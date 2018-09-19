@@ -2,98 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE54A1F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 12:50:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 739F61F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 14:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731528AbeISS2W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 14:28:22 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:42573 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731235AbeISS2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 14:28:22 -0400
-Received: by mail-qk1-f193.google.com with SMTP id g13-v6so2897782qki.9
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 05:50:33 -0700 (PDT)
+        id S1731704AbeISTse (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 15:48:34 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40650 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727675AbeISTse (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 15:48:34 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y8-v6so2314648wrh.7
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 07:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lQH1jxe4hCAa/hRlXy6WzGfvdrHX07ed3kEnYYBne1Q=;
+        b=NMqz8px2MnxJKJ8BLtIKRrWWKLB+8ZaUujWItXF/tFHy8da4X5PG7rHXh2rULqcf3D
+         eB39CdFsxHkzsS3Rtpcj67Ohn7oNXvaEd1O79+yCSh4nsyCzttsh5vnbJ+LUvqcuXZuD
+         3OHm8CQfF067HWuwlLBuRcR3MYlcvb8DORGbSqXZFLtk7xAD3nQeuOew3UvMLk7cm2iI
+         6a22gFiDJ8FhjEevBjsK+K0iQNkg2Tu60MdZA/+k1ejkP3MxDMf0I9YU25Z1POqIna/w
+         +Fk3oWVN9lKGBTi2Dg8Qsv+WIkPZVEGDzAfBjDzYdagDLNPy3Ubshz7EuL0gPaKFRQNo
+         WFHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2zuf/lehyHt+JfhgxcoGZvAHAWLZlf9wa7Sz8V9yehE=;
-        b=ccDmlT1GEK2Q1j7lo7EMUpCsrJcksPphzXKB+fZivPGFTV3rGFNFnRt5YQxDtNE4/U
-         NTuBTJYsxsgYKhS68ZaF3iXPOCNLJuJPtKKyPTodOENf+N9RNTCRgTjStD9Gaykqs8ru
-         /dLHFIJ+QDwsyCMOpG1lzCT8TgBnEJ9Aug0wTZHGncWpO1/+sgRuDb1ZG8jGNOqpr3xa
-         ZeGInuxtqZ9lV6j208fA4CSYMPSU6yNTxCNuHoGaijA/7LBJpQXn63XBUUTT1FmhScaI
-         PpiE0ThArcTCB9rYHqRV4JjsXzRTPHnGpB8gb+F0F+AA4tQfXXtKvMEt8Z3ELdCnaODg
-         hoAQ==
-X-Gm-Message-State: APzg51AkoRju8Bd7ua7M0cSgaBGNYgLywXehfG2/5QzjCLltlpQjUvbi
-        UECy6tAUMdw2HUNp/b6AdnUMUpmuNTJi5mwYDUc=
-X-Google-Smtp-Source: ANB0VdYsZxwzDqAdXCAF3L9eO5Xlwma9wf+el6Mcpkt+RSnavV+qmBPs+PKtaOqjJ+8VKxVIZDe+P6ZCegiE0t5wJEk=
-X-Received: by 2002:a37:4653:: with SMTP id t80-v6mr22974599qka.314.1537361433055;
- Wed, 19 Sep 2018 05:50:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lQH1jxe4hCAa/hRlXy6WzGfvdrHX07ed3kEnYYBne1Q=;
+        b=F7IjSNenBg7fQsAC++cKZqjNMF44KJlWlWzmZmUm47hChdjAw3e+FO2dy+/q7ub1sV
+         s6s4B2q9u/FesQpTpdVcq4K/VX3Hy3nsVkfYuKn3elP7CE8FxOGU5nGcNeuPBlV7A4dA
+         YHlKLdsfhUOdnv86izBG48dzpKzC5lLZn2AERmWOGqWr6yt4VpImJS8WYgoJav6vWZUO
+         xeTyTz9MtTjwH9SsqzoTg7dSaq23w1kP3pxWgdtNDBf3Bt+9BYSeWBakHbkmWlULMXPU
+         Z2o2olgCnA3+30ihK4ZoV6mS3PxbKP5XaCvFu68Mnds65EUCEBGn+RIa9DsRafb2R95N
+         AKMg==
+X-Gm-Message-State: APzg51CnlncJg/1rqqTDrL2pia3R+wR0uuQvanyv2v30BGuL49PVOwxR
+        NF4FFXLU6s1NSwXtsTgBJ83VNvwBdZ0=
+X-Google-Smtp-Source: ANB0VdaXdZDurF9r06h46bxpYUXh9gdRWwrOnv3k3sNqzEOG9X+EHlOzHnKHUMHIq2DPCL+eh9FfNw==
+X-Received: by 2002:adf:ec05:: with SMTP id x5-v6mr28565342wrn.266.1537366226693;
+        Wed, 19 Sep 2018 07:10:26 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id 184-v6sm7794262wmv.6.2018.09.19.07.10.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Sep 2018 07:10:25 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] reflog expire: add progress output
+Date:   Wed, 19 Sep 2018 14:10:16 +0000
+Message-Id: <20180919141016.27930-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.0.444.g18242da7ef
 MIME-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
- <e01b719de662f0b150f78b5a6ab6ccfce9c675fa.1537223021.git.matvore@google.com>
- <CAPig+cT5BLu2onbuTBbZ_mMzNMkEuPk5-g2d5YKw4V6Z42Y3aQ@mail.gmail.com> <CAMfpvhJ3ye_7LWaQ1abXKtMB=O1sfOz6xYN=7acrVdLOksq9eA@mail.gmail.com>
-In-Reply-To: <CAMfpvhJ3ye_7LWaQ1abXKtMB=O1sfOz6xYN=7acrVdLOksq9eA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 19 Sep 2018 08:50:21 -0400
-Message-ID: <CAPig+cQ3M+Wtyrm_GGRhL7kgM0eWPsXanK-AbLtJiQsORJ3A5A@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] t9109-git-svn-props.sh: split up several pipes
-To:     Matthew DeVore <matvore@google.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrn@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 18, 2018 at 10:56 PM Matthew DeVore <matvore@google.com> wrote:
-> On Mon, Sep 17, 2018 at 6:57 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Mon, Sep 17, 2018 at 6:25 PM Matthew DeVore <matvore@google.com> wrote:
-> > > +               cmp - $3
-> >
-> > This is just wrong. The "-" argument to 'cmp' says to read from
-> > standard input, but there is nothing being passed to 'cmp' on standard
-> > input anymore now that you're removed the pipe. I'm guessing that you
-> > really meant to use "observed" here (and reverse the order of
-> > arguments to be consistent with the expect-then-actual idiom).
-> > Finally, since these (apparently) might be binary, you can use
-> > test_cmp_bin() instead.
-> Fixed, except for the test_cmp_bin part. My understanding is that git
-> svn propget is supposed to be printing human-readable strings.
+Before this change the "git reflog expire" command didn't report any
+progress. This is the second command (after "pack-refs --all --prune")
+that the "gc" command will run.
 
-If so, then please use test_cmp() rather than raw 'cmp' since
-test_cmp() will show the actual difference between the expected and
-actual files, which can be helpful when diagnosing a failing test.
+On small repositories like this command won't take long to run, my
+test system it takes just under 1 second to run on git.git, but just
+around 8 seconds on linux.git, and much longer on the
+2015-04-03-1M-git.git[1] large test repository.
 
-> > After this patch, the test is even more broken than appears at first
-> > glance since the test body is inside double-quotes. This means that
-> > the $1, $2, $3 inside the test_propget() function are getting expanded
-> > _before_ the function itself is ever defined, to whatever bogus values
-> > $1, $2, $3 hold at that point. I can't see how this could ever have
-> > worked (except only appearing to work by pure accident).
-> Fixed, and here is the new test:
->
-> test_expect_success 'test propget' "
->         test_propget () {
->                 git svn propget \$1 \$2 >actual &&
->                 cmp \$3 actual
->         } &&
+Taking so long means that "gc" will appear to hang at the beginning of
+its run. It might still do so after this change if the earlier
+"pack-refs" command takes a really long time to run, but that'll only
+impact repositories with a really large set of refs to pack, and can
+be addressed in some future change.
 
-Rather than escaping "$" with backslash, a cleaner fix would be to
-change the double quotes around the test body to single quotes. Those
-double quotes weren't needed anyhow since there are no variable
-interpolations in the body. Single quotes would make that obvious at a
-glance in addition to avoiding unexpected behavior in the future (like
-$1, $2, etc. being interpolated at the wrong time). Single quotes
-would also make the test more idiomatic and consistent with the bulk
-of other tests in the suite. If you do go the route of swapping
-quotes, please be sure to mention the change in the commit message.
+One thing that's bad about this change is that we might *in theory*
+print a "Marking unreachable commits in reflog for expiry" message for
+each ref with a reflog. This is because the abbreviated callstack
+looks like this:
 
-Thanks.
+    0  mark_reachable at builtin/reflog.c:227
+    1  in unreachable at builtin/reflog.c:290
+    2  in should_expire_reflog_ent at builtin/reflog.c:317
+    3  in expire_reflog_ent at refs/files-backend.c:2956
+    4  in show_one_reflog_ent at refs/files-backend.c:1879
+    # This is the last function that has the refname (e.g. "HEAD") available
+    5  in files_for_each_reflog_ent at refs/files-backend.c:2025
+    6  in refs_for_each_reflog_ent at refs.c:2066
+    7  in files_reflog_expire at refs/files-backend.c:3043
+    8  in refs_reflog_expire at refs.c:2117
+    9  in reflog_expire at refs.c:2129
+    # Here's where we collect reflogs to expire, and expire each one
+    10 in cmd_reflog_expire  at builtin/reflog.c:595
+
+I.e. this progress is being reported for each expired reflog. So if
+start_progress() were used instead of start_delayed_progress() we'd
+print (e.g. on my git.git) hundreds of these lines.
+
+In practice I haven't been able to make it print anything except one
+line. This is because validating the reflogs for these other
+branches (not "HEAD") takes such a short amount of time.
+
+That may just be some artifact of the repositories I've tested, but I
+suspect It'll be true in general. As the callstack above shows, in
+order to guarantee that we don't do that we'd need to pass some
+"progress" variable through 10 levels of functions, many of which are
+"for_each" callback functions with void* cb_data.
+
+1. https://github.com/avar/2015-04-03-1M-git
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/reflog.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 3acef5a0ab..d3075ee75a 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -10,6 +10,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "reachable.h"
++#include "progress.h"
+ 
+ /* NEEDSWORK: switch to using parse_options */
+ static const char reflog_expire_usage[] =
+@@ -225,14 +226,20 @@ static void mark_reachable(struct expire_reflog_policy_cb *cb)
+ 	struct commit_list *pending;
+ 	timestamp_t expire_limit = cb->mark_limit;
+ 	struct commit_list *leftover = NULL;
++	struct progress *progress = NULL;
++	int i = 0;
+ 
+ 	for (pending = cb->mark_list; pending; pending = pending->next)
+ 		pending->item->object.flags &= ~REACHABLE;
+ 
+ 	pending = cb->mark_list;
++	progress = start_delayed_progress(
++		_("Marking unreachable commits in reflog for expiry"), 0);
+ 	while (pending) {
+ 		struct commit_list *parent;
+ 		struct commit *commit = pop_commit(&pending);
++
++		display_progress(progress, ++i);
+ 		if (commit->object.flags & REACHABLE)
+ 			continue;
+ 		if (parse_commit(commit))
+@@ -253,6 +260,7 @@ static void mark_reachable(struct expire_reflog_policy_cb *cb)
+ 		}
+ 	}
+ 	cb->mark_list = leftover;
++	stop_progress(&progress);
+ }
+ 
+ static int unreachable(struct expire_reflog_policy_cb *cb, struct commit *commit, struct object_id *oid)
+-- 
+2.19.0.444.g18242da7ef
+
