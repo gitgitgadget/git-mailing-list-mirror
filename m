@@ -2,126 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_12_24,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5124E1F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 11:12:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A59541F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 12:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732014AbeITQzm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 12:55:42 -0400
-Received: from forward24j.cmail.yandex.net ([5.255.227.60]:43384 "EHLO
-        forward24j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726954AbeITQzl (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 20 Sep 2018 12:55:41 -0400
-X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Sep 2018 12:55:38 EDT
-Received: from mxback2o.mail.yandex.net (mxback2o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::1c])
-        by forward24j.cmail.yandex.net (Yandex) with ESMTP id 4EFF0277B9
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 14:05:25 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback2o.mail.yandex.net (nwsmtp/Yandex) with ESMTP id UWlb42bSzh-5OTe28Cu;
-        Thu, 20 Sep 2018 14:05:24 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1537441524;
-        bh=nWsLMSMjoANV+BP5d7ulMK53GPgJa8SqhUZ7mZvEv64=;
-        h=From:To:Subject:Date:Message-Id;
-        b=CX9WVwYt2Gzrs8DaKvU3tm3VdXfFbWkcSrUjFZ/k5H1MREk0VbTX/4Gkmhhjrh1gW
-         yKQied0UlfzJtP0XQAb8ZFTD14okaTJsbAjfpgA1llG/ZqKjVVsCLxq/Qc3vzix3wl
-         CGWuOGn0rLGH4/9MJfswWQzOHdphURNPU66joXi8=
-Authentication-Results: mxback2o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by iva5-cb9df376e345.qloud-c.yandex.net with HTTP;
-        Thu, 20 Sep 2018 14:05:14 +0300
-From:   KES <kes-kes@yandex.ru>
-Envelope-From: kes-kes@yandex.com
-To:     git <git@vger.kernel.org>
-Subject: Work is not replayed on top while: git pull -v --rebase
+        id S2387719AbeITSeK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 14:34:10 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:45360 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387701AbeITSeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 14:34:10 -0400
+Received: by mail-qt0-f194.google.com with SMTP id l2-v6so3150323qtr.12
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 05:50:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=DMJa1qejDyhhSnUxEDQ/A9BNRKbysRZemy9nNpSifck=;
+        b=p2nEe9KIlH7ntxquAsHAr2gbvKjlk7LgTVKD3cd2I6Qv4xCmqKCHkz0dRI5mCEeIfk
+         q8lBXdO64RmxYx3nRiGZ1aUGm2hf+snKlGURYpaPM7VMN+U4ovMltJyeStwKo99XnmpM
+         jw6LbxuY2lXaTsD1FCuirTigjJcVDRJmSVjvjyOoyOlxWQr7R84+YjBeTtjL/ELumfRW
+         Y2MKR7MqJMz/kVfTVdBM7BIOZfxa28K+vjFeIMZgNI0ynmszYV//8mq53aclMS/EwP8p
+         5BfpvZiLlDa0mD8glOT2BP4YYeGf8vTwcrM18Uq+VpKfcPlKRx58dvynvNQt6/ujnDW+
+         Gk5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=DMJa1qejDyhhSnUxEDQ/A9BNRKbysRZemy9nNpSifck=;
+        b=q3iP+KG8H32R6v+g6rR8TVrQRP9b1aD7K9iaT7MNKyLAjw2QUIu6RckaTRf4wTQwE4
+         IYLTy/5pGDKxXKGX891wqXB37+mNRoGwlDVRI5B6IuhOfeqMMGG4tXAnC58JgVbUIDvp
+         0/6iN9lltQiN3InaahYTKZWxPOES+91kDKTDs6RZjyShHD7W8UAfQfk55gJBQ8JHWlbX
+         bC1eo9r9/vt4E6Kzz4Hd/4zhq5WoLFN07us5x8i5Nr01+uwkCv4RqUXATKb500d3K17n
+         PrxgVe60UxGfeXK69s3buGNbj2x+mzK3Q2XSQtvAgOpao35mt8rJA1JY3MipxZocLHB+
+         lMsg==
+X-Gm-Message-State: ABuFfojBCTfBX0b45MloRqh2FXcalc4m8pKrRb6GBGRl/teqedI4frun
+        pr3K5XshnBmj8k0U11E/HqytZ33K
+X-Google-Smtp-Source: ACcGV60lf06ppkCBHGXswWdeokEDMwkxwjAB7WasGb9q80blYhK/EiT4USrlOGX2QbXrjasw68Eu5A==
+X-Received: by 2002:ac8:440e:: with SMTP id j14-v6mr2571660qtn.257.1537447848034;
+        Thu, 20 Sep 2018 05:50:48 -0700 (PDT)
+Received: from [10.0.1.17] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id v13-v6sm14386161qtg.82.2018.09.20.05.50.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Sep 2018 05:50:45 -0700 (PDT)
+Subject: Re: [PATCH 1/4] git-commit-graph.txt: fix bullet lists
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+References: <cover.1537374062.git.martin.agren@gmail.com>
+ <222721870b74742fd2fd20816a8e351b28e788cc.1537374062.git.martin.agren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <84a8fa75-0f3f-878a-ca5f-132e7ca4f196@gmail.com>
+Date:   Wed, 19 Sep 2018 19:28:45 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Thu, 20 Sep 2018 14:05:14 +0300
-Message-Id: <6160201537441514@iva5-cb9df376e345.qloud-c.yandex.net>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+In-Reply-To: <222721870b74742fd2fd20816a8e351b28e788cc.1537374062.git.martin.agren@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
+On 9/19/2018 12:30 PM, Martin Ågren wrote:
+> We have a couple of bullet items which span multiple lines, and where we
+> have prefixed each line with a `*`. (This might be the result of a text
+> editor trying to help.) This results in each line being typeset as a
+> separate bullet item. Drop the extra `*`.
 
-TL;DR; Some local commits are lost while `git pull -v --rebase`
+Thank you for noticing this. It clearly looks wrong at 
+https://git-scm.com/docs/git-commit-graph
 
-[alias]
-    tree        = log --graph --decorate --pretty=oneline --abbrev-commit
-    changes     = log --graph --decorate --pretty=oneline --abbrev-commit --cherry-pick --boundary --left-right
-
-<HERE I do some work, commit it and push>
-
-<after some time>
-
-$ git fetch origin 
-remote: Counting objects: 806, done.
-remote: Compressing objects: 100% (197/197), done.
-remote: Total 806 (delta 587), reused 806 (delta 587)
-Receiving objects: 100% (806/806), 85.96 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (587/587), completed with 19 local objects.
-From https://tracker.feel-safe.net/gitdev/main
- + a562406d...f9015227 296_tos    -> origin/296_tos  (forced update)
-
-Here we see that someone did 'forced update'
-
-$ git tree -n 5
-* a562406d (HEAD -> 296_tos, back) Bulk changes         ### <<< PUT ATTENTION HERE
-* 177e2515 Bulk changes
-* 934bbb31 Fix Profile Page
-* 811d8812 Fix button's width on Authorization form
-* 97ca9419 Fix Tariff Options page
-
-Here git know that a562406d already pushed to remote
-
-Now I want to update my branch
-
-$ git pull -v --rebase
-From https://tracker.feel-safe.net/gitdev/main
- = [up to date]        296_tos                    -> origin/296_tos
-....
- = [up to date]        text-page-style            -> origin/text-page-style
-Changes from f66c29158a57d687aaf48fb89f9b897563c0142e to f9015227da20ad1f858174b4b4c188338eb26640:
- cpanfile                                |   4 +
-....
- templates/v2/tos/tos.html.ep            |   4 +-
- 31 files changed, 1694 insertions(+), 106 deletions(-)
- create mode 100644 lib/DbMapper.pm
-....
- create mode 100644 t/DbMapper/update_data.t
-First, rewinding head to replay your work on top of it...
-
-$ git tree -n 5
-* f9015227 (HEAD -> 296_tos, origin/296_tos) Bulk changes
-* 95064421 Fix Profile Page
-* c03c930a Fix button's width on Authorization form
-* e6df0662 Fix Tariff Options page
-* 22b5c754 Fix header on order page
-
-$ diff <(git show f901522) <(git show 177e2515)
-1c1
-< commit f9015227da20ad1f858174b4b4c188338eb26640
----
-> commit 177e2515eb2bc1c9733b4374f2da373aa969a601
-
-$ git changes a562406d...f9015227
->   50e9343a Merge branch 'orm' into dash_v2
-|\  
-| > 4be5e3c6 Test data fetching from DataSet
-| > 11d60181 More tests: Manual condition OP for join expression
-....
-| < a562406d (back) Bulk changes
-o f66c2915 (origin/dash_v2, dash_v2) Merge branch 'move_example_elements' into dash_v2
-
-We can see that a562406d after rebasing **is lost**
-
-
-Why a562406d is not applied on top of remote branch?
-
-PS. for `git push --force` there is alternative: --force-with-lease
-Is there something similar to --force-with-lease but for `git pull -v --rebase`?
+-Stolee
