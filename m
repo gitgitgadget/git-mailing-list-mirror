@@ -2,117 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8378A1F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 19:37:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B20E1F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 19:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732218AbeITBQz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 21:16:55 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:47941 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbeITBQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 21:16:55 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id 2iHxgFiSBWLW22iHygvvKJ; Wed, 19 Sep 2018 20:37:31 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=fJUXI6Se c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=AFZVbWJ3m9jpNa944rAA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 1/9] Makefile: add a hdr-check target
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-References: <d24df21a-7ab2-84f6-8b18-83fd9c8c2b30@ramsayjones.plus.com>
- <CAN0heSpNT25PrNwdbQKZo=Q8kpSfwnzuOz34xKHtfF+Fq9ZXmg@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <89478060-85c1-416a-0ad9-54d3f8f1111b@ramsayjones.plus.com>
-Date:   Wed, 19 Sep 2018 20:37:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1732366AbeITBSF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 21:18:05 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54434 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732220AbeITBSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 21:18:05 -0400
+Received: by mail-wm1-f68.google.com with SMTP id c14-v6so7487133wmb.4
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 12:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1FNn+pt6wD0Q8IZ/Ydky8ReWbmK93Nm+p4k0IyYUgcA=;
+        b=eVdNIXC+6Da1EBp7vWFhXD4OxKqmg8r66GmN5sTI+oEkFxj4ocLrF92pbE0fN2x4wO
+         qacdOXdT0XfcxKVrAQO62mwPXh8R7P3Mg5+XL+YqfYVgz3jBHUDQ3NhGwJMugPhk4Nml
+         480ZQxc1LDnMZtXOaj9pD6gJ3P8ls1cLfucq8V+fQq7MeXcS2Ua+VRtTT3AoJ7eCchZz
+         dhjIaPktI2vffgM0ZGzo9qMhPV1NzMBDGJm08FXyMcIr0Iw8k+pHnnFEcd9B40VkSayW
+         W+5WDt8jP8NTL6xpg7VRxeAqyof8POV1j0XntN1iiuC+48FD5f676Q6Yb9NaZ8nBIFkt
+         31Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=1FNn+pt6wD0Q8IZ/Ydky8ReWbmK93Nm+p4k0IyYUgcA=;
+        b=l8KXiN8KoMS8pFkCSZOjmZ50gVAEnN7Zg0IacxMspy4XKw6qrC13hAT7DF41vWWLPz
+         SdrAOD8i50lYwHe3IizLrk5DS/Ra+Kh7+qpdvzW71zPhKBvtK5+qG6a7CGkMrLCDnWZi
+         E3AUxykqCB6Cn92jXGEPpZaiw7DzGYGPvB4ZlK4l79MdATjzk9kQMjH/OEebMXpO9Or6
+         CADnEwYOFI4kF1SSkxCMpsAegenJXuecYF+6/fKNwacq1TnOodMiTEnW+eHg4RfLSDCU
+         pxH6qcUlvQFZgp5og/OWSRzvC8Ijo6dL2slee76VIPavhikpvtxN13SXZDhJdmfu6cdg
+         /MCQ==
+X-Gm-Message-State: APzg51A/ROzMJssdIo05oN49T3DNnJ5XX23YssByWZbwReFmhzRIWhg4
+        B/c8FElLcMjS7Xa6pPqXPTIX+gwW
+X-Google-Smtp-Source: ANB0VdbkDiag4RucoZJuemHwfGlQk389nK2zJq7f2A0Wp3AlhNYpSfJvDxHQX+1jCF+nknGaD7CZmw==
+X-Received: by 2002:a1c:b157:: with SMTP id a84-v6mr20075981wmf.18.1537385918268;
+        Wed, 19 Sep 2018 12:38:38 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z101-v6sm44792412wrb.55.2018.09.19.12.38.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 19 Sep 2018 12:38:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 2/6] test-reach: add run_three_modes method
+References: <pull.25.git.gitgitgadget@gmail.com>
+        <pull.25.v2.git.gitgitgadget@gmail.com>
+        <404c9186080ecee6c1cc39a6dcd17deaaa7a620a.1537243720.git.gitgitgadget@gmail.com>
+        <20180918180200.GD27036@localhost>
+        <xmqqbm8t473q.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 19 Sep 2018 12:38:37 -0700
+In-Reply-To: <xmqqbm8t473q.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 19 Sep 2018 12:31:21 -0700")
+Message-ID: <xmqq7ejh46rm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSpNT25PrNwdbQKZo=Q8kpSfwnzuOz34xKHtfF+Fq9ZXmg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfO1jCb+/o59tjXtR+f0o3Rv9BVIUdtA6iy7ntX70t0Y97rhuzwKE/WJg0erTwiaCS9F5j1wQiSC6bfDwWBT7g9o6ftmKrVZqpfMrqVwSdME4scOWMoMj
- Xs4RwtATrVE9a5h/hZdnSaMXWkLtQPLBCQB+Tv2kmff65xEx0xK0dRwQNS8UjnhEyPfWxsFFrQ4S1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-
-On 19/09/18 18:49, Martin Ågren wrote:
-> Hi Ramsay,
-> 
-> On Wed, 19 Sep 2018 at 02:07, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
->> @@ -2675,6 +2676,17 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->>  .PHONY: sparse $(SP_OBJ)
->>  sparse: $(SP_OBJ)
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>
+>>> While inspecting this code, I realized that the final test for
+>>> 'commit_contains --tag' is silently dropping the '--tag' argument.
+>>> It should be quoted to include both.
 >>
->> +GEN_HDRS := command-list.h unicode-width.h
-> 
-> Most of the things happening around here are obvious steps towards the
-> end-goal and seem to logically belong here, together. This one though,
-> "generated headers"(?) seems like it is more general in nature, so could
-> perhaps live somewhere else.
+>> Nit: while quoting the function's arguments does fix the issue, it
+>> leaves the tests prone to the same issue in the future.  Wouldn't it
+>> be better to use $@ inside the function to refer to all its arguments?
+>
+> IOW, do it more like this?
+>
+>>> -test_three_modes () {
+>>> +run_three_modes () {
+>>>  	test_when_finished rm -rf .git/objects/info/commit-graph &&
+>>> -	test-tool reach $1 <input >actual &&
+>>> +	$1 <input >actual &&
+>
+> 	"$@" <input >actual
+>
+> i.e. treat each parameter as separate things without further getting
+> split at $IFS and ...
+>
+>>> +test_three_modes () {
+>>> +	run_three_modes "test-tool reach $1"
+>
+> 	run_three_modes test-tool reach "$1"
+>
+> ... make sure there three things are sent as separate, by quoting
+> "$1" inside dq.
+>
+> I think that makes sense.
 
-Yes, generated headers, but no, not more general. ;-)
+I also noticed that 2/6 made "commti_contains --tag" enclosed in dq
+pair for one test, but the next test after it has the identical one.
 
-I originally included those headers directly in the
-EXCEPT_HDRS macro, along with the list of excluded
-directories (which was much longer at one point).
+Here is what I queued in the meantime.
 
-The 'command-list.h' is generated as part of the build
-(and so may or may not be part of the LIB_H macro), whereas
-the unicode-width.h header is only re-generated when someone
-runs the 'contrib/update-unicode/update_unicode.sh' script
-(presumably when a new standard version is announced) and
-commits the result.
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index 1b18e12a4e..1377849bf8 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -55,18 +55,18 @@ test_expect_success 'setup' '
+ 
+ run_three_modes () {
+ 	test_when_finished rm -rf .git/objects/info/commit-graph &&
+-	$1 <input >actual &&
++	"$@" <input >actual &&
+ 	test_cmp expect actual &&
+ 	cp commit-graph-full .git/objects/info/commit-graph &&
+-	$1 <input >actual &&
++	"$@" <input >actual &&
+ 	test_cmp expect actual &&
+ 	cp commit-graph-half .git/objects/info/commit-graph &&
+-	$1 <input >actual &&
++	"$@" <input >actual &&
+ 	test_cmp expect actual
+ }
+ 
+ test_three_modes () {
+-	run_three_modes "test-tool reach $1"
++	run_three_modes test-tool reach "$1"
+ }
+ 
+ test_expect_success 'ref_newer:miss' '
+@@ -223,7 +223,7 @@ test_expect_success 'commit_contains:hit' '
+ 	EOF
+ 	echo "commit_contains(_,A,X,_):1" >expect &&
+ 	test_three_modes commit_contains &&
+-	test_three_modes "commit_contains --tag"
++	test_three_modes commit_contains --tag
+ '
+ 
+ test_expect_success 'commit_contains:miss' '
+-- 
+2.19.0-216-g2d3b1c576c
 
-Both headers fail the 'hdr-check', although both generator
-scripts could be 'fixed' so that they passed. I just didn't
-think it was worth the effort - neither header was likely
-to be #included anywhere else. I guess I could eliminate
-that macro, absorbing it into EXCEPT_HDRS, if that would
-lead to less confusion ...
-
-[I suspect the fact that LIB_H (almost always) contains
-'command-list.h' has not been noticed ... :-P ]
-
-> Actually, we have a variable `GENERATED_H` which seems to try to do more
-> or less the same thing. It lists just one file, though, command-list.h.
-> And unicode-width.h seems to be tracked in git.git.
-
-Hmm, GENERATED_H seems only to be used by the i18n part of the
-makefile and, as a result of its appearance in LIB_H, sometimes
-results in command-list.h appearing twice in LOCALIZED_C.
-(which is probably not a problem).
-
-ATB,
-Ramsay Jones
-
-> Maybe use `GENERATED_H` instead, and list unicode-width.h on the next
-> line instead? Or am I completely misreading "GEN_HDRS"?
-> 
->> +EXCEPT_HDRS := $(GEN_HDRS) compat% xdiff%
->> +CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
->> +HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
->> +
->> +$(HCO): %.hco: %.h FORCE
->> +       $(QUIET_HDR)$(CC) -include git-compat-util.h -I. -o /dev/null -c -xc $<
->> +
->> +.PHONY: hdr-check $(HCO)
->> +hdr-check: $(HCO)
->> +
->>  .PHONY: style
->>  style:
->>         git clang-format --style file --diff --extensions c,h
-> 
