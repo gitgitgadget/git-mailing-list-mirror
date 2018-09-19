@@ -7,69 +7,153 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A1371F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 17:55:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F56B1F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 18:34:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731821AbeISXed (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 19:34:33 -0400
-Received: from mail-pg1-f172.google.com ([209.85.215.172]:44361 "EHLO
-        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726925AbeISXed (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 19:34:33 -0400
-Received: by mail-pg1-f172.google.com with SMTP id r1-v6so3090827pgp.11
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 10:55:31 -0700 (PDT)
+        id S1732702AbeITAN1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 20:13:27 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:42755 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732373AbeITAN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 20:13:27 -0400
+Received: by mail-pl1-f195.google.com with SMTP id g23-v6so3061790plq.9
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 11:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EhPfmLdHomCqeDvyDkRopnOti+GtOi3SXCA/NPB6/pY=;
-        b=FUz1pNDc73+dNS2Q83b6lvYieM0giN2vqdhthXEAYEM8SUFJwshbwIZkD9Zz+pj4yy
-         9hrfOTAU4iOC4ERTxiLFHnO8zkWXaFmMYCu/RMSPU1/YzCtBH7+5OnzQM5f5gnmOcfj1
-         mgteg8ga5HggdQDP8hFCoMIBBOmqM1n7t8q7TBFaY4WCop2Wuu4j4yuykn5YM5NWdnqG
-         BF1dQtqPmC+5kytJI2/haUt4waKimWsuG9VVKzJchVOXw5zknJqYMb3PZGkyJniP6gRH
-         0SH4hcKjceDkrtfP9wfOyClSlpsW2VKkcX2tKUdeUV/C6RIfUzxC3SXHjzM5FLk3sAjl
-         TxHw==
+        bh=4cajUU4bHyCOR2OUCCoSnrXw3TyRwTUQ0JbXZ9vwIS4=;
+        b=Z+cWCV9Z/sLu8epupftYicIM1Mt4V3TrrqZeQDlmfICuzN4iQlDsarxrR6yBV6ZrPD
+         vceLTWluPiuqrfM+Qyebph0NSPxzEvOngrudZgpynH0Scsv/RFLWk1aAJNz26sPAZisA
+         X9EwLOocJk9vdz/ueXhmqc77K+eOhYHWaiIgOsuzOpLNLX7K+0mZdO25AJUOkXXd6gpA
+         e2J0UO2Hdwt57jJ2YpjkQmKNWOhJn4aJUm7BB6Ye4mQ8NVRYarWmo7zIyruNtxr7Y/SY
+         tlShP/yfyxyKpG/r1z6kpVO6uTmygExkFJWwRzZCuo2cEJoB6DeCYYrv3egiWL7MQBdW
+         W0Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EhPfmLdHomCqeDvyDkRopnOti+GtOi3SXCA/NPB6/pY=;
-        b=cabYTFR7tkVe0yF/Ru+/vrbNBw3JwiQ+EXn3O03U2uPX2GNq81XUCXwF5wnfbMFSJE
-         zbzapg4pslu0+Z5geJIxtrhnPJ9F9HOeIYoiTCf+AfyxUgckkPN2OXY191l0hlfQI6J/
-         2/udEbkPeq1VgYsG03dRB9ZnenC8n5Y3svF8BOMSmSUgt8ivd0FGp5+aPGUPuBtrQhjY
-         dTKPZqOEzdwSrbvP7XYw1g9+0UD2m0ogGSJ5W7LxHg618b3omkbK6r9rwp+8GDfx1s1N
-         7+KmKbTgh9EQFZ8YD6f9vE9b9YOh7aQygkbgJFc6GGEJM3caBQVpT7gZa2+xJ6pWGQPP
-         K96Q==
-X-Gm-Message-State: APzg51Bsuwh6Bb/3Nz/IO/BziYWqoWJA7e4TwnNvLKIwUKP6/R4reIlc
-        h7pzG1F6Ze6WAyApPcetOtWy8552U9HhGZFpD4nxVsbe
-X-Google-Smtp-Source: ANB0VdYNngcIsDPpZWHqfyzeNu9PLFK0lHtF2QJrviISUcIxRXVVNreiYzcepd9pHe1neDBJSbJcRm5oK2Q65sk9uwk=
-X-Received: by 2002:a63:6507:: with SMTP id z7-v6mr1862574pgb.200.1537379731213;
- Wed, 19 Sep 2018 10:55:31 -0700 (PDT)
+        bh=4cajUU4bHyCOR2OUCCoSnrXw3TyRwTUQ0JbXZ9vwIS4=;
+        b=FbtIli2fzAPUAsIZb0gK8Fdan4/5fQUKRtHYptYQk5vVGpAorbiKqGmxTbsriPOL2j
+         S6dg7hlaeucWaWH7hZZRsPiMNW33suyFbgb5S9REdsY4n9n1anPGK8rbSSR2lBRxotfm
+         34LyR4cFCc8B40fdN8tjjMolTP8zF0tYCFQFHajO9q7XnBWUpiG6umnrkLg2kVT5lnhZ
+         HCZ3G16Yyig3qYbDuB0drwdCdq5bmXe6LmJUkrOTjpKVX5k846yawxRKmSdO8/k6GECw
+         Ktk2qP79N9vD3zRS4Ua3TKJOtiWTHjXCd5RLthIlKUAijPHRaTD6rCiz9GiJuV/bGgsy
+         LH6g==
+X-Gm-Message-State: APzg51BReYIF/oAYAugVYCDJ7Bk71QH6ZD0Kdp4KG8OU/bG9owcpfIpZ
+        0Bixq2/nKyfuMk067f+cz9AiozZT6YQN6KF5fY8=
+X-Google-Smtp-Source: ANB0VdZGW8yZBIbNbZTjfig+6iJyMs8ltx1Q4IMJWD402OtAC3G0U46PeRk3rshCV4nyyDfIteeR6L06Dom1KPM7Qno=
+X-Received: by 2002:a17:902:9893:: with SMTP id s19-v6mr35823349plp.130.1537382057369;
+ Wed, 19 Sep 2018 11:34:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <e81bbd0e714221aac47b387e7d1e1572af32aa8f.1537375024.git.martin.agren@gmail.com>
- <377b7cfa36c3b23150005f7faec02bbc4a325bd7.1537375024.git.martin.agren@gmail.com>
- <20180919172143.GA60492@syl>
-In-Reply-To: <20180919172143.GA60492@syl>
+References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com> <20180919034907.GA7626@sigill.intra.peff.net>
+In-Reply-To: <20180919034907.GA7626@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 19 Sep 2018 19:55:19 +0200
-Message-ID: <CAN0heSq7T=t7A9_jzTmNvj8SEfS0E6xWs-SFFwZjb2U1Ryqd2w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] git-config.txt: fix 'see: above' note
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 19 Sep 2018 20:34:05 +0200
+Message-ID: <CAN0heSpMRfDd7=E_kYL6ucL9bL2VWMGLTAkT72BUrVwR6YTezQ@mail.gmail.com>
+Subject: Re: [PATCH] pack-objects: handle island check for "external" delta base
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
+On Wed, 19 Sep 2018 at 05:49, Jeff King <peff@peff.net> wrote:
+> This is tricky to do inside a single "if" statement. And
+> after the merge in f3504ea3dd (Merge branch
+> 'cc/delta-islands', 2018-09-17), that "if" condition is
+> already getting pretty unwieldy. So this patch moves the
+> logic into a helper function, where we can easily use
+> multiple return paths. The result is a bit longer, but the
+> logic should be much easier to follow.
 
-On Wed, 19 Sep 2018 at 19:21, Taylor Blau <me@ttaylorr.com> wrote:
-> I could take or leave 2/2, since I usually write ", (see: above)", but
-> I'm not sure if that's grammatically correct or not.
+> +static int can_reuse_delta(const unsigned char *base_sha1,
+> +                          struct object_entry *delta,
+> +                          struct object_entry **base_out)
+> +{
+> +       struct object_entry *base;
+> +
+> +       if (!base_sha1)
+> +               return 0;
 
-Well, I sure ain't no grammar expert too... This is not a patch I feel
-strongly about, so I'll be happy to defer to others.
+So this corresponds to "if (base_ref &&".
 
-Thanks for reviewing,
+> +       /*
+> +        * First see if we're already sending the base (or it's explicitly in
+> +        * our "excluded" list.
+> +        */
+
+Missing ')'.
+
+> +       base = packlist_find(&to_pack, base_sha1, NULL);
+> +       if (base) {
+> +               if (!in_same_island(&delta->idx.oid, &base->idx.oid))
+> +                       return 0;
+
+This logic matches the removed code...
+
+> +               *base_out = base;
+> +               return 1;
+> +       }
+> +
+> +       /*
+> +        * Otherwise, reachability bitmaps may tell us if the receiver has it,
+> +        * even if it was buried too deep in history to make it into the
+> +        * packing list.
+> +        */
+> +       if (thin && bitmap_has_sha1_in_uninteresting(bitmap_git, base_sha1)) {
+
+This matches...
+
+> +               if (use_delta_islands) {
+> +                       struct object_id base_oid;
+> +                       hashcpy(base_oid.hash, base_sha1);
+> +                       if (!in_same_island(&delta->idx.oid, &base_oid))
+> +                               return 0;
+
+This does some extra juggling to avoid using `base->idx.oid`, which
+would have been the moral equivalent of the original code, but which
+won't fly since `base` is NULL.
+
+> +               }
+> +               *base_out = NULL;
+> +               return 1;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+>  static void check_object(struct object_entry *entry)
+>  {
+>         unsigned long canonical_size;
+> @@ -1556,22 +1607,7 @@ static void check_object(struct object_entry *entry)
+>                         break;
+>                 }
+>
+> -               if (base_ref && (
+> -                   (base_entry = packlist_find(&to_pack, base_ref, NULL)) ||
+> -                   (thin &&
+> -                    bitmap_has_sha1_in_uninteresting(bitmap_git, base_ref))) &&
+> -                   in_same_island(&entry->idx.oid, &base_entry->idx.oid)) {
+
+Yeah, the new function looks much simpler than this. We have
+
+  if (A && (B1 || B2) && C) {.
+
+Knowing what to look for, it can be seen that we can -- under the right
+circumstances -- have A and B2, but not B1, and try to evalute C by
+dereferencing `base_entry` which will be NULL.
+
+> +               if (can_reuse_delta(base_ref, entry, &base_entry)) {
+>                         oe_set_type(entry, entry->in_pack_type);
+>                         SET_SIZE(entry, in_pack_size); /* delta size */
+>                         SET_DELTA_SIZE(entry, in_pack_size);
+
+Without being at all familiar with this code, this looks sane to me.
+Just had a small nit about the missing closing ')'.
+
 Martin
