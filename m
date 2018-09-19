@@ -2,61 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEF921F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 21:22:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6A01F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 22:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731366AbeITDBx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 23:01:53 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:36991 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728150AbeITDBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 23:01:53 -0400
-Received: by mail-pf1-f193.google.com with SMTP id h69-v6so3293224pfd.4
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 14:22:06 -0700 (PDT)
+        id S1725876AbeITEF3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 00:05:29 -0400
+Received: from mail-lf1-f46.google.com ([209.85.167.46]:46590 "EHLO
+        mail-lf1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbeITEF3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 00:05:29 -0400
+Received: by mail-lf1-f46.google.com with SMTP id q22-v6so6538235lfa.13
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 15:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=f3fE9kTOTbOh2yEGkJwQvCU61kfITFbaknz+DWO9bMo=;
-        b=dDxmaFk58GmXpah7jOoi24goc0qF56ACTWD7GVBnHBZgenw5xSs9bSPymXrk5A0PQt
-         DlJlz6E5a8x8V2fzVSgxk/aIt0jpAZ7Nfc8D1QE99IR4z5kmG/piXnVgEOsvdQY/2jMh
-         kSC/mjyGk2sHGYAh0sTvdDgDS/jrjRVglEUXM2ORI5UCpCF0f439e+n80uDyu8ZyHtoY
-         DxGzf1vXOQQ5dq9t4dHEadBJQmmEU6rpopYNfi+EHnM+J9wDcorQPwJ0Q+Q/l6L1npG1
-         HjrGxGWOZvybGbI8bvsetH8lWPKf+NP5Wc3dQQRsMZA/RvTAng2llX4LcV+lTZHSR6gX
-         X+ag==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=IuKoiE/Fa2prGIeOEMiXXCS0/AKHszeLpRIq4DT2U7c=;
+        b=MH3qIObG8OfGferCHzD/ULmbwEdTJWri/T4J0Gnruzg40LTn3ina8gt5nss4hUbbJ8
+         y6wan4ldX7PyP1v5e9hJJvx1jXGK2UteEFD9J619Xgt8s8zCQbKjqwmWWxVgPGsVYj3+
+         Wf8MwuAm7YbZ0C+YIX1z/gsp4JVHodCztXrm17jmNEmmVo1AUbQlMPlOvA9L8iDsZA4s
+         2xnhrGJctz6tXjb7Nfp1Cfq3mttRyWvYc9SvXcJ53BwVnJxIddENieMgQLz1ZwETPSQd
+         ugjBB1Ze4hgmZXVKWTpRndbDr3OvXmd5NkK19huWxkU9vsyAB3gSwbHXojhw1Biq0sHo
+         Z0+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=f3fE9kTOTbOh2yEGkJwQvCU61kfITFbaknz+DWO9bMo=;
-        b=VMtR7vbUtf9KTI4ZzUxSk9/H2zZe+3V4YUuk/wfsaVRsVPqg++gC+LXiVa+53JgvW5
-         URpucHwA2G26KF6Rps0ffVYq6eF1DTEQiv4pVjYzrNAGs+y43TQd2++8KK5GNYTV1pjj
-         2aXkVrVV+Xa3GfHzidJlM1PZcQsRLmfDBIC3aWzMu4VLMyUAuwIufsMIfHufxjbD+4RC
-         JKkS7cVhJhnoDD5PGisXyBt6f5jUZ2rLR5k3RSQ6rmemK4YRGdeh7xw+VnZT5eE16dCK
-         Hx1U5mSoQZ9vvoIAz3cgFxHXtngD8MdUKmhtKVldTUaCCh9Z5uzee1S+TPjFb5kMbqI2
-         nyLw==
-X-Gm-Message-State: APzg51BWFqxgbKR1y7MhmvmqYIJanq0+PBqkJozPRlMASz+0CvIWuzk6
-        h4q+rXkYqUZ9YuwSal4oFoV0dkjQsgl2L1JfdyA=
-X-Google-Smtp-Source: ANB0VdaaeJP4d/eysp7lOcfylLvKuwRFypPZwVyUNt0TpwU18PxTmVIPjTypTSROCj43iHbRI2x/AnCs2n3OK0RG4JY=
-X-Received: by 2002:a62:8208:: with SMTP id w8-v6mr37352015pfd.215.1537392125949;
- Wed, 19 Sep 2018 14:22:05 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=IuKoiE/Fa2prGIeOEMiXXCS0/AKHszeLpRIq4DT2U7c=;
+        b=OqbmnL1/DfsopJf/v7BMnKmlv9IdvfdJOi1VgX5ZIS9OEmCl88eEJqkyGr3FCrJu4v
+         pq7XGSe5gxSVw0m6Cr960G8JRJ7yLCcD112n/ZegFFDOnDS3QPCo55WM4uMzxRo+fFOY
+         l6Plx7WqmN9fo9v5TYjh39kU9ItXTBREReY/7uEn3wc3ENjPZVrwjSiCCmuwy+9z8jg5
+         EDzBJtEvbvp9o63VQOlrreIj9nn/b75pOiAkxvtZibImXBizI5P/uCMIZaUQte1dBkE6
+         EOQB8yfIcufDgtqoW/Z0N6mQfiUxj9Eq2T/kZcIOicoz3YDyqzyHuzAqedlaYTVW/807
+         IFsA==
+X-Gm-Message-State: APzg51CPkusbeEkzAb/eD7RH0mBg8R9EJuRP4j7RzvnhSMva4SBWxTb5
+        Vaf+Rx4paPC0LG4BFW9dh1aCnIPkQZyJ5RLUyNzZnI1S
+X-Google-Smtp-Source: ANB0VdYS602FBfzuDZXRQyCxudgILeTRdArZ0OxRwH4lZY9+Z2fHOSk/tuyMKlDWp3Ssgyek5tmDWHcfN+Pd5sxtjSY=
+X-Received: by 2002:a19:8f57:: with SMTP id r84-v6mr12167119lfd.131.1537395925565;
+ Wed, 19 Sep 2018 15:25:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180919210138.31940-1-avarab@gmail.com>
-In-Reply-To: <20180919210138.31940-1-avarab@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 19 Sep 2018 23:21:54 +0200
-Message-ID: <CAN0heSr=upqAVzjm=gQoGVnOjBZcDWhmj3W8gFFa8bcfCgaHTg@mail.gmail.com>
-Subject: Re: [PATCH] gc: fix regression in 7b0f229222 impacting --quiet
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
+From:   Alexander Mills <alexander.d.mills@gmail.com>
+Date:   Wed, 19 Sep 2018 15:25:14 -0700
+Message-ID: <CA+KyZp4G6WCXjp_9x+NBWZysfg+Fu_PtF4qrhipT8UuLNnsCHA@mail.gmail.com>
+Subject: bug with git merge-base
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,31 +58,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 19 Sep 2018 at 23:04, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
-b@gmail.com> wrote:
-> Fix a regression in my recent 7b0f229222 ("commit-graph write: add
-> progress output", 2018-09-17), the newly added progress output for
-> "commit-graph write" didn't check the --quiet option.
+The following command sequence exits with 1, and no stderr
 
-s/, t/. T/, perhaps. Maybe also s/did/does/.
+base=3D'remotes/origin/dev';
+fork_point=3D"$(git merge-base --fork-point "$base")";
 
-> Do so, and add a test asserting that this works as expected. Since the
-> TTY perquisite isn't available everywhere let's add a version of this
+I cannot figure out why it's exiting with 1, but there is no stdout/stderr
 
-s/perq/prereq/
+-alex
 
-> that both requires and doesn't require that. This test might be overly
-> specific and will break if new progress output is added, but I think
-> it'll serve as a good reminder to test the undertested progress
-> mode(s).
+--=20
 
-> +test_expect_success 'gc --no-quiet' '
-> +       git -c gc.writeCommitGraph=3Dtrue gc --no-quiet >stdout 2>stderr =
-&&
-> +       ! test -s stdout &&
+Alexander D. Mills
+=C2=A1=C2=A1=C2=A1 New cell phone number: (415)730-1805 !!!
+alexander.d.mills@gmail.com
 
-`test_must_be_empty` for easier debugging?
-
-> +       test_line_count =3D 1 stderr &&
-> +       test_i18ngrep "Computing commit graph generation numbers" stderr
-> +'
+www.linkedin.com/pub/alexander-mills/b/7a5/418/
