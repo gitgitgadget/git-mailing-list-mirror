@@ -2,205 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4757A1F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 03:49:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8C271F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 04:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbeISJZE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 05:25:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52840 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725875AbeISJZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 05:25:04 -0400
-Received: (qmail 5448 invoked by uid 109); 19 Sep 2018 03:49:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Sep 2018 03:49:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14113 invoked by uid 111); 19 Sep 2018 03:49:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 23:49:07 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 23:49:07 -0400
-Date:   Tue, 18 Sep 2018 23:49:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] pack-objects: handle island check for "external" delta base
-Message-ID: <20180919034907.GA7626@sigill.intra.peff.net>
-References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
+        id S1726825AbeISKRV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 06:17:21 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:39925 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbeISKRV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 06:17:21 -0400
+Received: by mail-ed1-f67.google.com with SMTP id h4-v6so3737800edi.6
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 21:41:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=edKGZR1C+wzchyXz0YnxeGHbUnx2LzgMrWUe9maJRUE=;
+        b=rmiNRdO5qxZ6PFFFkQR5G1WJP3ywfeSElLQQ4AWcxL4XUoQ5cvtXYrCJKfBpThITrU
+         fCChhNkl16+weiLhMWoIc2cxYax/0nWnpENi9XbwWAvoEL8F3UyL74lwIY6V59PeO107
+         5wh83NzelbrOqMlFpxfXQ/HPLPFUJq3FsE2CVPzdUtzKjWG8m8lUXaPJkYbfkf5AmhwO
+         t9jIrYLMAZSjBEsLg6JMcXR2r7Gv4ry2eA4x8AOqLeuIqiY51Qx5FzchlPz/D4oGsh61
+         aX+UtrawvB1//57QYFIJswTqziJth+FcXEKDImWb7M98EotdLOqvVy/8fjzEuRGvYuhs
+         NCBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=edKGZR1C+wzchyXz0YnxeGHbUnx2LzgMrWUe9maJRUE=;
+        b=emsalLfb8jEylFIbezFYhZ7fCU8SFoawQ27Hdgv5k6BfUKLhYMS+teAy+VSnaxODkl
+         Fjfm7qu2PkOEs4QrwrSmbphypL4k7t2Lr9QyDMDnMW4cGjsAVG+PeXyqGbVvvvsZdnIN
+         1Aid52jjvd1gD0nd1TO66ZEiesft+v33fEXRlHgGShAZfOcjB++6E2fvjtLTb2NXWMFn
+         hSTiSw0z1NlaK73OAccLXUmMq0i5kC0wqj5euqHNUGtVSZU96zedRftOoYr4Lo0GtU3z
+         yUQCjXALh7j8aV4DGXb/TbjJ0isdxG30UXMlftQ6Zc3Z9q2rByot9YaMhO3vCQRxf48z
+         bFEA==
+X-Gm-Message-State: APzg51CiqistiDs+rK/rDrtBXvet5S497ERUo+M5O6BtGEv08NZylhzm
+        Ep9uvFqfpDdJ9lSLUulpItI=
+X-Google-Smtp-Source: ANB0Vdbc68twdoe3/6gnOUlWIDhUR4cFdJOX0wg4TuJuN0nsB+r858QqcCOKUztAWxEkizGG7HXunA==
+X-Received: by 2002:aa7:c5cd:: with SMTP id h13-v6mr55121227eds.27.1537332076322;
+        Tue, 18 Sep 2018 21:41:16 -0700 (PDT)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id h40-v6sm866515edh.88.2018.09.18.21.41.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 18 Sep 2018 21:41:15 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] config doc: add missing list separator for checkout.optimizeNewBranch
+References: <20180816182653.15580-1-benpeart@microsoft.com> <20180918053449.14047-1-avarab@gmail.com> <20180918171317.GB15470@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180918171317.GB15470@sigill.intra.peff.net>
+Date:   Wed, 19 Sep 2018 06:41:14 +0200
+Message-ID: <87va72jdzp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 14, 2018 at 02:56:36PM -0700, Junio C Hamano wrote:
 
-> * cc/delta-islands (2018-08-16) 7 commits
->   (merged to 'next' on 2018-08-27 at cf3d7bd93f)
->  + pack-objects: move 'layer' into 'struct packing_data'
->  + pack-objects: move tree_depth into 'struct packing_data'
->  + t5320: tests for delta islands
->  + repack: add delta-islands support
->  + pack-objects: add delta-islands support
->  + pack-objects: refactor code into compute_layer_order()
->  + Add delta-islands.{c,h}
-> 
->  Lift code from GitHub to restrict delta computation so that an
->  object that exists in one fork is not made into a delta against
->  another object that does not appear in the same forked repository.
-> 
->  Will merge to 'master'.
+On Tue, Sep 18 2018, Jeff King wrote:
 
-This needed some conflict resolution with my pack-bitmap-reuse-delta
-topic, but there's a subtle bug in the result that went to 'master'.
-Details and a fix below.
+> On Tue, Sep 18, 2018 at 05:34:49AM +0000, Ævar Arnfjörð Bjarmason wrote:
+>
+>> The documentation added in fa655d8411 ("checkout: optimize "git
+>> checkout -b <new_branch>"", 2018-08-16) didn't add the double-colon
+>> needed for the labeled list separator, as a result the added
+>> documentation all got squashed into one paragraph. Fix that by adding
+>> the list separator.
+>
+> Obviously the right thing to do, but your patch does not seem to apply
+> on that commit. Looks like you built it on a more recent commit that
+> also has checkout.defaultRemote (i.e., probably 'next')?
 
-As a side note, I did this same resolution myself at least twice (for my
-personal build and for porting the refreshed delta-reuse series to our
-GitHub build), and I wrote the exact same resolution you did both times.
-So I think it was an easy mistake to make. :)
-
--Peff
-
--- >8 --
-Subject: pack-objects: handle island check for "external" delta base
-
-Two recent topics, jk/pack-delta-reuse-with-bitmap and
-cc/delta-islands, can have a funny interaction. When
-checking if we can reuse an on-disk delta, the first topic
-allows base_entry to be NULL when we find an object that's
-not in the packing list. But the latter topic introduces a
-call to in_same_island(), which needs to look at
-base_entry->idx.oid. When these two features are used
-together, we might try to dereference a NULL base_entry.
-
-In practice, this doesn't really happen. We'd generally only
-use delta islands when packing to disk, since the whole
-point is to optimize the pack for serving fetches later. And
-the new delta-reuse code relies on having used reachability
-bitmaps to determine the set of objects, which we would
-typically only do when serving an actual fetch.
-
-However, it is technically possible to combine these
-features. And even without doing so, building with
-"SANITIZE=address,undefined" will cause t5310.46 to
-complain.  Even though that test does not have delta islands
-enabled, we still take the address of the NULL entry to pass
-to in_same_island(). That function then promptly returns
-without dereferencing the value when it sees that islands
-are not enabled, but it's enough to trigger a sanitizer
-error.
-
-The solution is straight-forward: when both features are
-used together, we should pass the oid of the found base to
-in_same_island().
-
-This is tricky to do inside a single "if" statement. And
-after the merge in f3504ea3dd (Merge branch
-'cc/delta-islands', 2018-09-17), that "if" condition is
-already getting pretty unwieldy. So this patch moves the
-logic into a helper function, where we can easily use
-multiple return paths. The result is a bit longer, but the
-logic should be much easier to follow.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/pack-objects.c | 68 ++++++++++++++++++++++++++++++++----------
- 1 file changed, 52 insertions(+), 16 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5041818ddf..27cb674124 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1470,6 +1470,57 @@ static void cleanup_preferred_base(void)
- 	done_pbase_paths_num = done_pbase_paths_alloc = 0;
- }
- 
-+/*
-+ * Return 1 iff the object specified by "delta" can be sent
-+ * literally as a delta against the base in "base_sha1". If
-+ * so, then *base_out will point to the entry in our packing
-+ * list, or NULL if we must use the external-base list.
-+ *
-+ * Depth value does not matter - find_deltas() will
-+ * never consider reused delta as the base object to
-+ * deltify other objects against, in order to avoid
-+ * circular deltas.
-+ */
-+static int can_reuse_delta(const unsigned char *base_sha1,
-+			   struct object_entry *delta,
-+			   struct object_entry **base_out)
-+{
-+	struct object_entry *base;
-+
-+	if (!base_sha1)
-+		return 0;
-+
-+	/*
-+	 * First see if we're already sending the base (or it's explicitly in
-+	 * our "excluded" list.
-+	 */
-+	base = packlist_find(&to_pack, base_sha1, NULL);
-+	if (base) {
-+		if (!in_same_island(&delta->idx.oid, &base->idx.oid))
-+			return 0;
-+		*base_out = base;
-+		return 1;
-+	}
-+
-+	/*
-+	 * Otherwise, reachability bitmaps may tell us if the receiver has it,
-+	 * even if it was buried too deep in history to make it into the
-+	 * packing list.
-+	 */
-+	if (thin && bitmap_has_sha1_in_uninteresting(bitmap_git, base_sha1)) {
-+		if (use_delta_islands) {
-+			struct object_id base_oid;
-+			hashcpy(base_oid.hash, base_sha1);
-+			if (!in_same_island(&delta->idx.oid, &base_oid))
-+				return 0;
-+		}
-+		*base_out = NULL;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- static void check_object(struct object_entry *entry)
- {
- 	unsigned long canonical_size;
-@@ -1556,22 +1607,7 @@ static void check_object(struct object_entry *entry)
- 			break;
- 		}
- 
--		if (base_ref && (
--		    (base_entry = packlist_find(&to_pack, base_ref, NULL)) ||
--		    (thin &&
--		     bitmap_has_sha1_in_uninteresting(bitmap_git, base_ref))) &&
--		    in_same_island(&entry->idx.oid, &base_entry->idx.oid)) {
--			/*
--			 * If base_ref was set above that means we wish to
--			 * reuse delta data, and either we found that object in
--			 * the list of objects we want to pack, or it's one we
--			 * know the receiver has.
--			 *
--			 * Depth value does not matter - find_deltas() will
--			 * never consider reused delta as the base object to
--			 * deltify other objects against, in order to avoid
--			 * circular deltas.
--			 */
-+		if (can_reuse_delta(base_ref, entry, &base_entry)) {
- 			oe_set_type(entry, entry->in_pack_type);
- 			SET_SIZE(entry, in_pack_size); /* delta size */
- 			SET_DELTA_SIZE(entry, in_pack_size);
--- 
-2.19.0.745.g75ede3edf3
-
+Yeah, it's based on top of next, which I was testing at the time and
+didn't expect that conflict.
