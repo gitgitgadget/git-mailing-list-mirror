@@ -2,202 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FCE11F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 20:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67A211F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 20:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731680AbeIUB5u (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 21:57:50 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:35462 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726128AbeIUB5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 21:57:50 -0400
-Received: by mail-io1-f67.google.com with SMTP id w11-v6so9489692iob.2
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 13:12:38 -0700 (PDT)
+        id S2388191AbeIUCfp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 22:35:45 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40108 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731832AbeIUCfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 22:35:45 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y8-v6so7088321wrh.7
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 13:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KFULGqIoPo86u7mTXMA9dV2IYkExCtTswTGOF748gsg=;
-        b=atX4fl4b+4IhEH4/YHA7dbbpCHI/yEK1zSjy7m3f9u7r3dcOskJlKu8F3Vva393AUu
-         Hqve3uav6Gi80TLCCkca8MkRnPelozcxER657S/XufKPd6QEVNc/+wVaPM4D4Cq+e/Ks
-         sIpajqiFiEBayVVOMzO3qvO4uX+hrt3bBfxbZVzje7pWAHrmPoCIdB26Al76R7xnlgii
-         nThpf1209ayHqNRL8GWKk5KCJSTJgzLE6ODmoomD5iFk1Zyvt4lF/1RdRm9rb7pU5MQ8
-         psMqWRUS4CM1FYczIFKbeMFMvG6/X2xbq97aeARdbcRzdnlTV7HONqtly/N0H/KNnxcl
-         kXCg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bunorwQ38kbYpD9ywjvoKWcPpil5E4F/sMZtDTVGxhg=;
+        b=nkOadLJ7u/6lHS8WYMcch2AituxHiTQIPqSBoLZkLrGkqz7ohem9YyoGzs6cyiCDt9
+         P6jqWY9briIu4UgQ0yv3RvewMYX95VE1uxn4lDUU18MihIx5zml9Ts6/s76fz96LmgrG
+         mdolK8A2THVbpPeZM2MmtulSpJr+exDM8r1cJbRFxF/bBZusLFGj548w86FdOjRSzS8x
+         ZpRyIHQpOJOiwFNxpW/LaZeOGkbek2Ekd9qh08nACR5i4BKPMQFkyT3fQp7IhDda4uOv
+         NeiHV/L7WncgVe+LTvyMhXmlBI97joLcKy0aIMKd8gOo6ukZjT8i0UEQI8dTVHS9S8aw
+         FQaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KFULGqIoPo86u7mTXMA9dV2IYkExCtTswTGOF748gsg=;
-        b=OhN9qsfQEORXXHIwW7S/YpCivK7mR8ApOEHxDpnjti7YZ1XD+QnEScLD196EFjZuu0
-         wZZ2BBPUe8jgn7aD6XyrmXkiDTZH++wg7dX5IWBMQxXhnOW5YgKLCVHzZRdtSQG7BDM4
-         cWXIIKKzSWnq9APPLEABXo+AOBC93xawKArq6rThXR+NHVL2Rw5duz/cZj/sp16kWUMK
-         YoDetev7FCDOJvoYfJ2qvX3tGT9nGqtp2hIphG0Ggkdgv2KBUEmZFsHVtscWyq8sXMRv
-         gHeNErnIXi4QU6YdTPx/B7l3Pvn7h8sBwSja6C9j6L8cM7jqkd88roPiwbb5TMGR8Rro
-         lOzw==
-X-Gm-Message-State: APzg51D9OA+QfxGe1DH68POtuRwu2cGgeBBZULgWaO2A3NlZ/2AlTdy/
-        y4x6d58By/G7uCXVnoPXBS7uOA==
-X-Google-Smtp-Source: ANB0VdaPBC9l3+3fJ7rgBS8/wZU4X67sOXTwE7VyVg4ukioM0mCFtqKWPigTQgxDnbutNse+VUn2gg==
-X-Received: by 2002:a24:dcc3:: with SMTP id q186-v6mr3322421itg.126.1537474358308;
-        Thu, 20 Sep 2018 13:12:38 -0700 (PDT)
-Received: from localhost ([173.225.52.219])
-        by smtp.gmail.com with ESMTPSA id v82-v6sm8857347iod.14.2018.09.20.13.12.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Sep 2018 13:12:36 -0700 (PDT)
-Date:   Thu, 20 Sep 2018 16:12:35 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] transport.c: introduce core.alternateRefsPrefixes
-Message-ID: <20180920201235.GB83799@syl>
-References: <cover.1537466087.git.me@ttaylorr.com>
- <3639e9058859b326f64600fcd0b608171b56ce9f.1537466087.git.me@ttaylorr.com>
- <20180920194734.GD29603@sigill.intra.peff.net>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bunorwQ38kbYpD9ywjvoKWcPpil5E4F/sMZtDTVGxhg=;
+        b=DnNyvPJfmdoRKrUCQISNsCqkbrZUlvhxWZYGvMtyBdXiTBwLZJ3gdOwcF6CGtdrPwt
+         7kXq5g/DttFP9VkBftthttNn0eeDzpYrFiRvq+RzUAHVd2y3Nx3k/9hitcX3mHm1i3PC
+         A7JoPQ2SwmfyMntjYLYyTuNnw9quQbHQaoua7xks0ohWBtLn0EQMqfP7BdVS43dDUlwo
+         hbIvtZU5+S4gMTxOgtAE2LYe2Kl/fIAmQNlom6df4tohMN7iLmLyYnY+kNoVhbAUwIEi
+         arHtzv0rd7dV+7P1IR/BoO4wdQ0VSAz9M4pTdnBOjO2BbjPj4hO06yjzlkkJMSycpFhf
+         WrRA==
+X-Gm-Message-State: APzg51D1hHY2v0B0miMOj6759A33iLOzDB6nuS4UcOy21OuFUHpefAQj
+        LHXbitEJUv0zYu+F9kxdXK8klBwH
+X-Google-Smtp-Source: ANB0VdZlMWtYC1wkBWvR+/McIXYWu6GSecgS9PWCaZp+IU4Q+BUzh5+impXP5r6YDUiKmYLO5yVWNA==
+X-Received: by 2002:a05:6000:c:: with SMTP id h12mr35929581wrx.103.1537476623684;
+        Thu, 20 Sep 2018 13:50:23 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z16-v6sm21191690wrq.78.2018.09.20.13.50.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 20 Sep 2018 13:50:23 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, matvore@google.com
+Subject: Re: [PATCH] fetch: in partial clone, check presence of targets
+References: <20180920184843.20898-1-jonathantanmy@google.com>
+Date:   Thu, 20 Sep 2018 13:50:22 -0700
+In-Reply-To: <20180920184843.20898-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 20 Sep 2018 11:48:43 -0700")
+Message-ID: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180920194734.GD29603@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 20, 2018 at 03:47:34PM -0400, Jeff King wrote:
-> On Thu, Sep 20, 2018 at 02:04:13PM -0400, Taylor Blau wrote:
->
-> > The recently-introduced "core.alternateRefsCommand" allows callers to
-> > specify with high flexibility the tips that they wish to advertise from
-> > alternates. This flexibility comes at the cost of some inconvenience
-> > when the caller only wishes to limit the advertisement to one or more
-> > prefixes.
->
-> To be clear: this isn't something we plan to use at GitHub at all. It
-> just seemed like a nice "in between" the current inflexible state and
-> the "incredibly flexible but not trivial to use" command from patch 2.
->
-> Note that unlike core.alternateRefsCommand, there are no security issues
-> here with reading this from the alternate, although:
->
->  - it's a little awkward to read the config from the alternate
->
->  - since these are clearly related config, it probably makes sense for
->    them to be consistent
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Another note is that the thing we are planning on using
-("core.alternateRefsCommand") could also be implemented as a hook,
-e.g., .git/hooks/gather-alternate-refs.
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 61bec5d21..e9640fe5a 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -938,6 +938,25 @@ static int quickfetch(struct ref *ref_map)
+>  	 */
+>  	if (deepen)
+>  		return -1;
+> +
+> +	if (repository_format_partial_clone) {
+> +		/*
+> +		 * For the purposes of the connectivity check,
+> +		 * check_connected() considers all objects promised by
+> +		 * promisor objects as existing, which means that the
+> +		 * connectivity check would pass even if a target object
+> +		 * in rm is merely promised and not present. When
+> +		 * fetching objects, we need all of them to be present
+> +		 * (in addition to having correct connectivity), so
+> +		 * check them directly.
+> +		 */
+> +		struct ref *r;
+> +		for (r = rm; r; r = r->next) {
+> +			if (!has_object_file(&r->old_oid))
+> +				return -1;
+> +		}
 
-That said, I think that this makes more sense when the alternate is
-doing the configuring, not the ohter way around.
+Because check_connected() lies in the presense of "promisor", we can
+defeat it this way, which makes sense.  
 
-> > For example, to advertise only tags, a caller using
-> > 'core.alternateRefsCommand' would have to do:
-> >
-> >   $ git config core.alternateRefsCommand ' \
-> >       git -C "$1" for-each-ref refs/tags \
-> >       --format="%(objectname) %(refname)" \
-> >     '
->
-> I think it's more likely that advertising only heads would make sense.
-> The pathological repos I see are usually a sane number of branches and
-> then an absurd number of tags.
+I wonder if it makes sense to do this check unconditionally, even
+when we are in a fully functioning clone.  The check is quite cheap
+and can reject a ref_map that has an object we do not know about,
+without check_connected() having to ask the rev-list.
 
-I agree with you. I used "refs/tags" as the prefix here since I'd like
-different output than when "core.alternateRefsPrefixes" isn't configured
-at all. Since we have a tag for each commit (we use test_commit to do
-so), and refs/heads/{a,b,c,master}, we'd get the same output whether we
-configured the prefix to be refs/heads, or didn't configure it at all.
-
-Since using 'git for-each-ref' sorts in order of refname, a prefix of
-"refs/tags" sorts in order of tagname, so we'll get different output
-because of it.
-
-That said, I think that this test is a little fragile as-is, since it'll
-break if we change the ordering of 'git for-each-ref'. Maybe we should
-`| sort >actual.haves`?
-
-> Not that it's super important, but I wonder if we should give a
-> motivating example like this in the documentation. In which case we'd
-> probably want to give the most plausible one.
-
-Maybe. I don't feel strongly about it, though.
-
-> > Since the value of "core.alternateRefsPrefixes" is appended to 'git
-> > for-each-ref' and then executed, include a "--" before taking the
-> > configured value to avoid misinterpreting arguments as flags to 'git
-> > for-each-ref'.
->
-> Good idea.
->
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index b908bc5825..d768c57310 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -622,6 +622,12 @@ core.alternateRefsCommand::
-> >  	linkgit:git-for-each-ref[1]. The first argument is the path of the alternate.
-> >  	Output must be of the form: `%(objectname) SPC %(refname)`.
-> >
-> > +core.alternateRefsPrefixes::
-> > +	When listing references from an alternate, list only references that begin
-> > +	with the given prefix. To list multiple prefixes, separate them with a
-> > +	whitespace character. If `core.alternateRefsCommand` is set, setting
-> > +	`core.alternateRefsPrefixes` has no effect.
->
-> I can't remember all of the rules for how for-each-ref matches prefixes,
-> but I remember that it's subtly different than git-branch (and that's
-> why ref-filter.c has two matching modes). Do we need to spell out the
-> rules here (or at least say "it matches like for-each-ref")?
-
-Good idea. I'll do that.
-
-> Also, a minor nit, but I think the argv_array_split() helper you're
-> using soaks up arbitrary amounts of whitespace. So maybe "separate them
-> with whitespace" instead of "a whitespace character". Or maybe we should
-> be strict in what we suggest and liberal in what we parse. ;)
-
-Yeah, I think that chaning "a whitespace character" -> "with
-whitespace" is the easier thing to do ;-).
-
-> > +test_expect_success 'with core.alternateRefsPrefixes' '
-> > +	test_config -C fork core.alternateRefsPrefixes "refs/tags" &&
-> > +	cat >expect <<-EOF &&
-> > +	$(git rev-parse one) .have
-> > +	$(git rev-parse three) .have
-> > +	$(git rev-parse two) .have
-> > +	EOF
-> > +	printf "0000" | git receive-pack fork | extract_haves >actual &&
-> > +	test_cmp expect actual
->
-> Looks sane, though the same pipe comment applies as before.
-
-Thanks. I applied that suggestion in both locations when reading your
-last mail.
-
-> >  test_done
-> > diff --git a/transport.c b/transport.c
-> > index e7d2cdf00b..9323e5c3cd 100644
-> > --- a/transport.c
-> > +++ b/transport.c
-> > @@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
-> >  		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
-> >  		argv_array_push(&cmd->args, "for-each-ref");
-> >  		argv_array_push(&cmd->args, "--format=%(objectname) %(refname)");
-> > +
-> > +		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
-> > +			argv_array_push(&cmd->args, "--");
-> > +			argv_array_split(&cmd->args, value);
-> > +		}
-> >  	}
->
-> The implementation ended up delightfully simple.
-
-Thanks :-). It made me quite happy, too.
-
-Thanks,
-Taylor
+> +	}
+> +
+>  	opt.quiet = 1;
+>  	return check_connected(iterate_ref_map, &rm, &opt);
+>  }
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> index bbbe7537d..359d27d02 100755
+> --- a/t/t5616-partial-clone.sh
+> +++ b/t/t5616-partial-clone.sh
+> @@ -170,6 +170,23 @@ test_expect_success 'partial clone fetches blobs pointed to by refs even if norm
+>  	git -C dst fsck
+>  '
+>  
+> +test_expect_success 'fetch what is specified on CLI even if already promised' '
+> +	rm -rf src dst.git &&
+> +	git init src &&
+> +	test_commit -C src foo &&
+> +	test_config -C src uploadpack.allowfilter 1 &&
+> +	test_config -C src uploadpack.allowanysha1inwant 1 &&
+> +
+> +	git hash-object --stdin <src/foo.t >blob &&
+> +
+> +	git clone --bare --filter=blob:none "file://$(pwd)/src" dst.git &&
+> +	git -C dst.git rev-list --objects --quiet --missing=print HEAD >missing_before &&
+> +	grep "?$(cat blob)" missing_before &&
+> +	git -C dst.git fetch origin $(cat blob) &&
+> +	git -C dst.git rev-list --objects --quiet --missing=print HEAD >missing_after &&
+> +	! grep "?$(cat blob)" missing_after
+> +'
+> +
+>  . "$TEST_DIRECTORY"/lib-httpd.sh
+>  start_httpd
