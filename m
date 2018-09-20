@@ -2,130 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF801F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 00:06:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FCCB1F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 05:53:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726180AbeITFqa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 01:46:30 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34044 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726003AbeITFqa (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 20 Sep 2018 01:46:30 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:68ab:e3d3:c0a3:4717])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A5AC860735;
-        Thu, 20 Sep 2018 00:06:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1537401963;
-        bh=vUO498MIY6I+R8TK9b/E7f/VgTyhSFJfPZCROpLWnxM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=vGKUDrit/mBMSvhAjG6wK59OZECC7RDdn1SsLWC18GSdYhrHRTNVYykPXp9YxvW9b
-         Q79TCFpa5hFp3IxwzhCB5+4txTAXeFSvnHYSVawo8KxvHNhq9cZA91QJZPBcBVhjjj
-         BU0z+WREuQgF8gR8/g3i8E7oZt4E385NMH1O838SQddbuZOABCRRY2VdJmEpNEfIEi
-         Q/c664sA1PhtQi/ui++6fR3GTIs0GFnDJDKLXcO6UQ7eaSGFiPqoQV9zHh/m474Vbf
-         WbAPrgcoKkpGGBwyHERSnrqgnUKVzMdvWD7fSrO4CYWFIJY1aKUVGdiR0ldp/XSgRo
-         nGA+Kdzqtjuwn3FqOpzdCAGjsqi4uPF2YhBpms4FsXYzmY/ifn6bvPKo/AZsA9pel1
-         DgiX7WP50CVfB+2hP8zCZmMzR7l7WWPCimYQ1xjmp5jrQRTe9imngj3gJpLR9OvIUa
-         uYgGxvPL7WcFw9rhNYmCYAleBZpr36y6HUGZr2pWVsrsDgLycUO
-Date:   Thu, 20 Sep 2018 00:05:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Add an EditorConfig file
-Message-ID: <20180920000559.GA432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
- <20180917231850.GB81083@syl>
+        id S1731240AbeITLfY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 07:35:24 -0400
+Received: from mail-pg1-f169.google.com ([209.85.215.169]:44360 "EHLO
+        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726295AbeITLfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 07:35:24 -0400
+Received: by mail-pg1-f169.google.com with SMTP id r1-v6so3868049pgp.11
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 22:53:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BJayoAaw6/qALc6ScvAEBz+PTBiBYrPmRUqjw2jJod4=;
+        b=Ko48OD8h2t1Kqx9B/CummlXiCxlFENbH+SOhVAzCZ/2Hqdsq7BlDF6CNfnoBNNFVnb
+         0sI4rXIRS8eFyd3l1iMioP6J+zQZhZIiENR5Mer3ZpN8TiRLhdGGRCG4Cui/zunJ8YMi
+         A9TL0187ik5vs+57/NqQOAQZK3xYqU15TuXJZMQ74H/8EL/8mpbBr7MVMxma1L+GsTwn
+         ta9NLxvbRScdUdySqwRGcKAREk2crBVRTcADBfDhEUxyxUXX7Z4C0QgFG3s9o0TpZY1m
+         d9sq5HfFgCmfqP+/mXuN1VJZ70hJuomkbGsMWJmSW5QwBWS7PnxhkoIHldBbHo78V/LB
+         IEig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BJayoAaw6/qALc6ScvAEBz+PTBiBYrPmRUqjw2jJod4=;
+        b=aYnTCJArAmIJlKg19nOQRvPQNNpwiwqFkzEiEgLSebFYbVEp5MidX3lsGbjVFkIsAG
+         MC6+Y6tfl46QA8fOY3psZJwQ9JOtQFwcfUb0M3I7hPE63ZHiWGycARjFFxk7jiTBZ4le
+         PuD7/AIpxxOUlPz0iv1iip+46fO06TEhEcNCYKdAnCoqP1XlKrSUxLKcxTXlXP42h97p
+         7Z4HSWN8214ADWwvJYayujpFtEmjv+W4zOaU1kh6p1Wh1si//QmVtekilXM3RVXwpkLo
+         AfNFxCKgfLwzZJTvazr3jx70h38TlPTfnG51DjC0hQvKNldDlt09ZaLbS/Pk3pbkpqcE
+         lL+Q==
+X-Gm-Message-State: APzg51Ca7ZGba3aIBz7ylDJN/1SnIEZxiHEo3Pvb9ejPT9Jt4T8zsj07
+        M7ZKsiR2AVcvBubuoALvc/Iel/vahIasvgBs6TM=
+X-Google-Smtp-Source: ANB0VdaOTqenS2UpQI/1p+57Q3kVBLvGV+Uw4o71FeqJAranZ9noPn67ISqc4HDduVhNE9rjvnvmNftI2QqBnohhEf4=
+X-Received: by 2002:a63:b95e:: with SMTP id v30-v6mr34974658pgo.221.1537422824085;
+ Wed, 19 Sep 2018 22:53:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eQ8QKBgzzGzhafWG"
-Content-Disposition: inline
-In-Reply-To: <20180917231850.GB81083@syl>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <d24df21a-7ab2-84f6-8b18-83fd9c8c2b30@ramsayjones.plus.com>
+ <CAN0heSpNT25PrNwdbQKZo=Q8kpSfwnzuOz34xKHtfF+Fq9ZXmg@mail.gmail.com> <89478060-85c1-416a-0ad9-54d3f8f1111b@ramsayjones.plus.com>
+In-Reply-To: <89478060-85c1-416a-0ad9-54d3f8f1111b@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 20 Sep 2018 07:53:32 +0200
+Message-ID: <CAN0heSq8U7ue-SB-1iP1ZdW2hgrR0fwuKh_q68KvJ4K1dphpCw@mail.gmail.com>
+Subject: Re: [PATCH 1/9] Makefile: add a hdr-check target
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 19 Sep 2018 at 22:15, Ramsay Jones <ramsay@ramsayjones.plus.com> wr=
+ote:
+> On 19/09/18 18:49, Martin =C3=85gren wrote:
+> > On Wed, 19 Sep 2018 at 02:07, Ramsay Jones <ramsay@ramsayjones.plus.com=
+> wrote:
+> >> +GEN_HDRS :=3D command-list.h unicode-width.h
+> >
+> > Most of the things happening around here are obvious steps towards the
+> > end-goal and seem to logically belong here, together. This one though,
+> > "generated headers"(?) seems like it is more general in nature, so coul=
+d
+> > perhaps live somewhere else.
+>
+> Yes, generated headers, but no, not more general. ;-)
 
---eQ8QKBgzzGzhafWG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The 'command-list.h' is generated as part of the build
+> (and so may or may not be part of the LIB_H macro), whereas
+> the unicode-width.h header is only re-generated when someone
+> runs the 'contrib/update-unicode/update_unicode.sh' script
+> (presumably when a new standard version is announced) and
+> commits the result.
 
-On Mon, Sep 17, 2018 at 07:18:50PM -0400, Taylor Blau wrote:
-> Hi brian,
->=20
-> Thanks for CC-ing me on this.
->=20
-> I use editorconfig every day via the configuration in my home directory
-> [1], and the Vim plugin editorconfig-vim [2]. It's a great piece of
-> software, and I've been using it without any issue since around the
-> beginning of 2015.
+Ah, I wasn't aware of how unicode-width.h works, thanks.
 
-Yeah, I noticed it in your dotfiles.
+> Both headers fail the 'hdr-check', although both generator
+> scripts could be 'fixed' so that they passed. I just didn't
+> think it was worth the effort - neither header was likely
+> to be #included anywhere else.
 
-> In all *.[ch] files in git.git, I found a total of 817 lines over 79
-> characters wide:
->=20
->   $ for file in $(git ls-files '**/*.[ch]'); do
->       awk 'length > 79' $f;
->     done | wc -l
->=20
-> So I think that specifying indent_style, and tab_width to be 'tab' and
-> '8' respectively is enough. We shouldn't be enforcing a rule about line
-> lengths that we are not ourselves consistently following.
+With the above background, I'd tend to agree.
 
-I must admit that some of these are my fault.  I think we're moving to
-use clang-format more as a tool, so hopefully those become less of an
-issue over time.
+> I guess I could eliminate
+> that macro, absorbing it into EXCEPT_HDRS, if that would
+> lead to less confusion ...
 
-> Have you thought about including guidelines on COMMIT_EDITMSG? We prefer
-> 72 characters per line [3], and this is enforceable via the following:
->=20
->   [COMMIT_EDITMSG]
->   max_line_length =3D 72
+I'm just a single data point, so don't trust my experience too much.
 
-That's an interesting thought.  I know different people have different
-settings for this: 70, 72, 74.  72 characters is typical for emails, and
-since our commits end up as emails, I think standardizing on 72 would
-make sense.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> > Actually, we have a variable `GENERATED_H` which seems to try to do mor=
+e
+> > or less the same thing. It lists just one file, though, command-list.h.
+>
+> Hmm, GENERATED_H seems only to be used by the i18n part of the
+> makefile and, as a result of its appearance in LIB_H, sometimes
+> results in command-list.h appearing twice in LOCALIZED_C.
 
---eQ8QKBgzzGzhafWG
-Content-Type: application/pgp-signature; name="signature.asc"
+Just thinking out loud, I suppose you could use $(GENERATED_H) instead
+of hard-coding command-list.h in your patch. But with the background you
+explained above, I think there's a good counter-argument to be made:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+When we gain new auto-generated headers, we wouldn't actually mind `make
+hdr-check` failing. We'd get the opportunity to decide whether making
+the new header pass the check is worth it, or whether the correct
+solution is to blacklist the auto-generated header. That's probably
+better than just blacklisting the new header by default so that we don't
+even notice that it has a potential problem.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlui5GcACgkQv1NdgR9S
-9ouUkBAAvHHeNncitnueMYTiQamo7T3HL2mV2NczgQPoC0UQI0ObMyd4zAi2TG/D
-JPeVLwMClhWZCBSO24WvvebZ1I9npPIvvaqCKn9IhGRhp7ZPj4e6m1JW1DzuV4m3
-7qfda0E4sVWog386tFDMQbRp44/XCmUmvwyP1KE5UXw6+T27fqXFNAT1dg7/16DZ
-ZcWQNaPsuQV6pYAprAawMJSnjE2zyCGpGrpNRYX52ODtsmRJCkaoqgxRpIiVYo8b
-QuI1iz2Atq/ro/w40mTV980bwJMBcVXsdRL/rhyOWjaAsAtOzUwipfNwk0lmUIN+
-VTtpAabdvyIagHyhE3g7+h42qM/NuGej2JRgxOYoxi6YpXkoz0QnjgQ5mlz+Swda
-Q8pnmMmjbA/v33guQYOqsQQAA6z0BCowF9BdPph11qaNcwN89BUOg9X79sx+XAO5
-wL0h3BCjEGhXCyas7f8UA+jiDL0qmSo2azKSFa8qwbRMio+M9+DiT0niBiXe4JiM
-MMJlW8yxbR57LpPhLnL66DAHP7WCImRfJhI0Gm6QEUTa+y14y5iFRBI5vxX5+GKb
-BNULEgZ81bZltuK71GE0yXcikGCJuvMr0BDIAxP60GUVfmFcPu14nNBNJA6vIOTk
-yuEfBDQ79h0Rbx/BwR/CDtnP5e3Lonyl5G3fxUu3ewt/iLC5Gu4=
-=PbnL
------END PGP SIGNATURE-----
+So I think your approach makes sense. I stumbled on the similarity of
+the name to something we already have. Maybe something like
 
---eQ8QKBgzzGzhafWG--
+  # Ignore various generated files, rather than updating the
+  # generating scripts for little or no benefit.
+  GEN_HDRS :=3D ...
+
+or a remark in the commit message, or rolling this into EXCEPT_HDRS, but
+I'd be perfectly fine just leaving this as it is. Please trust your own
+judgment more than mine.
+
+Thanks
+Martin
