@@ -7,80 +7,87 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7481F454
-	for <e@80x24.org>; Thu, 20 Sep 2018 16:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDD981F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 16:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730891AbeITWHX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 18:07:23 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:42795 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730856AbeITWHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 18:07:23 -0400
-Received: by mail-lf1-f68.google.com with SMTP id d7-v6so5145590lfj.9
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 09:23:08 -0700 (PDT)
+        id S1727611AbeITWV6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 18:21:58 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:46787 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726954AbeITWV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 18:21:58 -0400
+Received: by mail-lj1-f196.google.com with SMTP id 203-v6so8981589ljj.13
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 09:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=V9gJWnqVldYA2kKKr8OWzaG1HCrU42y5qct2DMgA/WE=;
-        b=u5Fpk92mv1Y2YuSQCQa2y6lS/lPyS5aeLoKpNZ62XRroIv+0qTyKTanf+3FhlRs6hT
-         Nh2Z2e1T3XxXmuqILJkvKU+2NAieYrz172ixI3ndv5oRmBV/TwVrHqrZpj2Hf6M7vVJx
-         9BRTwRynAIqfSM9/rXJiRBNSzTG+XyUtd9OJFhXvLYSd4zv9C+B58HsEXxhe1XtW9OfP
-         Nx8ykciFX9ODiVjGfwULEW27g+DAhdCU1UaPhcrNaejRjMxgj5iQXjBkkiNzFeicbBFE
-         KdEdoRHV34nyZOJemkMz5QfV9Yd3K4F50wJaS6Rxe2FwXZ9rYpQRk7wdmul5Za0rqlKo
-         gZZQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dg0zeH9D0TDrA09QE0eziMkyYZJAbCLWMxqnY5rIqww=;
+        b=CxG49WKgLnVpNvwBMrEX+L8xZ+4Nf1s3YSNicV12wtLgTpDk/PA54n9OnD2hL5uUb+
+         SF775vZgRkpl4NvXca+OWEmrO3WoPVpLks+DveI7jlmsA/k9oETDJYtdaHVtnizajUlK
+         GRbztnFGZxFw9rk+Omt7B1Q/013JSqNom3fBGFCpGMjw5qSY77b6pGOAruFAMSuApTnp
+         CgjTj6Jt2nmPoy4mhVK2385hanaNfNYu46RDEX9iQchWUgqOBFc2iuj0b6c4HZSDEbhj
+         PdbFrb2d0401a56FU/nxs9sdgKtFoq0POL/r5jsWTXqq77TmMWLyFIKmqyoAXxxny6z0
+         ZqUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=V9gJWnqVldYA2kKKr8OWzaG1HCrU42y5qct2DMgA/WE=;
-        b=QMu1D4fSgGtPMWrqip1uptEL6zRr1sqTTEL4PTksCx2F7BsbrRWeeHPDa9UbBiSpWe
-         zcUgYkJx+o0Hq9uue+yO0Ku+PHO4FZXuyWWlYZEtDBHhUQQ4GpMXv908jTn6Jc0T1weT
-         FxaBfwd/TL6Sw9ntDoPiF6YgmGcOdXxR/PxMgPJlT4o9IeKUE5SDXH5wVW7fWrSqJ9+I
-         9s9loMKTPxqFN4uIAdtgrlIkGJujiY/Yvhzgsnh34p6Uzga8xAxZNroCSPP/FvVx1GeW
-         wmP3sMxVwiKR2/8RNNaynWCtCP9Kc3N3hl7tm7fbu/GJ2gMt/s6tR5gXjTNFR+icjmiX
-         /PwA==
-X-Gm-Message-State: APzg51Cfr3zj84itOsFs6OwX6uNTfpXQdkPaogdrnpxyUxRnLY50mKdO
-        hqYWE1IcIcdq1q6IcrZ/ed4=
-X-Google-Smtp-Source: ANB0VdZjo/EB1NdXf45aVzOtXKxI/cKn2mhRdm6BFd86zpzK9qeUi7PFSnDzXVL/+AF/rVDQ+65kXw==
-X-Received: by 2002:a19:18e3:: with SMTP id 96-v6mr1798283lfy.133.1537460587285;
-        Thu, 20 Sep 2018 09:23:07 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g5-v6sm4630990ljg.54.2018.09.20.09.23.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dg0zeH9D0TDrA09QE0eziMkyYZJAbCLWMxqnY5rIqww=;
+        b=Xv/Ox8+23o0F/AsGCao3r6CsS2nMnSb5Zfnw+jHM0VijhTx4fzHBSr/b3Bf2bNGaSS
+         Odqu6LFQC4IFvvJC+/qv0WyojZ+PYR9rV8NObZbEcCTG1DEVDnfS4M2ZJh1NAgflfdZZ
+         +tUZNzENHIVL59fivXwVAY2I5rM0fP8uakHyNCDb11qdVskT+FctnCZ7FqaT4aIc7bBo
+         8vbr0gFRolXRg7MuHXeDiYLzZDG2rxBYCLrE+ep9tYesIjVQYBbmEbciP4vQUU6eErrX
+         +4zR0K1cIY3iyAJhm3QtvTJtX3KgFVA6Fb++pQr8OdIwyzgPT7vsag8UVRWVKEDfKFri
+         O7Mw==
+X-Gm-Message-State: APzg51BPTLkw4Y24zOuXEOBHRLY0vIZ2w9yOwI4G03zIyi+IjDF8Z8RY
+        +EIZ90JXRlTCisWoYSkxe8vpvp/6
+X-Google-Smtp-Source: ANB0VdYBuLY1yN9bTAWvjOsQzZHxVfd4915CywfYRUwCb0BwwgVdGvgnU8HyBOiQukAreYDvi/+47A==
+X-Received: by 2002:a2e:9243:: with SMTP id v3-v6mr23880572ljg.92.1537461456667;
+        Thu, 20 Sep 2018 09:37:36 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id r4-v6sm4349447ljd.70.2018.09.20.09.37.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Sep 2018 09:23:06 -0700 (PDT)
-Date:   Thu, 20 Sep 2018 18:23:03 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Frederick Eaton <frederik@ofb.net>
-Cc:     git@vger.kernel.org, Frederick Eaton <frederik@ofb.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-column.1: clarify initial description, provide
- examples
-Message-ID: <20180920162302.GB13379@duynguyen.home>
-References: <20180919201231.609-1-frederik@ofb.net>
- <20180919201231.609-3-frederik@ofb.net>
- <xmqqo9ct2ivl.fsf@gitster-ct.c.googlers.com>
+        Thu, 20 Sep 2018 09:37:35 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] completion: support "git fetch --multiple"
+Date:   Thu, 20 Sep 2018 18:37:33 +0200
+Message-Id: <20180920163733.20046-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo9ct2ivl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 19, 2018 at 03:59:58PM -0700, Junio C Hamano wrote:
-> > @@ -23,7 +26,7 @@ OPTIONS
-> >  
-> >  --mode=<mode>::
-> >  	Specify layout mode. See configuration variable column.ui for option
-> > -	syntax.
-> > +	syntax (in git-config(1)).
+When --multiple is given, the remaining arguments are remote names,
+not one remote followed by zero or more refspec. Detect this case,
+disable refspec completion, and pretend no remote is seen in order to
+complete multiple of them.
 
-I think we usually link to other commands with "linkgit", like
-linkgit:git-config[1]
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ contrib/completion/git-completion.bash | 1 +
+ 1 file changed, 1 insertion(+)
 
-Other than that, the rest looks good.
---
-Duy
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d63d2dffd4..a66bec966b 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -943,6 +943,7 @@ __git_complete_remote_or_refspec ()
+ 			*) ;;
+ 			esac
+ 			;;
++		--multiple) no_complete_refspec=1; break ;;
+ 		-*) ;;
+ 		*) remote="$i"; break ;;
+ 		esac
+-- 
+2.19.0.rc0.337.ge906d732e7
+
