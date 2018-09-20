@@ -2,91 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44F1A1F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 18:49:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D58811F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 18:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388069AbeIUAep (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 20:34:45 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:51119 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727171AbeIUAeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 20:34:44 -0400
-Received: by mail-wm1-f48.google.com with SMTP id s12-v6so590343wmc.0
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 11:49:52 -0700 (PDT)
+        id S2388085AbeIUAlm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 20:41:42 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45181 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727171AbeIUAlm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 20:41:42 -0400
+Received: by mail-io1-f65.google.com with SMTP id e12-v6so8978295iok.12
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 11:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LqY6Vemh0n5IL+4TY8R/sDdHe63aMwSsicoP8s1PJVw=;
-        b=GLHxgviqRb5WVbzy/NFTXMsURid7EiG2jK8WpXaYdwM7SGzSO8gayQDzj6u5Pbz0xy
-         F0j1a+84CDQFgUVo/0SxoJzueAe1XyQi8fNh+eChhXZeau7xODnvnlGsSuJeJvgoKA04
-         MNXsGXl4fftAorQAdyc6ptxtRrYfxeqBPyPYYvavl4U33te39ZJbXy5hDkc71gHTFo0/
-         J59UOIiD5JmQ0416yvyhk7gdAbUw4ElUvpmUffMEhWPfh3P1/Irq8lhSRazg6UnY5fJD
-         9/uBeni7744Y6Uh0wyPjReogQIoNUkvPSWHpbUtJ08yC74X8Qlsea5/M7x7qGMlDFRVT
-         pouQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=o9icwjDqRp+EMA1tMzpDr+xFPU469Yaa3Jco4Wi0u4Q=;
+        b=FsYywXdwpbZE3/7IdE3OfyIrqw3sWqEeNITpFpz8+7gG92/3SUqAn7J+reTFa1Y0qH
+         fmGv9jNB5uEQBsYKLDuCAclG+ofjjiu8HmsFr34XxGXBdnQCFX1zksfgwDqvNXerJwQs
+         gB2YUzCeKo1P962U5zsY41g5ZiwbzTx9r71loMy/snc9vgaRQuutkVi1BSkyea3WLLvq
+         ORCkXwb8XSvlFyWic4fZGtvJe98aGtMlJOn4FMq5N97bDyLbngw8ineQJ1/VxmMamgmi
+         0+96gVp0D8dcEd7u6l/LHNabTStTqbW3vNIejiFkZo5jqmfDkhRbf6xASUWSO7mBf47u
+         deIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LqY6Vemh0n5IL+4TY8R/sDdHe63aMwSsicoP8s1PJVw=;
-        b=LezoLO9TgJxxA0P03GvCg+gyRrjQrZJU4VhuF2HYaiQQKLMxVxNPKFLqBLcyVvV0z0
-         +kzwvDZ35fi9etgzfVXR61RAMG7pOk3PXWR1fdjU106OE082vAsevYXyolWCFpKxkkWe
-         xLaIlWSfIZTSwcp7bdVCOtw9rf5q8LlsyGp7aOv0fCc4tjrjdbUjeCB1VTGBiD0tNJTV
-         yw9OdBYjvwfL1hGdA1VmRHoVi9GsNwzygskynAqoNTklxIFNpmcr6GQWs8XpVF+CPUzE
-         AmPiyYD5P5ll923qnoTQ3z+jKn49DEDKiaq0ocB8+VG7dRnM/kFrmMgOOI5FsS9UBlj9
-         +o/Q==
-X-Gm-Message-State: APzg51C0883BfNbW9ow8pGVhqDKsgtmQwHpHJFlRpbS/u4ECj3EO2ql0
-        6MI6s7EF7l1honWfiresCL4=
-X-Google-Smtp-Source: ACcGV61QLw9UtUQrBHpIJhqg6yILMaUMyOzcwVS+9iyqKqiVNGsi0gWplHd9k797CYgQ65STVmSE4g==
-X-Received: by 2002:a1c:a187:: with SMTP id k129-v6mr3956031wme.111.1537469391799;
-        Thu, 20 Sep 2018 11:49:51 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a10-v6sm3201151wrs.24.2018.09.20.11.49.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 11:49:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/9] Makefile: add a hdr-check target
-References: <d24df21a-7ab2-84f6-8b18-83fd9c8c2b30@ramsayjones.plus.com>
-        <xmqqbm8s2qjd.fsf@gitster-ct.c.googlers.com>
-        <b7b9b26d-c175-05b9-7144-101bcaf592d4@ramsayjones.plus.com>
-Date:   Thu, 20 Sep 2018 11:49:50 -0700
-In-Reply-To: <b7b9b26d-c175-05b9-7144-101bcaf592d4@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Thu, 20 Sep 2018 17:03:05 +0100")
-Message-ID: <xmqqpnx8ypf5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=o9icwjDqRp+EMA1tMzpDr+xFPU469Yaa3Jco4Wi0u4Q=;
+        b=pP5OeAdeEPD/IUX5soP6itZ2MPrgZElhkF2f/DRIpnEaRlAn+A3gA38UAQiyVesdGF
+         gFO5RkMVZhIDLh+c698Bfunm0h/k9xbF2+5tLprymuLJjtcE9l7VK/5XQw6Cmz+WTfqU
+         8YS2HixN4jro6vtNnw6f7R7z2EyBALFSLxwX5ff5JzOW5rShLhL6Ge2dvBtGcfBmKZy/
+         i+xKNGjAfQeNkSgVEaZ+3Qcw2hmhl7xbteQcyjdjvoGzM+bchg1IFYo32yzZBz+YR5Kk
+         EKvctMQZ/mwO7MFqoijgnJIGvnkMCXQV0joR3IFVzNoEomoCUazgRCCRZ7Wcr6qU+KyS
+         TA1A==
+X-Gm-Message-State: APzg51CLXr1fWXehNpMN7xUWZQ4cBZEGR6ibCL+lYkHEF9AnnLEIHNFT
+        GhqA7AZFhoemV/vILWaBFLlrAQ==
+X-Google-Smtp-Source: ANB0Vda5pY8ZJyMqOXeOJupY/U5vQ46RW3I3la+s9KfgnUhHH+Vf75a3eGP6hSwp7ASi1HTyyX2qQQ==
+X-Received: by 2002:a24:f846:: with SMTP id a67-v6mr771693ith.13.1537469807969;
+        Thu, 20 Sep 2018 11:56:47 -0700 (PDT)
+Received: from localhost ([173.225.52.219])
+        by smtp.gmail.com with ESMTPSA id z2-v6sm7780657iom.25.2018.09.20.11.56.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Sep 2018 11:56:46 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Thu, 20 Sep 2018 14:56:44 -0400
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] Filter alternate references
+Message-ID: <20180920185644.GA72694@syl>
+References: <cover.1537466087.git.me@ttaylorr.com>
+ <CAGZ79kYv-n_x_Z3K=zsiTAQ9RCFMVE=6ZYCWRQMgioGRPnhVOQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYv-n_x_Z3K=zsiTAQ9RCFMVE=6ZYCWRQMgioGRPnhVOQ@mail.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Hi Stefan,
 
-> Yes, this was one of my first concerns (I even asked Elijah what
-> compiler options he used), but I was getting useful results without
-> passing CFLAGS, so I just ignored that issue ... :-D
-> ...
-> Indeed. This bothered me as well. The 'compat' directory does not
-> follow the 'usual pattern' of the main headers and is particularly
-> sensitive to the lack of various -DMACROs. I had initially included
-> _all_ sub-directories in the 'exclude list' (to follow what Elijah
-> had done), but then removed one at a time ...
+On Thu, Sep 20, 2018 at 11:35:23AM -0700, Stefan Beller wrote:
+> > To make the reference advertisement manageable even with a large number
+> > of references, let's allow the fork to select which ones it thinks might
+> > be "interesting", and only advertise those. This makes the advertisement
+> > much smaller, and lets us take advantage of the ".have" references, even
+> > when the upstream contains more references than we're advertising.
+> >
+> > This series implements the above functionality by means of
+> > "core.alternateRefsCommand", and "core.alternateRefsPrefixes", either a
+> > command to run in place of "git for-each-ref", or arguments to be
+> > appended to "git for-each-ref".
+> >
+> > The order of precedence when listing references from an alternate is as
+> > follows:
+> >
+> >   1. If the fork configures "core.alternateRefsCommand", run that.
+> >
+> >   2. If the fork configures "core.alternateRefsPrefixes", run 'git
+> >      for-each-ref', limiting results to references that have any of the
+> >      given values as a prefix.
+> >
+> >   3. Otherwise, run 'git for-each-ref' in the alternate.
+> >
+> > In a previous version of this series, I taught the configuration
+> > property to the alternate, as in "these are the references that _I_
+> > think _you_ will find interesting," rather than the other way around. I
+> > ultimately decided on what is attached here so that the fork does not
+> > have to trust the upstream to run arbitrary shell commands.
 >
-> I am open to suggestions for improvements. ;-)
+> Would it make sense to estimate the value of each .have before
+> advertising them and then advertise only the <n> most valuable
+> .haves ?
+> (e.g. if a .have is only one small commit ahead of origin/master,
+> it may not bring a lot of value as the potential savings are small,
+> but if that .have contains history between master..TIP that has lots
+> of big blobs or objects in general, this may be valuable to know)
 
-Perhaps it is sufficient to add a mention of these two issues in log
-message and an in-code comment nearby the .hco rule in Makefile, so
-that people can come back later to discover what design choice we
-made (i.e. "without worrying about these two issues, we are getting
-useful enough results, so we decided it is OK at least for now not
-to worry about them").
+I think that this sort of filtering should be theoretically possible
+by configuring "core.alternateRefsCommand", perhaps to execute a script
+like:
 
-Thanks.
+  cd "$1" &&
+  git for-each-ref --format="%(objectname) %(refname)" |
+  while read objectname refname; do
+    total_size="$(git rev-list --objects master...$objectname \
+      | awk '{ print $1 }' \
+      | git cat-file --batch-check='%(objectsize)' \
+      | awk '{ sum+=$1 } END { print $sum }')"
+
+    if [ "$total_size" -gt "$minimum_size" ]; then
+      echo "$objectname $refname"
+    fi
+  done
+
+But that's quite inefficient to compute, since you're walking the same
+parts of the graph over and over again.
+
+Perhaps we could teach Git to do something better? I suppose that just
+"core.alternateRefPrefixes" could do this by default (or with another
+knob) to further optimize the simpler case. But I think that we'd be
+equally OK without it, since push over V2 obviates the need for this
+sort of optimization (as you noted in the unquoted part of this
+response).
+
+My inclination is to avoid teaching this to Git, and let callers
+script it into their "core.alternateRefsCommand" if they really desire
+it.
+
+Does that seem OK?
+
+
+Thanks,
+Taylor
