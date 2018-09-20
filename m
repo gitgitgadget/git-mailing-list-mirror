@@ -2,133 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FCCB1F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 05:53:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5124E1F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 11:12:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731240AbeITLfY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 07:35:24 -0400
-Received: from mail-pg1-f169.google.com ([209.85.215.169]:44360 "EHLO
-        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726295AbeITLfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 07:35:24 -0400
-Received: by mail-pg1-f169.google.com with SMTP id r1-v6so3868049pgp.11
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 22:53:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BJayoAaw6/qALc6ScvAEBz+PTBiBYrPmRUqjw2jJod4=;
-        b=Ko48OD8h2t1Kqx9B/CummlXiCxlFENbH+SOhVAzCZ/2Hqdsq7BlDF6CNfnoBNNFVnb
-         0sI4rXIRS8eFyd3l1iMioP6J+zQZhZIiENR5Mer3ZpN8TiRLhdGGRCG4Cui/zunJ8YMi
-         A9TL0187ik5vs+57/NqQOAQZK3xYqU15TuXJZMQ74H/8EL/8mpbBr7MVMxma1L+GsTwn
-         ta9NLxvbRScdUdySqwRGcKAREk2crBVRTcADBfDhEUxyxUXX7Z4C0QgFG3s9o0TpZY1m
-         d9sq5HfFgCmfqP+/mXuN1VJZ70hJuomkbGsMWJmSW5QwBWS7PnxhkoIHldBbHo78V/LB
-         IEig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BJayoAaw6/qALc6ScvAEBz+PTBiBYrPmRUqjw2jJod4=;
-        b=aYnTCJArAmIJlKg19nOQRvPQNNpwiwqFkzEiEgLSebFYbVEp5MidX3lsGbjVFkIsAG
-         MC6+Y6tfl46QA8fOY3psZJwQ9JOtQFwcfUb0M3I7hPE63ZHiWGycARjFFxk7jiTBZ4le
-         PuD7/AIpxxOUlPz0iv1iip+46fO06TEhEcNCYKdAnCoqP1XlKrSUxLKcxTXlXP42h97p
-         7Z4HSWN8214ADWwvJYayujpFtEmjv+W4zOaU1kh6p1Wh1si//QmVtekilXM3RVXwpkLo
-         AfNFxCKgfLwzZJTvazr3jx70h38TlPTfnG51DjC0hQvKNldDlt09ZaLbS/Pk3pbkpqcE
-         lL+Q==
-X-Gm-Message-State: APzg51Ca7ZGba3aIBz7ylDJN/1SnIEZxiHEo3Pvb9ejPT9Jt4T8zsj07
-        M7ZKsiR2AVcvBubuoALvc/Iel/vahIasvgBs6TM=
-X-Google-Smtp-Source: ANB0VdaOTqenS2UpQI/1p+57Q3kVBLvGV+Uw4o71FeqJAranZ9noPn67ISqc4HDduVhNE9rjvnvmNftI2QqBnohhEf4=
-X-Received: by 2002:a63:b95e:: with SMTP id v30-v6mr34974658pgo.221.1537422824085;
- Wed, 19 Sep 2018 22:53:44 -0700 (PDT)
+        id S1732014AbeITQzm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 12:55:42 -0400
+Received: from forward24j.cmail.yandex.net ([5.255.227.60]:43384 "EHLO
+        forward24j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726954AbeITQzl (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 20 Sep 2018 12:55:41 -0400
+X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Sep 2018 12:55:38 EDT
+Received: from mxback2o.mail.yandex.net (mxback2o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::1c])
+        by forward24j.cmail.yandex.net (Yandex) with ESMTP id 4EFF0277B9
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 14:05:25 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback2o.mail.yandex.net (nwsmtp/Yandex) with ESMTP id UWlb42bSzh-5OTe28Cu;
+        Thu, 20 Sep 2018 14:05:24 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1537441524;
+        bh=nWsLMSMjoANV+BP5d7ulMK53GPgJa8SqhUZ7mZvEv64=;
+        h=From:To:Subject:Date:Message-Id;
+        b=CX9WVwYt2Gzrs8DaKvU3tm3VdXfFbWkcSrUjFZ/k5H1MREk0VbTX/4Gkmhhjrh1gW
+         yKQied0UlfzJtP0XQAb8ZFTD14okaTJsbAjfpgA1llG/ZqKjVVsCLxq/Qc3vzix3wl
+         CGWuOGn0rLGH4/9MJfswWQzOHdphURNPU66joXi8=
+Authentication-Results: mxback2o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by iva5-cb9df376e345.qloud-c.yandex.net with HTTP;
+        Thu, 20 Sep 2018 14:05:14 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.com
+To:     git <git@vger.kernel.org>
+Subject: Work is not replayed on top while: git pull -v --rebase
 MIME-Version: 1.0
-References: <d24df21a-7ab2-84f6-8b18-83fd9c8c2b30@ramsayjones.plus.com>
- <CAN0heSpNT25PrNwdbQKZo=Q8kpSfwnzuOz34xKHtfF+Fq9ZXmg@mail.gmail.com> <89478060-85c1-416a-0ad9-54d3f8f1111b@ramsayjones.plus.com>
-In-Reply-To: <89478060-85c1-416a-0ad9-54d3f8f1111b@ramsayjones.plus.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 20 Sep 2018 07:53:32 +0200
-Message-ID: <CAN0heSq8U7ue-SB-1iP1ZdW2hgrR0fwuKh_q68KvJ4K1dphpCw@mail.gmail.com>
-Subject: Re: [PATCH 1/9] Makefile: add a hdr-check target
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Thu, 20 Sep 2018 14:05:14 +0300
+Message-Id: <6160201537441514@iva5-cb9df376e345.qloud-c.yandex.net>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 19 Sep 2018 at 22:15, Ramsay Jones <ramsay@ramsayjones.plus.com> wr=
-ote:
-> On 19/09/18 18:49, Martin =C3=85gren wrote:
-> > On Wed, 19 Sep 2018 at 02:07, Ramsay Jones <ramsay@ramsayjones.plus.com=
-> wrote:
-> >> +GEN_HDRS :=3D command-list.h unicode-width.h
-> >
-> > Most of the things happening around here are obvious steps towards the
-> > end-goal and seem to logically belong here, together. This one though,
-> > "generated headers"(?) seems like it is more general in nature, so coul=
-d
-> > perhaps live somewhere else.
->
-> Yes, generated headers, but no, not more general. ;-)
+Hi.
 
-> The 'command-list.h' is generated as part of the build
-> (and so may or may not be part of the LIB_H macro), whereas
-> the unicode-width.h header is only re-generated when someone
-> runs the 'contrib/update-unicode/update_unicode.sh' script
-> (presumably when a new standard version is announced) and
-> commits the result.
+TL;DR; Some local commits are lost while `git pull -v --rebase`
 
-Ah, I wasn't aware of how unicode-width.h works, thanks.
+[alias]
+    tree        = log --graph --decorate --pretty=oneline --abbrev-commit
+    changes     = log --graph --decorate --pretty=oneline --abbrev-commit --cherry-pick --boundary --left-right
 
-> Both headers fail the 'hdr-check', although both generator
-> scripts could be 'fixed' so that they passed. I just didn't
-> think it was worth the effort - neither header was likely
-> to be #included anywhere else.
+<HERE I do some work, commit it and push>
 
-With the above background, I'd tend to agree.
+<after some time>
 
-> I guess I could eliminate
-> that macro, absorbing it into EXCEPT_HDRS, if that would
-> lead to less confusion ...
+$ git fetch origin 
+remote: Counting objects: 806, done.
+remote: Compressing objects: 100% (197/197), done.
+remote: Total 806 (delta 587), reused 806 (delta 587)
+Receiving objects: 100% (806/806), 85.96 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (587/587), completed with 19 local objects.
+From https://tracker.feel-safe.net/gitdev/main
+ + a562406d...f9015227 296_tos    -> origin/296_tos  (forced update)
 
-I'm just a single data point, so don't trust my experience too much.
+Here we see that someone did 'forced update'
 
-> > Actually, we have a variable `GENERATED_H` which seems to try to do mor=
-e
-> > or less the same thing. It lists just one file, though, command-list.h.
->
-> Hmm, GENERATED_H seems only to be used by the i18n part of the
-> makefile and, as a result of its appearance in LIB_H, sometimes
-> results in command-list.h appearing twice in LOCALIZED_C.
+$ git tree -n 5
+* a562406d (HEAD -> 296_tos, back) Bulk changes         ### <<< PUT ATTENTION HERE
+* 177e2515 Bulk changes
+* 934bbb31 Fix Profile Page
+* 811d8812 Fix button's width on Authorization form
+* 97ca9419 Fix Tariff Options page
 
-Just thinking out loud, I suppose you could use $(GENERATED_H) instead
-of hard-coding command-list.h in your patch. But with the background you
-explained above, I think there's a good counter-argument to be made:
+Here git know that a562406d already pushed to remote
 
-When we gain new auto-generated headers, we wouldn't actually mind `make
-hdr-check` failing. We'd get the opportunity to decide whether making
-the new header pass the check is worth it, or whether the correct
-solution is to blacklist the auto-generated header. That's probably
-better than just blacklisting the new header by default so that we don't
-even notice that it has a potential problem.
+Now I want to update my branch
 
-So I think your approach makes sense. I stumbled on the similarity of
-the name to something we already have. Maybe something like
+$ git pull -v --rebase
+From https://tracker.feel-safe.net/gitdev/main
+ = [up to date]        296_tos                    -> origin/296_tos
+....
+ = [up to date]        text-page-style            -> origin/text-page-style
+Changes from f66c29158a57d687aaf48fb89f9b897563c0142e to f9015227da20ad1f858174b4b4c188338eb26640:
+ cpanfile                                |   4 +
+....
+ templates/v2/tos/tos.html.ep            |   4 +-
+ 31 files changed, 1694 insertions(+), 106 deletions(-)
+ create mode 100644 lib/DbMapper.pm
+....
+ create mode 100644 t/DbMapper/update_data.t
+First, rewinding head to replay your work on top of it...
 
-  # Ignore various generated files, rather than updating the
-  # generating scripts for little or no benefit.
-  GEN_HDRS :=3D ...
+$ git tree -n 5
+* f9015227 (HEAD -> 296_tos, origin/296_tos) Bulk changes
+* 95064421 Fix Profile Page
+* c03c930a Fix button's width on Authorization form
+* e6df0662 Fix Tariff Options page
+* 22b5c754 Fix header on order page
 
-or a remark in the commit message, or rolling this into EXCEPT_HDRS, but
-I'd be perfectly fine just leaving this as it is. Please trust your own
-judgment more than mine.
+$ diff <(git show f901522) <(git show 177e2515)
+1c1
+< commit f9015227da20ad1f858174b4b4c188338eb26640
+---
+> commit 177e2515eb2bc1c9733b4374f2da373aa969a601
 
-Thanks
-Martin
+$ git changes a562406d...f9015227
+>   50e9343a Merge branch 'orm' into dash_v2
+|\  
+| > 4be5e3c6 Test data fetching from DataSet
+| > 11d60181 More tests: Manual condition OP for join expression
+....
+| < a562406d (back) Bulk changes
+o f66c2915 (origin/dash_v2, dash_v2) Merge branch 'move_example_elements' into dash_v2
+
+We can see that a562406d after rebasing **is lost**
+
+
+Why a562406d is not applied on top of remote branch?
+
+PS. for `git push --force` there is alternative: --force-with-lease
+Is there something similar to --force-with-lease but for `git pull -v --rebase`?
