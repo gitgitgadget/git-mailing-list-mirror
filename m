@@ -6,57 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C008A1F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 14:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 643EA1F454
+	for <e@80x24.org>; Thu, 20 Sep 2018 14:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733072AbeITUKe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 16:10:34 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44992 "EHLO
+        id S1733073AbeITUWS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 16:22:18 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45129 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730955AbeITUKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 16:10:34 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v16-v6so9607310wro.11
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 07:26:49 -0700 (PDT)
+        with ESMTP id S1726990AbeITUWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 16:22:17 -0400
+Received: by mail-wr1-f68.google.com with SMTP id 20-v6so9645530wrb.12
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 07:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=WS/b1tGluMJToqiqIgVIwk6nsK0CJxdenzBvvqZ4MyM=;
-        b=mkDckt1T3Fz3/XUtWcRJLoSnqA0tusZxj/AYqdeXfp8aKTiKAmspuUSpVqmyb3ppjv
-         Y+TKaktD05SbQhaMBN0J3+5sO5t0aeZPLDDRqc/wqrImuPYL58egklKEmkcJQHssnQCs
-         lp1lal3U7ruvPMQnFf1s+CKMP++FXh3kNEUMlGU51y/z94JLWgKHkmXZtz40Mx3xZ4fD
-         nSs2X19tmAtHMYLBOyrHU2lid7cF/MlPgrQEC6OM9bXpbN1GnQMkN13yAlPatnviaa4u
-         Mceu2bLWsfbGR36/O0grMa3vZepaMQASlrD04UV2zU0UNeUOuCRmqkGd03pdr+LNs059
-         3ogA==
+        bh=Mgt5yCpm3E7agmOdq5JoRueN5FSl1L6/mYIH9CEOJt4=;
+        b=mGmPU/2gHWXRSQeItVuWv5/9Djh4fi3kGNwYmYjHjV3RkjwwvvMCoRltIfef6LW93u
+         bI7AXp6rE5goABBFR0fjVZzl2WznDPO6Sp+CLxaV8OWgH6cTZ9Rl49TqitL/JqI93k7j
+         K6xNU49wK5f0Lr+Z50OBKIOt8jyLlKXkrosadI5btLjhxVOcoggiMmA4613zsfZlgARF
+         8ZvPKsKyWxnXbj0xJR0ARTC7e0AchC0vyKrEWyds7O9o/70Wf4X0/nQ0KGGakUEl2o+6
+         4VS44x3RB5bycOP5FSudCUrdTvZnYL4eaDZ6eDFuhtA1P1G/08PCcEcXm+FQ8leq6jQm
+         3CxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=WS/b1tGluMJToqiqIgVIwk6nsK0CJxdenzBvvqZ4MyM=;
-        b=fIlto/tXp15oD7FTNy91g7YGtfcNRZ4eA82nUoGHlHtckxtfF88RXJhxvXevOr/pIe
-         oZl4DLPI8MDppu6YSXnjIwS4lQnJ5Bj0LS9wMykX6Zj2QcF745OcZI31wFfQxiYTB3u1
-         XChDlj/duBtgJM7BlObMPy/62eHE1w1hZ5/m3ammvJtPC1wLkUnFb8FGH53diVLtcvoC
-         9sujqmJrtLL00ytg1v+JwKfBsckfHvQn063bYNJPr8JWK2xmflWSC76bYoS/IXjdSr9e
-         LuX++IA9kXYvjopkPi59czn751MFkGCwghl42/oyKcEhakosiNWhObCoQPAgTKFRsQiu
-         Xdnw==
-X-Gm-Message-State: APzg51BgR8JlIggcnsDPYQc+mCHU+68qKFMltxOIWsT4MPDPxo04YWOD
-        M64Xrv/yPZQvtwKsQHGL81+baFar
-X-Google-Smtp-Source: ANB0VdYeb6GG5vrqtiiJon/uGrfqquoCy8RcO2jULq0q+smn36mHi5NiIggl13DX8QkxmlTukoiR8A==
-X-Received: by 2002:adf:ab0b:: with SMTP id q11-v6mr34654349wrc.239.1537453607936;
-        Thu, 20 Sep 2018 07:26:47 -0700 (PDT)
+        bh=Mgt5yCpm3E7agmOdq5JoRueN5FSl1L6/mYIH9CEOJt4=;
+        b=OcoD2hY6JJ55JrXggD19mARibqrcFVxSXJ8SrZ6KBlItD7GLtivvTgQkjEtcCw1RS7
+         ZP+xmw67SYJgz8DnskPZ6sXmYtrrs2rR3gpZ/Ddpb65wQWptGmVD1MnX66yO7a1hr8B2
+         X1QVPBmgr4MYhDiyJHiqC8TDK/qHtrbYyZopB+mVEkcQwvIGDa5/Ii+GmW7Jf5ttS6yA
+         c6OIbovegVOrllTbTgK1N0CFaiCDc56UH8YMAH2E+Otys3zKQ1o28bxDEddLMNnAeZMu
+         TeHwc4xW8e9iF38rSP2HANGULf9ja0YqtXyeIt0ZuoUzVhNjmGy88KtmW/eaTNfPOWhk
+         hOfw==
+X-Gm-Message-State: APzg51C0WI2jbZZlPrntD8v3cDHLXmPzYk4PMsuzcGdsFDUKjoMjb1HB
+        WkbT46iSyLYeB3AFcPj5igQ2gqRk
+X-Google-Smtp-Source: ANB0VdYkKC1u2UNt3TSBRK9xN3sa8qhLPvpjbnmnTYLh4AvW0c6wU0RBO5fJAsPfhGawMyCcoMcoTw==
+X-Received: by 2002:adf:d245:: with SMTP id o5-v6mr34385182wri.91.1537454308514;
+        Thu, 20 Sep 2018 07:38:28 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c19-v6sm27388593wre.86.2018.09.20.07.26.46
+        by smtp.gmail.com with ESMTPSA id x24-v6sm38675318wrd.13.2018.09.20.07.38.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 07:26:47 -0700 (PDT)
+        Thu, 20 Sep 2018 07:38:27 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 1/9] Makefile: add a hdr-check target
-References: <d24df21a-7ab2-84f6-8b18-83fd9c8c2b30@ramsayjones.plus.com>
-Date:   Thu, 20 Sep 2018 07:26:46 -0700
-In-Reply-To: <d24df21a-7ab2-84f6-8b18-83fd9c8c2b30@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Wed, 19 Sep 2018 01:07:08 +0100")
-Message-ID: <xmqqbm8s2qjd.fsf@gitster-ct.c.googlers.com>
+To:     KES <kes-kes@yandex.ru>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Work is not replayed on top while: git pull -v --rebase
+References: <6160201537441514@iva5-cb9df376e345.qloud-c.yandex.net>
+Date:   Thu, 20 Sep 2018 07:38:27 -0700
+In-Reply-To: <6160201537441514@iva5-cb9df376e345.qloud-c.yandex.net> (KES's
+        message of "Thu, 20 Sep 2018 14:05:14 +0300")
+Message-ID: <xmqq36u42pzw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,30 +65,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+KES <kes-kes@yandex.ru> writes:
 
-> Commit ef3ca95475 ("Add missing includes and forward declarations",
-> 2018-08-15) resulted from the author employing a manual method to
-> create a C file consisting of a pair of pre-processor #include
-> lines (for 'git-compat-util.h' and a given toplevel header), and
-> fixing any resulting compiler errors or warnings.
+> PS. for `git push --force` there is alternative: --force-with-lease
+> Is there something similar to --force-with-lease but for `git pull -v --rebase`?
 
-It makes sense to have tool do what we do not have to do manually.
+Curious.
 
-One thing that makes me wonder with the patch is that the new check
-command does not seem to need to see what is on CFLAGS and friends.
-Having seen that "make DEVELOPER=1" adds more -W... on the command
-line of the compiler and makes a build fail on a source that
-otherwise would build, I am wondering if there are some (subset of)
-options that the header-check command line wants to give to the
-compiler.
+For "push", you are competing with the other pushers who want to
+update the repository over there, and there is need for the
+force-with-lease=<it must be this verison> safety, but what is the
+reason why you need to take a lease on your local side while doing
+a "pull"?
 
-Of course, there are also conditionally compiled sections of code,
-which are affected by the choice of -DMACRO=VALUE; how does this new
-feature handle that?
-
-> Add a Makefile target to automate this process. This implementation
-> relies on the '-include' and '-xc' arguments to the 'gcc' and 'clang'
-> compilers, which allows us to effectively create the required C
-> compilation unit on-the-fly. This limits the portability of this
-> solution to those systems which have such a compiler.
