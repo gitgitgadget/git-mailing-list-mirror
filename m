@@ -2,134 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F9731F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 21:40:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 409821F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 22:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388134AbeIUD0F (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 23:26:05 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33723 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728233AbeIUD0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 23:26:05 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v90-v6so10868385wrc.0
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 14:40:31 -0700 (PDT)
+        id S1728787AbeIUD42 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 23:56:28 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:43513 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727771AbeIUD41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 23:56:27 -0400
+Received: by mail-qk1-f202.google.com with SMTP id u22-v6so8699834qkk.10
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 15:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=dPdrX14Mo35j4pUuKZht77AK94IucY2Np6l3E4CGTkY=;
-        b=oQB8Nw9O92ohOUYioJw1AmEOUWhPtHhuhKwgXyMFSwTSGPsf4GV7ivJB9pDdBFkO6n
-         rFtHW5hNn614qGXmnkR615/hyXdNmqr2mrCBTtJBVtsWJTispW/M/292aqGO4LTXhtt3
-         +NsqyGtwqGepjC5vvysL1CpnmkDwW3vhCFKWdwcpV+dDYNTYXDGFzZIlyUKTks/4z2AV
-         Z1hYgf8nRnJeJKJd/RVDtwzS7b2xulmPqzK2vlslDMkURkNIjoxoeSy5DVNrVc0C6qvW
-         uV8ycUTBDNX1GgZAbqDcnKqZnZtSU8gOBVNF4r+lrpMEjxI93unEUD/l/95YYs0XIAy6
-         uPXA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=AriTFsMqL6P2w4TfqDuBumT7dtur91WHqrGwlTly+wc=;
+        b=sNy3VjcMmcqC2vJ2fQUJ+0uQUevUCV1lEcXpVyEqp4f4nVrZjqUFaay9+tBwA69Vg0
+         Xl/y2EqTGVNmnrvMZQxcsFmQ42C7CRhImuHBCONY+/qM3I+woOhotuM6ZCgkN/Fm5R53
+         5b1NjWW21CqoQFwBlVUrWiOxbSNNzXAG1gjVhp/Np57hxqDgK31YxzpCi+xc2/xCd+WV
+         qIx2fh5Maf/Suz40z7vMwWmkD1H7Xul3GqS0L3aFjFIDZmtT/OvS4wJGAa/OJVJ2wuHf
+         iccO/xBDSXu+QegsaC69u1miLeJF/zIj6IH1XbYUXK5Wz1Rucgdi/g7czOf28IAk5fIR
+         HuBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=dPdrX14Mo35j4pUuKZht77AK94IucY2Np6l3E4CGTkY=;
-        b=WKRlHBCnghIHB/Usjoy3NvkPqB7jVpEAaB9cFxDqw9ur2Zzofy9PFM1khTI6QO2ZVW
-         VE5ZPNzqiX2lutpZenc3dD9Ogak7XJc2QClzOp1ZXhOTjaXH+GMwwbP3GvxGEfgt2Zk1
-         EOzRLOLI37KW8dOXXmAAVq5XYJ9fj3MGeDkYXfpRxDrvmZisSjjZrPjrm5rpzIXc3vtD
-         VDErvwp6W/s6c1aBpvARVNubS61BqiKPOiCrSY0vEX36DmVBUzYRbP7qd+wWSRcm2Qjh
-         CXBI5eW6q+ExSnJSsofv15aK0twEiVpqa0PlRiS3snoQJf1AgospjRY3PjZFWX7c91Zu
-         JKzQ==
-X-Gm-Message-State: APzg51CWilyTwXGjHQdg48Y/yEmTTu3bZ7pd9CAVrinWkzShDI4OeZUg
-        AV7JqsS90lrfN6wQUE6kC8k=
-X-Google-Smtp-Source: ANB0Vda6KIlgVxZXhsXRDpyQBlpdQR+AYlQpc+xWT+LeS4462efJONdAJZIqfgc0gDJamGRs6irLQw==
-X-Received: by 2002:adf:b202:: with SMTP id u2-v6mr32796379wra.19.1537479630521;
-        Thu, 20 Sep 2018 14:40:30 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e133-v6sm4659518wma.33.2018.09.20.14.40.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 14:40:29 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, smaudet@sebastianaudet.com
-Subject: Re: [PATCH] add: do not accept pathspec magic 'attr'
-References: <20180917015259.GA26339@sebastianaudet.com>
-        <20180918173159.30300-1-pclouds@gmail.com>
-        <xmqqk1nh47no.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 20 Sep 2018 14:40:29 -0700
-In-Reply-To: <xmqqk1nh47no.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 19 Sep 2018 12:19:23 -0700")
-Message-ID: <xmqq36u3zw36.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=AriTFsMqL6P2w4TfqDuBumT7dtur91WHqrGwlTly+wc=;
+        b=juxp9NGkKg1/gLsPFqIrr9afKlx+A+69F1NMq4hswUgInDSl+oiSrYYgYqEPsQCxMW
+         sQleXlzdlzZju6iNgTPWhelvjOYoylPwyTssharu8StxHO5iJ4hM+MOLclf0tvdrQrxA
+         ibVQzGRTt9oVVupqL4Q2Sm5/zf3Q/K6rm7F2um0fdnhhievuaxr7m3BrOElDR8QictLQ
+         ep4iA215vmW5plV2KeECDXuaIemZe5qOYj5EXvHc3BcSQ0JkLkvRffMeo+W6HyvSOQyI
+         8wppx4QW+qqHcgpgbQwD8pc/FClM7Mk1IyHy25mHTmqGh5DGLxtqUxcBO0MBk8qMA2EF
+         70OA==
+X-Gm-Message-State: APzg51BC0Znqp3BXnunzjwV+kZjOhT3SPUHrX2lBtMzSaRyCMC9VrNiW
+        0rufVV2y4QzNW7cF/iaKgEgNpufcQ32qZxSZSudo
+X-Google-Smtp-Source: ANB0Vda4ux1ZuS6EhdUZGV2A89ftgj1eHi1OWhxc3/cDO9VimPb8DToex2m3JVGDsF5F+H9WuFu+MVWvElUe+gtMuaFP
+X-Received: by 2002:a37:4a49:: with SMTP id x70-v6mr12650270qka.60.1537481447953;
+ Thu, 20 Sep 2018 15:10:47 -0700 (PDT)
+Date:   Thu, 20 Sep 2018 15:10:38 -0700
+In-Reply-To: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20180920221038.74193-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
+Subject: Re: [PATCH] fetch: in partial clone, check presence of targets
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, matvore@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > +	if (repository_format_partial_clone) {
+> > +		/*
+> > +		 * For the purposes of the connectivity check,
+> > +		 * check_connected() considers all objects promised by
+> > +		 * promisor objects as existing, which means that the
+> > +		 * connectivity check would pass even if a target object
+> > +		 * in rm is merely promised and not present. When
+> > +		 * fetching objects, we need all of them to be present
+> > +		 * (in addition to having correct connectivity), so
+> > +		 * check them directly.
+> > +		 */
+> > +		struct ref *r;
+> > +		for (r = rm; r; r = r->next) {
+> > +			if (!has_object_file(&r->old_oid))
+> > +				return -1;
+> > +		}
+> 
+> Because check_connected() lies in the presense of "promisor", we can
+> defeat it this way, which makes sense.  
+> 
+> I wonder if it makes sense to do this check unconditionally, even
+> when we are in a fully functioning clone.  The check is quite cheap
+> and can reject a ref_map that has an object we do not know about,
+> without check_connected() having to ask the rev-list.
 
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
->
->> Commit b0db704652 (pathspec: allow querying for attributes -
->> 2017-03-13) adds new pathspec magic 'attr' but only with
->> match_pathspec(). "git add" has some pathspec related code that still
->> does not know about 'attr' and will bail out:
->>
->>     $ git add ':(attr:foo)'
->>     fatal: BUG:dir.c:1584: unsupported magic 40
->>
->> A better solution would be making this code support 'attr'. But I
->> don't know how much work is needed (I'm not familiar with this new
->> magic). For now, let's simply reject this magic with a friendlier
->> message:
->>
->>     $ git add ':(attr:foo)'
->>     fatal: :(attr:foo): pathspec magic not supported by this command: 'attr'
->>
->> Reported-by: smaudet@sebastianaudet.com
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->>  Since Brandon is currently unreachable, let's do this for now.
->
-> Thanks.  This certainly make it better than the status quo.
+It makes sense to me from a runtime point of view - the usual case, for
+me, is when we're missing at least one object that we're fetching, and
+doing the cheap check even allows us to skip the expensive check.
 
-And of course, there is an interesting glitch found after I almost
-finish day's integration cycle X-<.
+The hard part for me lies in how to communicate to future readers of the
+code that they cannot remove this section to simplify the code. We would
+need a more complicated comment, something like this:
 
--- >8 --
-Subject: [PATCH] fixup! add: do not accept pathspec magic 'attr'
-
-[Add the following when squashing]
-
-Update t6135 so that the expected error message is from the
-"graceful" rejection codepath, not "oops, we were supposed to reject
-the request to trigger this magic" codepath.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t6135-pathspec-with-attrs.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
-index 77b8cef661..e436a73962 100755
---- a/t/t6135-pathspec-with-attrs.sh
-+++ b/t/t6135-pathspec-with-attrs.sh
-@@ -164,11 +164,11 @@ test_expect_success 'fail if attr magic is used places not implemented' '
- 	# when you attempt to use attr magic in commands that do not implement
- 	# attr magic. This test does not advocate git-add to stay that way,
- 	# though, but git-add is convenient as it has its own internal pathspec
- 	# parsing.
- 	test_must_fail git add ":(attr:labelB)" 2>actual &&
--	test_i18ngrep "unsupported magic" actual
-+	test_i18ngrep "magic not supported" actual
- '
- 
- test_expect_success 'abort on giving invalid label on the command line' '
- 	test_must_fail git ls-files . ":(attr:☺)"
- '
--- 
-2.19.0-216-g2d3b1c576c
-
+ /*
+  * Check if all wanted objects are present.
+  *
+  * If the local repository is a partial clone, check_connected() is not
+  * sufficient - it would pass even if a wanted object is merely
+  * promised and not present. This is because, for the purposes of the
+  * connectivity check, check_connected() considers all objects promised
+  * by promisor objects as existing.
+  *
+  * If the local repository is not a partial clone, check_connected() is
+  * sufficient, but this loop allows us to avoid the expensive
+  * check_connected() in the usual case that at least one wanted object
+  * is missing.
+  */
