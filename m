@@ -2,185 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A31AA1F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 15:35:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FFE11F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 15:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732774AbeITVTV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 17:19:21 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:48607 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731225AbeITVTV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 17:19:21 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id 30z5gKclLjlDz30z7g3mO8; Thu, 20 Sep 2018 16:35:17 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=Ej2LrWfMBC6Eeug7ng8A:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 9/9] commit-reach.h: add missing declarations (hdr-check)
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <089b2111-b7e9-6795-b04a-ed259f78796a@ramsayjones.plus.com>
- <eb77d563-8b3e-9b00-59b8-b050e6378c69@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <2809251f-6eba-b0ac-68fe-b972809ccff7@ramsayjones.plus.com>
-Date:   Thu, 20 Sep 2018 16:35:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <eb77d563-8b3e-9b00-59b8-b050e6378c69@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfE3F7HlzvK36In7Q9+KDW8WZOnF94IgNwDt4t9Bhf0+XgbED87aPnLdB1Xgy8+Fr4MhIS2OGEaRl3mksqpI4tRTWHnQvi/CsO4pLDoY/zmsu9V4hz+24
- EilAEcq6GGC0l9wQqQIiVV6eyRj22IIfcmTq0cISeUCF0n62YGVYOIQHMaE8XPkP7nj4C9yho8rAEA==
+        id S1732528AbeITVT7 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 20 Sep 2018 17:19:59 -0400
+Received: from ao2.it ([92.243.12.208]:54808 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731225AbeITVT7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 17:19:59 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1g30xT-0003Hu-Sa; Thu, 20 Sep 2018 17:33:35 +0200
+Date:   Thu, 20 Sep 2018 17:35:52 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
+ not in the working tree
+Message-Id: <20180920173552.6109014827a062dcf3821632@ao2.it>
+In-Reply-To: <20180918171257.GC27036@localhost>
+References: <20180917140940.3839-1-ao2@ao2.it>
+        <20180917140940.3839-10-ao2@ao2.it>
+        <20180918171257.GC27036@localhost>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 18 Sep 2018 19:12:57 +0200
+SZEDER G�bor <szeder.dev@gmail.com> wrote:
 
-
-On 20/09/18 00:38, Derrick Stolee wrote:
-> On 9/18/2018 8:15 PM, Ramsay Jones wrote:
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>   commit-reach.h | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/commit-reach.h b/commit-reach.h
->> index 7d313e2975..f41d8f6ba3 100644
->> --- a/commit-reach.h
->> +++ b/commit-reach.h
->> @@ -1,12 +1,13 @@
->>   #ifndef __COMMIT_REACH_H__
->>   #define __COMMIT_REACH_H__
->>   +#include "commit.h"
->>   #include "commit-slab.h"
->>   -struct commit;
->>   struct commit_list;
->> -struct contains_cache;
+> Hi Antonio,
 > 
-> Interesting that you needed all of commit.h here, and these 'struct commit' and 'struct contains_cache' were not enough. Was there a reason you needed the entire header file instead of just adding a missing struct declaration?
+> it appears that this patch (and its previous versions as well) is
+> responsible for triggering occasional test failures in
+> 't7814-grep-recurse-submodules.sh', more frequently, about once in
+> every ten runs, on macOS on Travis CI, less frequently, about once in
+> a couple of hundred runs on Linux on my machine.
+>
 
-Actually, the original version of this patch didn't add that
-include! I changed my mind just before sending this series
-out, since I felt the original patch was conflating two issues.
+Thanks a lot for testing G�bor, it's really appreciated.
 
-The reason for the #include of 'commit.h' in this patch, but
-not with my original patch, has to to with the inline functions
-used in the commit-slab implementation. My original patch used
-the 'commit-slab-{decl,impl}.h' header files to sidestep the
-need for the definition of 'struct commit'.
+> The reason for the failure is memory corruption manifesting in various
+> ways: segfault, malloc() or use after free() errors from libc, corrupt
+> loose object, invalid ref, bogus output, etc.
+> 
+> Applying the following patch makes t7814 fail almost every time,
+> though sometimes that loop has to iterate over 1000 times until that
+> 'git grep' finally fails...  so good luck with debugging ;)
+[...]
 
-I have included an 'RFC on-top' patch below to show you what I
-had in mind. NOTE: I had not finished writing the commit message
-and you could argue that the 'implement' macro should go in the
-ref-filter.c file, since that is were the contains_cache is 
-'defined and initialised'. I had not intended to send this to
-the list ... :-D
+I managed to capture some traces of the segfaults using this variation:
 
-Note that, if you compile with optimizations disabled, then
-run this script:
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index 7184113b9b..56e87c3f8a 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -337,6 +337,10 @@ test_expect_success 'grep --recurse-submodules should pass the pattern type alon
+        test_must_fail git -c grep.patternType=fixed grep --recurse-submodules -e "(.|.)[\d]" &&
 
-  $ cat -n dup-static.sh
-       1 #!/bin/sh
-       2 
-       3 nm $1 | grep ' t ' | cut -d' ' -f3 | sort | uniq -c |
-       4 	sort -rn | grep -v '      1'
-  $ 
+        # Basic
++       for i in $(test_seq 0 2000)
++       do
++               debug --debugger="gdb --silent -ex run -ex quit --return-child-result --args" git grep --recurse-submodules 1 >/dev/null || return 1
++       done &&
+        git grep -G --recurse-submodules -e "(.|.)[\d]" >actual &&
+        cat >expect <<-\EOF &&
+        a:(1|2)d(3|4)
 
-  $ ./dup-static.sh git | grep contains
-       24 init_contains_cache_with_stride
-       24 init_contains_cache
-       24 contains_cache_peek
-       24 contains_cache_at_peek
-       24 contains_cache_at
-       24 clear_contains_cache
-  $ 
-  
-you will find 24 copies of the commit-slab routines for the
-contains_cache. Of course, when you enable optimizations again,
-these duplicate static functions (mostly) disappear. (Two static
-functions remain, the rest are actually inlined at -O2).
 
-However, if you apply the patch below, you end up with all of
-the functions in the contains_cache commit-slab implementation
-as external functions. Some of those functions are never called,
-so it's not necessarily a win ... ;-)
+Running t7814 with --run="1,6,22" is enough to observe the issue.
 
-ATB,
-Ramsay Jones
+FWICS these corruptions are caused by concurrent accesses to the object
+store.
 
--- >8 --
-Subject: [PATCH] commit-reach: use a shared commit-slab for the contains_cache
+The issue is caused by these facts:
+  1. git grep uses threads;
+  2. git grep reads submodules config with repo_read_gitmodules;
+  3. repo_read_gitmodules calls config_from_gitmodules
+  4. the changes in patch 9 in this series make config_from_gitmodules
+     use the object store, which apparently is not mt-safe, while the
+     previous use of git_config_from_file() was.
 
-Commit a9f1f1f9f8 ("commit-slab.h: code split", 2018-05-19) separated
-the commit-slab interface from its implementation, to allow for the
-definition of a public commit-slab data structure. This enabled us to
-avoid including the commit-slab implementation in a header file, which
-could result in the replication of the commit-slab functions in each
-compilation unit in which it was included.
+> On first look I didn't notice anything that is obviously wrong in this
+> patch and could be responsible for the memory corruption, but there is
+> one thing I found strange, though:
+> 
+> 
+> On Mon, Sep 17, 2018 at 04:09:40PM +0200, Antonio Ospite wrote:
+> > When the .gitmodules file is not available in the working tree, try
+> > using the content from the index and from the current branch.
+> 
+> "from the index and from the current branch" of which repository?
+> 
+[...]
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- commit-reach.c | 3 +++
- commit-reach.h | 6 +++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+> > diff --git a/submodule-config.c b/submodule-config.c
+> > index 61a555e920..bdb1d0e2c9 100644
+> > --- a/submodule-config.c
+> > +++ b/submodule-config.c
+> 
+> > @@ -603,8 +604,21 @@ static void submodule_cache_check_init(struct repository *repo)
+> >  static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
+> >  {
+> >  	if (repo->worktree) {
+> > -		char *file = repo_worktree_path(repo, GITMODULES_FILE);
+> > -		git_config_from_file(fn, file, data);
+> > +		struct git_config_source config_source = { 0 };
+> > +		const struct config_options opts = { 0 };
+> > +		struct object_id oid;
+> > +		char *file;
+> > +
+> > +		file = repo_worktree_path(repo, GITMODULES_FILE);
+> > +		if (file_exists(file))
+> > +			config_source.file = file;
+> > +		else if (get_oid(GITMODULES_INDEX, &oid) >= 0)
+> > +			config_source.blob = GITMODULES_INDEX;
+> 
+> The repository used in t7814 contains nested submodules, which means
+> that config_from_gitmodules() is invoked three times.
+> 
+> Now, the first two of those calls look at the superproject and at
+> 'submodule', and find the existing files '.../trash
+> directory.t7814-grep-recurse-submodules/.gitmodules' and '.../trash
+> directory.t7814-grep-recurse-submodules/submodule/.gitmodules',
+> respectively.  So far so good.
+> 
+> The third call, however, looks at the nested submodule at
+> 'submodule/sub', which doesn't contain a '.gitmodules' file.  So this
+> function goes on with the second condition and calls
+> get_oid(GITMODULES_INDEX, &oid), which then appears to find the blob
+> in the _superproject's_ index.
+> 
+> I'm no expert on submodules, but my gut feeling says that this can't
+> be right.  But if it _is_ right, then I would say that the commit
+> message should explain in detail, why it is right.
+>
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 622eeb313d..7223cacdd1 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "commit.h"
-+#include "commit-slab-impl.h"
- #include "commit-graph.h"
- #include "decorate.h"
- #include "prio-queue.h"
-@@ -18,6 +19,8 @@
- 
- static const unsigned all_flags = (PARENT1 | PARENT2 | STALE | RESULT);
- 
-+implement_shared_commit_slab(contains_cache, enum contains_result);
-+
- static int queue_has_nonstale(struct prio_queue *queue)
- {
- 	int i;
-diff --git a/commit-reach.h b/commit-reach.h
-index f41d8f6ba3..acf3b2d188 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -1,9 +1,9 @@
- #ifndef __COMMIT_REACH_H__
- #define __COMMIT_REACH_H__
- 
--#include "commit.h"
--#include "commit-slab.h"
-+#include "commit-slab-decl.h"
- 
-+struct commit;
- struct commit_list;
- struct ref_filter;
- struct object_id;
-@@ -55,7 +55,7 @@ enum contains_result {
- 	CONTAINS_YES
- };
- 
--define_commit_slab(contains_cache, enum contains_result);
-+define_shared_commit_slab(contains_cache, enum contains_result);
- 
- int commit_contains(struct ref_filter *filter, struct commit *commit,
- 		    struct commit_list *list, struct contains_cache *cache);
+I'll think about that too.
+
+> Anyway, even if it is indeed wrong, I'm not sure whether this is the
+> root cause of the memory corruption.
+> 
+
+I think the immediate cause of the corruptions is multi-threading in
+grep, I can prevent the issue from happening by using "git grep
+--threads 1 ...".
+
+Protecting the problematic submodules function could work for now, but
+I'd like to have more comments, my proposal is:
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 601f801158..52b45de749 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -427,6 +427,11 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
+        if (repo_submodule_init(&submodule, superproject, path))
+                return 0;
+
++       grep_read_lock();
++       /*
++        * NEEDSWORK: repo_read_gitmodules accesses the object store which is
++        * global, thus it needs to be protected.
++        */
+        repo_read_gitmodules(&submodule);
+
+        /*
+@@ -439,7 +444,6 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
+         * store is no longer global and instead is a member of the repository
+         * object.
+         */
+-       grep_read_lock();
+        add_to_alternates_memory(submodule.objects->objectdir);
+        grep_read_unlock();
+
+
+The pre-existing NEEDSWORK comment there also suggests that these
+problems with the object store are known. I was not aware of them.
+
+With the change from above I could not reproduce the problem anymore,
+this should be the only location where
+repo_read_gitmodules/config_from_gitmodules is called in a thread.
+
+Thanks you,
+   Antonio
+
 -- 
-2.19.0
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
