@@ -2,111 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 409821F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 22:10:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 836011F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 23:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728787AbeIUD42 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 23:56:28 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:43513 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727771AbeIUD41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 23:56:27 -0400
-Received: by mail-qk1-f202.google.com with SMTP id u22-v6so8699834qkk.10
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 15:10:48 -0700 (PDT)
+        id S1727171AbeIUFOl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 01:14:41 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36169 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbeIUFOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 01:14:40 -0400
+Received: by mail-wr1-f66.google.com with SMTP id e1-v6so11047487wrt.3
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 16:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=AriTFsMqL6P2w4TfqDuBumT7dtur91WHqrGwlTly+wc=;
-        b=sNy3VjcMmcqC2vJ2fQUJ+0uQUevUCV1lEcXpVyEqp4f4nVrZjqUFaay9+tBwA69Vg0
-         Xl/y2EqTGVNmnrvMZQxcsFmQ42C7CRhImuHBCONY+/qM3I+woOhotuM6ZCgkN/Fm5R53
-         5b1NjWW21CqoQFwBlVUrWiOxbSNNzXAG1gjVhp/Np57hxqDgK31YxzpCi+xc2/xCd+WV
-         qIx2fh5Maf/Suz40z7vMwWmkD1H7Xul3GqS0L3aFjFIDZmtT/OvS4wJGAa/OJVJ2wuHf
-         iccO/xBDSXu+QegsaC69u1miLeJF/zIj6IH1XbYUXK5Wz1Rucgdi/g7czOf28IAk5fIR
-         HuBA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=C26VbB1jzAKl1IK3yGSlgyZNvOfzCkery4g8e/auhr4=;
+        b=hwWk369VMmIRPCi3mWYDauLQJ7TXdx4TaFhZjH8YfddHDaJ6CFjxqnMCNbquGALMth
+         9S1mCu8BnpqteN1+m7joYDNFMjixV+HUsH0wTBBhrBqseDy3hI12z+t5dMq2v7AhsM3G
+         Rp637LdvoBQSPBwg4zMc/FNHrRFSE48kw2JDCVf0BpIOxfDB8WMWxWK+MHsOqPLg9LUq
+         LABEovFpqLL+XQyZ8Eg1YyWhOvkwt+ujvPFLr4zwmC2HavPFcV9sYPKRSvqppvmNZgl8
+         kiaBsJ8WSq/XjkU3rosYZ4BdCmY7S3VGGCxl2bTsoFNEiifZ5/wNzwJlbe6X2NVPfjCn
+         PpEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=AriTFsMqL6P2w4TfqDuBumT7dtur91WHqrGwlTly+wc=;
-        b=juxp9NGkKg1/gLsPFqIrr9afKlx+A+69F1NMq4hswUgInDSl+oiSrYYgYqEPsQCxMW
-         sQleXlzdlzZju6iNgTPWhelvjOYoylPwyTssharu8StxHO5iJ4hM+MOLclf0tvdrQrxA
-         ibVQzGRTt9oVVupqL4Q2Sm5/zf3Q/K6rm7F2um0fdnhhievuaxr7m3BrOElDR8QictLQ
-         ep4iA215vmW5plV2KeECDXuaIemZe5qOYj5EXvHc3BcSQ0JkLkvRffMeo+W6HyvSOQyI
-         8wppx4QW+qqHcgpgbQwD8pc/FClM7Mk1IyHy25mHTmqGh5DGLxtqUxcBO0MBk8qMA2EF
-         70OA==
-X-Gm-Message-State: APzg51BC0Znqp3BXnunzjwV+kZjOhT3SPUHrX2lBtMzSaRyCMC9VrNiW
-        0rufVV2y4QzNW7cF/iaKgEgNpufcQ32qZxSZSudo
-X-Google-Smtp-Source: ANB0Vda4ux1ZuS6EhdUZGV2A89ftgj1eHi1OWhxc3/cDO9VimPb8DToex2m3JVGDsF5F+H9WuFu+MVWvElUe+gtMuaFP
-X-Received: by 2002:a37:4a49:: with SMTP id x70-v6mr12650270qka.60.1537481447953;
- Thu, 20 Sep 2018 15:10:47 -0700 (PDT)
-Date:   Thu, 20 Sep 2018 15:10:38 -0700
-In-Reply-To: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180920221038.74193-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=C26VbB1jzAKl1IK3yGSlgyZNvOfzCkery4g8e/auhr4=;
+        b=gpQSblNuYnB3J3lHMUbFtEzexALQTbBdHoio6N4TAb9vRIINd4VRiBj1oP+efRBluG
+         J2Clt8iJNsu/0I/q0hX84/EGv+cz+cKsDn0PtQ1GXKrwZ5Ntk1QIbENB3+vqshCCSh5C
+         3m2PA6bBApiCU6D/ItiNFrbAbU3ifIzQ8mQzABwF0zrVB64shqz3RR17mK/iFkdXPIqa
+         ngUkmzIMSCGawgfneWO63l6BxhWvgN6QJ4J2AnOMezuRg+yEeH5NI1c9ef/ZZU+Qm0eu
+         g8PVfiftII/0+A846w/7ZY3XY2AI6SRf29hzYBi3byWotqeOn41WHqhYsugX+Ss7giZc
+         tm6Q==
+X-Gm-Message-State: ABuFfojhkLDtRgYAQ5Z2tuhO3VYq2rjHNKSgUejqV2/P1pJYWJN8rSPE
+        fIX7R3M5bcrRNrnOhDeRMHs=
+X-Google-Smtp-Source: ACcGV61u8UpvP4VFJVfEK5DUMj8HRpttHcEBHXk75MVzBNQXQy1jjPW6wZ+FdYd85LQy9yAyhJayEQ==
+X-Received: by 2002:adf:c454:: with SMTP id a20-v6mr3593535wrg.20.1537486122768;
+        Thu, 20 Sep 2018 16:28:42 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 14-v6sm7631605wmp.32.2018.09.20.16.28.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 20 Sep 2018 16:28:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, matvore@google.com
 Subject: Re: [PATCH] fetch: in partial clone, check presence of targets
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, matvore@google.com
-Content-Type: text/plain; charset="UTF-8"
+References: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
+        <20180920221038.74193-1-jonathantanmy@google.com>
+Date:   Thu, 20 Sep 2018 16:28:41 -0700
+In-Reply-To: <20180920221038.74193-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 20 Sep 2018 15:10:38 -0700")
+Message-ID: <xmqqy3bvycie.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > +	if (repository_format_partial_clone) {
-> > +		/*
-> > +		 * For the purposes of the connectivity check,
-> > +		 * check_connected() considers all objects promised by
-> > +		 * promisor objects as existing, which means that the
-> > +		 * connectivity check would pass even if a target object
-> > +		 * in rm is merely promised and not present. When
-> > +		 * fetching objects, we need all of them to be present
-> > +		 * (in addition to having correct connectivity), so
-> > +		 * check them directly.
-> > +		 */
-> > +		struct ref *r;
-> > +		for (r = rm; r; r = r->next) {
-> > +			if (!has_object_file(&r->old_oid))
-> > +				return -1;
-> > +		}
-> 
-> Because check_connected() lies in the presense of "promisor", we can
-> defeat it this way, which makes sense.  
-> 
-> I wonder if it makes sense to do this check unconditionally, even
-> when we are in a fully functioning clone.  The check is quite cheap
-> and can reject a ref_map that has an object we do not know about,
-> without check_connected() having to ask the rev-list.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-It makes sense to me from a runtime point of view - the usual case, for
-me, is when we're missing at least one object that we're fetching, and
-doing the cheap check even allows us to skip the expensive check.
+> The hard part for me lies in how to communicate to future readers of the
+> code that they cannot remove this section to simplify the code. We would
+> need a more complicated comment, something like this:
 
-The hard part for me lies in how to communicate to future readers of the
-code that they cannot remove this section to simplify the code. We would
-need a more complicated comment, something like this:
+That suggests two things.
 
- /*
-  * Check if all wanted objects are present.
-  *
-  * If the local repository is a partial clone, check_connected() is not
-  * sufficient - it would pass even if a wanted object is merely
-  * promised and not present. This is because, for the purposes of the
-  * connectivity check, check_connected() considers all objects promised
-  * by promisor objects as existing.
-  *
-  * If the local repository is not a partial clone, check_connected() is
-  * sufficient, but this loop allows us to avoid the expensive
-  * check_connected() in the usual case that at least one wanted object
-  * is missing.
-  */
+ - Perhaps quickfetch() is misnamed.  It is to ensure "these exist,
+   and are 'connected'"; renaming the helper to convey that would be
+   sufficient to prevent future readers from removing the "these
+   exist" check from it.
+
+ - Perhaps check_connected() is also misnamed, if the above "these
+   exist, and are 'connected'" is not a sufficient warning against
+   removal of the "these exist" test, perhaps "check_connected()" is
+   not telling the readers that things that are 'connected' do not
+   have to exist.  What does being 'connected' mean in the world
+   with "promised" objects anyway?  The designer of the feature
+   should probably have a concise and clear answer.
+
+>  /*
+>   * Check if all wanted objects are present.
+
+Here 'wanted' means... the tip that was directly requested must
+exist, and in addition, anything that is reachable from it must
+either exist locally or available from the lazy-clone source?  But
+that is not quite it. Your definition of 'present' is fuzzy and mean
+two different things---for the wanted tips, they must exist.  For
+the objects that are required for these wanted tips to be well
+formed, they do not have to exist but it is OK for them to be merely
+promised.
+
+Perhaps the comment for the quickfetch() function itself should say
+
+/*
+ * Ensure that the requested tips exist locally, and anything that is
+ * reachable from them either exist locally or promised to be available.
+ */
+
+Adding a similar comment to check_connected() function is left as an
+exercise, but I suspect it would be the latter half of the above
+sentence.
+
+It may be worth renaming both functions for clarity, as I mentioned
+already.
