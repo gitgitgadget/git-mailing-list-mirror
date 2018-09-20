@@ -2,82 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24EDA1F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 16:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B39291F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 17:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731215AbeITWYK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 18:24:10 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35855 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727252AbeITWYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 18:24:10 -0400
-Received: by mail-wm1-f66.google.com with SMTP id j192-v6so217213wmj.1
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 09:39:49 -0700 (PDT)
+        id S1731520AbeITXHI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 19:07:08 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:34193 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726990AbeITXHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 19:07:08 -0400
+Received: by mail-ed1-f48.google.com with SMTP id e25so58060edv.1
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 10:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=CBwiOMYGijz7VjB/BuJZFkrrgJzJMikUTxdpYovqcbg=;
-        b=tyUa5QHWD7WTRsxWhOcLfGwmQB+NZLwa+TH9mA3NQfF1iZZQ5zmUTvON1ANMRmH5de
-         3uP02eITsKDT5Eof87OifhEVNglDrCs77cBU+JLFpLKV8Yc1HURxQnH/fVv8iCkg7jxJ
-         NZ0259IWc9jySUrhRBlbilpW79HgTAsEzyGWl2f8pcEit8ph3HoBf+AHkvaynd5qZLdj
-         gRoXrbQlW2//g0ggq7Fl0lkIid+/kkKH2xTLoEgtOfIDVPgHsUTSUg4FB4bV3/A2+CRZ
-         wU6mzBktf5+wpRt3dFeOAcklim7P/32OCfka9JErM3JemEHGhym+EzPe9sIRKF/3aCbc
-         B7lA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QYRu4Z9+V9w67BuzeIDWLIqnqhyG4T+bGEE/Cvcr4rA=;
+        b=iyc29se85r65CmpUOjtKyWe2j1cN+QHtVwCaiXIR3cBlIHDbUTQwaQrh+Ola1/mvz3
+         ekBCbwTqox2w/iVrwk0RU3pwP9RCsX+0ut5l1x3f7rg2JLasOysIRzLj5yiOhx1ozfvI
+         yhU7Yd7FPDuBHKJuMT6kItvvGd3TYza4KqpvMjpp8mpLHGU17UgZTVJNg4/oLSKkG/KY
+         ocI9AWhDqb3IxsGjW3Ba8SzkIjOul+RxPIRJgaD48STvMCw1HbjwqcEOBAdFBDjwPGr7
+         fEJYLeK06J5onWDDcWpvFJk+LQLPlZ17EViaZM1OrtvfXBE61ufToQastKQ0ou5wdTbX
+         jkyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=CBwiOMYGijz7VjB/BuJZFkrrgJzJMikUTxdpYovqcbg=;
-        b=TO+sf0W4FRNaxLS+YmyVISP/qVRg/LQK59rRkDsn/nkRxgZAO80mdE6BJjAcOPEyTG
-         kq0ML9zqDc8AKPgwfIrsQR5GXk9IliQZLY0jYlWZyWEhqGl4JcToyEak46pb9DiDeH0i
-         9L2Jnd0pfDynwH7dQSIm+6i0EKIBwoHISc76XmFhfG3ydS2v18wP5NqB0nLyPEW50EZd
-         8e/dK3s6JtgF7ROfPfDf1aNmOSaWqpTmXcsncsDS2ASocZviVgK3DlxBkXFLYW6Mls+H
-         XY+8jIKrFDKUl7mzXcTlmrH6SvedNwWbHwa/ro/CZqr7GoomAIvGjHRuhkqEuGt7/6Em
-         tU8A==
-X-Gm-Message-State: APzg51D87DD35mbLYYD9HzUXluzul8oeVR3MCLMtHs5YkI4Q/9RWN77g
-        IP4zargI5Iru8ql2VT+o1LQ=
-X-Google-Smtp-Source: ANB0VdZ7rUd6utNW8kOL5lm+Kgrps/TrQBeklsHtEBVkqZ+8WhRnFLHU8+lYohynhZ3eYDyo8iwyoQ==
-X-Received: by 2002:a1c:c4ce:: with SMTP id u197-v6mr1642953wmf.10.1537461588162;
-        Thu, 20 Sep 2018 09:39:48 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 144-v6sm3829398wma.45.2018.09.20.09.39.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 09:39:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] fetch doc: correct grammar in --force docs
-References: <20180918054740.24180-1-avarab@gmail.com>
-        <20180918054740.24180-4-avarab@gmail.com>
-        <CAPig+cS6gPb0_niFrWHQafLgxwEFfdsQ1UDj8XU3avZJEp=Zog@mail.gmail.com>
-Date:   Thu, 20 Sep 2018 09:39:47 -0700
-In-Reply-To: <CAPig+cS6gPb0_niFrWHQafLgxwEFfdsQ1UDj8XU3avZJEp=Zog@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 18 Sep 2018 03:30:25 -0400")
-Message-ID: <xmqqy3bw15t8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=QYRu4Z9+V9w67BuzeIDWLIqnqhyG4T+bGEE/Cvcr4rA=;
+        b=QpmZcZctt4ZS+fgANuRa3KZhuiFv6WRrq4cyTbtIQMzAgxqw75KcxBoOl5fdnOKoBd
+         WwyTczezbu3o+Cz1M360/iW87MGrgA+N9aG/kp0ui2AwZPy1HJK/ltpxu6DaQHIm5WEs
+         MOMdhOg8z2biCxYVaeWcMw3bAUxWhCBslt64N+1bv6a5MYTa3JSdEW5Rs+eytb2zSqwC
+         k4y9RBuB4EWwiDQlKHn9xd5rgcRR5cPENVIjdUEzSQH3XxypIgn213km/qnTguB+rQTF
+         aA/L+mVZG6R9rRGM0eQAhZ5OFp4PT3dJ3julH+YPBaTnk5rwrbmg7SUqNN7Xotrb0RSa
+         ydaw==
+X-Gm-Message-State: APzg51Ac/lZOMsKVO35dmarqWBaKMW12jobWNrACcy3Z24bI2PjjL4/p
+        l0gG+3+xmsEN2IHskZG7ani6gVHfmAG+TKLZP+mLdJ5L
+X-Google-Smtp-Source: ANB0Vdaloe4VpZbwn4gXER+cSYvUetDApN6mDc5DCRPU0goGSVp3px2lEK0YuAfEq9C/nanYbVJ2J+pW9/MKM9j85nc=
+X-Received: by 2002:a50:91ab:: with SMTP id g40-v6mr5830075eda.50.1537464156478;
+ Thu, 20 Sep 2018 10:22:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   David Alphus <david.alphus@gmail.com>
+Date:   Thu, 20 Sep 2018 13:22:25 -0400
+Message-ID: <CAB=bJ9Mjw2keJ3aspLWcreLBcB15Eq-WjtBO0XS8B=C3XJmx9A@mail.gmail.com>
+Subject: git check-ignore ignores negated entries
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+If a .gitignore contains a ! entry, git check-ignore will still say
+the matching file is ignored if the file is not in the index.
 
-> On Tue, Sep 18, 2018 at 1:48 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> "Work the same" is incorrect and needs to be "Works the same
->> way". Fixes grammar in document anion I added in the recently landed
->
-> I, too, find those "document anions" problematic. Perhaps the
-> physicists around here can do something about it.
+Simple case to reproduce:
 
-Well, let's squash 2+3 together then.
+$ git init .
+$ echo "*.c" > .gitignore
+$ echo '!a.c' >> .gitignore
+$ touch a.c b.c
+$ git check-ignore a.c b.c
+a.c
+b.c
+$ git add *.c
+The following paths are ignored by one of your .gitignore files:
+b.c
+Use -f if you really want to add them.
+$ git check-ignore a.c b.c
+b.c
+$ git check-ignore --no-index a.c b.c
+a.c
+b.c
+$ git check-ignore --no-index --verbose a.c b.c
+.gitignore:2:!a.c       a.c
+.gitignore:1:*.c        b.c
+
+In looking through check-ignore.c, it appears that we check that
+last_exclude_matching() returns an exclude object. It should be noted
+that we do not consider that exclude struct can be set with the
+EXC_FLAG_NEGATIVE flag. This flag says that the final matching rule
+should not be ignored.
+check_ignore needs to consider this condition in order to work properly.
