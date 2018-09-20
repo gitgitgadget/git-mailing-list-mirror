@@ -6,59 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F4201F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 14:08:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15FC91F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 14:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732466AbeITTwR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 15:52:17 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43093 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730955AbeITTwR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 15:52:17 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k5-v6so9536026wre.10
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 07:08:37 -0700 (PDT)
+        id S1732584AbeITT4b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 15:56:31 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38243 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732302AbeITT4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 15:56:30 -0400
+Received: by mail-wm1-f68.google.com with SMTP id t25-v6so11201851wmi.3
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 07:12:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=UglD5jcc23HICFPPjOyXoNWk6RwzfKWMEfFN5q6khck=;
-        b=SprxtB5IZDEK8iR8ZP5hOLZFZdVrHhn9Yr2i26gr2xuXjMp33q4b2lL2YwJhcE2aOu
-         6FP6jcoNw023jN2RBr9OP5oBHLEYQmu8tETTb71vdn9p/tFEcE2wk2/kGe1/iTAUVhX0
-         sooT67z7V8BzHVUoCD9K2CaRrmZvrDx3tCYY5gRePoGF50/gyVhhRr7kkJ283QJhdVSP
-         jVFUmpMzR5kNVCcMp9q2gwVuOqj17q8rK2diYaLDw0DZEYjMxhLZOGqs06r6gBxPxfUL
-         Pz91P5MEd7JxsmrqRvK1UKLBuOTPiwRfKYI/TJ+ogdlWeEH9EVhGOcaB6Cc+Sucgbe5w
-         d2Jg==
+        bh=HDW4fF6/B2AbP2iYXIMqTK3iTu42KZ3gw2gWLKZmidw=;
+        b=inx4Hk9mn5nEIOVOcm+Vr1AVe390glQ02FSLd7CWSmOjxC95+uNbo6w4kb2QOD030A
+         9lRDQMvuhgcPsvUc/68EzCJmlbDnEcyuxKU87Yy4B35WCTI9KKMHjze11Ei6c/CWklIA
+         8yhQQbgagHImR3qUfTcVNJK15+bvhkHhsOFShwXCq+gZ0raoPCToGEGK5Yr3mT14Ozw5
+         KzCrkTlyOiDv/L8nqavv9M3PmOOjdZpe7OoYX1Figerr8fbrICjSMhvHDbDSeUFIBzkr
+         8X/XNgFqSAAa5SY3N0uR+fwojm5d0jqXU9uZdwqewWOyMjCH46R+6LbN7yKlZ8kUgk+D
+         KiQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=UglD5jcc23HICFPPjOyXoNWk6RwzfKWMEfFN5q6khck=;
-        b=LZUOJNFwg2eBR/ul9Kp8zlx5dUf8tb2Pl32OQ8AfkGIjS3Vr/ShCbC1RVf0XKAr1WM
-         p/l/ozYmLj/0uWSKnpFqUmpl6KevZwiBZLpHCHyGESNm/iSE+M3rpfk93NQe0cIqGyt/
-         1IZT86OeRSQSsLLZ9ROp4HwRo5Nz2LZxyU3je1Qm/1dM91jIVAkSD4voXjUUqbQH+dCk
-         /hwlLrmIAvs29cpBNj3k/lsDK0iN48d9P2baU5aEpFDjCuoQvJSum9IhdDQms3iZgSAz
-         pCCGrYokbElpRu7T2o73dI9eplsMGpjyaMp6uCY2jzeIxRVtwL4xrE73ZNTnUNdMX7Fq
-         LRpA==
-X-Gm-Message-State: ABuFfojQCiBwI83kIniDQaIOgl6MOf1zQzW2F8crg+pj2H5bLLvipHEj
-        w1V9tkXimd+tJ94quNZ8MVFGTz/6
-X-Google-Smtp-Source: ACcGV639mqaF0YRt5FxwyV/DHqAuqXsnOfRhPPpn50u8GxRcT9B6yFuq906mmx5QArah9Mspd0IdiA==
-X-Received: by 2002:a5d:4912:: with SMTP id x18-v6mr2806799wrq.114.1537452516462;
-        Thu, 20 Sep 2018 07:08:36 -0700 (PDT)
+        bh=HDW4fF6/B2AbP2iYXIMqTK3iTu42KZ3gw2gWLKZmidw=;
+        b=MbeUGLKODI2g8VD3uBc68Wpz1RcnLYt4S3xu8ACVcDBxjryGeZWeKxpJ287n52b8gC
+         xrBIKV43pMPu/BeQfI/KDzAq9uSuiMv2M8jpVfULta1tHdzmcZZEOsjqZTfYmgl9zmMe
+         tn0y1xxgV1s0Dc8o5973ceezJqLesbPw8AwEh+AMPaOLuOqAsHhcHeSX1hbupjE0McNQ
+         FyNeaLw3k24Eup7eoF2Qj11TVfp5jQ+3x8EQVkLKoYZTwZ26WKtlTaz/Pk5fOrJ8DW4f
+         ooV7w3bwn2UZSIclZk2YTIROHPH8lkdo98x2kc4PeSLQJ0YGLwp2oaLZjcuG9JrFnZLx
+         8vEw==
+X-Gm-Message-State: APzg51DtlQtHZ0QqEuZ9WG/V7QJhrEcAca2VF8m4nfgpcVKZuhwadsDI
+        +ThanngtPNBEY+LVHDMA0cc=
+X-Google-Smtp-Source: ANB0VdYfsASKJ7IcTxP+e8zCLcLWfOFkBLuFsWN+yNhUnqbsh3BIy8j5lh8XD22DGh+pH0f2AoQ8xQ==
+X-Received: by 2002:a1c:1bca:: with SMTP id b193-v6mr3049637wmb.6.1537452768456;
+        Thu, 20 Sep 2018 07:12:48 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t14sm4637063wrx.52.2018.09.20.07.08.35
+        by smtp.gmail.com with ESMTPSA id k63-v6sm4285672wmd.46.2018.09.20.07.12.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 07:08:35 -0700 (PDT)
+        Thu, 20 Sep 2018 07:12:47 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] Add an EditorConfig file
-References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
-        <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com>
-        <20180920000013.GZ432229@genre.crustytoothpaste.net>
-Date:   Thu, 20 Sep 2018 07:08:35 -0700
-In-Reply-To: <20180920000013.GZ432229@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 20 Sep 2018 00:00:14 +0000")
-Message-ID: <xmqqk1ng2rdo.fsf@gitster-ct.c.googlers.com>
+To:     Shulhan <m.shulhan@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>
+Subject: Re: [PATCH 0/1] git-rebase--interactive.sh: fix trailing spaces on empty $todo
+References: <20180918134412.32766-1-m.shulhan@gmail.com>
+Date:   Thu, 20 Sep 2018 07:12:47 -0700
+In-Reply-To: <20180918134412.32766-1-m.shulhan@gmail.com> (Shulhan's message
+        of "Tue, 18 Sep 2018 20:44:10 +0700")
+Message-ID: <xmqqfty42r6o.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,33 +66,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Shulhan <m.shulhan@gmail.com> writes:
 
-> I think "make style" and the EditorConfig file are complementary.  "make
-> style" autoformats code into a diff.  I agree that if we always used
-> clang-format to format code, then this would be a non-issue in the
-> EditorConfig file, since we'd just tell people to format their code and
-> be done with it.  However, we don't automatically do that, so I think
-> this still has value.
+> For someone who use editor that display trailing white spaces, issuing
+> interactive rebase will print two empty lines at the end of rebase with the
+> last line contains tab,
+>
+>   #	However, if you remove everything, the rebase will be aborted.
+>   #
+>   #\t
+>   # Note that empty commits are commented out
+>
+> The character "\t" in above example is white space tab.
+>
+> The "make test" was run succesfully but I can't reproduce/test manually with
+> non-empty $todo (I have no idea how to do it).
 
-Oh, we agree on that 100%.  These are complementary.  
+While the issue may still be there, I think that the mid-term plan
+for the release after this cycle is to use the GSoC version of
+"rebase -i" that rewrites all the logic that produces the above in
+C, which has been cooking in 'pu', and hopefully we can see it or
+its reroll in 'next' soonish.
 
-My comment was that it would be confusing if they gave contradicting
-suggestions to the end user.  After letting EditorConfig to enforce
-one style while typing and saving, if "make style" suggests to
-format it differently, it would not be a great user experience.
-
-The ideal response would have been "Oh, of course EditorConfig folks
-already thought about that, which is a natural thing to wish for,
-and they have a tool to generate clang-format configuration from the
-section for C language in any EditorConfig file---here is a link.
-After all, tools like clang-format look like just another editor to
-them ;-)".
-
-But that is a response in a dream-world.  If there is no such tool,
-I am perfectly OK if the plan is to manually keep them (loosely) in
-sync.  I do not think it is good use of our time to try to come up
-with such a tool (unless somebody is really interested in doing it,
-that is).
+So please see if the issue is there, or if you find other new issues
+(as this is essentially an attempted faithful re-implementation), in
+the version on 'pu', and report/fix them in there if necessary.
 
 Thanks.
+
+> Shulhan (1):
+>   git-rebase--interactive.sh: fix trailing spaces on empty $todo
+>
+>  git-rebase--interactive.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
