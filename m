@@ -6,66 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E87A41F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 21:18:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F9731F453
+	for <e@80x24.org>; Thu, 20 Sep 2018 21:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388476AbeIUDEA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Sep 2018 23:04:00 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53884 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726582AbeIUDEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Sep 2018 23:04:00 -0400
-Received: by mail-wm1-f68.google.com with SMTP id b19-v6so935273wme.3
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 14:18:32 -0700 (PDT)
+        id S2388134AbeIUD0F (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Sep 2018 23:26:05 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33723 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728233AbeIUD0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Sep 2018 23:26:05 -0400
+Received: by mail-wr1-f67.google.com with SMTP id v90-v6so10868385wrc.0
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 14:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Rk3qarqV10SV5RRWgtB/pEsrgVj504D281Z572Ezjws=;
-        b=n+0BUdeHnSowfWE+3zYHWqT5G2bNU7ZSx6Mkv4NDYXT1T91GipRSQk/CXD0EkIiBy1
-         LWB7rX95yyruP2bQ8LWq29rpsFFG1nJ1VbcpO4BGkBs77xcoCAg647Jys7F8jKAQ52Qp
-         6efSIM9K4SveDhMbcd+E7VaReU2qmg5Jqg77aY1Vt9hzBW3he/8JtzdvfVTibWv8HcpO
-         UZ7J+wIwU2CjYyLZmwRRDsJiVLV2NEInHHPDNjBA0vllPdiTky7XlPwVUlqMAAWk+W+I
-         6kNvB5I3zV72GPCw3gafzToj1OmLH6RM0gj6ETYcSmlOPjWcHA8OHnfdIMvK0964rhWd
-         fHhA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=dPdrX14Mo35j4pUuKZht77AK94IucY2Np6l3E4CGTkY=;
+        b=oQB8Nw9O92ohOUYioJw1AmEOUWhPtHhuhKwgXyMFSwTSGPsf4GV7ivJB9pDdBFkO6n
+         rFtHW5hNn614qGXmnkR615/hyXdNmqr2mrCBTtJBVtsWJTispW/M/292aqGO4LTXhtt3
+         +NsqyGtwqGepjC5vvysL1CpnmkDwW3vhCFKWdwcpV+dDYNTYXDGFzZIlyUKTks/4z2AV
+         Z1hYgf8nRnJeJKJd/RVDtwzS7b2xulmPqzK2vlslDMkURkNIjoxoeSy5DVNrVc0C6qvW
+         uV8ycUTBDNX1GgZAbqDcnKqZnZtSU8gOBVNF4r+lrpMEjxI93unEUD/l/95YYs0XIAy6
+         uPXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Rk3qarqV10SV5RRWgtB/pEsrgVj504D281Z572Ezjws=;
-        b=bwi0Ggbxb99OgBufg5GHPnMGjcztSAe97VC289hDPQ8LhQ9C7D1E6gc+b/SKhqD7xG
-         x483z3x5sTEDN1Tvsgf77vBNgNl7iKmdcbt4DkkBbAJAvRukMLajoFmk8tOHWKruSxmv
-         ntIwFAnhG+b3WLZha4hAwTEj9NjpKJ0uIj0DH156ty7TIzdw3MSlQX/HmGUgM+yI0rQQ
-         h2o/8mja1r0OUw5/DBxG6a9WUKi49gTV9KsqMAS6wuVwqdSVWyGSGgBYYW9OkwXrmlkt
-         KfQ1SZyCJ4eXOln77ixbhxm0FYeiNsxjIi9baEt57wjmxoavV9BqESZmqZewuFJVZ7I2
-         3tVw==
-X-Gm-Message-State: APzg51D26y29YB1ohTZQtnUlajRLJO7TcvSssxxyI8cD86z6Urkityn8
-        fi7fWnkOOXqZBKj3juqp8gNAJyTh
-X-Google-Smtp-Source: ACcGV624C6KeD0gxKPWlsNhAcEFB+XTOIaW+3FgU3T1xoLh0ntQR1wKaBNAsd4WQBxWh2sxDSNaObg==
-X-Received: by 2002:a1c:2dc8:: with SMTP id t191-v6mr4679821wmt.94.1537478311113;
-        Thu, 20 Sep 2018 14:18:31 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=dPdrX14Mo35j4pUuKZht77AK94IucY2Np6l3E4CGTkY=;
+        b=WKRlHBCnghIHB/Usjoy3NvkPqB7jVpEAaB9cFxDqw9ur2Zzofy9PFM1khTI6QO2ZVW
+         VE5ZPNzqiX2lutpZenc3dD9Ogak7XJc2QClzOp1ZXhOTjaXH+GMwwbP3GvxGEfgt2Zk1
+         EOzRLOLI37KW8dOXXmAAVq5XYJ9fj3MGeDkYXfpRxDrvmZisSjjZrPjrm5rpzIXc3vtD
+         VDErvwp6W/s6c1aBpvARVNubS61BqiKPOiCrSY0vEX36DmVBUzYRbP7qd+wWSRcm2Qjh
+         CXBI5eW6q+ExSnJSsofv15aK0twEiVpqa0PlRiS3snoQJf1AgospjRY3PjZFWX7c91Zu
+         JKzQ==
+X-Gm-Message-State: APzg51CWilyTwXGjHQdg48Y/yEmTTu3bZ7pd9CAVrinWkzShDI4OeZUg
+        AV7JqsS90lrfN6wQUE6kC8k=
+X-Google-Smtp-Source: ANB0Vda6KIlgVxZXhsXRDpyQBlpdQR+AYlQpc+xWT+LeS4462efJONdAJZIqfgc0gDJamGRs6irLQw==
+X-Received: by 2002:adf:b202:: with SMTP id u2-v6mr32796379wra.19.1537479630521;
+        Thu, 20 Sep 2018 14:40:30 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a203-v6sm3702637wmh.31.2018.09.20.14.18.29
+        by smtp.gmail.com with ESMTPSA id e133-v6sm4659518wma.33.2018.09.20.14.40.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 14:18:30 -0700 (PDT)
+        Thu, 20 Sep 2018 14:40:29 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 2/6] test-reach: add run_three_modes method
-References: <pull.25.git.gitgitgadget@gmail.com>
-        <pull.25.v2.git.gitgitgadget@gmail.com>
-        <404c9186080ecee6c1cc39a6dcd17deaaa7a620a.1537243720.git.gitgitgadget@gmail.com>
-        <20180918180200.GD27036@localhost>
-        <xmqqbm8t473q.fsf@gitster-ct.c.googlers.com>
-        <xmqq7ejh46rm.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 20 Sep 2018 14:18:29 -0700
-In-Reply-To: <xmqq7ejh46rm.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 19 Sep 2018 12:38:37 -0700")
-Message-ID: <xmqq7ejfzx3u.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, smaudet@sebastianaudet.com
+Subject: Re: [PATCH] add: do not accept pathspec magic 'attr'
+References: <20180917015259.GA26339@sebastianaudet.com>
+        <20180918173159.30300-1-pclouds@gmail.com>
+        <xmqqk1nh47no.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 20 Sep 2018 14:40:29 -0700
+In-Reply-To: <xmqqk1nh47no.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 19 Sep 2018 12:19:23 -0700")
+Message-ID: <xmqq36u3zw36.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,88 +71,65 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> I also noticed that 2/6 made "commti_contains --tag" enclosed in dq
-> pair for one test, but the next test after it has the identical one.
+> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 >
-> Here is what I queued in the meantime.
-> ...
+>> Commit b0db704652 (pathspec: allow querying for attributes -
+>> 2017-03-13) adds new pathspec magic 'attr' but only with
+>> match_pathspec(). "git add" has some pathspec related code that still
+>> does not know about 'attr' and will bail out:
+>>
+>>     $ git add ':(attr:foo)'
+>>     fatal: BUG:dir.c:1584: unsupported magic 40
+>>
+>> A better solution would be making this code support 'attr'. But I
+>> don't know how much work is needed (I'm not familiar with this new
+>> magic). For now, let's simply reject this magic with a friendlier
+>> message:
+>>
+>>     $ git add ':(attr:foo)'
+>>     fatal: :(attr:foo): pathspec magic not supported by this command: 'attr'
+>>
+>> Reported-by: smaudet@sebastianaudet.com
+>> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+>> ---
+>>  Since Brandon is currently unreachable, let's do this for now.
+>
+> Thanks.  This certainly make it better than the status quo.
 
-And of course, I find out that 3/6 needs a matching update after
-I've almost finished day's integration cycle, and need to redo the
-whole thing X-<.
-
-Here is a squashable update for 3/6 to match the proposed change.
+And of course, there is an interesting glitch found after I almost
+finish day's integration cycle X-<.
 
 -- >8 --
-Subject: fixup! test-reach: add rev-list tests
+Subject: [PATCH] fixup! add: do not accept pathspec magic 'attr'
 
- t/t6600-test-reach.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+[Add the following when squashing]
 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index 990ab56e7a..cf9179bdb8 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -252,7 +252,7 @@ test_expect_success 'rev-list: basic topo-order' '
- 		commit-6-2 commit-5-2 commit-4-2 commit-3-2 commit-2-2 commit-1-2 \
- 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
- 	>expect &&
--	run_three_modes "git rev-list --topo-order commit-6-6"
-+	run_three_modes git rev-list --topo-order commit-6-6
+Update t6135 so that the expected error message is from the
+"graceful" rejection codepath, not "oops, we were supposed to reject
+the request to trigger this magic" codepath.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t6135-pathspec-with-attrs.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
+index 77b8cef661..e436a73962 100755
+--- a/t/t6135-pathspec-with-attrs.sh
++++ b/t/t6135-pathspec-with-attrs.sh
+@@ -164,11 +164,11 @@ test_expect_success 'fail if attr magic is used places not implemented' '
+ 	# when you attempt to use attr magic in commands that do not implement
+ 	# attr magic. This test does not advocate git-add to stay that way,
+ 	# though, but git-add is convenient as it has its own internal pathspec
+ 	# parsing.
+ 	test_must_fail git add ":(attr:labelB)" 2>actual &&
+-	test_i18ngrep "unsupported magic" actual
++	test_i18ngrep "magic not supported" actual
  '
  
- test_expect_success 'rev-list: first-parent topo-order' '
-@@ -264,7 +264,7 @@ test_expect_success 'rev-list: first-parent topo-order' '
- 		commit-6-2 \
- 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
- 	>expect &&
--	run_three_modes "git rev-list --first-parent --topo-order commit-6-6"
-+	run_three_modes git rev-list --first-parent --topo-order commit-6-6
+ test_expect_success 'abort on giving invalid label on the command line' '
+ 	test_must_fail git ls-files . ":(attr:☺)"
  '
- 
- test_expect_success 'rev-list: range topo-order' '
-@@ -276,7 +276,7 @@ test_expect_success 'rev-list: range topo-order' '
- 		commit-6-2 commit-5-2 commit-4-2 \
- 		commit-6-1 commit-5-1 commit-4-1 \
- 	>expect &&
--	run_three_modes "git rev-list --topo-order commit-3-3..commit-6-6"
-+	run_three_modes git rev-list --topo-order commit-3-3..commit-6-6
- '
- 
- test_expect_success 'rev-list: range topo-order' '
-@@ -288,7 +288,7 @@ test_expect_success 'rev-list: range topo-order' '
- 		commit-6-2 commit-5-2 commit-4-2 \
- 		commit-6-1 commit-5-1 commit-4-1 \
- 	>expect &&
--	run_three_modes "git rev-list --topo-order commit-3-8..commit-6-6"
-+	run_three_modes git rev-list --topo-order commit-3-8..commit-6-6
- '
- 
- test_expect_success 'rev-list: first-parent range topo-order' '
-@@ -300,7 +300,7 @@ test_expect_success 'rev-list: first-parent range topo-order' '
- 		commit-6-2 \
- 		commit-6-1 commit-5-1 commit-4-1 \
- 	>expect &&
--	run_three_modes "git rev-list --first-parent --topo-order commit-3-8..commit-6-6"
-+	run_three_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
- '
- 
- test_expect_success 'rev-list: ancestry-path topo-order' '
-@@ -310,7 +310,7 @@ test_expect_success 'rev-list: ancestry-path topo-order' '
- 		commit-6-4 commit-5-4 commit-4-4 commit-3-4 \
- 		commit-6-3 commit-5-3 commit-4-3 \
- 	>expect &&
--	run_three_modes "git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6"
-+	run_three_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
- '
- 
- test_expect_success 'rev-list: symmetric difference topo-order' '
-@@ -324,7 +324,7 @@ test_expect_success 'rev-list: symmetric difference topo-order' '
- 		commit-3-8 commit-2-8 commit-1-8 \
- 		commit-3-7 commit-2-7 commit-1-7 \
- 	>expect &&
--	run_three_modes "git rev-list --topo-order commit-3-8...commit-6-6"
-+	run_three_modes git rev-list --topo-order commit-3-8...commit-6-6
- '
- 
- test_done
+-- 
+2.19.0-216-g2d3b1c576c
+
