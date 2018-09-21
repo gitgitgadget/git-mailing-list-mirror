@@ -2,125 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9D391F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 23:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33F4F1F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 23:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726011AbeIVF2a (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 01:28:30 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44966 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725756AbeIVF2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 01:28:30 -0400
-Received: by mail-ed1-f66.google.com with SMTP id s10-v6so11965609edb.11
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 16:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=AlLQ/LOii2hPyA/4b+gnHj3ItksISFzQR204i3oKtSs=;
-        b=AuQ09BIekxpbHYahpfzVi3uCmj72bcy/iMeYqiocNPwpjCgPIQjpFJR6TbVU9ebMeb
-         K5SmMDpS2MRxEfSTnFAiY+x87cJDxgXBDLBnMMcFhILSDF3wy51OKrlr5PJ7KA1fTkPm
-         wc8SBca2hoK0vUWaqCrSMnbMscbSAn04RCBWkqCLNRyOWgH4s14wyjuI+DxWqxpOq+CG
-         /d3VT2S4Lws/j8ILLnCsD+tpd1dkCJBqzVt6D7MunPtQcxgSuMyVoR1mBB33boGm87wG
-         GrIA4X44vn6GhnSBqEFk1cyKbcObMv4+UM1JbtkyKfSjUj1HAl+5hvqxaetUIx/ZVrGd
-         v0ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=AlLQ/LOii2hPyA/4b+gnHj3ItksISFzQR204i3oKtSs=;
-        b=LV6GxM38TLKZjFFVpJM3G1BF1YywOXr72+L4BjgXBC8CbdZ2XLpDMj/w+KTFEOpvtI
-         GrXbyve1U9JkWmbOdUVo6RJh6bupL3lOVc3laMOGCvJ9Li/Fz9b07X7hwTMWEacJ9mRt
-         Y0zBfgkXNrif4bvqDN9SMeus7+neOqPbyRvoE/kkAJsdDHkqECKQWD4/6ebwa2/1K04h
-         x4no6wemA0S7POjZhLYGdBwqi8fJmcfrqvevzJeLYQg5xXMMzAm+trN0qbmfXvNSesL5
-         1Xd24JL5ZmQP9oltEZL/JNs3aKhblHdzFznA7g1fnoYVMuyLAjlhJ1dIWdwoMukg7EYw
-         5ZOQ==
-X-Gm-Message-State: APzg51AJE0LheNSwfg+GSRwNNnV43nfpTvwktYT5y4j5E0jrbrC1g1Hd
-        Xe2tRGAk+JjS6ZhN6BZyQb7yTOG1vqM=
-X-Google-Smtp-Source: ANB0VdYxTAehNDahp8LYy1ivg3ykNliQ/JBpAVd6jcUBY2mW6hUCn/TK+L40oakG3rfhFyJtev51wQ==
-X-Received: by 2002:a50:8a66:: with SMTP id i93-v6mr14541299edi.281.1537573040619;
-        Fri, 21 Sep 2018 16:37:20 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id h24-v6sm2783262edb.43.2018.09.21.16.37.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 21 Sep 2018 16:37:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: Segfault in master due to 4fbcca4eff
-References: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com> <87pnx6kjn8.fsf@evledraar.gmail.com> <62a46e49-e539-cbb8-4aaf-6f9b5ae6be57@gmail.com> <87o9cqkj6p.fsf@evledraar.gmail.com> <5e7e6519-21c1-daff-65a5-7d2ca5e1dbd4@gmail.com> <xmqqefdmyhe9.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqefdmyhe9.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 22 Sep 2018 01:37:17 +0200
-Message-ID: <87lg7ujuc2.fsf@evledraar.gmail.com>
+        id S2391634AbeIVFac (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 01:30:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55728 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725756AbeIVFab (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 01:30:31 -0400
+Received: (qmail 8100 invoked by uid 109); 21 Sep 2018 23:39:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 21 Sep 2018 23:39:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9889 invoked by uid 111); 21 Sep 2018 23:39:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 21 Sep 2018 19:39:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2018 19:39:21 -0400
+Date:   Fri, 21 Sep 2018 19:39:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Sebastian Gniazdowski <psprint@zdharma.org>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: Very simple popen() code request, ground-shaking functionality
+ openned by it
+Message-ID: <20180921233921.GA3323@sigill.intra.peff.net>
+References: <315083291.15466.1537536854535@privateemail.com>
+ <20180921222454.GD11177@sigill.intra.peff.net>
+ <87musajun7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87musajun7.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Sep 22, 2018 at 01:30:36AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Fri, Sep 21 2018, Junio C Hamano wrote:
+> >> This will allow users to free their creativity and provide probably
+> >> dozens of custom Git progress bars.
+> >
+> > I don't personally feel that the existing progress bar is that bad, but
+> > if anybody wants to pursue this, I think the most sensible path is:
+> 
+> I don't think it's bad either, but one thing that's really neat about
+> Sebastian's suggestion is that it's using some UTF-8 terminal ASCII art
+> to render an actual progress bar.
 
-> Derrick Stolee <stolee@gmail.com> writes:
->
->> On 9/21/2018 10:40 AM, Ævar Arnfjörð Bjarmason wrote:
->>> On Fri, Sep 21 2018, Derrick Stolee wrote:
->>>
->>>>
->>>> This error was reported by Peff [1] and fixed in [2], but as stated
->>>> [3] I was waiting for more review before sending a v3. I'll send that
->>>> v3 shortly, responding to the feedback so far.
->>>>
->>>> -Stolee
->>>>
->>>> [1]
->>>> https://public-inbox.org/git/0bf9103c-9377-506b-7ad7-e5273d8e94fc@gmail.com/T/#u
->>>>
->>>> [2] https://public-inbox.org/git/pull.39.git.gitgitgadget@gmail.com/
->>>>
->>>> [3]
->>>> https://public-inbox.org/git/8d6061de-1654-577c-40c6-211dbd03aa36@gmail.com/
->>> Thanks and sorry for the duplicate report. I can confirm that applying
->>> the v2 of that fixes the segfault for the test case I posted.
->>
->> Thanks for the report! You are a good dogfooder.
->
-> Thanks, both of you ;-).  I was aware of the issue and proposed fix
-> but forgot about it when merging things down to 'master'.  Sorry
-> about that.
+Yeah. I don't care myself, but I'm not opposed to somebody trying to
+spruce up the in-code bar, as long we can still handle the lowest common
+denominator cleanly (and remember that includes passing progress bars
+back over the remote sideband).
 
-Just a follow-up question, in your merge commit you just pushed to
-"next" you say:
+> >   1. Add a trace_key for sending machine-readable progress output to a
+> >      descriptor or file. E.g., via setting GIT_TRACE_PROGRESS=2 in the
+> >      environment.
+> >
+> >   2. Teach the trace code to open a command for piping, so that you
+> >      could do something like GIT_TRACE_PROGRESS='|mygauge'.
+> >
+> > That would make your use case work, and I think many other use cases
+> > would benefit from both of those features independently.
+> 
+> Yup, that's all sensible, and would be great both for this and other
+> stuff if we wanted true extensibility for this sort of thing.
+> 
+> I'll just add that a 3rd thing that would also make sense would be to
+> add a feature to configure the value of these GIT_TRACE_*=* variables
+> via the .gitconfig, that's been suggested before (too lazy to dig up a
+> ML archive reference), and would make this as easy to configure as
+> Sebastian's suggestion.
 
-    Recent update broke the reachability algorithm when tags pointing
-    at objects that are not commit were involved, which has been fixed.
+Heh, I almost included that in my original mail, but didn't want to get
+into the tangle of secondary concerns. But since you mention it... :)
 
-And in Derrick's commit message it says:
+One thing to watch out is that (2) and (3) combined may mean executing
+arbitrary code specified in the .git/config of an untrusted repository.
+This is already the case for many commands, but we've specifically tried
+to avoid it with git-upload-pack, making it safe to "git fetch" out of
+an untrusted repository. It's almost certain that you'd be able to
+trigger trace code from it.
 
-    [...]but incorrectly assumed that all objects provided were commits[...]
+There are a number of solutions floating around. We already have some
+upload-pack config which is smart enough to realize when its source is
+in-repo and handle it appropriately, and we've talked on the list about
+having some "I don't trust this repo" environment variable that would
+make Git operate in a more restricted way. I don't think we need to hash
+out the solution here, but I just want to mention that it's a thing that
+would have to dealt with before adding those two features.
 
-I just wanted to double check (without having the time to dig myself at
-this point) whether this bug was understood & tested for, or whether the
-case I had was just /also/ fixed for unexpected reasons.
+(Actually, I guess you could argue that even reading existing trace
+specs out of config is potentially dangerous, since you can append to
+arbitrary files).
 
-I.e. in my upthread test case I have two annotated tags pointing at
-commits, whereas the merge to "next" says "when tags pointing at objects
-that are not commit were involved", which I I assume means say annotated
-tags pointing at blobs..., but that's not what I had.
-
-Wasn't this just a bug fix that had nothing to do with tags not pointing
-to commits, but just ones where we had the simple case of tags pointing
-to commits, but they just weren't peeled?
-
-I'm hoping for a "Junio skimmed the fix and wrote a merge message that
-wasn't quite accurate" here, but maybe that's not the case and something
-might be missing (e.g. missing test code).
+-Peff
