@@ -2,158 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 631CF1F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 18:22:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDF301F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 18:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391259AbeIVAMu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 20:12:50 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:33180 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391231AbeIVAMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 20:12:50 -0400
-Received: by mail-pf1-f201.google.com with SMTP id t26-v6so6930943pfh.0
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 11:22:45 -0700 (PDT)
+        id S2391223AbeIVAhu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 20:37:50 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:54673 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732114AbeIVAht (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 20:37:49 -0400
+Received: by mail-it1-f194.google.com with SMTP id f14-v6so3159239ita.4
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 11:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=JPpRgA3jjI9s3WJLpJx7Qk4EQx/3MPtwPClDugEcezY=;
-        b=FgEmYEs5Gt48hwUERjA5EHpsCxjqrLDqLIhTl+wZcwfi512gpFiSb2tro6IDELM2+X
-         NC1XZALAupOdbl6D0kuTPGWNiK+wW8zFEuCMDJDEbgaMLCdnbpy21Kd2XghjuPoO4Gpi
-         8NuCE0CG0VYpzak65QcclpeygEgGITEy1fbjIoHiJsWF9ZC/GuYN06tR2zAwGf0HKCls
-         BKTdJHWCref5MkN5QKOyNp1dV2KTABLYkjQU++nDKyCkm/lL/zNFw+Rf81mz7LnT7c9n
-         plA9twiblcTqO+IsLge12o5ZoxJrRFe/1o+hiJ/nvl5Gf69dsStA5NDjDuhMUXnM5sr2
-         wAQA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EzH8MnhvBKYvRRAoeAf2AgqzmIo2pOxzyhq+MSm+8k8=;
+        b=iNLTc/YlHNaJkGR86p8SNCnLkts0m9cOKAgxh2cbmezBL4h4rwTSbIJ7LjK+5syqwe
+         W4ljGAkJPXanTdRHpNIZAWLvoQ9II2u2C5Ne3SqWt112Fgya3q6UDjbwofmaACSmekib
+         5E3rHi0XinJ7/5GKMkjl9wLeKMKH1smogc8zANPSraxadA+pIzwJgAqQcXqu/+WJB6Gm
+         rtDUcKYisuxUgRrwm2na+cVI6RInippIjQWZBtSOw40rn38OHAQyj0+WyakgV8PsLiD/
+         IKBqxBTw7b57VtTDdFngqxHyHRlMpJnYUlIk3e/Lj+ioV9LMQkBK9BGhhXkSICYV2GRT
+         A8fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=JPpRgA3jjI9s3WJLpJx7Qk4EQx/3MPtwPClDugEcezY=;
-        b=RyvlM5WYHSlzZ2D40iozz4/hIVLR2cgWRCcAouhtjZKc5BrwlZ3iqVqRAxsfFWuxom
-         s2NWOv4XuHIUclVjXrzZbUkVFb5mTGffhGGjT0XnOMLgkamfbakFib2QGZjeivaZxLJW
-         Xt5sTTar+72rTQht+oBrOnJ4IzOi4gWVK59VsC2Vsgojbjd2rESW59hsPMBJ2knzEk8a
-         3dxDiQq1MuNzLFhtLGNd2X13i30xDiwecWStvniY+vPhPFjzIIiA2FWt4Mym7nqzeLeI
-         ZoziF+s6kPEQ3WTTZrkLDUc1lYnJRbmUGJQGpdXNe0GbHUeH7RrF3nrGqX+t5VswJOdL
-         EkmA==
-X-Gm-Message-State: APzg51D7MF+Tc5EXA1u1nwzFzINrZQAFlbeaZI8hs2KvGaxHEXtyZoUR
-        hNjIzJjTW+mq/aX849iRmA+edwGmqdQvlV9LZNWtAI/o8qI6Qm/Z0JG5ODGRdp+fO15+Je51Oqb
-        nST7L58IhMrrXV0KUOekSqq4O0c9fiS5ZkPW00MgzAtbD/YMeBbcH/k94CHlPj5M0yaZ1zT4WqK
-        ZX
-X-Google-Smtp-Source: ANB0VdYE/Q9JeoKRDDO5RaJgA9Ti7EMTuWW0nA7Q9ZKLFv2hFG7/sx6T8Pz9Z/ePyHxnnfuu9Ho0kCkAXxbFf9nceuxE
-X-Received: by 2002:a63:f65:: with SMTP id 37-v6mr2119387pgp.110.1537554165295;
- Fri, 21 Sep 2018 11:22:45 -0700 (PDT)
-Date:   Fri, 21 Sep 2018 11:22:38 -0700
-In-Reply-To: <cover.1537553700.git.jonathantanmy@google.com>
-Message-Id: <f575afa9393c4262853547ba536dc90f9511da5c.1537553700.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20180920184843.20898-1-jonathantanmy@google.com> <cover.1537553700.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH v2 2/2] fetch: in partial clone, check presence of targets
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EzH8MnhvBKYvRRAoeAf2AgqzmIo2pOxzyhq+MSm+8k8=;
+        b=AZup0bkodvwo7GT+edfylQJ3EADO5ASapAcxSVk9xMaIKB2Szt3/qrP76yo1DGebnd
+         Aj1SBjoUY+ge9esP1E10YJQqiHi2lXzrkH1oTobNJz1bdZaACvho6K8TmHCJFjAwdoHQ
+         BTxQIBfXSmDPeYPBuGgXSn4TPJrk6sJFbWVj9iK64i9YeehR2NRL4AnJSougmFH0tyHy
+         oWeLg7Xkb5ScyHweJkiRjhzA2KmMpU49xNrnkBZ9txAq4uEe/8iRYLAMSTo5TeUdVY8l
+         TvOX0Hz1N7CI7O6mxX0hFz0tDZh9yafh47tbafysmbebzWmhtuT6yfezITKA9cxuFHyu
+         +ckw==
+X-Gm-Message-State: APzg51C5pHbNvsODE0vbQb2ZvUp8wq2MDAmlfLsnqwiDdo7Zlah3YlfW
+        oIEZLBDAVk53iDAHlAjLLb7y53pgJ4U=
+X-Google-Smtp-Source: ANB0VdbPBu4wKupd8iENljNJYCzlnY9SttlEdMp/PJJm6TdbZw9lLR9Ov9ami4H5emgCISjIuthBXA==
+X-Received: by 2002:a24:4a83:: with SMTP id k125-v6mr7120359itb.121.1537555659163;
+        Fri, 21 Sep 2018 11:47:39 -0700 (PDT)
+Received: from localhost ([173.225.52.220])
+        by smtp.gmail.com with ESMTPSA id e140-v6sm2717079itc.24.2018.09.21.11.47.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Sep 2018 11:47:37 -0700 (PDT)
+Date:   Fri, 21 Sep 2018 14:47:36 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     peff@peff.net, gitster@pobox.com, sunshine@sunshineco.com,
+        sbeller@google.com
+Subject: [PATCH v2 0/3] Filter alternate references
+Message-ID: <cover.1537555544.git.me@ttaylorr.com>
+References: <cover.1537466087.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1537466087.git.me@ttaylorr.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fetching an object that is known as a promisor object to the local
-repository, the connectivity check in quickfetch() in builtin/fetch.c
-succeeds, causing object transfer to be bypassed. However, this should
-not happen if that object is merely promised and not actually present.
+Hi,
 
-Because this happens, when a user invokes "git fetch origin <sha-1>" on
-the command-line, the <sha-1> object may not actually be fetched even
-though the command returns an exit code of 0. This is a similar issue
-(but with a different cause) to the one fixed by a0c9016abd
-("upload-pack: send refs' objects despite "filter"", 2018-07-09).
+Attached is the second re-roll of my series to teach
+"core.alternateRefsCommand" and "core.alternateRefsPrefixes".
 
-Therefore, update quickfetch() to also directly check for the presence
-of all objects to be fetched. Its documentation and name are also
-updated to better reflect what it does.
+I have included a range-diff below (which I have taught my scripts to do
+by default now), but will summarize the changes as usual:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- builtin/fetch.c          | 15 +++++++++++++--
- t/t5616-partial-clone.sh | 17 +++++++++++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+  * Clean up t5410 according to Peff's suggestions in [1]:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 61bec5d21..b9e74c129 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -924,10 +924,11 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
-  * everything we are going to fetch already exists and is connected
-  * locally.
-  */
--static int quickfetch(struct ref *ref_map)
-+static int check_exist_and_connected(struct ref *ref_map)
- {
- 	struct ref *rm = ref_map;
- 	struct check_connected_options opt = CHECK_CONNECTED_INIT;
-+	struct ref *r;
- 
- 	/*
- 	 * If we are deepening a shallow clone we already have these
-@@ -938,13 +939,23 @@ static int quickfetch(struct ref *ref_map)
- 	 */
- 	if (deepen)
- 		return -1;
-+
-+	/*
-+	 * check_connected() allows objects to merely be promised, but
-+	 * we need all direct targets to exist.
-+	 */
-+	for (r = rm; r; r = r->next) {
-+		if (!has_object_file(&r->old_oid))
-+			return -1;
-+	}
-+
- 	opt.quiet = 1;
- 	return check_connected(iterate_ref_map, &rm, &opt);
- }
- 
- static int fetch_refs(struct transport *transport, struct ref *ref_map)
- {
--	int ret = quickfetch(ref_map);
-+	int ret = check_exist_and_connected(ref_map);
- 	if (ret)
- 		ret = transport_fetch_refs(transport, ref_map);
- 	if (!ret)
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index bbbe7537d..359d27d02 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -170,6 +170,23 @@ test_expect_success 'partial clone fetches blobs pointed to by refs even if norm
- 	git -C dst fsck
- '
- 
-+test_expect_success 'fetch what is specified on CLI even if already promised' '
-+	rm -rf src dst.git &&
-+	git init src &&
-+	test_commit -C src foo &&
-+	test_config -C src uploadpack.allowfilter 1 &&
-+	test_config -C src uploadpack.allowanysha1inwant 1 &&
-+
-+	git hash-object --stdin <src/foo.t >blob &&
-+
-+	git clone --bare --filter=blob:none "file://$(pwd)/src" dst.git &&
-+	git -C dst.git rev-list --objects --quiet --missing=print HEAD >missing_before &&
-+	grep "?$(cat blob)" missing_before &&
-+	git -C dst.git fetch origin $(cat blob) &&
-+	git -C dst.git rev-list --objects --quiet --missing=print HEAD >missing_after &&
-+	! grep "?$(cat blob)" missing_after
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.19.0.444.g18242da7ef-goog
+    * Simplify many `git update-ref -d`'s into one `git update-ref
+      --stdin`.
 
+    * Use `echo >`, instead of `printf >` to write an alternate
+      repository.
+
+    * Avoid placing Git on the left-hand side of a pipe.
+
+    * Use 'write_script', instead of embedding the same code in a
+      lengthy 'test_config'.
+
+  * Add a motivating example in Documentation/config.txt, per Peff's
+    suggestion in [1].
+
+  * Use `printf "%s .have\n"` with many arguments instead of another
+    `cat <<-EOF` block and extract it into `expect_haves`, per [2].
+
+  * Do not use `grep -o` in `extract_haves`, thus making it portable.
+    Per [3].
+
+[1]: https://public-inbox.org/git/20180920193751.GC29603@sigill.intra.peff.net/
+[2]: https://public-inbox.org/git/CAPig+cT7WTyBCQZ75WSjmBqiui383YrKqoHqbLASQkOaGVTfVA@mail.gmail.com/
+[3]: https://public-inbox.org/git/xmqqlg7ux0st.fsf@gitster-ct.c.googlers.com/
+
+Taylor Blau (3):
+  transport.c: extract 'fill_alternate_refs_command'
+  transport.c: introduce core.alternateRefsCommand
+  transport.c: introduce core.alternateRefsPrefixes
+
+ Documentation/config.txt | 18 ++++++++++++
+ t/t5410-receive-pack.sh  | 62 ++++++++++++++++++++++++++++++++++++++++
+ transport.c              | 34 ++++++++++++++++++----
+ 3 files changed, 108 insertions(+), 6 deletions(-)
+ create mode 100755 t/t5410-receive-pack.sh
+
+Range-diff against v1:
+1:  6e3a58afe7 = 1:  6e3a58afe7 transport.c: extract 'fill_alternate_refs_command'
+2:  4c4900722c ! 2:  9797f52551 transport.c: introduce core.alternateRefsCommand
+    @@ -42,6 +42,11 @@
+     +	the shell to execute the specified command instead of
+     +	linkgit:git-for-each-ref[1]. The first argument is the path of the alternate.
+     +	Output must be of the form: `%(objectname) SPC %(refname)`.
+    +++
+    ++This is useful when a repository only wishes to advertise some of its
+    ++alternate's references as ".have"'s. For example, to only advertise branch
+    ++heads, configure `core.alternateRefsCommand` to the path of a script which runs
+    ++`git --git-dir="$1" for-each-ref refs/heads`.
+     +
+      core.bare::
+      	If true this repository is assumed to be 'bare' and has no
+    @@ -70,32 +75,39 @@
+     +	(
+     +		cd fork &&
+     +		git config receive.advertisealternates true &&
+    -+		git update-ref -d refs/heads/a &&
+    -+		git update-ref -d refs/heads/b &&
+    -+		git update-ref -d refs/heads/c &&
+    -+		git update-ref -d refs/heads/master &&
+    -+		git update-ref -d refs/tags/one &&
+    -+		git update-ref -d refs/tags/two &&
+    -+		git update-ref -d refs/tags/three &&
+    -+		printf "../../.git/objects" >objects/info/alternates
+    ++		cat <<-EOF | git update-ref --stdin &&
+    ++		delete refs/heads/a
+    ++		delete refs/heads/b
+    ++		delete refs/heads/c
+    ++		delete refs/heads/master
+    ++		delete refs/tags/one
+    ++		delete refs/tags/two
+    ++		delete refs/tags/three
+    ++		EOF
+    ++		echo "../../.git/objects" >objects/info/alternates
+     +	)
+     +'
+     +
+    ++expect_haves () {
+    ++	printf "%s .have\n" $(git rev-parse $@) >expect
+    ++}
+    ++
+     +extract_haves () {
+    -+	depacketize - | grep -o '^.* \.have'
+    ++	depacketize - | grep '\.have' | sed -e 's/\\0.*$//g'
+     +}
+     +
+     +test_expect_success 'with core.alternateRefsCommand' '
+    -+	test_config -C fork core.alternateRefsCommand \
+    -+		"git --git-dir=\"\$1\" for-each-ref \
+    -+		--format=\"%(objectname) %(refname)\" \
+    -+		refs/heads/a refs/heads/c;:" &&
+    -+	cat >expect <<-EOF &&
+    -+	$(git rev-parse a) .have
+    -+	$(git rev-parse c) .have
+    ++	write_script fork/alternate-refs <<-\EOF &&
+    ++		git --git-dir="$1" for-each-ref \
+    ++			--format="%(objectname) %(refname)" \
+    ++			refs/heads/a \
+    ++			refs/heads/c
+     +	EOF
+    -+	printf "0000" | git receive-pack fork | extract_haves >actual &&
+    -+	test_cmp expect actual
+    ++	test_config -C fork core.alternateRefsCommand alternate-refs &&
+    ++	expect_haves a c >expect &&
+    ++	printf "0000" | git receive-pack fork >actual &&
+    ++	extract_haves <actual >actual.haves &&
+    ++	test_cmp expect actual.haves
+     +'
+     +
+     +test_done
+3:  3639e90588 ! 3:  6e8f65a16d transport.c: introduce core.alternateRefsPrefixes
+    @@ -40,13 +40,14 @@
+      --- a/Documentation/config.txt
+      +++ b/Documentation/config.txt
+     @@
+    - 	linkgit:git-for-each-ref[1]. The first argument is the path of the alternate.
+    - 	Output must be of the form: `%(objectname) SPC %(refname)`.
+    + heads, configure `core.alternateRefsCommand` to the path of a script which runs
+    + `git --git-dir="$1" for-each-ref refs/heads`.
+
+     +core.alternateRefsPrefixes::
+     +	When listing references from an alternate, list only references that begin
+    -+	with the given prefix. To list multiple prefixes, separate them with a
+    -+	whitespace character. If `core.alternateRefsCommand` is set, setting
+    ++	with the given prefix. Prefixes match as if they were given as arguments to
+    ++	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
+    ++	whitespace. If `core.alternateRefsCommand` is set, setting
+     +	`core.alternateRefsPrefixes` has no effect.
+     +
+      core.bare::
+    @@ -57,18 +58,15 @@
+      --- a/t/t5410-receive-pack.sh
+      +++ b/t/t5410-receive-pack.sh
+     @@
+    - 	test_cmp expect actual
+    + 	test_cmp expect actual.haves
+      '
+
+     +test_expect_success 'with core.alternateRefsPrefixes' '
+     +	test_config -C fork core.alternateRefsPrefixes "refs/tags" &&
+    -+	cat >expect <<-EOF &&
+    -+	$(git rev-parse one) .have
+    -+	$(git rev-parse three) .have
+    -+	$(git rev-parse two) .have
+    -+	EOF
+    -+	printf "0000" | git receive-pack fork | extract_haves >actual &&
+    -+	test_cmp expect actual
+    ++	expect_haves one three two >expect &&
+    ++	printf "0000" | git receive-pack fork >actual &&
+    ++	extract_haves <actual >actual.haves &&
+    ++	test_cmp expect actual.haves
+     +'
+     +
+      test_done
+--
+2.19.0.221.g150f307af
