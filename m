@@ -2,73 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D97D1F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 20:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD0771F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 20:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391362AbeIVCIp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 22:08:45 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:38310 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391251AbeIVCIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 22:08:44 -0400
-Received: by mail-qt1-f195.google.com with SMTP id z13-v6so3000444qts.5
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 13:18:16 -0700 (PDT)
+        id S2391440AbeIVCJy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 22:09:54 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33693 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391251AbeIVCJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 22:09:54 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n11-v6so2762142wro.0
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 13:19:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=5odBn9rpe2auE1ueUsDwmEvVn5QVngT/AHrS9h5lZ14=;
+        b=XFwTiqEM85ED9ui4ZZKoxmfBLpNktAPV+Sx7EIjBvg6rpzseAEo+su9LhFLgQz1Aaj
+         B+7heoNZxoFsf8IrdUNDeLJ7oqx5AIC81nEIfap+9heDrgvjWG2bS7qK2AQwsEIn275b
+         vfOm8/enasHCaEUpDKbYAgyMRXbGcxKPy/vYwxy4QcLlXy+Hnxp/23voz3UuJPLlC4aK
+         k3+FHFpXxMCe9/9OWmhebz7i1D59j5fQ4wH/QkLbUIhJTuByHGx6I7Ro5hVrnRggOBI/
+         yFH8GXoTaIUjfXD4OGZ4Dvu392rds/UafUdJG6qfJpFczTLYXjJK9ZrE2M29g/Krf8VF
+         pldw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JgwprXWmdF+dveZgZBg7O9PYEllIhagLD4ClN2ix06M=;
-        b=sv6K5XNuIDst9ghv2zdzexTt51MX3WYGFr+KadNJUYbqS2w84XBeLX5ThPDh0eF1uB
-         G1wcToqD3Jtm/zn4IoO5gxj2obFbhKZ8RByejrX1VSY7ZXJ3AzDHXCx8xJm8QTlSlFO5
-         eDZGVmv2k6W0O9r6nDHR51p9vxbtsOhxQ3LJS9DC7mKAqi3Jzd+8vsjzWFSrdYy7RA47
-         Y/vhFdlHiJ/sJev+F7vBb7XY/ha4BKobu//ossM3M0er9owPhfg/MPtC9ua5AWuJLDPR
-         q7RkLuUttbQ63pxrZdOjlkCfk5OUh7iloAoElTzqN/LUDhk2WeZI5UrDzJvPnbawRkr8
-         0Rkw==
-X-Gm-Message-State: APzg51CBm9J3WHMF/+4M08VK29Ye+C9SOwh8NWLAgPJ21urbWwH/YW3G
-        M8bnUoSt897L/n92XhpusKPQ21NLgDxX76ABC3g=
-X-Google-Smtp-Source: ANB0VdaC6iXYubqctBuMuEKmGNWyXsFUXKICKhWY2k5JKVwLfm1DLuidtBTJfKWjrh/naND66r2WJr2Meeu2J3oeK9Y=
-X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr33278550qtc.50.1537561095836;
- Fri, 21 Sep 2018 13:18:15 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5odBn9rpe2auE1ueUsDwmEvVn5QVngT/AHrS9h5lZ14=;
+        b=B/Tr38Kmsh52pUnqCB7QV4Ut29H98jpAMICFW2jNntkKzKGe1BP+cE7eDq67qP+yil
+         syBCuVYfWiz/3UiZoja0oozEpwNUicf+c+TGp5mup9UAPtH9yWWqm7FLGb/5iOD5ySp7
+         H9m26urzTIx28a8fL70AkBggxC0op6mzC7PhHSDXVYanNWnHy2ewd+7wdvXc8zB05IxP
+         BO+C55PEDwDwD3RwcytvVunp68+knd9Bs83APP7v2l3M5qXi636IWjN6WzgrFQZdXqM9
+         Hq818yf/wbE2jNRwENrL8cd661tOgmcFIzy+WG+YREcr3dkmFdju7K7PlJgvgk1Tb3s2
+         +vsw==
+X-Gm-Message-State: APzg51AkrplLFlLZ43i8LbZ0gVmtXFixti5gxPxvjwwQI3L9jDkrh251
+        laGppvhThlpTU7e4KnsZcHI=
+X-Google-Smtp-Source: ANB0VdaUdEFxMypXn7KY4442MdObEXAzWQFwU4dh5w0i4sO5R4NL68ppDrn2qimaezGdfQ7GyzY8tw==
+X-Received: by 2002:adf:db51:: with SMTP id f17-v6mr38839245wrj.212.1537561163845;
+        Fri, 21 Sep 2018 13:19:23 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 75-v6sm9432027wml.21.2018.09.21.13.19.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 21 Sep 2018 13:19:23 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] connected: document connectivity in partial clones
+References: <20180920184843.20898-1-jonathantanmy@google.com>
+        <cover.1537553700.git.jonathantanmy@google.com>
+        <14153be920095f5fc8c11da33d5d27469e3a0f39.1537553700.git.jonathantanmy@google.com>
+Date:   Fri, 21 Sep 2018 13:19:22 -0700
+In-Reply-To: <14153be920095f5fc8c11da33d5d27469e3a0f39.1537553700.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Fri, 21 Sep 2018 11:22:37 -0700")
+Message-ID: <xmqqmusavc1h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1537466087.git.me@ttaylorr.com> <cover.1537555544.git.me@ttaylorr.com>
- <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
-In-Reply-To: <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 21 Sep 2018 16:18:03 -0400
-Message-ID: <CAPig+cSx0vxegy+ENtiYgV=x-A=0upFZGuFbW-=cwwknko_f4A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] transport.c: introduce core.alternateRefsCommand
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 21, 2018 at 2:47 PM Taylor Blau <me@ttaylorr.com> wrote:
-> When in a repository containing one or more alternates, Git would
-> sometimes like to list references from its alternates. For example, 'git
-> receive-pack' list the objects pointed to by alternate references as
-> special ".have" references.
-> [...]
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+> In acb0c57260 ("fetch: support filters", 2017-12-08), check_connected()
+> was extended to allow objects to either be promised to be available (if
+> the repository is a partial clone) or to be present; previously, this
+> function required the latter. However, this change was not reflected in
+> the documentation of that function. Update the documentation
+> accordingly.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
-> diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-> @@ -0,0 +1,54 @@
-> +expect_haves () {
-> +       printf "%s .have\n" $(git rev-parse $@) >expect
-> +}
+>  connected.h | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
-Magic quoting behavior only kicks in when $@ is itself quoted, so this
-should be:
+Very much makes sense.  I think this is sufficient clarification to
+allay your earlier worry of having to have a huge in-code comment to
+prevent the "must exist" loop from getting removed.
 
-    printf "%s .have\n" $(git rev-parse "$@") >expect
-
-However, as it's unlikely that you need magic quoting in this case,
-you might get by with plain $* (unquoted).
+> diff --git a/connected.h b/connected.h
+> index e4c961817..8d5a6b3ad 100644
+> --- a/connected.h
+> +++ b/connected.h
+> @@ -51,9 +51,9 @@ struct check_connected_options {
+>  #define CHECK_CONNECTED_INIT { 0 }
+>  
+>  /*
+> - * Make sure that our object store has all the commits necessary to
+> - * connect the ancestry chain to some of our existing refs, and all
+> - * the trees and blobs that these commits use.
+> + * Make sure that all given objects and all objects reachable from them
+> + * either exist in our object store or (if the repository is a partial
+> + * clone) are promised to be available.
+>   *
+>   * Return 0 if Ok, non zero otherwise (i.e. some missing objects)
+>   *
