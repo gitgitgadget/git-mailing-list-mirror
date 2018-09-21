@@ -6,60 +6,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B372A1F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 02:17:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB9591F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 02:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388855AbeIUIED convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 21 Sep 2018 04:04:03 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:46363 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbeIUIEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 04:04:02 -0400
-Received: by mail-qk1-f194.google.com with SMTP id l194-v6so3371127qke.13
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 19:17:29 -0700 (PDT)
+        id S2388732AbeIUINf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 04:13:35 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:34711 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727387AbeIUINe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 04:13:34 -0400
+Received: by mail-qt1-f196.google.com with SMTP id x23-v6so378400qtr.1
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 19:26:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ywdFj2abImt7vAIjxWuwzr4jCML1IzQMraR6GU3F+4o=;
-        b=tmgtntwXthVyVgmJWeI8v0KrFXGq5+xviEq5NKFW3TwGBE6sO9woKBnq+o5CT4FK6j
-         EvPp9t3p/MIhZpK5HavrJYtIHbliIcb6ck+THpDaKk7ZsMMXriKyq1J6ZlaIewA9+mp0
-         GiGm5VFw6Mra1gH/qZfYlxAIoZl0rMYBNYOues7cdT7jbWoQ9WEYhf3+q1Uw0UHK7wy0
-         OiHX5kXZxI+OgoeNy3sWfiUp33oL0V/5ICThVg1ma0ytJDbjOEuNPjV6Zq2Xu1yIijL/
-         o864NxKND6mcakbA8Bo9X6GpJO/JksCN4vUzT0K93Ckt610Hk+UWN+yyT1RdSC+82Fs4
-         m1Zw==
-X-Gm-Message-State: APzg51AixNvs49TKKMjNO21jHdPYyVxnh1fWhuL8KaUn9UY2ZeCvZpep
-        yUiMFEl4IhsNPnEA4eTqFyAvfJFelJTLqPSS7wM=
-X-Google-Smtp-Source: ANB0Vda7CYjax+MiSoWfpJkyZtzjAtuWp03p9ZatlmG2E9/hTO1Pj3AzqSxdbYFMF2ue9sGdPau/Om56FYHs9jBoRq0=
-X-Received: by 2002:a37:455:: with SMTP id 82-v6mr8069408qke.26.1537496249266;
- Thu, 20 Sep 2018 19:17:29 -0700 (PDT)
+         :message-id:subject:to;
+        bh=6NSAPTZ0MtC3zGiRpJGxVdoPqt2pzZkGzJXVpKKG18I=;
+        b=E6vpAfEtGrx2tG0Zze7FWB/w9HxNtf/yTkGYPlbn/E4GqWMzvZyV0K6rWa9zwMC090
+         /0t5pjg/3Mj1aHEkeMkWl27OtMef5NdOKICvsHtffDuqiRdzIhQqIqN0h6W840aT6os6
+         u7/Prk9IX/qeShV+SHvtwnGD5SsqLHPdyrGs+S0iF2+aZ3jwRu6ocLpVNgqJq3ZaZZp7
+         0ArtjhOuIH4L9l8VwSvfHYVIf2a0+M32GV3H+yTpOutQc86EGm7MYRwjHtech1huqjrf
+         D+WR0pqtyD738fufuPYkQlOW/wg/roCa3HEnDXJuY5+e4jfz0THZWwnudZ4beAatvXlC
+         V67w==
+X-Gm-Message-State: APzg51B0OJyux/N2Y6wViqGDgVDBfS8it11pwrZjxCVe18UjJiWHyS1G
+        YWcJDA10JF6qyjpaQ/hElDUi1c9E8Btdmb/0JIM=
+X-Google-Smtp-Source: ANB0VdYAvA8IcIf/0WmvxKSYHHkkvBgTn00YLV3gdKKC0a8MD+ldY7ixbfG6FVksJ1tKPNOqj2gTCimt4b1tdbuz42Y=
+X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr30740931qtd.101.1537496818715;
+ Thu, 20 Sep 2018 19:26:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180919141016.27930-1-avarab@gmail.com>
-In-Reply-To: <20180919141016.27930-1-avarab@gmail.com>
+References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
+ <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com> <20180920000013.GZ432229@genre.crustytoothpaste.net>
+In-Reply-To: <20180920000013.GZ432229@genre.crustytoothpaste.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 20 Sep 2018 22:17:17 -0400
-Message-ID: <CAPig+cSP6mSKYoEMwaSZjZTj-kiQUHukjPUXVh3tv8ySVtJd6A@mail.gmail.com>
-Subject: Re: [PATCH] reflog expire: add progress output
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 20 Sep 2018 22:26:47 -0400
+Message-ID: <CAPig+cTQuwMDMpHe4inO61=Mq2+q1OdGsEG_hpii+dNmjXHZLg@mail.gmail.com>
+Subject: Re: [PATCH] Add an EditorConfig file
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 19, 2018 at 10:10 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> Before this change the "git reflog expire" command didn't report any
-> progress. This is the second command (after "pack-refs --all --prune")
-> that the "gc" command will run.
-> [...]
-> That may just be some artifact of the repositories I've tested, but I
-> suspect It'll be true in general. As the callstack above shows, in
+On Wed, Sep 19, 2018 at 8:00 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> (I am having trouble getting make style to work, though, because it
+> seems to invoke clang-format as a git subcommand, and I don't think that
+> works.  I may send a patch.)
 
-s/It'll/it'll/
-
-> order to guarantee that we don't do that we'd need to pass some
-> "progress" variable through 10 levels of functions, many of which are
-> "for_each" callback functions with void* cb_data.
+You're probably missing this piece:
+https://llvm.org/svn/llvm-project/cfe/trunk/tools/clang-format/git-clang-format
