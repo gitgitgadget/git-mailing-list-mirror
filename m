@@ -2,113 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 836011F453
-	for <e@80x24.org>; Thu, 20 Sep 2018 23:28:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52AF51F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 01:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbeIUFOl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 01:14:41 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36169 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbeIUFOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 01:14:40 -0400
-Received: by mail-wr1-f66.google.com with SMTP id e1-v6so11047487wrt.3
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 16:28:44 -0700 (PDT)
+        id S2388853AbeIUHaN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 03:30:13 -0400
+Received: from mail-io1-f74.google.com ([209.85.166.74]:56210 "EHLO
+        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388824AbeIUHaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 03:30:13 -0400
+Received: by mail-io1-f74.google.com with SMTP id m15-v6so16745891ioj.22
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 18:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=C26VbB1jzAKl1IK3yGSlgyZNvOfzCkery4g8e/auhr4=;
-        b=hwWk369VMmIRPCi3mWYDauLQJ7TXdx4TaFhZjH8YfddHDaJ6CFjxqnMCNbquGALMth
-         9S1mCu8BnpqteN1+m7joYDNFMjixV+HUsH0wTBBhrBqseDy3hI12z+t5dMq2v7AhsM3G
-         Rp637LdvoBQSPBwg4zMc/FNHrRFSE48kw2JDCVf0BpIOxfDB8WMWxWK+MHsOqPLg9LUq
-         LABEovFpqLL+XQyZ8Eg1YyWhOvkwt+ujvPFLr4zwmC2HavPFcV9sYPKRSvqppvmNZgl8
-         kiaBsJ8WSq/XjkU3rosYZ4BdCmY7S3VGGCxl2bTsoFNEiifZ5/wNzwJlbe6X2NVPfjCn
-         PpEA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=UtgVuBqe+NeyRHsnZJjXoH6ySnvdEJuPxQfqnbbc3tk=;
+        b=VdrcPFB2P4eCvEMNzCwvUR9IjBW3x+DjSJC+p5VCLeHXEvcugMHWOxm3QfgfN5eCSd
+         V+/dTeJoMf+8n83xFp3akI8Nj8y7hx2+IU4XYeT6KszbSiUTR6dySmeLUjLfULdgush5
+         CClqWEkW9Wcctscota32dJ9GYczq5qiqFQ2TaNwn56j54O7YH/uPoLCXO6/Rgk0yTuPZ
+         fw5ynYtxov5WOxeMYaa1Ls71OoL8p7syppooIq07sZ2oSr9UkND+VM5rx3Lj311ZHDXC
+         OafCfqSHPPtLBDrExM76lB/wniXdeUh7MwncyCWZw3T4FqdK84KDd96wlKpB8OjnkyF/
+         9WrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=C26VbB1jzAKl1IK3yGSlgyZNvOfzCkery4g8e/auhr4=;
-        b=gpQSblNuYnB3J3lHMUbFtEzexALQTbBdHoio6N4TAb9vRIINd4VRiBj1oP+efRBluG
-         J2Clt8iJNsu/0I/q0hX84/EGv+cz+cKsDn0PtQ1GXKrwZ5Ntk1QIbENB3+vqshCCSh5C
-         3m2PA6bBApiCU6D/ItiNFrbAbU3ifIzQ8mQzABwF0zrVB64shqz3RR17mK/iFkdXPIqa
-         ngUkmzIMSCGawgfneWO63l6BxhWvgN6QJ4J2AnOMezuRg+yEeH5NI1c9ef/ZZU+Qm0eu
-         g8PVfiftII/0+A846w/7ZY3XY2AI6SRf29hzYBi3byWotqeOn41WHqhYsugX+Ss7giZc
-         tm6Q==
-X-Gm-Message-State: ABuFfojhkLDtRgYAQ5Z2tuhO3VYq2rjHNKSgUejqV2/P1pJYWJN8rSPE
-        fIX7R3M5bcrRNrnOhDeRMHs=
-X-Google-Smtp-Source: ACcGV61u8UpvP4VFJVfEK5DUMj8HRpttHcEBHXk75MVzBNQXQy1jjPW6wZ+FdYd85LQy9yAyhJayEQ==
-X-Received: by 2002:adf:c454:: with SMTP id a20-v6mr3593535wrg.20.1537486122768;
-        Thu, 20 Sep 2018 16:28:42 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 14-v6sm7631605wmp.32.2018.09.20.16.28.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Sep 2018 16:28:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, matvore@google.com
-Subject: Re: [PATCH] fetch: in partial clone, check presence of targets
-References: <xmqqh8ijzyep.fsf@gitster-ct.c.googlers.com>
-        <20180920221038.74193-1-jonathantanmy@google.com>
-Date:   Thu, 20 Sep 2018 16:28:41 -0700
-In-Reply-To: <20180920221038.74193-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 20 Sep 2018 15:10:38 -0700")
-Message-ID: <xmqqy3bvycie.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=UtgVuBqe+NeyRHsnZJjXoH6ySnvdEJuPxQfqnbbc3tk=;
+        b=ruj6rfrpjAqfXzJTz/GWlHR9yB9wdR22EfjHBIsJ69CPcX6kpV8teVptOXZsTQsg1W
+         W6mX0xdhvNl/YoL6VANKkmhqOUOcqXsnx5KnIFl3+1C6oKjDSsl68Jt1LGnFiALQOcP4
+         tA+Dg+NfMBdzXuDjxlC/NGcAZF44+WRnQ2Y01sK88WLlhQLrkVmCsXFpEfb23pBZrQwb
+         DP79u4QadgRhT5kLiIVlQgteY3m4ofGzYiAF5TRhVPPfsmvQyuxzg9lIAWgrFhJU0jSx
+         sxlWLvCmofUXm01N8ac2LRx4mYR48sNhcLAjxKOccSTAw6Eohl65/csWFM8Tgp19TYk9
+         Tc7Q==
+X-Gm-Message-State: APzg51CWBsWutBmyL/HgwadceSN0j6kcE/hPYpJQ6HbUUzAIUFIrYb2d
+        6CR4NRyYoA9jVMknebSXEigRGIWtBii2oOGDzi5bf74+B4cnoB7Srx2+OosgS9YyaFRn4vYLs9G
+        1U16qOeO/AFm0o86WCRML2goxS2RROb3LRnJVVoaE68D40V8iw3l8Skpsliw=
+X-Google-Smtp-Source: ANB0VdaUr3Q3npENHSt1VOrkVCCANjl7/c2sjpuZM9eA6Exz+htsRzunizDqNpeR8Oet5FlFqQ6DPsfs7Dyn
+X-Received: by 2002:a6b:ca84:: with SMTP id a126-v6mr30214072iog.45.1537494228430;
+ Thu, 20 Sep 2018 18:43:48 -0700 (PDT)
+Date:   Thu, 20 Sep 2018 18:43:26 -0700
+In-Reply-To: <cover.1536969438.git.matvore@google.com>
+Message-Id: <cover.1537493611.git.matvore@google.com>
+Mime-Version: 1.0
+References: <cover.1536969438.git.matvore@google.com>
+X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
+Subject: [PATCH v3 0/5] Clean up tests for test_cmp arg ordering and pipe placement
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>, peff@peff.net,
+        jonathantanmy@google.com, gitster@pobox.com, jrn@google.com,
+        sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Two of the commits have changed drastically (see second and third points below)
+so I'm sending this again.
 
-> The hard part for me lies in how to communicate to future readers of the
-> code that they cannot remove this section to simplify the code. We would
-> need a more complicated comment, something like this:
+Summary of changes since last time:
+ - Remove the hacky linter check which makes sure pipes are placed at the end of
+   the line in tests - I may add this back in a more polished form when I have
+   time.
+ - Unbroke t9101 git-svn test which I had broken pretty badly in v2 of the
+   patchset.
+ - Cleaned up and generalized the wording of the added points in
+   CodingGuidelines.
 
-That suggests two things.
+Thank you,
 
- - Perhaps quickfetch() is misnamed.  It is to ensure "these exist,
-   and are 'connected'"; renaming the helper to convey that would be
-   sufficient to prevent future readers from removing the "these
-   exist" check from it.
+Matthew DeVore (5):
+  CodingGuidelines: add shell piping guidelines
+  tests: standardize pipe placement
+  t/*: fix ordering of expected/observed arguments
+  tests: don't swallow Git errors upstream of pipes
+  t9109: don't swallow Git errors upstream of pipes
 
- - Perhaps check_connected() is also misnamed, if the above "these
-   exist, and are 'connected'" is not a sufficient warning against
-   removal of the "these exist" test, perhaps "check_connected()" is
-   not telling the readers that things that are 'connected' do not
-   have to exist.  What does being 'connected' mean in the world
-   with "promised" objects anyway?  The designer of the feature
-   should probably have a concise and clear answer.
+ Documentation/CodingGuidelines         |  27 ++
+ t/lib-gpg.sh                           |   9 +-
+ t/t0000-basic.sh                       |   2 +-
+ t/t0021-conversion.sh                  |   4 +-
+ t/t1006-cat-file.sh                    |   8 +-
+ t/t1300-config.sh                      |   9 +-
+ t/t1303-wacky-config.sh                |   4 +-
+ t/t2101-update-index-reupdate.sh       |   2 +-
+ t/t3200-branch.sh                      |   2 +-
+ t/t3320-notes-merge-worktrees.sh       |   4 +-
+ t/t3400-rebase.sh                      |   8 +-
+ t/t3417-rebase-whitespace-fix.sh       |   6 +-
+ t/t3702-add-edit.sh                    |   4 +-
+ t/t3903-stash.sh                       |   8 +-
+ t/t3905-stash-include-untracked.sh     |   2 +-
+ t/t4025-hunk-header.sh                 |   2 +-
+ t/t4117-apply-reject.sh                |   6 +-
+ t/t4124-apply-ws-rule.sh               |  30 +--
+ t/t4138-apply-ws-expansion.sh          |   2 +-
+ t/t5317-pack-objects-filter-objects.sh | 360 ++++++++++++++-----------
+ t/t5318-commit-graph.sh                |   2 +-
+ t/t5500-fetch-pack.sh                  |   7 +-
+ t/t5616-partial-clone.sh               |  30 ++-
+ t/t5701-git-serve.sh                   |  14 +-
+ t/t5702-protocol-v2.sh                 |  10 +-
+ t/t6023-merge-file.sh                  |  12 +-
+ t/t6027-merge-binary.sh                |   4 +-
+ t/t6031-merge-filemode.sh              |   2 +-
+ t/t6112-rev-list-filters-objects.sh    | 224 ++++++++-------
+ t/t7201-co.sh                          |   4 +-
+ t/t7406-submodule-update.sh            |   8 +-
+ t/t7800-difftool.sh                    |   2 +-
+ t/t9100-git-svn-basic.sh               |   2 +-
+ t/t9101-git-svn-props.sh               |  34 ++-
+ t/t9133-git-svn-nested-git-repo.sh     |   6 +-
+ t/t9600-cvsimport.sh                   |   2 +-
+ t/t9603-cvsimport-patchsets.sh         |   4 +-
+ t/t9604-cvsimport-timestamps.sh        |   4 +-
+ 38 files changed, 504 insertions(+), 366 deletions(-)
 
->  /*
->   * Check if all wanted objects are present.
+-- 
+2.19.0.444.g18242da7ef-goog
 
-Here 'wanted' means... the tip that was directly requested must
-exist, and in addition, anything that is reachable from it must
-either exist locally or available from the lazy-clone source?  But
-that is not quite it. Your definition of 'present' is fuzzy and mean
-two different things---for the wanted tips, they must exist.  For
-the objects that are required for these wanted tips to be well
-formed, they do not have to exist but it is OK for them to be merely
-promised.
-
-Perhaps the comment for the quickfetch() function itself should say
-
-/*
- * Ensure that the requested tips exist locally, and anything that is
- * reachable from them either exist locally or promised to be available.
- */
-
-Adding a similar comment to check_connected() function is left as an
-exercise, but I suspect it would be the latter half of the above
-sentence.
-
-It may be worth renaming both functions for clarity, as I mentioned
-already.
