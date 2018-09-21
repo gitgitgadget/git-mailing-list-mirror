@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB9591F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 02:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 569D61F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 02:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388732AbeIUINf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 04:13:35 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:34711 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727387AbeIUINe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 04:13:34 -0400
-Received: by mail-qt1-f196.google.com with SMTP id x23-v6so378400qtr.1
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 19:26:59 -0700 (PDT)
+        id S2388823AbeIUIRz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 04:17:55 -0400
+Received: from mail-qk1-f174.google.com ([209.85.222.174]:46211 "EHLO
+        mail-qk1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbeIUIRz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 04:17:55 -0400
+Received: by mail-qk1-f174.google.com with SMTP id l194-v6so3384620qke.13
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 19:31:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=6NSAPTZ0MtC3zGiRpJGxVdoPqt2pzZkGzJXVpKKG18I=;
-        b=E6vpAfEtGrx2tG0Zze7FWB/w9HxNtf/yTkGYPlbn/E4GqWMzvZyV0K6rWa9zwMC090
-         /0t5pjg/3Mj1aHEkeMkWl27OtMef5NdOKICvsHtffDuqiRdzIhQqIqN0h6W840aT6os6
-         u7/Prk9IX/qeShV+SHvtwnGD5SsqLHPdyrGs+S0iF2+aZ3jwRu6ocLpVNgqJq3ZaZZp7
-         0ArtjhOuIH4L9l8VwSvfHYVIf2a0+M32GV3H+yTpOutQc86EGm7MYRwjHtech1huqjrf
-         D+WR0pqtyD738fufuPYkQlOW/wg/roCa3HEnDXJuY5+e4jfz0THZWwnudZ4beAatvXlC
-         V67w==
-X-Gm-Message-State: APzg51B0OJyux/N2Y6wViqGDgVDBfS8it11pwrZjxCVe18UjJiWHyS1G
-        YWcJDA10JF6qyjpaQ/hElDUi1c9E8Btdmb/0JIM=
-X-Google-Smtp-Source: ANB0VdYAvA8IcIf/0WmvxKSYHHkkvBgTn00YLV3gdKKC0a8MD+ldY7ixbfG6FVksJ1tKPNOqj2gTCimt4b1tdbuz42Y=
-X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr30740931qtd.101.1537496818715;
- Thu, 20 Sep 2018 19:26:58 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=WvlFBrRdkO/3cRUZC9jzv65BATEWtxxg3Mf4HVIbD60=;
+        b=Aa3W3E3X5ghkRjJncdKVWt/UO/+oLTdx0qEMwzxSQAnU+lT+9F7hLvbMBBM6s816Bi
+         cPNmSJrVw7RC+wc66LgpyPMvceG33FmntaRU7I70udg3sfJs/RFR/w+UI4x3pb2dmuQE
+         NRXZSVWoLaHBhthkl+IWSh4ohk5lgugVa3BLukwr/RTEdanS87gpqp/aW5DNZxlGGnJI
+         /JZ1IWnNnxWXLxZqRof/kRLnVcR9w3CWUQXAVyCHfnip+d8ABP9MWVAFjZl0nN1nxfyd
+         f+kR4LXNJ+nmC9aMPkRualtO2F24kwhrhyWhx4UyGwVzqDScSRyqMCajowkM/PB9Dbv7
+         MJFw==
+X-Gm-Message-State: APzg51D6FS4CrgFbDWkIa9k0pdOZYucDZMQTJg4b9qATedGQ9BCCEU0X
+        1+G0SBkKkZ/8427l+Z0XdW28euGqI5zyBfPVrAc=
+X-Google-Smtp-Source: ANB0VdblRgMfFX/ihNc6xn6JhxwZbQlsi+8WkxPuPrbWXCUtxsJPbQx2fszFum51GUB6RZdbezawfk2hNUFk7YzRJCc=
+X-Received: by 2002:a37:455:: with SMTP id 82-v6mr8093474qke.26.1537497077956;
+ Thu, 20 Sep 2018 19:31:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
- <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com> <20180920000013.GZ432229@genre.crustytoothpaste.net>
-In-Reply-To: <20180920000013.GZ432229@genre.crustytoothpaste.net>
+References: <CA+KyZp4G6WCXjp_9x+NBWZysfg+Fu_PtF4qrhipT8UuLNnsCHA@mail.gmail.com>
+In-Reply-To: <CA+KyZp4G6WCXjp_9x+NBWZysfg+Fu_PtF4qrhipT8UuLNnsCHA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 20 Sep 2018 22:26:47 -0400
-Message-ID: <CAPig+cTQuwMDMpHe4inO61=Mq2+q1OdGsEG_hpii+dNmjXHZLg@mail.gmail.com>
-Subject: Re: [PATCH] Add an EditorConfig file
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
+Date:   Thu, 20 Sep 2018 22:31:06 -0400
+Message-ID: <CAPig+cS+8+uGQTfxmq1XGMt5FBM1oq72d3N=3BkjhrA9ui+EWw@mail.gmail.com>
+Subject: Re: bug with git merge-base
+To:     alexander.d.mills@gmail.com
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 19, 2018 at 8:00 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> (I am having trouble getting make style to work, though, because it
-> seems to invoke clang-format as a git subcommand, and I don't think that
-> works.  I may send a patch.)
+On Wed, Sep 19, 2018 at 6:25 PM Alexander Mills
+<alexander.d.mills@gmail.com> wrote:
+> The following command sequence exits with 1, and no stderr
+>
+> base='remotes/origin/dev';
+> fork_point="$(git merge-base --fork-point "$base")";
+>
+> I cannot figure out why it's exiting with 1, but there is no stdout/stderr
 
-You're probably missing this piece:
-https://llvm.org/svn/llvm-project/cfe/trunk/tools/clang-format/git-clang-format
+Unable to reproduce the problem. Perhaps you can provide more context.
