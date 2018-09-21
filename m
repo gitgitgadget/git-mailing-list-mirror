@@ -2,138 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 661D61F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 05:45:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8052E1F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 07:19:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388984AbeIULdJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 07:33:09 -0400
-Received: from ICGRIDDB04.SEAS.UPENN.EDU ([158.130.57.72]:34180 "EHLO
-        ICGRIDDB04.SEAS.upenn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbeIULdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 07:33:09 -0400
-Received: from [10.13.0.14] (helo=ofb.net)
-        by ICGRIDDB04.SEAS.upenn.edu with esmtp (Exim 4.89)
-        (envelope-from <frederik@ofb.net>)
-        id 1g3EGG-0000og-PN; Fri, 21 Sep 2018 01:45:52 -0400
-Received: from localhost.localdomain (unknown [173.239.75.234])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ofb.net (Postfix) with ESMTPSA id 8FC0C3E868;
-        Thu, 20 Sep 2018 22:45:47 -0700 (PDT)
-Received: from frederik by localhost.localdomain with local (Exim 4.91)
-        (envelope-from <frederik@localhost.localdomain>)
-        id 1g3EGA-0000XZ-K1; Thu, 20 Sep 2018 22:45:46 -0700
-Date:   Thu, 20 Sep 2018 22:45:46 -0700
-From:   frederik@ofb.net
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] some documentation changes from the beginning of the
- alphabet
-Message-ID: <20180921054546.GA11082@ofb.net>
-Reply-To: frederik@ofb.net
-References: <20180919201231.609-1-frederik@ofb.net>
- <xmqqzhwd2jcq.fsf@gitster-ct.c.googlers.com>
- <CAPig+cR04cjf-D_hUgKhOSUAhHd8py7BM4-HOyE3VttV_ufXFQ@mail.gmail.com>
+        id S2389225AbeIUNHF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 09:07:05 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:38750 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389010AbeIUNHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 09:07:05 -0400
+Received: by mail-qk1-f195.google.com with SMTP id s129-v6so4864392qke.5
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 00:19:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ni79uXRvCVvwNyyyWy7p7Km8ZFwAc7FAoHrJDgSWWDs=;
+        b=MMCO91jY486+MSQfjZreuEXz/rtyOJvfxl0vPwSYHVCfpl6Im1ln3cF1fBZnNwJifo
+         FJgjLutpjPjeVA+ZQWTN8bysjDczliUFVd0mV5+x4feZRPIJfTOvkWwskvASMLoA2A4k
+         8NejkOgD9s0dr2pw3aYCMUadOzzYkbrzjXsRjy8ODOeHMUM6cZ23w3y1Ya/w2WilqrKM
+         TTphKgNwC5Mn3yAW9EJOUBpYywO1rN+DzAI1yphRdKt18l3kZtE2KqDUm7jgd81Jah20
+         O7AZW4pjcB1M7/u385KIx8N0Pu7ZioAl/kKe8tAcoWuHkp+oInAMvdI0V5Hs10qt7hJ/
+         2n+Q==
+X-Gm-Message-State: APzg51BVvOQvTIs8QhGbcpGDX089J57NvgDj2VTBEUTmEgTr9Onxxxjr
+        1P8BUNCB8CY435ggX+B9ABm1csvorpLIrf1SenQ=
+X-Google-Smtp-Source: ANB0VdbvffBg1RMZriwVCtvxcSxP8JLrihwbtbC/6/CrhwNdAGGDUFBmED2u/wdu+8U/f719cjGR9qDINWmFKKarYrE=
+X-Received: by 2002:a37:d78e:: with SMTP id t14-v6mr12031495qkt.220.1537514371793;
+ Fri, 21 Sep 2018 00:19:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cR04cjf-D_hUgKhOSUAhHd8py7BM4-HOyE3VttV_ufXFQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <cover.1537466087.git.me@ttaylorr.com> <3639e9058859b326f64600fcd0b608171b56ce9f.1537466087.git.me@ttaylorr.com>
+In-Reply-To: <3639e9058859b326f64600fcd0b608171b56ce9f.1537466087.git.me@ttaylorr.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 21 Sep 2018 03:19:20 -0400
+Message-ID: <CAPig+cT7WTyBCQZ75WSjmBqiui383YrKqoHqbLASQkOaGVTfVA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] transport.c: introduce core.alternateRefsPrefixes
+To:     ttaylorr@github.com
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Patches are welcome.
+On Thu, Sep 20, 2018 at 2:04 PM Taylor Blau <ttaylorr@github.com> wrote:
+> The recently-introduced "core.alternateRefsCommand" allows callers to
+> specify with high flexibility the tips that they wish to advertise from
+> alternates. This flexibility comes at the cost of some inconvenience
+> when the caller only wishes to limit the advertisement to one or more
+> prefixes.
+> [...]
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
+> @@ -44,4 +44,15 @@ test_expect_success 'with core.alternateRefsCommand' '
+> +test_expect_success 'with core.alternateRefsPrefixes' '
+> +       test_config -C fork core.alternateRefsPrefixes "refs/tags" &&
+> +       cat >expect <<-EOF &&
+> +       $(git rev-parse one) .have
+> +       $(git rev-parse three) .have
+> +       $(git rev-parse two) .have
+> +       EOF
 
-I'd be happy to patch git-contacts to link to the message you just
-sent, then maybe someone more qualified would know where to start... :)
+It's probably a matter of taste as to which is more readable, but this
+entire "cat <<EOF" block could be replaced with a simple one-liner:
 
-Frederick
+    printf "%s .have\n" $(git rev-parse one three two) >expect &&
 
-On Fri, Sep 21, 2018 at 01:18:30AM -0400, Eric Sunshine wrote:
-> On Wed, Sep 19, 2018 at 6:49 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > Frederick Eaton <frederik@ofb.net> writes:
-> > > By the way for some reason git-contacts shows more names when I run it
-> > > on the patch hash than when I give it the patch name:
-> > >
-> > > $ ./contrib/contacts/git-contacts 222580cb60ee64f7b81fed64ec8fbfc81952557f
-> > > Sébastien Guimmara <sebastien.guimmara@gmail.com>
-> > > Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> > > Eric Sunshine <sunshine@sunshineco.com>
-> > > Junio C Hamano <gitster@pobox.com>
-> > > $ ./contrib/contacts/git-contacts ./outgoing/0002-git-column.1-clarify-initial-description-provide-exa.patch
-> > > Junio C Hamano <gitster@pobox.com>
-> >
-> > I've never trusted what git-contacts say, but the latter one
-> > certainly looks strange [...]
-> 
-> I don't use git-contacts, but the first invocation isn't consulting
-> just a single commit but rather a range of commits. From git-contacts
-> documentation:
-> 
->     Input consists of one or more patch files or revision arguments.
->     A revision argument can be a range or a single `<rev>` which is
->     interpreted as `<rev>..HEAD`, thus the same revision arguments
->     are accepted as for linkgit:git-format-patch[1]. Patch files and
->     revision arguments can be combined in the same invocation.
-> 
-> So, you are actually running git-contacts on the range 222580cb..HEAD,
-> and 222580cb isn't even one of the patches being consulted (due to how
-> the range syntax does not include the argument to the left of "..").
-> To consult just that one commit, you'd want perhaps:
-> 
->     git-contacts 222580cb^..222580cb
-> 
-> > [...] as,
-> >
-> >         git log --no-merges Documentation/git-column.txt
-> >
-> > makes it clear that I have nothing to do with it ;-).  Perhaps the
-> > tool gives too much credit for Signed-off-by: footer, or something.
-> 
-> Since git-contacts can be used as git-send-email's --cc-cmd, it can
-> potentially be invoked many times, and it's a slow command (due to all
-> the "blaming" via git-blame). As an optimization, git-contacts limits
-> the timeframe of the blame via git-blame's --since option, with a
-> hardcoded limit of 5 years. So, the git-blame invocation made by
-> git-contacts for this patch file is:
-> 
->     git blame --porcelain -C -L13,+7 -L23,+7 -L43,+6 \
->         --since 5-years-ago \
->         4a189fff51b1^ -- Documentation/git-column.txt
-> 
-> Since the lines changed by the patch have not been touched within that
-> timeframe, git-blame assigns those lines to boundary commit 128a96c984
-> (Update draft release notes to 1.8.5 for the fifth batch of topics,
-> 2013-09-20), which was authored by Junio, which is why he shows up as
-> the only "contact".
-> 
-> If we remove the --since restriction:
-> 
->     git blame --porcelain -C -L13,+7 -L23,+7 -L43,+6 \
->         4a189fff51b1^ -- Documentation/git-column.txt
-> 
-> then the lines are correctly "blamed" to Duy via commit 7e29b8254f
-> (Add column layout skeleton and git-column, 2012-04-21).
-> 
-> The "Limitations" section of the git-contacts documentation says this:
-> 
->     Several conditions controlling a person's significance are
->     currently hard-coded, such as minimum participation level (10%),
->     blame date-limiting (5 years), and `-C` level for detecting moved
->     and copied lines (a single `-C`). In the future, these conditions
->     may become configurable.
-> 
-> So, this sort of potential issue was understood. Felipe's
-> git-related[1], from which git-contacts arose, eventually grew the
-> ability to tweak these hard-coded values via command-line options. The
-> same could be done for git-contacts. Patches are welcome.
-> 
-> [1]: https://github.com/felipec/git-related
-> 
+Same comment applies to previous patch, as well.
+
+> +       printf "0000" | git receive-pack fork | extract_haves >actual &&
+> +       test_cmp expect actual
+> +'
