@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB1771F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 15:58:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 328411F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 15:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390621AbeIUVrf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 17:47:35 -0400
-Received: from mail-lf1-f45.google.com ([209.85.167.45]:45422 "EHLO
-        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390357AbeIUVre (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 17:47:34 -0400
-Received: by mail-lf1-f45.google.com with SMTP id m80-v6so1354092lfi.12
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:03 -0700 (PDT)
+        id S2390614AbeIUVrd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 17:47:33 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:45704 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389545AbeIUVrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 17:47:33 -0400
+Received: by mail-lf1-f66.google.com with SMTP id m80-v6so1354041lfi.12
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aVlN3CsG2SNqTAQhykjoUYBWetEt96zCQsEwGP62Q2E=;
-        b=B7kdcHet6SaPse8W6CDFqUWy6DvK3VIEA/Fsgqp5L7shWPKXNJnlEk9gbJBay+aL6S
-         fXTfbKZYSJxqrM0urAGL7XyjTPBKuqWWu1i97DmRP/cxo7EVMEn915HE9cJvWh1Ex2eJ
-         Yva38mQVYPUWlQzs6rksdtrmJSXAo7RbnxvU9Lg93q4hj60ETRYQLuRALUsYUbrbLmlI
-         77vEzWFh3ohX1xmI/091xSWQByMDgifvM7tFx+TL6G9zTsf8QWqaSjJlqyY55GPtAbfU
-         4HcJsojjnVHDutxkoUrj343Up73mifKCH0XGDURXXxkmmXuuCYhwYuFqiYnvH4XB+F3n
-         ejfQ==
+        bh=+HSksfOAJW0/fs3Czs+73DPnuuXehKnw5jG2Ch+GXFE=;
+        b=FpbGU48Y4f6Lg3fhiAT3wmWprVXYl+Mj10j7NIAtvjXlrpVmnZdEw9c2N5uSppbb89
+         9uZTCvVBstpVCzAopexzH58b1Z2iLA/8qle627Kii6a3cVyT9q8/o4TIxrICbBsD0bor
+         /uTxfhYH/h/mCxNg2l6//9o4ac8NBq/Q2mxNABv80LLCz1/kRfnD8BfkD5puNiC78mcT
+         MDRsRMiaDhP0jnzqGZhmAVJbB74ak526WSM6e4mlt3EXN6+v96gYte8jUt5YFQnoGoJs
+         0zTC5Zm6Ddnr/zWbb4/EJ/YL0UXMRB/CbNylyvpLB1LUzXI0YW6T3DioKddjie0mx/l0
+         4Vzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aVlN3CsG2SNqTAQhykjoUYBWetEt96zCQsEwGP62Q2E=;
-        b=KxFKss3MWaTp87Xi5n5JU5OOBMGCug8VQXuks1xXh1U5FTJgQiTJVtnDQACiaT0nwK
-         5qAasrFA8vs3UbLsaNLBJwB9bYKXdsD1l1HaRL41BfzP51CM9Z3piZU98B2DD+hheplc
-         dQ4HMZ6WPK8fOnbsh/0eDzD51wxfcTdCZGBNfMf5OFtiU+a5keyfaRZ3GFbJd4WOFn2N
-         b5edkjY5QOYFipfrKtMd47QhtGjpRRIRXjFVdHmtgyCu1BcioAAfpqqz2v6HZ7cgMtqQ
-         TUbtjBWhkroZBqBAoNS0jIVLz95rxTMNux/IuRDMptiAT0zDVVq3rRlh8TJ8hBU9R8CR
-         1ipA==
-X-Gm-Message-State: APzg51Cd2bFfTMw2MOaLEYpVO8LUHSxnRpqHfiRps+pcW8FYlRGLqYYo
-        k2m7aD0kisqnta/wuCn6d4k=
-X-Google-Smtp-Source: ANB0VdaQq6WW5pLoxMSKXxIeaVcK+X0v/60BNkXsb8UYFmy3+7FqoFFvV1xBenbmxFODb04sr4EZkQ==
-X-Received: by 2002:a19:13dc:: with SMTP id 89-v6mr15177075lft.111.1537545482691;
-        Fri, 21 Sep 2018 08:58:02 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.58.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=+HSksfOAJW0/fs3Czs+73DPnuuXehKnw5jG2Ch+GXFE=;
+        b=cp8rvc/HmXOaKkWXSAG3z5g+3EwobARSeSAYOFGbbdcHDarTLmwoEOWy1wG6wC5P9S
+         nPHlsKtPSOtVJy9kyK7MyYkzjlSMnEn5p2CHVSXAPE5ATl2vDWzGipsIHFOYRN1RrHzE
+         djp2jcaCuedRwdgOj0u0qdp2LFbW4vP32NVP257Pt2duvn4elqTcTbrrFsmokg/IMc3b
+         5BJGhDHcz/s9z43p6BYTli4KR7qlzdVh62FZDQVqKle/twKdftsWF3CPjaYZyemxQk2T
+         FTdutsZRdYzTxCxOrE+t885GkyQqpJyrBDz43Qxe8nP5DSozODNH/hn2HpdIoAppz+Jx
+         FJGw==
+X-Gm-Message-State: APzg51Cy/cRUwo3hJtfLd5Y3rELm6keD5Oo3FSj513HW+YhWgUJNJJfe
+        y/22J02/JnUt2tUpWCngpw0=
+X-Google-Smtp-Source: ANB0VdZgOZwH0LGR5urnp1eWjOay2WJtjIUHuGHAS7KlnKNmWOZHAgXysIzBWCynh1SdttFKKw547g==
+X-Received: by 2002:a19:655d:: with SMTP id c29-v6mr29821497lfj.138.1537545481517;
         Fri, 21 Sep 2018 08:58:01 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.58.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Sep 2018 08:58:00 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com
-Subject: [PATCH v5 13/23] merge.c: remove implicit dependency on the_index
-Date:   Fri, 21 Sep 2018 17:57:29 +0200
-Message-Id: <20180921155739.14407-14-pclouds@gmail.com>
+Subject: [PATCH v5 12/23] merge-blobs.c: remove implicit dependency on the_index
+Date:   Fri, 21 Sep 2018 17:57:28 +0200
+Message-Id: <20180921155739.14407-13-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.640.gcd3aa10a8a
 In-Reply-To: <20180921155739.14407-1-pclouds@gmail.com>
 References: <20180915161759.8272-1-pclouds@gmail.com>
@@ -71,171 +71,89 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/merge.c |  8 +++++---
- builtin/pull.c  |  7 +++++--
- cache.h         |  6 ++++--
- merge.c         | 20 +++++++++++---------
- sequencer.c     |  6 +++---
- 5 files changed, 28 insertions(+), 19 deletions(-)
+ builtin/merge-tree.c |  2 +-
+ merge-blobs.c        | 15 +++++++++++----
+ merge-blobs.h        |  7 +++++--
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 592cb19caf..5f79fc5fd7 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -728,8 +728,9 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 			die(_("unable to write %s"), get_index_file());
- 		return clean ? 0 : 1;
- 	} else {
--		return try_merge_command(strategy, xopts_nr, xopts,
--						common, head_arg, remoteheads);
-+		return try_merge_command(the_repository,
-+					 strategy, xopts_nr, xopts,
-+					 common, head_arg, remoteheads);
- 	}
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index f8023bae1e..f32941fdab 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -76,7 +76,7 @@ static void *result(struct merge_list *entry, unsigned long *size)
+ 	their = NULL;
+ 	if (entry)
+ 		their = entry->blob;
+-	return merge_blobs(path, base, our, their, size);
++	return merge_blobs(&the_index, path, base, our, their, size);
  }
  
-@@ -1470,7 +1471,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 			goto done;
- 		}
+ static void *origin(struct merge_list *entry, unsigned long *size)
+diff --git a/merge-blobs.c b/merge-blobs.c
+index 668fb2e05d..ee0a0e90c9 100644
+--- a/merge-blobs.c
++++ b/merge-blobs.c
+@@ -29,7 +29,12 @@ static void free_mmfile(mmfile_t *f)
+ 	free(f->ptr);
+ }
  
--		if (checkout_fast_forward(&head_commit->object.oid,
-+		if (checkout_fast_forward(the_repository,
-+					  &head_commit->object.oid,
- 					  &commit->object.oid,
- 					  overwrite_ignore)) {
- 			ret = 1;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 681c127a07..33b7100837 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -562,7 +562,9 @@ static int pull_into_void(const struct object_id *merge_head,
- 	 * index/worktree changes that the user already made on the unborn
- 	 * branch.
+-static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our, mmfile_t *their, unsigned long *size)
++static void *three_way_filemerge(struct index_state *istate,
++				 const char *path,
++				 mmfile_t *base,
++				 mmfile_t *our,
++				 mmfile_t *their,
++				 unsigned long *size)
+ {
+ 	int merge_status;
+ 	mmbuffer_t res;
+@@ -42,7 +47,7 @@ static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our
  	 */
--	if (checkout_fast_forward(the_hash_algo->empty_tree, merge_head, 0))
-+	if (checkout_fast_forward(the_repository,
-+				  the_hash_algo->empty_tree,
-+				  merge_head, 0))
- 		return 1;
+ 	merge_status = ll_merge(&res, path, base, NULL,
+ 				our, ".our", their, ".their",
+-				&the_index, NULL);
++				istate, NULL);
+ 	if (merge_status < 0)
+ 		return NULL;
  
- 	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
-@@ -915,7 +917,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			"fast-forwarding your working tree from\n"
- 			"commit %s."), oid_to_hex(&orig_head));
- 
--		if (checkout_fast_forward(&orig_head, &curr_head, 0))
-+		if (checkout_fast_forward(the_repository, &orig_head,
-+					  &curr_head, 0))
- 			die(_("Cannot fast-forward your working tree.\n"
- 				"After making sure that you saved anything precious from\n"
- 				"$ git diff %s\n"
-diff --git a/cache.h b/cache.h
-index 260e4ee44a..49fe83331c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1716,10 +1716,12 @@ extern struct startup_info *startup_info;
- 
- /* merge.c */
- struct commit_list;
--int try_merge_command(const char *strategy, size_t xopts_nr,
-+int try_merge_command(struct repository *r,
-+		const char *strategy, size_t xopts_nr,
- 		const char **xopts, struct commit_list *common,
- 		const char *head_arg, struct commit_list *remotes);
--int checkout_fast_forward(const struct object_id *from,
-+int checkout_fast_forward(struct repository *r,
-+			  const struct object_id *from,
- 			  const struct object_id *to,
- 			  int overwrite_ignore);
- 
-diff --git a/merge.c b/merge.c
-index e30e03fb84..91008f7602 100644
---- a/merge.c
-+++ b/merge.c
-@@ -14,7 +14,8 @@ static const char *merge_argument(struct commit *commit)
- 	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
+@@ -50,7 +55,9 @@ static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our
+ 	return res.ptr;
  }
  
--int try_merge_command(const char *strategy, size_t xopts_nr,
-+int try_merge_command(struct repository *r,
-+		      const char *strategy, size_t xopts_nr,
- 		      const char **xopts, struct commit_list *common,
- 		      const char *head_arg, struct commit_list *remotes)
+-void *merge_blobs(const char *path, struct blob *base, struct blob *our, struct blob *their, unsigned long *size)
++void *merge_blobs(struct index_state *istate, const char *path,
++		  struct blob *base, struct blob *our,
++		  struct blob *their, unsigned long *size)
  {
-@@ -35,15 +36,16 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
- 	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
- 	argv_array_clear(&args);
- 
--	discard_cache();
--	if (read_cache() < 0)
-+	discard_index(r->index);
-+	if (read_index(r->index) < 0)
- 		die(_("failed to read the cache"));
--	resolve_undo_clear();
-+	resolve_undo_clear_index(r->index);
- 
- 	return ret;
- }
- 
--int checkout_fast_forward(const struct object_id *head,
-+int checkout_fast_forward(struct repository *r,
-+			  const struct object_id *head,
- 			  const struct object_id *remote,
- 			  int overwrite_ignore)
- {
-@@ -54,7 +56,7 @@ int checkout_fast_forward(const struct object_id *head,
- 	struct dir_struct dir;
- 	struct lock_file lock_file = LOCK_INIT;
- 
--	refresh_cache(REFRESH_QUIET);
-+	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
- 
- 	if (hold_locked_index(&lock_file, LOCK_REPORT_ON_ERROR) < 0)
- 		return -1;
-@@ -86,8 +88,8 @@ int checkout_fast_forward(const struct object_id *head,
+ 	void *res = NULL;
+ 	mmfile_t f1, f2, common;
+@@ -83,7 +90,7 @@ void *merge_blobs(const char *path, struct blob *base, struct blob *our, struct
+ 		common.ptr = xstrdup("");
+ 		common.size = 0;
  	}
+-	res = three_way_filemerge(path, &common, &f1, &f2, size);
++	res = three_way_filemerge(istate, path, &common, &f1, &f2, size);
+ 	free_mmfile(&common);
+ out_free_f2_f1:
+ 	free_mmfile(&f2);
+diff --git a/merge-blobs.h b/merge-blobs.h
+index 62b569e472..cc31038b80 100644
+--- a/merge-blobs.h
++++ b/merge-blobs.h
+@@ -1,8 +1,11 @@
+ #ifndef MERGE_BLOBS_H
+ #define MERGE_BLOBS_H
  
- 	opts.head_idx = 1;
--	opts.src_index = &the_index;
--	opts.dst_index = &the_index;
-+	opts.src_index = r->index;
-+	opts.dst_index = r->index;
- 	opts.update = 1;
- 	opts.verbose_update = 1;
- 	opts.merge = 1;
-@@ -101,7 +103,7 @@ int checkout_fast_forward(const struct object_id *head,
- 	}
- 	clear_unpack_trees_porcelain(&opts);
+-#include "blob.h"
++struct blob;
++struct index_state;
  
--	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
-+	if (write_locked_index(r->index, &lock_file, COMMIT_LOCK))
- 		return error(_("unable to write new index file"));
- 	return 0;
- }
-diff --git a/sequencer.c b/sequencer.c
-index dc2c58d464..2adc66f45e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -470,8 +470,8 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf err = STRBUF_INIT;
+-extern void *merge_blobs(const char *, struct blob *, struct blob *, struct blob *, unsigned long *);
++extern void *merge_blobs(struct index_state *, const char *,
++			 struct blob *, struct blob *,
++			 struct blob *, unsigned long *);
  
--	read_cache();
--	if (checkout_fast_forward(from, to, 1))
-+	read_index(&the_index);
-+	if (checkout_fast_forward(the_repository, from, to, 1))
- 		return -1; /* the callee should have complained already */
- 
- 	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
-@@ -1827,7 +1827,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 
- 		commit_list_insert(base, &common);
- 		commit_list_insert(next, &remotes);
--		res |= try_merge_command(opts->strategy,
-+		res |= try_merge_command(the_repository, opts->strategy,
- 					 opts->xopts_nr, (const char **)opts->xopts,
- 					common, oid_to_hex(&head), remotes);
- 		free_commit_list(common);
+ #endif /* MERGE_BLOBS_H */
 -- 
 2.19.0.640.gcd3aa10a8a
 
