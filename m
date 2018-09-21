@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52AF51F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 01:43:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 709451F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 01:43:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388853AbeIUHaN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 03:30:13 -0400
-Received: from mail-io1-f74.google.com ([209.85.166.74]:56210 "EHLO
-        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388824AbeIUHaN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 03:30:13 -0400
-Received: by mail-io1-f74.google.com with SMTP id m15-v6so16745891ioj.22
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 18:43:48 -0700 (PDT)
+        id S2388901AbeIUHaQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 03:30:16 -0400
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:56578 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388868AbeIUHaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 03:30:16 -0400
+Received: by mail-qk1-f201.google.com with SMTP id v65-v6so9418924qka.23
+        for <git@vger.kernel.org>; Thu, 20 Sep 2018 18:43:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=UtgVuBqe+NeyRHsnZJjXoH6ySnvdEJuPxQfqnbbc3tk=;
-        b=VdrcPFB2P4eCvEMNzCwvUR9IjBW3x+DjSJC+p5VCLeHXEvcugMHWOxm3QfgfN5eCSd
-         V+/dTeJoMf+8n83xFp3akI8Nj8y7hx2+IU4XYeT6KszbSiUTR6dySmeLUjLfULdgush5
-         CClqWEkW9Wcctscota32dJ9GYczq5qiqFQ2TaNwn56j54O7YH/uPoLCXO6/Rgk0yTuPZ
-         fw5ynYtxov5WOxeMYaa1Ls71OoL8p7syppooIq07sZ2oSr9UkND+VM5rx3Lj311ZHDXC
-         OafCfqSHPPtLBDrExM76lB/wniXdeUh7MwncyCWZw3T4FqdK84KDd96wlKpB8OjnkyF/
-         9WrA==
+        bh=VQimIdG5xD6KlZPhDqknJpYIETASC9Buquo4jns5Vzg=;
+        b=lv4wVOzYWrKHW8ljBPUdb/Xq0NbqAqkl60fK8Ec71o0xDE9oS5hWgcOS/nUZUyozYs
+         f8DHZMbm2H9MXAS2e6sJeXa7RtpuW72Ovcz7hvTqO22gcwW+I7i5WBWxD9YVPK4AOzLT
+         witdcyvR1sycbZ1F7XY8e+DkdpQYCfKe+1s+Etz56q8eBWRWxxkhL+E4dqjk/LyCa4rV
+         3lFyT3ZUyEXOAJG9MP1GkP0rJ4qCKPIpiiLU2RggpmYx1xAF8z3A91kvZQ/8t26NUX7y
+         9dO43pzTTBjS7R/ZFO0EdPws2hMVB/QKT9HOwSvj0KYsUoL+KEavqxft2XwQkJmIprPY
+         G3XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=UtgVuBqe+NeyRHsnZJjXoH6ySnvdEJuPxQfqnbbc3tk=;
-        b=ruj6rfrpjAqfXzJTz/GWlHR9yB9wdR22EfjHBIsJ69CPcX6kpV8teVptOXZsTQsg1W
-         W6mX0xdhvNl/YoL6VANKkmhqOUOcqXsnx5KnIFl3+1C6oKjDSsl68Jt1LGnFiALQOcP4
-         tA+Dg+NfMBdzXuDjxlC/NGcAZF44+WRnQ2Y01sK88WLlhQLrkVmCsXFpEfb23pBZrQwb
-         DP79u4QadgRhT5kLiIVlQgteY3m4ofGzYiAF5TRhVPPfsmvQyuxzg9lIAWgrFhJU0jSx
-         sxlWLvCmofUXm01N8ac2LRx4mYR48sNhcLAjxKOccSTAw6Eohl65/csWFM8Tgp19TYk9
-         Tc7Q==
-X-Gm-Message-State: APzg51CWBsWutBmyL/HgwadceSN0j6kcE/hPYpJQ6HbUUzAIUFIrYb2d
-        6CR4NRyYoA9jVMknebSXEigRGIWtBii2oOGDzi5bf74+B4cnoB7Srx2+OosgS9YyaFRn4vYLs9G
-        1U16qOeO/AFm0o86WCRML2goxS2RROb3LRnJVVoaE68D40V8iw3l8Skpsliw=
-X-Google-Smtp-Source: ANB0VdaUr3Q3npENHSt1VOrkVCCANjl7/c2sjpuZM9eA6Exz+htsRzunizDqNpeR8Oet5FlFqQ6DPsfs7Dyn
-X-Received: by 2002:a6b:ca84:: with SMTP id a126-v6mr30214072iog.45.1537494228430;
- Thu, 20 Sep 2018 18:43:48 -0700 (PDT)
-Date:   Thu, 20 Sep 2018 18:43:26 -0700
-In-Reply-To: <cover.1536969438.git.matvore@google.com>
-Message-Id: <cover.1537493611.git.matvore@google.com>
+        bh=VQimIdG5xD6KlZPhDqknJpYIETASC9Buquo4jns5Vzg=;
+        b=FycMoUgntPyxM3jm8vy3yKJhpRDOtHUgqpcHHMv5rlAxA3vWQBGyhrVsThT08ee7LM
+         laExP4QMom9MOCXQz6rMZ6Xl+LZW9hA5xaR5tq90nTrCj6oGUV6MfIEoP4iG0crxynVa
+         vQiXCvODjk7y8tB7Qv4N1mNLmSZ0wD1S7kz6InJW+oy01AJW0brjwMDamJ8895Rd0Ukr
+         J0KKxO6rUHsIS69LyAyecvCBb4HRmmUpq/55QDWfZMyx6ynEvjyhhHDPNNR4NZYohVNO
+         KRmKbYSwU8cBCiVxnD33p1j+dtpshUsVXo9E27grzrIJjLXFtyUhqTlYOL4+zuentANz
+         OV9A==
+X-Gm-Message-State: APzg51AFOH0I/MJerh6W9NohydMl++80AsMiC+vSdXjdcnHhf3GixVPy
+        NifkoDRxbVSLLZ1zOtlj4DSEnuf+lewQ4JNhvUh0lIubwp9niYFnUgHgqAbeWvoxjUAoSoVsseA
+        nUFoKnC0+WWb7CIxd190UNrVzjGfg/4Ime0mJo8igelyJkfqR45L135MsTyE=
+X-Google-Smtp-Source: ANB0VdawVK6FzWoYtTIQxAs+DWEN6vEx3cqN2nnhu9Ku26QfUIW0iJRv6Izn30GHYLU1LPU4yoOBS3ptCc1m
+X-Received: by 2002:a0c:e7c2:: with SMTP id c2-v6mr14361893qvo.10.1537494230777;
+ Thu, 20 Sep 2018 18:43:50 -0700 (PDT)
+Date:   Thu, 20 Sep 2018 18:43:27 -0700
+In-Reply-To: <cover.1537493611.git.matvore@google.com>
+Message-Id: <7dd9a1120726dee34aeebdfa4bf45a232c185500.1537493611.git.matvore@google.com>
 Mime-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com>
+References: <cover.1536969438.git.matvore@google.com> <cover.1537493611.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH v3 0/5] Clean up tests for test_cmp arg ordering and pipe placement
+Subject: [PATCH v3 1/5] CodingGuidelines: add shell piping guidelines
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, peff@peff.net,
@@ -64,67 +64,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two of the commits have changed drastically (see second and third points below)
-so I'm sending this again.
+Add two guidelines:
 
-Summary of changes since last time:
- - Remove the hacky linter check which makes sure pipes are placed at the end of
-   the line in tests - I may add this back in a more polished form when I have
-   time.
- - Unbroke t9101 git-svn test which I had broken pretty badly in v2 of the
-   patchset.
- - Cleaned up and generalized the wording of the added points in
-   CodingGuidelines.
+ - pipe characters should appear at the end of lines, and not cause
+   indentation
+ - pipes should be avoided when they swallow exit codes that can
+   potentially fail
+---
+ Documentation/CodingGuidelines | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-Thank you,
-
-Matthew DeVore (5):
-  CodingGuidelines: add shell piping guidelines
-  tests: standardize pipe placement
-  t/*: fix ordering of expected/observed arguments
-  tests: don't swallow Git errors upstream of pipes
-  t9109: don't swallow Git errors upstream of pipes
-
- Documentation/CodingGuidelines         |  27 ++
- t/lib-gpg.sh                           |   9 +-
- t/t0000-basic.sh                       |   2 +-
- t/t0021-conversion.sh                  |   4 +-
- t/t1006-cat-file.sh                    |   8 +-
- t/t1300-config.sh                      |   9 +-
- t/t1303-wacky-config.sh                |   4 +-
- t/t2101-update-index-reupdate.sh       |   2 +-
- t/t3200-branch.sh                      |   2 +-
- t/t3320-notes-merge-worktrees.sh       |   4 +-
- t/t3400-rebase.sh                      |   8 +-
- t/t3417-rebase-whitespace-fix.sh       |   6 +-
- t/t3702-add-edit.sh                    |   4 +-
- t/t3903-stash.sh                       |   8 +-
- t/t3905-stash-include-untracked.sh     |   2 +-
- t/t4025-hunk-header.sh                 |   2 +-
- t/t4117-apply-reject.sh                |   6 +-
- t/t4124-apply-ws-rule.sh               |  30 +--
- t/t4138-apply-ws-expansion.sh          |   2 +-
- t/t5317-pack-objects-filter-objects.sh | 360 ++++++++++++++-----------
- t/t5318-commit-graph.sh                |   2 +-
- t/t5500-fetch-pack.sh                  |   7 +-
- t/t5616-partial-clone.sh               |  30 ++-
- t/t5701-git-serve.sh                   |  14 +-
- t/t5702-protocol-v2.sh                 |  10 +-
- t/t6023-merge-file.sh                  |  12 +-
- t/t6027-merge-binary.sh                |   4 +-
- t/t6031-merge-filemode.sh              |   2 +-
- t/t6112-rev-list-filters-objects.sh    | 224 ++++++++-------
- t/t7201-co.sh                          |   4 +-
- t/t7406-submodule-update.sh            |   8 +-
- t/t7800-difftool.sh                    |   2 +-
- t/t9100-git-svn-basic.sh               |   2 +-
- t/t9101-git-svn-props.sh               |  34 ++-
- t/t9133-git-svn-nested-git-repo.sh     |   6 +-
- t/t9600-cvsimport.sh                   |   2 +-
- t/t9603-cvsimport-patchsets.sh         |   4 +-
- t/t9604-cvsimport-timestamps.sh        |   4 +-
- 38 files changed, 504 insertions(+), 366 deletions(-)
-
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 48aa4edfb..6d265327c 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -118,6 +118,24 @@ For shell scripts specifically (not exhaustive):
+ 		do this
+ 	fi
+ 
++ - If a command sequence joined with && or || or | spans multiple
++   lines, put each command on a separate line and put && and || and |
++   operators at the end of each line, rather than the start. This
++   means you don't need to use \ to join lines, since the above
++   operators imply the sequence isn't finished.
++
++	(incorrect)
++	grep blob verify_pack_result \
++	| awk -f print_1.awk \
++	| sort >actual &&
++	...
++
++	(correct)
++	grep blob verify_pack_result |
++	awk -f print_1.awk |
++	sort >actual &&
++	...
++
+  - We prefer "test" over "[ ... ]".
+ 
+  - We do not write the noiseword "function" in front of shell
+@@ -163,6 +181,15 @@ For shell scripts specifically (not exhaustive):
+ 
+    does not have such a problem.
+ 
++ - In a piped chain such as "grep blob objects | sort", the exit codes
++   returned by processes besides the last are ignored. This means that
++   if git crashes at the beginning or middle of a chain, it may go
++   undetected. Prefer writing the output of that command to a
++   temporary file with '>' rather than pipe it.
++
++ - The $(git ...) construct also discards git's exit code, so if the
++   goal is to test that particular command, redirect its output to a
++   temporary file rather than wrap it with $( ).
+ 
+ For C programs:
+ 
 -- 
 2.19.0.444.g18242da7ef-goog
 
