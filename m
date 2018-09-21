@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 328411F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF8081F453
 	for <e@80x24.org>; Fri, 21 Sep 2018 15:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390614AbeIUVrd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 17:47:33 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:45704 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389545AbeIUVrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 17:47:33 -0400
-Received: by mail-lf1-f66.google.com with SMTP id m80-v6so1354041lfi.12
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:02 -0700 (PDT)
+        id S2390626AbeIUVrg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 17:47:36 -0400
+Received: from mail-lj1-f172.google.com ([209.85.208.172]:43131 "EHLO
+        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390577AbeIUVrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 17:47:35 -0400
+Received: by mail-lj1-f172.google.com with SMTP id m84-v6so12080415lje.10
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+HSksfOAJW0/fs3Czs+73DPnuuXehKnw5jG2Ch+GXFE=;
-        b=FpbGU48Y4f6Lg3fhiAT3wmWprVXYl+Mj10j7NIAtvjXlrpVmnZdEw9c2N5uSppbb89
-         9uZTCvVBstpVCzAopexzH58b1Z2iLA/8qle627Kii6a3cVyT9q8/o4TIxrICbBsD0bor
-         /uTxfhYH/h/mCxNg2l6//9o4ac8NBq/Q2mxNABv80LLCz1/kRfnD8BfkD5puNiC78mcT
-         MDRsRMiaDhP0jnzqGZhmAVJbB74ak526WSM6e4mlt3EXN6+v96gYte8jUt5YFQnoGoJs
-         0zTC5Zm6Ddnr/zWbb4/EJ/YL0UXMRB/CbNylyvpLB1LUzXI0YW6T3DioKddjie0mx/l0
-         4Vzw==
+        bh=b4M3/LpaK5y6T0f/lyATtjEwjT7ofK1Os5gKnJL4DhU=;
+        b=L2w4FC1nMEQXUHWXZowGLHMthKHCJQYqHyEpjCDZuz/8FggY2rHcnTSh7lRmxW3nN6
+         EcMlVDBvBKDk10aFM1kte6GS6R8Vez/yHS+i4S6CnGgUD5LF5GIx0tKzi7f9rW2G1aNI
+         +GmUsMwTqbSzHu5egOrUioEvQqoBOjss5QI/gYgvoIljgHXY5OpOvriplBMwNrs6LGRW
+         uvbzPtLeSbcsxkZ8QhsyGRiWNJE7uKMA1S0luYypIWzOHOYVLYVz/IrYNpRpY+ClrIna
+         y4GWYqqMZvha1L+I2KF6tM8BtOkLH62/s9WW+ctkF1ud9OE9yiGZzPNy5en7ijzF7xx9
+         E86w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+HSksfOAJW0/fs3Czs+73DPnuuXehKnw5jG2Ch+GXFE=;
-        b=cp8rvc/HmXOaKkWXSAG3z5g+3EwobARSeSAYOFGbbdcHDarTLmwoEOWy1wG6wC5P9S
-         nPHlsKtPSOtVJy9kyK7MyYkzjlSMnEn5p2CHVSXAPE5ATl2vDWzGipsIHFOYRN1RrHzE
-         djp2jcaCuedRwdgOj0u0qdp2LFbW4vP32NVP257Pt2duvn4elqTcTbrrFsmokg/IMc3b
-         5BJGhDHcz/s9z43p6BYTli4KR7qlzdVh62FZDQVqKle/twKdftsWF3CPjaYZyemxQk2T
-         FTdutsZRdYzTxCxOrE+t885GkyQqpJyrBDz43Qxe8nP5DSozODNH/hn2HpdIoAppz+Jx
-         FJGw==
-X-Gm-Message-State: APzg51Cy/cRUwo3hJtfLd5Y3rELm6keD5Oo3FSj513HW+YhWgUJNJJfe
-        y/22J02/JnUt2tUpWCngpw0=
-X-Google-Smtp-Source: ANB0VdZgOZwH0LGR5urnp1eWjOay2WJtjIUHuGHAS7KlnKNmWOZHAgXysIzBWCynh1SdttFKKw547g==
-X-Received: by 2002:a19:655d:: with SMTP id c29-v6mr29821497lfj.138.1537545481517;
-        Fri, 21 Sep 2018 08:58:01 -0700 (PDT)
+        bh=b4M3/LpaK5y6T0f/lyATtjEwjT7ofK1Os5gKnJL4DhU=;
+        b=fzKw0lOhFg+YxQrIrT2lziBqEspsexKp6JqKRWxPRw/afaMtSgzoDH3EbdZkPOyJjN
+         YdkhlsbAOCGMhbBrfjE1ZYbalYxQ1E0ad0Cw3DZ2NF0dbNb55p2DyykUaBsxJuqB8pY/
+         L94ucgIoHXer7UXUo6tzKkOrIs6GuwtNnt4dE3OcJxfzrCtj5Wf5RNIr51W0BEkmhDBx
+         UiGdnXOeOZY/zUuwRPptR6OHCMay+og7QqOWK5/502OeO75g7FQ/04nLG7vDg38v8x7c
+         lAXScUyi8W+G2MVmR9Mk2cB9FK3AjA9Rzg/iPQXAv8HJWdv90cVH+J9HdskSI8/FH/87
+         +LSg==
+X-Gm-Message-State: ABuFfogfpe5f4G5q1dsP+GoPu2eUG0tMB1oyEPKO1tTOOrwy6B3Of2vL
+        1QTstKKimS7oG/quUlmcT6a6A60I
+X-Google-Smtp-Source: ACcGV63Sh1Tq/6t5ZE6XpBuskPm+byPRsLRQiXkRohlXh2hhdtaNs1qPlahunn8IMQVXfImjvzsdNg==
+X-Received: by 2002:a2e:97c8:: with SMTP id m8-v6mr2529765ljj.52.1537545483876;
+        Fri, 21 Sep 2018 08:58:03 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.58.00
+        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.58.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Sep 2018 08:58:00 -0700 (PDT)
+        Fri, 21 Sep 2018 08:58:03 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com
-Subject: [PATCH v5 12/23] merge-blobs.c: remove implicit dependency on the_index
-Date:   Fri, 21 Sep 2018 17:57:28 +0200
-Message-Id: <20180921155739.14407-13-pclouds@gmail.com>
+Subject: [PATCH v5 14/23] patch-ids.c: remove implicit dependency on the_index
+Date:   Fri, 21 Sep 2018 17:57:30 +0200
+Message-Id: <20180921155739.14407-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.640.gcd3aa10a8a
 In-Reply-To: <20180921155739.14407-1-pclouds@gmail.com>
 References: <20180915161759.8272-1-pclouds@gmail.com>
@@ -71,89 +71,76 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/merge-tree.c |  2 +-
- merge-blobs.c        | 15 +++++++++++----
- merge-blobs.h        |  7 +++++--
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ builtin/log.c | 2 +-
+ patch-ids.c   | 4 ++--
+ patch-ids.h   | 3 ++-
+ revision.c    | 2 +-
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index f8023bae1e..f32941fdab 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -76,7 +76,7 @@ static void *result(struct merge_list *entry, unsigned long *size)
- 	their = NULL;
- 	if (entry)
- 		their = entry->blob;
--	return merge_blobs(path, base, our, their, size);
-+	return merge_blobs(&the_index, path, base, our, their, size);
+diff --git a/builtin/log.c b/builtin/log.c
+index 4b602236d6..978fe7c10f 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -914,7 +914,7 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
+ 	if ((flags1 & UNINTERESTING) == (flags2 & UNINTERESTING))
+ 		die(_("Not a range."));
+ 
+-	init_patch_ids(ids);
++	init_patch_ids(the_repository, ids);
+ 
+ 	/* given a range a..b get all patch ids for b..a */
+ 	init_revisions(&check_rev, rev->prefix);
+diff --git a/patch-ids.c b/patch-ids.c
+index 342950c79d..7da86047d9 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -56,10 +56,10 @@ static int patch_id_cmp(const void *cmpfn_data,
+ 	return oidcmp(&a->patch_id, &b->patch_id);
  }
  
- static void *origin(struct merge_list *entry, unsigned long *size)
-diff --git a/merge-blobs.c b/merge-blobs.c
-index 668fb2e05d..ee0a0e90c9 100644
---- a/merge-blobs.c
-+++ b/merge-blobs.c
-@@ -29,7 +29,12 @@ static void free_mmfile(mmfile_t *f)
- 	free(f->ptr);
- }
- 
--static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our, mmfile_t *their, unsigned long *size)
-+static void *three_way_filemerge(struct index_state *istate,
-+				 const char *path,
-+				 mmfile_t *base,
-+				 mmfile_t *our,
-+				 mmfile_t *their,
-+				 unsigned long *size)
+-int init_patch_ids(struct patch_ids *ids)
++int init_patch_ids(struct repository *r, struct patch_ids *ids)
  {
- 	int merge_status;
- 	mmbuffer_t res;
-@@ -42,7 +47,7 @@ static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our
- 	 */
- 	merge_status = ll_merge(&res, path, base, NULL,
- 				our, ".our", their, ".their",
--				&the_index, NULL);
-+				istate, NULL);
- 	if (merge_status < 0)
- 		return NULL;
+ 	memset(ids, 0, sizeof(*ids));
+-	repo_diff_setup(the_repository, &ids->diffopts);
++	repo_diff_setup(r, &ids->diffopts);
+ 	ids->diffopts.detect_rename = 0;
+ 	ids->diffopts.flags.recursive = 1;
+ 	diff_setup_done(&ids->diffopts);
+diff --git a/patch-ids.h b/patch-ids.h
+index 79ac9a8498..82a12b66f8 100644
+--- a/patch-ids.h
++++ b/patch-ids.h
+@@ -6,6 +6,7 @@
  
-@@ -50,7 +55,9 @@ static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our
- 	return res.ptr;
- }
+ struct commit;
+ struct object_id;
++struct repository;
  
--void *merge_blobs(const char *path, struct blob *base, struct blob *our, struct blob *their, unsigned long *size)
-+void *merge_blobs(struct index_state *istate, const char *path,
-+		  struct blob *base, struct blob *our,
-+		  struct blob *their, unsigned long *size)
- {
- 	void *res = NULL;
- 	mmfile_t f1, f2, common;
-@@ -83,7 +90,7 @@ void *merge_blobs(const char *path, struct blob *base, struct blob *our, struct
- 		common.ptr = xstrdup("");
- 		common.size = 0;
- 	}
--	res = three_way_filemerge(path, &common, &f1, &f2, size);
-+	res = three_way_filemerge(istate, path, &common, &f1, &f2, size);
- 	free_mmfile(&common);
- out_free_f2_f1:
- 	free_mmfile(&f2);
-diff --git a/merge-blobs.h b/merge-blobs.h
-index 62b569e472..cc31038b80 100644
---- a/merge-blobs.h
-+++ b/merge-blobs.h
-@@ -1,8 +1,11 @@
- #ifndef MERGE_BLOBS_H
- #define MERGE_BLOBS_H
+ struct patch_id {
+ 	struct hashmap_entry ent;
+@@ -20,7 +21,7 @@ struct patch_ids {
  
--#include "blob.h"
-+struct blob;
-+struct index_state;
+ int commit_patch_id(struct commit *commit, struct diff_options *options,
+ 		    struct object_id *oid, int);
+-int init_patch_ids(struct patch_ids *);
++int init_patch_ids(struct repository *, struct patch_ids *);
+ int free_patch_ids(struct patch_ids *);
+ struct patch_id *add_commit_patch_id(struct commit *, struct patch_ids *);
+ struct patch_id *has_commit_patch_id(struct commit *, struct patch_ids *);
+diff --git a/revision.c b/revision.c
+index 0c6dc8c163..d70587678c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -877,7 +877,7 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ 		return;
  
--extern void *merge_blobs(const char *, struct blob *, struct blob *, struct blob *, unsigned long *);
-+extern void *merge_blobs(struct index_state *, const char *,
-+			 struct blob *, struct blob *,
-+			 struct blob *, unsigned long *);
+ 	left_first = left_count < right_count;
+-	init_patch_ids(&ids);
++	init_patch_ids(the_repository, &ids);
+ 	ids.diffopts.pathspec = revs->diffopt.pathspec;
  
- #endif /* MERGE_BLOBS_H */
+ 	/* Compute patch-ids for one side */
 -- 
 2.19.0.640.gcd3aa10a8a
 
