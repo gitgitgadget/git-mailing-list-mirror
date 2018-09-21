@@ -2,85 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 450691F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 21:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8B191F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 21:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391512AbeIVDA5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 23:00:57 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:40086 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391321AbeIVDA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 23:00:57 -0400
-Received: by mail-qt1-f195.google.com with SMTP id e9-v6so2745150qtp.7
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 14:10:18 -0700 (PDT)
+        id S2391562AbeIVDE7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 23:04:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:32968 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391560AbeIVDE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 23:04:59 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n11-v6so2864034wro.0
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 14:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=kQ78opCnJPi9dDQWHrUAtoZfJvgDRlpGaknneIhRArQ=;
+        b=jmLh+wPO9DQl6q6FX0HfhYHfDALVeYcFihaGBsw/9jvlen6lmd7Gl4iWQA73Xuymye
+         o5biL/ef8/P+pBk26eh1CRQAQbeB13Yli8wfNvPei6KAUNRGeb2A49QHGEf6ph1IUf0u
+         x9vv6xCxR/Xperr1n9X27ML8WiIPy3GxNbP4YznQZh8v0LDRzSR1VGSANn0T3MHam8VB
+         5IqYrQ1K3FStj4hzziuh7qSUkqa2AygJ2nCLKwy04PCH8JUKP0mAkVGlmu3f6+AjVRxX
+         PtLWNMwJdNFjQqbbUwVVgTuUtGwHLdDX2VXzl26jkwrDKOiRsSnCEZtp00xWtoTLsgSi
+         NC6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=r4Ie8uVzmiz4r7UXeyUkLlOzA0YvUNf+vh4PLbaANMk=;
-        b=B1IsX/0vewJNrXVnINtSfWJyEAixWnsKor4/jDwSC88JE3SRa2Q3Y5md1/VMBOOy0x
-         mnNOir22x9u1SGP9ixh89NlkwSfomkshtwp6PYIN8IM4cBnSDPrF31K6hSDl1qUlF+7L
-         TkdCgB1ElruknLemqUmCxZxPfkiqP1gSSIJQAbaHLp0c8Xzevoz0r1HvW4i2BXKqxJvw
-         kiyyGeLMDWZ9rCu/G0oP8z6fYSHK5pw4d36h8dTosF8gideUQ1NOZfaovfEmHzQbRyAj
-         K9OQRXEyUJPhydlG8NBIi37rgyq22LgbXzP9K0T9fiqGB5NGazoxe7kYxFt7j67MekPY
-         wUqA==
-X-Gm-Message-State: APzg51D0TzDzmXWz6B7GdIgZe2WRMhsX1/Ep+//jaoqmV9ZN93Wx3SzW
-        mvWt1JdvFTLpfcFNCLKbFoYEWZvFf0qSHARDMUU=
-X-Google-Smtp-Source: ANB0VdYXb7ByyV2VrdV/8OUnYb1fKbHcObO9e2Ez5U4k+alnLSorToAP0s03uglZBjzC/cNdQqFhZ+KW+OJqMdaQQPc=
-X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr33646450qtd.101.1537564218102;
- Fri, 21 Sep 2018 14:10:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1537466087.git.me@ttaylorr.com> <cover.1537555544.git.me@ttaylorr.com>
- <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
-In-Reply-To: <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 21 Sep 2018 17:10:06 -0400
-Message-ID: <CAPig+cRzY1LXuz3rYnPa5TqGv=Yur7o=h_6H4KNb6=fCV_ofFw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] transport.c: introduce core.alternateRefsCommand
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=kQ78opCnJPi9dDQWHrUAtoZfJvgDRlpGaknneIhRArQ=;
+        b=cULAZK4C2JDY0rU/QHRUrd5mGWuDxZlqaB1uVQMBLSGPfPj4tlL8Y2vnJao7YBNCww
+         24HuKrP9qouNyBZzBk9ZArKZQ9mj2jBECZN0GHZKpswoEgmh3/RBSaOJ6ibw0G0Clq27
+         my+SMpPlwdew1L8oJIJkyYNMJISJbccBgdCBOsY376wGzvg31tP994uwRXkpB0jV2iTA
+         S3gKhbb+gykvkeiH8t66jy8JUPxSXy9YC8mwXJVJCmuUcbcq91j+7euNWiy4+8JY7a3R
+         tQIL0qzhCtzyuCIn5Ih5kDe38DgNAFYUrSmuJbTi+Gc8R8OysvGm5ndP34mt+uLLydf7
+         JrrA==
+X-Gm-Message-State: APzg51BhsRCEyRIaZxo56LChd/2YOYRkw0WaWuB2pP7afbmAg0epA84s
+        2pc8pAEIcl2Mh2FQ0aq/i/g=
+X-Google-Smtp-Source: ANB0VdZKk5/d5kHx4gIrzIHZHDkF6nwoqDJQgBzTbHJouJN5eSJP0ZuqGW0zi03enOsSmfSQ0oC0vw==
+X-Received: by 2002:adf:8103:: with SMTP id 3-v6mr39939006wrm.213.1537564458489;
+        Fri, 21 Sep 2018 14:14:18 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id y10-v6sm25844325wrl.87.2018.09.21.14.14.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 21 Sep 2018 14:14:17 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, peff@peff.net, sunshine@sunshineco.com,
+        sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+References: <cover.1537466087.git.me@ttaylorr.com>
+        <cover.1537555544.git.me@ttaylorr.com>
+        <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
+Date:   Fri, 21 Sep 2018 14:14:17 -0700
+In-Reply-To: <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Fri, 21 Sep 2018 14:47:45 -0400")
+Message-ID: <xmqqbm8qv9hy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 21, 2018 at 2:47 PM Taylor Blau <me@ttaylorr.com> wrote:
-> When in a repository containing one or more alternates, Git would
-> sometimes like to list references from its alternates. For example, 'git
-> receive-pack' list the objects pointed to by alternate references as
-> special ".have" references.
-> [...]
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
+Taylor Blau <me@ttaylorr.com> writes:
+
+> +core.alternateRefsPrefixes::
+> +	When listing references from an alternate, list only references that begin
+> +	with the given prefix. Prefixes match as if they were given as arguments to
+> +	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
+> +	whitespace. If `core.alternateRefsCommand` is set, setting
+> +	`core.alternateRefsPrefixes` has no effect.
+
+We do not allow anything elaborate like "refs/tags/release-*" but we
+still allow "refs/tags/" and "refs/heads/" by listing them together,
+and because these are only prefixes, whitespace is a reasonable list
+separator as they cannot appear anywhere in a refname.  OK.
+
+Why is this "core"?  I thought this was more about receive-pack;
+even if this is going to be extended to upload-pack's negotiation,
+"core" is way too wide a hierarchy.  We have "transport.*" for
+things like this, no?
+
+The exact same comment applies to 2/3, of course.
+
+
 > diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-> @@ -0,0 +1,54 @@
-> +expect_haves () {
-> +       printf "%s .have\n" $(git rev-parse $@) >expect
-> +}
-> +
-> +test_expect_success 'with core.alternateRefsCommand' '
-> +       [...]
-> +       expect_haves a c >expect &&
-
-This is not great. Both the caller of expect_haves() and
-expect_haves() itself redirect to a file named "expect". This works,
-but only by accident.
-
-Better would be to make expect_haves() simply a generator to stdout
-and let the caller redirect to the file rather than hardcoding the
-filename in the function itself (much as extract_haves() takes it its
-input on stdin rather than hardcoding a filename). If you take this
-approach, then you'd probably want to rename the function, as well;
-perhaps call it emit_haves() or something.
-
-> +       printf "0000" | git receive-pack fork >actual &&
-> +       extract_haves <actual >actual.haves &&
-> +       test_cmp expect actual.haves
+> index 2f21f1cb8f..b656c9b30c 100755
+> --- a/t/t5410-receive-pack.sh
+> +++ b/t/t5410-receive-pack.sh
+> @@ -51,4 +51,12 @@ test_expect_success 'with core.alternateRefsCommand' '
+>  	test_cmp expect actual.haves
+>  '
+>  
+> +test_expect_success 'with core.alternateRefsPrefixes' '
+> +	test_config -C fork core.alternateRefsPrefixes "refs/tags" &&
+> +	expect_haves one three two >expect &&
+> +	printf "0000" | git receive-pack fork >actual &&
+> +	extract_haves <actual >actual.haves &&
+> +	test_cmp expect actual.haves
 > +'
+> +
+>  test_done
+> diff --git a/transport.c b/transport.c
+> index e7d2cdf00b..9323e5c3cd 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+>  		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
+>  		argv_array_push(&cmd->args, "for-each-ref");
+>  		argv_array_push(&cmd->args, "--format=%(objectname) %(refname)");
+> +
+> +		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
+> +			argv_array_push(&cmd->args, "--");
+> +			argv_array_split(&cmd->args, value);
+> +		}
+>  	}
+>  
+>  	cmd->env = local_repo_env;
