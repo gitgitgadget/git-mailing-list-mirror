@@ -2,79 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A08AC1F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 16:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFA3E1F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 16:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390730AbeIUWgs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 18:36:48 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:55627 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388909AbeIUWgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 18:36:48 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id 3Oa7gJVn9WLW23Oa8gxLPj; Fri, 21 Sep 2018 17:47:04 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=fJUXI6Se c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=SHWgZ3sZ2X1AwTs8gKIA:9 a=QEXdDO2ut3YA:10
- a=t8EmEut40mcA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] fetch-object.h: add missing declaration (hdr-check)
+        id S2390415AbeIUWiL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 18:38:11 -0400
+Received: from ICGRIDDB04.SEAS.UPENN.EDU ([158.130.57.72]:40428 "EHLO
+        ICGRIDDB04.SEAS.upenn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390281AbeIUWiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 18:38:11 -0400
+Received: from [10.13.0.14] (helo=ofb.net)
+        by ICGRIDDB04.SEAS.upenn.edu with esmtp (Exim 4.89)
+        (envelope-from <frederik@ofb.net>)
+        id 1g3ObS-0000Ik-Jc; Fri, 21 Sep 2018 12:48:26 -0400
+Received: from localhost.localdomain (unknown [173.239.75.234])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ofb.net (Postfix) with ESMTPSA id 683A73F1EA;
+        Fri, 21 Sep 2018 09:48:21 -0700 (PDT)
+Received: from frederik by localhost.localdomain with local (Exim 4.91)
+        (envelope-from <frederik@localhost.localdomain>)
+        id 1g3ObI-0004rZ-Fq; Fri, 21 Sep 2018 09:48:19 -0700
+Date:   Fri, 21 Sep 2018 09:48:16 -0700
+From:   frederik@ofb.net
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <12cd9928-d04d-d208-a1b4-ceecbdf79432@ramsayjones.plus.com>
- <xmqq1s9myg67.fsf@gitster-ct.c.googlers.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <f6663e27-cfe6-c927-746c-dfbeed5bb3a2@ramsayjones.plus.com>
-Date:   Fri, 21 Sep 2018 17:47:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+Cc:     Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] git-column.1: clarify initial description, provide
+ examples
+Message-ID: <20180921164802.GB11082@ofb.net>
+Reply-To: frederik@ofb.net
+References: <20180919201231.609-1-frederik@ofb.net>
+ <20180919201231.609-3-frederik@ofb.net>
+ <xmqqo9ct2ivl.fsf@gitster-ct.c.googlers.com>
+ <20180920162302.GB13379@duynguyen.home>
+ <20180920174722.GH22921@ofb.net>
+ <xmqqsh22x14v.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1s9myg67.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfD32e/XPjoDUgstQpfquMz3/EPo81QF3hsYEm9S2X8vKe7do5EycdlWPNMW8Mf0H0H7PHa+JZTTGrKNuZsjQg03ij3RZ8vULkOBt0yaZYldLlQgpfKtm
- 60GOuGZtR00H6yn5fLlOszUxuEdJdQdZoemS6DOnGn/qtYNcfPlnAqIe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsh22x14v.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you Junio, maybe I will have another chance to get practice
+sending a v2 patch.
 
-
-On 21/09/18 17:21, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Fri, Sep 21, 2018 at 09:32:00AM -0700, Junio C Hamano wrote:
+> frederik@ofb.net writes:
 > 
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>
->> Hi Junio,
->>
->> This is the patch I needed for the current 'next' branch to get
->> a clean 'hdr-check'
+> > On Thu, Sep 20, 2018 at 06:23:03PM +0200, Duy Nguyen wrote:
+> >> On Wed, Sep 19, 2018 at 03:59:58PM -0700, Junio C Hamano wrote:
+> >> > > @@ -23,7 +26,7 @@ OPTIONS
+> >> > >  
+> >> > >  --mode=<mode>::
+> >> > >  	Specify layout mode. See configuration variable column.ui for option
+> >> > > -	syntax.
+> >> > > +	syntax (in git-config(1)).
+> >> 
+> >> I think we usually link to other commands with "linkgit", like
+> >> linkgit:git-config[1]
+> >> 
+> >> Other than that, the rest looks good.
+> >
+> > Thank you, then do I edit the patch and resubmit as PATCH v2 with the
+> > message ID and all that?
+> >
+> > Frederick
 > 
-> Which means that this is a fix on top of jt/lazy-object-fetch-fix
-> topic, I think.
+> If this is the only change in the whole 3 patches, then I can just
+> squash in the following to save one round-trip.
 > 
-> Will apply there.
-
-Yes, indeed. Sorry, I should have added that information, rather
-than forcing you to look it up! (Similar comment on the userdiff.h
-patch as well) :(
-
-BTW, I notice that patch #9 (commit-reach.h: add missing declarations
- (hdr-check)) didn't make it onto 'pu' - was there something else I
-needed to do? (I am still in two minds about sending an RFC patch
-on-top of patch #9).
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
+>  Documentation/git-column.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-column.txt b/Documentation/git-column.txt
+> index 5bbb51068e..763afabb6d 100644
+> --- a/Documentation/git-column.txt
+> +++ b/Documentation/git-column.txt
+> @@ -26,7 +26,7 @@ OPTIONS
+>  
+>  --mode=<mode>::
+>  	Specify layout mode. See configuration variable column.ui for option
+> -	syntax (in git-config(1)).
+> +	syntax in linkgit:git-config[1].
+>  
+>  --raw-mode=<n>::
+>  	Same as --mode but take mode encoded as a number. This is mainly used
+> 
