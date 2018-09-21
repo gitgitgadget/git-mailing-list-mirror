@@ -2,119 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C89111F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 23:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDDDA1F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 23:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391631AbeIVFkx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 01:40:53 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39258 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeIVFkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 01:40:53 -0400
-Received: by mail-ed1-f65.google.com with SMTP id h4-v6so11991552edi.6
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 16:49:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=2AOIRlKCdakVQbcw3cVsyiaWVWfmiKZEj5Mjn9JgJf8=;
-        b=g6EqhyJ7KqiLpVCKzlDxnF4QD0kpBM55rqFgApvX+eJ5BRj2aGLCCBsAYeGYdPpCa/
-         INKr/jIU+zOMQVn+xsf1XymcOKVBp66nBK+s6s4MwdgV2DrtoHERPGL8LeriJqZVK1Q5
-         H4AN6xN1OpRZtFy7W2kctXoyeGsiM6wlhUIJM1Zkq4DCp1X1C2KUWO4/fGkDfNiNz2Hp
-         t3ECS3imBqcVSNtICoESPa4k0BXT+9EaEQDJSeiHjcfUHyPx3R8tjHywJGUpVFhJFORU
-         E7LHk3KWeDwhxxqYjyrpabjJHr1SBHX3my0xp8tSvDXtmuLPB68MRwDHbEhGcWGkkau8
-         OOGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=2AOIRlKCdakVQbcw3cVsyiaWVWfmiKZEj5Mjn9JgJf8=;
-        b=r9PYXK3Ky7SF8mDQDJPgVP4MOXH/CuVDWESGTtr5myLlTB5afjMjlTldT3Bl1tk1P0
-         p1x7D0FQiBW1HwHuhHl4qvT5gLSAwZHzkVojsQCVKt4AdjQPRjlIYYchMEq0QthaLabF
-         bxEdKpS1mm0416fLP5M2447HS/PsK3tSdQvh6qncqTQHYIOdzdj0J+cmQuwIouzhmqPg
-         wd8lzyVpWhYxf4BHR2okmqM3swnAi3LSG+qHYzPqtLLz8pIgtEHk1yykmB8+3lLmIFqx
-         dXUyo/xsmFyRxNN0lhwyAlF6b2EIKi/E6Za7NvI4GWROivIukDAp1yAIsSuQ27MDH3P6
-         bjPg==
-X-Gm-Message-State: ABuFfoiWVDEXi4hxq9PWwBf/Xs04c3gxLMXsV8RQ+XPXFnM72JjDYHVr
-        YMyhwjC7u74AQ8lPzZuTHlM=
-X-Google-Smtp-Source: ACcGV61YCvk6v+dKxvnhe96axv32V2CE7zX4RHlnZZUjf6GmUdCSHekNOXcJxUa7X85Ss1XgJvqg1A==
-X-Received: by 2002:aa7:c549:: with SMTP id s9-v6mr64101edr.73.1537573781137;
-        Fri, 21 Sep 2018 16:49:41 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id g4-v6sm2695564eda.86.2018.09.21.16.49.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 21 Sep 2018 16:49:40 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: Segfault in master due to 4fbcca4eff
-References: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com> <87pnx6kjn8.fsf@evledraar.gmail.com> <62a46e49-e539-cbb8-4aaf-6f9b5ae6be57@gmail.com> <87o9cqkj6p.fsf@evledraar.gmail.com> <5e7e6519-21c1-daff-65a5-7d2ca5e1dbd4@gmail.com> <xmqqefdmyhe9.fsf@gitster-ct.c.googlers.com> <87lg7ujuc2.fsf@evledraar.gmail.com> <20180921234543.GA3412@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180921234543.GA3412@sigill.intra.peff.net>
-Date:   Sat, 22 Sep 2018 01:49:38 +0200
-Message-ID: <87k1nejtrh.fsf@evledraar.gmail.com>
+        id S1727035AbeIVFrm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 01:47:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55770 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725756AbeIVFrl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 01:47:41 -0400
+Received: (qmail 8752 invoked by uid 109); 21 Sep 2018 23:56:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 21 Sep 2018 23:56:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10075 invoked by uid 111); 21 Sep 2018 23:56:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 21 Sep 2018 19:56:21 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2018 19:56:28 -0400
+Date:   Fri, 21 Sep 2018 19:56:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 1/2] commit-reach: properly peel tags
+Message-ID: <20180921235628.GA3437@sigill.intra.peff.net>
+References: <pull.39.v2.git.gitgitgadget@gmail.com>
+ <pull.39.v3.git.gitgitgadget@gmail.com>
+ <0a1e661271660b1fab317aac3997589a94b7c98f.1537542323.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <0a1e661271660b1fab317aac3997589a94b7c98f.1537542323.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Sep 21, 2018 at 08:05:26AM -0700, Derrick Stolee via GitGitGadget wrote:
 
-On Fri, Sep 21 2018, Jeff King wrote:
+> diff --git a/commit-reach.c b/commit-reach.c
+> index 86715c103c..e748414d04 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -544,20 +544,42 @@ int can_all_from_reach_with_flag(struct object_array *from,
+>  {
+>  	struct commit **list = NULL;
+>  	int i;
+> +	int nr_commits;
+>  	int result = 1;
+>  
+>  	ALLOC_ARRAY(list, from->nr);
+> +	nr_commits = 0;
+>  	for (i = 0; i < from->nr; i++) {
+> -		list[i] = (struct commit *)from->objects[i].item;
+> +		struct object *from_one = from->objects[i].item;
+>  
+> -		if (parse_commit(list[i]) ||
+> -		    list[i]->generation < min_generation)
+> -			return 0;
+> +		if (!from_one || from_one->flags & assign_flag)
+> +			continue;
+> +
+> +		from_one = deref_tag(the_repository, from_one,
+> +				     "a from object", 0);
+> +		if (!from_one || from_one->type != OBJ_COMMIT) {
+> +			/* no way to tell if this is reachable by
+> +			 * looking at the ancestry chain alone, so
+> +			 * leave a note to ourselves not to worry about
+> +			 * this object anymore.
+> +			 */
 
-> On Sat, Sep 22, 2018 at 01:37:17AM +0200, Ævar Arnfjörð Bjarmason wrote:
->
->> > Thanks, both of you ;-).  I was aware of the issue and proposed fix
->> > but forgot about it when merging things down to 'master'.  Sorry
->> > about that.
->> 
->> Just a follow-up question, in your merge commit you just pushed to
->> "next" you say:
->> 
->>     Recent update broke the reachability algorithm when tags pointing
->>     at objects that are not commit were involved, which has been fixed.
->> 
->> And in Derrick's commit message it says:
->> 
->>     [...]but incorrectly assumed that all objects provided were commits[...]
->> 
->> I just wanted to double check (without having the time to dig myself at
->> this point) whether this bug was understood & tested for, or whether the
->> case I had was just /also/ fixed for unexpected reasons.
->> 
->> I.e. in my upthread test case I have two annotated tags pointing at
->> commits, whereas the merge to "next" says "when tags pointing at objects
->> that are not commit were involved", which I I assume means say annotated
->> tags pointing at blobs..., but that's not what I had.
->> 
->> Wasn't this just a bug fix that had nothing to do with tags not pointing
->> to commits, but just ones where we had the simple case of tags pointing
->> to commits, but they just weren't peeled?
->> 
->> I'm hoping for a "Junio skimmed the fix and wrote a merge message that
->> wasn't quite accurate" here, but maybe that's not the case and something
->> might be missing (e.g. missing test code).
->
-> I think it's a combination of the merge message being slightly
-> inaccurate, and you slightly misreading it. :)
->
-> I think by "tags pointing", Junio meant "tag refs". Which of course,
-> often point at tag objects, but can also point at trees, etc.
->
-> But the problem is not limited to tag refs. I think it's a problem with
-> any "want" that is a non-commit. So really any ref pointing to a
-> non-commit is a problem. But of course tags are the likely way for that
-> to happen, since refs/heads is generally limited to commits.
->
-> So in short, yeah, the bug was triggered by fetching any annotated tag.
+A minor nit, but the original comment you restored here has a style
+violation. Might be worth fixing up (but certainly not worth a re-roll
+on its own).
 
-Thanks for clearing that up.
+> +			from->objects[i].item->flags |= assign_flag;
+
+OK, so here we mark the original tag with a flag...
+
+> +
+> +		list[nr_commits] = (struct commit *)from_one;
+> +		if (parse_commit(list[nr_commits]) ||
+> +		    list[nr_commits]->generation < min_generation) {
+> +			result = 0;
+> +			goto cleanup;
+> +		}
+
+And we jump to the cleanup here, but...
+
+> @@ -600,7 +622,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+>  	}
+>  
+>  cleanup:
+> -	for (i = 0; i < from->nr; i++) {
+> +	for (i = 0; i < nr_commits; i++) {
+>  		clear_commit_marks(list[i], RESULT);
+>  		clear_commit_marks(list[i], assign_flag);
+
+This walks over the items in the list array, which don't include the tag
+we marked. Did we decide that's OK? I think it's actually how the
+original code behaved, too, but it seems funny. At the least we might
+want to call it out in the commit message.
+
+Should we also be walking from->objects and clearing the flags from
+there (maybe not RESULT, but assign_flag)? It's not clear to me if it's
+unintentional for those to be marked after the function leaves or not.
+
+Also, a minor aside, but I think it would be slightly more efficient for
+those final two lines to do:
+
+  clear_commit_marks(list[i], RESULT | assign_flag);
+
+Of course, that's totally orthogonal to this patch, but it may make you
+feel better to offset the other round of clearing I'm suggesting. ;)
+
+> diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+> index eb21103998..08d2ea68e8 100644
+> --- a/t/helper/test-reach.c
+> +++ b/t/helper/test-reach.c
+
+These bits all looked good to me.
+
+-Peff
