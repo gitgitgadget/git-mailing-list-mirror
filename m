@@ -2,113 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 968471F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 22:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D67C1F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 22:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725860AbeIVEOf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 00:14:35 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37031 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeIVEOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 00:14:35 -0400
-Received: by mail-wm1-f67.google.com with SMTP id n11-v6so4753580wmc.2
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 15:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=V+y+GTse0Xn2K/43CaBfBoIJMzHvDBe1QwUZuGiTuNU=;
-        b=WUed73hWyMHQry4Vr3PSAed/INCYWXoJefUdzBDGyI2BAL9MHAFxIRcOEgjEfnf9tw
-         UTT4PSBm3yls+SxYGVY+UgQI2NG42zHul2u1xbtREm3f3F+xcMUJq1W1NBsjato6Lv3W
-         tdBT1Wh9cMB9Zhbvmud8z4/xrELmh8IP/Y6bY2+gX3YWMAKsU9xJ2e+szAC+9YWT/VGa
-         1SYTRGTC6aT8SXuD4VkZLwTzLkI1XboGtrceuhLWOliYr26Ssck5yRHc5HfvCSmqxr8+
-         w1nj9RohJYoSklgnQAnp2k+tSmvMg0HohJKZKVTM5EWgw31wM5jxZc7N2DilQI8QgXNZ
-         fqcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=V+y+GTse0Xn2K/43CaBfBoIJMzHvDBe1QwUZuGiTuNU=;
-        b=VpXC3yuy8U1EpkYlliYahx04ccZswxRSOvuAjOgFMJdxf8+l6CMKHxHlCbAadLjx4+
-         T2O++Ymopd75IOkwQXSjK7IV/9AR1yXMFuuSxcILSjysN2mYOq0t/N23SUTTDzwvmlsV
-         nNNQsYvSkWmcpbkWnAwdEdE7kZF/FwRlTEhl7HnPJ5LqjkFxbNO7TenDjpEcrosxKqf/
-         TcukqhG2Oz3XX4byC+J1uP3HK8WOYlrx4q6u/C1tHcLNeWBBl8jZ+FPT07O8y7dMgQgP
-         ojnX6pB9Bokn6YiIRYU5ywZAVRme8zA+SOjvhsHQpSqzvjmLQoqowiK3J5LDh3OVPpiG
-         Ou4Q==
-X-Gm-Message-State: ABuFfojI0LiMd4Ob3IQOYTlIdfJqT38FFzJJ9oJxF1R+dmFU0lUg0X/j
-        3CRD0jbiiDJ7WLCfnJZBKHU=
-X-Google-Smtp-Source: ACcGV61pEN+EgG684MMYTH+tLUnTuG+ctsFmuqS3xtS4rQj8mayQO8pXpTel2hoAf9HaPS+CWbaq2Q==
-X-Received: by 2002:a1c:7212:: with SMTP id n18-v6mr1050460wmc.33.1537568621161;
-        Fri, 21 Sep 2018 15:23:41 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x16-v6sm20817645wro.84.2018.09.21.15.23.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 21 Sep 2018 15:23:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        sunshine@sunshineco.com, sbeller@google.com
-Subject: Re: [PATCH v2 2/3] transport.c: introduce core.alternateRefsCommand
-References: <cover.1537466087.git.me@ttaylorr.com>
-        <cover.1537555544.git.me@ttaylorr.com>
-        <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
-        <xmqqfty2v9qj.fsf@gitster-ct.c.googlers.com>
-        <20180921221317.GB11177@sigill.intra.peff.net>
-Date:   Fri, 21 Sep 2018 15:23:40 -0700
-In-Reply-To: <20180921221317.GB11177@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 21 Sep 2018 18:13:18 -0400")
-Message-ID: <xmqqpnx6trpv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1725874AbeIVEPs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 00:15:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55608 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725748AbeIVEPs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 00:15:48 -0400
+Received: (qmail 5348 invoked by uid 109); 21 Sep 2018 22:24:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 21 Sep 2018 22:24:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9303 invoked by uid 111); 21 Sep 2018 22:24:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 21 Sep 2018 18:24:47 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2018 18:24:54 -0400
+Date:   Fri, 21 Sep 2018 18:24:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     Sebastian Gniazdowski <psprint@zdharma.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Very simple popen() code request, ground-shaking functionality
+ openned by it
+Message-ID: <20180921222454.GD11177@sigill.intra.peff.net>
+References: <315083291.15466.1537536854535@privateemail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <315083291.15466.1537536854535@privateemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Sep 21, 2018 at 09:34:14AM -0400, Sebastian Gniazdowski wrote:
 
-> On Fri, Sep 21, 2018 at 02:09:08PM -0700, Junio C Hamano wrote:
->
->> > +test_expect_success 'setup' '
->> > +	test_commit one &&
->> > +	git update-ref refs/heads/a HEAD &&
->> > +	test_commit two &&
->> > +	git update-ref refs/heads/b HEAD &&
->> > +	test_commit three &&
->> > +	git update-ref refs/heads/c HEAD &&
->> > +	git clone --bare . fork &&
->> > +	git clone fork pusher &&
->> > +	(
->> > +		cd fork &&
->> > +		git config receive.advertisealternates true &&
->> 
->> Hmph.  Do we have code to support this configuration variable?
->
-> Sorry, I should have caught that. Our existing solution is to disable
-> alternates in the advertisement entirely (since the optimization
-> backfires for us). So this line is a leftover from testing it against
-> our fork, and should be dropped.
->
-> If anybody is interested, we can share those patches, though they're
-> unsurprisingly trivial.
+> Git default progress indicator for clone is very unattractive, IMO. It
+> does its job in providing all the operation details very well, but I
+> bet most of users strongly dream about a gauge box!
+> 
+> Have a look at my gauge box constructed as git-stderr pipe script:
+> https://asciinema.org/a/202401
+> 
+> The main point of my feature request is: git can add
+> core.progress_pipe option, where e.g. `/usr/local/bin/mygauge' will be
+> set (a script like the one in the asciinema), and then simply do the
+> ground-school-known `popen("/usr/local/bin/mygauge","r+")', and write
+> **unchanged current-progress data** to the pipe, then read from the
+> pipe and forward to `stderr', where the progress normally lands in.
+> 
+> This will allow users to free their creativity and provide probably
+> dozens of custom Git progress bars.
 
-Heh, I guessed correctly what is going on ;-)
+I don't personally feel that the existing progress bar is that bad, but
+if anybody wants to pursue this, I think the most sensible path is:
 
-Even though there may not be much interest in the "all-or-none"
-boolean configuration, in order to upstream this custom thing, it
-may be the cleanest to upstream that all-or-none thing as well.
-Otherwise, you'd need to keep a patch to this test script that is
-private for your "all-or-none" feature.  That's your maintenance
-burden so it ultimately is your call ;-)
-> Also, useless-use-of-cat in the original, which could be:
->
->   git update-ref --stdin <<-\EOF
+  1. Add a trace_key for sending machine-readable progress output to a
+     descriptor or file. E.g., via setting GIT_TRACE_PROGRESS=2 in the
+     environment.
 
-Yup.
+  2. Teach the trace code to open a command for piping, so that you
+     could do something like GIT_TRACE_PROGRESS='|mygauge'.
 
-Thanks.
+That would make your use case work, and I think many other use cases
+would benefit from both of those features independently.
+
+-Peff
