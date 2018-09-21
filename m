@@ -2,136 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 312AE1F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 15:47:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3565F1F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 15:55:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390184AbeIUVhV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 17:37:21 -0400
-Received: from mail-qt1-f169.google.com ([209.85.160.169]:40658 "EHLO
-        mail-qt1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388909AbeIUVhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 17:37:21 -0400
-Received: by mail-qt1-f169.google.com with SMTP id e9-v6so1747065qtp.7
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:47:52 -0700 (PDT)
+        id S2390435AbeIUVpA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 17:45:00 -0400
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:52173 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390111AbeIUVo7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 17:44:59 -0400
+Received: by mail-wm1-f46.google.com with SMTP id y2-v6so3598366wma.1
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=8rWR4uSq+rMlFHrJachtg1UKfx5WfI7km8QYHWYSTb0=;
-        b=XEnXO2kRYuHKkAc5idOPJixT15ElQ0RKHATv/Q/uBw/ZsrJ+fOHJ+LnydqhSN2iRc7
-         4KGYEE7Fbw5duVIYe3iNzyn2ozS0+ZxtY/eidCSGZIjNzSGwXt4UpaQtB+eGg9gj6lrj
-         4dC/RPUJi7qbDgoFKaP/f8sHGAhPP7zd/QZMRBdR8qjipAE85Dxp/8C9IiYsOEkltoh3
-         oYDbNgAO7UMHxNfKkYKNuM6FqJUt+vnhnQMrs12Gojj9rXpk5VlHh++tUzaIaNZAKiKV
-         o9Fhi51bPAX5uh0l1KlPtk49f2cHCAz07DxkOkRYILmjdRzzpICDF5zcXnZgZxPFg0Ka
-         dJOQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1NmCszPxVjD3DkDIdGrEQLm8QVDNXiKqumoCHPMHvmY=;
+        b=irEN5NQ8PS32REst+HQDzTAN/9aTdZjnGisA4pXwD9KXQ7GX0h+3XJENhfGv5foL9J
+         V9jkloAnIBZFYaxL1HIT+5lp507gsZ7vX9+otgd0ELpVo/MNkoj6jM/5aTgvsKyQ/J+a
+         nM/VqQpc4d1/6B4msr9hVin3a3Q4HZiueRI0XMmLPHWgDv56i0XBlFDLsVklL71Wq/rh
+         l+53sXO/77WxnLXtIVhA5zXCD/KkkZ8R1V+fHrumKuCTP2X/aq5DZqBzWFg48CQ7IkCX
+         wK8/bvAtVjRYsPZ42riLohpgAkV6lxl90TgDLqan7fBACgUPwYIiU+9BWC3DXhU1XLb5
+         Q5lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=8rWR4uSq+rMlFHrJachtg1UKfx5WfI7km8QYHWYSTb0=;
-        b=CShSxLW2Zyl9wEku4WtWksDJz7FjBOPBcsnLCRMNxWcxAcK3eAoi45rxLSiI9EDPY3
-         IDas4Xxyd/xjivuUwVrq5yLkNJXXiOX/cYRuyZhIwgQbNa11pWeowfltuf4zhkroLI2b
-         iY9RHi7mCQrzw6mORVCypCUHIHNN+W73JNk95jCtSx66TNt3UkmHOvZMNputQU0Kj1HP
-         zw0seS3inYZZOVxiuhJaFPnpXUYMAzzx+XyK+GdMbe6D3RxDBSWfJywJAY0akuq1J7Cl
-         V9lUNdiHY25gPk4RvENp5AqH0Il2Zz3t6hN62lwsnDAUbFovZak7ukb7DJKN+8G2kWey
-         Q6/g==
-X-Gm-Message-State: ABuFfoiNLdLCE7L3plbrEYBYLX50knEZmBDRXQ8awDOjGK3RImfay8Pj
-        ajQvr/xvr46/OoUt/etkqRg=
-X-Google-Smtp-Source: ACcGV60FszmT7NyIGKKT+7f7Z5rD6vNc7m4ktcHByV8xoMqf58elQp5ySW+RtKgiZXayPQOTnuks/A==
-X-Received: by 2002:a0c:af55:: with SMTP id j21-v6mr1286821qvc.149.1537544871799;
-        Fri, 21 Sep 2018 08:47:51 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:f452:f7ab:45dd:bf7c? ([2001:4898:8010:0:dd88:f7ab:45dd:bf7c])
-        by smtp.gmail.com with ESMTPSA id v7-v6sm15181317qkc.29.2018.09.21.08.47.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Sep 2018 08:47:48 -0700 (PDT)
-Subject: Re: [PATCH v2 0/6] Use generation numbers for --topo-order
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.25.git.gitgitgadget@gmail.com>
- <pull.25.v2.git.gitgitgadget@gmail.com> <87worjjq6o.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2d72ae31-774e-d0a4-8b6c-ea125377eac5@gmail.com>
-Date:   Fri, 21 Sep 2018 11:47:45 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=1NmCszPxVjD3DkDIdGrEQLm8QVDNXiKqumoCHPMHvmY=;
+        b=B9aJRRNsky0bMNsfrK03zz9xOflhwtUaj1vyRWNNl9mnCcEhTVgUtoGpRG/DkyXosq
+         lwTFxz1sG/ZK3erag5gOqwEQg7tpHr1M7QXXkq8INfLumI7xY3Co0Lse3KE3GKosL62Q
+         /Vqm/a5KsTOobJne3qnwjjKoWgRjnKqHdhatyOy0ZsS7UVLwkkjdM/jUIG4DZ43Iuqhh
+         SjQViL6JrAr2Y5zQgpgrepVkAgfdIH510Cpld8ztBFQWasBGMdQUbp9bJsMkbP/23iIb
+         p1PEgGjopq4ex767xLrY5gPfI1eWx46VFApFo12ckCjCc/Q/POstzFEaAb9ZRTSS6Ilo
+         w3lQ==
+X-Gm-Message-State: ABuFfoh64+kuOU8pLP2MMD6ISYr7EVmWmlWEFjnezAXmdFfi0b482fxJ
+        J01iueGwmgtwCvZEh59Mrxk=
+X-Google-Smtp-Source: ANB0VdZSque94T2zXibhDV4LzG9TkoFsXJEjp8tNAQacZcJKGhmeK55G5oaey1I6Uk9CxsSLWRVg1A==
+X-Received: by 2002:a1c:7015:: with SMTP id l21-v6mr7755461wmc.81.1537545327550;
+        Fri, 21 Sep 2018 08:55:27 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v16-v6sm35368745wrw.12.2018.09.21.08.55.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 21 Sep 2018 08:55:26 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Segfault in master due to 4fbcca4eff
+References: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com>
+        <87pnx6kjn8.fsf@evledraar.gmail.com>
+        <62a46e49-e539-cbb8-4aaf-6f9b5ae6be57@gmail.com>
+        <87o9cqkj6p.fsf@evledraar.gmail.com>
+        <5e7e6519-21c1-daff-65a5-7d2ca5e1dbd4@gmail.com>
+Date:   Fri, 21 Sep 2018 08:55:26 -0700
+In-Reply-To: <5e7e6519-21c1-daff-65a5-7d2ca5e1dbd4@gmail.com> (Derrick
+        Stolee's message of "Fri, 21 Sep 2018 10:53:30 -0400")
+Message-ID: <xmqqefdmyhe9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87worjjq6o.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/18/2018 2:05 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Sep 18 2018, Derrick Stolee via GitGitGadget wrote:
->
-> Thanks. Good to see the commit graph used for more stuff.
->
->> On the Linux repository, I got the following performance results when
->> comparing to the previous version with or without a commit-graph:
+Derrick Stolee <stolee@gmail.com> writes:
+
+> On 9/21/2018 10:40 AM, Ævar Arnfjörð Bjarmason wrote:
+>> On Fri, Sep 21 2018, Derrick Stolee wrote:
 >>
->> Test: git rev-list --topo-order -100 HEAD
->> HEAD~1, no commit-graph: 6.80 s
->> HEAD~1, w/ commit-graph: 0.77 s
->>    HEAD, w/ commit-graph: 0.02 s
->>
->> Test: git rev-list --topo-order -100 HEAD -- tools
->> HEAD~1, no commit-graph: 9.63 s
->> HEAD~1, w/ commit-graph: 6.06 s
->>    HEAD, w/ commit-graph: 0.06 s
-> It would be great if this were made into a t/perf/ test shipped with
-> this series, that would be later quoted in a commit, as in
-> e.g. 3b41fb0cb2 ("fsck: use oidset instead of oid_array for skipList",
-> 2018-09-03).
+>>>
+>>> This error was reported by Peff [1] and fixed in [2], but as stated
+>>> [3] I was waiting for more review before sending a v3. I'll send that
+>>> v3 shortly, responding to the feedback so far.
+>>>
+>>> -Stolee
+>>>
+>>> [1]
+>>> https://public-inbox.org/git/0bf9103c-9377-506b-7ad7-e5273d8e94fc@gmail.com/T/#u
+>>>
+>>> [2] https://public-inbox.org/git/pull.39.git.gitgitgadget@gmail.com/
+>>>
+>>> [3]
+>>> https://public-inbox.org/git/8d6061de-1654-577c-40c6-211dbd03aa36@gmail.com/
+>> Thanks and sorry for the duplicate report. I can confirm that applying
+>> the v2 of that fixes the segfault for the test case I posted.
 >
-> Although generalizing that "-- tools" part (i.e. finding a candidate
-> dir) will require some heuristic, but would make it useful when running
-> this against other erpos.
+> Thanks for the report! You are a good dogfooder.
 
-t/perf/p4211-line-log.sh has the following test:
-
-
-     test_perf 'git log --oneline --raw --parents -1000' '
-             git log --oneline --raw --parents -1000 >/dev/null
-     '
-
-We could add the following to the end of that script to get similar 
-values, since it already selects a file randomly at the top of the script:
-
-     test_perf 'git log --oneline --raw --parents -1000 -- <file>' '
-             git log --oneline --raw --parents -1000 -- $file >/dev/null
-     '
-
->
->> If you want to read this series but are unfamiliar with the commit-graph and
->> generation numbers, then I recommend reading
->> Documentation/technical/commit-graph.txt or a blob post [1] I wrote on the
->> subject. In particular, the three-part walk described in "revision.c:
->> refactor basic topo-order logic" is present (but underexplained) as an
->> animated PNG [2].
-> We discussed some of this in private E-Mail, and this isn't really
-> feedback on *this* series in particular, just on the general
-> commit-graph work.
->
-> Right now git-config(1) just matter-of-factly says how to enable it, and
-> points to git-commit-graph(1) for further info, which just shows how to
-> run the tool. But nothing's describing what stuff is sped up, and those
-> sorts of docs aren't being updated as new optimizations (e.g. this
-> --topo-order walk) are added.
->
-> For that you need to scour a combination of your blogpost & commits in
-> git.git (with quoted perf numbers).
-
-Thanks for reminding me. I have this on my list of TODOs.
-
--Stolee
-
+Thanks, both of you ;-).  I was aware of the issue and proposed fix
+but forgot about it when merging things down to 'master'.  Sorry
+about that.
