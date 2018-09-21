@@ -2,84 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B20411F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 05:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 661D61F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 05:45:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388896AbeIULTf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 07:19:35 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:37728 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727141AbeIULTf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 07:19:35 -0400
-Received: by mail-qt1-f195.google.com with SMTP id n6-v6so642757qtl.4
-        for <git@vger.kernel.org>; Thu, 20 Sep 2018 22:32:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZRCHVCAG0OM84cdkzXKjY15QOsxmz4pOfiFhNNgD+Ho=;
-        b=slFwqBk44vkSmfGHc38f+7wVDW61g4WGMvnGQo2tZpmvdyBq9OIpe97UkqhLzN7QLF
-         BSCOD6jsMwdCbDFMs1GX/6aK+r6MB1WIL0ZtfhB7n+pdrCM6+fnvurB7evuveJvmo90O
-         8G+oVZRiJcGB6vIHJQXpqgVeehDSkfSoeMIKLycVmTBgOd3Ep/e9zpUNKrhZHykbC5U4
-         +tRdRN/dwraKgRRmWgLD6FCc1lT0Is326q+V9B1R34BkJo1co6XUrAKqbJNzCP8lVzaE
-         INLEpa/T55m331LhCWqi+tiJFzQRaOO/U3NNoI3rxTGQwA8TqBp25wz1Uya8T3GisSKh
-         MW2g==
-X-Gm-Message-State: APzg51DxYvnPWBHX9LsJA+ow3lIKbgsn9mNscv3QLlw7zETVO1GakOWd
-        v5bSboxWnTF+VExV5r+D7vo/1stRe4fYi/5WjBM=
-X-Google-Smtp-Source: ANB0VdZQpELGlLQx5nD56LWEtAQw4SGwUoXMn4mCxVioUjbPJkLRT1QD1/dTBBvRi/may++LYv1sCDAkm5ZaAz7sqIM=
-X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr30884239qtc.50.1537507943154;
- Thu, 20 Sep 2018 22:32:23 -0700 (PDT)
+        id S2388984AbeIULdJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 07:33:09 -0400
+Received: from ICGRIDDB04.SEAS.UPENN.EDU ([158.130.57.72]:34180 "EHLO
+        ICGRIDDB04.SEAS.upenn.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbeIULdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 07:33:09 -0400
+Received: from [10.13.0.14] (helo=ofb.net)
+        by ICGRIDDB04.SEAS.upenn.edu with esmtp (Exim 4.89)
+        (envelope-from <frederik@ofb.net>)
+        id 1g3EGG-0000og-PN; Fri, 21 Sep 2018 01:45:52 -0400
+Received: from localhost.localdomain (unknown [173.239.75.234])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ofb.net (Postfix) with ESMTPSA id 8FC0C3E868;
+        Thu, 20 Sep 2018 22:45:47 -0700 (PDT)
+Received: from frederik by localhost.localdomain with local (Exim 4.91)
+        (envelope-from <frederik@localhost.localdomain>)
+        id 1g3EGA-0000XZ-K1; Thu, 20 Sep 2018 22:45:46 -0700
+Date:   Thu, 20 Sep 2018 22:45:46 -0700
+From:   frederik@ofb.net
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] some documentation changes from the beginning of the
+ alphabet
+Message-ID: <20180921054546.GA11082@ofb.net>
+Reply-To: frederik@ofb.net
+References: <20180919201231.609-1-frederik@ofb.net>
+ <xmqqzhwd2jcq.fsf@gitster-ct.c.googlers.com>
+ <CAPig+cR04cjf-D_hUgKhOSUAhHd8py7BM4-HOyE3VttV_ufXFQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20180919201231.609-1-frederik@ofb.net> <20180919201231.609-3-frederik@ofb.net>
- <xmqqo9ct2ivl.fsf@gitster-ct.c.googlers.com> <20180920162302.GB13379@duynguyen.home>
- <20180920174722.GH22921@ofb.net>
-In-Reply-To: <20180920174722.GH22921@ofb.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 21 Sep 2018 01:32:12 -0400
-Message-ID: <CAPig+cQA5O_Zhe0wKzpppaQji997z2hfevnRMLW2nLRgce-YzQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] git-column.1: clarify initial description, provide examples
-To:     Frederick Eaton <frederik@ofb.net>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cR04cjf-D_hUgKhOSUAhHd8py7BM4-HOyE3VttV_ufXFQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 20, 2018 at 1:47 PM <frederik@ofb.net> wrote:
-> On Thu, Sep 20, 2018 at 06:23:03PM +0200, Duy Nguyen wrote:
-> > On Wed, Sep 19, 2018 at 03:59:58PM -0700, Junio C Hamano wrote:
-> > > > @@ -23,7 +26,7 @@ OPTIONS
-> > > >
-> > > >  --mode=<mode>::
-> > > >   Specify layout mode. See configuration variable column.ui for option
-> > > > - syntax.
-> > > > + syntax (in git-config(1)).
+> Patches are welcome.
+
+I'd be happy to patch git-contacts to link to the message you just
+sent, then maybe someone more qualified would know where to start... :)
+
+Frederick
+
+On Fri, Sep 21, 2018 at 01:18:30AM -0400, Eric Sunshine wrote:
+> On Wed, Sep 19, 2018 at 6:49 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > Frederick Eaton <frederik@ofb.net> writes:
+> > > By the way for some reason git-contacts shows more names when I run it
+> > > on the patch hash than when I give it the patch name:
+> > >
+> > > $ ./contrib/contacts/git-contacts 222580cb60ee64f7b81fed64ec8fbfc81952557f
+> > > Sébastien Guimmara <sebastien.guimmara@gmail.com>
+> > > Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> > > Eric Sunshine <sunshine@sunshineco.com>
+> > > Junio C Hamano <gitster@pobox.com>
+> > > $ ./contrib/contacts/git-contacts ./outgoing/0002-git-column.1-clarify-initial-description-provide-exa.patch
+> > > Junio C Hamano <gitster@pobox.com>
 > >
-> > I think we usually link to other commands with "linkgit", like
-> > linkgit:git-config[1]
->
-> Thank you, then do I edit the patch and resubmit as PATCH v2 with the
-> message ID and all that?
-
-Editing the patch directly is not recommended. More typical would be
-to use "git rebase -i" and/or "git commit --amend" to make changes to
-the commits themselves (that is, rewrite history), taking review
-comments into account (and generally polishing the changes). Once the
-edits are complete, re-generate the patches with git-format-patch and
-re-send the entire series as v2 with git-send-email (or some people
-skip git-format-patch and go directly to git-send-email to both format
-and send the patches as one step).
-
-You can use the -v option of git-format-patch to mark the series as v2.
-
-When sending v2 via git-send-email, you can use the --in-reply-to
-option with the message ID of the v1 cover letter to tie the re-roll
-to the original. (The message ID of the v1 cover letter is
-"20180919201231.609-1-frederik@ofb.net".)
+> > I've never trusted what git-contacts say, but the latter one
+> > certainly looks strange [...]
+> 
+> I don't use git-contacts, but the first invocation isn't consulting
+> just a single commit but rather a range of commits. From git-contacts
+> documentation:
+> 
+>     Input consists of one or more patch files or revision arguments.
+>     A revision argument can be a range or a single `<rev>` which is
+>     interpreted as `<rev>..HEAD`, thus the same revision arguments
+>     are accepted as for linkgit:git-format-patch[1]. Patch files and
+>     revision arguments can be combined in the same invocation.
+> 
+> So, you are actually running git-contacts on the range 222580cb..HEAD,
+> and 222580cb isn't even one of the patches being consulted (due to how
+> the range syntax does not include the argument to the left of "..").
+> To consult just that one commit, you'd want perhaps:
+> 
+>     git-contacts 222580cb^..222580cb
+> 
+> > [...] as,
+> >
+> >         git log --no-merges Documentation/git-column.txt
+> >
+> > makes it clear that I have nothing to do with it ;-).  Perhaps the
+> > tool gives too much credit for Signed-off-by: footer, or something.
+> 
+> Since git-contacts can be used as git-send-email's --cc-cmd, it can
+> potentially be invoked many times, and it's a slow command (due to all
+> the "blaming" via git-blame). As an optimization, git-contacts limits
+> the timeframe of the blame via git-blame's --since option, with a
+> hardcoded limit of 5 years. So, the git-blame invocation made by
+> git-contacts for this patch file is:
+> 
+>     git blame --porcelain -C -L13,+7 -L23,+7 -L43,+6 \
+>         --since 5-years-ago \
+>         4a189fff51b1^ -- Documentation/git-column.txt
+> 
+> Since the lines changed by the patch have not been touched within that
+> timeframe, git-blame assigns those lines to boundary commit 128a96c984
+> (Update draft release notes to 1.8.5 for the fifth batch of topics,
+> 2013-09-20), which was authored by Junio, which is why he shows up as
+> the only "contact".
+> 
+> If we remove the --since restriction:
+> 
+>     git blame --porcelain -C -L13,+7 -L23,+7 -L43,+6 \
+>         4a189fff51b1^ -- Documentation/git-column.txt
+> 
+> then the lines are correctly "blamed" to Duy via commit 7e29b8254f
+> (Add column layout skeleton and git-column, 2012-04-21).
+> 
+> The "Limitations" section of the git-contacts documentation says this:
+> 
+>     Several conditions controlling a person's significance are
+>     currently hard-coded, such as minimum participation level (10%),
+>     blame date-limiting (5 years), and `-C` level for detecting moved
+>     and copied lines (a single `-C`). In the future, these conditions
+>     may become configurable.
+> 
+> So, this sort of potential issue was understood. Felipe's
+> git-related[1], from which git-contacts arose, eventually grew the
+> ability to tweak these hard-coded values via command-line options. The
+> same could be done for git-contacts. Patches are welcome.
+> 
+> [1]: https://github.com/felipec/git-related
+> 
