@@ -2,130 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 318621F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 19:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21A381F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 19:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391228AbeIVBNZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 21:13:25 -0400
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:40669 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728456AbeIVBNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 21:13:24 -0400
-Received: by mail-yw1-f65.google.com with SMTP id z143-v6so5621694ywa.7
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 12:23:07 -0700 (PDT)
+        id S2391160AbeIVBto (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 21:49:44 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50947 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390726AbeIVBto (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 21:49:44 -0400
+Received: by mail-wm1-f67.google.com with SMTP id s12-v6so4226151wmc.0
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 12:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Mo6l2T9oGSb4lL4ZTlNIEpmIDX8lSG9SVwUgxEasMnM=;
-        b=fuBjGuoF/xbmuDZ1Wh7aSSPLqgSHk+K98bkxIREQtSxBN3UpA+uMmdPhCr5mu1E5S8
-         8rp9dDVBZhq9mNqLiUIKgGqdsF6BRjkiRgKRelq4YasyuinyUDSx9E2OQ+droz85l+hG
-         DM5uceR+t/d+0DESKscxjEXuy3XzFCqq6WBwUZw2yHZ9EQnarv6rlYSAFEMHl3cOa9gi
-         XUTGnnwMAXvXg7vpBqG/lh5L1Cy4ar4gzTY4TNf4l/mugdC41b5Kdi5GJnDkZU4Kaq3l
-         bjmq4KlhC1svt3fjZPsZhXYQHOiQ/Kq7WK+2w27UHv9GiFrFjZzpH4ukuxWU3n17mLn7
-         gaLA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UB0tOhJR1Ys/esSmXJxLgMCU5bQ5KzWucZAd8zW0f+4=;
+        b=qPeNW+S8LwC6KZsJaD6SK/ri2i4yvZIibnQBhgfsPKzEs+vv1nS9Jf9mzFbybCxnXm
+         TG7N7wXu2vGFMFjQ3QYdj8ZxN7OS8HTGhw4xnm//t6jZbOBkxVz1WobMhZjxh/QWXAAN
+         1+fOkJW2ovCGjWiU4axvvdA88rLQ3oZ+iXMUaLyYO0SgJWfjw83RcYE3xk1BJUwe353u
+         S8V/bOZnRw8ORDINMYUiWNWsAKGJt7ozc1y8Urc8nKDvY6wmNJwdrmqLW+87hjnjuaQ3
+         ZNgZtUMCNUgeExY1Ii09P/StAw70c8YaW+wnh8FKIe6Rz3X3j1fqde+j7h/nx+JceBpN
+         pn8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Mo6l2T9oGSb4lL4ZTlNIEpmIDX8lSG9SVwUgxEasMnM=;
-        b=Fr3/SGQpLkVgffEVfvZ6M8qDzDgygFZ1DwZbmPILVI5KqBIGDuSqOkh5Pr45pvK0to
-         3SOK64sfgnXIS0XwvQdpSaqN5X/WNP7ZBXVuYWt9bnA7J82HzxoB3DTp6myWxuveAx/5
-         bG1j6Pf/Z6QRCGHAvaGx0md3qx50Sju8NoGXQuMna9+8LiTdfKCKMyFc8f9WEIuKdCtl
-         4sa4AJjLOU7h2fkSX7caxpghqACe6v2bSFLki17okc1zzha8S7gzK0heZfzOci9PQgmj
-         qW9zfwJm+wnsS47w5ZvBQhok6ZFMlVJf8bEbRRwZNnNb3oHjhKsThJY33Wk19kljCNh8
-         55gA==
-X-Gm-Message-State: APzg51ChyO7rm8s/YGKO/LlXjmJXyW0jIvF0wOi9nj8ZWo/ozzXoHc6j
-        XdQyveVda/vYN0LRpZqwZ/ak+IyNLfl+WvVtJTGg4zFJAv9RVg==
-X-Google-Smtp-Source: ANB0Vdax5Rcr+kxRBXIf5dAe7VD36MQasVNdLs3bmxAYwD7bxFtzfA0paPOct3wlAegsq+FvEIPGyNdZMQH+CePPNU8=
-X-Received: by 2002:a81:5855:: with SMTP id m82-v6mr20186514ywb.300.1537557787066;
- Fri, 21 Sep 2018 12:23:07 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UB0tOhJR1Ys/esSmXJxLgMCU5bQ5KzWucZAd8zW0f+4=;
+        b=NkVg5JzG+BGpjgge2vOv3IdDrREvfByfVfRYsbjWNlOWaa0EqR1aj7b/UpbIfL8C9E
+         +m4c3/s73YFyiFGAMON7mTeSK4r8HABJ0Jo6bQuoib0nxuRas6yr7Sh+dL6pcyTs2EJN
+         YVMSeK5h+0wPbvZpl8tgDqa9E9GS6TwMnuy57qJvnRN8JxDNbStPuKqu06WvTziXPl+x
+         Murfed4cow0cYGNxag7wjn2ybkFgokmn/E8TJ0Q8wCJCUo68cwKp26uGuZQbRUCIvxzW
+         6Z/hDuJm5oe1J9cjzmNBmx4ld2DeJuCkV2yam/11BgrFU/Czr+ZFfGnf987kGwhkgvt2
+         Et6Q==
+X-Gm-Message-State: APzg51DBRiLwygI0tunfqzpoOrB4uSh81FQqou+N4HEqmCbqVBqs2xRE
+        /KAkNZNi8oowjiLaqRBzE1lrXWFP
+X-Google-Smtp-Source: ANB0VdacoFa6SwztMOMFJE3lG0x2FREMdpXzukd+yrew+yhY19f+nZ1T8OdyRZPoCfPEFs+hvyetjg==
+X-Received: by 2002:a1c:c501:: with SMTP id v1-v6mr6022622wmf.115.1537559958335;
+        Fri, 21 Sep 2018 12:59:18 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o19-v6sm35801833wro.50.2018.09.21.12.59.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 21 Sep 2018 12:59:17 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 2/3] transport.c: introduce core.alternateRefsCommand
+References: <cover.1537466087.git.me@ttaylorr.com>
+        <4c4900722cab253b3ce33cb28910c4602ce44536.1537466087.git.me@ttaylorr.com>
+        <xmqqlg7ux0st.fsf@gitster-ct.c.googlers.com>
+        <20180921174825.GA17718@syl> <20180921175739.GA21514@syl>
+Date:   Fri, 21 Sep 2018 12:59:16 -0700
+In-Reply-To: <20180921175739.GA21514@syl> (Taylor Blau's message of "Fri, 21
+        Sep 2018 13:57:39 -0400")
+Message-ID: <xmqqr2hmvcyz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180921185149.8670-1-marcnarc@xiplink.com>
-In-Reply-To: <20180921185149.8670-1-marcnarc@xiplink.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 21 Sep 2018 12:22:55 -0700
-Message-ID: <CAGZ79kabCTD9uvw+GPXxJGf8BfiqvMkhkA4Up8gC_kXjdv-o8g@mail.gmail.com>
-Subject: Re: [PATCH] fetch: Ensure that fetch.recurseSubmodules overrides submodule.recurse.
-To:     Marc Branchaud <marcnarc@xiplink.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 21, 2018 at 12:00 PM Marc Branchaud <marcnarc@xiplink.com> wrote:
+Taylor Blau <me@ttaylorr.com> writes:
+
+> In fact, I think that we can go even further: since we don't need to
+> catch the beginning '^.*' (without -o), we can instead:
 >
-> Also document this fact.
->
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-> ---
->
-> I ran into this bug when I had both fetch.recurseSubmodules=on-demand and
-> submodule.recurse=true, and submodule.recurse was set *after*
-> fetch.recurseSubmodules in my config.
->
-> The fix ensures that fetch.recurseSubmodules always overrides
-> submodule.recurse.  If neither is set then fetch still behaves as if
-> fetch.recurseSubmodules=on-demand (the documented default).
+>   extract_haves () {
+>     depacketize - | grep '\.have' | sed -e 's/\\0.*$//g'
+>   }
 
-At least the second paragraph is valuable information in the commit
-message, so maybe add it there? I am not sure if the first paragraph is
-a good part for the commit message, but maybe helps for writing a test?
+Do not pipe grep into sed, unless you have an overly elaborate set
+of patterns to filter with, e.g. something along the lines of...
 
-> +       reference.  This option overrides the more general submodule.recurse
-> +       option, for the `fetch` command.
->
->  fetch.fsckObjects::
->         If it is set to true, git-fetch-pack will check all fetched
-> @@ -3465,7 +3466,8 @@ submodule.active::
->  submodule.recurse::
->         Specifies if commands recurse into submodules by default. This
->         applies to all commands that have a `--recurse-submodules` option,
-> -       except `clone`.
-> +       except `clone`.  Also, the `fetch` command's behaviour can be specified
-> +       independently with the fetch.recurseSubmodules option.
+	sed -ne '/\.have/s/...//p'
 
-There is also push.recurseSubmodules, which should behave similarly?
-
-The series that introduced submodule.recurse ends with 58f4203e7db
-(builtin/fetch.c: respect 'submodule.recurse' option, 2017-05-31)
-(sb/submodule-blanket-recursive)
-seems to have overlooked this only for fetch/push, as the other
-commands (checkout, read-tree, reset, grep) do not have their
-own specific setting to recurse.
-
-
-> @@ -88,6 +90,7 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
->                 max_children = parse_submodule_fetchjobs(k, v);
->                 return 0;
->         } else if (!strcmp(k, "fetch.recursesubmodules")) {
-> +               recurse_submodules_set_explicitly = 1;
-
-the command line option also overried explicitely, but that
-is ensured via the program flow (parse_config happens after
-git_config to overlay options, which itself was pre-seeded
-with fetch_config_from_gitmodules).
-
-I briefly wondered if this overlaying approach would be better
-(i.e. first do git_config with more generic option, and then
-again with the more detailed option) as it would save one
-global variable, but the downsides are terrible (way more
-work to do, more code and such), so I think having a global
-makes sense and gets the job done.
-
-Ideally instead of a global we'd have this flag stored in
-the repository struct, as eventually in the long run,
-fetch_populated_submodules could happen in-process
-instead of spawning fetch processes for each submodule
-(and their nested submodules which may be configured
-differently). But for now the global will do.
-
-Thanks!
-Stefan
