@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E28DC1F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 15:58:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224D91F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 15:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390608AbeIUVrb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 17:47:31 -0400
-Received: from mail-lf1-f48.google.com ([209.85.167.48]:46912 "EHLO
-        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389545AbeIUVrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 17:47:31 -0400
-Received: by mail-lf1-f48.google.com with SMTP id q2-v6so1925655lfc.13
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:00 -0700 (PDT)
+        id S2390616AbeIUVrd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 17:47:33 -0400
+Received: from mail-lf1-f50.google.com ([209.85.167.50]:44205 "EHLO
+        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390577AbeIUVrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 17:47:33 -0400
+Received: by mail-lf1-f50.google.com with SMTP id g24-v6so11862794lfb.11
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0aBxSs2sqyRecz4UrS464gG8JPUefT2L3oFUincgrYY=;
-        b=eRnzcj4v7wLzQ3G0CIbDHatJIKtyoIwyj+fOA/5yUYIGvjfdBZsYCGlrPxFVwKsDec
-         OkwUo7UlgM3uHcxZ8K341Zs/FLdhqzCVSfEKjcZ4gaKTo2jp76IRrgXow9XzedC/jJgC
-         3PI2DjdcXOqZhw5SUbXlzdScQCP+31WUj5WxEwWm9OaW6cg7mPHtILUJYJ5Tn4PrR3Be
-         O3UZFcy5Bc77rzTfuHcjx2fgyS1VlmefDz8/CBx3QqRII4JQPhiJ0icHiMptHXX4UIIc
-         wF+J668dl54m/KB9eEx99jZx+MspYCofMnz8qEZyRsP8jKL996HyeoxmWbyVWTuEihec
-         /Xqg==
+        bh=hxys4FXyLHILA5IhU21VxggMeZUY9vNzWoCtLCopIb8=;
+        b=e9bx8x30+BMOb11z5s8vX/lBS/cRmEpQ1wJnVmT0QMzeS5Me4guEqVRahV8zFDAfBX
+         EW66pGCA9SAij6+NMBZbUdsbNQAaY/oElOP9RjL9rvHvyH4bOF5VwRP5xePq2tgnaoLq
+         ah9U9nJwUz43Cbm9yrmtOXG1O3YX22GcyaTGOuvu73BgNUpl8ZAaZZxvCCVIn6dicj7n
+         KRZYI8ByBo1d0bcqjE4ezG6mSZsNpePAMtv6jhwOUHy7yt8xhmvCiLhL3SDixKHR7IQW
+         z5KFVDVt4PyCbYWuEcXICyLpLvg26rypcDYaQBow3qgCDy9fgiuyI20GDx9qZTbgaeZa
+         /4vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0aBxSs2sqyRecz4UrS464gG8JPUefT2L3oFUincgrYY=;
-        b=p3IivoLYxtd/+m3vrzxLkPrEHtjMAQXiFw2Ay+bEES7xjAnah1WF8cLDbd8oAnxkZL
-         FtejhwTlvdRiVPHftQWDn9wjX0V5A1UygJyBuxKO/fVuWFbMWkOm88ej7Mmp3cIZejcS
-         iAo9sxfqnPxKNZFlYRX48OaIJKlYJYT2PqLwIzI3YeKbQstyGwn7kArz6DtM9+YoXt3b
-         bhII2KRn/uztZcEf0x7MSfw4x0E9ePmhVHqgzZ1QW3cIgUocuqrSccdARYTNcs14HhlO
-         kehnDF6PzOvXU1S+mAghP9ktFbrBMb14snrUKhenlu7dErtonoWzQHu3aKE9Vsbhz7t9
-         xqXg==
-X-Gm-Message-State: APzg51Bzd0ySHSfGCtXyj6jUn1PzBr/l0aFvd0bQklbnxelsxawgXw4h
-        1gAiOs1ZhQOKaR2HA/r/TqA=
-X-Google-Smtp-Source: ANB0VdYUTnRy05Iq3x+Z+I+0YkW83AciytqDjg5LBr3DMoq0xzdUsJk1khQ/Su6e3Z65fdGlODCo/g==
-X-Received: by 2002:a19:dd8a:: with SMTP id w10-v6mr16739679lfi.97.1537545479371;
-        Fri, 21 Sep 2018 08:57:59 -0700 (PDT)
+        bh=hxys4FXyLHILA5IhU21VxggMeZUY9vNzWoCtLCopIb8=;
+        b=Xfg7VDZ9NDwjby88SOCkk2TJ2uXbrpmqOXiRQhxFCW/lFRcZc4p85KZKfRpuy1o8uj
+         xIm0w4WXCsUjMtH1dRgPzgsaolsvMUCrZexpofoxVTOzDC2mojXNXDG+P7SrzTyylkcx
+         q8tBHCtYLnZZ1Pm7PrROYmh6tJihBuDoKk7QAEW4vL0qOrDnUV2vqT3Deo20cnoTQJat
+         9Wg/lKdY0ATklm5KY4GutMOZucZcZFLbfsxkXOCYhZVE2k+2pmPtCawW/7rvYT18TeW8
+         QMSVdzqh+6Txs5mTDgqDNz5U8hkMG59cr9OVntwo0Kv12dpb9xV9fH/phw95VzwuYhG0
+         QCVQ==
+X-Gm-Message-State: APzg51DozytzJZgWRsaVnnnDm3kZ60De/tvY1Ry1rRElAnNzBbS6ciEz
+        nZWFZ9QpelSy135ltuYJvsU=
+X-Google-Smtp-Source: ANB0VdYKKh6JBALbSwNsGMOHrSyJTa3bNNrmg2AJCcFmzSMy+XV4UwjWUkqNWTc0yJMunBJLPlZkkA==
+X-Received: by 2002:a19:c513:: with SMTP id w19-v6mr23288441lfe.113.1537545480464;
+        Fri, 21 Sep 2018 08:58:00 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.57.58
+        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.57.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Sep 2018 08:57:58 -0700 (PDT)
+        Fri, 21 Sep 2018 08:57:59 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com
-Subject: [PATCH v5 10/23] diff-lib.c: remove implicit dependency on the_index
-Date:   Fri, 21 Sep 2018 17:57:26 +0200
-Message-Id: <20180921155739.14407-11-pclouds@gmail.com>
+Subject: [PATCH v5 11/23] ll-merge.c: remove implicit dependency on the_index
+Date:   Fri, 21 Sep 2018 17:57:27 +0200
+Message-Id: <20180921155739.14407-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.640.gcd3aa10a8a
 In-Reply-To: <20180921155739.14407-1-pclouds@gmail.com>
 References: <20180915161759.8272-1-pclouds@gmail.com>
@@ -71,79 +71,248 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff-lib.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ apply.c            |  9 ++++++---
+ builtin/checkout.c |  3 ++-
+ diff.c             |  2 +-
+ ll-merge.c         | 17 +++++++++--------
+ ll-merge.h         |  5 ++++-
+ merge-blobs.c      |  3 ++-
+ merge-recursive.c  |  3 ++-
+ notes-merge.c      |  3 ++-
+ rerere.c           | 10 ++++++----
+ 9 files changed, 34 insertions(+), 21 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 88a98b1c06..c54773fe12 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -70,7 +70,7 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
- 				     struct stat *st, unsigned ce_option,
- 				     unsigned *dirty_submodule)
+diff --git a/apply.c b/apply.c
+index e485fbc6bc..ea111ab13f 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3467,7 +3467,8 @@ static int load_preimage(struct apply_state *state,
+ 	return 0;
+ }
+ 
+-static int three_way_merge(struct image *image,
++static int three_way_merge(struct apply_state *state,
++			   struct image *image,
+ 			   char *path,
+ 			   const struct object_id *base,
+ 			   const struct object_id *ours,
+@@ -3483,7 +3484,9 @@ static int three_way_merge(struct image *image,
+ 	status = ll_merge(&result, path,
+ 			  &base_file, "base",
+ 			  &our_file, "ours",
+-			  &their_file, "theirs", NULL);
++			  &their_file, "theirs",
++			  state->repo->index,
++			  NULL);
+ 	free(base_file.ptr);
+ 	free(our_file.ptr);
+ 	free(their_file.ptr);
+@@ -3595,7 +3598,7 @@ static int try_threeway(struct apply_state *state,
+ 	clear_image(&tmp_image);
+ 
+ 	/* in-core three-way merge between post and our using pre as base */
+-	status = three_way_merge(image, patch->new_name,
++	status = three_way_merge(state, image, patch->new_name,
+ 				 &pre_oid, &our_oid, &post_oid);
+ 	if (status < 0) {
+ 		if (state->apply_verbosity > verbosity_silent)
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 29ef50013d..cd9be50161 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -208,7 +208,8 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	 * merge.renormalize set, too
+ 	 */
+ 	status = ll_merge(&result_buf, path, &ancestor, "base",
+-			  &ours, "ours", &theirs, "theirs", NULL);
++			  &ours, "ours", &theirs, "theirs",
++			  state->istate, NULL);
+ 	free(ancestor.ptr);
+ 	free(ours.ptr);
+ 	free(theirs.ptr);
+diff --git a/diff.c b/diff.c
+index 1bcc0818df..a06c3b070c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3637,7 +3637,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 	data.lineno = 0;
+ 	data.o = o;
+ 	data.ws_rule = whitespace_rule(attr_path);
+-	data.conflict_marker_size = ll_merge_marker_size(attr_path);
++	data.conflict_marker_size = ll_merge_marker_size(o->repo->index, attr_path);
+ 
+ 	if (fill_mmfile(o->repo, &mf1, one) < 0 ||
+ 	    fill_mmfile(o->repo, &mf2, two) < 0)
+diff --git a/ll-merge.c b/ll-merge.c
+index 0e2800f7bb..c339ef8ae8 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -336,10 +336,10 @@ static const struct ll_merge_driver *find_ll_merge_driver(const char *merge_attr
+ 	return &ll_merge_drv[LL_TEXT_MERGE];
+ }
+ 
+-static void normalize_file(mmfile_t *mm, const char *path)
++static void normalize_file(mmfile_t *mm, const char *path, struct index_state *istate)
  {
--	int changed = ce_match_stat(ce, st, ce_option);
-+	int changed = ie_match_stat(diffopt->repo->index, ce, st, ce_option);
- 	if (S_ISGITLINK(ce->ce_mode)) {
- 		struct diff_flags orig_flags = diffopt->flags;
- 		if (!diffopt->flags.override_submodule_config)
-@@ -93,15 +93,16 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 	unsigned ce_option = ((option & DIFF_RACY_IS_MODIFIED)
- 			      ? CE_MATCH_RACY_IS_DIRTY : 0);
- 	uint64_t start = getnanotime();
-+	struct index_state *istate = revs->diffopt.repo->index;
+ 	struct strbuf strbuf = STRBUF_INIT;
+-	if (renormalize_buffer(&the_index, path, mm->ptr, mm->size, &strbuf)) {
++	if (renormalize_buffer(istate, path, mm->ptr, mm->size, &strbuf)) {
+ 		free(mm->ptr);
+ 		mm->size = strbuf.len;
+ 		mm->ptr = strbuf_detach(&strbuf, NULL);
+@@ -351,6 +351,7 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+ 	     mmfile_t *ours, const char *our_label,
+ 	     mmfile_t *theirs, const char *their_label,
++	     struct index_state *istate,
+ 	     const struct ll_merge_options *opts)
+ {
+ 	static struct attr_check *check;
+@@ -363,15 +364,15 @@ int ll_merge(mmbuffer_t *result_buf,
+ 		opts = &default_opts;
  
- 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+ 	if (opts->renormalize) {
+-		normalize_file(ancestor, path);
+-		normalize_file(ours, path);
+-		normalize_file(theirs, path);
++		normalize_file(ancestor, path, istate);
++		normalize_file(ours, path, istate);
++		normalize_file(theirs, path, istate);
+ 	}
  
- 	if (diff_unmerged_stage < 0)
- 		diff_unmerged_stage = 2;
--	entries = active_nr;
-+	entries = istate->cache_nr;
- 	for (i = 0; i < entries; i++) {
- 		unsigned int oldmode, newmode;
--		struct cache_entry *ce = active_cache[i];
-+		struct cache_entry *ce = istate->cache[i];
- 		int changed;
- 		unsigned dirty_submodule = 0;
- 		const struct object_id *old_oid, *new_oid;
-@@ -109,7 +110,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 		if (diff_can_quit_early(&revs->diffopt))
- 			break;
+ 	if (!check)
+ 		check = attr_check_initl("merge", "conflict-marker-size", NULL);
  
--		if (!ce_path_match(&the_index, ce, &revs->prune_data, NULL))
-+		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
- 			continue;
+-	if (!git_check_attr(&the_index, path, check)) {
++	if (!git_check_attr(istate, path, check)) {
+ 		ll_driver_name = check->items[0].value;
+ 		if (check->items[1].value) {
+ 			marker_size = atoi(check->items[1].value);
+@@ -391,14 +392,14 @@ int ll_merge(mmbuffer_t *result_buf,
+ 			  opts, marker_size);
+ }
  
- 		if (ce_stage(ce)) {
-@@ -145,7 +146,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			dpath->mode = wt_mode;
+-int ll_merge_marker_size(const char *path)
++int ll_merge_marker_size(struct index_state *istate, const char *path)
+ {
+ 	static struct attr_check *check;
+ 	int marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
  
- 			while (i < entries) {
--				struct cache_entry *nce = active_cache[i];
-+				struct cache_entry *nce = istate->cache[i];
- 				int stage;
+ 	if (!check)
+ 		check = attr_check_initl("conflict-marker-size", NULL);
+-	if (!git_check_attr(&the_index, path, check) && check->items[0].value) {
++	if (!git_check_attr(istate, path, check) && check->items[0].value) {
+ 		marker_size = atoi(check->items[0].value);
+ 		if (marker_size <= 0)
+ 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+diff --git a/ll-merge.h b/ll-merge.h
+index b72b19921e..6c6e22e40d 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -7,6 +7,8 @@
  
- 				if (strcmp(ce->name, nce->name))
-@@ -474,7 +475,9 @@ static int oneway_diff(const struct cache_entry * const *src,
- 	if (tree == o->df_conflict_entry)
- 		tree = NULL;
+ #include "xdiff/xdiff.h"
  
--	if (ce_path_match(&the_index, idx ? idx : tree, &revs->prune_data, NULL)) {
-+	if (ce_path_match(revs->diffopt.repo->index,
-+			  idx ? idx : tree,
-+			  &revs->prune_data, NULL)) {
- 		do_oneway_diff(o, idx, tree);
- 		if (diff_can_quit_early(&revs->diffopt)) {
- 			o->exiting_early = 1;
-@@ -506,7 +509,7 @@ static int diff_cache(struct rev_info *revs,
- 	opts.merge = 1;
- 	opts.fn = oneway_diff;
- 	opts.unpack_data = revs;
--	opts.src_index = &the_index;
-+	opts.src_index = revs->diffopt.repo->index;
- 	opts.dst_index = NULL;
- 	opts.pathspec = &revs->diffopt.pathspec;
- 	opts.pathspec->recursive = 1;
++struct index_state;
++
+ struct ll_merge_options {
+ 	unsigned virtual_ancestor : 1;
+ 	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
+@@ -19,8 +21,9 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+ 	     mmfile_t *ours, const char *our_label,
+ 	     mmfile_t *theirs, const char *their_label,
++	     struct index_state *istate,
+ 	     const struct ll_merge_options *opts);
+ 
+-int ll_merge_marker_size(const char *path);
++int ll_merge_marker_size(struct index_state *istate, const char *path);
+ 
+ #endif
+diff --git a/merge-blobs.c b/merge-blobs.c
+index fabb8c19ce..668fb2e05d 100644
+--- a/merge-blobs.c
++++ b/merge-blobs.c
+@@ -41,7 +41,8 @@ static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our
+ 	 * common ancestor.
+ 	 */
+ 	merge_status = ll_merge(&res, path, base, NULL,
+-				our, ".our", their, ".their", NULL);
++				our, ".our", their, ".their",
++				&the_index, NULL);
+ 	if (merge_status < 0)
+ 		return NULL;
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 939843e815..7edcda4db0 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1083,7 +1083,8 @@ static int merge_3way(struct merge_options *o,
+ 	read_mmblob(&src2, &b->oid);
+ 
+ 	merge_status = ll_merge(result_buf, a->path, &orig, base_name,
+-				&src1, name1, &src2, name2, &ll_opts);
++				&src1, name1, &src2, name2,
++				&the_index, &ll_opts);
+ 
+ 	free(base_name);
+ 	free(name1);
+diff --git a/notes-merge.c b/notes-merge.c
+index 9b154a5da6..432edfb89a 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -348,7 +348,8 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ 	read_mmblob(&remote, &p->remote);
+ 
+ 	status = ll_merge(&result_buf, oid_to_hex(&p->obj), &base, NULL,
+-			  &local, o->local_ref, &remote, o->remote_ref, NULL);
++			  &local, o->local_ref, &remote, o->remote_ref,
++			  &the_index, NULL);
+ 
+ 	free(base.ptr);
+ 	free(local.ptr);
+diff --git a/rerere.c b/rerere.c
+index c7787aa07f..e65d8fc06f 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -478,7 +478,7 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
+ {
+ 	int hunk_no = 0;
+ 	struct rerere_io_file io;
+-	int marker_size = ll_merge_marker_size(path);
++	int marker_size = ll_merge_marker_size(&the_index, path);
+ 
+ 	memset(&io, 0, sizeof(io));
+ 	io.io.getline = rerere_file_getline;
+@@ -641,7 +641,8 @@ static int try_merge(const struct rerere_id *id, const char *path,
+ 		 * A three-way merge. Note that this honors user-customizable
+ 		 * low-level merge driver settings.
+ 		 */
+-		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "", NULL);
++		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
++			       &the_index, NULL);
+ 
+ 	free(base.ptr);
+ 	free(other.ptr);
+@@ -960,7 +961,7 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
+ 	const struct cache_entry *ce;
+ 	int pos, len, i, hunk_no;
+ 	struct rerere_io_mem io;
+-	int marker_size = ll_merge_marker_size(path);
++	int marker_size = ll_merge_marker_size(&the_index, path);
+ 
+ 	/*
+ 	 * Reproduce the conflicted merge in-core
+@@ -995,7 +996,8 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
+ 	 */
+ 	ll_merge(&result, path, &mmfile[0], NULL,
+ 		 &mmfile[1], "ours",
+-		 &mmfile[2], "theirs", NULL);
++		 &mmfile[2], "theirs",
++		 &the_index, NULL);
+ 	for (i = 0; i < 3; i++)
+ 		free(mmfile[i].ptr);
+ 
 -- 
 2.19.0.640.gcd3aa10a8a
 
