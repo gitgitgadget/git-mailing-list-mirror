@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 224D91F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB1771F453
 	for <e@80x24.org>; Fri, 21 Sep 2018 15:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390616AbeIUVrd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 17:47:33 -0400
-Received: from mail-lf1-f50.google.com ([209.85.167.50]:44205 "EHLO
-        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390577AbeIUVrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 17:47:33 -0400
-Received: by mail-lf1-f50.google.com with SMTP id g24-v6so11862794lfb.11
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:01 -0700 (PDT)
+        id S2390621AbeIUVrf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 17:47:35 -0400
+Received: from mail-lf1-f45.google.com ([209.85.167.45]:45422 "EHLO
+        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390357AbeIUVre (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 17:47:34 -0400
+Received: by mail-lf1-f45.google.com with SMTP id m80-v6so1354092lfi.12
+        for <git@vger.kernel.org>; Fri, 21 Sep 2018 08:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hxys4FXyLHILA5IhU21VxggMeZUY9vNzWoCtLCopIb8=;
-        b=e9bx8x30+BMOb11z5s8vX/lBS/cRmEpQ1wJnVmT0QMzeS5Me4guEqVRahV8zFDAfBX
-         EW66pGCA9SAij6+NMBZbUdsbNQAaY/oElOP9RjL9rvHvyH4bOF5VwRP5xePq2tgnaoLq
-         ah9U9nJwUz43Cbm9yrmtOXG1O3YX22GcyaTGOuvu73BgNUpl8ZAaZZxvCCVIn6dicj7n
-         KRZYI8ByBo1d0bcqjE4ezG6mSZsNpePAMtv6jhwOUHy7yt8xhmvCiLhL3SDixKHR7IQW
-         z5KFVDVt4PyCbYWuEcXICyLpLvg26rypcDYaQBow3qgCDy9fgiuyI20GDx9qZTbgaeZa
-         /4vQ==
+        bh=aVlN3CsG2SNqTAQhykjoUYBWetEt96zCQsEwGP62Q2E=;
+        b=B7kdcHet6SaPse8W6CDFqUWy6DvK3VIEA/Fsgqp5L7shWPKXNJnlEk9gbJBay+aL6S
+         fXTfbKZYSJxqrM0urAGL7XyjTPBKuqWWu1i97DmRP/cxo7EVMEn915HE9cJvWh1Ex2eJ
+         Yva38mQVYPUWlQzs6rksdtrmJSXAo7RbnxvU9Lg93q4hj60ETRYQLuRALUsYUbrbLmlI
+         77vEzWFh3ohX1xmI/091xSWQByMDgifvM7tFx+TL6G9zTsf8QWqaSjJlqyY55GPtAbfU
+         4HcJsojjnVHDutxkoUrj343Up73mifKCH0XGDURXXxkmmXuuCYhwYuFqiYnvH4XB+F3n
+         ejfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hxys4FXyLHILA5IhU21VxggMeZUY9vNzWoCtLCopIb8=;
-        b=Xfg7VDZ9NDwjby88SOCkk2TJ2uXbrpmqOXiRQhxFCW/lFRcZc4p85KZKfRpuy1o8uj
-         xIm0w4WXCsUjMtH1dRgPzgsaolsvMUCrZexpofoxVTOzDC2mojXNXDG+P7SrzTyylkcx
-         q8tBHCtYLnZZ1Pm7PrROYmh6tJihBuDoKk7QAEW4vL0qOrDnUV2vqT3Deo20cnoTQJat
-         9Wg/lKdY0ATklm5KY4GutMOZucZcZFLbfsxkXOCYhZVE2k+2pmPtCawW/7rvYT18TeW8
-         QMSVdzqh+6Txs5mTDgqDNz5U8hkMG59cr9OVntwo0Kv12dpb9xV9fH/phw95VzwuYhG0
-         QCVQ==
-X-Gm-Message-State: APzg51DozytzJZgWRsaVnnnDm3kZ60De/tvY1Ry1rRElAnNzBbS6ciEz
-        nZWFZ9QpelSy135ltuYJvsU=
-X-Google-Smtp-Source: ANB0VdYKKh6JBALbSwNsGMOHrSyJTa3bNNrmg2AJCcFmzSMy+XV4UwjWUkqNWTc0yJMunBJLPlZkkA==
-X-Received: by 2002:a19:c513:: with SMTP id w19-v6mr23288441lfe.113.1537545480464;
-        Fri, 21 Sep 2018 08:58:00 -0700 (PDT)
+        bh=aVlN3CsG2SNqTAQhykjoUYBWetEt96zCQsEwGP62Q2E=;
+        b=KxFKss3MWaTp87Xi5n5JU5OOBMGCug8VQXuks1xXh1U5FTJgQiTJVtnDQACiaT0nwK
+         5qAasrFA8vs3UbLsaNLBJwB9bYKXdsD1l1HaRL41BfzP51CM9Z3piZU98B2DD+hheplc
+         dQ4HMZ6WPK8fOnbsh/0eDzD51wxfcTdCZGBNfMf5OFtiU+a5keyfaRZ3GFbJd4WOFn2N
+         b5edkjY5QOYFipfrKtMd47QhtGjpRRIRXjFVdHmtgyCu1BcioAAfpqqz2v6HZ7cgMtqQ
+         TUbtjBWhkroZBqBAoNS0jIVLz95rxTMNux/IuRDMptiAT0zDVVq3rRlh8TJ8hBU9R8CR
+         1ipA==
+X-Gm-Message-State: APzg51Cd2bFfTMw2MOaLEYpVO8LUHSxnRpqHfiRps+pcW8FYlRGLqYYo
+        k2m7aD0kisqnta/wuCn6d4k=
+X-Google-Smtp-Source: ANB0VdaQq6WW5pLoxMSKXxIeaVcK+X0v/60BNkXsb8UYFmy3+7FqoFFvV1xBenbmxFODb04sr4EZkQ==
+X-Received: by 2002:a19:13dc:: with SMTP id 89-v6mr15177075lft.111.1537545482691;
+        Fri, 21 Sep 2018 08:58:02 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.57.59
+        by smtp.gmail.com with ESMTPSA id o19-v6sm2192978lfk.30.2018.09.21.08.58.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Sep 2018 08:57:59 -0700 (PDT)
+        Fri, 21 Sep 2018 08:58:01 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com
-Subject: [PATCH v5 11/23] ll-merge.c: remove implicit dependency on the_index
-Date:   Fri, 21 Sep 2018 17:57:27 +0200
-Message-Id: <20180921155739.14407-12-pclouds@gmail.com>
+Subject: [PATCH v5 13/23] merge.c: remove implicit dependency on the_index
+Date:   Fri, 21 Sep 2018 17:57:29 +0200
+Message-Id: <20180921155739.14407-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.640.gcd3aa10a8a
 In-Reply-To: <20180921155739.14407-1-pclouds@gmail.com>
 References: <20180915161759.8272-1-pclouds@gmail.com>
@@ -71,248 +71,171 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- apply.c            |  9 ++++++---
- builtin/checkout.c |  3 ++-
- diff.c             |  2 +-
- ll-merge.c         | 17 +++++++++--------
- ll-merge.h         |  5 ++++-
- merge-blobs.c      |  3 ++-
- merge-recursive.c  |  3 ++-
- notes-merge.c      |  3 ++-
- rerere.c           | 10 ++++++----
- 9 files changed, 34 insertions(+), 21 deletions(-)
+ builtin/merge.c |  8 +++++---
+ builtin/pull.c  |  7 +++++--
+ cache.h         |  6 ++++--
+ merge.c         | 20 +++++++++++---------
+ sequencer.c     |  6 +++---
+ 5 files changed, 28 insertions(+), 19 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index e485fbc6bc..ea111ab13f 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3467,7 +3467,8 @@ static int load_preimage(struct apply_state *state,
- 	return 0;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 592cb19caf..5f79fc5fd7 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -728,8 +728,9 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			die(_("unable to write %s"), get_index_file());
+ 		return clean ? 0 : 1;
+ 	} else {
+-		return try_merge_command(strategy, xopts_nr, xopts,
+-						common, head_arg, remoteheads);
++		return try_merge_command(the_repository,
++					 strategy, xopts_nr, xopts,
++					 common, head_arg, remoteheads);
+ 	}
  }
  
--static int three_way_merge(struct image *image,
-+static int three_way_merge(struct apply_state *state,
-+			   struct image *image,
- 			   char *path,
- 			   const struct object_id *base,
- 			   const struct object_id *ours,
-@@ -3483,7 +3484,9 @@ static int three_way_merge(struct image *image,
- 	status = ll_merge(&result, path,
- 			  &base_file, "base",
- 			  &our_file, "ours",
--			  &their_file, "theirs", NULL);
-+			  &their_file, "theirs",
-+			  state->repo->index,
-+			  NULL);
- 	free(base_file.ptr);
- 	free(our_file.ptr);
- 	free(their_file.ptr);
-@@ -3595,7 +3598,7 @@ static int try_threeway(struct apply_state *state,
- 	clear_image(&tmp_image);
+@@ -1470,7 +1471,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			goto done;
+ 		}
  
- 	/* in-core three-way merge between post and our using pre as base */
--	status = three_way_merge(image, patch->new_name,
-+	status = three_way_merge(state, image, patch->new_name,
- 				 &pre_oid, &our_oid, &post_oid);
- 	if (status < 0) {
- 		if (state->apply_verbosity > verbosity_silent)
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 29ef50013d..cd9be50161 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -208,7 +208,8 @@ static int checkout_merged(int pos, const struct checkout *state)
- 	 * merge.renormalize set, too
+-		if (checkout_fast_forward(&head_commit->object.oid,
++		if (checkout_fast_forward(the_repository,
++					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+ 					  overwrite_ignore)) {
+ 			ret = 1;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 681c127a07..33b7100837 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -562,7 +562,9 @@ static int pull_into_void(const struct object_id *merge_head,
+ 	 * index/worktree changes that the user already made on the unborn
+ 	 * branch.
  	 */
- 	status = ll_merge(&result_buf, path, &ancestor, "base",
--			  &ours, "ours", &theirs, "theirs", NULL);
-+			  &ours, "ours", &theirs, "theirs",
-+			  state->istate, NULL);
- 	free(ancestor.ptr);
- 	free(ours.ptr);
- 	free(theirs.ptr);
-diff --git a/diff.c b/diff.c
-index 1bcc0818df..a06c3b070c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3637,7 +3637,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 	data.lineno = 0;
- 	data.o = o;
- 	data.ws_rule = whitespace_rule(attr_path);
--	data.conflict_marker_size = ll_merge_marker_size(attr_path);
-+	data.conflict_marker_size = ll_merge_marker_size(o->repo->index, attr_path);
+-	if (checkout_fast_forward(the_hash_algo->empty_tree, merge_head, 0))
++	if (checkout_fast_forward(the_repository,
++				  the_hash_algo->empty_tree,
++				  merge_head, 0))
+ 		return 1;
  
- 	if (fill_mmfile(o->repo, &mf1, one) < 0 ||
- 	    fill_mmfile(o->repo, &mf2, two) < 0)
-diff --git a/ll-merge.c b/ll-merge.c
-index 0e2800f7bb..c339ef8ae8 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -336,10 +336,10 @@ static const struct ll_merge_driver *find_ll_merge_driver(const char *merge_attr
- 	return &ll_merge_drv[LL_TEXT_MERGE];
+ 	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
+@@ -915,7 +917,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			"fast-forwarding your working tree from\n"
+ 			"commit %s."), oid_to_hex(&orig_head));
+ 
+-		if (checkout_fast_forward(&orig_head, &curr_head, 0))
++		if (checkout_fast_forward(the_repository, &orig_head,
++					  &curr_head, 0))
+ 			die(_("Cannot fast-forward your working tree.\n"
+ 				"After making sure that you saved anything precious from\n"
+ 				"$ git diff %s\n"
+diff --git a/cache.h b/cache.h
+index 260e4ee44a..49fe83331c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1716,10 +1716,12 @@ extern struct startup_info *startup_info;
+ 
+ /* merge.c */
+ struct commit_list;
+-int try_merge_command(const char *strategy, size_t xopts_nr,
++int try_merge_command(struct repository *r,
++		const char *strategy, size_t xopts_nr,
+ 		const char **xopts, struct commit_list *common,
+ 		const char *head_arg, struct commit_list *remotes);
+-int checkout_fast_forward(const struct object_id *from,
++int checkout_fast_forward(struct repository *r,
++			  const struct object_id *from,
+ 			  const struct object_id *to,
+ 			  int overwrite_ignore);
+ 
+diff --git a/merge.c b/merge.c
+index e30e03fb84..91008f7602 100644
+--- a/merge.c
++++ b/merge.c
+@@ -14,7 +14,8 @@ static const char *merge_argument(struct commit *commit)
+ 	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
  }
  
--static void normalize_file(mmfile_t *mm, const char *path)
-+static void normalize_file(mmfile_t *mm, const char *path, struct index_state *istate)
+-int try_merge_command(const char *strategy, size_t xopts_nr,
++int try_merge_command(struct repository *r,
++		      const char *strategy, size_t xopts_nr,
+ 		      const char **xopts, struct commit_list *common,
+ 		      const char *head_arg, struct commit_list *remotes)
  {
- 	struct strbuf strbuf = STRBUF_INIT;
--	if (renormalize_buffer(&the_index, path, mm->ptr, mm->size, &strbuf)) {
-+	if (renormalize_buffer(istate, path, mm->ptr, mm->size, &strbuf)) {
- 		free(mm->ptr);
- 		mm->size = strbuf.len;
- 		mm->ptr = strbuf_detach(&strbuf, NULL);
-@@ -351,6 +351,7 @@ int ll_merge(mmbuffer_t *result_buf,
- 	     mmfile_t *ancestor, const char *ancestor_label,
- 	     mmfile_t *ours, const char *our_label,
- 	     mmfile_t *theirs, const char *their_label,
-+	     struct index_state *istate,
- 	     const struct ll_merge_options *opts)
- {
- 	static struct attr_check *check;
-@@ -363,15 +364,15 @@ int ll_merge(mmbuffer_t *result_buf,
- 		opts = &default_opts;
+@@ -35,15 +36,16 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
+ 	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
+ 	argv_array_clear(&args);
  
- 	if (opts->renormalize) {
--		normalize_file(ancestor, path);
--		normalize_file(ours, path);
--		normalize_file(theirs, path);
-+		normalize_file(ancestor, path, istate);
-+		normalize_file(ours, path, istate);
-+		normalize_file(theirs, path, istate);
+-	discard_cache();
+-	if (read_cache() < 0)
++	discard_index(r->index);
++	if (read_index(r->index) < 0)
+ 		die(_("failed to read the cache"));
+-	resolve_undo_clear();
++	resolve_undo_clear_index(r->index);
+ 
+ 	return ret;
+ }
+ 
+-int checkout_fast_forward(const struct object_id *head,
++int checkout_fast_forward(struct repository *r,
++			  const struct object_id *head,
+ 			  const struct object_id *remote,
+ 			  int overwrite_ignore)
+ {
+@@ -54,7 +56,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	struct dir_struct dir;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 
+-	refresh_cache(REFRESH_QUIET);
++	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+ 
+ 	if (hold_locked_index(&lock_file, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+@@ -86,8 +88,8 @@ int checkout_fast_forward(const struct object_id *head,
  	}
  
- 	if (!check)
- 		check = attr_check_initl("merge", "conflict-marker-size", NULL);
+ 	opts.head_idx = 1;
+-	opts.src_index = &the_index;
+-	opts.dst_index = &the_index;
++	opts.src_index = r->index;
++	opts.dst_index = r->index;
+ 	opts.update = 1;
+ 	opts.verbose_update = 1;
+ 	opts.merge = 1;
+@@ -101,7 +103,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	}
+ 	clear_unpack_trees_porcelain(&opts);
  
--	if (!git_check_attr(&the_index, path, check)) {
-+	if (!git_check_attr(istate, path, check)) {
- 		ll_driver_name = check->items[0].value;
- 		if (check->items[1].value) {
- 			marker_size = atoi(check->items[1].value);
-@@ -391,14 +392,14 @@ int ll_merge(mmbuffer_t *result_buf,
- 			  opts, marker_size);
+-	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++	if (write_locked_index(r->index, &lock_file, COMMIT_LOCK))
+ 		return error(_("unable to write new index file"));
+ 	return 0;
  }
+diff --git a/sequencer.c b/sequencer.c
+index dc2c58d464..2adc66f45e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -470,8 +470,8 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
  
--int ll_merge_marker_size(const char *path)
-+int ll_merge_marker_size(struct index_state *istate, const char *path)
- {
- 	static struct attr_check *check;
- 	int marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+-	read_cache();
+-	if (checkout_fast_forward(from, to, 1))
++	read_index(&the_index);
++	if (checkout_fast_forward(the_repository, from, to, 1))
+ 		return -1; /* the callee should have complained already */
  
- 	if (!check)
- 		check = attr_check_initl("conflict-marker-size", NULL);
--	if (!git_check_attr(&the_index, path, check) && check->items[0].value) {
-+	if (!git_check_attr(istate, path, check) && check->items[0].value) {
- 		marker_size = atoi(check->items[0].value);
- 		if (marker_size <= 0)
- 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
-diff --git a/ll-merge.h b/ll-merge.h
-index b72b19921e..6c6e22e40d 100644
---- a/ll-merge.h
-+++ b/ll-merge.h
-@@ -7,6 +7,8 @@
+ 	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
+@@ -1827,7 +1827,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
  
- #include "xdiff/xdiff.h"
- 
-+struct index_state;
-+
- struct ll_merge_options {
- 	unsigned virtual_ancestor : 1;
- 	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
-@@ -19,8 +21,9 @@ int ll_merge(mmbuffer_t *result_buf,
- 	     mmfile_t *ancestor, const char *ancestor_label,
- 	     mmfile_t *ours, const char *our_label,
- 	     mmfile_t *theirs, const char *their_label,
-+	     struct index_state *istate,
- 	     const struct ll_merge_options *opts);
- 
--int ll_merge_marker_size(const char *path);
-+int ll_merge_marker_size(struct index_state *istate, const char *path);
- 
- #endif
-diff --git a/merge-blobs.c b/merge-blobs.c
-index fabb8c19ce..668fb2e05d 100644
---- a/merge-blobs.c
-+++ b/merge-blobs.c
-@@ -41,7 +41,8 @@ static void *three_way_filemerge(const char *path, mmfile_t *base, mmfile_t *our
- 	 * common ancestor.
- 	 */
- 	merge_status = ll_merge(&res, path, base, NULL,
--				our, ".our", their, ".their", NULL);
-+				our, ".our", their, ".their",
-+				&the_index, NULL);
- 	if (merge_status < 0)
- 		return NULL;
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 939843e815..7edcda4db0 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1083,7 +1083,8 @@ static int merge_3way(struct merge_options *o,
- 	read_mmblob(&src2, &b->oid);
- 
- 	merge_status = ll_merge(result_buf, a->path, &orig, base_name,
--				&src1, name1, &src2, name2, &ll_opts);
-+				&src1, name1, &src2, name2,
-+				&the_index, &ll_opts);
- 
- 	free(base_name);
- 	free(name1);
-diff --git a/notes-merge.c b/notes-merge.c
-index 9b154a5da6..432edfb89a 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -348,7 +348,8 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
- 	read_mmblob(&remote, &p->remote);
- 
- 	status = ll_merge(&result_buf, oid_to_hex(&p->obj), &base, NULL,
--			  &local, o->local_ref, &remote, o->remote_ref, NULL);
-+			  &local, o->local_ref, &remote, o->remote_ref,
-+			  &the_index, NULL);
- 
- 	free(base.ptr);
- 	free(local.ptr);
-diff --git a/rerere.c b/rerere.c
-index c7787aa07f..e65d8fc06f 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -478,7 +478,7 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- {
- 	int hunk_no = 0;
- 	struct rerere_io_file io;
--	int marker_size = ll_merge_marker_size(path);
-+	int marker_size = ll_merge_marker_size(&the_index, path);
- 
- 	memset(&io, 0, sizeof(io));
- 	io.io.getline = rerere_file_getline;
-@@ -641,7 +641,8 @@ static int try_merge(const struct rerere_id *id, const char *path,
- 		 * A three-way merge. Note that this honors user-customizable
- 		 * low-level merge driver settings.
- 		 */
--		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "", NULL);
-+		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
-+			       &the_index, NULL);
- 
- 	free(base.ptr);
- 	free(other.ptr);
-@@ -960,7 +961,7 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
- 	const struct cache_entry *ce;
- 	int pos, len, i, hunk_no;
- 	struct rerere_io_mem io;
--	int marker_size = ll_merge_marker_size(path);
-+	int marker_size = ll_merge_marker_size(&the_index, path);
- 
- 	/*
- 	 * Reproduce the conflicted merge in-core
-@@ -995,7 +996,8 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
- 	 */
- 	ll_merge(&result, path, &mmfile[0], NULL,
- 		 &mmfile[1], "ours",
--		 &mmfile[2], "theirs", NULL);
-+		 &mmfile[2], "theirs",
-+		 &the_index, NULL);
- 	for (i = 0; i < 3; i++)
- 		free(mmfile[i].ptr);
- 
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res |= try_merge_command(opts->strategy,
++		res |= try_merge_command(the_repository, opts->strategy,
+ 					 opts->xopts_nr, (const char **)opts->xopts,
+ 					common, oid_to_hex(&head), remotes);
+ 		free_commit_list(common);
 -- 
 2.19.0.640.gcd3aa10a8a
 
