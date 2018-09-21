@@ -2,82 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C56381F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 17:05:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40D041F453
+	for <e@80x24.org>; Fri, 21 Sep 2018 17:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390248AbeIUWzM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Sep 2018 18:55:12 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43512 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388909AbeIUWzM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Sep 2018 18:55:12 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k5-v6so13526972wre.10
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 10:05:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=GLmzw9ozZK9ZwADT9RnGtF+U1/ZEBZsUxg4sTyqw1ak=;
-        b=XV7yMWTJK9nuVLHkwFwLe77tZ0Vg3TjYiu2iUMyCOIB8Ks6/7cgpeICzH1lJv/xc8T
-         JqZeuwEMZFgp4IffmhZqhKSzUEboWPr8O5RBbZTRS7U/GEbSoflyHdaEt3ck/bCS4ozE
-         HDVBU1Nh7uryU5Bj0s/hdzSXwPpXHQ8CGVCJS/z1d8YLWUpgXd1S3CGh1cOVhkDwihN5
-         96KZLA2Z/lSUqglWMUrE2c1gZzkGLLFdtPNmPIgJhFs8dUUrC0X/HZGXunMmX57d5mfF
-         wjhqGDKRFpRwtdxlEAuzMc52/lmUmCU93z/3HLeDQuck+FS0DTMd2GZP5Qy7fQZyphqN
-         yIJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=GLmzw9ozZK9ZwADT9RnGtF+U1/ZEBZsUxg4sTyqw1ak=;
-        b=ZIW9nsoLz8kT7pUmS4yBW+UkQr0q6rYsk5MoOSUvE+0EBALMAyw4icP6oV5nvcyk/V
-         S/xnv4GF/11c7dzq8JJ+tA6PxqLkEJ52WgBLx+tLycHlALNQNyw2L6yxHyPCiTY+wg7X
-         DsGfwo2B9G12dPwbaPM43DvdN/MKgHhyIcL0A/DK+yMWLHhDRa/7E8y/cBGxG8IiqMZp
-         HKuyzhXiSrUWVpkrXHgmVVe8eh6GQnDf4e0sSe2NLoA0dL1L6b16nv7b7lU5WOKOvQo7
-         OIuYWkM+NFmmOjeCrOOuGFOI845U3V/CCuPNl1tH3XRNVjeWvra9KnZ+Y0dxDuNsrZmy
-         H0Dw==
-X-Gm-Message-State: APzg51CvzWS96zB/YNae1xeRBdPCW4pXYKkhMUVYX4946lm45pIJ0VhU
-        PGiDeZxyZsyZIObKobiD4mE=
-X-Google-Smtp-Source: ANB0VdZT5i2O58taDOgVzkOU2Gq54BswWEZEzkXK0XzlQMI5x7lXep4Tf0FHn8lmhnraVTBiMeG2VA==
-X-Received: by 2002:adf:b2b5:: with SMTP id g50-v6mr36648002wrd.218.1537549523393;
-        Fri, 21 Sep 2018 10:05:23 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z3-v6sm4631088wmf.12.2018.09.21.10.05.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 21 Sep 2018 10:05:22 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] fetch-object.h: add missing declaration (hdr-check)
-References: <12cd9928-d04d-d208-a1b4-ceecbdf79432@ramsayjones.plus.com>
-        <xmqq1s9myg67.fsf@gitster-ct.c.googlers.com>
-        <f6663e27-cfe6-c927-746c-dfbeed5bb3a2@ramsayjones.plus.com>
-Date:   Fri, 21 Sep 2018 10:05:22 -0700
-In-Reply-To: <f6663e27-cfe6-c927-746c-dfbeed5bb3a2@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Fri, 21 Sep 2018 17:47:03 +0100")
-Message-ID: <xmqq7ejewzl9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S2390524AbeIUWzt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Sep 2018 18:55:49 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:25189 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388909AbeIUWzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Sep 2018 18:55:49 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42H0Nm3jbnz5tlK;
+        Fri, 21 Sep 2018 19:06:00 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id A0EC54158;
+        Fri, 21 Sep 2018 19:05:59 +0200 (CEST)
+Subject: Re: What's cooking in git.git (Sep 2018, #04; Thu, 20)
+To:     Junio C Hamano <gitster@pobox.com>
+References: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org
+Message-ID: <e87e83c2-b371-1cc3-7eef-495f03ef05ef@kdbg.org>
+Date:   Fri, 21 Sep 2018 19:05:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Am 21.09.18 um 07:22 schrieb Junio C Hamano:
+> The tip of 'next' hasn't been rewound yet.  The three GSoC "rewrite
+> in C" topics are still unclassified in this "What's cooking" report,
+> but I am hoping that we can have them in 'next' sooner rather than
+> later.  I got an impression that Dscho wanted a chance for the final
+> clean-up on some of them, so I am not doing anything hasty yet at
+> this moment, though.
 
-> BTW, I notice that patch #9 (commit-reach.h: add missing declarations
->  (hdr-check)) didn't make it onto 'pu' - was there something else I
-> needed to do? (I am still in two minds about sending an RFC patch
-> on-top of patch #9).
+While playing around with those topics in my own build on Windows, I
+noticed a small glitch in your merge commits.
 
-I refrained from queuing it as I did not sense a clear resolution of
-the discussion.
+When I compile 59085279e6, which is today's jch~11, I see
 
-I found it a sign that you may want to update the log message to
-explain "instead of adding a few forward decls, include the whole
-commit.h because..." that you had to explain why the patch did what
-it did to Derrick in a follow-up message.
+    CC builtin/rebase.o
+builtin/rebase.c: In function 'can_fast_forward':
+builtin/rebase.c:443:2: warning: implicit declaration of function 'get_merge_bases' [-Wimplicit-function-declaration]
+  merge_bases = get_merge_bases(onto, head);
+  ^
+builtin/rebase.c:443:14: warning: assignment makes pointer from integer without a cast [enabled by default]
+  merge_bases = get_merge_bases(onto, head);
+              ^
+
+I notice that you fixed it in the next merge, jch~10 aka d311e29abe,
+by adding
+
+#include "commit-reach.h"
+
+in builtin/rebase.c; this line is obviously required one merge
+commit earlier, jch~11.
+
+-- Hannes
