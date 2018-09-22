@@ -2,80 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 127A81F453
-	for <e@80x24.org>; Sat, 22 Sep 2018 18:16:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39C8F1F453
+	for <e@80x24.org>; Sat, 22 Sep 2018 19:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726226AbeIWAKf convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 22 Sep 2018 20:10:35 -0400
-Received: from h3.fbrelay.privateemail.com ([131.153.2.44]:59426 "EHLO
-        h3.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726004AbeIWAKf (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Sep 2018 20:10:35 -0400
-Received: from MTA-06-3.privateemail.com (mta-06.privateemail.com [68.65.122.16])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id 1824180977
-        for <git@vger.kernel.org>; Sat, 22 Sep 2018 14:16:07 -0400 (EDT)
-Received: from MTA-06.privateemail.com (localhost [127.0.0.1])
-        by MTA-06.privateemail.com (Postfix) with ESMTP id F2DD260049;
-        Sat, 22 Sep 2018 14:16:05 -0400 (EDT)
-Received: from MacMini.local.mail (unknown [10.20.151.249])
-        by MTA-06.privateemail.com (Postfix) with ESMTPA id F3E0A60043;
-        Sat, 22 Sep 2018 18:16:04 +0000 (UTC)
-Date:   Sat, 22 Sep 2018 20:16:03 +0200
-From:   Sebastian Gniazdowski <psprint@zdharma.org>
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Message-ID: <etPan.5ba686e3.762c4412.1ba0@zdharma.org>
-In-Reply-To: <87musajun7.fsf@evledraar.gmail.com>
-References: <315083291.15466.1537536854535@privateemail.com>
- <20180921222454.GD11177@sigill.intra.peff.net>
- <87musajun7.fsf@evledraar.gmail.com> <87musajun7.fsf@evledraar.gmail.com>
-Subject: Re: Very simple popen() code request, ground-shaking
- functionality openned by it
-X-Mailer: Airmail (506)
+        id S1726530AbeIWBYD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 21:24:03 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:45117 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726039AbeIWBYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 21:24:03 -0400
+Received: by mail-ed1-f68.google.com with SMTP id p52-v6so13236195eda.12
+        for <git@vger.kernel.org>; Sat, 22 Sep 2018 12:29:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=k2LPhbglgFAqV/d4/p4ECS/seKyfW+mrgKegH3kIX/Q=;
+        b=RyBjlFlZKvqpsx/Oon3KTOv/wL4m2rpc+xx742KoPwhOYwWeJlLlWaYn6q+2hZkv/T
+         242VYZAZ3/NT8ALdeGL53YqD1Rblpd9OWapB9q1ey1QVbvF9WxRbMAomIf4VvvFiS53Q
+         783A6cUzb2gEK6yYi8wRF0NfJYxF7hN6tKRK2nOwYUEWiubWt+oqE88umsqJB8rcMKwA
+         VBflPZsbSuY+H2TscoOOcMKnyNUZKwLSZD9IRlH0Bsatd7lxYWLH486xsSLNRoJaUl01
+         xOizn9ks6pCoF9g8uNi+Faxf8ORKWCM6MBjjcVk9LjZE2UbfSeJ7qyOUudKuLXguhcSZ
+         FXmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=k2LPhbglgFAqV/d4/p4ECS/seKyfW+mrgKegH3kIX/Q=;
+        b=q8dhhTpAFrq4Bay1qzUK2kHlypHw/TzuGsVcp2ox4acM+hw9Srx0vvYsZqPHFNRiCI
+         AZLMBCCfA5kPHAvYs2ExB3OG+qkVvicEAoIdOiZbbECFJhl5negfUrot/1Fj4YeaWMdh
+         wa9tcmSs79TBC8KWxgyxnbOmkliHWZJiMQ93D9icnuBD83XucLqr/iu+uLhY2C62rmOM
+         A+G3eUoAFvxMy0UsJC+SpwVZad772vd4WTmTHdvF+kzviL8sDS9VKfy5IK9QQP8Tb0Yk
+         6V82Vn2qiqya8YbYWg8bjVA/yzGYiyaquBUWATFsc8iWzulie8V6ffaEyuTUHMCEHtt7
+         NPDA==
+X-Gm-Message-State: ABuFfoj/uV9i0Gbo8jugaYLCygOe8/QTOBZnWA1QGmeTxQyUBllNdBzW
+        DV1opD+Sv2Lm3WblQipHnYE=
+X-Google-Smtp-Source: ACcGV60IQsMOftFlZCrYOhJk/VC5m1tM+k6pHR/fs74o3R4weuRdhot5nXJtQQCLSSMf82XiSFuz8w==
+X-Received: by 2002:aa7:c5cd:: with SMTP id h13-v6mr5763965eds.27.1537644561711;
+        Sat, 22 Sep 2018 12:29:21 -0700 (PDT)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id s36-v6sm5890037edb.56.2018.09.22.12.29.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 22 Sep 2018 12:29:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git help: promote 'git help -av'
+References: <20180922174707.16498-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180922174707.16498-1-pclouds@gmail.com>
+Date:   Sat, 22 Sep 2018 21:29:18 +0200
+Message-ID: <87fty1jppt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22 września 2018 at 01:30:36, Ævar Arnfjörð Bjarmason (avarab@gmail.com) wrote: 
-> Duy's  
-> https://public-inbox.org/git/20180920161928.GA13379@duynguyen.home/ is  
-> another recent thing that reminded me of this, i.e. that suggested  
-> "\\|/-" spinner could be made much neater with non-ASCII.  
 
-Here is a IMO very large collection of spinner-like unicode animations: 
+On Sat, Sep 22 2018, Nguyễn Thái Ngọc Duy wrote:
 
-https://asciinema.org/a/ex8z3z6d5m7uv4buww0o2qeq2 
+> When you type "git help" (or just "git") you are greeted with a list
+> with commonly used commands and their short description and are
+> suggested to use "git help -a" or "git help -g" for more details.
+>
+> "git help -av" would be more friendly and inline with what is shown
+> with "git help" since it shows list of commands with description as
+> well, and commands are properly grouped.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  git.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git.c b/git.c
+> index a6f4b44af5..69c21f378b 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -31,7 +31,7 @@ const char git_usage_string[] =
+>  	   "           <command> [<args>]");
+>
+>  const char git_more_info_string[] =
+> -	N_("'git help -a' and 'git help -g' list available subcommands and some\n"
+> +	N_("'git help -av' and 'git help -g' list available subcommands and some\n"
+>  	   "concept guides. See 'git help <command>' or 'git help <concept>'\n"
+>  	   "to read about a specific subcommand or concept.");
 
-This comes from Zsh world, it's a plugin with spinners to use in Zsh scripts. I've never managed to see even 1/3 of them. 
+A side-effect of this not noted in your commit message is that we'll now
+invoke the pager, perhaps we should just do:
 
-> I'll just add that a 3rd thing that would also make sense would be to  
-> add a feature to configure the value of these GIT_TRACE_*=* variables  
-> via the .gitconfig, that's been suggested before (too lazy to dig up a  
-> ML archive reference), and would make this as easy to configure as  
-> Sebastian's suggestion.  
+    diff --git a/builtin/help.c b/builtin/help.c
+    index 8d4f6dd301..1a3b174aaf 100644
+    --- a/builtin/help.c
+    +++ b/builtin/help.c
+    @@ -436,9 +436,9 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+            parsed_help_format = help_format;
 
-Yes git config setting of this is most convenient IMO, most expected to occur in ~/.gitconfig, in which it would be set once to a favourite gauge-box script, and rather long long before looking at this part of config again. Or maybe in the beginning, dawn of such gauge-scripts (if there actually would be any new group of such scripts; but as it's a quite broad problem (see last `PS.' paragraph), then who knows), when some unstable gauge-box would be breaking login/passwords prompt (but that's stdout not stderr, shouldn't go through gauge-box-script) or "fatal: ..." messages, etc., user might be disabling it temporarily or choosing an alternate gauge-box solution, editing the config option ;) So not rarely edited in the beginning. (I don't know how much important would a fancy gauge box be for a regular user; I can tell it would be quite important to me). I think this is more convenient and clean than `export GIT_*' in .bashrc/.zshrc, rarely edited, just sitting there. 
+            if (show_all) {
+    +               setup_pager();
+                    git_config(git_help_config, NULL);
+                    if (verbose) {
+    -                       setup_pager();
+                            list_all_cmds_help();
+                            return 0;
+                    }
+    @@ -460,8 +460,10 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+                    return 0;
+            }
 
-Guys you seem to like the idea, I hope someone will approach the coding! 
+    -       if (show_guides)
+    +       if (show_guides) {
+    +               setup_pager();
+                    list_common_guides_help();
+    +       }
 
-PS. There's much room for improvement in the git-process-output.zsh in the Asciinema video, gauge scripts won't be simple. In general, the number of 0..100% sequences (like: compressing, resolving, etc. – they all go 0 to 100% on their own) should be somehow predicted (does Git know this in advance?) and the gauge should be divided into that many segments, each filling up per one corresponding 0..100% sequence, together forming single global 0..100% gauge.
+            if (show_all || show_guides) {
+                    printf("%s\n", _(git_more_info_string));
 
---  
-Sebastian Gniazdowski 
-News: https://twitter.com/ZdharmaI 
-IRC: https://kiwiirc.com/client/chat.freenode.net:+6697/#zplugin 
-Blog: http://zdharma.org
+Or is there a good reason we shouldn't invoke the pager for e.g. -g when
+the terminal is too small (per our default less config)?
+
+Another thing I noticed: We don't list -v in the git-help manpage, but
+since we use OPT_VERBOSE it's supported.
