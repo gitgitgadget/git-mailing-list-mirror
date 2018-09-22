@@ -8,174 +8,79 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF0A51F453
-	for <e@80x24.org>; Sat, 22 Sep 2018 12:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 358501F453
+	for <e@80x24.org>; Sat, 22 Sep 2018 12:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730187AbeIVS0l (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 14:26:41 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:43618 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728233AbeIVS0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 14:26:41 -0400
-Received: by mail-ed1-f49.google.com with SMTP id u23so3640281edx.10
-        for <git@vger.kernel.org>; Sat, 22 Sep 2018 05:33:14 -0700 (PDT)
+        id S1730720AbeIVSwY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 14:52:24 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:34764 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728324AbeIVSwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 14:52:24 -0400
+Received: by mail-ed1-f66.google.com with SMTP id e25so4343055edv.1
+        for <git@vger.kernel.org>; Sat, 22 Sep 2018 05:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=0QsxGwK8iAZfNVYlZtqUYfuIWM7cAP7g+DRz+r3ITpA=;
-        b=pn8CQOSCCgeIkiMfon9Sb0omtWutc1sKuFNeJbXvZ/LaxjBPhzpKV2jAniHhOzyvUk
-         03w4VYfNyUdySGa8kXO6OTJLyEe/HVWNSkfNQrDv11MPJ8hcOdr65NC2nFgTIPkl3o/k
-         ztRMLdpONV7mPIXqGx5rNd6Z9j4YXO19y0GDMKPs12I/zyZ0qGgsUblF5jDgXOfuYUSy
-         2EGW6rTgmA49YJZzFh2M4jY8m8jBAns0cnWtidD+eqimv0MiQaeSdEBe1kgvTT3Dl9sH
-         wPEWsIpZY352UvWRg/orM3gsSlwIGBpPLtOA505JCmyLUTPXQ51urLSF+vwTKP2zZkSp
-         NROg==
+         :message-id:mime-version;
+        bh=9EAAUcItjAq5Ftll4lBBR9FCnin75VJ928BMP5VfEYE=;
+        b=Fo8jFvtzoFhHbdgRYX0Jp2Hxwscn921T/wY4h6NnPR3ELNuNONcMzU8Bq2oOZciU4P
+         BDV++TmOUhNSxsBoIZNnde1UU7WkmRdWSeF5uFDS/fY0AiNSp+97KdU8t6hnBpFsurBh
+         3M6Ny8nrTnDlBbRaGnwRsvryXcT0iKBSx70kq/8WJ6oTaXXejJoQUAmDgfWHnJ5nY74i
+         oaALfsNXsuyjKUaDGqSc+ZyZuidvdSplp4DvtAerF8XH0T5fuFYIOuVN0gZGuTAy7jaq
+         0jph+jAIMrzZk1ykZnneo4E+vLV1Df0QGjAI0dOD/b/OHnzZ2Ff65/QaAkSTofXL3+KL
+         /YSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=0QsxGwK8iAZfNVYlZtqUYfuIWM7cAP7g+DRz+r3ITpA=;
-        b=SHYO833VKib15JUUFP4mhTspvBEOHPMb4lCX+tNkCOaGM3kZQQ6KtjMdtYsidhzxxs
-         l4EvwA4CgPCeaOAIvlNGTYD0wWrJM2anjqs2SmMpypbsfDAFkVQMYu2q/ZT7tHGuyOZ5
-         FkTxfy+LucK2w0LB+BCI7UcUt4TsIxcKJOVNsbd2T1rsHu4Nggi87g9pVShlvwWSwTrM
-         LylX18xiKJDoJPhjeOAoEb+hAqKflUxtgLbm2oF9VpVMx+sp0dyN20fwB7PbcGaJlB2C
-         72iVWzz63fB6gCasq/B9/U1KC2NUOwN65w/5YeeGaFOjuiaYPYqGxY/xNFB5LK7qBv75
-         hSdw==
-X-Gm-Message-State: ABuFfogcTDuT0lA4HOtg7RYmnaXe5pijU5fgW+Dc00uqDHYoTyiUjbin
-        ljt52OloZQNScses9DAjGTlogH8bhWQ=
-X-Google-Smtp-Source: ACcGV60NQzmJAzZSkhZARMs82K81rP1HjOPuqS/kcMxWS1WiCf2NPz9YcNwA98eLHBUVmAZbQYmkKQ==
-X-Received: by 2002:a50:a267:: with SMTP id 94-v6mr3705085edl.189.1537619593786;
-        Sat, 22 Sep 2018 05:33:13 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version;
+        bh=9EAAUcItjAq5Ftll4lBBR9FCnin75VJ928BMP5VfEYE=;
+        b=iwnjWWKgjtoLNgL+7Lf7ClrTSyH08Nd5v5bPB3tkNhzX0VpJlOX5psfbtlhVRY4eG+
+         ur6OapfqwigHiQcM27oSE607Y3+jinZ3q68/fTzX95lBes+YOytInwrkGjYcnX4aUpG+
+         Z+4pmvublksyJAUfipynY2rRJwb0hi5tkJok2FUcWl67F4opnejaPxoDWEyGtpmMAm03
+         58IX4BBIlMjOlPcSIL+E2ssSTEbVoYZlr4DgBRlsJm8CkvC26G2wbuBW3hbb5D2/6dOB
+         blLO+Kza6RpEa0fwm68RwUfrY3aMd/Z9VOdNnMJoPgjo7svsIF/Aj5IzkykB1kFm86j8
+         pl3A==
+X-Gm-Message-State: ABuFfojLh/dIUsq7H2GlE1rA8/7wzJhQW3nce+bFSE6sdR9NnUkJnH45
+        N198nNGsE33my4/E7r1O8yU=
+X-Google-Smtp-Source: ACcGV63b+oeLC8JEuWQSp1DkdyNiLiQPapdcKXR4V1L/3pFkFxYY5tgaJQ736KT9nrB3KKSfD/HbBQ==
+X-Received: by 2002:a50:b84f:: with SMTP id k15-v6mr532173ede.105.1537621132122;
+        Sat, 22 Sep 2018 05:58:52 -0700 (PDT)
 Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id v1-v6sm2896389edf.3.2018.09.22.05.33.12
+        by smtp.gmail.com with ESMTPSA id h8-v6sm3422152edi.68.2018.09.22.05.58.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 22 Sep 2018 05:33:13 -0700 (PDT)
+        Sat, 22 Sep 2018 05:58:51 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "H.Merijn Brand" <h.m.brand@xs4all.nl>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Coredump on ls-remote + --sort
-References: <20180922124215.0c8172d1@pc09.procura.nl>
+Subject: Re: [PATCH 1/8] sha1-array: provide oid_array_filter
+References: <20180921223558.65055-1-sbeller@google.com> <20180921223558.65055-2-sbeller@google.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180922124215.0c8172d1@pc09.procura.nl>
-Date:   Sat, 22 Sep 2018 14:33:11 +0200
-Message-ID: <87in2xk8zc.fsf@evledraar.gmail.com>
+In-reply-to: <20180921223558.65055-2-sbeller@google.com>
+Date:   Sat, 22 Sep 2018 14:58:50 +0200
+Message-ID: <87h8ihk7sl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Sep 22 2018, H.Merijn Brand wrote:
+On Fri, Sep 21 2018, Stefan Beller wrote:
 
-> A small background why I wanted this: I need to build a new version of
-> some software hosted in git, add a lot of shared/static stuff and
-> automatically test it. I want to get the most recent *tag* and create a
-> folder with the tagname in it, go into that folder and clone the repo,
-> check out the tag, add the rest of the stuff, build and test
->
-> As the default outpout of «git ls-remote --tags» or «git ls-remote» is
-> topologically sorted by tagname, the most recent tag is likely to be in
-> the middle.
->
-> Linux 4.12.14-lp150.12.16-default [openSUSE Leap 15.0]
->
-> $ git --version
-> git version 2.19.0
->
-> $ git ls-remote --tags github.com:Tux/App-ccdiff
-> 5e2513ab6dd4a24c8f3a3ace0a3faba6a291d818        refs/tags/0.04
-> 2f7ea0f1e751dc20c1ddb15f6d61c6fa62d5d6f1        refs/tags/0.05
-> a3802907be5b10383c7438f1d1c660fe13a05d3f        refs/tags/0.06
-> 3e4bfa7cde75fba221650b9d3aa5555b706803df        refs/tags/0.07
-> 05829d1ac5b49bbdd2167bc363b94f8a12e752b3        refs/tags/0.08
-> 9c6e5861ea9c6e50c501663d43c5a9f6d31b54bc        refs/tags/0.09
-> e815b059f6326da936c3a92272ba67e273b1dc3e        refs/tags/0.10
-> e6b40e331c945449bb8e71023de4920ca5574adc        refs/tags/0.20
-> be55e6336b1db5ffad23a6a0a663763e2f5da779        refs/tags/0.21
-> e283d563f02bb8d2131e8b95852072ac204b28b4        refs/tags/0.22
-> 0d3d1830f542121bfef1d984f21343c6d9c774f8        refs/tags/0.23
-> d7bf195a92095a4f0b810584810450e4001b1a2c        refs/tags/0.24
-> 5c517cf3f79cb18173714e63bc5b80a3e3f888f1        refs/tags/0.25
->
-> Whether or not supported, it should not dump core
->
-> $ git ls-remote --tags --sort=authordate github.com:Tux/App-ccdiff
-> Segmentation fault (core dumped)
->
-> (gdb) where
-> #0  0x00007ffff74784a6 in __strlen_sse2 () from /lib64/libc.so.6
-> #1  0x000000000057a956 in for_each_replace_ref ()
-> #2  0x0000000000596cec in do_lookup_replace_object ()
-> #3  0x00000000005c14eb in oid_object_info_extended ()
-> #4  0x000000000058b984 in get_object ()
-> #5  0x000000000058ddde in populate_value ()
-> #6  0x000000000058e36b in compare_refs ()
-> #7  0x000000000061447a in msort_with_tmp.part ()
-> #8  0x0000000000614505 in msort_with_tmp.part ()
-> #9  0x0000000000614518 in msort_with_tmp.part ()
-> #10 0x0000000000614518 in msort_with_tmp.part ()
-> #11 0x000000000061459e in git_qsort_s ()
-> #12 0x000000000058ed40 in ref_array_sort ()
-> #13 0x000000000044ef66 in cmd_ls_remote ()
-> #14 0x000000000040784f in handle_builtin ()
-> #15 0x0000000000407bb0 in cmd_main ()
-> #16 0x0000000000406b04 in main ()
->
-> Linux 3.10.0-862.6.3.el7.x86_64 [CentOS Linux 7.5.1804 (Core)]
->
-> $ git --version
-> git version 2.18.0
->
-> $ git ls-remote --tags https://github.com/Tux/App-ccdiff
-> 5e2513ab6dd4a24c8f3a3ace0a3faba6a291d818        refs/tags/0.04
-> 2f7ea0f1e751dc20c1ddb15f6d61c6fa62d5d6f1        refs/tags/0.05
-> a3802907be5b10383c7438f1d1c660fe13a05d3f        refs/tags/0.06
-> 3e4bfa7cde75fba221650b9d3aa5555b706803df        refs/tags/0.07
-> 05829d1ac5b49bbdd2167bc363b94f8a12e752b3        refs/tags/0.08
-> 9c6e5861ea9c6e50c501663d43c5a9f6d31b54bc        refs/tags/0.09
-> e815b059f6326da936c3a92272ba67e273b1dc3e        refs/tags/0.10
-> e6b40e331c945449bb8e71023de4920ca5574adc        refs/tags/0.20
-> be55e6336b1db5ffad23a6a0a663763e2f5da779        refs/tags/0.21
-> e283d563f02bb8d2131e8b95852072ac204b28b4        refs/tags/0.22
-> 0d3d1830f542121bfef1d984f21343c6d9c774f8        refs/tags/0.23
-> d7bf195a92095a4f0b810584810450e4001b1a2c        refs/tags/0.24
-> 5c517cf3f79cb18173714e63bc5b80a3e3f888f1        refs/tags/0.25
->
-> $ git ls-remote --tags --sort=authordate https://github.com/Tux/App-ccdiff
-> Segmentation fault
->
-> (gdb) where
-> #0  0x00007ffff751a67f in __strlen_sse42 () from /lib64/libc.so.6
-> #1  0x0000000000561c06 in for_each_replace_ref ()
-> #2  0x000000000057c3fa in do_lookup_replace_object ()
-> #3  0x00000000005a6aa8 in read_object_file_extended ()
-> #4  0x00000000005731e5 in get_object ()
-> #5  0x00000000005749df in populate_value ()
-> #6  0x0000000000574e9d in compare_refs ()
-> #7  0x00000000005efe57 in msort_with_tmp.part.0 ()
-> #8  0x00000000005efe31 in msort_with_tmp.part.0 ()
-> #9  0x00000000005efe0e in msort_with_tmp.part.0 ()
-> #10 0x00000000005efe0e in msort_with_tmp.part.0 ()
-> #11 0x00000000005eff5c in git_qsort_s ()
-> #12 0x00000000005757e0 in ref_array_sort ()
-> #13 0x000000000044c6b6 in cmd_ls_remote ()
-> #14 0x000000000040730e in handle_builtin ()
-> #15 0x000000000040760e in cmd_main ()
-> #16 0x0000000000406554 in main ()
+> +/*
+> + * Apply want to each entry in array, retaining only the entries for
+> + * which the function returns true.  Preserve the order of the entries
+> + * that are retained.
+> + */
+> +void oid_array_filter(struct oid_array *array,
+> +		      for_each_oid_fn want,
+> +		      void *cbdata);
+> +
+>  #endif /* SHA1_ARRAY_H */
 
-I can't reproduce this, I just get for both ssh and https:
-
-    $ ~/g/git/git --exec-path=$PWD ls-remote --tags --sort=authordate https://github.com/Tux/App-ccdiff
-    fatal: missing object 2f7ea0f1e751dc20c1ddb15f6d61c6fa62d5d6f1 for refs/tags/0.05
-    $ ~/g/git/git --exec-path=$PWD version
-    git version 2.18.0
-
-Same thing on latest 'master' (v2.19.0-221-g150f307afc).
-
-But maybe that's just a symptom of the same bug, when I clone the repo I
-get a working 0.05 tag, and it passes fsck, and I do get the
-2f7ea0f1e751dc20c1ddb15f6d61c6fa62d5d6f1 object (which is the 0.05 tag
-object).
+The code LGTM, but this comment should instead be an update to the API
+docs, see my recent 5cc044e025 ("get_short_oid: sort ambiguous objects
+by type, then SHA-1", 2018-05-10) for an addition of a new function to
+this API where I added some new docs.
