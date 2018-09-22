@@ -2,68 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E69F1F453
-	for <e@80x24.org>; Sat, 22 Sep 2018 14:12:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 070641F453
+	for <e@80x24.org>; Sat, 22 Sep 2018 17:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728727AbeIVUGB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 16:06:01 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50581 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728585AbeIVUGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 16:06:01 -0400
-Received: by mail-wm1-f65.google.com with SMTP id s12-v6so5655110wmc.0
-        for <git@vger.kernel.org>; Sat, 22 Sep 2018 07:12:16 -0700 (PDT)
+        id S1728005AbeIVXll (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 19:41:41 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:35770 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726464AbeIVXlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 19:41:40 -0400
+Received: by mail-lj1-f193.google.com with SMTP id p10-v6so14811455ljg.2
+        for <git@vger.kernel.org>; Sat, 22 Sep 2018 10:47:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qwn4qv98aMccIuVyCzmQEk2eavKe5psOhP4ZGMZTFdg=;
-        b=eOLst0HVZ0JgXzHSgUFz3/HeNtdTJgMLjDfnCi4YjFwJVAOePtcEMOGQWKuW6p9sYz
-         W/k+Gt/oe1ddjouwQcNB4UzhmJmHaGLo3YYmiNZYt6QGlj6hefZXviT6VvJ+hrAerB46
-         14UIvxf2EogAOkWM8cvIa9FXYO9c/gcnESVp2IC1izeE3R1HBs99AulStJ2zseFa2CRH
-         R2ftDmxJHUN/lS+Z7Bzavs/qO7Iea0Cjr7RX8m/5v+S3KbMIkPVcKqCWAZnu460XTUYg
-         oB4GNSvH1HJrzV4fAOwGjmrMpRD4vUEf5tALmV5CLpmzEKv7v8P7PcqDorcDWLdfPeKP
-         Ej0g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H4apIEQrE9mlYXBVVd2qLbLIhwI8ri6Vwk39NtuId1A=;
+        b=LtyarW4+wS+fQ5DPtTQsNb76BdZiU6yJudkgpmFRVDi6Uqr3HFspBUskH8CAWSXnc7
+         dp4vaSLJzlC67z9e2lJEgBnv1Ndomy7ZXNw+fZ2AFes59G0+7/By0s4VdGJ15H+8Q56t
+         VuHMhlNcHB8VvRKW11rO4jNDQjjPmMd0CTp58d9S28ax9polbLNPb8aMAZCuymLPyKhU
+         nzxGal7jSjjNgWzg+STlSQ3bYSsVzc4vRZ8GshZHMtBXzeeP21nh9sqEnO6e3vrS6eRC
+         CW5eK9Sfl135lA/1oOO+KkwXyZ26BJUW4AqxCv+VzxN8QRvaW+CdExseYZ9KJ0cbc2+m
+         MXOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qwn4qv98aMccIuVyCzmQEk2eavKe5psOhP4ZGMZTFdg=;
-        b=Jabs15FyLvW4BZ3Zd2L2XFCD6S54O+BYVu1MF0TnOpDAPGZ3PthGPPfBfDaji0reFa
-         Vk8diXEN5lRe714RmP9a+TEBX3OakILAgV19lZlhd974WwdYcg2/5qbDz2e6uUOg4OCu
-         zJoYy+s9LdAagGiQdQKpEMCJXXteWXkLP9zYthF85BCOLAX90uYHfPdSzF7U6fYJPVoV
-         rf3vqQK9BRdQVi06qOXSwygjtb/XusdBL6n918PFwHUULQ9GTdNUSgDV3bAOx4OqcER0
-         2MyB/W9FgF1o65XhY7rYGsMKQw4fIB3KqUHc+VwvoA82m9x/Pxi8Vj205WLfPqSR+HdX
-         29zA==
-X-Gm-Message-State: APzg51AI7yWxmX3LliWC/qnUwFam+0LI2t9ikKTH8wCbyVnJvO+a7YIJ
-        v/pP4SokEgeprU2ifaKK5HIWXFTh
-X-Google-Smtp-Source: ACcGV60hEx2YXLNUTQ1d2rVeJxV4G0804A6qJhMIZW5kkmN83e7jY+DED/xnzYf6+BmazxvDd+ivnA==
-X-Received: by 2002:a1c:e54:: with SMTP id 81-v6mr1710618wmo.84.1537625535711;
-        Sat, 22 Sep 2018 07:12:15 -0700 (PDT)
-Received: from localhost.localdomain (x4dbe3ca5.dyn.telefonica.de. [77.190.60.165])
-        by smtp.gmail.com with ESMTPSA id n17-v6sm5501550wmc.13.2018.09.22.07.12.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 22 Sep 2018 07:12:14 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H4apIEQrE9mlYXBVVd2qLbLIhwI8ri6Vwk39NtuId1A=;
+        b=CH9mzSe/qaRsPsIwTzIKNFoQ39IM3nZ2eqf9rhztX6t/Nce5PAbkfTsKI+CkBpYmai
+         apXmX7+j0n4+YP9OP8aNYIQuTcYuh2mIE9v5Ycoa5vppkAvwjmhzZSAMVTefPU5Qh2mz
+         ENz3N7IRdu0ElM/cQUMEPmNP9JP1+EV8ERkwXuLUfv6Ujmn/GXyd3syI2lmPoRORRd3m
+         PzjPoyn3A0aJ5WJNeUHwB5DC4msLvzMf5i8YzC4U+ErEWyswnmhU7k+ObWSQiCSrNd9h
+         gReHsxDFDlIGxUFCvAP/rjYST71NyZ4tvE+ZHWzy4EkaLGJlRP9Mw1H0Lk6AXQbGB+sq
+         QVDA==
+X-Gm-Message-State: ABuFfojNAVEEH+dhIfDcsDzYKtP4HWhU7RDTsxT7gH9VRFKjgfVb4c3n
+        nh1/+n4hHfjJd1MYu4iGjcFxVMaE
+X-Google-Smtp-Source: ACcGV61lYkYtmfW8JOfEQs3Dx4KQCD8dl1URXkRTs2hxwaAzjJ+jEphN5QWj3i9WHSp34lBfpLe64w==
+X-Received: by 2002:a2e:259:: with SMTP id 86-v6mr6284395ljc.107.1537638437302;
+        Sat, 22 Sep 2018 10:47:17 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id n23-v6sm5610832ljh.77.2018.09.22.10.47.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 22 Sep 2018 10:47:16 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     "H . Merijn Brand" <h.m.brand@xs4all.nl>,
-        Harald Nordgren <haraldnordgren@gmail.com>,
-        Olga Telezhnaia <olyatelezhnaya@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] ref-filter: don't look for objects when outside of a repository
-Date:   Sat, 22 Sep 2018 16:11:45 +0200
-Message-Id: <20180922141145.10558-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.19.0.355.geb876cd9d6
-In-Reply-To: <20180922124215.0c8172d1@pc09.procura.nl>
-References: <20180922124215.0c8172d1@pc09.procura.nl>
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] git help: promote 'git help -av'
+Date:   Sat, 22 Sep 2018 19:47:07 +0200
+Message-Id: <20180922174707.16498-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.0.647.gb9a6049235
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,67 +66,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The command 'git ls-remote --sort=authordate <remote>' segfaults when
-run outside of a repository, ever since the introduction of its
-'--sort' option in 1fb20dfd8e (ls-remote: create '--sort' option,
-2018-04-09).
+When you type "git help" (or just "git") you are greeted with a list
+with commonly used commands and their short description and are
+suggested to use "git help -a" or "git help -g" for more details.
 
-While in general the 'git ls-remote' command can be run outside of a
-repository just fine, its '--sort=<key>' option with certain keys does
-require access to the referenced objects.  This sorting is implemented
-using the generic ref-filter sorting facility, which already handles
-missing objects gracefully with the appropriate 'missing object
-deadbeef for HEAD' message.  However, being generic means that it
-checks replace refs while trying to retrieve an object, and while
-doing so it accesses the 'git_replace_ref_base' variable, which has
-not been initialized and is still a NULL pointer when outside of a
-repository, thus causing the segfault.
+"git help -av" would be more friendly and inline with what is shown
+with "git help" since it shows list of commands with description as
+well, and commands are properly grouped.
 
-Make ref-filter more careful and only attempt to retrieve an object
-when we are in a repository.  Also add a test to ensure that 'git
-ls-remote --sort' fails gracefully when executed outside of a
-repository.
-
-Reported-by: H.Merijn Brand <h.m.brand@xs4all.nl>
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
+ git.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'm not quite sure that this is the best place to add this check...
-but hey, it's a Saturday afternoon after all ;)
-
- ref-filter.c         | 3 ++-
- t/t5512-ls-remote.sh | 6 ++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index e1bcb4ca8a..3555bc29e7 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1473,7 +1473,8 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 		oi->info.sizep = &oi->size;
- 		oi->info.typep = &oi->type;
- 	}
--	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
-+	if (!have_git_dir() ||
-+	    oid_object_info_extended(the_repository, &oi->oid, &oi->info,
- 				     OBJECT_INFO_LOOKUP_REPLACE))
- 		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
- 				       oid_to_hex(&oi->oid), ref->refname);
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index bc5703ff9b..7dd081da01 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -302,4 +302,10 @@ test_expect_success 'ls-remote works outside repository' '
- 	nongit git ls-remote dst.git
- '
+diff --git a/git.c b/git.c
+index a6f4b44af5..69c21f378b 100644
+--- a/git.c
++++ b/git.c
+@@ -31,7 +31,7 @@ const char git_usage_string[] =
+ 	   "           <command> [<args>]");
  
-+test_expect_success 'ls-remote --sort fails gracefully outside repository' '
-+	# Use a sort key that requires access to the referenced objects.
-+	nongit test_must_fail git ls-remote --sort=authordate "$TRASH_DIRECTORY" 2>err &&
-+	test_i18ngrep "^fatal: missing object" err
-+'
-+
- test_done
+ const char git_more_info_string[] =
+-	N_("'git help -a' and 'git help -g' list available subcommands and some\n"
++	N_("'git help -av' and 'git help -g' list available subcommands and some\n"
+ 	   "concept guides. See 'git help <command>' or 'git help <concept>'\n"
+ 	   "to read about a specific subcommand or concept.");
+ 
 -- 
-2.19.0.355.geb876cd9d6
+2.19.0.647.gb9a6049235
 
