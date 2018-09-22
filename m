@@ -2,709 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03AE61F453
-	for <e@80x24.org>; Fri, 21 Sep 2018 23:59:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCC1C1F453
+	for <e@80x24.org>; Sat, 22 Sep 2018 10:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391641AbeIVFuX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 01:50:23 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:48117 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725756AbeIVFuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 01:50:23 -0400
-Received: by mail-qk1-f202.google.com with SMTP id u195-v6so14741677qka.14
-        for <git@vger.kernel.org>; Fri, 21 Sep 2018 16:59:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=jZKkAGz2INWqdD6E1auo1nbOQOB/JsdJ+G3fxcI67kM=;
-        b=OEslp3/C3s8OaUerNdxRRu5k07YOIZ1SgcYYQ9vpkDBrM08toFCpJu+4xLym/4g7Na
-         54gcoctMWoB+RM+LPw+eDrWuKeveODwHhcX1K+1eKcs2LJACjO8INH06wOL0Zopo3QFG
-         tmFDybFcrftLHlakR7+dqdIQCJ0x7UL20UTLqgADkLY4AIbp1dCvCl26QU9n4G8hPYro
-         usAvcpVTpQzoRNFL6gZOaGxTk1tWt17ckONWuNLe/E/LRZocXrHlRnW1HtapyrZXUKGV
-         QuXqlZwlnFz7RI0kE5qxhETz6q3pCIxw3XXbwNjwRbXdVgwXNQt6o49K+08G0b0YlxDU
-         7PuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=jZKkAGz2INWqdD6E1auo1nbOQOB/JsdJ+G3fxcI67kM=;
-        b=WJUNExzbSwP+e4Fviu3gJJkMYz2LD3GmYj5Zp8fgdloYoWcMsZctuxBhAo3XvrkQU3
-         b9CQ0FKKsYAOlwRVcEuE70R8atoL8tjBNSqmLfI61Ga3Tvso6HmpldTnQNxEj5j+c4uF
-         vEEeTRdbxgwehCZhsNcbJfqgaYsSW9YmUXcQ3rjeeqs13zbbUwAosDPlHVNu0If5H5An
-         bo5iYbg0cV0GDMg1mUNq0K10L5OllhMFiI1atLgWxCY9z0I7iaI03/vcYhdFjtxsUA6m
-         m/7EFu16QW6LeYL/FaLnSnJ6IeOowTcyCjWJJt89JkjhOduj7sxMCt138qKT4DPlXVxX
-         d1cA==
-X-Gm-Message-State: APzg51AAqjWcfFH+gswnM2R1IA32frm1kQporyUDZexhDN2UWCTHkVlI
-        ildtpPpVwmFRWokhTVj8Zh67C4GAACXnGwK+acAN1ZVZooPWqXrkN+jfnnDbbjQh4cvMhfcXsLI
-        7M0KjYQ7+5KWVjhaKsLohpxp2TsS00RkpFLJ24x43RgCNxYTbh0rhpLmwrbGS
-X-Google-Smtp-Source: ACcGV60L8fN6sSzUTDxYFLKMGwZNy9uPEMukzlIxdcgv2ef2zI9RWa40uB67fmmuB5OxK05Ikvgvjx4FvEJ5
-X-Received: by 2002:aed:3cd8:: with SMTP id e24-v6mr17779qtf.55.1537574348862;
- Fri, 21 Sep 2018 16:59:08 -0700 (PDT)
-Date:   Fri, 21 Sep 2018 16:58:33 -0700
-In-Reply-To: <20180921235833.99045-1-sbeller@google.com>
-Message-Id: <20180921235833.99045-4-sbeller@google.com>
-Mime-Version: 1.0
-References: <20180921235833.99045-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH 3/3] t0030: reformat style
-From:   Stefan Beller <sbeller@google.com>
+        id S1727944AbeIVQfd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 12:35:33 -0400
+Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:60274 "EHLO
+        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726022AbeIVQfd (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Sep 2018 12:35:33 -0400
+Received: from pc09.procura.nl ([188.202.26.81])
+        by smtp-cloud8.xs4all.net with ESMTPSA
+        id 3fMkgJEG312p23fMlgdb7r; Sat, 22 Sep 2018 12:42:23 +0200
+Date:   Sat, 22 Sep 2018 12:42:15 +0200
+From:   "H.Merijn Brand" <h.m.brand@xs4all.nl>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Coredump on ls-remote + --sort
+Message-ID: <20180922124215.0c8172d1@pc09.procura.nl>
+X-Mailer: Claws Mail 3.16.0git170 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ boundary="Sig_/y4ZPWUWkuNBo=WBzs5FtTOZ"; protocol="application/pgp-signature"
+X-CMAE-Envelope: MS4wfGhykl2sCEfJb8vpbaj0DSs25pkAMLtVUmszRKQ1n0t4GaijsB9UF4mEStC1H/LnaKSKoGACeNz9p4g9BdRnO31Gyaize1xIV9WrZ3HTkkkU4H9HP9/A
+ qecR02zwyr5VHVcEvjkBZaKajmUx92N0fD4SgVfazUeNJp4nEepPt8xG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t0030-stripspace.sh | 525 ++++++++++++++++++++----------------------
- 1 file changed, 254 insertions(+), 271 deletions(-)
+--Sig_/y4ZPWUWkuNBo=WBzs5FtTOZ
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index 5ce47e8af51..c2281a39b58 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -12,379 +12,362 @@ s40='                                        '
- sss="$s40$s40$s40$s40$s40$s40$s40$s40$s40$s40" # 400
- ttt="$t40$t40$t40$t40$t40$t40$t40$t40$t40$t40" # 400
- 
--test_expect_success \
--    'long lines without spaces should be unchanged' '
--    echo "$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual &&
--
--    echo "$ttt$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual &&
--
--    echo "$ttt$ttt$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual &&
--
--    echo "$ttt$ttt$ttt$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual
-+test_expect_success 'long lines without spaces should be unchanged' '
-+	echo "$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual &&
-+
-+	echo "$ttt$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual &&
-+
-+	echo "$ttt$ttt$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual &&
-+
-+	echo "$ttt$ttt$ttt$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'lines with spaces at the beginning should be unchanged' '
--    echo "$sss$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'lines with spaces at the beginning should be unchanged' '
-+	echo "$sss$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$sss$sss$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual &&
-+	echo "$sss$sss$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$sss$sss$sss$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual
-+	echo "$sss$sss$sss$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'lines with intermediate spaces should be unchanged' '
--    echo "$ttt$sss$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'lines with intermediate spaces should be unchanged' '
-+	echo "$ttt$sss$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$ttt$sss$sss$ttt" >expect &&
--    git stripspace <expect >actual &&
--    test_cmp expect actual
-+	echo "$ttt$sss$sss$ttt" >expect &&
-+	git stripspace <expect >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'consecutive blank lines should be unified' '
--    printf "$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'consecutive blank lines should be unified' '
-+	printf "$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt$ttt$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt$ttt$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt\n\n\n\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt$ttt\n" > expect &&
--    printf "$ttt\n\n\n\n\n$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$ttt$ttt\n" > expect &&
-+	printf "$ttt\n\n\n\n\n$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt$ttt$ttt\n" > expect &&
--    printf "$ttt\n\n\n\n\n$ttt$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$ttt$ttt$ttt\n" > expect &&
-+	printf "$ttt\n\n\n\n\n$ttt$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt$ttt$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt$ttt$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt\n" > expect &&
--    printf "$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$ttt\n" > expect &&
-+	printf "$ttt\n\t\n \n\n  \t\t\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt$ttt\n" > expect &&
--    printf "$ttt\n\t\n \n\n  \t\t\n$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$ttt$ttt\n" > expect &&
-+	printf "$ttt\n\t\n \n\n  \t\t\n$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$ttt$ttt$ttt\n" > expect &&
--    printf "$ttt\n\t\n \n\n  \t\t\n$ttt$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual
-+	printf "$ttt\n\n$ttt$ttt$ttt\n" > expect &&
-+	printf "$ttt\n\t\n \n\n  \t\t\n$ttt$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'only consecutive blank lines should be completely removed' '
-+test_expect_success 'only consecutive blank lines should be completely removed' '
- 
--    printf "\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "\n\n\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "\n\n\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "$sss\n$sss\n$sss\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "$sss\n$sss\n$sss\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "$sss$sss\n$sss\n\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "$sss$sss\n$sss\n\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "\n$sss\n$sss$sss\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "\n$sss\n$sss$sss\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "$sss$sss$sss$sss\n\n\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "$sss$sss$sss$sss\n\n\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "\n$sss$sss$sss$sss\n\n" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "\n$sss$sss$sss$sss\n\n" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "\n\n$sss$sss$sss$sss\n" | git stripspace >actual &&
--    test_must_be_empty actual
-+	printf "\n\n$sss$sss$sss$sss\n" | git stripspace >actual &&
-+	test_must_be_empty actual
- '
- 
--test_expect_success \
--    'consecutive blank lines at the beginning should be removed' '
--    printf "$ttt\n" > expect &&
--    printf "\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'consecutive blank lines at the beginning should be removed' '
-+	printf "$ttt\n" > expect &&
-+	printf "\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n" > expect &&
--    printf "\n\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n" > expect &&
-+	printf "\n\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n" > expect &&
--    printf "\n\n\n$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n" > expect &&
-+	printf "\n\n\n$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt\n" > expect &&
--    printf "\n\n\n$ttt$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt$ttt\n" > expect &&
-+	printf "\n\n\n$ttt$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt$ttt\n" > expect &&
--    printf "\n\n\n$ttt$ttt$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt$ttt$ttt\n" > expect &&
-+	printf "\n\n\n$ttt$ttt$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n" > expect &&
-+	printf "$ttt\n" > expect &&
- 
--    printf "$sss\n$sss\n$sss\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$sss\n$sss\n$sss\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "\n$sss\n$sss$sss\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "\n$sss\n$sss$sss\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$sss$sss\n$sss\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$sss$sss\n$sss\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$sss$sss$sss\n\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$sss$sss$sss\n\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "\n$sss$sss$sss\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "\n$sss$sss$sss\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "\n\n$sss$sss$sss\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual
-+	printf "\n\n$sss$sss$sss\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'consecutive blank lines at the end should be removed' '
--    printf "$ttt\n" > expect &&
--    printf "$ttt\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'consecutive blank lines at the end should be removed' '
-+	printf "$ttt\n" > expect &&
-+	printf "$ttt\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n" > expect &&
--    printf "$ttt\n\n\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n" > expect &&
-+	printf "$ttt\n\n\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n" > expect &&
--    printf "$ttt$ttt\n\n\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n" > expect &&
-+	printf "$ttt$ttt\n\n\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt\n" > expect &&
--    printf "$ttt$ttt$ttt\n\n\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt$ttt\n" > expect &&
-+	printf "$ttt$ttt$ttt\n\n\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt$ttt\n" > expect &&
--    printf "$ttt$ttt$ttt$ttt\n\n\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt$ttt$ttt\n" > expect &&
-+	printf "$ttt$ttt$ttt$ttt\n\n\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n" > expect &&
-+	printf "$ttt\n" > expect &&
- 
--    printf "$ttt\n$sss\n$sss\n$sss\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n$sss\n$sss\n$sss\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$sss\n$sss$sss\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$sss\n$sss$sss\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n$sss$sss\n$sss\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n$sss$sss\n$sss\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n$sss$sss$sss\n\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n$sss$sss$sss\n\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n$sss$sss$sss\n\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n\n$sss$sss$sss\n\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n\n\n$sss$sss$sss\n" | git stripspace >actual &&
--    test_cmp expect actual
-+	printf "$ttt\n\n\n$sss$sss$sss\n" | git stripspace >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'text without newline at end should end with newline' '
--    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
-+test_expect_success 'text without newline at end should end with newline' '
-+	test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
- '
- 
- # text plus spaces at the end:
- 
--test_expect_success \
--    'text plus spaces without newline at end should end with newline' '
--    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
-+test_expect_success 'text plus spaces without newline at end should end with newline' '
-+	test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
-+	test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
- '
- 
--test_expect_success \
--    'text plus spaces without newline at end should not show spaces' '
--    ! (printf "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
-+test_expect_success 'text plus spaces without newline at end should not show spaces' '
-+	! (printf "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (printf "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (printf "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (printf "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (printf "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (printf "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
- '
- 
--test_expect_success \
--    'text plus spaces without newline should show the correct lines' '
--    printf "$ttt\n" >expect &&
--    printf "$ttt$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'text plus spaces without newline should show the correct lines' '
-+	printf "$ttt\n" >expect &&
-+	printf "$ttt$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n" >expect &&
--    printf "$ttt$sss$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n" >expect &&
-+	printf "$ttt$sss$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n" >expect &&
--    printf "$ttt$sss$sss$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n" >expect &&
-+	printf "$ttt$sss$sss$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n" >expect &&
--    printf "$ttt$ttt$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n" >expect &&
-+	printf "$ttt$ttt$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n" >expect &&
--    printf "$ttt$ttt$sss$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n" >expect &&
-+	printf "$ttt$ttt$sss$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt$ttt\n" >expect &&
--    printf "$ttt$ttt$ttt$sss" | git stripspace >actual &&
--    test_cmp expect actual
-+	printf "$ttt$ttt$ttt\n" >expect &&
-+	printf "$ttt$ttt$ttt$sss" | git stripspace >actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success \
--    'text plus spaces at end should not show spaces' '
--    ! (echo "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
-+test_expect_success 'text plus spaces at end should not show spaces' '
-+	! (echo "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (echo "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (echo "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (echo "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (echo "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
-+	! (echo "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
- '
- 
--test_expect_success \
--    'text plus spaces at end should be cleaned and newline must remain' '
--    echo "$ttt" >expect &&
--    echo "$ttt$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'text plus spaces at end should be cleaned and newline must remain' '
-+	echo "$ttt" >expect &&
-+	echo "$ttt$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$ttt" >expect &&
--    echo "$ttt$sss$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	echo "$ttt" >expect &&
-+	echo "$ttt$sss$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$ttt" >expect &&
--    echo "$ttt$sss$sss$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	echo "$ttt" >expect &&
-+	echo "$ttt$sss$sss$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$ttt$ttt" >expect &&
--    echo "$ttt$ttt$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	echo "$ttt$ttt" >expect &&
-+	echo "$ttt$ttt$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$ttt$ttt" >expect &&
--    echo "$ttt$ttt$sss$sss" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	echo "$ttt$ttt" >expect &&
-+	echo "$ttt$ttt$sss$sss" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    echo "$ttt$ttt$ttt" >expect &&
--    echo "$ttt$ttt$ttt$sss" | git stripspace >actual &&
--    test_cmp expect actual
-+	echo "$ttt$ttt$ttt" >expect &&
-+	echo "$ttt$ttt$ttt$sss" | git stripspace >actual &&
-+	test_cmp expect actual
- '
- 
- # spaces only:
- 
--test_expect_success \
--    'spaces with newline at end should be replaced with empty string' '
--    echo | git stripspace >actual &&
--    test_must_be_empty actual &&
-+test_expect_success 'spaces with newline at end should be replaced with empty string' '
-+	echo | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    echo "$sss" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	echo "$sss" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    echo "$sss$sss" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	echo "$sss$sss" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    echo "$sss$sss$sss" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	echo "$sss$sss$sss" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    echo "$sss$sss$sss$sss" | git stripspace >actual &&
--    test_must_be_empty actual
-+	echo "$sss$sss$sss$sss" | git stripspace >actual &&
-+	test_must_be_empty actual
- '
- 
--test_expect_success \
--    'spaces without newline at end should not show spaces' '
--    ! (printf "" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss$sss" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss$sss$sss" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss$sss$sss$sss" | git stripspace | grep " " >/dev/null)
-+test_expect_success 'spaces without newline at end should not show spaces' '
-+	! (printf "" | git stripspace | grep " " >/dev/null) &&
-+	! (printf "$sss" | git stripspace | grep " " >/dev/null) &&
-+	! (printf "$sss$sss" | git stripspace | grep " " >/dev/null) &&
-+	! (printf "$sss$sss$sss" | git stripspace | grep " " >/dev/null) &&
-+	! (printf "$sss$sss$sss$sss" | git stripspace | grep " " >/dev/null)
- '
- 
--test_expect_success \
--    'spaces without newline at end should be replaced with empty string' '
--    printf "" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+test_expect_success 'spaces without newline at end should be replaced with empty string' '
-+	printf "" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "$sss$sss" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "$sss$sss" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "$sss$sss$sss" | git stripspace >actual &&
--    test_must_be_empty actual &&
-+	printf "$sss$sss$sss" | git stripspace >actual &&
-+	test_must_be_empty actual &&
- 
--    printf "$sss$sss$sss$sss" | git stripspace >actual &&
--    test_must_be_empty actual
-+	printf "$sss$sss$sss$sss" | git stripspace >actual &&
-+	test_must_be_empty actual
- '
- 
--test_expect_success \
--    'consecutive text lines should be unchanged' '
--    printf "$ttt$ttt\n$ttt\n" >expect &&
--    printf "$ttt$ttt\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+test_expect_success 'consecutive text lines should be unchanged' '
-+	printf "$ttt$ttt\n$ttt\n" >expect &&
-+	printf "$ttt$ttt\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n$ttt$ttt\n$ttt\n" >expect &&
--    printf "$ttt\n$ttt$ttt\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n$ttt$ttt\n$ttt\n" >expect &&
-+	printf "$ttt\n$ttt$ttt\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n$ttt\n$ttt\n$ttt$ttt\n" >expect &&
--    printf "$ttt\n$ttt\n$ttt\n$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n$ttt\n$ttt\n$ttt$ttt\n" >expect &&
-+	printf "$ttt\n$ttt\n$ttt\n$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n$ttt\n\n$ttt$ttt\n$ttt\n" >expect &&
--    printf "$ttt\n$ttt\n\n$ttt$ttt\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt\n$ttt\n\n$ttt$ttt\n$ttt\n" >expect &&
-+	printf "$ttt\n$ttt\n\n$ttt$ttt\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt$ttt\n\n$ttt\n$ttt$ttt\n" >expect &&
--    printf "$ttt$ttt\n\n$ttt\n$ttt$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual &&
-+	printf "$ttt$ttt\n\n$ttt\n$ttt$ttt\n" >expect &&
-+	printf "$ttt$ttt\n\n$ttt\n$ttt$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual &&
- 
--    printf "$ttt\n$ttt$ttt\n\n$ttt\n" >expect &&
--    printf "$ttt\n$ttt$ttt\n\n$ttt\n" | git stripspace >actual &&
--    test_cmp expect actual
-+	printf "$ttt\n$ttt$ttt\n\n$ttt\n" >expect &&
-+	printf "$ttt\n$ttt$ttt\n\n$ttt\n" | git stripspace >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'strip comments, too' '
--- 
-2.19.0.444.g18242da7ef-goog
+A small background why I wanted this: I need to build a new version of
+some software hosted in git, add a lot of shared/static stuff and
+automatically test it. I want to get the most recent *tag* and create a
+folder with the tagname in it, go into that folder and clone the repo,
+check out the tag, add the rest of the stuff, build and test
 
+As the default outpout of =C2=ABgit ls-remote --tags=C2=BB or =C2=ABgit ls-=
+remote=C2=BB is
+topologically sorted by tagname, the most recent tag is likely to be in
+the middle.
+
+Linux 4.12.14-lp150.12.16-default [openSUSE Leap 15.0]
+
+$ git --version
+git version 2.19.0
+
+$ git ls-remote --tags github.com:Tux/App-ccdiff
+5e2513ab6dd4a24c8f3a3ace0a3faba6a291d818        refs/tags/0.04
+2f7ea0f1e751dc20c1ddb15f6d61c6fa62d5d6f1        refs/tags/0.05
+a3802907be5b10383c7438f1d1c660fe13a05d3f        refs/tags/0.06
+3e4bfa7cde75fba221650b9d3aa5555b706803df        refs/tags/0.07
+05829d1ac5b49bbdd2167bc363b94f8a12e752b3        refs/tags/0.08
+9c6e5861ea9c6e50c501663d43c5a9f6d31b54bc        refs/tags/0.09
+e815b059f6326da936c3a92272ba67e273b1dc3e        refs/tags/0.10
+e6b40e331c945449bb8e71023de4920ca5574adc        refs/tags/0.20
+be55e6336b1db5ffad23a6a0a663763e2f5da779        refs/tags/0.21
+e283d563f02bb8d2131e8b95852072ac204b28b4        refs/tags/0.22
+0d3d1830f542121bfef1d984f21343c6d9c774f8        refs/tags/0.23
+d7bf195a92095a4f0b810584810450e4001b1a2c        refs/tags/0.24
+5c517cf3f79cb18173714e63bc5b80a3e3f888f1        refs/tags/0.25
+
+Whether or not supported, it should not dump core
+
+$ git ls-remote --tags --sort=3Dauthordate github.com:Tux/App-ccdiff
+Segmentation fault (core dumped)
+
+(gdb) where
+#0  0x00007ffff74784a6 in __strlen_sse2 () from /lib64/libc.so.6
+#1  0x000000000057a956 in for_each_replace_ref ()
+#2  0x0000000000596cec in do_lookup_replace_object ()
+#3  0x00000000005c14eb in oid_object_info_extended ()
+#4  0x000000000058b984 in get_object ()
+#5  0x000000000058ddde in populate_value ()
+#6  0x000000000058e36b in compare_refs ()
+#7  0x000000000061447a in msort_with_tmp.part ()
+#8  0x0000000000614505 in msort_with_tmp.part ()
+#9  0x0000000000614518 in msort_with_tmp.part ()
+#10 0x0000000000614518 in msort_with_tmp.part ()
+#11 0x000000000061459e in git_qsort_s ()
+#12 0x000000000058ed40 in ref_array_sort ()
+#13 0x000000000044ef66 in cmd_ls_remote ()
+#14 0x000000000040784f in handle_builtin ()
+#15 0x0000000000407bb0 in cmd_main ()
+#16 0x0000000000406b04 in main ()
+
+Linux 3.10.0-862.6.3.el7.x86_64 [CentOS Linux 7.5.1804 (Core)]
+
+$ git --version
+git version 2.18.0
+
+$ git ls-remote --tags https://github.com/Tux/App-ccdiff
+5e2513ab6dd4a24c8f3a3ace0a3faba6a291d818        refs/tags/0.04
+2f7ea0f1e751dc20c1ddb15f6d61c6fa62d5d6f1        refs/tags/0.05
+a3802907be5b10383c7438f1d1c660fe13a05d3f        refs/tags/0.06
+3e4bfa7cde75fba221650b9d3aa5555b706803df        refs/tags/0.07
+05829d1ac5b49bbdd2167bc363b94f8a12e752b3        refs/tags/0.08
+9c6e5861ea9c6e50c501663d43c5a9f6d31b54bc        refs/tags/0.09
+e815b059f6326da936c3a92272ba67e273b1dc3e        refs/tags/0.10
+e6b40e331c945449bb8e71023de4920ca5574adc        refs/tags/0.20
+be55e6336b1db5ffad23a6a0a663763e2f5da779        refs/tags/0.21
+e283d563f02bb8d2131e8b95852072ac204b28b4        refs/tags/0.22
+0d3d1830f542121bfef1d984f21343c6d9c774f8        refs/tags/0.23
+d7bf195a92095a4f0b810584810450e4001b1a2c        refs/tags/0.24
+5c517cf3f79cb18173714e63bc5b80a3e3f888f1        refs/tags/0.25
+
+$ git ls-remote --tags --sort=3Dauthordate https://github.com/Tux/App-ccdiff
+Segmentation fault
+
+(gdb) where
+#0  0x00007ffff751a67f in __strlen_sse42 () from /lib64/libc.so.6
+#1  0x0000000000561c06 in for_each_replace_ref ()
+#2  0x000000000057c3fa in do_lookup_replace_object ()
+#3  0x00000000005a6aa8 in read_object_file_extended ()
+#4  0x00000000005731e5 in get_object ()
+#5  0x00000000005749df in populate_value ()
+#6  0x0000000000574e9d in compare_refs ()
+#7  0x00000000005efe57 in msort_with_tmp.part.0 ()
+#8  0x00000000005efe31 in msort_with_tmp.part.0 ()
+#9  0x00000000005efe0e in msort_with_tmp.part.0 ()
+#10 0x00000000005efe0e in msort_with_tmp.part.0 ()
+#11 0x00000000005eff5c in git_qsort_s ()
+#12 0x00000000005757e0 in ref_array_sort ()
+#13 0x000000000044c6b6 in cmd_ls_remote ()
+#14 0x000000000040730e in handle_builtin ()
+#15 0x000000000040760e in cmd_main ()
+#16 0x0000000000406554 in main ()
+
+
+--=20
+H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
+using perl5.00307 .. 5.29   porting perl5 on HP-UX, AIX, and openSUSE
+http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
+http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
+
+--Sig_/y4ZPWUWkuNBo=WBzs5FtTOZ
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJbphyOAAoJEAOhR6E+XcCYUc0H+gLHUQr2hqjhdc53mIcifJWE
+7+3qbXgU1sorpqCC5XeukALIPCHSCkn0MtnqXVrOoLQunyljyRJAE/caBQmyJfL4
+BiNj1Tlr1Wq5UTsSZy72nT8u/96iHMGI4bKU3pMAkfxVxkNB56fzD6iXX3mDbR03
+Jo4QYsOzxtW78C2m4srQcaxlSY3kkkjhbsHTji8b9Bt+pybQCQ9ZnDrviiYLj7lt
+MWy+HNySIlFyAn0Kf5gSo642D+ayRjmP7Bc4SslPQKFS3yOGQlOjZBO7UKh7FOG3
+bA1qgP5OWQkczLCE4XhxI8xp2/udy6BykG3ZQzL22Pw2myR4blDGGN4cXqw+P9Q=
+=ccWe
+-----END PGP SIGNATURE-----
+
+--Sig_/y4ZPWUWkuNBo=WBzs5FtTOZ--
