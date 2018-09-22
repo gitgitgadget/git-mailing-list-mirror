@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4837D1F453
-	for <e@80x24.org>; Sat, 22 Sep 2018 18:05:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04D541F453
+	for <e@80x24.org>; Sat, 22 Sep 2018 18:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbeIVX7d (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Sep 2018 19:59:33 -0400
-Received: from mail-lf1-f44.google.com ([209.85.167.44]:35599 "EHLO
-        mail-lf1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727057AbeIVX7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Sep 2018 19:59:33 -0400
-Received: by mail-lf1-f44.google.com with SMTP id r191-v6so1082763lff.2
-        for <git@vger.kernel.org>; Sat, 22 Sep 2018 11:05:07 -0700 (PDT)
+        id S1728183AbeIVX7f (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Sep 2018 19:59:35 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:43435 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727337AbeIVX7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Sep 2018 19:59:34 -0400
+Received: by mail-lf1-f65.google.com with SMTP id x24-v6so13555120lfe.10
+        for <git@vger.kernel.org>; Sat, 22 Sep 2018 11:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nCLJ96XqaBVamaczLohwEQVWteGJy9skjMZYp0V/nJ0=;
-        b=UqnLM3qmVY+GBfCiEJv0VoxoQpF6Z/70gIc3+5oVV+xzgZHDhOsGCibd4P2/YcPJIY
-         H0usbUfgyuFvBDQZYHMNqwlBYAzvTLRiNAPP1F4vVmzVfiMVYpyFp8BZLBQMSWWFaUoA
-         1iZxqFYuQsTZWEAvexDQV397sKXI9ASeOz/ZUF/KMU44IUWxpRuXny/7TH7PokHG3EhP
-         D581BzrPXZCGTLhWaBXs2P7+FM+IASZ169n5BEAjppf6fFeTRezR/TWk3APmOH+mstJ4
-         WBFTpz2o3okTVBB6SyKPls+LEDfQPx8elPKGg5NwkMi/tInrXGGJTLsN/6sdJWrk3/ZB
-         5zYQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UUXEU44daxGO9DgBB1x130uWr+j4ehZlHXxck0ZnfgI=;
+        b=C4uv4Y6+Yxbl3UBarjgFPCMcbM3FouunzM0lZtbeqnDVYHyRWgmw6nucBuZR2FgGaV
+         WGIbvvmJElduKgM6qsDvnkDq72hFoIUPlsH8wNXSh6xOrb8aqR34uNMm1LP22Z68IcrA
+         NOqg/W1PqUJAOEZAuUc404nOQ1ITQyktZyxmXGmaaQ3QVtDneRmeFxPcqJkutOlIbk/h
+         AxF9SqRZ+QqLaUBJvshriTABl1i1bg8yuDhlzazE/yuoHBdyguLfV/zaOMPbqpF28vxg
+         cm9qU24ujc5BJY7vU3RHQVGrDc4SkMJrP8FEFBDf/rpkmpazNp77B51ssBsT808NnF81
+         113g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nCLJ96XqaBVamaczLohwEQVWteGJy9skjMZYp0V/nJ0=;
-        b=PKwmdApdTPCnjEMsWudbKoE82DAtQfwTAd1QQjZdNkkMLEqI4Lk/ePSmwgreEzIeU4
-         /Yd1Y9DZp9RFH58x8KM1w22HnzoGhLrT/WsvMEaf1g7vGxLuBMthWEnK6nC0lSaBzpsT
-         EMXnU7HOA6w96MvMNqNUlH7xP4XUqpCzqBAM3yhkk57mLxvQ8Aur3dJmPvLFQWs+4Ym2
-         LMXoLEEgarKBj2Joh247l1Zmg54yEKLcWs0Edc6yIK/QTDfmzt1LoYBKMoC2M1uuLNGn
-         vE9NtzyMfWYrOYbHm1eyqnS3UxiACPXl4k9QF6J9sl2Mca38oNfkelxGs2ki7JuIXmNf
-         1qng==
-X-Gm-Message-State: APzg51BNgPUoD8rjC/V4PHup3QK5PE3zsZu8OOU/vnHOmp9obd6nRUm8
-        3TQk4LsSRx2HiJslWz3OmGeJG7xo
-X-Google-Smtp-Source: ANB0VdaKpd6JTUV5JFiPSVD90fKHp1dBoLGhmYZkGwZvK9IJGnVDHf57biYN6I15OsK1QzcInKVqIA==
-X-Received: by 2002:a19:9e85:: with SMTP id h127-v6mr1807571lfe.89.1537639506299;
-        Sat, 22 Sep 2018 11:05:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UUXEU44daxGO9DgBB1x130uWr+j4ehZlHXxck0ZnfgI=;
+        b=Lw7n34cFvVLqwAIO/VyoUwUL5Bq9yeT4g0I1IC8SQDHVYhjmpu8WS8ojx0OHmQSwfB
+         yEc0iUlFhUWIczgYXRPR4rKPusMxHnjaZ/G6ja7226XUSbDX3s039vYw2t6J0mStPWlF
+         JPccNJzKx6XrG1UVN6SRivTHkXqNB0P/cL/rOnNflrgdkR9vzI1bMUY3tUxkk+1f9YPW
+         gKQSsOgIHFoWEUrx8VvvngbF/LKAsfVg+/xxdVCigX4KJddifPvvkZrL3qq0c5aehn2a
+         8Vilc/qfT3F8gAl4qrBxjuOddwNkSIdPFuZQlmBEhPKFv9jyvU4PujgkYlgwxafFbDCk
+         op9Q==
+X-Gm-Message-State: APzg51CYkq6bMBFOhNCOdvh3b/tKFAXrPXUy/E2KbjOUaghLPQJU2Mpp
+        ZnpW6mK1pmikszKONFTGZaQ7epee
+X-Google-Smtp-Source: ANB0Vda5qMnQHs7tN2N+75mSar/O+qghnhQQTRbn8RIh9WJWVzAW5B+RF7CpDBu4h7ioR/60owDh0g==
+X-Received: by 2002:a19:1603:: with SMTP id m3-v6mr1824860lfi.82.1537639507388;
+        Sat, 22 Sep 2018 11:05:07 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id f4-v6sm2877942lfa.9.2018.09.22.11.05.05
+        by smtp.gmail.com with ESMTPSA id f4-v6sm2877942lfa.9.2018.09.22.11.05.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 22 Sep 2018 11:05:05 -0700 (PDT)
+        Sat, 22 Sep 2018 11:05:06 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 0/8] fix per-worktree ref iteration in fsck/reflog expire
-Date:   Sat, 22 Sep 2018 20:04:52 +0200
-Message-Id: <20180922180500.4689-1-pclouds@gmail.com>
+Subject: [PATCH 1/8] refs.c: indent with tabs, not spaces
+Date:   Sat, 22 Sep 2018 20:04:53 +0200
+Message-Id: <20180922180500.4689-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.647.gb9a6049235
+In-Reply-To: <20180922180500.4689-1-pclouds@gmail.com>
+References: <20180922180500.4689-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,71 +69,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry it took me so long to revisit these bugs, even though the first
-one was reported nearly a year ago. I guess I slept on it way longer
-than I should have.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This series opens up the currrent worktree's ref space, allowing one
-worktree to see refs from other worktrees. With this, it's possible to
-have less confusing error reports (e.g. "heh.. what HEAD are you
-talking about?"). And it's possible to peek one worktree from another,
-e.g. now I could do
-
-    git checkout main/HEAD
-    make test -j8
-
-in one terminal and go back to the original terminal and continue
-hacking while tests are being run in the background.
-
-With this issue out of the way, I could now continue to fix the
-"forget to look at all HEADs/reflogs" problem in fsck and "reflog
-expire". The fsck patches are mostly from Elijah with some code/test
-adaptation from me.
-
-I also take this opportunity to try to standardize a common/private
-space in $GIT_DIR or ref hierarchy so we don't have to add more rules
-in the future.
-
-One heads up. One remaining problem with "refs and worktrees" is the
-ability to completely separate ref space between worktrees (i.e.
-refs/heads/master on worktree A is completely different than one in
-worktree B). This is needed to make use worktrees in submodules. But
-the way I see it, per-worktree refs may have to be moved back to
-$GIT_COMMON_DIR/refs to be efficient.
-
-This may be backward incompatible change. Haven't thought it through
-yet (and didn't see it coming because I largely ignored refs/bisect,
-which should have made me think about this much earlier)
-
-Elijah Newren (2):
-  fsck: Move fsck_head_link() to get_default_heads() to avoid some globals
-  fsck: check HEAD and reflog from other worktrees
-
-Nguyễn Thái Ngọc Duy (6):
-  refs.c: indent with tabs, not spaces
-  Add a place for (not) sharing stuff between worktrees
-  refs: new ref types to make per-worktree refs visible to all worktrees
-  revision.c: correct a parameter name
-  revision.c: better error reporting on ref from different worktrees
-  reflog expire: cover reflog from all worktrees
-
- Documentation/git-reflog.txt           |  7 ++-
- Documentation/gitrepository-layout.txt | 11 ++++-
- builtin/fsck.c                         | 68 ++++++++++++++++++--------
- builtin/reflog.c                       | 22 +++++++--
- path.c                                 |  1 +
- refs.c                                 | 23 ++++++++-
- refs.h                                 |  8 +--
- refs/files-backend.c                   | 42 ++++++++++++++--
- revision.c                             | 22 ++++++---
- t/t0060-path-utils.sh                  |  2 +
- t/t1415-worktree-refs.sh               | 66 +++++++++++++++++++++++++
- t/t1450-fsck.sh                        | 39 +++++++++++++++
- worktree.c                             | 32 ++++++++++--
- worktree.h                             | 14 ++++++
- 14 files changed, 312 insertions(+), 45 deletions(-)
- create mode 100755 t/t1415-worktree-refs.sh
-
+diff --git a/refs.c b/refs.c
+index a7a75b4cc0..9f7268d5fe 100644
+--- a/refs.c
++++ b/refs.c
+@@ -646,7 +646,7 @@ enum ref_type ref_type(const char *refname)
+ 		return REF_TYPE_PER_WORKTREE;
+ 	if (is_pseudoref_syntax(refname))
+ 		return REF_TYPE_PSEUDOREF;
+-       return REF_TYPE_NORMAL;
++	return REF_TYPE_NORMAL;
+ }
+ 
+ long get_files_ref_lock_timeout_ms(void)
 -- 
 2.19.0.647.gb9a6049235
 
