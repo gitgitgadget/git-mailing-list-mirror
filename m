@@ -6,40 +6,41 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A031F453
-	for <e@80x24.org>; Sun, 23 Sep 2018 07:51:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A6E21F453
+	for <e@80x24.org>; Sun, 23 Sep 2018 08:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726079AbeIWNsH convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 09:48:07 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:36406 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbeIWNsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Sep 2018 09:48:06 -0400
-Received: by mail-qk1-f193.google.com with SMTP id n186-v6so10145744qke.3
-        for <git@vger.kernel.org>; Sun, 23 Sep 2018 00:51:33 -0700 (PDT)
+        id S1726090AbeIWOCu convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 10:02:50 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:38061 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbeIWOCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Sep 2018 10:02:49 -0400
+Received: by mail-qt1-f196.google.com with SMTP id z13-v6so5889241qts.5
+        for <git@vger.kernel.org>; Sun, 23 Sep 2018 01:06:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8TrAwQjzQ2L3AOZtBiFHrdlNjmWgAJ1DHKzPDHloFX8=;
-        b=eWZA9832DqfTMYwuzOmbQ97D7syXw/I/8AbtdlB/21gIEl7Yfaa8WFstBsPhUIYzQB
-         HWpDrBTunc2eVu/K5qnVzc4rrYIVEDAL1wZeQKuNRcygWNUKcIHcdMeRoYGwAoFWsANK
-         OnT8n9Oi5Q6Nu7/vZJdBnON+CIVLrYYOy2VsH+PDyUiM6uW4wTtUR2SIJO3nP2/lcw/G
-         CsY29iyb9HHLzFoqr5oPSQbzN/9C/WSLPR43pLdzGL0oebMbYqe8Dw5IW+vuO6sG/11Q
-         0mQS6D1upQaKLbZZYYv9YEwuRUmVQJnlAnXhcK9+xGpZt1W51hAf3lFDWsoScGlqhjDG
-         5Img==
-X-Gm-Message-State: ABuFfojXTQz36JvGP2wxgfC3VAYL5ISlkyllMHZS77WL/HjAkIW+tcPr
-        N9ySt1XBiieL7EN9UMux9OX1ICy7Nz3aWlH9jRc=
-X-Google-Smtp-Source: ACcGV63a0UvjzwZT92A4qRxEpafYebvTLVKh2Zkzy/Ylx3jAX4b0HivqWVJ9hlLyTfof37h5Nnh8FamUhHd+T9wLK+Y=
-X-Received: by 2002:a37:9306:: with SMTP id v6-v6mr3077924qkd.36.1537689092924;
- Sun, 23 Sep 2018 00:51:32 -0700 (PDT)
+        bh=YVctPRuGmaKmsIhUlgF3vtt2IviNFdLxyG+a1uk0lKI=;
+        b=CgBPD007+QQzNHSM3Jy6WMhxP/GHf48FoHTiHpmy6+pxIn7XP3e0d2NrgnLUcuv3Wo
+         0Tcs6EGDPDS/yFCgwVu7eQkfIO3KnkTCbRdYYr68Y5N75rA2Ibg2MuO6uzRokrCqmRt6
+         8bzrI1Rq5kDg8ZltgkubUQQK5aiKy42DG5QXSqPFCjDwZ3d9E9jh76yRZ4cjMOXA9r0X
+         hW1lfDHf3j9PsFXJzZmUhSSYM37Kq5U7NC+Eka5JdxVj2GADGYeyaaQ+jy1edrLA1N+O
+         W7DCIl5JgcRs99u0E//ymsq9Cf03QZ68XWEOHEvcsggvRrC0qO8PUsvGn3fHPfShzLYi
+         UCdg==
+X-Gm-Message-State: APzg51DxNE8bfmowc4c7I+m+3XsmBYHTA7Y7FE8BAICaVGC89qXoK9K1
+        OwGB9gAEyEpSZxffHNTLzqbkSvaEI8P+FIIGgl0=
+X-Google-Smtp-Source: ACcGV62jDGtuj81emFgzsvDSFyVA+TBEWzWApFzgifqcHrfP5L4w9qfDVyxviPSRIQ7vm8wjvO9mdgeagm2G9V54fjg=
+X-Received: by 2002:aed:2171:: with SMTP id 104-v6mr3406461qtc.220.1537689973554;
+ Sun, 23 Sep 2018 01:06:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-3-pclouds@gmail.com>
-In-Reply-To: <20180922180500.4689-3-pclouds@gmail.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-4-pclouds@gmail.com>
+In-Reply-To: <20180922180500.4689-4-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 23 Sep 2018 03:51:22 -0400
-Message-ID: <CAPig+cS-S8cnDnZfXLyz=W3fVM=Bp9ntNVab6uZqeHA9_CSUCw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] Add a place for (not) sharing stuff between worktrees
+Date:   Sun, 23 Sep 2018 04:06:03 -0400
+Message-ID: <CAPig+cTtjwCMRMx2xS1WPyM30ipxx5QJK_Aueu50i-jLQdpdBA@mail.gmail.com>
+Subject: Re: [PATCH 3/8] refs: new ref types to make per-worktree refs visible
+ to all worktrees
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
@@ -52,29 +53,37 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, Sep 22, 2018 at 2:05 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> When multiple worktrees are used, we need rules to determine if
-> something belongs to one worktree or all of them. Instead of keeping
-> adding rules when new stuff comes, have a generic rule:
 > [...]
+> The main worktree has to be treated specially because well.. it's
+> special from the beginning. So HEAD from the main worktree is
+> acccessible via the name "main/HEAD" (we can't use
+> "worktrees/main/HEAD" because "main" under "worktrees" is not
+> reserved).
+
+Bikeshedding: I wonder if this would be more intuitive if called
+simply "/HEAD" rather than "main/HEAD".
+
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
-> diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
-> @@ -0,0 +1,36 @@
-> +test_expect_success 'setup' '
-> +       test_commit initial &&
-> +       test_commit wt1 &&
-> +       test_commit wt2 &&
-> +       git worktree add wt1 wt1 &&
-> +       git worktree add wt2 wt2 &&
-> +       git checkout initial
-> +'
+> diff --git a/refs.c b/refs.c
+> @@ -641,12 +641,32 @@ static int is_pseudoref_syntax(const char *refname)
+> +static int is_main_pseudoref_syntax(const char *refname)
+> +{
+> +       return skip_prefix(refname, "main/", &refname) &&
+> +               is_pseudoref_syntax(refname);
+> +}
 > +
-> +test_expect_success 'add refs/local' '
-> +       git update-ref refs/local/foo HEAD &&
-> +       git -C wt1 update-ref refs/local/foo HEAD &&
-> +       git -C wt2 update-ref refs/local/foo HEAD
-> +'
+> +static int is_other_pseudoref_syntax(const char *refname)
+> +{
+> +       if (!skip_prefix(refname, "worktrees/", &refname))
+> +               return 0;
+> +       refname = strchr(refname, '/');
+> +       if (!refname)
+> +               return 0;
+> +       return is_pseudoref_syntax(refname + 1);
+> +}
 
-Not at all worth a re-roll, but the "add refs/local" test seems like
-just more setup, thus could be rolled into the "setup" test (unless it
-will be growing in some non-setup way in later patches).
+If the input is "worktrees/refs/" (nothing following the trailing
+'/'), then an empty string will be passed to is_pseudoref_syntax(),
+which will return true. Does that result in correct behavior? (Same
+question about "main/" being passed to is_main_pseudoref_syntax().)
