@@ -6,41 +6,40 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58F021F453
-	for <e@80x24.org>; Sun, 23 Sep 2018 08:38:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B51D1F453
+	for <e@80x24.org>; Sun, 23 Sep 2018 08:41:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbeIWOW3 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 10:22:29 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42411 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbeIWOW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Sep 2018 10:22:29 -0400
-Received: by mail-qt1-f194.google.com with SMTP id z8-v6so5905622qto.9
-        for <git@vger.kernel.org>; Sun, 23 Sep 2018 01:25:50 -0700 (PDT)
+        id S1726172AbeIWOiZ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 10:38:25 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:39323 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbeIWOiY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Sep 2018 10:38:24 -0400
+Received: by mail-qt1-f193.google.com with SMTP id c25-v6so185571qtp.6
+        for <git@vger.kernel.org>; Sun, 23 Sep 2018 01:41:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rXnoPPlDC5dNhZZ1uUBjp4TL/eGT3ssUsNr8DMazKEw=;
-        b=Mm2WZim7T1WFaOGtgGP2t7awU1xQM3fD7qMQVDph5jDNNzg4NaoAsNtMCcQr9foBim
-         fuFqGsUwZwRjmQ2wNPO9ditEK6L+YSC4POBpLfDl3CWItJzsoUuRf/RMtyMguKQ7K/b0
-         sSKIqPlHJ24tI8xQpdkqzWFpREbgyhtjP//IHi+3m8STtNWNG9bNirq1GJ/AO2GR6ZMw
-         XBOaYkH+Cn0VeA6tRBYsXiihZpL5ZX+z28YKWJ7QAa/TqCDIobRairDBTf+L0ajyg4Rq
-         I9NiwgGG1/4EOUYr/0tRArf+PSmBgNUsjGKwtbPM2jJm4K50yO2cVJJoemY7t9H31S59
-         uygA==
-X-Gm-Message-State: ABuFfogljJP38TC5ouyksBg9ueQP8YTC4UBrO1WGmAXkhADWkCrmYAzx
-        gJVG28WaRQjTMz8KwROl3p+my75wN5XUoMUaeCh17qup
-X-Google-Smtp-Source: ANB0VdZ/LjpE3EOEBf0Liixo5h7JsnGSjpHyfMe/6kRiLGzcpqw4rePUNMcy4vaDYwrBGjshzmDS1vyigWblaCCsoJ8=
-X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr3606215qtd.101.1537691149610;
- Sun, 23 Sep 2018 01:25:49 -0700 (PDT)
+        bh=abofi4uudZBGznjYX6chUh9Wkb/hKSpl6NL694X6rL4=;
+        b=CZT2kWdGjJvW7nb7U1FP49wiCMjpNMFmbTIkgh6GZBs5dBWWw4EgIM9K0992Y+tSSt
+         YBv8Z/bbJ0LkRnt43jB+KPIgkuX5uzuJ+QnsFEgVd7OkuWEMxkVJa8NaUu+GDPpqnlm0
+         QG473SuhioQUHOjkjilKfS0D7+9ive+Q6uphl+NeiQLbxAkjAepZoQt4RlJAxSvWRB6r
+         w3ObOPV/BdYnytqxWTd55k3bF7GJmNSFqZRzR2sWq2XudF330kDJ/Tu+UCJwfrE7qKzo
+         WOcd8HqmcVqLuIZKvZsySxO/bElJnVkvZAqUsmQJ29hDeb2LfwxiFOErygF2pjMTELYS
+         arTA==
+X-Gm-Message-State: ABuFfojh/LmH0l/fZmmeRSlySruNHl51bPgy2IpZNulS87YJn0KKiGeG
+        Xjm6mC3KeYfy41yanwrQ0YmCnRbumPwSBhGoS9lxjhAV
+X-Google-Smtp-Source: ACcGV612SKcFhi6rOc1QhBPgJLu8ZXaJbUOMNAgTh8bbw4grfxGfgc9GWvz3AEvvXgzwBFpEHr9qbeI1pgr42uKZB2M=
+X-Received: by 2002:a0c:b616:: with SMTP id f22-v6mr3353733qve.184.1537692102889;
+ Sun, 23 Sep 2018 01:41:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-6-pclouds@gmail.com>
-In-Reply-To: <20180922180500.4689-6-pclouds@gmail.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-8-pclouds@gmail.com>
+In-Reply-To: <20180922180500.4689-8-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 23 Sep 2018 04:25:39 -0400
-Message-ID: <CAPig+cTZpgU_n78wG4W0PDvM7Xdr3-1DoHz4d25XBFUmUy7a+A@mail.gmail.com>
-Subject: Re: [PATCH 5/8] revision.c: better error reporting on ref from
- different worktrees
+Date:   Sun, 23 Sep 2018 04:41:32 -0400
+Message-ID: <CAPig+cTcaS-J5CwNo5RqeZiJYQ9OTt+Qzo08tdDjvZNaVSK2OQ@mail.gmail.com>
+Subject: Re: [PATCH 7/8] fsck: check HEAD and reflog from other worktrees
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
@@ -53,63 +52,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, Sep 22, 2018 at 2:05 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> Make use of the new ref aliases to pass refs from another worktree
-> around and access them from the current ref store instead. This does
-> not change any functionality, but when a problem shows up, we would
-> report something like
-
-From this description, I had a hard time grasping that the first
-example output is the desired one. Not necessarily worth a re-roll,
-but had it said instead something like this:
-
-    ...but when a problem arises, we would like the reported
-    messages to mention full ref aliases, like this:
-
-it would have been more obvious.
-
-More below...
-
->     fatal: bad object worktrees/ztemp/HEAD
->     warning: reflog of 'main/HEAD' references pruned commits
+> fsck is a repo-wide operation and should check all references no
+> matter which worktree they are associated to.
 >
-> instead of
->
->     fatal: bad object HEAD
->     warning: reflog of 'HEAD' references pruned commits
->
-> which does not really tell where the refs are from.
->
+> Reported-by: Jeff King <peff@peff.net>
+> Helped-by: Elijah Newren <newren@gmail.com>
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -487,6 +487,28 @@ int submodule_uses_worktrees(const char *path)
-> +void strbuf_worktree_ref(const struct worktree *wt,
-> +                        struct strbuf *sb,
-> +                        const char *refname)
-> +{
-> +       if (wt && !wt->is_current) {
-> +               if (is_main_worktree(wt))
-> +                       strbuf_addstr(sb, "main/");
-> +               else
-> +                       strbuf_addf(sb, "worktrees/%s/", wt->id);
-> +       }
-> +       strbuf_addstr(sb, refname);
-> +}
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> @@ -101,6 +101,45 @@ test_expect_success 'HEAD link pointing at a funny place' '
+> +test_expect_success 'HEAD link pointing at a funny object (from different wt)' '
+> +       test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+> +       test_when_finished "rm -rf .git/worktrees wt" &&
+> +       git worktree add wt &&
+> +       mv .git/HEAD .git/SAVED_HEAD &&
+> +       echo 0000000000000000000000000000000000000000 >.git/HEAD &&
 
-Seeing this use worktree->id to construct "worktrees/<id>/<refname>"
-makes me wonder how the user is going to know the ID of a worktree in
-order to specify such refs in the first place. For example, how is the
-user going to know the <id> in "git rev-parse worktrees/<id>/HEAD"? I
-don't think we print the worktree ID anywhere, do we? Certainly, "git
-worktree list" doesn't show it, and "git worktree add" stopped showing
-it as of 2c27002a0a (worktree: improve message when creating a new
-worktree, 2018-04-24).
+Perhaps use $ZERO_OID here instead of hardcoded "0..." string to play
+friendly with brian's bc/hash-independent-tests (in 'next'). Same for
+following test.
 
-> diff --git a/worktree.h b/worktree.h
-> @@ -108,4 +108,18 @@ extern const char *worktree_git_path(const struct worktree *wt,
-> +/*
-> + * Return a refname suitable for access from the current ref
-> + * store. The result may be destroyed at the next call.
-> + */
+> +       # avoid corrupt/broken HEAD from interfering with repo discovery
+> +       test_must_fail git -C wt fsck 2>out &&
+> +       cat out &&
 
-If you re-roll, perhaps: s/may/will/
+Unneeded 'cat'. Debugging cruft? Same for other tests.
+
+> +       grep "main/HEAD: detached HEAD points" out
+
+This message doesn't get localized, so no need for test_i18ngrep(). Okay.
+
+> +'
