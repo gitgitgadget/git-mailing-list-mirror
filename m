@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABCC11F453
-	for <e@80x24.org>; Sun, 23 Sep 2018 13:07:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBA541F453
+	for <e@80x24.org>; Sun, 23 Sep 2018 13:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726139AbeIWTEs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Sep 2018 15:04:48 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:37477 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726071AbeIWTEs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Sep 2018 15:04:48 -0400
-Received: by mail-io1-f65.google.com with SMTP id v14-v6so15709870iob.4
-        for <git@vger.kernel.org>; Sun, 23 Sep 2018 06:07:22 -0700 (PDT)
+        id S1726154AbeIWTIO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Sep 2018 15:08:14 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:35351 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726094AbeIWTIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Sep 2018 15:08:14 -0400
+Received: by mail-io1-f68.google.com with SMTP id w11-v6so15727024iob.2
+        for <git@vger.kernel.org>; Sun, 23 Sep 2018 06:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=0X45yJcaWxyscWF0eU9mE7lMBGePf7kgrOWob8sdn+o=;
-        b=DZHtCy+ajQMjuSYyHK9z/An4md9a1jIZLQoyR7v4dwpFZofJPRfZkcNgm/jtFEb7Ys
-         ViXp78amIKl+/wsP+1iCgeMzaj3dtXEUcGE25lYnFAJVDppJtLbErMsrGaRVgMJw4QMR
-         3QqAL/Y5LOGfpYHV0JgD80j6cuq064IeY9D7uYtBiVvtUYsr7j3suMykLYeBexoXstlf
-         PkeDdD2VpREIq1f/t/zZiMdjFiQltxhuS9W6zDVCVsfvwpR9ZUe/zWTstcKF1tFUzKer
-         LlmYt6nQqD8xfkXgNTpxL1EVLh7ibcv37EHNqQegSQ/o2hwgfDTCK4WbwNEEV8ZlxqjY
-         F0Bw==
+        bh=W224jIiSeqEvuDOj1f/T4VM9FWyV0lTSLFVKzq/QhW0=;
+        b=emhrFxNlGWZDoUIcZFXlCtyqhTNR/cTAzZ2e1qPOhW1NklskXiQM3Mj0sSPyAlfJXw
+         O2arX+N2UTSEHXXWOSSyyid16Caf1S6/HH9oHvSOvmgaIa9U6nH7QTRL+eDqdx5rCsI0
+         W3zu46tndTfAN0greGYL5TgBGJb9DnABrip9Bst7zkuk5Ncy5PePpa8JLZnjci/RP2sT
+         WWRdLYsbnYsfK/b4J47Q5DzUE3/+V0UQKi7ybBgKNwVhKw+ROabkvuPTzehr27CUlnp/
+         HByFAMWIY8XNODT27/zaCo/jfeLhPBoeOtzbv64vDyVCth7r3vQuCSNyJeuCrPCzSCc7
+         TrlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0X45yJcaWxyscWF0eU9mE7lMBGePf7kgrOWob8sdn+o=;
-        b=qKwS6xgVLd0OdRLkVj16yrQSoc38JVpgMBoCcCLjjreOibilNexMate8cULeJa1YXD
-         PozrLjWn7LhOoImauBSWOP5ps4IFFMyDY9tVk532llrUQQ9Z9Jwn8+qqoIOUjYRXfs1e
-         TuV4AztytrqD/3xUZx4OyYel6oxupLJTGUzudd/SIoBC12Poudsex0a6G6m+6/U6at45
-         IRFr0sLeriAg7rPMeey/ofd8wVsAsHZ7v3ihgG5sUU1vM5X3RSjrAJUJiEdjkPSDZPhT
-         eygLESVE8dcrtcc6gUyWtmmRkXYCgJPgqH8/m1Ne2jT+E1AbAclnjLHErNBHs4lxYrEB
-         uHQA==
-X-Gm-Message-State: ABuFfohP5ZCb6Kwn1cjFKFEaywhNB6QFmfIvalowKVjAOoKEYS/lnIub
-        i3OfcEl2rtpQaXts2qAROM1q/FvluH/nhaLnKqk=
-X-Google-Smtp-Source: ACcGV62IMX9QYflbJ3oMMKan9fvS78+v1aUjWP2JhFqQLSKnFU662tXrCxRjGoL7b5Zq9lZevDP3VZdjmpJMog4MlmU=
-X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr4286550iok.236.1537708042344;
- Sun, 23 Sep 2018 06:07:22 -0700 (PDT)
+        bh=W224jIiSeqEvuDOj1f/T4VM9FWyV0lTSLFVKzq/QhW0=;
+        b=dXqfJvMd9r+hAeFYBquiETSd8+jyqc/prj6IZrNRwiZpPEa2fDwjMkB/leg9xZzOk/
+         Ux7AZ/pHUYbr0dxFsMUFelmDdmJlcxyS0225ciUbMZGqm83ik0v8O8KJVGheDNe2mqMp
+         d3yJjyvClXaoIN/VbgVrVusMJHLfT/ZY9uXO13IsMRujWqE+3vCamMT4EZHtP7L7/FTp
+         Z9P++RLD9Kb/3u36aqntIfOZmtO9IjmsvH20FRmgvDPQpVa0lUQNJGwkxri9g9DVp0+U
+         ErIP9Qv0Sax2sfrfyTbu1wMMdyzQN0lMVF/x4BwhoU/wIGBL9POhMGhZakQkn9xxMXBW
+         7QDA==
+X-Gm-Message-State: ABuFfohQ2JSLPuEzfBY8qFYHpbn2PRjLElVffg87nDuj7pzokVRtStIY
+        SqHTjCu8wQUbA68lFdB+baRWuaykM0OnrgRYQhfHdQ==
+X-Google-Smtp-Source: ACcGV62rWsAS2x1R13bpwp3d0LnIUI7/A4kzLUkrn0sIKebkP384BvXf7qNxivYQq1VtQDrKkFeOjtX8xO3w/bhMyY4=
+X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr4300766iok.236.1537708247967;
+ Sun, 23 Sep 2018 06:10:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <315083291.15466.1537536854535@privateemail.com>
- <20180921222454.GD11177@sigill.intra.peff.net> <87musajun7.fsf@evledraar.gmail.com>
-In-Reply-To: <87musajun7.fsf@evledraar.gmail.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-4-pclouds@gmail.com>
+ <CAPig+cTtjwCMRMx2xS1WPyM30ipxx5QJK_Aueu50i-jLQdpdBA@mail.gmail.com>
+In-Reply-To: <CAPig+cTtjwCMRMx2xS1WPyM30ipxx5QJK_Aueu50i-jLQdpdBA@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 23 Sep 2018 15:06:56 +0200
-Message-ID: <CACsJy8C5-kFivA5eEJu7pKA5=PajW5rLB6V4tVEueMtr58QC=A@mail.gmail.com>
-Subject: Re: Very simple popen() code request, ground-shaking functionality
- openned by it
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, psprint@zdharma.org,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Sun, 23 Sep 2018 15:10:21 +0200
+Message-ID: <CACsJy8BM=JH+z2yaMjqJpfXvSxjkagVNJAs7SPsiFJYw-eCYDg@mail.gmail.com>
+Subject: Re: [PATCH 3/8] refs: new ref types to make per-worktree refs visible
+ to all worktrees
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,40 +64,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 22, 2018 at 1:30 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Duy's
-> https://public-inbox.org/git/20180920161928.GA13379@duynguyen.home/ is
-> another recent thing that reminded me of this, i.e. that suggested
-> "\\|/-" spinner could be made much neater with non-ASCII.
+On Sun, Sep 23, 2018 at 10:06 AM Eric Sunshine <sunshine@sunshineco.com> wr=
+ote:
 >
-> >   1. Add a trace_key for sending machine-readable progress output to a
-> >      descriptor or file. E.g., via setting GIT_TRACE_PROGRESS=3D2 in th=
-e
-> >      environment.
-> >
-> >   2. Teach the trace code to open a command for piping, so that you
-> >      could do something like GIT_TRACE_PROGRESS=3D'|mygauge'.
-> >
-> > That would make your use case work, and I think many other use cases
-> > would benefit from both of those features independently.
+> On Sat, Sep 22, 2018 at 2:05 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
+ <pclouds@gmail.com> wrote:
+> > [...]
+> > The main worktree has to be treated specially because well.. it's
+> > special from the beginning. So HEAD from the main worktree is
+> > acccessible via the name "main/HEAD" (we can't use
+> > "worktrees/main/HEAD" because "main" under "worktrees" is not
+> > reserved).
 >
-> Yup, that's all sensible, and would be great both for this and other
-> stuff if we wanted true extensibility for this sort of thing.
->
-> I'll just add that a 3rd thing that would also make sense would be to
-> add a feature to configure the value of these GIT_TRACE_*=3D* variables
-> via the .gitconfig, that's been suggested before (too lazy to dig up a
-> ML archive reference), and would make this as easy to configure as
-> Sebastian's suggestion.
+> Bikeshedding: I wonder if this would be more intuitive if called
+> simply "/HEAD" rather than "main/HEAD".
 
-I'm less concern about prettiness than showing numbers that are hard
-to interpret. My other option was just showing ".", "..", "..."
-sequence, which achieves the same thing.
-
-I'm not opposed to having core.progressor or something like that. We
-already have core.pager and this new config serves more or less the
-same purpose. But I don't think I'll put time into implementing it.
-
+A ref name cannot start with '/'. I'm open to a different name than
+"main" though, it just felt a better name than "main-worktree".
 --=20
 Duy
