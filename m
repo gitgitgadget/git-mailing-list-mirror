@@ -2,139 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06AAE1F453
-	for <e@80x24.org>; Sun, 23 Sep 2018 06:51:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72A031F453
+	for <e@80x24.org>; Sun, 23 Sep 2018 07:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726139AbeIWMr5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Sep 2018 08:47:57 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:45557 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbeIWMr5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Sep 2018 08:47:57 -0400
-Received: by mail-io1-f68.google.com with SMTP id e12-v6so15361446iok.12
-        for <git@vger.kernel.org>; Sat, 22 Sep 2018 23:51:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=d0WPYvOQCCqu+4POSSZhAt1mLl/ZxdHeujDfbRR+4Vk=;
-        b=BS5p5Nu2xL90+v/lLmmeMPolCBtGgxLD2AV2S+HmbyXDsHq9C+/WTknTn1MMTcShqG
-         Fd4mrFXxod9gzSM0l9oc1TGRgQWVJT9YxiAfLi2yUGQJJ0rmZYfNbuw2VqyA0+/pnumO
-         XsZdZBeU0vyM6oejDJDDGERhPP/MfW2s92dzLc6C08ruQj325sqMc2bjcAXDdgse6C++
-         XGaaVwD+RIG3i0Rx6Lk71viWKqR8w9SAXWNNqpDty7ihL2XSr2T19n8VRahwpkAJqbi6
-         2AoctM8ptjBHNUKsMD9pQIFChavExbXMaAasbd507QxuQnwR+IB/lS0gW2dPvaFMumVH
-         5AQg==
+        id S1726079AbeIWNsH convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 09:48:07 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:36406 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbeIWNsG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Sep 2018 09:48:06 -0400
+Received: by mail-qk1-f193.google.com with SMTP id n186-v6so10145744qke.3
+        for <git@vger.kernel.org>; Sun, 23 Sep 2018 00:51:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=d0WPYvOQCCqu+4POSSZhAt1mLl/ZxdHeujDfbRR+4Vk=;
-        b=ioPXS+x2z+fp97Nw8vipKT4K+he2lw/b9T89bG3SdPVcCCngCRUpvLZCxv1x7Uo8Jz
-         kXkCxJx55QuTdmnUN14y1S/CTxdkwuct8ODjXqEd4xAx1qmrFaKYC/pGl5yspbrRCSg0
-         2dS4uc6rxURR63/mmHPc5sA5Vfmv5CIStYqMH94TbrUSKdozy1PKWX0C1XKFJ/nan06Z
-         taGJYhtzNyVfNtb1mCFkrKfN6SF5LH5TCYbUqwJK92lsjsYmrIEISpq0o4HZddoq/5Hy
-         IqFxew1nOHAWYHhhU6o3vQ/XMP8ekehN6ncIaDxhdHSEO3VdcTbhsLauNxkbKpTmLJoc
-         n0hA==
-X-Gm-Message-State: ABuFfohB2w83ze7k2VCf5OdEk+D2/FRLHQFdP7odQeJKTplMnu1/VJdq
-        R/KRRT5sFuxRoT+f8z5hk0gfpodkNe115NdBl1w=
-X-Google-Smtp-Source: ACcGV634LkouCzn27X/mkoBh6VnglV6f58Krodzr4UrWrYEsKdEyFxtL8cgKVjCMf5SEIwnHAH5A4snfto406fqGxpM=
-X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr3641136ioe.282.1537685492716;
- Sat, 22 Sep 2018 23:51:32 -0700 (PDT)
+        bh=8TrAwQjzQ2L3AOZtBiFHrdlNjmWgAJ1DHKzPDHloFX8=;
+        b=eWZA9832DqfTMYwuzOmbQ97D7syXw/I/8AbtdlB/21gIEl7Yfaa8WFstBsPhUIYzQB
+         HWpDrBTunc2eVu/K5qnVzc4rrYIVEDAL1wZeQKuNRcygWNUKcIHcdMeRoYGwAoFWsANK
+         OnT8n9Oi5Q6Nu7/vZJdBnON+CIVLrYYOy2VsH+PDyUiM6uW4wTtUR2SIJO3nP2/lcw/G
+         CsY29iyb9HHLzFoqr5oPSQbzN/9C/WSLPR43pLdzGL0oebMbYqe8Dw5IW+vuO6sG/11Q
+         0mQS6D1upQaKLbZZYYv9YEwuRUmVQJnlAnXhcK9+xGpZt1W51hAf3lFDWsoScGlqhjDG
+         5Img==
+X-Gm-Message-State: ABuFfojXTQz36JvGP2wxgfC3VAYL5ISlkyllMHZS77WL/HjAkIW+tcPr
+        N9ySt1XBiieL7EN9UMux9OX1ICy7Nz3aWlH9jRc=
+X-Google-Smtp-Source: ACcGV63a0UvjzwZT92A4qRxEpafYebvTLVKh2Zkzy/Ylx3jAX4b0HivqWVJ9hlLyTfof37h5Nnh8FamUhHd+T9wLK+Y=
+X-Received: by 2002:a37:9306:: with SMTP id v6-v6mr3077924qkd.36.1537689092924;
+ Sun, 23 Sep 2018 00:51:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922174707.16498-1-pclouds@gmail.com> <87fty1jppt.fsf@evledraar.gmail.com>
-In-Reply-To: <87fty1jppt.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 23 Sep 2018 08:51:06 +0200
-Message-ID: <CACsJy8CjZ+eupz+j5go2bRbSyf-cXWvCJkPFjfDejj89Z3j9ig@mail.gmail.com>
-Subject: Re: [PATCH] git help: promote 'git help -av'
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-3-pclouds@gmail.com>
+In-Reply-To: <20180922180500.4689-3-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 23 Sep 2018 03:51:22 -0400
+Message-ID: <CAPig+cS-S8cnDnZfXLyz=W3fVM=Bp9ntNVab6uZqeHA9_CSUCw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] Add a place for (not) sharing stuff between worktrees
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 22, 2018 at 9:29 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Sat, Sep 22 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
-> > When you type "git help" (or just "git") you are greeted with a list
-> > with commonly used commands and their short description and are
-> > suggested to use "git help -a" or "git help -g" for more details.
-> >
-> > "git help -av" would be more friendly and inline with what is shown
-> > with "git help" since it shows list of commands with description as
-> > well, and commands are properly grouped.
-> >
-> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> > ---
-> >  git.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/git.c b/git.c
-> > index a6f4b44af5..69c21f378b 100644
-> > --- a/git.c
-> > +++ b/git.c
-> > @@ -31,7 +31,7 @@ const char git_usage_string[] =3D
-> >          "           <command> [<args>]");
-> >
-> >  const char git_more_info_string[] =3D
-> > -     N_("'git help -a' and 'git help -g' list available subcommands an=
-d some\n"
-> > +     N_("'git help -av' and 'git help -g' list available subcommands a=
-nd some\n"
-> >          "concept guides. See 'git help <command>' or 'git help <concep=
-t>'\n"
-> >          "to read about a specific subcommand or concept.");
->
-> A side-effect of this not noted in your commit message is that we'll now
-> invoke the pager, perhaps we should just do:
->
->     diff --git a/builtin/help.c b/builtin/help.c
->     index 8d4f6dd301..1a3b174aaf 100644
->     --- a/builtin/help.c
->     +++ b/builtin/help.c
->     @@ -436,9 +436,9 @@ int cmd_help(int argc, const char **argv, const c=
-har *prefix)
->             parsed_help_format =3D help_format;
->
->             if (show_all) {
->     +               setup_pager();
->                     git_config(git_help_config, NULL);
->                     if (verbose) {
->     -                       setup_pager();
->                             list_all_cmds_help();
->                             return 0;
->                     }
->     @@ -460,8 +460,10 @@ int cmd_help(int argc, const char **argv, const =
-char *prefix)
->                     return 0;
->             }
->
->     -       if (show_guides)
->     +       if (show_guides) {
->     +               setup_pager();
->                     list_common_guides_help();
->     +       }
->
->             if (show_all || show_guides) {
->                     printf("%s\n", _(git_more_info_string));
->
-> Or is there a good reason we shouldn't invoke the pager for e.g. -g when
-> the terminal is too small (per our default less config)?
+On Sat, Sep 22, 2018 at 2:05 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> When multiple worktrees are used, we need rules to determine if
+> something belongs to one worktree or all of them. Instead of keeping
+> adding rules when new stuff comes, have a generic rule:
+> [...]
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+> diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+> @@ -0,0 +1,36 @@
+> +test_expect_success 'setup' '
+> +       test_commit initial &&
+> +       test_commit wt1 &&
+> +       test_commit wt2 &&
+> +       git worktree add wt1 wt1 &&
+> +       git worktree add wt2 wt2 &&
+> +       git checkout initial
+> +'
+> +
+> +test_expect_success 'add refs/local' '
+> +       git update-ref refs/local/foo HEAD &&
+> +       git -C wt1 update-ref refs/local/foo HEAD &&
+> +       git -C wt2 update-ref refs/local/foo HEAD
+> +'
 
-Different pagers may behave differently (and so far "help -a" still
-fits in my screen). So I don't think we should invoke pager more than
-necessary.
---=20
-Duy
+Not at all worth a re-roll, but the "add refs/local" test seems like
+just more setup, thus could be rolled into the "setup" test (unless it
+will be growing in some non-setup way in later patches).
