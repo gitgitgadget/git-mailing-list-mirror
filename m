@@ -3,118 +3,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51AE01F453
-	for <e@80x24.org>; Sun, 23 Sep 2018 15:54:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11E8D1F453
+	for <e@80x24.org>; Sun, 23 Sep 2018 15:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726259AbeIWVvk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Sep 2018 17:51:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39082 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726223AbeIWVvk (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Sep 2018 17:51:40 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:596e:6738:f59:e0e0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E64C16046C;
-        Sun, 23 Sep 2018 15:53:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1537718024;
-        bh=NOhMkGYSWTphs9qADHvPfH5UPMsspgyYAgBrf0TE8AY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XvXAsqNqLYOUHubsItxN1vj05mO1wraGFOKOcxSeFaW+VBi9ZJbeC20FpLMjNYT42
-         0KMpStQftmFS85PhKbv5qXnJHiLo3vvXcqjcZzQLgmenxDVk2C2AsrKAnXe9ccYewh
-         /PdITrjNt0o/Th0uZwMCTQcCq0qd2zIaDGb1sKMHtNstHFfpYtfYKOkhyy5yAnfblc
-         dknUDcfS6jcgRbH7c6ro6mPbJZpAzZ7X356chqmwbqOxxi0KwqY1NLx2rz7LXu2G2+
-         VuEEfpnlRkVNG3UthyP44bgN2obZN1yG53ydKZxrUEcDFsc/GHso2aC9jDAtWvNUtv
-         h19CJKTSWS0Z385e5Dj+sa/j85UH+i4pbnjqWwn//tcAmG6Eq14i7gMHGBYuq0rBmQ
-         +AVQCJMnt5qLd/JMbB4AAaMfjAjiLn275Nj43+AHLNmIh+WmoxRPjWTEKbWixiB5CS
-         wEwQz9h/jz9Uj6MtQOrbRwKLlfUB2NdEwYqYomaGJvCnuhrqDk0
-Date:   Sun, 23 Sep 2018 15:53:38 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>
+        id S1726242AbeIWV4O (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Sep 2018 17:56:14 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:40909 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726199AbeIWV4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Sep 2018 17:56:13 -0400
+Received: by mail-ed1-f46.google.com with SMTP id j62-v6so14326019edd.7
+        for <git@vger.kernel.org>; Sun, 23 Sep 2018 08:58:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=l3KMb+v3Jtn0Mgy5M/AuGtiFNkkNnvk9BseCJtL8++4=;
+        b=r2PQ+U/r06svVvxuLp3qFH6znZYpCeT4Bm+UzEE3Z3sq2e4/ioZJyvww/Hv4/14Rap
+         pW2hb6PWn27sxXofJgV0nCWsS7vuOYqF70tLqT/lnb/g9vmhlfP8xiPyvzvn2afkYlWz
+         6yCd7ZMSlOSToRh9g9pAj+ta1qOhBUIcjTR+bCrzEn/Fex3d6dM+yxZdbMf/4QnPZz0+
+         yfQsKKm13LZsPNvJtoLgq0IWtdKklw8RzpVn0Gip2oOXJ5RsAiHXarwNxAGYeqFwK77k
+         baXY/pIVOqFE5HU2EP3NTQHW9y8i2gZoq19/SrgcalMX8yBmGws4zkV2LqTOq4zv8ONm
+         ePJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=l3KMb+v3Jtn0Mgy5M/AuGtiFNkkNnvk9BseCJtL8++4=;
+        b=o8acqnGEHPRTv+YZ/lXIfXpGo07ySR3er3WMG04ICuNw5YvidHgENxyjDlbEvCIAwj
+         BKuVtxMZihyYZUblIJu+VLS14Vqo7EvK0Tzt8Of3Sh3wNeHddJ1Ys6YiDBbHwxzD2MI7
+         3CXQkx1kO7Zf64O35bbIHvykqxvSA9Np/AfBNPqBHbLetst0+25yJjsHmZ974c/OclGs
+         thDt5TB/m8hKlcgVX/b7dgJstSmSdS4JpVcTCQQh/3iN0gMvKTwJf72xnxvWIT50kA4n
+         7c3o+XkrCFou6Y5wQuQlZ11LnIDwMo3pjG91QYkzUeXkPZEfkQm8Pexha476W1/CmN4L
+         DHiQ==
+X-Gm-Message-State: ABuFfogHOGzRLQqcZ3/rJf5D7vQiRmC0HjVvUowM9+3iV1KCHArTKBcD
+        BKW35gvCIZtpSU5Td9T8L38=
+X-Google-Smtp-Source: ACcGV63Drn/2QtK/A1myfik/VdIMY9dxQcTGivi2u7dNUm08HBO0AxopnMCx1GZv5O/N6Tn3kL8Qqg==
+X-Received: by 2002:a50:9e65:: with SMTP id z92-v6mr7800971ede.204.1537718296936;
+        Sun, 23 Sep 2018 08:58:16 -0700 (PDT)
+Received: from [192.168.2.7] ([217.9.127.11])
+        by smtp.gmail.com with ESMTPSA id m22-v6sm439364edp.0.2018.09.23.08.58.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Sep 2018 08:58:16 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
 Subject: Re: Import/Export as a fast way to purge files from Git?
-Message-ID: <20180923155338.GF432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAPig+cTLjThK4CVzfgV=Uk5OumpjhaQD_YNXmg7pNtkkUFiiyQ@mail.gmail.com>
+Date:   Sun, 23 Sep 2018 17:58:14 +0200
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <DE9CF60B-7DCB-4B82-9C96-663E145CAD56@gmail.com>
 References: <F65AF000-7AE0-44C8-81C8-E58D6769FAA3@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Bina0ufSB9dLMnVr"
-Content-Disposition: inline
-In-Reply-To: <F65AF000-7AE0-44C8-81C8-E58D6769FAA3@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+ <CAPig+cTLjThK4CVzfgV=Uk5OumpjhaQD_YNXmg7pNtkkUFiiyQ@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3445.9.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Bina0ufSB9dLMnVr
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Sep 23, 2018 at 03:04:58PM +0200, Lars Schneider wrote:
-> Hi,
+> On Sep 23, 2018, at 4:55 PM, Eric Sunshine <sunshine@sunshineco.com> =
+wrote:
 >=20
-> I recently had to purge files from large Git repos (many files, many comm=
-its).
-> The usual recommendation is to use `git filter-branch --index-filter` to =
-purge
-> files. However, this is *very* slow for large repos (e.g. it takes 45min =
-to
-> remove the `builtin` directory from git core). I realized that I can remo=
-ve
-> files *way* faster by exporting the repo, removing the file references,
-> and then importing the repo (see Perl script below, it takes ~30sec to re=
-move
-> the `builtin` directory from git core). Do you see any problem with this
-> approach?
+> On Sun, Sep 23, 2018 at 9:05 AM Lars Schneider =
+<larsxschneider@gmail.com> wrote:
+>> I recently had to purge files from large Git repos (many files, many =
+commits).
+>> The usual recommendation is to use `git filter-branch --index-filter` =
+to purge
+>> files. However, this is *very* slow for large repos (e.g. it takes =
+45min to
+>> remove the `builtin` directory from git core). I realized that I can =
+remove
+>> files *way* faster by exporting the repo, removing the file =
+references,
+>> and then importing the repo (see Perl script below, it takes ~30sec =
+to remove
+>> the `builtin` directory from git core). Do you see any problem with =
+this
+>> approach?
+>=20
+> A couple comments:
+>=20
+> For purging files from a history, take a look at BFG[1] which bills
+> itself as "a simpler, faster alternative to git-filter-branch for
+> cleansing bad data out of your Git repository history".
 
-I don't know of any problems with this approach.  I didn't audit your
-specific Perl script for any issues, though.
+Yes, BFG is great. Unfortunately, it requires Java which is not =
+available
+on every system I have to work with. I required a solution that would =
+work
+in every Git environment. Hence the Perl script :-)
 
-I suspect you're gaining speed mostly because you're running three
-processes total instead of at least one process (sh) per commit.  So I
-don't think there's anything that Git can do to make this faster on our
-end without a redesign.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
 
---Bina0ufSB9dLMnVr
-Content-Type: application/pgp-signature; name="signature.asc"
+> The approach of exporting to a fast-import stream, modifying the
+> stream, and re-importing is quite reasonable.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+Thanks for the confirmation!
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluntwIACgkQv1NdgR9S
-9otsdw/8C58pb45BOU6/NQl6PMHLN/kPbEKvDpYNaWH/ETwsJAeNKPREEZRMRa5F
-Ifj/Jhx7+SaKS/LaVbVelgd57lrfIrq2sH+LV1LmUYMkxNAsy54DDC0X7Uf1FjRJ
-D8uKIypLtcw1yzr1BFTvT/wsuYI4XpT+lg5WBUb9Y9pCUZy6FTN5O6HLnfvahDJc
-+2CpvmmpsC3wkLUYWRpt5EgcvAEFi/vywUiXrYBALVpy+ze2Rh6IOhoyizRq7YWc
-w3oxSupOthdUV/rL30p+s9UDSilEf8SBqx2Rux1OEX01OKVno9oKTHJBp+y32pcy
-XKCk4wXAVgs2DsyOtiGAWFuogpnh903QoA8mFnsIU/soq8lO4xx6X7dlfcO/aBng
-inMhuTXSEkUAwWy9Ya5MWSjjF4sqYWe+cKC6mRGCHSA4jrnxv1OM0TxlYSowxfAP
-QkYSuFdMXP1bMCS5/RHbjQltBP04YbuJat4sbOsIZyqeHnOgVONnbV9fUMFYMre1
-NbXbMNHzA+sx8Ci4J2eGiU7HTw/B45DJSVWDIiYuqfOj7en7cMYttisfd0YuMjG/
-2DRzsey4n+3W2vlg2GCdZQO41agtZtmc++pTxWxzhvyEpR5Kt+BK3hL5KZb71cCw
-gPshh3aJFuEeDQzH41cQZr+o4oOuw6YcpcheeYy9dmYa6k1TlSw=
-=krSy
------END PGP SIGNATURE-----
 
---Bina0ufSB9dLMnVr--
+> However, rather than
+> re-inventing, take a look at reposurgeon[2], which allows you to do
+> major surgery on fast-import streams. Not only can it purge files from
+> a repository, but it can slice, dice, puree, and saute pretty much any
+> attribute of a repository.
+
+Wow. Reposurgeon looks very interesting. Thanks a lot for the pointer!
+
+Cheers,
+Lars
+
+
+> [1]: https://rtyley.github.io/bfg-repo-cleaner/
+> [2]: http://www.catb.org/esr/reposurgeon/
+
