@@ -6,41 +6,41 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A6E21F453
-	for <e@80x24.org>; Sun, 23 Sep 2018 08:06:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58F021F453
+	for <e@80x24.org>; Sun, 23 Sep 2018 08:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726090AbeIWOCu convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 10:02:50 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:38061 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbeIWOCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Sep 2018 10:02:49 -0400
-Received: by mail-qt1-f196.google.com with SMTP id z13-v6so5889241qts.5
-        for <git@vger.kernel.org>; Sun, 23 Sep 2018 01:06:14 -0700 (PDT)
+        id S1726070AbeIWOW3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 23 Sep 2018 10:22:29 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:42411 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbeIWOW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Sep 2018 10:22:29 -0400
+Received: by mail-qt1-f194.google.com with SMTP id z8-v6so5905622qto.9
+        for <git@vger.kernel.org>; Sun, 23 Sep 2018 01:25:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YVctPRuGmaKmsIhUlgF3vtt2IviNFdLxyG+a1uk0lKI=;
-        b=CgBPD007+QQzNHSM3Jy6WMhxP/GHf48FoHTiHpmy6+pxIn7XP3e0d2NrgnLUcuv3Wo
-         0Tcs6EGDPDS/yFCgwVu7eQkfIO3KnkTCbRdYYr68Y5N75rA2Ibg2MuO6uzRokrCqmRt6
-         8bzrI1Rq5kDg8ZltgkubUQQK5aiKy42DG5QXSqPFCjDwZ3d9E9jh76yRZ4cjMOXA9r0X
-         hW1lfDHf3j9PsFXJzZmUhSSYM37Kq5U7NC+Eka5JdxVj2GADGYeyaaQ+jy1edrLA1N+O
-         W7DCIl5JgcRs99u0E//ymsq9Cf03QZ68XWEOHEvcsggvRrC0qO8PUsvGn3fHPfShzLYi
-         UCdg==
-X-Gm-Message-State: APzg51DxNE8bfmowc4c7I+m+3XsmBYHTA7Y7FE8BAICaVGC89qXoK9K1
-        OwGB9gAEyEpSZxffHNTLzqbkSvaEI8P+FIIGgl0=
-X-Google-Smtp-Source: ACcGV62jDGtuj81emFgzsvDSFyVA+TBEWzWApFzgifqcHrfP5L4w9qfDVyxviPSRIQ7vm8wjvO9mdgeagm2G9V54fjg=
-X-Received: by 2002:aed:2171:: with SMTP id 104-v6mr3406461qtc.220.1537689973554;
- Sun, 23 Sep 2018 01:06:13 -0700 (PDT)
+        bh=rXnoPPlDC5dNhZZ1uUBjp4TL/eGT3ssUsNr8DMazKEw=;
+        b=Mm2WZim7T1WFaOGtgGP2t7awU1xQM3fD7qMQVDph5jDNNzg4NaoAsNtMCcQr9foBim
+         fuFqGsUwZwRjmQ2wNPO9ditEK6L+YSC4POBpLfDl3CWItJzsoUuRf/RMtyMguKQ7K/b0
+         sSKIqPlHJ24tI8xQpdkqzWFpREbgyhtjP//IHi+3m8STtNWNG9bNirq1GJ/AO2GR6ZMw
+         XBOaYkH+Cn0VeA6tRBYsXiihZpL5ZX+z28YKWJ7QAa/TqCDIobRairDBTf+L0ajyg4Rq
+         I9NiwgGG1/4EOUYr/0tRArf+PSmBgNUsjGKwtbPM2jJm4K50yO2cVJJoemY7t9H31S59
+         uygA==
+X-Gm-Message-State: ABuFfogljJP38TC5ouyksBg9ueQP8YTC4UBrO1WGmAXkhADWkCrmYAzx
+        gJVG28WaRQjTMz8KwROl3p+my75wN5XUoMUaeCh17qup
+X-Google-Smtp-Source: ANB0VdZ/LjpE3EOEBf0Liixo5h7JsnGSjpHyfMe/6kRiLGzcpqw4rePUNMcy4vaDYwrBGjshzmDS1vyigWblaCCsoJ8=
+X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr3606215qtd.101.1537691149610;
+ Sun, 23 Sep 2018 01:25:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-4-pclouds@gmail.com>
-In-Reply-To: <20180922180500.4689-4-pclouds@gmail.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-6-pclouds@gmail.com>
+In-Reply-To: <20180922180500.4689-6-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 23 Sep 2018 04:06:03 -0400
-Message-ID: <CAPig+cTtjwCMRMx2xS1WPyM30ipxx5QJK_Aueu50i-jLQdpdBA@mail.gmail.com>
-Subject: Re: [PATCH 3/8] refs: new ref types to make per-worktree refs visible
- to all worktrees
+Date:   Sun, 23 Sep 2018 04:25:39 -0400
+Message-ID: <CAPig+cTZpgU_n78wG4W0PDvM7Xdr3-1DoHz4d25XBFUmUy7a+A@mail.gmail.com>
+Subject: Re: [PATCH 5/8] revision.c: better error reporting on ref from
+ different worktrees
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
@@ -53,37 +53,63 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sat, Sep 22, 2018 at 2:05 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> [...]
-> The main worktree has to be treated specially because well.. it's
-> special from the beginning. So HEAD from the main worktree is
-> acccessible via the name "main/HEAD" (we can't use
-> "worktrees/main/HEAD" because "main" under "worktrees" is not
-> reserved).
+> Make use of the new ref aliases to pass refs from another worktree
+> around and access them from the current ref store instead. This does
+> not change any functionality, but when a problem shows up, we would
+> report something like
 
-Bikeshedding: I wonder if this would be more intuitive if called
-simply "/HEAD" rather than "main/HEAD".
+From this description, I had a hard time grasping that the first
+example output is the desired one. Not necessarily worth a re-roll,
+but had it said instead something like this:
 
+    ...but when a problem arises, we would like the reported
+    messages to mention full ref aliases, like this:
+
+it would have been more obvious.
+
+More below...
+
+>     fatal: bad object worktrees/ztemp/HEAD
+>     warning: reflog of 'main/HEAD' references pruned commits
+>
+> instead of
+>
+>     fatal: bad object HEAD
+>     warning: reflog of 'HEAD' references pruned commits
+>
+> which does not really tell where the refs are from.
+>
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
-> diff --git a/refs.c b/refs.c
-> @@ -641,12 +641,32 @@ static int is_pseudoref_syntax(const char *refname)
-> +static int is_main_pseudoref_syntax(const char *refname)
+> diff --git a/worktree.c b/worktree.c
+> @@ -487,6 +487,28 @@ int submodule_uses_worktrees(const char *path)
+> +void strbuf_worktree_ref(const struct worktree *wt,
+> +                        struct strbuf *sb,
+> +                        const char *refname)
 > +{
-> +       return skip_prefix(refname, "main/", &refname) &&
-> +               is_pseudoref_syntax(refname);
-> +}
-> +
-> +static int is_other_pseudoref_syntax(const char *refname)
-> +{
-> +       if (!skip_prefix(refname, "worktrees/", &refname))
-> +               return 0;
-> +       refname = strchr(refname, '/');
-> +       if (!refname)
-> +               return 0;
-> +       return is_pseudoref_syntax(refname + 1);
+> +       if (wt && !wt->is_current) {
+> +               if (is_main_worktree(wt))
+> +                       strbuf_addstr(sb, "main/");
+> +               else
+> +                       strbuf_addf(sb, "worktrees/%s/", wt->id);
+> +       }
+> +       strbuf_addstr(sb, refname);
 > +}
 
-If the input is "worktrees/refs/" (nothing following the trailing
-'/'), then an empty string will be passed to is_pseudoref_syntax(),
-which will return true. Does that result in correct behavior? (Same
-question about "main/" being passed to is_main_pseudoref_syntax().)
+Seeing this use worktree->id to construct "worktrees/<id>/<refname>"
+makes me wonder how the user is going to know the ID of a worktree in
+order to specify such refs in the first place. For example, how is the
+user going to know the <id> in "git rev-parse worktrees/<id>/HEAD"? I
+don't think we print the worktree ID anywhere, do we? Certainly, "git
+worktree list" doesn't show it, and "git worktree add" stopped showing
+it as of 2c27002a0a (worktree: improve message when creating a new
+worktree, 2018-04-24).
+
+> diff --git a/worktree.h b/worktree.h
+> @@ -108,4 +108,18 @@ extern const char *worktree_git_path(const struct worktree *wt,
+> +/*
+> + * Return a refname suitable for access from the current ref
+> + * store. The result may be destroyed at the next call.
+> + */
+
+If you re-roll, perhaps: s/may/will/
