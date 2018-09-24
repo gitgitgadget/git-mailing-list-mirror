@@ -2,73 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21DA41F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 23:06:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5194B1F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 23:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726596AbeIYFKv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 01:10:51 -0400
-Received: from mail-yb1-f181.google.com ([209.85.219.181]:46141 "EHLO
-        mail-yb1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbeIYFKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 01:10:51 -0400
-Received: by mail-yb1-f181.google.com with SMTP id o8-v6so803599ybk.13
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 16:06:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9tQ/VCxD6Smekeew8Lc+F6qLrvTnX1QE99wUvU3g9pI=;
-        b=tmOIBRM7iu5vd4Hcs68OXJTIXaxINELLpWJINYHoruwqwHuPyazcOB6xvIWPT+R2Xf
-         Pk1s2kyl7L86qRgVjCyjxmk+i9BdwbfT+kA5dR4v0cJ8TTyxiLxABY7H5se3f69JjbSv
-         v9qxsEQhe2oJYGJDX3rASzfYNza7GhF+X44AEnaYBpBI4DBn2SwedvP+nO/YT5NL3q1f
-         nhxgXi0b4zbIXmChEx0uODwnboRhSYfjfAXzwn78HEAjvBFdRVTXK+nCzK+Tt0GwoDJM
-         Y+ZZ2GMnL+EghZpZnra6BJduA9qONirf3TnJrvDgjnFB4yjwbchE8sEuu2G8bIZsmq02
-         N1vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9tQ/VCxD6Smekeew8Lc+F6qLrvTnX1QE99wUvU3g9pI=;
-        b=lVYIlrAT06muSY1riZV6j5u71Brw5E3S3vtOxaM3KJ2/YHOXwju+Psb1mg3f51q+/a
-         R5gsotDGgh4TK5pPuHP7rVlc2dVAHVWanu+9RlI7uRu9GKm2Qpv3VaXap4A/vHROxqzM
-         5ZjvdIZ2RArVNWRjfS4KDWWUpP/simBZolVUnf+iWcLJHux8f0PwgpzpO0WJj55alTq6
-         gXuCIH9rI5ZzuVSYtrFtA21UfuLc5AeZgFR88j1LmFsFsiA1NrE3h6r2vrzA/1sEZU97
-         3zd7A6PmOVj1IasCxsQyJhNqg9qPtLz3XcgZjhwh1/cq2skPkm3etN9Zbx2W9pF0lgn5
-         7qmA==
-X-Gm-Message-State: ABuFfoiwg5Itzpak4wgo8UZwF4ct0+gVkF85CMKNES0M8eAlkKXFhpHB
-        nJqkJl+T8jPa9ZYHne67L45k3JyOwXFU7r6BLdTf+g==
-X-Google-Smtp-Source: ACcGV63w7jV8pXSree3ILb8yPs1JZD/MnWkjsYFpJjgaQqt770D3+4D8cmRAXGObJ1xYbeV7auTqA5bZ0Zj2syDDFXE=
-X-Received: by 2002:a25:db02:: with SMTP id g2-v6mr489307ybf.493.1537830377654;
- Mon, 24 Sep 2018 16:06:17 -0700 (PDT)
+        id S1726436AbeIYFTb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 01:19:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58084 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725843AbeIYFTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 01:19:31 -0400
+Received: (qmail 16110 invoked by uid 109); 24 Sep 2018 23:14:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Sep 2018 23:14:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 799 invoked by uid 111); 24 Sep 2018 23:14:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 24 Sep 2018 19:14:41 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2018 19:14:56 -0400
+Date:   Mon, 24 Sep 2018 19:14:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+Message-ID: <20180924231455.GA7702@sigill.intra.peff.net>
+References: <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
+ <xmqqbm8qv9hy.fsf@gitster-ct.c.googlers.com>
+ <20180921213753.GA11177@sigill.intra.peff.net>
+ <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
+ <20180921221832.GC11177@sigill.intra.peff.net>
+ <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
+ <20180924181011.GA24781@sigill.intra.peff.net>
+ <xmqqa7o6skkl.fsf@gitster-ct.c.googlers.com>
+ <20180924205022.GA26936@sigill.intra.peff.net>
+ <xmqqva6ur24y.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180917140940.3839-1-ao2@ao2.it> <20180917140940.3839-2-ao2@ao2.it>
- <20180924122502.f932da9d6b71c1f81341040a@ao2.it>
-In-Reply-To: <20180924122502.f932da9d6b71c1f81341040a@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Sep 2018 16:06:06 -0700
-Message-ID: <CAGZ79kaKSZeZwbcaRd810mk5wW6C0ewZWv8EX_KUB82=R1MYaQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/9] submodule: add a print_config_from_gitmodules() helper
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqva6ur24y.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > +int print_config_from_gitmodules(const char *key)
->
-> I am thinking about adding  a "struct repository" argument to this
-> function
+On Mon, Sep 24, 2018 at 02:55:57PM -0700, Junio C Hamano wrote:
 
-Sounds like a good idea.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Do you have an opinion on whether for_each_alternate_refs() interface
+> > should stop passing back refnames? By the "they may not even exist"
+> > rationale in this sub-thread, I think it's probably foolish for any
+> > caller to actually depend on the names being meaningful.
+> 
+> I personally do not mind they were all ".have" or unnamed.
+> 
+> The primary motivatgion behind for-each-alternate-refs was that we
+> wanted to find more anchoring points to help the common ancestry
+> negotiation and for-each-*-ref was the obvious way to do so; the
+> user did not care anything about names.
+
+Right, I think that is totally fine for the current uses. I guess my
+question was: do you envision cutting the interface down to only the
+oids to bite us in the future?
+
+I was on the fence during past discussions, but I think I've come over
+to the idea that the refnames actively confuse things.
+
+-Peff
