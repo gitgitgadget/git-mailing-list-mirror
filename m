@@ -2,135 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 687551F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 19:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43A241F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 20:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbeIYCCn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 22:02:43 -0400
-Received: from mail-io1-f43.google.com ([209.85.166.43]:45623 "EHLO
-        mail-io1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726225AbeIYCCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 22:02:43 -0400
-Received: by mail-io1-f43.google.com with SMTP id e12-v6so18597124iok.12
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 12:58:52 -0700 (PDT)
+        id S1726520AbeIYCJT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 22:09:19 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34357 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726218AbeIYCJS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 22:09:18 -0400
+Received: by mail-wr1-f65.google.com with SMTP id t15so13045610wrx.1
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 13:05:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=C9YtLVMWori1HsYuatb+2eYvLzpcFmikTyHaVPpqyGY=;
-        b=biqqH9LDA4wW62WXcsssXLqtavOTPn+ssbWmqRnbj055p4OiTe4YtzNhc33x5x3CnW
-         q3ts3UYg0PtlDQjnRlwwhPeSVy7q7xChnZoYSiefXTDhLTzEwkOwgKtIEpWHg0HzM+dU
-         mWXbzzKTZ8TgwbEcx6gxUJUNwAP5lzzkpZ7W1haC02YjPvn/pUMtOf5ZSnlrOSbj8Gu9
-         wweEh5XxrFo94rRyzN1s5t9NoHtuGw4k9C1qyR33uh3m7MqUhsllhHqzzReQk9tuQbd/
-         fzfzTiFKJle/6fBurUpqUYymyBpv5nTAJ/7J3nPdPMaFElxOAgFppZn4xu7yc+FtP4Ev
-         flxA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SlZr70RuczqnSOm9EuU0n470+jLrlszk6g1eIvzqrlc=;
+        b=OGdwAh/WfAqGaKt5nLBe3v/o+gXqrQUmpzic8dQ7hmLPwMlIOHwGUi4Irx7n1R4wqp
+         peHoEpFWmNytfs3p2ePR5tNjIGgELEknmFQKWXu6+R/5qnpD7K/Nw8tZteTVSZxyxUKs
+         UWDRDh57+jaFxFdS1XqeKSZi2yinZGO+eurVu+UQei4eh1QCZfJ2Wa1ssALeUN2BY2Px
+         K/7cIYQb/g3VgVOwU5Jz7AX51i0kpbvo6ZkoMuyJfoH1UDXKmkidFk2JDjgBhESftfxC
+         9nzGQSk8dpxaR6MkgXnGEOz3AyEJGnbf/cWOCsI7ey8DpSLYzxymnU84s+zwEqAc36Ge
+         q9pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=C9YtLVMWori1HsYuatb+2eYvLzpcFmikTyHaVPpqyGY=;
-        b=fRWxCV6+kcPa7O0rOxf1uHuX4LVL1uilm5ulQ2QTx/HbYXBb2pdV0mgL8YqeS57wxR
-         zspbNC3Ac+nowXqTs/rxUTz2ls6hY3O6kwqqjDyFZIBMUX0Vi9Z+OlX9z4iDTkqFdbxh
-         DJPtV47U621hDK/ATZ9zUvHKCg51/E0B0DGLBlk9htt5rI3MHoj71w04Vl4xqHl4lqIy
-         JBBBnHLq3c06gn7Z1t4vnTk9am6iJ2IUCEmR9337yxWSpJyxNvxmNNPxq88ZnXjz+5rD
-         WLd8DO/TMh+ls4hai2SMRwKwzv7oY9Z27nclBeOHsSQmieESOaus6c0oPkJwULvjK2jJ
-         ka5w==
-X-Gm-Message-State: ABuFfojuEktgRhTWYoSVvcTDGi/b0rV6B08tinOIlTLxDGlQ1cqLLrP8
-        jsaw2hxjuzCZmwoRCReg2bCu3A==
-X-Google-Smtp-Source: ACcGV62OLv042ZtWWWMpxGCV6i2ayl3HmpIOwG5DR/WjC0AXDrCcuFUz8nHfxd++0Y8dIPMguB7Uow==
-X-Received: by 2002:a6b:acc2:: with SMTP id v185-v6mr358250ioe.300.1537819132209;
-        Mon, 24 Sep 2018 12:58:52 -0700 (PDT)
-Received: from localhost ([75.104.69.134])
-        by smtp.gmail.com with ESMTPSA id n194-v6sm773itg.14.2018.09.24.12.58.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Sep 2018 12:58:50 -0700 (PDT)
-Date:   Mon, 24 Sep 2018 14:58:40 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     John Austin <john@astrangergravity.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Randall Becker <rsbecker@nexbridge.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        id@joeyh.name, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        pastelmobilesuit@github.com
-Subject: Re: Git for games working group
-Message-ID: <20180924195840.GG68796@syl>
-References: <878t41lcfi.fsf@evledraar.gmail.com>
- <20180917135525.GF71477@syl>
- <874leokw3p.fsf@evledraar.gmail.com>
- <20180917164705.GA28056@kitenet.net>
- <8736u8kpgu.fsf@evledraar.gmail.com>
- <CA+AhR6doYuwoucdcN9aKw7-HxgR-qa6OiN4Dnzcy5rifL8PYvg@mail.gmail.com>
- <000501d45366$cf437060$6dca5120$@nexbridge.com>
- <CA+AhR6c+D84sHhABRm4xf=5RWnpVEBXMXzdQxipYMS5bmkw9iQ@mail.gmail.com>
- <20180924140122.GC68796@syl>
- <CA+AhR6cyNqPW7YvEdanv_vA=T2oLrUm2ZyMZjLLFtdx8B+dqYQ@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SlZr70RuczqnSOm9EuU0n470+jLrlszk6g1eIvzqrlc=;
+        b=adNCaXGMdOTuRqKOQTJ4lyVO6Zb1O1FQNK+36sl6cmQpPq/UIaoZG+yv28vgmQoKqf
+         E/TKCQYYecfPRuX8OgxyuHYVD5qoJkoGStr2HLYZPh16ANYeo1MXkrZ1INhawK+4UM0d
+         TXV3w0kVUREiryTu9BdGCP/J5H6r0oCofkYiq6P2ik2QBD0Q5Yo0ds8LSOFSA175bPeF
+         hC6F04b7Rjg/pgATcEO9+ISeC8RVHEHkPGmMRRwEOESgIszoJL6OpdrwsvtiCGvVBA6R
+         8sTKQxMVph2+jBhKSQpr4F+PP1psLDH3LOuu3V1/TdLMXBpdufq+q/1PMZhxYrLqVYlk
+         mrRA==
+X-Gm-Message-State: ABuFfojkzIL7lDIiUAhLqFyho9RnqU3euM0+HiB0bkzKDEbhPT7V/RrO
+        ZOglcf12oeNgvw966obyNUCI48fR
+X-Google-Smtp-Source: ACcGV62l/qs2fyKYZbAIE36WXLRftlwUI6CUWe2iVRHW87pDBYxDrYajloMB45arr0Y1l5oZeDKEwQ==
+X-Received: by 2002:a5d:6451:: with SMTP id d17-v6mr292690wrw.64.1537819524526;
+        Mon, 24 Sep 2018 13:05:24 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q14-v6sm177954wrj.39.2018.09.24.13.05.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 24 Sep 2018 13:05:23 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] Add an EditorConfig file
+References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
+        <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com>
+        <20180920000013.GZ432229@genre.crustytoothpaste.net>
+        <xmqqk1ng2rdo.fsf@gitster-ct.c.googlers.com>
+        <20180921225039.GC432229@genre.crustytoothpaste.net>
+Date:   Mon, 24 Sep 2018 13:05:23 -0700
+In-Reply-To: <20180921225039.GC432229@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 21 Sep 2018 22:50:40 +0000")
+Message-ID: <xmqqefdislto.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+AhR6cyNqPW7YvEdanv_vA=T2oLrUm2ZyMZjLLFtdx8B+dqYQ@mail.gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 08:34:44AM -0700, John Austin wrote:
-> Perhaps git-global-graph is a decent name. GGG? G3? :). The structure
-> right now in my head looks a bit like:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+>> But that is a response in a dream-world.  If there is no such tool,
+>> I am perfectly OK if the plan is to manually keep them (loosely) in
+>> sync.  I do not think it is good use of our time to try to come up
+>> with such a tool (unless somebody is really interested in doing it,
+>> that is).
 >
-> Global Graph:
->      client - post-commit git hooks to push changes up to the GG
+> Would it be helpful if I sent a script that ran during CI to ensure they
+> stayed in sync for the couple places where they overlap?  I'm happy to
+> do so if you think it would be useful.
 
-I'm replying to this part of the email to note that this would cause Git
-LFS to have to do some extra work, since running 'git lfs install'
-already writes to .git/hooks/post-commit (ironically, to detect and
-unlock locks that we should have released).
+It may even be an overkill.
 
-I'm not immediately sure about how we'd resolve this, though I suspect
-it would look like either of:
-
-  - Git LFS knows how to install or _append_ hooks to a given location,
-    should one already exist at that path on disk, or
-
-  - git-global-graph knows how to accommodate Git LFS, and can include a
-    line that calls 'git-lfs-post-commit(1)', perhaps via:
-
-      $ git global-graph install --git-lfs=$(which git-lfs)
-
-    or similar.
-
-> For LFS, The main points of integration with I see are:
->     -- bundling of packages (optionally install this package with a
-> normal LFS installation)
->     -- `git lfs locks` integration. ie. integration with the read-only
-> control of LFS
-
-Sounds sane to me.
-
-> > we strictly avoid using CGo
->
-> What's the main reason for this? Build system complexity?
-
-A couple of reasons. CGO is widely considered to be (1) slow and (2)
-unsafe. For our purposes, this would almost be OK, except that it makes
-it impossible for me to build cross-platform binaries without the
-correct compilers installed.
-
-Today, I build Git LFS for every pair in {Windows, Darwin, Linux,
-FreeBSD} x {386, amd64} by running 'make release', and using CGO would
-not allow me to do that.
-
-Transitioning from Go to CGO during each call is notoriously expensive,
-and concedes many of the benefits that leads us to choose Go in the
-first place. (Although now that I write much more C than Go, I don't
-think I would make the same argument today ;-).)
-
-Thanks,
-Taylor
+A comment addressed to those who edit one file to look at the other
+file on both files would be sufficient, I suspect.
