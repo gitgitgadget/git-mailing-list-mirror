@@ -7,172 +7,296 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 617691F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 20:57:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 227651F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 20:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727490AbeIYDB5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 23:01:57 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44064 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727355AbeIYDB4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 23:01:56 -0400
-Received: by mail-pf1-f194.google.com with SMTP id k21-v6so9612530pff.11
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 13:57:52 -0700 (PDT)
+        id S1727528AbeIYDB6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 23:01:58 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36346 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727355AbeIYDB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 23:01:58 -0400
+Received: by mail-pf1-f195.google.com with SMTP id b7-v6so2210660pfo.3
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 13:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=O3iFukMUdl6Vt5Gqhj5VX1v8fp4BIE8pl+tlACAY9TI=;
-        b=ohbQSr2oT6mCo1GcsIDTENIsNjJ7X/1Z8hssTiqOtPSHPG2yJSVEltuOQuBV/woKbY
-         UhD9rxi3lSXp800SoQfvc6DKY2fUIDXbRhDnaAr06r/E53Z5jCcXiQHdS1typG/PTbXI
-         HWQL/avzz0Kk2MNR1suaAC085GwMkj9dgMDjaEqhwty2mbpXHFXQJmsh/FvlI8YVzqXp
-         A0XyTqQZn5G84ZEH7I8kfFUA8wfeKM/QU8is04xUSMy61XgghKSJGPOr74pBGXIhqrh2
-         iSzyOZ5J8OtSTPyXUMWgcZgX/Op/rRolv6jmyWO1OYkqLJ26lFhtT4MIS3Kl90Rbepie
-         Fk2w==
+        bh=ZLjBOcmepafBQmYC/m9k6eWAaJP6PnrT92ZFP06gVAY=;
+        b=vD1w36DD1/76g0zBAYI6MOK4cMtqF6PozALtW08wGYNPjTmjNS8N/7nUHlWzmFdAUe
+         yivuj5Xrzg2NjQVquCrYr+G556w5HhqkiDjvU343Akym0NW3b5Tkjq9qUPllg56WoYPp
+         VGNM8/dHp7uSutHHOEcvXpX+lFLv1/0J/A/ENdbEmVcEjv1gbZp8J3g8j/a6MbuOw9Hi
+         1ht1wi7Ods3EK/K91nuhc9vKP9IZooFzNCEe5BjE1mFGWtFr8+nETjI2LJZ3Icg0OYG0
+         fNBXr2C/uj1UpNitwLehP2MGb8ksk11L9fFIV7xbvSZ2Hi99PFK+JyI8uujcJwijijCE
+         fqOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=O3iFukMUdl6Vt5Gqhj5VX1v8fp4BIE8pl+tlACAY9TI=;
-        b=ck5T3frpUNQDElONB6wP0fNK0yxU3OtLZ+Lr96E4ZjcnZoe0wkOhA+sjTyvcsjxbcj
-         7lq9tETGXN3Y+wo9B8ZO8+6lFZLYJ4z2HaDOIRTlrNHPaAI2VNhz1k8CaVoWB08gptla
-         6ONFvXULXbnP834F06gizCqArSE6Pfd7BQwwuDIgZz2VCQ27dtWQ09v4U2Ahyj4RE5gm
-         akIHD8s1O+G+pM1uhivSxatUXq6F5T0WgUDFfzY313iVGKjUgyDPBAWgMBKN1zfcT1BU
-         F/0pJPovZpYODcHuRFBniufOCtkCHc+8fl8FUXp5jqYjFca5/9yGNe3szPK8qt3QSGwV
-         xgrg==
-X-Gm-Message-State: ABuFfohdJhBw5xUrkgVBtpwmh5yv+/yWOrCpbsAfo4ublIgyX7PQzGE/
-        OgpvkI4XtRh7RD29YWJsp7bhbIuZ
-X-Google-Smtp-Source: ACcGV63YNvnUfQ5C4fZgIWdpenKWcLfwbq5GKmgMsqdNqXqgeJrQWwXGascKkpZHCeqSwBq3Qp3aww==
-X-Received: by 2002:a17:902:9045:: with SMTP id w5-v6mr503953plz.10.1537822671745;
-        Mon, 24 Sep 2018 13:57:51 -0700 (PDT)
+        bh=ZLjBOcmepafBQmYC/m9k6eWAaJP6PnrT92ZFP06gVAY=;
+        b=EmVEWD94+xGzIl0EWHPL8gzcAw1db0ljfbGSrRSFgrkLxX3Q1HoRZukxSoa7NoLR+K
+         Dnh6nfCYwl5JXxwibWwP6PHzAspAQ1ItgDVEixrJ2jrctVnV63rrgt7uHV91Se6ThwUG
+         e/LObnMJlc2U3z99J9FtUUDgEorv3hIcEF6gYWQoWuLxfcPpupJhwovst9WCUu9IIJ9n
+         CP4KrWXR/eOUaj6kR+Os8KwQrNzcoJfxsu0R/Y9MPOvn6eWQsw3pZhiB4XEKXSLzhds/
+         N1UjJ9z7d/cixShgG/LeHIQdftaKUj34i4xWKFFmhxRTHH3H1GNNxwdVwVbX3DQzaxT3
+         ex6Q==
+X-Gm-Message-State: ABuFfohd7wwW2ybVG3yQq2S2DdoxzbNQ3JfnMR7nZIgbtOGiCU0wBsIG
+        LZYwO7DpmZ322Qu/i1R0UcAi4b88
+X-Google-Smtp-Source: ACcGV63qynTwbAoYNNXNeM62wlDHOSgCCSsm04OTjmubpQPqjBAyMULedeTq+mmLnjUb2+iedF3aVQ==
+X-Received: by 2002:a63:5ec5:: with SMTP id s188-v6mr463798pgb.126.1537822673184;
+        Mon, 24 Sep 2018 13:57:53 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id p3-v6sm236884pfo.130.2018.09.24.13.57.50
+        by smtp.gmail.com with ESMTPSA id z20-v6sm281872pfd.99.2018.09.24.13.57.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Sep 2018 13:57:50 -0700 (PDT)
-Date:   Mon, 24 Sep 2018 13:57:50 -0700 (PDT)
-X-Google-Original-Date: Mon, 24 Sep 2018 20:57:47 GMT
-Message-Id: <pull.39.v4.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.39.v3.git.gitgitgadget@gmail.com>
+        Mon, 24 Sep 2018 13:57:52 -0700 (PDT)
+Date:   Mon, 24 Sep 2018 13:57:52 -0700 (PDT)
+X-Google-Original-Date: Mon, 24 Sep 2018 20:57:48 GMT
+Message-Id: <a0a3cf01343381281554d0e175b2f4ec5fbe0abb.1537822669.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.39.v4.git.gitgitgadget@gmail.com>
 References: <pull.39.v3.git.gitgitgadget@gmail.com>
+        <pull.39.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 0/1] Properly peel tags in can_all_from_reach_with_flags()
+Subject: [PATCH v4 1/1] commit-reach: properly peel tags and clear flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>
+Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As Peff reported [1], the refactored can_all_from_reach_with_flags() method
-does not properly peel tags. Since the helper method can_all_from_reach()
-and code in t/helper/test-reach.c all peel tags before getting to this
-method, it is not super-simple to create a test that demonstrates this.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I modified t/helper/test-reach.c to allow calling
-can_all_from_reach_with_flags() directly, and added a test in
-t6600-test-reach.sh that demonstrates the segfault without the fix.
+The can_all_from_reach_with_flag() algorithm was refactored in 4fbcca4e
+"commit-reach: make can_all_from_reach... linear" but incorrectly
+assumed that all objects provided were commits. During a fetch
+negotiation, ok_to_give_up() in upload-pack.c may provide unpeeled tags
+to the 'from' array. The current code creates a segfault.
 
-For V2, I compared the loop that inspects the 'from' commits in commit
-ba3ca1edce "commit-reach: move can_all_from_reach_with_flags" to the version
-here and got the following diff:
+Add a direct call to can_all_from_reach_with_flag() in 'test-tool reach'
+and add a test in t6600-test-reach.sh that demonstrates this segfault.
 
-3c3
-<                 if (from_one->flags & assign_flag)
+Correct the issue by peeling tags when investigating the initial list
+of objects in the 'from' array.
+
+The can_all_from_reach_with_flag() method uses 'assign_flag' as a
+value we can use to mark objects temporarily during our commit walk.
+The intent is that these flags are removed from all objects before
+returning. However, this is not the case.
+
+The 'from' array could also contain objects that are not commits, and
+we mark those objects with 'assign_flag'. Add a loop to the 'cleanup'
+section that removes these markers.
+
+Also, we forgot to free() the memory for 'list', so add that to the
+'cleanup' section. Also, use a cleaner mechanism for clearing those
+flags.
+
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
->                 if (!from_one || from_one->flags & assign_flag)
-5c5,7
-<                 from_one = deref_tag(the_repository, from_one, "a from object", 0);
----
->
->                 from_one = deref_tag(the_repository, from_one,
->                                      "a from object", 0);
-14a17,22
->
->                 list[nr_commits] = (struct commit *)from_one;
->                 if (parse_commit(list[nr_commits]) ||
->                     list[nr_commits]->generation < min_generation)
->                         return 0; /* is this a leak? */
->                 nr_commits++;
-
-This diff includes the early termination we had before 'deref_tag' and the
-comment for why we can ignore non-commit objects.
-
-[1] 
-https://public-inbox.org/git/0bf9103c-9377-506b-7ad7-e5273d8e94fc@gmail.com/T/#u
-
-Derrick Stolee (1):
-  commit-reach: properly peel tags and clear flags
-
  commit-reach.c        | 44 +++++++++++++++++++++++++++++++++----------
  t/helper/test-reach.c | 22 +++++++++++++++++-----
  t/t6600-test-reach.sh | 30 +++++++++++++++++++++++++++--
  3 files changed, 79 insertions(+), 17 deletions(-)
 
-
-base-commit: 6621c838743812aaba96e55cfec8524ea1144c2d
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-39%2Fderrickstolee%2Ftag-fix-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-39/derrickstolee/tag-fix-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/39
-
-Range-diff vs v3:
-
- 1:  0a1e661271 ! 1:  a0a3cf0134 commit-reach: properly peel tags
-     @@ -1,6 +1,6 @@
-      Author: Derrick Stolee <dstolee@microsoft.com>
-      
-     -    commit-reach: properly peel tags
-     +    commit-reach: properly peel tags and clear flags
-      
-          The can_all_from_reach_with_flag() algorithm was refactored in 4fbcca4e
-          "commit-reach: make can_all_from_reach... linear" but incorrectly
-     @@ -14,6 +14,19 @@
-          Correct the issue by peeling tags when investigating the initial list
-          of objects in the 'from' array.
-      
-     +    The can_all_from_reach_with_flag() method uses 'assign_flag' as a
-     +    value we can use to mark objects temporarily during our commit walk.
-     +    The intent is that these flags are removed from all objects before
-     +    returning. However, this is not the case.
-     +
-     +    The 'from' array could also contain objects that are not commits, and
-     +    we mark those objects with 'assign_flag'. Add a loop to the 'cleanup'
-     +    section that removes these markers.
-     +
-     +    Also, we forgot to free() the memory for 'list', so add that to the
-     +    'cleanup' section. Also, use a cleaner mechanism for clearing those
-     +    flags.
-     +
-          Signed-off-by: Jeff King <peff@peff.net>
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
-     @@ -74,10 +87,18 @@
-       
-       cleanup:
-      -	for (i = 0; i < from->nr; i++) {
-     -+	for (i = 0; i < nr_commits; i++) {
-     - 		clear_commit_marks(list[i], RESULT);
-     - 		clear_commit_marks(list[i], assign_flag);
-     - 	}
-     +-		clear_commit_marks(list[i], RESULT);
-     +-		clear_commit_marks(list[i], assign_flag);
-     +-	}
-     ++	clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
-     ++	free(list);
-     ++
-     ++	for (i = 0; i < from->nr; i++)
-     ++		from->objects[i].item->flags &= ~assign_flag;
-     ++
-     + 	return result;
-     + }
-     + 
-      
-      diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-      --- a/t/helper/test-reach.c
- 2:  b2e0ee4978 < -:  ---------- commit-reach: fix memory and flag leaks
-
+diff --git a/commit-reach.c b/commit-reach.c
+index 86715c103c..db84f85986 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -544,20 +544,42 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ {
+ 	struct commit **list = NULL;
+ 	int i;
++	int nr_commits;
+ 	int result = 1;
+ 
+ 	ALLOC_ARRAY(list, from->nr);
++	nr_commits = 0;
+ 	for (i = 0; i < from->nr; i++) {
+-		list[i] = (struct commit *)from->objects[i].item;
++		struct object *from_one = from->objects[i].item;
+ 
+-		if (parse_commit(list[i]) ||
+-		    list[i]->generation < min_generation)
+-			return 0;
++		if (!from_one || from_one->flags & assign_flag)
++			continue;
++
++		from_one = deref_tag(the_repository, from_one,
++				     "a from object", 0);
++		if (!from_one || from_one->type != OBJ_COMMIT) {
++			/* no way to tell if this is reachable by
++			 * looking at the ancestry chain alone, so
++			 * leave a note to ourselves not to worry about
++			 * this object anymore.
++			 */
++			from->objects[i].item->flags |= assign_flag;
++			continue;
++		}
++
++		list[nr_commits] = (struct commit *)from_one;
++		if (parse_commit(list[nr_commits]) ||
++		    list[nr_commits]->generation < min_generation) {
++			result = 0;
++			goto cleanup;
++		}
++
++		nr_commits++;
+ 	}
+ 
+-	QSORT(list, from->nr, compare_commits_by_gen);
++	QSORT(list, nr_commits, compare_commits_by_gen);
+ 
+-	for (i = 0; i < from->nr; i++) {
++	for (i = 0; i < nr_commits; i++) {
+ 		/* DFS from list[i] */
+ 		struct commit_list *stack = NULL;
+ 
+@@ -600,10 +622,12 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 	}
+ 
+ cleanup:
+-	for (i = 0; i < from->nr; i++) {
+-		clear_commit_marks(list[i], RESULT);
+-		clear_commit_marks(list[i], assign_flag);
+-	}
++	clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
++	free(list);
++
++	for (i = 0; i < from->nr; i++)
++		from->objects[i].item->flags &= ~assign_flag;
++
+ 	return result;
+ }
+ 
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index eb21103998..08d2ea68e8 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -31,6 +31,7 @@ int cmd__reach(int ac, const char **av)
+ 	struct object_id oid_A, oid_B;
+ 	struct commit *A, *B;
+ 	struct commit_list *X, *Y;
++	struct object_array X_obj = OBJECT_ARRAY_INIT;
+ 	struct commit **X_array;
+ 	int X_nr, X_alloc;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -49,7 +50,8 @@ int cmd__reach(int ac, const char **av)
+ 
+ 	while (strbuf_getline(&buf, stdin) != EOF) {
+ 		struct object_id oid;
+-		struct object *o;
++		struct object *orig;
++		struct object *peeled;
+ 		struct commit *c;
+ 		if (buf.len < 3)
+ 			continue;
+@@ -57,14 +59,14 @@ int cmd__reach(int ac, const char **av)
+ 		if (get_oid_committish(buf.buf + 2, &oid))
+ 			die("failed to resolve %s", buf.buf + 2);
+ 
+-		o = parse_object(r, &oid);
+-		o = deref_tag_noverify(o);
++		orig = parse_object(r, &oid);
++		peeled = deref_tag_noverify(orig);
+ 
+-		if (!o)
++		if (!peeled)
+ 			die("failed to load commit for input %s resulting in oid %s\n",
+ 			    buf.buf, oid_to_hex(&oid));
+ 
+-		c = object_as_type(r, o, OBJ_COMMIT, 0);
++		c = object_as_type(r, peeled, OBJ_COMMIT, 0);
+ 
+ 		if (!c)
+ 			die("failed to load commit for input %s resulting in oid %s\n",
+@@ -85,6 +87,7 @@ int cmd__reach(int ac, const char **av)
+ 				commit_list_insert(c, &X);
+ 				ALLOC_GROW(X_array, X_nr + 1, X_alloc);
+ 				X_array[X_nr++] = c;
++				add_object_array(orig, NULL, &X_obj);
+ 				break;
+ 
+ 			case 'Y':
+@@ -113,6 +116,15 @@ int cmd__reach(int ac, const char **av)
+ 		print_sorted_commit_ids(list);
+ 	} else if (!strcmp(av[1], "can_all_from_reach")) {
+ 		printf("%s(X,Y):%d\n", av[1], can_all_from_reach(X, Y, 1));
++	} else if (!strcmp(av[1], "can_all_from_reach_with_flag")) {
++		struct commit_list *iter = Y;
++
++		while (iter) {
++			iter->item->object.flags |= 2;
++			iter = iter->next;
++		}
++
++		printf("%s(X,_,_,0,0):%d\n", av[1], can_all_from_reach_with_flag(&X_obj, 2, 4, 0, 0));
+ 	} else if (!strcmp(av[1], "commit_contains")) {
+ 		struct ref_filter filter;
+ 		struct contains_cache cache;
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index d139a00d1d..ae94b27f70 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -31,7 +31,8 @@ test_expect_success 'setup' '
+ 	for i in $(test_seq 1 10)
+ 	do
+ 		test_commit "1-$i" &&
+-		git branch -f commit-1-$i
++		git branch -f commit-1-$i &&
++		git tag -a -m "1-$i" tag-1-$i commit-1-$i
+ 	done &&
+ 	for j in $(test_seq 1 9)
+ 	do
+@@ -39,11 +40,13 @@ test_expect_success 'setup' '
+ 		x=$(($j + 1)) &&
+ 		test_commit "$x-1" &&
+ 		git branch -f commit-$x-1 &&
++		git tag -a -m "$x-1" tag-$x-1 commit-$x-1 &&
+ 
+ 		for i in $(test_seq 2 10)
+ 		do
+ 			git merge commit-$j-$i -m "$x-$i" &&
+-			git branch -f commit-$x-$i
++			git branch -f commit-$x-$i &&
++			git tag -a -m "$x-$i" tag-$x-$i commit-$x-$i
+ 		done
+ 	done &&
+ 	git commit-graph write --reachable &&
+@@ -205,6 +208,29 @@ test_expect_success 'can_all_from_reach:miss' '
+ 	test_three_modes can_all_from_reach
+ '
+ 
++test_expect_success 'can_all_from_reach_with_flag: tags case' '
++	cat >input <<-\EOF &&
++	X:tag-2-10
++	X:tag-3-9
++	X:tag-4-8
++	X:commit-5-7
++	X:commit-6-6
++	X:commit-7-5
++	X:commit-8-4
++	X:commit-9-3
++	Y:tag-1-9
++	Y:tag-2-8
++	Y:tag-3-7
++	Y:commit-4-6
++	Y:commit-5-5
++	Y:commit-6-4
++	Y:commit-7-3
++	Y:commit-8-1
++	EOF
++	echo "can_all_from_reach_with_flag(X,_,_,0,0):1" >expect &&
++	test_three_modes can_all_from_reach_with_flag
++'
++
+ test_expect_success 'commit_contains:hit' '
+ 	cat >input <<-\EOF &&
+ 	A:commit-7-7
 -- 
 gitgitgadget
