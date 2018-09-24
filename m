@@ -2,116 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DC791F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 18:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54BE61F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 19:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728926AbeIYAzL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 20:55:11 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:38744 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728493AbeIYAzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 20:55:11 -0400
-Received: by mail-yw1-f66.google.com with SMTP id d126-v6so1629227ywa.5
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 11:51:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UQwIdxcUijC5DKCgdziKOGcaGzP9sUzEflpiwKR1Wv8=;
-        b=flKOHYf5ALIphpEwHpjTm3iVI9xl1+2MBXhj8CrtAL36fdCsJpPBHznpH09w056Pqo
-         rXBprbkBE3fDAz18pXYsrGgI2RdpWowwyDMSWcYi+AZofD/hvfBdQUFPHwaQNfnO0inu
-         fa6KCh3P26kR6ppqmZl6oFzx7KKU8wFZ+zMCQjBmDfCXXOn85RivhvvbqQpQIKpH14yi
-         O9hvFHvxq+eYUNTGXSIyZlpliO+ojHR2TuQd5ekDsLyXf1uNVKrCWm/BKgRvUq4l+feL
-         F1jtVZzV5lThWNDOwdOizmS28Mtsy2nY7kQBoNFNsrWwTvRtaBNyCqQG2TXfAO6QbHlm
-         4Fsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UQwIdxcUijC5DKCgdziKOGcaGzP9sUzEflpiwKR1Wv8=;
-        b=JfoOnpNmsc20S03yRbhx/KF5TWq5Dg2hA0Obw52sxp9GfAeO1+I/UVPwcVQYTZXNAd
-         +Oimy5I0aMTb+CCSRsZr3dqAO5FkYmza6og73TeR2/6dZ6UeQokhkx40RW3pnVbAxtHx
-         w1wxns+oYPLOJRrqwi+8nIrVQkcJv74kdXgCoYLIQ4cmwEIPYcnXdXptvtU5L7pUyMlL
-         LWYClEgZiJGCg19a5Cpjgdko9trl8k/nsWTlQF15v+9kBKLkjfDH5XNnFdHi2F3XRLnG
-         VEAWvfTi3P/AASJ4xUOCbZfXWeZAGatgH6zAY8rLlJY/ZXky5h//MBjGBGsy+j3pTttp
-         Ljag==
-X-Gm-Message-State: ABuFfojNS+tprUAyMlepjWYf6cBBSXjbhMfRjIPJaYbKf15UgILXaP38
-        6IkgMzoSvrHoKVNr6j9sV+Fzyry2J/6IHG2yPvMdYw==
-X-Google-Smtp-Source: ACcGV62wXKplohdc8EvFOlIIOqP4DBrNY/d3++pkE1cpFly69pjb/SkWpUpsY5a/5tqrbttZ4u/mVn1EiAC0mqTY9b0=
-X-Received: by 2002:a81:5bc6:: with SMTP id p189-v6mr80561ywb.370.1537815098396;
- Mon, 24 Sep 2018 11:51:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180921235833.99045-1-sbeller@google.com> <20180921235833.99045-2-sbeller@google.com>
- <7f77be2b-a084-5b8d-df65-1bb4b9c5da82@gmail.com>
-In-Reply-To: <7f77be2b-a084-5b8d-df65-1bb4b9c5da82@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Sep 2018 11:51:27 -0700
-Message-ID: <CAGZ79kaeWa5PRregdoJp82sSsY1-GF7kk33fxf1kbTPcZWu-bg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t7001: reformat to newer style
+        id S1729766AbeIYBKD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 21:10:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57578 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728480AbeIYBKD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 21:10:03 -0400
+Received: (qmail 7011 invoked by uid 109); 24 Sep 2018 19:06:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Sep 2018 19:06:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29052 invoked by uid 111); 24 Sep 2018 19:06:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 24 Sep 2018 15:06:11 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2018 15:06:26 -0400
+Date:   Mon, 24 Sep 2018 15:06:26 -0400
+From:   Jeff King <peff@peff.net>
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 2/2] commit-reach: fix memory and flag leaks
+Message-ID: <20180924190625.GA27029@sigill.intra.peff.net>
+References: <pull.39.v2.git.gitgitgadget@gmail.com>
+ <pull.39.v3.git.gitgitgadget@gmail.com>
+ <b2e0ee49788bfbf2182df7a93694333568552962.1537542323.git.gitgitgadget@gmail.com>
+ <20180921235803.GB3437@sigill.intra.peff.net>
+ <c8320650-230a-9a17-df79-9555d5214bd2@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c8320650-230a-9a17-df79-9555d5214bd2@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 6:31 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 9/21/2018 7:58 PM, Stefan Beller wrote:
-> > The old formatting style is a real hindrance of getting people up to speed
-> > contributing as they use existing code as an example and follow that style.
-> > So let's get rid of the old style and reformat it in our current style.
-> I was suspicious of your automated approach catching everything, so I
-> looked carefully at this patch. There are still a lot of things
-> happening that we would not recommend doing in new tests.
+On Mon, Sep 24, 2018 at 01:25:12PM -0400, Derrick Stolee wrote:
 
-Heh, thanks for calling that out. So we're looking at a full formatter
-instead of a partial formatter that helps moving in the right direction now. :-/
+> On 9/21/2018 7:58 PM, Jeff King wrote:
+> > On Fri, Sep 21, 2018 at 08:05:27AM -0700, Derrick Stolee via GitGitGadget wrote:
+> > 
+> > > From: Derrick Stolee <dstolee@microsoft.com>
+> > > 
+> > > The can_all_from_reach_with_flag() method uses 'assign_flag' as a
+> > > value we can use to mark objects temporarily during our commit walk.
+> > > The intent is that these flags are removed from all objects before
+> > > returning. However, this is not the case.
+> > > 
+> > > The 'from' array could also contain objects that are not commits, and
+> > > we mark those objects with 'assign_flag'. Add a loop to the 'cleanup'
+> > > section that removes these markers.
+> > > 
+> > > Also, we forgot to free() the memory for 'list', so add that to the
+> > > 'cleanup' section.
+> > Urgh, ignore most of my response to patch 1, then. I saw there was a
+> > patch 2, but thought it was just handling the free().
+> > 
+> > The flag-clearing here makes perfect sense.
+> 
+> In my local branch, I ended up squashing this commit into the previous,
+> because I discovered clear_commit_marks_many() making the cleanup section
+> have this diff:
+> 
+> @@ -600,10 +622,12 @@ int can_all_from_reach_with_flag(struct object_array
+> *from,
+>         }
+> 
+>  cleanup:
+> -       for (i = 0; i < from->nr; i++) {
+> -               clear_commit_marks(list[i], RESULT);
+> -               clear_commit_marks(list[i], assign_flag);
+> -       }
+> +       clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
+> +       free(list);
+> +
+> +       for (i = 0; i < from->nr; i++)
+> +               from->objects[i].item->flags &= ~assign_flag;
+> +
+>         return result;
+>  }
+> 
+> With the bigger change in the larger set, there is less reason to do
+> separate commits. (Plus, it confused you during review.)
 
-I would prefer to use automation as much as possible for these tasks
-to keep it easy to apply it at scale once a file is not touched by
-master..pu any more.
+Yeah, that looks better still. Thanks!
 
-When applying styles manually, there is sometimes a judgement call,
-which would like to the inevitable bikeshedding that I'd prefer to avoid.
-
-> > +test_expect_success 'moving the file out of subdirectory' '
-> > +     cd path0 && git mv COPYING ../path1/COPYING
-> > +'
-> Perhaps split this line on the &&?
-
-In real modern testing, this could also be
-
-    git -C path0 mv ...
-
-which would also fix the cd.. below and not needing
-a subshell there either (using -C again).
-
-Looking at this from a higher level, nowadays I would write
-tests that have more lines in them, instead of having
-one git command per test.
-
-> > +test_expect_success 'moving to existing tracked target with trailing slash' '
-> > +     mkdir path2 &&
-> > +     >path2/file && git add path2/file &&
-> This line in particular looks a bit strange. What is this doing? At
-> least we should split the &&.
-
-Yes.
-
-> > +test_expect_success 'do not move directory over existing directory' '
-> > +     mkdir path0 && mkdir path0/path2 && test_must_fail git mv path2 path0
-> > +'
->
-> Split this line.
-
-Okay, I'll go manually over these tests to adapt to new style.
-
-Thanks for looking over the patch!
-Stefan
+-Peff
