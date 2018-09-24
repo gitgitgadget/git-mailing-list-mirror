@@ -2,200 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2055D1F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 14:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EAE81F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 15:17:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729108AbeIXUYJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 16:24:09 -0400
-Received: from mail-qt1-f177.google.com ([209.85.160.177]:44381 "EHLO
-        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727579AbeIXUYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 16:24:09 -0400
-Received: by mail-qt1-f177.google.com with SMTP id k38-v6so9574685qtk.11
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 07:21:46 -0700 (PDT)
+        id S1730466AbeIXVT7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 17:19:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43053 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728880AbeIXVT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 17:19:58 -0400
+Received: by mail-wr1-f67.google.com with SMTP id z14-v6so2589042wrs.10
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 08:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=gi1tti4r6U1oIxnodVQNSud9cKPHWoIhQFhN1iV88pc=;
-        b=B0etahrIPIFP8Cb5WfIhTGMDLrmBEpiDjqgGqveLgfqr9PbZxDPpu8YrPG7Y+2X6tl
-         CmAELYYiFCQFhu2ppGofw5uxigJcZWdpcsIdk9izoNDAO5ywaEhRe8F/UMutoqU7hn/s
-         z8icPdD4y4di+er0Fqzkxj1HWD084sVswkgUaq+zoSXuTdqAKPAYk17qGXdg0N+5QxFQ
-         JKr6PRQ1XtgtiY61fo3x74Ees4KZR8mwVHQ68EhplCPfeAZZLNmLOe3Ogy8TCD9xwS1w
-         WDLelSeFENDv1d+AeaKmE20Jpr+RuwJETK7cznubWaPyZJHU2NoMjZC0GQogcxzt82Xr
-         9wmA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=TxFfGOjxdIO6gmXJ6t39Wsh90FK65LrQnpIBkPj1uR4=;
+        b=qWGMo73PhmKyANt1hQp4oRIq/d4pqyUtAtK404UXe0rMJnpc6HCm505FmUNBKyInjy
+         U623SEyU97FdjJ03D6ddAr+qMIvzXKe/RorVgE9hXcZ3ng0VXi8QjHWE2Rjjjqk6eAws
+         NeYuwCPnNVhWJaA24OBCkDZhQ7EgdumsldNOTb4+c7fICC/xBwXo0JO6xeW/rsPh0Zsy
+         ey2/ZwvkZzZiD0cVAKUZmFD+UM8HZTZDVepuFoorp+nnozpoJcfHe2rNuFLRS34HJflB
+         3Jz2XfY6ivsQfa1FVFc5ifQu7Lk8tN1RAPhSKnNCso2exXypEUZUUraYbe0WQ21lYCLV
+         pr+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=gi1tti4r6U1oIxnodVQNSud9cKPHWoIhQFhN1iV88pc=;
-        b=ZztJqV9F/h+nvnf4CWEJ4l2lAUHjPiCf7mLViaaljgng+WlPE+NpsMJYG36BLkk/gk
-         9E9bur6ZkDwjcFbgMrj5Zuc8UnKYrR6mI4uypSKHgaH/qS0ozUOQYNEi0ehesQhPSkge
-         5tG+HHUTWtS9cysB2M1jguU5BNIQUX+sOktnQBP1+zx9lAWUvUSWgTN7L9nvl+eTFJB4
-         joMwOU6Ak+bbD7d4YRXN8iS9oWn1Lt0cV2NY7j+WNVYJpx6epRIALrmYNFroFCPgVv3S
-         F8iBG8Udg3LPvDqGCeoL8i1Ok1ClEX/vOO3abC8dTGqkwsRc8t/A6d1hLQ/EA2glwzUi
-         WzMw==
-X-Gm-Message-State: ABuFfojABvAxMoGHtqTpEIqZi2RR0+/wSuqju0Yr2yzg6D1dSJwGnmK/
-        h7j8uNz5HlNm73JIBvcYpXgKeg==
-X-Google-Smtp-Source: ACcGV633hRML9oOD5ttSmVvH6cGwiV2zcVkDUdudVHF1h7/VyLyLAbddVnC+k1qw4w14dp0ba0heGA==
-X-Received: by 2002:a0c:c38e:: with SMTP id o14-v6mr7749012qvi.36.1537798906098;
-        Mon, 24 Sep 2018 07:21:46 -0700 (PDT)
-Received: from localhost ([50.49.245.163])
-        by smtp.gmail.com with ESMTPSA id f53-v6sm25508554qtk.40.2018.09.24.07.21.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Sep 2018 07:21:44 -0700 (PDT)
-Date:   Mon, 24 Sep 2018 10:21:43 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] worktree: add per-worktree config files
-Message-ID: <20180924142143.GD68796@syl>
-References: <20180923170438.23610-1-pclouds@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=TxFfGOjxdIO6gmXJ6t39Wsh90FK65LrQnpIBkPj1uR4=;
+        b=Wjv8IkHPeH3i3cKZgWAQWWOlYa39nfAbtTATZPoWZZk+yET5c7ihShl05xev+D5d8x
+         bb4tZK9bxMvJ04Q5qKHT+2ClYnMUwIHquaGAo7r1OAyk0eHoM7JCEM8Z4r8oQrX+VDLa
+         QtqGDSlkd4iOVwfi4CC842EjmtEOvb0eCLHEl65+fbjYAKvtSX5+u5vuzn7id9qnIfgW
+         lgl1dHgTDCsOirlXs92ta3Bn3cFcBTba4wabXFV+LWrcx8eH9lYFFEHX3sUme/GRSLkx
+         +lr/jUOZwICgcXDLLj3ycKubOu/Qb8GUKPbFWINdcXyagmtT42ykeVnNedAhfNExDgfV
+         u0Yg==
+X-Gm-Message-State: ABuFfoh1x80t67LwUBDBoIEoa2VgHcgZGBz0SMsntf8vNgDy+MldbBTH
+        yHgfpgOifpJzLaHxLgsLOMI=
+X-Google-Smtp-Source: ACcGV63igaYXbyaGq2oyuMLmCjr1+CUvqnReVg+m5iA0HMQs9nSHxbZImzv0leQtuRRbpzuYTLpbnQ==
+X-Received: by 2002:adf:9142:: with SMTP id j60-v6mr9581025wrj.180.1537802236718;
+        Mon, 24 Sep 2018 08:17:16 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t2-v6sm29231813wre.96.2018.09.24.08.17.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 24 Sep 2018 08:17:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+References: <cover.1537466087.git.me@ttaylorr.com>
+        <cover.1537555544.git.me@ttaylorr.com>
+        <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
+        <xmqqbm8qv9hy.fsf@gitster-ct.c.googlers.com>
+        <20180921213753.GA11177@sigill.intra.peff.net>
+        <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
+        <20180921221832.GC11177@sigill.intra.peff.net>
+Date:   Mon, 24 Sep 2018 08:17:14 -0700
+In-Reply-To: <20180921221832.GC11177@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 21 Sep 2018 18:18:32 -0400")
+Message-ID: <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180923170438.23610-1-pclouds@gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 23, 2018 at 07:04:38PM +0200, Nguyễn Thái Ngọc Duy wrote:
-> A new repo extension is added, worktreeConfig. When it is present:
+Jeff King <peff@peff.net> writes:
 
-I was initially scratching my head at why this should be a repository
-extension, but...
+> I was suggesting that check_everything_connected() is not strictly
+> transport-related, so would be inappropriate for transport.*, and we'd
+> need a more generic name. And my "either way" was that I could see
+> an argument that it _is_ transport related, since we only call it now
+> when receiving a pack. But that doesn't have to be the case, and
+> certainly implementing it with "rev-list --alternate-refs" muddies that
+> considerably.
 
->  - The special treatment for core.bare and core.worktree, to stay
->    effective only in main worktree, is gone. These config files are
->    supposed to be in config.worktree.
+Even after 7043c707 ("check_everything_connected: use a struct with
+named options", 2016-07-15) unified many into check_connected(),
+there still are different reasons why we call to find out about the
+connectivity, and I doubt we can afford to have a single knob that
+is shared both for transport and other kind of connectivity checks
+(like fsck or repack).  Do we want to be affected by "we pretend
+that these are the only refs exported from that alternate object
+store" when repacking and pruning only local objects and keep us
+rely on the alternate, for example?
 
-This seems to be sufficient justification for it. A destructive action
-(such as migrating configuration from one location to another, as you
-have implemented in the patch below) should be something that the user
-opts into, rather than having happen automatically.
-
-> This extension is most useful in multiple worktree setup because you
-> now have an option to store per-worktree config (which is either
-> .git/config.worktree for main worktree, or
-> .git/worktrees/xx/config.worktree for linked ones).
-
-This sounds quite useful for these situations.
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 8d85d1a324..c24abf5871 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2,8 +2,9 @@ CONFIGURATION FILE
->  ------------------
->
->  The Git configuration file contains a number of variables that affect
-> -the Git commands' behavior. The `.git/config` file in each repository
-> -is used to store the configuration for that repository, and
-> +the Git commands' behavior. The files `.git/config` and optionally
-> +`config.worktree` (see `extensions.worktreeConfig` below) are each
-> +repository is used to store the configuration for that repository, and
-
-Typo: 'are each'.
-
->  ENVIRONMENT
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> index e2ee9fc21b..3f9112db56 100644
-> --- a/Documentation/git-worktree.txt
-> +++ b/Documentation/git-worktree.txt
-> @@ -204,6 +204,43 @@ working trees, it can be used to identify worktrees. For example if
->  you only have two working trees, at "/abc/def/ghi" and "/abc/def/ggg",
->  then "ghi" or "def/ghi" is enough to point to the former working tree.
->
-> +CONFIGURATION FILE
-> +------------------
-> +By default, the repository "config" file is shared across all working
-> +directories. If the config variables `core.bare` or `core.worktree`
-> +are already present in the config file, they will be applied to the
-> +main working directory only.
-> +
-> +In order to have configuration specific to working directories, you
-> +can turn on "worktreeConfig" extension, e.g.:
-> +
-> +------------
-> +$ git config extensions.worktreeConfig true
-> +------------
-
-Good, this matches my expectation from above.
-
-> @@ -24,6 +25,7 @@ static char key_delim = ' ';
->  static char term = '\n';
->
->  static int use_global_config, use_system_config, use_local_config;
-> +static int use_worktree_config;
->  static struct git_config_source given_config_source;
->  static int actions, type;
->  static char *default_value;
-> @@ -123,6 +125,7 @@ static struct option builtin_config_options[] = {
->  	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
->  	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
->  	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
-> +	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config file")),
->  	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
->  	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read config from given blob object")),
->  	OPT_GROUP(N_("Action")),
-> @@ -602,6 +605,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  			     PARSE_OPT_STOP_AT_NON_OPTION);
->
->  	if (use_global_config + use_system_config + use_local_config +
-> +	    use_worktree_config +
->  	    !!given_config_source.file + !!given_config_source.blob > 1) {
-
-I feel like we're getting into "let's extract a function" territory,
-here, since this line is growing in width. Perhaps:
-
-  static int config_files_count()
-  {
-    return use_global_config + use_system_config + use_local_config +
-  		use_worktree_config +
-  		!!given_config_source.file +
-  		!!given_config_source.blob;
-  }
-
-Simplifying the call to:
-
-> diff --git a/t/t2029-worktree-config.sh b/t/t2029-worktree-config.sh
-> new file mode 100755
-> index 0000000000..4ebdf13cf9
-> --- /dev/null
-> +++ b/t/t2029-worktree-config.sh
-> @@ -0,0 +1,82 @@
-> +#!/bin/sh
-> +
-> +test_description="config file in multi worktree"
-> +
-> +. ./test-lib.sh
-> +
-> +cmp_config() {
-> +	if [ "$1" = "-C" ]; then
-> +		shift &&
-> +		GD="-C $1" &&
-> +		shift
-> +	else
-> +		GD=
-> +	fi &&
-> +	echo "$1" >expected &&
-> +	shift &&
-> +	git $GD config "$@" >actual &&
-> +	test_cmp expected actual
-> +}
-
-This cmp_config seems generally useful, perhaps beyond t2029. What do
-you think about putting it in t/test-lib-functions.sh instead?
-
-Thanks,
-Taylor
+In any case it is good that these configuration variables are
+defined on _our_ side, not in the alternate---it means that we do
+not have to worry about the case where the alternateRefsCommand lies
+and tells us that an object that the alternate does not actually
+have exists at a tip of a ref in an attempt to confuse us, etc.
