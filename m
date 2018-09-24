@@ -2,171 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66CE41F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 21:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32FC31F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 21:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbeIYDFf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 23:05:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57818 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727057AbeIYDFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 23:05:34 -0400
-Received: (qmail 11308 invoked by uid 109); 24 Sep 2018 21:01:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Sep 2018 21:01:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30675 invoked by uid 111); 24 Sep 2018 21:01:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 24 Sep 2018 17:01:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2018 17:01:27 -0400
-Date:   Mon, 24 Sep 2018 17:01:27 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        sunshine@sunshineco.com, sbeller@google.com
-Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
-Message-ID: <20180924210127.GA6255@sigill.intra.peff.net>
-References: <cover.1537555544.git.me@ttaylorr.com>
- <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
- <xmqqbm8qv9hy.fsf@gitster-ct.c.googlers.com>
- <20180921213753.GA11177@sigill.intra.peff.net>
- <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
- <20180921221832.GC11177@sigill.intra.peff.net>
- <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
- <20180924181011.GA24781@sigill.intra.peff.net>
- <xmqqa7o6skkl.fsf@gitster-ct.c.googlers.com>
- <20180924205022.GA26936@sigill.intra.peff.net>
+        id S1727721AbeIYDGi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 23:06:38 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:54330 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727057AbeIYDGi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 23:06:38 -0400
+Received: by mail-wm1-f47.google.com with SMTP id c14-v6so11135035wmb.4
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 14:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=7MXymcOqzZQLhdcgg//FVj2OsedvwkdyKjv3T9I8Q6Q=;
+        b=HDgD8N2mBxOqEw0IXopYwlJMcCLTOvfZrBQ1MIz6guq91FAeYjkIxxB+g5opKulz/Y
+         84nNkpdgnMvdLGSfxhbO8nCkbu2KjdFP4L2Y2U1/80+n7I4bTA0RfzsKFk3jVFAn1QG7
+         56MK5PJLziGn6GYoVJA9d6d1TnQ+/5InIkLu6BXvj21vF5J8PCw4aZcOkS0k3WiLNXM6
+         yLEp3vyWEY/X1NvqzSvTHviMyLeA3fiUp4gthg2HLaV5B0pRaffjaR2xhouJ0Q0mntK9
+         sncnZzZjdI0gUNnfebturqBphLq/odAemtFWICp8k4MsFIG0YYmw23whNn4i5wC6UyrH
+         tEsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=7MXymcOqzZQLhdcgg//FVj2OsedvwkdyKjv3T9I8Q6Q=;
+        b=C11BYSEul2tmsYoACNBoMp5gKCndur+IQxmvot78qSCxnOzia/VxtrI1q2lEL6LGIl
+         6snNg2LYYL/TXHbrZsziCNMpO7arLJiJhtyBoaJ4bHTw5sN6BR2SlQhqPGTNZHkC5+g3
+         f4213tXaDydv1kWB5PLEVfJXc81oOgf4YwB3xsSneMyJCktep4/G4JQtgX1STKE1auCY
+         uKwlZP/UwIvt69zrJhb1vDnYdJOGRpeFU/v4oQYL10jvqHu3rO7wb5EyGboLvGohWjIW
+         VsOuwK/W11vyRUmwAdS49JpqiilUig3k+6LyK+gAlXL/LU5B8E1XnZfRb947KEpLb4Cr
+         RXTg==
+X-Gm-Message-State: ABuFfojCW0qigbNk+nPza3fobWhQKeEOZTURdmVgIwfG54917PwVomKn
+        ZteO4S0m8mGvLV96bml/x0k=
+X-Google-Smtp-Source: ACcGV62j4RTGZARuOpeKRrMoND9DTuIc30sOXmGgaHgCCvwYPdHKRpAvwujRMlfIilkO1+tqoQm+IA==
+X-Received: by 2002:a1c:970c:: with SMTP id z12-v6mr121270wmd.20.1537822951580;
+        Mon, 24 Sep 2018 14:02:31 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id b74-v6sm203037wma.8.2018.09.24.14.02.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 24 Sep 2018 14:02:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephen Smith <ischis2@cox.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 4/4] wt-status.c: Set the committable flag in the collect phase.
+References: <20180906005329.11277-1-ischis2@cox.net>
+        <xmqqworxufuv.fsf@gitster-ct.c.googlers.com>
+        <2295579.U4Xb9QnJqG@thunderbird>
+Date:   Mon, 24 Sep 2018 14:02:30 -0700
+In-Reply-To: <2295579.U4Xb9QnJqG@thunderbird> (Stephen Smith's message of
+        "Sun, 23 Sep 2018 20:15:16 -0700")
+Message-ID: <xmqqzhw6r4m1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180924205022.GA26936@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 04:50:22PM -0400, Jeff King wrote:
+Stephen Smith <ischis2@cox.net> writes:
 
-> On Mon, Sep 24, 2018 at 01:32:26PM -0700, Junio C Hamano wrote:
-> 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > So I think it's conceptually consistent to always show a subset.
-> > 
-> > OK.  Then I agree with you that it is a good approach to first adopt
-> > core.* knobs that universally apply, and add specialized ones as
-> > they are needed later.
-> 
-> Thanks. There's one other major decision for this series, I think.
-> 
-> Do you have an opinion on whether for_each_alternate_refs() interface
-> should stop passing back refnames? By the "they may not even exist"
-> rationale in this sub-thread, I think it's probably foolish for any
-> caller to actually depend on the names being meaningful.
-> 
-> We need to decide now because the idea of which data is relevant is
-> getting baked into the documented alternateRefsCmd output format.
+> I can see three solutions and could support any of the three:
+> 1) Move the free calls to run_status() and cmd_status().
+> 2) Move the calls calls to wt_status_print since that is the last function 
+> from wt_status.c that is called befor the structure goes out of scope in  
+> run_status() and cmd_status().
+> 3) Add a new wt_collect*() function to free the variables. This would have an 
+> advantage that the free calls could be grouped in on place and not done in to 
+> functions.  A second advantage is that the free calls would be located where 
+> the pointers are initialized.  
+>
+> Personally I like solutions 1 and 3 over 2.
+> What do others think?
 
-Just to sketch it out further, I was thinking that we'd do something
-like this at the front of Taylor's series (with the rest rebased as
-appropriate on top).
+I think freeing at the top level caller (i.e. #1) once it finished
+using the information collected would make the most sense---it
+initiated the collection, then fed the collected info to shower, and
+now it knows it is done with the pieces of memory it used to make
+these two parts communicate with each other.
 
--- >8 --
-Subject: [PATCH] transport: drop refnames from for_each_alternate_ref
+And for keeping multiple "pieces of memory" as a unit, introducing a
+helper is a good technique (i.e. #3); but I view that mostly as an
+implementation detail of #1.
 
-None of the current callers use the refname parameter we pass to their
-callbacks. In theory somebody _could_ do so, but it's actually quite
-weird if you think about it: it's a ref in somebody else's repository.
-So the name has no meaning locally, and in fact there may be duplicates
-if there are multiple alternates.
-
-The users of this interface really only care about seeing some ref tips,
-since that promises that the alternate has the full commit graph
-reachable from there. So let's keep the information we pass back to the
-bare minimum.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/receive-pack.c | 3 +--
- fetch-pack.c           | 3 +--
- transport.c            | 6 +++---
- transport.h            | 2 +-
- 4 files changed, 6 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index a3bb13af10..39993f2bcf 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -281,8 +281,7 @@ static int show_ref_cb(const char *path_full, const struct object_id *oid,
- 	return 0;
- }
- 
--static void show_one_alternate_ref(const char *refname,
--				   const struct object_id *oid,
-+static void show_one_alternate_ref(const struct object_id *oid,
- 				   void *data)
- {
- 	struct oidset *seen = data;
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 75047a4b2a..b643de143b 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -76,8 +76,7 @@ struct alternate_object_cache {
- 	size_t nr, alloc;
- };
- 
--static void cache_one_alternate(const char *refname,
--				const struct object_id *oid,
-+static void cache_one_alternate(const struct object_id *oid,
- 				void *vcache)
- {
- 	struct alternate_object_cache *cache = vcache;
-diff --git a/transport.c b/transport.c
-index 1c76d64aba..2e0bc414d0 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1336,7 +1336,7 @@ static void read_alternate_refs(const char *path,
- 	cmd.git_cmd = 1;
- 	argv_array_pushf(&cmd.args, "--git-dir=%s", path);
- 	argv_array_push(&cmd.args, "for-each-ref");
--	argv_array_push(&cmd.args, "--format=%(objectname) %(refname)");
-+	argv_array_push(&cmd.args, "--format=%(objectname)");
- 	cmd.env = local_repo_env;
- 	cmd.out = -1;
- 
-@@ -1348,13 +1348,13 @@ static void read_alternate_refs(const char *path,
- 		struct object_id oid;
- 
- 		if (get_oid_hex(line.buf, &oid) ||
--		    line.buf[GIT_SHA1_HEXSZ] != ' ') {
-+		    line.buf[GIT_SHA1_HEXSZ]) {
- 			warning(_("invalid line while parsing alternate refs: %s"),
- 				line.buf);
- 			break;
- 		}
- 
--		cb(line.buf + GIT_SHA1_HEXSZ + 1, &oid, data);
-+		cb(&oid, data);
- 	}
- 
- 	fclose(fh);
-diff --git a/transport.h b/transport.h
-index 01e717c29e..9baeca2d7a 100644
---- a/transport.h
-+++ b/transport.h
-@@ -261,6 +261,6 @@ int transport_refs_pushed(struct ref *ref);
- void transport_print_push_status(const char *dest, struct ref *refs,
- 		  int verbose, int porcelain, unsigned int *reject_reasons);
- 
--typedef void alternate_ref_fn(const char *refname, const struct object_id *oid, void *);
-+typedef void alternate_ref_fn(const struct object_id *oid, void *);
- extern void for_each_alternate_ref(alternate_ref_fn, void *);
- #endif
--- 
-2.19.0.764.g0a058409ab
+Thanks.
 
