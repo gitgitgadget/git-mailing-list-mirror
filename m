@@ -2,131 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 818D61F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 21:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66CE41F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 21:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728107AbeIYDFI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 23:05:08 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:36260 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727057AbeIYDFI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 23:05:08 -0400
-Received: by mail-yb1-f196.google.com with SMTP id 5-v6so8861229ybf.3
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 14:01:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=W3CLiD0nXmeem9M86nvNBcpgMvsCl97RHtTkYM+36UA=;
-        b=p3rVsiv7BlH9MuQ5viXghHU2piRYLyHXosRdg8bas14cu0ZBzr4k5x2NeBhSDTT4g0
-         5flabbnlZTcfHkUicquMAHK7UvwFW/Xzzj26D7JLzLPpxVzQUwFZkJfa508n1ndYPpU9
-         2oTh0iAK5Iyicmnm3O3VfazyHw6rgjVG5twiBJ2LssFoZFYYQu99nI1wqy18KOrfmGzd
-         tZAQeiP95N1v1j99T0uuubmIuWJQ/9npFbg6YQ7Y3M3GXKmG20s5oqz61I2tx5Iq4tVU
-         XVecgkQ7tCjvVveI72FasWrAB1UFx2j4iT0z4Q8ddHgKgVgzbCKZPcSbcqGM9n0bar6K
-         QOmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=W3CLiD0nXmeem9M86nvNBcpgMvsCl97RHtTkYM+36UA=;
-        b=fE1XD/aCh+As9QRLUHrIe8IYBJQp324Sy14mCZ2jvKvacitOfmZ4BpboBA+WonNVvX
-         XGdBVj86agj0lbo0uw24eLuVmzXVCr7tJryC869t8+nLXnOXdOg29gvIpRwEZrmLgBuG
-         vNb9pPoPXzep3ZRxEL9OaINm1zwnjOB03lg9Fp0fYGjKHtK5LUQiyPfh8u+ReD7EXlfd
-         72c8oo7WlhXy8IEYuYJPIwWhMDPMKIUHJRX+aHvX7O6s1dOnoYrTkGBmGo0QdkhJQeWQ
-         5rcZ9iuJ2nlDg5uaEFup9WEfk2Clvt3RhAWLsLl7m745perxXfEY3GiJCcL0SEmf704e
-         LIVA==
-X-Gm-Message-State: ABuFfogHZ3AVbAVw85cHEc+NMGXtg96ADWfPfH5anNw27LHXEw2zcc15
-        jC0HTos1O1yjiA3D7rY7LrYNmqRBsMEqArsmlSW9Ew==
-X-Google-Smtp-Source: ACcGV628/Tm8H2fFMfOGnKKoYhOBtOPYOjG34grKXuWOBClYMVw+GyrCAiM9XZYaSBxhFHBafwoPenOtgoBgOK43HoY=
-X-Received: by 2002:a25:e481:: with SMTP id b123-v6mr319542ybh.416.1537822862319;
- Mon, 24 Sep 2018 14:01:02 -0700 (PDT)
+        id S1728111AbeIYDFf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 23:05:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57818 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727057AbeIYDFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 23:05:34 -0400
+Received: (qmail 11308 invoked by uid 109); 24 Sep 2018 21:01:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Sep 2018 21:01:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30675 invoked by uid 111); 24 Sep 2018 21:01:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 24 Sep 2018 17:01:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2018 17:01:27 -0400
+Date:   Mon, 24 Sep 2018 17:01:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+Message-ID: <20180924210127.GA6255@sigill.intra.peff.net>
+References: <cover.1537555544.git.me@ttaylorr.com>
+ <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
+ <xmqqbm8qv9hy.fsf@gitster-ct.c.googlers.com>
+ <20180921213753.GA11177@sigill.intra.peff.net>
+ <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
+ <20180921221832.GC11177@sigill.intra.peff.net>
+ <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
+ <20180924181011.GA24781@sigill.intra.peff.net>
+ <xmqqa7o6skkl.fsf@gitster-ct.c.googlers.com>
+ <20180924205022.GA26936@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <20180917140940.3839-1-ao2@ao2.it> <20180917140940.3839-10-ao2@ao2.it>
- <20180918171257.GC27036@localhost> <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
-In-Reply-To: <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Sep 2018 14:00:50 -0700
-Message-ID: <CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com>
-Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
- not in the working tree
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180924205022.GA26936@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 3:20 AM Antonio Ospite <ao2@ao2.it> wrote:
+On Mon, Sep 24, 2018 at 04:50:22PM -0400, Jeff King wrote:
 
-> > The third call, however, looks at the nested submodule at
-> > 'submodule/sub', which doesn't contain a '.gitmodules' file.  So this
-> > function goes on with the second condition and calls
-> > get_oid(GITMODULES_INDEX, &oid), which then appears to find the blob
-> > in the _superproject's_ index.
-> >
->
-> You are correct.
->
-> This is a limitation of the object store in git, there is no equivalent
-> of get_oid() to get the oid from a specific repository and this affects
-> config_with_options too when the config source is a blob.
+> On Mon, Sep 24, 2018 at 01:32:26PM -0700, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > So I think it's conceptually consistent to always show a subset.
+> > 
+> > OK.  Then I agree with you that it is a good approach to first adopt
+> > core.* knobs that universally apply, and add specialized ones as
+> > they are needed later.
+> 
+> Thanks. There's one other major decision for this series, I think.
+> 
+> Do you have an opinion on whether for_each_alternate_refs() interface
+> should stop passing back refnames? By the "they may not even exist"
+> rationale in this sub-thread, I think it's probably foolish for any
+> caller to actually depend on the names being meaningful.
+> 
+> We need to decide now because the idea of which data is relevant is
+> getting baked into the documented alternateRefsCmd output format.
 
-Not yet, as there is a big push to pass-through an object-store object
-or similar recently and rely less on global variables.
-I am not sure I get to this code, though.
+Just to sketch it out further, I was thinking that we'd do something
+like this at the front of Taylor's series (with the rest rebased as
+appropriate on top).
 
-> This does not affect commands called via "git -C submodule_dir cmd"
-> because in that case the chdir happens before the_repository is set up,
-> for instance "git-submodule $SOMETHING --recursive" commands seem to
-> change the working directory before the recursion.
+-- >8 --
+Subject: [PATCH] transport: drop refnames from for_each_alternate_ref
 
-For this it may be worth looking into the option
-       --super-prefix=<path>
-  Currently for internal use only. Set a prefix which gives a
-  path from above a repository down to its root. One use is
-  to give submodules context about the superproject that
-  invoked it.
+None of the current callers use the refname parameter we pass to their
+callbacks. In theory somebody _could_ do so, but it's actually quite
+weird if you think about it: it's a ref in somebody else's repository.
+So the name has no meaning locally, and in fact there may be duplicates
+if there are multiple alternates.
 
-the whole motion of moving to in-process deprecates this clunky
-API to pass around strings to subprocesses.
+The users of this interface really only care about seeing some ref tips,
+since that promises that the alternate has the full commit graph
+reachable from there. So let's keep the information we pass back to the
+bare minimum.
 
-> The test suite passes even after removing repo_read_gitmodules()
-> entirely from builtin/grep.c, but I am still not confident that I get
-> all the implication of why that call was originally added in commit
-> f9ee2fcdfa (grep: recurse in-process using 'struct repository',
-> 2017-08-02).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/receive-pack.c | 3 +--
+ fetch-pack.c           | 3 +--
+ transport.c            | 6 +++---
+ transport.h            | 2 +-
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
-If you checkout that commit and remove the call to repo_read_gitmodules
-and then call git-grep in a superproject with nested submodules, you
-get a segfault.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index a3bb13af10..39993f2bcf 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -281,8 +281,7 @@ static int show_ref_cb(const char *path_full, const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-static void show_one_alternate_ref(const char *refname,
+-				   const struct object_id *oid,
++static void show_one_alternate_ref(const struct object_id *oid,
+ 				   void *data)
+ {
+ 	struct oidset *seen = data;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 75047a4b2a..b643de143b 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -76,8 +76,7 @@ struct alternate_object_cache {
+ 	size_t nr, alloc;
+ };
+ 
+-static void cache_one_alternate(const char *refname,
+-				const struct object_id *oid,
++static void cache_one_alternate(const struct object_id *oid,
+ 				void *vcache)
+ {
+ 	struct alternate_object_cache *cache = vcache;
+diff --git a/transport.c b/transport.c
+index 1c76d64aba..2e0bc414d0 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1336,7 +1336,7 @@ static void read_alternate_refs(const char *path,
+ 	cmd.git_cmd = 1;
+ 	argv_array_pushf(&cmd.args, "--git-dir=%s", path);
+ 	argv_array_push(&cmd.args, "for-each-ref");
+-	argv_array_push(&cmd.args, "--format=%(objectname) %(refname)");
++	argv_array_push(&cmd.args, "--format=%(objectname)");
+ 	cmd.env = local_repo_env;
+ 	cmd.out = -1;
+ 
+@@ -1348,13 +1348,13 @@ static void read_alternate_refs(const char *path,
+ 		struct object_id oid;
+ 
+ 		if (get_oid_hex(line.buf, &oid) ||
+-		    line.buf[GIT_SHA1_HEXSZ] != ' ') {
++		    line.buf[GIT_SHA1_HEXSZ]) {
+ 			warning(_("invalid line while parsing alternate refs: %s"),
+ 				line.buf);
+ 			break;
+ 		}
+ 
+-		cb(line.buf + GIT_SHA1_HEXSZ + 1, &oid, data);
++		cb(&oid, data);
+ 	}
+ 
+ 	fclose(fh);
+diff --git a/transport.h b/transport.h
+index 01e717c29e..9baeca2d7a 100644
+--- a/transport.h
++++ b/transport.h
+@@ -261,6 +261,6 @@ int transport_refs_pushed(struct ref *ref);
+ void transport_print_push_status(const char *dest, struct ref *refs,
+ 		  int verbose, int porcelain, unsigned int *reject_reasons);
+ 
+-typedef void alternate_ref_fn(const char *refname, const struct object_id *oid, void *);
++typedef void alternate_ref_fn(const struct object_id *oid, void *);
+ extern void for_each_alternate_ref(alternate_ref_fn, void *);
+ #endif
+-- 
+2.19.0.764.g0a058409ab
 
-On master (and deleting out that line) you do not get the segfault,
-I think praise goes to ff6f1f564c4 (submodule-config: lazy-load a
-repository's .gitmodules file, 2017-08-03) which happened shortly
-after f9ee2fcdfa.
-
-It showcased that it worked by converting ls-files, but left out grep.
-
-So I think based on ff6f1f564c4 it is safe to remove all calls to
-repo_read_gitmodules.
-
-> Anyways, even if we removed the call we would prevent the problem from
-> happening in the test suite, but not in the real world, in case non-leaf
-> submodules without .gitmodules in their working tree.
-
-Quite frankly I think grep was just overlooked in review of
-https://public-inbox.org/git/20170803182000.179328-14-bmwill@google.com/
-
-Stefan
