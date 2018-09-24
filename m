@@ -2,411 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EBF61F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 10:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9DB1F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 10:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728384AbeIXQHn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 12:07:43 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:23140 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728212AbeIXQHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 12:07:42 -0400
-Received: from lindisfarne.localdomain ([92.28.142.68])
-        by smtp.talktalk.net with SMTP
-        id 4NkrgLWW7VlGZ4Nl0gJ4t2; Mon, 24 Sep 2018 11:06:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1537783583;
-        bh=HspFNSLmTDRGUrPImNysDWU/diDc37DQMBhOEACKGA8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=eftOTc7bliLsNkadGEP7kfIHF6Py2Yw38fRYRYxL+62hMnZpw8riNYz4R1syK+wFB
-         51T+HADsF7x5wNilIALO0ysmANZzLcJyOcXuMQRxKGo4u+Ii9OxBgEFk811htybxJo
-         Tb4RdRGMqrz9LvEVOFO0296/lK4oLB6FshqAvN3Y=
-X-Originating-IP: [92.28.142.68]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
- a=UGDAwvN9cmeZh0o4udnnNw==:17 a=evINK-nbAAAA:8 a=5rxgeBVgAAAA:8
- a=pGLkceISAAAA:8 a=nyiV9DaaKwamI5fiTRwA:9 a=wxDFKLatdRnlK-lf:21
- a=8b6LPyszy7AXvmLs:21 a=RfR_gqz1fSpA9VikTjo0:22 a=PwKx63F5tFurRwaNxrlG:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [RFC PATCH 3/3] diff: add --color-moved-ws=allow-mixed-indentation-change
-Date:   Mon, 24 Sep 2018 11:06:04 +0100
-Message-Id: <20180924100604.32208-4-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20180924100604.32208-1-phillip.wood@talktalk.net>
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
-MIME-Version: 1.0
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfEyWkvXXvy2UcBteCOwm0JwwEjZ0yNQ/aPlviE4NeEcNZxaB3qmP/opcx/2XjvTyRzYFePt8AOzlZPULFljcMUSqyODtbbSAv/JXRVRIppd9QG9fO7Lr
- XI8lxBMPO33INqW0L9RZBDGF4qiAj1rbjEOURpQOKusnVJO8PTwV026ZSqBAsdMTDALYeiNECLSLfMdOW7wt4gTyjFGvlBQSqMUERfVOCYnbUl4hGhmUdS9N
- XprGpAmFtTSO+dQ5D/r5DQ==
+        id S1727335AbeIXQV4 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 24 Sep 2018 12:21:56 -0400
+Received: from ao2.it ([92.243.12.208]:58788 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725982AbeIXQV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 12:21:56 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1g4NwQ-0008Bb-EG; Mon, 24 Sep 2018 12:18:10 +0200
+Date:   Mon, 24 Sep 2018 12:20:31 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
+ not in the working tree
+Message-Id: <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
+In-Reply-To: <20180918171257.GC27036@localhost>
+References: <20180917140940.3839-1-ao2@ao2.it>
+        <20180917140940.3839-10-ao2@ao2.it>
+        <20180918171257.GC27036@localhost>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, 18 Sep 2018 19:12:57 +0200
+SZEDER Gábor <szeder.dev@gmail.com> wrote:
 
-This adds another mode for highlighting lines that have moved with an
-indentation change. Unlike the existing
---color-moved-ws=allow-indentation-change setting this mode uses the
-visible change in the indentation to group lines, rather than the
-indentation string. This means it works with files that use a mix of
-tabs and spaces for indentation and can cope with whitespace errors
-where there is a space before a tab (it's the job of
---ws-error-highlight to deal with those errors, it should affect the
-move detection). It will also group the lines either
-side of a blank line if their indentation change matches so short
-lines followed by a blank line followed by more lines with the same
-indentation change will be correctly highlighted.
+[...]
+> On Mon, Sep 17, 2018 at 04:09:40PM +0200, Antonio Ospite wrote:
+> > When the .gitmodules file is not available in the working tree, try
+> > using the content from the index and from the current branch.
+> 
+> "from the index and from the current branch" of which repository?
+>
 
-This is a RFC as there are a number of questions about how to proceed
-from here:
- 1) Do we need a second option or should this implementation replace
-    --color-moved-ws=allow-indentation-change. I'm unclear if that mode
-    has any advantages for some people. There seems to have been an
-    intention [1] to get it working with mixes of tabs and spaces but
-    nothing ever came of it.
- 2) If we keep two options what should this option be called, the name
-    is long and ambiguous at the moment - mixed could refer to mixed
-    indentation length rather than a mix of tabs and spaces.
- 3) Should we support whitespace flags with this mode?
-    --ignore-space-at-eol and --ignore-cr-at eol would be fairly simple
-    to support and I can see a use for them, --ignore-all-space and
-    --ignore-space-change would need some changes to xdiff to allow them
-    to apply only after the indentation. I think --ignore-blank-lines
-    would need a bit of work to get it working as well. (Note the
-    existing mode does not support any of these flags either)
+I took a look, some comments below.
 
-[1] https://public-inbox.org/git/CAGZ79kasAqE+=7ciVrdjoRdu0UFjVBr8Ma502nw+3hZL=ebXYQ@mail.gmail.com/
+> > diff --git a/submodule-config.c b/submodule-config.c
+> > index 61a555e920..bdb1d0e2c9 100644
+> > --- a/submodule-config.c
+> > +++ b/submodule-config.c
+> 
+> > @@ -603,8 +604,21 @@ static void submodule_cache_check_init(struct repository *repo)
+> >  static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
+> >  {
+[...]
+> > +		file = repo_worktree_path(repo, GITMODULES_FILE);
+> > +		if (file_exists(file))
+> > +			config_source.file = file;
+> > +		else if (get_oid(GITMODULES_INDEX, &oid) >= 0)
+> > +			config_source.blob = GITMODULES_INDEX;
+> > +		else if (get_oid(GITMODULES_HEAD, &oid) >= 0)
+> > +			config_source.blob = GITMODULES_HEAD;
+> > +
+> 
+> The repository used in t7814 contains nested submodules, which means
+> that config_from_gitmodules() is invoked three times.
+> 
+> Now, the first two of those calls look at the superproject and at
+> 'submodule', and find the existing files '.../trash
+> directory.t7814-grep-recurse-submodules/.gitmodules' and '.../trash
+> directory.t7814-grep-recurse-submodules/submodule/.gitmodules',
+> respectively.  So far so good.
+> 
+> The third call, however, looks at the nested submodule at
+> 'submodule/sub', which doesn't contain a '.gitmodules' file.  So this
+> function goes on with the second condition and calls
+> get_oid(GITMODULES_INDEX, &oid), which then appears to find the blob
+> in the _superproject's_ index.
+>
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- diff.c                     | 122 +++++++++++++++++++++++++++++++++----
- diff.h                     |   1 +
- t/t4015-diff-whitespace.sh |  89 +++++++++++++++++++++++++++
- 3 files changed, 199 insertions(+), 13 deletions(-)
+You are correct.
 
-diff --git a/diff.c b/diff.c
-index 0a652e28d4..45f33daa60 100644
---- a/diff.c
-+++ b/diff.c
-@@ -304,7 +304,11 @@ static int parse_color_moved_ws(const char *arg)
- 		else if (!strcmp(sb.buf, "ignore-all-space"))
- 			ret |= XDF_IGNORE_WHITESPACE;
- 		else if (!strcmp(sb.buf, "allow-indentation-change"))
--			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
-+			ret = COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE |
-+			 (ret & ~COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE);
-+		else if (!strcmp(sb.buf, "allow-mixed-indentation-change"))
-+			ret = COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE |
-+			 (ret & ~COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE);
- 		else
- 			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
- 
-@@ -314,6 +318,9 @@ static int parse_color_moved_ws(const char *arg)
- 	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
- 	    (ret & XDF_WHITESPACE_FLAGS))
- 		die(_("color-moved-ws: allow-indentation-change cannot be combined with other white space modes"));
-+	else if ((ret & COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE) &&
-+		 (ret & XDF_WHITESPACE_FLAGS))
-+		die(_("color-moved-ws: allow-mixed-indentation-change cannot be combined with other white space modes"));
- 
- 	string_list_clear(&l, 0);
- 
-@@ -763,11 +770,65 @@ struct moved_entry {
-  * comparision is longer than the second.
-  */
- struct ws_delta {
--	char *string;
-+	union {
-+		int delta;
-+		char *string;
-+	};
- 	unsigned int current_longer : 1;
-+	unsigned int have_string : 1;
- };
- #define WS_DELTA_INIT { NULL, 0 }
- 
-+static int compute_mixed_ws_delta(const struct emitted_diff_symbol *a,
-+				  const struct emitted_diff_symbol *b,
-+				  int *delta)
-+{
-+	unsigned int i = 0, j = 0;
-+	int la, lb;
-+	int ta = a->flags & WS_TAB_WIDTH_MASK;
-+	int tb = b->flags & WS_TAB_WIDTH_MASK;
-+	const char *sa = a->line;
-+	const char *sb = b->line;
-+
-+	if (xdiff_is_blankline(sa, a->len, 0) &&
-+	    xdiff_is_blankline(sb, b->len, 0)) {
-+		*delta = INT_MIN;
-+		return 1;
-+	}
-+
-+	/* skip any \v \f \r at start of indentation */
-+	while (sa[i] == '\f' || sa[i] == '\v' ||
-+	       (sa[i] == '\r' && i < a->len - 1))
-+		i++;
-+	while (sb[j] == '\f' || sb[j] == '\v' ||
-+	       (sb[j] == '\r' && j < b->len - 1))
-+		j++;
-+
-+	for (la = 0; ; i++) {
-+		if (sa[i] == ' ')
-+			la++;
-+		else if (sa[i] == '\t')
-+			la = ((la + ta) / ta) * ta;
-+		else
-+			break;
-+	}
-+	for (lb = 0; ; j++) {
-+		if (sb[j] == ' ')
-+			lb++;
-+		else if (sb[j] == '\t')
-+			lb = ((lb + tb) / tb) * tb;
-+		else
-+			break;
-+	}
-+	if (a->s == DIFF_SYMBOL_PLUS)
-+		*delta = la - lb;
-+	else
-+		*delta = lb - la;
-+
-+	return (a->len - i == b->len - j) &&
-+		!memcmp(sa + i, sb + j, a->len - i);
-+}
-+
- static int compute_ws_delta(const struct emitted_diff_symbol *a,
- 			     const struct emitted_diff_symbol *b,
- 			     struct ws_delta *out)
-@@ -778,6 +839,7 @@ static int compute_ws_delta(const struct emitted_diff_symbol *a,
- 
- 	out->string = xmemdupz(longer->line, d);
- 	out->current_longer = (a == longer);
-+	out->have_string = 1;
- 
- 	return !strncmp(longer->line + d, shorter->line, shorter->len);
- }
-@@ -820,15 +882,34 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
- 	 * To do so we need to compare 'l' to 'cur', adjusting the
- 	 * one of them for the white spaces, depending which was longer.
- 	 */
-+	if (o->color_moved_ws_handling &
-+	    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
-+		wslen = strlen(pmb->wsd->string);
-+		if (pmb->wsd->current_longer)
-+			c += wslen;
-+		else
-+			a += wslen;
- 
--	wslen = strlen(pmb->wsd->string);
--	if (pmb->wsd->current_longer)
--		c += wslen;
--	else
--		a += wslen;
-+		if (strcmp(a, c))
-+			return 1;
- 
--	if (strcmp(a, c))
--		return 1;
-+		return 0;
-+	} else if (o->color_moved_ws_handling &
-+		   COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE) {
-+		int delta;
-+
-+		if (!compute_mixed_ws_delta(cur->es, l, &delta))
-+		    return 1;
-+
-+		if (pmb->wsd->delta == INT_MIN) {
-+			pmb->wsd->delta = delta;
-+			return 0;
-+		}
-+
-+		return !(delta == pmb->wsd->delta || delta == INT_MIN);
-+	} else {
-+		BUG("no color_moved_ws_allow_indentation_change set");
-+	}
- 
- 	return 0;
- }
-@@ -845,7 +926,8 @@ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
- 			 & XDF_WHITESPACE_FLAGS;
- 
- 	if (diffopt->color_moved_ws_handling &
--	    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+	    (COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE |
-+	     COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE))
- 		/*
- 		 * As there is not specific white space config given,
- 		 * we'd need to check for a new block, so ignore all
-@@ -953,7 +1035,8 @@ static void pmb_advance_or_null_multi_match(struct diff_options *o,
- 			pmb[i] = pmb[i]->next_line;
- 		} else {
- 			if (pmb[i]->wsd) {
--				free(pmb[i]->wsd->string);
-+				if (pmb[i]->wsd->have_string)
-+					free(pmb[i]->wsd->string);
- 				FREE_AND_NULL(pmb[i]->wsd);
- 			}
- 			pmb[i] = NULL;
-@@ -1066,7 +1149,8 @@ static void mark_color_as_moved(struct diff_options *o,
- 			continue;
- 
- 		if (o->color_moved_ws_handling &
--		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+		    (COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE |
-+		     COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE))
- 			pmb_advance_or_null_multi_match(o, match, hm, pmb, pmb_nr, n);
- 		else
- 			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
-@@ -1088,6 +1172,17 @@ static void mark_color_as_moved(struct diff_options *o,
- 						pmb[pmb_nr++] = match;
- 					} else
- 						free(wsd);
-+				} else if (o->color_moved_ws_handling &
-+					   COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE) {
-+					int delta;
-+
-+					if (compute_mixed_ws_delta(l, match->es, &delta)) {
-+						struct ws_delta *wsd = xmalloc(sizeof(*match->wsd));
-+						wsd->delta = delta;
-+						wsd->have_string = 0;
-+						match->wsd = wsd;
-+						pmb[pmb_nr++] = match;
-+					}
- 				} else {
- 					pmb[pmb_nr++] = match;
- 				}
-@@ -5740,7 +5835,8 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 			struct hashmap add_lines, del_lines;
- 
- 			if (o->color_moved_ws_handling &
--			    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+			    (COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE |
-+			     COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE))
- 				o->color_moved_ws_handling |= XDF_IGNORE_WHITESPACE;
- 
- 			hashmap_init(&del_lines, moved_entry_cmp, o, 0);
-diff --git a/diff.h b/diff.h
-index 5e6bcf0926..03628cda45 100644
---- a/diff.h
-+++ b/diff.h
-@@ -217,6 +217,7 @@ struct diff_options {
- 
- 	/* XDF_WHITESPACE_FLAGS regarding block detection are set at 2, 3, 4 */
- 	#define COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE (1<<5)
-+	#define COLOR_MOVED_WS_ALLOW_MIXED_INDENTATION_CHANGE (1<<6)
- 	int color_moved_ws_handling;
- };
- 
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 41facf7abf..737dbd4a42 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -1902,4 +1902,93 @@ test_expect_success 'compare whitespace delta incompatible with other space opti
- 	test_i18ngrep allow-indentation-change err
- '
- 
-+NUL=''
-+test_expect_success 'compare mixed whitespace delta across moved blocks' '
-+
-+	git reset --hard &&
-+	tr Q_ "\t " <<-EOF >text.txt &&
-+	${NUL}
-+	____too short without
-+	${NUL}
-+	____being grouped across blank line
-+	${NUL}
-+	context
-+	lines
-+	to
-+	anchor
-+	____Indented text to
-+	_Q____be further indented by four spaces across
-+	____Qseveral lines
-+	QQ____These two lines have had their
-+	____indentation reduced by four spaces
-+	Qdifferent indentation change
-+	____too short
-+	EOF
-+
-+	git add text.txt &&
-+	git commit -m "add text.txt" &&
-+
-+	tr Q_ "\t " <<-EOF >text.txt &&
-+	context
-+	lines
-+	to
-+	anchor
-+	QIndented text to
-+	QQbe further indented by four spaces across
-+	Q____several lines
-+	${NUL}
-+	QQtoo short without
-+	${NUL}
-+	QQbeing grouped across blank line
-+	${NUL}
-+	Q_QThese two lines have had their
-+	indentation reduced by four spaces
-+	QQdifferent indentation change
-+	__Qtoo short
-+	EOF
-+
-+	git -c color.diff.whitespace="normal red" \
-+		-c core.whitespace=space-before-tab \
-+		diff --color --color-moved --ws-error-highlight=all \
-+		--color-moved-ws=allow-mixed-indentation-change >actual.raw &&
-+	grep -v "index" actual.raw | test_decode_color >actual &&
-+
-+	cat <<-\EOF >expected &&
-+	<BOLD>diff --git a/text.txt b/text.txt<RESET>
-+	<BOLD>--- a/text.txt<RESET>
-+	<BOLD>+++ b/text.txt<RESET>
-+	<CYAN>@@ -1,16 +1,16 @@<RESET>
-+	<BOLD;MAGENTA>-<RESET>
-+	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>    too short without<RESET>
-+	<BOLD;MAGENTA>-<RESET>
-+	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>    being grouped across blank line<RESET>
-+	<BOLD;MAGENTA>-<RESET>
-+	 <RESET>context<RESET>
-+	 <RESET>lines<RESET>
-+	 <RESET>to<RESET>
-+	 <RESET>anchor<RESET>
-+	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>    Indented text to<RESET>
-+	<BOLD;MAGENTA>-<RESET><BRED> <RESET>	<BOLD;MAGENTA>    be further indented by four spaces across<RESET>
-+	<BOLD;MAGENTA>-<RESET><BRED>    <RESET>	<BOLD;MAGENTA>several lines<RESET>
-+	<BOLD;BLUE>-<RESET>		<BOLD;BLUE>    These two lines have had their<RESET>
-+	<BOLD;BLUE>-<RESET><BOLD;BLUE>    indentation reduced by four spaces<RESET>
-+	<BOLD;MAGENTA>-<RESET>	<BOLD;MAGENTA>different indentation change<RESET>
-+	<RED>-<RESET><RED>    too short<RESET>
-+	<BOLD;CYAN>+<RESET>	<BOLD;CYAN>Indented text to<RESET>
-+	<BOLD;CYAN>+<RESET>		<BOLD;CYAN>be further indented by four spaces across<RESET>
-+	<BOLD;CYAN>+<RESET>	<BOLD;CYAN>    several lines<RESET>
-+	<BOLD;YELLOW>+<RESET>
-+	<BOLD;YELLOW>+<RESET>		<BOLD;YELLOW>too short without<RESET>
-+	<BOLD;YELLOW>+<RESET>
-+	<BOLD;YELLOW>+<RESET>		<BOLD;YELLOW>being grouped across blank line<RESET>
-+	<BOLD;YELLOW>+<RESET>
-+	<BOLD;CYAN>+<RESET>	<BRED> <RESET>	<BOLD;CYAN>These two lines have had their<RESET>
-+	<BOLD;CYAN>+<RESET><BOLD;CYAN>indentation reduced by four spaces<RESET>
-+	<BOLD;YELLOW>+<RESET>		<BOLD;YELLOW>different indentation change<RESET>
-+	<GREEN>+<RESET><BRED>  <RESET>	<GREEN>too short<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
- test_done
+This is a limitation of the object store in git, there is no equivalent
+of get_oid() to get the oid from a specific repository and this affects
+config_with_options too when the config source is a blob.
+
+This does not affect commands called via "git -C submodule_dir cmd"
+because in that case the chdir happens before the_repository is set up,
+for instance "git-submodule $SOMETHING --recursive" commands seem to
+change the working directory before the recursion.
+
+> > +		config_with_options(fn, data, &config_source, &opts);
+> > +
+> >  		free(file);
+> >  	}
+> >  }
+> I'm no expert on submodules, but my gut feeling says that this can't
+> be right.  But if it _is_ right, then I would say that the commit
+> message should explain in detail, why it is right.
+> 
+
+I agree it isn't right, I didn't consider the case of nested
+submodules, but even if I did the current git design does not
+allow to correctly solve the problem: "read config from blob of an
+arbitrary repository".
+
+So what to do for the time being?
+
+The issue is there but in a "normal" scenario it is not causing any real
+harm because:
+
+  1. currently it is exposed "only" by git grep and nested submodules.
+
+  2. the new mechanism works fine when reading the submodule config for
+     the root repository.
+
+  3. the new mechanism does not "usually" impact non-leaf nested
+     submodules, because the .gitmodules file is "normally" there.
+
+  4. git grep never *uses* the GITMODULES_INDEX erroneously read
+     from the root project when scanning the _leaf_ nested submodule
+     because there are no further submodules down the line, the
+     following check fails in builtin/grep.c:
+
+       if (recurse_submodules && S_ISGITLINK(entry.mode) ...
+       ...
+
+In fact, because of 4. the test suite passes even if the gitmodule
+config is not correct for the leaf submodule.
+
+Actually 4. makes me think that the repo_read_gitmodules() call in
+builtin/grep.c might not be strictly necessary, its purpose seems to be
+to *anticipate* reading the config of *child* submodules while still
+processing the *current* submodule, the config for the *current*
+submodule was already read from the superproject by the immediately
+preceding repo_submodule_init(), via:
+
+  repo_submodule_init()
+    submodule_from_path()
+      gitmodules_read_check()
+        repo_read_gitmodules()
+
+And this would happen anyway also for child submodules down the
+recursion path if we removed repo_read_gitmodules() in builtin/grep.c,
+the operation would be not protected by grep_read_lock() tho.
+
+The test suite passes even after removing repo_read_gitmodules()
+entirely from builtin/grep.c, but I am still not confident that I get
+all the implication of why that call was originally added in commit
+f9ee2fcdfa (grep: recurse in-process using 'struct repository',
+2017-08-02).
+
+Anyways, even if we removed the call we would prevent the problem from
+happening in the test suite, but not in the real world, in case non-leaf
+submodules without .gitmodules in their working tree.
+
+To recap:
+  - patch 9/9 exposes a problem with the object store but for now it's
+    only a potential problem in the future case that someone wanted to
+    use *nested* submodules without .gitmodules in the working tree.
+  - the new code should not affect current users which
+    assume .gitmodules to be in the working tree for nested submodules;
+  - even if we removed the call to repo_read_gitmodules() call in
+    builtin/grep.c we would not avoid the problem entirely, just avoid
+    it for the the _leaf_ submodules in case of nested submodules.
+
+Selfishly, I'd propose to still merge the changes (I can send a v6 with
+the locking fix in) and I'll write a test_expect_failure snippet to
+document the problem Gábor spotted so we remember about it and fix it
+when the object store can be accessed per-repository.
+
+I am afraid I cannot look into the core issue about the object store in
+my free time, however if someone wanted to sponsor some time I might
+consider taking a stab at it.
+
+Ciao,
+   Antonio
+
 -- 
-2.19.0
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
