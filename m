@@ -2,105 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F9071F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 17:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5FEC1F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 18:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730059AbeIYACw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 20:02:52 -0400
-Received: from mail-pg1-f169.google.com ([209.85.215.169]:36761 "EHLO
-        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728468AbeIYACw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 20:02:52 -0400
-Received: by mail-pg1-f169.google.com with SMTP id d1-v6so9500386pgo.3
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 10:59:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=4DJQ/8g5cQl9LVZfeVlxNOS5KPehwzpYQksSjnb3TN0=;
-        b=Xq55bi7QJw/uTHYJzi+vQsyzGnLNLY4NsyWn40yWsDfZRLxtQrfhIjoqK5WLv68gG6
-         fBHE15zYvqM5gIL3qeBP593W+yYtV+h7fcAy9roajXK5VXJCUQA0diFoXtEqZbjln06J
-         aDamzW4oZTcitcC+NUsaQ6VLwkw6hbPXyFoaY5wY7s0Hj2MuPmZgXOavnaEveLvjuv3y
-         /n+nrcO8gRUKNgnr7cOfXHrnTvWTJO0SLO45WPb1riEviWOY0e9DnArDZcVs2W0bjc/y
-         GdjfOSM3KhBPNhcCT9be06jRddfZoTaoEILv8VuGWc3O7/3yLYXkgHEol00WasYWcUi6
-         dxuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=4DJQ/8g5cQl9LVZfeVlxNOS5KPehwzpYQksSjnb3TN0=;
-        b=p9PCL3soue6uCeyduIDPkZP8k4R8thg974d+veqGW2a9AKd5p7nAJnp9iIYld00fb+
-         cECdwH+Y1DgFbHpXAgGuGdamauz22ZcxMXvU2QPcuTX8bPuFjmzQe0+masKEwGUE8QD1
-         A5/uemr4dpLgGKca+j131mc/YOI2g0nRJWBSUphOtP+zeOnC1kSzNbgQ6fDOtoFrrkkB
-         6MXmwesgQa45AkXwd28SxySbPINn4XcXidEir+WiRkR98749jiuT8tO5Gr0f9B/pXfwh
-         jKy73thG3lbAot9M2qbgZM2s5geE6/JeydaLVAlI27I4G0gHHamAK1H3gR0Zjaz8Icfs
-         VUmA==
-X-Gm-Message-State: ABuFfoid8CNIgPDUq/j7n7feY69HThuBsX+F+vmlV1KHSeoJsKvvyLWp
-        Ni0R2fK080wUiar7SvCdSJHzNo/r
-X-Google-Smtp-Source: ANB0VdYOeZis12wSdV5U3XmPOlQARvxV2aYs3JcfnGAAiN/bosZoHzZD3zbKAi9b0r14qf+88HGEFg==
-X-Received: by 2002:a62:f610:: with SMTP id x16-v6mr11228592pfh.169.1537811971382;
-        Mon, 24 Sep 2018 10:59:31 -0700 (PDT)
-Received: from smckelvie-mbp2tb.corp.xevo.com (hq.xevo.com. [4.14.243.50])
-        by smtp.gmail.com with ESMTPSA id r205-v6sm49264784pgr.11.2018.09.24.10.59.29
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Sep 2018 10:59:30 -0700 (PDT)
-From:   Sam McKelvie <sammck@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Subject: "git rev-parse --show-superproject-working-tree" fails with "fatal:
- BUG: returned path string doesn't match cwd?" if supermodule has unmerged
- changes of the submodule reference
-Message-Id: <EE3D88E4-EF86-44E2-811D-535C8F19C51A@gmail.com>
-Date:   Mon, 24 Sep 2018 10:59:28 -0700
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.9.1)
+        id S1729296AbeIYANg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 20:13:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57508 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727497AbeIYANg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 20:13:36 -0400
+Received: (qmail 5019 invoked by uid 109); 24 Sep 2018 18:10:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Sep 2018 18:10:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28709 invoked by uid 111); 24 Sep 2018 18:09:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 24 Sep 2018 14:09:57 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2018 14:10:12 -0400
+Date:   Mon, 24 Sep 2018 14:10:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+Message-ID: <20180924181011.GA24781@sigill.intra.peff.net>
+References: <cover.1537466087.git.me@ttaylorr.com>
+ <cover.1537555544.git.me@ttaylorr.com>
+ <6e8f65a16dc0be84234d2be93bb4a5c9a585dd57.1537555544.git.me@ttaylorr.com>
+ <xmqqbm8qv9hy.fsf@gitster-ct.c.googlers.com>
+ <20180921213753.GA11177@sigill.intra.peff.net>
+ <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
+ <20180921221832.GC11177@sigill.intra.peff.net>
+ <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I experienced this problem using git 2.17.1; however, from inspection of =
-the next branch, function get_superproject_working_tree() in submodule.c =
-has not changed in 2 years.
+On Mon, Sep 24, 2018 at 08:17:14AM -0700, Junio C Hamano wrote:
 
-I believe the problem is related to the fact that when a merge of the =
-submodule reference is in progress, "git --stage =E2=80=94full-name =
-<submodule-relative-path>=E2=80=9D returns three seperate entries for =
-the submodule (one for each stage) rather than a single entry; e.g.,
+> Jeff King <peff@peff.net> writes:
+> 
+> > I was suggesting that check_everything_connected() is not strictly
+> > transport-related, so would be inappropriate for transport.*, and we'd
+> > need a more generic name. And my "either way" was that I could see
+> > an argument that it _is_ transport related, since we only call it now
+> > when receiving a pack. But that doesn't have to be the case, and
+> > certainly implementing it with "rev-list --alternate-refs" muddies that
+> > considerably.
+> 
+> Even after 7043c707 ("check_everything_connected: use a struct with
+> named options", 2016-07-15) unified many into check_connected(),
+> there still are different reasons why we call to find out about the
+> connectivity, and I doubt we can afford to have a single knob that
+> is shared both for transport and other kind of connectivity checks
+> (like fsck or repack).  Do we want to be affected by "we pretend
+> that these are the only refs exported from that alternate object
+> store" when repacking and pruning only local objects and keep us
+> rely on the alternate, for example?
 
-$ git ls-files --stage --full-name submodule-child-test
-160000 dbbd2766fa330fa741ea59bb38689fcc2d283ac5 1	=
-submodule-child-test
-160000 f174d1dbfe863a59692c3bdae730a36f2a788c51 2	=
-submodule-child-test
-160000 e6178f3a58b958543952e12824aa2106d560f21d 3	=
-submodule-child-test
+Actually, yes, I think there is value in a single knob. At least that's
+what I'd want for our (GitHub's) use case.
 
-The code in get_superproject_working_tree() uses the =E2=80=9C-z=E2=80=9D =
-option on ls-files, so it expects null-byte termination between entries. =
-However, the computation of super_sub_len:
+Remember that these alternate refs might not exist at all (the
+alternates mechanism can work with just a bare "objects" directory,
+unconnected from a real git repo). So I think anything using them has to
+view it as a "best effort" optimization: we might or might not know
+about some ref tips that might or might not cover the whole set of
+objects in the alternate. They're the things we _guarantee_ that the
+alternate has full connectivity for, and it might have more.
 
-    		super_sub_len =3D sb.buf + sb.len - super_sub - 1;
+So I think it's conceptually consistent to always show a subset. I did
+qualify with "for our use case" because some people might be primarily
+concerned with the bandwidth of sending .haves across the network.
+Whereas at our scale, even enumerating them at all is prohibitively
+expensive.
 
-will only work when there is exactly one entry returned. If this line is =
-changed to:
+One thing we could do is add a "core" config now (whether it's in core.*
+or wherever). And then if later somebody wants receive-pack to behave
+differently, we have an out: we can add transfer.alternateRefsCommand or
+even receive.alternateRefsCommand that take precedence in those
+situations.
 
-		super_sub_len =3D strlen(super_sub);
+Of course we could add the more restricted ones now, and add the "core"
+one later as new uses grow. But that's more work now, since we'd have to
+plumb through that context to the for_each_alternate_ref() interface.
+I'd rather punt on that work until later (because I suspect that "later"
+will never actually come).
 
-then only the first returned entry is used, and the bug is resolved.
+> In any case it is good that these configuration variables are
+> defined on _our_ side, not in the alternate---it means that we do
+> not have to worry about the case where the alternateRefsCommand lies
+> and tells us that an object that the alternate does not actually
+> have exists at a tip of a ref in an attempt to confuse us, etc.
 
-strlen() should be safe to use here because strbuf_read ensures the =
-result buffer is null-terminated.
+Yes. It also makes it easy to use "git -c" to override the scheme if you
+want to (as opposed to mucking with on-disk files in the alternate).
 
-Thanks,
-Sam McKelvie
-
-
+-Peff
