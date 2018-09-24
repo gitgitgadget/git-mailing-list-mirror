@@ -7,98 +7,109 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07201F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 21:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A06E1F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 21:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbeIYDTj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 23:19:39 -0400
-Received: from mail-pf1-f177.google.com ([209.85.210.177]:34757 "EHLO
-        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727531AbeIYDTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 23:19:39 -0400
-Received: by mail-pf1-f177.google.com with SMTP id k19-v6so9660630pfi.1
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 14:15:30 -0700 (PDT)
+        id S1728253AbeIYDTl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 23:19:41 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35667 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727531AbeIYDTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 23:19:40 -0400
+Received: by mail-pf1-f195.google.com with SMTP id p12-v6so9658457pfh.2
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 14:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=IC7q8eJ4t48uNedGBKRM4AzRdpMO77T2UGyKNw1x6m4=;
-        b=F3WpHZrqu/7q5PF7GCI8nz1i4r7ohIPdX3Ai8sfUGlJe9iB6i2KeJE9VU00b8a+D0W
-         w0Fvsx4gMD32/fbltkdYLNb+WolZGafEw3wszpVTS4rYiazxpxAl8elgF//vwTMpqJO7
-         OqnOhDbVlKaB+n6kcnKT7Rgokio/Zi02SxiSy/lEYVg1v+XlMvMsX3sSWkU6cQ9d04OL
-         k84MF1kku5QaRli22vlx0tzW1XcbzwLXMmh94QEOz/j+4oUWkazzvkBHPKDvxIsbhdXc
-         Kgs4ON/GZMPyvmLSMm6YL0hn76Y44T2UOmQZEVSpjMdiAirV03IzsoAnza7ko5J6VrWJ
-         p9kQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=njVK7igx+h9jBQXLDChkUwcNuceJ7yanrcPOpwkbrWU=;
+        b=S8W6D2qYj70ErGtKdY2pGGb3nSkqMENkQ2dvM8cJBDN2CZ9lnIBrxYyIjMqk7TEGj2
+         6Ibo/lcJ2CFZD7tA17iThZpJOUOiZPIBdNsDgTVClsDZ4yxeQCzr5QhGEz4m8qw2f9O5
+         6Eop70nbalW/Qu8X4VC5U+kpB+cBndEg8fCgpr8QGDZnHTKHt1yu/b5k/J5OScfg5uwZ
+         /mBoSEe1JxscE21hf1sk7sCq9/nDIkrlRIBDR1G1MSMZ173jTjb9h7C+JwuJcd2vLY+v
+         1jwmQaFeb8lc47vcBl2vHovU8ofLGEQ39iLGp0eCtemU4d8esTBx9Ul+B7h5oZNr/Qmz
+         rOIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=IC7q8eJ4t48uNedGBKRM4AzRdpMO77T2UGyKNw1x6m4=;
-        b=ofZGO11wYjmLdhnL5WWHgM8aC3scz2CpcU20xkkf63lIFORWdg+R2tWiSiTz582LTb
-         PBGvEwHVm6G2AGeJMe/7uEn085c7yPdO1pHqNfE9ipqzhhR1gVkvixoQScG17On6D83o
-         3txQUpUZcuGJsJZFm5gldMfSLeVUejLfNDezTxM5P44U9ZrccAwezhdIUvVsdnVgBJZF
-         2fP8M+y4XrbMGA1uIfz+rz/me5eRINyfPQzvlT79++3JHlxZ8sqLBsgpEpL1AoxqUTzy
-         27Qs8L5pp8mbVJ30K1vznSxWX6FcWNMk/EPqtBQKPuXHtbnNSZ2K3kDeEOhBwxtXojXE
-         Mu9w==
-X-Gm-Message-State: ABuFfojZJe2lCPsnWdewF+d2jFd/11+GpNLxNVojfWoMWWbC9rnU2MeL
-        dT3u86UmQYk0rL1a9HMnhq+ibv23
-X-Google-Smtp-Source: ACcGV632M23iDdJzNQS9BJbD5r5SWZY+BvT8xOC2eG/wFROVVgz62Wq6UCLYopyLw7H5FW7xcG4J0g==
-X-Received: by 2002:a62:1a16:: with SMTP id a22-v6mr493831pfa.237.1537823730163;
-        Mon, 24 Sep 2018 14:15:30 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=njVK7igx+h9jBQXLDChkUwcNuceJ7yanrcPOpwkbrWU=;
+        b=JKcFG3EnzTWSF/AWmbw+/J5/Mn8Stz7lljeeMzCxRK6xGkCRWKGcEJqkrR/nfnEZsG
+         W6ZiohjgzfvlaHeN4IVk+Yc1ronjc3Ux0nmCP78fuUWtRZ6XE7vXIn8G0lofTywG2eQy
+         t4lYt0FBZ7HyQ4lN69oa325ER47rtgmGbeQDNhP9M1dXMPGj10ubLmBD/NcdbRQgOdcl
+         Sno7CsdOYfozd2+bY7Km423F2rJ0hPSmTs/5G7y9c+3JUww2bBMvyYHaR10E91x4Ykyn
+         6z2fWlzZ/0jKdHpBQgZXxnuScvj5n8ZbBnTEKSxAHqbA5yINIp+QjmMf8wi/XUij6qE3
+         p9Fw==
+X-Gm-Message-State: ABuFfogX2mQ8880luPWEBcJzuYjltMHxv/I7IA8F93b4zOS+Io7WSi5q
+        xvf5lBRVlO4v86A92t1W+tUV1Nxg
+X-Google-Smtp-Source: ACcGV63I5rxQ+zJIz5yZPAZHj0xLGWQWZlj3K2SfOS1/6HYkDlWWqIdDG1Iq2mE6afy6t/fEVXnefg==
+X-Received: by 2002:a62:5c03:: with SMTP id q3-v6mr547767pfb.182.1537823731596;
+        Mon, 24 Sep 2018 14:15:31 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id y128-v6sm319504pfb.56.2018.09.24.14.15.28
+        by smtp.gmail.com with ESMTPSA id h82-v6sm273540pfa.173.2018.09.24.14.15.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Sep 2018 14:15:29 -0700 (PDT)
-Date:   Mon, 24 Sep 2018 14:15:29 -0700 (PDT)
-X-Google-Original-Date: Mon, 24 Sep 2018 21:15:26 GMT
-Message-Id: <pull.41.git.gitgitgadget@gmail.com>
+        Mon, 24 Sep 2018 14:15:30 -0700 (PDT)
+Date:   Mon, 24 Sep 2018 14:15:30 -0700 (PDT)
+X-Google-Original-Date: Mon, 24 Sep 2018 21:15:27 GMT
+Message-Id: <56374128136fe9377503d446daf98e67847194aa.1537823728.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.41.git.gitgitgadget@gmail.com>
+References: <pull.41.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] read-cache: update index format default to v4
+Subject: [PATCH 1/1] read-cache: update index format default to v4
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     pclouds@gmail.com, peartben@gmail.com, git@jeffhostetler.com,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After discussing this with several people off-list, I thought I would open
-the question up to the list:
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Should we update the default index version to v4?
+The index v4 format has been available since 2012 with 9d22778
+"reach-cache.c: write prefix-compressed names in the index". Since
+the format has been stable for so long, almost all versions of Git
+in use today understand version 4, removing one barrier to upgrade
+-- that someone may want to downgrade and needs a working repo.
 
-The .git/index file stores the list of every path tracked by Git in the
-working directory, including merge information, staged paths, and
-information about the file system contents (based on modified time). The
-only major update in v4 is that the paths are prefix-compressed. This
-compression works best in repos with a lot of paths, especially deep paths.
-For this reason, we set the index to v4 in VFS for Git.
+Despite being stable for a long time, this index version was never
+adopted as the default. This prefix-compressed version of the format
+can get significant space savings on repos with large working
+directories (which naturally tend to have deep nesting). This version
+is set as the default for some external tools, such as VFS for Git.
+Because of this external use, the format has had a lot of "testing in
+production" and also is subject to continuous integration in these
+environments.
 
-Among VFS for Git contributors, we were talking about how the v4 format is
-not covered by the test suite by default. We are working to increase the
-number of CI builds that set extra GIT_TEST_* variables that we need.
-However, I thought it worth having a discussion of whether this is a good
-thing to recommend for all users of Git.
+Previously, to test version 4 indexes, we needed to run the test
+suite with GIT_TEST_INDEX_VERSION=4 (or TEST_GIT_INDEX_VERSION=4).
 
-Personally, I'm not an expert here, but I am happy to start the
-conversation.
+One potential, but short-term, downside is that we lose coverage of
+the version 3 indexes. The trade-off is that we may want to cover
+that version using GIT_TEST_INDEX_VERSION=3.
 
-Thanks, -Stolee
-
-Derrick Stolee (1):
-  read-cache: update index format default to v4
-
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  read-cache.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 53f9a3e157dbbc901a02ac2c73346d375e24978c
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-41%2Fderrickstolee%2Findex-v4-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-41/derrickstolee/index-v4-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/41
+diff --git a/read-cache.c b/read-cache.c
+index 372588260e..af6c8f2a67 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1484,7 +1484,7 @@ struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
+  * Index File I/O
+  *****************************************************************/
+ 
+-#define INDEX_FORMAT_DEFAULT 3
++#define INDEX_FORMAT_DEFAULT 4
+ 
+ static unsigned int get_index_format_default(void)
+ {
 -- 
 gitgitgadget
