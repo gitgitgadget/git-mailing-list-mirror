@@ -6,57 +6,59 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 244C71F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 15:46:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C47D81F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 16:10:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729454AbeIXVsz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 17:48:55 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51171 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbeIXVsz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 17:48:55 -0400
-Received: by mail-wm1-f67.google.com with SMTP id s12-v6so10258778wmc.0
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 08:46:07 -0700 (PDT)
+        id S1731178AbeIXWMz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 18:12:55 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:36005 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728976AbeIXWMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 18:12:54 -0400
+Received: by mail-wm1-f45.google.com with SMTP id y13-v6so5869669wmi.1
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 09:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=lK4KqGvFEK2CF9XNW4gQrpCEwiUAnmri5jUNmQnGqU8=;
-        b=UxRB/bBpBVRk4+B9oRXVNBa/qeuWDgSInSVCwN+KQuXDL36EvL5gi1ApVeqx/aIpKO
-         OXgwtlA8j4F0k8uzdbu9Bs3cq9FIqV7lfUNVugK38eBl/ZMEJTQCIrTlY1T9n8DEkywK
-         NYxaMp87aauN14lbFAO03QGuT4Ynp4MOjG15tPmYrhNZRDSfYLpMeeK8S90euvyua7EQ
-         PxGSm66MK9LviEgx5mZROEQkGLs1g0Y59Ab6ITO6IOPia1UZ0S7uSrYmnpqUbWIVZPrn
-         HaBfPw3WsP7XQh0x9YwWEX5X7hk6aVrjHavUmwQh+wuxeFvFSA08oIc2aEF00DFS4BXd
-         PuBA==
+        bh=aluCes8eHK6l9toQtK1BdI7x7l56tSWrgWtuDw+ss0M=;
+        b=NG2xXMzkWeI/EKCBQSwkU7jJOIl4E7WqKRBW6gYJWZ0B0knQ3IBw+FDBzGs1rS8BEQ
+         kKrGYZcI/iKXDPY0MCydrQF4bz+MCvEfbifr1EmtQ358x2o1w6XH36AiNA9EQsWIi+lB
+         u6wOR/18VdhFl6KP87Nhzfvw6UYzrNps1TuLpl/Hm///xEhBNtvYC9roWmuGVxLuhQyd
+         c/HM/pY4xHIWFkC7VZxLoSSV/Yhdirv3OSmtICGB7pIwiZslvvkt6c0nW+S2Q3LDTLUm
+         lgxR6wiSEuwpKSbW5usOGT2aQ3gHcVzf9HMu6YGp9/LD/901BJIldCHpl84eisy2JN5O
+         +TQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=lK4KqGvFEK2CF9XNW4gQrpCEwiUAnmri5jUNmQnGqU8=;
-        b=K0ROEzf25/l4PcKKkOxW9M9Jyk3Oq57VyRQYR6X92XJyLnI/mrN2VD/g0ugjfE83YV
-         qhiGXWxzQEz1cMdwfm+Fj/no06v1AeZPmsy1T5XOYcBJVtbEjNZz2h7yiVJSDhIKxMQf
-         AUEfrKjEZIIHqgXSk902MVZqxKk8kzeoSbweNyDUkGw5A4EsNPEsjJmCoSi1Peh4wYog
-         PA+uhV5oYLIHw4rpR4PmbpoakPVNg3n6cbsXt21vUrI3HLmpB3oTVAhQlRBoUJpMmr5I
-         GeNXqI24wpJtrxmgjFVTZTLi3VXKdPfZwUuTtdrKepkhwokTK8V8Q+fMNxc50DEFjOYK
-         ysUQ==
-X-Gm-Message-State: ABuFfoiU9J133qN2XezZLyRXuCyu8WGk7wNoshFpCZoBTmxHss1ORRBS
-        2hVzZn7/UeH6rJFLtx2TLeyhPfIC
-X-Google-Smtp-Source: ACcGV60xlsvsOXpLX4O3RKidrBQIfJzXQmPT9PjmuaY/6Hk8n0b6Osx5JVIKqE1iw+p/dumaeMSnlg==
-X-Received: by 2002:a1c:87ca:: with SMTP id j193-v6mr8126677wmd.76.1537803966417;
-        Mon, 24 Sep 2018 08:46:06 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 198-v6sm17571615wmm.0.2018.09.24.08.46.04
+        bh=aluCes8eHK6l9toQtK1BdI7x7l56tSWrgWtuDw+ss0M=;
+        b=UrmrtwdWhgA3Qb4vtG7a2Y7O94DpHa6jQyMw0Siagejnl14Rrrz6BGOgI47qCnbhYV
+         u/3dDkEKyuNoGVAWGjoxDW3Sv/Qao0Wb1kv8K6dKPt4SvVHSzEYmlD1aaVJcCJ7WGw3y
+         Dt48NOdViNlUF1rjdPoL9SJvC/S3+3oXK9lcDTTL3JMQsR2ZiR7Up72Hibur1eWdoSsd
+         PFfDbpnARfIXtEzesKrOS6rotu7boYkC5kL1oNrXRDvSjOsw2hi3GTqsrXdimbXoJWuT
+         Fp5xODlT1bwh076Pel4jRZbTWhNZwbOA49E53Lv9PCLa/m7SWYwcz1X1tfUqGAc3jdZc
+         ge5A==
+X-Gm-Message-State: ABuFfojnAHkkO/yh4Y4HlGYMtzdN4jYN8EWbYaBonvMMKkmzuVTv0goM
+        B/IdjRq4FUNLoNbxcfq3kX6LJ3ci
+X-Google-Smtp-Source: ANB0VdZe9iF2nlN0CV6utF1yZIKroE3j6SbwfLm8ETiIDwKbu9Pr4RI9Y82mEvbh506+iitLZnDrgA==
+X-Received: by 2002:a1c:7305:: with SMTP id d5-v6mr8194111wmb.53.1537805400193;
+        Mon, 24 Sep 2018 09:10:00 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x15-v6sm29499645wrt.53.2018.09.24.09.09.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 24 Sep 2018 08:46:05 -0700 (PDT)
+        Mon, 24 Sep 2018 09:09:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] receive-pack: update comment with check_everything_connected
-References: <20180921230444.GA2713@sigill.intra.peff.net>
-Date:   Mon, 24 Sep 2018 08:46:04 -0700
-In-Reply-To: <20180921230444.GA2713@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 21 Sep 2018 19:04:45 -0400")
-Message-ID: <xmqqbm8muceb.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] t7001: reformat to newer style
+References: <20180921235833.99045-1-sbeller@google.com>
+        <20180921235833.99045-2-sbeller@google.com>
+        <7f77be2b-a084-5b8d-df65-1bb4b9c5da82@gmail.com>
+Date:   Mon, 24 Sep 2018 09:09:58 -0700
+In-Reply-To: <7f77be2b-a084-5b8d-df65-1bb4b9c5da82@gmail.com> (Derrick
+        Stolee's message of "Mon, 24 Sep 2018 09:31:16 -0400")
+Message-ID: <xmqq4leeubah.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,34 +67,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> That function is now called "check_connected()", but we forgot to update
-> this comment in 7043c7071c (check_everything_connected: use a struct
-> with named options, 2016-07-15).
+>> +test_expect_success 'moving the file back into subdirectory' '
+>> +	cd path0 && git mv ../path1/COPYING COPYING
+>> +'
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Just a minor annoyance I happened to notice while discussing in another
-> thread. I notice both of us still called it check-everything-connected
-> in our emails; old habits die hard, I suppose. ;)
+> Split at &&, use subshell?
 
-Yup, and now I think I caught up ;-)  Thanks.
+Yes, I was almost going to point out the same, saying "'reformat to
+newer style' is much larger than only changing how the test body is
+formatted", but was debating myself, as a good "modernization patch"
+needs both mechanical changes and manual/semantic clean-ups, and it
+is very clear that these three patches deliberately limit themselves
+to the former for easier verification.
 
+It is relatively rare that files are not touched by any in-flight
+topic in the codebase, which is a good opportunity to apply this
+kind of wholesale clean-up, so I tend to agree that it is a shame
+not to do the non-mechanical clean up in the same series.  Perhaps
+the best way would be to keep these three mechanical steps as they
+are, and then follow-up with non-mechanical clean-up like you
+suggested.
+
+>> +test_expect_success 'commiting the change' '
+>> +	cd .. && git commit -m move-in -a
+>> +'
 >
->  builtin/receive-pack.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Drop "cd .." (and the comments about being in path0)
+
+... when the previous step moves to "git -C path0 mv ..." or
+preferrably "(cd path0 && git mv ...)".
+
+
+> [big snip]
 >
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index a3bb13af10..3b7432c8e4 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1834,7 +1834,7 @@ static void prepare_shallow_update(struct command *commands,
->  	/*
->  	 * keep hooks happy by forcing a temporary shallow file via
->  	 * env variable because we can't add --shallow-file to every
-> -	 * command. check_everything_connected() will be done with
-> +	 * command. check_connected() will be done with
->  	 * true .git/shallow though.
->  	 */
->  	setenv(GIT_SHALLOW_FILE_ENVIRONMENT, alt_shallow_file, 1);
+>> +test_expect_success 'moving to existing tracked target with trailing slash' '
+>> +	mkdir path2 &&
+>> +	>path2/file && git add path2/file &&
+> This line in particular looks a bit strange. What is this doing? At
+> least we should split the &&.
+
+Create an empty file by redirecting the output from a no-op into it,
+and then adding the result.  I agree with you that this would be
+easier to read on two lines.
+
+>> +	git mv path1/path0/ path2/ &&
+>> +	test_path_is_dir path2/path0/
+>> +'
