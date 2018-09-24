@@ -2,99 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54BE61F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 19:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 410DC1F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 19:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729766AbeIYBKD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 21:10:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57578 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728480AbeIYBKD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 21:10:03 -0400
-Received: (qmail 7011 invoked by uid 109); 24 Sep 2018 19:06:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 24 Sep 2018 19:06:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29052 invoked by uid 111); 24 Sep 2018 19:06:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 24 Sep 2018 15:06:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Sep 2018 15:06:26 -0400
-Date:   Mon, 24 Sep 2018 15:06:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 2/2] commit-reach: fix memory and flag leaks
-Message-ID: <20180924190625.GA27029@sigill.intra.peff.net>
-References: <pull.39.v2.git.gitgitgadget@gmail.com>
- <pull.39.v3.git.gitgitgadget@gmail.com>
- <b2e0ee49788bfbf2182df7a93694333568552962.1537542323.git.gitgitgadget@gmail.com>
- <20180921235803.GB3437@sigill.intra.peff.net>
- <c8320650-230a-9a17-df79-9555d5214bd2@gmail.com>
+        id S1731532AbeIYBTA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 21:19:00 -0400
+Received: from mail-yw1-f48.google.com ([209.85.161.48]:34248 "EHLO
+        mail-yw1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731413AbeIYBTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 21:19:00 -0400
+Received: by mail-yw1-f48.google.com with SMTP id m129-v6so2552169ywc.1
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 12:15:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cPmWjnmeTcp8OFVCUo1hAXuaKZKIWjm1Gic5DV/mZ7k=;
+        b=YQbCoKImtwp2LCb/HV9T3QtIhVHtLQXVeWjHdg5v5pZ9HmaQXHstg1SpdsUfvBO4pj
+         KxnmZSq2mKzNE9AFMs/XHmFf6Eom0BEzPHXxUruhKEbIIBW/cQqA7W8bP3+KqJP5bPh6
+         tOje4+POdBWXDFH40vMz2YoGYvO6DjpzbRaEcL8Yz7THEsoUbAaDINF9NiqraA0P159q
+         ubkXklAf8a0y7s2ruHbpofe1839bbcnH+c1FpLqRgA2QzPsx9KmbZJS/6sG4UVEXVoKW
+         JEA+0lD2xp/V5JkoSIaBtawMkIlihJcu5dtxcFkfxquHsOx7DA+wYNJeGMpqpsnSSPGQ
+         XPgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cPmWjnmeTcp8OFVCUo1hAXuaKZKIWjm1Gic5DV/mZ7k=;
+        b=fCLvAHj/LGSenb57x5nUItRJEru32hnPS77Q+A6+K7rtgjGLKw/POMdLDHEjSLR2md
+         lb0puyxzRwVPM66sYJeB9Sc2dylP8uOxWSU/KFjn/j64AUQCRURB7SifpjibjGNdgfiJ
+         CU3qiGOWHxtDIjGtqJJiA1tDWCOp15ll2uDxis3iK5vUEF3NPNBZ8xsGZHyEmdbGs2/Y
+         khbOLdCjFIZkPv46jNZtP6TqgutG7tPV2Ci1DwTWW/8KU6Rc6a/fYO5QdKwX+uUppBsf
+         wHMUEKXHE7MjYpCLyVXfXCFDSSplpf+dr92SkXBjKMmTxP61zHIj6q5SPlYRRlHEKtd1
+         DMXw==
+X-Gm-Message-State: ABuFfoj7M9Yf7X1e8dCLRZjUhjTV8/2qJKX/D9WNQUw7vAHezvydflEk
+        s7CnO5x1/WwqER2sC/ezjVq1wpW3tZmbLSvrVhe3YQ==
+X-Google-Smtp-Source: ACcGV60xRz9NNKrjzDJu7f8qGZMHW3uk5aeFBAEJgVGUoKTRW05xJy2h1/a1KNBGoCIbIYhG/oiFXtVF7v8oLVSH2is=
+X-Received: by 2002:a81:5710:: with SMTP id l16-v6mr122068ywb.3.1537816521902;
+ Mon, 24 Sep 2018 12:15:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c8320650-230a-9a17-df79-9555d5214bd2@gmail.com>
+References: <EE3D88E4-EF86-44E2-811D-535C8F19C51A@gmail.com>
+In-Reply-To: <EE3D88E4-EF86-44E2-811D-535C8F19C51A@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 24 Sep 2018 12:15:10 -0700
+Message-ID: <CAGZ79kZg8YLhNBoYJsB4ksbBtEMj3JvHs-qH7w930FiBDeVekQ@mail.gmail.com>
+Subject: Re: "git rev-parse --show-superproject-working-tree" fails with
+ "fatal: BUG: returned path string doesn't match cwd?" if supermodule has
+ unmerged changes of the submodule reference
+To:     sammck@gmail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 01:25:12PM -0400, Derrick Stolee wrote:
+On Mon, Sep 24, 2018 at 10:59 AM Sam McKelvie <sammck@gmail.com> wrote:
+>
+> I experienced this problem using git 2.17.1; however, from inspection of =
+the next branch, function get_superproject_working_tree() in submodule.c ha=
+s not changed in 2 years.
+>
+> I believe the problem is related to the fact that when a merge of the sub=
+module reference is in progress, "git --stage =E2=80=94full-name <submodule=
+-relative-path>=E2=80=9D returns three seperate entries for the submodule (=
+one for each stage) rather than a single entry; e.g.,
+>
+> $ git ls-files --stage --full-name submodule-child-test
+> 160000 dbbd2766fa330fa741ea59bb38689fcc2d283ac5 1       submodule-child-t=
+est
+> 160000 f174d1dbfe863a59692c3bdae730a36f2a788c51 2       submodule-child-t=
+est
+> 160000 e6178f3a58b958543952e12824aa2106d560f21d 3       submodule-child-t=
+est
+>
+> The code in get_superproject_working_tree() uses the =E2=80=9C-z=E2=80=9D=
+ option on ls-files, so it expects null-byte termination between entries. H=
+owever, the computation of super_sub_len:
+>
+>                 super_sub_len =3D sb.buf + sb.len - super_sub - 1;
+>
+> will only work when there is exactly one entry returned. If this line is =
+changed to:
+>
+>                 super_sub_len =3D strlen(super_sub);
+>
+> then only the first returned entry is used, and the bug is resolved.
+>
+> strlen() should be safe to use here because strbuf_read ensures the resul=
+t buffer is null-terminated.
 
-> On 9/21/2018 7:58 PM, Jeff King wrote:
-> > On Fri, Sep 21, 2018 at 08:05:27AM -0700, Derrick Stolee via GitGitGadget wrote:
-> > 
-> > > From: Derrick Stolee <dstolee@microsoft.com>
-> > > 
-> > > The can_all_from_reach_with_flag() method uses 'assign_flag' as a
-> > > value we can use to mark objects temporarily during our commit walk.
-> > > The intent is that these flags are removed from all objects before
-> > > returning. However, this is not the case.
-> > > 
-> > > The 'from' array could also contain objects that are not commits, and
-> > > we mark those objects with 'assign_flag'. Add a loop to the 'cleanup'
-> > > section that removes these markers.
-> > > 
-> > > Also, we forgot to free() the memory for 'list', so add that to the
-> > > 'cleanup' section.
-> > Urgh, ignore most of my response to patch 1, then. I saw there was a
-> > patch 2, but thought it was just handling the free().
-> > 
-> > The flag-clearing here makes perfect sense.
-> 
-> In my local branch, I ended up squashing this commit into the previous,
-> because I discovered clear_commit_marks_many() making the cleanup section
-> have this diff:
-> 
-> @@ -600,10 +622,12 @@ int can_all_from_reach_with_flag(struct object_array
-> *from,
->         }
-> 
->  cleanup:
-> -       for (i = 0; i < from->nr; i++) {
-> -               clear_commit_marks(list[i], RESULT);
-> -               clear_commit_marks(list[i], assign_flag);
-> -       }
-> +       clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
-> +       free(list);
-> +
-> +       for (i = 0; i < from->nr; i++)
-> +               from->objects[i].item->flags &= ~assign_flag;
-> +
->         return result;
->  }
-> 
-> With the bigger change in the larger set, there is less reason to do
-> separate commits. (Plus, it confused you during review.)
+This is good analysis of the issue. Thanks for writing it up!
+Would you also mind to send a patch fixing the problem?
 
-Yeah, that looks better still. Thanks!
+I agree that using strlen should work. I do not recall why I
+did not use it at the time of writing it.
 
--Peff
+Thanks,
+Stefan
