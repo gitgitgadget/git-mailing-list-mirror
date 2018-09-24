@@ -2,193 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D37B41F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 15:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 244C71F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 15:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730457AbeIXVsI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 17:48:08 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:55099 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbeIXVsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 17:48:07 -0400
-Received: by mail-pf1-f202.google.com with SMTP id x6-v6so1865920pfn.21
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 08:45:20 -0700 (PDT)
+        id S1729454AbeIXVsz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 17:48:55 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51171 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726400AbeIXVsz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 17:48:55 -0400
+Received: by mail-wm1-f67.google.com with SMTP id s12-v6so10258778wmc.0
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 08:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=coyFQ5g/BKyXMJCFiPgxd6WMBTNiLUYESA3EmaYoAd0=;
-        b=lrzQCIWNDzV1gJQXjVNhYU/2nxlnsIB6hPPpzl4VnoDhKKDia1YlZONQrDV9wp07qx
-         psUHtvVN22N1Mcp4pvdS0HB3vC5C9vKQHcueP9VE7Z8duceL2sZWZWWw9n4xRA3JJIL1
-         W0NbBvHjLVf0ADsmie7vKo2cE4kCeZDnxZLNIWqTnWgOCnQLYKTYQXNtR+CZLpyKEEUt
-         uiHjhMd2LHMARykOaBZRjLmToLjTfYiZebQfC3UQ1qcyKymMusCeDqBctZi7a5GqdhqT
-         1Ms2Zae6VCjIr665IxDv/aFBVDPxWFaemUqd8LxtQHTQloAZmU8UYbyDyLFo920SxK+Y
-         EIYA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=lK4KqGvFEK2CF9XNW4gQrpCEwiUAnmri5jUNmQnGqU8=;
+        b=UxRB/bBpBVRk4+B9oRXVNBa/qeuWDgSInSVCwN+KQuXDL36EvL5gi1ApVeqx/aIpKO
+         OXgwtlA8j4F0k8uzdbu9Bs3cq9FIqV7lfUNVugK38eBl/ZMEJTQCIrTlY1T9n8DEkywK
+         NYxaMp87aauN14lbFAO03QGuT4Ynp4MOjG15tPmYrhNZRDSfYLpMeeK8S90euvyua7EQ
+         PxGSm66MK9LviEgx5mZROEQkGLs1g0Y59Ab6ITO6IOPia1UZ0S7uSrYmnpqUbWIVZPrn
+         HaBfPw3WsP7XQh0x9YwWEX5X7hk6aVrjHavUmwQh+wuxeFvFSA08oIc2aEF00DFS4BXd
+         PuBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=coyFQ5g/BKyXMJCFiPgxd6WMBTNiLUYESA3EmaYoAd0=;
-        b=h1WN1GerxmUEwb8jN7BOkCW6AZu4KiJ15CxMpJNVCoYd2L/zMt1KmEZ17Frp9sSyu5
-         9jdbtoLoh2WP/jVyyo/U3RqlJr0yZmneP6DlQUzyoTKRozS0Y82VVvYrts+IOASIErT+
-         986iqnJ79+nM+CQ3X/wqltARObSzoRmQCP+ETPnparQTA6juCFozaH7qOTC2+LvybXhR
-         66n/3eFlySgo9u6PsBAwoJ+fQeuVfrdMPSY6ue+0m5ZJ/jBi255EE/8Ah4/fSk8Vh7Yp
-         icLnBGPk04y2DSo7nS5Ny9atdAx0Z4VvyYBt28tOH85MMPBtBSwGX9bLL2CtRQailzVK
-         C1PQ==
-X-Gm-Message-State: ABuFfoiQpMDm3mVJ/mdqCxaMG6U/jvrHjiD1DDBLnOZyRKxNtyKnvp1x
-        8Njflh4Yzw3V5vK1tUIIo5a6uOl/oI4I2kAO8Gs3LQkLYAsEOJglEaD10WUbTovpXyOW5J4PRcP
-        K6qSCwAwOZ3kZp1KQ+A9NS8n3lvrilUuc2haB9XS8Ly9dMkMhcc3bBQW/1mrLEd7TZkw39TpZ5G
-        Q5
-X-Google-Smtp-Source: ACcGV61Po0rDGwcGnolqxwCaVHWhYODWD8WpNNR4FAW+UsuwoY9uHnjxELqbvYB2RfK0R/l96RNq8o0TOKUm4RiBoXUb
-X-Received: by 2002:a63:5d26:: with SMTP id r38-v6mr348675pgb.154.1537803919962;
- Mon, 24 Sep 2018 08:45:19 -0700 (PDT)
-Date:   Mon, 24 Sep 2018 08:45:16 -0700
-Message-Id: <20180924154516.48704-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH] fetch-pack: approximate no_dependents with filter
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lK4KqGvFEK2CF9XNW4gQrpCEwiUAnmri5jUNmQnGqU8=;
+        b=K0ROEzf25/l4PcKKkOxW9M9Jyk3Oq57VyRQYR6X92XJyLnI/mrN2VD/g0ugjfE83YV
+         qhiGXWxzQEz1cMdwfm+Fj/no06v1AeZPmsy1T5XOYcBJVtbEjNZz2h7yiVJSDhIKxMQf
+         AUEfrKjEZIIHqgXSk902MVZqxKk8kzeoSbweNyDUkGw5A4EsNPEsjJmCoSi1Peh4wYog
+         PA+uhV5oYLIHw4rpR4PmbpoakPVNg3n6cbsXt21vUrI3HLmpB3oTVAhQlRBoUJpMmr5I
+         GeNXqI24wpJtrxmgjFVTZTLi3VXKdPfZwUuTtdrKepkhwokTK8V8Q+fMNxc50DEFjOYK
+         ysUQ==
+X-Gm-Message-State: ABuFfoiU9J133qN2XezZLyRXuCyu8WGk7wNoshFpCZoBTmxHss1ORRBS
+        2hVzZn7/UeH6rJFLtx2TLeyhPfIC
+X-Google-Smtp-Source: ACcGV60xlsvsOXpLX4O3RKidrBQIfJzXQmPT9PjmuaY/6Hk8n0b6Osx5JVIKqE1iw+p/dumaeMSnlg==
+X-Received: by 2002:a1c:87ca:: with SMTP id j193-v6mr8126677wmd.76.1537803966417;
+        Mon, 24 Sep 2018 08:46:06 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 198-v6sm17571615wmm.0.2018.09.24.08.46.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 24 Sep 2018 08:46:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] receive-pack: update comment with check_everything_connected
+References: <20180921230444.GA2713@sigill.intra.peff.net>
+Date:   Mon, 24 Sep 2018 08:46:04 -0700
+In-Reply-To: <20180921230444.GA2713@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 21 Sep 2018 19:04:45 -0400")
+Message-ID: <xmqqbm8muceb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whenever a lazy fetch is performed for a tree object, any trees and
-blobs it directly or indirectly references will be fetched as well.
-There is a "no_dependents" argument in struct fetch_pack_args that
-indicates that objects that the wanted object references need not be
-sent, but it currently has no effect other than to inhibit usage of
-object flags.
+Jeff King <peff@peff.net> writes:
 
-Extend the "no_dependents" argument to also exclude sending of objects
-as much as the current protocol allows: when fetching a tree, all trees
-it references will be sent (but not the blobs), and when fetching a
-blob, it will still be sent. (If this mechanism is used to fetch a
-commit or any other non-blob object, all referenced objects, except
-blobs, will be sent.) The client neither needs to know or specify the
-type of each object it wants.
+> That function is now called "check_connected()", but we forgot to update
+> this comment in 7043c7071c (check_everything_connected: use a struct
+> with named options, 2016-07-15).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Just a minor annoyance I happened to notice while discussing in another
+> thread. I notice both of us still called it check-everything-connected
+> in our emails; old habits die hard, I suppose. ;)
 
-The necessary code change is done in fetch_pack() instead of somewhere
-closer to where the "filter" instruction is written to the wire so that
-only one part of the code needs to be changed in order for users of all
-protocol versions to benefit from this optimization.
+Yup, and now I think I caught up ;-)  Thanks.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This was prompted by a user at $DAY_JOB who had a partial clone
-excluding trees, and had a workflow that only required tree objects (and
-not blobs).
-
-This will hopefully make partial clones excluding trees (with the
-"tree:0" filter) a bit better, in that if an operation requires only
-trees to be inspected, the required download is much smaller.
----
- fetch-pack.c             | 14 ++++++++++++++
- fetch-pack.h             |  7 +++++++
- t/t0410-partial-clone.sh | 41 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 88a078e9b..c25b0f54c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1598,6 +1598,20 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
- 	if (nr_sought)
- 		nr_sought = remove_duplicates_in_refs(sought, nr_sought);
- 
-+	if (args->no_dependents && !args->filter_options.choice) {
-+		/*
-+		 * The protocol does not support requesting that only the
-+		 * wanted objects be sent, so approximate this by setting a
-+		 * "blob:none" filter if no filter is already set. This works
-+		 * for all object types: note that wanted blobs will still be
-+		 * sent because they are directly specified as a "want".
-+		 *
-+		 * NEEDSWORK: Add an option in the protocol to request that
-+		 * only the wanted objects be sent, and implement it.
-+		 */
-+		parse_list_objects_filter(&args->filter_options, "blob:none");
-+	}
-+
- 	if (!ref) {
- 		packet_flush(fd[1]);
- 		die(_("no matching remote head"));
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 5b6e86880..43ec344d9 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -43,6 +43,13 @@ struct fetch_pack_args {
- 	unsigned from_promisor:1;
- 
- 	/*
-+	 * Attempt to fetch only the wanted objects, and not any objects
-+	 * referred to by them. Due to protocol limitations, extraneous
-+	 * objects may still be included. (When fetching non-blob
-+	 * objects, only blobs are excluded; when fetching a blob, the
-+	 * blob itself will still be sent. The client does not need to
-+	 * know whether a wanted object is a blob or not.)
-+	 *
- 	 * If 1, fetch_pack() will also not modify any object flags.
- 	 * This allows fetch_pack() to safely be called by any function,
- 	 * regardless of which object flags it uses (if any).
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 128130066..08a0c3651 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -170,6 +170,47 @@ test_expect_success 'fetching of missing objects' '
- 	git verify-pack --verbose "$IDX" | grep "$HASH"
- '
- 
-+test_expect_success 'fetching of missing blobs works' '
-+	rm -rf server repo &&
-+	test_create_repo server &&
-+	test_commit -C server foo &&
-+	git -C server repack -a -d --write-bitmap-index &&
-+
-+	git clone "file://$(pwd)/server" repo &&
-+	git hash-object repo/foo.t >blobhash &&
-+	rm -rf repo/.git/objects/* &&
-+
-+	git -C server config uploadpack.allowanysha1inwant 1 &&
-+	git -C server config uploadpack.allowfilter 1 &&
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "origin" &&
-+
-+	git -C repo cat-file -p $(cat blobhash)
-+'
-+
-+test_expect_success 'fetching of missing trees does not fetch blobs' '
-+	rm -rf server repo &&
-+	test_create_repo server &&
-+	test_commit -C server foo &&
-+	git -C server repack -a -d --write-bitmap-index &&
-+
-+	git clone "file://$(pwd)/server" repo &&
-+	git -C repo rev-parse foo^{tree} >treehash &&
-+	git hash-object repo/foo.t >blobhash &&
-+	rm -rf repo/.git/objects/* &&
-+
-+	git -C server config uploadpack.allowanysha1inwant 1 &&
-+	git -C server config uploadpack.allowfilter 1 &&
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "origin" &&
-+	git -C repo cat-file -p $(cat treehash) &&
-+
-+	# Ensure that the tree, but not the blob, is fetched
-+	git -C repo rev-list --objects --missing=print $(cat treehash) >objects &&
-+	grep "^$(cat treehash)" objects &&
-+	grep "^[?]$(cat blobhash)" objects
-+'
-+
- test_expect_success 'rev-list stops traversal at missing and promised commit' '
- 	rm -rf repo &&
- 	test_create_repo repo &&
--- 
-2.19.0.444.g18242da7ef-goog
-
+>
+>  builtin/receive-pack.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index a3bb13af10..3b7432c8e4 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -1834,7 +1834,7 @@ static void prepare_shallow_update(struct command *commands,
+>  	/*
+>  	 * keep hooks happy by forcing a temporary shallow file via
+>  	 * env variable because we can't add --shallow-file to every
+> -	 * command. check_everything_connected() will be done with
+> +	 * command. check_connected() will be done with
+>  	 * true .git/shallow though.
+>  	 */
+>  	setenv(GIT_SHALLOW_FILE_ENVIRONMENT, alt_shallow_file, 1);
