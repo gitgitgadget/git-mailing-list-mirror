@@ -2,86 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43A241F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 20:05:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08A8D1F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 20:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbeIYCJT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 22:09:19 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34357 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbeIYCJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 22:09:18 -0400
-Received: by mail-wr1-f65.google.com with SMTP id t15so13045610wrx.1
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 13:05:25 -0700 (PDT)
+        id S1727472AbeIYCYI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 22:24:08 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:55401 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726316AbeIYCYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 22:24:08 -0400
+Received: by mail-it1-f195.google.com with SMTP id c23-v6so4251557itd.5
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 13:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SlZr70RuczqnSOm9EuU0n470+jLrlszk6g1eIvzqrlc=;
-        b=OGdwAh/WfAqGaKt5nLBe3v/o+gXqrQUmpzic8dQ7hmLPwMlIOHwGUi4Irx7n1R4wqp
-         peHoEpFWmNytfs3p2ePR5tNjIGgELEknmFQKWXu6+R/5qnpD7K/Nw8tZteTVSZxyxUKs
-         UWDRDh57+jaFxFdS1XqeKSZi2yinZGO+eurVu+UQei4eh1QCZfJ2Wa1ssALeUN2BY2Px
-         K/7cIYQb/g3VgVOwU5Jz7AX51i0kpbvo6ZkoMuyJfoH1UDXKmkidFk2JDjgBhESftfxC
-         9nzGQSk8dpxaR6MkgXnGEOz3AyEJGnbf/cWOCsI7ey8DpSLYzxymnU84s+zwEqAc36Ge
-         q9pA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=UZUuIEl6l0g9haOZRNe+UMOXDT2SXTnNjIqbkZXhtIg=;
+        b=DRgcy6O9aF0oqQPK1hRusUlH+gDTW+MJiSqzxdRc/L6QXUzb22Zo8R5+ExvVnh88nZ
+         h4SBHiujSUtoTmZdt/hhpuKjLL7vfztH42qe4f967KQ+QKlFOfSHyekfIJxh6y7Vs2/O
+         lIaDX9M5kqyhqttwfVYBhs96KDEZj2phH9aIBxtXtFFh9uEDqN9/1L6j0ciTCOaBwZBR
+         zCoWcpWi6LcUF38YLJyLnYlaJSz04nV2cloHdVQjx3tbp74kOzDmaj7RSq0py82B3+lY
+         FtpO+q7kp8RSNOoNjggXeuhs6atqGPnneqyEntp0HCUfC66TH/n+jGpyTOYlVA8WDE+q
+         74Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SlZr70RuczqnSOm9EuU0n470+jLrlszk6g1eIvzqrlc=;
-        b=adNCaXGMdOTuRqKOQTJ4lyVO6Zb1O1FQNK+36sl6cmQpPq/UIaoZG+yv28vgmQoKqf
-         E/TKCQYYecfPRuX8OgxyuHYVD5qoJkoGStr2HLYZPh16ANYeo1MXkrZ1INhawK+4UM0d
-         TXV3w0kVUREiryTu9BdGCP/J5H6r0oCofkYiq6P2ik2QBD0Q5Yo0ds8LSOFSA175bPeF
-         hC6F04b7Rjg/pgATcEO9+ISeC8RVHEHkPGmMRRwEOESgIszoJL6OpdrwsvtiCGvVBA6R
-         8sTKQxMVph2+jBhKSQpr4F+PP1psLDH3LOuu3V1/TdLMXBpdufq+q/1PMZhxYrLqVYlk
-         mrRA==
-X-Gm-Message-State: ABuFfojkzIL7lDIiUAhLqFyho9RnqU3euM0+HiB0bkzKDEbhPT7V/RrO
-        ZOglcf12oeNgvw966obyNUCI48fR
-X-Google-Smtp-Source: ACcGV62l/qs2fyKYZbAIE36WXLRftlwUI6CUWe2iVRHW87pDBYxDrYajloMB45arr0Y1l5oZeDKEwQ==
-X-Received: by 2002:a5d:6451:: with SMTP id d17-v6mr292690wrw.64.1537819524526;
-        Mon, 24 Sep 2018 13:05:24 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q14-v6sm177954wrj.39.2018.09.24.13.05.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 24 Sep 2018 13:05:23 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] Add an EditorConfig file
-References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
-        <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com>
-        <20180920000013.GZ432229@genre.crustytoothpaste.net>
-        <xmqqk1ng2rdo.fsf@gitster-ct.c.googlers.com>
-        <20180921225039.GC432229@genre.crustytoothpaste.net>
-Date:   Mon, 24 Sep 2018 13:05:23 -0700
-In-Reply-To: <20180921225039.GC432229@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 21 Sep 2018 22:50:40 +0000")
-Message-ID: <xmqqefdislto.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=UZUuIEl6l0g9haOZRNe+UMOXDT2SXTnNjIqbkZXhtIg=;
+        b=pUE3b5PJ2NKoEtVY8QTyQxQ/iP90aIMuEBfdPc2rrcikwo4KX2+1owj2EsKMa15Ko5
+         pOlUkJQHx4eYd2Cc32OzJhPfD5RFNDI7cuVY4rDa9UqwzJZFI7qMXj/PCYlcm8uOsX17
+         loMVmxt3j1uAui4OQ8avjSw3gKiZgzwRSJ/YAATfsSpLM5/WI/tfVgw3BNRzIYI9s6YV
+         np7ooe54yeQ4HeV7F03Spw+TDWR1KAHRrgJPIPUCUDZAli+MSZAtNBjDrkglU4RFjSaC
+         WmnYhzPO04osI0HyG9pr6n+7kIkf8dRYhiZMuvq8Hv2vC1EkKdrj/rT5wTboiGThLDr/
+         x3GQ==
+X-Gm-Message-State: ABuFfoiTXv1YQNJaT8JyM0w0G2kgi/gl4PvrxtlnxHBKFbFTUq3M3CeJ
+        pbSRdm3QcpPkxxVaesZoj5Y47/IoGomMwg==
+X-Google-Smtp-Source: ACcGV63nmFHN86quG09Z2DxZb9oWmqKUyK/II2Rfi/gPRInh8qdUpjU+BV/A5ateH7Qegtpj6bgOZg==
+X-Received: by 2002:a24:ce41:: with SMTP id v62-v6mr90551itg.52.1537820411899;
+        Mon, 24 Sep 2018 13:20:11 -0700 (PDT)
+Received: from localhost ([75.104.69.134])
+        by smtp.gmail.com with ESMTPSA id z2-v6sm101927iom.25.2018.09.24.13.20.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Sep 2018 13:20:10 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Mon, 24 Sep 2018 15:20:00 -0500
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] git help: promote 'git help -av'
+Message-ID: <20180924202000.GA88744@syl>
+References: <20180922174707.16498-1-pclouds@gmail.com>
+ <20180924181927.GB25341@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180924181927.GB25341@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
->> But that is a response in a dream-world.  If there is no such tool,
->> I am perfectly OK if the plan is to manually keep them (loosely) in
->> sync.  I do not think it is good use of our time to try to come up
->> with such a tool (unless somebody is really interested in doing it,
->> that is).
+On Mon, Sep 24, 2018 at 02:19:28PM -0400, Jeff King wrote:
+> On Sat, Sep 22, 2018 at 07:47:07PM +0200, Nguyễn Thái Ngọc Duy wrote:
 >
-> Would it be helpful if I sent a script that ran during CI to ensure they
-> stayed in sync for the couple places where they overlap?  I'm happy to
-> do so if you think it would be useful.
+> > When you type "git help" (or just "git") you are greeted with a list
+> > with commonly used commands and their short description and are
+> > suggested to use "git help -a" or "git help -g" for more details.
+> >
+> > "git help -av" would be more friendly and inline with what is shown
+> > with "git help" since it shows list of commands with description as
+> > well, and commands are properly grouped.
+>
+> I agree that "help -av" is likely to be more friendly. I kind of wonder
+> if it should just be the default for "-a". Do we have any obligation not
+> to change the format of that output?
 
-It may even be an overkill.
+I agree, though I'd like to clarify what you said before doing so
+wholeheartedly.
 
-A comment addressed to those who edit one file to look at the other
-file on both files would be sufficient, I suspect.
+Did you mean that all existing uses of 'git help -a' should instead mean
+'git help -av' (i.e., that '-a' after your proposed patch means the same
+as '-av' in revisions prior to this one?)
+
+If so, I agree. I can't imagine a case where I'd like to provide '-a'
+and _not_ '-v', so certainly the later should come as a two-for-one
+deal. Less, more well-intentioned knobs seems a positive trend to me, so
+I am for this idea.
+
+Thanks,
+Taylor
