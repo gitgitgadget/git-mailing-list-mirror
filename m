@@ -6,72 +6,95 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 331A01F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 22:24:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC641F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 22:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726042AbeIYE2f (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 00:28:35 -0400
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:38346 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725812AbeIYE2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 00:28:35 -0400
-Received: by mail-wm1-f50.google.com with SMTP id z16-v6so5150028wmi.3
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 15:24:10 -0700 (PDT)
+        id S1726026AbeIYEdz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 00:33:55 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51481 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725959AbeIYEdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 00:33:54 -0400
+Received: by mail-wm1-f67.google.com with SMTP id y25-v6so3888682wmi.1
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 15:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=j/bR7CNHK+oUQvFtDB4J+/m+3A+eWFtZnHrhrM6hWSM=;
-        b=uYobbMIp95KVNsJ08MOnaYUxxT5wNfDvQfxpO5NFRPcto3p5ifHWYbOUhyHYLYtf4P
-         ts75DCXL0x/sqUtZTKNz4CR2jtkAt9YheGDtitq8JPLKQjF15mVj1CwClFFPUf773+qg
-         4BXATFMdUVWvn6yzcHdJ6lcdqpMg370PAEB153G7f8Z40+A81I6iA5eaJTaV/EpV8qZe
-         zDubgkpbGN50dGAUHPC9hxoG5R1rdQJohGfuDJNeoebwesbvkw/uI5qD02nkYTn6vDut
-         rwa73wHXHc2VM6r8JH8MNAGcoOgMtRK7khjror9cAhHjtJNgC6JlvaDtLIAwWQdRJjk6
-         YV0w==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=mn+km6are53E17nSxzsA/wdXzWxV0z00u4Rs3SXizQQ=;
+        b=Ith6zEYgsCOQcwaGyc3Hbsz5+l84j8Q18BijSmpzHrCdvshy/pGzLvbrI8SflPEcp2
+         W3LuOyfij1aHZPbDmZl/AVAPeEISS40TZCXiWwKW6zOE5nDAkHYgC5OUWtAlz+/qHhPl
+         z9V9vpl5FFk62oYBUruvZg+jIDF6BhAy65/SEfJdQ59E8/MtTjEr5MsYVWnBSR9bT4oY
+         5cK07p88cWNVAoItcpIaz8osUMevggyt3NwXA1Po+/qWP4jcOyR+1Ft6dIFWPwi8gSqP
+         Zg7oatRV05EAxpq3upmUTjsW6bDm9FkVESO9mYhgKKXlztVi4Xq1r6CurJQ834zfgHjt
+         MDUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=j/bR7CNHK+oUQvFtDB4J+/m+3A+eWFtZnHrhrM6hWSM=;
-        b=IzXITzPhTosVC+Zyt3Kp+juTqt4YKg4QDyAL2wadY8sOQgvkrdBruyIwEqA+p9eP+Z
-         RZvo+2eKCNTuFTZjQKxoKJN+krY+BdckvI4oIn7KzJqo3zuIrDwfIn0Nxd93qk4yS0fo
-         aB2aDXkKretAD/rlIU4I8GJv68aOr5S0g2MPnuRnaNG9duY0oIsq31bCp6b3EPpcwppW
-         k1WZN29yqf4rjg362o83Bp8bsb1E3RTF3hraew3uwDY5hDKnK2YkljYkbCnOobv9z/vW
-         JFgC2DTAYuU2x7zHR92mSSwqVSS6NErZSud6M2GKeQoZfAZxc1yQvlKmTacH5/i9dezE
-         khwQ==
-X-Gm-Message-State: ABuFfogws4kJeQEpHRLEgh5c8+uQXtGD/qf2ynilB7REKz2+sV7yl3qH
-        SiwUnSVqLjT6pEVKxOctOm4=
-X-Google-Smtp-Source: ACcGV62QkHlyyMEKF8d3EdD7KMzLtcAC0icjhhlKhZzax6AefTpnECyqC2e3MVANvDdHU/DrBJySsg==
-X-Received: by 2002:a1c:f611:: with SMTP id w17-v6mr250161wmc.143.1537827849288;
-        Mon, 24 Sep 2018 15:24:09 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x16-v6sm318551wro.84.2018.09.24.15.24.08
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=mn+km6are53E17nSxzsA/wdXzWxV0z00u4Rs3SXizQQ=;
+        b=gIhQhO5cXwN5sSNNVFSTTjz073BnvQzYiDBX+5zpF/lIVwNgsRC/ifgdI/o4MSLfLI
+         DcxrHCAuasrznpzw9eygjFAhneML92PJTmyr0No1Pw1EB8cG8lpamZFrYSv/chXCvduS
+         UK2NomHePhV1LeE7NNz3Ab3OezyW+v3h2A4IYG0aqIEhoRjhvn9/ViRUAUOpwMLsZGld
+         c4y0QNGmSxttVTKD/ThzutJnJc5Ix4LTrP1o8/h4pLw0AWCA6FAWysnKiBLTZvU+aXqJ
+         83WDOwyfEiCwuqaXHjUbRxrAxfjEW3laLE8+16oJ1slxfIxo2/1rylFl8vmNJWC022v6
+         nysw==
+X-Gm-Message-State: ABuFfogXv6rFaVissqYHQZ4JS7WoKjFglFxD8EcbNbFZGSVm/jCn8FmK
+        DpicANXaGKSAscyWysDiYxQ=
+X-Google-Smtp-Source: ACcGV62Zbs49kAu60zCffk6rnI5yfu0mpn1ZL425DFJ3cAuqykY2PCMlS1M55OV4rVr9jtGVG8j5pA==
+X-Received: by 2002:a1c:3282:: with SMTP id y124-v6mr275071wmy.11.1537828167207;
+        Mon, 24 Sep 2018 15:29:27 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 198-v6sm280071wmm.0.2018.09.24.15.29.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 24 Sep 2018 15:24:08 -0700 (PDT)
+        Mon, 24 Sep 2018 15:29:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sebastian Kuzminsky <seb@highlab.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug in 'git describe'?
-References: <fd340f7b-61c0-2661-bdca-c239e51bc464@highlab.com>
-Date:   Mon, 24 Sep 2018 15:24:08 -0700
-In-Reply-To: <fd340f7b-61c0-2661-bdca-c239e51bc464@highlab.com> (Sebastian
-        Kuzminsky's message of "Mon, 24 Sep 2018 15:45:06 -0600")
-Message-ID: <xmqqefdir0tz.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, pclouds@gmail.com, peartben@gmail.com,
+        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] read-cache: update index format default to v4
+References: <pull.41.git.gitgitgadget@gmail.com>
+        <56374128136fe9377503d446daf98e67847194aa.1537823728.git.gitgitgadget@gmail.com>
+        <20180924213223.GG27036@localhost>
+Date:   Mon, 24 Sep 2018 15:29:26 -0700
+In-Reply-To: <20180924213223.GG27036@localhost> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Mon, 24 Sep 2018 23:32:23 +0200")
+Message-ID: <xmqqa7o6r0l5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sebastian Kuzminsky <seb@highlab.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> I've got two tiny git repos whose commit graphs are identical, but
-> where 'git describe' gives different results.
-> ...
-> The histories differ only in the timestamps of the commits...
+> On Mon, Sep 24, 2018 at 02:15:30PM -0700, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>> 
+>> The index v4 format has been available since 2012 with 9d22778
+>> "reach-cache.c: write prefix-compressed names in the index". Since
+>> the format has been stable for so long, almost all versions of Git
+>> in use today understand version 4, removing one barrier to upgrade
+>> -- that someone may want to downgrade and needs a working repo.
+>
+> What about alternative implementations, like JGit, libgit2, etc.?
 
-describe does take the commit timestamps into account, so it is
-expected you would get different results out of an otherwise
-identically looking graph.
+Good question.
+
+Because the index-version of an index file is designed to be sticky,
+repos that need to be accessed by other implementations can keep
+whatever current version.  A new repo that need to be accessed by
+them can be (forcibly) written in v2 and keep its v2ness, I would
+think.
+
+And that would serve as an incentive for the implementations to
+catch up ;-)
+
+
+
