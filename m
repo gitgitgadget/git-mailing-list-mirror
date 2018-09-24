@@ -2,96 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_BL_SPAMCOP_NET,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12BA31F453
-	for <e@80x24.org>; Mon, 24 Sep 2018 03:15:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D4161F453
+	for <e@80x24.org>; Mon, 24 Sep 2018 10:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727205AbeIXJPU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Sep 2018 05:15:20 -0400
-Received: from fed1rmfepo101.cox.net ([68.230.241.143]:45075 "EHLO
-        fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726134AbeIXJPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Sep 2018 05:15:19 -0400
-Received: from fed1rmimpo209.cox.net ([68.230.241.160])
-          by fed1rmfepo101.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20180924031518.KJEQ4101.fed1rmfepo101.cox.net@fed1rmimpo209.cox.net>
-          for <git@vger.kernel.org>; Sun, 23 Sep 2018 23:15:18 -0400
-Received: from thunderbird.smith.home ([68.2.114.239])
-        by fed1rmimpo209.cox.net with cox
-        id fFFG1y00g59yGBo01FFHSz; Sun, 23 Sep 2018 23:15:17 -0400
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090201.5BA856C6.0039,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.3 cv=UKxp4xXy c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10 a=WDhBSedXqNQA:10
- a=tDrJsivbDvydaWdw5SQA:9 a=CjuIK1q_8ugA:10
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 58FDF29A0075;
-        Sun, 23 Sep 2018 20:15:16 -0700 (MST)
-From:   Stephen Smith <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 4/4] wt-status.c: Set the committable flag in the collect phase.
-Date:   Sun, 23 Sep 2018 20:15:16 -0700
-Message-ID: <2295579.U4Xb9QnJqG@thunderbird>
-Organization: Personal
-References: <20180906005329.11277-1-ischis2@cox.net> <xmqqworxufuv.fsf@gitster-ct.c.googlers.com>
+        id S1728311AbeIXQHk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Sep 2018 12:07:40 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:15147 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728212AbeIXQHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Sep 2018 12:07:40 -0400
+Received: from lindisfarne.localdomain ([92.28.142.68])
+        by smtp.talktalk.net with SMTP
+        id 4NkrgLWW7VlGZ4NkygJ4sn; Mon, 24 Sep 2018 11:06:20 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1537783581;
+        bh=RpqTxiuLb5a3jiGq6vyqtswjvdvBb2oWy7fK7XoZyOI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=i5kvGGwaNdg2BRI8pIXA+BNpfyr/RPi7pvWXoX7mozmpaJy8IFdy1TNPhOk745YdC
+         6+wy9kLGEZZ45hoUwdr8bRz+Y/emChfOpYz94+Ps28jA1SkFDo5tyRsPLauNif/+oS
+         /7ZLynwSD9xyrAVRXQIY8r9xgsJQ8ljq5ZWYnEhY=
+X-Originating-IP: [92.28.142.68]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
+ a=UGDAwvN9cmeZh0o4udnnNw==:17 a=evINK-nbAAAA:8 a=UXsM_k0DTXzUqNaiiZIA:9
+ a=LkKtLPdKtb9Niahs:21 a=hA-f583o6LWtlw6A:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [RFC PATCH 1/3] xdiff-interface: make xdl_blankline() available
+Date:   Mon, 24 Sep 2018 11:06:02 +0100
+Message-Id: <20180924100604.32208-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.19.0
+In-Reply-To: <20180924100604.32208-1-phillip.wood@talktalk.net>
+References: <20180924100604.32208-1-phillip.wood@talktalk.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfD2h4nL0QDmanxvgtjCll/2XbCboPOSAyycYvTLa6H33PJpj0qPrJWz7ZdN0Ckb0xHhEFCTBgda7Ngl+50vTnFkDfgWzeIcj1Teim1/lBsvOwhLjPa1i
+ oKLbckB4Ki+m/aXAWnrPSUjANWtxEmTYZooasf05idBNEcYviURZe3T6hlW/S5H6G9UrbaCmGuKgRvcrXNRdc+j0lBI3QP3nzqid/5KbG//18O+FzKmFyviJ
+ wJPSZ/CdCik0lDHHMd/4HA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, September 7, 2018 3:31:55 PM MST Junio C Hamano wrote:
-> For example, I noticed that both of the old
-> callsites of wt_status_get_state() have free() of a few fiedls in
-> the structure, and I kept the code as close to the original, but I
-> suspect they should not be freed there in the functions in the
-> "print" phase, but rather the caller of the "collect" and "print"
-> should be made responsible for deciding when to dispose the entire
-> wt_status (and wt_status_state as part of it).  This illustration
-> patch does not address that kind of details (yet).
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I followed the call tree back to original callers run_status() and 
-cmd_status() in commit.c
+This will be used by the move detection code.
 
-This leads to a philosophical question.  We want to move the state information 
-out of the print functions because it doesn't seem correct.  For the case in 
-question this includes the calls to free() .   By doing this we seem go have 
-traded one location that shouldn't be touching the state variables for 
-another. 
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ xdiff-interface.c | 5 +++++
+ xdiff-interface.h | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-I can see three solutions and could support any of the three:
-1) Move the free calls to run_status() and cmd_status().
-2) Move the calls calls to wt_status_print since that is the last function 
-from wt_status.c that is called befor the structure goes out of scope in  
-run_status() and cmd_status().
-3) Add a new wt_collect*() function to free the variables. This would have an 
-advantage that the free calls could be grouped in on place and not done in to 
-functions.  A second advantage is that the free calls would be located where 
-the pointers are initialized.  
-
-Personally I like solutions 1 and 3 over 2.
-What do others think?
-
-sps
-
-
-
-
-
-
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 9315bc0ede..eceabfa72d 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -308,6 +308,11 @@ int xdiff_compare_lines(const char *l1, long s1,
+ 	return xdl_recmatch(l1, s1, l2, s2, flags);
+ }
+ 
++int xdiff_is_blankline(const char *l1, long s1, long flags)
++{
++	return xdl_blankline(l1, s1, flags);
++}
++
+ int git_xmerge_style = -1;
+ 
+ int git_xmerge_config(const char *var, const char *value, void *cb)
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index 135fc05d72..d0008b016f 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -45,4 +45,9 @@ extern int xdiff_compare_lines(const char *l1, long s1,
+  */
+ extern unsigned long xdiff_hash_string(const char *s, size_t len, long flags);
+ 
++/*
++ * Returns 1 if the line is blank, taking XDF_WHITESPACE_FLAGS into account
++ */
++extern int xdiff_is_blankline(const char *s, long len, long flags);
++
+ #endif
+-- 
+2.19.0
 
