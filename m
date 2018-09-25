@@ -2,198 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0355C1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 213C11F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbeIZEog (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:44:36 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33933 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726444AbeIZEoS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:18 -0400
-Received: by mail-ed1-f66.google.com with SMTP id q19-v6so209880edr.1
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:33 -0700 (PDT)
+        id S1726291AbeIZE4g (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:56:36 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44327 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725762AbeIZE4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:56:36 -0400
+Received: by mail-pg1-f195.google.com with SMTP id g2-v6so4606641pgu.11
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:46:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=4u0dFBNQm59Toa3wXWRgraEGh88Vb68GW6Y4gUOVVYQ=;
-        b=T1EcPJud3NeHJCnC6PIDQX46UqrbOJ+0VmHf6yD0Uo1pkx2m3RS4SfD9ydv+ZNdLkC
-         8yC93pO5vmKcQ3t/2W+mcugl1n9RksIpq2NTqrxHWj+q9HwGRYUwYuvH4rqgu5x8247I
-         XhrKFuoTWviSjKRY1PQll4z1vGbzhpMYhtrIx9VKI6q6E0BH58B+TTyjMsEnPGQJsSeG
-         bNcEKGiG+ssAvAu7dwLzQFTKHpNU6OXAjhoDi9MBGJMPCn6+mGTkM7QfR5lBnwzouf6P
-         M6lCBj1WdeMl/RKMgu5Zr8r9/BiSAv4aoP5eMhiKf7iaS+m1ogHUgspt9DhxpEyXX1q7
-         yw6A==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UKMsOWM6QRK6RYTsqILPOaON20HwoDEUn7TUFKW08ug=;
+        b=mOnanYrQQgz08TJ95h3idoX1/VxD6vKmIpogt57riJZ1JgLKT9vZ4F/rQAosxZn7Lt
+         7ZT87oxMzFud8KZvH3nhYAlYzzXcg/iDdR9s4iryzrXIU/4s6omcZ+Psj8vWu3P2Xr7R
+         pJ1Z0JxT7upRgzRvzhgyZLY4ASaPs8pTLAIEkZ4dwgMY0megzSzHMl9Ql7wbxZ8yJthZ
+         aummAHiMqYRtH1jQM5/hTg0yfwPszrhKXniaUT0lFqt217RhGbHdBe69R5vZ8irtVyUo
+         h5W6St6g5sQuVNatT6EkN4zgEn3QlC3UVh59hpIvdQNdji1p5Ucd7wyROrKwWFt1D7YY
+         HD3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4u0dFBNQm59Toa3wXWRgraEGh88Vb68GW6Y4gUOVVYQ=;
-        b=SOmPtCB7qZTKL1UZjr91L+259jqPAU1eoyjJQq1n0QqQ8Ob1FPSxdtPkq3+HO5nhDf
-         HYx3bCHTpz9OA8nf61k/qj6s1ffH3dpbpapqmQluww+iy5aVHLxlx0vPZ7GMsTb4jgfz
-         5FNc0WZO3zqmseDAooi2h1Rq+PUUCBeAL70RHOf5BOfU6P5VW5dwOtIkXJp+bYZPFUag
-         saIzr5TtbvX8tiNk1CvgvdmvLAPW+Y6hoj7yPHUmMl3cR/5pFxFGxlvm7CZir0bbpuRu
-         VfvoHrWDrf45ttZId421vl3JHMKgAxWIszFtdpn59GxZQJa6IutnExGrjFzwinZuvNJS
-         2HYQ==
-X-Gm-Message-State: ABuFfoiFEfyQzMAXObWSST/GksMIVA4SPSchWosi5LHzO5IMA7ywOhzc
-        4k/6ut2ypTtzIMojQwOpSGAgOajC
-X-Google-Smtp-Source: ACcGV60whenGjpFZPJjCnJaj0yxxBYGV/pDCkeUHoZgH6zGyB1EBMKwDbmr/mpaWLB1tGMIbO+h9Hg==
-X-Received: by 2002:a50:e044:: with SMTP id g4-v6mr1363624edl.152.1537914872536;
-        Tue, 25 Sep 2018 15:34:32 -0700 (PDT)
-Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.31
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UKMsOWM6QRK6RYTsqILPOaON20HwoDEUn7TUFKW08ug=;
+        b=EvGnT0Ravw+bg1CHEYVjCkZl34NRDOZ8R/DS8oBQzACxjD9CtlrEM4ALoaR5+lioKe
+         ofrINN8M5Gqym+dG4KXBR6XEYeIWmRUuj1Esp0RgxGt2097AOfXdo7kkEVkRRDMhRg84
+         mSULnO+BmCaA2uNBa1KD8p0bMYyXi1yGIgQ0Pg0v8eqmVJ0JV0VssOW0kIFCCzm7HTKr
+         yEa2yG061F6i9ark4Re21Tc2A1cSBkZU2BH7Ae/TEpdjUrQ6CJgTi2wJOL7pYCPknjrT
+         6tYkMzG9TR9o3xsSTMTWxJqmOVnLpnwi9B6zxalBpsSvvnXoG8rl20GvM64G8rONETQJ
+         yjzQ==
+X-Gm-Message-State: ABuFfoig6cDnNcIlTuDUWcqX+ZL0UIG50MqA2kesp6k2TTYNPzOTng4x
+        mNzFMf2qXDMHEGQmADX/6Z1VGQ==
+X-Google-Smtp-Source: ACcGV63JB7kiWYcNHpNjyz50+/ECyKbx7ufts0xTM/1tlavsepQWeYtDXiQ9vOlnBjMJV71BCdhXtA==
+X-Received: by 2002:a17:902:3c5:: with SMTP id d63-v6mr3109057pld.145.1537915608507;
+        Tue, 25 Sep 2018 15:46:48 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:d190:33d6:11d2:d23b])
+        by smtp.gmail.com with ESMTPSA id k8-v6sm10188912pga.80.2018.09.25.15.46.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 15:34:31 -0700 (PDT)
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH v9 09/21] stash: convert branch to builtin
-Date:   Wed, 26 Sep 2018 01:33:25 +0300
-Message-Id: <f7b639a7b4da943884f7a4960d06ec4d2344a119.1537913094.git.ungureanupaulsebastian@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
-In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
-References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
+        Tue, 25 Sep 2018 15:46:46 -0700 (PDT)
+Date:   Tue, 25 Sep 2018 15:46:45 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org, sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+Message-ID: <20180925224645.GG4364@syl>
+References: <20180921213753.GA11177@sigill.intra.peff.net>
+ <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
+ <20180921221832.GC11177@sigill.intra.peff.net>
+ <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
+ <20180924181011.GA24781@sigill.intra.peff.net>
+ <xmqqa7o6skkl.fsf@gitster-ct.c.googlers.com>
+ <20180924205022.GA26936@sigill.intra.peff.net>
+ <xmqqva6ur24y.fsf@gitster-ct.c.googlers.com>
+ <20180924231455.GA7702@sigill.intra.peff.net>
+ <xmqq1s9hqxtt.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1s9hqxtt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Joel Teichroeb <joel@teichroeb.net>
+On Tue, Sep 25, 2018 at 10:41:18AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>
+> > Right, I think that is totally fine for the current uses. I guess my
+> > question was: do you envision cutting the interface down to only the
+> > oids to bite us in the future?
+> >
+> > I was on the fence during past discussions, but I think I've come over
+> > to the idea that the refnames actively confuse things.
+>
+> [ ... ]
+>
+> So, I think we probably are better off without names.
 
-Add stash branch to the helper and delete the apply_to_branch
-function from the shell script.
+Sorry for re-entering the thread a little later. I was travelling
+yesterday, and was surprised when I discovered that our "grep | sed" vs.
+"sed" discussion had grown so much ;-).
 
-Checkout does not currently provide a function for checking out
-a branch as cmd_checkout does a large amount of sanity checks
-first that we require here.
+My reading of this is threefold:
 
-Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
-Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
----
- builtin/stash--helper.c | 46 +++++++++++++++++++++++++++++++++++++++++
- git-stash.sh            | 17 ++-------------
- 2 files changed, 48 insertions(+), 15 deletions(-)
+  1. There are some cosmetic changes that need to occur in t5410 and
+     documentation, which are mentioned above. Those seem self
+     explanatory, and I've applied the necessary bits already on my
+     local version of this topic.
 
-diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index 72472eaeb7..5841bd0e98 100644
---- a/builtin/stash--helper.c
-+++ b/builtin/stash--helper.c
-@@ -14,6 +14,7 @@
- static const char * const git_stash_helper_usage[] = {
- 	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
- 	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
-+	N_("git stash--helper branch <branchname> [<stash>]"),
- 	N_("git stash--helper clear"),
- 	NULL
- };
-@@ -28,6 +29,11 @@ static const char * const git_stash_helper_apply_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_helper_branch_usage[] = {
-+	N_("git stash--helper branch <branchname> [<stash>]"),
-+	NULL
-+};
-+
- static const char * const git_stash_helper_clear_usage[] = {
- 	N_("git stash--helper clear"),
- 	NULL
-@@ -536,6 +542,44 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
- 	return ret;
- }
- 
-+static int branch_stash(int argc, const char **argv, const char *prefix)
-+{
-+	int ret;
-+	const char *branch = NULL;
-+	struct stash_info info;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_helper_branch_usage, 0);
-+
-+	if (!argc) {
-+		fprintf_ln(stderr, "No branch name specified");
-+		return -1;
-+	}
-+
-+	branch = argv[0];
-+
-+	if (get_stash_info(&info, argc - 1, argv + 1))
-+		return -1;
-+
-+	cp.git_cmd = 1;
-+	argv_array_pushl(&cp.args, "checkout", "-b", NULL);
-+	argv_array_push(&cp.args, branch);
-+	argv_array_push(&cp.args, oid_to_hex(&info.b_commit));
-+	ret = run_command(&cp);
-+	if (!ret)
-+		ret = do_apply_stash(prefix, &info, 1, 0);
-+	if (!ret && info.is_stash_ref)
-+		ret = do_drop_stash(prefix, &info, 0);
-+
-+	free_stash_info(&info);
-+
-+	return ret;
-+}
-+
- int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- {
- 	pid_t pid = getpid();
-@@ -562,6 +606,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!clear_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "drop"))
- 		return !!drop_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "branch"))
-+		return !!branch_stash(argc, argv, prefix);
- 
- 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 		      git_stash_helper_usage, options);
-diff --git a/git-stash.sh b/git-stash.sh
-index a99d5dc9e5..29d9f44255 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -598,20 +598,6 @@ drop_stash () {
- 	clear_stash
- }
- 
--apply_to_branch () {
--	test -n "$1" || die "$(gettext "No branch name specified")"
--	branch=$1
--	shift 1
--
--	set -- --index "$@"
--	assert_stash_like "$@"
--
--	git checkout -b $branch $REV^ &&
--	apply_stash "$@" && {
--		test -z "$IS_STASH_REF" || drop_stash "$@"
--	}
--}
--
- test "$1" = "-p" && set "push" "$@"
- 
- PARSE_CACHE='--not-parsed'
-@@ -673,7 +659,8 @@ pop)
- 	;;
- branch)
- 	shift
--	apply_to_branch "$@"
-+	cd "$START_DIR"
-+	git stash--helper branch "$@"
- 	;;
- *)
- 	case $# in
--- 
-2.19.0.rc0.23.g1fb9f40d88
+  2. The core.alternateRefsCommand vs transport.* discussion was
+     resolved in [1] as "let's use core.alternateRefsCommand and
+     core.alternateRefsPrefixes" for now, and others contributors can
+     change this as is needed.
 
+  3. We can apply Peff's patch to remove the refname requirement before
+     mine, as well as any relevant changes in my series as have been
+     affected by Peff's patch (e.g., documentation mentioning
+     '%(refname)', etc).
+
+Does this all sound sane to you (and match your recollection/reading of
+the thread)? If so, I'll send v3 hopefully tomorrow.
+
+Sorry for repeating what's already been said in this thread, but I felt
+it was important to ensure that we had matching understandings of one
+another.
+
+Thanks,
+Taylor
+
+[1]: https://public-inbox.org/git/xmqqa7o6skkl.fsf@gitster-ct.c.googlers.com/
