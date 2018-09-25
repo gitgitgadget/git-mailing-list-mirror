@@ -2,228 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D92601F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 21:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C00111F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbeIZEH7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:07:59 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:42853 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725732AbeIZEH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:07:59 -0400
-Received: by mail-oi1-f194.google.com with SMTP id v198-v6so2813885oif.9
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 14:58:21 -0700 (PDT)
+        id S1725762AbeIZEMr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:12:47 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51351 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725732AbeIZEMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:12:47 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y25-v6so171516wmi.1
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=A7SnPxO4+LanHKDYyIB+VSFLgfj6rTTmoVcm4phNkSk=;
-        b=TpdORDASnDptaDRtiphsJB84VB0eDpX4zoKsexprjqx/HF8SVuJvR+e7MNVWzj5ep3
-         OxCr3mb8BxXiRIWOkgUMEHa/RSA0e/scgyjEUXN/VYHHEzla2lTZ2yGIhop3XB1YJ9uF
-         7Cx7DstXBpPaRtD8LPtCbgW74Od3ksctxzmXex7MSRax/Vqq+tCZeUYQFgioxyPhTFLu
-         /nU8JQHXoqhgSJ/MIJHwkiti5/OnM2NjjsN9dRmynGHADC4k9xKAwVqSon3xAFt9Je22
-         x15hLpR23OxNX79c0TzCUET0P9uXDym/XN6FA2oewDl9i06aDRa3Mo6/rmqyMcKdmJ30
-         3MzQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dENGSSrUHp0NoGu5iovW+l0pTJ5Ot3PmyhSPeWCO1ng=;
+        b=RS4tp3OaDRvGaeFXS0tj1oEcRYHYsLjDm3pL9OUNhcSNuF5ZTJGMLetdHOAVeUmoDf
+         /LhZ1rcV5IJyQqmrv9Nqlb5GVJyazEo9pExad3doTsZgIeG75CPUjLAK5KUXasUUXgwt
+         g0UywcCayPLmiCLW+XTo1hFE9tMsnBQi9Xv48wb2F8TN65rdQ2veKuA02hcT3Qoj82Rs
+         t8+TF4gvgOoRakC6mmveo8nwhJawObmWADsFs1tQcblJIpUVY3fm+jFqlPtk/YDplsgz
+         Iahc2I+cVnvXjMEX6NWSW/WHvSOU3YMNvWjah83wm9IrbkRPcdJdXY9nJKytyfWesXbv
+         N8kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=A7SnPxO4+LanHKDYyIB+VSFLgfj6rTTmoVcm4phNkSk=;
-        b=ICqpKJVpwyr+B8GEvM8c1oMMA2DWfUgn9Ia4ZJmg5NfMqV4/NcYk3dECtS3Fr/RotI
-         sd0VkkbDk3+woXKsRpBYCZiXc7WTycj99wuxvm9VrWlwHaOiKysaHzp+KD2G8WyAY8LG
-         Xeah/sQHBi5Mv3nPY9npNlf4yZ0V4ji9KRFVfB0Z1ErQRt/KwS1Dm5DXM9tYc8mlV6Rp
-         QY5mwEae9CutizaSSdArLuV2x/PncnMU9NNDZftlc+E1arWWR0R3CCESalvk7ZDOdfAJ
-         3bayTAOBbFk27HX9s9fW+c4Ly/dRHu/9NA55tMk6b7oACyGjE53E/sNBPVXhZEAqXJOB
-         IXeg==
-X-Gm-Message-State: ABuFfohiFIYgLPpMKpPZyv5N16CrLMLg5TTWgCePIn03/smbY34gihqP
-        1kEAmHK+g2a+SO+iCNSQtAcSujOT3j9wntz1wVRm
-X-Google-Smtp-Source: ACcGV62+CTU+H/A2/xaQXQIINsYHfcDNLwk991VglF3uzasJc4EEQU3bn4fqy9/qvsCL0eOwoug+lNRC7K3+y+z7pSo=
-X-Received: by 2002:aca:b208:: with SMTP id b8-v6mr97712oif.144.1537912701253;
- Tue, 25 Sep 2018 14:58:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dENGSSrUHp0NoGu5iovW+l0pTJ5Ot3PmyhSPeWCO1ng=;
+        b=NzWDUHaqO6qGMNEzzOQKYCleU9EwACcqx3yJnJE3ZL366MFSKmpgc81CLYcVXQun1j
+         3eFjuSvw4I0sV3iDGpLMKP6ofBln2nSZkrCjVW0DnHrX3G3L1kZb53MLQvYZhsC2oJbR
+         gpG7RoyLzwoJYD+xdbi0MWSTqbIEXL/st1qhVJLlZgM3/12VoJwjGn4Baa5XT3jViIry
+         8CJFRy77jfo01LIb5m8h7u1vQK4I6ySW6BreK1eVAJFQvy+R9KxZpqqq9HFmP9iN0ljv
+         2TApQBzsXBvBbSjxn9aLO7D+NYulsOgn9JPFXDJREUc6gauNLZKGIYveyyDL05w4bKlA
+         h8Mw==
+X-Gm-Message-State: ABuFfogLtIEmkfkIssS7F4EKz6cNME8WjcYuTlSvgJxl5ilTOmUBOK2v
+        RrVvULIQJ+uRvxQrYO34k9E=
+X-Google-Smtp-Source: ACcGV60OmWMDqd6tMslbPiaP6KIqBfJIN5nnHNubZ2Rs1f6D/s0kt+buKlDC4dxIQnIkL7rOViJAaQ==
+X-Received: by 2002:a1c:7ed4:: with SMTP id z203-v6mr2227352wmc.62.1537912986692;
+        Tue, 25 Sep 2018 15:03:06 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 139-v6sm5053367wmp.4.2018.09.25.15.03.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 25 Sep 2018 15:03:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        stas@stason.org
+Subject: Re: [PATCH 1/1] config doc: highlight the name=value syntax
+References: <29173fd8-ce72-0927-9bfe-786442dfd82c@stason.org>
+        <20180924222416.5240-2-philipoakley@iee.org>
+Date:   Tue, 25 Sep 2018 15:03:05 -0700
+In-Reply-To: <20180924222416.5240-2-philipoakley@iee.org> (Philip Oakley's
+        message of "Mon, 24 Sep 2018 23:24:16 +0100")
+Message-ID: <xmqqlg7pnskm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com> <cover.1537493611.git.matvore@google.com>
- <7dd9a1120726dee34aeebdfa4bf45a232c185500.1537493611.git.matvore@google.com> <20180924210314.GE27036@localhost>
-In-Reply-To: <20180924210314.GE27036@localhost>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Tue, 25 Sep 2018 14:58:08 -0700
-Message-ID: <CAMfpvhJ-chi7OMRKjjk79r0uqCqW67Vj9J=tT7Kz-XUmw41H5A@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] CodingGuidelines: add shell piping guidelines
-To:     szeder.dev@gmail.com
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 2:03 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
-> > + - In a piped chain such as "grep blob objects | sort", the exit codes
->
-> Let's make an example with git in it, e.g. something like this:
->
->   git cmd | grep important | sort
->
-> since just two lines below the new text mentions git crashing.
-Done.
+Philip Oakley <philipoakley@iee.org> writes:
 
-> > + - The $(git ...) construct also discards git's exit code, so if the
->
-> This contruct is called command substitution, and it does preserve the
-> command's exit code, when the expanded text is assigned to a variable:
->
->   $ var=3D$(exit 42) ; echo $?
->   42
->
-> Note, however, that even in that case only the exit code of the last
-> command substitution is preserved:
->
->   $ var=3D$(exit 1)foo$(exit 2)bar$(exit 3) ; echo $?
->   3
->
-OK, I've changed this guideline to allow for setting a variable with
-command substitution, but not in other contexts. It's worded
-sufficiently openly such that your latter example will be forbidden.
+> +Variable name/value syntax
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+>  All the other lines (and the remainder of the line after the section
+>  header) are recognized as setting variables, in the form
+>  'name = value' (or just 'name', which is a short-hand to say that
+> @@ -69,7 +72,8 @@ stripped.  Leading whitespaces after 'name =', the remainder of the
+>  line after the first comment character '#' or ';', and trailing
+>  whitespaces of the line are discarded unless they are enclosed in
+>  double quotes.  Internal whitespaces within the value are retained
+> -verbatim.
+> +verbatim. Single quotes are not special and form part of the
+> +variable's value.
+>  
+>  Inside double quotes, double quote `"` and backslash `\` characters
+>  must be escaped: use `\"` for `"` and `\\` for `\`.
 
-> > +   goal is to test that particular command, redirect its output to a
-> > +   temporary file rather than wrap it with $( ).
->
-> I find this a bit vague, and to me it implies that ignoring the exit
-> code of a git command that is not the main focus of the given test is
-> acceptable, e.g. (made up pseudo example):
->
->   test_expect_success 'fetch gets what it should' '
->     git fetch $remote &&
->     test "$(git rev-parse just-fetched)" =3D $expected_oid
->   '
->
-> In my opinion no tests should ignore the exit code of any git
-> command, ever.
+Hmph.  This feels a bit backwards.  
 
-This seems like a pretty strong assertion, but something very similar
-is written in t/README (in the "don't" section):
+The original paragraph is horrible in that there is no clear mention
+that a pair of dq can be used to quote (which primarily is useful if
+your value have leading or trailing whitespaces); the closest hint
+is "enclosed in double quotes" we see in the pre-context.  The added
+sentence singles out sq but it is unclear why it is necessary to
+call out that it is not special---the readers can legitimately
+wonder if backquotes are special or not and why.
 
- - use '! git cmd' when you want to make sure the git command exits
-   with failure in a controlled way by calling "die()".  Instead,
-   use 'test_must_fail git cmd'.  This will signal a failure if git
-   dies in an unexpected way (e.g. segfault).
+I wonder if this is easier to understand:
 
-So I've changed this to basically say you should never ignore git's exit co=
-de.
+    diff --git a/Documentation/config.txt b/Documentation/config.txt
+    index ad0f4510c3..5eebd539df 100644
+    --- a/Documentation/config.txt
+    +++ b/Documentation/config.txt
+    @@ -61,12 +61,16 @@ the variable is the boolean "true").
+     The variable names are case-insensitive, allow only alphanumeric characters
+     and `-`, and must start with an alphabetic character.
 
-Here is the new commit with updated message (I will wait for a day or
-two before I send a reroll):
+    +The value part can have segments that are enclosed in a pair of
+    +double quotes (note: other kinds of quoting character pairs are not
+    +special)--the double quotes are stripped from the value.
+    +
+     A line that defines a value can be continued to the next line by
+     ending it with a `\`; the backquote and the end-of-line are
+     stripped.  Leading whitespaces after 'name =', the remainder of the
+     line after the first comment character '#' or ';', and trailing
+    -whitespaces of the line are discarded unless they are enclosed in
+    -double quotes.  Internal whitespaces within the value are retained
+    +whitespaces of the line are discarded.
+    +Internal whitespaces within the value are retained
+     verbatim.
 
-    Documentation: add shell guidelines
+     Inside double quotes, double quote `"` and backslash `\` characters
 
-    Add the following guideline to Documentation/CodingGuidelines:
+> @@ -89,10 +93,14 @@ each other with the exception that `includeIf` sections may be ignored
+>  if their condition does not evaluate to true; see "Conditional includes"
+>  below.
+>  
+> +Both the `include` and `includeIf` sections implicitly apply an 'if found'
+> +condition to the given path names.
+> +
 
-            &&, ||, and | should appear at the end of lines, not the
-            beginning, and the \ line continuation character should be
-            omitted
+Mentioning that missing target file is not an error is definitely an
+improvement.  I've never viewed it as applying "if found" condition
+myself, but it is not wrong per-se to do so, I would think.
 
-    And the following to t/README (since it is specific to writing tests):
+>  You can include a config file from another by setting the special
+>  `include.path` (or `includeIf.*.path`) variable to the name of the file
+>  to be included. The variable takes a pathname as its value, and is
+> -subject to tilde expansion. These variables can be given multiple times.
+> +subject to tilde expansion and the value syntax detailed above.
+> +These variables can be given multiple times.
 
-            pipes and $(git ...) should be avoided when they swallow exit
-            codes of Git processes
-
-    Signed-off-by: Matthew DeVore <matvore@google.com>
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideline=
-s
-index 48aa4edfb..3d2cfea9b 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -118,6 +118,24 @@ For shell scripts specifically (not exhaustive):
-                 do this
-         fi
-
-+ - If a command sequence joined with && or || or | spans multiple
-+   lines, put each command on a separate line and put && and || and |
-+   operators at the end of each line, rather than the start. This
-+   means you don't need to use \ to join lines, since the above
-+   operators imply the sequence isn't finished.
-+
-+        (incorrect)
-+        grep blob verify_pack_result \
-+        | awk -f print_1.awk \
-+        | sort >actual &&
-+        ...
-+
-+        (correct)
-+        grep blob verify_pack_result |
-+        awk -f print_1.awk |
-+        sort >actual &&
-+        ...
-+
-  - We prefer "test" over "[ ... ]".
-
-  - We do not write the noiseword "function" in front of shell
-@@ -163,7 +181,6 @@ For shell scripts specifically (not exhaustive):
-
-    does not have such a problem.
-
--
- For C programs:
-
-  - We use tabs to indent, and interpret tabs as taking up to
-diff --git a/t/README b/t/README
-index 9028b47d9..3e28b72c4 100644
---- a/t/README
-+++ b/t/README
-@@ -461,6 +461,32 @@ Don't:
-    platform commands; just use '! cmd'.  We are not in the business
-    of verifying that the world given to us sanely works.
-
-+ - Use Git upstream in the non-final position in a piped chain, as in:
-+
-+     git -C repo ls-files |
-+     xargs -n 1 basename |
-+     grep foo
-+
-+   which will discard git's exit code and may mask a crash. In the
-+   above example, all exit codes are ignored except grep's.
-+
-+   Instead, write the output of that command to a temporary
-+   file with ">" or assign it to a variable with "x=3D$(git ...)" rather
-+   than pipe it.
-+
-+ - Use command substitution in a way that discards git's exit code.
-+   When assigning to a variable, the exit code is not discarded, e.g.:
-+
-+     x=3D$(git cat-file -p $sha) &&
-+     ...
-+
-+   is OK because a crash in "git cat-file" will cause the "&&" chain
-+   to fail, but:
-+
-+     test_cmp expect $(git cat-file -p $sha)
-+
-+   is not OK and a crash in git could go undetected.
-+
-  - use perl without spelling it as "$PERL_PATH". This is to help our
-    friends on Windows where the platform Perl often adds CR before
-    the end of line, and they bundle Git with a version of Perl that
-
-
->
->
-> These last two points, however, are specific to test scripts,
-> therefore I think they would be better placed in 't/README', where the
-> rest of the test-specific guidelines are.
->
-> >  For C programs:
-> >
-> > --
-> > 2.19.0.444.g18242da7ef-goog
-> >
+I have a mild suspicion that this adds negative value.  Singling out
+that "[include] path = ..."  follows the usual value syntax makes
+the readers wonder if there are some "[section] variable = ..." that
+does not follow the value syntax that they have to be aware of and
+careful about.
