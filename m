@@ -6,57 +6,68 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25D581F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 23:09:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49CFE1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 23:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726147AbeIZFTo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 01:19:44 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39132 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726089AbeIZFTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 01:19:44 -0400
-Received: by mail-wr1-f66.google.com with SMTP id s14-v6so24991013wrw.6
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 16:09:51 -0700 (PDT)
+        id S1726355AbeIZGGS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 02:06:18 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53484 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726147AbeIZGGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 02:06:18 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b19-v6so336416wme.3
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 16:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=dq6YFfkOo+sA0aeAM1p+89XN4F17foORSAL6tKlakg4=;
-        b=AojmVWnEw639cep3+7xWfj/N1qjk6UUlIihjziSmhNtH3qtzuDPdr4zuZrOEwxxWJN
-         Xigp3IW0fRqq9Gna6IwXkXcdm7SWstQSpSeTFOBJwZiQDlGFvXHJVp8K4VlhSo9Pe0pJ
-         W/1XNhq4x8kckz0rBM50UCLJ6jD33CyvuQlGK27S5zGqdTNCINk78qpWD6C2TQJ1E9qU
-         j1a2LfMyRtPOw3iyd93N5stQ7xr+oMppYUAoBG3OTa0L0iqfm5CSoE1bmgOfGItuItXI
-         rkU9LkSCCxAeunn/srp/TOehj6gIcWt4SHX/H1ZkGGF/bhrsj/v8+4cAxEfpRwc2XNQA
-         So+g==
+        bh=jbEAEIJmnhsJqv/owd8Qi5D9NpKCD5iO934W03lHRe0=;
+        b=oCHPiVFRfwh/b3rjmfHUAOctuIJloPCSzIHVg6ZSZYwM0+2MIEV6iX+UNIUwfqCLPp
+         F+5E6ZbhBXDFcFhRFE/VbLvgWqNJhORaUTudU9WxODiRonlnEMXIl08pXmVwGZC4sfRl
+         LuLH6su7S7pqGHWqnE/yn3ycvnR1TKH5+fK8hdo9zCxygBSfeIV1cLeaYIMnt3t6Olhq
+         9d2cn/EgCdru22nPeexp6zKX90vLvhCltqzgvDchoeosPNCIi/0Kd+qRqjep6Mtw35pY
+         P8fqXye4NdTVKtPag+Yi+bz6S2XXZL21nJ8Kd4zGtsSISlZfvYGIB3qjAsIT5AD4UiEL
+         3Qjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=dq6YFfkOo+sA0aeAM1p+89XN4F17foORSAL6tKlakg4=;
-        b=SnpKprTGixMf8EWXte0b2Wm8xwzGB+KoHiTXl62yaEt7R/Wt8UCF2DaB51lSanlRyg
-         Z9thgpdMiLweaxaVs9y/vXi5eJqtyk8/OwwzDeGYoHeESRPAcS5Tf7USlfnc6a2PLY0n
-         YXB0+9qrgtpwvYl8/a67pDLi3fGKIxeqdoLjPaUnXncFyiTogdS8McDUmT3HeFmEwzKc
-         OcHqTPnku3HcJ0+keJtP2o4d8tO76Td4gYe63Qtg9XEpfXuizfsbm+UQJe8yZ2NDukJY
-         YErZVbukzVlUbwKtiwKC45bVKrdnBctDrLRj7RRDWBRiY+x7CPwjEaX9RrKh1MjML/ha
-         al/A==
-X-Gm-Message-State: ABuFfohSqsGVZ01/vmV7rH3kN4wYDGki53q4nbXO7XFPsGCVyHQrfKGR
-        918UXsj9NGzOTn0wDhMm0mk=
-X-Google-Smtp-Source: ACcGV601qaG+NHlTs7y5vMOp+67QukPieoHPu+5yvPaVOMmgRXm4+Xu8BjtWpxLxh1kIibZxVM2CAA==
-X-Received: by 2002:adf:ecc4:: with SMTP id s4-v6mr2978519wro.142.1537916990421;
-        Tue, 25 Sep 2018 16:09:50 -0700 (PDT)
+        bh=jbEAEIJmnhsJqv/owd8Qi5D9NpKCD5iO934W03lHRe0=;
+        b=iiQ4SyarHlk7U1HR2M3NW0nePHBHk07ZlifZ5ISvWusvqxypYo483/P4KT21KGgILz
+         WslFjDVjjq+Ei3ounYnBNDq4MT26mIOdHZHTayL4lqd4y5VX0vhw0Rbi4WB4Av8rYS1K
+         fpC+CXPccM987UWyNvfho67AzPyb7ix1ik3FLRJYhyg/pCXNZOHBc9+rA8JhgSIph7/T
+         7H7sKVKLIUXIMmyNfZyltpoyc96ECpteJ86iveg3thopd6pJmB/g9xJ0EXeRz+x1SoDK
+         ePBCxKYUhEiyFle3qYFQIU/ZiQWNprc+KzX+mTQ50FGAGbJr5ObNAMIcCF7Ry5Q1HoJm
+         I7/Q==
+X-Gm-Message-State: ABuFfoiPbBFZU0mzrbsiPDQRDgUgoYyF0P+l0GQavDWBJo0SNZH0ubNh
+        0dhroLWVBhHdGTsSkiH/+ZiFRT9B
+X-Google-Smtp-Source: ACcGV61E1+tjXrnnQ86USKb8YofvW510exCXThFTvUu4y/BSwvc9S7EUU6qBofA8GxIwmva8gcoFIw==
+X-Received: by 2002:a1c:5801:: with SMTP id m1-v6mr2513583wmb.135.1537919774081;
+        Tue, 25 Sep 2018 16:56:14 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s10-v6sm3252423wrw.35.2018.09.25.16.09.49
+        by smtp.gmail.com with ESMTPSA id f9-v6sm2670227wmc.24.2018.09.25.16.56.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Sep 2018 16:09:49 -0700 (PDT)
+        Tue, 25 Sep 2018 16:56:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] transport: list refs before fetch if necessary
-References: <20180925225355.74237-1-jonathantanmy@google.com>
-Date:   Tue, 25 Sep 2018 16:09:49 -0700
-In-Reply-To: <20180925225355.74237-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 25 Sep 2018 15:53:55 -0700")
-Message-ID: <xmqq8t3pnphe.fsf@gitster-ct.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v2 3/3] transport.c: introduce core.alternateRefsPrefixes
+References: <20180921213753.GA11177@sigill.intra.peff.net>
+        <xmqqtvmitsi4.fsf@gitster-ct.c.googlers.com>
+        <20180921221832.GC11177@sigill.intra.peff.net>
+        <xmqqftxzsz5x.fsf@gitster-ct.c.googlers.com>
+        <20180924181011.GA24781@sigill.intra.peff.net>
+        <xmqqa7o6skkl.fsf@gitster-ct.c.googlers.com>
+        <20180924205022.GA26936@sigill.intra.peff.net>
+        <xmqqva6ur24y.fsf@gitster-ct.c.googlers.com>
+        <20180924231455.GA7702@sigill.intra.peff.net>
+        <xmqq1s9hqxtt.fsf@gitster-ct.c.googlers.com>
+        <20180925224645.GG4364@syl>
+Date:   Tue, 25 Sep 2018 16:56:11 -0700
+In-Reply-To: <20180925224645.GG4364@syl> (Taylor Blau's message of "Tue, 25
+        Sep 2018 15:46:45 -0700")
+Message-ID: <xmqq4lednnc4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,114 +76,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 143ca008c8..7213fa0d32 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -1105,6 +1105,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
->  }
->  
->  static struct transport_vtable vtable = {
-> +	0,
->  	set_helper_option,
->  	get_refs_list,
->  	fetch,
-> diff --git a/transport-internal.h b/transport-internal.h
-> index 1cde6258a7..004bee5e36 100644
-> --- a/transport-internal.h
-> +++ b/transport-internal.h
-> @@ -6,6 +6,12 @@ struct transport;
->  struct argv_array;
->  
->  struct transport_vtable {
-> +	/**
-> +	 * This transport supports the fetch() function being called
-> +	 * without get_refs_list() first being called.
-> +	 */
-> +	unsigned fetch_without_list : 1;
-> +
->  	/**
->  	 * Returns 0 if successful, positive if the option is not
->  	 * recognized or is inapplicable, and negative if the option
-> diff --git a/transport.c b/transport.c
-> index 1c76d64aba..ee8a78ff37 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -703,6 +703,7 @@ static int disconnect_git(struct transport *transport)
->  }
->  
->  static struct transport_vtable taken_over_vtable = {
-> +	1,
->  	NULL,
->  	get_refs_via_connect,
->  	fetch_refs_via_pack,
-> @@ -852,6 +853,7 @@ void transport_check_allowed(const char *type)
->  }
->  
->  static struct transport_vtable bundle_vtable = {
-> +	0,
->  	NULL,
->  	get_refs_from_bundle,
->  	fetch_refs_from_bundle,
-> @@ -861,6 +863,7 @@ static struct transport_vtable bundle_vtable = {
->  };
->  
->  static struct transport_vtable builtin_smart_vtable = {
-> +	1,
->  	NULL,
->  	get_refs_via_connect,
->  	fetch_refs_via_pack,
+> My reading of this is threefold:
+>
+>   1. There are some cosmetic changes that need to occur in t5410 and
+>      documentation, which are mentioned above. Those seem self
+>      explanatory, and I've applied the necessary bits already on my
+>      local version of this topic.
+>
+>   2. The core.alternateRefsCommand vs transport.* discussion was
+>      resolved in [1] as "let's use core.alternateRefsCommand and
+>      core.alternateRefsPrefixes" for now, and others contributors can
+>      change this as is needed.
+>
+>   3. We can apply Peff's patch to remove the refname requirement before
+>      mine, as well as any relevant changes in my series as have been
+>      affected by Peff's patch (e.g., documentation mentioning
+>      '%(refname)', etc).
 
-Up to this point I think I understand the change.  We gain one new
-trait for each transport, many of the transport cannot run fetch
-without first seeing the advertisement, some are OK, so we have 0 or
-1 in these vtables as appropriately.
+I do think it makes sense to allow alternateRefsCommand to output
+just the object names without adding any refnames, and to keep the
+parser simple, we should not even make the refname optional
+(i.e. "allow" above becomes "require"), and make the default one
+done via an invocation of for-each-ref also do the same.
 
-> @@ -1224,6 +1227,15 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
->  	struct ref **heads = NULL;
->  	struct ref *rm;
->  
-> +	if (!transport->vtable->fetch_without_list)
-> +		/*
-> +		 * Some transports (e.g. the built-in bundle transport and the
-> +		 * transport helper interface) do not work when fetching is
-> +		 * done immediately after transport creation. List the remote
-> +		 * refs anyway (if not already listed) as a workaround.
-> +		 */
-> +		transport_get_remote_refs(transport, NULL);
-> +
+I do not think there was a strong concensus that we need to change
+the internal C API signature, though.  If the function signature for
+the callback between each_ref_fn and alternate_ref_fn were the same,
+I would have opposed to the change, but because they are already
+different, I do not think it is necessary to keep the dummy refname
+parameter that is always passed a meaningless value.
 
-But this I do not quite understand.  It looks saying "when asked to
-fetch, if the transport does not allow us to do so without first
-getting the advertisement, lazily do that", and that may be a good
-thing to do, but then aren't the current set of callers already
-calling transport-get-remote-refs elsewhere before they call
-transport-fetch-refs?  IOW, I would have expected to see a matching
-removal, or at least a code that turns an unconditional call to
-get-remote-refs to a conditional one that is done only for the
-transport that lacks the capability, or something along that line.
+The final series would be
 
-... ah, do you mean that this is not a new feature, but is a bugfix
-for some callers that are not calling get-remote-refs before calling
-fetch-refs, and the bit is to work around the fact that some
-transport not just can function without get-remote-refs first but do
-not want to call it?
+ 1/4: peff's "refnames in alternates do nto matter"
 
-IOW, I am a bit confused by this comment (copied from an earlier part)
+ 2/4: your "hardcoded for-each-ref becomes just a default"
 
-> +	/**
-> +	 * This transport supports the fetch() function being called
-> +	 * without get_refs_list() first being called.
-> +	 */
+ 3/4: your "config can affect what command enumerates alternate's tips"
 
-Shouldn't it read more like "this transport does not want its
-get-refs-list called when fetch-refs is done"?
+ 4/4: your "with prefix config, you don't need a fully custom command"
 
-I dunno.
-
-
->  	for (rm = refs; rm; rm = rm->next) {
->  		nr_refs++;
->  		if (rm->peer_ref &&
+I guess?
