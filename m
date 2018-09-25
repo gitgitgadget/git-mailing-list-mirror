@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9120B1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E36D61F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726314AbeIZEoJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:44:09 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:45106 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbeIZEoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:09 -0400
-Received: by mail-ed1-f47.google.com with SMTP id j2-v6so160944edp.12
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:23 -0700 (PDT)
+        id S1726361AbeIZEoM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:44:12 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:32832 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbeIZEoL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:11 -0400
+Received: by mail-ed1-f44.google.com with SMTP id g26-v6so211791edp.0
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=jcZ53rClSWCfp8+1xlU28nnR3n/AH9mVUlnAVmluBjg=;
-        b=RClQFr2nUIRn00JX4WiKXA2azKAOoYwvK6gymVjOThFx/wIBaieXAiOZ84ft8h51bc
-         VLttesHVfyDJWBxBdT6CfsGL5nsQKNH1JD9RE0kc7sB9zj8NZHBNMpoRcOoO233TiaUp
-         LrJJtJx9vG+VqYUlMP6tVs9eLscMuBfaW3vh5rWj4UkMQ/CKr1GjABFBsBXFn6TrvE5U
-         4PsruseC4/GZFfNYcnfRYS4twUTerYsQwdA13HR0C7REQzDP3MP78BGxzTXC5U45bYf3
-         sWHvZyGmiIkSnuGMbunNfgCDkLIPG2xMLKcQc6CLYUFckSeSqHdmseAXdeJve5W9OBfu
-         0UOQ==
+        bh=kPaN61rh4za54e28lcZm7UD97EVduRjN6t1LJjI4BaI=;
+        b=LyxqoiueSPivXlxpRg2TJFaI5QVpYO2dkSD92m562dByXFxcj1npjGTMHfh1X67Xo4
+         O1IAC9hBB7t/o07z1nqJAfJxuO6ow678mLCB/rjFJt6QFUFwiK+jHCK2nz4dPDJZIHlu
+         +b8V4y9THPPoHcO3JOr6Hg/J/GmBQVn2I2oNNP5dv3rn3dewHPal7hywiuIC30uTPl9C
+         JdSss9BjwQT0CaZKo4YRoOZs9k0w4X6PwBbRPWNySDFBlx02e++ZiVdFr1RdWkGICMsH
+         qr6fplk1dgM9rY8WzK2PvJ23e0bx4tNSXm67Q2U5Rv0nnBCu3RobOUOWE0XRireGpPMQ
+         xXWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jcZ53rClSWCfp8+1xlU28nnR3n/AH9mVUlnAVmluBjg=;
-        b=q8Dn90S7/AKZ+JDiWEpda0AD8Odtl6YK/Xue/UT2N4/0QS84xFf0x2+2dKja9wIhNQ
-         jtGFq07EhAWWcIXlMrXGT1tzQe3W8peMGKWS0Dp9qmNu1Sh5g4gpZji6bY4oA03WB0wY
-         Rvu1/ZyXlH0gFb6DNcRCL8tbu5Gm/c/SH92U3BXmvJ+9H0HR/XtpzJ08q8XTbOFHZbFp
-         hM6LYxVcqNuPQehRdfzQXnLj/3RtQZLDkZHEFQoGeA9Fl7NkfttysNvqNj9ZXTzDzKvh
-         h+K0ySqclt7K964DeGbY/jaqy52FVWSgvcLE/QrdMGP3VNXNCLkSDeoLXIvLX4vobRCa
-         CqgQ==
-X-Gm-Message-State: ABuFfogr+Azi1hKNJs0cCaWgbUlQGIV36N+jBqYkie7SG2vePzUuWzWx
-        NBEDdZoTlKrQZaxuRdVNo0U+z3Id
-X-Google-Smtp-Source: ACcGV60litQwatnTedEkbCMTfXbFgpub6JRLSBV475n/NyG4KalRDzXVPbUtuQHk0k+cJs6JVJONjQ==
-X-Received: by 2002:a50:8386:: with SMTP id 6-v6mr5008580edi.170.1537914862670;
-        Tue, 25 Sep 2018 15:34:22 -0700 (PDT)
+        bh=kPaN61rh4za54e28lcZm7UD97EVduRjN6t1LJjI4BaI=;
+        b=DfFDFNtXJ5B+mujdcinp5t+E+t2lrjgYaYoYCxCKJxApoZdQpXzRyJP3S9kPvrFs6q
+         B0Q6au85Y+bkaxqIX8rYd5UkEfAzfk4aJH+4dgF5brpFlx1aqPpj3ydX3dj2iQv6YNq6
+         3jxypVG14vJR78RkzDmrazwOO2lZIgzmkrb/oOWfLLcCMZCaMNGUY4YVqZ2Uz3Loll3j
+         ni7j+XIEkngi55yx6QIu+YK3Np1WlMLVBzvXxyEx8qFS3dc5+mRd3M0knjMHYnI+kkKQ
+         qyxdsJfp2Cwp8X+oT79viJC0iJjbCXqecWF6Wez4Yz5BwX7WjmDBXfJXGGs0qhdp0bUy
+         b2pw==
+X-Gm-Message-State: ABuFfogyZDHNa6E6JZE5eD4Pi6LFRvej4HofAZ7BShx3WeLw+DnSy61Z
+        BTMYKh4mo7Q+ZOyfUA2OX5f5dyfB
+X-Google-Smtp-Source: ACcGV62atSP5G7GB1UvfhmYB19XZTLn5POJ6hDeRJTJ5oqrOtgxBKCUKwbxQDp+eMfAfC7uhpA9lMw==
+X-Received: by 2002:aa7:ce8b:: with SMTP id y11-v6mr5074317edv.4.1537914863592;
+        Tue, 25 Sep 2018 15:34:23 -0700 (PDT)
 Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.21
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.22
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 15:34:21 -0700 (PDT)
+        Tue, 25 Sep 2018 15:34:23 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v9 03/21] stash: improve option parsing test coverage
-Date:   Wed, 26 Sep 2018 01:33:15 +0300
-Message-Id: <b40495d6bdbba753840486888b02559513b43d80.1537913094.git.ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v9 03/21] stash: update test cases conform to coding guidelines
+Date:   Wed, 26 Sep 2018 01:33:16 +0300
+Message-Id: <2e7eef95b626721bac48d072aa0869452fe4297a.1537911869.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
-In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
-References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
+In-Reply-To: <cover.1537911869.git.ungureanupaulsebastian@gmail.com>
+References: <cover.1537911869.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -65,71 +65,381 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Joel Teichroeb <joel@teichroeb.net>
+Removed whitespaces after redirection operators.
 
-In preparation for converting the stash command incrementally to
-a builtin command, this patch improves test coverage of the option
-parsing. Both for having too many parameters, or too few.
-
-Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- t/t3903-stash.sh | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ t/t3903-stash.sh | 120 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 61 insertions(+), 59 deletions(-)
 
 diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 1f871d3cca..af7586d43d 100755
+index af7586d43d..de6cab1fe7 100755
 --- a/t/t3903-stash.sh
 +++ b/t/t3903-stash.sh
-@@ -444,6 +444,36 @@ test_expect_failure 'stash file to directory' '
- 	test foo = "$(cat file/file)"
+@@ -8,22 +8,22 @@ test_description='Test git stash'
+ . ./test-lib.sh
+ 
+ test_expect_success 'stash some dirty working directory' '
+-	echo 1 > file &&
++	echo 1 >file &&
+ 	git add file &&
+ 	echo unrelated >other-file &&
+ 	git add other-file &&
+ 	test_tick &&
+ 	git commit -m initial &&
+-	echo 2 > file &&
++	echo 2 >file &&
+ 	git add file &&
+-	echo 3 > file &&
++	echo 3 >file &&
+ 	test_tick &&
+ 	git stash &&
+ 	git diff-files --quiet &&
+ 	git diff-index --cached --quiet HEAD
  '
  
-+test_expect_success 'giving too many ref arguments does not modify files' '
-+	git stash clear &&
-+	test_when_finished "git reset --hard HEAD" &&
-+	echo foo >file2 &&
-+	git stash &&
-+	echo bar >file2 &&
-+	git stash &&
-+	test-tool chmtime =123456789 file2 &&
-+	for type in apply pop "branch stash-branch"
-+	do
-+		test_must_fail git stash $type stash@{0} stash@{1} 2>err &&
-+		test_i18ngrep "Too many revisions" err &&
-+		test 123456789 = $(test-tool chmtime -g file2) || return 1
-+	done
-+'
-+
-+test_expect_success 'drop: too many arguments errors out (does nothing)' '
-+	git stash list >expect &&
-+	test_must_fail git stash drop stash@{0} stash@{1} 2>err &&
-+	test_i18ngrep "Too many revisions" err &&
+-cat > expect << EOF
++cat >expect <<EOF
+ diff --git a/file b/file
+ index 0cfbf08..00750ed 100644
+ --- a/file
+@@ -35,7 +35,7 @@ EOF
+ 
+ test_expect_success 'parents of stash' '
+ 	test $(git rev-parse stash^) = $(git rev-parse HEAD) &&
+-	git diff stash^2..stash > output &&
++	git diff stash^2..stash >output &&
+ 	test_cmp output expect
+ '
+ 
+@@ -74,7 +74,7 @@ test_expect_success 'apply stashed changes' '
+ 
+ test_expect_success 'apply stashed changes (including index)' '
+ 	git reset --hard HEAD^ &&
+-	echo 6 > other-file &&
++	echo 6 >other-file &&
+ 	git add other-file &&
+ 	test_tick &&
+ 	git commit -m other-file &&
+@@ -99,12 +99,12 @@ test_expect_success 'stash drop complains of extra options' '
+ 
+ test_expect_success 'drop top stash' '
+ 	git reset --hard &&
+-	git stash list > stashlist1 &&
+-	echo 7 > file &&
++	git stash list >expected &&
++	echo 7 >file &&
+ 	git stash &&
+ 	git stash drop &&
+-	git stash list > stashlist2 &&
+-	test_cmp stashlist1 stashlist2 &&
 +	git stash list >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'show: too many arguments errors out (does nothing)' '
-+	test_must_fail git stash show stash@{0} stash@{1} 2>err 1>out &&
-+	test_i18ngrep "Too many revisions" err &&
-+	test_must_be_empty out
-+'
-+
- test_expect_success 'stash create - no changes' '
++	test_cmp expected actual &&
+ 	git stash apply &&
+ 	test 3 = $(cat file) &&
+ 	test 1 = $(git show :file) &&
+@@ -113,9 +113,9 @@ test_expect_success 'drop top stash' '
+ 
+ test_expect_success 'drop middle stash' '
+ 	git reset --hard &&
+-	echo 8 > file &&
++	echo 8 >file &&
+ 	git stash &&
+-	echo 9 > file &&
++	echo 9 >file &&
+ 	git stash &&
+ 	git stash drop stash@{1} &&
+ 	test 2 = $(git stash list | wc -l) &&
+@@ -160,7 +160,7 @@ test_expect_success 'stash pop' '
+ 	test 0 = $(git stash list | wc -l)
+ '
+ 
+-cat > expect << EOF
++cat >expect <<EOF
+ diff --git a/file2 b/file2
+ new file mode 100644
+ index 0000000..1fe912c
+@@ -170,7 +170,7 @@ index 0000000..1fe912c
+ +bar2
+ EOF
+ 
+-cat > expect1 << EOF
++cat >expect1 <<EOF
+ diff --git a/file b/file
+ index 257cc56..5716ca5 100644
+ --- a/file
+@@ -180,7 +180,7 @@ index 257cc56..5716ca5 100644
+ +bar
+ EOF
+ 
+-cat > expect2 << EOF
++cat >expect2 <<EOF
+ diff --git a/file b/file
+ index 7601807..5716ca5 100644
+ --- a/file
+@@ -198,79 +198,79 @@ index 0000000..1fe912c
+ EOF
+ 
+ test_expect_success 'stash branch' '
+-	echo foo > file &&
++	echo foo >file &&
+ 	git commit file -m first &&
+-	echo bar > file &&
+-	echo bar2 > file2 &&
++	echo bar >file &&
++	echo bar2 >file2 &&
+ 	git add file2 &&
+ 	git stash &&
+-	echo baz > file &&
++	echo baz >file &&
+ 	git commit file -m second &&
+ 	git stash branch stashbranch &&
+ 	test refs/heads/stashbranch = $(git symbolic-ref HEAD) &&
+ 	test $(git rev-parse HEAD) = $(git rev-parse master^) &&
+-	git diff --cached > output &&
++	git diff --cached >output &&
+ 	test_cmp output expect &&
+-	git diff > output &&
++	git diff >output &&
+ 	test_cmp output expect1 &&
+ 	git add file &&
+ 	git commit -m alternate\ second &&
+-	git diff master..stashbranch > output &&
++	git diff master..stashbranch >output &&
+ 	test_cmp output expect2 &&
+ 	test 0 = $(git stash list | wc -l)
+ '
+ 
+ test_expect_success 'apply -q is quiet' '
+-	echo foo > file &&
++	echo foo >file &&
+ 	git stash &&
+-	git stash apply -q > output.out 2>&1 &&
++	git stash apply -q >output.out 2>&1 &&
+ 	test_must_be_empty output.out
+ '
+ 
+ test_expect_success 'save -q is quiet' '
+-	git stash save --quiet > output.out 2>&1 &&
++	git stash save --quiet >output.out 2>&1 &&
+ 	test_must_be_empty output.out
+ '
+ 
+ test_expect_success 'pop -q is quiet' '
+-	git stash pop -q > output.out 2>&1 &&
++	git stash pop -q >output.out 2>&1 &&
+ 	test_must_be_empty output.out
+ '
+ 
+ test_expect_success 'pop -q --index works and is quiet' '
+-	echo foo > file &&
++	echo foo >file &&
+ 	git add file &&
+ 	git stash save --quiet &&
+-	git stash pop -q --index > output.out 2>&1 &&
++	git stash pop -q --index >output.out 2>&1 &&
+ 	test foo = "$(git show :file)" &&
+ 	test_must_be_empty output.out
+ '
+ 
+ test_expect_success 'drop -q is quiet' '
+ 	git stash &&
+-	git stash drop -q > output.out 2>&1 &&
++	git stash drop -q >output.out 2>&1 &&
+ 	test_must_be_empty output.out
+ '
+ 
+ test_expect_success 'stash -k' '
+-	echo bar3 > file &&
+-	echo bar4 > file2 &&
++	echo bar3 >file &&
++	echo bar4 >file2 &&
+ 	git add file2 &&
+ 	git stash -k &&
+ 	test bar,bar4 = $(cat file),$(cat file2)
+ '
+ 
+ test_expect_success 'stash --no-keep-index' '
+-	echo bar33 > file &&
+-	echo bar44 > file2 &&
++	echo bar33 >file &&
++	echo bar44 >file2 &&
+ 	git add file2 &&
+ 	git stash --no-keep-index &&
+ 	test bar,bar2 = $(cat file),$(cat file2)
+ '
+ 
+ test_expect_success 'stash --invalid-option' '
+-	echo bar5 > file &&
+-	echo bar6 > file2 &&
++	echo bar5 >file &&
++	echo bar6 >file2 &&
+ 	git add file2 &&
+ 	test_must_fail git stash --invalid-option &&
+ 	test_must_fail git stash save --invalid-option &&
+@@ -486,11 +486,12 @@ test_expect_success 'stash branch - no stashes on stack, stash-like argument' '
  	git stash clear &&
  	test_when_finished "git reset --hard HEAD" &&
-@@ -479,6 +509,11 @@ test_expect_success 'stash branch - stashes on stack, stash-like argument' '
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	git stash branch stash-branch ${STASH_ID} &&
+-	test_when_finished "git reset --hard HEAD && git checkout master && git branch -D stash-branch" &&
++	test_when_finished "git reset --hard HEAD && git checkout master &&
++	git branch -D stash-branch" &&
  	test $(git ls-files --modified | wc -l) -eq 1
  '
  
-+test_expect_success 'stash branch complains with no arguments' '
-+	test_must_fail git stash branch 2>err &&
-+	test_i18ngrep "No branch name specified" err
-+'
-+
- test_expect_success 'stash show format defaults to --stat' '
+@@ -498,14 +499,15 @@ test_expect_success 'stash branch - stashes on stack, stash-like argument' '
  	git stash clear &&
  	test_when_finished "git reset --hard HEAD" &&
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+-	echo bar >> file &&
++	echo bar >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	git stash branch stash-branch ${STASH_ID} &&
+-	test_when_finished "git reset --hard HEAD && git checkout master && git branch -D stash-branch" &&
++	test_when_finished "git reset --hard HEAD && git checkout master &&
++	git branch -D stash-branch" &&
+ 	test $(git ls-files --modified | wc -l) -eq 1
+ '
+ 
+@@ -518,10 +520,10 @@ test_expect_success 'stash show format defaults to --stat' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+-	echo bar >> file &&
++	echo bar >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	cat >expected <<-EOF &&
+@@ -536,10 +538,10 @@ test_expect_success 'stash show - stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+-	echo bar >> file &&
++	echo bar >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	echo "1	0	file" >expected &&
+@@ -551,10 +553,10 @@ test_expect_success 'stash show -p - stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+-	echo bar >> file &&
++	echo bar >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	cat >expected <<-EOF &&
+@@ -574,7 +576,7 @@ test_expect_success 'stash show - no stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	echo "1	0	file" >expected &&
+@@ -586,7 +588,7 @@ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD" &&
+ 	git reset --hard &&
+-	echo foo >> file &&
++	echo foo >>file &&
+ 	STASH_ID=$(git stash create) &&
+ 	git reset --hard &&
+ 	cat >expected <<-EOF &&
+@@ -606,9 +608,9 @@ test_expect_success 'stash drop - fail early if specified stash is not a stash r
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD && git stash clear" &&
+ 	git reset --hard &&
+-	echo foo > file &&
++	echo foo >file &&
+ 	git stash &&
+-	echo bar > file &&
++	echo bar >file &&
+ 	git stash &&
+ 	test_must_fail git stash drop $(git rev-parse stash@{0}) &&
+ 	git stash pop &&
+@@ -620,9 +622,9 @@ test_expect_success 'stash pop - fail early if specified stash is not a stash re
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD && git stash clear" &&
+ 	git reset --hard &&
+-	echo foo > file &&
++	echo foo >file &&
+ 	git stash &&
+-	echo bar > file &&
++	echo bar >file &&
+ 	git stash &&
+ 	test_must_fail git stash pop $(git rev-parse stash@{0}) &&
+ 	git stash pop &&
+@@ -632,8 +634,8 @@ test_expect_success 'stash pop - fail early if specified stash is not a stash re
+ 
+ test_expect_success 'ref with non-existent reflog' '
+ 	git stash clear &&
+-	echo bar5 > file &&
+-	echo bar6 > file2 &&
++	echo bar5 >file &&
++	echo bar6 >file2 &&
+ 	git add file2 &&
+ 	git stash &&
+ 	test_must_fail git rev-parse --quiet --verify does-not-exist &&
+@@ -653,8 +655,8 @@ test_expect_success 'ref with non-existent reflog' '
+ test_expect_success 'invalid ref of the form stash@{n}, n >= N' '
+ 	git stash clear &&
+ 	test_must_fail git stash drop stash@{0} &&
+-	echo bar5 > file &&
+-	echo bar6 > file2 &&
++	echo bar5 >file &&
++	echo bar6 >file2 &&
+ 	git add file2 &&
+ 	git stash &&
+ 	test_must_fail git stash drop stash@{1} &&
+@@ -724,7 +726,7 @@ test_expect_success 'stash apply shows status same as git status (relative to cu
+ 	test_i18ncmp expect actual
+ '
+ 
+-cat > expect << EOF
++cat >expect <<EOF
+ diff --git a/HEAD b/HEAD
+ new file mode 100644
+ index 0000000..fe0cbee
+@@ -737,14 +739,14 @@ EOF
+ test_expect_success 'stash where working directory contains "HEAD" file' '
+ 	git stash clear &&
+ 	git reset --hard &&
+-	echo file-not-a-ref > HEAD &&
++	echo file-not-a-ref >HEAD &&
+ 	git add HEAD &&
+ 	test_tick &&
+ 	git stash &&
+ 	git diff-files --quiet &&
+ 	git diff-index --cached --quiet HEAD &&
+ 	test "$(git rev-parse stash^)" = "$(git rev-parse HEAD)" &&
+-	git diff stash^..stash > output &&
++	git diff stash^..stash >output &&
+ 	test_cmp output expect
+ '
+ 
 -- 
-2.19.0.rc0.23.g1fb9f40d88
+2.19.0.rc0.23.g1c0a08a5d3
 
