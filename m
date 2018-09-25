@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72E451F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DFEC1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726765AbeIZEoc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:44:32 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36045 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726669AbeIZEoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:30 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f4-v6so200766edq.3
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:44 -0700 (PDT)
+        id S1726372AbeIZEoN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:44:13 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:39854 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726319AbeIZEoN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:13 -0400
+Received: by mail-ed1-f48.google.com with SMTP id h4-v6so185083edi.6
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=cxPcb7E/udRc8Kanr0MZhQ2pNHj3YeYyatVYRdoZRBs=;
-        b=uG3ERwruPKqUsAoGImW8GPJ6WW6J8sSJJOW7d6jt04c2O4rD7p2Juo+0+46jY9Ud/V
-         g88ersyOkSZWcvshU91BewRDNB9/vFX3ds1cvZB0i9WoSeebeZpY0N9UenkSpX8fmqTa
-         gDSh+7cMqhngbM0kM3IeNHPls38QSGZkMm1EDThOQXs/D4CKOOP8WliyfrbaWbmwdsCt
-         RdI2pOsuHnPJbXh2RkYRjqtK1oJS7MjcmhnRa+dXMGqBkhDxeSwibhTu+R7AxRBT0OQb
-         m/loerRBNY1gJy3RJEkBgx/fdi9n69yUHEJ9GU4q+AABMaXg8KcTtY2cabkkD8ouQkG1
-         N+vg==
+        bh=0hiLFsi6N+zD69VmUURWdwsROxwb/Narz5T/ytUhcv4=;
+        b=EhFOG7Wti0zEL6zDkrEhqwpLPwt55xueqe82woN9YTDCoKXtRjIoIfNoDbeQFTq1xk
+         IPQ9AowoWeuJslO2NUn0bnWqE+AjcL1BJLZDi2lJOEQSUiqqfB4ijYbZUawc0PjL9pXN
+         7TQHKo+nx/tBQrP2aJ8j3kPUtW/6lgs/vHwrHa7UDep9LMSZuogt+7ElQDD3g3VU1pf5
+         jmmbBLe14iIzqmboQgYZbGA09D4ot4DhJz9E2hS08AOKpF/SvR3ujrEZX9WIdz5uyGt+
+         rrB5wXe+CaFTvpE0q0NsNx2EfbT89ea+HIASPmCkCw3poGYN9aJBgJcQwWzJEP3tUULI
+         dzrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cxPcb7E/udRc8Kanr0MZhQ2pNHj3YeYyatVYRdoZRBs=;
-        b=dsWFEnuDiLWMqXihkCVICEblNK8IsUd57viZjj1wScF/I8Qdw3d7n1BMjnlVNbi8D9
-         OwlbdfCdakl+J1FRRRJPbWUUB2XjjfmCwiKuU3O6dRmgCvuffyZhj1DUDMo6+PNBDbkd
-         m3uHW4mQjgnVP4ODmq0WppMHEhd2Nl2Un+l/tFEtBqz95Fre9QoK9+ARtLdz9tB3yxph
-         Gy4oGbC8iXgtOt8IUXhKLK0VU9c5VT+KCEpkU7VrboWlopMtRKyATBmjmoJlZjyYRIfx
-         6iaDkKY9u5Hjr+Lho7o/8AxcxOUIkbjJ1L3c7BKjm9IdcnR7M+VjbufRMa+o5aF82jf1
-         SjLw==
-X-Gm-Message-State: ABuFfojRzsyDJQK+SG8ymFGaJ9vghp9PSpD21zCzBeK9gYlvjv5dTXbO
-        x5EMtdB5pQLKQNRu0DUF1C8x6HWV
-X-Google-Smtp-Source: ACcGV63H/thGSil+LIZozhWM2TSK4KurcLsrJcZHkmVtXU0GqPfrV5kJh3DKJk/F36f3fTXBUsoy2A==
-X-Received: by 2002:a50:8ea1:: with SMTP id w30-v6mr4756844edw.197.1537914883412;
-        Tue, 25 Sep 2018 15:34:43 -0700 (PDT)
+        bh=0hiLFsi6N+zD69VmUURWdwsROxwb/Narz5T/ytUhcv4=;
+        b=ZtKGT+p6T/lZM6puEJhxSzFkGvLvO1PBuJENLKDA7lKeOKqTqDIOX5+QNVLvOpea23
+         k33aUMdNx9V5mGMXjSx1Ayp1+58EHFsYnBG1MIgxX/ftQ64w9VGGruZao+mmtCb66MPf
+         +rCsIMcTM2Nsa0raJ23wi2vJUKiTs9oh7ovLgGPdCIeKmNp8oHmTldGJalQ39A5SLIaZ
+         pjv7DWlg5FBF5LsKAafFKJtqKnSBnuhg0AO2HOBZVHoSNhUYe28nXpF6R0xJZRndrK9Y
+         dN0tgKpzAjo+SSSrxA/Sm7iWghdxJ8VYHPJOOqaQfTamJRMW7Ce5aeed5JjhPJ77aueL
+         5vmA==
+X-Gm-Message-State: ABuFfoh58XE9K0ZGXKPIvYyOTVm7RjtCE2UNwdTqP8ICxtFQvLp9rA6Z
+        /wIWByHqotYR5BQ4skkE5XozWeea
+X-Google-Smtp-Source: ACcGV61LNRqKN4fGEG+CWsJ0rF345RZo3u4wRZgDp3W7PWRh7WlqK1EuvR4yiW3Kn7UkUxPKZV+4Zg==
+X-Received: by 2002:a50:d1c7:: with SMTP id i7-v6mr4727129edg.169.1537914866595;
+        Tue, 25 Sep 2018 15:34:26 -0700 (PDT)
 Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.42
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.25
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 15:34:42 -0700 (PDT)
+        Tue, 25 Sep 2018 15:34:25 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v9 20/21] stash: optimize `get_untracked_files()` and `check_changes()`
-Date:   Wed, 26 Sep 2018 01:33:36 +0300
-Message-Id: <c5d7df39656c3404a2469bdb9e7a09fad46d3227.1537913094.git.ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v9 05/21] stash: add tests for `git stash show` config
+Date:   Wed, 26 Sep 2018 01:33:19 +0300
+Message-Id: <fb89d3dfa8ab6a4d1be2aa0e2df6dea5d0d58f43.1537911869.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
-In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
-References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
+In-Reply-To: <cover.1537911869.git.ungureanupaulsebastian@gmail.com>
+References: <cover.1537911869.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -65,159 +65,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commits introduces a optimization by avoiding calling the
-same functions again. For example, `git stash push -u`
-would call at some points the following functions:
-
- * `check_changes()` (inside `do_push_stash()`)
- * `do_create_stash()`, which calls: `check_changes()` and
-`get_untracked_files()`
-
-Note that `check_changes()` also calls `get_untracked_files()`.
-So, `check_changes()` is called 2 times and `get_untracked_files()`
-3 times.
-
-The old function `check_changes()` now consists of two functions:
-`get_untracked_files()` and `check_changes_tracked_files()`.
-
-These are the call chains for `push` and `create`:
-
- * `push_stash()` -> `do_push_stash()` -> `do_create_stash()`
-
- * `create_stash()` -> `do_create_stash()`
-
-To prevent calling the same functions over and over again,
-`check_changes()` inside `do_create_stash()` is now placed
-in the caller functions (`create_stash()` and `do_push_stash()`).
-This way `check_changes()` and `get_untracked files()` are called
-only one time.
-
-https://public-inbox.org/git/20180818223329.GJ11326@hank.intra.tgummerer.com/
+This commit introduces tests for `git stash show`
+config. It tests all the cases where `stash.showStat`
+and `stash.showPatch` are unset or set to true / false.
 
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- builtin/stash.c | 51 ++++++++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+ t/t3907-stash-show-config.sh | 83 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
+ create mode 100755 t/t3907-stash-show-config.sh
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index fc4a2050b1..43d0de1f13 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -875,19 +875,18 @@ static int get_untracked_files(struct pathspec ps, int include_untracked,
- }
- 
- /*
-- * The return value of `check_changes()` can be:
-+ * The return value of `check_changes_tracked_files()` can be:
-  *
-  * < 0 if there was an error
-  * = 0 if there are no changes.
-  * > 0 if there are changes.
-  */
--static int check_changes(struct pathspec ps, int include_untracked)
+diff --git a/t/t3907-stash-show-config.sh b/t/t3907-stash-show-config.sh
+new file mode 100755
+index 0000000000..10914bba7b
+--- /dev/null
++++ b/t/t3907-stash-show-config.sh
+@@ -0,0 +1,83 @@
++#!/bin/sh
 +
-+static int check_changes_tracked_files(struct pathspec ps)
- {
- 	int result;
--	int ret = 0;
- 	struct rev_info rev;
- 	struct object_id dummy;
--	struct strbuf out = STRBUF_INIT;
- 
- 	/* No initial commit. */
- 	if (get_oid("HEAD", &dummy))
-@@ -915,14 +914,26 @@ static int check_changes(struct pathspec ps, int include_untracked)
- 	if (diff_result_code(&rev.diffopt, result))
- 		return 1;
- 
-+	return 0;
++test_description='Test git stash show configuration.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit file
++'
++
++# takes three parameters:
++# 1. the stash.showStat value (or "<unset>")
++# 2. the stash.showPatch value (or "<unset>")
++# 3. the diff options of the expected output (or nothing for no output)
++test_stat_and_patch () {
++	if test "<unset>" = "$1"
++	then
++		test_unconfig stash.showStat
++	else
++		test_config stash.showStat "$1"
++	fi &&
++
++	if test "<unset>" = "$2"
++	then
++		test_unconfig stash.showPatch
++	else
++		test_config stash.showPatch "$2"
++	fi &&
++
++	shift 2 &&
++	echo 2 >file.t &&
++	if test $# != 0
++	then
++		git diff "$@" >expect
++	fi &&
++	git stash &&
++	git stash show >actual &&
++
++	if test $# = 0
++	then
++		test_must_be_empty actual
++	else
++		test_cmp expect actual
++	fi
 +}
 +
-+/*
-+ * The function will fill `untracked_files` with the names of untracked files
-+ * It will return 1 if there were any changes and 0 if there were not.
-+ */
++test_expect_success 'showStat unset showPatch unset' '
++	test_stat_and_patch "<unset>" "<unset>" --stat
++'
 +
-+static int check_changes(struct pathspec ps, int include_untracked,
-+			 struct strbuf *untracked_files)
-+{
-+	int ret = 0;
-+	if (check_changes_tracked_files(ps))
-+		ret = 1;
++test_expect_success 'showStat unset showPatch false' '
++	test_stat_and_patch "<unset>" false --stat
++'
 +
- 	if (include_untracked && get_untracked_files(ps, include_untracked,
--						     &out)) {
--		strbuf_release(&out);
--		return 1;
--	}
-+						     untracked_files))
-+		ret = 1;
- 
--	strbuf_release(&out);
--	return 0;
-+	return ret;
- }
- 
- static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
-@@ -1131,7 +1142,7 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
- 		head_commit = lookup_commit(the_repository, &info->b_commit);
- 	}
- 
--	if (!check_changes(ps, include_untracked)) {
-+	if (!check_changes(ps, include_untracked, &untracked_files)) {
- 		ret = 1;
- 		*stash_msg = NULL;
- 		goto done;
-@@ -1157,8 +1168,7 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
- 		goto done;
- 	}
- 
--	if (include_untracked && get_untracked_files(ps, include_untracked,
--						     &untracked_files)) {
-+	if (include_untracked) {
- 		if (save_untracked_files(info, &msg, untracked_files)) {
- 			if (!quiet)
- 				fprintf_ln(stderr, _("Cannot save the untracked files"));
-@@ -1234,18 +1244,14 @@ static int create_stash(int argc, const char **argv, const char *prefix)
- 					     ++argv, ' ');
- 
- 	memset(&ps, 0, sizeof(ps));
--	ret = do_create_stash(ps, &stash_msg, 0, 0, &info, NULL, 0);
-+	if (!check_changes_tracked_files(ps))
-+		return 0;
- 
--	if (!ret)
-+	if (!(ret = do_create_stash(ps, &stash_msg, 0, 0, &info, NULL, 0)))
- 		printf_ln("%s", oid_to_hex(&info.w_commit));
- 
- 	strbuf_release(&stash_msg_buf);
--
--	/*
--	 * ret can be 1 if there were no changes. In this case, we should
--	 * not error out.
--	 */
--	return ret < 0;
-+	return ret;
- }
- 
- static int do_push_stash(struct pathspec ps, char *stash_msg, int quiet,
-@@ -1254,6 +1260,7 @@ static int do_push_stash(struct pathspec ps, char *stash_msg, int quiet,
- 	int ret = 0;
- 	struct stash_info info;
- 	struct strbuf patch = STRBUF_INIT;
-+	struct strbuf untracked_files = STRBUF_INIT;
- 
- 	if (patch_mode && keep_index == -1)
- 		keep_index = 1;
-@@ -1289,7 +1296,7 @@ static int do_push_stash(struct pathspec ps, char *stash_msg, int quiet,
- 		goto done;
- 	}
- 
--	if (!check_changes(ps, include_untracked)) {
-+	if (!check_changes(ps, include_untracked, &untracked_files)) {
- 		stash_msg = NULL;
- 		if (!quiet)
- 			printf_ln(_("No local changes to save"));
++test_expect_success 'showStat unset showPatch true' '
++	test_stat_and_patch "<unset>" true --stat -p
++'
++
++test_expect_success 'showStat false showPatch unset' '
++	test_stat_and_patch false "<unset>"
++'
++
++test_expect_success 'showStat false showPatch false' '
++	test_stat_and_patch false false
++'
++
++test_expect_success 'showStat false showPatch true' '
++	test_stat_and_patch false true -p
++'
++
++test_expect_success 'showStat true showPatch unset' '
++	test_stat_and_patch true "<unset>" --stat
++'
++
++test_expect_success 'showStat true showPatch false' '
++	test_stat_and_patch true false --stat
++'
++
++test_expect_success 'showStat true showPatch true' '
++	test_stat_and_patch true true --stat -p
++'
++
++test_done
 -- 
-2.19.0.rc0.23.g1fb9f40d88
+2.19.0.rc0.23.g1c0a08a5d3
 
