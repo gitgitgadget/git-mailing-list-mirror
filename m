@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC80C1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DDE41F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726497AbeIZEoV (ORCPT <rfc822;e@80x24.org>);
+        id S1726506AbeIZEoV (ORCPT <rfc822;e@80x24.org>);
         Wed, 26 Sep 2018 00:44:21 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35633 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbeIZEoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:20 -0400
-Received: by mail-ed1-f68.google.com with SMTP id y21-v6so204826edr.2
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:34 -0700 (PDT)
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:38009 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbeIZEoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:21 -0400
+Received: by mail-ed1-f50.google.com with SMTP id x8-v6so190352eds.5
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=9yi4pehCrT28vEnrSBu3au5TlWfEPICxy1Qu0sGII2c=;
-        b=Bc/6YL4ZU/Hjb5uVRqcuOU2ksXWCCkcjMeKhETfJNyAjRwj4btk2z3rky0hlz4KBlD
-         G5YmLMjMEJaQXEqaFONVcr3cwn4GvRGOePC54Li5M6aWLTNH46+MNUL2fRh+fqNUEIZ4
-         L6RwjJs9m2zZ66SY0GMIqXvY3siMRpKIAjTzPt47H721qVdeSJXVUd1yfagzrsyHuiWD
-         Vh/cGSd3qdrbU7af5PT8xiKeD2tWgLRqCNmEWz+twYF4HeaMZz+rJNFdIrtrc9b+fcnJ
-         zy023je5v988ZujUwVdk+svd9Symu10i+NgepBRJv2UNWoEMUd63WyRwDqDY7r4pK8O6
-         /hcA==
+        bh=emstmxA0N28GUlKQv9rQzOqV8OvFlYCuvFOq5X0kWlU=;
+        b=hm0Pz/JUFB6A9Gn4OjxpZF8Wzd2vfJncyXjR1oLrtvn1VySbFwPOR8eJh6gCED+7M2
+         DKg6IjmekllfB8MmT5TeOdD2z300InQ1/DX7re2qT+MXhd2hgn1MUy0jmCD4462B/dca
+         pTZptf/GszMP5NUcgLIgX5oMQDOpwcraS4NkS9seZVNAkIIcJdvFJ5xE12PBCexcDa4G
+         EJ/3/kIH5vv+Q+0RFFYJb/lrHyU2/LVTDEpORi5YbbVC2sVd3AgzAI6RlGgZHdNa6AxU
+         +cBYo+YxV5GqF6Hwd5b/qXlF/woJCU1urp1PUnSa3j6GdtCMHgiriShT8Do8kdKf0DgD
+         9RwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9yi4pehCrT28vEnrSBu3au5TlWfEPICxy1Qu0sGII2c=;
-        b=Tnj5myGcCIYHvijfQJdJBITtXl7qfxDY6rZkz1Mb0CFB37Pf0Nk9/IPj1BjFyygiXr
-         50WgOLy3h/h9wiIkjPp2QkSC6hCgVZgetoH/XHB3RQtK6mwA56PXF9ITqruw5A28fcjj
-         PhnJ1PWzeC2WYa4zWluKBD/vFVF695kPjOa1WkJwQ4MLhY6NBlO+cnMkiPcfJ/AW07LQ
-         kgVslx75fddnWnw1mXa/dZGLC4zoC0mywVXMiAxbQQGzbNy7TRLIZyeC3XyeyPtZSPeX
-         QL9S8NiuiKAZTWO1GceyU0ISuuaMBNQFlbPjSTLnV7kDNt6vNCSRlCsm+52R53QqWVcX
-         DaJw==
-X-Gm-Message-State: ABuFfojP8lxdZzMnIJsKsAN34nnBNd+YwmzMVl+KO28PU3gUaWaTwisE
-        nFc4jiAb9hzrrC4hrPbrq3Q58QHS
-X-Google-Smtp-Source: ACcGV61eKALrpOkzIPbA7rGwGmrnOrnnFOx3GIrBdgRV/AKleenC1EkfMs7hkFsKG4B5YqO6bXLvmQ==
-X-Received: by 2002:a50:a5db:: with SMTP id b27-v6mr4760664edc.137.1537914873529;
-        Tue, 25 Sep 2018 15:34:33 -0700 (PDT)
+        bh=emstmxA0N28GUlKQv9rQzOqV8OvFlYCuvFOq5X0kWlU=;
+        b=a4XAV4QSc07Qi14gi/0j7woCjz5YkJyvOaD3efqt41jos4CJRd6lR1eekOfokvCivK
+         xDXqSpqj26PCjvUT/a/SjKH67HSYCkJqyCn4937YlUdD6OnW2RKg2iQAZ2Gfys0rHzoo
+         Tfi+17PFnUB8ZreRx8DW9YGo20/YDR62GypP8Tt2Fi2M5fEcAj3P48Use7xTuCrQc41b
+         bs9bbM6oTvQS70vXBA1A6NtNXAxaI2/jj+uUPVA8taevP3SKbfpMCqABTxOwApk5tGdW
+         QF9iyTOef1PZWWkFL+96vFpcHsROg5IOJyDkcWFEa6l94FPc+rSa8wgtNFrbQ4xIVqE/
+         /Tlg==
+X-Gm-Message-State: ABuFfoiQ1w6MFAIQjBJ+Ox20H7rLfeRxQDXmfc23p3Js+l8BBAj3p7lV
+        H3S9ZU4jVlzSf0GyPcTwRTAo9kXI
+X-Google-Smtp-Source: ACcGV61KDCFFibgw0rH3Wd1u0XFeeOj1fh0OzVETuWqwvfZExl7GrbyLn9XBlQgnfwuMsaGmb553vw==
+X-Received: by 2002:aa7:d3d4:: with SMTP id o20-v6mr4844071edr.193.1537914874487;
+        Tue, 25 Sep 2018 15:34:34 -0700 (PDT)
 Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.32
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.33
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 15:34:32 -0700 (PDT)
+        Tue, 25 Sep 2018 15:34:33 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v9 10/21] stash: convert pop to builtin
-Date:   Wed, 26 Sep 2018 01:33:26 +0300
-Message-Id: <716078e70b01febefd9bd5300ce60de6d5bbd6f4.1537913094.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v9 11/21] stash: convert list to builtin
+Date:   Wed, 26 Sep 2018 01:33:27 +0300
+Message-Id: <d0ea2c4b94b451d498aff5e8829534cb535a691f.1537913094.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
 In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
@@ -65,153 +65,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Joel Teichroeb <joel@teichroeb.net>
+Add stash list to the helper and delete the list_stash function
+from the shell script.
 
-Add stash pop to the helper and delete the pop_stash, drop_stash,
-assert_stash_ref functions from the shell script now that they
-are no longer needed.
-
-Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- builtin/stash--helper.c | 38 ++++++++++++++++++++++++++++++++-
- git-stash.sh            | 47 ++---------------------------------------
- 2 files changed, 39 insertions(+), 46 deletions(-)
+ builtin/stash--helper.c | 31 +++++++++++++++++++++++++++++++
+ git-stash.sh            |  7 +------
+ 2 files changed, 32 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index 5841bd0e98..c1f78d3275 100644
+index c1f78d3275..9e256690ec 100644
 --- a/builtin/stash--helper.c
 +++ b/builtin/stash--helper.c
-@@ -13,7 +13,7 @@
+@@ -12,6 +12,7 @@
+ #include "rerere.h"
  
  static const char * const git_stash_helper_usage[] = {
++	N_("git stash--helper list [<options>]"),
  	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
--	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
-+	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+ 	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
  	N_("git stash--helper branch <branchname> [<stash>]"),
- 	N_("git stash--helper clear"),
- 	NULL
-@@ -24,6 +24,11 @@ static const char * const git_stash_helper_drop_usage[] = {
+@@ -19,6 +20,11 @@ static const char * const git_stash_helper_usage[] = {
  	NULL
  };
  
-+static const char * const git_stash_helper_pop_usage[] = {
-+	N_("git stash--helper pop [--index] [-q|--quiet] [<stash>]"),
++static const char * const git_stash_helper_list_usage[] = {
++	N_("git stash--helper list [<options>]"),
 +	NULL
 +};
 +
- static const char * const git_stash_helper_apply_usage[] = {
- 	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
+ static const char * const git_stash_helper_drop_usage[] = {
+ 	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
  	NULL
-@@ -542,6 +547,35 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
+@@ -614,6 +620,29 @@ static int branch_stash(int argc, const char **argv, const char *prefix)
  	return ret;
  }
  
-+static int pop_stash(int argc, const char **argv, const char *prefix)
++static int list_stash(int argc, const char **argv, const char *prefix)
 +{
-+	int ret;
-+	int index = 0;
-+	int quiet = 0;
-+	struct stash_info info;
++	struct child_process cp = CHILD_PROCESS_INIT;
 +	struct option options[] = {
-+		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-+		OPT_BOOL(0, "index", &index,
-+			 N_("attempt to recreate the index")),
 +		OPT_END()
 +	};
 +
 +	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_helper_pop_usage, 0);
++			     git_stash_helper_list_usage,
++			     PARSE_OPT_KEEP_UNKNOWN);
 +
-+	if (get_stash_info(&info, argc, argv))
-+		return -1;
++	if (!ref_exists(ref_stash))
++		return 0;
 +
-+	assert_stash_ref(&info);
-+	if ((ret = do_apply_stash(prefix, &info, index, quiet)))
-+		printf_ln(_("The stash entry is kept in case you need it again."));
-+	else
-+		ret = do_drop_stash(prefix, &info, quiet);
-+
-+	free_stash_info(&info);
-+	return ret;
++	cp.git_cmd = 1;
++	argv_array_pushl(&cp.args, "log", "--format=%gd: %gs", "-g",
++			 "--first-parent", "-m", NULL);
++	argv_array_pushv(&cp.args, argv);
++	argv_array_push(&cp.args, ref_stash);
++	argv_array_push(&cp.args, "--");
++	return run_command(&cp);
 +}
 +
- static int branch_stash(int argc, const char **argv, const char *prefix)
+ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
  {
- 	int ret;
-@@ -606,6 +640,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!clear_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "drop"))
- 		return !!drop_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "pop"))
-+		return !!pop_stash(argc, argv, prefix);
+ 	pid_t pid = getpid();
+@@ -644,6 +673,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+ 		return !!pop_stash(argc, argv, prefix);
  	else if (!strcmp(argv[0], "branch"))
  		return !!branch_stash(argc, argv, prefix);
++	else if (!strcmp(argv[0], "list"))
++		return !!list_stash(argc, argv, prefix);
  
+ 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+ 		      git_stash_helper_usage, options);
 diff --git a/git-stash.sh b/git-stash.sh
-index 29d9f44255..8f2640fe90 100755
+index 8f2640fe90..6052441aa2 100755
 --- a/git-stash.sh
 +++ b/git-stash.sh
-@@ -554,50 +554,6 @@ assert_stash_like() {
- 	}
+@@ -382,11 +382,6 @@ have_stash () {
+ 	git rev-parse --verify --quiet $ref_stash >/dev/null
  }
  
--is_stash_ref() {
--	is_stash_like "$@" && test -n "$IS_STASH_REF"
+-list_stash () {
+-	have_stash || return 0
+-	git log --format="%gd: %gs" -g --first-parent -m "$@" $ref_stash --
 -}
 -
--assert_stash_ref() {
--	is_stash_ref "$@" || {
--		args="$*"
--		die "$(eval_gettext "'\$args' is not a stash reference")"
--	}
--}
--
--apply_stash () {
--	cd "$START_DIR"
--	git stash--helper apply "$@"
--	res=$?
--	cd_to_toplevel
--	return $res
--}
--
--pop_stash() {
--	assert_stash_ref "$@"
--
--	if apply_stash "$@"
--	then
--		drop_stash "$@"
--	else
--		status=$?
--		say "$(gettext "The stash entry is kept in case you need it again.")"
--		exit $status
--	fi
--}
--
--drop_stash () {
--	assert_stash_ref "$@"
--
--	git reflog delete --updateref --rewrite "${REV}" &&
--		say "$(eval_gettext "Dropped \${REV} (\$s)")" ||
--		die "$(eval_gettext "\${REV}: Could not drop stash entry")"
--
--	# clear_stash if we just dropped the last stash entry
--	git rev-parse --verify --quiet "$ref_stash@{0}" >/dev/null ||
--	clear_stash
--}
--
- test "$1" = "-p" && set "push" "$@"
- 
- PARSE_CACHE='--not-parsed'
-@@ -655,7 +611,8 @@ drop)
- 	;;
- pop)
+ show_stash () {
+ 	ALLOW_UNKNOWN_FLAGS=t
+ 	assert_stash_like "$@"
+@@ -574,7 +569,7 @@ test -n "$seen_non_option" || set "push" "$@"
+ case "$1" in
+ list)
  	shift
--	pop_stash "$@"
-+	cd "$START_DIR"
-+	git stash--helper pop "$@"
+-	list_stash "$@"
++	git stash--helper list "$@"
  	;;
- branch)
+ show)
  	shift
 -- 
 2.19.0.rc0.23.g1fb9f40d88
