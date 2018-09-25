@@ -7,69 +7,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FE9B1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 11:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7B771F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 13:28:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728733AbeIYSBY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 14:01:24 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50855 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728706AbeIYSBY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 14:01:24 -0400
-Received: by mail-wm1-f68.google.com with SMTP id s12-v6so13101013wmc.0
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 04:54:12 -0700 (PDT)
+        id S1729167AbeIYTff (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 15:35:35 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:45249 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727165AbeIYTfe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 15:35:34 -0400
+Received: by mail-qt1-f194.google.com with SMTP id l2-v6so13272473qtr.12
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 06:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=utcEQkLTMiEtKiW/tm+AQXYhpj5a+7iQ7z+RB055oGA=;
-        b=bMhuVY3dHPUUDZ6n6+qF0oCkfFOUiQ8/sxkfjJ7mra0VA8pfbBt5xSBf57sLBCV1/k
-         abWBTHGcqNrdqcgoSlDNer620yG9zkvaQbeFXHw2Sn0R5LDNayW1qbYR+7tWC2ynBV6r
-         txzfyfd9EP93F9c2U9BxE7C/6knJ5KHynb6VqrReR7IFB1qQtJ9VUAYkZQr/oI9wJA2F
-         q3HBWEqjVV5OxqndBZy6meH+6wjy2TChWE7/oV7Xw9cUe88KviSEneVbXCIW//bQj1tN
-         E8u485qMDrKvG7jNTglomZZgU+5NK+0OT+e/ICzEMo38ueG3ce0fO9Fbm41T+Mu+hKS9
-         WiTA==
+        bh=Se3NxHRQNb7SWftCIIptMmABYA0ofXxGlVVOuPR0Xo8=;
+        b=qLXxMeXAhx5929vY9XLD8Uj7Kytd7/8d4XS+3ObMLzF5++VbMvEmd40pfuVpVtw3fu
+         VdapInHGYHPebfHffCpDQG8vYEePnnH96ZxafETfACt1ehzqqWOd6f2uH+YV9OzYdPlV
+         iJxPNdKFxDWpa3tn6Yq2oCJUc2k2girY5IOp5jig9sGeBtzG7s2IiB9MZRm5HH9j77Tx
+         QtL5VNsVIo7+gfn33yZNtH0TkbRVlIr/aye6xBEJpw/yY1lV3oeNgZirMGtscHswKgwy
+         B0CasCtrclVeemPzv2UkjSWIPiCO14WAEjnCBpxKAHArsSSR0sK1aw7pNYhJQy6TW8SV
+         c+tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=utcEQkLTMiEtKiW/tm+AQXYhpj5a+7iQ7z+RB055oGA=;
-        b=rLpRZjCmpP7bl7LowXvByd143a8MCsI0rbC8cpB3uRzsWhWXRYnQt7olfSsT1+FXYa
-         +JjuDy0bfc8zTwhMNqnbpVXO43XWb/7FxA1bWuWUehKHUQbI9zVqhVx/nKgC3QWDfh7K
-         Cswathj5CjvYZcOrF0moBL3tIQrnAK/3P+cVwIdQpn44xZtrvXQcc6nlA3r0v6ir3gqz
-         jL3plukqXzn+lHeJIK183kuLPcnZ0SIixJC0QWJav8eoH9OoOQ0y3CBRH5HHh+0gx4+x
-         JQ4nOZyPmK8UGMTGLnCFVBCeuFVJ1+irWVXNytNJmllPUBewPwjMhoKIPSIHqH3V3lxT
-         En4g==
-X-Gm-Message-State: ABuFfogWQWHZY+MVR6XPHyqC5ndk1ZitNmyHIyicAlKc6fCYQsVgHlmO
-        uBC3lBhjH8xH8vjUD9RZAGqhhI5g
-X-Google-Smtp-Source: ACcGV63s09atQAAFjEVplt6w+wtVHxH/oPjG0rvGdJtdG2bZb1mzI3iKUpTUDsLxsemtP7yvYmfPug==
-X-Received: by 2002:a1c:e289:: with SMTP id z131-v6mr426986wmg.32.1537876451024;
-        Tue, 25 Sep 2018 04:54:11 -0700 (PDT)
-Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id z14-v6sm1998628wrr.91.2018.09.25.04.54.09
+        bh=Se3NxHRQNb7SWftCIIptMmABYA0ofXxGlVVOuPR0Xo8=;
+        b=W6/F68c1F59XVZc0Kd5zvkymDRFeqAhZbw63S+VJ8+aMMNPyOasD1/kawLAzcYlv4r
+         TIq34BAajPH+4/Pk2U/cf5F3UxqZVEfJtd1RgcWYIFhBaymWdoWZrbZbU7fZg/He2ztf
+         iwfQkaKy5MeuNSgiLC+JX6ajZMaZCpA6Wc6fUPQk6ut5t7IxpevQid993Uc1YiIFCEDu
+         eEBtd2Eqo1tJRfLI/ko0stooQrGuNA65PGZGmd4FwVqdVkm+0XrRaSZdf29hrI4LJk1N
+         V23Yr/F1whwzirSVhsAniaEtdYqunq7Ccg0ugsV6TjosfwX0hTeL62fp6gSMKx/jRw20
+         RIDQ==
+X-Gm-Message-State: ABuFfogzwWL1v2NzT5trpipn/qZRk0i+qoy0QIllPw0XdDwptWILhqp6
+        Sq+hjGI8Ikn/EKBY4pAgDkASrvSi
+X-Google-Smtp-Source: ACcGV61fO3+coA/q8LQUmHNTpN4etVnT/0HA2MBD5L+Ffh9I9lWU48R9QSnNWmuktJczQbbRpTjZYw==
+X-Received: by 2002:aed:3e4d:: with SMTP id m13-v6mr733891qtf.99.1537882079883;
+        Tue, 25 Sep 2018 06:27:59 -0700 (PDT)
+Received: from stolee-linux.mshome.net ([167.220.148.125])
+        by smtp.gmail.com with ESMTPSA id h68-v6sm1157628qkc.97.2018.09.25.06.27.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 04:54:10 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+        Tue, 25 Sep 2018 06:27:51 -0700 (PDT)
+From:   Derrick Stolee <stolee@gmail.com>
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 7/8] t0410: test fetching from many promisor remotes
-Date:   Tue, 25 Sep 2018 13:53:40 +0200
-Message-Id: <20180925115341.19248-8-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.19.0.278.gca5b891cac
-In-Reply-To: <20180925115341.19248-1-chriscool@tuxfamily.org>
-References: <20180925115341.19248-1-chriscool@tuxfamily.org>
+Cc:     peff@peff.net, Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] commit-reach: cleanups in can_all_from_reach...
+Date:   Tue, 25 Sep 2018 13:27:41 +0000
+Message-Id: <20180925132741.223513-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.19.0
+In-Reply-To: <pull.39.v4.git.gitgitgadget@gmail.com>
+References: <pull.39.v4.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -77,56 +66,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Due to a regression introduced by 4fbcca4e "commit-reach: make
+can_all_from_reach... linear" the series including b67f6b26
+"commit-reach: properly peel tags" was merged to master quickly.
+
+There were a few more cleanups left to apply in the series, which
+are included by this change:
+
+1. Clean up a comment that is in the incorrect style.
+
+2. Replace multiple calls to clear_commit_marks() with one call to
+   clear_commit_marks_many().
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t0410-partial-clone.sh | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ commit-reach.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 8b32be6417..3fbd8d919e 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -170,6 +170,28 @@ test_expect_success 'fetching of missing objects' '
- 	git verify-pack --verbose "$IDX" | grep "$HASH"
- '
+diff --git a/commit-reach.c b/commit-reach.c
+index 5a845440a9..66aa41262c 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -558,7 +558,8 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 		from_one = deref_tag(the_repository, from_one,
+ 				     "a from object", 0);
+ 		if (!from_one || from_one->type != OBJ_COMMIT) {
+-			/* no way to tell if this is reachable by
++			/*
++			 * no way to tell if this is reachable by
+ 			 * looking at the ancestry chain alone, so
+ 			 * leave a note to ourselves not to worry about
+ 			 * this object anymore.
+@@ -622,10 +623,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 	}
  
-+test_expect_success 'fetching of missing objects from another odb remote' '
-+	git clone "file://$(pwd)/server" server2 &&
-+	test_commit -C server2 bar &&
-+	git -C server2 repack -a -d --write-bitmap-index &&
-+	HASH2=$(git -C server2 rev-parse bar) &&
-+
-+	git -C repo remote add server2 "file://$(pwd)/server2" &&
-+	git -C repo config odb.magic2.promisorRemote server2 &&
-+	git -C repo cat-file -p "$HASH2" &&
-+
-+	git -C repo fetch server2 &&
-+	rm -rf repo/.git/objects/* &&
-+	git -C repo cat-file -p "$HASH2" &&
-+
-+	# Ensure that the .promisor file is written, and check that its
-+	# associated packfile contains the object
-+	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
-+	test_line_count = 1 promisorlist &&
-+	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
-+	git verify-pack --verbose "$IDX" | grep "$HASH2"
-+'
-+
- test_expect_success 'fetching of missing objects works with ref-in-want enabled' '
- 	# ref-in-want requires protocol version 2
- 	git -C server config protocol.version 2 &&
-@@ -183,7 +205,7 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
- '
+ cleanup:
+-	for (i = 0; i < nr_commits; i++) {
+-		clear_commit_marks(list[i], RESULT);
+-		clear_commit_marks(list[i], assign_flag);
+-	}
++	clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
+ 	free(list);
  
- test_expect_success 'rev-list stops traversal at missing and promised commit' '
--	rm -rf repo &&
-+	rm -rf repo server server2 &&
- 	test_create_repo repo &&
- 	test_commit -C repo foo &&
- 	test_commit -C repo bar &&
+ 	for (i = 0; i < from->nr; i++)
+
+base-commit: 4067a64672f9db8ca38d5a2682a7cdba7938c18b
 -- 
-2.19.0.278.gca5b891cac
+2.19.0
 
