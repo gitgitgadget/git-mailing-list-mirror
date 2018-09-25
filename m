@@ -2,117 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7B771F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 13:28:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5FA31F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 14:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729167AbeIYTff (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 15:35:35 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45249 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727165AbeIYTfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 15:35:34 -0400
-Received: by mail-qt1-f194.google.com with SMTP id l2-v6so13272473qtr.12
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 06:28:00 -0700 (PDT)
+        id S1729382AbeIYUhj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 16:37:39 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:44733 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729098AbeIYUhj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 16:37:39 -0400
+Received: by mail-qk1-f193.google.com with SMTP id g184-v6so109471qkc.11
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 07:29:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Se3NxHRQNb7SWftCIIptMmABYA0ofXxGlVVOuPR0Xo8=;
-        b=qLXxMeXAhx5929vY9XLD8Uj7Kytd7/8d4XS+3ObMLzF5++VbMvEmd40pfuVpVtw3fu
-         VdapInHGYHPebfHffCpDQG8vYEePnnH96ZxafETfACt1ehzqqWOd6f2uH+YV9OzYdPlV
-         iJxPNdKFxDWpa3tn6Yq2oCJUc2k2girY5IOp5jig9sGeBtzG7s2IiB9MZRm5HH9j77Tx
-         QtL5VNsVIo7+gfn33yZNtH0TkbRVlIr/aye6xBEJpw/yY1lV3oeNgZirMGtscHswKgwy
-         B0CasCtrclVeemPzv2UkjSWIPiCO14WAEjnCBpxKAHArsSSR0sK1aw7pNYhJQy6TW8SV
-         c+tw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=IxeNtsQDKAprdagx8WnldekgvKjph4nFIvpEj/C1WNM=;
+        b=oYPB8x7VauRgl1/jB2OtXHDK2AIOD/1nz0dMPOPhztdCI2Owg+U4dmyO4i7nOiEYz1
+         KQMLsvBjudfk7OJ7C06bJKvSMJtEdo1/0rLoLVVsqSGCtwleOjKxW+qebXbkq3vlB/sq
+         yIYjcQ9cZPNiE/Ux69eVGOxM0qfkWVQYu1tVzYC2OtKlFNQnkNgDJnkdoe0JJfbfJtfa
+         BUHwhVXAPAb81FGYfpCvIeYreGYTNIw9/2D1brPUUhqgByxfRPzWXZU4kPFxpZDb9hNU
+         sE2he6zAKa82BpG/EwOuwruSzMRj+s+fcs/TfR+VJYwq/1Ymya1ivdSyB7o4EkxeJy5x
+         zTUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Se3NxHRQNb7SWftCIIptMmABYA0ofXxGlVVOuPR0Xo8=;
-        b=W6/F68c1F59XVZc0Kd5zvkymDRFeqAhZbw63S+VJ8+aMMNPyOasD1/kawLAzcYlv4r
-         TIq34BAajPH+4/Pk2U/cf5F3UxqZVEfJtd1RgcWYIFhBaymWdoWZrbZbU7fZg/He2ztf
-         iwfQkaKy5MeuNSgiLC+JX6ajZMaZCpA6Wc6fUPQk6ut5t7IxpevQid993Uc1YiIFCEDu
-         eEBtd2Eqo1tJRfLI/ko0stooQrGuNA65PGZGmd4FwVqdVkm+0XrRaSZdf29hrI4LJk1N
-         V23Yr/F1whwzirSVhsAniaEtdYqunq7Ccg0ugsV6TjosfwX0hTeL62fp6gSMKx/jRw20
-         RIDQ==
-X-Gm-Message-State: ABuFfogzwWL1v2NzT5trpipn/qZRk0i+qoy0QIllPw0XdDwptWILhqp6
-        Sq+hjGI8Ikn/EKBY4pAgDkASrvSi
-X-Google-Smtp-Source: ACcGV61fO3+coA/q8LQUmHNTpN4etVnT/0HA2MBD5L+Ffh9I9lWU48R9QSnNWmuktJczQbbRpTjZYw==
-X-Received: by 2002:aed:3e4d:: with SMTP id m13-v6mr733891qtf.99.1537882079883;
-        Tue, 25 Sep 2018 06:27:59 -0700 (PDT)
-Received: from stolee-linux.mshome.net ([167.220.148.125])
-        by smtp.gmail.com with ESMTPSA id h68-v6sm1157628qkc.97.2018.09.25.06.27.47
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=IxeNtsQDKAprdagx8WnldekgvKjph4nFIvpEj/C1WNM=;
+        b=e/nq36eAnWJO9pqlkVEbKZ0PEkZVizibIjQkZSxV6+JrqngpRCY/xIoCT7E1Lp27h3
+         klKWRJrlI4T+0hUno0gIOhy7S9viVMzk2jH+ZdQh7JiHzYHnYZudYJUTmpOje34Umucq
+         c+0cKZVQ41DeSIuqUmvJ0pzm4XdJODHUnt1MhRbeFf8nrouCoxPd0jmCoW6oTPvu8CiP
+         mjjEvy5l89gTDecBHwVe8RFTIVhju0vBW6hbjrf8sTcKMYqEUcpn7cizPpTn0L2X/XbR
+         tDjEVxMaeo0mb1XG2g8JkYKZ3GhQTqI6eWYaLkkSoX1O9+XlYd/1ptcsm4D92b+8Op54
+         PXuw==
+X-Gm-Message-State: ABuFfoh+JMtHD1F8X1OWYoCQX2ME22hVIDbnrG/vJ4LUv1YEm2pdoPzT
+        GDQAloSbOHLXQCnPNnU9SPg=
+X-Google-Smtp-Source: ACcGV62TJwQNBVybm+pB5OdrjMAH+YKsJqu4v+1sl01CfZaWwyvQ08K7EFUbvg7+Wwk8tmY13DDwLw==
+X-Received: by 2002:a37:4653:: with SMTP id t80-v6mr903082qka.314.1537885792199;
+        Tue, 25 Sep 2018 07:29:52 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:78b6:4100:eb3b:b0cf? ([2001:4898:8010:0:61ec:4100:eb3b:b0cf])
+        by smtp.gmail.com with ESMTPSA id d127-v6sm1444934qkg.14.2018.09.25.07.29.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 06:27:51 -0700 (PDT)
+        Tue, 25 Sep 2018 07:29:47 -0700 (PDT)
+Subject: Re: [PATCH 1/1] read-cache: update index format default to v4
+To:     Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, pclouds@gmail.com, peartben@gmail.com,
+        git@jeffhostetler.com, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <pull.41.git.gitgitgadget@gmail.com>
+ <56374128136fe9377503d446daf98e67847194aa.1537823728.git.gitgitgadget@gmail.com>
+ <20180924213223.GG27036@localhost> <20180925070618.GB1596@xps>
 From:   Derrick Stolee <stolee@gmail.com>
-X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH] commit-reach: cleanups in can_all_from_reach...
-Date:   Tue, 25 Sep 2018 13:27:41 +0000
-Message-Id: <20180925132741.223513-1-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <pull.39.v4.git.gitgitgadget@gmail.com>
-References: <pull.39.v4.git.gitgitgadget@gmail.com>
+Message-ID: <4d276a77-0ac9-c1d1-b5de-3ded394efb0b@gmail.com>
+Date:   Tue, 25 Sep 2018 10:29:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
+In-Reply-To: <20180925070618.GB1596@xps>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 9/25/2018 3:06 AM, Patrick Steinhardt wrote:
+> On Mon, Sep 24, 2018 at 11:32:23PM +0200, SZEDER Gábor wrote:
+>> On Mon, Sep 24, 2018 at 02:15:30PM -0700, Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <dstolee@microsoft.com>
+>>>
+>>> The index v4 format has been available since 2012 with 9d22778
+>>> "reach-cache.c: write prefix-compressed names in the index". Since
+>>> the format has been stable for so long, almost all versions of Git
+>>> in use today understand version 4, removing one barrier to upgrade
+>>> -- that someone may want to downgrade and needs a working repo.
+>> What about alternative implementations, like JGit, libgit2, etc.?
+> Speaking of libgit2, we are able to read and write index v4 since
+> commit c1b370e93
 
-Due to a regression introduced by 4fbcca4e "commit-reach: make
-can_all_from_reach... linear" the series including b67f6b26
-"commit-reach: properly peel tags" was merged to master quickly.
+This is a good point, Szeder.
 
-There were a few more cleanups left to apply in the series, which
-are included by this change:
+Patrick: I'm glad LibGit2 is up-to-date with index formats.
 
-1. Clean up a comment that is in the incorrect style.
+Unfortunately, taking a look (for the first time) at the JGit code 
+reveals that they don't appear to have v4 support. In 
+org.eclipse.jgit/src/org/eclipse/jgit/dircache/DirCache.java, the 
+DirCache.readFrom() method: lines 488-494, I see the following snippet:
 
-2. Replace multiple calls to clear_commit_marks() with one call to
-   clear_commit_marks_many().
+                 final int ver = NB.decodeInt32(hdr, 4);
+                 boolean extended = false;
+                 if (ver == 3)
+                         extended = true;
+                 else if (ver != 2)
+                         throw new 
+CorruptObjectException(MessageFormat.format(
+JGitText.get().unknownDIRCVersion, Integer.valueOf(ver)));
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-reach.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+It looks like this will immediately throw with versions other than 2 or 3.
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 5a845440a9..66aa41262c 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -558,7 +558,8 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 		from_one = deref_tag(the_repository, from_one,
- 				     "a from object", 0);
- 		if (!from_one || from_one->type != OBJ_COMMIT) {
--			/* no way to tell if this is reachable by
-+			/*
-+			 * no way to tell if this is reachable by
- 			 * looking at the ancestry chain alone, so
- 			 * leave a note to ourselves not to worry about
- 			 * this object anymore.
-@@ -622,10 +623,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 	}
- 
- cleanup:
--	for (i = 0; i < nr_commits; i++) {
--		clear_commit_marks(list[i], RESULT);
--		clear_commit_marks(list[i], assign_flag);
--	}
-+	clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
- 	free(list);
- 
- 	for (i = 0; i < from->nr; i++)
+I'm adding Jonathan Nieder to CC so he can check with JGit people about 
+the impact of this change.
 
-base-commit: 4067a64672f9db8ca38d5a2682a7cdba7938c18b
--- 
-2.19.0
+Thanks,
+
+-Stolee
+
 
