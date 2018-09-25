@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71E961F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40D831F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726012AbeIZEoF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:44:05 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35616 "EHLO
+        id S1726147AbeIZEoG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:44:06 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45151 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725733AbeIZEoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:04 -0400
-Received: by mail-ed1-f66.google.com with SMTP id y21-v6so204465edr.2
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:19 -0700 (PDT)
+        with ESMTP id S1725762AbeIZEoF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:05 -0400
+Received: by mail-ed1-f66.google.com with SMTP id j2-v6so160872edp.12
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=EGu5BaMF48W6ZcnKtxx5T4sVDEVc7jWv6b/8qtwp9iA=;
-        b=lE889Y6Ve7jT9KMxQFeN9mpA5Owr+fTdLXCpNSDWuFTe3/3aMDmdaSIwTFPOwajjWU
-         5CiDY0gO6ugGEDCdmnO/COJGD9U5fYyCL8eLH94s3VGWuKS1BZWafWfdhXUxAL3dnWbH
-         iydc+IvtuVjvNpv/L7w9a8TIbC2N6Vt6ArXTp+Z1zBlHcCUif3vlhX4mV0uGCijYxFKW
-         oFr726VJJD3ii8r+uu6C95o6AUPY6KlDEOWVY7Mb1fHzPv7BEGfFo22xZywiwUftvT72
-         Y9EDufLoO9bug7aUdyxDgmjyH8fsjl4zlR+YiP+NiyULeiTkwqVPW3IoKZdhb0yebvzF
-         gs1w==
+        bh=mENKfG3WNsOOCO9AadipTWZI4tfehjaQLGBREV5AMlw=;
+        b=d5XvBPNXEg/9dQn0vw3ha04OxGqk+oua+Tc0gi9bgySXE/6BqzadiyILv3IjFEwfQp
+         NOjwgykZKhK3cELt650NCk4lIFOYjb0E4sfQDxJq89hH1apzivZjU/9mCWsjSK/02pff
+         JMHM2pWHwg5/ItclBHALLDi/EVbAqgP5AW3Ce629AEq0y6oJ67EJNlo4DsmIxM8+E4KG
+         JOHxoPxTj4NKge6GShKXC+D/TIJLiCYKasLcm1UmK25XX5ppxeRW377t/0R4/qlNxHMK
+         lwHZSjYmXvyPSshuZ0vrf0+eBEQ6jg8W9DiVspMI7KfVNJsqbwmecW1E/v3VrjIF7oyl
+         +1LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EGu5BaMF48W6ZcnKtxx5T4sVDEVc7jWv6b/8qtwp9iA=;
-        b=lvrh2iBg056A1dxuvhxbogaG5cJNlA5ZdzZ/nJQAEQjlAbuZNIGM7PuMMbrRUq9cww
-         6jcCWcnwUJMh/LytC1Tfql1LiUMKSXqfZFb6+oLckcAMGIVr2IBatFT3REn8RyLeqZIO
-         ii5q21U2psZIDtxrbKFjF0v12jZg2vJwMJHOJjRwS3Mz2ESn7XtcAWjm6h6ZljEvkCeB
-         zSmRzHoz3JuBf2JpEqvaoSX7HA/4LrEDtx/QtKXOKSYN2oQ4UyfRzFDc32UxP18LguUh
-         vfU0vwnWpkEhcx3brBWo4tP6TIAKayv0MGxUB9Y7OoKy+b6DXfDjvhMkdI027lz5FJRC
-         ejww==
-X-Gm-Message-State: ABuFfognhOTeH7pugphPm6x+NNSFhSNsHl+AIfLgg214NQlDzcGJ8e/s
-        krMwechr57zd3xr8pRlBDrqjByat
-X-Google-Smtp-Source: ACcGV61oOEh+S3azaoB2+k410vpUrtUpI+P5M1Yu/k8WdkUH833RdUZPNNTf109vEy1s/T53ZckIYA==
-X-Received: by 2002:a50:9043:: with SMTP id z3-v6mr4757910edz.216.1537914858672;
-        Tue, 25 Sep 2018 15:34:18 -0700 (PDT)
+        bh=mENKfG3WNsOOCO9AadipTWZI4tfehjaQLGBREV5AMlw=;
+        b=Fo3b4z2qgQACnWINNt6BAag8A7QpkuzOevMAWkfzSPTwvvwOVrVMPHwhDASY9B7gFi
+         udVK3+WxhsKQp+WNPLtCfsXfy8s5UaQGn3AXKsMaj5bDF/XrCCgWf8+pJOd8DgG1hDvg
+         9IS/ATofP0nvLaC/U7cPLVtJq9ARIANUQrourMf5jrrI1xEEltGozVTncGRvwOrThnFX
+         084Csl59fwPCgZOT2Pr6Rc6sCvqB66yYrgv1l1XywKHeXIxJtgZsRMPIhdquaywVLo95
+         iJZRWoXm+GSdAmE7r5dqi+ujaZkslzYOzOKvfr5vWMfcKMzB3W7IyJPJ7NZCVlyMLZ/y
+         NbNA==
+X-Gm-Message-State: ABuFfoiJ+4pg5qP/v2fHUqeWZGmkpBBh1TPjYTf66M02gNHRhfydW53V
+        uNoztn0TibMtMFWrHgYr5YOXRcaF
+X-Google-Smtp-Source: ACcGV631zfpd/rFt35rXfJTZjo8mwslCC+Lr0ikNtHhORbcw9mjjudLH73+e4zfZ/m3EFLO9PCabjg==
+X-Received: by 2002:a50:d2d4:: with SMTP id q20-v6mr2771678edg.212.1537914859630;
+        Tue, 25 Sep 2018 15:34:19 -0700 (PDT)
 Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.17
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.18
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Tue, 25 Sep 2018 15:34:18 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v9 00/21] Convert "git stash" to C builtin
-Date:   Wed, 26 Sep 2018 01:33:11 +0300
-Message-Id: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v9 01/21] sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+Date:   Wed, 26 Sep 2018 01:33:12 +0300
+Message-Id: <b21cdeb1636b679d80ff554c48bc76516aed2cf6.1537913094.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
-In-Reply-To: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
+In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
+References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -65,56 +65,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Compared to `get_oid()`, `get_oidf()` has as parameters
+a pointer to `object_id`, a printf format string and
+additional arguments. This will help simplify the code
+in subsequent commits.
 
-This is a new iteration of `git stash`, based on the last review I got.
-This new iteration brings mostly code styling fix issues in order to make
-the code more readable. There is also a new patch "strbuf.c: add
-`strbuf_join_argv()`". By making some small changes, the code is now a
-little bit closer to be used as API.
+Original-idea-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+---
+ cache.h     |  1 +
+ sha1-name.c | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
-Joel Teichroeb (5):
-  stash: improve option parsing test coverage
-  stash: convert apply to builtin
-  stash: convert drop and clear to builtin
-  stash: convert branch to builtin
-  stash: convert pop to builtin
-
-Paul-Sebastian Ungureanu (16):
-  sha1-name.c: add `get_oidf()` which acts like `get_oid()`
-  strbuf.c: add `strbuf_join_argv()`
-  stash: update test cases conform to coding guidelines
-  stash: rename test cases to be more descriptive
-  stash: add tests for `git stash show` config
-  stash: convert list to builtin
-  stash: convert show to builtin
-  stash: mention options in `show` synopsis.
-  stash: convert store to builtin
-  stash: convert create to builtin
-  stash: convert push to builtin
-  stash: make push -q quiet
-  stash: convert save to builtin
-  stash: convert `stash--helper.c` into `stash.c`
-  stash: optimize `get_untracked_files()` and `check_changes()`
-  stash: replace all `write-tree` child processes with API calls
-
- Documentation/git-stash.txt  |    4 +-
- Makefile                     |    2 +-
- builtin.h                    |    1 +
- builtin/stash.c              | 1595 ++++++++++++++++++++++++++++++++++
- cache.h                      |    1 +
- git-stash.sh                 |  752 ----------------
- git.c                        |    1 +
- sha1-name.c                  |   19 +
- strbuf.c                     |   15 +
- strbuf.h                     |    7 +
- t/t3903-stash.sh             |  192 ++--
- t/t3907-stash-show-config.sh |   83 ++
- 12 files changed, 1851 insertions(+), 821 deletions(-)
- create mode 100644 builtin/stash.c
- delete mode 100755 git-stash.sh
- create mode 100755 t/t3907-stash-show-config.sh
-
+diff --git a/cache.h b/cache.h
+index b1fd3d58ab..d93b2e25a5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1309,6 +1309,7 @@ struct object_context {
+ 	GET_OID_BLOB)
+ 
+ extern int get_oid(const char *str, struct object_id *oid);
++extern int get_oidf(struct object_id *oid, const char *fmt, ...);
+ extern int get_oid_commit(const char *str, struct object_id *oid);
+ extern int get_oid_committish(const char *str, struct object_id *oid);
+ extern int get_oid_tree(const char *str, struct object_id *oid);
+diff --git a/sha1-name.c b/sha1-name.c
+index c9cc1318b7..261b960bbd 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1471,6 +1471,25 @@ int get_oid(const char *name, struct object_id *oid)
+ 	return get_oid_with_context(name, 0, oid, &unused);
+ }
+ 
++/*
++ * This returns a non-zero value if the string (built using printf
++ * format and the given arguments) is not a valid object.
++ */
++int get_oidf(struct object_id *oid, const char *fmt, ...)
++{
++	va_list ap;
++	int ret;
++	struct strbuf sb = STRBUF_INIT;
++
++	va_start(ap, fmt);
++	strbuf_vaddf(&sb, fmt, ap);
++	va_end(ap);
++
++	ret = get_oid(sb.buf, oid);
++	strbuf_release(&sb);
++
++	return ret;
++}
+ 
+ /*
+  * Many callers know that the user meant to name a commit-ish by
 -- 
 2.19.0.rc0.23.g1fb9f40d88
 
