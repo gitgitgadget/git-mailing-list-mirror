@@ -2,173 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA1DC1F454
-	for <e@80x24.org>; Tue, 25 Sep 2018 08:07:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 512531F456
+	for <e@80x24.org>; Tue, 25 Sep 2018 11:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727485AbeIYONk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 10:13:40 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:36375 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbeIYONk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 10:13:40 -0400
-Received: by mail-io1-f65.google.com with SMTP id q5-v6so19759225iop.3
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 01:07:19 -0700 (PDT)
+        id S1728559AbeIYSBO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 14:01:14 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40390 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727165AbeIYSBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 14:01:14 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y8-v6so19406122wrh.7
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 04:54:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=H0lbTztgX3VdLA63Q3KLzWoSsOcRg7JY7EZD6OMxJg0=;
-        b=Dys7lhMO15W2UiII89gpavVMERzKdaIM+o6Yab/1jgfKRa1Z7hdP0Joyz6vVVVIpJZ
-         jRmOaNngkuZKC3gRCAEE30yJSm71lzglospc5INUKsIsWbUSLEi6eBr+jvlBWyo0cQg5
-         DMRXJ2IPzn4wXOoIc4+7z9Ubqcpv6qMAT7Ewl/zgaGttVJmjkF+yN+Ywz7qGObClzr25
-         FVqFyUsyoDzU6Gwj5JdI/G43xZaDirYx8iQB7f0wVvBUkN1XDYope9gLuUke29Ck2i2T
-         6zw1KbvlCGowcOIO7vsCJGKuVk80zHWz9FO0ymD0nehvFU0s7B8y6Y6vkISFnMga/cx/
-         S7ng==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9jykZQCbcjpLm+LQOT+qfq32v83w5y4DwKBWtR+fNOM=;
+        b=ltFyGg6YiPUu9V+tUSeB5uz1Isbsmxd+RdG03pwXMBO3ErqNDySeV9YhMO5tOmvjA2
+         xQ7bOZ8Z5GpoV+B7Ajd3K3qOPYtvxyiKaFfk9hmwzBWPVPuC8t2EkMHYjx7dNIF7uHfp
+         L0RG+LwPELZ2mNDvl7gdWxk6Oi+s97lXTNMJ9OH8L9Hj/3rNJvjsab3C0zzPHazEKs6e
+         c6InGWESXQ0xOnxQnnpgXOI3hLCSVLsE6vSEk8y62KgqpPowC6LZ0P50lwIgewEIbhEz
+         C+ig7JirI1vJmIb0a8EhqmKtEqf68TOKge2CZFpu/gqJttOzxcruq2rcIJQIqjRztFgM
+         s8WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=H0lbTztgX3VdLA63Q3KLzWoSsOcRg7JY7EZD6OMxJg0=;
-        b=DU823JYDQ6n8ZI1O6kQo+TKkGTtmpDeCLvQMu/ISUV0ZsMuKVnlN5nmvFriRrvQtUw
-         5igCRFdt+9AQxQGUSRrfFcMOyjowNUu/TtHUqGjDjPW4h9wiDX5Oghx7j3LxIg1erO4E
-         Im/PF7gOjX2HVrl9BHFkp9bqmvpoY/bNk51maHTPPdjJhThkDIkx0U20uXLKOy7TAJhc
-         6LUOvKDuwy52V1/K4+49pboKe5tR0CY4hF7fIou7PSJdWClZRFZ0xGFYdBmlRsj/0ORn
-         CglPRZ30r83EnTlcd+nePdWaxNeff09IGD0awQQlj8HAgcqZT/zQ2oPBbzITHReOvUOj
-         FHCg==
-X-Gm-Message-State: ABuFfohgidOZd1PNH0UK9HpAmR5ULhhlooPjnm3eix12bnTbsHpYTo6w
-        daBkFTj+M9glEwV9blAkr9rgtM2SoJh9RVjm094=
-X-Google-Smtp-Source: ACcGV617OCVEF89h0pDG4UvlQcNpw3e/+Ek8lb6pqbKoCLGkiLQoQQE3HNz7JhlvOAj8d0whMYiwB3TtzDNa5AMfNto=
-X-Received: by 2002:a6b:b80a:: with SMTP id i10-v6mr2036941iof.5.1537862838887;
- Tue, 25 Sep 2018 01:07:18 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a4f:22d2:0:0:0:0:0 with HTTP; Tue, 25 Sep 2018 01:07:18
- -0700 (PDT)
-In-Reply-To: <CAGZ79kYPik87zvLUPPKFzcATFUdBFcXrAkTYxpxvAQy6w1CcUw@mail.gmail.com>
-References: <20180802061505.2983-1-chriscool@tuxfamily.org>
- <20180802061505.2983-10-chriscool@tuxfamily.org> <CAGZ79kYPik87zvLUPPKFzcATFUdBFcXrAkTYxpxvAQy6w1CcUw@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9jykZQCbcjpLm+LQOT+qfq32v83w5y4DwKBWtR+fNOM=;
+        b=gzPALeTyiDape939/LUwpr7+w9mvy8X1Fp6vUlCyn6eOshrnrWuPhfBLyZPhf+E7ZB
+         EXzfgFWVBdnr56IQ4zAr61gJ+GoZ3FqfptvHHWEBykoN+rBGQJmEVx60CxI/kQe6Vr3v
+         Y/B9xfiTNdrJ+4b6WBJ8NxXb7Se2ArG0mRKYAyzQYoE/oiz+SIuJxvtdzZqE9KeP71Wt
+         YzcefqUjRpN+6T9Y8Uuyxk7vs8foTLMkdPqHNfnkowhlKwrK7Wei39QFdn4wZDXTpvO5
+         6tpXcIAz1txgtoeCrHNKnXQKychiN5QN6Kl7aiMa55TS3OF/qbtZfe8GSrrYE1Gub5Gf
+         FN9A==
+X-Gm-Message-State: ABuFfohGw3/G53azGKAIazfcxd4PMkSUspbOx8RNqbkrqofvncVNNRiu
+        bXlbUEGY+NGEJ1INo+817SQbR9n0
+X-Google-Smtp-Source: ACcGV62oCcY8b9mbScfoYscdLGPkTymNmvCx1Sgch8OS+lDojPyM1ifocLLHxkt3tUb/L4wS+ZMHcw==
+X-Received: by 2002:adf:82cb:: with SMTP id 69-v6mr622657wrc.131.1537876440634;
+        Tue, 25 Sep 2018 04:54:00 -0700 (PDT)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id z14-v6sm1998628wrr.91.2018.09.25.04.53.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Sep 2018 04:53:59 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 25 Sep 2018 10:07:18 +0200
-Message-ID: <CAP8UFD1ia1xWk9pjfTUQ3zD7=dP=8UjKzf=G0ptsz=qRH8_X+Q@mail.gmail.com>
-Subject: Re: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>, Mike Hommey <mh@glandium.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH v5 0/8] Introducing remote ODBs
+Date:   Tue, 25 Sep 2018 13:53:33 +0200
+Message-Id: <20180925115341.19248-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.19.0.278.gca5b891cac
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 3, 2018 at 12:55 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Aug 1, 2018 at 11:16 PM Christian Couder
-> <christian.couder@gmail.com> wrote:
->>
->> From: Christian Couder <christian.couder@gmail.com>
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  Documentation/config.txt | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 43b2de7b5f..2d048d47f2 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -2513,6 +2513,11 @@ This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
->>  environment variable, which must be a colon separated list of refs or
->>  globs.
->>
->> +odb.<name>.promisorRemote::
->> +       The name of a promisor remote. For now promisor remotes are
->> +       the only kind of remote object database (odb) that is
->> +       supported.
->> +
->
-> Can you explain the end goal for this? (I did not find it in the cover letter,
-> nor do I make sense of this documentation)
+This path series is a follow up from the patch series called "odb
+remote" that I sent earlier this year, which was itself a follow up
+from previous series. See the links section for more information.
 
-First thank you for (re)opening this discussion, as I think it may
-help resolve the issues related to my work.
+Goal
+~~~~
 
-In the cover letter there is a "Discussion" section which is about
-this, but I agree that it might not be very clear.
-
-The main issue that this patch series tries to solve is that
-extensions.partialclone config option limits the partial clone and
-promisor features to only one remote. One related issue is that it
-also prevents to have other kind of promisor/partial clone/odb
-remotes. By other kind I mean remotes that would not necessarily be
-git repos, but that could store objects (that's where ODB, for Object
-DataBase, comes from) and could provide those objects to Git through a
-helper (or driver) script or program.
-
-For reference I tried to raise these issues (especially the first one)
-at least twice before extensions.partialclone was merged:
-
-https://public-inbox.org/git/CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com/
-https://public-inbox.org/git/CAP8UFD0P7kVo2NP4Wq7OaSV4H1+sqHapuzW5AQef+enNS0S5hw@mail.gmail.com/
-
-but it was still merged as is.
-
-(So of course now it's not surprising that my work on this patch
-series keeps conflicting with work that is still going on promisors
-and partial clone, and unfortunately the result is that my work keeps
-being ejected from pu when it can reach it.)
-
-> So from what I understand, this series relates to partialClone, which
-> has the remote name of the "promisor" in extensions.partialclone.
-> That is the remote to contact for any needs w.r.t. partial clone and
-> fetching on demand.
-
-Yes.
-
-> This key "odb.<name1>.promisorRemote = <name2>" introduces
-> 2 new names, where do each of these two names hook in?
-> name2 is a remote, such as "origin" from what I can tell, but
-> which naming scheme does name1 follow here?
-
-There is just one new name. Instead of:
-
-  extensions.partialclone = <remote name>
-
-there is:
-
-  odb.<remote odb name>.promisorRemote = <remote name>
-
-So it is now like:
-
-  remote.<remote name>.url = <remote url>
-
-which we use for remote repositories.
-
-And it enables us to:
+This series is about introducing a remote ODB mechanism and showing
+that this mechanism makes it is possible to:
 
   - have more than one promisor remote
   - specify different parameters for each promisor remote
   - make it possible later to have other kind of promisor/odb remotes
 
-It also restores the distributed nature of Git which was kind of
+This also restores the distributed nature of Git which was kind of
 broken for promisor remotes.
 
-> What makes the odb key different, in that the partial clone
-> feature only handles objects as well?
+Explanations
+~~~~~~~~~~~~
 
-I am not sure I understand this question. Anyway if we want more than
-one promisor remote, we need to be able to specify different
-parameters for each promisor remote. For example now
+The extensions.partialclone config option limits the partial clone and
+promisor features to only one remote.
+
+That config option also prevents having other kind of promisor/partial
+clone/odb remotes. By other kind I mean remotes that would not
+necessarily be git repos, but that could store objects (that's where
+ODB, for Object DataBase, comes from) and could provide those objects
+to Git through a helper (or driver) script or program.
+
+If we want more than one promisor remote, we also need to be able to
+specify different parameters for each promisor remote. For example now
 core.partialclonefilter is used to specify some filters for the
 promisor remote, but how can we nicely specify different partial clone
 filters if we have more than one promisor remote?
@@ -178,26 +114,149 @@ replaced with odb.<remote odb name>.partialclonefilter, so that
 parameters for a remote odb are properly grouped together in the
 section where the remote odb is defined.
 
-One alternative scheme could be for example to have:
+So an added benefit is that the "remote.<remote name>.*" config name
+space is not overloaded with more config variables.
 
-  remote.<remote name>.promisor = (true|false)
+Discussion
+~~~~~~~~~~
 
-or maybe:
+I am not sure that it is ok to completely replace the
+"extensions.partialclone" config option. Even if it is fully replaced,
+no "extensions.remoteodb" is implemented in these patches, as maybe
+the "extensions.partialclone" name could be kept even if the
+underlying mechanism is the remote odb mechanism. 
 
-  remote.<remote name>.partialclone = (true|false)
+I think that the remote odb mechanism is much more extensible, so I
+think using "extensions.partialclone" to specify a promisor remote
+should be at least deprecated.
 
-instead of:
+Changes compared to V4 of this patch series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  extensions.partialclone = <remote name>
+The main change is that the interface of remote_odb_get_direct() in
+patch 3/8 is changed, so that it can fetch more than one object. This
+remove the needs for remote_odb_get_many_direct(), so the patch that
+introduced this function (4/9 in V4) has been removed.
 
-And then we could also have:
+High level overview of this patch series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  remote.<remote name>.partialclonefilter = <partial clone filter>
+  - Patch 1/8:
 
-The issue with this scheme is that it kind of overloads the
-"remote.<remote name>.*" namespace for something that can be seen as
-different especially if, as I want to do it later, we are going to
-have other kind of promisor/odb remotes.
+This makes functions in fetch-object.c return an error code, which is
+necessary to later tell that they failed and try another remote odb
+when there is more than one. This could also just be seen as a fix to
+these functions.
 
-I plan to send a V5 of this patch series really soon now, where I will
-try to explain better the end goal.
+  - Patch 2/8:
+
+This introduces the minimum infrastructure for remote odbs.
+
+  - Patches 3/8:
+
+This patch implements remote_odb_get_direct() using fetch_objects()
+from "fetch-object.c". Compared to V4, the interface of many functions
+now uses oids instead of sha1s.
+
+  - Patch 4/8:
+
+This implement remote_odb_reinit() which will be needed to reparse the
+remote odb configuration.
+
+  - Patches 5/8 and 6/8:
+
+These patches integrate the remote odb mechanism into the
+promisor/narrow clone code. The "extensions.partialClone" config
+option is replaced by "odb.<name>.promisorRemote" and
+"core.partialCloneFilter" is replaced by
+"odb.<name>.partialCloneFilter". (See the Discussion section below
+about this.)
+
+  - Patch 7/8:
+
+This adds a test case that shows that now more than one promisor
+remote can be used.
+
+  - Patch 8/8:
+
+This starts documenting the remote odb mechanism.
+
+Links
+~~~~~
+
+This patch series on GitHub:
+
+V5: https://github.com/chriscool/git/commits/remote-odb
+V4: https://github.com/chriscool/git/commits/remote-odb5
+V3: https://github.com/chriscool/git/commits/remote-odb3
+V2: https://github.com/chriscool/git/commits/remote-odb2
+V1: https://github.com/chriscool/git/commits/remote-odb1
+
+Discussions related to previous versions:
+
+V4: https://public-inbox.org/git/20180802061505.2983-1-chriscool@tuxfamily.org/
+V3: https://public-inbox.org/git/20180713174959.16748-1-chriscool@tuxfamily.org/
+V2: https://public-inbox.org/git/20180630083542.20347-1-chriscool@tuxfamily.org/
+V1: https://public-inbox.org/git/20180623121846.19750-1-chriscool@tuxfamily.org/
+
+Previous "odb remote" series:
+
+https://public-inbox.org/git/20180513103232.17514-1-chriscool@tuxfamily.org/
+https://github.com/chriscool/git/commits/odb-remote
+
+Version 1 and 2 of the "Promisor remotes and external ODB support" series:
+
+https://public-inbox.org/git/20180103163403.11303-1-chriscool@tuxfamily.org/
+https://public-inbox.org/git/20180319133147.15413-1-chriscool@tuxfamily.org/
+
+Version 1 and 2 of the "Promisor remotes and external ODB support" series on GitHub:
+
+https://github.com/chriscool/git/commits/gl-small-promisor-external-odb12
+https://github.com/chriscool/git/commits/gl-small-promisor-external-odb71
+
+
+Christian Couder (8):
+  fetch-object: make functions return an error code
+  Add initial remote odb support
+  remote-odb: implement remote_odb_get_direct()
+  remote-odb: add remote_odb_reinit()
+  Use remote_odb_get_direct() and has_remote_odb()
+  Use odb.origin.partialclonefilter instead of core.partialclonefilter
+  t0410: test fetching from many promisor remotes
+  Documentation/config: add odb.<name>.promisorRemote
+
+ Documentation/config.txt      |   5 ++
+ Makefile                      |   2 +
+ builtin/cat-file.c            |   5 +-
+ builtin/fetch.c               |  13 ++--
+ builtin/gc.c                  |   3 +-
+ builtin/repack.c              |   3 +-
+ cache.h                       |   2 -
+ connected.c                   |   3 +-
+ environment.c                 |   1 -
+ fetch-object.c                |  13 ++--
+ fetch-object.h                |   4 +-
+ list-objects-filter-options.c |  51 ++++++++-------
+ list-objects-filter-options.h |   3 +-
+ odb-helper.c                  |  31 +++++++++
+ odb-helper.h                  |  23 +++++++
+ packfile.c                    |   3 +-
+ remote-odb.c                  | 120 ++++++++++++++++++++++++++++++++++
+ remote-odb.h                  |   9 +++
+ setup.c                       |   7 +-
+ sha1-file.c                   |  14 ++--
+ t/t0410-partial-clone.sh      |  62 ++++++++++++------
+ t/t5500-fetch-pack.sh         |   4 +-
+ t/t5601-clone.sh              |   2 +-
+ t/t5616-partial-clone.sh      |   4 +-
+ t/t5702-protocol-v2.sh        |   2 +-
+ unpack-trees.c                |   6 +-
+ 26 files changed, 309 insertions(+), 86 deletions(-)
+ create mode 100644 odb-helper.c
+ create mode 100644 odb-helper.h
+ create mode 100644 remote-odb.c
+ create mode 100644 remote-odb.h
+
+-- 
+2.19.0.278.gca5b891cac
+
