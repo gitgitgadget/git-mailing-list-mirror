@@ -2,132 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18D1E1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 01:24:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 740DC1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 02:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726139AbeIYH3R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 03:29:17 -0400
-Received: from mail-yb1-f194.google.com ([209.85.219.194]:44492 "EHLO
-        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726021AbeIYH3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 03:29:16 -0400
-Received: by mail-yb1-f194.google.com with SMTP id y12-v6so5876935ybj.11
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 18:24:19 -0700 (PDT)
+        id S1726350AbeIYISc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 04:18:32 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35195 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726200AbeIYISc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 04:18:32 -0400
+Received: by mail-pg1-f195.google.com with SMTP id v133-v6so2762734pgb.2
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 19:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1VCurAMso5KvU5mdIi+toKGi9hZoViPC+xpUcXRRfOo=;
-        b=s9uShstf9vaVTkjti8ts0mQGnOjEEClhJUvG4DlmZLPsUFQC6zlBZuV1LwiEa09/9F
-         T5N41dSbA0hdN1XNkAF8WB50adIxh/xqP82K1+F0QTU6zRTA2nTYatGGFzy381Hi5O5I
-         BT4x2F8Fr01TFf0i0VFvsCexX0HF9rac56pfqLOx6PQ4mBX0ltk6FxLf/A1Lroa7IckI
-         3JilOcaE6sEo18v4OBP2GwNNdHtuKpz8mCEUqZdcR7SbELslJ9XsV3NmZ2eGw+gwQbP9
-         3i9t1Sy0mklaNvozTsBxmqjicCalxX01AR0w9Q1U3TO0X0XGrQxCX/11Pz60GhbGpROk
-         YDFw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IfZ0odzdPXaKqxnMuUWJvrfMbt5zO3N3yRmVRfLVsmw=;
+        b=mH/pXAVkF4H8lFynHuqR0BUZagmvIaH8nUYUwLWjUhVv35ib4343hA5cQP6eF3ltIg
+         gPzonYYjo0KsFtJ9dNObdXPQTulEFcGvZLx7mur+9lpzEAEacwuYcgTsi8ggL49V+CzG
+         ZCJVcM5YRgBgi8smirFyxrFFdvCDwIz2unyT9MHS0PgSCGMEJl2mARmBoZuvY7dCbQXm
+         6KTTbgsE/WxGfuVWiF9KHq2GK0woG3a5MjH1lK/LX4jJ5OiA+v5b4c5ZOSXCiGObWM4c
+         wTmSDrc2LmD95Of+cfD85hsTvXYSUWwRgP4DTwvwuXiXkcEcSmkjICBs+1PnvFkQMLrR
+         5ZKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1VCurAMso5KvU5mdIi+toKGi9hZoViPC+xpUcXRRfOo=;
-        b=t2WGF+Z/b2FT5+9xpFRBU6f8hInZQNHjdcRjcAdWOisVl/Rn+NWm0FPjFh8xMHCeE3
-         dkqf1BWFIw9/06yFgmbTLIRmXR4ArK17XqO3g7EPWSYLCuNTzUlcCEdocCcGv4N4Puat
-         DfzywKOXYLusWkZDHxbBSU72xO7C/yHGdN/Kpex0FWHQ51+fHjfhRF7YHrX9B1TAQ/U9
-         lUJwQDrtqHHxXX4G4e1ghaTK0k+ThZ9smm3ErjBIaUTy1ac7vkwrcMV2+W1UZv8oigZO
-         0pwjazgYUeMoETjbhDXz0VxlAG5L2S2QKfNOUCrkG8ABvflQJFmp6aLvIiW+TmSowhMD
-         t54A==
-X-Gm-Message-State: ABuFfogsCrmifHAoZzE7w+QWoZzKiR2TGCQV3YKrIT0fd1DZxJH8YOlt
-        Twh2i7o1g0FHgOhiTz9oL33TwkhTVtGOjPj/uiYXxA==
-X-Google-Smtp-Source: ACcGV625oogfFJrXLgCW/lsPKzgV2bCrMJJyF/Tdw9ehRa86yBxhzP/WEvtRJsMoUHgJcu429FVd+s4NYTYLjcl3ZxM=
-X-Received: by 2002:a5b:1ce:: with SMTP id f14-v6mr686387ybp.363.1537838658570;
- Mon, 24 Sep 2018 18:24:18 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IfZ0odzdPXaKqxnMuUWJvrfMbt5zO3N3yRmVRfLVsmw=;
+        b=dRTJT1mwGKSyHqk6Kh14auWHMFbuNXUj3MlKeAYk7DNTBRvkuY2iQN/G+JkupJ63Z5
+         qDPdaNfEjR0pRZyqdxteXXulHmPe1+jjuW9iqN0OdrtCka+KejeRfrWii8XXuy0rZfkG
+         6KNRxWvOT42Wj6xAfl1MQcwkodTMix5OfsqdcAh0hqNPgqXAWuS+tNNgEgJLe0bg42vd
+         PxDPwd8NgR0D68dPU6es/vbNw3AGCHrNrEgzHh7HcaxjqoKgstE5Xtjt/bJ5OhzbYeo8
+         fsbUjCFVYmeCyCnEWPJPqYtesZe3G2xwMz2DqDsiTk6He2mACh88J2qYPetzyjqen30q
+         VwVA==
+X-Gm-Message-State: ABuFfojBDHUiv/qYE29zmbU/mb4lhCACv1jAaiKFFapHyNs85RlxSZqW
+        0MHPWMqcGgUvlGsvR6vqfTs4PlvY
+X-Google-Smtp-Source: ACcGV61gCk9Z+H6upWQnQQBkBSUPr4MPFGWLtaxP8Pcp8db0A4tLgOVqP/6cvHGmcpeTnt3ggLb6aw==
+X-Received: by 2002:a63:6283:: with SMTP id w125-v6mr1177968pgb.83.1537841604095;
+        Mon, 24 Sep 2018 19:13:24 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id k64-v6sm734195pfg.141.2018.09.24.19.13.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 24 Sep 2018 19:13:22 -0700 (PDT)
+Date:   Mon, 24 Sep 2018 19:13:20 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] mailmap: consistently normalize brian m. carlson's
+ name
+Message-ID: <20180925021320.GQ138072@aiede.svl.corp.google.com>
+References: <20180506232421.975789-1-sandals@crustytoothpaste.net>
+ <20180508015845.268572-1-sandals@crustytoothpaste.net>
+ <20180522220826.GP10623@aiede.svl.corp.google.com>
+ <20180522224215.GI652292@genre.crustytoothpaste.net>
+ <20180917181800.GA140909@aiede.svl.corp.google.com>
+ <20180917222158.GY432229@genre.crustytoothpaste.net>
+ <20180924173902.GB138072@aiede.svl.corp.google.com>
+ <20180925011547.GG432229@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-References: <20180924212352.41909-1-smckelvie@xevo.com>
-In-Reply-To: <20180924212352.41909-1-smckelvie@xevo.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Sep 2018 18:24:07 -0700
-Message-ID: <CAGZ79kZa-d3kPXp=q-YezffF68BUZzXv_tUaOKCi8=9SHy6jrA@mail.gmail.com>
-Subject: Re: [PATCH] submodule.c: Make get_superproject_working_tree() work
- when supermodule has unmerged changes of the submodule reference
-To:     sammck@gmail.com
-Cc:     git <git@vger.kernel.org>, smckelvie@xevo.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180925011547.GG432229@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 2:25 PM Sam McKelvie <sammck@gmail.com> wrote:
+brian m. carlson wrote:
+> On Mon, Sep 24, 2018 at 10:39:02AM -0700, Jonathan Nieder wrote:
+>> brian m. carlson wrote:
 
-Thanks for writing a patch!
-I wonder if we can shorten the subject and make it a bit more concise,
-how about
-
-    submodule: Alllow staged changes for get_superproject_working_tree
-
-or
-
-    rev-parse: allow staged submodule in --show-superproject-working-tree
-
-
->     Previously, "fatal: BUG: returned path string doesn't match cwd?" is =
-displayed and
->     git-rev-parse aborted.
-
-Usually it is hard to read, continuing from the commit title to the body
-of the commit message, as the title may be displayed differently or
-somewhere else, so it would be good to restate it or rather state the
-command that is broken, which we are trying to fix.
-
-    Invoking 'git rev-parse --show-superproject-working-tree' exits with
-
-        fatal: BUG ...
-
-    instead of displaying the superproject working tree when ....
-
->     The problem is due to the fact that when a merge of the submodule ref=
-erence is in progress,
->     "git --stage =E2=80=94full-name <submodule-relative-path>=E2=80=9D re=
-turns three seperate entries for the
-
-"ls-files" is missing in that git invocation?
-
->     submodule (one for each stage) rather than a single entry; e.g.,
+>>> I think this commit message makes sense.
+[...]
+>>                              What would it take to make the patch make
+>> sense, too? ;-)
 >
->     $ git ls-files --stage --full-name submodule-child-test
->     160000 dbbd2766fa330fa741ea59bb38689fcc2d283ac5 1       submodule-chi=
-ld-test
->     160000 f174d1dbfe863a59692c3bdae730a36f2a788c51 2       submodule-chi=
-ld-test
->     160000 e6178f3a58b958543952e12824aa2106d560f21d 3       submodule-chi=
-ld-test
+> I certainly didn't mean to imply a failing on your part for explaining
+> the change adequately.  I've just always found the format confusing and
+> I know others do, too.
+
+No worries.  I took the opportunity because the patch isn't in "next"
+yet so I was looking for a way to nudge it forward.  I think v2 is
+simpler than v1.  Thanks for your help.
+
+[...]
+> This has been a really helpful explanation.  Thanks.
 >
->     The code in get_superproject_working_tree() expected exactly one entr=
-y to be returned;
->     this patch makes it use the first entry if multiple entries are retur=
-ned.
+> Maybe I'll have some time over the next week or so to send a patch to
+> the documentation to make it more understandable to past me.
 
-The code looks good.
+Sounds good.  I think the (non-)handling of the 'name <email> name'
+case is likely to be a bug.
 
-I wonder if we want to add a test for it, see t/t1500-rev-parse.sh
-(at the very end 'showing the superproject correctly').
+>> How about this?
+[...]
+> Having read your explanation, this looks good.  Thanks for fixing this.
 
->
->     Signed-off-by: Sam McKelvie <smckelvie@xevo.com>
+\o/ Thanks for looking it over.
 
-Side note: the commit message seems to be indented,
-but the patch applies fine, which makes me curious:
-How did you produce&send the patch?
-(Usually a patch would not apply as white spaces are
-mangled in the code for example in some email setups)
-(If I had to guess I could imagine that it is the output of
-git-show as that indents the commit message usually,
-see git-format-patch for a better tool)
-
-Thanks for writing the patch!
-Stefan
+Sincerely,
+Jonathan
