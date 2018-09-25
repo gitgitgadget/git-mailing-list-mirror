@@ -7,82 +7,79 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECFF11F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 15:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE4BE1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 16:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729077AbeIYWGa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 18:06:30 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:52341 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728598AbeIYWGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 18:06:30 -0400
-Received: by mail-it1-f196.google.com with SMTP id h3-v6so16085977ita.2
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 08:58:22 -0700 (PDT)
+        id S1729220AbeIYWO0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 18:14:26 -0400
+Received: from mail-it1-f173.google.com ([209.85.166.173]:35314 "EHLO
+        mail-it1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729051AbeIYWOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 18:14:25 -0400
+Received: by mail-it1-f173.google.com with SMTP id 139-v6so15959335itf.0
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 09:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9hMVxzssV4rp3LZrfen+wl5A0lppvdCKYa7/9nS2yw4=;
-        b=WQG5TemYXa8wid6xFAWOWVyt/tBo/zldV4XAR9W+8ZTKTPnaZLvmZ9aHVIpcZ8CbeG
-         r3X+iwL8FZKGgBzrOxYXVRzW84ra31oafGf5HZ5JezoxaDEDXVxQscAYeWaNna3B5hpu
-         8gMCwtKmvoaKaHDTzKbTk1zR7c0hPcR+NurEzBLd/E+E9EFzmCUG5g5dOuca5Z5O+JT+
-         mx6MTFmCg12w/pppp7Y50kB6aqoG0rm1yuZrx5QQVcjwGon9flMe3jx317GSFDqTCweY
-         pwlh5t5qdauwQ7NvzIPMUPePYMkVDdN6dOpgPJt/FRI0MG38pesCnZN7jUQS1kYEC8jw
-         xPTg==
+        bh=2Y1JLyzu06TaFjTozC0weLP1am7bLiX73yFVXYcsyTY=;
+        b=NetsMFNqDeYvZFbQF6xUZ2QhLe51KOCK3svNq7sh9V3r6hMdPY4aF46P4fKNBHAuJG
+         NvLa0bMQXr3fQWgZeF31UJgyPYGsFtm/rs78NgCtYfPfULc0ePXWaf6HbgqVf/8Wb7ch
+         uqPyXJV/U0cIlJD9FSfFPUrQBgHY4SR2Ib4+VkXLupUqf+d2zUVmkoLknLSrK+5N7PuH
+         x6VFOAfZ9MoISxrVDaegYLJnm4DyOsUdq91J180d3NABj/ot4JX5mPra3w22ErHRfC7I
+         8A232pna+xazItK1YRcdFhMLlI+faZmC4pee3VUD9AnjWnziR5PtMZs7OW7aIpwsGSJ8
+         bT1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9hMVxzssV4rp3LZrfen+wl5A0lppvdCKYa7/9nS2yw4=;
-        b=QSXE4o1UJisYRdh8lL9H53hODm6m/knl7SK1uoiP+OkBjreEa0wupFIKkfAQnagWcC
-         z+p7Kuat+opRgIM/7Sm8z4WQxrt09LwyYSMTUzSYkBmnOkJtmrTH6h58Edku6RjgEQBv
-         CAnpjrlk7nStwj/kcV1DuPm9liv/InTX0WwC45nvq2ybdKk9ooa1R8avqcxhpztAApRR
-         DzUT3sBzeCJSPWn/pmDKi35TAOefg3OGZ+v54Tq4kIdyo2Np9402mNwIi1cX80qj9d9H
-         BEVcYzN60rDBjOZxRQ3YRZXVliMpVDQYcMZsm4rjTxByaIcNIJVZzyHOIHgKTjMO3fMV
-         mlFg==
-X-Gm-Message-State: ABuFfojXxUn880gyx79K5qCKEMG74JJsRwp/jdetbKKz1g/ldk03qry3
-        WCG5BWnoRm16qZXDh34VlFgZ48bYVE161AYu1KAnYA==
-X-Google-Smtp-Source: ACcGV63ad7KNQIhzcZRC2YXHh5L+ojpjDzG3iRo8Y5GTX57qab/J+/zxpiqyRdKdVTzufvZ74uV9RFFi7dFR2L5GW9g=
-X-Received: by 2002:a24:328d:: with SMTP id j135-v6mr1351271ita.5.1537891101665;
- Tue, 25 Sep 2018 08:58:21 -0700 (PDT)
+        bh=2Y1JLyzu06TaFjTozC0weLP1am7bLiX73yFVXYcsyTY=;
+        b=HsgPQgux0p+8NFOx7xvmwVZ4OrhRIMLidqIiOAEyfqIOmm4XVxGOtLSLtZqJZ+tYyd
+         huUpN4lgb67xQ+iuChSCDlJHNVbFZAkm8AInOpP8RK26Zeyg5CWvfmJCGwKcCuU+LKYk
+         yqFGIAQSQrv8kwT+KCFIu+xclHqA89wiqAUFrKUU50+dw9YNqL1zkp06vIM1kJPoxg+S
+         rfZp7BIQVrh33Q6bsod1on/JRvfsvPF/QcvAsIeBu9cDbyy1uHnNfKnuPXGhGmA8KmcP
+         dA+n/6nm/iugWnVT2DdSMpO3iKQLVGptPJspWYImjUHW9jHakCkwnA+ciNga3CjAV1tI
+         QMJg==
+X-Gm-Message-State: ABuFfohqXAflgDNIHUqwN4OJBir04VAtZMBw/ZTsxzlpHliHefQFT0+7
+        pTKOtDZMAv6qsscrAoV8xnsjc4vcsz45aoQ8zkg=
+X-Google-Smtp-Source: ACcGV61lhzOhccpR0xsQQuzJnL2V2nPw/u0XjpKhYv0/1MFiHDqSzpHrBFgucKh3iQl3SQKRnTX8W66+XaSc3QCisuE=
+X-Received: by 2002:a02:95c7:: with SMTP id b65-v6mr1668894jai.61.1537891575162;
+ Tue, 25 Sep 2018 09:06:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180923170438.23610-1-pclouds@gmail.com> <20180924142143.GD68796@syl>
-In-Reply-To: <20180924142143.GD68796@syl>
+References: <fd340f7b-61c0-2661-bdca-c239e51bc464@highlab.com>
+ <xmqqefdir0tz.fsf@gitster-ct.c.googlers.com> <dbd2dcef-c892-3628-119e-f688e74f3599@highlab.com>
+In-Reply-To: <dbd2dcef-c892-3628-119e-f688e74f3599@highlab.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 25 Sep 2018 17:57:55 +0200
-Message-ID: <CACsJy8BFydQorJveGirFG4v3KLsF9bd3fALddJVU62BTF9UR2Q@mail.gmail.com>
-Subject: Re: [PATCH] worktree: add per-worktree config files
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 25 Sep 2018 18:05:49 +0200
+Message-ID: <CACsJy8C4+cj=K2NetC05rmwenY0cArQ7NehZZ+Df90fmzBVThA@mail.gmail.com>
+Subject: Re: bug in 'git describe'?
+To:     seb@highlab.com
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 4:21 PM Taylor Blau <me@ttaylorr.com> wrote:
-> > +cmp_config() {
-> > +     if [ "$1" = "-C" ]; then
-> > +             shift &&
-> > +             GD="-C $1" &&
-> > +             shift
-> > +     else
-> > +             GD=
-> > +     fi &&
-> > +     echo "$1" >expected &&
-> > +     shift &&
-> > +     git $GD config "$@" >actual &&
-> > +     test_cmp expected actual
-> > +}
+On Tue, Sep 25, 2018 at 5:41 PM Sebastian Kuzminsky <seb@highlab.com> wrote:
+> That behavior seems to me to be different from what the (2.11) manpage says:
+
+Good opportunity to improve the man page anyway even if Junio is
+right. I agree that the section about "search strategy" is a bit
+misleading because it does not mention anything about time stuff.
+
 >
-> This cmp_config seems generally useful, perhaps beyond t2029. What do
-> you think about putting it in t/test-lib-functions.sh instead?
-
-Good point. t1300 (and I think some t13xx) does the same. Other tests also do
-
-    test "$(git config...)" = blah
-
-which can also use this function to have better error reporting when
-things go wrong.
+> > it suffixes the tag name with the number of additional commits on top
+> > of the tagged object
+>
+>
+> And:
+>
+> > If multiple tags were found during the walk then the tag which has
+> > the fewest commits different from the input commit-ish will be
+> > selected and output. Here fewest commits different is defined as the
+> > number of commits which would be shown by git log tag..input will be
+> > the smallest number of commits possible.
 -- 
 Duy
