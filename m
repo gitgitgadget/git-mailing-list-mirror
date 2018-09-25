@@ -2,122 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1350D1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 16:53:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B6B71F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 16:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbeIYXBz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 19:01:55 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:37589 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbeIYXBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 19:01:55 -0400
-Received: by mail-yw1-f66.google.com with SMTP id y14-v6so2354467ywa.4
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 09:53:33 -0700 (PDT)
+        id S1726350AbeIYXEV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 19:04:21 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:40168 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbeIYXEV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 19:04:21 -0400
+Received: by mail-it1-f193.google.com with SMTP id h23-v6so16182073ita.5
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 09:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=n59taTCwVA7VpDGkqyU7PV6li4LQQ/Dg/rzeCERlWlM=;
-        b=k8PBU6052QRz5+TJUQULh1S297q0RLicUvU1pTY7TOslfHGf4Jjnlx75KlDl1VW2vE
-         wAZB1dpRLLxZiRd93WvIhXXUU2TmFU0QWB1WieTdbUbPPMz5BwVKu4jUPa8WkaN5eJZz
-         MNGH3fxVQJwqDEe+4C/EAX316i1d0B56J7VvrFug/pPyEmgzBCRW9vNYdSh1IfyrHXEB
-         rgFOdWeT0TTIKoAu82qHz/v4TxDUA/8DxnX6dw3AxX0mRNJQ9xR5+dsCyxJFKD/oed5P
-         SK7hruyqOkVK1IBHZzgS8dNNi3C9FBvoBetiePTSurneg2kP+ibiHqlpfJT82pBPPF+3
-         ceUw==
+        bh=qQwH0Ogp1S2X43CVUTREVbtoU4Mu33H2fxhp/ICB69I=;
+        b=TT+Ar3IQ4OkVvJFuOnvk/sqV1IaaHgiORldopUYr8wi6chPfOYzq6BPSCqMBbjFos1
+         Y/d1eV67JB4KttOvxMNYHYck791RQ3zVPhCzqNeNdFXAXC12SMDtHf8Q/2AOc221JEqI
+         H0I3aOxcNR+0hI9BWb/7Akqla+N9Yr6PX6Mx7f7EO716JAQiRwP3E5jugju9dXcSFvx9
+         E7n5ZPmb50qxGKQ5Le5CG43wCl2fuAs2cZunUNeCDGDN96QGtSfnSuVSGKMpF7uwNyxD
+         Kw2fPYlz+T0mn0HZZFf0wAI7Kwz6Qo1zt3HvvDPxrqef0dtqpHjp/GLblDCOfj7v1ytB
+         P/IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=n59taTCwVA7VpDGkqyU7PV6li4LQQ/Dg/rzeCERlWlM=;
-        b=qvAz29uMxvDriGmfU6Wos9dEBxqqECJWXQ0q9wNAh4Uz3aiaGL4Z/TrvtqYaeyKsui
-         QhfP3gtfGOuwyji3dYZvI58kxkLV6WUzrhsiJ1Kf1G0Cgna4uzgWrajCfZEr5AsianwT
-         LdOWRkaVSLwgRFI4rK3LunuTrcbWUMHuZ9WR+CCYM7Enlmw3RhK34hUEhPvk/Qd7oAdy
-         EP05rq4NNFbbwbg/PLE1vKks9eWCTgXdQIVavRuxq8G0XBcWLFmQWqzKIqV4pXYuJzKV
-         W3bI/CH8FFuqrHFzDdg7xKWvxI/6lw5m7n1oEVhhlInGyyCgu+yJD4cvOe8pPDkbb2PT
-         NZpw==
-X-Gm-Message-State: ABuFfoilloG3OLbCSsB99vGM57HQKOV8CQjX4+3Omd2e9Z5Mv4Yw9w3F
-        VCFHFsKh6u8E1vv5kL3jT5RVZSm5XDgQNvHAOw3GQA==
-X-Google-Smtp-Source: ACcGV63r4hnrbk6VBUaawV+t63fI02Bwy735sXJGdj2oXd1upozo9f4qIdK1EMK5a9nTZ8aIrQ87lV8Ysy2kQjM9lTE=
-X-Received: by 2002:a81:5710:: with SMTP id l16-v6mr1046626ywb.3.1537894412983;
- Tue, 25 Sep 2018 09:53:32 -0700 (PDT)
+        bh=qQwH0Ogp1S2X43CVUTREVbtoU4Mu33H2fxhp/ICB69I=;
+        b=h2lfetepfW6Uu5FePgD6/3quWsyLmN4W536v0K8V3Cgz2flcO4hAWE5qdCdw4LezW+
+         zTaYHszkHLBja8TjVZlq6QxrIQf8FwQfzb2zsCvAfq7DIAoqpgE5ExZZo7xTMMrCzkp4
+         yxSDFwYJtPx3aD74P1WLCZIzVeCvjOq4q00/YoPE0UyJNX1JqSZsELaMpkc57YGH3N3w
+         XKorB8S1bMeOp9kKjlDpA2tggFIeR5ULyhfp0Y3IkMvXTDfeuV2K67q9GkYJdkhWJvlL
+         5ircgNTTXV4SdTa88dI8uomhXx5CyTFdiOOUAQX3le/gwKkNypJgNUlrvNhjY98D+qtu
+         lEgQ==
+X-Gm-Message-State: ABuFfoi7SJh7Tcz5HQ0FJYDcWd45EkLthdIQK6mHZXST0WcQdz1SLM6a
+        u99ShY2Wf6MXQ6+0RemoR4nvyHs9XtCrhBjZlnE=
+X-Google-Smtp-Source: ACcGV61Ldvg5xsXJa033zE0yMV1Y4KsAy9fpKYUVwCatQqV9OdaeLIw+2POx7+G/sMs4gwUIpCq+j8z0ox5QXUVW67k=
+X-Received: by 2002:a24:328d:: with SMTP id j135-v6mr1603357ita.5.1537894557941;
+ Tue, 25 Sep 2018 09:55:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-4-pclouds@gmail.com>
- <CAGZ79kYTzs=Xx-K-ghUa=as7Q0tiw-z1h7_D2=6zaO3fpWMrWg@mail.gmail.com> <CACsJy8DsykQzUzx7iTqPeuGBSJ9gcEHJRw_UCXJCrsXxf+hntQ@mail.gmail.com>
-In-Reply-To: <CACsJy8DsykQzUzx7iTqPeuGBSJ9gcEHJRw_UCXJCrsXxf+hntQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 25 Sep 2018 09:53:21 -0700
-Message-ID: <CAGZ79kaDoV-1rtOzXasQ+-sfcoWV7FSBhDrm_kueTt_+a95gUw@mail.gmail.com>
-Subject: Re: [PATCH 3/8] refs: new ref types to make per-worktree refs visible
- to all worktrees
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Jeff King <peff@peff.net>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-3-pclouds@gmail.com>
+ <CAGZ79kZF1+0PTEgF_NwM_AwttJ0sedAP8CT834L5ZGJpxZ+G_Q@mail.gmail.com>
+ <CACsJy8BKTkbc=ZgMnO7Yuk0eaqzZnifo80tnR872_T8b02biqg@mail.gmail.com> <CAGZ79kZw8-BiW5VE_YN5X2E07FeMA=XtHpjcUoSFtWNRu44fAQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kZw8-BiW5VE_YN5X2E07FeMA=XtHpjcUoSFtWNRu44fAQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 25 Sep 2018 18:55:31 +0200
+Message-ID: <CACsJy8BRv1wb7urzriaj9AceZh-Ot1Tsb2w9rExRXkoHFn7_hw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] Add a place for (not) sharing stuff between worktrees
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 25, 2018 at 8:49 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Sep 25, 2018 at 4:48 AM Stefan Beller <sbeller@google.com> wrote:
-> > > This patch also makes it possible to specify refs from one worktree in
-> > > another one, e.g.
+On Tue, Sep 25, 2018 at 6:24 PM Stefan Beller <sbeller@google.com> wrote:
+> > > That sounds dangerous to me. There is already a concept of
+> > > local and remote-tracking branches. So I would think that local
+> > > may soon become an overused word, (just like "index" today or
+> > > "recursive" to a lesser extend).
 > > >
-> > >     git log worktrees/foo/HEAD
+> > > Could this special area be more explicit?
+> > > (refs/worktree-local/ ? or after peeking at the docs below
+> > > refs/un-common/ ?)
 > >
-> > This has strong similarities to remote refs:
-> > Locally I may have a branch master, whose (stale local copy of its
-> > distributed) counterpart is named origin/master.
+> > refs/un-common sounds really "uncommon" :D. If refs/local is bad, I
+> > guess we could go with either refs/worktree-local, refs/worktree,
+> > refs/private, refs/per-worktree... My vote is on refs/worktree. I
 >
-> If you think of each worktree as independent clones (which is more or
-> less true, the fact that they share ODB is more like an implementation
-> detail) then yes it's almost like remotes.
+> refs/worktree sounds good to me (I do not object), but I am not
+> overly enthused either, as when I think further worktrees and
+> submodules are both features with a very similar nature in that
+> they touch a lot of core concepts in Git, but seem to be a niche
+> feature for the masses for now.
 
-Apart from the ODB and the refs subsystem, there is also the config
-space, which is shared (but you have sent out patches to have local
-config as well).
+I think the similarity is partly because submodule feature also has to
+manage worktrees. My view is at some point, this "git worktree" would
+be good enough that it can handle submodules as well (for the worktree
+part only of course)
 
-So I would think worktrees are better than having two clones not just
-due to the shared ODB, but also due to the common config as then I
-have to setup my repo only once and can add/remove worktrees
-cheaply (in terms of "how much time do I need to spend to configure
-it as I need").
+> For example I could think of submodules following this addressing
+> mode as well: submodule/<path>/master sounds similar to the
+> originally proposed worktree/<name>/<branch> convention.
+> For now it is not quite clear to me why you would want to have
+> access to the submodule refs in the superproject, but maybe
+> the use case will come later.
 
-> > It is also possible to have a working tree named origin
-> > (just I like to name my worktree "git", when working on git.git),
-> > how do we differentiate between the neighbor-worktree
-> > "origin/master" and the remote-tracking branch "origin/master" ?
+Yeah. In theory we could "mount" the submodule ref store to a
+superproject's ref store. I think it may be needed just for the same
+reason it's needed for worktree: error reporting. If you peek into a
+submodule and say "HEAD has an error", the user will get confused
+whether it's superproject's HEAD or a submodule's HEAD.
+
+> And with that said, I wonder if the "local" part should be feature agnostic,
+> or if we want to be "local" for worktrees, "local" for remotes, "local"
+> for submodules (i.e. our own refs vs submodule refs).
+
+You lost me here.
+
 >
-> Hmm.. I think you're thinking that origin/master could either mean
-> refs/worktrees/origin/master or refs/remotes/origin/master. I do not
-> think we're going to support expanding origin/master to
-> refs/worktrees/origin/master. This part about ref resolution did cross
-> my mind but I didn't see a good reason to support it.
+> > think as long as the word "worktree" is in there, people would notice
+> > the difference.
 >
-> Even if we do support it, this is not even a new problem. If you have
-> refs/heads/origin/master and refs/remotes/origin/master now, we have
-> ref ambiguity anyway and a solution for this should handle
-> refs/worktrees/origin/master well if it comes into the picture.
+> That makes sense. But is refs/worktree shared or local? It's not quite
+> obvious to me, as I could have refs/worktree/<worktree-name>/master
+> instead when it is shared, so I tend to favor refs/local-worktree/ a bit
+> more, but that is more typing. :/
 
-So once origin/master is overloaded, I would have to spell out
-refs/worktrees/origin/master and refs/remotes/origin/master to
-avoid confusing the DWIM machinery. Makes sense.
+OK I think mixing the two patches will different purposes messes you
+(or me) up ;-)
 
-> > How do we deal with that?
+refs/worktrees/xxx (and refs/main/xxx) are about visibility from other
+worktrees. Or like Eric put it, they are simply aliases. These refs
+are not shared because if they are, you can already see them without
+new "ref mount points" like this.
+
+refs/worktree (previously refs/local) is also per-worktree but it's
+specifically because you can't have per-worktree inside "refs/" (the
+only exception so far is refs/bisect which is hard coded). You can
+have refs outside "refs/" (like HEAD or FETCH_HEAD) and they will not
+be shared, but they cannot be iterated while those inside refs/ can
+be. This is more about deciding what to share and I believe is really
+worktree-specific and only matters to _current_ worktree.
+
+Since refs/worktree is per-worktree, you can also view them from a
+different worktree via refs/worktrees/. E.g. if you have
+refs/worktree/foo then another worktree can see it via
+refs/worktrees/xxx/refs/worktree/foo (besides pseudo refs like
+refs/worktrees/xxx/HEAD)
+
+> As we grow the worktree feature, do we ever expect the need to
+> reference the current worktree?
 >
-> main is accessed via worktrees/main/HEAD while the main worktree's
-> HEAD is accessed via main/HEAD (which is _not_ automatically expanded
-> to refs/worktrees/main/HEAD). But if it is, yes we need to detect
-> ambiguity and tell the user to specify full ref name, either
-> refs/main/HEAD or refs/worktrees/main/HEAD.
+> For example when there is a ref "test" that could be unique per
+> repo and in the common area, so refs/heads/test would describe
+> it and "test" would get there in DWIM mode.
+>
+> But then I could also delete the common ref and recreate a "test"
+> ref in worktree A, in worktree B however DWIMming "test" could still
+> refer to A's "test" as it is unique (so far) in the repository.
+> And maybe I would want to check if test exists locally, so I'd
+> want to ask for "self/test" (with "self" == "B" as that is my cwd).
 
-Ah, I see. Now I actually understand the last paragraph of the
-commit message. Thanks for explaining!
-
-Stefan
+You probably lost me again. In theory we must be able to detect
+ambiguity and stop DWIMing. If you want to be ambiguity-free, you
+specify full ref name, starting with "refs/" which should function
+like "self/" because worktree design so far is always about the
+current worktree's view.
+-- 
+Duy
