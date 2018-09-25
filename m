@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 998471F459
-	for <e@80x24.org>; Tue, 25 Sep 2018 11:54:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FE9B1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 11:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728771AbeIYSB0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 14:01:26 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34065 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728720AbeIYSBZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 14:01:25 -0400
-Received: by mail-wm1-f65.google.com with SMTP id j25-v6so12427107wmc.1
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 04:54:13 -0700 (PDT)
+        id S1728733AbeIYSBY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 14:01:24 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50855 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728706AbeIYSBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 14:01:24 -0400
+Received: by mail-wm1-f68.google.com with SMTP id s12-v6so13101013wmc.0
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 04:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fV41yInvCdhsvUv2wVmgXInhjEVSuqiAazcH8xp6V44=;
-        b=vgaiU4eb7nv67DmxkB5Y7EsgqAkfrOLWpiRzIJQ/42lUYExBwlDIP3tHXXGvK10Tj4
-         85dKe5P0Rtdlg+2pNuUdbYtLDTeQ852mOkeHGT7uwq4rql63Hs7wkDGfK6ve2ZYJejDe
-         rzzQb3cQ4rorOCoU1Q3jKZ1fK88syHdkxuwmsp86pm7oyCoOGMfpHMDwF3NA6AnU4Eyq
-         aD/ivYlcgBC61WfVkIa5qIMCiXcroR8j7O+URXGOH9Tgyj6qPKXsvNsTDhbQJ1fS5nru
-         jBajfjEZ/Gut1QNqOvOknEOrwSvvzwCj9NfJ+sRtOGM7q03lmWahLBvtDDBdySNA/ym6
-         Nk8Q==
+        bh=utcEQkLTMiEtKiW/tm+AQXYhpj5a+7iQ7z+RB055oGA=;
+        b=bMhuVY3dHPUUDZ6n6+qF0oCkfFOUiQ8/sxkfjJ7mra0VA8pfbBt5xSBf57sLBCV1/k
+         abWBTHGcqNrdqcgoSlDNer620yG9zkvaQbeFXHw2Sn0R5LDNayW1qbYR+7tWC2ynBV6r
+         txzfyfd9EP93F9c2U9BxE7C/6knJ5KHynb6VqrReR7IFB1qQtJ9VUAYkZQr/oI9wJA2F
+         q3HBWEqjVV5OxqndBZy6meH+6wjy2TChWE7/oV7Xw9cUe88KviSEneVbXCIW//bQj1tN
+         E8u485qMDrKvG7jNTglomZZgU+5NK+0OT+e/ICzEMo38ueG3ce0fO9Fbm41T+Mu+hKS9
+         WiTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fV41yInvCdhsvUv2wVmgXInhjEVSuqiAazcH8xp6V44=;
-        b=sxG8l8Ms2KGiYYjXFfU2K5Ub1ejtpREYh0JYPaArS4rihkLuj9UdQe/7vHdqK25KVX
-         j6lXCcnnbbSXfA6fvw/U2dR/6cA20Q1NyYN1kWY6r/JXu45WX+xi+l03yWlWfSRNPyPO
-         zJ8CfJCvOGwmfuqROkRXjjDdiNu5TSEXUGqm88uefpbZ4YWfcLesyizNGST4aZiOk8pQ
-         ORikZ5reFOzdcgfJrl9w3sVf8DRUvwcmVQe+zHmjL+CVPoO5RaOwPr6TiQsrPVBH5ZQe
-         5z3uASERobxcK3XPbn/+gGkviKAOqU6XncZSO1B2UQOrnFFRq2r/bbNxlTkfpJ+SdCT+
-         9qQg==
-X-Gm-Message-State: ABuFfog7rBLQjFB+gix47nhxhGXFWN5PiGBEuSFeqb99iFSWSOnfjki3
-        npvB+pJGpE37EQen3yJVHP/Eo7Ku
-X-Google-Smtp-Source: ACcGV621955V2cDm7zV67UIOaZCNwHX7v2bKqrQ+J3DmLphN7UCQCvZtxb4fNP/VZjW11qJXcf7sfg==
-X-Received: by 2002:a1c:c8d:: with SMTP id 135-v6mr394897wmm.116.1537876452628;
-        Tue, 25 Sep 2018 04:54:12 -0700 (PDT)
-Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id z14-v6sm1998628wrr.91.2018.09.25.04.54.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=utcEQkLTMiEtKiW/tm+AQXYhpj5a+7iQ7z+RB055oGA=;
+        b=rLpRZjCmpP7bl7LowXvByd143a8MCsI0rbC8cpB3uRzsWhWXRYnQt7olfSsT1+FXYa
+         +JjuDy0bfc8zTwhMNqnbpVXO43XWb/7FxA1bWuWUehKHUQbI9zVqhVx/nKgC3QWDfh7K
+         Cswathj5CjvYZcOrF0moBL3tIQrnAK/3P+cVwIdQpn44xZtrvXQcc6nlA3r0v6ir3gqz
+         jL3plukqXzn+lHeJIK183kuLPcnZ0SIixJC0QWJav8eoH9OoOQ0y3CBRH5HHh+0gx4+x
+         JQ4nOZyPmK8UGMTGLnCFVBCeuFVJ1+irWVXNytNJmllPUBewPwjMhoKIPSIHqH3V3lxT
+         En4g==
+X-Gm-Message-State: ABuFfogWQWHZY+MVR6XPHyqC5ndk1ZitNmyHIyicAlKc6fCYQsVgHlmO
+        uBC3lBhjH8xH8vjUD9RZAGqhhI5g
+X-Google-Smtp-Source: ACcGV63s09atQAAFjEVplt6w+wtVHxH/oPjG0rvGdJtdG2bZb1mzI3iKUpTUDsLxsemtP7yvYmfPug==
+X-Received: by 2002:a1c:e289:: with SMTP id z131-v6mr426986wmg.32.1537876451024;
         Tue, 25 Sep 2018 04:54:11 -0700 (PDT)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id z14-v6sm1998628wrr.91.2018.09.25.04.54.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Sep 2018 04:54:10 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 8/8] Documentation/config: add odb.<name>.promisorRemote
-Date:   Tue, 25 Sep 2018 13:53:41 +0200
-Message-Id: <20180925115341.19248-9-chriscool@tuxfamily.org>
+Subject: [PATCH v5 7/8] t0410: test fetching from many promisor remotes
+Date:   Tue, 25 Sep 2018 13:53:40 +0200
+Message-Id: <20180925115341.19248-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.19.0.278.gca5b891cac
 In-Reply-To: <20180925115341.19248-1-chriscool@tuxfamily.org>
 References: <20180925115341.19248-1-chriscool@tuxfamily.org>
@@ -79,27 +79,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+ t/t0410-partial-clone.sh | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ad0f4510c3..9df988adb9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2655,6 +2655,11 @@ This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
- environment variable, which must be a colon separated list of refs or
- globs.
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 8b32be6417..3fbd8d919e 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -170,6 +170,28 @@ test_expect_success 'fetching of missing objects' '
+ 	git verify-pack --verbose "$IDX" | grep "$HASH"
+ '
  
-+odb.<name>.promisorRemote::
-+	The name of a promisor remote. For now promisor remotes are
-+	the only kind of remote object database (odb) that is
-+	supported.
++test_expect_success 'fetching of missing objects from another odb remote' '
++	git clone "file://$(pwd)/server" server2 &&
++	test_commit -C server2 bar &&
++	git -C server2 repack -a -d --write-bitmap-index &&
++	HASH2=$(git -C server2 rev-parse bar) &&
 +
- pack.window::
- 	The size of the window used by linkgit:git-pack-objects[1] when no
- 	window size is given on the command line. Defaults to 10.
++	git -C repo remote add server2 "file://$(pwd)/server2" &&
++	git -C repo config odb.magic2.promisorRemote server2 &&
++	git -C repo cat-file -p "$HASH2" &&
++
++	git -C repo fetch server2 &&
++	rm -rf repo/.git/objects/* &&
++	git -C repo cat-file -p "$HASH2" &&
++
++	# Ensure that the .promisor file is written, and check that its
++	# associated packfile contains the object
++	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
++	test_line_count = 1 promisorlist &&
++	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
++	git verify-pack --verbose "$IDX" | grep "$HASH2"
++'
++
+ test_expect_success 'fetching of missing objects works with ref-in-want enabled' '
+ 	# ref-in-want requires protocol version 2
+ 	git -C server config protocol.version 2 &&
+@@ -183,7 +205,7 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
+ '
+ 
+ test_expect_success 'rev-list stops traversal at missing and promised commit' '
+-	rm -rf repo &&
++	rm -rf repo server server2 &&
+ 	test_create_repo repo &&
+ 	test_commit -C repo foo &&
+ 	test_commit -C repo bar &&
 -- 
 2.19.0.278.gca5b891cac
 
