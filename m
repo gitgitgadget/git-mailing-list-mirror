@@ -2,72 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 642F41F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 05:17:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11E2A1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 06:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726095AbeIYLXK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 07:23:10 -0400
-Received: from mail-qk1-f171.google.com ([209.85.222.171]:35957 "EHLO
-        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726030AbeIYLXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 07:23:10 -0400
-Received: by mail-qk1-f171.google.com with SMTP id a85-v6so861722qkg.3
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 22:17:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QJ2lQMbgy1C46bQWvN+n+1GZXLkz5E5fgg9mSAPeQK4=;
-        b=jeDQcmCj5YcrZYUZbg1D6EcmG4xLPxxmSsZwEC4N4GZWyuZvB+jCopzydWgh0lnd4f
-         shuoJjWrCONWY8qwR3a314zxu10nqCI+xiS/fZQ1NGJw1GIcGqJDB/wx+bR61aN7x23d
-         BC1G7bR8RBovAhIHkcRIGQKH9HrvVFLuIDzsWt97poDsTYvzoVQ06VD2jb09glc/em1/
-         CynfBuivCVe5T1CQkuy1cR0PmwzphJ8uZkCLJdYfgDFwYgrt1ytQGCUioUfJ0XnlMIRa
-         U5dAmBKfoRovJmRP5RyVrsJOvP8ycyDrzOMROw6crdftC0iCOL03XbEFip7n9rQ4oEl3
-         r21A==
-X-Gm-Message-State: ABuFfojkm/ISDJZlB/NIaG/2oDbxjBFFI3hITxr+rxgNJDvnFHXu9fkG
-        rRc/4HzUfMowXgwtJ4QcIDyhtcozyRLlm8yHRbM=
-X-Google-Smtp-Source: ACcGV6380C6u+cG6P7jUKwwYIrQuOy9wcwMWoIwFyfAQhap2j13g705u+Fj33+FEfIaFagLCvSsEK3e+NfJMd0+WIiU=
-X-Received: by 2002:a37:d78e:: with SMTP id t14-v6mr1370035qkt.220.1537852644079;
- Mon, 24 Sep 2018 22:17:24 -0700 (PDT)
+        id S1728203AbeIYMsZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 08:48:25 -0400
+Received: from forward4j.cmail.yandex.net ([5.255.227.22]:59707 "EHLO
+        forward4j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726030AbeIYMsZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 25 Sep 2018 08:48:25 -0400
+Received: from mxback6j.mail.yandex.net (mxback6j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10f])
+        by forward4j.cmail.yandex.net (Yandex) with ESMTP id D8E10218F7;
+        Tue, 25 Sep 2018 09:42:20 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback6j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id WRb9oNg9C8-gKv0Lc4R;
+        Tue, 25 Sep 2018 09:42:20 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1537857740;
+        bh=3PysmUHHRSwm6xrp1gRxUPRFF79eueCqbEgYBiEODs0=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:Message-Id;
+        b=ZYBV5FvODSgclsiFgHPL87xS5EHVgifo4tLTLSF2tnRb7nNRq+zUmbIz8IecLtf6t
+         Hns0GhbOVU9FgvWeHpk/5RwGRK8SN4UroovG+jXP6c//LBks7UzV5x7iO4weB8kRmm
+         YN+esZvb4dMtPwY+tl2gNQY4m7av2iii7LCD7BnE=
+Authentication-Results: mxback6j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by sas2-857317bd6599.qloud-c.yandex.net with HTTP;
+        Tue, 25 Sep 2018 09:42:20 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.com
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+In-Reply-To: <xmqq36u42pzw.fsf@gitster-ct.c.googlers.com>
+References: <6160201537441514@iva5-cb9df376e345.qloud-c.yandex.net> <xmqq36u42pzw.fsf@gitster-ct.c.googlers.com>
+Subject: Re: Work is not replayed on top while: git pull -v --rebase
 MIME-Version: 1.0
-References: <pull.39.v3.git.gitgitgadget@gmail.com> <pull.39.v4.git.gitgitgadget@gmail.com>
- <a0a3cf01343381281554d0e175b2f4ec5fbe0abb.1537822669.git.gitgitgadget@gmail.com>
-In-Reply-To: <a0a3cf01343381281554d0e175b2f4ec5fbe0abb.1537822669.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 25 Sep 2018 01:17:12 -0400
-Message-ID: <CAPig+cTT9cpDPyWugg8WNmCdA7OhEOxVxTxD3FRhpf7Sgdg-zA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] commit-reach: properly peel tags and clear flags
-To:     gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 25 Sep 2018 09:42:20 +0300
+Message-Id: <21782811537857740@sas2-857317bd6599.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 4:58 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> diff --git a/commit-reach.c b/commit-reach.c
-> @@ -544,20 +544,42 @@ int can_all_from_reach_with_flag(struct object_array *from,
->  {
-> +               from_one = deref_tag(the_repository, from_one,
-> +                                    "a from object", 0);
-> +               if (!from_one || from_one->type != OBJ_COMMIT) {
-> +                       /* no way to tell if this is reachable by
-> +                        * looking at the ancestry chain alone, so
-> +                        * leave a note to ourselves not to worry about
-> +                        * this object anymore.
-> +                        */
+As you can see I have lost some commits. Thus I wanna an option to be safe
 
-Style nit:
-
-    /*
-     * Multi-line comment
-     * formatting.
-     */
+20.09.2018, 17:38, "Junio C Hamano" <gitster@pobox.com>:
+> KES <kes-kes@yandex.ru> writes:
+>
+>>  PS. for `git push --force` there is alternative: --force-with-lease
+>>  Is there something similar to --force-with-lease but for `git pull -v --rebase`?
+>
+> Curious.
+>
+> For "push", you are competing with the other pushers who want to
+> update the repository over there, and there is need for the
+> force-with-lease=<it must be this verison> safety, but what is the
+> reason why you need to take a lease on your local side while doing
+> a "pull"?
