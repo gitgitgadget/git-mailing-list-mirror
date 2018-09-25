@@ -6,62 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C00111F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7A511F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725762AbeIZEMr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:12:47 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51351 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725732AbeIZEMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:12:47 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y25-v6so171516wmi.1
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:03:07 -0700 (PDT)
+        id S1725806AbeIZET2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:19:28 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36644 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725732AbeIZET2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:19:28 -0400
+Received: by mail-wr1-f67.google.com with SMTP id l10-v6so1750989wrp.3
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=dENGSSrUHp0NoGu5iovW+l0pTJ5Ot3PmyhSPeWCO1ng=;
-        b=RS4tp3OaDRvGaeFXS0tj1oEcRYHYsLjDm3pL9OUNhcSNuF5ZTJGMLetdHOAVeUmoDf
-         /LhZ1rcV5IJyQqmrv9Nqlb5GVJyazEo9pExad3doTsZgIeG75CPUjLAK5KUXasUUXgwt
-         g0UywcCayPLmiCLW+XTo1hFE9tMsnBQi9Xv48wb2F8TN65rdQ2veKuA02hcT3Qoj82Rs
-         t8+TF4gvgOoRakC6mmveo8nwhJawObmWADsFs1tQcblJIpUVY3fm+jFqlPtk/YDplsgz
-         Iahc2I+cVnvXjMEX6NWSW/WHvSOU3YMNvWjah83wm9IrbkRPcdJdXY9nJKytyfWesXbv
-         N8kg==
+        bh=3Ad5Wc5FEnAM2KQLiQrF6olS4Aw4GmxtkT7rr+5aUQI=;
+        b=eMxSHm/wfogVkk2PzgDtIAHH5dE2UaeOqYxUAypEu/98sX37y2qE/PapiK8khY/m5E
+         RhwMg2WpdQDB5XfZIjZldLCok+JSdXJAe+PfE5wJE6B/ABdZYLOJTmm7RF4r6Up1nn66
+         6s/omEhYdO9SOb95KQO81yiIsVwo+fUA4IO4Z083WWnfPf25ueRh2Jzau3dMkmEUdAJU
+         REYBwOQFySymWp/c26GrAQEPo1e98SdcCHwM3Ewz9p0xlZe9AL8eM9cQiXISZvgfZBfb
+         bpNIl9RruiptL/Nx83Yx/fl5eUeY9+sKgsiNY9Pu6XM3cklNlYVys/P3Sm3syzR5bcfm
+         Hyqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=dENGSSrUHp0NoGu5iovW+l0pTJ5Ot3PmyhSPeWCO1ng=;
-        b=NzWDUHaqO6qGMNEzzOQKYCleU9EwACcqx3yJnJE3ZL366MFSKmpgc81CLYcVXQun1j
-         3eFjuSvw4I0sV3iDGpLMKP6ofBln2nSZkrCjVW0DnHrX3G3L1kZb53MLQvYZhsC2oJbR
-         gpG7RoyLzwoJYD+xdbi0MWSTqbIEXL/st1qhVJLlZgM3/12VoJwjGn4Baa5XT3jViIry
-         8CJFRy77jfo01LIb5m8h7u1vQK4I6ySW6BreK1eVAJFQvy+R9KxZpqqq9HFmP9iN0ljv
-         2TApQBzsXBvBbSjxn9aLO7D+NYulsOgn9JPFXDJREUc6gauNLZKGIYveyyDL05w4bKlA
-         h8Mw==
-X-Gm-Message-State: ABuFfogLtIEmkfkIssS7F4EKz6cNME8WjcYuTlSvgJxl5ilTOmUBOK2v
-        RrVvULIQJ+uRvxQrYO34k9E=
-X-Google-Smtp-Source: ACcGV60OmWMDqd6tMslbPiaP6KIqBfJIN5nnHNubZ2Rs1f6D/s0kt+buKlDC4dxIQnIkL7rOViJAaQ==
-X-Received: by 2002:a1c:7ed4:: with SMTP id z203-v6mr2227352wmc.62.1537912986692;
-        Tue, 25 Sep 2018 15:03:06 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 139-v6sm5053367wmp.4.2018.09.25.15.03.05
+        bh=3Ad5Wc5FEnAM2KQLiQrF6olS4Aw4GmxtkT7rr+5aUQI=;
+        b=S6GghvKkfJHpzEprY55bP4S3NlhY+toHnLnFmlC7VjxZdS21FrDXXWIQWqGghJ5ulj
+         oENYpvGpAOw+lqYJh5WZFS1dI8F6KedtCJcRL3r+RMajMbQg7jCdyHjvV1/G9PXVjqfC
+         OKm9Mz8nV40u3ZTLnFqTL4jKCUB4n6zw2TAuSsKQ1ZO6ZdBb9RMh3V+ijdKUcxiI2WQJ
+         fT9vSL/7fry0XHsxm6zQ7Uuv/Wct6OZ4E1+J1RBiYUPBeo0H9nS9YuEzhoH8LECLNN1D
+         fSUUxxawkr+tvsoq92g1d95WJQJja4svYpAeCzDfNyJYAvkrpJMCWNDYaW4KXyjrW+Em
+         vcQQ==
+X-Gm-Message-State: ABuFfoiexuVe1yVUKJGTiVUNLgHuS1hbMR089GZtnp7rntDm0Ip8xVpW
+        HNdbzIBFOqyW+orM0NstZQtvn3Nz
+X-Google-Smtp-Source: ACcGV606d0+MFWEVd8X4TZVgsCN+ROatb2Xq/ch56BMGedVkDj0myhUrSH7vWvR5/ATZgLRHa2tITQ==
+X-Received: by 2002:adf:fe48:: with SMTP id m8-v6mr2710572wrs.171.1537913386726;
+        Tue, 25 Sep 2018 15:09:46 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k7-v6sm3497676wmf.41.2018.09.25.15.09.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Sep 2018 15:03:05 -0700 (PDT)
+        Tue, 25 Sep 2018 15:09:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        stas@stason.org
-Subject: Re: [PATCH 1/1] config doc: highlight the name=value syntax
-References: <29173fd8-ce72-0927-9bfe-786442dfd82c@stason.org>
-        <20180924222416.5240-2-philipoakley@iee.org>
-Date:   Tue, 25 Sep 2018 15:03:05 -0700
-In-Reply-To: <20180924222416.5240-2-philipoakley@iee.org> (Philip Oakley's
-        message of "Mon, 24 Sep 2018 23:24:16 +0100")
-Message-ID: <xmqqlg7pnskm.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: approximate no_dependents with filter
+References: <20180924154516.48704-1-jonathantanmy@google.com>
+Date:   Tue, 25 Sep 2018 15:09:45 -0700
+In-Reply-To: <20180924154516.48704-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 24 Sep 2018 08:45:16 -0700")
+Message-ID: <xmqqh8idns9i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,82 +65,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> +Variable name/value syntax
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
->  All the other lines (and the remainder of the line after the section
->  header) are recognized as setting variables, in the form
->  'name = value' (or just 'name', which is a short-hand to say that
-> @@ -69,7 +72,8 @@ stripped.  Leading whitespaces after 'name =', the remainder of the
->  line after the first comment character '#' or ';', and trailing
->  whitespaces of the line are discarded unless they are enclosed in
->  double quotes.  Internal whitespaces within the value are retained
-> -verbatim.
-> +verbatim. Single quotes are not special and form part of the
-> +variable's value.
->  
->  Inside double quotes, double quote `"` and backslash `\` characters
->  must be escaped: use `\"` for `"` and `\\` for `\`.
+> Whenever a lazy fetch is performed for a tree object, any trees and
+> blobs it directly or indirectly references will be fetched as well.
+> There is a "no_dependents" argument in struct fetch_pack_args that
+> indicates that objects that the wanted object references need not be
+> sent, but it currently has no effect other than to inhibit usage of
+> object flags.
+>
+> Extend the "no_dependents" argument to also exclude sending of objects
+> as much as the current protocol allows: when fetching a tree, all trees
+> it references will be sent (but not the blobs), and when fetching a
+> blob, it will still be sent. (If this mechanism is used to fetch a
+> commit or any other non-blob object, all referenced objects, except
+> blobs, will be sent.) The client neither needs to know or specify the
+> type of each object it wants.
+>
+> The necessary code change is done in fetch_pack() instead of somewhere
+> closer to where the "filter" instruction is written to the wire so that
+> only one part of the code needs to be changed in order for users of all
+> protocol versions to benefit from this optimization.
 
-Hmph.  This feels a bit backwards.  
+It is very clear how you are churning the code, but it is utterly
+unclear from the description what you perceived as a problem and why
+this change is a good (if not the best) solution for that problem,
+at least to me.
 
-The original paragraph is horrible in that there is no clear mention
-that a pair of dq can be used to quote (which primarily is useful if
-your value have leading or trailing whitespaces); the closest hint
-is "enclosed in double quotes" we see in the pre-context.  The added
-sentence singles out sq but it is unclear why it is necessary to
-call out that it is not special---the readers can legitimately
-wonder if backquotes are special or not and why.
+After reading the above description, I cannot shake the feeling that
+this is tied too strongly to the tree:0 use case?  Does it help
+other use cases (e.g. would it be useful or harmful if a lazy clone
+was done to exclude blobs that are larger than certain threshold, or
+objects of all types that are not referenced by commits younger than
+certain threshold)?
 
-I wonder if this is easier to understand:
-
-    diff --git a/Documentation/config.txt b/Documentation/config.txt
-    index ad0f4510c3..5eebd539df 100644
-    --- a/Documentation/config.txt
-    +++ b/Documentation/config.txt
-    @@ -61,12 +61,16 @@ the variable is the boolean "true").
-     The variable names are case-insensitive, allow only alphanumeric characters
-     and `-`, and must start with an alphabetic character.
-
-    +The value part can have segments that are enclosed in a pair of
-    +double quotes (note: other kinds of quoting character pairs are not
-    +special)--the double quotes are stripped from the value.
-    +
-     A line that defines a value can be continued to the next line by
-     ending it with a `\`; the backquote and the end-of-line are
-     stripped.  Leading whitespaces after 'name =', the remainder of the
-     line after the first comment character '#' or ';', and trailing
-    -whitespaces of the line are discarded unless they are enclosed in
-    -double quotes.  Internal whitespaces within the value are retained
-    +whitespaces of the line are discarded.
-    +Internal whitespaces within the value are retained
-     verbatim.
-
-     Inside double quotes, double quote `"` and backslash `\` characters
-
-> @@ -89,10 +93,14 @@ each other with the exception that `includeIf` sections may be ignored
->  if their condition does not evaluate to true; see "Conditional includes"
->  below.
->  
-> +Both the `include` and `includeIf` sections implicitly apply an 'if found'
-> +condition to the given path names.
-> +
-
-Mentioning that missing target file is not an error is definitely an
-improvement.  I've never viewed it as applying "if found" condition
-myself, but it is not wrong per-se to do so, I would think.
-
->  You can include a config file from another by setting the special
->  `include.path` (or `includeIf.*.path`) variable to the name of the file
->  to be included. The variable takes a pathname as its value, and is
-> -subject to tilde expansion. These variables can be given multiple times.
-> +subject to tilde expansion and the value syntax detailed above.
-> +These variables can be given multiple times.
-
-I have a mild suspicion that this adds negative value.  Singling out
-that "[include] path = ..."  follows the usual value syntax makes
-the readers wonder if there are some "[section] variable = ..." that
-does not follow the value syntax that they have to be aware of and
-careful about.
