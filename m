@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6DBC1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3601F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbeIZEoX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:44:23 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:44199 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726474AbeIZEoW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:22 -0400
-Received: by mail-ed1-f48.google.com with SMTP id t11-v6so165817edq.11
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:36 -0700 (PDT)
+        id S1726768AbeIZEoc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:44:32 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43924 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726289AbeIZEoa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:30 -0400
+Received: by mail-ed1-f67.google.com with SMTP id u23so170678edx.10
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=DBZp/PWdnaUkdTLy5oS1EEawWximy7/2UXtbY2JqitY=;
-        b=gsFFRwiWFxR+MAGIwSG3rTknj4fC5JvXoXb10TCcolUwm8+Sc1/awqV9pg3IAcLIGs
-         gN050GrYQ5Su8kFiE+g0IuHYD7TLWl1yB6Vm/w4mCD/BASDanCP5+QTzD26fuwTR7hDl
-         BaZM2i6HbaWcnmBliALbpGQ0zpr7OK41Cn3fXdqIbOn26wXMJHja2GvKaQQ4vyNzq8eR
-         Qw/m/E1PViIYF2D2f56ZCKEoDtDCnBT587wuwsJJH9q6pntCbGoyY5bAno+hNpq2bz5N
-         pSHvjgtDkob/7Z/SNZ8RAkTNyZK240KGH6274mC5351o1yLIGmN3hfIPGEMS0Z0Je4ex
-         BWHg==
+        bh=xxW8Q0t94ubg6LLGzT2Nu7sA56MKD4lWd0asvksHVd8=;
+        b=K8F0/tnUGdDXToLTZbGmpQR7epnYF1aktlcuUnE2GclHjasiAyhZgK84U8XqLzsnhY
+         aiYTUCb1fHECZXxcCWEi8I19oSrDuyWbksNAiW2Ads/ldDVvcnGxO+ch8VqSvtJXrufe
+         3ni7zs+xJ3CBj4AVNrprp7yTJ7RNwlOu9kpzretY1LS9id8d9qVg1cdMaP91RA/edS3L
+         ToIRI7WJ50aYJgLfXjq2OZhr6iIe41SSgd44DdhciaUwICXXu6DU15+4irIGv/MZxVPj
+         KNVDkr5xDPSayxjeDJr8hJ2GxBcnyJDR/ZAGHuGHazvhTb824rQI5XKD/6wiqx6+GB8s
+         S0Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DBZp/PWdnaUkdTLy5oS1EEawWximy7/2UXtbY2JqitY=;
-        b=nNbAwVyXKJLkW0JXFOmc7nygEr3pvtIkjnOXW0KSZUSFMn8DzmRS6Ow/3No+qhoLxL
-         UrlE7PaybHoc2vGXQznHWqDoUTlZErOXLk0sdeihQ4Gc6FTxPTglCzmzKI/IRGaHyqad
-         YtttBU6Qa/yK2J9rPJT2vA1TMfR6/Y8phlzf8TWGdeVyDHDqNvlLObIh6NVHNHjs4lbQ
-         LMRU5juqwuKJBjQUmuKdXLgXJHFnSRWuQnzM8zNzbvu1eAcR+2Q6thmGXOfR2cmh5uJ2
-         yKzgUT5dEwClZE/AJ6QD/vAeeeQejvOnTXOIJwE2uY7ySCeYIegbmK+Mu7PdxOAxVm/e
-         d4Yw==
-X-Gm-Message-State: ABuFfojREAeStvNOkBXDMJAvpN3xKVaTZc4NEVYip8dG5Q8tfxHntXYH
-        qfstpuSE49tfOz/TlSnDWzrOvi2S
-X-Google-Smtp-Source: ACcGV61ZKi3LIB4/Il5cWWW1R517R0IsRclCpUmsvFfDdcfiEuFlv9YKTXBCRbGcJqfne1MqXpsC2w==
-X-Received: by 2002:a50:9043:: with SMTP id z3-v6mr4759417edz.216.1537914875453;
-        Tue, 25 Sep 2018 15:34:35 -0700 (PDT)
+        bh=xxW8Q0t94ubg6LLGzT2Nu7sA56MKD4lWd0asvksHVd8=;
+        b=g2pLTrbKZwo+OR07y+nW08nbHYSshbVxMahXuOjZWqwQ1jMEjR3PSkHWkItgGeOvkV
+         1SGS6mEuL2vhuZYYjjjhxg8LQc7AEPTtLJzLJdlBTgUuUDAeSfr7FPcAYXk0k/bI4r1z
+         NaLHIlvAvgOmVRmrFZ2pDmxVISSq39VRjP4PHLoeggHVSqBZzxwF2aElx0RCJZPhscYq
+         yfRog/JJlIlhzo4O/4J4iGeUt0Mdna/ued7hv14KQz8NXHklgzU9r2tfPbrrKcx/08z4
+         u6DuTp58QVT3pk4DsLeT0nrf86ycoa5npUa2vMCNiW5BarNXh2WjNqDdsXxXb9NVI9C5
+         10lw==
+X-Gm-Message-State: ABuFfogt0Ew5aIhvpfwPKecrfHF3ts1Q5RPpMQDeH1rW+USDQtzXaQzU
+        2A1x/MbnwnPAx+pqoz20tfF3Yncl
+X-Google-Smtp-Source: ACcGV63w5Pd59DsIdXCXxmloMpeKU6Ru4hMVINO6DkrJNJVYG290/0/Z1e1X1ftOCapxTGpftzmObg==
+X-Received: by 2002:a50:c345:: with SMTP id q5-v6mr1056070edb.130.1537914884394;
+        Tue, 25 Sep 2018 15:34:44 -0700 (PDT)
 Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.34
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.43
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 15:34:34 -0700 (PDT)
+        Tue, 25 Sep 2018 15:34:43 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v9 12/21] stash: convert show to builtin
-Date:   Wed, 26 Sep 2018 01:33:28 +0300
-Message-Id: <7d43996554895c86840f5fc2ee9c5239f3d6ff3a.1537913094.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v9 21/21] stash: replace all `write-tree` child processes with API calls
+Date:   Wed, 26 Sep 2018 01:33:37 +0300
+Message-Id: <1fb9f40d88a813af81e3ddc9e143215571bc53f3.1537913094.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
 In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
@@ -65,299 +65,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add stash show to the helper and delete the show_stash, have_stash,
-assert_stash_like, is_stash_like and parse_flags_and_rev functions
-from the shell script now that they are no longer needed.
-
-In shell version, although `git stash show` accepts `--index` and
-`--quiet` options, it ignores them. In C, both options are passed
-further to `git diff`.
+This commit replaces spawning `git write-tree` with API calls.
 
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- builtin/stash--helper.c |  87 ++++++++++++++++++++++++++
- git-stash.sh            | 132 +---------------------------------------
- 2 files changed, 88 insertions(+), 131 deletions(-)
+ builtin/stash.c | 41 ++++++++++++-----------------------------
+ 1 file changed, 12 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index 9e256690ec..1bc838ee6b 100644
---- a/builtin/stash--helper.c
-+++ b/builtin/stash--helper.c
-@@ -10,9 +10,12 @@
- #include "run-command.h"
- #include "dir.h"
- #include "rerere.h"
-+#include "revision.h"
-+#include "log-tree.h"
- 
- static const char * const git_stash_helper_usage[] = {
- 	N_("git stash--helper list [<options>]"),
-+	N_("git stash--helper show [<stash>]"),
- 	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
- 	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
- 	N_("git stash--helper branch <branchname> [<stash>]"),
-@@ -25,6 +28,11 @@ static const char * const git_stash_helper_list_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_helper_show_usage[] = {
-+	N_("git stash--helper show [<stash>]"),
-+	NULL
-+};
-+
- static const char * const git_stash_helper_drop_usage[] = {
- 	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
- 	NULL
-@@ -643,6 +651,83 @@ static int list_stash(int argc, const char **argv, const char *prefix)
- 	return run_command(&cp);
- }
- 
-+static int show_stat = 1;
-+static int show_patch;
-+
-+static int git_stash_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "stash.showstat")) {
-+		show_stat = git_config_bool(var, value);
-+		return 0;
-+	}
-+	if (!strcmp(var, "stash.showpatch")) {
-+		show_patch = git_config_bool(var, value);
-+		return 0;
-+	}
-+	return git_default_config(var, value, cb);
-+}
-+
-+static int show_stash(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
-+	int opts = 0;
-+	int ret = 0;
-+	struct stash_info info;
-+	struct rev_info rev;
-+	struct argv_array stash_args = ARGV_ARRAY_INIT;
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+
-+	init_diff_ui_defaults();
-+	git_config(git_diff_ui_config, NULL);
-+	init_revisions(&rev, prefix);
-+
-+	for (i = 1; i < argc; i++) {
-+		if (argv[i][0] != '-')
-+			argv_array_push(&stash_args, argv[i]);
-+		else
-+			opts++;
-+	}
-+
-+	ret = get_stash_info(&info, stash_args.argc, stash_args.argv);
-+	argv_array_clear(&stash_args);
-+	if (ret)
-+		return -1;
-+
-+	/*
-+	 * The config settings are applied only if there are not passed
-+	 * any options.
-+	 */
-+	if (!opts) {
-+		git_config(git_stash_config, NULL);
-+		if (show_stat)
-+			rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT;
-+
-+		if (show_patch)
-+			rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
-+
-+		if (!show_stat && !show_patch) {
-+			free_stash_info(&info);
-+			return 0;
-+		}
-+	}
-+
-+	argc = setup_revisions(argc, argv, &rev, NULL);
-+	if (argc > 1) {
-+		free_stash_info(&info);
-+		usage_with_options(git_stash_helper_show_usage, options);
-+	}
-+
-+	rev.diffopt.flags.recursive = 1;
-+	setup_diff_pager(&rev.diffopt);
-+	diff_tree_oid(&info.b_commit, &info.w_commit, "", &rev.diffopt);
-+	log_tree_diff_flush(&rev);
-+
-+	free_stash_info(&info);
-+	return diff_result_code(&rev.diffopt, 0);
-+}
-+
- int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 43d0de1f13..86a7e0a5a5 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -941,9 +941,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
  {
- 	pid_t pid = getpid();
-@@ -675,6 +760,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!branch_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "list"))
- 		return !!list_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "show"))
-+		return !!show_stash(argc, argv, prefix);
+ 	int ret = 0;
+ 	struct strbuf untracked_msg = STRBUF_INIT;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
+-	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
++	struct index_state istate = { NULL };
  
- 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 		      git_stash_helper_usage, options);
-diff --git a/git-stash.sh b/git-stash.sh
-index 6052441aa2..0d05cbc1e5 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -378,35 +378,6 @@ save_stash () {
- 	fi
+ 	cp_upd_index.git_cmd = 1;
+ 	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
+@@ -957,15 +956,11 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
+ 		goto done;
+ 	}
+ 
+-	cp_write_tree.git_cmd = 1;
+-	argv_array_push(&cp_write_tree.args, "write-tree");
+-	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->u_tree, &istate, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+-	get_oid_hex(out.buf, &info->u_tree);
+ 
+ 	if (commit_tree(untracked_msg.buf, untracked_msg.len,
+ 			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
+@@ -974,8 +969,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
+ 	}
+ 
+ done:
++	discard_index(&istate);
+ 	strbuf_release(&untracked_msg);
+-	strbuf_release(&out);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
  }
+@@ -984,11 +979,10 @@ static int stash_patch(struct stash_info *info, struct pathspec ps,
+ 		       struct strbuf *out_patch, int quiet)
+ {
+ 	int ret = 0;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+ 	struct child_process cp_add_i = CHILD_PROCESS_INIT;
+-	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+ 	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
++	struct index_state istate = { NULL };
  
--have_stash () {
--	git rev-parse --verify --quiet $ref_stash >/dev/null
--}
--
--show_stash () {
--	ALLOW_UNKNOWN_FLAGS=t
--	assert_stash_like "$@"
--
--	if test -z "$FLAGS"
--	then
--		if test "$(git config --bool stash.showStat || echo true)" = "true"
--		then
--			FLAGS=--stat
--		fi
--
--		if test "$(git config --bool stash.showPatch || echo false)" = "true"
--		then
--			FLAGS=${FLAGS}${FLAGS:+ }-p
--		fi
--
--		if test -z "$FLAGS"
--		then
--			return 0
--		fi
--	fi
--
--	git diff ${FLAGS} $b_commit $w_commit
--}
--
- show_help () {
- 	exec git help stash
- 	exit 1
-@@ -448,107 +419,6 @@ show_help () {
- #   * unknown flags were set and ALLOW_UNKNOWN_FLAGS is not "t"
- #
+ 	remove_path(stash_index_path.buf);
  
--parse_flags_and_rev()
--{
--	test "$PARSE_CACHE" = "$*" && return 0 # optimisation
--	PARSE_CACHE="$*"
--
--	IS_STASH_LIKE=
--	IS_STASH_REF=
--	INDEX_OPTION=
--	s=
--	w_commit=
--	b_commit=
--	i_commit=
--	u_commit=
--	w_tree=
--	b_tree=
--	i_tree=
--	u_tree=
--
--	FLAGS=
--	REV=
--	for opt
--	do
--		case "$opt" in
--			-q|--quiet)
--				GIT_QUIET=-t
--			;;
--			--index)
--				INDEX_OPTION=--index
--			;;
--			--help)
--				show_help
--			;;
--			-*)
--				test "$ALLOW_UNKNOWN_FLAGS" = t ||
--					die "$(eval_gettext "unknown option: \$opt")"
--				FLAGS="${FLAGS}${FLAGS:+ }$opt"
--			;;
--			*)
--				REV="${REV}${REV:+ }'$opt'"
--			;;
--		esac
--	done
--
--	eval set -- $REV
--
--	case $# in
--		0)
--			have_stash || die "$(gettext "No stash entries found.")"
--			set -- ${ref_stash}@{0}
--		;;
--		1)
--			:
--		;;
--		*)
--			die "$(eval_gettext "Too many revisions specified: \$REV")"
--		;;
--	esac
--
--	case "$1" in
--		*[!0-9]*)
--			:
--		;;
--		*)
--			set -- "${ref_stash}@{$1}"
--		;;
--	esac
--
--	REV=$(git rev-parse --symbolic --verify --quiet "$1") || {
--		reference="$1"
--		die "$(eval_gettext "\$reference is not a valid reference")"
--	}
--
--	i_commit=$(git rev-parse --verify --quiet "$REV^2") &&
--	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>/dev/null) &&
--	s=$1 &&
--	w_commit=$1 &&
--	b_commit=$2 &&
--	w_tree=$3 &&
--	b_tree=$4 &&
--	i_tree=$5 &&
--	IS_STASH_LIKE=t &&
--	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
--	IS_STASH_REF=t
--
--	u_commit=$(git rev-parse --verify --quiet "$REV^3") &&
--	u_tree=$(git rev-parse "$REV^3:" 2>/dev/null)
--}
--
--is_stash_like()
--{
--	parse_flags_and_rev "$@"
--	test -n "$IS_STASH_LIKE"
--}
--
--assert_stash_like() {
--	is_stash_like "$@" || {
--		args="$*"
--		die "$(eval_gettext "'\$args' is not a stash-like commit")"
--	}
--}
--
- test "$1" = "-p" && set "push" "$@"
+@@ -1014,17 +1008,12 @@ static int stash_patch(struct stash_info *info, struct pathspec ps,
+ 	}
  
- PARSE_CACHE='--not-parsed'
-@@ -573,7 +443,7 @@ list)
- 	;;
- show)
- 	shift
--	show_stash "$@"
-+	git stash--helper show "$@"
- 	;;
- save)
- 	shift
+ 	/* State of the working tree. */
+-	cp_write_tree.git_cmd = 1;
+-	argv_array_push(&cp_write_tree.args, "write-tree");
+-	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+-	get_oid_hex(out.buf, &info->w_tree);
+-
+ 	cp_diff_tree.git_cmd = 1;
+ 	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "HEAD",
+ 			 oid_to_hex(&info->w_tree), "--", NULL);
+@@ -1040,7 +1029,7 @@ static int stash_patch(struct stash_info *info, struct pathspec ps,
+ 	}
+ 
+ done:
+-	strbuf_release(&out);
++	discard_index(&istate);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
+ }
+@@ -1050,9 +1039,8 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+ 	int ret = 0;
+ 	struct rev_info rev;
+ 	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
+-	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct strbuf diff_output = STRBUF_INIT;
++	struct index_state istate = { NULL };
+ 
+ 	set_alternate_index_output(stash_index_path.buf);
+ 	if (reset_tree(&info->i_tree, 0, 0)) {
+@@ -1091,20 +1079,15 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+ 		goto done;
+ 	}
+ 
+-	cp_write_tree.git_cmd = 1;
+-	argv_array_push(&cp_write_tree.args, "write-tree");
+-	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+-	get_oid_hex(out.buf, &info->w_tree);
+-
+ done:
++	discard_index(&istate);
+ 	UNLEAK(rev);
+-	strbuf_release(&out);
+ 	object_array_clear(&rev.pending);
+ 	strbuf_release(&diff_output);
+ 	remove_path(stash_index_path.buf);
 -- 
 2.19.0.rc0.23.g1fb9f40d88
 
