@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4F6C1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 02:35:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21D691F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 02:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727576AbeIYIk4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 04:40:56 -0400
-Received: from mail-yb1-f194.google.com ([209.85.219.194]:44125 "EHLO
-        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727492AbeIYIk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 04:40:56 -0400
-Received: by mail-yb1-f194.google.com with SMTP id y12-v6so5932621ybj.11
-        for <git@vger.kernel.org>; Mon, 24 Sep 2018 19:35:40 -0700 (PDT)
+        id S1727609AbeIYIxs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 04:53:48 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:37840 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726417AbeIYIxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 04:53:47 -0400
+Received: by mail-yw1-f67.google.com with SMTP id y14-v6so1514578ywa.4
+        for <git@vger.kernel.org>; Mon, 24 Sep 2018 19:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=BbLOUIipf8DVSnofKEiejdwfULG7zA6bA+8oAXp1AlQ=;
-        b=emhLLpn1PBuSwquK02MOC17ILEfJ+FKe14LrPaaWhwwbCtxBR8vnDru/b8FW5DZCOs
-         5myGd3V+nUXghSha9jjL8QIc8dnkOGhKXuZMWpU0zx5TfYTZsYKYGLoVL1fCzPSBd0OT
-         Z2oMxDA5Mqr3mpe1Vw07YEBa8xWbAtIbjDL6SyLYqvvRlkhMktNVzKw0VA2PArVLr77Y
-         F3l48emT3dwnTPB7BCv3+FTItQ4w1V0niZKIPF0M2ElHw8Fb5DBxW5j/EMSbY/5QOdI0
-         mUgVeVrEU0XHUgKYGfoHdusKBVKvx7CmhqdqT/uFYCVmR9cs38NQjOWhpVMTfmIfa0mU
-         0qIw==
+        bh=2MOq0WGDETdbfz+la9hjU3cg+iSXoewEjnW40cVZyLM=;
+        b=jBDS/h93Z+dzoa2zM61ZHID7cghq9M1t6e+/trZhBrJh87efkV3a4QsT6uG7BaPAOI
+         Kz0ZR3V6j7rXMEKBFQquEE3V2wWxN/CFNcDhSkSuI9Yj+MEVgF5erWVeva+NZbPk19/+
+         Z4m/0V2Ro/I3oYyADGpJ40LnSdSlAVM2LXKCoEIUhHUNTW/B2fK47+fWZtsE6QskXByy
+         jie9+zmQPl14UulkbmPMRjrf+85pG1xi3Vi24ZKTebr/JcQBPbAwO8NFspihNQLMFFJP
+         w0kotvRGw1h+XLx2rkDyd5UDfERKqjBzHI9HyUJOrQGXpks47+cvoyjIR156XrEQBxnD
+         rS9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BbLOUIipf8DVSnofKEiejdwfULG7zA6bA+8oAXp1AlQ=;
-        b=kdH8Vlu+gPkT5oKkuszYrTVtByINSmSYkdDDvxk+s+/nNRcCOM1PmYEwUpfMEIjv+6
-         lFHLmNRdXJMOB5+D2/u1BvKvt7fkTgqI8VaxlEJnVB6mw0RlCPjweyVbFJlH4Vj9S9DB
-         iEORjjx4tIEgb81ptqgHOqgoqNqiZAqwVeeyY8VkHy8nF60tMx8ZorIqiSJTHhGciF9t
-         6RfyUZ5164GZ+05SWjARdTHQMLSYUkbf782tOTIuIobN8Uw95aevFrxyBiMpGOIt18/W
-         /22B9krg1z7ti4C06EnZXFzUcT4FQFoxfbvohcGs2MBZ7qSM7tDPhtSP9RPhAkCsIJn2
-         3xqg==
-X-Gm-Message-State: ABuFfoiI12vIcwbP+KP4FyBg1OxFw9BYG4NcRB+g/+9HEPlA0O6oT1n2
-        tGI5sKQLo82PoyTDuCcGH/urwqvq/VrRp6M9IK2snw==
-X-Google-Smtp-Source: ACcGV61xFgpPQMfrPHHVIBobl5KnFgso81XwOHOPFkKg4aaktw2TNKxIXj6CquffFmgxWwGiQWlI6ZRBOkb0ynZj5VI=
-X-Received: by 2002:a25:e481:: with SMTP id b123-v6mr765968ybh.416.1537842940175;
- Mon, 24 Sep 2018 19:35:40 -0700 (PDT)
+        bh=2MOq0WGDETdbfz+la9hjU3cg+iSXoewEjnW40cVZyLM=;
+        b=IGEhV+k8UyUlyPckE10wL2BfdhFBs9lq32VS7craww8Z0jFXOm06HAtPWzF/RdfLGe
+         KGbVomnB8r/L6oGDhk6hz8A4JVamxsOS44PVmap6jrXUsQpuAIJcVzxh94JGc4tGMyrw
+         Su3wRuI+zpd4BMVCvIEP542mbdjLDZ8Tg3QIJW14WKIpgeELHwbDShSMOzb1wVQtsYr6
+         59i5o4WqfNhHJESktLrpZuhRGpi5gNekfTa96/RwrIJGUsrGBPq8AvhhlLFclYf0ye5D
+         7sL8und0Dso3qNG977vHPXHMDklKIWoUMkQSrutBPkrgjQO1PdfYM8W0e3u9Wmn1CQ9i
+         mxkA==
+X-Gm-Message-State: ABuFfoj1IWcTRwZakeKVHFlzOMrDvCPkpYii3GBfHTXatezf8P7GaAVh
+        elMTxw/KN1hc7S0K5zAwfDMAjVx6JTZaiH5eiiwPmg==
+X-Google-Smtp-Source: ACcGV6283KC5fslRjafMojVwK0gxquAQnhiYkJgoUc2Bjcj7oZT9tdrpFb+KzlAkK0UGeM/K8QbC8qFmSfEKCv4bj2o=
+X-Received: by 2002:a81:b64c:: with SMTP id h12-v6mr758990ywk.119.1537843709150;
+ Mon, 24 Sep 2018 19:48:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-3-pclouds@gmail.com>
-In-Reply-To: <20180922180500.4689-3-pclouds@gmail.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-4-pclouds@gmail.com>
+In-Reply-To: <20180922180500.4689-4-pclouds@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Sep 2018 19:35:29 -0700
-Message-ID: <CAGZ79kZF1+0PTEgF_NwM_AwttJ0sedAP8CT834L5ZGJpxZ+G_Q@mail.gmail.com>
-Subject: Re: [PATCH 2/8] Add a place for (not) sharing stuff between worktrees
+Date:   Mon, 24 Sep 2018 19:48:18 -0700
+Message-ID: <CAGZ79kYTzs=Xx-K-ghUa=as7Q0tiw-z1h7_D2=6zaO3fpWMrWg@mail.gmail.com>
+Subject: Re: [PATCH 3/8] refs: new ref types to make per-worktree refs visible
+ to all worktrees
 To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
         Jeff King <peff@peff.net>
@@ -65,29 +66,61 @@ X-Mailing-List: git@vger.kernel.org
 On Sat, Sep 22, 2018 at 11:05 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
 <pclouds@gmail.com> wrote:
 >
-> When multiple worktrees are used, we need rules to determine if
-> something belongs to one worktree or all of them. Instead of keeping
-> adding rules when new stuff comes, have a generic rule:
+> One of the problems with multiple worktree is accessing per-worktree
+> refs of one worktree from another worktree. This was sort of solved by
+> multiple ref store, where the code can open the ref store of another
+> worktree and has access to the ref space of that worktree.
 >
-> - Inside $GIT_DIR, which is per-worktree by default, add
->   $GIT_DIR/common which is always shared. New features that want to
->   share stuff should put stuff under this directory.
-
-So that /common is a directory and you have to use it specifically
-in new code? That would be easy to overlook when coming up
-with $GIT_DIR/foo for implementing the git-foo.
-
+> The problem with this is reporting. "HEAD" in another ref space is
+> also called "HEAD" like in the current ref space. In order to
+> differentiate them, all the code must somehow carry the ref store
+> around and print something like "HEAD from this ref store".
 >
-> - Inside refs/, which is shared by default except refs/bisect, add
->   refs/local/ which is per-worktree. We may eventually move
->   refs/bisect to this new location and remove the exception in refs
->   code.
+> But that is not feasible (or possible with a _lot_ of work). With the
+> current design, we pass a reference around as a string (so called
+> "refname"). Extending this design to pass a string _and_ a ref store
+> is a nightmare, especially when handling extended SHA-1 syntax.
+>
+> So we do it another way. Instead of entering a separate ref space, we
+> make refs from other worktrees available in the current ref space. So
+> "HEAD" is always HEAD of the current worktree, but then we can have
+> "worktrees/blah/HEAD" to denote HEAD from a worktree named
+> "blah". This syntax coincidentally matches the underlying directory
+> structure which makes implementation a bit easier.
+>
+> The main worktree has to be treated specially because well.. it's
+> special from the beginning. So HEAD from the main worktree is
+> acccessible via the name "main/HEAD" (we can't use
+> "worktrees/main/HEAD" because "main" under "worktrees" is not
+> reserved).
+>
+> This patch also makes it possible to specify refs from one worktree in
+> another one, e.g.
+>
+>     git log worktrees/foo/HEAD
 
-That sounds dangerous to me. There is already a concept of
-local and remote-tracking branches. So I would think that local
-may soon become an overused word, (just like "index" today or
-"recursive" to a lesser extend).
+This has strong similarities to remote refs:
+Locally I may have a branch master, whose (stale local copy of its
+distributed) counterpart is named origin/master.
 
-Could this special area be more explicit?
-(refs/worktree-local/ ? or after peeking at the docs below
-refs/un-common/ ?)
+It is also possible to have a working tree named origin
+(just I like to name my worktree "git", when working on git.git),
+how do we differentiate between the neighbor-worktree
+"origin/master" and the remote-tracking branch "origin/master" ?
+
+As the remote tracking branches are shared between all
+worktree there is no need to differentiate between a
+local-worktree remote tracking branch and a
+neighbor-worktree remote tracking branch.
+
+Now that you introduce the magic main working tree,
+we also need to disallow working trees to be named "main",
+i.e.
+    $ git worktree add main HEAD
+
+produces
+
+  $ ls .git/worktrees/
+  main
+
+How do we deal with that?
