@@ -2,100 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7A511F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2816B1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:20:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725806AbeIZET2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:19:28 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36644 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725732AbeIZET2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:19:28 -0400
-Received: by mail-wr1-f67.google.com with SMTP id l10-v6so1750989wrp.3
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:09:47 -0700 (PDT)
+        id S1725999AbeIZEaU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:30:20 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46520 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725762AbeIZEaT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:30:19 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k14-v6so134503edr.13
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3Ad5Wc5FEnAM2KQLiQrF6olS4Aw4GmxtkT7rr+5aUQI=;
-        b=eMxSHm/wfogVkk2PzgDtIAHH5dE2UaeOqYxUAypEu/98sX37y2qE/PapiK8khY/m5E
-         RhwMg2WpdQDB5XfZIjZldLCok+JSdXJAe+PfE5wJE6B/ABdZYLOJTmm7RF4r6Up1nn66
-         6s/omEhYdO9SOb95KQO81yiIsVwo+fUA4IO4Z083WWnfPf25ueRh2Jzau3dMkmEUdAJU
-         REYBwOQFySymWp/c26GrAQEPo1e98SdcCHwM3Ewz9p0xlZe9AL8eM9cQiXISZvgfZBfb
-         bpNIl9RruiptL/Nx83Yx/fl5eUeY9+sKgsiNY9Pu6XM3cklNlYVys/P3Sm3syzR5bcfm
-         Hyqg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=r4W57qzVHJqCzEsgq0enJu4gx+fy7rsBJ1RXubEyXKY=;
+        b=o2D1/gVObzOdjdSmjwA/dPrP5A7ly6PeAto1ZB/sjFUhH4t+i9s6H+v7KiokX1qLje
+         LpjUzGBjZrXA9XbG7lj7v6PnrA+2N5cQFscVV4vMHfbX/Oh/jqkQeDiLNa3rJ+uhhqVO
+         zQTySP3XMZzPs/AulZvlzQNv/xQs+iTsoJpL+UeKmwNa8qHK1SIuN88s2etwIYaDOuVm
+         7Bxuu+qWjICtTqvWC7f9yvglo/H4Cob9fO0UWeXkZIYQjJsdrJnXztI1rZjmYN2UaFhn
+         AEIIblk4PFdV/0Wb10dyNt+E4KaErK/X7Y6LMt6q1z2m2EJH6Ib828OxXw+MoFPVIBAp
+         mPHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3Ad5Wc5FEnAM2KQLiQrF6olS4Aw4GmxtkT7rr+5aUQI=;
-        b=S6GghvKkfJHpzEprY55bP4S3NlhY+toHnLnFmlC7VjxZdS21FrDXXWIQWqGghJ5ulj
-         oENYpvGpAOw+lqYJh5WZFS1dI8F6KedtCJcRL3r+RMajMbQg7jCdyHjvV1/G9PXVjqfC
-         OKm9Mz8nV40u3ZTLnFqTL4jKCUB4n6zw2TAuSsKQ1ZO6ZdBb9RMh3V+ijdKUcxiI2WQJ
-         fT9vSL/7fry0XHsxm6zQ7Uuv/Wct6OZ4E1+J1RBiYUPBeo0H9nS9YuEzhoH8LECLNN1D
-         fSUUxxawkr+tvsoq92g1d95WJQJja4svYpAeCzDfNyJYAvkrpJMCWNDYaW4KXyjrW+Em
-         vcQQ==
-X-Gm-Message-State: ABuFfoiexuVe1yVUKJGTiVUNLgHuS1hbMR089GZtnp7rntDm0Ip8xVpW
-        HNdbzIBFOqyW+orM0NstZQtvn3Nz
-X-Google-Smtp-Source: ACcGV606d0+MFWEVd8X4TZVgsCN+ROatb2Xq/ch56BMGedVkDj0myhUrSH7vWvR5/ATZgLRHa2tITQ==
-X-Received: by 2002:adf:fe48:: with SMTP id m8-v6mr2710572wrs.171.1537913386726;
-        Tue, 25 Sep 2018 15:09:46 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k7-v6sm3497676wmf.41.2018.09.25.15.09.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Sep 2018 15:09:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=r4W57qzVHJqCzEsgq0enJu4gx+fy7rsBJ1RXubEyXKY=;
+        b=OdFQwQLBBqljRdnGDAVX4YHU7kNWufvx/HwcD/uVYCFRnJU5+uErDww+ni3pVVpgJI
+         C1d7L6W07Gi4TE8g+fB+/j2QnZwhYC1XngYURRidcg31C3u6Pss4kJspK/ghlCDXv8CV
+         hS6Ho9Bhl7uab65VjvfWoTLc1DqJd/c81bdrKE7LrRQp7I397AzqCvbcLJwagUkxIIV4
+         CxWrU87iSJabQpew1mD/4HfbdHBE/pWxR+kOjIAWc9ZiwbfeyRhZUoemxo/YZCbXZWex
+         nO48YUgYb7092e1SGHuVRpd7bru+Es5pFlSFpWTzxzieq4ox5IngBmZfgSxVDc4Do+0x
+         AUQA==
+X-Gm-Message-State: ABuFfoh9UBvVaxknKoGC4Srw/7zHgXcgh7HujGqXiYxbp9rA0W+DBkKZ
+        jnMVPNXwyfXAEf8Mg8k3g4uzDQPy
+X-Google-Smtp-Source: ACcGV63Z97VLAgLtkg5JGRgJBo0S+yL5sbjyWsZaJ8vGqa1KFv2502NeVF/VNx1iR/yGJ9RtaelCPA==
+X-Received: by 2002:a50:8807:: with SMTP id b7-v6mr4868471edb.182.1537914036531;
+        Tue, 25 Sep 2018 15:20:36 -0700 (PDT)
+Received: from [192.168.0.103] ([92.55.154.13])
+        by smtp.gmail.com with ESMTPSA id d23-v6sm6498547eds.47.2018.09.25.15.20.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Sep 2018 15:20:35 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v8 14/20] stash: convert create to builtin
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch-pack: approximate no_dependents with filter
-References: <20180924154516.48704-1-jonathantanmy@google.com>
-Date:   Tue, 25 Sep 2018 15:09:45 -0700
-In-Reply-To: <20180924154516.48704-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Mon, 24 Sep 2018 08:45:16 -0700")
-Message-ID: <xmqqh8idns9i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
+ <a4faed3c8aa5ea8f0d4c578b693f3b5de3e3a709.1535665109.git.ungureanupaulsebastian@gmail.com>
+ <nycvar.QRO.7.76.6.1809031718230.71@tvgsbejvaqbjf.bet>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <5ba50c37-2840-e1f9-4d35-877979018f1c@gmail.com>
+Date:   Wed, 26 Sep 2018 01:20:34 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <nycvar.QRO.7.76.6.1809031718230.71@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi,
 
-> Whenever a lazy fetch is performed for a tree object, any trees and
-> blobs it directly or indirectly references will be fetched as well.
-> There is a "no_dependents" argument in struct fetch_pack_args that
-> indicates that objects that the wanted object references need not be
-> sent, but it currently has no effect other than to inhibit usage of
-> object flags.
->
-> Extend the "no_dependents" argument to also exclude sending of objects
-> as much as the current protocol allows: when fetching a tree, all trees
-> it references will be sent (but not the blobs), and when fetching a
-> blob, it will still be sent. (If this mechanism is used to fetch a
-> commit or any other non-blob object, all referenced objects, except
-> blobs, will be sent.) The client neither needs to know or specify the
-> type of each object it wants.
->
-> The necessary code change is done in fetch_pack() instead of somewhere
-> closer to where the "filter" instruction is written to the wire so that
-> only one part of the code needs to be changed in order for users of all
-> protocol versions to benefit from this optimization.
+Sorry for the late reply. I had a lot on my plate for the last couple of 
+weeks.
 
-It is very clear how you are churning the code, but it is utterly
-unclear from the description what you perceived as a problem and why
-this change is a good (if not the best) solution for that problem,
-at least to me.
+>> +
+>> +	git_config(git_diff_basic_config, NULL);
+> 
+> Is this not called in as part of `git_config(git_default_config, NULL);`
+> in cmd_stash() already?
+> 
+> *clicketyclick*
+> 
+> I guess not. But then, maybe it would make sense to run with
+> `git_diff_basic_config` from the get go, to avoid having to run
+> `git_config()` twice.
 
-After reading the above description, I cannot shake the feeling that
-this is tied too strongly to the tree:0 use case?  Does it help
-other use cases (e.g. would it be useful or harmful if a lazy clone
-was done to exclude blobs that are larger than certain threshold, or
-objects of all types that are not referenced by commits younger than
-certain threshold)?
+I am not sure I got it right, but if I did:
 
+Running `git_config` with `git_diff_basic_config` from the
+beginning wouldn't be pointless when we would use any other
+command than `create`, `push` and `save`? Although it might
+confuse the reader a little bit, the stash should run without
+problems.
+
+Best,
+Paul
