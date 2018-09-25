@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79F351F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E0E11F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726704AbeIZEo3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:44:29 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33943 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbeIZEo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:44:29 -0400
-Received: by mail-ed1-f65.google.com with SMTP id q19-v6so210118edr.1
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:42 -0700 (PDT)
+        id S1726744AbeIZEoa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:44:30 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:38255 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbeIZEoa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:30 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x8-v6so190529eds.5
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=MLyn/ZwV6wtAqf7oeA6dyzt0lp/pIGsl9UCOYBgcF08=;
-        b=Atg3I3LzCWh6wN6dOrl/tDWtOXKcCSYiCPH989tnfstv7R1hQ2/doOiJVWQcBTxcGc
-         7IgEdL8S0y8dqJMP35nKkLz/a6bOITgwk8VQibLV2vL9uOeiHhlvNcgkcy5rooIzXiok
-         Y+Bp/54BAiGWsLfcdyungDTdYqPOoB3n/B2wx4dwb+rp8bJhiGptiV7m8J9DAEMu+3sD
-         h4oq1XsWFc5OhIpDp0F1DATvBTrvS6NWcrgVRsNSHDKSTSrN7HUBv8SNAd0Ev/QmGAq8
-         mIVQ2TCejdPxk0Wnl+pVeny3D8oYwvK2g67T22jXonobYa4CvQTh11BihGdwjUIcSPmW
-         8Axw==
+        bh=EtGwTHaGL7JPuUFO5H0NQDYVLYXVf5CRlQxNpVUtmcE=;
+        b=VX7aYj3ZK9QhTQZwhkcPu/WUYjRptFKZMicz/ZAO2A2LpTn5bMp+nIzK8ZukSeeVw/
+         /m22Jze/2yfctjLv9zMvmP4i/5QD3CjNhOYPglxGt8fYOF+kO9Q/XAZ8H9y8qAOykoPq
+         v10oYxm0Sc4LsGClILh3Hayv1R/49nrA6bXLMD39W4ET6EXnhVolPbXz40pMYCOB2XkS
+         +LufhMDPTGIby7NQ8oSxS2QMLjJxCVeuWNS3pog5DLnYf010kN5C0O5GXEaFkfVG0ToI
+         z/N01KV88T+dTGjUZcGwaPIJb3opmd68EivNgPVNvCPBitd4Th6D03V8wE7ymqc9aRcA
+         4UKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MLyn/ZwV6wtAqf7oeA6dyzt0lp/pIGsl9UCOYBgcF08=;
-        b=gJt76Pe9XzEOhOg755aTPKcI6TEp6hDYiIUfeVF/Pkp+174KpqbkseI+JrvkoH6rRU
-         fT5/3J4eI0+gfm+i4Le2ZX4G6OPskUYxy4Hg1ZTa5gYpUFoWtUPBcD6z3Y3oVWqlo+KE
-         OWCZTeoBQgKdqC1B7hcKF5wISU6lfhh2h8dVQyp3ywc8LJcwHDteuGVcO/6eXWtU3q3M
-         fpSt7vDC44kOz/RmXvARpThW8Q9Y2l2xqGwBCdfzQ7QKD0NjHsRWztJUUG6Uk1ojxSGB
-         lqeVy6qZzDn2snZcit75A8gzGTJ+MsClJozctK04uwr/UWXx8H4RDJWLnlXkHq+fdot0
-         P1Kw==
-X-Gm-Message-State: ABuFfoi2AuLICrDZxuslHieCUhXAIAlAx2F/7zd+9YEAz2+YyAFK5ba1
-        xmxSY9vHVfbmE62yvvqo1OugpuGP
-X-Google-Smtp-Source: ACcGV62NJtg67u/fxYOD6knqyRQ6iiC56Rrg0+/6AIil6w7E+fqfs4jvabCmr4XLNFRv3pLt00ZBag==
-X-Received: by 2002:a50:baae:: with SMTP id x43-v6mr5005808ede.65.1537914881470;
-        Tue, 25 Sep 2018 15:34:41 -0700 (PDT)
+        bh=EtGwTHaGL7JPuUFO5H0NQDYVLYXVf5CRlQxNpVUtmcE=;
+        b=R09Pz5fD0eIvBI5wHi61QyxS6zUAxn+8cT8H2sqdEwph5FMkaBnat5Fh8sDqvKrJzW
+         qlZVouhDWwj3NyLnYEG0a97yAbzQ03al+BBid8ROp0skXWf78n+wDA/ADZrNLBvzZie7
+         s3lv8YYDXSJbHU6KWCVfV5DsWAZP0rrtbfQIBNutRYxXkS+LfqdNSEwemRb0puSZJRah
+         kH7PcgTSp9SRoKmUNhB2cK42At9lkM8oCni8iDkVJbJQaX12txalkk+O7lbSyGZggPjA
+         uRjRgt+dYYhrbyzvFZ/wzd/1bFQgYJ+IjYjBAgTS6hjfnS52D+jw04I8LjOlSrbBoxz7
+         +OVA==
+X-Gm-Message-State: ABuFfoizBAcR/D/UKv6qVfDYL5wYAN6JCGzv0ydryhDbz6Vkp5HT5RFc
+        pNm52pZe7IhA0EHIeD3hxSU8fmgl
+X-Google-Smtp-Source: ACcGV62KSF1sSE5anYi1aUl/zgrMuvJxsrVVi1+Ct7Xf+OFuUkTDYA9fUEGcgYEPVyItY1eEcNBtvA==
+X-Received: by 2002:a50:d59a:: with SMTP id v26-v6mr4655610edi.226.1537914882461;
+        Tue, 25 Sep 2018 15:34:42 -0700 (PDT)
 Received: from localhost.localdomain ([92.55.154.13])
-        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.40
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.41
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 15:34:40 -0700 (PDT)
+        Tue, 25 Sep 2018 15:34:41 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v9 18/21] stash: convert save to builtin
-Date:   Wed, 26 Sep 2018 01:33:34 +0300
-Message-Id: <c695d8f53e494c7811efcdac00421cfa7dd2fc5d.1537913094.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v9 19/21] stash: convert `stash--helper.c` into `stash.c`
+Date:   Wed, 26 Sep 2018 01:33:35 +0300
+Message-Id: <2e6b0734c0185053733c0aa47d4a618cf054c67e.1537913094.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
 In-Reply-To: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
@@ -65,433 +65,578 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add stash save to the helper and delete functions which are no
-longer needed (`show_help()`, `save_stash()`, `push_stash()`,
-`create_stash()`, `clear_stash()`, `untracked_files()` and
-`no_changes()`).
+The old shell script `git-stash.sh`  was removed and replaced
+entirely by `builtin/stash.c`. In order to do that, `create` and
+`push` were adapted to work without `stash.sh`. For example, before
+this commit, `git stash create` called `git stash--helper create
+--message "$*"`. If it called `git stash--helper create "$@"`, then
+some of these changes wouldn't have been necessary.
 
-The `-m` option is no longer supported as it might not make
-sense to have two ways of passing a message. Even if this is
-a change in behaviour, the documentation remains the same
-because the `-m` parameter was omitted before.
+This commit also removes the word `helper` since now stash is
+called directly and not by a shell script.
 
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- builtin/stash--helper.c |  50 +++++++
- git-stash.sh            | 311 +---------------------------------------
- 2 files changed, 52 insertions(+), 309 deletions(-)
+ .gitignore                           |   1 -
+ Makefile                             |   3 +-
+ builtin.h                            |   2 +-
+ builtin/{stash--helper.c => stash.c} | 162 ++++++++++++++++-----------
+ git-stash.sh                         | 153 -------------------------
+ git.c                                |   2 +-
+ 6 files changed, 98 insertions(+), 225 deletions(-)
+ rename builtin/{stash--helper.c => stash.c} (90%)
+ delete mode 100755 git-stash.sh
 
-diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index 73bb22dc94..96689a00e9 100644
+diff --git a/.gitignore b/.gitignore
+index b59661cb88..ffceea7d59 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -157,7 +157,6 @@
+ /git-show-ref
+ /git-stage
+ /git-stash
+-/git-stash--helper
+ /git-status
+ /git-stripspace
+ /git-submodule
+diff --git a/Makefile b/Makefile
+index f900c68e69..ac1787d113 100644
+--- a/Makefile
++++ b/Makefile
+@@ -617,7 +617,6 @@ SCRIPT_SH += git-quiltimport.sh
+ SCRIPT_SH += git-rebase.sh
+ SCRIPT_SH += git-remote-testgit.sh
+ SCRIPT_SH += git-request-pull.sh
+-SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
+ 
+@@ -1093,7 +1092,7 @@ BUILTIN_OBJS += builtin/shortlog.o
+ BUILTIN_OBJS += builtin/show-branch.o
+ BUILTIN_OBJS += builtin/show-index.o
+ BUILTIN_OBJS += builtin/show-ref.o
+-BUILTIN_OBJS += builtin/stash--helper.o
++BUILTIN_OBJS += builtin/stash.o
+ BUILTIN_OBJS += builtin/stripspace.o
+ BUILTIN_OBJS += builtin/submodule--helper.o
+ BUILTIN_OBJS += builtin/symbolic-ref.o
+diff --git a/builtin.h b/builtin.h
+index 317bc338f7..e60f0fc58f 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -223,7 +223,7 @@ extern int cmd_show(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_status(int argc, const char **argv, const char *prefix);
+-extern int cmd_stash__helper(int argc, const char **argv, const char *prefix);
++extern int cmd_stash(int argc, const char **argv, const char *prefix);
+ extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
+ extern int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
+ extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/stash--helper.c b/builtin/stash.c
+similarity index 90%
+rename from builtin/stash--helper.c
+rename to builtin/stash.c
+index 96689a00e9..fc4a2050b1 100644
 --- a/builtin/stash--helper.c
-+++ b/builtin/stash--helper.c
-@@ -26,6 +26,8 @@ static const char * const git_stash_helper_usage[] = {
- 	N_("git stash--helper [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++++ b/builtin/stash.c
+@@ -16,75 +16,70 @@
+ 
+ #define INCLUDE_ALL_FILES 2
+ 
+-static const char * const git_stash_helper_usage[] = {
+-	N_("git stash--helper list [<options>]"),
+-	N_("git stash--helper show [<options>] [<stash>]"),
+-	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
+-	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+-	N_("git stash--helper branch <branchname> [<stash>]"),
+-	N_("git stash--helper clear"),
+-	N_("git stash--helper [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++static const char * const git_stash_usage[] = {
++	N_("git stash list [<options>]"),
++	N_("git stash show [<options>] [<stash>]"),
++	N_("git stash drop [-q|--quiet] [<stash>]"),
++	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
++	N_("git stash branch <branchname> [<stash>]"),
++	N_("git stash clear"),
++	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
  	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
  	   "          [--] [<pathspec>...]]"),
-+	N_("git stash--helper save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
-+	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
+-	N_("git stash--helper save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++	N_("git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
  	NULL
  };
  
-@@ -81,6 +83,12 @@ static const char * const git_stash_helper_push_usage[] = {
+-static const char * const git_stash_helper_list_usage[] = {
+-	N_("git stash--helper list [<options>]"),
++static const char * const git_stash_list_usage[] = {
++	N_("git stash list [<options>]"),
  	NULL
  };
  
-+static const char * const git_stash_helper_save_usage[] = {
-+	N_("git stash--helper save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
-+	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
-+	NULL
-+};
+-static const char * const git_stash_helper_show_usage[] = {
+-	N_("git stash--helper show [<options>] [<stash>]"),
++static const char * const git_stash_show_usage[] = {
++	N_("git stash show [<options>] [<stash>]"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_drop_usage[] = {
+-	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
++static const char * const git_stash_drop_usage[] = {
++	N_("git stash drop [-q|--quiet] [<stash>]"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_pop_usage[] = {
+-	N_("git stash--helper pop [--index] [-q|--quiet] [<stash>]"),
++static const char * const git_stash_pop_usage[] = {
++	N_("git stash pop [--index] [-q|--quiet] [<stash>]"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_apply_usage[] = {
+-	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
++static const char * const git_stash_apply_usage[] = {
++	N_("git stash apply [--index] [-q|--quiet] [<stash>]"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_branch_usage[] = {
+-	N_("git stash--helper branch <branchname> [<stash>]"),
++static const char * const git_stash_branch_usage[] = {
++	N_("git stash branch <branchname> [<stash>]"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_clear_usage[] = {
+-	N_("git stash--helper clear"),
++static const char * const git_stash_clear_usage[] = {
++	N_("git stash clear"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_store_usage[] = {
+-	N_("git stash--helper store [-m|--message <message>] [-q|--quiet] <commit>"),
++static const char * const git_stash_store_usage[] = {
++	N_("git stash store [-m|--message <message>] [-q|--quiet] <commit>"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_create_usage[] = {
+-	N_("git stash--helper create [<message>]"),
+-	NULL
+-};
+-
+-static const char * const git_stash_helper_push_usage[] = {
+-	N_("git stash--helper [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++static const char * const git_stash_push_usage[] = {
++	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
+ 	   "          [--] [<pathspec>...]]"),
+ 	NULL
+ };
+ 
+-static const char * const git_stash_helper_save_usage[] = {
+-	N_("git stash--helper save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
++static const char * const git_stash_save_usage[] = {
++	N_("git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
+ 	NULL
+ };
+@@ -223,7 +218,7 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_clear_usage,
++			     git_stash_clear_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+ 
+ 	if (argc)
+@@ -525,7 +520,7 @@ static int apply_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_apply_usage, 0);
++			     git_stash_apply_usage, 0);
+ 
+ 	if (get_stash_info(&info, argc, argv))
+ 		return -1;
+@@ -598,7 +593,7 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_drop_usage, 0);
++			     git_stash_drop_usage, 0);
+ 
+ 	if (get_stash_info(&info, argc, argv))
+ 		return -1;
+@@ -624,7 +619,7 @@ static int pop_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_pop_usage, 0);
++			     git_stash_pop_usage, 0);
+ 
+ 	if (get_stash_info(&info, argc, argv))
+ 		return -1;
+@@ -650,7 +645,7 @@ static int branch_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_branch_usage, 0);
++			     git_stash_branch_usage, 0);
+ 
+ 	if (!argc) {
+ 		fprintf_ln(stderr, "No branch name specified");
+@@ -685,7 +680,7 @@ static int list_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_list_usage,
++			     git_stash_list_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+ 
+ 	if (!ref_exists(ref_stash))
+@@ -765,7 +760,7 @@ static int show_stash(int argc, const char **argv, const char *prefix)
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+ 	if (argc > 1) {
+ 		free_stash_info(&info);
+-		usage_with_options(git_stash_helper_show_usage, options);
++		usage_with_options(git_stash_show_usage, options);
+ 	}
+ 
+ 	rev.diffopt.flags.recursive = 1;
+@@ -810,7 +805,7 @@ static int store_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_store_usage,
++			     git_stash_store_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN);
+ 
+ 	if (argc != 1) {
+@@ -1228,35 +1223,28 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+ 
+ static int create_stash(int argc, const char **argv, const char *prefix)
+ {
+-	int include_untracked = 0;
+ 	int ret = 0;
+ 	char *stash_msg = NULL;
+ 	struct stash_info info;
+ 	struct pathspec ps;
+-	struct option options[] = {
+-		OPT_BOOL('u', "include-untracked", &include_untracked,
+-			 N_("include untracked files in stash")),
+-		OPT_STRING('m', "message", &stash_msg, N_("message"),
+-			 N_("stash message")),
+-		OPT_END()
+-	};
++	struct strbuf stash_msg_buf = STRBUF_INIT;
+ 
+-	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_create_usage,
+-			     0);
++	/* Startinf with argv[1], since argv[0] is "create" */
++	stash_msg = (char*) strbuf_join_argv(&stash_msg_buf, argc - 1,
++					     ++argv, ' ');
+ 
+ 	memset(&ps, 0, sizeof(ps));
+-	ret = do_create_stash(ps, &stash_msg, include_untracked, 0, &info,
+-			      NULL, 0);
++	ret = do_create_stash(ps, &stash_msg, 0, 0, &info, NULL, 0);
+ 
+ 	if (!ret)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
+ 
++	strbuf_release(&stash_msg_buf);
 +
- static const char *ref_stash = "refs/stash";
- static struct strbuf stash_index_path = STRBUF_INIT;
- 
-@@ -1481,6 +1489,46 @@ static int push_stash(int argc, const char **argv, const char *prefix)
- 			     include_untracked);
+ 	/*
+ 	 * ret can be 1 if there were no changes. In this case, we should
+ 	 * not error out.
+ 	 */
+-	free((char *) stash_msg);
+ 	return ret < 0;
  }
  
-+static int save_stash(int argc, const char **argv, const char *prefix)
-+{
-+	int keep_index = -1;
-+	int patch_mode = 0;
-+	int include_untracked = 0;
-+	int quiet = 0;
-+	int ret = 0;
-+	char *stash_msg = NULL;
-+	struct pathspec ps;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct option options[] = {
-+		OPT_BOOL('k', "keep-index", &keep_index,
-+			 N_("keep index")),
-+		OPT_BOOL('p', "patch", &patch_mode,
-+			 N_("stash in patch mode")),
-+		OPT__QUIET(&quiet, N_("quiet mode")),
-+		OPT_BOOL('u', "include-untracked", &include_untracked,
-+			 N_("include untracked files in stash")),
-+		OPT_SET_INT('a', "all", &include_untracked,
-+			    N_("include ignore files"), 2),
-+		OPT_STRING('m', "message", &stash_msg, "message",
-+			   N_("stash message")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_helper_save_usage,
-+			     PARSE_OPT_KEEP_DASHDASH);
-+
+@@ -1480,9 +1468,10 @@ static int push_stash(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_push_usage,
+-			     0);
 +	if (argc)
-+		stash_msg = (char*) strbuf_join_argv(&buf, argc, argv, ' ');
-+
-+	memset(&ps, 0, sizeof(ps));
-+	ret = do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
-+			    include_untracked);
-+
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
- int cmd_stash__helper(int argc, const char **argv, const char *prefix)
++		argc = parse_options(argc, argv, prefix, options,
++				     git_stash_push_usage,
++				     0);
+ 
+ 	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL, prefix, argv);
+ 	return do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
+@@ -1515,7 +1504,7 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+-			     git_stash_helper_save_usage,
++			     git_stash_save_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+ 
+ 	if (argc)
+@@ -1529,10 +1518,12 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-int cmd_stash__helper(int argc, const char **argv, const char *prefix)
++int cmd_stash(int argc, const char **argv, const char *prefix)
  {
++	int i = -1;
  	pid_t pid = getpid();
-@@ -1521,6 +1569,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!create_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "push"))
+ 	const char *index_file;
++	struct argv_array args = ARGV_ARRAY_INIT;
+ 
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -1540,16 +1531,16 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	argc = parse_options(argc, argv, prefix, options, git_stash_helper_usage,
++	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
+ 
+ 	index_file = get_index_file();
+ 	strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file,
+ 		    (uintmax_t)pid);
+ 
+-	if (argc < 1)
+-		usage_with_options(git_stash_helper_usage, options);
+-	if (!strcmp(argv[0], "apply"))
++	if (argc == 0)
++		return !!push_stash(0, NULL, prefix);
++	else if (!strcmp(argv[0], "apply"))
+ 		return !!apply_stash(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "clear"))
+ 		return !!clear_stash(argc, argv, prefix);
+@@ -1571,7 +1562,44 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
  		return !!push_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "save"))
-+		return !!save_stash(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "save"))
+ 		return !!save_stash(argc, argv, prefix);
++	else if (*argv[0] != '-')
++		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
++			      git_stash_usage, options);
++
++	if (strcmp(argv[0], "-p")) {
++		while (++i < argc && strcmp(argv[i], "--")) {
++			/*
++			 * `akpqu` is a string which contains all short options,
++			 * except `-m` which is verified separately.
++			 */
++			if ((strlen(argv[i]) == 2) && *argv[i] == '-' &&
++			    strchr("akpqu", argv[i][1]))
++				continue;
++
++			if (!strcmp(argv[i], "--all") ||
++			    !strcmp(argv[i], "--keep-index") ||
++			    !strcmp(argv[i], "--no-keep-index") ||
++			    !strcmp(argv[i], "--patch") ||
++			    !strcmp(argv[i], "--quiet") ||
++			    !strcmp(argv[i], "--include-untracked"))
++				continue;
++
++			/*
++			 * `-m` and `--message=` are verified separately because
++			 * they need to be immediately followed by a string
++			 * (i.e.`-m"foobar"` or `--message="foobar"`).
++			 */
++			if ((strlen(argv[i]) > 2 &&
++			     !strncmp(argv[i], "-m", 2)) ||
++			    (strlen(argv[i]) > 10 &&
++			     !strncmp(argv[i], "--message=", 10)))
++				continue;
++
++			usage_with_options(git_stash_usage, options);
++		}
++	}
  
- 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 		      git_stash_helper_usage, options);
+-	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+-		      git_stash_helper_usage, options);
++	argv_array_push(&args, "push");
++	argv_array_pushv(&args, argv);
++	return !!push_stash(args.argc, args.argv, prefix);
+ }
 diff --git a/git-stash.sh b/git-stash.sh
-index c3146f62ab..695f1feba3 100755
+deleted file mode 100755
+index 695f1feba3..0000000000
 --- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -36,314 +36,6 @@ else
-        reset_color=
- fi
- 
--no_changes () {
--	git diff-index --quiet --cached HEAD --ignore-submodules -- "$@" &&
--	git diff-files --quiet --ignore-submodules -- "$@" &&
--	(test -z "$untracked" || test -z "$(untracked_files "$@")")
--}
++++ /dev/null
+@@ -1,153 +0,0 @@
+-#!/bin/sh
+-# Copyright (c) 2007, Nanako Shiraishi
 -
--untracked_files () {
--	if test "$1" = "-z"
--	then
--		shift
--		z=-z
--	else
--		z=
--	fi
--	excl_opt=--exclude-standard
--	test "$untracked" = "all" && excl_opt=
--	git ls-files -o $z $excl_opt -- "$@"
--}
+-dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="list [<options>]
+-   or: $dashless show [<stash>]
+-   or: $dashless drop [-q|--quiet] [<stash>]
+-   or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
+-   or: $dashless branch <branchname> [<stash>]
+-   or: $dashless save [--patch] [-k|--[no-]keep-index] [-q|--quiet]
+-		      [-u|--include-untracked] [-a|--all] [<message>]
+-   or: $dashless [push [--patch] [-k|--[no-]keep-index] [-q|--quiet]
+-		       [-u|--include-untracked] [-a|--all] [-m <message>]
+-		       [-- <pathspec>...]]
+-   or: $dashless clear"
 -
--clear_stash () {
--	if test $# != 0
--	then
--		die "$(gettext "git stash clear with parameters is unimplemented")"
--	fi
--	if current=$(git rev-parse --verify --quiet $ref_stash)
--	then
--		git update-ref -d $ref_stash $current
--	fi
--}
+-SUBDIRECTORY_OK=Yes
+-OPTIONS_SPEC=
+-START_DIR=$(pwd)
+-. git-sh-setup
+-require_work_tree
+-prefix=$(git rev-parse --show-prefix) || exit 1
+-cd_to_toplevel
 -
--create_stash () {
--	stash_msg=
--	untracked=
--	while test $# != 0
--	do
--		case "$1" in
--		-m|--message)
--			shift
--			stash_msg=${1?"BUG: create_stash () -m requires an argument"}
--			;;
--		-m*)
--			stash_msg=${1#-m}
--			;;
--		--message=*)
--			stash_msg=${1#--message=}
--			;;
--		-u|--include-untracked)
--			shift
--			untracked=${1?"BUG: create_stash () -u requires an argument"}
--			;;
--		--)
--			shift
--			break
--			;;
--		esac
--		shift
--	done
+-TMP="$GIT_DIR/.git-stash.$$"
+-TMPindex=${GIT_INDEX_FILE-"$(git rev-parse --git-path index)"}.stash.$$
+-trap 'rm -f "$TMP-"* "$TMPindex"' 0
 -
--	git update-index -q --refresh
--	if no_changes "$@"
--	then
--		exit 0
--	fi
+-ref_stash=refs/stash
 -
--	# state of the base commit
--	if b_commit=$(git rev-parse --verify HEAD)
--	then
--		head=$(git rev-list --oneline -n 1 HEAD --)
--	else
--		die "$(gettext "You do not have the initial commit yet")"
--	fi
+-if git config --get-colorbool color.interactive; then
+-       help_color="$(git config --get-color color.interactive.help 'red bold')"
+-       reset_color="$(git config --get-color '' reset)"
+-else
+-       help_color=
+-       reset_color=
+-fi
 -
--	if branch=$(git symbolic-ref -q HEAD)
--	then
--		branch=${branch#refs/heads/}
--	else
--		branch='(no branch)'
--	fi
--	msg=$(printf '%s: %s' "$branch" "$head")
+-#
+-# Parses the remaining options looking for flags and
+-# at most one revision defaulting to ${ref_stash}@{0}
+-# if none found.
+-#
+-# Derives related tree and commit objects from the
+-# revision, if one is found.
+-#
+-# stash records the work tree, and is a merge between the
+-# base commit (first parent) and the index tree (second parent).
+-#
+-#   REV is set to the symbolic version of the specified stash-like commit
+-#   IS_STASH_LIKE is non-blank if ${REV} looks like a stash
+-#   IS_STASH_REF is non-blank if the ${REV} looks like a stash ref
+-#   s is set to the SHA1 of the stash commit
+-#   w_commit is set to the commit containing the working tree
+-#   b_commit is set to the base commit
+-#   i_commit is set to the commit containing the index tree
+-#   u_commit is set to the commit containing the untracked files tree
+-#   w_tree is set to the working tree
+-#   b_tree is set to the base tree
+-#   i_tree is set to the index tree
+-#   u_tree is set to the untracked files tree
+-#
+-#   GIT_QUIET is set to t if -q is specified
+-#   INDEX_OPTION is set to --index if --index is specified.
+-#   FLAGS is set to the remaining flags (if allowed)
+-#
+-# dies if:
+-#   * too many revisions specified
+-#   * no revision is specified and there is no stash stack
+-#   * a revision is specified which cannot be resolve to a SHA1
+-#   * a non-existent stash reference is specified
+-#   * unknown flags were set and ALLOW_UNKNOWN_FLAGS is not "t"
+-#
 -
--	# state of the index
--	i_tree=$(git write-tree) &&
--	i_commit=$(printf 'index on %s\n' "$msg" |
--		git commit-tree $i_tree -p $b_commit) ||
--		die "$(gettext "Cannot save the current index state")"
+-test "$1" = "-p" && set "push" "$@"
 -
--	if test -n "$untracked"
--	then
--		# Untracked files are stored by themselves in a parentless commit, for
--		# ease of unpacking later.
--		u_commit=$(
--			untracked_files -z "$@" | (
--				GIT_INDEX_FILE="$TMPindex" &&
--				export GIT_INDEX_FILE &&
--				rm -f "$TMPindex" &&
--				git update-index -z --add --remove --stdin &&
--				u_tree=$(git write-tree) &&
--				printf 'untracked files on %s\n' "$msg" | git commit-tree $u_tree  &&
--				rm -f "$TMPindex"
--		) ) || die "$(gettext "Cannot save the untracked files")"
+-PARSE_CACHE='--not-parsed'
+-# The default command is "push" if nothing but options are given
+-seen_non_option=
+-for opt
+-do
+-	case "$opt" in
+-	--) break ;;
+-	-*) ;;
+-	*) seen_non_option=t; break ;;
+-	esac
+-done
 -
--		untracked_commit_option="-p $u_commit";
--	else
--		untracked_commit_option=
--	fi
+-test -n "$seen_non_option" || set "push" "$@"
 -
--	if test -z "$patch_mode"
--	then
--
--		# state of the working tree
--		w_tree=$( (
--			git read-tree --index-output="$TMPindex" -m $i_tree &&
--			GIT_INDEX_FILE="$TMPindex" &&
--			export GIT_INDEX_FILE &&
--			git diff-index --name-only -z HEAD -- "$@" >"$TMP-stagenames" &&
--			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
--			git write-tree &&
--			rm -f "$TMPindex"
--		) ) ||
--			die "$(gettext "Cannot save the current worktree state")"
--
--	else
--
--		rm -f "$TMP-index" &&
--		GIT_INDEX_FILE="$TMP-index" git read-tree HEAD &&
--
--		# find out what the user wants
--		GIT_INDEX_FILE="$TMP-index" \
--			git add--interactive --patch=stash -- "$@" &&
--
--		# state of the working tree
--		w_tree=$(GIT_INDEX_FILE="$TMP-index" git write-tree) ||
--		die "$(gettext "Cannot save the current worktree state")"
--
--		git diff-tree -p HEAD $w_tree -- >"$TMP-patch" &&
--		test -s "$TMP-patch" ||
--		die "$(gettext "No changes selected")"
--
--		rm -f "$TMP-index" ||
--		die "$(gettext "Cannot remove temporary index (can't happen)")"
--
--	fi
--
--	# create the stash
--	if test -z "$stash_msg"
--	then
--		stash_msg=$(printf 'WIP on %s' "$msg")
--	else
--		stash_msg=$(printf 'On %s: %s' "$branch" "$stash_msg")
--	fi
--	w_commit=$(printf '%s\n' "$stash_msg" |
--	git commit-tree $w_tree -p $b_commit -p $i_commit $untracked_commit_option) ||
--	die "$(gettext "Cannot record working tree state")"
--}
--
--push_stash () {
--	keep_index=
--	patch_mode=
--	untracked=
--	stash_msg=
--	while test $# != 0
--	do
--		case "$1" in
--		-k|--keep-index)
--			keep_index=t
--			;;
--		--no-keep-index)
--			keep_index=n
--			;;
--		-p|--patch)
--			patch_mode=t
--			# only default to keep if we don't already have an override
--			test -z "$keep_index" && keep_index=t
--			;;
--		-q|--quiet)
--			GIT_QUIET=t
--			;;
--		-u|--include-untracked)
--			untracked=untracked
--			;;
--		-a|--all)
--			untracked=all
--			;;
--		-m|--message)
--			shift
--			test -z ${1+x} && usage
--			stash_msg=$1
--			;;
--		-m*)
--			stash_msg=${1#-m}
--			;;
--		--message=*)
--			stash_msg=${1#--message=}
--			;;
--		--help)
--			show_help
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			option="$1"
--			eval_gettextln "error: unknown option for 'stash push': \$option"
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	eval "set $(git rev-parse --sq --prefix "$prefix" -- "$@")"
--
--	if test -n "$patch_mode" && test -n "$untracked"
--	then
--		die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
--	fi
--
--	test -n "$untracked" || git ls-files --error-unmatch -- "$@" >/dev/null || exit 1
--
--	git update-index -q --refresh
--	if no_changes "$@"
--	then
--		say "$(gettext "No local changes to save")"
--		exit 0
--	fi
--
--	git reflog exists $ref_stash ||
--		clear_stash || die "$(gettext "Cannot initialize stash")"
--
--	create_stash -m "$stash_msg" -u "$untracked" -- "$@"
--	git stash--helper store -m "$stash_msg" -q $w_commit ||
--	die "$(gettext "Cannot save the current status")"
--	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
--
--	if test -z "$patch_mode"
--	then
--		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
--		if test -n "$untracked" && test $# = 0
--		then
--			git clean --force --quiet -d $CLEAN_X_OPTION
--		fi
--
--		if test $# != 0
--		then
--			test -z "$untracked" && UPDATE_OPTION="-u" || UPDATE_OPTION=
--			test "$untracked" = "all" && FORCE_OPTION="--force" || FORCE_OPTION=
--			git add $UPDATE_OPTION $FORCE_OPTION -- "$@"
--			git diff-index -p --cached --binary HEAD -- "$@" |
--			git apply --index -R
--		else
--			git reset --hard -q
--		fi
--
--		if test "$keep_index" = "t" && test -n "$i_tree"
--		then
--			git read-tree --reset $i_tree
--			git ls-files -z --modified -- "$@" |
--			git checkout-index -z --force --stdin
--		fi
--	else
--		git apply -R < "$TMP-patch" ||
--		die "$(gettext "Cannot remove worktree changes")"
--
--		if test "$keep_index" != "t"
--		then
--			git reset -q -- "$@"
--		fi
--	fi
--}
--
--save_stash () {
--	push_options=
--	while test $# != 0
--	do
--		case "$1" in
--		--)
--			shift
--			break
--			;;
--		-*)
--			# pass all options through to push_stash
--			push_options="$push_options $1"
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	stash_msg="$*"
--
--	if test -z "$stash_msg"
--	then
--		push_stash $push_options
--	else
--		push_stash $push_options -m "$stash_msg"
--	fi
--}
--
--show_help () {
--	exec git help stash
--	exit 1
--}
--
- #
- # Parses the remaining options looking for flags and
- # at most one revision defaulting to ${ref_stash}@{0}
-@@ -408,7 +100,8 @@ show)
- 	;;
- save)
- 	shift
--	save_stash "$@"
-+	cd "$START_DIR"
-+	git stash--helper save "$@"
- 	;;
- push)
- 	shift
+-# Main command set
+-case "$1" in
+-list)
+-	shift
+-	git stash--helper list "$@"
+-	;;
+-show)
+-	shift
+-	git stash--helper show "$@"
+-	;;
+-save)
+-	shift
+-	cd "$START_DIR"
+-	git stash--helper save "$@"
+-	;;
+-push)
+-	shift
+-	cd "$START_DIR"
+-	git stash--helper push "$@"
+-	;;
+-apply)
+-	shift
+-	cd "$START_DIR"
+-	git stash--helper apply "$@"
+-	;;
+-clear)
+-	shift
+-	git stash--helper clear "$@"
+-	;;
+-create)
+-	shift
+-	git stash--helper create --message "$*"
+-	;;
+-store)
+-	shift
+-	git stash--helper store "$@"
+-	;;
+-drop)
+-	shift
+-	git stash--helper drop "$@"
+-	;;
+-pop)
+-	shift
+-	cd "$START_DIR"
+-	git stash--helper pop "$@"
+-	;;
+-branch)
+-	shift
+-	cd "$START_DIR"
+-	git stash--helper branch "$@"
+-	;;
+-*)
+-	case $# in
+-	0)
+-		cd "$START_DIR"
+-		git stash--helper push &&
+-		say "$(gettext "(To restore them type \"git stash apply\")")"
+-		;;
+-	*)
+-		usage
+-	esac
+-	;;
+-esac
+diff --git a/git.c b/git.c
+index 3c0e762d7d..78548397cf 100644
+--- a/git.c
++++ b/git.c
+@@ -544,7 +544,7 @@ static struct cmd_struct commands[] = {
+ 	{ "show-index", cmd_show_index },
+ 	{ "show-ref", cmd_show_ref, RUN_SETUP },
+ 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+-	{ "stash--helper", cmd_stash__helper, RUN_SETUP | NEED_WORK_TREE },
++	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stripspace", cmd_stripspace },
+ 	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX | NO_PARSEOPT },
 -- 
 2.19.0.rc0.23.g1fb9f40d88
 
