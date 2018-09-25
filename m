@@ -2,113 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2491F454
-	for <e@80x24.org>; Tue, 25 Sep 2018 22:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71E961F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 22:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726190AbeIZElZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 00:41:25 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:39898 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725773AbeIZElY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 00:41:24 -0400
-Received: by mail-wm1-f51.google.com with SMTP id q8-v6so207947wmq.4
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:31:39 -0700 (PDT)
+        id S1726012AbeIZEoF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 00:44:05 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35616 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725733AbeIZEoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 00:44:04 -0400
+Received: by mail-ed1-f66.google.com with SMTP id y21-v6so204465edr.2
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 15:34:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=UszrF4q2hEDYVcH7/nD6XOF/NEhWeKhqWmeGXqIyvaA=;
-        b=Pn3gGKGFl/yz116ljEakxXhKWq6mPzo6K4AOjRF+SYYoNC4AhZTOvcMe7nuPH6zvh1
-         pK2lXoqNtJLN9DR+WmCPEFRCPQzTKH8mqCJwhnkiIyu8vHrJEEuAVw5YERcFW17Hc7aG
-         CETzsAv79PzdDe2aJCJJy0m5VOukaWyr9Wdbewgd7vDNNPK9Gd8cHPOQ04ou+8Tq1YZF
-         TsUK5xd2rjJA4VzyN1R/uxZ7OcFOP5KVAtwOyn6k6CWByZ1r4ohGv6LaCpbCFzmgZMLC
-         5kTinRf3yb8XvoDI69RgKavy6U07iud3BoM6ad4nektjKqi6wdyDHRuBuKNHM/GZT5rr
-         rp+g==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=EGu5BaMF48W6ZcnKtxx5T4sVDEVc7jWv6b/8qtwp9iA=;
+        b=lE889Y6Ve7jT9KMxQFeN9mpA5Owr+fTdLXCpNSDWuFTe3/3aMDmdaSIwTFPOwajjWU
+         5CiDY0gO6ugGEDCdmnO/COJGD9U5fYyCL8eLH94s3VGWuKS1BZWafWfdhXUxAL3dnWbH
+         iydc+IvtuVjvNpv/L7w9a8TIbC2N6Vt6ArXTp+Z1zBlHcCUif3vlhX4mV0uGCijYxFKW
+         oFr726VJJD3ii8r+uu6C95o6AUPY6KlDEOWVY7Mb1fHzPv7BEGfFo22xZywiwUftvT72
+         Y9EDufLoO9bug7aUdyxDgmjyH8fsjl4zlR+YiP+NiyULeiTkwqVPW3IoKZdhb0yebvzF
+         gs1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=UszrF4q2hEDYVcH7/nD6XOF/NEhWeKhqWmeGXqIyvaA=;
-        b=VNafHVTQg+QmPx3L7SP3SPidN/+RAtUTzJz1pYuMl7Ah6vyEKlDKz/ZmVvkp/ECtc3
-         OkEf8cM0K6nFwUnWCZNb15SOaxvBLeoPpIiUOUfCJiqCqZkXLSIA20jYLHCD+ttvQXjv
-         FVlZtA9Xg4QgxvXh0Sz/SRevpaegqydZTYt2Tftf/SHyf7/U4+sBMkFd9rmljcyN//LT
-         4O13lvPaMek7POoac+T43vqBYGDMf99NBSr6hD5UIMI3YcUNM7o69N/49UQGVwIm8yZ+
-         5QupCbMbhu8t4/i5/CEtdlw1o6GTlxFfUhdM2DZSWJk9e9j/161AkF6L2rym56mzA3nA
-         8Zsg==
-X-Gm-Message-State: ABuFfogWtM5SdPQhO1QRgPNpxHJftUhxMQhKioBIIqfBJzbUEpZa2Aso
-        2sz/hfzo7yrd7w8D8Dl5PbE=
-X-Google-Smtp-Source: ACcGV61ZDk2zEKk6oIIlQAwEUStFz4vL1T7a7mEwVky1rr3xKvyzhZpXRhQ8knj7MadYfUEr7oC3mA==
-X-Received: by 2002:a1c:4182:: with SMTP id o124-v6mr2416344wma.101.1537914698175;
-        Tue, 25 Sep 2018 15:31:38 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o19-v6sm5158127wro.50.2018.09.25.15.31.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Sep 2018 15:31:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Duy Nguyen <pclouds@gmail.com>, Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
-References: <20180802061505.2983-1-chriscool@tuxfamily.org>
-        <20180802061505.2983-10-chriscool@tuxfamily.org>
-        <CAGZ79kYPik87zvLUPPKFzcATFUdBFcXrAkTYxpxvAQy6w1CcUw@mail.gmail.com>
-        <CAP8UFD1ia1xWk9pjfTUQ3zD7=dP=8UjKzf=G0ptsz=qRH8_X+Q@mail.gmail.com>
-Date:   Tue, 25 Sep 2018 15:31:36 -0700
-In-Reply-To: <CAP8UFD1ia1xWk9pjfTUQ3zD7=dP=8UjKzf=G0ptsz=qRH8_X+Q@mail.gmail.com>
-        (Christian Couder's message of "Tue, 25 Sep 2018 10:07:18 +0200")
-Message-ID: <xmqqd0t1nr93.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EGu5BaMF48W6ZcnKtxx5T4sVDEVc7jWv6b/8qtwp9iA=;
+        b=lvrh2iBg056A1dxuvhxbogaG5cJNlA5ZdzZ/nJQAEQjlAbuZNIGM7PuMMbrRUq9cww
+         6jcCWcnwUJMh/LytC1Tfql1LiUMKSXqfZFb6+oLckcAMGIVr2IBatFT3REn8RyLeqZIO
+         ii5q21U2psZIDtxrbKFjF0v12jZg2vJwMJHOJjRwS3Mz2ESn7XtcAWjm6h6ZljEvkCeB
+         zSmRzHoz3JuBf2JpEqvaoSX7HA/4LrEDtx/QtKXOKSYN2oQ4UyfRzFDc32UxP18LguUh
+         vfU0vwnWpkEhcx3brBWo4tP6TIAKayv0MGxUB9Y7OoKy+b6DXfDjvhMkdI027lz5FJRC
+         ejww==
+X-Gm-Message-State: ABuFfognhOTeH7pugphPm6x+NNSFhSNsHl+AIfLgg214NQlDzcGJ8e/s
+        krMwechr57zd3xr8pRlBDrqjByat
+X-Google-Smtp-Source: ACcGV61oOEh+S3azaoB2+k410vpUrtUpI+P5M1Yu/k8WdkUH833RdUZPNNTf109vEy1s/T53ZckIYA==
+X-Received: by 2002:a50:9043:: with SMTP id z3-v6mr4757910edz.216.1537914858672;
+        Tue, 25 Sep 2018 15:34:18 -0700 (PDT)
+Received: from localhost.localdomain ([92.55.154.13])
+        by smtp.gmail.com with ESMTPSA id o37-v6sm33553edo.71.2018.09.25.15.34.17
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Sep 2018 15:34:18 -0700 (PDT)
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v9 00/21] Convert "git stash" to C builtin
+Date:   Wed, 26 Sep 2018 01:33:11 +0300
+Message-Id: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.23.g1fb9f40d88.dirty
+In-Reply-To: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hello,
 
-> The main issue that this patch series tries to solve is that
-> extensions.partialclone config option limits the partial clone and
-> promisor features to only one remote. One related issue is that it
-> also prevents to have other kind of promisor/partial clone/odb
-> remotes. By other kind I mean remotes that would not necessarily be
-> git repos, but that could store objects (that's where ODB, for Object
-> DataBase, comes from) and could provide those objects to Git through a
-> helper (or driver) script or program.
+This is a new iteration of `git stash`, based on the last review I got.
+This new iteration brings mostly code styling fix issues in order to make
+the code more readable. There is also a new patch "strbuf.c: add
+`strbuf_join_argv()`". By making some small changes, the code is now a
+little bit closer to be used as API.
 
-I do not think "sources that are not git repositories" is all that
-interesting, unless they can also serve as the source for ext::
-remote helper.  And if they can serve "git fetch ext::...", I think
-they can be treated just like a normal Git repository by the
-backfill code that needs to lazily populate the partial clone.
+Joel Teichroeb (5):
+  stash: improve option parsing test coverage
+  stash: convert apply to builtin
+  stash: convert drop and clear to builtin
+  stash: convert branch to builtin
+  stash: convert pop to builtin
 
-And it would be nice to be able to say "I took these commits from
-that remote and that remote should be able to backfill the trees and
-the blobs necessary to complete these commits" for more than one
-remote would obviously be a good thing.  The way we mark the
-promisor packs currently is by a mere presence of a file, but
-nothing prevents us from extending it to write the nickname of the
-configured remote the pack was taken from to help us answer "who can
-feed us the remaining objects?", for example, so I do not think it
-is an insurmountable problem
+Paul-Sebastian Ungureanu (16):
+  sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+  strbuf.c: add `strbuf_join_argv()`
+  stash: update test cases conform to coding guidelines
+  stash: rename test cases to be more descriptive
+  stash: add tests for `git stash show` config
+  stash: convert list to builtin
+  stash: convert show to builtin
+  stash: mention options in `show` synopsis.
+  stash: convert store to builtin
+  stash: convert create to builtin
+  stash: convert push to builtin
+  stash: make push -q quiet
+  stash: convert save to builtin
+  stash: convert `stash--helper.c` into `stash.c`
+  stash: optimize `get_untracked_files()` and `check_changes()`
+  stash: replace all `write-tree` child processes with API calls
 
-I guess JTan is the primary person who is interested/working on the
-partial clone with backfill?  Have you two been collaborating well?
+ Documentation/git-stash.txt  |    4 +-
+ Makefile                     |    2 +-
+ builtin.h                    |    1 +
+ builtin/stash.c              | 1595 ++++++++++++++++++++++++++++++++++
+ cache.h                      |    1 +
+ git-stash.sh                 |  752 ----------------
+ git.c                        |    1 +
+ sha1-name.c                  |   19 +
+ strbuf.c                     |   15 +
+ strbuf.h                     |    7 +
+ t/t3903-stash.sh             |  192 ++--
+ t/t3907-stash-show-config.sh |   83 ++
+ 12 files changed, 1851 insertions(+), 821 deletions(-)
+ create mode 100644 builtin/stash.c
+ delete mode 100755 git-stash.sh
+ create mode 100755 t/t3907-stash-show-config.sh
 
-Do you two need help from us to make that happen, and if so what do
-you need?  Stop the world and declare this and that source files are
-off limits for two weeks, or something like that?
-
+-- 
+2.19.0.rc0.23.g1fb9f40d88
 
