@@ -2,304 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4211F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 17:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4098C1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 17:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726309AbeIYXxd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 19:53:33 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:36822 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725918AbeIYXxc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 19:53:32 -0400
-Received: by mail-lf1-f65.google.com with SMTP id v17-v6so16899777lfe.3
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 10:44:55 -0700 (PDT)
+        id S1726815AbeIZAFP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 20:05:15 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:34476 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726304AbeIZAFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 20:05:15 -0400
+Received: by mail-yw1-f68.google.com with SMTP id m129-v6so3898618ywc.1
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 10:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6pNsNA4udk28W5sTd/C4bbh5oX1k18SN1XSDDcEc1cw=;
-        b=PVYvWpLaPdkrPhGhhcYBUsJvDDxq4Y7VSRqNbxHF43vbgYGFWSxwUUHgAmyVQ1EN2Y
-         6/8XSGHB5WRgaOaVarmijaLWmT8ChbjihohKAukoG2Ic5ivTv5WAscPhKMDtYYn6pxKz
-         oBFGpliVZCPVBq+2Cyz5DUxAIGeyEtQO9c/bzYp9B+ClODHagAlQwdzbD1SDvjdYh0kY
-         PwTcOhaX5Weeu3O9zI1iIyaZnpM360xjb8fDkN62eQy/pwVEgfAOrc3JIlCcz5Dfg1g2
-         X9rzpEjrBRqyGC2Emb5gN6uzul04AzwSdG0M7/whnaKqcrT6pe91cyWE5NoVKD3MVMt0
-         HRow==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oL7DTdNbIg9LlYT8O8TG9JwFSNqtiJ8DbebqbDjgiFc=;
+        b=aCCG6i5PDF05ZV0hKSKsnmvsHMa4JJHoELkPjqKRnwvtuLxQuPn5wyZFWLyrVhb+Aa
+         VHCy6oNvOvEf16Iy7Uk1EQ3nQYZPUD9hkfcMFEvXWirQpUGddccphwBKf1xfVxTymECf
+         juKjFNOXj6j0dnABivIVixcwfxC0xm6nOnuKCnnaFKdBetuij4zTtmDAf8MQb4FBDy3D
+         cahXHfVOlUoDFx06jn3IdPkpXBdarAn7S1XHFIl+ykYdccb4tnD1coJH+wvC9S2ewLaM
+         NMm5GG3OHNkVHvyhKwzKrwgzubuYP7+yYc2jHCBCpE1uVjqw6MBZEWzpHocqS1Bsdj51
+         7G1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6pNsNA4udk28W5sTd/C4bbh5oX1k18SN1XSDDcEc1cw=;
-        b=RYwZZRYGpOOVm7aln4MvuGw8DSt6EPhkAdzilsu7G3zBBcHt2sUXZck/KKxSCzm7jE
-         62lVgw7JXspErPCtO+eO5cQL2HL9EeEXudY7tLpSgsGWL3/UNs867YbZtNStIPSqr2Sf
-         wMhNSqDFnMdg/g391IWF/eMcm1IJO6VPWfqYJ/UTFUzHKQ6VPWFdjI8DAFbJad/Y+sJ/
-         ju5XMRmyp71eKcOuAkt/X1pKTuMvLoARFXYpe8w1hp6W/iIUC1PzQmHJxF+ifc2H09Y9
-         vQT4HyqNcqBL+l2MZ1YOJflsz1VyRo/KAnhmViTpjF/nL8AgiBdxiBgsj4Uo9fQhKQH+
-         j3aA==
-X-Gm-Message-State: ABuFfogDF5NJo08JIUoH9JC8lMKZs/pXNgKDnuwTE2+C3cTwDaKMsVp3
-        nBOuRMtfNbmmFmCMO+hQrrY=
-X-Google-Smtp-Source: ACcGV60omiuxslTLOpchjBaL/2SAt0SU/qOpKLoj/XXlY1q1tfGioWr9pxggFUn11TIOHxeApM8PTQ==
-X-Received: by 2002:a19:df43:: with SMTP id q3-v6mr1551594lfj.53.1537897494687;
-        Tue, 25 Sep 2018 10:44:54 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id m10-v6sm527110lfl.38.2018.09.25.10.44.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Sep 2018 10:44:53 -0700 (PDT)
-Date:   Tue, 25 Sep 2018 19:44:51 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] git help: promote 'git help -av'
-Message-ID: <20180925174451.GA29454@duynguyen.home>
-References: <20180922174707.16498-1-pclouds@gmail.com>
- <20180924181927.GB25341@sigill.intra.peff.net>
- <xmqq4leesjdc.fsf@gitster-ct.c.googlers.com>
- <CACsJy8D1EMCqvBdxbta4oocMF33jwDf1=opXwZ0aRN7LYu=JXg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oL7DTdNbIg9LlYT8O8TG9JwFSNqtiJ8DbebqbDjgiFc=;
+        b=eW2UEu5CvKXoQ8XmGcAyo8y4Z5HdzRVSBKNV2LzFpKfESom1oNXXkTKaO3PYvHjciI
+         jRkUFeufXB8/BcI21fqsQF34FNJYjCF2wkcodBp+zPy6ht67TbRICYO7Bj0KDz56qdpi
+         X/283jZ+w31Wiwhyd1R4f9hY8Q/4j/X1OlL77GaHM8RZWi26T+qFP+EuHC+FAIOwkBbZ
+         kDeWb2Pb5hJioHPkextc6kv50gwqgwdD2Z2SpM6LJEZ6hatoFPcnDGHBpEH2uiSspo8s
+         mFQ9tAxtHVwjWz+StwYbnegbl8uHvhylg3mpL3SJLDUS7zcphseSiCBVwo8c+2EvlUWj
+         6P3A==
+X-Gm-Message-State: ABuFfoh+vDJApsRNl1anN4webgeGrDF6jCdpQ8T5XpWDFMRF8gnwb1va
+        bkIKJcBluokPRAsQqj+Assu8ZXveav7uXNjpptnXjg==
+X-Google-Smtp-Source: ACcGV60MsQtZj3Qu5LkMy0iDUtfQrrgZrrgIGjFodnWy+T9XrOVv1mCzDQu2/QdhAiP0OXPRnnfWXy9TdikY6OsZm6k=
+X-Received: by 2002:a81:5855:: with SMTP id m82-v6mr1175188ywb.300.1537898195555;
+ Tue, 25 Sep 2018 10:56:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8D1EMCqvBdxbta4oocMF33jwDf1=opXwZ0aRN7LYu=JXg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-3-pclouds@gmail.com>
+ <CAGZ79kZF1+0PTEgF_NwM_AwttJ0sedAP8CT834L5ZGJpxZ+G_Q@mail.gmail.com>
+ <CACsJy8BKTkbc=ZgMnO7Yuk0eaqzZnifo80tnR872_T8b02biqg@mail.gmail.com>
+ <CAGZ79kZw8-BiW5VE_YN5X2E07FeMA=XtHpjcUoSFtWNRu44fAQ@mail.gmail.com> <CACsJy8BRv1wb7urzriaj9AceZh-Ot1Tsb2w9rExRXkoHFn7_hw@mail.gmail.com>
+In-Reply-To: <CACsJy8BRv1wb7urzriaj9AceZh-Ot1Tsb2w9rExRXkoHFn7_hw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 25 Sep 2018 10:56:24 -0700
+Message-ID: <CAGZ79kZqQVZJpiAkS0xy1rN9vLa-udaPDwWd03OC8TGiayOTcQ@mail.gmail.com>
+Subject: Re: [PATCH 2/8] Add a place for (not) sharing stuff between worktrees
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 25, 2018 at 05:15:38PM +0200, Duy Nguyen wrote:
-> On Mon, Sep 24, 2018 at 10:58 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > I personally find "help -av" a bit too loud to my taste than plain
-> > "-a", and more importantly, I look at "help -a" primarily to check
-> > the last section "avaialble from elsewhere on your $PATH" to find
-> > things like "clang-format", which I do not think is available
-> > anywhere in "help -av", so I do not think "-av" can be promoted as
-> > an upward-compatible replacement in its current form.
-> 
-> Yep. I also thought "help -a" was denser but wasn't sure if it
-> actually helps or not. Whenever I look at that block of commands, I
-> end up searching anyway. For my use case, "help -a" could be better
-> served with something like "git apropos".
-> 
-> I think adding another section about external commands in "help -av"
-> would address the "clang-format" stuff. With that, it's probably good
-> enough to completely replace "help -a". It may also be good to list
-> aliases there too in a separate section so you have "all you can type"
-> in one (big) list.
+On Tue, Sep 25, 2018 at 9:55 AM Duy Nguyen <pclouds@gmail.com> wrote:
 
-Here's the patch that adds that external commands and aliases
-sections. I feel that external commands section is definitely good to
-have even if we don't replace "help -a". Aliases are more
-subjective...
+> > And with that said, I wonder if the "local" part should be feature agnostic,
+> > or if we want to be "local" for worktrees, "local" for remotes, "local"
+> > for submodules (i.e. our own refs vs submodule refs).
+>
+> You lost me here.
 
--- 8< --
-diff --git a/builtin/help.c b/builtin/help.c
-index 8d4f6dd301..23a34b36e7 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -38,7 +38,6 @@ static const char *html_path;
- static int show_all = 0;
- static int show_guides = 0;
- static int show_config;
--static int verbose;
- static unsigned int colopts;
- static enum help_format help_format = HELP_FORMAT_NONE;
- static int exclude_guides;
-@@ -53,7 +52,6 @@ static struct option builtin_help_options[] = {
- 			HELP_FORMAT_WEB),
- 	OPT_SET_INT('i', "info", &help_format, N_("show info page"),
- 			HELP_FORMAT_INFO),
--	OPT__VERBOSE(&verbose, N_("print command description")),
- 	OPT_END(),
- };
- 
-@@ -437,14 +435,9 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 
- 	if (show_all) {
- 		git_config(git_help_config, NULL);
--		if (verbose) {
--			setup_pager();
--			list_all_cmds_help();
--			return 0;
--		}
--		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
--		load_command_list("git-", &main_cmds, &other_cmds);
--		list_commands(colopts, &main_cmds, &other_cmds);
-+		setup_pager();
-+		list_all_cmds_help();
-+		return 0;
- 	}
- 
- 	if (show_config) {
-diff --git a/help.c b/help.c
-index 96f6d221ed..4a168230dc 100644
---- a/help.c
-+++ b/help.c
-@@ -98,7 +98,8 @@ static int cmd_name_cmp(const void *elem1, const void *elem2)
- 	return strcmp(e1->name, e2->name);
- }
- 
--static void print_cmd_by_category(const struct category_description *catdesc)
-+static void print_cmd_by_category(const struct category_description *catdesc,
-+				  int *longest_p)
- {
- 	struct cmdname_help *cmds;
- 	int longest = 0;
-@@ -124,6 +125,8 @@ static void print_cmd_by_category(const struct category_description *catdesc)
- 		print_command_list(cmds, mask, longest);
- 	}
- 	free(cmds);
-+	if (longest_p)
-+		*longest_p = longest;
- }
- 
- void add_cmdname(struct cmdnames *cmds, const char *name, int len)
-@@ -193,26 +196,6 @@ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
- 	cmds->cnt = cj;
- }
- 
--static void pretty_print_cmdnames(struct cmdnames *cmds, unsigned int colopts)
--{
--	struct string_list list = STRING_LIST_INIT_NODUP;
--	struct column_options copts;
--	int i;
--
--	for (i = 0; i < cmds->cnt; i++)
--		string_list_append(&list, cmds->names[i]->name);
--	/*
--	 * always enable column display, we only consult column.*
--	 * about layout strategy and stuff
--	 */
--	colopts = (colopts & ~COL_ENABLE_MASK) | COL_ENABLED;
--	memset(&copts, 0, sizeof(copts));
--	copts.indent = "  ";
--	copts.padding = 2;
--	print_columns(&list, colopts, &copts);
--	string_list_clear(&list, 0);
--}
--
- static void list_commands_in_dir(struct cmdnames *cmds,
- 					 const char *path,
- 					 const char *prefix)
-@@ -285,29 +268,10 @@ void load_command_list(const char *prefix,
- 	exclude_cmds(other_cmds, main_cmds);
- }
- 
--void list_commands(unsigned int colopts,
--		   struct cmdnames *main_cmds, struct cmdnames *other_cmds)
--{
--	if (main_cmds->cnt) {
--		const char *exec_path = git_exec_path();
--		printf_ln(_("available git commands in '%s'"), exec_path);
--		putchar('\n');
--		pretty_print_cmdnames(main_cmds, colopts);
--		putchar('\n');
--	}
--
--	if (other_cmds->cnt) {
--		printf_ln(_("git commands available from elsewhere on your $PATH"));
--		putchar('\n');
--		pretty_print_cmdnames(other_cmds, colopts);
--		putchar('\n');
--	}
--}
--
- void list_common_cmds_help(void)
- {
- 	puts(_("These are common Git commands used in various situations:"));
--	print_cmd_by_category(common_categories);
-+	print_cmd_by_category(common_categories, NULL);
- }
- 
- void list_all_main_cmds(struct string_list *list)
-@@ -405,7 +369,7 @@ void list_common_guides_help(void)
- 		{ CAT_guide, N_("The common Git guides are:") },
- 		{ 0, NULL }
- 	};
--	print_cmd_by_category(catdesc);
-+	print_cmd_by_category(catdesc, NULL);
- 	putchar('\n');
- }
- 
-@@ -494,9 +458,48 @@ void list_config_help(int for_human)
- 	string_list_clear(&keys, 0);
- }
- 
-+static int get_alias(const char *var, const char *value, void *data)
-+{
-+	struct string_list *list = data;
-+
-+	if (skip_prefix(var, "alias.", &var))
-+		string_list_append(list, var)->util = xstrdup(value);
-+
-+	return 0;
-+}
-+
- void list_all_cmds_help(void)
- {
--	print_cmd_by_category(main_categories);
-+	struct string_list others = STRING_LIST_INIT_DUP;
-+	struct string_list alias_list = STRING_LIST_INIT_DUP;
-+	struct cmdname_help *aliases;
-+	int i, longest;
-+
-+	printf_ln(_("See 'git help <command>' to read about a specific subcommand"));
-+	print_cmd_by_category(main_categories, &longest);
-+
-+	list_all_other_cmds(&others);
-+	if (others.nr)
-+		printf("\n%s\n", _("External commands"));
-+	for (i = 0; i < others.nr; i++)
-+		printf("   %s\n", others.items[i].string);
-+	string_list_clear(&others, 0);
-+
-+	git_config(get_alias, &alias_list);
-+	string_list_sort(&alias_list);
-+	if (alias_list.nr) {
-+		printf("\n%s\n", _("Command aliases"));
-+		ALLOC_ARRAY(aliases, alias_list.nr + 1);
-+		for (i = 0; i < alias_list.nr; i++) {
-+			aliases[i].name = alias_list.items[i].string;
-+			aliases[i].help = alias_list.items[i].util;
-+			aliases[i].category = 1;
-+		}
-+		aliases[alias_list.nr].name = NULL;
-+		print_command_list(aliases, 1, longest);
-+		free(aliases);
-+	}
-+	string_list_clear(&alias_list, 1);
- }
- 
- int is_in_cmdlist(struct cmdnames *c, const char *s)
-diff --git a/help.h b/help.h
-index 9eab6a3f89..105de6195a 100644
---- a/help.h
-+++ b/help.h
-@@ -37,7 +37,6 @@ extern void add_cmdname(struct cmdnames *cmds, const char *name, int len);
- /* Here we require that excludes is a sorted list. */
- extern void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
- extern int is_in_cmdlist(struct cmdnames *cmds, const char *name);
--extern void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
- 
- /*
-  * call this to die(), when it is suspected that the user mistyped a
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index bc27df7f38..964615de2f 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -30,8 +30,7 @@ test_expect_success "setup" '
- test_expect_success 'basic help commands' '
- 	git help >/dev/null &&
- 	git help -a >/dev/null &&
--	git help -g >/dev/null &&
--	git help -av >/dev/null
-+	git help -g >/dev/null
- '
- 
- test_expect_success "works for commands and guides by default" '
--- 8< --
+Yeah, me too after rereading. :P
 
---
-Duy
+I think the "local" part always implies that there is a part that is
+not local and depending on the feature you call it remote or other
+worktree.
+
+When writing this comment I briefly wondered if we want to combine
+the local aspects of the various features.
+However the "local" part really depends on the feature
+(e.g. a ref on a different worktree is still local from the here/remote
+perspective or from the superproject/submodule perspective),
+so I think I was misguided.
+
+> > > think as long as the word "worktree" is in there, people would notice
+> > > the difference.
+> >
+> > That makes sense. But is refs/worktree shared or local? It's not quite
+> > obvious to me, as I could have refs/worktree/<worktree-name>/master
+> > instead when it is shared, so I tend to favor refs/local-worktree/ a bit
+> > more, but that is more typing. :/
+>
+> OK I think mixing the two patches will different purposes messes you
+> (or me) up ;-)
+
+possible.
+
+>
+> refs/worktrees/xxx (and refs/main/xxx) are about visibility from other
+> worktrees. Or like Eric put it, they are simply aliases. These refs
+> are not shared because if they are, you can already see them without
+> new "ref mount points" like this.
+>
+> refs/worktree (previously refs/local) is also per-worktree but it's
+> specifically because you can't have per-worktree inside "refs/" (the
+> only exception so far is refs/bisect which is hard coded). You can
+> have refs outside "refs/" (like HEAD or FETCH_HEAD) and they will not
+> be shared, but they cannot be iterated while those inside refs/ can
+> be. This is more about deciding what to share and I believe is really
+> worktree-specific and only matters to _current_ worktree.
+>
+> Since refs/worktree is per-worktree, you can also view them from a
+> different worktree via refs/worktrees/. E.g. if you have
+> refs/worktree/foo then another worktree can see it via
+> refs/worktrees/xxx/refs/worktree/foo (besides pseudo refs like
+> refs/worktrees/xxx/HEAD)
+
+Ah. now I seem to understand, thanks for explaining.
