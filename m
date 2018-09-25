@@ -2,87 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4BF81F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 20:54:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1475D1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 20:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726544AbeIZDEN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 23:04:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59198 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726173AbeIZDEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 23:04:13 -0400
-Received: (qmail 417 invoked by uid 109); 25 Sep 2018 20:54:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 25 Sep 2018 20:54:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11488 invoked by uid 111); 25 Sep 2018 20:54:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 25 Sep 2018 16:54:30 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Sep 2018 16:54:47 -0400
-Date:   Tue, 25 Sep 2018 16:54:47 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] git help: promote 'git help -av'
-Message-ID: <20180925205446.GB21956@sigill.intra.peff.net>
-References: <20180922174707.16498-1-pclouds@gmail.com>
- <20180924181927.GB25341@sigill.intra.peff.net>
- <xmqq4leesjdc.fsf@gitster-ct.c.googlers.com>
- <CACsJy8D1EMCqvBdxbta4oocMF33jwDf1=opXwZ0aRN7LYu=JXg@mail.gmail.com>
- <20180925174451.GA29454@duynguyen.home>
+        id S1726173AbeIZDHH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 23:07:07 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50304 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726026AbeIZDHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 23:07:06 -0400
+Received: by mail-wm1-f68.google.com with SMTP id s12-v6so39883wmc.0
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 13:57:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=UnX8botRMywNXrTAZlcsbNK6e1UF6Slg81PjOVGvKWU=;
+        b=sAQeFPeeODuciBJ0qyWjQ0O3PfxQHqqBd7m5xpR6itymIi9wUHGY9XwSKFJBsPf3VF
+         qsoI3aWgtIFa1uYS3TISPyWeHgGtNRJEYJkE/4NsfSZ0mewtv88xh4M1AmPJJkLu3v7p
+         V5rb+OyMRwo0B9SlO9ASrGqpk6EsQTq1T82VJVEdedk+Ja6B56WlGMywqhsaZrDEJ8sw
+         UoTZMxRBVHg+w6F92TLTXS4eSb+i+f8pBTofxxPq1ShDTwLenyhokYFy/v7sPWxlV2hH
+         eUa414X3p4koytAPz9WneNcc5L2elPDTLbPWV9Sgw0E1AHIiP1l99LmFUzATACVNeJUi
+         6j8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=UnX8botRMywNXrTAZlcsbNK6e1UF6Slg81PjOVGvKWU=;
+        b=CkTCHhXtK5VD5MndMwy5tF7KuW2CEgZ9M54b5hJtgi0WZKhVCOkllLrAUS7NUiXqUP
+         PExX17Zqj+JjxHzuJwdEncXHd4sH2cAu5VCLdMXk7gJo0TskEzAFKQ6uOaZQcXi9ZI++
+         dto4Hs6bk2yHDTKCv2LunS3S8XKjZMMfgg6hTtJOuEEAxzSOt67rV1xD6AHzQA32vcnK
+         dTK6PVgnuy/FRjh8LkJylf3PitGQ8qer0g3/tg4wYRTkp5ziwXzThiIWTX4QvxHqCS41
+         ylbAok/O41sdP5eJMoXXM8BMYKG3iyKDKxmlevwNGcUZfBfOTLJy6VBm9MpZ/PwtFSlp
+         yyIw==
+X-Gm-Message-State: ABuFfojn3Pb1hekSPFMCDHLmO39zAB47igMB7mBNj8e4mWXtjeQ+zbuY
+        NG3yg0XmiYumnyNoEzYlrfQYkBoa
+X-Google-Smtp-Source: ACcGV61GGUc83wSe7dp08RivGjOonU694A1Stg/9qUlIQootenmG5ClKtdHoAY/lmBkCuTaqBCvpEw==
+X-Received: by 2002:a1c:88cd:: with SMTP id k196-v6mr2026369wmd.17.1537909059553;
+        Tue, 25 Sep 2018 13:57:39 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 184-v6sm5986277wmv.6.2018.09.25.13.57.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 25 Sep 2018 13:57:38 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        "H . Merijn Brand" <h.m.brand@xs4all.nl>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Olga Telezhnaia <olyatelezhnaya@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH] ref-filter: don't look for objects when outside of a repository
+References: <20180922124215.0c8172d1@pc09.procura.nl>
+        <20180922141145.10558-1-szeder.dev@gmail.com>
+        <20180924181722.GA25341@sigill.intra.peff.net>
+        <20180924212034.GF27036@localhost>
+Date:   Tue, 25 Sep 2018 13:57:38 -0700
+In-Reply-To: <20180924212034.GF27036@localhost> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Mon, 24 Sep 2018 23:20:34 +0200")
+Message-ID: <xmqq5zytpa65.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180925174451.GA29454@duynguyen.home>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 25, 2018 at 07:44:51PM +0200, Duy Nguyen wrote:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> > I think adding another section about external commands in "help -av"
-> > would address the "clang-format" stuff. With that, it's probably good
-> > enough to completely replace "help -a". It may also be good to list
-> > aliases there too in a separate section so you have "all you can type"
-> > in one (big) list.
-> 
-> Here's the patch that adds that external commands and aliases
-> sections. I feel that external commands section is definitely good to
-> have even if we don't replace "help -a". Aliases are more
-> subjective...
+> However, if we go for a more informative error message, then wouldn't
+> it be better to add this condition in populate_value() before it even
+> calls get_object()?  Then we could also add the problematic format
+> specifier to the error message (I think, but didn't actually check),
+> just in case someone specified multiple sort keys.
 
-Just eyeballing the output, it looks pretty reasonable to me. The lack
-of explanation for external commands really stands out, but there's not
-much we can do.
+Even though I suspect that verify_ref_format() is the logically the
+right place to do this (after all, it is about seeing if the format
+makes sense, and a format that requires an object access used
+outside a repository should trigger an verification error), doing
+that in populate_value() probably strikes the best balance, I would
+think.
 
-That part of the output is not very compact, and we _could_ put it in
-columns, but that might be confusing since the rest of the output is
-one-per-line.
-
-Mentioning aliases seems reasonable to me. The definitions of some of
-mine are pretty nasty bits of shell, but I guess that people either
-don't have any ugly aliases, or are comfortable enough with them that
-they won't be scared away. :)
-
-> -- 8< --
-> @@ -53,7 +52,6 @@ static struct option builtin_help_options[] = {
->  			HELP_FORMAT_WEB),
->  	OPT_SET_INT('i', "info", &help_format, N_("show info page"),
->  			HELP_FORMAT_INFO),
-> -	OPT__VERBOSE(&verbose, N_("print command description")),
->  	OPT_END(),
->  };
-
-Would we want to continue respecting "-v" as a noop? I admit I did not
-even know it existed until this thread, but if people have trained
-themselves to run "git help -av", we should probably continue to give
-them this output.
-
--Peff
