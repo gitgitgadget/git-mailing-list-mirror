@@ -7,77 +7,102 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0481F1F453
-	for <e@80x24.org>; Tue, 25 Sep 2018 15:16:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 141EB1F453
+	for <e@80x24.org>; Tue, 25 Sep 2018 15:36:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729423AbeIYVYC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Sep 2018 17:24:02 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43770 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729315AbeIYVYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Sep 2018 17:24:02 -0400
-Received: by mail-io1-f66.google.com with SMTP id y10-v6so20715506ioa.10
-        for <git@vger.kernel.org>; Tue, 25 Sep 2018 08:16:05 -0700 (PDT)
+        id S1729606AbeIYVoc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Sep 2018 17:44:32 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:53204 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729306AbeIYVoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Sep 2018 17:44:32 -0400
+Received: by mail-it1-f196.google.com with SMTP id h3-v6so15982173ita.2
+        for <git@vger.kernel.org>; Tue, 25 Sep 2018 08:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3lTC9kJq0YyE7v36J/2W0pdTsCFSkoDusf6P488NHVk=;
-        b=dWFTXkvEOdPO5ghlJxukjAvmi9NzZNfDTq6m7Psqc3Dqx4ZXQMgjHjth0BOJL/zdJ6
-         cypF9cJgDGoPzGkO4ZtsNnxcsgHHsFlpdN/IcgI/lDB/AdzBqE9b3JXEQwEYB1qhIRIA
-         r4CF1PpA8ajiHaNmv4QuB2r6jMO94g+cDLZYKXJvJZ8F6hGY/hGF8Q4hTwxj8ZQ45RD6
-         dKaeFuDsf0+6ryCcqLuUM1hZIP5yk2A6sKxEx0YElKk0FxRX3A0K4s/aojaU/HJAv/MH
-         fjkTf4ocewV22L4b7vtFszMsQ99LFsGr1NEn8dF6rLnB5NLTBIbXPPOZzKEV5kbhTV2W
-         rswQ==
+         :cc:content-transfer-encoding;
+        bh=9PTh23sOCPZUURNhyGCvkXveGKrmywhkjnqkk90MUYo=;
+        b=HxzFeqi066bdtv1o1jTOm/qwcX/DOxN2UBLAZmEY5uw73K5lcwCaZSLiec79CIOv81
+         lHI6jZyGIpNHdxTp1ZFlYMy/DaMueD2FHiIZo7jOqpkjZbz2C6d5wdGQYA5KYm/72+vK
+         RTlZPtrViXb/yVSH3uA/bav1aGMyMlp3lP84Mc7wYGF4wDrHLZ8MjbRORsSkXPEBnjeo
+         t3Aynq9L+aDSLMjpI5Ne4RKqNGJV+Fk7Ej9cc37INXQCJLYZ1ZDjWV6ybskNQ5uc/UJj
+         9y+L7pvzpWxYRCBFjUgYWQL9asiO1b39esYr6+cnnMRL71Q1L5buThd3Dp5t8XJ7fG4g
+         vekA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3lTC9kJq0YyE7v36J/2W0pdTsCFSkoDusf6P488NHVk=;
-        b=HGi7ioTc12/eP0m/L0AMVj5KEg1DCbN+CoSWgywXNG0PVUQip/0MRY/mED+zesGHxm
-         K07q+gh1cZ8yfou5/MxBVaANeVBhkAUKxxiLYr6mTQ8klxWVOcfl+WbwCY+YDfQmtRXa
-         oFgM9eI3ext3StMtjrt3X2OpfoXqWQlokpwInG2YCkr/ZHHoVep+Ez/FIWW87KNwgpbl
-         e9bKHx+j/G5ywPg2JEOnSpNUvxsODFkcK1SxfhWp9tpeyhSdXhhp0roqMRxyNMeNF6pr
-         OqmCGhWsRcL06VWiIzCHngvLoJFxa6evBBqHzdtf5ZVeFxYkxLGFpwmSDM/VDbz54SO+
-         OT7g==
-X-Gm-Message-State: ABuFfoj/+BtXJniy3EWoJYt4kCyeRprJJLwftPPmSb6y/f4awLbnpiLH
-        n/RKP1XoUNeXG8z7HwXYr27Fb+/dpewEiYyzPX0=
-X-Google-Smtp-Source: ACcGV63KKrthBjepskctrlC4Zp5MOwI1uSXXHM3NZhLmLDkpxuTI/ErxV0J3boCDYBtW12LELWNp4mRsTk15g5zF9DM=
-X-Received: by 2002:a6b:8f93:: with SMTP id r141-v6mr927892iod.118.1537888564859;
- Tue, 25 Sep 2018 08:16:04 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9PTh23sOCPZUURNhyGCvkXveGKrmywhkjnqkk90MUYo=;
+        b=TvmjpmcjgfzBUBugl83rYM1LAKvKapzONkAqxvFwaum2TWTkz6UzQQZBpU5Vb2F0hn
+         y2MikqCSqrO20uTSDRWeikbwfXOjEB5D5lMqaeh6mqnD4i7m1h1m5WLRqtq+LIXTWenj
+         x+z6chycFG0/IBQImcWGMuZGetIaFLBw6J33rwuG/yuRhErP79VB88SSgbO9nQgM5d61
+         VKy+1akZyc0kiIpJRFj26l7DOiffmb2MaKVqQWvb5r16ZiLa2YX5V7Ve1Ls5ML5xGftb
+         jRMS/VWuthBRoZxTjeKbImoU+dDgy4Ct+XTDi0w1ffYptM8lS8b7pREuWM2BQDZmR0Mg
+         hFbg==
+X-Gm-Message-State: ABuFfogBTktn2AznINRfChVYbyNMrzskGhyoC0Bj+sVqx6CjV8AbIMC7
+        e3qg1NYKI597F0HoxcuW8fPks0/+rUNcn2eoo+k=
+X-Google-Smtp-Source: ACcGV600pDiuXoT6GtyQGxlnomRlsA31eOn8Xv2uXBYaScaMZccJksOlCqnj5kOniq6kvWQ/xefOQJwl8XPC2Dn6lEY=
+X-Received: by 2002:a02:270f:: with SMTP id g15-v6mr1468807jaa.94.1537889788420;
+ Tue, 25 Sep 2018 08:36:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180922174707.16498-1-pclouds@gmail.com> <20180924181927.GB25341@sigill.intra.peff.net>
- <xmqq4leesjdc.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4leesjdc.fsf@gitster-ct.c.googlers.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-3-pclouds@gmail.com>
+ <CAGZ79kZF1+0PTEgF_NwM_AwttJ0sedAP8CT834L5ZGJpxZ+G_Q@mail.gmail.com>
+In-Reply-To: <CAGZ79kZF1+0PTEgF_NwM_AwttJ0sedAP8CT834L5ZGJpxZ+G_Q@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 25 Sep 2018 17:15:38 +0200
-Message-ID: <CACsJy8D1EMCqvBdxbta4oocMF33jwDf1=opXwZ0aRN7LYu=JXg@mail.gmail.com>
-Subject: Re: [PATCH] git help: promote 'git help -av'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 25 Sep 2018 17:36:02 +0200
+Message-ID: <CACsJy8BKTkbc=ZgMnO7Yuk0eaqzZnifo80tnR872_T8b02biqg@mail.gmail.com>
+Subject: Re: [PATCH 2/8] Add a place for (not) sharing stuff between worktrees
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 24, 2018 at 10:58 PM Junio C Hamano <gitster@pobox.com> wrote:
-> I personally find "help -av" a bit too loud to my taste than plain
-> "-a", and more importantly, I look at "help -a" primarily to check
-> the last section "avaialble from elsewhere on your $PATH" to find
-> things like "clang-format", which I do not think is available
-> anywhere in "help -av", so I do not think "-av" can be promoted as
-> an upward-compatible replacement in its current form.
+On Tue, Sep 25, 2018 at 4:35 AM Stefan Beller <sbeller@google.com> wrote:
+>
+> On Sat, Sep 22, 2018 at 11:05 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+> >
+> > When multiple worktrees are used, we need rules to determine if
+> > something belongs to one worktree or all of them. Instead of keeping
+> > adding rules when new stuff comes, have a generic rule:
+> >
+> > - Inside $GIT_DIR, which is per-worktree by default, add
+> >   $GIT_DIR/common which is always shared. New features that want to
+> >   share stuff should put stuff under this directory.
+>
+> So that /common is a directory and you have to use it specifically
+> in new code? That would be easy to overlook when coming up
+> with $GIT_DIR/foo for implementing the git-foo.
 
-Yep. I also thought "help -a" was denser but wasn't sure if it
-actually helps or not. Whenever I look at that block of commands, I
-end up searching anyway. For my use case, "help -a" could be better
-served with something like "git apropos".
+There's no easy way out. I have to do _something_ if you want to share
+$GIT_DIR/foo to all worktrees. Either we have to update path.c and add
+"foo" which is not even an option for external commands, or we put
+"foo" in a common place, e.g. $GIT_DIR/common/foo.
 
-I think adding another section about external commands in "help -av"
-would address the "clang-format" stuff. With that, it's probably good
-enough to completely replace "help -a". It may also be good to list
-aliases there too in a separate section so you have "all you can type"
-in one (big) list.
---
+> > - Inside refs/, which is shared by default except refs/bisect, add
+> >   refs/local/ which is per-worktree. We may eventually move
+> >   refs/bisect to this new location and remove the exception in refs
+> >   code.
+>
+> That sounds dangerous to me. There is already a concept of
+> local and remote-tracking branches. So I would think that local
+> may soon become an overused word, (just like "index" today or
+> "recursive" to a lesser extend).
+>
+> Could this special area be more explicit?
+> (refs/worktree-local/ ? or after peeking at the docs below
+> refs/un-common/ ?)
+
+refs/un-common sounds really "uncommon" :D. If refs/local is bad, I
+guess we could go with either refs/worktree-local, refs/worktree,
+refs/private, refs/per-worktree... My vote is on refs/worktree. I
+think as long as the word "worktree" is in there, people would notice
+the difference.
+--=20
 Duy
