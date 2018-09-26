@@ -2,104 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01A901F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 17:40:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 172081F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 17:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728462AbeIZXyF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 19:54:05 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:38128 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727399AbeIZXyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 19:54:05 -0400
-Received: by mail-wr1-f48.google.com with SMTP id j8-v6so24142384wrw.5
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 10:40:03 -0700 (PDT)
+        id S1728574AbeI0AEF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 20:04:05 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36862 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727604AbeI0AEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 20:04:04 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y13-v6so3289633wmi.1
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 10:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=s6/8cRxKM1DEn/zTT7wtdiBB0k9wuPbT1opmcY/kuhs=;
-        b=hF49NSzLrAw4IdDJa3eu5xPdKGJX/5Be6sbY18wAkIDqs/HKb4OIhq/LSP0UxGRXbU
-         iijSmrRgoTr6MzolsdMGkq2HKKdEKRcUqbovOD6cgeNKbfwQzSl5PT3aLicXlg4ma1vG
-         yxSZTlnLbxPJH0clUbzPlHGvbLDn1J26mbzrTsHG0T5amsgaKAlOV6NfdNnbWVQtc+gS
-         IC5xYIvofXAf4uOpiJ6BqulWDu5tkjXjdYYIqBYEz8bLkDzvdsjjFCAh9eZYPxf5yp/X
-         iCNNQ9ZR431F+/5UDd9SQys3qUu4u/oKRE30R9Fezaj58WeXZSMYr5BAdFctr3dbmy6m
-         qBKg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=9A+gAb4jofpJ3ExtXkT3MDExMX9xA/XMYr3nL4IDzpg=;
+        b=f0U8BeQiEXF7tnqMKFDC/DBVsKJlZrzKynUgW65IzxS2J2QPLASUyuH8o6T1LKM0n4
+         LfJ001ZuvoobGBhQaeBvKAMT+YcczQKTPyoxIfzyviKpQ5IlrK0bNkNB/yTq8KtZvV11
+         FcJQXHznoOnxE2R8ibYckGw9mBjUuo5xYGdLgfkaIVgrV6og8jkaqlOkSPk7OKVpfNta
+         oK7RvOxN0no3mV4a0PDQDQrrLT7RIrU7QHwHVDjZve2lASmGKsBfUVmWsDEBy6efOrSo
+         9hW37H+T25Vp3DR9vbXb8410zsROPea0JB05SxTnrkSaHYdYo64+AAwArIvkZxGWVh66
+         AHdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=s6/8cRxKM1DEn/zTT7wtdiBB0k9wuPbT1opmcY/kuhs=;
-        b=DzQxwYK4J4si9O7uS7s0BBqsVaAF2AzxH4QQ6nfzhGFuAtnMAh9cF0IEmOD0p1eGzy
-         ITpMhjIdQmGmbc5CzPbUmRKmjq54ql8RVN2NA+2INQWPBdBvhsnPpZuoEG25f1gEgW1Z
-         j2IoRI13OQhsXMBMyWj9vTXxuMpCqIjJs2DM0kzZi354K76Cg+zmyEaEV75pBWjsoytB
-         dgZN+GRDTOpgV31sTQmo6IEnTqTSw3UOIiwKNkpt8Ut+V8O5c9LKMfsUykRItJE19QMJ
-         jDJlYkVVnn3ZLh6ieDFJgdy9fVCW0vam1Lkekon6luBgOcMklKWpwjagVNbzhhmp6VAS
-         wIig==
-X-Gm-Message-State: ABuFfogFAWXxjwbJqwLX8ajhEU/L5z6O1el8JAVc84S2CGaNQwaPQDv4
-        C8OUZpp4WGQvxs6dlh1ayRQ=
-X-Google-Smtp-Source: ACcGV62wMVAP6NhyybzE4p418q6/gZWJ2KeC8OivxQVmJZ2eQf0NvaOpoX5ftoOJK3778w6XznTS6A==
-X-Received: by 2002:adf:ef47:: with SMTP id c7-v6mr5988545wrp.182.1537983602328;
-        Wed, 26 Sep 2018 10:40:02 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h8-v6sm6640918wre.15.2018.09.26.10.40.01
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=9A+gAb4jofpJ3ExtXkT3MDExMX9xA/XMYr3nL4IDzpg=;
+        b=PzdmzwrWH/ADl2RFwHBxnkHJOtPeVLeEdzXTr0Ku/TAkN9TovMcoQy1CC1dyvpi6Xk
+         /uB00kOqQisjCNlGpQvN35BGIKJoequrL8fWydy+MqZ7JIYjDBLaEJiv6TbiRnQBhO0e
+         BvXREAm/05s0ShjQDPugTheQVlUFjiQAZQSAjwhCMZ1m/2Wa2EMzRf+JDaaBPJ9zbhYn
+         iVybChX5O0E4NDkJDnkrih/92GyhpyLTrnZl/+6P6BDawDhOQs3t+Vp/0jdDExQJZl7f
+         JFu9bPAllATDM2dBhNrI5i5+YZBNfYNf1Y97P+wDxg+COjtnQ9p+MnS9WQg1M2w2t8Rp
+         /sLQ==
+X-Gm-Message-State: ABuFfojG7uqob6ABLXv09eQ6KS8bJRtlYeMoWc7JEmxyZLKjgkGpSRkX
+        5UmgaSXmgHJusR+MQa+XVh0=
+X-Google-Smtp-Source: ACcGV61eH9ti7FIi9Gd0ZGvECWg+h2cSGnMnIBxsgAzWJ6JcWkpudPVeKUQUWwQjMMS0AzkZWKm79Q==
+X-Received: by 2002:a1c:4857:: with SMTP id v84-v6mr5057643wma.8.1537984199313;
+        Wed, 26 Sep 2018 10:49:59 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id n4-v6sm7063769wrr.21.2018.09.26.10.49.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Sep 2018 10:40:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] worktree: add per-worktree config files
-References: <20180923170438.23610-1-pclouds@gmail.com>
-        <xmqqtvmdnuab.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8Bux0iiOp+zjELM4DuZwiQMA6EDaL0M71Jkp_qPACD8og@mail.gmail.com>
-Date:   Wed, 26 Sep 2018 10:40:01 -0700
-In-Reply-To: <CACsJy8Bux0iiOp+zjELM4DuZwiQMA6EDaL0M71Jkp_qPACD8og@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 26 Sep 2018 17:48:48 +0200")
-Message-ID: <xmqq4lecma32.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 26 Sep 2018 10:49:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 1/8] sha1-array: provide oid_array_filter
+References: <20180921223558.65055-1-sbeller@google.com> <20180921223558.65055-2-sbeller@google.com> <87h8ihk7sl.fsf@evledraar.gmail.com> <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com> <20180926041517.GA2140@sigill.intra.peff.net> <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 26 Sep 2018 19:49:57 +0200
+Message-ID: <87d0t0jghm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
 
-> I believe the main selling point of multiple worktrees is sharing
-> refs. You could easily avoid expensive clones with --local, but
-> synchronizing between different clones is not very convenient. Other
-> than that, different worktrees tend to behave like separate clones.
+On Wed, Sep 26 2018, Junio C Hamano wrote:
 
-OK.  Even with the enforced limitation that no single branch can be
-checked out in multiple worktrees at the same time, it is more
-convenient as you can "merge" other branch and trust that the result
-on the checked-out branch in your worktree is immediately visible to
-other worktrees.
+> Jeff King <peff@peff.net> writes:
+>
+>> On Tue, Sep 25, 2018 at 12:26:44PM -0700, Stefan Beller wrote:
+>>
+>>> On Sat, Sep 22, 2018 at 5:58 AM Ævar Arnfjörð Bjarmason
+>>> <avarab@gmail.com> wrote:
+>>> >
+>>> >
+>>> > On Fri, Sep 21 2018, Stefan Beller wrote:
+>>> >
+>>> > > +/*
+>>> > > + * Apply want to each entry in array, retaining only the entries for
+>>> > > + * which the function returns true.  Preserve the order of the entries
+>>> > > + * that are retained.
+>>> > > + */
+>>> > > +void oid_array_filter(struct oid_array *array,
+>>> > > +                   for_each_oid_fn want,
+>>> > > +                   void *cbdata);
+>>> > > +
+>>> > >  #endif /* SHA1_ARRAY_H */
+>>> >
+>>> > The code LGTM, but this comment should instead be an update to the API
+>>> > docs, see my recent 5cc044e025 ("get_short_oid: sort ambiguous objects
+>>> > by type, then SHA-1", 2018-05-10) for an addition of a new function to
+>>> > this API where I added some new docs.
+>>>
+>>> ok will fix for consistency (this whole API is there).
+>>>
+>>> Longer term (I thought) we were trying to migrate API docs
+>>> to headers instead?
+>>
+>> Yes, please. I think it prevents exactly this sort of confusion. :)
+>
+> CodingGuidelines or SubmittingPatches update, perhaps?
+>
+>  Documentation/CodingGuidelines | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 48aa4edfbd..b54684e807 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -358,7 +358,11 @@ For C programs:
+>     string_list for sorted string lists, a hash map (mapping struct
+>     objects) named "struct decorate", amongst other things.
+>
+> - - When you come up with an API, document it.
+> + - When you come up with an API, document it.  It used to be
+> +   encouraged to do so in Documentation/technical/, and the birds-eye
+> +   level overview may still be more suitable there, but detailed
+> +   function-by-function level of documentation is done by comments in
+> +   corresponding .h files these days.
+>
+>   - The first #include in C files, except in platform specific compat/
+>     implementations, must be either "git-compat-util.h", "cache.h" or
 
-> user has multiple worktrees, but the extension is not enabled. I'm
-
-Exactly.  "config --worktree" in your script will silently break
-other worktrees; it wanted to affect only the current worktree, but
-it changed settings to all the others.
-
-> probably not clear in the commit message, but "git config" can detect
-> that the extension has not been enabled, automatically enable it (and
-> move core.bare and core.worktree (if present) to the main worktree's
-> private config), so "git config --worktree" will never share the
-> change.
-
-I wonder if that is good enough.  The user in one worktree did
-"config --worktree" and all the worktrees now start diverging in
-their config---but that is true _only_ when they use "--worktree"
-option to say "I want this to be set differently from others".  All
-the other calls to "git config" will stil be shared.
-
-So from a cursory thinking, it sounds OK to me, but somebody else
-may think of bad ramifications after a good night sleep.
-
-
-
+Thanks. I had not looked at this closely and was under the false
+impression that it was going in the other direction. Good to have it
+clarified.
