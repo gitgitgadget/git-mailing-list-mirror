@@ -2,100 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EE781F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 19:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C00721F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 19:54:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbeI0CEW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 22:04:22 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39114 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726453AbeI0CEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 22:04:22 -0400
-Received: by mail-wm1-f68.google.com with SMTP id q8-v6so3636326wmq.4
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 12:49:48 -0700 (PDT)
+        id S1726453AbeI0CJ3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 22:09:29 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:34323 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbeI0CJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 22:09:28 -0400
+Received: by mail-qt1-f195.google.com with SMTP id x23-v6so280045qtr.1
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 12:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HoBqEd2KeoQvGrVmqV96CuIDRtdH8RwxgNdN7I8XTBs=;
-        b=ltuaCnxkUcQhM4FbVKwwqZpTZ/vNuFwg9GIwkApaf3w+U/1Nq3RIYpb/t3gGDnOojN
-         ra51SuywwtKtYUlQQiUzw3ndXFkIfH/H9ygGv0oVHnfUe7Kk5vl8yOaBo5X1HH/FqAAR
-         5541fQ5XzJ/TthY7DgydE48iwDOZwJNTXOzn3LJRD7HyfragitgSWaWsGIziDhyzQ8t7
-         PqJZhxTa5+eroI6ZdF/yO/YNN05GWsSFZOAgvqUeZPV7w9OzMfY9ETqLXPqyf2zY0f8q
-         FpUv7kk1EyK6DhfMf/Or7PPYqNOSa9VrGxzaB5GT1Xk0U5J2rNyI1UIAVhKqAFydwv5U
-         CviQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=j2XnxiGba6Qjmpjy2W/qsrlZvswoHxsTFu9xrz9lf44=;
+        b=rGzBo6xAfDM35qRUGFgDzkmrfMUx6KEI2myEtHOasrCvrBvfLwSnU59gTeApQoYSzV
+         X/wl3NzBlVNl/M2n4G+kerV+aTOwehM+X4EJPoMG3WfO3jr9ZJhK17BBOxfRlpPfuHMk
+         yJwpQNx3mZyjxD33CAoQbYKdwT/Pt2mQj8H+Hx13BZR5OK8n4FKsMNwA0YZsaeL5W95k
+         qoc4+JvrYqP/b93j5+2HxSzjOFAaIXaO+jccelc4TN2AcP0vYfUl60TnB6s7r3yDiR4q
+         UZTgELWP9pAjxmWZsUxbNQJw4msWeqP0bbQz8QamgmaP/zn1e2wJB9PKEWUp2KDjoXLQ
+         bIdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HoBqEd2KeoQvGrVmqV96CuIDRtdH8RwxgNdN7I8XTBs=;
-        b=anfI5GTsQy61VOPf++otFJyRfIXmFXfkG1lqId3bd6a1YVTgAUxRMm48VMisnUxDRP
-         ml62B7DExSA4mhe0x+jWVYzw9Uev0CnUa62dVTlKUsu60QMEezPArtklrPGq/dU6LpB7
-         RwTU4F8e140r7vmaQkyN49weG2FmGikB9IRdOHuSDLGIyv/Q4dwSei6metF5bHxyM3BH
-         SF8eDQlRuZA7EvKtRf40rN1/BxCA9QwKj6yQpsLflsrIgS4h4Av3cehlYfTOJWMuQCqt
-         +agv7wiib4Yd2hihi16T9DAbT1fTto8prMoZIKTjNT2DMieL2ZpaaX3dz9N5UukNKJ/6
-         AX2g==
-X-Gm-Message-State: ABuFfojDUM6nNWdWfJaYlNM+2Qt586tJTrHDX+4tbSSFW4rxYz2HfozH
-        jcYa6GrzUjtp7zEaZNX5G8s=
-X-Google-Smtp-Source: ACcGV60D5b04qC+H0AKuWkFn8aK9PpSVkMeEfbLMWwW1JA2UpcoqmWbD0TcqKSfZUJ8HxASC0Rbw4A==
-X-Received: by 2002:a1c:b49:: with SMTP id 70-v6mr5653000wml.149.1537991387500;
-        Wed, 26 Sep 2018 12:49:47 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 132-v6sm336750wmd.13.2018.09.26.12.49.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Sep 2018 12:49:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/8] sha1-array: provide oid_array_filter
-References: <20180921223558.65055-1-sbeller@google.com>
-        <20180921223558.65055-2-sbeller@google.com>
-        <87h8ihk7sl.fsf@evledraar.gmail.com>
-        <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com>
-        <20180926041517.GA2140@sigill.intra.peff.net>
-        <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
-        <87d0t0jghm.fsf@evledraar.gmail.com>
-        <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
-        <87a7o4je0t.fsf@evledraar.gmail.com>
-        <20180926185812.GD30680@sigill.intra.peff.net>
-Date:   Wed, 26 Sep 2018 12:49:46 -0700
-In-Reply-To: <20180926185812.GD30680@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 26 Sep 2018 14:58:13 -0400")
-Message-ID: <xmqqtvmcjaxx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=j2XnxiGba6Qjmpjy2W/qsrlZvswoHxsTFu9xrz9lf44=;
+        b=mIWxq2vhkiYFILLEJkY+szL10zx09LHZMIdOAfDjg4I5mxRnxuwJ2hsa0OSzfLvH23
+         c7Kq4/sWbdaj02f7o64E2dx03DtIpbF7yvs3T44EQeGd11CbLAeEbIZCI14UN9pssthv
+         rAHHz4dGbr+WdBSxdSCft5F8nL8G0G6cTLS7Qv7jUbAozdw1aybGb28z+HOtM7IXEsMm
+         Z9S/FENkOWLSo64x5vo9/iSgw3OwY2NAogJRTJ9aIExMNwWFx8r4J8mZW/Ph6v+Cegar
+         eLBiWY+giPo+a/AgtRatndoHwObiSGYY9ntG4FFG8QpTIFI5+mE/3L7SnTZp2+6WymAH
+         7bHA==
+X-Gm-Message-State: ABuFfog+kCEpgcLv36EyC5X0T/PIoRzFcvkTX9My2GaVBeZQMQrnhsVs
+        AeRrccsMpvU38fpX7IyW60hPAOKaxG0=
+X-Google-Smtp-Source: ACcGV60MIeQXpHujKidA31aSSKn4HXgLri+ffBSA/3+LG8KpUuHtu6w0ASwIyM6Na2GcyqJ5hjNstQ==
+X-Received: by 2002:ac8:1644:: with SMTP id x4-v6mr5736561qtk.67.1537991693358;
+        Wed, 26 Sep 2018 12:54:53 -0700 (PDT)
+Received: from localhost.localdomain (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id 23-v6sm3314922qkn.11.2018.09.26.12.54.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Sep 2018 12:54:52 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>
+Subject: [PATCH v6 0/7] speed up index load through parallelization
+Date:   Wed, 26 Sep 2018 15:54:35 -0400
+Message-Id: <20180926195442.1380-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.18.0.windows.1
+In-Reply-To: <20180823154053.20212-1-benpeart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> Now I'll admit it seems like make-work to me because I would not plan to
-> ever look at the formatted output myself. But I guess I don't understand
-> the audience for this formatted output. These are APIs internal to Git
-> itself. We would not generally want to install gitapi-oid-array into
-> /usr/share/man, because only people actually working on Git would be
-> able to use it. So it sounds like a convenience for a handful of
-> developers (who like to look at this manpage versus the source). It
-> doesn't seem like the cost/benefit is there.
->
-> And if we were going to generate something external, would it make more
-> sense to write in a structured format like doxygen? I am not a big fan
-> of it myself, but at least from there you can generate a more richly
-> interconnected set of documentation.
+Base Ref: master
+Web-Diff: https://github.com/benpeart/git/commit/a0300882d4
+Checkout: git fetch https://github.com/benpeart/git read-index-multithread-v6 && git checkout a0300882d4
 
-I agree on both counts.  I just like to read these in plain text
-while I am coding for Git (or reviewing patches coded for Git).  
 
-The reason why I have mild preference to D/technical/ over in-header
-doc is only because I find even these asterisks at the left-side-end
-distracting; it is not that materials in D/technical could be passed
-through AsciiDoc.
+This iteration brings back the Index Entry Offset Table (IEOT) extension
+which enables us to multi-thread the cache entry parsing without having
+the primary thread have to scan all the entries first.  In cases where the
+cache entry parsing is the most expensive part, this yields some additional
+savings.
+
+Using p0002-read-cache.sh to generate some performance numbers shows how
+each of the various patches contribute to the overall performance win.
+
+
+Test w/100,000 files    Baseline  Optimize V4    Extensions     Entries
+----------------------------------------------------------------------------
+0002.1: read_cache      22.36     18.74 -16.2%   18.64 -16.6%   12.63 -43.5%
+
+Test w/1,000,000 files  Baseline  Optimize V4    Extensions     Entries
+-----------------------------------------------------------------------------
+0002.1: read_cache      304.40    270.70 -11.1%  195.50 -35.8%  204.82 -32.7%
+
+Note that on the 1,000,000 files case, multi-threading the cache entry parsing
+does not yield a performance win.  This is because the cost to parse the
+index extensions in this repo, far outweigh the cost of loading the cache
+entries.
+
+Name                            First    Last	  Elapsed	
+load_index_extensions()		629.001  870.244  241.243	
+load_cache_entries_thread()	683.911  723.199  39.288	
+load_cache_entries_thread()	686.206  723.512  37.306	
+load_cache_entries_thread()	686.43   722.596  36.166	
+load_cache_entries_thread()	684.998  718.74   33.742	
+load_cache_entries_thread()	685.035  718.698  33.663	
+load_cache_entries_thread()	686.557  709.545  22.988	
+load_cache_entries_thread()	684.533  703.536  19.003	
+load_cache_entries_thread()	684.537  703.521  18.984	
+load_cache_entries_thread()	685.062  703.774  18.712	
+load_cache_entries_thread()	685.42   703.416  17.996	
+load_cache_entries_thread()	648.604  664.496  15.892	
+				
+293.74 Total load_cache_entries_thread()
+
+The high cost of parsing the index extensions is driven by the cache tree
+and the untracked cache extensions. As this is currently the longest pole,
+any reduction in this time will reduce the overall index load times so is
+worth further investigation in another patch series.
+
+Name                                    First    Last     Elapsed
+|   + git!read_index_extension     	684.052  870.244  186.192
+|    + git!cache_tree_read         	684.052  797.801  113.749
+|    + git!read_untracked_extension	797.801  870.244  72.443
+
+One option would be to load each extension on a separate thread but I
+believe that is overkill for the vast majority of repos.  Instead, some
+optimization of the loading code for these two extensions is probably worth
+looking into as a quick examination shows that the bulk of the time for both
+of them is spent in xcalloc().
+
+
+### Patches
+
+Ben Peart (6):
+  read-cache: clean up casting and byte decoding
+  eoie: add End of Index Entry (EOIE) extension
+  config: add new index.threads config setting
+  read-cache: load cache extensions on a worker thread
+  ieot: add Index Entry Offset Table (IEOT) extension
+  read-cache: load cache entries on worker threads
+
+Nguyễn Thái Ngọc Duy (1):
+  read-cache.c: optimize reading index format v4
+
+ Documentation/config.txt                 |   7 +
+ Documentation/technical/index-format.txt |  41 ++
+ config.c                                 |  18 +
+ config.h                                 |   1 +
+ read-cache.c                             | 741 +++++++++++++++++++----
+ t/README                                 |  10 +
+ t/t1700-split-index.sh                   |   2 +
+ 7 files changed, 705 insertions(+), 115 deletions(-)
+
+
+base-commit: fe8321ec057f9231c26c29b364721568e58040f7
+-- 
+2.18.0.windows.1
+
 
