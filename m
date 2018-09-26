@@ -2,116 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F26B01F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 19:15:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E31E01F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 19:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727199AbeI0BaF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 21:30:05 -0400
-Received: from mail-qt1-f176.google.com ([209.85.160.176]:46010 "EHLO
-        mail-qt1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726416AbeI0BaE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 21:30:04 -0400
-Received: by mail-qt1-f176.google.com with SMTP id l2-v6so58684qtr.12
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 12:15:39 -0700 (PDT)
+        id S1727234AbeI0Bap (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 21:30:45 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39870 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726959AbeI0Bao (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 21:30:44 -0400
+Received: by mail-wr1-f67.google.com with SMTP id s14-v6so76194wrw.6
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 12:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=XXrZuM8rkV9ErlJ6wiCuF7pu8eYDRZrgOCKZQ1v2jCo=;
-        b=nkHVdWBaFyS4/v71O4gQ3zL2rtj8D/xdsYJrEeH5vWzrJ9kb1LkrWq5zOBUtOiYZsj
-         4T42KYrymy3C8IXWiLb7W8hnvhCWsiIoqWBrepjSLVsV1o8DovPvhGJzeEtEoXricYLc
-         clH7V/VomslG3mkTkfjY2UNV7SKeWFo88IrOikYPBm88d0yPPsp+Ibr5Pt2EV8KQALSt
-         gcVi04DAL6WZgP40/C3FVqql9dNGXhBBCtv7BqGUdgjSP1U1Ou/xeGo8keFEQ7mau31o
-         pw5OKAlOAz6XjXwAyCCiY8H2dYd4jdUwpAyeBA9TQnQ1naPtLcf75naAuL1W9B/UOqVS
-         ACWw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=DnqspS/CBnHo1wrU0c86R1s1FrhNVNwNViOIChorJq0=;
+        b=SPkgyGJN2eXPpGw0bO2PqFHJ50TYZaSk5POrpZjKcTkpZWOU0q+FD0zbvaVgmWloXl
+         W9h8T1q61s4FX+mmi2Mrrf9J1TVlWnCcsUjtnN/dvgmOZABSvIAvZ/2ApxSzi+wgDrCZ
+         oRhlIZ89JMFSp1gLfkOGo1CXIIFfTQk9og4JsckEBhKFEVN2MTwPGLQyD2XeEL8MYD+z
+         Farh96bULtNK4eG7PjaROq+OkTnWpKFkQbyk26vFgAeOieUoMPtsyMap1HOg+Ko2VUwN
+         y9zpR13MXXbipF8Dgh1E+KsjYh6lsQiI6Pb5xX6CbUVkEcVYOfrG6NEgx+ciEJAKqX43
+         EyIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=XXrZuM8rkV9ErlJ6wiCuF7pu8eYDRZrgOCKZQ1v2jCo=;
-        b=umOYFZor2zFoTFDgd+PzsMNOQhAvxDDQXJWe33s+gSY5Mc+KLhXpYidxPvQ2VsQUuv
-         rVDGNuxGRBT5u3uQZ57Cq776arvwnwxfC1oolbESVmPvpT/maIU05JNFU6YhKFU1zz/6
-         sVwJNknIVhveKGsFpnZPEY4IrUBlBWmeW6VOHfuinSXmiMwiDqGGit+gExvxUNovRqej
-         aqEUqJtSmOaXehfsPo2nVoxYzCyD6uXRrZ6+buRL06FABjjxIPBAWV9D7Mjq1Xmb/hog
-         RMCh88qZ+XEpQKqGCwmQh33j8vf6PIya9SrBSI7nRprEgDXtvamGeD9p7BdMCPml70vI
-         iUHA==
-X-Gm-Message-State: ABuFfohJ3QFeDZXX1m2/aw+T1BUs9F5+NXYeAfn6mUJNBHdNl5tEdmb5
-        +s3HEM1VsPQSJ2jD1wYkBUU=
-X-Google-Smtp-Source: ACcGV60pplH4dTIBN+PddIjM4bXU8+SHHrGu6Rm7ffL8TjINCQzrBrRO+zPlvKz2xbgcZzgO7EQ0OQ==
-X-Received: by 2002:ac8:23d8:: with SMTP id r24-v6mr5641727qtr.300.1537989339136;
-        Wed, 26 Sep 2018 12:15:39 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:51a9:99b0:a00a:e3c? ([2001:4898:8010:0:3adf:99b0:a00a:e3c])
-        by smtp.gmail.com with ESMTPSA id 69-v6sm3233482qki.19.2018.09.26.12.15.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Sep 2018 12:15:37 -0700 (PDT)
-Subject: Re: [PATCH v3 1/7] prio-queue: add 'peek' operation
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.25.v2.git.gitgitgadget@gmail.com>
- <pull.25.v3.git.gitgitgadget@gmail.com>
- <cc1ec4c2702d8ba35873600d321015bb0430d92e.1537551564.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <04c9cd31-81cb-878c-85d4-dfa93220cf8b@gmail.com>
-Date:   Wed, 26 Sep 2018 15:15:37 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=DnqspS/CBnHo1wrU0c86R1s1FrhNVNwNViOIChorJq0=;
+        b=DbGco3K7kI5cwOKM5IlJEwULhiDlmOn+fCf58ZwAnSSNeeIEG6KjgKKw83VYLjN2cE
+         7lSgupANnVq7rXURp6fmysJAl0EEsKJaQi29rzquxdMUwP7d69+Mm2iheNG29/K1PcY8
+         q1R0+IKr1WGeJiyVsRbPxWD7KwmnITugAsJm0RpPWV0Fv2M8BF1zctVUKIOqCDLVbCat
+         i7jjUpTMGUW5pOLt8NZ32zNkychfHeK+I4d86k8p7hTHywY+/72oLnQFxhy07FneOeqf
+         vxamdiD4D4fZG/7dlwgxZ5If+R0KGB4I1q65N0aeKwx74R72aapZve+Rua+kngNocDOY
+         84Mg==
+X-Gm-Message-State: ABuFfoj65KKJJTH90eByNfQs1IW72HZxq2Dnc2TaUl/hTkr2bOTw3C4k
+        NyUtiBVvvO3mrxRoNPuQDuM=
+X-Google-Smtp-Source: ACcGV60zKAeZEanvopW5f96qc2RhaEiiVLFHX61Ai2H3noTwSBmOR4+lcCGaAJtHWvSE3FGPXd+5NA==
+X-Received: by 2002:adf:b2d7:: with SMTP id g81-v6mr6051267wrd.48.1537989377610;
+        Wed, 26 Sep 2018 12:16:17 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t4-v6sm7413051wrb.45.2018.09.26.12.16.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 26 Sep 2018 12:16:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Alexander Pyhalov <apyhalov@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: t7005-editor.sh failure
+References: <CALOYryFX4PPR+=1L+sjEqPsdmNh_+vNxGf0wwuAgoYzau=GShw@mail.gmail.com>
+        <CAN0heSrhaaP0ds8K92g9w5DAnbwuq8mM6WLKrTQ7e_a8Fku9KA@mail.gmail.com>
+        <CALOYryEMB5HoCXbVKnc49KLkk2ySZjn4DG9RbJjQAvPn1H5K6Q@mail.gmail.com>
+        <CAN0heSpUhzbTjceVhBxk_jjE=vOAVTzXGFQ=UL9Y+muJHe0S6w@mail.gmail.com>
+        <20180926121107.GH27036@localhost>
+        <xmqqlg7oktto.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 26 Sep 2018 12:16:16 -0700
+In-Reply-To: <xmqqlg7oktto.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 26 Sep 2018 11:16:35 -0700")
+Message-ID: <xmqq36twkr27.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <cc1ec4c2702d8ba35873600d321015bb0430d92e.1537551564.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/21/2018 1:39 PM, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> When consuming a priority queue, it can be convenient to inspect
-> the next object that will be dequeued without actually dequeueing
-> it. Our existing library did not have such a 'peek' operation, so
-> add it as prio_queue_peek().
->
-> Add a reference-level comparison in t/helper/test-prio-queue.c
-> so this method is exercised by t0009-prio-queue.sh.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->   prio-queue.c               |  9 +++++++++
->   prio-queue.h               |  6 ++++++
->   t/helper/test-prio-queue.c | 10 +++++++---
->   3 files changed, 22 insertions(+), 3 deletions(-)
->
-> diff --git a/prio-queue.c b/prio-queue.c
-> index a078451872..d3f488cb05 100644
-> --- a/prio-queue.c
-> +++ b/prio-queue.c
-> @@ -85,3 +85,12 @@ void *prio_queue_get(struct prio_queue *queue)
->   	}
->   	return result;
->   }
-> +
-> +void *prio_queue_peek(struct prio_queue *queue)
-> +{
-> +	if (!queue->nr)
-> +		return NULL;
-> +	if (!queue->compare)
-> +		return queue->array[queue->nr - 1].data;
-> +	return queue->array[0].data;
-> +}
+Junio C Hamano <gitster@pobox.com> writes:
 
-The second branch here is never run by the test suite, as the only 
-consumers never have compare== NULL. I'll add an ability to test this 
-"stack" behavior into t0009-prio-queue.sh.
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>
+>> Having said all that, I didn't omit the quotes in 4362da078e with the
+>> above in mind; in fact I tend to use quotes even when they are
+>> unnecessary (e.g. in variable assignments: var="$1"), because unquoted
+>> variables and command substitutions freak me out before I can think
+>> through whether its safe to omit the quotes or not :)
+>
+> I quote >"$file" (but not var=$var) because the CodingGuidelines
+> tells me to:
+>
+>  - Redirection operators should be written with space before, but no
+>    space after them.  In other words, write 'echo test >"$file"'
+>    instead of 'echo test> $file' or 'echo test > $file'.  Note that
+>    even though it is not required by POSIX to double-quote the
+>    redirection target in a variable (as shown above), our code does so
+>    because some versions of bash issue a warning without the quotes.
+>
+> ;-)
+>
+>> Sidenote: this test should use the write_script helper to create this
+>> editor script.
+>
+> Good suggestion.
 
--Stolee
+Perhaps like this.
 
+-- >8 --
+Subject: t7005: make sure it passes under /bin/bash
+
+In POSIX.1 compliant shells, you should be able to use a variable
+reference without quoting for the target of the redirection, e.g.
+
+	echo foo >$file
+	echo bar >$1
+
+without fear of substitution of $file getting split at $IFS.
+However, some versions of bash throws a warning, especially when
+they are invoked as /bin/bash (not as /bin/sh).  Those who build
+with SHELL_PATH=/bin/bash and run t/t7005-editor.sh triggers an
+unnecessary failure due to this issue.
+
+Fix it by making sure that the generated "editor" script quotes the
+target of redirection.  
+
+While at it, update the way to creatd these scripts to use the
+write_script wrapper, so that we do not have to worry about writing
+the she-bang line and making the result executable.
+
+Reported-by: Alexander Pyhalov <apyhalov@gmail.com>
+Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t7005-editor.sh | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
+index b2ca77b338..b0c4cc4ca0 100755
+--- a/t/t7005-editor.sh
++++ b/t/t7005-editor.sh
+@@ -20,11 +20,9 @@ fi
+ 
+ for i in GIT_EDITOR core_editor EDITOR VISUAL $vi
+ do
+-	cat >e-$i.sh <<-EOF
+-	#!$SHELL_PATH
++	write_script "e-$i.sh" <<-EOF
+ 	echo "Edited by $i" >"\$1"
+ 	EOF
+-	chmod +x e-$i.sh
+ done
+ 
+ if ! test -z "$vi"
+@@ -112,8 +110,9 @@ do
+ done
+ 
+ test_expect_success 'editor with a space' '
+-	echo "echo space >\$1" >"e space.sh" &&
+-	chmod a+x "e space.sh" &&
++	write_script "e space.sh" <<-\EOF &&
++	echo space >"$1"
++	EOF
+ 	GIT_EDITOR="./e\ space.sh" git commit --amend &&
+ 	test space = "$(git show -s --pretty=format:%s)"
+ 
