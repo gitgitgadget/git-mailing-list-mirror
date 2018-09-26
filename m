@@ -2,139 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 993A91F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 18:43:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65511F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 18:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728492AbeI0A5e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 20:57:34 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33815 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726395AbeI0A5e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 20:57:34 -0400
-Received: by mail-ed1-f65.google.com with SMTP id q19-v6so2829821edr.1
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:43:16 -0700 (PDT)
+        id S1726127AbeI0A6y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 20:58:54 -0400
+Received: from mail-qk1-f182.google.com ([209.85.222.182]:37162 "EHLO
+        mail-qk1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725733AbeI0A6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 20:58:54 -0400
+Received: by mail-qk1-f182.google.com with SMTP id c13-v6so1527qkm.4
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=AQmPAo+b7IRvuGuDT15+oF5gKT0jEdrHiJH8FthvgWI=;
-        b=Eq6PCpO1YaZlnDdvm27Jai37DMdeyB5L0I/PAEGqj54pG+bk29D3eLM1wvkC/59el2
-         FqGJVCOmwg6ftW7QP9Y+eqaN9zPpRomDY7OqQrbNAD42Nbvd7DyYvMyyiO+BijJJpqKk
-         /aNVTJ86gC5aGfj+m3E7fsQly+qDQtyDOLMXIwqY4PCkexK1tHFXEkzGlcvrtEuv4+Wz
-         8K4D/AJ5pzWk5CdtH+6LuAgNemvOBy6fcrfdqD2sS18Ia64mM4dIAAs0AmZsd532tH0n
-         0kb+a/YtviWgz7qEl5q/RjnOHpfznLr0rLYfWQxtlFASynEHAB7nBLKfcQIihDnctkS3
-         lu5A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=DjaFAP7Rn43GpHN+PPVNZ9rqiQVF6eYeq+8xNn0xdkk=;
+        b=i/WQFSdeB+Hvpz0jbdHt0hGRj1I6eNj4/MWyqKcL1hhTKNeh/YzFpeJwaixcqbsQPI
+         NvoKBMT4BbBlOl6VhIXELEDz4ufAxNixIwdKxhZZ9kcWeaBcdQLQg6czePMNMG7cec+4
+         Zh72kz/QXPwKuJtk7PLkP8Nsf4n9KZuwsHPwuVgG+hOVYHx9ZZE3u5x8ONJsKRdL1GXX
+         sOH2Qpo0iQlsKfLGgGi9IL5FhS76r62u/E74893v89B45WlTAqPqUbZd/FtM0dc2y/08
+         b07HWmOSUdo0JTKiLdEpLlNRw5sLadziNGDAD11r1DVF614lA3flkUKWQjw2AbV/3UCi
+         cKGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=AQmPAo+b7IRvuGuDT15+oF5gKT0jEdrHiJH8FthvgWI=;
-        b=GgsvK6AmH5vxGDKl9NMfmcYr0G7SyLMwRZShChhm8Fy1tmIPGyhQ36RNdwstqr2CZH
-         lpcGBqV6n/eployZqIM0e507Pr5a0s4zcaR5qiJ0PvDgh7ESscSSHtoAH33GUcMJfGY+
-         NxNNk7d5adRHJhXITRwl5QGwzJKZiSCQSlfJFIqoQx7366uthLmCO+0hVA3ddHOa+d+1
-         aTFwnabm+2up8g2owfcXMW9B7ROfYsEvULOLKe24oyPfc9bl6ywtvVDnPVBFPnelOD4s
-         F3bA/zLWAaGqOq7PXiaiabc6wpRRFQT6QlnG2MQxZxdOHPjxYtUQvDekPs26KhUsvt20
-         gXVA==
-X-Gm-Message-State: ABuFfohN9V2TILdFxf7s3kfTfHAigLuK6/tvqxC+S2msEz6Pts1WVSgm
-        BB9FAA2n/JmAsszfL5LxuJ0=
-X-Google-Smtp-Source: ACcGV63/t8aeKcasEdtEoLqu9xd6uVFwxmm4YwSt8ybFnrP8g8A28git+34sTV6Jc8v7R1HE1n1AAw==
-X-Received: by 2002:a50:d1c7:: with SMTP id i7-v6mr11631752edg.169.1537987395449;
-        Wed, 26 Sep 2018 11:43:15 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id b9-v6sm79384edk.62.2018.09.26.11.43.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Sep 2018 11:43:14 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=DjaFAP7Rn43GpHN+PPVNZ9rqiQVF6eYeq+8xNn0xdkk=;
+        b=BJKYn+mfi7jqQ3oQhq1ug8xzDWz+iM2gEwUpzIId5g3IbS+PF7lZaatDhq1E0DgE0S
+         y2O8ngd6gNYcawubsNBKvdDcf5TQutj1o6pv6/fUzeH/xaK49wZ9M0r94Eo+3umAJWqk
+         70Orgukt2xZPHPgyp89ZM0VMuhojLT0PphcoIuyYQNZ43IVmOOlB77O3bEG2hDbIQTs1
+         mv6E0cu8kC2C/TNfEmVE+6OKxzLIkH5NnSTI79iL4j9iLTIs0/uMtzNxtJyWHswXot9O
+         nYBN6QtDQbcnMWd2uUa5CqPIryhGUxqzBbSHx/+mfwcRkkNfiUqkeWP3U6tCzHsDAmlB
+         nyyg==
+X-Gm-Message-State: ABuFfogD+5lttnwbU3tM9x9gcyo0Hl3buM1PZUj/hJS6Od+MlgB8uUzW
+        JWTHSefS1YBXTFog5NCXMQXzkgfE
+X-Google-Smtp-Source: ACcGV60+hCRyPEykAS6GGemSvmovhgjBHyugC2aVTWL4zZxVdIDQnoy9YkdYKY1DDqpM3JYlAPgF9Q==
+X-Received: by 2002:a37:c683:: with SMTP id s3-v6mr5262769qkl.269.1537987475407;
+        Wed, 26 Sep 2018 11:44:35 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:51a9:99b0:a00a:e3c? ([2001:4898:8010:0:3adf:99b0:a00a:e3c])
+        by smtp.gmail.com with ESMTPSA id f184-v6sm3429169qkc.23.2018.09.26.11.44.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Sep 2018 11:44:34 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Tuesday, Sept 25)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/8] sha1-array: provide oid_array_filter
-References: <20180921223558.65055-1-sbeller@google.com>
-        <20180921223558.65055-2-sbeller@google.com>
-        <87h8ihk7sl.fsf@evledraar.gmail.com>
-        <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com>
-        <20180926041517.GA2140@sigill.intra.peff.net>
-        <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
-        <87d0t0jghm.fsf@evledraar.gmail.com>
-        <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 26 Sep 2018 20:43:14 +0200
-Message-ID: <87a7o4je0t.fsf@evledraar.gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com>
+ <xmqqtvmckum8.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c805d8c5-e605-3db8-9e57-0988c635c3df@gmail.com>
+Date:   Wed, 26 Sep 2018 14:44:34 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <xmqqtvmckum8.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Sep 26 2018, Junio C Hamano wrote:
-
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On 9/26/2018 1:59 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 >
->> On Wed, Sep 26 2018, Junio C Hamano wrote:
+>> In an effort to ensure new code is reasonably covered by the test
+>> suite, we now have contrib/coverage-diff.sh to combine the gcov output
+>> from 'make coverage-test ; make coverage-report' with the output from
+>> 'git diff A B' to discover _new_ lines of code that are not covered.
 >>
->>> Jeff King <peff@peff.net> writes:
->>>>
->>>> Yes, please. I think it prevents exactly this sort of confusion. :)
->>>
->>> CodingGuidelines or SubmittingPatches update, perhaps?
->>>
->>>  Documentation/CodingGuidelines | 6 +++++-
->>>  1 file changed, 5 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->>> index 48aa4edfbd..b54684e807 100644
->>> --- a/Documentation/CodingGuidelines
->>> +++ b/Documentation/CodingGuidelines
->>> @@ -358,7 +358,11 @@ For C programs:
->>>     string_list for sorted string lists, a hash map (mapping struct
->>>     objects) named "struct decorate", amongst other things.
->>>
->>> - - When you come up with an API, document it.
->>> + - When you come up with an API, document it.  It used to be
->>> +   encouraged to do so in Documentation/technical/, and the birds-eye
->>> +   level overview may still be more suitable there, but detailed
->>> +   function-by-function level of documentation is done by comments in
->>> +   corresponding .h files these days.
->>>
->>>   - The first #include in C files, except in platform specific compat/
->>>     implementations, must be either "git-compat-util.h", "cache.h" or
+>> This report takes the output of these results after running on four
+>> branches:
 >>
->> Thanks. I had not looked at this closely and was under the false
->> impression that it was going in the other direction. Good to have it
->> clarified.
+>>          pu: 80e728fa913dc3a1165b6dec9a7afa6052a86325
+>>
+>>         jch: 0c10634844314ab89666ed0a1c7d36dde7ac9689
+>>
+>>        next: 76f2f5c1e34c4dbef1029e2984c2892894c444ce
+>>
+>>      master: fe8321ec057f9231c26c29b364721568e58040f7
+>>
+>> master@{1}: 2d3b1c576c85b7f5db1f418907af00ab88e0c303
+>>
+>> I ran the test suite on each of these branches on an Ubuntu Linux VM,
+>> and I'm missing some dependencies (like apache, svn, and perforce) so
+>> not all tests are run.
+> Thanks.
 >
-> Heh, I knew people were in favor of one over the other but until
-> Peff chimed in to this thread, I didn't recall which one was
-> preferred, partly because I personally do not see a huge advantage
-> in using in-code comments as docs for programmers, and do not like
-> having to read them as in-code comments.
+>> master@{1}..master:
+>>
+>> builtin/remote.c
+>> 5025425dfff     (   Shulhan     2018-09-13 20:18:33 +0700
+>> 864)            return error(_("No such remote: '%s'"), name);
+>> commit-reach.c
+>> b67f6b26e35     (Derrick Stolee 2018-09-21 08:05:26 -0700
+>> 559)                    continue;
+>> b67f6b26e35     (Derrick Stolee 2018-09-21 08:05:26 -0700
+>> 569)                    from->objects[i].item->flags |= assign_flag;
+>> b67f6b26e35     (Derrick Stolee 2018-09-21 08:05:26 -0700
+>> 570)                    continue;
+>> b67f6b26e35     (Derrick Stolee 2018-09-21 08:05:26 -0700
+>> 576)                    result = 0;
+>> b67f6b26e35     (Derrick Stolee 2018-09-21 08:05:26 -0700
+>> 577)                    goto cleanup;
+>> cat: compat#mingw.c.gcov: No such file or directory
+>> ll-merge.c
+>> d64324cb60e     (Torsten Bögershausen   2018-09-12 21:32:02
+>> +0200       379)                    marker_size =
+>> DEFAULT_CONFLICT_MARKER_SIZE;
+>> remote-curl.c
+>> c3b9bc94b9b     (Elijah Newren  2018-09-05 10:03:07 -0700
+>> 181)            options.filter = xstrdup(value);
+> As I think the data presented here is very valuable, let me ignore
+> the findings of this specific run (which will be fixed by individual
+> authors as/if necessary), and focus on the way the data is presented
+> (which will affect the ease of consumption by authors of future
+> commits).
 >
-> If somebody wants to wordsmith the text and send in a patch with
-> good log message, please do so, as I myself am not sure if what I
-> wrote is the consensus position.  It could be that they want to have
-> even birds-eye overview in the header files.
+> These wrapped blame output lines are harder to view.  Can we have
+> this in plain/text without format=flowed at least?
 
-While we're on that subject, I'd much prefer if these technical docs and
-other asciidoc-ish stuff we would be manpages build as part of our
-normal "make doc" target. So e.g. this one would be readable via
-something like "man 3 gitapi-oid-array".
+Perhaps removing the middle columns of data and just "<sha> <num>) 
+<line>" would be easier? We could also remove tabs to save space. For 
+example:
 
-They could still be maintained along with the code given a sufficiently
-smart doc build system, e.g. perl does that:
-https://github.com/Perl/perl5/blob/v5.26.0/av.c#L294-L387
+builtin/remote.c
+5025425dfff  864) return error(_("No such remote: '%s'"), name);
 
-Although doing that in some readable and sane way would mean getting rid
-of your beloved multi-line /* ... */ comment formatting, at least for
-that case. It would be a pain to have everyone configure their editor to
-word-wrap lines with leading "*" without screwing up the asciidoc
-format.
+commit-reach.c
+b67f6b26e35 559) continue;
+b67f6b26e35 569) from->objects[i].item->flags |= assign_flag;
+b67f6b26e35 570) continue;
+b67f6b26e35 576) result = 0;
+b67f6b26e35 577) goto cleanup;
+
+ll-merge.c
+d64324cb60e 379) marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+
+remote-curl.c
+c3b9bc94b9b  181) options.filter = xstrdup(value);
+
+This does still pad the data by a bit, but should be more readable. Most 
+"uncovered" code will be indented at least one level.
+
+We do lose the author information, but keen readers could identify code 
+they are interested in by filename and then look up the commit by OID later.
+
+>
+> I personally do not mind a monospaced and non-wrapping website, just
+> I do not mind visiting travis-ci.org for recent results from time to
+> time.  Others may differ.
+>
+> There is an error message from "cat" in it, by the way.
+Thanks! I'll add an 'if' statement when there is no gcov file. This 
+happens for the compat layers that are not compiled in and for the 
+t/helper directory, it seems.
+>
+>> preload-index.c
+>> ae9af12287b     (Nguyễn Thái Ngọc Duy   2018-09-15 19:56:04
+>> +0200       73)                     struct progress_data *pd =
+>> p->progress;
+>> ae9af12287b     (Nguyễn Thái Ngọc Duy   2018-09-15 19:56:04
+>> +0200       75) pthread_mutex_lock(&pd->mutex);
+>> ae9af12287b     (Nguyễn Thái Ngọc Duy   2018-09-15 19:56:04
+>> +0200       76)                     pd->n += last_nr - nr;
+>> ae9af12287b     (Nguyễn Thái Ngọc Duy   2018-09-15 19:56:04
+>> +0200       77) display_progress(pd->progress, pd->n);
+>> ae9af12287b     (Nguyễn Thái Ngọc Duy   2018-09-15 19:56:04
+>> +0200       78) pthread_mutex_unlock(&pd->mutex);
+>> ae9af12287b     (Nguyễn Thái Ngọc Duy   2018-09-15 19:56:04
+>> +0200       79)                     last_nr = nr;
+> I wonder how much we can save the effort that is needed to scan the
+> output if we somehow coalesce these consecutive lines that are
+> attributed to the same commit.
+
+It could be possible to group consecutive lines together, but hopefully 
+reducing the total data is enough, and we can keep the actual lines visible.
+
+Thanks,
+
+-Stolee
+
