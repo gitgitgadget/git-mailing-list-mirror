@@ -6,59 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C3C51F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 22:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF0F51F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 22:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbeI0EWE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 00:22:04 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52908 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726397AbeI0EWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 00:22:04 -0400
-Received: by mail-wm1-f66.google.com with SMTP id l7-v6so3833200wme.2
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 15:07:00 -0700 (PDT)
+        id S1726448AbeI0EaE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 00:30:04 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:43537 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726164AbeI0EaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 00:30:03 -0400
+Received: by mail-wr1-f51.google.com with SMTP id z14-v6so455629wrs.10
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 15:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=jp9nouSZ2TgXzDZCzfvK/knA83BKbUbXmrs8O5PgGsA=;
-        b=mVJGSR2wSKvVviLrSG9ShcfN+3DFdwHJLJITdzuVXA7Yprq2rBmZXby/0SjfX6iWb4
-         F6+GaNTd8xWPqazH7w2WEMdOQEiVWizdIcaIpyomaFMEAcDFLx+SO6NE77Q1cDBulys4
-         ZiJY/xj3ay+3/tqK2WSMJuc4jl0vk10imGZGCnU+eSXnfRHrQ6e4FTwyAVHuC0Vfl0Ow
-         lbqKbqmj9yjnr37qGeywu/xWXV/8K6kem2dBjVpiLKG12GwPkLhtmVqVUty0rev9vK2L
-         28Tf0TFMjTse63pNi6d7HmUkrW452ELYt0F0tgxEbfc1FqRIHQ8G3lMq1DmA/mq7o/B4
-         KKRg==
+        bh=52c+TC1hrJoktpr+m/QpGCX2e8tDGZWs0bQVGE2teeI=;
+        b=cXIMf1lsn9hzyog9M4U5sht/jAJJLxAZZm2Ndhdgsrwu9fxxQKLw3NZmUWUEgNhWjP
+         UnM+4mwSdtXP1eBzch13sLv/aniwJXxXvoYS6KI2a9vCiJ9iutj6GFOekhmHcMd5i/E6
+         rJB+Ly9A/Rras+OEG+Yu+wS6npPqGstnZO19UxzzpDQB/4RqgVJZir2NwDIvuapw5bi9
+         Gc3OPNZMuST7VPocj62pejt94anHivYW8vKM7gpiDQXrxTfFMcn546WeQwKq0ufNPaKQ
+         9X9edKBsFXiaH4q07I84jaImEUWjuOU+rswBckrXi/Xj5NsuUiu8G1ju17lpw84xR/LU
+         DTbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=jp9nouSZ2TgXzDZCzfvK/knA83BKbUbXmrs8O5PgGsA=;
-        b=aq0wAbbeEU8eYzTHetF2/v7egO9XVmfFzCkx23mM6/+A0yKMew/yzPPquLm3igE7e3
-         6v7z7X6YXEr/SKGl3M1MoG2UnlRMLeoMHnwTGI+oWKZfWKYvi/RIcwOioqvbSLdv0S+P
-         Evy8e91VSdLnm8vxcgUkq5e7UYhVBKb85tksASFhA5Oko8wXKXCoO5FIHEEM5wF4vUYc
-         gJbbfaXXLaW6ylCb2WnJmi2ATPL2Px8joNGdTfKdf0rbRSr/iBqWBkL8k2E646QFCbK2
-         i7OYQ6zwD2S0lUCOto3qDjogjjQBABmaweVd/WW/8F4JBOVIw9SuBCrrt3nTzUVgi17M
-         +FKA==
-X-Gm-Message-State: ABuFfojTIUl7Atk3++oPDvDmk3dKUNGZhLJJIsHinJURhg9G0HOOSTUl
-        SSx9e57kjSl+f+t0RzUhGlI=
-X-Google-Smtp-Source: ACcGV62OGELRw0iqczGCOjpmHsf4/tIGnQ4V6jOOlQtlEzuql0b1db21lwldlY4xTe7MUhvp5aD56Q==
-X-Received: by 2002:a1c:7212:: with SMTP id n18-v6mr5915912wmc.33.1537999618942;
-        Wed, 26 Sep 2018 15:06:58 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r9sm139970wrx.65.2018.09.26.15.06.58
+        bh=52c+TC1hrJoktpr+m/QpGCX2e8tDGZWs0bQVGE2teeI=;
+        b=EIex4HoJw/u/TanQ41FlFgELHPj9+XjWffq1B0qCT5GXJLZiUxVgwgoICGkQhByxed
+         4AtxwmNwjlapQzZhxxL0HEuUfo+njR/a9KBqVMt45cPlR3prMBhA0P0DRnlxcxnkS4iq
+         iH9IdnMjQ4snnKMax+Gu2IZDGVaO7/BfClvQKAE0YgNpsgTvzFooNoujkg7dSzUKaZ2y
+         9x8H/z9UY25A+PYKSABAzQJwM4asxqjIJYokdJxGLGJSprAefTIhDFznVUhLg2QLa2DP
+         jpL4BUD7g2dlmLkdYqGSkv9/NNiEaBHhlQb7ERvH1hQQ+PYO/As3f6kMJGJYU7uhWlpq
+         0GMA==
+X-Gm-Message-State: ABuFfoj1gKqTxSjtzC3ofcSuzTn6xm03wq9+ho4zo7qQJA23WA4iYQiD
+        hoXTttQm3ITIUbRO4gBVc6OlYzZC
+X-Google-Smtp-Source: ACcGV60Gc0j4SZxi9S8q0yn1LifwlEPcDW2aCdff6cFqZNh+igorz5gMCLZ2+RY00HwBxARATj09XA==
+X-Received: by 2002:adf:9464:: with SMTP id 91-v6mr6077482wrq.200.1538000097095;
+        Wed, 26 Sep 2018 15:14:57 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z10-v6sm144702wrv.22.2018.09.26.15.14.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Sep 2018 15:06:58 -0700 (PDT)
+        Wed, 26 Sep 2018 15:14:56 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH v6 0/7] speed up index load through parallelization
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20180926195442.1380-1-benpeart@microsoft.com>
-Date:   Wed, 26 Sep 2018 15:06:57 -0700
-In-Reply-To: <20180926195442.1380-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Wed, 26 Sep 2018 15:54:35 -0400")
-Message-ID: <xmqq5zyrkj5q.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 3/9] submodule.c: sort changed_submodule_names before searching it
+References: <20180925194755.105578-1-sbeller@google.com>
+        <20180925194755.105578-4-sbeller@google.com>
+Date:   Wed, 26 Sep 2018 15:14:56 -0700
+In-Reply-To: <20180925194755.105578-4-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 25 Sep 2018 12:47:49 -0700")
+Message-ID: <xmqq1s9fkisf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,47 +66,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Base Ref: master
-> Web-Diff: https://github.com/benpeart/git/commit/a0300882d4
-> Checkout: git fetch https://github.com/benpeart/git read-index-multithread-v6 && git checkout a0300882d4
+> We can string_list_insert() to maintain sorted-ness of the
+> list as we find new items, or we can string_list_append() to
+> build an unsorted list and sort it at the end just once.
 >
->
-> This iteration brings back the Index Entry Offset Table (IEOT) extension
-> which enables us to multi-thread the cache entry parsing without having
-> the primary thread have to scan all the entries first.  In cases where the
-> cache entry parsing is the most expensive part, this yields some additional
-> savings.
+> To pick which one is more appropriate, we notice the fact
+> that we discover new items more or less in the already
+> sorted order.  That makes "append then sort" more
+> appropriate.
 
-Nice.
+I somehow thought that we agreed that the second paragraph above did
+not make much sense in the previous review round.
 
-> Test w/100,000 files    Baseline  Optimize V4    Extensions     Entries
-> ----------------------------------------------------------------------------
-> 0002.1: read_cache      22.36     18.74 -16.2%   18.64 -16.6%   12.63 -43.5%
->
-> Test w/1,000,000 files  Baseline  Optimize V4    Extensions     Entries
-> -----------------------------------------------------------------------------
-> 0002.1: read_cache      304.40    270.70 -11.1%  195.50 -35.8%  204.82 -32.7%
->
-> Note that on the 1,000,000 files case, multi-threading the cache entry parsing
-> does not yield a performance win.  This is because the cost to parse the
-> index extensions in this repo, far outweigh the cost of loading the cache
-> entries.
-> ...
-> The high cost of parsing the index extensions is driven by the cache tree
-> and the untracked cache extensions. As this is currently the longest pole,
-> any reduction in this time will reduce the overall index load times so is
-> worth further investigation in another patch series.
+    ... goes and looks ...
 
-Interesting.
+https://public-inbox.org/git/CAGZ79kbavjVbTqXsmtjW6=jhkq47_p3mc6=92xOp4_mfhqDtvw@mail.gmail.com/
 
-> One option would be to load each extension on a separate thread but I
-> believe that is overkill for the vast majority of repos.  Instead, some
-> optimization of the loading code for these two extensions is probably worth
-> looking into as a quick examination shows that the bulk of the time for both
-> of them is spent in xcalloc().
-
-Thanks.  Looking forward to block some quality time off to read this
-through, but from the cursory look (read: diff between the previous
-round), this looks quite promising.
+That was two review cycles ago, I guess.
