@@ -2,127 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D1DF1F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 18:49:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB8E1F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 18:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbeI0BDf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 21:03:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60498 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726107AbeI0BDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 21:03:35 -0400
-Received: (qmail 18755 invoked by uid 109); 26 Sep 2018 18:49:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Sep 2018 18:49:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21158 invoked by uid 111); 26 Sep 2018 18:48:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 26 Sep 2018 14:48:55 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Sep 2018 14:49:15 -0400
-Date:   Wed, 26 Sep 2018 14:49:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
-Subject: Re: [PATCH] help: allow redirecting to help for aliased command
-Message-ID: <20180926184914.GC30680@sigill.intra.peff.net>
-References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
- <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
+        id S1728526AbeI0BIZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 21:08:25 -0400
+Received: from mail-qk1-f171.google.com ([209.85.222.171]:36354 "EHLO
+        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725806AbeI0BIZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 21:08:25 -0400
+Received: by mail-qk1-f171.google.com with SMTP id a85-v6so26945qkg.3
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=GBQfJi4MT6+Mtfflwn4/Uq6+1mDiJMGLR/yJJ0cFpLg=;
+        b=Re4bUx6zzfqFBQs5wttMYi7mvwd/64YB/HH/fzU1TUZ9FCzMCgcE/UEl0OSmtp42CW
+         73grS54cPhGBXzDYGDv68tfSMZ7skDqNgz4xm/3FwtrwbEQ56JEUkeKphuhbDSNOfdxq
+         1ye5kauOQpBh4Vh5Slj7Z2gLAWmmn066c6vPhdFK97FS1G716Ypqsbg4C3uB137yoawy
+         rWmBpEpFZ5AAHWfl+97noN8R8wD7FynZfJEUabGuTwjs9wXI3rhqfnhbzS6v2NoUnRni
+         HNcXLRfNOdcJnTGv2IVxWzFLT7HPGBvaeCqDoMc4Sqp1gGemDeaKsJCpwST09V9PACCL
+         AgKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=GBQfJi4MT6+Mtfflwn4/Uq6+1mDiJMGLR/yJJ0cFpLg=;
+        b=PvaGIDR1SzKKLkiqFiydi1cqNc5yrksvTxeEai3PgpXi5ilcKfyJOzexGP1/sn6uGN
+         wZpdnP49mHb41Q0N3XW6b6OGArqIWavgI81R/gE21F4WJYMz+Nw2ECxLmnQ5pBOLYWMl
+         NeKcKEV6k9kzVSPkicqHmZZ2Bc+Lkz/OJn1WUvQDU0/E5GpXt5/2aRf7Ewi7N9kTzwjd
+         42uav6HQ8aYs0/yq+Qt5phiXG29rvcKvt8GJIx3CnUeZ4ctkTr7UFxzt3JbrgBJL0Gdh
+         exRiUMld2Jf+LxZxRxFg1/vuGJuvjTENWiRWWw2hbfmd81PF7TERYFozsolcuuMQ/9L/
+         ELEw==
+X-Gm-Message-State: ABuFfoiE15Kxuc0IUZznUECkD6HHpC6ANFnpQUC9Lp3hgBkBh3P8sGTc
+        AVvU8DULitoX4DGADD5/aUJ0lyE2
+X-Google-Smtp-Source: ACcGV61ysZEkLF8AgddBu0w3EiR/XMQbc8KG8j+kVW6jT4rNQXOHhmKFLZ1pT2CrSzMw3Zk7GUTqJw==
+X-Received: by 2002:a37:8346:: with SMTP id f67-v6mr5361515qkd.18.1537988044485;
+        Wed, 26 Sep 2018 11:54:04 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:51a9:99b0:a00a:e3c? ([2001:4898:8010:0:3adf:99b0:a00a:e3c])
+        by smtp.gmail.com with ESMTPSA id b7-v6sm3539594qtt.24.2018.09.26.11.54.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Sep 2018 11:54:03 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Tuesday, Sept 25)
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>, Git List <git@vger.kernel.org>
+References: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com>
+ <d92f18e2-0bbc-e36b-123a-3ed3f44cf418@gmail.com>
+ <b46d6363-1709-968e-105a-3f4e8a77155e@gmail.com>
+ <20180926184308.GA2253@hank.intra.tgummerer.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a7228cb5-5085-e1c7-0731-d37b19cdc3bf@gmail.com>
+Date:   Wed, 26 Sep 2018 14:54:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180926184308.GA2253@hank.intra.tgummerer.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 08:16:36AM -0700, Junio C Hamano wrote:
+On 9/26/2018 2:43 PM, Thomas Gummerer wrote:
+> On 09/26, Derrick Stolee wrote:
+>> This is a bit tricky to do, but I will investigate. For some things, the
+>> values can conflict with each other (GIT_TEST_SPLIT_INDEX doesn't play
+>> nicely with other index options, I think).
+> Just commenting on this point.  I think all the index options should
+> be playing nicely with eachother.  I occasionally run the test suite
+> with some of them turned on, and if something failed that was always
+> an actual bug.  The different modes can be used in different
+> combinations in the wild as well, so we should get them to interact
+> nicely in the test suite.
 
-> > This introduces a help.followAlias config option that transparently
-> > redirects to (the first word of) the alias text (provided of course it
-> > is not a shell command), similar to the option for autocorrect of
-> > misspelled commands.
-> 
-> While I do agree with you that it would sometimes be very handy if
-> "git cp --help" behaved identically to "git cherry-pick --help" just
-> like "git cp -h" behaves identically to "git cherry-pick -h" when
-> you have "[alias] cp = cherry-pick", I do not think help.followAlias
-> configuration is a good idea.  I may know, perhaps because I use it
-> all the time, by heart that "cp" is aliased to "cherry-pick" and
-> want "git cp --help" to directly give me the manpage, but I may not
-> remember if "co" was commit or checkout and want to be concisely
-> told that it is aliased to checkout without seeing the full manpage.
-> Which means you'd want some way to command line override anyway, and
-> having to say "git -c help.followAlias=false cp --help" is not a
-> great solution.
-> 
-> If we expect users to use "git cp --help" a lot more often than "git
-> help cp" (or the other way around), one way to give a nicer experience
-> may be to unconditionally make "git cp --help" to directly show the
-> manpage of cherry-pick, while keeping "git help cp" to never do
-> that.  Then those who want to remember what "co" is aliased to can
-> ask "git help co".
+Thanks! I'm still working out details on this, since the test suite is 
+broken with GIT_TEST_COMMIT_GRAPH due to a verbosity issue [1], which I 
+forgot until I ran the tests with the variable on.
 
-I like that direction much better. I also wondered if we could leverage
-the "-h" versus "--help" distinction. The problem with printing the
-alias definition along with "--help" is that the latter will start a
-pager that obliterates what we wrote before (and hence all of this delay
-trickery).
+I'll re-run with these variables:
 
-But for "-h" we generally expect the command to output a usage message.
+GIT_TEST_SPLIT_INDEX=1
 
-So what if the rules were:
+GIT_TEST_FULL_IN_PACK_ARRAY=1
 
-  - "git help cp" shows "cp is an alias for cherry-pick" (as it does
-    now)
+GIT_TEST_OE_SIZE=128
 
-  - "git cp -h" shows "cp is an alias for cherry-pick", followed by
-    actually running "cherry-pick -h", which will show the usage
-    message. For a single-word command that does very little, since the
-    usage message starts with "cherry-pick". But if your alias is
-    actually "cp = cherry-pick -n", then it _is_ telling you extra
-    information. And this could even work with "!" aliases: we define
-    it, and then it is up to the alias to handle "-h" sensibly.
+GIT_TEST_OE_DELTA_SIZE=128
 
-  - "git cp --help" opens the manpage for cherry-pick. We don't bother
-    with the alias definition, as it's available through other means
-    (and thus we skip the obliteration/timing thing totally).
+GIT_TEST_VALIDATE_INDEX_CACHE_ENTRIES=1
 
-    This really only works for non-! aliases. Those would continue to
-    show the alias definition.
+GIT_TEST_FSMONITOR=$PWD/t/t7519/fsmonitor-all
 
+GIT_TEST_INDEX_VERSION=4
 
-> If you have "[alias] cp = cherry-pick -n", split_cmdline discards
-> "-n" and the follow-alias prompt does not even tell you that it did
-> so, and you get "git help cherry-pick".  This code somehow expects
-> you to know to jump to the section that describes the "--no-commit"
-> option.  I do not think that is a reasonable expectation.
-> 
-> When you have "[alias] cp = cherry-pick -n", "git cp --help" should
-> not do "git help cherry-pick".  Only a single word that exactly
-> matches a git command should get this treatment.
+GIT_TEST_PRELOAD_INDEX=1
 
-I'm not sure I agree. A plausible scenario (under the rules I gave
-above) is:
+GIT_TEST_DISABLE_EOIE=1
 
-  $ git cp -h
-  'cp' is aliased to 'cherry-pick -n'
-  usage: git cherry-pick ...
+GIT_TEST_INDEX_THREADS=1
 
-  $ git cp --help
+Thanks,
 
-I.e., you already know the "-n" part, and now you want to dig further.
-Of course one could just type "git cherry-pick --help" since you also
-know that, too. But by that rationale, one could already do:
+-Stolee
 
-  $ git help cp
-  $ git help cherry-pick
+[1] 
+https://public-inbox.org/git/60aae3d6-35b2-94fb-afd7-6978e935a4f7@gmail.com/
 
-without this patch at all.
-
--Peff
