@@ -2,171 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9F671F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 10:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CE921F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 10:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727637AbeIZQi7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 12:38:59 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:39998 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727477AbeIZQi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 12:38:59 -0400
-Received: by mail-lf1-f68.google.com with SMTP id t22-v6so12987649lfb.7
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 03:26:42 -0700 (PDT)
+        id S1727407AbeIZQzn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 12:55:43 -0400
+Received: from mail-qt1-f180.google.com ([209.85.160.180]:44081 "EHLO
+        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726841AbeIZQzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 12:55:43 -0400
+Received: by mail-qt1-f180.google.com with SMTP id k38-v6so16645811qtk.11
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 03:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=dMFzkXD1dT1P0RomVvaRyYKn+VbA1NCoWtxdTHE/XRs=;
-        b=f85sRGnlbgTya0w0wMgkmNz/xkIIYPhMyfU/N9aHnnU0M8yNS004GdYFIUo9d1QF34
-         0emFKvvhEMXGnulmZOLNezqyZIZnNqdXQsJAAr3znCc5xGcTpF8ROAcFZtTzloqQw28g
-         PiaEuIw1Zx3iP00CLkO5GxNzyN6fvkDurUZgs=
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=OnTG2Emyz51WKSztu9bqSCFLkYFnfzYlz7jnDdGwGhs=;
+        b=SgfOB8RWQoJCKiT9EqShF7hHYex4uTdSvox1CvTWpDVbq7NRznXwTOiVFGYD8hT+aP
+         wbpi9Zv1umFzKEWP2sD/qbRpTu91EOG9+8cypQXo+tlOPl/Te2XxrXbeFPkyEUD3wgnH
+         vH511WiZEXf6BGVbgGbAFO9h81to5+VdEUeevnUMSMyoIHNxYKo3jXBa9fODAxQ9ZMmC
+         D+kK+090zW8qqhfCGTsu6QSm9HD4o3d8N8lTf1ZeERCUPd4eC+PFN+XFd8ckYcC74NGe
+         QWI55+dJcQKGCZSxg5LBnLsNlofTOxCPDxZRMo/jev+xYTjgWFAdmMHNGAXqNTERHUH/
+         lBcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=dMFzkXD1dT1P0RomVvaRyYKn+VbA1NCoWtxdTHE/XRs=;
-        b=sGbWD+rEAGrPxnn/OBoRUyOI/ieuGyniTk0ouhzyu4yC6tuWV9oK7amN4NtYA71FJc
-         5QG1LR1tM3TqW1w5hGB7tYNKjQYidWxDk/epMUCSCr5qy77fKt7qeWrZr7n7Zy7TMeiV
-         XPSfMXgA0FclEgEf9Z7XxIBxQJ3ke5KqdI6koIVbPpWD+68VlSU1Z/g4EcAqgoqoGmNK
-         GOx+csSOcSiXOm/iPBywRYdSXzuiP8cJGrxLEuGHZnGHyA0jv1oeoE0YzKM2m76xCR7R
-         yqaU1cazWpoQ1mvUCm86W6i+HCZQBzUyBqXfcyl5KSiEheab9rXhkTQchE8dUgf7NW4V
-         r/Fg==
-X-Gm-Message-State: ABuFfogryt0TuNNEZyHyrWeb+Zg1hDIfcsKZXkqA1Gz2fxjMHQTzUIiE
-        /2Kkn2CtoepiueWJQpXZ459vqnbY9n9Mv7qk
-X-Google-Smtp-Source: ACcGV6376gjTKNeKl219Kykzi6YXN7okK9orgcrZBQgTyT5pxK9cNu/5PGlpUbNxYQ0ic4Ug2lGoWQ==
-X-Received: by 2002:a19:2a8c:: with SMTP id q12-v6mr3701121lfq.95.1537957600833;
-        Wed, 26 Sep 2018 03:26:40 -0700 (PDT)
-Received: from prevas-ravi.prevas.se ([81.216.59.226])
-        by smtp.gmail.com with ESMTPSA id s140-v6sm932128lfs.91.2018.09.26.03.26.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 26 Sep 2018 03:26:39 -0700 (PDT)
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-To:     git@vger.kernel.org
-Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [PATCH] help: allow redirecting to help for aliased command
-Date:   Wed, 26 Sep 2018 12:26:36 +0200
-Message-Id: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
-X-Mailer: git-send-email 2.16.4
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=OnTG2Emyz51WKSztu9bqSCFLkYFnfzYlz7jnDdGwGhs=;
+        b=qku46ov2BsehVgtAVkmrEW/Jc8SMYpqhzkMDAOzckrSpFfwjjU5stLUoAtg37P1Kta
+         xsExAMcZBRvWkTYMyRKE9FZVmP2nit8oIJfHC6qxXXf8KIP3seOpNWkEQxzVnvsToXd1
+         gIdhpleLXvffykZD/hznXn77FJwnAzb2qE2VP2u4SeXsy7wetWmjP8MRo0dWJnoEqKSO
+         mlzjr1z31pq19B01ua33K04ucqvPMv3eAt8SZ/BasGBA/MXNZf5yaQB2poEta9W4jDOZ
+         69WiV8fNRiUQ5IZKvKS0vSiec8e5WDCCVlFuTf8+yn/Ap+Bi0F7Bykg4/zF4LaCbSRdg
+         n2cA==
+X-Gm-Message-State: ABuFfogaSUKRZW19PE67/JMzDweMtzUGB+3if0jyhbThwMn6eH6gZQWZ
+        JTjd5nX7hMMTzlXAgPGIGjJZb/kuUqI=
+X-Google-Smtp-Source: ACcGV60zqtU8fhC7mDfTiwhngXjOnc38lJqJFsuMeiEg74rVyZeOc0vKW8Wsf2BUEbMVLqVacwPyIw==
+X-Received: by 2002:a0c:c181:: with SMTP id n1-v6mr3844676qvh.73.1537958601345;
+        Wed, 26 Sep 2018 03:43:21 -0700 (PDT)
+Received: from [10.0.1.17] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id n71-v6sm2707483qke.61.2018.09.26.03.43.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Sep 2018 03:43:20 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Tuesday, Sept 25)
+To:     Ben Peart <peartben@gmail.com>, Git List <git@vger.kernel.org>
+References: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com>
+ <d92f18e2-0bbc-e36b-123a-3ed3f44cf418@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b46d6363-1709-968e-105a-3f4e8a77155e@gmail.com>
+Date:   Wed, 26 Sep 2018 06:43:14 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <d92f18e2-0bbc-e36b-123a-3ed3f44cf418@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I often use 'git <cmd> --help' as a quick way to get the documentation
-for a command. However, I've also trained my muscle memory to use my
-aliases (cp=cherry-pick, co=checkout etc.), which means that I often end
-up doing
+On 9/25/2018 5:12 PM, Ben Peart wrote:
+>
+>
+> On 9/25/2018 2:42 PM, Derrick Stolee wrote:
+>> In an effort to ensure new code is reasonably covered by the test 
+>> suite, we now have contrib/coverage-diff.sh to combine the gcov 
+>> output from 'make coverage-test ; make coverage-report' with the 
+>> output from 'git diff A B' to discover _new_ lines of code that are 
+>> not covered.
+>>
+>> This report takes the output of these results after running on four 
+>> branches:
+>>
+>>          pu: 80e728fa913dc3a1165b6dec9a7afa6052a86325
+>>
+>>         jch: 0c10634844314ab89666ed0a1c7d36dde7ac9689
+>>
+>>        next: 76f2f5c1e34c4dbef1029e2984c2892894c444ce
+>>
+>>      master: fe8321ec057f9231c26c29b364721568e58040f7
+>>
+>> master@{1}: 2d3b1c576c85b7f5db1f418907af00ab88e0c303
+>>
+>> I ran the test suite on each of these branches on an Ubuntu Linux VM, 
+>> and I'm missing some dependencies (like apache, svn, and perforce) so 
+>> not all tests are run.
+>>
+>> I submit this output without comment. I'm taking a look especially at 
+>> my own lines to see where coverage can be improved.
+>>
+>
+> Thanks for driving this.  I think it provides an interesting view into 
+> new code and how well it is being tested.  In an effort to make this 
+> as useful as possible, we should be looking to eliminate as much noise 
+> as possible otherwise people will stop looking at it.
+Thanks for helping identifying the noise.
+>
+> I looked at the lines that came from my patches and most if not all of 
+> them are only going to be executed by the test suite if the correct 
+> "special setup" option is enabled.  In my particular case, that is the 
+> option "GIT_TEST_INDEX_THREADS=<n>" as documented in t/README.
+>
+> I suspect this will be the case for other code as well so I wonder if 
+> the tests should be run with each the GIT_TEST_* options that exist to 
+> exercise uncommon code paths with the test suite.  This should prevent 
+> false positives on code paths that are actually covered by the test 
+> suite as long as it is run with the appropriate option set.
+This is a bit tricky to do, but I will investigate. For some things, the 
+values can conflict with each other (GIT_TEST_SPLIT_INDEX doesn't play 
+nicely with other index options, I think). For others, we don't have the 
+environment variables in all versions yet, as they are still merging down.
+>
+> I realize it would take a long time to run the entire test suite with 
+> all GIT_TEST_* variables so perhaps they can only be tested "as 
+> needed" (ie when patches add new variables in the "special setups" 
+> section of t/README).  This should reduce the number of combinations 
+> that need to be run while still eliminating many of the false positive 
+> hits.
 
-  git cp --help
+This is something to think about. For my own thoughts, I was thinking of 
+trying to run it when we see large blocks of code that are uncovered and 
+obviously because of environment variables. This is what I was thinking 
+when I saw your and Duy's commits in the output. I'll see if I can 
+re-run the suite using GIT_TEST_INDEX_THREADS=2 and 
+GIT_TEST_INDEX_VERSION=4.
 
-to which git correctly informs me that cp is an alias for
-cherry-pick. However, I already knew that, and what I really wanted was
-the man page for the cherry-pick command.
-
-This introduces a help.followAlias config option that transparently
-redirects to (the first word of) the alias text (provided of course it
-is not a shell command), similar to the option for autocorrect of
-misspelled commands.
-
-The documentation in config.txt could probably be improved. Also, I
-mimicked the autocorrect case in that the "Continuing to ..." text goes
-to stderr, but because of that, I also print the "is aliased to" text to
-stderr, which is different from the current behaviour of using
-stdout. I'm not sure what the most correct thing is, but I assume --help
-is mostly used interactively with stdout and stderr pointing at the same
-place.
-
-Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
----
- Documentation/config.txt | 10 ++++++++++
- builtin/help.c           | 36 +++++++++++++++++++++++++++++++++---
- 2 files changed, 43 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ad0f4510c3..8a1fc8064e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2105,6 +2105,16 @@ help.autoCorrect::
- 	value is 0 - the command will be just shown but not executed.
- 	This is the default.
- 
-+help.followAlias::
-+	When requesting help for an alias, git prints a line of the
-+	form "'<alias>' is aliased to '<string>'". If this option is
-+	set to a positive integer, git proceeds to show the help for
-+	the first word of <string> after the given number of
-+	deciseconds. If the value of this option is negative, the
-+	redirect happens immediately. If the value is 0 (which is the
-+	default), or <string> begins with an exclamation point, no
-+	redirect takes place.
-+
- help.htmlPath::
- 	Specify the path where the HTML documentation resides. File system paths
- 	and URLs are supported. HTML pages will be prefixed with this path when
-diff --git a/builtin/help.c b/builtin/help.c
-index 8d4f6dd301..ef1c3f0916 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -34,6 +34,7 @@ enum help_format {
- };
- 
- static const char *html_path;
-+static int follow_alias;
- 
- static int show_all = 0;
- static int show_guides = 0;
-@@ -273,6 +274,10 @@ static int git_help_config(const char *var, const char *value, void *cb)
- 		html_path = xstrdup(value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "help.followalias")) {
-+		follow_alias = git_config_int(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "man.viewer")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-@@ -415,9 +420,34 @@ static const char *check_git_cmd(const char* cmd)
- 
- 	alias = alias_lookup(cmd);
- 	if (alias) {
--		printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
--		free(alias);
--		exit(0);
-+		const char **argv;
-+		int count;
-+
-+		if (!follow_alias || alias[0] == '!') {
-+			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
-+			free(alias);
-+			exit(0);
-+		}
-+		fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
-+
-+		/*
-+		 * We use split_cmdline() to get the first word of the
-+		 * alias, to ensure that we use the same rules as when
-+		 * the alias is actually used. split_cmdline()
-+		 * modifies alias in-place.
-+		 */
-+		count = split_cmdline(alias, &argv);
-+		if (count < 0)
-+			die("Bad alias.%s string: %s", cmd,
-+			    split_cmdline_strerror(count));
-+
-+		if (follow_alias > 0) {
-+			fprintf_ln(stderr,
-+				   _("Continuing to help for %s in %0.1f seconds."),
-+				   alias, follow_alias/10.0);
-+			sleep_millisec(follow_alias * 100);
-+		}
-+		return alias;
- 	}
- 
- 	if (exclude_guides)
--- 
-2.16.4
-
+Thanks,
+-Stolee
