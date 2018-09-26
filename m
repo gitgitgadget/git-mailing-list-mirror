@@ -7,91 +7,92 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5CC1F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 07:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD8661F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 08:05:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727251AbeIZOLK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 10:11:10 -0400
-Received: from mail-pf1-f178.google.com ([209.85.210.178]:41223 "EHLO
-        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727043AbeIZOLK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 10:11:10 -0400
-Received: by mail-pf1-f178.google.com with SMTP id m77-v6so4349936pfi.8
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 00:59:30 -0700 (PDT)
+        id S1727234AbeIZORY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 10:17:24 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43777 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbeIZORY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 10:17:24 -0400
+Received: by mail-pf1-f193.google.com with SMTP id j26-v6so13051933pfi.10
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 01:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aC90OkfFH7LlxtnBGAFth9wvr3dr6Gm0DKmxJaYwXRc=;
-        b=LsMtc573ZwTds+8PkkgKdqo6rcnQL9jlGMYeK5bYzzbUptwUYBwHIBhO4p+EwGG8lh
-         jY8oLCYKKtO1n/tKjFh3mKPkE5yuOus0JOnhw9rK8hn3LK+k64CoNlyS4XxM1fZdcNdG
-         If0TRtt0FHc21yK6G5pEhxF67zGlFaGu3Kdwi4fU+Mr2F297zD5/43/F5TPKYiQ9FBPy
-         kBT8RDNph34kTqxRprXaRaBl+3zrRU+f5YrDIvrIxtREVS3qswRlOb26zlidwuhdBLzv
-         /6EtxCnwbYU9/lknOVld54VxcUJRbSGTLbDGFhCqIl+FfAceN7ylkSp8RMuU5wRwtOE1
-         f2fQ==
+         :cc:content-transfer-encoding;
+        bh=D1/qUePBg+de0LYGvnj8X/GUY6vhRj83TihrYlFJiLU=;
+        b=caKnmw6w0yWgiEETWAv+D0IkdymBAThP+QHyR/uDhO6046DrVpOS/yyVlutGXXLYok
+         ER6KkvWRLRMTux2MSYBt/PZGIvx1osKAiz38Mc4Azq0d5vJZHZVRS1rXseYVs8hyeNes
+         r9k5OAaGH3hsd5S2yjOsc+Jnf/nBWYuZo9kfzIfGhAsyJLZ1jA54Pn4hCnjZzPJgbCHG
+         BCmUml31HKlCCxcLtyg5Bz4pzfwPVLMNDyQnetcpqX2DXv09F5XBv6Wp7JvMYh3a7SMY
+         m0BL7UfL/f2A6r0VDNx3ERLpoW4ItRWEa0CnAzecB5nz3pFA49zxC4l5ADOlHQi5Xm3Q
+         RoaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aC90OkfFH7LlxtnBGAFth9wvr3dr6Gm0DKmxJaYwXRc=;
-        b=UF9ZuRQAEXPhiqBH4fLTf3bRdEQNARWcKJJRoqDz8Co+4iJvegu7rIgWwOohFZFprI
-         mi9iZOOTvXjf7rsLi4CEPPwxoidxuuo+ihpoHMo5tcFQtABAls/D7QwMn01QBKuj5q3X
-         xQmL6tTKnvjf2ITrqmjnlfNDFBXcaNqDgRCEydj5/bUKNEzC6r66/su+10vxf3x4rHP6
-         alks6lgu5hWanLmfyEkC9vJErpWp+1l20KPNXt7fioY4g5W/rXql0HdXX/tDzr6/RcV1
-         jX8bfGQ95j241+MC5U3qT0X/FhC94M4hAQj1qx9AR5XBBliLrycvurFEjSK33FSRRkgH
-         QGGQ==
-X-Gm-Message-State: ABuFfojjwBKhJgEsh14TeVrAiucR32GB+Tfn4bAI6eGgkNSCHQHOdSNz
-        m0VEma+sUCOg5cdHtDvdB8V2n4Bi+PeYjs/P6c36k/eK
-X-Google-Smtp-Source: ACcGV61k2SIs3pDchSwv14TsPpDXS6R+MsIbKbMJbT3KCQsXHzFaGzisExklAQ1tYHjMhTp8s0Mu6AOKySn42Is1N3o=
-X-Received: by 2002:a63:b95e:: with SMTP id v30-v6mr4417279pgo.221.1537948770466;
- Wed, 26 Sep 2018 00:59:30 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=D1/qUePBg+de0LYGvnj8X/GUY6vhRj83TihrYlFJiLU=;
+        b=EXsSIR9GqDlS6/13s5gMTns2dDNJ2TPyIB6WFacsdOfLGH17VBIXEjNE8QSebCkMim
+         g2hIcR/gzfmZwhOBdtj0rffGNun8IyU96av47P3XCod6KwRcS5PFCIsHRtb4+kybBAi5
+         tcZCwXXwapMZkyN1bIs9BUO44EJ21ve725WHNyONODpUMpV5JcP1yAVWrwyvljX5stWB
+         pwnjK4TV0UM+uo+WgAVAg8lsJp86s4/0u6GMhGvCd2d4JmXuu3ghS8CjdkQ/mpTZfGMY
+         Qkij4dUpwrFbsoscqvFFgCUQbrhS5pvz03hgGDT2HcBIqDGqxmkDL6ZXkyGO5bqmS4WF
+         SoLw==
+X-Gm-Message-State: ABuFfoipelAJWnOwYMqtrPRzvRtOnY5/1T04JodQj+aAeVPdcl6BdRJM
+        6N1uSkqp2ecqGQSJfAQ7qXb0Y8Vq62qo8kivnQY=
+X-Google-Smtp-Source: ACcGV62w5F1P/40JEbPzndrtNtlxh0OWI8utaaNzcVTCJQUYQcAG5xRfsed2iM5tnPDxiPGYr6kXpt62PudZDbBOY18=
+X-Received: by 2002:a63:ef4f:: with SMTP id c15-v6mr4447797pgk.368.1537949142723;
+ Wed, 26 Sep 2018 01:05:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALOYryFX4PPR+=1L+sjEqPsdmNh_+vNxGf0wwuAgoYzau=GShw@mail.gmail.com>
-In-Reply-To: <CALOYryFX4PPR+=1L+sjEqPsdmNh_+vNxGf0wwuAgoYzau=GShw@mail.gmail.com>
+References: <6319b34fc808ff6d8948e59f381cc5342b9ef17d.1537375332.git.martin.agren@gmail.com>
+ <xmqqlg7wyol5.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg7wyol5.fsf@gitster-ct.c.googlers.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 26 Sep 2018 09:59:16 +0200
-Message-ID: <CAN0heSrhaaP0ds8K92g9w5DAnbwuq8mM6WLKrTQ7e_a8Fku9KA@mail.gmail.com>
-Subject: Re: t7005-editor.sh failure
-To:     apyhalov@gmail.com
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 26 Sep 2018 10:05:29 +0200
+Message-ID: <CAN0heSqA192U-eH8CZJJbKNcimPYxqn6yva6mstsEHnH1-DEGA@mail.gmail.com>
+Subject: Re: [PATCH] git.txt: mention mailing list archive
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alexander,
+On Thu, 20 Sep 2018 at 21:07, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> > In the "Reporting Bugs" section of git(1), we refer to the mailing list=
+,
+> > but we do not give any hint about where the archives might be found.
+>
+> And why is it a good idea to give that information in Reporting Bugs
+> section?  Are we asking the bug reporters to look for similar issues
+> in the archive before they send their message?  If so, I think that
 
-Welcome to the list!
+Your guess is correct, sorry for forcing you to make one.
 
-On Wed, 26 Sep 2018 at 08:54, Alexander Pyhalov <apyhalov@gmail.com> wrote:
-> On updating git to 2.19 we've suddenly got t7005-editor.sh test failures.
-> The issue seems to be that generated "e space.sh" file can't handle
-> files with spaces.
-> Instead of 'echo space >$1' it should be 'echo space > "$1"' or git
-> editor fails when gets file with spaces in name.
+> we should be explicit about it, too.  Otherwise, the list archive
+> location would look like an irrelevant noise to those who wanted to
+> find the address to report bugs to.
+>
+> For example, we can say something like this:
+>
+> >  Report bugs to the Git mailing list <git@vger.kernel.org> where the
+> >  development and maintenance is primarily done.  You do not have to be
+> >  subscribed to the list to send a message there.
+>   +If you want to check to see if the issue has
+>   +been reported already, the list archive can be found at
+>   +<https://public-inbox.org/git/> and other places.
 
-Thanks for finding, analysing and reporting. I haven't bisected, but I'm
-guessing this comes from 4362da078e (t7005-editor: get rid of the
-SPACES_IN_FILENAMES prereq, 2018-05-14), which only happens to have to
-do with spaces in filenames. But in rewriting the test, it introduced
-/another/ instance of spaces-matter-here and didn't quote $1 properly.
-Cute. :-)
+I think that one reason I avoided spelling out why giving the archive
+location was a good thing to do, was that I didn't want to begin a huge
+list of "please do this and that", scaring away potential bug reporters.
+I think your "If you want to" solves that problem very nicely. I'll wrap
+this up later today.
 
-We try to snuggle the filename to the >redirector, so it would be 'echo
-space >"$1"' and similar.
-
-Could we have your sign-off for this? Please see [1] for what that
-means. If you want to re-submit as a "proper" patch with commit message
-and all, great. If not, I could do it for you, with you as "Author:", if
-you just let me know.
-
-By the way, could you say something about which shell or which
-environment this bug triggered in? Just so we can better understand how
-this snuck past us.
-
-[1] https://github.com/git/git/blob/master/Documentation/SubmittingPatches
-
-Thanks
 Martin
