@@ -2,81 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53EB91F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 18:58:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1805F1F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 18:59:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbeI0BMf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 21:12:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60514 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726127AbeI0BMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 21:12:35 -0400
-Received: (qmail 19092 invoked by uid 109); 26 Sep 2018 18:58:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 26 Sep 2018 18:58:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21203 invoked by uid 111); 26 Sep 2018 18:57:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 26 Sep 2018 14:57:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Sep 2018 14:58:13 -0400
-Date:   Wed, 26 Sep 2018 14:58:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/8] sha1-array: provide oid_array_filter
-Message-ID: <20180926185812.GD30680@sigill.intra.peff.net>
-References: <20180921223558.65055-1-sbeller@google.com>
- <20180921223558.65055-2-sbeller@google.com>
- <87h8ihk7sl.fsf@evledraar.gmail.com>
- <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com>
- <20180926041517.GA2140@sigill.intra.peff.net>
- <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
- <87d0t0jghm.fsf@evledraar.gmail.com>
- <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
- <87a7o4je0t.fsf@evledraar.gmail.com>
+        id S1728554AbeI0BNa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 21:13:30 -0400
+Received: from mail-ua1-f48.google.com ([209.85.222.48]:44880 "EHLO
+        mail-ua1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726127AbeI0BNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 21:13:30 -0400
+Received: by mail-ua1-f48.google.com with SMTP id m11-v6so2082uao.11
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qn3zyg6h3ai1ZXjHlDk0P30wf/qKsVRM+qo8orucsTo=;
+        b=IvepRXz7W2i38GiboHdyIi/VzLvlies42Q4PQIx+rBhtvlikzDAMmMHd73Ium5PKAZ
+         YcfvUnzQSTFPcDBn1PSi23WLM3Yld5z2+baQRGvhnKdji3oH9xP4oY+yv0K9yk55OCYm
+         8ZuuDbUtHPh8uAEbgINeZksIu9VPqTc5ZOl2ErhkiC1Xvfn3CyQmG2RoRX4h+jtVsa4Q
+         dyyWUZx8OJ4HxsK9/2EcPRf1nErz6yYDuK/b7Dt7iM6QZMRaPGxPgoaUJnzUmKsHqOaU
+         DDt+n+arEtrz27iNv94XPdyCVvzYTIe1ButULT2ik+0gz7RZC8xk2e9wnEPaJNtdDl5v
+         WDwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qn3zyg6h3ai1ZXjHlDk0P30wf/qKsVRM+qo8orucsTo=;
+        b=s3d4IXwvZBqGhUnyw737PTTaQYZFYk8tUQsAVaClTNW9NymR6VGaOr9SpE6/4V3R+M
+         bYDWXkQkdFC1GdiMhIMj4s8pCpkd2IOokG/pGQAx+MoqIO27F3tY6SpQ9r+EJS2HAbez
+         CFrY1/wfUex+ItixWciW4drRo6RbJkbHM5fqGHkVvbmn8CWwTclayaVz3hj2yJ48QjJG
+         3ngmdNjWqEi1vJFlm0kKXIVRQujgqUZUGE8U+BuB/LbqusX1t+nxobYyw5gd4aiT5B6O
+         dEwqlHJnCW+f0Xm2Rv+LsWOKhGOl3LQqi/XY5H+VC4ZPmvn95uLGlor2diSQKAg9t7ST
+         ylkg==
+X-Gm-Message-State: ABuFfogLNSHfIScq9nQYXB2Fa81dioK2dkrpDlLYlSveCkBfCiEZv805
+        eUnMmd6tyriW5H9Sg5qLJIgIX4YcIUr0su/AtAo=
+X-Google-Smtp-Source: ACcGV62U3b91PrlTVnzw7xLYYBhgFA+R/w0Fl9kNY+cduWbWE56jAmh1fItQ/RPEhawEbj60W7tZn9Bsb1mga+T2HuI=
+X-Received: by 2002:a9f:35f1:: with SMTP id u46-v6mr2382365uad.20.1537988349103;
+ Wed, 26 Sep 2018 11:59:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a7o4je0t.fsf@evledraar.gmail.com>
+References: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com>
+In-Reply-To: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 26 Sep 2018 11:58:56 -0700
+Message-ID: <CABPp-BFzNR__8ycP04gFjJYqKfBWoq_p1VhyagsYnvJn9O4TuQ@mail.gmail.com>
+Subject: Re: Git Test Coverage Report (Tuesday, Sept 25)
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 08:43:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Sep 25, 2018 at 11:44 AM Derrick Stolee <stolee@gmail.com> wrote:
+> c3b9bc94b9b     (Elijah Newren  2018-09-05 10:03:07 -0700
+> 181)            options.filter = xstrdup(value);
 
-> While we're on that subject, I'd much prefer if these technical docs and
-> other asciidoc-ish stuff we would be manpages build as part of our
-> normal "make doc" target. So e.g. this one would be readable via
-> something like "man 3 gitapi-oid-array".
+I blame Duy; he was the one who wanted me to look for and remove stray
+semicolons in additional places[1].  ;-)
 
-I'm mildly negative on this, just because it introduces extra work on
-people writing the documentation. Now it has to follow special
-formatting rules, and sometimes the source is uglier (e.g., the horrible
-+-continuation in lists). Are authors now responsible for formatting any
-changes they make to make sure they look good in asciidoc? Or are people
-who care about the formatted output going to come along afterwards and
-submit fixup patches? Either way it seems like make-work.
+All joking aside, and even though I know nothing of remote-curl.c
+beyond the fact that it used to have an excessive number of
+semicolons, I think it's awesome that you're running a report like
+this.
 
-Now I'll admit it seems like make-work to me because I would not plan to
-ever look at the formatted output myself. But I guess I don't understand
-the audience for this formatted output. These are APIs internal to Git
-itself. We would not generally want to install gitapi-oid-array into
-/usr/share/man, because only people actually working on Git would be
-able to use it. So it sounds like a convenience for a handful of
-developers (who like to look at this manpage versus the source). It
-doesn't seem like the cost/benefit is there.
 
-And if we were going to generate something external, would it make more
-sense to write in a structured format like doxygen? I am not a big fan
-of it myself, but at least from there you can generate a more richly
-interconnected set of documentation.
+Elijah
 
--Peff
+[1] https://public-inbox.org/git/CACsJy8Cf5+3+6yDwe4Y4wYLze4Y6naW-pj134KTpXM+wyWbFVQ@mail.gmail.com/
