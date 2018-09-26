@@ -2,182 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 800121F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 18:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB6F1F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 18:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbeI0AXX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 20:23:23 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40350 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbeI0AXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 20:23:23 -0400
-Received: by mail-pf1-f193.google.com with SMTP id s5-v6so6065787pfj.7
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:09:14 -0700 (PDT)
+        id S1726107AbeI0AZ5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 20:25:57 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:44371 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725848AbeI0AZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 20:25:56 -0400
+Received: by mail-wr1-f48.google.com with SMTP id v16-v6so27980271wro.11
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rY7oqdbhKhFlmkPGbAz7HEnD3L3bZz1/Pc3lpYjN2mM=;
-        b=GeYXJhlTX/Jrn/pLfh99nr/KzEX/0u59JgdIHh0zpspNnTKqh4lLCcAzm7WHxqVFS5
-         1YIK0DjWihzrOvh1EWdYbkbi1sG/WhZDPAIl18V5xXQAwuXfCp1GMg+8oXN64twZ7rg5
-         Z5cwjVMn7vCLoJRTrDcn6AWREYwFG76GtKLKHkHx9K/Ri4M5iK/6YYYtXfYjP/+84aTA
-         CQbmx69GjO5ta7dZ1o7ZrarQMPKfeHbNLQsJ0zHlQzWinDzaTFhc70jAI9E8Tut4AfCo
-         r/ZD/Sur4v5D5IyXifxh3VcLpM62VrG7KmPL5gVUkYvOfkt9AwIJ/9JEEH+rEm8y7ILb
-         BSgQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=LdpGFZwegR4lY+cTZbcx+2HZFTRddLklHZJ3hcCkrH4=;
+        b=ViquUs+2ekvKNru9FTcDoHyqFFp5YWcULy6CPNQ7VFAhzQyRprVRzfAQJ57fHYHbLA
+         bAS/dwZoGrya4jIeFRYjPNjvdHQmeb1q+skrIszpiKrVDWhB9agLBsRTowcGsdT/bQHu
+         nLDfN/eVIdAipkRlLHnqW7MnfX0MXczKkUZn5Aicp2yKsfXBkK7/HrIOVe3e5QFcPBzP
+         pjHWOUn4urrtqKaPwxJFs812Ac9x/XzXTxnbdvQLXJnOoNkIv5s+Kn0nzssJ3TXAY4al
+         bodzayPAYOTQiOmDqxwhbEWrsJE6KdE4YFiMe8nAwtr6NMB7gRNbSjoXUpGRIxGNSc21
+         siJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rY7oqdbhKhFlmkPGbAz7HEnD3L3bZz1/Pc3lpYjN2mM=;
-        b=jBI3jrXdhxFQjKbEymPGuJgmXzn70sR59KspYFSIq8xHxMbRwvoKD4vJK9u+cY8xuA
-         H4UV2Ub08H/M88bcb+ZXrTcNzPVuyy+21SELnt87x8rZQOyYKPcXuNNhCHBSGLrksI3g
-         954TY02Lz69ml/rCy05p+T+Fh1SWliqbxqeXd7wI8LPRsVb6EaSe3njEVgORUD9b+aGW
-         qLkiIwroPMT2niCrbDhx8BcPR9nAl1isD5Bf+lsQXHwHo0wZjiCanDVoy+nIYVwlW8JP
-         s/zhJgmiLrshDqgyRcEfl1bQB9+D8zviNDkpVbFE5ZFiCTUPiHnGiO2SITsara8nuhRc
-         /T1Q==
-X-Gm-Message-State: ABuFfogMT+Ychjdq+rF5NdeLxsVPA2HaAHdMbxyY5dmtNq7Dbf8fo4OO
-        3D4KmXCPeS87HBj1jqD/qshM2PGWcANcGw==
-X-Google-Smtp-Source: ACcGV61Bk+9FZohDxh2O/9EbvYY+RnNzoep4KpSgtgD6KTuCC+39iucikf5A6btjwpSxnt/vzs3Ujg==
-X-Received: by 2002:a62:8d84:: with SMTP id p4-v6mr7420933pfk.251.1537985353648;
-        Wed, 26 Sep 2018 11:09:13 -0700 (PDT)
-Received: from localhost ([205.175.107.36])
-        by smtp.gmail.com with ESMTPSA id g6-v6sm8274732pfb.11.2018.09.26.11.09.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Sep 2018 11:09:12 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Wed, 26 Sep 2018 11:09:11 -0700
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
-Subject: Re: [PATCH] help: allow redirecting to help for aliased command
-Message-ID: <20180926180911.GA63889@syl>
-References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
- <20180926143708.GD25697@syl>
- <xmqqtvmcmg2v.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=LdpGFZwegR4lY+cTZbcx+2HZFTRddLklHZJ3hcCkrH4=;
+        b=prwDzXSFWYExPgAHWx80/VyAkK4WyuZlS4NqlWhrCik+jFxfzSS3XWEJzIMR7mXxSG
+         R0PZeEoibVbAZO/CTKjVMX4lMYMUcvPVV06/C471JsqFtMuhPazOkFmY4CBivZ9+jWLk
+         kvmGMfEdJiS8MKwQeu01By4yD5eTo23Q4/iT/hDcwn6AH95xdVdhLFxN/cH6Qaw0FVAQ
+         0eaSGoartYCocl5k3OQ9HktAoTJWceQ8iKnWO+Hlh0/oe8R4JOySMYuVdM6aObSQ8wqS
+         W7pczkC6Ebc25hm/KPWM9bvoUjEZtgcyVnEagy8UwsINalYugguuBj7lmowPhTkioYr5
+         wBVA==
+X-Gm-Message-State: ABuFfoj4oYQcGN9KPGRTncgcJ9rLJ727m614V0x1HaLcqUaxTpRg/3BZ
+        8+JtmeDIppAibQTNOsjKGls=
+X-Google-Smtp-Source: ACcGV63B2huUbp08O2DU10cW3kdYB6rKX1IpIuVhlMhtX8b9p1fUw09N3EtSXWmDbzJHWViQNCRnAA==
+X-Received: by 2002:adf:e792:: with SMTP id n18-v6mr5941475wrm.136.1537985506102;
+        Wed, 26 Sep 2018 11:11:46 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z69-v6sm114049wmz.18.2018.09.26.11.11.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 26 Sep 2018 11:11:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>, Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
+References: <20180802061505.2983-1-chriscool@tuxfamily.org>
+        <20180802061505.2983-10-chriscool@tuxfamily.org>
+        <CAGZ79kYPik87zvLUPPKFzcATFUdBFcXrAkTYxpxvAQy6w1CcUw@mail.gmail.com>
+        <CAP8UFD1ia1xWk9pjfTUQ3zD7=dP=8UjKzf=G0ptsz=qRH8_X+Q@mail.gmail.com>
+        <xmqqd0t1nr93.fsf@gitster-ct.c.googlers.com>
+        <20180926041222.GA743@sigill.intra.peff.net>
+Date:   Wed, 26 Sep 2018 11:11:45 -0700
+In-Reply-To: <20180926041222.GA743@sigill.intra.peff.net> (Jeff King's message
+        of "Wed, 26 Sep 2018 00:12:22 -0400")
+Message-ID: <xmqqpnx0ku1q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtvmcmg2v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 08:30:32AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >> +help.followAlias::
-> >> +	When requesting help for an alias, git prints a line of the
-> >> +	form "'<alias>' is aliased to '<string>'". If this option is
-> >> +	set to a positive integer, git proceeds to show the help for
-> >
-> > With regard to "set to a positive integer", I'm not sure why this is the
-> > way that it is. I see below you used 'git_config_int()', but I think
-> > that 'git_config_bool()' would be more appropriate.
-> >
-> > The later understands strings like "yes", "on" or "true", which I think
-> > is more of what I would expect from a configuration setting such as
-> > this.
->
-> That is, as you read in the next paragraph, because it gives the
-> number of deciseconds to show a prompt before showing the manpage.
->
-> Not that I think this configuration is a good idea (see my review).
->
-> >> +	the first word of <string> after the given number of
-> >> +	deciseconds. If the value of this option is negative, the
-> >> +	redirect happens immediately. If the value is 0 (which is the
-> >> +	default), or <string> begins with an exclamation point, no
-> >> +	redirect takes place.
-> >
-> > It was unclear to my originlly why this was given as a configuration
-> > knob, but my understanding after reading the patch is that this is to do
-> > _additional_ things besides printing what is aliased to what.
-> >
-> > Could you perhaps note this in the documentation?
->
-> It may be that the description for the "execute the likely typoed
-> command" configuration is poorly written and this merely copied the
-> badness from it.  Over there the prompt gives a chance to ^C out,
-> which serves useful purpose, and if that is not documented, we should.
->
-> On the other hand, I'd rather see this prompt in the new code
-> removed, because I do not think the prompt given in the new code
-> here is all that useful.
->
-> >> @@ -415,9 +420,34 @@ static const char *check_git_cmd(const char* cmd)
-> >>
-> >>  	alias = alias_lookup(cmd);
-> >>  	if (alias) {
-> >> -		printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
-> >> -		free(alias);
-> >> -		exit(0);
-> >> +		const char **argv;
-> >> +		int count;
-> >> +
-> >> +		if (!follow_alias || alias[0] == '!') {
-> >> +			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
-> >> +			free(alias);
-> >> +			exit(0);
-> >> +		}
-> >> +		fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
-> >
-> > OK, I think that this is a sensible decision: print to STDERR when
-> > that's not the main purpose of what're doing (e.g., we're going to
-> > follow the alias momentarily), and STDOUT when it's the only thing we're
-> > doing.
->
-> > Potentially we could call 'fprintf_ln()' only once, and track an `int
-> > fd` at the top of this block.
->
-> I actually think this should always give the output to standard output.
->
-> >> +
-> >> +		/*
-> >> +		 * We use split_cmdline() to get the first word of the
-> >> +		 * alias, to ensure that we use the same rules as when
-> >> +		 * the alias is actually used. split_cmdline()
-> >> +		 * modifies alias in-place.
-> >> +		 */
-> >> +		count = split_cmdline(alias, &argv);
-> >> +		if (count < 0)
-> >> +			die("Bad alias.%s string: %s", cmd,
-> >> +			    split_cmdline_strerror(count));
-> >
-> > Please wrap this in _() so that translators can translate it.
-> >
-> >> +		if (follow_alias > 0) {
-> >> +			fprintf_ln(stderr,
-> >> +				   _("Continuing to help for %s in %0.1f seconds."),
-> >> +				   alias, follow_alias/10.0);
-> >> +			sleep_millisec(follow_alias * 100);
-> >> +		}
-> >> +		return alias;
-> >
-> > I'm not sure that this notification is necessary, but I'll defer to the
-> > judgement of others on this one.
->
-> I didn't bother to check the original but this is mimicking an
-> existing code that lets configuration to be set to num-deciseconds
-> to pause and give chance to ^C out, and also allows it to be set to
-> negative to immediately go ahead.  follow-alias at this point cannot
-> be zero in the codeflow, but it still can be negative.
+Jeff King <peff@peff.net> writes:
 
-I think that this is the most compelling argument _for_ the configuration
-that you are not in favor of. I understood your previous review as "I
-know that 'git cp' is a synonym of 'git cherry-pick', but I want to use
-'git co --help' for when I don't remember what 'git co' is a synonym
-of."
+>> I do not think "sources that are not git repositories" is all that
+>> interesting, unless they can also serve as the source for ext::
+>> remote helper.  And if they can serve "git fetch ext::...", I think
+>> they can be treated just like a normal Git repository by the
+>> backfill code that needs to lazily populate the partial clone.
+>
+> I don't know about that. Imagine I had a regular Git repo with a bunch
+> of large blobs, and then I also stored those large blobs in something
+> like S3 that provides caching, geographic locality, and resumable
+> transfers.
+>
+> It would be nice to be able to say:
+>
+>   1. Clone from the real repo, but do not transfer any blobs larger than
+>      10MB.
+>
+>   2. When you need a blob, check the external odb that points to S3. Git
+>      cannot know about this automatically, but presumably you would set
+>      a few config variables to point to an external-odb helper script.
+>
+>   3. If for some reason S3 doesn't work, you can always request it from
+>      the original repo. That part _doesn't_ need extra config, since we
+>      can assume that the source of the promisor pack can feed us the
+>      extra objects[1].
+>
+> But you don't need to ever be able to "git fetch" from the S3 repo.
+>
+> Now if you are arguing that the interface to the external-odb helper
+> script should be that it _looks_ like upload-pack, but simply advertises
+> no refs and will let you fetch any object, that makes more sense to me.
+> It's not something you could "git clone", but you can "git fetch" from
+> it.
 
-This pause (though I'm a little surprised by it when reviewing the
-code), I think strikes a good balance between the two, i.e., that you
-can get help for whatever it is aliased to, and see what that alias is.
-
-Thanks,
-Taylor
+Yup.  The lazy backfill JTan has, if I understand correctly, only
+wants "Please give me this and that object" and use of "upload-pack"
+is an implementation detail.  Over the existing Git protocols, you
+may implement it as sending these object names as "want" and perhaps
+restrict the traversal (if there is a "want" object that is commit)
+by giving some commits as "have", i.e. "upload-pack" may not be the
+best model for the other side, but that is what we have readily
+available.  I was hoping that the way we take to move forward is to
+enhance that interface so that we can use different "object store"
+backends as needed, to satisfy needs from both parties.
