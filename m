@@ -2,100 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0241F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 13:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E7C41F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 13:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728603AbeIZTgj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 15:36:39 -0400
-Received: from mail-pf1-f181.google.com ([209.85.210.181]:34899 "EHLO
-        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726987AbeIZTgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 15:36:38 -0400
-Received: by mail-pf1-f181.google.com with SMTP id p12-v6so13450929pfh.2
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 06:23:41 -0700 (PDT)
+        id S1727552AbeIZTxB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 15:53:01 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38423 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726938AbeIZTxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 15:53:01 -0400
+Received: by mail-pg1-f193.google.com with SMTP id r77-v6so8831039pgr.5
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 06:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xspXhU2motLJ1B7IVcgTfyge2zXkCQ2mZEhpri4Q1kU=;
-        b=WATKn5vCjvLDY/8Ex42LinRO5PkHLfXdIgx/PiJUSedjMxbFvdeGndjDamHLVJ2iK6
-         C0kOtE9gvtUKPg08CMuDa7PQAyKZjzQ/GaYYmCxbTVt8dz4e06dP/C5knABYNQORQja6
-         tvvQw20NtlsJwyboLqHwSJfipP3lWayzjco5DcSzp+huA6M0bVFR4uGt6FoKD0vwYmgm
-         y5iW3HL/r9GEyzNa9GCIezxinXWuD8D2qnol0cEkTPumJP88lB8a4zMTGUdxmBB+kaD0
-         PDu60Uac0w/TMG4+erCiZzXv0I44uDDYlK13T/jaWKpjYFyP0TaEODtO/lrZWpI7p2hu
-         UGZg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CYVtVkvKiCoQsMEKyTwA8s92/HhKOTFJ+5kwwKDIxko=;
+        b=nfkDNlJFNmT3BiqytilzYEKq2ObOHMqbFHCPwBRqUT64J5L9NX3LQk8V1fVYMgYwJQ
+         NOJO3VDZIQS5chxJRLoGDtHqdHX4cbGseW/HQ0UB65eLM/1+avS3nXIiz/SGVaHs8dGm
+         +siTrrh9fznvcq9AdvPtYAQd4m/BgksOSbnBqgv4AROs1UPwaTwMccvZzDiMHp5Z/qWb
+         93fVOF4TBNjNO9XUtuVLRnDssIzTI88/fcI64F6q0cpW7UDtkLiv/guJL/5ORxfsjgXU
+         hTdDvpeSGBQkKWXXJhTkz4NKhCbxqdf1bmTEgAuMfLdJ6ZtRkrvAqI97iPlPClJ7gfZZ
+         0b6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xspXhU2motLJ1B7IVcgTfyge2zXkCQ2mZEhpri4Q1kU=;
-        b=MzS7cZuBi+yPY3L3Ja+rf+K6GcOezHaTOWHI5YLv0max1x782JGtJDHFY9zjw7tYOQ
-         NwNtAsq4bk7n2IJvmcSzHsySmr/gXpfswhbmeXA8hilC2PSulz0okRGYvdV4ZPTamix/
-         3IL+uGikEgRXCECqHxdj9rKQHklwiQF86/b8W9gG2AK/dr1GeG95s4weCM9jqwuIeucW
-         Zmc9h0CMAuP0RLZT9cvFKTkJaoa33xtzmUA5qoP/cXIbr/UZ8X4NHi27kiI6QusBnTwn
-         YfoWChHfl7Q/RbRtUmEq91ZEfGkmX54RXv5CV9wWuDY1nxDaiDN6MCKaBSuA7wSr8oke
-         zYXQ==
-X-Gm-Message-State: ABuFfoheTnvwr+j51pUXO7j58jnG3mQMZSBoc+2dWw7SfshVIT+jupMA
-        x0c31oGY8zvlOhKmuNscDSbJE+wqtHn38cOw6Gw=
-X-Google-Smtp-Source: ACcGV60gcAH2nXiHPASiNbP32egnGuDhr6Zor5wSwOTl9+jISSJanh35yVtEvsAS3NLKxsR1HkbahXxZ1mGIBlQx4WY=
-X-Received: by 2002:a62:2646:: with SMTP id m67-v6mr6364434pfm.254.1537968221150;
- Wed, 26 Sep 2018 06:23:41 -0700 (PDT)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CYVtVkvKiCoQsMEKyTwA8s92/HhKOTFJ+5kwwKDIxko=;
+        b=pqAtfjoujSbBiSdy9xpazflYaEeSbkcNsk2r3bqL5B/nLkdDUU0D17et02px9I3ASx
+         HDiRiDem/ysK5EBvOpzjmDMe1I5KnHmplibcq4MO1LRJH2CWkOL42EXGUZb3VZYfGtUJ
+         YAzWUOuE7nVpOhQMEpLJprRkMTDCdHpJJhTxjCS7xF2+LsoQuJZr3uXPHk4FbgHgxqT3
+         9VzviO1VQA2hZEoB19XkPbL5BIe7HkX0UHqHGVCeDuBV2SxBtPdz52J8HMaeor6By1Zf
+         8rwDw0xukd2fX/gLE1/Q4EN9dK4jPJv8tr04LSLrGpaYWcpWGVE2Db0RyszpE2Aei9YJ
+         I1yQ==
+X-Gm-Message-State: ABuFfohhdztIhCpdXNed6Zvh/SoLOxj4Y0LWHxbp23/CS7eRSJcb0b0c
+        WnyJP6XXz1x3c5Qx87UMiwVruQ==
+X-Google-Smtp-Source: ACcGV63lZofrzspiDOOM0vllWk5MGnyXtJ3S85KYQN3/w8ysd/KKi+j06DQ0Z5LPVM02sv8XsRseOw==
+X-Received: by 2002:a62:ff09:: with SMTP id b9-v6mr6401923pfn.46.1537969199689;
+        Wed, 26 Sep 2018 06:39:59 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:d190:33d6:11d2:d23b])
+        by smtp.gmail.com with ESMTPSA id t84-v6sm10876772pfj.7.2018.09.26.06.39.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Sep 2018 06:39:58 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Wed, 26 Sep 2018 06:39:56 -0700
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+        sbeller@google.com
+Subject: Re: [PATCH v2 2/3] transport.c: introduce core.alternateRefsCommand
+Message-ID: <20180926133956.GA25697@syl>
+References: <cover.1537466087.git.me@ttaylorr.com>
+ <cover.1537555544.git.me@ttaylorr.com>
+ <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
+ <20180922180231.GD432229@genre.crustytoothpaste.net>
+ <20180922195258.GA20983@sigill.intra.peff.net>
+ <20180926010935.GK4364@syl>
+ <20180926033337.GC32064@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <CALOYryFX4PPR+=1L+sjEqPsdmNh_+vNxGf0wwuAgoYzau=GShw@mail.gmail.com>
- <CAN0heSrhaaP0ds8K92g9w5DAnbwuq8mM6WLKrTQ7e_a8Fku9KA@mail.gmail.com>
- <CALOYryEMB5HoCXbVKnc49KLkk2ySZjn4DG9RbJjQAvPn1H5K6Q@mail.gmail.com>
- <CAN0heSpUhzbTjceVhBxk_jjE=vOAVTzXGFQ=UL9Y+muJHe0S6w@mail.gmail.com> <CAPig+cR8KyeihQbUbSP7Awz+NTbf8c3r-ZE9w2wjnvvEpU0gDg@mail.gmail.com>
-In-Reply-To: <CAPig+cR8KyeihQbUbSP7Awz+NTbf8c3r-ZE9w2wjnvvEpU0gDg@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 26 Sep 2018 15:23:26 +0200
-Message-ID: <CAN0heSrajoYrkta3+uZJnH32mWsL7vKiYYmEzZ3h+GAeuMQPSA@mail.gmail.com>
-Subject: Re: t7005-editor.sh failure
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Alexander Pyhalov <apyhalov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180926033337.GC32064@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 26 Sep 2018 at 13:59, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> This description of the behavior is misleading (actually, actively
-> wrong).
-
-Hmm, that's bad, my apologies.
-
->     echo foo bar >cow
->     echo >cow foo bar
->     echo foo >cow bar
+On Tue, Sep 25, 2018 at 11:33:37PM -0400, Jeff King wrote:
+> On Tue, Sep 25, 2018 at 06:09:35PM -0700, Taylor Blau wrote:
 >
-> That is, they all create a file named "cow" with content "foo bar".
-
-Somehow I knew that, as in "I've seen that before", but I guess I've
-never thought about it long enough to really incorporate it.
-
-> So, in your example:
+> > > So I think this is fine (modulo that the grep and sed can be combined).
+> > > Yet another option would be to simply strip away everything except the
+> > > object id (which is all we care about), like:
+> > >
+> > >   depacketize | perl -lne '/^(\S+) \.have/ and print $1'
+> >
+> > Thanks for this. This is the suggestion I ended up taking (modulo taking
+> > '-' as the first argument to 'depacketize').
 >
->     echo space >/foo/t/trash directory.t7005-editor/.git/COMMIT_EDITMSG
+> I don't think depacketize takes any arguments. It always reads from
+> stdin directly, doesn't it? Your "-" is not hurting anything, but it is
+> totally ignored.
+
+Yep, certainly. I think that I was drawn to this claim because I watched
+t5410 fail after applying the above recommendation, so thusly assumed
+that it was my fault for not passing `-` to 'depacketize()`.
+
+In the end, I'm not sure why the test failed originally (it's likely
+that I hadn't removed the ".have" part of 'expect_haves()', yet). But, I
+removed the `-` in my local copy of v3, and the tests passes on all
+revisions of this series that have it.
+
+> A perl tangent if you're interested:
 >
-> what is actually happening is that it is creating a file named
-> "/foo/t/trash" with content "space
-> directory.t7005-editor/.git/COMMIT_EDITMSG".
+>   Normally for shell functions like this that are just wrappers around
+>   perl snippets, I would suggest to pass "$@" from the function's
+>   arguments to perl. So for example if we had:
+>
+>     haves_from_packets () {
+> 	perl -lne '/^(\S+) \.have/ and print $1' "$@"
+>     }
+>
+>   then you could call it with a filename:
+>
+>     haves_from_packets packets
+>
+>   or input on stdin:
+>
+>     haves_from_packets <packets
+>
+>   and either works (this is magic from perl's "-p" loop, but you get the
+>   same if you write "while (<>)" explicitly in your program).
+>
+>   But because depacketize() has to use byte-wise read() calls, it
+>   doesn't get that magic for free. And it did not seem worth the effort
+>   to implement, when shell redirections are so easy. ;)
 
-Thanks for clarifying.
+To be clear, we ought to leave this function as:
 
-> As for the "ambiguous redirect" diagnostic, that seems to be Bash
-> trying to be helpful in reporting what is likely a programming error
-> (that is, forgetting to double-quote the expansion).
+  extract_haves () {
+    depacketize | perl -lne '/^(\S+) \.have/ and print $1'
+  }
 
-I see that SZEDER has posted some interesting reading. I'll make sure I
-understand this better before coming back to this later today.
+Or are you suggesting that we change it to:
 
-Thanks
-Martin
+  extract_haves () {
+    perl -lne '/^(\S+) \.have/ and print $1'
+  }
+
+And call it as:
+
+  printf "0000" | git receive-pack fork >actual &&
+  depacketize <actual >actual.packets
+  extract_haves <actual.packets >actual.haves &&
+
+Frankly, (and I think that this is what you're getting at in your reply
+above), I think that the former (e.g., calling 'depacketize()' in
+'extract_haves()') is cleaner. This approach leaves us with "actual" and
+"actual.haves", and obviates the need for another intermediary,
+"actual.packets".
+
+> > The 'print $1' part of this makes things a lot nicer, actually, having
+> > removed the " .have" suffix. We can get rid of the expect_haves()
+> > function above, and instead call 'git rev-parse' inline and get the
+> > right results.
+>
+> Yes. You can even do it all in a single rev-parse call.
+
+Indeed.
+
+Thanks,
+Taylor
