@@ -2,88 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B06001F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 19:29:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 236AF1F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 19:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726778AbeI0BoY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 21:44:24 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:37639 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbeI0BoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 21:44:24 -0400
-Received: by mail-wm1-f48.google.com with SMTP id y26-v6so2965015wma.2
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 12:29:55 -0700 (PDT)
+        id S1726623AbeI0BqL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 21:46:11 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38179 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbeI0BqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 21:46:11 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j8-v6so123277wrw.5
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 12:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=p8WLhYHOYtXAikTmW9xOqCa8qz6VOeT6d9qEcb15E+s=;
-        b=hvisRD7JRekSJ0YSynf1QCxtzoMiyC5HWQN+RzsIp5rE/ZsO9MjkSeeIOZhuakoGyp
-         fRG0UB5UIbfVGl8t34ctZz0mP1odvJE16SE4esh8lV+kvk+ZM3SyTGKUtN9rEiKyWwac
-         DJoxjrXnPRC+L6CdDH85YNsPqsdf9VL36vv6qkMrgMfeFDKg0rbTr/q1Gr0CG32AQjh+
-         auH4jiRmLRDHdKoqKpAD0+pVQk5QWnnnz+2ErCIh4boIb6bVoPXb67ZVGxHJNm1WMp+x
-         YrPZaAJ5j9ZNi9tuPhl/7JzZ31CFNUUc92KPrv033PMDLXhs2x6B/trAJKyP1f6bp3Eq
-         2Jcg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dmB6qWWI17boId/b/2VknAe5rBDqWxbCjtAk5crlXA8=;
+        b=t/ASRhPeyQ5Trb4yXklSWaJ5Y+M/c0Q/Tr4u9DVLO0GIETem1cSLt3sW89h+uC11HV
+         Wa1BgeFApllSMG1sTQGFEvxCsH1ionMKBWOuE/7dgN8YM7mo1rpvBRrLqkItszAh5re/
+         Yivj/V2HAdGFY0NzBgs2b1fTtKXv6m7XwrVw+ThzNiDIS+NtocjSwwlheILBHqPmr6UK
+         b8ri4MhqeMYoZuyhxLTsUzsKYkD5cKOh/uWQkx1zWew8Jxh5RGV+EwGR6Xn/mSHyU7n+
+         CcZs+GNkWPWeql5ZT4xCRxCi4MUXjnpOxYp0U4aqtOlA65po+rlwbtspMq7e4EI6rz1O
+         GfbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=p8WLhYHOYtXAikTmW9xOqCa8qz6VOeT6d9qEcb15E+s=;
-        b=iJeT9/u6LMql2KPiCZtaifjHLFtr/Y4sD4CF+UZ0A0zQrqR4k38am/kTnIDDBiH3z1
-         osGRVMwWSnIDSoppC12k1/oqbSW9Axd/bzZsO8Bn41BkxHaWBR98G4IOrQw36Kzcmuwz
-         qjpO6DyF/ajlgHn6vev94oWs+PCGRUyKMRUjOiW3Kz5x5wY6xseNcTwzC5VZwO+qlKfX
-         o+cRyHNwf/PlwNq/6OxxhImk8vddRmvL6apU+8kDq7++4rdeIdivSPmdPUHtYmLE96l5
-         sv9l2icl0wW3sJY1JqC37o1OzQrBPru0Mp0zwDux5Ufz8ZmbPMR7Blc8C68Ohls/NnI2
-         2pLg==
-X-Gm-Message-State: ABuFfoiLSlWR8h5pRJAeGE7LM95i7KU7749Vf88KTPvhDbLylEdMpbNv
-        MIsRYFxdvGROJ39rLLYDys/XFlbxW9E=
-X-Google-Smtp-Source: ACcGV63aI8+Yzi1d5kuoNyvlQEcPY3osysZbGt4mi0Sv6SqLlGQ3LsKLEguY99XRe7orBRFLba9t/w==
-X-Received: by 2002:a1c:87ca:: with SMTP id j193-v6mr5659172wmd.76.1537990194396;
-        Wed, 26 Sep 2018 12:29:54 -0700 (PDT)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id d6-v6sm316566wmd.2.2018.09.26.12.29.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Sep 2018 12:29:53 -0700 (PDT)
-Subject: Re: t7005-editor.sh failure
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Alexander Pyhalov <apyhalov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CALOYryFX4PPR+=1L+sjEqPsdmNh_+vNxGf0wwuAgoYzau=GShw@mail.gmail.com>
- <CAN0heSrhaaP0ds8K92g9w5DAnbwuq8mM6WLKrTQ7e_a8Fku9KA@mail.gmail.com>
- <CALOYryEMB5HoCXbVKnc49KLkk2ySZjn4DG9RbJjQAvPn1H5K6Q@mail.gmail.com>
- <CAN0heSpUhzbTjceVhBxk_jjE=vOAVTzXGFQ=UL9Y+muJHe0S6w@mail.gmail.com>
- <20180926121107.GH27036@localhost>
- <xmqqlg7oktto.fsf@gitster-ct.c.googlers.com>
- <xmqq36twkr27.fsf@gitster-ct.c.googlers.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <8ae32a61-f5b8-bbd0-6500-5292b8887b2d@gmail.com>
-Date:   Wed, 26 Sep 2018 21:29:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dmB6qWWI17boId/b/2VknAe5rBDqWxbCjtAk5crlXA8=;
+        b=L/RamSRWIhfl0OZkOMkDlcVU86SRvJYB3iXvosYSd7ybvOuNEXiQC6qYfErAAnTBDk
+         IOR1yZKDWK5gjk09LMPtqq0fascLtC9NQddDJHxfFb83bfaBphrSII1NO4uK/PyyM0iy
+         o3q2XZFGh1SEfumO2yTmkmP8syaMei62gxXSvNrSHCmUAuzSBkEt7cAkJ1noPwqLq8K2
+         nVbWaQJeDF2Aklrmee5oSl6DlXKXxg4GbnZrRyIhK6ZfJbbaEM9dz9NiVXALpovE/YSI
+         UHmvJpnHXwnAspibS9oLgyFeX2GtIhHG4SWK3yPr9oe37O+PwYDmtIIaqLFIvH2VeAmz
+         JP8w==
+X-Gm-Message-State: ABuFfojp2Rh7giFe/lQFTgebHwCdmYy5sWxBKhXW1fe2PPXwkSekM9Py
+        eR02cXBvWA/9PtYT7c5jVHg=
+X-Google-Smtp-Source: ACcGV62SD9WLOdiQ3vqGlGRnV6U/xo/WoyzEEsvRY1hYe4LYm/I0NwWm5htbfpwXYqaP/y0Cw76V/g==
+X-Received: by 2002:adf:9e06:: with SMTP id u6-v6mr6067511wre.51.1537990300563;
+        Wed, 26 Sep 2018 12:31:40 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a203-v6sm180839wmh.31.2018.09.26.12.31.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 26 Sep 2018 12:31:40 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
+Subject: Re: [PATCH] help: allow redirecting to help for aliased command
+References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
+        <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
+        <20180926184914.GC30680@sigill.intra.peff.net>
+Date:   Wed, 26 Sep 2018 12:31:39 -0700
+In-Reply-To: <20180926184914.GC30680@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 26 Sep 2018 14:49:15 -0400")
+Message-ID: <xmqqy3bojbs4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq36twkr27.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-09-26 21:16, Junio C Hamano wrote:
-> While at it, update the way to creatd these scripts to use the
+Jeff King <peff@peff.net> writes:
 
-s/creatd/create/
+>> When you have "[alias] cp = cherry-pick -n", "git cp --help" should
+>> not do "git help cherry-pick".  Only a single word that exactly
+>> matches a git command should get this treatment.
+>
+> I'm not sure I agree. A plausible scenario (under the rules I gave
+> above) is:
+>
+>   $ git cp -h
+>   'cp' is aliased to 'cherry-pick -n'
+>   usage: git cherry-pick ...
 
-Or rewording as "... update the way these scripts are created ..."
+With that additional rule, I can buy "it is fine for 'git cp --help'
+to completely ignore -n and behave as if 'git help cherry-pick' was
+given", I think.  People already expect "git cp --help" to give the
+alias expansion, so to them any change will be a regression any way
+we cut it---but I think this is the least bad approach.
 
-> write_script wrapper, so that we do not have to worry about writing
-> the she-bang line and making the result executable.
+>   $ git cp --help
+>
+> I.e., you already know the "-n" part, and now you want to dig further.
+
+One very good thing about the "make '--help' go directly to the
+manpage, while teaching '-h' to report also alias expansion" is that
+people already expect "-h" is more concise than "--help".  The
+current output from "git cp --help" violates that expectation, and
+the change you suggest rectifies it.
+
+> Of course one could just type "git cherry-pick --help" since you also
+> know that, too.
+
+Yeah, but that is not an argument.  The user aliased cp because
+cherry-pick was quite a mouthful and do not want to type "git
+cherry-pick --help" in the first place.
