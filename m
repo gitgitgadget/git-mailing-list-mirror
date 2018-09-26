@@ -2,63 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49A491F453
-	for <e@80x24.org>; Wed, 26 Sep 2018 18:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99BC31F453
+	for <e@80x24.org>; Wed, 26 Sep 2018 18:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728430AbeI0Ajy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Sep 2018 20:39:54 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33336 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbeI0Ajy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Sep 2018 20:39:54 -0400
-Received: by mail-ed1-f66.google.com with SMTP id g26-v6so2787468edp.0
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:25:41 -0700 (PDT)
+        id S1726127AbeI0AmK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Sep 2018 20:42:10 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43907 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725806AbeI0AmK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Sep 2018 20:42:10 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z14-v6so10519006wrs.10
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 11:27:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/Ik5Tw8IUDeY5L8pMCXSmm6gWIH/uPjsYINbyylCKps=;
-        b=ZF4ncFypdm5xxX1nmZTxzFfc5Pay6zTz0BfxUXrCkpmBRMtqW9RaTlCWAzEtaYmnPt
-         OpgfSVE+4n2A9kM+TW0mNp0IriM4ikEDKZa0JXABNUNFZRK1ggmV3hla55tOraJ4UtKM
-         t45tOIS4cHdc6AZ1IPFajASh0kdHh8FXBe9ppYCvvD1OKYRai9+x2uWoyKhA3+E5JmT+
-         DIi5JBj/kkSa/ux9H2GtQlrutC49+kYlxPfOobjeWMxVIF/nIz6PaLTjplyOKpOQn1IV
-         4mD5TiqX2toaecuKCBrh3PApJsK2luTzZiBmKAkMPcNvzk7ww7Am92Zmp297/3v87dKS
-         HamA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=zJdYbwxIot5zhfR6pKYCa6mVyP+r9vcn+2ykT4uDI8U=;
+        b=Dx2ijxpj/GIX0kxeYToUzHbfUenCQp1EvNoMsys2nUPN/mEQLH3BsqXqQDEqCES40d
+         KGVnNJ7UxGeswmHRX963QT9x0JtGhRKiMjLMkjLqL1IapTd2yOTuWb4gOCzWIaHtst65
+         5K4qDu+QcpjlX8BzCAD6f7eTbHfyeJujLMqQ48qIkOjWcuhm+vwjiXRG6kmBaqrmzFEG
+         0fMLZa2HbAuGBRJjSLllDjfnfLdqgfj7fkPgXXPh8ICzMTcXq/XHRej70YSpCnmwL/2C
+         arc4ZrzbJ/6s3d0LXrEmGrh3Lx3kJaMlZTa9pZbmfehE4Ik4tATvBu/lUhBl2mJLcXi6
+         YL4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/Ik5Tw8IUDeY5L8pMCXSmm6gWIH/uPjsYINbyylCKps=;
-        b=MSZNqhGyTywrkm4n65Z92h7PpAsOqVHW3Un0BW2bCx6ala08B0LQb6TP2XuZ3/4m7x
-         bZpVqJZTDTh/Gqbj9iWDsJV99veyTYaU+rUCWMulUZQrevt8qXyKT1M+aTSacwTwghJG
-         iVMaqnGINMTq9oTk9bTpNFefIFvoF2oOXzQ8hZbuoBJIWX6mCjW0ntKHovev72k7ylJZ
-         Doj2Kf3KwqOoaGUBx7CmflnuDGQ0PLlCJhFestaZvv1Nj5KrX40h4HGqGmaJ2ScNyimQ
-         Hhfe3dDkynAKjFO2QFh2JjINY3vzm9iHiZIYHHn9yXARamucSGrbqe1JyqqP4X50+94U
-         kICQ==
-X-Gm-Message-State: ABuFfog+f7DTJd83LyOmtHbHYed4tqvknH0phjTGuKZbMto2Bzq+P9Hw
-        eD2yoTkxZHfN9dXBO7NbJkY=
-X-Google-Smtp-Source: ACcGV60QdI1jz6E/gXMLWMrpVm/50ZyOnMUF0gvghtJBxlCqOLHwBSv66xn0bBj+vePvDVI8+zy5YA==
-X-Received: by 2002:a50:8fe6:: with SMTP id y93-v6mr11617068edy.290.1537986340429;
-        Wed, 26 Sep 2018 11:25:40 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id a11-v6sm31860edn.95.2018.09.26.11.25.39
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=zJdYbwxIot5zhfR6pKYCa6mVyP+r9vcn+2ykT4uDI8U=;
+        b=Twhv/nRNUHjdTmDqVvBcesmyeC084HR5oZwpbSR4cpXdhRYngo0lWO3NgsZg8KY2JM
+         g5dzSfqpQ6jPFkGh05LoNK8NOb/3rFwroLduVJ7Uu/qeKJXqOEIWL8XNX5QZ64Q+nAuA
+         9BvkPTIdFgz2+7OfTzI5eVK2USVCJiv6+kHthVrsTyi2lo4WCyOvYsn/E8LamqIF6wZu
+         sn7XvE61+GLhTbVDJIowBqCq/nnzOA756tMmXBI5P020vJn4ZchwoU4XJKaSDBF1lkzg
+         DIQASBfwQBhqXfdseyMlfG5gXOCSktNt3VQy4wEYLUjMgNW1/TA8ea/w4R5X5/y6IpOR
+         tyfg==
+X-Gm-Message-State: ABuFfohNR78vIt1NUqeBeIkwwDfmhBuvwWH60bkXFAYflXzvuzWFOBQq
+        cJIe+hJW79VntEK/pcmzNco=
+X-Google-Smtp-Source: ACcGV625TPgUqFhKhM7t3OzwJ6usebfykkITOqdWo+n85wDN7JF5o22a0Po5Ar7FL/52tQP0KKGo9A==
+X-Received: by 2002:adf:db11:: with SMTP id s17-v6mr6186340wri.221.1537986474913;
+        Wed, 26 Sep 2018 11:27:54 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z69-v6sm172672wmz.18.2018.09.26.11.27.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Sep 2018 11:25:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] worktree: add per-worktree config files
-References: <20180923170438.23610-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180923170438.23610-1-pclouds@gmail.com>
-Date:   Wed, 26 Sep 2018 20:25:38 +0200
-Message-ID: <87bm8kjeu5.fsf@evledraar.gmail.com>
+        Wed, 26 Sep 2018 11:27:54 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 1/8] sha1-array: provide oid_array_filter
+References: <20180921223558.65055-1-sbeller@google.com>
+        <20180921223558.65055-2-sbeller@google.com>
+        <87h8ihk7sl.fsf@evledraar.gmail.com>
+        <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com>
+        <20180926041517.GA2140@sigill.intra.peff.net>
+        <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
+        <87d0t0jghm.fsf@evledraar.gmail.com>
+Date:   Wed, 26 Sep 2018 11:27:53 -0700
+In-Reply-To: <87d0t0jghm.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 26 Sep 2018 19:49:57 +0200")
+Message-ID: <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -67,25 +75,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Sun, Sep 23 2018, Nguyễn Thái Ngọc Duy wrote:
+> On Wed, Sep 26 2018, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>>>
+>>> Yes, please. I think it prevents exactly this sort of confusion. :)
+>>
+>> CodingGuidelines or SubmittingPatches update, perhaps?
+>>
+>>  Documentation/CodingGuidelines | 6 +++++-
+>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+>> index 48aa4edfbd..b54684e807 100644
+>> --- a/Documentation/CodingGuidelines
+>> +++ b/Documentation/CodingGuidelines
+>> @@ -358,7 +358,11 @@ For C programs:
+>>     string_list for sorted string lists, a hash map (mapping struct
+>>     objects) named "struct decorate", amongst other things.
+>>
+>> - - When you come up with an API, document it.
+>> + - When you come up with an API, document it.  It used to be
+>> +   encouraged to do so in Documentation/technical/, and the birds-eye
+>> +   level overview may still be more suitable there, but detailed
+>> +   function-by-function level of documentation is done by comments in
+>> +   corresponding .h files these days.
+>>
+>>   - The first #include in C files, except in platform specific compat/
+>>     implementations, must be either "git-compat-util.h", "cache.h" or
+>
+> Thanks. I had not looked at this closely and was under the false
+> impression that it was going in the other direction. Good to have it
+> clarified.
 
-> +extensions.worktreeConfig::
-> +	If set, by default "git config" reads from both "config" and
-> +	"config.worktree" file in that order.
+Heh, I knew people were in favor of one over the other but until
+Peff chimed in to this thread, I didn't recall which one was
+preferred, partly because I personally do not see a huge advantage
+in using in-code comments as docs for programmers, and do not like
+having to read them as in-code comments.
 
-How does this interact with config that's now only used if it's in
-.git/config? E.g. you can't set remote.<remote>.<url> in ~/.gitconfig,
-will that be inherited across the two of these?
+If somebody wants to wordsmith the text and send in a patch with
+good log message, please do so, as I myself am not sure if what I
+wrote is the consensus position.  It could be that they want to have
+even birds-eye overview in the header files.
 
-> In multiple working
-> +	directory mode, "config" file is shared while
-> +	"config.worktree" is per-working directory.
-
-"But then how will it work with more than one?" I found myself thinking
-before reading some more and remembering .git/worktree. Shouldn't we
-consistently say:
-
-    [...]"config" and "worktrees/<worktree name>/config"[...]
-
-Or something like that?
