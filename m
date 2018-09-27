@@ -2,98 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 219A91F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 21:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6C6D1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 21:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbeI1Drx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 23:47:53 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:41809 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727265AbeI1Drx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 23:47:53 -0400
-Received: by mail-vk1-f202.google.com with SMTP id d189-v6so1075628vka.8
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 14:27:37 -0700 (PDT)
+        id S1727425AbeI1Dze (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 23:55:34 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54606 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727295AbeI1Dze (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 23:55:34 -0400
+Received: by mail-wm1-f67.google.com with SMTP id c14-v6so259209wmb.4
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 14:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=TIucuAgmYQb/kQCWkIDnpdggh0EYVE0IvPXrtszmnIQ=;
-        b=LtKwr4h9RWFGxd55VSmxlIGdvjCJAqNAAaAppY4tGdDl+M3nX/08yPWuhLyjMJ+v1u
-         UyUAy/pNNgNUb/fj5nJ1TC16OBxDB3ZqOBSARySUciD+XKE/zDVNg9ZyOaRaMvTxn2Ms
-         T+b1MzBAWLOUaW1UfeoCJKnFOtus3DTWVSz9aq4JGnTSHWSVceXYmPWR0VDc+QaiK7e4
-         nWJ5StAzFQMzBJ3ntkiucg+vxfnlDmjwMIUeSBebx9IFeoS7oNv6als4RM0e/17/mGAM
-         ffcj7G+BBZ7m/4EpcCygJc9yrkI0RQ1O2BddJT2LR9ioqdrabjU3Tnm4+yGAonNwVtY9
-         ibdQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=m3/6emYKWRknLiK3IAHwl29z4mblk4/jxf1Jtrj6bVo=;
+        b=oWUvuCww3Exk7Q7pxpRqjvAxuh2hMTznNjdb74xlKydSSricCPlIuIUiElCfLERp/j
+         iN90l6dL1VqQrXvDgvp8sPk99rHXTt5tUacpEs6wywvON4Y3MGTyTkDD3oR1LhS16qy7
+         AyNNbwghB6W4yeYDeMElV7P1unSpvq3lChT7fkPTMnp0Jc7uK7ptmyx3oxsk3rkLZ8c5
+         JdFxgaxr7nX2SuZp3kcFTF3l87LFzmaKdx4pH3nsnC07SfsdkgvnhbH33oMm336hUDPI
+         WU59bkMCM8G4bxEw9KAK9BMctA0UDFYoVLuwJvV6rTsxltTUnJUCp3nlID4JCBbBuSa2
+         58og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=TIucuAgmYQb/kQCWkIDnpdggh0EYVE0IvPXrtszmnIQ=;
-        b=pEFIRZvULBn1OSR86LlIoYybr9jHbCuS6bG8aa0OIVhprE8mKIKZWJQiFa4140+qNo
-         lNELemzlNl+DVmrqyc6qtiagg2C3iiFNchXuqlfGLC4c+VCPhRcnp5aNp6G6h5uNT1j9
-         WPcdcKCXlV1S0XX1JiP8NEv5nDuzN7ES+rwfpmijP8f0AwNgS359EWnorHd5snZkthdC
-         GNObF0rWO8/lwtKigf0cj+L6QypaqfpDBJQRohG4byzJ6CPLQYGgTgIJdyqSL2lg50MT
-         HVTlrG5BIjwjA4+nICaS4QPQze2nGQW79foGR6yreBNh3exOS0IKrgG71awfbC1sljMx
-         zUEA==
-X-Gm-Message-State: ABuFfoh2Hzen4qPyf4omMCzlUaQ7XqZNZpwUIMRadWo0o4Hfo+tW4hpY
-        yXxAHb81Eh+7pq/7FWT6Et4VnM/L0Jc+
-X-Google-Smtp-Source: ACcGV607EdHzt/bCk2oLe1RCqEjvbjtQRVKL5ePt11VETC8QsYuR/DfbqUgx0dpz7pzBtGaKqG5hyHZ2rkuR
-X-Received: by 2002:a9f:300d:: with SMTP id h13-v6mr7217188uab.9.1538083656725;
- Thu, 27 Sep 2018 14:27:36 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 14:27:27 -0700
-In-Reply-To: <xmqqwor6hmgk.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180927212727.128214-1-sbeller@google.com>
-Mime-Version: 1.0
-References: <xmqqwor6hmgk.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0
-Subject: [PATCH] Documentation/CodingGuidelines: How to document new APIs
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, peff@peff.net,
-        sbeller@google.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=m3/6emYKWRknLiK3IAHwl29z4mblk4/jxf1Jtrj6bVo=;
+        b=shg7vJfPUy9wbKRs/IHWFALL7F6x7KEr6YtA58WUdJYEuQelrr2Z2NBv14Z3+6SRE1
+         fOPGmK4Wm6/jOPT7rIA/Q/lu/+MlGhqc5+Rh3pEjMCDM3ETj8JblEXoF1zY+whM4UqIS
+         w6fol4icn0Smntt/WpS6eESiUWS3ZzUjfqQ9CL3EuO/UnfIPTmhFOnKKdUYGesi+5XSz
+         1slqo41GZGqHOo3Wz8rDSmUoAzrmPjpOY0vY/AxsUJinaGmLsOPHsZ+CNPMvfHYdSy0B
+         siIDdUWOTMTXgMPF061loONwyf1x3ieBdCRrZ82rhoxBIzqBQhab84JuVswHuVQNLSh3
+         N5Og==
+X-Gm-Message-State: ABuFfogX69fiUaa/Y6h0VulnKG5hTzeKbZMaZUIMYrTyVv44Ma6RBXCb
+        UE1Gh2U4g7aSzUNC7TR8NkE=
+X-Google-Smtp-Source: ACcGV61izGndV9Ihv5Ijg6ygseGuLMSBYRMgZbjwPsUisZux+ICBNBjcHU82pEUYZ79Ni+/w/r3GrQ==
+X-Received: by 2002:a1c:2dc5:: with SMTP id t188-v6mr270629wmt.94.1538084115296;
+        Thu, 27 Sep 2018 14:35:15 -0700 (PDT)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id g8-v6sm150173wmf.10.2018.09.27.14.35.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Sep 2018 14:35:14 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 22:35:11 +0100
+From:   Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Nickolai Belakovski <nbelakovski@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] branch: colorize branches checked out in a linked
+ working tree the same way as the current branch is colorized
+Message-ID: <20180927213511.GB2628@rigel>
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20180927181708.GA2468@sigill.intra.peff.net>
+ <20180927192804.GA27163@rigel>
+ <20180927193559.GB6950@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180927193559.GB6950@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are different opinions on how to document an API properly.
-Discussion turns out nobody disagrees with documenting new APIs on the
-function level in the header file and high level concepts in
-Documentation/technical, so let's state that in the guidelines.
+On Thu, Sep 27, 2018 at 03:35:59PM -0400, Jeff King wrote:
+> On Thu, Sep 27, 2018 at 08:28:04PM +0100, Rafael Ascensão wrote:
+> > But if we're open to change how branches are displayed maybe a config
+> > option like branch.format (probably not the best name choice) that can
+> > be set to the 'for-each-ref --format' syntax would be way more flexible.
+> 
+> We have that already, don't we?
+>
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+git branch has --format, but there's no way (at least to my knowledge)
+to define a value in gitconfig to be used by $git branch.
 
- This is how I would approach the documentation patch.
- 
- Thanks,
- Stefan
- 
- Documentation/CodingGuidelines | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
- 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 48aa4edfbd..15bfb8bbb8 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -358,7 +358,10 @@ For C programs:
-    string_list for sorted string lists, a hash map (mapping struct
-    objects) named "struct decorate", amongst other things.
- 
-- - When you come up with an API, document it.
-+ - When you come up with an API, document the functions in the header
-+   and highlevel concepts in Documentation/technical/. Note that this
-+   directory still contains function level documentation as historically
-+   everything was documented there.
- 
-  - The first #include in C files, except in platform specific compat/
-    implementations, must be either "git-compat-util.h", "cache.h" or
--- 
-2.19.0
+Having branch --format available, making an alias is a possible route.
+(Either by wrapping branch --format or for-each-ref itself). But I was
+referring to changing the output of the default $git branch;
 
