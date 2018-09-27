@@ -2,139 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 343DC1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 18:42:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FFDE1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 18:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728577AbeI1BBw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 21:01:52 -0400
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:47080 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727320AbeI1BBw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 21:01:52 -0400
-Received: by mail-yb1-f193.google.com with SMTP id o8-v6so1525932ybk.13
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:42:15 -0700 (PDT)
+        id S1728638AbeI1BJc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 21:09:32 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:55059 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727995AbeI1BJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 21:09:32 -0400
+Received: by mail-it1-f193.google.com with SMTP id f14-v6so9160530ita.4
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MCvnAP2zvT/QwGm7nQg73QliWgy6DeR6eMAWVulyX10=;
-        b=dthK2yOtLZ5/l+JEFeTiq4vp1dM3imB2OkHVsCkTQnpN9RskHuBQWjvk4X4ptoXtLl
-         aq5rkS17Qh1EsqRRgQvfLt/gSMt6OdoE1kWlZJpzvJK/iassWR30sgNt4PMahlWzoNT0
-         76W70QmfJLr7pdYiHGK1Ty4ZrQGSkCaMrjL8cNa103NlxKDPoWBQoNVSZ5Zyn/rwrrXk
-         GmEktSbHJ5YDZMHazXi1gPXPRWrDBY9WvxjjpV8Mx2fjcnOuZBy2WAPkttvH9KW55UF0
-         J/k7r/+zOoR6pwIyzJfdjAceNHZyopjbp6rUzVu7LkiU07GSD/1E0994soqW1dQg3D24
-         1c7g==
+         :cc:content-transfer-encoding;
+        bh=7+wF+ZztRxjNg4hrV25CgIDx86Iy/KYA+r2gm7JDVO4=;
+        b=DJkEK0Z6EotoR9s18y0T43UdeSKsUJOXqA4+b/u4o2eiR1WfOK2VWDEyuW4e9deo6P
+         1y4YspArTn9j6bgJPGNmK2Xjdku8QsNrbWmfK0mzQgKJfOSaIWGSMNDvNHBF2tsaldna
+         YCmmtTEFhGK/t1yTi502tEjyr5Kpa+LqUzIgsVxqmL9LiZMrjHNMTvDnnDeVHqNfpMYq
+         ePgE+r+y8SG8T1Rtx/oKPegWL7ECxFqf3acbWvo4YbvRqQg8vzxEsjHPw1bask27hH7x
+         ccE7QfWRLdlaEmAw9qDZDadL+TIi+K9BXr/C8Ol75K0NCog3XNwX+Bxr/AkwDySRmfLq
+         pHUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MCvnAP2zvT/QwGm7nQg73QliWgy6DeR6eMAWVulyX10=;
-        b=jE5XKRdTvPTuAg5GKRfcsWs6VWDprep9cAuN0g1V5upGRiemWz89nJdLMWo7FSGSmn
-         dx9WQ/dDPp2bo+xfK9PdZTm9ZX/q5/5RmZgn2Tg+MAExxkDqmF6WWcG89rhTuJ29Tqau
-         +VTiXM3tjWj5R4AE6hQby6ni7r/mpMtcvjw4r/TCr1eHhauLBWWb1lrpIHNh03nwVDJE
-         xlW3rRBDeBcC7sbwLnmE5XEOUmDtIzpUHMcpFVFeMzDf8b9LNcJQBN+geS9Br1uwGdi9
-         ZCuiB1+H0BdwrFmLsqqlNPA3k43f/9BEwhdRUvpi4V41awQGe0cIhtYG39Hvo6RHZK1E
-         CE0A==
-X-Gm-Message-State: ABuFfoi/4GYuY30IGIx4uLlzQo7+h36WbJ9zPssYjwEf4rc1BdNWWqxB
-        Fp3SH66Ahvb+KqeRg80uDYEQSClftIiBSJbyGFgkDw==
-X-Google-Smtp-Source: ACcGV603yiGHp5kp7/BWD/ffnknat0RD2NgzNTGy5Rvc9CF8hR7brwO5Qar/u1D3VffdMQ4/1cIJeHNe+LZ2F/pQacw=
-X-Received: by 2002:a25:7505:: with SMTP id q5-v6mr6705360ybc.191.1538073735089;
- Thu, 27 Sep 2018 11:42:15 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7+wF+ZztRxjNg4hrV25CgIDx86Iy/KYA+r2gm7JDVO4=;
+        b=PySdvxWfWKiqBbZCMl8oHVDYJ3WMKzM31m7Hx3NGamLzI7teIiIQsBSjKl0dJWAKro
+         4e2rgRWYtobNULbcIpUFUWuXIPJmIaJKE4DeSz5UqnKpEIGZitUwBG/z+x9eQ0c8Jwah
+         MdjUDaeJQQshAoktGv50/e32HYVRtTRF0Tqlflxgxq6WhbjRcWeMskcRyZYQyA/FnSWR
+         dkdqQIXe6ClAyIVQZXLBs6OdceDT5zryHpYGCppw4oYJ1zSJSkIaFCIWxYn3J2bAAOls
+         5pG/+EdlzZQXA6WhPImIJdRTGwDAsNp0RO/KR/efBkbjW7+q/NSy/AFk+ECVgBAzODwx
+         RRIg==
+X-Gm-Message-State: ABuFfohj54z/KlONKT3iapQAkUdXBn50zCjU6n3dW75p86vIGdc8RQn+
+        khknePwO5fubppS4wCAnqxvMBTkMuROaTd3Eadq7Mg==
+X-Google-Smtp-Source: ACcGV60KySBargwIc4RCWrvyy7pXSvGL/8Huhe8RZeEhFxiAMkp/QnthCZRKPF9rzqFRSf2wIDseck1YKlu1UHW6Fh0=
+X-Received: by 2002:a02:270f:: with SMTP id g15-v6mr10471310jaa.94.1538074193032;
+ Thu, 27 Sep 2018 11:49:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180912053519.31085-1-steadmon@google.com> <20180927012455.234876-1-steadmon@google.com>
- <20180927012455.234876-3-steadmon@google.com>
-In-Reply-To: <20180927012455.234876-3-steadmon@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Sep 2018 11:42:03 -0700
-Message-ID: <CAGZ79kZuJr35b4ui3J_sMkscQDt+tx88jFgKY9CKn5CtHnN7tA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] archive: use packet_reader for communications
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git <git@vger.kernel.org>
+References: <20180923170438.23610-1-pclouds@gmail.com> <87bm8kjeu5.fsf@evledraar.gmail.com>
+ <CACsJy8Dwo_cBEQeqttj3G=RGaJT7bmVb=ABnV2916swgYQnyrw@mail.gmail.com> <87r2heiybu.fsf@evledraar.gmail.com>
+In-Reply-To: <87r2heiybu.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 27 Sep 2018 20:49:26 +0200
+Message-ID: <CACsJy8AxUC7MjTnwG8LL+-WEQzTCj7pya8s-6eE=NG3HaWWunw@mail.gmail.com>
+Subject: Re: [PATCH] worktree: add per-worktree config files
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 6:25 PM Josh Steadmon <steadmon@google.com> wrote:
+On Thu, Sep 27, 2018 at 8:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> ...
 >
-> Using packet_reader will simplify version detection and capability
-> handling, which will make implementation of protocol v2 support in
-> git-archive easier.
->
-> This refactoring does not change the behavior of "git archive".
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> So there is some special casing of .git/config somewhere. I looked into
+> this ages ago, and don't remember where that's done.
 
-This patch is
-Reviewed-by: Stefan Beller <sbeller@google.com>
-
-Thanks!
-
-> ---
->  builtin/archive.c | 23 ++++++++++++++---------
->  1 file changed, 14 insertions(+), 9 deletions(-)
->
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> index e74f675390..4eb547c5b7 100644
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -27,10 +27,11 @@ static int run_remote_archiver(int argc, const char **argv,
->                                const char *remote, const char *exec,
->                                const char *name_hint)
->  {
-> -       char *buf;
->         int fd[2], i, rv;
->         struct transport *transport;
->         struct remote *_remote;
-> +       struct packet_reader reader;
-> +       enum packet_read_status status;
->
->         _remote = remote_get(remote);
->         if (!_remote->url[0])
-> @@ -38,6 +39,8 @@ static int run_remote_archiver(int argc, const char **argv,
->         transport = transport_get(_remote, _remote->url[0]);
->         transport_connect(transport, "git-upload-archive", exec, fd);
->
-> +       packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
-> +
->         /*
->          * Inject a fake --format field at the beginning of the
->          * arguments, with the format inferred from our output
-> @@ -53,18 +56,20 @@ static int run_remote_archiver(int argc, const char **argv,
->                 packet_write_fmt(fd[1], "argument %s\n", argv[i]);
->         packet_flush(fd[1]);
->
-> -       buf = packet_read_line(fd[0], NULL);
-> -       if (!buf)
-> +       status = packet_reader_read(&reader);
-> +
-> +       if (status != PACKET_READ_NORMAL || reader.pktlen <= 0)
->                 die(_("git archive: expected ACK/NAK, got a flush packet"));
-> -       if (strcmp(buf, "ACK")) {
-> -               if (starts_with(buf, "NACK "))
-> -                       die(_("git archive: NACK %s"), buf + 5);
-> -               if (starts_with(buf, "ERR "))
-> -                       die(_("remote error: %s"), buf + 4);
-> +       if (strcmp(reader.line, "ACK")) {
-> +               if (starts_with(reader.line, "NACK "))
-> +                       die(_("git archive: NACK %s"), reader.line + 5);
-> +               if (starts_with(reader.line, "ERR "))
-> +                       die(_("remote error: %s"), reader.line + 4);
->                 die(_("git archive: protocol error"));
->         }
->
-> -       if (packet_read_line(fd[0], NULL))
-> +       status = packet_reader_read(&reader);
-> +       if (status == PACKET_READ_NORMAL && reader.pktlen > 0)
->                 die(_("git archive: expected a flush"));
->
->         /* Now, start reading from fd[0] and spit it out to stdout */
-> --
-> 2.19.0.605.g01d371f741-goog
->
+Thanks! At least know I have some clues to look into (and will do).
+--=20
+Duy
