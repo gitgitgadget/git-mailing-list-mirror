@@ -2,187 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4C0D1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 20:53:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D86821F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 21:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727361AbeI1DNw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 23:13:52 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45850 "EHLO
+        id S1727421AbeI1Diq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 23:38:46 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35473 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727295AbeI1DNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 23:13:51 -0400
-Received: by mail-wr1-f67.google.com with SMTP id m16so4052241wrx.12
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 13:53:41 -0700 (PDT)
+        with ESMTP id S1727389AbeI1Diq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 23:38:46 -0400
+Received: by mail-wr1-f67.google.com with SMTP id o16so4169253wrx.2
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 14:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=USNKKgUlrWuyttctIO9PIox+wd22ud+ySWfnrlCJ4z0=;
-        b=r73FpX3Hr7UbGDYMKRcgkG7vOip4y9xQslpI/kh6YCyrLPJubM8kYrXLd/lJzN0LvO
-         ms+YtiXJ0WNZh0SRDMincDHNl+KvJMkVL6Nce6HBhalaGicwTEGjdjOuQBwzEzpY8AeD
-         OMx3IsT0mJQTGgg1taAJrFmvaAz9jgBLsUAXFZtBTCdMaoo4ydZrUIJG/N4jOvtqS+An
-         ZciukliHSh7RqjwdQSnu2dqPwD8CsAzZIy2eB5p9C+muUhh3XUH/L1IVxVtoKdYAsUB+
-         EZ28G6JLJPRDTLaxfDbDzDtFnsTMhpufZL1Kt03jaxokJ8Xa2s8+e2ycAc5IVKB3shpC
-         juLA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=mYiHZWyE5MIGceONcEDaMEirC1nWmuRasNk7/1tpfsA=;
+        b=SQFY68zpEPn8NXigxn5l0qObxUqtiG3A4sZCTetejBviL0ZaOMay8f659bQHAUOPjY
+         ikkyyre9SiA3HYoeAA4UwkrPjWnuL0jEGzrVuMkoXENFRoFxIrdGSUidEW2mqp+LdDt7
+         nfszdr3k7mVDckTMnlWFxEfBiUOVSmJgDJ1lYCAzNx6ElhY0tHWC6pg1WzmS11QeZQ9d
+         arspGlpAmoScTp//cKynxt1CIUNjDmDBDvbvcZkZUSEum4Lro4X4Y54gK2ZqEvLR0pRg
+         reb0XjvgUqxVqcuWxiFNNtGJGQoCuAPaF0rJoTlHgMK7MbsohTQB/wx4pAZ3EZc/3CM+
+         yKlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=USNKKgUlrWuyttctIO9PIox+wd22ud+ySWfnrlCJ4z0=;
-        b=iIbN4Xv5bn8NHglzTVA7tvrDyph2IRgq8YA3RIT7AT/KrC8NSuaFQHJsgNvr2JCARV
-         dXBmP5A3Ai6bNbnbqMZ9Aj+Jtu/02WlNyGDSgXIhD/+jQcCFs1DfWD+PdXSrgifc9b06
-         q/BTmKyhb0RkHhLxSmcYiFKpbuxYngQHqr6sM3uok7yUpP1JZ7l/Varoi5iQ65+BXtIN
-         SwB8yNo+XngEUL/XWueXRP+tSi/UiMFKCRXdp/9z7wpA70J0urlOZUzi7aVYKzCC3Ihw
-         BIZUoty0fid1K3WR/dAUs502rnR6No9ZyhObvMQRRl3AUoEwkqgqk4lHk5tGD+LFTn1f
-         V2SQ==
-X-Gm-Message-State: ABuFfogENhjVgTnuU4xPQw5Ip/PxQaZak4xQsAcqiEe3Nce7LjHuVpL3
-        A7yCIG9dKHwGhZOPd9zanyo=
-X-Google-Smtp-Source: ACcGV63XZqiAj325aEwaa145nQxOLjwqNNS0Gu9gbCo0+kNSBi0chGoSVmGigmqIqdhenajplTpxPQ==
-X-Received: by 2002:adf:c98d:: with SMTP id f13-v6mr10186626wrh.148.1538081620830;
-        Thu, 27 Sep 2018 13:53:40 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mYiHZWyE5MIGceONcEDaMEirC1nWmuRasNk7/1tpfsA=;
+        b=Tj1vOk/j0KDjC8GG/xp8B3VNsBtYadKzPb+zSL43z1C27y7nCcoOzd7QD5oqxOiXWY
+         79VhP4SOJdfmW0NXZIQN3e3P1h5bgpmkymMaOFTQf7wGQ5Ir3fcHyYotDA+ta+SPMREU
+         e0jfxJuTE45IonswOjfZ9FyIsCo66TKT6M8MtYDgnBloCyM+q3zYWDVZlYOsqR/XSnaO
+         k53RNYNKcBm+RMnSOws9qUn20nKLRFp0Z7o/GMxiyn+tR0Vvq7JrfmJjvhAqbj+IMUvn
+         ime8f0VQOWPTXQffszLr1GLydd2VqyneHkNWjYrXkn/PDygEQ+/VDziAEEmTlkc0Ofj3
+         jdXA==
+X-Gm-Message-State: ABuFfoitSXodPq3LnwH6m8BO1EySc17aHPzGbHSJOhs//aH7bv6GWiYo
+        RWOysPWfr4ellyqm86bUdT4=
+X-Google-Smtp-Source: ACcGV602NG16abBIcbul/cNe49FNc0pJSG0o2kbzyXAc72HklkXFarOUmHx80kdcidswKKjbT+q/6g==
+X-Received: by 2002:a5d:608b:: with SMTP id w11-v6mr10668113wrt.193.1538083109318;
+        Thu, 27 Sep 2018 14:18:29 -0700 (PDT)
 Received: from localhost (x4dbd8656.dyn.telefonica.de. [77.189.134.86])
-        by smtp.gmail.com with ESMTPSA id r140-v6sm203544wmd.7.2018.09.27.13.53.38
+        by smtp.gmail.com with ESMTPSA id i4-v6sm4839040wrs.87.2018.09.27.14.18.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 13:53:39 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 22:53:37 +0200
+        Thu, 27 Sep 2018 14:18:28 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 23:18:26 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Alexander Pyhalov <apyhalov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: t7005-editor.sh failure
-Message-ID: <20180927205337.GK27036@localhost>
-References: <CALOYryFX4PPR+=1L+sjEqPsdmNh_+vNxGf0wwuAgoYzau=GShw@mail.gmail.com>
- <CAN0heSrhaaP0ds8K92g9w5DAnbwuq8mM6WLKrTQ7e_a8Fku9KA@mail.gmail.com>
- <CALOYryEMB5HoCXbVKnc49KLkk2ySZjn4DG9RbJjQAvPn1H5K6Q@mail.gmail.com>
- <CAN0heSpUhzbTjceVhBxk_jjE=vOAVTzXGFQ=UL9Y+muJHe0S6w@mail.gmail.com>
- <20180926121107.GH27036@localhost>
- <xmqqlg7oktto.fsf@gitster-ct.c.googlers.com>
- <xmqq36twkr27.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/5] CodingGuidelines: add shell piping guidelines
+Message-ID: <20180927211826.GL27036@localhost>
+References: <cover.1536969438.git.matvore@google.com>
+ <cover.1537493611.git.matvore@google.com>
+ <7dd9a1120726dee34aeebdfa4bf45a232c185500.1537493611.git.matvore@google.com>
+ <20180924210314.GE27036@localhost>
+ <CAMfpvhJ-chi7OMRKjjk79r0uqCqW67Vj9J=tT7Kz-XUmw41H5A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq36twkr27.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAMfpvhJ-chi7OMRKjjk79r0uqCqW67Vj9J=tT7Kz-XUmw41H5A@mail.gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 12:16:16PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Sep 25, 2018 at 02:58:08PM -0700, Matthew DeVore wrote:
+> Here is the new commit with updated message (I will wait for a day or
+> two before I send a reroll):
+> 
+>     Documentation: add shell guidelines
+> 
+>     Add the following guideline to Documentation/CodingGuidelines:
+> 
+>             &&, ||, and | should appear at the end of lines, not the
+>             beginning, and the \ line continuation character should be
+>             omitted
+> 
+>     And the following to t/README (since it is specific to writing tests):
+> 
+>             pipes and $(git ...) should be avoided when they swallow exit
+>             codes of Git processes
+> 
+>     Signed-off-by: Matthew DeVore <matvore@google.com>
+> 
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 48aa4edfb..3d2cfea9b 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -118,6 +118,24 @@ For shell scripts specifically (not exhaustive):
+>                  do this
+>          fi
+> 
+> + - If a command sequence joined with && or || or | spans multiple
+> +   lines, put each command on a separate line and put && and || and |
+> +   operators at the end of each line, rather than the start. This
+> +   means you don't need to use \ to join lines, since the above
+> +   operators imply the sequence isn't finished.
+> +
+> +        (incorrect)
+> +        grep blob verify_pack_result \
+> +        | awk -f print_1.awk \
+> +        | sort >actual &&
+> +        ...
+> +
+> +        (correct)
+> +        grep blob verify_pack_result |
+> +        awk -f print_1.awk |
+> +        sort >actual &&
+> +        ...
+> +
+>   - We prefer "test" over "[ ... ]".
+> 
+>   - We do not write the noiseword "function" in front of shell
+> @@ -163,7 +181,6 @@ For shell scripts specifically (not exhaustive):
+> 
+>     does not have such a problem.
+> 
+> -
+>  For C programs:
+> 
+>   - We use tabs to indent, and interpret tabs as taking up to
+> diff --git a/t/README b/t/README
+> index 9028b47d9..3e28b72c4 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -461,6 +461,32 @@ Don't:
+>     platform commands; just use '! cmd'.  We are not in the business
+>     of verifying that the world given to us sanely works.
+> 
+> + - Use Git upstream in the non-final position in a piped chain, as in:
 
-> > I quote >"$file" (but not var=$var) because the CodingGuidelines
-> > tells me to:
+Note the starting upper case 'U'.
+
+> +
+> +     git -C repo ls-files |
+> +     xargs -n 1 basename |
+> +     grep foo
+> +
+> +   which will discard git's exit code and may mask a crash. In the
+> +   above example, all exit codes are ignored except grep's.
+> +
+> +   Instead, write the output of that command to a temporary
+> +   file with ">" or assign it to a variable with "x=$(git ...)" rather
+> +   than pipe it.
+> +
+> + - Use command substitution in a way that discards git's exit code.
+
+'U' again.
+
+> +   When assigning to a variable, the exit code is not discarded, e.g.:
+> +
+> +     x=$(git cat-file -p $sha) &&
+> +     ...
+> +
+> +   is OK because a crash in "git cat-file" will cause the "&&" chain
+> +   to fail, but:
+> +
+> +     test_cmp expect $(git cat-file -p $sha)
+> +
+> +   is not OK and a crash in git could go undetected.
+
+Well, this is not OK indeed, because it doesn't make any sense in the
+first place :)  'test_cmp' requires two paths as argumens, but the
+output of 'git cat-file -p' is the whole _content_ of the given object.
+
+>   - use perl without spelling it as "$PERL_PATH". This is to help our
+
+Note the starting lower case 'u'.
+
+This is because these are the continuation of the "Don't:" some lines
+earlier, so your new points should start with a lower case 'u' as
+well.
+
+
+Sidenote: I think we should consider reformatting this whole section
+as:
+
+  - Don't do this.
+  - Don't do that.
+
+because it grew so much that when I look at the last points, then that
+starting "Don't:" has already scrolled out of my screen.
+
+>     friends on Windows where the platform Perl often adds CR before
+>     the end of line, and they bundle Git with a version of Perl that
+> 
+> 
 > >
-> >  - Redirection operators should be written with space before, but no
-> >    space after them.  In other words, write 'echo test >"$file"'
-> >    instead of 'echo test> $file' or 'echo test > $file'.  Note that
-> >    even though it is not required by POSIX to double-quote the
-> >    redirection target in a variable (as shown above), our code does so
-> >    because some versions of bash issue a warning without the quotes.
 > >
-> > ;-)
-
-Oh, indeed, I didn't notice that.
-
-> Subject: t7005: make sure it passes under /bin/bash
-> 
-> In POSIX.1 compliant shells, you should be able to use a variable
-> reference without quoting for the target of the redirection, e.g.
-> 
-> 	echo foo >$file
-> 	echo bar >$1
-> 
-> without fear of substitution of $file getting split at $IFS.
-> However, some versions of bash throws a warning, especially when
-
-I would say it's an error, not a warning.
-
-Regarding the "some versions", it's unclear when Bash started to apply
-word splitting to the filename in redirection.  The changelog of
-version 2.04-beta2 contains the following entry:
-
-  When running in POSIX.2 mode, bash no longer performs word
-  splitting on the expanded value of the word supplied as the filename
-  argument to redirection operators.
-
-so it must have started earlier, but I found further no sign of it in
-the changelog.  In its man page the first ever mention of word
-splitting affecting redirections came only later, in version 2.04.
-
-v2.04 was release in 2000, so it's bordering on "since forever".
-
-
-> they are invoked as /bin/bash (not as /bin/sh).  Those who build
-> with SHELL_PATH=/bin/bash and run t/t7005-editor.sh triggers an
-
-The grammar here confused me a bit...  maybe s/triggers/trigger/ ?
-
-> unnecessary failure due to this issue.
-> 
-> Fix it by making sure that the generated "editor" script quotes the
-> target of redirection.  
-> 
-> While at it, update the way to creatd these scripts to use the
-> write_script wrapper, so that we do not have to worry about writing
-> the she-bang line and making the result executable.
-> 
-> Reported-by: Alexander Pyhalov <apyhalov@gmail.com>
-> Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t7005-editor.sh | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
-> 
-> diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
-> index b2ca77b338..b0c4cc4ca0 100755
-> --- a/t/t7005-editor.sh
-> +++ b/t/t7005-editor.sh
-> @@ -20,11 +20,9 @@ fi
->  
->  for i in GIT_EDITOR core_editor EDITOR VISUAL $vi
->  do
-> -	cat >e-$i.sh <<-EOF
-> -	#!$SHELL_PATH
-> +	write_script "e-$i.sh" <<-EOF
-
-This can't be <<-\EOF ...
-
->  	echo "Edited by $i" >"\$1"
-
-... because here we have to expand $i, and, therefore, we need both
-double-quotes and \-escaping for $1.  Ok.
-
->  	EOF
-> -	chmod +x e-$i.sh
->  done
->  
->  if ! test -z "$vi"
-> @@ -112,8 +110,9 @@ do
->  done
->  
->  test_expect_success 'editor with a space' '
-> -	echo "echo space >\$1" >"e space.sh" &&
-> -	chmod a+x "e space.sh" &&
-> +	write_script "e space.sh" <<-\EOF &&
-
-But here it can be <<-\EOF ...
-
-> +	echo space >"$1"
-
-... so here we don't need the \-escaping.  Good.
-
-> +	EOF
->  	GIT_EDITOR="./e\ space.sh" git commit --amend &&
->  	test space = "$(git show -s --pretty=format:%s)"
->  
+> > These last two points, however, are specific to test scripts,
+> > therefore I think they would be better placed in 't/README', where the
+> > rest of the test-specific guidelines are.
+> >
+> > >  For C programs:
+> > >
+> > > --
+> > > 2.19.0.444.g18242da7ef-goog
+> > >
