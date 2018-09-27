@@ -2,89 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2820D1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 18:20:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ECE01F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 18:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727587AbeI1Aj4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 20:39:56 -0400
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:35695 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727223AbeI1Aj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 20:39:56 -0400
-Received: by mail-yb1-f195.google.com with SMTP id o63-v6so1529714yba.2
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:20:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=upJsA5RPn89UL6zIgPe/q1uW13UOylEpaHnsq8xxcYg=;
-        b=ToqUrLUhiOTyUbwBEAx9zXU5R3vA/SgHREMTCJHcNqrBD0EpByCkIhyaG+gFdhw5cP
-         yITkfG+Kb/OkuZOjp5Ov/8ic9PoOA7ijh2oaSPpQtw4vyGu0cnM/exiY8ku8nX4Ybyx7
-         w9+HfBKiMFfJQ0rSwdzSaxaV6uSbdrUSazPrc68qogC1x2KcHC91/8IL6SCfm6p51GPI
-         BMl6ygATVMBPItKjDbdD0znXR3llu4KNT61uOPn9OVggxTm8XcWq6/WTFO0Gk0Cxe80u
-         xNXFvybbcc/+NxYSwfJYj8QAp5OFmG7QuLRVZ8VYWdjs2U24i4WWbyqQurhKcmKTe5zc
-         o7aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=upJsA5RPn89UL6zIgPe/q1uW13UOylEpaHnsq8xxcYg=;
-        b=RdFXEFg9hPpzngjm8Cfsw7AaGhqo9vvPtDcHSM7AKKLqayRDTJ6pXGSQWSPvJ9+qvH
-         nw4lqynYXORNUvoYkfdy2xmRUmHgf3Mf9qphTqGTb9nP/qDp4jcOaFdoWU/zdQnbh85I
-         ZFdEyU5swVJXF1IJAcYLyGHcdBJXOvCcRfiUPcr2zIfVLU6BfU5f/nDtZtFUXar9/HsP
-         i1BD2NlO37QHOgVkSe1Onwn43rCGdr51z3NRhzcGVeq9H+8tB1yrXSsmdGxKe3R4CVzC
-         scWK01I0w+w1pSMoY9YORssJbO4X6es0rDepR+NKsxEBh6Gqvehpg7RhHQD5K7wZUCjw
-         vvgQ==
-X-Gm-Message-State: ABuFfogrbUtkT+C1ltp2iYwGH9q2WTriBGeptJcMPJ9WqPXcbMJFm6zB
-        8Csqw6ez9lEpiQGI3aaGxlNgFtzhC4yRDqJvzq5TPcVMs0c=
-X-Google-Smtp-Source: ACcGV62Oe+G2HeL8K/H2hIiKdHh/YJ8qPdRxek3mcVnqW56sjNno7BgYQ8jFJtZFdeZDYlIt6RZ4HCTBSaHwI8CZNBg=
-X-Received: by 2002:a5b:1ce:: with SMTP id f14-v6mr6492499ybp.363.1538072424440;
- Thu, 27 Sep 2018 11:20:24 -0700 (PDT)
+        id S1728278AbeI1ApC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 20:45:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33858 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727622AbeI1ApC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 20:45:02 -0400
+Received: (qmail 7116 invoked by uid 109); 27 Sep 2018 18:25:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 27 Sep 2018 18:25:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3457 invoked by uid 111); 27 Sep 2018 18:25:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 27 Sep 2018 14:25:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Sep 2018 14:25:29 -0400
+Date:   Thu, 27 Sep 2018 14:25:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: On shipping more of our technical docs as manpages
+Message-ID: <20180927182528.GB2468@sigill.intra.peff.net>
+References: <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com>
+ <20180926041517.GA2140@sigill.intra.peff.net>
+ <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
+ <87d0t0jghm.fsf@evledraar.gmail.com>
+ <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
+ <87a7o4je0t.fsf@evledraar.gmail.com>
+ <20180926185812.GD30680@sigill.intra.peff.net>
+ <878t3oj8em.fsf@evledraar.gmail.com>
+ <20180927062011.GA1318@sigill.intra.peff.net>
+ <xmqqwor6hmgk.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180912053519.31085-1-steadmon@google.com> <20180927012455.234876-1-steadmon@google.com>
-In-Reply-To: <20180927012455.234876-1-steadmon@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Sep 2018 11:20:13 -0700
-Message-ID: <CAGZ79kaBvHwUUf0rXeAwBY-M+Oi9JjsQnLs4v3FAvx4a9ZRbSA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] Add proto v2 archive command with HTTP support
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwor6hmgk.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 6:25 PM Josh Steadmon <steadmon@google.com> wrote:
->
-> This is the second version of my series to add a new protocol v2 command
-> for archiving, with support for HTTP(S).
->
-> NEEDSWORK: a server built with this series is not backwards-compatible
-> with clients that set GIT_PROTOCOL=version=2 or configure
-> protocol.version=2. The old client will unconditionally send "argument
-> ..." packet lines, which breaks the server's expectations of a
-> "command=archive" request,
+On Thu, Sep 27, 2018 at 10:36:11AM -0700, Junio C Hamano wrote:
 
-So if an old client sets protocol to v2, it would only apply that
-protocol version
-to fetch, not archive, so it would start following a v0 conversation, but
-as the protocol version is set, it would be transmitted to the server.
-This sounds like a bug in the client?
+> Jeff King <peff@peff.net> writes:
+> 
+> > If you're interested in pulling documentation out of the header files
+> > and generating asciidoc from it, I'm happy to at least try keeping it up
+> > to date. When we started putting this information into header files, we
+> > used "/**" to start the comment, as a special marker to indicate it was
+> > worth pulling out. I don't know how well we've maintained that
+> > convention, but it's a starting point.
+> 
+> I noticed some people add these extra asterisk at the beginning of
+> comment, but I do not recall that we declared it is a convention we
+> adopt, so I'd rather be surprised if we've "maintained" it.
 
->  while the server's capability advertisement
-> in turn breaks the clients expectation of either an ACK or NACK.
+True. _I_ declared it as a convention and used it when I migrated some
+of the initial api-* documents, but I don't know if anybody else
+followed that lead.
 
-Could a modern client send either another protocol version (3?)
-or a special capability along the protocol version ("fixed_archive")
+FWIW, it is not my own convention, but one used by other tools like
+doxygen (which in turn got it from javadoc, I think).
 
-> I've been discussing workarounds for this with Jonathan Nieder, but
-> please let me know if you have any suggestions for v3 of this series.
+> Please have it in CodingGuidelines or somewhere once this thread
+> settles and we decide to keep that convention (I have no problem
+> with the convention; it is just I personally didn't think it was
+> worth doing myself at least until now that we might have found
+> somebody who wants to make use of the markings).
 
-Care to open the discussion to the list? What are the different
-approaches, what are the pros/cons?
+Yeah, this is basically why I hadn't pushed harder for it. If nobody is
+actually extracting based on the convention, there is not much point. So
+I was waiting for somebody to show up with an interest in using an
+extraction tool.
+
+-Peff
