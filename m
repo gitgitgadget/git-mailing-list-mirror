@@ -2,156 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15D251F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 18:34:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB4331F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 18:37:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728101AbeI1AyG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 20:54:06 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44969 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727621AbeI1AyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 20:54:06 -0400
-Received: by mail-ed1-f68.google.com with SMTP id t11-v6so5931180edq.11
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:34:31 -0700 (PDT)
+        id S1728446AbeI1A45 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 20:56:57 -0400
+Received: from mail-io1-f74.google.com ([209.85.166.74]:37543 "EHLO
+        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727622AbeI1A45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 20:56:57 -0400
+Received: by mail-io1-f74.google.com with SMTP id r18-v6so4004235ioj.4
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=gfPjZ8738FHQ6lTCXZAbX5Ji2Id7IAk4v6w3r4RBK4I=;
-        b=Km6ZEZAYrPoDwTh90a4yTxgZirlHNJl/DvsZ+EcL6yELT5lPnTGI2vMPaU1h1sS2IA
-         rbqvWDF1QZr1ssyHko4hCfbDVEg6C92CU2QshrEMwfrSk2qDVcY2uj7tAmfvDWJdQX7W
-         D9pr1+HdGPS+ofB1qzQ6TpxhCQXmRZhK2C84V5PiyciDP4T+9RfnMwpdxTtdVrYxQBqj
-         KtLYYCcl+rjbNDsfdsUvQcPRWpoZocvZWA2szNkeKySjbx9+zdS6/hQnpyEEOsrrFTA+
-         8HkkfyfD2BLOuW5PElcedN0/dF3OOTFTUcEIcGiYh+k0qOSpKt/wuDy43PCrFojWutTR
-         523g==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=9zzASNn0UB8SMMU/QL52HI2DlHfkvPau9lrDnePKAv4=;
+        b=W5polPkAoul3ZGbYlcqd0PqLfgDSP3QfX2WdSyemkjKP2pYzA3/ebzIs6exF1Oxr1N
+         hr4Lj98o2h+u46Ujrph8qToouzEe2G1Rs65p8VW3ok86rzSbXNhcNP2kcC1RoJqDNgQ2
+         fobkQ73Gtdr8m5ZO5Nrbz6MoCLSvI/EUtcaADycz/9M7jzGSS8c1jhi7qonjR9Ur9N/2
+         I7ZlyZqN3zWtAWFMmBA33qTGKs8k7+91t5jH8xDszC9Eu7p5MxLyW6CEiI5I9JalCt6q
+         w5lS1eNcClsAEa4SuX1z48eajIcU1pP/VMQeRVfsEqtvtR8DC64yx2NxvCaT9CK/CcDG
+         j1Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=gfPjZ8738FHQ6lTCXZAbX5Ji2Id7IAk4v6w3r4RBK4I=;
-        b=XLHbAdO2A1cHl4RZo6/POOjH31ECKZX7rv6lcPT6LcHB9YIsLrMLGNbfhLoGp7giL8
-         4qQPV9fY262IFBSg68xyUF84+dxY37eoTp+ZOMCTdDvJZQB0gzdI1/Gf8xQAYkvjwqJm
-         A+7p4o5BWTUYyktOtsn0sifw3V/yP08vNS5w1Xnpz/9TueNDZ4RV4xYLSfr7tKSC9oz7
-         PdwGtMfHrtO/Of+R0+GHVaAI+4WNzXUQPbWe5HfQzTxh5qQ/6Bfxmw97URmuTbHIDjpY
-         9qtDp8bsd4Kd4nZo9R+8OVDZNKtX4MDXx4pfrVdIwg7GmSBf2Z9swiJ2ombweDZqQv6X
-         tHLg==
-X-Gm-Message-State: ABuFfohFdDULJ6I9aKNB6ZZGclYnQQh8ThwJ1mBSRcBoYlib8ADxKv8g
-        gx7ZLSURn0U/CckOPIIkWxs=
-X-Google-Smtp-Source: ACcGV63o+9y+9TS/k65HMC1iw90JdRudr/pfSm2qlpPLNfLLXBpsya3i6eNPFzsMg0jcT7uq0VuEqg==
-X-Received: by 2002:a50:8d86:: with SMTP id r6-v6mr19134825edh.125.1538073270624;
-        Thu, 27 Sep 2018 11:34:30 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id a12-v6sm221258ejr.46.2018.09.27.11.34.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 11:34:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] worktree: add per-worktree config files
-References: <20180923170438.23610-1-pclouds@gmail.com> <87bm8kjeu5.fsf@evledraar.gmail.com> <CACsJy8Dwo_cBEQeqttj3G=RGaJT7bmVb=ABnV2916swgYQnyrw@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CACsJy8Dwo_cBEQeqttj3G=RGaJT7bmVb=ABnV2916swgYQnyrw@mail.gmail.com>
-Date:   Thu, 27 Sep 2018 20:34:29 +0200
-Message-ID: <87r2heiybu.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=9zzASNn0UB8SMMU/QL52HI2DlHfkvPau9lrDnePKAv4=;
+        b=OkIiKLlYKPHAxTzWVTv2kApq6EkpNxhX/6+eR41kYqrAu9A+URe2WKCsnRErhgDxzv
+         CWNkVjTr17XK3hcwIaiHI7s71LhpSsdCt/PZ835p3LE29RcO1I75AYVCOmSCAoTVQrP8
+         29v1o8161m9udfgKeRaYEeNu6Xkll26Lfs0aGs6yfwXCNseBn98YDh+puVLBIY+yBhxw
+         zh6jpoJysswBYLCqM5UOA6wOtzmz6mW+n65FxsKZXYGrAwbIT9K2iMPRw5dQV5r7m7Jx
+         ixw69IUVOhPoW1GwaT+c4QTU7wwOhgbPeySBi2snQODvZ/h4nPZxChX2VrLCBT+BXa3s
+         wL0Q==
+X-Gm-Message-State: ABuFfojXqHM7VxwfJJwTbao8Eozygwz9LGPT07T6O7P29Xi1E5+hNa0z
+        lvNloP8yiM/xZfnUYxJNV+WNK0DI11mamT6v43Td
+X-Google-Smtp-Source: ACcGV60YhM1Lb+m7VWZD2OjUVNtico+7DPWvYG588mirkcV5pj0QE5MCCKUpPcbjNdgQvFtJXj6gF3XnokEzCQ+QYw2N
+X-Received: by 2002:a24:4245:: with SMTP id i66-v6mr7790161itb.5.1538073441821;
+ Thu, 27 Sep 2018 11:37:21 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 11:37:18 -0700
+In-Reply-To: <xmqqh8idns9i.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20180927183718.89804-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqh8idns9i.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: Re: [PATCH] fetch-pack: approximate no_dependents with filter
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> It is very clear how you are churning the code, but it is utterly
+> unclear from the description what you perceived as a problem and why
+> this change is a good (if not the best) solution for that problem,
+> at least to me.
 
-On Thu, Sep 27 2018, Duy Nguyen wrote:
+Firstly, thanks for your comments and questions - it's sometimes hard
+for me to think of the questions someone else would ask when reading one
+of my patches. I have tried to rewrite the commit message (you can see
+it at the end of this e-mail) following your questions.
 
-> On Wed, Sep 26, 2018 at 8:25 PM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> On Sun, Sep 23 2018, Nguyễn Thái Ngọc Duy wrote:
->>
->> > +extensions.worktreeConfig::
->> > +     If set, by default "git config" reads from both "config" and
->> > +     "config.worktree" file in that order.
->>
->> How does this interact with config that's now only used if it's in
->> .git/config? E.g. you can't set remote.<remote>.<url> in ~/.gitconfig,
->> will that be inherited across the two of these?
->
-> Er... we can't? If I remember correctly we don't have any enforcement
-> on where what config vars must or must not go. The only exception is
-> core.bare and core.worktree which is only read from $GIT_DIR/config
-> because of the way they are involved in .git directory discovery. If I
-> put remote "foo" in ~/.gitconfig, "git remote" happily reports remote
-> "foo" to me.
->
-> To sum up, we always inherit config from higher levels, with
-> /etc/gitconfig being the highest and $GIT_DIR/config the lowest. It's
-> up to the user to share config between repos responsibly. This patch
-> only adds one more level, $GIT_DIR/config.worktree which is now the
-> lowest level.
+The new paragraph 1 addresses what I perceive as a problem, and the new
+paragraph 2 addresses the ideal and partial solution.
 
-I see I'm misremembering most of the details here. I thought that if I put:
+> After reading the above description, I cannot shake the feeling that
+> this is tied too strongly to the tree:0 use case?  Does it help
+> other use cases (e.g. would it be useful or harmful if a lazy clone
+> was done to exclude blobs that are larger than certain threshold, or
+> objects of all types that are not referenced by commits younger than
+> certain threshold)?
 
-    [remote "whatever]
-    url = ...
+Yes, it is solely for the tree:0 use case. But it doesn't hurt other use
+cases, as I have explained in new paragraph 3.
 
-Into my ~/.gitconfig that it wouldn't work, but it does, e.g. here in my
-~/g/git:
+I have retained old paragraph 3 as new paragraph 4, and removed old
+paragraph 2 as it mostly duplicates the comments in the code. New commit
+message follows:
 
-    $ grep -A1 whatever .git/config
-    $
-    $ grep -A1 whatever ~/.gitconfig
-    [remote "whatever"]
-        url = git@github.com:test/git.git
+[start commit message]
 
-But there's still some special casing for .git/config going on,
-e.g. here:
+fetch-pack: exclude blobs when lazy-fetching trees
 
-    $ git config remote.origin.url
-    git@github.com:git/git.git
-    $ git config remote.whatever.url
-    git@github.com:test/git.git
-    $ git remote get-url origin
-    git@github.com:git/git.git
-    $ git remote get-url whatever
-    fatal: No such remote 'whatever'
+A partial clone with missing trees can be obtained using "git clone
+--filter=tree:none <repo>". In such a repository, when a tree needs to
+be lazily fetched, any tree or blob it directly or indirectly references
+is fetched as well, regardless of whether the original command required
+those objects, or if the local repository already had some of them.
 
-And:
+This is because the fetch protocol, which the lazy fetch uses, does not
+allow clients to request that only the wanted objects be sent, which
+would be the ideal solution. This patch implements a partial solution:
+specify the "blob:none" filter, somewhat reducing the fetch payload.
 
-    $ git remote set-url whatever git@github.com:test2/git.git
-    fatal: No such remote 'whatever'
+This change has no effect when lazily fetching blobs (due to how filters
+work). And if lazily fetching a commit (such repositories are difficult
+to construct and is not a use case we support very well, but it is
+possible), referenced commits and trees are still fetched - only the
+blobs are not fetched.
 
-So there is some special casing of .git/config somewhere. I looked into
-this ages ago, and don't remember where that's done.
+The necessary code change is done in fetch_pack() instead of somewhere
+closer to where the "filter" instruction is written to the wire so that
+only one part of the code needs to be changed in order for users of all
+protocol versions to benefit from this optimization.
 
-I was wondering if these patches introduced any unwanted edge cases in
-this regard, e.g. if you're using the per-worktree config, and you have
-remotes in .git/config, does "git remote get/set-url" do the right
-thing?
-
-Then if we have remotes in .git/config, should we add new remotes to
-.git/config or the per-worktree file? I'd lean towards .git/config,
-since remotes are orthagonal to worktrees, and closely tied with refs
-which are shared no matter what this extension says, but maybe there's a
-good argument for doing it the other way around.
-
-
-
->> > In multiple working
->> > +     directory mode, "config" file is shared while
->> > +     "config.worktree" is per-working directory.
->>
->> "But then how will it work with more than one?" I found myself thinking
->> before reading some more and remembering .git/worktree. Shouldn't we
->> consistently say:
->>
->>     [...]"config" and "worktrees/<worktree name>/config"[...]
->>
->> Or something like that?
->
-> Point taken. Maybe I'm trying to hide implementation details too much.
+[end commit message]
