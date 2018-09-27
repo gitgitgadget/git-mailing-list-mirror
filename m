@@ -2,104 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6B1D1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 20:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70F001F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 20:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727361AbeI1DBK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 23:01:10 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36542 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727295AbeI1DBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 23:01:10 -0400
-Received: by mail-wr1-f67.google.com with SMTP id l10-v6so4067801wrp.3
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 13:41:03 -0700 (PDT)
+        id S1727421AbeI1DBj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 23:01:39 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:34582 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727295AbeI1DBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 23:01:38 -0400
+Received: by mail-ed1-f66.google.com with SMTP id q19-v6so6289360edr.1
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 13:41:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=coUbo3Ad/i/jiTvvmYti4hGu7vprimfhJi7KfNHYzq0=;
-        b=NSdFkT97hG0tItjLs8zI/SZhPEg4byA02usu5fpep08toGABvyGnBYGysc+tscRyFR
-         AzUNQvFjNjrukc6SXTBOrm2tU0i5c9VURze//FyseJ9t3LjUDICAp6QPzGwIVHJUu+u3
-         bKousyL7Pr27A4r3YrQuv+/YjsYBschMs5NHojdinfEm6Aa1r1NlsDcG0fPE8Vo9iRw0
-         cNALY+ceLfiy904t341NI6s4rT3QqacKdNcHUULxUFOIDJQrIbQurT6Gr+6AHSwe6Ze7
-         AglQg4WsOepGpmokBqwT8C3MD+jMujRnczTaY7I0qhw0Lgqbyem3smAZ/tg6wwJqODzs
-         cKmA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=UX2sfCza/2jg5jZUc54Q5CC+npgXZxTdSkDIDS5rzJM=;
+        b=TU+XYbCQBqosE3In3bLrI6ZrteoY0w6xXV84Fu3sKAdU0Yxgnyw6T54Q3T+0iFr2Lr
+         AJUnG1HJuFn3S3JwpNpdLg0mpfd6T0/WurLOVQqz4pLN1uSOAk1LwDpTETjmo5OQ4hc1
+         7db3mZUI3bIEr841h6m+/66QQlmSI0iJmtxvNqTaT8GnBte0WPYc+MU2jfS0pNs2FvVl
+         /A7jyAlUEOxXlyM0KKPSgHv4wkB+QRRI21mB7gW+S/Ak3K51H372M+FWzmonQJT8Ph5J
+         CdzSTJJ5OZa+G2S1GwG8ufjVHe6zpel9kz8dWBXuo4J37zPmnnxIrpzt2XPnUOS7UKwP
+         3r2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=coUbo3Ad/i/jiTvvmYti4hGu7vprimfhJi7KfNHYzq0=;
-        b=lWbqhF4RtdcLqetK6um8T/SeedV7GqQBr8UoehfFFHRjoec012Rykn5XPr9XXtqiZW
-         MjEHGRD6Edn0lkGxH+GmIhXMKYe+nxIEmmzTxDOuA76pcPDROZHwH2BEme2nPILfUtvr
-         sGmvhVaX3FalXP10QcYSiOGJ7Ij6JWUQ8GH7nf7dKL4jbGnLZ4dJmlFYr6jeX9JEyn/l
-         1zbKo1F9QKIrriqO3+WZgBzRqbGJ3KBjTkZc26vUuJIvWu2rszHc6qQQwbpnImofVKd3
-         ki5P4EfTm1MftaV13gtdlFqfaio6GgQZvQZp/yKpuaur2xQm9ssxWWBM7wosM30pqTiL
-         gIUw==
-X-Gm-Message-State: ABuFfog5GmeHQyhwn53OnLKX9C4HgOB8UtYvwxuZUTiJu4aYpON9A0ED
-        UO7n4as2ZSLjsm2l0XhH5rREzLnQ
-X-Google-Smtp-Source: ACcGV627Y2/B7vwCV6EYJ6xJOSpD15vrcI/5ETLl6Wpx9V8tRWo8q2ZO/mvZ95FSkqnp9+ftdMrLbA==
-X-Received: by 2002:adf:94c2:: with SMTP id 60-v6mr2608588wrr.247.1538080862391;
-        Thu, 27 Sep 2018 13:41:02 -0700 (PDT)
-Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
-        by smtp.gmail.com with ESMTPSA id d2-v6sm2897417wrm.71.2018.09.27.13.41.01
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=UX2sfCza/2jg5jZUc54Q5CC+npgXZxTdSkDIDS5rzJM=;
+        b=Uy/uXa8Ketv4Z98K0UlWNdzE1+rzsgz1gh1KnXdM9BUIS43n7BHEbQwDv1V/fwU1U4
+         zVUV5ZrXkjLckBNsfpy/MhQ3C8wrA8x/YeutqL2hn2cHkkWaEsgK4b2X9haOy/6b9ITT
+         QJP+J4uigoDhor6viw4bebHsYhaPARXjZtmLxoZbC0yZZn1k6js9YtYWxidcXrEXEFvk
+         zGJPOwZpWLou3JwDpm8Kkl4sOUkIl/MralfMnH7DegCKzRK9yeipEfup2O8fvrv7vVnz
+         lpZPZOV0d3/Zpmby6Etac8iu9j8Uui1P3FCDSAVqx7uRhRTYfQmlVCpDmGKrfTWBy2zK
+         4fUw==
+X-Gm-Message-State: ABuFfojAR5ghgi8cMMfSse/3pT4HhZENv+DPqUVXH/miDSNTJkNi4xfK
+        6JhxTgTGghnJTcyzAJGgdGb6JDmc0P8=
+X-Google-Smtp-Source: ACcGV612lqAeevVV1YEdjH38vGnYrMvm/B/Kvy1/NJCcTcPoJswkF02ughTF9FllS6YU7H2xozN/Mg==
+X-Received: by 2002:a50:90a6:: with SMTP id c35-v6mr5493460eda.31.1538080891133;
+        Thu, 27 Sep 2018 13:41:31 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id b58-v6sm3567321ede.37.2018.09.27.13.41.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 13:41:01 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 21:40:49 +0100
-From:   Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     avarab@gmail.com, Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] branch: colorize branches checked out in a linked
- working tree the same way as the current branch is colorized
-Message-ID: <20180927204049.GA2628@rigel>
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20180927181708.GA2468@sigill.intra.peff.net>
- <20180927192804.GA27163@rigel>
- <87pnwyiu8k.fsf@evledraar.gmail.com>
- <CAC05385d=1s_qidC4uLdRAqUNaP7jwYTjfxHtGrmBDJ54F8pRA@mail.gmail.com>
+        Thu, 27 Sep 2018 13:41:30 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/2] negotiator: improve recent behavior + docs
+References: <87in4tu6wb.fsf@evledraar.gmail.com> <20180927194125.8380-1-jonathantanmy@google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180927194125.8380-1-jonathantanmy@google.com>
+Date:   Thu, 27 Sep 2018 22:41:29 +0200
+Message-ID: <87o9ciisg6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC05385d=1s_qidC4uLdRAqUNaP7jwYTjfxHtGrmBDJ54F8pRA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 27, 2018 at 01:16:19PM -0700, Nickolai Belakovski wrote:
+
+On Thu, Sep 27 2018, Jonathan Tan wrote:
+
+>> > If you wanted to do this, it seems better to me to just declare a "null"
+>> > negotiation algorithm that does not perform any negotiation at all.
+>>
+>> I think such an algorithm is a good idea in general, especially for
+>> testing, and yeah, maybe that's the best way out of this, i.e. to do:
+>>
+>>     if git rev-parse {}/HEAD 2>/dev/null
+>>     then
+>>         git fetch --negotiation-tip={}/HEAD {}
+>>     else
+>>         git -c fetch.negotiationAlgorithm=null fetch {}
+>>     fi
+>>
+>> Would such an algorithm be added by overriding default.c's add_tip
+>> function to never add anything by calling default_negotiator_init()
+>> followed by null_negotiator_init(), which would only override add_tip?
+>> (yay C OO)
+>>
+>> If so from fetch-pack.c it looks like there may be the limitation on the
+>> interface that the negotiator can't exit early (in
+>> fetch-pack.c:mark_tips). But I've just skimmed this, so maybe I've
+>> missed something.
 >
-> Not to hijack my own thread, but FWIW git branch -r shows remote
-> branches in red, but old/new status of a remote branch is ambiguous
-> (could have new stuff, could be out of date). Also, git branch -vv
-> shows remote tracking branches in blue. One could argue it should be
-> red since git branch -r is in red.
+> (I was reminded to reply to this offlist - sorry for the late reply.)
 >
-
-For me remote branches being red means: they're here but you cannot
-write to them. They are like 'read-only/disabled' branches. Under this
-interpretation red makes sense.
-
-
-On Thu, Sep 27, 2018 at 9:02 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> I think too many things need to be replaced (known_common, add_tip, and
+> ack all need to do nothing), so it's best to start from scratch. That
+> way, we also don't need to deal with the subtleties of C OO :-)
 >
-> E.g. I thought green here made sense because in "diff" we show the
-> old/new as red/green, so the branch you're on is "new" in the same
-> sense, i.e. it's what your current state is.
+>> Also, looks like because of the current interface =null and
+>> --negotiation-tip=* would (somewhat confusingly) do a "real" negotiation
+>> if done that way, since it'll bypass the API and insert tips for it to
+>> negotiate, but it looks like overriding next() will get around that.
 >
+> If you do it as I suggest (in particular, add_tip doing nothing) then
+> there is the opposite problem that it won't be easy to inform the user
+> that --negotiation-tip does nothing in this case. Maybe there needs to
+> be an "accepts_tips" field in struct fetch_negotiator that, if false,
+> means that custom tips (or any tips) are not accepted, allowing the
+> caller of the negotiator to print a warning message in this case.
 
-I still defend using green and dim green for this case. Because all
-these worktrees are in a sense active. They're checked out in some
-place. It's just the case that the particular one that we are in is
-probably more relevant than the others.
+Thanks, yeah it seems the interface would need to be tweaked for such a
+"null" negotiator.
 
---
-Cheers
-Rafael Ascensão
+Some more general questions (which I can turn into docs once I
+understand this). If I run this, as a testcase for two random repos
+where I "fetch" an unrelated one and use the first ever commit to
+git.git as an alias for this "null" negotiatior, i.e. "just present this
+one commit":
+
+    (
+        rm -rf /tmp/git &&
+        git clone https://github.com/git/git.git /tmp/git &&
+        cd /tmp/git &&
+        git remote add gitlab-shell https://github.com/cr-marcstevens/sha1collisiondetection &&
+        GIT_TRACE_PACKET=/tmp/git/packet.trace git fetch --negotiation-tip=$(git log --reverse|head -n 1|cut -d ' ' -f2) gitlab-shell &&
+        grep -c "fetch-pack> have" /tmp/git/packet.trace
+    )
+
+I get:
+
+    warning: Ignoring --negotiation-tip because the protocol does not support it.
+
+And the grep -c shows we tried to present 55170 commits in "have" lines
+to the server. Now, change that to SSH and all is well:
+
+    (
+        rm -rf /tmp/git &&
+        git clone git@github.com:git/git.git /tmp/git &&
+        cd /tmp/git &&
+        git remote add gitlab-shell git@github.com:cr-marcstevens/sha1collisiondetection &&
+        GIT_TRACE_PACKET=/tmp/git/packet.trace git fetch --negotiation-tip=$(git log --reverse|head -n 1|cut -d ' ' -f2) gitlab-shell &&
+        grep -c "fetch-pack> have" /tmp/git/packet.trace
+    )
+
+I don't understand this limitation. With the SSH version we skip
+straight to saying we "want" with just the 1 "have" line of
+"e83c5163316f89bfbde7d9ab23ca2e25604af290".
+
+Why aren't we doing the same over http? I don't get how protocol support
+is needed, it's us who decide to send over the "have" lines. Some
+variant of this does work over "skipping":
+
+    (
+        rm -rf /tmp/git &&
+        git clone https://github.com/git/git.git /tmp/git &&
+        cd /tmp/git &&
+        git remote add gitlab-shell https://github.com/cr-marcstevens/sha1collisiondetection &&
+        GIT_TRACE_PACKET=/tmp/git/packet.trace git -c fetch.negotiationAlgorithm=skipping fetch gitlab-shell &&
+        grep -c "fetch-pack> have" /tmp/git/packet.trace
+    )
+
+There we send 14002 "have" lines, which seems expected, but then with
+the same thing over SSH we don't send any:
+
+    (
+        rm -rf /tmp/git &&
+        git clone git@github.com:git/git.git /tmp/git &&
+        cd /tmp/git &&
+        git remote add gitlab-shell git@github.com:cr-marcstevens/sha1collisiondetection &&
+        GIT_TRACE_PACKET=/tmp/git/packet.trace git -c fetch.negotiationAlgorithm=skipping fetch gitlab-shell &&
+        grep -c "fetch-pack> have" /tmp/git/packet.trace
+    )
+
+So that seems like another bug, and as an aside, a "skipping"
+implementation that sends ~1/4 of the commits in the repo seems way less
+aggressive than it should be. I was expecting something that would
+gradually "ramp up" from the tips. Where say starting at master/next/pu
+we present every 100th commit as a "have" until the 1000th commit, then
+every 1000 commits until 10k and quickly after that step up the size
+rapidly.
