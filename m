@@ -8,59 +8,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78BC81F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 15:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63C5D1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 16:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728284AbeI0V5V (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 17:57:21 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:53551 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728083AbeI0V5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 17:57:21 -0400
-Received: by mail-wm1-f52.google.com with SMTP id b19-v6so6395940wme.3
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 08:38:30 -0700 (PDT)
+        id S1728335AbeI0WUR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 18:20:17 -0400
+Received: from mail-wm1-f48.google.com ([209.85.128.48]:50530 "EHLO
+        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727338AbeI0WUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 18:20:16 -0400
+Received: by mail-wm1-f48.google.com with SMTP id s12-v6so6473251wmc.0
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=9owH9fN8Nc4treJbbl4RxcFFMUW1k9sg2+FXszAhvTI=;
-        b=rEC3Y3ginCrRnpB4YLQsqgmudmrBwwfInPHWDZSfFx2Ib1oa3+Xq288HQagL2Ev3LE
-         hulSnH7OxRfDB3Wxj+EGyOmAPVqeG488eNhUHZMw5vpguCdsOTTK2PcSChZRemQq2YX2
-         oxzXpjuj5QfqUoYzPU5LXZlVkN7GJjjLxAPcw4Z1BY7l4ddr+o6jyPVNAoIXGTOMt1PP
-         TCnXC0CVTg8+NArU9Uo6m/1fNVj5/VzHF5Nb6unWuO4miozFEUVZuRDv1kq1Kc6JsiwS
-         oxa9nbEYmXgJeW080BS3H5lMKmI7yYbpyTpcR1ZglaVUWFF8LLhQFq2/RIdGwV2NXVUF
-         Wwhg==
+        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
+        bh=1Nbiz6YqGWmUMJuqGGm1Nag6g+gW+k2YQBGOy2ol2jk=;
+        b=UTjs923Egc5RJUq5pz/l4B1h0NKUjT48hhkfc1U1rKlR4jZ9ZDwBHdkfB2bOER+oYS
+         gP0oN5b0x7T1Qv4/F9I/WAa/Ij3yqVZm9w050JZa3sTirRNZqrLXYkEeETBJs3dZPOP8
+         bYRDAnfPsP0Ybhhs92TtAYzT0itYtPMfJlTMVzb1ym+Yx5nly57QjedXuaoUnIe+grvK
+         Sz+kZ5BdOWq+kSVI75MGB1T0GeJUV9zHJzjmCAQgR/0v9gfLpK1Q4bwpp7WU5BpfHC4T
+         xPniJWYVKbE0aAJylZ/ZSOzFRfa6yc+fGB+qYRKw76K5YQW5doU92F2MePJJkTyG6Ora
+         XVLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=9owH9fN8Nc4treJbbl4RxcFFMUW1k9sg2+FXszAhvTI=;
-        b=cbWy5BHZbNnoECIo0CeHrQ1ZSHmg0tl2cuU2gmaXb6dpkURNyKXzWqHkBwGgN97SGt
-         M2EB5l+vjfbJnddpWsaJpBakGwNADllFVbB9CnGX4FQ5QVnwZu2kKCEc5YZvrgEXcNYt
-         YYW9+sElTKfc4U7EXc3O+gEihEOzkT2I5OBDeCbPp0nIubkE4pGxV+bYHi7pRBqhSVcR
-         B+TNtzf3ajJ7zLmtWbOuZ1m4n4DaOjGUnVEbKXZTlAUS9L2JefR2rrr4bA2jWGnsDcWc
-         HIR9Ly5TtSqjvaonctLkuBgSWz7mCPU9oirUuVI5isVT+Q6LifqqtW1LK9Bf2xzICjkO
-         3M/g==
-X-Gm-Message-State: ABuFfoiR6Dk9ufwDn9eA8RMsel73k1TcTUva92BlvBonwi2I0CqTwvvZ
-        FtJI5Z4cI+fP8Ujn2o10NaaPcsx29kg=
-X-Google-Smtp-Source: ACcGV62K91ReUb4dN4/kirwsHR6wAGBX8yOaavqaOU2qsvjpoduWrvshAQYKDXK5zfvZx3/zVgNDSA==
-X-Received: by 2002:a1c:6c0a:: with SMTP id h10-v6mr8673350wmc.47.1538062709053;
-        Thu, 27 Sep 2018 08:38:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
+         :mime-version;
+        bh=1Nbiz6YqGWmUMJuqGGm1Nag6g+gW+k2YQBGOy2ol2jk=;
+        b=PTpzxHtY2IQH6j241ZQ0tVUVKrtHZwDNHGXJtd6L5jKtmOAn2XOPIuxfIjvAk8F4+b
+         ArKbo+mUKzvKWTepFfhr4RvdMYi5ui5mfINrXZm8V5XcVSJpjYzl/Uq42d4a8n/mI+pS
+         Cl8AhAO5xcW+yNNOIR1dqKikSyDqx258vxhwG7VjfxcGYJrKE9U3xEqxSH0NlMEkIhEc
+         Ymz1/5SyEueC3vzzptT9WNHW+AwiRbm9L7ju5LNnPoOp9RwFmHR6jHSEp4MXBTewj/ax
+         IHAclrFMgoTHOIvFGsJoqCts1zETlIXZJ5BHsslCyOyVEr+rGlh95CwZ4dMqxfsZvEXI
+         0oqQ==
+X-Gm-Message-State: ABuFfojEiVpZcayKF7+7BCyRpDVWKrVrVl3+mjRADbv9imvIY11UekI/
+        3OMT8TwIrAG/OpQdJgtQRWuA5j5TiUA=
+X-Google-Smtp-Source: ACcGV60Kn+hn2uG/KH0qBXfJCboXQS5a7iAXObaBBAelzvMVPbZCSs67LfsImW54AIG8m3xMkldLHA==
+X-Received: by 2002:a1c:4857:: with SMTP id v84-v6mr8016452wma.8.1538064079780;
+        Thu, 27 Sep 2018 09:01:19 -0700 (PDT)
 Received: from evledraar (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id x132-v6sm8918859wmg.3.2018.09.27.08.38.28
+        by smtp.gmail.com with ESMTPSA id x65-v6sm2730650wmg.39.2018.09.27.09.01.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 08:38:28 -0700 (PDT)
+        Thu, 27 Sep 2018 09:01:19 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Git Test Coverage Report (Tuesday, Sept 25)
-References: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com> <d92f18e2-0bbc-e36b-123a-3ed3f44cf418@gmail.com> <b46d6363-1709-968e-105a-3f4e8a77155e@gmail.com> <20180926184308.GA2253@hank.intra.tgummerer.com> <a7228cb5-5085-e1c7-0731-d37b19cdc3bf@gmail.com> <225dc2e3-1aa0-ac19-26e6-59b54dfe871c@gmail.com> <07ab14bb-766b-e375-989b-73974ef7fece@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
+Subject: Git for Windows for Unix?
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <07ab14bb-766b-e375-989b-73974ef7fece@gmail.com>
-Date:   Thu, 27 Sep 2018 17:38:26 +0200
-Message-ID: <87wor7hrwt.fsf@evledraar.gmail.com>
+Date:   Thu, 27 Sep 2018 18:01:18 +0200
+Message-ID: <87va6rhqup.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -68,48 +64,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I had an IRC conversation with Johannes saying I didn't know Git For
+Windows builds perfectly well for Linux, this just isn't advertised in
+the ANNOUNCE E-Mails, so I hadn't tried.
 
-On Thu, Sep 27 2018, Derrick Stolee wrote:
+Johannes doesn't build his own tarballs, but these are provided at:
+https://github.com/git-for-windows/git/tags diffing
+https://github.com/git/git/tags v.s. what Junio releases shows:
 
-> On 9/27/2018 11:21 AM, Ben Peart wrote:
->>
->>
->> On 9/26/2018 2:54 PM, Derrick Stolee wrote:
->>>
->>> GIT_TEST_INDEX_THREADS=1
->>>
->>
->> Because the test repos are so small (ie smaller than 10K files), the
->> test suite already executes as if GIT_TEST_INDEX_THREADS=1 is set
->> (ie single threaded). I added the test variable so that the
->> multi-threading code could be forced to execute in spite of the
->> default minimum number of files logic.
->>
->> I'd recommend you set GIT_TEST_INDEX_THREADS=3 instead. (3 because 1
->> thread is used for loading the index extensions and we need 2 or
->> more threads available to exercise multi-threaded loading of the
->> index entries).
->
-> According to t/README, GIT_TEST_INDEX_THREADS is a boolean and setting
-> it to 1 causes us to use 3 threads:
->
->  GIT_TEST_INDEX_THREADS=<boolean> forces multi-threaded loading of
->  the index cache entries and extensions for the whole test suite.
->
-> Here is the only consumption of the variable in the product code (in
-> read-cache.c):
->
->  /* enable testing with fewer than default minimum of entries */
->  if (istate->cache_nr > 1 && nr_threads < 3 &&
-> git_env_bool("GIT_TEST_INDEX_THREADS", 0))
->  nr_threads = 3;
->
-> This was non-obvious to me, and I had originally set it to a larger
-> number. I happened to notice the boolean nature while I was looking up
-> the rest of the GIT_TEST_* variables.
+    $ diff -ru git-2.19.0 git-2.19.0.gh
+    Only in git-2.19.0: configure
+    Only in git-2.19.0/git-gui: version
+    Only in git-2.19.0: version
 
-I didn't know it worked like that. Would be neat if we had some "strict
-bool" function in config.c that would accept on/true/1 off/false/0 but
-barf on e.g. 12345 instead of treating it as just another synonym for 1,
-I'd say we could even enable it by default, but maybe not, but
-definitely for all this GIT_TEST_* stuff.
+So to use these you need to grab the GitHub tarball, create a "version"
+file saying e.g. 2.19.0.windows.1 or whatever it is (derived from the
+name of the tarball), and if applicable make your own configure script.
+
+GFW is a "friendly fork", but a permanent one it seems. The diff between
+it and 2.19.0 proper is ~10k lines, and e.g. this last release had
+experimental stash/rebase in C that 2.19.0 didn't.
+
+So it would be great if this were packaged up by linux distro as some
+"alterate" package of git. I'm putting Jonathan in the "To" line because
+I'm mainly interested in this for Debian, but maybe there's wider
+interest at git-packagers...
