@@ -2,74 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7FC71F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 19:21:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6DE91F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 19:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728278AbeI1Bla (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 21:41:30 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41625 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727587AbeI1Bla (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 21:41:30 -0400
-Received: by mail-pf1-f196.google.com with SMTP id m77-v6so2575442pfi.8
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:21:43 -0700 (PDT)
+        id S1728359AbeI1BoF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 21:44:05 -0400
+Received: from mail-it1-f202.google.com ([209.85.166.202]:52782 "EHLO
+        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727995AbeI1BoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 21:44:04 -0400
+Received: by mail-it1-f202.google.com with SMTP id e9-v6so9204365itf.2
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=JkKOXk+l5Bvl+VFr1eqttXU5azV71VbY+yZlnVxWgaY=;
-        b=KxFu3aS2KCeAi2HAO1zkTbB8h85wRSU/wUGKOSG6UP/Xf0BniV16xXtZa0A668d9BF
-         kAIeGYvdeq+t/AEQ23/656ZpRFjkF6HUdIgNeAKCaZRtrT7g0rYWOUPyp59ianPo4ZhO
-         MvVa3bJcII+ep9sIGrpw9ZEl5p8O09+jyCYo2vU23hzVhrKFwjOIBJNE046TJ/gWuJEW
-         P6x1yeC1m3/O6gdXDZvsz05GLVMQiUrUFXc6dydn5sLWkS1op41uU9E4/rOcUZHnBT5s
-         GYl3eTxK9jy+ITIDmcNX5OtZpnGoKe1Vd5P3TwVVKtJUM5XBUj9yNVLORfFY8cSMF88q
-         dScA==
+        bh=BlDKlP/vG6N80mJu/2+NPpHoL9jYdk/0pnq+HzS6dWM=;
+        b=OB7OxEazMZgdCnqb/G1MxVRwUhFzDYY4K4ahSGfMRNZigU8oBcCBNlO6bex6qCBneD
+         lJWXfSTOIMJvZThI1Osu3hzCBPVT2fzonr+Acnhq0BQpbaC1Fp+U+eSF+w14PWyuFLIV
+         EHVzVT+vcCbEODuaUBApmOarFVPXUZJOxseGOkmqOkAeiPU1NOtrkYZigMpLD86a2sLv
+         mGWPNgeMG+FadbsI1BlkXhj9q6Z2OJhR/eyNXxWyPK/Ru/zetdKBLHFvWl6Xdwj2T4gJ
+         xSHKiECvmtwJzAmzYM6V8KCBbrAls0/ycREyfLUk6jZjVyRQl2l9DRWQTLlrXWUg0nFN
+         CPuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JkKOXk+l5Bvl+VFr1eqttXU5azV71VbY+yZlnVxWgaY=;
-        b=XY16xFMMrujtvoAo+mVCaBMBMybiY6C2vhWfQxa1xuv3M/t40RjyYPyx9FC1WzDy/j
-         2VUAtnT0nigmlifDVoLermvk3eybxSBXYVl01cDw2rTNEKloHNKG6BjyY3FXSQeFCmxs
-         1nTE6hViSBMunsHM45shr7xryFyF2ojl4JtIBZq5GNRbxQPm1j4x5okivGQxOUDx3BPi
-         c7rvR7cl8+XWNucyMcmVfIiEbnGT50yRLhxBBxQWB5//n5amAu7jlKOnormQwUIyQ2J/
-         R2qcTB74UTgIryB21nhVtkAB77qo7bvK/UKQWol2EN5KflGb5P8LysqPESK7GipE71Cp
-         ilMw==
-X-Gm-Message-State: ABuFfojlOHWTrvM4Zt1oYn3VpOpMQbWJsCmIGhG8gyTFYE6KmU5T39C3
-        RJjwklfl2YYeSmxw7qtgjEJp9jvQ03KxtyH2QYVLzxI9
-X-Google-Smtp-Source: ACcGV63Q09PGCdp+fRvaCYlCmNKkx0jZkGtYzm0bKEAOFuGOuB5hCsEwsTag+b2v7W6h2FpZUpGOlv40bdJCqHh3Qaw=
-X-Received: by 2002:a17:902:9893:: with SMTP id s19-v6mr12573649plp.130.1538076103421;
- Thu, 27 Sep 2018 12:21:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <6b1cb43e-a1a8-921f-cd66-3697609854e0@gmail.com>
- <cover.1538075326.git.martin.agren@gmail.com> <31d467b9-1ffd-5c1d-2ff2-f4cb76854f0a@gmail.com>
-In-Reply-To: <31d467b9-1ffd-5c1d-2ff2-f4cb76854f0a@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 27 Sep 2018 21:21:31 +0200
-Message-ID: <CAN0heSpih+eMrbar29q6g7-aHD8SmufZvDTe97Me2hF6CJb3Qg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] git-commit-graph.txt: various cleanups
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=BlDKlP/vG6N80mJu/2+NPpHoL9jYdk/0pnq+HzS6dWM=;
+        b=iljQLOfNPizcc7yp4toP7DCVteAMViWWPdL3SbZrJMBzoxxIdACWo/t7I2pyWLC6RP
+         aoIGF7ZBuwxp78fPybjvutVQHRT5pDiOmvOkU6iyVYCF0HgeIoJA1EJTipbYPtcpQfp+
+         ypW1LXEdv/Dj5GAC/p5G4ka2Jd4ts0F5LMjFCbofVzEJFhHWBc8tzE+s9rqUCCH485Og
+         62oXBwzUIGX4+eOMLjK/em90RzSu996O+ghRN7tPJY949bTVfhCI5iyQpNd/WWZiIzJR
+         rq4z2LOiQ7cieecy8hfNPSPZC2D8XiztvIvVaGsMX+2Ms0YbIfb65jKmESoC3RfpF3qV
+         J3Nw==
+X-Gm-Message-State: ABuFfoj6/sNQpGfQOX/n9TkIxLHONAkMghB/Kr23F1ptBCideYAoROeb
+        bP8LANzVVcI1uOaLnztwDuBEbyf4VU6oBpiZ4cRoE02XWS4lgh1NH+UuuaH4T71j2/3GYjN2aCq
+        6DPa2RVQqvp0fkvJ6py4hQ5J/DEwxbjouHFYr0FO87MrsRJXxvuBWmb13Hk0LvAB8Wh0M6bmmaU
+        Ir
+X-Google-Smtp-Source: ACcGV61RtYU0B9lR0tqohLIyJd3CY+1cQ05wzf3jLuA/PCKty+zIdn8KexYcsMFdMCczxSVLQEAmtz8InVZQC6aHgYoo
+X-Received: by 2002:a24:e303:: with SMTP id d3-v6mr395329ith.0.1538076256867;
+ Thu, 27 Sep 2018 12:24:16 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 12:24:03 -0700
+In-Reply-To: <20180925225355.74237-1-jonathantanmy@google.com>
+Message-Id: <cover.1538075680.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20180925225355.74237-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: [RFC PATCH v2 0/4] Avoid ls-refs when possible in protocol v2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick
+To answer Junio's questions in [1], I think it's best to include the
+full patch set that I'm developing, so here it is. The original patch is
+now patch 3 of this set.
 
-On Thu, 27 Sep 2018 at 21:16, Derrick Stolee <stolee@gmail.com> wrote:
-> Thanks! This version satisfies my concerns and looks good to me.
->
-> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+[1] https://public-inbox.org/git/xmqq8t3pnphe.fsf@gitster-ct.c.googlers.com/
 
-Thanks for the spectacularly snappy review. I don't expect commit graphs
-to help my use cases a lot, but I still wanted to try them out a little
-and stumbled on the `*` lists. Thanks for doing this work!
+Rearranging Junio's questions:
 
-Martin
+> ... ah, do you mean that this is not a new feature, but is a bugfix
+> for some callers that are not calling get-remote-refs before calling
+> fetch-refs, and the bit is to work around the fact that some
+> transport not just can function without get-remote-refs first but do
+> not want to call it?
+
+Yes, it is the bugfix you describe, except that the bug coincidentally
+does not cause any bad behavior. fetch-object.c indeed does not call
+get-remote-refs before fetch-refs, but it calls transport_set_option(),
+which so happens to do what we need (call set_helper_option()).
+
+However, we need it now, because ...
+
+> But this I do not quite understand.  It looks saying "when asked to
+> fetch, if the transport does not allow us to do so without first
+> getting the advertisement, lazily do that", and that may be a good
+> thing to do, but then aren't the current set of callers already
+> calling transport-get-remote-refs elsewhere before they call
+> transport-fetch-refs?  IOW, I would have expected to see a matching
+> removal, or at least a code that turns an unconditional call to
+> get-remote-refs to a conditional one that is done only for the
+> transport that lacks the capability, or something along that line.
+
+... this "matching removal" you are talking about is in the subsequent
+patch 4. And there is no transport_set_option() to save us this time, so
+we really do need this bugfix.
+
+> IOW, I am a bit confused by this comment (copied from an earlier part)
+> 
+> > +	/**
+> > +	 * This transport supports the fetch() function being called
+> > +	 * without get_refs_list() first being called.
+> > +	 */
+> 
+> Shouldn't it read more like "this transport does not want its
+> get-refs-list called when fetch-refs is done"?
+> 
+> I dunno.
+
+I'm not sure I understand - transports generally don't care if
+get-refs-list is called after fetch-refs. Also, this already happens
+when fetching with tag following from a server that does not support tag
+following, using a transport that supports reuse.
+
+Jonathan Tan (4):
+  transport: allow skipping of ref listing
+  transport: do not list refs if possible
+  transport: list refs before fetch if necessary
+  fetch: do not list refs if fetching only hashes
+
+ builtin/fetch.c             | 32 +++++++++++++++++-----
+ fetch-pack.c                |  2 +-
+ t/t5551-http-fetch-smart.sh | 15 +++++++++++
+ t/t5702-protocol-v2.sh      | 18 +++++++++++++
+ transport-helper.c          |  1 +
+ transport-internal.h        |  6 +++++
+ transport.c                 | 54 ++++++++++++++++++++++++++++++++-----
+ 7 files changed, 115 insertions(+), 13 deletions(-)
+
+-- 
+2.19.0.605.g01d371f741-goog
+
