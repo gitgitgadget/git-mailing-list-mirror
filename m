@@ -2,96 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C45A1F454
-	for <e@80x24.org>; Thu, 27 Sep 2018 16:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A54E1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 16:22:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728187AbeI0WhJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 18:37:09 -0400
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:46637 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727437AbeI0WhI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 18:37:08 -0400
-Received: by mail-qt1-f175.google.com with SMTP id h22-v6so3314766qtr.13
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:18:08 -0700 (PDT)
+        id S1728370AbeI0Wlj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 18:41:39 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39398 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728213AbeI0Wli (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 18:41:38 -0400
+Received: by mail-wm1-f67.google.com with SMTP id q8-v6so6595220wmq.4
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=m5gN91kqjuuwWFl0YYQDUpf5DimMjadsiXUl6VDkhMo=;
-        b=YwhhY7gSlmJh8IoW6El2ekFUW3nORVzB0sIM5wAJsAie+zTVg1J9njIE/yufFESpry
-         mRhJhJUcQdy1I5HCgDCdXs0FsCBKPDhxE9cefx4rZh0G3+CNT6rIitYtClkcznrOM3Qf
-         EnHa+XD5Yw5zLLx1Mr7tJA/C8AHFND/IOUpwMzN3LyVfAQXngigMSILlYpQau/0Y0kx/
-         BEfYjQRXx2Whg7dSFJbmJStpOaJxOwvbcbotTBwa73R33jdWy/0CdchONP63PyZvlih5
-         STSeq0ckaW7fJJ0DBPyo96KTQwR5e12VVgShrCUeFBSGuG0aldMlc8ahkJpZerFkiqVW
-         8i/w==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WqlGKO4fJGG+vcy+dY/MvoXI61/9PygbZmE9I/QsFdc=;
+        b=arVhoD22pFCNb4EwyD2NOypGVYFJBJtDmIyrgZxDTsBNvxQOyuzxO+r10bAqd2EGjo
+         k+lnOKRPzEDza9FNkOtUn7oQno55BCZyUMNrZewhiFJ3st9f6/RC/hqhwBUHnmTDPPCt
+         psrjuWKbDhNX1vrf7GG1Ov7fl3Wva/CKvA5MdgYrlV//c7qXQJ43B62bqwkfpAFfzGtf
+         3bJeZ5l1aQOLtVHB4OUdkhy1vS6qm3CFmcpQ+QLeU69KRoq7bZhsCDbU72eiEwt6LTpY
+         ZGBQaWOTdnc2btwaZpKw0fyROlRbrqNIgm2kSHjsRpxpoRt+kdxSm4p9uD6l1wN+9P3x
+         50pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=m5gN91kqjuuwWFl0YYQDUpf5DimMjadsiXUl6VDkhMo=;
-        b=WI8Ei+6ctZmalCvB6vakKLUHZa3bYv7nUbGoCGmMQGig2OGk/hNkvWC4L4NaKifxna
-         nResWiJAagdMHW/tDPFANHx6rnI75+4ApBSWIbXb7Rec4hdUzzIXc6VngPMfX897doKB
-         VY1SYEtm3WTfTFE0zyYYySOSuDQQV4yHRe6/hsNHoSVIEkDOdvv/Wxy6tlW/1R6DJQjL
-         q6wIqyX0aELIwTcUIWAstS0C5Fuup32J/Cu05taorYEqWcLy2R77CIOPNNHW533KfqKq
-         PRqXWrsWDDmTXfKTPwLL42AAY19D9QzGI6x23vzv+8bxsyNZzB41zqjHe1aUae7MOGt4
-         oUlw==
-X-Gm-Message-State: ABuFfoihiEOsSsZozX0kH77dAkpXfui/1elsydfn2CKuu8H/SXaZk9dh
-        LHy17/O4w+3zyDoW9YiMGPqvq4G8
-X-Google-Smtp-Source: ACcGV619dSPJVuwlqL04zNtxh5VQnIth3YNzwlmy6S0rb08Y7ig5U+RazQe6v7CWouT4ni2HyU/Q/Q==
-X-Received: by 2002:a0c:869c:: with SMTP id 28-v6mr8705648qvf.92.1538065087836;
-        Thu, 27 Sep 2018 09:18:07 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:1455:e436:6b50:1b07? ([2001:4898:8010:0:fd8a:e436:6b50:1b07])
-        by smtp.gmail.com with ESMTPSA id c2-v6sm1674456qkj.79.2018.09.27.09.18.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 09:18:07 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WqlGKO4fJGG+vcy+dY/MvoXI61/9PygbZmE9I/QsFdc=;
+        b=ktrxOQoxN43P7U5VzW3tl3wA+sQPpWqfdc05ry4EXgtdYiTH3RC+RHR3CEEvoC9pJY
+         fqQRefHO9v3+7oHaiiVCuyisJ+suo3ybIzStleqzmSn53V40SqbhCB0vF5YKaQ1cHvBx
+         3a2wP9Os9CmJhgzlZUDni9NCjq9UrHz9HtsD4N6pj4fkbnkEvlfjfRdyn4LjQ+r7D+mG
+         2U7pNwILHAoLW7eObu15Epr9tP2cORuy/6j4Ki2opYgSvCDIcrjU2f4GJjv0f46dZYEj
+         VDaKUaeRlMNLmXDAN0BpeHOvcbaTCUSdeyjiPv8guc4SqmOtZ8UB5xcA9JyanXPwvIi0
+         2SQQ==
+X-Gm-Message-State: ABuFfoiwJ6Ps6KDSx+Wtv2eVIg5kvQHHqIu56LJYKyCLJ3k9531q1bez
+        C3st8DTpO/isKGWzAZI1yjw=
+X-Google-Smtp-Source: ACcGV63zjg5oua+vVE5pYtGWmE5OLddedt9wIHU6UQIwX+jeeYxtgV14UCe7v0XnvXkBbHPGNf9/aw==
+X-Received: by 2002:a1c:a401:: with SMTP id n1-v6mr8113092wme.125.1538065355362;
+        Thu, 27 Sep 2018 09:22:35 -0700 (PDT)
+Received: from evledraar (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id 75-v6sm4568775wml.21.2018.09.27.09.22.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Sep 2018 09:22:34 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
 Subject: Re: Git for Windows for Unix?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
-References: <87va6rhqup.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d3d82080-f3e7-50cd-df81-1fed3198eb88@gmail.com>
-Date:   Thu, 27 Sep 2018 12:18:07 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+References: <87va6rhqup.fsf@evledraar.gmail.com> <20180927160523.GA112066@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180927160523.GA112066@aiede.svl.corp.google.com>
+Date:   Thu, 27 Sep 2018 18:22:33 +0200
+Message-ID: <87tvmaj4fq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87va6rhqup.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/27/2018 12:01 PM, Ævar Arnfjörð Bjarmason wrote:
-> I had an IRC conversation with Johannes saying I didn't know Git For
-> Windows builds perfectly well for Linux, this just isn't advertised in
-> the ANNOUNCE E-Mails, so I hadn't tried.
 
-We run CI to ensure it builds and tests on Mac OSX, too. This is 
-important to the VFS for Git group, as we work on making that work for 
-Mac clients. We have our fork of Git for Windows at 
-https://github.com/microsoft/git.
+On Thu, Sep 27 2018, Jonathan Nieder wrote:
 
-> GFW is a "friendly fork", but a permanent one it seems. The diff between
-> it and 2.19.0 proper is ~10k lines, and e.g. this last release had
-> experimental stash/rebase in C that 2.19.0 didn't.
+> Ævar Arnfjörð Bjarmason wrote:
+>
+>> GFW is a "friendly fork", but a permanent one it seems. The diff between
+>> it and 2.19.0 proper is ~10k lines, and e.g. this last release had
+>> experimental stash/rebase in C that 2.19.0 didn't.
+>>
+>> So it would be great if this were packaged up by linux distro as some
+>> "alterate" package of git. I'm putting Jonathan in the "To" line because
+>> I'm mainly interested in this for Debian, but maybe there's wider
+>> interest at git-packagers...
+>
+> Please coordinate with Dscho to get these patches into "next" upstream.
 
-Hopefully we can learn from having this experimental feature in the wild 
-and improve the patches on-list by fixing issues.
+I understand that this happens at some trickle, but how up-to-date that
+is goes back & forth, here's the history of differences for all major
+releases since 2.0.0 to 2.19.0:
 
-We do have a desire to move as much as possible upstream. It's difficult 
-to find time to pay down that "fork debt".
+    $ for rel in {0..19} ; do echo 2.$rel.0 vanilla v.s. gfw: && git diff --stat v2.$rel.0..$(git tag -l | grep v2.$rel.0.windows) -- '*.[ch]' '*.txt' '*.sh' |grep 'files changed'; done
+    2.0.0 vanilla v.s. gfw:
+     1790 files changed, 242271 insertions(+), 76973 deletions(-)
+    2.1.0 vanilla v.s. gfw:
+     1757 files changed, 231844 insertions(+), 75560 deletions(-)
+    2.2.0 vanilla v.s. gfw:
+     1733 files changed, 222517 insertions(+), 74745 deletions(-)
+    2.3.0 vanilla v.s. gfw:
+     66 files changed, 1612 insertions(+), 234 deletions(-)
+    2.4.0 vanilla v.s. gfw:
+     83 files changed, 2483 insertions(+), 299 deletions(-)
+    2.5.0 vanilla v.s. gfw:
+     89 files changed, 3150 insertions(+), 512 deletions(-)
+    2.6.0 vanilla v.s. gfw:
+     94 files changed, 3327 insertions(+), 538 deletions(-)
+    2.7.0 vanilla v.s. gfw:
+     95 files changed, 3616 insertions(+), 590 deletions(-)
+    2.8.0 vanilla v.s. gfw:
+     60 files changed, 3091 insertions(+), 497 deletions(-)
+    2.9.0 vanilla v.s. gfw:
+     60 files changed, 2945 insertions(+), 482 deletions(-)
+    2.10.0 vanilla v.s. gfw:
+     79 files changed, 6053 insertions(+), 1271 deletions(-)
+    2.11.0 vanilla v.s. gfw:
+     113 files changed, 6337 insertions(+), 1051 deletions(-)
+    2.12.0 vanilla v.s. gfw:
+     110 files changed, 4509 insertions(+), 868 deletions(-)
+    2.13.0 vanilla v.s. gfw:
+     122 files changed, 4217 insertions(+), 919 deletions(-)
+    2.14.0 vanilla v.s. gfw:
+     151 files changed, 5237 insertions(+), 1093 deletions(-)
+    2.15.0 vanilla v.s. gfw:
+     178 files changed, 4903 insertions(+), 912 deletions(-)
+    2.16.0 vanilla v.s. gfw:
+     172 files changed, 4614 insertions(+), 940 deletions(-)
+    2.17.0 vanilla v.s. gfw:
+     163 files changed, 4574 insertions(+), 882 deletions(-)
+    2.18.0 vanilla v.s. gfw:
+     163 files changed, 4688 insertions(+), 883 deletions(-)
+    2.19.0 vanilla v.s. gfw:
+     184 files changed, 9197 insertions(+), 1271 deletions(-)
 
-Thanks,
+So it's similar to various packages that have "alternates" and are semi
+or permanently forked, like emacs & xemacs, JDK etc., although I can't
+recall one offhand that's quite similar to GFW v.s. git.git.
 
--Stolee
-
+My only stake in this is I thought it would be neat to be able to "apt
+install git-for-windows", but I understand there's a support burden, but
+if some *nix packagers are interested, maybe never taking it out of the
+Debian equivalent of "experimental" and saying "this is unsupported, go
+to the GFW tracker..." when bugs are filed would cut down on the support
+burden.
