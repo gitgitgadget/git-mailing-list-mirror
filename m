@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E68051F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 22:00:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D0D51F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 22:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727269AbeI1EU4 (ORCPT <rfc822;e@80x24.org>);
+        id S1727358AbeI1EU5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 00:20:57 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51038 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727068AbeI1EU4 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 Sep 2018 00:20:56 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34710 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726132AbeI1EU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 00:20:56 -0400
-Received: by mail-wr1-f66.google.com with SMTP id z4-v6so2855385wrb.1
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:00:29 -0700 (PDT)
+Received: by mail-wm1-f68.google.com with SMTP id s12-v6so320900wmc.0
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ngUDtohThwk0HJVrv/FyDBSPP/VInNQ/cfxq9bqg/Js=;
-        b=JOfRxt58jjtwrxeqQv8n5FQNuHg7nuhrtoeg+N1EqopCpjmQ6hlc8bOnPu/sQ7WwA2
-         OUg+iUN2bmzi+Dq5WIk0QjwM/hn5WIoGCt6sEmHfpYvi773wrT1PjgCITos14RM0lE1m
-         IkiygtuovAyLfrbWqx68LHhrai6AL916kGHX0Wsh0SHNAXL/PUcM5XhOAmSiXSt/EGuV
-         rUQHYSmyt4jq+T5ywxy3fLMrkk8RsUyb2v8yo2bJTB2ckY35FPSzT1bDh5oTpv/v/HGB
-         zfUZdfA2GoC8Goq+iJhdvuubou8AAtogZGgXqTwfkywb4HIZz670bJ45v96R8jRCgzHm
-         EHXg==
+        bh=aWt5e6qT4kmhvE+Xbam/ld2s2AoX8QzcdNdxuocVwr0=;
+        b=IZhFFXxnbc02jhqE0lfhQJbTCjKeQ8Nv9ztvM7o7DD0jlUNgwJAG7TGW94oL8xqWzq
+         HzBPH8S+P2pQeSkQF/ReYTO8x2KNmKg1SykoElhaKETdThTIjA4Z5OXwIbDc9smceL8C
+         lJb3cM3CZfKler+FS5hO5EEMSF7pXsgyvjbsoMJ0dA4gTBw6EE4p1XKvRYsyBBAH/tOn
+         n7wA1i3i/QVd61P1Jbz6/NouBeH71EgWYWZch4M61XHQo5CCaZ+Xj91Iak4zj45gXTQ/
+         gd4LCju+XLXLJsd2a1OPpNoYc5JlqqhYmF+G4iywp7X9lDpNp+b1QY5LVlKOi+d4iYZN
+         jYug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ngUDtohThwk0HJVrv/FyDBSPP/VInNQ/cfxq9bqg/Js=;
-        b=VMn1Zob86oaEbBBtYlQelRLxduILgANszvgQoSrn1lNDQUEL9zRGj3W0jfrsNNOB87
-         UzJ9Vv4y5H7ggARHVFj1BD/VhJHxbjkE0Vq6n4YofNfp9lDojcLuqhbBQ3FBoWdIoi1X
-         XybfyrMpf5ChzmN3pDMYhTkkDdJyyYQBlY1Ge49kjWPPQr87mMGNxmjvmxUMAu8lnsR3
-         MeVB/uhK64YQlT+yMv2pqagAXyZVZOetKirGbjVsVyfy7cimxM1eKMe/ZG/WY0ADujzl
-         VSVvQ/q849P0D+sMZYMAelR+iu4MPqPmo67hoXxWL52yAPIowNrjcqvEQ5btcTSGhRfL
-         VC/Q==
-X-Gm-Message-State: ABuFfoh8/cEzAgIfGbJAKNT3go4kW1Wii9122ZVU0x66aHZ76Hsy3ZSB
-        Jx7iXhb/vIgikIms+WjrbagThArw
-X-Google-Smtp-Source: ACcGV63A4/J5BA6pnVLeMO0zSS06hayufhlF2owNDTLvVFgBpup33P1ivQrTNKjsrfX7XILN+SfFGg==
-X-Received: by 2002:adf:ac13:: with SMTP id v19-v6mr10191605wrc.135.1538085628887;
-        Thu, 27 Sep 2018 15:00:28 -0700 (PDT)
+        bh=aWt5e6qT4kmhvE+Xbam/ld2s2AoX8QzcdNdxuocVwr0=;
+        b=ayAEvHosgEVkxnT76ADICn6MPDUi7nJuw6OJbR6Ut35HI//y3SWWLkcWbQ5axoA1V1
+         fVj7bh4HHjoX3LmTaMC4+KgnDPjZ7gmxsYFpj3W91SadiLNCkeTuBPVSqQINQJmPKmfj
+         TeN4fIIKjnfgiDwbdfy3mNOVrQ+LWhs62myK3szYGtJS/xNOYfxX0La9nO1Kq+8HYoZs
+         6bahoq2VcBxJTiwwhK3/0aOlcs5+QNpsA+pRicMS1EHp69XRHcVLtO24hcN2zHg3kr47
+         ZYYGlX+riZ5qefbEmv5uzFtWhmKoL54GE41VPn+hmh0vHC0knOrTeduCOfY7ho+rweU3
+         ZnCg==
+X-Gm-Message-State: ABuFfojvrRJx3tDF/lUCpHo2Qczr/pB0j0P1gjcbGcoFjTV+DKrI5eaK
+        AMHsADMaZv7a7EdXADv87tvbm0l7
+X-Google-Smtp-Source: ACcGV63Urv8Y7XH2omIc/yNABHZWj9WmFRBObmJEg4yFH8rj0n98qonec+73SOezhOmyIKDsn0n9tw==
+X-Received: by 2002:a1c:6c0a:: with SMTP id h10-v6mr336788wmc.47.1538085630105;
+        Thu, 27 Sep 2018 15:00:30 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-28-140.w86-222.abo.wanadoo.fr. [86.222.27.140])
-        by smtp.googlemail.com with ESMTPSA id h206-v6sm243153wmf.25.2018.09.27.15.00.27
+        by smtp.googlemail.com with ESMTPSA id h206-v6sm243153wmf.25.2018.09.27.15.00.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 15:00:28 -0700 (PDT)
+        Thu, 27 Sep 2018 15:00:29 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v8 01/20] sequencer: make three functions and an enum from sequencer.c public
-Date:   Thu, 27 Sep 2018 23:55:51 +0200
-Message-Id: <20180927215610.32210-2-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v8 02/20] rebase -i: rewrite append_todo_help() in C
+Date:   Thu, 27 Sep 2018 23:55:52 +0200
+Message-Id: <20180927215610.32210-3-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20180927215610.32210-1-alban.gruin@gmail.com>
 References: <20180828121045.14933-1-alban.gruin@gmail.com>
@@ -71,143 +71,263 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes rebase_path_todo(), get_missing_commit_check_level(),
-write_message() and the enum check_level accessible outside sequencer.c,
-renames check_level to missing_commit_check_level, and prefixes its
-value names by MISSING_COMMIT_ to avoid namespace pollution.
+This rewrites append_todo_help() from shell to C. It also incorporates
+some parts of initiate_action() and complete_action() that also write
+help texts to the todo file.
 
-This function and this enum will eventually be moved to
-rebase-interactive.c and become static again, so no special attention
-was given to the naming.
+This also introduces the source file rebase-interactive.c. This file
+will contain functions necessary for interactive rebase that are too
+specific for the sequencer, and is part of libgit.a.
 
-This will be needed for the rewrite of append_todo_help() from shell to
-C, as it will be in a new library source file, rebase-interactive.c.
+Two flags are added to rebase--helper.c: one to call
+append_todo_help() (`--append-todo-help`), and another one to tell
+append_todo_help() to write the help text suited for the edit-todo
+mode (`--write-edit-todo`).
+
+Finally, append_todo_help() is removed from git-rebase--interactive.sh
+to use `rebase--helper --append-todo-help` instead.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-No changes since v7.
+The changes are due to the rebase, no real changes otherwise.
 
- sequencer.c | 26 +++++++++++---------------
- sequencer.h | 11 +++++++++++
- 2 files changed, 22 insertions(+), 15 deletions(-)
+ Makefile                   |  1 +
+ builtin/rebase--helper.c   | 11 ++++--
+ git-rebase--interactive.sh | 52 ++---------------------------
+ rebase-interactive.c       | 68 ++++++++++++++++++++++++++++++++++++++
+ rebase-interactive.h       |  6 ++++
+ 5 files changed, 86 insertions(+), 52 deletions(-)
+ create mode 100644 rebase-interactive.c
+ create mode 100644 rebase-interactive.h
 
-diff --git a/sequencer.c b/sequencer.c
-index ddb41a62d9..c24d37dfb1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -53,7 +53,7 @@ static GIT_PATH_FUNC(rebase_path, "rebase-merge")
-  * the lines are processed, they are removed from the front of this
-  * file and written to the tail of 'done'.
-  */
--static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
-+GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
- /*
-  * The rebase command lines that have already been processed. A line
-  * is moved here when it is first handled, before any associated user
-@@ -377,8 +377,8 @@ static void print_advice(int show_hint, struct replay_opts *opts)
- 	}
- }
+diff --git a/Makefile b/Makefile
+index 13e1c52478..ff7f01634f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -942,6 +942,7 @@ LIB_OBJS += quote.o
+ LIB_OBJS += range-diff.o
+ LIB_OBJS += reachable.o
+ LIB_OBJS += read-cache.o
++LIB_OBJS += rebase-interactive.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs.o
+ LIB_OBJS += refs/files-backend.o
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index f7c2a5fdc8..05e73e71d4 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -3,6 +3,7 @@
+ #include "config.h"
+ #include "parse-options.h"
+ #include "sequencer.h"
++#include "rebase-interactive.h"
  
--static int write_message(const void *buf, size_t len, const char *filename,
--			 int append_eol)
-+int write_message(const void *buf, size_t len, const char *filename,
-+		  int append_eol)
+ static const char * const builtin_rebase_helper_usage[] = {
+ 	N_("git rebase--helper [<options>]"),
+@@ -12,12 +13,12 @@ static const char * const builtin_rebase_helper_usage[] = {
+ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  {
- 	struct lock_file msg_file = LOCK_INIT;
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+-	unsigned flags = 0, keep_empty = 0, rebase_merges = 0;
++	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, write_edit_todo = 0;
+ 	int abbreviate_commands = 0, rebase_cousins = -1;
+ 	enum {
+ 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
+ 		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
+-		ADD_EXEC
++		ADD_EXEC, APPEND_TODO_HELP
+ 	} command = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+@@ -27,6 +28,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
+ 		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
+ 			 N_("keep original branch points of cousins")),
++		OPT_BOOL(0, "write-edit-todo", &write_edit_todo,
++			 N_("append the edit-todo message to the todo-list")),
+ 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+ 				CONTINUE),
+ 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
+@@ -45,6 +48,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
+ 		OPT_CMDMODE(0, "add-exec-commands", &command,
+ 			N_("insert exec commands in todo list"), ADD_EXEC),
++		OPT_CMDMODE(0, "append-todo-help", &command,
++			    N_("insert the help in the todo list"), APPEND_TODO_HELP),
+ 		OPT_END()
+ 	};
  
-@@ -4422,24 +4422,20 @@ int transform_todos(unsigned flags)
- 	return i;
+@@ -84,5 +89,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!rearrange_squash();
+ 	if (command == ADD_EXEC && argc == 2)
+ 		return !!sequencer_add_exec_commands(argv[1]);
++	if (command == APPEND_TODO_HELP && argc == 1)
++		return !!append_todo_help(write_edit_todo, keep_empty);
+ 	usage_with_options(builtin_rebase_helper_usage, options);
+ }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 299ded2137..94c23a7af2 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -39,38 +39,6 @@ comment_for_reflog () {
+ 	esac
  }
  
--enum check_level {
--	CHECK_IGNORE = 0, CHECK_WARN, CHECK_ERROR
--};
+-append_todo_help () {
+-	gettext "
+-Commands:
+-p, pick <commit> = use commit
+-r, reword <commit> = use commit, but edit the commit message
+-e, edit <commit> = use commit, but stop for amending
+-s, squash <commit> = use commit, but meld into previous commit
+-f, fixup <commit> = like \"squash\", but discard this commit's log message
+-x, exec <command> = run command (the rest of the line) using shell
+-d, drop <commit> = remove commit
+-l, label <label> = label current HEAD with a name
+-t, reset <label> = reset HEAD to a label
+-m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+-.       create a merge commit using the original merge commit's
+-.       message (or the oneline, if no original merge commit was
+-.       specified). Use -c <commit> to reword the commit message.
 -
--static enum check_level get_missing_commit_check_level(void)
-+enum missing_commit_check_level get_missing_commit_check_level(void)
- {
- 	const char *value;
+-These lines can be re-ordered; they are executed from top to bottom.
+-" | git stripspace --comment-lines >>"$todo"
+-
+-	if test $(get_missing_commit_check_level) = error
+-	then
+-		gettext "
+-Do not remove any line. Use 'drop' explicitly to remove a commit.
+-" | git stripspace --comment-lines >>"$todo"
+-	else
+-		gettext "
+-If you remove a line here THAT COMMIT WILL BE LOST.
+-" | git stripspace --comment-lines >>"$todo"
+-	fi
+-}
+-
+ die_abort () {
+ 	apply_autostash
+ 	rm -rf "$state_dir"
+@@ -143,13 +111,7 @@ initiate_action () {
+ 		git stripspace --strip-comments <"$todo" >"$todo".new
+ 		mv -f "$todo".new "$todo"
+ 		collapse_todo_ids
+-		append_todo_help
+-		gettext "
+-You are editing the todo file of an ongoing interactive rebase.
+-To continue rebase after editing, run:
+-    git rebase --continue
+-
+-" | git stripspace --comment-lines >>"$todo"
++		git rebase--helper --append-todo-help --write-edit-todo
  
- 	if (git_config_get_value("rebase.missingcommitscheck", &value) ||
- 			!strcasecmp("ignore", value))
--		return CHECK_IGNORE;
-+		return MISSING_COMMIT_CHECK_IGNORE;
- 	if (!strcasecmp("warn", value))
--		return CHECK_WARN;
-+		return MISSING_COMMIT_CHECK_WARN;
- 	if (!strcasecmp("error", value))
--		return CHECK_ERROR;
-+		return MISSING_COMMIT_CHECK_ERROR;
- 	warning(_("unrecognized setting %s for option "
- 		  "rebase.missingCommitsCheck. Ignoring."), value);
--	return CHECK_IGNORE;
-+	return MISSING_COMMIT_CHECK_IGNORE;
- }
+ 		git_sequence_editor "$todo" ||
+ 			die "$(gettext "Could not execute editor")"
+@@ -220,17 +182,7 @@ $comment_char $(eval_ngettext \
+ 	"Rebase \$shortrevisions onto \$shortonto (\$todocount commands)" \
+ 	"$todocount")
+ EOF
+-	append_todo_help
+-	gettext "
+-	However, if you remove everything, the rebase will be aborted.
+-
+-	" | git stripspace --comment-lines >>"$todo"
+-
+-	if test -z "$keep_empty"
+-	then
+-		printf '%s\n' "$comment_char $(gettext "Note that empty commits are commented out")" >>"$todo"
+-	fi
+-
++	git rebase--helper --append-todo-help ${keep_empty:+--keep-empty}
  
- define_commit_slab(commit_seen, unsigned char);
-@@ -4451,7 +4447,7 @@ define_commit_slab(commit_seen, unsigned char);
-  */
- int check_todo_list(void)
- {
--	enum check_level check_level = get_missing_commit_check_level();
-+	enum missing_commit_check_level check_level = get_missing_commit_check_level();
- 	struct strbuf todo_file = STRBUF_INIT;
- 	struct todo_list todo_list = TODO_LIST_INIT;
- 	struct strbuf missing = STRBUF_INIT;
-@@ -4468,7 +4464,7 @@ int check_todo_list(void)
- 	advise_to_edit_todo = res =
- 		parse_insn_buffer(todo_list.buf.buf, &todo_list);
- 
--	if (res || check_level == CHECK_IGNORE)
-+	if (res || check_level == MISSING_COMMIT_CHECK_IGNORE)
- 		goto leave_check;
- 
- 	/* Mark the commits in git-rebase-todo as seen */
-@@ -4503,7 +4499,7 @@ int check_todo_list(void)
- 	if (!missing.len)
- 		goto leave_check;
- 
--	if (check_level == CHECK_ERROR)
-+	if (check_level == MISSING_COMMIT_CHECK_ERROR)
- 		advise_to_edit_todo = res = 1;
- 
- 	fprintf(stderr,
-diff --git a/sequencer.h b/sequencer.h
-index c986bc8251..579de9127b 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -8,6 +8,7 @@ struct commit;
- 
- const char *git_path_commit_editmsg(void);
- const char *git_path_seq_dir(void);
-+const char *rebase_path_todo(void);
- 
- #define APPEND_SIGNOFF_DEDUP (1u << 0)
- 
-@@ -62,6 +63,15 @@ struct replay_opts {
- };
- #define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
- 
-+enum missing_commit_check_level {
-+	MISSING_COMMIT_CHECK_IGNORE = 0,
-+	MISSING_COMMIT_CHECK_WARN,
-+	MISSING_COMMIT_CHECK_ERROR
-+};
+ 	has_action "$todo" ||
+ 		return 2
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+new file mode 100644
+index 0000000000..d7996bc8d9
+--- /dev/null
++++ b/rebase-interactive.c
+@@ -0,0 +1,68 @@
++#include "cache.h"
++#include "commit.h"
++#include "rebase-interactive.h"
++#include "sequencer.h"
++#include "strbuf.h"
 +
-+int write_message(const void *buf, size_t len, const char *filename,
-+		  int append_eol);
++int append_todo_help(unsigned edit_todo, unsigned keep_empty)
++{
++	struct strbuf buf = STRBUF_INIT;
++	FILE *todo;
++	int ret;
++	const char *msg = _("\nCommands:\n"
++"p, pick <commit> = use commit\n"
++"r, reword <commit> = use commit, but edit the commit message\n"
++"e, edit <commit> = use commit, but stop for amending\n"
++"s, squash <commit> = use commit, but meld into previous commit\n"
++"f, fixup <commit> = like \"squash\", but discard this commit's log message\n"
++"x, exec <command> = run command (the rest of the line) using shell\n"
++"d, drop <commit> = remove commit\n"
++"l, label <label> = label current HEAD with a name\n"
++"t, reset <label> = reset HEAD to a label\n"
++"m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]\n"
++".       create a merge commit using the original merge commit's\n"
++".       message (or the oneline, if no original merge commit was\n"
++".       specified). Use -c <commit> to reword the commit message.\n"
++"\n"
++"These lines can be re-ordered; they are executed from top to bottom.\n");
 +
- /* Call this to setup defaults before parsing command line options */
- void sequencer_init_config(struct replay_opts *opts);
- int sequencer_pick_revisions(struct replay_opts *opts);
-@@ -84,6 +94,7 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
- 
- int sequencer_add_exec_commands(const char *command);
- int transform_todos(unsigned flags);
-+enum missing_commit_check_level get_missing_commit_check_level(void);
- int check_todo_list(void);
- int skip_unnecessary_picks(void);
- int rearrange_squash(void);
++	todo = fopen_or_warn(rebase_path_todo(), "a");
++	if (!todo)
++		return 1;
++
++	strbuf_add_commented_lines(&buf, msg, strlen(msg));
++
++	if (get_missing_commit_check_level() == MISSING_COMMIT_CHECK_ERROR)
++		msg = _("\nDo not remove any line. Use 'drop' "
++			 "explicitly to remove a commit.\n");
++	else
++		msg = _("\nIf you remove a line here "
++			 "THAT COMMIT WILL BE LOST.\n");
++
++	strbuf_add_commented_lines(&buf, msg, strlen(msg));
++
++	if (edit_todo)
++		msg = _("\nYou are editing the todo file "
++			"of an ongoing interactive rebase.\n"
++			"To continue rebase after editing, run:\n"
++			"    git rebase --continue\n\n");
++	else
++		msg = _("\nHowever, if you remove everything, "
++			"the rebase will be aborted.\n\n");
++
++	strbuf_add_commented_lines(&buf, msg, strlen(msg));
++
++	if (!keep_empty) {
++		msg = _("Note that empty commits are commented out");
++		strbuf_add_commented_lines(&buf, msg, strlen(msg));
++	}
++
++	ret = fputs(buf.buf, todo);
++	if (ret < 0)
++		error_errno(_("could not append help text to '%s'"), rebase_path_todo());
++
++	fclose(todo);
++	strbuf_release(&buf);
++
++	return ret;
++}
+diff --git a/rebase-interactive.h b/rebase-interactive.h
+new file mode 100644
+index 0000000000..47372624e0
+--- /dev/null
++++ b/rebase-interactive.h
+@@ -0,0 +1,6 @@
++#ifndef REBASE_INTERACTIVE_H
++#define REBASE_INTERACTIVE_H
++
++int append_todo_help(unsigned edit_todo, unsigned keep_empty);
++
++#endif
 -- 
 2.19.0
 
