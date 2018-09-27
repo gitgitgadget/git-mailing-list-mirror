@@ -2,184 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A01851F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 19:24:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 136C31F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 19:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728680AbeI1BoZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 21:44:25 -0400
-Received: from mail-io1-f73.google.com ([209.85.166.73]:39832 "EHLO
-        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728101AbeI1BoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 21:44:25 -0400
-Received: by mail-io1-f73.google.com with SMTP id x5-v6so4069231ioa.6
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:24:37 -0700 (PDT)
+        id S1728689AbeI1BsK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 21:48:10 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51515 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728278AbeI1BsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 21:48:10 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y25-v6so7023311wmi.1
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:28:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=VIcC7tx9B4oUDsvz6GmX4ErQ3TOv3BnJOy8jvlzqb14=;
-        b=brPbUatG9pYoLS/qNOiRpkexsxqyxrNyvki+E4RAfzM8Ocr+317dZZV0qDTPKZJdOF
-         yiK1o09sH0FbTu+Ye5csJ6GeRpLGRsubo+TDEyMTUEPcV7suseY1Tv7NXvVg0b/7DUOh
-         iEh8pM8j89g2rBZQAL8AB3HEIbPw75HfBDJn1vd/7ZpSiWxmAOkPCP+haprkybPWIoox
-         DMBtpV2piy/UF0n1t8aXjrM/ogxtEf0ga/6n6emqnBWUaSpoZwAiEV42AbuUGdeRdocg
-         gijKtzzaRl8ivfjn8KtY9I9TpaDL6Iipo/Cu2hJtu1sMhu5bE4JSXGKC++LY5wZ8wMby
-         AXGA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=QrZ7GHGepm96Rjsio77vSDGx1d4h0K1xEjjwDUVHMmE=;
+        b=qaSM/fgkbJHC89YYQoV/1QtAjZBqVnQo8wVK7Xj7RmRiUqKoPCxs38ynlUx5FuZ1gB
+         vd1aTE3VwU1R54YROWijgfH3LQJ2uX0hePa0ZXJUlnW+c//fqA3f8ValE04gPH7SHHZ5
+         rmbHigJgVf8amd+CZsGiBBYI43uxYHSBh7afeymoRU84uep7Dm6HQqNXohzYNTRrq/pQ
+         MsNDVQrmtlorBnQK9tsmy29D+9KTPf37iH3RBLsZ3K99eriIR+lcMd4n/enIvxyHQKdI
+         5OFj6ut1bJ3wF6GlDnL8AuESm7scnFsNDCrFC8TM3Ip7ZQwFqNycYW6usY3B+Ln+7Rng
+         5lXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=VIcC7tx9B4oUDsvz6GmX4ErQ3TOv3BnJOy8jvlzqb14=;
-        b=WqKjL8yo+QBtsbZ5l32mP80n2dbXz7/Cc5b5lEXeu8f0Fmztfa4TSQ8m6SbbK3/LJo
-         qzIzUJLdnxx0kw0eBprcla+YZ+GKvZfVOOzPfbDFEZ0HKPUdamLwByKjWCoKe+zcWBO2
-         y3zzqKMVn7vwGnFue2tq7mYBlsusosuvPNAvZwp3SeixQOtHjOKD3pLArzLzj2w8jSb0
-         KzhjpGjgPCn3Fk39Vix7uDosthtBp9X5ERqXAsVVnfmR0TaTTcXIORcgwJK0K0uM05UE
-         AfsrPx3XcRsJNdoo7d+pnjN5aIh9vT1srzp5b5gHZAlYSH7WB4g0WaCVoKo8eOo2IUKP
-         CUKw==
-X-Gm-Message-State: ABuFfohIWrJKnpV4EkasxBDUtRYH5PPFYMsb7QwVroMOPydfYEeObIb7
-        SDPrJiaf1MwGZP4MFdtalFumIX7MRD/KsvX57xUKEo2RVX+u8EhaWPl+n5XB0n8dEWwYDlFc28X
-        vnt3JfTt6aDmEaIXiJXoXwArh2HPY5JWSrrIAdvJVHLBVwh/ruyW05VmVYB98QsL+4xvjSXP/nj
-        HF
-X-Google-Smtp-Source: ACcGV6087iMtpkHyRQk71EqPY3CHj599q7ShpdMvBPb98/K0zqeU2cObGEruWOsoCW/0OZxcHfkAipfynxRzcfhljgcK
-X-Received: by 2002:a24:f585:: with SMTP id k127-v6mr7773148ith.1.1538076276901;
- Thu, 27 Sep 2018 12:24:36 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 12:24:07 -0700
-In-Reply-To: <cover.1538075680.git.jonathantanmy@google.com>
-Message-Id: <1ae00ea1fdd1118b92ac90d67f27a988750b60f2.1538075680.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20180925225355.74237-1-jonathantanmy@google.com> <cover.1538075680.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [RFC PATCH v2 4/4] fetch: do not list refs if fetching only hashes
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=QrZ7GHGepm96Rjsio77vSDGx1d4h0K1xEjjwDUVHMmE=;
+        b=rWAYdkjAoEOqrA9qnV+7CsU82HxfczGPPm+3p2Eg1kz59GCfp5/Nl4kqfoiRbxWVQ3
+         aHBPP7gZazK/FNa7JTAgko49Ajdi/JiUyaL+SFLjWu7hUNaDsz1N6GIVr/MzJft67cyV
+         aTyerRirF30YP1jgxFDFAW5wOeMeT4fPhy3get1oGX1u8Myci7gmpemWdCG2blGpzBXz
+         mrniM1MQNItBBaXQ33dpbv2VmkcYImjPnK9wAgxnMwxpbp2gmKX9R1pk7SsogcbX75YO
+         dvQl0B49xYTRGxGSZ4YKzLGVul5xJCVfO2PQ15rXbrxh2pxZZFs6PmlfFPJH6P+Z0nAV
+         UBFA==
+X-Gm-Message-State: ABuFfoiHmqyX6DBZ0VRgJU9VcTLi1PNV7CCDLuROfbsxlobaAEppwDc8
+        ygtMpdbmy5NsfkEM6SEh6uo=
+X-Google-Smtp-Source: ACcGV63Vtq5fwGIYnhpAm6QlWwS4yacYJLbeV0wX5gupOxhtwopVi0ka6T9XQ+CiWiwKq5Ipa1uHaQ==
+X-Received: by 2002:a1c:3545:: with SMTP id c66-v6mr50933wma.120.1538076500499;
+        Thu, 27 Sep 2018 12:28:20 -0700 (PDT)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id f9-v6sm2591560wmc.24.2018.09.27.12.28.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Sep 2018 12:28:19 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 20:28:04 +0100
+From:   Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Nickolai Belakovski <nbelakovski@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] branch: colorize branches checked out in a linked
+ working tree the same way as the current branch is colorized
+Message-ID: <20180927192804.GA27163@rigel>
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20180927181708.GA2468@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180927181708.GA2468@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If only hash literals are given on a "git fetch" command-line, tag
-following is not requested, and the fetch is done using protocol v2, a
-list of refs is not required from the remote. Therefore, optimize by
-invoking transport_get_remote_refs() only if we need the refs.
+On Thu, Sep 27, 2018 at 02:17:08PM -0400, Jeff King wrote:
+> Do we want to limit this to git-branch, though? Ideally any output you
+> get from git-branch could be replicated with for-each-ref (or with
+> a custom "branch --format").
+> 
+> I.e., could we have a format in ref-filter that matches HEAD, but
+> returns a distinct symbol for a worktree HEAD? That would allow a few
+> things:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- builtin/fetch.c             | 32 ++++++++++++++++++++++++++------
- t/t5551-http-fetch-smart.sh | 15 +++++++++++++++
- t/t5702-protocol-v2.sh      | 13 +++++++++++++
- 3 files changed, 54 insertions(+), 6 deletions(-)
+I was going to suggest using dim green and green for elsewhere and here
+respectively, in a similar way how range-diff uses it to show different
+versions of the same diff.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 0696abfc2a..4c4f8fa194 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1175,6 +1175,7 @@ static int do_fetch(struct transport *transport,
- 	int retcode = 0;
- 	const struct ref *remote_refs;
- 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
-+	int must_list_refs = 1;
- 
- 	if (tags == TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags == 2)
-@@ -1190,17 +1191,36 @@ static int do_fetch(struct transport *transport,
- 			goto cleanup;
- 	}
- 
--	if (rs->nr)
-+	if (rs->nr) {
-+		int i;
-+
- 		refspec_ref_prefixes(rs, &ref_prefixes);
--	else if (transport->remote && transport->remote->fetch.nr)
-+
-+		/*
-+		 * We can avoid listing refs if all of them are exact
-+		 * OIDs
-+		 */
-+		must_list_refs = 0;
-+		for (i = 0; i < rs->nr; i++) {
-+			if (!rs->items[i].exact_sha1) {
-+				must_list_refs = 1;
-+				break;
-+			}
-+		}
-+	} else if (transport->remote && transport->remote->fetch.nr)
- 		refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
- 
--	if (ref_prefixes.argc &&
--	    (tags == TAGS_SET || (tags == TAGS_DEFAULT))) {
--		argv_array_push(&ref_prefixes, "refs/tags/");
-+	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
-+		must_list_refs = 1;
-+		if (ref_prefixes.argc)
-+			argv_array_push(&ref_prefixes, "refs/tags/");
- 	}
- 
--	remote_refs = transport_get_remote_refs(transport, &ref_prefixes);
-+	if (must_list_refs)
-+		remote_refs = transport_get_remote_refs(transport, &ref_prefixes);
-+	else
-+		remote_refs = NULL;
-+
- 	argv_array_clear(&ref_prefixes);
- 
- 	ref_map = get_ref_map(transport->remote, remote_refs, rs,
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 771f36f9ff..12b339d239 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -381,6 +381,21 @@ test_expect_success 'using fetch command in remote-curl updates refs' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'fetch by SHA-1 without tag following' '
-+	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
-+	rm -rf "$SERVER" client &&
-+
-+	git init "$SERVER" &&
-+	test_commit -C "$SERVER" foo &&
-+
-+	git clone $HTTPD_URL/smart/server client &&
-+
-+	test_commit -C "$SERVER" bar &&
-+	git -C "$SERVER" rev-parse bar >bar_hash &&
-+	git -C client -c protocol.version=0 fetch \
-+		--no-tags origin $(cat bar_hash)
-+'
-+
- test_expect_success 'GIT_REDACT_COOKIES redacts cookies' '
- 	rm -rf clone &&
- 	echo "Set-Cookie: Foo=1" >cookies &&
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index a316bb9bf4..1a97331648 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -79,6 +79,19 @@ test_expect_success 'fetch with git:// using protocol v2' '
- 	grep "fetch< version 2" log
- '
- 
-+test_expect_success 'fetch by hash without tag following with protocol v2 does not list refs' '
-+	test_when_finished "rm -f log" &&
-+
-+	test_commit -C "$daemon_parent" two_a &&
-+	git -C "$daemon_parent" rev-parse two_a >two_a_hash &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/log" git -C daemon_child -c protocol.version=2 \
-+		fetch --no-tags origin $(cat two_a_hash) &&
-+
-+	grep "fetch< version 2" log &&
-+	! grep "fetch> command=ls-refs" log
-+'
-+
- test_expect_success 'pull with git:// using protocol v2' '
- 	test_when_finished "rm -f log" &&
- 
--- 
-2.19.0.605.g01d371f741-goog
+But if we're open to change how branches are displayed maybe a config
+option like branch.format (probably not the best name choice) that can
+be set to the 'for-each-ref --format' syntax would be way more flexible.
 
+e.g.
+    branch.format='%(if:equals=+)...'
+
+I think the different symbol and dimmed color would be a nice addition,
+but I am leaning towards giving the user the ultimate choice on how they
+want to format their output. (Maybe with dimmed plus symbol as default).
+
+--
+Cheers,
+Rafael Ascensão
