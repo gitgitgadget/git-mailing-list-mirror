@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A14B1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id B86FE1F453
 	for <e@80x24.org>; Thu, 27 Sep 2018 22:00:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727599AbeI1EVC (ORCPT <rfc822;e@80x24.org>);
+        id S1727620AbeI1EVC (ORCPT <rfc822;e@80x24.org>);
         Fri, 28 Sep 2018 00:21:02 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41525 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727068AbeI1EVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 00:21:01 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j15-v6so4219685wrt.8
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:00:35 -0700 (PDT)
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44395 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727567AbeI1EVC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 00:21:02 -0400
+Received: by mail-wr1-f68.google.com with SMTP id v16-v6so4206567wro.11
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8GthGCUWYdPj7y2CmvVXL7STiQ1QXc/mxs2NH392SKQ=;
-        b=VnzKuIEnQSQfqtjLOGGAyzZJdLMPoGrmAS4d9ziSSIU/SWGx87ZfZEtDY8e7l0aztO
-         oNRsGF780Bo2ffNDLLw/hkJxxQ2JxRKRvMib3UY9imV8trcpehzz1sBtUxuf2uLUGmV6
-         hIjLoME78GBV84LqZ7sXCkQeD5/IXI72LBmvBMXzTpXcjQ801CiwiqvsJ121VLz0+zyC
-         hQQeMDfloPPqAST+5sr5hWDJRV9zhQ2RylN8MdxAQko/+C2rpZeLfMkdfO/f2WZJJc+D
-         I+4rhSPg0Xy4tq88mZX9+HHyvCYIGi4D1pyIxSaBQt2tky7Of9/Xk41rZxbhHuM80ZTJ
-         OzSA==
+        bh=V20aHstr7lHBofIfJHFdCgIzVlM/8E0oK6yRdv+SaM4=;
+        b=qE1cUH0n1iLsrBSQ2zMSgcvG4gbJfnu1ZBd2xDNgVWUpPY4U49PhRd01akkD29BILT
+         4zzCjvgJXPeL5yNjaUqfgROQmSRUaRgG8R5nKXQQB31Lfk/cgvr6z0fuO63/ymxfmv4L
+         UBnrih9U0ZOXuA6ZO0t1n3auZlrZxgJMAiTzjSp5x5lIgoVFMPWlVNCVGpBzVcQYTJPJ
+         d89+aq/f/EwaFDK0+P70+lFkHdsyF2p2c7/719pNgVejpK3wcTYxHJyIm03vmDujLARM
+         eVgqX4g0JYToYaEWFjPWyXoLvH664Ec0Qd6PtvJYQEF1fvYrCrbwDa+JaLicgCOF4x+U
+         BcxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8GthGCUWYdPj7y2CmvVXL7STiQ1QXc/mxs2NH392SKQ=;
-        b=Oy5jbgG7z4GTAlpwvl5TtdAppiNqA01NiA+PVy7jcCUXRsvAJL+11YNiJJ9EQHNFoi
-         vL3li1DdHaCLgIvfCv9Gkw+q3CVE7vtOY9XpkYBoA7EfHDuSOU7e9QwIUkhi9NLTNpld
-         hQ529GLfSEI4Q9Q8QnytZGqr+v7+BC4aA7+XLm1Cy1q7JnBT7V95O+Nu1RSO/S6p8krk
-         khsYPQcgPOUKGurmC9Z2ypAJFabrL/qkBxaF0Ze5EJhN21Q1B5gBcA3cCIK11D6BiAat
-         LfeZqOqaQXjPyI33zeyZZnHe6v6Ee6eCLcJ5M52vy/RjfRdAeq7MKo5nIJLnfHFfxGl/
-         6fGg==
-X-Gm-Message-State: ABuFfohVDOXwkiNyZBYcBKr+h+AQWPvRqB59Os149vHuaTvYH65YPzIk
-        A2HzMzuUt9IYsWt2N1N8cAiA+7Ne
-X-Google-Smtp-Source: ACcGV61lEYO/rRycwKlIFwF3o8GBQSyynpIB+JvIjfkrYj2QzdCluJ2iH0dOSbflycG/+KcXKGCp0g==
-X-Received: by 2002:adf:e882:: with SMTP id d2-v6mr9844481wrm.43.1538085634905;
-        Thu, 27 Sep 2018 15:00:34 -0700 (PDT)
+        bh=V20aHstr7lHBofIfJHFdCgIzVlM/8E0oK6yRdv+SaM4=;
+        b=qa8Ao7lYuqC/vlhunTH46OEqLAagFD0tMySjxkzKi/yEo378i9TwjhpoVaVwtTWxEJ
+         88o/alskbq20Kr7LzP2XIFhoTOyM7taw16qOGrRLXbOkyVigGqhE10rbD+n4Gk1FHyAg
+         NZCDG0PFFnSevqk6LWx3YjhFxR5q4RhXE8oPcZEHjgDdr1LYX32F5Sx7Wd9xz60yJBRb
+         QWcqwidmXAFI8T1A7Wm68qs4y6MWAbbl/+W3Fhk5NBQQOmRPBvOyeACkzSifyeDf/YCK
+         qP0CKRdLRHbKV4iTxmXLrVRKBiXSMWm7n0fcegkNxQG3NAvYgJfOcZr4SvLPQoE399mR
+         3Y7Q==
+X-Gm-Message-State: ABuFfoj0MMF5qaRU+YBybePiQ13+2cM2Eck+YMiK9MULtoMl9BW+47DE
+        jvCd04l3pTZGyXXDTDyqXa5l++Ho
+X-Google-Smtp-Source: ACcGV62O1s8nfFva0AkgJUN3ShlnVygqOqNeVe8pt56Bl2HPn9nz6cg0LfFUo5xYqzV29wEjVOD/aw==
+X-Received: by 2002:adf:93c2:: with SMTP id 60-v6mr9592432wrp.81.1538085636041;
+        Thu, 27 Sep 2018 15:00:36 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-28-140.w86-222.abo.wanadoo.fr. [86.222.27.140])
-        by smtp.googlemail.com with ESMTPSA id h206-v6sm243153wmf.25.2018.09.27.15.00.33
+        by smtp.googlemail.com with ESMTPSA id h206-v6sm243153wmf.25.2018.09.27.15.00.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 15:00:34 -0700 (PDT)
+        Thu, 27 Sep 2018 15:00:35 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v8 06/20] rebase -i: rewrite setup_reflog_action() in C
-Date:   Thu, 27 Sep 2018 23:55:56 +0200
-Message-Id: <20180927215610.32210-7-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v8 07/20] rebase -i: rewrite checkout_onto() in C
+Date:   Thu, 27 Sep 2018 23:55:57 +0200
+Message-Id: <20180927215610.32210-8-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20180927215610.32210-1-alban.gruin@gmail.com>
 References: <20180828121045.14933-1-alban.gruin@gmail.com>
@@ -72,165 +72,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites (the misnamed) setup_reflog_action() from shell to C. The
-new version is called prepare_branch_to_be_rebased().
+This rewrites checkout_onto() from shell to C.
 
-A new command is added to rebase--helper.c, “checkout-base”, as well as
-a new flag, “verbose”, to avoid silencing the output of the checkout
-operation called by checkout_base_commit().
-
-The function `run_git_checkout()` will also be used in the next commit,
-therefore its code is not part of `checkout_base_commit()`.
-
-The shell version is then stripped in favour of a call to the helper.
-
-As $GIT_REFLOG_ACTION is no longer set at the first call of
-checkout_onto(), a call to comment_for_reflog() is added at the
-beginning of this function.
+A new command (“checkout-onto”) is added to rebase--helper.c. The shell
+version is then stripped.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
 No changes since v7.
 
  builtin/rebase--helper.c   |  7 ++++++-
- git-rebase--interactive.sh | 16 ++--------------
- sequencer.c                | 30 ++++++++++++++++++++++++++++++
- sequencer.h                |  2 ++
- 4 files changed, 40 insertions(+), 15 deletions(-)
+ git-rebase--interactive.sh | 25 ++++---------------------
+ sequencer.c                | 19 +++++++++++++++++++
+ sequencer.h                |  3 +++
+ 4 files changed, 32 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index 731a64971d..0e76dadba6 100644
+index 0e76dadba6..7d9426d23c 100644
 --- a/builtin/rebase--helper.c
 +++ b/builtin/rebase--helper.c
-@@ -18,7 +18,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+@@ -18,7 +18,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  	enum {
  		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
  		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
--		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
-+		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, PREPARE_BRANCH
+-		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, PREPARE_BRANCH
++		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO, PREPARE_BRANCH,
++		CHECKOUT_ONTO
  	} command = 0;
  	struct option options[] = {
  		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -28,6 +28,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
- 		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
- 			 N_("keep original branch points of cousins")),
-+		OPT__VERBOSE(&opts.verbose, N_("be verbose")),
- 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
- 				CONTINUE),
- 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
-@@ -51,6 +52,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "edit-todo", &command,
- 			    N_("edit the todo list during an interactive rebase"),
+@@ -54,6 +55,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  			    EDIT_TODO),
-+		OPT_CMDMODE(0, "prepare-branch", &command,
-+			    N_("prepare the branch to be rebased"), PREPARE_BRANCH),
+ 		OPT_CMDMODE(0, "prepare-branch", &command,
+ 			    N_("prepare the branch to be rebased"), PREPARE_BRANCH),
++		OPT_CMDMODE(0, "checkout-onto", &command,
++			    N_("checkout a commit"), CHECKOUT_ONTO),
  		OPT_END()
  	};
  
-@@ -94,5 +97,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		return !!append_todo_help(0, keep_empty);
- 	if (command == EDIT_TODO && argc == 1)
+@@ -99,5 +102,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  		return !!edit_todo_list(flags);
-+	if (command == PREPARE_BRANCH && argc == 2)
-+		return !!prepare_branch_to_be_rebased(&opts, argv[1]);
+ 	if (command == PREPARE_BRANCH && argc == 2)
+ 		return !!prepare_branch_to_be_rebased(&opts, argv[1]);
++	if (command == CHECKOUT_ONTO && argc == 4)
++		return !!checkout_onto(&opts, argv[1], argv[2], argv[3]);
  	usage_with_options(builtin_rebase_helper_usage, options);
  }
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2defe607f4..77e972bb6c 100644
+index 77e972bb6c..b68f108f28 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -72,6 +72,7 @@ collapse_todo_ids() {
+@@ -28,17 +28,6 @@ case "$comment_char" in
+ 	;;
+ esac
  
- # Switch to the branch in $into and notify it in the reflog
- checkout_onto () {
-+	comment_for_reflog start
- 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
- 	output git checkout $onto || die_abort "$(gettext "could not detach HEAD")"
- 	git update-ref ORIG_HEAD $orig_head
-@@ -119,19 +120,6 @@ initiate_action () {
- 	esac
- }
- 
--setup_reflog_action () {
--	comment_for_reflog start
+-orig_reflog_action="$GIT_REFLOG_ACTION"
 -
--	if test ! -z "$switch_to"
--	then
--		GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to"
--		output git checkout "$switch_to" -- ||
--			die "$(eval_gettext "Could not checkout \$switch_to")"
--
--		comment_for_reflog start
--	fi
+-comment_for_reflog () {
+-	case "$orig_reflog_action" in
+-	''|rebase*)
+-		GIT_REFLOG_ACTION="rebase -i ($1)"
+-		export GIT_REFLOG_ACTION
+-		;;
+-	esac
 -}
 -
- init_basic_state () {
- 	orig_head=$(git rev-parse --verify HEAD) || die "$(gettext "No HEAD?")"
- 	mkdir -p "$state_dir" || die "$(eval_gettext "Could not create temporary \$state_dir")"
-@@ -211,7 +199,7 @@ git_rebase__interactive () {
- 		return 0
- 	fi
- 
--	setup_reflog_action
-+	git rebase--helper --prepare-branch "$switch_to" ${verbose:+--verbose}
- 	init_basic_state
- 
- 	init_revisions_and_shortrevisions
-diff --git a/sequencer.c b/sequencer.c
-index 5919ad312e..d8a59c50f8 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3285,6 +3285,36 @@ static const char *reflog_message(struct replay_opts *opts,
- 	return buf.buf;
+ die_abort () {
+ 	apply_autostash
+ 	rm -rf "$state_dir"
+@@ -70,14 +59,6 @@ collapse_todo_ids() {
+ 	git rebase--helper --shorten-ids
  }
  
-+static int run_git_checkout(struct replay_opts *opts, const char *commit,
-+			    const char *action)
+-# Switch to the branch in $into and notify it in the reflog
+-checkout_onto () {
+-	comment_for_reflog start
+-	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
+-	output git checkout $onto || die_abort "$(gettext "could not detach HEAD")"
+-	git update-ref ORIG_HEAD $orig_head
+-}
+-
+ get_missing_commit_check_level () {
+ 	check_level=$(git config --get rebase.missingCommitsCheck)
+ 	check_level=${check_level:-ignore}
+@@ -176,7 +157,8 @@ EOF
+ 
+ 	git rebase--helper --check-todo-list || {
+ 		ret=$?
+-		checkout_onto
++		git rebase--helper --checkout-onto "$onto_name" "$onto" \
++		    "$orig_head" ${verbose:+--verbose}
+ 		exit $ret
+ 	}
+ 
+@@ -186,7 +168,8 @@ EOF
+ 	onto="$(git rebase--helper --skip-unnecessary-picks)" ||
+ 	die "Could not skip unnecessary pick commands"
+ 
+-	checkout_onto
++	git rebase--helper --checkout-onto "$onto_name" "$onto" "$orig_head" \
++	    ${verbose:+--verbose}
+ 	require_clean_work_tree "rebase"
+ 	exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
+ 	     --continue
+diff --git a/sequencer.c b/sequencer.c
+index d8a59c50f8..c7f930ab9c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3315,6 +3315,25 @@ int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit)
+ 	return 0;
+ }
+ 
++int checkout_onto(struct replay_opts *opts,
++		  const char *onto_name, const char *onto,
++		  const char *orig_head)
 +{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
++	struct object_id oid;
++	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
 +
-+	cmd.git_cmd = 1;
++	if (get_oid(orig_head, &oid))
++		return error(_("%s: not a valid OID"), orig_head);
 +
-+	argv_array_push(&cmd.args, "checkout");
-+	argv_array_push(&cmd.args, commit);
-+	argv_array_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
-+
-+	if (opts->verbose)
-+		return run_command(&cmd);
-+	else
-+		return run_command_silent_on_success(&cmd);
-+}
-+
-+int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit)
-+{
-+	const char *action;
-+
-+	if (commit && *commit) {
-+		action = reflog_message(opts, "start", "checkout %s", commit);
-+		if (run_git_checkout(opts, commit, action))
-+			return error(_("could not checkout %s"), commit);
++	if (run_git_checkout(opts, onto, action)) {
++		apply_autostash(opts);
++		sequencer_remove_state(opts);
++		return error(_("could not detach HEAD"));
 +	}
 +
-+	return 0;
++	return update_ref(NULL, "ORIG_HEAD", &oid, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
 +}
 +
  static const char rescheduled_advice[] =
  N_("Could not execute the todo command\n"
  "\n"
 diff --git a/sequencer.h b/sequencer.h
-index 579de9127b..9f0ce21be7 100644
+index 9f0ce21be7..5fa89edd3b 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -121,6 +121,8 @@ int update_head_with_reflog(const struct commit *old_head,
- void commit_post_rewrite(const struct commit *current_head,
+@@ -122,6 +122,9 @@ void commit_post_rewrite(const struct commit *current_head,
  			 const struct object_id *new_head);
  
-+int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit);
-+
+ int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit);
++int checkout_onto(struct replay_opts *opts,
++		  const char *onto_name, const char *onto,
++		  const char *orig_head);
+ 
  #define SUMMARY_INITIAL_COMMIT   (1 << 0)
  #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
- void print_commit_summary(const char *prefix, const struct object_id *oid,
 -- 
 2.19.0
 
