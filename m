@@ -2,174 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793811F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 19:12:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A04A61F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 19:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728733AbeI1Bce (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 21:32:34 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:36620 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728500AbeI1Bce (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 21:32:34 -0400
-Received: by mail-lj1-f193.google.com with SMTP id p89-v6so3518607ljb.3
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:12:47 -0700 (PDT)
+        id S1728485AbeI1Bga (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 21:36:30 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:42799 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727760AbeI1Bga (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 21:36:30 -0400
+Received: by mail-qt1-f193.google.com with SMTP id z8-v6so3996317qto.9
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7Xva8vQDZEMUAE1Q6f9lSk4IcxNRk30fbL+PPGRBeEk=;
-        b=KHL1GmtKO907sM0XeXCmwpBSLIo/OVK/QtLrLjsrhj/2tIqHU3Cfb3XebwziHaRkvu
-         EyzXycK/aLlgZWcSqUlvSBEPu6e9nVeZdh+JZOt8hEDO65rRNkta64q7udTky+7FEtbX
-         npua7lmTsJZe/EYWGsbgW2xVPMIFzIrgzYE284uFWJQTKIyp4XQQLLOPFDPayjAAQafN
-         cfdIUUmK1gD4JFeiATJIaNXBxAlVf5epYVV1ywy6luP1Rx1NAJktVUt9Ub2As0WpBMSR
-         YUgQxina4eJ01zJsWKCiad5dKZrPZRFX7st7wYiZo9o5dWzFOFHMg2mjpDiGJZM08rKv
-         snvg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=ujWV8jnm0tnqUo66BuNHtjk6xY+6ZrqchIZGCzBPPR4=;
+        b=YkjatBemeb5yTfKQ+MIUvVokTIxsXJruqEcjtnE8YX6seIVZWWpwwxS0U5TTyhF97X
+         odon6tNNVrzY2cjRt+gzthiMbDp04e2QB/eIcYhoExCsdpodrzynNxxsWefpdk5N76jW
+         rZ8haVp6dPHfND0eByE4K7VemgcfcY7IFETvgSTriI/dZEJyjef1I211HZW1YMSfq4aY
+         UrBcE8P4RBkvl/tEu6LO3EDrgagsPWsAdje2yDMWfyvVcyXmJ0N0fuGpErMxlxnE64Af
+         LAJuelbo04wFbs7mc5+wwScw6NBKOkD0JNhLkhIJCAWHNfO23Z/m+b+zOST5hYhPigzJ
+         MGdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7Xva8vQDZEMUAE1Q6f9lSk4IcxNRk30fbL+PPGRBeEk=;
-        b=NxwFXVp1Fiulg27Sha48oHSkl/GaFt05hbjTuXn+IZdBj7zOHbaLqiyrrMJpkJuOTZ
-         Z7DDBr4TnLQEtJnQMXHaffTXcsjUAzOcck1FxXtLE89VeXSyrfgXbWCW60kBI3N3B4aX
-         iFMsntGECyJwJqY8aaf5zTsKT2welFqHO2ebyKh/JcFgbIlfS9dOblamq1qXVok5frjh
-         zxp6lDxQ2+NGlIo2kMM8O6yPlYUYEMaU8wCjYSqqnbbWCnuRT0TTCtxnb5WUq+3AJSYg
-         3VqR+O9Qkdse3UIjPZXC/7Nvszgeb3xP1qmzcgkC4cWOHuyciTTo6/nhwhCTFkqS1dNg
-         O5mQ==
-X-Gm-Message-State: ABuFfojQtk1NlPVCx6uf1/qr2wKUjIMt3qLcamU9ZL+xxjfbv90tTMaV
-        fPG6GDAx83svEIQcpC9/mdAMk/+5
-X-Google-Smtp-Source: ACcGV60XgoXfYBAQM2l+HzvWIM+bNZVm4gMg1qw7g4rJ77vewig4jGWIOcUM2qHRTmpM3CwQ2OVqHw==
-X-Received: by 2002:a2e:8346:: with SMTP id l6-v6mr7450827ljh.72.1538075566016;
-        Thu, 27 Sep 2018 12:12:46 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id r79-v6sm561673ljb.84.2018.09.27.12.12.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 27 Sep 2018 12:12:45 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v2 4/4] Doc: refer to the "commit-graph file" with dash
-Date:   Thu, 27 Sep 2018 21:12:22 +0200
-Message-Id: <99b64287ec22e8690d5518002240be3e9147cb8e.1538075326.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.19.0.216.g2d3b1c576c
-In-Reply-To: <cover.1538075326.git.martin.agren@gmail.com>
-References: <6b1cb43e-a1a8-921f-cd66-3697609854e0@gmail.com> <cover.1538075326.git.martin.agren@gmail.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=ujWV8jnm0tnqUo66BuNHtjk6xY+6ZrqchIZGCzBPPR4=;
+        b=LqrJNTG47tuy7xQSOjAY3S1E+CCo2bsq3vujIujdZVpsYfIPN2serYMffvC3Ua1je8
+         jpXQXFs8FuckymeWHAWgoFR6RaaDXj9NEnoDTGnVeb7nmXcam9+2BymXK4B6C+XSe94G
+         CmiH1npy5UoUz9YdONgbW71qIcnH1iD+Dt5332k+6vK7rkjBNSZG4gvcbTclBZ72qnwX
+         xUxBRlf+IRDW+/agggeTuV51JyqY0/1mC9crjZOk/ZLHwm2aK9y0GVs4uwnvgLT1rqm4
+         x1VnJ1nRh+s/WPZ+iTIBE7NmrqvuwFrH1eDEIZmPJhEl47sz8MbTwdztphoMXmiWA0Zk
+         7s9A==
+X-Gm-Message-State: ABuFfoiJXOstFNmKloOXOn2Qa7BGeaZxLeFPv9f0OogCx1CsONx+1aVx
+        6Hut7xewAwvnsPubsNXNZ99lfU6y
+X-Google-Smtp-Source: ACcGV62Nt7Xq/aDNtF2wwiyRV376veKyV8Gln7i9hEgtjf5/oGNC5lD6rE2Oir1ulitHDTpAk/Dw5g==
+X-Received: by 2002:ac8:259d:: with SMTP id e29-v6mr9786261qte.233.1538075803983;
+        Thu, 27 Sep 2018 12:16:43 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:1455:e436:6b50:1b07? ([2001:4898:8010:0:fd8a:e436:6b50:1b07])
+        by smtp.gmail.com with ESMTPSA id c18-v6sm1869329qte.78.2018.09.27.12.16.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Sep 2018 12:16:43 -0700 (PDT)
+Subject: Re: [PATCH v2 0/4] git-commit-graph.txt: various cleanups
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+References: <6b1cb43e-a1a8-921f-cd66-3697609854e0@gmail.com>
+ <cover.1538075326.git.martin.agren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <31d467b9-1ffd-5c1d-2ff2-f4cb76854f0a@gmail.com>
+Date:   Thu, 27 Sep 2018 15:16:43 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <cover.1538075326.git.martin.agren@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The file processed by `git commit-graph` is referred to as the
-"commit-graph file", also with a dash. We have a few references to the
-"commit graph file", though, without the dash. These occur in
-git-commit-graph.txt as well as in Doc/technical/commit-graph.txt. Fix
-them.
+On 9/27/2018 3:12 PM, Martin Ågren wrote:
+> This v2 starts with the same two patches as v1 did, then goes on to
+> change "[commit] graph file" to "commit-graph file" with a dash, to
+> match other instances as well as Derrick's feedback.
+Thanks! This version satisfies my concerns and looks good to me.
 
-Do not change the references to the "commit graph" (without "... file")
-as a data structure.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/git-commit-graph.txt       | 12 ++++++------
- Documentation/technical/commit-graph.txt |  8 ++++----
- 2 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index f33330a171..624470e198 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -3,7 +3,7 @@ git-commit-graph(1)
- 
- NAME
- ----
--git-commit-graph - Write and verify Git commit graph files
-+git-commit-graph - Write and verify Git commit-graph files
- 
- 
- SYNOPSIS
-@@ -17,16 +17,16 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--Manage the serialized commit graph file.
-+Manage the serialized commit-graph file.
- 
- 
- OPTIONS
- -------
- --object-dir::
--	Use given directory for the location of packfiles and commit graph
-+	Use given directory for the location of packfiles and commit-graph
- 	file. This parameter exists to specify the location of an alternate
- 	that only has the objects directory, not a full `.git` directory. The
--	commit graph file is expected to be at `<dir>/info/commit-graph` and
-+	commit-graph file is expected to be at `<dir>/info/commit-graph` and
- 	the packfiles are expected to be in `<dir>/pack`.
- 
- 
-@@ -34,7 +34,7 @@ COMMANDS
- --------
- 'write'::
- 
--Write a commit graph file based on the commits found in packfiles.
-+Write a commit-graph file based on the commits found in packfiles.
- +
- With the `--stdin-packs` option, generate the new commit graph by
- walking objects only in the specified pack-indexes. (Cannot be combined
-@@ -66,7 +66,7 @@ database. Used to check for corrupted data.
- EXAMPLES
- --------
- 
--* Write a commit graph file for the packed commits in your local `.git`
-+* Write a commit-graph file for the packed commits in your local `.git`
-   directory.
- +
- ------------------------------------------------
-diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-index c664acbd76..6b7dde011e 100644
---- a/Documentation/technical/commit-graph.txt
-+++ b/Documentation/technical/commit-graph.txt
-@@ -15,13 +15,13 @@ There are two main costs here:
- 1. Decompressing and parsing commits.
- 2. Walking the entire graph to satisfy topological order constraints.
- 
--The commit graph file is a supplemental data structure that accelerates
-+The commit-graph file is a supplemental data structure that accelerates
- commit graph walks. If a user downgrades or disables the 'core.commitGraph'
- config setting, then the existing ODB is sufficient. The file is stored
- as "commit-graph" either in the .git/objects/info directory or in the info
- directory of an alternate.
- 
--The commit graph file stores the commit graph structure along with some
-+The commit-graph file stores the commit graph structure along with some
- extra metadata to speed up graph walks. By listing commit OIDs in lexi-
- cographic order, we can identify an integer position for each commit and
- refer to the parents of a commit using those integer positions. We use
-@@ -103,7 +103,7 @@ that of a parent.
- Design Details
- --------------
- 
--- The commit graph file is stored in a file named 'commit-graph' in the
-+- The commit-graph file is stored in a file named 'commit-graph' in the
-   .git/objects/info directory. This could be stored in the info directory
-   of an alternate.
- 
-@@ -127,7 +127,7 @@ Future Work
-     - 'log --topo-order'
-     - 'tag --merged'
- 
--- A server could provide a commit graph file as part of the network protocol
-+- A server could provide a commit-graph file as part of the network protocol
-   to avoid extra calculations by clients. This feature is only of benefit if
-   the user is willing to trust the file, because verifying the file is correct
-   is as hard as computing it from scratch.
--- 
-2.19.0.216.g2d3b1c576c
-
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
