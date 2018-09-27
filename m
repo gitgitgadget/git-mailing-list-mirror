@@ -2,159 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 388EC1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 01:25:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 827281F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 04:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726948AbeI0Hl1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 03:41:27 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:49079 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726588AbeI0Hl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 03:41:27 -0400
-Received: by mail-vk1-f202.google.com with SMTP id g71-v6so322172vke.15
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 18:25:44 -0700 (PDT)
+        id S1726597AbeI0Kgq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 06:36:46 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:43725 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726571AbeI0Kgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 06:36:46 -0400
+Received: by mail-vs1-f68.google.com with SMTP id y22-v6so707666vsj.10
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 21:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=IJjbq8DDjp/TM3ofFJtHDEPDb7EyViyLhbWH6raeeEo=;
-        b=vaXUPCMh+tb5A2xps1QTGNU7K27OmQT4uAyDFoikBDaFfLCI4jCJhLuvqheE1NahOU
-         4KFdr5P4qkbnOvVpj/ssudvmzq26Od0PxhQAt4x/l74vDmHDgcFYQOfSHY126E1Ri3wL
-         6E49kUo0Ou3/3+MN/yOMJInlqeL22kc0RuUkKsUBZP+j2yoOE8DOmrll9WZyoFXAT6Zl
-         Jwc/oDa9ZbUmUo0Ox3O7oKJOwJ//His/e/BOveK07EOQzA0INtWpZbwyKH4CBEYJ1S5K
-         HMhJXFw1aL4lckKM7Suum22eqdO72KcunzToyEviTStQ9rlu3fjpwrRtqQ1hbfHQeJ5f
-         7t3Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0Gf2GcyiuUMgbVp+NdPI6xrwpN7hTL2yJAnvMcVKwwM=;
+        b=CM99BzmEfgiRM5O8inQqbaqacqGU6MCbfzJ0QlgHWCTaNKxmUZJfffLWjdll/ePYyN
+         dQw1HaqnN40YIulzGjmk+4AjhWEffoXIl1/lgNrFS/fZERQQeI3pTAKvNVGiWTNFt4q0
+         1O1EY/W7Qm51isX6OhpiBB6p+7dF3r8VWKsTPtQH85KszqbM9Hv+ch/8PYrmxMZPbbli
+         CuoaD2sZv4NaHwPcmr78UGcQODO1i0GWoOtGQ3OshjfUXCkbGfT5edxhPKfRaoH2oCxu
+         lWedgyiUcE8Ra8RN2ugfuleXl2eDusn4uMsWsKSTkBPC8UIJG7Ld/WS3i3zx2khge3uv
+         2iPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=IJjbq8DDjp/TM3ofFJtHDEPDb7EyViyLhbWH6raeeEo=;
-        b=aRyxImT6xA4DtR+iCG1ZbUzmgltsHYw+RAkAuKm/AeFzGPwenVHbJrYlXS2RZpqIlN
-         3hjFUQdxUihiSYOishTEb5GvHq351VWuCtPqzHOi4jD6WD99IuM6Fx8bEYxWFyb+mjDH
-         ZbTPNnnHzb/WVj/63tROAI+PFrPJq9nsGIrPGSaT0RlGwv0W0LPUmerq49/zH3NSU9pI
-         leJDsBK6o0yYmkClOT4WqaN3oqP/WHZRiaVODXnLSg/YbshVTOIAqUx+88OY+eaNCAQB
-         XOs8R2b/+ofTZRr6Xy1R8VAN3EIy61c/V8GcQ3+Plrz4mrylDdab1IBQcqewsnlGCEy7
-         IjHw==
-X-Gm-Message-State: ABuFfoj6ZpJuxWmoihMDeMkg+ru3h8gES3b+xOqTSVXvJPRwewKaTTRY
-        e4eLpERkiS79fip6O09GvZgyE6H2x10LqSIUewq1MIF6hDdRW4YbPx6tb+s/PJod63UxUYzksUp
-        n39P5KOBqHOR5tznq8MYLmGViRVRsLsKdjvq/vdLpU68kQBkiIfrJmc6vSMavjew=
-X-Google-Smtp-Source: ACcGV60Oei/DcTxXRdKH3dcPziS6gzS11UBxwHqzucQK+6QHCysuH3oo2+1zcE4Z1uM8lBtC8XI7KzYyWGmbSA==
-X-Received: by 2002:a1f:b915:: with SMTP id j21-v6mr3597538vkf.13.1538011543767;
- Wed, 26 Sep 2018 18:25:43 -0700 (PDT)
-Date:   Wed, 26 Sep 2018 18:24:55 -0700
-In-Reply-To: <20180927012455.234876-1-steadmon@google.com>
-Message-Id: <20180927012455.234876-5-steadmon@google.com>
-Mime-Version: 1.0
-References: <20180912053519.31085-1-steadmon@google.com> <20180927012455.234876-1-steadmon@google.com>
-X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v2 4/4] archive: allow archive over HTTP(S) with proto v2
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     Josh Steadmon <steadmon@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0Gf2GcyiuUMgbVp+NdPI6xrwpN7hTL2yJAnvMcVKwwM=;
+        b=rSoDBG1S6x/SRJ8IYX8YlfkRjD8GQHNr8Z5X10qtBwcb+YEgoP4bNUXrxW+JVp0dko
+         ErJ9SmySU5XF5dXkw30C0CtpjFReljqRv77cNcySw0JlwKS33ac/yhyx4RvviFfwP9Ji
+         mLr8CHoeIN1yDxt1c/+J+Taks/+JO6VmvDTpmVDI7WAd9x0USt8Ojwt3ASTCXPr9b7tC
+         xmrYYvdyXcBnuGMYERVoUPiM7+ySPTae7TXo5DG8ZFmp3wVayBRQhnD6GhAekaiqyPRT
+         Bng70cGYTtAmOn9gC+3RhKuYEaMiwZg+wm1ZZoBrgftiiISrOZIj3c97gCtZY6BobLsb
+         1INQ==
+X-Gm-Message-State: ABuFfohCau8E/ZDWitUU9ww+/r9oz9iOtwGXxDQO+2swuYJ+ENAfAYds
+        95vxz9Wpr5tIW+UvnGI+dN1nCQIbGBvwbVcD6ng=
+X-Google-Smtp-Source: ACcGV60KO5xCP+H+5MmRnwwaMlvJwbLahpuyRetPyOdxILRUMgPk3lHqTHvLuYFsttTP+Pkg1ssOF1vsBtY+87YRhF4=
+X-Received: by 2002:a67:7f13:: with SMTP id a19-v6mr2875806vsd.175.1538022033234;
+ Wed, 26 Sep 2018 21:20:33 -0700 (PDT)
+MIME-Version: 1.0
+References: <3c11c193-a978-69be-4b8e-4b59b270338e@gmail.com>
+ <877ej8j7uf.fsf@evledraar.gmail.com> <d2a8619b-5110-0a03-5559-fd84cb7509b6@gmail.com>
+ <875zysj6fq.fsf@evledraar.gmail.com>
+In-Reply-To: <875zysj6fq.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 26 Sep 2018 21:20:22 -0700
+Message-ID: <CABPp-BEMTn2LEq8pB7Yenudnp0rSRfXCzeej4p3SE0BGovosmA@mail.gmail.com>
+Subject: Re: Triggering "BUG: wt-status.c:476: multiple renames on the same
+ target? how?"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Cc:     andreastacchiotti@gmail.com,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- builtin/archive.c  | 12 +++++++++++-
- http-backend.c     | 13 ++++++++++++-
- transport-helper.c |  7 ++++---
- 3 files changed, 27 insertions(+), 5 deletions(-)
+On Wed, Sep 26, 2018, 2:27 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com> wrote:
+>
+> On Wed, Sep 26 2018, Andrea Stacchiotti wrote:
+>
+> > I'm very sorry, I indeed forgot the `diff.renames=3Dcopies`.
+> >
+> > The following script can reproduce the bug even with a blank config:
 
-diff --git a/builtin/archive.c b/builtin/archive.c
-index f91d222677..78a259518d 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -87,7 +87,17 @@ static int run_remote_archiver(int argc, const char **argv,
- 		status = packet_reader_read(&reader);
- 		if (status == PACKET_READ_NORMAL && reader.pktlen > 0)
- 			die(_("git archive: expected a flush"));
--	}
-+	} else if (version == protocol_v2 &&
-+		   (starts_with(transport->url, "http://") ||
-+		    starts_with(transport->url, "https://")))
-+		/*
-+		 * Commands over HTTP require two requests, so there's an
-+		 * additional server response to parse. We do only basic sanity
-+		 * checking here that the versions presented match across
-+		 * requests.
-+		 */
-+		if (version != discover_version(&reader))
-+			die(_("git archive: received different protocol versions in subsequent requests"));
- 
- 	/* Now, start reading from fd[0] and spit it out to stdout */
- 	rv = recv_sideband("archive", fd[0], 1);
-diff --git a/http-backend.c b/http-backend.c
-index 9e894f197f..8e262d50e0 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -32,6 +32,7 @@ struct rpc_service {
- static struct rpc_service rpc_service[] = {
- 	{ "upload-pack", "uploadpack", 1, 1 },
- 	{ "receive-pack", "receivepack", 0, -1 },
-+	{ "upload-archive", "uploadarchive", 1, 1 },
- };
- 
- static struct string_list *get_parameters(void)
-@@ -637,6 +638,15 @@ static void service_rpc(struct strbuf *hdr, char *service_name)
- 	struct rpc_service *svc = select_service(hdr, service_name);
- 	struct strbuf buf = STRBUF_INIT;
- 
-+	if (!strcmp(service_name, "git-upload-archive")) {
-+		/*
-+		 * git-upload-archive doesn't need --stateless-rpc, because it
-+		 * always handles only a single request.
-+		 */
-+		argv[1] = ".";
-+		argv[2] = NULL;
-+	}
-+
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "application/x-git-%s-request", svc->name);
- 	check_content_type(hdr, buf.buf);
-@@ -713,7 +723,8 @@ static struct service_cmd {
- 	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file},
- 
- 	{"POST", "/git-upload-pack$", service_rpc},
--	{"POST", "/git-receive-pack$", service_rpc}
-+	{"POST", "/git-receive-pack$", service_rpc},
-+	{"POST", "/git-upload-archive$", service_rpc},
- };
- 
- static int bad_request(struct strbuf *hdr, const struct service_cmd *c)
-diff --git a/transport-helper.c b/transport-helper.c
-index 143ca008c8..c41c3dfcff 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -604,8 +604,9 @@ static int process_connect_service(struct transport *transport,
- 		strbuf_addf(&cmdbuf, "connect %s\n", name);
- 		ret = run_connect(transport, &cmdbuf);
- 	} else if (data->stateless_connect &&
--		   (get_protocol_version_config() == protocol_v2) &&
--		   !strcmp("git-upload-pack", name)) {
-+		   get_protocol_version_config() == protocol_v2 &&
-+		   (!strcmp("git-upload-pack", name) ||
-+		    !strcmp("git-upload-archive", name))) {
- 		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
- 		ret = run_connect(transport, &cmdbuf);
- 		if (ret)
-@@ -639,7 +640,7 @@ static int connect_helper(struct transport *transport, const char *name,
- 
- 	/* Get_helper so connect is inited. */
- 	get_helper(transport);
--	if (!data->connect)
-+	if (!data->connect && !data->stateless_connect)
- 		die(_("operation not supported by protocol"));
- 
- 	if (!process_connect_service(transport, name, exec))
--- 
-2.19.0.605.g01d371f741-goog
+Thanks for the bug report and the simple testcase.
 
+> > ---------------------
+> >
+> > # Make a test repo
+> > git init testrepo
+> > cd testrepo
+> > git config user.name A
+> > git config user.email B
+> > git config diff.renames copies
+> >
+> > # Add a file called orig
+> > echo 'a' > orig
+> > git add orig
+> > git commit -m'orig'
+> >
+> > # Copy orig in new and modify orig
+> > cp orig new
+> > echo 'b' > orig
+> >
+> > # add -N and then commit trigger the bug
+> > git add -N new
+> > git commit
+> >
+> > # Cleanup
+> > cd ..
+> > rm -rf testrepo
+>
+> Thanks. Bisecting shows that the bug is in dc6b1d92ca ("wt-status: use
+> settings from git_diff_ui_config", 2018-05-04) first released with
+> 2.18.0.
+
+The bisect is slightly misleading; the bug was introduced in 2.17.0
+for renames, and when copy detection became a thing in 2.18.0 it also
+incidentally would trigger with copies.  I'll post a patch soon.
