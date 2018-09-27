@@ -2,110 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6ECF1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 22:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5853E1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 22:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726024AbeI1Ex6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 00:53:58 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43978 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725728AbeI1Ex6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 00:53:58 -0400
-Received: by mail-pg1-f196.google.com with SMTP id q19-v6so2940125pgn.10
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=TUsq9E45WrUom4T4bXw9z8WX6mVsIPBBNor49L4GY0Y=;
-        b=oFbj1jr/PTKnZXHkCjAFAbG3tIT2/vJ3DsYhEtTWQPXYOxbDy5BtokIK/dydBSwJ+R
-         0WHHcBnt2dBv1ZP72dtA9+t8e45mSeHR8bmBEhMADiNpWORToYUabKA1Vf4Re1fFWCff
-         GSEjnq9Z6n8bXg2QGflONhWiu4Cbr8zaTeOEBdEVA7WLa4pRRdzGn5kc/H7t5GpcdCbZ
-         DLDC8lC53RBoC0xnTNAQ4a0r7SCsR/R8x2+7jQHx3aJmE82vrdtCoDAp7Q0DDzvS8ljN
-         bpGEpL83i2vPfzLkqVf11s25dKlxv8Nf9ek4u2Bp9K4lMxMRC/ImWI4o6VAelR/p048d
-         ZKTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=TUsq9E45WrUom4T4bXw9z8WX6mVsIPBBNor49L4GY0Y=;
-        b=gVGY1vzVBAAbqi3sNR7xDgxmVOokNRvQZ7+y8ug8vJpeLLp5ue90mFz/KVYU24OQoL
-         925Uv4ZjIREQX4oPdqfvo5oTpl0/IwzwrkULIyBCkJrvMBa5uIFtRyq6jCImQL+wKzdP
-         VF5F9RCQzTrsLM4jGBh2Y3VBQQYwiDFjNLGwpOtjxMX7y1bCYrMu8WgzMyYUevH/NSWH
-         5Q7wxqguoE+voeWBXjRb+h2ZXTs06DNO9yLhmnfcdiAiN0G0iAep13Aidc1y/ZWfwdxL
-         Mv8BUztQQ4thGIN+cYWSO+Y3yrACD14R7YFgmJxpBsoR4kM7vz9o3pqJLG5iq18L08sI
-         y9Qg==
-X-Gm-Message-State: ABuFfoiSoSAfkZ7+KLbsF6jnml6+9K8xzv8VEc2n7M2yhcnewvHpFBMU
-        U4KlQmbat9VaB/SfEFWN71BBbw==
-X-Google-Smtp-Source: ACcGV63Ryda0tXNvzR/IB60ZERtdX+StrnUGQAkyW2wGccnZLNMSei69AQfZF0p7Utsk/mlAppSAwg==
-X-Received: by 2002:a63:a40a:: with SMTP id c10-v6mr12439176pgf.140.1538087605517;
-        Thu, 27 Sep 2018 15:33:25 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:79fb:7d7a:4d6b:acb7])
-        by smtp.gmail.com with ESMTPSA id l9-v6sm4567228pgg.79.2018.09.27.15.33.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 15:33:24 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 15:33:14 -0700
-From:   Josh Steadmon <steadmon@google.com>
+        id S1726141AbeI1Eyf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 00:54:35 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:48050 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725728AbeI1Eye (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Sep 2018 00:54:34 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:596e:6738:f59:e0e0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 746B361B73;
+        Thu, 27 Sep 2018 22:33:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1538087638;
+        bh=AeeTgBWrhGsNXsCtwJmf3pesTrI3hCb8gqJE3FAzafI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=N4PZ2F8ag3Xji5B4tNcxBORfQ8Z8KR+FuGHpN1jFKnaJsBdgLAjCUFViLP95L++3w
+         sF//Qe5b3ZbR2GaI2QLJEoZGcmKM/fwNH1D6K9CqcFpruNQiLpBlhpsIJWOs/F6aqn
+         kuO8I3Y7y0nuJu1Syfgl1agZu7K9gq/ORuHs+piLww43kNpGW9igCDZ31rwyd+jGdJ
+         +YyFzvUwDuiZsNE53QVMObDqY8uoHb+XGIjJTTiOQIcTv7iLJhkAJewrpxh7gumzNU
+         wDS4UUhgn/9cyD0YwmTavB5Y30f7kYoRL4MzBQEWGLi3M9ixG3Gy7vSgwxdte0Dte1
+         qurA6cNEmy2TsBJJRxXAFh+8WRH7sIhFygcdJ1wkSZwLitGV1PyJRpKtl+bWNiD//i
+         VLpaJL6wmLHotZ4kqv4c4y3aKXpZUtkYqkJZNkhF4DcRbGNef6bwfBvLR6aqv5Le0K
+         cjF2wQiJWhKhc3bM77O7LnBifyGEspre0Ga9LEC9YoWaGuNbdC5
+Date:   Thu, 27 Sep 2018 22:33:53 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/4] Add proto v2 archive command with HTTP support
-Message-ID: <20180927223314.GA230445@google.com>
-References: <20180912053519.31085-1-steadmon@google.com>
- <20180927012455.234876-1-steadmon@google.com>
- <CAGZ79kaBvHwUUf0rXeAwBY-M+Oi9JjsQnLs4v3FAvx4a9ZRbSA@mail.gmail.com>
- <20180927183017.GD112066@aiede.svl.corp.google.com>
- <xmqq1s9efuqc.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] Add an EditorConfig file
+Message-ID: <20180927223353.GH432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
+ <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com>
+ <20180920000013.GZ432229@genre.crustytoothpaste.net>
+ <xmqqk1ng2rdo.fsf@gitster-ct.c.googlers.com>
+ <20180921225039.GC432229@genre.crustytoothpaste.net>
+ <xmqqefdislto.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="HlXFiQcSFG/a+HqU"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1s9efuqc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1+54 (2af6caa1) (2018-07-26)
+In-Reply-To: <xmqqefdislto.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018.09.27 15:20, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> >  1. Clients sending version=2 when they do not, in fact, speak protocol
-> >     v2 for a service is a (serious) bug.  (Separately from this
-> >     series) we should fix it.
-> >
-> >  2. That bug is already in the wild, alas.  Fortunately the semantics of
-> >     GIT_PROTOCOL as a list of key/value pairs is well defined.  So we
-> >     have choices of (a) bump version to version=3 (b) pass another
-> >     value 'version=2:yesreallyversion=2' (c) etc.
-> >
-> >  3. This is likely to affect push, too.
-> 
-> Do you mean that existing "git push", "git fetch" and "git archive"
-> sends version=2 even when they are not capable of speaking protocol
-> v2?  I thought that "git archive [--remote]" was left outside of the
-> protocol update (that was the reason why the earlier attempt took a
-> hacky route of "shallow clone followed by local archive"), so there
-> is no "git archive" in the wild that can even say "version=$n"
-> (which requires you to be at least version=1)?
 
-Yes, the version on my desktop sends version=2 when archiving:
+--HlXFiQcSFG/a+HqU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-∫ which git
-/usr/bin/git
-∫ git --version
-git version 2.19.0.605.g01d371f741-goog
-∫ GIT_TRACE_PACKET=${HOME}/server_trace git daemon \
-  --enable=upload-archive \
-  --base-path=${HOME}/src/bare-repos &
-[1] 258496
-∫ git archive --remote git://localhost/test-repo.git HEAD >! test.tar
-∫ grep version ~/server_trace
-15:31:22.377869 pkt-line.c:80           packet:          git< git-upload-archive /test-repo.git\0host=localhost\0\0version=2\0
+On Mon, Sep 24, 2018 at 01:05:23PM -0700, Junio C Hamano wrote:
+> > Would it be helpful if I sent a script that ran during CI to ensure they
+> > stayed in sync for the couple places where they overlap?  I'm happy to
+> > do so if you think it would be useful.
+>=20
+> It may even be an overkill.
+>=20
+> A comment addressed to those who edit one file to look at the other
+> file on both files would be sufficient, I suspect.
+
+Sure.  Let me reroll with that change.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--HlXFiQcSFG/a+HqU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlutWtEACgkQv1NdgR9S
+9otVow//e7glc0PFmyTWoirTuBZkMCF3Dp8iJpKXc9N/IoLmKZxWXegCUdqdfKf8
+E5m2flJ/Y3mSM3UNrbiisq0iOWk69BSmM7uWxxaCODCWbF8+fTB5ls1yxO8XO1eW
+LYiIqeeajDrbSKb6x3MW/7+NsmNDVHNVQ8XuNPwke9uhNXnat0K2G1gGrPS2qeOZ
+Z5KiUHQxX+RKj4PeFMZAqugUACvk3bGI52SuC+Xk9S5ZWcr9UmnaVw6xEBIw1P3T
+eHOJXeaorfPbI21ieQ7yd+8U6M5jpesaQKkH9UYV9SQ4qW35u09FpgSf1KtXfY0b
+5GTPolachRF3CXEb9owwsTlsZKeP+CgtCZa1RhgveU/xW6W4p/fmJEzHwlvzzRDD
+hqDjq3vfIo5HZsF58PqAOe7Lc8WObAqig5xR9clmGT17AQj4KkBTXo4gtTPiCuyw
+bU2sNWP1dieblnUSs6nm73Fm0+w328+AXrGPQ3/JKpEdtPet5xjmZto7Ru32y0vs
+cciboFKLxKxieQUnzOLdTZLoz86V8OjPJT6f7rT+ImrYO24JlsWEWPjaMc+uICnt
+OhX0gBBqQ/cPRDf0UXEdw/JfTmBSI6yiMg2l8LeRoJI6RSsByJ6BcgdUB8lvuSQz
+CYeyqiX8kmiumrZo2tXqnI7No5yBMPDH2OfLELISQCLnP/Ho+oA=
+=StXh
+-----END PGP SIGNATURE-----
+
+--HlXFiQcSFG/a+HqU--
