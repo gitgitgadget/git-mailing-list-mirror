@@ -2,117 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23ADB1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 14:23:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 395C41F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 14:44:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727844AbeI0UmL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 16:42:11 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36188 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727289AbeI0UmK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 16:42:10 -0400
-Received: by mail-wr1-f66.google.com with SMTP id l10-v6so2862112wrp.3
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 07:23:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=tH1vw7yzOWo2y275RsOuHZjxNYKDhJwpetoc+uiRH+w=;
-        b=i82xur/PKSE/ii9C8ONQmfpt7i8aaHO7foENTp+EwelzXl6v8WrlPbDTmuglmS2pmZ
-         irUf1/kDkxUFxw3bnybhPBvlpkh68aTE4Eg7MVq6Fak1uHamEsPfxsA0ALYazR1syqbD
-         raxaUgroS/fM7r24AKRDu8LuQhIdoIN7Y2whssiwz+R7/nday/yIdP86ZyyedwrgeNmB
-         FiCBSlduT48+fZLM1RgVEiKwcCYFIKsqQ0wJpzzP3Si5alocxw7g9nvpoDEB2BONt92+
-         6L0dGmm04a+VsocoOx2X43ImEB/pRCNzrRQ0OdJlA95lHqgkmeZCbyiqOYU+zd1SKGMi
-         H+Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=tH1vw7yzOWo2y275RsOuHZjxNYKDhJwpetoc+uiRH+w=;
-        b=K6lbbBjZa6SnfB26P4jI6wXslaZFr5t6oZaxMEGd3TsyKdJudP6CN9XT7rgaZtujHM
-         BTqFkQjOHgu5djVwfQh7PEXPncgoEVlj6c4Rtu7i1VqKWp9Q3d0qDTj/X4LckgakBSdW
-         EJW3QugIPAjwVY55Fl6H7AhwcxpVSCnxtvibgQZvCNYuLUCg/IxSvf1Tzff9td36/GR8
-         /Qx2ucVptePrWfig4necvUrgD+M/wWqy/rSJJoZTbDg6mWbRUBeIDfra++2L5hO1LFt+
-         7ytsgBLqAbDP/trwBcDxa5Nd2/VkNE1XioNsGBbV2w2myk5CI3R6elvgBDbVmt1/KB/0
-         mByg==
-X-Gm-Message-State: ABuFfojM46pn5WjVABB7s716JvrtR7h8SYreNEYCtrDL4AyKP/jGWsGj
-        Wdqb9tiQK/cX5CfEy+T5qK4=
-X-Google-Smtp-Source: ACcGV61qM1TBXAjuwxU3/x8EjwsrpimUZR+tBG/lPLOGrwGtY3jAleqXjhXcuFOjcOo0mIgrdo5lPg==
-X-Received: by 2002:adf:afdd:: with SMTP id y29-v6mr5195703wrd.176.1538058218707;
-        Thu, 27 Sep 2018 07:23:38 -0700 (PDT)
-Received: from localhost (x4dbd8656.dyn.telefonica.de. [77.189.134.86])
-        by smtp.gmail.com with ESMTPSA id f6-v6sm1878792wrr.68.2018.09.27.07.23.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 07:23:37 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 16:23:36 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Fix the racy split index problem
-Message-ID: <20180927142336.GJ27036@localhost>
-References: <20180927124434.30835-1-szeder.dev@gmail.com>
- <871s9fjbcb.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <871s9fjbcb.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        id S1727435AbeI0VCy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 17:02:54 -0400
+Received: from ao2.it ([92.243.12.208]:34399 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727334AbeI0VCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 17:02:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
+        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=u+r0hbYh27rnabjUVPnc9za15ypp43zUkIG8NaXrKgQ=;
+        b=Y+glVz6cXWPA9BposEr3nW7fzviWturTxvcT4Jg5A0fsCrrfuOoLlwYK6cF8SmCj+Kk+TC9TnNc+MNuNiqXA/QINgixgY38xPXdVwcSwsrpaaY5hfROqhESNsgPe8qA6nVIDFgOOAI9GOKZHL6NyJYNj3G8xSmeAkFKYmMR1f6coXsnYDhNDGhj+sq9EkLwY8ahnlujqug6Q9TUHqToo3mo3VM8NjcqlLO2KPGdOjZsB2m5noJjm57Kg2/tTPcCm8esW4k+6lEOsEIbKcsYkCObv0nVI0eX+zAC4wGn9mHUSSF6xzEh5zikqsY+xMrfJZJXoBTEAGbf4mzqj6aFfPA==;
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1g5XUF-0006JR-6p; Thu, 27 Sep 2018 16:41:51 +0200
+Date:   Thu, 27 Sep 2018 16:44:15 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
+ not in the working tree
+Message-Id: <20180927164415.44b1d00ee5f8e582afdaa933@ao2.it>
+In-Reply-To: <CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com>
+References: <20180917140940.3839-1-ao2@ao2.it>
+        <20180917140940.3839-10-ao2@ao2.it>
+        <20180918171257.GC27036@localhost>
+        <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
+        <CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 27, 2018 at 03:53:24PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Sep 27 2018, SZEDER Gábor wrote:
-> 
-> > This is the second attempt to fix the racy split index problem, which
-> > causes occasional failures in several random test scripts when run
-> > with 'GIT_TEST_SPLIT_INDEX=yes'.  The important details are in patches
-> > 1 and 5 (corresponding to v1's 3 and 5).
-> 
-> Thanks. I'm running the same sorts of tests I noted in
-> https://public-inbox.org/git/87va7ireuu.fsf@evledraar.gmail.com/ on
-> this. The fix Jeff had that you noted in
-> https://public-inbox.org/git/20180906151439.GA8016@localhost/ is now in
-> "master".
-> 
-> I take it your
-> https://github.com/szeder/git/commits/racy-split-index-fix is the same
-> as this submission?
+Hi Stefan,
 
-Yes.
+On Mon, 24 Sep 2018 14:00:50 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-> Anyway, I'm testing that cherry-picked on top of the
-> latest master.
-> 
-> Unfortunate that we couldn't get the isolated test you made in
-> https://public-inbox.org/git/20180907034942.GA10370@localhost/
+> On Mon, Sep 24, 2018 at 3:20 AM Antonio Ospite <ao2@ao2.it> wrote:
+>=20
+[...]
+> > This is a limitation of the object store in git, there is no equivalent
+> > of get_oid() to get the oid from a specific repository and this affects
+> > config_with_options too when the config source is a blob.
+>=20
+> Not yet, as there is a big push to pass-through an object-store object
+> or similar recently and rely less on global variables.
+> I am not sure I get to this code, though.
+>
 
-Nah, that's not an isolated test case, that's only a somewhat
-narrowed-down, but rather reliable reproduction recipe while I still
-had no idea what was going on :)
+If you end up touching get_oid() please CC me.
 
-The _real_ isolated test is the last test in t1701, that's what it
-eventually boiled down to.
+> > This does not affect commands called via "git -C submodule_dir cmd"
+> > because in that case the chdir happens before the_repository is set up,
+> > for instance "git-submodule $SOMETHING --recursive" commands seem to
+> > change the working directory before the recursion.
+>=20
+> For this it may be worth looking into the option
+>        --super-prefix=3D<path>
+>   Currently for internal use only. Set a prefix which gives a
+>   path from above a repository down to its root. One use is
+>   to give submodules context about the superproject that
+>   invoked it.
+>
 
-> but I
-> don't see how it could be added without some very liberal
-> getenv("GIT_TEST_blahblah"), so it's probably best to not add it,
-> particularly with the C rewrite of git-stash in-flight.
-> 
-> I'll report back when I have enough test data to say how these patches
-> affect the intermittent test failures under GIT_TEST_SPLIT_INDEX=yes.
+My comment wanted to highlight that there are NO problems in the
+mentioned cases:
+
+  - git -C submodule_dir cmd
+  - git submodule cmd --recursive
+
+Are you suggesting to look into super-prefix for any reason in
+particular?
+
+[...]
+> > The test suite passes even after removing repo_read_gitmodules()
+> > entirely from builtin/grep.c, but I am still not confident that I get
+> > all the implication of why that call was originally added in commit
+> > f9ee2fcdfa (grep: recurse in-process using 'struct repository',
+> > 2017-08-02).
+>=20
+> If you checkout that commit and remove the call to repo_read_gitmodules
+> and then call git-grep in a superproject with nested submodules, you
+> get a segfault.
+>=20
+> On master (and deleting out that line) you do not get the segfault,
+> I think praise goes to ff6f1f564c4 (submodule-config: lazy-load a
+> repository's .gitmodules file, 2017-08-03) which happened shortly
+> after f9ee2fcdfa.
+>=20
+> It showcased that it worked by converting ls-files, but left out grep.
+>=20
+> So I think based on ff6f1f564c4 it is safe to remove all calls to
+> repo_read_gitmodules.
+>
+
+Thanks for confirming.
+
+> > Anyways, even if we removed the call we would prevent the problem from
+> > happening in the test suite, but not in the real world, in case non-leaf
+> > submodules without .gitmodules in their working tree.
+>=20
+> Quite frankly I think grep was just overlooked in review of
+> https://public-inbox.org/git/20170803182000.179328-14-bmwill@google.com/
+>=20
+
+OK, so the plan for v6 is:
+
+  - avoid the corruption issues spotted by G=E1bor by removing the call
+    to repo_read_gitmodules in builtin/grep.c (this still does not fix
+    the potential problem with nested submodules).
+
+  - add a new test-tool which better exercises the new
+    config_from_gitmodules code,
+
+  - add also a test_expect_failure test to document the use case that
+    cannot be supported yet: nested submodules without .gitmodules in
+    their working tree.
+
+Thanks,
+   Antonio
+
+--=20
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
