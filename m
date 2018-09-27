@@ -2,139 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33DF31F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 15:31:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9191F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 15:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728137AbeI0Vub (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 17:50:31 -0400
-Received: from smtp66.ord1c.emailsrvr.com ([108.166.43.66]:56665 "EHLO
-        smtp66.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727262AbeI0Vub (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Sep 2018 17:50:31 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Sep 2018 17:50:30 EDT
-Received: from smtp25.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp25.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id B453F204C9;
-        Thu, 27 Sep 2018 11:24:21 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp25.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 6B162204A4;
-        Thu, 27 Sep 2018 11:24:21 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Thu, 27 Sep 2018 11:24:21 -0400
-Subject: Wherefor worktrees?
-To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20180923170438.23610-1-pclouds@gmail.com>
- <xmqqtvmdnuab.fsf@gitster-ct.c.googlers.com>
- <CACsJy8Bux0iiOp+zjELM4DuZwiQMA6EDaL0M71Jkp_qPACD8og@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <e7f63c0f-90dd-0e53-9721-35d2b827e101@xiplink.com>
-Date:   Thu, 27 Sep 2018 11:24:21 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1727597AbeI0VwN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 17:52:13 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42362 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727262AbeI0VwN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 17:52:13 -0400
+Received: by mail-wr1-f67.google.com with SMTP id b11-v6so3094747wru.9
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 08:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=PHizjlzOk41Jnx5FlS4uaJQaRYazAChdYzqEg1rZ0co=;
+        b=ef8FUbThygyO+7bXA7LL0MtgfCuAkBKXwqqOR31whFvpqxHuMv694osQh0k21VbVpl
+         zqbFoXzO5S9ptz5aymFrTCa0WgU6c51GX0V75OQVW2ONAEKzxr9+SQ7Iyz1GgQDWH1yf
+         YimbrpCx7sH4acWi58eqX/0oe5ZmzRWXrmqIsQQRkFq0PmEjqhgytFljguRodGJBlIz4
+         zNFxRw00iYo1KGS9zvjDfcq4qUyk3LNFVrVOgDAkDvLvhMUChGe0B9RrovuHYtX6nSrL
+         HpJbMo66RxnSPLiz8UroKsPLDDxML7u2U9ZslBulfD4BZdprCfR7P3h1+UnqIlTFonWp
+         V5pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=PHizjlzOk41Jnx5FlS4uaJQaRYazAChdYzqEg1rZ0co=;
+        b=q4yYFxa91wAQ0jma4eorId6Lk4SKqTEdrFnrGJ4vZPVxW9JwITTtmsI10RQz6ivJd4
+         6+j9p+sLS+D90d5gbQwEDJGM+XKrUl3TamOI7gFhU1JF0ogmv4Yr3ZU15mau9zOoXa9d
+         QXvk7Lu7fYZSTbULCT2q/n7SqTipJWqIZCbzy5eaK+nXF4VhstRk593snmIgPDN0H8aN
+         06FikSJhKOkVd/oj/P1hP0zx3wtAZJzO1/FDio4xiu+bhILjAoyf22t7jzznvwaehJ91
+         5/ZO2r9jmhXAmsgGVf+GKVJ9CTPFMuYMoT378HcakSzSfDPUytZHpWzfghtVxmVujHuF
+         9ErQ==
+X-Gm-Message-State: ABuFfogfgDZyYNFL9Yjk7trxCwlISe9wQBXUBIZoSS0QxYD2qoCue+KQ
+        vHrqM5HVAoWRnsJ400o7gP8=
+X-Google-Smtp-Source: ACcGV62iAEatlASfuXhJx8DUA55e2+d+OAIhlNQbOy9oUQRhzLfypOj8uQ6pw5dCv2DzDRo2qtRklA==
+X-Received: by 2002:adf:b6a0:: with SMTP id j32-v6mr9103045wre.55.1538062403345;
+        Thu, 27 Sep 2018 08:33:23 -0700 (PDT)
+Received: from evledraar (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id q5-v6sm3831499wmd.29.2018.09.27.08.33.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Sep 2018 08:33:22 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Nickolai Belakovski <nbelakovski@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: colorize branches checked out in a linked working tree the same way as the current branch is colorized
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+Date:   Thu, 27 Sep 2018 17:33:21 +0200
+Message-ID: <87y3bnhs5a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8Bux0iiOp+zjELM4DuZwiQMA6EDaL0M71Jkp_qPACD8og@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-09-26 11:48 AM, Duy Nguyen wrote:
-> 
-> I believe the main selling point of multiple worktrees is sharing
-> refs. You could easily avoid expensive clones with --local, but
-> synchronizing between different clones is not very convenient. Other
-> than that, different worktrees tend to behave like separate clones.
 
-Sharing hooks is also useful, but yes mainly the refs.
+On Thu, Sep 27 2018, Nickolai Belakovski wrote:
 
-I love being able to work in more than one branch at a time.  I often 
-have a couple of ongoing big, messy topics, and being able to easily 
-jump onto some release branch for a quick bugfix, without having to 
-first stash things or finish an interactive rebase or fix a conflicting 
-merge, is a godsend.
+> In order to more clearly display which branches are active, the output
+> of git branch is modified to colorize branches checked out in any linked
+> worktrees with the same color as the current branch.
+>
+> This is meant to simplify workflows related to worktree, particularly
+> due to the limitations of not being able to check out the same branch in
+> two worktrees and the inability to delete a branch checked out in a
+> worktree. When performing branch operations like checkout and delete, it
+> would be useful to know more readily if the branches in which the user
+> is interested are already checked out in a worktree.
+>
+> The git worktree list command contains the relevant information, however
+> this is a much less frquently used command than git branch.
+>
+> Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
 
-And the reason I use worktrees for this, instead of clones, is for the 
-shared refs.  It makes sense to me that I'm working with different 
-checkouts from a single repo, with all my local branches and local tags. 
-  "git fetch" updates the remote refs regardless of which worktree I'm 
-in when I run it.  The setup is lightweight and efficient; it's just how 
-I want to work.
+Sounds cool, b.t.w. would be neat-o to have some screenshot uploaded to
+imgur or whatever just to skim what it looks like before/after.
 
-Having used git-new-workdir for a long time, it's main deficiency for me 
-is submodules (the shared bisection state didn't bother me much).  It 
-would be nice if all my worktrees' submodules also shared refs.  That's 
-"nice", but not "essential".  Mainly it would be convenient if a 
-recursive-submodule fetch performed in one worktree updated the 
-submodule refs in my other worktrees.  Similarly, if I create a local 
-branch in a submodule in one worktree, it would be nice to see that 
-branch in the submodule in other worktrees.  Again, "nice", but probably 
-just because I've lived with git-new-workdir's limitations for so long 
-that I'm used to them.
-
-That said, I really appreciate Duy's work here -- thanks!  Git deserves 
-to have a cool feature like worktrees be part of its standard toolkit.
-
-		M.
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 4fc55c350..65b58ff7c 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -334,11 +334,36 @@ static char *build_format(struct ref_filter
+> *filter, int maxwidth, const char *r
+>         struct strbuf local = STRBUF_INIT;
+>         struct strbuf remote = STRBUF_INIT;
+>
+> -       strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
+> -                   branch_get_color(BRANCH_COLOR_CURRENT),
+> -                   branch_get_color(BRANCH_COLOR_LOCAL));
+> -       strbuf_addf(&remote, "  %s",
+> -                   branch_get_color(BRANCH_COLOR_REMOTE));
+> +       // Prepend the current branch of this worktree with "* " and
+> all other branches with "  "
 
 
-> This leaves a gray area where other things should be shared or not. I
-> think the preference (or default mode) is still _not_ shared (*).
-> Sharing more things (besides refs and object database) is just a new
-> opportunity popping up when we implement multiple worktrees. Since
-> multiple worktrees (or clones before its time) are grouped together,
-> sometimes you would like to share common configuration. We could sort
-> of achieve this already with includeIf but again not as convenient.
-> 
-> (*) real life is not that simple. Since refs are shared, including
-> _remotes_ refs, so configuration related to remotes should also be
-> shared, or it will be a maintenance nightmare. Which is why
-> $GIT_DIR/config so far has been shared besides the two exceptions that
-> are core.bare and core.worktree. And I really like to get rid of these
-> exceptions.
-> 
->> Is there a better way to achieve that without the
->> downside of multiple worktrees (e.g. configuration need to be
->> uniform)?
-> 
-> Is there a better way to achieve sharing refs between clones? I gave
-> it a minute but couldn't come up with a good answer :(
-> 
->>> (*) "git config --worktree" points back to "config" file when this
->>>      extension is not present so that it works in any setup.
->>
->> Shouldn't it barf and error out instead?
-> 
-> The intention is a uniform interface/api that works with both single
-> and multiple worktrees configurations. Otherwise in your scripts you
-> would need to write "if single worktree, do this, else do that". If
-> "git config --worktree" works with both, the existing scripts can be
-> audited and updated just a bit, adding "--worktree" where the config
-> should not be shared, and we're done.
-> 
->> A user who hasn't enabled
->> the extension uses --worktree option and misled to believe that the
->> setting affects only a single worktree, even though the change is
->> made globally---that does not sound like a great end-user experience.
-> 
-> I was talking about a single worktree. But I think here you meant the
-> user has multiple worktrees, but the extension is not enabled. I'm
-> probably not clear in the commit message, but "git config" can detect
-> that the extension has not been enabled, automatically enable it (and
-> move core.bare and core.worktree (if present) to the main worktree's
-> private config), so "git config --worktree" will never share the
-> change.
-> 
-> But perhaps the user should be made aware of this situation and asked
-> to explicitly enable the extension instead? It's certainly a more
-> conservative approach.
-> 
+We use /* ... */ C comments, not C++-style // (well, it's in C now, but
+not the ancient versions we need to support).
+
+It also seems all of this patch was copy/pasted into GMail or something,
+it has wrapping and doesn't apply with "git am".
+
+Also most/all of these comments I'd say we could better do without,
+i.e. the ones explaining basic code flow that's easy to see from the
+code itself.
