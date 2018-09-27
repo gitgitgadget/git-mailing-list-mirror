@@ -7,73 +7,84 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D3551F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 16:29:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 808CA1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 16:37:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727587AbeI0WsE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 18:48:04 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:47034 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727212AbeI0WsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 18:48:04 -0400
-Received: by mail-io1-f67.google.com with SMTP id y12-v6so2321610ioj.13
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:29:01 -0700 (PDT)
+        id S1727622AbeI0W42 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 18:56:28 -0400
+Received: from mail-it1-f179.google.com ([209.85.166.179]:37602 "EHLO
+        mail-it1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727320AbeI0W41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 18:56:27 -0400
+Received: by mail-it1-f179.google.com with SMTP id m9-v6so8379628ita.2
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Z66BLgaP1BG7aaSmtW4Ot0nMsPM46fpP7CN3YGL9d5s=;
-        b=OQBvtEsOBfYd8ENjX7/tX6aNp0+nVerrVixAcM1lcxFRuM/I8i4iYR0N0EG/fYZmjk
-         Blfo3esIsUcztOmjspsO5xi6JgWFVW1i9DSL1aRGAsv1nWawYzD/JlFjM6yMZ02dl/hQ
-         ku9QMkOke0WudIXxLmLAG//UhHZzqefAno33KQKf3ZwW9xFkIuZes7Ho+2igy03Ft/Tb
-         ugXIV9MjTf9sZ5vBeCEK/eJybJClz/C2G6ehaMplH2XYfL4CS0UpfZ0DyhAoglYD36t+
-         pCIrTuc62URTqOLeFhtNEgoU5EmIMdr+sdUOLC5nQYtkTJpE5tQ2Xbez2Auy6dgIstGj
-         Crow==
+         :cc;
+        bh=wj49vABbJ5WViMYynFi/oULZkwj1pSm6Yi687buh0qU=;
+        b=RNzM78DUGRPgn59/u0Wi9FdCb9Gpy+zUixcBI4QMIJ1R5zgq31crM4retS+gpu+UzA
+         BlIM+6dcgQAsQUQXzTKvn8vfupjyd9p7KrCiA4NQFh4rQZcoTYzE3G7NTsQSpdvrCUdC
+         AtEMPc4bmay1eMhGzTEiM66oqGmrXuAi5UHSuTTo27PJg2IJpO3OIReKPZMqDwhMgyDj
+         GoaIVz8pJu5GT7AI5eob3FUc36dS37OoVAVaOuHcN6QJjfjoH8hLtgE71ndbpFcP+cqb
+         PGghktmMbmBQQOH2XjWi33BvZfpx7XNCat2AXhAghKcjSFrY+j0hE1fNPy2MYPmPDtyO
+         I6dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z66BLgaP1BG7aaSmtW4Ot0nMsPM46fpP7CN3YGL9d5s=;
-        b=AUe8dI5bt4j/MfmZ4goO4r+OgKFvRU28Pkd07Qhwrmq3f9nZlixUBNnlQjg+eKmYX4
-         DHG5SY2LTh6Pq8z9/fc+2cxpKzcGeHl4uE44ZEZGwIfV6Ax++0+0Fav9S1XkNh1hoSVG
-         YuMDHUD6PU6U/vP+vtAR6+eIs8r+8JAbw/CrQjFxqJIj8JGTJJtHsor/gmluToOi09bd
-         mMZR3CKoHdcO4E/QOJ9NnD9nMXC7+61g3CFsN/3zI4WaPpedIYcDz6fKavoZDNMJh6a5
-         snBcCXzvM0fGA41aX3B6pot5e0z27xrxgP84LX6tK4zMPLFH0YxTlTFL0N0YkKZYNHU/
-         e4tQ==
-X-Gm-Message-State: ABuFfoggLRNnI2VcwCM3NcRZM9Rtgr/JhnSJYS91072sCXmHmOTDnkWs
-        3diuHnODwW+wUhGoaE3SK+uom4832VsZbvNtUFk=
-X-Google-Smtp-Source: ACcGV62ULhNJwup1CKWTaCoW6fAZp+i6RoxQdGN77NFj7EGQ+7MTRkfQBPvy/ybP8lOfZgGJqS4Ea1gsyqJ8DiGNA4Q=
-X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr8602709iok.236.1538065740876;
- Thu, 27 Sep 2018 09:29:00 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=wj49vABbJ5WViMYynFi/oULZkwj1pSm6Yi687buh0qU=;
+        b=O0UQ4HY4qe4dYny/dtMZhNd8a99z51qKDL/SQ0H8Nn03PskghT7DeKnCoK5+UvccY0
+         r4kLPYqpUMQ4/wukTm2KbDlekQ6DDLtixBht+llQKoOHLpJDD2ZjotRJfZk+AnclyvR/
+         Rpp3P0psdfhecw8rqvGdaxXEust/XhdAzzdnQ+flQLKyu/M/2cL/RvrK3NFUTXNvU+Kw
+         pU6BrlMobuYhMPnllAgz6XHmFUkUr3e/iZNIVQqzb4wLbmUFAdYmfOHmkTHFXhEkDunt
+         cOcPW6SYObaMwNKWWEd07DLf59aa/EVKd+IuiCgcGee2a+R00OMy0HdBqjhgHFytcCWH
+         r+aQ==
+X-Gm-Message-State: ABuFfohca+obcYmzUqNV8Lm4FzeTCO/3BwwT6/EjZs5juIdk/wqx31UP
+        kfKeJe3yeNbE53iOO56wcc6muIklMy9k1zdJCak=
+X-Google-Smtp-Source: ACcGV622Td0DQoNrLHo5Q3y5AGdQp42V684ip3J3RhJZi8Vu3qeuIzwfHExYSR41lBfrQfC1EL9tAemeHTLRxOd/tdE=
+X-Received: by 2002:a02:49d7:: with SMTP id p84-v6mr10650422jad.97.1538066242137;
+ Thu, 27 Sep 2018 09:37:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <87va6rhqup.fsf@evledraar.gmail.com> <20180927160523.GA112066@aiede.svl.corp.google.com>
- <87tvmaj4fq.fsf@evledraar.gmail.com>
-In-Reply-To: <87tvmaj4fq.fsf@evledraar.gmail.com>
+References: <20180923170438.23610-1-pclouds@gmail.com> <xmqqtvmdnuab.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8Bux0iiOp+zjELM4DuZwiQMA6EDaL0M71Jkp_qPACD8og@mail.gmail.com> <e7f63c0f-90dd-0e53-9721-35d2b827e101@xiplink.com>
+In-Reply-To: <e7f63c0f-90dd-0e53-9721-35d2b827e101@xiplink.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Sep 2018 18:28:34 +0200
-Message-ID: <CACsJy8BdqdRtCVHriniFhpFf0brESetZaFs_w3P3hZ+5xFBbdg@mail.gmail.com>
-Subject: Re: Git for Windows for Unix?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git-packagers@googlegroups.com,
+Date:   Thu, 27 Sep 2018 18:36:55 +0200
+Message-ID: <CACsJy8B_xDUQjC7uGRpR6FhFVuToUwim3sjUTk9tWUfLY2LkBA@mail.gmail.com>
+Subject: Re: Wherefor worktrees?
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 27, 2018 at 6:24 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> My only stake in this is I thought it would be neat to be able to "apt
-> install git-for-windows",
+On Thu, Sep 27, 2018 at 5:24 PM Marc Branchaud <marcnarc@xiplink.com> wrote:
+>
+> On 2018-09-26 11:48 AM, Duy Nguyen wrote:
+> >
+> > I believe the main selling point of multiple worktrees is sharing
+> > refs. You could easily avoid expensive clones with --local, but
+> > synchronizing between different clones is not very convenient. Other
+> > than that, different worktrees tend to behave like separate clones.
+>
+> Sharing hooks is also useful
 
-That's what private builds are for (or "PPA" if debian has an
-equivalent). I already largely ignore any Windows reports because I
-don't know the differences in the fork. What's next? If a linux bug
-report comes, will I have to double check with the reporter whether
-it's GFW build or git.git?
---=20
+Well yes, but for hooks I think a better way is moving hook management
+back to config files. I think we have a rough idea what to do, and
+AEvar highlighted the mand roadblocks elsewhere. Hopefully it will
+materialize someday.
+
+> Having used git-new-workdir for a long time, it's main deficiency for me
+> is submodules (the shared bisection state didn't bother me much).  It
+> would be nice if all my worktrees' submodules also shared refs.  That's
+> "nice", but not "essential".
+
+Heh I've been thinking about this a bit too. I thought separate refs
+was a requirement for submodules, but if you don't actively use
+branches in submodules and go with detached HEAD, it might work.
+-- 
 Duy
