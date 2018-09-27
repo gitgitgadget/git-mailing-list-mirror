@@ -2,156 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 678921F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 17:59:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0C8E1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 18:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728697AbeI1ATQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 20:19:16 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41222 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728410AbeI1ATQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 20:19:16 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f38-v6so5850184edd.8
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 10:59:49 -0700 (PDT)
+        id S1728670AbeI1AUb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 20:20:31 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:40259 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727987AbeI1AUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 20:20:31 -0400
+Received: by mail-yw1-f68.google.com with SMTP id z143-v6so1460544ywa.7
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=mcT19AiTN6rNNhGxqmHpuE8JyeXrcfH+GGt+YxT4/mU=;
-        b=KzaS+Ni0HJbQscokS8zSnni0lnH+YR1huWCf/6ARn4MVUBgUpBbVrOAzd7gYo98GbQ
-         ZidExzVkWSQdPrg+jfmmy2D+Zs4lu8Gx+yuoJT9iIR5DY0KnBoKmNPdviCXSWgoFLw5H
-         kkVW3v57oFGRJTT86T7GhVkfSz6/eoIp+zi7czEjcIpvAalc8QqWZ8g6ise7Hx2JW/1t
-         6IiqkFQWuD785bWa+ZFDiRiUq3xFYOF+iD3TfJPvONHeEc2uC+LNv86xbPr2UMQx71Fi
-         bIRBqLoEpEJKJG9shMkTKuNre/qzUJNF273qFJCbKfvsTpU72cUdrQYrnU7ZJnxdzZbi
-         5iyA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QOzqMwa/P6exufCnDQsMQhEFoFgH/vyP4gnrWJ4ARLc=;
+        b=g1IeF7DdQmzOQ5UixngwZKUf8aRE/CvIpn3Hnz5Q0H1ATO+AhWioJ2AeOKPqsKKuNV
+         PehdcjtMCS4is/xcIaqRrgw4IAQKtH69aYNlUEhN2hvMeszfoOJ5qIrpYxdDc2DBuMFN
+         aRMq9cd1CuzsgIOWLTwB5iFLZO4PAieAXtFuydSeAw4RCB/btMe+g5shdWUxxk7RRn1G
+         asyqkgUXgigPqWla9Qb5ArnNgiDDhPDNC3mc8aDSrSlovdH45Wjx7wPz9eBk5kGzZxAw
+         5DAU+ke//Z6Nie2Kw2NBoBudhkudYdsBE57zF/mOn0XLs6bWCLnMV2U505zEpcVtvQyb
+         R0jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=mcT19AiTN6rNNhGxqmHpuE8JyeXrcfH+GGt+YxT4/mU=;
-        b=TQpixUdGU6LNZddfMAXAs0KfSRfaQQYapmpdh5De+M2FWkhfMh2QwGg04RTY1xIOJP
-         zxNgNMOtgYiDe5Pp0yuj/6aF9aemDhOkfNA0jY6kcCoeyYzNY9lXijHyR6lC547PheNe
-         MSf6S1VHNWMlkWZO5IIHw0SrigQZotoGYhy2STdDOxUc+r7HvPWtECjTwN74/mCg2Dis
-         Uf+U4I1NlR3oEURxTySOqdKXoNBRuGzV1Tzudwu5guL+cWnxE24HkkZyJwS68pDgLuIO
-         gM66prSII4s7tV1Wjk0KkC1TZcjPdy1aA9vZToK+LBpD8bVdNOZ2N/pvaAg50eoUlt0h
-         4Jmw==
-X-Gm-Message-State: ABuFfohpINX28RS1MoMZAqi9bXlSYSWA1EwCKa9Du3ULqkqqqDcbxWaB
-        AUAtpSehi3Ul6wHYrjj/4M98FFYsMHg=
-X-Google-Smtp-Source: ACcGV61aA32IX18SIvIugC6VuL9JbetZlTXGj87egef34ltAYvPYpEtT/hMxuAgs6gPCadLxIEOn5w==
-X-Received: by 2002:a50:998a:: with SMTP id m10-v6mr19898656edb.7.1538071188396;
-        Thu, 27 Sep 2018 10:59:48 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id e8-v6sm209728ejm.75.2018.09.27.10.59.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 10:59:47 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] branch: colorize branches checked out in a linked working tree the same way as the current branch is colorized
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com> <87y3bnhs5a.fsf@evledraar.gmail.com> <CAC05387S9P+w8yqqcjkQDnURYSgQmqtukxS4KvqJu-kDA+_o0g@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAC05387S9P+w8yqqcjkQDnURYSgQmqtukxS4KvqJu-kDA+_o0g@mail.gmail.com>
-Date:   Thu, 27 Sep 2018 19:59:46 +0200
-Message-ID: <87sh1uizxp.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QOzqMwa/P6exufCnDQsMQhEFoFgH/vyP4gnrWJ4ARLc=;
+        b=Ga4elS88J1Cav+T5Ft9RJx60rWVUfLGSjm0YEjKKuFdNZkt0eYF5SqtFKoOkFQxyCZ
+         iT8IkfrHo5UY6R9uj8L5SSRmxCpZOTw5KlGWAElktsF+BoxniRQUkYenRHQW6hye9RLh
+         cVNCRaS5ZMhaBu9IbKCeBVtQJcCP7VkiBps2fGiO8ATZjZDOJWyU5IgcLWWTtvMf0eDb
+         Cls0FOWSYQJqffYa76qBCCUCCfXfHD3TuSkmTs6qd2GDZvq6UHGlbJuno4q33xpU3PWF
+         ZDFtGsS87nSHc7bM3rumFdjFTqoi64hvTtOIEcb7yonC/+RGgSmey8fifO2upVM2d1fT
+         7eEA==
+X-Gm-Message-State: ABuFfohw8Gska4bdGyskLnLi7wpGmaecblJIA80COYg2bd2xR2Vkngc1
+        oWF2hyMWsH9er82WJeqlf2dWhqBUVbsk9dxeQeDygw==
+X-Google-Smtp-Source: ACcGV61OuF47HM5UUVg6bGQ/X8SaeN/qjxQVFej0ROO7bp6490CyoFIDyAwMmitQ2aZe/d3Cw/JiSCqxTea8lbTqYzY=
+X-Received: by 2002:a81:a115:: with SMTP id y21-v6mr6396863ywg.178.1538071264039;
+ Thu, 27 Sep 2018 11:01:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180917140940.3839-1-ao2@ao2.it> <20180917140940.3839-10-ao2@ao2.it>
+ <20180918171257.GC27036@localhost> <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
+ <CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com> <20180927164415.44b1d00ee5f8e582afdaa933@ao2.it>
+In-Reply-To: <20180927164415.44b1d00ee5f8e582afdaa933@ao2.it>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 27 Sep 2018 11:00:52 -0700
+Message-ID: <CAGZ79kYHLF0TVfVuVfKfe_A4D2QGziRCsrYpyh7wuHjdpPEkDA@mail.gmail.com>
+Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
+ not in the working tree
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Sep 27 2018, Nickolai Belakovski wrote:
-
-> Will do re: screenshot when I get home, although it's pretty easy to
-> imagine, the git branch output will have one other branch colored in green,
-> bit without the asterisk (for one linked worktree) :)
+On Thu, Sep 27, 2018 at 7:44 AM Antonio Ospite <ao2@ao2.it> wrote:
 >
-> Also will do re: changing comments to /**/ (didn't know // was from C++,
-> TIL) and I'll clean up the comments to remove some of the more obvious
-> ones, but I'll try to keep a comment explaining the basic flow of creating
-> a nest if statement to evaluate worktree refs for color.
+> If you end up touching get_oid() please CC me.
+
+noted. I am not sure I'll touch it anytime soon, though.
+
 >
-> And yes, I copy/pasted into gmail. I was having trouble setting up
-> send-email, but I think I may have it figured out now. Should I create a
-> new thread with send-email? Or maybe reply to this one (I can do that by
-> specifying the Message-ID to reply to right?
+> Are you suggesting to look into super-prefix for any reason in
+> particular?
 
-You'd run git format-patch master..your-topic with
---subject-prefix="PATCH v2" and
---in-reply-to="<CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>". Then
-it'll show up in reply to your v1.
+No, I misread the intent of that part of your message
 
-You can also for an easier experience do this via GitGitGadget, see
-https://github.com/gitgitgadget/gitgitgadget looking at its code it
-seems to have some way to reference a Message-ID, but I don't know how
-to trigger that.
-
-> This is my first time using this workflow, so I appreciate your
-> patience :) )?
-
-No worries, happy to help.
-
-> On Thu, Sep 27, 2018 at 8:33 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> wrote:
+> >
+> > So I think based on ff6f1f564c4 it is safe to remove all calls to
+> > repo_read_gitmodules.
+> >
 >
->>
->> On Thu, Sep 27 2018, Nickolai Belakovski wrote:
->>
->> > In order to more clearly display which branches are active, the output
->> > of git branch is modified to colorize branches checked out in any linked
->> > worktrees with the same color as the current branch.
->> >
->> > This is meant to simplify workflows related to worktree, particularly
->> > due to the limitations of not being able to check out the same branch in
->> > two worktrees and the inability to delete a branch checked out in a
->> > worktree. When performing branch operations like checkout and delete, it
->> > would be useful to know more readily if the branches in which the user
->> > is interested are already checked out in a worktree.
->> >
->> > The git worktree list command contains the relevant information, however
->> > this is a much less frquently used command than git branch.
->> >
->> > Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
->>
->> Sounds cool, b.t.w. would be neat-o to have some screenshot uploaded to
->> imgur or whatever just to skim what it looks like before/after.
->>
->> > diff --git a/builtin/branch.c b/builtin/branch.c
->> > index 4fc55c350..65b58ff7c 100644
->> > --- a/builtin/branch.c
->> > +++ b/builtin/branch.c
->> > @@ -334,11 +334,36 @@ static char *build_format(struct ref_filter
->> > *filter, int maxwidth, const char *r
->> >         struct strbuf local = STRBUF_INIT;
->> >         struct strbuf remote = STRBUF_INIT;
->> >
->> > -       strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)
->> %s%%(end)",
->> > -                   branch_get_color(BRANCH_COLOR_CURRENT),
->> > -                   branch_get_color(BRANCH_COLOR_LOCAL));
->> > -       strbuf_addf(&remote, "  %s",
->> > -                   branch_get_color(BRANCH_COLOR_REMOTE));
->> > +       // Prepend the current branch of this worktree with "* " and
->> > all other branches with "  "
->>
->>
->> We use /* ... */ C comments, not C++-style // (well, it's in C now, but
->> not the ancient versions we need to support).
->>
->> It also seems all of this patch was copy/pasted into GMail or something,
->> it has wrapping and doesn't apply with "git am".
->>
->> Also most/all of these comments I'd say we could better do without,
->> i.e. the ones explaining basic code flow that's easy to see from the
->> code itself.
->>
+> Thanks for confirming.
+>
+
+> OK, so the plan for v6 is:
+>
+>   - avoid the corruption issues spotted by G=C3=A1bor by removing the cal=
+l
+>     to repo_read_gitmodules in builtin/grep.c (this still does not fix
+>     the potential problem with nested submodules).
+>
+>   - add a new test-tool which better exercises the new
+>     config_from_gitmodules code,
+
+Sounds good.
+
+>
+>   - add also a test_expect_failure test to document the use case that
+>     cannot be supported yet: nested submodules without .gitmodules in
+>     their working tree.
+
+Personally I would want to live in a world where we don't *have* to nor
+*want* to support submodules without .gitmodules in the respective
+superproject.
+
+We did support some use cases historically that I would make sure to
+continue to support, but I am not sure how much effort we want to spend
+on supporting further use cases of incomplete submodules.
+
+Feel free to do so, as such tests help to document the boundaries.
+
+Stefan
