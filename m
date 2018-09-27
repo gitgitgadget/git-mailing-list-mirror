@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30DF91F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 19:24:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A01851F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 19:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728658AbeI1BoX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 21:44:23 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:42183 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728101AbeI1BoW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 21:44:22 -0400
-Received: by mail-qk1-f202.google.com with SMTP id z17-v6so3689515qka.9
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:24:35 -0700 (PDT)
+        id S1728680AbeI1BoZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 21:44:25 -0400
+Received: from mail-io1-f73.google.com ([209.85.166.73]:39832 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728101AbeI1BoZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 21:44:25 -0400
+Received: by mail-io1-f73.google.com with SMTP id x5-v6so4069231ioa.6
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=yW07xfrG9F09zjKIND8N4BMCzKFoSNM01OoNXDTquLc=;
-        b=SccTr4aMktpsVWJoFdU8wfjE5KM3koyDwLFweGQM7Li9Vu+XhzHHJzNhpiKA7kAW0z
-         9pVV433AWg1BjNmBFVii7cJAadylEo0GXxvzqjdWatH4yo/5U5UULEkHSXTcJgvmxhyZ
-         L1+fv6zQ/jeIPPIXpTVluoYMTFfDhwrUZPw5dSZJbIFOTIXSHHyOZIfCXxSXNQs3CezB
-         IcO2BcBryTUdPXbSfGHIpDIZ7O9DBy83l0OVjgCQGdLJYZ+jLjorAbpX4AO2n2/dBGpR
-         W9DmIU7Ly2IXpe4xE8tK45/PHFEQEhLvgK/pMqFS088tA3VYVC0mRLgSVXs30kqmuTwm
-         hUuQ==
+        bh=VIcC7tx9B4oUDsvz6GmX4ErQ3TOv3BnJOy8jvlzqb14=;
+        b=brPbUatG9pYoLS/qNOiRpkexsxqyxrNyvki+E4RAfzM8Ocr+317dZZV0qDTPKZJdOF
+         yiK1o09sH0FbTu+Ye5csJ6GeRpLGRsubo+TDEyMTUEPcV7suseY1Tv7NXvVg0b/7DUOh
+         iEh8pM8j89g2rBZQAL8AB3HEIbPw75HfBDJn1vd/7ZpSiWxmAOkPCP+haprkybPWIoox
+         DMBtpV2piy/UF0n1t8aXjrM/ogxtEf0ga/6n6emqnBWUaSpoZwAiEV42AbuUGdeRdocg
+         gijKtzzaRl8ivfjn8KtY9I9TpaDL6Iipo/Cu2hJtu1sMhu5bE4JSXGKC++LY5wZ8wMby
+         AXGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=yW07xfrG9F09zjKIND8N4BMCzKFoSNM01OoNXDTquLc=;
-        b=IAmP8AVfVzAP/Ypfuu93sOzyraNm1nxpZvZIViQt/HAdGTm9AcG95unq2EzE+cdX+b
-         Aw6lEMdSEjaa9FtF6B/E1nRNMCKOrceDGucBMHfQSDs/iSxlLRI7xZDpaKAIHlpsNVS+
-         QgkyUgdsxEdwflLCEAc7PybpAgpykWYa659olWDQFSmp7HW4sbnizp8BvmuQ4c3h0g4N
-         pXl3c02E432h5dQQZgJsu9upLMt+RB+swux0I9Fw9AQM5eaJ5lmAD9aWIH39QeGlaQIc
-         CQYV6RLBfLnu/i9D1EzYsszCXyig1ZQWgW3VvTfDbMHPBAQBNspDY+t3bbm1Zj1cCmj5
-         hxwQ==
-X-Gm-Message-State: ABuFfohUYOT2PC1xRvRsCzF12jXHW95MAYzPG2gX8PKHiknoYDe5Zolf
-        VM05YQ7EJiMkseP2CEZQPxyrBawo4cRYfKhS0d4ebYxC3T1BEUjLzHnOLDzsIH89VlHnOGWFrl+
-        /WLddq3uF4OK/zWEglvXaWpSgL2vcwZtUy6fcT+l48z5YnzZyBvlBLHYoFLvrPzJmrzKdS2/y/Z
-        +p
-X-Google-Smtp-Source: ACcGV63vqdsT5sWGUTx3OySINNSlDbA+g38lzJTspovYMMYlkONWNQ8qLdN2y2tGBdxNO8vojuFY7N18opkNJmAkY7ko
-X-Received: by 2002:a0c:d2b5:: with SMTP id q50-v6mr5565697qvh.1.1538076274678;
- Thu, 27 Sep 2018 12:24:34 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 12:24:06 -0700
+        bh=VIcC7tx9B4oUDsvz6GmX4ErQ3TOv3BnJOy8jvlzqb14=;
+        b=WqKjL8yo+QBtsbZ5l32mP80n2dbXz7/Cc5b5lEXeu8f0Fmztfa4TSQ8m6SbbK3/LJo
+         qzIzUJLdnxx0kw0eBprcla+YZ+GKvZfVOOzPfbDFEZ0HKPUdamLwByKjWCoKe+zcWBO2
+         y3zzqKMVn7vwGnFue2tq7mYBlsusosuvPNAvZwp3SeixQOtHjOKD3pLArzLzj2w8jSb0
+         KzhjpGjgPCn3Fk39Vix7uDosthtBp9X5ERqXAsVVnfmR0TaTTcXIORcgwJK0K0uM05UE
+         AfsrPx3XcRsJNdoo7d+pnjN5aIh9vT1srzp5b5gHZAlYSH7WB4g0WaCVoKo8eOo2IUKP
+         CUKw==
+X-Gm-Message-State: ABuFfohIWrJKnpV4EkasxBDUtRYH5PPFYMsb7QwVroMOPydfYEeObIb7
+        SDPrJiaf1MwGZP4MFdtalFumIX7MRD/KsvX57xUKEo2RVX+u8EhaWPl+n5XB0n8dEWwYDlFc28X
+        vnt3JfTt6aDmEaIXiJXoXwArh2HPY5JWSrrIAdvJVHLBVwh/ruyW05VmVYB98QsL+4xvjSXP/nj
+        HF
+X-Google-Smtp-Source: ACcGV6087iMtpkHyRQk71EqPY3CHj599q7ShpdMvBPb98/K0zqeU2cObGEruWOsoCW/0OZxcHfkAipfynxRzcfhljgcK
+X-Received: by 2002:a24:f585:: with SMTP id k127-v6mr7773148ith.1.1538076276901;
+ Thu, 27 Sep 2018 12:24:36 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 12:24:07 -0700
 In-Reply-To: <cover.1538075680.git.jonathantanmy@google.com>
-Message-Id: <33b22cf96ee27053a6de22fdfb48f58cc8012644.1538075680.git.jonathantanmy@google.com>
+Message-Id: <1ae00ea1fdd1118b92ac90d67f27a988750b60f2.1538075680.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20180925225355.74237-1-jonathantanmy@google.com> <cover.1538075680.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [RFC PATCH v2 3/4] transport: list refs before fetch if necessary
+Subject: [RFC PATCH v2 4/4] fetch: do not list refs if fetching only hashes
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
@@ -63,115 +63,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The built-in bundle transport and the transport helper interface do not
-work when transport_fetch_refs() is called immediately after transport
-creation. This will be needed in a subsequent patch, so fix this.
-
-Evidence: fetch_refs_from_bundle() relies on data->header being
-initialized in get_refs_from_bundle(), and fetch() in transport-helper.c
-relies on either data->fetch or data->import being set by get_helper(),
-but neither transport_helper_init() nor fetch() calls get_helper().
-
-Up until the introduction of the partial clone feature, this has not
-been a problem, because transport_fetch_refs() is always called after
-transport_get_remote_refs(). With the introduction of the partial clone
-feature, which involves calling transport_fetch_refs() (to fetch objects
-by their OIDs) without transport_get_remote_refs(), this is still not a
-problem, but only coincidentally - we do not support partially cloning a
-bundle, and as for cloning using a transport-helper-using protocol, it
-so happens that before transport_fetch_refs() is called, fetch_refs() in
-fetch-object.c calls transport_set_option(), which means that the
-aforementioned get_helper() is invoked through set_helper_option() in
-transport-helper.c.
-
-This could be fixed by fixing the transports themselves, but it doesn't
-seem like a good idea to me to open up previously untested code paths;
-also, there may be transport helpers in the wild that assume that "list"
-is always called before "fetch". Instead, fix this by having
-transport_fetch_refs() call transport_get_remote_refs() to ensure that
-the latter is always called at least once, unless the transport
-explicitly states that it supports fetching without listing refs.
+If only hash literals are given on a "git fetch" command-line, tag
+following is not requested, and the fetch is done using protocol v2, a
+list of refs is not required from the remote. Therefore, optimize by
+invoking transport_get_remote_refs() only if we need the refs.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- transport-helper.c   |  1 +
- transport-internal.h |  6 ++++++
- transport.c          | 12 ++++++++++++
- 3 files changed, 19 insertions(+)
+ builtin/fetch.c             | 32 ++++++++++++++++++++++++++------
+ t/t5551-http-fetch-smart.sh | 15 +++++++++++++++
+ t/t5702-protocol-v2.sh      | 13 +++++++++++++
+ 3 files changed, 54 insertions(+), 6 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 143ca008c8..7213fa0d32 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1105,6 +1105,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
- }
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 0696abfc2a..4c4f8fa194 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1175,6 +1175,7 @@ static int do_fetch(struct transport *transport,
+ 	int retcode = 0;
+ 	const struct ref *remote_refs;
+ 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
++	int must_list_refs = 1;
  
- static struct transport_vtable vtable = {
-+	0,
- 	set_helper_option,
- 	get_refs_list,
- 	fetch,
-diff --git a/transport-internal.h b/transport-internal.h
-index 1cde6258a7..004bee5e36 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -6,6 +6,12 @@ struct transport;
- struct argv_array;
+ 	if (tags == TAGS_DEFAULT) {
+ 		if (transport->remote->fetch_tags == 2)
+@@ -1190,17 +1191,36 @@ static int do_fetch(struct transport *transport,
+ 			goto cleanup;
+ 	}
  
- struct transport_vtable {
-+	/**
-+	 * This transport supports the fetch() function being called
-+	 * without get_refs_list() first being called.
-+	 */
-+	unsigned fetch_without_list : 1;
+-	if (rs->nr)
++	if (rs->nr) {
++		int i;
 +
- 	/**
- 	 * Returns 0 if successful, positive if the option is not
- 	 * recognized or is inapplicable, and negative if the option
-diff --git a/transport.c b/transport.c
-index 4329cca8e5..ea72fff6a6 100644
---- a/transport.c
-+++ b/transport.c
-@@ -733,6 +733,7 @@ static int disconnect_git(struct transport *transport)
- }
- 
- static struct transport_vtable taken_over_vtable = {
-+	1,
- 	NULL,
- 	get_refs_via_connect,
- 	fetch_refs_via_pack,
-@@ -882,6 +883,7 @@ void transport_check_allowed(const char *type)
- }
- 
- static struct transport_vtable bundle_vtable = {
-+	0,
- 	NULL,
- 	get_refs_from_bundle,
- 	fetch_refs_from_bundle,
-@@ -891,6 +893,7 @@ static struct transport_vtable bundle_vtable = {
- };
- 
- static struct transport_vtable builtin_smart_vtable = {
-+	1,
- 	NULL,
- 	get_refs_via_connect,
- 	fetch_refs_via_pack,
-@@ -1254,6 +1257,15 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
- 	struct ref **heads = NULL;
- 	struct ref *rm;
- 
-+	if (!transport->vtable->fetch_without_list)
+ 		refspec_ref_prefixes(rs, &ref_prefixes);
+-	else if (transport->remote && transport->remote->fetch.nr)
++
 +		/*
-+		 * Some transports (e.g. the built-in bundle transport and the
-+		 * transport helper interface) do not work when fetching is
-+		 * done immediately after transport creation. List the remote
-+		 * refs anyway (if not already listed) as a workaround.
++		 * We can avoid listing refs if all of them are exact
++		 * OIDs
 +		 */
-+		transport_get_remote_refs(transport, NULL);
++		must_list_refs = 0;
++		for (i = 0; i < rs->nr; i++) {
++			if (!rs->items[i].exact_sha1) {
++				must_list_refs = 1;
++				break;
++			}
++		}
++	} else if (transport->remote && transport->remote->fetch.nr)
+ 		refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
+ 
+-	if (ref_prefixes.argc &&
+-	    (tags == TAGS_SET || (tags == TAGS_DEFAULT))) {
+-		argv_array_push(&ref_prefixes, "refs/tags/");
++	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
++		must_list_refs = 1;
++		if (ref_prefixes.argc)
++			argv_array_push(&ref_prefixes, "refs/tags/");
+ 	}
+ 
+-	remote_refs = transport_get_remote_refs(transport, &ref_prefixes);
++	if (must_list_refs)
++		remote_refs = transport_get_remote_refs(transport, &ref_prefixes);
++	else
++		remote_refs = NULL;
 +
- 	for (rm = refs; rm; rm = rm->next) {
- 		nr_refs++;
- 		if (rm->peer_ref &&
+ 	argv_array_clear(&ref_prefixes);
+ 
+ 	ref_map = get_ref_map(transport->remote, remote_refs, rs,
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 771f36f9ff..12b339d239 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -381,6 +381,21 @@ test_expect_success 'using fetch command in remote-curl updates refs' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'fetch by SHA-1 without tag following' '
++	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
++	rm -rf "$SERVER" client &&
++
++	git init "$SERVER" &&
++	test_commit -C "$SERVER" foo &&
++
++	git clone $HTTPD_URL/smart/server client &&
++
++	test_commit -C "$SERVER" bar &&
++	git -C "$SERVER" rev-parse bar >bar_hash &&
++	git -C client -c protocol.version=0 fetch \
++		--no-tags origin $(cat bar_hash)
++'
++
+ test_expect_success 'GIT_REDACT_COOKIES redacts cookies' '
+ 	rm -rf clone &&
+ 	echo "Set-Cookie: Foo=1" >cookies &&
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index a316bb9bf4..1a97331648 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -79,6 +79,19 @@ test_expect_success 'fetch with git:// using protocol v2' '
+ 	grep "fetch< version 2" log
+ '
+ 
++test_expect_success 'fetch by hash without tag following with protocol v2 does not list refs' '
++	test_when_finished "rm -f log" &&
++
++	test_commit -C "$daemon_parent" two_a &&
++	git -C "$daemon_parent" rev-parse two_a >two_a_hash &&
++
++	GIT_TRACE_PACKET="$(pwd)/log" git -C daemon_child -c protocol.version=2 \
++		fetch --no-tags origin $(cat two_a_hash) &&
++
++	grep "fetch< version 2" log &&
++	! grep "fetch> command=ls-refs" log
++'
++
+ test_expect_success 'pull with git:// using protocol v2' '
+ 	test_when_finished "rm -f log" &&
+ 
 -- 
 2.19.0.605.g01d371f741-goog
 
