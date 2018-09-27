@@ -2,110 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE681F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 14:49:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16B161F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 15:13:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728278AbeI0VHq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 17:07:46 -0400
-Received: from ao2.it ([92.243.12.208]:34413 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727516AbeI0VHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 17:07:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=EcgWxffSVLubqZfeuWg3NrpI20QbuSj4SFZWuxpBSbE=;
-        b=nlvJtXpxmq+Tyzbb70aeS0+Io8MCS0xPC1ncDN0RA0Le0oKsKMYuVSYc+hwNxxsznM5dbjq1S8dcYZ1jWo3UqihgoP+glzFLX51KCR3v1z2dGEJs1Pjaixy/OF7tWJAWtFY8cf7xXkj0qh0U0pNyms7Ixah7OIcqbhJxOMI5xU8xZ9U8++PomPmzQ9CVrNvsq/W2xSQOdzttdHK0T7RrE17bllshuDAqNPbMx0OvsntANiWsk1roih9oWB8gYFeE00pIaRthAyOtMF+WPvyTee+y0gUi+v2SffRI/qtHFLI5nUdw7Tz6EG6WeOQX8krUnAxmxhnhmBaqTfME4wK63Q==;
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1g5XYw-0006S1-0Z; Thu, 27 Sep 2018 16:46:42 +0200
-Date:   Thu, 27 Sep 2018 16:49:06 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
- not in the working tree
-Message-Id: <20180927164906.d3bd6ae0aeb4210d4fcf92ea@ao2.it>
-In-Reply-To: <xmqq5zyyyg9q.fsf@gitster-ct.c.googlers.com>
-References: <20180917140940.3839-1-ao2@ao2.it>
-        <20180917140940.3839-10-ao2@ao2.it>
-        <20180918171257.GC27036@localhost>
-        <20180920173552.6109014827a062dcf3821632@ao2.it>
-        <xmqq5zyyyg9q.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1727588AbeI0VcX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 17:32:23 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:36647 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727262AbeI0VcX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 17:32:23 -0400
+Received: by mail-qt1-f195.google.com with SMTP id e26-v6so3139347qtq.3
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 08:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=h7ZKPHuAZ05Zw2Jv81yNrx0jwoXcqDNVMGXClvhcClU=;
+        b=npUsShIkEy6BFA+B5OiWTS5f7sMIaaA4+twGmO+d3gtNgWSoYoCznRaZDTUvzJlvem
+         SAhgZ3K4eB6kNhJkKvtbv8iwdKKm8Rw85cWXlSrbO6pQifctQwAea7w0Z45IaQeWLizg
+         kh7EolziJLHPe/33AKylSWYtzUDf0CxHDBcR9HG3GuGakPyMtlDhglK+XZYBs6fhiRhX
+         7kyH9xvlwulRVW6IkMatIrZ4j9bLjAewUHmxd/caAC9+Xy9BSn8pRcIhzROIfDLTyZwc
+         98mZ4CxG8thAy2x7c4U0PBLudFyITzq5iwkl3wdBjzJXnjcb+82NOehI1WCS4E6DqIAo
+         gBNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=h7ZKPHuAZ05Zw2Jv81yNrx0jwoXcqDNVMGXClvhcClU=;
+        b=WEllvrAxbD3ipnhKrdcIuB/y+49UZEKTQWjtEW7jZgSE4Vtt4onbEq59KINcfTVRdu
+         yhR11DHZxZky0Qr7+sTegSFC5Ehmv9NuVSff1VQBKw80s2UyRfyYEa4kA01rcMFPWEzM
+         KNEkquljSOb3yGiZ785Thz2jsDReimTkb9P/zmaKlXnN9H8x8wbBrp3of7Dt0dGd0UJI
+         Txp/JFmBF5+er4U03NpgcyH3ZlpjQRju77XQvo/WDG0B/ulgCE7t67UjBXI1BVgpe1Bk
+         99BrdSOzB6OGVLVHL+fUfE38v0QJGM+NMkDRRNk9hpfVceXGokJLgWSu4VoUwOtOg7ow
+         w/kQ==
+X-Gm-Message-State: ABuFfohXgPyG3xqyTc1Eb6jTgZ4YA3OTTP1S9L4s60jvVBypknrbZnfv
+        9sXKu7twGXnJjmL2LHpo2EXdLbALJAFj5tj/qqYqisVS
+X-Google-Smtp-Source: ACcGV634WsYRDTJLvJu1taJSZS3yKp9wxooH/A5Y5VUDNZ8U7ETFyqsGHifKNCN5WgTlxKrTbzvrB9KPcxnrEJCrKUU=
+X-Received: by 2002:a0c:8ab0:: with SMTP id 45-v6mr8430687qvv.159.1538061219705;
+ Thu, 27 Sep 2018 08:13:39 -0700 (PDT)
+MIME-Version: 1.0
+From:   Nickolai Belakovski <nbelakovski@gmail.com>
+Date:   Thu, 27 Sep 2018 08:13:13 -0700
+Message-ID: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+Subject: [PATCH] branch: colorize branches checked out in a linked working
+ tree the same way as the current branch is colorized
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 21 Sep 2018 09:19:45 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+In order to more clearly display which branches are active, the output
+of git branch is modified to colorize branches checked out in any linked
+worktrees with the same color as the current branch.
 
-> Antonio Ospite <ao2@ao2.it> writes:
-> 
-> > Protecting the problematic submodules function could work for now, but
-> > I'd like to have more comments, my proposal is:
-> >
-> > diff --git a/builtin/grep.c b/builtin/grep.c
-> > index 601f801158..52b45de749 100644
-> > --- a/builtin/grep.c
-> > +++ b/builtin/grep.c
-> > @@ -427,6 +427,11 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
-> >         if (repo_submodule_init(&submodule, superproject, path))
-> >                 return 0;
-> >
-> > +       grep_read_lock();
-> > +       /*
-> > +        * NEEDSWORK: repo_read_gitmodules accesses the object store which is
-> > +        * global, thus it needs to be protected.
-> > +        */
-> >         repo_read_gitmodules(&submodule);
-> >
-> >         /*
-> > @@ -439,7 +444,6 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
-> >          * store is no longer global and instead is a member of the repository
-> >          * object.
-> >          */
-> > -       grep_read_lock();
-> >         add_to_alternates_memory(submodule.objects->objectdir);
-> >         grep_read_unlock();
-> 
-> I think this is in line with how the grep codepath protects itself
-> when doing anything that accesses the object store.
-> 
+This is meant to simplify workflows related to worktree, particularly
+due to the limitations of not being able to check out the same branch in
+two worktrees and the inability to delete a branch checked out in a
+worktree. When performing branch operations like checkout and delete, it
+would be useful to know more readily if the branches in which the user
+is interested are already checked out in a worktree.
 
-Thanks for the comment.
+The git worktree list command contains the relevant information, however
+this is a much less frquently used command than git branch.
 
-However, after confirming with Stefan Beller, I think we are going to
-solve the corruption issue by removing this call to
-repo_read_gitmodules(), which is not strictly necessary:
+Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
+---
 
-https://public-inbox.org/git/CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com/
+Notes:
+    Travis CI results: https://travis-ci.org/nbelakovski/git/builds/432320949
 
-Thanks,
-   Antonio
+ builtin/branch.c         | 35 ++++++++++++++++++++++++++++++-----
+ t/t3203-branch-output.sh | 21 +++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 4fc55c350..65b58ff7c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -334,11 +334,36 @@ static char *build_format(struct ref_filter
+*filter, int maxwidth, const char *r
+        struct strbuf local = STRBUF_INIT;
+        struct strbuf remote = STRBUF_INIT;
+
+-       strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
+-                   branch_get_color(BRANCH_COLOR_CURRENT),
+-                   branch_get_color(BRANCH_COLOR_LOCAL));
+-       strbuf_addf(&remote, "  %s",
+-                   branch_get_color(BRANCH_COLOR_REMOTE));
++       // Prepend the current branch of this worktree with "* " and
+all other branches with "  "
++       strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %%(else)  %%(end)");
++       // Prepend remote branches with two spaces
++       strbuf_addstr(&remote, "  ");
++       if(want_color(branch_use_color)) {
++               // Create a nested if statement to evaluate if the
+current ref is equal to a HEAD ref from either
++               // the main or any linked worktrees. If so, color it
+CURRENT, otherwise color it LOCAL
++               struct strbuf color = STRBUF_INIT;
++               struct worktree **worktrees = get_worktrees(0);
++               int i;
++               for (i = 0; worktrees[i]; ++i) {
++                       strbuf_addf(&color,
+"%%(if:equals=%s)%%(refname)%%(then)%s%%(else)",
++                                   worktrees[i]->head_ref,
++                                   branch_get_color(BRANCH_COLOR_CURRENT));
++               }
++               // add one more check in the nested if-else to cover
+the detached HEAD state
++               strbuf_addf(&color, "%%(if)%%(HEAD)%%(then)%s%%(else)%s%%(end)",
++                           branch_get_color(BRANCH_COLOR_CURRENT),
++                           branch_get_color(BRANCH_COLOR_LOCAL));
++               // close up the nested if-else
++               for (; i > 0; --i) {
++                       strbuf_addf(&color, "%%(end)");
++               }
++               free_worktrees(worktrees);
++               strbuf_addbuf(&local, &color);
++               strbuf_release(&color);
++
++               strbuf_addf(&remote, "%s",
++                           branch_get_color(BRANCH_COLOR_REMOTE));
++    }
+
+        if (filter->verbose) {
+                struct strbuf obname = STRBUF_INIT;
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index ee6787614..369a156c0 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -240,6 +240,27 @@ test_expect_success 'git branch --format option' '
+        test_i18ncmp expect actual
+ '
+
++test_expect_success '"add" a worktree' '
++       mkdir worktree_dir &&
++       git worktree add -b master_worktree worktree_dir master
++'
++
++cat >expect <<'EOF'
++* <GREEN>(HEAD detached from fromtag)<RESET>
++  ambiguous<RESET>
++  branch-one<RESET>
++  branch-two<RESET>
++  master<RESET>
++  <GREEN>master_worktree<RESET>
++  ref-to-branch<RESET> -> branch-one
++  ref-to-remote<RESET> -> origin/branch-one
++EOF
++test_expect_success TTY 'worktree colors correct' '
++       test_terminal git branch >actual.raw &&
++       test_decode_color <actual.raw >actual &&
++       test_cmp expect actual
++'
++
+ test_expect_success "set up color tests" '
+        echo "<RED>master<RESET>" >expect.color &&
+        echo "master" >expect.bare &&
 
 -- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+2.14.2
