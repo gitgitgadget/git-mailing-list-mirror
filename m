@@ -2,116 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB4331F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 18:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B1931F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 18:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728446AbeI1A45 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 20:56:57 -0400
-Received: from mail-io1-f74.google.com ([209.85.166.74]:37543 "EHLO
-        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727622AbeI1A45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 20:56:57 -0400
-Received: by mail-io1-f74.google.com with SMTP id r18-v6so4004235ioj.4
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:37:22 -0700 (PDT)
+        id S1728298AbeI1A5v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 20:57:51 -0400
+Received: from mail-yw1-f54.google.com ([209.85.161.54]:40669 "EHLO
+        mail-yw1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727404AbeI1A5v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 20:57:51 -0400
+Received: by mail-yw1-f54.google.com with SMTP id z143-v6so1513721ywa.7
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9zzASNn0UB8SMMU/QL52HI2DlHfkvPau9lrDnePKAv4=;
-        b=W5polPkAoul3ZGbYlcqd0PqLfgDSP3QfX2WdSyemkjKP2pYzA3/ebzIs6exF1Oxr1N
-         hr4Lj98o2h+u46Ujrph8qToouzEe2G1Rs65p8VW3ok86rzSbXNhcNP2kcC1RoJqDNgQ2
-         fobkQ73Gtdr8m5ZO5Nrbz6MoCLSvI/EUtcaADycz/9M7jzGSS8c1jhi7qonjR9Ur9N/2
-         I7ZlyZqN3zWtAWFMmBA33qTGKs8k7+91t5jH8xDszC9Eu7p5MxLyW6CEiI5I9JalCt6q
-         w5lS1eNcClsAEa4SuX1z48eajIcU1pP/VMQeRVfsEqtvtR8DC64yx2NxvCaT9CK/CcDG
-         j1Zw==
+        bh=FjfLZ2tAtQ+8Y10s5K1TS7+H2f1rkJkBr//TLumwdio=;
+        b=INgT4GL6+EZLxtrYHyHkgTUb8xGCbJfJZmOPOQRW4MSJEIcHbFZgVXJ5Ly4XnaATUd
+         1P1nLZhsrUVpcncFVCKwUvtlcBy7FoELZdw1d9OUxvL6B+Ptduz/2eiovzLTvZtdDBVn
+         GKLJ5NFq4mRKWPWqrgQyz9wCDFuk6o8ToPEyHx5z6xWvJYG8kbkAS/uh+evF674MGdJz
+         xL9Xs67820cEn5ehpg3rdFWkhlbeMzjVbvm4IMNKSTxdSkxOSRJwDfsHimqf45PpLAh1
+         ll4WnXryjRPpEQ4dCAsKsAj1ahel/sD/phRm6md9jMirnuUWRG0qqcWi7Nr58XK20xVJ
+         blBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=9zzASNn0UB8SMMU/QL52HI2DlHfkvPau9lrDnePKAv4=;
-        b=OkIiKLlYKPHAxTzWVTv2kApq6EkpNxhX/6+eR41kYqrAu9A+URe2WKCsnRErhgDxzv
-         CWNkVjTr17XK3hcwIaiHI7s71LhpSsdCt/PZ835p3LE29RcO1I75AYVCOmSCAoTVQrP8
-         29v1o8161m9udfgKeRaYEeNu6Xkll26Lfs0aGs6yfwXCNseBn98YDh+puVLBIY+yBhxw
-         zh6jpoJysswBYLCqM5UOA6wOtzmz6mW+n65FxsKZXYGrAwbIT9K2iMPRw5dQV5r7m7Jx
-         ixw69IUVOhPoW1GwaT+c4QTU7wwOhgbPeySBi2snQODvZ/h4nPZxChX2VrLCBT+BXa3s
-         wL0Q==
-X-Gm-Message-State: ABuFfojXqHM7VxwfJJwTbao8Eozygwz9LGPT07T6O7P29Xi1E5+hNa0z
-        lvNloP8yiM/xZfnUYxJNV+WNK0DI11mamT6v43Td
-X-Google-Smtp-Source: ACcGV60YhM1Lb+m7VWZD2OjUVNtico+7DPWvYG588mirkcV5pj0QE5MCCKUpPcbjNdgQvFtJXj6gF3XnokEzCQ+QYw2N
-X-Received: by 2002:a24:4245:: with SMTP id i66-v6mr7790161itb.5.1538073441821;
- Thu, 27 Sep 2018 11:37:21 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 11:37:18 -0700
-In-Reply-To: <xmqqh8idns9i.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180927183718.89804-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqh8idns9i.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: Re: [PATCH] fetch-pack: approximate no_dependents with filter
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FjfLZ2tAtQ+8Y10s5K1TS7+H2f1rkJkBr//TLumwdio=;
+        b=iWUr8xtWhNFchKfcLkFskkeOMecDTUDdqtd2jvwKbl7A/J2L0b+HmDJyUmUt7B55rv
+         5foxKegpqOWFiKJHT7Dk25K868s3NocCGK8O7wRiSHEm62cI1vWFInTjT7b5HfeTdcEZ
+         oUIeARnrHkHgIM5BeTw8D1fh5ZlH821asUGGMzMLA7S0pmgiZTJ1iNl0wQ/3Suf7yHQf
+         uO6wJDh5PtlEGeVXHjv+CAtmHeGiy0yvTDdYj8u6e8dJEQDejCVi68Rmyi5SjZRCYOSp
+         HZ8M2+ZYqU/Koi4z5josC6+yGyzXXkEVZTdYZqXHxa4nhEwMuNbvNh3qTzbBbaN/8e5i
+         PuxA==
+X-Gm-Message-State: ABuFfojtRBnvGV2bFUkwDXdY3syoBY5txokteYTwAywbrkt8e9Zsn5IO
+        rbM4UFhOxU2SxzTjKzoml7RqFrNQQ1Hvn+RTLj9z0Q==
+X-Google-Smtp-Source: ACcGV610Wve2l/0i6gfb4Dfwzmijc3xCuSbXOFogtdlOKW4VmLkbcsFjNRs5XT59rUOc9nFjCxz6AUwkAXG5lGZQgT0=
+X-Received: by 2002:a81:a11:: with SMTP id 17-v6mr6418908ywk.238.1538073495318;
+ Thu, 27 Sep 2018 11:38:15 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180912053519.31085-1-steadmon@google.com> <20180927012455.234876-1-steadmon@google.com>
+ <20180927012455.234876-2-steadmon@google.com>
+In-Reply-To: <20180927012455.234876-2-steadmon@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 27 Sep 2018 11:38:04 -0700
+Message-ID: <CAGZ79kZ2aqW7X57KHPtjQiyWtwfk4SGZYRqwccgy9ji0s+sYYQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] archive: follow test standards around assertions
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> It is very clear how you are churning the code, but it is utterly
-> unclear from the description what you perceived as a problem and why
-> this change is a good (if not the best) solution for that problem,
-> at least to me.
+On Wed, Sep 26, 2018 at 6:25 PM Josh Steadmon <steadmon@google.com> wrote:
+>
+> Move assertions outside of the check_tar function so that all top-level
+> code is wrapped in a test_expect_* assertion.
 
-Firstly, thanks for your comments and questions - it's sometimes hard
-for me to think of the questions someone else would ask when reading one
-of my patches. I have tried to rewrite the commit message (you can see
-it at the end of this e-mail) following your questions.
+Cool, I'll file this under modernizing the test infrastructure ;-)
 
-The new paragraph 1 addresses what I perceive as a problem, and the new
-paragraph 2 addresses the ideal and partial solution.
+> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+> index 2a97b27b0a..c408e3a23d 100755
+> --- a/t/t5000-tar-tree.sh
+> +++ b/t/t5000-tar-tree.sh
+> @@ -62,11 +62,9 @@ check_tar() {
+>         dir=$1
+>         dir_with_prefix=$dir/$2
+>
+> -       test_expect_success ' extract tar archive' '
+> -               (mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile
+> -       '
+> +       (mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile &&
+>
+> -       test_expect_success TAR_NEEDS_PAX_FALLBACK ' interpret pax headers' '
+> +       if test_have_prereq TAR_NEEDS_PAX_FALLBACK ; then
+>                 (
+>                         cd $dir &&
+>                         for header in *.paxheader
+> @@ -82,16 +80,11 @@ check_tar() {
+>                                 fi
+>                         done
+>                 )
+> -       '
+> +       fi &&
+>
+> -       test_expect_success ' validate filenames' '
+> -               (cd ${dir_with_prefix}a && find .) | sort >$listfile &&
+> -               test_cmp a.lst $listfile
+> -       '
+> -
+> -       test_expect_success ' validate file contents' '
+> -               diff -r a ${dir_with_prefix}a
+> -       '
+> +       (cd ${dir_with_prefix}a && find .) | sort >$listfile &&
+> +       test_cmp a.lst $listfile &&
+> +       diff -r a ${dir_with_prefix}a
 
-> After reading the above description, I cannot shake the feeling that
-> this is tied too strongly to the tree:0 use case?  Does it help
-> other use cases (e.g. would it be useful or harmful if a lazy clone
-> was done to exclude blobs that are larger than certain threshold, or
-> objects of all types that are not referenced by commits younger than
-> certain threshold)?
+Up to here we unwrapped code and removed test_expect_success
+and just executed the code as is, so later callers would need to encapsulate
+the call to check_tar with test_expect_success.
 
-Yes, it is solely for the tree:0 use case. But it doesn't hurt other use
-cases, as I have explained in new paragraph 3.
+However as we are touching the code here, we can go further than just
+unwrapping it, usually we'd format one command a line,
 
-I have retained old paragraph 3 as new paragraph 4, and removed old
-paragraph 2 as it mostly duplicates the comments in the code. New commit
-message follows:
+    (
+        cd ${dir_with_prefix}a &&
+        find .
+    ) | sort >$listfile &&
+    test_cmp ...
 
-[start commit message]
+I am not sure if that standard style is more legible in this case though.
 
-fetch-pack: exclude blobs when lazy-fetching trees
+>  }
+>
+>  test_expect_success \
+> @@ -143,19 +136,20 @@ test_expect_success \
+>      'git archive' \
+>      'git archive HEAD >b.tar'
+>
+> -check_tar b
+> +test_expect_success 'extract archive' 'check_tar b'
 
-A partial clone with missing trees can be obtained using "git clone
---filter=tree:none <repo>". In such a repository, when a tree needs to
-be lazily fetched, any tree or blob it directly or indirectly references
-is fetched as well, regardless of whether the original command required
-those objects, or if the local repository already had some of them.
+Heh. Just looked into the file and the surrounding code is
+a wild mixture of the old style
 
-This is because the fetch protocol, which the lazy fetch uses, does not
-allow clients to request that only the wanted objects be sent, which
-would be the ideal solution. This patch implements a partial solution:
-specify the "blob:none" filter, somewhat reducing the fetch payload.
+test_expect_success \
+    'git archive' \
+    'git archive HEAD >b.tar'
 
-This change has no effect when lazily fetching blobs (due to how filters
-work). And if lazily fetching a commit (such repositories are difficult
-to construct and is not a use case we support very well, but it is
-possible), referenced commits and trees are still fetched - only the
-blobs are not fetched.
+check_tar b
 
-The necessary code change is done in fetch_pack() instead of somewhere
-closer to where the "filter" instruction is written to the wire so that
-only one part of the code needs to be changed in order for users of all
-protocol versions to benefit from this optimization.
+and the new style
 
-[end commit message]
+test_expect_success 'test name' '
+ <TAB> command &&
+ <TAB> command2
+'
+
+Maybe we could cleanup that file to look more like
+one of the newer tests (e.g. t3206, t0410) ?
+
+But I guess for the purpose of getting the check_tar
+function usable inside a test, this would do enough.
+
+>
+>  test_expect_success 'git archive --prefix=prefix/' '
+>         git archive --prefix=prefix/ HEAD >with_prefix.tar
+>  '
+>
+> -check_tar with_prefix prefix/
+> +test_expect_success 'extract with prefix' 'check_tar with_prefix prefix/'
+>
+>  test_expect_success 'git-archive --prefix=olde-' '
+>         git archive --prefix=olde- HEAD >with_olde-prefix.tar
+>  '
+>
+> -check_tar with_olde-prefix olde-
+> +test_expect_success 'extract with olde- prefix' \
+> +       'check_tar with_olde-prefix olde-'
+
+In new style this would look like
+
+    test_expect_success 'extract with olde- prefix' '
+        check_tar with_olde-prefix olde-
+    '
