@@ -2,109 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5853E1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 22:34:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BBF01F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 22:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726141AbeI1Eyf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 00:54:35 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:48050 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725728AbeI1Eye (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 28 Sep 2018 00:54:34 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:596e:6738:f59:e0e0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 746B361B73;
-        Thu, 27 Sep 2018 22:33:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1538087638;
-        bh=AeeTgBWrhGsNXsCtwJmf3pesTrI3hCb8gqJE3FAzafI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=N4PZ2F8ag3Xji5B4tNcxBORfQ8Z8KR+FuGHpN1jFKnaJsBdgLAjCUFViLP95L++3w
-         sF//Qe5b3ZbR2GaI2QLJEoZGcmKM/fwNH1D6K9CqcFpruNQiLpBlhpsIJWOs/F6aqn
-         kuO8I3Y7y0nuJu1Syfgl1agZu7K9gq/ORuHs+piLww43kNpGW9igCDZ31rwyd+jGdJ
-         +YyFzvUwDuiZsNE53QVMObDqY8uoHb+XGIjJTTiOQIcTv7iLJhkAJewrpxh7gumzNU
-         wDS4UUhgn/9cyD0YwmTavB5Y30f7kYoRL4MzBQEWGLi3M9ixG3Gy7vSgwxdte0Dte1
-         qurA6cNEmy2TsBJJRxXAFh+8WRH7sIhFygcdJ1wkSZwLitGV1PyJRpKtl+bWNiD//i
-         VLpaJL6wmLHotZ4kqv4c4y3aKXpZUtkYqkJZNkhF4DcRbGNef6bwfBvLR6aqv5Le0K
-         cjF2wQiJWhKhc3bM77O7LnBifyGEspre0Ga9LEC9YoWaGuNbdC5
-Date:   Thu, 27 Sep 2018 22:33:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] Add an EditorConfig file
-Message-ID: <20180927223353.GH432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-References: <20180917230307.588334-1-sandals@crustytoothpaste.net>
- <xmqqtvmm42es.fsf@gitster-ct.c.googlers.com>
- <20180920000013.GZ432229@genre.crustytoothpaste.net>
- <xmqqk1ng2rdo.fsf@gitster-ct.c.googlers.com>
- <20180921225039.GC432229@genre.crustytoothpaste.net>
- <xmqqefdislto.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HlXFiQcSFG/a+HqU"
-Content-Disposition: inline
-In-Reply-To: <xmqqefdislto.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1726081AbeI1FHh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 01:07:37 -0400
+Received: from mail-io1-f73.google.com ([209.85.166.73]:42356 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725924AbeI1FHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 01:07:37 -0400
+Received: by mail-io1-f73.google.com with SMTP id m13-v6so4582598ioq.9
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:47:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=T/mWb2pinaGr/NIbwzD2ZKk5Ez1SPU0Rj/tLu/bX8No=;
+        b=VpJ0SvNMT5sZ7jv78urp+uMDizNj1JGvm79XRVZj8O8lHtyF9RptSVFs31mNQQmAmT
+         m3WLZ5RB0hijH58bRF6CpI/DG6c/ei9DkVFtt8nidOlrNYZzbjbCLow8+9RlKFOWj0xN
+         xIAfvzEPoC1cFK+x0hIwR/gaiuUHLWRcChnVpQ0HEembSbM/Vdlea+cOn4SyXfRxB9XA
+         q4k8rNlBAlfJVec9PG8wjgbKUItT1jKCj36tKg3qOolzujxl+PAm5YjSdxATvooSGbJU
+         YcILXhyVRBb2cd3/YEdX7AQV0kxuomLMZjpF5HrhLU+5bUUhoCl9S7pUcDr6lHvJvHUV
+         h+vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=T/mWb2pinaGr/NIbwzD2ZKk5Ez1SPU0Rj/tLu/bX8No=;
+        b=Pn/gItirb8AuscNENcjRaKpWtV/p4ssfkT235vzM/+mvvbx09n6rRRNTHwMWYzZTPU
+         XrdRYcue7Y8K0xaDkJAKy4RL3ULPeBKoXW2yrW/wkLVLbYUMU7T4JXCiKr+8vvTPLzE4
+         WpdxHkblJ3M+9Lo8+DwFiU7MTj+3IWHN/RO7SNIbfQTkQ8QxIWTtoM/0zvKLcCkMPBRx
+         iPo9/PcptgVrkLB+VPyuMK8jFhaYrRK01wR85bl31SmRpQg0tFHp/s5ZTfkyaWaI/ehl
+         4wmMBoEsEmuo53z1r0RN/0/6WGFI9p5A7xdJojmsWyOZjsKh88Ky/FSSHPITfH273Yno
+         rFTA==
+X-Gm-Message-State: ABuFfojoPBmvScWbanGUUaFoJeTis+8AGbochdVqFrHhTd2L+WymQa6z
+        1/w4OZJ8v9RFHm7HxY6i9aL3ylZI0mA/V01qp2a5
+X-Google-Smtp-Source: ACcGV61zym78E7p3+Woj9PBZD+2QNpWJ3dHa9tmXCJRvHpgCC2wRxFGAk+DjQQgeKklRPWl0K14lOpLoYkBJTIXQRQrs
+X-Received: by 2002:a24:1382:: with SMTP id 124-v6mr518684itz.30.1538088421327;
+ Thu, 27 Sep 2018 15:47:01 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 15:46:47 -0700
+In-Reply-To: <87o9ciisg6.fsf@evledraar.gmail.com>
+Message-Id: <20180927224647.111690-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <87o9ciisg6.fsf@evledraar.gmail.com>
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: Re: [PATCH 0/2] negotiator: improve recent behavior + docs
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     avarab@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> I get:
+> 
+>     warning: Ignoring --negotiation-tip because the protocol does not support it.
 
---HlXFiQcSFG/a+HqU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When I implemented --negotiation-tip, I only implemented it for
+protocols that support connect or stateless-connect, because
+implementing it fully would have required expanding the protocol helper
+functionality. For reference, the commit is 3390e42adb ("fetch-pack:
+support negotiation tip whitelist", 2018-07-03).
 
-On Mon, Sep 24, 2018 at 01:05:23PM -0700, Junio C Hamano wrote:
-> > Would it be helpful if I sent a script that ran during CI to ensure they
-> > stayed in sync for the couple places where they overlap?  I'm happy to
-> > do so if you think it would be useful.
->=20
-> It may even be an overkill.
->=20
-> A comment addressed to those who edit one file to look at the other
-> file on both files would be sufficient, I suspect.
+So HTTPS wouldn't work unless you were using protocol v2.
 
-Sure.  Let me reroll with that change.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> So that seems like another bug, and as an aside, a "skipping"
+> implementation that sends ~1/4 of the commits in the repo seems way less
+> aggressive than it should be. I was expecting something that would
+> gradually "ramp up" from the tips. Where say starting at master/next/pu
+> we present every 100th commit as a "have" until the 1000th commit, then
+> every 1000 commits until 10k and quickly after that step up the size
+> rapidly.
 
---HlXFiQcSFG/a+HqU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlutWtEACgkQv1NdgR9S
-9otVow//e7glc0PFmyTWoirTuBZkMCF3Dp8iJpKXc9N/IoLmKZxWXegCUdqdfKf8
-E5m2flJ/Y3mSM3UNrbiisq0iOWk69BSmM7uWxxaCODCWbF8+fTB5ls1yxO8XO1eW
-LYiIqeeajDrbSKb6x3MW/7+NsmNDVHNVQ8XuNPwke9uhNXnat0K2G1gGrPS2qeOZ
-Z5KiUHQxX+RKj4PeFMZAqugUACvk3bGI52SuC+Xk9S5ZWcr9UmnaVw6xEBIw1P3T
-eHOJXeaorfPbI21ieQ7yd+8U6M5jpesaQKkH9UYV9SQ4qW35u09FpgSf1KtXfY0b
-5GTPolachRF3CXEb9owwsTlsZKeP+CgtCZa1RhgveU/xW6W4p/fmJEzHwlvzzRDD
-hqDjq3vfIo5HZsF58PqAOe7Lc8WObAqig5xR9clmGT17AQj4KkBTXo4gtTPiCuyw
-bU2sNWP1dieblnUSs6nm73Fm0+w328+AXrGPQ3/JKpEdtPet5xjmZto7Ru32y0vs
-cciboFKLxKxieQUnzOLdTZLoz86V8OjPJT6f7rT+ImrYO24JlsWEWPjaMc+uICnt
-OhX0gBBqQ/cPRDf0UXEdw/JfTmBSI6yiMg2l8LeRoJI6RSsByJ6BcgdUB8lvuSQz
-CYeyqiX8kmiumrZo2tXqnI7No5yBMPDH2OfLELISQCLnP/Ho+oA=
-=StXh
------END PGP SIGNATURE-----
-
---HlXFiQcSFG/a+HqU--
+I reproduced using your commands, and yes, there is a bug - I'll take a
+look.
