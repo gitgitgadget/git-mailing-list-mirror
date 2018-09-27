@@ -2,143 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 095DE1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 22:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 293181F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 22:29:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbeI1EsD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 00:48:03 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:37616 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725924AbeI1EsD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 00:48:03 -0400
-Received: by mail-it1-f195.google.com with SMTP id m9-v6so478046ita.2
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:27:32 -0700 (PDT)
+        id S1726337AbeI1Etw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 00:49:52 -0400
+Received: from mail-it1-f169.google.com ([209.85.166.169]:51033 "EHLO
+        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726064AbeI1Etw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 00:49:52 -0400
+Received: by mail-it1-f169.google.com with SMTP id j81-v6so494624ite.0
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Kb/APN2Lsnxpm3gBGbXaRj9Er5BhycUSiDtsfDV5ADc=;
-        b=cVVDgvYWcN4t6HgzQeBHaoDNDzMPSiyp7BgI7PFJ52MZ5n1Vn0W3DoRbzjzPhDoz5j
-         Ye3nDV/rYVOoxBh4GHo8EMc+BpHNCM1g2a2wEP+zHhT3swVDpwUbqRGaGlkXkyuKOghs
-         0MyR51geLHbD3MYE5q3veTbCHpDH9OOXD4bGF+dqsKpr77rMdobzSgqT+FJx4BLubbK4
-         NB5GW5TI4Tp/+6TT+oKdQFHFHVnsa3GAJU9yIYV9U4RobR7YF0Pv3RZ46Ysl/z8IPMCG
-         jdW6c6w6rXvscrziXmY6gdukIityhiO4JyBsT5Y+i8qo1WNZT7i8XxgyaFlpFtQ4T5Xx
-         UVoA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=eJ3wD8cOh1cQlc/fQ6mvTPL6dBvRM6lR1qDAA1AemwM=;
+        b=SclQ0SdzYw/bKxA2sbWNeXyaRxmW/nI8fTaMvjlprTwZ1K38UA63cuc6yqAawkBzlO
+         jeKbJjaCn6H97Q0dhcItZ/8dIk2Oi2wT97mSkPOosKSD/AZFtz1Yd84tIDdlVobcHPhD
+         k7R3uEvRE/OpR4UTTCUmgh+pJBIr+6a+P+cX7MiDgfQbwr6CuGW+mwjiJdRjsnJ0PoIt
+         FPjQ3NwOc2I2DBCdgaYXAsJN1DDPLYyJ1Af6wzUfgl87/iJiQ93DDkwoEInC1xrDHC9S
+         2P+KtOm9QjrYKYBHuVKU4jA3Rf9mEf5SJw1wJdAWeBr8ld61V5kfdhYVGZgVq4nux/6y
+         q7Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Kb/APN2Lsnxpm3gBGbXaRj9Er5BhycUSiDtsfDV5ADc=;
-        b=MO16rC9AUVFFaZRTU+GxNpUREQApGO/lkKSY5+BHQKx5K2q02J0hfk4FqOm1ThZqTf
-         zIof7TKL9Rz28Ke1c1OYbRlufMRcoufRPTsc9/PahBLX9RhUq3FHtjt2KZyFYgcgdrbH
-         LknOmiesYLJEV2OVbCuC1+mH9+DDUyiAJjRtUDCD/OAUUY6/OpALahq/j2j4YliMpN19
-         Yn8SLu4MTIn8w4vBlUyVV1z/jfh6IpuHgrpnZKrtjPzixcyJOibxbhYWlVfN2aqw3/KR
-         nPKkrlIVtjdQb5XSLzBZyGkQOGDctUWB9x/cstpO8mpzk5kJGWIUR/nY/gmoHuE9ldd7
-         Bm0g==
-X-Gm-Message-State: ABuFfoipt9TkIw0Q6IzYJfTQI5+7T8/jrx1RM58Fz+SsLP4SwPxKbfw9
-        J5O1GwSRS1EQd4RGukvC5aA=
-X-Google-Smtp-Source: ACcGV612zdG0Sdq6ci1JhHiBgRn0BEbLNo4qlmJZbg/OZ7GxfeiYmh8imDv/fSls5+aQf4gXY/eeFA==
-X-Received: by 2002:a24:b60a:: with SMTP id g10-v6mr469932itf.55.1538087251895;
-        Thu, 27 Sep 2018 15:27:31 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id h66-v6sm191910ita.22.2018.09.27.15.27.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 15:27:31 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 15:27:28 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] FYI / RFC: submodules: introduce repo-like workflow
-Message-ID: <20180927222728.GD193497@aiede.svl.corp.google.com>
-References: <20180927221603.148025-1-sbeller@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=eJ3wD8cOh1cQlc/fQ6mvTPL6dBvRM6lR1qDAA1AemwM=;
+        b=kK57yfCan0xtu8Q21dm7dqAw5v+sA9mQndyfWLWL+GTUm3SfIIY7V3CrD9YjB99/dd
+         EeI/c3CQCsGQTwZNrtWUKKHLY7Usqdc2otWRQASC69uzrY0wf819YcCPAF5703huta0d
+         98i8W4rJQOzYiwDTsl/BJ9W0oVey+iI2+kmambQVbNDx6EwbR2JZ0LEjsD6xnidTmMn2
+         +ngKKsn1v4svwol6P2q7SWZ+n9QzxZ6aJOaITPhJJPYOhVa9T5OtpMXe+dQ8aWPZgWD4
+         0UgHcoB908CaN62SYuNvFQ5Oo5S0vImbkIeeECJAzWBE2ghFDA4AR4149KTeWcA6wIqK
+         Yl5A==
+X-Gm-Message-State: ABuFfoj4NuUcZD3NqhR1tIQB8GMtIp6f0A98j30eeg9z8E2zPSy6eynG
+        x2ccdVBOHN7P4WlYaiepMaqO8x51eSsTW9AN2sXJgvjk
+X-Google-Smtp-Source: ACcGV61HaDmLf/c9C4ApM01cYPrJzbABbuygYDLKFvToB39+zIJjgN8POzAD0+Q6yPqV9CIza8Aoda28QH/IhNXZ0e4=
+X-Received: by 2002:a24:be8f:: with SMTP id i137-v6mr453697itf.61.1538087360767;
+ Thu, 27 Sep 2018 15:29:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180927221603.148025-1-sbeller@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Raman Gupta <rocketraman@gmail.com>
+Date:   Thu, 27 Sep 2018 18:29:09 -0400
+Message-ID: <CADF5XCygzArjd9rgY_x_BqnhL5QpFL1CO1JjOHnBQc3HFn_JdQ@mail.gmail.com>
+Subject: --skip-worktree and operations like checkout / stash /etc.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(dropping cc-s to my internal address that I don't use on this list
- and to git-core@google.com which bounces)
-Hi,
+The comand `update-index --skip-worktree` seems to be an ideal way to
+tell git to locally ignore some modified files. However, this seems
+not to play well with very common commands like `checkout` and
+`stash`.
 
-Stefan Beller wrote:
+$ git checkout other-branch
+error: Your local changes to the following files would be overwritten
+by checkout:
+        path/to/ignored/file
+Please commit your changes or stash them before you switch branches.
+Aborting
 
-> Internally we have rolled out this as an experiment for
-> "submodules replacing the repo tool[1]". The repo tool is described as:
->
->     Repo unifies Git repositories when necessary, performs uploads to the
->     Gerrit revision control system, and automates parts of the Android
->     development workflow. Repo is not meant to replace Git, only to make
->     it easier to work with Git in the context of Android. The repo command
->     is an executable Python script that you can put anywhere in your path.
-[...]
-> Submodules can also be understood as unifying Git repositories, even more,
-> in the superproject the submodules have relationships between their
-> versions, which the repo tool only provides in releases.
->
-> The repo tool does not provide these relationships between versions, but
-> all the repositories (in case of Android think of ~1000 git repositories)
-> are put in their place without depending on each other.
->
-> This comes with a couple of advantages and disadvantages:
+Ok, well lets try stashing:
 
-Thanks for describing this background.
+$ git stash save
+No local changes to save
 
-[...]
-> This changes the following commands in the superproject:
->
->   checkout -B/-b create branches in subs, too
->   checkout (-f): update branch in submodule (create if needed) and check
->                  it out; Pass the argument down literally if it is a branch
->                  name (e.g. "checkout -f master" will run a
->                             "checkout -f master" in the submodule as well)
->   clone: see checkout
->   reset --hard: see checkout
+Ok, lets try a checkout with a merge:
 
-As you mentioned, I've been using this submodule.repoLike=true mode
-for my own use for a while.  You did a nice job of explaining on how
-it fits into a Gerrit-driven workflow; I'd like to add that I find it
-pleasant in non-Gerrit-driven contexts as well.
+$ git checkout -m other-branch
+error: Entry 'path/to/ignored/file' not uptodate. Cannot merge.
 
-The primary difference from repoLike=false is that this makes the
-normal state to have branches checked out in submodules.  For example,
-if I run
+Ok, lets force this sucker:
 
-	git checkout --recurse-submodules -B master origin/master
+$ git checkout -f other-branch
+error: Entry 'path/to/ignored/file' not uptodate. Cannot merge.
 
-then this will create and check out a "master" branch in all
-submodules instead of only in the superproject.  This helps avoid some
-issues in Git's submodule handling where submodule commits can be
-pruned if they have not been checked out in a while because there is
-no ref pointing to them.
+Ok, at this point I'm wondering, do I really need to
+--no-skip-worktree all the ignored files, do my `checkout -m`, and
+then ignore them again? Umm, no, that ain't gonna work.
 
-Some next steps:
+I'd love for git to just check if my worktree-skipped changes will
+merge cleanly into the target branch, and if they do so, go ahead and
+do that merge (with perhaps a notification printed to the console) and
+keep the skip worktree status. If the merge ends up with a conflict,
+then feel free to no-worktree-skip it and show me merge conflicts.
 
-- now that we have a repository object, some of the implementation can
-  be simplified and made more robust.  I expect that will also make
-  these patches easier to review
-
-- also in the direction of reviewability, at that point we may want to
-  split this into multiple patches
-
-- gitsubmodules.txt and config.txt should describe the new option, to
-  help new users understand what this new repoLike workflow does
-
-- there are some edge cases in the UX that get... messy that I should
-  describe in another message
-
-All that said, thanks for sending this out, and I'd be happy to hear
-from any interested people --- feedback from anyone adventurous enough
-to try this out would be very welcome.
-
-Happy hacking,
-Jonathan
+Regards,
+Raman
