@@ -7,95 +7,97 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE5501F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 17:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA4A51F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 17:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728347AbeI0Xcu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 19:32:50 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:38369 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727597AbeI0Xcu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 19:32:50 -0400
-Received: by mail-it1-f193.google.com with SMTP id p129-v6so8517950ite.3
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 10:13:34 -0700 (PDT)
+        id S1727731AbeI0Xo2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 19:44:28 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:37034 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727588AbeI0Xo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 19:44:28 -0400
+Received: by mail-io1-f66.google.com with SMTP id v14-v6so2489891iob.4
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 10:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=L1b5F5rSn0U+0XFJyYKYRC2xD+fKYYza/wq1BkWt9hk=;
-        b=lS3ikUuIge2mMJCP47b62sYyINwK382mlNm6JC0woIJ8ZX+9wGq+nT+7JLPOxapRVy
-         EEd91HGH0MbI5vmjK9uXaX3Ij/ZEyp70V7AOJXmyGYP8/gfL32A84AHQC3bSHZTKxWuO
-         1ozhpl2W0NjzYYBVlkzbNhkc/SKFxqurdHwDCO+50Uo4119Kei3ipUA4Q7tXot8PnrlU
-         SaW38RiTsDE3gz/VP9YsHKkN/C7jKBt9t/V7xDO1W0W8K1W2pybuxdNApy5lCRXxmHG9
-         YxPVFn/Mdhlo/eD8fArJ/C+RBq0WZn8bBVa8Et3X4fR1niHRLLeb4/u6gS4VRDli3JfY
-         mpAw==
+         :cc:content-transfer-encoding;
+        bh=H/OM1o8AMY4GohgeJiylNC0tzmJZ8t8YTAySN+WIXGo=;
+        b=FhBEEr8ntEOs2Rh2vU649I2gMrQUwO2NvwpLKl4lWfT+1DSJsn1zJedLyAL+9OjLqx
+         sH9HmUyoHfsoKwgmG/oYjtUXPXhgiB8H0tEyuhEnagH5meAJyPliLLCbrmwjdXvvre7k
+         uwTvNVD4bzzCiChhFnZy2MS/WfjGeO3JpuzW+83SVvk102AkwBQc4PhG2mLEdhNh/3jx
+         NVTpkl30BcdZ64iqApaGHrLkd8KYiHGR2dnRfsSyOQ2M/z0BDkBarLipeh7x4nUdXmSa
+         /Z2j5Epi0q64WqZbYK3sGOIFxdxRWDiLfuBRJYKY8ck91uskmNwZOQJp58QY07EdCK+W
+         i5ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=L1b5F5rSn0U+0XFJyYKYRC2xD+fKYYza/wq1BkWt9hk=;
-        b=Y+68xTNT1YeJfIwWIq76sV1z46Q2sL+lppQ3+wqYjZfwShKj70dObXlNvxr/iYHVtM
-         mqGbjPs4d22xlKreH/03GrNa9XHuPCSeT9nQkSXNhVe8L36ciDgu8cXvWA5bK6ECfFnH
-         Vxo4U07td39EBQfqdJN5tvki9+OV7eUMXe1inzg6mS4FHfWnjm/5hq0FhFDDYf/2nEXf
-         WerPuk6HHCljkFI4bx1JwKxCt2dDdgRBnLoHeB5PtnJUNMXzbLXjKZOigZXTGNwn0iao
-         vpiN1LVFe5u5Ddkj5R6CjGoifI3zMSkHOZr5OjuF4PUJTowOOhCKq9IFzTHAMBlapzaB
-         weVA==
-X-Gm-Message-State: ABuFfogjYOe5IMueAwrcLemUb8dzR/5kEhzRSCmw6mJhKvx1V0Qd85pP
-        VhWdrTUA6Os5HIAcvCW4/Z7KOrSvbr5zzIEjLJI=
-X-Google-Smtp-Source: ACcGV60JhREWCUUdyV7wIepusveCaQC3iovHbREbop8J5Hph4j2WuQ5zATtLKNsx0ekRnTlvbzgVSORbUq7KJAdFEXU=
-X-Received: by 2002:a02:49d7:: with SMTP id p84-v6mr10777336jad.97.1538068414338;
- Thu, 27 Sep 2018 10:13:34 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=H/OM1o8AMY4GohgeJiylNC0tzmJZ8t8YTAySN+WIXGo=;
+        b=IICpHOEUMzMREMTliwwllrjhSdUqjAARortj87vH6eijJr9VUynBfxJOfj7SPO7++a
+         Ofg+onCmNdW9SziKEcMMxQKZXgohNsAoImfhZqmqDHt0GsNmLZOMyeAvh2nfzyWVI0aE
+         Xs01airVcFedL23amduUWqakJqQux5CZiU0QOLZCzGx4DTMIXIWNcBePkVHlEZYCzCXr
+         yMIRrDyPzKzZnW13OlmCkvLcf+ha7VWYw7WvynlUjAaDeRKSZZaTmthj8hZpkMDEp2tP
+         TJNU3fWhZH3dF2hgnyMx1hLyj6y89qkLrcUqu6TX5CD3DFQJFMEnJPjH08CfGflOgWc9
+         F5UQ==
+X-Gm-Message-State: ABuFfoh0LKQRXFt5cNugprzDCv8UkVHLhHykreEg8f9lF/yOJCKdYc9Q
+        wTSQnuYpna+VC0rCgVVkfJAKt3rwR0wn01EvQgoxjg==
+X-Google-Smtp-Source: ACcGV63zOhaEFtkU0SfgqAlzf4nD7NU010t84QMu19BMz9luYBhOckPlN96q1tm+8uOUwJC0RY+4chwd/P0S86wz04I=
+X-Received: by 2002:a6b:8f93:: with SMTP id r141-v6mr9113440iod.118.1538069109096;
+ Thu, 27 Sep 2018 10:25:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com> <20180926195442.1380-1-benpeart@microsoft.com>
-In-Reply-To: <20180926195442.1380-1-benpeart@microsoft.com>
+References: <20180923170438.23610-1-pclouds@gmail.com> <87bm8kjeu5.fsf@evledraar.gmail.com>
+In-Reply-To: <87bm8kjeu5.fsf@evledraar.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Sep 2018 19:13:08 +0200
-Message-ID: <CACsJy8BdKo-TQi2YuPjyoTb3uyqKLvJKNOSD5cdopygm3y4CcA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/7] speed up index load through parallelization
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
+Date:   Thu, 27 Sep 2018 19:24:42 +0200
+Message-ID: <CACsJy8Dwo_cBEQeqttj3G=RGaJT7bmVb=ABnV2916swgYQnyrw@mail.gmail.com>
+Subject: Re: [PATCH] worktree: add per-worktree config files
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 9:54 PM Ben Peart <peartben@gmail.com> wrote:
-> The high cost of parsing the index extensions is driven by the cache tree
-> and the untracked cache extensions. As this is currently the longest pole,
-> any reduction in this time will reduce the overall index load times so is
-> worth further investigation in another patch series.
+On Wed, Sep 26, 2018 at 8:25 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Sun, Sep 23 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
-> Name                                    First    Last     Elapsed
-> |   + git!read_index_extension          684.052  870.244  186.192
-> |    + git!cache_tree_read              684.052  797.801  113.749
-> |    + git!read_untracked_extension     797.801  870.244  72.443
+> > +extensions.worktreeConfig::
+> > +     If set, by default "git config" reads from both "config" and
+> > +     "config.worktree" file in that order.
 >
-> One option would be to load each extension on a separate thread but I
-> believe that is overkill for the vast majority of repos.
+> How does this interact with config that's now only used if it's in
+> .git/config? E.g. you can't set remote.<remote>.<url> in ~/.gitconfig,
+> will that be inherited across the two of these?
 
-They both grow proportional to the number of trees in worktree, which
-probably also scales to the worktree size. Frankly I think the
-parallel index loading is already overkill for the majority of repos,
-so speeding up further of the 1% giant repos does not sound that bad.
-And I think you already lay the foundation for loading index stuff in
-parallel with this series.
+Er... we can't? If I remember correctly we don't have any enforcement
+on where what config vars must or must not go. The only exception is
+core.bare and core.worktree which is only read from $GIT_DIR/config
+because of the way they are involved in .git directory discovery. If I
+put remote "foo" in ~/.gitconfig, "git remote" happily reports remote
+"foo" to me.
 
-> Instead, some
-> optimization of the loading code for these two extensions is probably worth
-> looking into as a quick examination shows that the bulk of the time for both
-> of them is spent in xcalloc().
+To sum up, we always inherit config from higher levels, with
+/etc/gitconfig being the highest and $GIT_DIR/config the lowest. It's
+up to the user to share config between repos responsibly. This patch
+only adds one more level, $GIT_DIR/config.worktree which is now the
+lowest level.
 
-Another easy "optimization" is delaying loading these until we need
-them (or load them in background, read_index() returns even before
-these extensions are finished, but this is of course trickier).
+> > In multiple working
+> > +     directory mode, "config" file is shared while
+> > +     "config.worktree" is per-working directory.
+>
+> "But then how will it work with more than one?" I found myself thinking
+> before reading some more and remembering .git/worktree. Shouldn't we
+> consistently say:
+>
+>     [...]"config" and "worktrees/<worktree name>/config"[...]
+>
+> Or something like that?
 
-UNTR extension for example is only useful for "git status" (and maybe
-one or two other use cases). Not having to load them all the time is
-likely a win. The role of TREE extension has grown bigger these days
-so it's still maybe worth putting more effort into making it load it
-faster rather than just hiding the cost.
--- 
+Point taken. Maybe I'm trying to hide implementation details too much.
+--=20
 Duy
