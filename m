@@ -8,57 +8,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9191F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 15:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78BC81F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 15:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727597AbeI0VwN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 17:52:13 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42362 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727262AbeI0VwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 17:52:13 -0400
-Received: by mail-wr1-f67.google.com with SMTP id b11-v6so3094747wru.9
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 08:33:24 -0700 (PDT)
+        id S1728284AbeI0V5V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 17:57:21 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:53551 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728083AbeI0V5V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 17:57:21 -0400
+Received: by mail-wm1-f52.google.com with SMTP id b19-v6so6395940wme.3
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 08:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=PHizjlzOk41Jnx5FlS4uaJQaRYazAChdYzqEg1rZ0co=;
-        b=ef8FUbThygyO+7bXA7LL0MtgfCuAkBKXwqqOR31whFvpqxHuMv694osQh0k21VbVpl
-         zqbFoXzO5S9ptz5aymFrTCa0WgU6c51GX0V75OQVW2ONAEKzxr9+SQ7Iyz1GgQDWH1yf
-         YimbrpCx7sH4acWi58eqX/0oe5ZmzRWXrmqIsQQRkFq0PmEjqhgytFljguRodGJBlIz4
-         zNFxRw00iYo1KGS9zvjDfcq4qUyk3LNFVrVOgDAkDvLvhMUChGe0B9RrovuHYtX6nSrL
-         HpJbMo66RxnSPLiz8UroKsPLDDxML7u2U9ZslBulfD4BZdprCfR7P3h1+UnqIlTFonWp
-         V5pQ==
+        bh=9owH9fN8Nc4treJbbl4RxcFFMUW1k9sg2+FXszAhvTI=;
+        b=rEC3Y3ginCrRnpB4YLQsqgmudmrBwwfInPHWDZSfFx2Ib1oa3+Xq288HQagL2Ev3LE
+         hulSnH7OxRfDB3Wxj+EGyOmAPVqeG488eNhUHZMw5vpguCdsOTTK2PcSChZRemQq2YX2
+         oxzXpjuj5QfqUoYzPU5LXZlVkN7GJjjLxAPcw4Z1BY7l4ddr+o6jyPVNAoIXGTOMt1PP
+         TCnXC0CVTg8+NArU9Uo6m/1fNVj5/VzHF5Nb6unWuO4miozFEUVZuRDv1kq1Kc6JsiwS
+         oxa9nbEYmXgJeW080BS3H5lMKmI7yYbpyTpcR1ZglaVUWFF8LLhQFq2/RIdGwV2NXVUF
+         Wwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=PHizjlzOk41Jnx5FlS4uaJQaRYazAChdYzqEg1rZ0co=;
-        b=q4yYFxa91wAQ0jma4eorId6Lk4SKqTEdrFnrGJ4vZPVxW9JwITTtmsI10RQz6ivJd4
-         6+j9p+sLS+D90d5gbQwEDJGM+XKrUl3TamOI7gFhU1JF0ogmv4Yr3ZU15mau9zOoXa9d
-         QXvk7Lu7fYZSTbULCT2q/n7SqTipJWqIZCbzy5eaK+nXF4VhstRk593snmIgPDN0H8aN
-         06FikSJhKOkVd/oj/P1hP0zx3wtAZJzO1/FDio4xiu+bhILjAoyf22t7jzznvwaehJ91
-         5/ZO2r9jmhXAmsgGVf+GKVJ9CTPFMuYMoT378HcakSzSfDPUytZHpWzfghtVxmVujHuF
-         9ErQ==
-X-Gm-Message-State: ABuFfogfgDZyYNFL9Yjk7trxCwlISe9wQBXUBIZoSS0QxYD2qoCue+KQ
-        vHrqM5HVAoWRnsJ400o7gP8=
-X-Google-Smtp-Source: ACcGV62iAEatlASfuXhJx8DUA55e2+d+OAIhlNQbOy9oUQRhzLfypOj8uQ6pw5dCv2DzDRo2qtRklA==
-X-Received: by 2002:adf:b6a0:: with SMTP id j32-v6mr9103045wre.55.1538062403345;
-        Thu, 27 Sep 2018 08:33:23 -0700 (PDT)
+        bh=9owH9fN8Nc4treJbbl4RxcFFMUW1k9sg2+FXszAhvTI=;
+        b=cbWy5BHZbNnoECIo0CeHrQ1ZSHmg0tl2cuU2gmaXb6dpkURNyKXzWqHkBwGgN97SGt
+         M2EB5l+vjfbJnddpWsaJpBakGwNADllFVbB9CnGX4FQ5QVnwZu2kKCEc5YZvrgEXcNYt
+         YYW9+sElTKfc4U7EXc3O+gEihEOzkT2I5OBDeCbPp0nIubkE4pGxV+bYHi7pRBqhSVcR
+         B+TNtzf3ajJ7zLmtWbOuZ1m4n4DaOjGUnVEbKXZTlAUS9L2JefR2rrr4bA2jWGnsDcWc
+         HIR9Ly5TtSqjvaonctLkuBgSWz7mCPU9oirUuVI5isVT+Q6LifqqtW1LK9Bf2xzICjkO
+         3M/g==
+X-Gm-Message-State: ABuFfoiR6Dk9ufwDn9eA8RMsel73k1TcTUva92BlvBonwi2I0CqTwvvZ
+        FtJI5Z4cI+fP8Ujn2o10NaaPcsx29kg=
+X-Google-Smtp-Source: ACcGV62K91ReUb4dN4/kirwsHR6wAGBX8yOaavqaOU2qsvjpoduWrvshAQYKDXK5zfvZx3/zVgNDSA==
+X-Received: by 2002:a1c:6c0a:: with SMTP id h10-v6mr8673350wmc.47.1538062709053;
+        Thu, 27 Sep 2018 08:38:29 -0700 (PDT)
 Received: from evledraar (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id q5-v6sm3831499wmd.29.2018.09.27.08.33.22
+        by smtp.gmail.com with ESMTPSA id x132-v6sm8918859wmg.3.2018.09.27.08.38.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 08:33:22 -0700 (PDT)
+        Thu, 27 Sep 2018 08:38:28 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] branch: colorize branches checked out in a linked working tree the same way as the current branch is colorized
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Git Test Coverage Report (Tuesday, Sept 25)
+References: <4bcd63bf-648d-f3f6-dac8-aabe7ea1e480@gmail.com> <d92f18e2-0bbc-e36b-123a-3ed3f44cf418@gmail.com> <b46d6363-1709-968e-105a-3f4e8a77155e@gmail.com> <20180926184308.GA2253@hank.intra.tgummerer.com> <a7228cb5-5085-e1c7-0731-d37b19cdc3bf@gmail.com> <225dc2e3-1aa0-ac19-26e6-59b54dfe871c@gmail.com> <07ab14bb-766b-e375-989b-73974ef7fece@gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
-Date:   Thu, 27 Sep 2018 17:33:21 +0200
-Message-ID: <87y3bnhs5a.fsf@evledraar.gmail.com>
+In-reply-to: <07ab14bb-766b-e375-989b-73974ef7fece@gmail.com>
+Date:   Thu, 27 Sep 2018 17:38:26 +0200
+Message-ID: <87wor7hrwt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -67,51 +69,47 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Sep 27 2018, Nickolai Belakovski wrote:
+On Thu, Sep 27 2018, Derrick Stolee wrote:
 
-> In order to more clearly display which branches are active, the output
-> of git branch is modified to colorize branches checked out in any linked
-> worktrees with the same color as the current branch.
+> On 9/27/2018 11:21 AM, Ben Peart wrote:
+>>
+>>
+>> On 9/26/2018 2:54 PM, Derrick Stolee wrote:
+>>>
+>>> GIT_TEST_INDEX_THREADS=1
+>>>
+>>
+>> Because the test repos are so small (ie smaller than 10K files), the
+>> test suite already executes as if GIT_TEST_INDEX_THREADS=1 is set
+>> (ie single threaded). I added the test variable so that the
+>> multi-threading code could be forced to execute in spite of the
+>> default minimum number of files logic.
+>>
+>> I'd recommend you set GIT_TEST_INDEX_THREADS=3 instead. (3 because 1
+>> thread is used for loading the index extensions and we need 2 or
+>> more threads available to exercise multi-threaded loading of the
+>> index entries).
 >
-> This is meant to simplify workflows related to worktree, particularly
-> due to the limitations of not being able to check out the same branch in
-> two worktrees and the inability to delete a branch checked out in a
-> worktree. When performing branch operations like checkout and delete, it
-> would be useful to know more readily if the branches in which the user
-> is interested are already checked out in a worktree.
+> According to t/README, GIT_TEST_INDEX_THREADS is a boolean and setting
+> it to 1 causes us to use 3 threads:
 >
-> The git worktree list command contains the relevant information, however
-> this is a much less frquently used command than git branch.
+>  GIT_TEST_INDEX_THREADS=<boolean> forces multi-threaded loading of
+>  the index cache entries and extensions for the whole test suite.
 >
-> Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
-
-Sounds cool, b.t.w. would be neat-o to have some screenshot uploaded to
-imgur or whatever just to skim what it looks like before/after.
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 4fc55c350..65b58ff7c 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -334,11 +334,36 @@ static char *build_format(struct ref_filter
-> *filter, int maxwidth, const char *r
->         struct strbuf local = STRBUF_INIT;
->         struct strbuf remote = STRBUF_INIT;
+> Here is the only consumption of the variable in the product code (in
+> read-cache.c):
 >
-> -       strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
-> -                   branch_get_color(BRANCH_COLOR_CURRENT),
-> -                   branch_get_color(BRANCH_COLOR_LOCAL));
-> -       strbuf_addf(&remote, "  %s",
-> -                   branch_get_color(BRANCH_COLOR_REMOTE));
-> +       // Prepend the current branch of this worktree with "* " and
-> all other branches with "  "
+>  /* enable testing with fewer than default minimum of entries */
+>  if (istate->cache_nr > 1 && nr_threads < 3 &&
+> git_env_bool("GIT_TEST_INDEX_THREADS", 0))
+>  nr_threads = 3;
+>
+> This was non-obvious to me, and I had originally set it to a larger
+> number. I happened to notice the boolean nature while I was looking up
+> the rest of the GIT_TEST_* variables.
 
-
-We use /* ... */ C comments, not C++-style // (well, it's in C now, but
-not the ancient versions we need to support).
-
-It also seems all of this patch was copy/pasted into GMail or something,
-it has wrapping and doesn't apply with "git am".
-
-Also most/all of these comments I'd say we could better do without,
-i.e. the ones explaining basic code flow that's easy to see from the
-code itself.
+I didn't know it worked like that. Would be neat if we had some "strict
+bool" function in config.c that would accept on/true/1 off/false/0 but
+barf on e.g. 12345 instead of treating it as just another synonym for 1,
+I'd say we could even enable it by default, but maybe not, but
+definitely for all this GIT_TEST_* stuff.
