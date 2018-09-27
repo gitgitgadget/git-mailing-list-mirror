@@ -7,73 +7,69 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A04A61F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 19:16:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7FC71F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 19:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728485AbeI1Bga (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 21:36:30 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:42799 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727760AbeI1Bga (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 21:36:30 -0400
-Received: by mail-qt1-f193.google.com with SMTP id z8-v6so3996317qto.9
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:16:44 -0700 (PDT)
+        id S1728278AbeI1Bla (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 21:41:30 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41625 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727587AbeI1Bla (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 21:41:30 -0400
+Received: by mail-pf1-f196.google.com with SMTP id m77-v6so2575442pfi.8
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 12:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=ujWV8jnm0tnqUo66BuNHtjk6xY+6ZrqchIZGCzBPPR4=;
-        b=YkjatBemeb5yTfKQ+MIUvVokTIxsXJruqEcjtnE8YX6seIVZWWpwwxS0U5TTyhF97X
-         odon6tNNVrzY2cjRt+gzthiMbDp04e2QB/eIcYhoExCsdpodrzynNxxsWefpdk5N76jW
-         rZ8haVp6dPHfND0eByE4K7VemgcfcY7IFETvgSTriI/dZEJyjef1I211HZW1YMSfq4aY
-         UrBcE8P4RBkvl/tEu6LO3EDrgagsPWsAdje2yDMWfyvVcyXmJ0N0fuGpErMxlxnE64Af
-         LAJuelbo04wFbs7mc5+wwScw6NBKOkD0JNhLkhIJCAWHNfO23Z/m+b+zOST5hYhPigzJ
-         MGdg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JkKOXk+l5Bvl+VFr1eqttXU5azV71VbY+yZlnVxWgaY=;
+        b=KxFu3aS2KCeAi2HAO1zkTbB8h85wRSU/wUGKOSG6UP/Xf0BniV16xXtZa0A668d9BF
+         kAIeGYvdeq+t/AEQ23/656ZpRFjkF6HUdIgNeAKCaZRtrT7g0rYWOUPyp59ianPo4ZhO
+         MvVa3bJcII+ep9sIGrpw9ZEl5p8O09+jyCYo2vU23hzVhrKFwjOIBJNE046TJ/gWuJEW
+         P6x1yeC1m3/O6gdXDZvsz05GLVMQiUrUFXc6dydn5sLWkS1op41uU9E4/rOcUZHnBT5s
+         GYl3eTxK9jy+ITIDmcNX5OtZpnGoKe1Vd5P3TwVVKtJUM5XBUj9yNVLORfFY8cSMF88q
+         dScA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ujWV8jnm0tnqUo66BuNHtjk6xY+6ZrqchIZGCzBPPR4=;
-        b=LqrJNTG47tuy7xQSOjAY3S1E+CCo2bsq3vujIujdZVpsYfIPN2serYMffvC3Ua1je8
-         jpXQXFs8FuckymeWHAWgoFR6RaaDXj9NEnoDTGnVeb7nmXcam9+2BymXK4B6C+XSe94G
-         CmiH1npy5UoUz9YdONgbW71qIcnH1iD+Dt5332k+6vK7rkjBNSZG4gvcbTclBZ72qnwX
-         xUxBRlf+IRDW+/agggeTuV51JyqY0/1mC9crjZOk/ZLHwm2aK9y0GVs4uwnvgLT1rqm4
-         x1VnJ1nRh+s/WPZ+iTIBE7NmrqvuwFrH1eDEIZmPJhEl47sz8MbTwdztphoMXmiWA0Zk
-         7s9A==
-X-Gm-Message-State: ABuFfoiJXOstFNmKloOXOn2Qa7BGeaZxLeFPv9f0OogCx1CsONx+1aVx
-        6Hut7xewAwvnsPubsNXNZ99lfU6y
-X-Google-Smtp-Source: ACcGV62Nt7Xq/aDNtF2wwiyRV376veKyV8Gln7i9hEgtjf5/oGNC5lD6rE2Oir1ulitHDTpAk/Dw5g==
-X-Received: by 2002:ac8:259d:: with SMTP id e29-v6mr9786261qte.233.1538075803983;
-        Thu, 27 Sep 2018 12:16:43 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:1455:e436:6b50:1b07? ([2001:4898:8010:0:fd8a:e436:6b50:1b07])
-        by smtp.gmail.com with ESMTPSA id c18-v6sm1869329qte.78.2018.09.27.12.16.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 12:16:43 -0700 (PDT)
-Subject: Re: [PATCH v2 0/4] git-commit-graph.txt: various cleanups
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-References: <6b1cb43e-a1a8-921f-cd66-3697609854e0@gmail.com>
- <cover.1538075326.git.martin.agren@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <31d467b9-1ffd-5c1d-2ff2-f4cb76854f0a@gmail.com>
-Date:   Thu, 27 Sep 2018 15:16:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JkKOXk+l5Bvl+VFr1eqttXU5azV71VbY+yZlnVxWgaY=;
+        b=XY16xFMMrujtvoAo+mVCaBMBMybiY6C2vhWfQxa1xuv3M/t40RjyYPyx9FC1WzDy/j
+         2VUAtnT0nigmlifDVoLermvk3eybxSBXYVl01cDw2rTNEKloHNKG6BjyY3FXSQeFCmxs
+         1nTE6hViSBMunsHM45shr7xryFyF2ojl4JtIBZq5GNRbxQPm1j4x5okivGQxOUDx3BPi
+         c7rvR7cl8+XWNucyMcmVfIiEbnGT50yRLhxBBxQWB5//n5amAu7jlKOnormQwUIyQ2J/
+         R2qcTB74UTgIryB21nhVtkAB77qo7bvK/UKQWol2EN5KflGb5P8LysqPESK7GipE71Cp
+         ilMw==
+X-Gm-Message-State: ABuFfojlOHWTrvM4Zt1oYn3VpOpMQbWJsCmIGhG8gyTFYE6KmU5T39C3
+        RJjwklfl2YYeSmxw7qtgjEJp9jvQ03KxtyH2QYVLzxI9
+X-Google-Smtp-Source: ACcGV63Q09PGCdp+fRvaCYlCmNKkx0jZkGtYzm0bKEAOFuGOuB5hCsEwsTag+b2v7W6h2FpZUpGOlv40bdJCqHh3Qaw=
+X-Received: by 2002:a17:902:9893:: with SMTP id s19-v6mr12573649plp.130.1538076103421;
+ Thu, 27 Sep 2018 12:21:43 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cover.1538075326.git.martin.agren@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <6b1cb43e-a1a8-921f-cd66-3697609854e0@gmail.com>
+ <cover.1538075326.git.martin.agren@gmail.com> <31d467b9-1ffd-5c1d-2ff2-f4cb76854f0a@gmail.com>
+In-Reply-To: <31d467b9-1ffd-5c1d-2ff2-f4cb76854f0a@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 27 Sep 2018 21:21:31 +0200
+Message-ID: <CAN0heSpih+eMrbar29q6g7-aHD8SmufZvDTe97Me2hF6CJb3Qg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] git-commit-graph.txt: various cleanups
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/27/2018 3:12 PM, Martin Ågren wrote:
-> This v2 starts with the same two patches as v1 did, then goes on to
-> change "[commit] graph file" to "commit-graph file" with a dash, to
-> match other instances as well as Derrick's feedback.
-Thanks! This version satisfies my concerns and looks good to me.
+Hi Derrick
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+On Thu, 27 Sep 2018 at 21:16, Derrick Stolee <stolee@gmail.com> wrote:
+> Thanks! This version satisfies my concerns and looks good to me.
+>
+> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+
+Thanks for the spectacularly snappy review. I don't expect commit graphs
+to help my use cases a lot, but I still wanted to try them out a little
+and stumbled on the `*` lists. Thanks for doing this work!
+
+Martin
