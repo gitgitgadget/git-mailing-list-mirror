@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3B221F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 22:00:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E68051F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 22:00:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726907AbeI1EUx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 00:20:53 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38439 "EHLO
+        id S1727269AbeI1EU4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 00:20:56 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34710 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726132AbeI1EUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 00:20:53 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j8-v6so4236489wrw.5
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:00:28 -0700 (PDT)
+        with ESMTP id S1726132AbeI1EU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 00:20:56 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z4-v6so2855385wrb.1
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 15:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7YVGQQK7lwOm9Qr04fPiQi2dwuGNIhjTZVUlb6wlnbo=;
-        b=akuNg2UBYdf4Q67UTwvLep+c2Q5e8Y8kyIQErtUmWWyq2O6CIphMjSRyw3Or230fMZ
-         F8LgYjVeHKeNJ5LICneF2+4TgKmjT3/yvVG5YPkdcMC/KCkx2A0ZL3WzuE+BYO/2zPyN
-         V+8YMFZEpbCNtQN83vzZne1eP38ycMYg+IT1wEI3uXffjisWWZfujFa3p+oEhzPAf63h
-         K4efb9h6ZFFdfXEYjIV9CBMSJppuGX05lBsWrbm/NrO5FDwZBfVZ9mmHVmINuKP1kcWW
-         cux1nmqecPQF4kN+GxgHkXIznR3UArJMQaZzhfNBWiPLasxSRkLUHxBSklZQkcd7D4b3
-         UJAA==
+        bh=ngUDtohThwk0HJVrv/FyDBSPP/VInNQ/cfxq9bqg/Js=;
+        b=JOfRxt58jjtwrxeqQv8n5FQNuHg7nuhrtoeg+N1EqopCpjmQ6hlc8bOnPu/sQ7WwA2
+         OUg+iUN2bmzi+Dq5WIk0QjwM/hn5WIoGCt6sEmHfpYvi773wrT1PjgCITos14RM0lE1m
+         IkiygtuovAyLfrbWqx68LHhrai6AL916kGHX0Wsh0SHNAXL/PUcM5XhOAmSiXSt/EGuV
+         rUQHYSmyt4jq+T5ywxy3fLMrkk8RsUyb2v8yo2bJTB2ckY35FPSzT1bDh5oTpv/v/HGB
+         zfUZdfA2GoC8Goq+iJhdvuubou8AAtogZGgXqTwfkywb4HIZz670bJ45v96R8jRCgzHm
+         EHXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7YVGQQK7lwOm9Qr04fPiQi2dwuGNIhjTZVUlb6wlnbo=;
-        b=oUSGfRUNGqvyJnELsNtMtf450GqOZQ3WwIBfYM5BIOor0d4m1LIaJuXoNzR71KrNZ6
-         WDnr1oV/oVNesDABBSilry5nw4P6LwBZfG8x7adxmDIReewiL/XTxrMbqmL2hDB4O+Fa
-         XvPIBJfG5koraTUs73Fg9dk3XoYkBZxTs6fdMLh0FMZftggPo2UQz3AlpqY9jWZ7c0Uz
-         tVlBjcatoUG6Z5g2gzFAjrZ9r1qgU5sxl3Lye0c+oeGv/+o/wM0sx5rFGn4VqX0acmIq
-         aco7iGLkLyY6hUvz8WH9AuLvOx6kpWYyHWM/mDGQQJFd94Toc1iX1NWHYbE/nXtXIzF/
-         tQfw==
-X-Gm-Message-State: ABuFfohwLIzyvuSFssUI0SeRvVimH+9mWQNbp/Hh4kIIw7EyMHRHk+nh
-        CyGgpn8pJ2cgdbu3MLr5/U0/Js28
-X-Google-Smtp-Source: ACcGV62hpNAokXzj0DYLnuKMKn4YTsHZaJ0SKf2GkXFVaICa+zcACR5l/ZY/nygcgarsUEYhCu/e7w==
-X-Received: by 2002:adf:8567:: with SMTP id 94-v6mr10575907wrh.223.1538085627380;
-        Thu, 27 Sep 2018 15:00:27 -0700 (PDT)
+        bh=ngUDtohThwk0HJVrv/FyDBSPP/VInNQ/cfxq9bqg/Js=;
+        b=VMn1Zob86oaEbBBtYlQelRLxduILgANszvgQoSrn1lNDQUEL9zRGj3W0jfrsNNOB87
+         UzJ9Vv4y5H7ggARHVFj1BD/VhJHxbjkE0Vq6n4YofNfp9lDojcLuqhbBQ3FBoWdIoi1X
+         XybfyrMpf5ChzmN3pDMYhTkkDdJyyYQBlY1Ge49kjWPPQr87mMGNxmjvmxUMAu8lnsR3
+         MeVB/uhK64YQlT+yMv2pqagAXyZVZOetKirGbjVsVyfy7cimxM1eKMe/ZG/WY0ADujzl
+         VSVvQ/q849P0D+sMZYMAelR+iu4MPqPmo67hoXxWL52yAPIowNrjcqvEQ5btcTSGhRfL
+         VC/Q==
+X-Gm-Message-State: ABuFfoh8/cEzAgIfGbJAKNT3go4kW1Wii9122ZVU0x66aHZ76Hsy3ZSB
+        Jx7iXhb/vIgikIms+WjrbagThArw
+X-Google-Smtp-Source: ACcGV63A4/J5BA6pnVLeMO0zSS06hayufhlF2owNDTLvVFgBpup33P1ivQrTNKjsrfX7XILN+SfFGg==
+X-Received: by 2002:adf:ac13:: with SMTP id v19-v6mr10191605wrc.135.1538085628887;
+        Thu, 27 Sep 2018 15:00:28 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-28-140.w86-222.abo.wanadoo.fr. [86.222.27.140])
-        by smtp.googlemail.com with ESMTPSA id h206-v6sm243153wmf.25.2018.09.27.15.00.26
+        by smtp.googlemail.com with ESMTPSA id h206-v6sm243153wmf.25.2018.09.27.15.00.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 15:00:26 -0700 (PDT)
+        Thu, 27 Sep 2018 15:00:28 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -57,85 +57,157 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v8 00/20] rebase -i: rewrite in C
-Date:   Thu, 27 Sep 2018 23:55:50 +0200
-Message-Id: <20180927215610.32210-1-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v8 01/20] sequencer: make three functions and an enum from sequencer.c public
+Date:   Thu, 27 Sep 2018 23:55:51 +0200
+Message-Id: <20180927215610.32210-2-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20180828121045.14933-1-alban.gruin@gmail.com>
+In-Reply-To: <20180927215610.32210-1-alban.gruin@gmail.com>
 References: <20180828121045.14933-1-alban.gruin@gmail.com>
+ <20180927215610.32210-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series rewrite the interactive rebase from shell to C.
+This makes rebase_path_todo(), get_missing_commit_check_level(),
+write_message() and the enum check_level accessible outside sequencer.c,
+renames check_level to missing_commit_check_level, and prefixes its
+value names by MISSING_COMMIT_ to avoid namespace pollution.
 
-The v7 was based on ffc6fa0e39 ("Fourth batch for 2.19 cycle",
-2018-07-24), but this series is based on fe8321ec05 ("Second batch post
-2.19", 2017-09-24) due to some conflicts.
+This function and this enum will eventually be moved to
+rebase-interactive.c and become static again, so no special attention
+was given to the naming.
 
-Changes since v7:
+This will be needed for the rewrite of append_todo_help() from shell to
+C, as it will be in a new library source file, rebase-interactive.c.
 
- - [17/20] The optionnal parameter of `-S' was mandatory in
-   rebase--builtin2, making it abort when a signing key is provided to
-   `user.signingkey' and `commit.gpgsign' is set to true.  First
-   reported on github[0], fixed by Johannes Schindelin.
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
+No changes since v7.
 
- - [2, 5, 19, 20/20] Changes due to the rebase.
+ sequencer.c | 26 +++++++++++---------------
+ sequencer.h | 11 +++++++++++
+ 2 files changed, 22 insertions(+), 15 deletions(-)
 
- - [9, 11/20] Conflict solving.
-
-Alban Gruin (20):
-  sequencer: make three functions and an enum from sequencer.c public
-  rebase -i: rewrite append_todo_help() in C
-  editor: add a function to launch the sequence editor
-  rebase -i: rewrite the edit-todo functionality in C
-  sequencer: add a new function to silence a command, except if it fails
-  rebase -i: rewrite setup_reflog_action() in C
-  rebase -i: rewrite checkout_onto() in C
-  sequencer: refactor append_todo_help() to write its message to a
-    buffer
-  sequencer: change the way skip_unnecessary_picks() returns its result
-  t3404: todo list with commented-out commands only aborts
-  rebase -i: rewrite complete_action() in C
-  rebase -i: remove unused modes and functions
-  rebase -i: implement the logic to initialize $revisions in C
-  rebase -i: rewrite the rest of init_revisions_and_shortrevisions() in
-    C
-  rebase -i: rewrite write_basic_state() in C
-  rebase -i: rewrite init_basic_state() in C
-  rebase -i: implement the main part of interactive rebase as a builtin
-  rebase--interactive2: rewrite the submodes of interactive rebase in C
-  rebase -i: remove git-rebase--interactive.sh
-  rebase -i: move rebase--helper modes to rebase--interactive
-
- .gitignore                     |   1 -
- Makefile                       |   5 +-
- builtin.h                      |   2 +-
- builtin/rebase--helper.c       |  88 ---------
- builtin/rebase--interactive.c  | 271 ++++++++++++++++++++++++++++
- cache.h                        |   1 +
- editor.c                       |  27 ++-
- git-rebase--interactive.sh     | 283 -----------------------------
- git-rebase--preserve-merges.sh |  10 +-
- git-rebase.sh                  |  47 ++++-
- git.c                          |   2 +-
- rebase-interactive.c           |  90 ++++++++++
- rebase-interactive.h           |   8 +
- sequencer.c                    | 320 +++++++++++++++++++++++++++------
- sequencer.h                    |  22 ++-
- strbuf.h                       |   2 +
- t/t3404-rebase-interactive.sh  |  10 ++
- 17 files changed, 740 insertions(+), 449 deletions(-)
- delete mode 100644 builtin/rebase--helper.c
- create mode 100644 builtin/rebase--interactive.c
- delete mode 100644 git-rebase--interactive.sh
- create mode 100644 rebase-interactive.c
- create mode 100644 rebase-interactive.h
-
+diff --git a/sequencer.c b/sequencer.c
+index ddb41a62d9..c24d37dfb1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -53,7 +53,7 @@ static GIT_PATH_FUNC(rebase_path, "rebase-merge")
+  * the lines are processed, they are removed from the front of this
+  * file and written to the tail of 'done'.
+  */
+-static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
++GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
+ /*
+  * The rebase command lines that have already been processed. A line
+  * is moved here when it is first handled, before any associated user
+@@ -377,8 +377,8 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+ 	}
+ }
+ 
+-static int write_message(const void *buf, size_t len, const char *filename,
+-			 int append_eol)
++int write_message(const void *buf, size_t len, const char *filename,
++		  int append_eol)
+ {
+ 	struct lock_file msg_file = LOCK_INIT;
+ 
+@@ -4422,24 +4422,20 @@ int transform_todos(unsigned flags)
+ 	return i;
+ }
+ 
+-enum check_level {
+-	CHECK_IGNORE = 0, CHECK_WARN, CHECK_ERROR
+-};
+-
+-static enum check_level get_missing_commit_check_level(void)
++enum missing_commit_check_level get_missing_commit_check_level(void)
+ {
+ 	const char *value;
+ 
+ 	if (git_config_get_value("rebase.missingcommitscheck", &value) ||
+ 			!strcasecmp("ignore", value))
+-		return CHECK_IGNORE;
++		return MISSING_COMMIT_CHECK_IGNORE;
+ 	if (!strcasecmp("warn", value))
+-		return CHECK_WARN;
++		return MISSING_COMMIT_CHECK_WARN;
+ 	if (!strcasecmp("error", value))
+-		return CHECK_ERROR;
++		return MISSING_COMMIT_CHECK_ERROR;
+ 	warning(_("unrecognized setting %s for option "
+ 		  "rebase.missingCommitsCheck. Ignoring."), value);
+-	return CHECK_IGNORE;
++	return MISSING_COMMIT_CHECK_IGNORE;
+ }
+ 
+ define_commit_slab(commit_seen, unsigned char);
+@@ -4451,7 +4447,7 @@ define_commit_slab(commit_seen, unsigned char);
+  */
+ int check_todo_list(void)
+ {
+-	enum check_level check_level = get_missing_commit_check_level();
++	enum missing_commit_check_level check_level = get_missing_commit_check_level();
+ 	struct strbuf todo_file = STRBUF_INIT;
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+ 	struct strbuf missing = STRBUF_INIT;
+@@ -4468,7 +4464,7 @@ int check_todo_list(void)
+ 	advise_to_edit_todo = res =
+ 		parse_insn_buffer(todo_list.buf.buf, &todo_list);
+ 
+-	if (res || check_level == CHECK_IGNORE)
++	if (res || check_level == MISSING_COMMIT_CHECK_IGNORE)
+ 		goto leave_check;
+ 
+ 	/* Mark the commits in git-rebase-todo as seen */
+@@ -4503,7 +4499,7 @@ int check_todo_list(void)
+ 	if (!missing.len)
+ 		goto leave_check;
+ 
+-	if (check_level == CHECK_ERROR)
++	if (check_level == MISSING_COMMIT_CHECK_ERROR)
+ 		advise_to_edit_todo = res = 1;
+ 
+ 	fprintf(stderr,
+diff --git a/sequencer.h b/sequencer.h
+index c986bc8251..579de9127b 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -8,6 +8,7 @@ struct commit;
+ 
+ const char *git_path_commit_editmsg(void);
+ const char *git_path_seq_dir(void);
++const char *rebase_path_todo(void);
+ 
+ #define APPEND_SIGNOFF_DEDUP (1u << 0)
+ 
+@@ -62,6 +63,15 @@ struct replay_opts {
+ };
+ #define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
+ 
++enum missing_commit_check_level {
++	MISSING_COMMIT_CHECK_IGNORE = 0,
++	MISSING_COMMIT_CHECK_WARN,
++	MISSING_COMMIT_CHECK_ERROR
++};
++
++int write_message(const void *buf, size_t len, const char *filename,
++		  int append_eol);
++
+ /* Call this to setup defaults before parsing command line options */
+ void sequencer_init_config(struct replay_opts *opts);
+ int sequencer_pick_revisions(struct replay_opts *opts);
+@@ -84,6 +94,7 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
+ 
+ int sequencer_add_exec_commands(const char *command);
+ int transform_todos(unsigned flags);
++enum missing_commit_check_level get_missing_commit_check_level(void);
+ int check_todo_list(void);
+ int skip_unnecessary_picks(void);
+ int rearrange_squash(void);
 -- 
 2.19.0
 
