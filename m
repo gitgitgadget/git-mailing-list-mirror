@@ -2,108 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4A81F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 08:21:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 850E41F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 08:58:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbeI0OiB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 10:38:01 -0400
-Received: from mail-ot1-f53.google.com ([209.85.210.53]:45610 "EHLO
-        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbeI0OiB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 10:38:01 -0400
-Received: by mail-ot1-f53.google.com with SMTP id c13-v6so1694768otf.12
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 01:20:59 -0700 (PDT)
+        id S1727077AbeI0PPg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 11:15:36 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:37412 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726944AbeI0PPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 11:15:35 -0400
+Received: by mail-wr1-f46.google.com with SMTP id u12-v6so1689764wrr.4
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 01:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=channable.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=NXrafdDOL2YxZ/GYizM6OFW2YqQdbk5LvgMtkThjPzA=;
-        b=dBaS4wvbCFlXQCWbBBsZA+unGIfvemPLv2/GRSdwv5D4kOTVDyRlqRg+hwao93jJ5k
-         NCOBoV53I9KkAp7Lv5AI4PQUjHYltFs9+t2Ky5S5VjIENbRbGnSpkqDtQIk1oli213Ij
-         F8iDouG/rO8iUv764blKr+njIeHa6a2gPJHRTHFDkL/ddNmmRklBjIKsRkJqaiHVcWKi
-         ynEDZvXdUHZv9qZ9i8F1Ss+ecUgOj6TqvWCULBbFPCjD7NGBvK5gSPuN+orfVVHgCKll
-         uk+LUyIWYSfmZZWt02yowYsN5GF8Ev2x9mRZAmDP/h/KwD/iBNixJ5vtg/YUNKO9ln+U
-         OfBA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Hp5EzQUGCJ5e+Itt8S0vFo3o7v1PnG+8aW6woWor95w=;
+        b=g7b70WFMRV7jxrlPITJceK3Wvw4c1C5tz4+wMrHgmmmBEjOFYEZTjg6AUQVgGm8kzP
+         cLW6T8mNSL5BNl14TjUhM8kMJmL4IZ8pf54gLt0+9NPOhxvUOW3DB73J7GTLyWKceCwO
+         vNYY5/bhQRsS8o0Yuu95rtZqqqJlDFh5UmNfHzn6KqkyN8ymmlux6QZRenOhzxISZwPt
+         ObmVHAvitw3eZHnIXZzojENi/J74Nfvzz2HZ06RxsWaVDmRO36fUsuoRgBt94NmW/5Ap
+         uj5Dxn2wo+NalDH7R3sWNYwRjGNC2MWMt7OE7jHiRjLZhs50pygIU1gtstKZSQGFYXP9
+         7eZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=NXrafdDOL2YxZ/GYizM6OFW2YqQdbk5LvgMtkThjPzA=;
-        b=kmI2iu3CG/O8XRC0fNqun0qf/l1Tc25TVbhJqKAyfOkH/Xm29KcP9YN0DSVqNeJSs7
-         n0huRUv26ltKxDjOx5tgFwgKm/swNMcbrCYmQZqDcuo4Kp4C6W931m40DMDqGpWb+3nE
-         vix820WYxJBX8+UGQsz85xUg/f0KgYfRB1N/2FOM+VE49IJMOS86fSer+nHTjAYy+mId
-         dIppBsIDH8tcpZosvhqdCOA0eX4yBqFcl4rQqk84WxSsxS0KZLbgVhDmVJTVIXea5KSc
-         ew5V34RVmtRBMp1AhTP0oJqvq2OZc2mNydTHS24l2uO13GeZU6WM7rj/kGfFIKzRNI/N
-         hD5Q==
-X-Gm-Message-State: ABuFfohkLbwTpzLrn2RUIRPCmdlt+w+5gutMxjv6IGG4wbzSBEWgoxHH
-        GZrZf4QnaDiCThseu3S6yKg1QeklTdxfmVN1F/k2lf/1HpA=
-X-Google-Smtp-Source: ACcGV61nn7Hw1PgSWZiBCQVd9zt+3SMGYjmrIOcfXMEfH1BlDwUWPWpidXNnexgxNO/07V6PZpi+dhLfvX7QNXpdWXU=
-X-Received: by 2002:a9d:fc1:: with SMTP id m1-v6mr6721935otd.276.1538036458439;
- Thu, 27 Sep 2018 01:20:58 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Hp5EzQUGCJ5e+Itt8S0vFo3o7v1PnG+8aW6woWor95w=;
+        b=pDs0iv3hZR5UQyb1rxY7ngiLkZwaGOKbuwPyB47gY4ldTqgbwavu/h7UYGeqImD27L
+         RfoGci8OAkGSbJK6cnbD9N2pFQ3+WbiVAzZ3fI3v/e2FzZPOBSiTkUUwK3quMOofNZA6
+         mNdrORoYxq9j9rSgZ/vUMhmV+zyR9UL5qu7L+WyWVy1VLsWOcyVlJpmQkq7kRl2xKJdu
+         mFJ+gjwLMoqdOxU8CK+xO683TaW3iioL9U2kuH2LUvUEip1yx1foVYf9zp3Jufr2FINR
+         3L7mBV/PbwRovJOIrdz43JLXmCe5nT3T8vRwiyc0MqkJds/AT9w3b08gLAJ/ay0QRodX
+         hZQA==
+X-Gm-Message-State: ABuFfogOecTa5pq93tBtyqbfJyuZjFygk5W5U4K+ourLNhL7tdt7SYwh
+        l1o4jVxhUNAydJhAOZwiQNw=
+X-Google-Smtp-Source: ACcGV60tgOH0N6Zj04KFCCqDE0/LSSQMmeAw4fxD1IyghJbAtq9BvyfRNWcfudGDOCzFeh3ifz/3SA==
+X-Received: by 2002:adf:e109:: with SMTP id d9-v6mr8106636wri.42.1538038702888;
+        Thu, 27 Sep 2018 01:58:22 -0700 (PDT)
+Received: from evledraar (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id v106-v6sm2220105wrc.85.2018.09.27.01.58.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Sep 2018 01:58:22 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>
+Subject: Re: On shipping more of our technical docs as manpages
+References: <20180921223558.65055-1-sbeller@google.com>
+        <20180921223558.65055-2-sbeller@google.com>
+        <87h8ihk7sl.fsf@evledraar.gmail.com>
+        <CAGZ79kZCkccV=4a1cAE0DpV7hZGxuCyJuceyAEow_u0LspwYAw@mail.gmail.com>
+        <20180926041517.GA2140@sigill.intra.peff.net>
+        <xmqqlg7ombgt.fsf@gitster-ct.c.googlers.com>
+        <87d0t0jghm.fsf@evledraar.gmail.com>
+        <xmqqd0t0ktau.fsf@gitster-ct.c.googlers.com>
+        <87a7o4je0t.fsf@evledraar.gmail.com>
+        <20180926185812.GD30680@sigill.intra.peff.net>
+        <878t3oj8em.fsf@evledraar.gmail.com>
+        <CAGZ79kZOZL24Q=L-XkdrKRMjNg=dynQ+67qyD+iceg7GLru3yw@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAGZ79kZOZL24Q=L-XkdrKRMjNg=dynQ+67qyD+iceg7GLru3yw@mail.gmail.com>
+Date:   Thu, 27 Sep 2018 10:58:21 +0200
+Message-ID: <874lebjp02.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Ruud van Asseldonk <ruud@channable.com>
-Date:   Thu, 27 Sep 2018 10:20:42 +0200
-Message-ID: <CAAqqbi=5Dc2yisSG5r71NGvwS7bfQh_aRpxiTbtFm-XHDqjYUw@mail.gmail.com>
-Subject: Null pointer dereference in rerere.c
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I just ran into a segmentation fault during a rebase with rerere
-enabled. Inspecting the core dump with gdb shows:
+On Wed, Sep 26 2018, Stefan Beller wrote:
 
-(gdb) bt
-#0  0x000055d673375ce0 in do_rerere_one_path (update=0x7fff03c37f30,
-rr_item=0x55d6746d0b30) at rerere.c:755
-#1  do_plain_rerere (fd=3, rr=0x7fff03c37ef0) at rerere.c:853
-#2  rerere (flags=flags@entry=0) at rerere.c:918
-#3  0x000055d673246b01 in am_resolve (state=0x7fff03c38120) at builtin/am.c:1901
-#4  cmd_am (argc=<optimised out>, argv=<optimised out>,
-prefix=<optimised out>) at builtin/am.c:2394
-#5  0x000055d67323f975 in run_builtin (argv=<optimised out>,
-argc=<optimised out>, p=<optimised out>) at git.c:346
-#6  handle_builtin (argc=<optimised out>, argv=<optimised out>) at git.c:554
-#7  0x000055d6732405e5 in run_argv (argv=0x7fff03c394a0,
-argcp=0x7fff03c394ac) at git.c:606
-#8  cmd_main (argc=<optimised out>, argv=<optimised out>) at git.c:683
-#9  0x000055d67323f64a in main (argc=4, argv=0x7fff03c396f8) at common-main.c:43
-(gdb) info locals
-path = 0x55d6746d08e0 "<file path redacted>"
-id = 0x55d6746d01e0
-rr_dir = 0x55d6746ccb80
-variant = <optimised out>
-path = <optimised out>
-id = <optimised out>
-rr_dir = <optimised out>
-variant = <optimised out>
-both = <optimised out>
-vid = <optimised out>
-path = <optimised out>
-(gdb) print id
-$1 = (struct rerere_id *) 0x55d6746d01e0
-(gdb) print id->collection
-$2 = (struct rerere_dir *) 0x55d6746ccb80
-(gdb) print id->collection->status
-$3 = (unsigned char *) 0x0
+> On Wed, Sep 26, 2018 at 1:44 PM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>
+>> > And if we were going to generate something external, would it make more
+>> > sense to write in a structured format like doxygen? I am not a big fan
+>> > of it myself, but at least from there you can generate a more richly
+>> > interconnected set of documentation.
+>>
+>> It's useful to have a single authoritative source for all documentation
+>> that's easy to search through.
+>
+> If that is the case I would propose to keep it all in header files and
+> organize the headers.
+>
+>> That includes stuff like perl585delta(1) which we'd stick in
+>> Documentation/RelNotes, and "Internals and C Language Interface". Most
+>> of what we'd put in Documentation/technical/api-* & headers is in
+>> perlapi(1).
+>
+> This seems cool, but was also a recent introduction?
+> perl400delta seems to yield nothing for me (which may be because
+> I do not have an old version of perl installed?)
 
-This is using Git 2.17.1 from the 1:2.17.1-1ubuntu0.1 Ubuntu package.
-Looking at the diff between v2.17.1 and master for rerere.c it looks
-like the part of the rerere.c where the null pointer dereference
-happens has not been touched, so the issue might still be there.
-Unfortunately I was unable to reproduce the bug; after removing
-.git/MERGE_RR.lock and restarting the rebase, it completed fine.
-
-Please let me know if there is anything I can do to help diagnose the
-problem, or whether I should report the bug to Ubuntu instead.
-
-Kind regards,
-
-Ruud van Asseldonk
+Depends on what you think is "recent" I suppose. Perl 5.4 is the first
+version where deltas in POD format started being maintained
+consistently, that version was released in mid-1997. Perl 4 was released
+in 1991, see "perldoc perlhist". So ~everything consistently in POD has
+been the case for ~20 years.
