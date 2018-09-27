@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7411F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 01:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63B571F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 01:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbeI0HlS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 03:41:18 -0400
-Received: from mail-vs1-f74.google.com ([209.85.217.74]:44348 "EHLO
-        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726588AbeI0HlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 03:41:18 -0400
-Received: by mail-vs1-f74.google.com with SMTP id i25-v6so366008vso.11
-        for <git@vger.kernel.org>; Wed, 26 Sep 2018 18:25:35 -0700 (PDT)
+        id S1726924AbeI0HlU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 03:41:20 -0400
+Received: from mail-ot1-f73.google.com ([209.85.210.73]:45573 "EHLO
+        mail-ot1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726588AbeI0HlU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 03:41:20 -0400
+Received: by mail-ot1-f73.google.com with SMTP id c46-v6so1278351otd.12
+        for <git@vger.kernel.org>; Wed, 26 Sep 2018 18:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=4M2AXJvgSC3+E19DesQWuQGaLX7D02c3LUmaQenKhy8=;
-        b=LrHW1CX0RyVYVQbvwXT7sh5J76ebTChyRS3EKijFoWFRGYPg/D8Bcg60B/bj0dlb99
-         wQock1HN1LIDbqaj9OvipoaIn0A9gHyaXvPTisOPFWlHTOquy/4tQ3jIhFP1x6zPKIRi
-         ptqpP4fawWN78eNKdqYreJu4VT67cHYMHWPW8qOZn+UqSskSOTf6ElI5tSi8fjrfq5Qr
-         7RJbQzJ/kjKVzbNpwchR7PTxYJHJTRgBDcYaspJjfjrgLHl3hnZg4umufciGmlBtpe+k
-         /x9urfB09mTwMdYVG2b5fVgFRbVbr2z2OMxrhfXm9O0ym/rBqwEVfwBnu4xGxIhl1Dn5
-         wq+A==
+        bh=G5qgRp129EspzskcFzeY0PL7JE8nJck0Ql5xq8kxcbU=;
+        b=SDOL5JQ/TO/YbPlXHMG8cYAZ/iXnEoVTFkmcp8Pr+7qHZ+s3y5E0An8jVFxW4dzKLD
+         9iJlkBMsQXku76lZy6U0ScVEVwdZ/Q1YpxQEOGP8i8m9p7h26BAU7bQouNZK085+LS2B
+         ohFRx8e9PFmSIfCXanJ8t40hIxwpZKYqC+2soKCow4TYI7VCuGkdCQgNFqJdOzrYPKrr
+         cb4wFhqcuNPSEYq3GI35hLEgee33LntRKZOZLI7QDhheLhStiGf3UhaAkkU+ZOEU1Ise
+         NfIu2DV7yNSqCSmCQ1eRm5TEmOppaAks/q1MLl5fHc4MJvfw0iSrHbVZRJBGVo8JaB3e
+         ugvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=4M2AXJvgSC3+E19DesQWuQGaLX7D02c3LUmaQenKhy8=;
-        b=QocVyoW3HatqN/uf8JdaBTRNFL0ogFOJKV5b7MzrnDF9kmR7n/7BHCzmeDahxiy0vj
-         +WkYaKBO98CnN1is7vGkL6x6cueiVOWiTcoSS7VOcs+cCMGsgm0RkxJAnJgqc5MBqYnp
-         BtFxfa5QOMq8qkdHHzBvfjeMQRXwcIFnyC9RSCbNUejab3m3uhkpIdxr74YV8uj52hkK
-         ZwPcz+BzYH1joW08oTFscaesLER3BIE1TeDn9D36t91Hdgb13SeUM4mGzJEgXdPjK2br
-         XL1hdLJmQ21zuNOjFttHNIvuoaxL6JlejZbln6HnnkGQ6UI/y4g2h09Y9h3pxH6TlvCF
-         Gv6A==
-X-Gm-Message-State: ABuFfogMp+rFm5unuuZtV0Q56OuhOivQMmL7cFGh+C9QYd1LLvWI0aV4
-        VijUC9ub1WJcMeIAjhHJ/MfVKYlC6G5VOwlXPr7I/sczNYHRwGugoBBdFT7ErfhuVxxJXGkxCUD
-        s/KOMyynE7dJwbCTt/t9wJl15WYDboSBCGvg3kKhQns+5HPdvSs9uo7ASSUZ0HVM=
-X-Google-Smtp-Source: ACcGV60mp5CxztkGDhBS3/2eWYSe2NRITW6QQdOxuAqPelmdXem3tCI2NQD92G7k2cIKPerndoSXGjivkv0H0A==
-X-Received: by 2002:a1f:29d7:: with SMTP id p206-v6mr3493853vkp.22.1538011534735;
- Wed, 26 Sep 2018 18:25:34 -0700 (PDT)
-Date:   Wed, 26 Sep 2018 18:24:52 -0700
+        bh=G5qgRp129EspzskcFzeY0PL7JE8nJck0Ql5xq8kxcbU=;
+        b=OK3Za3fYgj9uRiHhvY3HGgPKh0oDvsd12K2GJUG0APmbxNCcuGosBprX0+UL/Yen6U
+         wKZ+8F7GpGKXk2VQu7VdnWjvfNWiKcU3zy/yDeGA0nusYPaah/GFRpZ9PPAqNgl8bYXa
+         bPWZpG0Zi9nmz9jBkMuctj5EYLUJyUsyu97Q71GbSlfMp3I1WaCck85oFOs7BvD5ZaSR
+         EV6PimV6gxf9AL9D3LnJPhE6Smxi9u1owoZdTENXuXB3WTUD2MuagXmBINMRftOpeUpZ
+         j65+0gJZNxn44KdVxTV1EbUPB1p7IbDpDqoc5/wjA1OR29Readw/8QMrbKI7Lj/6GAa/
+         WAfQ==
+X-Gm-Message-State: ABuFfogN2fjJLq3QlFu8qAcwXvTyVZTNoYLMcG8wIjHN954+T+y3VaGe
+        lVMkxyBL46LvPrbJ1RwVjpujPfshm5jXe+j1oU6BrbtXCYIYsO44zbuoYtG3rbpfSRanXLPFmiV
+        ymZ5cOI5uCn4xTlC+AW2KHcJVGnm6hWau2zeridyXeFHPAUp7uzlNqjQmLzN3EZk=
+X-Google-Smtp-Source: ACcGV61wfQs/f/gtqIz0XMyCADtRkaSNdhlt0KosC8HJvdbXWED9GrSgwpu4vjstUWcXFZSq17y++rPQs9NHEg==
+X-Received: by 2002:a9d:4b17:: with SMTP id q23-v6mr1875368otf.82.1538011537608;
+ Wed, 26 Sep 2018 18:25:37 -0700 (PDT)
+Date:   Wed, 26 Sep 2018 18:24:53 -0700
 In-Reply-To: <20180927012455.234876-1-steadmon@google.com>
-Message-Id: <20180927012455.234876-2-steadmon@google.com>
+Message-Id: <20180927012455.234876-3-steadmon@google.com>
 Mime-Version: 1.0
 References: <20180912053519.31085-1-steadmon@google.com> <20180927012455.234876-1-steadmon@google.com>
 X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v2 1/4] archive: follow test standards around assertions
+Subject: [PATCH v2 2/4] archive: use packet_reader for communications
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     Josh Steadmon <steadmon@google.com>
@@ -62,77 +62,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move assertions outside of the check_tar function so that all top-level
-code is wrapped in a test_expect_* assertion.
+Using packet_reader will simplify version detection and capability
+handling, which will make implementation of protocol v2 support in
+git-archive easier.
+
+This refactoring does not change the behavior of "git archive".
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/t5000-tar-tree.sh | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ builtin/archive.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 2a97b27b0a..c408e3a23d 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -62,11 +62,9 @@ check_tar() {
- 	dir=$1
- 	dir_with_prefix=$dir/$2
+diff --git a/builtin/archive.c b/builtin/archive.c
+index e74f675390..4eb547c5b7 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -27,10 +27,11 @@ static int run_remote_archiver(int argc, const char **argv,
+ 			       const char *remote, const char *exec,
+ 			       const char *name_hint)
+ {
+-	char *buf;
+ 	int fd[2], i, rv;
+ 	struct transport *transport;
+ 	struct remote *_remote;
++	struct packet_reader reader;
++	enum packet_read_status status;
  
--	test_expect_success ' extract tar archive' '
--		(mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile
--	'
-+	(mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile &&
+ 	_remote = remote_get(remote);
+ 	if (!_remote->url[0])
+@@ -38,6 +39,8 @@ static int run_remote_archiver(int argc, const char **argv,
+ 	transport = transport_get(_remote, _remote->url[0]);
+ 	transport_connect(transport, "git-upload-archive", exec, fd);
  
--	test_expect_success TAR_NEEDS_PAX_FALLBACK ' interpret pax headers' '
-+	if test_have_prereq TAR_NEEDS_PAX_FALLBACK ; then
- 		(
- 			cd $dir &&
- 			for header in *.paxheader
-@@ -82,16 +80,11 @@ check_tar() {
- 				fi
- 			done
- 		)
--	'
-+	fi &&
++	packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
++
+ 	/*
+ 	 * Inject a fake --format field at the beginning of the
+ 	 * arguments, with the format inferred from our output
+@@ -53,18 +56,20 @@ static int run_remote_archiver(int argc, const char **argv,
+ 		packet_write_fmt(fd[1], "argument %s\n", argv[i]);
+ 	packet_flush(fd[1]);
  
--	test_expect_success ' validate filenames' '
--		(cd ${dir_with_prefix}a && find .) | sort >$listfile &&
--		test_cmp a.lst $listfile
--	'
--
--	test_expect_success ' validate file contents' '
--		diff -r a ${dir_with_prefix}a
--	'
-+	(cd ${dir_with_prefix}a && find .) | sort >$listfile &&
-+	test_cmp a.lst $listfile &&
-+	diff -r a ${dir_with_prefix}a
- }
+-	buf = packet_read_line(fd[0], NULL);
+-	if (!buf)
++	status = packet_reader_read(&reader);
++
++	if (status != PACKET_READ_NORMAL || reader.pktlen <= 0)
+ 		die(_("git archive: expected ACK/NAK, got a flush packet"));
+-	if (strcmp(buf, "ACK")) {
+-		if (starts_with(buf, "NACK "))
+-			die(_("git archive: NACK %s"), buf + 5);
+-		if (starts_with(buf, "ERR "))
+-			die(_("remote error: %s"), buf + 4);
++	if (strcmp(reader.line, "ACK")) {
++		if (starts_with(reader.line, "NACK "))
++			die(_("git archive: NACK %s"), reader.line + 5);
++		if (starts_with(reader.line, "ERR "))
++			die(_("remote error: %s"), reader.line + 4);
+ 		die(_("git archive: protocol error"));
+ 	}
  
- test_expect_success \
-@@ -143,19 +136,20 @@ test_expect_success \
-     'git archive' \
-     'git archive HEAD >b.tar'
+-	if (packet_read_line(fd[0], NULL))
++	status = packet_reader_read(&reader);
++	if (status == PACKET_READ_NORMAL && reader.pktlen > 0)
+ 		die(_("git archive: expected a flush"));
  
--check_tar b
-+test_expect_success 'extract archive' 'check_tar b'
- 
- test_expect_success 'git archive --prefix=prefix/' '
- 	git archive --prefix=prefix/ HEAD >with_prefix.tar
- '
- 
--check_tar with_prefix prefix/
-+test_expect_success 'extract with prefix' 'check_tar with_prefix prefix/'
- 
- test_expect_success 'git-archive --prefix=olde-' '
- 	git archive --prefix=olde- HEAD >with_olde-prefix.tar
- '
- 
--check_tar with_olde-prefix olde-
-+test_expect_success 'extract with olde- prefix' \
-+	'check_tar with_olde-prefix olde-'
- 
- test_expect_success 'git archive on large files' '
-     test_config core.bigfilethreshold 1 &&
+ 	/* Now, start reading from fd[0] and spit it out to stdout */
 -- 
 2.19.0.605.g01d371f741-goog
 
