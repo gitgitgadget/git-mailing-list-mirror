@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 872181F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 18:30:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2947D1F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 18:30:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728535AbeI1Atx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 20:49:53 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:43651 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727307AbeI1Atx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 20:49:53 -0400
-Received: by mail-pg1-f195.google.com with SMTP id q19-v6so2549220pgn.10
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:30:20 -0700 (PDT)
+        id S1727622AbeI1AuR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 20:50:17 -0400
+Received: from mail-pg1-f176.google.com ([209.85.215.176]:45686 "EHLO
+        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727307AbeI1AuR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 20:50:17 -0400
+Received: by mail-pg1-f176.google.com with SMTP id t70-v6so2542412pgd.12
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 11:30:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=JBw7+BC2sjNIS6t5FD4N/yoELHlCbwTqccUn2I5/pcs=;
-        b=egqzmsG1M+ORQ0mazc+lO7E2bBvBSD9m7NI+An3fyadF/ChxiwNKUQIN2kuOWSLBxF
-         dgN3UcWFRl/4d4+XDQOepg2n2kc+7VmD1kkupRGZ5EF2JjJq2yzJEjIHFNkCk+SbARx8
-         oJDFQOijBpkf5z7R/BJmNkYQ+3tHBU89AV4qdQQBoYqYIYpV+eYsjwsZvPSyyPnT1/30
-         FYoxFmLOxQYK9SKrRIdBXK+CBw2f7fun78w/7r/FhgcFd0oBNRBPYAxrGWQK9cFbq6JH
-         NWzr49GGDSRidtugobW3szRcbFatm9CTG4XVHWaESDnPRF72bTQyeSukC70MUTY3CFco
-         9PXA==
+        bh=I7GeeQBQoiv1G00F9/UYk6p3qTMdXBPJ4AJlykRJHmk=;
+        b=XE2lawOIHcSidLcKrnWmOxYhPvbk9MOgh5U/QZ10BxifNWYpPjIbhdRw4FRU3L01wZ
+         czKjBLl/zDOkIbYQoywrxSBO2paK1q3RrXYnWknvLO/LqV3NTiqmckcz/ASu1A+oZeux
+         qPHlYVYBRxo3yotdVwEEvLagA69AfVkf8k+PGjqDOfMtIQFp/4ZkGEEJqclY9YJBDzbO
+         2oFhulED4dTIqcoJNOUt8ySKFndF8bLg2MQPeOTA+ZZpoS/yELyYC/M5M3tkz1j2+Z7m
+         fB/n9KsnoIDGtSi980PL77yIwvF6gBCWyKVngVhJtVpMoMB4cs3YyEnX+fAoRHg2R/11
+         xbog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JBw7+BC2sjNIS6t5FD4N/yoELHlCbwTqccUn2I5/pcs=;
-        b=fLaO7FqI5qiYGYmNX75YcM/Xe0gjJXYo1UPLWfWCJqURjzAX/d9Yc9MXIDdWAnvi6i
-         a5CV0wc90mqafclAAa1ET2TKZno0W7ig5V1EqAEa3FuIsUgHzJ0vgwxpqMVLoS+2NsIz
-         l1UQ5nw/69OnEyxUM5OPLrp4UuM52KIbdUn6Cvnsox6QXJQqoRTm8DyRoA4JzkdU9Hsc
-         6FqE8BNxyYNbJyg8bhX7gZiKi7hbi4gQkHI89Q/nDuCaD0EFK9Yrsnie2oo+JT9f6TTD
-         BHvkDzWCjI/pY474P2hr/Da673XPisMECR31aTl0GzvxJMClkviN1llVI4oRMp9RZZoF
-         kHEQ==
-X-Gm-Message-State: ABuFfogTooxupC07w/cMDgsTfotTI2RHkIFZrhu7+KK+b3ZyjiAvPdJT
-        WP3t9H1GBMv1RCIi3HtzSCE=
-X-Google-Smtp-Source: ACcGV60D36U04ienx9M+iTgglgfJ8LLXSEi8Pv2NWirWe4cOEIrS2+8iGi94Ir6HvZux35Z2E/N34A==
-X-Received: by 2002:a63:e54d:: with SMTP id z13-v6mr11518648pgj.169.1538073019394;
-        Thu, 27 Sep 2018 11:30:19 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 3-v6sm4966962pfq.10.2018.09.27.11.30.18
+        bh=I7GeeQBQoiv1G00F9/UYk6p3qTMdXBPJ4AJlykRJHmk=;
+        b=Lka8wdverep70tW88uqGK4rFxwPpJRE7R107SRBYjHlXg8QaKcAGyhk2YS7teQyxG1
+         7KxactS9l149SvFejNBLjD+PH3lkW9vKzh0w18WCXr+k6V9EmND0UuuL17coTUYCiAAF
+         G4hcqLryk9oi+P6pJymHt7DHhk2ap1Ocolfd4MJmoOrGuyaIddxF0BSpIILdahhHOce3
+         EXs5MM2dbfOXOjJRrohBEmNcrIdzGacvEJ5A/Swnm7fep6BqDBXi5mcd+Le47F96GqxR
+         jeXMUAFoojV5I+Mr8RjLuOs2Voqyl4jV0wkKY/Ncr65pmAG+pPT69ToS2RHCclcollho
+         eDtQ==
+X-Gm-Message-State: ABuFfoiHyYVT6TPMfHeV3Er9MJecNGSeouiavW2KzK79j10ebL7HnSdN
+        nKv6p0aAmQQ6a2g/SPf1+tzuDURcwxSzRw==
+X-Google-Smtp-Source: ACcGV615OoJ4I/97l+XTVb/Oo9HD4OPNhqFuZ3wgAZuEVjcSTLabOvJjkSxKyp4877hHImddBSux9Q==
+X-Received: by 2002:a63:4860:: with SMTP id x32-v6mr11477800pgk.375.1538073042500;
+        Thu, 27 Sep 2018 11:30:42 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:79fb:7d7a:4d6b:acb7])
+        by smtp.gmail.com with ESMTPSA id k185-v6sm5471609pfc.160.2018.09.27.11.30.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 11:30:18 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 11:30:17 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+        Thu, 27 Sep 2018 11:30:41 -0700 (PDT)
+Date:   Thu, 27 Sep 2018 11:30:36 -0700
+From:   Josh Steadmon <steadmon@google.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git <git@vger.kernel.org>
+Cc:     git <git@vger.kernel.org>
 Subject: Re: [PATCH v2 0/4] Add proto v2 archive command with HTTP support
-Message-ID: <20180927183017.GD112066@aiede.svl.corp.google.com>
+Message-ID: <20180927183036.GA55647@google.com>
 References: <20180912053519.31085-1-steadmon@google.com>
  <20180927012455.234876-1-steadmon@google.com>
  <CAGZ79kaBvHwUUf0rXeAwBY-M+Oi9JjsQnLs4v3FAvx4a9ZRbSA@mail.gmail.com>
@@ -62,35 +63,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <CAGZ79kaBvHwUUf0rXeAwBY-M+Oi9JjsQnLs4v3FAvx4a9ZRbSA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mutt/1.10.1+54 (2af6caa1) (2018-07-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+On 2018.09.27 11:20, Stefan Beller wrote:
 > On Wed, Sep 26, 2018 at 6:25 PM Josh Steadmon <steadmon@google.com> wrote:
+> >
+> > This is the second version of my series to add a new protocol v2 command
+> > for archiving, with support for HTTP(S).
+> >
+> > NEEDSWORK: a server built with this series is not backwards-compatible
+> > with clients that set GIT_PROTOCOL=version=2 or configure
+> > protocol.version=2. The old client will unconditionally send "argument
+> > ..." packet lines, which breaks the server's expectations of a
+> > "command=archive" request,
+> 
+> So if an old client sets protocol to v2, it would only apply that
+> protocol version
+> to fetch, not archive, so it would start following a v0 conversation, but
+> as the protocol version is set, it would be transmitted to the server.
+> This sounds like a bug in the client?
 
->> I've been discussing workarounds for this with Jonathan Nieder, but
->> please let me know if you have any suggestions for v3 of this series.
->
+Yeah, basically. We're telling the server we support v2, even if the
+specific operation we're trying to do doesn't have a v2 implementation
+on the client. So this is going to make it ugly to replace existing
+commands.
+
+> >  while the server's capability advertisement
+> > in turn breaks the clients expectation of either an ACK or NACK.
+> 
+> Could a modern client send either another protocol version (3?)
+> or a special capability along the protocol version ("fixed_archive")
+> 
+> > I've been discussing workarounds for this with Jonathan Nieder, but
+> > please let me know if you have any suggestions for v3 of this series.
+> 
 > Care to open the discussion to the list? What are the different
 > approaches, what are the pros/cons?
 
-Do you mean sending video of chatting in the office?
+Jonathan suggested something along the lines of what you said above,
+adding a new field in GIT_PROTOCOL. So we'd send something like
+"version=2:archive_version=2" and have the server detect the latter.
 
-Josh and I discussed that
-
- 1. Clients sending version=2 when they do not, in fact, speak protocol
-    v2 for a service is a (serious) bug.  (Separately from this
-    series) we should fix it.
-
- 2. That bug is already in the wild, alas.  Fortunately the semantics of
-    GIT_PROTOCOL as a list of key/value pairs is well defined.  So we
-    have choices of (a) bump version to version=3 (b) pass another
-    value 'version=2:yesreallyversion=2' (c) etc.
-
- 3. This is likely to affect push, too.
-
-Thanks and hope that helps,
-Jonathan
+I'm not sure if that's the best way to go about this since I'm not
+familiar with the version detection code for other parts of the system.
+I worry that it will lead us down the path of having to specify a
+version for every command that we eventually convert to protocol v2. On
+the other hand, I don't see any other way to work around this, at least
+in the archive case. We can't peek at the client's transmissions on the
+server, because v2 requires that the server speaks first...
