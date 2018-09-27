@@ -2,79 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4EA71F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 17:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 678921F453
+	for <e@80x24.org>; Thu, 27 Sep 2018 17:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727612AbeI1ARw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 20:17:52 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:54100 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727307AbeI1ARw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 20:17:52 -0400
-Received: by mail-it1-f196.google.com with SMTP id q70-v6so8984995itb.3
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 10:58:26 -0700 (PDT)
+        id S1728697AbeI1ATQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 20:19:16 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41222 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728410AbeI1ATQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 20:19:16 -0400
+Received: by mail-ed1-f67.google.com with SMTP id f38-v6so5850184edd.8
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 10:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HRbiGPrkTx7nAHycgEeVJQIsptDk+D4QiZ6kFh8bOE4=;
-        b=TPdip0sxjIY7jcLDW0mXQqzayXLIQcJQWHpH410EbDs/Q+zPD6c4Ahd2FFGWnpByaz
-         DqgIUjj67SrqSNJvT6nEg+pOnJ/Fv1fZXjcVFftWN+bmC0HlEgfUzUogYqlzskIyPXYc
-         EaFWUXV2H4kTxnerk9tK5wwFM8GsQORMy7FwrMKoQ1/Z8eIRaCGgOwu8CSapvX5hughZ
-         Pto+HIX+F47o3YX6EP98sbGKj4d4l7SY9QwHj1Xs6nqYn5PuSlQa5DxhQ7EYeXI6M1v8
-         2aVpcXbg9BbFjQ+cPjb1gkuXU8B/4dEXkupHx09Fcg9oQdqWDeeKVEVKTYrnauOD2w1E
-         I86w==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=mcT19AiTN6rNNhGxqmHpuE8JyeXrcfH+GGt+YxT4/mU=;
+        b=KzaS+Ni0HJbQscokS8zSnni0lnH+YR1huWCf/6ARn4MVUBgUpBbVrOAzd7gYo98GbQ
+         ZidExzVkWSQdPrg+jfmmy2D+Zs4lu8Gx+yuoJT9iIR5DY0KnBoKmNPdviCXSWgoFLw5H
+         kkVW3v57oFGRJTT86T7GhVkfSz6/eoIp+zi7czEjcIpvAalc8QqWZ8g6ise7Hx2JW/1t
+         6IiqkFQWuD785bWa+ZFDiRiUq3xFYOF+iD3TfJPvONHeEc2uC+LNv86xbPr2UMQx71Fi
+         bIRBqLoEpEJKJG9shMkTKuNre/qzUJNF273qFJCbKfvsTpU72cUdrQYrnU7ZJnxdzZbi
+         5iyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HRbiGPrkTx7nAHycgEeVJQIsptDk+D4QiZ6kFh8bOE4=;
-        b=WZanrX7V1dKYekhglNU7T+u2ZmsgXsseTyBR86AlBuzzbejxptvNMywU3pNJWMN1Jw
-         Ny0B1T4ersxZxeBpkA2A9puSmd2dcZ6Ek8h8aC3FlHy39qDJdK0JTIs/1f6gfavKKP6M
-         10dAFSUCvQtkBLvDPyAFC9+7KFVD1n4YmTNe5/IuDRsyxUKWKC4t7t/JT8QKchDA5B+S
-         ZQ3QFtAXVoEN8/eSq28L/e1SOqOz9e/KaZ6PKY0FQrxQDgaxECjqVn/L3BCc0Pv3+S+c
-         omGpQNA5FBF6j/d5nbolQfl30EjA5V0EwIU5os1qvrQ+mTS7MSYAlpngsNBVr5h+EZWR
-         M63w==
-X-Gm-Message-State: ABuFfoihsgZPrYEpky/nXapDB+r5iQt+IalqkVSBsOQIXqI+gPS4vGOi
-        OVa8rnsaYIfYvbVW4wjBomk+lxu5imUj/xfB5lJ+mg==
-X-Google-Smtp-Source: ACcGV62TilGvZcHmAzn4N+Io1fAjdirThM9Of7jWaYIPaJiGLvyjp2PoFmjx1/Vc0owtMpWqUmyi0+KYuEGKfaveEXs=
-X-Received: by 2002:a24:aa41:: with SMTP id y1-v6mr10138252iti.91.1538071106338;
- Thu, 27 Sep 2018 10:58:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=mcT19AiTN6rNNhGxqmHpuE8JyeXrcfH+GGt+YxT4/mU=;
+        b=TQpixUdGU6LNZddfMAXAs0KfSRfaQQYapmpdh5De+M2FWkhfMh2QwGg04RTY1xIOJP
+         zxNgNMOtgYiDe5Pp0yuj/6aF9aemDhOkfNA0jY6kcCoeyYzNY9lXijHyR6lC547PheNe
+         MSf6S1VHNWMlkWZO5IIHw0SrigQZotoGYhy2STdDOxUc+r7HvPWtECjTwN74/mCg2Dis
+         Uf+U4I1NlR3oEURxTySOqdKXoNBRuGzV1Tzudwu5guL+cWnxE24HkkZyJwS68pDgLuIO
+         gM66prSII4s7tV1Wjk0KkC1TZcjPdy1aA9vZToK+LBpD8bVdNOZ2N/pvaAg50eoUlt0h
+         4Jmw==
+X-Gm-Message-State: ABuFfohpINX28RS1MoMZAqi9bXlSYSWA1EwCKa9Du3ULqkqqqDcbxWaB
+        AUAtpSehi3Ul6wHYrjj/4M98FFYsMHg=
+X-Google-Smtp-Source: ACcGV61aA32IX18SIvIugC6VuL9JbetZlTXGj87egef34ltAYvPYpEtT/hMxuAgs6gPCadLxIEOn5w==
+X-Received: by 2002:a50:998a:: with SMTP id m10-v6mr19898656edb.7.1538071188396;
+        Thu, 27 Sep 2018 10:59:48 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id e8-v6sm209728ejm.75.2018.09.27.10.59.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Sep 2018 10:59:47 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Nickolai Belakovski <nbelakovski@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] branch: colorize branches checked out in a linked working tree the same way as the current branch is colorized
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com> <87y3bnhs5a.fsf@evledraar.gmail.com> <CAC05387S9P+w8yqqcjkQDnURYSgQmqtukxS4KvqJu-kDA+_o0g@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAC05387S9P+w8yqqcjkQDnURYSgQmqtukxS4KvqJu-kDA+_o0g@mail.gmail.com>
+Date:   Thu, 27 Sep 2018 19:59:46 +0200
+Message-ID: <87sh1uizxp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
-In-Reply-To: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Sep 2018 19:58:00 +0200
-Message-ID: <CACsJy8AQ9uGoJUvDo8+9n7HbvsHsNRSyntxRZ5tUFRVxFGAS0w@mail.gmail.com>
-Subject: Re: [PATCH] branch: colorize branches checked out in a linked working
- tree the same way as the current branch is colorized
-To:     nbelakovski@gmail.com
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 27, 2018 at 5:15 PM Nickolai Belakovski
-<nbelakovski@gmail.com> wrote:
+
+On Thu, Sep 27 2018, Nickolai Belakovski wrote:
+
+> Will do re: screenshot when I get home, although it's pretty easy to
+> imagine, the git branch output will have one other branch colored in green,
+> bit without the asterisk (for one linked worktree) :)
 >
-> In order to more clearly display which branches are active, the output
-> of git branch is modified to colorize branches checked out in any linked
-> worktrees with the same color as the current branch.
+> Also will do re: changing comments to /**/ (didn't know // was from C++,
+> TIL) and I'll clean up the comments to remove some of the more obvious
+> ones, but I'll try to keep a comment explaining the basic flow of creating
+> a nest if statement to evaluate worktree refs for color.
+>
+> And yes, I copy/pasted into gmail. I was having trouble setting up
+> send-email, but I think I may have it figured out now. Should I create a
+> new thread with send-email? Or maybe reply to this one (I can do that by
+> specifying the Message-ID to reply to right?
 
-My first thought was "how do I know which branch I'm on then if they
-are all green?" but then the current worktree's branch would have a
-"*" in front while other worktree's do not. Perhaps worth mentioning
-in the commit message.
+You'd run git format-patch master..your-topic with
+--subject-prefix="PATCH v2" and
+--in-reply-to="<CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>". Then
+it'll show up in reply to your v1.
 
-It may be better though to have a different color code for other
-worktree's branch, we can still default the color to green, but people
-who rely on colors rather than "*" can choose a different color.
--- 
-Duy
+You can also for an easier experience do this via GitGitGadget, see
+https://github.com/gitgitgadget/gitgitgadget looking at its code it
+seems to have some way to reference a Message-ID, but I don't know how
+to trigger that.
+
+> This is my first time using this workflow, so I appreciate your
+> patience :) )?
+
+No worries, happy to help.
+
+> On Thu, Sep 27, 2018 at 8:33 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> wrote:
+>
+>>
+>> On Thu, Sep 27 2018, Nickolai Belakovski wrote:
+>>
+>> > In order to more clearly display which branches are active, the output
+>> > of git branch is modified to colorize branches checked out in any linked
+>> > worktrees with the same color as the current branch.
+>> >
+>> > This is meant to simplify workflows related to worktree, particularly
+>> > due to the limitations of not being able to check out the same branch in
+>> > two worktrees and the inability to delete a branch checked out in a
+>> > worktree. When performing branch operations like checkout and delete, it
+>> > would be useful to know more readily if the branches in which the user
+>> > is interested are already checked out in a worktree.
+>> >
+>> > The git worktree list command contains the relevant information, however
+>> > this is a much less frquently used command than git branch.
+>> >
+>> > Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
+>>
+>> Sounds cool, b.t.w. would be neat-o to have some screenshot uploaded to
+>> imgur or whatever just to skim what it looks like before/after.
+>>
+>> > diff --git a/builtin/branch.c b/builtin/branch.c
+>> > index 4fc55c350..65b58ff7c 100644
+>> > --- a/builtin/branch.c
+>> > +++ b/builtin/branch.c
+>> > @@ -334,11 +334,36 @@ static char *build_format(struct ref_filter
+>> > *filter, int maxwidth, const char *r
+>> >         struct strbuf local = STRBUF_INIT;
+>> >         struct strbuf remote = STRBUF_INIT;
+>> >
+>> > -       strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)
+>> %s%%(end)",
+>> > -                   branch_get_color(BRANCH_COLOR_CURRENT),
+>> > -                   branch_get_color(BRANCH_COLOR_LOCAL));
+>> > -       strbuf_addf(&remote, "  %s",
+>> > -                   branch_get_color(BRANCH_COLOR_REMOTE));
+>> > +       // Prepend the current branch of this worktree with "* " and
+>> > all other branches with "  "
+>>
+>>
+>> We use /* ... */ C comments, not C++-style // (well, it's in C now, but
+>> not the ancient versions we need to support).
+>>
+>> It also seems all of this patch was copy/pasted into GMail or something,
+>> it has wrapping and doesn't apply with "git am".
+>>
+>> Also most/all of these comments I'd say we could better do without,
+>> i.e. the ones explaining basic code flow that's easy to see from the
+>> code itself.
+>>
