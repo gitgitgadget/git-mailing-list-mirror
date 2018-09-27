@@ -2,86 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02C1E1F453
-	for <e@80x24.org>; Thu, 27 Sep 2018 16:05:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C45A1F454
+	for <e@80x24.org>; Thu, 27 Sep 2018 16:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728474AbeI0WYY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Sep 2018 18:24:24 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42148 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727541AbeI0WYY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Sep 2018 18:24:24 -0400
-Received: by mail-pf1-f194.google.com with SMTP id l9-v6so2219242pff.9
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:05:27 -0700 (PDT)
+        id S1728187AbeI0WhJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Sep 2018 18:37:09 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:46637 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727437AbeI0WhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Sep 2018 18:37:08 -0400
+Received: by mail-qt1-f175.google.com with SMTP id h22-v6so3314766qtr.13
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 09:18:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=/Yzl/duBeQBR7jJwf87tEA0buMroRqAVE0gLOCWk8dY=;
-        b=ncAolSx8uOYwrFR+4htShqmJxt2Yn6xysL9TRlTfh7n1feGosRNfwZtH2tOhGmvHn0
-         5pywdxT20+0TTVA+r44Yz6qPXOusI9qMJ5c/kmA9UFXKC2WimuGdFZSmWHT7O/HjE5Q8
-         5XKtwQxpldidD6h3hdajsPJXQRMMrcatCvyTjiE2IbnIo02MD9Zd2QQRGfJRwkTQRvnN
-         l+K3KQ4L7jkQUC1yoAKxcwm1OVYcySuC7sv+SeYEHRFtB89TZen1FSwuUq5yyT2UKp64
-         DVoka3UMZOT9cCow/nKZUQrPH2O+xj98rwyVHw7PGUK/cwN9GrmxzOi/ShiWNjh/eCbn
-         odHA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=m5gN91kqjuuwWFl0YYQDUpf5DimMjadsiXUl6VDkhMo=;
+        b=YwhhY7gSlmJh8IoW6El2ekFUW3nORVzB0sIM5wAJsAie+zTVg1J9njIE/yufFESpry
+         mRhJhJUcQdy1I5HCgDCdXs0FsCBKPDhxE9cefx4rZh0G3+CNT6rIitYtClkcznrOM3Qf
+         EnHa+XD5Yw5zLLx1Mr7tJA/C8AHFND/IOUpwMzN3LyVfAQXngigMSILlYpQau/0Y0kx/
+         BEfYjQRXx2Whg7dSFJbmJStpOaJxOwvbcbotTBwa73R33jdWy/0CdchONP63PyZvlih5
+         STSeq0ckaW7fJJ0DBPyo96KTQwR5e12VVgShrCUeFBSGuG0aldMlc8ahkJpZerFkiqVW
+         8i/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/Yzl/duBeQBR7jJwf87tEA0buMroRqAVE0gLOCWk8dY=;
-        b=KrVIt0ASquTqOy72Tsw8xXe1n9f7h5tDcV0963/va9WsxT9BFrCxL14OWxB9sLLSkX
-         3ZI582jXbgm9+nkbMH1teV3PAR/eVG/RkpvQnhyNwH1y/fJz9ENS2jb2gVb4Yh59ROVV
-         1PBJhJJQLSfpd1gMHuHxXdsB0cY69chkbd1r0OMIshplEb6ZvNAPot30KMxK8SSSjmNj
-         WakRZiB5YRwW/2DcWgP0S3YbNGyZIaflwrF+yQh3uFXWWq2wN8gs6L1RC/0XvBVzcYbT
-         9I/wiMf5dUhR6oPbjZvZ6X048MJuXIWGzwUPXtgb5dt3FzEyHccQos9fO6WD8kNlCIVI
-         6TYQ==
-X-Gm-Message-State: ABuFfoj+DxzOygkLmYVH4H5x6pNancK5gK0EbWgZWjZeTDgOe2bZDBOg
-        j8fpVpkx10wSL7TmqDtUcUnqE1vS
-X-Google-Smtp-Source: ACcGV61mZfTntfbd3suk8EV3ZmcoYmOLuQzpKrOuIY8O2sfK61hNVg82EilcA2FQ3VF8QVLo+8oImw==
-X-Received: by 2002:a17:902:567:: with SMTP id 94-v6mr11884600plf.201.1538064326607;
-        Thu, 27 Sep 2018 09:05:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id k83-v6sm3805573pfj.63.2018.09.27.09.05.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 09:05:25 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 09:05:23 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=m5gN91kqjuuwWFl0YYQDUpf5DimMjadsiXUl6VDkhMo=;
+        b=WI8Ei+6ctZmalCvB6vakKLUHZa3bYv7nUbGoCGmMQGig2OGk/hNkvWC4L4NaKifxna
+         nResWiJAagdMHW/tDPFANHx6rnI75+4ApBSWIbXb7Rec4hdUzzIXc6VngPMfX897doKB
+         VY1SYEtm3WTfTFE0zyYYySOSuDQQV4yHRe6/hsNHoSVIEkDOdvv/Wxy6tlW/1R6DJQjL
+         q6wIqyX0aELIwTcUIWAstS0C5Fuup32J/Cu05taorYEqWcLy2R77CIOPNNHW533KfqKq
+         PRqXWrsWDDmTXfKTPwLL42AAY19D9QzGI6x23vzv+8bxsyNZzB41zqjHe1aUae7MOGt4
+         oUlw==
+X-Gm-Message-State: ABuFfoihiEOsSsZozX0kH77dAkpXfui/1elsydfn2CKuu8H/SXaZk9dh
+        LHy17/O4w+3zyDoW9YiMGPqvq4G8
+X-Google-Smtp-Source: ACcGV619dSPJVuwlqL04zNtxh5VQnIth3YNzwlmy6S0rb08Y7ig5U+RazQe6v7CWouT4ni2HyU/Q/Q==
+X-Received: by 2002:a0c:869c:: with SMTP id 28-v6mr8705648qvf.92.1538065087836;
+        Thu, 27 Sep 2018 09:18:07 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:1455:e436:6b50:1b07? ([2001:4898:8010:0:fd8a:e436:6b50:1b07])
+        by smtp.gmail.com with ESMTPSA id c2-v6sm1674456qkj.79.2018.09.27.09.18.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Sep 2018 09:18:07 -0700 (PDT)
 Subject: Re: Git for Windows for Unix?
-Message-ID: <20180927160523.GA112066@aiede.svl.corp.google.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
 References: <87va6rhqup.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d3d82080-f3e7-50cd-df81-1fed3198eb88@gmail.com>
+Date:   Thu, 27 Sep 2018 12:18:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <87va6rhqup.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
+On 9/27/2018 12:01 PM, Ævar Arnfjörð Bjarmason wrote:
+> I had an IRC conversation with Johannes saying I didn't know Git For
+> Windows builds perfectly well for Linux, this just isn't advertised in
+> the ANNOUNCE E-Mails, so I hadn't tried.
+
+We run CI to ensure it builds and tests on Mac OSX, too. This is 
+important to the VFS for Git group, as we work on making that work for 
+Mac clients. We have our fork of Git for Windows at 
+https://github.com/microsoft/git.
 
 > GFW is a "friendly fork", but a permanent one it seems. The diff between
 > it and 2.19.0 proper is ~10k lines, and e.g. this last release had
 > experimental stash/rebase in C that 2.19.0 didn't.
->
-> So it would be great if this were packaged up by linux distro as some
-> "alterate" package of git. I'm putting Jonathan in the "To" line because
-> I'm mainly interested in this for Debian, but maybe there's wider
-> interest at git-packagers...
 
-Please coordinate with Dscho to get these patches into "next" upstream.
+Hopefully we can learn from having this experimental feature in the wild 
+and improve the patches on-list by fixing issues.
 
-Thanks and hope that helps,
-Jonathan
+We do have a desire to move as much as possible upstream. It's difficult 
+to find time to pay down that "fork debt".
+
+Thanks,
+
+-Stolee
+
