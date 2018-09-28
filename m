@@ -2,128 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E256A1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 18:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA0161F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 18:39:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726789AbeI2BBG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 21:01:06 -0400
-Received: from esg260-1.itc.swri.edu ([129.162.252.140]:41823 "EHLO
-        esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726141AbeI2BBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 21:01:06 -0400
-Received: from smtp.swri.org (MBX256.adm.swri.edu [129.162.26.125])
-        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w8SIZgEP110703
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
-        Fri, 28 Sep 2018 13:35:42 -0500
-Received: from MBX260.adm.swri.edu (129.162.29.125) by MBX256.adm.swri.edu
- (129.162.26.125) with Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 28 Sep
- 2018 13:35:42 -0500
-Received: from csd-17117.dyn.datasys.swri.edu (129.162.105.28) by
- smtp.swri.org (129.162.29.125) with Microsoft SMTP Server id 15.0.1395.4 via
- Frontend Transport; Fri, 28 Sep 2018 13:35:42 -0500
-From:   "Strain, Roger L" <roger.strain@swri.org>
-To:     <git@vger.kernel.org>
-CC:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stephen R Guglielmo <srguglielmo@gmail.com>,
-        "David A . Greene" <greened@obbligato.org>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Stephen R Guglielmo <srg@guglielmo.us>,
-        Dave Ware <davidw@realtimegenomics.com>,
-        David Aguilar <davvid@gmail.com>
-Subject: [PATCH 4/4] subtree: improve decision on merges kept in split
-Date:   Fri, 28 Sep 2018 13:35:40 -0500
-Message-ID: <20180928183540.48968-5-roger.strain@swri.org>
-X-Mailer: git-send-email 2.19.0.windows.1
-In-Reply-To: <20180928183540.48968-1-roger.strain@swri.org>
-References: <20180928183540.48968-1-roger.strain@swri.org>
+        id S1726304AbeI2BEC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 21:04:02 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:46881 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726118AbeI2BEC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 21:04:02 -0400
+Received: by mail-qt1-f193.google.com with SMTP id h22-v6so7668816qtr.13
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 11:38:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=bJ8w/Fir+3A8NAyilZ7tp8ZLpLGXbENWoZOg1DZwaaM=;
+        b=MFLUF9J42YtvfU3Cah6jdGzMLqi72CRwwPOWa0gV00x7olfE/0eNuCuYFcrJi+2I3D
+         hrHXhWW7OwgujQ3YLEN7ufXWuLnewSJaLNJkm1CQQ0+Mjn405ufeiyXS7MOdOBH3fS5T
+         tVzsI2/EH6KkzoqoWwwQ7+8I1IjCZmgg6OkCiLbzJLevQ8Z+ZsywqXsRE7J5ppW/nBcB
+         ZuSQHOcHLGGOI1DWXIJogZoA1lMVyQYppoGcdThwaaFDTZUhke+IZELFNi1bkjRMWajb
+         vHxe3crKhKXj042sRUfNDyxI/yCY0/AkKVZpWzwLst6Hxv3vU2a1RYarCScYWK5IV+Qy
+         ha/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=bJ8w/Fir+3A8NAyilZ7tp8ZLpLGXbENWoZOg1DZwaaM=;
+        b=OARZ4cIPs9KD5o1cJMWfrh8C5AcwvaI8UGQDkbuOJO4KtP9A/ubDGlKxNJKUTtx8v+
+         lMR653oLU6A2AvHXmsrqa8ppyLhkNKQcM+/o5NtBD7z93R8kVjLvWpGw7RLF+M4sKivW
+         J5CnKl5d6gHpHVFnDdSUPfPCPtgHWouiBCXXWThxIHljpUxeKwrWdiq0RR0tc3LTAeuc
+         25ykoomV33Ym+3yLOqXQfk9lG4LX7wtGh5c0hBCh6l5dXrtXk3AOyM7zOvFWoZ4FNZFk
+         ibSgXxUIk1xtvba6KeJ6bFn3Jv/kJIMZqNX06o+11OTT8XMU0aYjqh6l8EuMjiIJDj/z
+         C3cw==
+X-Gm-Message-State: ABuFfog7JIdp5PCtx3K+sbf6sVbWOb1cAZEPLQS2Zdaw4inZXW0VXAxG
+        Fo24BdPgRn+ds4Ju+/8qSRsC38Q+MnE=
+X-Google-Smtp-Source: ACcGV61EX6nat+Ix82bBoU2lwZxQj3F/W0lNFbs8DfllFA6skaoZMCi0V8eB9hkKjUrRI7jXZDpz2w==
+X-Received: by 2002:a0c:b3d6:: with SMTP id b22-v6mr2241390qvf.203.1538159938169;
+        Fri, 28 Sep 2018 11:38:58 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id p7-v6sm1156001qkp.73.2018.09.28.11.38.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Sep 2018 11:38:57 -0700 (PDT)
+Subject: Re: [PATCH v6 3/7] eoie: add End of Index Entry (EOIE) extension
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180926195442.1380-1-benpeart@microsoft.com>
+ <20180926195442.1380-4-benpeart@microsoft.com>
+ <20180928001929.GN27036@localhost>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <8a12adb1-74f2-b824-b2c7-c82e0f36ad94@gmail.com>
+Date:   Fri, 28 Sep 2018 14:38:54 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-28_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
- priorityscore=1501 malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=828 adultscore=0 classifier=spam adjust=-40 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1809280182
+In-Reply-To: <20180928001929.GN27036@localhost>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When multiple identical parents are detected for a commit being considered
-for copying, explicitly check whether one is the common merge base between
-the commits. If so, the other commit can be used as the identical parent;
-if not, a merge must be performed to maintain history.
 
-In some situations two parents of a merge commit may appear to both have
-identical subtree content with each other and the current commit. However,
-those parents can potentially come from different commit graphs.
 
-Previous behavior would simply select one of the identical parents to
-serve as the replacement for this commit, based on the order in which they
-were processed.
+On 9/27/2018 8:19 PM, SZEDER Gábor wrote:
+> On Wed, Sep 26, 2018 at 03:54:38PM -0400, Ben Peart wrote:
+>> The End of Index Entry (EOIE) is used to locate the end of the variable
+> 
+> Nit: perhaps start with:
+> 
+>    The End of Index Entry (EOIE) optional extension can be used to ...
+> 
+> to make it clearer for those who don't immediately realize the
+> significance of the upper case 'E' in the extension's signature.
+> 
+>> length index entries and the beginning of the extensions. Code can take
+>> advantage of this to quickly locate the index extensions without having
+>> to parse through all of the index entries.
+>>
+>> Because it must be able to be loaded before the variable length cache
+>> entries and other index extensions, this extension must be written last.
+>> The signature for this extension is { 'E', 'O', 'I', 'E' }.
+>>
+>> The extension consists of:
+>>
+>> - 32-bit offset to the end of the index entries
+>>
+>> - 160-bit SHA-1 over the extension types and their sizes (but not
+>> their contents).  E.g. if we have "TREE" extension that is N-bytes
+>> long, "REUC" extension that is M-bytes long, followed by "EOIE",
+>> then the hash would be:
+>>
+>> SHA-1("TREE" + <binary representation of N> +
+>> 	"REUC" + <binary representation of M>)
+>>
+>> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
+>> ---
+>>   Documentation/technical/index-format.txt |  23 ++++
+>>   read-cache.c                             | 151 +++++++++++++++++++++--
+>>   t/README                                 |   5 +
+>>   t/t1700-split-index.sh                   |   1 +
+>>   4 files changed, 172 insertions(+), 8 deletions(-)
+>>
+> 
+>> diff --git a/t/README b/t/README
+>> index 3ea6c85460..aa33ac4f26 100644
+>> --- a/t/README
+>> +++ b/t/README
+>> @@ -327,6 +327,11 @@ GIT_TEST_COMMIT_GRAPH=<boolean>, when true, forces the commit-graph to
+>>   be written after every 'git commit' command, and overrides the
+>>   'core.commitGraph' setting to true.
+>>   
+>> +GIT_TEST_DISABLE_EOIE=<boolean> disables writing the EOIE extension.
+>> +This is used to allow tests 1, 4-9 in t1700-split-index.sh to succeed
+>> +as they currently hard code SHA values for the index which are no longer
+>> +valid due to the addition of the EOIE extension.
+> 
+> Is this extension enabled by default?  The commit message doesn't
+> explicitly say so, but I don't see any way to turn it on or off, while
+> there is this new GIT_TEST environment variable to disable it for one
+> particular test, so it seems so.  If that's indeed the case, then
+> wouldn't it be better to update those hard-coded SHA1 values in t1700
+> instead?
+> 
 
-New behavior compares the merge base between the commits to determine if
-a new merge commit is necessary to maintain history despite the identical
-content.
+Yes, it is enabled by default and the only way to disable it is the 
+GIT_TEST_DISABLE_EOIE environment variable.
 
-Signed-off-by: Strain, Roger L <roger.strain@swri.org>
----
- contrib/subtree/git-subtree.sh | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+The tests in t1700-split-index.sh assume that there are no extensions in 
+the index file so anything that adds an extension, will break one or 
+more of the tests.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 23dd04cbe..1c157dbd9 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -541,6 +541,7 @@ copy_or_skip () {
- 	nonidentical=
- 	p=
- 	gotparents=
-+	copycommit=
- 	for parent in $newparents
- 	do
- 		ptree=$(toptree_for_commit $parent) || exit $?
-@@ -548,7 +549,24 @@ copy_or_skip () {
- 		if test "$ptree" = "$tree"
- 		then
- 			# an identical parent could be used in place of this rev.
--			identical="$parent"
-+			if test -n "$identical"
-+			then
-+				# if a previous identical parent was found, check whether
-+				# one is already an ancestor of the other
-+				mergebase=$(git merge-base $identical $parent)
-+				if test "$identical" = "$mergebase"
-+				then
-+					# current identical commit is an ancestor of parent
-+					identical="$parent"
-+				elif test "$parent" != "$mergebase"
-+				then
-+					# no common history; commit must be copied
-+					copycommit=1
-+				fi
-+			else
-+				# first identical parent detected
-+				identical="$parent"
-+			fi
- 		else
- 			nonidentical="$parent"
- 		fi
-@@ -571,7 +589,6 @@ copy_or_skip () {
- 		fi
- 	done
- 
--	copycommit=
- 	if test -n "$identical" && test -n "$nonidentical"
- 	then
- 		extras=$(git rev-list --count $identical..$nonidentical)
--- 
-2.19.0.windows.1
+First in 'enable split index', they hard code SHA values assuming there 
+are no extensions. If some option adds an extension, these hard coded 
+values no longer match and the test fails.
 
+Later in 'disable split index' they save off the SHA of the index with 
+split-index turned off and then in later tests, compare it to the SHA of 
+the shared index.  Because extensions are stripped when the shared index 
+is written out this only works if there were not extensions in the 
+original index.
+
+I'll document this behavior and reasoning in the test directly.
+
+This did cause me to reexamine how EOIE and IEOT behave when split index 
+is turned on.  These two extensions help most with a large index.  When 
+split index is turned on, the large index is actually the shared index 
+as the index is now the smaller set of deltas.
+
+Currently, the extensions are stripped out of the shared index which 
+means they are not available when they are needed to quickly load the 
+shared index.  I'll see if I can update the patch so that these 
+extensions are still written out and available in the shared index to 
+speed up when it is loaded.
+
+Thanks!
+
+>>   Naming Tests
+>>   ------------
+>>   
+>> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+>> index be22398a85..1f168378c8 100755
+>> --- a/t/t1700-split-index.sh
+>> +++ b/t/t1700-split-index.sh
+>> @@ -7,6 +7,7 @@ test_description='split index mode tests'
+>>   # We need total control of index splitting here
+>>   sane_unset GIT_TEST_SPLIT_INDEX
+>>   sane_unset GIT_FSMONITOR_TEST
+>> +GIT_TEST_DISABLE_EOIE=true; export GIT_TEST_DISABLE_EOIE
+>>   
+>>   test_expect_success 'enable split index' '
+>>   	git config splitIndex.maxPercentChange 100 &&
+>> -- 
+>> 2.18.0.windows.1
+>>
