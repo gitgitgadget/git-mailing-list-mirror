@@ -8,90 +8,120 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 785E01F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 10:17:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 143A61F454
+	for <e@80x24.org>; Fri, 28 Sep 2018 10:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729301AbeI1QkJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 12:40:09 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39174 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728936AbeI1QkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 12:40:08 -0400
-Received: by mail-wr1-f68.google.com with SMTP id s14-v6so5776715wrw.6
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 03:17:04 -0700 (PDT)
+        id S1729321AbeI1Q7B (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 12:59:01 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39775 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729242AbeI1Q7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 12:59:00 -0400
+Received: by mail-wm1-f67.google.com with SMTP id q8-v6so1669413wmq.4
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 03:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=zEv3cF3OcVvPSwIl6LkEa4srb7SpUScaw/k5Eb5YICM=;
-        b=DWD9Mk6XZ8UA/tqQGbFAXE31EMTl/NHOwmc57q+ZImfQJt2IVJQkNsf486b/POSgys
-         HzMHznJDaPTahoo7g5gObqfFjp/NqIsZiRg2uQWLzYnOIpNcyiiS+NL8uAJKkothqoW/
-         3XKpqNAIYVqh/7CSxeAfOc9MPq/XFeIrZAOBaGfwdQD4Bpc1wwwHAK6ln5lQsIYvo/7S
-         XOvotbAeBNhVag8Z1/GmNw9Hcikx9ZFzei+XQIC9cqhcfsnIJBBjZ1TT9ftA9yUbFQQy
-         uHUkR1LYY/HBZl94fpL7vgJl4morghqi+uSuaKZYo53WrEe+P4D7an69eaLdYMRxKb59
-         YXew==
+         :content-disposition:in-reply-to:user-agent;
+        bh=ha0lPWYOctM5LLNpn3UUIXQtoaCifxai5a0thc3xzMw=;
+        b=kJ6isWImB2vp8a7ie3z6mDchBviMJZ4HQu/dsQrni+qW+jRr9SkiDYflDRCwrUR1HM
+         dbjZfwglx2AKNRNZ0wgl6B3hdYr0LdfD/jHdORMkUpHDfzrPVMIOAh14RdX5cWdsZFMk
+         z573zrrYRR/Zi989IxT5zx1bjTgQpQoHCQdVaAs7UL6zWZnoUbTvM2ex9iw8emw16bgR
+         D1vl2YL8DV6ETNrhUcJWOBlKUAFUIMqs5L2lo9G7zSxr4fy3QrdltOpwt5MKvywhIo0g
+         BkHLbAAjCLwkRWMPNm0t3AjCekTojmZen78qN/l7sxELOeqQKebv8z5tMXhXnHDRpbnA
+         9FfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=zEv3cF3OcVvPSwIl6LkEa4srb7SpUScaw/k5Eb5YICM=;
-        b=rsyt13sQ/wVQCstCBHvLYYDQmn3BMG6bXvZVLFtprFbNxqBMWt8Wa6gtN3YHsOfQxK
-         u0e2xnuyOC/JYdq3bA3ZFBdCnNX8rQI64f+pgkyxZrCA07776fzGJtqK0PWUjIT98BCG
-         hDr2SPdqMIqU8q8WPg2b1R74NTw69SzSn7rIxMmjfuJpOwlFKXlLuSO3g447o5if+482
-         AdF5xsy5YAFoAtxllh1K0vFy/p8vA4szkFNRLrFS/BcYYfPMCRXdmZvw6XXdBFj2xIay
-         bGs+swWNBgrKUXXE0TcDju8/AODkulpfHnArQBx58JQhjQPjCh97iLRZjeNpnPFCKMjy
-         TYOQ==
-X-Gm-Message-State: ABuFfog0eSAsGv5sDAP2SxcMhqdLUjpOvgrEOouyCFUyy4nH1AMHg9AE
-        DPI4piIRgabBHmaVNyajc98=
-X-Google-Smtp-Source: ACcGV637cHozm72F9xplfH66SgtuNyOXorw75JYKGTaHXPN8e6t34f05Z2QeiizcTHRDCExV9F5i1g==
-X-Received: by 2002:a05:6000:11c1:: with SMTP id i1mr3753605wrx.310.1538129824058;
-        Fri, 28 Sep 2018 03:17:04 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ha0lPWYOctM5LLNpn3UUIXQtoaCifxai5a0thc3xzMw=;
+        b=DoPmKZaIjfU31B0ltoE4OARr/SBfUWTaK1NjGrdTnIeE29/Gt1zpe98jitxDY4F7bn
+         66As0AG92EeSiCTn3QJWOfz46xuubq1+msMZRnwzaeoMYex1WBPetp4GObfheww9DO8h
+         7RlWdRBEQB3v1AUvkj1Om22E8+qo+Ff6DtpAFvnbo3+9YuPqhChRvO+xe4XBUrt3WIJA
+         wUdsU5meXq2erWYUq95QZRRrGFNGch6sVLfF8aqmQPZVamJsyHW1aoAiedbNb2gtyg5c
+         UocykQfiImKnSoLlchncbrCzw+P6P41yrjLgtXoqY70d6EuZmQGbUK4S1u5C6zLfzf9q
+         djEw==
+X-Gm-Message-State: ABuFfoi+IilKhjiYwaWkWoSm1CVbNp7+PJZ5n6c+zM+T3UeFNVCIUUcj
+        Vg1asT3orVi8+1Mak6F5WqY=
+X-Google-Smtp-Source: ACcGV63H9QKhPyLm3sNpt3NeQ9BUGSyYkSRy0aIJ49qPytC7b0x1oI3L8t6X9jkp0kHdstnppQGQkA==
+X-Received: by 2002:a1c:b709:: with SMTP id h9-v6mr1219557wmf.130.1538130951155;
+        Fri, 28 Sep 2018 03:35:51 -0700 (PDT)
 Received: from localhost (x4db1ef73.dyn.telefonica.de. [77.177.239.115])
-        by smtp.gmail.com with ESMTPSA id u23-v6sm5997222wrc.42.2018.09.28.03.17.02
+        by smtp.gmail.com with ESMTPSA id k13-v6sm4025444wrq.7.2018.09.28.03.35.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Sep 2018 03:17:02 -0700 (PDT)
-Date:   Fri, 28 Sep 2018 12:17:00 +0200
+        Fri, 28 Sep 2018 03:35:50 -0700 (PDT)
+Date:   Fri, 28 Sep 2018 12:35:48 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Fix the racy split index problem
-Message-ID: <20180928101700.GB23446@localhost>
-References: <20180927124434.30835-1-szeder.dev@gmail.com>
- <871s9fjbcb.fsf@evledraar.gmail.com>
- <20180927142336.GJ27036@localhost>
- <87zhw3hsiv.fsf@evledraar.gmail.com>
- <87k1n6hzwu.fsf@evledraar.gmail.com>
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v5 7/8] t0410: test fetching from many promisor remotes
+Message-ID: <20180928103548.GC23446@localhost>
+References: <20180925115341.19248-1-chriscool@tuxfamily.org>
+ <20180925115341.19248-8-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k1n6hzwu.fsf@evledraar.gmail.com>
+In-Reply-To: <20180925115341.19248-8-chriscool@tuxfamily.org>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 28, 2018 at 08:57:53AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > Thanks. I had ~400 runs of the tests I ran before and they were all
-> > OK. Now trying also with t1701 (which I hadn't noticed was a new
-> > test...).
+On Tue, Sep 25, 2018 at 01:53:40PM +0200, Christian Couder wrote:
+> From: Christian Couder <christian.couder@gmail.com>
 > 
-> Ran that overnight with the same conditions as before. 2683 OK runs and
-> 0 failures (and counting). So it seems like the combination of the two
-> fixed the split index bugs.
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t0410-partial-clone.sh | 24 +++++++++++++++++++++++-
+>  1 file changed, 23 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+> index 8b32be6417..3fbd8d919e 100755
+> --- a/t/t0410-partial-clone.sh
+> +++ b/t/t0410-partial-clone.sh
+> @@ -170,6 +170,28 @@ test_expect_success 'fetching of missing objects' '
+>  	git verify-pack --verbose "$IDX" | grep "$HASH"
+>  '
+>  
+> +test_expect_success 'fetching of missing objects from another odb remote' '
+> +	git clone "file://$(pwd)/server" server2 &&
+> +	test_commit -C server2 bar &&
+> +	git -C server2 repack -a -d --write-bitmap-index &&
+> +	HASH2=$(git -C server2 rev-parse bar) &&
+> +
+> +	git -C repo remote add server2 "file://$(pwd)/server2" &&
+> +	git -C repo config odb.magic2.promisorRemote server2 &&
+> +	git -C repo cat-file -p "$HASH2" &&
+> +
+> +	git -C repo fetch server2 &&
+> +	rm -rf repo/.git/objects/* &&
+> +	git -C repo cat-file -p "$HASH2" &&
+> +
+> +	# Ensure that the .promisor file is written, and check that its
+> +	# associated packfile contains the object
+> +	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
+> +	test_line_count = 1 promisorlist &&
+> +	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
 
-Yeah, I thought they would.  If you look at the first loop of
-prepare_to_write_split_index() classifying which cache entries should
-be included in the new split index, you'll see only two code paths
-that could leave out an entry from the split index, i.e. where an
-entry could be left with a non-zero 'ce->index' and without its
-CE_UPDATE_IN_BASE flag set.  Now, with the fix in patch 5/5 both of
-those code paths have the is_race_timestamp() check.
+You could drop the unnecessary 'cat', 'sed' is capable to open a file
+on its own.
 
+> +	git verify-pack --verbose "$IDX" | grep "$HASH2"
+
+Don't run a git command, especially one with "verify" in its name,
+upstream of a pipe, because the pipe hides the git command's exit
+code.
+
+> +'
