@@ -2,130 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A08631F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 21:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7D921F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 21:38:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727203AbeI2Dq2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 23:46:28 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40138 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726451AbeI2Dq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 23:46:28 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n31-v6so5307310pgm.7
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 14:20:53 -0700 (PDT)
+        id S1725938AbeI2EEb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 00:04:31 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37007 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725266AbeI2EEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 00:04:31 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y26-v6so3515710wma.2
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 14:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=EDhskakqtTiFEdTi3m6aUgoU6IK++gPy5R6w75WeR4w=;
-        b=SyBOKYm0gAS3eTtOu/5iIzwLcjxdzihyvNXtachWv2B5z/0tzkDjmU9DXI13a9RYom
-         MLpNCTiap2Vb8O6xB6C872wqDgFtGnLkS7vAn7qtrTGsKn6ST8+fbC1gZDwtBpavaD2Y
-         3+rFqC/PjETqyGKmC6FYIivTkEuCl5CncU1gSBJ5OleiBf1rcyk5c8Oc0at114W5yPHF
-         79hw2t2P4kyeZOA1AnolrY2uhS4r6bRA/13ULBixQAytJmk1tZgZXsSu9I/Rhijwos3C
-         tV1lVVUONmE7JM+m52SFzjRpBQYtB2MF0OVNI37PK502J4du1a9tjouc0EimDEcBmV2j
-         Pgag==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=m9r4oYmceMrzoxrR43GshknW4yEA1q4R48KHnWtqC9k=;
+        b=jEuvGV1BWi4d/7agy2rmWvOGfQoe9jzux88J23gWT7AUw5M6fqzFoqwTTerXcAdEoc
+         xcsjuFLUdni7AsdOIdrPSQiTso2i5Xxe6+jdL+ejoBMdeNx6SB847dCccOrnbzRnKiCJ
+         tZw8yj/kuJovXugpkzanbCLSrBZwbzmC3cLZK4EI15nzBWBk5gML8vEkH1siyGb7UC1q
+         6/bVXW20jlUfrpSt4CFOnhAJgYYPNq1Au5OLa7ECp/n0N2cVgnddi96BSSpVBjW+w9fh
+         swEwu+S/0HGbixLZ71NaSDY1qxaPGGBsXprIB4e1a+AXnMFVoxT84niuwIBs6sWGJn3/
+         f86Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=EDhskakqtTiFEdTi3m6aUgoU6IK++gPy5R6w75WeR4w=;
-        b=mw4/xPXomxYo2vRGDe0qX66Yy3Llvq7pLqIl+bGVUrEihypyV7xryQ6VrixoKkfPzj
-         h5X+H2ez8J4YjvGt4B75oaLGSxvJS5W6ivn2uwCuYNNCgAVNfOtQ5wtkBmVu9FcKykPk
-         DtS2y3TEjpd/iWop9yvjHwuJABKLeJrRw3SqLiaWiXkQ3JQyykknuTuNpRLKezYxXCVQ
-         dJ/p9VL6yY1bGFYqeMOa6uhY/0ZXqGnHCDjUGk0jmMwWtilOu8r0EpQoM7xroQkjczLX
-         ECPKwkqEEIyt7tAn0qBVCW27MvFW6QsyOruDj4myPERgAsIaaLnybUVGjCQsUPuPzmMn
-         J9kg==
-X-Gm-Message-State: ABuFfogD/LV72bT80bbilapuTXJkN+ROxwR8B3dUoqNNnYnYxsICqKsr
-        CHcrUavDsGGcEmL5fD2OBqo=
-X-Google-Smtp-Source: ACcGV61ZeVSisUAgZn+IAUCgJGMWoDMMcmrmbX1+NCdDwlqRG7H42Rg6eoUGlAwcYxQf6y3nE04OLQ==
-X-Received: by 2002:a63:2f81:: with SMTP id v123-v6mr340115pgv.223.1538169652744;
-        Fri, 28 Sep 2018 14:20:52 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v2-v6sm8614743pgf.58.2018.09.28.14.20.51
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=m9r4oYmceMrzoxrR43GshknW4yEA1q4R48KHnWtqC9k=;
+        b=M/qucmPF6hB8FX1/FNKgUqt3cj2u9KbZrj5dyuDiB5qt7WhLZMWQqkbMx24md6qCtS
+         hMdbXf1PYfF7Ibdn6yp7GgCXQwtYQ8YIH4HKJQ+HOWiT6XmlslPfDrYOEQdkDOt7JAi3
+         n2PBmwO0GaDSlccOqUSAHBiM5LEqMMKiL7F7VTuSqHnnUjktlaDGcNuwO9bn+RImsaxx
+         WtxfIgibbzPqtHV2OvCgied2onolzgw2KC7XAVIIaOadGsvZe5S49YqAUp7BGavnEHrO
+         eimmcL3Nf1DXJMQo2xKEajflGihQLh6NIR7GKx+/eiZi1SB9mmkvC77f3H2BtiqLr6RQ
+         HGgg==
+X-Gm-Message-State: ABuFfoiMVkWEEivck4H5VZaxznD9Z76WUP5zaWtjRVFOnyjC4IierMJ6
+        Z1hAIXh1Nl6XlgEN26J7Rnc=
+X-Google-Smtp-Source: ACcGV63H8x8JcPm+91pTxJxpHR13AdGdEX2ERbRqXMWOIzAr72/Uq8nTgYVO9UUrAV/HIe7QIzl4dg==
+X-Received: by 2002:a1c:1252:: with SMTP id 79-v6mr2923731wms.70.1538170730652;
+        Fri, 28 Sep 2018 14:38:50 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q135-v6sm4194774wmd.4.2018.09.28.14.38.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Sep 2018 14:20:51 -0700 (PDT)
-Date:   Fri, 28 Sep 2018 14:20:49 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] git doc: direct bug reporters to mailing list archive (Re:
- [PATCH v2] git.txt: mention mailing list archive)
-Message-ID: <20180928212049.GD193055@aiede.svl.corp.google.com>
-References: <20180926134717.GC25697@syl>
- <20180927055018.6683-1-martin.agren@gmail.com>
- <20180927063735.GC220288@aiede.svl.corp.google.com>
- <CAN0heSpG2jewXuzcZQAeFydW4zanzymSGVqVz2u0myW3Z7Wcrw@mail.gmail.com>
- <xmqq1s9def2p.fsf@gitster-ct.c.googlers.com>
+        Fri, 28 Sep 2018 14:38:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org, jrnieder@gmail.com,
+        peff@peff.net
+Subject: Re: [PATCH] strbuf.h: format according to coding guidelines
+References: <xmqq5zypefcp.fsf@gitster-ct.c.googlers.com>
+        <20180928173033.159192-1-sbeller@google.com>
+        <xmqqr2hdbdp8.fsf@gitster-ct.c.googlers.com>
+        <xmqqin2pbcwh.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 28 Sep 2018 14:38:49 -0700
+In-Reply-To: <xmqqin2pbcwh.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 28 Sep 2018 13:11:26 -0700")
+Message-ID: <xmqq8t3lb8uu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1s9def2p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Subject: git doc: direct bug reporters to mailing list archive
+Junio C Hamano <gitster@pobox.com> writes:
 
-The mailing list archive can help a user encountering a bug to tell
-whether a recent regression has already been reported and whether a
-longstanding bug has already had some discussion to start their
-thinking.
+> I actually do not mind the rule to be more like
+>
+>  * Use the same parameter names used in the function declaration when
+>    the description in the API documentation refers the parameter.
 
-Based-on-patch-by: Martin Ågren <martin.agren@gmail.com>
-Improved-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Junio C Hamano wrote:
->> Jonathan Nieder wrote:
+Assuming that we adopt the above guideline, let's extending it to
+the original patch's review.
 
->>> Hm.  I think this encourages a behavior that I want to discourage:
->>> assuming that if a bug has already been reported then there's nothing
->>> more for the new user to add.
-[...]
-> Yup, in short I think any one of the above three is good enough.
-> Let's just pick one and move on.  Unless somebody sends in an
-> improvement that can be applied readily, by default I'll just "git
-> am" the one Martin sent, as that is the easiest thing to do ;-).
+The following is a good example.  FIRST and SECOND would have been
+upcased if this followed my earlier illustration to make them stand
+out as references to the parameters, but it is already readable
+without upcasing _and_ naming parameters is helping here.
 
-I assume this is meant as a nudge, in which case nudge successful. ;-)
+ /**
+  * Compare two buffers. Returns an integer less than, equal to, or greater
+  * than zero if the first buffer is found, respectively, to be less than,
+  * to match, or be greater than the second buffer.
+  */
+-extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
++int strbuf_cmp(const struct strbuf *first, const struct strbuf *second);
 
-My experience is that bug reporters are very sensitive to hints the
-project gives about what kind of bugs they want to receive.  I'd
-rather make use of that lesson now instead of waiting to relearn it in
-the wild.  Here goes.
 
-Thanks, both.
 
- Documentation/git.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The next one could be improved and say something like: "Remove LEN
+bytes in the strbuf SB starting at offset POS", as it already had
+'pos' and 'len' that are readily usable.  Notice that "Remove LEN
+bytes starting at offset POS" is a sufficiently clear description
+and that is why I do not think we should require all parameters to
+be named.
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 74a9d7edb4..8e6a92e8ba 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -858,7 +858,9 @@ Reporting Bugs
+ /**
+  * Remove given amount of data from a given position of the buffer.
+  */
+-extern void strbuf_remove(struct strbuf *, size_t pos, size_t len);
++void strbuf_remove(struct strbuf *sb, size_t pos, size_t len);
  
- Report bugs to the Git mailing list <git@vger.kernel.org> where the
- development and maintenance is primarily done.  You do not have to be
--subscribed to the list to send a message there.
-+subscribed to the list to send a message there.  See the list archive
-+at https://public-inbox.org/git for previous bug reports and other
-+discussions.
- 
- Issues which are security relevant should be disclosed privately to
- the Git Security mailing list <git-security@googlegroups.com>.
--- 
-2.19.0.605.g01d371f741
+
+The last example is a job half-done.  The original had pos and len
+parameters and referred to them in the text, but just said "with the
+given data".  Now we have data and data_len, "the given data" can
+and should be clarified by referring to them.
+
+ /**
+  * Remove the bytes between `pos..pos+len` and replace it with the given
+  * data.
+  */
+-extern void strbuf_splice(struct strbuf *, size_t pos, size_t len,
+-			  const void *, size_t);
++void strbuf_splice(struct strbuf *sb, size_t pos, size_t len,
++		   const void *data, size_t data_len);
 
