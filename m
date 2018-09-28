@@ -6,92 +6,85 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA6D1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 22:25:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D22921F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 22:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726492AbeI2Evo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 00:51:44 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55895 "EHLO
+        id S1726769AbeI2ExX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 00:53:23 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54322 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726287AbeI2Evo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 00:51:44 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 206-v6so3596708wmb.5
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 15:25:53 -0700 (PDT)
+        with ESMTP id S1726332AbeI2ExX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 00:53:23 -0400
+Received: by mail-wm1-f65.google.com with SMTP id c14-v6so3592475wmb.4
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 15:27:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=fW3SuHXYj2/rpU7Sj9UOGK9rRI0znk23QCGKAXHH4mE=;
-        b=SoO0GqwOg2VtCMBEoLzvzzpvoP1W7GNpNrc8g9POxfDILCkiGo9TMlFZJ990FlUJKI
-         9s/bbRi9Sr1hwaSMwVP3eMwYSQ0wHRGEiCLFiu8GokdEgO9inlUaIe+4WuZIGGnFqJ7X
-         IXiXuPp6CIosDLjFi81a+6FnrSR/ehYoFHccwleoBI+wL/NFtBPCxXG2mURpsnu3elRl
-         LBWersavYs6rDr/ri2MAsW6QrtI/thhE+QT7nnaZ1leucfZ8AUjuv/Qmu0ZbwwBUdxCj
-         SuzWFg5//miXOsG2gNqdA44oGfB1a/S0kv685sFpOTOehFfpti1SXY1w2tlWEzg1cpOF
-         1mrA==
+         :user-agent:mime-version;
+        bh=FChaoacNLkzl8M0YmYeFq8CH1Rc2N0oqqz1S2BIN5z8=;
+        b=Y3KMYcLg/JBDNgGiFaVEXUpAvYT8TE/hvaiABpph3kLNuvY1GsDH74l2eIYYyUfosk
+         wYDt0oMkmguuCbUZPlrJiguFN6kH6JuM6dY2GCPYPOMWxMIYplx/63pyQpzS7TEMOcjE
+         3JetLEKLjP48CW/CWioqK33dPkQGLVYm4XXEb46GomzVxX47S3hiVlCiJ1mvvVrU8OEw
+         LYnAPywkdMb/OB5bODcUAr8R+34JIkznjDOFF5UnoWWWN7UhcGYz5+0bXBEyDdzW2vli
+         mBR2oXa2+UJvx24FPtAWmDXP5tMXzn9bcxjEh7w2Do5IvkEySM1xgs9fu06XpFmidKPq
+         KZjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=fW3SuHXYj2/rpU7Sj9UOGK9rRI0znk23QCGKAXHH4mE=;
-        b=S6er68c3RwMirl2DKZ7pKfMUo1as6Hy833del/rZyvVoUO5tDj+DrdgT3GzhVk+pnb
-         gwPQnqUueKN5TQzgS+SYEPgnQ4p1uCpf/Qol/DzmXByeXMwfpmNMXuNTMsmOg3CIkK65
-         OuMfQ7MTWgQRWyexthdrjl0jeR/W9wbrSJrHuBFubv60Hd40pUTQiM5cxC1acVQnwXg9
-         tlFDi0q1nDtldA6qi4b3eUXL7F2MTa0GBfXxN0SOEGLKjGTWRNdUwgVjJniqhRGqhr7A
-         PdSUvujBCZ8jShvLNtD5re7reJw/2SUMLhEZ5eP4wSyWBrYlhBOmlbYcR4xFYDKVdqoS
-         z2GQ==
-X-Gm-Message-State: ABuFfoip65EJs0KOq9Dq1QnzCRSxUEkABdEtsXxBrlUg6Q6GzwhL5ILT
-        cWuwXMwlwUa+TjkQgvPYsTI=
-X-Google-Smtp-Source: ACcGV62DqB8Mlpq2lZIfXNk/7dWOpKjuA4M4RJyY3QBNcUx/UC3uN/w8pxLv9ZmoQzjRRn/qPeRWMg==
-X-Received: by 2002:a1c:603:: with SMTP id 3-v6mr2970682wmg.64.1538173552452;
-        Fri, 28 Sep 2018 15:25:52 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=FChaoacNLkzl8M0YmYeFq8CH1Rc2N0oqqz1S2BIN5z8=;
+        b=XDDPKIOxpix42UKGmpqIl7jzHlc/7TFMngd2Zs1OEzYO9hv8/HxDrbuBeR6CewygDO
+         YF8Y7SVsn93hWKNryikNbolgMx3+SDnK2Fh/TCedYk0pw9EKSS41WsBVIzz9adOAVmt1
+         KkqDxr6kd/UzyDDZUZmuZ/2quBvUQ4rNDOuvrl6fCIX8E/NUFzg6Q5sKLxShjPSKKvLX
+         3xYNPnOXO8iDmajtKYp6D0tyFHZCSI9jnREYuWOKRbzFGeVzruG+fUvgtX7JacA8dtIw
+         gm+McYvCpWC4K0uHH8mSpcVcpSlvfE0NFm2JeBQ9XGICZU8h6DDJiGa/prTrjKraH0w+
+         9q/Q==
+X-Gm-Message-State: ABuFfoia3bWgeudzlbXfy65VMYdbWYXvIocAUR7jlVDs0ssCoj0Nm5oz
+        Cajq8VLtjP1WYRxeMYjRvkjSVLEO
+X-Google-Smtp-Source: ACcGV61QY2KLMjy07+BdMKf3J3ziqLiStZPBFFTNa2WMkQ6c/6O/aKgIHKnmbLv36Yr0nowIjTpiog==
+X-Received: by 2002:a1c:a386:: with SMTP id m128-v6mr2907774wme.139.1538173651468;
+        Fri, 28 Sep 2018 15:27:31 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d2-v6sm4788707wrn.20.2018.09.28.15.25.51
+        by smtp.gmail.com with ESMTPSA id j133-v6sm3936650wmd.12.2018.09.28.15.27.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Sep 2018 15:25:51 -0700 (PDT)
+        Fri, 28 Sep 2018 15:27:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sam McKelvie <sammck@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] submodule: Alllow staged changes for get_superproject_working_tree
-References: <20180927181054.25802-1-sammck@gmail.com>
-        <xmqqbm8ifvka.fsf@gitster-ct.c.googlers.com>
-        <D09E2583-BD1D-4C56-9C19-6B1E97CEEDAA@gmail.com>
-        <xmqqmus2e6rp.fsf@gitster-ct.c.googlers.com>
-        <37DC7525-209F-49CC-90AA-D55463456D20@gmail.com>
-        <xmqqftxtcxjb.fsf@gitster-ct.c.googlers.com>
-        <2A26D56C-59E6-4F69-B0CA-4849EBE7EBC9@gmail.com>
-Date:   Fri, 28 Sep 2018 15:25:51 -0700
-In-Reply-To: <2A26D56C-59E6-4F69-B0CA-4849EBE7EBC9@gmail.com> (Sam McKelvie's
-        message of "Fri, 28 Sep 2018 14:59:15 -0700")
-Message-ID: <xmqqh8i99s40.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] git doc: direct bug reporters to mailing list archive (Re: [PATCH v2] git.txt: mention mailing list archive)
+References: <20180926134717.GC25697@syl>
+        <20180927055018.6683-1-martin.agren@gmail.com>
+        <20180927063735.GC220288@aiede.svl.corp.google.com>
+        <CAN0heSpG2jewXuzcZQAeFydW4zanzymSGVqVz2u0myW3Z7Wcrw@mail.gmail.com>
+        <xmqq1s9def2p.fsf@gitster-ct.c.googlers.com>
+        <20180928212049.GD193055@aiede.svl.corp.google.com>
+Date:   Fri, 28 Sep 2018 15:27:30 -0700
+In-Reply-To: <20180928212049.GD193055@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Fri, 28 Sep 2018 14:20:49 -0700")
+Message-ID: <xmqqd0sx9s19.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sam McKelvie <sammck@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> Or perhaps
->> 
->> rev-parse: --show-superproject-working-tree should work during a merge
->> 
->> may be more to the point.  It does not hint the root cause of the
->> bug like the other one, but is more direct how the breakage would
->> have been observed by the end users.
->> 
-> Haha, that is closer to my original title that Stefan wanted to change:
->
-> submodule.c: Make get_superproject_working_tree() work when superproject has unmerged changes of the submodule reference
->
-> Though I could see why mine was too long.
->
-> I’m really happy with both your suggestions
+> My experience is that bug reporters are very sensitive to hints the
+> project gives about what kind of bugs they want to receive.  I'd
+> rather make use of that lesson now instead of waiting to relearn it in
+> the wild.  Here goes.
 
-I've pushed out with the "rev-parse: ..." as the title.
+OK.  This unfortunately came a bit too late for today's integration
+cycle, so I'll leave this in my inbox and replace what is queued 
+with it later.
 
-Thanks for the fix.
+Unless there is another one to supersede this proposal comes before
+that happens, that is.
+
+Thanks.
 
