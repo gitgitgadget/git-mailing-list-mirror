@@ -2,126 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 121A81F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 02:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D2FC1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 02:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727421AbeI1JAa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 05:00:30 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46832 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726271AbeI1JAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 05:00:30 -0400
-Received: by mail-pg1-f194.google.com with SMTP id b129-v6so3284060pga.13
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 19:39:04 -0700 (PDT)
+        id S1726665AbeI1JBx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 05:01:53 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45989 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726271AbeI1JBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 05:01:53 -0400
+Received: by mail-wr1-f65.google.com with SMTP id m16so4631673wrx.12
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 19:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rJSUDXn4DUbBa6DRGtXY06kfKOno1ynxe2Wl5caHJq8=;
-        b=KhzPWtSyI8Zf38JQY0qKg3RVyUMQF81VVhPWbd3S4G8g7owTQb5JT27QRP/KvtZDQ6
-         Rgj/vIo1sAK53C/KzRZzCpMLhudtIqWavx4V2E5ibCuSUW8guQj1Dau2d2IqxKcdTSPw
-         /96Bil3oDf3EB1nZtStO0L0BJ0KDoVXK3QcGRPC4CDE/exi9kMjfrAM8yEoCksa1/Lxn
-         hpSeJmjm4m/jN9T0X3mo4t9aJhP4J3lUdw+gKGJj7SaVLelrb2scsAXnsEiJEtg2PpAe
-         Ib0J98QrmLksPv1ptysYfjwTgJLTB+aIf/f/uQvw0/M06Gam+fX3P7IHFFIvZiwgT253
-         y/oA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=RxKmpg0vU3Nq7Nx1qvCOSy8XmdGTPRPnp/3PBgdaf9M=;
+        b=DGsDCG2tdvVCXdXtCV0pXW2PsbKQJNdekcgRFOi9UEE6mtZZIc/+0fbBD2MtN5U1Jm
+         9oxKUHjTtasma6qYNOilqv92/qAbNztRkV8VCSp/BKNXR4Q8yf2vxZvPLRNzDbVS+cSb
+         gIWKafja+x5gnci0xrQbB/nTrqy3KXTiSM8/6e9OjbeyS+PdUjn+Nor/++QhuKXGUFdi
+         UOql90CGk37Rl26BWh4MubnJJ+He0yemYtrtUX8F9HgiUXn1VxVRf6uZdfKhEXJ9MSwY
+         8iha5BLrl01bitEX3HWeU5Y2YuSr0QeTarqhZ8n2sxAa4mbGtsnMS/itL0M1BpeDgKLr
+         qahw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rJSUDXn4DUbBa6DRGtXY06kfKOno1ynxe2Wl5caHJq8=;
-        b=Nx/v55FFM3/HgHj3G9RcVvsOvLd35u8zkJVdXcjRRRvq+lSstm0l7hcQDddMS5cnd5
-         9TEs0gxYybooll90f4hffoyOn4O67LlZRDTNjLYXG/QWPGYMySAl670pytZAMwRphAty
-         VLavQCLNql0L2RZuzxpKzhDt6GGf3oPN0SRbARl3vLXQWBrYEkfe81qYdEGFBLKhmDEn
-         YG8ZIUHKDY8qBJAV8tuyYVqh9GUzygFTp3rTX0lJQqnYIyFAcdMIrH1kaefZKHWc3G8u
-         2yF0spiCMb71tRBR/AIuFPA8vbNJaFN1WlksUDyn0jq1Ku6u+6QoZuMiG7ywZvCOWMI/
-         DuDw==
-X-Gm-Message-State: ABuFfohU25SMWPzZA9jvDQS7KH+aHvvvpJIiOhvGe/idrdd9cLHWpDqD
-        yIIialp2+XtxkCXRK0n3IiyZbA==
-X-Google-Smtp-Source: ACcGV61VVMC2R/v4wKUbczurKS4LC1IdfAg6iDEVgF9hIfHwMePIm1DkFXuBwGZGcjh8a/Mz3heuwA==
-X-Received: by 2002:a63:e318:: with SMTP id f24-v6mr12751362pgh.175.1538102343627;
-        Thu, 27 Sep 2018 19:39:03 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:1924:afac:8279:2210])
-        by smtp.gmail.com with ESMTPSA id x20-v6sm7515360pfe.131.2018.09.27.19.39.01
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=RxKmpg0vU3Nq7Nx1qvCOSy8XmdGTPRPnp/3PBgdaf9M=;
+        b=hPoCh8BPtXe2TCxWh50uBtvmLZsBX1Hin9TV4OXKmGyOb0YlIOeKguHoY4db7GgNDw
+         nFKW6JwaYP/bakDh/R3CzRdDBqZXEQb4YxMKOmMs3YgRWxW/KlQla3qpyPefkl0CnIq3
+         4OeTQ/dB2qP2Kk5e6Kn7bKBVjMLJg5WZGp7wu2a0IRWGhNLA8R1ItSiGS5uZG2ZszpSF
+         lYfqgsL68Z3cXZRzOKuHSF6hhwYKjz5njwDyGxI+E2tt2KNeMcYQ2Wj00jlwfPynVYRM
+         SLKfzgjlLkvc9MLNltd0ZkIpmtnKxIIu1TfYRoofg/ViTHT6KIR92pxGl3yjLkswGLhu
+         m7VQ==
+X-Gm-Message-State: ABuFfogd/+B+w9/+YmwHNGRrr7ArHclUoQLVrzyaq5QUcWtVsQuE/45V
+        +7nGNAV54bYA20XsOqvKHi8=
+X-Google-Smtp-Source: ACcGV62bAPNaw90F33nEcMupNob5zr9b+5lIcXAEH4pWIQvCEL2HVGOZxNmbhLTQBrwDXhjfgdFLKg==
+X-Received: by 2002:a5d:4b52:: with SMTP id w18-v6mr10370928wrs.87.1538102425722;
+        Thu, 27 Sep 2018 19:40:25 -0700 (PDT)
+Received: from localhost (x4dbd8656.dyn.telefonica.de. [77.189.134.86])
+        by smtp.gmail.com with ESMTPSA id s24-v6sm572659wmc.7.2018.09.27.19.40.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 19:39:02 -0700 (PDT)
-Date:   Thu, 27 Sep 2018 19:39:01 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-        sbeller@google.com
-Subject: Re: [PATCH v2 2/3] transport.c: introduce core.alternateRefsCommand
-Message-ID: <20180928023901.GB89283@syl>
-References: <cover.1537466087.git.me@ttaylorr.com>
- <cover.1537555544.git.me@ttaylorr.com>
- <9797f525517142b3494cfbd17a10dfeb3bf586e2.1537555544.git.me@ttaylorr.com>
- <20180922180231.GD432229@genre.crustytoothpaste.net>
- <20180922195258.GA20983@sigill.intra.peff.net>
- <20180926010935.GK4364@syl>
- <20180926033337.GC32064@sigill.intra.peff.net>
- <20180926133956.GA25697@syl>
- <20180926183853.GB30680@sigill.intra.peff.net>
+        Thu, 27 Sep 2018 19:40:24 -0700 (PDT)
+Date:   Fri, 28 Sep 2018 04:40:22 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Subject: Re: [PATCH v2 1/5] split-index: add tests to demonstrate the racy
+ split index problem
+Message-ID: <20180928024022.GQ27036@localhost>
+References: <20180927124434.30835-1-szeder.dev@gmail.com>
+ <20180927124434.30835-2-szeder.dev@gmail.com>
+ <20180928004843.GP27036@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180926183853.GB30680@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180928004843.GP27036@localhost>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 02:38:53PM -0400, Jeff King wrote:
-> On Wed, Sep 26, 2018 at 06:39:56AM -0700, Taylor Blau wrote:
->
-> > > A perl tangent if you're interested:
-> > [...]
-> >
-> > To be clear, we ought to leave this function as:
-> >
-> >   extract_haves () {
-> >     depacketize | perl -lne '/^(\S+) \.have/ and print $1'
-> >   }
->
-> Yes, I agree. You cannot do the "$@" there because it relies on
-> depacketize, which only handles stdin.
->
-> > Or are you suggesting that we change it to:
-> >
-> >   extract_haves () {
-> >     perl -lne '/^(\S+) \.have/ and print $1'
-> >   }
->
-> No, sorry. I just used the ".have" snippet as filler text, but I see
-> that muddied my meaning considerably. This really was just a tangent for
-> the future. What you've written above is the best thing for this case.
+On Fri, Sep 28, 2018 at 02:48:43AM +0200, SZEDER Gábor wrote:
+> Junio,
+> 
+> On Thu, Sep 27, 2018 at 02:44:30PM +0200, SZEDER Gábor wrote:
+> > diff --git a/t/t1701-racy-split-index.sh b/t/t1701-racy-split-index.sh
+> > new file mode 100755
+> > index 0000000000..ebde418d7e
+> > --- /dev/null
+> > +++ b/t/t1701-racy-split-index.sh
+> > @@ -0,0 +1,218 @@
+> > +#!/bin/sh
+> > +
+> > +# This test can give false success if your machine is sufficiently
+> > +# slow or all trials happened to happen on second boundaries.
+> > +
+> > +test_description='racy split index'
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +test_expect_success 'setup' '
+> > +	# Only split the index when the test explicitly says so.
+> > +	sane_unset GIT_TEST_SPLIT_INDEX GIT_FSMONITOR_TEST &&
+> 
+> Please note that this patch adds another use of the environment
+> variable GIT_FSMONITOR_TEST, while the topic 'bp/rename-test-env-var'
+> is about to rename that variable to GIT_TEST_FSMONITOR.
 
-I see, and I had assumed that you meant the later, not that including
-" .have" was a good way to go forward. So I think that we're in
-agreement here.
+Hang on for a sec.  I unset GIT_FSMONITOR_TEST in this test, because I
+saw that 't1700-split-index.sh' unsets it, and I just followed suit.
+But come to think of it, t1700 has to unset it, because some of its
+tests check the index's SHA-1 checksum, and the FSMN extension would
+interfere with that, of course.  However, that's not an issue for
+t1701, because none of its tests care about the index's checksum, so
+unsetting GIT_FSMONITOR_TEST is actually unnecessary here...  unless
+it could have other side effects that I'm not aware of.
 
-> > And call it as:
-> >
-> >   printf "0000" | git receive-pack fork >actual &&
-> >   depacketize <actual >actual.packets
-> >   extract_haves <actual.packets >actual.haves &&
-> >
-> > Frankly, (and I think that this is what you're getting at in your reply
-> > above), I think that the former (e.g., calling 'depacketize()' in
-> > 'extract_haves()') is cleaner. This approach leaves us with "actual" and
-> > "actual.haves", and obviates the need for another intermediary,
-> > "actual.packets".
->
-> Yeah. I have no problem with the three-liner you wrote above, but I do
-> not see any particular reason for it.
-
-Good. That's the version that I'll send shortly, then.
-
-Thanks,
-Taylor
