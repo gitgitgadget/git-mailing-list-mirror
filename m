@@ -2,86 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B65411F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 18:43:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF1EF1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 18:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbeI2BIP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 21:08:15 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:41562 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726152AbeI2BIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 21:08:15 -0400
-Received: by mail-wr1-f51.google.com with SMTP id j15-v6so7383012wrt.8
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 11:43:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Iipf5QdAHT2TtV2/c8xF6QWUDyyIKXCTS8qkgTE7+g0=;
-        b=vNVwyYoB8wt2fREzDppcwDRToqRY86mNR/di7nezT3Bi68qZWMCt81mj767ujH9mcS
-         p5khmUj0soRIM/Z8yKpRVnewyqgL5YMHWkQ9e6Fj3prhfcgHsxGURwlIGnnXWdD2JBRs
-         M6f5yi7+DgznT4kQSd1IBAU5hK6jL8sHQNJ0txUJQsZ68XDHdEYDuNtdotk8jE4wO8hg
-         avRiQpzHiW4RkX4AIPLrHUDX2LpHYeKZIl1rd9cs2vojZy1iAQTmBb/lSvqOv5eHCFMH
-         FdK5AHedsEIFxb78bIM/KHVu2m5B5FGqZ139lCP7sasxY3ibu130OGf+N16iZIy1WB6l
-         BM5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Iipf5QdAHT2TtV2/c8xF6QWUDyyIKXCTS8qkgTE7+g0=;
-        b=Dwqqy26ABDNZ8276mzdtLFJDUB3IHE15rSUuGgaGBsK0h26mgHlEP9YYgwLv0c9x0D
-         hynhx6Rr9vuU0AMuFZnMe9rH/38jhVIJiKwdEvppDNm22Mfx3KigQmM46KFlSih8xZ4w
-         rmysFOReYUlrSNs6iAkn9w3Z7PBZdRm/+cnDvZor0QaqO3Qm++p42l7Dp8E0PToCbURM
-         FVQwB8E1s9GMKWlYY3rwL3Sn5GK+Qgz895WqW8xiigQVkEDX2GdYmJN+fRhDaxatwLh9
-         CVo4+rG8HOdxgxIIncTQrZ4mKkEfbH69v/3RBYJ8bRKvCH2En0OfcCoJy0ta4Hkp8o3R
-         TmWA==
-X-Gm-Message-State: ABuFfojxpjcLiJDw3j9BmuBQ8b0pjqLv9hup4DU9TQhOUEUC+gnvXXWa
-        DamQCPsLPeV1TfQaILglWIg=
-X-Google-Smtp-Source: ACcGV60TwSfhm+olrJX8IS2i0c8Pjfi7OUKfkJm1KLKZj1O+rTYVbsgKhtEexmB4a/1/qs5EOfcvmQ==
-X-Received: by 2002:a05:6000:124e:: with SMTP id j14mr4828625wrx.315.1538160188408;
-        Fri, 28 Sep 2018 11:43:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 62-v6sm7767203wra.48.2018.09.28.11.43.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Sep 2018 11:43:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "jrnieder\@gmail.com" <jrnieder@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v3 3/5] fsmonitor: update GIT_TEST_FSMONITOR support
-References: <20180914143708.63024-1-benpeart@microsoft.com>
-        <20180918232916.57736-1-benpeart@microsoft.com>
-        <20180918232916.57736-4-benpeart@microsoft.com>
-        <20180928100143.GA23446@localhost>
-        <653f4fbd-ed32-4cf8-b1bb-9cfef4f8deaa@gmail.com>
-        <efe7ae90-d0c2-9223-cdab-8b6c64f818bd@gmail.com>
-Date:   Fri, 28 Sep 2018 11:43:07 -0700
-In-Reply-To: <efe7ae90-d0c2-9223-cdab-8b6c64f818bd@gmail.com> (Ben Peart's
-        message of "Fri, 28 Sep 2018 10:27:16 -0400")
-Message-ID: <xmqqzhw1bgzo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726709AbeI2BVz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 21:21:55 -0400
+Received: from esg260-1.itc.swri.edu ([129.162.252.140]:44230 "EHLO
+        esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726297AbeI2BVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 21:21:55 -0400
+Received: from smtp.swri.org (MBX256.adm.swri.edu [129.162.26.125])
+        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w8SIue1G127167
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+        Fri, 28 Sep 2018 13:56:40 -0500
+Received: from MBX260.adm.swri.edu (129.162.29.125) by MBX256.adm.swri.edu
+ (129.162.26.125) with Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 28 Sep
+ 2018 13:56:40 -0500
+Received: from csd-17117.dyn.datasys.swri.edu (129.162.105.28) by
+ smtp.swri.org (129.162.29.125) with Microsoft SMTP Server id 15.0.1395.4 via
+ Frontend Transport; Fri, 28 Sep 2018 13:56:40 -0500
+From:   "Strain, Roger L" <roger.strain@swri.org>
+To:     <git@vger.kernel.org>
+CC:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stephen R Guglielmo <srguglielmo@gmail.com>,
+        "David A . Greene" <greened@obbligato.org>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Stephen R Guglielmo <srg@guglielmo.us>,
+        Dave Ware <davidw@realtimegenomics.com>,
+        David Aguilar <davvid@gmail.com>
+Subject: [PATCH 0/4] Multiple subtree split fixes regarding complex repos
+Date:   Fri, 28 Sep 2018 13:56:39 -0500
+Message-ID: <20180928183540.48968-1-roger.strain@swri.org>
+X-Mailer: git-send-email 2.19.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-28_08:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1809280185
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+We recently (about eight months ago) transitioned to git source control systems for several very large, very complex systems. We brought over several active versions requiring maintenance updates, and also set up several subtree repos to manage code shared between the systems. Recently, we attempted to push updates back to those subtrees and encountered errors. I believe I have identified and corrected the errors we found in our repos, and would like to contribute those fixes back.
 
-> Junio, can you squash in the following patch or would you prefer I
-> reroll the entire series?
+Commands to demonstrate both failures using the current version of the subtree script are here:
+https://gist.github.com/FoxFireX/1b794384612b7fd5e7cd157cff96269e
 
-Squash it to f8cd77d5 ("fsmonitor: update GIT_TEST_FSMONITOR
-support", 2018-09-18) and use the two new lines in the log message?
+Short summary of three problems involved:
+1. Split using rejoins fails in some cases where a commit has a parent which was a parent commit further upstream from a rejoin, causing a new initial commit to be created, which is not related to the original subtree commits.
+2. Split using rejoins fails to generate a merge commit which may have triaged the previous problem, but instead elected to use only the parent which is not connected to the original subtree commits. (This may occur when the commit and both parents all share the same subtree hash.)
+3. Split ignoring joins also ignores the original add commit, which causes content prior to the add to be considered part of the subtree graph, changing the commit hashes so it is not connected to the original subtree commits.
 
-I can do that.
+The following commits address each problem individually, along with a single commit that makes no functional change but performs a small refactor of the existing code. Hopefully that will make reviewing it a simpler task. This is my first attempt at submitting a patch back, so apologies if I've made any errors in the process.
 
-Thanks.
+Strain, Roger L (4):
+  subtree: refactor split of a commit into standalone method
+  subtree: make --ignore-joins pay attention to adds
+  subtree: use commits before rejoins for splits
+  subtree: improve decision on merges kept in split
+
+ contrib/subtree/git-subtree.sh | 129 +++++++++++++++++++++------------
+ 1 file changed, 83 insertions(+), 46 deletions(-)
+
+-- 
+2.19.0.windows.1
+
