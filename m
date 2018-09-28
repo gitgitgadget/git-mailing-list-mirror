@@ -2,120 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SBL_CSS shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBDF71F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 16:37:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A21001F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 16:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728946AbeI1XCL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 19:02:11 -0400
-Received: from mail-qk1-f174.google.com ([209.85.222.174]:41216 "EHLO
-        mail-qk1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728451AbeI1XCK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 19:02:10 -0400
-Received: by mail-qk1-f174.google.com with SMTP id n3-v6so4221589qkn.8
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 09:37:36 -0700 (PDT)
+        id S1728920AbeI1XO5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 19:14:57 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34753 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726934AbeI1XO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 19:14:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id z4-v6so5728203wrb.1
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 09:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=9uqmVIyR1m11S6/TsLEd0Y1xadSurWHPN9WY1ZkonrA=;
-        b=DqR/rdJGERGMDjUv7tZOjYDzosEt0JyePn3q9uqDSGt8D/moYflMjAnFGRWuzdj7Xw
-         wQXJ6Jc2EbTfYROjXNmieJwkrgL+KInLtpjr44GpjD/Wg8qQZqNc4CA2ryTqVK+Xn5Ry
-         6lvxIUpxI2nVmAYDzqA1DgeWpt1axEX8MSjlHu4T/JZH40DFcSyaWaxH825e1WLCepKK
-         Bop6PFKnT/gvFa2RhpbPAawt1eQLhEp1EP0h2sJCFB/m8UScAKjeSv8jjmAnDtl4jInx
-         rhb/FNUWhwjxVEDugsO+Zr+XejEB36C/XlnEvkr0cWECpst5V0tXds/9SB4JquVZ1ODb
-         Xh2g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=47ygUmpwypn123pOeR63MfF2YxI5+uPemhRa8HyjlQw=;
+        b=hvKKvHNQQP+DlgExGGv9W+9HSOJRXPha2VaIR7je5J1Ro35vdexIGj2VMzh13l1RA0
+         XhwmvNWKNVNK7nyJ6oxGzKOVllhBbREPH4I1+nTDa1lz81NA/VGXrC31DvJedY0zJrpq
+         d0k6mJmOv0QcWzslA+4hjlvO/nPbGU7QWms0gi1j060HNwursHmyZZlIb8BbiKRN/S+8
+         BvlZnXqbSPMsTZI0G/HpHIh+KtcB8Ht5s86VCIY2RxLO+NQU2M/SDwopOnvpX4sHE6/Q
+         gH9E0w2nbjcAlDevqLrjuW7FeyI+LVKOF4P08D0jKbAPd0wBie8c5MiRB1c6ey5tb47q
+         /erA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=9uqmVIyR1m11S6/TsLEd0Y1xadSurWHPN9WY1ZkonrA=;
-        b=pBjtR6xJKBtIQ7WnrC9Qd3eM06wlm0hH6Nv/j52P4FIrnIbTJbamaTA32ZnaNkhjAH
-         Tom8tfVfdCWBkMt1Rc0Qe/65WPwyWFkZnJpvrSn/nK6r1MF4Tsecd5QNoxqxQP7h2qov
-         pbCRmHouXlAwEi3gP4yo+diUFRLBi3bz5uLMde2VTevBK6cOh5mm/+1DOtOKLebK/jjZ
-         pkIav0oB+bONPQ/zQknYsGCLCTopP2V/hGatyMeNWkO4O1RsVcZPUR94qoZq91TtMlwk
-         bkd3IzufQi7Cn8CA1eIuKG0gXi+arN7LGTKzHTV3x2nBcbkqfDYuXoqgVcYCZ1ixpZFF
-         W83Q==
-X-Gm-Message-State: ABuFfohGHctJt8bqk5Wc1hSbJWonHpl4gCyHybwH8db5/Ahz7NvyQzqJ
-        10JuIbg3qSq4RSdXGNeILCpk9ECg
-X-Google-Smtp-Source: ACcGV63WOynh0HVvMxbCXVdiDRxp1pfiivEDAMJ8Pjr9tO81yBHc5CHmOpTM7lr2fXsAEMLQ1aRvfg==
-X-Received: by 2002:a37:a48d:: with SMTP id n135-v6mr5754505qke.160.1538152655591;
-        Fri, 28 Sep 2018 09:37:35 -0700 (PDT)
-Received: from lottle.net.com ([2600:3c03::f03c:91ff:fe55:6cc])
-        by smtp.gmail.com with ESMTPSA id n25-v6sm3519135qkl.8.2018.09.28.09.37.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Sep 2018 09:37:34 -0700 (PDT)
-From:   Kyle Hubert <khubert@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Kyle Hubert <khubert@gmail.com>
-Subject: [PATCH] Improvement to only call Git Credential Helper once
-Date:   Fri, 28 Sep 2018 12:37:16 -0400
-Message-Id: <20180928163716.29947-1-khubert@gmail.com>
-X-Mailer: git-send-email 2.11.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=47ygUmpwypn123pOeR63MfF2YxI5+uPemhRa8HyjlQw=;
+        b=Nf/336PNrtCYXb7We/Bm3Hk86laviRWL/GWHvEFseyE4reU42JUCj7fjYwTvp5Log1
+         gagcZnA7avorD869UkUoVTAIWtwV1vAfOLdZuyeBcD21+aVYJtjnHkTa08N50lhqSv9T
+         Ye7S5/bSz/44m5YfyIHx0GVGJ3//nGSTgpX78amajomzGi1mCZn/zLX6ceAKtju0mH+1
+         NlEo4BdkCo/QOrYoOOKuzMK0Jeb6ZzDPlBC7SJcJx8kGsjPKb0n+re62qV7xGEEvGwhe
+         BMZWYLtJdWKNq5aSwZce//TNuaxaDMY2O7HTG6rIgSCcxlWfhMu5x1hAxYFzm4I/n6Ht
+         M7vw==
+X-Gm-Message-State: ABuFfogtZy7H+iPMyX1cTTGafxw/BwqJPW/dY3UHcLkId9lLD9Qp2ri2
+        nVqjKRQjKyC+wMX8r9SogQo1lKrI
+X-Google-Smtp-Source: ACcGV63Zb+CgkW4YwIg0f6edYf3hpF/SOtlRoYlJ2VaGh8QIKML2c2s48AMa0/3fcqdxtIS1KBSHTQ==
+X-Received: by 2002:adf:ec11:: with SMTP id x17-v6mr10903575wrn.266.1538153417615;
+        Fri, 28 Sep 2018 09:50:17 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u191-v6sm2727567wmd.31.2018.09.28.09.50.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 28 Sep 2018 09:50:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, avarab@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/CodingGuidelines: How to document new APIs
+References: <xmqqwor6hmgk.fsf@gitster-ct.c.googlers.com>
+        <20180927212727.128214-1-sbeller@google.com>
+        <20180927232732.GA216193@aiede.svl.corp.google.com>
+        <20180928011129.GD11281@sigill.intra.peff.net>
+Date:   Fri, 28 Sep 2018 09:50:14 -0700
+In-Reply-To: <20180928011129.GD11281@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 27 Sep 2018 21:11:29 -0400")
+Message-ID: <xmqq5zypefcp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When calling the Git Credential Helper that is set in the git config,
-the get command can return a credential. Git immediately turns around
-and calls the store command, even though that credential was just
-retrieved by the Helper. This creates two side effects. First of all,
-if the Helper requires a passphrase, the user has to type it in
-twice. Secondly, if the user has a number of helpers, this retrieves
-the credential from one service and writes it to all services.
+Jeff King <peff@peff.net> writes:
 
-This commit introduces a new field in the credential struct that
-detects when the credential was retrieved using the Helper, and early
-exits when called to store the credential.
+> On Thu, Sep 27, 2018 at 04:27:32PM -0700, Jonathan Nieder wrote:
+>
+>> > There are different opinions on how to document an API properly.
+>> > Discussion turns out nobody disagrees with documenting new APIs on the
+>> > function level in the header file and high level concepts in
+>> > Documentation/technical, so let's state that in the guidelines.
+>> 
+>> I disagree with this.  I think we should put all the API docs in the
+>> header file, like we're already doing in e.g. strbuf.h.
+>
+> Me too.
+>
+> I think other high-level concepts that are _not_ APIs (e.g., file
+> formats, protocol, etc) could go into technical/.
+>
+> (Though actually, those are the thing that I would not mind at all if
+> they get formatted into real manpages and shipped to end users. We do
+> not expect most users to dissect our file-formats, but they could at
+> least be useful to somebody poking around).
+>
+>> Do you have a link to where in the discussion this split-docs strategy
+>> was decided?
+>
+> I think the purpose of this patch is to spur people towards a decision.
+> :)
+
+OK.
+
+-- >8 --
+Subject: CodingGuidelines: document the API in *.h files
+
+It makes it harder to let the API description and the reality drift
+apart if the doc is kept close to the implementation or the header
+of the API.  We have been slowly migrating API docs out of the
+Documentation/technical/api-* to *.h files, and the development
+community generally considers that how inline docs in strbuf.h is
+done the best current practice.
+
+We recommend documenting in the header over documenting near the
+implementation to encourage people to write the docs that are
+readable without peeking at the implemention.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- credential.c | 8 +++++++-
- credential.h | 3 ++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ Documentation/CodingGuidelines | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/credential.c b/credential.c
-index 62be651b0..79bf62d49 100644
---- a/credential.c
-+++ b/credential.c
-@@ -280,8 +280,10 @@ void credential_fill(struct credential *c)
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 6d265327c9..e87090c849 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -385,7 +385,11 @@ For C programs:
+    string_list for sorted string lists, a hash map (mapping struct
+    objects) named "struct decorate", amongst other things.
  
- 	for (i = 0; i < c->helpers.nr; i++) {
- 		credential_do(c, c->helpers.items[i].string, "get");
--		if (c->username && c->password)
-+		if (c->username && c->password) {
-+			c->retrieved = 1;
- 			return;
-+		}
- 		if (c->quit)
- 			die("credential helper '%s' told us to quit",
- 			    c->helpers.items[i].string);
-@@ -300,6 +302,10 @@ void credential_approve(struct credential *c)
- 		return;
- 	if (!c->username || !c->password)
- 		return;
-+	if (c->retrieved) {
-+		c->approved = 1;
-+		return;
-+	}
+- - When you come up with an API, document it.
++ - When you come up with an API, document it the functions and the
++   structures in the header file that exposes the API to its callers.
++   Use what is in "strbuf.h" as a model to decide the appropriate tone
++   in which the description is given, and the level of details to put
++   in the description.
  
- 	credential_apply_config(c);
- 
-diff --git a/credential.h b/credential.h
-index 6b0cd16be..d99df2f52 100644
---- a/credential.h
-+++ b/credential.h
-@@ -8,7 +8,8 @@ struct credential {
- 	unsigned approved:1,
- 		 configured:1,
- 		 quit:1,
--		 use_http_path:1;
-+		 use_http_path:1,
-+		 retrieved:1;
- 
- 	char *username;
- 	char *password;
--- 
-2.11.0
-
+  - The first #include in C files, except in platform specific compat/
+    implementations, must be either "git-compat-util.h", "cache.h" or
