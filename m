@@ -2,74 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D07AD1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 22:15:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA6D1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 22:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726517AbeI2Ek6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 00:40:58 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:32830 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726325AbeI2Ek6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 00:40:58 -0400
-Received: by mail-wr1-f43.google.com with SMTP id f10-v6so7887201wrs.0
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 15:15:10 -0700 (PDT)
+        id S1726492AbeI2Evo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 00:51:44 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55895 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726287AbeI2Evo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 00:51:44 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 206-v6so3596708wmb.5
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 15:25:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=9c3jh9R+4KaRB0CazN6VnTHpMXxz9UaG5wUa3zkzypY=;
-        b=gv1b+Y+M5+NwDgaKDK1n1UJBUvzuZyskrMU/T0SyIcAne++0ZafuJjp9PMBFfAdO1K
-         JtacJ/kiZjPvUDHVYEJ9uMjqrU1JX18HFfJE1T6crfxIICv6Ho36amE6hkTmZxhyIrKp
-         8Dvj6tcihYH4VjvYqJBfrGzDF8IAcZj5NmcmoBymjvcV/QqwxEnCpf9+icuEpFy5m7a1
-         2TgwcJxC+UJ7e70dG9z3/Bzg/XdFRMeP7IwA7fYMzefwQSvO1Ep1l3QQpawnJXPqW7Wl
-         7lPUv61LybGcJ5pQRrKvcastElgT/aLX7ih8ntqZ/EvYpcQ2JptCD8noUFrZIURJk/nm
-         ESow==
+        bh=fW3SuHXYj2/rpU7Sj9UOGK9rRI0znk23QCGKAXHH4mE=;
+        b=SoO0GqwOg2VtCMBEoLzvzzpvoP1W7GNpNrc8g9POxfDILCkiGo9TMlFZJ990FlUJKI
+         9s/bbRi9Sr1hwaSMwVP3eMwYSQ0wHRGEiCLFiu8GokdEgO9inlUaIe+4WuZIGGnFqJ7X
+         IXiXuPp6CIosDLjFi81a+6FnrSR/ehYoFHccwleoBI+wL/NFtBPCxXG2mURpsnu3elRl
+         LBWersavYs6rDr/ri2MAsW6QrtI/thhE+QT7nnaZ1leucfZ8AUjuv/Qmu0ZbwwBUdxCj
+         SuzWFg5//miXOsG2gNqdA44oGfB1a/S0kv685sFpOTOehFfpti1SXY1w2tlWEzg1cpOF
+         1mrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=9c3jh9R+4KaRB0CazN6VnTHpMXxz9UaG5wUa3zkzypY=;
-        b=swH8/cXNKSE4+QmpwED0JHRwzmSSCen0UOKsA+yquTBR7IUflZ0GtFWvky/tnbNGo8
-         pwqj2I3gB16u7x8qO78GKn5v6bMkkQi2DHBcuEmWcOhILEaWOOhCZzM+xp7xQcQTPNCD
-         trrexesP+y1nCsBB4+f+sK8lA+SWBYpX6RBTiTxFNq3hNhr1jyZAvy35r7kRbR1gbb4x
-         y4Dz+rs1MhQScSkeIVqaxdXBG/nilDuxBDukx52KH+flzj1Z9btGO791BYKEXUCm9iQv
-         5147Bw2glYcN4qgfLLFDX4Amhoe7xbcjwIqUURIAllEJf2F/BSNxODTOx8K9CK+1Cse+
-         uARA==
-X-Gm-Message-State: ABuFfojHIwviZ/SLHkHkAPMVSjU+1bPudKczDFMzCZm+feXstc1Qu/9f
-        2aYrdlbJYC5v8/Hi5Ry1qpk=
-X-Google-Smtp-Source: ACcGV633l0DqXIWPuLsLA8Fxn78GFN36M5K6ichjV9MY//D1UIr5ynuvbemQmSnrSHHJ/CmbijKoUw==
-X-Received: by 2002:a5d:5210:: with SMTP id j16-v6mr331017wrv.290.1538172909146;
-        Fri, 28 Sep 2018 15:15:09 -0700 (PDT)
+        bh=fW3SuHXYj2/rpU7Sj9UOGK9rRI0znk23QCGKAXHH4mE=;
+        b=S6er68c3RwMirl2DKZ7pKfMUo1as6Hy833del/rZyvVoUO5tDj+DrdgT3GzhVk+pnb
+         gwPQnqUueKN5TQzgS+SYEPgnQ4p1uCpf/Qol/DzmXByeXMwfpmNMXuNTMsmOg3CIkK65
+         OuMfQ7MTWgQRWyexthdrjl0jeR/W9wbrSJrHuBFubv60Hd40pUTQiM5cxC1acVQnwXg9
+         tlFDi0q1nDtldA6qi4b3eUXL7F2MTa0GBfXxN0SOEGLKjGTWRNdUwgVjJniqhRGqhr7A
+         PdSUvujBCZ8jShvLNtD5re7reJw/2SUMLhEZ5eP4wSyWBrYlhBOmlbYcR4xFYDKVdqoS
+         z2GQ==
+X-Gm-Message-State: ABuFfoip65EJs0KOq9Dq1QnzCRSxUEkABdEtsXxBrlUg6Q6GzwhL5ILT
+        cWuwXMwlwUa+TjkQgvPYsTI=
+X-Google-Smtp-Source: ACcGV62DqB8Mlpq2lZIfXNk/7dWOpKjuA4M4RJyY3QBNcUx/UC3uN/w8pxLv9ZmoQzjRRn/qPeRWMg==
+X-Received: by 2002:a1c:603:: with SMTP id 3-v6mr2970682wmg.64.1538173552452;
+        Fri, 28 Sep 2018 15:25:52 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a9-v6sm2946407wmf.28.2018.09.28.15.15.08
+        by smtp.gmail.com with ESMTPSA id d2-v6sm4788707wrn.20.2018.09.28.15.25.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Sep 2018 15:15:08 -0700 (PDT)
+        Fri, 28 Sep 2018 15:25:51 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v6 4/7] config: add new index.threads config setting
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20180926195442.1380-1-benpeart@microsoft.com>
-        <20180926195442.1380-5-benpeart@microsoft.com>
-        <20180928002627.GO27036@localhost>
-        <cbc48a95-62f5-a098-fb70-97b6cf241920@gmail.com>
-        <xmqqsh1tczyz.fsf@gitster-ct.c.googlers.com>
-        <a58a5cce-b3c2-62a2-598b-6b7dbe1a86fc@gmail.com>
-        <bf0c24ac-6e2a-9a3e-835f-f21e763ab2c7@ramsayjones.plus.com>
-Date:   Fri, 28 Sep 2018 15:15:07 -0700
-In-Reply-To: <bf0c24ac-6e2a-9a3e-835f-f21e763ab2c7@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Fri, 28 Sep 2018 21:30:02 +0100")
-Message-ID: <xmqqo9ch9slw.fsf@gitster-ct.c.googlers.com>
+To:     Sam McKelvie <sammck@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] submodule: Alllow staged changes for get_superproject_working_tree
+References: <20180927181054.25802-1-sammck@gmail.com>
+        <xmqqbm8ifvka.fsf@gitster-ct.c.googlers.com>
+        <D09E2583-BD1D-4C56-9C19-6B1E97CEEDAA@gmail.com>
+        <xmqqmus2e6rp.fsf@gitster-ct.c.googlers.com>
+        <37DC7525-209F-49CC-90AA-D55463456D20@gmail.com>
+        <xmqqftxtcxjb.fsf@gitster-ct.c.googlers.com>
+        <2A26D56C-59E6-4F69-B0CA-4849EBE7EBC9@gmail.com>
+Date:   Fri, 28 Sep 2018 15:25:51 -0700
+In-Reply-To: <2A26D56C-59E6-4F69-B0CA-4849EBE7EBC9@gmail.com> (Sam McKelvie's
+        message of "Fri, 28 Sep 2018 14:59:15 -0700")
+Message-ID: <xmqqh8i99s40.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -79,25 +73,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Sam McKelvie <sammck@gmail.com> writes:
 
->>                 if (!nr) {
->>                         ieot_blocks = istate->cache_nr / THREAD_COST;
->> -                       if (ieot_blocks < 1)
->> -                               ieot_blocks = 1;
->>                         cpus = online_cpus();
->>                         if (ieot_blocks > cpus - 1)
->>                                 ieot_blocks = cpus - 1;
+>> Or perhaps
+>> 
+>> rev-parse: --show-superproject-working-tree should work during a merge
+>> 
+>> may be more to the point.  It does not hint the root cause of the
+>> bug like the other one, but is more direct how the breakage would
+>> have been observed by the end users.
+>> 
+> Haha, that is closer to my original title that Stefan wanted to change:
 >
-> So, am I reading this correctly - you need cpus > 2 before an
-> IEOT extension block is written out?
+> submodule.c: Make get_superproject_working_tree() work when superproject has unmerged changes of the submodule reference
 >
-> OK.
+> Though I could see why mine was too long.
+>
+> I’m really happy with both your suggestions
 
-Why should we be even calling online_cpus() in this codepath to
-write the index in a single thread to begin with?
+I've pushed out with the "rev-parse: ..." as the title.
 
-The number of cpus that readers would use to read this index file
-has nothing to do with the number of cpus available to this
-particular writer process.  
+Thanks for the fix.
 
