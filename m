@@ -2,182 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9CA91F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 13:55:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 451991F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 14:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728873AbeI1UTq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 16:19:46 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:39964 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728792AbeI1UTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 16:19:46 -0400
-Received: by mail-pf1-f194.google.com with SMTP id s5-v6so4392193pfj.7
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 06:55:52 -0700 (PDT)
+        id S1727361AbeI1Uph (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 16:45:37 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:37226 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726121AbeI1Uph (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 16:45:37 -0400
+Received: by mail-qt1-f193.google.com with SMTP id n6-v6so6806059qtl.4
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 07:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ih1IRQB5JvPmWOH+vEKjUxz+cWBard8YL+kkvINPMio=;
-        b=NsljpP+josPPdXFXyHuXC4NnKP3tdELlDDUExezwzesAANmutLdUErl4p1f/f1L/C7
-         EkivKGmwbKAtjJYcXOye9mCJ/6pPuKHcOzT6oZq6WsAP82mECHjRseBj+mPufcrixLf2
-         rWGlkHvjSYGnaEix952V4m590cEiN70t29JyB5eA+Lmi6o2yuOEptmiE3uzCnmkPCdLn
-         CxMIXq5HTOd9Sct/Z8Vv9JOgA2WesFy91+GY+iK+1djNDXH5V2q7PDIkTWzGlPLrXY8q
-         OqJX5RLkTLFHfJYWjfIuXjDLX9ZUowPrBSfe5yDo/0rIrwPzZ5+GitOBQdXcujRmx4tw
-         8HaA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=20pVwesw+KnUP97TH4nFLgElGM1FwfMMalos1N55tgU=;
+        b=Wc9rU2FKfeJcfJNo0V/NmnlTacWOqhGi/MrB6iMmv4Q3LWkJSAeXs/7SQSN/LjLska
+         FICFnSgNj7ZU4T9nKFx3HYLwRUG3bwX34q5V7jNavEddGiqg0TU1lmRdxjZu3eq0TIQC
+         KBgzBtJ0O5e9yBFTPdURVMESPBHJlN/L6X8wzpCkUy3dc8X/xdjKL3iQu3o5uMTkQYpk
+         HWKhHEAWWz9Z8/mIwMEM0QtOYSi7RoOS0wc1vEvOw+hqE4P1h4xENSsMasCqY6pc64l+
+         PK40cOAxVifxTLoL5nEdV6vp1a9jHkdfVxKNDlwbMvI+Nh6tZCAN3Nb9qQencvrNfvDN
+         3FHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ih1IRQB5JvPmWOH+vEKjUxz+cWBard8YL+kkvINPMio=;
-        b=ucBkikQylYlzY9emyqsz2qi9Av7nrMXE5YMHXL3yuup5LPG6vRXtSPemNyLLnbFKAz
-         oxdqQ5aCQrG1FFO8xZ5elwjhLgPuC1/+gF5ISjG+vK6Xhu+EYSiau7revPjwXE9TEbeq
-         zFEThgMpy11u0s0JAqc7+PQB1NOiXvw/Xr8C0Sqkb60zQ35i1s+q63kkhx9tG+zK49m3
-         dTdwV/toAePS1K2+kD3hik21UEJ1/qS+13+xD9dcTMK8ssTbaxApQAzgmI+OXhGZ+i9R
-         LBhIQCfl6pryDC4YaxdZ2M3VyPXoywWNFbk4rQ0kLMjRMcvDQX8hAdX1fNB7JRtwfdZO
-         gjsA==
-X-Gm-Message-State: ABuFfogJJmUyNyJgi8zGF6k+wdHUfj5lIx3sVaTJS4e+llXmLiEy+Jw7
-        +Fl2D/pnEFIfhBoAIqosvsbbqFZ/i76X9g==
-X-Google-Smtp-Source: ACcGV61P+af1BBCDSmv48HkKQMcMMFWBgoe7C23vJ0DS/lhRafyV0muU2HPs/W0kHdB0vKyTspcwOg==
-X-Received: by 2002:a62:3ac8:: with SMTP id v69-v6mr16923503pfj.164.1538142951749;
-        Fri, 28 Sep 2018 06:55:51 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:1924:afac:8279:2210])
-        by smtp.gmail.com with ESMTPSA id v83-v6sm13672684pfa.103.2018.09.28.06.55.49
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=20pVwesw+KnUP97TH4nFLgElGM1FwfMMalos1N55tgU=;
+        b=q12MKENiCvgvGWcC4fuEULsoIpcIRqpCeMaL71eSoX6cLFdNGe3OAfXJxTOKB5ngO/
+         ptWqcFZLwHTLn9cj1SsHu+YYvov16J05cXACM4b7i12v7GwhABWpkblSckkXDquvYfDt
+         P5K9UUUXTeiD2cque04lpi/tviDlW7o3YoCTgiMkmpfjlhIrfj3Mx965oEbncRt+G+6R
+         D6pOlvvwzjvxwvo6xQOoo8dhMEetmGZoAkkBAaIDw9Gh3iLlhWvJHtj7WLXoFOKR+q21
+         e319z2Mpefk6Yw1NjCaToq9BgSnSdz7FJl//g/5fQInWSgnwYIgZuoday/H68fJ1Jo68
+         4ZzA==
+X-Gm-Message-State: ABuFfohFyq6pH1xoUMIGIt9KeO5aVSwrTlmOAbn+LRX4JIbwR7E27Bel
+        iac17+STa1KhXYQ5ggLu6vY=
+X-Google-Smtp-Source: ACcGV61bmBWklxhqWSHjkqFPQYr4P7tDHGr11DB/Csy+qKR6pMuehSb/uuVxDYEL23Eg/2NRg2DcXg==
+X-Received: by 2002:ac8:1c89:: with SMTP id f9-v6mr12833923qtl.265.1538144495184;
+        Fri, 28 Sep 2018 07:21:35 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id m61-v6sm720414qte.30.2018.09.28.07.21.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Sep 2018 06:55:50 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Fri, 28 Sep 2018 06:55:49 -0700
-To:     "Stephen P. Smith" <ischis2@cox.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 1/1] roll wt_status_state into wt_status and populate in
- the collect phase
-Message-ID: <20180928135549.GA23652@syl>
-References: <xmqqr2i5ueg4.fsf@gitster-ct.c.googlers.com>
- <20180928044936.2919-1-ischis2@cox.net>
- <20180928044936.2919-2-ischis2@cox.net>
+        Fri, 28 Sep 2018 07:21:34 -0700 (PDT)
+Subject: Re: [PATCH v3 3/5] fsmonitor: update GIT_TEST_FSMONITOR support
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "jrnieder@gmail.com" <jrnieder@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+References: <20180914143708.63024-1-benpeart@microsoft.com>
+ <20180918232916.57736-1-benpeart@microsoft.com>
+ <20180918232916.57736-4-benpeart@microsoft.com>
+ <20180928100143.GA23446@localhost>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <653f4fbd-ed32-4cf8-b1bb-9cfef4f8deaa@gmail.com>
+Date:   Fri, 28 Sep 2018 10:21:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180928044936.2919-2-ischis2@cox.net>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+In-Reply-To: <20180928100143.GA23446@localhost>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 27, 2018 at 09:49:36PM -0700, Stephen P. Smith wrote:
-> When updating the collect and print functions, it was found that
-> status variables were initialized in the collect phase and some
-> variables were later freed in the print functions.
 
-Nit: I think that in the past Eric Sunshine has recommended that I use
-active voice in patches, but "it was found" is passive.
 
-I tried to find the message that I was thinking of, but couldn't, so
-perhaps I'm inventing it myself ;-).
+On 9/28/2018 6:01 AM, SZEDER Gábor wrote:
+> On Tue, Sep 18, 2018 at 11:29:35PM +0000, Ben Peart wrote:
+>> diff --git a/t/README b/t/README
+>> index 56a417439c..47165f7eab 100644
+>> --- a/t/README
+>> +++ b/t/README
+>> @@ -319,6 +319,10 @@ GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncommon pack-objects code
+>>   path where deltas larger than this limit require extra memory
+>>   allocation for bookkeeping.
+>>   
+>> +GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
+>> +code path for utilizing a file system monitor to speed up detecting
+>> +new or changed files.
+> 
+> Here you tell us to set GIT_TEST_FSMONITOR to an absolute path, and we
+> are good to go.
+> 
+>> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+>> index 756beb0d8e..d77012ea6d 100755
+>> --- a/t/t7519-status-fsmonitor.sh
+>> +++ b/t/t7519-status-fsmonitor.sh
+>> @@ -8,7 +8,7 @@ test_description='git status with file system watcher'
+>>   # To run the entire git test suite using fsmonitor:
+>>   #
+>>   # copy t/t7519/fsmonitor-all to a location in your path and then set
+>> -# GIT_FSMONITOR_TEST=fsmonitor-all and run your tests.
+>> +# GIT_TEST_FSMONITOR=fsmonitor-all and run your tests.
+> 
+> But this old comment is different, suggesting copying that script to
+> our $PATH.
+> 
+> I prefer your instructions above, because it's only a single step,
+> and, more importantly, it won't pollute my $PATH.  I think this
+> comment should be updated to make the advices in both places
+> consistent.  Or perhaps even removed, now that all GIT_TEST variables
+> are documented in the same place?
+> 
 
-I'm CC-ing Eric to check my judgement.
-
-> Move the status state structure variables into the status state
-> structure and populate them in the collect functions.
->
-> Create a new funciton to free the buffers that were being freed in the
-> print function.  Call this new function in commit.c where both the
-> collect and print functions were being called.
->
-> Based on a patch suggestion by Junio C Hamano. [1]
->
-> [1] https://public-inbox.org/git/xmqqr2i5ueg4.fsf@gitster-ct.c.googlers.com/
->
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
->  builtin/commit.c |   3 ++
->  wt-status.c      | 135 +++++++++++++++++++++--------------------------
->  wt-status.h      |  38 ++++++-------
->  3 files changed, 83 insertions(+), 93 deletions(-)
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 51ecebbec1..e168321e49 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -506,6 +506,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
->
->  	wt_status_collect(s);
->  	wt_status_print(s);
-> +	wt_status_collect_free_buffers(s);
->
->  	return s->committable;
->  }
-> @@ -1388,6 +1389,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
->  		s.prefix = prefix;
->
->  	wt_status_print(&s);
-> +	wt_status_collect_free_buffers(&s);
-> +
->  	return 0;
->  }
->
-> diff --git a/wt-status.c b/wt-status.c
-> index c7f76d4758..9977f0cdf2 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -744,21 +744,26 @@ static int has_unmerged(struct wt_status *s)
->
->  void wt_status_collect(struct wt_status *s)
->  {
-> -	struct wt_status_state state;
->  	wt_status_collect_changes_worktree(s);
-> -
-
-Nit: unnecessary diff, but I certainly don't think that this is worth a
-re-roll on its own.
-
->  	if (s->is_initial)
->  		wt_status_collect_changes_initial(s);
->  	else
->  		wt_status_collect_changes_index(s);
->  	wt_status_collect_untracked(s);
->
-> -	memset(&state, 0, sizeof(state));
-> -	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
-> -	if (state.merge_in_progress && !has_unmerged(s))
-> +	wt_status_get_state(&s->state, s->branch && !strcmp(s->branch, "HEAD"));
-> +	if (s->state.merge_in_progress && !has_unmerged(s))
->  		s->committable = 1;
-
-Should this line be de-dented to match the above?
-
->  }
->
-> +void wt_status_collect_free_buffers(struct wt_status *s)
-> +{
-> +	free(s->state.branch);
-> +	free(s->state.onto);
-> +	free(s->state.detached_from);
-> +}
-> +
-> +
-
-Nit: too much whitespace between 'wt_status_collect_free_buffers()' and
-'wt_longstatus_print_unmerged()' below. I see that there are two
-newlines above, but I think that there should just be one.
-
->  static void wt_longstatus_print_unmerged(struct wt_status *s)
->  {
->  	int shown_header = 0;
-> @@ -1087,8 +1092,7 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
->  }
-
-The rest of this patch looks sensible to me, but I didn't follow the
-original discussion in [1], so take my review with a grain of salt :-).
-
-Thanks,
-Taylor
+I prefer the suggestion to simply remove this text from the test script 
+now that there is documentation for it in the t/README file.
