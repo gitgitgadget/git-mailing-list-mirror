@@ -2,121 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 300DB1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 00:26:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 461421F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 00:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727524AbeI1Gr2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 02:47:28 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34683 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725924AbeI1Gr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 02:47:28 -0400
-Received: by mail-wr1-f65.google.com with SMTP id z4-v6so3095754wrb.1
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 17:26:31 -0700 (PDT)
+        id S1728683AbeI1GvW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 02:51:22 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41117 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728075AbeI1GvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 02:51:22 -0400
+Received: by mail-pf1-f196.google.com with SMTP id m77-v6so3024014pfi.8
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 17:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mWR/9KMm1Ww7a5hfrCClclXXZB7DM2sKTf93dJC00iA=;
-        b=MwEJIiU5h8tse46BWwV5kDEtRBsEHM/nt6gSF54ykyNnGGSLSwPGzpG5B6DTgLLeJ1
-         maElazydYIO5QAyP0mtEVgZYFWyVAqY31nsEH8j0KECQVVikiQrAuRLHjCIXYyvtzun1
-         tpUycoSaI6LXVs3TVJ8b3hjzJeyRZ2MdHFv15JP9Dy404nsNFouFpY797VrslTEHUNkf
-         WQnJkjmeHxR/OYfuR0reJ4QGs08aG9yymIC0wkI1/DTQkOyO0GM1F8hnS+zFHDcWlm3K
-         Dmrmgcva3nMRE7QAOue2OxRYnJusKbBwyRQsTXiLkfTMtkcpl/Fjw66As2z70hum/vwn
-         1Z0g==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9mOF5maE3FQCwh9FUBy0dQRxL5q+L9ue6IlK6/9IgFI=;
+        b=kiMoqMUGNcga23vB0euLHG4cTE0a5XC4sbdTeSEkbcNMSS3YF3OeOxYsWF77lGnDJo
+         BAKrtVdO33sn77LbTfZ5JjBHVubzoIis/JW4D3DWeVKrMk3dqdz9HTPzqmKczw2ENLl+
+         /bOhUQi/eJFNAxIfQRzetUJjuhMXezwvBQfbQA+s6eO8ceOMR1o2GR0eFY3WOXpzBhyp
+         L9yEO5X++L+iMvbajfyFnTgzMvqYK5F564WD/seKWsnZwT+lUYJR1l/eNBj1YqiV133K
+         uv5SWrRLGhjgUWop9taLQqRTbAnhFSTGz4FOUNWEfw9KbZz+CXuQBxUC1ApfMiARotMJ
+         Bx5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mWR/9KMm1Ww7a5hfrCClclXXZB7DM2sKTf93dJC00iA=;
-        b=U5sAoll3tUAhtdgIhoCUuT9x50C2C4LRKzlCtCya+CF4oM7nFlc93CGO1oLEH3JoWV
-         4ZUYCP3/ijb22wFqYV2CmKTLEsrX5GZQa9nxUVZ3Tx73srg/iWlPAAKDubWe22EHp9BS
-         7V5f3Uxs3k9LpbDNzJHqP+U1GN9PKYTO8YE0eSeJYoLGKtKRBI3JJD9/XxsqZwToJUlE
-         Pe0IIhzdHUiYUGhxN9g0e8xxRwL3o3svBwfSpBE27YuvO3zyNtTZycOCleXDjNiCVJXf
-         W7FRg9VB51PAFP3wT7Uver2nQvcsUkn7B8fg2jxWjZKugg6MmxYA/TlWAqmc+hAyzo6B
-         GNkg==
-X-Gm-Message-State: ABuFfoiSF0DRhOPnfqU5PofUn8Jr6gxZYZ7u2NIu1B0CeBcWSFandEsD
-        9GEXxZyheCy8Xc4Oht2vQ0Q=
-X-Google-Smtp-Source: ACcGV607gdBGMqIRijWbK+fWDFypCUrP7GPa60ZjjBg1BWh1m+AC8Wi2Z5PUuRJ7Q1RhqGEvf9WPvQ==
-X-Received: by 2002:adf:f111:: with SMTP id r17-v6mr2367364wro.303.1538094390695;
-        Thu, 27 Sep 2018 17:26:30 -0700 (PDT)
-Received: from localhost (x4dbd8656.dyn.telefonica.de. [77.189.134.86])
-        by smtp.gmail.com with ESMTPSA id i4-v6sm5979546wrs.87.2018.09.27.17.26.29
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9mOF5maE3FQCwh9FUBy0dQRxL5q+L9ue6IlK6/9IgFI=;
+        b=HG8gpmP4A1rXMc6N1zUa+nIetDzi8bFXbxdgXZugjhXV4r32unDdp8e6AWlK0oYHHW
+         t7Hc00w6NRGU4p+47AQHY5q1yHbsv87VGq4fb+thDHbxgsGK/x7GujsqCTuFSRuzKz+t
+         cyUkfUP2iDcvrSvk0H0qkZuXzvVVNhmYp2v5CmggXhDMuHA+WRlpWF4paVEsFa6C2y4V
+         gwLZ43n5WOLc11TlJLoViuLMNYxdZQjqWxN1CWMll8pu5kGKy6pmeUeK+ILm0L5jkSEH
+         OFWRFvTH9Y0uJn60j5UqheEdEmZotmIxsXUG8uyZzlTg6orYFRnmXWArN2ddZU9cnB7M
+         VP0g==
+X-Gm-Message-State: ABuFfojR2hBfID/pVA+RWBMSnL5WLsK3mr2BsbvF8gNiYvQEj0pYzH9K
+        v+knhVc2MUUUsnVBqopyGxPycXuC
+X-Google-Smtp-Source: ACcGV62XqOSgQRiLwwO3djVA+jYdJJG5AwJDgB+dy6qAF0aq434a+CV1u3fr9dXHm5ECzK2giGsOBA==
+X-Received: by 2002:a65:4cc3:: with SMTP id n3-v6mr3527251pgt.257.1538094623629;
+        Thu, 27 Sep 2018 17:30:23 -0700 (PDT)
+Received: from smckelvie-mbp2tb.corp.xevo.com (hq.xevo.com. [4.14.243.50])
+        by smtp.gmail.com with ESMTPSA id 189-v6sm4892150pfe.121.2018.09.27.17.30.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 17:26:29 -0700 (PDT)
-Date:   Fri, 28 Sep 2018 02:26:27 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v6 4/7] config: add new index.threads config setting
-Message-ID: <20180928002627.GO27036@localhost>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180926195442.1380-1-benpeart@microsoft.com>
- <20180926195442.1380-5-benpeart@microsoft.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180926195442.1380-5-benpeart@microsoft.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Thu, 27 Sep 2018 17:30:22 -0700 (PDT)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Subject: Re: [PATCH] submodule: Alllow staged changes for
+ get_superproject_working_tree
+From:   Sam McKelvie <sammck@gmail.com>
+In-Reply-To: <xmqqbm8ifvka.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 27 Sep 2018 17:30:21 -0700
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D09E2583-BD1D-4C56-9C19-6B1E97CEEDAA@gmail.com>
+References: <20180927181054.25802-1-sammck@gmail.com>
+ <xmqqbm8ifvka.fsf@gitster-ct.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3445.9.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 03:54:39PM -0400, Ben Peart wrote:
-> Add support for a new index.threads config setting which will be used to
-> control the threading code in do_read_index().  A value of 0 will tell the
-> index code to automatically determine the correct number of threads to use.
-> A value of 1 will make the code single threaded.  A value greater than 1
-> will set the maximum number of threads to use.
-> 
-> For testing purposes, this setting can be overwritten by setting the
-> GIT_TEST_INDEX_THREADS=<n> environment variable to a value greater than 0.
-> 
-> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
-> ---
+All of your comments seem reasonable; however, since the patch was =
+signed off by Stefan it
+Is unclear to me whether I should submit another patch or what. I =
+apologize for not being
+facile with the patching workflow.
 
-> diff --git a/t/README b/t/README
-> index aa33ac4f26..0fcecf4500 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -332,6 +332,11 @@ This is used to allow tests 1, 4-9 in t1700-split-index.sh to succeed
->  as they currently hard code SHA values for the index which are no longer
->  valid due to the addition of the EOIE extension.
->  
-> +GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
-> +of the index for the whole test suite by bypassing the default number of
-> +cache entries and thread minimums. Settting this to 1 will make the
+> On Sep 27, 2018, at 3:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Sam McKelvie <sammck@gmail.com> writes:
+>=20
+>> Subject: Re: [PATCH] submodule: Alllow staged changes for =
+get_superproject_working_tree
+>=20
+> s/Alllow/allow/;
+>=20
 
-s/ttt/tt/
+Ok, no caps on first letter of subject.
 
-> +index loading single threaded.
-> +
->  Naming Tests
->  ------------
->  
-> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-> index 1f168378c8..ab205954cf 100755
-> --- a/t/t1700-split-index.sh
-> +++ b/t/t1700-split-index.sh
-> @@ -8,6 +8,7 @@ test_description='split index mode tests'
->  sane_unset GIT_TEST_SPLIT_INDEX
->  sane_unset GIT_FSMONITOR_TEST
->  GIT_TEST_DISABLE_EOIE=true; export GIT_TEST_DISABLE_EOIE
-> +GIT_TEST_INDEX_THREADS=1; export GIT_TEST_INDEX_THREADS
+>> Invoking 'git rev-parse --show-superproject-working-tree' exits with
+>>=20
+>>    "fatal: BUG: returned path string doesn't match cwd?"
+>>=20
+>> when the superproject has an unmerged entry for the current =
+submodule,
+>> instead of displaying the superproject's working tree.
+>>=20
+>> The problem is due to the fact that when a merge of the submodule =
+reference
+>> is in progress, "git ls-files --stage =E2=80=94full-name =
+<submodule-relative-path>=E2=80=9D
+>> returns three seperate entries for the submodule (one for each stage) =
+rather
+>> than a single entry; e.g.,
+>>=20
+>> $ git ls-files --stage --full-name submodule-child-test
+>> 160000 dbbd2766fa330fa741ea59bb38689fcc2d283ac5 1       =
+submodule-child-test
+>> 160000 f174d1dbfe863a59692c3bdae730a36f2a788c51 2       =
+submodule-child-test
+>> 160000 e6178f3a58b958543952e12824aa2106d560f21d 3       =
+submodule-child-test
+>>=20
+>> The code in get_superproject_working_tree() expected exactly one =
+entry to
+>> be returned; this patch makes it use the first entry if multiple =
+entries
+>> are returned.
+>>=20
+>> Test t1500-rev-parse is extended to cover this case.
+>>=20
+>> Signed-off-by: Sam McKelvie <sammck@gmail.com>
+>> ---
+>> submodule.c          |  2 +-
+>> t/t1500-rev-parse.sh | 17 ++++++++++++++++-
+>> 2 files changed, 17 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/submodule.c b/submodule.c
+>> index 33de6ee5f..5b9d5ad7e 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -1885,7 +1885,7 @@ const char *get_superproject_working_tree(void)
+>> 		 * We're only interested in the name after the tab.
+>> 		 */
+>> 		super_sub =3D strchr(sb.buf, '\t') + 1;
+>> -		super_sub_len =3D sb.buf + sb.len - super_sub - 1;
+>> +		super_sub_len =3D strlen(super_sub);
+>=20
+> As we are reading from "ls-files -z -s", we know that the name is
+> terminated with NUL, so we can just use strlen().  Good.
+>>=20
+>> 		if (super_sub_len > cwd_len ||
+>> 		    strcmp(&cwd[cwd_len - super_sub_len], super_sub))
+>> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+>> index 5c715fe2c..b774cafc5 100755
+>> --- a/t/t1500-rev-parse.sh
+>> +++ b/t/t1500-rev-parse.sh
+>> @@ -134,7 +134,6 @@ test_expect_success 'rev-parse =
+--is-shallow-repository in non-shallow repo' '
+>> test_expect_success 'showing the superproject correctly' '
+>> 	git rev-parse --show-superproject-working-tree >out &&
+>> 	test_must_be_empty out &&
+>> -
+>=20
+> I have a feeling that this break made the series of tests in this
+> block easier to follow.  Shouldn't we be moving in the other
+> direction, namely =E2=80=A6
+>=20
+That=E2=80=99s fair.
 
-Why does multithreading have to be disabled in this test?
 
->  test_expect_success 'enable split index' '
->  	git config splitIndex.maxPercentChange 100 &&
-> -- 
-> 2.18.0.windows.1
-> 
+>> 	test_create_repo super &&
+>> 	test_commit -C super test_commit &&
+>> 	test_create_repo sub &&
+>> @@ -142,6 +141,22 @@ test_expect_success 'showing the superproject =
+correctly' '
+>> 	git -C super submodule add ../sub dir/sub &&
+>> 	echo $(pwd)/super >expect  &&
+>> 	git -C super/dir/sub rev-parse --show-superproject-working-tree =
+>out &&
+>> +	test_cmp expect out &&
+>=20
+> Here is an end of one subtest, deserves to have a break like the =
+above.
+
+OK
+
+>=20
+>> +	test_commit -C super submodule_add &&
+>> +	git -C super checkout -b branch1 &&
+>> +	git -C super/dir/sub checkout -b branch1 &&
+>> +	test_commit -C super/dir/sub branch1_commit &&
+>> +	git -C super add dir/sub &&
+>> +	test_commit -C super branch1_commit &&
+>> +	git -C super checkout master &&
+>> +	git -C super checkout -b branch2 &&
+>> +	git -C super/dir/sub checkout master &&
+>> +	git -C super/dir/sub checkout -b branch2 &&
+>> +	test_commit -C super/dir/sub branch2_commit &&
+>> +	git -C super add dir/sub &&
+>> +	test_commit -C super branch2_commit &&
+>> +	test_must_fail git -C super merge branch1 &&
+>=20
+> and all of the above is just a set-up for another subtest, so a
+> solid block of text like we see in the above is good.
+>=20
+> 	Side note: there are a few of
+>=20
+> 		git -C $there checkout $onebranch &&
+> 		git -C $there checkout -b $anotherbranch &&
+>=20
+> 	as recurring pattern.  Shouldn't they be more like a single
+> 	liner
+>=20
+> 		git -C $there checkout -b $anotherbranch $onebranch &&
+>=20
+> 	?  It wasn't clear if the split was an attempt to hide some
+> 	breakage (e.g. "checkout -b B A" did not work but "checkout
+> 	A && checkout -b B" did) or just being verbose because the
+> 	author is not used to "checkout -b B A" form.
+
+You=E2=80=99re right, the two forms are equivalent and the single-line =
+version is simpler.
+
+>=20
+>> +	git -C super/dir/sub rev-parse --show-superproject-working-tree =
+>out &&
+>> 	test_cmp expect out
+>> '
+>=20
+> Thanks.
+
+Thank you.
+
