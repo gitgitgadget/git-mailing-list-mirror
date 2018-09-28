@@ -2,126 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3DC41F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 06:57:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EFA41F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 07:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728811AbeI1NUO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 09:20:14 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:41717 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726106AbeI1NUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 09:20:13 -0400
-Received: by mail-ed1-f66.google.com with SMTP id f38-v6so7199327edd.8
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 23:57:56 -0700 (PDT)
+        id S1728913AbeI1ODQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 10:03:16 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:44708 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728841AbeI1ODQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 10:03:16 -0400
+Received: by mail-lf1-f65.google.com with SMTP id g24-v6so4219750lfb.11
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 00:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Io2Xr9fPJgHunyZJwAvDkxwLuP6Ch5ymJnLlsWKqezU=;
-        b=K92YsrNZNnm4U0waLUOxcDuYvG7ElwJb4Qgv4p8/fijulFW8sDROzxY+/PYyY/cNlj
-         By8TVQKNLbvVnMG8f97NBsoO9KLD7ywg5aYwuulJpuLsd18nDZVWW909571xsAl7l2Ku
-         oGa0TWAio47YK+s6uEn9l0cj5I4lhQl97emIUohJZFBeBILI2y5LUGMaPokmDliVjw1A
-         2Gjs/vsdWWn3dsbUdXLJWc4fKa2cQg+bn3Y9mhXeIR4u6pAR3f60zeKHrn2fgJipQqeU
-         ZzlLH4FJXkgklZ8U/yK+kmFfVlNcxAxrtayq9myzJVxhVq5hTUHVCPnk/o2zHe2rxsor
-         HaJg==
+        d=rasmusvillemoes.dk; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SpDUaHlhJbhhC3NXqf4/7rrKmpIRuDRnYl0kOp7shwc=;
+        b=Eb8c98GcxX9koopJ3kDovofnrtZXUGvcGTQZPdFoIjT/l3swOv+l6XoqOVUukSoKwG
+         HWN3ibcr2jRcFmtPyYOsMYkDxN0mhe+DSc/OdkoyUWSuGBl1mEKdzbuJGNdRI53K6hG2
+         YK0PJF9XNd9qJ2MH9KOWB+4gRa+XkJL+12PaM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Io2Xr9fPJgHunyZJwAvDkxwLuP6Ch5ymJnLlsWKqezU=;
-        b=RlGYWvOHw8SuknUuKapZhr818wL5/0dJ/96v5+Um/fZpKKk4dlzHGM61DImlSDwntM
-         /N2NHkLDPa755ALg2kn/41rm1cesNdWrxqXf4ANfq9Ok5SGAZkso4WPk2kiAz7HcqzjB
-         TtMjIvECOMSlp10KLv8PkFRIlWSh/gt7UZGMn9WTXsWW4F+lRkyFUgdVue3EiHvutK9q
-         LVS04SN0Lmv+b/NpVP//kxMe9DMcf6DdV4Jue9X/WH5TbpBsRAJYmFdP+74PeIQKhMZQ
-         AE24wQiDTMRlNmh4YtFGom6cMnmyyqc4M8EAl9Pw7Opxts9vytekcAud2VhRUtqpbXpw
-         QMkw==
-X-Gm-Message-State: ABuFfoiN2cpBl9uIOCYocTN4yEBXtIfqvGJORsXJ9Io29rc14V17Q4TI
-        SVaSKO+AwpsnfV4RvplVU0DV/vwQy9o=
-X-Google-Smtp-Source: ACcGV62tH7D8FUXF8vyPtXUP6IXrO8joBwNND/pfyktHPHJO+Owx3GOGXiHpTnyqIsrwVQDTwPTBSg==
-X-Received: by 2002:a17:906:35d2:: with SMTP id p18-v6mr1086765ejb.6.1538117875316;
-        Thu, 27 Sep 2018 23:57:55 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id t44-v6sm2118802edd.96.2018.09.27.23.57.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Sep 2018 23:57:54 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Fix the racy split index problem
-References: <20180927124434.30835-1-szeder.dev@gmail.com> <871s9fjbcb.fsf@evledraar.gmail.com> <20180927142336.GJ27036@localhost> <87zhw3hsiv.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <87zhw3hsiv.fsf@evledraar.gmail.com>
-Date:   Fri, 28 Sep 2018 08:57:53 +0200
-Message-ID: <87k1n6hzwu.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SpDUaHlhJbhhC3NXqf4/7rrKmpIRuDRnYl0kOp7shwc=;
+        b=sJner3f49le3hCYGASCipgc6ZCH/sOZTIT24GNE0Ha2/A1m3ggURBh1bntyCGjKtQS
+         rZSwPAbgx9Na8htjMERSFKETQrcjZQnjVsooqz4o+QBV29UIo+zjlcLWPWJc710c/eau
+         xnvwom0idDB9xIvqEPD6c9M9fab3MW2TDihyRIVPDf0eUsQABo8/nyps4yv944xt/gRT
+         fuPE94HaeB2wTV10IGNGhfPV3Uuukx1WFohO2+COq4yV5Dm1i6CvVoTZD49NOKc6jql6
+         ecNidRDXvKIml0oTiSnAPi2i3pJg/RnE/Xp/HUAibnHaC96CDHSb7QmrJLaNokPNeNBb
+         amaQ==
+X-Gm-Message-State: ABuFfojmDyLxuh475qUf+IX7fmt4Q0W6573T0c7387ltAFnsVYWtDuDo
+        T1MIufZJpAGqv4IwnBlef3UjkH+Lx2oltejL
+X-Google-Smtp-Source: ACcGV632wM3ROElHeucW8QQxMha6TmqfY5HkVLygC4b7YavSTmrReIALg1XlcPdAP4nrc0Jqb3AMAQ==
+X-Received: by 2002:a19:910c:: with SMTP id t12-v6mr7439196lfd.98.1538120447992;
+        Fri, 28 Sep 2018 00:40:47 -0700 (PDT)
+Received: from [192.168.43.23] (77.241.135.131.mobile.3.dk. [77.241.135.131])
+        by smtp.gmail.com with ESMTPSA id n16-v6sm867059lji.28.2018.09.28.00.40.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Sep 2018 00:40:47 -0700 (PDT)
+Subject: Re: [PATCH] help: allow redirecting to help for aliased command
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
+ <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
+From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Message-ID: <fb221514-4749-affa-c657-0e36dd28fb13@rasmusvillemoes.dk>
+Date:   Fri, 28 Sep 2018 09:40:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2018-09-26 17:16, Junio C Hamano wrote:
+> Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
+> 
+>> +		/*
+>> +		 * We use split_cmdline() to get the first word of the
+>> +		 * alias, to ensure that we use the same rules as when
+>> +		 * the alias is actually used. split_cmdline()
+>> +		 * modifies alias in-place.
+>> +		 */
+>> +		count = split_cmdline(alias, &argv);
+>> +		if (count < 0)
+>> +			die("Bad alias.%s string: %s", cmd,
+>> +			    split_cmdline_strerror(count));
+>> +
+>> +		if (follow_alias > 0) {
+>> +			fprintf_ln(stderr,
+>> +				   _("Continuing to help for %s in %0.1f seconds."),
+>> +				   alias, follow_alias/10.0);
+>> +			sleep_millisec(follow_alias * 100);
+>> +		}
+>> +		return alias;
+> 
+> If you have "[alias] cp = cherry-pick -n", split_cmdline discards
+> "-n" and the follow-alias prompt does not even tell you that it did
+> so,
 
-On Thu, Sep 27 2018, Ævar Arnfjörð Bjarmason wrote:
+That's not really true, as I deliberately did the split_cmdline after
+printing the "is an alias for", but before "continuing to help for", so
+this would precisely tell you
 
-> On Thu, Sep 27 2018, SZEDER Gábor wrote:
->
->> On Thu, Sep 27, 2018 at 03:53:24PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>>
->>> On Thu, Sep 27 2018, SZEDER Gábor wrote:
->>>
->>> > This is the second attempt to fix the racy split index problem, which
->>> > causes occasional failures in several random test scripts when run
->>> > with 'GIT_TEST_SPLIT_INDEX=yes'.  The important details are in patches
->>> > 1 and 5 (corresponding to v1's 3 and 5).
->>>
->>> Thanks. I'm running the same sorts of tests I noted in
->>> https://public-inbox.org/git/87va7ireuu.fsf@evledraar.gmail.com/ on
->>> this. The fix Jeff had that you noted in
->>> https://public-inbox.org/git/20180906151439.GA8016@localhost/ is now in
->>> "master".
->>>
->>> I take it your
->>> https://github.com/szeder/git/commits/racy-split-index-fix is the same
->>> as this submission?
->>
->> Yes.
->>
->>> Anyway, I'm testing that cherry-picked on top of the
->>> latest master.
->>>
->>> Unfortunate that we couldn't get the isolated test you made in
->>> https://public-inbox.org/git/20180907034942.GA10370@localhost/
->>
->> Nah, that's not an isolated test case, that's only a somewhat
->> narrowed-down, but rather reliable reproduction recipe while I still
->> had no idea what was going on :)
->>
->> The _real_ isolated test is the last test in t1701, that's what it
->> eventually boiled down to.
->
-> Thanks. I had ~400 runs of the tests I ran before and they were all
-> OK. Now trying also with t1701 (which I hadn't noticed was a new
-> test...).
+  cp is an alias for 'cherry-pick -n'
+  continuing to help for 'cherry-pick' in 1.5 seconds
 
-Ran that overnight with the same conditions as before. 2683 OK runs and
-0 failures (and counting). So it seems like the combination of the two
-fixed the split index bugs.
+> and you get "git help cherry-pick".  This code somehow expects
+> you to know to jump to the section that describes the "--no-commit"
+> option.  I do not think that is a reasonable expectation.
 
->>> but I
->>> don't see how it could be added without some very liberal
->>> getenv("GIT_TEST_blahblah"), so it's probably best to not add it,
->>> particularly with the C rewrite of git-stash in-flight.
->>>
->>> I'll report back when I have enough test data to say how these patches
->>> affect the intermittent test failures under GIT_TEST_SPLIT_INDEX=yes.
+No, in that case I would not expect git cp --help to jump to that
+section anymore than I would expect "git cherry-pick -n --help" to
+magically do that (and that would be impossible in general, if more
+options are bundled in the alias).
+
+> When you have "[alias] cp = cherry-pick -n", "git cp --help" should
+> not do "git help cherry-pick".  Only a single word that exactly
+> matches a git command should get this treatment.
+
+I considered that, and could certainly live with that. But it seems the
+discussion took a different turn in another part of the thread, so I'll
+continue there.
+
+Rasmus
