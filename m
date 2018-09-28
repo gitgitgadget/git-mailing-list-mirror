@@ -2,21 +2,21 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 672FE1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 18:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCBD21F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 18:35:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726337AbeI2BAz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 21:00:55 -0400
-Received: from esg260-1.itc.swri.edu ([129.162.252.140]:41788 "EHLO
+        id S1726505AbeI2BA7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 21:00:59 -0400
+Received: from esg260-1.itc.swri.edu ([129.162.252.140]:41805 "EHLO
         esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726118AbeI2BAz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 21:00:55 -0400
+        with ESMTP id S1726118AbeI2BA7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 21:00:59 -0400
 Received: from smtp.swri.org (MBX260.adm.swri.edu [129.162.29.125])
-        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w8SIZfCo110697
+        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w8SIZfCn110697
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
         Fri, 28 Sep 2018 13:35:42 -0500
 Received: from MBX260.adm.swri.edu (129.162.29.125) by MBX260.adm.swri.edu
@@ -35,9 +35,9 @@ CC:     Jonathan Nieder <jrnieder@gmail.com>,
         Stephen R Guglielmo <srg@guglielmo.us>,
         Dave Ware <davidw@realtimegenomics.com>,
         David Aguilar <davvid@gmail.com>
-Subject: [PATCH 3/4] subtree: use commits before rejoins for splits
-Date:   Fri, 28 Sep 2018 13:35:39 -0500
-Message-ID: <20180928183540.48968-4-roger.strain@swri.org>
+Subject: [PATCH 2/4] subtree: make --ignore-joins pay attention to adds
+Date:   Fri, 28 Sep 2018 13:35:38 -0500
+Message-ID: <20180928183540.48968-3-roger.strain@swri.org>
 X-Mailer: git-send-email 2.19.0.windows.1
 In-Reply-To: <20180928183540.48968-1-roger.strain@swri.org>
 References: <20180928183540.48968-1-roger.strain@swri.org>
@@ -56,102 +56,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds recursive evaluation of parent commits which were not part of the
-initial commit list when performing a split.
+Changes the behavior of --ignore-joins to always consider a subtree add
+commit, and ignore only splits and squashes.
 
-Split expects all relevant commits to be reachable from the target commit
-but not reachable from any previous rejoins. However, a branch could be
-based on a commit prior to a rejoin, then later merged back into the
-current code. In this case, a parent to the commit will not be present in
-the initial list of commits, trigging an "incorrect order" warning.
+The --ignore-joins option is documented to ignore prior --rejoin commits.
+However, it additionally ignored subtree add commits generated when a
+subtree was initially added to a repo.
 
-Previous behavior was to consider that commit to have no parent, creating
-an original commit containing all subtree content. This commit is not
-present in an existing subtree commit graph, changing commit hashes and
-making pushing to a subtree repo impossible.
-
-New behavior will recursively check these unexpected parent commits to
-track them back to either an earlier rejoin, or a true original commit.
-The generated synthetic commits will properly match previously-generated
-commits, allowing successful pushing to a prior subtree repo.
+Due to the logic which determines whether a commit is a mainline commit
+or a subtree commit (namely, the presence or absence of content in the
+subtree prefix) this causes commits before the initial add to appear to
+be part of the subtree. An --ignore-joins split would therefore consider
+those commits part of the subtree history and include them at the
+beginning of the synthetic history, causing the resulting hashes to be
+incorrect for all later commits.
 
 Signed-off-by: Strain, Roger L <roger.strain@swri.org>
 ---
- contrib/subtree/git-subtree.sh | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ contrib/subtree/git-subtree.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index d8861f306..23dd04cbe 100755
+index 2cd7b345b..d8861f306 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -231,12 +231,14 @@ cache_miss () {
- }
- 
- check_parents () {
--	missed=$(cache_miss "$@")
-+	missed=$(cache_miss "$1")
-+	local indent=$(($2 + 1))
- 	for miss in $missed
- 	do
- 		if ! test -r "$cachedir/notree/$miss"
- 		then
- 			debug "  incorrect order: $miss"
-+			process_split_commit "$miss" "" "$indent"
- 		fi
- 	done
- }
-@@ -606,8 +608,20 @@ ensure_valid_ref_format () {
- process_split_commit () {
- 	local rev="$1"
- 	local parents="$2"
--	revcount=$(($revcount + 1))
--	progress "$revcount/$revmax ($createcount)"
-+	local indent=$3
-+
-+	if test $indent -eq 0
+@@ -340,7 +340,12 @@ find_existing_splits () {
+ 	revs="$2"
+ 	main=
+ 	sub=
+-	git log --grep="^git-subtree-dir: $dir/*\$" \
++	local grep_format="^git-subtree-dir: $dir/*\$"
++	if test -n "$ignore_joins"
 +	then
-+		revcount=$(($revcount + 1))
-+	else
-+		# processing commit without normal parent information;
-+		# fetch from repo
-+		parents=$(git show -s --pretty=%P "$rev")
-+		extracount=$(($extracount + 1))
++		grep_format="^Add '$dir/' from commit '"
 +	fi
-+
-+	progress "$revcount/$revmax ($createcount) [$extracount]"
-+
- 	debug "Processing commit: $rev"
- 	exists=$(cache_get "$rev")
- 	if test -n "$exists"
-@@ -617,14 +631,13 @@ process_split_commit () {
- 	fi
- 	createcount=$(($createcount + 1))
- 	debug "  parents: $parents"
-+	check_parents "$parents" "$indent"
- 	newparents=$(cache_get $parents)
- 	debug "  newparents: $newparents"
- 
- 	tree=$(subtree_for_commit "$rev" "$dir")
- 	debug "  tree is: $tree"
- 
--	check_parents $parents
--
- 	# ugly.  is there no better way to tell if this is a subtree
- 	# vs. a mainline commit?  Does it matter?
- 	if test -z "$tree"
-@@ -744,10 +757,11 @@ cmd_split () {
- 	revmax=$(eval "$grl" | wc -l)
- 	revcount=0
- 	createcount=0
-+	extracount=0
- 	eval "$grl" |
- 	while read rev parents
++	git log --grep="$grep_format" \
+ 		--no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
+ 	while read a b junk
  	do
--		process_split_commit "$rev" "$parents"
-+		process_split_commit "$rev" "$parents" 0
- 	done || exit $?
+@@ -730,12 +735,7 @@ cmd_split () {
+ 		done
+ 	fi
  
- 	latest_new=$(cache_get latest_new)
+-	if test -n "$ignore_joins"
+-	then
+-		unrevs=
+-	else
+-		unrevs="$(find_existing_splits "$dir" "$revs")"
+-	fi
++	unrevs="$(find_existing_splits "$dir" "$revs")"
+ 
+ 	# We can't restrict rev-list to only $dir here, because some of our
+ 	# parents have the $dir contents the root, and those won't match.
 -- 
 2.19.0.windows.1
 
