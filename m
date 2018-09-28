@@ -2,96 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8276B1F454
-	for <e@80x24.org>; Fri, 28 Sep 2018 11:43:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9EEC1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 13:36:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729395AbeI1SHG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 14:07:06 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:43992 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729359AbeI1SHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 14:07:06 -0400
-Received: by mail-qt1-f193.google.com with SMTP id q41-v6so1398585qtq.10
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 04:43:43 -0700 (PDT)
+        id S1728913AbeI1T74 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 15:59:56 -0400
+Received: from mail-io1-f48.google.com ([209.85.166.48]:43911 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727676AbeI1T74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 15:59:56 -0400
+Received: by mail-io1-f48.google.com with SMTP id y10-v6so4157192ioa.10
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 06:36:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=R3iiYaCR1OQSHMQGyGskp5KhrhraXTyrbUsSmC17c4Y=;
-        b=jqnC9MP589R+8n1g0kCFGhl0KHvol36psFPHofP016xyQpGBMUdM3pLr/ooWJIqd25
-         OUVxk2Kfb8eMKWdf5aifPBWgQ/c29RFW5BYjHS0a+c2jCnlCdCWVX4dePHtul8dLJhS4
-         guwJepvdcrhwvwo2gnL54/ddeifl6b08nGcbWnvIQrB/oXFvnti7WXmjWv7Tu9dhsIKk
-         vL+e127on+GE99q3yWHCd/PgjEcWmEKQqwM1S7SfncfCHFpydKF4b3KAKRrn1ZCyQbsx
-         6gM1bHT+8qR4GBm/lxl3v1k71KRomGRbhZgX0jNogfkwZzJbUhQ2ecyizJ27npISOB6J
-         OQhg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=qZT7+YIKQ9AdW+GgtO642BjPmGSvnn2MJRBuTbr8oeg=;
+        b=r3KGkvFtOYZuPjODZrI0eJrtpFj6bemlFqRwaoO7e6UlLv1NYSbIfAmnA6ttVeYE9E
+         eUaLUMmD4CpJK+ZJlVoVRrZg7vgdCbMx/fdwgzkOG1RqrclursfLQLdbE1g0jJ0kd/r2
+         ShUFu1sGf8hSrLjUDeidQ4s1hdGkwv+WB9jUWXVsbrrNUmxwWxTof1h7njpZLS5RMeTD
+         1immSsM0ky6YGNlIbjlBHqNW00hcG2UpknpHmglMWrRArLgNzRcCFSNbaLUZ1gnhif28
+         4mIMAZG3Auci75kMATFLWM8pZcIIJ1DQnV5gC41h9goqlmcxHbROEmGOrLieIQq0kpEu
+         q6xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=R3iiYaCR1OQSHMQGyGskp5KhrhraXTyrbUsSmC17c4Y=;
-        b=WDhN/UYijzwUN7101IsIJvrujBiuSAJBb4cugaxjNg5xjnzKP9wt0ZQ9I3JTL+3FWu
-         SPyyHoDS1zq+KtqhrsgVZPqupbPh3IY0/oK90cQ4vqjuyNgFv1B9aVxwidK1WjV2Mhgb
-         rLoqEVdKTUKxqHS5fxVp3vvCOW42+FHRcFgusTnpqj6vW5WTLXAdTgIDt8ifexwOaDnj
-         RIidnjDbJvlbQAmhJV+u5DBsDp6B0ym0GlyLw9itR5nLXL+nIYLiVqikOVhN0tjrZiFU
-         5kACOvZeOV6kIgJDPJiYhkq2IaZMr6NKjufyU4rWw4GsfOsJ0BJecAGfl6TqM4eifYYi
-         cOPw==
-X-Gm-Message-State: ABuFfoiNpeOiXmwCGz58w3kb2/8VATIcxVMHuRDH5NBGEo8XtdUW5/Ej
-        T8mjbuS2qd1OqKpB4BoJtjOnmuCkk1MCdvbcDtE=
-X-Google-Smtp-Source: ACcGV61QIpvcfHQ8Brmk0djMz8bpxzvIg3xOCXQ4EJLby0mK9xBLuPMZBUs0PhwQWEgrqjlwkYAeqf+UNs/lxj6uldk=
-X-Received: by 2002:aed:33e7:: with SMTP id v94-v6mr12453277qtd.52.1538135022564;
- Fri, 28 Sep 2018 04:43:42 -0700 (PDT)
+         :message-id:subject:to;
+        bh=qZT7+YIKQ9AdW+GgtO642BjPmGSvnn2MJRBuTbr8oeg=;
+        b=pQXMNcJ7aYqwophlp1d+8Xmpi/nqo2274J95AcLrkSUYkKnPfA2f3tk1nhVbvoKrHW
+         0adY28RTnv85sZmHW6f4izV8Cv8uDa4tDhjv1q8Gg4cx/2JY3MpL0+u/15Ok+neYDtUg
+         BYZ3tJhAJph/HBOyD+p5uYgGUeNvOY+Z8qIYBp43BtAda+YIall9kYmx2189ylsyspZP
+         1P7oB12M/Rm5zaEqk7LvEG9PZg+imYHg/3N2d8x5TDxmYjJ+Y+U+sAGU4E5LWjLtl5e9
+         2ZN7xeJpRvqdQwYkSqhQFDWRrqjgM69idn1gQ1GfNPq9mBIYON53mQLyGR4cSuvjBvQa
+         Mhig==
+X-Gm-Message-State: ABuFfoiELkhdmvTfn6usV0So7NkolaO/YP9R6rFqgNNubvwS8xrx9GY3
+        CboG/gKX2wJ9qgO2agQKHwTHD8NM575jh8M5Wn4Tl7Bq
+X-Google-Smtp-Source: ACcGV63/GVKHtzoGUuHAzrkrvZ1/67KSjZMtSXNjWSIrhV/AIR7lcx3WXPCEmZMFX9NmA+RPUHZbUx33M1t2hqIJUkE=
+X-Received: by 2002:a6b:3902:: with SMTP id g2-v6mr11980555ioa.168.1538141766618;
+ Fri, 28 Sep 2018 06:36:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180925115341.19248-1-chriscool@tuxfamily.org>
- <20180925115341.19248-8-chriscool@tuxfamily.org> <20180928103548.GC23446@localhost>
-In-Reply-To: <20180928103548.GC23446@localhost>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 28 Sep 2018 13:43:30 +0200
-Message-ID: <CAP8UFD1HBUL+Kv7biBLwfkL9j9syw+UwBgrJ5rAykZ-M5h8jbg@mail.gmail.com>
-Subject: Re: [PATCH v5 7/8] t0410: test fetching from many promisor remotes
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>
+References: <CADF5XCygzArjd9rgY_x_BqnhL5QpFL1CO1JjOHnBQc3HFn_JdQ@mail.gmail.com>
+In-Reply-To: <CADF5XCygzArjd9rgY_x_BqnhL5QpFL1CO1JjOHnBQc3HFn_JdQ@mail.gmail.com>
+From:   Raman Gupta <rocketraman@gmail.com>
+Date:   Fri, 28 Sep 2018 09:35:55 -0400
+Message-ID: <CADF5XCxfmuqXau4YGrGgfU6JgxbHthZn5o5_t6J=x9JEaS_K4Q@mail.gmail.com>
+Subject: Re: --skip-worktree and operations like checkout / stash /etc.
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 28, 2018 at 12:35 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
->
-> On Tue, Sep 25, 2018 at 01:53:40PM +0200, Christian Couder wrote:
+In the meantime I've created this simple script, but what a hack...
 
-> > +     IDX=3D$(cat promisorlist | sed "s/promisor$/idx/") &&
->
-> You could drop the unnecessary 'cat', 'sed' is capable to open a file
-> on its own.
->
-> > +     git verify-pack --verbose "$IDX" | grep "$HASH2"
->
-> Don't run a git command, especially one with "verify" in its name,
-> upstream of a pipe, because the pipe hides the git command's exit
-> code.
+#!/bin/bash
+git ls-files -v | grep "^S " | cut -c3- | readarray ignored
+for x in "${ignored[@]}"; do
+  git update-index --no-skip-worktree -- "$x"
+done
+git checkout -m $@
+for x in "${ignored[@]}"; do
+  git update-index --skip-worktree -- "$x"
+done
 
-Yeah, I copied both of the above lines from the test just above the
-one I added. So I will probably add a patch to fix those kinds of
-issues in t0410 at the beginning of the series, and then of course
-copy the fixed tests in the tests I add.
-
-Thanks,
-Christian.
+Regards,
+Raman
+On Thu, Sep 27, 2018 at 6:29 PM Raman Gupta <rocketraman@gmail.com> wrote:
+>
+> The comand `update-index --skip-worktree` seems to be an ideal way to
+> tell git to locally ignore some modified files. However, this seems
+> not to play well with very common commands like `checkout` and
+> `stash`.
+>
+> $ git checkout other-branch
+> error: Your local changes to the following files would be overwritten
+> by checkout:
+>         path/to/ignored/file
+> Please commit your changes or stash them before you switch branches.
+> Aborting
+>
+> Ok, well lets try stashing:
+>
+> $ git stash save
+> No local changes to save
+>
+> Ok, lets try a checkout with a merge:
+>
+> $ git checkout -m other-branch
+> error: Entry 'path/to/ignored/file' not uptodate. Cannot merge.
+>
+> Ok, lets force this sucker:
+>
+> $ git checkout -f other-branch
+> error: Entry 'path/to/ignored/file' not uptodate. Cannot merge.
+>
+> Ok, at this point I'm wondering, do I really need to
+> --no-skip-worktree all the ignored files, do my `checkout -m`, and
+> then ignore them again? Umm, no, that ain't gonna work.
+>
+> I'd love for git to just check if my worktree-skipped changes will
+> merge cleanly into the target branch, and if they do so, go ahead and
+> do that merge (with perhaps a notification printed to the console) and
+> keep the skip worktree status. If the merge ends up with a conflict,
+> then feel free to no-worktree-skip it and show me merge conflicts.
+>
+> Regards,
+> Raman
