@@ -2,23 +2,23 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCBD21F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 18:35:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 630E11F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 18:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbeI2BA7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 21:00:59 -0400
-Received: from esg260-1.itc.swri.edu ([129.162.252.140]:41805 "EHLO
+        id S1726717AbeI2BBF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 21:01:05 -0400
+Received: from esg260-1.itc.swri.edu ([129.162.252.140]:41820 "EHLO
         esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726118AbeI2BA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 21:00:59 -0400
+        with ESMTP id S1726118AbeI2BBF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 21:01:05 -0400
 Received: from smtp.swri.org (MBX260.adm.swri.edu [129.162.29.125])
-        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w8SIZfCn110697
+        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w8SIZfCm110697
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
-        Fri, 28 Sep 2018 13:35:42 -0500
+        Fri, 28 Sep 2018 13:35:41 -0500
 Received: from MBX260.adm.swri.edu (129.162.29.125) by MBX260.adm.swri.edu
  (129.162.29.125) with Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 28 Sep
  2018 13:35:41 -0500
@@ -35,9 +35,9 @@ CC:     Jonathan Nieder <jrnieder@gmail.com>,
         Stephen R Guglielmo <srg@guglielmo.us>,
         Dave Ware <davidw@realtimegenomics.com>,
         David Aguilar <davvid@gmail.com>
-Subject: [PATCH 2/4] subtree: make --ignore-joins pay attention to adds
-Date:   Fri, 28 Sep 2018 13:35:38 -0500
-Message-ID: <20180928183540.48968-3-roger.strain@swri.org>
+Subject: [PATCH 1/4] subtree: refactor split of a commit into standalone method
+Date:   Fri, 28 Sep 2018 13:35:37 -0500
+Message-ID: <20180928183540.48968-2-roger.strain@swri.org>
 X-Mailer: git-send-email 2.19.0.windows.1
 In-Reply-To: <20180928183540.48968-1-roger.strain@swri.org>
 References: <20180928183540.48968-1-roger.strain@swri.org>
@@ -56,58 +56,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes the behavior of --ignore-joins to always consider a subtree add
-commit, and ignore only splits and squashes.
-
-The --ignore-joins option is documented to ignore prior --rejoin commits.
-However, it additionally ignored subtree add commits generated when a
-subtree was initially added to a repo.
-
-Due to the logic which determines whether a commit is a mainline commit
-or a subtree commit (namely, the presence or absence of content in the
-subtree prefix) this causes commits before the initial add to appear to
-be part of the subtree. An --ignore-joins split would therefore consider
-those commits part of the subtree history and include them at the
-beginning of the synthetic history, causing the resulting hashes to be
-incorrect for all later commits.
+In a particularly complex repo, subtree split was not creating
+compatible splits for pushing back to a separate repo. Addressing
+one of the issues requires recursive handling of parent commits
+that were not initially considered by the algorithm. This commit
+makes no functional changes, but relocates the code to be called
+recursively into a new method to simply comparisons of later
+commits.
 
 Signed-off-by: Strain, Roger L <roger.strain@swri.org>
 ---
- contrib/subtree/git-subtree.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ contrib/subtree/git-subtree.sh | 78 ++++++++++++++++++----------------
+ 1 file changed, 42 insertions(+), 36 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 2cd7b345b..d8861f306 100755
+index d3f39a862..2cd7b345b 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -340,7 +340,12 @@ find_existing_splits () {
- 	revs="$2"
- 	main=
- 	sub=
--	git log --grep="^git-subtree-dir: $dir/*\$" \
-+	local grep_format="^git-subtree-dir: $dir/*\$"
-+	if test -n "$ignore_joins"
+@@ -598,6 +598,47 @@ ensure_valid_ref_format () {
+ 		die "'$1' does not look like a ref"
+ }
+ 
++process_split_commit () {
++	local rev="$1"
++	local parents="$2"
++	revcount=$(($revcount + 1))
++	progress "$revcount/$revmax ($createcount)"
++	debug "Processing commit: $rev"
++	exists=$(cache_get "$rev")
++	if test -n "$exists"
 +	then
-+		grep_format="^Add '$dir/' from commit '"
++		debug "  prior: $exists"
++		return
 +	fi
-+	git log --grep="$grep_format" \
- 		--no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
- 	while read a b junk
++	createcount=$(($createcount + 1))
++	debug "  parents: $parents"
++	newparents=$(cache_get $parents)
++	debug "  newparents: $newparents"
++
++	tree=$(subtree_for_commit "$rev" "$dir")
++	debug "  tree is: $tree"
++
++	check_parents $parents
++
++	# ugly.  is there no better way to tell if this is a subtree
++	# vs. a mainline commit?  Does it matter?
++	if test -z "$tree"
++	then
++		set_notree "$rev"
++		if test -n "$newparents"
++		then
++			cache_set "$rev" "$rev"
++		fi
++		return
++	fi
++
++	newrev=$(copy_or_skip "$rev" "$tree" "$newparents") || exit $?
++	debug "  newrev is: $newrev"
++	cache_set "$rev" "$newrev"
++	cache_set latest_new "$newrev"
++	cache_set latest_old "$rev"
++}
++
+ cmd_add () {
+ 	if test -e "$dir"
+ 	then
+@@ -706,42 +747,7 @@ cmd_split () {
+ 	eval "$grl" |
+ 	while read rev parents
  	do
-@@ -730,12 +735,7 @@ cmd_split () {
- 		done
- 	fi
+-		revcount=$(($revcount + 1))
+-		progress "$revcount/$revmax ($createcount)"
+-		debug "Processing commit: $rev"
+-		exists=$(cache_get "$rev")
+-		if test -n "$exists"
+-		then
+-			debug "  prior: $exists"
+-			continue
+-		fi
+-		createcount=$(($createcount + 1))
+-		debug "  parents: $parents"
+-		newparents=$(cache_get $parents)
+-		debug "  newparents: $newparents"
+-
+-		tree=$(subtree_for_commit "$rev" "$dir")
+-		debug "  tree is: $tree"
+-
+-		check_parents $parents
+-
+-		# ugly.  is there no better way to tell if this is a subtree
+-		# vs. a mainline commit?  Does it matter?
+-		if test -z "$tree"
+-		then
+-			set_notree "$rev"
+-			if test -n "$newparents"
+-			then
+-				cache_set "$rev" "$rev"
+-			fi
+-			continue
+-		fi
+-
+-		newrev=$(copy_or_skip "$rev" "$tree" "$newparents") || exit $?
+-		debug "  newrev is: $newrev"
+-		cache_set "$rev" "$newrev"
+-		cache_set latest_new "$newrev"
+-		cache_set latest_old "$rev"
++		process_split_commit "$rev" "$parents"
+ 	done || exit $?
  
--	if test -n "$ignore_joins"
--	then
--		unrevs=
--	else
--		unrevs="$(find_existing_splits "$dir" "$revs")"
--	fi
-+	unrevs="$(find_existing_splits "$dir" "$revs")"
- 
- 	# We can't restrict rev-list to only $dir here, because some of our
- 	# parents have the $dir contents the root, and those won't match.
+ 	latest_new=$(cache_get latest_new)
 -- 
 2.19.0.windows.1
 
