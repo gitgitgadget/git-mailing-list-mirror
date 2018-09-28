@@ -2,113 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D2FC1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 02:40:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 766D21F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 03:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726665AbeI1JBx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 05:01:53 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45989 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726271AbeI1JBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 05:01:53 -0400
-Received: by mail-wr1-f65.google.com with SMTP id m16so4631673wrx.12
-        for <git@vger.kernel.org>; Thu, 27 Sep 2018 19:40:26 -0700 (PDT)
+        id S1728075AbeI1JvT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 05:51:19 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45784 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726068AbeI1JvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 05:51:18 -0400
+Received: by mail-pf1-f193.google.com with SMTP id a23-v6so3276281pfi.12
+        for <git@vger.kernel.org>; Thu, 27 Sep 2018 20:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=RxKmpg0vU3Nq7Nx1qvCOSy8XmdGTPRPnp/3PBgdaf9M=;
-        b=DGsDCG2tdvVCXdXtCV0pXW2PsbKQJNdekcgRFOi9UEE6mtZZIc/+0fbBD2MtN5U1Jm
-         9oxKUHjTtasma6qYNOilqv92/qAbNztRkV8VCSp/BKNXR4Q8yf2vxZvPLRNzDbVS+cSb
-         gIWKafja+x5gnci0xrQbB/nTrqy3KXTiSM8/6e9OjbeyS+PdUjn+Nor/++QhuKXGUFdi
-         UOql90CGk37Rl26BWh4MubnJJ+He0yemYtrtUX8F9HgiUXn1VxVRf6uZdfKhEXJ9MSwY
-         8iha5BLrl01bitEX3HWeU5Y2YuSr0QeTarqhZ8n2sxAa4mbGtsnMS/itL0M1BpeDgKLr
-         qahw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RG7WWUTyPcGYJoCX3+hFWBNulALmcaLtS1edXaVknDs=;
+        b=fuRQTW1GAFOm56OLZcQl/YDC07xeUqRqJtAMfer3yKlcoVK/ffkeBFVQ52KEDHiOY4
+         LG1dW2feY2rz38piw519ZjyTJX/pJ6uWE9Ea4WsVdddY2yJCiLSphDqvmz8jf8jjUmCt
+         bQy81U7nnF/6KfUBQH/0J5/hpMXrQzqJdoc8B23dHz61GBtuDztRZsXW3kJjkE0uf2Bs
+         4hbaYDIeQAce6Jo5AWJEon9/mDJQ3N1yRIa9fW+JR0FdCuwZBHkac4oKpO9me9+3680p
+         M0kuFdcqdM+HbQaidgCiizYORj1QZNkEdbYH14ieNd2uJ5wUhUCVf/rmLSbTuzFReTBX
+         UMKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=RxKmpg0vU3Nq7Nx1qvCOSy8XmdGTPRPnp/3PBgdaf9M=;
-        b=hPoCh8BPtXe2TCxWh50uBtvmLZsBX1Hin9TV4OXKmGyOb0YlIOeKguHoY4db7GgNDw
-         nFKW6JwaYP/bakDh/R3CzRdDBqZXEQb4YxMKOmMs3YgRWxW/KlQla3qpyPefkl0CnIq3
-         4OeTQ/dB2qP2Kk5e6Kn7bKBVjMLJg5WZGp7wu2a0IRWGhNLA8R1ItSiGS5uZG2ZszpSF
-         lYfqgsL68Z3cXZRzOKuHSF6hhwYKjz5njwDyGxI+E2tt2KNeMcYQ2Wj00jlwfPynVYRM
-         SLKfzgjlLkvc9MLNltd0ZkIpmtnKxIIu1TfYRoofg/ViTHT6KIR92pxGl3yjLkswGLhu
-         m7VQ==
-X-Gm-Message-State: ABuFfogd/+B+w9/+YmwHNGRrr7ArHclUoQLVrzyaq5QUcWtVsQuE/45V
-        +7nGNAV54bYA20XsOqvKHi8=
-X-Google-Smtp-Source: ACcGV62bAPNaw90F33nEcMupNob5zr9b+5lIcXAEH4pWIQvCEL2HVGOZxNmbhLTQBrwDXhjfgdFLKg==
-X-Received: by 2002:a5d:4b52:: with SMTP id w18-v6mr10370928wrs.87.1538102425722;
-        Thu, 27 Sep 2018 19:40:25 -0700 (PDT)
-Received: from localhost (x4dbd8656.dyn.telefonica.de. [77.189.134.86])
-        by smtp.gmail.com with ESMTPSA id s24-v6sm572659wmc.7.2018.09.27.19.40.23
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RG7WWUTyPcGYJoCX3+hFWBNulALmcaLtS1edXaVknDs=;
+        b=rQrmQwILGMZhLpITR01pQvucW4IP/VwfXZSS0AzRRKhLDsXCweir4HwHs8H9qS6Asc
+         9QU3rGyEoLTswrS2U4G+spzlpX9OoJS7Rdqr8aPp4I570ahi+wkD/vDrqKw9+fJoEZId
+         kqGs/qVFQ40WedJ1ogVt5HwS780K5BkJbOTMBfXCBDPCfMEgUECEhA8lxy/jBGY12uGy
+         DkQtCh02KYDa+zxvGASEsVqJPNAgkOcL34kNeIJNHVroKcuj/knmUAy7oWrtQtRtqQbr
+         oCY/+bWJI51vsLA15v6DUP0IlvgLf5P36O/hNSZzmMuaUx/8B8jRxxBQYgC3IzORjcAf
+         wKUQ==
+X-Gm-Message-State: ABuFfohUK7+KmfPxmw4rCbX+H42tXr/YBJIGIRGwa+KL0adVs3PqZpdO
+        Q67eG7Vx4JepdDIbpLpLNI8=
+X-Google-Smtp-Source: ACcGV62BCcshj4VQ9dZLvwv7TFu5zjaAmPEeYEk3uFcA4HnUkuIWC1KOJ9J5g2Qj/oNApseiax8xIQ==
+X-Received: by 2002:a17:902:3fa5:: with SMTP id a34-v6mr14050713pld.244.1538105383087;
+        Thu, 27 Sep 2018 20:29:43 -0700 (PDT)
+Received: from [192.168.1.21] (c-67-161-125-133.hsd1.wa.comcast.net. [67.161.125.133])
+        by smtp.gmail.com with ESMTPSA id y86-v6sm5895409pfk.84.2018.09.27.20.29.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Sep 2018 19:40:24 -0700 (PDT)
-Date:   Fri, 28 Sep 2018 04:40:22 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        Thu, 27 Sep 2018 20:29:41 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Subject: Re: [PATCH] submodule: Alllow staged changes for
+ get_superproject_working_tree
+From:   Sam McKelvie <sammck@gmail.com>
+In-Reply-To: <xmqqmus2e6rp.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 27 Sep 2018 20:29:40 -0700
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <37DC7525-209F-49CC-90AA-D55463456D20@gmail.com>
+References: <20180927181054.25802-1-sammck@gmail.com>
+ <xmqqbm8ifvka.fsf@gitster-ct.c.googlers.com>
+ <D09E2583-BD1D-4C56-9C19-6B1E97CEEDAA@gmail.com>
+ <xmqqmus2e6rp.fsf@gitster-ct.c.googlers.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Subject: Re: [PATCH v2 1/5] split-index: add tests to demonstrate the racy
- split index problem
-Message-ID: <20180928024022.GQ27036@localhost>
-References: <20180927124434.30835-1-szeder.dev@gmail.com>
- <20180927124434.30835-2-szeder.dev@gmail.com>
- <20180928004843.GP27036@localhost>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180928004843.GP27036@localhost>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Mailer: Apple Mail (2.3445.9.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 28, 2018 at 02:48:43AM +0200, SZEDER Gábor wrote:
-> Junio,
-> 
-> On Thu, Sep 27, 2018 at 02:44:30PM +0200, SZEDER Gábor wrote:
-> > diff --git a/t/t1701-racy-split-index.sh b/t/t1701-racy-split-index.sh
-> > new file mode 100755
-> > index 0000000000..ebde418d7e
-> > --- /dev/null
-> > +++ b/t/t1701-racy-split-index.sh
-> > @@ -0,0 +1,218 @@
-> > +#!/bin/sh
-> > +
-> > +# This test can give false success if your machine is sufficiently
-> > +# slow or all trials happened to happen on second boundaries.
-> > +
-> > +test_description='racy split index'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'setup' '
-> > +	# Only split the index when the test explicitly says so.
-> > +	sane_unset GIT_TEST_SPLIT_INDEX GIT_FSMONITOR_TEST &&
-> 
-> Please note that this patch adds another use of the environment
-> variable GIT_FSMONITOR_TEST, while the topic 'bp/rename-test-env-var'
-> is about to rename that variable to GIT_TEST_FSMONITOR.
+> On Sep 27, 2018, at 6:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Sam McKelvie <sammck@gmail.com> writes:
+>=20
+>>>> Subject: Re: [PATCH] submodule: Alllow staged changes for =
+get_superproject_working_tree
+>>>=20
+>>> s/Alllow/allow/;
+>>>=20
+>>=20
+>> Ok, no caps on first letter of subject.
+>=20
+> Ah, that, too.  I meant to correct triple ell, though ;-)
+>=20
+> When one reviewer says Reviewed-by: but you later found that the
+> patch was not good enough to deserve a redoing, feel free to redo
+> the patch and do not add the Reviewed-by: you got for the old one
+> to your second submission.  The difference between the one that was
+> reviewed and the one you updated invalidates the stale Reviewed-by:,
+> essentially.
+>=20
+> Some reviewers explicitly state "With this and that nit corrected or
+> left as-is, the patch is Reviewed-by: me" to tell you that as long
+> as the difference between the version reviewed and the updated one
+> is limited within the named issues, you can add Reviewed-by: to your
+> rerolled patch.
+>=20
+> In this case, I think the nits are pretty small and I do not mind
+> tweaking the version we are discussing on my end, without having you
+> to send an updated one.
+>=20
+> Here is what I'd squash into your commit, with title corrected, if
+> you are OK with that plan.  In the meantime, I'll keep the following
+> as a separate patch on top when I merge your fix to 'pu'.
+>=20
+> Thanks.
 
-Hang on for a sec.  I unset GIT_FSMONITOR_TEST in this test, because I
-saw that 't1700-split-index.sh' unsets it, and I just followed suit.
-But come to think of it, t1700 has to unset it, because some of its
-tests check the index's SHA-1 checksum, and the FSMN extension would
-interfere with that, of course.  However, that's not an issue for
-t1701, because none of its tests care about the index's checksum, so
-unsetting GIT_FSMONITOR_TEST is actually unnecessary here...  unless
-it could have other side effects that I'm not aware of.
+I wholeheartedly approve of that plan and your tweaking commit below. =
+Thank you, Junio.
+
+~Sam
+
+>=20
+> t/t1500-rev-parse.sh | 9 +++++----
+> 1 file changed, 5 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+> index b774cafc5d..01abee533d 100755
+> --- a/t/t1500-rev-parse.sh
+> +++ b/t/t1500-rev-parse.sh
+> @@ -134,6 +134,7 @@ test_expect_success 'rev-parse =
+--is-shallow-repository in non-shallow repo' '
+> test_expect_success 'showing the superproject correctly' '
+> 	git rev-parse --show-superproject-working-tree >out &&
+> 	test_must_be_empty out &&
+> +
+> 	test_create_repo super &&
+> 	test_commit -C super test_commit &&
+> 	test_create_repo sub &&
+> @@ -142,20 +143,20 @@ test_expect_success 'showing the superproject =
+correctly' '
+> 	echo $(pwd)/super >expect  &&
+> 	git -C super/dir/sub rev-parse --show-superproject-working-tree =
+>out &&
+> 	test_cmp expect out &&
+> +
+> 	test_commit -C super submodule_add &&
+> 	git -C super checkout -b branch1 &&
+> 	git -C super/dir/sub checkout -b branch1 &&
+> 	test_commit -C super/dir/sub branch1_commit &&
+> 	git -C super add dir/sub &&
+> 	test_commit -C super branch1_commit &&
+> -	git -C super checkout master &&
+> -	git -C super checkout -b branch2 &&
+> -	git -C super/dir/sub checkout master &&
+> -	git -C super/dir/sub checkout -b branch2 &&
+> +	git -C super checkout -b branch2 master &&
+> +	git -C super/dir/sub checkout -b branch2 master &&
+> 	test_commit -C super/dir/sub branch2_commit &&
+> 	git -C super add dir/sub &&
+> 	test_commit -C super branch2_commit &&
+> 	test_must_fail git -C super merge branch1 &&
+> +
+> 	git -C super/dir/sub rev-parse --show-superproject-working-tree =
+>out &&
+> 	test_cmp expect out
+> '
 
