@@ -6,59 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A26011F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 17:01:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E73F1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 17:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728889AbeI1XZj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 19:25:39 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46978 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbeI1XZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 19:25:39 -0400
-Received: by mail-wr1-f66.google.com with SMTP id z3-v6so7106771wrr.13
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 10:00:59 -0700 (PDT)
+        id S1728765AbeI1Xcd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 19:32:33 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42228 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727361AbeI1Xcd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 19:32:33 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b11-v6so7124861wru.9
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 10:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=xlgpY0gDt3yxssGR/tM0a8T1R07Mml7H8VGn/WUfLVs=;
-        b=AyULbtalyfzVWUmNUEZJlfTGxyn82mZBJhPOWMcur/iln1mXGuleFE1VzPudkEmghP
-         oEyjN5PvBjrVL6MxEjsgeRhBu1dAylfAYdx3RU2MbTHX7nmheJc/iaGMoJO6SiV4kyZ6
-         gNxMmabbj0y6k6hOTGJkZSYnv/GhWwVtU2tqAcjaJKlvyL3zVYYjCppLL6SfWP94uqdW
-         9F+BapvTI+BhuzrG6YNoFRl2GlX2QAzjEbqCiSOZ22dgA8xoSutksNf3YPrjJNC+Il71
-         9+epq3y4TX2FjS64THnu5DjVyZxJFYiWdhNhrguOiCZyCQIyS5nOKs9RPNnszXxH6OES
-         m8Xw==
+        bh=2dM8/1maF/zq2SS0q7UhCliOZMzzCKgrgMd6hQYcR7g=;
+        b=MBNueXUHk2EcM6DWIxT9S/WywhwUaS5crMDfmPeVbmysWlHelx/8t9HXV8OYPv06re
+         pHsZiQ/hXjlXFYxQOueyaVjPoKCXj1i0jhBCSEIpA78Mt9VHItVMTBi+kV4UCQ9FrhVm
+         84ROd8rp2paNEHB7OYD6AlqpTs0yWIp1UDJZdQNTHaRUe9Wee5UNQa70Ok3vpixjo8wR
+         dlgx5nW7k72SVKe0ZeN/FNAg1fLfsIO7Ck+3cBmi2nzRdS60Os1YNpU4AtlZBquUwqdT
+         F9FPK1CxktnjmHNxndHEHABuPsLEqQ1mzErZAFW7O32YjWTiNs9Qn/vsJbM/4THKLZxH
+         7oBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=xlgpY0gDt3yxssGR/tM0a8T1R07Mml7H8VGn/WUfLVs=;
-        b=cWiiJfKKcmfopeQZi1Br2UrsjKjVBXvsV5rFMoj5743TPNoXI7OeZjZ3Zbcn6yTKCb
-         LD7Kmk4i4OC4Wj0lgmU+B2epHynn83FD6kgXznoORmtPxZ+RZVpCp6MSj9zlUTYJEtpw
-         1JN97GR+yiVJey8OL0bj8wkuIa6aXGg+1UZZn0G/64lf9xVkb9jHYk18ul0mfjysWblN
-         Q8ddMIDVWkPV0ZXSGzbxrG3MGN7nbGlSPGlFsemhdcaJm2F/gqRPWhZXZDEj5iFQZacK
-         2IjW3WcovPHgbmzKtmuD6p+4cBvUqSj8KV8UD52OfSi6z80gijRz/zXLCnO17hMACBTu
-         OCIQ==
-X-Gm-Message-State: ABuFfoiGawVpXFbYjpEP6Fhb9hl0EPjE70vvSQPBKXjGX4jHd1OitWP1
-        6BYa+msEN11blRWQbhtbwmUUFRIb
-X-Google-Smtp-Source: ACcGV62cSb/HOHlTpvpyMCAriK2qW7ypbiJpO41PrJGEEk35rwcvWW+FRwZB4oiCJOXe4oRVAtN1yQ==
-X-Received: by 2002:adf:bc84:: with SMTP id g4-v6mr6080477wrh.250.1538154058263;
-        Fri, 28 Sep 2018 10:00:58 -0700 (PDT)
+        bh=2dM8/1maF/zq2SS0q7UhCliOZMzzCKgrgMd6hQYcR7g=;
+        b=ebZnLjBPdXB/ZumDDjkCcePU3bTQ1lJH6aORg9TkkQGrypiYHcswU60B0iaAd+hQll
+         1DVwGYLQc21rmJQX1PVXDJjDbVZl1vHLi/1BjDYPr5jHfBGlSQgNNQAiIFoXXw9hHvAB
+         zIzjYXVQIYwhAtMQC/4Uw8/3eMwJyS4f9W9a6kgXAGJgWlBjLTb3xct7QPhBWA63tkvx
+         5SqZkRHRCmjedtK1ILJkCNND4yPhdxa/NHuwRu9Z5yMGYwraHGaV/YrOPuFUevmeelkq
+         yQINVDEzxdsrU9WO/kwzTFbX0g2IgmYJkW2vD69zFk9nhDbYAGRMYocIt8ru6pqm+Y5b
+         XAMg==
+X-Gm-Message-State: ABuFfojECIQJ30aFkZ1FSdMDwXUQRyB3ikjCYAyozhoCjWnQm0FjrUBu
+        O8ds90l3z3Mpsn8w8X4/SECqjhFY
+X-Google-Smtp-Source: ACcGV614ajXMymBD/LebBrs8VkQXREJ0codVBcaPy4IVvkiNzX5DtEB1aEYh1MsTEXkekf+GUlkHXg==
+X-Received: by 2002:adf:ef47:: with SMTP id c7-v6mr13057697wrp.182.1538154469714;
+        Fri, 28 Sep 2018 10:07:49 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w192-v6sm2988959wmf.33.2018.09.28.10.00.56
+        by smtp.gmail.com with ESMTPSA id u185-v6sm2435114wmf.9.2018.09.28.10.07.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Sep 2018 10:00:57 -0700 (PDT)
+        Fri, 28 Sep 2018 10:07:48 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] help: allow redirecting to help for aliased command
-References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
-        <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
-        <fb221514-4749-affa-c657-0e36dd28fb13@rasmusvillemoes.dk>
-Date:   Fri, 28 Sep 2018 10:00:56 -0700
-In-Reply-To: <fb221514-4749-affa-c657-0e36dd28fb13@rasmusvillemoes.dk> (Rasmus
-        Villemoes's message of "Fri, 28 Sep 2018 09:40:45 +0200")
-Message-ID: <xmqqwor5d0af.fsf@gitster-ct.c.googlers.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v6 4/7] config: add new index.threads config setting
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+        <20180926195442.1380-1-benpeart@microsoft.com>
+        <20180926195442.1380-5-benpeart@microsoft.com>
+        <20180928002627.GO27036@localhost>
+        <cbc48a95-62f5-a098-fb70-97b6cf241920@gmail.com>
+Date:   Fri, 28 Sep 2018 10:07:48 -0700
+In-Reply-To: <cbc48a95-62f5-a098-fb70-97b6cf241920@gmail.com> (Ben Peart's
+        message of "Fri, 28 Sep 2018 09:39:12 -0400")
+Message-ID: <xmqqsh1tczyz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,35 +72,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
+Ben Peart <peartben@gmail.com> writes:
 
->>> +		if (follow_alias > 0) {
->>> +			fprintf_ln(stderr,
->>> +				   _("Continuing to help for %s in %0.1f seconds."),
->>> +				   alias, follow_alias/10.0);
->>> +			sleep_millisec(follow_alias * 100);
->>> +		}
->>> +		return alias;
->> 
->> If you have "[alias] cp = cherry-pick -n", split_cmdline discards
->> "-n" and the follow-alias prompt does not even tell you that it did
->> so,
+>> Why does multithreading have to be disabled in this test?
 >
-> That's not really true, as I deliberately did the split_cmdline after
-> printing the "is an alias for", but before "continuing to help for", so
-> this would precisely tell you
->
->   cp is an alias for 'cherry-pick -n'
->   continuing to help for 'cherry-pick' in 1.5 seconds
+> If multi-threading is enabled, it will write out the IEOT extension
+> which changes the SHA and causes the test to fail.
 
-Yes, but notice that cherry-pick appears twice---I do not know about
-you, but I know at least my eyes will be drawn to the last mention
-that does not have '-n' stronger than the one before/above that
-line.
+I think it is a design mistake to let the writing processes's
+capability decide what is written in the file to be read later by a
+different process, which possibly may have different capability.  If
+you are not writing with multiple threads, it should not matter if
+that writer process is capable of and configured to spawn 8 threads
+if the process were reading the file---as it is not reading the file
+it is writing right now.
 
-In any case, I think Peff's "Let's teach 'git cp -h' to prefix what
-'cp' is aliased to before invoking 'git cherry-pick -n -h' (and let
-it fail)" approach is much more robust, so let's do that without
-emulating that command-typo-correction codepath.
-
-
+I can understand if the design is to write IEOT only if the
+resulting index is expected to become large enough (above an
+arbitrary threshold like 100k entries) to matter.  I also can
+understand if IEOT is omitted when the repository configuration says
+that no process is allowed to read the index with multi-threaded
+codepath in that repository.
