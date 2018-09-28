@@ -2,98 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9C1A1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 15:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93C9D1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 15:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729187AbeI1V4F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 17:56:05 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:37885 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728946AbeI1V4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 17:56:05 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id 5ujcgY1N0jlDz5uk7g7wZX; Fri, 28 Sep 2018 16:31:48 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=49dTPssbX5TUBygoor8A:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] read-cache: fix division by zero core-dump
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <476b5678-41b2-d2f8-1890-ba315354ebc0@ramsayjones.plus.com>
- <8a76234e-fcf8-f435-33e9-1846c3b6ad14@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <da607bd3-c91b-556d-b342-927cb2f773c7@ramsayjones.plus.com>
-Date:   Fri, 28 Sep 2018 16:31:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1729422AbeI1WIc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 18:08:32 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:33993 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729025AbeI1WIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 18:08:32 -0400
+Received: by mail-lf1-f66.google.com with SMTP id y10-v6so5375475lfj.1
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 08:44:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hv/9G+QK8iY3P040t7HC+wH3L7npdRsARfBMuIajDLk=;
+        b=b1+Npp+LEOlr816J4+fbFPbZ8XSaCbIE3o3OFVmupHwHdhG7roije3HxA1D+WwyNOT
+         1YTBDxy0mJh92NjCKz6MdR6GuuwgVcjnfYIgGogKhk9CtDV4Q2cKNguSbvzvCifPOCni
+         VwSWTZCCOw+FEINj9ASKvq0vZXcOClfROhJbsAaykpjozXYPXu/KAkkq9noFh/5DlO2c
+         yKQzBwV64+ZXV7ETTcsW3YzP8pOQYStETNUQNEEfqmcvoxdWuqgw+FwCBOCNMsNVkyex
+         tladGp1hglsY7KrppQEWmRZ53LYgIQmZxPpu4e8OtYZlFpT6cTyX4WlaTpNoXk8VhkEr
+         H5Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hv/9G+QK8iY3P040t7HC+wH3L7npdRsARfBMuIajDLk=;
+        b=mlocs4L6ymWbTUBIQmfEo6eqhjwLfiEdRAVy/Ds+5yL2a3CVMJoRuBw7wXpknhJUeK
+         041xaCBFFPI5V1kwB84khO4bYfyHrHFDe3OaRq/YBxd8IBEvUqyzGtd1JHfMH0xaOeq0
+         pWk/+PRNGUaXj3vEqi94uA2pTosdyOcGiL9lG7q1viAQ+2clJAw9uTTAmnN1b+87Malx
+         ZWz2qXTl7dLPQvZxsKzcGillERt8oDMarCNslXMcF8TZzpcBNc804B2vFgd0E31XLIEM
+         ty30GDCE5DLSpLsqCcfZecmTmiKSViQKuwQOMNvcylDBR6n2KD3jyTedZn0+hZeF/Ur2
+         7c5Q==
+X-Gm-Message-State: ABuFfohbap08TseN07eyFasb4vw+ZbeQA3L3hJZ/OzgfcyO7VZ56s2Zi
+        b187kdjAmEJrbpCCP3QbJCUFzpVW
+X-Google-Smtp-Source: ACcGV62R+dV1UUU64kdCloEXP70NvsO2gfDs5EtVamW9S8iEYm36JmavNYcOmXBP4HYxNIH75s2kcw==
+X-Received: by 2002:a19:9b12:: with SMTP id d18-v6mr11444871lfe.132.1538149450480;
+        Fri, 28 Sep 2018 08:44:10 -0700 (PDT)
+Received: from mosebacke.ipredator.se ([2001:67c:1350:106::1a])
+        by smtp.gmail.com with ESMTPSA id d126-v6sm1090499lfe.75.2018.09.28.08.44.09
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 28 Sep 2018 08:44:09 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] t1400: drop debug `echo` to actually execute `test`
+Date:   Fri, 28 Sep 2018 17:43:59 +0200
+Message-Id: <20180928154359.26919-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.19.0.216.g2d3b1c576c
 MIME-Version: 1.0
-In-Reply-To: <8a76234e-fcf8-f435-33e9-1846c3b6ad14@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJc1Mnh84HgScjSqmZ6z7QXZRs7Zn/b6o3mWFRomPN2pXePBB+cbXaa/+Bb9sXpoCWcx9TOjRN0DJdDZHIvvrUjZWP+u8ysb8rgf0r+a4HTcH6o35bKW
- dabiGOIgS7PyqDnyJJ832igbYRe4a/FoQXCTH7FXGw1Q8xeoQlA1TKr22I34KluAaCgNZlTjS+go8w==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Instead of running `test "foo" = "$(bar)"`, we prefix the whole thing
+with `echo`. Comparing to nearby tests makes it clear that this is just
+debug leftover. This line has actually been modified four times since it
+was introduced in e52290428b (General ref log reading improvements.,
+2006-05-19) and the `echo` has always survived. Let's finally drop it.
 
+This script could need some more cleanups. This is just an immediate fix
+so that we actually test what we intend to.
 
-On 28/09/18 02:20, Ben Peart wrote:
-> 
-> 
-> On 9/27/2018 6:24 PM, Ramsay Jones wrote:
->>
->> commit 225df8a468 ("ieot: add Index Entry Offset Table (IEOT)
->> extension", 2018-09-26) added a 'DIV_ROUND_UP(entries, ieot_blocks)
->> expression, where ieot_blocks was set to zero for a single cpu
->> platform. This caused an SIGFPE and a core dump in practically
->> every test in the test-suite, until test t4056-diff-order.sh, which
->> then went into an infinite loop!
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>
->> Hi Ben,
->>
->> Could you please squash this into the relevant commits on your
->> 'bp/read-cache-parallel' branch. (The first hunk fixes a sparse
->> warning about using an integer as a NULL pointer).
->>
-> 
-> Absolutely - thanks for the patch.
-> 
-> I don't know how long it's been since I've been on a single core CPU - I'm sad for you. ;-)
+All other hits for `git grep "\<echo test " -- t/` seem fine. They want
+to create some input or expected output data.
 
-Heh, don't be - whilst I do still have a single cpu laptop about
-the place _somewhere_, I haven't booted it up in about 15 years! :-D
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ t/t1400-update-ref.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I used to regularly test git (and other software) on my old 32-bit
-laptop (windows xp/Linux Mint 17.x, Core2 duo), but just lately
-I have taken to using a 32-bit VM on my current laptop (4th gen i5)
-instead. (The git test-suite would take approx 50 min to run on
-the 32-bit hardware, whereas it only takes 8 min on the VM!).
-
-I have configured the 32-bit VM with a single cpu, because when
-the VM was configured with two cpus the git test-suite would take
-longer to run (approx. 8 -> 10 min)! Taking more resources from
-the host, but increasing the running time, didn't seem like a good
-return. ;-)
-
-Also, this is not the first time some multi-threaded code in git
-has 'failed' by assuming more than one cpu, so ...
-
-ATB,
-Ramsay Jones
-
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 02493f14ba..b72beebe42 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -359,21 +359,21 @@ ld="Thu, 26 May 2005 18:43:00 -0500"
+ test_expect_success 'Query "master@{May 25 2005}" (before history)' '
+ 	test_when_finished "rm -f o e" &&
+ 	git rev-parse --verify "master@{May 25 2005}" >o 2>e &&
+ 	test $C = $(cat o) &&
+ 	test "warning: Log for '\''master'\'' only goes back to $ed." = "$(cat e)"
+ '
+ test_expect_success 'Query master@{2005-05-25} (before history)' '
+ 	test_when_finished "rm -f o e" &&
+ 	git rev-parse --verify master@{2005-05-25} >o 2>e &&
+ 	test $C = $(cat o) &&
+-	echo test "warning: Log for '\''master'\'' only goes back to $ed." = "$(cat e)"
++	test "warning: Log for '\''master'\'' only goes back to $ed." = "$(cat e)"
+ '
+ test_expect_success 'Query "master@{May 26 2005 23:31:59}" (1 second before history)' '
+ 	test_when_finished "rm -f o e" &&
+ 	git rev-parse --verify "master@{May 26 2005 23:31:59}" >o 2>e &&
+ 	test $C = $(cat o) &&
+ 	test "warning: Log for '\''master'\'' only goes back to $ed." = "$(cat e)"
+ '
+ test_expect_success 'Query "master@{May 26 2005 23:32:00}" (exactly history start)' '
+ 	test_when_finished "rm -f o e" &&
+ 	git rev-parse --verify "master@{May 26 2005 23:32:00}" >o 2>e &&
+-- 
+2.19.0.216.g2d3b1c576c
 
