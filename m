@@ -2,119 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D005E1F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 22:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6EF1F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 22:06:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbeI2EbJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 00:31:09 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35727 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbeI2EbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 00:31:08 -0400
-Received: by mail-wr1-f67.google.com with SMTP id o16so7851495wrx.2
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 15:05:22 -0700 (PDT)
+        id S1726562AbeI2Ebq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 00:31:46 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45596 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726332AbeI2Ebp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 00:31:45 -0400
+Received: by mail-pg1-f195.google.com with SMTP id t70-v6so5350215pgd.12
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 15:06:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=082+8VUm3MlP1X6PWUGI211PwC6JLPbIL65qw7xjQaQ=;
-        b=YTOxWW+KNpD/JTMCJ9hEuNpRlavmGMbmJi/CHBXrRINLfBouKi60MJxtFae1vWPtBO
-         R5pniIf7DppdQM1OxVjygKYJguoDogooCvIgWWOmia1ey7XdSz7InDNvOAupfGXZyFg+
-         1uC+rXSuIKn4KAErJkpIvyay/1O3Z3ylRl+GEmf+7j9bAL1Ixn9K6Be+pERtjGu+88zw
-         em8L90AOPWKJxA2ggWVsW3KODgW6LvXisLBuqYdOzXo87xC9TEwz5EJm0uRTfuQCV2R3
-         OAgtf6qWx4bfaIcRhk5SrCjJLXO/NiVYbbsyTh1Yq+RvgHyPCDQWbveJ0gPi5I5KB7XP
-         wimw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dZ7sr8bsxjQsCyhigcUx7rm2qdW+LW2CZ6N29WmyFoo=;
+        b=g/FIIy7vlLE3xzN1I4tcVpb6yzWJzv9/N5OxE9L7HpxKo0cG6gr/BbY7MCnUBDgjos
+         XwiRDNunnVCJVuTJyNCshbLEg5vhuRAXXLRULYDIFZ8o+3BCwOjAxqvSEUk8dVYlbjMI
+         Igxxhg7xFugRBuSrrnYDcnl94cDoE2zpPhmKdoxcM4wPfmbdRyE9zaole7Wjojh9wg5j
+         IGmoWwrt6LTnn06DU6vNTOVwPpjvXpNqchqppWbyly3gnHSwYyqOHHJZBUzSB4kICgnU
+         8ZjUtlRavju9sumlBpIFGelBllON+879ZdMYygqWtlgzEC+VPv/3nZ7qgud2jiyk1rg4
+         Msgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=082+8VUm3MlP1X6PWUGI211PwC6JLPbIL65qw7xjQaQ=;
-        b=prftRkcIOCT8nvZEnnLMtJTZd0r/SEYTR0MCX96m435O7Gk1rYUJfMLJF3m59rT2iI
-         xOdxc4ZlsE5zEvgCzkm3g7OB+jhlUmdnNqtN+fL79DbwlMq7wgOM5qwjdDPxiXzOaWQG
-         cRSeGZNcZStmTY29c55wq5v3eOuBHAKEmXbiWen6uy/MhWZFwTQuJa8LopjAGUEWNfaj
-         4uWjEo0P6TMULDK0sethSGMpynn1gcuPvvZF3zzBjn5dQJLNN8aT7oT71AEIQL28PbkK
-         lxBblGazqwHMsOVciiYDaZ8F1JdfB85p4JGvPx5Rngym3MIgxmhlwz9Zp+Y5yT5KiIVh
-         qi5A==
-X-Gm-Message-State: ABuFfojhu3xlZRKA8XTx8O4aPf9+SCt8CARwqfteKbegOSFh9xL4Mh5b
-        ZumteDo5wTvaOBXpLlDT1xI=
-X-Google-Smtp-Source: ACcGV63MMpQjYeo2ASQq+wCXZs3ttHT/RYR4GJVnXtVgH19tB3vaGTGhshYIyGffpZjtO+Ka0Lh9Qg==
-X-Received: by 2002:adf:a352:: with SMTP id d18-v6mr327133wrb.31.1538172321350;
-        Fri, 28 Sep 2018 15:05:21 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k13-v6sm5483023wrq.7.2018.09.28.15.05.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Sep 2018 15:05:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ralf Thielow <ralf.thielow@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-rebase.sh: fix typos in error messages
-References: <20180928192849.30792-1-ralf.thielow@gmail.com>
-        <xmqqzhw19t9a.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 28 Sep 2018 15:05:20 -0700
-In-Reply-To: <xmqqzhw19t9a.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 28 Sep 2018 15:01:05 -0700")
-Message-ID: <xmqqsh1t9t27.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dZ7sr8bsxjQsCyhigcUx7rm2qdW+LW2CZ6N29WmyFoo=;
+        b=c1mD4qztGBQFrrLwzgppjEF3Yjk2RJQ+qmOuU3R3kWngsNTI2VIgjQ2Iv2PQZ/TZxv
+         wbVptIRiXUia0zyJGxJlNYAdVdDO3lYXbpvGT+Mk+7SH2JpcGuX3WfgzaFQT3kQ+PTxt
+         4tIsYtRSm8X2od1HcmedeBQVSWZ+CA3eiNCE/jYk9SKfafxjO/grhOmfkRmePw4kBMbw
+         KtPlyMYXo6scV36cEG6vhvZhvfKcbjXT0VzrBegsgAml+9M9A+xGNw9jwV+4ctmLTvOQ
+         OkZCZASljd7TT7GDmqie/sp1z46jHa7HfqzK3dlvBXJA77bhpjMVpXsNlUAXYG5Vl2wo
+         ILFg==
+X-Gm-Message-State: ABuFfogwZI0/And8xaa9FtvvTfm4riq8O7I8HQzO2w0rFd6JN7E+5EAP
+        Ci4bwkP/p/I4UeSH8m0vmGJZ7g==
+X-Google-Smtp-Source: ACcGV60Xhu11tCjOzwbgxnRo96+ZuCV8tOl/8NcMHNqtUBaZKRqlLf+LX8ajf6dGv+VgofBwilkzWg==
+X-Received: by 2002:a17:902:7887:: with SMTP id q7-v6mr501864pll.111.1538172359689;
+        Fri, 28 Sep 2018 15:05:59 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:a5eb:f7e6:92aa:f2c8])
+        by smtp.gmail.com with ESMTPSA id l16-v6sm13118912pfj.179.2018.09.28.15.05.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Sep 2018 15:05:58 -0700 (PDT)
+Date:   Fri, 28 Sep 2018 15:05:57 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com, sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v3 4/4] transport.c: introduce core.alternateRefsPrefixes
+Message-ID: <20180928220557.GB45367@syl>
+References: <cover.1537466087.git.me@ttaylorr.com>
+ <cover.1538108385.git.me@ttaylorr.com>
+ <48eb774c9e36f468549a278fd8cf703d8a34af28.1538108385.git.me@ttaylorr.com>
+ <20180928053057.GD25850@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180928053057.GD25850@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> ...  However, because the same mistakes are inherited to
-> builtin/rebase.c by these topics, we'd need a matching fix to
-> correct 07664161 ("builtin rebase: error out on incompatible
-> option/mode combinations", 2018-08-08) and either squash the fix
-> into that commit, or queue it on top of pk/rebase-in-c-5-test topic.
+On Fri, Sep 28, 2018 at 01:30:57AM -0400, Jeff King wrote:
+> On Thu, Sep 27, 2018 at 09:25:45PM -0700, Taylor Blau wrote:
 >
-> Will queue; thanks.
+> > The recently-introduced "core.alternateRefsCommand" allows callers to
+> > specify with high flexibility the tips that they wish to advertise from
+> > alternates. This flexibility comes at the cost of some inconvenience
+> > when the caller only wishes to limit the advertisement to one or more
+> > prefixes.
+> >
+> > For example, to advertise only tags, a caller using
+> > 'core.alternateRefsCommand' would have to do:
+> >
+> >   $ git config core.alternateRefsCommand ' \
+> >       git -C "$1" for-each-ref refs/tags --format="%(objectname)"'
+>
+> This has the same "$@" issue as the previous one, I think (which only
+> makes your point about it being cumbersome more true!).
 
-Here is what I'd queue, too.
+Hmm. I'll be curious to how you respond to my other message about the
+same topic. I feel that whatever the outcome there is will affect both
+locations in the same way.
 
--- >8 --
-Subject: [PATCH] rebase: fix typos in error messages
+> > In the case that the caller wishes to specify multiple prefixes, they
+> > may separate them by whitespace. If "core.alternateRefsCommand" is set,
+> > it will take precedence over "core.alternateRefsPrefixes".
+>
+> Just a meta-comment: I don't particularly mind this discussion in the
+> commit message, but since these points ought to be in the documentation
+> anyway, it may make sense to omit them here in the name of brevity.
 
-The separator between words in a multi-word option name is a dash,
-not an underscore.
+Sure, that makes sense.
 
-Inspired by a matching change by Ralf Thielow for the scripted
-version of "git rebase".
+> > +core.alternateRefsPrefixes::
+> > +	When listing references from an alternate, list only references that begin
+> > +	with the given prefix. Prefixes match as if they were given as arguments to
+> > +	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
+> > +	whitespace. If `core.alternateRefsCommand` is set, setting
+> > +	`core.alternateRefsPrefixes` has no effect.
+>
+> Looks good.
+>
+> > diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
+> > index 503dde35a4..3449967cc7 100755
+> > --- a/t/t5410-receive-pack.sh
+> > +++ b/t/t5410-receive-pack.sh
+> > @@ -46,4 +46,12 @@ test_expect_success 'with core.alternateRefsCommand' '
+> >  	test_cmp expect actual.haves
+> >  '
+> >
+> > +test_expect_success 'with core.alternateRefsPrefixes' '
+> > +	test_config -C fork core.alternateRefsPrefixes "refs/tags" &&
+> > +	git rev-parse one three two >expect &&
+> > +	printf "0000" | git receive-pack fork >actual &&
+> > +	extract_haves <actual >actual.haves &&
+> > +	test_cmp expect actual.haves
+> > +'
+>
+> If you follow my suggestion on the test setup from the last patch, it
+> would make sense to just put "refs/heads/public/" here. Although neither
+> that nor what you have here tests the whitespace separation. Possibly
+> there should be a third hierarchy.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/rebase.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Sounds good; that's what I did.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1a697d70c9..0f9a40aae5 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1135,15 +1135,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		 *       git-rebase.txt caveats with "unless you know what you are doing"
- 		 */
- 		if (options.rebase_merges)
--			die(_("error: cannot combine '--preserve_merges' with "
-+			die(_("error: cannot combine '--preserve-merges' with "
- 			      "'--rebase-merges'"));
- 
- 	if (options.rebase_merges) {
- 		if (strategy_options.nr)
--			die(_("error: cannot combine '--rebase_merges' with "
-+			die(_("error: cannot combine '--rebase-merges' with "
- 			      "'--strategy-option'"));
- 		if (options.strategy)
--			die(_("error: cannot combine '--rebase_merges' with "
-+			die(_("error: cannot combine '--rebase-merges' with "
- 			      "'--strategy'"));
- 	}
- 
--- 
-2.19.0-271-gfe8321ec05
+> > diff --git a/transport.c b/transport.c
+> > index e271b66603..83474add28 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+> >  		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
+> >  		argv_array_push(&cmd->args, "for-each-ref");
+> >  		argv_array_push(&cmd->args, "--format=%(objectname)");
+> > +
+> > +		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
+> > +			argv_array_push(&cmd->args, "--");
+> > +			argv_array_split(&cmd->args, value);
+> > +		}
+>
+> And this part looks good.
 
+Thanks for the review of this patch, too.
+
+Thanks,
+Taylor
