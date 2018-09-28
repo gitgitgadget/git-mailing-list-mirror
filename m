@@ -2,119 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 451991F453
-	for <e@80x24.org>; Fri, 28 Sep 2018 14:21:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C46011F453
+	for <e@80x24.org>; Fri, 28 Sep 2018 14:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727361AbeI1Uph (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Sep 2018 16:45:37 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:37226 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbeI1Uph (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Sep 2018 16:45:37 -0400
-Received: by mail-qt1-f193.google.com with SMTP id n6-v6so6806059qtl.4
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 07:21:35 -0700 (PDT)
+        id S1728453AbeI1Upz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Sep 2018 16:45:55 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39219 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726971AbeI1Upz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Sep 2018 16:45:55 -0400
+Received: by mail-pg1-f195.google.com with SMTP id r9-v6so733424pgv.6
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 07:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=20pVwesw+KnUP97TH4nFLgElGM1FwfMMalos1N55tgU=;
-        b=Wc9rU2FKfeJcfJNo0V/NmnlTacWOqhGi/MrB6iMmv4Q3LWkJSAeXs/7SQSN/LjLska
-         FICFnSgNj7ZU4T9nKFx3HYLwRUG3bwX34q5V7jNavEddGiqg0TU1lmRdxjZu3eq0TIQC
-         KBgzBtJ0O5e9yBFTPdURVMESPBHJlN/L6X8wzpCkUy3dc8X/xdjKL3iQu3o5uMTkQYpk
-         HWKhHEAWWz9Z8/mIwMEM0QtOYSi7RoOS0wc1vEvOw+hqE4P1h4xENSsMasCqY6pc64l+
-         PK40cOAxVifxTLoL5nEdV6vp1a9jHkdfVxKNDlwbMvI+Nh6tZCAN3Nb9qQencvrNfvDN
-         3FHA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lhCJi8UHfVvkBtq1XQUSk6rQinLogi32+GPv1kzEo5A=;
+        b=vmNy9RyjrGHpOroup20Bp9m9D8+C22WrYWuo2cau1UpsjvLWZNhKJiYH7+his8Aw8c
+         bk7oE/4czbFquOSlcXU61YRnsMS9nqFX/qOUEPQ6tQFKnoTG53b7+15cE8bAxbVeEnRI
+         bw1eSKTA4gxuxybCi/tnH8bb6M6EYXqfqoKzyMsaAJdOc1lemVE7xp4Xz+DzdbbTU3XZ
+         U0jL5khM/O/rgcFQ1tsiQvO2qL1Tf67Y7H3jHUH6yuUs+iitW5xJ+/eM23uYKPJwe5mt
+         bE06Q9nkqJ2o3/9/9f1/rB4Do+LTgBM/yC+t47qE452PE9rKmhtlgAW1+6dlC7Ddl4Tk
+         moiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=20pVwesw+KnUP97TH4nFLgElGM1FwfMMalos1N55tgU=;
-        b=q12MKENiCvgvGWcC4fuEULsoIpcIRqpCeMaL71eSoX6cLFdNGe3OAfXJxTOKB5ngO/
-         ptWqcFZLwHTLn9cj1SsHu+YYvov16J05cXACM4b7i12v7GwhABWpkblSckkXDquvYfDt
-         P5K9UUUXTeiD2cque04lpi/tviDlW7o3YoCTgiMkmpfjlhIrfj3Mx965oEbncRt+G+6R
-         D6pOlvvwzjvxwvo6xQOoo8dhMEetmGZoAkkBAaIDw9Gh3iLlhWvJHtj7WLXoFOKR+q21
-         e319z2Mpefk6Yw1NjCaToq9BgSnSdz7FJl//g/5fQInWSgnwYIgZuoday/H68fJ1Jo68
-         4ZzA==
-X-Gm-Message-State: ABuFfohFyq6pH1xoUMIGIt9KeO5aVSwrTlmOAbn+LRX4JIbwR7E27Bel
-        iac17+STa1KhXYQ5ggLu6vY=
-X-Google-Smtp-Source: ACcGV61bmBWklxhqWSHjkqFPQYr4P7tDHGr11DB/Csy+qKR6pMuehSb/uuVxDYEL23Eg/2NRg2DcXg==
-X-Received: by 2002:ac8:1c89:: with SMTP id f9-v6mr12833923qtl.265.1538144495184;
-        Fri, 28 Sep 2018 07:21:35 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id m61-v6sm720414qte.30.2018.09.28.07.21.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lhCJi8UHfVvkBtq1XQUSk6rQinLogi32+GPv1kzEo5A=;
+        b=VlUf8dkE2qrayK5NIVDXgWlbYuOiJmiKnNzV0pW+msK6r9BLby822hIJW8cd/ZOJu8
+         whSXWqfKjqAGQq77VK6ZhLmWQlWn4qQH1ey8GyuKUlUbpBwhlouWh8BwrGBd+OBfxM9N
+         4vu3TG+bKDSNbBpBbKCGBKDbEMOr4ZlPmV6yUkjDfbpYX5Qav2EGMAK/chr8BMkALpSJ
+         BXrst2+4jtwtvBeVkZebi9Uh46MOg/DMV6KiVmNl3x8rt1B+wzGT3pf66gXeSKPSKQ1K
+         4dYbKqGLPkhtM82MYgRxpTlebVF4mP2lAmNzxL5TAS6RqOAbF5wivlblJTQkMG8uVeSy
+         k+sw==
+X-Gm-Message-State: ABuFfoi1b8o0w5ShBIX2NJymtJXJncnh0zBY9l0DZ1BWy1xnL0eopMy7
+        Lq3m7HuQLABf9HvbK2aDBPfZ3g==
+X-Google-Smtp-Source: ACcGV63jVD0fVotBf48GKHq6FJMFY07EQ/qWKmWSFPb+mCczQJxuOmRJHbFUDHQYFPpJ4PDtZxctdg==
+X-Received: by 2002:a63:2a0b:: with SMTP id q11-v6mr15026439pgq.36.1538144513341;
+        Fri, 28 Sep 2018 07:21:53 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:1924:afac:8279:2210])
+        by smtp.gmail.com with ESMTPSA id w2-v6sm3604304pfk.140.2018.09.28.07.21.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Sep 2018 07:21:34 -0700 (PDT)
-Subject: Re: [PATCH v3 3/5] fsmonitor: update GIT_TEST_FSMONITOR support
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "jrnieder@gmail.com" <jrnieder@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-References: <20180914143708.63024-1-benpeart@microsoft.com>
- <20180918232916.57736-1-benpeart@microsoft.com>
- <20180918232916.57736-4-benpeart@microsoft.com>
- <20180928100143.GA23446@localhost>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <653f4fbd-ed32-4cf8-b1bb-9cfef4f8deaa@gmail.com>
-Date:   Fri, 28 Sep 2018 10:21:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        Fri, 28 Sep 2018 07:21:51 -0700 (PDT)
+Date:   Fri, 28 Sep 2018 07:21:51 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com, sunshine@sunshineco.com, sbeller@google.com
+Subject: Re: [PATCH v3 1/4] transport: drop refnames from
+ for_each_alternate_ref
+Message-ID: <20180928142151.GD23652@syl>
+References: <cover.1537466087.git.me@ttaylorr.com>
+ <cover.1538108385.git.me@ttaylorr.com>
+ <037273dab0f861e5f10241de1e32cddaabeab0cc.1538108385.git.me@ttaylorr.com>
+ <20180928045858.GA25850@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20180928100143.GA23446@localhost>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180928045858.GA25850@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Sep 28, 2018 at 12:58:58AM -0400, Jeff King wrote:
+> > From: Jeff King <me@ttaylorr.com>
+>
+> Pretty sure that isn't right. :)
 
+Indeed that isn't right :-). I try my best to review my patches
+diligently before submitting them, but here's an interesting side-story
+if you're interested:
 
-On 9/28/2018 6:01 AM, SZEDER Gábor wrote:
-> On Tue, Sep 18, 2018 at 11:29:35PM +0000, Ben Peart wrote:
->> diff --git a/t/README b/t/README
->> index 56a417439c..47165f7eab 100644
->> --- a/t/README
->> +++ b/t/README
->> @@ -319,6 +319,10 @@ GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncommon pack-objects code
->>   path where deltas larger than this limit require extra memory
->>   allocation for bookkeeping.
->>   
->> +GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
->> +code path for utilizing a file system monitor to speed up detecting
->> +new or changed files.
-> 
-> Here you tell us to set GIT_TEST_FSMONITOR to an absolute path, and we
-> are good to go.
-> 
->> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
->> index 756beb0d8e..d77012ea6d 100755
->> --- a/t/t7519-status-fsmonitor.sh
->> +++ b/t/t7519-status-fsmonitor.sh
->> @@ -8,7 +8,7 @@ test_description='git status with file system watcher'
->>   # To run the entire git test suite using fsmonitor:
->>   #
->>   # copy t/t7519/fsmonitor-all to a location in your path and then set
->> -# GIT_FSMONITOR_TEST=fsmonitor-all and run your tests.
->> +# GIT_TEST_FSMONITOR=fsmonitor-all and run your tests.
-> 
-> But this old comment is different, suggesting copying that script to
-> our $PATH.
-> 
-> I prefer your instructions above, because it's only a single step,
-> and, more importantly, it won't pollute my $PATH.  I think this
-> comment should be updated to make the advices in both places
-> consistent.  Or perhaps even removed, now that all GIT_TEST variables
-> are documented in the same place?
-> 
+I use a script 'git mail' which is essentially doing:
 
-I prefer the suggestion to simply remove this text from the test script 
-now that there is documentation for it in the t/README file.
+  git format-patch --stdout >mbox && mutt -f mbox
+
+So, by the time that I've reviewed the diff via:
+
+  $ git format-patch --stdout | less
+
+I assume that the patches are ready to send (since, after all, running
+'git format-patch' more than once shouldn't change anything.) So, I open
+mutt with 'git mail', write my cover letter, and send each of the
+patches to the list.
+
+It was during that last phase that I ignored the From: Jeff King
+<me@ttaylorr.com>, which I agree with you is certainly incorrect :-).
+
+I was going to ask Junio to fix this up when queuing, but it seems (from
+a quick skim of the rest of your review), that we will reach v4, so I'll
+see if I can't teach 'git mail' to do the right thing for me.
+
+> The patch itself is flawless, of course. ;)
+
+Obviously ;-).
+
+Thanks,
+Taylor
