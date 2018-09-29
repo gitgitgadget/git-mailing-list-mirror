@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA0FB1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 19:10:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 099CC1F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 19:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727746AbeI3BkT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 21:40:19 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:34027 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727405AbeI3BkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 21:40:18 -0400
-Received: by mail-lf1-f65.google.com with SMTP id y10-v6so7253762lfj.1
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 12:10:42 -0700 (PDT)
+        id S1728075AbeI3BkX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 21:40:23 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:47030 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727643AbeI3BkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 21:40:23 -0400
+Received: by mail-lf1-f67.google.com with SMTP id q2-v6so7183181lfc.13
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 12:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PqMBW3fLRjKCNDA9feT57k7M9eB/UhBVATbbc2cHHj0=;
-        b=q8YoY5V4IFukHEeEoJ2GPpAMWwrcDIapIbAvFOKUev+UisJFCJIb3vpBEwBPQVT+VH
-         lfjq5YyjgkZixPFUt39zRmvF32IyXqkWf0PeMePTJT36Po57S0aAZBqVFdaSEfnssomF
-         /W/d0xY47WXDQxY34eG0XvXVQR31FQBp5G/qXEIC/b18JOvQOHf8VzUgZfQQ/fP0+liS
-         oDMcgjujw0sHafTeiUqO9wyJ6f1JEIJDv+16yfL6ILQICYN18KCDXyS+luo41V8SdYOe
-         OzrYe87CV6FeN7GTNhaX5/tTWO4vvtVdM01HM1U+RDLz0sJ9Uh9P2xG5FIXLc3sEm4KW
-         kunw==
+        bh=gjH83BQBEIV9zGTb6sA7alTUSuKHIbeGklJLQwZvK8s=;
+        b=JIXs0jlacT/qTUNaY5+a8kUWt1Q8gRTJrblgKmwvMfj+A2UBZlIjkGvprxSKSvUIUB
+         PEq0DsLtRdQsfB3y/6qmanwl8HZ8xhF3EZI02LYgay0ZYooobEzH/TMEIge2ZbMxc4G2
+         lRSMR4X/W3sVs5/WisjLiJx+iEg55eZ9f0IX8gOefAbHjaLybnYg387xqx5GRbcLpijB
+         9tdbCoQeFVlmvyQFzwu7lj6KDS+0LT5MPubOtP/4NmcoQw7MxM8m6CC+JSfl51A5wptc
+         XTRIVSN4K+oA9f1H/YzY9r4SlouhrHb7Iq4F3Y0oYsuqkLo03EaVp+tAAP+uXLPQ2/Ql
+         3bxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PqMBW3fLRjKCNDA9feT57k7M9eB/UhBVATbbc2cHHj0=;
-        b=NaWqS3pLZCLZDGh3LdqgDucyqwN4OViDRL18iyMBpgq0gp2SPlsx3DpPfUcmqsi7cL
-         AyH0wYlufKEuA0BSOxdUIB/MUhMbJN++2TlYuGyfFk+a6wjZXoS/LuW51bkaWZ2eiOZb
-         VDElXaKcOyQk2UCkCBPduOYIUy7ytSoDIxlep+BqI+21E8NwA3L9jJ+l1z3zBe7AvUt3
-         qBuVISreDbKCPpxxGTgVPYatJ9R7vU+6LoPYOYoRJP7mw5XYOCRDDCt4uQgIbqPJO91X
-         +m+WyCWcpLolVKGR+AW5tvRBNZ8QZ4xZEfv1n/xXA6HYJ4JREYrAQ0FhbjnV2nx7VoBu
-         YXJw==
-X-Gm-Message-State: ABuFfog577lg6WIlT+dtjVNxEmDk16n6c+QX1kycyxpiKjJo73ms6CDl
-        D0kBDEIGh5NQ9sth3jOMkqc=
-X-Google-Smtp-Source: ACcGV60aYBzWRYvh/w4UM5d/byZe0og/Mr9Q8oRdJ0SwiFCXBlMsr0ZZ8hCXKVt973z3tw2UkvsHIw==
-X-Received: by 2002:a19:1b14:: with SMTP id b20-v6mr1899942lfb.12.1538248241516;
-        Sat, 29 Sep 2018 12:10:41 -0700 (PDT)
+        bh=gjH83BQBEIV9zGTb6sA7alTUSuKHIbeGklJLQwZvK8s=;
+        b=uR1CdJwo8fT2ulKoUIQIVVMLCFqDYTyxlBB77rDz4Av2O5m4K2dXM8U+Rof79R0/Ah
+         gR98NTuyPSOMpdMwRyGY2xIxaQ7WYs9VSPiBJR9w/opFA0C7p1MdAVOFUHavA/fKQdzt
+         w1fiHg1KWcRFwGAPCl91dOx4O/GXJfi+vgzS7rTeC7h27Qfq/nNvZkX8PuHZ0nxSvBxj
+         wDwu6nWhQA5ySPdJ8H4Ifru1xG7QAH2lw0N44b8HGi/uI5DD7GjIFuloAOGtN7RGr0Zz
+         jbP7z+tjrCxh876VW/8gKXBUTLDTVtEj2uWojKHzIa1yUoOeaY9pPEjjkX5zMuY6925d
+         t1Uw==
+X-Gm-Message-State: ABuFfogTCLi3YBu3wU5oaYHKlCLFGpG4+y7oRKdbWavyZJvWAwfu0D+V
+        ljFrLAeZV0mcz2f/Pi/pCr0=
+X-Google-Smtp-Source: ACcGV61Xmz6Io22FAPjFYaZqZWjDaNHnJ1r91cU/L7JHTHJjOJx55djkEG3rCPVFi6WFdrDQB+gn5A==
+X-Received: by 2002:a19:a90f:: with SMTP id s15-v6mr1877353lfe.154.1538248245773;
+        Sat, 29 Sep 2018 12:10:45 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c14-v6sm1638494lfi.23.2018.09.29.12.10.40
+        by smtp.gmail.com with ESMTPSA id c14-v6sm1638494lfi.23.2018.09.29.12.10.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Sep 2018 12:10:40 -0700 (PDT)
+        Sat, 29 Sep 2018 12:10:44 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -56,12 +56,13 @@ Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 0/8] fix per-worktree ref iteration in fsck/reflog expire
-Date:   Sat, 29 Sep 2018 21:10:21 +0200
-Message-Id: <20180929191029.13994-1-pclouds@gmail.com>
+Subject: [PATCH v2 3/8] refs: new ref types to make per-worktree refs visible to all worktrees
+Date:   Sat, 29 Sep 2018 21:10:24 +0200
+Message-Id: <20180929191029.13994-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.341.g3acb95d729
-In-Reply-To: <20180922180500.4689-1-pclouds@gmail.com>
+In-Reply-To: <20180929191029.13994-1-pclouds@gmail.com>
 References: <20180922180500.4689-1-pclouds@gmail.com>
+ <20180929191029.13994-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,38 +71,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2 changes
+One of the problems with multiple worktree is accessing per-worktree
+refs of one worktree from another worktree. This was sort of solved by
+multiple ref store, where the code can open the ref store of another
+worktree and has access to the ref space of that worktree.
 
-- more documentation
-- main/ prefix is renamed to main-worktree/ to reduce ambiguation
-  chances and make it clearer
-- refs/local is renamed to refs/worktree
-- bug fix in is_main_pseudoref_syntax() and
-  is_other_pseudoref_syntax()
+The problem with this is reporting. "HEAD" in another ref space is
+also called "HEAD" like in the current ref space. In order to
+differentiate them, all the code must somehow carry the ref store
+around and print something like "HEAD from this ref store".
 
-Interdiff
+But that is not feasible (or possible with a _lot_ of work). With the
+current design, we pass a reference around as a string (so called
+"refname"). Extending this design to pass a string _and_ a ref store
+is a nightmare, especially when handling extended SHA-1 syntax.
+
+So we do it another way. Instead of entering a separate ref space, we
+make refs from other worktrees available in the current ref space. So
+"HEAD" is always HEAD of the current worktree, but then we can have
+"worktrees/blah/HEAD" to denote HEAD from a worktree named
+"blah". This syntax coincidentally matches the underlying directory
+structure which makes implementation a bit easier.
+
+The main worktree has to be treated specially because well.. it's
+special from the beginning. So HEAD from the main worktree is
+acccessible via the name "main-worktree/HEAD" instead of
+"worktrees/main/HEAD" because "main" could be just another secondary
+worktree.
+
+This patch also makes it possible to specify refs from one worktree in
+another one, e.g.
+
+    git log worktrees/foo/HEAD
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-worktree.txt | 15 ++++++++++-
+ refs.c                         | 21 ++++++++++++++++
+ refs.h                         |  8 +++---
+ refs/files-backend.c           | 28 +++++++++++++++++++++
+ t/t1415-worktree-refs.sh       | 46 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 114 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index e2ee9fc21b..58415f9207 100644
+index a50fbf8094..58415f9207 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -204,6 +204,35 @@ working trees, it can be used to identify worktrees. For example if
- you only have two working trees, at "/abc/def/ghi" and "/abc/def/ggg",
- then "ghi" or "def/ghi" is enough to point to the former working tree.
- 
-+REFS
-+----
-+In multiple working trees, some refs may be shared between all working
-+trees, some refs are local. One example is HEAD is different for all
+@@ -208,7 +208,8 @@ REFS
+ ----
+ In multiple working trees, some refs may be shared between all working
+ trees, some refs are local. One example is HEAD is different for all
+-working trees. This section is about the sharing rules.
 +working trees. This section is about the sharing rules and how to access
 +refs of one working tree from another.
-+
-+In general, all pseudo refs are per working tree and all refs starting
-+with "refs/" are shared. Pseudo refs are ones like HEAD which are
-+directly under GIT_DIR instead of inside GIT_DIR/refs. There are one
-+exception to this: refs inside refs/bisect and refs/worktree is not
-+shared.
-+
+ 
+ In general, all pseudo refs are per working tree and all refs starting
+ with "refs/" are shared. Pseudo refs are ones like HEAD which are
+@@ -216,6 +217,18 @@ directly under GIT_DIR instead of inside GIT_DIR/refs. There are one
+ exception to this: refs inside refs/bisect and refs/worktree is not
+ shared.
+ 
 +Refs that are per working tree can still be accessed from another
 +working tree via two special paths main-worktree and worktrees. The
 +former gives access to per-worktree refs of the main working tree,
@@ -114,176 +143,127 @@ index e2ee9fc21b..58415f9207 100644
 +GIT_COMMON_DIR/worktrees/foo/HEAD and
 +GIT_COMMON_DIR/worktrees/bar/refs/bisect/bad.
 +
-+To access refs, it's best not to look inside GIT_DIR directly. Instead
-+use commands such as linkgit:git-revparse[1] or linkgit:git-update-ref[1]
-+which will handle refs correctly.
-+
- DETAILS
- -------
- Each linked working tree has a private sub-directory in the repository's
-@@ -228,7 +257,8 @@ linked working tree `git rev-parse --git-path HEAD` returns
- `/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `git
- rev-parse --git-path refs/heads/master` uses
- $GIT_COMMON_DIR and returns `/path/main/.git/refs/heads/master`,
--since refs are shared across all working trees.
-+since refs are shared across all working trees, except refs/bisect and
-+refs/worktree.
- 
- See linkgit:gitrepository-layout[5] for more information. The rule of
- thumb is do not make any assumption about whether a path belongs to
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-index fad404ed7c..89b616e049 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -96,9 +96,9 @@ refs::
- 	directory.  The 'git prune' command knows to preserve
- 	objects reachable from refs found in this directory and
- 	its subdirectories.
--	This directory is ignored (except refs/bisect and refs/local)
--	if $GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/refs" will be
--	used instead.
-+	This directory is ignored (except refs/bisect and
-+	refs/worktree) if $GIT_COMMON_DIR is set and
-+	"$GIT_COMMON_DIR/refs" will be used instead.
- 
- refs/heads/`name`::
- 	records tip-of-the-tree commit objects of branch `name`
-diff --git a/path.c b/path.c
-index 7eb61bf31b..bf4bb02a27 100644
---- a/path.c
-+++ b/path.c
-@@ -119,6 +119,7 @@ static struct common_dir common_list[] = {
- 	{ 0, 1, 0, "objects" },
- 	{ 0, 1, 0, "refs" },
- 	{ 0, 1, 1, "refs/bisect" },
-+	{ 0, 1, 1, "refs/worktree" },
- 	{ 0, 1, 0, "remotes" },
- 	{ 0, 1, 0, "worktrees" },
- 	{ 0, 1, 0, "rr-cache" },
+ To access refs, it's best not to look inside GIT_DIR directly. Instead
+ use commands such as linkgit:git-revparse[1] or linkgit:git-update-ref[1]
+ which will handle refs correctly.
 diff --git a/refs.c b/refs.c
-index 90b73c7334..2378b2e7fc 100644
+index 1bc4ed301b..2378b2e7fc 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -624,7 +624,7 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **log)
- static int is_per_worktree_ref(const char *refname)
- {
- 	return !strcmp(refname, "HEAD") ||
--		starts_with(refname, "refs/local/") ||
-+		starts_with(refname, "refs/worktree/") ||
- 		starts_with(refname, "refs/bisect/") ||
- 		starts_with(refname, "refs/rewritten/");
+@@ -641,12 +641,33 @@ static int is_pseudoref_syntax(const char *refname)
+ 	return 1;
  }
-@@ -643,7 +643,8 @@ static int is_pseudoref_syntax(const char *refname)
  
- static int is_main_pseudoref_syntax(const char *refname)
- {
--	return skip_prefix(refname, "main/", &refname) &&
++static int is_main_pseudoref_syntax(const char *refname)
++{
 +	return skip_prefix(refname, "main-worktree/", &refname) &&
 +		*refname &&
- 		is_pseudoref_syntax(refname);
++		is_pseudoref_syntax(refname);
++}
++
++static int is_other_pseudoref_syntax(const char *refname)
++{
++	if (!skip_prefix(refname, "worktrees/", &refname))
++		return 0;
++	refname = strchr(refname, '/');
++	if (!refname || !refname[1])
++		return 0;
++	return is_pseudoref_syntax(refname + 1);
++}
++
+ enum ref_type ref_type(const char *refname)
+ {
+ 	if (is_per_worktree_ref(refname))
+ 		return REF_TYPE_PER_WORKTREE;
+ 	if (is_pseudoref_syntax(refname))
+ 		return REF_TYPE_PSEUDOREF;
++	if (is_main_pseudoref_syntax(refname))
++		return REF_TYPE_MAIN_PSEUDOREF;
++	if (is_other_pseudoref_syntax(refname))
++		return REF_TYPE_OTHER_PSEUDOREF;
+ 	return REF_TYPE_NORMAL;
  }
  
-@@ -652,7 +653,7 @@ static int is_other_pseudoref_syntax(const char *refname)
- 	if (!skip_prefix(refname, "worktrees/", &refname))
- 		return 0;
- 	refname = strchr(refname, '/');
--	if (!refname)
-+	if (!refname || !refname[1])
- 		return 0;
- 	return is_pseudoref_syntax(refname + 1);
- }
+diff --git a/refs.h b/refs.h
+index bd52c1bbae..9b53dbeae8 100644
+--- a/refs.h
++++ b/refs.h
+@@ -704,9 +704,11 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
+ int ref_is_hidden(const char *, const char *);
+ 
+ enum ref_type {
+-	REF_TYPE_PER_WORKTREE,
+-	REF_TYPE_PSEUDOREF,
+-	REF_TYPE_NORMAL,
++	REF_TYPE_PER_WORKTREE,	  /* refs inside refs/ but not shared       */
++	REF_TYPE_PSEUDOREF,	  /* refs outside refs/ in current worktree */
++	REF_TYPE_MAIN_PSEUDOREF,  /* pseudo refs from the main worktree     */
++	REF_TYPE_OTHER_PSEUDOREF, /* pseudo refs from other worktrees       */
++	REF_TYPE_NORMAL,	  /* normal/shared refs inside refs/        */
+ };
+ 
+ enum ref_type ref_type(const char *refname);
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bf9ed633b1..9ca2a3706c 100644
+index 2dd77f9485..9ca2a3706c 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -178,7 +178,7 @@ static void files_reflog_path(struct files_ref_store *refs,
- 	case REF_TYPE_OTHER_PSEUDOREF:
- 		return files_reflog_path_other_worktrees(refs, sb, refname);
- 	case REF_TYPE_MAIN_PSEUDOREF:
--		if (!skip_prefix(refname, "main/", &refname))
+@@ -149,6 +149,23 @@ static struct files_ref_store *files_downcast(struct ref_store *ref_store,
+ 	return refs;
+ }
+ 
++static void files_reflog_path_other_worktrees(struct files_ref_store *refs,
++					      struct strbuf *sb,
++					      const char *refname)
++{
++	const char *real_ref;
++
++	if (!skip_prefix(refname, "worktrees/", &real_ref))
++		BUG("refname %s is not a other-worktree ref", refname);
++	real_ref = strchr(real_ref, '/');
++	if (!real_ref)
++		BUG("refname %s is not a other-worktree ref", refname);
++	real_ref++;
++
++	strbuf_addf(sb, "%s/%.*slogs/%s", refs->gitcommondir,
++		    (int)(real_ref - refname), refname, real_ref);
++}
++
+ static void files_reflog_path(struct files_ref_store *refs,
+ 			      struct strbuf *sb,
+ 			      const char *refname)
+@@ -158,6 +175,12 @@ static void files_reflog_path(struct files_ref_store *refs,
+ 	case REF_TYPE_PSEUDOREF:
+ 		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
+ 		break;
++	case REF_TYPE_OTHER_PSEUDOREF:
++		return files_reflog_path_other_worktrees(refs, sb, refname);
++	case REF_TYPE_MAIN_PSEUDOREF:
 +		if (!skip_prefix(refname, "main-worktree/", &refname))
- 			BUG("ref %s is not a main pseudoref", refname);
- 		/* passthru */
++			BUG("ref %s is not a main pseudoref", refname);
++		/* passthru */
  	case REF_TYPE_NORMAL:
-@@ -200,7 +200,7 @@ static void files_ref_path(struct files_ref_store *refs,
+ 		strbuf_addf(sb, "%s/logs/%s", refs->gitcommondir, refname);
+ 		break;
+@@ -176,6 +199,11 @@ static void files_ref_path(struct files_ref_store *refs,
+ 	case REF_TYPE_PSEUDOREF:
  		strbuf_addf(sb, "%s/%s", refs->gitdir, refname);
  		break;
- 	case REF_TYPE_MAIN_PSEUDOREF:
--		if (!skip_prefix(refname, "main/", &refname))
++	case REF_TYPE_MAIN_PSEUDOREF:
 +		if (!skip_prefix(refname, "main-worktree/", &refname))
- 			BUG("ref %s is not a main pseudoref", refname);
- 		/* passthru */
- 	case REF_TYPE_OTHER_PSEUDOREF:
-@@ -297,7 +297,7 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
- 	closedir(d);
- 
- 	/*
--	 * Manually add refs/bisect and refs/local, which, being
-+	 * Manually add refs/bisect and refs/worktree, which, being
- 	 * per-worktree, might not appear in the directory listing for
- 	 * refs/ in the main repo.
- 	 */
-@@ -310,11 +310,11 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
- 			add_entry_to_dir(dir, child_entry);
- 		}
- 
--		pos = search_ref_dir(dir, "refs/local/", 11);
-+		pos = search_ref_dir(dir, "refs/worktree/", 11);
- 
- 		if (pos < 0) {
- 			struct ref_entry *child_entry = create_dir_entry(
--					dir->cache, "refs/local/", 11, 1);
-+					dir->cache, "refs/worktree/", 11, 1);
- 			add_entry_to_dir(dir, child_entry);
- 		}
- 	}
++			BUG("ref %s is not a main pseudoref", refname);
++		/* passthru */
++	case REF_TYPE_OTHER_PSEUDOREF:
+ 	case REF_TYPE_NORMAL:
+ 		strbuf_addf(sb, "%s/%s", refs->gitcommondir, refname);
+ 		break;
 diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
-index 46ca7bfc19..8b701d07af 100755
+index 16c91bef57..8b701d07af 100755
 --- a/t/t1415-worktree-refs.sh
 +++ b/t/t1415-worktree-refs.sh
-@@ -10,33 +10,38 @@ test_expect_success 'setup' '
- 	test_commit wt2 &&
- 	git worktree add wt1 wt1 &&
- 	git worktree add wt2 wt2 &&
--	git checkout initial
-+	git checkout initial &&
-+	git update-ref refs/worktree/foo HEAD &&
-+	git -C wt1 update-ref refs/worktree/foo HEAD &&
-+	git -C wt2 update-ref refs/worktree/foo HEAD
+@@ -30,4 +30,50 @@ test_expect_success 'refs/worktree are per-worktree' '
+ 	( cd wt2 && test_cmp_rev worktree/foo wt2 )
  '
  
--test_expect_success 'add refs/local' '
--	git update-ref refs/local/foo HEAD &&
--	git -C wt1 update-ref refs/local/foo HEAD &&
--	git -C wt2 update-ref refs/local/foo HEAD
--'
--
--test_expect_success 'refs/local must not be packed' '
-+test_expect_success 'refs/worktree must not be packed' '
- 	git pack-refs --all &&
- 	test_path_is_missing .git/refs/tags/wt1 &&
--	test_path_is_file .git/refs/local/foo &&
--	test_path_is_file .git/worktrees/wt1/refs/local/foo &&
--	test_path_is_file .git/worktrees/wt2/refs/local/foo
-+	test_path_is_file .git/refs/worktree/foo &&
-+	test_path_is_file .git/worktrees/wt1/refs/worktree/foo &&
-+	test_path_is_file .git/worktrees/wt2/refs/worktree/foo
- '
- 
--test_expect_success 'refs/local are per-worktree' '
--	test_cmp_rev local/foo initial &&
--	( cd wt1 && test_cmp_rev local/foo wt1 ) &&
--	( cd wt2 && test_cmp_rev local/foo wt2 )
-+test_expect_success 'refs/worktree are per-worktree' '
-+	test_cmp_rev worktree/foo initial &&
-+	( cd wt1 && test_cmp_rev worktree/foo wt1 ) &&
-+	( cd wt2 && test_cmp_rev worktree/foo wt2 )
- '
- 
--test_expect_success 'resolve main/HEAD' '
--	test_cmp_rev main/HEAD initial &&
--	( cd wt1 && test_cmp_rev main/HEAD initial ) &&
--	( cd wt2 && test_cmp_rev main/HEAD initial )
 +test_expect_success 'resolve main-worktree/HEAD' '
 +	test_cmp_rev main-worktree/HEAD initial &&
 +	( cd wt1 && test_cmp_rev main-worktree/HEAD initial ) &&
@@ -296,16 +276,14 @@ index 46ca7bfc19..8b701d07af 100755
 +	cp .git/HEAD .git/refs/heads/main-worktree/HEAD &&
 +	git rev-parse main-worktree/HEAD 2>warn >/dev/null &&
 +	grep "main-worktree/HEAD.*ambiguous" warn
- '
- 
- test_expect_success 'resolve worktrees/xx/HEAD' '
-@@ -45,11 +50,19 @@ test_expect_success 'resolve worktrees/xx/HEAD' '
- 	( cd wt2 && test_cmp_rev worktrees/wt1/HEAD wt1 )
- '
- 
--test_expect_success 'reflog of main/HEAD' '
--	git reflog HEAD | sed "s/HEAD/main\/HEAD/" >expected &&
--	git reflog main/HEAD >actual &&
++'
++
++test_expect_success 'resolve worktrees/xx/HEAD' '
++	test_cmp_rev worktrees/wt1/HEAD wt1 &&
++	( cd wt1 && test_cmp_rev worktrees/wt1/HEAD wt1 ) &&
++	( cd wt2 && test_cmp_rev worktrees/wt1/HEAD wt1 )
++'
++
 +test_expect_success 'ambiguous worktrees/xx/HEAD' '
 +	mkdir -p .git/refs/heads/worktrees/wt1 &&
 +	test_when_finished rm .git/refs/heads/worktrees/wt1/HEAD &&
@@ -317,86 +295,22 @@ index 46ca7bfc19..8b701d07af 100755
 +test_expect_success 'reflog of main-worktree/HEAD' '
 +	git reflog HEAD | sed "s/HEAD/main-worktree\/HEAD/" >expected &&
 +	git reflog main-worktree/HEAD >actual &&
- 	test_cmp expected actual &&
--	git -C wt1 reflog main/HEAD >actual.wt1 &&
++	test_cmp expected actual &&
 +	git -C wt1 reflog main-worktree/HEAD >actual.wt1 &&
- 	test_cmp expected actual.wt1
- '
- 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 444e8c1ad9..e97e6a7c6d 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -106,19 +106,17 @@ test_expect_success 'HEAD link pointing at a funny object (from different wt)' '
- 	test_when_finished "rm -rf .git/worktrees wt" &&
- 	git worktree add wt &&
- 	mv .git/HEAD .git/SAVED_HEAD &&
--	echo 0000000000000000000000000000000000000000 >.git/HEAD &&
-+	echo $ZERO_OID >.git/HEAD &&
- 	# avoid corrupt/broken HEAD from interfering with repo discovery
- 	test_must_fail git -C wt fsck 2>out &&
--	cat out &&
- 	grep "main/HEAD: detached HEAD points" out
- '
- 
- test_expect_success 'other worktree HEAD link pointing at a funny object' '
- 	test_when_finished "rm -rf .git/worktrees other" &&
- 	git worktree add other &&
--	echo 0000000000000000000000000000000000000000 >.git/worktrees/other/HEAD &&
-+	echo $ZERO_OID >.git/worktrees/other/HEAD &&
- 	test_must_fail git fsck 2>out &&
--	cat out &&
- 	grep "worktrees/other/HEAD: detached HEAD points" out
- '
- 
-@@ -127,7 +125,6 @@ test_expect_success 'other worktree HEAD link pointing at missing object' '
- 	git worktree add other &&
- 	echo "Contents missing from repo" | git hash-object --stdin >.git/worktrees/other/HEAD &&
- 	test_must_fail git fsck 2>out &&
--	cat out &&
- 	grep "worktrees/other/HEAD: invalid sha1 pointer" out
- '
- 
-@@ -136,7 +133,6 @@ test_expect_success 'other worktree HEAD link pointing at a funny place' '
- 	git worktree add other &&
- 	echo "ref: refs/funny/place" >.git/worktrees/other/HEAD &&
- 	test_must_fail git fsck 2>out &&
--	cat out &&
- 	grep "worktrees/other/HEAD points to something strange" out
- '
- 
-
-Elijah Newren (1):
-  fsck: Move fsck_head_link() to get_default_heads() to avoid some
-    globals
-
-Nguyễn Thái Ngọc Duy (7):
-  refs.c: indent with tabs, not spaces
-  Add a place for (not) sharing stuff between worktrees
-  refs: new ref types to make per-worktree refs visible to all worktrees
-  revision.c: correct a parameter name
-  revision.c: better error reporting on ref from different worktrees
-  fsck: check HEAD and reflog from other worktrees
-  reflog expire: cover reflog from all worktrees
-
- Documentation/git-reflog.txt           |  7 ++-
- Documentation/git-worktree.txt         | 32 ++++++++++-
- Documentation/gitrepository-layout.txt | 11 +++-
- builtin/fsck.c                         | 68 +++++++++++++++-------
- builtin/reflog.c                       | 22 ++++++-
- path.c                                 |  2 +
- refs.c                                 | 24 +++++++-
- refs.h                                 |  8 ++-
- refs/files-backend.c                   | 42 +++++++++++++-
- revision.c                             | 22 ++++---
- t/t0060-path-utils.sh                  |  2 +
- t/t1415-worktree-refs.sh               | 79 ++++++++++++++++++++++++++
- t/t1450-fsck.sh                        | 35 ++++++++++++
- worktree.c                             | 32 ++++++++++-
- worktree.h                             | 14 +++++
- 15 files changed, 354 insertions(+), 46 deletions(-)
- create mode 100755 t/t1415-worktree-refs.sh
-
++	test_cmp expected actual.wt1
++'
++
++test_expect_success 'reflog of worktrees/xx/HEAD' '
++	git -C wt2 reflog HEAD | sed "s/HEAD/worktrees\/wt2\/HEAD/" >expected &&
++	git reflog worktrees/wt2/HEAD >actual &&
++	test_cmp expected actual &&
++	git -C wt1 reflog worktrees/wt2/HEAD >actual.wt1 &&
++	test_cmp expected actual.wt1 &&
++	git -C wt2 reflog worktrees/wt2/HEAD >actual.wt2 &&
++	test_cmp expected actual.wt2
++'
++
+ test_done
 -- 
 2.19.0.341.g3acb95d729
 
