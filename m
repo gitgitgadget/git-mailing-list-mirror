@@ -2,89 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6E371F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 00:51:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7051F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 03:33:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727279AbeI2HRv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 03:17:51 -0400
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:40534 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726360AbeI2HRv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 03:17:51 -0400
-Received: by mail-wm1-f44.google.com with SMTP id o2-v6so3712972wmh.5
-        for <git@vger.kernel.org>; Fri, 28 Sep 2018 17:51:33 -0700 (PDT)
+        id S1727301AbeI2J5H (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 05:57:07 -0400
+Received: from mail-io1-f54.google.com ([209.85.166.54]:33984 "EHLO
+        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726325AbeI2J5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 05:57:07 -0400
+Received: by mail-io1-f54.google.com with SMTP id h16-v6so5654784ioj.1
+        for <git@vger.kernel.org>; Fri, 28 Sep 2018 20:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jEtMoMbEV4eNFGfpQI/GrLtyqcEo3Jj1y/Iq/2og5Co=;
-        b=AM8VWAtQ9TxYWN9yrrAiqXYlofBPgbDQIlDdkzA+0qFzn3PpbzqomMqFb0vLWW+4Xn
-         aTzM43bEVFA0o1MBE8uPvTuttrVsMqglYR4UagpwyzCJEKA8MI6ISxL18YuWz1aZpn47
-         5FAf9WkonvNmYWUkpuIBWAdbhrmxA13JwErP+nF9i42/gQJaCg7jkZkFD4uHZW7L+2BL
-         IUCEyB/mDl1+GwLsAiNmAvH63GCyNjXAk6MSfCuMMD/r7tPbpZwsnFXPpaAAFacB3WOi
-         GzuSg5HSjwbNUsSC/nTlul63g06EC7rhXkkuKpmiYbzRudmZHD0jrCRAkUc677iyK7dt
-         srog==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=KzVw0M2k9uVl4SUX7xZA3TC3hqDNKhvOVIsuZDeeroQ=;
+        b=t5dAsoRjH4A704UJrTtAdD/hzxQsaB0vC6kchyGd9DIsK30NTEgy2jpJxRrQ62hBGR
+         ZN5E3ndXS22h+pznrJAgiztNrRLICY0P723XPuLtMxGUS2jpzsXoGvj4F7vqH3rDqqza
+         hG71ECTvQ94WqVT4zD87CeHASI9xDIVsCBCZHddLqeDkgZRpwo1KyjlmWIb0ULtF5Wkv
+         XVaVabDwc3mRSfVGBomqn/zX8dlwM7LqvQCgmtJZx9MNaw2XaTf5tY6s1qN64FiI0I8I
+         WtrIp4AFIcV5jb6P1tlNTKKJqKE3cOxVnB4JrknFTw/36HHhlI11YIpBKXyqv/rO7olr
+         //Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jEtMoMbEV4eNFGfpQI/GrLtyqcEo3Jj1y/Iq/2og5Co=;
-        b=Rv+vj0hdyLRbvnYm3FRYxagszia1MiL3cfvdaEe5kxHH/00IpYJQ0Jc8QUYLHhTzDw
-         GoG/PrCAy/qcRHk+7r8tJ+MXFvBxahho9uF3acyhBFdcjMA5dcKGjoPJf+n5nXD5+xbu
-         I2XQ/nbuzSp2+/2jjb4DhSpKO0s97Ql6sP0pjf1NCx5OawohBJm7d8APuvEy5oeS+VcD
-         nRkSsqKOGXgQZ0CBajM5kHI6mK0JlB27c5jwmRtms2rKsmj/oOI4t//I+5Vd2PGxxalV
-         rWvEdgUxsDL4UxqJNUAyemP7jJ+xXPesraAhn+55fgHCgJKN6L/Wr4c+jgCuqRUHSFR9
-         fVFw==
-X-Gm-Message-State: ABuFfoiIAEu7EAWiFBdNW6EqsrrW+Dw8QfwCs9pcTPTEpfAppAid+egm
-        SuohfHJkUPh6dWYqVVs6gKTYAQn/
-X-Google-Smtp-Source: ACcGV601tNJ39RhmoihAXIDuidjHpzVDSrS4BqH4aCd+Yc3OLLp7XDyW/POitYjQL8wHXcBDD4zFNA==
-X-Received: by 2002:a1c:958d:: with SMTP id x135-v6mr3419787wmd.46.1538182292273;
-        Fri, 28 Sep 2018 17:51:32 -0700 (PDT)
-Received: from localhost (x4db1ef73.dyn.telefonica.de. [77.177.239.115])
-        by smtp.gmail.com with ESMTPSA id i4-v6sm13621416wrs.87.2018.09.28.17.51.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Sep 2018 17:51:31 -0700 (PDT)
-Date:   Sat, 29 Sep 2018 02:51:28 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v6 3/7] eoie: add End of Index Entry (EOIE) extension
-Message-ID: <20180929005128.GD23446@localhost>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180926195442.1380-1-benpeart@microsoft.com>
- <20180926195442.1380-4-benpeart@microsoft.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KzVw0M2k9uVl4SUX7xZA3TC3hqDNKhvOVIsuZDeeroQ=;
+        b=AxV3Bjvw4GoWvn31euvkxGsIi3tyE+OE/qNDZ1ew4e1oeAU4X9LVkmtuG30DNgWdKd
+         U74/RdSZeogAXkWH+s28FD1ITdtlglKS3PQqbPGJrZ5VJsX9V+2PvGrsbXBTGBVHbxZd
+         tRx5TBDTmJxy2FvbYIoI9sPQVzkiFkQee4uERPg65n2MIZkMl36/1b8LyYWJlG6rlia+
+         Ot5SbhPRavg0FY9faUjF6+hp2IV9rxtCJET1Mofqo9smJwZi/PjbS+XI6H7JJ4vMZgKV
+         o3hCgt9J8RX3PRcA98XTwD5abAmApmw7N/YZTIBfKfPESjW0M3bZFVeeDaeX0nzdAl04
+         xtiA==
+X-Gm-Message-State: ABuFfoiOAZ8CPoH6YRL9+gGjmVnhe/uofXzw8+jJDufslue90FGby0MT
+        l12DyQ2LKmqfHUH3wOKKFBp6AdQsgW8HC0jCP/+d
+X-Google-Smtp-Source: ACcGV62jBLfytXugYCYLb7AhZVKReb4urnTIsZ9NX+fuPKMtnq9q0uHYezOrM1eqX9wclt1HwroTnmjaekajtM455Og=
+X-Received: by 2002:a6b:cb01:: with SMTP id b1-v6mr1007761iog.23.1538191822230;
+ Fri, 28 Sep 2018 20:30:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180926195442.1380-4-benpeart@microsoft.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 2002:a02:88e4:0:0:0:0:0 with HTTP; Fri, 28 Sep 2018 20:30:21
+ -0700 (PDT)
+From:   Paul Wratt <paul.wratt@gmail.com>
+Date:   Sat, 29 Sep 2018 15:30:21 +1200
+Message-ID: <CA+zYZ3-CS1ZP_LXdWPMVoOvcU+4QimJH2A0WgQ2yT5dFkO5F3Q@mail.gmail.com>
+Subject: wrong output on fail
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 26, 2018 at 03:54:38PM -0400, Ben Peart wrote:
-> diff --git a/read-cache.c b/read-cache.c
-> index 6ba99e2c96..80255d3088 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
+--------------
+...
+Total 21 (delta 8), reused 0 (delta 0)
+error: RPC failed; result=56, HTTP code = 0
+fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
+Everything up-to-date
+--------------
 
-> +static size_t read_eoie_extension(const char *mmap, size_t mmap_size)
-> +{
+I am getting the above from "git push".
 
-<....>
+I am having intermittent HTTPS connection failures with my ISP
+(Vodafone NZ, mobile), although HTTP works fine. It may even be a
+peering issue.
 
-> +	the_hash_algo->final_fn(hash, &c);
-> +	if (hashcmp(hash, (const unsigned char *)index))
-> +		return 0;
+The failures above are accounted for, but that last line is definitely wrong
 
-Please use !hasheq() instead of hashcmp().
-
+Cheers
+Paul
