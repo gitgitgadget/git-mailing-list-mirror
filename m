@@ -6,104 +6,135 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5152F1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 17:11:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E83D1F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 17:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728457AbeI2XlG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 19:41:06 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41458 "EHLO
+        id S1728552AbeI3AJP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 20:09:15 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35300 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728364AbeI2XlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 19:41:06 -0400
-Received: by mail-wr1-f68.google.com with SMTP id j15-v6so9461094wrt.8
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 10:11:54 -0700 (PDT)
+        with ESMTP id S1728377AbeI3AJP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 20:09:15 -0400
+Received: by mail-wr1-f68.google.com with SMTP id w5-v6so288598wrt.2
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 10:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=szg3uJcXFKtiPAHZaS5jAvzuReZKNT7vqtlbBxhu0Gs=;
-        b=fxX642TWE4Zh8mg1qDFamcjChC7M9vU/qlXDK/xfYlPXUj38fns5NmYtMp+Rsn9Gzo
-         s7v4A71dV2NaHq1OzQDnEN3ya5+sj5rp+dZkwb5FWJ/V1UVDkkITdfuDVYR0NwG9M1Nk
-         Cnv+EZJUxCDqd3MfIax93AFKQjP7qV87TmK69TrD/W/Dg3PBqmdL4IvMG7CpcilwH9gZ
-         xmWJ5f89xFIt/Q2uiEeIM6R5nHG8SnGrcmangRz2PsClVGljQjlo0fKzTg7iI71QyLoZ
-         R4Aznuxnp5xRdVF164kAZ3X7gku7sSSCXOJbXkSp6vqx8ittf+PA6Pdxo2R8lLsVLqTr
-         tHrw==
+         :user-agent:mime-version;
+        bh=WuExWfszUoiuMKXR5ozIMIKfXW9ol8YAxcnnA6XMOjs=;
+        b=SMtJhiqwnTnaKOpjvWhx7M8sV7C69aFzaydCvZgS7fIkozmTZsXu3GNGhpiz/F6imD
+         gP5MBdS/1vpcEjTITOysDWvU+bQ7AHZtzW0CQfjNXqncoUNUkt+u98eElR60+cJzPXHm
+         yATrpjUdRmBkwGGLqm+m5ggFAHqkyKPWbGNG9+J7oLJDAVD+BSRz2j2707RYdityvvsD
+         iBuI4YMIvNJrhBK8asn4xwho3RPg5Xr+6Dn6kHt7KMuXegMi5vdu9N+/vSTwjQ2O2I2h
+         mYBQCdXdmjsi6oeCk7tqEjR9dzUvCsr+7KAj5RTS5iyvJriAvjV5tacclq6mKKnghWwH
+         yeow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=szg3uJcXFKtiPAHZaS5jAvzuReZKNT7vqtlbBxhu0Gs=;
-        b=n1FhBYuKF2jrq4jQHH9nsptPVEpNJ2Jqw42FmOmiNiVTFdWTkZTROFQfO2Y2qs+A+M
-         SZbgHOmLihPlRWf2ukj7iDjNJ8JruyxCRIVc8zpFgkEKzpF6wzsnS0fVFCXbZ+1RoBg3
-         lazGZLYXCyT3geX2Rr3yqslEjnDWd4A5Y4sUN7J1g/LrN29/MXIQ+u4jdZjh60P/mCug
-         h4+slm7a1C6cOZPSJ69s2H4kuLDah2ODhJAF8ym2Xwxc8EkE0bnZNlUrJAXDnFAzjGue
-         ZAHZI3v364ccPxrQj/XFeHOK8DnNU2w21GH+lbejkrE55tKoN5ZFIKH/nVpSoDBJ4RAm
-         Q56A==
-X-Gm-Message-State: ABuFfogdvnetZeotK2Vnkth80Vr5CEhKmuXPOaOElrSq/mPJSUpd4GhE
-        yJSTB5XkT8/3vJ2IV5Yvo8k=
-X-Google-Smtp-Source: ACcGV63AJk0DPEZ5i5A5MpeLZEsYCwCZUBQmhTXe0uPISuVblosRNzvabdEcg5I4Kv8uwoMjujUi9w==
-X-Received: by 2002:adf:a29d:: with SMTP id s29-v6mr2436791wra.100.1538241113012;
-        Sat, 29 Sep 2018 10:11:53 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i131-v6sm4687408wmg.26.2018.09.29.10.11.51
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=WuExWfszUoiuMKXR5ozIMIKfXW9ol8YAxcnnA6XMOjs=;
+        b=GtzUrtmFQGUKZ1cdiof8j6vGAPCPwcCRPF7zELcpW0dSq4LCIcvt7CVnYNrz1WK8so
+         wTpO0Kd1389lpdeSI2DhqwKA8ZLZXchlMMohu1WD/qFseiRIrwskVJen8YsUd9B2Oi2V
+         xIAX69o3UWgUzagvc1cQLsP3x9jHQVErjnZJyttgHTqbmBMqIDtO8txwt21vCwaOBaV5
+         aJvetOK5WzQFqSDBxhJ8DzOqKr+IdX0rkxMGnBv+AmmTKFAZ+MHk4AGaJao4Lrp2Dqo2
+         2wFyGMi8pfV3irQDDhGsDlGdYOPFdkklkXZrS/gwgk56OwR6oMNM4JrIPdDOvWveXi/Q
+         8N1w==
+X-Gm-Message-State: ABuFfogLdBx3GXM6n+F2eZdnU1li31x/BKBKtiwftrRq72k+z7D8YpG6
+        ybCKAGlasiFMC+fVKbPvd07C2TbD
+X-Google-Smtp-Source: ACcGV604E2PazOHrMpg1+xPdCKVlqbfyPI9Ac2WcokpAcsej3rBz6x5RpOLcOx0tisnFZJ54ywY/sw==
+X-Received: by 2002:adf:c3cd:: with SMTP id d13-v6mr2552795wrg.68.1538242796909;
+        Sat, 29 Sep 2018 10:39:56 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g15-v6sm1183927wrp.56.2018.09.29.10.39.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 29 Sep 2018 10:11:52 -0700 (PDT)
+        Sat, 29 Sep 2018 10:39:55 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Christoph Berg <myon@debian.org>
-Subject: Re: [PATCH] grep: provide a noop --recursive option
-References: <20180929140132.GA31238@msg.df7cb.de>
-        <20180929145527.23444-1-avarab@gmail.com>
-Date:   Sat, 29 Sep 2018 10:11:51 -0700
-In-Reply-To: <20180929145527.23444-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 29 Sep 2018 14:55:27 +0000")
-Message-ID: <xmqq8t3k9qjs.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
+Subject: Re: [PATCH] help: allow redirecting to help for aliased command
+References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
+        <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
+        <20180926184914.GC30680@sigill.intra.peff.net>
+        <3677a12b-5b9b-ad2a-1e3a-7de251baa40d@rasmusvillemoes.dk>
+        <20180929082108.GJ2174@sigill.intra.peff.net>
+Date:   Sat, 29 Sep 2018 10:39:54 -0700
+In-Reply-To: <20180929082108.GJ2174@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 29 Sep 2018 04:21:08 -0400")
+Message-ID: <xmqq4le89p91.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> This --recursive (-r) option does nothing, and is purely here to
-> appease people who have "grep -r ..." burned into their muscle memory.
+> Right, I'm proposing only to add the extra message and then continue as
+> usual.
 >
-> Requested-by: Christoph Berg <myon@debian.org>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
+> It is a little funny, I guess, if you have a script which doesn't
+> respond to "-h", because you'd get our "foo is aliased to git-bar"
+> message to stderr, followed by who-knows-what. But as long as it's to
+> stderr (and not stdout), I think it's not likely to _break_ anything.
+>
+>> >   - "git cp --help" opens the manpage for cherry-pick. We don't bother
+>> >     with the alias definition, as it's available through other means
+>> >     (and thus we skip the obliteration/timing thing totally).
+>> 
+>> It sounds like you suggest doing this unconditionally, and without any
+>> opt-in via config option or a short wait? That would certainly work for
+>> me. It is, in fact, how I expect 'git cp --help' to work, until I get
+>> reminded that it does not... Also, as Junio noted, is consistent with
+>> --help generally providing more information than -h - except that one
+>> loses the 'is an alias for' part for --help.
+>
+> Yes, I'd suggest doing it always. No config, no wait.
 
-I personally am not all that sympathetic to the "'git grep' and
-'grep' sound similar, so even though it won't do anything useful
-just add a synonym to noop" line of reasoning.  That will lead to
-sloppy noop, and will invite unbound amount of busywork to deal with
-future complaints like "oh, but 'grep GNU COPYING' does not give
-useless filename in front like the same command line with 'git'
-prefixed; please fix 'git grep'" (which we'd have to say "no",
-wasting our time).
+While I do think your suggestion is the best among various ones
+floated in the thread, I just realized there is one potential glitch
+even with that approach.  
 
-I however do not mind if we added "--recursive" with matching
-"--no-recursive", and
+Suppose "git foo" is aliased to a command "git bar".
 
- - made "--recursive" the default (obviously)
+The best case is when "git bar -h" knows that it is asked to give us
+a short usage.  We get "foo is aliased to bar" followed by the short
+usage for "bar" and everything is visible above the shell prompt
+after all that happens.
 
- - made "--no-recursive" a synonym to setting the recursion limit
-   to "never recurse"
+The second best case is when "git bar" simply does not support "-h"
+but actively notices an unknown option on the command line to give
+the usage message.  We see "foo is aliased to bar" followed by "-h
+is an unknown option; supported options are ..." and everything is
+visible above the shell prompt after all that happens.
 
- - and made "--recursive" a synonym to setting the recursion limit
-   to "infinity".
+The worst case is when "git bar" supports or ignores "-h" and
+produces reams of output.  Sending the "aliased to" message to the
+standard error means that it is scrolled out when the output is
+done, or lost even when "git foo -h | less" attempts to let the
+reader read before the early part of the output scrolls away.
 
-That would be more work than this patch.  But if I see "--recursive"
-advertised as a feature, and the command by default goes recursive,
-I do expect to be able to tell it not to recurse.
+Even the first two "better" cases share the same glitch if the "foo
+is aliased to bar" goes to the standard error output.  Parse-options
+enabled commands tend to show a long "-h" output that you would need
+to say "git grep -h | less", losing the "aliased to" message.
 
-I also expect folks who are used to "git grep --re<TAB>" to summon
-the only option of the command that begins with that prefix to start
-complaining that they now have to type "--recurs<TAB>" instead.  I
-am not solving that with the above suggestion to improve the
-suggested "noop".
+At least it seems to me an improvement to use standard output,
+instead of standard error, for the alias information.
+
+In practice, however, what the command that "git foo" is aliased to
+does when given "-h" is probably unknown (because the user is asking
+what "git foo" is in the first place), so perhaps I am worried too
+much.  When the user does not know if the usage text comes to the
+standard output or to the standard error, and if the usage text is
+very long or not, they probably would learn quickly that the safest
+thing to do is to
+
+	$ git unknown-command -h >&2 | less
+
+And at that point, it does not matter which between the standard
+output and the standard error streams we write "unknown-command is
+aliased to ...".
+
+So I dunno.
