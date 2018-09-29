@@ -6,90 +6,96 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8C9F1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 07:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A53A31F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 07:56:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727559AbeI2ONb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 10:13:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36130 "HELO cloud.peff.net"
+        id S1727751AbeI2OYH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 10:24:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36148 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727502AbeI2ONb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 10:13:31 -0400
-Received: (qmail 9771 invoked by uid 109); 29 Sep 2018 07:46:05 -0000
+        id S1727621AbeI2OYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 10:24:07 -0400
+Received: (qmail 10203 invoked by uid 109); 29 Sep 2018 07:56:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Sep 2018 07:46:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Sep 2018 07:56:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4524 invoked by uid 111); 29 Sep 2018 07:45:38 -0000
+Received: (qmail 4564 invoked by uid 111); 29 Sep 2018 07:56:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Sep 2018 03:45:38 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Sep 2018 03:56:12 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Sep 2018 03:46:04 -0400
-Date:   Sat, 29 Sep 2018 03:46:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Sep 2018 03:56:38 -0400
+Date:   Sat, 29 Sep 2018 03:56:38 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, avarab@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Documentation/CodingGuidelines: How to document new APIs
-Message-ID: <20180929074603.GF2174@sigill.intra.peff.net>
-References: <xmqqwor6hmgk.fsf@gitster-ct.c.googlers.com>
- <20180927212727.128214-1-sbeller@google.com>
- <20180927232732.GA216193@aiede.svl.corp.google.com>
- <20180928011129.GD11281@sigill.intra.peff.net>
- <xmqq5zypefcp.fsf@gitster-ct.c.googlers.com>
+To:     Daniel Lo <wilburlo@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Request for examples on git log --format:tformat
+Message-ID: <20180929075638.GG2174@sigill.intra.peff.net>
+References: <CAOeX3KXASgnyVcZuTAjyXLgnZpeA1FD3XXvSoRd11b9V9jpGFg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5zypefcp.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAOeX3KXASgnyVcZuTAjyXLgnZpeA1FD3XXvSoRd11b9V9jpGFg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 28, 2018 at 09:50:14AM -0700, Junio C Hamano wrote:
+On Fri, Sep 28, 2018 at 11:29:32AM -0700, Daniel Lo wrote:
 
-> -- >8 --
-> Subject: CodingGuidelines: document the API in *.h files
+> I was reviewing the tformat parameters on:
+> https://git-scm.com/docs/git-log (middle of the page).
 > 
-> It makes it harder to let the API description and the reality drift
-> apart if the doc is kept close to the implementation or the header
-> of the API.  We have been slowly migrating API docs out of the
-> Documentation/technical/api-* to *.h files, and the development
-> community generally considers that how inline docs in strbuf.h is
-> done the best current practice.
+> Specifically: %<|(<N>): make the next placeholder take at least until
+> Nth columns, padding spaces on the right if necessary
 > 
-> We recommend documenting in the header over documenting near the
-> implementation to encourage people to write the docs that are
-> readable without peeking at the implemention.
+> I found the instructions regard space formatting to be very confusing.
+> An example would be helpful to illustrate what the proper space
+> formatting syntax is:
+> 
+> Ex:
+> git log --format="tformat:%h %<(15)%an %s"
+> 
+> 0123456 Author Name Commit message - author name is formatted to be
+> padded with space to occupy at least 15 characters
+> 
+> All of the special symbols %<|(<>) made me confused to what was
+> required and what was describing the syntax.
 
-Yeah, I agree with all of that rationale.
+I'm not sure if you're asking for somebody to give an example here, or
+suggesting that the documentation should contain an example.
 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 6d265327c9..e87090c849 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -385,7 +385,11 @@ For C programs:
->     string_list for sorted string lists, a hash map (mapping struct
->     objects) named "struct decorate", amongst other things.
->  
-> - - When you come up with an API, document it.
-> + - When you come up with an API, document it the functions and the
-> +   structures in the header file that exposes the API to its callers.
-> +   Use what is in "strbuf.h" as a model to decide the appropriate tone
-> +   in which the description is given, and the level of details to put
-> +   in the description.
+If the former, then an example matching the documentation you quoted is:
 
-I like the general idea here. I had trouble parsing the "in which the
-description is given". Maybe just:
+  git log --format='%h %<|(15)%an %s'
 
-  When you come up with an API, document its functions and structures in
-  the header file that exposes the API to its callers. Use what is in
-  "strbuf.h" as a model for the appropriate tone and level of detail.
+The difference (I think -- I've never actually use either of these in
+the wild myself) between %< and %<| is that the former pads out to N
+spaces, and the latter pads out until we've reached the Nth column (so
+taking into account all prior content on the line, too).
 
-I like the idea you mentioned elsewhere of polishing up strbuf.h to
-serve as the model (but I don't want to hold up this much simpler patch
-if that seems likely to drag on).
+To see the difference try:
 
-Thanks for pushing this towards a concrete conclusion.
+  # pad names to 30 chars
+  git log --format='%h %<(30)%an %s'
+
+versus
+
+  # pad out to the 30th column, including the hash
+  git log --format='%h %<|(30)%an %s'
+
+versus
+
+  # pad out to the 30th column, but without the hash there should be
+  # much more whitespace
+  git log --format='%<|(30)%an %s'
+
+
+If you are suggesting that there should be some examples in the
+documentation, I agree (I had to stare at the descriptions and run a few
+tests myself to figure this out). I'm not sure if they should go near
+the placeholder list, or in the examples section.
 
 -Peff
+
+PS Orthogonal to your question, but one tip: "--format" defaults to
+   "tformat:" if its argument contains %-placeholders.
