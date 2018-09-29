@@ -2,110 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A650C1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 18:27:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDCB21F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 18:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728685AbeI3A4x (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 20:56:53 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:38787 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728197AbeI3A4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 20:56:52 -0400
-Received: by mail-it1-f194.google.com with SMTP id i76-v6so1060516ita.3
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 11:27:26 -0700 (PDT)
+        id S1728652AbeI3BAi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 21:00:38 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53372 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728197AbeI3BAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 21:00:38 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b19-v6so5055607wme.3
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 11:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eLGoR8XY8pf/MFUM7Q8+fd5zwEUNuRoqaA9/kYoyJqs=;
-        b=PsYJTXhCnEnqTimsEgT9XMH0T0IJjMURS7SXpI1F9pn5nCbUC8FnjwkvWJ9BvkGtkn
-         uWvDrCoy/QTD48DJ+AlYkaroaxpj2LWCftXD9L+VYD5+Ie7Hbapbp2MOit/3CK58Ho5p
-         94kcqAxmFBPB1PBhCYpBbG8l3/W3yrQSzXbyZEWwGg5qsgbt/Y6qkbcut6m0ZVhaNTeI
-         dacrFP1hmI5gF5++6xYVRo+md1o5cQWoHiK0j4q32LHBC0No1WjaXcEXvI6TS3S9LtkR
-         H6LiZ5DhGZgugU4oUB4derAhIqIGrQtyQG/wUsC4MnQpUZrAeUYXYRzZxXgAOxsWtXKW
-         jICQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=q6Fmwh24mTjfwjKn/3P5a0UWxKYF0KrJRKxcHtQ5ZVQ=;
+        b=KLfQL+3ueiF1liCvSeddURUiATWReWXRRjQ6ZbPoDo9DzbkApjT9DAUDzB+w3LjTFb
+         MZqUsxZmd49fpd+k24hWv0SN579fPRYg4yb4ib1l+FM9n+Ce4+gMmFrYTU3szwsm2sXE
+         Jgjn67GES+q9arKcEPwX/l5MT0agypydRSLKfChRcrONm+RIUufCCjz/v2PdPrtb46ZL
+         B+4aOhISOon9S3Fm5ypGE/uZ+GXuGJhg+LnNTVG75sVAra8YjIGspvJ8uyK+XJ9z+LjE
+         cgwTD0qa+p5t2rEP0WJIJJUoVZNxTtT3UM22bi4LSp7I2KXXtnG8z4DUt10tV/pViyi/
+         u2zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eLGoR8XY8pf/MFUM7Q8+fd5zwEUNuRoqaA9/kYoyJqs=;
-        b=EfKacG5L4zw1xwmlMBmIff0Rb7XBtn76cd+2Az/uDXOl79GPUW0rXX4sGrSGupaf1e
-         J6XYPLsJi9Im7sRNSbs5nEKe00A4zJRFF41XHteBwBBMyiD4zU6WKE6Bowx/STN5VqHn
-         8tgVkVWFM5V70jM7wm7P2jwba7xX+SG9iEJq/BQ4ijTLdY+OPfCJE9ClrV2ojUEb1b95
-         vSf5UiWDO9aQxU1MhSj7ilctBxBXRHo5eaQaYPnrplRH9GXDJKKo8ioeVl2AzxSoxJEa
-         NNJQ4mqk3TfaY5L4+Gbo+NDMWG19P38xfNOUUg3HLUjoWZzhifhaSjiB7uy00e7qJtyj
-         ZPcQ==
-X-Gm-Message-State: ABuFfoj2Nkp8bjMYmsx4fGtPLGxRVJ308duMg9SxX9Q3aUTNvrkz6yEe
-        dbqi10y/ByLVWm8gngP11xmSlJTulCMON7CP6BY=
-X-Google-Smtp-Source: ACcGV62fEewWJdBtmUbUlydn91lJ73lhQIbBDWN/GHBvVub3OiYXd84XxPuBtt3XfDZvfJowIfc2rmMM8SuZsTxSKBs=
-X-Received: by 2002:a02:49d7:: with SMTP id p84-v6mr3072957jad.97.1538245646207;
- Sat, 29 Sep 2018 11:27:26 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=q6Fmwh24mTjfwjKn/3P5a0UWxKYF0KrJRKxcHtQ5ZVQ=;
+        b=GGWWF++8HO2ofhjUz4jFexV9ckNRubLPN3DWSME6D/ss1CLeg9wtzKyKWXbRgt8U7V
+         1wslJbmDmN8ekomfAmZmYFRJ1Yjls0H1CSZi4AW/uuBhFPOXQdaN1y4NKF/GbeNK2+UM
+         b/T2heljOrjE/QIGN/PncosdVLGX9AnlGB05tZZeP4GboTLBukScqzZG3YBuI0R5T6LF
+         kkm2ORhxNbDM/dt9rpiKukgxAlo/lt8SQVzo7w/O+f6ka3ORFngckeumVbunftkVLItZ
+         EcRpMDstCoCtwsDso/U/IRrz29bZYiNUacER9HbhyML9m4atuVY9I5qEwgu7e4tQLx9v
+         hz9g==
+X-Gm-Message-State: ABuFfoiXqormedlkiYgyffsIxjcHFYaXUwp2Le2SfrqliFmTvRH6+M81
+        uW92T6FEZ7wQDzdbD/bZXTE=
+X-Google-Smtp-Source: ACcGV61s0kvjW7Q+tEhXDvjlDMy1VRu8nGDSu4bngEud9mN928p+Spd9sq9ybjlKlnJJn0Tfgbml7A==
+X-Received: by 2002:a1c:385:: with SMTP id 127-v6mr5126445wmd.92.1538245869486;
+        Sat, 29 Sep 2018 11:31:09 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q200-v6sm6392192wmd.2.2018.09.29.11.31.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 29 Sep 2018 11:31:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] fetch: replace string-list used as a look-up table with a hashmap
+References: <xmqqin2sj6df.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kamkLV7yHtCu_qSqNzj7bJm0=Uw1CKxss+zTKJWsYz3qw@mail.gmail.com>
+        <20180927055415.GC14178@sigill.intra.peff.net>
+Date:   Sat, 29 Sep 2018 11:31:08 -0700
+In-Reply-To: <20180927055415.GC14178@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 27 Sep 2018 01:54:15 -0400")
+Message-ID: <xmqqva6o88b7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180922180500.4689-4-pclouds@gmail.com>
- <xmqqy3bpnupm.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy3bpnupm.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 29 Sep 2018 20:26:59 +0200
-Message-ID: <CACsJy8AiVdXHNz362rixeUWj0Y4HknU93qqcT2EFMWVbsjwpJg@mail.gmail.com>
-Subject: Re: [PATCH 3/8] refs: new ref types to make per-worktree refs visible
- to all worktrees
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 25, 2018 at 11:16 PM Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Sep 26, 2018 at 03:59:08PM -0700, Stefan Beller wrote:
 >
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>> > +struct refname_hash_entry {
+>> > +       struct hashmap_entry ent; /* must be the first member */
+>> 
+>> $ git grep "struct hashmap_entry" reveals that we have another
+>> convention that we follow but not document, which is to stress
+>> the importance of putting the hashmap_entry first. ;-)
 >
-> > The main worktree has to be treated specially because well.. it's
-> > special from the beginning. So HEAD from the main worktree is
-> > acccessible via the name "main/HEAD" (we can't use
-> > "worktrees/main/HEAD" because "main" under "worktrees" is not
-> > reserved).
+> One thing I've liked about the list.h implementation is that you can
+> store the list pointer anywhere in the struct, or even have the same
+> struct in multiple lists.
 >
-> I do not quite follow.  So with this, both refs/heads/master and
-> main/refs/heads/master are good names for the master branch (even
-> though the local branch names are not per worktree), because
-> in the main worktree, refs/bisect/bad and main/refs/bisect/bad ought
-> to mean the same thing.
-
-True. I think the ambiguation here is about the main worktree versus a
-secondary worktree that is accidentally named "main". Then suddenly we
-have to worktrees of the same name, and accessing them both via
-worktrees/<id>/HEAD will not work, and there is no other way to
-disambiguate them.
-
->         side note: Or is this only for pseudo-refs
->         (i.e. $GIT_DIR/$name where $name consists of all caps or
->         underscore and typically ends with HEAD)?
-
-Right now, due to implementation limitations, only pseudo refs (or
-loose refs in the case of refs/bisect) are accessible. But I don't see
-why main/refs/heads/master should not work.
-
-> The disambiguation rule has always been: if you have a confusingly
-> named ref, you can spell it out fully to avoid any ambiguity, e.g.
-> refs/heads/refs/heads/foo can be given to "git rev-parse" and will
-> mean the tip of the branch whose name is "refs/heads/foo", even when
-> another branch whose name is "foo" exists.
+> The only funny thing is that you have to "dereference" the iterator like
+> this:
 >
-> Would we have a reasonable disambiguation rules that work well with
-> the main/ and worktrees/* prefixes?  When somebody has main/HEAD branch
-> and writes "git rev-parse main/HEAD", does it find refs/heads/main/HEAD
-> or $GIT_DIR/HEAD, if the user is in the main worktree?
+>   struct list_head *pos;
+>   struct actual_thing *item;
+>   ...
+>   item = list_entry(pos, struct actual_thing, list_member);
+>
+> which is a minor pain, but it's reasonably hard to get it wrong.
+>
+> I wonder if we could do the same here. The hashmap would only ever see
+> the "struct hashmap_entry", and then the caller would convert that back
+> to the actual type.
 
-The rules are not touched. But it looks like everything still works as
-expected (I'm adding tests to verify this)
---=20
-Duy
+Hmph, how would hashmap_cmp_fn look like with that scheme?  It would
+get one entry, another entry (or just the skeleton of it) and
+optionally a separate keydata (if the second one is skeleton), and
+the first two points at the embedded hashmap struct, not the
+surrounding one.  The callback function is now responsible for
+calling a hashmap_entry() macro that adjusts for the negative offset
+like list_entry() does?
+
+> I think we could even get away with not converting
+> existing callers; if the hashmap _is_ at the front, then that
+> list_entry() really just devolves to a cast.
+
+Yes.
+
+> So as long as the struct
+> definition and the users of the struct agree, it would just work.
+
+Yes, too.
+
+Was it ever a consideration, when allowing struct list-head anywhere
+in the enclosing struct, that it would allow an element to be on
+more than one list?  Would it benefit us to be able to place an
+element in multiple hashmaps because we do not have to have the
+embedded hashmap_entry always at the beginning if we did this
+change?
