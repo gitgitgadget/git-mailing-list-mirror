@@ -2,165 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36C8F1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 15:09:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97C461F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 15:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728347AbeI2ViK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 17:38:10 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:54280 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728284AbeI2ViK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 17:38:10 -0400
-Received: by mail-it1-f193.google.com with SMTP id l191-v6so571360ita.4
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 08:09:23 -0700 (PDT)
+        id S1728290AbeI2VnI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 17:43:08 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43191 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728123AbeI2VnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 17:43:08 -0400
+Received: by mail-ed1-f67.google.com with SMTP id u23so10562542edx.10
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 08:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rOx3bZdnV2AcK4T6z1CGJforBZASd9zwHPR5Yjb8ABc=;
-        b=nxUc+ATmXYgS2rRIqZ7mRj4G4HSslsP8DWYwrj4oqji0S/eUdV5EFlqOCT/sMzilDO
-         W3mptRH71rA5eOGYyatLUWt2aEQ2SV/9Zifwxy1F2L7a3Z/YqhZ0tc9t4fFTcp/iM99Y
-         Tex4Fsc32VfshesZZdzsI+/ZW8q4Cn/Tc18dSnnRreWIdAYEBrP2bNRklF5WWoVdOTh7
-         6vBboFM2GUIhrC/rZFTWqEMLnMa1QNsCHw9y42h1MlFpIDgLvihCgYvyK2Zag2DjzzTs
-         ZfjRBN53auI2uzHkTIMiRLY0jmSgYKkIQKWe7vAt8MMRHbpJNB8Ks922oO3tid3rFytk
-         uXOw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=le+SXr3JVXxl5IUfVDGtdhN3w9W7LA6leCQRTLBiNXc=;
+        b=ROcNnWZ/56+i5HX69MQPP8V7MLSutfZvdbXMsmWGjUWQ/Pzx6uF12szNa/DxwXec6w
+         qiNv4xbieCsPuasHrIg3Y3+DoiI8R2hr6ZvFsOK/YlwtI60vHjnpAP8MVqlUHomQbGms
+         nDbGWTTjligbz+X8n2vHCmMwUA0PDmUkgwuiQjrBBJRmeER4ILIZrOC11VxgtgVIqb/u
+         byOfKk0VWkhVgZ8ASSI8KmPKnQs78KxXG1kkbr17lj4m1SxrgC5I6lo0urf0GY3Hxkmu
+         Vukgy6Ya8t11JYutjY77bqhCoKdVG2EDAvugEZOZ4BCL/2bh1kO1E8woyp6LIlAaplKJ
+         d5SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rOx3bZdnV2AcK4T6z1CGJforBZASd9zwHPR5Yjb8ABc=;
-        b=bfwypoo7L5V7Lt43EYw9+37umkkE1SeshnHxlrWSGPaWryU5xThqXBjNyV2O/7EOOt
-         NAHMMR/VFAOnOOZIKZX54RZb/LmxXIkDShOI0Nw5OI0zPdBnH+EL/PVJaggo0HCrFTuM
-         odNne0Z+OVCaAd4AiAJRZ+I9nfgClCwWCsE6iUaApok+RNIFgykVFdVN+sZHrrzN7Xj/
-         mw3ifB4l70l7D5Va6v+waunNotPti5ORAJKjrLcsAhYqzUvKgV1GKLxZfGwnTAD2lOV/
-         NTYKYVK9ANSIP2AnkTkdqN4pIbJsu2zf4mQYOGSQS2Q1ohgIdLoqz8Wq0tSiuAiGjgWa
-         qSgg==
-X-Gm-Message-State: ABuFfojO1IAfgQYPZN1NCJ0/+CyNAptyeaUxJD3yr1oQEKJMQcCWtgUW
-        Mih77YmUa9/UD0u0d3rdt0O7IQvCn+P81DhzeLY=
-X-Google-Smtp-Source: ACcGV61vcj0ZCmqEZM20R7/b+t55UzHcY/oBvJ2tNpWtMm7lz+y6tYEae1NLnZ7/5UCSiUAf3XUU88Uh06MHuhXv9+o=
-X-Received: by 2002:a02:49d7:: with SMTP id p84-v6mr2573533jad.97.1538233762982;
- Sat, 29 Sep 2018 08:09:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=le+SXr3JVXxl5IUfVDGtdhN3w9W7LA6leCQRTLBiNXc=;
+        b=UwxodE25aCrbZmJ+uMLTCdYmehvA5g2Q4Tieofmkef+oqGDh5dHRvOZlv5FLuFA9tx
+         VfYDPA5Mls3R4/CLcAmUKTAO9EF2LtaFEHmxdMT+qd2MiGdoitSrHc6lg4940d8iTR7o
+         jeTF7OZ+ZvHM2/1Epvz33ZC0lb5f6VfnMYUn9gSTA/l6d4i+bS+KQStpOCUtaAMgXN89
+         WqlimNedgxeHM8RZb139wViEKiPFt+/vBkGIdkLwGsm/rctB0bNJSptXPbLt3zD8V6/V
+         20Cz5q/Kfr6NTZ+A/tOPe9i6qQpOP40Zqxv+Pe2s6EYCHxT/j4H38SdIiDNHXZvF89F/
+         sJnA==
+X-Gm-Message-State: ABuFfojochK9m57inzB0h3I6b+GN0xR5SJmsmOa8M3SaXTnMkewA/yTB
+        o3yuNRC3YQ7Gg7NEfwzlglppACrheYI=
+X-Google-Smtp-Source: ACcGV60IU4uRX5QgWS0WQdI2t4k0ssqQefRmXQd/2PQgu51FSek0EjlMnxDsvgspWEHkutfEQSOGYw==
+X-Received: by 2002:a50:ed1a:: with SMTP id j26-v6mr8568562eds.29.1538234059364;
+        Sat, 29 Sep 2018 08:14:19 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id a21-v6sm2859977edr.57.2018.09.29.08.14.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 29 Sep 2018 08:14:18 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
+Subject: Re: Git for Windows for Unix?
+References: <87va6rhqup.fsf@evledraar.gmail.com>
+        <20180927160523.GA112066@aiede.svl.corp.google.com>
+        <87tvmaj4fq.fsf@evledraar.gmail.com>
+        <20180927162623.GB112066@aiede.svl.corp.google.com>
+        <87ftxtieeg.fsf@evledraar.gmail.com>
+        <20180928204233.GA193055@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180928204233.GA193055@aiede.svl.corp.google.com>
+Date:   Sat, 29 Sep 2018 17:14:18 +0200
+Message-ID: <87efdcibed.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20180929140132.GA31238@msg.df7cb.de> <20180929145527.23444-1-avarab@gmail.com>
-In-Reply-To: <20180929145527.23444-1-avarab@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 29 Sep 2018 17:08:56 +0200
-Message-ID: <CACsJy8A6MqAmSZ=bhatX0MZTWRjR9Ci9h9NhJEshtpmqpHr4JA@mail.gmail.com>
-Subject: Re: [PATCH] grep: provide a noop --recursive option
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, myon@debian.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 29, 2018 at 4:58 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> This --recursive (-r) option does nothing, and is purely here to
-> appease people who have "grep -r ..." burned into their muscle memory.
 
-GNU grep -r recurses infinitely but Git grep also has --max-depth. How
-do these interact? My knee-jerk reaction is -r equals --max-depth=3D-1
-(i.e. overriding previous --mex-depth options on command line, or from
-alias)
+On Fri, Sep 28 2018, Jonathan Nieder wrote:
 
-> Requested-by: Christoph Berg <myon@debian.org>
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
+> Ævar Arnfjörð Bjarmason wrote:
+>> On Thu, Sep 27 2018, Jonathan Nieder wrote:
 >
-> On Sat, Sep 29, 2018 at 4:10 PM Christoph Berg <myon@debian.org> wrote:
-> >
-> > I often use "grep -r $pattern" to recursively grep a source tree. If
-> > that takes too long, I hit ^C and tag "git" in front of the command
-> > line and re-run it. git then complains "error: unknown switch `r'"
-> > because "git grep" is naturally recursive.
-> >
-> > Could we have "git grep -r" accept the argument for compatibility?
-> > Other important grep switches like "-i" are compatible, adding -r
-> > would improve usability.
+>>> That said, that seems to me like a lot of work to avoid adding some
+>>> patches to "next" that belong in "next" anyway.  I understand why the
+>>> Git for Windows maintainer does not always have time to upstream
+>>> promptly, which is why I suggest working with him to find a way to
+>>> help with that.
+>>>
+>>> If there's something I'm missing and Git is actually an uncooperative
+>>> upstream like the cases you've mentioned, then I'd be happy to learn
+>>> about that so we can fix it, too.
+>>
+>> That's one and valid way to look at it, convergence would be ideal.
+>>
+>> Another way to look at it, which is closer to what I was thinking about,
+>> is to just view GFW as some alternate universe "next" branch (which by
+>> my count is ~2-3k commits ahead of master[1]).
 >
-> I don't have an opinion on this either way, it doesn't scratch my
-> itch, but hey, why not. Here's a patch to implement it.
->
->  Documentation/git-grep.txt | 6 ++++++
->  builtin/grep.c             | 3 +++
->  t/t7810-grep.sh            | 8 ++++++++
->  3 files changed, 17 insertions(+)
->
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index a3049af1a3..a1aea8be4e 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -290,6 +290,12 @@ providing this option will cause it to die.
->         Do not output matched lines; instead, exit with status 0 when
->         there is a match and with non-zero status when there isn't.
->
-> +-r::
-> +--recursive::
-> +       This option does nothing. git-grep is always recursive. This
-> +       noop option is provided for compatibility with the muscle
-> +       memory of people used to grep(1).
-> +
->  <tree>...::
->         Instead of searching tracked files in the working tree, search
->         blobs in the given trees.
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 601f801158..02d4384225 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -785,6 +785,7 @@ int cmd_grep(int argc, const char **argv, const char =
-*prefix)
->         int use_index =3D 1;
->         int pattern_type_arg =3D GREP_PATTERN_TYPE_UNSPECIFIED;
->         int allow_revs;
-> +       int unused_recursive; /* this is never used */
->
->         struct option options[] =3D {
->                 OPT_BOOL(0, "cached", &cached,
-> @@ -802,6 +803,8 @@ int cmd_grep(int argc, const char **argv, const char =
-*prefix)
->                         N_("show non-matching lines")),
->                 OPT_BOOL('i', "ignore-case", &opt.ignore_case,
->                         N_("case insensitive matching")),
-> +               OPT_BOOL('r', "recursive", &unused_recursive,
-> +                       N_("does nothing, git-grep is always recursive, f=
-or grep(1) muscle memory compatibility")),
->                 OPT_BOOL('w', "word-regexp", &opt.word_regexp,
->                         N_("match patterns only at word boundaries")),
->                 OPT_SET_INT('a', "text", &opt.binary,
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index be5c1bd553..c48d1fa34b 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -469,6 +469,14 @@ do
->                 git grep --count -h -e b $H -- ab >actual &&
->                 test_cmp expected actual
->         '
-> +
-> +       for flag in '' ' -r' ' --recursive'
-> +       do
-> +               test_expect_success "grep $flag . (testing that --recursi=
-ve is a noop)" '
-> +                       git grep$flag . >actual &&
-> +                       test_line_count =3D 43 actual
-> +       '
-> +       done
->  done
->
->  cat >expected <<EOF
-> --
-> 2.19.0.605.g01d371f741
->
+> You could view it that way, but I don't.  Many Git for Windows patches
+> have never even visited the Git mailing list.
 
+Not to beat this point to death, just replying because I'm not sure if
+we're talking past each other, or if you're just vehemently making the
+point that these patches *really* should be sent to the ML (which I
+don't disagree with at all).
 
---=20
-Duy
+I meant "alternative universe 'next'" in the sense that it's a published
+branch that's shipped to people and is consistently ahead of master, not
+that the same process of sending patches to git@vger.kernel.org has been
+used to generate it.
+
+In the case of GFW they have their own internal contribution mechanism,
+GitHub PRs etc., and only eventually submit things to the ML.
