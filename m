@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C57A1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 15:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1A951F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 15:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728361AbeI2V7R (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 17:59:17 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:36694 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728347AbeI2V7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 17:59:17 -0400
-Received: by mail-lj1-f195.google.com with SMTP id p89-v6so8471440ljb.3
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 08:30:25 -0700 (PDT)
+        id S1728374AbeI2V7U (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 17:59:20 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:38445 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728348AbeI2V7T (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 17:59:19 -0400
+Received: by mail-lj1-f193.google.com with SMTP id p6-v6so8451467ljc.5
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 08:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EoRYjSjtgnZ04ZxHYp7vh49DtDy6UCrEnvNi/iv5ewY=;
-        b=fs+S5XELB6vnn1JwHvPaSoPt98/x0UDEf99VXEkQC+cKmYDdhRsbCZM/3BZV02WGFD
-         KD5UKUVyfqS1hRMV4bVU8+2+UdkbjRQO+PB/SS7DGRnFxTfW8EEs/08kebk2Qeq7K6RD
-         Uk5PeH9v1jlofkF/yMnASKwMfKWgztosw5ayuiKL4IR3V6SZkzCk3iIgSyXeB6qKJFjp
-         Lpck766sn13b4nrIaNIAxXfSWZB860HsPgwbv2eOJeJZmYxnP6JWoDv9eTjPv1i3u8oE
-         t0R9F2BIdit7/9Xq4Ox1o9zYkuEm16ciRdQQLrUi++3JiP73H8jdZntlh9+yQLAe6mQ+
-         Cxpw==
+        bh=obzqILY1jSXaRgnlPClulAmNzoajnaQjhnHkrh/DY4c=;
+        b=n7JXEZODVRzhAbSVYlaZyNQhqz6WybPABGj+vuR8MFVbSZJqjB/ZBt8xnuhu+1KZyb
+         dchChQGWuPQyQWiG9yPxREjZPHs0EDVhTUEz/bJ2YQvdrOAHkLQqyXO34UoLZoDEQwQV
+         gX9ceXLvf56rX4rgmSKJafEPC0t90m6m3aK26lbs9uzmzR/KWqeyDLVYNB5O1CqdxhoV
+         J8TeyWjFEV0gkHRG/81NOUwPKXvfMphSxbd9F7w3bGHKpJl56H7NXZZKoOFCqafXgSZk
+         ANKLFpWzAkFeyobfAutEH/R8KDmrT13bmwFQA/w82QrN55fjEE7rQqCkTK4TqAfqcfE/
+         9EUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EoRYjSjtgnZ04ZxHYp7vh49DtDy6UCrEnvNi/iv5ewY=;
-        b=P8KMOaCUI85PgdOUAd3pGK1Xx+agXYKbv7Moc7fQaJ9R1pKfZJ8knl1JQiuWNfkkMw
-         S5ohx34LUgDaR59i2hzCD1QqAGj8U5o9tFBR92pHtckG8wKpuywaMUWCEBo0t8hUcYgo
-         0i+EkOzp1Y7YJAaryWbA806LN8U2txZYFRtwNPOjkePRlXnD7v7Mv4Epw3peBUzUVODW
-         jAGqs34TvH09uvtISHd3P2T+GNg3XWUC33Lo8GaIhqlaTsvxtGVi1cb2ychIBsvDos64
-         kBtXV3pGJBC0KA7ds9LK4eDhYd9P9ipNWHQWxZfBowng+fFDSL5VMn0LNgnaFGX/QyBR
-         yy/Q==
-X-Gm-Message-State: ABuFfohArROD0ZRYiAPDzGneX/VX0fKwjUJAt9BYFLvHVR1wrhSyKqUZ
-        tP5Yn30qKMWlNC5on2xE3iM=
-X-Google-Smtp-Source: ACcGV63KjLo1Zl4tvuLiR84/vssr+cVYfbFpn8axgQPO7cAkqRjurOvCUjsUzArLMS1qQsW+RAtwFw==
-X-Received: by 2002:a2e:3211:: with SMTP id y17-v6mr1752965ljy.39.1538235024424;
-        Sat, 29 Sep 2018 08:30:24 -0700 (PDT)
+        bh=obzqILY1jSXaRgnlPClulAmNzoajnaQjhnHkrh/DY4c=;
+        b=js+Er1zcEUDjwqDeDoXTDj7HrZdR/Yxjj3yve24x3GO8AQKwqB3a9xeNpw0ff+VgBj
+         lbz7+qYZgtZcu2iJGZ21295WfDzlyAPzRllVpVtU/lxcrrh9lcO8G0JWLq4WqYxlDbev
+         qvuCE9wcMoO8Czk96B8LpU2MZx+Jk5TzXTIp8+EDzXJVDDcRReAaANvyy6oZR5YqbMVX
+         UgadB5IrQ/6sDeB2ahlbKts+rXm/AqqcEmT4CE+2ESJpFhOEMxgNfjM/Rz59p/8AYuiG
+         9+23MrhEknqJE/O/lb2EdyKWJGs+TbNLM2k1XeFrYUzdh2CawP8rvQWHBH5kge8NT+wo
+         aQvg==
+X-Gm-Message-State: ABuFfoiAtC52T8iEMKmipKS7GVrHywZGllB6WbRAlS1WozgrFmGiEO7T
+        NnSJ3csCkfbVI5zaf1594M8=
+X-Google-Smtp-Source: ACcGV63k6rqpkAxLBlii82TEO7SmlTeAeo2eHqiH3ZNFozn41yPQd5EvZax+tUKUWI9PMuztk8xi3Q==
+X-Received: by 2002:a2e:20da:: with SMTP id g87-v6mr1771006lji.88.1538235025541;
+        Sat, 29 Sep 2018 08:30:25 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id m13-v6sm1600899lfj.39.2018.09.29.08.30.23
+        by smtp.gmail.com with ESMTPSA id m13-v6sm1600899lfj.39.2018.09.29.08.30.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Sep 2018 08:30:23 -0700 (PDT)
+        Sat, 29 Sep 2018 08:30:24 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>
-Subject: [PATCH v2 1/2] t1300: extract and use test_cmp_config()
-Date:   Sat, 29 Sep 2018 17:30:04 +0200
-Message-Id: <20180929153005.10599-2-pclouds@gmail.com>
+Subject: [PATCH v2 2/2] worktree: add per-worktree config files
+Date:   Sat, 29 Sep 2018 17:30:05 +0200
+Message-Id: <20180929153005.10599-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.341.g3acb95d729
 In-Reply-To: <20180929153005.10599-1-pclouds@gmail.com>
 References: <20180923170438.23610-1-pclouds@gmail.com>
@@ -70,227 +70,481 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In many config-related tests it's common to check if a config variable
-has expected value and we want to print the differences when the test
-fails. Doing it the normal way is three lines of shell code. Let's add
-a function do to all this (and a little more).
+A new repo extension is added, worktreeConfig. When it is present:
 
-This function has uses outside t1300 as well but I'm not going to
-convert them all. And it will be used in the next commit where
-per-worktree config feature is introduced.
+ - Repository config reading by default includes $GIT_DIR/config _and_
+   $GIT_DIR/config.worktree. "config" file remains shared in multiple
+   worktree setup.
+
+ - The special treatment for core.bare and core.worktree, to stay
+   effective only in main worktree, is gone. These config settings are
+   supposed to be in config.worktree.
+
+This extension is most useful in multiple worktree setup because you
+now have an option to store per-worktree config (which is either
+.git/config.worktree for main worktree, or
+.git/worktrees/xx/config.worktree for linked ones).
+
+This extension can be used in single worktree mode, even though it's
+pretty much useless (but this can happen after you remove all linked
+worktrees and move back to single worktree).
+
+"git config" reads from both "config" and "config.worktree" by default
+(i.e. without either --user, --file...) when this extension is
+present. Default writes still go to "config", not "config.worktree". A
+new option --worktree is added for that (*).
+
+Since a new repo extension is introduced, existing git binaries should
+refuse to access to the repo (both from main and linked worktrees). So
+they will not misread the config file (i.e. skip the config.worktree
+part). They may still accidentally write to the config file anyway if
+they use with "git config --file <path>".
+
+This design places a bet on the assumption that the majority of config
+variables are shared so it is the default mode. A safer move would be
+default writes go to per-worktree file, so that accidental changes are
+isolated.
+
+(*) "git config --worktree" points back to "config" file when this
+    extension is not present and there is only one worktree so that it
+    works in any both single and multiple worktree setups.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/t1300-config.sh       | 79 ++++++++++-------------------------------
- t/test-lib-functions.sh | 24 +++++++++++++
- 2 files changed, 43 insertions(+), 60 deletions(-)
+ Documentation/config.txt               | 12 +++-
+ Documentation/git-config.txt           | 26 ++++++---
+ Documentation/git-worktree.txt         | 30 ++++++++++
+ Documentation/gitrepository-layout.txt |  8 +++
+ builtin/config.c                       | 19 ++++++-
+ cache.h                                |  2 +
+ config.c                               | 11 ++++
+ environment.c                          |  1 +
+ setup.c                                | 40 ++++++++++---
+ t/t2029-worktree-config.sh             | 79 ++++++++++++++++++++++++++
+ 10 files changed, 210 insertions(+), 18 deletions(-)
+ create mode 100755 t/t2029-worktree-config.sh
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index cdf1fed5d1..00c2b0f0eb 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -76,15 +76,11 @@ EOF
- test_expect_success 'non-match result' 'test_cmp expect .git/config'
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 8d85d1a324..44407e69db 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2,8 +2,9 @@ CONFIGURATION FILE
+ ------------------
  
- test_expect_success 'find mixed-case key by canonical name' '
--	echo Second >expect &&
--	git config cores.whatever >actual &&
--	test_cmp expect actual
-+	test_cmp_config Second cores.whatever
- '
+ The Git configuration file contains a number of variables that affect
+-the Git commands' behavior. The `.git/config` file in each repository
+-is used to store the configuration for that repository, and
++the Git commands' behavior. The files `.git/config` and optionally
++`config.worktree` (see `extensions.worktreeConfig` below) in each
++repository is used to store the configuration for that repository, and
+ `$HOME/.gitconfig` is used to store a per-user configuration as
+ fallback values for the `.git/config` file. The file `/etc/gitconfig`
+ can be used to store a system-wide default configuration.
+@@ -371,6 +372,13 @@ advice.*::
+ 		editor input from the user.
+ --
  
- test_expect_success 'find mixed-case key by non-canonical name' '
--	echo Second >expect &&
--	git config CoReS.WhAtEvEr >actual &&
--	test_cmp expect actual
-+	test_cmp_config Second CoReS.WhAtEvEr
- '
++extensions.worktreeConfig::
++	If set, by default "git config" reads from both "config" and
++	"config.worktree" file from GIT_DIR in that order. In
++	multiple working directory mode, "config" file is shared while
++	"config.worktree" is per-working directory (i.e., it's in
++	GIT_COMMON_DIR/worktrees/<id>/config.worktree)
++
+ core.fileMode::
+ 	Tells Git if the executable bit of files in the working tree
+ 	is to be honored.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 8e240435be..4870e00b89 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -45,13 +45,15 @@ unset an existing `--type` specifier with `--no-type`.
  
- test_expect_success 'subsections are not canonicalized by git-config' '
-@@ -94,12 +90,8 @@ test_expect_success 'subsections are not canonicalized by git-config' '
- 	[section "SubSection"]
- 	key = two
- 	EOF
--	echo one >expect &&
--	git config section.subsection.key >actual &&
--	test_cmp expect actual &&
--	echo two >expect &&
--	git config section.SubSection.key >actual &&
--	test_cmp expect actual
-+	test_cmp_config one section.subsection.key &&
-+	test_cmp_config two section.SubSection.key
- '
+ When reading, the values are read from the system, global and
+ repository local configuration files by default, and options
+-`--system`, `--global`, `--local` and `--file <filename>` can be
+-used to tell the command to read from only that location (see <<FILES>>).
++`--system`, `--global`, `--local`, `--worktree` and
++`--file <filename>` can be used to tell the command to read from only
++that location (see <<FILES>>).
  
- cat > .git/config <<\EOF
-@@ -212,9 +204,7 @@ test_expect_success 'really really mean test' '
- '
+ When writing, the new value is written to the repository local
+ configuration file by default, and options `--system`, `--global`,
+-`--file <filename>` can be used to tell the command to write to
+-that location (you can say `--local` but that is the default).
++`--worktree`, `--file <filename>` can be used to tell the command to
++write to that location (you can say `--local` but that is the
++default).
  
- test_expect_success 'get value' '
--	echo alpha >expect &&
--	git config beta.haha >actual &&
--	test_cmp expect actual
-+	test_cmp_config alpha beta.haha
- '
+ This command will fail with non-zero status upon error.  Some exit
+ codes are:
+@@ -131,6 +133,11 @@ from all available files.
+ +
+ See also <<FILES>>.
  
- cat > expect << EOF
-@@ -251,15 +241,11 @@ test_expect_success 'non-match' '
- '
++--worktree::
++	Similar to `--local` except that `.git/config.worktree` is
++	read from or written to if `extensions.worktreeConfig` is
++	present. If not it's the same as `--local`.
++
+ -f config-file::
+ --file config-file::
+ 	Use the given config file instead of the one specified by GIT_CONFIG.
+@@ -281,6 +288,10 @@ $XDG_CONFIG_HOME/git/config::
+ $GIT_DIR/config::
+ 	Repository specific configuration file.
  
- test_expect_success 'non-match value' '
--	echo wow >expect &&
--	git config --get nextsection.nonewline !for >actual &&
--	test_cmp expect actual
-+	test_cmp_config wow --get nextsection.nonewline !for
- '
++$GIT_DIR/config.worktree::
++	This is optional and is only searched when
++	`extensions.worktreeConfig` is present in $GIT_DIR/config.
++
+ If no further options are given, all reading options will read all of these
+ files that are available. If the global or the system-wide configuration
+ file are not available they will be ignored. If the repository configuration
+@@ -299,9 +310,10 @@ configuration file. Note that this also affects options like `--replace-all`
+ and `--unset`. *'git config' will only ever change one file at a time*.
  
- test_expect_success 'multi-valued get returns final one' '
--	echo "wow2 for me" >expect &&
--	git config --get nextsection.nonewline >actual &&
--	test_cmp expect actual
-+	test_cmp_config "wow2 for me" --get nextsection.nonewline
- '
+ You can override these rules either by command-line options or by environment
+-variables. The `--global` and the `--system` options will limit the file used
+-to the global or system-wide file respectively. The `GIT_CONFIG` environment
+-variable has a similar effect, but you can specify any filename you want.
++variables. The `--global`, `--system` and `--worktree` options will limit
++the file used to the global, system-wide or per-worktree file respectively.
++The `GIT_CONFIG` environment variable has a similar effect, but you
++can specify any filename you want.
  
- test_expect_success 'multi-valued get-all returns all' '
-@@ -520,21 +506,11 @@ test_expect_success 'editing stdin is an error' '
  
- test_expect_success 'refer config from subdirectory' '
- 	mkdir x &&
--	(
--		cd x &&
--		echo strasse >expect &&
--		git config --get --file ../other-config ein.bahn >actual &&
--		test_cmp expect actual
--	)
--
-+	test_cmp_config -C x strasse --get --file ../other-config ein.bahn
- '
+ ENVIRONMENT
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index e2ee9fc21b..aa88278dde 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -204,6 +204,36 @@ working trees, it can be used to identify worktrees. For example if
+ you only have two working trees, at "/abc/def/ghi" and "/abc/def/ggg",
+ then "ghi" or "def/ghi" is enough to point to the former working tree.
  
- test_expect_success 'refer config from subdirectory via --file' '
--	(
--		cd x &&
--		git config --file=../other-config --get ein.bahn >actual &&
--		test_cmp expect actual
--	)
-+	test_cmp_config -C x strasse --file=../other-config --get ein.bahn
- '
++CONFIGURATION FILE
++------------------
++By default, the repository "config" file is shared across all working
++trees. If the config variables `core.bare` or `core.worktree` are
++already present in the config file, they will be applied to the main
++working trees only.
++
++In order to have configuration specific to working trees, you can turn
++on "worktreeConfig" extension, e.g.:
++
++------------
++$ git config extensions.worktreeConfig true
++------------
++
++In this mode, specific configuration stays in the path pointed by `git
++rev-parse --git-path config.worktree`. You can add or update
++configuration in this file with `git config --worktree`. Older Git
++versions may will refuse to access repositories with this extension.
++
++Note that in this file, the exception for `core.bare` and `core.worktree`
++is gone. If you have them in $GIT_DIR/config before, you must move
++them to the `config.worktree` of the main working tree. You may also
++take this opportunity to review and move other configuration that you
++do not want to share to all working trees:
++
++ - `core.worktree` and `core.bare` should never be shared
++
++ - `core.sparseCheckout` is recommended per working tree, unless you
++   are sure you always use sparse checkout for all working trees.
++
+ DETAILS
+ -------
+ Each linked working tree has a private sub-directory in the repository's
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+index e85148f05e..36fcca8087 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -143,6 +143,11 @@ config::
+ 	if $GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/config" will be
+ 	used instead.
  
- cat > expect << EOF
-@@ -688,16 +664,13 @@ test_expect_success numbers '
++config.worktree::
++	Working directory specific configuration file for the main
++	working directory in multiple working directory setup (see
++	linkgit:git-worktree[1]).
++
+ branches::
+ 	A slightly deprecated way to store shorthands to be used
+ 	to specify a URL to 'git fetch', 'git pull' and 'git push'.
+@@ -275,6 +280,9 @@ worktrees/<id>/locked::
+ 	or manually by `git worktree prune`. The file may contain a string
+ 	explaining why the repository is locked.
  
- test_expect_success '--int is at least 64 bits' '
- 	git config giga.watts 121g &&
--	echo 129922760704 >expect &&
--	git config --int --get giga.watts >actual &&
--	test_cmp expect actual
-+	echo  >expect &&
-+	test_cmp_config 129922760704 --int --get giga.watts
- '
++worktrees/<id>/config.worktree::
++	Working directory specific configuration file.
++
+ SEE ALSO
+ --------
+ linkgit:git-init[1],
+diff --git a/builtin/config.c b/builtin/config.c
+index 97b58c4aea..84385ef165 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -5,6 +5,7 @@
+ #include "parse-options.h"
+ #include "urlmatch.h"
+ #include "quote.h"
++#include "worktree.h"
  
- test_expect_success 'invalid unit' '
- 	git config aninvalid.unit "1auto" &&
--	echo 1auto >expect &&
--	git config aninvalid.unit >actual &&
--	test_cmp expect actual &&
-+	test_cmp_config 1auto aninvalid.unit &&
- 	test_must_fail git config --int --get aninvalid.unit 2>actual &&
- 	test_i18ngrep "bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit" actual
- '
-@@ -1039,9 +1012,7 @@ test_expect_success '--null --get-regexp' '
+ static const char *const builtin_config_usage[] = {
+ 	N_("git config [<options>]"),
+@@ -24,6 +25,7 @@ static char key_delim = ' ';
+ static char term = '\n';
  
- test_expect_success 'inner whitespace kept verbatim' '
- 	git config section.val "foo 	  bar" &&
--	echo "foo 	  bar" >expect &&
--	git config section.val >actual &&
--	test_cmp expect actual
-+	test_cmp_config "foo 	  bar" section.val
- '
+ static int use_global_config, use_system_config, use_local_config;
++static int use_worktree_config;
+ static struct git_config_source given_config_source;
+ static int actions, type;
+ static char *default_value;
+@@ -123,6 +125,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
+ 	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
+ 	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
++	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config file")),
+ 	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
+ 	OPT_STRING(0, "blob", &given_config_source.blob, N_("blob-id"), N_("read config from given blob object")),
+ 	OPT_GROUP(N_("Action")),
+@@ -602,6 +605,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
  
- test_expect_success SYMLINKS 'symlinked configuration' '
-@@ -1808,21 +1779,15 @@ big = 1M
- EOF
+ 	if (use_global_config + use_system_config + use_local_config +
++	    use_worktree_config +
+ 	    !!given_config_source.file + !!given_config_source.blob > 1) {
+ 		error(_("only one config file at a time"));
+ 		usage_builtin_config();
+@@ -645,7 +649,20 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		given_config_source.file = git_etc_gitconfig();
+ 	else if (use_local_config)
+ 		given_config_source.file = git_pathdup("config");
+-	else if (given_config_source.file) {
++	else if (use_worktree_config) {
++		struct worktree **worktrees = get_worktrees(0);
++		if (repository_format_worktree_config)
++			given_config_source.file = git_pathdup("config.worktree");
++		else if (worktrees[0] && worktrees[1])
++			die(_("--worktree cannot be used with multiple "
++			      "working trees unless the config\n"
++			      "extension worktreeConfig is enabled. "
++			      "Please read \"CONFIGURATION FILE\"\n"
++			      "section in \"git help worktree\" for details"));
++		else
++			given_config_source.file = git_pathdup("config");
++		free_worktrees(worktrees);
++	} else if (given_config_source.file) {
+ 		if (!is_absolute_path(given_config_source.file) && prefix)
+ 			given_config_source.file =
+ 				prefix_filename(prefix, given_config_source.file);
+diff --git a/cache.h b/cache.h
+index d508f3d4f8..9e9b917e99 100644
+--- a/cache.h
++++ b/cache.h
+@@ -957,11 +957,13 @@ extern int grafts_replace_parents;
+ extern int repository_format_precious_objects;
+ extern char *repository_format_partial_clone;
+ extern const char *core_partial_clone_filter_default;
++extern int repository_format_worktree_config;
  
- test_expect_success 'identical modern --type specifiers are allowed' '
--	git config --type=int --type=int core.big >actual &&
--	echo 1048576 >expect &&
--	test_cmp expect actual
-+	test_cmp_config 1048576 --type=int --type=int core.big
- '
+ struct repository_format {
+ 	int version;
+ 	int precious_objects;
+ 	char *partial_clone; /* value of extensions.partialclone */
++	int worktree_config;
+ 	int is_bare;
+ 	int hash_algo;
+ 	char *work_tree;
+diff --git a/config.c b/config.c
+index 3461993f0a..b3025164d2 100644
+--- a/config.c
++++ b/config.c
+@@ -1695,6 +1695,17 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	if (repo_config && !access_or_die(repo_config, R_OK, 0))
+ 		ret += git_config_from_file(fn, repo_config, data);
  
- test_expect_success 'identical legacy --type specifiers are allowed' '
--	git config --int --int core.big >actual &&
--	echo 1048576 >expect &&
--	test_cmp expect actual
-+	test_cmp_config 1048576 --int --int core.big
- '
- 
- test_expect_success 'identical mixed --type specifiers are allowed' '
--	git config --int --type=int core.big >actual &&
--	echo 1048576 >expect &&
--	test_cmp expect actual
-+	test_cmp_config 1048576 --int --type=int core.big
- '
- 
- test_expect_success 'non-identical modern --type specifiers are not allowed' '
-@@ -1841,21 +1806,15 @@ test_expect_success 'non-identical mixed --type specifiers are not allowed' '
- '
- 
- test_expect_success '--type allows valid type specifiers' '
--	echo "true" >expect &&
--	git config --type=bool core.foo >actual &&
--	test_cmp expect actual
-+	test_cmp_config true  --type=bool core.foo
- '
- 
- test_expect_success '--no-type unsets type specifiers' '
--	echo "10" >expect &&
--	git config --type=bool --no-type core.number >actual &&
--	test_cmp expect actual
-+	test_cmp_config 10 --type=bool --no-type core.number
- '
- 
- test_expect_success 'unset type specifiers may be reset to conflicting ones' '
--	echo 1048576 >expect &&
--	git config --type=bool --no-type --type=int core.big >actual &&
--	test_cmp expect actual
-+	test_cmp_config 1048576 --type=bool --no-type --type=int core.big
- '
- 
- test_expect_success '--type rejects unknown specifiers' '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index d82fac9d79..4cd7fb8fdf 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -747,6 +747,30 @@ test_cmp() {
- 	$GIT_TEST_CMP "$@"
++	/*
++	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
++	 * But let's not complicate things before it's actually needed.
++	 */
++	if (repository_format_worktree_config) {
++		char *path = git_pathdup("config.worktree");
++		if (!access_or_die(path, R_OK, 0))
++			ret += git_config_from_file(fn, path, data);
++		free(path);
++	}
++
+ 	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
+ 	if (git_config_from_parameters(fn, data) < 0)
+ 		die(_("unable to parse command-line config"));
+diff --git a/environment.c b/environment.c
+index 3f3c8746c2..268310b3dc 100644
+--- a/environment.c
++++ b/environment.c
+@@ -33,6 +33,7 @@ int ref_paranoia = -1;
+ int repository_format_precious_objects;
+ char *repository_format_partial_clone;
+ const char *core_partial_clone_filter_default;
++int repository_format_worktree_config;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
+ const char *apply_default_whitespace;
+diff --git a/setup.c b/setup.c
+index b24c811c1c..1be5037f12 100644
+--- a/setup.c
++++ b/setup.c
+@@ -402,6 +402,20 @@ void setup_work_tree(void)
+ 	initialized = 1;
  }
  
-+# similar to test_cmp but $2 is a config key instead of actual value
-+# it can also accept -C to read from a different repo, e.g.
-+#
-+#     test_cmp_config -C xyz foo core.bar
-+#
-+# is sort of equivalent of
-+#
-+#     test "foo" = "$(git -C xyz core.bar)"
++static int read_worktree_config(const char *var, const char *value, void *vdata)
++{
++	struct repository_format *data = vdata;
 +
-+test_cmp_config() {
-+	if [ "$1" = "-C" ]
-+	then
-+		shift &&
-+		GD="-C $1" &&
-+		shift
-+	else
-+		GD=
-+	fi &&
-+	echo "$1" >expected &&
-+	shift &&
-+	git $GD config "$@" >actual &&
-+	test_cmp expected actual
++	if (strcmp(var, "core.bare") == 0) {
++		data->is_bare = git_config_bool(var, value);
++	} else if (strcmp(var, "core.worktree") == 0) {
++		if (!value)
++			return config_error_nonbool(var);
++		data->work_tree = xstrdup(value);
++	}
++	return 0;
 +}
 +
- # test_cmp_bin - helper to compare binary files
+ static int check_repo_format(const char *var, const char *value, void *vdata)
+ {
+ 	struct repository_format *data = vdata;
+@@ -423,16 +437,13 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
+ 			if (!value)
+ 				return config_error_nonbool(var);
+ 			data->partial_clone = xstrdup(value);
+-		} else
++		} else if (!strcmp(ext, "worktreeconfig"))
++			data->worktree_config = git_config_bool(var, value);
++		else
+ 			string_list_append(&data->unknown_extensions, ext);
+-	} else if (strcmp(var, "core.bare") == 0) {
+-		data->is_bare = git_config_bool(var, value);
+-	} else if (strcmp(var, "core.worktree") == 0) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		data->work_tree = xstrdup(value);
+ 	}
+-	return 0;
++
++	return read_worktree_config(var, value, vdata);
+ }
  
- test_cmp_bin() {
+ static int check_repository_format_gently(const char *gitdir, struct repository_format *candidate, int *nongit_ok)
+@@ -466,7 +477,20 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+ 
+ 	repository_format_precious_objects = candidate->precious_objects;
+ 	repository_format_partial_clone = candidate->partial_clone;
++	repository_format_worktree_config = candidate->worktree_config;
+ 	string_list_clear(&candidate->unknown_extensions, 0);
++
++	if (repository_format_worktree_config) {
++		/*
++		 * pick up core.bare and core.worktree from per-worktree
++		 * config if present
++		 */
++		strbuf_addf(&sb, "%s/config.worktree", gitdir);
++		git_config_from_file(read_worktree_config, sb.buf, candidate);
++		strbuf_release(&sb);
++		has_common = 0;
++	}
++
+ 	if (!has_common) {
+ 		if (candidate->is_bare != -1) {
+ 			is_bare_repository_cfg = candidate->is_bare;
+diff --git a/t/t2029-worktree-config.sh b/t/t2029-worktree-config.sh
+new file mode 100755
+index 0000000000..286121d8de
+--- /dev/null
++++ b/t/t2029-worktree-config.sh
+@@ -0,0 +1,79 @@
++#!/bin/sh
++
++test_description="config file in multi worktree"
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit start
++'
++
++test_expect_success 'config --worktree in single worktree' '
++	git config --worktree foo.bar true &&
++	test_cmp_config true foo.bar
++'
++
++test_expect_success 'add worktrees' '
++	git worktree add wt1 &&
++	git worktree add wt2
++'
++
++test_expect_success 'config --worktree without extension' '
++	test_must_fail git config --worktree foo.bar false
++'
++
++test_expect_success 'enable worktreeConfig extension' '
++	git config extensions.worktreeConfig true &&
++	test_cmp_config true extensions.worktreeConfig
++'
++
++test_expect_success 'config is shared as before' '
++	git config this.is shared &&
++	test_cmp_config shared this.is &&
++	test_cmp_config -C wt1 shared this.is &&
++	test_cmp_config -C wt2 shared this.is
++'
++
++test_expect_success 'config is shared (set from another worktree)' '
++	git -C wt1 config that.is also-shared &&
++	test_cmp_config also-shared that.is &&
++	test_cmp_config -C wt1 also-shared that.is &&
++	test_cmp_config -C wt2 also-shared that.is
++'
++
++test_expect_success 'config private to main worktree' '
++	git config --worktree this.is for-main &&
++	test_cmp_config for-main this.is &&
++	test_cmp_config -C wt1 shared this.is &&
++	test_cmp_config -C wt2 shared this.is
++'
++
++test_expect_success 'config private to linked worktree' '
++	git -C wt1 config --worktree this.is for-wt1 &&
++	test_cmp_config for-main this.is &&
++	test_cmp_config -C wt1 for-wt1 this.is &&
++	test_cmp_config -C wt2 shared this.is
++'
++
++test_expect_success 'core.bare no longer for main only' '
++	test_config core.bare true &&
++	test "$(git rev-parse --is-bare-repository)" = true &&
++	test "$(git -C wt1 rev-parse --is-bare-repository)" = true &&
++	test "$(git -C wt2 rev-parse --is-bare-repository)" = true
++'
++
++test_expect_success 'per-worktree core.bare is picked up' '
++	git -C wt1 config --worktree core.bare true &&
++	test "$(git rev-parse --is-bare-repository)" = false &&
++	test "$(git -C wt1 rev-parse --is-bare-repository)" = true &&
++	test "$(git -C wt2 rev-parse --is-bare-repository)" = false
++'
++
++test_expect_success 'config.worktree no longer read without extension' '
++	git config --unset extensions.worktreeConfig &&
++	test_cmp_config shared this.is &&
++	test_cmp_config -C wt1 shared this.is &&
++	test_cmp_config -C wt2 shared this.is
++'
++
++test_done
 -- 
 2.19.0.341.g3acb95d729
 
