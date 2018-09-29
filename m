@@ -6,61 +6,80 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A5241F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 08:00:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 388151F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 08:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727568AbeI2O1q (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 10:27:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36168 "HELO cloud.peff.net"
+        id S1727559AbeI2Ooi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 10:44:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36202 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727538AbeI2O1q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 10:27:46 -0400
-Received: (qmail 10387 invoked by uid 109); 29 Sep 2018 08:00:18 -0000
+        id S1727535AbeI2Ooi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 10:44:38 -0400
+Received: (qmail 11425 invoked by uid 109); 29 Sep 2018 08:17:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Sep 2018 08:00:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 29 Sep 2018 08:17:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4611 invoked by uid 111); 29 Sep 2018 07:59:51 -0000
+Received: (qmail 4756 invoked by uid 111); 29 Sep 2018 08:16:39 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Sep 2018 03:59:51 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 29 Sep 2018 04:16:39 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Sep 2018 04:00:16 -0400
-Date:   Sat, 29 Sep 2018 04:00:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Sep 2018 04:17:05 -0400
+Date:   Sat, 29 Sep 2018 04:17:05 -0400
 From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+To:     Kyle Hubert <khubert@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t1400: drop debug `echo` to actually execute `test`
-Message-ID: <20180929080016.GH2174@sigill.intra.peff.net>
-References: <20180928154359.26919-1-martin.agren@gmail.com>
+Subject: Re: [PATCH] Improvement to only call Git Credential Helper once
+Message-ID: <20180929081705.GI2174@sigill.intra.peff.net>
+References: <20180928163716.29947-1-khubert@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180928154359.26919-1-martin.agren@gmail.com>
+In-Reply-To: <20180928163716.29947-1-khubert@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 28, 2018 at 05:43:59PM +0200, Martin Ågren wrote:
+On Fri, Sep 28, 2018 at 12:37:16PM -0400, Kyle Hubert wrote:
 
-> Instead of running `test "foo" = "$(bar)"`, we prefix the whole thing
-> with `echo`. Comparing to nearby tests makes it clear that this is just
-> debug leftover. This line has actually been modified four times since it
-> was introduced in e52290428b (General ref log reading improvements.,
-> 2006-05-19) and the `echo` has always survived. Let's finally drop it.
+> When calling the Git Credential Helper that is set in the git config,
+> the get command can return a credential. Git immediately turns around
+> and calls the store command, even though that credential was just
+> retrieved by the Helper. This creates two side effects. First of all,
+> if the Helper requires a passphrase, the user has to type it in
+> twice. Secondly, if the user has a number of helpers, this retrieves
+> the credential from one service and writes it to all services.
+> 
+> This commit introduces a new field in the credential struct that
+> detects when the credential was retrieved using the Helper, and early
+> exits when called to store the credential.
 
-Hmm, yeah. I cannot see how this echo was ever accomplishing anything.
+Wow, what's old is new again. Here's more or less the same patch from
+2012:
 
-> This script could need some more cleanups. This is just an immediate fix
-> so that we actually test what we intend to.
+  https://public-inbox.org/git/20120407033417.GA13914@sigill.intra.peff.net/
 
-Yeah, this is definitely worth doing now, and not holding hostage to a
-bigger cleanup.
+Unfortunately, some people seem to rely on this multi-helper behavior. I
+recommend reading the whole thread, as there are some interesting bits
+in it (that I had always meant to return to, but somehow 6 years went
+by).
+
+I'm not entirely opposed to breaking the current behavior in the name of
+better security (namely not unexpectedly propagating credentials), but
+it would be nice if we provided better tools for people to let their
+helpers interact (like the credential-wrap thing I showed in that
+thread).
 
 > ---
->  t/t1400-update-ref.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  credential.c | 8 +++++++-
+>  credential.h | 3 ++-
+>  2 files changed, 9 insertions(+), 2 deletions(-)
 
-The patch looks good to me. Thanks!
+I know your patch is right, because it's almost identical to mine. :)
+(Mine didn't use the "retrieved" flag in the middle, but just set
+"approved" directly).
+
+If we do go this route, though, we might want to steal the test from
+that earlier round.
 
 -Peff
