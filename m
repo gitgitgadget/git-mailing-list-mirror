@@ -2,80 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D86AD1F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 20:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759E41F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 23:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727690AbeI3C4h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 22:56:37 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55800 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727405AbeI3C4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 22:56:37 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 206-v6so5194839wmb.5
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 13:26:48 -0700 (PDT)
+        id S1726491AbeI3FaY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Sep 2018 01:30:24 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:36472 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726166AbeI3FaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 01:30:24 -0400
+Received: by mail-lj1-f196.google.com with SMTP id p89-v6so8945098ljb.3
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 16:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wWDXXUmox0UIN9zsy0ImUb8RlO9l8vyZCFdW3jM/JJw=;
-        b=q5CKmXL/S6pKi8tIMkzFDROgKDOjomLSCLQ07h697mpXl3csq/Bosw0ClC0U7edwJb
-         ri+W5RNbsUsh9M7xMOhARL3vsfBtsbLqWtArPK2ilESBhyZYvXwupc0j40M+DAp7SwKV
-         KZz7pI656ymRAy0M+ljMDePNx51q/LYu76K+OH04v9w1mdov9uYHBGQZpznSYXodFQOK
-         PFDOSGIeUvSjYUg0/GF/4v43dD3ZyBPbhyiLYpwPEtsBo8CCp9spOMV62cTHP6G9F2Jw
-         DYldPOr2+h3Myk0Zsc6tmzQyn02LwRSfcsqQ12a4Yp3pDwPxGrkkkEVpGLI7vtwOVZiy
-         0ZQA==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZFmdKZLmpqoMimv6idFEi/1pFwVv6sfbHggZAWIH72w=;
+        b=jozG38gXiKGOmgvV9MSs9e8ip5b7Q3JG4A+q0owgj7qfK+dQKAScpFHMDiuYX2DFUb
+         Y66O0K5OBBY/Gj4G5C2iJ6rN745lVCBFroJhSYwbQcHmU141BMw+8iHYf7vCgZgTi2zR
+         TGhYlBPdQSw3izx1irIAi8977kIfVTb9WNcui6wWgkA4KNV0C9zDESB1CTUc6i2jNtQp
+         S5pdCcmvvvOjYQuTt6yeTzYP19waQD4mGWtNbIuernFPnUk5A1u7f7o5/zwS8OUrh8YN
+         HVZKGhyb92RNYA/LHUdqpnTONWX7j/0XeVJ2tmcwfGiFxF5rGy7X/RySjhQIdXUTPAOH
+         hdfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wWDXXUmox0UIN9zsy0ImUb8RlO9l8vyZCFdW3jM/JJw=;
-        b=XE9kPSvgCZijoiB/rxbcXFQP4qWBp6YJSyEGxjQJmUZhGHdbiljkInsfI3/MpG/9xp
-         jw4syAtUVcuxQXNaTVowl+RPYtk66CT72KVnN+Mf5v2N32Gvh7Zo/zvtf98kUjySw8M1
-         7V7lBbpIA+AVTXHNmPaKs0bpkg1ZzLLCGkFEB4LI7fbWpfA7JPYleazutx6MBjKOz1QW
-         7pyO0Qnt4XQJerPLftnoLhN+CE8LE1X6ftaQj9Br1HkM7z9IT5ttd3e628gArIm36UNN
-         cc9EtqEAjkbuftx+S9vjs2nlJGSRGzwYIqpqjpCnvsJQy6clX61AdXvMqNz5Af4PTLSf
-         xOzA==
-X-Gm-Message-State: ABuFfohPr89onkOkoyinePXNm/8Qaz5vCynHq4Mwqv86BWDCfbj/a4D8
-        /1+kyg9fPlHTGo0mGr5QNLQ=
-X-Google-Smtp-Source: ACcGV60pwZB/fXnkf8cDLldkKYUQ+O8ENS5bpdtWLZPMmrndvNWfcgwKsXGqRvIeZPy7/1aylJHsKA==
-X-Received: by 2002:a1c:a9d4:: with SMTP id s203-v6mr3217068wme.58.1538252807737;
-        Sat, 29 Sep 2018 13:26:47 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k63-v6sm10729044wmd.46.2018.09.29.13.26.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 29 Sep 2018 13:26:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch-pack: approximate no_dependents with filter
-References: <20180924154516.48704-1-jonathantanmy@google.com>
-Date:   Sat, 29 Sep 2018 13:26:46 -0700
-In-Reply-To: <20180924154516.48704-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Mon, 24 Sep 2018 08:45:16 -0700")
-Message-ID: <xmqqftxs82yh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZFmdKZLmpqoMimv6idFEi/1pFwVv6sfbHggZAWIH72w=;
+        b=c4sGn8gEtKNO0PSVchT5jd11Z7Vyf7GPFhqS9BMiTrAeS0aEnksYGhG0iIh1fCflux
+         tFgs18RFT1Cc/KrEhVu3gGAAX0WblMnVSRp6IotkhZ3tWjwOWsY5HjWbv6vwRN1zUTf+
+         s4F4AZgf3lconisoX/6mem6q+nKO5TAPx6TIf8bPO69tTx3NY+6rdDxl7sfWabvSgG/J
+         Rn23EkInO9sjA2FR3AQFBCn//aBeOmCMTUq7gg31tvThmGFDDhlahlfk8uoLMfRiF85z
+         s8+yzxa6G5REGXwMPLMDPhH04RxuGMjPTiJkEH3SuS4wBAxdw7ApMKnlPF+5LeFevKMA
+         pb7Q==
+X-Gm-Message-State: ABuFfogbw8I6kpvELvT7iiOs8HWOn3i/M5/HLc0DsXxUxhCjjqJ8QDu3
+        PkTqtnAppjXUrQYXZOtmSfiuV0cpBfV1Af9mNJ+8LghtrToMlA==
+X-Google-Smtp-Source: ACcGV61ojrjtUaIk66F9j7vvwd1cSicnjWkaMoUqiw4PXslCKavSXWY1aZCm/iRPyCS+LNFYtOmXLeVc+pJRB74p2jw=
+X-Received: by 2002:a2e:99d3:: with SMTP id l19-v6mr2323864ljj.132.1538262004627;
+ Sat, 29 Sep 2018 16:00:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a2e:2e13:0:0:0:0:0 with HTTP; Sat, 29 Sep 2018 16:00:04
+ -0700 (PDT)
+From:   Stefan Xenos <sxenos@google.com>
+Date:   Sat, 29 Sep 2018 16:00:04 -0700
+Message-ID: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
+Subject: Git Evolve
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hello, List!
 
-> This was prompted by a user at $DAY_JOB who had a partial clone
-> excluding trees, and had a workflow that only required tree objects (and
-> not blobs).
->
-> This will hopefully make partial clones excluding trees (with the
-> "tree:0" filter) a bit better, in that if an operation requires only
-> trees to be inspected, the required download is much smaller.
+I'm interested in porting something like Mercurial's evolve command to
+Git. I'll be following up with a formal proposal shortly, but before I
+do I thought I'd introduce myself to the list and find out if anyone
+else is interested in this topic.
 
-This seems to break 5520 and 5616 when merged to 'pu'.  
+What is the evolve command?
 
-It seems that merging master to md/filter-trees and then applying
-this is sufficient to break 5616.
+Imagine you have three dependent changes up for review and you receive
+feedback that requires editing all three changes. While you're editing
+one, more feedback arrives on one of the others. What do you do?
+
+The evolve command is a convenient way to work with chains of commits
+that are under review. Whenever you rebase or amend a commit, the
+repository remembers that the old commit is obsolete and has been
+replaced by the new one. Then, at some point in the future, you can
+run "git evolve" and the correct sequence of rebases will occur in the
+correct order such that no commit has an obsolete parent.
+
+Part of making the "evolve" command work involves tracking the edits
+to a commit over time, which could provide a lot of other benefits:
+
+- Systems like gerrit would no longer need to rely on "change-id" tags
+in commit comments to associate commits with the change that they
+edit, since git itself would have that information.
+- You could directly view the history of a commit over time (ie: the
+sequence of amends and rebases that occurred with that commit,
+orthogonal to the history of the branch it is on). If you've used
+mercurial, this would be a git equivalent to "hg obslog". If you've
+used gerrit, this would be like the gerrit "change log" but it would
+work for all commits and work offline.
+- You can easily list all the changes that you have as works-in
+progress. If you've used gerrit, this would be an offline equivalent
+to the gerrit dashboard.
+- You could choose to share the history of a commit with others, or
+collaborate on and merge different variants of the same change.
+
+Some information about Mercurial's evolve command can be found here:
+https://www.mercurial-scm.org/doc/evolution/
+
+Other similar technologies:
+
+rebase -i can be used to solve the same problem, but you can't easily
+switch tasks midway through an interactive rebase or have more than
+one interactive rebase going on at the same time. It also can't handle
+the case where you have multiple changes sharing the same parent that
+needs to be rebased and won't let you collaborate with others on
+resolving a complicated interactive rebase.
+
+patch queues (topgit, stgit, quilt) address a very similar problem,
+however since they're built on top of git rather than integrated with
+it, most of them end up managing extra state that can get easily
+damaged whenever you run a native git command that doesn't know about
+the patch queue. Most of them also have various workflow problems that
+aren't present in hg evolve.
+
+Is anyone else interested in this? Please email me directly or on this
+list. Let's chat: I want to make sure that whatever we come up with is
+at least as good as any similar technology that has come before.
