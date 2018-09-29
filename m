@@ -2,111 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97C461F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 15:14:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6851F453
+	for <e@80x24.org>; Sat, 29 Sep 2018 15:23:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728290AbeI2VnI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Sep 2018 17:43:08 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43191 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728123AbeI2VnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Sep 2018 17:43:08 -0400
-Received: by mail-ed1-f67.google.com with SMTP id u23so10562542edx.10
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 08:14:20 -0700 (PDT)
+        id S1728335AbeI2VwQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Sep 2018 17:52:16 -0400
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:38120 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728246AbeI2VwQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Sep 2018 17:52:16 -0400
+Received: by mail-oi1-f177.google.com with SMTP id u197-v6so7885555oif.5
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 08:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=le+SXr3JVXxl5IUfVDGtdhN3w9W7LA6leCQRTLBiNXc=;
-        b=ROcNnWZ/56+i5HX69MQPP8V7MLSutfZvdbXMsmWGjUWQ/Pzx6uF12szNa/DxwXec6w
-         qiNv4xbieCsPuasHrIg3Y3+DoiI8R2hr6ZvFsOK/YlwtI60vHjnpAP8MVqlUHomQbGms
-         nDbGWTTjligbz+X8n2vHCmMwUA0PDmUkgwuiQjrBBJRmeER4ILIZrOC11VxgtgVIqb/u
-         byOfKk0VWkhVgZ8ASSI8KmPKnQs78KxXG1kkbr17lj4m1SxrgC5I6lo0urf0GY3Hxkmu
-         Vukgy6Ya8t11JYutjY77bqhCoKdVG2EDAvugEZOZ4BCL/2bh1kO1E8woyp6LIlAaplKJ
-         d5SA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=5Bm89wxj1rLEmBga5FbfsN1ZMhxdKTdWm46UsNrz/yc=;
+        b=B80EL1tihzMnEgUy5URPb3QRm7wqjF+yqKf4URHD8qNs/VVproo/Co4Q4a5wSW4QA+
+         0Je449xP3GUatcnEEl19LEcgFxlLUROj53mPgiFmAV6/v6grTCjraKi1yfKQ2EdrGwlg
+         BmqZ0cmJhgttjB6PkxeSBE2JWh3FXwBxldikIayp2ONyQHb6b8AvmiZvIV+T1RU0efYq
+         rByMHBUTAYQUE4JT25r5NJV/aCeTFaDaMctL8qyQzht5tQSVoCAktmGW0ssZo/Zb0se2
+         7VwvSRdyiI99cifbnqi0z/VGQ1FN0whCtRYf8DJfHlUtrtOgeasUylIKIBDk2hHAoV9g
+         OCTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=le+SXr3JVXxl5IUfVDGtdhN3w9W7LA6leCQRTLBiNXc=;
-        b=UwxodE25aCrbZmJ+uMLTCdYmehvA5g2Q4Tieofmkef+oqGDh5dHRvOZlv5FLuFA9tx
-         VfYDPA5Mls3R4/CLcAmUKTAO9EF2LtaFEHmxdMT+qd2MiGdoitSrHc6lg4940d8iTR7o
-         jeTF7OZ+ZvHM2/1Epvz33ZC0lb5f6VfnMYUn9gSTA/l6d4i+bS+KQStpOCUtaAMgXN89
-         WqlimNedgxeHM8RZb139wViEKiPFt+/vBkGIdkLwGsm/rctB0bNJSptXPbLt3zD8V6/V
-         20Cz5q/Kfr6NTZ+A/tOPe9i6qQpOP40Zqxv+Pe2s6EYCHxT/j4H38SdIiDNHXZvF89F/
-         sJnA==
-X-Gm-Message-State: ABuFfojochK9m57inzB0h3I6b+GN0xR5SJmsmOa8M3SaXTnMkewA/yTB
-        o3yuNRC3YQ7Gg7NEfwzlglppACrheYI=
-X-Google-Smtp-Source: ACcGV60IU4uRX5QgWS0WQdI2t4k0ssqQefRmXQd/2PQgu51FSek0EjlMnxDsvgspWEHkutfEQSOGYw==
-X-Received: by 2002:a50:ed1a:: with SMTP id j26-v6mr8568562eds.29.1538234059364;
-        Sat, 29 Sep 2018 08:14:19 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id a21-v6sm2859977edr.57.2018.09.29.08.14.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 29 Sep 2018 08:14:18 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
-Subject: Re: Git for Windows for Unix?
-References: <87va6rhqup.fsf@evledraar.gmail.com>
-        <20180927160523.GA112066@aiede.svl.corp.google.com>
-        <87tvmaj4fq.fsf@evledraar.gmail.com>
-        <20180927162623.GB112066@aiede.svl.corp.google.com>
-        <87ftxtieeg.fsf@evledraar.gmail.com>
-        <20180928204233.GA193055@aiede.svl.corp.google.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180928204233.GA193055@aiede.svl.corp.google.com>
-Date:   Sat, 29 Sep 2018 17:14:18 +0200
-Message-ID: <87efdcibed.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=5Bm89wxj1rLEmBga5FbfsN1ZMhxdKTdWm46UsNrz/yc=;
+        b=I9OzF5uUWqpgZG7vNxtpOcFKigRx7e65y5jQwWLQpoJFnnRivUVTqaoJVYOfgN7Pqe
+         qaByUX4guSP5aRQZGJ2bxyox3+8YnP4V1as0zEN5zpZhCLhYLkL/1jw8p/75HM0Iyp/g
+         FW8JKEe8nJN5/RT44nHGJVIV3GLydpymO3RXV/k2Jq7lIT1JW/h8HLtvD5rjCM3mQDJV
+         suSRxIvnfCZYbjzAhmvB3V28oMG+oM7Qvsj4AndOX8qsc1vkph8CmyICXP2HNJwGRg7B
+         sFhdfElRGOg2bEwLYNQ7CnfPUNBIfGs2CqFXxWiBG8bpauDH+4TujAxGGSQvKJ6NKxoZ
+         j5gw==
+X-Gm-Message-State: ABuFfohatu8qsz4J1ZuX1WEKixbSPYX22DTCClJ/rMBezZAYZPWvaEw/
+        hYyDJsOoLV2C0gKDRV1k6XNdZziHaL9cB75F82IXN4J0
+X-Google-Smtp-Source: ACcGV60s7FSIC4hgNRrDA+C0CxuU2Mw6FfjjE8g3yNMMZCf8G2IBdcpQm+lWFbpxtfZz7oUa/KOk24ddIVr9Fov1MWg=
+X-Received: by 2002:a54:4618:: with SMTP id p24-v6mr1552177oip.172.1538234607082;
+ Sat, 29 Sep 2018 08:23:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   Raymond Jennings <shentino@gmail.com>
+Date:   Sat, 29 Sep 2018 08:22:50 -0700
+Message-ID: <CAGDaZ_oBpLxD0cutrsNsFBEtH+-Fn2eT40gDsnGZhhU0qm2Ofw@mail.gmail.com>
+Subject: [BUG] Segfault in "git submodule"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Sep 28 2018, Jonathan Nieder wrote:
-
-> Ævar Arnfjörð Bjarmason wrote:
->> On Thu, Sep 27 2018, Jonathan Nieder wrote:
->
->>> That said, that seems to me like a lot of work to avoid adding some
->>> patches to "next" that belong in "next" anyway.  I understand why the
->>> Git for Windows maintainer does not always have time to upstream
->>> promptly, which is why I suggest working with him to find a way to
->>> help with that.
->>>
->>> If there's something I'm missing and Git is actually an uncooperative
->>> upstream like the cases you've mentioned, then I'd be happy to learn
->>> about that so we can fix it, too.
->>
->> That's one and valid way to look at it, convergence would be ideal.
->>
->> Another way to look at it, which is closer to what I was thinking about,
->> is to just view GFW as some alternate universe "next" branch (which by
->> my count is ~2-3k commits ahead of master[1]).
->
-> You could view it that way, but I don't.  Many Git for Windows patches
-> have never even visited the Git mailing list.
-
-Not to beat this point to death, just replying because I'm not sure if
-we're talking past each other, or if you're just vehemently making the
-point that these patches *really* should be sent to the ML (which I
-don't disagree with at all).
-
-I meant "alternative universe 'next'" in the sense that it's a published
-branch that's shipped to people and is consistently ahead of master, not
-that the same process of sending patches to git@vger.kernel.org has been
-used to generate it.
-
-In the case of GFW they have their own internal contribution mechanism,
-GitHub PRs etc., and only eventually submit things to the ML.
+[New LWP 19644]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Core was generated by `git submodule--helper status'.
+Program terminated with signal SIGSEGV, Segmentation fault.
+#0  refs_read_raw_ref (type=<optimized out>, referent=<optimized out>,
+oid=<optimized out>, refname=<optimized out>, ref_store=<optimized
+out>) at refs.c:1451
+1451 return ref_store->be->read_raw_ref(ref_store, refname, oid,
+referent, type);
+#0  refs_read_raw_ref (type=<optimized out>, referent=<optimized out>,
+oid=<optimized out>, refname=<optimized out>, ref_store=<optimized
+out>) at refs.c:1451
+#1  refs_resolve_ref_unsafe (refs=0x0,
+refname=refname@entry=0x55e863062253 "HEAD",
+resolve_flags=resolve_flags@entry=1, oid=oid@entry=0x7ffdc834b1c0,
+flags=flags@entry=0x7ffdc834b1bc) at refs.c:1493
+#2  0x000055e862fcad5c in refs_read_ref_full (flags=0x7ffdc834b1bc,
+oid=0x7ffdc834b1c0, resolve_flags=1, refname=0x55e863062253 "HEAD",
+refs=<optimized out>) at refs.c:224
+#3  refs_head_ref (refs=<optimized out>, fn=fn@entry=0x55e862f25fb0
+<handle_submodule_head_ref>, cb_data=cb_data@entry=0x7ffdc834b300) at
+refs.c:1314
+#4  0x000055e862f292a2 in status_submodule (flags=0, prefix=<optimized
+out>, ce_flags=0, ce_oid=0x55e86468d4d4, path=0x55e86468d4e8
+"lpc-doc") at builtin/submodule--helper.c:624
+#5  status_submodule_cb (cb_data=0x7ffdc834b240,
+list_item=0x55e86468d490) at builtin/submodule--helper.c:665
+#6  for_each_listed_submodule (cb_data=<optimized out>, fn=<optimized
+out>, list=<optimized out>) at builtin/submodule--helper.c:404
+#7  module_status (argc=<optimized out>, argv=<optimized out>,
+prefix=<optimized out>) at builtin/submodule--helper.c:698
+#8  0x000055e862eaec95 in run_builtin (argv=<optimized out>,
+argc=<optimized out>, p=<optimized out>) at git.c:346
+#9  handle_builtin (argc=<optimized out>, argv=<optimized out>) at git.c:554
+#10 0x000055e862eaf985 in run_argv (argv=0x7ffdc834be20,
+argcp=0x7ffdc834be2c) at git.c:606
+#11 cmd_main (argc=<optimized out>, argv=<optimized out>) at git.c:683
+#12 0x000055e862eae96a in main (argc=3, argv=0x7ffdc834c078) at common-main.c:43
