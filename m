@@ -2,118 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 759E41F453
-	for <e@80x24.org>; Sat, 29 Sep 2018 23:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADE5B1F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 00:57:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbeI3FaY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Sep 2018 01:30:24 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:36472 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726166AbeI3FaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 01:30:24 -0400
-Received: by mail-lj1-f196.google.com with SMTP id p89-v6so8945098ljb.3
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 16:00:05 -0700 (PDT)
+        id S1726901AbeI3H0j (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Sep 2018 03:26:39 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:37799 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726800AbeI3H0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 03:26:39 -0400
+Received: by mail-wr1-f41.google.com with SMTP id u12-v6so10036406wrr.4
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 17:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ZFmdKZLmpqoMimv6idFEi/1pFwVv6sfbHggZAWIH72w=;
-        b=jozG38gXiKGOmgvV9MSs9e8ip5b7Q3JG4A+q0owgj7qfK+dQKAScpFHMDiuYX2DFUb
-         Y66O0K5OBBY/Gj4G5C2iJ6rN745lVCBFroJhSYwbQcHmU141BMw+8iHYf7vCgZgTi2zR
-         TGhYlBPdQSw3izx1irIAi8977kIfVTb9WNcui6wWgkA4KNV0C9zDESB1CTUc6i2jNtQp
-         S5pdCcmvvvOjYQuTt6yeTzYP19waQD4mGWtNbIuernFPnUk5A1u7f7o5/zwS8OUrh8YN
-         HVZKGhyb92RNYA/LHUdqpnTONWX7j/0XeVJ2tmcwfGiFxF5rGy7X/RySjhQIdXUTPAOH
-         hdfQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=XcrAlFjxC22PGiZV3qNY4+GRKA+WnHxT5ZrXgT/0c/s=;
+        b=U8T7rTPjl/Z3MqQ9mjgJQvMV/4jAJhNdPRQ06esZ9uUYD65HOVtpxSM+3pXBoKEYtO
+         ycEmkRWtJR1RH9xQTIKxgtfMAtSjJkdjWAhUsk6A84A5G8lPDyD6F+KUG/uDMApbJxr+
+         kUg3nOB/sQjxkqzE183gixjIpVvxJGHadyUtfBwiRMkdK1MPHBm1zrenmWcc8HYl/M1o
+         gGZ82JiJoMuDSuE033LXZIPEuQBTDNNQIY0rXHSSSSBfcTC8nLjDtm0ZnWfqHwmaZ4X1
+         NFDaEWY7gvf+U3YqdTQ7n+KD0p7EHmRobJ2SHKcsLPPnJcNnbNoqvDGnZ9uSqXx5I+L3
+         nI3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ZFmdKZLmpqoMimv6idFEi/1pFwVv6sfbHggZAWIH72w=;
-        b=c4sGn8gEtKNO0PSVchT5jd11Z7Vyf7GPFhqS9BMiTrAeS0aEnksYGhG0iIh1fCflux
-         tFgs18RFT1Cc/KrEhVu3gGAAX0WblMnVSRp6IotkhZ3tWjwOWsY5HjWbv6vwRN1zUTf+
-         s4F4AZgf3lconisoX/6mem6q+nKO5TAPx6TIf8bPO69tTx3NY+6rdDxl7sfWabvSgG/J
-         Rn23EkInO9sjA2FR3AQFBCn//aBeOmCMTUq7gg31tvThmGFDDhlahlfk8uoLMfRiF85z
-         s8+yzxa6G5REGXwMPLMDPhH04RxuGMjPTiJkEH3SuS4wBAxdw7ApMKnlPF+5LeFevKMA
-         pb7Q==
-X-Gm-Message-State: ABuFfogbw8I6kpvELvT7iiOs8HWOn3i/M5/HLc0DsXxUxhCjjqJ8QDu3
-        PkTqtnAppjXUrQYXZOtmSfiuV0cpBfV1Af9mNJ+8LghtrToMlA==
-X-Google-Smtp-Source: ACcGV61ojrjtUaIk66F9j7vvwd1cSicnjWkaMoUqiw4PXslCKavSXWY1aZCm/iRPyCS+LNFYtOmXLeVc+pJRB74p2jw=
-X-Received: by 2002:a2e:99d3:: with SMTP id l19-v6mr2323864ljj.132.1538262004627;
- Sat, 29 Sep 2018 16:00:04 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=XcrAlFjxC22PGiZV3qNY4+GRKA+WnHxT5ZrXgT/0c/s=;
+        b=k6rrIMAT18DsTrN7mtknJigc3haaREPUgUNZhlDzVIqwl6FusXWKqT6A50T+E03uKz
+         YIRMRrHUBSd9gTv6IsWa75EnAXUsQpMLitq/7yjXDO0KUX93WGIDz4/mYTwz4t3bkuzG
+         FGQlJWc3TDC8WDGzI1YDt025MCkwfAazZzzBZ1Ba2z25K64CzjzT5AZdSh0a7o5ErGfs
+         gyOKowJbzA/ane2X/J3NiUduuoxjDSu0Z1vb9+OFTY7jbqMpXlcfdghk+yvLga9ck0Nv
+         GYXgyd+G0bsVWmP38aB/Hgz8BFtd2K9wJSttIdLyUlfaxFQCHeD5Aqw552T4B504q8Vg
+         7Flg==
+X-Gm-Message-State: ABuFfojNEPVQEE6XWGqEX2+fNOjxEz98UXKkRG2ELqG1gRR5LBrxf8T9
+        nf6KGB5t8xzhUtGt8TCyYi4=
+X-Google-Smtp-Source: ACcGV63nZUoTVvfxuL/2hzQBFoVFXOfznhaCNd2CQ52RzMxLpJZ8ZnuW88crcC81/BZjb0BTJh5apA==
+X-Received: by 2002:a5d:6a46:: with SMTP id t6-v6mr3158006wrw.192.1538268959957;
+        Sat, 29 Sep 2018 17:55:59 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f6-v6sm6662076wrr.68.2018.09.29.17.55.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 29 Sep 2018 17:55:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git Evolve
+References: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
+Date:   Sat, 29 Sep 2018 17:55:56 -0700
+In-Reply-To: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
+        (Stefan Xenos's message of "Sat, 29 Sep 2018 16:00:04 -0700")
+Message-ID: <xmqqbm8f952b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a2e:2e13:0:0:0:0:0 with HTTP; Sat, 29 Sep 2018 16:00:04
- -0700 (PDT)
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Sat, 29 Sep 2018 16:00:04 -0700
-Message-ID: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
-Subject: Git Evolve
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, List!
+Stefan Xenos <sxenos@google.com> writes:
 
-I'm interested in porting something like Mercurial's evolve command to
-Git. I'll be following up with a formal proposal shortly, but before I
-do I thought I'd introduce myself to the list and find out if anyone
-else is interested in this topic.
+> What is the evolve command?
+> ...
+> - Systems like gerrit would no longer need to rely on "change-id" tags
+> in commit comments to associate commits with the change that they
+> edit, since git itself would have that information.
+> ...
+> Is anyone else interested in this? Please email me directly or on this
+> list. Let's chat: I want to make sure that whatever we come up with is
+> at least as good as any similar technology that has come before.
 
-What is the evolve command?
+As you listed in the related technologies section, I think the
+underlying machinery that supports "rebase -i", especially with the
+recent addition of redoing the existing merges (i.e. "rebase -i
+-r"), may be enough to rewrite the histories that were built on top
+of a commit that has been obsoleted by amending.
 
-Imagine you have three dependent changes up for review and you receive
-feedback that requires editing all three changes. While you're editing
-one, more feedback arrives on one of the others. What do you do?
+I would imagine that the main design effort you would need to make
+is to figure out a good way to
 
-The evolve command is a convenient way to work with chains of commits
-that are under review. Whenever you rebase or amend a commit, the
-repository remembers that the old commit is obsolete and has been
-replaced by the new one. Then, at some point in the future, you can
-run "git evolve" and the correct sequence of rebases will occur in the
-correct order such that no commit has an obsolete parent.
+ (1) keep track of which commits are obsoleted by which other ones
+     [*1*], and
 
-Part of making the "evolve" command work involves tracking the edits
-to a commit over time, which could provide a lot of other benefits:
+ (2) to figure out what histories are still to be rebuilt in what
+     order on top of what commit efficiently.
 
-- Systems like gerrit would no longer need to rely on "change-id" tags
-in commit comments to associate commits with the change that they
-edit, since git itself would have that information.
-- You could directly view the history of a commit over time (ie: the
-sequence of amends and rebases that occurred with that commit,
-orthogonal to the history of the branch it is on). If you've used
-mercurial, this would be a git equivalent to "hg obslog". If you've
-used gerrit, this would be like the gerrit "change log" but it would
-work for all commits and work offline.
-- You can easily list all the changes that you have as works-in
-progress. If you've used gerrit, this would be an offline equivalent
-to the gerrit dashboard.
-- You could choose to share the history of a commit with others, or
-collaborate on and merge different variants of the same change.
+Once these are done, you should be able to write out the sequence of
+instructions to feed the same sequencer machinery used by the
+"rebase -i" command.
 
-Some information about Mercurial's evolve command can be found here:
-https://www.mercurial-scm.org/doc/evolution/
+[Side note]
 
-Other similar technologies:
+*1* It is very desirable to keep track of the evolution of a change
+    without polluting the commit object with things like Change-Id:
+    and other cruft, either in the body or in the header.  If we
+    lose the Change-Id: footer without adding any new cruft in the
+    commit object header, that would be a great success.  It would
+    be a failure if we end up touching the object header.
 
-rebase -i can be used to solve the same problem, but you can't easily
-switch tasks midway through an interactive rebase or have more than
-one interactive rebase going on at the same time. It also can't handle
-the case where you have multiple changes sharing the same parent that
-needs to be rebased and won't let you collaborate with others on
-resolving a complicated interactive rebase.
 
-patch queues (topgit, stgit, quilt) address a very similar problem,
-however since they're built on top of git rather than integrated with
-it, most of them end up managing extra state that can get easily
-damaged whenever you run a native git command that doesn't know about
-the patch queue. Most of them also have various workflow problems that
-aren't present in hg evolve.
 
-Is anyone else interested in this? Please email me directly or on this
-list. Let's chat: I want to make sure that whatever we come up with is
-at least as good as any similar technology that has come before.
+
