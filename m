@@ -2,123 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C2F1F454
-	for <e@80x24.org>; Sun, 30 Sep 2018 04:27:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 843791F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 04:33:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727875AbeI3K67 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Sep 2018 06:58:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36574 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726644AbeI3K66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 06:58:58 -0400
-Received: (qmail 11333 invoked by uid 109); 30 Sep 2018 04:27:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 30 Sep 2018 04:27:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9531 invoked by uid 111); 30 Sep 2018 04:27:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 30 Sep 2018 00:27:07 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Sep 2018 00:27:35 -0400
-Date:   Sun, 30 Sep 2018 00:27:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
-Subject: Re: [PATCH] help: allow redirecting to help for aliased command
-Message-ID: <20180930042735.GA32120@sigill.intra.peff.net>
-References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
- <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
- <20180926184914.GC30680@sigill.intra.peff.net>
- <3677a12b-5b9b-ad2a-1e3a-7de251baa40d@rasmusvillemoes.dk>
- <20180929082108.GJ2174@sigill.intra.peff.net>
- <xmqq4le89p91.fsf@gitster-ct.c.googlers.com>
+        id S1727609AbeI3LEa convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 30 Sep 2018 07:04:30 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:37203 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727019AbeI3LEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 07:04:30 -0400
+Received: by mail-qt1-f196.google.com with SMTP id n6-v6so10790617qtl.4
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 21:33:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kMB64mrRRDVshdSY2SCsXa/pbjslrD6U3zNC8l5VWLQ=;
+        b=EPoXCzLrh7f5RdOM0OsUgQORQGPxtEFY2XFBsIfOLFa6FhQs3QlJI1OPPSZoqIj7Lp
+         ylTqx59DfbztQqInLFDRv0FHFs9dWl94lf/+LgGhttVV0IJWJwrJxtd3gCOzBS+Kc2DD
+         d2rbLy/+dEz4M1Ho1aBPQSzi9cerM81Uh68JrWbyi1XsaOJA4VD0u1mDKKz1mlU8qS1p
+         9DaKQVkmbuj903Qk31g2KvzMbn99Ivtj9ZQfYyty8BH2hIZjjk4bhT//ifiGgS4qpKf6
+         qqZI0h1lysMtSneRPCP48TcogSp4u6UbSeqsmyhHgw84EwajHRpSfuBqLEUB7tf7eB1K
+         aD8Q==
+X-Gm-Message-State: ABuFfogDCeIB0s2zoWpT54L5vLhxjkPhDP2j1lQ96KiDrvYCIWkUM4pf
+        mS7E+Is60W3H/962ZnwAbagCeUgpDbmO8dQX2BQ=
+X-Google-Smtp-Source: ACcGV61f12hmK/pvO6w8Jap0QJoD29BnmY+U+M272eCxAOZQHhZzaeJZ45+jm367q3E0fjNZ/zXnu48Dd8ZARdA05Fc=
+X-Received: by 2002:a0c:e5ce:: with SMTP id u14-v6mr4114982qvm.6.1538281986972;
+ Sat, 29 Sep 2018 21:33:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4le89p91.fsf@gitster-ct.c.googlers.com>
+References: <20180923170438.23610-1-pclouds@gmail.com> <20180929153005.10599-1-pclouds@gmail.com>
+ <20180929153005.10599-3-pclouds@gmail.com>
+In-Reply-To: <20180929153005.10599-3-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 30 Sep 2018 00:32:55 -0400
+Message-ID: <CAPig+cSv4P99ZJ=CtCC7HctfSg5W6sadiknhk9yXSaBDZ81ctw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] worktree: add per-worktree config files
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 29, 2018 at 10:39:54AM -0700, Junio C Hamano wrote:
+On Sat, Sep 29, 2018 at 11:30 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> A new repo extension is added, worktreeConfig. When it is present:
+> [...]
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> @@ -2,8 +2,9 @@ CONFIGURATION FILE
+>  The Git configuration file contains a number of variables that affect
+> +the Git commands' behavior. The files `.git/config` and optionally
+> +`config.worktree` (see `extensions.worktreeConfig` below) in each
+> +repository is used to store the configuration for that repository, and
 
-> Suppose "git foo" is aliased to a command "git bar".
-> 
-> The best case is when "git bar -h" knows that it is asked to give us
-> a short usage.  We get "foo is aliased to bar" followed by the short
-> usage for "bar" and everything is visible above the shell prompt
-> after all that happens.
-> 
-> The second best case is when "git bar" simply does not support "-h"
-> but actively notices an unknown option on the command line to give
-> the usage message.  We see "foo is aliased to bar" followed by "-h
-> is an unknown option; supported options are ..." and everything is
-> visible above the shell prompt after all that happens.
+s/is used/are/used/
 
-Right, these are the ones we hope for.
+>  `$HOME/.gitconfig` is used to store a per-user configuration as
+>  fallback values for the `.git/config` file. The file `/etc/gitconfig`
+>  can be used to store a system-wide default configuration.
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> @@ -204,6 +204,36 @@ working trees, it can be used to identify worktrees. For example if
+> +CONFIGURATION FILE
+> +------------------
+> +In this mode, specific configuration stays in the path pointed by `git
+> +rev-parse --git-path config.worktree`. You can add or update
+> +configuration in this file with `git config --worktree`. Older Git
+> +versions may will refuse to access repositories with this extension.
 
-> The worst case is when "git bar" supports or ignores "-h" and
-> produces reams of output.  Sending the "aliased to" message to the
-> standard error means that it is scrolled out when the output is
-> done, or lost even when "git foo -h | less" attempts to let the
-> reader read before the early part of the output scrolls away.
+s/may will/will/
 
-This is the "who-knows-what" case I meant here:
+> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+> @@ -275,6 +280,9 @@ worktrees/<id>/locked::
+> +worktrees/<id>/config.worktree::
+> +       Working directory specific configuration file.
 
->> It is a little funny, I guess, if you have a script which doesn't
->> respond to "-h", because you'd get our "foo is aliased to git-bar"
->> message to stderr, followed by who-knows-what. But as long as it's to
->> stderr (and not stdout), I think it's not likely to _break_ anything.
+I wonder if this deserves a quick mention in
+Documentation/git-worktree.txt since other worktree-related files,
+such as "worktrees/<id>/locked", are mentioned there.
 
-And I think this has to be stderr. We're polluting the output of the
-aliased command with our extra message, so we have two choices:
+> diff --git a/builtin/config.c b/builtin/config.c
+> @@ -645,7 +649,20 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+> +       else if (use_worktree_config) {
+> +               struct worktree **worktrees = get_worktrees(0);
+> +               if (repository_format_worktree_config)
+> +                       given_config_source.file = git_pathdup("config.worktree");
+> +               else if (worktrees[0] && worktrees[1])
+> +                       die(_("--worktree cannot be used with multiple "
+> +                             "working trees unless the config\n"
+> +                             "extension worktreeConfig is enabled. "
+> +                             "Please read \"CONFIGURATION FILE\"\n"
+> +                             "section in \"git help worktree\" for details"));
+> +               else
+> +                       given_config_source.file = git_pathdup("config");
 
-  1. Pollute stderr, and risk copious stdout (or a pager) scrolling it
-     off the screen.
-
-  2. Pollute stdout, at which point our message may be confused as part
-     of the actual output of the command (and that may not even be
-     immediately noticed if it is passed through a shell pipeline or
-     into a file).
-
-Choice (2) seems like a regression to me. Choice (1) is unfortunate in
-some cases, but is no worse than today's behavior.
-
-(Obviously I'm not including choices like not running the sub-command at
-all, but I think that would be even worse).
-
-> Even the first two "better" cases share the same glitch if the "foo
-> is aliased to bar" goes to the standard error output.  Parse-options
-> enabled commands tend to show a long "-h" output that you would need
-> to say "git grep -h | less", losing the "aliased to" message.
-> 
-> At least it seems to me an improvement to use standard output,
-> instead of standard error, for the alias information.
-
-...so I'd disagree with this.
-
-> In practice, however, what the command that "git foo" is aliased to
-> does when given "-h" is probably unknown (because the user is asking
-> what "git foo" is in the first place), so perhaps I am worried too
-> much.  When the user does not know if the usage text comes to the
-> standard output or to the standard error, and if the usage text is
-> very long or not, they probably would learn quickly that the safest
-> thing to do is to
-> 
-> 	$ git unknown-command -h >&2 | less
-> 
-> And at that point, it does not matter which between the standard
-> output and the standard error streams we write "unknown-command is
-> aliased to ...".
-
-Yeah. I think if "git foo -h" produces a bunch of output you didn't
-expect, then "git help foo" or "git foo --help" may be the next thing
-you reach for. That's not so different than running the command even
-without any aliases involved.
-
--Peff
+I'm not sure I understand the purpose of allowing --worktree when only
+a single worktree is present and extensions.worktreeConfig is not set.
+Can you talk about it a bit more?
