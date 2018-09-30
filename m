@@ -6,105 +6,81 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 843791F453
-	for <e@80x24.org>; Sun, 30 Sep 2018 04:33:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2B171F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 04:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727609AbeI3LEa convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 30 Sep 2018 07:04:30 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:37203 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727019AbeI3LEa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 07:04:30 -0400
-Received: by mail-qt1-f196.google.com with SMTP id n6-v6so10790617qtl.4
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 21:33:07 -0700 (PDT)
+        id S1727823AbeI3LL4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Sep 2018 07:11:56 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:35625 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727630AbeI3LL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 07:11:56 -0400
+Received: by mail-qt1-f193.google.com with SMTP id z14-v6so10818027qtn.2
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 21:40:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kMB64mrRRDVshdSY2SCsXa/pbjslrD6U3zNC8l5VWLQ=;
-        b=EPoXCzLrh7f5RdOM0OsUgQORQGPxtEFY2XFBsIfOLFa6FhQs3QlJI1OPPSZoqIj7Lp
-         ylTqx59DfbztQqInLFDRv0FHFs9dWl94lf/+LgGhttVV0IJWJwrJxtd3gCOzBS+Kc2DD
-         d2rbLy/+dEz4M1Ho1aBPQSzi9cerM81Uh68JrWbyi1XsaOJA4VD0u1mDKKz1mlU8qS1p
-         9DaKQVkmbuj903Qk31g2KvzMbn99Ivtj9ZQfYyty8BH2hIZjjk4bhT//ifiGgS4qpKf6
-         qqZI0h1lysMtSneRPCP48TcogSp4u6UbSeqsmyhHgw84EwajHRpSfuBqLEUB7tf7eB1K
-         aD8Q==
-X-Gm-Message-State: ABuFfogDCeIB0s2zoWpT54L5vLhxjkPhDP2j1lQ96KiDrvYCIWkUM4pf
-        mS7E+Is60W3H/962ZnwAbagCeUgpDbmO8dQX2BQ=
-X-Google-Smtp-Source: ACcGV61f12hmK/pvO6w8Jap0QJoD29BnmY+U+M272eCxAOZQHhZzaeJZ45+jm367q3E0fjNZ/zXnu48Dd8ZARdA05Fc=
-X-Received: by 2002:a0c:e5ce:: with SMTP id u14-v6mr4114982qvm.6.1538281986972;
- Sat, 29 Sep 2018 21:33:06 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=3WRLY2jlMa8+Xr0uztMbjxF5s6Py/IfEWTRhoBoBiXE=;
+        b=TrewJtJqiPD71HvjBcC49bLx94S5NEfWXVgh3aQuZ3jOq9wiuGxHB948OFQbF5NSNy
+         1d5mTYBXUaCj+Ni7L+d0Dj5i/BHUP3Kj/CZ+CecdL99X3TwwuiNRKG4lqRBcy0IFN2lH
+         G0RMjRXS5F0wpottnt+1ned2S2/M/M5zN+dbdf/UnuELoDbx2niQGXgmEBl+w6/E0p7y
+         /P4/6LBXaULAt+jUZ9qq33MGD4Tve4EvSnAl3N+ds8fYM9U+w6R2FucK16xUjZ2UkRfF
+         IohDxX+knwOKbivA9WiN37lKLT+ZPwMtafLvFEwkqaiTedETas6n+ZWXCABqHJd8uKoO
+         ynKQ==
+X-Gm-Message-State: ABuFfog0JVvfZ8XsnYK+6+XdzTZO5IfDmpnoCbKi8FpnHgoj5LHVuGUK
+        ne7AqR4YGMHyGgHlxj9owdvoSZpblOGdEdmKzUw=
+X-Google-Smtp-Source: ACcGV61Yq0fxyiv5AhiRG1ixBwfudSEaIQI91VtbQvsXJnV/jshT+8pquvZ4tlfPnudKkLicjywu1qJyMSRLKffBywM=
+X-Received: by 2002:aed:2171:: with SMTP id 104-v6mr4128306qtc.220.1538282431728;
+ Sat, 29 Sep 2018 21:40:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180923170438.23610-1-pclouds@gmail.com> <20180929153005.10599-1-pclouds@gmail.com>
- <20180929153005.10599-3-pclouds@gmail.com>
-In-Reply-To: <20180929153005.10599-3-pclouds@gmail.com>
+References: <xmqqr2i5ueg4.fsf@gitster-ct.c.googlers.com> <20180928044936.2919-1-ischis2@cox.net>
+ <20180928044936.2919-2-ischis2@cox.net> <20180928135549.GA23652@syl>
+In-Reply-To: <20180928135549.GA23652@syl>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 30 Sep 2018 00:32:55 -0400
-Message-ID: <CAPig+cSv4P99ZJ=CtCC7HctfSg5W6sadiknhk9yXSaBDZ81ctw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] worktree: add per-worktree config files
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+Date:   Sun, 30 Sep 2018 00:40:20 -0400
+Message-ID: <CAPig+cSW1D9hEc8CX-QmqSA8jJw+2E1hSYXk7osZJVQ9_JNThQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] roll wt_status_state into wt_status and populate in
+ the collect phase
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     "Stephen & Linda Smith" <ischis2@cox.net>,
+        Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 29, 2018 at 11:30 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> A new repo extension is added, worktreeConfig. When it is present:
-> [...]
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> @@ -2,8 +2,9 @@ CONFIGURATION FILE
->  The Git configuration file contains a number of variables that affect
-> +the Git commands' behavior. The files `.git/config` and optionally
-> +`config.worktree` (see `extensions.worktreeConfig` below) in each
-> +repository is used to store the configuration for that repository, and
+On Fri, Sep 28, 2018 at 9:55 AM Taylor Blau <me@ttaylorr.com> wrote:
+> On Thu, Sep 27, 2018 at 09:49:36PM -0700, Stephen P. Smith wrote:
+> > When updating the collect and print functions, it was found that
+> > status variables were initialized in the collect phase and some
+> > variables were later freed in the print functions.
+>
+> Nit: I think that in the past Eric Sunshine has recommended that I use
+> active voice in patches, but "it was found" is passive.
+>
+> I tried to find the message that I was thinking of, but couldn't, so
+> perhaps I'm inventing it myself ;-).
+>
+> I'm CC-ing Eric to check my judgement.
 
-s/is used/are/used/
+You're probably thinking of "imperative mood" (and perhaps [1]), which
+this commit message already uses when it says "Move the..." and
+"Create a new function..." (in the couple paragraphs following the
+part you quoted).
 
->  `$HOME/.gitconfig` is used to store a per-user configuration as
->  fallback values for the `.git/config` file. The file `/etc/gitconfig`
->  can be used to store a system-wide default configuration.
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> @@ -204,6 +204,36 @@ working trees, it can be used to identify worktrees. For example if
-> +CONFIGURATION FILE
-> +------------------
-> +In this mode, specific configuration stays in the path pointed by `git
-> +rev-parse --git-path config.worktree`. You can add or update
-> +configuration in this file with `git config --worktree`. Older Git
-> +versions may will refuse to access repositories with this extension.
+> > Move the status state structure variables into the status state
+> > structure and populate them in the collect functions.
+> >
+> > Create a new funciton to free the buffers that were being freed in the
 
-s/may will/will/
+s/funciton/function/
 
-> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-> @@ -275,6 +280,9 @@ worktrees/<id>/locked::
-> +worktrees/<id>/config.worktree::
-> +       Working directory specific configuration file.
+> > print function.  Call this new function in commit.c where both the
+> > collect and print functions were being called.
 
-I wonder if this deserves a quick mention in
-Documentation/git-worktree.txt since other worktree-related files,
-such as "worktrees/<id>/locked", are mentioned there.
-
-> diff --git a/builtin/config.c b/builtin/config.c
-> @@ -645,7 +649,20 @@ int cmd_config(int argc, const char **argv, const char *prefix)
-> +       else if (use_worktree_config) {
-> +               struct worktree **worktrees = get_worktrees(0);
-> +               if (repository_format_worktree_config)
-> +                       given_config_source.file = git_pathdup("config.worktree");
-> +               else if (worktrees[0] && worktrees[1])
-> +                       die(_("--worktree cannot be used with multiple "
-> +                             "working trees unless the config\n"
-> +                             "extension worktreeConfig is enabled. "
-> +                             "Please read \"CONFIGURATION FILE\"\n"
-> +                             "section in \"git help worktree\" for details"));
-> +               else
-> +                       given_config_source.file = git_pathdup("config");
-
-I'm not sure I understand the purpose of allowing --worktree when only
-a single worktree is present and extensions.worktreeConfig is not set.
-Can you talk about it a bit more?
+[1]: https://public-inbox.org/git/CAPig+cTozduqSAxh+w4H85m7en72Yo09asdx+1KSTswqbnBr4w@mail.gmail.com/
