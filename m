@@ -2,113 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC7E31F453
-	for <e@80x24.org>; Sun, 30 Sep 2018 05:27:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 580231F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 05:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728015AbeI3L6u (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Sep 2018 07:58:50 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40503 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727746AbeI3L6u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 07:58:50 -0400
-Received: by mail-wm1-f66.google.com with SMTP id o2-v6so5567576wmh.5
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 22:27:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=x7CqX7PVrNk6bfwcTU9bKSjXrd1CmeMWWAZCRemQGVk=;
-        b=UcBasm1BOQRDPxoqct0XIBip2LqhoCJqSix47yy8WfG+RYyxo7zvq9uB6+unAo7SVU
-         yH7vO9Ly41gF1MifmIdupCPeDgKaMVzo1p9H6o0stZHScgEHV2gjsodIOWF9zJIv8xUG
-         SqRk6pMF5N7w3gVDKo0PCoFi8qj/1VkEaWRBdw4k2qWlPgIsZthcEG5OwPgRB8OoT3R+
-         WXgq7YvpSTOmu0iFTkBHubKWiJULVAF6El7nPTHJBQpiIfPRV5c31UUHAOgZ4S59ntLM
-         9BVIMPrBJ18I244KcvZA50CDoRIqBW7PB1fZ9p/k2UZfUYDZO3CpE4FsEJaZzWu6ooHQ
-         7q5Q==
+        id S1727801AbeI3MIG convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 30 Sep 2018 08:08:06 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:33248 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727750AbeI3MIG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 08:08:06 -0400
+Received: by mail-qt1-f193.google.com with SMTP id i10-v6so10882643qtp.0
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 22:36:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=x7CqX7PVrNk6bfwcTU9bKSjXrd1CmeMWWAZCRemQGVk=;
-        b=pIOQ/8CdqshHKgRLDq21SsejYxGSdQH235CutCOz7Vg6lwyAh54vF1HuwDxDSWEdSj
-         d8+e1aDPgnSI50Y63DywLK1UslinWQe9HX2B/Ev5QyVjlqUo9MmA0PMGpueh/VMxCrEp
-         mFiq3rrrilxed9941FUWu+yjiBaNHVWfsxY0ZjupTUtqx3VKqhDU4uhb3/xP73/qJfNx
-         jhjhK6V5M+2k1OmT8zl0ux7Q7uTZhIUkt40CpStgBVuo9GhrXNEdoQAYWGVmAV0u4yU+
-         Xkhw7EscYbn2MDFa6M3JNnb3V+96kwXq5WMq+Sw678kvoxXaWMQGiMefvnJc3D6OLsgw
-         x2/A==
-X-Gm-Message-State: ABuFfohbgecajzw7Y14Jm3CkcgQBo8ajetdY5j3rA+h41GQbI0aY5Opa
-        sMenvA2fM6ADwveMcrgEwTs=
-X-Google-Smtp-Source: ACcGV60tK8tR0p7lUJ8jYV+YIJacAq9BINUracjYpcwAYcjFVz3+WgFRvqGsVTeNo9+R+kZfhquyIw==
-X-Received: by 2002:a1c:1203:: with SMTP id 3-v6mr5650053wms.21.1538285236645;
-        Sat, 29 Sep 2018 22:27:16 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b81-v6sm218775wmh.47.2018.09.29.22.27.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 29 Sep 2018 22:27:15 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
-Subject: Re: [PATCH] help: allow redirecting to help for aliased command
-References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
-        <xmqqzhw4mgq3.fsf@gitster-ct.c.googlers.com>
-        <20180926184914.GC30680@sigill.intra.peff.net>
-        <3677a12b-5b9b-ad2a-1e3a-7de251baa40d@rasmusvillemoes.dk>
-        <20180929082108.GJ2174@sigill.intra.peff.net>
-        <xmqq4le89p91.fsf@gitster-ct.c.googlers.com>
-        <20180930042735.GA32120@sigill.intra.peff.net>
-Date:   Sat, 29 Sep 2018 22:27:15 -0700
-In-Reply-To: <20180930042735.GA32120@sigill.intra.peff.net> (Jeff King's
-        message of "Sun, 30 Sep 2018 00:27:35 -0400")
-Message-ID: <xmqqy3bj7dxo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gsKg4mZDGvf2hj3MmPZ49ccBNokVePdx+WgdIPjI8ak=;
+        b=SFXTEk0hUlB4EkMp7Js3HlJ/1BQSD+L5XIhp/oAv4Ne+JoJj5d6PYGcAV9/y0CowQ6
+         8eYAnh1YRsnPzlGcKrWLQ1m5Mw2IHJwRr8M/ImxXEkTUS/xRo3rKlYn8w2Vx0aCZSlEl
+         RqPruSSB8lf9SehvgnfzobpRikv0faHiSgzLn7CbHtif3tpoY25NKe8PQWxK/miAkhOp
+         X01+4lriz0qPQgBvmnGW4MzxCP9UFxktbWbdWzv5zk61AOKA79asMC51TuexuS1FwZ/e
+         Fl23inXVST99MNSFZ61QDXDfrmKH/xuaRpNfTK55T+/u/KhFbWbzczzKKDceValHEq76
+         gx4A==
+X-Gm-Message-State: ABuFfogadYgO4C/j+C+9oOeXaz6Zib/yCDGWV0utwHFGsTzE0vfwcjud
+        oOKRHVruotzc/Ko99j5pFfLWjsZnzfAhXBlgddI=
+X-Google-Smtp-Source: ACcGV62fodYdJUilq16i8PapY6SV1qpFn9WiwgR3Xr8ClDghcF9Yjk9E60oALQOxYW+p7r8fjD1XaEEaMtN7I+n1yOQ=
+X-Received: by 2002:a0c:9de1:: with SMTP id p33-v6mr463487qvf.82.1538285792322;
+ Sat, 29 Sep 2018 22:36:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180929191029.13994-1-pclouds@gmail.com>
+ <20180929191029.13994-9-pclouds@gmail.com>
+In-Reply-To: <20180929191029.13994-9-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 30 Sep 2018 01:36:21 -0400
+Message-ID: <CAPig+cQBiXRvzf6skmmyVap-6fLEbmVRGNBQqD4H-HfAPampjA@mail.gmail.com>
+Subject: Re: [PATCH v2 8/8] reflog expire: cover reflog from all worktrees
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sat, Sep 29, 2018 at 3:11 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+> diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+> @@ -72,6 +72,11 @@ Options for `expire`
+> +--single-worktree::
+> +       By default when `--all` is specified, reflogs from all working
+> +       trees are processed. This option limits the processing to reflogs
+> +       from the current working tree only.
 
-> And I think this has to be stderr. We're polluting the output of the
-> aliased command with our extra message, so we have two choices:
->
->   1. Pollute stderr, and risk copious stdout (or a pager) scrolling it
->      off the screen.
->
->   2. Pollute stdout, at which point our message may be confused as part
->      of the actual output of the command (and that may not even be
->      immediately noticed if it is passed through a shell pipeline or
->      into a file).
->
-> Choice (2) seems like a regression to me. Choice (1) is unfortunate in
-> some cases, but is no worse than today's behavior.
+Bikeshedding: I wonder if this should be named "--this-worktree" or
+"--this-worktree-only" or if it should somehow be orthogonal to --all
+rather than modifying it. (Genuine questions. I don't have the
+answers.)
 
-I think the output of "git foo -h" changing (i.e. has "aliased
-to..."  message in front) is about the same degree of regression as
-"git foo --help" no longer giving "aliased to..." information
-anywhere, though.
-
->> Even the first two "better" cases share the same glitch if the "foo
->> ...
->> thing to do is to
->> 
->> 	$ git unknown-command -h >&2 | less
->> 
->> And at that point, it does not matter which between the standard
->> output and the standard error streams we write "unknown-command is
->> aliased to ...".
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> @@ -577,10 +585,18 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+>         if (do_all) {
+>                 struct collect_reflog_cb collected;
+> +               struct worktree **worktrees, **p;
+>                 int i;
 >
-> Yeah. I think if "git foo -h" produces a bunch of output you didn't
-> expect, then "git help foo" or "git foo --help" may be the next thing
-> you reach for. That's not so different than running the command even
-> without any aliases involved.
+>                 memset(&collected, 0, sizeof(collected));
+> -               for_each_reflog(collect_reflog, &collected);
+> +               worktrees = get_worktrees(0);
+> +               for (p = worktrees; *p; p++) {
+> +                       if (!all_worktrees && !(*p)->is_current)
+> +                               continue;
+> +                       collected.wt = *p;
+> +                       for_each_reflog(collect_reflog, &collected);
+> +               }
+> +               free_worktrees(worktrees);
 
-Hmmm.  With the "teach 'git foo -h' to output 'foo is aliased to
-bar' to the standard error before running 'git bar -h'", plus "'git
-foo --help' now goes straight to 'git bar --help'", "git foo --help"
-no longer tells us that foo is aliased to bar.  Presumably "git help
-foo" will still give "foo is bar" and stop?
+Should this have a test in the test suite?
