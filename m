@@ -2,204 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CBF71F453
-	for <e@80x24.org>; Sun, 30 Sep 2018 17:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A63381F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 20:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728427AbeJAAbS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Sep 2018 20:31:18 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39056 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727470AbeJAAbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 20:31:17 -0400
-Received: by mail-wr1-f66.google.com with SMTP id s14-v6so11323026wrw.6
-        for <git@vger.kernel.org>; Sun, 30 Sep 2018 10:57:17 -0700 (PDT)
+        id S1728596AbeJACwZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Sep 2018 22:52:25 -0400
+Received: from mail-lj1-f176.google.com ([209.85.208.176]:41439 "EHLO
+        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728518AbeJACwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 22:52:25 -0400
+Received: by mail-lj1-f176.google.com with SMTP id u21-v6so3154399lja.8
+        for <git@vger.kernel.org>; Sun, 30 Sep 2018 13:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8qWP6ZlehAb8d2eTgfpQPMudmoD4PqOqd/GzpeJau3Q=;
-        b=BOQ7kWQAKXfLNbAuDWIphJpEPp//eFwMfq6M1rrp1aUUVpCRRSg7h2jyckCiXlE6CH
-         583uHfyhg/oaAUQ7K6iWBXR+Ql3groV//lqEG6g1q01Lmb7UO1s72WojQktyWkiopVu6
-         CVqIPmGClG5WfWF+It5Pc7s/f/BQ98XN7x2bzV1sWshwN21ItBAI9B61LC9W3EbAR03i
-         3xk+mdNYr0yrYsCluxx3Lh3iD1t2mEKgl7TSJ05Zj5tGVyW08l68sQObz27pq+VE+xaq
-         uyYrCYMjW5uV1hUeKQrJ22aoPRu9xurhI7+iolU8YTtm+4NG7mCkEyO4/xZ5DQqY4Q3N
-         YnRQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3krKiRcJ6TM0AAiSTG/d8rmBMSLBL9YxDxhdPU5QFCo=;
+        b=EvEzMlvyVBlDyIo7xVefQOfyu3OX+XUB5CGm1L0SdaEF8xLtXaXaThoqmP1T5PVr16
+         Xi8czDJv/DaWwS0x0lhD4rnEBACOJ2y04HBPm2gemzkQ1Y6yWArls55qjQdLCXYyaO+3
+         79EJ8A+AhaAoLQGFlJ1X8XpcivoMHuVWg/Kbk2O7Z277F6AjoMd4TNbAh8teVELlvYz3
+         YquIz0WonQgxxYKpdR1MZ6JhTd/+aA0uvN9Lfgzk+IuUivJcwiM4fdIwc8F7W5WYR5Xx
+         p11RbX9Z+qKi6SLZ9kz0OMqSS1AgWSqLyJVNT041iBXhjeLhvwjM/a5Qg72yevyYF+Us
+         Oraw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8qWP6ZlehAb8d2eTgfpQPMudmoD4PqOqd/GzpeJau3Q=;
-        b=r1RbQHKscjyauAnGETxGEyeyUDeSP+3aHttPs92TZ45TTX/VtLKnB7GFa8RsgLWFPF
-         O4sx9Zyi9UfnTFKH2uDHCbTteUs+DXq5o0Ucfklz8DrzU1etTdWAgdoeS7ROExBZhc7c
-         ky4XQyQIu5DqXZJgaNFBnT4aDSkdxNh9BVd7PmvtJXYrhAPvvmrH/yXNmhYOTHH76gMV
-         706oIRyPBlU3x63ZidzlwHGFXuMT3dELwPDXjET6FHEA4OC/H5u7vKPrYmU3G4iybctZ
-         XwhJ96UiXtjqQSXVv9aQnfgWTxLf0fCF1yh8JwnjRiDjT9hXle2saN0dU98g1EKMCTKH
-         v5Tw==
-X-Gm-Message-State: ABuFfoh+80zottAlHw27jUxlgT5NseuxmoJBV11/eWZ2x504h6jGNSKM
-        r7Clh10L94DKJKsXNEy+2i0=
-X-Google-Smtp-Source: ACcGV63BWZ5DP/mq1ELjAuHRJgGDMooUiAqWjL9Zdl/kGAPJedzJD7UuL7f6t8PIkNrfRq/10GwM4g==
-X-Received: by 2002:adf:8322:: with SMTP id 31-v6mr4615314wrd.285.1538330236361;
-        Sun, 30 Sep 2018 10:57:16 -0700 (PDT)
-Received: from localhost ([2.30.92.34])
-        by smtp.gmail.com with ESMTPSA id z10-v6sm7851554wrv.22.2018.09.30.10.57.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 30 Sep 2018 10:57:15 -0700 (PDT)
-Date:   Sun, 30 Sep 2018 18:57:14 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v9 09/21] stash: convert branch to builtin
-Message-ID: <20180930175714.GF2253@hank.intra.tgummerer.com>
-References: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
- <f7b639a7b4da943884f7a4960d06ec4d2344a119.1537913094.git.ungureanupaulsebastian@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3krKiRcJ6TM0AAiSTG/d8rmBMSLBL9YxDxhdPU5QFCo=;
+        b=uczcuWdQYzD3ibAfgBZphhxlCV7EM7NN/YRoqdF1AczE6ZeDV5KchX7K/bchV6b4ui
+         /QI0sDzDTsTkTi+hvFuJvotLjeLv4yD24qDGyx6x37QzgvyJQaN6mKAQNAkJMwScoOBl
+         JkzVGyq0AMhh3xhlmE8/9bJflPMo+xSTc/Li4WniOtK3ax8mNnPYKmwFslH6ENJG2xTv
+         LGdBIadEMmxyIVIqf8q7vPf05ncUPxt05nLciXWdNxb4ULyWug7ISLQ9ClIuUbYFcGRZ
+         5Nr2wm/1tbB0qJtnhIHsndynvsrJh9fTbl2uoZST5E8PvBxycpFNRJ+/kAHHbMmOFxd5
+         csVw==
+X-Gm-Message-State: ABuFfojjTdkm5lidHxOiGYXvYKvNhU/ZLbVW6tj6M/OHunq7LLMwq83k
+        vWvLLXlSo1CbEk+Y+/NpEvZFk/JjS+ElvNa6CsHLT6KNigRdpg==
+X-Google-Smtp-Source: ACcGV60YaFO9qeniKXX1yOrTA1ADfjBgfFAVMvNEcGj4qGugBpaI5LpCME30GfFvTfDbJRZNy7YtEf2C6Jrrq3j01A0=
+X-Received: by 2002:a2e:5614:: with SMTP id k20-v6mr4302648ljb.48.1538338679703;
+ Sun, 30 Sep 2018 13:17:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f7b639a7b4da943884f7a4960d06ec4d2344a119.1537913094.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Received: by 2002:a2e:2e13:0:0:0:0:0 with HTTP; Sun, 30 Sep 2018 13:17:59
+ -0700 (PDT)
+In-Reply-To: <xmqqbm8f952b.fsf@gitster-ct.c.googlers.com>
+References: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
+ <xmqqbm8f952b.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Xenos <sxenos@google.com>
+Date:   Sun, 30 Sep 2018 13:17:59 -0700
+Message-ID: <CAPL8ZiuzxmgNRE5mVy64xpm_bwbEdkV_X_cAW9B=6LU1T_YF9w@mail.gmail.com>
+Subject: Re: Git Evolve
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/26, Paul-Sebastian Ungureanu wrote:
-> From: Joel Teichroeb <joel@teichroeb.net>
-> 
-> Add stash branch to the helper and delete the apply_to_branch
-> function from the shell script.
-> 
-> Checkout does not currently provide a function for checking out
-> a branch as cmd_checkout does a large amount of sanity checks
-> first that we require here.
-> 
-> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
->  builtin/stash--helper.c | 46 +++++++++++++++++++++++++++++++++++++++++
->  git-stash.sh            | 17 ++-------------
->  2 files changed, 48 insertions(+), 15 deletions(-)
-> 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 72472eaeb7..5841bd0e98 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -14,6 +14,7 @@
->  static const char * const git_stash_helper_usage[] = {
->  	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
->  	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
-> +	N_("git stash--helper branch <branchname> [<stash>]"),
->  	N_("git stash--helper clear"),
->  	NULL
->  };
-> @@ -28,6 +29,11 @@ static const char * const git_stash_helper_apply_usage[] = {
->  	NULL
->  };
->  
-> +static const char * const git_stash_helper_branch_usage[] = {
-> +	N_("git stash--helper branch <branchname> [<stash>]"),
-> +	NULL
-> +};
-> +
->  static const char * const git_stash_helper_clear_usage[] = {
->  	N_("git stash--helper clear"),
->  	NULL
-> @@ -536,6 +542,44 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
->  	return ret;
->  }
->  
-> +static int branch_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	int ret;
-> +	const char *branch = NULL;
-> +	struct stash_info info;
-> +	struct child_process cp = CHILD_PROCESS_INIT;
-> +	struct option options[] = {
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     git_stash_helper_branch_usage, 0);
-> +
-> +	if (!argc) {
-> +		fprintf_ln(stderr, "No branch name specified");
+> If we lose the Change-Id: footer without adding any new cruft in the
+> commit object header, that would be a great success.  It would
+> be a failure if we end up touching the object header.
 
-This should be marked for translation.
+Yes, I was thinking along the same lines.
 
-> +		return -1;
-> +	}
-> +
-> +	branch = argv[0];
-> +
-> +	if (get_stash_info(&info, argc - 1, argv + 1))
-> +		return -1;
-> +
-> +	cp.git_cmd = 1;
-> +	argv_array_pushl(&cp.args, "checkout", "-b", NULL);
-> +	argv_array_push(&cp.args, branch);
-> +	argv_array_push(&cp.args, oid_to_hex(&info.b_commit));
-> +	ret = run_command(&cp);
-> +	if (!ret)
-> +		ret = do_apply_stash(prefix, &info, 1, 0);
-> +	if (!ret && info.is_stash_ref)
-> +		ret = do_drop_stash(prefix, &info, 0);
-> +
-> +	free_stash_info(&info);
-> +
-> +	return ret;
-> +}
-> +
->  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  {
->  	pid_t pid = getpid();
-> @@ -562,6 +606,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  		return !!clear_stash(argc, argv, prefix);
->  	else if (!strcmp(argv[0], "drop"))
->  		return !!drop_stash(argc, argv, prefix);
-> +	else if (!strcmp(argv[0], "branch"))
-> +		return !!branch_stash(argc, argv, prefix);
->  
->  	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
->  		      git_stash_helper_usage, options);
-> diff --git a/git-stash.sh b/git-stash.sh
-> index a99d5dc9e5..29d9f44255 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -598,20 +598,6 @@ drop_stash () {
->  	clear_stash
->  }
->  
-> -apply_to_branch () {
-> -	test -n "$1" || die "$(gettext "No branch name specified")"
-> -	branch=$1
-> -	shift 1
-> -
-> -	set -- --index "$@"
-> -	assert_stash_like "$@"
-> -
-> -	git checkout -b $branch $REV^ &&
-> -	apply_stash "$@" && {
-> -		test -z "$IS_STASH_REF" || drop_stash "$@"
-> -	}
-> -}
-> -
->  test "$1" = "-p" && set "push" "$@"
->  
->  PARSE_CACHE='--not-parsed'
-> @@ -673,7 +659,8 @@ pop)
->  	;;
->  branch)
->  	shift
-> -	apply_to_branch "$@"
-> +	cd "$START_DIR"
-> +	git stash--helper branch "$@"
->  	;;
->  *)
->  	case $# in
-> -- 
-> 2.19.0.rc0.23.g1fb9f40d88
-> 
+If obsolescence graph is stored as part of the commit header, it would
+get unconditionally shared whenever that commit is pushed, and I would
+consider it a desirable property if users could choose whether to push
+just a commit or a the obsolescence graph that contains the commit.
+Sometimes the reason you're amending a commit may be because the
+original contained content that shouldn't be pushed.
+
+Putting it in the header would also either cause it to get retained
+forever by git gc or create a situation where we permit dangling
+references - and neither seem desirable to me. It would be nice if
+users could retain the obsolescence graph for stuff a user is actively
+working on, but we could discard it (with 0 cost) for commits they're
+done with or were never interested in editing.
+
+On Sat, Sep 29, 2018 at 5:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Xenos <sxenos@google.com> writes:
+>
+>> What is the evolve command?
+>> ...
+>> - Systems like gerrit would no longer need to rely on "change-id" tags
+>> in commit comments to associate commits with the change that they
+>> edit, since git itself would have that information.
+>> ...
+>> Is anyone else interested in this? Please email me directly or on this
+>> list. Let's chat: I want to make sure that whatever we come up with is
+>> at least as good as any similar technology that has come before.
+>
+> As you listed in the related technologies section, I think the
+> underlying machinery that supports "rebase -i", especially with the
+> recent addition of redoing the existing merges (i.e. "rebase -i
+> -r"), may be enough to rewrite the histories that were built on top
+> of a commit that has been obsoleted by amending.
+>
+> I would imagine that the main design effort you would need to make
+> is to figure out a good way to
+>
+>  (1) keep track of which commits are obsoleted by which other ones
+>      [*1*], and
+>
+>  (2) to figure out what histories are still to be rebuilt in what
+>      order on top of what commit efficiently.
+>
+> Once these are done, you should be able to write out the sequence of
+> instructions to feed the same sequencer machinery used by the
+> "rebase -i" command.
+>
+> [Side note]
+>
+> *1* It is very desirable to keep track of the evolution of a change
+>     without polluting the commit object with things like Change-Id:
+>     and other cruft, either in the body or in the header.  If we
+>     lose the Change-Id: footer without adding any new cruft in the
+>     commit object header, that would be a great success.  It would
+>     be a failure if we end up touching the object header.
+>
+>
+>
+>
