@@ -2,175 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E25E1F453
-	for <e@80x24.org>; Sun, 30 Sep 2018 04:57:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12DD01F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 05:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727823AbeI3L2m (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Sep 2018 07:28:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36598 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727753AbeI3L2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 07:28:42 -0400
-Received: (qmail 13035 invoked by uid 109); 30 Sep 2018 04:57:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 30 Sep 2018 04:57:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9646 invoked by uid 111); 30 Sep 2018 04:56:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 30 Sep 2018 00:56:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Sep 2018 00:57:13 -0400
-Date:   Sun, 30 Sep 2018 00:57:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] fetch: replace string-list used as a look-up table with
- a hashmap
-Message-ID: <20180930045713.GB32120@sigill.intra.peff.net>
-References: <xmqqin2sj6df.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kamkLV7yHtCu_qSqNzj7bJm0=Uw1CKxss+zTKJWsYz3qw@mail.gmail.com>
- <20180927055415.GC14178@sigill.intra.peff.net>
- <xmqqva6o88b7.fsf@gitster-ct.c.googlers.com>
+        id S1727778AbeI3LpK convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 30 Sep 2018 07:45:10 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:34032 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727715AbeI3LpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 07:45:09 -0400
+Received: by mail-qt1-f193.google.com with SMTP id x23-v6so10856670qtr.1
+        for <git@vger.kernel.org>; Sat, 29 Sep 2018 22:13:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GX5qzLTqXskO8vPRegn3sA/u+WnQBhSXcgmZ1xINusM=;
+        b=WRlo0TB93Lt8uDcBaI7HIjA7aXaUOaycLmQxcEQKsBtL5Q28wOd2yopu/84ETBzpft
+         BrfPCVrcWQHH6JF8BYJ5erYHdtK/1zwJvDx9HEPp1JQtUNRr6pN6L1foIDE1C6zaLvxn
+         u8KtsPXSkrvfZy2AUhK6UiNbJsabnDlIhWaGiuF6nyw+hLLZgYKhwWZUWrpeeIzgi5hG
+         xSJbhm37WZbDxObBMNC5JBlXIYrdQowmwrQRRcXKmr5tmdRkyT9vLStVwmbQQ0f+r+go
+         NHpOWxsSm7qMuxR8FgpPzN7xEI+QKrsN0S1VJA2Wn3Ftfpb6zfAvUE5N8sHJUx77QfNV
+         w3UA==
+X-Gm-Message-State: ABuFfohGD+3KlCB2UYz6iyw0wSII6wz9VVpmJtzmwRLNRyUojemNtAVU
+        ii2xUbhXYkSs0ReIOkXn6K4mMVzD9vGKdznrH8Q=
+X-Google-Smtp-Source: ACcGV63rI7Uc7qFIaJBqc/jh1UdS2cBKa+t9U4dVYJiOFD29nATRp9N6WOyEwnp8H6KtapWki1Xsg/BOxkr+Pxtlcec=
+X-Received: by 2002:a0c:964a:: with SMTP id 10-v6mr4291320qvy.62.1538284419203;
+ Sat, 29 Sep 2018 22:13:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqva6o88b7.fsf@gitster-ct.c.googlers.com>
+References: <20180922180500.4689-1-pclouds@gmail.com> <20180929191029.13994-1-pclouds@gmail.com>
+ <20180929191029.13994-4-pclouds@gmail.com>
+In-Reply-To: <20180929191029.13994-4-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 30 Sep 2018 01:13:28 -0400
+Message-ID: <CAPig+cTRNzhKhcmt7hnLHP=8Oc86EnokSDzDD4z2CGYFGmuz4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] refs: new ref types to make per-worktree refs
+ visible to all worktrees
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 29, 2018 at 11:31:08AM -0700, Junio C Hamano wrote:
+On Sat, Sep 29, 2018 at 3:10 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> The main worktree has to be treated specially because well.. it's
 
-> > The only funny thing is that you have to "dereference" the iterator like
-> > this:
-> >
-> >   struct list_head *pos;
-> >   struct actual_thing *item;
-> >   ...
-> >   item = list_entry(pos, struct actual_thing, list_member);
-> >
-> > which is a minor pain, but it's reasonably hard to get it wrong.
-> >
-> > I wonder if we could do the same here. The hashmap would only ever see
-> > the "struct hashmap_entry", and then the caller would convert that back
-> > to the actual type.
-> 
-> Hmph, how would hashmap_cmp_fn look like with that scheme?  It would
-> get one entry, another entry (or just the skeleton of it) and
-> optionally a separate keydata (if the second one is skeleton), and
-> the first two points at the embedded hashmap struct, not the
-> surrounding one.  The callback function is now responsible for
-> calling a hashmap_entry() macro that adjusts for the negative offset
-> like list_entry() does?
+Nit: s/well../well.../
 
-Exactly. The comparison functions currently look something like this:
+> special from the beginning. So HEAD from the main worktree is
+> acccessible via the name "main-worktree/HEAD" instead of
+> "worktrees/main/HEAD" because "main" could be just another secondary
+> worktree.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> @@ -216,6 +217,18 @@ directly under GIT_DIR instead of inside GIT_DIR/refs. There are one
+> +Refs that are per working tree can still be accessed from another
+> +working tree via two special paths main-worktree and worktrees. The
 
-  int foo_hash_cmp(const void *data,
-		   const void *e1, const void *e2,
-		   const void *keydata)
-  {
-	const struct foo *f1 = (const struct foo *)e1;
-	const struct foo *f2 = (const struct foo *)e2;
-	return strcmp(foo->field, keydata ? keydata : foo->field);
-  }
+s/paths/paths,/
 
-(this is using the correct function signature; you can drop the casts if
-you violate that, but IMHO this style is more maintainable in the long
-run). With the hashmap_entry at an arbitrary position, the body is:
+> +former gives access to per-worktree refs of the main working tree,
+> +while the former to all linked working trees.
 
-  const struct foo *f1 = hash_entry(e1, struct foo, hash_field);
-  const struct foo *f2 = hash_entry(e2, struct foo, hash_field);
-  return strcmp(foo->field, keydata ? keydata : foo->field);
+s/former/latter/
 
-where hash_field is the member of "struct foo" that holds the "struct
-hashmap_entry". So that's not so different, but there is an interesting
-implication here. The comparison callback has to know which
-hashmap_entry name to use! So if you have a struct that can be in two
-hashes, like:
+> diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+> @@ -30,4 +30,50 @@ test_expect_success 'refs/worktree are per-worktree' '
+> +test_expect_success 'ambiguous main-worktree/HEAD' '
+> +       mkdir -p .git/refs/heads/main-worktree &&
+> +       test_when_finished rm .git/refs/heads/main-worktree/HEAD &&
+> +       cp .git/HEAD .git/refs/heads/main-worktree/HEAD &&
 
-  struct foo {
-    char *name;
-    struct hashmap_entry h1;
-    struct hashmap_entry h2;
-  };
+Better to use "rm -f" for cleanup in case this 'cp' fails for some reason.
 
-then you cannot use a single foo_hash_cmp() function. You have to use a
-different one for each field. Which seems kind of nasty and error-prone.
+> +       git rev-parse main-worktree/HEAD 2>warn >/dev/null &&
 
-So I dunno. Maybe this is not a good direction. I have to admit that I'm
-not wild about our hashmap implementation in general:
+You could probably omit the /dev/null redirect.
 
-  - the way it handles allocations is often awkward, or causes you to
-    write confusing boilerplate
+> +       grep "main-worktree/HEAD.*ambiguous" warn
+> +'
+> +
+> +test_expect_success 'ambiguous worktrees/xx/HEAD' '
+> +       mkdir -p .git/refs/heads/worktrees/wt1 &&
+> +       test_when_finished rm .git/refs/heads/worktrees/wt1/HEAD &&
 
-  - it's not type-safe
+Ditto "rm -f".
 
-  - it seems slower than open-addressed alternatives (e.g., over in [1]
-    we determined that oidset can be made almost twice as fast using
-    khash)
+> +       cp .git/HEAD .git/refs/heads/worktrees/wt1/HEAD &&
+> +       git rev-parse worktrees/wt1/HEAD 2>warn >/dev/null &&
 
-  - the chained implementation in hashmap.c is probably better for cases
-    where there's a lot of deletions, because removing from the hashmap
-    truly removes everything (whereas with open-addressed schemes, we
-    either didn't implement deletion at all, or it sets a marker which
-    allows the item to be dropped next time the hash is resized)
+Ditto /dev/null.
 
-[1] https://public-inbox.org/git/20180814015842.GA27055@sigill.intra.peff.net/
-
-> Was it ever a consideration, when allowing struct list-head anywhere
-> in the enclosing struct, that it would allow an element to be on
-> more than one list?
-
-I don't know the history of that list code in that kernel, but I always
-assumed that was one of the goals. We don't use it yet, but there are
-places where we could (e.g., packed_git is part of the regular packed
-list, as well as the mru; the former is implemented as a singly-linked
-list, but that's mostly historical).
-
-It also allows us to have an item in a list and a hashmap (since if they
-both needed to be at the start of the struct, that wouldn't work). We do
-use that ability for delta_base_cache_entry.
-
-> Would it benefit us to be able to place an
-> element in multiple hashmaps because we do not have to have the
-> embedded hashmap_entry always at the beginning if we did this
-> change?
-
-I'm not sure. I think it would allow us to more aggressively stick the
-hashmap_entry inside existing structs. For instance, in the patch from
-this thread, could we actually shove the hashmap_entry structs into
-"struct ref", and save having to allocate the extra refname_hash struct?
-
-I guess that pollutes "struct ref", though. Unless we generically say
-"it can be a part of up to 3 hashes" and provide struct hashmap_entry
-h1, struct hashmap_entry h2, etc. And then your new code does:
-
-  struct hashmap existing_refs;
-  struct hashmap remote_refs;
-
-  /*
-   * These need to be different compare functions to access the
-   * h1 and h2 fields in "struct ref"!
-   */
-  hashmap_init(&existing_refs, ref_hash_cmp_h1);
-  hashmap_init(&remote_refs, ref_hash_cmp_h2);
-
-  ...
-
-  hashmap_add(&existing_refs, &some_ref->h1);
-
-But that seems pretty error-prone (not just confusing h1 and h2 here,
-but how do we know that some other part of the code isn't using "h1" for
-its own hash already?)
-
-So again, maybe this is just a bad direction.
-
-At least with an open-addressed scheme, the hash table itself contains
-everything, and you can just store pointers to the existing refs.
-
--Peff
+> +       grep "worktrees/wt1/HEAD.*ambiguous" warn
+> +'
