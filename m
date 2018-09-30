@@ -2,108 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12DD01F453
-	for <e@80x24.org>; Sun, 30 Sep 2018 05:13:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1C5C1F453
+	for <e@80x24.org>; Sun, 30 Sep 2018 05:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbeI3LpK convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 30 Sep 2018 07:45:10 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:34032 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727715AbeI3LpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Sep 2018 07:45:09 -0400
-Received: by mail-qt1-f193.google.com with SMTP id x23-v6so10856670qtr.1
-        for <git@vger.kernel.org>; Sat, 29 Sep 2018 22:13:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GX5qzLTqXskO8vPRegn3sA/u+WnQBhSXcgmZ1xINusM=;
-        b=WRlo0TB93Lt8uDcBaI7HIjA7aXaUOaycLmQxcEQKsBtL5Q28wOd2yopu/84ETBzpft
-         BrfPCVrcWQHH6JF8BYJ5erYHdtK/1zwJvDx9HEPp1JQtUNRr6pN6L1foIDE1C6zaLvxn
-         u8KtsPXSkrvfZy2AUhK6UiNbJsabnDlIhWaGiuF6nyw+hLLZgYKhwWZUWrpeeIzgi5hG
-         xSJbhm37WZbDxObBMNC5JBlXIYrdQowmwrQRRcXKmr5tmdRkyT9vLStVwmbQQ0f+r+go
-         NHpOWxsSm7qMuxR8FgpPzN7xEI+QKrsN0S1VJA2Wn3Ftfpb6zfAvUE5N8sHJUx77QfNV
-         w3UA==
-X-Gm-Message-State: ABuFfohGD+3KlCB2UYz6iyw0wSII6wz9VVpmJtzmwRLNRyUojemNtAVU
-        ii2xUbhXYkSs0ReIOkXn6K4mMVzD9vGKdznrH8Q=
-X-Google-Smtp-Source: ACcGV63rI7Uc7qFIaJBqc/jh1UdS2cBKa+t9U4dVYJiOFD29nATRp9N6WOyEwnp8H6KtapWki1Xsg/BOxkr+Pxtlcec=
-X-Received: by 2002:a0c:964a:: with SMTP id 10-v6mr4291320qvy.62.1538284419203;
- Sat, 29 Sep 2018 22:13:39 -0700 (PDT)
+        id S1727799AbeI3LwZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Sep 2018 07:52:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36614 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727707AbeI3LwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Sep 2018 07:52:25 -0400
+Received: (qmail 14444 invoked by uid 109); 30 Sep 2018 05:20:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 30 Sep 2018 05:20:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9832 invoked by uid 111); 30 Sep 2018 05:20:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 30 Sep 2018 01:20:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Sep 2018 01:20:51 -0400
+Date:   Sun, 30 Sep 2018 01:20:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kyle Hubert <khubert@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Improvement to only call Git Credential Helper once
+Message-ID: <20180930052051.GC32120@sigill.intra.peff.net>
+References: <20180928163716.29947-1-khubert@gmail.com>
+ <20180929081705.GI2174@sigill.intra.peff.net>
+ <xmqqk1n486o1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180929191029.13994-1-pclouds@gmail.com>
- <20180929191029.13994-4-pclouds@gmail.com>
-In-Reply-To: <20180929191029.13994-4-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 30 Sep 2018 01:13:28 -0400
-Message-ID: <CAPig+cTRNzhKhcmt7hnLHP=8Oc86EnokSDzDD4z2CGYFGmuz4Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] refs: new ref types to make per-worktree refs
- visible to all worktrees
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk1n486o1.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 29, 2018 at 3:10 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> The main worktree has to be treated specially because well.. it's
+On Sat, Sep 29, 2018 at 12:06:38PM -0700, Junio C Hamano wrote:
 
-Nit: s/well../well.../
+> Jeff King <peff@peff.net> writes:
+> 
+> > Wow, what's old is new again. Here's more or less the same patch from
+> > 2012:
+> >
+> >   https://public-inbox.org/git/20120407033417.GA13914@sigill.intra.peff.net/
+> >
+> > Unfortunately, some people seem to rely on this multi-helper behavior. I
+> > recommend reading the whole thread, as there are some interesting bits
+> > in it (that I had always meant to return to, but somehow 6 years went
+> > by).
+> 
+> After reading that thread again, my version of summary is that
+> 
+>  - storing the credential obtained from a helper back to the same
+>    helper may be pointless at best and may incur end-user
+>    interaction (e.g. asking for symmetric encryption key before the
+>    data hits the disk), but it can be used as a "we used what you
+>    gave us successfully" ping-back signal.  We may not have designed
+>    approve() to do "store" back to the same helper by default and
+>    instead to do so only when asked by the helper, if we knew
+>    better.  But an unconditional change of behaviour will break
+>    existing users and helpers.
+> 
+>  - storing the credential obtained from a helper to a different
+>    helper may have security implications, and we may not have
+>    designed approve() to do "store" by default to all helpers if we
+>    knew better.  But an unconditional change of behaviour will break
+>    existing users and helpers.
 
-> special from the beginning. So HEAD from the main worktree is
-> acccessible via the name "main-worktree/HEAD" instead of
-> "worktrees/main/HEAD" because "main" could be just another secondary
-> worktree.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> @@ -216,6 +217,18 @@ directly under GIT_DIR instead of inside GIT_DIR/refs. There are one
-> +Refs that are per working tree can still be accessed from another
-> +working tree via two special paths main-worktree and worktrees. The
+Yeah, I agree with that summary, except I want to pick a nit with the
+very last sentence.
 
-s/paths/paths,/
+You're not wrong that it will break those existing users, but there are
+security implications. If you're expecting and relying on that behavior,
+then all is well with the current code, and you'd be annoyed by a
+change. But if you're not expecting it, the system is not just broken:
+it may be leaking credentials from a higher-security first-choice helper
+to a lower-security second-choice one.
 
-> +former gives access to per-worktree refs of the main working tree,
-> +while the former to all linked working trees.
+And that's why I wonder if it might be the right thing to break
+compatibility in this case.
 
-s/former/latter/
+> Assuming that the above summary is accurate, I think the former is
+> easier to solve.  In the ideal end game state, we would also have
+> "accepted" in the protocol and call the helper that gave us the
+> accepted credential material with an earlier "get" (if the helper is
+> updated to understand "accepted").  The "accepted" may not even need
+> to receive the credential material as the payload.
 
-> diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
-> @@ -30,4 +30,50 @@ test_expect_success 'refs/worktree are per-worktree' '
-> +test_expect_success 'ambiguous main-worktree/HEAD' '
-> +       mkdir -p .git/refs/heads/main-worktree &&
-> +       test_when_finished rm .git/refs/heads/main-worktree/HEAD &&
-> +       cp .git/HEAD .git/refs/heads/main-worktree/HEAD &&
+I think you can really solve both by adding a "retrieved" key to the
+store step of the protocol (which can be done in a backwards-compatible
+way, since all sides are supposed to ignore keys they don't understand).
 
-Better to use "rm -f" for cleanup in case this 'cp' fails for some reason.
+Then a helper which understands "retrieved" can say "Oh, this came from
+another helper; I don't need to store it". And that includes things that
+might have come from itself! Likewise, helpers might take options to
+tell them how to behave. So the "do some https thing and cache it"
+combination from that earlier thread would be:
 
-> +       git rev-parse main-worktree/HEAD 2>warn >/dev/null &&
+  [credential]
+  helper = magic-https-thing
+  helper = cache
 
-You could probably omit the /dev/null redirect.
+and the safe version of "try high-security thing, and then fall back to
+caching" would be:
 
-> +       grep "main-worktree/HEAD.*ambiguous" warn
-> +'
-> +
-> +test_expect_success 'ambiguous worktrees/xx/HEAD' '
-> +       mkdir -p .git/refs/heads/worktrees/wt1 &&
-> +       test_when_finished rm .git/refs/heads/worktrees/wt1/HEAD &&
+  [credential]
+  helper = high-security-thing
+  helper = cache --no-retrieved
 
-Ditto "rm -f".
+(that keeps the default matching the current behavior, but obviously we
+could flip it if we wanted to have a safer default but leave the
+existing case with an escape hatch).
 
-> +       cp .git/HEAD .git/refs/heads/worktrees/wt1/HEAD &&
-> +       git rev-parse worktrees/wt1/HEAD 2>warn >/dev/null &&
+> The latter is trickier, as there are design considerations.
+> 
+>  - We may want to allow the helper that gives the credential back
+>    from the outside world upon "get" request to say "you can 'store'
+>    this to other helpers of this kind but not of that kind".  If we
+>    want to do so, we'd need to extend what is returned from the
+>    helper upon "get" (e.g. "get2" will give more than what "get"
+>    does back).
 
-Ditto /dev/null.
+I don't think you need a "get2". The helpers should be free to pass back
+extra keys (but old versions of Git just won't do anything with them).
 
-> +       grep "worktrees/wt1/HEAD.*ambiguous" warn
-> +'
+>  - We may want to allow the helper that receives the credential
+>    material from others to behave differently depending on where it
+>    came from, and what other helpers done to it (e.g. even a new
+>    credential the end user just typed may not want to go to all
+>    helpers; an on-disk helper may feel "I'd take it if the only
+>    other helpers that responded to 'store' are the transient
+>    'in-core' kind, but otherwise I'd ignore").  I am not offhand
+>    sure what kind of flexibility and protocol extension is
+>    necessary.
+
+If we have a "retrieved" flag, it could be "retrieved=some-helper" to
+show which helper it came from. One tricky thing, though, is that
+helpers do not always have a simple name (they can be arbitrary shell
+expressions).
+
+>  - We may want to be able to override the preference the helper
+>    makes in the above two.  The user may want to say "Only use this
+>    on-disk helper as a read-only source and never call 'store' on it
+>    to add new entries (or update an existing one)."
+
+Yes. I think if we go this route that helpers would just annotate
+credentials they pass back (e.g., a key that says "this credential has
+property foo") and other credentials would take user direction to
+respect them (e.g., credential-cache would grow an option to say "do not
+cache things with property foo").
+
+The final patch in that earlier thread:
+
+  https://public-inbox.org/git/20120408071300.GB13662@sigill.intra.peff.net/
+
+showed what it would look like to just pass the properties around
+between the helpers. That would be enough so that an individual helper
+"foo" could:
+
+  - set a key like "from=foo"
+
+  - treat "from=foo" as a no-op for the "store" step (thus avoiding
+    the ask-for-passphrase-again problem that started this current thread)
+
+And then other helpers like credential-cache could grow options like
+"--ignore=from", which would not cache anything that has a non-empty
+"from" property.
+
+-Peff
