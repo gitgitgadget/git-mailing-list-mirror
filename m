@@ -2,137 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C39421F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 08:55:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 562D61F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 11:21:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728956AbeJAPcN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 11:32:13 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:47000 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728804AbeJAPcN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 11:32:13 -0400
-Received: by mail-ed1-f45.google.com with SMTP id g32-v6so3029801edg.13
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 01:55:31 -0700 (PDT)
+        id S1729164AbeJAR6e (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 13:58:34 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44035 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728921AbeJAR6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 13:58:33 -0400
+Received: by mail-ed1-f68.google.com with SMTP id t11-v6so13813625edq.11
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 04:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=e+fkagyYJHcz13Yay412kDEOrU7ig1VBTKp+pCzUdFk=;
-        b=cT7CdxtSUxjRtrkjCNM5yJM//ymDaQoXXTKxysHAerg5lqRxA8P8tafdcbPOQ1qwfB
-         lPa7E0Zn2arN0grXvpawrLAQxEFXcNYg1owUQ89XgAJeYSnJta2NCOImDC9MKUMRsE/m
-         i2i8bqPU8fX0T/YKsKbjVDFVFD6G5U6/PmaFKqjJRrVdKatnlFPeLSIHDFIdATWe57hs
-         jp7cfYr5zWrtzLl/wiIQiE5ER+DN89gM2ze+01KcxIXtMtnFMFoJRUGTYneeoiJ6K14n
-         IVBF7gb/I1+mYipWZc4Merx9UANJLL6EqVYh35qSj6A4OXNZ9n68ObK9WutJLstF22Ok
-         pBOw==
+        d=rasmusvillemoes.dk; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=l1ODIU9iEfHmqL7k7k7lWOMTtI2qht62/ymAyEfv31k=;
+        b=NUEi8+tW74Hs6zU4+7WQeOn+NkZ/wY2/PadOe0LyrLBEpQR9AaLSb/9rzVLErHe5gU
+         SbABXZP00KozxXsx/TZ/8bkCGIj5qQnDxaT23CurIZWCPkHYKRhMcHirWynBdvz1g6ux
+         Bm3+2GJrrfYikdVfm6EzglathnzP6CiY5K/e4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=e+fkagyYJHcz13Yay412kDEOrU7ig1VBTKp+pCzUdFk=;
-        b=plzH/o/BMS6QMnyrfkIgJUUbRcvfB/f39KxaLX80RCu0Lm9C+xDBZ+EwkKtAqYEc0g
-         4Hcv6i9Nr90i3F+L+SK5lXFpi7GTKx6+ZzMdjhOLg7B5U6PMbU9nieIAGsppqPMc/Dfw
-         zbKxdFl9yUI4ca+Esx6bhf6neqqOhfwfpuTkF0K6yLVcvOznKASSajkI61rzswY/T2fs
-         Dqc0Of+ySsFvC+9tI3ylczUd+ty1JgqSPvwO3lYYBavUwPCJz930b+SAGZn+5aSutPP6
-         7ZLo2EJ08VR+YyMom7x6Br57XFKNl1Dv7OFXf6swUlsH79AakXZasWw51SeVA7KlShsc
-         csWg==
-X-Gm-Message-State: ABuFfogCe0WioL4UibHynhLBKSvJMY9qQclHsmYFMnLefSGC6qHQo3Gs
-        BAW3QK2vtNX01tUAItAh+/o=
-X-Google-Smtp-Source: ACcGV63QyIjf+vGuxaUhp7t5ipM78x0pUfnNoCFAdaZSGOiWcQvIqqiKUoVRCL4Nuuew97YHEa1eTw==
-X-Received: by 2002:a50:f397:: with SMTP id g23-v6mr6245167edm.110.1538384130656;
-        Mon, 01 Oct 2018 01:55:30 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id o29-v6sm289196edc.95.2018.10.01.01.55.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Oct 2018 01:55:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jose Gisbert <jose.gisbert@live.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Using git svn rebase at quarantine environment or a feasible alternative to synchronize git and svn repositories
-References: <VI1PR0902MB2223EA3FC0ACE7E9AFB7A6ACE2EF0@VI1PR0902MB2223.eurprd09.prod.outlook.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <VI1PR0902MB2223EA3FC0ACE7E9AFB7A6ACE2EF0@VI1PR0902MB2223.eurprd09.prod.outlook.com>
-Date:   Mon, 01 Oct 2018 10:55:28 +0200
-Message-ID: <87a7nyhwqn.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=l1ODIU9iEfHmqL7k7k7lWOMTtI2qht62/ymAyEfv31k=;
+        b=FpMp5rmuAcDbk1Jgp/Lt1u2c9zZYffrDExevSAzvFEwP0k74B+jwQPDEfRQ1p44Zax
+         Y42rAKzmfAOuVWro5qeJVzThUopEFkNwNtRv+Nu7yZm+JHlf3SIjREwOF/AGUO3F50Lz
+         THg1xmuCSDRscheBQ6YgkNGQyQMSFrO1dVpG07WUek1A4dl/o/J/DdVIcm+0CWxfXcmB
+         ThTgCL0W94L4eoQW4iDaH55ABmZxcYLmcILXKZp8pHdDlA59boTEgWN3M1AAZ8i2Akmb
+         fSeuXMhU3hMP4KMzQR/0/krq+IYGohDYHjFl2y2p7Ldpxz40BOdQ53QfogxrsjyxA6fb
+         78Gw==
+X-Gm-Message-State: ABuFfogs4Jz6E2ICXHu7c5wobIUaZfClVh8L3Sq5T060TYPKhAjfdnI9
+        WVF58kWbw94Ih6WJiSpyE+jHY+SNmxSmNQ==
+X-Google-Smtp-Source: ACcGV62YmCo2+yR0LDXx7tWSTW/AvuApg+y83EaKcYEdYslaDV1HbE4Wme6nQzaIzAdwaGy/yQSpsQ==
+X-Received: by 2002:a50:b399:: with SMTP id s25-v6mr16695991edd.217.1538392873821;
+        Mon, 01 Oct 2018 04:21:13 -0700 (PDT)
+Received: from prevas-ravi.waoo.dk (dhcp-5-186-116-96.cgn.ip.fibianet.dk. [5.186.116.96])
+        by smtp.gmail.com with ESMTPSA id d13-v6sm1908560eda.51.2018.10.01.04.21.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 01 Oct 2018 04:21:13 -0700 (PDT)
+From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Subject: [PATCH v2 1/3] help: redirect to aliased commands for "git cmd --help"
+Date:   Mon,  1 Oct 2018 13:21:05 +0200
+Message-Id: <20181001112107.28956-1-rv@rasmusvillemoes.dk>
+X-Mailer: git-send-email 2.19.0
+In-Reply-To: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
+References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As discussed in the thread for v1 of this patch [1] [2], this changes the
+rules for "git foo --help" when foo is an alias.
 
-On Mon, Oct 01 2018, Jose Gisbert wrote:
+(0) When invoked as "git help foo", we continue to print the "foo is
+aliased to bar" message and nothing else.
 
-> Dear members of the Git community,
->
-> The enterprise I work for is planning to switch from svn to git.
->
-> Before the complete switch to git we have decided to implement a scenario
-> where the two SCMs live together, being the svn repository the reference. We
-> also want this scenario to be transparent for both SCM users.
->
-> I read the articles referenced at the end of the email and I come to the
-> following solution.
->
-> My proposal consists to import the svn repository to git using git svn and set
-> receive.denyCurrentBranch to updateInstead. Then install pre-receive and
-> post-receive hooks and set that repository as the central repository for git
-> users.
->
-> The pre-receive hook does git svn rebase and, if there is an update at the svn
-> repository, rejects the push and instructs the user to do git pull. The
-> post-receive hook does git svn dcommit to update the state of the svn
-> repository, then instructs the user to do git pull too.
->
-> Both scripts check the changes pushed are made at master before doing anything
-> and exit after performing these tasks. branches.master.rebase is set to merges
-> at the user repository to avoid the histories of the central and the user
-> repositories diverge after doing git svn dcommit.
->
-> However I'm stuck at this point because the pre-receive hook it's not allowed
-> to do git svn rebase because update refs are not allowed at the quarantine
-> environment. I was sure that I tried this solution with a past version of git
-> and it worked, but now I doubt this because the restriction to update refs at
-> quarantine environment was delivered at version 2.13, that dates from April
-> 2017, if I'm not wrong.
->
-> I don't know if this solution could be implemented or is there a better way to
-> accomplish this kind of synchronization (I tried Tmate SubGit, but it didn't
-> work for me and I don't know if we will be willing to purchase a license).
-> Could you help me with this question?
->
-> I come here asking for help because I think this is the appropriate place to
-> do so. I apologise if this is not the case. Any help is welcome. If anything
-> needs to be clarified, please, ask me to do so. I can share with you the
-> source code of the hook scripts, if necessary.
+(1) If foo is an alias for a shell command, print "foo is aliased to
+!bar" as usual.
 
-A very long time ago I had a similar setup where some clients were using
-git-svn. This was for the first attempt to migrate the Wikimedia
-repositories away from SVN.
+(2) Otherwise, break the alias string into words, and pretend that "git
+word0 --help" was called.
 
-There I had a setup where users could fetch my git-svn clone, which was
-hosted on github, and through some magic (I forgot the details) "catch
-up" with their local client. I.e. there was some mapping data that
-wasn't sent over.
+At least for me, getting the man page for git-cherry-pick directly with
+"git cp --help" is more useful (and how I expect an alias to behave)
+than the short "is aliased to" notice. It is also consistent with
+"--help" generally providing more comprehensive help than "-h".
 
-But users would always push to svn, not git. I think if you can live
-with that you'd have a much easier time, having this setup where you
-push to git and you then have to carry that push forward to svn is a lot
-more complex than just having the clients do that.
+I believe that printing the "is aliased to" message also in case (2) has
+value: Depending on pager setup, or if the user has help.format=web, the
+message is still present immediately above the prompt when the user
+quits the pager/returns to the terminal. That serves as an explanation
+for why one was redirected to "man git-cherry-pick" from "git cp
+--help", and if cp is actually 'cherry-pick -n', it reminds the user
+that using cp has some flag implicitly set before firing off the next
+command.
 
-GitHub also has a SVN gateway, that has no open source equivalent that I
-know of:
-https://help.github.com/articles/support-for-subversion-clients/
+It also provides some useful info in case we end up erroring out, either
+in the "bad alias string" check, or in the "No manual entry for gitbar"
+case.
 
-Maybe that's something you'd like to consider, i.e. fully migrate to git
-sooner than later, and for any leftover SVN clients have them push to a
-private repo on GitHub. Even if you only keep that GitHub repo as a
-bride during the migration and host Git in-house it'll be a lot easier
-with git as a DVCS to continually merge in those changes than pulling
-the same trick with a centralized system like SVN.
+[1] https://public-inbox.org/git/20180926102636.30691-1-rv@rasmusvillemoes.dk/
+[2] https://public-inbox.org/git/20180926184914.GC30680@sigill.intra.peff.net/
+
+Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+---
+ builtin/help.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/help.c b/builtin/help.c
+index 8d4f6dd301..4802a06f37 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -415,9 +415,29 @@ static const char *check_git_cmd(const char* cmd)
+ 
+ 	alias = alias_lookup(cmd);
+ 	if (alias) {
+-		printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
+-		free(alias);
+-		exit(0);
++		const char **argv;
++		int count;
++
++		/*
++		 * If we were invoked as "git help cmd", or cmd is an
++		 * alias for a shell command, we inform the user what
++		 * cmd is an alias for and do nothing else.
++		 */
++		if (!exclude_guides || alias[0] == '!') {
++			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
++			free(alias);
++			exit(0);
++		}
++		/*
++		 * Otherwise, we pretend that the command was "git
++		 * word0 --help.
++		 */
++		fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
++		count = split_cmdline(alias, &argv);
++		if (count < 0)
++			die(_("bad alias.%s string: %s"), cmd,
++			    split_cmdline_strerror(count));
++		return alias;
+ 	}
+ 
+ 	if (exclude_guides)
+-- 
+2.19.0
+
