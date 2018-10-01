@@ -3,121 +3,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFA821F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 15:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4BA1F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 15:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726152AbeJAWXd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 18:23:33 -0400
-Received: from mail.ao2.it ([92.243.12.208]:39164 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725266AbeJAWXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 18:23:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=Ch6k3oBpJ9EK2jWmSy3Pbfa9TkmgnEMMkQLF8fGV9J8=;
-        b=bjHi1lbl4xuuFewJjw3To43bt4uzEHCMHHxISs2wI/xFPErrbNh5+gdrmu8jnP4Mr/G1LboZLDYSvxH6FckY50UAx8KwB+K4llsCpwQI3eSs09duhwlVZx/VpnnBRJ0WGuR26O16Xq7Ot7u8ZvtwGaZLW3LQAnNfamHWhniMCuJdxYubGBJ/VCUJkABq11KSTuHPMuknmH1VY8kB2n2H5f8QotHK7XVlvxsN0SFUWxdetp2OwI/B43SLrb1awsBhUsz7iTBEgN3O8dTtmFfr6OfeBVcPBEkGGWQ+UQJtwp8eE/mAkE8cmW0SJEWf7qAfKWImboJmjQp8v3ObqByBIQ==;
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1g70LD-0007ar-Nd; Mon, 01 Oct 2018 17:42:35 +0200
-Date:   Mon, 1 Oct 2018 17:45:04 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        id S1725951AbeJAW3c (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 18:29:32 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:41026 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbeJAW3c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 18:29:32 -0400
+Received: by mail-io1-f65.google.com with SMTP id q4-v6so9809122iob.8
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 08:51:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=r75pmSrArYEAY6fQgWujWCMuS/J0KozDzySa5r6jtgs=;
+        b=QJKKcl4SZQHxmJlxgM74A3c3tHJ9Qc97NzbzIoeyfhNBWe/9Vjqipxuo8Jq5V1yq+b
+         9OTu+QQYCDSXZERuU6m/76CO/120ynHFK+RSZmaoUb105Rv5zTRvivn1p1vGqK9v8NaC
+         mcxr+ItbNRFJofnN9qvDm3otS8kRhrquSWuIpeByn9TJcQfIBk2KrxXs7zDrdil4LgaG
+         R3vGIH+VD/A0YyErVplp2dBBbCj+h+tMLmQC7jZNVZn4bICNJkOHspJScPcshr7fmfkk
+         Zx4ljkpUpq0ekV1bjW/fwXM1890F3LSJG3TO1lHUSLRrD0rgkjp26GM1KCsRN4stKD5X
+         mqiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r75pmSrArYEAY6fQgWujWCMuS/J0KozDzySa5r6jtgs=;
+        b=hALebjPk0Az16LdoCrbDzGdmKz8PSAdpjErBFLVH9mFpP74cKKsSset988xQLO9chA
+         qw0/QAZiK8DtWymzb+pBapq3lwpm/xMHzKh+Gu0RUKREl2Txq3VtsZ3RZ3xi4tJldVkO
+         5o594ooJZyHGgHpmt6nPuLj4UqCu+xw3zYgQQxJ/6qIgafAFdf/LSO51x3bRVD4g/Yp7
+         pMLP1a37LeeJpSFJJlZwEOdNHDvaHtiOImTBpv5Ll/PwxsJIJ7bU3c5ZuE1oP4wBl8xH
+         cpv/8kGRyVyimJG5nUvyjujLcVXoIfOfStpuuT4sIJsjGFtX0aaHKeuWYFKD54ewbhLY
+         mGKw==
+X-Gm-Message-State: ABuFfojQlr1YCXCu0gNkNu+02sxjjV66YcX0a4dQlIOyv4aNGdMR2yQd
+        APvbjfn/gPhrtnA9ivJt9y/ReT3G4HogLPR3MGM=
+X-Google-Smtp-Source: ACcGV63LpKawBrQtVcw7rdxdc4uVLAISV4zERXoYqc65wES0sppwd9+1QQdaBczvVr4yXI4pR7NOy5Ur5UPiVi13SMQ=
+X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr6954473ioe.282.1538409065905;
+ Mon, 01 Oct 2018 08:51:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181001134556.33232-1-peartben@gmail.com> <20181001134556.33232-6-peartben@gmail.com>
+In-Reply-To: <20181001134556.33232-6-peartben@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 1 Oct 2018 17:50:39 +0200
+Message-ID: <CACsJy8A2+P6RM5OOhke=Ptc2iPB81fGu0BF-Ven9am_UEThB8A@mail.gmail.com>
+Subject: Re: [PATCH v7 5/7] read-cache: load cache extensions on a worker thread
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
- not in the working tree
-Message-Id: <20181001174504.684457e627ed76abee5e19b8@ao2.it>
-In-Reply-To: <CAGZ79kYHLF0TVfVuVfKfe_A4D2QGziRCsrYpyh7wuHjdpPEkDA@mail.gmail.com>
-References: <20180917140940.3839-1-ao2@ao2.it>
-        <20180917140940.3839-10-ao2@ao2.it>
-        <20180918171257.GC27036@localhost>
-        <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
-        <CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com>
-        <20180927164415.44b1d00ee5f8e582afdaa933@ao2.it>
-        <CAGZ79kYHLF0TVfVuVfKfe_A4D2QGziRCsrYpyh7wuHjdpPEkDA@mail.gmail.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+        Ben Peart <benpeart@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 27 Sep 2018 11:00:52 -0700
-Stefan Beller <sbeller@google.com> wrote:
-
-> On Thu, Sep 27, 2018 at 7:44 AM Antonio Ospite <ao2@ao2.it> wrote:
-[...]
-> > OK, so the plan for v6 is:
-> >
-> >   - avoid the corruption issues spotted by G=E1bor by removing the call
-> >     to repo_read_gitmodules in builtin/grep.c (this still does not fix
-> >     the potential problem with nested submodules).
-> >
-
-Actually that is not enough to fix the inconsistent access to the
-object store: the functions is_submodule_active() and
-repo_submodule_init() too end up calling config_from_gitmodules() and
-need protecting as well, so I am going to put them under the git read
-lock and leave repo_read_gitmodules() in place for now.
-
-Removing unneeded code can go in a possible stand-alone patch.
-
-> >   - add a new test-tool which better exercises the new
-> >     config_from_gitmodules code,
->=20
-> Sounds good.
->=20
-> >
-> >   - add also a test_expect_failure test to document the use case that
-> >     cannot be supported yet: nested submodules without .gitmodules in
-> >     their working tree.
->=20
-> Personally I would want to live in a world where we don't *have* to nor
-> *want* to support submodules without .gitmodules in the respective
-> superproject.
+On Mon, Oct 1, 2018 at 3:46 PM Ben Peart <peartben@gmail.com> wrote:
+> @@ -1890,6 +1891,46 @@ static size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
+>  static size_t read_eoie_extension(const char *mmap, size_t mmap_size);
+>  static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context, size_t offset);
 >
+> +struct load_index_extensions
+> +{
+> +#ifndef NO_PTHREADS
+> +       pthread_t pthread;
+> +#endif
+> +       struct index_state *istate;
+> +       const char *mmap;
+> +       size_t mmap_size;
+> +       unsigned long src_offset;
+> +};
+> +
+> +static void *load_index_extensions(void *_data)
+> +{
+> +       struct load_index_extensions *p = _data;
+> +       unsigned long src_offset = p->src_offset;
+> +
+> +       while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
+> +               /* After an array of active_nr index entries,
+> +                * there can be arbitrary number of extended
+> +                * sections, each of which is prefixed with
+> +                * extension name (4-byte) and section length
+> +                * in 4-byte network byte order.
+> +                */
+> +               uint32_t extsize;
+> +               memcpy(&extsize, p->mmap + src_offset + 4, 4);
+> +               extsize = ntohl(extsize);
 
-Just to double check: are you referring to *nested* submodules in the
-sentence above?
+This could be get_be32() so that the next person will not need to do
+another cleanup patch.
 
-I am asking because the whole point of this patchset is to *enable* the
-use of submodules without .gitmodules in the working tree of the
-superproject. :)
+> +               if (read_index_extension(p->istate,
+> +                       p->mmap + src_offset,
+> +                       p->mmap + src_offset + 8,
+> +                       extsize) < 0) {
 
-It's just that current limitations in git do not allow to support this
-for *nested* submodules yet.
+This alignment is misleading because the conditions are aligned with
+the code block below. If you can't align it with the '(', then just
+add another tab.
 
-> We did support some use cases historically that I would make sure to
-> continue to support, but I am not sure how much effort we want to spend
-> on supporting further use cases of incomplete submodules.
->
-> Feel free to do so, as such tests help to document the boundaries.
->=20
+> +                       munmap((void *)p->mmap, p->mmap_size);
 
-Let's see how v6 turns out.
+This made me pause for a bit since we should not need to cast back to
+void *. It turns out you need this because mmap pointer is const. But
+you don't even need to munmap here. We're dying, the OS will clean
+everything up.
 
-Thanks,
-   Antonio
-
---=20
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+> +                       die(_("index file corrupt"));
+> +               }
+> +               src_offset += 8;
+> +               src_offset += extsize;
+> +       }
+> +
+> +       return NULL;
+> +}
+-- 
+Duy
