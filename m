@@ -2,125 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4BA1F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 15:51:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1A5A1F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 15:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725951AbeJAW3c (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 18:29:32 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:41026 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725934AbeJAW3c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 18:29:32 -0400
-Received: by mail-io1-f65.google.com with SMTP id q4-v6so9809122iob.8
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 08:51:06 -0700 (PDT)
+        id S1726092AbeJAWfC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 18:35:02 -0400
+Received: from mail-it1-f170.google.com ([209.85.166.170]:36186 "EHLO
+        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbeJAWfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 18:35:02 -0400
+Received: by mail-it1-f170.google.com with SMTP id c85-v6so12168134itd.1
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 08:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=r75pmSrArYEAY6fQgWujWCMuS/J0KozDzySa5r6jtgs=;
-        b=QJKKcl4SZQHxmJlxgM74A3c3tHJ9Qc97NzbzIoeyfhNBWe/9Vjqipxuo8Jq5V1yq+b
-         9OTu+QQYCDSXZERuU6m/76CO/120ynHFK+RSZmaoUb105Rv5zTRvivn1p1vGqK9v8NaC
-         mcxr+ItbNRFJofnN9qvDm3otS8kRhrquSWuIpeByn9TJcQfIBk2KrxXs7zDrdil4LgaG
-         R3vGIH+VD/A0YyErVplp2dBBbCj+h+tMLmQC7jZNVZn4bICNJkOHspJScPcshr7fmfkk
-         Zx4ljkpUpq0ekV1bjW/fwXM1890F3LSJG3TO1lHUSLRrD0rgkjp26GM1KCsRN4stKD5X
-         mqiQ==
+         :cc:content-transfer-encoding;
+        bh=aXUpmdUWgUJYqd1xc1vAiVWR3/pCpWbXkwxE7L1taMM=;
+        b=U7iWD25NPnOj20mUGoTm+YuODFvFGkr90XoAcpED5JX1awoYNA1aj/BenoJSgLt47q
+         nbfjc2avydb2TXqifEiYf8hFSAO3EIf7uiSDVvhouOQa0JupPoDpY/WmWLNUmwA+zovj
+         r8SWYMNhcGc/pmE+g6MUVuR1ODkGb1yFIf96m0xdf1H52Bazrldvj0tYzDYmNX3HfG92
+         pieMrWcqvUuwMbupkzJSJIiLcE0s2SYb6Dx4+jwLtn54CDFkFqKwJqfd3XZoc/m43mMK
+         MJtqN6nAwYa93un4v8y59kIMIWy2GpgPLspMOVl3F5DdpuvdvQ0dMiYH6qLdJdZIUslX
+         yr3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=r75pmSrArYEAY6fQgWujWCMuS/J0KozDzySa5r6jtgs=;
-        b=hALebjPk0Az16LdoCrbDzGdmKz8PSAdpjErBFLVH9mFpP74cKKsSset988xQLO9chA
-         qw0/QAZiK8DtWymzb+pBapq3lwpm/xMHzKh+Gu0RUKREl2Txq3VtsZ3RZ3xi4tJldVkO
-         5o594ooJZyHGgHpmt6nPuLj4UqCu+xw3zYgQQxJ/6qIgafAFdf/LSO51x3bRVD4g/Yp7
-         pMLP1a37LeeJpSFJJlZwEOdNHDvaHtiOImTBpv5Ll/PwxsJIJ7bU3c5ZuE1oP4wBl8xH
-         cpv/8kGRyVyimJG5nUvyjujLcVXoIfOfStpuuT4sIJsjGFtX0aaHKeuWYFKD54ewbhLY
-         mGKw==
-X-Gm-Message-State: ABuFfojQlr1YCXCu0gNkNu+02sxjjV66YcX0a4dQlIOyv4aNGdMR2yQd
-        APvbjfn/gPhrtnA9ivJt9y/ReT3G4HogLPR3MGM=
-X-Google-Smtp-Source: ACcGV63LpKawBrQtVcw7rdxdc4uVLAISV4zERXoYqc65wES0sppwd9+1QQdaBczvVr4yXI4pR7NOy5Ur5UPiVi13SMQ=
-X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr6954473ioe.282.1538409065905;
- Mon, 01 Oct 2018 08:51:05 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aXUpmdUWgUJYqd1xc1vAiVWR3/pCpWbXkwxE7L1taMM=;
+        b=aLupkM1HGmpVcd+NiQR7w9DpJet0X5yYbgM1FDJ8v8cJEMmOoao5m09VFWKJ3P9tOK
+         I+CU9udtUoG8enbLXnCsUxD51RSAC9vKWhlRepaipmpXVndOzPMn0rTtmjD148T3lS95
+         H8Kx5DsIn+oGLc3MR/3mfBBYHirRWhj40g3gpAtzaKjFHud5LEZ+RRcfQNf9HnB9T8t7
+         8LTx1/P+vPqynY3evK2fOJXDQK4xFBdmw8iGVJLldJ+sQlJ8vX1BAtZ05M1Se3Ckzr9S
+         9gEo8raIzn1o2k4CK262sWoSvBPxg2M518+mlJT+AAoSOOiB7TMgrDhxjopGkXx7Nq1Q
+         GsaA==
+X-Gm-Message-State: ABuFfohRQqN4BjTWA4raJMWP4uAEtpKcpHT55KQZJYMx/ansE6YT5hHl
+        HRJQB2JRDtbtZT3DZ28ygabus6U45Lekh5DZMXQ=
+X-Google-Smtp-Source: ACcGV63r+7mXEjI7jfPk/kPgBeV143YfedmbkfRG0TTiGFj6gdsyGMOOyy7X4z+zxrluaXtiqy6IUpcEv5mX9PC4Hds=
+X-Received: by 2002:a02:1211:: with SMTP id i17-v6mr8622386jad.47.1538409393880;
+ Mon, 01 Oct 2018 08:56:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181001134556.33232-1-peartben@gmail.com> <20181001134556.33232-6-peartben@gmail.com>
-In-Reply-To: <20181001134556.33232-6-peartben@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 1 Oct 2018 17:50:39 +0200
-Message-ID: <CACsJy8A2+P6RM5OOhke=Ptc2iPB81fGu0BF-Ven9am_UEThB8A@mail.gmail.com>
-Subject: Re: [PATCH v7 5/7] read-cache: load cache extensions on a worker thread
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
+References: <CAEdN-uV6giCp6FbC=J3B--6_kEzFkG8Yq4VXgGnhoNjERsXSQw@mail.gmail.com>
+In-Reply-To: <CAEdN-uV6giCp6FbC=J3B--6_kEzFkG8Yq4VXgGnhoNjERsXSQw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 1 Oct 2018 17:56:22 +0200
+Message-ID: <CAP8UFD0D5pu+6e25KeHFUKAFHf966tJ3j-3bhigFcSfr_UmVzg@mail.gmail.com>
+Subject: Re: [Outreachy] Introducing
+To:     giovana.vmorais@gmail.com
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 1, 2018 at 3:46 PM Ben Peart <peartben@gmail.com> wrote:
-> @@ -1890,6 +1891,46 @@ static size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
->  static size_t read_eoie_extension(const char *mmap, size_t mmap_size);
->  static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context, size_t offset);
+Hi Giovana,
+
+On Mon, Oct 1, 2018 at 4:04 PM Giovana Morais <giovana.vmorais@gmail.com> w=
+rote:
 >
-> +struct load_index_extensions
-> +{
-> +#ifndef NO_PTHREADS
-> +       pthread_t pthread;
-> +#endif
-> +       struct index_state *istate;
-> +       const char *mmap;
-> +       size_t mmap_size;
-> +       unsigned long src_offset;
-> +};
-> +
-> +static void *load_index_extensions(void *_data)
-> +{
-> +       struct load_index_extensions *p = _data;
-> +       unsigned long src_offset = p->src_offset;
-> +
-> +       while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
-> +               /* After an array of active_nr index entries,
-> +                * there can be arbitrary number of extended
-> +                * sections, each of which is prefixed with
-> +                * extension name (4-byte) and section length
-> +                * in 4-byte network byte order.
-> +                */
-> +               uint32_t extsize;
-> +               memcpy(&extsize, p->mmap + src_offset + 4, 4);
-> +               extsize = ntohl(extsize);
+> Hey there, Christian and Git!
+>
+> My initial Outreachy application got accepted and, looking through availa=
+ble projects, I was really interested in `git bisect` one, since I want to =
+take my C skills to a next level and, of course, have a deeper understandin=
+g of git itself. I think it will be a hard, but awesome challenge. (:
 
-This could be get_be32() so that the next person will not need to do
-another cleanup patch.
+Great!
 
-> +               if (read_index_extension(p->istate,
-> +                       p->mmap + src_offset,
-> +                       p->mmap + src_offset + 8,
-> +                       extsize) < 0) {
+About possible projects there is also
+https://git.github.io/Outreachy-17/ but only the `git bisect` has been
+officially proposed as an Outreachy project. I hope Dscho (Johannes
+Schindelin) will be ok to submit one of the 2 others soon and to
+register himself as a mentor or co-mentor on some of the projects.
+Please add him in CC, like I did in this email.
 
-This alignment is misleading because the conditions are aligned with
-the code block below. If you can't align it with the '(', then just
-add another tab.
+> I took a look at the patches already sent but I'm still lost of where I c=
+an start contributing. Can you guys give me some light?
 
-> +                       munmap((void *)p->mmap, p->mmap_size);
+We usually ask Outreachy and Google Summer of Code applicants to first
+work on a micro-project before starting to work on a bigger project.
+There is https://git.github.io/SoC-2018-Microprojects/ for that though
+it is not up-to-date. Some micro-projects we propose might have
+already been taken by GSoC students last winter/spring. Sorry we
+didn't update the page or create another one. Anyway there are some
+micro-projects there like "Add more builtin patterns for userdiff"
+that are still valid and still good small tasks to get started working
+on Git. And there are explanations about how you can search for
+micro-projects (especially how to search for #leftoverbits on the
+mailing list archive).
 
-This made me pause for a bit since we should not need to cast back to
-void *. It turns out you need this because mmap pointer is const. But
-you don't even need to munmap here. We're dying, the OS will clean
-everything up.
+Thank you for your interest in contributing to Git,
+Christian.
 
-> +                       die(_("index file corrupt"));
-> +               }
-> +               src_offset += 8;
-> +               src_offset += extsize;
-> +       }
-> +
-> +       return NULL;
-> +}
--- 
-Duy
+
+
+> Thanks a lot!
+> --
+> Giovana Vieira de Morais
