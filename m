@@ -2,101 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86A381F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 19:19:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78F6C1F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 19:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbeJBB7K (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 21:59:10 -0400
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:40105 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbeJBB7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 21:59:10 -0400
-Received: by mail-yb1-f193.google.com with SMTP id w7-v6so6094679ybm.7
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 12:19:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ihTkUqZhhqmkUOzZiik/UlNMwfDIn+N9i+/O/Uvjecs=;
-        b=DGs7YUw6XPMHevDpAACAht18VBFv731arSp1Y89CTWu13tpTvd/ARR7cYb04oR0vOG
-         aTdJ3b9iT5dM/2ug1pL1nc0H1l1R2nZoPuS0EEZOSGAzVjQhlWlRGOdhlfOEL38s+Amz
-         N5Xdg+Clgnqh2bDstDlbZSmrDS1XamkwFwD4PwDm/9Y5bojfBWD0dkSpf0qK4JoitznN
-         TaoRGtWqccRmLGYqSXqvHBCGCQTjcsTSk2BUW3PHm5u8usjP3AtDhJB5Y1ftzCIcsYi/
-         9Mu1FqmwTGLDMG2IHEr03P6+AKWb9qVH3EnNyhx9syUCOrYhPyTmzh9DXc11Lpi7XhY8
-         E/Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ihTkUqZhhqmkUOzZiik/UlNMwfDIn+N9i+/O/Uvjecs=;
-        b=IP7Hb4lmDkek5eYyupkmTWSRgxoVpBa4dnUPb4Oh9mJspCK/8uUhiqUB/yI7moIOF/
-         j/KKhaWaI8e1URPQZ5nSqjaYTE/J83Mx2sPhjCCl/WTPntLG4Cv3bgXBoPX2IsP/0mWJ
-         Xd2+VexvGxHVvcra7BdmHr78RkjJW2aXNP4RAJOBh6bcmdtw3Ige/8DCDTZir09zP0Ab
-         VQzaAQAGJDWml2s2tkGgrxeyHBQzXyI/rxTLT/hOauTKgdoJoPy1mm8xVHNlRBCQYnnD
-         AoH8jLHyVNpSXXvffOSzKUs1GQrWdW7SPdmyxWX0iGNhAdVectlIxOL6g45UDz+N3k2b
-         elzg==
-X-Gm-Message-State: ABuFfoiSM9CDpzvCiTB31sJdXkp2pIIAaZRn8jmlLeqehQlS2cV1rTlW
-        qG7tdOPb+/0x3f3+zT9mkEWoI65RP8Uqg7DbvzbPxg==
-X-Google-Smtp-Source: ACcGV620hHat7zhZi70D6z0MdNPpovaDI0hTww2Ne929kbduS3OiSPgHK2NTm85ursjY9bpV0WL2I3rR+zg6kpiuP0g=
-X-Received: by 2002:a25:7505:: with SMTP id q5-v6mr6936269ybc.191.1538421593928;
- Mon, 01 Oct 2018 12:19:53 -0700 (PDT)
+        id S1726178AbeJBCA0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 22:00:26 -0400
+Received: from mout.web.de ([212.227.17.12]:33545 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725948AbeJBCA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 22:00:26 -0400
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M9GN8-1g0z7R1JrK-00Cerj; Mon, 01
+ Oct 2018 21:15:59 +0200
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M9GN8-1g0z7R1JrK-00Cerj; Mon, 01
+ Oct 2018 21:15:59 +0200
+Subject: Re: [PATCH] grep: provide a noop --recursive option
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Christoph Berg <myon@debian.org>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <20180929140132.GA31238@msg.df7cb.de>
+ <20180929145527.23444-1-avarab@gmail.com>
+ <xmqq8t3k9qjs.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ffc574a9-cf78-2dd5-084a-a6005547d363@web.de>
+Date:   Mon, 1 Oct 2018 21:15:57 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-References: <CAGDaZ_oBpLxD0cutrsNsFBEtH+-Fn2eT40gDsnGZhhU0qm2Ofw@mail.gmail.com>
- <87bm8giapu.fsf@evledraar.gmail.com> <CACsJy8BYr6cVtAcDO9w-tfgEiWnbvQCgSR7p3OFKbqVkPA1Gaw@mail.gmail.com>
- <CAGDaZ_oS4bjzd67T5atJrJ6_x2Cfr8JgnoGWePzA53mb2ObdNg@mail.gmail.com>
-In-Reply-To: <CAGDaZ_oS4bjzd67T5atJrJ6_x2Cfr8JgnoGWePzA53mb2ObdNg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 1 Oct 2018 12:19:42 -0700
-Message-ID: <CAGZ79kYX3ZgmE3S-2cq0F_27Ctq_wwuSo53znRrBquik3ODXew@mail.gmail.com>
-Subject: Re: [BUG] Segfault in "git submodule"
-To:     shentino@gmail.com
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq8t3k9qjs.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:VQ04ixzkS3CaltVsNy/YtMJKDDjSxK3/kO+PP1PEw7Z1O1AhXpF
+ oOHOzk9kvovVRHVFbqvBQhN4YRORrwSHLz/u9DPBPhQSHRy9dK20MY7ell3VgniL5BgJlZ1
+ clQwAt9/Lbr3SuMTWRm6v0UaqDmsGUJuSheEJH2ZqJQHVJAtLQdXlWFuBG8IHgHhTf8+TdS
+ tagIWLab58AtxN874ek2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pj9AzS5d2m8=:Opzm8+9fegS28prHFGnM2E
+ y0ezF8Ayn+J9NdzWsLwTEO/nn8xIhhMcukIFgsw1aaSkiKs8fNqRFX0QBMl3oaKr5QviSut3P
+ R8SiERD97PtAkDjhkynlR2i46Fh1jxuP8Qm8+jY0WLw+ysn9xkWfYlhiTY5AE+5ZTL1J2Rois
+ jvBCv56jIAkb4Q5tqHCu2Uh59XyVR9Xkiz0MppKXp6y8UwPp2bru19Z2KYluj+Tn2WKAwXWbM
+ TbYi12CKxeVWUlsPMyccACGkA4lRvhHL5VZ10HsFQiZSc+QEMYVJfCO7lpM4K7F2B0ZspEY68
+ 6m8pOgxDK+aQyO4lzUJIyVPOMCH6+FMsA+6xo2q2ZtkowNxKx57rvX9i2Zyc9zzecBeJAPgsn
+ ze6VvcZwo8M2A8UNjY77TrpvPM43kNbotJXb40uPVfKnsWH0TW25t4BSJnXN4VcwadoQplilF
+ 3Eeq+soBWaXB2XLscVf2AZ7qffTQqso5MdqSY2DfTqE9vwNM3KT16BoFuXXYf5gNh2u6m5xc6
+ Fkb4RAJUATE08GgVBKZMGAO1Lio7hWmbHCm2/MR31XTJ4I0LTjnVfmQI+Ap/1mso0j2T5iRlo
+ EryYwvi0keoAqLiF3IOjxrVk4xErj7FYanURCcyJBeenS/j2tKMmfCFvBbhylH/R+OzH2RuWx
+ CiES76AQ1HmJo99rzigic36X7WP0Q7lJfGxsM6LR5zUcgK6Dr7oul7DY1qQYNOqwpZnmQKb5W
+ yGS3rAx/Uvz8lxK5xMDH+CWyS+N3SL7OHkLYL6cZtthzvdfoCMEhz0K2Bk/Ei48YstpTCbTBg
+ xLtc9ulgxnNMzPPBAOxS21BebAg6bs1FCUedNAh1eMYXuuxSw4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 29, 2018 at 9:43 AM Raymond Jennings <shentino@gmail.com> wrote=
-:
->
-> I have a repo, but it appears to be specific to staging area state.
-> It only segfaults when I have a certain file deleted.
->
-> Where do you want me to upload it?
-> On Sat, Sep 29, 2018 at 8:34 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Sat, Sep 29, 2018 at 5:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> > > > #1  refs_resolve_ref_unsafe (refs=3D0x0,
-> > > > refname=3Drefname@entry=3D0x55e863062253 "HEAD",
-> > > > resolve_flags=3Dresolve_flags@entry=3D1, oid=3Doid@entry=3D0x7ffdc8=
-34b1c0,
-> > > > flags=3Dflags@entry=3D0x7ffdc834b1bc) at refs.c:1493
-> >
-> > refs is NULL. It looks like somebody fails to get the right submodule
-> > ref store (or tries to get it but fails to check if it may return
-> > NULL)
+Am 29.09.2018 um 19:11 schrieb Junio C Hamano:
+> I however do not mind if we added "--recursive" with matching
+> "--no-recursive", and
+> 
+>  - made "--recursive" the default (obviously)
+> 
+>  - made "--no-recursive" a synonym to setting the recursion limit
+>    to "never recurse"
+> 
+>  - and made "--recursive" a synonym to setting the recursion limit
+>    to "infinity".
+> 
+> That would be more work than this patch.  But if I see "--recursive"
+> advertised as a feature, and the command by default goes recursive,
+> I do expect to be able to tell it not to recurse.
 
-This is spot on.
+-- >8 --
+Subject: [PATCH] grep: add -r/--[no-]recursive
 
-Raymond, are you on Git v2.16.0 by any chance?
-(and if now which version are you on).
+Recognize -r and --recursive as synonyms for --max-depth=-1 for
+compatibility with GNU grep; it's still the default for git grep.
 
-I suspect 2.16, as that is a version of Git, in which there happens to be
-a call into the refs subsystem in submodule--helper.c in line 624.
+This also adds --no-recursive as synonym for --max-depth=0 for free,
+which is welcome for completeness and consistency.
 
-Is it possible to upgrade Git (to v2.18.0 or later) or cherry-pick
-74b6bda32f (submodule: check for NULL return of get_submodule_ref_store(),
-2018-03-28) into your copy of Git?
+Fix the description for --max-depth, while we're at it -- negative
+values other than -1 actually disable recursion, i.e. they are
+equivalent to --max-depth=0.
 
-Thanks,
-Stefan
+Requested-by: Christoph Berg <myon@debian.org>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Initial-patch-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ Documentation/git-grep.txt | 11 +++++++++--
+ builtin/grep.c             |  2 ++
+ t/t7810-grep.sh            | 12 ++++++++++++
+ 3 files changed, 23 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index a3049af1a3..84fe236a8e 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 	   [(-O | --open-files-in-pager) [<pager>]]
+ 	   [-z | --null]
+ 	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
+-	   [--max-depth <depth>]
++	   [--max-depth <depth>] [--[no-]recursive]
+ 	   [--color[=<when>] | --no-color]
+ 	   [--break] [--heading] [-p | --show-function]
+ 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
+@@ -119,11 +119,18 @@ OPTIONS
+ 
+ --max-depth <depth>::
+ 	For each <pathspec> given on command line, descend at most <depth>
+-	levels of directories. A negative value means no limit.
++	levels of directories. A value of -1 means no limit.
+ 	This option is ignored if <pathspec> contains active wildcards.
+ 	In other words if "a*" matches a directory named "a*",
+ 	"*" is matched literally so --max-depth is still effective.
+ 
++-r::
++--recursive::
++	Same as `--max-depth=-1`; this is the default.
++
++--no-recursive::
++	Same as `--max-depth=0`.
++
+ -w::
+ --word-regexp::
+ 	Match the pattern only at word boundary (either begin at the
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 601f801158..f6e127f0bc 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -811,6 +811,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			GREP_BINARY_NOMATCH),
+ 		OPT_BOOL(0, "textconv", &opt.allow_textconv,
+ 			 N_("process binary files with textconv filters")),
++		OPT_SET_INT('r', "recursive", &opt.max_depth,
++			    N_("search in subdirectories (default)"), -1),
+ 		{ OPTION_INTEGER, 0, "max-depth", &opt.max_depth, N_("depth"),
+ 			N_("descend at most <depth> levels"), PARSE_OPT_NONEG,
+ 			NULL, 1 },
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index be5c1bd553..43aa4161cf 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -309,6 +309,8 @@ do
+ 			echo ${HC}v:1:vvv
+ 		} >expected &&
+ 		git grep --max-depth -1 -n -e vvv $H >actual &&
++		test_cmp expected actual &&
++		git grep --recursive -n -e vvv $H >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -317,6 +319,8 @@ do
+ 			echo ${HC}v:1:vvv
+ 		} >expected &&
+ 		git grep --max-depth 0 -n -e vvv $H >actual &&
++		test_cmp expected actual &&
++		git grep --no-recursive -n -e vvv $H >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -327,6 +331,8 @@ do
+ 			echo ${HC}v:1:vvv
+ 		} >expected &&
+ 		git grep --max-depth 0 -n -e vvv $H -- "*" >actual &&
++		test_cmp expected actual &&
++		git grep --no-recursive -n -e vvv $H -- "*" >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -344,6 +350,8 @@ do
+ 			echo ${HC}t/v:1:vvv
+ 		} >expected &&
+ 		git grep --max-depth 0 -n -e vvv $H -- t >actual &&
++		test_cmp expected actual &&
++		git grep --no-recursive -n -e vvv $H -- t >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -353,6 +361,8 @@ do
+ 			echo ${HC}v:1:vvv
+ 		} >expected &&
+ 		git grep --max-depth 0 -n -e vvv $H -- . t >actual &&
++		test_cmp expected actual &&
++		git grep --no-recursive -n -e vvv $H -- . t >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -362,6 +372,8 @@ do
+ 			echo ${HC}v:1:vvv
+ 		} >expected &&
+ 		git grep --max-depth 0 -n -e vvv $H -- t . >actual &&
++		test_cmp expected actual &&
++		git grep --no-recursive -n -e vvv $H -- t . >actual &&
+ 		test_cmp expected actual
+ 	'
+ 	test_expect_success "grep $L with grep.extendedRegexp=false" '
+-- 
+2.19.0
+
