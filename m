@@ -7,204 +7,117 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78F6C1F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 19:21:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44FDE1F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 19:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726178AbeJBCA0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 22:00:26 -0400
-Received: from mout.web.de ([212.227.17.12]:33545 "EHLO mout.web.de"
+        id S1726207AbeJBCAi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 22:00:38 -0400
+Received: from mout.web.de ([212.227.17.11]:41785 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725948AbeJBCA0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 22:00:26 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M9GN8-1g0z7R1JrK-00Cerj; Mon, 01
- Oct 2018 21:15:59 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M9GN8-1g0z7R1JrK-00Cerj; Mon, 01
- Oct 2018 21:15:59 +0200
-Subject: Re: [PATCH] grep: provide a noop --recursive option
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Christoph Berg <myon@debian.org>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <20180929140132.GA31238@msg.df7cb.de>
- <20180929145527.23444-1-avarab@gmail.com>
- <xmqq8t3k9qjs.fsf@gitster-ct.c.googlers.com>
+        id S1725948AbeJBCAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 22:00:38 -0400
+X-Greylist: delayed 320 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Oct 2018 22:00:38 EDT
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8iH2-1g1XM50UJQ-00CAX2; Mon, 01
+ Oct 2018 21:16:09 +0200
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8iH2-1g1XM50UJQ-00CAX2; Mon, 01
+ Oct 2018 21:16:09 +0200
+Subject: Re: What's cooking in git.git (Sep 2018, #04; Thu, 20)
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <ffc574a9-cf78-2dd5-084a-a6005547d363@web.de>
-Date:   Mon, 1 Oct 2018 21:15:57 +0200
+Message-ID: <c5f7009b-53b5-26b9-8a01-b8648ee33a15@web.de>
+Date:   Mon, 1 Oct 2018 21:16:07 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <xmqq8t3k9qjs.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqin2zxw55.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:VQ04ixzkS3CaltVsNy/YtMJKDDjSxK3/kO+PP1PEw7Z1O1AhXpF
- oOHOzk9kvovVRHVFbqvBQhN4YRORrwSHLz/u9DPBPhQSHRy9dK20MY7ell3VgniL5BgJlZ1
- clQwAt9/Lbr3SuMTWRm6v0UaqDmsGUJuSheEJH2ZqJQHVJAtLQdXlWFuBG8IHgHhTf8+TdS
- tagIWLab58AtxN874ek2A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pj9AzS5d2m8=:Opzm8+9fegS28prHFGnM2E
- y0ezF8Ayn+J9NdzWsLwTEO/nn8xIhhMcukIFgsw1aaSkiKs8fNqRFX0QBMl3oaKr5QviSut3P
- R8SiERD97PtAkDjhkynlR2i46Fh1jxuP8Qm8+jY0WLw+ysn9xkWfYlhiTY5AE+5ZTL1J2Rois
- jvBCv56jIAkb4Q5tqHCu2Uh59XyVR9Xkiz0MppKXp6y8UwPp2bru19Z2KYluj+Tn2WKAwXWbM
- TbYi12CKxeVWUlsPMyccACGkA4lRvhHL5VZ10HsFQiZSc+QEMYVJfCO7lpM4K7F2B0ZspEY68
- 6m8pOgxDK+aQyO4lzUJIyVPOMCH6+FMsA+6xo2q2ZtkowNxKx57rvX9i2Zyc9zzecBeJAPgsn
- ze6VvcZwo8M2A8UNjY77TrpvPM43kNbotJXb40uPVfKnsWH0TW25t4BSJnXN4VcwadoQplilF
- 3Eeq+soBWaXB2XLscVf2AZ7qffTQqso5MdqSY2DfTqE9vwNM3KT16BoFuXXYf5gNh2u6m5xc6
- Fkb4RAJUATE08GgVBKZMGAO1Lio7hWmbHCm2/MR31XTJ4I0LTjnVfmQI+Ap/1mso0j2T5iRlo
- EryYwvi0keoAqLiF3IOjxrVk4xErj7FYanURCcyJBeenS/j2tKMmfCFvBbhylH/R+OzH2RuWx
- CiES76AQ1HmJo99rzigic36X7WP0Q7lJfGxsM6LR5zUcgK6Dr7oul7DY1qQYNOqwpZnmQKb5W
- yGS3rAx/Uvz8lxK5xMDH+CWyS+N3SL7OHkLYL6cZtthzvdfoCMEhz0K2Bk/Ei48YstpTCbTBg
- xLtc9ulgxnNMzPPBAOxS21BebAg6bs1FCUedNAh1eMYXuuxSw4=
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:bfBbLx2N8oE+SYdV8BmXs6nE7AbkSJTcBKHizSFFgDV8xNOtyh8
+ V/ac/iG3HFWcb/mLap52gyzvQuyxvU/cS9jlz2o9oQm3hFsaKzdstmN/uSK6uFZrR5ceBXF
+ /q0pHmK3f/t0XnTl/0FX0P6JqBaPvQvm/n3LHPFteG855MZmRDXgEPFcw6G64PlZB0vIyHM
+ nMcyP3+P7DIBbVyOmaihQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kzhmjKdwwAo=:beq/G4iM1zTv6LlqQyCsuY
+ L4nTQY8ZkbBS0PTqaaKBneC8xLOhE2j+o/MwCyUNd7MOjxJ4VE+ZGlLQesMqP016EkVmjq5WD
+ 6gDzZCMuq1kKY3Q+/awsYy6WZUA9BinF2cNrcweRkZuwW8YEspBFYzFJjLGWO6JhnInftk7sN
+ 11eLIgF5kcWFHApqIHJbMK6MaTHcdu/qFp20zbBIoKwlU0c/0CXLhJb7g+Q2LUShsY+ZNfeZe
+ E2i5XEsWchQNACC/tPmN1AUb3VsPHv+IhPnp/PVVpph5ueoD2qL+p5YEIkErIVKt6rJ/3QgEC
+ MCFTQiG2Inoupo5eaOJ/R/0QtDhCmQwlU2mVD27CSbrJk8BVM4uCH8/6eQX98QhW1uwfFUhkZ
+ 2ctnM6O/WvXLlVIPwCUY0OLIzKqyeFNzjDXSGGULAb1qtJHzKag05S1/BvkxDQNZzLoFgnA7K
+ IjZBDTYFeZlSY1KQ0ur0uFmqIJGP4hyrC+ToSDeP3fHtW8LvYmem9bOQlJRzkAbUBL84A4En2
+ M5LDfNOZYa2LVwxdZlI9Pram7Do2Nw3Rki1F1EPDORRIc2DTh+62lm/8A8EMaQLNA3nP0gznh
+ CnEAQMSDSllIcYTTULEbiZmSBy5pqyQWlDCdiPM8fgWLebNUHYSTUOvADIOON1yoJ86/u0vft
+ OPOPRPY5nQUtmBLEMj1cI7ubETvuoyh5VYsWE/COMqaRYNa7CDtMe8pvxzg+/QTfcRneJrvhf
+ 9IT1BGexNbdqEI4gHGfpQU2uA+TYSqD/qiyV5JECMei1DX+JCxMoA3aQgl560rmBLd6mNqQ40
+ 64KM0NF6GPGv3eqMgE8vuVXpxjHxEKmO2o53K0K9UP0vwptWkw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.09.2018 um 19:11 schrieb Junio C Hamano:
-> I however do not mind if we added "--recursive" with matching
-> "--no-recursive", and
+Am 21.09.2018 um 07:22 schrieb Junio C Hamano:
+> * cc/delta-islands (2018-08-16) 7 commits
+>   (merged to 'next' on 2018-08-27 at cf3d7bd93f)
+>  + pack-objects: move 'layer' into 'struct packing_data'
+>  + pack-objects: move tree_depth into 'struct packing_data'
+>  + t5320: tests for delta islands
+>  + repack: add delta-islands support
+>  + pack-objects: add delta-islands support
+>  + pack-objects: refactor code into compute_layer_order()
+>  + Add delta-islands.{c,h}
 > 
->  - made "--recursive" the default (obviously)
+>  Lift code from GitHub to restrict delta computation so that an
+>  object that exists in one fork is not made into a delta against
+>  another object that does not appear in the same forked repository.
+
+> * jk/pack-delta-reuse-with-bitmap (2018-08-21) 6 commits
+>   (merged to 'next' on 2018-08-22 at fc50b59dab)
+>  + pack-objects: reuse on-disk deltas for thin "have" objects
+>  + pack-bitmap: save "have" bitmap from walk
+>  + t/perf: add perf tests for fetches from a bitmapped server
+>  + t/perf: add infrastructure for measuring sizes
+>  + t/perf: factor out percent calculations
+>  + t/perf: factor boilerplate out of test_perf
+>  (this branch is used by jk/pack-objects-with-bitmap-fix.)
 > 
->  - made "--no-recursive" a synonym to setting the recursion limit
->    to "never recurse"
-> 
->  - and made "--recursive" a synonym to setting the recursion limit
->    to "infinity".
-> 
-> That would be more work than this patch.  But if I see "--recursive"
-> advertised as a feature, and the command by default goes recursive,
-> I do expect to be able to tell it not to recurse.
+>  When creating a thin pack, which allows objects to be made into a
+>  delta against another object that is not in the resulting pack but
+>  is known to be present on the receiving end, the code learned to
+>  take advantage of the reachability bitmap; this allows the server
+>  to send a delta against a base beyond the "boundary" commit.
 
--- >8 --
-Subject: [PATCH] grep: add -r/--[no-]recursive
+Not sure if it's the interaction of the two topics or if only one of
+them is to blame, but the result of the merge can dereference a NULL
+pointer.  Found using Clang's UBSan and t5310.
 
-Recognize -r and --recursive as synonyms for --max-depth=-1 for
-compatibility with GNU grep; it's still the default for git grep.
+Here's a patch that avoids the issue, but I don't know if it's the
+right thing to do -- should we rather treat a non-existing base as
+"not from the same island" instead?
 
-This also adds --no-recursive as synonym for --max-depth=0 for free,
-which is welcome for completeness and consistency.
+And it's certainly ugly -- that condition is complicated enough
+already.  Splitting it up in a nice way would probably help, but how?
 
-Fix the description for --max-depth, while we're at it -- negative
-values other than -1 actually disable recursion, i.e. they are
-equivalent to --max-depth=0.
-
-Requested-by: Christoph Berg <myon@debian.org>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Initial-patch-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- Documentation/git-grep.txt | 11 +++++++++--
- builtin/grep.c             |  2 ++
- t/t7810-grep.sh            | 12 ++++++++++++
- 3 files changed, 23 insertions(+), 2 deletions(-)
+ builtin/pack-objects.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index a3049af1a3..84fe236a8e 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -18,7 +18,7 @@ SYNOPSIS
- 	   [(-O | --open-files-in-pager) [<pager>]]
- 	   [-z | --null]
- 	   [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
--	   [--max-depth <depth>]
-+	   [--max-depth <depth>] [--[no-]recursive]
- 	   [--color[=<when>] | --no-color]
- 	   [--break] [--heading] [-p | --show-function]
- 	   [-A <post-context>] [-B <pre-context>] [-C <context>]
-@@ -119,11 +119,18 @@ OPTIONS
- 
- --max-depth <depth>::
- 	For each <pathspec> given on command line, descend at most <depth>
--	levels of directories. A negative value means no limit.
-+	levels of directories. A value of -1 means no limit.
- 	This option is ignored if <pathspec> contains active wildcards.
- 	In other words if "a*" matches a directory named "a*",
- 	"*" is matched literally so --max-depth is still effective.
- 
-+-r::
-+--recursive::
-+	Same as `--max-depth=-1`; this is the default.
-+
-+--no-recursive::
-+	Same as `--max-depth=0`.
-+
- -w::
- --word-regexp::
- 	Match the pattern only at word boundary (either begin at the
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 601f801158..f6e127f0bc 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -811,6 +811,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			GREP_BINARY_NOMATCH),
- 		OPT_BOOL(0, "textconv", &opt.allow_textconv,
- 			 N_("process binary files with textconv filters")),
-+		OPT_SET_INT('r', "recursive", &opt.max_depth,
-+			    N_("search in subdirectories (default)"), -1),
- 		{ OPTION_INTEGER, 0, "max-depth", &opt.max_depth, N_("depth"),
- 			N_("descend at most <depth> levels"), PARSE_OPT_NONEG,
- 			NULL, 1 },
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index be5c1bd553..43aa4161cf 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -309,6 +309,8 @@ do
- 			echo ${HC}v:1:vvv
- 		} >expected &&
- 		git grep --max-depth -1 -n -e vvv $H >actual &&
-+		test_cmp expected actual &&
-+		git grep --recursive -n -e vvv $H >actual &&
- 		test_cmp expected actual
- 	'
- 
-@@ -317,6 +319,8 @@ do
- 			echo ${HC}v:1:vvv
- 		} >expected &&
- 		git grep --max-depth 0 -n -e vvv $H >actual &&
-+		test_cmp expected actual &&
-+		git grep --no-recursive -n -e vvv $H >actual &&
- 		test_cmp expected actual
- 	'
- 
-@@ -327,6 +331,8 @@ do
- 			echo ${HC}v:1:vvv
- 		} >expected &&
- 		git grep --max-depth 0 -n -e vvv $H -- "*" >actual &&
-+		test_cmp expected actual &&
-+		git grep --no-recursive -n -e vvv $H -- "*" >actual &&
- 		test_cmp expected actual
- 	'
- 
-@@ -344,6 +350,8 @@ do
- 			echo ${HC}t/v:1:vvv
- 		} >expected &&
- 		git grep --max-depth 0 -n -e vvv $H -- t >actual &&
-+		test_cmp expected actual &&
-+		git grep --no-recursive -n -e vvv $H -- t >actual &&
- 		test_cmp expected actual
- 	'
- 
-@@ -353,6 +361,8 @@ do
- 			echo ${HC}v:1:vvv
- 		} >expected &&
- 		git grep --max-depth 0 -n -e vvv $H -- . t >actual &&
-+		test_cmp expected actual &&
-+		git grep --no-recursive -n -e vvv $H -- . t >actual &&
- 		test_cmp expected actual
- 	'
- 
-@@ -362,6 +372,8 @@ do
- 			echo ${HC}v:1:vvv
- 		} >expected &&
- 		git grep --max-depth 0 -n -e vvv $H -- t . >actual &&
-+		test_cmp expected actual &&
-+		git grep --no-recursive -n -e vvv $H -- t . >actual &&
- 		test_cmp expected actual
- 	'
- 	test_expect_success "grep $L with grep.extendedRegexp=false" '
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index e6316d294d..9abed4a0f0 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1559,7 +1559,8 @@ static void check_object(struct object_entry *entry)
+ 		    (base_entry = packlist_find(&to_pack, base_ref, NULL)) ||
+ 		    (thin &&
+ 		     bitmap_has_sha1_in_uninteresting(bitmap_git, base_ref))) &&
+-		    in_same_island(&entry->idx.oid, &base_entry->idx.oid)) {
++		    (!base_entry ||
++		     in_same_island(&entry->idx.oid, &base_entry->idx.oid))) {
+ 			/*
+ 			 * If base_ref was set above that means we wish to
+ 			 * reuse delta data, and either we found that object in
 -- 
 2.19.0
-
