@@ -2,398 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682E01F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 13:46:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6D061F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 14:17:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729398AbeJAUYR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 16:24:17 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:41587 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729386AbeJAUYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 16:24:17 -0400
-Received: by mail-qt1-f193.google.com with SMTP id m15-v6so13934530qtp.8
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 06:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VM9+riDOIdO2imNrziF2T4pihYKpsxg9CPRjLs9d7SU=;
-        b=Coqc7rTnN7TeDEVU6x+WwF8PjMVCO+/iupPJYvdi6Sgy8397ApXU+R6YoHCgiDEf0U
-         uPcTTqo4BOY1aQipXv6wq5zIMto+r5iqZMXL1+HPcfBv9k/tiUs+KCkk4H1YjfyCbbyC
-         00slaUTRL/+wLYL3gwyKYZQcq0ZuhG2rOxBIfIJs21CN6WzWLBc2k+o/ffZqI96HsXfx
-         gbFBLKvnS3QCaaK8mLY6l08p8Ng17QhjOc294c6qsdV+4w9t+4ABjobZu9ykZeaK4gdO
-         q1TS7jr3hd/uMyrcRDgVOzoAMPMl9nrUjkzLb9PcXMfusdJ891jObKteg9qmlT753+3T
-         HKfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=VM9+riDOIdO2imNrziF2T4pihYKpsxg9CPRjLs9d7SU=;
-        b=flSres3zKevYcJXPJI1JhdK/jOYwCaKxJtDVqmdb60jR1fR6emNFBxcgb11jSdgJpV
-         qVs0BvcA2T3ZE1RpcWlIenjPdoYlEdl9mmmFfOUc++XwMZGUVSpw4OnDNnNsiKTN3V3e
-         hFOUgvFm+wBu3FqvbQgefi1fQLGIA0qziWQj+7D4t8jlHkPiVg7DB0lpmMDpBP4cI7BL
-         QU6dfPy+JsYlYG3DgG0wnA/ezopEYbVesMg9WMdFnC0QlWIqicLMdRjTwTHQEPl+jLV5
-         G2TpFKLT4NQTPVdIti/1FiFOfSA79r9EFx4tz6ywG1CMj9u64qxKW2C6JhSKgASDKeX7
-         mbdw==
-X-Gm-Message-State: ABuFfoisA9/swJofzMK5AiqKXpCOYT8jTkfhbFfF6XyFOGGxSS8IMv0Q
-        uiPi2NewivlSHpqLPDAu8odZlPla/gI=
-X-Google-Smtp-Source: ACcGV62inHLge7MXfDU2lxYRX7Gxr6Nf7faBgAbiNlpQN8ufwXmSd9Gc476I+weCOxg15XOWq9Q7kg==
-X-Received: by 2002:a0c:f94e:: with SMTP id i14-v6mr8649316qvo.50.1538401582455;
-        Mon, 01 Oct 2018 06:46:22 -0700 (PDT)
-Received: from localhost.localdomain (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id f129-v6sm6763435qkb.40.2018.10.01.06.46.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Oct 2018 06:46:21 -0700 (PDT)
-From:   Ben Peart <peartben@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>,
-        Ben Peart <peartben@gmail.com>
-Subject: [PATCH v7 7/7] read-cache: load cache entries on worker threads
-Date:   Mon,  1 Oct 2018 09:45:56 -0400
-Message-Id: <20181001134556.33232-8-peartben@gmail.com>
-X-Mailer: git-send-email 2.18.0.windows.1
-In-Reply-To: <20181001134556.33232-1-peartben@gmail.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181001134556.33232-1-peartben@gmail.com>
+        id S1729502AbeJAUzc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 16:55:32 -0400
+Received: from mail-oln040092068029.outbound.protection.outlook.com ([40.92.68.29]:56593
+        "EHLO EUR02-HE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729341AbeJAUzb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 16:55:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w1vtjNwr+MaY0BLijkaTRpw7vFyLxgdxvIBJG1hKOfE=;
+ b=QShwyk7Ws5N0q8ij/cskfxKzYCDr/KVZyCusWUHC9pFwbEFJvhmG5OrXOHZOXrhpa748pr3eSmckxIQVObMmZLJQQlgr7PPyrbJHHf6zOB3mhxsbeRSHsK80viHvSRdoHbHqr1dUj6o3M+DoBHpLbCVGppN5tI9F5iuET93a3c7IvGfEobKmS7WyJMPWHWJsJkLpT9K0defXxHpUKWJHgOmTR82QF61jCm/MPoKaTmostD/QBkz4eOVHrxH45KAaVOcIyQVJ6CrsLisgOUlrq0g9gZWqQoAbu7dZWGfQDxKoqZ+wLhtHIdRfVH5zXJ5nuWpV46643TZOmwPhsW3/Ag==
+Received: from AM5EUR02FT039.eop-EUR02.prod.protection.outlook.com
+ (10.152.8.60) by AM5EUR02HT083.eop-EUR02.prod.protection.outlook.com
+ (10.152.9.239) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1185.13; Mon, 1 Oct
+ 2018 14:17:25 +0000
+Received: from VI1PR0902MB2223.eurprd09.prod.outlook.com (10.152.8.53) by
+ AM5EUR02FT039.mail.protection.outlook.com (10.152.9.27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.1185.13 via Frontend Transport; Mon, 1 Oct 2018 14:17:25 +0000
+Received: from VI1PR0902MB2223.eurprd09.prod.outlook.com
+ ([fe80::1b9:1b61:c38c:8bd9]) by VI1PR0902MB2223.eurprd09.prod.outlook.com
+ ([fe80::1b9:1b61:c38c:8bd9%3]) with mapi id 15.20.1185.024; Mon, 1 Oct 2018
+ 14:17:25 +0000
+From:   Jose Gisbert <jose.gisbert@live.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Using git svn rebase at quarantine environment or a feasible
+ alternative to synchronize git and svn repositories
+Thread-Topic: Using git svn rebase at quarantine environment or a feasible
+ alternative to synchronize git and svn repositories
+Thread-Index: AQHUWV6KIMpBHSj6s0iSXwsGXjkPyaUKFkIAgABHv+o=
+Date:   Mon, 1 Oct 2018 14:17:25 +0000
+Message-ID: <VI1PR0902MB22239E8AFA54DE8FFC0CB67FE2EF0@VI1PR0902MB2223.eurprd09.prod.outlook.com>
+References: <VI1PR0902MB2223EA3FC0ACE7E9AFB7A6ACE2EF0@VI1PR0902MB2223.eurprd09.prod.outlook.com>,<87a7nyhwqn.fsf@evledraar.gmail.com>
+In-Reply-To: <87a7nyhwqn.fsf@evledraar.gmail.com>
+Accept-Language: es-ES, en-US
+Content-Language: es-ES
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:53C0395D2406DC3556C60F5742981E931469ECF8214A95C6A51CFB7351B14653;UpperCasedChecksum:BB78C32D93CA788BB857024BB7C200551A29A6A6014CC853F79C989B765B24EF;SizeAsReceived:7313;Count:47
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn:  [rkXBBoeRcgeQLm1WfH8tF0Nv+GZQ0MNy]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;AM5EUR02HT083;6:17jlsVU/WhqRPXAcjc/Z+JZ5FIR0705m1ZOS91gtENfcOUIsfUbzyOsXMy1x7fNHGjfyU7qDfUC8G6ESpR9ZnIxL0nXxbNK9RAEpULYjRZr/8p+D3WylJWGKbUxrcsyBDDUg4QAbBUPScp8o/Y/IzFXLHa/3xSLSq6nL3dFLVMuoaYbNV5+EuJEE5aj0+XRUDe4bFvAsUZYb+iF0TMOVckfi7aWakUp3fsyNWl8sN09lswWkVAa+fsxivYGd/pjF/Fm5/wnpj1oSEwuDrbG0eQ2ng+KtzpuPKfP8rD+sYkAn7jFuIxEvOybPtaps3bhuiCxkkg1ObWFcxgaqGTBVcMFC48NpTr1iI6wzm73R9vX99RZbvMXOZ30FbeZL72rNUVrKAF733dUGyDb2H9dpt8kTN/vnvijKFh4Ms05hd3Cx/wRaO9fHfQBIuCoMv2YBmEW+J19KJtprX7nrUc9ThA==;5:fWEjvlM6iAofYFIhlXh6+etdyxiuXRn8+d0/fxNG0ez6eVVSEnI/hz9MJrmVm8es02aVm6XOK5nkql/Dvm6JeyoD9Utjb9iC3526YCDw7JTAAX0csewBmFz7WP2WypFa1WhFZrWZ8KM4d8RZz4n1aqTr8OjkLBTNopSt3VXmPhc=;7:B6lwpjkalmx9OU2HZ4K+YOwUTrwvMHrzNFryhuiqXCSB+lCS6oR5TZDTGlOqSgRcxQJ/LnwJygQFJ0sk1m2AXuXJWHoOIv0GdQs4AwTH2lou2ESQpXQE/1VJgS62j2+8hCIFwpDFuo+bOEIOtG1QQ6DlJHZVhdkzPgzwBje6LiySYBru++Rw8hNOw2gCPeZKf1oU4tMkXWXbJAwom66FNLiDWxOlSvD3TBOMkB0PEhJ/ohMFv5HRVVddN0jxK7oF
+x-incomingheadercount: 47
+x-eopattributedmessage: 0
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(2017031322404)(1601125500)(1603101475)(1701031045);SRVR:AM5EUR02HT083;
+x-ms-traffictypediagnostic: AM5EUR02HT083:
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(4566010)(82015058);SRVR:AM5EUR02HT083;BCL:0;PCL:0;RULEID:;SRVR:AM5EUR02HT083;
+x-forefront-prvs: 0812095267
+x-forefront-antispam-report: SFV:NSPM;SFS:(7070007)(189003)(199004)(6246003)(486006)(68736007)(6306002)(9686003)(229853002)(6506007)(256004)(5660300001)(7696005)(561944003)(14444005)(8936002)(33656002)(8676002)(81156014)(76176011)(476003)(82202002)(55016002)(345774005)(56003)(86362001)(6436002)(104016004)(14454004)(25786009)(99286004)(71200400001)(106356001)(1411001)(5250100002)(966005)(305945005)(11346002)(97736004)(446003)(34290500001)(71190400001)(44832011)(74316002)(26005)(39060400002)(6346003)(4326008)(102836004)(6916009)(2900100001)(105586002);DIR:OUT;SFP:1901;SCL:1;SRVR:AM5EUR02HT083;H:VI1PR0902MB2223.eurprd09.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: live.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=jose.gisbert@live.com; 
+x-microsoft-antispam-message-info: QG9fN0GeuQ2+MQRmaLz2N9E3ia2vjn4rEE/1/4fz9K6ufOHoOM3K1GTTtAvoPFY/PztdiRQDVdBPqu3sj/nBSlBDrAQJkCS/6tiSkpSmK1USNKNg6PAyUbHsDb00R5VqhO7RElfFiHMRnKo22Vr8GykOAuAAgnXLFZnhTFv41baXefR5Ox4TzCwfLA5D8uhsIR3SrBx06cHrZvkEy+DZM2QNTjvPDkFG95RzxJSywAY=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: live.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 24fd1209-d934-423e-a578-ee886993c07f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54c7f728-ca70-4ae1-2da3-08d627a89cc0
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 24fd1209-d934-423e-a578-ee886993c07f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Oct 2018 14:17:25.6122
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM5EUR02HT083
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Peart <benpeart@microsoft.com>
-
-This patch helps address the CPU cost of loading the index by utilizing
-the Index Entry Offset Table (IEOT) to divide loading and conversion of
-the cache entries across multiple threads in parallel.
-
-I used p0002-read-cache.sh to generate some performance data:
-
-Test w/100,000 files reduced the time by 32.24%
-Test w/1,000,000 files reduced the time by -4.77%
-
-Note that on the 1,000,000 files case, multi-threading the cache entry parsing
-does not yield a performance win.  This is because the cost to parse the
-index extensions in this repo, far outweigh the cost of loading the cache
-entries.
-
-The high cost of parsing the index extensions is driven by the cache tree
-and the untracked cache extensions. As this is currently the longest pole,
-any reduction in this time will reduce the overall index load times so is
-worth further investigation in another patch series.
-
-Signed-off-by: Ben Peart <peartben@gmail.com>
----
- read-cache.c | 224 +++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 189 insertions(+), 35 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 9557376e78..14402a0738 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1720,7 +1720,8 @@ int read_index(struct index_state *istate)
- 	return read_index_from(istate, get_index_file(), get_git_dir());
- }
- 
--static struct cache_entry *create_from_disk(struct index_state *istate,
-+static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
-+					    unsigned int version,
- 					    struct ondisk_cache_entry *ondisk,
- 					    unsigned long *ent_size,
- 					    const struct cache_entry *previous_ce)
-@@ -1737,7 +1738,7 @@ static struct cache_entry *create_from_disk(struct index_state *istate,
- 	 * number of bytes to be stripped from the end of the previous name,
- 	 * and the bytes to append to the result, to come up with its name.
- 	 */
--	int expand_name_field = istate->version == 4;
-+	int expand_name_field = version == 4;
- 
- 	/* On-disk flags are just 16 bits */
- 	flags = get_be16(&ondisk->flags);
-@@ -1761,16 +1762,17 @@ static struct cache_entry *create_from_disk(struct index_state *istate,
- 		const unsigned char *cp = (const unsigned char *)name;
- 		size_t strip_len, previous_len;
- 
--		previous_len = previous_ce ? previous_ce->ce_namelen : 0;
-+		/* If we're at the begining of a block, ignore the previous name */
- 		strip_len = decode_varint(&cp);
--		if (previous_len < strip_len) {
--			if (previous_ce)
-+		if (previous_ce) {
-+			previous_len = previous_ce->ce_namelen;
-+			if (previous_len < strip_len)
- 				die(_("malformed name field in the index, near path '%s'"),
--				    previous_ce->name);
--			else
--				die(_("malformed name field in the index in the first path"));
-+					previous_ce->name);
-+			copy_len = previous_len - strip_len;
-+		} else {
-+			copy_len = 0;
- 		}
--		copy_len = previous_len - strip_len;
- 		name = (const char *)cp;
- 	}
- 
-@@ -1780,7 +1782,7 @@ static struct cache_entry *create_from_disk(struct index_state *istate,
- 			len += copy_len;
- 	}
- 
--	ce = mem_pool__ce_alloc(istate->ce_mem_pool, len);
-+	ce = mem_pool__ce_alloc(ce_mem_pool, len);
- 
- 	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
- 	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
-@@ -1950,6 +1952,52 @@ static void *load_index_extensions(void *_data)
- 	return NULL;
- }
- 
-+/*
-+ * A helper function that will load the specified range of cache entries
-+ * from the memory mapped file and add them to the given index.
-+ */
-+static unsigned long load_cache_entry_block(struct index_state *istate,
-+			struct mem_pool *ce_mem_pool, int offset, int nr, const char *mmap,
-+			unsigned long start_offset, const struct cache_entry *previous_ce)
-+{
-+	int i;
-+	unsigned long src_offset = start_offset;
-+
-+	for (i = offset; i < offset + nr; i++) {
-+		struct ondisk_cache_entry *disk_ce;
-+		struct cache_entry *ce;
-+		unsigned long consumed;
-+
-+		disk_ce = (struct ondisk_cache_entry *)(mmap + src_offset);
-+		ce = create_from_disk(ce_mem_pool, istate->version, disk_ce, &consumed, previous_ce);
-+		set_index_entry(istate, i, ce);
-+
-+		src_offset += consumed;
-+		previous_ce = ce;
-+	}
-+	return src_offset - start_offset;
-+}
-+
-+static unsigned long load_all_cache_entries(struct index_state *istate,
-+			const char *mmap, size_t mmap_size, unsigned long src_offset)
-+{
-+	unsigned long consumed;
-+
-+	if (istate->version == 4) {
-+		mem_pool_init(&istate->ce_mem_pool,
-+				estimate_cache_size_from_compressed(istate->cache_nr));
-+	} else {
-+		mem_pool_init(&istate->ce_mem_pool,
-+				estimate_cache_size(mmap_size, istate->cache_nr));
-+	}
-+
-+	consumed = load_cache_entry_block(istate, istate->ce_mem_pool,
-+					0, istate->cache_nr, mmap, src_offset, NULL);
-+	return consumed;
-+}
-+
-+#ifndef NO_PTHREADS
-+
- /*
-  * Mostly randomly chosen maximum thread counts: we
-  * cap the parallelism to online_cpus() threads, and we want
-@@ -1959,20 +2007,125 @@ static void *load_index_extensions(void *_data)
- 
- #define THREAD_COST		(10000)
- 
-+struct load_cache_entries_thread_data
-+{
-+	pthread_t pthread;
-+	struct index_state *istate;
-+	struct mem_pool *ce_mem_pool;
-+	int offset;
-+	const char *mmap;
-+	struct index_entry_offset_table *ieot;
-+	int ieot_offset;        /* starting index into the ieot array */
-+	int ieot_work;          /* count of ieot entries to process */
-+	unsigned long consumed;	/* return # of bytes in index file processed */
-+};
-+
-+/*
-+ * A thread proc to run the load_cache_entries() computation
-+ * across multiple background threads.
-+ */
-+static void *load_cache_entries_thread(void *_data)
-+{
-+	struct load_cache_entries_thread_data *p = _data;
-+	int i;
-+
-+	/* iterate across all ieot blocks assigned to this thread */
-+	for (i = p->ieot_offset; i < p->ieot_offset + p->ieot_work; i++) {
-+		p->consumed += load_cache_entry_block(p->istate, p->ce_mem_pool, p->offset, p->ieot->entries[i].nr, p->mmap, p->ieot->entries[i].offset, NULL);
-+		p->offset += p->ieot->entries[i].nr;
-+	}
-+	return NULL;
-+}
-+
-+static unsigned long load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
-+			unsigned long src_offset, int nr_threads, struct index_entry_offset_table *ieot)
-+{
-+	int i, offset, ieot_work, ieot_offset, err;
-+	struct load_cache_entries_thread_data *data;
-+	unsigned long consumed = 0;
-+	int nr;
-+
-+	/* a little sanity checking */
-+	if (istate->name_hash_initialized)
-+		BUG("the name hash isn't thread safe");
-+
-+	mem_pool_init(&istate->ce_mem_pool, 0);
-+	data = xcalloc(nr_threads, sizeof(struct load_cache_entries_thread_data));
-+
-+	/* ensure we have no more threads than we have blocks to process */
-+	if (nr_threads > ieot->nr)
-+		nr_threads = ieot->nr;
-+	data = xcalloc(nr_threads, sizeof(struct load_cache_entries_thread_data));
-+
-+	offset = ieot_offset = 0;
-+	ieot_work = DIV_ROUND_UP(ieot->nr, nr_threads);
-+	for (i = 0; i < nr_threads; i++) {
-+		struct load_cache_entries_thread_data *p = &data[i];
-+		int j;
-+
-+		if (ieot_offset + ieot_work > ieot->nr)
-+			ieot_work = ieot->nr - ieot_offset;
-+
-+		p->istate = istate;
-+		p->offset = offset;
-+		p->mmap = mmap;
-+		p->ieot = ieot;
-+		p->ieot_offset = ieot_offset;
-+		p->ieot_work = ieot_work;
-+
-+		/* create a mem_pool for each thread */
-+		nr = 0;
-+		for (j = p->ieot_offset; j < p->ieot_offset + p->ieot_work; j++)
-+			nr += p->ieot->entries[j].nr;
-+		if (istate->version == 4) {
-+			mem_pool_init(&p->ce_mem_pool,
-+				estimate_cache_size_from_compressed(nr));
-+		}
-+		else {
-+			mem_pool_init(&p->ce_mem_pool,
-+				estimate_cache_size(mmap_size, nr));
-+		}
-+
-+		err = pthread_create(&p->pthread, NULL, load_cache_entries_thread, p);
-+		if (err)
-+			die(_("unable to create load_cache_entries thread: %s"), strerror(err));
-+
-+		/* increment by the number of cache entries in the ieot block being processed */
-+		for (j = 0; j < ieot_work; j++)
-+			offset += ieot->entries[ieot_offset + j].nr;
-+		ieot_offset += ieot_work;
-+	}
-+
-+	for (i = 0; i < nr_threads; i++) {
-+		struct load_cache_entries_thread_data *p = &data[i];
-+
-+		err = pthread_join(p->pthread, NULL);
-+		if (err)
-+			die(_("unable to join load_cache_entries thread: %s"), strerror(err));
-+		mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
-+		consumed += p->consumed;
-+	}
-+
-+	free(data);
-+
-+	return consumed;
-+}
-+#endif
-+
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_exist)
- {
--	int fd, i;
-+	int fd;
- 	struct stat st;
- 	unsigned long src_offset;
- 	const struct cache_header *hdr;
- 	const char *mmap;
- 	size_t mmap_size;
--	const struct cache_entry *previous_ce = NULL;
- 	struct load_index_extensions p;
- 	size_t extension_offset = 0;
- #ifndef NO_PTHREADS
--	int nr_threads;
-+	int nr_threads, cpus;
-+	struct index_entry_offset_table *ieot = NULL;
- #endif
- 
- 	if (istate->initialized)
-@@ -2014,10 +2167,18 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	p.mmap = mmap;
- 	p.mmap_size = mmap_size;
- 
-+	src_offset = sizeof(*hdr);
-+
- #ifndef NO_PTHREADS
- 	nr_threads = git_config_get_index_threads();
--	if (!nr_threads)
--		nr_threads = online_cpus();
-+
-+	/* TODO: does creating more threads than cores help? */
-+	if (!nr_threads) {
-+		nr_threads = istate->cache_nr / THREAD_COST;
-+		cpus = online_cpus();
-+		if (nr_threads > cpus)
-+			nr_threads = cpus;
-+	}
- 
- 	if (nr_threads > 1) {
- 		extension_offset = read_eoie_extension(mmap, mmap_size);
-@@ -2032,29 +2193,22 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 			nr_threads--;
- 		}
- 	}
--#endif
--
--	if (istate->version == 4) {
--		mem_pool_init(&istate->ce_mem_pool,
--			      estimate_cache_size_from_compressed(istate->cache_nr));
--	} else {
--		mem_pool_init(&istate->ce_mem_pool,
--			      estimate_cache_size(mmap_size, istate->cache_nr));
--	}
- 
--	src_offset = sizeof(*hdr);
--	for (i = 0; i < istate->cache_nr; i++) {
--		struct ondisk_cache_entry *disk_ce;
--		struct cache_entry *ce;
--		unsigned long consumed;
-+	/*
-+	 * Locate and read the index entry offset table so that we can use it
-+	 * to multi-thread the reading of the cache entries.
-+	 */
-+	if (extension_offset && nr_threads > 1)
-+		ieot = read_ieot_extension(mmap, mmap_size, extension_offset);
- 
--		disk_ce = (struct ondisk_cache_entry *)(mmap + src_offset);
--		ce = create_from_disk(istate, disk_ce, &consumed, previous_ce);
--		set_index_entry(istate, i, ce);
-+	if (ieot)
-+		src_offset += load_cache_entries_threaded(istate, mmap, mmap_size, src_offset, nr_threads, ieot);
-+	else
-+		src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
-+#else
-+	src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
-+#endif
- 
--		src_offset += consumed;
--		previous_ce = ce;
--	}
- 	istate->timestamp.sec = st.st_mtime;
- 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
- 
--- 
-2.18.0.windows.1
-
+> > Dear members of the Git community,=0A=
+> >=0A=
+> > The enterprise I work for is planning to switch from svn to git.=0A=
+> >=0A=
+> > Before the complete switch to git we have decided to implement a scenar=
+io=0A=
+> > where the two SCMs live together, being the svn repository the referenc=
+e.=0A=
+> > We also want this scenario to be transparent for both SCM users.=0A=
+> >=0A=
+> > I read the articles referenced at the end of the email and I come to th=
+e=0A=
+> > following solution.=0A=
+> >=0A=
+> > My proposal consists to import the svn repository to git using git svn =
+and=0A=
+> > set receive.denyCurrentBranch to updateInstead. Then install pre-receiv=
+e=0A=
+> > and post-receive hooks and set that repository as the central repositor=
+y=0A=
+> > for git users.=0A=
+> >=0A=
+> > The pre-receive hook does git svn rebase and, if there is an update at =
+the=0A=
+> > svn repository, rejects the push and instructs the user to do git pull.=
+=0A=
+> > The post-receive hook does git svn dcommit to update the state of the s=
+vn=0A=
+> > repository, then instructs the user to do git pull too.=0A=
+> >=0A=
+> > Both scripts check the changes pushed are made at master before doing=
+=0A=
+> > anything and exit after performing these tasks. branches.master.rebase =
+is=0A=
+> > set to merges at the user repository to avoid the histories of the cent=
+ral=0A=
+> > and the user repositories diverge after doing git svn dcommit.=0A=
+> >=0A=
+> > However I'm stuck at this point because the pre-receive hook it's not=
+=0A=
+> > allowed to do git svn rebase because update refs are not allowed at the=
+=0A=
+> > quarantine environment. I was sure that I tried this solution with a pa=
+st=0A=
+> > version of git and it worked, but now I doubt this because the restrict=
+ion=0A=
+> > to update refs at quarantine environment was delivered at version 2.13,=
+=0A=
+> > that dates from April 2017, if I'm not wrong.=0A=
+> >=0A=
+> > I don't know if this solution could be implemented or is there a better=
+=0A=
+> > way to accomplish this kind of synchronization (I tried Tmate SubGit, b=
+ut=0A=
+> > it didn't work for me and I don't know if we will be willing to purchas=
+e a=0A=
+> > license). Could you help me with this question?=0A=
+> >=0A=
+> > I come here asking for help because I think this is the appropriate pla=
+ce=0A=
+> > to do so. I apologise if this is not the case. Any help is welcome. If=
+=0A=
+> > anything needs to be clarified, please, ask me to do so. I can share wi=
+th=0A=
+> > you the source code of the hook scripts, if necessary.=0A=
+> =0A=
+> A very long time ago I had a similar setup where some clients were using=
+=0A=
+> git-svn. This was for the first attempt to migrate the Wikimedia=0A=
+> repositories away from SVN.=0A=
+> =0A=
+> There I had a setup where users could fetch my git-svn clone, which was=
+=0A=
+> hosted on github, and through some magic (I forgot the details) "catch up=
+"=0A=
+> with their local client. I.e. there was some mapping data that wasn't sen=
+t=0A=
+> over.=0A=
+> =0A=
+> But users would always push to svn, not git. I think if you can live with=
+=0A=
+> that you'd have a much easier time, having this setup where you push to g=
+it=0A=
+> and you then have to carry that push forward to svn is a lot more complex=
+=0A=
+> than just having the clients do that.=0A=
+> =0A=
+> GitHub also has a SVN gateway, that has no open source equivalent that I=
+=0A=
+> know of: https://help.github.com/articles/support-for-subversion-clients/=
+=0A=
+> =0A=
+> Maybe that's something you'd like to consider, i.e. fully migrate to git=
+=0A=
+> sooner than later, and for any leftover SVN clients have them push to a=
+=0A=
+> private repo on GitHub. Even if you only keep that GitHub repo as a bride=
+=0A=
+> during the migration and host Git in-house it'll be a lot easier with git=
+ as=0A=
+> a DVCS to continually merge in those changes than pulling the same trick=
+=0A=
+> with a centralized system like SVN.=0A=
+=0A=
+Hi =C6var,=0A=
+=0A=
+First of all, thank you very much for your early response.=0A=
+=0A=
+I don't think making users always commit to svn is necessary. In fact, from=
+ my=0A=
+point of view, updating the svn repository with the changes committed to th=
+e=0A=
+git central repository is easy because there is no obstacle preventing to r=
+un=0A=
+git svn dcommit at the post-update hook.=0A=
+=0A=
+What I haven't managed to accomplish is to pull diffs from the svn reposito=
+ry=0A=
+into the git central repository without manual intervention. I suppose that=
+ in=0A=
+the setup you describe you manually pulled changes from the svn repository=
+=0A=
+into your git-svn repository at GitHub. If don't, it would be very useful f=
+or=0A=
+me if you could remember how did you managed to do it automatically.=0A=
+=0A=
+I guess GitHub svn bridge (thank you for telling me about it, I didn't know=
+=0A=
+about its existence) could be the solution if it was not for the fact that =
+we=0A=
+want to keep our svn repository. Our whole CD infrastructure feeds from tha=
+t=0A=
+repository and we'd like to figure out if everybody is comfortable using gi=
+t=0A=
+and what is the actual value of using it as a team before making the effort=
+ of=0A=
+changing everything.=0A=
+=0A=
+Regards,=0A=
+=0A=
+Jose=
