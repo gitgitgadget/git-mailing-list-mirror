@@ -2,145 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 497A61F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 19:26:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 445B01F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 19:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726243AbeJBCFT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 22:05:19 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:44598 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbeJBCFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 22:05:19 -0400
-Received: by mail-qk1-f194.google.com with SMTP id y8-v6so1470617qka.11
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 12:26:02 -0700 (PDT)
+        id S1726138AbeJBCWT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 22:22:19 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:33273 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbeJBCWS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 22:22:18 -0400
+Received: by mail-yw1-f67.google.com with SMTP id m127-v6so2419160ywb.0
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 12:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=XeCaTOlyRBJjP/MkHKjnTVdU895WHl0XYX9bqM9N114=;
-        b=iIAln+cRmpybR09NLe2ndDLE7MfbN/rO298Zyv95DFHxo2SkSniT+Znd2MrcUvzyLI
-         xo3oFTTEhZyKkB7ztrzRTw0YPciTRWCmO3qEYOXIqGuG+Br1IoV8v5079x04r5TOVUi8
-         O0aCsyGdhUlLCN/24SmqqdqrskXAwCk2J858wY2mNfxzDp6m27zLp0/N6nz4E3KKTLuh
-         C1xyZNbM8y2m8+2bD3i8kTh5k8SBLHeHlaORXEUqp8fXig8yhwVcbJrUgu/UNtc/bDHM
-         RWWUj9oG6YMib9oRgyTSQf1Kxog29T13N4MQYPRMjjflYNtb6D23qE73gsWMW+Y+HN3K
-         r1hw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dRZiYAzrIqSLuXb5p+9g5gUBJWOqL08zfAw6z5p8maw=;
+        b=rUhMG6dyawMn4KgcC05JNXuGGpPl9dKHxFuS046HhMFEpU1nXLXaYhwseGvUXg/IS4
+         yN2kJuhiCdsEHB+LVGMV7WHRsWlNFIMAEXwxthvu7akJg3be8Cvy+WeRDX/k/zMBferD
+         njbZH5Cs6TQ5hD2+jGHqJzn20Xvq0gwuqLoG29B28ejSKUs0uNTl5OdAe4qgNmHSl8Ss
+         WupomOjuEW8jvdeq5FwA7AQZ7L426vGJh3g04xZl+xK2hCUeFGsMrVjLhXc1amVPtW3/
+         d4mBSEMsSB7eJT4gghhQhmNZ8TAVOLU5G/gg2bi8qved0bzmN0WzV69oXfBO6nAUlbR1
+         AXsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=XeCaTOlyRBJjP/MkHKjnTVdU895WHl0XYX9bqM9N114=;
-        b=JJecw4zeTqqalikLvbi7WamPl7I3dtI/LH1TnjTWMn3K638tQhQY2mHzVV5GHGmdDz
-         UoPWBTqvSK7ADVHLhI3o752h0jjPf9tvW7HJYV2mv0kX7q+JYvFYa3iZy+ZlxTSzJh+w
-         eheBsIDe2f461hCPsNow2FAZuwQsuq23DH37gWJDF4c/MKshcYBHprFH/X04xB8+HbXq
-         CmkCgMhBuRNL4gjvIDDjs7Mw096Yw6AaheZnkzEqZcGslI6+LGevYOvtd8J2CX+YUj04
-         qmHp9fosxlPFCi8VbAQxK26B9IILaS//kj2s9KpQ5ECqpPapMGPfTfskNMRfb3f9NDK6
-         IQBA==
-X-Gm-Message-State: ABuFfoj5tbvQ6EsnklOXNLd6jtRfkPjUYt6CZkUJnNWxNuZh/AfwGUIZ
-        riKUu51BWaowvSTMgL8UxOg=
-X-Google-Smtp-Source: ACcGV62HB5tnHueWeI2vlkNp+joflu3wI1d3EA9smDIFXuROBAsduFdg/rRHTG3iEHm+/m4gN0/yMQ==
-X-Received: by 2002:a37:1b99:: with SMTP id m25-v6mr9558818qkh.7.1538421961548;
-        Mon, 01 Oct 2018 12:26:01 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:f5be:873:b4e5:f5e1? ([2001:4898:8010:0:def4:873:b4e5:f5e1])
-        by smtp.gmail.com with ESMTPSA id c43-v6sm3762566qtd.85.2018.10.01.12.26.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Oct 2018 12:26:00 -0700 (PDT)
-Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
- <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
-Date:   Mon, 1 Oct 2018 15:26:00 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dRZiYAzrIqSLuXb5p+9g5gUBJWOqL08zfAw6z5p8maw=;
+        b=uP2auK0ngoWunQk8GUBrWCXoPB/vodfnYiz5Ys/KgheMBV+ONbayik27cVsF6JPI2J
+         wY4S47ocj8w3wmUpRmZ8KIpszFEFQElYBjT7jc/BzN0gGEKqucOhXdgaee8kYXk+Qj3a
+         s+fSQq8u5OZI+NdF6IjmTjLLunlVeZ9ckk8bCqB8TDsy/bav2aUKiEyVt77GgbCf/CJv
+         ILM33RyiDrQK8vaXM5/jj6DXhfJbT6z2JLCp/kIBpzTtgQwoh+RGyIv8XRqcmJkgVlRE
+         Yb2tQ1lRhXvyWMSgxgMfAGnXjXT7dilqp2hCCy5w9OZyQ9W0P8vsU1HBkQKzDGP+y6nA
+         gKnw==
+X-Gm-Message-State: ABuFfojYIsQUStdhZbiyRudFiBn903rr2pKsqVJwaDmgPJ7y+dV7euXT
+        b1riwZMcPHi4Gbhz+l7/e4kD9Oqn8gyy0XDWepoK5A==
+X-Google-Smtp-Source: ACcGV60LkMbv8yY1q5Bo8+3JYNxDozhXaFIesSlbdi11PqFsP8fzuJlrOsifgzn14Ltj38z7JbAth7Qs3MeJb2JDM4A=
+X-Received: by 2002:a81:5bc6:: with SMTP id p189-v6mr6595384ywb.370.1538422976749;
+ Mon, 01 Oct 2018 12:42:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20180917140940.3839-1-ao2@ao2.it> <20180917140940.3839-10-ao2@ao2.it>
+ <20180918171257.GC27036@localhost> <20180924122031.9dbec6b4c2e2a8c1bff3365b@ao2.it>
+ <CAGZ79kZaomuE3p1puznM1x+hu-w4O+ZqeGUODBDj=-R3Z1hDzg@mail.gmail.com>
+ <20180927164415.44b1d00ee5f8e582afdaa933@ao2.it> <CAGZ79kYHLF0TVfVuVfKfe_A4D2QGziRCsrYpyh7wuHjdpPEkDA@mail.gmail.com>
+ <20181001174504.684457e627ed76abee5e19b8@ao2.it>
+In-Reply-To: <20181001174504.684457e627ed76abee5e19b8@ao2.it>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 1 Oct 2018 12:42:45 -0700
+Message-ID: <CAGZ79kanvDJcCQom6-w-LBUW7ST9Nmfs9ysAjBYBy2GTAzgx7A@mail.gmail.com>
+Subject: Re: [PATCH v5 9/9] submodule: support reading .gitmodules when it's
+ not in the working tree
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/1/2018 3:16 PM, René Scharfe wrote:
-> Am 28.06.2018 um 14:31 schrieb Derrick Stolee via GitGitGadget:
->> diff --git a/commit-reach.c b/commit-reach.c
->> index c58e50fbb..ac132c8e4 100644
->> --- a/commit-reach.c
->> +++ b/commit-reach.c
->> @@ -513,65 +513,88 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
->>   	return is_descendant_of(commit, list);
->>   }
->>   
->> -int reachable(struct commit *from, int with_flag, int assign_flag,
->> -	      time_t min_commit_date)
->> +static int compare_commits_by_gen(const void *_a, const void *_b)
->>   {
->> -	struct prio_queue work = { compare_commits_by_commit_date };
->> +	const struct commit *a = (const struct commit *)_a;
->> +	const struct commit *b = (const struct commit *)_b;
-> This cast is bogus.  QSORT gets handed a struct commit **, i.e. an array
-> of pointers, and qsort(1) passes references to those pointers to the
-> compare function, and not the pointer values.
-
-Good catch! I'm disappointed that we couldn't use type-checking here, as 
-it is quite difficult to discover that the types are wrong here.
-
-
-> As a result it's unlikely that the array is sorted in the intended
-> order.  Given that, a silly question: Is sorting even necessary here?
-
-The reason to sort is to hopefully minimize the amount we walk by 
-exploring the "lower" commits first. This is a performance-only thing, 
-not a correctness issue (which is why the bug exists). Even then, it is 
-just a heuristic.
-> Anyway, the patch below should fix it.
+On Mon, Oct 1, 2018 at 8:45 AM Antonio Ospite <ao2@ao2.it> wrote:
 >
-> -- >8 --
-> Subject: [PATCH] commit-reach: fix cast in compare_commits_by_gen()
+> On Thu, 27 Sep 2018 11:00:52 -0700
+> Stefan Beller <sbeller@google.com> wrote:
 >
-> The elements of the array to be sorted are commit pointers, so the
-> comparison function gets handed references to these pointers, not
-> pointers to commit objects.  Cast to the right type and dereference
-> once to correctly get the commit reference.
+> > On Thu, Sep 27, 2018 at 7:44 AM Antonio Ospite <ao2@ao2.it> wrote:
+> [...]
+> > > OK, so the plan for v6 is:
+> > >
+> > >   - avoid the corruption issues spotted by G=C3=A1bor by removing the=
+ call
+> > >     to repo_read_gitmodules in builtin/grep.c (this still does not fi=
+x
+> > >     the potential problem with nested submodules).
+> > >
 >
-> Found using Clang's ASan and t5500.
+> Actually that is not enough to fix the inconsistent access to the
+> object store: the functions is_submodule_active() and
+> repo_submodule_init() too end up calling config_from_gitmodules() and
+> need protecting as well, so I am going to put them under the git read
+> lock and leave repo_read_gitmodules() in place for now.
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> Has this patch a performance impact?
->
->   commit-reach.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/commit-reach.c b/commit-reach.c
-> index 00e5ceee6f..2f5e592d16 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -529,8 +529,8 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
->   
->   static int compare_commits_by_gen(const void *_a, const void *_b)
->   {
-> -	const struct commit *a = (const struct commit *)_a;
-> -	const struct commit *b = (const struct commit *)_b;
-> +	const struct commit *a = *(const struct commit * const *)_a;
-> +	const struct commit *b = *(const struct commit * const *)_b;
 
-I would expect s/* const */**/ here, but I'm guessing your formulation 
-is a bit extra careful about types.
+>
+> I am asking because the whole point of this patchset is to *enable* the
+> use of submodules without .gitmodules in the working tree of the
+> superproject. :)
 
-Thanks!
+I was imprecise and meant to
+s/.gitmodules/mechanism to configure the name <-> path mapping/
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+In this series, the .gitmodules may not be present in the working tree,
+but it is still there in the repo. Later we may want to rename that file
+or put it into a magic branch, and I'd still find it a good idea.
+What I find a bad idea is to have only a gitlink and a repo put
+into that path and expect that it magically works as then it is not
+a submodule, but some "halfway there thing". We need to have
+an explicit "yes this is a submodule" statement, (which currently
+comes from the .gitmodules file in the working tree), and I am not
+attached to where it comes from, but that it exists.
