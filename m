@@ -2,194 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EC6A1F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 19:16:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86A381F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 19:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726118AbeJBBz0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 21:55:26 -0400
-Received: from mout.web.de ([212.227.17.12]:38199 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725958AbeJBBz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 21:55:26 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxODe-1fdvxZ2Zpa-016vD3; Mon, 01
- Oct 2018 21:16:03 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxODe-1fdvxZ2Zpa-016vD3; Mon, 01
- Oct 2018 21:16:03 +0200
-Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
-Date:   Mon, 1 Oct 2018 21:16:01 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726143AbeJBB7K (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Oct 2018 21:59:10 -0400
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:40105 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbeJBB7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Oct 2018 21:59:10 -0400
+Received: by mail-yb1-f193.google.com with SMTP id w7-v6so6094679ybm.7
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 12:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ihTkUqZhhqmkUOzZiik/UlNMwfDIn+N9i+/O/Uvjecs=;
+        b=DGs7YUw6XPMHevDpAACAht18VBFv731arSp1Y89CTWu13tpTvd/ARR7cYb04oR0vOG
+         aTdJ3b9iT5dM/2ug1pL1nc0H1l1R2nZoPuS0EEZOSGAzVjQhlWlRGOdhlfOEL38s+Amz
+         N5Xdg+Clgnqh2bDstDlbZSmrDS1XamkwFwD4PwDm/9Y5bojfBWD0dkSpf0qK4JoitznN
+         TaoRGtWqccRmLGYqSXqvHBCGCQTjcsTSk2BUW3PHm5u8usjP3AtDhJB5Y1ftzCIcsYi/
+         9Mu1FqmwTGLDMG2IHEr03P6+AKWb9qVH3EnNyhx9syUCOrYhPyTmzh9DXc11Lpi7XhY8
+         E/Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ihTkUqZhhqmkUOzZiik/UlNMwfDIn+N9i+/O/Uvjecs=;
+        b=IP7Hb4lmDkek5eYyupkmTWSRgxoVpBa4dnUPb4Oh9mJspCK/8uUhiqUB/yI7moIOF/
+         j/KKhaWaI8e1URPQZ5nSqjaYTE/J83Mx2sPhjCCl/WTPntLG4Cv3bgXBoPX2IsP/0mWJ
+         Xd2+VexvGxHVvcra7BdmHr78RkjJW2aXNP4RAJOBh6bcmdtw3Ige/8DCDTZir09zP0Ab
+         VQzaAQAGJDWml2s2tkGgrxeyHBQzXyI/rxTLT/hOauTKgdoJoPy1mm8xVHNlRBCQYnnD
+         AoH8jLHyVNpSXXvffOSzKUs1GQrWdW7SPdmyxWX0iGNhAdVectlIxOL6g45UDz+N3k2b
+         elzg==
+X-Gm-Message-State: ABuFfoiSM9CDpzvCiTB31sJdXkp2pIIAaZRn8jmlLeqehQlS2cV1rTlW
+        qG7tdOPb+/0x3f3+zT9mkEWoI65RP8Uqg7DbvzbPxg==
+X-Google-Smtp-Source: ACcGV620hHat7zhZi70D6z0MdNPpovaDI0hTww2Ne929kbduS3OiSPgHK2NTm85ursjY9bpV0WL2I3rR+zg6kpiuP0g=
+X-Received: by 2002:a25:7505:: with SMTP id q5-v6mr6936269ybc.191.1538421593928;
+ Mon, 01 Oct 2018 12:19:53 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:NteczQnW4kehkb2QvUJh5GVd5YL60YLdXYsIg/odOEdBN8aRElJ
- veM+foh+1NXBhHtiNHmAa9fjPUm47p2b8MyBZD6520w4lyjtUQWESa3BEisO+vwvcGJ68NZ
- YClMXKKh8EetBTN8Rb8C5f4e3d5OY8BtSPUn52XQDkHxumHVKpaoj0gfF9x+X5BDC/axHMP
- krw8zRApiUfdcc4ooC+Xg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LSU0MxGxy3w=:QrIWozkEwzH9tT8aCKnkTi
- A+xC/S8VAcdG2FoqrcBbrkEa/YMM7baGgtJow8xqF8bDlEt7aY+pVhmo8KYUqaH2Ng3WyY70b
- Dii7ZcZN/BpJL32tiYDz4P0rl4xTxnFQLheS4/NblQIIzzBbrM+s0nRtO5/6umGaVdLq6sBsZ
- jYilj4+bn8F/60uF8NTHVj2SGK6vhuN8/0DBWv6AYOZTEb92PH8jj6okfeKGjkKJlU334stjd
- vyX8MfD1Jymi5XQucrMOEeKy0G6K5SpM7Z1Osoop+wtesV1rQyFdSMCh4HG/3aOAe21/9TsU3
- /ZNxoBtNNCtws31Kdq3IlaT0phj3NkubT+CVD8ST7keUxslN/iT7GhqrA8bavAXIEIFWI2Rnw
- 0hHfIOVsdl+O/NzMCen6nMz75XjwT373y2oVeid5OnA1USh4uGJ4Xx/kMAxcca+DvC9hJYD5S
- 6r0gRa4vdOFbeNWlp5yCCN1h38PqyE1M0Hzib0LSA3zkOwhCsw5hZM80BdC5aAH5sYtjrHFOw
- umIDaLBWeqZz47/ZC5zJx9p9mnNbU+zrENlrM51LtllSeX8CehCKYWgVmhYEnS/qwWqO+7iTn
- frJCZ2jvLClMrBrZg4DBXFWjKzGJWTvIH2f2lHd49u0L/WTjADoZzMfZtP8fMJOt/MJuEpA6E
- PDS0vv1YjKtQLd/d4Op/ql86Vht9lFXjEBuiE88PWv4oe7Wa8bYzY4ygiFuRtML6s3PsjjCvF
- jnWQYKlGr3xmE97jWRUNUby21HLwIcOOZStU8ah+qG8RICIV316Pp/YAZF6cHoOV/wPFbpxeu
- CL/5Osqr+iJZGNylPeXHfMap5EAKBS+9dEgL6NBnZpUI5i4DtI=
+References: <CAGDaZ_oBpLxD0cutrsNsFBEtH+-Fn2eT40gDsnGZhhU0qm2Ofw@mail.gmail.com>
+ <87bm8giapu.fsf@evledraar.gmail.com> <CACsJy8BYr6cVtAcDO9w-tfgEiWnbvQCgSR7p3OFKbqVkPA1Gaw@mail.gmail.com>
+ <CAGDaZ_oS4bjzd67T5atJrJ6_x2Cfr8JgnoGWePzA53mb2ObdNg@mail.gmail.com>
+In-Reply-To: <CAGDaZ_oS4bjzd67T5atJrJ6_x2Cfr8JgnoGWePzA53mb2ObdNg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 1 Oct 2018 12:19:42 -0700
+Message-ID: <CAGZ79kYX3ZgmE3S-2cq0F_27Ctq_wwuSo53znRrBquik3ODXew@mail.gmail.com>
+Subject: Re: [BUG] Segfault in "git submodule"
+To:     shentino@gmail.com
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.06.2018 um 14:31 schrieb Derrick Stolee via GitGitGadget:
-> diff --git a/commit-reach.c b/commit-reach.c
-> index c58e50fbb..ac132c8e4 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -513,65 +513,88 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
->  	return is_descendant_of(commit, list);
->  }
->  
-> -int reachable(struct commit *from, int with_flag, int assign_flag,
-> -	      time_t min_commit_date)
-> +static int compare_commits_by_gen(const void *_a, const void *_b)
->  {
-> -	struct prio_queue work = { compare_commits_by_commit_date };
-> +	const struct commit *a = (const struct commit *)_a;
-> +	const struct commit *b = (const struct commit *)_b;
+On Sat, Sep 29, 2018 at 9:43 AM Raymond Jennings <shentino@gmail.com> wrote=
+:
+>
+> I have a repo, but it appears to be specific to staging area state.
+> It only segfaults when I have a certain file deleted.
+>
+> Where do you want me to upload it?
+> On Sat, Sep 29, 2018 at 8:34 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Sat, Sep 29, 2018 at 5:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> > > > #1  refs_resolve_ref_unsafe (refs=3D0x0,
+> > > > refname=3Drefname@entry=3D0x55e863062253 "HEAD",
+> > > > resolve_flags=3Dresolve_flags@entry=3D1, oid=3Doid@entry=3D0x7ffdc8=
+34b1c0,
+> > > > flags=3Dflags@entry=3D0x7ffdc834b1bc) at refs.c:1493
+> >
+> > refs is NULL. It looks like somebody fails to get the right submodule
+> > ref store (or tries to get it but fails to check if it may return
+> > NULL)
 
-This cast is bogus.  QSORT gets handed a struct commit **, i.e. an array
-of pointers, and qsort(1) passes references to those pointers to the
-compare function, and not the pointer values.
+This is spot on.
 
-As a result it's unlikely that the array is sorted in the intended
-order.  Given that, a silly question: Is sorting even necessary here?
+Raymond, are you on Git v2.16.0 by any chance?
+(and if now which version are you on).
 
-Anyway, the patch below should fix it.
+I suspect 2.16, as that is a version of Git, in which there happens to be
+a call into the refs subsystem in submodule--helper.c in line 624.
 
->  
-> -	prio_queue_put(&work, from);
-> -	while (work.nr) {
-> -		struct commit_list *list;
-> -		struct commit *commit = prio_queue_get(&work);
-> -
-> -		if (commit->object.flags & with_flag) {
-> -			from->object.flags |= assign_flag;
-> -			break;
-> -		}
-> -		if (!commit->object.parsed)
-> -			parse_object(the_repository, &commit->object.oid);
-> -		if (commit->object.flags & REACHABLE)
-> -			continue;
-> -		commit->object.flags |= REACHABLE;
-> -		if (commit->date < min_commit_date)
-> -			continue;
-> -		for (list = commit->parents; list; list = list->next) {
-> -			struct commit *parent = list->item;
-> -			if (!(parent->object.flags & REACHABLE))
-> -				prio_queue_put(&work, parent);
-> -		}
-> -	}
-> -	from->object.flags |= REACHABLE;
-> -	clear_commit_marks(from, REACHABLE);
-> -	clear_prio_queue(&work);
-> -	return (from->object.flags & assign_flag);
-> +	if (a->generation < b->generation)
-> +		return -1;
-> +	if (a->generation > b->generation)
-> +		return 1;
-> +	return 0;
->  }
->  
->  int can_all_from_reach_with_flag(struct object_array *from,
->  				 int with_flag, int assign_flag,
-> -				 time_t min_commit_date)
-> +				 time_t min_commit_date,
-> +				 uint32_t min_generation)
->  {
-> +	struct commit **list = NULL;
->  	int i;
-> +	int result = 1;
->  
-> +	ALLOC_ARRAY(list, from->nr);
->  	for (i = 0; i < from->nr; i++) {
-> -		struct object *from_one = from->objects[i].item;
-> +		list[i] = (struct commit *)from->objects[i].item;
->  
-> -		if (from_one->flags & assign_flag)
-> -			continue;
-> -		from_one = deref_tag(the_repository, from_one, "a from object", 0);
-> -		if (!from_one || from_one->type != OBJ_COMMIT) {
-> -			/* no way to tell if this is reachable by
-> -			 * looking at the ancestry chain alone, so
-> -			 * leave a note to ourselves not to worry about
-> -			 * this object anymore.
-> -			 */
-> -			from->objects[i].item->flags |= assign_flag;
-> -			continue;
-> -		}
-> -		if (!reachable((struct commit *)from_one, with_flag, assign_flag,
-> -			       min_commit_date))
-> +		parse_commit(list[i]);
-> +
-> +		if (list[i]->generation < min_generation)
->  			return 0;
->  	}
-> -	return 1;
-> +
-> +	QSORT(list, from->nr, compare_commits_by_gen);
+Is it possible to upgrade Git (to v2.18.0 or later) or cherry-pick
+74b6bda32f (submodule: check for NULL return of get_submodule_ref_store(),
+2018-03-28) into your copy of Git?
 
--- >8 --
-Subject: [PATCH] commit-reach: fix cast in compare_commits_by_gen()
-
-The elements of the array to be sorted are commit pointers, so the
-comparison function gets handed references to these pointers, not
-pointers to commit objects.  Cast to the right type and dereference
-once to correctly get the commit reference.
-
-Found using Clang's ASan and t5500.
-
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-Has this patch a performance impact?
-
- commit-reach.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/commit-reach.c b/commit-reach.c
-index 00e5ceee6f..2f5e592d16 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -529,8 +529,8 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
- 
- static int compare_commits_by_gen(const void *_a, const void *_b)
- {
--	const struct commit *a = (const struct commit *)_a;
--	const struct commit *b = (const struct commit *)_b;
-+	const struct commit *a = *(const struct commit * const *)_a;
-+	const struct commit *b = *(const struct commit * const *)_b;
- 
- 	if (a->generation < b->generation)
- 		return -1;
--- 
-2.19.0
+Thanks,
+Stefan
