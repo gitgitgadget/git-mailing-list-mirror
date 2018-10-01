@@ -2,118 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94C391F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 20:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0310D1F453
+	for <e@80x24.org>; Mon,  1 Oct 2018 21:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726317AbeJBDRP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Oct 2018 23:17:15 -0400
-Received: from mout.web.de ([212.227.17.12]:59291 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726149AbeJBDRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Oct 2018 23:17:15 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2MUi-1fqVSx1LpU-00s4ur; Mon, 01
- Oct 2018 22:37:31 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2MUi-1fqVSx1LpU-00s4ur; Mon, 01
- Oct 2018 22:37:31 +0200
-Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
-To:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
- <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
- <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
-Date:   Mon, 1 Oct 2018 22:37:29 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1725994AbeJBEMO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 00:12:14 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:44840 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725878AbeJBEMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 00:12:14 -0400
+Received: by mail-ot1-f67.google.com with SMTP id 36-v6so14665825oth.11
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 14:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=X9Q0VW5T/J/7Ntr6psdKoTu8rihHg1eL0HW6rmg5l6E=;
+        b=T+geMScRIHVoew5NgPdylja9L53mIOv08yrZA+qM3tp2H5HfkRmO+ATRHRnh/vBW9c
+         7YGUeblFnrdYtZ9dNlbygL/0ELgn3S9vKsmpSmGRqiVxkmwy1EUV9WRaKl8Slk4WFSX+
+         qt6fppYSL2lCAadQnKwgUS7NGHdsfX/3EQq6C9KjF6V06Z+M598NWhol+zEi1Gg4dC0v
+         EXGa6FEHUK8KHkZCbzcGMcoTONIMDXLbdom6b1Yrg4uKOVEHJ5eE+cEjVNkiGCAok2Wf
+         e2xPx9qOIbtnPAFlwOehy0sw7MGayzrv4YXEjmWtxvS9AIHp8g4jeOJqD+yh/KjCQbJy
+         /d3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=X9Q0VW5T/J/7Ntr6psdKoTu8rihHg1eL0HW6rmg5l6E=;
+        b=jP5t14/m5cqTI+dYi+2hs+Be3E8hiOA4qKlE1B1W+86vhPpvDvp/VxMh0YcdFRutQ8
+         qV7G4sXpIhlSMsGdEic0SOcRc1nL+ppxixWdHz14CBygQ0FBhNoZ6qrUuqJk0SJkjsyS
+         oNadHysTshQ/SjjqXBXE+x9suGCEufAGZrwi2oO0gO2MQsmcFlzTfISBn5O7aZL5alss
+         x5CZCXMpINswv2toZw+pkLxmkbcKrgO79EAT4PHbccXXeIVMajW27KPb1x4hWqQb2J9+
+         AQd547Q9m8/78cYMHdfPEL95kWsY5dv/4iZnCh1TabK8IbnySawEzaK66RgxAceD422w
+         J8pA==
+X-Gm-Message-State: ABuFfoj4zvzqOfqTInU11d5wiXtlAREciSqlv3S1SKDOjqYOVfIBZ0CJ
+        A8bou4YiVijnO4DE58IKUpNxpEMC8T9Mynbrrrc=
+X-Google-Smtp-Source: ACcGV615R92UU+BaicBSdS6YmKwNw+x3wXUHoXi+XboKKmV6koEJQRNDAovNfafk9beAbSQGNY1+7kG8NylE4gR1O3s=
+X-Received: by 2002:a9d:da8:: with SMTP id 37-v6mr7210962ots.212.1538429545858;
+ Mon, 01 Oct 2018 14:32:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:85OLWWAUvZq+aY0ccqIyvT3Rjw7CJJpHABjljJKnC8g7y5RQyXN
- CIeZITojdP5+tVUM76PjcRDUiEoYZg28DXA/XkIL7vVHGK75OzHH7orYLJKA/XYRBUrtPeF
- kXzA2VA+ubF2U7dYtr/NIwEIB3nnrZdQGnp0RPVfDEgNdgFLwTQTCn9wTOuvepZwcsnwR4b
- WWKZN2OTtkzUVdBxD93Jw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+KARjYcuDWM=:AD036R0BbS8uRrsZUmPeXs
- Yi0XAfg+/GzuHrwiFKZZV8T/KZLAalFq6TG4uvHO7KzCcda1h2OIhT45+HABxZmJLhie3NWoD
- Wq/RrUuac9dxtDxwYjpIB/H5Ytr5OpFM0jLl1pbv0uMrYnQLu3yVQXy4BlHmUVFqyPby+kV44
- gzPtRnQW3lBxI4EtDFs00nh+82cIhjSWVITFyVkQ8o9060bM9Nd/UkE4YsODZraUWFvx9Evjl
- 4WdiUlZyo+TwD538OcY/19mpbUrwcH+7x3RrMMdDn9xsnU2ZPyzcJwCPzwRtMVjPFdJ3Cvy1S
- l4yFTlJA5xGhc/x11M3RqplQcJc3twdx6lzZH5ihlAdIb09MNbEXa9AEh5aQs4O/lPijut+5Y
- 4VB1vLymRsIiEW6qg84PDs5nqeWjQoPMGVdZq7QM+XbSMe6blsVgyyd+3//36SZxnrYLV8sIh
- znZdG1mKf7D5q7Aqrwa9MIkwgfZ8hk+WvnbC2QXH8uzA5FUEz3Rh4JUDxs57iyLwCb0saRSLi
- emJAjOQ88llVzTxZNWq3JL0ADMYKL7GvD+QMWqRfpskJN60pl1CrA9kqP4JNauRe0B2Ue6efX
- zQhB6wQPQhq7MzOmYWOzUIKfbfYtIEZhED+O8h8dhAcZ92AGDDz9cQ8V0Ae+SyGDiTYI34ajW
- cLgWIOf43x9GrfBDmxB7ujFoUoDmqNErZU3bZ02mvR9mVG/ho5t2WMqLSd0rRjw6V448xp4He
- xpl0bsD8qn9rRAl+9Nkh9FaL7jb39JTJurop2Pp41DXveSZvVWxm0BhdFG7oVEtID8/RytYus
- HT6+T9nIRRKsmuum267nWsIALDK7phfPKO+kUsoqvS3lJIelQs=
+References: <CAGDaZ_oBpLxD0cutrsNsFBEtH+-Fn2eT40gDsnGZhhU0qm2Ofw@mail.gmail.com>
+ <87bm8giapu.fsf@evledraar.gmail.com> <CACsJy8BYr6cVtAcDO9w-tfgEiWnbvQCgSR7p3OFKbqVkPA1Gaw@mail.gmail.com>
+ <CAGDaZ_oS4bjzd67T5atJrJ6_x2Cfr8JgnoGWePzA53mb2ObdNg@mail.gmail.com> <CAGZ79kYX3ZgmE3S-2cq0F_27Ctq_wwuSo53znRrBquik3ODXew@mail.gmail.com>
+In-Reply-To: <CAGZ79kYX3ZgmE3S-2cq0F_27Ctq_wwuSo53znRrBquik3ODXew@mail.gmail.com>
+From:   Raymond Jennings <shentino@gmail.com>
+Date:   Mon, 1 Oct 2018 14:31:49 -0700
+Message-ID: <CAGDaZ_q30GPWsd-NF1OSOx8m7LwXm4vk_5XcqRD5MxcjDx=GzQ@mail.gmail.com>
+Subject: Re: [BUG] Segfault in "git submodule"
+To:     sbeller@google.com
+Cc:     pclouds@gmail.com, avarab@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.10.2018 um 21:26 schrieb Derrick Stolee:
-> On 10/1/2018 3:16 PM, René Scharfe wrote:
->> Am 28.06.2018 um 14:31 schrieb Derrick Stolee via GitGitGadget:
->>> diff --git a/commit-reach.c b/commit-reach.c
->>> index c58e50fbb..ac132c8e4 100644
->>> --- a/commit-reach.c
->>> +++ b/commit-reach.c
->>> @@ -513,65 +513,88 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
->>>   	return is_descendant_of(commit, list);
->>>   }
->>>   
->>> -int reachable(struct commit *from, int with_flag, int assign_flag,
->>> -	      time_t min_commit_date)
->>> +static int compare_commits_by_gen(const void *_a, const void *_b)
->>>   {
->>> -	struct prio_queue work = { compare_commits_by_commit_date };
->>> +	const struct commit *a = (const struct commit *)_a;
->>> +	const struct commit *b = (const struct commit *)_b;
->> This cast is bogus.  QSORT gets handed a struct commit **, i.e. an array
->> of pointers, and qsort(1) passes references to those pointers to the
->> compare function, and not the pointer values.
-> 
-> Good catch! I'm disappointed that we couldn't use type-checking here, as 
-> it is quite difficult to discover that the types are wrong here.
+Yes, git 2.16.4 to be exact.
 
-Generics in C are hard, and type checking traditionally falls by the
-wayside.  You could use macros for that, like klib [*] does, but that
-has its own downsides (more object text, debugging the sort macros
-themselves is harder).
-
-[*] https://github.com/attractivechaos/klib/blob/master/ksort.h
-
->> diff --git a/commit-reach.c b/commit-reach.c
->> index 00e5ceee6f..2f5e592d16 100644
->> --- a/commit-reach.c
->> +++ b/commit-reach.c
->> @@ -529,8 +529,8 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
->>   
->>   static int compare_commits_by_gen(const void *_a, const void *_b)
->>   {
->> -	const struct commit *a = (const struct commit *)_a;
->> -	const struct commit *b = (const struct commit *)_b;
->> +	const struct commit *a = *(const struct commit * const *)_a;
->> +	const struct commit *b = *(const struct commit * const *)_b;
-> 
-> I would expect s/* const */**/ here, but I'm guessing your formulation 
-> is a bit extra careful about types.
-
-Yeah, that second const is not necessary, as the dereference in the same
-line makes it inconsequential, but I added it to make clear that this
-function is really not supposed to write at all..
-
-René
+I upgraded to 2.19 after ~arch keywording the package on gentoo and
+that fixed it.
+On Mon, Oct 1, 2018 at 12:19 PM Stefan Beller <sbeller@google.com> wrote:
+>
+> On Sat, Sep 29, 2018 at 9:43 AM Raymond Jennings <shentino@gmail.com> wro=
+te:
+> >
+> > I have a repo, but it appears to be specific to staging area state.
+> > It only segfaults when I have a certain file deleted.
+> >
+> > Where do you want me to upload it?
+> > On Sat, Sep 29, 2018 at 8:34 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> > >
+> > > On Sat, Sep 29, 2018 at 5:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
+n
+> > > <avarab@gmail.com> wrote:
+> > > > > #1  refs_resolve_ref_unsafe (refs=3D0x0,
+> > > > > refname=3Drefname@entry=3D0x55e863062253 "HEAD",
+> > > > > resolve_flags=3Dresolve_flags@entry=3D1, oid=3Doid@entry=3D0x7ffd=
+c834b1c0,
+> > > > > flags=3Dflags@entry=3D0x7ffdc834b1bc) at refs.c:1493
+> > >
+> > > refs is NULL. It looks like somebody fails to get the right submodule
+> > > ref store (or tries to get it but fails to check if it may return
+> > > NULL)
+>
+> This is spot on.
+>
+> Raymond, are you on Git v2.16.0 by any chance?
+> (and if now which version are you on).
+>
+> I suspect 2.16, as that is a version of Git, in which there happens to be
+> a call into the refs subsystem in submodule--helper.c in line 624.
+>
+> Is it possible to upgrade Git (to v2.18.0 or later) or cherry-pick
+> 74b6bda32f (submodule: check for NULL return of get_submodule_ref_store()=
+,
+> 2018-03-28) into your copy of Git?
+>
+> Thanks,
+> Stefan
