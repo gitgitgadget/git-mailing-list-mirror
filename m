@@ -2,183 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E12491F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 23:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C97B1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 23:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbeJCGOk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 02:14:40 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33445 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725724AbeJCGOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 02:14:40 -0400
-Received: by mail-pf1-f194.google.com with SMTP id d4-v6so733109pfn.0
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 16:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zu8UIzmsN792SU20Q0HRoobP4FBBh8TERIVTGoKk/Rg=;
-        b=SU0jSvrr4/qDt5iCQPLwv4mS0UeAAWssGajchoio18szxTSfbtnk3gOyIZPs5goFDC
-         /cyLEWuv3Ls9k6QRYa1ahjb6FwMyBJ/USrtwDm1hnEQX43EsID/PMBT8xHZ6R5NzZT8g
-         47Jw5s19O5yieObO11I8HvmbdxncyXeww6ZUCkg1vazP3ofM9K8J1GDznru3gxtqDcK3
-         kpzmlVyRpuosLx98gLsg+zRgkJ/0r2QvnjmoSFPcX8BLCBRdmarAvgq4Izz5qFDU85ED
-         bcuzOh1W3xV7WcAscN0tRNAMFbaF+Ml2IOd1PA8hTu2aluIfQx0tsicm3r1qvKEk0S3H
-         IofA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zu8UIzmsN792SU20Q0HRoobP4FBBh8TERIVTGoKk/Rg=;
-        b=on4uPJ8VT24j2Uyqtd6L5IpA/pz7EnfUomGRspNsJwKzOQ05S992McTw9VDlogiIsa
-         7X6OAeyP+tnsIXu1vdifbNd2XTgyjICQ9wVb3CcB7he72lxaUXFH6IsYnikNZiGDORwq
-         cR1PksluPH/IvJa9kjo2R9+3UlkCwousfzUFVvuqWgINOBlsx+bBMugqIYEV54ahs3cq
-         I9CzTe3a41AS0fWEIwG3X6xfJh2Zzf6fg+GyByzK60rcTACdy8AvxXJap1RkjN8gxA4g
-         7Je4BSGeaO87gTxxWXM+y5HzCEnIid/xnehzrJxoiKOhotaDKSrgRvo0c+4R0quoq5Rq
-         m/1g==
-X-Gm-Message-State: ABuFfoh4gDVay797iJWYZBLwO2ekHfEPaBpDTGMjGnoxWMLIpu4udF4a
-        z/lLBHBAwxD2hRuT2XGEVj0mcY+ZMOQj0Q==
-X-Google-Smtp-Source: ACcGV629PGyMDnUNUax1Be3snv1k7Lt9RA5ahV3A15NTowzx5RNTHaWaFBf4nPkv+35l7P0jnyKnfg==
-X-Received: by 2002:a62:1906:: with SMTP id 6-v6mr9244694pfz.9.1538522931521;
-        Tue, 02 Oct 2018 16:28:51 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:e958:2ad1:68d0:890f])
-        by smtp.gmail.com with ESMTPSA id h130-v6sm22498286pgc.88.2018.10.02.16.28.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Oct 2018 16:28:50 -0700 (PDT)
-Date:   Tue, 2 Oct 2018 16:28:40 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org, ramsay@ramsayjones.plus.com
-Cc:     peff@peff.net, gitster@pobox.com, sunshine@sunshineco.com,
+        id S1726547AbeJCG0s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 02:26:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39288 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725198AbeJCG0r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 02:26:47 -0400
+Received: (qmail 22372 invoked by uid 109); 2 Oct 2018 23:40:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Oct 2018 23:40:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8155 invoked by uid 111); 2 Oct 2018 23:40:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Oct 2018 19:40:21 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2018 19:40:56 -0400
+Date:   Tue, 2 Oct 2018 19:40:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         sbeller@google.com
-Subject: [PATCH v4 4/4] transport.c: introduce core.alternateRefsPrefixes
-Message-ID: <20181002232840.GA31540@syl>
-References: <aeee4d8f-b224-2b1b-40fb-d484dbaabae3@ramsayjones.plus.com>
+Subject: Re: [PATCH v4 3/4] transport.c: introduce core.alternateRefsCommand
+Message-ID: <20181002234056.GA18516@sigill.intra.peff.net>
+References: <cover.1537466087.git.me@ttaylorr.com>
+ <cover.1538446826.git.me@ttaylorr.com>
+ <aadb27c0106d8f1a49dd35e7a040131aecaef2c1.1538446827.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aeee4d8f-b224-2b1b-40fb-d484dbaabae3@ramsayjones.plus.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+In-Reply-To: <aadb27c0106d8f1a49dd35e7a040131aecaef2c1.1538446827.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 02, 2018 at 04:13:13PM +0100, Ramsay Jones wrote:
->
-> On 02/10/18 03:24, Taylor Blau wrote:
-> [snip]
-> > diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-> > index 49d0fe44fb..94794c35da 100755
-> > --- a/t/t5410-receive-pack-alternates.sh
-> > +++ b/t/t5410-receive-pack-alternates.sh
-> > @@ -30,4 +30,12 @@ test_expect_success 'with core.alternateRefsCommand' '
-> >  	test_cmp expect actual.haves
-> >  '
-> >
-> > +test_expect_success 'with core.alternateRefsPrefixes' '
-> > +	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
-> > +	git rev-parse private/branch expect &&
->
-> s/expect/>expect/ ?
+On Mon, Oct 01, 2018 at 07:23:58PM -0700, Taylor Blau wrote:
 
-Ah, certainly. Thanks for catching my mistake. I've resent 4/4 as below.
+> +core.alternateRefsCommand::
+> +	When advertising tips of available history from an alternate, use the shell to
+> +	execute the specified command instead of linkgit:git-for-each-ref[1]. The
+> +	first argument is the absolute path of the alternate. Output must contain one
+> +	hex object id per line (i.e., the same as produce by `git for-each-ref
+> +	--format='%(objectname)'`).
+> ++
+> +This is useful when a repository only wishes to advertise some of its
+> +alternate's references as `.have`'s. For example, to only advertise branch
+> +heads, configure `core.alternateRefsCommand` to the path of a script which runs
+> +`git --git-dir="$1" for-each-ref --format='%(objectname)' refs/heads`.
+> ++
+> +Note that the configured value is executed in a shell, and thus
+> +linkgit:git-for-each-ref[1] by itself does not work, as scripts have to handle
+> +the path argument specially.
 
-Junio -- if you find this re-roll to be acceptable, please queue this
-patch instead of the one that it is in reply to.
+This last paragraph is trying to fix the wrong-impression that we
+discussed in the last round. But I'm not sure it doesn't make things
+more confusing. ;)
 
--- >8 --
+Specifically, the problem isn't the shell. The issue is that we pass the
+repo path as an argument to the command. So either:
 
-The recently-introduced "core.alternateRefsCommand" allows callers to
-specify with high flexibility the tips that they wish to advertise from
-alternates. This flexibility comes at the cost of some inconvenience
-when the caller only wishes to limit the advertisement to one or more
-prefixes.
+  - it's a real command that we run, in which case git-for-each-ref does
+    not take a repo path argument and so doesn't work; or
 
-For example, to advertise only tags, a caller using
-'core.alternateRefsCommand' would have to do:
+  - it's a shell snippet, in which case the argument is appended to the
+    snippet (and here's where you can get into a rabbit hole of
+    explaining how our shell invocation works, and we should avoid that)
 
-  $ git config core.alternateRefsCommand ' \
-      f() { git -C "$1" for-each-ref \
-              refs/tags --format="%(objectname)" }; f "$@"'
+Can we just say:
 
-The above is cumbersome to write, so let's introduce a
-"core.alternateRefsPrefixes" to address this common case. Instead, the
-caller can run:
+  Note that you cannot generally put `git for-each-ref` directly into
+  the config value, as it does not take a repository path as an argument
+  (but you can wrap the command above in a shell script).
 
-  $ git config core.alternateRefsPrefixes 'refs/tags'
+> [...]
 
-Which will behave identically to the longer example using
-"core.alternateRefsCommand".
+The rest of the patch looks good to me, along with the other three
+(modulo the "expect" fixup you already sent).
 
-Since the value of "core.alternateRefsPrefixes" is appended to 'git
-for-each-ref' and then executed, include a "--" before taking the
-configured value to avoid misinterpreting arguments as flags to 'git
-for-each-ref'.
-
-In the case that the caller wishes to specify multiple prefixes, they
-may separate them by whitespace. If "core.alternateRefsCommand" is set,
-it will take precedence over "core.alternateRefsPrefixes".
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/config.txt           | 7 +++++++
- t/t5410-receive-pack-alternates.sh | 8 ++++++++
- transport.c                        | 5 +++++
- 3 files changed, 20 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ac0577d288..1dc5eb3cfa 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -632,6 +632,13 @@ Note that the configured value is executed in a shell, and thus
- linkgit:git-for-each-ref[1] by itself does not work, as scripts have to handle
- the path argument specially.
-
-+core.alternateRefsPrefixes::
-+	When listing references from an alternate, list only references that begin
-+	with the given prefix. Prefixes match as if they were given as arguments to
-+	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
-+	whitespace. If `core.alternateRefsCommand` is set, setting
-+	`core.alternateRefsPrefixes` has no effect.
-+
- core.bare::
- 	If true this repository is assumed to be 'bare' and has no
- 	working directory associated with it.  If this is the case a
-diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-index 49d0fe44fb..457c20c2a5 100755
---- a/t/t5410-receive-pack-alternates.sh
-+++ b/t/t5410-receive-pack-alternates.sh
-@@ -30,4 +30,12 @@ test_expect_success 'with core.alternateRefsCommand' '
- 	test_cmp expect actual.haves
- '
-
-+test_expect_success 'with core.alternateRefsPrefixes' '
-+	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
-+	git rev-parse private/branch >expect &&
-+	printf "0000" | git receive-pack fork >actual &&
-+	extract_haves <actual >actual.haves &&
-+	test_cmp expect actual.haves
-+'
-+
- test_done
-diff --git a/transport.c b/transport.c
-index e271b66603..83474add28 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
- 		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
- 		argv_array_push(&cmd->args, "for-each-ref");
- 		argv_array_push(&cmd->args, "--format=%(objectname)");
-+
-+		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
-+			argv_array_push(&cmd->args, "--");
-+			argv_array_split(&cmd->args, value);
-+		}
- 	}
-
- 	cmd->env = local_repo_env;
---
-2.19.0.221.g150f307af
+-Peff
