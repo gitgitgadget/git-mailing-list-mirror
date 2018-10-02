@@ -2,128 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 206701F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 22:28:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FBD81F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 22:32:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726663AbeJCFOc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 01:14:32 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36187 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725198AbeJCFOb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 01:14:31 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f4-v6so3573301edq.3
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 15:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JB4TPIMhwdkapOChzaI2KxDdkkTkQvdPOxGCkIdWq6A=;
-        b=suchoT0auaNHLE9oh1fzO2WHbLMfFVNG7obt9U43NqwtS0MoYsk8MMajQP4xtoyxd7
-         3K+GFJuqX7X0jd1ufzWzOjDqPorLHidQwi+XG5WvjwD8b2dXDMJTgr0lVmRFlMhFU33y
-         DMCbPhzZ3TyqSylsAuJhW6+m0QHb2hd9/UwDTb3s+7a3pyMYyJOzs6H7YnOerpOl+Huk
-         QDAqRnA8umg7+IKyXhQJtQG0g7N6YO9V6wzLBMYbvf5jilgQNmUybCvjdWn476Q/+X8D
-         VcCOguvmnfDmuDsmZiJszV5u423CsjUquR1D4MUsNXCU2aL+nt7v6rV5sZRPC+xpmYop
-         BoYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JB4TPIMhwdkapOChzaI2KxDdkkTkQvdPOxGCkIdWq6A=;
-        b=bxfCuy9jdwguEy58zG+MO6l+jMMCZT30+gf87AGg6tdMh23bV94CmXxTIOmM+cZ71E
-         UzQGKcrV/DqBB1mW/Q4prQLSIdOFlFOG1ixxufRgHXtJD5+lm7BscODs1sV5rLLyNbSY
-         +7goquegNVvXCa6WCRE0/Rq5RJnYM72GRXU/u1/KUcTOs9ciU8qyicBNHI1WrPygXSsV
-         oP+0hd+/1i692wAJUBGfmyZtlGT9kNAyGddqzX3drj7GVWAJkS1WL8q8VXuLvm2SAnvq
-         pa9tuw6Yr1HbI1H2uhIWKFdu2i1xSjXZO0w3N7tKudwyfOntgzgg4TdUPd7zTLmFXBYh
-         ky3Q==
-X-Gm-Message-State: ABuFfoiRMBrqRBtx2cKa93lsxjx/Eh2H9NmZW9E3ORspsS9XqV8V85ud
-        wFxgVVLgWBHgH/4WzSnSX9fr/s64HucKjE1xTwLBkg==
-X-Google-Smtp-Source: ACcGV63bUysLuRV3eqr/rI/0PTjzJnfENrCxxgTy2t3b2vvVb+M8cDIBC1pgYHthaa+wP+X/kKzIkinAxzIwI6N0IDQ=
-X-Received: by 2002:a17:906:2da9:: with SMTP id g9-v6mr4047055eji.67.1538519332663;
- Tue, 02 Oct 2018 15:28:52 -0700 (PDT)
+        id S1726731AbeJCFSH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 01:18:07 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63024 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725198AbeJCFSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 01:18:07 -0400
+X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Oct 2018 01:18:05 EDT
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F94B35F15;
+        Tue,  2 Oct 2018 18:25:57 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=rPblc7tXxwBQ
+        mLnVdiRulgPjjUo=; b=Zc+All8n40+KkShd6762esrDuMlMHcUffMKPg0RipYxW
+        fgEPL0cRRdTlEOIz/lSJe4ECvSAOZVifwoiL6Ta04x5Bfmg/fK/nKkzz9/jxzHTi
+        ot58lIlV0puqDH9jfTz+pVcAhd21kbp7dOO0MvD/T54LWtH0AyvmaYUrVMlHWBM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4844035F14;
+        Tue,  2 Oct 2018 18:25:57 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:references:date:in-reply-to:message-id:mime-version:content-type:content-transfer-encoding; s=mesmtp; bh=OBywHyqcCE0QWH3vH9m3zJOPV7Hygr3L+aSdHYPdeKc=; b=lQ33oJ/8D00yFEl7ppR/Tp8d/W4u1XfO7X57MyHBnXICiSQBuS2f12Fgy20xE6fSFFKLo7aZ9TLZGVk30YqWZ4YIkP2L2UnEM1H2OEB6aBpgZNQL1dChFTRENwzEFpbC5jiho8d2Ud3eaGF6zhdfCfAJkTq+A8ZsuArCjmefp9E=
+Received: from localhost (unknown [76.118.43.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8D76035F13;
+        Tue,  2 Oct 2018 18:25:54 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Stefan Xenos <sxenos@google.com>,
+        git@vger.kernel.org, Jordan Torbiak <torbiak@gmail.com>
+Subject: Re: Git Evolve
+References: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
+        <20181002012326.GA96979@syl> <877ej0iuhc.fsf@evledraar.gmail.com>
+Date:   Tue, 02 Oct 2018 18:25:52 -0400
+In-Reply-To: <877ej0iuhc.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 02 Oct 2018 11:11:11 +0200")
+Message-ID: <87r2h8c7f3.fsf@kyleam.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1538516853.git.steadmon@google.com> <59357266bd86e8e0ace9217a97717129a6f76188.1538516853.git.steadmon@google.com>
-In-Reply-To: <59357266bd86e8e0ace9217a97717129a6f76188.1538516853.git.steadmon@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 2 Oct 2018 15:28:41 -0700
-Message-ID: <CAGZ79kbD=P__8GU9rV87wREF_MbQA9i2ij6C2qXyaJfqHD3Szg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] protocol: limit max protocol version per service
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Pobox-Relay-ID: 20668830-C692-11E8-B31B-F5C31241B9FE-24757444!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 2, 2018 at 3:00 PM Josh Steadmon <steadmon@google.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Tue, Oct 02 2018, Taylor Blau wrote:
+
+[...]
+
+>> Specifically, I've wanted the 'hg absorb' command. My understanding of
+>> the commands functionality is that it builds a sort of flamegraph-esque
+>> view of the blame, and then cascades downwards parts of a change. I am
+>> sure that I'm not doing the command justice, so I'll defer to [1] where
+>> it is explained in more detail.
+>>
+>> The benefit of this command is that it gives you a way to--without
+>> ambiguity--absorb changes into earlier commits, and in fact, the
+>> earliest commit that they make sense to belong to.
+>>
+>> This would simplify my workflow greatly when re-rolling patches, as I
+>> often want to rewrite a part of an earlier commit. This is certainly
+>> possible by a number of different `git rebase` invocations (e.g., (1)
+>> create fixup commits, and then re-order them, or (2) mark points in your
+>> history as 'edit', and rewrite them in a detached state, and I'm sure
+>> many more).
+>>
+>> I'm curious if you or anyone else has thought about how this might work
+>> in Git.
 >
-> For services other than git-receive-pack, clients currently advertise
-> that they support the version set in the protocol.version config,
-> regardless of whether or not there is actually an implementation of that
-> service for the given protocol version. This causes backwards-
-> compatibility problems when a new implementation for the given
-> protocol version is added.
->
-> This patch sets maximum allowed protocol versions for git-receive-pack,
-> git-upload-archive, and git-upload-pack.
->
-> Previously, git-receive-pack would downgrade from v2 to v0, but would
-> allow v1 if set in protocol.version. Now, it will downgrade from v2 to
-> v1.
+> I've wanted a "git absorb" for a while, but have done no actual work on
+> it, I just found out about it.
 
-But does git-receive-pack understand v1?
-As to my understanding we have not even defined v1
-for push (receive-pack) and archive --remote (upload-archive).
-v1 is only known to fetch (upload-pack).
+It may be worth looking into git-autofixup [0] (author cc'd).  I learned
+about it when Magit used it in its magit-commit-absorb command, but I
+haven't used it yet myself.
 
-> +enum protocol_version determine_maximum_protocol_version(
-> +               const char *service, enum protocol_version default_version)
-> +{
-> +       if (!strcmp(service, "git-receive-pack"))
-> +               return protocol_v1;
-> +       else if (!strcmp(service, "git-upload-archive"))
-> +               return protocol_v1;
+[0] https://github.com/torbiak/git-autofixup
 
-so I would think these two would be _v0.
-... goes and checks ...
-aa9bab29b8 (upload-pack, receive-pack: introduce protocol version 1,
-2017-10-16) seems to actually teach v1 to receive-pack as well,
-but upload-archive was completely off radar, so I think returning
-(v1, v0, v2 in the order as in the code) would make sense?
-
-Asides from this, I thought there was a deliberate decision
-that we'd want to avoid a strict order on the protocol versions,
-but I could not find prior discussion on list to back up this claim. :/
-
-For example we'd go with e.g. enums instead of integers
-for version numbers, as then some internal setup could
-also have things like protocol_v2018-10-02 or protocol_vWhatever;
-some protocol version may be advantageous to the client, some to
-the server, and we'd need to negotiate the best version that both
-are happy with. (e.g. the server may like version 0, 2 and 3, and
-the client may like 0,2,4 as 3 is bad security wise for the client,
-so both would negotiate to 2 as their best case)
-
-From a maintenance perspective, do we want to keep
-this part of the code central, as it ties protocol (as proxied
-by service name) to the max version number?
-I would think that we'd rather have the decision local to the
-code, i.e. builtin/fetch would need to tell protocol.c that it
-can do (0,1,2) and builtin/push can do (0,1), and then the
-networking layers of code would figure out by the input
-from the caller and the input from the user (configured
-protocol.version) what is the best to go forward from
-then on.
-
-But I guess having the central place here is not to
-bad either. How will it cope with the desire of protocol v2
-to have only one end point (c.f. serve.{c,h} via builtin/serve
-as "git serve") ?
-
-Stefan
+--=20
+Kyle
