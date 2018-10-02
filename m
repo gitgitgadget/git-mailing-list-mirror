@@ -2,92 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FE801F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 15:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11D2B1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 15:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728461AbeJBV5I (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 17:57:08 -0400
-Received: from avasout02.plus.net ([212.159.14.17]:43278 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbeJBV5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 17:57:08 -0400
-Received: from [10.0.2.15] ([80.189.70.193])
-        by smtp with ESMTPA
-        id 7MMKgs4azkHg47MMMgRBsj; Tue, 02 Oct 2018 16:13:14 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Q9b8Hb+a c=1 sm=1 tr=0
- a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
- a=IkcTkHD0fZMA:10 a=3Job1O-c_WliRMcLOQ8A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4 4/4] transport.c: introduce core.alternateRefsPrefixes
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, sunshine@sunshineco.com,
-        sbeller@google.com
-References: <cover.1537466087.git.me@ttaylorr.com>
- <cover.1538446826.git.me@ttaylorr.com>
- <0d3521e92a55377d3e37ecd24ff7667dab50d61d.1538446827.git.me@ttaylorr.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <aeee4d8f-b224-2b1b-40fb-d484dbaabae3@ramsayjones.plus.com>
-Date:   Tue, 2 Oct 2018 16:13:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726672AbeJBWYN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 18:24:13 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:34628 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbeJBWYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 18:24:13 -0400
+Received: by mail-pf1-f194.google.com with SMTP id k19-v6so189253pfi.1
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 08:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rZrLH79DnoyQ5TlIZ0TG1BGJXoIUb8PnJIxPS3DNKIE=;
+        b=cH8Z9MRI/5AedSBNVJyylgfUmpI3PzbMjt7KuRoOb64S30FDA1Rd5S8lSzYs/PWW8x
+         XnrZ8doIOHGkZCjzLi4gaWI+r0jPKBQLYlot39I8zwb0rY6GSbhQbbjqmBBlKb54DkG3
+         zjhkxvdFYXAba520/3Se9+7k+cBZIRHhXbSOVBxFWnbdyfPJmAJzs9Mi7xMQiK7XI0IO
+         kL2aUOj2/vFSousfV49R8xswcQp4VMDwJip+LEJcJUtnvG/YmYd4YptCAkshKuvDbuSC
+         4sjMK4TQL+IbOPokZwns6GRVv2eD2xBMzc6l2rjkXF3J38+ArIu4pw0WyNLmhgubgUy/
+         zjeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rZrLH79DnoyQ5TlIZ0TG1BGJXoIUb8PnJIxPS3DNKIE=;
+        b=RYb+8KfKYUVH7Z72hi3lOFokodz+mV1Zml38VjaL3XjPrSuoDzHg4lGQc9p4CS9Tlg
+         TyHQOeW8KQXgudqP3Mz99TsnxjZzFR8eSlAVtU4YoQ7aW4AbLWxgEJ0npC4UYP5wguZD
+         OqCKOu5T3AFOBbqKrZilqjyTbqxLFm+VgtErWQd9/jUf02ubZ1jeWRnAdhZLt1CO/Tu1
+         Qkcp9AvJgrmmf5pV7HXT5P9eRIn4t5OQtptqgUIo27n4JKcMuUALNB7HHx5PWfUajY6S
+         xzJWguali5OrqBz5K6SXpsHb+ILXrZsemlK+m07UGK4yLwYzwMybJl/aGwmGy0hKtSSN
+         O84Q==
+X-Gm-Message-State: ABuFfogHAZswP4mVFJgtdim8wlw6PIEKyz2v++Cj2b9ryoJTcLvGy8Tw
+        q1M8vcNNXPhn0/dFv545M7WY5cadNyZeAUSNtoA=
+X-Google-Smtp-Source: ACcGV619ioc30UeaR4/j9foH+PGPEPb981ZX+bYVZEtbvCeb0ybVaXFMnG8l3eh9WkfUMBelVaEp4C2FNg6EP5bnRSo=
+X-Received: by 2002:a62:2646:: with SMTP id m67-v6mr17031202pfm.254.1538494813775;
+ Tue, 02 Oct 2018 08:40:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <0d3521e92a55377d3e37ecd24ff7667dab50d61d.1538446827.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJgKUkli1rhzHwx8gn3LRJfKr8UK34qKoWfvohRvBXvwIA7AeAVP9fMF33zQb807kmKmxAQxj5NYNAnPvKu3SW1e9fpJY6FFHdnvOMq5C1unCW4fF7fa
- hjwbr0rXT+gZ2cyelbdqvk4633GKYI0OOUam/msoNGs7MlUvBvq7uE8s
+References: <pull.42.git.gitgitgadget@gmail.com> <6906c25415eddf79cc3f71f905a77b140f2f66f0.1538492321.git.gitgitgadget@gmail.com>
+In-Reply-To: <6906c25415eddf79cc3f71f905a77b140f2f66f0.1538492321.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 2 Oct 2018 17:40:01 +0200
+Message-ID: <CAN0heSomOen+mWg1CuPGUCJFgmDQUjGLtAdxpWLwrStRU4Me8g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] commit-graph: clean up leaked memory during write
+To:     gitgitgadget@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 02/10/18 03:24, Taylor Blau wrote:
-[snip]
-> diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-> index 49d0fe44fb..94794c35da 100755
-> --- a/t/t5410-receive-pack-alternates.sh
-> +++ b/t/t5410-receive-pack-alternates.sh
-> @@ -30,4 +30,12 @@ test_expect_success 'with core.alternateRefsCommand' '
->  	test_cmp expect actual.haves
->  '
->  
-> +test_expect_success 'with core.alternateRefsPrefixes' '
-> +	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
-> +	git rev-parse private/branch expect &&
-
-s/expect/>expect/ ?
-
-ATB,
-Ramsay Jones
-
-> +	printf "0000" | git receive-pack fork >actual &&
-> +	extract_haves <actual >actual.haves &&
-> +	test_cmp expect actual.haves
-> +'
+On Tue, 2 Oct 2018 at 17:01, Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 2a24eb8b5a..7226bd6b58 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -698,6 +698,8 @@ void write_commit_graph_reachable(const char *obj_dir=
+, int append,
+>         string_list_init(&list, 1);
+>         for_each_ref(add_ref_to_list, &list);
+>         write_commit_graph(obj_dir, NULL, &list, append, report_progress)=
+;
 > +
->  test_done
-> diff --git a/transport.c b/transport.c
-> index e271b66603..83474add28 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
->  		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
->  		argv_array_push(&cmd->args, "for-each-ref");
->  		argv_array_push(&cmd->args, "--format=%(objectname)");
-> +
-> +		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
-> +			argv_array_push(&cmd->args, "--");
-> +			argv_array_split(&cmd->args, value);
-> +		}
->  	}
->  
->  	cmd->env = local_repo_env;
-> 
+> +       string_list_clear(&list, 0);
+>  }
+
+Nit: The blank line adds some asymmetry, IMVHO.
+
+>  void write_commit_graph(const char *obj_dir,
+> @@ -846,9 +848,11 @@ void write_commit_graph(const char *obj_dir,
+>         compute_generation_numbers(&commits, report_progress);
+>
+>         graph_name =3D get_commit_graph_filename(obj_dir);
+> -       if (safe_create_leading_directories(graph_name))
+> +       if (safe_create_leading_directories(graph_name)) {
+> +               UNLEAK(graph_name);
+>                 die_errno(_("unable to create leading directories of %s")=
+,
+>                           graph_name);
+> +       }
+
+Do you really need this hunk? In my testing with LeakSanitizer and
+valgrind, I don't need this hunk to be leak-free. Generally speaking, it
+seems impossible to UNLEAK when dying, since we don't know what we have
+allocated higher up in the call-stack.
+
+Without this hunk, this patch can have my
+
+Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
+
+as I've verified the leaks before and after. With this hunk, I am
+puzzled and feel uneasy, both about having to UNLEAK before dying and
+about having to UNLEAK outside of builtin/.
+
+> +       free(graph_name);
+> +       free(commits.list);
+>         free(oids.list);
+>         oids.alloc =3D 0;
+>         oids.nr =3D 0;
+
+Both `commits` and `oids` are on the stack here, so cleaning up one more
+than the other is a bit asymmetrical. Also, if we try to zero the counts
+-- which seems unnecessary to me, but which is not new with this patch --
+we should perhaps use `FREE_AND_NULL` too. But personally, I would just
+use `free` and leave `nr` and `alloc` at whatever values they happen to
+have.
+
+Martin
