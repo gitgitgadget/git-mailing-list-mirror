@@ -2,89 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D63C21F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 21:34:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C30281F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 21:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728619AbeJCET4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 00:19:56 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45005 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726862AbeJCET4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 00:19:56 -0400
-Received: by mail-qt1-f194.google.com with SMTP id c56-v6so3710436qtd.11
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 14:34:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=VPGf/R492x6rSWeW2hlj8u8rdGekyc1oYWTxCLvAdAQ=;
-        b=Jo/xqm+Gi4ReOrNWbrUUWlmKPFM+7V4NwhLACJ/0hQlw9Vg9YREcAmRiZQ73g9K4Eb
-         r3xE1uqppg/VQMA6nc3Puh/LrzpBILz94qztlPcJ1VV/GYpKf12P1sHdIUR9dUEJU1nc
-         zw97rp3WiK9IhCFHG1jT86XdcdTjFn5803TFJzwc2t+mWIcQZmlVgHs1QEMjGqozxvox
-         GG/IVQQTsZdwvr/kI7/iKpCcisbY3oJMAPg9TKRvO1MLM9I+QBFUSzE96Ey9en7SUQ81
-         zePfGaZGDtb0oVYGyikYLe9DnV1GtmyAAv1fXNWVQZtrOiVLO5ipQy3bnGUQzSVUHDpI
-         8q3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=VPGf/R492x6rSWeW2hlj8u8rdGekyc1oYWTxCLvAdAQ=;
-        b=I4MtZqqzEVUnxzdNxbjpdM5ytE0Op/ta2AvG/KFD5Kyi5xs2NuBMe+FAhfyNr1QgVt
-         I6LjuQkgf44zxlm6wp+TWFvVtI9S8UR87eZjQqJPyS5X/euu9C9ZtgVf0rYIa9NMhMV8
-         TvSq3WbQ1dQzCGoWI/NV9zs1SynC6UEEBlxXN7UOKmgvnbp09EJTtJQG4MMZ1Qs5KnvJ
-         kxTP1beEx4k187nKHoYvYM7b3rygS4UYKwwaNMFtv254zaqHr6nGtQZ8cR+VPdwyHlTZ
-         X03HZA2h0zPIwGxIIDqzfsQzao+GiLlOtT9hwjwmYmiDLQ6tP50KHQEc/Fwl27BB1lhk
-         p0KA==
-X-Gm-Message-State: ABuFfohoYo9NfQ7nrLA556tpoR0J0CVR2JbScd6wWpSbhESA0TYWKsfD
-        eits4YhlFm0mBLGc7Dnpn/A=
-X-Google-Smtp-Source: ACcGV63PpEnzvKWZRDLeOU4XuyC0fFv6epLoDEUN4xwimIxDaQ3ArprCKAptG5DJGA/B/FUOLehGJA==
-X-Received: by 2002:ac8:7003:: with SMTP id x3-v6mr14420403qtm.325.1538516073006;
-        Tue, 02 Oct 2018 14:34:33 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:81f3:8f89:2be9:a31b? ([2001:4898:8010:0:6b29:8f89:2be9:a31b])
-        by smtp.gmail.com with ESMTPSA id q24-v6sm1548596qtb.26.2018.10.02.14.34.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Oct 2018 14:34:32 -0700 (PDT)
-Subject: Re: [PATCH] more oideq/hasheq conversions
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-References: <20181002211921.GA3322@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5f28c9d1-1fed-5af4-c6fb-c05d90d125c2@gmail.com>
-Date:   Tue, 2 Oct 2018 17:34:32 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1728734AbeJCEhB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 00:37:01 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51333 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727460AbeJCEhA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 00:37:00 -0400
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1fOCjP3JhU-00pvi4; Tue, 02
+ Oct 2018 23:51:31 +0200
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1fOCjP3JhU-00pvi4; Tue, 02
+ Oct 2018 23:51:31 +0200
+Date:   Tue, 2 Oct 2018 23:51:33 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Michal Fita <michal.fita@schneider-electric.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git 2.19.01 on Windows crasesh during GC
+In-Reply-To: <AM5PR0401MB2484A080D36571F2486B9609C4190@AM5PR0401MB2484.eurprd04.prod.outlook.com>
+Message-ID: <nycvar.QRO.7.76.6.1810022350240.2034@tvgsbejvaqbjf.bet>
+References: <AM5PR0401MB2484A080D36571F2486B9609C4190@AM5PR0401MB2484.eurprd04.prod.outlook.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20181002211921.GA3322@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XpFX1LrkqH0bgqEq5q8+f+nkudD8YEdRE7n1shJFpe/gbQpjKx6
+ 9r/4BfQeZnvjhN4i4n4q479FH9uYw1CythcqKnFxWffCgGDoFzaF7lOowBLU1T+7iGQGoUo
+ WrAMOCUVhVM9nNFPYvcE02/qDyq3CMGUevxxsiKq4qnVXObMs3+pbAlg2xqEqCwi4FqXeU0
+ FqBhACsGpDnKC28h+y8sg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RuHvSFoout0=:X/R6okIOJPp7kUW9L3NqL+
+ lyf0e8oM0db4/JHrCw5BavIU5B6b7gxI7X6ocVphCFrGVEl5E4BL2iTGZr/rIPXUfWpM7Ugv7
+ PmneM0Yu752I+anT3Qd+93asZJ+0OI/jQHihPy7pQWWjnGpjyZYwYcPqP0Cd2/qPTi4HivW5/
+ 0olLOwsZTwK7vEx4NjL5ZRw5B4st6cVpx02W7WroB0AZ8V2/a5bsr5R7lJuYMavQZWzGzfCi2
+ Yo6U9hLzdKLoQLaolFW+AVHhruRhKI5gexb86+0dOw8pha3FdI9jPWL9e4Qo6eVFqz5YPC2SB
+ 1mcfOPkr6slhjkr23gKubSzsRRAgjJyzj70vnGeo8iYEs897QcyaEqJr6CVwoT9LxmOO3ghL1
+ ifbZlf2eoeRmaZuY2YThxbnfBypoDr0qAVtOMu3SQGfuV2NOsDgMF7vgnDhev2/SqyZz2h3oD
+ I0JdIuMi93DIcLX/wH8p97qoe8SR+I8rFgu2OK7Kc+mwbIAX3xKeLBSBsJToaRKKXTOLLhwUO
+ /kgYANUENL6ZezXOqq3N+ZcJG3s0IRyGUis0ucsdZRbblgGNSADlgmUtdlXrVlroTjW1u8W1h
+ h6obrR3TPMU6pjAvKOQTc+6pPd4D8pheNXYNlAUx6+lDaHOTXYyOMpGUIopMRhsIxEPakn89Z
+ nR/BJIZSZsC7qK36nleIlClIVAKjl98ugY1okjP/EPxdgypMqzp7NLDHX08v5kP8jHu83u3pM
+ L3xd1rdKvS8PktONA+rIVp6d1yCtdaurawDN33LjYFiOYGpAuRkOiRlw1bW3jyvG5m9D/ITFi
+ nu87HzXH47ezrAtCCZWNpMrpIO/zvv4XBtJPzXXqduz88VQVTs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/2/2018 5:19 PM, Jeff King wrote:
-> We added faster equality-comparison functions for hashes in
-> 14438c4497 (introduce hasheq() and oideq(), 2018-08-28). A
-> few topics were in-flight at the time, and can now be
-> converted. This covers all spots found by "make coccicheck"
-> in master (the coccicheck results were tweaked by hand for
-> style).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Jake: I was surprised that this was not a "patch 2" on top of your
-> earlier coccicheck patch. Apologies if you were planning to send it out.
->
-> This doesn't conflict with anything in "pu", so it's a reasonable time
-> to apply it. There are a few lingering cases in pu, so another option is
-> to wait a week or two and see if they get merged.
-These conversions look good to me!
+Hi,
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+On Fri, 14 Sep 2018, Michal Fita wrote:
+
+> Problem signature:
+>   Problem Event Name:	APPCRASH
+>   Application Name:	git.exe
+>   Application Version:	2.19.0.1
+>   Application Timestamp:	5b980bc7
+>   Fault Module Name:	ntdll.dll
+>   Fault Module Version:	6.1.7601.24117
+>   Fault Module Timestamp:	5add228d
+>   Exception Code:	c0000005
+>   Exception Offset:	0000000000032964
+>   OS Version:	6.1.7601.2.1.0.256.48
+>   Locale ID:	2057
+>   Additional Information 1:	335e
+>   Additional Information 2:	335ee83054d6c615e4a7142c362e3dd4
+>   Additional Information 3:	5184
+>   Additional Information 4:	518485c5adbc52c624cc6890056919a6
+
+Sadly, this is hardly enough information to even start a wild goose chase
+of a debugging spree.
+
+Happily, I *think* that another report will help you, too:
+https://github.com/git-for-windows/git/issues/1839
+
+In short: please test with a new snapshot from
+https://wingit.blob.core.windows.net/files/index.html
+
+Ciao,
+Johannes
