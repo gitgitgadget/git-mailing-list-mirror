@@ -3,82 +3,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8011F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 17:02:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 501161F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 17:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbeJBXq4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 19:46:56 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:52007 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726731AbeJBXq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 19:46:56 -0400
-Received: by mail-it1-f196.google.com with SMTP id 74-v6so4434597itw.1
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 10:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7Ej+xQRkHSRAHQqDMSeRK2fEtm7uWKhC8lCfXym3vU4=;
-        b=tsytKvGkGV8prm2v6n5Uc59peG+YN7JV4fV+zM+uT3xz61icFnuqNFRowiTeTawJHy
-         KZ9/UImMNa7CXSa420w53KfNw5NJz6q52VKbhI5yGCjIOgkiE8eKTfbGRsZRZfMarf9H
-         gY4nTIkzkqkWvEZzEaZTQt8SGE7Qm7tC0ICOVgdgG3WwkNB9HGvzKqol3UtsyaWyBEgA
-         Xyi1yw6RtnT0mWuVhMXtelbfy5LLdDMyKKcpryafScLbHMkpEXFU0iubzYV9LuN+vyiB
-         m/OCOo9logMKSzxxsGVDRhH40I71tYFTQFqTzIn/OwgMbGjcaP22raY3WSu1CjRk4iCr
-         7lwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7Ej+xQRkHSRAHQqDMSeRK2fEtm7uWKhC8lCfXym3vU4=;
-        b=Fn71auVQQrdIMZeUFwQJaq3dAOpPHrMnM7hAEdDwgoTP6/OwRs/urm1vl7BBZ9G48c
-         O8jiMiD2UvaSRdhhE6GIlG3nURG622eLp85r526/Fqgu0f1Tie1sk5zInVp2zKIIlHEM
-         V+8Ch9wVrkQz6e4L23BqRx6mi2miDW4y7UrJg/6ubCnDwupARPoSqOuLxDXI7Vi7VWtg
-         M/3ofQ3ExVtWfHDkNBfpjZbaORbEr8AaaCShc+3IQY/xSERE4r4mm70m7inkkXacqMu2
-         MxEF0QTyJEOEiJWmSdj/6kqmQ50ef9Ig23BfmLXqVq/uBk2DIdfaqGLze1h/orTZcTle
-         vmKw==
-X-Gm-Message-State: ABuFfojm5qt8Sbw9XMFVqRn7PrRFYEw3agat7OJbJ5Linw2KSPdXviqu
-        4KobStTbe+XX/ANXgCjTV0UwvoEQnNSJbD1rKRE=
-X-Google-Smtp-Source: ACcGV62UDwOeDlnhPLKpOFThZguLSemwusy8t/nDmd+s+E+0TET2EkvypvZ3uLKzxKilbzhl60vX31ymnlKARdxeo4A=
-X-Received: by 2002:a24:7605:: with SMTP id z5-v6mr2459996itb.62.1538499755311;
- Tue, 02 Oct 2018 10:02:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181001134556.33232-1-peartben@gmail.com> <20181001134556.33232-7-peartben@gmail.com>
- <CACsJy8B9dd-N=w13XP2FuHRfqK2tmzuNx0WN-ZhuchssG6RUdg@mail.gmail.com> <351b9746-6c2e-a658-3f51-71c1f4cbc3ac@gmail.com>
-In-Reply-To: <351b9746-6c2e-a658-3f51-71c1f4cbc3ac@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 2 Oct 2018 19:02:09 +0200
-Message-ID: <CACsJy8BEk9q0DNzXLUo0BgN3DUYYk=vSQcLqtQY=-JLAn74RXg@mail.gmail.com>
-Subject: Re: [PATCH v7 6/7] ieot: add Index Entry Offset Table (IEOT) extension
-To:     Ben Peart <peartben@gmail.com>
+        id S1727095AbeJCAkK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 20:40:10 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:33180 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726645AbeJCAkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 20:40:10 -0400
+Received: from lindisfarne.localdomain ([92.28.142.68])
+        by smtp.talktalk.net with SMTP
+        id 7OtMgc0MNVlGZ7OtTgNKnm; Tue, 02 Oct 2018 18:55:35 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1538502935;
+        bh=P8ag5AEiZh28d5NxVOMvXDZYkQho8WHJqYyAxTCDpzw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=PZUZ6uQleFncW8Fb80uCPntOMNATyxfhCu7diTaIkzCPoCidXOcSqrT6wgXGyMhUO
+         NW2yHjJq2DJpldXE3rb3XfS55R96/V8bQBQCPx5BBZiml3IRjDXG9tSkRC9l2pKObS
+         uSS7bbheWCgxBHP1k1r9FCfPVUIVVmSg7PLxgwbI=
+X-Originating-IP: [92.28.142.68]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
+ a=UGDAwvN9cmeZh0o4udnnNw==:17 a=evINK-nbAAAA:8 a=zrg1TGVO0JqqeQklKD4A:9
+ a=z_d1wuQn5cqjXh0E:21 a=0UEQN__nQJZCTTcb:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 2/5] diff --color-moved-ws: fix out of bounds string access
+Date:   Tue,  2 Oct 2018 18:55:11 +0100
+Message-Id: <20181002175514.31495-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.19.0
+In-Reply-To: <20181002175514.31495-1-phillip.wood@talktalk.net>
+References: <20181002175514.31495-1-phillip.wood@talktalk.net>
+MIME-Version: 1.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfGVJQQjfhe11d9fwYfDRpENNcIPzjlWxScSxj0hevRKAcdI3nhuAEc0U8J0z5+Ghtue3dia8vqOrr0XEYlHTF3tqnwG+rd2oqAJ9I7M4PCRBHD9FC7h3
+ 9o0mhU41f4M34eLofPw4AaLtdS6yQHbbTbimITa4CQKJwaOvyD5hCw8AGX38oZUXaNU3YIWCN+bBaAN5juCr4j5Cjxh71RCXbAvWN3W9os6vphqfRCSUaRoy
+ BzZFYS8o8DZf+SPDEg2vON2MgK4VhGcuERbuKyIR0ZWoNP3mHrRKrXNPPNm7Xdya
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 2, 2018 at 6:34 PM Ben Peart <peartben@gmail.com> wrote:
-> >> +                       offset = lseek(newfd, 0, SEEK_CUR) + write_buffer_len;
-> >
-> > This only works correctly if the ce_write_entry() from the last
-> > iteration has flushed everything to out to newfd. Maybe it does, but
-> > it's error prone to rely on that in my opinion. Maybe we need an
-> > explicit ce_write_flush() here to make sure.
-> >
->
-> This logic already takes any unflushed data into account - the offset is
-> what has been flushed to disk (lseek) plus the amount still in the
-> buffer (write_buffer_len) waiting to be flushed.  I don't see any need
-> to force an additional flush and adding one could have a negative impact
-> on performance.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Eck! How did I miss that write_buffer_len :P
+When adjusting the start of the string to take account of the change
+in indentation the code was not checking that the string being
+adjusted was in fact longer than the indentation change. This was
+detected by asan.
+
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/diff.c b/diff.c
+index 5a08d64497..0096bdc339 100644
+--- a/diff.c
++++ b/diff.c
+@@ -841,7 +841,7 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 		al -= wslen;
+ 	}
+ 
+-	if (strcmp(a, c))
++	if (al < 0 || al != cl || memcmp(a, c, al))
+ 		return 1;
+ 
+ 	return 0;
 -- 
-Duy
+2.19.0
+
