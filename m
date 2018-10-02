@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360B31F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 02:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D72C1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 02:24:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726692AbeJBJEt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 05:04:49 -0400
-Received: from mail-io1-f51.google.com ([209.85.166.51]:42508 "EHLO
-        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbeJBJEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 05:04:49 -0400
-Received: by mail-io1-f51.google.com with SMTP id n18-v6so538482ioa.9
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 19:23:59 -0700 (PDT)
+        id S1726709AbeJBJEy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 05:04:54 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:55987 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726715AbeJBJEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 05:04:54 -0400
+Received: by mail-it1-f196.google.com with SMTP id c23-v6so1291242itd.5
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 19:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=DV7GU0hije/3MRO0t6GQNPK1JremetfuPFkNeZT3Y/E=;
-        b=xOQSed5pj6xZnl+rsGV7ltkyqzLk5qNuxeaUFJh/Q1Vtid1inRil0Hg0vfkxaZaGkL
-         vndDh4ew8fc33BsgmT9mbigPH3WIpEje48xHPH3QX4tH0eK/GeXGCWQwFQj3u2KM+iCq
-         sK0Y4jkgKfah8tx1HJNq00Qdz2/phkVaCbaJrAE44bX0m6JhWtdpxYCt278OSaSYIRvE
-         c44hqS+fgXJAGFQrTvZ2IvfhoYqZ0GC3mCszLIZYNULMLiWu7TuoxdO5pb7NK8+D0SfJ
-         VIO9O8Ed6QXFln04EAX4vv3N7WWbtO3q7vRHGb5oZ9Y4kkmVe9pI1MIfr2e0NK/NUDW4
-         pU0w==
+        bh=B7lGpwVzoTTTl71QZYzO24ADdLeKcqQoJ9sWAkF4ea4=;
+        b=LIoyRAY3X/+bByf5JIuVNNd2k6SgbzO6d/mR5yQgojrmLCGoq1Df/+cImYBO+bdP2x
+         AVrhOSE3kXwC/3keTdbTEr2Ted70ZlIOrNj7aNbmlCyj4NliDhwjT7sV1COVomB2Ykd0
+         0aOcWePmCPyugIej4UrIZfqZo952RpKV9mi/Z3j4//UharKkdVzmseX9YQhctwyXbnJk
+         IuQjxecQ/FlfdmrHr35AnP9STN5ppBK+pyssL69dIBf4EwqzMBPyJl6cR5n0+uZYWzz7
+         r9lMbHQMPXLzHo2tQ5IdjxyTlSA5iftHTRJmNBFq+A3Rb8wilJ2yzsBIC28CnoELY/RR
+         ppZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DV7GU0hije/3MRO0t6GQNPK1JremetfuPFkNeZT3Y/E=;
-        b=DkrOCafH3fBTJaQY+/Npc/3F1zldCadLmQgDO2/UlpYTFjewld06+t76dilzOQrlrR
-         6DkP/Ha+IyOJKPdA+asmpq71gIw2tKNB44mi/2yTHLkQ3elXTtMqva3NN6c1OEAU5xyv
-         F8ywldGvXHpi1Dazafaxg04oDmqWwfZAdenNVkm6v6UImNjZShTK10WPUa1UcWvcth/L
-         cCxevUNION4vbNSzBOkc18R7po3cP4/OJ/UGI0lexCMHB5DWtnkCZbZ25dHiEmIDc+h0
-         kMvO4UBPHDPrAxDoBVWV8zh+4M2roTZQ5cIwCdIm7aHmv9uPflCfk666znuYm756e0PL
-         lJnw==
-X-Gm-Message-State: ABuFfojv7GjDunybYQ2xtIIIgiIM4PU6g/rrBIfhmIuGwU30G7UCSAlL
-        TaqjFDIk0FX/RPNUM4H3G1uKqO3bQQQbqQ==
-X-Google-Smtp-Source: ACcGV62xnrhi3kDfvMWhgmMtvJhjeesQV1LP/cn+5kPbbH9JRBEuIwr52MLIANmw2vv5oz1rgN3rEQ==
-X-Received: by 2002:a62:6cc4:: with SMTP id h187-v6mr14409783pfc.158.1538447038237;
-        Mon, 01 Oct 2018 19:23:58 -0700 (PDT)
+        bh=B7lGpwVzoTTTl71QZYzO24ADdLeKcqQoJ9sWAkF4ea4=;
+        b=eXIlnuGAQq9FNQtFkrQH+Li5bDMgvp+m7PRxYtQxVhnj/L4nlYDAqJkfu78z0Ai77U
+         s5s0VIV8mG1SdCH6QxyGJMK3toSremED1fjxXZNBYnBW7CJ/i66b/aYqVkCC0o09Hlms
+         GxpklTYkIDHvsiaGzsyICHERj0iBRGYF0OwD+tXKfIugaetiY5bc15Vn6/Jy2gtU063D
+         fgbJOeRNeQDyyOG3Hq3scCZ0o70qTWiXYs/UCAPrlYbhgzEk6Vm3toloC1tse1ViTKbs
+         ZTpUnSLPQYwFA9+HNDlG8FhqfKfUnsg7Ov/dRdxN8ZTYDzPqJ1MWAk7ePAyMGl7K6hWu
+         UUZQ==
+X-Gm-Message-State: ABuFfojx6Rx6wGTkJCxoHY5+TxkERLzxijO1tzvMYvnR8uFQnlTVBJbN
+        fr409QAkTpWNF38EdtnOCDHi3jbLowJhxQ==
+X-Google-Smtp-Source: ACcGV63T5vFnXq9UG1p2vuu7sXlin4B7oihGK80kaJ1bGLLclfKdQNoUsgYPKaKKhIJVFvqPTod30g==
+X-Received: by 2002:a63:2441:: with SMTP id k62-v6mr12719931pgk.26.1538447043228;
+        Mon, 01 Oct 2018 19:24:03 -0700 (PDT)
 Received: from localhost ([2601:602:9200:32b0:e958:2ad1:68d0:890f])
-        by smtp.gmail.com with ESMTPSA id l16-v6sm27830301pfj.179.2018.10.01.19.23.56
+        by smtp.gmail.com with ESMTPSA id t4-v6sm2545596pfh.45.2018.10.01.19.24.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Oct 2018 19:23:57 -0700 (PDT)
-Date:   Mon, 1 Oct 2018 19:23:56 -0700
+        Mon, 01 Oct 2018 19:24:02 -0700 (PDT)
+Date:   Mon, 1 Oct 2018 19:24:01 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, sunshine@sunshineco.com,
         sbeller@google.com
-Subject: [PATCH v4 2/4] transport.c: extract 'fill_alternate_refs_command'
-Message-ID: <6119de15f2ba56e093c60a41990db740f3904d54.1538446827.git.me@ttaylorr.com>
+Subject: [PATCH v4 4/4] transport.c: introduce core.alternateRefsPrefixes
+Message-ID: <0d3521e92a55377d3e37ecd24ff7667dab50d61d.1538446827.git.me@ttaylorr.com>
 References: <cover.1537466087.git.me@ttaylorr.com>
  <cover.1538446826.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,54 +67,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To list alternate references, 'read_alternate_refs' creates a child
-process running 'git for-each-ref' in the alternate's Git directory.
+The recently-introduced "core.alternateRefsCommand" allows callers to
+specify with high flexibility the tips that they wish to advertise from
+alternates. This flexibility comes at the cost of some inconvenience
+when the caller only wishes to limit the advertisement to one or more
+prefixes.
 
-Prepare to run other commands besides 'git for-each-ref' by introducing
-and moving the relevant code from 'read_alternate_refs' to
-'fill_alternate_refs_command'.
+For example, to advertise only tags, a caller using
+'core.alternateRefsCommand' would have to do:
+
+  $ git config core.alternateRefsCommand ' \
+      f() { git -C "$1" for-each-ref \
+              refs/tags --format="%(objectname)" }; f "$@"'
+
+The above is cumbersome to write, so let's introduce a
+"core.alternateRefsPrefixes" to address this common case. Instead, the
+caller can run:
+
+  $ git config core.alternateRefsPrefixes 'refs/tags'
+
+Which will behave identically to the longer example using
+"core.alternateRefsCommand".
+
+Since the value of "core.alternateRefsPrefixes" is appended to 'git
+for-each-ref' and then executed, include a "--" before taking the
+configured value to avoid misinterpreting arguments as flags to 'git
+for-each-ref'.
+
+In the case that the caller wishes to specify multiple prefixes, they
+may separate them by whitespace. If "core.alternateRefsCommand" is set,
+it will take precedence over "core.alternateRefsPrefixes".
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- transport.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ Documentation/config.txt           | 7 +++++++
+ t/t5410-receive-pack-alternates.sh | 8 ++++++++
+ transport.c                        | 5 +++++
+ 3 files changed, 20 insertions(+)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ac0577d288..1dc5eb3cfa 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -632,6 +632,13 @@ Note that the configured value is executed in a shell, and thus
+ linkgit:git-for-each-ref[1] by itself does not work, as scripts have to handle
+ the path argument specially.
+ 
++core.alternateRefsPrefixes::
++	When listing references from an alternate, list only references that begin
++	with the given prefix. Prefixes match as if they were given as arguments to
++	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
++	whitespace. If `core.alternateRefsCommand` is set, setting
++	`core.alternateRefsPrefixes` has no effect.
++
+ core.bare::
+ 	If true this repository is assumed to be 'bare' and has no
+ 	working directory associated with it.  If this is the case a
+diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
+index 49d0fe44fb..94794c35da 100755
+--- a/t/t5410-receive-pack-alternates.sh
++++ b/t/t5410-receive-pack-alternates.sh
+@@ -30,4 +30,12 @@ test_expect_success 'with core.alternateRefsCommand' '
+ 	test_cmp expect actual.haves
+ '
+ 
++test_expect_success 'with core.alternateRefsPrefixes' '
++	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
++	git rev-parse private/branch expect &&
++	printf "0000" | git receive-pack fork >actual &&
++	extract_haves <actual >actual.haves &&
++	test_cmp expect actual.haves
++'
++
+ test_done
 diff --git a/transport.c b/transport.c
-index 2e0bc414d0..2825debac5 100644
+index e271b66603..83474add28 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -1325,6 +1325,17 @@ char *transport_anonymize_url(const char *url)
- 	return xstrdup(url);
- }
- 
-+static void fill_alternate_refs_command(struct child_process *cmd,
-+					const char *repo_path)
-+{
-+	cmd->git_cmd = 1;
-+	argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
-+	argv_array_push(&cmd->args, "for-each-ref");
-+	argv_array_push(&cmd->args, "--format=%(objectname)");
-+	cmd->env = local_repo_env;
-+	cmd->out = -1;
-+}
+@@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+ 		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
+ 		argv_array_push(&cmd->args, "for-each-ref");
+ 		argv_array_push(&cmd->args, "--format=%(objectname)");
 +
- static void read_alternate_refs(const char *path,
- 				alternate_ref_fn *cb,
- 				void *data)
-@@ -1333,12 +1344,7 @@ static void read_alternate_refs(const char *path,
- 	struct strbuf line = STRBUF_INIT;
- 	FILE *fh;
++		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
++			argv_array_push(&cmd->args, "--");
++			argv_array_split(&cmd->args, value);
++		}
+ 	}
  
--	cmd.git_cmd = 1;
--	argv_array_pushf(&cmd.args, "--git-dir=%s", path);
--	argv_array_push(&cmd.args, "for-each-ref");
--	argv_array_push(&cmd.args, "--format=%(objectname)");
--	cmd.env = local_repo_env;
--	cmd.out = -1;
-+	fill_alternate_refs_command(&cmd, path);
- 
- 	if (start_command(&cmd))
- 		return;
+ 	cmd->env = local_repo_env;
 -- 
 2.19.0.221.g150f307af
-
