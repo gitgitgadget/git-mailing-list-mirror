@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0671F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 18:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37C7B1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 18:59:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbeJCBe1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 21:34:27 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46198 "EHLO
+        id S1727482AbeJCBnq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 21:43:46 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36092 "EHLO
         mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbeJCBe1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 21:34:27 -0400
-Received: by mail-ed1-f68.google.com with SMTP id g32-v6so3013118edg.13
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 11:49:40 -0700 (PDT)
+        with ESMTP id S1726881AbeJCBnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 21:43:46 -0400
+Received: by mail-ed1-f68.google.com with SMTP id f4-v6so3092956edq.3
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 11:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pikYI0NVKnMm/AfLn40xKVvyjASsC/OwNGHgz4SJPxU=;
-        b=EiYFDh9TEvDgwG7OHGh8ljsLbmYCwxQlnRiJnvmDQEz7AQj77e3Ft4PuvmRvAJxarl
-         HZn1neej7gK5VFmoX+5qnYEUBZLyA/0RDIgIXO1KyVlBpZYjhmiUgWnQHOIhW/bDsvFC
-         fPNhD1pzpiHXNGdAjvy88klgacZmLh6ssDG7/5waG0L6XtYnUF4/d8T4iojUXPWn6bce
-         /J7VoI5BDgBOIhBheW4RcYM8KxhaZjMhdDe5W27D9IJ98c5a1McqUiSFP5zWZU5CyQ1S
-         LQ2HGJM8VcBsFPZcmQAFu6IQXB8ez75AjWzSkDlKULNyV91pmIu7MQoYjk/lDApeasnt
-         E0wA==
+        bh=2bO7EIMw5W9sfALx+Xf0tz/xUSUU1N0JyWFXJndhf3c=;
+        b=Hyb5jdJu3gZykn030Dk41V5kr9D4KvZg/tEkpoTsZdHeZfJtAm4lJzetVLFOZoV2ZO
+         0ADXXTAKlVdRuDv4KacCkgkZIRoSV++TNnvYW52ywq7JriwH9zK5YBx9LVzWXtV1wWv+
+         xMdIPgZ5q96GdLA41p7jo0N6Xwj3nbaYEnfd8cBDc1XO3QmnSVPsBSHlsN8ylu+Ays43
+         nfaitHeErP5W7BLu4EzYvb5rqKvPVQDUj93Akz/DRb3nXFJO3iR3nNK9Su6tcrVw5xFN
+         bNol/Lj8ns9L95kXCoFbr2cZmkmIEMa7KU8gbZOadOnjGGUQiG34c9LduIfl+gY353u9
+         zucQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pikYI0NVKnMm/AfLn40xKVvyjASsC/OwNGHgz4SJPxU=;
-        b=bkWOHqtug2G+tcOOdGDqzgpjPxLyK4FwUqyhR/TQQWQ+y//EsRIm/qhxj8A58VwSVo
-         OjMf982Z2ipKlhhqAZ9s5lfUWlEbU6EBJvYS+SI7TgTha91/erP0DERV0QN2yG800gRb
-         4VlkBve31u6wQATBdPdPzuRs+RKnCetxS48bDunmCtAAJC4Q4MSNYtDt2nyhIRoClBEK
-         bviCB0C7JO6aef74gSE/0fTp48Ru1n+P5r1n3ikVzYqj3VHG5CP63z+VwXq1WErS/tii
-         yA7QirVl3VGz+IZaOzwvZlfsnUlPIcHLwpWNkITjxqPHR1JV+CHuvXQ+gemc3fnxqCKb
-         8Pog==
-X-Gm-Message-State: ABuFfohAw06fLcaXO6HllM/5fjLtMInfNKbmw0rjxGuM4GkdA3KwfYUR
-        8qTM8R2iDoAnWcBPQs4qlgzLAh27K4n4GE6NcPSVP/1B4XA=
-X-Google-Smtp-Source: ACcGV62fRyfIy/iTHlc8WnswnTZW0kxAQMmiybXKqCeUPabTOMOo6Ajadz6X+OeoT5r8x6EuIObavoKO6FcwCf0actM=
-X-Received: by 2002:aa7:d9cf:: with SMTP id v15-v6mr12116347eds.25.1538506179762;
- Tue, 02 Oct 2018 11:49:39 -0700 (PDT)
+        bh=2bO7EIMw5W9sfALx+Xf0tz/xUSUU1N0JyWFXJndhf3c=;
+        b=fBiUxp84mjMd4wvrtdIrMdYGfKmjYmnuJoHXqqlYh/SDMD0Wq6kI94C3I2f+oH3L8R
+         6/sr0vYDkD0THjMaqtt3pXTuj8cG2PJSxaXVAT67a6tXeRavO/6sKmfnA2X7Z03RyQ/C
+         yihM7QP6x9tZfpk728896CDrFfgD5DrhBKm8cFPZbsf0rQrRm/lxZDavgEhDqcjUmghl
+         rw7V+TEDuiOSAe6Fsv3GSz9vSzq5Un3HwixinJGFRcA+GNx8hdylWJ6bWjW+23LkcmGq
+         Cf/2EUh/P7wIxyMOoeIfFHAVC0ESPFg0tgNqbM9UFaALNBMIORg3ld3u0qvZgKa/4nPk
+         86dA==
+X-Gm-Message-State: ABuFfoiHWo49xU7NA7qhHF/IRefGuTpghhm6wctdShAqI1dU5DjtHhFK
+        nFSrqqX6CeccrLU54ZzCgFp9B5rv4NPpo8Kn4kvu8Q==
+X-Google-Smtp-Source: ACcGV63LtpmSz7AU3gSuZWrPZtG/opWAR3Ibn+H5P/tHAkKm41QgMmby9ugV2l0/Y1RVTzW+MARNIv5AVOEvQuofd2Y=
+X-Received: by 2002:aa7:c746:: with SMTP id c6-v6mr8339684eds.231.1538506736881;
+ Tue, 02 Oct 2018 11:58:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181002175514.31495-1-phillip.wood@talktalk.net>
-In-Reply-To: <20181002175514.31495-1-phillip.wood@talktalk.net>
+References: <20181002175514.31495-1-phillip.wood@talktalk.net> <20181002175514.31495-2-phillip.wood@talktalk.net>
+In-Reply-To: <20181002175514.31495-2-phillip.wood@talktalk.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 2 Oct 2018 11:49:28 -0700
-Message-ID: <CAGZ79kYqACgoNShaPBQQSUN1B_dhmdxHxBV6YZoNAd39f6XMjw@mail.gmail.com>
-Subject: Re: [PATCH 1/5] diff --color-moved-ws: fix double free crash
+Date:   Tue, 2 Oct 2018 11:58:45 -0700
+Message-ID: <CAGZ79kYu9enUT=yL8wfM9quYYz1fs5OU4Wcvci9ZVPPdXkY6gA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] diff --color-moved-ws: fix out of bounds string access
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -61,33 +61,39 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Oct 2, 2018 at 10:55 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
-
-> The solution is to store the ws_delta in the array of potential moved
-> blocks rather than with the lines. This means that it no longer needs
-> to be copied around and one block cannot overwrite the ws_delta of
-> another. Additionally it saves some malloc/free calls as we don't keep
-> allocating and freeing ws_deltas.
-
-Another solution would be to duplicate the copy-arounds, that it only
-fixes the double free, but having another layer of abstraction
-(moved block vs line) makes sense as then we don't need to copy
-it forward.
-
-With this patch applied the diff as mentioned works and having the
-ws deltas with the blocks instead of the
-
+>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> When adjusting the start of the string to take account of the change
+> in indentation the code was not checking that the string being
+> adjusted was in fact longer than the indentation change. This was
+> detected by asan.
 >
 > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  diff.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 5a08d64497..0096bdc339 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -841,7 +841,7 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+>                 al -= wslen;
+>         }
+>
+> -       if (strcmp(a, c))
+> +       if (al < 0 || al != cl || memcmp(a, c, al))
 
+If (al < 0) then al != cl, so I would think we could drop the first
+part, and only check with al != cl || memcmp
 
+In theory we should use xdiff_compare_lines here
+as the rest of the lines could have more white space issues,
+but we catch that earlier via a die("color-moved-ws:
+allow-indentation-change cannot be combined with other
+white space modes"), so memcmp is fine.
 
->  static void pmb_advance_or_null_multi_match(struct diff_options *o,
-[...]
->         for (i = 0; i < pmb_nr; i++) {
->                 if (got_match[i]) {
->                         /* Carry the white space delta forward */
-
-I would think this comment is obsolete as well with this patch?
-
-With or without that nit addressed, this patch is
-Reviewed-by: Stefan Beller <sbeller@google.com>
+Side note: There are comments above this code that seem
+to be also obsolete after patch 1 ("...carried forward in
+pmb->wsd; ...)
