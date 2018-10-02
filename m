@@ -2,89 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59E801F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 19:16:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3481F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 19:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727233AbeJCCBq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 22:01:46 -0400
-Received: from mga06.intel.com ([134.134.136.31]:11053 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726818AbeJCCBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 22:01:46 -0400
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 02 Oct 2018 12:16:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.54,332,1534834800"; 
-   d="scan'208";a="85212225"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.177.161])
-  by FMSMGA003.fm.intel.com with ESMTP; 02 Oct 2018 12:16:53 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] coccicheck: process every source file at once
-Date:   Tue,  2 Oct 2018 12:16:42 -0700
-Message-Id: <20181002191642.21504-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.18.0.219.gaf81d287a9da
+        id S1727546AbeJCCDz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 22:03:55 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38934 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727403AbeJCCDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 22:03:55 -0400
+Received: (qmail 11828 invoked by uid 109); 2 Oct 2018 19:19:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Oct 2018 19:19:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31174 invoked by uid 111); 2 Oct 2018 19:18:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Oct 2018 15:18:25 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2018 15:19:00 -0400
+Date:   Tue, 2 Oct 2018 15:19:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
+Message-ID: <20181002191900.GA2014@sigill.intra.peff.net>
+References: <20180811170248.GC27393@sigill.intra.peff.net>
+ <20180811172350.GA2689@sigill.intra.peff.net>
+ <f69e08d7-b29d-a9b7-b6d4-5294c4379133@web.de>
+ <6065f3e5-f831-802f-9adc-099de99405fc@web.de>
+ <20180814015842.GA27055@sigill.intra.peff.net>
+ <030bac66-eeb4-7bc9-8f27-1e6b4124fd76@web.de>
+ <20180827230314.GB10402@sigill.intra.peff.net>
+ <9e2440cc-39a6-f51b-9aee-8536020ed033@web.de>
+ <20181001202605.GB10234@sigill.intra.peff.net>
+ <d2421f36-563c-92ac-3fc9-29306d94b6fd@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d2421f36-563c-92ac-3fc9-29306d94b6fd@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Tue, Oct 02, 2018 at 09:05:32PM +0200, René Scharfe wrote:
 
-make coccicheck is used in order to apply coccinelle semantic patches,
-and see if any of the transformations found within contrib/coccinelle/
-can be applied to the current code base.
+> > The reason hashmap.c was added was to avoid open addressing. ;)
+> Because efficient removal of elements is easier to implement with
+> chaining, according to 6a364ced49 (add a hashtable implementation that
+> supports O(1) removal).  khash.h deletes using its flags bitmap.  We
+> didn't compare their performance when entries are removed so far.
 
-Pass every file to a single invocation of spatch, instead of running
-spatch once per source file.
+I think it may depend on your workload. Open-addressing generally uses a
+tombstone, so you're still dealing with the "deleted" entries until the
+next table resize. I suspect that's fine in most cases, but I also am
+sure you could find a benchmark that favors the chained approach (I
+think in most cases we actually never delete at all -- we simply fill up
+a table and then eventually clear it).
 
-This reduces the time required to run make coccicheck by a significant
-amount of time:
+> > So yeah, I think it could perhaps be improved, but in my mind talking
+> > about "hashmap.c" is fundamentally talking about chained buckets.
+> 
+> Admittedly I wouldn't touch hashmap.c, as I find its interface too
+> complex to wrap my head around.  But perhaps I just didn't try hard
+> enough, yet.
 
-Prior timing of make coccicheck
-  real    6m14.090s
-  user    25m2.606s
-  sys     1m22.919s
+FWIW, it's not just you. ;)
 
-New timing of make coccicheck
-  real    1m36.580s
-  user    7m55.933s
-  sys     0m18.219s
+> > Yeah. And if it really does perform better, I think we should stick with
+> > it in the code base. I wonder if we could stand to clean up the
+> > interfaces a little.  E.g., I had a hard time declaring a hash in one
+> > place, and then defining it somewhere else.
+> 
+> You can't use KHASH_DECLARE and KHASH_INIT together, as both declare
+> the same structs.  So I guess the idea is to have a header file with
+> KHASH_DECLARE and a .c file with KHASH_INIT, the latter *not* including
+> the former, but both including khash.h.  I didn't actually try that,
+> though.
 
-This is nearly a 4x decrease in the time required to run make
-coccicheck. This is due to the overhead of restarting spatch for every
-file. By processing all files at once, we can amortize this startup cost
-across the total number of files, rather than paying it once per file.
+Yeah, that seems weird. You'd want to include one from the other to make
+sure that they both match.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+By the way, if you do want to pursue changes, I have no problem at all
+hacking up khash into something that can't be merged with its upstream.
+It's nice that it's a well-used and tested library, but I'd much rather
+have something that we on this project understand (and that matches our
+conventions and style).
 
-diff --git a/Makefile b/Makefile
-index df1df9db78da..b9947f3f51ec 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2715,10 +2715,8 @@ endif
- %.cocci.patch: %.cocci $(COCCI_SOURCES)
- 	@echo '    ' SPATCH $<; \
- 	ret=0; \
--	for f in $(COCCI_SOURCES); do \
--		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
--			{ ret=$$?; break; }; \
--	done >$@+ 2>$@.log; \
-+	( $(SPATCH) --sp-file $< $(COCCI_SOURCES) $(SPATCH_FLAGS) || \
-+		{ ret=$$?; }; ) >$@+ 2>$@.log; \
- 	if test $$ret != 0; \
- 	then \
- 		cat $@.log; \
--- 
-2.18.0.219.gaf81d287a9da
+> > This is kind of a layering violation, too. You're assuming that struct
+> > assignment is sufficient to make one kh struct freeable from another
+> > pointer. That's probably reasonable, since you're just destroying them
+> > both (e.g., some of our FLEX structs point into their own struct memory,
+> > making a hidden dependency; but they obviously would not need to free
+> > such a field).
+> 
+> Fair enough.  How about this on top?  (The khash.h part would go in
+> first in a separate patch in a proper series.)
 
+Yes, much nicer, and the khash change wasn't too painful.
+
+-Peff
