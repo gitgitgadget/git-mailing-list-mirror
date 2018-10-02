@@ -7,61 +7,71 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F6EB1F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 09:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F05091F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 09:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727153AbeJBQJG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 12:09:06 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:36339 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbeJBQJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 12:09:05 -0400
-Received: by mail-ed1-f53.google.com with SMTP id f4-v6so1442591edq.3
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 02:26:46 -0700 (PDT)
+        id S1727557AbeJBQ0S (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 12:26:18 -0400
+Received: from mail-lf1-f48.google.com ([209.85.167.48]:37774 "EHLO
+        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726321AbeJBQ0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 12:26:17 -0400
+Received: by mail-lf1-f48.google.com with SMTP id a82-v6so932130lfa.4
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 02:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ZfhHrHm8fiWgB43eb/4Jdt6RED9JjemYHk6AznpDQxA=;
-        b=AnkfN5bTuiAudxKncfcos/L/o3JmJVmQz0spOYmvixawwUAvICOMQQPoWo5N8H3i+C
-         tPZalvnHt0UaiMxH5t6WzN1AjHU9ZtsVN+Q+TWSHQUboE01Bua8t/NjZfzHKtvm6kssD
-         whWpm4Kuj8t9Hc9/VevEPbW2Bf7ZSgSi65aJsWf3N3ToAJpTUJppaDgfKjjAr5NCORan
-         88zoEifRJRJVSM9X4UQn/lqgxwtVxoAKsaDcuDfza5ISZW7pBU0fG/QsE/EhG7KhCm1M
-         zn/TNWkFDSeyigREK5XwDy3+GWDZ4eIPBetEh7SBT5zfw5Jm3obGnQhvJb7AqlSRGAnn
-         L8uQ==
+        h=subject:references:to:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=OFO7fVmKVJ/EFpMCsEf542jgvMNSQkRH266Jo7JlsEc=;
+        b=vZh5s2dY5amxVcbrErSy4WgE0tZG+JKQ7CT5tKanAP59z6FhUKHs9oN+fiObAAOD6d
+         IhtkEkxkpQerLkGQTf1dmKeWIbPJCEggiJjy6F6hLNVytNDiULEk1cPR8WdfTybLYv90
+         e+MtjFU1KGU/0A+GqYHuARLZCefTC7nfYFBw5wjBYxMqXobEqwRebIJyVkXFKACteCLw
+         1X0gxaHkKjk15pa3LUzZw8rW4zq7zQMA0sdXEFCPSk/ilXGrvEb3sYdrNKAPJcvhSdqU
+         Fpyum/duvDHxLdH5qkYxmKtbNwKUeL0q84Qy5vdgvNouQPRMPILIQlBdl7RCMQl9h27D
+         umjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ZfhHrHm8fiWgB43eb/4Jdt6RED9JjemYHk6AznpDQxA=;
-        b=ECAwCoxKq9ilPw5ZO5Tt0zK6do+HcxmWPVtrN3C1omUzzabvA4pjBSIulb8/nhlEaZ
-         yazc0TO0Kf3J2I3kFtdpt7sLvh/qUGrbaIsY2KRf3UM8lOlZx86NYEVy1Z1B9zuh6Zzm
-         fisseuxI2bRbZNvyHf6WWZl64CUoxjkJVNMkF22LtH93/GPjdBmul95mDoQmiN75p5+G
-         SspW/viouAe5ZmrqwpvBlukiKtC4sjVoVfBXuWs7TTrGBBTSGUzM/Y787VLTpQqhwZhp
-         pIzlb7gA1WXNHXPo5A/Yx0jn1yvLcxEPXLJ9h2exSUfsUFfqD4lC9Smha2UjKzTObO/U
-         WYMg==
-X-Gm-Message-State: ABuFfogBhSthU7A9Jx2PhrDTuzH9FbR5TvYUCtpeOf6pruSawIfb9hO9
-        qBXjmRyCt+GMAjw+uO2DSO+UMc8OqtBZfqWSSk/reQ==
-X-Google-Smtp-Source: ACcGV63KZgL8DZLT90W86+uC/A7fcw1Yk/7tf5m9FoUB7ZD0uOcJ9vIq+WxPE+6fL6F2Gj9+Vac1XlNmU8751jiZ+Zo=
-X-Received: by 2002:a17:906:5a43:: with SMTP id l3-v6mr2026689ejs.43.1538472406072;
- Tue, 02 Oct 2018 02:26:46 -0700 (PDT)
-MIME-Version: 1.0
-From:   Jayesh Badwaik <badwaik.jayesh@gmail.com>
-Date:   Tue, 2 Oct 2018 11:26:19 +0200
-Message-ID: <CAGiqTF47fu85XCFnEbfMEF96v6U=N_Ferr56qAji4eLuBpyxjg@mail.gmail.com>
-Subject: Display a commit in red if it is not signed.
+        h=x-gm-message-state:subject:references:to:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=OFO7fVmKVJ/EFpMCsEf542jgvMNSQkRH266Jo7JlsEc=;
+        b=fv5y/cYJHCF5UHu1YHwS2Sb6FU39avwuMV+JfSUQsbrgztFEYtk+C0+xscHWDiaiGl
+         ZHyv8/6XpYvLoGRXxBxtzSrnWyya6gZEEfSddO5jA+GWTiiHPFFtXOE+WM+ytshQZBMj
+         6YchQ/HY9jKIMsFEpaD2rlvpvsHbdC+Gu2is6mLcEFEdtY2sv1fIXHqlOzIHLAtS935r
+         5pAvD/smNU6LTCQmg5yJyLJ3Y+TK58uNuPNb9wJw3w/DKIM5noyGXvFgaVO/S6Y2siTq
+         TC7gS56C5lrHl7XKYDzUgGzd00mc+UM4VWaM+FNNEYuXaB3wUNw8RLi4gwPkDNXcfkp0
+         jOPw==
+X-Gm-Message-State: ABuFfojPAbOrAe3sMGlWDGzU/gX2nl4sp7e0E/J4vMkF2JRq8tUCgKJR
+        2zzW+LSMwpNN3mccXULrw81uUcxc
+X-Google-Smtp-Source: ACcGV620bmfgOitNDY3u1JylEJ8N6T0+JgHBxoABraPLSD0fLo6xNpUxX6AaLSE/2rn7wKq4ne109A==
+X-Received: by 2002:a19:be46:: with SMTP id o67-v6mr7543081lff.139.1538473432658;
+        Tue, 02 Oct 2018 02:43:52 -0700 (PDT)
+Received: from ?IPv6:2a01:110f:d32:a800:abd5:65cf:ddaa:57c7? ([2a01:110f:d32:a800:abd5:65cf:ddaa:57c7])
+        by smtp.gmail.com with ESMTPSA id u6-v6sm3277303ljk.62.2018.10.02.02.43.51
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Oct 2018 02:43:52 -0700 (PDT)
+Subject: git-remote-helper list command question
+References: <e63531d2-d0d9-7b37-480b-b7f2a40782e4@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From:   =?UTF-8?Q?Stanis=c5=82aw_Drozd?= <drozdziak1@gmail.com>
+X-Forwarded-Message-Id: <e63531d2-d0d9-7b37-480b-b7f2a40782e4@gmail.com>
+Message-ID: <384e746b-4ca4-1f5e-0c58-accac06ffaf9@gmail.com>
+Date:   Tue, 2 Oct 2018 11:43:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <e63531d2-d0d9-7b37-480b-b7f2a40782e4@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Is there a way to create git pretty format that sets the color to one
-color (say red) only when the commit is unsigned or the signature
-cannot be verified?
+I'm trying to write a fast-import-based git remote helper, but I'm not sure what the output of the `list` command should look like. How can I find an example of the format in action?
 
-Thank you
+Thanks,
+Stan
 
--- 
-Cheers
-Jayesh Badwaik
-https://jayeshbadwaik.gitlab.io
