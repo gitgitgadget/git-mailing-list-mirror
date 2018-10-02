@@ -2,61 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 382701F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 07:05:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BD2B1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 07:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726543AbeJBNqr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 09:46:47 -0400
-Received: from mail.body-piercing.com ([61.19.42.229]:50037 "EHLO
-        mail.body-piercing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726304AbeJBNqq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 09:46:46 -0400
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Oct 2018 09:46:45 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=body-piercing.com; s=dkim;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Reply-To:To:From:Subject:Date:Message-ID; bh=r1l7xbNNgykL144pRa3jG7UBaNG2cQwdZEDU0A3g5Uw=;
-        b=D2tGiqnrduhzUKuSjC0jBfwTNUZW7yYCuPZm69a4Cpe6Uz7tvOBUxEMsSFd4akktEp2BY5vSBelHhtrstfMKXg6PQpw8oHjtu/Qj6bgluXSidXkB/UHvkcuTkK5AJJGW2VDasfWcNLg8t4YXTd5m+/uO+cAwzJ2226cmSIf07Ac=;
-Received: from mail1.body-piercing.com ([192.168.80.205]:16033 helo=mail.body-piercing.com)
-        by mail.body-piercing.com with esmtps (TLSv1.2:AES256-SHA256:256)
-        (Exim 4.82_1-5b7a7c0-XX)
-        (envelope-from <pd_web0@body-piercing.com>)
-        id 1g7Eev-0007ZJ-0j
-        for git@vger.kernel.org; Tue, 02 Oct 2018 13:59:53 +0700
-Received: from [192.168.80.240] (192.168.80.240) by MAIL1.body-piercing.com
- (192.168.80.205) with Microsoft SMTP Server id 15.1.669.32; Tue, 2 Oct 2018
- 13:59:52 +0700
-Received: from 192.168.80.184
-        (SquirrelMail authenticated user pd_web0@body-piercing.com)
-        by 192.168.80.240 with HTTP;
-        Tue, 2 Oct 2018 13:59:51 +0700
-Message-ID: <e7f885a203122612b8dd343212c4e0a9.squirrel@192.168.80.240>
-Date:   Tue, 2 Oct 2018 13:59:51 +0700
-Subject: cannot dowload from your amazon server a windows git distro
-From:   WEB0 - Helmut <pd_web0@body-piercing.com>
+        id S1726617AbeJBNsE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 09:48:04 -0400
+Received: from mail3.mt.com ([194.68.2.51]:35273 "EHLO mail3.mt.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726304AbeJBNsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 09:48:04 -0400
+X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Oct 2018 09:48:04 EDT
+Received: from ch00sem24.mt.mtnet ([172.21.41.118])
+  by mail3.mt.com with ESMTP; 02 Oct 2018 08:52:10 +0200
+Received: from CH00SEM22.mt.mtnet ([172.21.41.116]) by ch00sem24.mt.mtnet
+ ([172.21.41.118]) with mapi id 14.03.0389.001; Tue, 2 Oct 2018 08:56:30 +0200
+From:   <Peter.Dolland@mt.com>
 To:     <git@vger.kernel.org>
-Reply-To: <pd_web0@body-piercing.com>
-User-Agent: SquirrelMail/1.5.2 [SVN]
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+CC:     <notifications@github.com>
+Subject: WG: [git-for-windows/git] log -L/<regex>/,+1 not accepted (#1856)
+Thread-Topic: [git-for-windows/git] log -L/<regex>/,+1 not accepted (#1856)
+Thread-Index: AQHUWW2uO5iIdm0370yToQfix7xJk6UK4jQAgACcSdA=
+Date:   Tue, 2 Oct 2018 06:56:29 +0000
+Message-ID: <C19A54411B361046A786B5FA02D5689FE3B01FF9@ch00sem22.mt.mtnet>
+References: <git-for-windows/git/issues/1856@github.com>
+ <git-for-windows/git/issues/1856/426092877@github.com>
+In-Reply-To: <git-for-windows/git/issues/1856/426092877@github.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.21.7.7]
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-aGksDQp5b3UgYW1hem9uIGRvd25sb2FkIGlzIG5vdCB3b3JraW5nLg0KZG8geW91IGhhdmUgc29t
-ZSBmcmVlIGxvY2F0aW9uIHRvIGRvd25sb2FkIHBsZWFzZT8NCg0KDQoNCmh0dHBzOi8vZ2l0aHVi
-LXByb2R1Y3Rpb24tcmVsZWFzZS1hc3NldC0yZTY1YmUuczMuYW1hem9uYXdzLmNvbS8yMzIxNjI3
-Mi81MDgzNDM4MC1iNmQxLTExZTgtOTE0Zi1mMDhhMWNiMzhmMmI/WC1BbXotQWxnb3JpdGhtPUFX
-UzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIw
-MTgxMDAyJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDE4MTAw
-MlQwNjU1MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04OWYyYmFkNGNmMjEz
-NmZlNzRlYTY4ZTZmZTZlZGVlY2UxOTUyNWNlZDYwNmNhYWJiYmEzM2I3ZGU1NDdhNmE5JlgtQW16
-LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJnJlc3BvbnNlLWNvbnRlbnQtZGlzcG9zaXRp
-b249YXR0YWNobWVudCUzQiUyMGZpbGVuYW1lJTNER2l0LTIuMTkuMC02NC1iaXQuZXhlJnJlc3Bv
-bnNlLWNvbnRlbnQtdHlwZT1hcHBsaWNhdGlvbiUyRm9jdGV0LXN0cmVhbQ0KDQoNCg0KVGhpcyBt
-ZXNzYWdlIGhhcyBiZWVuIHNjYW5uZWQgYnkgU09QSE9TIFB1cmVNZXNzYWdlLiBJVCBEZXB0Lg==
+UGxlYXNlIHNlZSBteSBvcmlnaW5hbCBvYnNlcnZhdGlvbiBiZWxvdy4NCklzIGl0IHBvc3NpYmxl
+LCB0byBleHRlbmQgdGhlIGdpdC1sb2cgc3ludGF4IGluIHRoZSB3YXksIHRoYXQgaXQgYWNjZXB0
+cyB0aGUgc2hvcnQgLUwgb3B0aW9uICh3aXRob3V0IDpmaWxlKSBvZiBibGFtZSBpbiB1bmlxdWUg
+Y2FzZXMgKG9ubHkgb25lIGZpbGUgaXMgbG9nZ2VkIG9yIHJlc3BlY3RpdmVseSB0aGUgLUwgZXhw
+cmVzc2lvbiBtYXkgYmUgdmFsaWQgZm9yIGFsbCBsb2dnZWQgZmlsZXMpPyBJdCB3b3VsZCBiZSBu
+aWNlIGZvciBjb21tYW5kIGxpbmUgdXNlcnMhDQoNCkFsdGVybmF0aXZlbHkgSSBjb3VsZCBhbHNv
+IGltYWdpbmUgdGhlIGV4dGVuc2lvbiBvZiB0aGUgYmxhbWUgZnVuY3Rpb25hbGl0eSBpbiB0aGUg
+ZGlyZWN0aW9uIHRvIHNlZSBhIHdob2xlIGhpc3RvcnkgaW5zdGVhZCBvZiBvbmx5IHRoZSBsYXN0
+IG1vZGlmaWNhdGlvbi4gDQoNCkJlc3QgcmVnYXJkcywNClBldGVyIERvbGxhbmQNCg0KLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0NClZvbjogSm9oYW5uZXMgU2NoaW5kZWxpbiBbbWFpbHRvOm5vdGlm
+aWNhdGlvbnNAZ2l0aHViLmNvbV0gDQpHZXNlbmRldDogRGllbnN0YWcsIDIuIE9rdG9iZXIgMjAx
+OCAwMTowNg0KQW46IGdpdC1mb3Itd2luZG93cy9naXQNCkNjOiBEb2xsYW5kIFBldGVyIE1UUENF
+OyBNZW50aW9uDQpCZXRyZWZmOiBSZTogW2dpdC1mb3Itd2luZG93cy9naXRdIGxvZyAtTC88cmVn
+ZXg+LywrMSBub3QgYWNjZXB0ZWQgKCMxODU2KQ0KDQpJdCB3b3VsZCBiZSBhcHByb3ByaWF0ZSwg
+YnV0IHdoYXQgQFBoaWxpcE9ha2xleSBhc2tlZCB5b3UsIEBwZG9sbGFuZCwgd2FzIHdoZXRoZXIg
+dGhpcyBpcyBXaW5kb3dzLXNwZWNpZmljIGJlaGF2aW9yLiBCZWNhdXNlIGlmIGl0IGlzIG5vdCwg
+dGhlbiB0aGUgZmVhdHVyZSByZXF1ZXN0IHdvdWxkIGJlIGJldHRlciBzZW50IHRvIGdpdEB2Z2Vy
+Lmtlcm5lbC5vcmcgKHRoZSByZWFsIEdpdCBtYWlsaW5nIGxpc3Q7IHBsZWFzZSBtYWtlIHN1cmUg
+dG8gc2VuZCBwbGFpbi10ZXh0LW9ubHkgbWFpbHMpLg0KWW91IHNhdyBmaXQgdG8gc2ltcGx5IGRl
+bGV0ZSB0aGUgaXNzdWUgcmVwb3J0aW5nIHRlbXBsYXRlIGluc3RlYWQgb2YgZmlsbGluZyBpdCBv
+dXQsIHNvIEkgaGF2ZSBubyB3YXkgdG8gYXNzZXNzIHdoZXRoZXIgV1NMIHdvdWxkIGJlIGFuIG9w
+dGlvbiBmb3IgeW91Lg0KDQotLS0tLS0tLS0tLQ0KVm9uOiBQZXRlciBEb2xsYW5kIFttYWlsdG86
+bm90aWZpY2F0aW9uc0BnaXRodWIuY29tXSANCkdlc2VuZGV0OiBNb250YWcsIDEuIE9rdG9iZXIg
+MjAxOCAxMzoyNg0KQW46IGdpdC1mb3Itd2luZG93cy9naXQNCkNjOiBEb2xsYW5kIFBldGVyIE1U
+UENFOyBZb3VyIGFjdGl2aXR5DQpCZXRyZWZmOiBSZTogW2dpdC1mb3Itd2luZG93cy9naXRdIGxv
+ZyAtTC88cmVnZXg+LywrMSBub3QgYWNjZXB0ZWQgKCMxODU2KQ0KDQpJIGhhdmUgbm8gcG9zc2li
+aWxpdHkgdG8gY2hlY2sgdGhpcyBvbiBMaW51eC4gDQoNCkhvd2V2ZXIsIEkgZm91bmQgb3V0LCB0
+aGF0IHRoZSBkb2N1bWVudGF0aW9uIG9mIHRoZSDigJNMIG9wdGlvbiBpcyBkaWZmZXJlbnQgZm9y
+IGJsYW1lIGFuZCBsb2cuIFRoZSBkb2N1bWVudGVkIGxvZyDigJNMIGlzIHdvcmtpbmcsIGV2ZW4g
+aWYgdGhlIG91dHB1dCBpcyBub3QgZXhhY3RseSwgd2hhdCBJIHdhbnRlZC4gTmV2ZXJ0aGVsZXNz
+LCBJIHRoaW5rIGl0IHdvdWxkIGJlIGFwcHJvcHJpYXRlLCB0byBhZG1pdCB0aGUgc3ludGF4IG9m
+IGJsYW1lIGZvciBsb2cgdG9vLiANCg0KQmVzdCByZWdhcmRzLCANCg0KUGV0ZXIgRG9sbGFuZCAN
+Cg0KVm9uOiBQaGlsaXAgT2FrbGV5IFttYWlsdG86bm90aWZpY2F0aW9uc0BnaXRodWIuY29tXSAN
+Ckdlc2VuZGV0OiBNb250YWcsIDEuIE9rdG9iZXIgMjAxOCAxMzowNCANCkFuOiBnaXQtZm9yLXdp
+bmRvd3MvZ2l0IA0KQ2M6IERvbGxhbmQgUGV0ZXIgTVRQQ0U7IEF1dGhvciANCkJldHJlZmY6IFJl
+OiBbZ2l0LWZvci13aW5kb3dzL2dpdF0gbG9nIC1MLzxyZWdleD4vLCsxIG5vdCBhY2NlcHRlZCAo
+IzE4NTYpIA0KDQoNCkhhdmUgeW91IGJlZW4gYWJsZSB0byBjaGVjayBpZiB0aGlzIGlzc3VlIGlz
+IGFsc28gcHJlc2VudCBvbiBMaW51eD8gSXQgbWF5IGJlIGEgYSBnbG9iYWwgR2l0IHByb2JsZW0g
+cmF0aGVyIHRoYW4ganVzdCBhIEctZi1XIGlzc3VlLiANCg0KSSBrbm93IHRoZXJlIHdlcmUgc29t
+ZSBmYWlybHkgcmVjZW50IHVwc3RyZWFtIHBhdGNoZXMgcmVnYXJkaW5nIHRoZSBzdGFydCxlbmQg
+YXNwZWN0cyBvZiB0aGUgdGhlICctTCcgb3B0aW9uIChJSVJDIG1haW5seSBhYm91dCB0aGUgdmFs
+dWVzIHNwYW5uaW5nIHRoZSBlbmQgb2YgdGhlIGZpbGUpLiANCg0KVGhlcmUgYXJlIGEgbnVtYmVy
+IG9mIHRoZXNlIG9wdGlvbnMgdGhhdCBkbyBub3QgY2FycnkgZnVsbHkgYmV0d2VlbiBjb21tYW5k
+cy4gDQoNCuKAlCANCllvdSBhcmUgcmVjZWl2aW5nIHRoaXMgYmVjYXVzZSB5b3UgYXV0aG9yZWQg
+dGhlIHRocmVhZC4gDQpSZXBseSB0byB0aGlzIGVtYWlsIGRpcmVjdGx5LCB2aWV3IGl0IG9uIEdp
+dEh1YjxodHRwczovL2dpdGh1Yi5jb20vZ2l0LWZvci13aW5kb3dzL2dpdC9pc3N1ZXMvMTg1NiNp
+c3N1ZWNvbW1lbnQtNDI1ODY4ODMyPiwgb3IgbXV0ZSB0aGUgdGhyZWFkPGh0dHBzOi8vZ2l0aHVi
+LmNvbS9ub3RpZmljYXRpb25zL3Vuc3Vic2NyaWJlLWF1dGgvQURTaEVCeldONGhPNnVDNGZya2JI
+VVdmakMwaU9jY3lrczV1Z2ZhMGdhSnBaTTRYQnZlcD4uIA0KDQotLS0tLS0tLS0gPHRoZSBvcmln
+aW5hbD4gLS0tLS0tLS0tLS0tDQpWb246IFBldGVyIERvbGxhbmQgW21haWx0bzpub3RpZmljYXRp
+b25zQGdpdGh1Yi5jb21dIA0KR2VzZW5kZXQ6IE1vbnRhZywgMS4gT2t0b2JlciAyMDE4IDEyOjAx
+DQpBbjogZ2l0LWZvci13aW5kb3dzL2dpdA0KQ2M6IERvbGxhbmQgUGV0ZXIgTVRQQ0U7IFlvdXIg
+YWN0aXZpdHkNCkJldHJlZmY6IFtnaXQtZm9yLXdpbmRvd3MvZ2l0XSBsb2cgLUwvPHJlZ2V4Pi8s
+KzEgbm90IGFjY2VwdGVkICgjMTg1NikNCg0KJCBnaXQgbG9nIC1MJy9EUklWRVJfU1RBVEUgPSAi
+LycsKzEgLS0gcGxtLWRldi9Xb2xrZV9NNjAwX1VURjguamF2YQ0KZmF0YWw6IC1MIGFyZ3VtZW50
+IG5vdCAnc3RhcnQsZW5kOmZpbGUnIG9yICc6ZnVuY25hbWU6ZmlsZSc6IC9EUklWRVJfU1RBVEUg
+PSAiLywrMQ0Kd2hlcmVhcyBibGFtZSB3aXRoIHRoZSBzYW1lIGFyZ3VtZW50cyBkb2VzIGl0Og0K
+JCBnaXQgYmxhbWUgLUwnL0RSSVZFUl9TVEFURSA9ICIvJywrMSAtLSBwbG0tZGV2L1dvbGtlX002
+MDBfVVRGOC5qYXZhDQo1MWFmYjNjNDkxIChQZXRlciAyMDE4LTA0LTE5IDEwOjIzOjQxICswMjAw
+IDUxKSBwcm90ZWN0ZWQgc3RhdGljIGZpbmFsIFN0cmluZyBEUklWRVJfU1RBVEUgPSAiMTgwNDE5
+IjsNClRoZSBzYW1lIGJlaGF2aW9yIHdpdGggZ2l0IHZlcnNpb25zIDIuNS4xIGFuZCAyLjE5LjAu
+d2luZG93cy4xLg0K4oCUDQpZb3UgYXJlIHJlY2VpdmluZyB0aGlzIGJlY2F1c2UgeW91IGFyZSBz
+dWJzY3JpYmVkIHRvIHRoaXMgdGhyZWFkLg0KUmVwbHkgdG8gdGhpcyBlbWFpbCBkaXJlY3RseSwg
+dmlldyBpdCBvbiBHaXRIdWIsIG9yIG11dGUgdGhlIHRocmVhZC4NCg==
