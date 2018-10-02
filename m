@@ -2,279 +2,308 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B4121F453
-	for <e@80x24.org>; Mon,  1 Oct 2018 23:07:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 585FE1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 00:17:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726407AbeJBFrl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 01:47:41 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:36536 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725878AbeJBFrl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 01:47:41 -0400
-Received: by mail-oi1-f195.google.com with SMTP id p125-v6so34818oic.3
-        for <git@vger.kernel.org>; Mon, 01 Oct 2018 16:07:32 -0700 (PDT)
+        id S1726442AbeJBG5k (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 02:57:40 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:55566 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726321AbeJBG5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 02:57:39 -0400
+Received: by mail-qk1-f202.google.com with SMTP id d200-v6so195808qkc.22
+        for <git@vger.kernel.org>; Mon, 01 Oct 2018 17:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GnFFI79GfPZOT3dHBoBdQE/h10WwrAIAPH6MxZUtEvE=;
-        b=IfD40++cdOweInc2UTF1bJ+97wjVEfUxpSnIg+QsH3r15ubmoTp/X922CdokeplYeM
-         yVo9riH8uuP6PRl2SS7XP+OlD1EmFcDy6R4SRHEJmpVJMi64Y1aPvhwVFY6x9xvhwJAD
-         F2P23IKS95NVSh27NAn0aewbLwX9W/lhCv7GIEFAG3Z4eMFkt3zQ+8mE4cnu/wmo6S/9
-         /KHQO9I9IkcTZli++Tmld242G3JgB1Q53YMlICBBs/x/i7/OBHrFiT6V4urPihdbPOCu
-         3S8iulpLiqajEI+NzUOAVOODVjmaA8i2rYJ3x05ZACIBpD6AeK/f/SmhzrF7QO/0CrpI
-         Et8w==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=DC40ShPJyNLtRaSIf/YsVwmdxvV2dMGrhgwEOWCb4fY=;
+        b=ToGbZQubA8PCODSJizb+rmr20OiyrN2C8R8PusptyhpELsHpIPfrqyU4ukrpIyt0ZO
+         oolofyfBEZe4VutW+0NYag5MCS3qzcfo/5GGqiNRYESGduaYYMgfNafnCYr+upQdOPSj
+         95rJ3SQ26CY4ecxcK6gQYyPYx56xKTljfy6JbFbrqd+FHW6qXZkzq1+ZZsU6mc3JMbXx
+         tD41ltBvezTLH9WtXK+GJBgrs8a+n84VkD4NGpFQqhgCtUyuAzuOoob3gyd8FxhpzJNu
+         59BJgZlWYEqk+qgMzsgNrGEGW/hNvEWlL9o7OThLfgUQtrM6gp6ckeO4LZweVUKpzftH
+         rwZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GnFFI79GfPZOT3dHBoBdQE/h10WwrAIAPH6MxZUtEvE=;
-        b=YoksVqIEtOK5aFIlumKvAFLlajutiQ8ddxxKgURLu715Edh5FRMno+erYxaJmEORpW
-         hW0JuAUXOVXGgMR86dhEfJd1GNfeOBDihan9d0wdr8ioTvxHiaIodqEC40pZK8vgJzWL
-         SsboqeihlgIWb6ZNZxOxQ4ChHRCn/iAQxZsyOXiWxL7OX9zan1U1Ad8OJuj5TUybi41q
-         SZIIJJhl3O8qaXTeXdRG6vR4cdEYIw/gq9QETrKmGMrh8jSEmUzZ1OWMx5x76P58gCSR
-         +KsICRU0CyusXR/aMChfAymgrNDKxiof9DlhQXzYnG03YhWXMPQr1/bGCLFlZov8mAzP
-         7J9g==
-X-Gm-Message-State: ABuFfogzlQGpwgctn4uPdpgHtxG0pLfjO/YG+ymIyoWtatU0l3JejpFU
-        wdSAO7PD1KGlBwccBBJAxp0OhkylY08Fvq7hYe+o
-X-Google-Smtp-Source: ACcGV63Ida2OlvHb9EeJ1N8rMPy57X3kaoZ9YLLbRuUOzMjUtgiIQ7DvQD6+lr6CoEy8PYovvVk1hvmcquuQ4UHETY4=
-X-Received: by 2002:aca:f209:: with SMTP id q9-v6mr4188533oih.144.1538435252061;
- Mon, 01 Oct 2018 16:07:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com> <cover.1537493611.git.matvore@google.com>
- <7dd9a1120726dee34aeebdfa4bf45a232c185500.1537493611.git.matvore@google.com>
- <20180924210314.GE27036@localhost> <CAMfpvhJ-chi7OMRKjjk79r0uqCqW67Vj9J=tT7Kz-XUmw41H5A@mail.gmail.com>
- <20180927211826.GL27036@localhost>
-In-Reply-To: <20180927211826.GL27036@localhost>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Mon, 1 Oct 2018 16:07:19 -0700
-Message-ID: <CAMfpvhLcWp_1xxjhBZtsOXYHuBak10K2P8Q1Yy4thfwioYysXw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] CodingGuidelines: add shell piping guidelines
-To:     szeder.dev@gmail.com
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=DC40ShPJyNLtRaSIf/YsVwmdxvV2dMGrhgwEOWCb4fY=;
+        b=CzpXstv8VHhnT+a0qYa/gOU9hqPF/XIYbtWyBHZGPDcp0ZaSNDOvOkv1D6eoeSALve
+         7+MXcDfq3luh5d0HOx+m2TsNzkayx3a4AJ4eswrPyoG+JxNUmLjuq7Y3DuO6Uhetq9e7
+         PgCTqf5XLtuXPS6pzIbLBBKaBxE4gzDeGRqeON/y1oQhcwq+j2ntW2E1Rnd9eTHwSRy3
+         Go9twBeT8Q9gbGlbIyHLeqRaByXul7Ssy57vr0jOWRX+apKZhPirhmGytV80FaKDqUFB
+         VBy8yz2hzmi/RK0iS12UfSZrzb9dzVSDKZoibGUb4zHNdUWUYr7KqQkQber7ALzGwcG0
+         T15w==
+X-Gm-Message-State: ABuFfoiY8SXGNuC/58dx6+z+WR1QUpW64JsOXBbASiOqMPTPLblX1Pcw
+        lczD07uqu1K17CmxsWpUAWouHfsQA6Sl
+X-Google-Smtp-Source: ACcGV63RhdNFDt1Y/+34/YSHimqcQuxu1oAyqrGRXSwI+gM6YQ/zab+CSOPvJHlYjC/fhg52c10RvfXhYuq3
+X-Received: by 2002:a0c:9468:: with SMTP id i37-v6mr5234682qvi.21.1538439436904;
+ Mon, 01 Oct 2018 17:17:16 -0700 (PDT)
+Date:   Mon,  1 Oct 2018 17:17:13 -0700
+In-Reply-To: <20180906225423.GB81412@aiede.svl.corp.google.com>
+Message-Id: <20181002001713.137087-1-sbeller@google.com>
+Mime-Version: 1.0
+References: <20180906225423.GB81412@aiede.svl.corp.google.com>
+X-Mailer: git-send-email 2.19.0
+Subject: [PATCH] submodule update --remote: introduce pinning
+From:   Stefan Beller <sbeller@google.com>
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 27, 2018 at 2:18 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
-> On Tue, Sep 25, 2018 at 02:58:08PM -0700, Matthew DeVore wrote:
-> > + - Use Git upstream in the non-final position in a piped chain, as in:
->
-> Note the starting upper case 'U'.
->
-> > + - Use command substitution in a way that discards git's exit code.
->
-> 'U' again.
->
-...
-> > +
-> > +     test_cmp expect $(git cat-file -p $sha)
-> > +
-> > +   is not OK and a crash in git could go undetected.
->
-> Well, this is not OK indeed, because it doesn't make any sense in the
-> first place :)  'test_cmp' requires two paths as argumens, but the
-> output of 'git cat-file -p' is the whole _content_ of the given object.
+gitmodules(5) sayeth:
 
-I've replaced the example and added "Don't" in front of each new item
-(explanation for this below). Here is a new diff for this file - the
-rest of the commit is the same:
+   submodule.<name>.branch
+       A remote branch name for tracking updates in the upstream
+       submodule. If the option is not specified, it defaults to master.
 
-    platform commands; just use '! cmd'.  We are not in the business
-    of verifying that the world given to us sanely works.
+This doesn't allow having a "pinned" submodule that should not be updated
+from upstream. We should change this to have no default --- if branch is
+not specified, don't update that submodule, just like in Gerrit's
+corresponding feature[1].
 
-+ - Don't use Git upstream in the non-final position in a piped chain, as
-+   in:
+[1] https://gerrit-review.googlesource.com/Documentation/user-submodules.html#_defining_the_submodule_branch
+
+
+However changing defaults is difficult as it may surprise the user,
+Jonathan came up with a 4 step plan:
+Step 0: introduce
+
+	# current behavior:
+        git submodule update --remote --remote-default-to-master
+
+	# new behavior:
+        git submodule update --remote --remote-pinned
+
+and treat plain "git submodule update --remote" as --default-to-master.
+
+Step 1: when neither --default-to-master nor --no-default-to-master
+has been passed, warn when encountering a submodule with no branch
+and treat it as "master".
+
+Step 2: when neither --default-to-master nor --no-default-to-master
+has been passed, error out when encountering a submodule with no
+branch.
+
+Step 3: when neither --default-to-master nor --no-default-to-master
+has been passed, warn when encountering a submodule with no branch
+and treat it as pinned.
+
+Step 4: eliminate the warning.
+
+This implements step 0 and 1.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+Sorry that this took so long, this is a rough patch for steps 0 & 1,
+I'd still need to update docs.
+
+Stefan
+
+
+ Documentation/gitmodules.txt | 11 ++++++-----
+ builtin/submodule--helper.c  | 36 +++++++++++++++++++++++++++++-------
+ git-submodule.sh             | 34 +++++++++++++++++++++++++---------
+ t/t7406-submodule-update.sh  | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 89 insertions(+), 21 deletions(-)
+
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index 4d63def206..fe42dbdb3e 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -50,11 +50,12 @@ submodule.<name>.update::
+ 
+ submodule.<name>.branch::
+ 	A remote branch name for tracking updates in the upstream submodule.
+-	If the option is not specified, it defaults to 'master'.  A special
+-	value of `.` is used to indicate that the name of the branch in the
+-	submodule should be the same name as the current branch in the
+-	current repository.  See the `--remote` documentation in
+-	linkgit:git-submodule[1] for details.
++	A special value of `.` is used to indicate that the name of the
++	branch in the submodule should be the same name as the current
++	branch in the current repository.  See the `--remote` documentation
++	in linkgit:git-submodule[1] for details.
++	If not set, the default for `git submodule update --remote` is
++	to update the submodule to the superproject's recorded object id.
+ 
+ submodule.<name>.fetchRecurseSubmodules::
+ 	This option can be used to control recursive fetching of this
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 40844870cf..6413f2b410 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1889,7 +1889,7 @@ static int resolve_relative_path(int argc, const char **argv, const char *prefix
+ 	return 0;
+ }
+ 
+-static const char *remote_submodule_branch(const char *path)
++static const char *remote_submodule_branch(const char *path, int default_pinned)
+ {
+ 	const struct submodule *sub;
+ 	const char *branch = NULL;
+@@ -1904,8 +1904,12 @@ static const char *remote_submodule_branch(const char *path)
+ 		branch = sub->branch;
+ 	free(key);
+ 
+-	if (!branch)
+-		return "master";
++	if (!branch) {
++		if (default_pinned)
++			return "";
++		else
++			return "master";
++	}
+ 
+ 	if (!strcmp(branch, ".")) {
+ 		const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+@@ -1932,12 +1936,30 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
+ {
+ 	const char *ret;
+ 	struct strbuf sb = STRBUF_INIT;
+-	if (argc != 2)
+-		die("submodule--helper remote-branch takes exactly one arguments, got %d", argc);
++	int default_pinned = 0;
 +
-+     git -C repo ls-files |
-+     xargs -n 1 basename |
-+     grep foo
++	struct option remote_options[] = {
++		OPT_SET_INT(0, "default-master", &default_pinned,
++				N_("unconfigured submodules default to master branch"), 0),
++		OPT_SET_INT(0, "default-pinned", &default_pinned,
++				N_("unconfigured submodules default to superproject object id"), 1),
++		OPT_END()
++	};
 +
-+   which will discard git's exit code and may mask a crash. In the
-+   above example, all exit codes are ignored except grep's.
++	const char *const git_submodule_helper_usage[] = {
++		N_("git submodule--helper remote-branch [--default-{master, pinned}]  -- <path>"),
++		NULL
++	};
 +
-+   Instead, write the output of that command to a temporary
-+   file with ">" or assign it to a variable with "x=3D$(git ...)" rather
-+   than pipe it.
++	argc = parse_options(argc, argv, prefix, remote_options,
++			     git_submodule_helper_usage, 0);
 +
-+ - Don't use command substitution in a way that discards git's exit
-+   code. When assigning to a variable, the exit code is not discarded,
-+   e.g.:
++	if (argc != 1)
++		die("submodule--helper remote-branch takes exactly one path, got %d", argc);
+ 
+-	ret = remote_submodule_branch(argv[1]);
++	ret = remote_submodule_branch(argv[0], default_pinned);
+ 	if (!ret)
+-		die("submodule %s doesn't exist", argv[1]);
++		die("submodule %s doesn't exist", argv[0]);
+ 
+ 	printf("%s", ret);
+ 	strbuf_release(&sb);
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 1b568e29b9..829b90ea97 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -431,6 +431,7 @@ fetch_in_submodule () (
+ #
+ cmd_update()
+ {
++	remote_default_option=
+ 	# parse $args after "submodule ... update".
+ 	while test $# -ne 0
+ 	do
+@@ -450,6 +451,12 @@ cmd_update()
+ 		--remote)
+ 			remote=1
+ 			;;
++		--remote-default-to-master)
++			remote_default_option=--default-master
++			;;
++		--remote-pinned)
++			remote_default_option=--default-pinned
++			;;
+ 		-N|--no-fetch)
+ 			nofetch=1
+ 			;;
+@@ -555,17 +562,26 @@ cmd_update()
+ 
+ 		if test -n "$remote"
+ 		then
+-			branch=$(git submodule--helper remote-branch "$sm_path")
+-			if test -z "$nofetch"
++			if test -z $remote_default_option
+ 			then
+-				# Fetch remote before determining tracking $sha1
+-				fetch_in_submodule "$sm_path" $depth ||
+-				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
++				say "--remote needs clarification: --remote-pinned or --remote-default-to-master?"
++				say "assuming --remote-default-to-master for now"
++				remote_default_option=--default-master
++			fi
++			branch=$(git submodule--helper remote-branch ${remote_default_option} -- "$sm_path")
++			if test -n "$branch"
++			then
++				if test -z "$nofetch"
++				then
++					# Fetch remote before determining tracking $sha1
++					fetch_in_submodule "$sm_path" $depth ||
++					die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
++				fi
++				remote_name=$(sanitize_submodule_env; cd "$sm_path" && get_default_remote)
++				sha1=$(sanitize_submodule_env; cd "$sm_path" &&
++					git rev-parse --verify "${remote_name}/${branch}") ||
++				die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
+ 			fi
+-			remote_name=$(sanitize_submodule_env; cd "$sm_path" && get_default_remote)
+-			sha1=$(sanitize_submodule_env; cd "$sm_path" &&
+-				git rev-parse --verify "${remote_name}/${branch}") ||
+-			die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
+ 		fi
+ 
+ 		if test "$subsha1" != "$sha1" || test -n "$force"
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 10dc91620a..3019978211 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -260,6 +260,35 @@ test_expect_success 'submodule update --remote should fetch upstream changes wit
+ 	)
+ '
+ 
++test_expect_success 'submodule update --remote should not fetch upstream when no branch is set' '
++	(
++		cd super &&
++		test_might_fail git config --unset -f .gitmodules submodule.submodule.branch &&
++		git add .gitmodules &&
++		git commit --allow-empty -m "submodules: pin in superproject branch" &&
++		git -C ../submodule checkout -f master
++	) &&
++	(
++		cd submodule &&
++		echo line4b >>file &&
++		git add file &&
++		test_tick &&
++		git commit -m "upstream line4b"
++	) &&
++	(
++		cd super &&
 +
-+     x=3D$(git cat-file -p $sha) &&
-+     ...
++		git submodule update --remote-pinned --remote --force submodule &&
++		git status --porcelain --untracked=no --ignore-submodules=none >actual &&
++		test_must_be_empty actual &&
 +
-+   is OK because a crash in "git cat-file" will cause the "&&" chain
-+   to fail, but:
++		git submodule update --remote-default-to-master --remote --force submodule &&
++		git -C submodule log -1 --oneline >actual &&
++		git -C ../submodule log -1 --oneline >expect &&
++		test_cmp expect actual
++	)
++'
 +
-+     test "refs/heads/foo" =3D "$(git symbolic-ref HEAD)"
-+
-+   is not OK and a crash in git could go undetected.
-+
-  - Don't use perl without spelling it as "$PERL_PATH". This is to help
-    our friends on Windows where the platform Perl often adds CR before
-    the end of line, and they bundle Git with a version of Perl that
+ test_expect_success 'local config should override .gitmodules branch' '
+ 	(cd submodule &&
+ 	 git checkout test-branch &&
+-- 
+2.19.0
 
-
->
-> >   - use perl without spelling it as "$PERL_PATH". This is to help our
->
-> Note the starting lower case 'u'.
->
-> This is because these are the continuation of the "Don't:" some lines
-> earlier, so your new points should start with a lower case 'u' as
-> well.
->
->
-> Sidenote: I think we should consider reformatting this whole section
-> as:
->
->   - Don't do this.
->   - Don't do that.
->
-> because it grew so much that when I look at the last points, then that
-> starting "Don't:" has already scrolled out of my screen.
->
-I didn't like how easy it was to mistake a "Don't" item for a "Do"
-(although temporarily until you read the first sentence, but it's
-still confusing). So I added a new commit to clean this section up.
-Here it is:
-
-Author: Matthew DeVore <matvore@google.com>
-Date:   Mon Oct 1 15:30:49 2018 -0700
-
-    t/README: reformat Do, Don't, Keep in mind lists
-
-    The list of Don'ts for test writing has grown large such that it is har=
-d
-    to see at a glance which section an item is in. In other words, if I
-    ignore a little bit of surrounding context, the "don'ts" look like
-    "do's."
-
-    To make the list more readable, prefix "Don't" in front of every first
-    sentence in the items.
-
-    Also, the "Keep in mind" list is out of place and awkward, because it
-    was a very short "list" beneath two very long ones, and it seemed easy
-    to miss under the list of "don'ts," and it only had one item. So move
-    this item to the list of "do's" and phrase as "Remember..."
-
-    Signed-off-by: Matthew DeVore <matvore@google.com>
-
-diff --git a/t/README b/t/README
-index 9028b47d9..85024aba6 100644
---- a/t/README
-+++ b/t/README
-@@ -393,13 +393,13 @@ This test harness library does the following things:
-    consistently when command line arguments --verbose (or -v),
-    --debug (or -d), and --immediate (or -i) is given.
-
--Do's, don'ts & things to keep in mind
-+Do's & don'ts
- -------------------------------------
-
- Here are a few examples of things you probably should and shouldn't do
- when writing tests.
-
--Do:
-+Here are the "do's:"
-
-  - Put all code inside test_expect_success and other assertions.
-
-@@ -444,16 +444,21 @@ Do:
-    Windows, where the shell (MSYS bash) mangles absolute path names.
-    For details, see the commit message of 4114156ae9.
-
--Don't:
-+ - Remember that inside the <script> part, the standard output and
-+   standard error streams are discarded, and the test harness only
-+   reports "ok" or "not ok" to the end user running the tests. Under
-+   --verbose, they are shown to help debug the tests.
-
-- - exit() within a <script> part.
-+And here are the "don'ts:"
-+
-+ - Don't exit() within a <script> part.
-
-    The harness will catch this as a programming error of the test.
-    Use test_done instead if you need to stop the tests early (see
-    "Skipping tests" below).
-
-- - use '! git cmd' when you want to make sure the git command exits
--   with failure in a controlled way by calling "die()".  Instead,
-+ - Don't use '! git cmd' when you want to make sure the git command
-+   exits with failure in a controlled way by calling "die()".  Instead,
-    use 'test_must_fail git cmd'.  This will signal a failure if git
-    dies in an unexpected way (e.g. segfault).
-
-@@ -461,8 +466,8 @@ Don't:
-    platform commands; just use '! cmd'.  We are not in the business
-    of verifying that the world given to us sanely works.
-
-- - use perl without spelling it as "$PERL_PATH". This is to help our
--   friends on Windows where the platform Perl often adds CR before
-+ - Don't use perl without spelling it as "$PERL_PATH". This is to help
-+   our friends on Windows where the platform Perl often adds CR before
-    the end of line, and they bundle Git with a version of Perl that
-    does not do so, whose path is specified with $PERL_PATH. Note that we
-    provide a "perl" function which uses $PERL_PATH under the hood, so
-@@ -470,17 +475,17 @@ Don't:
-    (but you do, for example, on a shebang line or in a sub script
-    created via "write_script").
-
-- - use sh without spelling it as "$SHELL_PATH", when the script can
--   be misinterpreted by broken platform shell (e.g. Solaris).
-+ - Don't use sh without spelling it as "$SHELL_PATH", when the script
-+   can be misinterpreted by broken platform shell (e.g. Solaris).
-
-- - chdir around in tests.  It is not sufficient to chdir to
-+ - Don't chdir around in tests.  It is not sufficient to chdir to
-    somewhere and then chdir back to the original location later in
-    the test, as any intermediate step can fail and abort the test,
-    causing the next test to start in an unexpected directory.  Do so
-    inside a subshell if necessary.
-
-- - save and verify the standard error of compound commands, i.e. group
--   commands, subshells, and shell functions (except test helper
-+ - Don't save and verify the standard error of compound commands, i.e.
-+   group commands, subshells, and shell functions (except test helper
-    functions like 'test_must_fail') like this:
-
-      ( cd dir && git cmd ) 2>error &&
-@@ -495,7 +500,7 @@ Don't:
-      ( cd dir && git cmd 2>../error ) &&
-      test_cmp expect error
-
-- - Break the TAP output
-+ - Don't break the TAP output
-
-    The raw output from your test may be interpreted by a TAP harness. TAP
-    harnesses will ignore everything they don't know about, but don't step
-@@ -515,13 +520,6 @@ Don't:
-    but the best indication is to just run the tests with prove(1),
-    it'll complain if anything is amiss.
-
--Keep in mind:
--
-- - Inside the <script> part, the standard output and standard error
--   streams are discarded, and the test harness only reports "ok" or
--   "not ok" to the end user running the tests. Under --verbose, they
--   are shown to help debugging the tests.
--
-
- Skipping tests
- --------------
