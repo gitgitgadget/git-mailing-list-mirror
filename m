@@ -2,74 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EE641F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 06:02:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 382701F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 07:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbeJBMnv convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 2 Oct 2018 08:43:51 -0400
-Received: from dns1.iai.co.il ([194.90.48.30]:30300 "EHLO mmnxfpmta1.iai.co.il"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726703AbeJBMnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 08:43:51 -0400
-Received: from exmail4.iai.co.il (unknown [172.21.48.62])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by Forcepoint Email with ESMTPS id 34D0E73403C1AAF2C978
-        for <git@vger.kernel.org>; Tue,  2 Oct 2018 08:47:12 +0300 (IDT)
-Received: from EXS11.iai.co.il ([169.254.2.245]) by exmail4.iai.co.il
- ([172.21.48.62]) with mapi id 14.03.0266.001; Tue, 2 Oct 2018 08:47:12 +0300
-From:   Michele Hallak <mhallak@iai.co.il>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git projects with submodules in different sites - in txt format (:+(
-Thread-Topic: git projects with submodules in different sites - in txt
- format (:+(
-Thread-Index: AdRaE1vIt/NhnL3PTdOAtEyz5cGDcA==
-Date:   Tue, 2 Oct 2018 05:47:11 +0000
-Message-ID: <15774B2750A13244948B89FDD2FEC2EACF15C69A@EXS11.iai.co.il>
-Accept-Language: en-US, he-IL
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.21.48.107]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1726543AbeJBNqr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 09:46:47 -0400
+Received: from mail.body-piercing.com ([61.19.42.229]:50037 "EHLO
+        mail.body-piercing.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726304AbeJBNqq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 09:46:46 -0400
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Oct 2018 09:46:45 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=body-piercing.com; s=dkim;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Reply-To:To:From:Subject:Date:Message-ID; bh=r1l7xbNNgykL144pRa3jG7UBaNG2cQwdZEDU0A3g5Uw=;
+        b=D2tGiqnrduhzUKuSjC0jBfwTNUZW7yYCuPZm69a4Cpe6Uz7tvOBUxEMsSFd4akktEp2BY5vSBelHhtrstfMKXg6PQpw8oHjtu/Qj6bgluXSidXkB/UHvkcuTkK5AJJGW2VDasfWcNLg8t4YXTd5m+/uO+cAwzJ2226cmSIf07Ac=;
+Received: from mail1.body-piercing.com ([192.168.80.205]:16033 helo=mail.body-piercing.com)
+        by mail.body-piercing.com with esmtps (TLSv1.2:AES256-SHA256:256)
+        (Exim 4.82_1-5b7a7c0-XX)
+        (envelope-from <pd_web0@body-piercing.com>)
+        id 1g7Eev-0007ZJ-0j
+        for git@vger.kernel.org; Tue, 02 Oct 2018 13:59:53 +0700
+Received: from [192.168.80.240] (192.168.80.240) by MAIL1.body-piercing.com
+ (192.168.80.205) with Microsoft SMTP Server id 15.1.669.32; Tue, 2 Oct 2018
+ 13:59:52 +0700
+Received: from 192.168.80.184
+        (SquirrelMail authenticated user pd_web0@body-piercing.com)
+        by 192.168.80.240 with HTTP;
+        Tue, 2 Oct 2018 13:59:51 +0700
+Message-ID: <e7f885a203122612b8dd343212c4e0a9.squirrel@192.168.80.240>
+Date:   Tue, 2 Oct 2018 13:59:51 +0700
+Subject: cannot dowload from your amazon server a windows git distro
+From:   WEB0 - Helmut <pd_web0@body-piercing.com>
+To:     <git@vger.kernel.org>
+Reply-To: <pd_web0@body-piercing.com>
+User-Agent: SquirrelMail/1.5.2 [SVN]
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-I am getting out of idea about how to change the methodology we are using in order to ease our integration process... Close to despair, I am throwing the question to you...
-
-We have 6 infrastructure repositories.
-Each project is composed of 4 repositories, each one using one or two infrastructure repositories as sub-modules. (Not the same)
-
-The infrastructure repositories are common to several projects and in the case we have to make change in the infrastructure for a specific project, we are doing it on a specific branch until properly merged.
-
-Everything is fine (more or less) and somehow working.
-
-Now, we have one project that will be developed in another site and with another git server physically separated from the main site.
-
-I copied the infrastructure repositories in the new site and removed and add the sub-modules in order for them to point to the url in the separated git server.
-
-Every 2 weeks, the remotely developed code has to be integrated back in the main site. 
-My idea was to format GIT patches, integrate in the main site, tag the whole thing and ship back the integrated tagged code to the remote site.
-... and now the nightmare starts:
-
-Since the .gitmodules is different, I cannot have the same SHA and then same tag and I am never sure that the integrated code is proper.
-
-May be there is a simple solution that I don't know about to my problem? Is there something else than GIT patches? Should I simply ship to the remote site the code as is and change the submodules each time?
-
-Thanks a lot for trying to help me,
-
-Michele
-
-
-
-*********************************************************************************************** Please consider the environment before printing this email ! The information contained in this communication is proprietary to Israel Aerospace Industries Ltd. and/or third parties, may contain confidential or privileged information, and is intended only for the use of the intended addressee thereof. If you are not the intended addressee, please be aware that any use, disclosure, distribution and/or copying of this communication is strictly prohibited. If you receive this communication in error, please notify the sender immediately and delete it from your computer. Thank you. Visit us at: www.iai.co.il
+aGksDQp5b3UgYW1hem9uIGRvd25sb2FkIGlzIG5vdCB3b3JraW5nLg0KZG8geW91IGhhdmUgc29t
+ZSBmcmVlIGxvY2F0aW9uIHRvIGRvd25sb2FkIHBsZWFzZT8NCg0KDQoNCmh0dHBzOi8vZ2l0aHVi
+LXByb2R1Y3Rpb24tcmVsZWFzZS1hc3NldC0yZTY1YmUuczMuYW1hem9uYXdzLmNvbS8yMzIxNjI3
+Mi81MDgzNDM4MC1iNmQxLTExZTgtOTE0Zi1mMDhhMWNiMzhmMmI/WC1BbXotQWxnb3JpdGhtPUFX
+UzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIw
+MTgxMDAyJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDE4MTAw
+MlQwNjU1MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04OWYyYmFkNGNmMjEz
+NmZlNzRlYTY4ZTZmZTZlZGVlY2UxOTUyNWNlZDYwNmNhYWJiYmEzM2I3ZGU1NDdhNmE5JlgtQW16
+LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJnJlc3BvbnNlLWNvbnRlbnQtZGlzcG9zaXRp
+b249YXR0YWNobWVudCUzQiUyMGZpbGVuYW1lJTNER2l0LTIuMTkuMC02NC1iaXQuZXhlJnJlc3Bv
+bnNlLWNvbnRlbnQtdHlwZT1hcHBsaWNhdGlvbiUyRm9jdGV0LXN0cmVhbQ0KDQoNCg0KVGhpcyBt
+ZXNzYWdlIGhhcyBiZWVuIHNjYW5uZWQgYnkgU09QSE9TIFB1cmVNZXNzYWdlLiBJVCBEZXB0Lg==
