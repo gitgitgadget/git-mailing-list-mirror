@@ -7,92 +7,118 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B1731F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 14:58:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 605451F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 14:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728974AbeJBVmd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 17:42:33 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39760 "EHLO
+        id S1729026AbeJBVmg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 17:42:36 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39766 "EHLO
         mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726178AbeJBVmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 17:42:33 -0400
-Received: by mail-pl1-f195.google.com with SMTP id w14-v6so1824689plp.6
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 07:58:45 -0700 (PDT)
+        with ESMTP id S1726178AbeJBVmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 17:42:36 -0400
+Received: by mail-pl1-f195.google.com with SMTP id w14-v6so1824767plp.6
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 07:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=ppR2khltWpVfUxX9OpzbokmeMpuYCVPqSe2wfimhbQI=;
-        b=EgYtu3IoBm5eMslOpWTXU0WIKdeAwH7E9IMklrQmN10gZllmE6JUBcNbri4NBtv+MU
-         GSBxNY5+CiCtvTT/jNRfA66jTKx/mQjYwMqgiwUlhCUPWCIGK5UVLry0NtnX5lsExAsm
-         baqRL01qKsqi+TgrI91bvuadTX7+Z2goSLn0HPlJBg49DBVE4qOu5Jb3krmmqTLAiPLc
-         jR17AmRT+X5CaisVra46P76uOa+KTiJKRC5qMUxrzlMA+Ktc4Z8B8iMSmqRxj1apR62Q
-         QGz/nY49DUg19BZvEY5Tj5grYzV13pibDBFSHVxofDxZakCQdZZ1cblDfJ01oKBnJ2Z7
-         u4ag==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=rdM8CsWrGFbyF/WMo7PncykA222x6fhLBIpxan5tuxE=;
+        b=EZZ84iEJ/Mm427h1TLWzxrOeHaBbLHNfAEXTfCafMu0bcmnFzoyRRPuLZPmiPAEHDm
+         OtTh+UgDxHXyIbq3L5vnQTUjSgk1QwXXu8vZgdnkvmuEV7xRsrKLMQW1ouJFMTQ/865b
+         41Qh7krQm2ENTXNE8vQPlG5witBW1lSrwN2IV4V0uhTEagOD5euDM31Vk/W864uA00tc
+         QnpAmthUuT5R7zEYJkfcwc3FKDmcUufPksD6SvfExw60Tpt2DNE7dTH2d6d95YEsa0iq
+         uPlor3K6gS54ouJWJ54tPyBoIS+kjHOtdNSIosFUmrV7Lr6j90GedImmqyfwEbM5kd5D
+         rYpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ppR2khltWpVfUxX9OpzbokmeMpuYCVPqSe2wfimhbQI=;
-        b=II5IMzjI2o/blR4wkRfCm7wQYzlw5iX58LGdYoUCzSt8KPObXcgZoCRb9ylP5f0pjS
-         GhDasIBFb4TvbmDUr9uR9+FxBKI+7gRoE2/T3tS16540EahVvZVXdzACvltJaStpcJH6
-         xUtlzmg0+2iMrk6WP2dOQiZyuzSqV5i7ysNZH7usDLPbsnSBlvYkDt/J5I3TVPo3uVyJ
-         GLAqZlMxmxJuAUt4iB4Biw3I7AB/OW1zzPvxqm7c2UXStydtWgK/mmLSfFUcV82LF5gl
-         3fm50BhGTH2up7Dn9zkUncuGgSY6mJ8VsY9amp+lxPivVNoQnLb2V6UDGB0X00j94x00
-         BuVA==
-X-Gm-Message-State: ABuFfojlNV2mOlkZv1JbGjghjBm6rFLqVSiXYhfTsMAEsjFLRiNKOvJZ
-        /vWPzj9mnB8BVc0SfTbsHHLqNes7
-X-Google-Smtp-Source: ACcGV611ptjthHFEz3nT6tFe/kt+YMK4JFFPkk1yUSOp41qgXBmy4GoIE4aL3NblKh6ATmezfbWRWQ==
-X-Received: by 2002:a17:902:261:: with SMTP id 88-v6mr17155138plc.331.1538492324592;
-        Tue, 02 Oct 2018 07:58:44 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=rdM8CsWrGFbyF/WMo7PncykA222x6fhLBIpxan5tuxE=;
+        b=UCxPXgZAHxa3EsgbWhadhapEa3KKFJB5o6Dj62h6mWI4CWohkfxrL+ypia8mtUf/hk
+         NXauDSXtimtl5lVVV9LalzEClXOOcSvrRwXb2/tKKlQmhZrXCOITpShn/JAPRT9J+hYh
+         GwYwRJVTUbL6yTzPP34mFh9qRN4YbLJK8xMvQaVJInO6beVOqRaXRS3dO9rxDC457gDV
+         G6oklLi2l2Qs7v6FbUjPVYyBq9kkLBWLoQ1GMycsW52LURLZdHoq8cqzjySDZeE+rgnb
+         dpYYigJj28k5Zo7m9cjgXoXhxHsWSBlQtomzHFbPVMpKIKGPUM58/s1PU9X5j+dtXCUH
+         AHjQ==
+X-Gm-Message-State: ABuFfoio/ozgjI4ZqC81zZHPClb/MtKWm6qC02d8Ygv0sA2lelUW0pTf
+        OO9wcr+WlDOHr81q5F4hKSUNoQFX
+X-Google-Smtp-Source: ACcGV604oMxWHgjEJiBRiSioOlC9Gu5dol7Aex2wlbo1vZwo43+WHO/uwQre/Ft/ozYiRXbh5jg/Sw==
+X-Received: by 2002:a62:d046:: with SMTP id p67-v6mr16939625pfg.147.1538492326038;
+        Tue, 02 Oct 2018 07:58:46 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id h10-v6sm25841142pfj.78.2018.10.02.07.58.43
+        by smtp.gmail.com with ESMTPSA id l3-v6sm21265435pff.8.2018.10.02.07.58.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Oct 2018 07:58:43 -0700 (PDT)
-Date:   Tue, 02 Oct 2018 07:58:43 -0700 (PDT)
-X-Google-Original-Date: Tue, 02 Oct 2018 14:58:39 GMT
-Message-Id: <pull.42.git.gitgitgadget@gmail.com>
+        Tue, 02 Oct 2018 07:58:45 -0700 (PDT)
+Date:   Tue, 02 Oct 2018 07:58:45 -0700 (PDT)
+X-Google-Original-Date: Tue, 02 Oct 2018 14:58:40 GMT
+Message-Id: <6906c25415eddf79cc3f71f905a77b140f2f66f0.1538492321.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.42.git.gitgitgadget@gmail.com>
+References: <pull.42.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] Clean up leaks in commit-graph.c
+Subject: [PATCH 1/2] commit-graph: clean up leaked memory during write
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While looking at the commit-graph code, I noticed some memory leaks. These
-can be found by running
+From: Derrick Stolee <dstolee@microsoft.com>
 
-valgrind --leak-check=full ./git commit-graph write --reachable
+The write_commit_graph() method in commit-graph.c leaks some lits
+and strings during execution. In addition, a list of strings is
+leaked in write_commit_graph_reachable(). Clean these up so our
+memory checking is cleaner.
 
-The impact of these leaks are small, as we never call write_commit_graph
-_reachable in a loop, but it is best to be diligent here.
+Running 'valgrind --leak-check=full git commit-graph write
+--reachable' demonstrates these leaks and how they are fixed after
+this change.
 
-While looking at memory consumption within write_commit_graph(), I noticed
-that we initialize our oid list with "object count / 4", which seems to be a
-huge over-count. I reduce this by a factor of eight.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-graph.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-I built off of ab/commit-graph-progress, because my patch involves lines
-close to those changes.
-
-Thanks, -Stolee
-
-Derrick Stolee (2):
-  commit-graph: clean up leaked memory during write
-  commit-graph: reduce initial oid allocation
-
- commit-graph.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-
-base-commit: 6b89a34c89fc763292f06012318b852b74825619
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-42%2Fderrickstolee%2Fcommit-graph-leak-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-42/derrickstolee/commit-graph-leak-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/42
+diff --git a/commit-graph.c b/commit-graph.c
+index 2a24eb8b5a..7226bd6b58 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -698,6 +698,8 @@ void write_commit_graph_reachable(const char *obj_dir, int append,
+ 	string_list_init(&list, 1);
+ 	for_each_ref(add_ref_to_list, &list);
+ 	write_commit_graph(obj_dir, NULL, &list, append, report_progress);
++
++	string_list_clear(&list, 0);
+ }
+ 
+ void write_commit_graph(const char *obj_dir,
+@@ -846,9 +848,11 @@ void write_commit_graph(const char *obj_dir,
+ 	compute_generation_numbers(&commits, report_progress);
+ 
+ 	graph_name = get_commit_graph_filename(obj_dir);
+-	if (safe_create_leading_directories(graph_name))
++	if (safe_create_leading_directories(graph_name)) {
++		UNLEAK(graph_name);
+ 		die_errno(_("unable to create leading directories of %s"),
+ 			  graph_name);
++	}
+ 
+ 	hold_lock_file_for_update(&lk, graph_name, LOCK_DIE_ON_ERROR);
+ 	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+@@ -893,6 +897,8 @@ void write_commit_graph(const char *obj_dir,
+ 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
+ 	commit_lock_file(&lk);
+ 
++	free(graph_name);
++	free(commits.list);
+ 	free(oids.list);
+ 	oids.alloc = 0;
+ 	oids.nr = 0;
 -- 
 gitgitgadget
+
