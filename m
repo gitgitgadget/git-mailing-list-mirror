@@ -2,158 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE9041F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 15:06:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9121F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 15:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728755AbeJBVul (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 17:50:41 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55877 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727451AbeJBVul (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 17:50:41 -0400
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBmvH-1fysDO2RiZ-00Ar3G; Tue, 02
- Oct 2018 17:06:41 +0200
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBmvH-1fysDO2RiZ-00Ar3G; Tue, 02
- Oct 2018 17:06:41 +0200
-Date:   Tue, 2 Oct 2018 17:06:42 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 17/21] range-diff: populate the man page
-In-Reply-To: <20180910133704.GC5233@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1810021652420.2034@tvgsbejvaqbjf.bet>
-References: <pull.1.v5.git.gitgitgadget@gmail.com> <pull.1.v6.git.gitgitgadget@gmail.com> <8c5543a0667fffe0cb0684427f726fdfb75b28d0.1534159977.git.gitgitgadget@gmail.com> <87lg8a7wj2.fsf@evledraar.gmail.com> <20180909165431.GA17224@localhost>
- <87k1nu7fm0.fsf@evledraar.gmail.com> <20180910133704.GC5233@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727267AbeJBV5B (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 17:57:01 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:43918 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbeJBV5B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 17:57:01 -0400
+Received: by mail-qt1-f193.google.com with SMTP id q41-v6so2282260qtq.10
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 08:13:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2Kx/EiZqVomhFsCPzoMZjM5pdgvJAXjIPQqqJwbpJHQ=;
+        b=CVqXhRJZpDSau5UhYdgpGu/uUlnoXDxIjtgtZYSH0f1nzwHtU6Onk4hWKP7XCYrzcK
+         RjzsxzI3CyYiODgeULUrCQBYjk6EwdA335fWlpKhYilEM3q4hWee/DF+y59B7sMLYt5D
+         gXhxdHCONuOju1jGf5CuEvE0wvuBhEDvuEkirdyilS/egz7f5HGdz+nsJnAuz31zjePw
+         UiMRm0+V/6lh3kFhAnIoLet0mVGC6uwk+T7Y3mj4JrPFtlbPt039BvmbnKBLLDNcwRfV
+         jiRk2Jh3rdtImXFNRKzl2JxRcw/a7upfUoDoAO5VflcWTrw3NruMpAGvYH7UNzSwSXih
+         WtbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2Kx/EiZqVomhFsCPzoMZjM5pdgvJAXjIPQqqJwbpJHQ=;
+        b=STc1zcTsqdDKChB/1TJ5IheFwTcx4zEhFtqISs9HOOLAn9qHGGeYl/hhgs8fkNSppk
+         Xnr4Q4IgFDGM4r2FS2f1KxLg1hmwJQNiUVZigN26eyW7a2lRr8lZlplSRnGYrDW9rE1P
+         qcrJuxX6LG/VEmIPWpc/L5qX0I1aIyxoOOR9hjfw1ndAVttU0MT7fuGVHW1STLW2g+Mm
+         1zk3MbksYEo2SUTTkJoYgN8Y6dq62vPuWR5VjpD9WL4WSE5Pc8zrx1GbQOfuSUptjsf6
+         0F/KZZ+4qlpgpRlcK+rtMjUSPKaA4KtAG9bg0TytGdfoyVFHRX26yyKFbKJgIRa2L0M3
+         f+Og==
+X-Gm-Message-State: ABuFfoh3tQgSrYVYHyJqhSHK/Bw8ddnwXX4JwT+hPzykx5vjiUATt2Vx
+        U1Iyhk3tlh9G4LOXNAj0Jxw=
+X-Google-Smtp-Source: ACcGV60dxzaY4lLYa5UW+NnHghIRo8PCD3BaBfJHjYBiwBVUVv0hVQTa8c0KQTOxRHDcTmm/ex0sLg==
+X-Received: by 2002:ac8:32c9:: with SMTP id a9-v6mr12978758qtb.41.1538493188417;
+        Tue, 02 Oct 2018 08:13:08 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id r82-v6sm11806913qkh.28.2018.10.02.08.13.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Oct 2018 08:13:07 -0700 (PDT)
+Subject: Re: [PATCH v7 3/7] eoie: add End of Index Entry (EOIE) extension
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181001134556.33232-1-peartben@gmail.com>
+ <20181001134556.33232-4-peartben@gmail.com>
+ <CACsJy8CX0TwVydzmqsjHK+W7tcaDgRCgeU3Gmc-bA1Ecf=Yz6A@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <424326cc-0cfe-3af8-d2f7-6c124cb077cd@gmail.com>
+Date:   Tue, 2 Oct 2018 11:13:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-825645290-1538492803=:2034"
-X-Provags-ID: V03:K1:T+sugwSjWBg0ukUa1E4Uz1+ohJHoi3e5pnTHH6jyOgY7mh8sIS4
- LEh6x7SzGgNhaREHEbama9emr14pMpXSLeQURB6GG9z9bRyyWPoY0YmpbUBwp4B3qeQuqAv
- t7IaZPzBOIu9RSu5JB81Sq5CffIVzl1sP6ClSKNKJWWviLe5kW/eTNeNxPylGVQapF8NzRa
- WzPx9sz5dHdgsCQ/XgGOw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QXuxH+GHWAw=:35tZwxEYl8BUE+GwpzBFIT
- fWbXo9iOFRCSykn9yJBoIjQbUQITV1KzdBGoA7pqq2lS02UVdOdAbCOrbRujvUSdbn7oNIih3
- ThXKg/TY1bWlLi9dD2P9Ex6YzIOEm+ADA/Cj3aLP7QjcIL3R0B2uV2+ODqiYkgldCIvARSQgT
- wVJHZy4j4m7fRkbqSiLyMJEMK3sMQ6xJ3b1gc0ZAVvneVBnse8/SBiKGwZAbndjj/xo+ItUuQ
- 9d7eHRrIriDU7w7b4d1fd4rfLPEoyTKT96iMTaButDEQ8/2IMGMofVfHMS/UgRVa7gLXyLkEB
- /ou7MIMac3IvlvlwRmdmz+vFt2YoTOi8VmmYWOx70+8LcTA2vOxcYk2nJ6QfsP6lduDtGq9/G
- Vc8RTLV2uQdyFvigMSBVZO0fPAYlk6BFucvScKCLCuLq1fpY2wpcQDO34xqfS/EQuqo82H7aw
- 9mL86G40lDSclvFbP3gq2GKxHh74K0wU0H68cwYl2ClWuNUGxuseCKWD1xhBaCJfjLW/7g74H
- RxKG5qp9hrD5m4gWbZ+vb/DjDjykdA/otX86gEQmaLYcaeK0QD6W3gyqAc8CZQLdFnnZ3OzCT
- roUuk/7AYoUc9i29BFQwY/bOUyiXWV+Z+li1sBEJCx9hTgpPO2bH9lgaZ77MhZQn6Agsgr0C0
- 2vSJdQEtUq2mAuRM90ygWiA0ScL9uSxSEcdFsp9e+nzA/u296G8P2q94QGsmjYf0kJ2VPNB82
- apXAheyxHYSIbKRHGqz+psUJ3g01dKUlu5wzWoTYzRjuwKNA89y3GaC1eUioRz4B92xjvyKlh
- l3UDW0j5eLpTsZSMKnPwqEYuew07h+YAbT/xXmGVUgty2nxA3s=
+In-Reply-To: <CACsJy8CX0TwVydzmqsjHK+W7tcaDgRCgeU3Gmc-bA1Ecf=Yz6A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-825645290-1538492803=:2034
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi Peff,
+On 10/1/2018 11:30 AM, Duy Nguyen wrote:
+> On Mon, Oct 1, 2018 at 3:46 PM Ben Peart <peartben@gmail.com> wrote:
+>> @@ -2479,6 +2491,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+>>          if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
+>>                  return -1;
+>>
+>> +       offset = lseek(newfd, 0, SEEK_CUR) + write_buffer_len;
+> 
+> Note, lseek() could in theory return -1 on error. Looking at the error
+> code list in the man page it's pretty unlikely though, unless
+> 
 
-On Mon, 10 Sep 2018, Jeff King wrote:
+Good catch. I'll add the logic to check for an error.
 
-> On Sun, Sep 09, 2018 at 07:19:51PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->=20
-> > >> And then I turn that into:
-> > >>
-> > >>     # @{u} because I happen to be on 'master' and it's shorter to ty=
-pe
-> > >>     # than origin/master...
-> > >>     git range-diff @{u} 38b5f0fe72...718fbdedbc
-> > >
-> > > I don't understand what you want with that @{u} or 'origin/master' in
-> > > the first place.  It's unnecessary, the three-dot notation on its own
-> > > works just fine.
-> >=20
-> > Maybe I've been using the wrong mode all along, I passed over by habits
-> > from tbdiff, which were surely copy/pasted from somewhere.
-> >=20
-> > Looking at the git-range-diff manpage though it recommends <base> <rev1=
->
-> > <rev2> over <rev1>...<rev2> when the topic has been rebased, which is
-> > usually the case for e.g. a topic that's submitted to git.git (usually
-> > be the time feedback has been gathered & a re-submission has been made
-> > Junio has pushed another "master").
-> >=20
-> > So isn't "<base> <rev1> <rev2>" the right thing to use over
-> > "<rev1>...<rev2>" for git.git use? I think so, but I'm not sure.
->=20
-> The problem with <rev1>...<rev2> is that it finds the actual merge base,
-> not the beginning of the topic.
+>> +static size_t read_eoie_extension(const char *mmap, size_t mmap_size)
+>> +{
+>> +       /*
+>> +        * The end of index entries (EOIE) extension is guaranteed to be last
+>> +        * so that it can be found by scanning backwards from the EOF.
+>> +        *
+>> +        * "EOIE"
+>> +        * <4-byte length>
+>> +        * <4-byte offset>
+>> +        * <20-byte hash>
+>> +        */
+>> +       const char *index, *eoie;
+>> +       uint32_t extsize;
+>> +       size_t offset, src_offset;
+>> +       unsigned char hash[GIT_MAX_RAWSZ];
+>> +       git_hash_ctx c;
+>> +
+>> +       /* ensure we have an index big enough to contain an EOIE extension */
+>> +       if (mmap_size < sizeof(struct cache_header) + EOIE_SIZE_WITH_HEADER + the_hash_algo->rawsz)
+> 
+> Using sizeof() for on-disk structures could be dangerous because you
+> don't know how much padding there could be (I'm not sure if it's
+> actually specified in the C language spec). I've checked, on at least
+> x86 and amd64, sizeof(struct cache_header) is 12 bytes, but I don't
+> know if there are any crazy architectures out there that set higher
+> padding.
+> 
 
-That is actually not true, not for `range-diff`. If it sees `A...B`, it
-will automatically generate `B..A A..B` from it.
-
-That matters if the branches `A` and `B` have multiple merge bases.
-
-> So if you have a 5-patch topic, but the first two patches weren't
-> changed in the rebase, it won't show them at all!  I made this mistake
-> in [1], for example.
-
-Yep, that is very easy to do.
-
-Another thing to note is that often `A...B` is not doing the right thing
-with branches that go into `pu` because some of us contributors rebase
-to `master` (or `next`) between iterations. For such a use case, I
-myself prefer the `@{u}` version that =C3=86var wants to use. (Although I
-leave off the three dots, in which case everything works quite
-magically.)
-
-> For a force-push, though, you may not care about seeing the topic as a
-> whole, and that mid-topic merge-base could be just fine. So pasting just
-> the "A...B" works.
->=20
-> I don't think your "@{u} A...B" makes any sense. You're giving _two_
-> bases, which is weird. But even if you wanted to ignore the "..." base
-> as a convenience to users of fetch, @{u} does not necessarily have
-> anything to do with the @{upstream} of the topic at "A". You really want
-> branch@{u}, which is on a separate part of the fetch output line (and
-> your branch@{u} and the remote's are not necessarily the same, either;
-> in this case you probably do not even have that branch checked out).
-
-While `@{u}` in general does not relate to `A` nor `B`, it is quite
-possible that it always does in =C3=86var's scenario. I would not want to
-limit them in how they want to use Git from this point of view.
-
-However, I would have a little bit of a problem with special-casing the
-two-arg version when there are no dots in the first arg, and three dots
-in the second one.
-
-The problem here: the two-arg version already has a meaning: two commit
-ranges. And it *is* conceivable that somebody wants to compare, say, the
-full history of `git-gui.git` with a certain symmetric range in `pu`.
-Granted, that is very obscure a use case, but it would be hard to
-explain why the two-arg case refers to two commit ranges in some cases,
-and in other cases not.
-
-Ciao,
-Dscho
-
->=20
-> -Peff
->=20
-> [1] https://public-inbox.org/git/20180821195102.GB859@sigill.intra.peff.n=
-et/
->=20
---8323328-825645290-1538492803=:2034--
+This must be safe as the same code has been in do_read_index() and 
+verify_index_from() for a long time.
