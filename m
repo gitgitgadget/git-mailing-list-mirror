@@ -2,171 +2,359 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 378F51F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 19:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A36CB1F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 19:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727615AbeJCByA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 21:54:00 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37823 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726781AbeJCBx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 21:53:59 -0400
-Received: by mail-pf1-f196.google.com with SMTP id j23-v6so436369pfi.4
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 12:09:09 -0700 (PDT)
+        id S1727624AbeJCByT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 21:54:19 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:33676 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727395AbeJCByT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 21:54:19 -0400
+Received: by mail-qt1-f195.google.com with SMTP id q40-v6so3245062qte.0
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 12:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=euvE31kvUQM3D2LFL5LvhWDMz1LiKcuXNkA0biw8L7o=;
-        b=jNYLtWj/88uXz4aXrS2jbgEm3X0vKhrVMiBtwCJLEnPCgLm6qVWXcaUyJ94G31tKHH
-         3cdPQCLlrhxuxH69N5Dyk87DM2e7e4+qZaTNtcmlbiYIjitlJ1BvOeQg4e3GFgUQEi+r
-         bGvBLYyElx5RS/pLWIqYkbW5Qws4RLxI1mFnV32DUYgNDyEbAmXpoyjATsNMrIcGCehS
-         E8+kcTN4ed2/0DuPQCaQwk9ZI1IAsY0BQCkU/nlgNnRN9flybcuFMTc6iHAlH0eYWssK
-         +FYAvgCEJmPWI+cLqqOrz0oX8QzFn1soS1DgCqvGpxXALnVMoPStqmC5nSbqemQ5uvwn
-         SQLA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=N3uZrucHYpEzLs6m5oq2Jk9IXCfRW+xKfaeNjNzl9ag=;
+        b=QBt59P1izMPkpVR91goSZQK0nn3sAt3bH/Jlcd1ij+woWxWiBVALNAAiyQYSD1MJnM
+         exllbsTyRxTG6iV3GMVPE+7BqZXyZQqE9ksDY2WDhh1lFeP+L/U3KUIQLpJDlrCHbbU1
+         4FTrmCOXVxUjiGV64IwrP+wsKoRWNpDSvmpaCXbAeu0Iu4rbXAO4gK8+IP9KdZG45F6L
+         Pzad6NL3f3uQxTmVC2odi2rKVykC6vx2QVmzABigHSRUQyw6OmG80jE/AzJQHn0IdwjQ
+         FnXY856vKXeeIBp7LQ55DY5die4hVLobeLr56XbMK/LXu34cgUTuB+N686LjMqGFF03G
+         Lm2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=euvE31kvUQM3D2LFL5LvhWDMz1LiKcuXNkA0biw8L7o=;
-        b=oVx1Pb6nH5IJRFbJEId06EgarmOS2+zRCEWuQqcQnmfTT+3KFmECF/SMioGtuu6CcL
-         YA63HGaWZKt9kA94Dumf3sr1X0csXpXvJgfhDS0RZBhrJfqVCYqho2QCyUc5eRT1GQIC
-         EZRFZvmvyw4OoYzZ0TZW1A6ue37Hlknk7yBysZxh6f7cZ+w145INHXg6onnMIkIjgm7E
-         /UAr/KDCjJa/43yQAVDsWrUdw7MqA2lnXXwdCldgbHt6ln53hHGFOSYJm5ZoUGKi+itU
-         t59rtY+f2HJPFDxrfihUTG3PYVhUeJ5Ss14pMQm9r5M27VIDns42CpD05BuHaDPrBS0Q
-         kVmw==
-X-Gm-Message-State: ABuFfoj3d4IP3GDnwx6fHOU4AbUnTorNXoGG4y8Sb0JwGvL6fBG2mZNF
-        VSkb7ZgySexcGejRikyxtqSW4Gne6ODTxvftZEM=
-X-Google-Smtp-Source: ACcGV600H3bYRyPgil4oH2DJ/KDaDWHPRUVlz5+Vy7kih8m6c3MlldkiTr9L1hfjXE4JndWDVRSCTJa1iC+WmnZGts0=
-X-Received: by 2002:a62:9015:: with SMTP id a21-v6mr14640172pfe.49.1538507349131;
- Tue, 02 Oct 2018 12:09:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.42.git.gitgitgadget@gmail.com> <6906c25415eddf79cc3f71f905a77b140f2f66f0.1538492321.git.gitgitgadget@gmail.com>
- <CAN0heSomOen+mWg1CuPGUCJFgmDQUjGLtAdxpWLwrStRU4Me8g@mail.gmail.com> <CAGZ79kYtNnNPMv0=rB4ie=tOoYEPPZ=CmYFg4PG2_j96vjODeQ@mail.gmail.com>
-In-Reply-To: <CAGZ79kYtNnNPMv0=rB4ie=tOoYEPPZ=CmYFg4PG2_j96vjODeQ@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 2 Oct 2018 21:08:57 +0200
-Message-ID: <CAN0heSqOjYDXRf4KE_C0GDnFW8r4qVfWnUVuW-Q+4D87nhFURQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] commit-graph: clean up leaked memory during write
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=N3uZrucHYpEzLs6m5oq2Jk9IXCfRW+xKfaeNjNzl9ag=;
+        b=bBeiyBmWGp7Ynd/DACihzJImsaXC482ZJ/B4FoYAZiftYuLjVgYBorPwh9j1EQCIDX
+         wb/Or2AQZLesjHfFARs6ncBMkxpPN9g9Lgg5tvKPF9QvillCaOdQqVst8wXQoPNl/mfm
+         eomXHLEiYa9inHS5pWQInxll4Aif9TsuN5r7vUKZy8MNwuUWbADJkyNDSQj5/z6WTN2L
+         77QkXccV0QT/BchjlXy/5Op8RI2uLIoltBN3ZjPWfmXrygoziISu02qTVOyaAh+rgrIQ
+         E2mRCNN6dn+rTWIRCn69C86BkUPwxcv5ir6Vp9CwT4IK+uRDd6VSBRVNTgDQKf0tpoR9
+         HqvA==
+X-Gm-Message-State: ABuFfohVpirhYsDqsFTZ+uCq8jfZ8vVa0uDAlKmY/RAPflWZDQS/PjPR
+        J941noDRb5X6LrC/wiXfMBE=
+X-Google-Smtp-Source: ACcGV60UUxiPU1ffIGjUHIWsAkklJUJx+iA84lviG6Cp5HcWBxS8MvB7ZHrqHnjJ+q+FqZrmfGVtcA==
+X-Received: by 2002:aed:39e8:: with SMTP id m95-v6mr13842279qte.30.1538507367690;
+        Tue, 02 Oct 2018 12:09:27 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id a8-v6sm9500957qth.43.2018.10.02.12.09.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Oct 2018 12:09:26 -0700 (PDT)
+Subject: Re: [PATCH v7 7/7] read-cache: load cache entries on worker threads
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        Ben Peart <benpeart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181001134556.33232-1-peartben@gmail.com>
+ <20181001134556.33232-8-peartben@gmail.com>
+ <CACsJy8D7Pbg6xMZBfCiz_7_=reY3Os4R_70wc65VMxbu2=Kqjw@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <8f00ea21-07dc-4d19-7bd8-16dee53eba67@gmail.com>
+Date:   Tue, 2 Oct 2018 15:09:24 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <CACsJy8D7Pbg6xMZBfCiz_7_=reY3Os4R_70wc65VMxbu2=Kqjw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2 Oct 2018 at 19:59, Stefan Beller <sbeller@google.com> wrote:
-> > > +
-> > > +       string_list_clear(&list, 0);
-> > >  }
-> >
-> > Nit: The blank line adds some asymmetry, IMVHO.
->
-> I think these blank lines are super common, as in:
->
->     {
->       declarations;
->
->       multiple;
->       lines(of);
->       code;
->
->       cleanup;
->       and_frees;
->     }
->
-> (c.f. display_table in column.c, which I admit to have
-> cherry-picked as an example).
->
-> While in nit territory, I would rather move the string list init
-> into the first block:
->
->   {
->     struct string_list list = STRING_LIST_INIT_DUP;
->
->     for_each_ref(add_ref_to_list, &list);
->     write_commit_graph(obj_dir, NULL, &list, append);
->
->     string_list_clear(&list, 0);
->   }
 
-Now this looks very symmetrical. :-)
 
-> > >  void write_commit_graph(const char *obj_dir,
-> > > @@ -846,9 +848,11 @@ void write_commit_graph(const char *obj_dir,
-> > >         compute_generation_numbers(&commits, report_progress);
-> > >
-> > >         graph_name = get_commit_graph_filename(obj_dir);
-> > > -       if (safe_create_leading_directories(graph_name))
-> > > +       if (safe_create_leading_directories(graph_name)) {
-> > > +               UNLEAK(graph_name);
-> > >                 die_errno(_("unable to create leading directories of %s"),
-> > >                           graph_name);
-> > > +       }
-> >
-> > Do you really need this hunk?
->
-> graph_name is produced via xstrfmt in get_commit_graph_filename,
-> so it needs to be free'd in any return/exit path.
+On 10/1/2018 1:09 PM, Duy Nguyen wrote:
+> On Mon, Oct 1, 2018 at 3:46 PM Ben Peart <peartben@gmail.com> wrote:
+>> +/*
+>> + * A helper function that will load the specified range of cache entries
+>> + * from the memory mapped file and add them to the given index.
+>> + */
+>> +static unsigned long load_cache_entry_block(struct index_state *istate,
+>> +                       struct mem_pool *ce_mem_pool, int offset, int nr, const char *mmap,
+> 
+> Please use unsigned long for offset (here and in the thread_data
+> struct). We should use off_t instead, but that's out of scope. At
+> least keep offset type consistent in here.
+> 
 
-Agreed. Although I am questioning that `die()` and its siblings count.
+Unfortunately, this code is littered with different types for size and 
+offset.  "int" is the most common but there are also off_t, size_t and 
+some unsigned long as well.  Currently all of them are at least 32 bits 
+so until we need to have an index larger than 32 bits, we should be OK. 
+I agree, fixing them all is outside the scope of this patch.
 
-> > In my testing with LeakSanitizer and
-> > valgrind, I don't need this hunk to be leak-free.
->
->
-> > Generally speaking, it
-> > seems impossible to UNLEAK when dying, since we don't know what we have
-> > allocated higher up in the call-stack.
->
-> I do not understand; I thought UNLEAK was specifically for the purpose of
-> die() calls without imposing extra overhead; rereading 0e5bba53af
-> (add UNLEAK annotation for reducing leak false positives, 2017-09-08)
-> doesn't provide an example for prematurely die()ing, only for regular
-> program exit.
->
-> > [...] With this hunk, I am
-> > puzzled and feel uneasy, both about having to UNLEAK before dying and
-> > about having to UNLEAK outside of builtin/.
->
-> I am not uneasy about an UNLEAK before dying, but about dying outside
-> builtin/ in general
+>> +                       unsigned long start_offset, const struct cache_entry *previous_ce)
+> 
+> I don't think you want to pass previous_ce in. You always pass NULL
+> anyway. And if this function is about loading a block (i.e. at block
+> boundary) then initial previous_ce _must_ be NULL or things break
+> horribly.
+> 
 
-Yeah, not dying would be even better (out of scope for this patch).
+The function as written can load any arbitrary subset of cache entries 
+as long as previous_ce is set correctly.  I currently only use it on 
+block boundaries but I don't see any good reason to limit its 
+capabilities by moving what code passes the NULL in one function deeper.
 
-> (but having a die call accompanied by UNLEAK seems
-> to be the right thing). Can you explain the worries you have regarding the
-> allocations on the call stack, as xstrfmt is allocating on the heap and we
-> only UNLEAK the pointer to that?
+>> @@ -1959,20 +2007,125 @@ static void *load_index_extensions(void *_data)
+>>
+>>   #define THREAD_COST            (10000)
+>>
+>> +struct load_cache_entries_thread_data
+>> +{
+>> +       pthread_t pthread;
+>> +       struct index_state *istate;
+>> +       struct mem_pool *ce_mem_pool;
+>> +       int offset;
+>> +       const char *mmap;
+>> +       struct index_entry_offset_table *ieot;
+>> +       int ieot_offset;        /* starting index into the ieot array */
+> 
+> If it's an index, maybe just name it ieot_index and we can get rid of
+> the comment.
+> 
+>> +       int ieot_work;          /* count of ieot entries to process */
+> 
+> Maybe instead of saving the whole "ieot" table here. Add
+> 
+>       struct index_entry_offset *blocks;
+> 
+> which points to the starting block for this thread and rename that
+> mysterious (to me) ieot_work to nr_blocks. The thread will have access
+> from blocks[0] to blocks[nr_blocks - 1]
+> 
 
-I think we agree that leaking things "allocat[ed] on the call stack"
-isn't much of a worry. The reason I mentioned the call stack is that
-we've got any number of calls behind us on it, and we might have made
-all sorts of allocations on the heap, and at this point, we have no
-idea about what we should be UNLEAK-ing.
+Meh. Either way you have to figure out there are a block of entries and 
+each thread is going to process some subset of those entries.  You can 
+do the base + offset math here or down in the calling function but it 
+has to happen (and be understood) either way.
 
-My worry is that one of these would seem to be true:
+I'll rename ieot_offset to ieot_start and ieot_work to ieot_blocks which 
+should hopefully help make it more obvious what they do.
 
-* UNLEAK is unsuitable for the job. Whenever we have a `die()` as we do
-  here, we can UNLEAK the variables we know of, but we can't do anything
-  about the allocations we have made higher up the call-chain. Our test
-  suite obviously provokes lots of calls to `die()` -- imagine that each
-  of those leaves a few leaked allocations behind. We'd have a semi-huge
-  number of leaks being reported. While we could mark with UNLEAK to
-  reduce that number, we wouldn't be able to bring the number of leaks
-  down to anywhere near manageable where we'd be able to find the last
-  few true positives.
+>> +       unsigned long consumed; /* return # of bytes in index file processed */
+>> +};
+>> +
+>> +/*
+>> + * A thread proc to run the load_cache_entries() computation
+>> + * across multiple background threads.
+>> + */
+>> +static void *load_cache_entries_thread(void *_data)
+>> +{
+>> +       struct load_cache_entries_thread_data *p = _data;
+>> +       int i;
+>> +
+>> +       /* iterate across all ieot blocks assigned to this thread */
+>> +       for (i = p->ieot_offset; i < p->ieot_offset + p->ieot_work; i++) {
+>> +               p->consumed += load_cache_entry_block(p->istate, p->ce_mem_pool, p->offset, p->ieot->entries[i].nr, p->mmap, p->ieot->entries[i].offset, NULL);
+> 
+> Please wrap this long line.
+> 
+>> +               p->offset += p->ieot->entries[i].nr;
+>> +       }
+>> +       return NULL;
+>> +}
+>> +
+>> +static unsigned long load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
+>> +                       unsigned long src_offset, int nr_threads, struct index_entry_offset_table *ieot)
+>> +{
+>> +       int i, offset, ieot_work, ieot_offset, err;
+>> +       struct load_cache_entries_thread_data *data;
+>> +       unsigned long consumed = 0;
+>> +       int nr;
+>> +
+>> +       /* a little sanity checking */
+>> +       if (istate->name_hash_initialized)
+>> +               BUG("the name hash isn't thread safe");
+>> +
+>> +       mem_pool_init(&istate->ce_mem_pool, 0);
+>> +       data = xcalloc(nr_threads, sizeof(struct load_cache_entries_thread_data));
+> 
+> we normally use sizeof(*data) instead of sizeof(struct ...)
+> 
+>> +
+>> +       /* ensure we have no more threads than we have blocks to process */
+>> +       if (nr_threads > ieot->nr)
+>> +               nr_threads = ieot->nr;
+>> +       data = xcalloc(nr_threads, sizeof(struct load_cache_entries_thread_data));
+> 
+> eh.. reallocate the same "data"?
+> 
 
-* We add code with no purpose. In this case, we're not talking a lot of
-  lines, but across the code base, if they bring no gain, they are bound
-  to provide a negative net value given enough time.
+Thanks, good catch - I hate leaky code.
 
-Martin
+>> +
+>> +       offset = ieot_offset = 0;
+>> +       ieot_work = DIV_ROUND_UP(ieot->nr, nr_threads);
+>> +       for (i = 0; i < nr_threads; i++) {
+>> +               struct load_cache_entries_thread_data *p = &data[i];
+>> +               int j;
+>> +
+>> +               if (ieot_offset + ieot_work > ieot->nr)
+>> +                       ieot_work = ieot->nr - ieot_offset;
+>> +
+>> +               p->istate = istate;
+>> +               p->offset = offset;
+>> +               p->mmap = mmap;
+>> +               p->ieot = ieot;
+>> +               p->ieot_offset = ieot_offset;
+>> +               p->ieot_work = ieot_work;
+>> +
+>> +               /* create a mem_pool for each thread */
+>> +               nr = 0;
+> 
+> Since nr is only used in this for loop. Declare it in this scope
+> instead of declaring it for the whole function.
+> 
+>> +               for (j = p->ieot_offset; j < p->ieot_offset + p->ieot_work; j++)
+>> +                       nr += p->ieot->entries[j].nr;
+>> +               if (istate->version == 4) {
+>> +                       mem_pool_init(&p->ce_mem_pool,
+>> +                               estimate_cache_size_from_compressed(nr));
+>> +               }
+>> +               else {
+>> +                       mem_pool_init(&p->ce_mem_pool,
+>> +                               estimate_cache_size(mmap_size, nr));
+>> +               }
+> 
+> Maybe keep this mem_pool_init code inside load_cache_entries_thread(),
+> similar to how you do it for load_cache_entries_thread(). It's mostly
+> to keep this loop shorter to see (and understand), of course
+> parallelizing this mem_pool_init() is just noise.
+> 
+
+I understand the desire to get that part of the thread initialization 
+out of the main line of this function (it's a bit messy between the 
+entry counting and version differences) but I prefer to have all the 
+thread initialization completed before creating the thread.  That allows 
+for simpler error handling and helps minimize the state you have to pass 
+into the thread (mmap_size in this case).
+
+>> +
+>> +               err = pthread_create(&p->pthread, NULL, load_cache_entries_thread, p);
+>> +               if (err)
+>> +                       die(_("unable to create load_cache_entries thread: %s"), strerror(err));
+>> +
+>> +               /* increment by the number of cache entries in the ieot block being processed */
+>> +               for (j = 0; j < ieot_work; j++)
+>> +                       offset += ieot->entries[ieot_offset + j].nr;
+> 
+> I wonder if it makes things simpler if you store cache_entry _index_
+> in entrie[] array instead of storing the number of entries. You can
+> easily calculate nr then by doing entries[i].index -
+> entries[i-1].index. And you can count multiple blocks the same way,
+> without looping like this.
+> 
+>> +               ieot_offset += ieot_work;
+>> +       }
+>> +
+>> +       for (i = 0; i < nr_threads; i++) {
+>> +               struct load_cache_entries_thread_data *p = &data[i];
+>> +
+>> +               err = pthread_join(p->pthread, NULL);
+>> +               if (err)
+>> +                       die(_("unable to join load_cache_entries thread: %s"), strerror(err));
+>> +               mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
+>> +               consumed += p->consumed;
+>> +       }
+>> +
+>> +       free(data);
+>> +
+>> +       return consumed;
+>> +}
+>> +#endif
+>> +
+>>   /* remember to discard_cache() before reading a different cache! */
+>>   int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>>   {
+>> -       int fd, i;
+>> +       int fd;
+>>          struct stat st;
+>>          unsigned long src_offset;
+>>          const struct cache_header *hdr;
+>>          const char *mmap;
+>>          size_t mmap_size;
+>> -       const struct cache_entry *previous_ce = NULL;
+>>          struct load_index_extensions p;
+>>          size_t extension_offset = 0;
+>>   #ifndef NO_PTHREADS
+>> -       int nr_threads;
+>> +       int nr_threads, cpus;
+>> +       struct index_entry_offset_table *ieot = NULL;
+>>   #endif
+>>
+>>          if (istate->initialized)
+>> @@ -2014,10 +2167,18 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>>          p.mmap = mmap;
+>>          p.mmap_size = mmap_size;
+>>
+>> +       src_offset = sizeof(*hdr);
+> 
+> OK we've been doing this since forever, sizeof(struct cache_header)
+> probably does not have extra padding on any supported platform.
+> 
+>> @@ -2032,29 +2193,22 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>>                          nr_threads--;
+>>                  }
+>>          }
+>> -#endif
+>> -
+>> -       if (istate->version == 4) {
+>> -               mem_pool_init(&istate->ce_mem_pool,
+>> -                             estimate_cache_size_from_compressed(istate->cache_nr));
+>> -       } else {
+>> -               mem_pool_init(&istate->ce_mem_pool,
+>> -                             estimate_cache_size(mmap_size, istate->cache_nr));
+>> -       }
+>>
+>> -       src_offset = sizeof(*hdr);
+>> -       for (i = 0; i < istate->cache_nr; i++) {
+>> -               struct ondisk_cache_entry *disk_ce;
+>> -               struct cache_entry *ce;
+>> -               unsigned long consumed;
+>> +       /*
+>> +        * Locate and read the index entry offset table so that we can use it
+>> +        * to multi-thread the reading of the cache entries.
+>> +        */
+>> +       if (extension_offset && nr_threads > 1)
+>> +               ieot = read_ieot_extension(mmap, mmap_size, extension_offset);
+> 
+> You need to free ieot at some point.
+> 
+
+Good catch - I hate leaky code.
+
+>>
+>> -               disk_ce = (struct ondisk_cache_entry *)(mmap + src_offset);
+>> -               ce = create_from_disk(istate, disk_ce, &consumed, previous_ce);
+>> -               set_index_entry(istate, i, ce);
+>> +       if (ieot)
+>> +               src_offset += load_cache_entries_threaded(istate, mmap, mmap_size, src_offset, nr_threads, ieot);
+>> +       else
+>> +               src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
+>> +#else
+>> +       src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
+>> +#endif
+>>
+>> -               src_offset += consumed;
+>> -               previous_ce = ce;
+>> -       }
+>>          istate->timestamp.sec = st.st_mtime;
+>>          istate->timestamp.nsec = ST_MTIME_NSEC(st);
+>>
+>> --
+>> 2.18.0.windows.1
+>>
