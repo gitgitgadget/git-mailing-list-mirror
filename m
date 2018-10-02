@@ -2,89 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7281D1F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 20:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 327391F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 21:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727589AbeJCDng (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Oct 2018 23:43:36 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46358 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726572AbeJCDng (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Oct 2018 23:43:36 -0400
-Received: by mail-ed1-f68.google.com with SMTP id g32-v6so3336841edg.13
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 13:58:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Xr7J+E2O1sCgdh5yVPwVlkmaykTw7OhWIEPOx4Cn+Es=;
-        b=Jji71J9nTo7pTZ+W07KQx6gyhL5e318isSyO6zB/TF1ggaE6mIknPaKGsi2oqSijh0
-         2bJpb64ptLaBIkOCsglLBBcaDCDi8lCFVmTB8oVcBvhXNor7CEOxpiH1IHnEhl6pnqKR
-         9/OC1XnBdQmxw+S4fBkvJXoK7DS1OKD7p+9jYG5eOawW1Lye8pFo8IbAWcfUhCWyMB7J
-         OTFcZ457RmtH3hyry0YUZzoAemWNjvFLuZ4Yym9fOvWHLbVLrHymadvSHoZHfreGaHP+
-         udPB2O2rIy7UMSbT8Zle9+iHhLDwJlF/WwDE6My+luwPv7N5CAnd6vash0y5qgS6eXlW
-         U4XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Xr7J+E2O1sCgdh5yVPwVlkmaykTw7OhWIEPOx4Cn+Es=;
-        b=PqJeW17Zn+zN/N0GSXDxWlfg3zQalsp5Fbyv4BEblejXqGB74N8WCTK1zKIzLC+9eD
-         CpJ5VB64xfmwOZOrWzotXCcJDdpE6NzVRPc2Do21EEqehI6LJ0xV39idO4ckzV6xVT6c
-         W6Yk0U5zucLLljL6RCld4JiwxRh/8pXCcagcsWIlQhFZ1MpIM18SOpo9CO33XBnzigH1
-         QfFCt9yVO4Vo8tcQg+3hWUsD58a1THf8spj1yiJuQ2D70TV/fJnF68GqGgHJsbX32aAH
-         gsLD5MMS6NLOdVPGAL3bPiUZZ9l1si6f4O+zQNyzwU0GHDmNgleyAL2vcVO6OwUE7Yl0
-         LmyQ==
-X-Gm-Message-State: ABuFfoi9R4z7anRK0lPSE6hQfHh2KAVttrldD5b7nnyROYrFQbxU8oJJ
-        J0nfw/PW0y5LQJYbqInN9UWHTZpl/SwTyiOsK18d3A==
-X-Google-Smtp-Source: ACcGV63egLKZm0n6slU2XPwOTWZE8FZKobT7WLZ+S0QHMU3XT2w6jhSZXDfo6jSiKr0ZKv3MEaI1zG8RgRqlzvsfQ0E=
-X-Received: by 2002:a50:cf0a:: with SMTP id c10-v6mr26070938edk.242.1538513901167;
- Tue, 02 Oct 2018 13:58:21 -0700 (PDT)
+        id S1727535AbeJCDpa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Oct 2018 23:45:30 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:13929 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726572AbeJCDpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Oct 2018 23:45:30 -0400
+Received: from [192.168.1.4] ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id 7Rm9gd7fppXFj7Rm9guGv1; Tue, 02 Oct 2018 22:00:13 +0100
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=anyJmfQTAAAA:8
+ a=uPZiAMpXAAAA:8 a=iiQuyQKBzodtzL9u7X8A:9 a=QEXdDO2ut3YA:10
+ a=YJ_ntbLOlx1v6PCnmBeL:22
+Subject: Re: git projects with submodules in different sites - in txt format
+ (:+(
+To:     Michele Hallak <mhallak@iai.co.il>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <15774B2750A13244948B89FDD2FEC2EACF15C69A@EXS11.iai.co.il>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <b059c580-28d2-9f97-7ded-9bdd60b45a54@iee.org>
+Date:   Tue, 2 Oct 2018 22:00:14 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20181002191642.21504-1-jacob.e.keller@intel.com>
- <20181002195519.GB2014@sigill.intra.peff.net> <CA+P7+xrjpEe_3_mAwZ73O2JP2Pd518OFnSf+gfmbTJW7A3Q=Nw@mail.gmail.com>
- <20181002203124.GC2014@sigill.intra.peff.net>
-In-Reply-To: <20181002203124.GC2014@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 2 Oct 2018 13:58:10 -0700
-Message-ID: <CA+P7+xqxov6-+t6ixuVxUvi=yfjDuxsa8poGL0TrUrWoj3NUNA@mail.gmail.com>
-Subject: Re: [PATCH] coccicheck: process every source file at once
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <15774B2750A13244948B89FDD2FEC2EACF15C69A@EXS11.iai.co.il>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfHlL6EXSkMHtEiggcui9pZDMQB3dDM3OrCGSbf+Mr9DK2Up3PGSyjpUyp0JlSRWxqf9iZtz7Lg+2RXUWfzTZWCw50Hm/4l5lDXyKG7lAtVKj40eztYSw
+ fA+rDJXTah5zfgIr5h5EJUhtEFFIQucVOhNLjbkwVBr/IbfRnwxOBNLxI4QEqMHjcWfOHrGMJYp3UUz9kHVEvwuWX0xQVfmpCkk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 2, 2018 at 1:31 PM Jeff King <peff@peff.net> wrote:
-> Actually, I guess we do not need to save $? at all, since we have only a
-> single process to care about. So even simpler:
->
->   spatch ... 2>$@+ 2>$@.log ||
->   {
->         cat $@.log
->         exit 1
->   }
->   # if we get here, we were successful
->   mv $@+ $@ ;# etc
->
-> would work. That's missing all the Makefile=required backslashes and
-> semicolons, of course. ;)
+On 02/10/2018 06:47, Michele Hallak wrote:
+> Hi,
+> 
+> I am getting out of idea about how to change the methodology we are using in order to ease our integration process... Close to despair, I am throwing the question to you...
+> 
+> We have 6 infrastructure repositories [A, B, C, D, E, F ?].
+
+> Each project [W,X,Y,Z] is composed of 4 repositories [1-4], each one using one or two infrastructure repositories as sub-modules. (Not the same)
+
+e.g. W1-W4; with say B & D as submodules
+> 
+> The infrastructure repositories are common to several projects and in the case we have to make change in the infrastructure for a specific project, we are doing it on a specific branch until properly merged.
+
+Do you also have remotes setup that provide backup and central authority 
+to the projects..?
+> 
+> Everything is fine (more or less) and somehow working.
+
+Good..
+> 
+> Now, we have one project that will be developed in another site and with another git server physically separated from the main site.
+
+Is it networked? Internal control, external internet, sneakernet?
+> 
+> I copied the infrastructure repositories in the new site and removed and add the sub-modules in order for them to point to the url in the separated git server.
+> 
+> Every 2 weeks, the remotely developed code has to be integrated back in the main site.
+> My idea was to format GIT patches, integrate in the main site, tag the whole thing and ship back the integrated tagged code to the remote site.
+> ... and now the nightmare starts:
+yep, you have lost the validation & verification capability of Git's 
+sha1/oid and DAG.
+
+> 
+> Since the .gitmodules is different, I cannot have the same SHA and then same tag and I am never sure that the integrated code is proper.
+
+Remotes, remotes...
+> 
+> May be there is a simple solution that I don't know about to my problem? Is there something else than GIT patches? Should I simply ship to the remote site the code as is and change the submodules each time?
 >
 
-I opted to drop to just save the return, immediately after calling.
-It's a bit less code change, and I think the result is as clear as the
-above would be. This way we do drop the subshell, not that it matters
-much in the end...
+I think the solution you need is `git bundle` 
+https://git-scm.com/docs/git-bundle. This is designed for the case where 
+you do not have the regular git transport infrastructure. Instead it 
+records the expected data that would be 'on the wire', which is then 
+read in at the far end. The bundle can contain excess data to ensure 
+overlap between site transmissions.
 
-Thanks,
-Jake
+You just run the projects in the same way but add the courier step for 
+shipping the CD, or some password protected archive as per your security 
+needs.
 
-> -Peff
+Everything is should be just fine (more or less) and somehow it will 
+just work. ;-)
+
+--
+Philip
+https://stackoverflow.com/questions/11792671/how-to-git-bundle-a-complete-repo
