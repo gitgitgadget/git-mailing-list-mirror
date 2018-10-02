@@ -2,129 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C98D1F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 21:19:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D63C21F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 21:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726833AbeJCEEm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 00:04:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39122 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725832AbeJCEEm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 00:04:42 -0400
-Received: (qmail 16663 invoked by uid 109); 2 Oct 2018 21:19:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Oct 2018 21:19:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6710 invoked by uid 111); 2 Oct 2018 21:18:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Oct 2018 17:18:47 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2018 17:19:21 -0400
-Date:   Tue, 2 Oct 2018 17:19:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
+        id S1728619AbeJCET4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 00:19:56 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:45005 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726862AbeJCET4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 00:19:56 -0400
+Received: by mail-qt1-f194.google.com with SMTP id c56-v6so3710436qtd.11
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 14:34:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=VPGf/R492x6rSWeW2hlj8u8rdGekyc1oYWTxCLvAdAQ=;
+        b=Jo/xqm+Gi4ReOrNWbrUUWlmKPFM+7V4NwhLACJ/0hQlw9Vg9YREcAmRiZQ73g9K4Eb
+         r3xE1uqppg/VQMA6nc3Puh/LrzpBILz94qztlPcJ1VV/GYpKf12P1sHdIUR9dUEJU1nc
+         zw97rp3WiK9IhCFHG1jT86XdcdTjFn5803TFJzwc2t+mWIcQZmlVgHs1QEMjGqozxvox
+         GG/IVQQTsZdwvr/kI7/iKpCcisbY3oJMAPg9TKRvO1MLM9I+QBFUSzE96Ey9en7SUQ81
+         zePfGaZGDtb0oVYGyikYLe9DnV1GtmyAAv1fXNWVQZtrOiVLO5ipQy3bnGUQzSVUHDpI
+         8q3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=VPGf/R492x6rSWeW2hlj8u8rdGekyc1oYWTxCLvAdAQ=;
+        b=I4MtZqqzEVUnxzdNxbjpdM5ytE0Op/ta2AvG/KFD5Kyi5xs2NuBMe+FAhfyNr1QgVt
+         I6LjuQkgf44zxlm6wp+TWFvVtI9S8UR87eZjQqJPyS5X/euu9C9ZtgVf0rYIa9NMhMV8
+         TvSq3WbQ1dQzCGoWI/NV9zs1SynC6UEEBlxXN7UOKmgvnbp09EJTtJQG4MMZ1Qs5KnvJ
+         kxTP1beEx4k187nKHoYvYM7b3rygS4UYKwwaNMFtv254zaqHr6nGtQZ8cR+VPdwyHlTZ
+         X03HZA2h0zPIwGxIIDqzfsQzao+GiLlOtT9hwjwmYmiDLQ6tP50KHQEc/Fwl27BB1lhk
+         p0KA==
+X-Gm-Message-State: ABuFfohoYo9NfQ7nrLA556tpoR0J0CVR2JbScd6wWpSbhESA0TYWKsfD
+        eits4YhlFm0mBLGc7Dnpn/A=
+X-Google-Smtp-Source: ACcGV63PpEnzvKWZRDLeOU4XuyC0fFv6epLoDEUN4xwimIxDaQ3ArprCKAptG5DJGA/B/FUOLehGJA==
+X-Received: by 2002:ac8:7003:: with SMTP id x3-v6mr14420403qtm.325.1538516073006;
+        Tue, 02 Oct 2018 14:34:33 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:81f3:8f89:2be9:a31b? ([2001:4898:8010:0:6b29:8f89:2be9:a31b])
+        by smtp.gmail.com with ESMTPSA id q24-v6sm1548596qtb.26.2018.10.02.14.34.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Oct 2018 14:34:32 -0700 (PDT)
+Subject: Re: [PATCH] more oideq/hasheq conversions
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
 Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] more oideq/hasheq conversions
-Message-ID: <20181002211921.GA3322@sigill.intra.peff.net>
+References: <20181002211921.GA3322@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5f28c9d1-1fed-5af4-c6fb-c05d90d125c2@gmail.com>
+Date:   Tue, 2 Oct 2018 17:34:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20181002211921.GA3322@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We added faster equality-comparison functions for hashes in
-14438c4497 (introduce hasheq() and oideq(), 2018-08-28). A
-few topics were in-flight at the time, and can now be
-converted. This covers all spots found by "make coccicheck"
-in master (the coccicheck results were tweaked by hand for
-style).
+On 10/2/2018 5:19 PM, Jeff King wrote:
+> We added faster equality-comparison functions for hashes in
+> 14438c4497 (introduce hasheq() and oideq(), 2018-08-28). A
+> few topics were in-flight at the time, and can now be
+> converted. This covers all spots found by "make coccicheck"
+> in master (the coccicheck results were tweaked by hand for
+> style).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Jake: I was surprised that this was not a "patch 2" on top of your
+> earlier coccicheck patch. Apologies if you were planning to send it out.
+>
+> This doesn't conflict with anything in "pu", so it's a reasonable time
+> to apply it. There are a few lingering cases in pu, so another option is
+> to wait a week or two and see if they get merged.
+These conversions look good to me!
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Jake: I was surprised that this was not a "patch 2" on top of your
-earlier coccicheck patch. Apologies if you were planning to send it out.
-
-This doesn't conflict with anything in "pu", so it's a reasonable time
-to apply it. There are a few lingering cases in pu, so another option is
-to wait a week or two and see if they get merged.
-
- builtin/checkout.c | 3 ++-
- cache-tree.c       | 2 +-
- commit-reach.c     | 2 +-
- midx.c             | 8 ++++----
- 4 files changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b30b48767e..902c06702c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -497,7 +497,8 @@ static int skip_merge_working_tree(const struct checkout_opts *opts,
- 	 * We must do the merge if we are actually moving to a new commit.
- 	 */
- 	if (!old_branch_info->commit || !new_branch_info->commit ||
--		oidcmp(&old_branch_info->commit->object.oid, &new_branch_info->commit->object.oid))
-+		!oideq(&old_branch_info->commit->object.oid,
-+		       &new_branch_info->commit->object.oid))
- 		return 0;
- 
- 	/*
-diff --git a/cache-tree.c b/cache-tree.c
-index 5ce51468f0..9c5cf2cc4f 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -781,7 +781,7 @@ static void verify_one(struct index_state *istate,
- 		strbuf_add(&tree_buf, oid->hash, the_hash_algo->rawsz);
- 	}
- 	hash_object_file(tree_buf.buf, tree_buf.len, tree_type, &new_oid);
--	if (oidcmp(&new_oid, &it->oid))
-+	if (!oideq(&new_oid, &it->oid))
- 		BUG("cache-tree for path %.*s does not match. "
- 		    "Expected %s got %s", len, path->buf,
- 		    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
-diff --git a/commit-reach.c b/commit-reach.c
-index 00e5ceee6f..a7808430e1 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -426,7 +426,7 @@ struct contains_stack {
- static int in_commit_list(const struct commit_list *want, struct commit *c)
- {
- 	for (; want; want = want->next)
--		if (!oidcmp(&want->item->object.oid, &c->object.oid))
-+		if (oideq(&want->item->object.oid, &c->object.oid))
- 			return 1;
- 	return 0;
- }
-diff --git a/midx.c b/midx.c
-index f3e8dbc108..06aef56400 100644
---- a/midx.c
-+++ b/midx.c
-@@ -285,8 +285,8 @@ static int nth_midxed_pack_entry(struct multi_pack_index *m, struct pack_entry *
- 		struct object_id oid;
- 		nth_midxed_object_oid(&oid, m, pos);
- 		for (i = 0; i < p->num_bad_objects; i++)
--			if (!hashcmp(oid.hash,
--				     p->bad_object_sha1 + the_hash_algo->rawsz * i))
-+			if (hasheq(oid.hash,
-+				   p->bad_object_sha1 + the_hash_algo->rawsz * i))
- 				return 0;
- 	}
- 
-@@ -583,8 +583,8 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
- 		 * Take only the first duplicate.
- 		 */
- 		for (cur_object = 0; cur_object < nr_fanout; cur_object++) {
--			if (cur_object && !oidcmp(&entries_by_fanout[cur_object - 1].oid,
--						  &entries_by_fanout[cur_object].oid))
-+			if (cur_object && oideq(&entries_by_fanout[cur_object - 1].oid,
-+						&entries_by_fanout[cur_object].oid))
- 				continue;
- 
- 			ALLOC_GROW(deduplicated_entries, *nr_objects + 1, alloc_objects);
--- 
-2.19.0.489.g7c40b6af8e
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
