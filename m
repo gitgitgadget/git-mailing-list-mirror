@@ -2,89 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C30281F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 21:51:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C62891F453
+	for <e@80x24.org>; Tue,  2 Oct 2018 22:00:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728734AbeJCEhB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 00:37:01 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51333 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727460AbeJCEhA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 00:37:00 -0400
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1fOCjP3JhU-00pvi4; Tue, 02
- Oct 2018 23:51:31 +0200
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1fOCjP3JhU-00pvi4; Tue, 02
- Oct 2018 23:51:31 +0200
-Date:   Tue, 2 Oct 2018 23:51:33 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Michal Fita <michal.fita@schneider-electric.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git 2.19.01 on Windows crasesh during GC
-In-Reply-To: <AM5PR0401MB2484A080D36571F2486B9609C4190@AM5PR0401MB2484.eurprd04.prod.outlook.com>
-Message-ID: <nycvar.QRO.7.76.6.1810022350240.2034@tvgsbejvaqbjf.bet>
-References: <AM5PR0401MB2484A080D36571F2486B9609C4190@AM5PR0401MB2484.eurprd04.prod.outlook.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XpFX1LrkqH0bgqEq5q8+f+nkudD8YEdRE7n1shJFpe/gbQpjKx6
- 9r/4BfQeZnvjhN4i4n4q479FH9uYw1CythcqKnFxWffCgGDoFzaF7lOowBLU1T+7iGQGoUo
- WrAMOCUVhVM9nNFPYvcE02/qDyq3CMGUevxxsiKq4qnVXObMs3+pbAlg2xqEqCwi4FqXeU0
- FqBhACsGpDnKC28h+y8sg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RuHvSFoout0=:X/R6okIOJPp7kUW9L3NqL+
- lyf0e8oM0db4/JHrCw5BavIU5B6b7gxI7X6ocVphCFrGVEl5E4BL2iTGZr/rIPXUfWpM7Ugv7
- PmneM0Yu752I+anT3Qd+93asZJ+0OI/jQHihPy7pQWWjnGpjyZYwYcPqP0Cd2/qPTi4HivW5/
- 0olLOwsZTwK7vEx4NjL5ZRw5B4st6cVpx02W7WroB0AZ8V2/a5bsr5R7lJuYMavQZWzGzfCi2
- Yo6U9hLzdKLoQLaolFW+AVHhruRhKI5gexb86+0dOw8pha3FdI9jPWL9e4Qo6eVFqz5YPC2SB
- 1mcfOPkr6slhjkr23gKubSzsRRAgjJyzj70vnGeo8iYEs897QcyaEqJr6CVwoT9LxmOO3ghL1
- ifbZlf2eoeRmaZuY2YThxbnfBypoDr0qAVtOMu3SQGfuV2NOsDgMF7vgnDhev2/SqyZz2h3oD
- I0JdIuMi93DIcLX/wH8p97qoe8SR+I8rFgu2OK7Kc+mwbIAX3xKeLBSBsJToaRKKXTOLLhwUO
- /kgYANUENL6ZezXOqq3N+ZcJG3s0IRyGUis0ucsdZRbblgGNSADlgmUtdlXrVlroTjW1u8W1h
- h6obrR3TPMU6pjAvKOQTc+6pPd4D8pheNXYNlAUx6+lDaHOTXYyOMpGUIopMRhsIxEPakn89Z
- nR/BJIZSZsC7qK36nleIlClIVAKjl98ugY1okjP/EPxdgypMqzp7NLDHX08v5kP8jHu83u3pM
- L3xd1rdKvS8PktONA+rIVp6d1yCtdaurawDN33LjYFiOYGpAuRkOiRlw1bW3jyvG5m9D/ITFi
- nu87HzXH47ezrAtCCZWNpMrpIO/zvv4XBtJPzXXqduz88VQVTs=
+        id S1728110AbeJCEpk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 00:45:40 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:43134 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727279AbeJCEpk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 00:45:40 -0400
+Received: by mail-pl1-f201.google.com with SMTP id b95-v6so4093873plb.10
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 15:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=UBMHUL7+C1wjGEvXPE99G/GxvCAVMtnoJsWPA9VQbeA=;
+        b=IbVas+79jDpY+6ArrWeA3GMTgOD2OQQDIdZIjo5WwkeFHon7OlHxtFOsPMz30wP+DZ
+         6/s4YHSKsnn1ztRVyqMGwts1Sz/qtWeorKzkYqSGo+OLu4iM0e/GUMPi7kjKeMUmeboO
+         tYIHR++0rC9jdb963dCBBdb5s+Wl2qeaR4aJLxIdEDCLWXvljlPBr1Ls45Am/QwTCZ3U
+         SsgiopEMSV5TzRlWul15ZMXgkMje0sK47WFICTJmpCJAQWTg6F6H+A2GfmDbCugnV0OM
+         R1CnVAdkTHAUtOl27MMofefX/RYinjPnHIkiLLtuItnELUS/3w1LWc0piwKvjhAOLQSo
+         kGew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=UBMHUL7+C1wjGEvXPE99G/GxvCAVMtnoJsWPA9VQbeA=;
+        b=ItTRDdBMn1BIyulmcgoxa72z8Zum/wAdH5JInw7DCfSk/9fWpwWpvlWeC2derAUgtB
+         owJ6Hz7jSDeb+wPR8pzzlCRXdsOL7XSu9XwsoAGs3P/jewKpl+4LnhF+8gjQrqMjTVKD
+         uwhRQWcYoqkxxMoGhgfLzX4zCfpia0Jd4zN7j99p3pw5zliKk7UYvVNIQmo2ve75upWx
+         yVqBDiSKLEBjehw6Hr+vtgZcs98KSKwUaBsg6F76XlYWLYZsDq2Rdl8JpaIwVNkT5+oH
+         TYWdFeTDGrpJP5zdLY+dB8PDkpeQKNdksyUqImhbLvydB+qpLmabDNqdj+iggOmViUOf
+         l/Lw==
+X-Gm-Message-State: ABuFfogkxiu9X4fuipGmVhavZLUH1A4u3YHB9X8VBvU6zH9F8ucPWDGQ
+        sFVG657T+rc+ZQHO/Vzi63AlakCXebcsGieIOQuvlbUuWVkmj8iefU+wJ7Xxb7qpRBwph47ksCP
+        8VvGIlWzd2E8QK3EcmBT1I5ulrfuMS7ABh7b7dKn3RMnjMipCL3wFqdkETt0x9sM=
+X-Google-Smtp-Source: ACcGV61uZzaCfNdD3P9q1K3MexBBJ11lyXkHaM8g/Oc16NQs2hEFtRuzmACVMmaZOMjFYcG5XXBnGN3vFtaoPg==
+X-Received: by 2002:a65:5048:: with SMTP id k8-v6mr7404190pgo.17.1538517610760;
+ Tue, 02 Oct 2018 15:00:10 -0700 (PDT)
+Date:   Tue,  2 Oct 2018 14:59:50 -0700
+Message-Id: <cover.1538516853.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: [PATCH 0/1] Limit client version advertisements
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, jrnieder@gmail.com, gitster@pobox.com,
+        steadmon@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+As discussed in [1], clients will incorrectly advertise support for
+protocol version 2 even when the service in question does not have a v2
+implementation. This patch sets maximum protocol versions for
+git-receive-pack, git-upload-archive, and git-upload-pack.
 
-On Fri, 14 Sep 2018, Michal Fita wrote:
+[1]: https://public-inbox.org/git/20180927012455.234876-1-steadmon@google.com/
 
-> Problem signature:
->   Problem Event Name:	APPCRASH
->   Application Name:	git.exe
->   Application Version:	2.19.0.1
->   Application Timestamp:	5b980bc7
->   Fault Module Name:	ntdll.dll
->   Fault Module Version:	6.1.7601.24117
->   Fault Module Timestamp:	5add228d
->   Exception Code:	c0000005
->   Exception Offset:	0000000000032964
->   OS Version:	6.1.7601.2.1.0.256.48
->   Locale ID:	2057
->   Additional Information 1:	335e
->   Additional Information 2:	335ee83054d6c615e4a7142c362e3dd4
->   Additional Information 3:	5184
->   Additional Information 4:	518485c5adbc52c624cc6890056919a6
+Josh Steadmon (1):
+  protocol: limit max protocol version per service
 
-Sadly, this is hardly enough information to even start a wild goose chase
-of a debugging spree.
+ connect.c     | 11 ++++-------
+ protocol.c    | 13 +++++++++++++
+ protocol.h    |  7 +++++++
+ remote-curl.c | 11 ++++-------
+ 4 files changed, 28 insertions(+), 14 deletions(-)
 
-Happily, I *think* that another report will help you, too:
-https://github.com/git-for-windows/git/issues/1839
+-- 
+2.19.0.605.g01d371f741-goog
 
-In short: please test with a new snapshot from
-https://wingit.blob.core.windows.net/files/index.html
-
-Ciao,
-Johannes
