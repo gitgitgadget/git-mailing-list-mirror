@@ -2,250 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A6B51F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 13:16:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79F7B1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 13:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbeJCUFK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 16:05:10 -0400
-Received: from mout.web.de ([212.227.15.4]:50289 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726748AbeJCUFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 16:05:10 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2MZY-1fonDq0vem-00s35j; Wed, 03
- Oct 2018 15:16:42 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2MZY-1fonDq0vem-00s35j; Wed, 03
- Oct 2018 15:16:42 +0200
-Subject: [PATCH v2 2/2] oidset: use khash
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5efe6695-2e82-786c-1170-7874978cb534@web.de>
-Date:   Wed, 3 Oct 2018 15:16:39 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726798AbeJCUMY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 16:12:24 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:36569 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726725AbeJCUMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 16:12:23 -0400
+Received: by mail-wr1-f51.google.com with SMTP id y16so6137720wrw.3
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 06:23:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
+        bh=wUpUUz+eOzh+TSQeUbyMbasOhxIU+JI7/etjfpDbuV0=;
+        b=ANouHP0jTbAHR5hiEMDLTzSZmEMGRwQorWwlfLBUczobL6MbCK8fg2srQ1ikjaYptq
+         A/+Kq4Bk47Brsv7FV8YE14WcuFkFaTpWq34zn7yN/YXEcxJkgPqqdbD/G2FxLjEtoPfk
+         EfarENDbLZaU1K1EjkzVtaclWmtdSc47GDGC/pEyE3YmLJOMa+20F9cwobagR3zwh/oU
+         /LFtHkcmv91xiTcTnSkPiVwl8dUB7aPFRlTkZvsDq8av+ZapeFnOsrsZ6n1IR2415YBh
+         r3Kull5y7Z5rGULCQxe1vAzDFh8mc51azQUyjoxUL/4q9QBeefmMRnaWTmgU5b48mZDR
+         BzIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
+         :mime-version;
+        bh=wUpUUz+eOzh+TSQeUbyMbasOhxIU+JI7/etjfpDbuV0=;
+        b=NowLZgQSEqj94VoAnehk+jCIghom0TohpdBVmFxzBvs3mUIWl02OE0fLXpyvt6N5UF
+         YjQaVFONMFNORZyomkhIlUfd4FgIAh1YeEQbqIdg/D38eBADE/nyl/GigLphMT/EHQ+Y
+         a/TSrZtLSeVutzNcGXxj/5sIE1sZqojc9aoNO3RF/AmIZH0VSC6H4+V8CP+tVk7bTI90
+         M5/KCWKQdFUZ0Qd7/H8sKQcb46N8YOGzmmb0ZHMic9ZzXGfAlPZGztf1D+0tDDG1PrAw
+         At/y5VFvcqK9gX+LjYOH2J+lZRCaFViyzXN77P5yFV/woqEr7w3PNBaPaO0lM4qbJtq/
+         F3SQ==
+X-Gm-Message-State: ABuFfohCZTO+fPGYeC/05dT7NeS1Y6VmfIhh2/JQlSrzMr0zGPk5g3Jf
+        VggJm+U09iWoA2QgqPPd+HPXgEiG
+X-Google-Smtp-Source: ACcGV60UJadyZLrAoNioVLMKeSsFR7PgtZV4WxGhQ9LdX/0oukS+E6KZ/4tjsx2atIPc1K4m+WMYUw==
+X-Received: by 2002:adf:fc0b:: with SMTP id i11-v6mr1402466wrr.9.1538573038531;
+        Wed, 03 Oct 2018 06:23:58 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id 188-v6sm2251819wmg.13.2018.10.03.06.23.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Oct 2018 06:23:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: We should add a "git gc --auto" after "git clone" due to commit graph
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+Date:   Wed, 03 Oct 2018 15:23:57 +0200
+Message-ID: <87tvm3go42.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:SV8Z+r+7R/TPj8O1Hakv8BurIJxbfDwnH6S0FjH1TUJYkl+mF40
- jjRZeMkOpi9qP3FgAO6z4ASadQQYVz7ifyIA/Z1+mBbt4W1ELCfxDOeOktRAxv1WyC2//UJ
- mi+J1i2KdZS5xuYLXLsXwALSvTgsKs1sJ5p7rgelKL/vJP4kAAsqFMZX7/L66Y4DJkbWTT+
- EXHfcg8cqL+oegR8+cBLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:b+LhKZvYbTU=:uDbgVKZ/u7XoEjevwjIodz
- tuuzm5UzRplpUE475ghomOtYLd4u4z+xRN5LfD2B124TIo8BIgBiMHq1qL46FLKi9I9h3cwTe
- Do9Cdo3I9oXOz2S9T/7Zjxih+dYzUgHQYsLCA4KHYz0U1RELWZp9Ilx+/3zFpecOKhdfCIGrt
- gdIlR5+Bc1kXkkQQU1IW/dO0tRTeGPxMaFkzLhTv3Yogp7/5DDatv8WPtQHRuWo8Xkl6myYPP
- O9yD2gIJjFJdfavrxP4bW1N06WCBjsN1pu6UNUc82kH7GZ9Eb8AsCoHkNqvwNUnuTRsV7v1Eg
- z08hHmVEqcFCdN56OBjblfWJMDRIDXcjfziOWpt2+a7YVb9RZPBTZ0+ZHrkWuE5y//4peMyzY
- e/8zu+K929NRjXwGa/ZMnt4ek94DixRSaN4z1/Lq3VTIlT2/4+5TaZAa6biyXQDGIbsgHFXi1
- FQhNPWNYZ5tqKN8vBAo+mnqyrFjBB6PPzcVuMg3C5FU6gOaAghWl1878VTBjOPZV3wI40RzCU
- DVZmFjHoqo7CjhHgTYTX0O+c/kUpDNtex9S6QUk0AZ/fakxtQBaCGvwKgudXv5XD7Z05mMLbt
- HnFnepWXdO7ZBVwA0STvRTMuhAAIW0FVVgC1siufMJE72Pdh8qC6YJMVUV61FDGpNeZPLhAzG
- 0/iRdreHbA8iLhiwoCXhqvcHQAJAe1sL5FcO7qhlCYjZ8Ug0zwmp1f8/seLriFU5S0j+q5kYh
- wt2vDvVn2Xy95JU7KkgzpMSz6At6UEYKukRcJqpPge6AtkVnlO+LYXooWWNu7Wtu5pfdHrCkw
- lXpXkIMi1hQ0THpl6uNqH4hxpxG3qnHWzySukDzfZWtzVVqf5Y=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reimplement oidset using khash.h in order to reduce its memory footprint
-and make it faster.
+Don't have time to patch this now, but thought I'd send a note / RFC
+about this.
 
-Performance of a command that mainly checks for duplicate objects using
-an oidset, with master and Clang 6.0.1:
+Now that we have the commit graph it's nice to be able to set
+e.g. core.commitGraph=true & gc.writeCommitGraph=true in ~/.gitconfig or
+/etc/gitconfig to apply them to all repos.
 
-  $ cmd="./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'"
+But when I clone e.g. linux.git stuff like 'tag --contains' will be slow
+until whenever my first "gc" kicks in, which may be quite some time if
+I'm just using it passively.
 
-  $ /usr/bin/time $cmd >/dev/null
-  0.22user 0.03system 0:00.25elapsed 99%CPU (0avgtext+0avgdata 48484maxresident)k
-  0inputs+0outputs (0major+11204minor)pagefaults 0swaps
+So we should make "git gc --auto" be run on clone, and change the
+need_to_gc() / cmd_gc() behavior so that we detect that the
+gc.writeCommitGraph=true setting is on, but we have no commit graph, and
+then just generate that without doing a full repack.
 
-  $ hyperfine "$cmd"
-  Benchmark #1: ./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'
+As an aside such more granular "gc" would be nice for e.g. pack-refs
+too. It's possible for us to just have one pack, but to have 100k loose
+refs.
 
-    Time (mean ± σ):     250.0 ms ±   6.0 ms    [User: 225.9 ms, System: 23.6 ms]
+It might also be good to have some gc.autoDetachOnClone option and have
+it false by default, so we don't have a race condition where "clone
+linux && git -C linux tag --contains" is slow because the graph hasn't
+been generated yet, and generating the graph initially doesn't take that
+long compared to the time to clone a large repo (and on a small one it
+won't matter either way).
 
-    Range (min … max):   242.0 ms … 261.1 ms
+I was going to say "also for midx", but of course after clone we have
+just one pack, so I can't imagine us needing this. But I can see us
+having other such optional side-indexes in the future generated by gc,
+and they'd also benefit from this.
 
-And with this patch:
-
-  $ /usr/bin/time $cmd >/dev/null
-  0.14user 0.00system 0:00.15elapsed 100%CPU (0avgtext+0avgdata 41396maxresident)k
-  0inputs+0outputs (0major+8318minor)pagefaults 0swaps
-
-  $ hyperfine "$cmd"
-  Benchmark #1: ./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'
-
-    Time (mean ± σ):     151.9 ms ±   4.9 ms    [User: 130.5 ms, System: 21.2 ms]
-
-    Range (min … max):   148.2 ms … 170.4 ms
-
-Initial-patch-by: Jeff King <peff@peff.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- fetch-pack.c |  2 +-
- oidset.c     | 34 ++++++++++++----------------------
- oidset.h     | 36 ++++++++++++++++++++++++++++--------
- 3 files changed, 41 insertions(+), 31 deletions(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 75047a4b2a..a839315726 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -536,7 +536,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
- 	 * add to "newlist" between calls, the additions will always be for
- 	 * oids that are already in the set.
- 	 */
--	if (!tip_oids->map.map.tablesize) {
-+	if (!tip_oids->set.n_buckets) {
- 		add_refs_to_oidset(tip_oids, unmatched);
- 		add_refs_to_oidset(tip_oids, newlist);
- 	}
-diff --git a/oidset.c b/oidset.c
-index 454c54f933..9836d427ef 100644
---- a/oidset.c
-+++ b/oidset.c
-@@ -3,38 +3,28 @@
- 
- int oidset_contains(const struct oidset *set, const struct object_id *oid)
- {
--	if (!set->map.map.tablesize)
--		return 0;
--	return !!oidmap_get(&set->map, oid);
-+	khiter_t pos = kh_get_oid(&set->set, *oid);
-+	return pos != kh_end(&set->set);
- }
- 
- int oidset_insert(struct oidset *set, const struct object_id *oid)
- {
--	struct oidmap_entry *entry;
--
--	if (!set->map.map.tablesize)
--		oidmap_init(&set->map, 0);
--	else if (oidset_contains(set, oid))
--		return 1;
--
--	entry = xmalloc(sizeof(*entry));
--	oidcpy(&entry->oid, oid);
--
--	oidmap_put(&set->map, entry);
--	return 0;
-+	int added;
-+	kh_put_oid(&set->set, *oid, &added);
-+	return !added;
- }
- 
- int oidset_remove(struct oidset *set, const struct object_id *oid)
- {
--	struct oidmap_entry *entry;
--
--	entry = oidmap_remove(&set->map, oid);
--	free(entry);
--
--	return (entry != NULL);
-+	khiter_t pos = kh_get_oid(&set->set, *oid);
-+	if (pos == kh_end(&set->set))
-+		return 0;
-+	kh_del_oid(&set->set, pos);
-+	return 1;
- }
- 
- void oidset_clear(struct oidset *set)
- {
--	oidmap_free(&set->map, 1);
-+	kh_release_oid(&set->set);
-+	oidset_init(set, 0);
- }
-diff --git a/oidset.h b/oidset.h
-index 40ec5f87fe..4b90540cd4 100644
---- a/oidset.h
-+++ b/oidset.h
-@@ -1,7 +1,8 @@
- #ifndef OIDSET_H
- #define OIDSET_H
- 
--#include "oidmap.h"
-+#include "hashmap.h"
-+#include "khash.h"
- 
- /**
-  * This API is similar to sha1-array, in that it maintains a set of object ids
-@@ -15,19 +16,33 @@
-  *      table overhead.
-  */
- 
-+static inline unsigned int oid_hash(struct object_id oid)
-+{
-+	return sha1hash(oid.hash);
-+}
-+
-+static inline int oid_equal(struct object_id a, struct object_id b)
-+{
-+	return oideq(&a, &b);
-+}
-+
-+KHASH_INIT(oid, struct object_id, int, 0, oid_hash, oid_equal)
-+
- /**
-  * A single oidset; should be zero-initialized (or use OIDSET_INIT).
-  */
- struct oidset {
--	struct oidmap map;
-+	kh_oid_t set;
- };
- 
--#define OIDSET_INIT { OIDMAP_INIT }
-+#define OIDSET_INIT { { 0 } }
- 
- 
- static inline void oidset_init(struct oidset *set, size_t initial_size)
- {
--	oidmap_init(&set->map, initial_size);
-+	memset(&set->set, 0, sizeof(set->set));
-+	if (initial_size)
-+		kh_resize_oid(&set->set, initial_size);
- }
- 
- /**
-@@ -58,19 +73,24 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
- void oidset_clear(struct oidset *set);
- 
- struct oidset_iter {
--	struct oidmap_iter m_iter;
-+	kh_oid_t *set;
-+	khiter_t iter;
- };
- 
- static inline void oidset_iter_init(struct oidset *set,
- 				    struct oidset_iter *iter)
- {
--	oidmap_iter_init(&set->map, &iter->m_iter);
-+	iter->set = &set->set;
-+	iter->iter = kh_begin(iter->set);
- }
- 
- static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
- {
--	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
--	return e ? &e->oid : NULL;
-+	for (; iter->iter != kh_end(iter->set); iter->iter++) {
-+		if (kh_exist(iter->set, iter->iter))
-+			return &kh_key(iter->set, iter->iter++);
-+	}
-+	return NULL;
- }
- 
- static inline struct object_id *oidset_iter_first(struct oidset *set,
--- 
-2.19.0
-
+#leftoverbits
