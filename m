@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204B61F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 23:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEA3B1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 23:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726438AbeJDFz2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 01:55:28 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:57249 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbeJDFz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 01:55:28 -0400
-Received: by mail-qk1-f201.google.com with SMTP id l75-v6so6540253qke.23
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 16:05:01 -0700 (PDT)
+        id S1726770AbeJDFza (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 01:55:30 -0400
+Received: from mail-vs1-f73.google.com ([209.85.217.73]:46159 "EHLO
+        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbeJDFza (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 01:55:30 -0400
+Received: by mail-vs1-f73.google.com with SMTP id t144-v6so2542366vsc.13
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 16:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=UVopHplhmY4vMrEIQnBCjAZhsOOjrVcIpd0+XwBFdqk=;
-        b=uKwgYCjXFhd+nledZZJstuYGlFF3DSmidCrII89Ej3eVjfm5MwZhuKOruGly8BDBzy
-         8CkGUwDlYza5CnM+B6jzhzkPFbhQBFhvkjKw1+UFAR/XLvh5tX3Jv88aVdqUEZmsyrAX
-         kkzL/VGYuzX4naYNh+tH3EIebZkS8tlyv081ymo8LFf2zwnHGpxOobEW+h8K51NSHgmU
-         vE129Zx7QmiZlu9fDtZmx9diqW3XGPKVl0eFaRao8l2K131hMEW4JYi69WMhb7wF7/R0
-         R/24alhSzdhx/8zwu1HmaS01eM8wyfAV/slNQ9PB6YzNaJutB4UDr7VdJtF3Xq+Nmuot
-         zC/A==
+        bh=6nEfDjltC21xAK0yk3RkvLjBSkCg8hcjBwVD5XTBP/M=;
+        b=BoPtyMnvGvbIJYCzVzGXzBj9tMtJgEEaF/bJ1ZjDTC/luR2f2CU8vgcS0C8jaJQDlL
+         wDQgofUNO1OYbhSTfO6IJxem1eCanmoqju4tBTYP4IXG9kmSMxCTRRl/FNoja55Tkc6/
+         yCPdyule/wmicR77wCldgm9YU0Rd5zF/RzRp19HXTlF80JVkxYqokFO4y0LZMpl4OZ28
+         BRuUSYaSGiUruvhiUawqYi1X+dFD+YL8zmSG9PWpeNHBfEOkDckWPvRu2OiwkAZJNs/W
+         tTsVMb/dmJpd64OsDvwDjUsJm2O480d1zT4NEpoG/ySJ+CoeEzqy1P8hWek+bfLyMkeP
+         Viuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=UVopHplhmY4vMrEIQnBCjAZhsOOjrVcIpd0+XwBFdqk=;
-        b=E+Kk3Rjf+kHNAilg6AHFQ7s5AWzqawjOWWRTVTmLV932tmn4R0IpxMwThSfo1OVMWk
-         WfNunrSApfK+II1jWDEYWj/AtLmVlkhpVjHyBw2iQYnMbTspkHiLx0Ti3mj3TBIxYjQr
-         UkcG+LhxBVuR6VMqlQ1JFDHP4XHqkWvwct5pE0j+TkmU38slxVRts3Tb+8wkBFOiqxza
-         xpfxtaysmdB3lf+BK80lHO3NYg9XS3IhQiG40EfqUYlihK3L6Nwd0oomqp7uXr/9xdUP
-         cqM9yFMKDZh8IYwCXN7GXYyPnWhHo0pExSO3OLfrnl2FmrqSRr21BRgM9eXM57zn9Yq2
-         U//w==
-X-Gm-Message-State: ABuFfojIYoKv7aJ75iUje5VT4273sz70jo3cpzxUXE2mNLCaTHVjW9Xf
-        Bj7xo3whqR4BTws1VVf0GYF1YN4yiXugdYUEVSC5jOGcFH/tdZ4iGGFousCwDW14VtRFIgf9T8V
-        CRxX84w/sMOHjKDbmyGyzoZ9fM2+UWV8PvBTZgrmZQOTkSGY0oV7NzxU2GVjVWXzR24+9vzZir4
-        4B
-X-Google-Smtp-Source: ACcGV62bujl6fSPA00ezInV1dm0TqA344+wam8LOpgop5fsHPLjx/Isrlfsx7ee9KBKRpbz+2yNSYSbvi5Gz8wHrvnS9
-X-Received: by 2002:a0c:89c5:: with SMTP id 5-v6mr2841101qvs.56.1538607900617;
- Wed, 03 Oct 2018 16:05:00 -0700 (PDT)
-Date:   Wed,  3 Oct 2018 16:04:52 -0700
+        bh=6nEfDjltC21xAK0yk3RkvLjBSkCg8hcjBwVD5XTBP/M=;
+        b=nzdpGaanlxGJx3qdceB46eVLtArbcxRqiZPFSda63wrQtl+QAK4ANztAGrKZhS4E9L
+         Ckpbb2hdCKzHxjVsJM+L8/xRx3mEyZ4ecA/jZhoUUHs2CE1tPrnpDDD+3iSZKPa4gyGG
+         NDu8WvEBJP8EEOYqnHa6s27mgbR3DpVxf0xDb3xKg0PgD89gqooPPzad6jR+YrVCAtn8
+         kPkujYq21tygXF9CpoTnb4lUgKI9yL2Ktqwg/Qa/Y7J3CM0SXOtD1xTraZ7AnOW2zJdN
+         wqGJ6UE0tYplm4zuog0ku7Vz1xCC/bDLWfTXO/uf1c1xKROPWMvjl64sVlQIBGne53td
+         yKOQ==
+X-Gm-Message-State: ABuFfohIZPL/XH0GSk8F/U9H8QNDaIfwdB1pgmE/02K4pSppfW7HfxHi
+        DuiWb3crG5tVV7jtEyVL1UeWxPMs7H31m1keQdYqiReOmDajc4Z8MzIlUARBukOAEwB9Z27hhUw
+        UZZIrOn5dj3xmZMVqW5ZacuqmLLd5KsVuz6sHiw4/a1t360eU8VE2WxSD+aPYt18DiBMJsiGFoX
+        HF
+X-Google-Smtp-Source: ACcGV63LUirXKGnKRH4+VRRDuiNfxqVQWxsuKrhw9XJ2ktB9sdqqNxRTKlQ3UhbX3AaYCXINb/PgrdoS2BB6gygr1zUH
+X-Received: by 2002:a67:cf87:: with SMTP id g7-v6mr3432120vsm.12.1538607902989;
+ Wed, 03 Oct 2018 16:05:02 -0700 (PDT)
+Date:   Wed,  3 Oct 2018 16:04:53 -0700
 In-Reply-To: <cover.1538607476.git.jonathantanmy@google.com>
-Message-Id: <ac263ac3bec1aaf482248730afa126a8667fa8d5.1538607476.git.jonathantanmy@google.com>
+Message-Id: <1142e0a4e1db9f4f5c0cee41e936a36deb64bd5d.1538607476.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20180924154516.48704-1-jonathantanmy@google.com> <cover.1538607476.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v2 1/2] fetch-pack: avoid object flags if no_dependents
+Subject: [PATCH v2 2/2] fetch-pack: exclude blobs when lazy-fetching trees
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
@@ -63,213 +63,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fetch_pack() is invoked as part of another Git command (due to a
-lazy fetch from a partial clone, for example), it uses object flags that
-may already be used by the outer Git command.
+A partial clone with missing trees can be obtained using "git clone
+--filter=tree:none <repo>". In such a repository, when a tree needs to
+be lazily fetched, any tree or blob it directly or indirectly references
+is fetched as well, regardless of whether the original command required
+those objects, or if the local repository already had some of them.
 
-The commit that introduced the lazy fetch feature (88e2f9ed8e
-("introduce fetch-object: fetch one promisor object", 2017-12-05)) tried
-to avoid this overlap, but it did not avoid it totally. It was
-successful in avoiding writing COMPLETE, but did not avoid reading
-COMPLETE, and did not avoid writing and reading ALTERNATE.
+This is because the fetch protocol, which the lazy fetch uses, does not
+allow clients to request that only the wanted objects be sent, which
+would be the ideal solution. This patch implements a partial solution:
+specify the "blob:none" filter, somewhat reducing the fetch payload.
 
-Ensure that no flags are written or read by fetch_pack() in the case
-where it is used to perform a lazy fetch. To do this, it is sufficient
-to avoid checking completeness of wanted refs (unnecessary in the case
-of lazy fetches), and to avoid negotiation-related work (in the current
-implementation, already, no negotiation is performed). After that was
-done, the lack of overlap was verified by checking all direct and
-indirect usages of COMPLETE and ALTERNATE - that they are read or
-written only if no_dependents is false.
+This change has no effect when lazily fetching blobs (due to how filters
+work). And if lazily fetching a commit (such repositories are difficult
+to construct and is not a use case we support very well, but it is
+possible), referenced commits and trees are still fetched - only the
+blobs are not fetched.
 
-There are other possible solutions to this issue:
-
- (1) Split fetch-pack.{c,h} into a flag-using part and a non-flag-using
-     part, and whenever no_dependents is set, only use the
-     non-flag-using part.
- (2) Make fetch_pack() be able to be used with arbitrary repository
-     objects. fetch_pack() should then create its own repository object
-     based on the given repository object, with its own object
-     hashtable, so that the flags do not conflict.
-
-(1) is possible but invasive - some functions would need to be split;
-and such invasiveness would potentially be unnecessary if we ever were
-to need (2) anyway. (2) would be useful if we were to support, say,
-submodules that were partial clones themselves, but I don't know when or
-if the Git project plans to support those.
+The necessary code change is done in fetch_pack() instead of somewhere
+closer to where the "filter" instruction is written to the wire so that
+only one part of the code needs to be changed in order for users of all
+protocol versions to benefit from this optimization.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 101 ++++++++++++++++++++++++++++++---------------------
- 1 file changed, 59 insertions(+), 42 deletions(-)
+ fetch-pack.c             | 14 ++++++++++++++
+ fetch-pack.h             |  7 +++++++
+ t/t0410-partial-clone.sh | 41 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 62 insertions(+)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 75047a4b2a..b9b1211dda 100644
+index b9b1211dda..5d82666a52 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -253,8 +253,10 @@ static int find_common(struct fetch_negotiator *negotiator,
- 	if (args->stateless_rpc && multi_ack == 1)
- 		die(_("--stateless-rpc requires multi_ack_detailed"));
+@@ -1615,6 +1615,20 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 	if (nr_sought)
+ 		nr_sought = remove_duplicates_in_refs(sought, nr_sought);
  
--	mark_tips(negotiator, args->negotiation_tips);
--	for_each_cached_alternate(negotiator, insert_one_alternate_object);
-+	if (!args->no_dependents) {
-+		mark_tips(negotiator, args->negotiation_tips);
-+		for_each_cached_alternate(negotiator, insert_one_alternate_object);
-+	}
- 
- 	fetching = 0;
- 	for ( ; refs ; refs = refs->next) {
-@@ -271,8 +273,12 @@ static int find_common(struct fetch_negotiator *negotiator,
- 		 * We use lookup_object here because we are only
- 		 * interested in the case we *know* the object is
- 		 * reachable and we have already scanned it.
++	if (args->no_dependents && !args->filter_options.choice) {
++		/*
++		 * The protocol does not support requesting that only the
++		 * wanted objects be sent, so approximate this by setting a
++		 * "blob:none" filter if no filter is already set. This works
++		 * for all object types: note that wanted blobs will still be
++		 * sent because they are directly specified as a "want".
 +		 *
-+		 * Do this only if args->no_dependents is false (if it is true,
-+		 * we cannot trust the object flags).
- 		 */
--		if (((o = lookup_object(the_repository, remote->hash)) != NULL) &&
-+		if (!args->no_dependents &&
-+		    ((o = lookup_object(the_repository, remote->hash)) != NULL) &&
- 				(o->flags & COMPLETE)) {
- 			continue;
- 		}
-@@ -710,31 +716,29 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 
- 	oidset_clear(&loose_oid_set);
- 
--	if (!args->no_dependents) {
--		if (!args->deepen) {
--			for_each_ref(mark_complete_oid, NULL);
--			for_each_cached_alternate(NULL, mark_alternate_complete);
--			commit_list_sort_by_date(&complete);
--			if (cutoff)
--				mark_recent_complete_commits(args, cutoff);
--		}
-+	if (!args->deepen) {
-+		for_each_ref(mark_complete_oid, NULL);
-+		for_each_cached_alternate(NULL, mark_alternate_complete);
-+		commit_list_sort_by_date(&complete);
-+		if (cutoff)
-+			mark_recent_complete_commits(args, cutoff);
++		 * NEEDSWORK: Add an option in the protocol to request that
++		 * only the wanted objects be sent, and implement it.
++		 */
++		parse_list_objects_filter(&args->filter_options, "blob:none");
 +	}
- 
--		/*
--		 * Mark all complete remote refs as common refs.
--		 * Don't mark them common yet; the server has to be told so first.
--		 */
--		for (ref = *refs; ref; ref = ref->next) {
--			struct object *o = deref_tag(the_repository,
--						     lookup_object(the_repository,
--						     ref->old_oid.hash),
--						     NULL, 0);
-+	/*
-+	 * Mark all complete remote refs as common refs.
-+	 * Don't mark them common yet; the server has to be told so first.
-+	 */
-+	for (ref = *refs; ref; ref = ref->next) {
-+		struct object *o = deref_tag(the_repository,
-+					     lookup_object(the_repository,
-+					     ref->old_oid.hash),
-+					     NULL, 0);
- 
--			if (!o || o->type != OBJ_COMMIT || !(o->flags & COMPLETE))
--				continue;
-+		if (!o || o->type != OBJ_COMMIT || !(o->flags & COMPLETE))
-+			continue;
- 
--			negotiator->known_common(negotiator,
--						 (struct commit *)o);
--		}
-+		negotiator->known_common(negotiator,
-+					 (struct commit *)o);
- 	}
- 
- 	save_commit_buffer = old_save_commit_buffer;
-@@ -990,11 +994,15 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	if (!server_supports("deepen-relative") && args->deepen_relative)
- 		die(_("Server does not support --deepen"));
- 
--	mark_complete_and_common_ref(&negotiator, args, &ref);
--	filter_refs(args, &ref, sought, nr_sought);
--	if (everything_local(args, &ref)) {
--		packet_flush(fd[1]);
--		goto all_done;
-+	if (!args->no_dependents) {
-+		mark_complete_and_common_ref(&negotiator, args, &ref);
-+		filter_refs(args, &ref, sought, nr_sought);
-+		if (everything_local(args, &ref)) {
-+			packet_flush(fd[1]);
-+			goto all_done;
-+		}
-+	} else {
-+		filter_refs(args, &ref, sought, nr_sought);
- 	}
- 	if (find_common(&negotiator, args, fd, &oid, ref) < 0)
- 		if (!args->keep_pack)
-@@ -1040,7 +1048,7 @@ static void add_shallow_requests(struct strbuf *req_buf,
- 	}
- }
- 
--static void add_wants(const struct ref *wants, struct strbuf *req_buf)
-+static void add_wants(int no_dependents, const struct ref *wants, struct strbuf *req_buf)
- {
- 	int use_ref_in_want = server_supports_feature("fetch", "ref-in-want", 0);
- 
-@@ -1057,8 +1065,12 @@ static void add_wants(const struct ref *wants, struct strbuf *req_buf)
- 		 * We use lookup_object here because we are only
- 		 * interested in the case we *know* the object is
- 		 * reachable and we have already scanned it.
-+		 *
-+		 * Do this only if args->no_dependents is false (if it is true,
-+		 * we cannot trust the object flags).
- 		 */
--		if (((o = lookup_object(the_repository, remote->hash)) != NULL) &&
-+		if (!no_dependents &&
-+		    ((o = lookup_object(the_repository, remote->hash)) != NULL) &&
- 		    (o->flags & COMPLETE)) {
- 			continue;
- 		}
-@@ -1155,7 +1167,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 	}
- 
- 	/* add wants */
--	add_wants(wants, &req_buf);
-+	add_wants(args->no_dependents, wants, &req_buf);
- 
- 	if (args->no_dependents) {
- 		packet_buf_write(&req_buf, "done");
-@@ -1346,16 +1358,21 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 				args->deepen = 1;
- 
- 			/* Filter 'ref' by 'sought' and those that aren't local */
--			mark_complete_and_common_ref(&negotiator, args, &ref);
--			filter_refs(args, &ref, sought, nr_sought);
--			if (everything_local(args, &ref))
--				state = FETCH_DONE;
--			else
-+			if (!args->no_dependents) {
-+				mark_complete_and_common_ref(&negotiator, args, &ref);
-+				filter_refs(args, &ref, sought, nr_sought);
-+				if (everything_local(args, &ref))
-+					state = FETCH_DONE;
-+				else
-+					state = FETCH_SEND_REQUEST;
 +
-+				mark_tips(&negotiator, args->negotiation_tips);
-+				for_each_cached_alternate(&negotiator,
-+							  insert_one_alternate_object);
-+			} else {
-+				filter_refs(args, &ref, sought, nr_sought);
- 				state = FETCH_SEND_REQUEST;
--
--			mark_tips(&negotiator, args->negotiation_tips);
--			for_each_cached_alternate(&negotiator,
--						  insert_one_alternate_object);
-+			}
- 			break;
- 		case FETCH_SEND_REQUEST:
- 			if (send_fetch_request(&negotiator, fd[1], args, ref,
+ 	if (!ref) {
+ 		packet_flush(fd[1]);
+ 		die(_("no matching remote head"));
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 5b6e868802..43ec344d95 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -43,6 +43,13 @@ struct fetch_pack_args {
+ 	unsigned from_promisor:1;
+ 
+ 	/*
++	 * Attempt to fetch only the wanted objects, and not any objects
++	 * referred to by them. Due to protocol limitations, extraneous
++	 * objects may still be included. (When fetching non-blob
++	 * objects, only blobs are excluded; when fetching a blob, the
++	 * blob itself will still be sent. The client does not need to
++	 * know whether a wanted object is a blob or not.)
++	 *
+ 	 * If 1, fetch_pack() will also not modify any object flags.
+ 	 * This allows fetch_pack() to safely be called by any function,
+ 	 * regardless of which object flags it uses (if any).
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index cfd0655ea1..c521d7d6c6 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -182,6 +182,47 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
+ 	grep "git< fetch=.*ref-in-want" trace
+ '
+ 
++test_expect_success 'fetching of missing blobs works' '
++	rm -rf server repo &&
++	test_create_repo server &&
++	test_commit -C server foo &&
++	git -C server repack -a -d --write-bitmap-index &&
++
++	git clone "file://$(pwd)/server" repo &&
++	git hash-object repo/foo.t >blobhash &&
++	rm -rf repo/.git/objects/* &&
++
++	git -C server config uploadpack.allowanysha1inwant 1 &&
++	git -C server config uploadpack.allowfilter 1 &&
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config extensions.partialclone "origin" &&
++
++	git -C repo cat-file -p $(cat blobhash)
++'
++
++test_expect_success 'fetching of missing trees does not fetch blobs' '
++	rm -rf server repo &&
++	test_create_repo server &&
++	test_commit -C server foo &&
++	git -C server repack -a -d --write-bitmap-index &&
++
++	git clone "file://$(pwd)/server" repo &&
++	git -C repo rev-parse foo^{tree} >treehash &&
++	git hash-object repo/foo.t >blobhash &&
++	rm -rf repo/.git/objects/* &&
++
++	git -C server config uploadpack.allowanysha1inwant 1 &&
++	git -C server config uploadpack.allowfilter 1 &&
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config extensions.partialclone "origin" &&
++	git -C repo cat-file -p $(cat treehash) &&
++
++	# Ensure that the tree, but not the blob, is fetched
++	git -C repo rev-list --objects --missing=print $(cat treehash) >objects &&
++	grep "^$(cat treehash)" objects &&
++	grep "^[?]$(cat blobhash)" objects
++'
++
+ test_expect_success 'rev-list stops traversal at missing and promised commit' '
+ 	rm -rf repo &&
+ 	test_create_repo repo &&
 -- 
 2.19.0.605.g01d371f741-goog
 
