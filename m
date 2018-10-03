@@ -2,102 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0A781F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 17:12:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4A5E1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 17:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727234AbeJDABh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 20:01:37 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:34148 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726851AbeJDABg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 20:01:36 -0400
-Received: by mail-pl1-f194.google.com with SMTP id f18-v6so3778412plr.1
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 10:12:20 -0700 (PDT)
+        id S1726941AbeJDATM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 20:19:12 -0400
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:37774 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726884AbeJDATL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 20:19:11 -0400
+Received: by mail-pf1-f169.google.com with SMTP id j23-v6so2022420pfi.4
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 10:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VuotZzHgDMRiVrQhM09A8eBcul7JL+o4OMz5phJz6yc=;
-        b=AHP9e16/dT7bCgIGciuk7kWowsGCTSfnZsRlOU0r+fL6tcGHLeJ1SScKmCGSFlZV2P
-         dJRsM4KuLieJwq3IDfnnLenHTXnyPyPgjk+WEs3u2t858VgZVrcrYG8ICKgjkX11WLuj
-         wConWT2itKSvn9qgVC3eBy/aS3kbxLNRu7CorOiUrjD3MD4zNYokrR6Qy7Fw9CR7dYVI
-         sAIsTa4af5gLsgfZineR3xcorJ3KX609ALd9mqbZ1FPKVlba9j8U+Y4RGZgzZwTjjiSH
-         8r0cGGKPF/Zx4az1YtWlbDz/eBiCvq0MaHbBVd+809qTrvTX71HjVv6tN4KKRIKu3V7F
-         2yYQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=kGcOkdOEwmTAogoaBCHTVnnCLF3EKLk7DYAfOvIqNiE=;
+        b=OxV6kjUEoHiWDMCfOd0EyrRVRkgCFNHsVYkUF0Zsl2gEMgIxTAuZSJh+4YjkD2hNgk
+         48UVzIBTmaSkD/F9Rrc72QbvAuanvm4wAP03nld/zcZeVDfC39xozbpSa3jRo+tssoVy
+         kCwOeXfxp9KGYEgwWe8JORKwKEmOG2flL9DF5TawCO0yEnj5kQJPDtKbIC576ATclnIp
+         +/UOuFJ68m2vVEkP6FqgwLPe2wNVWNa6J8yItFRAPdV/z2+ChEQDvDN1ItkaB50xfjbg
+         U7FVunE/tut6fQqWqAKrdC69OWIt+4LZpR7AWaTS+kQlVECUiTRlkDYDhmMgOFNVnmFP
+         fcRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VuotZzHgDMRiVrQhM09A8eBcul7JL+o4OMz5phJz6yc=;
-        b=CTylfgA6j2AaTrMyon4INDz4B4H3yBo3bHGvuaj0ILbDNWDxvwqDVdlsVWEAdtyln2
-         OkTR3wm3QmhJHtsyPZKfKmIiwCzX5A7I+R/RQaEGEsZBFQZky9RSph9E5mH/ukJ5LLAW
-         ISvFwWwnkfX3DnHOyXybsN3ZKikDrqbDXe6mjjuP9V6WEag4m0EC40Ld27J/FgJRQer+
-         DkwMP2MdkntOeNt4V4pFDLStYx9R37oZqTqyZ18HEE/KOs9zuSBWrWsan7Opy02HBp+6
-         3tDL3QTKhysI+vOqwqeY+pmFarPPIFbpGMVdPBkbBah7+RYYcAoqZvmK/z36xY8MzS/6
-         5Xvg==
-X-Gm-Message-State: ABuFfoh4v/+SaSSjIb+vDJVK43grzNUbB5KGiB2HoDFvv0jTRgao9fEV
-        0Lz8ERUxGj4d/8z3Y6RJajvryO3G
-X-Google-Smtp-Source: ACcGV60MnCHe6eH35Swu40YPxTpz91yPq7g2MifRahqulowuNr+3HhWcNrqYSVs4v1coptpuuxmehQ==
-X-Received: by 2002:a17:902:447:: with SMTP id 65-v6mr2556605ple.325.1538586740047;
-        Wed, 03 Oct 2018 10:12:20 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id g17-v6sm3437090pfe.37.2018.10.03.10.12.18
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=kGcOkdOEwmTAogoaBCHTVnnCLF3EKLk7DYAfOvIqNiE=;
+        b=swkxcgU/RpKEBSHCiqituoO2PCFAf+iz4gE6oUqiZiqapnT0wRhtZMUXSKuSIpUdS7
+         62Vi79ljW6nDHrBX92Oq/cLTlv3FVtxV4DYr0XbDXGcE8LOFKdL3TVhsWsHd8qrHMoYV
+         2b4dMiSSi1ZUHZhsbthX/lY2oqrnpzErysH1g8iOV3Q2FG5Q2CllY3shpM3OXvDqM/bU
+         DMg0nGhmiLp5jyWGS7GZYRPXi3SVXIlrEoliBcRcoBeIb2ZAyvs0l5vWW+mVA3FOMvhv
+         Asa5aBTTC07+3o8pw/mGlJXUscBOe+QFyqrMSSGJUbxmYxiVI1OuqpFwM78t9rMaErVM
+         G2tw==
+X-Gm-Message-State: ABuFfohWAUOjS2o05a/xld6HLKGWClFq2VTquLNMptezQx4bFlDoAUAr
+        n6EKY2MwX1HtaJnCQ1/kdCX5/MMn
+X-Google-Smtp-Source: ACcGV62ieMoon26hnZuqUAbOTRrzAgSfcbdJRzgyiQBttq2vZQXcVXYGISPaNY4Ou/xx0RxiIKA+qA==
+X-Received: by 2002:a62:ee06:: with SMTP id e6-v6mr2773814pfi.2.1538587790232;
+        Wed, 03 Oct 2018 10:29:50 -0700 (PDT)
+Received: from [192.168.2.4] ([171.233.129.129])
+        by smtp.gmail.com with ESMTPSA id p75-v6sm3734826pfi.22.2018.10.03.10.29.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 10:12:19 -0700 (PDT)
-Date:   Wed, 03 Oct 2018 10:12:19 -0700 (PDT)
-X-Google-Original-Date: Wed, 03 Oct 2018 17:12:12 GMT
-Message-Id: <1002fd34fc57e929265d07ad6e6010116b27b7a9.1538586732.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.42.v2.git.gitgitgadget@gmail.com>
-References: <pull.42.git.gitgitgadget@gmail.com>
-        <pull.42.v2.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/3] commit-graph: reduce initial oid allocation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 03 Oct 2018 10:29:49 -0700 (PDT)
+Subject: Re: Git credentials not working
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+References: <a1ceb967-6020-6074-f504-c684242c79ab@gmail.com>
+ <f4f7bd2c-4c48-e749-4df1-ddf05896b337@gmail.com>
+ <CAP8UFD3LEYd7RytZU_-wVcDosH+6VSdM2j3NUcnR0aQc8QfoQg@mail.gmail.com>
+From:   Dimitri Kopriwa <d.kopriwa@gmail.com>
+Message-ID: <d4f5551f-89d2-d63e-49da-dd80f22ea9ce@gmail.com>
+Date:   Thu, 4 Oct 2018 00:29:46 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <CAP8UFD3LEYd7RytZU_-wVcDosH+6VSdM2j3NUcnR0aQc8QfoQg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
 
-While writing a commit-graph file, we store the full list of
-commits in a flat list. We use this list for sorting and ensuring
-we are closed under reachability.
-
-The initial allocation assumed that (at most) one in four objects
-is a commit. This is a dramatic over-count for many repos,
-especially large ones. Since we grow the repo dynamically, reduce
-this count by a factor of eight. We still set it to a minimum of
-1024 before allocating.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-graph.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index ceca6026b0..e773703e1d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -720,7 +720,7 @@ void write_commit_graph(const char *obj_dir,
- 	struct progress *progress = NULL;
- 
- 	oids.nr = 0;
--	oids.alloc = approximate_object_count() / 4;
-+	oids.alloc = approximate_object_count() / 32;
- 	oids.progress = NULL;
- 	oids.progress_done = 0;
- 
--- 
-gitgitgadget
+On 10/3/18 11:03 PM, Christian Couder wrote:
+> (removing git-security from CC)
+>
+> On Wed, Oct 3, 2018 at 4:09 PM Dimitri Kopriwa <d.kopriwa@gmail.com> wrote:
+>
+>> Git credentials in ~/.git-credentials and ~/.config/git/credentials are
+>> being removed by git upon reading.
+> https://git-scm.com/docs/git-credential says:
+>
+> "If the action is reject, git-credential will send the description to
+> any configured credential helpers, which may erase any stored
+> credential matching the description."
+>
+> So maybe this is expected.
+I am using this script to create my credential file, how am I supposed 
+to do in a non tty environment? Is there a prefered way?
+>
+> Another possibility is that your .gitlab-ci.yml might launch scripts
+> writing into those files, like the before_script.sh script that is
+> described on:
+>
+> https://stackoverflow.com/questions/50553049/is-it-possible-to-do-a-git-push-within-a-gitlab-ci-without-ssh
+>
+> Could you also check which credential helper and which options are
+> used? For example with commands like:
+>
+> $ git config -l --show-origin | grep -i cred
+> $ git config -l --show-origin | grep -i http
+> $ git config -l --show-origin | grep -i askpass
+> $ env | grep -i askpass
+  * branch            HEAD       -> FETCH_HEAD
+17:15:36.175966 run-command.c:637       trace: run_command: git gc --auto
+17:15:36.177688 git.c:415               trace: built-in: git gc --auto
+[32;1m$ git config -l --show-origin | grep -i cred[0;m
+17:15:36.180191 git.c:415               trace: built-in: git config -l 
+--show-origin
+file:/root/.gitconfig    credential.helper=store
+file:.git/config    credential.helper=store
+[32;1m$ git config -l --show-origin | grep -i http[0;m
+17:15:36.182768 git.c:415               trace: built-in: git config -l 
+--show-origin
+file:.git/config 
+remote.origin.url=https://git.example.com/example/sample-project.git
+[32;1m$ git config -l --show-origin | grep -i askpass || echo nothing 
+to do[0;m
+17:15:36.185306 git.c:415               trace: built-in: git config -l 
+--show-origin
+nothing to do
+[32;1m$ env | grep -i askpass || echo nothing to do[0;m
+nothing to do
