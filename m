@@ -6,69 +6,141 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1921F454
-	for <e@80x24.org>; Wed,  3 Oct 2018 00:10:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D74E1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 02:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726394AbeJCG4A (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 02:56:00 -0400
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:37196 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726251AbeJCG4A (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 02:56:00 -0400
-Received: by mail-ot1-f45.google.com with SMTP id o13-v6so3799008otl.4
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 17:10:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jJsvSbKYjcotZmERLHfSq5DIx+bFIc9u6yVa/OnsDvU=;
-        b=l0Qydu7bBjTkev6ANzgWzKocghVQf4jgIzU2ogBJegPhTkTrnC6WRMHpj98NjumhAB
-         lUxDrjGMhTo9evtU4d7tx2mE2corGc14km+nuyjTV51fujH76FF91f399SVi4wV6dZeX
-         QfoR0Nw1zTb/y9aRI3RTCAsGwnrGms0WzDFtwvzCjVX3dz2mUL6pWf8kkwlUgYGOb8uh
-         G/iuH3Xrn963c2233ieHt1W/zrh17JLO8bZ0SbVg8HsC9i2Il5pwW6sden1kwjNuxPAJ
-         vZ5hT2zaDO8MQmaeFIoUwmULz5tGYO2grAuw0NQNtALibA+wjbg8kc9EiiPfbg6Wth6Q
-         PCeg==
-X-Gm-Message-State: ABuFfogsNv3l/dUu2/dkBfeAnXDIQD/eDeWLA1vhZxNL64PeFS5zsfze
-        6DEoQNnVHtYHku1aiz1ChjbVKMhrQVxA13wU/Leouw==
-X-Google-Smtp-Source: ACcGV63J0GTwaln0LXpw/pdCVLWKNvvqw7soJ5649/Nshn8x4FXYtCDjxcH13LbwPOUuLPBWvJ/dn75MhVReQjWHviM=
-X-Received: by 2002:a9d:7a7:: with SMTP id 36mr4853237oto.72.1538525404926;
- Tue, 02 Oct 2018 17:10:04 -0700 (PDT)
+        id S1726451AbeJCJAR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 05:00:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39366 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726341AbeJCJAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 05:00:17 -0400
+Received: (qmail 28443 invoked by uid 109); 3 Oct 2018 02:14:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 03 Oct 2018 02:14:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8695 invoked by uid 111); 3 Oct 2018 02:13:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 02 Oct 2018 22:13:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2018 22:13:58 -0400
+Date:   Tue, 2 Oct 2018 22:13:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/3] help: redirect to aliased commands for "git cmd
+ --help"
+Message-ID: <20181003021358.GA20553@sigill.intra.peff.net>
+References: <20180926102636.30691-1-rv@rasmusvillemoes.dk>
+ <20181001112107.28956-1-rv@rasmusvillemoes.dk>
 MIME-Version: 1.0
-References: <573B6BF5.1090004@kdbg.org> <20160517194533.GA11289@sigill.intra.peff.net>
- <20160517195136.GB11289@sigill.intra.peff.net> <20160517195541.GC11289@sigill.intra.peff.net>
- <CAM-tV-9gAGBLsEh3=aa-bHT2DmJb=dfahq+kUW+0GLoc7eFq0w@mail.gmail.com>
- <CAM-tV--dHGJbxfWGKrRde+Q2-cnmCXNshQtX4PN7jnMWER_+bg@mail.gmail.com>
- <20180625162308.GA13719@sigill.intra.peff.net> <CAM-tV-8sbbht7NUwf87-gq=+P=LNPyiEcv3zL+1BxfXK+ktmVA@mail.gmail.com>
- <20180806212603.GA21026@sigill.intra.peff.net> <CAM-tV-_=4WuMGemm6RTB902-m8JfMKGp_OkQFuJMagPE8bOOtg@mail.gmail.com>
- <20180908161316.GA326@sigill.intra.peff.net> <CAM-tV-9N36puQHKQ38JxAxNR5Zen=3jM7pG7vHioYvvGTxLHCg@mail.gmail.com>
-In-Reply-To: <CAM-tV-9N36puQHKQ38JxAxNR5Zen=3jM7pG7vHioYvvGTxLHCg@mail.gmail.com>
-From:   Noam Postavsky <npostavs@users.sourceforge.net>
-Date:   Tue, 2 Oct 2018 20:09:46 -0400
-Message-ID: <CAM-tV-8PRAPdrQie=Vy8hiRuDr6FaQzsJFuwMtR5PS6Y+Lbo+w@mail.gmail.com>
-Subject: Re: [BUG] A part of an edge from an octopus merge gets colored, even
- with --color=never
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Hemmo Nieminen <hemmo.nieminen@iki.fi>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181001112107.28956-1-rv@rasmusvillemoes.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 24 Sep 2018 at 20:27, Noam Postavsky
-<npostavs@users.sourceforge.net> wrote:
->
-> On Sat, 8 Sep 2018 at 12:13, Jeff King <peff@peff.net> wrote:
->
-> > Great (and sorry for the delayed response).
->
-> No problem, I know it's not the most urgent bug ever :)
+On Mon, Oct 01, 2018 at 01:21:05PM +0200, Rasmus Villemoes wrote:
 
-Ping. :)
+> As discussed in the thread for v1 of this patch [1] [2], this changes the
+> rules for "git foo --help" when foo is an alias.
+> 
+> (0) When invoked as "git help foo", we continue to print the "foo is
+> aliased to bar" message and nothing else.
+> 
+> (1) If foo is an alias for a shell command, print "foo is aliased to
+> !bar" as usual.
+> 
+> (2) Otherwise, break the alias string into words, and pretend that "git
+> word0 --help" was called.
+> 
+> At least for me, getting the man page for git-cherry-pick directly with
+> "git cp --help" is more useful (and how I expect an alias to behave)
+> than the short "is aliased to" notice. It is also consistent with
+> "--help" generally providing more comprehensive help than "-h".
 
-> I managed to recast my script into the framework of the
-> other tests (see attached t4299-octopus.sh); it seems like it should
-> go into t4202-log.sh, but it's not clear to me how I can do this
-> without breaking all the other tests which expect a certain sequence
-> of commits.
+Makes sense.
+
+> I believe that printing the "is aliased to" message also in case (2) has
+> value: Depending on pager setup, or if the user has help.format=web, the
+> message is still present immediately above the prompt when the user
+> quits the pager/returns to the terminal. That serves as an explanation
+> for why one was redirected to "man git-cherry-pick" from "git cp
+> --help", and if cp is actually 'cherry-pick -n', it reminds the user
+> that using cp has some flag implicitly set before firing off the next
+> command.
+> 
+> It also provides some useful info in case we end up erroring out, either
+> in the "bad alias string" check, or in the "No manual entry for gitbar"
+> case.
+
+OK, I buy that line of reasoning. And in the other cases, it shouldn't
+_hurt_ anything.
+
+> diff --git a/builtin/help.c b/builtin/help.c
+> index 8d4f6dd301..4802a06f37 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -415,9 +415,29 @@ static const char *check_git_cmd(const char* cmd)
+>  
+>  	alias = alias_lookup(cmd);
+>  	if (alias) {
+> -		printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
+> -		free(alias);
+> -		exit(0);
+> +		const char **argv;
+> +		int count;
+> +
+> +		/*
+> +		 * If we were invoked as "git help cmd", or cmd is an
+> +		 * alias for a shell command, we inform the user what
+> +		 * cmd is an alias for and do nothing else.
+> +		 */
+> +		if (!exclude_guides || alias[0] == '!') {
+> +			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
+> +			free(alias);
+> +			exit(0);
+> +		}
+
+I'm not sure I understand why exclude_guides is relevant. We check it
+below when we know that we _don't_ have an alias. Hrm. I guess you're
+using it here as a proxy for "git foo --help" being used instead of "git
+help foo". The comment probably needs to spell out that exclude_guides
+is the same as your "we were invoked as...".
+
+I wonder if we could change the name of that option. It is an
+undocumented, hidden option that we use internally, so it should be OK
+to do so (or we could always add another one). That might prevent
+somebody in the future from using --exclude-guides in more places and
+breaking your assumption here.
+
+> +		/*
+> +		 * Otherwise, we pretend that the command was "git
+> +		 * word0 --help.
+> +		 */
+> +		fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
+> +		count = split_cmdline(alias, &argv);
+> +		if (count < 0)
+> +			die(_("bad alias.%s string: %s"), cmd,
+> +			    split_cmdline_strerror(count));
+> +		return alias;
+
+So we split only to find argv[0] here. But then we don't return it. That
+works because the split is done in place, meaning we must have inserted
+a NUL in alias. That's sufficiently subtle that it might be worth
+spelling it out in a comment.
+
+We don't need to free alias here as we do above, because we're passing
+it back. We should free argv, though, I think (not its elements, just
+the array itself).
+
+Unfortunately the caller is going to leak our returned "alias", but I'm
+not sure we can do much about it. I'm not overly concerned with the
+memory, but it is going to trigger leak-checkers (and we're trying to
+quiet them down, not go the other way). I think it may be OK to overlook
+that and just UNLEAK() it in cmd_help().
+
+-Peff
