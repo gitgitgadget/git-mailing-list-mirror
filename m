@@ -2,103 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85A821F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 19:00:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C262D1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 19:08:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727109AbeJDBuR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 21:50:17 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:45290 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726950AbeJDBuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 21:50:17 -0400
-Received: by mail-ot1-f65.google.com with SMTP id u22so6620503ota.12
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:00:38 -0700 (PDT)
+        id S1727007AbeJDB6J (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 21:58:09 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:34578 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726884AbeJDB6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 21:58:09 -0400
+Received: by mail-ed1-f43.google.com with SMTP id q19-v6so6391712edr.1
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:08:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=w9n1QuUsmgagCXp5jPRcRGs44akDJEnAdkD4vLElobw=;
-        b=ojMsVBfOY8GHg8N+vNVp6tE10L3X30qt4Cl3/0kfU5D+YaAwMpzFBfZgDu90odl0tM
-         VcY3bLLLe396D6QYX7CxoxE1Q3ZXZuF1UToz3v7eK/dsDHTGwGOGoqxD+MmGEKtrme+I
-         ptrb0QM8WOqs11cxbi4iSXyW7P5ZlMvIqFC64o6+xRsdhpB851yHyibTMZTlUdvpBZeJ
-         6U3+OgjxOnkZjM7uaEIV675hX5TaiXZkO/QawSBI0P9uXONhppK/FalB0iFY7lnGsrAV
-         iGAgSiqV6dvliXUQEEOmJ9shzQfIfjktSjKM6hjqnr2tWBaaWa9GFQZhAqEZPNU/Xw+C
-         KCqQ==
+        bh=0BJ4TtIkM/BCabQORdGDcivu1e8AL8DYnTSHximlkW4=;
+        b=EwfMCk5Mga4ZYcC50OoEnNKQb2aQj9cbP0Fsa0yjKsE7/XUqUXUoirsXGtUTRP3mFJ
+         wAPUG8TpIFyvz+NduisDEqs/1/ybOnTGoznbMklREeMFtK3gN8zAKCFwPn32VTRDDmHB
+         G73X9czKMwfuEGeRbyPqh05D0Qxk2g4IaquBjJyX7XkM6pKZCzY0hXCaDiY1znE31cdW
+         U+rj75u/qWdkwiB9Djsgh9FcaXp7JPDlTAHP2/KSHk8YAtl7cuxVhhFm03XUQwY9DiA4
+         21KwdyH4iA/3TkK8RnZLvDZ8FBqV0pkF107t+ezFAZtEuDBZh3c2lopu1J/bmA+VEVYj
+         kZ6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=w9n1QuUsmgagCXp5jPRcRGs44akDJEnAdkD4vLElobw=;
-        b=Mz3Nz02LtA8j2gWCKroy53REb0gHC4xxo+GYo3Ll7vT0nnHpbT1Ec2iWMN+vjszkG/
-         gd2Hr8ekkOj1PKhvux8YUbKQBTMVXNi6/4zMHCE5Ua3adDCl8lcRcZNWzaaVS+jw6Pp1
-         g0SHWWvEH9YEwsvQmRxBMlkSYIHUCw7LWQ+9L2QyeAdSZoD0PQEfBDSEeFfpT31i9VFY
-         QnidfewP6pYlw/XbtZbLtUsSNzW7geoqHhopCeTO+klYQjU4Yci7GaGezM8KcqDx5i9t
-         fIXC87wWl8q0CjDogLfXSX55onkby8tVAngKpTH5Vc8G6kRvedWPy3hYkdRa032Vjcsg
-         2NRg==
-X-Gm-Message-State: ABuFfogeKQssWZkW5NC0vO4Zbwg7F7RX66SYN41lNj2hvGhjN75YCMAz
-        UxNtN0Umifc7/wQyA7UieIEiXGLYUU3QR/1aL9XslZEdZA==
-X-Google-Smtp-Source: ACcGV63JivxqTXC4VTFzfDhrndp266MoG+DP8I2vYWBLsCVG/XA/VXpp3guugaFm+2ZysVqmLaVaV5CqA+1n9WA2yys=
-X-Received: by 2002:a9d:32c3:: with SMTP id u61-v6mr1555454otb.173.1538593237793;
- Wed, 03 Oct 2018 12:00:37 -0700 (PDT)
+        bh=0BJ4TtIkM/BCabQORdGDcivu1e8AL8DYnTSHximlkW4=;
+        b=AcmtSLMoC3S3gW/JardHCKDSEQNHO/52TFCij+I3psvjLWKzGnGpBWrISjaNC5BlAz
+         Pta9LlFak9ZId7HD+4XD9l5iRlHLF47r10n57g1cVfZWvNmPyURaK50HI7i3XA3zFvjW
+         6Uay7ryHskDnWh3jiNB5sKOp1EZF6Jr5NdOh32Czg4xuCH9b1oSggkDTty03BOsBwjiJ
+         YktFS7OwTcq56GzRp5sYq8z99F2CC/0edE8UiLl2v01WAUrh33bTXn8X0sqZuaMUF7tn
+         X8H3aSCMHPwQfWQygSO+XcXTpYW6sMAO+J7sp1oYnHg7u2DOMzqI47VMItRFc8Lvc9AX
+         VfBw==
+X-Gm-Message-State: ABuFfoiGB6RqbAOrBTdrDihJ3ZoGI6vgULefhpSyjTYUnyMCuOikp1mC
+        Us3HSeLaKaOXAwYFCveEiF+Pyqq7EyQwsm+BJ175rQ==
+X-Google-Smtp-Source: ACcGV63a56H2XRQPX6meVQ5Gaoc2W0T5T96PhyZCLo1DbQhW0dmlokElm5H3Nj5JU5yx7etJ5+6cq0C2pvM9Cr2+gkI=
+X-Received: by 2002:aa7:d9cf:: with SMTP id v15-v6mr4180451eds.25.1538593707342;
+ Wed, 03 Oct 2018 12:08:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1534183648.git.matvore@google.com>
- <92faf2e011474bcc87b1b0974e7e232f6469dc4a.1534183648.git.matvore@google.com> <d751d56b-84bb-a03d-5f2a-7dbaf8d947cc@jeffhostetler.com>
-In-Reply-To: <d751d56b-84bb-a03d-5f2a-7dbaf8d947cc@jeffhostetler.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Wed, 3 Oct 2018 12:00:25 -0700
-Message-ID: <CAMfpvhLsrBPtH66bOLX8HKmdKHs6_BpxG4q6P6MUkH-JUafkCg@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] list-objects-filter: implement filter tree:0
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+References: <87tvm3go42.fsf@evledraar.gmail.com> <20181003133650.GN23446@localhost>
+ <87r2h7gmd7.fsf@evledraar.gmail.com> <20181003141732.GO23446@localhost>
+ <87o9cbglez.fsf@evledraar.gmail.com> <20181003145308.GP23446@localhost>
+In-Reply-To: <20181003145308.GP23446@localhost>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 3 Oct 2018 12:08:15 -0700
+Message-ID: <CAGZ79kbyCZcMuj=_Od+C+tHg=PzzDd8QV+9RqS7iFcZS+Ht+Bg@mail.gmail.com>
+Subject: Re: We should add a "git gc --auto" after "git clone" due to commit graph
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 8:13 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
 >
-> There are a couple of options here:
-> [] If really want to omit all trees and blobs (and we DO NOT want
->     the oidset of everything omitted), then we might be able to
->     shortcut the traversal and speed things up.
->
->     {} add a LOFR_SKIP_TREE bit to list_objects_filter_result
->     {} test this bit process_tree() and avoid the init_tree_desc() and
->        the while loop and some adjacent setup/tear-down code.
->     {} make this filter something like:
->
->         case LOFS_BEGIN_TREE:
->                 if (filter_data->omits) {
->                         oidset_insert(filter_data->omits, &obj->oid);
->                         return LOFR_MARK_SEEN; /* ... (hard omit) */
->                 } else
->                         return LOFR_SKIP_TREE;
->         case LOFS_BLOB:
->                 if (filter_data->omits) {
->                         oidset_insert(filter_data->omits, &obj->oid);
->                         return LOFR_MARK_SEEN; /* ... (hard omit) */
->                 else
->                         assert(...should not happen...);
->
-> [] Later, if we choose to actually support a depth>0, we'll probably
->     want a different filter function to conditionally include/exclude
->     blobs, include shallow tree[node]s, and do some of the provisional-
->     omit logic on deep tree[nodes] (in case a tree appears at multiple
->     places/depths in the history).  But that can wait.
->
-> Jeff
->
+> But you thought right, I do have an objection against that.  'git gc'
+> should, well, collect garbage.  Any non-gc stuff is already violating
+> separation of concerns.
 
-Jeff, have you made any progress on depth>0 support for the tree
-filter? I'd like to take a stab at it without duplicating work :)
+I share these concerns in a slightly more abstract way, as
+I would bucket the actions into two separate bins:
 
-- Matt
+One bin that throws away information.
+this would include removing expired reflog entries (which
+I do not think are garbage, or collection thereof), but their
+usefulness is questionable.
+
+The other bin would be actions that optimize but
+do not throw away any information, repacking (without
+dropping files) would be part of it, or the new
+"write additional files".
+
+Maybe we can move all actions of the second bin into a new
+"git optimize" command, and git gc would do first the "throw away
+things" and then the optimize action, whereas clone would only
+go for the second optimizing part?
