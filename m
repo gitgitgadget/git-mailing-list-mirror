@@ -2,177 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A07C1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 15:00:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40EB31F454
+	for <e@80x24.org>; Wed,  3 Oct 2018 15:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726856AbeJCVtJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 17:49:09 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:37386 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726748AbeJCVtJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 17:49:09 -0400
-Received: by mail-pl1-f196.google.com with SMTP id az3-v6so3617645plb.4
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 08:00:23 -0700 (PDT)
+        id S1726835AbeJCVyN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 17:54:13 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51384 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726797AbeJCVyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 17:54:13 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 143-v6so6043546wmf.1
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 08:05:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=vQJCeMQH+T5I0zx8MJTVY7L957YxJ9IacuzDrLNiqSM=;
-        b=Y5Oy6Mf3k0/1725jxH3GAmR6BvBjP34OA9FBe0y0UCfCEIjWdEQARptGblS+btGNIh
-         JxvLI3ZkM7lHLvusRkuuuvyNEjdJlhzk4eDJfmXo7WLBDASyHa0lWkgNAWEp3++wzmuS
-         JuU+LjuH5pFWtpPhClvsdcvnCwoPSzuWFITDdahvXlCf1TsH1w6UVHpArjSDjk75THpL
-         e9n6kN8K5hhs4o5iFqiFpZdxY1SwHbYl7aOS2aGl2ZPfCimUCXi4lXNXfGNgAcRbR/KH
-         DoilTTTaqCnLOKVcqJJL6MxenXl938K5rdt/tH3qXNQ18M4EQitk/elYJT+c4dcrB55M
-         pn3A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=QaNQ5FyD4WwdxjNiDKqm1yR9hzMCE88PwkuHu1wzVug=;
+        b=jkCusXeh91wLaUO1DKrmnPoiNjMZxf+65aJOyuRMt+RZW8QBxTv7dRA9QrzmwCYwue
+         Ww7JJpOWglxw7GsnUnadiEkeA5DJvHBJpABQNAGhuF3G611M4tk1+6VmErKx26XhdsQI
+         uuEYj9rrWcf89lyoREbfrB+uAcC3riBhqGsu8J4DUuVsqZbF2WOwnjNR/JabgszVAU15
+         gQiYjdFhZ9IDaK8skO26efLvh3KvNXkrrRR2CsqiXU5LAKpkbxa1v6nVnNzuO7LDRWNR
+         Fthx/+mLVxQUknO0r7ALyuXhGnXZ85pCgnw/wRV1Zo81GdvnByYr5ayhWGwI+Pc5WnHH
+         aI6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vQJCeMQH+T5I0zx8MJTVY7L957YxJ9IacuzDrLNiqSM=;
-        b=EdThhWVb0jl0KZzFZG7aj3V3qoIb4syTOnmNH4OLkni0AWY9IfCIDB7SUGXg5MscIk
-         jqVu+DAQ3D1YCPILHBzxkbcN3YWPGMZhVIc3RR3hStwWcl/2+pdpje/zyI9Ps9K6xDKR
-         f3CoiQSMDGNbwK/tY+UU64w9WNxYPAvoFHysyadQqe8FmNq+EiA+B2DLNuwCibPia684
-         Gg+Sp7nNL0MYGrab4G3SGknmoYIFlC3jMlr0GIUCpZwFbLjOAS20wVcO6y0+IRvRZGO0
-         a2EbSrhyeRGofDyfcpmGvJOliNqs9ltYF5Nv+WGfxPXCjla8iSDYkanI8jO7zAEi+Asu
-         m9nA==
-X-Gm-Message-State: ABuFfoil1l+Mv5H1DpVAbMkRa9aqVnlH9tyMosMiFUlZtHQOO6ddpvgV
-        EYs9Bjgz5hSMCQuhNwc7lRADep/f
-X-Google-Smtp-Source: ACcGV63dAwdOzcwsVhCAPMbgXiGn3CwUBNJTModeL0J258ZZ+3arEbWsEc76oQTIYDk5OBTUk0tuKw==
-X-Received: by 2002:a17:902:2e83:: with SMTP id r3-v6mr2101129plb.80.1538578822664;
-        Wed, 03 Oct 2018 08:00:22 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id 22-v6sm3384547pfl.126.2018.10.03.08.00.21
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=QaNQ5FyD4WwdxjNiDKqm1yR9hzMCE88PwkuHu1wzVug=;
+        b=S15DiE0TuDrwboR9+d7IFb+oADG52JATEBxicBiOMF5RoyW2e9rL8PhKjyBjFmO8b9
+         ECA5GHm8sugDDDA1aVB+aWGC39/4ZB4w8o8WqxDY0Y2i5cZWPNL0u1nL6svOgdZ82zv4
+         nmld5AYRhivrL+h4NdeCTLjTwYqnUnbRnu+N3jc2mJwR6Zx/n6112rE6aKlQkewOHoKY
+         B7EXbQwvTxV/iCSFFOtUvjk6sVwrcZOuC7ItWeJZcmVOuY4a648I60uiOabc3ifUEKVS
+         b30uZZUj0E2L2R7HfxdSmRS+RN52RU2RJmPT+AFbJ4duHvcLu/TgoRtZtkH/TF2mUzu9
+         0TuQ==
+X-Gm-Message-State: ABuFfohu1FfCE9kKq6oPLQWxBVgLZhJfAHoZC1ab7pv7brYDXFpVmjH6
+        jcVc6XPXQIJM8YUZhk+COgM2xpJu
+X-Google-Smtp-Source: ACcGV62fhp9Aqkn/lY8nN7ujCvC5DyQT5bQBd7FZSntSN76wSfw9aJ9EhGQYN/++4OjSDa0D7sQc/Q==
+X-Received: by 2002:a1c:7614:: with SMTP id r20-v6mr1874116wmc.52.1538579125599;
+        Wed, 03 Oct 2018 08:05:25 -0700 (PDT)
+Received: from localhost (x4dbea401.dyn.telefonica.de. [77.190.164.1])
+        by smtp.gmail.com with ESMTPSA id w17-v6sm1798316wmc.43.2018.10.03.08.05.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 08:00:21 -0700 (PDT)
-Date:   Wed, 03 Oct 2018 08:00:21 -0700 (PDT)
-X-Google-Original-Date: Wed, 03 Oct 2018 15:00:18 GMT
-Message-Id: <b358178548bdc9134d4e4b83b1d0384ebb257a72.1538578818.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.43.git.gitgitgadget@gmail.com>
-References: <pull.43.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] rebase -i: introduce the 'break' command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Wed, 03 Oct 2018 08:05:24 -0700 (PDT)
+Date:   Wed, 3 Oct 2018 17:05:22 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] coccicheck: process every source file at once
+Message-ID: <20181003150522.GQ23446@localhost>
+References: <20181002191642.21504-1-jacob.e.keller@intel.com>
+ <20181002195519.GB2014@sigill.intra.peff.net>
+ <20181003101658.GM23446@localhost>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181003101658.GM23446@localhost>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Oct 03, 2018 at 12:16:58PM +0200, SZEDER Gábor wrote:
+> On Tue, Oct 02, 2018 at 03:55:19PM -0400, Jeff King wrote:
+> > On Tue, Oct 02, 2018 at 12:16:42PM -0700, Jacob Keller wrote:
+> > 
+> > > make coccicheck is used in order to apply coccinelle semantic patches,
+> > > and see if any of the transformations found within contrib/coccinelle/
+> > > can be applied to the current code base.
+> > > 
+> > > Pass every file to a single invocation of spatch, instead of running
+> > > spatch once per source file.
+> > > 
+> > > This reduces the time required to run make coccicheck by a significant
+> > > amount of time:
+> > > 
+> > > Prior timing of make coccicheck
+> > >   real    6m14.090s
+> > >   user    25m2.606s
+> > >   sys     1m22.919s
+> > > 
+> > > New timing of make coccicheck
+> > >   real    1m36.580s
+> > >   user    7m55.933s
+> > >   sys     0m18.219s
+> > 
+> > Yay! This is a nice result.
+> > 
+> > It's also one of the things that Julia suggested in an earlier thread.
+> > One thing I wasn't quite sure about after digging into the various
+> > versions (1.0.4 on Debian stable/unstable, 1.0.6 in experimental, and
+> > pre-1.0.7 at the bleeding edge) was whether the old versions would be
+> > similarly helped (or work at all).
+> > 
+> > I just replicated your results with 1.0.4.deb-3+b2 from Debian stable.
+> > It's possible there are older versions floating around, but for
+> > something developer-only like this, I think "in Debian stable" is a
+> > reasonable enough cutoff.
+> 
+> Linux build jobs on Travis CI run Ubuntu Trusty 14.04 LTS, and
+> therefore our static analysis build job still runs 1.0.0~rc19.deb-3.
+> 
+> This patch appears to work fine with that version, too,
 
-The 'edit' command can be used to cherry-pick a commit and then
-immediately drop out of the interactive rebase, with exit code 0, to let
-the user amend the commit, or test it, or look around.
+In fact, it works finer than ever, because running 1.0.0 with this
+patch on Travis CI notices a possible memmove() -> MOVE_ARRAY()
+conversion:
 
-Sometimes this functionality would come in handy *without*
-cherry-picking a commit, e.g. to interrupt the interactive rebase even
-before cherry-picking a commit, or immediately after an 'exec' or a
-'merge'.
+  https://travis-ci.org/szeder/git/jobs/436542684#L576
 
-This commit introduces that functionality, as the spanking new 'break' command.
+Surprisingly, running 1.0.0 without this patch, or running 1.0.4
+locally either with or without this patch doesn't notice that
+memmove() call.  Presumably that's why Jonathan could kind-of "revert"
+my conversion from f919ffebed (Use MOVE_ARRAY, 2018-01-22) in his
+6a1a79fd14 (object: move grafts to object parser, 2018-05-15) without
+anyone noticing.
 
-Suggested-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- rebase-interactive.c       | 1 +
- sequencer.c                | 7 ++++++-
- t/lib-rebase.sh            | 2 +-
- t/t3418-rebase-continue.sh | 9 +++++++++
- 4 files changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 0f4119cbae..78f3263fc1 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -14,6 +14,7 @@ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
- "s, squash <commit> = use commit, but meld into previous commit\n"
- "f, fixup <commit> = like \"squash\", but discard this commit's log message\n"
- "x, exec <command> = run command (the rest of the line) using shell\n"
-+"b, break = stop here (continue rebase later with 'git rebase --continue')\n"
- "d, drop <commit> = remove commit\n"
- "l, label <label> = label current HEAD with a name\n"
- "t, reset <label> = reset HEAD to a label\n"
-diff --git a/sequencer.c b/sequencer.c
-index 8dd6db5a01..b209f8af46 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1416,6 +1416,7 @@ enum todo_command {
- 	TODO_SQUASH,
- 	/* commands that do something else than handling a single commit */
- 	TODO_EXEC,
-+	TODO_BREAK,
- 	TODO_LABEL,
- 	TODO_RESET,
- 	TODO_MERGE,
-@@ -1437,6 +1438,7 @@ static struct {
- 	{ 'f', "fixup" },
- 	{ 's', "squash" },
- 	{ 'x', "exec" },
-+	{ 'b', "break" },
- 	{ 'l', "label" },
- 	{ 't', "reset" },
- 	{ 'm', "merge" },
-@@ -1964,7 +1966,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- 	padding = strspn(bol, " \t");
- 	bol += padding;
- 
--	if (item->command == TODO_NOOP) {
-+	if (item->command == TODO_NOOP || item->command == TODO_BREAK) {
- 		if (bol != eol)
- 			return error(_("%s does not accept arguments: '%s'"),
- 				     command_to_string(item->command), bol);
-@@ -3293,6 +3295,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			unlink(rebase_path_stopped_sha());
- 			unlink(rebase_path_amend());
- 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
-+
-+			if (item->command == TODO_BREAK)
-+				break;
- 		}
- 		if (item->command <= TODO_SQUASH) {
- 			if (is_rebase_i(opts))
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 25a77ee5cb..584604ee63 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -49,7 +49,7 @@ set_fake_editor () {
- 		case $line in
- 		squash|fixup|edit|reword|drop)
- 			action="$line";;
--		exec*)
-+		exec*|break)
- 			echo "$line" | sed 's/_/ /g' >> "$1";;
- 		"#")
- 			echo '# comment' >> "$1";;
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index c145dbac38..185a491089 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -239,5 +239,14 @@ test_rerere_autoupdate -m
- GIT_SEQUENCE_EDITOR=: && export GIT_SEQUENCE_EDITOR
- test_rerere_autoupdate -i
- test_rerere_autoupdate --preserve-merges
-+unset GIT_SEQUENCE_EDITOR
-+
-+test_expect_success 'the todo command "break" works' '
-+	rm -f execed &&
-+	FAKE_LINES="break exec_>execed" git rebase -i HEAD &&
-+	test_path_is_missing execed &&
-+	git rebase --continue &&
-+	test_path_is_file execed
-+'
- 
- test_done
--- 
-gitgitgadget
