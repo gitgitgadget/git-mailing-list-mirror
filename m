@@ -2,113 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46B8D1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 13:36:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F07F1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 13:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726811AbeJCUZV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 16:25:21 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46843 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbeJCUZV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 16:25:21 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z3-v6so6154959wrr.13
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 06:36:53 -0700 (PDT)
+        id S1726936AbeJCUbZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 16:31:25 -0400
+Received: from mail-qt1-f179.google.com ([209.85.160.179]:44263 "EHLO
+        mail-qt1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726694AbeJCUbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 16:31:25 -0400
+Received: by mail-qt1-f179.google.com with SMTP id c56-v6so5893308qtd.11
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 06:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=r/Kxy5TQzkqmqWXlhFYM87TfOrS6xBqpGfd5kRHQJUw=;
-        b=gbQ+4E31iDX8KjBYZyYUMav+Wl7fQvWwRfLixyIpvx/LdUDXMX+KxddSZoTc1ebHY0
-         XHP+KfS7k8TmLFM9wib2KXeCinni8t/+tTL8+WYpDL1WLmSNKidgXRhdY/Pm1gqTzs3M
-         CTyWZSqoG57VoNM4xmqverfY5NrXgEXs+FWxY5OvRay2ek3C/Ago6wdZkw5cjFHp8zYF
-         hbBWwUzaSpVfXsqXnI6UJ3FUPpQ2mmmL5wZdF1lMBGCu2j0OPKWB8h+CMFr9t9EHegGb
-         5107SwgvwPrulIZTNIBnfYwYKYtzPCN9ByclxDuynpTuXwroyXsUcQy7S6Q5CNK9h3fK
-         UvNw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=2P1Ac2MooRGg4IMS6MFQSpgWoH88jD7QKfTvFbNmQwo=;
+        b=C9kPrZVOCv1qUj43aQ+/xPErO2aJU/jcjkSPHFVUDPjXj/+PS1b/fU6Zo4b2WLKVKc
+         MnILVzQdl6hBnaGDI7QJ+yqnfPTsH3leTYXL/oyXoxH41YWKzh7MO2qqdD8i2Gi4mn/8
+         tesN4pS5/4MSgG3fLWIkyYb6wBHNL+lTAhyI7hSPimpwdJSdtbDMwIg5zJG0J0tPALbw
+         NRb/DRzDYg/YlbkLXymxl3LmErZrlcDcJrNbft5EE/63U+7uJ/Wq1niuD9yO0P9MqY/F
+         2Tvcq0cufVYMfaUKnQg3z5I9F77+gHmC7Qced0siVhXa2r3zemBTaoHSeqV2jEnUUeYI
+         e48Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=r/Kxy5TQzkqmqWXlhFYM87TfOrS6xBqpGfd5kRHQJUw=;
-        b=P0sMdU4jACUJHnyEsEZ15+fadAG8tvQl4+wCkFozwTdJC+cmRx1UUPhz4RnZNqSwi2
-         6cU+HCy6K2AsqfCQaqyXFyPRXFmI1CaJE4WGlrn0xgFGPq76ZYH+rMQlGffccOotQKt+
-         wI//rFEwBVuXRBJp9hX0ByfjYI/hYo5xaQ9EK89r+r9Eaf3iwq+W77y+sRbGbmh6E8dF
-         JKbfC7MHfR9W8NJLLqseJYUjg41RvrZG1HGeljy2kTMpZbpx2yxQBtvANgmw9rAyOQW2
-         NL1cVRKL1uyjdbSpAc1+/lnNAR5MHyQUizvgqwV30FWVk8OORMQtQGoONZ1IxPq9ZkJy
-         dB9w==
-X-Gm-Message-State: ABuFfojVLvTNzrvm8rs7MW1sIdBFCh5jexlEsz4mNnofvydotZIyKP+s
-        oFUdtXO1CvTNyQ1O1yuXfTm84w8b
-X-Google-Smtp-Source: ACcGV61MMXGr/G0qHPXnFu03cTv7bDGk7fHfJA39sOL0to3YpdHAZQ6O9xuxv8cN3C8RQqM6wSFcnQ==
-X-Received: by 2002:a5d:6490:: with SMTP id r16-v6mr1241691wru.99.1538573813174;
-        Wed, 03 Oct 2018 06:36:53 -0700 (PDT)
-Received: from localhost (x4dbea401.dyn.telefonica.de. [77.190.164.1])
-        by smtp.gmail.com with ESMTPSA id c2-v6sm1679472wrt.77.2018.10.03.06.36.51
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=2P1Ac2MooRGg4IMS6MFQSpgWoH88jD7QKfTvFbNmQwo=;
+        b=GnLzQvgNBWJZsLIzFEWy+alPNo1+O3douNFf5KNBkYwFA2raRxMBP/t+FZVGPv0jvs
+         LPcLyiH0nMUfplTHWqQ1ghr2jr24Caq1e1Cwfb54jvalBZGp7YXZ0bn5gB3sG4c+b8HZ
+         rQttjeDxK9KbzoG0Jcar0+KwGxQdC57UCM0NB2B8OUeIrqFkjv62G9oapeKZH3f5kvMI
+         /c0y0s35ekNhNOZ7+mzkAGGwwECmfdJXYEq0WMNvh6fRkqo7OmO7UVDVMvCL65SRSIPs
+         CVLr7c1fb7Jb5IFQAkESejulusaAz3MJ8o48RzJ0XG8VNPxZVXfqtgBZjxHSAh4uGz7U
+         LUJQ==
+X-Gm-Message-State: ABuFfoga6622HTzhzbQQSpZppjp0z1FLZkhZ0ujp9v62OsZnrwPKW9ih
+        UyWnh/ucAn53USSPDqeMHlU=
+X-Google-Smtp-Source: ACcGV61PIzPoUhGhke8pB9IkuN4PsBAJo/02juQA2O7Z2SJL6kwOM+7/E+YGGg3BM+UKiNihY6R0Cg==
+X-Received: by 2002:a0c:eb10:: with SMTP id j16-v6mr1243010qvp.95.1538574176417;
+        Wed, 03 Oct 2018 06:42:56 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:81f3:8f89:2be9:a31b? ([2001:4898:8010:0:6b29:8f89:2be9:a31b])
+        by smtp.gmail.com with ESMTPSA id c85-v6sm551306qke.89.2018.10.03.06.42.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 06:36:52 -0700 (PDT)
-Date:   Wed, 3 Oct 2018 15:36:50 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+        Wed, 03 Oct 2018 06:42:55 -0700 (PDT)
 Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
  graph
-Message-ID: <20181003133650.GN23446@localhost>
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
+        <pclouds@gmail.com>
 References: <87tvm3go42.fsf@evledraar.gmail.com>
+ <20181003133650.GN23446@localhost>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <836a8d28-0879-73a5-7e0b-75f438ff6785@gmail.com>
+Date:   Wed, 3 Oct 2018 09:42:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20181003133650.GN23446@localhost>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tvm3go42.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 03, 2018 at 03:23:57PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Don't have time to patch this now, but thought I'd send a note / RFC
-> about this.
-> 
-> Now that we have the commit graph it's nice to be able to set
-> e.g. core.commitGraph=true & gc.writeCommitGraph=true in ~/.gitconfig or
-> /etc/gitconfig to apply them to all repos.
-> 
-> But when I clone e.g. linux.git stuff like 'tag --contains' will be slow
-> until whenever my first "gc" kicks in, which may be quite some time if
-> I'm just using it passively.
-> 
-> So we should make "git gc --auto" be run on clone,
+On 10/3/2018 9:36 AM, SZEDER Gábor wrote:
+> On Wed, Oct 03, 2018 at 03:23:57PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>> Don't have time to patch this now, but thought I'd send a note / RFC
+>> about this.
+>>
+>> Now that we have the commit graph it's nice to be able to set
+>> e.g. core.commitGraph=true & gc.writeCommitGraph=true in ~/.gitconfig or
+>> /etc/gitconfig to apply them to all repos.
+>>
+>> But when I clone e.g. linux.git stuff like 'tag --contains' will be slow
+>> until whenever my first "gc" kicks in, which may be quite some time if
+>> I'm just using it passively.
+>>
+>> So we should make "git gc --auto" be run on clone,
+> There is no garbage after 'git clone'...
 
-There is no garbage after 'git clone'...
+And since there is no garbage, the gc will not write the commit-graph.
 
-> and change the
-> need_to_gc() / cmd_gc() behavior so that we detect that the
-> gc.writeCommitGraph=true setting is on, but we have no commit graph, and
-> then just generate that without doing a full repack.
+>
+>> and change the
+>> need_to_gc() / cmd_gc() behavior so that we detect that the
+>> gc.writeCommitGraph=true setting is on, but we have no commit graph, and
+>> then just generate that without doing a full repack.
+> Or just teach 'git clone' to run 'git commit-graph write ...'
 
-Or just teach 'git clone' to run 'git commit-graph write ...'
+I plan to add a 'fetch.writeCommitGraph' config setting. I was waiting 
+until the file is incremental (on my to-do list soon), so the write is 
+fast when only adding a few commits at a time. This would cover the 
+clone case, too.
 
-> As an aside such more granular "gc" would be nice for e.g. pack-refs
-> too. It's possible for us to just have one pack, but to have 100k loose
-> refs.
-> 
-> It might also be good to have some gc.autoDetachOnClone option and have
-> it false by default, so we don't have a race condition where "clone
-> linux && git -C linux tag --contains" is slow because the graph hasn't
-> been generated yet, and generating the graph initially doesn't take that
-> long compared to the time to clone a large repo (and on a small one it
-> won't matter either way).
-> 
-> I was going to say "also for midx", but of course after clone we have
-> just one pack, so I can't imagine us needing this. But I can see us
-> having other such optional side-indexes in the future generated by gc,
-> and they'd also benefit from this.
-> 
-> #leftoverbits
+Thanks,
+-Stolee
