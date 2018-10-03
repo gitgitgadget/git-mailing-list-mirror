@@ -2,104 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F27B21F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 20:43:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D69F71F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 21:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727361AbeJDDdN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 23:33:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40528 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726969AbeJDDdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 23:33:12 -0400
-Received: (qmail 8997 invoked by uid 109); 3 Oct 2018 20:43:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 03 Oct 2018 20:43:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17591 invoked by uid 111); 3 Oct 2018 20:42:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 03 Oct 2018 16:42:35 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2018 16:43:12 -0400
-Date:   Wed, 3 Oct 2018 16:43:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Dimitri Kopriwa <d.kopriwa@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: Git credentials not working
-Message-ID: <20181003204312.GC20709@sigill.intra.peff.net>
-References: <a1ceb967-6020-6074-f504-c684242c79ab@gmail.com>
- <f4f7bd2c-4c48-e749-4df1-ddf05896b337@gmail.com>
- <20181003171104.GA12200@sigill.intra.peff.net>
- <89f60502-c67d-83b6-593b-a0e6d8567183@gmail.com>
- <20181003182409.GA14848@sigill.intra.peff.net>
- <84e704e0-fbf9-230f-459c-2927dea19a03@gmail.com>
+        id S1726338AbeJDEMR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 00:12:17 -0400
+Received: from newman.cs.utexas.edu ([128.83.139.110]:41067 "EHLO
+        newman.cs.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbeJDEMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 00:12:17 -0400
+X-Greylist: delayed 804 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Oct 2018 00:12:16 EDT
+Received: from vyasa.cs.utexas.edu (vyasa.cs.utexas.edu [128.83.130.99])
+        by newman.cs.utexas.edu (8.14.4/8.14.4/Debian-4.1ubuntu1) with ESMTP id w93L8foK021589
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 Oct 2018 16:08:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs.utexas.edu;
+        s=default; t=1538600922;
+        bh=GSTOCDL11TY9T8jVqQaI7BA75fRwwEAESOB9IojKzY4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=L1XQym/UZDJzKDjToBSPysMitmhOvIyISa0r/mxc4plYNuI2D3esO65xZHc/HKnvP
+         SdW51LtllWG5bE8bQtaV5ogbGETr3nejyXZr4CF7kxCsWkCpxOOblKJNc9Lj9353hA
+         hjVVI9kZX9CmxE4GGLT0DC8zRStL/ZQvVgtpbCTg=
+Received: (from mihir@localhost)
+        by vyasa.cs.utexas.edu (8.15.2/8.15.2/Submit) id w93L8fjn024705;
+        Wed, 3 Oct 2018 16:08:41 -0500
+From:   Mihir Mehta <mihir@cs.utexas.edu>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, sunshine@sunshineco.us,
+        Mihir Mehta <mihir@cs.utexas.edu>
+Subject: [PATCH] doc: fix a typo and clarify a sentence
+Date:   Wed,  3 Oct 2018 16:08:24 -0500
+Message-Id: <20181003210824.24634-1-mihir@cs.utexas.edu>
+X-Mailer: git-send-email 2.19.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <84e704e0-fbf9-230f-459c-2927dea19a03@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.9 (newman.cs.utexas.edu [128.83.139.110]); Wed, 03 Oct 2018 16:08:41 -0500 (CDT)
+X-Virus-Scanned: clamav-milter 0.98.7 at newman
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 04, 2018 at 02:34:17AM +0700, Dimitri Kopriwa wrote:
+I noticed that git-merge-base was unlikely to actually be a git command,
+and tried it in my shell. Seeing that it doesn't work, I cleaned up two
+places in the docs where it appears.
 
-> I have replaced the way I fill the git credentials store, I have verify
-> ~/.git-credentials and information are there, the ~/.gitconfig look fine
-> too.
-> 
-> I still have 401 error when reading from that file.
-> 
-> This is the paste log : https://paste.gnome.org/pmntlkdw0
-> 
-> Now that I use git approve, I dont think that I need a custom helper.
-> 
-> Any idea why I still can't log in using git-credential?
+Signed-off-by: Mihir Mehta <mihir@cs.utexas.edu>
+---
+ Documentation/git-diff.txt                  | 5 +++--
+ Documentation/howto/update-hook-example.txt | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-Looking at your pastebin, it looks like the server sometimes takes it
-and sometimes not. E.g., piping the log through:
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index b180f1fa5..6173f569e 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -72,8 +72,9 @@ two blob objects, or changes between two files on disk.
+ 	This form is to view the changes on the branch containing
+ 	and up to the second <commit>, starting at a common ancestor
+ 	of both <commit>.  "git diff A\...B" is equivalent to
+-	"git diff $(git-merge-base A B) B".  You can omit any one
+-	of <commit>, which has the same effect as using HEAD instead.
++	"git diff $(git merge-base A B) B".  You can omit any one
++	of the two instances of <commit>, which has the same effect as
++	using HEAD in its place.
+ 
+ Just in case if you are doing something exotic, it should be
+ noted that all of the <commit> in the above description, except
+diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
+index a5193b1e5..89821ec74 100644
+--- a/Documentation/howto/update-hook-example.txt
++++ b/Documentation/howto/update-hook-example.txt
+@@ -80,7 +80,7 @@ case "$1" in
+       info "The branch '$1' is new..."
+     else
+       # updating -- make sure it is a fast-forward
+-      mb=$(git-merge-base "$2" "$3")
++      mb=$(git merge-base "$2" "$3")
+       case "$mb,$2" in
+         "$2,$mb") info "Update is fast-forward" ;;
+ 	*)	  noff=y; info "This is not a fast-forward update.";;
+-- 
+2.19.0
 
-  egrep '(Send|Recv) header:' |
-  perl -lpe 's/^.*?(=>|<=) //'
-
-I see:
-
-  Send header: GET /example-keys/sample-project.git/info/refs?service=git-upload-pack HTTP/1.1
-  Send header: User-Agent: git/2.19.0
-  ...
-  Recv header: HTTP/1.1 401 Unauthorized
-  Recv header: WWW-Authenticate: Basic realm="GitLab"
-  ...
-  Send header: GET /example-keys/sample-project.git/info/refs?service=git-upload-pack HTTP/1.1
-  Send header: Authorization: Basic <redacted>
-  Send header: User-Agent: git/2.19.0
-  ...
-  Recv header: HTTP/1.1 200 OK
-
-So that works. But then later we get:
-
-  Send header: GET /example-keys/sample-project.git/info/refs?service=git-upload-pack HTTP/1.1
-  Send header: User-Agent: git/2.19.0
-  ...
-  Recv header: HTTP/1.1 401 Unauthorized
-  Recv header: WWW-Authenticate: Basic realm="GitLab"
-  ...
-  Send header: GET /example-keys/sample-project.git/info/refs?service=git-upload-pack HTTP/1.1
-  Send header: Authorization: Basic <redacted>
-  Send header: User-Agent: git/2.19.0
-  ...
-  Recv header: HTTP/1.1 401 Unauthorized
-
-And then that causes credential-store to delete the non-working entry,
-after which all of them must fail (because you have no working
-credential, and presumably no terminal to prompt the user).
-
-I have no idea why the same request would sometimes be allowed and
-sometimes not. It's possible the <redacted> data is different in those
-two times, but I don't know why that would be. It's also possible you're
-hitting different load-balancing servers that behave differently.
-
--Peff
