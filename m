@@ -2,124 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29F4A1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 14:06:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CCF31F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 14:17:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726991AbeJCUzR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 16:55:17 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42838 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbeJCUzQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 16:55:16 -0400
-Received: by mail-pf1-f195.google.com with SMTP id f26-v6so1594070pfn.9
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 07:06:43 -0700 (PDT)
+        id S1726738AbeJCVGM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 17:06:12 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40281 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726543AbeJCVGM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 17:06:12 -0400
+Received: by mail-wr1-f66.google.com with SMTP id d2-v6so1918760wro.7
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 07:17:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:references:to:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=RtocE0WvZm6GMoXdYtW2vRC3iB7LgB32QHY3Jl6Fgic=;
-        b=WZSXFZLQTMkto/GdcDe422X2UqXvdcyMIt0CIBc0vBXsi2/kDDXOw2YvIxZevjEY5F
-         qJcXduO2Cf1WcCHFw8ckht+mY5TgL5YLk61WfiuiOT2qN85Znc6JRCeUUDDzeu3gUiVj
-         8Bh0841w0cqt+RwRgHMTcGi7obrYDsJCrWuqjtrjN9miuMPm8AHGryed/k4z8k8YL4t+
-         zVgnUUke8kXCLopwH/EaVlXUMewFcBvEfqW5yhyYfQlsek/Ip6i/zvlER9s1RyjlGjZT
-         HuOQbO4HvN0XrrDnuUxXsv1OajLpruPfY4HyNs60g9WOyetPLaI2r5a5kDVcR4BSF4kG
-         7yQg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MXMkjowuT7HAHj8XsQqlQV/k8NjLHf1QaQ9nNPxLNCw=;
+        b=KIXMrlB7BTPxmz/GYA0frpEwFxfcm4h8xE5L33ggA4TMg2f4xTY2aZgWHfC+9KRup3
+         QC8qxRJBR5TfK99OybATXfJm0sX9ICFYBzUmxFkNP53vaS6MYxaN5O+olvMkOoxRHSyV
+         x5NsrxDI3nx6wCVHlOHryJMfwsZWCloTb88CQagoJ6neA0rTWpn5EJcrLsundnLf1WdM
+         RZSlWpYIw3mckjXZiUfieh8OIdiU/GUMqDXm9qQpTgCxduyD4jODvXZAzwXil6kkYuRY
+         2nkzWyXYCrQB+7XIa2qkTj+IayvPhvnE4nP+/V4Ur//2wty0xBwi3JYj6SSCGqaGI2qY
+         N2hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:references:to:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=RtocE0WvZm6GMoXdYtW2vRC3iB7LgB32QHY3Jl6Fgic=;
-        b=FOvcagVfey/Pg3iYaUToaXYJZ+0DPPOU+NbQGhWykuUXEV0KFYwKcWtt393EWi0Wzs
-         tH3s79r/aoLCz4v3L6gJ/5QY8QBkbFnM6ihuzwvZkE2ZbMIKNcFVAStP+ZPSLoHnjQOR
-         8Wh7EVhjfEiORCaVFbQSc35e4GmkjpEyl9WTlSqafQZBpJ9KIBbMxiNFxLl9JJSIpAV8
-         zeFfVKJMe4tcGLpku+B1mx7/ymqZFd75nYfG/Ym6y7/sUqht5b5wUMClbCVbtseEoai6
-         +WxAG1Z1qBFjIDe+5aFpWRWVL59QyKk1AfQOyimNrp0Vq9HhQPB6qRPjshKSMixX2dp0
-         CZdw==
-X-Gm-Message-State: ABuFfoh6SkD7V/bPXgAB3Hvcq3GoXie1ge4MEyz3gTfc6mKiPjIH4r37
-        2c6FlL3raJD0jFwdTmM9xc6pBuq4
-X-Google-Smtp-Source: ACcGV60Z1X43rBWSQ6yWISGZFaTqbJBkUC4qXp4yYp13+8T9venbn+Nc15dkAveY47YANllx3HwCxg==
-X-Received: by 2002:a63:844:: with SMTP id 65-v6mr1528516pgi.144.1538575602927;
-        Wed, 03 Oct 2018 07:06:42 -0700 (PDT)
-Received: from [192.168.2.4] ([171.233.129.129])
-        by smtp.gmail.com with ESMTPSA id x17-v6sm2429396pfn.59.2018.10.03.07.06.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=MXMkjowuT7HAHj8XsQqlQV/k8NjLHf1QaQ9nNPxLNCw=;
+        b=uX541c3OUhyzzmkkq97HU7y+hpmVOWm8FPkdUOaKmKQ6opKu0epVil6X3QO+Ba0jnS
+         guSisX2KG4nTe2zNrhBwNayLLPR/jve/9fKvQKf5Jc/di3kazBvYX39Bm7SGjxsTeqGS
+         2YoUlrtoNyKrRINd1ekafsiF6rLMaxyYfK/bFxI7SS1s8xsFIBPCe1gcVDgiL9+Kq6nG
+         Y/gk1KuecEUf3jGJSwPRueCjuhlkLBFM0shn7dCOzV6In/KAUM1+BH9Cn03+Dsv0oOGJ
+         pSzKXqSUkT+DNn30nXLEV54mIpopTSiV1REJ6aR5A8XNGMGMGWF0XY8KRO9H9HyFgCi9
+         Hf/Q==
+X-Gm-Message-State: ABuFfoiLNtYxvXGEoDuAicDOeQp5Ohweopkypij3ihAHF+ibxVdejcES
+        8K/ADXvPKvWvW23GRMJHfPg=
+X-Google-Smtp-Source: ACcGV61SrTuMkBRir8pze7WqVcs90Lm1cOA6Y1tXc5YM9ckHXGih1/E4C13Bz7bPErqiQ/sbPf68lg==
+X-Received: by 2002:adf:decb:: with SMTP id i11-v6mr1498365wrn.270.1538576255308;
+        Wed, 03 Oct 2018 07:17:35 -0700 (PDT)
+Received: from localhost (x4dbea401.dyn.telefonica.de. [77.190.164.1])
+        by smtp.gmail.com with ESMTPSA id 188-v6sm2430926wmg.13.2018.10.03.07.17.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 07:06:42 -0700 (PDT)
-Subject: Fwd: Git credentials not working
-References: <a1ceb967-6020-6074-f504-c684242c79ab@gmail.com>
-To:     git-security@googlegroups.com, git@vger.kernel.org
-From:   Dimitri Kopriwa <d.kopriwa@gmail.com>
-X-Forwarded-Message-Id: <a1ceb967-6020-6074-f504-c684242c79ab@gmail.com>
-Message-ID: <f4f7bd2c-4c48-e749-4df1-ddf05896b337@gmail.com>
-Date:   Wed, 3 Oct 2018 21:06:38 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        Wed, 03 Oct 2018 07:17:34 -0700 (PDT)
+Date:   Wed, 3 Oct 2018 16:17:32 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
+ graph
+Message-ID: <20181003141732.GO23446@localhost>
+References: <87tvm3go42.fsf@evledraar.gmail.com>
+ <20181003133650.GN23446@localhost>
+ <87r2h7gmd7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <a1ceb967-6020-6074-f504-c684242c79ab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+In-Reply-To: <87r2h7gmd7.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git list,
+On Wed, Oct 03, 2018 at 04:01:40PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Oct 03 2018, SZEDER Gábor wrote:
+> 
+> > On Wed, Oct 03, 2018 at 03:23:57PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >> Don't have time to patch this now, but thought I'd send a note / RFC
+> >> about this.
+> >>
+> >> Now that we have the commit graph it's nice to be able to set
+> >> e.g. core.commitGraph=true & gc.writeCommitGraph=true in ~/.gitconfig or
+> >> /etc/gitconfig to apply them to all repos.
+> >>
+> >> But when I clone e.g. linux.git stuff like 'tag --contains' will be slow
+> >> until whenever my first "gc" kicks in, which may be quite some time if
+> >> I'm just using it passively.
+> >>
+> >> So we should make "git gc --auto" be run on clone,
+> >
+> > There is no garbage after 'git clone'...
+> 
+> "git gc" is really "git gc-or-create-indexes" these days.
 
+Because it happens to be convenient to create those indexes at
+gc-time.  But that should not be an excuse to run gc when by
+definition no gc is needed.
 
-I have tried to used git credentials within Gitlab-CI runners. I have 4 
-instance of GitLab and discovered a weird bug with Git credentials when 
-use within a CI process.
-
-Please note before all that the time spend allowed me multiple time to 
-check that my credentials are valid for the repository. And calling git 
-fetch --tags with the full remote url that include the credentials 
-always succeeded.
-
-Tested with Git 2.11, 2.19
-
-Git credentials in ~/.git-credentials and ~/.config/git/credentials are 
-being removed by git upon reading.
-
-This happen randomly accross my CI runner, and change that make them 
-work on not related.
-
-
-{ Error: Command failed: git fetch --tags 
-https://git.example.com/example/some-project.git
-18:25:52.554903 git.c:415               trace: built-in: git fetch 
---tags https://git.example.com/example/some-project.git
-18:25:52.555234 run-command.c:637       trace: run_command: GIT_DIR=.git 
-git-remote-https https://git.example.com/example/some-project.git 
-https://git.example.com/example/some-project.git
-18:25:52.692741 run-command.c:637       trace: run_command: 'git 
-credential-store get'
-18:25:52.697314 git.c:659               trace: exec: 
-git-credential-store get
-18:25:52.697372 run-command.c:637       trace: run_command: 
-git-credential-store get
-18:25:52.936024 run-command.c:637       trace: run_command: 'git 
-credential-store erase'
-18:25:52.940307 git.c:659               trace: exec: 
-git-credential-store erase
-18:25:52.940365 run-command.c:637       trace: run_command: 
-git-credential-store erase
-remote: HTTP Basic: Access denied
-fatal: Authentication failed for 
-'https://git.example.com/example/some-project.git/'
-
-
-See the full question here: 
-https://stackoverflow.com/questions/52614467/why-does-git-credential-store-call-git-credential-erase-and-make-my-credential-f
-
-
-Can you please help me found why is git credential-store erase called ?
-
-
-Best regards,
-
+> >> and change the
+> >> need_to_gc() / cmd_gc() behavior so that we detect that the
+> >> gc.writeCommitGraph=true setting is on, but we have no commit graph, and
+> >> then just generate that without doing a full repack.
+> >
+> > Or just teach 'git clone' to run 'git commit-graph write ...'
+> 
+> Then when adding something like the commit graph we'd need to patch both
+> git-clone and git-gc, it's much more straightforward to make
+> need_to_gc() more granular.
+> 
+> >> As an aside such more granular "gc" would be nice for e.g. pack-refs
+> >> too. It's possible for us to just have one pack, but to have 100k loose
+> >> refs.
+> >>
+> >> It might also be good to have some gc.autoDetachOnClone option and have
+> >> it false by default, so we don't have a race condition where "clone
+> >> linux && git -C linux tag --contains" is slow because the graph hasn't
+> >> been generated yet, and generating the graph initially doesn't take that
+> >> long compared to the time to clone a large repo (and on a small one it
+> >> won't matter either way).
+> >>
+> >> I was going to say "also for midx", but of course after clone we have
+> >> just one pack, so I can't imagine us needing this. But I can see us
+> >> having other such optional side-indexes in the future generated by gc,
+> >> and they'd also benefit from this.
+> >>
+> >> #leftoverbits
