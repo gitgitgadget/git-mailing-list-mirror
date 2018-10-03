@@ -2,132 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4DBC1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 19:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7491F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 19:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727372AbeJDCde (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 22:33:34 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40894 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727283AbeJDCdd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 22:33:33 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n31-v6so2017745pgm.7
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:43:45 -0700 (PDT)
+        id S1726969AbeJDCmZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 22:42:25 -0400
+Received: from mail-vs1-f73.google.com ([209.85.217.73]:53310 "EHLO
+        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726941AbeJDCmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 22:42:25 -0400
+Received: by mail-vs1-f73.google.com with SMTP id g184-v6so2295351vsd.20
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:52:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xP8s7pZODrNTqCuygyKg4o8kzCijz1sOlFFcG6lhGQM=;
-        b=De6kHP04zfh5xnXJ0veaEN0bR6L6i8eWQ00noaw72MnwtDETfQVtWZjut3c3cehIRM
-         1g6XYepR6GladXXps5eQKdEItDC/jhmf9S4UcL2cny2bXOjLwKdaJ3i5JdP4FCI5neg7
-         YTbjJZu+Y1vw6qi08b8CF/9X9dVCXIFvd/Tto6txBwBjW3+CU1RP3ulgNXtia8/q/p78
-         VQfPmENF6SyryeNmFnquRApFCrhWM3LRZtUW9ttqNHGzZ6UmuaiDm7BtlMs/VxDEYcVa
-         FM/h2SelEOaHk3DwsUWEYVGrvOw8YS/rXjfh8bksBt9MipieClSokJ+ewN4i2En6zJNp
-         YGIg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=KBfixe8iN8u+s8M6xMIoN92tLFDfit9wjnqNEdiLN7E=;
+        b=A1bwu1tUNVRaZwRmQRHsp2ufOzi22ZGvpDbF2FA7dCbss9s2u/V4eTMlbqeq/1yuhC
+         oY6Y1BVZcpsk5KmZZ8wYW1fuq6leWctz1Mg6AseS7J7UF3uHUTtMhFmDjmPKswCeye08
+         nAptD/C2YuGN7CmeasEh9bLZRKywRcwXgfLmHy8gN0bm7RE5L+Rp2bNcuGnBuSOoXHzO
+         MnZBkVJWMfderqKJEDBJPv9c6X/TbAVUNbWt5iY+lVKMiH7E4zfU0qKU0aUFG5DHnswY
+         jvJfCfsyCwRdPTpjPr4dIuoSVjdLldZLCFmBClK3Qt1Z8Sri6a528Dbtt4FYMSGRFYrs
+         uf1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xP8s7pZODrNTqCuygyKg4o8kzCijz1sOlFFcG6lhGQM=;
-        b=lzh2wnVDn7shF26RNhQoqas3Ha5f5Qe3fGzB1mlj4s8uu1OttUzYGfXTx788LX3XCF
-         /xjq3VvqQdZsd6Vk+WVt3ho7qDddOPftnpM9ClrrOTew18NMS6k41D4KnZJiVoBDOjCa
-         WGxToMOwkTFNPH8TeYnUqZFT9yZHrIFDlzWoOpDHS2Qz70iHC0U/QDBaCm/wOOFUmiWk
-         mtkVYwxMBsUVODs7ppSvw73X0k0jGjqnii0QhaIpKp5CZWypyYULJ+2qc5AVxnm2zjCJ
-         dL4t0lEhq1ymJ3nLIZr9euxmUc+QuJwIBPqtt1nAJ/uS6pAoQnB+B8Bs6tkFL2grlQ/B
-         ir4w==
-X-Gm-Message-State: ABuFfojgB7jUTb1Fu430M+/W0Hq9VGcR1q6OLEcCQRiJBCcOFlAZxD4c
-        b64fDkmFaErH49r/JbZdJLU9zg7Y
-X-Google-Smtp-Source: ACcGV60f18OOz5iFxoPmD49YX9bABnvhNs0soORa610ydvtrEg9vMeapnD1MtxRX1KTOrhMf0D65eg==
-X-Received: by 2002:a62:6786:: with SMTP id t6-v6mr3200634pfj.92.1538595825261;
-        Wed, 03 Oct 2018 12:43:45 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id z7-v6sm3704788pff.146.2018.10.03.12.43.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 12:43:44 -0700 (PDT)
-Date:   Wed, 03 Oct 2018 12:43:44 -0700 (PDT)
-X-Google-Original-Date: Wed, 03 Oct 2018 19:43:37 GMT
-Message-Id: <2b127d9669aa7b73ced7611b6e77044f5efed11d.1538595818.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.44.git.gitgitgadget@gmail.com>
-References: <pull.44.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/3] mingw: bump the minimum Windows version to Vista
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=KBfixe8iN8u+s8M6xMIoN92tLFDfit9wjnqNEdiLN7E=;
+        b=l/UuI/9ESkkVBtR17t+y+0uDeQpt3jCDCxL8tboOErW45e2YVrZ/A/n0yWv/tyiqQs
+         ClOfHQUIxirhoQxdH4oqZ4sZLcbNNbQfqfzq7RG16Uc6lTgBxLi5U/Bn+4AD1oFgHM04
+         ubFkGSdxmFrUShBFHA9QO6c4EpZ2THOz/5X9beO7+KiS01nzRsXwqzEnTXW+Wu2cp2fG
+         OwNduIVYzN0K5Ab0QP6Yk7rPPpiZ49X7+tlnoOPKiOe954VN6fzDQVD5FAuDTw8SuPP4
+         x29MIr+TyCBfB/KkA1Whp08BTHamHyFfM2zHETg6t1HaF387wGiIY1dNhOSJOQbqwdV+
+         O2mA==
+X-Gm-Message-State: ABuFfoiiTmvOeVItO8IE1bnQdtgXc+54f+EVP44OdaegWaQptvZ/92on
+        zFpEGW/Q/ZyvSarx6dE3m5nD96HrxgSzwT3uw+kD6hTrcajwGzX8uvQMBM4rWGCRAPagVeyTuS+
+        yfDD5MC2bXzhVxNbesFrM5txCpfPH8M08LrClT8ZzJKUnw8end+8GedAcZes=
+X-Google-Smtp-Source: ACcGV63OgAM0GTK4o9pRK2d5/9QWq2Y5n7kCrEVity2wot7obNhK//87eZTsPJnheENM4g+Me4FqtkcLtFWZ
+X-Received: by 2002:a9f:2724:: with SMTP id a33-v6mr2683458uaa.10.1538596355010;
+ Wed, 03 Oct 2018 12:52:35 -0700 (PDT)
+Date:   Wed,  3 Oct 2018 12:52:11 -0700
+In-Reply-To: <cover.1533854545.git.matvore@google.com>
+Message-Id: <cover.1538592829.git.matvore@google.com>
+Mime-Version: 1.0
+References: <cover.1533854545.git.matvore@google.com>
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: [PATCH v10 0/8] filter: support for excluding all trees and blobs
+From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Matthew DeVore <matvore@google.com>, sbeller@google.com,
+        git@jeffhostetler.com, jeffhost@microsoft.com, peff@peff.net,
+        stefanbeller@gmail.com, jonathantanmy@google.com,
+        gitster@pobox.com, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This is a minor change to the previous rollup. It moves positional
+arguments to the end of git-rev-list invocations. Here is an interdiff
+from v9:
 
-Quite some time ago, a last plea to the XP users out there who want to
-see Windows XP support in Git for Windows, asking them to get engaged
-and help, vanished into the depths of the universe.
-
-We tried for a long time to play nice with the last remaining XP users
-who somehow manage to build Git from source, but a recent update of
-mingw-w64 (7.0.0.5233.e0c09544 -> 7.0.0.5245.edf66197) finally dropped
-the last sign of XP support, and Git for Windows' SDK is no longer able
-to build core Git's `master` branch as a consequence. (Git for Windows'
-`master` branch already bumped the minimum Windows version to Vista a
-while ago, so it is fine.)
-
-It is time to require Windows Vista or later to build Git from source.
-This, incidentally, lets us use quite a few nice new APIs.
-
-It also means that we no longer need the inet_pton() and inet_ntop()
-emulation, which is nice.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- config.mak.uname  | 4 ----
- git-compat-util.h | 2 +-
- 2 files changed, 1 insertion(+), 5 deletions(-)
-
-diff --git a/config.mak.uname b/config.mak.uname
-index e47af72e01..8acdeb71fd 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -381,8 +381,6 @@ ifeq ($(uname_S),Windows)
- 	NO_PYTHON = YesPlease
- 	BLK_SHA1 = YesPlease
- 	ETAGS_TARGET = ETAGS
--	NO_INET_PTON = YesPlease
--	NO_INET_NTOP = YesPlease
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	NATIVE_CRLF = YesPlease
- 	DEFAULT_HELP_FORMAT = html
-@@ -529,8 +527,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_REGEX = YesPlease
- 	NO_PYTHON = YesPlease
- 	ETAGS_TARGET = ETAGS
--	NO_INET_PTON = YesPlease
--	NO_INET_NTOP = YesPlease
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	DEFAULT_HELP_FORMAT = html
- 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 3ba93d9c15..48c955541e 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -147,7 +147,7 @@
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 7b6294ca5..53fbf7db8 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -168,7 +168,8 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
+ 	git -C dst fsck &&
  
- #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
- # if !defined(_WIN32_WINNT)
--#  define _WIN32_WINNT 0x0502
-+#  define _WIN32_WINNT 0x0600
- # endif
- #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
- #include <winsock2.h>
+ 	# Make sure we only have commits, and all trees and blobs are missing.
+-	git -C dst rev-list master --missing=allow-any --objects >fetched_objects &&
++	git -C dst rev-list --missing=allow-any --objects master \
++		>fetched_objects &&
+ 	awk -f print_1.awk fetched_objects |
+ 	xargs -n1 git -C dst cat-file -t >fetched_types &&
+ 
+@@ -184,7 +185,7 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
+ 	git -C dst fsck &&
+ 
+ 	# Auto-fetch all remaining trees and blobs with --missing=error
+-	git -C dst rev-list master --missing=error --objects >fetched_objects &&
++	git -C dst rev-list --missing=error --objects master >fetched_objects &&
+ 	test_line_count = 70 fetched_objects &&
+ 
+ 	awk -f print_1.awk fetched_objects |
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
+index 6e5c41a68..5a61614b1 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -227,7 +227,8 @@ test_expect_success 'rev-list W/ --missing=print and --missing=allow-any for tre
+ # Test tree:0 filter.
+ 
+ test_expect_success 'verify tree:0 includes trees in "filtered" output' '
+-	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=tree:0 |
++	git -C r3 rev-list --quiet --objects --filter-print-omitted \
++		--filter=tree:0 HEAD |
+ 	awk -f print_1.awk |
+ 	sed s/~// |
+ 	xargs -n1 git -C r3 cat-file -t |
+
+Thank you,
+
+Matthew DeVore (8):
+  list-objects: store common func args in struct
+  list-objects: refactor to process_tree_contents
+  list-objects: always parse trees gently
+  rev-list: handle missing tree objects properly
+  revision: mark non-user-given objects instead
+  list-objects-filter: use BUG rather than die
+  list-objects-filter-options: do not over-strbuf_init
+  list-objects-filter: implement filter tree:0
+
+ Documentation/rev-list-options.txt     |   5 +
+ builtin/rev-list.c                     |  11 +-
+ list-objects-filter-options.c          |  19 +-
+ list-objects-filter-options.h          |   1 +
+ list-objects-filter.c                  |  60 ++++++-
+ list-objects.c                         | 232 +++++++++++++------------
+ revision.c                             |   1 -
+ revision.h                             |  26 ++-
+ t/t0410-partial-clone.sh               |  45 +++++
+ t/t5317-pack-objects-filter-objects.sh |  41 +++++
+ t/t5616-partial-clone.sh               |  42 +++++
+ t/t6112-rev-list-filters-objects.sh    |  43 +++++
+ 12 files changed, 398 insertions(+), 128 deletions(-)
+
 -- 
-gitgitgadget
+2.19.0.605.g01d371f741-goog
+
