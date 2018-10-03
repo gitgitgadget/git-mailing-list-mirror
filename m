@@ -2,91 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10C0B1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 18:47:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFAF1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 18:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727218AbeJDBgw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 21:36:52 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:32994 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726991AbeJDBgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 21:36:52 -0400
-Received: by mail-ed1-f65.google.com with SMTP id g26-v6so6332862edp.0
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 11:47:15 -0700 (PDT)
+        id S1727152AbeJDBlR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 21:41:17 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:35041 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbeJDBlR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 21:41:17 -0400
+Received: by mail-ed1-f48.google.com with SMTP id y19-v6so6336044edd.2
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 11:51:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=EjdWyl8pKdj51rgzG5xDnKkL9+tEN0wW6dELVbPokX8=;
-        b=HsP7hWpO/X0Wo2Jg2zyFGwEfKDDOWckUhXe1+iHP4HYsaTscaWuLm/niMiUn3/mNen
-         4+IDnKMUql4DT+d+9dS7IQgovl+HiGUOgxvt9PXLN20PpLpzw4dmUR3b7dp1yi2UMK/D
-         z55cUE2pQSuteLz2uz7xrc0UqsX9p7VulOb6CZ/ErBcxa7v8RIZjWMRiepPUSBmae3Ww
-         +aQ2yz5QyY4t4vA++WFvPwSKJ/s1hCrJ1MRQeRfXg8kjQTg3O1K0sCf0iRrEsKJA2Dny
-         fLTtMfRlZoaZyMNQzR4Sr0+paDhxs/v8jxCC07oB6n2QoNLB2yWECfmOr+ujxsRqCeyF
-         dFxQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KZPbBvN505hiwMd0kUFDp+mz125yuohEEo2OhVj2hHc=;
+        b=nTT5SbLfukz5KTlRLi8FcJxIxgArp4d6ZSrf32u1SlHjV2gyyp4GC0izNMpMiPnyXx
+         gRDoqXzl5jT0lkYVsDKw9WhzKk3U52Y119Q5kjRctG1gvxghUcBHOUd0Ys2zZ6XOQAKg
+         d13JCIhfPg1OO82Ez6GOtFCpOg0wiidvMqmaxONTYpCNdSDg2Xd+jRtTi95lGba+jm1v
+         qzWKM9TOf4YmLH8igJQiUEc+mu7VU5uBtElFEd2fpWlGSrH7wFh7KcyTMknS5nFJ9eNq
+         zBFLwUr3SX+QlaW8R8IegTS+sNYXclzHJVFBSKnEQGdfHM7fT7YaBYC7jUBm6NTw/oIS
+         ydYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=EjdWyl8pKdj51rgzG5xDnKkL9+tEN0wW6dELVbPokX8=;
-        b=dWMKqy8XJIx74XrFsnP6meZExEUGH0AnHHfM0DuSuC/vhlnGbMd/yUNooHlDkwzUIl
-         qPZ4CUY8vcYLWn04Ly0qXfdaMx0BxT+bglmOShCwMmsyuzZL+FyCYzhmTPMk/GB9byGz
-         Aky1mJ23UJrgz+ms0tDXYPrRc5KQ5dHoAmM8WC8GEbB4B6NQpMevIy5sv26eY3btk78U
-         qVBOQL53oHw6bmxZL9DVtnSFRGU344nqLuEuya2Fwlz3cNV3k5HEmR85nZxiS9JbtQXa
-         P4LMyvb7ocBwbB0PHpo07EuLNi5PQM5g7b4gu7pldx3i+3MfW2Pt4Defko21RcP5qDlm
-         Dprg==
-X-Gm-Message-State: ABuFfoggyFhXddH2/9O8chcctzrE31GFPZA3BwN0OMLn4Akhnfwz4mdT
-        BGto0z13BLmiawcWT7SkeHw=
-X-Google-Smtp-Source: ACcGV63+9Y0PItLlZgNgvPYMKs4daSz6Ppj/eF3FU1K4Kix0stFZsjhrozQMsR9w6Jy+/bsmRPYNjg==
-X-Received: by 2002:aa7:d441:: with SMTP id q1-v6mr4266241edr.26.1538592434641;
-        Wed, 03 Oct 2018 11:47:14 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id x14-v6sm794665edb.84.2018.10.03.11.47.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Oct 2018 11:47:13 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit graph
-References: <87tvm3go42.fsf@evledraar.gmail.com>
-        <20181003133650.GN23446@localhost>
-        <87r2h7gmd7.fsf@evledraar.gmail.com>
-        <20181003141732.GO23446@localhost>
-        <87o9cbglez.fsf@evledraar.gmail.com>
-        <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
-Date:   Wed, 03 Oct 2018 20:47:11 +0200
-Message-ID: <87lg7ehnps.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KZPbBvN505hiwMd0kUFDp+mz125yuohEEo2OhVj2hHc=;
+        b=fX4zEsJL4v79tdIFXyFPhfe6PWxuf4catrMCgfZ84WE3qruYHYjMRuV3Wuik5XtRf5
+         bemfOPuY3erZ6defHtb0hI78mZhJ2Bt+RvNsIIO7yIYuT1DUhswGJE2EzDQsYM6bpz3G
+         1HbEkwTdjMjEIL9AFrYdPfAVcPW+QOeZsXxhgUlPmfsC681ZmIS7z93EhQMQbIiajEBF
+         +e26TgD0sgOioQh/xyTSo+p+49sfIZI/OOqSqZZaqAUr1/9SnFI+LWBfSKNHmgD8m4fu
+         HVKjQm11Fe6It7uqGLhxNBYJ8vJ+8gwPuwmn27oS7HDj2SjmgmGgePSM6ZQY8kaq1XpC
+         CfWQ==
+X-Gm-Message-State: ABuFfojnfsM7FeakIt8/7Tl4rReSPi6LAAJZrzzZHcX1/aIMP3T6F0yp
+        vmlKBRolt7Jg6wTyigynuKn5oSCd0OFexUNpAV06AQ==
+X-Google-Smtp-Source: ACcGV63XBlwYJmpWb77uYM6AVdjElngQSTUMjmhMBnmtnTPpf8STv8rahNFXiMPTxjnY4nzL1DB56iBOepf6SMJCINw=
+X-Received: by 2002:a50:93c5:: with SMTP id o63-v6mr4152067eda.154.1538592699093;
+ Wed, 03 Oct 2018 11:51:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CADWf5z4pAR20qeoT1RnYENBB7Q5fA2fVVTNqPzMzvOE5Dq02qA@mail.gmail.com>
+In-Reply-To: <CADWf5z4pAR20qeoT1RnYENBB7Q5fA2fVVTNqPzMzvOE5Dq02qA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 3 Oct 2018 11:51:27 -0700
+Message-ID: <CAGZ79kZ=FXEgTgZ7hO_7O2Qo-ze9ykQW0_Vgr=m7MFe8mc9+Mg@mail.gmail.com>
+Subject: Re: inside the git folder
+To:     chrisjberlin@googlemail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Oct 03 2018, Stefan Beller wrote:
-
->> So we wouldn't be spending 5 minutes repacking linux.git right after
->> cloning it, just ~10s generating the commit graph, and the same would
->> happen if you rm'd .git/objects/info/commit-graph and ran "git commit",
->> which would kick of "gc --auto" in the background and do the same thing.
+On Wed, Oct 3, 2018 at 5:26 AM Chris Jeschke
+<chrisjberlin@googlemail.com> wrote:
 >
-> Or generating local bitmaps or pack idx files as well?
+> Hey git-team,
+> I am working on a plug-in for a distributed pair programming tool. To
+> skip the details: I was thinking about sending parts of the git folder
+> as a zip folder with our own Bytestream instead of using the git API.
+> Is there a common sense about what should and what shouldn't be done
+> when working with the files inside the git folder?
 
-I'm less familiar with this area, but when I clone I get a pack *.idx
-file, why does it need to be regenerated?
+This contradicts the security model of git.
+Locally I can do things like:
+    git config alias.co "rm -rf ~"
+    echo "rm -rf ~" >.git/hooks/{...}
+and I would experience bad things, but that is ok,
+as I configured it locally (supposedly I know what
+I am doing); but if I have the ability to send these
+tricks to my beloved coworkers, hilarity might ensue.
 
-But yeah, in principle this would be a sensible addition, but I'm not
-aware of cases where clients get significant benefits from bitmaps (see
-https://githubengineering.com/counting-objects/), and I don't turn it on
-for clients, but maybe I've missed something.
+What stuff do you need to send around?
+
+objects? Fine, as the receive could check they are
+good using fsck.
+
+refs/ ? Sure. It may be confusing to users,
+but I am sure you'll figure UX out.
+
+local config, hooks ? I would not.
+
+Not sure what else you'd think of sending around.
+
+Cheers,
+Stefan
