@@ -2,107 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F07F1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 13:42:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5A351F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 13:52:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbeJCUbZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 16:31:25 -0400
-Received: from mail-qt1-f179.google.com ([209.85.160.179]:44263 "EHLO
-        mail-qt1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbeJCUbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 16:31:25 -0400
-Received: by mail-qt1-f179.google.com with SMTP id c56-v6so5893308qtd.11
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 06:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=2P1Ac2MooRGg4IMS6MFQSpgWoH88jD7QKfTvFbNmQwo=;
-        b=C9kPrZVOCv1qUj43aQ+/xPErO2aJU/jcjkSPHFVUDPjXj/+PS1b/fU6Zo4b2WLKVKc
-         MnILVzQdl6hBnaGDI7QJ+yqnfPTsH3leTYXL/oyXoxH41YWKzh7MO2qqdD8i2Gi4mn/8
-         tesN4pS5/4MSgG3fLWIkyYb6wBHNL+lTAhyI7hSPimpwdJSdtbDMwIg5zJG0J0tPALbw
-         NRb/DRzDYg/YlbkLXymxl3LmErZrlcDcJrNbft5EE/63U+7uJ/Wq1niuD9yO0P9MqY/F
-         2Tvcq0cufVYMfaUKnQg3z5I9F77+gHmC7Qced0siVhXa2r3zemBTaoHSeqV2jEnUUeYI
-         e48Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=2P1Ac2MooRGg4IMS6MFQSpgWoH88jD7QKfTvFbNmQwo=;
-        b=GnLzQvgNBWJZsLIzFEWy+alPNo1+O3douNFf5KNBkYwFA2raRxMBP/t+FZVGPv0jvs
-         LPcLyiH0nMUfplTHWqQ1ghr2jr24Caq1e1Cwfb54jvalBZGp7YXZ0bn5gB3sG4c+b8HZ
-         rQttjeDxK9KbzoG0Jcar0+KwGxQdC57UCM0NB2B8OUeIrqFkjv62G9oapeKZH3f5kvMI
-         /c0y0s35ekNhNOZ7+mzkAGGwwECmfdJXYEq0WMNvh6fRkqo7OmO7UVDVMvCL65SRSIPs
-         CVLr7c1fb7Jb5IFQAkESejulusaAz3MJ8o48RzJ0XG8VNPxZVXfqtgBZjxHSAh4uGz7U
-         LUJQ==
-X-Gm-Message-State: ABuFfoga6622HTzhzbQQSpZppjp0z1FLZkhZ0ujp9v62OsZnrwPKW9ih
-        UyWnh/ucAn53USSPDqeMHlU=
-X-Google-Smtp-Source: ACcGV61PIzPoUhGhke8pB9IkuN4PsBAJo/02juQA2O7Z2SJL6kwOM+7/E+YGGg3BM+UKiNihY6R0Cg==
-X-Received: by 2002:a0c:eb10:: with SMTP id j16-v6mr1243010qvp.95.1538574176417;
-        Wed, 03 Oct 2018 06:42:56 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:81f3:8f89:2be9:a31b? ([2001:4898:8010:0:6b29:8f89:2be9:a31b])
-        by smtp.gmail.com with ESMTPSA id c85-v6sm551306qke.89.2018.10.03.06.42.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 06:42:55 -0700 (PDT)
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
- graph
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
-        <pclouds@gmail.com>
-References: <87tvm3go42.fsf@evledraar.gmail.com>
- <20181003133650.GN23446@localhost>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <836a8d28-0879-73a5-7e0b-75f438ff6785@gmail.com>
-Date:   Wed, 3 Oct 2018 09:42:55 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <20181003133650.GN23446@localhost>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        id S1726964AbeJCUlV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 16:41:21 -0400
+Received: from dns1.iai.co.il ([212.235.98.150]:30200 "EHLO
+        mmnxfpmta1.iai.co.il" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726694AbeJCUlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 16:41:21 -0400
+X-Greylist: delayed 928 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Oct 2018 16:41:19 EDT
+Received: from EXMAIL6.iai.co.il (unknown [172.21.48.110])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by Forcepoint Email with ESMTPS id 2CE93BB5130C1B836856;
+        Wed,  3 Oct 2018 16:37:07 +0300 (IDT)
+Received: from EXS11.iai.co.il ([169.254.2.245]) by EXMAIL6.iai.co.il
+ ([172.21.48.110]) with mapi id 14.03.0266.001; Wed, 3 Oct 2018 16:37:07 +0300
+From:   Michele Hallak <mhallak@iai.co.il>
+To:     Philip Oakley <philipoakley@iee.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: git projects with submodules in different sites - in txt format
+ (:+(
+Thread-Topic: git projects with submodules in different sites - in txt
+ format (:+(
+Thread-Index: AdRaE1vIt/NhnL3PTdOAtEyz5cGDcAAZmkEAACjNNgA=
+Date:   Wed, 3 Oct 2018 13:37:06 +0000
+Message-ID: <15774B2750A13244948B89FDD2FEC2EACF15CA71@EXS11.iai.co.il>
+References: <15774B2750A13244948B89FDD2FEC2EACF15C69A@EXS11.iai.co.il>
+ <b059c580-28d2-9f97-7ded-9bdd60b45a54@iee.org>
+In-Reply-To: <b059c580-28d2-9f97-7ded-9bdd60b45a54@iee.org>
+Accept-Language: en-US, he-IL
 Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.21.48.107]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/3/2018 9:36 AM, SZEDER Gábor wrote:
-> On Wed, Oct 03, 2018 at 03:23:57PM +0200, Ævar Arnfjörð Bjarmason wrote:
->> Don't have time to patch this now, but thought I'd send a note / RFC
->> about this.
->>
->> Now that we have the commit graph it's nice to be able to set
->> e.g. core.commitGraph=true & gc.writeCommitGraph=true in ~/.gitconfig or
->> /etc/gitconfig to apply them to all repos.
->>
->> But when I clone e.g. linux.git stuff like 'tag --contains' will be slow
->> until whenever my first "gc" kicks in, which may be quite some time if
->> I'm just using it passively.
->>
->> So we should make "git gc --auto" be run on clone,
-> There is no garbage after 'git clone'...
-
-And since there is no garbage, the gc will not write the commit-graph.
-
->
->> and change the
->> need_to_gc() / cmd_gc() behavior so that we detect that the
->> gc.writeCommitGraph=true setting is on, but we have no commit graph, and
->> then just generate that without doing a full repack.
-> Or just teach 'git clone' to run 'git commit-graph write ...'
-
-I plan to add a 'fetch.writeCommitGraph' config setting. I was waiting 
-until the file is incremental (on my to-do list soon), so the write is 
-fast when only adding a few commits at a time. This would cover the 
-clone case, too.
-
-Thanks,
--Stolee
+VGhhbmsgeW91IHNvIG11Y2gsIEkgd2lsbCBjaGVjayB0aGlzIEdJVCBidW5kbGUuLi4uDQpTaW5j
+ZSB5b3UgYXNrZWQsIGhlcmUgYXJlIG15IGFuc3dlcnMgc3VmZml4ZWQgYnkgTUhTID4+DQoNCk1p
+Y2hlbGUNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IFBoaWxpcCBPYWtsZXkg
+W21haWx0bzpwaGlsaXBvYWtsZXlAaWVlLm9yZ10gDQpTZW50OiBXZWRuZXNkYXksIE9jdG9iZXIg
+MywgMjAxOCAxMjowMCBBTQ0KVG86IE1pY2hlbGUgSGFsbGFrOyBnaXRAdmdlci5rZXJuZWwub3Jn
+DQpTdWJqZWN0OiBSZTogZ2l0IHByb2plY3RzIHdpdGggc3VibW9kdWxlcyBpbiBkaWZmZXJlbnQg
+c2l0ZXMgLSBpbiB0eHQgZm9ybWF0ICg6KygNCg0KT24gMDIvMTAvMjAxOCAwNjo0NywgTWljaGVs
+ZSBIYWxsYWsgd3JvdGU6DQo+IEhpLA0KPiANCj4gSSBhbSBnZXR0aW5nIG91dCBvZiBpZGVhIGFi
+b3V0IGhvdyB0byBjaGFuZ2UgdGhlIG1ldGhvZG9sb2d5IHdlIGFyZSB1c2luZyBpbiBvcmRlciB0
+byBlYXNlIG91ciBpbnRlZ3JhdGlvbiBwcm9jZXNzLi4uIENsb3NlIHRvIGRlc3BhaXIsIEkgYW0g
+dGhyb3dpbmcgdGhlIHF1ZXN0aW9uIHRvIHlvdS4uLg0KPiANCj4gV2UgaGF2ZSA2IGluZnJhc3Ry
+dWN0dXJlIHJlcG9zaXRvcmllcyBbQSwgQiwgQywgRCwgRSwgRiA/XS4NCg0KPiBFYWNoIHByb2pl
+Y3QgW1csWCxZLFpdIGlzIGNvbXBvc2VkIG9mIDQgcmVwb3NpdG9yaWVzIFsxLTRdLCBlYWNoIG9u
+ZSANCj4gdXNpbmcgb25lIG9yIHR3byBpbmZyYXN0cnVjdHVyZSByZXBvc2l0b3JpZXMgYXMgc3Vi
+LW1vZHVsZXMuIChOb3QgdGhlIA0KPiBzYW1lKQ0KDQplLmcuIFcxLVc0OyB3aXRoIHNheSBCICYg
+RCBhcyBzdWJtb2R1bGVzDQoNCk1IUyA+PiBFeGFjdA0KDQo+IA0KPiBUaGUgaW5mcmFzdHJ1Y3R1
+cmUgcmVwb3NpdG9yaWVzIGFyZSBjb21tb24gdG8gc2V2ZXJhbCBwcm9qZWN0cyBhbmQgaW4gdGhl
+IGNhc2Ugd2UgaGF2ZSB0byBtYWtlIGNoYW5nZSBpbiB0aGUgaW5mcmFzdHJ1Y3R1cmUgZm9yIGEg
+c3BlY2lmaWMgcHJvamVjdCwgd2UgYXJlIGRvaW5nIGl0IG9uIGEgc3BlY2lmaWMgYnJhbmNoIHVu
+dGlsIHByb3Blcmx5IG1lcmdlZC4NCg0KRG8geW91IGFsc28gaGF2ZSByZW1vdGVzIHNldHVwIHRo
+YXQgcHJvdmlkZSBiYWNrdXAgYW5kIGNlbnRyYWwgYXV0aG9yaXR5IHRvIHRoZSBwcm9qZWN0cy4u
+Pw0KDQpNSFMgPj4gSWYgeW91IG1lYW4gdGhhdCB3ZSBoYXZlIGEgR0lUIHNlcnZlciwgYXMgeWVz
+Li4uIA0KPiANCj4gRXZlcnl0aGluZyBpcyBmaW5lIChtb3JlIG9yIGxlc3MpIGFuZCBzb21laG93
+IHdvcmtpbmcuDQoNCkdvb2QuLg0KPiANCj4gTm93LCB3ZSBoYXZlIG9uZSBwcm9qZWN0IHRoYXQg
+d2lsbCBiZSBkZXZlbG9wZWQgaW4gYW5vdGhlciBzaXRlIGFuZCB3aXRoIGFub3RoZXIgZ2l0IHNl
+cnZlciBwaHlzaWNhbGx5IHNlcGFyYXRlZCBmcm9tIHRoZSBtYWluIHNpdGUuDQoNCklzIGl0IG5l
+dHdvcmtlZD8gSW50ZXJuYWwgY29udHJvbCwgZXh0ZXJuYWwgaW50ZXJuZXQsIHNuZWFrZXJuZXQ/
+DQoNCk1IUz4+PiBUb3RhbGx5IGRpc2Nvbm5lY3RlZCAtIFR3byBpc29sYXRlZCBuZXR3b3Jrcy4N
+Cj4gDQo+IEkgY29waWVkIHRoZSBpbmZyYXN0cnVjdHVyZSByZXBvc2l0b3JpZXMgaW4gdGhlIG5l
+dyBzaXRlIGFuZCByZW1vdmVkIGFuZCBhZGQgdGhlIHN1Yi1tb2R1bGVzIGluIG9yZGVyIGZvciB0
+aGVtIHRvIHBvaW50IHRvIHRoZSB1cmwgaW4gdGhlIHNlcGFyYXRlZCBnaXQgc2VydmVyLg0KPiAN
+Cj4gRXZlcnkgMiB3ZWVrcywgdGhlIHJlbW90ZWx5IGRldmVsb3BlZCBjb2RlIGhhcyB0byBiZSBp
+bnRlZ3JhdGVkIGJhY2sgaW4gdGhlIG1haW4gc2l0ZS4NCj4gTXkgaWRlYSB3YXMgdG8gZm9ybWF0
+IEdJVCBwYXRjaGVzLCBpbnRlZ3JhdGUgaW4gdGhlIG1haW4gc2l0ZSwgdGFnIHRoZSB3aG9sZSB0
+aGluZyBhbmQgc2hpcCBiYWNrIHRoZSBpbnRlZ3JhdGVkIHRhZ2dlZCBjb2RlIHRvIHRoZSByZW1v
+dGUgc2l0ZS4NCj4gLi4uIGFuZCBub3cgdGhlIG5pZ2h0bWFyZSBzdGFydHM6DQp5ZXAsIHlvdSBo
+YXZlIGxvc3QgdGhlIHZhbGlkYXRpb24gJiB2ZXJpZmljYXRpb24gY2FwYWJpbGl0eSBvZiBHaXQn
+cyBzaGExL29pZCBhbmQgREFHLg0KDQpNSFM+Pj4gSXQncyBzb290aGluZyB0byBiZSB1bmRlcnN0
+b29kLiAoOispDQoNCj4gDQo+IFNpbmNlIHRoZSAuZ2l0bW9kdWxlcyBpcyBkaWZmZXJlbnQsIEkg
+Y2Fubm90IGhhdmUgdGhlIHNhbWUgU0hBIGFuZCB0aGVuIHNhbWUgdGFnIGFuZCBJIGFtIG5ldmVy
+IHN1cmUgdGhhdCB0aGUgaW50ZWdyYXRlZCBjb2RlIGlzIHByb3Blci4NCg0KUmVtb3RlcywgcmVt
+b3Rlcy4uLg0KPiANCj4gTWF5IGJlIHRoZXJlIGlzIGEgc2ltcGxlIHNvbHV0aW9uIHRoYXQgSSBk
+b24ndCBrbm93IGFib3V0IHRvIG15IHByb2JsZW0/IElzIHRoZXJlIHNvbWV0aGluZyBlbHNlIHRo
+YW4gR0lUIHBhdGNoZXM/IFNob3VsZCBJIHNpbXBseSBzaGlwIHRvIHRoZSByZW1vdGUgc2l0ZSB0
+aGUgY29kZSBhcyBpcyBhbmQgY2hhbmdlIHRoZSBzdWJtb2R1bGVzIGVhY2ggdGltZT8NCj4NCg0K
+SSB0aGluayB0aGUgc29sdXRpb24geW91IG5lZWQgaXMgYGdpdCBidW5kbGVgIGh0dHBzOi8vZ2l0
+LXNjbS5jb20vZG9jcy9naXQtYnVuZGxlLiBUaGlzIGlzIGRlc2lnbmVkIGZvciB0aGUgY2FzZSB3
+aGVyZSB5b3UgZG8gbm90IGhhdmUgdGhlIHJlZ3VsYXIgZ2l0IHRyYW5zcG9ydCBpbmZyYXN0cnVj
+dHVyZS4gSW5zdGVhZCBpdCByZWNvcmRzIHRoZSBleHBlY3RlZCBkYXRhIHRoYXQgd291bGQgYmUg
+J29uIHRoZSB3aXJlJywgd2hpY2ggaXMgdGhlbiByZWFkIGluIGF0IHRoZSBmYXIgZW5kLiBUaGUg
+YnVuZGxlIGNhbiBjb250YWluIGV4Y2VzcyBkYXRhIHRvIGVuc3VyZSBvdmVybGFwIGJldHdlZW4g
+c2l0ZSB0cmFuc21pc3Npb25zLg0KDQpZb3UganVzdCBydW4gdGhlIHByb2plY3RzIGluIHRoZSBz
+YW1lIHdheSBidXQgYWRkIHRoZSBjb3VyaWVyIHN0ZXAgZm9yIHNoaXBwaW5nIHRoZSBDRCwgb3Ig
+c29tZSBwYXNzd29yZCBwcm90ZWN0ZWQgYXJjaGl2ZSBhcyBwZXIgeW91ciBzZWN1cml0eSBuZWVk
+cy4NCg0KRXZlcnl0aGluZyBpcyBzaG91bGQgYmUganVzdCBmaW5lIChtb3JlIG9yIGxlc3MpIGFu
+ZCBzb21laG93IGl0IHdpbGwganVzdCB3b3JrLiA7LSkNCg0KTUhTPj4+IEkgYW0gaG9wZWZ1bCEg
+VGhhbmtzIGEgbG90DQoNCi0tDQpQaGlsaXANCmh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVl
+c3Rpb25zLzExNzkyNjcxL2hvdy10by1naXQtYnVuZGxlLWEtY29tcGxldGUtcmVwbw0KDQpEZWZh
+dWx0IFByb2ZpbGUNCioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqIFBsZWFz
+ZSBjb25zaWRlciB0aGUgZW52aXJvbm1lbnQgYmVmb3JlIHByaW50aW5nIHRoaXMgZW1haWwgISBU
+aGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgY29tbXVuaWNhdGlvbiBpcyBwcm9wcmll
+dGFyeSB0byBJc3JhZWwgQWVyb3NwYWNlIEluZHVzdHJpZXMgTHRkLiBhbmQvb3IgdGhpcmQgcGFy
+dGllcywgbWF5IGNvbnRhaW4gY29uZmlkZW50aWFsIG9yIHByaXZpbGVnZWQgaW5mb3JtYXRpb24s
+IGFuZCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgdXNlIG9mIHRoZSBpbnRlbmRlZCBhZGRyZXNz
+ZWUgdGhlcmVvZi4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIGFkZHJlc3NlZSwgcGxlYXNl
+IGJlIGF3YXJlIHRoYXQgYW55IHVzZSwgZGlzY2xvc3VyZSwgZGlzdHJpYnV0aW9uIGFuZC9vciBj
+b3B5aW5nIG9mIHRoaXMgY29tbXVuaWNhdGlvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5
+b3UgcmVjZWl2ZSB0aGlzIGNvbW11bmljYXRpb24gaW4gZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhl
+IHNlbmRlciBpbW1lZGlhdGVseSBhbmQgZGVsZXRlIGl0IGZyb20geW91ciBjb21wdXRlci4gVGhh
+bmsgeW91LiBWaXNpdCB1cyBhdDogd3d3LmlhaS5jby5pbA0K
