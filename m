@@ -2,136 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BBAE1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 15:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AFC91F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 15:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbeJCWIf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 18:08:35 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33138 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726748AbeJCWIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 18:08:35 -0400
-Received: by mail-ed1-f66.google.com with SMTP id g26-v6so5739076edp.0
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 08:19:44 -0700 (PDT)
+        id S1726936AbeJCWZh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 18:25:37 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:40246 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726748AbeJCWZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 18:25:37 -0400
+Received: by mail-lj1-f194.google.com with SMTP id r83-v6so5544432ljr.7
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 08:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=9NM2grs9soOCxy+Ssx4bb/qep9sqkp3EXELZATzZ9JY=;
-        b=prlIyWHpU6CTeeOlvF6roHore07WS2Xn9G+1awQg5BBG1cEltKNgOIbkU2R7TI1+It
-         I4U0+0jXaS3Xkmq4VJ/CKmsW1i5i/OzsBzBpCaXaldNtmWOJKTz5yhj8c3jIp8mSgyIO
-         HjyrFMdwcBgxP9F5jRxCTPlPa+2CMtNMuLETpolwSZ7kp3J6AtfFE46K1D4kQD376US6
-         Igqys0F34f999VNOqkZp2JHOPK6sblT8ixlKJwox3QI1mvSyeP+KgphcmowUYVez224Y
-         B7g8Qk3UK1jbLx3GJxs8y9DFFzP791kbe2qOqpwGsMpflBWZf5RXFqyFFAetMl75a676
-         V+/g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JsOYLy30W/TX9SmNm1ss24L+cwKwyh/hvRjHzAvMNEc=;
+        b=pNFRqqxeGqhNl6x/CDBRAK7GnbvQVb4QLqhH0L1AqmFliFR//6pPmKPN3qsku4BNlP
+         C36GJVzmltMhjGRVXGnv9D+lFGRj+lG8JsFYaS9HTaM//C2LOmR8Zs5866CrQJMjpmZq
+         KQkJvzqMgVNhBEVEn9iG3Q92f9AAd2TYZRIt3Tl66Bx7UYpFisqMcfLmRUt1GjU9p3hT
+         8r8k8VSfjSbDBjMYYhCo69qqQsDQb3g9dap1GslbcVdKlzDPY93jTtml7U0VFoKsCAf9
+         HYrJps0pdniIHc+v++aG/2n9o606WwU2bj6cu3sK4rG7zP5jaLl4SEARl92m/TtUNBqj
+         Xqyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=9NM2grs9soOCxy+Ssx4bb/qep9sqkp3EXELZATzZ9JY=;
-        b=V/rR8mjqxBpKhUDg7m0aaEE1yne7oikMHe+XLfmZKf/BNwEgIH6l4cmNubSBRwWOoV
-         KzURgfm7vm/OgtB4O+tL6viqFzal2WOSMyyhkSND+lDoyCxB5hpbOwbp37bXMM8YQgUN
-         Wh4uVHhxXIrQJkidkanrxosJp2hhpyiRY+w6cwcA4lV35CIhHO+WhrjCh4nZvnvWOuQE
-         G7IdgwYQ56qZYYFD+CZQQdVOEwEly4mZ/BviofDgCrVbkoFqnAYbbWCtxIaDpBj+SOoE
-         n3dvZVTDwu49KBKFtiUQT3FbjXqIDmnTvVJttkYvlQmL1JXo/TFyQPr6FHesdMarKxd5
-         ZfMQ==
-X-Gm-Message-State: ABuFfoh1d77MF3zl5V7F/mRLKxSI0Vn0UJLsVzTMmbftotBo1HihqgLC
-        TUNsn5AdaIHV1JY5RtOiUNgj5+ov
-X-Google-Smtp-Source: ACcGV62+z9MOWJwRlZynM1uQKXQKVAHzLprk7RMg+oFFBgPDKMCX+3yupHF4lheITV1IB46Pe98wfg==
-X-Received: by 2002:a17:906:33c7:: with SMTP id w7-v6mr2461394eja.28.1538579983102;
-        Wed, 03 Oct 2018 08:19:43 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id b26-v6sm550199edw.0.2018.10.03.08.19.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Oct 2018 08:19:42 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit graph
-References: <87tvm3go42.fsf@evledraar.gmail.com> <20181003133650.GN23446@localhost> <87r2h7gmd7.fsf@evledraar.gmail.com> <20181003141732.GO23446@localhost> <87o9cbglez.fsf@evledraar.gmail.com> <20181003145308.GP23446@localhost>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181003145308.GP23446@localhost>
-Date:   Wed, 03 Oct 2018 17:19:41 +0200
-Message-ID: <87murvgir6.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JsOYLy30W/TX9SmNm1ss24L+cwKwyh/hvRjHzAvMNEc=;
+        b=L5YcFi2TAmo7mdkJEclvHzcjnwyYEG6TcMMVP1TW9a7VJoGGNWgKtsoHd9zN9Rr9AH
+         UYyOn5zR+s8bYGjFeDCQbMf09JfT8pf8f2Kwun5v25Fe+WGo4tTB+D5b7lxIdOKmNQ5o
+         MB/8mo+DCI/FyH+UPzN1IUvv9cw5L7qJs0GS2oTX4EN0FmaFveD9LV2g/sYdTwTISaTN
+         pFCZND3pGmET4kepvcYtZhVmzAtXnhrvmFE7rtMbZUeZPf4ZWUr61LclSGJ82jGp7thd
+         7KprhIUi8vnxTei93JDF5Ncm1C3fnHWAD5sUQp/2JLF4rXHJ5DWIJhwTEaqdWtv3oshb
+         yY/A==
+X-Gm-Message-State: ABuFfoh7QpNaIfuiJ3PL0+T8HlDkeLhsvLNsxiFfHpPAOIt97mZwkKL4
+        vazs2EYlLyLz1G8lHrFWEEE=
+X-Google-Smtp-Source: ACcGV60JMkAoaPsWAs1BOKkQdulNkB+AuwcWWgjZy6eopqWbtKyGpGNCPWr+18DIbU0zJJ2AqMjG5w==
+X-Received: by 2002:a2e:6e08:: with SMTP id j8-v6mr1635116ljc.61.1538581001928;
+        Wed, 03 Oct 2018 08:36:41 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id u196-v6sm471838lja.42.2018.10.03.08.36.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 03 Oct 2018 08:36:40 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        gitgitgadget@gmail.com, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH 0/2] commit-graph: more leak fixes
+Date:   Wed,  3 Oct 2018 17:36:21 +0200
+Message-Id: <cover.1538579441.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.19.0.329.g76f2f5c1e3
+In-Reply-To: <1686b309-e0af-5518-0fa5-4635b2f481b9@gmail.com>
+References: <1686b309-e0af-5518-0fa5-4635b2f481b9@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Derrick,
 
-On Wed, Oct 03 2018, SZEDER Gábor wrote:
+These two patches on top of yours make the test suite (i.e., the subset
+of it that I run) leak-free with respect to builtin/commit-graph.c and
+commit-graph.c.
 
-> On Wed, Oct 03, 2018 at 04:22:12PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>
->> On Wed, Oct 03 2018, SZEDER Gábor wrote:
->>
->> > On Wed, Oct 03, 2018 at 04:01:40PM +0200, Ævar Arnfjörð Bjarmason wrote:
->> >>
->> >> On Wed, Oct 03 2018, SZEDER Gábor wrote:
->> >>
->> >> > On Wed, Oct 03, 2018 at 03:23:57PM +0200, Ævar Arnfjörð Bjarmason wrote:
->> >> >> Don't have time to patch this now, but thought I'd send a note / RFC
->> >> >> about this.
->> >> >>
->> >> >> Now that we have the commit graph it's nice to be able to set
->> >> >> e.g. core.commitGraph=true & gc.writeCommitGraph=true in ~/.gitconfig or
->> >> >> /etc/gitconfig to apply them to all repos.
->> >> >>
->> >> >> But when I clone e.g. linux.git stuff like 'tag --contains' will be slow
->> >> >> until whenever my first "gc" kicks in, which may be quite some time if
->> >> >> I'm just using it passively.
->> >> >>
->> >> >> So we should make "git gc --auto" be run on clone,
->> >> >
->> >> > There is no garbage after 'git clone'...
->> >>
->> >> "git gc" is really "git gc-or-create-indexes" these days.
->> >
->> > Because it happens to be convenient to create those indexes at
->> > gc-time.  But that should not be an excuse to run gc when by
->> > definition no gc is needed.
->>
->> Ah, I thought you just had an objection to the "gc" name being used for
->> non-gc stuff,
->
-> But you thought right, I do have an objection against that.  'git gc'
-> should, well, collect garbage.  Any non-gc stuff is already violating
-> separation of concerns.
+The first could be squashed into your patch 1/2. It touches the same
+function, but it requires a different usage to trigger, so squashing it
+in would require broadening the scope. I understand if you don't want to
+do that.
 
-Ever since git-gc was added back in 30f610b7b0 ("Create 'git gc' to
-perform common maintenance operations.", 2006-12-27) it has been
-described as:
+If you want to pick these up as part of your re-roll in any way, shape
+or form, go ahead. If not, they can go in separately, either in parallel
+or after your series lands. Whatever the destiny of this posting, I'll
+follow through as appropriate.
 
-    git-gc - Cleanup unnecessary files and optimize the local repository
+Martin
 
-Creating these indexes like the commit-graph falls under "optimize the
-local repository", and 3rd party tools (e.g. the repo tool doing this
-came up on list recently) have been calling "gc --auto" with this
-assumption.
+Martin Ågren (2):
+  commit-graph: free `struct packed_git` after closing it
+  builtin/commit-graph.c: UNLEAK variables
 
->>  but if you mean we shouldn't do a giant repack right after
->> clone I agree.
->
-> And, I also mean that since 'git clone' knows that there can't
-> possibly be any garbage in the first place, then it shouldn't call 'gc
-> --auto' at all.  However, since it also knows that there is a lot of
-> new stuff, then it should create a commit-graph if enabled.
+ builtin/commit-graph.c | 11 ++++++-----
+ commit-graph.c         |  1 +
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-Is this something you think just because the tool isn't called
-git-gc-and-optimzie, or do you think this regardless of what it's
-called?
+-- 
+2.19.0.329.g76f2f5c1e3
 
-I don't see how splitting up the entry points for "detect if we need to
-cleanup or optimize the repo" leaves us with a better codebase for the
-reasons noted in
-https://public-inbox.org/git/87pnwrgll2.fsf@evledraar.gmail.com/
