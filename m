@@ -2,76 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 031F61F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 07:49:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A75C21F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 08:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727355AbeJCOgp convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 3 Oct 2018 10:36:45 -0400
-Received: from mail-qt1-f170.google.com ([209.85.160.170]:33803 "EHLO
-        mail-qt1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726883AbeJCOgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 10:36:45 -0400
-Received: by mail-qt1-f170.google.com with SMTP id x23-v6so4938337qtr.1
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 00:49:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9BZm1h2hbY6X91cR83HNjs7mh+cogK7ZdbykIBMUuHk=;
-        b=dq2R1uMcCJEuhknIWuDAbhR6PG3ppAeykQeZ7Wb0lkmWvgFhwbRlkj0OQV1BUe3ouh
-         Emr7uXED1SuMW5ixM9eHU7ohCdFX7WHndY98yKIgSybjxMs/uRfY3AV9tMROuMrLlKoB
-         hlzupdQNuHwFhCMy913ngjjqrBm1y2HdTKph2+SMtuyo7jMfGTm9pKlBXTxegXZmM/RP
-         Atd1LSAgxvkfsD5JmcpxjKpxagwd++yjQB8NThTSxo892vu/Cpr5wJjmk8HcoKgYh1+L
-         xPw8Lekfed0Vv2b2CtikjuY1XPOlhYSn23OUEDG8uvbLAGF6wZiYvNh3gmX/A9aiDJDd
-         aNyQ==
-X-Gm-Message-State: ABuFfoiUkp7eBxDApAtyyf3Du8ZbRtcBB7Q5BeEicGynkHvIs6av74Ia
-        Cr6jz0zDNqzWRVeqLf29MwHzjwZTmyUv0N0Xrv0=
-X-Google-Smtp-Source: ACcGV60TCZcppBfoG/HSAAfWuzR/1bX2/gO7qlp/h6ihgAgxHSn8/I4gcEkQEVw28SluKvybTx6zaBLss5aZ1Mw2axw=
-X-Received: by 2002:a0c:b3d6:: with SMTP id b22-v6mr181371qvf.203.1538552970379;
- Wed, 03 Oct 2018 00:49:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180922180500.4689-1-pclouds@gmail.com> <20180929191029.13994-1-pclouds@gmail.com>
- <20180929191029.13994-9-pclouds@gmail.com> <CAPig+cQBiXRvzf6skmmyVap-6fLEbmVRGNBQqD4H-HfAPampjA@mail.gmail.com>
- <CACsJy8C1niWzC8GPiKkXmyBwxbctb-vmM51CVts12TMzLFnJVA@mail.gmail.com>
-In-Reply-To: <CACsJy8C1niWzC8GPiKkXmyBwxbctb-vmM51CVts12TMzLFnJVA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Oct 2018 03:49:20 -0400
-Message-ID: <CAPig+cSHRus=zTd0reWoFMi+ERbjQO92tNhJBT9jnmUP8vvm3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 8/8] reflog expire: cover reflog from all worktrees
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+        id S1727439AbeJCPRF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 11:17:05 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:54520 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727421AbeJCPRF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 11:17:05 -0400
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id 7EA87335D12;
+        Wed,  3 Oct 2018 08:29:42 +0000 (UTC)
+Message-ID: <1538555376.1042.3.camel@gentoo.org>
+Subject: Re: [PATCH v2] gpg-interface.c: detect and reject multiple
+ signatures on commits
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com
+Date:   Wed, 03 Oct 2018 10:29:36 +0200
+In-Reply-To: <20180817073441.5247-1-mgorny@gentoo.org>
+References: <20180817073441.5247-1-mgorny@gentoo.org>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-KPIhO+zMk07vzieEYh0v"
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 2, 2018 at 12:16 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Sep 30, 2018 at 7:36 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Sat, Sep 29, 2018 at 3:11 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> > > +--single-worktree::
-> > > +       By default when `--all` is specified, reflogs from all working
-> > > +       trees are processed. This option limits the processing to reflogs
-> > > +       from the current working tree only.
-> >
-> > Bikeshedding: I wonder if this should be named "--this-worktree" or
-> > "--this-worktree-only" or if it should somehow be orthogonal to --all
-> > rather than modifying it. (Genuine questions. I don't have the
-> > answers.)
->
-> It follows a precedent (made by me :p) which is rev-list
-> --single-worktree. I doubt that option is widely used though so we
-> could still rename it if there's a better name. I made
-> --single-worktree to contrast "all worktrees" by default. Even if it's
-> "this/current worktree" it still has to somehow say "everything in
-> this worktree" so I felt modifying --all was a good idea.
 
-Precedent overrides bikeshedding, so leaving it as-is is fine.
+--=-KPIhO+zMk07vzieEYh0v
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, 2018-08-17 at 09:34 +0200, Micha=C5=82 G=C3=B3rny wrote:
+> GnuPG supports creating signatures consisting of multiple signature
+> packets.  If such a signature is verified, it outputs all the status
+> messages for each signature separately.  However, git currently does not
+> account for such scenario and gets terribly confused over getting
+> multiple *SIG statuses.
+>=20
+> For example, if a malicious party alters a signed commit and appends
+> a new untrusted signature, git is going to ignore the original bad
+> signature and report untrusted commit instead.  However, %GK and %GS
+> format strings may still expand to the data corresponding
+> to the original signature, potentially tricking the scripts into
+> trusting the malicious commit.
+>=20
+> Given that the use of multiple signatures is quite rare, git does not
+> support creating them without jumping through a few hoops, and finally
+> supporting them properly would require extensive API improvement, it
+> seems reasonable to just reject them at the moment.
+>=20
+
+Gentle ping.
+
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--=-KPIhO+zMk07vzieEYh0v
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlu0ffFfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQpiYRAAoGpXOaIkNghzvbdbRcNiwoERcPXT79MgIx9ATKcL6tQBDCEOEJXDK2ll
+6EcIq3m+r+NoWvLhfUNZ6qiWBDbCEJjBkevbEjUHwYyLyimWp0e9vVpd5ZZDGmcD
+fYEcDjZiKEKHv9d+D+IJDXqFlSPVm+ujXOGHekkjKA+RPJIIU2vbx4svKxOYiuS/
+zcE/C/unKqNu/pD3mkkISzmx+BTD6OsmMlorYNtf4niZ/00KTtyNBdWPOUpwG8N/
+BwbnidVGUm3x14Vp/HMk0TJmUlDzlWHX+HpoUKOEWlzG83v3oj+u1pq4Fqa+MBsA
+8QoAqW6L4GtM5wqPNoJFF5IY3RBHmIa72CXbPNycbau8/bJXH2r82pMSLJpqwxzc
+Oq8/Zepr1NIpIHrMlI7Q37KBCPcF25Vn8n5E7FCe1Z2Dv51o+SCrhC6rTyF86GZy
+UoFnvwxiWx4AtNUvApbq/3+0LL1d7vRPZWvm3KZvq3/e7F/Bl90xO2NXWOmlL+Ku
+I7+0nvKX7Tzfl0r2bn8XKpCL9iLiMdr4YtVfltFRbfK+2c+JdPbeQ243HcPORPZl
+4C+bSK3Q3WgStVAk0O8Lfjr7j9aICN4X7DKCML5EMU9byIrgFNLnBZdpKdmgiMtI
+A+j2Fdgndh8D60wIwnGeUxoWucjSDlEb5hVKlYWrLNt26Y4SL/w=
+=2fIf
+-----END PGP SIGNATURE-----
+
+--=-KPIhO+zMk07vzieEYh0v--
+
