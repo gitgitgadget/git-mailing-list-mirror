@@ -2,191 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEA3B1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 23:05:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E59F61F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 23:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbeJDFza (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 01:55:30 -0400
-Received: from mail-vs1-f73.google.com ([209.85.217.73]:46159 "EHLO
-        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbeJDFza (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 01:55:30 -0400
-Received: by mail-vs1-f73.google.com with SMTP id t144-v6so2542366vsc.13
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 16:05:03 -0700 (PDT)
+        id S1726752AbeJDF6r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 01:58:47 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:33175 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726198AbeJDF6r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 01:58:47 -0400
+Received: by mail-ot1-f67.google.com with SMTP id q50so3162241otd.0
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 16:08:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=6nEfDjltC21xAK0yk3RkvLjBSkCg8hcjBwVD5XTBP/M=;
-        b=BoPtyMnvGvbIJYCzVzGXzBj9tMtJgEEaF/bJ1ZjDTC/luR2f2CU8vgcS0C8jaJQDlL
-         wDQgofUNO1OYbhSTfO6IJxem1eCanmoqju4tBTYP4IXG9kmSMxCTRRl/FNoja55Tkc6/
-         yCPdyule/wmicR77wCldgm9YU0Rd5zF/RzRp19HXTlF80JVkxYqokFO4y0LZMpl4OZ28
-         BRuUSYaSGiUruvhiUawqYi1X+dFD+YL8zmSG9PWpeNHBfEOkDckWPvRu2OiwkAZJNs/W
-         tTsVMb/dmJpd64OsDvwDjUsJm2O480d1zT4NEpoG/ySJ+CoeEzqy1P8hWek+bfLyMkeP
-         Viuw==
+        bh=ylzAUGveaHfl0YKzHQvFq9pFMPOEhoFgKQKtYnaGKVo=;
+        b=bcHdVhTESp2En4ip5METlQys8ff7+SVgoTx2dHMsMQXWsRspeQEEUTIyaLfdYol/V1
+         AG4TBECFugZqW562j7OUuecWdjwEhzo4RIHcdw0kXcNnmYif5wzn05AMJ8l2zI8aXNvf
+         c+Ygbfp0NOdNvoSOiURHrlMp3rqeX2Y+LStYFXtxSdzkKsgo+zS8mMqxNzJu0o9oMO3c
+         OWq3NQA2VKglI2S0o6VkkTRZ9tZbX/bNsKaBgxOFVfIlEJwYxgG9b/p2LaZ0J2RhgY1e
+         5NHovZjeV6c+PmfQS0gvvnmCdErV5ipNb64aH/rUMelDhIJKZtqO2JBBFAu4wGg16WhU
+         nuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=6nEfDjltC21xAK0yk3RkvLjBSkCg8hcjBwVD5XTBP/M=;
-        b=nzdpGaanlxGJx3qdceB46eVLtArbcxRqiZPFSda63wrQtl+QAK4ANztAGrKZhS4E9L
-         Ckpbb2hdCKzHxjVsJM+L8/xRx3mEyZ4ecA/jZhoUUHs2CE1tPrnpDDD+3iSZKPa4gyGG
-         NDu8WvEBJP8EEOYqnHa6s27mgbR3DpVxf0xDb3xKg0PgD89gqooPPzad6jR+YrVCAtn8
-         kPkujYq21tygXF9CpoTnb4lUgKI9yL2Ktqwg/Qa/Y7J3CM0SXOtD1xTraZ7AnOW2zJdN
-         wqGJ6UE0tYplm4zuog0ku7Vz1xCC/bDLWfTXO/uf1c1xKROPWMvjl64sVlQIBGne53td
-         yKOQ==
-X-Gm-Message-State: ABuFfohIZPL/XH0GSk8F/U9H8QNDaIfwdB1pgmE/02K4pSppfW7HfxHi
-        DuiWb3crG5tVV7jtEyVL1UeWxPMs7H31m1keQdYqiReOmDajc4Z8MzIlUARBukOAEwB9Z27hhUw
-        UZZIrOn5dj3xmZMVqW5ZacuqmLLd5KsVuz6sHiw4/a1t360eU8VE2WxSD+aPYt18DiBMJsiGFoX
-        HF
-X-Google-Smtp-Source: ACcGV63LUirXKGnKRH4+VRRDuiNfxqVQWxsuKrhw9XJ2ktB9sdqqNxRTKlQ3UhbX3AaYCXINb/PgrdoS2BB6gygr1zUH
-X-Received: by 2002:a67:cf87:: with SMTP id g7-v6mr3432120vsm.12.1538607902989;
- Wed, 03 Oct 2018 16:05:02 -0700 (PDT)
-Date:   Wed,  3 Oct 2018 16:04:53 -0700
-In-Reply-To: <cover.1538607476.git.jonathantanmy@google.com>
-Message-Id: <1142e0a4e1db9f4f5c0cee41e936a36deb64bd5d.1538607476.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20180924154516.48704-1-jonathantanmy@google.com> <cover.1538607476.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v2 2/2] fetch-pack: exclude blobs when lazy-fetching trees
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ylzAUGveaHfl0YKzHQvFq9pFMPOEhoFgKQKtYnaGKVo=;
+        b=J18VfRIMgvjUK3c5lHEUpRke78kaHAIeRKceQtxKFzhVYIy10b//BTe2S64KjBI5Sp
+         P7n0mIeD5D7aI07UahQ9IfL/fYF+jqxTHSg2VcJf4ODqwQRDb2OaF7pBl7W+aDpscibT
+         FdrygeXU+LXjg8oiuqENiJVcR04lkynjnFIp9cMuDNgaKHCeW5cMYMf3Y3QhkACtsDaK
+         wo1VA1cfSl2L3N5MAIFYYw39NA+YNWIdML7hU3Ccop5/JaJ+RkMIMqHndOJcdOEivvZ6
+         JSuyhf+xxUPb/wklqFo6bycVf4mv4Xk5OaHgRcJz9k/yl6ibRe5T5sp1EOoOqX+BPDRF
+         nEJQ==
+X-Gm-Message-State: ABuFfogyGz6Pj38ugGiYUsvRVkmdsA05aIiai1qBmJfB1M0TnqR9EKWC
+        CH+0EVIvuq2y36rHQo4ByNmPlZRb+vz4FgDG/RdNCtqb9aWP
+X-Google-Smtp-Source: ACcGV62Gff4apUoeTRVakU4ntNSB3iN1Fh+d1Vfu2L10Wg0Tch+fSoLYz6yH2sVdT6nso00CqUm9MS+QEO4ULqTbRJo=
+X-Received: by 2002:a9d:3ea5:: with SMTP id b34-v6mr1996139otc.341.1538608098898;
+ Wed, 03 Oct 2018 16:08:18 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1533854545.git.matvore@google.com> <cover.1538592829.git.matvore@google.com>
+In-Reply-To: <cover.1538592829.git.matvore@google.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Wed, 3 Oct 2018 16:08:06 -0700
+Message-ID: <CAMfpvhLmXyk5MKoe=zC_sVgURwcxLBWL3zZWkrncGeL0FcyQDQ@mail.gmail.com>
+Subject: Re: [PATCH v10 0/8] filter: support for excluding all trees and blobs
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
+Cc:     Stefan Beller <sbeller@google.com>, git@jeffhostetler.com,
+        jeffhost@microsoft.com, Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A partial clone with missing trees can be obtained using "git clone
---filter=tree:none <repo>". In such a repository, when a tree needs to
-be lazily fetched, any tree or blob it directly or indirectly references
-is fetched as well, regardless of whether the original command required
-those objects, or if the local repository already had some of them.
+On Wed, Oct 3, 2018 at 12:52 PM Matthew DeVore <matvore@google.com> wrote:
+>
+> This is a minor change to the previous rollup. It moves positional
+> arguments to the end of git-rev-list invocations. Here is an interdiff
+> from v9:
+...
+There is another problem with this patchset related to dropped exit
+codes and pipelines. In t6112, we run "git cat-file -t" on an object
+with was rm'd without being promised. It was printing an error and
+going undetected because it was upstream in a pipeline. The file was
+removed in the previous test.
 
-This is because the fetch protocol, which the lazy fetch uses, does not
-allow clients to request that only the wanted objects be sent, which
-would be the ideal solution. This patch implements a partial solution:
-specify the "blob:none" filter, somewhat reducing the fetch payload.
+So I fixed the previous test to clone the repository before
+manipulating it, and I fixed the latter test to not mask Git exit
+codes :) (This is a really insidious pattern and I should have taken
+it more seriously.) Below is an interdiff. The two tests are added in
+different commits, so each commit had to be fixed up.
 
-This change has no effect when lazily fetching blobs (due to how filters
-work). And if lazily fetching a commit (such repositories are difficult
-to construct and is not a use case we support very well, but it is
-possible), referenced commits and trees are still fetched - only the
-blobs are not fetched.
+I'll send a re-roll in two days or so if there are no more comments.
 
-The necessary code change is done in fetch_pack() instead of somewhere
-closer to where the "filter" instruction is written to the wire so that
-only one part of the code needs to be changed in order for users of all
-protocol versions to benefit from this optimization.
+diff --git a/t/t6112-rev-list-filters-objects.sh
+b/t/t6112-rev-list-filters-objects.sh
+index 5a61614b1..c8e3d87c4 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -210,16 +210,21 @@ test_expect_success 'verify sparse:oid=oid-ish
+omits top-level files' '
+ test_expect_success 'rev-list W/ --missing=print and
+--missing=allow-any for trees' '
+         TREE=$(git -C r3 rev-parse HEAD:dir1) &&
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- fetch-pack.c             | 14 ++++++++++++++
- fetch-pack.h             |  7 +++++++
- t/t0410-partial-clone.sh | 41 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+)
+-        rm r3/.git/objects/$(echo $TREE | sed "s|^..|&/|") &&
++        # Create a spare repo because we will be deleting objects
+from this one.
++        git clone r3 r3.b &&
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index b9b1211dda..5d82666a52 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1615,6 +1615,20 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
- 	if (nr_sought)
- 		nr_sought = remove_duplicates_in_refs(sought, nr_sought);
- 
-+	if (args->no_dependents && !args->filter_options.choice) {
-+		/*
-+		 * The protocol does not support requesting that only the
-+		 * wanted objects be sent, so approximate this by setting a
-+		 * "blob:none" filter if no filter is already set. This works
-+		 * for all object types: note that wanted blobs will still be
-+		 * sent because they are directly specified as a "want".
-+		 *
-+		 * NEEDSWORK: Add an option in the protocol to request that
-+		 * only the wanted objects be sent, and implement it.
-+		 */
-+		parse_list_objects_filter(&args->filter_options, "blob:none");
-+	}
+-        git -C r3 rev-list --quiet --missing=print --objects HEAD
+>missing_objs 2>rev_list_err &&
++        rm r3.b/.git/objects/$(echo $TREE | sed "s|^..|&/|") &&
 +
- 	if (!ref) {
- 		packet_flush(fd[1]);
- 		die(_("no matching remote head"));
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 5b6e868802..43ec344d95 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -43,6 +43,13 @@ struct fetch_pack_args {
- 	unsigned from_promisor:1;
- 
- 	/*
-+	 * Attempt to fetch only the wanted objects, and not any objects
-+	 * referred to by them. Due to protocol limitations, extraneous
-+	 * objects may still be included. (When fetching non-blob
-+	 * objects, only blobs are excluded; when fetching a blob, the
-+	 * blob itself will still be sent. The client does not need to
-+	 * know whether a wanted object is a blob or not.)
-+	 *
- 	 * If 1, fetch_pack() will also not modify any object flags.
- 	 * This allows fetch_pack() to safely be called by any function,
- 	 * regardless of which object flags it uses (if any).
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index cfd0655ea1..c521d7d6c6 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -182,6 +182,47 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
- 	grep "git< fetch=.*ref-in-want" trace
++        git -C r3.b rev-list --quiet --missing=print --objects HEAD \
++                >missing_objs 2>rev_list_err &&
+         echo "?$TREE" >expected &&
+         test_cmp expected missing_objs &&
+
+         # do not complain when a missing tree cannot be parsed
+         test_must_be_empty rev_list_err &&
+
+-        git -C r3 rev-list --missing=allow-any --objects HEAD >objs
+2>rev_list_err &&
++        git -C r3.b rev-list --missing=allow-any --objects HEAD \
++                >objs 2>rev_list_err &&
+         ! grep $TREE objs &&
+         test_must_be_empty rev_list_err
  '
- 
-+test_expect_success 'fetching of missing blobs works' '
-+	rm -rf server repo &&
-+	test_create_repo server &&
-+	test_commit -C server foo &&
-+	git -C server repack -a -d --write-bitmap-index &&
-+
-+	git clone "file://$(pwd)/server" repo &&
-+	git hash-object repo/foo.t >blobhash &&
-+	rm -rf repo/.git/objects/* &&
-+
-+	git -C server config uploadpack.allowanysha1inwant 1 &&
-+	git -C server config uploadpack.allowfilter 1 &&
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "origin" &&
-+
-+	git -C repo cat-file -p $(cat blobhash)
-+'
-+
-+test_expect_success 'fetching of missing trees does not fetch blobs' '
-+	rm -rf server repo &&
-+	test_create_repo server &&
-+	test_commit -C server foo &&
-+	git -C server repack -a -d --write-bitmap-index &&
-+
-+	git clone "file://$(pwd)/server" repo &&
-+	git -C repo rev-parse foo^{tree} >treehash &&
-+	git hash-object repo/foo.t >blobhash &&
-+	rm -rf repo/.git/objects/* &&
-+
-+	git -C server config uploadpack.allowanysha1inwant 1 &&
-+	git -C server config uploadpack.allowfilter 1 &&
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config extensions.partialclone "origin" &&
-+	git -C repo cat-file -p $(cat treehash) &&
-+
-+	# Ensure that the tree, but not the blob, is fetched
-+	git -C repo rev-list --objects --missing=print $(cat treehash) >objects &&
-+	grep "^$(cat treehash)" objects &&
-+	grep "^[?]$(cat blobhash)" objects
-+'
-+
- test_expect_success 'rev-list stops traversal at missing and promised commit' '
- 	rm -rf repo &&
- 	test_create_repo repo &&
--- 
-2.19.0.605.g01d371f741-goog
+@@ -228,12 +233,13 @@ test_expect_success 'rev-list W/ --missing=print
+and --missing=allow-any for tre
 
+ test_expect_success 'verify tree:0 includes trees in "filtered" output' '
+         git -C r3 rev-list --quiet --objects --filter-print-omitted \
+-                --filter=tree:0 HEAD |
+-        awk -f print_1.awk |
++                --filter=tree:0 HEAD >revs &&
++
++        awk -f print_1.awk revs |
+         sed s/~// |
+-        xargs -n1 git -C r3 cat-file -t |
+-        sort -u >filtered_types &&
++        xargs -n1 git -C r3 cat-file -t >unsorted_filtered_types &&
+
++        sort -u unsorted_filtered_types >filtered_types &&
+         printf "blob\ntree\n" >expected &&
+         test_cmp expected filtered_types
+ '
