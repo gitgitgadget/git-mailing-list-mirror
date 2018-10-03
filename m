@@ -2,82 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 123A01F453
-	for <e@80x24.org>; Tue,  2 Oct 2018 23:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1921F454
+	for <e@80x24.org>; Wed,  3 Oct 2018 00:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725754AbeJCGcP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 02:32:15 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:42977 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725724AbeJCGcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 02:32:14 -0400
-Received: by mail-ed1-f67.google.com with SMTP id n2-v6so3649590edo.9
-        for <git@vger.kernel.org>; Tue, 02 Oct 2018 16:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EPbctQUTl94xU/Od3wgLPWy8Tju19SKqJiG2WLKi3A0=;
-        b=XLnDvxekTXYL8YGkB6EKKPUfuygw3v5hRS9S+pvZFca8j83YMNLnejy9gKKPEAoES/
-         zrQGC//2vMCQWthdyD0Tn0wbRnvFCk2Tu5skwiCgX6XAbDfpwE+gLfaWhIK1eTTOhaSn
-         95gU8JtaUOD47RVGZxKGWJUV/McTdJeEfQfWhhI6V1zGUqJLoRFX/FAcBCZZ6gQbUnlb
-         DaUpu+WDr8ujaYPrvy4qiYef3xfxGs2KeuAwbbVLpiTGkC9HUlq0gaRvZLB/IAdKiPhz
-         HjXi639MEIDIBtP2xq7sj6YcvPTZ4iwobrTHROp4OPtB3ufKJEX/Q/coMDzoCyA6ATed
-         l+Zg==
+        id S1726394AbeJCG4A (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 02:56:00 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:37196 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726251AbeJCG4A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 02:56:00 -0400
+Received: by mail-ot1-f45.google.com with SMTP id o13-v6so3799008otl.4
+        for <git@vger.kernel.org>; Tue, 02 Oct 2018 17:10:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EPbctQUTl94xU/Od3wgLPWy8Tju19SKqJiG2WLKi3A0=;
-        b=ONbJNOb/5LLsltf+6CXbewlMFj5Q7jofdWU2Wd8JBBPcUbNcbrm6n3a72HqI79+Dk7
-         t84Zty8RULNblII4tdL3Q0dDy+vc5S3cxymyyFTKywsP8vLtFcZuNChk643cYknjMTx+
-         gvzS/cPYAMm6G60wifVduvXXbAY0dcV1xdfQSyS3WhCyoEvRQUQq83sx16zpTwZ2MVth
-         99wK8Pp8J3uAsCwsueCHp73xtS6WFCeqaNimEVmiygrGxjaARZr5KXGYs7g8evn8TafZ
-         0IT2c4u1Bk87636guce++CSUOr9einUe/jTJvKLjg9uqMdCARK8FdYSyc634qtC/Z1CV
-         Zglg==
-X-Gm-Message-State: ABuFfoh40PYihtM5f6RvZVrCOsNqFPv9M4G57nAR7jEKQLSpaAug2LFJ
-        1a6TEPzLRCPGteOQhCfLF9S4zzWMprdGZR6VD9A=
-X-Google-Smtp-Source: ACcGV60hAFA2frPKkEIqjD0lKS/P1F3IlvNjzEvkZ2enkgz3mQUcGt8cw26D2Uf69QrcwDsz3KHZLmhgn/EKo5htEAU=
-X-Received: by 2002:a50:93c5:: with SMTP id o63-v6mr26722647eda.154.1538523982838;
- Tue, 02 Oct 2018 16:46:22 -0700 (PDT)
+        bh=jJsvSbKYjcotZmERLHfSq5DIx+bFIc9u6yVa/OnsDvU=;
+        b=l0Qydu7bBjTkev6ANzgWzKocghVQf4jgIzU2ogBJegPhTkTrnC6WRMHpj98NjumhAB
+         lUxDrjGMhTo9evtU4d7tx2mE2corGc14km+nuyjTV51fujH76FF91f399SVi4wV6dZeX
+         QfoR0Nw1zTb/y9aRI3RTCAsGwnrGms0WzDFtwvzCjVX3dz2mUL6pWf8kkwlUgYGOb8uh
+         G/iuH3Xrn963c2233ieHt1W/zrh17JLO8bZ0SbVg8HsC9i2Il5pwW6sden1kwjNuxPAJ
+         vZ5hT2zaDO8MQmaeFIoUwmULz5tGYO2grAuw0NQNtALibA+wjbg8kc9EiiPfbg6Wth6Q
+         PCeg==
+X-Gm-Message-State: ABuFfogsNv3l/dUu2/dkBfeAnXDIQD/eDeWLA1vhZxNL64PeFS5zsfze
+        6DEoQNnVHtYHku1aiz1ChjbVKMhrQVxA13wU/Leouw==
+X-Google-Smtp-Source: ACcGV63J0GTwaln0LXpw/pdCVLWKNvvqw7soJ5649/Nshn8x4FXYtCDjxcH13LbwPOUuLPBWvJ/dn75MhVReQjWHviM=
+X-Received: by 2002:a9d:7a7:: with SMTP id 36mr4853237oto.72.1538525404926;
+ Tue, 02 Oct 2018 17:10:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181002211921.GA3322@sigill.intra.peff.net>
-In-Reply-To: <20181002211921.GA3322@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 2 Oct 2018 16:46:11 -0700
-Message-ID: <CA+P7+xp6B4K-bHnSV1npL-1pV30jENFyPKDmCmzEuRZKFK=jQg@mail.gmail.com>
-Subject: Re: [PATCH] more oideq/hasheq conversions
+References: <573B6BF5.1090004@kdbg.org> <20160517194533.GA11289@sigill.intra.peff.net>
+ <20160517195136.GB11289@sigill.intra.peff.net> <20160517195541.GC11289@sigill.intra.peff.net>
+ <CAM-tV-9gAGBLsEh3=aa-bHT2DmJb=dfahq+kUW+0GLoc7eFq0w@mail.gmail.com>
+ <CAM-tV--dHGJbxfWGKrRde+Q2-cnmCXNshQtX4PN7jnMWER_+bg@mail.gmail.com>
+ <20180625162308.GA13719@sigill.intra.peff.net> <CAM-tV-8sbbht7NUwf87-gq=+P=LNPyiEcv3zL+1BxfXK+ktmVA@mail.gmail.com>
+ <20180806212603.GA21026@sigill.intra.peff.net> <CAM-tV-_=4WuMGemm6RTB902-m8JfMKGp_OkQFuJMagPE8bOOtg@mail.gmail.com>
+ <20180908161316.GA326@sigill.intra.peff.net> <CAM-tV-9N36puQHKQ38JxAxNR5Zen=3jM7pG7vHioYvvGTxLHCg@mail.gmail.com>
+In-Reply-To: <CAM-tV-9N36puQHKQ38JxAxNR5Zen=3jM7pG7vHioYvvGTxLHCg@mail.gmail.com>
+From:   Noam Postavsky <npostavs@users.sourceforge.net>
+Date:   Tue, 2 Oct 2018 20:09:46 -0400
+Message-ID: <CAM-tV-8PRAPdrQie=Vy8hiRuDr6FaQzsJFuwMtR5PS6Y+Lbo+w@mail.gmail.com>
+Subject: Re: [BUG] A part of an edge from an octopus merge gets colored, even
+ with --color=never
 To:     Jeff King <peff@peff.net>
-Cc:     Git mailing list <git@vger.kernel.org>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Hemmo Nieminen <hemmo.nieminen@iki.fi>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 2, 2018 at 2:19 PM Jeff King <peff@peff.net> wrote:
+On Mon, 24 Sep 2018 at 20:27, Noam Postavsky
+<npostavs@users.sourceforge.net> wrote:
 >
-> We added faster equality-comparison functions for hashes in
-> 14438c4497 (introduce hasheq() and oideq(), 2018-08-28). A
-> few topics were in-flight at the time, and can now be
-> converted. This covers all spots found by "make coccicheck"
-> in master (the coccicheck results were tweaked by hand for
-> style).
+> On Sat, 8 Sep 2018 at 12:13, Jeff King <peff@peff.net> wrote:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Jake: I was surprised that this was not a "patch 2" on top of your
-> earlier coccicheck patch. Apologies if you were planning to send it out.
+> > Great (and sorry for the delayed response).
 >
+> No problem, I know it's not the most urgent bug ever :)
 
-Nope, I hadn't gotten around to this yet, thanks!
+Ping. :)
 
-The conversions also look good to me :)
-
-Regards,
-Jake
+> I managed to recast my script into the framework of the
+> other tests (see attached t4299-octopus.sh); it seems like it should
+> go into t4202-log.sh, but it's not clear to me how I can do this
+> without breaking all the other tests which expect a certain sequence
+> of commits.
