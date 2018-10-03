@@ -7,89 +7,245 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 500641F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 13:13:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A6B51F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 13:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726738AbeJCUBU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 16:01:20 -0400
-Received: from mout.web.de ([212.227.15.3]:36641 "EHLO mout.web.de"
+        id S1726834AbeJCUFK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 16:05:10 -0400
+Received: from mout.web.de ([212.227.15.4]:50289 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726630AbeJCUBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 16:01:20 -0400
+        id S1726748AbeJCUFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 16:05:10 -0400
 Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LilMD-1fZkJl2AlJ-00cz62; Wed, 03
- Oct 2018 15:12:52 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2MZY-1fonDq0vem-00s35j; Wed, 03
+ Oct 2018 15:16:42 +0200
 Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LilMD-1fZkJl2AlJ-00cz62; Wed, 03
- Oct 2018 15:12:52 +0200
-Subject: [PATCH v2 1/2] khash: factor out kh_release_*
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2MZY-1fonDq0vem-00s35j; Wed, 03
+ Oct 2018 15:16:42 +0200
+Subject: [PATCH v2 2/2] oidset: use khash
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <054cf3b9-e915-2669-0e24-a08f7dd1f35d@web.de>
-Date:   Wed, 3 Oct 2018 15:12:49 +0200
+Message-ID: <5efe6695-2e82-786c-1170-7874978cb534@web.de>
+Date:   Wed, 3 Oct 2018 15:16:39 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
 In-Reply-To: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:7S2hBB0o/LroOQv6uxYc0ezOxFJK8TeBPSw4CsGi7GJga14Ul7F
- gmVle8ok3IxNvMxJGWdsnMTCiEfrdD0klCzxv3iMFYi755hqgypVjsmLkoOAWFelIvADns3
- yPy+T5ym6Z7LdvcJ9E6xLUmMHhy2HgD+TH2yg/ewu3Q8eE4qnFRRsJR3uxqKmio4FnAVb6k
- Z3WwIJVev/jLkveIizfVQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SVrRKmLMxQU=:LFoTBKoS+ttS4k09DXIPRu
- YZClPpmyMGOnG/HTv58VRssE4Hamr+z4CNXWzIAky4QBtr+zpkBCkVh3fZFqJzDiwr3CLx3tQ
- MDj8hLhkac01l3c4FKyCZ3RnBAC0K+XJJmHf2NBrdObdw7Iiw2GdM5yHRMlIVW3VWIlTNf0zL
- KBYaAE51uTmLH9FT90V61Th3Hiv2/OZcCGJ+JnjQiUAD+/jlr/HDWk6fq109ms16Prvu1SJwt
- CgZx4LO1mUNYErtsvFhC2mCa8ScRCZB0DsLRcZmloaTmV28yNGo/4bzyTU/0S9uyHx9DNaMcZ
- 6jL/ABYPF7Fk/A/boJFwmqFj5JOjp7+TgeqXxLp6ayL3DcDU4V95tbz7Q1hDM8SczdCUVUqxf
- q3Ssvr7k915Mi8nFXnHEe41TzDjsNnYmXa3tlQwAkTkZzxU6nBf381macp/wl0lRXV95MNjjI
- LT74EapCO5JRNYaAdUj63CL7jpu3CgzbawSzmyUEMh2UCDUUcC6lyiJk+EgWr5y7w+x1eL87h
- e0CVxFedbpURjAvNmp0vgegFHZhq5AGz08z4h3548plBjHGMe+JsVhVveKKuHFdA4NLNiCuW8
- yRqJJFJyL1J1VF2H8BRbc0XkSp9CIdblEZtuYaJ3VeVxlrTf9Q+sljxrLIkVug1eW027geoji
- sQWwU7yf1Ev9/vFJvsfo+6JymD1Kz3OTdOvx4lY7+pBcUMTrkrfNobaqz0FdazYqvbPgEFHcw
- bTprkKQy5rN7ibzQ0e7i1qOHg+eUM92c3r8J75sv8yQfH76XHzRtU1fH+k6vbPiI1IFvsJfi1
- K/ek9NNXWWn73Pym0K+vBERkCrPCNMj0yco4kkQFQtH5iFwy98=
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:SV8Z+r+7R/TPj8O1Hakv8BurIJxbfDwnH6S0FjH1TUJYkl+mF40
+ jjRZeMkOpi9qP3FgAO6z4ASadQQYVz7ifyIA/Z1+mBbt4W1ELCfxDOeOktRAxv1WyC2//UJ
+ mi+J1i2KdZS5xuYLXLsXwALSvTgsKs1sJ5p7rgelKL/vJP4kAAsqFMZX7/L66Y4DJkbWTT+
+ EXHfcg8cqL+oegR8+cBLw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:b+LhKZvYbTU=:uDbgVKZ/u7XoEjevwjIodz
+ tuuzm5UzRplpUE475ghomOtYLd4u4z+xRN5LfD2B124TIo8BIgBiMHq1qL46FLKi9I9h3cwTe
+ Do9Cdo3I9oXOz2S9T/7Zjxih+dYzUgHQYsLCA4KHYz0U1RELWZp9Ilx+/3zFpecOKhdfCIGrt
+ gdIlR5+Bc1kXkkQQU1IW/dO0tRTeGPxMaFkzLhTv3Yogp7/5DDatv8WPtQHRuWo8Xkl6myYPP
+ O9yD2gIJjFJdfavrxP4bW1N06WCBjsN1pu6UNUc82kH7GZ9Eb8AsCoHkNqvwNUnuTRsV7v1Eg
+ z08hHmVEqcFCdN56OBjblfWJMDRIDXcjfziOWpt2+a7YVb9RZPBTZ0+ZHrkWuE5y//4peMyzY
+ e/8zu+K929NRjXwGa/ZMnt4ek94DixRSaN4z1/Lq3VTIlT2/4+5TaZAa6biyXQDGIbsgHFXi1
+ FQhNPWNYZ5tqKN8vBAo+mnqyrFjBB6PPzcVuMg3C5FU6gOaAghWl1878VTBjOPZV3wI40RzCU
+ DVZmFjHoqo7CjhHgTYTX0O+c/kUpDNtex9S6QUk0AZ/fakxtQBaCGvwKgudXv5XD7Z05mMLbt
+ HnFnepWXdO7ZBVwA0STvRTMuhAAIW0FVVgC1siufMJE72Pdh8qC6YJMVUV61FDGpNeZPLhAzG
+ 0/iRdreHbA8iLhiwoCXhqvcHQAJAe1sL5FcO7qhlCYjZ8Ug0zwmp1f8/seLriFU5S0j+q5kYh
+ wt2vDvVn2Xy95JU7KkgzpMSz6At6UEYKukRcJqpPge6AtkVnlO+LYXooWWNu7Wtu5pfdHrCkw
+ lXpXkIMi1hQ0THpl6uNqH4hxpxG3qnHWzySukDzfZWtzVVqf5Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a function for releasing the khash-internal allocations, but not the
-khash structure itself.  It can be used with on-stack khash structs.
+Reimplement oidset using khash.h in order to reduce its memory footprint
+and make it faster.
 
+Performance of a command that mainly checks for duplicate objects using
+an oidset, with master and Clang 6.0.1:
+
+  $ cmd="./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'"
+
+  $ /usr/bin/time $cmd >/dev/null
+  0.22user 0.03system 0:00.25elapsed 99%CPU (0avgtext+0avgdata 48484maxresident)k
+  0inputs+0outputs (0major+11204minor)pagefaults 0swaps
+
+  $ hyperfine "$cmd"
+  Benchmark #1: ./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'
+
+    Time (mean ± σ):     250.0 ms ±   6.0 ms    [User: 225.9 ms, System: 23.6 ms]
+
+    Range (min … max):   242.0 ms … 261.1 ms
+
+And with this patch:
+
+  $ /usr/bin/time $cmd >/dev/null
+  0.14user 0.00system 0:00.15elapsed 100%CPU (0avgtext+0avgdata 41396maxresident)k
+  0inputs+0outputs (0major+8318minor)pagefaults 0swaps
+
+  $ hyperfine "$cmd"
+  Benchmark #1: ./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'
+
+    Time (mean ± σ):     151.9 ms ±   4.9 ms    [User: 130.5 ms, System: 21.2 ms]
+
+    Range (min … max):   148.2 ms … 170.4 ms
+
+Initial-patch-by: Jeff King <peff@peff.net>
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
-1 tab = 4 spaces here.
+ fetch-pack.c |  2 +-
+ oidset.c     | 34 ++++++++++++----------------------
+ oidset.h     | 36 ++++++++++++++++++++++++++++--------
+ 3 files changed, 41 insertions(+), 31 deletions(-)
 
- khash.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/khash.h b/khash.h
-index 07b4cc2e67..d10caa0c35 100644
---- a/khash.h
-+++ b/khash.h
-@@ -82,11 +82,16 @@ static const double __ac_HASH_UPPER = 0.77;
- 	SCOPE kh_##name##_t *kh_init_##name(void) {							\
- 		return (kh_##name##_t*)xcalloc(1, sizeof(kh_##name##_t));		\
- 	}																	\
-+	SCOPE void kh_release_##name(kh_##name##_t *h)						\
-+	{																	\
-+		free(h->flags);													\
-+		free((void *)h->keys);											\
-+		free((void *)h->vals);											\
-+	}																	\
- 	SCOPE void kh_destroy_##name(kh_##name##_t *h)						\
- 	{																	\
- 		if (h) {														\
--			free((void *)h->keys); free(h->flags);					\
--			free((void *)h->vals);										\
-+			kh_release_##name(h);										\
- 			free(h);													\
- 		}																\
- 	}																	\
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 75047a4b2a..a839315726 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -536,7 +536,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
+ 	 * add to "newlist" between calls, the additions will always be for
+ 	 * oids that are already in the set.
+ 	 */
+-	if (!tip_oids->map.map.tablesize) {
++	if (!tip_oids->set.n_buckets) {
+ 		add_refs_to_oidset(tip_oids, unmatched);
+ 		add_refs_to_oidset(tip_oids, newlist);
+ 	}
+diff --git a/oidset.c b/oidset.c
+index 454c54f933..9836d427ef 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -3,38 +3,28 @@
+ 
+ int oidset_contains(const struct oidset *set, const struct object_id *oid)
+ {
+-	if (!set->map.map.tablesize)
+-		return 0;
+-	return !!oidmap_get(&set->map, oid);
++	khiter_t pos = kh_get_oid(&set->set, *oid);
++	return pos != kh_end(&set->set);
+ }
+ 
+ int oidset_insert(struct oidset *set, const struct object_id *oid)
+ {
+-	struct oidmap_entry *entry;
+-
+-	if (!set->map.map.tablesize)
+-		oidmap_init(&set->map, 0);
+-	else if (oidset_contains(set, oid))
+-		return 1;
+-
+-	entry = xmalloc(sizeof(*entry));
+-	oidcpy(&entry->oid, oid);
+-
+-	oidmap_put(&set->map, entry);
+-	return 0;
++	int added;
++	kh_put_oid(&set->set, *oid, &added);
++	return !added;
+ }
+ 
+ int oidset_remove(struct oidset *set, const struct object_id *oid)
+ {
+-	struct oidmap_entry *entry;
+-
+-	entry = oidmap_remove(&set->map, oid);
+-	free(entry);
+-
+-	return (entry != NULL);
++	khiter_t pos = kh_get_oid(&set->set, *oid);
++	if (pos == kh_end(&set->set))
++		return 0;
++	kh_del_oid(&set->set, pos);
++	return 1;
+ }
+ 
+ void oidset_clear(struct oidset *set)
+ {
+-	oidmap_free(&set->map, 1);
++	kh_release_oid(&set->set);
++	oidset_init(set, 0);
+ }
+diff --git a/oidset.h b/oidset.h
+index 40ec5f87fe..4b90540cd4 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -1,7 +1,8 @@
+ #ifndef OIDSET_H
+ #define OIDSET_H
+ 
+-#include "oidmap.h"
++#include "hashmap.h"
++#include "khash.h"
+ 
+ /**
+  * This API is similar to sha1-array, in that it maintains a set of object ids
+@@ -15,19 +16,33 @@
+  *      table overhead.
+  */
+ 
++static inline unsigned int oid_hash(struct object_id oid)
++{
++	return sha1hash(oid.hash);
++}
++
++static inline int oid_equal(struct object_id a, struct object_id b)
++{
++	return oideq(&a, &b);
++}
++
++KHASH_INIT(oid, struct object_id, int, 0, oid_hash, oid_equal)
++
+ /**
+  * A single oidset; should be zero-initialized (or use OIDSET_INIT).
+  */
+ struct oidset {
+-	struct oidmap map;
++	kh_oid_t set;
+ };
+ 
+-#define OIDSET_INIT { OIDMAP_INIT }
++#define OIDSET_INIT { { 0 } }
+ 
+ 
+ static inline void oidset_init(struct oidset *set, size_t initial_size)
+ {
+-	oidmap_init(&set->map, initial_size);
++	memset(&set->set, 0, sizeof(set->set));
++	if (initial_size)
++		kh_resize_oid(&set->set, initial_size);
+ }
+ 
+ /**
+@@ -58,19 +73,24 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
+ void oidset_clear(struct oidset *set);
+ 
+ struct oidset_iter {
+-	struct oidmap_iter m_iter;
++	kh_oid_t *set;
++	khiter_t iter;
+ };
+ 
+ static inline void oidset_iter_init(struct oidset *set,
+ 				    struct oidset_iter *iter)
+ {
+-	oidmap_iter_init(&set->map, &iter->m_iter);
++	iter->set = &set->set;
++	iter->iter = kh_begin(iter->set);
+ }
+ 
+ static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
+ {
+-	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
+-	return e ? &e->oid : NULL;
++	for (; iter->iter != kh_end(iter->set); iter->iter++) {
++		if (kh_exist(iter->set, iter->iter))
++			return &kh_key(iter->set, iter->iter++);
++	}
++	return NULL;
+ }
+ 
+ static inline struct object_id *oidset_iter_first(struct oidset *set,
 -- 
 2.19.0
+
