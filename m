@@ -2,148 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D2241F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 19:40:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6F541F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 19:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbeJDCak (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 22:30:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40380 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726969AbeJDCak (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 22:30:40 -0400
-Received: (qmail 6394 invoked by uid 109); 3 Oct 2018 19:40:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 03 Oct 2018 19:40:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16915 invoked by uid 111); 3 Oct 2018 19:40:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 03 Oct 2018 15:40:14 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2018 15:40:51 -0400
-Date:   Wed, 3 Oct 2018 15:40:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] oidset: use khash
-Message-ID: <20181003194051.GB20709@sigill.intra.peff.net>
-References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
- <5efe6695-2e82-786c-1170-7874978cb534@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        id S1727319AbeJDCda (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 22:33:30 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:35794 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726964AbeJDCd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 22:33:28 -0400
+Received: by mail-pg1-f194.google.com with SMTP id v133-v6so2036237pgb.2
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:43:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=tuGoOpewTmz1Aa2tv1DyxpF1NDYGfRq2QnI+NXLROYw=;
+        b=VJ+bF+6k5DWLhKr1xPvcflg083TKVaVM4GQsg6C1k2XHwOWHwOj2LV7qs2TL/SG5wQ
+         TscZkED3gRL3hBcv0D16rUE/J0ohuoAPiT2bLTvr8plJGyiu5g8tMoqvCj8uE9gSrqFK
+         RcoeJA8hgmDbwSi37/f4tPIBUV5Trdf6gsUphBenHCaQSL5cQcUnMS1bE0h/g5flsfyT
+         1SR5+BLu7UeemN9vTkhhXzI+ewPNNX6OM34RKfRTneTbB95oU5GYunXBCLV0YjsM+YtW
+         7tOn0IImiTbnD6+WtR6RfcpUc639UWwwk4Df/7jumV/eKnUv4L2K+9N9sTtq202yZ8LO
+         lmMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tuGoOpewTmz1Aa2tv1DyxpF1NDYGfRq2QnI+NXLROYw=;
+        b=DvU/ZCuxiibI0QNxVJMteZ1181c6X2gRDceYO/D9I6D76CgpdDrqR4DURtryiTlIHl
+         gsFOEVphwklYonedIFb1aE31F4FJqBFtevpVni0mfbhAPacacQ2u1y65/OTYuwmuPD9e
+         6l+wI58o0GePdOnq+rnTt+q2u1e+bcASEy5dgtCdrU5UruzDCsiOU48FQNkgZtXQIajn
+         4+N098bZ3wvhui83TpmTun8IsL/Jbn9qi3WGYUbKuCeLIC6f0fXcrWgZYDCogIq0YG6q
+         kcXCrtnj5wlcFTwNjKQy19aMM6+3Kb2UIDVan8NIiWQy2RVKIdb6eV0zTVBQMqcCNztn
+         o2XQ==
+X-Gm-Message-State: ABuFfojtoA4v/3K/COJBTkcJAnUDC9W1UU9iVrMJdGqw7ErLs3Fx6pea
+        E6LzO3whOtZgB6A8zaLVPWZh9rm3
+X-Google-Smtp-Source: ACcGV60FA4Jk61pBTVvFiKQEjYu6ol9mkjHyTmuPtgMiGErfLWRByvILRELdubZkPNiVFLSCSvYYsQ==
+X-Received: by 2002:a62:ccd4:: with SMTP id j81-v6mr3285553pfk.76.1538595820797;
+        Wed, 03 Oct 2018 12:43:40 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id d7-v6sm7330997pfm.23.2018.10.03.12.43.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Oct 2018 12:43:39 -0700 (PDT)
+Date:   Wed, 03 Oct 2018 12:43:39 -0700 (PDT)
+X-Google-Original-Date: Wed, 03 Oct 2018 19:43:34 GMT
+Message-Id: <pull.44.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/3] mingw: require Windows Vista or later (and fix the Windows CI builds)
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5efe6695-2e82-786c-1170-7874978cb534@web.de>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 03, 2018 at 03:16:39PM +0200, René Scharfe wrote:
+I noticed that a recent GitGitGadget build failed in the Windows phase, with
+compat/poll/poll.h problems all over the place.
 
-> Performance of a command that mainly checks for duplicate objects using
-> an oidset, with master and Clang 6.0.1:
-> 
->   $ cmd="./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'"
-> 
->   $ /usr/bin/time $cmd >/dev/null
->   0.22user 0.03system 0:00.25elapsed 99%CPU (0avgtext+0avgdata 48484maxresident)k
->   0inputs+0outputs (0major+11204minor)pagefaults 0swaps
-> 
->   $ hyperfine "$cmd"
->   Benchmark #1: ./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'
-> 
->     Time (mean ± σ):     250.0 ms ±   6.0 ms    [User: 225.9 ms, System: 23.6 ms]
-> 
->     Range (min … max):   242.0 ms … 261.1 ms
-> 
-> And with this patch:
-> 
->   $ /usr/bin/time $cmd >/dev/null
->   0.14user 0.00system 0:00.15elapsed 100%CPU (0avgtext+0avgdata 41396maxresident)k
->   0inputs+0outputs (0major+8318minor)pagefaults 0swaps
-> 
->   $ hyperfine "$cmd"
->   Benchmark #1: ./git-cat-file --batch-all-objects --unordered --buffer --batch-check='%(objectname)'
-> 
->     Time (mean ± σ):     151.9 ms ±   4.9 ms    [User: 130.5 ms, System: 21.2 ms]
-> 
->     Range (min … max):   148.2 ms … 170.4 ms
+Turns out that this is caused by the recent upgrade of the mingw-w64 headers
+and crt files (7.0.0.5233.e0c09544 -> 7.0.0.5245.edf66197, which I assume
+now enforces Vista as minimal Windows version also for all mingw-w64
+projects).
 
-Thanks. Just to reinforce these timings, a similar command on linux.git
-drops from 4.0s to 2.3s.
+Luckily, in Git for Windows' master, we already had changes to require Vista
+(for unrelated reasons: to restrict the std handle inheritance when spawning
+new processes).
 
-The patch itself mostly looks good. A few small comments:
+Technically, Windows Vista is already no longer supported
+[https://support.microsoft.com/en-us/help/22882/windows-vista-end-of-support]
+, but we do try to keep Git building on older Windows version, up until the
+point when it becomes too big of a maintenance burden.
 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 75047a4b2a..a839315726 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -536,7 +536,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
->  	 * add to "newlist" between calls, the additions will always be for
->  	 * oids that are already in the set.
->  	 */
-> -	if (!tip_oids->map.map.tablesize) {
-> +	if (!tip_oids->set.n_buckets) {
->  		add_refs_to_oidset(tip_oids, unmatched);
->  		add_refs_to_oidset(tip_oids, newlist);
->  	}
+Johannes Schindelin (3):
+  compat/poll: prepare for targeting Windows Vista
+  mingw: set _WIN32_WINNT explicitly for Git for Windows
+  mingw: bump the minimum Windows version to Vista
 
-This is a little intimate with the implementation of khash, but I think
-it's probably OK (and really no worse than what was there before).
+ compat/poll/poll.c |  6 +++---
+ compat/poll/poll.h | 15 +++++++++++++++
+ config.mak.uname   |  4 ----
+ git-compat-util.h  |  4 ++--
+ 4 files changed, 20 insertions(+), 9 deletions(-)
 
-As the comment above notes, I think we're really looking at the case
-where this gets populated on the first call, but not subsequent ones. It
-might be less hacky to use a "static int initialized" here. Or if we
-want to avoid hidden globals, put the logic into filter_refs() to decide
-when to populate.
 
-I don't think any of that needs to hold up this series, though.
-
->  int oidset_insert(struct oidset *set, const struct object_id *oid)
->  {
-> -	struct oidmap_entry *entry;
-> -
-> -	if (!set->map.map.tablesize)
-> -		oidmap_init(&set->map, 0);
-> -	else if (oidset_contains(set, oid))
-> -		return 1;
-> -
-> -	entry = xmalloc(sizeof(*entry));
-> -	oidcpy(&entry->oid, oid);
-> -
-> -	oidmap_put(&set->map, entry);
-> -	return 0;
-> +	int added;
-> +	kh_put_oid(&set->set, *oid, &added);
-> +	return !added;
->  }
-
-This actually does the check-and-insert in a single lookup, which is
-nice. ;)
-
-> diff --git a/oidset.h b/oidset.h
-> index 40ec5f87fe..4b90540cd4 100644
-> --- a/oidset.h
-> +++ b/oidset.h
-> [...]
-> +KHASH_INIT(oid, struct object_id, int, 0, oid_hash, oid_equal)
-
-This will declare these "static inline". Our other major "macros become
-inline functions" code is commit-slab.h, and there we found it necessary
-to add MAYBE_UNUSED. I wonder if we ought to be doing the same here (I
-don't get any warnings, but I suspect sparse might complain).
-
-It might be nice if these functions could hide inside oidset.c (and just
-declare the struct here). It looks like we might be able to do that with
-__KHASH_TYPE(), but the double-underscore implies that we're not
-supposed to. ;)
-
-I guess we also use a few of them in our inlines here. I'm not 100% sure
-that oidset_* needs to be inlined either, but this is at least a pretty
-faithful conversion of the original.
-
--Peff
+base-commit: fe8321ec057f9231c26c29b364721568e58040f7
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-44%2Fdscho%2Frequire-windows-vista-or-later-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-44/dscho/require-windows-vista-or-later-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/44
+-- 
+gitgitgadget
