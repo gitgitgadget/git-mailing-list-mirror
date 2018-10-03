@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDFAB1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 19:43:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 606DB1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 19:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbeJDCda (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 22:33:30 -0400
-Received: from mail-pl1-f179.google.com ([209.85.214.179]:43601 "EHLO
-        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727283AbeJDCda (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 22:33:30 -0400
-Received: by mail-pl1-f179.google.com with SMTP id 30-v6so3963774plb.10
-        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:43:43 -0700 (PDT)
+        id S1727361AbeJDCdd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 22:33:33 -0400
+Received: from mail-pg1-f173.google.com ([209.85.215.173]:38138 "EHLO
+        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727279AbeJDCdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 22:33:31 -0400
+Received: by mail-pg1-f173.google.com with SMTP id r77-v6so2025941pgr.5
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 12:43:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eaCap+4eG7xnx8/kcNiGRQmECQLgnN8QRuovxIBGM1I=;
-        b=IFTHDuUphSOmIxgrznYilkp4VQ4++2MceQ8k6Or8W3Qc8pxHdjpv7f+QqB0EGbX/SZ
-         pMahDoHNg2QBkqKsVhzN9VWRzYn8GjqfmjVfHKMmCC+LU4ONsoLXi7EMuBBvny+dV4+6
-         ZCNw228lcojk1vyte/GvGR9c6eAGST/LoebdC0Ukk0i9YDEPqfQQKKFp91Yj7oxjzmel
-         UmSSz7UIojG8Phf181Oy73CgBe58ru4358v4JPH34JZGGZCjbpQAvMqNdxakasH6clKP
-         p0zWX2qyDRGw6mjS7weiqWeVwQZbFuf7a6K7qS0HNzJc+2strFk6BJLM76rY7uGRvP0M
-         K8hA==
+        bh=qwETXbBpa/3IfIxTJyl7x12RlJkCss0KRrjInvB0RW0=;
+        b=LIPrzj2TwZGxfzwvIcvmNJV7x4c5GynlcLF8Ijln9P0qQYf4OwbNC9uu9113P6jt3q
+         RlyTx3Js7fwiWvuvvTtyf6z2TclXpqa9v1ZrLJvsxeKqkHN/p72IEDZHnRd/flqe0qW3
+         L1AHtHzfUnRswMAL/7+PQPT09P6LLzXvxo/xnTynWrrp4UP+pjD42lS/1kYQ7/kwISn3
+         VxdPva0eqTTz2/jhfmga0/zKAVcyVqqn0+0Ky2EbObfRsfPOknbU3js1mm5iTL9spWku
+         +76PGD9ptwgybcuU8mzKJCzk54WD4cmllyMIKsai5AQ776vqP423yH+q7Puw9kiUBa6f
+         /D6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eaCap+4eG7xnx8/kcNiGRQmECQLgnN8QRuovxIBGM1I=;
-        b=WvE7y7edhT/sEbfAF517FWMY/7uPpRglxPkPgHeYmtbw/J+Z+INfeIzDDUOv4ERBUL
-         q/cLURp64ZaeewjCQ+oYwpOM/8nINmZNJ2XuD4om+GkMMnauWi2bDo/Vb2d7+EFRgqkR
-         7jr429dzzXGAc5X1cpm4Iwb5y5+nf7whI/nFDwyvPfqS64Bc2b0rHRsdjvKQapdeGQJg
-         iTzemgq3OXEXsCvNa+W8tYq6cSbrMNKiLuBio9Ym+9wNPk1Vj87RP2gFZh6U4721Mxam
-         F07RSjz/hYce0GfvEdA8SsfZyHVjZ/vPxZDDS4L4b2tMRy4rwQSOf/zc8S1JzlWaK29/
-         8epQ==
-X-Gm-Message-State: ABuFfohIEK6nM6nvTvZsduEnlu8s1fUSKB1H5fzPb7FOljFFdCslyuLI
-        pAoQI+mB4g7USgi/bif4LGggNblF
-X-Google-Smtp-Source: ACcGV61zwC9csSNIY9QFfBbAZCLo7qw32LclIO51Uqw5dnbxjUocw3TwQcKUP56IE7+3v+YCBZeglQ==
-X-Received: by 2002:a17:902:7e49:: with SMTP id a9-v6mr3097018pln.149.1538595822281;
-        Wed, 03 Oct 2018 12:43:42 -0700 (PDT)
+        bh=qwETXbBpa/3IfIxTJyl7x12RlJkCss0KRrjInvB0RW0=;
+        b=EHcTtUSnU7/K5AKd/VE0kgxXtAWfz0FVsL1TvaY23izh/c1OWsNUEh+pfx/hzygbs2
+         rwx4o+VfbFe/ZO9nmYAUTfaOOA7X/hxlEkYdDZJL9/YfaX1xHRysY+XiEOIuYBqSADA/
+         PDaHw6DMeMzFtU2PehMuCB4fCOYisN90hCy7uaRw0nS6eUsUEBBYRPesdvB4wOFF6v/j
+         90aQWIfB1KfUH7JRLrtzJY6U1l9/fKxTJW0QAtDBMDKyJMI/3ZoQp63rabkID7g9kgG/
+         FWL7Q0PiVyPFIrAcvjBXeBW0s0u3AgVy+N7W0zL5FLtCyHtztmqlmLk3lBx5FNiAOuJe
+         aigw==
+X-Gm-Message-State: ABuFfoh+GBWd5cZdGH0PT3CkJzgf0ARkA8TC/ZnvolPcYVLWDCxT66Hd
+        nhqNK6zvlmmFbrU7E3KHg8DlCnJq
+X-Google-Smtp-Source: ACcGV62+/fOCOilGP81FXd5VpzosWF7P5Y/ZPfwB9S/kFtiqqiWpKcRb09AXIH670WH4k+A+Vsx2kQ==
+X-Received: by 2002:a63:525c:: with SMTP id s28-v6mr2689902pgl.78.1538595823777;
+        Wed, 03 Oct 2018 12:43:43 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id o62-v6sm3521322pfb.0.2018.10.03.12.43.41
+        by smtp.gmail.com with ESMTPSA id l10-v6sm4782297pgs.45.2018.10.03.12.43.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Oct 2018 12:43:41 -0700 (PDT)
-Date:   Wed, 03 Oct 2018 12:43:41 -0700 (PDT)
-X-Google-Original-Date: Wed, 03 Oct 2018 19:43:35 GMT
-Message-Id: <1c2dba41189e97c2dfa7d98da3b52589eb9091cc.1538595818.git.gitgitgadget@gmail.com>
+        Wed, 03 Oct 2018 12:43:43 -0700 (PDT)
+Date:   Wed, 03 Oct 2018 12:43:43 -0700 (PDT)
+X-Google-Original-Date: Wed, 03 Oct 2018 19:43:36 GMT
+Message-Id: <47966fb1f55bf3014d93b8aa2d746ef22f8b5a7c.1538595818.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.44.git.gitgitgadget@gmail.com>
 References: <pull.44.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/3] compat/poll: prepare for targeting Windows Vista
+Subject: [PATCH 2/3] mingw: set _WIN32_WINNT explicitly for Git for Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,73 +70,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Windows Vista (and later) actually have a working poll(), but we still
-cannot use it because it only works on sockets.
+Previously, we only ever declared a target Windows version if compiling
+with Visual C.
 
-So let's detect when we are targeting Windows Vista and undefine those
-constants, and define `pollfd` so that we can declare our own pollfd
-struct.
+Which meant that we were relying on the MinGW headers to guess which
+Windows version we want to target...
 
-We also need to make sure that we override those constants *after*
-`winsock2.h` has been `#include`d (otherwise we would not really
-override those constants).
+Let's be explicit about it, in particular because we actually want to
+bump the target Windows version to Vista (which we will do in the next
+commit).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/poll/poll.c |  6 +++---
- compat/poll/poll.h | 15 +++++++++++++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ git-compat-util.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/poll/poll.c b/compat/poll/poll.c
-index 7ed3fbbea1..ad5dcde439 100644
---- a/compat/poll/poll.c
-+++ b/compat/poll/poll.c
-@@ -29,9 +29,6 @@
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5f2e90932f..3ba93d9c15 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -146,7 +146,7 @@
+ #define _SGI_SOURCE 1
  
- #include <sys/types.h>
- 
--/* Specification.  */
--#include <poll.h>
--
- #include <errno.h>
- #include <limits.h>
- #include <assert.h>
-@@ -55,6 +52,9 @@
- # include <unistd.h>
- #endif
- 
-+/* Specification.  */
-+#include "poll.h"
-+
- #ifdef HAVE_SYS_IOCTL_H
- # include <sys/ioctl.h>
- #endif
-diff --git a/compat/poll/poll.h b/compat/poll/poll.h
-index cd1995292a..1e1597360f 100644
---- a/compat/poll/poll.h
-+++ b/compat/poll/poll.h
-@@ -21,6 +21,21 @@
- #ifndef _GL_POLL_H
- #define _GL_POLL_H
- 
-+#if defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x600
-+/* Vista has its own, socket-only poll() */
-+#undef POLLIN
-+#undef POLLPRI
-+#undef POLLOUT
-+#undef POLLERR
-+#undef POLLHUP
-+#undef POLLNVAL
-+#undef POLLRDNORM
-+#undef POLLRDBAND
-+#undef POLLWRNORM
-+#undef POLLWRBAND
-+#define pollfd compat_pollfd
-+#endif
-+
- /* fake a poll(2) environment */
- #define POLLIN      0x0001      /* any readable data available   */
- #define POLLPRI     0x0002      /* OOB/Urgent readable data      */
+ #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
+-# if defined (_MSC_VER) && !defined(_WIN32_WINNT)
++# if !defined(_WIN32_WINNT)
+ #  define _WIN32_WINNT 0x0502
+ # endif
+ #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
 -- 
 gitgitgadget
 
