@@ -2,103 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F24C1F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 20:14:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2ED1B1F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 20:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726971AbeJDDEW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 23:04:22 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33043 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726941AbeJDDEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 23:04:22 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDhGw-1fwF5C1CbW-00H9Ch; Wed, 03
- Oct 2018 22:14:24 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDhGw-1fwF5C1CbW-00H9Ch; Wed, 03
- Oct 2018 22:14:24 +0200
-Date:   Wed, 3 Oct 2018 22:14:28 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] sequencer: use return value of oidset_insert()
-In-Reply-To: <18bf2384-694c-f98b-1c31-3c80c07bde2a@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1810032213330.73@tvgsbejvaqbjf.bet>
-References: <18bf2384-694c-f98b-1c31-3c80c07bde2a@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727077AbeJDDZ1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 23:25:27 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:40577 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726950AbeJDDZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 23:25:26 -0400
+Received: by mail-ed1-f48.google.com with SMTP id j62-v6so6573737edd.7
+        for <git@vger.kernel.org>; Wed, 03 Oct 2018 13:35:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=s/MxVj/LyqUx8dULmbbh3cr+arY568NtDKgc449zFw8=;
+        b=XLwbv6Q88Jc+8DIkjKFz7RaVaeAKPPeRQW+UG/Q0An/8+PGAyQtG/ulbuxwlhbmkh3
+         C3ftgUYmXoo3LBcWR1nvXRkGn+ac+bycJJpU0cRRlNS/txD5Wqdi8Lx0JBAiZshsPx00
+         ZO9ZAcferjdC/Y7J3qsY+zCm9nnagl4C4ZCehGXtWXwZ4hOBn4txtoRAmjQSqlNVrvkO
+         klS8iKsmA7q3rgPWVQiRXbG12FOIbQlNRpauCdWSG7a0sSboxX7zOHi3bJ7Gn4mI/l8X
+         9ApxV6uZntyYPpy1gNTGqQCY6cFq8Wt+AXl3ahGOMllLpga4T+OxfNZP+TTmYt9/IMiS
+         Mn+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=s/MxVj/LyqUx8dULmbbh3cr+arY568NtDKgc449zFw8=;
+        b=WRzfOoH1NmUFyGac5gSzg03MewbkVzrJjO7+d7ERZzZ10zI98jNu6pvyvkp/l/iZtW
+         ZOYG0tfYGjXLVFgcysHJJ0i0wvZADeySu5vINFt+MKKjFnZC4oZbtVl4xD9r219CRyYb
+         5onh+d0miPKx5DUDSx56zhxj34VPPjM9QEt0xwwAG3ppka0DFpsiL/s4T/Lfy04EDbd5
+         h1bj07DCwda45asbAxHmnnonmvkP008Vxj+nptULuU6W2I4O63vHuZfU4PrMoiA5vGmC
+         BkpH6ygNANZnDgMuMI4RX0HbiycBg+LvtDGUMZ87+LbtrTD5PqL8/7Qm8AGWJ5B3lSFv
+         goNw==
+X-Gm-Message-State: ABuFfohLcoj+Z59oeFw4S0oug8P4gnL3SC7yA5PeCtuUW9s16++Dnhgb
+        Uu+1IdN45OhTs8GBxM/u8gw=
+X-Google-Smtp-Source: ACcGV62k0xBROWrOXilQ32xj/oLTZCAWkfdvINrGtxoAmRpOaSKK4IEg1tRFOqpVMz8VPM52kE6O7Q==
+X-Received: by 2002:a17:906:548:: with SMTP id k8-v6mr3539792eja.11.1538598927387;
+        Wed, 03 Oct 2018 13:35:27 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id d2-v6sm797810edd.55.2018.10.03.13.35.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Oct 2018 13:35:26 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: We should add a "git gc --auto" after "git clone" due to commit graph
+References: <87tvm3go42.fsf@evledraar.gmail.com>
+        <20181003133650.GN23446@localhost>
+        <87r2h7gmd7.fsf@evledraar.gmail.com>
+        <20181003141732.GO23446@localhost>
+        <87o9cbglez.fsf@evledraar.gmail.com>
+        <20181003145308.GP23446@localhost>
+        <CAGZ79kbyCZcMuj=_Od+C+tHg=PzzDd8QV+9RqS7iFcZS+Ht+Bg@mail.gmail.com>
+        <20181003192127.GC16666@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181003192127.GC16666@sigill.intra.peff.net>
+Date:   Wed, 03 Oct 2018 22:35:25 +0200
+Message-ID: <87k1myhipe.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-825261742-1538597668=:73"
-X-Provags-ID: V03:K1:bRbQXOW1BI9+t6jLg+LfcwYaJlQqppp2acvo+2CULqtdEsnL3tO
- 0ZyxqbO5B1+TOtWjdAHyxAhNEB7tAsjNKh/Wefb4bwXkvRTUOltKkhjubJ7/q1XX/52SlEY
- 9HqStYZV+n4QUvM224m9hM0EjSMdVRNFtsqXHZok0TbFKSMI9Aty9egpn2VDEmayPw4vvr+
- 9kRU96hHTltqBQP+5ynLA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ajGzWgzomEc=:LzGt9GIa+T70o8gGlF5zGQ
- xrsZ9OiAXLrSjrRDuO7rJUHs4irJfuVfwgqZoOl2w/fAdwZDjxo15bMVAiWVqVoRj8A9XWSEH
- AtztAbI5qualS8fe1jy7G0l8RyJelEkWUH6Tt8tuYMpMHuci1W51UqX3QnRNRAAXPRDuCc5FC
- NkNZFRMCIz9c/0hjehG0ZG+pmYAjxhwvELl2Hk9GCfV3ww2LwXs5aSXQ0t3qAHU4Gu/gWdQ+S
- 7E2VuUwf5WR+dYXNGJCh5RrE8rZM6r6sfkrRZYoaj3Aw+VqRqIBnyH5eJzBNYePEPlgohylh3
- J5JNUN+l3Ux0SioRrRVQpo0HadBJX1SsB1GQmhe5XyO4H1loQJPQap453AqZ/4YE+DvelVUMI
- h9FRQmgJk3G4sFaQ5U3oJETKxQyaETscRcgOpKDPkODGkonHw/XxUh3HeyzdwyN8GCvKOaZVi
- dCSVR6U2vWGzCRredUmd8KUn3QmBwSedArHOAdwy9l+6LYCU4tmz0abf6b0I4Fftge+OH78+9
- CkzMNTeskthtd40REt2cjjHCBArbF+O5oEKnIS77mezazyk4g1Bn5gD1I2as8pIJ4FHsZBqeu
- IS3rMw9rAGw0+BKN+PO3T2800asb1d1m1RAxFSHplJ2ovaHanUYKLNqHQj5sxcmZbX2FHmHY2
- vQcZATcxgV9ySw1AZJVGnXruT210YOo1VkMqpNq/hnw2NICw/Nuwwc/GK0aqP8n2rJIDNluLM
- 4457eN8TWpB5QPXKSPH2yCVdq4mO+r/kKIs/nE4E2z2kszOuqMamdj+ncDWl5YmI9QZMnC+8b
- zV1PyAnyH13ClgveKP6Y2Wsth/qcZvgK2N49Z4dvlz0m/2/P9E=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-825261742-1538597668=:73
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Wed, Oct 03 2018, Jeff King wrote:
 
-Hi Ren=C3=A9,
+> On Wed, Oct 03, 2018 at 12:08:15PM -0700, Stefan Beller wrote:
+>
+>> I share these concerns in a slightly more abstract way, as
+>> I would bucket the actions into two separate bins:
+>>
+>> One bin that throws away information.
+>> this would include removing expired reflog entries (which
+>> I do not think are garbage, or collection thereof), but their
+>> usefulness is questionable.
+>>
+>> The other bin would be actions that optimize but
+>> do not throw away any information, repacking (without
+>> dropping files) would be part of it, or the new
+>> "write additional files".
+>>
+>> Maybe we can move all actions of the second bin into a new
+>> "git optimize" command, and git gc would do first the "throw away
+>> things" and then the optimize action, whereas clone would only
+>> go for the second optimizing part?
+>
+> One problem with that world-view is that some of the operations do
+> _both_, for efficiency. E.g., repacking will drop unreachable objects in
+> too-old packs. We could actually be more aggressive in combining things
+> here. For instance, a full object graph walk in linux.git takes 30-60
+> seconds, depending on your CPU. But we do it at least twice during a gc:
+> once to repack, and then again to determine reachability for pruning.
+>
+> If you generate bitmaps during the repack step, you can use them during
+> the prune step. But by itself, the cost of generating the bitmaps
+> generally outweighs the extra walk. So it's not worth generating them
+> _just_ for this (but is an obvious optimization for a server which would
+> be generating them anyway).
 
-On Wed, 3 Oct 2018, Ren=C3=A9 Scharfe wrote:
+I don't mean to fan the flames of this obviously controversial "git gc
+does optimization" topic (which I didn't suspect there would be a debate
+about...), but a related thing I was wondering about the other day is
+whether we could have a gc.fsck option, and in the background do fsck
+while we were at it, and report this back via some facility like
+gc.log[1].
 
-> oidset_insert() returns 1 if the object ID is already in the set and
-> doesn't add it again, or 0 if it hadn't been present.  Make use of that
-> fact instead of checking with an extra oidset_contains() call.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
+That would also fall into this category of more work we could do while
+we're doing a full walk anyway, but as with what you're suggesting would
+require some refactoring.
 
-ACK!
-
-Thanks,
-Dscho
-
->  sequencer.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->=20
-> diff --git a/sequencer.c b/sequencer.c
-> index ddb41a62d9..6387c9ee6e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4146,9 +4146,7 @@ static int make_script_with_merges(struct pretty_pr=
-int_context *pp,
->  =09=09=09struct object_id *oid =3D &parent->item->object.oid;
->  =09=09=09if (!oidset_contains(&interesting, oid))
->  =09=09=09=09continue;
-> -=09=09=09if (!oidset_contains(&child_seen, oid))
-> -=09=09=09=09oidset_insert(&child_seen, oid);
-> -=09=09=09else
-> +=09=09=09if (oidset_insert(&child_seen, oid))
->  =09=09=09=09label_oid(oid, "branch-point", &state);
->  =09=09}
-> =20
-> --=20
-> 2.19.0
->=20
---8323328-825261742-1538597668=:73--
+1. Well, one that doesn't suck, see
+   https://public-inbox.org/git/87inc89j38.fsf@evledraar.gmail.com/ /
+   https://public-inbox.org/git/87d0vmck55.fsf@evledraar.gmail.com/ etc.
