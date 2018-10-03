@@ -7,80 +7,72 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6D511F453
-	for <e@80x24.org>; Wed,  3 Oct 2018 13:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE1771F453
+	for <e@80x24.org>; Wed,  3 Oct 2018 13:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726862AbeJCTzP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Oct 2018 15:55:15 -0400
-Received: from mout.web.de ([212.227.15.4]:56271 "EHLO mout.web.de"
+        id S1726809AbeJCT7g (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Oct 2018 15:59:36 -0400
+Received: from mout.web.de ([212.227.15.14]:43923 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726679AbeJCTzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Oct 2018 15:55:15 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MKwFs-1g7grc2LFQ-0003lq; Wed, 03
- Oct 2018 15:06:52 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MKwFs-1g7grc2LFQ-0003lq; Wed, 03
- Oct 2018 15:06:52 +0200
+        id S1726630AbeJCT7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Oct 2018 15:59:36 -0400
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MN43c-1g5SwY13ns-006dtT; Wed, 03
+ Oct 2018 15:11:10 +0200
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MN43c-1g5SwY13ns-006dtT; Wed, 03
+ Oct 2018 15:11:10 +0200
 X-Mozilla-News-Host: news://news.public-inbox.org:119
 To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] sequencer: use return value of oidset_insert()
-Message-ID: <18bf2384-694c-f98b-1c31-3c80c07bde2a@web.de>
-Date:   Wed, 3 Oct 2018 15:06:49 +0200
+Subject: [PATCH v2 0/2] oidset: use khash
+Message-ID: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
+Date:   Wed, 3 Oct 2018 15:11:06 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:pOmdjP04JFz3+gfkx0AbrXvzCf3seTnEoy7OI9sdHQEBae633SM
- v303jZNljANCfdP5fAUbjjLINihfqDXhV3tWrh7X/RRDeFjhEbqVrPbKE244PDv4q5KP1vr
- elb8l5k++zHdWB/gM1kpBYZsK5NFU2zGfAz7L3LRYLVclqnUdEwepewO+T5vdomifelYguj
- mO8dDWjMK7bvs5k3ASOfg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2Dpz0C/e5H8=:tjGEujPk108wIU3vEatw2n
- jDQ9DPmKiSG02p2UjP0AS08dpaW9cy69NaZvxau6UeyifCgvU1pdAsY4jBikx6jDiSeDNaq75
- Lgdv1U3vvM+THWEYitrnPlyVkC//BJTj7s0QAhx3BzvhEHSt2TSa9U1UGtPQwl+oYp8HkCFPl
- RndpNTmMCz7iNH7UchmzOX7KMSenhnLSJN86jKkJgzfieGdfSAgwywdeveWS2nB+IHk6vwpCo
- ESQ1FACTF9LYwFjgd45bYrq1DSPedysQRwVNQRdBPHXdgyBNEYsZoMuN0NEZgp/we1jGEaGgG
- S2WwVLHcFKDUwgelyrTIwTP40Kj/6qnOR3naTrYnNGAFpoGcMvyyAJ5tv1yMFh2s9jYyVXNJn
- m+tgMlPUbudoX3VmiqcC6lNWfNm4Pqo6kGQm4WTKG+iC1KlNxywvcp+HGlzQXyiWrUdrK81XB
- e9UyrarK2ps7UE5Nbbg6lfHJuCaGm+VpPTo7LtmKgWIo8PumCLbCQkLcGtkrfGce2vz5mXbUY
- jiK4Dq/AI0dRZYak9AMVwKViwx/bVOu8M7+BVYZCyCLydxQxMkJcFHaMcRiU493tRvhksYDt/
- DgsLBU8IqWogF4WA4N5VLzrU1gZzQu+sTg67UEmEvxVtbweLFxGvZYi9HtlW6TJG8Eg+eGVa9
- SZLXjPX3dpLo31aY1g75BFuae0hRzXuqWtExiowOULvkn3NFBt9TCuW1lqs3C2oLZ4JonS/Ba
- RNrccj7QO7bO316aQ+zf6HuXFJOiZODzWPJNoAyt8XKS9xypKlfkOyhRfRv9OfrLLIg148Kk3
- ex31R09WrnLGcfYOXKqYl7bCiwPAz0sf2SS0bHDc09dJY2d6xA=
+X-Provags-ID: V03:K1:HzAF+kT4FUDWWv6qO0mx1IYCy+nAd8r19h1uurDk+XUNPucVfsW
+ eSYnXwGdlXs74f8dWi/O7fmCwN+xRntaOlC2oaXceDczkdLmKWVsr7La6W0FNHEqZIbF3An
+ GYxhGeBlfcc1ru3sMf6VB1UlLLMQdC3Y0k+dTj8jxriFy6hBG5wcAidKBeOOtyqSKi+Wllj
+ CArYNcAfLf/ysqpyooj2Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e/m/NmsAByA=:s+dU4vV9RanS02qQTMNdBR
+ q63c+rh1N9j2o6zFzq4qQu3q4A/Pf4poKg1MEe3y4+DTdxgV+cQSFp/AQD+Y555v6tYFq+EZZ
+ IofWk68+Gvq6WhU/uMqROb+Om2sQaNWzUX7+7rtiE7uYx6NO2kzhQ63sMibRSDxOQRnPUFKPA
+ 6Io08FuXg5NCBWK1GvPgVhpUcEtCxk8Ah9PSvL1QoFIs3fHUhJBHUR8p01cV55S3EdpOZfY4u
+ cW/thptoXxAFWxRyq0Q8CZFxbEvJhb55pTF5sRkgHVxoLdmUaZr9IOB8BfSs0c8MBaTcSwL/9
+ CEkiLOmzUbEQGGHZipJsjEo9/z6KFtUzO4BQJDcKf79EUP4DUFtCzHzgGiTyrm30UWStW/m4k
+ 90KLmZf2PAUiJQiYke9XV7KG5i+h+vhc8gDm2q/tcNMzTPpT82LVcHdmaUxFFr9nocsnPMDCB
+ oDkCcL39BkAFOfwAXk9f6X00py6EkY+nbwgPC2hV2oikClfL6o57sTR/s88TNDywkadC3TAMI
+ NYq1o9ZcgWiFBFQ6tGCUyLt1FkJ3RROk9mx/9c06/ZA8he6MFaN/WWvgXNahthAqal39io3XL
+ v0td/vb1G+FcVTRwWXCPgUGqS7B5C9pWL7A/MCOH/LIIumMspaaX+U58L9JuXYTI1dKkF/cXS
+ gd2BELe9wAbaRlSd+Zl/A9hbI/3/98n2CGgC5PJxCCruR0kK0PV0D84ymDs8uG7Q6HBOmhJ5n
+ 0MrM9vxkahWdj6tojSRt9g1z68ay9WAi6NS9Xk5oYhf5pHOXjLmj7hDCaDU7tOViyk60BXcKv
+ NXNDA8BX3951UUdHUKyq8Gxa8CWQ55d4Chzc//NqL/PYRiHh64=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-oidset_insert() returns 1 if the object ID is already in the set and
-doesn't add it again, or 0 if it hadn't been present.  Make use of that
-fact instead of checking with an extra oidset_contains() call.
+Continue the discussion of speeding up oidset started in [1] here in
+its own thread.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- sequencer.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+[1] https://public-inbox.org/git/20180811172350.GA2689@sigill.intra.peff.net/
 
-diff --git a/sequencer.c b/sequencer.c
-index ddb41a62d9..6387c9ee6e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4146,9 +4146,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 			struct object_id *oid = &parent->item->object.oid;
- 			if (!oidset_contains(&interesting, oid))
- 				continue;
--			if (!oidset_contains(&child_seen, oid))
--				oidset_insert(&child_seen, oid);
--			else
-+			if (oidset_insert(&child_seen, oid))
- 				label_oid(oid, "branch-point", &state);
- 		}
- 
+The first patch does a mild refactoring to support khash structures
+on the stack, and the second one converts oidset to khash.
+
+  khash: factor out kh_release_*
+  oidset: use khash
+
+ fetch-pack.c |  2 +-
+ khash.h      |  9 +++++++--
+ oidset.c     | 34 ++++++++++++----------------------
+ oidset.h     | 36 ++++++++++++++++++++++++++++--------
+ 4 files changed, 48 insertions(+), 33 deletions(-)
+
 -- 
 2.19.0
