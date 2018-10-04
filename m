@@ -2,120 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 377781F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 17:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 036161F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 19:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727545AbeJEAXa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 20:23:30 -0400
-Received: from mail-lf1-f48.google.com ([209.85.167.48]:41854 "EHLO
-        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727407AbeJEAX3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 20:23:29 -0400
-Received: by mail-lf1-f48.google.com with SMTP id q39-v6so7384635lfi.8
-        for <git@vger.kernel.org>; Thu, 04 Oct 2018 10:29:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vZ/8HhM3vhnMBlc5c465Q1g11hmtSlk3XPZjuKEFzgs=;
-        b=vHrBIXwmzYNlBuvIX+Gl7sv5u3EPhv1Lj4FEhRlOvbOx+X79GZigYg26g8Xda4/RvU
-         53owrENo0VO9XxsO/AgRQAyCQmdSMKWvO/SHnFCzEYXjHBvE5ykgiQTKvaZTwWDgpgG0
-         xxwFF/DBTywXY0MG3qHmfKnTmFGiCc5JjJdG/S0AYT+ry8YkDi0uDmY9nJjUiRtUxQ1y
-         Fk/UHXVD4nX6Mq5L0Pj7nae9iGiI2V1SK+d0Ennmv0S/iWZHNHAS2L8Mc3j0gC0xdn4A
-         naUMMglFn3XyCE4kXCNGJVJZmKdZ4tt5ih8Xmbe9bDJyyXoVw4HY51N/jH93OgtdK0A2
-         A0FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vZ/8HhM3vhnMBlc5c465Q1g11hmtSlk3XPZjuKEFzgs=;
-        b=FTlSEyiFrg9Fa2RqUKA7UvUv42fNCYMV/pBRONv+0Nnsf6fiJmEH6TYSQSZvWLvj1b
-         1Y8C8fdBxNoln2QFHdnPfx0H3CelOsbLzOMGkOLKdB9BTqw2Zhet2Gl7ACle3Vcg5kae
-         gAOlSqtN0xzmbZrTr83a7iokXzG+JzZEstueJhL4aI2sj54UGeR3WTn6AnM86ds5OkjE
-         Z+jWrKjmFdJ0IbKc13XbFrxgnA7ARMALePThr775jI6NE+hFxxPlG0RbkLDR3xaSFMC/
-         aQMDZV85W74lvYSV71aop+QqWloStTBOxTdd6OFgit1gLfEFN1zydZ2Pt60ur0+PhL/j
-         kw7Q==
-X-Gm-Message-State: ABuFfoj6OBgX2HLI8nH5N8pZxWYYEItmthHWe1aJnkYTqwkCCg3B0B6J
-        4Qa6CU1u0iFxoeXk55RQcW1mRZEF0LANMLEDXRSgGA==
-X-Google-Smtp-Source: ACcGV63WiBJRPTko1CpK6If/xv+GGtxnb+xq8ZWDZ3Js/hbm8Qmhq0T1xpa4yhqMcErIP1dqyTsyPVdym0uaUJgpEGY=
-X-Received: by 2002:a19:d7d6:: with SMTP id q83-v6mr4404140lfi.27.1538674152145;
- Thu, 04 Oct 2018 10:29:12 -0700 (PDT)
+        id S1727536AbeJEChB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 22:37:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45511 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727354AbeJEChB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 22:37:01 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfBX6-1fO4GF3bLc-00opkm; Thu, 04
+ Oct 2018 21:42:15 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfBX6-1fO4GF3bLc-00opkm; Thu, 04
+ Oct 2018 21:42:15 +0200
+Date:   Thu, 4 Oct 2018 21:42:21 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ananya Krishna Maram <ananyakittu1997@gmail.com>
+cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] [Outreachy] git/userdiff.c fix regex pattern error
+In-Reply-To: <CA+=o6KHxwYdYsvFDzBaG1q2jvgtN5f4LruD5k=dqei8workWfQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1810042136430.73@tvgsbejvaqbjf.bet>
+References: <20181004113015.GA30901@manohar-ssh> <nycvar.QRO.7.76.6.1810041624290.73@tvgsbejvaqbjf.bet> <CA+=o6KFN-p901GiJzj5BquU2RKCVTOKarGpjjuqsASN_uqGZSQ@mail.gmail.com> <nycvar.QRO.7.76.6.1810041718480.73@tvgsbejvaqbjf.bet>
+ <CA+=o6KHxwYdYsvFDzBaG1q2jvgtN5f4LruD5k=dqei8workWfQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a2e:2e13:0:0:0:0:0 with HTTP; Thu, 4 Oct 2018 10:29:11 -0700 (PDT)
-In-Reply-To: <86d0spzoi1.fsf@gmail.com>
-References: <CAPL8ZivFmHqS2y+WmNR6faRMnuahiqwPVYsV99NiJ1QLHOs9fQ@mail.gmail.com>
- <xmqqbm8f952b.fsf@gitster-ct.c.googlers.com> <86d0spzoi1.fsf@gmail.com>
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Thu, 4 Oct 2018 10:29:11 -0700
-Message-ID: <CAPL8ZitYycD=zZc9yK2ZWn6xSP2rtyviQnOYPFhBpsvQQHe09w@mail.gmail.com>
-Subject: Re: Git Evolve
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qMLcqkdQ+0DMfUDLEk+Gd0BP5x8jlXg/XNyTG/DX8RzhuUuWp3y
+ tYus8zbmkPNl/m/fm6R07QYBMVeCYfLlNW2dqR3qY0njkMGSHM5dmRZ6pgiOcSiFUXJ7d0D
+ 69DhLsiq0nAGDVn5JNjWjaIXDMmV3hqstWzdUocrDtKeBR1xpO/mWSo9avCrysqb4MbydP0
+ JtdNSBaK+RCSGTBQyoHgg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/oYsS9z9mtU=:P/zS+WT3BGPLVU4uE6OeXu
+ 75Zlq/5wB0Vg1vbCHj3MvmlhJVGBPQmhJpAfH6uEbLm1zrM/qGYSxug7xVWtIxXXsB4qobhoy
+ a8KbxSVWlMMhoA/pIzvENjeqVGPZqZg2ARGmqcPJrxOTkKryllRylZ5BYpf/DGfa3vnVGwPs4
+ h9dKrjhqHu5GDx53K9/Jh18Tzwo9ggsp3QaURp4F0vJe7MtqwBNHEbUPnc6A4iNhoRDQ2+qqi
+ Wyp4lxneqc3cZZgjIi4foUhsP4tWpZHx/UB3uJN0f0Ikv5N2x4BVXmIInPTWqc7U8aNRge56Q
+ 4GPiD2s4akmvwdw8J/TcgcZsMHfMsXrlZbE1U/Cz3zGQqJ+j9BWMM6unD/K8Unk2afMeXbCRT
+ Vse/HNcvGlgJJEMgzxllg90zynwLdajPOfqFo0Y/MItPm7MjKuhGQFDiEJqjzIVizEKlBkRj2
+ /Gnksv4B1EO117jy4m/fXO553gcpETYdXxA2Sh7JkCF9SZyDDprUq6MCGpwaJVdM4jOnVjXS+
+ tEPjcmnVrt7IPysS7XKW8f+Tek6HoLjXkHKwYhBgnim7iZDP9ZsfeSFS/1NhBlOs1b43dnIk3
+ L4kRDVeKDsRHJM5MquzhRC3dj/d4s6RvA7IODrIy0yUyNoxryJET1nX+UNqG+LPtB8uabr/eX
+ ORWmeVGovHED6RIBIKKiDPWeqePZZtztlUu/tSy5ChOCjsQ+0TkW6R1e0u7TVTh81O9+Thg7P
+ S93ZUsjiUjG0ZuOHWymvGQHaCbbabjeuoAd7EV+op+J+ZgBAijMdZNnKvU0yGuIqlrrWlcufX
+ fl0sd56q2wte/IZfW85Vb3EpntzhTcv0AH/GhcChG0Wmko/1A8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Gerrit uses notes and branches of meta-commits internally for its
-database, but it still uses the change-id footers to associate an
-uploaded commit with a change within its database.
+Hi Ananya,
 
-On Thu, Oct 4, 2018 at 9:05 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Stefan Xenos <sxenos@google.com> writes:
->>
->>> What is the evolve command?
->>> ...
->>> - Systems like gerrit would no longer need to rely on "change-id" tags
->>> in commit comments to associate commits with the change that they
->>> edit, since git itself would have that information.
->>> ...
->>> Is anyone else interested in this? Please email me directly or on this
->>> list. Let's chat: I want to make sure that whatever we come up with is
->>> at least as good as any similar technology that has come before.
->>
->> As you listed in the related technologies section, I think the
->> underlying machinery that supports "rebase -i", especially with the
->> recent addition of redoing the existing merges (i.e. "rebase -i
->> -r"), may be enough to rewrite the histories that were built on top
->> of a commit that has been obsoleted by amending.
->>
->> I would imagine that the main design effort you would need to make
->> is to figure out a good way to
->>
->>  (1) keep track of which commits are obsoleted by which other ones
->>      [*1*], and
->>
->>  (2) to figure out what histories are still to be rebuilt in what
->>      order on top of what commit efficiently.
->>
->> Once these are done, you should be able to write out the sequence of
->> instructions to feed the same sequencer machinery used by the
->> "rebase -i" command.
->
-> Well, that assumes that "rebase -i" can correctly recreate merges, if
-> needed.
->
->> [Side note]
->>
->> *1* It is very desirable to keep track of the evolution of a change
->>     without polluting the commit object with things like Change-Id:
->>     and other cruft, either in the body or in the header.  If we
->>     lose the Change-Id: footer without adding any new cruft in the
->>     commit object header, that would be a great success.  It would
->>     be a failure if we end up touching the object header.
->
-> Doesn't Gerrit use git-notes instead of 'Change-Id:' trailer nowadays?
-> Notes transport is quite easily controlled; the problem with notes merge
-> does not matter for this use.
->
-> Best,
-> --
-> Jakub Nar=C4=99bski
+On Thu, 4 Oct 2018, Ananya Krishna Maram wrote:
+
+> On Thu, 4 Oct 2018 at 20:56, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > [... talking about the reason why a slash does not need to be escaped
+> > in a C string specifying a regular expression...]
+> >
+> > But it does not need to be escaped, when you specify the regular
+> > expression the way we do. And the way we specified it is really the
+> > standard when specifying regular expressions in C code, i.e. *without* the
+> > suggested backslash.
+> 
+> Aha!. this makes total sense. I was thinking from a general regular expression
+> point of view. But I should be thinking from C point of view and how C
+> might interpret this newly submitted string.
+> This explanation is very clear. Thanks for taking time to reply to my
+> patch. From next time on, I will try to think from
+> git project's point of view.
+
+Of course! Thank you for taking the time to contribute this patch.
+
+Maybe you have another idea for a micro-project? Maybe there is something
+in Git that you wish was more convenient? Or maybe
+https://public-inbox.org/git/?q=leftoverbits has something that you would
+like to implement?
+
+Ciao,
+Johannes
+
+> 
+> Thanks,
+> Ananya.
+> 
+> > Ciao,
+> > Johannes
+> >
+> > >
+> > > Thanks,
+> > > Ananya.
+> > >
+> > > > Thanks,
+> > > > Johannes
+> > > >
+> > > > > ---
+> > > > >  userdiff.c | 2 +-
+> > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/userdiff.c b/userdiff.c
+> > > > > index f565f6731..f4ff9b9e5 100644
+> > > > > --- a/userdiff.c
+> > > > > +++ b/userdiff.c
+> > > > > @@ -123,7 +123,7 @@ PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
+> > > > >        /* -- */
+> > > > >        "[a-zA-Z_][a-zA-Z0-9_]*"
+> > > > >        "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
+> > > > > -      "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
+> > > > > +      "|[-+*\/<>%&^|=!]=|\/\/=?|<<=?|>>=?|\\*\\*=?"),
+> > > > >        /* -- */
+> > > > >  PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
+> > > > >        /* -- */
+> > > > > --
+> > > > > 2.17.1
+> > > > >
+> > > > >
+> > >
+> 
