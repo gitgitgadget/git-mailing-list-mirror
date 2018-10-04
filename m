@@ -2,125 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ACB11F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 21:45:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57F7A1F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 22:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728120AbeJEEk4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 00:40:56 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36225 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727089AbeJEEkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 00:40:55 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a8-v6so35462wmf.1
-        for <git@vger.kernel.org>; Thu, 04 Oct 2018 14:45:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CHFcHLzqXiR8P/rAOg3TZWUXaZUaCYjKpwIGoB9HKNs=;
-        b=HbdQvJUh6kkhfWGqwWi1m42CxmEFAi9su7LKN9BLgersFK5NFilqo0vIVBSd4GQrDZ
-         C3ygdTeKhhqpPU3KdCssKPpjq8f4rgMbUFsjAH1RQGvdW3mpoF6CVC0O4wEJHSa1AQFL
-         pXl/fRiqJshxeXS0LemZY7RDwglX9mgItUKe7nU9Mc0LBMnmRpqlpNd0pf3Hz9enQdb/
-         mImEffWVhfb/LMh1ctLTzB63MboQDYC2IjPfgbXdX0v8wTFB2b8L6wIZtgkVUFP1ip29
-         kVM5j0Y5fTtGwDAnoCiEW8O0MQmxswmFUHqCnhEP9gm6up9JaJeMy4LWvCd10Jh7Nd5o
-         HNBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CHFcHLzqXiR8P/rAOg3TZWUXaZUaCYjKpwIGoB9HKNs=;
-        b=GM2sj30YVW8MlIoB0L0xhEpMxvt8aU56gRju1BJ8e9NfAhOuch5wb5j9zlLulzbAqy
-         T4HdNH/sl/PQXn1ocB9jAb71zonxUyAp7HRESSlUkRV9ZGfRU2BC+ifB8XhEx7Z2xfDb
-         /i4N/Uiw2AvBOMNlo9LzEge4jNsoHGraNYo8iCsp6Ym4EZ3DJjpNlHPP+R8ytnFPNtB/
-         N/4+7OVFeE0DJ40PrZiiYiwkGJ9mzQI0pssSFdjNIhQ3c9B5lnsfLs52d4xHcwQSQK+p
-         gpCdN5WZRI+H/hXyKuPaOuZEOLhHMX9WByuB7q+mzh824ASiE7zLIlH2LmKpZQYhcdPK
-         SnTQ==
-X-Gm-Message-State: ABuFfohQ/wRQXt0V6SkNwNGv6E22edrCfQXyzM7ARqH/PTbtDEsotk+s
-        oW+rBDQizqxyxk+IPN7lZio=
-X-Google-Smtp-Source: ACcGV61OfWohfke+K9VpItfaINqCKfpTl43puaQaft3Vf1oAGCCOcSueBlljVBFbM82qCk1sEIn8ig==
-X-Received: by 2002:a1c:3581:: with SMTP id c123-v6mr5928542wma.50.1538689536379;
-        Thu, 04 Oct 2018 14:45:36 -0700 (PDT)
-Received: from localhost (x4dbe5b76.dyn.telefonica.de. [77.190.91.118])
-        by smtp.gmail.com with ESMTPSA id j6-v6sm4257729wru.4.2018.10.04.14.45.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Oct 2018 14:45:35 -0700 (PDT)
-Date:   Thu, 4 Oct 2018 23:45:33 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Eneas Queiroz <cotequeiroz@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] Error while trying to git apply a patch; works with patch
- -p1
-Message-ID: <20181004214533.GS23446@localhost>
-References: <CAPxccB1VnDV5BjkcFcoPVmegJSg6iN_tD3o0e9G2XKXaM_=4KA@mail.gmail.com>
+        id S1726652AbeJEFCi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 01:02:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41918 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725758AbeJEFCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 01:02:38 -0400
+Received: (qmail 5045 invoked by uid 109); 4 Oct 2018 22:07:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 04 Oct 2018 22:07:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30989 invoked by uid 111); 4 Oct 2018 22:06:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 04 Oct 2018 18:06:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Oct 2018 18:07:11 -0400
+Date:   Thu, 4 Oct 2018 18:07:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 2/5] fetch-pack: load tip_oids eagerly iff needed
+Message-ID: <20181004220711.GA28287@sigill.intra.peff.net>
+References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
+ <14e57ec8-b8a2-10bd-688d-1cb926e77675@web.de>
+ <9f51ac28-73e9-2855-c650-7d695945e286@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPxccB1VnDV5BjkcFcoPVmegJSg6iN_tD3o0e9G2XKXaM_=4KA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9f51ac28-73e9-2855-c650-7d695945e286@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 04, 2018 at 06:01:11PM -0300, Eneas Queiroz wrote:
-> I've sent this to the list 2 days ago, but I can't find it in the list
-> archives, so I'm sending it again without files attached.  I apologize
-> if this is a duplicate. One should be able to reproduce this with the
-> current PR files, but if not, I can provide them.
-> 
-> I've hit a strange error while trying to apply a patch from github
-> here: https://github.com/openwrt/openwrt/pull/965
-> 
-> 965.patch:452: trailing whitespace.
-> 
-> 965.patch:559: space before tab in indent.
->              -o $(SHLIBNAME_FULL) \
-> 965.patch:560: space before tab in indent.
->              $$ALLSYMSFLAGS $$SHOBJECTS $$NOALLSYMSFLAGS $$LIBDEPS; \
-> 965.patch:564: space before tab in indent.
->         -o $(SHLIBNAME_FULL) \
-> 965.patch:2334: trailing whitespace.
-> 
-> error: package/libs/openssl/patches/100-Configure-afalg-support.patch:
-> No such file or directory
-> error: package/libs/openssl/patches/110-openwrt_targets.patch: No such
-> file or directory
-> error: package/libs/openssl/patches/120-fix_link_segfault.patch: No
-> such file or directory
-> error: package/libs/openssl/patches/1.1.0/100-Configure-afalg-support.patch:
-> No such file or directory
-> error: package/libs/openssl/patches/1.1.0/110-openwrt_targets.patch:
-> No such file or directory
-> 
-> If you get the patch file from
-> https://github.com/openwrt/openwrt/pull/965.patch and apply it with
-> git apply, it fails.  If I apply the same file with patch -p1, it
-> works fine.  I've tried it with git 2.16.4 and 2.19, and they both
-> fail with the same error, and at least 2 more people have confirmed
-> it.
-> 
-> git apply fails even when using git format-patch -13 --stdout as a
-> source, so it is not github doing something weird.
-> 
-> The file is a series of 13 patches.  If I split the series after the
+On Thu, Oct 04, 2018 at 05:09:39PM +0200, René Scharfe wrote:
 
-So this is no _a_ patch, then, but a mailbox of patches.  'git apply'
-is supposed to apply a single a patch; apparently 'patch' is more
-lenient.
+> tip_oids_contain() lazily loads refs into an oidset at its first call.
+> It abuses the internal (sub)member .map.tablesize of that oidset to
+> check if it has done that already.
+> 
+> Determine if the oidset needs to be populated upfront and then do that
+> instead.  This duplicates a loop, but simplifies the existing one by
+> separating concerns between the two.
 
-Have you tried 'git am'?
+I like this approach much better than what I showed earlier. But...
 
-> 3rd patch, it works.
-> Also, if I use https://github.com/openwrt/openwrt/pull/965.diff, it also works.
-> 
-> I'm not subscribed to the list, so please CC me.
-> 
-> Cheers,
-> 
-> Eneas
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 3b317952f0..53914563b5 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -526,23 +526,6 @@ static void add_refs_to_oidset(struct oidset *oids, struct ref *refs)
+>  		oidset_insert(oids, &refs->old_oid);
+>  }
+>  
+> -static int tip_oids_contain(struct oidset *tip_oids,
+> -			    struct ref *unmatched, struct ref *newlist,
+> -			    const struct object_id *id)
+> -{
+> -	/*
+> -	 * Note that this only looks at the ref lists the first time it's
+> -	 * called. This works out in filter_refs() because even though it may
+> -	 * add to "newlist" between calls, the additions will always be for
+> -	 * oids that are already in the set.
+> -	 */
+
+I don't think the subtle point this comment is making goes away. We're
+still growing the list in the loop that calls tip_oids_contain() (and
+which now calls just oidset_contains). That's OK for the reasons given
+here, but I think that would need to be moved down to this code:
+
+> +	if (strict) {
+> +		for (i = 0; i < nr_sought; i++) {
+> +			ref = sought[i];
+> +			if (!is_unmatched_ref(ref))
+> +				continue;
+> +
+> +			add_refs_to_oidset(&tip_oids, unmatched);
+> +			add_refs_to_oidset(&tip_oids, newlist);
+> +			break;
+> +		}
+> +	}
+
+I.e., we need to say here why it's OK to summarize newlist in the
+oidset, even though we're adding to it later.
+
+-Peff
