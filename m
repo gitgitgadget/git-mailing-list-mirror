@@ -2,127 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 036161F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 19:42:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B09A1F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 19:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727536AbeJEChB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 22:37:01 -0400
-Received: from mout.gmx.net ([212.227.15.19]:45511 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727354AbeJEChB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 22:37:01 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfBX6-1fO4GF3bLc-00opkm; Thu, 04
- Oct 2018 21:42:15 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfBX6-1fO4GF3bLc-00opkm; Thu, 04
- Oct 2018 21:42:15 +0200
-Date:   Thu, 4 Oct 2018 21:42:21 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ananya Krishna Maram <ananyakittu1997@gmail.com>
-cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] [Outreachy] git/userdiff.c fix regex pattern error
-In-Reply-To: <CA+=o6KHxwYdYsvFDzBaG1q2jvgtN5f4LruD5k=dqei8workWfQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1810042136430.73@tvgsbejvaqbjf.bet>
-References: <20181004113015.GA30901@manohar-ssh> <nycvar.QRO.7.76.6.1810041624290.73@tvgsbejvaqbjf.bet> <CA+=o6KFN-p901GiJzj5BquU2RKCVTOKarGpjjuqsASN_uqGZSQ@mail.gmail.com> <nycvar.QRO.7.76.6.1810041718480.73@tvgsbejvaqbjf.bet>
- <CA+=o6KHxwYdYsvFDzBaG1q2jvgtN5f4LruD5k=dqei8workWfQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727545AbeJEChb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 22:37:31 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:32780 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727354AbeJEChb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 22:37:31 -0400
+Received: by mail-ed1-f66.google.com with SMTP id g26-v6so9663987edp.0
+        for <git@vger.kernel.org>; Thu, 04 Oct 2018 12:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i6Te8Cys4J65C9R4geXATPZz6ysnohuT7Hf8kAKs9d8=;
+        b=O9JUwHEiyvGZr9RCJlC3SprU4DqY+wZ77HV+4JQtXiZb22Cl7LyuuNhPGkC9V/jiBA
+         sBhlxCQQHgF+XkpXjGtSGMu0o2lBZ+q1Dz+z6oXuCSk/Zq7IgKxXVL5OGgIaHvr6haJH
+         Tceu91UNPGnK9ZQueiuZWvIBM7hiVBSXWm3+9Tuqi8hIF2cdabltEcNzWiA8kmeVatDf
+         292qKwsblZZ9l8xCdplFyhLlIoS2wWomoDMu2eber/H6FXaE1gdKMffzRvz1nKOpNSK1
+         co+5QVCk8bYKZ3gjqH5vThK5jqBwLCpbgICejJcW2hyKhF8zd8iCPCcgz9JHdWYK3HMa
+         8g/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i6Te8Cys4J65C9R4geXATPZz6ysnohuT7Hf8kAKs9d8=;
+        b=WJs29TFRBxaTWaY4ks+tp96yLAUJuzS9DpgDykH/Y7zpdP4EmKeJha4VLtz5aXbLdB
+         Jvb7uXo5UF0SiPzbBNyrIq14/5Azw8p8ZK0v/My8f6bo/lYB1qxWpmDXmD2emCBM7oPL
+         Db78NB1+v0kYt9VcTd0ep1zTGGSMuCgOqmVM5TKJNEe1s+pQldge49vBCZaWczBRCqDs
+         jy8Q6ij/lvPEgHBe6BnzddpP96xYX6mvAlbH9jkrmJNMXMNiOdlD8F7RF/wmOBhLEbYk
+         VIrfophK4acLSMFCExhHnpd/rUNAlbiLb5suVQx2HpJJhJO3Yrg+6tTYYpeDs1bp7M9A
+         qgpQ==
+X-Gm-Message-State: ABuFfojpRqhuKOQtGluw0ziMpK8YhZoOO9/eAUD6J4pOSdhPVgUHtxeh
+        HbTOi5bvTvqHMzM+MMrMXto9w0FQ13xuoSMGZ+pIHQ==
+X-Google-Smtp-Source: ACcGV63OXnMjYkwIYzpTPOXlqmHos7F/IA7xJB7lm0YDYcs8m3S7vVvkL9LyTMOUGAfT/VtjkUDarsenlRXp4gvtzOo=
+X-Received: by 2002:a50:93c5:: with SMTP id o63-v6mr10397014eda.154.1538682165508;
+ Thu, 04 Oct 2018 12:42:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qMLcqkdQ+0DMfUDLEk+Gd0BP5x8jlXg/XNyTG/DX8RzhuUuWp3y
- tYus8zbmkPNl/m/fm6R07QYBMVeCYfLlNW2dqR3qY0njkMGSHM5dmRZ6pgiOcSiFUXJ7d0D
- 69DhLsiq0nAGDVn5JNjWjaIXDMmV3hqstWzdUocrDtKeBR1xpO/mWSo9avCrysqb4MbydP0
- JtdNSBaK+RCSGTBQyoHgg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/oYsS9z9mtU=:P/zS+WT3BGPLVU4uE6OeXu
- 75Zlq/5wB0Vg1vbCHj3MvmlhJVGBPQmhJpAfH6uEbLm1zrM/qGYSxug7xVWtIxXXsB4qobhoy
- a8KbxSVWlMMhoA/pIzvENjeqVGPZqZg2ARGmqcPJrxOTkKryllRylZ5BYpf/DGfa3vnVGwPs4
- h9dKrjhqHu5GDx53K9/Jh18Tzwo9ggsp3QaURp4F0vJe7MtqwBNHEbUPnc6A4iNhoRDQ2+qqi
- Wyp4lxneqc3cZZgjIi4foUhsP4tWpZHx/UB3uJN0f0Ikv5N2x4BVXmIInPTWqc7U8aNRge56Q
- 4GPiD2s4akmvwdw8J/TcgcZsMHfMsXrlZbE1U/Cz3zGQqJ+j9BWMM6unD/K8Unk2afMeXbCRT
- Vse/HNcvGlgJJEMgzxllg90zynwLdajPOfqFo0Y/MItPm7MjKuhGQFDiEJqjzIVizEKlBkRj2
- /Gnksv4B1EO117jy4m/fXO553gcpETYdXxA2Sh7JkCF9SZyDDprUq6MCGpwaJVdM4jOnVjXS+
- tEPjcmnVrt7IPysS7XKW8f+Tek6HoLjXkHKwYhBgnim7iZDP9ZsfeSFS/1NhBlOs1b43dnIk3
- L4kRDVeKDsRHJM5MquzhRC3dj/d4s6RvA7IODrIy0yUyNoxryJET1nX+UNqG+LPtB8uabr/eX
- ORWmeVGovHED6RIBIKKiDPWeqePZZtztlUu/tSy5ChOCjsQ+0TkW6R1e0u7TVTh81O9+Thg7P
- S93ZUsjiUjG0ZuOHWymvGQHaCbbabjeuoAd7EV+op+J+ZgBAijMdZNnKvU0yGuIqlrrWlcufX
- fl0sd56q2wte/IZfW85Vb3EpntzhTcv0AH/GhcChG0Wmko/1A8=
+References: <20181002175514.31495-1-phillip.wood@talktalk.net>
+ <20181004100745.4568-1-phillip.wood@talktalk.net> <20181004100745.4568-6-phillip.wood@talktalk.net>
+In-Reply-To: <20181004100745.4568-6-phillip.wood@talktalk.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 4 Oct 2018 12:42:34 -0700
+Message-ID: <CAGZ79kbamUK=d+-ejy9vopDiVZF7OVOngz1Zx9y04VR3HnmoXg@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] diff --color-moved: fix a memory leak
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ananya,
+On Thu, Oct 4, 2018 at 3:07 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Free the hashmap items as well as the hashmap itself. This was found
+> with asan.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Thu, 4 Oct 2018, Ananya Krishna Maram wrote:
+Thanks for this series, all 5 patches are
 
-> On Thu, 4 Oct 2018 at 20:56, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > [... talking about the reason why a slash does not need to be escaped
-> > in a C string specifying a regular expression...]
-> >
-> > But it does not need to be escaped, when you specify the regular
-> > expression the way we do. And the way we specified it is really the
-> > standard when specifying regular expressions in C code, i.e. *without* the
-> > suggested backslash.
-> 
-> Aha!. this makes total sense. I was thinking from a general regular expression
-> point of view. But I should be thinking from C point of view and how C
-> might interpret this newly submitted string.
-> This explanation is very clear. Thanks for taking time to reply to my
-> patch. From next time on, I will try to think from
-> git project's point of view.
-
-Of course! Thank you for taking the time to contribute this patch.
-
-Maybe you have another idea for a micro-project? Maybe there is something
-in Git that you wish was more convenient? Or maybe
-https://public-inbox.org/git/?q=leftoverbits has something that you would
-like to implement?
-
-Ciao,
-Johannes
-
-> 
-> Thanks,
-> Ananya.
-> 
-> > Ciao,
-> > Johannes
-> >
-> > >
-> > > Thanks,
-> > > Ananya.
-> > >
-> > > > Thanks,
-> > > > Johannes
-> > > >
-> > > > > ---
-> > > > >  userdiff.c | 2 +-
-> > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > >
-> > > > > diff --git a/userdiff.c b/userdiff.c
-> > > > > index f565f6731..f4ff9b9e5 100644
-> > > > > --- a/userdiff.c
-> > > > > +++ b/userdiff.c
-> > > > > @@ -123,7 +123,7 @@ PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
-> > > > >        /* -- */
-> > > > >        "[a-zA-Z_][a-zA-Z0-9_]*"
-> > > > >        "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
-> > > > > -      "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
-> > > > > +      "|[-+*\/<>%&^|=!]=|\/\/=?|<<=?|>>=?|\\*\\*=?"),
-> > > > >        /* -- */
-> > > > >  PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
-> > > > >        /* -- */
-> > > > > --
-> > > > > 2.17.1
-> > > > >
-> > > > >
-> > >
-> 
+Reviewed-by: Stefan Beller <sbeller@google.com>
