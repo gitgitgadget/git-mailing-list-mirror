@@ -2,317 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 583411F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 10:08:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58CB41F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 11:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbeJDRA3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 13:00:29 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:55839 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727578AbeJDRA3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 13:00:29 -0400
-Received: from lindisfarne.localdomain ([92.28.142.68])
-        by smtp.talktalk.net with SMTP
-        id 80XsgfYebVlGZ80XygOCEU; Thu, 04 Oct 2018 11:07:55 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1538647675;
-        bh=yJ9z0HRdqdSmi/NtQyM8wtW6JjbcjX7tgdnJptc01tA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=i3yA1l8y7HWUYxwjOLxT6JbCvaGDVMWyWblwu7mYJoSGtl5wmmnPPKFc7DhaqYBM0
-         HyKtYg3O/uYV4giCz1SXACxeIYiOzxvRdGUc6tRC49uOzqF69lvAz8tnUSKMazAwH8
-         vItWozUtvp3QL+HOwQwfssiQA3mZ4fL6jW0RItHQ=
-X-Originating-IP: [92.28.142.68]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
- a=UGDAwvN9cmeZh0o4udnnNw==:17 a=evINK-nbAAAA:8 a=_rzlfNngT4RONqvaySYA:9
- a=OUBv6ERI6rX7pUnl:21 a=bcszGWiqAtblYPha:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 1/5] diff --color-moved-ws: fix double free crash
-Date:   Thu,  4 Oct 2018 11:07:41 +0100
-Message-Id: <20181004100745.4568-2-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20181004100745.4568-1-phillip.wood@talktalk.net>
-References: <20181002175514.31495-1-phillip.wood@talktalk.net>
- <20181004100745.4568-1-phillip.wood@talktalk.net>
+        id S1727234AbeJDR4L (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 13:56:11 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53327 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727131AbeJDR4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 13:56:10 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBIAz-1fxofG1eVB-00AEoy; Thu, 04
+ Oct 2018 13:03:23 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBIAz-1fxofG1eVB-00AEoy; Thu, 04
+ Oct 2018 13:03:23 +0200
+Date:   Thu, 4 Oct 2018 13:03:27 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Chris Jeschke <chrisjberlin@googlemail.com>
+cc:     sbeller@google.com, git@vger.kernel.org
+Subject: Re: inside the git folder
+In-Reply-To: <CADWf5z4DNRj=+X5pUF-Pe4vTq01OmFLk7KMP-=_hWWOEmsJg4A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1810041257010.73@tvgsbejvaqbjf.bet>
+References: <CADWf5z4pAR20qeoT1RnYENBB7Q5fA2fVVTNqPzMzvOE5Dq02qA@mail.gmail.com> <CAGZ79kZ=FXEgTgZ7hO_7O2Qo-ze9ykQW0_Vgr=m7MFe8mc9+Mg@mail.gmail.com> <CADWf5z4DNRj=+X5pUF-Pe4vTq01OmFLk7KMP-=_hWWOEmsJg4A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfHnJ+W9y4dFZtsqOa2McTFttGuO7JBAetyCjRPSQTkPu9wXB7RYKSTCBZDp/711u/1mwNHU5lAZCSllyM9VRgBFnQkaw0dpycDtohRJt6tPB2k3ovKM2
- oCOP+YHc1IDkb8GQadJSJKMcbOj6GWUM2t4q4WPHiAph/SwqlOzYUMuA4S2C0btSTHGwmJRf1Eok3tvA86SkUSPPtPZPaTckuWeX2wQZI2ewhTkiYTcDIKGC
- ER/mHDK440j6B6Rk/Z5vLv9mlxsoHA9UwBEUCzTrsMs00QE760UJfbybeHsFNKHKS30XQkS1IvMGO4OUSymtSQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LFVhPGzJtt2oLssuvRhgR0HSc9G+Jgb8klXPjDGrBCQ5sexr4eV
+ QCbSsVNrop7bf3yy42RTxJ/s1EnP4MpCiaYR9VIKkyldqiaQSEwj5mLZCsK0iGlz0J5SEGQ
+ WFHY6rQOjOPE38bxGyBta3g048kJy5ozjWh4Gl7rjyKBTiWwjPeSIjVL+IAD7TlCWsgW4nd
+ 8kdsiqOEiOvjj0d0DjMHw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:s3s18Zj9klA=:tS2ITkNQwPw1R61mA9kBQo
+ BOQ8OTiVnieZrPCgc/1fWhvInROjUWO/IiP0XjOgmUpCpjni5+KmRgg0KQ6BFovuF/9Wklst5
+ bV9FkYWX2h+HLq6Bk32pFY2+5rW764kf8V1+hztToR0wrHAKBt5QZK0sYAbjynxCUOMm/K30k
+ nufa3EhoXWiYhvVYbipFxm4oKIluy/iKmdHePT1Obi1mbWSzm5Ss2yv0JlKMvMCCQ/edD/jMc
+ 904AepuRTF8No3XFMQZukvmPSTjRFJh1AQ9JNw9WIt/fQpZTa3MuWDZbiDGRXdTUeqm1ZQers
+ W7X6ROPJzINiEkTuGu3irELvtmuiZ7EV/GPKv05K3GrnWM70mqrUUO3j801N4w/Dq1MVP1ZAw
+ 12OBLWvR/+4mKWfbtG1h0VAxMOl6QOXLaUi2BUoFv8mwzU9J5dXYiPvlwy5CJAfipBb0hQwsl
+ RmBXw6iVxYb+5PitjupxHAxh7jkxmUc7sVtnTkMtipRWVxyZlhDQvbCO6q8qXtqLm1tijpbJS
+ lB94eg1T9ZED1Iq8GcXIDkOJhVs/aahRXxtdEGpjJDH6fTl0k0I5dUTV/RB4f+8a4+dOxoGmy
+ DPzIlMp6P0T+JYQc3C+OyD19oPNakQQS6pm5DZsHhFaIR94vfLODfueT+E4tZHoleiBL3Ahtw
+ m2IQ24XJ1IEuag4Y1g+Qiarukd9QHeFCmPJmCkKCuMiWMN86ZAuRGQw3vCtSIvaiEVxxOGr6T
+ YQ+Ni+00f5GrRhW0F7hR+wCkCdm1grzopAfv0FG01+/xjNdHpe4uRZ/52yVWJ4BYBH97Dui33
+ NlF0u4E8oiJQwz4NZiTfcAh8c17wzYEFMrtNWKzxYCGWBETs8k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi Chris,
 
-Running
-  git diff --color-moved-ws=allow-indentation-change v2.18.0 v2.19.0
-results in a crash due to a double free. This happens when two
-potential moved blocks start with consecutive lines. As
-pmb_advance_or_null_multi_match() advances it copies the ws_delta from
-the last matching line to the next. When the first of our consecutive
-lines is advanced its ws_delta well be copied to the second,
-overwriting the ws_delta of the block containing the second line. Then
-when the second line is advanced it will copy the new ws_delta to the
-line below it and so on. Eventually one of these blocks will stop
-matching and the ws_delta will be freed. From then on the other block
-is in a use-after-free state and when it stops matching it will try to
-free the ws_delta that has already been freed by the other block.
+as mentioned by Stefan (who is a respected, active core Git contributor,
+if you need any more arguments to listen to him), it is inappropriate to
+copy the contents of the .git/ directory wholesale to another user's
+machine.
 
-The solution is to store the ws_delta in the array of potential moved
-blocks rather than with the lines. This means that it no longer needs
-to be copied around and one block cannot overwrite the ws_delta of
-another. Additionally it saves some malloc/free calls as we don't keep
-allocating and freeing ws_deltas.
+For one, it would horribly break in case the user overrode `user.email` in
+`.git/config`. That's one setting that should not be copied *anywhere*.
+And that's just one, there are *plenty* more examples. Just think of
+absolute paths referring to files that probably do not even exist on
+another machine! Like, worktrees, etc.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
+Of course, you could start a list of exceptions (files, config keys, etc)
+that should not be copied. But that's very fragile a solution.
 
-Notes:
-    This applies on top of fab01ec52e ("diff: fix
-    --color-moved-ws=allow-indentation-change", 2018-09-04). Note that the
-    crash happens with or without that patch, but the mechanism is
-    slightly different without it.
-    
-    Changes since v1:
-     - updated comments to match new implementation.
+So no, copying the .git/ directory is always the wrong thing to do, as
+Stefan pointed out.
 
- diff.c | 82 ++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 45 insertions(+), 37 deletions(-)
+I could imagine that a much better idea is to identify a *positive* list
+of things you want to copy over. The output of `git rev-parse
+--symbolic-full-name HEAD`? Sure. Maybe even the output of `git rev-parse
+--symbolic-full-name HEAD@{u}`? And then the URL of the corresponding
+remote? Sure. `.git/objects/alternates/`? Absolutely not.
 
-diff --git a/diff.c b/diff.c
-index 9393993e33..02d885f039 100644
---- a/diff.c
-+++ b/diff.c
-@@ -751,7 +751,6 @@ struct moved_entry {
- 	struct hashmap_entry ent;
- 	const struct emitted_diff_symbol *es;
- 	struct moved_entry *next_line;
--	struct ws_delta *wsd;
- };
- 
- /**
-@@ -768,6 +767,17 @@ struct ws_delta {
- };
- #define WS_DELTA_INIT { NULL, 0 }
- 
-+struct moved_block {
-+	struct moved_entry *match;
-+	struct ws_delta wsd;
-+};
-+
-+static void moved_block_clear(struct moved_block *b)
-+{
-+	FREE_AND_NULL(b->wsd.string);
-+	b->match = NULL;
-+}
-+
- static int compute_ws_delta(const struct emitted_diff_symbol *a,
- 			     const struct emitted_diff_symbol *b,
- 			     struct ws_delta *out)
-@@ -785,7 +795,7 @@ static int compute_ws_delta(const struct emitted_diff_symbol *a,
- static int cmp_in_block_with_wsd(const struct diff_options *o,
- 				 const struct moved_entry *cur,
- 				 const struct moved_entry *match,
--				 struct moved_entry *pmb,
-+				 struct moved_block *pmb,
- 				 int n)
- {
- 	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
-@@ -805,25 +815,24 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
- 	if (strcmp(a, b))
- 		return 1;
- 
--	if (!pmb->wsd)
-+	if (!pmb->wsd.string)
- 		/*
--		 * No white space delta was carried forward? This can happen
--		 * when we exit early in this function and do not carry
--		 * forward ws.
-+		 * The white space delta is not active? This can happen
-+		 * when we exit early in this function.
- 		 */
- 		return 1;
- 
- 	/*
--	 * The indent changes of the block are known and carried forward in
-+	 * The indent changes of the block are known and stored in
- 	 * pmb->wsd; however we need to check if the indent changes of the
- 	 * current line are still the same as before.
- 	 *
- 	 * To do so we need to compare 'l' to 'cur', adjusting the
- 	 * one of them for the white spaces, depending which was longer.
- 	 */
- 
--	wslen = strlen(pmb->wsd->string);
--	if (pmb->wsd->current_longer) {
-+	wslen = strlen(pmb->wsd.string);
-+	if (pmb->wsd.current_longer) {
- 		c += wslen;
- 		cl -= wslen;
- 	} else {
-@@ -873,7 +882,6 @@ static struct moved_entry *prepare_entry(struct diff_options *o,
- 	ret->ent.hash = xdiff_hash_string(l->line, l->len, flags);
- 	ret->es = l;
- 	ret->next_line = NULL;
--	ret->wsd = NULL;
- 
- 	return ret;
- }
-@@ -913,76 +921,72 @@ static void add_lines_to_move_detection(struct diff_options *o,
- static void pmb_advance_or_null(struct diff_options *o,
- 				struct moved_entry *match,
- 				struct hashmap *hm,
--				struct moved_entry **pmb,
-+				struct moved_block *pmb,
- 				int pmb_nr)
- {
- 	int i;
- 	for (i = 0; i < pmb_nr; i++) {
--		struct moved_entry *prev = pmb[i];
-+		struct moved_entry *prev = pmb[i].match;
- 		struct moved_entry *cur = (prev && prev->next_line) ?
- 				prev->next_line : NULL;
- 		if (cur && !hm->cmpfn(o, cur, match, NULL)) {
--			pmb[i] = cur;
-+			pmb[i].match = cur;
- 		} else {
--			pmb[i] = NULL;
-+			pmb[i].match = NULL;
- 		}
- 	}
- }
- 
- static void pmb_advance_or_null_multi_match(struct diff_options *o,
- 					    struct moved_entry *match,
- 					    struct hashmap *hm,
--					    struct moved_entry **pmb,
-+					    struct moved_block *pmb,
- 					    int pmb_nr, int n)
- {
- 	int i;
- 	char *got_match = xcalloc(1, pmb_nr);
- 
- 	for (; match; match = hashmap_get_next(hm, match)) {
- 		for (i = 0; i < pmb_nr; i++) {
--			struct moved_entry *prev = pmb[i];
-+			struct moved_entry *prev = pmb[i].match;
- 			struct moved_entry *cur = (prev && prev->next_line) ?
- 					prev->next_line : NULL;
- 			if (!cur)
- 				continue;
--			if (!cmp_in_block_with_wsd(o, cur, match, pmb[i], n))
-+			if (!cmp_in_block_with_wsd(o, cur, match, &pmb[i], n))
- 				got_match[i] |= 1;
- 		}
- 	}
- 
- 	for (i = 0; i < pmb_nr; i++) {
- 		if (got_match[i]) {
--			/* Carry the white space delta forward */
--			pmb[i]->next_line->wsd = pmb[i]->wsd;
--			pmb[i] = pmb[i]->next_line;
-+			/* Advance to the next line */
-+			pmb[i].match = pmb[i].match->next_line;
- 		} else {
--			if (pmb[i]->wsd) {
--				free(pmb[i]->wsd->string);
--				FREE_AND_NULL(pmb[i]->wsd);
--			}
--			pmb[i] = NULL;
-+			moved_block_clear(&pmb[i]);
- 		}
- 	}
- }
- 
--static int shrink_potential_moved_blocks(struct moved_entry **pmb,
-+static int shrink_potential_moved_blocks(struct moved_block *pmb,
- 					 int pmb_nr)
- {
- 	int lp, rp;
- 
- 	/* Shrink the set of potential block to the remaining running */
- 	for (lp = 0, rp = pmb_nr - 1; lp <= rp;) {
--		while (lp < pmb_nr && pmb[lp])
-+		while (lp < pmb_nr && pmb[lp].match)
- 			lp++;
- 		/* lp points at the first NULL now */
- 
--		while (rp > -1 && !pmb[rp])
-+		while (rp > -1 && !pmb[rp].match)
- 			rp--;
- 		/* rp points at the last non-NULL */
- 
- 		if (lp < pmb_nr && rp > -1 && lp < rp) {
- 			pmb[lp] = pmb[rp];
--			pmb[rp] = NULL;
-+			pmb[rp].match = NULL;
-+			pmb[rp].wsd.string = NULL;
- 			rp--;
- 			lp++;
- 		}
-@@ -1029,7 +1033,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 				struct hashmap *add_lines,
- 				struct hashmap *del_lines)
- {
--	struct moved_entry **pmb = NULL; /* potentially moved blocks */
-+	struct moved_block *pmb = NULL; /* potentially moved blocks */
- 	int pmb_nr = 0, pmb_alloc = 0;
- 	int n, flipped_block = 1, block_length = 0;
- 
-@@ -1058,7 +1062,11 @@ static void mark_color_as_moved(struct diff_options *o,
- 		}
- 
- 		if (!match) {
-+			int i;
-+
- 			adjust_last_block(o, n, block_length);
-+			for(i = 0; i < pmb_nr; i++)
-+				moved_block_clear(&pmb[i]);
- 			pmb_nr = 0;
- 			block_length = 0;
- 			continue;
-@@ -1086,14 +1094,12 @@ static void mark_color_as_moved(struct diff_options *o,
- 				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
- 				if (o->color_moved_ws_handling &
- 				    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) {
--					struct ws_delta *wsd = xmalloc(sizeof(*match->wsd));
--					if (compute_ws_delta(l, match->es, wsd)) {
--						match->wsd = wsd;
--						pmb[pmb_nr++] = match;
--					} else
--						free(wsd);
-+					if (compute_ws_delta(l, match->es,
-+							     &pmb[pmb_nr].wsd))
-+						pmb[pmb_nr++].match = match;
- 				} else {
--					pmb[pmb_nr++] = match;
-+					pmb[pmb_nr].wsd.string = NULL;
-+					pmb[pmb_nr++].match = match;
- 				}
- 			}
- 
-@@ -1110,6 +1116,8 @@ static void mark_color_as_moved(struct diff_options *o,
- 	}
- 	adjust_last_block(o, n, block_length);
- 
-+	for(n = 0; n < pmb_nr; n++)
-+		moved_block_clear(&pmb[n]);
- 	free(pmb);
- }
- 
--- 
-2.19.0
+It is tedious, alright, but you simply cannot copy the contents of .git/
+to another machine and expect that to work.
 
+Ciao,
+Johannes
+
+On Thu, 4 Oct 2018, Chris Jeschke wrote:
+
+> Hi Stefan,
+> 
+> thanks for your answer.
+> 
+> The Goal after sending the files is to have a copy on the remote site.
+> This includes that the working directory is the same (what we already
+> guarantee with our tool) and that git is at the same 'state' (that
+> means that we have the same history and that we checkout at the same
+> branch/commit).
+> My idea:
+> Send the working directory with our  tool
+> Initialize a Git directory on the remote side
+> Send the 'objects','refs', 'HEAD' and the 'gitignore' with our tool
+> 
+> Is there anything else I should take care of?
+> 
+> Am Mi., 3. Okt. 2018 um 20:51 Uhr schrieb Stefan Beller <sbeller@google.com>:
+> >
+> > On Wed, Oct 3, 2018 at 5:26 AM Chris Jeschke
+> > <chrisjberlin@googlemail.com> wrote:
+> > >
+> > > Hey git-team,
+> > > I am working on a plug-in for a distributed pair programming tool. To
+> > > skip the details: I was thinking about sending parts of the git folder
+> > > as a zip folder with our own Bytestream instead of using the git API.
+> > > Is there a common sense about what should and what shouldn't be done
+> > > when working with the files inside the git folder?
+> >
+> > This contradicts the security model of git.
+> > Locally I can do things like:
+> >     git config alias.co "rm -rf ~"
+> >     echo "rm -rf ~" >.git/hooks/{...}
+> > and I would experience bad things, but that is ok,
+> > as I configured it locally (supposedly I know what
+> > I am doing); but if I have the ability to send these
+> > tricks to my beloved coworkers, hilarity might ensue.
+> >
+> > What stuff do you need to send around?
+> >
+> > objects? Fine, as the receive could check they are
+> > good using fsck.
+> >
+> > refs/ ? Sure. It may be confusing to users,
+> > but I am sure you'll figure UX out.
+> >
+> > local config, hooks ? I would not.
+> >
+> > Not sure what else you'd think of sending around.
+> >
+> > Cheers,
+> > Stefan
+> 
