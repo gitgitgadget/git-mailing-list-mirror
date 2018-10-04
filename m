@@ -2,112 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C86381F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 15:05:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 253BD1F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 15:05:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727684AbeJDV7M (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 17:59:12 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:36985 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727354AbeJDV7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 17:59:12 -0400
-Received: by mail-lf1-f67.google.com with SMTP id a82-v6so7050569lfa.4
-        for <git@vger.kernel.org>; Thu, 04 Oct 2018 08:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iq5Z9NwrOhoRGuJefQ7DSCaqYXEIj9n2KDVJr5+2Uhc=;
-        b=rFHnEcX1TghYauF165LcsxTpxLWUYoLbWmjZs3IFyGmGdXd9E2OHZ7yu2ME6bbSR9D
-         /cYSGUQKWcEbe/1ShO79VoKdrHOT7noqTantKyi821fIzWveJ62TdhD6DMMScMKMoy0H
-         hzFENMTkg4VPvsHGpDjgU8yDKuGkkP1AstrIbQaJEYv7fdT1P+EBbxr+OhC3pZ+mPXpR
-         OPspQkqqhn40azD+cdiO2Nqmzvmvg35DGufVUz3WbRn+CIhPi6/A4qPK0F4SSEx+aBX7
-         lVH8FRepGT7D67uVnFEsbOt0NtfAQvheY+zlWMgb9IkQK+k8iBKvL7d5h2PM35sGIhpi
-         oCfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iq5Z9NwrOhoRGuJefQ7DSCaqYXEIj9n2KDVJr5+2Uhc=;
-        b=KCdv96xFQG7j4kdfONotxxUtd3J3letJw7lO9LCN0IKnZvj2X/QT8Kq0LqPoZC7Jsm
-         rzqpdxTAvoAJG4lPoq835md6P2s93X3LY/IioQxemFAynQd4FZncNqRpf2KG1emvNUPz
-         WNp7yo6pTNQZDMelYXPEp5s6MpBeAzxgRkegLkn4recbZC4VYzNNHb7w/hH4Ry9jFkL9
-         RUGRX/LrNB0kk+B13WC69XBrfRRfZVcSwUmtq9E/mEDjDOtf2d57OJhPBM3wIxri9UIQ
-         QNOSgp8+2SFwVtcjiPsRYup3EMjdlrwVteA7pB25wRi2tY3OgFMtPWxkSkFOkgFmc9ba
-         gdBw==
-X-Gm-Message-State: ABuFfoiyTITdmKJoaThhupwYqRP9tVFqUHBoRppVVvkGConJfm+4hbpY
-        KMO9cTHICMeCl35QYUZR/5lHSsFie5iK7stddXE=
-X-Google-Smtp-Source: ACcGV61vmntl050x2S6GKnintaqfloOj4jql+6eoryl84G4uUgCr7N14Zx1OLnHUMIGrXUV9ZMp2bMhvcu22ht2JghY=
-X-Received: by 2002:a19:eadb:: with SMTP id y88-v6mr3993720lfi.1.1538665529777;
- Thu, 04 Oct 2018 08:05:29 -0700 (PDT)
+        id S1727691AbeJDV7c (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 17:59:32 -0400
+Received: from mout.web.de ([212.227.15.4]:47267 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727354AbeJDV7c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 17:59:32 -0400
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lpw63-1fTGT31TD5-00fkwn; Thu, 04
+ Oct 2018 17:05:42 +0200
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lpw63-1fTGT31TD5-00fkwn; Thu, 04
+ Oct 2018 17:05:42 +0200
+Subject: [PATCH v3 0/5] oidset: use khash
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <14e57ec8-b8a2-10bd-688d-1cb926e77675@web.de>
+Date:   Thu, 4 Oct 2018 17:05:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-References: <20181004113015.GA30901@manohar-ssh> <nycvar.QRO.7.76.6.1810041624290.73@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1810041624290.73@tvgsbejvaqbjf.bet>
-From:   Ananya Krishna Maram <ananyakittu1997@gmail.com>
-Date:   Thu, 4 Oct 2018 15:05:18 +0530
-Message-ID: <CA+=o6KFN-p901GiJzj5BquU2RKCVTOKarGpjjuqsASN_uqGZSQ@mail.gmail.com>
-Subject: Re: [PATCH] [Outreachy] git/userdiff.c fix regex pattern error
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:YUAc4MNYv3vYwbo4SQjYUPfUqKijQkDsDgwt2kX9vD1TNdGiziS
+ OCGta4chLRjLlZ8sNhTHzc0bG7nkZxskNzADxPALX5DY7y0BA/Yh0RzFrKDMO75khUoo9K7
+ 9NM1fv0f1FFfj3sGbEtP8z89E1a7d1ByK+NpUIQT2N+gGkACDM79sap/m9DREwZfFDD549T
+ aaH8jmPdDAaLkuG7e9mnw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7jcbhJuIras=:RKyDkqcL4l3Z1EiujmWQ8n
+ 99TwibhtyZsGta2YAKxXZVGLr6SqG0mjUgGSG6ruGXS0Ox+kaNZuzrCsjFJTJuW3VjwztYNER
+ hjJMb4K+oZwLr7YQnni5wbkZLWgdfTwmxstPSLFiB/OLw1skNUC2Xlek/vUydP034ADbL62US
+ OVDXCHlK6aR5H3I5lxfYqwyDLzxkKMw24adqGg4/HhBI74ySxUv+Mg8tud2uxGarWOXDlg+1y
+ W/sGo6/+Yyi6gwCH5zJL8xuJYZY7YBcs1EwKg5GTZjMboH34NCvR+ml7YkRVz5qJ58Ri9MGKW
+ y7kQN4wrsa7dvVFiu8RjH3/WvjCheoQKFtsl8/v4CSr8Lnz3nLPAN4j2BU/Q+eimpX7WCgitB
+ 1tleYbr80zYBF3+MItRyzGjVNLhXjj2XlTx50OgKtitD/F9SXCiSfrTVS7s8gG0Mt7rVop8H1
+ 0YqFKyBDpaNG8s8BKaY8F+Cpt7aaYB6FngDEXR5ApMxYBDT01mr/+JrSUtd4DKeUE3buz0Xd2
+ f5Y0e+hx1G3QF9RX5c21sG31dBRBv2BOvNTjnLjZbP0KWYSdPoDMz/iRttG4KRYfiqYNrjqdY
+ AcXhf7sIM4yBSLUvUNE/8x87pLoLimIliGCjDJmJyfYJ10JhPgCyJzKlUrD/MmPvjaHdvkR+2
+ pjl3wVlBoKrJAMIqFZadZmPOEMJdEkcV/nR/uInbUAurmEXrFSRwHGB4OieGQpz47ZIhwaY6c
+ iuCpxbhGPso0eL5HsyYefCZWUodyNaiEmaRXeiOzkIiYXBrTUBAC5Dz+kZoNdQ8FXmXz4CiIy
+ DywnxC2/JyrRwjDnOHD5RSLzLbvapLvs+vmtKpHhf4Uz3x4kYc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 4 Oct 2018 at 19:56, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Ananya,
->
-> thank you for taking the time to write this patch!
->
-> On Thu, 4 Oct 2018, Ananya Krishna Maram wrote:
->
-> > the forward slash character should be escaped with backslash. Fix
-> > Unescaped forward slash error in Python regex statements.
-> >
-> > Signed-off-by: Ananya Krishna Maram<ananyakittu1997@gmail.com>
->
-> That explains pretty well what you did, but I wonder why the forward slash
-> needs to be escaped? I would understand if we enclosed the pattern in
-> `/<regex>/`, as it is done e.g. in Javascript, but we do not...
+Two new patches to avoid using oidset internals in fetch-pack:
 
-You are correct, the code would execute either ways. But when I came across
-this line, I didn't get it's meaning instantly because as per standards, forward
-slash has to be escaped. In fact when open source code is written according to
-standards, the code will be reachable to more people.
+  fetch-pack: factor out is_unmatched_ref()
+  fetch-pack: load tip_oids eagerly iff needed
 
-Thanks,
-Ananya.
+Unchanged patch:
 
-> Thanks,
-> Johannes
->
-> > ---
-> >  userdiff.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/userdiff.c b/userdiff.c
-> > index f565f6731..f4ff9b9e5 100644
-> > --- a/userdiff.c
-> > +++ b/userdiff.c
-> > @@ -123,7 +123,7 @@ PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
-> >        /* -- */
-> >        "[a-zA-Z_][a-zA-Z0-9_]*"
-> >        "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
-> > -      "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
-> > +      "|[-+*\/<>%&^|=!]=|\/\/=?|<<=?|>>=?|\\*\\*=?"),
-> >        /* -- */
-> >  PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
-> >        /* -- */
-> > --
-> > 2.17.1
-> >
-> >
+  khash: factor out kh_release_*
+
+Unchanged, except it doesn't touch fetch-pack anymore:
+
+  oidset: use khash
+
+A new patch, to reduce object text size:
+
+  oidset: uninline oidset_init()
+
+ fetch-pack.c | 49 +++++++++++++++++++++++--------------------------
+ khash.h      |  9 +++++++--
+ oidset.c     | 41 +++++++++++++++++++----------------------
+ oidset.h     | 43 ++++++++++++++++++++++++++++++++-----------
+ 4 files changed, 81 insertions(+), 61 deletions(-)
+
+-- 
+2.19.0
+
