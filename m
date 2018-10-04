@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B37341F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 15:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 352E11F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 15:11:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727436AbeJDWDb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 18:03:31 -0400
-Received: from mout.web.de ([212.227.15.3]:45357 "EHLO mout.web.de"
+        id S1727691AbeJDWEr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 18:04:47 -0400
+Received: from mout.web.de ([212.227.15.4]:34559 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727354AbeJDWDa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 18:03:30 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNLRJ-1g6ANa4BKr-006xtw; Thu, 04
- Oct 2018 17:09:44 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNLRJ-1g6ANa4BKr-006xtw; Thu, 04
- Oct 2018 17:09:44 +0200
-Subject: [PATCH v3 2/5] fetch-pack: load tip_oids eagerly iff needed
+        id S1727685AbeJDWEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 18:04:46 -0400
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LvS5r-1fhaFN2v4N-010ZLG; Thu, 04
+ Oct 2018 17:10:58 +0200
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LvS5r-1fhaFN2v4N-010ZLG; Thu, 04
+ Oct 2018 17:10:58 +0200
+Subject: [PATCH v3 3/5] khash: factor out kh_release_*
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>
 References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
  <14e57ec8-b8a2-10bd-688d-1cb926e77675@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <9f51ac28-73e9-2855-c650-7d695945e286@web.de>
-Date:   Thu, 4 Oct 2018 17:09:39 +0200
+Message-ID: <46f34917-eafd-2970-17f4-c2df92a00352@web.de>
+Date:   Thu, 4 Oct 2018 17:10:54 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
@@ -38,107 +38,60 @@ In-Reply-To: <14e57ec8-b8a2-10bd-688d-1cb926e77675@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:jtX6vYyEkBvGwyuP8hS4luFJMrxtB3Y1wfyi7MFqYO3t5pwqfws
- cXoFXBUOsV5zk4S8bKg2MJ59/IWvNt8joTwjwHVlUQcZBZqD1l0oIC67Bi43AsOcXfGP0eV
- sQJ4BX1gu1wDXNHfHP2tQd2Z+qKvNzyVuE3JUVmSAdiYsUnaiksT6TwQzdBQdlLHl3cavek
- jeUDr8kHo22YTvYxBeYkw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EQ/nXDRTFV4=:MxTqSwUfu+R8H7OYzz3QLi
- Hk1ZmjbxUsKpRXIulUSGMlCciWGdSeCZGkHrRLcohTiMzonI+kIwiDoet/Hu2xZDM9HfGz54f
- ZHpq65bZwMuc9Zng5c0+2fWz6zG3dnjhYHaym+brK6DFrrZ2nJ6xxI2hmjpC/BCvfZiB/ADh0
- NIVwD+nGEWu7UxRi9m17a5H664HUYltMBImbJ0K6E2p6fIajLLPK0ERw6PRYilrooVxPjHTvR
- F56+W5OhtQNc1PI47BWzgQxn4/9aQXw3LqAKXh2losTrdWQ8KOmCDPBCT5NJp9er/NOfnYcyv
- fXZ45im70hJ3U+Om6m6yxDB7GJ86Lv2eoNryXCuhylr2AU5a2e1iMEQxAqVZgITbqd0eTa1jU
- jywmuoYjyXqC2UNPCmwg8vnPBJrpoK2ek3JTpF7gdTkqoipKM90KHe/knZmuFzY1R+Qb/RgMb
- cMe+jg8WxE80d+EE2e//Au8tI6tICO748ybHTPyOxvZEZ7Ycj9i09Fstia3B0P+1Vfu8Yvpc3
- rotI6P9S5h6GQDLYRuKqtdeQ1KKGqPdRnTk+39npdKOkjBpWS66govENPBp3xceLED5qdnUwY
- loG2914eBlgphTXAv+Xr7N2H2pkuqREv/3zNfVfmqszTWWCdf7xmtgIGpuY8PEX4R3xKDxG57
- 92i2j2iwys5g2WGeXwWzi4LxJpBOX9GZjgp6nmeZRwdvBlrtUxdUMt2q1ltFa+C5PbxN0jWn9
- hpQBqaUiuPWkqH/Rbm8GMWOtsw4z2lkYyd4Z5z9MrCIPwqGiUWXU5qZWqXpnSfoFWkuq5ydXX
- WQbI2RNYDhsmYmakKpiX8PfPw6c6bNLHWnPqO4/fAWQ/tgFYZA=
+X-Provags-ID: V03:K1:V6gOV89ppLTSLM6Q5AUmtH54iOKlKJl3NtwQE9al7MJ+oESyllg
+ 43Fb/0/UFi5YFE82QnsINK2w7hmohXKUxPHFDZ1gO27648Gqghn7lHHlLiX+KUG0Sqwqbk+
+ y0WgwtuBhbK6MHgLsJYpKhNDuukkm8QKCiaGZvmGCnBbvTwQGhwcVi6FKiWSO08RzHQAIAH
+ CgfHUukdGYQTcj04jR+pA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uYg8tJ4M7KU=:ppnSHUxAv41Us73V3tBk8j
+ gfcm+1MxBq15QnvFVFK9XguXyC3h4BcvAQtXLsfQ3zjtjRePE7PAVhhAadsOxc9ljAsSylKAQ
+ viKanYsQM6By09YpvAI+LABZBAJ/K4QHfwlP+LjesY0wVtKWJV1lB0acUnUIFIYoP3MnJJ4Ie
+ LJGwnmYPj9NmfXvQGC883LIaczl/b5VXYSmChGtMtE04q5incwhOBclZ+p8xm3cYJP/cNmO+n
+ 3tWec7OKizjzkJVDdT0vnm0+xW3CLyR7l0+SiA5lLPxXpRh2JTI4p/IiaR3fKX1SkueNRIhyo
+ cLLDmR9JPVdws89QXqjBBoL84gWsP3oXllBvpyShJpS/kT4ekYeu9lEhJJo4GWGcdxBE4Cekb
+ ASDNwZrRrdKaQoyFQ7Q5oryvGAKjqUM3jmzW4CSi94KLaGa5o6FVubxgHqLEXEER5qMWg2MLw
+ FP1sS/QlLo619ytsGQVd0cXnmLURPdBs2cOgJrCrtNtUt17GwujuKwf1Zn3Zh+ltM2TAJCi4a
+ EpZqL8m6cLt93FQN/wtuLFUcmCKcSb8D2et8Fwik9UqGeO4m4ZZNh8SeO2KikBXuin+aJqYJZ
+ U2KUIYhAcY4jAMahwA+o6rupibRjyC73u/lkXHvQzrExin21sfIz/+y8xEKC0szyvB6FHUvQS
+ i2uUYP6RxJD7V+NGOpvgldVPzX0JWVsLAPujES/0Gc83Utv4Aqy222wXROkhFJRgGTUUxvKZq
+ 4uCdOyd0fQrsYQB1i5NaO1HooZ9R/CEorBiBWALoHM2Du5zw6/0fxzP2UPNYEW46QbHE7gLJv
+ cYpOTbSQLL0IzcXo6JGTxhKMIK9WLvHHVn6syGGFFp/Y7/34rQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tip_oids_contain() lazily loads refs into an oidset at its first call.
-It abuses the internal (sub)member .map.tablesize of that oidset to
-check if it has done that already.
-
-Determine if the oidset needs to be populated upfront and then do that
-instead.  This duplicates a loop, but simplifies the existing one by
-separating concerns between the two.
+Add a function for releasing the khash-internal allocations, but not the
+khash structure itself.  It can be used with on-stack khash structs.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- fetch-pack.c | 36 +++++++++++++++---------------------
- 1 file changed, 15 insertions(+), 21 deletions(-)
+1 tab = 4 spaces here.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 3b317952f0..53914563b5 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -526,23 +526,6 @@ static void add_refs_to_oidset(struct oidset *oids, struct ref *refs)
- 		oidset_insert(oids, &refs->old_oid);
- }
- 
--static int tip_oids_contain(struct oidset *tip_oids,
--			    struct ref *unmatched, struct ref *newlist,
--			    const struct object_id *id)
--{
--	/*
--	 * Note that this only looks at the ref lists the first time it's
--	 * called. This works out in filter_refs() because even though it may
--	 * add to "newlist" between calls, the additions will always be for
--	 * oids that are already in the set.
--	 */
--	if (!tip_oids->map.map.tablesize) {
--		add_refs_to_oidset(tip_oids, unmatched);
--		add_refs_to_oidset(tip_oids, newlist);
--	}
--	return oidset_contains(tip_oids, id);
--}
--
- static int is_unmatched_ref(const struct ref *ref)
- {
- 	struct object_id oid;
-@@ -563,6 +546,8 @@ static void filter_refs(struct fetch_pack_args *args,
- 	struct ref *ref, *next;
- 	struct oidset tip_oids = OIDSET_INIT;
- 	int i;
-+	int strict = !(allow_unadvertised_object_request &
-+		       (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
- 
- 	i = 0;
- 	for (ref = *refs; ref; ref = next) {
-@@ -599,16 +584,25 @@ static void filter_refs(struct fetch_pack_args *args,
- 		}
- 	}
- 
-+	if (strict) {
-+		for (i = 0; i < nr_sought; i++) {
-+			ref = sought[i];
-+			if (!is_unmatched_ref(ref))
-+				continue;
-+
-+			add_refs_to_oidset(&tip_oids, unmatched);
-+			add_refs_to_oidset(&tip_oids, newlist);
-+			break;
-+		}
-+	}
-+
- 	/* Append unmatched requests to the list */
- 	for (i = 0; i < nr_sought; i++) {
- 		ref = sought[i];
- 		if (!is_unmatched_ref(ref))
- 			continue;
- 
--		if ((allow_unadvertised_object_request &
--		     (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1)) ||
--		    tip_oids_contain(&tip_oids, unmatched, newlist,
--				     &ref->old_oid)) {
-+		if (!strict || oidset_contains(&tip_oids, &ref->old_oid)) {
- 			ref->match_status = REF_MATCHED;
- 			*newtail = copy_ref(ref);
- 			newtail = &(*newtail)->next;
+ khash.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/khash.h b/khash.h
+index 07b4cc2e67..d10caa0c35 100644
+--- a/khash.h
++++ b/khash.h
+@@ -82,11 +82,16 @@ static const double __ac_HASH_UPPER = 0.77;
+ 	SCOPE kh_##name##_t *kh_init_##name(void) {							\
+ 		return (kh_##name##_t*)xcalloc(1, sizeof(kh_##name##_t));		\
+ 	}																	\
++	SCOPE void kh_release_##name(kh_##name##_t *h)						\
++	{																	\
++		free(h->flags);													\
++		free((void *)h->keys);											\
++		free((void *)h->vals);											\
++	}																	\
+ 	SCOPE void kh_destroy_##name(kh_##name##_t *h)						\
+ 	{																	\
+ 		if (h) {														\
+-			free((void *)h->keys); free(h->flags);					\
+-			free((void *)h->vals);										\
++			kh_release_##name(h);										\
+ 			free(h);													\
+ 		}																\
+ 	}																	\
 -- 
 2.19.0
