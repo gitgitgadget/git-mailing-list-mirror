@@ -2,89 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E57ED1F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 11:30:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E2851F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 13:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727370AbeJDSXM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 14:23:12 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34419 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727183AbeJDSXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 14:23:12 -0400
-Received: by mail-pg1-f196.google.com with SMTP id g12-v6so3044395pgs.1
-        for <git@vger.kernel.org>; Thu, 04 Oct 2018 04:30:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=WZqlFp7MmMK7/G3AsiZmzYkLBeMu5rt5dtj3U2/OLi8=;
-        b=eNRRaUowjWCBOZPGhfKnRw4JI6/VmVHbMtPAm+A6o+RJo7RpbR/RV2MqMSkCmHm1dp
-         pREqVlDTGqHhe8Oi8iy/yRAHoq9OvXBJOjXIjX8djhHa8iC7rG1np/Nr9zsrd7vPvpT0
-         csHVNp2rzhQtlkuI0rxqnA0lf+hGJYHWrbiH1Te7c2G5hWrmqY53oOdWHRjJKoNlYLZe
-         pjomCl+iGBUqX2LCYzEfZIWmYyko+qYlszTDQqQhQWG6m2dp9Q5HdciqeC7WNuYj6rm/
-         gf53lnMdrPVXZUHMksvp2v9BMFZTrmiR2Qid9oTZn8gVYnQROOEYInzwVgntehB1zIiL
-         gZVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=WZqlFp7MmMK7/G3AsiZmzYkLBeMu5rt5dtj3U2/OLi8=;
-        b=Vwtu5x0XZ99VYFyRTR/mNWWtvE/ACHWIcSrsyjuC7jsXet0FWiLXNWxNgcs1t1KhCI
-         B74/GNCaU1U+fKYf9IebzSMolVsup1QY2ddDNTWi/GPOgSeZtIW1oUkEsKYGk6ErZmss
-         BRbwzUkr8nu+0nFsHLfm8CI3btLlohdGTySJ1CRDMWsAOkGWMeP1XdjvVncFBUbXQBDJ
-         /U8klp9g1rwcVDRpXGs3+Y2XZUTUI/1AboDPFxehvMS0HOD7vHOF6flhLe9jr4a4P4QA
-         g3jqCjlPNpReqpelja1SzmYllcIihYu5NqQ5GGCLNNcz6NNGfr1ypwEAGqnMxILKOtp7
-         B6Lw==
-X-Gm-Message-State: ABuFfogpw5mYYBwk8WorL98Xs6Hzf5BAlfSq7VvouWZphQiAT1DNwz3v
-        tCR0iRMwRH1bpGHfcgYcwOo=
-X-Google-Smtp-Source: ACcGV62JDF5S4DZdOKAY2RaRCJlj2+ggqDC6MTPO8ZRo+kvZdIAoA+QDud+jQg2OI2lf5Eg85TP9zg==
-X-Received: by 2002:a62:c60a:: with SMTP id m10-v6mr5501200pfg.15.1538652621601;
-        Thu, 04 Oct 2018 04:30:21 -0700 (PDT)
-Received: from manohar-ssh ([106.51.121.242])
-        by smtp.gmail.com with ESMTPSA id d7-v6sm13458600pfm.23.2018.10.04.04.30.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Oct 2018 04:30:20 -0700 (PDT)
-Date:   Thu, 4 Oct 2018 11:30:15 +0000
-From:   Ananya Krishna Maram <ananyakittu1997@gmail.com>
-To:     christian.couder@gmail.com, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de
-Subject: [PATCH] [Outreachy] git/userdiff.c fix regex pattern error
-Message-ID: <20181004113015.GA30901@manohar-ssh>
+        id S1727469AbeJDUJy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 16:09:54 -0400
+Received: from fed1rmfepo203.cox.net ([68.230.241.148]:55370 "EHLO
+        fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727415AbeJDUJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 16:09:53 -0400
+Received: from fed1rmimpo306.cox.net ([68.230.241.174])
+          by fed1rmfepo203.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20181004131637.UUNS4163.fed1rmfepo203.cox.net@fed1rmimpo306.cox.net>
+          for <git@vger.kernel.org>; Thu, 4 Oct 2018 09:16:37 -0400
+Received: from thunderbird.smith.home ([68.2.114.239])
+        by fed1rmimpo306.cox.net with cox
+        id jRGc1y02l59yGBo01RGdKZ; Thu, 04 Oct 2018 09:16:37 -0400
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020C.5BB612B5.003B,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=cYVmUULM c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=x7bEGLp0ZPQA:10 a=smKx5t2vBNcA:10 a=1XWaLZrsAAAA:8
+ a=mK_AVkanAAAA:8 a=zXwBfdiiUvvSbLr2YdIA:9 a=CjuIK1q_8ugA:10
+ a=3gWm3jAn84ENXaBijsEo:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id D52EF29A010A;
+        Thu,  4 Oct 2018 06:16:36 -0700 (MST)
+From:   Stephen Smith <ischis2@cox.net>
+To:     Chris Jeschke <chrisjberlin@googlemail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        sbeller@google.com, git@vger.kernel.org
+Subject: Re: inside the git folder
+Date:   Thu, 04 Oct 2018 06:16:36 -0700
+Message-ID: <384680468.dD3INfo3AG@thunderbird>
+Organization: Personal
+References: <CADWf5z4pAR20qeoT1RnYENBB7Q5fA2fVVTNqPzMzvOE5Dq02qA@mail.gmail.com> <CADWf5z4DNRj=+X5pUF-Pe4vTq01OmFLk7KMP-=_hWWOEmsJg4A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-the forward slash character should be escaped with backslash. Fix
-Unescaped forward slash error in Python regex statements.
+Chris -
 
-Signed-off-by: Ananya Krishna Maram<ananyakittu1997@gmail.com>
----
- userdiff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+You may want to look at "git bundle" to transfer the repository contents.   
+Then the recipient could fetch from the bundle to get the source git history.
 
-diff --git a/userdiff.c b/userdiff.c
-index f565f6731..f4ff9b9e5 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -123,7 +123,7 @@ PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
--	 "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
-+	 "|[-+*\/<>%&^|=!]=|\/\/=?|<<=?|>>=?|\\*\\*=?"),
- 	 /* -- */
- PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
- 	 /* -- */
--- 
-2.17.1
+Just a thought.
+
+sps
+
+On Thursday, October 4, 2018 4:03:27 AM MST Johannes Schindelin wrote:
+> Hi Chris,
+> 
+> as mentioned by Stefan (who is a respected, active core Git contributor,
+> if you need any more arguments to listen to him), it is inappropriate to
+> copy the contents of the .git/ directory wholesale to another user's
+> machine.
+> 
+> For one, it would horribly break in case the user overrode `user.email` in
+> `.git/config`. That's one setting that should not be copied *anywhere*.
+> And that's just one, there are *plenty* more examples. Just think of
+> absolute paths referring to files that probably do not even exist on
+> another machine! Like, worktrees, etc.
+> 
+> Of course, you could start a list of exceptions (files, config keys, etc)
+> that should not be copied. But that's very fragile a solution.
+> 
+> So no, copying the .git/ directory is always the wrong thing to do, as
+> Stefan pointed out.
+> 
+> I could imagine that a much better idea is to identify a *positive* list
+> of things you want to copy over. The output of `git rev-parse
+> --symbolic-full-name HEAD`? Sure. Maybe even the output of `git rev-parse
+> --symbolic-full-name HEAD@{u}`? And then the URL of the corresponding
+> remote? Sure. `.git/objects/alternates/`? Absolutely not.
+> 
+> It is tedious, alright, but you simply cannot copy the contents of .git/
+> to another machine and expect that to work.
+> 
+> Ciao,
+> Johannes
+> 
+> On Thu, 4 Oct 2018, Chris Jeschke wrote:
+> > Hi Stefan,
+> > 
+> > thanks for your answer.
+> > 
+> > The Goal after sending the files is to have a copy on the remote site.
+> > This includes that the working directory is the same (what we already
+> > guarantee with our tool) and that git is at the same 'state' (that
+> > means that we have the same history and that we checkout at the same
+> > branch/commit).
+> > My idea:
+> > Send the working directory with our  tool
+> > Initialize a Git directory on the remote side
+> > Send the 'objects','refs', 'HEAD' and the 'gitignore' with our tool
+> > 
+> > Is there anything else I should take care of?
+> > 
+> > Am Mi., 3. Okt. 2018 um 20:51 Uhr schrieb Stefan Beller 
+<sbeller@google.com>:
+> > > On Wed, Oct 3, 2018 at 5:26 AM Chris Jeschke
+> > > 
+> > > <chrisjberlin@googlemail.com> wrote:
+> > > > Hey git-team,
+> > > > I am working on a plug-in for a distributed pair programming tool. To
+> > > > skip the details: I was thinking about sending parts of the git folder
+> > > > as a zip folder with our own Bytestream instead of using the git API.
+> > > > Is there a common sense about what should and what shouldn't be done
+> > > > when working with the files inside the git folder?
+> > > 
+> > > This contradicts the security model of git.
+> > > 
+> > > Locally I can do things like:
+> > >     git config alias.co "rm -rf ~"
+> > >     echo "rm -rf ~" >.git/hooks/{...}
+> > > 
+> > > and I would experience bad things, but that is ok,
+> > > as I configured it locally (supposedly I know what
+> > > I am doing); but if I have the ability to send these
+> > > tricks to my beloved coworkers, hilarity might ensue.
+> > > 
+> > > What stuff do you need to send around?
+> > > 
+> > > objects? Fine, as the receive could check they are
+> > > good using fsck.
+> > > 
+> > > refs/ ? Sure. It may be confusing to users,
+> > > but I am sure you'll figure UX out.
+> > > 
+> > > local config, hooks ? I would not.
+> > > 
+> > > Not sure what else you'd think of sending around.
+> > > 
+> > > Cheers,
+> > > Stefan
+
+
+
 
