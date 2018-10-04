@@ -2,75 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B09A1F453
-	for <e@80x24.org>; Thu,  4 Oct 2018 19:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE0491F453
+	for <e@80x24.org>; Thu,  4 Oct 2018 21:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727545AbeJEChb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Oct 2018 22:37:31 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:32780 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727354AbeJEChb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Oct 2018 22:37:31 -0400
-Received: by mail-ed1-f66.google.com with SMTP id g26-v6so9663987edp.0
-        for <git@vger.kernel.org>; Thu, 04 Oct 2018 12:42:46 -0700 (PDT)
+        id S1728003AbeJED42 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Oct 2018 23:56:28 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:39516 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727536AbeJED41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Oct 2018 23:56:27 -0400
+Received: by mail-it1-f195.google.com with SMTP id w200-v6so16095836itc.4
+        for <git@vger.kernel.org>; Thu, 04 Oct 2018 14:01:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i6Te8Cys4J65C9R4geXATPZz6ysnohuT7Hf8kAKs9d8=;
-        b=O9JUwHEiyvGZr9RCJlC3SprU4DqY+wZ77HV+4JQtXiZb22Cl7LyuuNhPGkC9V/jiBA
-         sBhlxCQQHgF+XkpXjGtSGMu0o2lBZ+q1Dz+z6oXuCSk/Zq7IgKxXVL5OGgIaHvr6haJH
-         Tceu91UNPGnK9ZQueiuZWvIBM7hiVBSXWm3+9Tuqi8hIF2cdabltEcNzWiA8kmeVatDf
-         292qKwsblZZ9l8xCdplFyhLlIoS2wWomoDMu2eber/H6FXaE1gdKMffzRvz1nKOpNSK1
-         co+5QVCk8bYKZ3gjqH5vThK5jqBwLCpbgICejJcW2hyKhF8zd8iCPCcgz9JHdWYK3HMa
-         8g/g==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=lk9HbP6/dAhE63rh78RtVsp0PYhn9kBK/E15VLtNTJk=;
+        b=cIxP8azsHEClBfuh4ozSrMTXExVO/oOdhpADpt5lWcVEoK6/UAWUDhaGWYY1hSIXE0
+         wFuTCTNd6/eQXi+RnO9/FF/gWt53N/4Swq7GCUnxhQ6MtrSFB9h/3P7x+3XWBCgEkJfq
+         eom+tkTd4mxKZlckYIEHUQ6sqPhvkgTI3n1g4GsTTD+Ha4Y5GafLWjVVKEkl0/vH2jb0
+         6O6uOi4RPvx2/V8NgOrSfR9Qv4bMe/B/RUCjaB9d4a1KDFnIAayunJBBIkJMfZBMfDS2
+         9aH3lk1aWcLytrK56DF9fzjkNvxukH8dh2nGepYSWWASzBxQN3/aNaoWiDPXSP48R5xE
+         f/4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i6Te8Cys4J65C9R4geXATPZz6ysnohuT7Hf8kAKs9d8=;
-        b=WJs29TFRBxaTWaY4ks+tp96yLAUJuzS9DpgDykH/Y7zpdP4EmKeJha4VLtz5aXbLdB
-         Jvb7uXo5UF0SiPzbBNyrIq14/5Azw8p8ZK0v/My8f6bo/lYB1qxWpmDXmD2emCBM7oPL
-         Db78NB1+v0kYt9VcTd0ep1zTGGSMuCgOqmVM5TKJNEe1s+pQldge49vBCZaWczBRCqDs
-         jy8Q6ij/lvPEgHBe6BnzddpP96xYX6mvAlbH9jkrmJNMXMNiOdlD8F7RF/wmOBhLEbYk
-         VIrfophK4acLSMFCExhHnpd/rUNAlbiLb5suVQx2HpJJhJO3Yrg+6tTYYpeDs1bp7M9A
-         qgpQ==
-X-Gm-Message-State: ABuFfojpRqhuKOQtGluw0ziMpK8YhZoOO9/eAUD6J4pOSdhPVgUHtxeh
-        HbTOi5bvTvqHMzM+MMrMXto9w0FQ13xuoSMGZ+pIHQ==
-X-Google-Smtp-Source: ACcGV63OXnMjYkwIYzpTPOXlqmHos7F/IA7xJB7lm0YDYcs8m3S7vVvkL9LyTMOUGAfT/VtjkUDarsenlRXp4gvtzOo=
-X-Received: by 2002:a50:93c5:: with SMTP id o63-v6mr10397014eda.154.1538682165508;
- Thu, 04 Oct 2018 12:42:45 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=lk9HbP6/dAhE63rh78RtVsp0PYhn9kBK/E15VLtNTJk=;
+        b=pmfarKh5mtfbOlhFvLBUn5uA+iNYvrPAAH6O5jkZw6wFbSSY2iUfrKjxF6mE1ns6gO
+         W87rU7n8zqijbtKo1MhUafr6co9ULBrP3fIV79psTjeDYAw89wmnbj62izJbkyfZ2ua6
+         AG9cnCfGaar+B8GCU/XJIhM3VhCTX4lcOH3Ot0zDheFKoEvmWqWvrGhHnMIx3ajg1LBD
+         WHr6YTRtBy4zQApKXJzNvMfgKkyJU4vqjwlcQJxXY+LSYTtLdSWi5UKjI/V5I4zewuGX
+         fRrF0ukll1sgU2+ohmshkrQhCyEu+8YnxccPiUH3krkdyJnycfD7k/GqIcxX53bNFmQk
+         hKOg==
+X-Gm-Message-State: ABuFfojbG6MEaiZS6Tknmt6zJ+7hBazpkfWtMbZNmgcOB/8GRe05Cg0k
+        G9+Ccnew46LB9D4hr42BU9V54BGEKUkNFIhCntm6Jd/3
+X-Google-Smtp-Source: ACcGV62/Oh78MzUeDHEiqNW3+f7hAuQAl0AFQ7knldT3zQO95p/bnC8dgtLEHMoACgy20fTsTWaqUXj6GXuNuGhLxxI=
+X-Received: by 2002:a24:141:: with SMTP id 62-v6mr6283905itk.97.1538686882587;
+ Thu, 04 Oct 2018 14:01:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181002175514.31495-1-phillip.wood@talktalk.net>
- <20181004100745.4568-1-phillip.wood@talktalk.net> <20181004100745.4568-6-phillip.wood@talktalk.net>
-In-Reply-To: <20181004100745.4568-6-phillip.wood@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 4 Oct 2018 12:42:34 -0700
-Message-ID: <CAGZ79kbamUK=d+-ejy9vopDiVZF7OVOngz1Zx9y04VR3HnmoXg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] diff --color-moved: fix a memory leak
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   Eneas Queiroz <cotequeiroz@gmail.com>
+Date:   Thu, 4 Oct 2018 18:01:11 -0300
+Message-ID: <CAPxccB1VnDV5BjkcFcoPVmegJSg6iN_tD3o0e9G2XKXaM_=4KA@mail.gmail.com>
+Subject: [BUG] Error while trying to git apply a patch; works with patch -p1
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 4, 2018 at 3:07 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Free the hashmap items as well as the hashmap itself. This was found
-> with asan.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+I've sent this to the list 2 days ago, but I can't find it in the list
+archives, so I'm sending it again without files attached.  I apologize
+if this is a duplicate. One should be able to reproduce this with the
+current PR files, but if not, I can provide them.
 
-Thanks for this series, all 5 patches are
+I've hit a strange error while trying to apply a patch from github
+here: https://github.com/openwrt/openwrt/pull/965
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+965.patch:452: trailing whitespace.
+
+965.patch:559: space before tab in indent.
+             -o $(SHLIBNAME_FULL) \
+965.patch:560: space before tab in indent.
+             $$ALLSYMSFLAGS $$SHOBJECTS $$NOALLSYMSFLAGS $$LIBDEPS; \
+965.patch:564: space before tab in indent.
+        -o $(SHLIBNAME_FULL) \
+965.patch:2334: trailing whitespace.
+
+error: package/libs/openssl/patches/100-Configure-afalg-support.patch:
+No such file or directory
+error: package/libs/openssl/patches/110-openwrt_targets.patch: No such
+file or directory
+error: package/libs/openssl/patches/120-fix_link_segfault.patch: No
+such file or directory
+error: package/libs/openssl/patches/1.1.0/100-Configure-afalg-support.patch:
+No such file or directory
+error: package/libs/openssl/patches/1.1.0/110-openwrt_targets.patch:
+No such file or directory
+
+If you get the patch file from
+https://github.com/openwrt/openwrt/pull/965.patch and apply it with
+git apply, it fails.  If I apply the same file with patch -p1, it
+works fine.  I've tried it with git 2.16.4 and 2.19, and they both
+fail with the same error, and at least 2 more people have confirmed
+it.
+
+git apply fails even when using git format-patch -13 --stdout as a
+source, so it is not github doing something weird.
+
+The file is a series of 13 patches.  If I split the series after the
+3rd patch, it works.
+Also, if I use https://github.com/openwrt/openwrt/pull/965.diff, it also works.
+
+I'm not subscribed to the list, so please CC me.
+
+Cheers,
+
+Eneas
