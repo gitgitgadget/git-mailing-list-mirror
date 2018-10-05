@@ -2,113 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 946761F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 18:21:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6501F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 18:39:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728044AbeJFBV2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 21:21:28 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:35305 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727957AbeJFBV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 21:21:28 -0400
-Received: by mail-ot1-f67.google.com with SMTP id j9-v6so13612961otl.2
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 11:21:34 -0700 (PDT)
+        id S1728446AbeJFBjI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 21:39:08 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35255 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728139AbeJFBjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 21:39:08 -0400
+Received: by mail-wm1-f67.google.com with SMTP id e187-v6so2800079wmf.0
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 11:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/Xg7L2lqk90ufbZxj+b6LV4VdbuiVJh2ArHWvMMZSgU=;
-        b=cl1yax1PPkKRH5pdtqpaNEZbkN5ZnLrOpA3+xWAdojgyt1qpxUlvTtN6J1zD3lEnwI
-         anUXuMHSRHag2GxIUAQpTytyFg4XM48uRewzJ3OmbeUf/wwGR4qdGSz1iU7LhibYL4rP
-         B86VZEJEOhemvlktgyxgKTDK2OOgmuvtr47bthH/9U+k6aNgggY/56cvEwYNl6mhyhSf
-         kd6A0ybIboNA/UY5/GfxG/WZ2bBa6i9+Nfdn2IFj1cZUjds24/7lJj0nM06x0++LAjUx
-         hW99IXA7n+7ITXboPEqjqEUNUSBIuCeJbh6e7UdmKuXHiKaqvZ8FL8sYyQVt+t42lrBW
-         TQOQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=t9ExjtXsIFZcfIkOvOUnpFM8Fxi6TpgmoapFaAayXhM=;
+        b=A/iJWbmNH13/z5B/rX2EJto7JG61JkCKX9GNSFK/bg82LEPjclBL6mUklY/LB8fE0H
+         ziabcvHGwyini4I0rqQ/si4TKrgRTBvW7TCb0+z8FV4ODkEjuRTzI7o9/Ppf75l+LPye
+         Rr8myZ61oUJOdYuQtR9ihl0qn1mo+teeAGNsV+zSRzijIhj0Ok3sImwt/dR9Fp4+fm53
+         YmuraW+Yw4AB3ALB5xWE4EBdITrTe8raxgib4oRCHQCyRXNXsaQrWuzEMYh0Tek57cID
+         jECeBoqBy/fz5HLlsc0QtRYBAdZgrFOj+5z3vmv+p0ciQ0zuArVf7+SWflg0ksn8ClK1
+         FeQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/Xg7L2lqk90ufbZxj+b6LV4VdbuiVJh2ArHWvMMZSgU=;
-        b=hPBEbv2sDwRoQPNGLY/wCVMjcexs22j0W29yFRU5nCXAfY0qG2n/Qiq3G5Hqng5IIN
-         TXX0JppdHyPKI3gjqGHbqKcdmPJc05/4hLmIvQGCwISsGKALPGf6v5e2wErw9DyL6xuP
-         dax0fyyI+jTNMZv/Y4yIs3VbnfyQ/+VGdiEHwa19gmny9QbyqfynxZYXDRM3fBzmnpkJ
-         DFVjDiRCSudfX1WiJa0YwPSwJQweRN8Qj4IR9nEouzAaM0iXAlfcxdfGIk73jzT0qM/M
-         +uZc3uvOCCo61/fjbj8BJJGxOiTN0WyGf1PfUT7sk2kvvWmkm0oNYbgQQOHPXhnVW8LJ
-         RNfw==
-X-Gm-Message-State: ABuFfogMHDFWkd7lE1923/Q4SHlvwYxua/L7UtLt7YrswXMyT20ixH1l
-        4u8x3o5Gt7MT8I0VEuh1jqsQFcaGbq7l76zoXjgr
-X-Google-Smtp-Source: ACcGV620P3wqbrzvk9gFMOAT9Hm0aFjv81GkdSlyTOD5bydLrP0ob8SdK57mfZFCVPmksv5aVpOUihNs2MkSzVX04qk=
-X-Received: by 2002:a9d:32c3:: with SMTP id u61-v6mr6837788otb.173.1538763693811;
- Fri, 05 Oct 2018 11:21:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=t9ExjtXsIFZcfIkOvOUnpFM8Fxi6TpgmoapFaAayXhM=;
+        b=trYlIQQi9/wFDDSUe2aPkTPUdW4uu8p2tS+6w8ovVikn/DO5Pgyr5nPer09CwN4uYl
+         11oVJv92UB+JGgZHXuyp2w1utVxSQAOvVGZP9ingjhIJs3i94yGEG3IDb4+gMw9sYKQv
+         /ZMZkZWjLvByHFV666oSlNfc5aIsEcjza2Mc8eE/JrvZclegizDh5KW4eRcLkhgyPJnk
+         rHAqBA2oABv300ZirUBBUXSjl78fy2PeQBbs9/Ah0Jw6PYptmIGO1haj1jWBhsn8TA8s
+         G5ddzKXAP+tbHxtDLFsVeuoiPJNxgMmghlSOzgrl1Td1o2UYauDPoa6yowt+wksNs5wy
+         9VRA==
+X-Gm-Message-State: ABuFfoj2nchUkjFHb/3WJVNN51STpOMvBP9GVf3KyEhEXlCkSsW9uRk9
+        tDivRnJJWQqg70BppDnFhBg=
+X-Google-Smtp-Source: ACcGV63AtnnGx7OBk9RXPbje05AjuXr9khEQ/x1jcRkBzJLHxW6jWnBFzr3iVkXfxF7gUtUJrqdwIA==
+X-Received: by 2002:a1c:ae08:: with SMTP id x8-v6mr8371975wme.86.1538764748553;
+        Fri, 05 Oct 2018 11:39:08 -0700 (PDT)
+Received: from localhost (x4d0c6f69.dyn.telefonica.de. [77.12.111.105])
+        by smtp.gmail.com with ESMTPSA id j6-v6sm402775wmd.29.2018.10.05.11.39.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Oct 2018 11:39:07 -0700 (PDT)
+Date:   Fri, 5 Oct 2018 20:39:04 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v3] coccicheck: process every source file at once
+Message-ID: <20181005183904.GV23446@localhost>
+References: <20181002200710.15721-1-jacob.e.keller@intel.com>
+ <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
+ <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
+ <20181005124048.GT23446@localhost>
+ <20181005162517.GB11254@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com> <cover.1538581868.git.matvore@google.com>
- <a45b646fced228e5a7fab4db7a35c1c6084e58d0.1538581868.git.matvore@google.com> <xmqq5zygwd9k.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq5zygwd9k.fsf@gitster-ct.c.googlers.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Fri, 5 Oct 2018 11:21:22 -0700
-Message-ID: <CAMfpvhKgr8EFbc-hkEcC4ocjW2U2YCopeRuMyLTq9xk9cd8b=A@mail.gmail.com>
-Subject: Re: [PATCH v4 2/7] Documentation: add shell guidelines
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>, szeder.dev@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181005162517.GB11254@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 5, 2018 at 9:48 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matthew DeVore <matvore@google.com> writes:
->
-> > Add the following guideline to Documentation/CodingGuidelines:
-> >
-> >       &&, ||, and | should appear at the end of lines, not the
-> >       beginning, and the \ line continuation character should be
-> >       omitted
->
-> "should be omitted" sounds as if it is the norm to have such a
-> character, but it is not.  The text in the actual patch body does a
-> much better job than this.
->
-> Perhaps
->
->         Break overlong lines after "&&", "||", and "|", not before
->         them; that way the command can continue to subsequent lines
->         without backslash at the end.
-That sounds good. Fixed.
+On Fri, Oct 05, 2018 at 12:25:17PM -0400, Jeff King wrote:
+> On Fri, Oct 05, 2018 at 02:40:48PM +0200, SZEDER Gábor wrote:
+> 
+> > On Thu, Oct 04, 2018 at 07:17:47PM -0700, Jacob Keller wrote:
+> > > Junio, do you want me to update the commit message on my side with the
+> > > memory concerns? Or could you update it to mention memory as a noted
+> > > trade off.
+> > 
+> > We have been running 'make -j2 coccicheck' in the static analysis
+> > build job on Travis CI, which worked just fine so far.  The Travis CI
+> > build environments have 3GB of memory available [1], but, as shown in
+> > [2], with this patch the memory consumption jumps up to about
+> > 1.3-1.8GB for each of those jobs.  So with two parallel jobs we will
+> > very likely bump into this limit.
+> > 
+> > So this patch should definitely change that build script to run only a
+> > single job.
+> 
+> It should still be a net win, since the total CPU seems to drop by a
+> factor of 3-4.
 
-> > + - If a command sequence joined with && or || or | spans multiple
-> > +   lines, put each command on a separate line and put && and || and |
-> > +   operators at the end of each line, rather than the start. This
-> > +   means you don't need to use \ to join lines, since the above
-> > +   operators imply the sequence isn't finished.
->
-> Correct.  Even though I wonder if we need to say the last sentence,
-> which is rather obvious, patch is already written and I do not see
-> much point editing this further.
-ack
+Well, that's true when you have unlimited resources... :)  or it's
+true even then, when I have just enough resources, but not much
+contention.  After all, Coccinelle doesn't have to parse the same
+header files over and over again.  However, on Travis CI, where who
+knows how many other build jobs are running next to our static
+analysis, it doesn't seem to be the case.
 
-> > @@ -466,6 +466,34 @@ And here are the "don'ts:"
-> >     platform commands; just use '! cmd'.  We are not in the business
-> >     of verifying that the world given to us sanely works.
-> >
-> > + - Don't use Git upstream in the non-final position in a piped chain, as
-> > +   in:
->
-> "upstream in the non-final position" is a bit redundant, isn't it?
->
->   - Don't feed the output of 'git' to a pipe, as in:
+On current master with an additional 'time' in front:
 
-Done, but I changed it to "Don't feed the output of a git command to a
-pipe, as in:" since referring to it as "git command" without the
-quotes seems rather common in this file.
+  time make --jobs=2 coccicheck
+  <...>
+  695.70user 50.27system 6:27.88elapsed 192%CPU (0avgtext+0avgdata 91448maxresident)k
+  5976inputs+2536outputs (42major+18411888minor)pagefaults 0swaps
 
-Thank you for the review!
+  https://travis-ci.org/szeder/git/jobs/437733874#L574
+
+With this patch, but without -j2 to fit into 3GB:
+
+  960.50user 22.59system 16:23.74elapsed 99%CPU (0avgtext+0avgdata 1606156maxresident)k
+  5976inputs+1320outputs (26major+4548440minor)pagefaults 0swaps
+
+  https://travis-ci.org/szeder/git/jobs/437734003#L575
+
+Note that both the runtime and the CPU time increased. (and RSS, of
+course)
+
+> Are we OK with saying 1.3-1.8GB is necessary to run coccicheck? That
+> doesn't feel like an exorbitant request for a developer-only tool these
+> days, but I have noticed some people on the list tend to have lousier
+> machines than I do. ;)
+> 
+> -Peff
