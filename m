@@ -2,112 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98DAE1F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 16:44:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07AEC1F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 16:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728061AbeJEXn7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 19:43:59 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33375 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727572AbeJEXn7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 19:43:59 -0400
-Received: by mail-wr1-f67.google.com with SMTP id e4-v6so14248536wrs.0
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 09:44:28 -0700 (PDT)
+        id S1728569AbeJEXrC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 19:47:02 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39752 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728170AbeJEXrC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 19:47:02 -0400
+Received: by mail-wm1-f68.google.com with SMTP id q8-v6so2528113wmq.4
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 09:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4c8ylyqG1USsofpyHP8/9qRBnr40M9wTCi8Et28jaJE=;
-        b=aFp1Nl1RnAUvK8BeyLBD59OTmHvtzlhvzT7WGEjRBChMuUIhafHvYxEGZ8lFLj6WGQ
-         MPT4+JWqwTLivhhUmQf2D7pQxatz6n3Yt+y1QI3deAKo9oJCmrd9LRJLJrFGi8mHUs1C
-         0MVKMNPuuij9mz2top9pdz09lCdcsNaug0hp4dB8uUXymqTRY6K/9UmGwSo9Km1LfibC
-         TeSI4Xq9sdTNgi2sKsi8402w+D2zvkfneyuRTwgbpJsnTbhM7cKVhHibJUPM+1ZPfaNB
-         VN/X+5sDdsyJ3W6dgjwO03l3d4wkGS/yCI/RxDRXpl9y0rsm0FJRur9ZjjpHsrl3sAMW
-         qAfA==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=WoBiZFlxCjCQA6nyhcyc11DKWzRzDQcIm/LywdTuk1g=;
+        b=aQBzRxWuvq3jf64iZL+ByzG0KFBnYyqDeXQ8eNYsbJV8O65x+dA/psy9WijnfHPHCR
+         P95P4WPioWH7mxuONOs9X9A+QTD19tSUM+njABi6SIbXLRbiIrxssVf0Hccj1n3pMNRC
+         bECJqV0u0JOhkSPICH2tgJyXDPcoSFapqHiTJMhp5uKcusbymiiLqfZz1fjzOoskWjuG
+         MKYrx9TNXzndsA6DNMa6KAOQCtrBdxKYAw3RD39xWpMPaxV/jfJFL74ote6bQUe7pBXo
+         VWBznUC+LUuGpqWGR8h5L+KS6tiaXIJ5PqxENhsZkMjzVocA7UrIilXPJi7DY2t7yFJW
+         79KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=4c8ylyqG1USsofpyHP8/9qRBnr40M9wTCi8Et28jaJE=;
-        b=hL14vy+qHY6tWcALzPkKO+kwHFOrGgbb/OzGw+eBmXtgjKRTraERCwUAUtGsDrDsuE
-         SmZOuknobX1myj0LNZLeFLSVwHquQT2Q5giOLmto0GAku5LyL+G/APNA1w4htu+nchRf
-         JctxVUARI9jscw84uyskNIW3x7tEbMfH6IHsI/YRgI6V/uS4hqleu3MlieAA63z/69fK
-         UdtZ6wiRpA0REYv+41EiviLQnpRMQUT6I8/ytAfE7dcH4MgFIvSVudLVO8CkkvxfqCeF
-         LZZ3Wto/kIPkalcnWPOAemOhErKvmNIzw1AYmqxL5uCk6q+pu6zntv6Kn0OLSv+NMDLf
-         xp3Q==
-X-Gm-Message-State: ABuFfojE+84Lk6LaakbFLGF0yIp04/muQQdLSfujlz1f1qnSHRBZ+AHC
-        b3/MaZFxpOMHbDjH3z4Jhc8=
-X-Google-Smtp-Source: ACcGV61V6tlGGr5BVIM76K1VuOZOq4NY6rd0Ri+zWVHECvnqsYZwGMk4NlQIMGfn/68eFQlGn2uLXg==
-X-Received: by 2002:a5d:620b:: with SMTP id y11-v6mr8876802wru.105.1538757867761;
-        Fri, 05 Oct 2018 09:44:27 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id t66-v6sm1516107wmt.5.2018.10.05.09.44.26
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=WoBiZFlxCjCQA6nyhcyc11DKWzRzDQcIm/LywdTuk1g=;
+        b=cHlyauyrgraDmpDN/ERfgAFol7ERFPVeEMokobwiQjJHkbge0K0wnifPVl6r8KOuyT
+         rcJ9u3xipco3U7dLOSj2uzSSJw6d1aRCKks4uudOx1Z5y5/uNQXTYA9qWtyEIMnwv2FC
+         CIXZsNnnkkxI8hZh/SwK0f8c/pnlz2USgLmuMZlyNiK5FFtF4cwLifpFIwLSnOYEeXvv
+         NBlYddmJi0DJ0CSdjqTH5snc5GRbhq6t9X5XnF6uvUjJ21efkJJjWO4FPT2dNkwf+DTa
+         /UfO1t3BNB0IoF+OgUZI41D/nrKN0YN7BxJbI6J5DMfzzekWU+bJryA60cGDOU8iLOAo
+         qLZg==
+X-Gm-Message-State: ABuFfogyQSRW3OKeOHA3tavqPIex78KaA1NldTi+it8+s9pTunqKurRZ
+        cvxhYVGpQItPRvoO8btqb1/Y15ZPiPc=
+X-Google-Smtp-Source: ACcGV62ZR71KrI19RCYn0jcCKgL1G0PRC3MOsrr9MnhSwXPPPvMSDX5yO+cwbsPwEK+8teST0/MV0w==
+X-Received: by 2002:a1c:cbc1:: with SMTP id b184-v6mr8268267wmg.149.1538758049254;
+        Fri, 05 Oct 2018 09:47:29 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i7-v6sm8313356wrb.30.2018.10.05.09.47.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 09:44:26 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Is there some script to find un-delta-able objects?
-References: <87d0soh3v8.fsf@evledraar.gmail.com> <20181005161943.GA8816@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181005161943.GA8816@sigill.intra.peff.net>
-Date:   Fri, 05 Oct 2018 18:44:25 +0200
-Message-ID: <87bm88gx7a.fsf@evledraar.gmail.com>
+        Fri, 05 Oct 2018 09:47:28 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tao Qingyun <taoqy@ls-a.me>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH] branch: trivial style fix
+References: <20181005095213.12509-1-taoqy@ls-a.me>
+Date:   Fri, 05 Oct 2018 09:47:27 -0700
+Message-ID: <xmqqy3bcwdb4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Tao Qingyun <taoqy@ls-a.me> writes:
 
-On Fri, Oct 05 2018, Jeff King wrote:
-
-> On Fri, Oct 05, 2018 at 04:20:27PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> ---
+>  builtin/branch.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
->> I.e. something to generate the .gitattributes file using this format:
->>
->> https://git-scm.com/docs/gitattributes#_packing_objects
->>
->> Some stuff is obvious, like "*.gpg binary -delta", but I'm wondering if
->> there's some repo scanner utility to spew this out for a given repo.
->
-> I'm not sure what you mean by "un-delta-able" objects. Do you mean ones
-> where we're not likely to find a delta? Or ones where Git will not try
-> to look for a delta?
->
-> If the latter, I think the only rules are the "-delta" attribute and the
-> object size. You should be able to use git-check-attr and "git-cat-file"
-> to get that info.
->
-> If the former, I don't know how you would know. We can only report on
-> what isn't a delta _yet_.
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index c396c41533..52aad0f602 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -222,10 +222,11 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>  		if (!head_rev)
+>  			die(_("Couldn't look up commit object for HEAD"));
+>  	}
+> -	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+> +	for (i = 0; i < argc; i++) {
+>  		char *target = NULL;
+>  		int flags = 0;
+>  
+> +		strbuf_reset(&bname);
 
-Some version of the former. Ones where we haven't found any (or much of)
-useful deltas yet. E.g. say I had a repository with a lot of files
-generated by this command at various points in the history:
+This is not "trivial" nor "style fix", though.
 
-    dd if=/dev/urandom of=file.binary count=1024 bs=1024
+It is not "trivial" because it also changes the behaviour.  Instead
+of resetting the strbuf each time after the loop body runs, the new
+code resets it before the loop body, even for the 0-th iteration
+where the strbuf hasn't even been used at all.  It is not a "style
+fix" because we do not have a particular reason to avoid using the
+comma operator to perform two simple expressions with side effects
+inside a single expression.
 
-Some script similar to git-sizer which could report that the
-packed+compressed+delta'd version of the 10 *.binary files I had in my
-history had a 1:1 ratio of how large they were in .git, v.s. how large
-the sum of each file retrieved by "git show" was (i.e. uncompressed,
-un-delta'd).
+>  		strbuf_branchname(&bname, argv[i], allowed_interpret);
+>  		free(name);
+>  		name = mkpathdup(fmt, bname.buf);
+> @@ -716,8 +717,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  		print_columns(&output, colopts, NULL);
+>  		string_list_clear(&output, 0);
+>  		return 0;
+> -	}
+> -	else if (edit_description) {
+> +	} else if (edit_description) {
 
-That doesn't mean that tomorrow I won't commit 10 new objects which
-would have a really good delta ratio to those 10 existing files,
-bringing the ratio to ~1:2, but if I had some report like:
+This one is a style fix that is trivial.  It does not change the
+semantics a bit, and we do prefer "else if" to be on the same line
+as the closing "}" of the earlier "if" that opened the matching "{".
 
-    <ratio> <extension>
-
-For a given repo that could be fed into .gitattributes to say we
-shouldn't bother to delta files of certain extensions.
+>  		const char *branch_name;
+>  		struct strbuf branch_ref = STRBUF_INIT;
