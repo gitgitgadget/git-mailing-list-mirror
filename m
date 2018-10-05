@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 089181F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 903FE1F453
 	for <e@80x24.org>; Fri,  5 Oct 2018 13:06:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728582AbeJEUEv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 16:04:51 -0400
-Received: from mail.ao2.it ([92.243.12.208]:44939 "EHLO ao2.it"
+        id S1728591AbeJEUEx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 16:04:53 -0400
+Received: from mail.ao2.it ([92.243.12.208]:44957 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728562AbeJEUEu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 16:04:50 -0400
+        id S1728539AbeJEUEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 16:04:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=/XduOMTKlF9WoDmLlIRWrMjOFCgd1YKk2Gr7hBcVkjg=;
-        b=Fl05bHeF5ejyHIyY49yxyq0oPcGMxUbEsMQgO4b7zbpw4bZnbjMH15ssOExb/24pp+EbB/mzuav9n+Pu4fOnn2OHeuYMWTy3H1z6titA83sXJLUDWRmhR/9VxuhDZpkv/743WdbgbH1cEDeoppDIgRBGCJYBozKEcUXMWz8Rp1llsy0iPSJqlpQ+ZbCfrM5PoJtBPvh7coTohj5ZDyyjWgOAZrmH7ZxVu8kIcP+Bwhy4c1e7COhsQJa+xFMwLd7WwU3AssgGVzC/fkoqQnYo7vghVc6ycLFynQp23mhmcGk85U73Is7ihl6uNWWXC2I5wuhyUyU8ySiAlBtV2y7qEg==;
+        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=NZazWSjJUOSO7r6KsHLkRyeo3KBDb5IUxtZW9kpRdQ8=;
+        b=RAnTIwoT7fSfMHg9zLO8k2DmD8PpWzu2OiQ8rR3kj8GTXppjA0rYfbfSO7yDFetjmL3RHT1We08ztgy62tEPuo9V3Gw+beq+hHJVjwOY/EF2DPWJTIlqCubVa7hyGYxomjc1t6cAY68Qj7q0fW06N+gsP4O2cx9PsnC3lwfSY0EawEGO1XS/zkl/BwM5eCgXx3Erm+3794dnLn6AX3WMBN/h3pzjrNxSwjkmZZMDUyA7tv4PwoFYw9AVWkUffkPScYQ0yrmreJlLbby4f8iD+sTF+RixIhNJhKOFT1ff5dWmR97qtYWvOglDt822x14AyLsJu+9MhxsbpNx8jO+wTw==;
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1g8PlU-0003BQ-9I; Fri, 05 Oct 2018 15:03:32 +0200
+        id 1g8PlT-0003BH-Qc; Fri, 05 Oct 2018 15:03:31 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1g8Pnx-00049M-Va; Fri, 05 Oct 2018 15:06:05 +0200
+        id 1g8Pnx-000494-At; Fri, 05 Oct 2018 15:06:05 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
@@ -34,9 +34,9 @@ Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v6 10/10] t/helper: add test-submodule-nested-repo-config
-Date:   Fri,  5 Oct 2018 15:06:01 +0200
-Message-Id: <20181005130601.15879-11-ao2@ao2.it>
+Subject: [PATCH v6 02/10] submodule: factor out a config_set_in_gitmodules_file_gently function
+Date:   Fri,  5 Oct 2018 15:05:53 +0200
+Message-Id: <20181005130601.15879-3-ao2@ao2.it>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20181005130601.15879-1-ao2@ao2.it>
 References: <20181005130601.15879-1-ao2@ao2.it>
@@ -48,145 +48,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test tool to exercise config_from_gitmodules(), in particular for
-the case of nested submodules.
+Introduce a new config_set_in_gitmodules_file_gently() function to write
+config values to the .gitmodules file.
 
-Add also a test to document that reading the submoudles config of nested
-submodules does not work yet when the .gitmodules file is not in the
-working tree but it still in the index.
+This is in preparation for a future change which will use the function
+to write to the .gitmodules file in a more controlled way instead of
+using "git config -f .gitmodules".
 
-This is because the git API does not always make it possible access the
-object store  of an arbitrary repository (see get_oid() usage in
-config_from_gitmodules()).
+The purpose of the change is mainly to centralize the code that writes
+to the .gitmodules file to avoid some duplication.
 
-When this git limitation gets fixed the aforementioned use case will be
-supported too.
+The naming follows git_config_set_in_file_gently() but the git_ prefix
+is removed to communicate that this is not a generic git-config API.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- Makefile                                     |  1 +
- t/helper/test-submodule-nested-repo-config.c | 30 +++++++++++++++++
- t/helper/test-tool.c                         |  1 +
- t/helper/test-tool.h                         |  1 +
- t/t7411-submodule-config.sh                  | 34 ++++++++++++++++++++
- 5 files changed, 67 insertions(+)
- create mode 100644 t/helper/test-submodule-nested-repo-config.c
+ submodule-config.c | 12 ++++++++++++
+ submodule-config.h |  1 +
+ submodule.c        | 10 +++-------
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 13e1c52478..fe8587cd8c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -737,6 +737,7 @@ TEST_BUILTINS_OBJS += test-sigchain.o
- TEST_BUILTINS_OBJS += test-strcmp-offset.o
- TEST_BUILTINS_OBJS += test-string-list.o
- TEST_BUILTINS_OBJS += test-submodule-config.o
-+TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
- TEST_BUILTINS_OBJS += test-subprocess.o
- TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
- TEST_BUILTINS_OBJS += test-wildmatch.o
-diff --git a/t/helper/test-submodule-nested-repo-config.c b/t/helper/test-submodule-nested-repo-config.c
-new file mode 100644
-index 0000000000..a31e2a9bea
---- /dev/null
-+++ b/t/helper/test-submodule-nested-repo-config.c
-@@ -0,0 +1,30 @@
-+#include "test-tool.h"
-+#include "submodule-config.h"
-+
-+static void die_usage(int argc, const char **argv, const char *msg)
-+{
-+	fprintf(stderr, "%s\n", msg);
-+	fprintf(stderr, "Usage: %s <submodulepath> <config name>\n", argv[0]);
-+	exit(1);
-+}
-+
-+int cmd__submodule_nested_repo_config(int argc, const char **argv)
-+{
-+	struct repository submodule;
-+
-+	if (argc < 3)
-+		die_usage(argc, argv, "Wrong number of arguments.");
-+
-+	setup_git_directory();
-+
-+	if (repo_submodule_init(&submodule, the_repository, argv[1])) {
-+		die_usage(argc, argv, "Submodule not found.");
-+	}
-+
-+	/* Read the config of _child_ submodules. */
-+	print_config_from_gitmodules(&submodule, argv[2]);
-+
-+	submodule_free(the_repository);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index b87a8c1f22..3b473bccd8 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -42,6 +42,7 @@ static struct test_cmd cmds[] = {
- 	{ "strcmp-offset", cmd__strcmp_offset },
- 	{ "string-list", cmd__string_list },
- 	{ "submodule-config", cmd__submodule_config },
-+	{ "submodule-nested-repo-config", cmd__submodule_nested_repo_config },
- 	{ "subprocess", cmd__subprocess },
- 	{ "urlmatch-normalization", cmd__urlmatch_normalization },
- 	{ "wildmatch", cmd__wildmatch },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index e074957279..3ca351230c 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -38,6 +38,7 @@ int cmd__sigchain(int argc, const char **argv);
- int cmd__strcmp_offset(int argc, const char **argv);
- int cmd__string_list(int argc, const char **argv);
- int cmd__submodule_config(int argc, const char **argv);
-+int cmd__submodule_nested_repo_config(int argc, const char **argv);
- int cmd__subprocess(int argc, const char **argv);
- int cmd__urlmatch_normalization(int argc, const char **argv);
- int cmd__wildmatch(int argc, const char **argv);
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 2cfabb18bc..89690b7adb 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -216,4 +216,38 @@ test_expect_success 'reading submodules config from the current branch when .git
- 	)
- '
+diff --git a/submodule-config.c b/submodule-config.c
+index 823bc76812..8659d97e06 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -707,6 +707,18 @@ int print_config_from_gitmodules(struct repository *repo, const char *key)
+ 	return 0;
+ }
  
-+test_expect_success 'reading nested submodules config' '
-+	(cd super &&
-+		git init submodule/nested_submodule &&
-+		echo "a" >submodule/nested_submodule/a &&
-+		git -C submodule/nested_submodule add a &&
-+		git -C submodule/nested_submodule commit -m "add a" &&
-+		git -C submodule submodule add ./nested_submodule &&
-+		git -C submodule add nested_submodule &&
-+		git -C submodule commit -m "added nested_submodule" &&
-+		git add submodule &&
-+		git commit -m "updated submodule" &&
-+		echo "./nested_submodule" >expect &&
-+		test-tool submodule-nested-repo-config \
-+			submodule submodule.nested_submodule.url >actual &&
-+		test_cmp expect actual
-+	)
-+'
++int config_set_in_gitmodules_file_gently(const char *key, const char *value)
++{
++	int ret;
 +
-+# When this test eventually passes, before turning it into
-+# test_expect_success, remember to replace the test_i18ngrep below with
-+# a "test_must_be_empty warning" to be sure that the warning is actually
-+# removed from the code.
-+test_expect_failure 'reading nested submodules config when .gitmodules is not in the working tree' '
-+	test_when_finished "git -C super/submodule checkout .gitmodules" &&
-+	(cd super &&
-+		echo "./nested_submodule" >expect &&
-+		rm submodule/.gitmodules &&
-+		test-tool submodule-nested-repo-config \
-+			submodule submodule.nested_submodule.url >actual 2>warning &&
-+		test_i18ngrep "nested submodules without %s in the working tree are not supported yet" warning &&
-+		test_cmp expect actual
-+	)
-+'
++	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, value);
++	if (ret < 0)
++		/* Maybe the user already did that, don't error out here */
++		warning(_("Could not update .gitmodules entry %s"), key);
 +
- test_done
++	return ret;
++}
++
+ struct fetch_config {
+ 	int *max_children;
+ 	int *recurse_submodules;
+diff --git a/submodule-config.h b/submodule-config.h
+index 031747ccf8..4dc9b0771c 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -49,6 +49,7 @@ const struct submodule *submodule_from_path(struct repository *r,
+ 					    const char *path);
+ void submodule_free(struct repository *r);
+ int print_config_from_gitmodules(struct repository *repo, const char *key);
++int config_set_in_gitmodules_file_gently(const char *key, const char *value);
+ 
+ /*
+  * Returns 0 if the name is syntactically acceptable as a submodule "name"
+diff --git a/submodule.c b/submodule.c
+index b53cb6e9c4..3b23e76e55 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -89,6 +89,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ {
+ 	struct strbuf entry = STRBUF_INIT;
+ 	const struct submodule *submodule;
++	int ret;
+ 
+ 	if (!file_exists(GITMODULES_FILE)) /* Do nothing without .gitmodules */
+ 		return -1;
+@@ -104,14 +105,9 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ 	strbuf_addstr(&entry, "submodule.");
+ 	strbuf_addstr(&entry, submodule->name);
+ 	strbuf_addstr(&entry, ".path");
+-	if (git_config_set_in_file_gently(GITMODULES_FILE, entry.buf, newpath) < 0) {
+-		/* Maybe the user already did that, don't error out here */
+-		warning(_("Could not update .gitmodules entry %s"), entry.buf);
+-		strbuf_release(&entry);
+-		return -1;
+-	}
++	ret = config_set_in_gitmodules_file_gently(entry.buf, newpath);
+ 	strbuf_release(&entry);
+-	return 0;
++	return ret;
+ }
+ 
+ /*
 -- 
 2.19.0
 
