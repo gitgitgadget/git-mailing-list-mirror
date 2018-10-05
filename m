@@ -6,69 +6,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB4041F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 06:10:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B25381F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 06:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727532AbeJENHN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 09:07:13 -0400
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:35453 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726732AbeJENHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 09:07:13 -0400
-Received: by mail-wm1-f43.google.com with SMTP id e187-v6so725349wmf.0
-        for <git@vger.kernel.org>; Thu, 04 Oct 2018 23:10:01 -0700 (PDT)
+        id S1727733AbeJENLc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 09:11:32 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53038 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726732AbeJENLb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 09:11:31 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 189-v6so684981wmw.2
+        for <git@vger.kernel.org>; Thu, 04 Oct 2018 23:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=rx0nSjK6Do9yst4b3d2c27yeJuJVL1ukgIR7cMYjam4=;
-        b=ga86P7YirvyvbxenShTDhDgfKpfqBiUo83kE/V5Z+NAa1Xqx47DAGmKtqdkr2aFHUn
-         QR9iAnViKSpN2/nh4nQnKnnMT5eJwHD7DWbhTCZued7mz1kCh9sw+LQ33cdWRyNJQoKR
-         jwDqWinHMhk0mUgiK04zeyHKhFoMPi2jEKDkEjJb8IgSYPYHCe2pREVujObE1+5syLzq
-         T1aeaI/mqhJFP7Ou8MgEis/OEG2+TM1HOBRKkA3CeXLV4PJhTS9AY8gz2HLiWLlx4lUS
-         J+Rlcfb8cpZgacJ79MevbBMzbP+GsI2iXYiTCKwNxXaA/r+zpr4pBVDo29d1T6/hRY+o
-         ehAQ==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=IE436Yl8fmc5iIju/ByWDiwSOouccf3OdC3eNHvb8eg=;
+        b=OhcArRpsc5b+eLQEwV11XVGbcBqTqNfPSNZRtj3IiPKYMYdPaajsE15dyRBmrXTDEn
+         yz83Wo5onwmK1tm4Y5jnUoRAF/ioxKd4OKnXgvynWXzRDP4UKZvahpO2YEwQLkdjTt2B
+         k3Nxxrl0G1/RTXHkP2fSjSprNpihTwjCuO+t3J1BlWZ+ml7Zn9cdeCVV01Q1WxLcIt/Z
+         MVyMJ9sURfCT7kfjM3ZufsgJsog7g8+mZU/FZDFqM9EDHzrSo4GPD6eSvPWI/M7yiqLZ
+         dOwUgMpLcSzCiyiby5sIaa6xe/T7iv3KiMuo1j0mhl5JzvXmgNpVm6pPwHVtSsppmwHU
+         qgeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=rx0nSjK6Do9yst4b3d2c27yeJuJVL1ukgIR7cMYjam4=;
-        b=WAO/GgOg5W3Z2fop4zh8L4EPKffK+HgD7Wm0sm8gRUQWctYzKbenyHIh3xw2wxWUTc
-         GRwgRHsNzgiTdhF3NU/E/zMS0a7ImScbxHzWr63IHufmtd+yJHEKT7g6HPB/vAP1o9Xg
-         Y1tGFrHoYdU9+bVhphk/R5tkvxkk4XxjVJ0U22HIGet8xKjS/+Covh8aE3jNhh3j+v4R
-         uy3IXSJI5fzsX0yUvhVPXMbFyR1tvbqzZ7rNNx+U05APu9IFbM9bJ4HSZYkLjqTSwawf
-         z/IBz6UuYRB3aPy9goUxxgqACNYGsSTCwAMCk+0deCeMPzbNzC5uoLQ0rlkUlTRWWyuW
-         Gvuw==
-X-Gm-Message-State: ABuFfoiy0pED8AdNthDtM32ZbepvN6Hnwvk/H73gxplhfg9zzVmLIDJ0
-        vUU3NZSKtwHmcIXKMv7emd4=
-X-Google-Smtp-Source: ACcGV630QnX10cindCce9x+YzMpCNxbc/HYL1o2FACiQs3AKvRsYzQaphPz11uTiGE7jE1XEOFgtIA==
-X-Received: by 2002:a1c:2984:: with SMTP id p126-v6mr7117744wmp.5.1538719800051;
-        Thu, 04 Oct 2018 23:10:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x186-v6sm1236473wmx.24.2018.10.04.23.09.58
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=IE436Yl8fmc5iIju/ByWDiwSOouccf3OdC3eNHvb8eg=;
+        b=Ue7SQnsWU2o9nSek/4lqjXRkv69FNwQVJbYPQulEnWDfdPL5ZRdP4QICXB38CMCXU1
+         oJzsmQ21Acta+Xf/IX7sSUKixe97CVRI+aOF2c8J7ptBHzVxJ/h+WtUwpwHYE9GXZNPB
+         IlEt9v67NAquIL6hJEX4MJbza5ILbSLIrJG4GRM3eSt5bXsKhMz+UOhUQCL+K+ox1l1K
+         6Nb+zalao7aO5MNShzZZUVLSdsjo3MhHk5HLW9eOmImOUlSG6krL5m5OgHID2RyH+QLY
+         EXg8m+8QNn1Jwfe2IRr7Nr4udMeeVorB23/RgF1G2lITkHi0Pu+b0fagNw391u3cohis
+         Ouig==
+X-Gm-Message-State: ABuFfoha8rJ28Ld6IY5CyYZrJqHKENU/S9OQz8+zFs2HsC/79Qj3BuvI
+        59rmk7rB1ECEBcgZMQ+LLpqpaiIt6ic=
+X-Google-Smtp-Source: ACcGV611mfd9ija7gecyYtO4Cl7K3+TIYjcr4bYREBJEIT6AYSK+Ir6h3O0XpxjfiOXM5+kV9QTIyg==
+X-Received: by 2002:a1c:7816:: with SMTP id t22-v6mr6972635wmc.46.1538720057311;
+        Thu, 04 Oct 2018 23:14:17 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a105-v6sm14418002wrc.23.2018.10.04.23.14.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Oct 2018 23:09:59 -0700 (PDT)
+        Thu, 04 Oct 2018 23:14:16 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit graph
-References: <87tvm3go42.fsf@evledraar.gmail.com>
-        <20181003133650.GN23446@localhost>
-        <87r2h7gmd7.fsf@evledraar.gmail.com>
-        <20181003141732.GO23446@localhost>
-        <87o9cbglez.fsf@evledraar.gmail.com>
-        <20181003145308.GP23446@localhost>
-        <87murvgir6.fsf@evledraar.gmail.com>
-        <20181003165926.GR23446@localhost>
-Date:   Thu, 04 Oct 2018 23:09:58 -0700
-In-Reply-To: <20181003165926.GR23446@localhost> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Wed, 3 Oct 2018 18:59:26 +0200")
-Message-ID: <xmqqpnwo3ow9.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH v2] gpg-interface.c: detect and reject multiple signatures on commits
+References: <20180817073441.5247-1-mgorny@gentoo.org>
+        <1538555376.1042.3.camel@gentoo.org>
+Date:   Thu, 04 Oct 2018 23:14:15 -0700
+Message-ID: <xmqqin2g3op4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -78,61 +65,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Michał Górny <mgorny@gentoo.org> writes:
 
->>     git-gc - Cleanup unnecessary files and optimize the local repository
+> On Fri, 2018-08-17 at 09:34 +0200, Michał Górny wrote:
+>> GnuPG supports creating signatures consisting of multiple signature
+>> packets.  If such a signature is verified, it outputs all the status
+>> messages for each signature separately.  However, git currently does not
+>> account for such scenario and gets terribly confused over getting
+>> multiple *SIG statuses.
 >> 
->> Creating these indexes like the commit-graph falls under "optimize the
->> local repository",
+>> For example, if a malicious party alters a signed commit and appends
+>> a new untrusted signature, git is going to ignore the original bad
+>> signature and report untrusted commit instead.  However, %GK and %GS
+>> format strings may still expand to the data corresponding
+>> to the original signature, potentially tricking the scripts into
+>> trusting the malicious commit.
+>> 
+>> Given that the use of multiple signatures is quite rare, git does not
+>> support creating them without jumping through a few hoops, and finally
+>> supporting them properly would require extensive API improvement, it
+>> seems reasonable to just reject them at the moment.
+>> 
 >
-> But it doesn't fall under "cleanup unnecessary files", which the
-> commit-graph file is, since, strictly speaking, it's purely
-> optimization.
+> Gentle ping.
 
-I won't be actively engaged in this discussion soon, but I must say
-that "git gc" doing "garbage collection" is merely an implementation
-detail of optimizing the repository for further use.  And from that
-point of view, what needs to be updated is the synopsis of the
-git-gc doc.  It states "X and Y" above, but it actually is "Y by
-doing X and other things".
+I think among the three issues raised in the review of v1 [*1*], one
+of them remain unaddressed.  Other than that the addition relative
+to v2 looks reasonable (but I only skimmed the patch).
 
-I understand your "by definition there is no garbage immediately
-after clone" position, and also I would understand if you find it
-(perhaps philosophically) disturbing that "git clone" may give users
-a suboptimal repository that immediately needs optimizing [*1*].
+[Reference] *1* https://public-inbox.org/git/xmqq1saxc5gu.fsf@gitster-ct.c.googlers.com/ 
 
-But that bridge was crossed long time ago ever since pack transfer
-was invented.  The data source sends only the pack data stream, and
-the receiving end is responsible for spending cycles to build .idx
-file.  Theoretically, .pack should be all that is needed---you
-should be able to locate any necessary object by parsing the .pack
-file every time you open it, and .idx is mere optimization.  You can
-think of the .midx and graph files the same way.
+Relevant part reproduced here.
 
-I'd consider it a growing pain that these two recent inventions were
-and are still built as a totally optional and separate features,
-requiring completely separate full enumeration of objects in the
-repository that needs to happen anyway when we build .idx out of the
-received .pack.
+>>>  	/* Iterate over all search strings */
+>>>  	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+>>> @@ -50,6 +52,10 @@ static void parse_gpg_output(struct signature_check *sigc)
+>>>  				continue;
+>>>  			found += strlen(sigcheck_gpg_status[i].check);
+>>> ...
+>>> +	if (had_status > 1) {
+>>> +		sigc->result = 'E';
+>>> +		/* Clear partial data to avoid confusion */
+>>> +		if (sigc->signer)
+>>> +			FREE_AND_NULL(sigc->signer);
+>>> +		if (sigc->key)
+>>> +			FREE_AND_NULL(sigc->key);
+>>> +	}
+>>
+>> Makes sense to me.
+>
+> I was wondering if we have to revamp the loop altogether.  The
+> current code runs through the list of all the possible "status"
+> lines, and find the first occurrence for each type in the buffer
+> that has GPG output.  Second and subsequent occurrence of the same
+> type, if existed, will not be noticed by the original loop
+> structure, and this patch does not change it, even though the topic
+> of the patch is about rejecting the signature block with elements
+> taken from multiple signatures.
 
-I would not be surprised by a future in which the initial index-pack
-that is responsible for receiving the incoming pack stream and
-storing that in .pack file(s) while creating corresponding .idx
-file(s) becomes also responsible for building .midx and graph files
-in the same pass, or at least smaller number of passes.  Once we
-gain experience and confidence with these new auxiliary files, that
-ought to happen naturally.  And at that point, we won't be having
-this discussion---we'd all happily run index-pack to receive the
-pack data, because that is pretty much the fundamental requirement
-to make use of the data.
+Which still smells to me that it points out a grave (made grave by
+what the patch claims to address) issue in the implementation of v1;
+did v2 get substantially updated to address the concern?
 
-[Footnote]
+> One way to fix it may be to keep
+> the current loop structure to go over the sigcheck_gpg_status[],
+> but make the logic inside the loop into an inner loop that finds all
+> occurrences of the same type, instead of stopping after finding the
+> first instance.  But once we go to that length, I suspect that it
+> may be cleaner to iterate over the lines in the buffer, checking
+> each line if it matches one of the recognized "[GNUPG:] FOOSIG"
+> lines and acting on it (while ignoring unrecognized lines).
 
-*1* Even without considering these recent invention of auxiliary
-    files, cloning from a sloppily packed server whose primary focus
-    is to avoid spending cycles by not computing better deltas will
-    give the cloner a suboptimal repository.  If we truly want to
-    have an optimized repository ready to be used after cloning, we
-    should run an equivalent of "repack -a -d -f" immediately after
-    "git clone".
+
+P.S. I'd be either offline or otherwise occupied until the next
+week, so there is no need to hastily prepare an updated patch
+series.
+
+Thanks.
 
