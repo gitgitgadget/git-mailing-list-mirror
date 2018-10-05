@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB6C71F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1992C1F453
 	for <e@80x24.org>; Fri,  5 Oct 2018 13:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728608AbeJEUE4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 16:04:56 -0400
-Received: from mail.ao2.it ([92.243.12.208]:44965 "EHLO ao2.it"
+        id S1728572AbeJEUEv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 16:04:51 -0400
+Received: from mail.ao2.it ([92.243.12.208]:44936 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728594AbeJEUE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 16:04:56 -0400
+        id S1728278AbeJEUEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 16:04:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=eAqGR3AV3oY53gGFvQsnMClrkn5wGaWMgp2BoTNuM8o=;
-        b=D96p6FMMTUYfHnHD8OOxn/NpIArTLB4vlg8kxilzxiySRdWk58icNCcmQhmu2a3pFuebvichMRTubPoWe+GFDtDzUbufFkRycnAcAEgtM1HLgAHVSkWKGmL7gfhvJJqYZq6q0kFGqW0NBf/jiqwSJ3CMPR9Sb1Q24Zq4o6LV7M3/ySkgGpCDCnYueGPLVU3H/bWxnwFbgIOVsC7GfcriI6qHk4jUMDpclF4vvQyb8AGIVwfnYAnQlydxEBYZdFofOkfs9b3XyyrtrVbW6uTjpkXMkaBzZrdp0DxN0PN/tQOWb08Ml4tiLsbOKM9cTlOjmoE7iAhttuLm9GQafwsuYg==;
+        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=Va1U5VkeNhAgJEIwNEGecCt6l5b914QyDoal8eEZ6Sc=;
+        b=ChzFkONPGR5iHC9BmF6bcKfHkn9Ymmxk2ioxsxFeDIU0BePR+PzKT0GqJSSEk8g/JHzxoVYW0a4dDrqG2x6bgK7oCTRwUvK5ORqWMFvDf3ZG+cupdaqJh+Fqm6HL0t3Xg8VfFLhoPnFjfaIfgvFBd81wkYW0QNixh5AMimepEwzxo7AwypI7Mpdmp6pN/1GMRirCWyRVGHqULHwd9gj85Hp/55E1Hz4qZ+6Qas50pjLe84C06nBZknj34bi7nlhqKy1uz73tNgq+xP89jTgnKMIw7WTO0y0sOXaLckeQOs/A45FCon4J8biJeou6tcqao8BFcf0k3W5e8Om2Wc/XTQ==;
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1g8PlU-0003BM-5T; Fri, 05 Oct 2018 15:03:32 +0200
+        id 1g8PlT-0003BI-Tv; Fri, 05 Oct 2018 15:03:31 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1g8Pnx-00049C-Kx; Fri, 05 Oct 2018 15:06:05 +0200
+        id 1g8Pnx-00049A-IX; Fri, 05 Oct 2018 15:06:05 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
@@ -34,9 +34,9 @@ Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v6 06/10] submodule: use the 'submodule--helper config' command
-Date:   Fri,  5 Oct 2018 15:05:57 +0200
-Message-Id: <20181005130601.15879-7-ao2@ao2.it>
+Subject: [PATCH v6 05/10] submodule--helper: add a new 'config' subcommand
+Date:   Fri,  5 Oct 2018 15:05:56 +0200
+Message-Id: <20181005130601.15879-6-ao2@ao2.it>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20181005130601.15879-1-ao2@ao2.it>
 References: <20181005130601.15879-1-ao2@ao2.it>
@@ -48,45 +48,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the 'submodule--helper config' command in git-submodules.sh to avoid
-referring explicitly to .gitmodules by the hardcoded file path.
-
-This makes it possible to access the submodules configuration in a more
-controlled way.
+Add a new 'config' subcommand to 'submodule--helper', this extra level
+of indirection makes it possible to add some flexibility to how the
+submodules configuration is handled.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- git-submodule.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/submodule--helper.c | 14 ++++++++++++++
+ t/t7411-submodule-config.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1b568e29b9..0805fadf47 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -72,7 +72,7 @@ get_submodule_config () {
- 	value=$(git config submodule."$name"."$option")
- 	if test -z "$value"
- 	then
--		value=$(git config -f .gitmodules submodule."$name"."$option")
-+		value=$(git submodule--helper config submodule."$name"."$option")
- 	fi
- 	printf '%s' "${value:-$default}"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 40844870cf..e1bdca8f0b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2125,6 +2125,19 @@ static int check_name(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
-@@ -283,11 +283,11 @@ or you are unsure what this means choose another name with the '--name' option."
- 	git add --no-warn-embedded-repo $force "$sm_path" ||
- 	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
  
--	git config -f .gitmodules submodule."$sm_name".path "$sm_path" &&
--	git config -f .gitmodules submodule."$sm_name".url "$repo" &&
-+	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
-+	git submodule--helper config submodule."$sm_name".url "$repo" &&
- 	if test -n "$branch"
- 	then
--		git config -f .gitmodules submodule."$sm_name".branch "$branch"
-+		git submodule--helper config submodule."$sm_name".branch "$branch"
- 	fi &&
- 	git add --force .gitmodules ||
- 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
++static int module_config(int argc, const char **argv, const char *prefix)
++{
++	/* Equivalent to ACTION_GET in builtin/config.c */
++	if (argc == 2)
++		return print_config_from_gitmodules(the_repository, argv[1]);
++
++	/* Equivalent to ACTION_SET in builtin/config.c */
++	if (argc == 3)
++		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
++
++	die("submodule--helper config takes 1 or 2 arguments: name [value]");
++}
++
+ #define SUPPORT_SUPER_PREFIX (1<<0)
+ 
+ struct cmd_struct {
+@@ -2154,6 +2167,7 @@ static struct cmd_struct commands[] = {
+ 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+ 	{"is-active", is_active, 0},
+ 	{"check-name", check_name, 0},
++	{"config", module_config, 0},
+ };
+ 
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+index b1f3c6489b..791245f18d 100755
+--- a/t/t7411-submodule-config.sh
++++ b/t/t7411-submodule-config.sh
+@@ -134,4 +134,31 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 	)
+ '
+ 
++test_expect_success 'reading submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "../submodule" >expect &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'writing submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "new_url" >expect &&
++		git submodule--helper config submodule.submodule.url "new_url" &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'overwriting unstaged submodules config with "submodule--helper config"' '
++	test_when_finished "git -C super checkout .gitmodules" &&
++	(cd super &&
++		echo "newer_url" >expect &&
++		git submodule--helper config submodule.submodule.url "newer_url" &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.19.0
 
