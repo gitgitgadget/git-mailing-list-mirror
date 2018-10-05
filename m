@@ -2,178 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 265DD1F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 08:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEF601F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 08:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728197AbeJEPR3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 11:17:29 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36572 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727236AbeJEPR3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 11:17:29 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a8-v6so1041021wmf.1
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 01:19:50 -0700 (PDT)
+        id S1728423AbeJEPee (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 11:34:34 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37936 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727942AbeJEPee (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 11:34:34 -0400
+Received: by mail-ed1-f67.google.com with SMTP id c1-v6so10929550ede.5
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 01:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=oZ1RBH0YF5C1Xf0e3lNrGlbBZ0x3Lg6VrxMJCqkVrPU=;
-        b=kmYcyUv9JTD5OJUdP9+jBQXsxTekFo1EwfdjrF7wKEJAHye5zIcmU/OdGDuktemLsi
-         yZvyEHozsPt1QRcqz8KYpbXn5KE1+QW8CH1vfADp8JwGicXWjPwqZwJpu7J5KP90g/wV
-         /7+0E5F5qKGddsSItGsUXTei+3NR3XLYPZIbaLsOakgZ4f1gHpuV8+lzH6nSc2/tsR7/
-         nk65yzl6YDbwBpOjoz7hIPd8z89yjUCr4buzjHekU1CkSWns0FT3PGNxLVpRp+rTh42z
-         PW9TPHyFu4RFWktNV8IDA+5A4NXZTUlkPXHWeREwuSMgChuQxFftz7+CQKpE0yJGd0s5
-         aBbw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0legS6hBs9PdUD5k5TW34uIAyEqh62H02PtYJ82BZ+Q=;
+        b=IwZprxRiBbEC/R6PonnG0rouI/7Pa9X9l+VoGeILo81aBOg/r4z1W0CZ8GxJhHM3aV
+         39rItbIJ/CST9VdghemGWs59SMjjt4mdXUeNVtiqzRzg045H0pmI3YeENf2Z+131H92b
+         mzRp8epVxrb9cyVjDPSU5AMZ0HGwshjE3qrBRPAWpow1+omTr0vwMFIatTtDuqNXzmI+
+         dlV/pVEWIHWKcxqJX7Mad7/qKCrXuGn2pXaJEOgirxc0FT5nUkiZEMTw9aEfx8CAjB0H
+         bleFVi+sx5CtkHiXn7FoxGYvXRAafhsC0UkvTZg8XmVzT0C4icmpBidiCriTjVHa9QIt
+         Cb1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=oZ1RBH0YF5C1Xf0e3lNrGlbBZ0x3Lg6VrxMJCqkVrPU=;
-        b=ptRAuAiyHdER1oexKHH2fMvyTCy7EMhOeLKMyurB2AVHh4QGuEBN3y6/m47AQIgyT6
-         zDJLuxrsOfeZk891uLWoZtKz5JFnuo+YIoWGDZM/nEkrxPMGfCRIbTjHg3fr6upvxGED
-         UIM9YDgpm+/5qn3NTdH8y+T2qb+jY1XnkYyB1GUeewNUK9zbDF7ICkANVeynRXm97msf
-         8KJlyQzSYdwS1HiK9g6T6K+ScsOVShW+IMHwNvR7PhtfOUq7Z9rth/ML1Dzafcu/atGH
-         UWQGFGkuU9li6n4yDygwEkSOqvWgf2Kb9B32UKDzPeZ1VVtbSwTDZ+jujqiZN82mny4i
-         HBHg==
-X-Gm-Message-State: ABuFfog9CvbGjcsGFDdFos+Jv1u7gEFHdImY3fUpQCpzSYZtROtZkoC9
-        SabDcDd1qELU7iVgH9SdRxY=
-X-Google-Smtp-Source: ACcGV62egafugC51SZh22AS/7diegJXekESVrRbfdMqSiRp2+XCHzi87f3ndhMUvp7KGdutWpETYwQ==
-X-Received: by 2002:a1c:d4b:: with SMTP id 72-v6mr7547120wmn.102.1538727589738;
-        Fri, 05 Oct 2018 01:19:49 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o14-v6sm4101761wrp.57.2018.10.05.01.19.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 01:19:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 1/3] help: redirect to aliased commands for "git cmd --help"
-References: <20181001112107.28956-1-rv@rasmusvillemoes.dk>
-        <20181003114242.9858-1-rv@rasmusvillemoes.dk>
-        <20181003114242.9858-2-rv@rasmusvillemoes.dk>
-Date:   Fri, 05 Oct 2018 01:19:48 -0700
-Message-ID: <xmqq8t3czty3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0legS6hBs9PdUD5k5TW34uIAyEqh62H02PtYJ82BZ+Q=;
+        b=lFitUyRubcQQh60UxHe1jaq8UMcSeFy5HGXLcDx6Jh3C0MpDUNCx2VkdDvYhnFsjt4
+         trCpBg0CrW9GBRvXDmrY+B5HTJ25KjTf6OgotYHxmx3IhKRXC7gQ4f9Y252oIuXha8Qy
+         2tlYV5tVOcA12N1gqU7f+RI3y+vVLzgpJ9af5zjQFOx1eFJ57ArR8bXg7Wwq0aHTixic
+         jD0dR7rRrBI4fwF+VIJ/pFemlK7GpbxyJdqg6ca3vDBkzKzDaoTqhLZfG14OjOreQLIe
+         zVHXTYwj/mifgItLx6e0c9kh8bkHCMPST0bRLeZe8nfRZ86RmP3xgzfrhHyhR4TJi7WU
+         SjkA==
+X-Gm-Message-State: ABuFfohWrNaS6vYM9dkO1zXrSVFrhHpGDBnJsrZdBCT+QkQFTfzPkNYz
+        gWhfT7iprYrNi46XkajqFdwA1qSMlk4ac0AEh3w=
+X-Google-Smtp-Source: ACcGV60xJAVC4sSxVrf0DX15TcfN+0eSrSs6/QG19dBRYxBP0ilE3FK+ySmsD7D4iHqujDZ9otSNuMn42A7VnpRiLy4=
+X-Received: by 2002:aa7:c581:: with SMTP id g1-v6mr4449073edq.79.1538728612172;
+ Fri, 05 Oct 2018 01:36:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.43.git.gitgitgadget@gmail.com> <b358178548bdc9134d4e4b83b1d0384ebb257a72.1538578818.git.gitgitgadget@gmail.com>
+ <xmqq1s9424ig.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1s9424ig.fsf@gitster-ct.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 5 Oct 2018 01:36:40 -0700
+Message-ID: <CA+P7+xqttkfXc7QF8z=RkcaS_k4dp_mj-EX3xEji8BsT0SKyKQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] rebase -i: introduce the 'break' command
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     gitgitgadget@gmail.com, Git mailing list <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
+On Fri, Oct 5, 2018 at 1:17 AM Junio C Hamano <gitster@pobox.com> wrote:
+> If one wants to emulate this with the versions of Git that are
+> currently deployed, would it be sufficient to insert "exec false"
+> instead of "break"?
+>
+> The reason I am asking is *not* to imply that we do not need this
+> new feature.  It is because I vaguely recall seeing a request to add
+> 'pause' to the insn set and "exec false" was mentioned as a more
+> general alternative long time ago.  I am trying to see if this is a
+> recurring request/wish, because it would reinforce that this new
+> feature would be a good addition if that is the case.
+>
+> I suspect that "exec false" would give a message that looks like a
+> complaint ("'false' failed so we are giving you control back to fix
+> things" or something like that), and having a dedicated way to pause
+> the execution without alarming the user is a good idea.
+>
+> I think the earlier request asked for 'pause' (I didn't dig the list
+> archive very carefully, though), and 'stop' may also be a possible
+> verb, but I tend to agree with this patch that 'break' is probably
+> the best choice, simply because it begins with 'b' in the
+> abbreviated form, a letter that is not yet used by others (unlike
+> 'pause' or 'stop' that would want 'p' and 's' that are already
+> taken)..
+>
 
-> As discussed in the thread for v1 of this patch [1] [2], this changes the
-> rules for "git foo --help" when foo is an alias.
->
-> (0) When invoked as "git help foo", we continue to print the "foo is
-> aliased to bar" message and nothing else.
->
-> (1) If foo is an alias for a shell command, print "foo is aliased to
-> !bar" as usual.
->
-> (2) Otherwise, break the alias string into words, and pretend that "git
-> word0 --help" was called.
->
-> At least for me, getting the man page for git-cherry-pick directly with
-> "git cp --help" is more useful (and how I expect an alias to behave)
-> than the short "is aliased to" notice. It is also consistent with
-> "--help" generally providing more comprehensive help than "-h".
->
-> I believe that printing the "is aliased to" message also in case (2) has
-> value: Depending on pager setup, or if the user has help.format=web, the
-> message is still present immediately above the prompt when the user
-> quits the pager/returns to the terminal. That serves as an explanation
-> for why one was redirected to "man git-cherry-pick" from "git cp
-> --help", and if cp is actually 'cherry-pick -n', it reminds the user
-> that using cp has some flag implicitly set before firing off the next
-> command.
->
-> It also provides some useful info in case we end up erroring out, either
-> in the "bad alias string" check, or in the "No manual entry for gitbar"
-> case.
+Yea. I use "exec false" all the time for this purpose, but it's a bit
+confusing, and it does cause rebase to indicate that a command failed.
 
-These two paragraphs were misleading, because they sounded as if you
-were lamenting that you were somehow forbidden from doing so even
-though you believe doing it is the right thing.
+I think adding a builtin command to do this is a good idea, and I
+think break is a reasonable verb, (especially considering the
+shorthand "b").
 
-But that is not what is happening.  I think we should update the (2)
-above to mention what you actually do in the code, perhaps like so:
-
-    (2) Otherwise, show "foo is aliased to bar" to the standard
-        error stream, and then break the alias string into words and
-        pretend as if "git word[0] --help" were called.  The former
-        is necessary to help users when 'foo' is aliased to a
-        command with an option (e.g. "[alias] cp = cherry-pick -n"),
-        and hopefully remain visible when help.format=web is used,
-        "git bar --help" errors out, or the manpage of "git bar" is
-        short enough. It may not help if the help shows manpage on
-        the terminal as usual, though.
-
-As we explain why we show the alias information before going to the
-manpage in the item itself and a brief discussion of pros-and-cons,
-we can safely lose the "I believe..."  paragraph, which looks
-somewhat out of place in a log message.
-
-It also is strange to count from (0); if the patchset is rerolled
-again, I'd prefer to see these start counting from (1), in which
-case this item will become (3).
-
-> [1] https://public-inbox.org/git/20180926102636.30691-1-rv@rasmusvillemoes.dk/
-> [2] https://public-inbox.org/git/20180926184914.GC30680@sigill.intra.peff.net/
->
-> Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-> ---
->  builtin/help.c | 34 +++++++++++++++++++++++++++++++---
->  1 file changed, 31 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/help.c b/builtin/help.c
-> index 8d4f6dd301..e0e3fe62e9 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -415,9 +415,37 @@ static const char *check_git_cmd(const char* cmd)
->  
->  	alias = alias_lookup(cmd);
->  	if (alias) {
-> -		printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
-> -		free(alias);
-> -		exit(0);
-> +		const char **argv;
-> +		int count;
-> +
-> +		/*
-> +		 * handle_builtin() in git.c rewrites "git cmd --help"
-> +		 * to "git help --exclude-guides cmd", so we can use
-> +		 * exclude_guides to distinguish "git cmd --help" from
-> +		 * "git help cmd". In the latter case, or if cmd is an
-> +		 * alias for a shell command, just print the alias
-> +		 * definition.
-> +		 */
-> +		if (!exclude_guides || alias[0] == '!') {
-> +			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
-> +			free(alias);
-> +			exit(0);
-> +		}
-> +		/*
-> +		 * Otherwise, we pretend that the command was "git
-> +		 * word0 --help". We use split_cmdline() to get the
-> +		 * first word of the alias, to ensure that we use the
-> +		 * same rules as when the alias is actually
-> +		 * used. split_cmdline() modifies alias in-place.
-> +		 */
-> +		fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
-> +		count = split_cmdline(alias, &argv);
-> +		if (count < 0)
-> +			die(_("bad alias.%s string: %s"), cmd,
-> +			    split_cmdline_strerror(count));
-> +		free(argv);
-> +		UNLEAK(alias);
-> +		return alias;
->  	}
->  
->  	if (exclude_guides)
+Regards,
+Jake
