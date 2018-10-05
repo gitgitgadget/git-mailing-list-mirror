@@ -2,179 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84E9C1F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 16:48:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A95BF1F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 16:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728325AbeJEXr6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 19:47:58 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38849 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728139AbeJEXr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 19:47:58 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 193-v6so2523358wme.3
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 09:48:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=5yIeF4WhNatscZ5xSeBBifNxSsc+5ip4T7IvQ5WMPv8=;
-        b=RxcNfeqaoG2qkMzUwS8i4hxbCKULlaUgOn1YxXjs/W9YOUuFtUqaGc9XT9ArQBIPJK
-         HDPPM/B4L2qX/s1Itv5y7S61f0/fCJBtKx0rqnYkahz83DD7nBAZoQlxfH8Jf4f5rvSZ
-         ILiV2UvSNJyFWXS/uwfCYrUEMv+ggkzLCJ7MebcGVWWRRcgpL2TMtBhS+dG23tbIn1Po
-         6vndrWZ53Jqra3ZzakcvZtNbsJnDJhScN00xNB32MXlYOSWhbW1EmE9PF9hBnMI+Ge71
-         Q3OztNTlXsP2eRrEDihTHi8ME+Q85ckaH8MHph97PacVq9o7yHtJRS3JB4FVBu2CXinx
-         f6ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=5yIeF4WhNatscZ5xSeBBifNxSsc+5ip4T7IvQ5WMPv8=;
-        b=kL/JYVYCEY/1r2yfJyifT9xoQs6wI24ap5RhiU1/tyggnLUQDYykm2C9YGe44FNdwr
-         PGNpWUSaWf/Jj5KYBS5AotgR73VgOO91U2iTuThe0bB5mtK5eWZRbhhK7dJTDpMfn5aY
-         VJf5PXGoXXbY0gcwpSRhu3H/6flEv+T1ZUoUqGIF7o0abD6eSVH9vHo+smkz/dDBIpk1
-         4drDCCMyTrhIal5x8HsaMJiwoDdzar32yhbDUoCChSQeAh9bb9oSH/v5h2X8EnqNGv4c
-         d/Vvn5k7uXC4kJHJFbA4xip386yR1T/yZrKMSArP3RS8Rl9qpUHYhyWuFH2/tCgDegsA
-         LBAw==
-X-Gm-Message-State: ABuFfojQjWq3SrqGzcNhcB6F5OMFgtffw6zCzk/0HV8oOrkm4M53SF1O
-        6xAwNFN1d2k5Z/8J3hD6uZ8=
-X-Google-Smtp-Source: ACcGV60+sUnbPnSg0UaOGKw0aV7e2+oC5Q9EIEbZSukxxusYuCdymNqw2dhVPUqpktW3cKlPjSBQ8Q==
-X-Received: by 2002:a7b:c151:: with SMTP id z17-v6mr8943502wmi.39.1538758104981;
-        Fri, 05 Oct 2018 09:48:24 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c13-v6sm9915307wrm.50.2018.10.05.09.48.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 09:48:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        jrn@google.com, sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 2/7] Documentation: add shell guidelines
-References: <cover.1536969438.git.matvore@google.com>
-        <cover.1538581868.git.matvore@google.com>
-        <a45b646fced228e5a7fab4db7a35c1c6084e58d0.1538581868.git.matvore@google.com>
-Date:   Fri, 05 Oct 2018 09:48:23 -0700
-Message-ID: <xmqq5zygwd9k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728044AbeJEXvc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 19:51:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43260 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727746AbeJEXvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 19:51:32 -0400
+Received: (qmail 19399 invoked by uid 109); 5 Oct 2018 16:52:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Oct 2018 16:52:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13065 invoked by uid 111); 5 Oct 2018 16:51:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Oct 2018 12:51:16 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Oct 2018 12:51:58 -0400
+Date:   Fri, 5 Oct 2018 12:51:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
+Message-ID: <20181005165157.GC11254@sigill.intra.peff.net>
+References: <pull.10.git.gitgitgadget@gmail.com>
+ <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
+ <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
+ <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
+ <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
+ <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+On Fri, Oct 05, 2018 at 12:59:02AM +0200, René Scharfe wrote:
 
-> Add the following guideline to Documentation/CodingGuidelines:
->
-> 	&&, ||, and | should appear at the end of lines, not the
-> 	beginning, and the \ line continuation character should be
-> 	omitted
-
-"should be omitted" sounds as if it is the norm to have such a
-character, but it is not.  The text in the actual patch body does a
-much better job than this.
-
-Perhaps
-
-	Break overlong lines after "&&", "||", and "|", not before
-	them; that way the command can continue to subsequent lines
-	without backslash at the end.
-
-> And the following to t/README (since it is specific to writing tests):
->
-> 	pipes and $(git ...) should be avoided when they swallow exit
-> 	codes of Git processes
-
-Good.
-
-> Signed-off-by: Matthew DeVore <matvore@google.com>
-> ---
->  Documentation/CodingGuidelines | 18 ++++++++++++++++++
->  t/README                       | 28 ++++++++++++++++++++++++++++
->  2 files changed, 46 insertions(+)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 48aa4edfb..72967deb7 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -118,6 +118,24 @@ For shell scripts specifically (not exhaustive):
->  		do this
->  	fi
+> We could also do something like this to reduce the amount of manual
+> casting, but do we want to?  (Macro at the bottom, three semi-random
+> examples at the top.)
+> [...]
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5f2e90932f..f9e78d69a2 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1066,6 +1066,18 @@ static inline void sane_qsort(void *base, size_t nmemb, size_t size,
+>  		qsort(base, nmemb, size, compar);
+>  }
 >  
-> + - If a command sequence joined with && or || or | spans multiple
-> +   lines, put each command on a separate line and put && and || and |
-> +   operators at the end of each line, rather than the start. This
-> +   means you don't need to use \ to join lines, since the above
-> +   operators imply the sequence isn't finished.
+> +#define DEFINE_SORT(name, elemtype, one, two, code)			\
+> +static int name##_compare(const void *one##_v_, const void *two##_v_)	\
+> +{									\
+> +	elemtype const *one = one##_v_;					\
+> +	elemtype const *two = two##_v_;					\
+> +	code;								\
+> +}									\
+> +static void name(elemtype *array, size_t n)				\
+> +{									\
+> +	QSORT(array, n, name##_compare);				\
+> +}
 
-Correct.  Even though I wonder if we need to say the last sentence,
-which is rather obvious, patch is already written and I do not see
-much point editing this further.
+Interesting. When I saw the callers of this macro, I first thought you
+were just removing the casts from the comparison function, but the real
+value here is the matching QSORT() wrapper which provides the type
+safety.
 
-> +	(incorrect)
-> +	grep blob verify_pack_result \
-> +	| awk -f print_1.awk \
-> +	| sort >actual &&
-> +	...
-> +
-> +	(correct)
-> +	grep blob verify_pack_result |
-> +	awk -f print_1.awk |
-> +	sort >actual &&
-> +	...
-> +
->   - We prefer "test" over "[ ... ]".
->  
->   - We do not write the noiseword "function" in front of shell
-> diff --git a/t/README b/t/README
-> index 85024aba6..9a71d5732 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -466,6 +466,34 @@ And here are the "don'ts:"
->     platform commands; just use '! cmd'.  We are not in the business
->     of verifying that the world given to us sanely works.
->  
-> + - Don't use Git upstream in the non-final position in a piped chain, as
-> +   in:
+I'm not wild about declaring functions inside macros, just because it
+makes tools like ctags like useful (but I have certainly been guilty of
+it myself). I'd also worry that taking "code" as a macro parameter might
+not scale (what happens if the code has a comma in it?)
 
-"upstream in the non-final position" is a bit redundant, isn't it?
+I think we can address that last part by switching the definition order.
+Like:
 
-  - Don't feed the output of 'git' to a pipe, as in:
+  #define DEFINE_SORT(name, elemtype, one, two) \
+  static int name##_compare(const void *, const void *);                \
+  static void name(elemtype *array, size_t n)                           \
+  {                                                                     \
+	QSORT(array, n, name##_compare);                                \
+  }                                                                     \
+  static int name##_compare(const void *one##_v_, const void *two##_v_) \
+  {                                                                     \
+	elemtype const *one = one##_v_;					\
+	elemtype const *two = two##_v_;					\
 
-> +
-> +     git -C repo ls-files |
-> +     xargs -n 1 basename |
-> +     grep foo
-> +
-> +   which will discard git's exit code and may mask a crash. In the
-> +   above example, all exit codes are ignored except grep's.
+And then expecting the caller to do:
 
-Good.
+  DEFINE_SORT(foo, struct foo, a, b)
+     /* code goes here */
+  }
 
-> +   Instead, write the output of that command to a temporary
-> +   file with ">" or assign it to a variable with "x=$(git ...)" rather
-> +   than pipe it.
-> +
-> + - Don't use command substitution in a way that discards git's exit
-> +   code. When assigning to a variable, the exit code is not discarded,
-> +   e.g.:
-> +
-> +     x=$(git cat-file -p $sha) &&
-> +     ...
-> +
-> +   is OK because a crash in "git cat-file" will cause the "&&" chain
-> +   to fail, but:
-> +
-> +     test "refs/heads/foo" = "$(git symbolic-ref HEAD)"
-> +
-> +   is not OK and a crash in git could go undetected.
+The unbalanced braces are nasty, though (and likely to screw up editor
+formatting, highlighting, etc).
 
-Good.
+I wonder if it would be possible to just declare the comparison function
+with its real types, and then teach QSORT() to do a type check. That
+would require typeof() at least, but it would be OK for the type-check
+to be available only to gcc/clang users, I think.
 
->   - Don't use perl without spelling it as "$PERL_PATH". This is to help
->     our friends on Windows where the platform Perl often adds CR before
->     the end of line, and they bundle Git with a version of Perl that
+I'm not quite sure what that type-check would look like, but I was
+thinking something along the lines of (inside the QSORT macro):
+
+  do {
+    /* this will yield a type mismatch if fed the wrong function */
+    int (*check)(const typeof(array), const typeof(array)) = compar;
+    sane_qsort(array, n, sizeof(*array), n);
+  } while (0)
+
+I have no idea if that even comes close to compiling, though.
+
+-Peff
