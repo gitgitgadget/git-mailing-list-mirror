@@ -2,94 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0917F1F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 13:06:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261C31F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 13:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728620AbeJEUE7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 16:04:59 -0400
-Received: from mail.ao2.it ([92.243.12.208]:44979 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728595AbeJEUE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 16:04:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=vm8rnAzLQVB6G46UsK3SCT1S9bWIwMmJ56kdSij41yk=;
-        b=T1+yV/yUyM8fy621kO3El47rSjXFMQbD2timTC5QY6OZaF80DHt+gALakg69PT7Y+53b65KB3bBlHeRz/02NHY9QLm2AeI13vw2foJr/oYnmSfzYWejyb7015ll4wYP5qONAFpTeCzMNN6LWuUMD5+ufZp0V5IAovqPoUzpLSvbO5u0vHZXT47gHkbc0IjO/SpB8d+QReGaM0YXvhWilsUpFIQ1VukX56AN1uIcSzfnGWFxjRFscCCOZJYBk/yN1RUQy95+ArxHhPLMVdfI9u1oeNa/WYof9qFiHtK65vYaVub/1/kVfj98E1Sut164f72dpjynRpyABdQte2dFaqg==;
-Received: from localhost ([::1] helo=jcn)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1g8PlU-0003BL-61; Fri, 05 Oct 2018 15:03:32 +0200
-Received: from ao2 by jcn with local (Exim 4.91)
-        (envelope-from <ao2@ao2.it>)
-        id 1g8Pnx-00049E-Ni; Fri, 05 Oct 2018 15:06:05 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v6 07/10] t7506: clean up .gitmodules properly before setting up new scenario
-Date:   Fri,  5 Oct 2018 15:05:58 +0200
-Message-Id: <20181005130601.15879-8-ao2@ao2.it>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20181005130601.15879-1-ao2@ao2.it>
-References: <20181005130601.15879-1-ao2@ao2.it>
+        id S1727958AbeJEUOr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 16:14:47 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46710 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727701AbeJEUOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 16:14:47 -0400
+Received: by mail-wr1-f68.google.com with SMTP id a2-v6so6453390wrc.13
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 06:16:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=CVKc4FyNTlPk9stKhiCtH7AeAHPggkU4m2lEkaApvgc=;
+        b=ibaWBpC0lmg5E+tVVmj3cw4tc2u8jCTEpKuRNtaG2oq7eAHFOnoWcv2UvyJBa5CBUT
+         5VnopEngRYThQ/JWTlmCZUySMDKVcADi0r/DCsBcnG6d2WKpVHKgb6hEX9ADzeT/0KuU
+         ofoDa5JqbuGjbSaDcz9ftqWqBQUerdyYnwJ5WxyjWIxl8lHHYSa6WHuQHVw9i9PchAAR
+         gZpx+ar0At2pK8YEpw8lc434mAOYAXBfSk0/800FsPOYgFjzBrpu854vjjywty20k2/g
+         ZpE6ZSYZzbCJWxsPosfG0uRJu6r8wscZqmhIe868gLP8LMQ3KQyoX5PXw3opgdlSeBza
+         KIBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=CVKc4FyNTlPk9stKhiCtH7AeAHPggkU4m2lEkaApvgc=;
+        b=ZHxZtPD6EzrMI3WEbsD/FQzRpUoPbszpUql6BKEOE++wca6BpZi7DcDKXGrBHb8V/b
+         rRx3xToXdog2K18fOo9OySMXXPxEplpms+MYhpmLyQHPTGhYeJgCJnBXQkdO++kIH/BF
+         DjtP6zd0S/vMK/PSXw3a3xPMAOFCTfPRnoAUJvv4WsFpZ4VR3Nkc9dPa2/RWBH8sLRrn
+         vK608j/sETl/Zh8IR94NCE4J6Nl0k6Upbon6LL9NbVgFloFDe9UosHs8YFoC8SkFpG/L
+         8P3zZOd3YLt8mlNjcGW7ABJz01C2TwGTIDbTj2nm7H+qKWw2L7ymrKB39ONKl/dH9XY2
+         KJnQ==
+X-Gm-Message-State: ABuFfoh0AjLq6AFMJBJURKtpt4FkwWKRfrjHMVsy8d/cMlXojPFq+uC3
+        kwhqB8CX6s4H8Bw6qIz6wzE=
+X-Google-Smtp-Source: ACcGV62PSvTJ2EVB5Somrqm9kn9Kitp51stdpGBtfKRFYdWeTx/lpnx3bsnKcMrAe70f3qetWskd5w==
+X-Received: by 2002:adf:9d26:: with SMTP id k38-v6mr8798488wre.18.1538745364921;
+        Fri, 05 Oct 2018 06:16:04 -0700 (PDT)
+Received: from localhost (x4d0c6f69.dyn.telefonica.de. [77.12.111.105])
+        by smtp.gmail.com with ESMTPSA id x139-v6sm7091006wme.3.2018.10.05.06.16.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Oct 2018 06:16:03 -0700 (PDT)
+Date:   Fri, 5 Oct 2018 15:16:02 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Eneas Queiroz <cotequeiroz@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] Error while trying to git apply a patch; works with patch
+ -p1
+Message-ID: <20181005131602.GU23446@localhost>
+References: <CAPxccB1VnDV5BjkcFcoPVmegJSg6iN_tD3o0e9G2XKXaM_=4KA@mail.gmail.com>
+ <20181004214533.GS23446@localhost>
+ <CAPxccB2B2Cq=CQZ3D8rmvqc63pUV3f1hc_Ngt5nWStR-getpjA@mail.gmail.com>
 MIME-Version: 1.0
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPxccB2B2Cq=CQZ3D8rmvqc63pUV3f1hc_Ngt5nWStR-getpjA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In t/t7506-status-submodule.sh at some point a new scenario is set up to
-test different things, in particular new submodules are added which are
-meant to completely replace the previous ones.
+On Fri, Oct 05, 2018 at 09:17:54AM -0300, Eneas Queiroz wrote:
+> Em qui, 4 de out de 2018 às 18:45, SZEDER Gábor <szeder.dev@gmail.com> escreveu:
+> >
+> > On Thu, Oct 04, 2018 at 06:01:11PM -0300, Eneas Queiroz wrote:
+> > > I've sent this to the list 2 days ago, but I can't find it in the list
+> > > archives, so I'm sending it again without files attached.  I apologize
+> > > if this is a duplicate. One should be able to reproduce this with the
+> > > current PR files, but if not, I can provide them.
+> > >
+> > > I've hit a strange error while trying to apply a patch from github
+> > > here: https://github.com/openwrt/openwrt/pull/965
+> > >
+> > > 965.patch:452: trailing whitespace.
+> > >
+> > > 965.patch:559: space before tab in indent.
+> > >              -o $(SHLIBNAME_FULL) \
+> > > 965.patch:560: space before tab in indent.
+> > >              $$ALLSYMSFLAGS $$SHOBJECTS $$NOALLSYMSFLAGS $$LIBDEPS; \
+> > > 965.patch:564: space before tab in indent.
+> > >         -o $(SHLIBNAME_FULL) \
+> > > 965.patch:2334: trailing whitespace.
+> > >
+> > > error: package/libs/openssl/patches/100-Configure-afalg-support.patch:
+> > > No such file or directory
+> > > error: package/libs/openssl/patches/110-openwrt_targets.patch: No such
+> > > file or directory
+> > > error: package/libs/openssl/patches/120-fix_link_segfault.patch: No
+> > > such file or directory
+> > > error: package/libs/openssl/patches/1.1.0/100-Configure-afalg-support.patch:
+> > > No such file or directory
+> > > error: package/libs/openssl/patches/1.1.0/110-openwrt_targets.patch:
+> > > No such file or directory
+> > >
+> > > If you get the patch file from
+> > > https://github.com/openwrt/openwrt/pull/965.patch and apply it with
+> > > git apply, it fails.  If I apply the same file with patch -p1, it
+> > > works fine.  I've tried it with git 2.16.4 and 2.19, and they both
+> > > fail with the same error, and at least 2 more people have confirmed
+> > > it.
+> > >
+> > > git apply fails even when using git format-patch -13 --stdout as a
+> > > source, so it is not github doing something weird.
+> > >
+> > > The file is a series of 13 patches.  If I split the series after the
+> >
+> > So this is no _a_ patch, then, but a mailbox of patches.  'git apply'
+> > is supposed to apply a single a patch; apparently 'patch' is more
+> > lenient.
+> >
+> > Have you tried 'git am'?
+> >
+> > > 3rd patch, it works.
+> > > Also, if I use https://github.com/openwrt/openwrt/pull/965.diff, it also works.
+> > >
+> > > I'm not subscribed to the list, so please CC me.
+> > >
+> > > Cheers,
+> > >
+> > > Eneas
+> 
+> Thanks for the reply.  Is that expected behavior?  git apply seems to
+> work in most similar cases.
 
-However before calling the "git submodule add" commands for the new
-layout, the .gitmodules file is removed only from the working tree still
-leaving the previous content in current branch.
+Oh, I'm surprised by that; but I rarely use 'git apply' directly, as I
+apply even single patches with 'git am'.
 
-This can break if, in the future, "git submodule add" starts
-differentiating between the following two cases:
+> git am works fine--although it complains a lot about whitespace errors
+> when patching *.patch output files.
+> 
+> I know they're just warnings, but perhaps git apply/am should suppress
+> them when creating/patching a *.patch file, since context lines in
+> '*.patch' files all start with a space.
 
-  - .gitmodules is not in the working tree but it is in the current
-    branch (it may not be safe to add new submodules in this case);
+'git am' and 'git apply' don't know or care about filetypes, and
+neither does the rest of Git for that matter, unless you explicitly
+tell them to.  With a proper .gitattributes entry you can tell them to
+ignore all or only specific types of whitespace errors in '*.patch'
+files, e.g.:
 
-  - .gitmodules is neither in the working tree nor anywhere in the
-    current branch (it is safe to add new submodules).
+  *.patch -whitespace
 
-Since the test intends to get rid of .gitmodules anyways, let's
-completely remove it from the current branch, to actually start afresh
-in the new scenario.
+or
 
-This is more future-proof and does not break current tests.
-
-Signed-off-by: Antonio Ospite <ao2@ao2.it>
----
- t/t7506-status-submodule.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 943708fb04..08629a6e70 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -325,7 +325,8 @@ test_expect_success 'setup superproject with untracked file in nested submodule'
- 	(
- 		cd super &&
- 		git clean -dfx &&
--		rm .gitmodules &&
-+		git rm .gitmodules &&
-+		git commit -m "remove .gitmodules" &&
- 		git submodule add -f ./sub1 &&
- 		git submodule add -f ./sub2 &&
- 		git submodule add -f ./sub1 sub3 &&
--- 
-2.19.0
+  *.patch whitespace=-space-before-tab,-blank-at-eol
 
