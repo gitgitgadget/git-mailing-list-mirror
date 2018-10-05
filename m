@@ -6,76 +6,102 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31E051F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 16:47:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3C451F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 16:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728964AbeJEXrR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 19:47:17 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34187 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728611AbeJEXrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 19:47:17 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z4-v6so14232866wrb.1
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 09:47:44 -0700 (PDT)
+        id S1728965AbeJEXrW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 19:47:22 -0400
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:36096 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728118AbeJEXrW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 19:47:22 -0400
+Received: by mail-wm1-f41.google.com with SMTP id a8-v6so2520924wmf.1
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 09:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=0FrkNEGYNaQRaMIY1Qm8zFDdfmDnzuhvGc1dvSEZc58=;
-        b=Pfq1slps/MyVNlqF6T6TYMqBnFPISJCsjNTrytLO/PYrwXT5is7shw4QUutmf3m5cF
-         Aosr9PAvozJU+FrYVMY2o3PNF28CU4j6l9ehl/896n+mFT3qdF7rCjQ0BFdwxo+aFXOl
-         /3VWEjXWefBluUYeMzopeCEKTmP1Od4/DvII4cMYPYvcMJSDMP0KcCBqKq03h+r5oCEG
-         vq9y387uUT/s5dmtHvcYGdRRy16kxf3gHrHrVsRPlt3YiSaRBZq5wvqzlCuDwClGPHm/
-         mAOfHzv8wMXtDt1YrRHOv1OePPdqVJXdQlEEARvECT7fW/yp/DGc/v8VpDx2OB/j+nsu
-         4wdg==
+         :mime-version:content-transfer-encoding;
+        bh=GdsTF7XyjMlCimO7TKPlBA5XStyIIsCImaClqk8Eymc=;
+        b=pBc3UMnUZ7avrAZeREQ2LsHuc9+3415MZzchFkB/ech5E/XuEpK/N8ER24efS/63xf
+         thj2vnsxOgvKxGrCWCEbcp6YxknJHZAGy1nZrKFRCZ+YoAqFvsuBnKJXB7LMbIbuU4Qv
+         tFFbR8tGilgYZDpi7T9QVUlvovLgQG0NHWF6DQtHFUg9xz2S4s9BFPDDRtfX3XEc8/3Q
+         Sv/8xkeqOM84pHrud0mz5c7UszRAcZQR0hNvmIlQ9Pz5+DJN7QH/DvlS982ZviuwBxTm
+         OFHjs9G4FvTUgjt9CTcPfLpCEVOJWxE1FEhiCQvyDG8w/zvcHlrvlLBev5OrNwYlITT6
+         cfhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=0FrkNEGYNaQRaMIY1Qm8zFDdfmDnzuhvGc1dvSEZc58=;
-        b=LCO+B38L6t0LyNU9ue0bOtg0V+uBsEQt5Vorb1+iKgQlF3JgcU0VLba7FxBOFlEDtR
-         dmFENOw3UGosDwZRRhlE610Ci6P5E2uzUk+VV1qXxijPCykqNppy7ppN4yVa9t1gVVz/
-         dzgBAk7AE1uR5GvFZviiuH48MpT5NihPTkPPTQDuvywYMpMbuaPplByV19Bn9V26eo2L
-         qNjkH6wQ9aksPw30BlpMAcBbH4pHiEy7DckBDNqHJ2ZndZSefBbQF18sjMMLMSFkVYFn
-         pBDzs0oAHQIXL8eTGZoN3MRQ+76cWNLHqmDvzkKbCjo6tF0AiyB6BUTjfUJYf2GcL3/G
-         hfJg==
-X-Gm-Message-State: ABuFfohbDBFbGpvfq1gS49+fc/SuQ8gZ8U4Xt4KsHcvAAPce4C8PiWkL
-        POs21yR5cevKQkMaxXTAKWo=
-X-Google-Smtp-Source: ACcGV62oSViEfMfliZkIpT3H7v6i9225OSRRcZ+8XbrmQE1nTuOvRFGBk8DgnSeE8f/297WWCxLWKQ==
-X-Received: by 2002:adf:db45:: with SMTP id f5-v6mr9040038wrj.237.1538758063837;
-        Fri, 05 Oct 2018 09:47:43 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t77-v6sm1968623wme.18.2018.10.05.09.47.42
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=GdsTF7XyjMlCimO7TKPlBA5XStyIIsCImaClqk8Eymc=;
+        b=YsbDF/LyUYuEDWPaI5fUYHSO53cN8pQ0mO1WQE1knwR1ZGbJzHyDaLXmJZ39uPPCRV
+         TauUKziyO7p/JwbemTcG49cFPmzSn8CtpJXngDkI5ZM05MJHxDtm7jFzR1JeRVkl+DC8
+         k+ThCFquBq0s/bPFAqO5UTd6n0pUnfAFRdDr7S1SpHlCzT0xnWnh6pP1ImocRzugy0HH
+         pC3ufvGH3p1UBnrcQ+qaNhtUOOaNqaOaZ9nZrxUcBzK5FTi+JBSIhnDbEubaoSOLjCDZ
+         PdPLAiZ5HymPgsvEIviMgXbE6pPSOj8yiuppe6PSj/QFxnZ6AWAAS+ixTq40+qXJ7EeE
+         c6LQ==
+X-Gm-Message-State: ABuFfohzrrXOa1T0/VuIBcc9SWVXjq6LKsxcfzO7S67SLNSz7ugZ5BbW
+        TUrF2efvcksLLvnBXQJFrks=
+X-Google-Smtp-Source: ACcGV62YGEC3YRmR2wIP/i4YSkbkzcEtSWPOk2S28BBhkiEbcHTXO3AB/nOpnnSf4XBhmQLrqCkhTA==
+X-Received: by 2002:a1c:88cd:: with SMTP id k196-v6mr8123249wmd.17.1538758069350;
+        Fri, 05 Oct 2018 09:47:49 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w72-v6sm14620615wrc.52.2018.10.05.09.47.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 09:47:42 -0700 (PDT)
+        Fri, 05 Oct 2018 09:47:48 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 1/3] help: redirect to aliased commands for "git cmd --help"
-References: <20181001112107.28956-1-rv@rasmusvillemoes.dk>
-        <20181003114242.9858-1-rv@rasmusvillemoes.dk>
-        <20181003114242.9858-2-rv@rasmusvillemoes.dk>
-        <xmqq8t3czty3.fsf@gitster-ct.c.googlers.com>
-        <5e79944d-e82f-f4c1-00ec-445121769f42@rasmusvillemoes.dk>
-Date:   Fri, 05 Oct 2018 09:47:41 -0700
-Message-ID: <xmqqr2h4wdaq.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Is there some script to find un-delta-able objects?
+References: <87d0soh3v8.fsf@evledraar.gmail.com>
+        <20181005161943.GA8816@sigill.intra.peff.net>
+Date:   Fri, 05 Oct 2018 09:47:47 -0700
+Message-ID: <xmqqk1mwwdak.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
+Jeff King <peff@peff.net> writes:
 
->> It also is strange to count from (0); if the patchset is rerolled
->> again, I'd prefer to see these start counting from (1), in which
->> case this item will become (3).
+> On Fri, Oct 05, 2018 at 04:20:27PM +0200, Ævar Arnfjörð Bjarmason wrote:
 >
-> If you prefer, I can send a v4.
+>> I.e. something to generate the .gitattributes file using this format:
+>> 
+>> https://git-scm.com/docs/gitattributes#_packing_objects
+>> 
+>> Some stuff is obvious, like "*.gpg binary -delta", but I'm wondering if
+>> there's some repo scanner utility to spew this out for a given repo.
+>
+> I'm not sure what you mean by "un-delta-able" objects. Do you mean ones
+> where we're not likely to find a delta? Or ones where Git will not try
+> to look for a delta?
+>
+> If the latter, I think the only rules are the "-delta" attribute and the
+> object size. You should be able to use git-check-attr and "git-cat-file"
+> to get that info.
+>
+> If the former, I don't know how you would know. We can only report on
+> what isn't a delta _yet_.
 
-Sure, if you prefer, you can send a v4 for me to look at and queue.
+I am reasonably sure that the question is about solving the former
+so that "-delta" attribute is set appropriately.
 
-Thanks.
+Iniitially, I thought that it is likely an undeltifiable object has
+higher randomness than deltifiable ones and that can be exploited,
+but if you have such a highly random blob A (and no other object
+like it) in the repository and then later acquire another blob B
+that happens to share most of the data with A, then A and B by
+themselves will pass the "highly random" test but still yet each can
+be expressed as a delta derived from the other.  So your "what isn't
+a delta yet" is a reasonable assessment of what mechanically can be
+known.  
+
+Knowledge/heuristic like "No two '*.gpg' files are expected to be
+alike" needs something more than the randomness of individual files,
+I guess.
+
