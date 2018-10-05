@@ -2,83 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8751F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 17:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF7081F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 17:18:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729071AbeJFADm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 20:03:42 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42985 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728021AbeJFADm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 20:03:42 -0400
-Received: by mail-wr1-f68.google.com with SMTP id g15-v6so11647403wru.9;
-        Fri, 05 Oct 2018 10:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Di2qTnfVSi8PA9aM+8/35V9tuh8JDi6tG4um5JXc9mI=;
-        b=IDhEOd4auRfhpBsfWEqU6SAc+0iYYYci+g4QHdYBLfVETAXKiQklbTStIJRanUvoDE
-         oDMtTuUvcnC/slwWDVaLWRojHQ4UZ1kuU2W3kDNP8Gob3gwhXsj/tclIdQu1/Nt5wjSN
-         D1QYkYzQZH4LC17hKcCVlrx0IJIMiQDM05lJ+REgy1o6AG+0jobJPHE6xZddnShz9XSF
-         l0nm1TbHuXDtBimpOhS+yQ5wLxO1O0WAi1kAzAsM9py+whoM6eE4BGQob8Q/Yq8xdy2Y
-         +sfgVIzqtj92fO4MPM8Wpw5D5YRqMHQKKAZUzmL/5wL0/vHcjWPY4HwcZMWJbutoBpqo
-         5sBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Di2qTnfVSi8PA9aM+8/35V9tuh8JDi6tG4um5JXc9mI=;
-        b=QluoFzo1hn+U1e02Sji8ViPRPFU+ZuwwpvKJJ/IVolOdeE7tWpZk8O/mYy/c9CHsX7
-         Tp+RtX3oQn/zID3mHVWqwjCk/3GtH5qasT9ncwZkKD+oDhBHEiiu+USFo/ouaj79GUh+
-         sMdxA4fbmOWEVfQuUb/+0OMSXagzWIdJwMhmrJKAtshUHpxP7DtVOFWifPMjKFEL5xRp
-         2jna1jtU6DEKs57IozKuZufDmol0aYlw9c9t4LccDzoXIE6TmP1reymFap6g7eoHg3Bd
-         Z5+wf9w0tJspObb3fW2SSY5PGfXa/Il0hbsZE6kXCxNCCALKVNGCcTSNDmvtjJz+5pJW
-         YPWg==
-X-Gm-Message-State: ABuFfoiax0PTlolX5m35kP+eTD7iN4xr6IbXnDyK7tiYs0Yt8dJSykF4
-        JVG8JL8j6pkwnG2AqoAMUmGtT5HWb1s=
-X-Google-Smtp-Source: ACcGV62kDPDQnfO9ozAQd90+LEeHOSSPvhmyzFYcYQM8mzM9mrbOuIDT8ZmJAFBPjcz/xvCBfn4dMg==
-X-Received: by 2002:adf:9a84:: with SMTP id a4-v6mr8757363wrc.78.1538759043894;
-        Fri, 05 Oct 2018 10:04:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r13-v6sm1879991wmf.35.2018.10.05.10.04.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 10:04:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        id S1727957AbeJFASN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 20:18:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:37605 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727572AbeJFASN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 20:18:13 -0400
+Received: from localhost.localdomain ([65.55.188.218]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MLunc-1g59IS0TqG-007p7w; Fri, 05 Oct 2018 19:18:32 +0200
+Received: from localhost.localdomain ([65.55.188.218]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MLunc-1g59IS0TqG-007p7w; Fri, 05 Oct 2018 19:18:32 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
         git-packagers@googlegroups.com
-Subject: Re: [Announce] Git 2.14.5, 2.15.3, 2.16.5, 2.17.2, 2.18.1, and 2.19.1
-References: <xmqqy3bcuy3l.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 05 Oct 2018 10:04:02 -0700
-In-Reply-To: <xmqqy3bcuy3l.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 05 Oct 2018 10:01:18 -0700")
-Message-ID: <xmqqpnwouxz1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.19.1
+Date:   Fri,  5 Oct 2018 17:18:25 +0000
+Message-Id: <20181005171825.3936-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.19.1.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:CvM2xN02SdZNVPihX07xDH1BZD7k/jcaSPCwvtV929ak6F2Kw+A
+ s0iW1/SlM1cbbLk/E/lSsAJgrhUGvD3bh36IpkAQN2GZsehG+UEMtlWd8gKNonPigdcs3PN
+ S9rSpcYPwutJifa0LkkyDvZUV6PD45n/htjHvuudU+NdIj3+BX5AnqMajywiKTu+MJvW5ff
+ XXAfOnRzaj3+cra7lXRvQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dXwr2zpPvq0=:/dip89alzgbYj4zajE+U8D
+ zupeRwF3vx15d5Z935Zet9F8S8gTY2uHvLf/p6ylpAKoXlB2tFFefZnjmYzrX7IMd61tBAA33
+ VWUBYof2JLixl0N23iELyGvpYxT5QgijAwRLIfQUS0MNvMrCMjWrQOlCWz0jZ9mpqOJJjVu2h
+ tKjkaHsTdhYjGgXDHCIdT7TKOFoE3LtcM7IJix4gWqrblmgezGTfCeYYg/uBbkJ+22iMTevCK
+ wa9gUlW4g4N+C1E1RtMqxfP710bFRBYUt8rXBwsVqKrq/m9rX3idGNaXUBakzy4n0Gqg4NgSW
+ 8QnVRspFDNAouYCuq/O7d3y6rGfMkgwPH9+9KXt/gExVu/GFB5qxW1Dnx7rriKGi9rAJOB5AP
+ Ji7Qg5Rvq6IotsjqbA9k0kMJlz6H1ZsUkF1tCZRG5NeVjKa6SG/W/I0y/JNDU4wP6EDpp74nz
+ IzNEPwAfyDYtLnr+ROX8F/+7y0lAsmQiH8vNCDOBHONqZTepCSVDehY3Cr9ruqI8B7a4gac38
+ OBR8WE4nJo73SC+dsQCDcgzFR3xujzOR42E2nHQ4Mw1gtbzZQDqQ532EFXEHusxLZ/V05yrcn
+ f16h5SP9qPrWraeaUFM8Y77jnNUBTf5rkK4pjD9sMB1GYm2r6q5VKPr7gks675sP30Wo7hiUA
+ dIt0ps6EcE9f+O+alspwYtd83zy+UCraoNiYnCQJTMt/kxtXvt5GzJvcqUsMYILn0lfCtc7a2
+ 4jWD4KAkEzH+0qCG761CJp8v/dDjIqijgB+giW+evHwwqOchitEySGCgE0UZtwM/ZG237C6Ml
+ Y1COjKwukA5lfcqfXXKmJw4h3ZWcJpXDZFC5r0hr8QVqDAsCQI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dear Git users,
 
-> These releases fix a security flaw (CVE-2018-17456), which allowed an
-> attacker to execute arbitrary code by crafting a malicious .gitmodules
-> file in a project cloned with --recurse-submodules.
+It is my pleasure to announce that Git for Windows 2.19.1 is available from:
 
-The tarballs are found at:
+	https://gitforwindows.org/
 
-    https://www.kernel.org/pub/software/scm/git/
+Changes since Git for Windows v2.19.0 (September 11th 2018)
 
-The following public repositories all have a copy of these
-tags:
+New Features
 
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+  * Comes with Git v2.19.1.
+  * Comes with Git LFS v2.5.2.
+  * Comes with Git Credential Manager v1.17.2.
+  * When FSCache is enabled, commands such as add, commit, and reset
+    are now much faster.
+  * Sublime Text, Atom, and even the new user-specific VS Code
+    installations can now by used as Git's default editor.
+  * Comes with Git Credential Manager v1.18.0.
+
+Bug Fixes
+
+  * Several corner case bugs were fixed in the built-in rebase/stash
+    commands.
+  * An occasional crash in git gc (which had been introduced into
+    v2.19.0) has been fixed.
+
+Filename | SHA-256
+-------- | -------
+Git-2.19.1-64-bit.exe | 5e11205840937dd4dfa4a2a7943d08da7443faa41d92ccc5dafbb4f82e724793
+Git-2.19.1-32-bit.exe | a94ab28c2a9c20cf1ef061a2acce5b2de572773e5efed0e994d89380f458d52a
+PortableGit-2.19.1-64-bit.7z.exe | 419fc2141b5d17c5ad73d9b2306cd3b2f5114c50bd67558cdc538da2c8e67b66
+PortableGit-2.19.1-32-bit.7z.exe | 03b993c9aa336259c293eaf3f123f6591a9c8f2939d2129810332d5f64d553a6
+MinGit-2.19.1-64-bit.zip | f89e103a41bda8e12efeaab198a8c20bb4a84804683862da518ee2cb66a5a5b3
+MinGit-2.19.1-32-bit.zip | 9bde728fe03f66a022b3e41408902ccfceb56a34067db1f35d6509375b9be922
+MinGit-2.19.1-busybox-64-bit.zip | aa2c0dd240c9db66a85d8633fb9f90cbcc10cb00c86cc37880bdde691c1362de
+MinGit-2.19.1-busybox-32-bit.zip | 179c7810e6f388e37a6b4073e9cfc2d109598061787dc913b3813b78fecafa97
+Git-2.19.1-64-bit.tar.bz2 | 7b4de9b248dcec6f28210f14af2cf1eb31e1400e3c4f139a277fcdd7691486d2
+Git-2.19.1-32-bit.tar.bz2 | 4ae9ce6fe7a5fe4b149dc8e24f1a7db3dff5285225e10aa6c0e39284ad0548bd
+pdbs-for-git-64-bit-2.19.1.1.11a3092e18-1.zip | 856c9fb0eb8b2ffb6b6b4b3c2f5ffb37add31c60aed1662b0784114d57444d5e
+pdbs-for-git-32-bit-2.19.1.1.11a3092e18-1.zip | 83191c41776fc3c4d16e2abd686d881d36f5c5e9320a34826fcee33dd74f8a0d
+
+Ciao,
+Johannes
