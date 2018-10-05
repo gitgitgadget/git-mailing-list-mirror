@@ -2,113 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC24D1F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 19:36:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2FE11F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 19:41:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728314AbeJFCgu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 22:36:50 -0400
-Received: from mout.web.de ([212.227.15.3]:36305 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728160AbeJFCgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 22:36:50 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Luu81-1fhjjj24OH-0101Cw; Fri, 05
- Oct 2018 21:36:30 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Luu81-1fhjjj24OH-0101Cw; Fri, 05
- Oct 2018 21:36:30 +0200
-Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
+        id S1728314AbeJFClz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 22:41:55 -0400
+Received: from mail-qt1-f175.google.com ([209.85.160.175]:33365 "EHLO
+        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728139AbeJFClz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 22:41:55 -0400
+Received: by mail-qt1-f175.google.com with SMTP id q40-v6so15069347qte.0
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 12:41:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=cpUECcM0O2ey7doCI7yXRH+1uLg7Eb5ELBGtw2x+/yY=;
+        b=hIOtZpf2vYCN7bNgfrNxOByYIwVKYVMNpQZX4oPfG3w5GjBl25FWonk9hfz4Kr+GF0
+         LvfEqEe/w4S2W1CI/6Py9ppmKYLjE7LLFHKD5/wfcRFvze5DRI73FO3+QD19cRXZYuEC
+         2KlPs7cTKiZyItLj8Nicz8eivIwugmpH+XGgr/B2lyBVdeakqAFbAtluB+0n/nAqa7DY
+         fq37I73ll8P7WZ4ocJRVN61fcyyA1MuJgf74UzAX4i/6BxUZgudcH8O3vve/ctqddqQC
+         ScngRpI8aEdSPO3bnC4J82Xv+FezDtBd6Oao5XDgPm6/IVZTVrzcoaGQnMGt8zGGNe7U
+         S/SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=cpUECcM0O2ey7doCI7yXRH+1uLg7Eb5ELBGtw2x+/yY=;
+        b=FtXx01xXvlPgoUCSWCUGqvhHeDszpAY0hyt8vwyTXsQsC0j7LyQTbvtrZqUP4P9GGN
+         j1KQiJ1UM8ndXk7MOaO3Sh4Fjun9UzsW3Ez6xIV2BpxQ53H0J3tyq3ENSa9ytnEiG7S1
+         anH6DtylAwtw4TYGTHvrJR7ab1Adwx6sBHviMCUe3AarTZYGJiZZPvVARu6W3vPYl2+A
+         bvQy4pA4ImNdtCwMuGDOb/A3w4ZTVyOhcTgigARVf37HSEYnxu/fZg76J9AgUsViwRLc
+         HPNzskmD7irC/i+AsZLYr3TOmYRP0AZAvbzqwnIYaDAD1Yux14IEkypPeSpL5ZO8HFvh
+         ICzg==
+X-Gm-Message-State: ABuFfohJK23htV+TcABseekOs7Ur/IKe0ST4oDIm69+fJH65ejTtSrID
+        qRd92KkXo5oOPiMJFvRKvqc=
+X-Google-Smtp-Source: ACcGV63Rk6kiye85jtgIavpYO8kV52VvW4xt5hpRDb3JOh+b9KrGQuN8R2HkzkCrx8vlpZH5HigCpg==
+X-Received: by 2002:ac8:248c:: with SMTP id s12-v6mr10582565qts.116.1538768502639;
+        Fri, 05 Oct 2018 12:41:42 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id t188-v6sm4213271qkc.58.2018.10.05.12.41.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Oct 2018 12:41:41 -0700 (PDT)
+Subject: Re: [RFC PATCH] We should add a "git gc --auto" after "git clone" due
+ to commit graph
 To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
- <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
- <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
- <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
- <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
- <20181005165157.GC11254@sigill.intra.peff.net>
- <dca35e44-a763-bcf0-f457-b8dab53815cf@web.de>
- <20181005190847.GC17482@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c05f192b-4e89-48b0-1c23-b43ec6fdb74b@web.de>
-Date:   Fri, 5 Oct 2018 21:36:28 +0200
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+References: <87tvm3go42.fsf@evledraar.gmail.com>
+ <87in2hgzin.fsf@evledraar.gmail.com>
+ <dcb8f115-ce3c-64fa-50cc-dd03569c0164@gmail.com>
+ <87ftxkh7bf.fsf@evledraar.gmail.com>
+ <05fefab0-4012-4ef0-5df1-2430eea2bf4d@gmail.com>
+ <20181005192154.GD17482@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <934fa00e-f6df-c333-4968-3e9acffab22d@gmail.com>
+Date:   Fri, 5 Oct 2018 15:41:40 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <20181005190847.GC17482@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20181005192154.GD17482@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:nx9kK+Wlq3jYhs1R4rJylj8g6GnNHI5JhkMx7pziNwJIw7DYaE7
- MOuQslZpHbig8SX4QC6KWsv8crHl/UCc/36wH+DyaMNJoqaLnamlSEmeKeTLl+QHZR5BlgX
- hwJvjOdPGcT4pYBLKQA/3yaXsHbRrlYb9FH6ciXieI66rL4ayoQzO5s5o41mvoPBNB5aTRs
- y71qZ/8jB5q5n1IbomfKw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SY0wTdUymyk=:rONqllsk1DFy2duCXbHGG8
- vE8fXgZB8m2eSeMyTI1yuG84Id5WIvur8v/q6XxefLhn0GvJG+GIpHLlIAPzZ4ogGyPR2sZ+c
- nraQ+3mpk9E593TZJR6naZvTd/6Vq3lS20TDYQq4IXPYAqNpgYjMUTaU4WFSLbtHBW7otMStd
- ibSNA4waR7sjYz0a95JscR3gGh+T8sFZ+6YtDfSPLam+fqSLvHJduIVjIloQqY/i/qOaPaLUP
- 6M7geQjWiOswXZEMur0Amb3c3ntXaPYKGUKtm5PA/+Bvh1d/AG1bI5Do80Y4TGHbLwv0WucfT
- hhD/jtb27rfbc4XccQA6yZVv9wG9qnFOpThjlax5BVOM8lST7bIKAvJE+GVWnGZ4sAskqew/R
- yix/a735+Y4S9d4VKCVCQmRj6Y8p5fSbsOmWGES8f+2cLOlzF7GbvgtNi1/hk5WBE8YfWqtgT
- /pCu2bO1Bydvr68gUWBL7cigx614/ObIqiMBQsRZ2qjuvHK8HCKcKxRN47zkzW2LiN3/zD2eA
- pzjc6IdFVI89tNf2MVQeh4fmd+5Kxk+6l9ota0NFIKPvjPpecj55+lfYCVbk2ao5zgn7d/na5
- eemmTigwS/v6Zt8bMd4bGZbjwzSK5JLpaykc2zQfLtvViOUINCs5cuNRy8Cu9hBZ21ZRL3KPQ
- qRHHVnSel78tjzaIuL49krqJLwj6WWVlDMoSRE/BhqVQVJ2rg3FiiAagNr2TM3R4tky+l1s42
- mg/CkqPXJ03ABS6JerO1tSA3pohwSbpMBCOLI+wDeWXsO6V0Bgty0xHZekA+fUj7p4YNA1m2e
- lhYT4IYPIGt8p1T4Oo0uONnfZlpDWHl3latwU6lh9IQ6lqxazk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.10.2018 um 21:08 schrieb Jeff King:
-> On Fri, Oct 05, 2018 at 08:48:27PM +0200, René Scharfe wrote:
->> +#define DEFINE_SORT(name, type, compare)				\
->> +static int compare##_void(const void *one, const void *two)		\
->> +{									\
->> +	return compare(one, two);					\
->> +}									\
->> +static void name(type base, size_t nmemb)				\
->> +{									\
->> +	const type dummy = NULL;					\
->> +	if (nmemb > 1)							\
->> +		qsort(base, nmemb, sizeof(base[0]), compare##_void);	\
->> +	else if (0)							\
->> +		compare(dummy, dummy);					\
->> +}
-> 
-> I do like that this removes the need to have the code block aspart of
-> the macro.
-> 
-> Did you measure to see if there is any runtime impact?
+On 10/5/2018 3:21 PM, Jeff King wrote:
+> On Fri, Oct 05, 2018 at 09:45:47AM -0400, Derrick Stolee wrote:
+>
+>> My misunderstanding was that your proposed change to gc computes the
+>> commit-graph in either of these two cases:
+>>
+>> (1) The auto-GC threshold is met.
+>>
+>> (2) There is no commit-graph file.
+>>
+>> And what I hope to have instead of (2) is (3):
+>>
+>> (3) The commit-graph file is "sufficiently behind" the tip refs.
+>>
+>> This condition is intentionally vague at the moment. It could be that we
+>> hint that (3) holds by saying "--post-fetch" (i.e. "We just downloaded a
+>> pack, and it probably contains a lot of new commits") or we could create
+>> some more complicated condition based on counting reachable commits with
+>> infinite generation number (the number of commits not in the commit-graph
+>> file).
+>>
+>> I like that you are moving forward to make the commit-graph be written more
+>> frequently, but I'm trying to push us in a direction of writing it even more
+>> often than your proposed strategy. We should avoid creating too many
+>> orthogonal conditions that trigger the commit-graph write, which is why I'm
+>> pushing on your design here.
+>>
+>> Anyone else have thoughts on this direction?
+> Yes, I think measuring "sufficiently behind" is the right thing.
+> Everything else is a proxy or heuristic, and will run into corner cases.
+> E.g., I have some small number of objects and then do a huge fetch, and
+> now my commit-graph only covers 5% of what's available.
+>
+> We know how many objects are in the graph already. And it's not too
+> expensive to get the number of objects in the repository. We can do the
+> same sampling for loose objects that "gc --auto" does, and counting
+> packed objects just involves opening up the .idx files (that can be slow
+> if you have a ton of packs, but you'd want to either repack or use a
+> .midx in that case anyway, either of which would help here).
+>
+> So can we really just take (total_objects - commit_graph_objects) and
+> compare it to some threshold?
 
-No, but I wouldn't expect any -- the generated code should be the same
-in most cases.
+The commit-graph only stores the number of _commits_, not total objects.
 
-Here's an example: https://godbolt.org/z/gwXENy.
+Azure Repos' commit-graph does store the total number of objects, and 
+that is how we trigger updating the graph, so it is not unreasonable to 
+use that as a heuristic.
 
-> As an aside, we may need to take a "scope" argument in case somebody
-> wants to do this in a non-static way.
+Thanks,
 
-Sure.  (They could easily wrap the static function, but a macro
-parameter is simpler still.)
+-Stolee
 
-> It would be nice if we could make
-> this "static inline", but I don't think even a clever compiler would be
-> able to omit the wrapper call.
-
-It could, if it was to inline qsort(3).  Current compilers don't do
-that AFAIK, but I wouldn't be too surprised if they started to.
-
-The typed comparison function can be inlined into the one with the void
-pointers, though.
-
-René
