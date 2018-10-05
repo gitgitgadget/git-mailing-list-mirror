@@ -6,54 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D151F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 17:01:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8751F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 17:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729659AbeJFAA5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 20:00:57 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45542 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729340AbeJFAA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 20:00:56 -0400
-Received: by mail-wr1-f67.google.com with SMTP id q5-v6so14246279wrw.12;
-        Fri, 05 Oct 2018 10:01:21 -0700 (PDT)
+        id S1729071AbeJFADm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 20:03:42 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42985 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728021AbeJFADm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 20:03:42 -0400
+Received: by mail-wr1-f68.google.com with SMTP id g15-v6so11647403wru.9;
+        Fri, 05 Oct 2018 10:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version;
-        bh=nLBTRPT7U0mTbbndU1Y3gTLw1WDjXpU6IRvYSfHj1bw=;
-        b=Zv7yuVmVzF7ui5YJuU9HGiuedXcFqFt8TnW51hUqdznbbQUC/yvVQAJyxnMrSGqnxw
-         vv1384WQcxcAvv1XwtDmdnFx+YISU6TNB6DkE/pnn1VIoIXAqta1JzilqeFgIeN598a/
-         V4ketf4JEEqrs9RHOUbsK/lWsju5qrPBJy5Fb+cLERr5yzyAIb8tK601n1mnLQNhbWKb
-         JvgaeDp6Y6InN/RfgAYIv/c/VepYbhpwHTMfMwOdFXSbVFnJdUnXunLK18riEz+mLeYu
-         8nLCoN0Q6Xz9Sk3n5VpWlrNHSbExf8iPmOh1ao8ckSL6fcCGJCkfZFKOL5vY+085eEOX
-         RPKg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Di2qTnfVSi8PA9aM+8/35V9tuh8JDi6tG4um5JXc9mI=;
+        b=IDhEOd4auRfhpBsfWEqU6SAc+0iYYYci+g4QHdYBLfVETAXKiQklbTStIJRanUvoDE
+         oDMtTuUvcnC/slwWDVaLWRojHQ4UZ1kuU2W3kDNP8Gob3gwhXsj/tclIdQu1/Nt5wjSN
+         D1QYkYzQZH4LC17hKcCVlrx0IJIMiQDM05lJ+REgy1o6AG+0jobJPHE6xZddnShz9XSF
+         l0nm1TbHuXDtBimpOhS+yQ5wLxO1O0WAi1kAzAsM9py+whoM6eE4BGQob8Q/Yq8xdy2Y
+         +sfgVIzqtj92fO4MPM8Wpw5D5YRqMHQKKAZUzmL/5wL0/vHcjWPY4HwcZMWJbutoBpqo
+         5sBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version;
-        bh=nLBTRPT7U0mTbbndU1Y3gTLw1WDjXpU6IRvYSfHj1bw=;
-        b=nCbnDRkvGP+PnAdy563x9nsCt2YSdp91Z1Po9Om4cTlezccZBtfpS/zAEOhDKAXURY
-         27QGrIU+2VL9oCsBhx/rpmUyq0sp4VkygELq0xNZcc1rnoFTc4pLgCVaR0JQXpRs4TiL
-         A8FHAMzoqZlwqT8BrjXSNmBiDZ/Z2l9fsD1WxEBpiS6eK5Izj7gh4Jddl3Hlx2dtagUK
-         cyv455rMJmyK4P0ZD/a5nG2vd4PFPjU/3rRfXjM2YBgnA5WC3dwjVc4Sk72iVTGL/CSs
-         oHva/i92tt99JmnPF8G28IkTh8qkJodVqiF6vaY73KQp1/RwjF2pR3hRvoui9JRbvro7
-         Bx3Q==
-X-Gm-Message-State: ABuFfoh6/vS14qHGZhd9WvzyneCNZe0EijiYeUu+x+VMP/igx17by/yo
-        oPogDjDl0WKfj5L7cd70oVq4ulMFgVg=
-X-Google-Smtp-Source: ACcGV62oRG7/0K4jPkmTqm5XIEArKzxZz4BRXTC3RJBQXjqJWdXlXQtN5vLjdKSolP+/I8pEmV2cig==
-X-Received: by 2002:adf:bb02:: with SMTP id r2-v6mr8897957wrg.24.1538758879911;
-        Fri, 05 Oct 2018 10:01:19 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p9-v6sm7592119wrt.10.2018.10.05.10.01.19
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Di2qTnfVSi8PA9aM+8/35V9tuh8JDi6tG4um5JXc9mI=;
+        b=QluoFzo1hn+U1e02Sji8ViPRPFU+ZuwwpvKJJ/IVolOdeE7tWpZk8O/mYy/c9CHsX7
+         Tp+RtX3oQn/zID3mHVWqwjCk/3GtH5qasT9ncwZkKD+oDhBHEiiu+USFo/ouaj79GUh+
+         sMdxA4fbmOWEVfQuUb/+0OMSXagzWIdJwMhmrJKAtshUHpxP7DtVOFWifPMjKFEL5xRp
+         2jna1jtU6DEKs57IozKuZufDmol0aYlw9c9t4LccDzoXIE6TmP1reymFap6g7eoHg3Bd
+         Z5+wf9w0tJspObb3fW2SSY5PGfXa/Il0hbsZE6kXCxNCCALKVNGCcTSNDmvtjJz+5pJW
+         YPWg==
+X-Gm-Message-State: ABuFfoiax0PTlolX5m35kP+eTD7iN4xr6IbXnDyK7tiYs0Yt8dJSykF4
+        JVG8JL8j6pkwnG2AqoAMUmGtT5HWb1s=
+X-Google-Smtp-Source: ACcGV62kDPDQnfO9ozAQd90+LEeHOSSPvhmyzFYcYQM8mzM9mrbOuIDT8ZmJAFBPjcz/xvCBfn4dMg==
+X-Received: by 2002:adf:9a84:: with SMTP id a4-v6mr8757363wrc.78.1538759043894;
+        Fri, 05 Oct 2018 10:04:03 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r13-v6sm1879991wmf.35.2018.10.05.10.04.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 10:01:19 -0700 (PDT)
+        Fri, 05 Oct 2018 10:04:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
         git-packagers@googlegroups.com
-Subject: [Announce] Git 2.14.5, 2.15.3, 2.16.5, 2.17.2, 2.18.1, and 2.19.1
-Date:   Fri, 05 Oct 2018 10:01:18 -0700
-Message-ID: <xmqqy3bcuy3l.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [Announce] Git 2.14.5, 2.15.3, 2.16.5, 2.17.2, 2.18.1, and 2.19.1
+References: <xmqqy3bcuy3l.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 05 Oct 2018 10:04:02 -0700
+In-Reply-To: <xmqqy3bcuy3l.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 05 Oct 2018 10:01:18 -0700")
+Message-ID: <xmqqpnwouxz1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -62,29 +66,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These releases fix a security flaw (CVE-2018-17456), which allowed an
-attacker to execute arbitrary code by crafting a malicious .gitmodules
-file in a project cloned with --recurse-submodules.
+Junio C Hamano <gitster@pobox.com> writes:
 
-When running "git clone --recurse-submodules", Git parses the supplied
-.gitmodules file for a URL field and blindly passes it as an argument
-to a "git clone" subprocess.  If the URL field is set to a string that
-begins with a dash, this "git clone" subprocess interprets the URL as
-an option.  This can lead to executing an arbitrary script shipped in
-the superproject as the user who ran "git clone".
+> These releases fix a security flaw (CVE-2018-17456), which allowed an
+> attacker to execute arbitrary code by crafting a malicious .gitmodules
+> file in a project cloned with --recurse-submodules.
 
-In addition to fixing the security issue for the user running "clone",
-the 2.17.2, 2.18.1 and 2.19.1 releases have an "fsck" check which can
-be used to detect such malicious repository content when fetching or
-accepting a push. See "transfer.fsckObjects" in git-config(1).
+The tarballs are found at:
 
-Credit for finding and fixing this vulnerability goes to joernchen
-and Jeff King, respectively.
+    https://www.kernel.org/pub/software/scm/git/
 
-P.S. Folks at Microsoft tried to follow the known exploit recipe on
-Git for Windows (but not Cygwin or other Git implementations on
-Windows) and found that the recipe (or its variants they can think
-of) would not make their system vulnerable.  This is due to the fact
-that the type of submodule path require by the known exploit recipe
-cannot be created on Windows.  Nonetheless, it is possible we have
-missed some exploitation path and users are encouraged to upgrade.
+The following public repositories all have a copy of these
+tags:
+
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
