@@ -2,144 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4834E1F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 21:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B51511F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 21:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726577AbeJFEXO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Oct 2018 00:23:14 -0400
-Received: from mout.web.de ([212.227.15.3]:33885 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725896AbeJFEXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Oct 2018 00:23:14 -0400
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LjaR6-1fbPj002Mi-00bZn4; Fri, 05
- Oct 2018 23:22:34 +0200
-Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LjaR6-1fbPj002Mi-00bZn4; Fri, 05
- Oct 2018 23:22:34 +0200
-Subject: Re: [PATCH v3 2/5] fetch-pack: load tip_oids eagerly iff needed
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <64911aec-71cd-d990-5dfd-bf2c3163690c@web.de>
- <14e57ec8-b8a2-10bd-688d-1cb926e77675@web.de>
- <9f51ac28-73e9-2855-c650-7d695945e286@web.de>
- <20181004220711.GA28287@sigill.intra.peff.net>
- <c75fa650-d2b4-9979-a1f2-25d75c6f447b@web.de>
- <20181005202737.GA22460@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a5a5b0c5-cc97-dc50-56dd-25ec64c03e48@web.de>
-Date:   Fri, 5 Oct 2018 23:22:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <20181005202737.GA22460@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:MRvq3qoW4Kge7xxF8bEvQC8LS3ed9RPzfmXFmdf6qMXIQzlK3Qx
- +RAsBA0nAXQgdVbCcT7JIMZ9ql9jhU/RYreYQM9hPey31rV3rvGKzUl2CiW/3D+4yNlKImH
- H3LzSr6aTHIdhifl8ZEcr2hKK+AkLA31OQG5vFqz9cT78X27Kl0fPFnSIRnxlUP18/L8y1w
- NNpSvAVkEO1ZFVWYXC1Xw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OBjzhyLBNxQ=:M6heyKpvQQZ83zKuS3sslI
- EVo/spWOHvY7MwyJAI1DZDJ6JJFqDHjDGH20leYlv9Cm3pUiO0Mjt/BrxRP5jGiCCnzafvKwO
- 7QBzflQcIRoqwtGK4tlXAfuGgjnX2NRxVCFJVvxJ3LGHZhHSG4iHlI3/mOj2CdceFKI0/6qsc
- jCaQ8iGAchEpn8TdFcUCfXYRCOMYhZ8LBfe1ORoWYo/G4y5wge8gCvqJkn7fNQOxzn5SfPk2P
- cMZuz4SPbxbIjnQRX87hrmuf7mVE3frvgwsLEXwQGRb2szPDU2W3qRAzockp0GrRrF+eMIQ50
- oLqpJ5gecsuqrHRCi/kR7gSaLyzyRc04vyKlJ0KfE9fOT62n/F3vdgcn72VdF9PiPiDwoivde
- faDPjckwNcGGyDSqLhTb0FAtyTESqJh8Sc1OdJaGxP8W9Zlk+58nA8rIdg/LAuHYiVdBTVu04
- 0WuZG0vM1PsInexmkbzwyZRk9RMeFvY4gSPahWb0IWZt0kKhkk+ZsEzjJoC6I5J0bWeoz00rG
- /2yABgTvX9J/XD2tzA5itqB4Lry3wHXQJVUjY+cXArcdc2+ZNZ9GXAYR2eMVCoWRFKHqfURlT
- hYLqondgaif0Id7mqPWKshvRy4gQo9NFmNsFJS2AIRIWIIhMokqdE5iX/l8DXKvmLVueeI79F
- nMO/aMqapAk1AatKlmYcLlz9WMUqbjhQvFbInkpvf7yo5Ek6Rm8rXG3Pge1gFbAbJ8plP+Lg4
- ZDQaA0K4DDOVSr8CcJbNe6FuzJ9T9Eksf8XDDTep+y7IEWVRQFuBOEsa0jHyC6xaCxWUwTjYn
- uuwr2+YIVUeAkhVSympjuum3JZwuE6akP0v2B3X7t1GdR4fqHM=
+        id S1727228AbeJFEcL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Oct 2018 00:32:11 -0400
+Received: from mail-oi1-f202.google.com ([209.85.167.202]:52976 "EHLO
+        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725896AbeJFEcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Oct 2018 00:32:10 -0400
+Received: by mail-oi1-f202.google.com with SMTP id w198-v6so10030110oiw.19
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 14:31:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=oCUVReVcRJvdUsdFrZCcC1WDmXck9VUnVBLTo3wJhh4=;
+        b=EdkQYLAI1h4QGkgrujUXcaK5804Zc9k1HoAV8M0ssQxlGXB0pJ+Uasme9kla5FeBQQ
+         RanI7yfuEhuuuafmJYaRTCE/FXH+3nTdPKEFIEmhiWlF1GijcMvxWqH1lMlOvlOykthX
+         GtoC6WffoTXPIxPctH7wZYgustl8tMMgduwzVmwh0v/TvxzX9NQKJktXWEZgjoca+JZ+
+         y9mqK0GeZJaZ8JThcB6ApGWwp+/JDLJhM0mqkgPz0XdjlX3q90+4hy+3hhua9ndpH30G
+         yDBY8VEvfPk9FWwY36Ex+DLwobsD8No8Yp4DTJsJrptDcOUqYsS8SAuG8hCwtNj7bCpv
+         nS/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=oCUVReVcRJvdUsdFrZCcC1WDmXck9VUnVBLTo3wJhh4=;
+        b=YgoPSTzS55Ra+kgFaH5eVi5REmQJDCtKJIcSzAo7yWK/U/gJjaez3aPjORUnESE1tC
+         YyJVDplERW0ifvLljJFbbRmsxbEIvjiZRD30/kR17YuoycWok4JXAlyhYmLtE1lvazpj
+         KaRsbFUTzJF+iEPsH7UdYKVmFATHhWrvpKQsdcuQQthJNkqMSeBfbv7FobGE8+DxRjTz
+         ok2T2qpJlohHxRdOhOAccvul75u2pMeKS2PtwOdhzpOfqcTZTlJphw3wnalNp814BJno
+         pDZrrEmD4ypV4X2jbdO7uPxhz+mzoRh+HrwQHrHc3KgF2sQovlQQjndqGj0LaxNato1S
+         e0fQ==
+X-Gm-Message-State: ABuFfogOMTvfUuKP8xVMBVqZug8yeT2GwnX2MbOjWSqUI8xwNledGSgt
+        xzvUj7Je1tpPJ4St5ftdxcT68vWFaTGTruDqN32cwYBWpENpdP3WVz0p2CclDderGtyjXAkx4XW
+        Spe6pNr6TZdWkiT0oWmdyeyhWa8aPLJ5VdEarQSeRuC4bOCKcH3o8GxWccfI=
+X-Google-Smtp-Source: ACcGV60q44C9AHm623bow89lH3S1Ho19k+vZyJHO7Mtt8J57AFWWhra37VzwSFAyIjxN2ppTHFNRKwOUHqnI
+X-Received: by 2002:a9d:339b:: with SMTP id u27mr7945337otc.13.1538775096512;
+ Fri, 05 Oct 2018 14:31:36 -0700 (PDT)
+Date:   Fri,  5 Oct 2018 14:31:19 -0700
+In-Reply-To: <cover.1533854545.git.matvore@google.com>
+Message-Id: <cover.1538774738.git.matvore@google.com>
+Mime-Version: 1.0
+References: <cover.1533854545.git.matvore@google.com>
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: [PATCH v11 0/8] filter: support for excluding all trees and blobs
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>, sbeller@google.com,
+        git@jeffhostetler.com, jeffhost@microsoft.com, peff@peff.net,
+        stefanbeller@gmail.com, jonathantanmy@google.com,
+        gitster@pobox.com, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.10.2018 um 22:27 schrieb Jeff King:
-> On Fri, Oct 05, 2018 at 10:13:34PM +0200, René Scharfe wrote:
-> 
->>>> -{
->>>> -	/*
->>>> -	 * Note that this only looks at the ref lists the first time it's
->>>> -	 * called. This works out in filter_refs() because even though it may
->>>> -	 * add to "newlist" between calls, the additions will always be for
->>>> -	 * oids that are already in the set.
->>>> -	 */
->>>
->>> I don't think the subtle point this comment is making goes away. We're
->>> still growing the list in the loop that calls tip_oids_contain() (and
->>> which now calls just oidset_contains). That's OK for the reasons given
->>> here, but I think that would need to be moved down to this code:
->>>
->>>> +	if (strict) {
->>>> +		for (i = 0; i < nr_sought; i++) {
->>>> +			ref = sought[i];
->>>> +			if (!is_unmatched_ref(ref))
->>>> +				continue;
->>>> +
->>>> +			add_refs_to_oidset(&tip_oids, unmatched);
->>>> +			add_refs_to_oidset(&tip_oids, newlist);
->>>> +			break;
->>>> +		}
->>>> +	}
->>>
->>> I.e., we need to say here why it's OK to summarize newlist in the
->>> oidset, even though we're adding to it later.
->>
->> There is already this comment:
->>
->> 	/* Append unmatched requests to the list */
->>
->> And that's enough in my eyes.  The refs loop at the top splits the list
->> into matched ("the list") and unmatched, and the loop below said comment
->> adds a few more.  I see no subtlety left -- what do I miss?
-> 
-> It looks like tip_oids is meant as a fast lookup into what's in
-> unmatched and newlist. But in the second loop we continue appending to
-> newlist. Why is it OK that we do not update tip_oids when we do so?
+Here is a clean re-rollup fixing the issue I found earlier. It fixes a problem
+stemming from a discarded exit code, which masked a crash in Git. The crash was
+not a bug because an earlier test deleted a loose object file. The fix was to
+make that test manipulate a clone rather than the original repo.
 
-`tip_oids` contains the object_ids of the all `refs` passed to
-filter_refs().  Instead of adding them at the top of the function that
-is done only when it has become clear that there are unmatched ones,
-as an optimization.  (That optimization was implemented by lazy-loading
-in tip_oids_contain() earlier.)  At that point the list has been split
-into `newlist` and `unmatched`, so we load from them instead of `refs`.
+An interdiff from v10 is below.
 
-> 
-> I.e., something like this explains it:
-> 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 53914563b5..c0a1b80f4c 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -606,6 +606,12 @@ static void filter_refs(struct fetch_pack_args *args,
->  			ref->match_status = REF_MATCHED;
->  			*newtail = copy_ref(ref);
->  			newtail = &(*newtail)->next;
-> +			/*
-> +			 * No need to update tip_oids with ref->old_oid; we got
-> +			 * here because either it was already there, or we are
-> +			 * in !strict mode, in which case we do not use
-> +			 * tip_oids at all.
-> +			 */
->  		} else {
->  			ref->match_status = REF_UNADVERTISED_NOT_ALLOWED;
->  		}
+Thank you,
+Matt
 
-This comment puzzles me -- why ask the question it answers?
-`tip_oids` has been loaded with all `refs` at that point; adding
-more seems odd.
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
+index 5a61614b1..c8e3d87c4 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -210,16 +210,21 @@ test_expect_success 'verify sparse:oid=oid-ish omits top-level files' '
+ test_expect_success 'rev-list W/ --missing=print and --missing=allow-any for trees' '
+         TREE=$(git -C r3 rev-parse HEAD:dir1) &&
+ 
+-        rm r3/.git/objects/$(echo $TREE | sed "s|^..|&/|") &&
++        # Create a spare repo because we will be deleting objects from this one.
++        git clone r3 r3.b &&
+ 
+-        git -C r3 rev-list --quiet --missing=print --objects HEAD >missing_objs 2>rev_list_err &&
++        rm r3.b/.git/objects/$(echo $TREE | sed "s|^..|&/|") &&
++
++        git -C r3.b rev-list --quiet --missing=print --objects HEAD \
++                >missing_objs 2>rev_list_err &&
+         echo "?$TREE" >expected &&
+         test_cmp expected missing_objs &&
+ 
+         # do not complain when a missing tree cannot be parsed
+         test_must_be_empty rev_list_err &&
+ 
+-        git -C r3 rev-list --missing=allow-any --objects HEAD >objs 2>rev_list_err &&
++        git -C r3.b rev-list --missing=allow-any --objects HEAD \
++                >objs 2>rev_list_err &&
+         ! grep $TREE objs &&
+         test_must_be_empty rev_list_err
+ '
+@@ -228,12 +233,13 @@ test_expect_success 'rev-list W/ --missing=print and --missing=allow-any for tre
+ 
+ test_expect_success 'verify tree:0 includes trees in "filtered" output' '
+         git -C r3 rev-list --quiet --objects --filter-print-omitted \
+-                --filter=tree:0 HEAD |
+-        awk -f print_1.awk |
++                --filter=tree:0 HEAD >revs &&
++
++        awk -f print_1.awk revs |
+         sed s/~// |
+-        xargs -n1 git -C r3 cat-file -t |
+-        sort -u >filtered_types &&
++        xargs -n1 git -C r3 cat-file -t >unsorted_filtered_types &&
+ 
++        sort -u unsorted_filtered_types >filtered_types &&
+         printf "blob\ntree\n" >expected &&
+         test_cmp expected filtered_types
+ '
 
-I feel the code needs be simplified further; not sure how, though,
-except perhaps by using the `unfound` array added in another reply.
+Matthew DeVore (8):
+  list-objects: store common func args in struct
+  list-objects: refactor to process_tree_contents
+  list-objects: always parse trees gently
+  rev-list: handle missing tree objects properly
+  revision: mark non-user-given objects instead
+  list-objects-filter: use BUG rather than die
+  list-objects-filter-options: do not over-strbuf_init
+  list-objects-filter: implement filter tree:0
 
-René
+ Documentation/rev-list-options.txt     |   5 +
+ builtin/rev-list.c                     |  11 +-
+ list-objects-filter-options.c          |  19 +-
+ list-objects-filter-options.h          |   1 +
+ list-objects-filter.c                  |  60 ++++++-
+ list-objects.c                         | 232 +++++++++++++------------
+ revision.c                             |   1 -
+ revision.h                             |  26 ++-
+ t/t0410-partial-clone.sh               |  45 +++++
+ t/t5317-pack-objects-filter-objects.sh |  41 +++++
+ t/t5616-partial-clone.sh               |  42 +++++
+ t/t6112-rev-list-filters-objects.sh    |  49 ++++++
+ 12 files changed, 404 insertions(+), 128 deletions(-)
+
+-- 
+2.19.0.605.g01d371f741-goog
+
