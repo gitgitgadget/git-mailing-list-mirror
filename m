@@ -2,73 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D10511F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 16:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98DAE1F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 16:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729330AbeJEXYo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 19:24:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43142 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729060AbeJEXYo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 19:24:44 -0400
-Received: (qmail 18289 invoked by uid 109); 5 Oct 2018 16:25:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Oct 2018 16:25:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12429 invoked by uid 111); 5 Oct 2018 16:24:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Oct 2018 12:24:35 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Oct 2018 12:25:17 -0400
-Date:   Fri, 5 Oct 2018 12:25:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v3] coccicheck: process every source file at once
-Message-ID: <20181005162517.GB11254@sigill.intra.peff.net>
-References: <20181002200710.15721-1-jacob.e.keller@intel.com>
- <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
- <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
- <20181005124048.GT23446@localhost>
+        id S1728061AbeJEXn7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 19:43:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33375 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727572AbeJEXn7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 19:43:59 -0400
+Received: by mail-wr1-f67.google.com with SMTP id e4-v6so14248536wrs.0
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 09:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=4c8ylyqG1USsofpyHP8/9qRBnr40M9wTCi8Et28jaJE=;
+        b=aFp1Nl1RnAUvK8BeyLBD59OTmHvtzlhvzT7WGEjRBChMuUIhafHvYxEGZ8lFLj6WGQ
+         MPT4+JWqwTLivhhUmQf2D7pQxatz6n3Yt+y1QI3deAKo9oJCmrd9LRJLJrFGi8mHUs1C
+         0MVKMNPuuij9mz2top9pdz09lCdcsNaug0hp4dB8uUXymqTRY6K/9UmGwSo9Km1LfibC
+         TeSI4Xq9sdTNgi2sKsi8402w+D2zvkfneyuRTwgbpJsnTbhM7cKVhHibJUPM+1ZPfaNB
+         VN/X+5sDdsyJ3W6dgjwO03l3d4wkGS/yCI/RxDRXpl9y0rsm0FJRur9ZjjpHsrl3sAMW
+         qAfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=4c8ylyqG1USsofpyHP8/9qRBnr40M9wTCi8Et28jaJE=;
+        b=hL14vy+qHY6tWcALzPkKO+kwHFOrGgbb/OzGw+eBmXtgjKRTraERCwUAUtGsDrDsuE
+         SmZOuknobX1myj0LNZLeFLSVwHquQT2Q5giOLmto0GAku5LyL+G/APNA1w4htu+nchRf
+         JctxVUARI9jscw84uyskNIW3x7tEbMfH6IHsI/YRgI6V/uS4hqleu3MlieAA63z/69fK
+         UdtZ6wiRpA0REYv+41EiviLQnpRMQUT6I8/ytAfE7dcH4MgFIvSVudLVO8CkkvxfqCeF
+         LZZ3Wto/kIPkalcnWPOAemOhErKvmNIzw1AYmqxL5uCk6q+pu6zntv6Kn0OLSv+NMDLf
+         xp3Q==
+X-Gm-Message-State: ABuFfojE+84Lk6LaakbFLGF0yIp04/muQQdLSfujlz1f1qnSHRBZ+AHC
+        b3/MaZFxpOMHbDjH3z4Jhc8=
+X-Google-Smtp-Source: ACcGV61V6tlGGr5BVIM76K1VuOZOq4NY6rd0Ri+zWVHECvnqsYZwGMk4NlQIMGfn/68eFQlGn2uLXg==
+X-Received: by 2002:a5d:620b:: with SMTP id y11-v6mr8876802wru.105.1538757867761;
+        Fri, 05 Oct 2018 09:44:27 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id t66-v6sm1516107wmt.5.2018.10.05.09.44.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 05 Oct 2018 09:44:26 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Is there some script to find un-delta-able objects?
+References: <87d0soh3v8.fsf@evledraar.gmail.com> <20181005161943.GA8816@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181005161943.GA8816@sigill.intra.peff.net>
+Date:   Fri, 05 Oct 2018 18:44:25 +0200
+Message-ID: <87bm88gx7a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181005124048.GT23446@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 05, 2018 at 02:40:48PM +0200, SZEDER Gábor wrote:
 
-> On Thu, Oct 04, 2018 at 07:17:47PM -0700, Jacob Keller wrote:
-> > Junio, do you want me to update the commit message on my side with the
-> > memory concerns? Or could you update it to mention memory as a noted
-> > trade off.
-> 
-> We have been running 'make -j2 coccicheck' in the static analysis
-> build job on Travis CI, which worked just fine so far.  The Travis CI
-> build environments have 3GB of memory available [1], but, as shown in
-> [2], with this patch the memory consumption jumps up to about
-> 1.3-1.8GB for each of those jobs.  So with two parallel jobs we will
-> very likely bump into this limit.
-> 
-> So this patch should definitely change that build script to run only a
-> single job.
+On Fri, Oct 05 2018, Jeff King wrote:
 
-It should still be a net win, since the total CPU seems to drop by a
-factor of 3-4.
+> On Fri, Oct 05, 2018 at 04:20:27PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+>> I.e. something to generate the .gitattributes file using this format:
+>>
+>> https://git-scm.com/docs/gitattributes#_packing_objects
+>>
+>> Some stuff is obvious, like "*.gpg binary -delta", but I'm wondering if
+>> there's some repo scanner utility to spew this out for a given repo.
+>
+> I'm not sure what you mean by "un-delta-able" objects. Do you mean ones
+> where we're not likely to find a delta? Or ones where Git will not try
+> to look for a delta?
+>
+> If the latter, I think the only rules are the "-delta" attribute and the
+> object size. You should be able to use git-check-attr and "git-cat-file"
+> to get that info.
+>
+> If the former, I don't know how you would know. We can only report on
+> what isn't a delta _yet_.
 
-Are we OK with saying 1.3-1.8GB is necessary to run coccicheck? That
-doesn't feel like an exorbitant request for a developer-only tool these
-days, but I have noticed some people on the list tend to have lousier
-machines than I do. ;)
+Some version of the former. Ones where we haven't found any (or much of)
+useful deltas yet. E.g. say I had a repository with a lot of files
+generated by this command at various points in the history:
 
--Peff
+    dd if=/dev/urandom of=file.binary count=1024 bs=1024
+
+Some script similar to git-sizer which could report that the
+packed+compressed+delta'd version of the 10 *.binary files I had in my
+history had a 1:1 ratio of how large they were in .git, v.s. how large
+the sum of each file retrieved by "git show" was (i.e. uncompressed,
+un-delta'd).
+
+That doesn't mean that tomorrow I won't commit 10 new objects which
+would have a really good delta ratio to those 10 existing files,
+bringing the ratio to ~1:2, but if I had some report like:
+
+    <ratio> <extension>
+
+For a given repo that could be fed into .gitattributes to say we
+shouldn't bother to delta files of certain extensions.
