@@ -2,101 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 507221F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 19:17:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C39F1F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 19:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728160AbeJFCSD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 22:18:03 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45222 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728042AbeJFCSD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 22:18:03 -0400
-Received: by mail-ed1-f65.google.com with SMTP id v18-v6so11494464edq.12
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 12:17:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NjdfGXTuGr6RREVwTEbbuH7EmjUZxr982j74o8hBlq8=;
-        b=EwrR9DoxSLFRYxVDaejJMIhWWp56bblHbh05CAifE92N3Dsh/pH+N8fzoHbAZGfStA
-         022lmZd+49EsFZYhrniIcP9E0lhrnm4vTsR0izCEL5b3cNKOX3s3yINoZL7XbuIkpALl
-         uw0lAM9/8AYRypCknWdqxSF8+gJa1aDDO5TAQOhtUho4su7nDvPETPtoB0WWLgJXgcrP
-         gUQk5iKYbNg6qkTKlVVln6ddM8QJbvDrMcky4bB4MwGXLDtAwVsAz++JsHh8Q8cBR6sU
-         O5QNRhti1QqpNQZkfjS4vnLGP/Rl2UZgP+Zmf2RhPFm6gecxn0lo1kD5EQAnYukt6qb4
-         Yoig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NjdfGXTuGr6RREVwTEbbuH7EmjUZxr982j74o8hBlq8=;
-        b=WyokcmhzzQQakFFcBI53tEx2uBLm5RGqKBGSbTOF2zSAsVA67FANoO+pDdV8fseSV6
-         qbdXokjA1GUYqTVgLP6Hl3ye+aIBew0cp+caEUOpJIgM1HNMOSOEccuDUFh374m9MpnC
-         fm613dycSurRb5GtgYLx1y75WFrM1ksunjTniMpmOCHyKILz2R+jLyMvKm+OD1Uy9lJR
-         s81EG2Qwhqoz3fl9eFOEQbKJg7EUkB8U9FJf4uwyXbhho1EKJmiz6nkKD3rPcZzU3l0N
-         qTzDSg52oebR4umrI6QPaRrnSt3/sJnpZJVrBtx11gsgzBFtUpMqjd/jNGo1eyNrfZrW
-         2DgQ==
-X-Gm-Message-State: ABuFfoiPmoyfXjq93gRiv/v87ZCfwnPhM2pIAxljDtv11Y0vZII4V+uy
-        zwOckK4BoZNBK+UW8R9ElRLwtkJ2hxLBAn0z+TZC2xgmAVH8TQ==
-X-Google-Smtp-Source: ACcGV625VA24nkZgT3jtXjkva3ibP9iilNoy1VSv3Y9yQpQTx/9/Jb8Igl9uKhJubdDBjZXcRsPyNv7X/kmQcUh9SMw=
-X-Received: by 2002:a50:93c5:: with SMTP id o63-v6mr16103556eda.154.1538767073651;
- Fri, 05 Oct 2018 12:17:53 -0700 (PDT)
+        id S1728341AbeJFCWD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 22:22:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43590 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728139AbeJFCWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 22:22:03 -0400
+Received: (qmail 24955 invoked by uid 109); 5 Oct 2018 19:21:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Oct 2018 19:21:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15121 invoked by uid 111); 5 Oct 2018 19:21:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Oct 2018 15:21:12 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Oct 2018 15:21:54 -0400
+Date:   Fri, 5 Oct 2018 15:21:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH] We should add a "git gc --auto" after "git clone"
+ due to commit graph
+Message-ID: <20181005192154.GD17482@sigill.intra.peff.net>
+References: <87tvm3go42.fsf@evledraar.gmail.com>
+ <87in2hgzin.fsf@evledraar.gmail.com>
+ <dcb8f115-ce3c-64fa-50cc-dd03569c0164@gmail.com>
+ <87ftxkh7bf.fsf@evledraar.gmail.com>
+ <05fefab0-4012-4ef0-5df1-2430eea2bf4d@gmail.com>
 MIME-Version: 1.0
-References: <20180929140132.GA31238@msg.df7cb.de> <20180929145527.23444-1-avarab@gmail.com>
- <CAGZ79kbw96x2Dow7d-sUfOHXiVN8j9KgqEObo+TrVd5zWKbaEA@mail.gmail.com>
- <xmqqftxkztzb.fsf@gitster-ct.c.googlers.com> <20181005130516.3qnhtjg7js53iomf@shiar.net>
-In-Reply-To: <20181005130516.3qnhtjg7js53iomf@shiar.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 5 Oct 2018 12:17:42 -0700
-Message-ID: <CAGZ79kbQMg0sQbwhnjV1eO-LmRifJs1jzAkZmHT0+OS4RxRJwA@mail.gmail.com>
-Subject: Re: [PATCH] grep: provide a noop --recursive option
-To:     git@shiar.nl
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>, myon@debian.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <05fefab0-4012-4ef0-5df1-2430eea2bf4d@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 5, 2018 at 6:05 AM Mischa POSLAWSKY <git@shiar.nl> wrote:
->
-> Junio C Hamano wrote 2018-10-05 1:19 (-0700):
-> > Stefan Beller <sbeller@google.com> writes:
-> >
-> > > git-grep is always file/tree recursive, but there is --recurse-submodules
-> > > which is off by default. Instead of providing a short alias to a noop,
-> > > we could use -r for submodules. (And if you happen to have no
-> > > submodules, this is a noop for you)
-> >
-> > I am not sure if it is an overall win for those who do have and use
-> > submodules to easily be able to go recursive with a short-and-sweet
-> > 'r', or even they want to work inside one project at a time most of
-> > the time.  If the latter, then using 'r' for recurse-submodules is
-> > going to be a mistake (besides, other commands that have 'recursive'
-> > typically use 'r' for its shorthand,and 'r' does not stand for
-> > 'recurse-submodules' for them).
->
-> Personally I would welcome a shorthand for --recurse-submodules,
-> especially if --r^I no longer completes to this.
+On Fri, Oct 05, 2018 at 09:45:47AM -0400, Derrick Stolee wrote:
 
-The new switch differs by one dash, so I'd think the double dashed
-version would still autocomplete.
+> My misunderstanding was that your proposed change to gc computes the
+> commit-graph in either of these two cases:
+> 
+> (1) The auto-GC threshold is met.
+> 
+> (2) There is no commit-graph file.
+> 
+> And what I hope to have instead of (2) is (3):
+> 
+> (3) The commit-graph file is "sufficiently behind" the tip refs.
+> 
+> This condition is intentionally vague at the moment. It could be that we
+> hint that (3) holds by saying "--post-fetch" (i.e. "We just downloaded a
+> pack, and it probably contains a lot of new commits") or we could create
+> some more complicated condition based on counting reachable commits with
+> infinite generation number (the number of commits not in the commit-graph
+> file).
+> 
+> I like that you are moving forward to make the commit-graph be written more
+> frequently, but I'm trying to push us in a direction of writing it even more
+> often than your proposed strategy. We should avoid creating too many
+> orthogonal conditions that trigger the commit-graph write, which is why I'm
+> pushing on your design here.
+> 
+> Anyone else have thoughts on this direction?
 
-Unrelated to this, but more to submodules:
-There is submodule.recurse which you may want to set.
-Would you be interested in a more specific config option there?
-(i.e. grep.recurseSubmodules to only apply to grep recursing into
-submodules, just like fetch.recurseSubmodules only applies to fetch)
+Yes, I think measuring "sufficiently behind" is the right thing.
+Everything else is a proxy or heuristic, and will run into corner cases.
+E.g., I have some small number of objects and then do a huge fetch, and
+now my commit-graph only covers 5% of what's available.
 
-> It is also closer to the behaviour provided by grep -r as that recurses
-> into submodules as well.
+We know how many objects are in the graph already. And it's not too
+expensive to get the number of objects in the repository. We can do the
+same sampling for loose objects that "gc --auto" does, and counting
+packed objects just involves opening up the .idx files (that can be slow
+if you have a ton of packs, but you'd want to either repack or use a
+.midx in that case anyway, either of which would help here).
 
-That sort of makes for the grep case, but not for other commands.
-See the related discussion at
-https://public-inbox.org/git/20180907064026.GB172953@aiede.svl.corp.google.com/
+So can we really just take (total_objects - commit_graph_objects) and
+compare it to some threshold?
+
+-Peff
