@@ -2,138 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E00CC1F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 12:18:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE9361F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 12:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728353AbeJETQf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 15:16:35 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:38706 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727558AbeJETQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 15:16:35 -0400
-Received: by mail-it1-f193.google.com with SMTP id i76-v6so2387874ita.3
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 05:18:07 -0700 (PDT)
+        id S1728134AbeJETj0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 15:39:26 -0400
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:51072 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727701AbeJETj0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 15:39:26 -0400
+Received: by mail-wm1-f41.google.com with SMTP id s12-v6so1752554wmc.0
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 05:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9NiMoXVfEECcyaJsRqOJuWS4t0j6jg7hUWd5Dj4Kusw=;
-        b=OfuuTmnod5yEt1yaOfBJojOFqM2i+aMjaUmOAYA+8rXI/0lRs5T0CiD6DRb3wSUB3o
-         SJdXzdAngep9iYLOxJDnG3EgeoQYjum0GhWW4gz1K9zVhch2G4idU3fQT8Lhji+aTGhy
-         0nBXocTDtDBVFF7P9vo1RVxw78CgwWEZa/XqS7UKEQiFhqmQdBCzgMxAm2nlKLR+YHSO
-         70Jxx5ay0M3JC2nsMlmqcsaHbNEi4WEgcReWh7f5qB3golg4aFyFEbygdDNQmcSMnBxJ
-         ERTFAIAZLIL132wD0shZcf95mPn2srUvL05J3j96Gz3Ol2HIqWQJJ/ccaQyXzlGstkRc
-         aSCQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Xip45j15EPafa2aCV54zYgL0U24uUp9YsrYhm3a8grU=;
+        b=ByA2iTH/TArl3J9vBB3Odb33H+m6IQrytSDidax4pTMPhMf1pFQJal/j/yFF20Qshn
+         JCXA2hT0wgYyPYZPuk5fLgsvBBsKciywhWKLYUD3Z82s9rjy5ORuqkG8HH5xVmUOU7a7
+         XMN+b5OksZt4F453rBRK5CQKqT/2p7KVvSzWjqCoE6GhOnp+Ww2CYY22ddjVAeicXeoq
+         nSgF21S89DzH8P5yJi4Whg6txn2dEP89xGOre2HJU6m6SiUM5eEtBvenorXTbfOfcApY
+         5W/L8nSsOIS7rlm/X2fMi0R+Zkr+5wNiBsFsVwvZIMiRXa4OxEp1a2Ortr6Ykd/llqTE
+         pLJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9NiMoXVfEECcyaJsRqOJuWS4t0j6jg7hUWd5Dj4Kusw=;
-        b=ehZ52tLt51nUCMYbSyQ7HbbMc95ROX+myi4w3JO8YpioxfzRrVPy0VYSR1JIaUPfrk
-         wtoV9bhqmLP/OVimoqTdXFSsfJx992ASvPlxFaZTAsoWHd1lEZfC11ChUKQ9Ri+pfKir
-         SQadVmh+grhu3MuEx2QgkjT7GvTLicpK+LSX0HjH/rbUi8Sn2DnVyY2QYC12fF0vv6ul
-         /Av+sz8QTRKNVAdZMFbMlvWkhuHgREthO/cAkXYea0MOJLkgUxUe0efLkbugt4UjyIXt
-         VSofog0srqLzCKfEHeW8sZ2HvuXsMk1ZsyS07miomDm2FNIYNRT196ppxDQkPIjdX+Hp
-         CCpw==
-X-Gm-Message-State: ABuFfojX/Nd/ZsFlm1NUc71rnlHQUH6d5cfB8mZsIN6hfiPlIu4hZjBx
-        kS4oKJpqBw/WQUXGexPRY7KzpAoECYZLNGsILi4=
-X-Google-Smtp-Source: ACcGV61EoSk5GksProNQpeyp+dHZfg4Hf4Tlf/hrdn6DSV/NMci8eLmR12sJuPK0BEvA5nqfHP1oalZs5293bj8rqO4=
-X-Received: by 2002:a24:141:: with SMTP id 62-v6mr8164914itk.97.1538741886350;
- Fri, 05 Oct 2018 05:18:06 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Xip45j15EPafa2aCV54zYgL0U24uUp9YsrYhm3a8grU=;
+        b=ue12nn2Zm7s3fQsunj33i2gS4MGWSVh2ptWIBwStxKhirHRbWTrU6KFWoUMl/2Cudx
+         peT3EZ2UKblEWz94LHkq/ixGRtSXmm5zV+LbEimvGlD3hHEsP72oGXhk5ejsP58cHYfk
+         ZO9ludZJdQrNkx0PamrY8MsdDKjc4ubOQkcQp141E0W09/yl6LHXrSqnHrJMjxSXx0jW
+         sho0Re8y6U5rxDTnxagAkPFDzY6Z/PuzAHhTn6NOtyI4kfCUQRbLL2kCVVqHur9hJXjt
+         zW0n7+f1SWxxFN2FLTa20VB63y1Lh5CmD8ssChVSJbXfxTc2NGJhFSByJ4dWPZbSQiyx
+         7RtA==
+X-Gm-Message-State: ABuFfohAJHRunRizfoYp0zQwwJr136GotK/ASHQ4tdUFummUci97aKpv
+        o/ZParqDdV+tXncLi1cKZ/o=
+X-Google-Smtp-Source: ACcGV63Fgt1Y+5EjqpbixMM7Yp/Lg0t9/Sir76anrf5FFzmFv4dry0DgAE7NlTtetHF3/X2x2WcHSg==
+X-Received: by 2002:a1c:e386:: with SMTP id a128-v6mr8322650wmh.106.1538743251776;
+        Fri, 05 Oct 2018 05:40:51 -0700 (PDT)
+Received: from localhost (x4d0c6f69.dyn.telefonica.de. [77.12.111.105])
+        by smtp.gmail.com with ESMTPSA id a18sm5920836wrx.55.2018.10.05.05.40.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Oct 2018 05:40:50 -0700 (PDT)
+Date:   Fri, 5 Oct 2018 14:40:48 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] coccicheck: process every source file at once
+Message-ID: <20181005124048.GT23446@localhost>
+References: <20181002200710.15721-1-jacob.e.keller@intel.com>
+ <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
+ <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAPxccB1VnDV5BjkcFcoPVmegJSg6iN_tD3o0e9G2XKXaM_=4KA@mail.gmail.com>
- <20181004214533.GS23446@localhost>
-In-Reply-To: <20181004214533.GS23446@localhost>
-From:   Eneas Queiroz <cotequeiroz@gmail.com>
-Date:   Fri, 5 Oct 2018 09:17:54 -0300
-Message-ID: <CAPxccB2B2Cq=CQZ3D8rmvqc63pUV3f1hc_Ngt5nWStR-getpjA@mail.gmail.com>
-Subject: Re: [BUG] Error while trying to git apply a patch; works with patch -p1
-To:     szeder.dev@gmail.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Em qui, 4 de out de 2018 =C3=A0s 18:45, SZEDER G=C3=A1bor <szeder.dev@gmail=
-.com> escreveu:
->
-> On Thu, Oct 04, 2018 at 06:01:11PM -0300, Eneas Queiroz wrote:
-> > I've sent this to the list 2 days ago, but I can't find it in the list
-> > archives, so I'm sending it again without files attached.  I apologize
-> > if this is a duplicate. One should be able to reproduce this with the
-> > current PR files, but if not, I can provide them.
-> >
-> > I've hit a strange error while trying to apply a patch from github
-> > here: https://github.com/openwrt/openwrt/pull/965
-> >
-> > 965.patch:452: trailing whitespace.
-> >
-> > 965.patch:559: space before tab in indent.
-> >              -o $(SHLIBNAME_FULL) \
-> > 965.patch:560: space before tab in indent.
-> >              $$ALLSYMSFLAGS $$SHOBJECTS $$NOALLSYMSFLAGS $$LIBDEPS; \
-> > 965.patch:564: space before tab in indent.
-> >         -o $(SHLIBNAME_FULL) \
-> > 965.patch:2334: trailing whitespace.
-> >
-> > error: package/libs/openssl/patches/100-Configure-afalg-support.patch:
-> > No such file or directory
-> > error: package/libs/openssl/patches/110-openwrt_targets.patch: No such
-> > file or directory
-> > error: package/libs/openssl/patches/120-fix_link_segfault.patch: No
-> > such file or directory
-> > error: package/libs/openssl/patches/1.1.0/100-Configure-afalg-support.p=
-atch:
-> > No such file or directory
-> > error: package/libs/openssl/patches/1.1.0/110-openwrt_targets.patch:
-> > No such file or directory
-> >
-> > If you get the patch file from
-> > https://github.com/openwrt/openwrt/pull/965.patch and apply it with
-> > git apply, it fails.  If I apply the same file with patch -p1, it
-> > works fine.  I've tried it with git 2.16.4 and 2.19, and they both
-> > fail with the same error, and at least 2 more people have confirmed
-> > it.
-> >
-> > git apply fails even when using git format-patch -13 --stdout as a
-> > source, so it is not github doing something weird.
-> >
-> > The file is a series of 13 patches.  If I split the series after the
->
-> So this is no _a_ patch, then, but a mailbox of patches.  'git apply'
-> is supposed to apply a single a patch; apparently 'patch' is more
-> lenient.
->
-> Have you tried 'git am'?
->
-> > 3rd patch, it works.
-> > Also, if I use https://github.com/openwrt/openwrt/pull/965.diff, it als=
-o works.
-> >
-> > I'm not subscribed to the list, so please CC me.
-> >
-> > Cheers,
-> >
-> > Eneas
+On Thu, Oct 04, 2018 at 07:17:47PM -0700, Jacob Keller wrote:
+> Junio, do you want me to update the commit message on my side with the
+> memory concerns? Or could you update it to mention memory as a noted
+> trade off.
 
-Thanks for the reply.  Is that expected behavior?  git apply seems to
-work in most similar cases.
+We have been running 'make -j2 coccicheck' in the static analysis
+build job on Travis CI, which worked just fine so far.  The Travis CI
+build environments have 3GB of memory available [1], but, as shown in
+[2], with this patch the memory consumption jumps up to about
+1.3-1.8GB for each of those jobs.  So with two parallel jobs we will
+very likely bump into this limit.
 
-git am works fine--although it complains a lot about whitespace errors
-when patching *.patch output files.
+So this patch should definitely change that build script to run only a
+single job.
 
-I know they're just warnings, but perhaps git apply/am should suppress
-them when creating/patching a *.patch file, since context lines in
-'*.patch' files all start with a space.
 
-Cheers,
+1 - https://docs.travis-ci.com/user/common-build-problems/#my-build-script-is-killed-without-any-error
+2 - https://public-inbox.org/git/20181003101658.GM23446@localhost/
 
-Eneas
+
+> > >  Makefile | 6 ++----
+> > >  1 file changed, 2 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/Makefile b/Makefile
+> > > index df1df9db78da..da692ece9e12 100644
+> > > --- a/Makefile
+> > > +++ b/Makefile
+> > > @@ -2715,10 +2715,8 @@ endif
+> > >  %.cocci.patch: %.cocci $(COCCI_SOURCES)
+> > >         @echo '    ' SPATCH $<; \
+> > >         ret=0; \
+> > > -       for f in $(COCCI_SOURCES); do \
+> > > -               $(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
+> > > -                       { ret=$$?; break; }; \
+> > > -       done >$@+ 2>$@.log; \
+> > > +       $(SPATCH) --sp-file $< $(COCCI_SOURCES) $(SPATCH_FLAGS) >$@+ 2>$@.log; \
+> > > +       ret=$$?; \
+> > >         if test $$ret != 0; \
+> > >         then \
+> > >                 cat $@.log; \
+> > > --
+> > > 2.18.0.219.gaf81d287a9da
+> > >
