@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A92591F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 17:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43BEA1F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 18:12:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728214AbeJFAyR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 20:54:17 -0400
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:38114 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727941AbeJFAyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 20:54:17 -0400
-Received: by mail-ot1-f66.google.com with SMTP id l1so195106otj.5
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 10:54:30 -0700 (PDT)
+        id S1728160AbeJFBMo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 21:12:44 -0400
+Received: from mail-oi1-f181.google.com ([209.85.167.181]:34247 "EHLO
+        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728042AbeJFBMn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 21:12:43 -0400
+Received: by mail-oi1-f181.google.com with SMTP id v69-v6so11152746oif.1
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 11:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BRZTPy5FKxa6za8EpYcLd8E4lJgRFWzqjx/9Z4h6Nwg=;
-        b=nnszQpI8G3kwU9EWEPPNy4oRpr69mx13fYCn9Yzi1T03EWzU3zZuck7nv4i77nA2nq
-         cbSowvDZJkcJ65aNcf9sJVlsOpPb3gOWD7IcGOt7bpe3szwJxTFYyrFd0EeJblKeOSYm
-         TGXYTERxvdcUsWK7NHf0pEsrdiAx6R/IcErKTC0GAH29GAIJEEKvyY5OF6q+IanobkZ4
-         PDmB7bDh4Y9uh4N+MkRQDUYAYxtQrZSSn30ADyj9pmOfSzMoeMpPOtCSd5bxDJq8Si0H
-         T59guHr+pQKf/zPDhmzYWO94ksfdEEz/Jp9/bsHNrMxzAH77TxGprJa+07v0TvmTsac+
-         4VQQ==
+        bh=rRsn3RlH6OXRU59K97viP379aHsz5AczjngBBYtoaMk=;
+        b=VsvS49IfuJlmPVmvAmL2ngL8y8ho51ussYgJAGkMgw8s96gmZDudH1W/RrTGIq8TV0
+         zvFNVztQ7vnQSAV7LkBAoulhX3Kzb1JOVgXWgOiq4HY7z29L81sMaJ+5H0Xl39suWVVB
+         jsb3/wQ5/7IqVA4Vl3swovn29du4fUTJaoh3nnxsCbisOyuP7FOgoiDRWw3OLQj/sBZs
+         Fhe/fajOC/s+WR9EuyhVrhDCmflvT2EsbAWJDJXOrC/7xDGPGuJVCwtMNIwdVLo6o65J
+         ex4XXSRqaoqcibIryERoNknXLBPcyyIaVJ3+JtbAoB80p4cwFZmXxRkXWwCbN4sXMzgm
+         cRzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BRZTPy5FKxa6za8EpYcLd8E4lJgRFWzqjx/9Z4h6Nwg=;
-        b=frurGOwDtFp45CVNK/A+5TtQ5hsgvGCCeHZ2ooDxTiUfexMHYOHYcgJbvXwD5mzVcY
-         1xUmg8nynm0sKriPvAB6Z3CuXxtERVnb2NJ5y1qlycj4sQW7bOHRc+1Uhx5ljjRigkqR
-         4oSoKlGTmTo1ofOIk/ff5mpVWcrlF9XZjFjndN2s8O6KakG+BFNuUgNgLwwByaUW2xxe
-         auXWeNp+UsPUeY8tjhMSGblI+y94m3Z4BYXBzM31uTQk6AqoEvwdpfoO40plWztauMUa
-         d25MhF/pG7y9viGhXVgMVZvYwFS4Fp1xvcRlHzMnW6kd1W8SIVvjlVCt1KVhUh9qfQA+
-         TXUw==
-X-Gm-Message-State: ABuFfogQlA7RqZcD9tVn2zwjqVP7vAjaUWxyIZefW744DRinEaHZGf5Y
-        sA+Pchb9Mr7s6OaxiN0eAzYsTTkCCf0uvnN01uwY
-X-Google-Smtp-Source: ACcGV62MxKWI31JdNawWqshuy/ZLy5UdZzpS9AqBnbtO3FYISQL0Pvm07F34dl8vlAtv4jnjsO4/P5khhGJP7o/3Dd8=
-X-Received: by 2002:a9d:1c87:: with SMTP id l7mr7508679ota.259.1538762069326;
- Fri, 05 Oct 2018 10:54:29 -0700 (PDT)
+        bh=rRsn3RlH6OXRU59K97viP379aHsz5AczjngBBYtoaMk=;
+        b=LITd3QdvgL1pd5WWGncS3ytaVWgQnHYodzFe2K0mPMM+P5qylYpRRDuYwLTK+pNgvQ
+         s+V5VE3nHjOr1/seQdH8KVJ3FdPMMugbycbLhGlujI8gvu2SWfn/soGQW7hASLblxnrQ
+         QilR/Ro+Y3IqWbSRxfC+esRw1uaRj9fVcDerkwr08fpdGtiF1SDAuWevJ8oylWLR+FZ5
+         4cI+9Y1aySW0tKBCO8XQn8//Rqxg9pjJMbNI8OU+RuT2btLdEsrJH1N4sZnAdJ7gnbcJ
+         AoYfw15wATfdldjIYavbHRerV+zHhm/DTL56/vK0UYSphFBq74Q2Sw94r3RCPkZmoKnZ
+         sdJw==
+X-Gm-Message-State: ABuFfoiMVvR8Dojzky07Z1tvLaQFx8jltyo0ekf3iJiP6c0pZUJQUzOq
+        Sqky5sCrUHmhbqRpXMnrrAaVx1pra5qaoc+31xIZZx2Han0K
+X-Google-Smtp-Source: ACcGV626Vk0vgmsRWvAJvzFdGIvdcQWmDUmnbbGZF9+h759fZgr14wjhUJ41SpzE3gnfu2pP+Wgoj354BP4DY3+zcys=
+X-Received: by 2002:aca:5c85:: with SMTP id q127-v6mr40780oib.127.1538763171620;
+ Fri, 05 Oct 2018 11:12:51 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1536969438.git.matvore@google.com> <cover.1538581868.git.matvore@google.com>
- <8c0821f68570551675901f4bfdd3149884286c48.1538581868.git.matvore@google.com> <xmqqd0sowda4.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0sowda4.fsf@gitster-ct.c.googlers.com>
+ <8c0821f68570551675901f4bfdd3149884286c48.1538581868.git.matvore@google.com>
+ <xmqqd0sowda4.fsf@gitster-ct.c.googlers.com> <CAMfpvhJasrpDxgt+LATsSQf68LB97hCQnCCnRMJP51iXDc34SQ@mail.gmail.com>
+In-Reply-To: <CAMfpvhJasrpDxgt+LATsSQf68LB97hCQnCCnRMJP51iXDc34SQ@mail.gmail.com>
 From:   Matthew DeVore <matvore@google.com>
-Date:   Fri, 5 Oct 2018 10:54:16 -0700
-Message-ID: <CAMfpvhJasrpDxgt+LATsSQf68LB97hCQnCCnRMJP51iXDc34SQ@mail.gmail.com>
+Date:   Fri, 5 Oct 2018 11:12:39 -0700
+Message-ID: <CAMfpvh+0kugh8g=5KzAao6tru0k0Gp2-OY8km+Xr7fBDk4PmyQ@mail.gmail.com>
 Subject: Re: [PATCH v4 5/7] tests: don't swallow Git errors upstream of pipes
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -64,28 +65,6 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 5, 2018 at 9:48 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Hopefully this is not a blind mechanical patch, as introduction of
-> unexpected temporary files in the working tree could interfere with
-> later tests (e.g. they may expect exact set of untracked files, and
-> these new temporary files would b unexpected additions).
->
-> Thanks.
-
-I reviewed the files modified in this patch. For the svn one, there
-are other scratch files being created in the cwd before mine, so my
-additions should be fine, I admit I don't fully understand the
-commands being run in that test...after the temp files are created, I
-see git svn proplist and git svn propget being executed... the public
-documentation for them does not seem to contradict my assumption.
-(http://svnbook.red-bean.com/en/1.6/svn.ref.svn.c.propget.html)
-
-As for the other test files in this patch, all git invocations are
-either "git clone" or "git init <dir>" or "git -C ..." which means
-none of them care about extra files in the cwd. After I searched for
-Git commands I read through the files somewhat briskly and looked for
-any globs or suspicious invocations of awk, grep, or other commands
-(we really do use a limited number of commands in the tests I saw :)
-and did not find anything that depended on existence or non-existence
-of unnamed files.
+I just realized that the changes to t9101 should actually be part of
+the next patch (6/7), not this one. I've fixed that for the next
+re-roll.
