@@ -2,115 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE9361F453
-	for <e@80x24.org>; Fri,  5 Oct 2018 12:40:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F5CB1F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 12:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728134AbeJETj0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 15:39:26 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:51072 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727701AbeJETj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 15:39:26 -0400
-Received: by mail-wm1-f41.google.com with SMTP id s12-v6so1752554wmc.0
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 05:40:52 -0700 (PDT)
+        id S1728181AbeJETrq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 15:47:46 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38768 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728118AbeJETrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 15:47:46 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 193-v6so1815946wme.3
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 05:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Xip45j15EPafa2aCV54zYgL0U24uUp9YsrYhm3a8grU=;
-        b=ByA2iTH/TArl3J9vBB3Odb33H+m6IQrytSDidax4pTMPhMf1pFQJal/j/yFF20Qshn
-         JCXA2hT0wgYyPYZPuk5fLgsvBBsKciywhWKLYUD3Z82s9rjy5ORuqkG8HH5xVmUOU7a7
-         XMN+b5OksZt4F453rBRK5CQKqT/2p7KVvSzWjqCoE6GhOnp+Ww2CYY22ddjVAeicXeoq
-         nSgF21S89DzH8P5yJi4Whg6txn2dEP89xGOre2HJU6m6SiUM5eEtBvenorXTbfOfcApY
-         5W/L8nSsOIS7rlm/X2fMi0R+Zkr+5wNiBsFsVwvZIMiRXa4OxEp1a2Ortr6Ykd/llqTE
-         pLJQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=QHQQmqW4HEbMPttLhIE86T2YejU4ORZ7yEDgVOatSlU=;
+        b=cpgyTu6BhE3fvVvvbgqDVp09Pprh+d4JX2srE/he42M7iSWgCEyyvj/YoxIthW65HG
+         o6JfGEwJWv6nlDUul7Dqw0YCeei2Pc5RtLazz7OqpJ8gHozCX5VlTKzmW0iEX1nDxNQy
+         qRHMYJ8g+zVX7ok5tMFrKGiqFa8k/DQgUyV4t2vfU4WULwr1Seh0/oXpZhELaQ5rzHqV
+         bsOB41JBDV47VUzUytFXNf3z3GrJG/CWqA6ad24xwvku9gU03q22mqKmucRflqQqUe9o
+         IFQ3Jmc9kpPpfeiN9JgMy4WQzNWW7L2UT3awAzv7HCGZ2Yiq0qpJZHmyihJuXhSbGpCc
+         qsEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Xip45j15EPafa2aCV54zYgL0U24uUp9YsrYhm3a8grU=;
-        b=ue12nn2Zm7s3fQsunj33i2gS4MGWSVh2ptWIBwStxKhirHRbWTrU6KFWoUMl/2Cudx
-         peT3EZ2UKblEWz94LHkq/ixGRtSXmm5zV+LbEimvGlD3hHEsP72oGXhk5ejsP58cHYfk
-         ZO9ludZJdQrNkx0PamrY8MsdDKjc4ubOQkcQp141E0W09/yl6LHXrSqnHrJMjxSXx0jW
-         sho0Re8y6U5rxDTnxagAkPFDzY6Z/PuzAHhTn6NOtyI4kfCUQRbLL2kCVVqHur9hJXjt
-         zW0n7+f1SWxxFN2FLTa20VB63y1Lh5CmD8ssChVSJbXfxTc2NGJhFSByJ4dWPZbSQiyx
-         7RtA==
-X-Gm-Message-State: ABuFfohAJHRunRizfoYp0zQwwJr136GotK/ASHQ4tdUFummUci97aKpv
-        o/ZParqDdV+tXncLi1cKZ/o=
-X-Google-Smtp-Source: ACcGV63Fgt1Y+5EjqpbixMM7Yp/Lg0t9/Sir76anrf5FFzmFv4dry0DgAE7NlTtetHF3/X2x2WcHSg==
-X-Received: by 2002:a1c:e386:: with SMTP id a128-v6mr8322650wmh.106.1538743251776;
-        Fri, 05 Oct 2018 05:40:51 -0700 (PDT)
-Received: from localhost (x4d0c6f69.dyn.telefonica.de. [77.12.111.105])
-        by smtp.gmail.com with ESMTPSA id a18sm5920836wrx.55.2018.10.05.05.40.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Oct 2018 05:40:50 -0700 (PDT)
-Date:   Fri, 5 Oct 2018 14:40:48 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] coccicheck: process every source file at once
-Message-ID: <20181005124048.GT23446@localhost>
-References: <20181002200710.15721-1-jacob.e.keller@intel.com>
- <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
- <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=QHQQmqW4HEbMPttLhIE86T2YejU4ORZ7yEDgVOatSlU=;
+        b=AJkM06qWRDNbwlsyFA/4fnrHwDJmp0Cuhza1o0p+CwSJye9oR7tlhqSV9zEYrh5Ilb
+         6Tp+K4xVyHRs92Sb9yghFSh6ibgZK4NhAIp12k4B3QKE+VK3nIkqRPcRT1eean8MHes7
+         WHjXQ+l9YX2Q2Fq4pbfEvFY5J91qMmSHEfDlfw1NymXOaLyCW4p5itpEQVWgaS+qn4Vl
+         h2JZdJTkN4Klp2LQghjSiDdc3mt3pY3GMhE4Rx+YIcsY1Wv3F3A/Xry6FaYF9MjXYx1H
+         fF+7CxrmjSLQcXtIvdVzo73Jysrc4TTQXQ99p6NxpJTdOOHnsUJagN7oLkmQJwbi6Ov0
+         xaHw==
+X-Gm-Message-State: ABuFfogSy+Ygl9y3+C+fYO4Xh9TMXXglxMDY/nKypqjq9MLkL0hhWsTw
+        11lwXDt2fmTfnBwFigf3c5c=
+X-Google-Smtp-Source: ACcGV62Gb3WGqAUHkqfDqJn6UKeg9K2GClg/JC75SYBOjiWmeRlHWJqmDhaPFpyUEP9si1YUM299lg==
+X-Received: by 2002:a1c:578c:: with SMTP id l134-v6mr8126983wmb.135.1538743749850;
+        Fri, 05 Oct 2018 05:49:09 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id 12-v6sm2313886wms.11.2018.10.05.05.49.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 05 Oct 2018 05:49:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        Christoph Berg <myon@debian.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] grep: provide a noop --recursive option
+References: <20180929140132.GA31238@msg.df7cb.de>
+        <20180929145527.23444-1-avarab@gmail.com>
+        <xmqq8t3k9qjs.fsf@gitster-ct.c.googlers.com>
+        <ffc574a9-cf78-2dd5-084a-a6005547d363@web.de>
+        <xmqqmurszu2d.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqmurszu2d.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 05 Oct 2018 14:49:07 +0200
+Message-ID: <87h8i0h83g.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 04, 2018 at 07:17:47PM -0700, Jacob Keller wrote:
-> Junio, do you want me to update the commit message on my side with the
-> memory concerns? Or could you update it to mention memory as a noted
-> trade off.
 
-We have been running 'make -j2 coccicheck' in the static analysis
-build job on Travis CI, which worked just fine so far.  The Travis CI
-build environments have 3GB of memory available [1], but, as shown in
-[2], with this patch the memory consumption jumps up to about
-1.3-1.8GB for each of those jobs.  So with two parallel jobs we will
-very likely bump into this limit.
+On Fri, Oct 05 2018, Junio C Hamano wrote:
 
-So this patch should definitely change that build script to run only a
-single job.
+> René Scharfe <l.s.r@web.de> writes:
+>
+>>
+>> Recognize -r and --recursive as synonyms for --max-depth=-1 for
+>> compatibility with GNU grep; it's still the default for git grep.
+>>
+>> This also adds --no-recursive as synonym for --max-depth=0 for free,
+>> which is welcome for completeness and consistency.
+>>
+>> Fix the description for --max-depth, while we're at it -- negative
+>> values other than -1 actually disable recursion, i.e. they are
+>> equivalent to --max-depth=0.
+>> ...
+>> diff --git a/builtin/grep.c b/builtin/grep.c
+>> index 601f801158..f6e127f0bc 100644
+>> --- a/builtin/grep.c
+>> +++ b/builtin/grep.c
+>> @@ -811,6 +811,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>>  			GREP_BINARY_NOMATCH),
+>>  		OPT_BOOL(0, "textconv", &opt.allow_textconv,
+>>  			 N_("process binary files with textconv filters")),
+>> +		OPT_SET_INT('r', "recursive", &opt.max_depth,
+>> +			    N_("search in subdirectories (default)"), -1),
+>
+> Wow.
+>
+> I didn't think of this trick to let OPT_SET_INT() to grok --no-* and
+> set the variable to 0.  Being able to do this without a custom
+> callback is certainly very nice.
+>
+> The patch looks good.
 
-
-1 - https://docs.travis-ci.com/user/common-build-problems/#my-build-script-is-killed-without-any-error
-2 - https://public-inbox.org/git/20181003101658.GM23446@localhost/
-
-
-> > >  Makefile | 6 ++----
-> > >  1 file changed, 2 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/Makefile b/Makefile
-> > > index df1df9db78da..da692ece9e12 100644
-> > > --- a/Makefile
-> > > +++ b/Makefile
-> > > @@ -2715,10 +2715,8 @@ endif
-> > >  %.cocci.patch: %.cocci $(COCCI_SOURCES)
-> > >         @echo '    ' SPATCH $<; \
-> > >         ret=0; \
-> > > -       for f in $(COCCI_SOURCES); do \
-> > > -               $(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
-> > > -                       { ret=$$?; break; }; \
-> > > -       done >$@+ 2>$@.log; \
-> > > +       $(SPATCH) --sp-file $< $(COCCI_SOURCES) $(SPATCH_FLAGS) >$@+ 2>$@.log; \
-> > > +       ret=$$?; \
-> > >         if test $$ret != 0; \
-> > >         then \
-> > >                 cat $@.log; \
-> > > --
-> > > 2.18.0.219.gaf81d287a9da
-> > >
+FWIW I'm not going to carry this series forward, I wrote it more as a
+"here's how this could be done". But if Christoph / René wants to hack
+on it...
