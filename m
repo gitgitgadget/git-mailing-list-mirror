@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BBFF1F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 21:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 885DD1F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 21:31:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728572AbeJFEcW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Oct 2018 00:32:22 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:52110 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725896AbeJFEcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Oct 2018 00:32:22 -0400
-Received: by mail-pf1-f201.google.com with SMTP id b22-v6so10592330pfc.18
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 14:31:48 -0700 (PDT)
+        id S1728595AbeJFEcY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Oct 2018 00:32:24 -0400
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:41749 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725896AbeJFEcY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Oct 2018 00:32:24 -0400
+Received: by mail-yw1-f74.google.com with SMTP id d23-v6so8280774ywd.8
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 14:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ZKuKNSP057nSvDjXzFGLi35kG3kKSmLWoYm+UknR7i4=;
-        b=Ta+LYlGTa9gUOrT/zjY0wKLWckYqNP4zSbuGGItFDKJfo656GnbBzOBvb3SsUPSWkM
-         pewm4dAmHLYaYfYMc6w2uPhkHQH4jMk6rR9zGY1wRZsURqBpPYpOyoozfmeM6+p+kMxW
-         8akh+GgLbL9GCinNtaJYUzihgeyoYicOKpcAU8Ij4RH3RNFniLGGOUfTkGa3BJDOYEc2
-         XHl3KANf0nLLctuWlSwzd2ajA5ym+QB0j5RR45lO77InmQEmsb7whWctbtPocEaoUj1B
-         X09zJWA5AIcDKc+gokAlvL4oZUbI/HTeFdGdVvFT/kAsxcdHStI7yPi65Xksi4pyPsVz
-         M7yw==
+        bh=eo+qxEhYTUv3+lsEELI+YrG0h/e6PzpHh4BhzyK/WVc=;
+        b=ETYmtsedM9mqSAX+wVOWfEJmpcRlDSPUgT2ISTsO96hzXPzH/uXklVb3JCU01TsvhM
+         8oedMY16g89zj3LaFUKDbEkkuhoQbjtpl8JTIrj61GCCBruyjMP+akeI9Wj4t4NE5zC7
+         7Doy4I5p1+gQDlp+8V20CfxSASGOeVJOYQlRzvGfFBXLy+j8yts2m1PdpeNaVK8YNclZ
+         W/nXsrqsEKio9Zk1lK5ZjjBNe3BbxePv2y1C+yoAn5S2lWbwisUHhu4YjWQWvIyhoNiw
+         RpO8KiCvyUHbIdKgilzsTogw5Lqm3RDqjZZVyC5cPz33WcvPkn2Dx3gl+zXvXWb2K8Fs
+         K0yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ZKuKNSP057nSvDjXzFGLi35kG3kKSmLWoYm+UknR7i4=;
-        b=UUEmEYIcckiJaMlwU7MlsoJR2LgTOgc8YDEkwtCo0EILVLOyQM1tUMILG5aQ8vC1Ur
-         D3+kfkFaVZM0vtSzjIuA76CmQTDyKCQmZ+iaiv6/iM+FG5NAubNb/XdT9aa/nMQ1/ayM
-         bmM9kkcayCPLjNv7aFjygcDsz5GQMzh0dJB2/sR2sR++zzT6GCS7f+5KQBxTG/rluccE
-         pozcZxrfgivRcM6DsmDz3fZ2UxUdC6bCmjRaTHRRJQTgUlIhVlnO2ITcXomkUlF9/ej5
-         ALzVT2WR82Lf3TqOKDqKmNSByTssSFrSlHGW9GUjHPe4kicKgjl2st1yYIEA2YQsGHwt
-         /J9g==
-X-Gm-Message-State: ABuFfogpW/aWoln2M3Cx9ASDQcoHc71R8Du3CXM1feHf8qu5U8EbVbr8
-        Q/ug+P49EWm2KrQrEKX6Mh3HoDbuBfcAQgFhKx7VPFL2q6MBHbVBYQXRH/g8D2MqBRv5T0fiUrr
-        O3QKOxrKoLxKX/5n49lZXc3W1tPvPXFTjISJaNWy6ZHjH5nuLoM3Zj0qRxw0=
-X-Google-Smtp-Source: ACcGV61J1dSRqOIu4XtjCMs+rXVgIjPusly0LV9uQgho3260hfd80jTE7vQI6EpH4+X8naqvFSUePZQQ5Jj3
-X-Received: by 2002:a62:4853:: with SMTP id v80-v6mr6173842pfa.10.1538775107597;
- Fri, 05 Oct 2018 14:31:47 -0700 (PDT)
-Date:   Fri,  5 Oct 2018 14:31:24 -0700
+        bh=eo+qxEhYTUv3+lsEELI+YrG0h/e6PzpHh4BhzyK/WVc=;
+        b=XhFPhAGj9bTYYNKRBw/SMmiD16u0BLF+da78iCHYwYPBk9/outfnfQv2JoOYGsfMD8
+         rXVndkINTcSoopHBisNQUauv8ImGkYfEe7TAFKTjTP91FOLBobe2AMOjoB29XRX5iT9q
+         UVl7MDposbVoHOrYV2Y0kFsq8Q9QzzYCi37kFqlYeo48XRDW51H2dX9lzPZRMqHHdMvf
+         5ST1XQV9Yv4Q0aIu8RoFaYc4g8QibvuMYumyUtL4VgtyxVcPICCkf8SSw0JdhHg6MAsw
+         k/vNJ3ARsRiVwnsVB9o+7AoG3+acxi8VqzT1+hQj5Ar3hjctbcp2Qt97/4R+Y52rWBk8
+         sLwA==
+X-Gm-Message-State: ABuFfoi3gny9l6vFQj8EvguLrpRmhtuvmQVi0p4mB7WN5V6FydfRQV9P
+        GxwuMXIJkn4ubgZNKv+DWRE79JNBrgnBerfGG/ywBKxHjf0RHFx+XJNwKCZTJTAIcZ25gbZbbbw
+        UAOCCF1acpvyxvDT9HQSGfWhzASI3XogVrZKECO0C56byM4wVMpEfgdFBdks=
+X-Google-Smtp-Source: ACcGV61idjskI2uLtfqVa30PecLJxgbzbU6qbHUJyZYItVWc4IQL6pXalHBgqZoM2H1H3VMUqIuFKgw00Y8A
+X-Received: by 2002:a25:bdc8:: with SMTP id g8-v6mr7943362ybk.101.1538775110120;
+ Fri, 05 Oct 2018 14:31:50 -0700 (PDT)
+Date:   Fri,  5 Oct 2018 14:31:25 -0700
 In-Reply-To: <cover.1538774738.git.matvore@google.com>
-Message-Id: <9ef4d3ada1f9ce89abd529c83137625469eaf920.1538774738.git.matvore@google.com>
+Message-Id: <5b337881c3b6cf0f7a9483e578f613f59c609c44.1538774738.git.matvore@google.com>
 Mime-Version: 1.0
 References: <cover.1533854545.git.matvore@google.com> <cover.1538774738.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v11 5/8] revision: mark non-user-given objects instead
+Subject: [PATCH v11 6/8] list-objects-filter: use BUG rather than die
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, sbeller@google.com,
@@ -65,165 +65,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, list-objects.c incorrectly treats all root trees of commits
-as USER_GIVEN. Also, it would be easier to mark objects that are
-non-user-given instead of user-given, since the places in the code
-where we access an object through a reference are more obvious than
-the places where we access an object that was given by the user.
+In some cases in this file, BUG makes more sense than die. In such
+cases, a we get there from a coding error rather than a user error.
 
-Resolve these two problems by introducing a flag NOT_USER_GIVEN that
-marks blobs and trees that are non-user-given, replacing USER_GIVEN.
-(Only blobs and trees are marked because this mark is only used when
-filtering objects, and filtering of other types of objects is not
-supported yet.)
-
-This fixes a bug in that git rev-list behaved differently from git
-pack-objects. pack-objects would *not* filter objects given explicitly
-on the command line and rev-list would filter. This was because the two
-commands used a different function to add objects to the rev_info
-struct. This seems to have been an oversight, and pack-objects has the
-correct behavior, so I added a test to make sure that rev-list now
-behaves properly.
+'return' has been removed following some instances of BUG since BUG does
+not return.
 
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- list-objects.c                      | 31 +++++++++++++++++------------
- revision.c                          |  1 -
- revision.h                          | 11 ++++++++--
- t/t6112-rev-list-filters-objects.sh | 12 +++++++++++
- 4 files changed, 39 insertions(+), 16 deletions(-)
+ list-objects-filter.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/list-objects.c b/list-objects.c
-index 243192af5..7a1a0929d 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -53,7 +53,7 @@ static void process_blob(struct traversal_context *ctx,
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index a0ba78b20..5f8b1a002 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -44,8 +44,7 @@ static enum list_objects_filter_result filter_blobs_none(
  
- 	pathlen = path->len;
- 	strbuf_addstr(path, name);
--	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn)
-+	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn)
- 		r = ctx->filter_fn(LOFS_BLOB, obj,
- 				   path->buf, &path->buf[pathlen],
- 				   ctx->filter_data);
-@@ -120,17 +120,19 @@ static void process_tree_contents(struct traversal_context *ctx,
- 				continue;
- 		}
+ 	switch (filter_situation) {
+ 	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
  
--		if (S_ISDIR(entry.mode))
--			process_tree(ctx,
--				     lookup_tree(the_repository, entry.oid),
--				     base, entry.path);
-+		if (S_ISDIR(entry.mode)) {
-+			struct tree *t = lookup_tree(the_repository, entry.oid);
-+			t->object.flags |= NOT_USER_GIVEN;
-+			process_tree(ctx, t, base, entry.path);
-+		}
- 		else if (S_ISGITLINK(entry.mode))
- 			process_gitlink(ctx, entry.oid->hash,
- 					base, entry.path);
--		else
--			process_blob(ctx,
--				     lookup_blob(the_repository, entry.oid),
--				     base, entry.path);
-+		else {
-+			struct blob *b = lookup_blob(the_repository, entry.oid);
-+			b->object.flags |= NOT_USER_GIVEN;
-+			process_blob(ctx, b, base, entry.path);
-+		}
- 	}
- }
+ 	case LOFS_BEGIN_TREE:
+ 		assert(obj->type == OBJ_TREE);
+@@ -102,8 +101,7 @@ static enum list_objects_filter_result filter_blobs_limit(
  
-@@ -171,7 +173,7 @@ static void process_tree(struct traversal_context *ctx,
- 	}
+ 	switch (filter_situation) {
+ 	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
  
- 	strbuf_addstr(base, name);
--	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn)
-+	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn)
- 		r = ctx->filter_fn(LOFS_BEGIN_TREE, obj,
- 				   base->buf, &base->buf[baselen],
- 				   ctx->filter_data);
-@@ -185,7 +187,7 @@ static void process_tree(struct traversal_context *ctx,
- 	if (!failed_parse)
- 		process_tree_contents(ctx, tree, base);
+ 	case LOFS_BEGIN_TREE:
+ 		assert(obj->type == OBJ_TREE);
+@@ -208,8 +206,7 @@ static enum list_objects_filter_result filter_sparse(
  
--	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn) {
-+	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn) {
- 		r = ctx->filter_fn(LOFS_END_TREE, obj,
- 				   base->buf, &base->buf[baselen],
- 				   ctx->filter_data);
-@@ -301,8 +303,11 @@ static void do_traverse(struct traversal_context *ctx)
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
- 		 */
--		if (get_commit_tree(commit))
--			add_pending_tree(ctx->revs, get_commit_tree(commit));
-+		if (get_commit_tree(commit)) {
-+			struct tree *tree = get_commit_tree(commit);
-+			tree->object.flags |= NOT_USER_GIVEN;
-+			add_pending_tree(ctx->revs, tree);
-+		}
- 		ctx->show_commit(commit, ctx->show_data);
+ 	switch (filter_situation) {
+ 	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
  
- 		if (ctx->revs->tree_blobs_in_commit_order)
-diff --git a/revision.c b/revision.c
-index de4dce600..72d48a17f 100644
---- a/revision.c
-+++ b/revision.c
-@@ -175,7 +175,6 @@ static void add_pending_object_with_path(struct rev_info *revs,
- 		strbuf_release(&buf);
- 		return; /* do not add the commit itself */
- 	}
--	obj->flags |= USER_GIVEN;
- 	add_object_array_with_path(obj, name, &revs->pending, mode, path);
- }
+ 	case LOFS_BEGIN_TREE:
+ 		assert(obj->type == OBJ_TREE);
+@@ -389,7 +386,7 @@ void *list_objects_filter__init(
+ 	assert((sizeof(s_filters) / sizeof(s_filters[0])) == LOFC__COUNT);
  
-diff --git a/revision.h b/revision.h
-index 5910613cb..83e164039 100644
---- a/revision.h
-+++ b/revision.h
-@@ -21,9 +21,16 @@
- #define SYMMETRIC_LEFT	(1u<<8)
- #define PATCHSAME	(1u<<9)
- #define BOTTOM		(1u<<10)
--#define USER_GIVEN	(1u<<25) /* given directly by the user */
-+/*
-+ * Indicates object was reached by traversal. i.e. not given by user on
-+ * command-line or stdin.
-+ * NEEDSWORK: NOT_USER_GIVEN doesn't apply to commits because we only support
-+ * filtering trees and blobs, but it may be useful to support filtering commits
-+ * in the future.
-+ */
-+#define NOT_USER_GIVEN	(1u<<25)
- #define TRACK_LINEAR	(1u<<26)
--#define ALL_REV_FLAGS	(((1u<<11)-1) | USER_GIVEN | TRACK_LINEAR)
-+#define ALL_REV_FLAGS	(((1u<<11)-1) | NOT_USER_GIVEN | TRACK_LINEAR)
+ 	if (filter_options->choice >= LOFC__COUNT)
+-		die("invalid list-objects filter choice: %d",
++		BUG("invalid list-objects filter choice: %d",
+ 		    filter_options->choice);
  
- #define DECORATE_SHORT_REFS	1
- #define DECORATE_FULL_REFS	2
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index efe5a2467..ccbc64413 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -30,6 +30,18 @@ test_expect_success 'verify blob:none omits all 5 blobs' '
- 	test_cmp observed expected
- '
- 
-+test_expect_success 'specify blob explicitly prevents filtering' '
-+	file_3=$(git -C r1 ls-files -s file.3 |
-+		 awk -f print_2.awk) &&
-+
-+	file_4=$(git -C r1 ls-files -s file.4 |
-+		 awk -f print_2.awk) &&
-+
-+	git -C r1 rev-list --objects --filter=blob:none HEAD $file_3 >observed &&
-+	grep -q "$file_3" observed &&
-+	test_must_fail grep -q "$file_4" observed
-+'
-+
- test_expect_success 'verify emitted+omitted == all' '
- 	git -C r1 rev-list HEAD --objects \
- 		| awk -f print_1.awk \
+ 	init_fn = s_filters[filter_options->choice];
 -- 
 2.19.0.605.g01d371f741-goog
 
