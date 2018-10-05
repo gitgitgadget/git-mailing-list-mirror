@@ -2,130 +2,293 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6501F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 18:39:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35C271F97E
+	for <e@80x24.org>; Fri,  5 Oct 2018 18:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728446AbeJFBjI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 21:39:08 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35255 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728139AbeJFBjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Oct 2018 21:39:08 -0400
-Received: by mail-wm1-f67.google.com with SMTP id e187-v6so2800079wmf.0
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 11:39:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=t9ExjtXsIFZcfIkOvOUnpFM8Fxi6TpgmoapFaAayXhM=;
-        b=A/iJWbmNH13/z5B/rX2EJto7JG61JkCKX9GNSFK/bg82LEPjclBL6mUklY/LB8fE0H
-         ziabcvHGwyini4I0rqQ/si4TKrgRTBvW7TCb0+z8FV4ODkEjuRTzI7o9/Ppf75l+LPye
-         Rr8myZ61oUJOdYuQtR9ihl0qn1mo+teeAGNsV+zSRzijIhj0Ok3sImwt/dR9Fp4+fm53
-         YmuraW+Yw4AB3ALB5xWE4EBdITrTe8raxgib4oRCHQCyRXNXsaQrWuzEMYh0Tek57cID
-         jECeBoqBy/fz5HLlsc0QtRYBAdZgrFOj+5z3vmv+p0ciQ0zuArVf7+SWflg0ksn8ClK1
-         FeQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=t9ExjtXsIFZcfIkOvOUnpFM8Fxi6TpgmoapFaAayXhM=;
-        b=trYlIQQi9/wFDDSUe2aPkTPUdW4uu8p2tS+6w8ovVikn/DO5Pgyr5nPer09CwN4uYl
-         11oVJv92UB+JGgZHXuyp2w1utVxSQAOvVGZP9ingjhIJs3i94yGEG3IDb4+gMw9sYKQv
-         /ZMZkZWjLvByHFV666oSlNfc5aIsEcjza2Mc8eE/JrvZclegizDh5KW4eRcLkhgyPJnk
-         rHAqBA2oABv300ZirUBBUXSjl78fy2PeQBbs9/Ah0Jw6PYptmIGO1haj1jWBhsn8TA8s
-         G5ddzKXAP+tbHxtDLFsVeuoiPJNxgMmghlSOzgrl1Td1o2UYauDPoa6yowt+wksNs5wy
-         9VRA==
-X-Gm-Message-State: ABuFfoj2nchUkjFHb/3WJVNN51STpOMvBP9GVf3KyEhEXlCkSsW9uRk9
-        tDivRnJJWQqg70BppDnFhBg=
-X-Google-Smtp-Source: ACcGV63AtnnGx7OBk9RXPbje05AjuXr9khEQ/x1jcRkBzJLHxW6jWnBFzr3iVkXfxF7gUtUJrqdwIA==
-X-Received: by 2002:a1c:ae08:: with SMTP id x8-v6mr8371975wme.86.1538764748553;
-        Fri, 05 Oct 2018 11:39:08 -0700 (PDT)
-Received: from localhost (x4d0c6f69.dyn.telefonica.de. [77.12.111.105])
-        by smtp.gmail.com with ESMTPSA id j6-v6sm402775wmd.29.2018.10.05.11.39.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Oct 2018 11:39:07 -0700 (PDT)
-Date:   Fri, 5 Oct 2018 20:39:04 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S1728662AbeJFBsj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 21:48:39 -0400
+Received: from mout.web.de ([212.227.15.3]:48847 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728381AbeJFBsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 21:48:39 -0400
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lzate-1fd2Bb3vH8-014mUT; Fri, 05
+ Oct 2018 20:48:30 +0200
+Received: from [192.168.178.36] ([91.20.58.167]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lzate-1fd2Bb3vH8-014mUT; Fri, 05
+ Oct 2018 20:48:30 +0200
+Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
 To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v3] coccicheck: process every source file at once
-Message-ID: <20181005183904.GV23446@localhost>
-References: <20181002200710.15721-1-jacob.e.keller@intel.com>
- <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
- <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
- <20181005124048.GT23446@localhost>
- <20181005162517.GB11254@sigill.intra.peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.10.git.gitgitgadget@gmail.com>
+ <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
+ <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
+ <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
+ <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
+ <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
+ <20181005165157.GC11254@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <dca35e44-a763-bcf0-f457-b8dab53815cf@web.de>
+Date:   Fri, 5 Oct 2018 20:48:27 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
+In-Reply-To: <20181005165157.GC11254@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181005162517.GB11254@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Provags-ID: V03:K1:tKyD8tCLwOiWfGj/FAH7mCRqvNc61Et3TAnM9x+0YibULpz8zi9
+ 9VvfyBFdnWkpR0eJMNc9ZVE/qO0+J7/k/roFZD3rmzGnuyN6VQcNrW8pk2RuS+RUjbV/wNl
+ 2cIvt1YpwRDNMGdZD8RSHF7Rfo5oAHJRSuB5s8GAjTAl0mqnULvpwINHuXBZEOVETc05Gjo
+ vbgoaFSMin7QqdCEbqjGg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Yz71LHDZjc4=:YoPNl4U+wtfBC2tQds8UPf
+ HAjtTHVEiuqRA+RxEd8ULXaWg6XudJPpJKYUAj/RRftj0PqR+dg2PqCmycujwzIRPr1aDHVLh
+ l3vfV/yKnwS0hpXWtzGqVaM1rmfOgWGXcDu2gqepdIm2mWDspWntR1iOpUtlFwxJfyKqcNzf3
+ Aj/jR34iQk2iJdeGwkJj2ZPdzsC2Tq3W+PFHttsJuGhEGyuLo5JBXRSp9Xwtz3uj6+1KfHLqz
+ EtPKXBEKqyjoTdvhS1JYbuhFAhni/H8WKJ2hP/bnoV8V6WUvvaTQ/FDMb1FRl44La+UFGg7NJ
+ KJqFBm52ZSB/Hp1/1VgxjBvuxYh8HAHve3Er07lm1r6HI09jrQ3FC/bU+qLqrZYczDRhTu3cI
+ I3rSiFUMy2KXMaLo/+ZQ/QL69x4evyI334jS7nqzqzAwlZSKI4KudNPuKNvMCPe3RI7vcE/L+
+ lP2PvvydaT2Et64VsOiq6acihBLNnuI0PwG7DkTGkYUtlE0+xoqvjAFY4+Ya7K1neD23KZpgD
+ FvXROH0x4go5dhM1ki6Lo2qKBKDC6URXxviZAgQybx75Lm2SCL1pUCqVh0zpmGWuk6l6xyJXM
+ XcCYlziT+SZHPGwsoins605hJhvb0vcTARWOg/5sGeuHObjww2jm8LPLKq5RKUNM/B4pZwYl3
+ baVebfal9yxcXGLFOCvYQ+s3tFNTSti88idxLZoML3HqtT+s8Kao1M1XaW/sXeLd07bxVzMmW
+ ESeDErusRuIbLS5wzl5wCSXmBBlhJ+49e+5fsiL9HnyfMai4Jf36yOQyWs6h20IpQiHJ1tYTr
+ EjNkLvLdrfqQMDshOHAEwTBXqF1YSFn+KBn8pgLmPralm4FNWg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 05, 2018 at 12:25:17PM -0400, Jeff King wrote:
-> On Fri, Oct 05, 2018 at 02:40:48PM +0200, SZEDER Gábor wrote:
+Am 05.10.2018 um 18:51 schrieb Jeff King:
+> On Fri, Oct 05, 2018 at 12:59:02AM +0200, René Scharfe wrote:
 > 
-> > On Thu, Oct 04, 2018 at 07:17:47PM -0700, Jacob Keller wrote:
-> > > Junio, do you want me to update the commit message on my side with the
-> > > memory concerns? Or could you update it to mention memory as a noted
-> > > trade off.
-> > 
-> > We have been running 'make -j2 coccicheck' in the static analysis
-> > build job on Travis CI, which worked just fine so far.  The Travis CI
-> > build environments have 3GB of memory available [1], but, as shown in
-> > [2], with this patch the memory consumption jumps up to about
-> > 1.3-1.8GB for each of those jobs.  So with two parallel jobs we will
-> > very likely bump into this limit.
-> > 
-> > So this patch should definitely change that build script to run only a
-> > single job.
+>> We could also do something like this to reduce the amount of manual
+>> casting, but do we want to?  (Macro at the bottom, three semi-random
+>> examples at the top.)
+>> [...]
+>> diff --git a/git-compat-util.h b/git-compat-util.h
+>> index 5f2e90932f..f9e78d69a2 100644
+>> --- a/git-compat-util.h
+>> +++ b/git-compat-util.h
+>> @@ -1066,6 +1066,18 @@ static inline void sane_qsort(void *base, size_t nmemb, size_t size,
+>>  		qsort(base, nmemb, size, compar);
+>>  }
+>>  
+>> +#define DEFINE_SORT(name, elemtype, one, two, code)			\
+>> +static int name##_compare(const void *one##_v_, const void *two##_v_)	\
+>> +{									\
+>> +	elemtype const *one = one##_v_;					\
+>> +	elemtype const *two = two##_v_;					\
+>> +	code;								\
+>> +}									\
+>> +static void name(elemtype *array, size_t n)				\
+>> +{									\
+>> +	QSORT(array, n, name##_compare);				\
+>> +}
 > 
-> It should still be a net win, since the total CPU seems to drop by a
-> factor of 3-4.
+> Interesting. When I saw the callers of this macro, I first thought you
+> were just removing the casts from the comparison function, but the real
+> value here is the matching QSORT() wrapper which provides the type
+> safety.
 
-Well, that's true when you have unlimited resources... :)  or it's
-true even then, when I have just enough resources, but not much
-contention.  After all, Coccinelle doesn't have to parse the same
-header files over and over again.  However, on Travis CI, where who
-knows how many other build jobs are running next to our static
-analysis, it doesn't seem to be the case.
+Indeed.
 
-On current master with an additional 'time' in front:
+> I'm not wild about declaring functions inside macros, just because it
+> makes tools like ctags like useful (but I have certainly been guilty of
+> it myself). I'd also worry that taking "code" as a macro parameter might
+> not scale (what happens if the code has a comma in it?)
 
-  time make --jobs=2 coccicheck
-  <...>
-  695.70user 50.27system 6:27.88elapsed 192%CPU (0avgtext+0avgdata 91448maxresident)k
-  5976inputs+2536outputs (42major+18411888minor)pagefaults 0swaps
+It works fine, as long as the comma is surrounded by parentheses, so
+function calls with more than one parameter are fine without any change.
 
-  https://travis-ci.org/szeder/git/jobs/437733874#L574
-
-With this patch, but without -j2 to fit into 3GB:
-
-  960.50user 22.59system 16:23.74elapsed 99%CPU (0avgtext+0avgdata 1606156maxresident)k
-  5976inputs+1320outputs (26major+4548440minor)pagefaults 0swaps
-
-  https://travis-ci.org/szeder/git/jobs/437734003#L575
-
-Note that both the runtime and the CPU time increased. (and RSS, of
-course)
-
-> Are we OK with saying 1.3-1.8GB is necessary to run coccicheck? That
-> doesn't feel like an exorbitant request for a developer-only tool these
-> days, but I have noticed some people on the list tend to have lousier
-> machines than I do. ;)
+> I think we can address that last part by switching the definition order.
+> Like:
 > 
-> -Peff
+>   #define DEFINE_SORT(name, elemtype, one, two) \
+>   static int name##_compare(const void *, const void *);                \
+>   static void name(elemtype *array, size_t n)                           \
+>   {                                                                     \
+> 	QSORT(array, n, name##_compare);                                \
+>   }                                                                     \
+>   static int name##_compare(const void *one##_v_, const void *two##_v_) \
+>   {                                                                     \
+> 	elemtype const *one = one##_v_;					\
+> 	elemtype const *two = two##_v_;					\
+> 
+> And then expecting the caller to do:
+> 
+>   DEFINE_SORT(foo, struct foo, a, b)
+>      /* code goes here */
+>   }
+> 
+> The unbalanced braces are nasty, though (and likely to screw up editor
+> formatting, highlighting, etc).
+
+Adding an extra pair of parentheses if needed is also not ideal, but has
+less downsides, I think.
+
+> I wonder if it would be possible to just declare the comparison function
+> with its real types, and then teach QSORT() to do a type check. That
+> would require typeof() at least, but it would be OK for the type-check
+> to be available only to gcc/clang users, I think.
+> 
+> I'm not quite sure what that type-check would look like, but I was
+> thinking something along the lines of (inside the QSORT macro):
+> 
+>   do {
+>     /* this will yield a type mismatch if fed the wrong function */
+>     int (*check)(const typeof(array), const typeof(array)) = compar;
+>     sane_qsort(array, n, sizeof(*array), n);
+>   } while (0)
+> 
+> I have no idea if that even comes close to compiling, though.
+
+If the comparison function has proper types then we need to declare a
+version with void pointer parameters as well to give to qsort(3).  I
+think using cast function pointers is undefined.  Perhaps like this?
+
+---
+ bisect.c          | 11 +++++------
+ commit-graph.c    |  8 ++++----
+ commit-reach.c    | 12 +++++++-----
+ git-compat-util.h | 14 ++++++++++++++
+ 4 files changed, 30 insertions(+), 15 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index e8b17cf7e1..1fc6278c6b 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -192,17 +192,16 @@ struct commit_dist {
+ 	int distance;
+ };
+ 
+-static int compare_commit_dist(const void *a_, const void *b_)
++static int compare_commit_dist(const struct commit_dist *a,
++			       const struct commit_dist *b)
+ {
+-	struct commit_dist *a, *b;
+-
+-	a = (struct commit_dist *)a_;
+-	b = (struct commit_dist *)b_;
+ 	if (a->distance != b->distance)
+ 		return b->distance - a->distance; /* desc sort */
+ 	return oidcmp(&a->commit->object.oid, &b->commit->object.oid);
+ }
+ 
++DEFINE_SORT(sort_by_commit_dist, struct commit_dist *, compare_commit_dist)
++
+ static struct commit_list *best_bisection_sorted(struct commit_list *list, int nr)
+ {
+ 	struct commit_list *p;
+@@ -223,7 +222,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
+ 		array[cnt].distance = distance;
+ 		cnt++;
+ 	}
+-	QSORT(array, cnt, compare_commit_dist);
++	sort_by_commit_dist(array, cnt);
+ 	for (p = list, i = 0; i < cnt; i++) {
+ 		struct object *obj = &(array[i].commit->object);
+ 
+diff --git a/commit-graph.c b/commit-graph.c
+index 7f4519ec3b..07d302fefd 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -550,13 +550,13 @@ static void write_graph_chunk_large_edges(struct hashfile *f,
+ 	}
+ }
+ 
+-static int commit_compare(const void *_a, const void *_b)
++static int commit_compare(const struct object_id *a, const struct object_id *b)
+ {
+-	const struct object_id *a = (const struct object_id *)_a;
+-	const struct object_id *b = (const struct object_id *)_b;
+ 	return oidcmp(a, b);
+ }
+ 
++DEFINE_SORT(sort_oids, struct object_id *, commit_compare)
++
+ struct packed_commit_list {
+ 	struct commit **list;
+ 	int nr;
+@@ -780,7 +780,7 @@ void write_commit_graph(const char *obj_dir,
+ 
+ 	close_reachable(&oids);
+ 
+-	QSORT(oids.list, oids.nr, commit_compare);
++	sort_oids(oids.list, oids.nr);
+ 
+ 	count_distinct = 1;
+ 	for (i = 1; i < oids.nr; i++) {
+diff --git a/commit-reach.c b/commit-reach.c
+index 2f5e592d16..496c4201af 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -527,11 +527,11 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
+ 	return is_descendant_of(commit, list);
+ }
+ 
+-static int compare_commits_by_gen(const void *_a, const void *_b)
++static int compare_commits_by_gen(const struct commit * const *ap,
++				  const struct commit * const *bp)
+ {
+-	const struct commit *a = *(const struct commit * const *)_a;
+-	const struct commit *b = *(const struct commit * const *)_b;
+-
++	const struct commit *a = *ap;
++	const struct commit *b = *bp;
+ 	if (a->generation < b->generation)
+ 		return -1;
+ 	if (a->generation > b->generation)
+@@ -539,6 +539,8 @@ static int compare_commits_by_gen(const void *_a, const void *_b)
+ 	return 0;
+ }
+ 
++DEFINE_SORT(sort_commits_by_gen, struct commit **, compare_commits_by_gen)
++
+ int can_all_from_reach_with_flag(struct object_array *from,
+ 				 unsigned int with_flag,
+ 				 unsigned int assign_flag,
+@@ -580,7 +582,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 		nr_commits++;
+ 	}
+ 
+-	QSORT(list, nr_commits, compare_commits_by_gen);
++	sort_commits_by_gen(list, nr_commits);
+ 
+ 	for (i = 0; i < nr_commits; i++) {
+ 		/* DFS from list[i] */
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5f2e90932f..2462173790 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1066,6 +1066,20 @@ static inline void sane_qsort(void *base, size_t nmemb, size_t size,
+ 		qsort(base, nmemb, size, compar);
+ }
+ 
++#define DEFINE_SORT(name, type, compare)				\
++static int compare##_void(const void *one, const void *two)		\
++{									\
++	return compare(one, two);					\
++}									\
++static void name(type base, size_t nmemb)				\
++{									\
++	const type dummy = NULL;					\
++	if (nmemb > 1)							\
++		qsort(base, nmemb, sizeof(base[0]), compare##_void);	\
++	else if (0)							\
++		compare(dummy, dummy);					\
++}
++
+ #ifndef HAVE_ISO_QSORT_S
+ int git_qsort_s(void *base, size_t nmemb, size_t size,
+ 		int (*compar)(const void *, const void *, void *), void *ctx);
+-- 
+2.19.0
