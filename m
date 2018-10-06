@@ -7,78 +7,75 @@ X-Spam-Status: No, score=-0.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 489441F97E
-	for <e@80x24.org>; Sat,  6 Oct 2018 04:28:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEE0B1F97E
+	for <e@80x24.org>; Sat,  6 Oct 2018 04:30:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727595AbeJFLa2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Oct 2018 07:30:28 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39722 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726759AbeJFLa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Oct 2018 07:30:28 -0400
-Received: by mail-wr1-f68.google.com with SMTP id 61-v6so14637052wrb.6
-        for <git@vger.kernel.org>; Fri, 05 Oct 2018 21:28:39 -0700 (PDT)
+        id S1727123AbeJFLcc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Oct 2018 07:32:32 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55160 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726759AbeJFLcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Oct 2018 07:32:32 -0400
+Received: by mail-wm1-f65.google.com with SMTP id r63-v6so3487179wma.4
+        for <git@vger.kernel.org>; Fri, 05 Oct 2018 21:30:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:date:from:to:cc:message-id;
-        bh=7VUXgIFiAuSiuO7W1qyAwJd1Tu/jYuyWTwWRjValqho=;
-        b=reaaXhrNd/16OgchNCPHK+9ON4fcCZ+a6AQbE0jpEGKddCqLX4B/yplxc1gHlFA9Cr
-         gPlHXuvyh0fzfgtmBFqXelEsvspVdKd502hLanpMSTQ7sODArd3z7nuquVR9Rv3vkt+v
-         b8uJJ9MKuHu2fKtp7c2dzfKTmE+Vp6EAih2tXhrtRL7uzjUMovLmt9mczhG3PhQXfQSo
-         W3Es19UVefqlZYm2BOV8jGTEn+4L1nX3bxtIfk2bDLTeEyD01KRaUlC7fnCD28LDeFdZ
-         Bqypfx/2P3Ek6c3RwqgdBEr8+Mw2RsTdAqZwBShIepqRmQQdENuzgLkJ7DTRI7yuneJf
-         aGxQ==
+        bh=nHzw4wto/bg/zRhNUTGZrhvmrmq6/uO2KiqoREHH8VM=;
+        b=caBeeGjOs2tGkdrCHDEY/DB53jrWv1dP0v6S9QMBPCEFQ6ZpJr3ZwbryQf8Hg+Mqly
+         0G2fHBuuVZ96E+IHvboECu10leQEmReVx4H+SxGY41hUHa8iLzePJYF68mwe6e9/Qhzf
+         8QFoEnePZMyDrA0ouVFp9Xv6WK0hHqerGvhuO/ufQHykViTetFZWndZ3Is9sBm7tbclG
+         oAiqLqwyFwCy0kslCcjGGN5mf9pWRnvDk8EHs8ubfPlRz/LgaOWJK82J/RA2c8IAq9Lb
+         TGedTDUSdyKJgl8kwcEnxRnvgilULp3Ns7LSrNVSBAOX61qDp7pplhbSag15v60cMxLM
+         H9Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:date:from:to:cc:message-id;
-        bh=7VUXgIFiAuSiuO7W1qyAwJd1Tu/jYuyWTwWRjValqho=;
-        b=j7u9l3G0QX8Ro/N57N9v/jaxcRnOacoXkPdzlHv1cOyMDaS3TOIfczolI/MZXrIKyO
-         N7f41U1gR70ispfFeeod7ByY0YjBovsZDccke+mUKouloy9cptOw+PU4b+ZuoJcLeMd+
-         /aPyBZ87Yvv5oR+/tZdvwjfz8tSXQibM4EqIXKOQ1qfPEc8ROySXoOgHypR2z5m3VY45
-         Vrv43fhjrEJlIcCV1JtSk4hpYooziWqYUEjfKDyiFVdoPB9E4njfSocGnrw6L1a08Z8V
-         y49WxFjPsoz5hHARCCHXi5Slm6wIlnrAqxxyOrwBv5lpvPmjv5x2GA5UhaF27wYRI8pA
-         2TiA==
-X-Gm-Message-State: ABuFfohvXkel94e0pauR8NcjdHbssTX1m9p3pbuDf3gm0M3JhkjtGuHB
-        HQafxSm754JHeBt/RR5p+93zJzESeBI=
-X-Google-Smtp-Source: ACcGV60snKUP+YtIgH6nfMwjSX5Ejo0q8rwrhXHa6cUlfc/dm66tDvCF0tgHNXkCyYg7uZqZPKl5+A==
-X-Received: by 2002:adf:8103:: with SMTP id 3-v6mr9895319wrm.106.1538800118901;
-        Fri, 05 Oct 2018 21:28:38 -0700 (PDT)
+        bh=nHzw4wto/bg/zRhNUTGZrhvmrmq6/uO2KiqoREHH8VM=;
+        b=ga2DjJ2rqFZ5WWtZhpFdaYyupXNXqV4Hg/AxGz3j0MTzpHw9J7aoFyzhKee8WUw6np
+         UjGc4LrB7Ao1yO/aqJilJ4nvCCf1C9sdB9dCCwoiUkgmIO/NwK6detm9Au/O3O6KuSLY
+         MXnqR4htPcOpyEnoawwmD4CIZ8j4EOYuejb+oZeV2JXD94v/zJSHvyHh5JRtYT08ybKG
+         bMvtBiFb+lafKGnXvXajSAfHELSoOs96iimEvqA2HSM+wVdE1g9xZEpbaL9lxj1/EFe0
+         K+AedVs9ZUm8jjkhPmkuzgK5bf9ZGKnNRqlVQfDnBZMwD5gqsMJtMLsIPG3sxoDvf2FI
+         Navw==
+X-Gm-Message-State: ABuFfoivpHGxqfyEUArE8fLgRZHWp/RLoH7igvDaea0YskI7IrZwkAK6
+        TlQpx38FLhCR2zg5p86omcvlW53Le1E=
+X-Google-Smtp-Source: ACcGV61Hyc/vB+xJunSLHA3o+zDByjFlXsVamI8P7742mqR74jB8+oAYshxxpDxIixcAJ1aEPiFi+w==
+X-Received: by 2002:a1c:b604:: with SMTP id g4-v6mr463960wmf.111.1538800242293;
+        Fri, 05 Oct 2018 21:30:42 -0700 (PDT)
 Received: from gmail.com (ip114.ip-142-44-232.net. [142.44.232.114])
-        by smtp.gmail.com with ESMTPSA id 140-v6sm5939436wmx.34.2018.10.05.21.28.37
+        by smtp.gmail.com with ESMTPSA id x186-v6sm5338494wmx.24.2018.10.05.21.30.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Oct 2018 21:28:38 -0700 (PDT)
-Subject: [PATCH] docs: graph: Remove unnecessary `graph_update()' call
-Date:   Sat, 06 Oct 2018 04:20:16 -0000
+        Fri, 05 Oct 2018 21:30:41 -0700 (PDT)
+Subject: [PATCH] docs: typo: s/isimilar/similar/
+Date:   Sat, 06 Oct 2018 04:20:22 -0000
 From:   Michael Witten <mfwitten@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Message-ID: <3dda7b8f75854716ac6b205ca05a7656-mfwitten@gmail.com>
+Message-ID: <a31311c7d5ba4dd18e0d0d70e9975e4f-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sample code calls `get_revision()' followed by `graph_update()',
-but the documentation and source code indicate that `get_revision()'
-already calls `graph_update()' for you.
-
 Signed-off-by: Michael Witten <mfwitten@gmail.com>
 ---
- Documentation/technical/api-history-graph.txt | 1 -
- 1 file changed, 1 deletion(-)
+ Documentation/git-rebase.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/technical/api-history-graph.txt b/Documentation/technical/api-history-graph.txt
-index 18142b6d29..d9fd98d435 100644
---- a/Documentation/technical/api-history-graph.txt
-+++ b/Documentation/technical/api-history-graph.txt
-@@ -115,7 +115,6 @@ struct commit *commit;
- struct git_graph *graph = graph_init(opts);
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 1fbc6ebcde..432baabe33 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -954,7 +954,7 @@ command fails, it is rescheduled immediately, with a helpful message how
+ to proceed.
  
- while ((commit = get_revision(opts)) != NULL) {
--	graph_update(graph, commit);
- 	while (!graph_is_commit_finished(graph))
- 	{
- 		struct strbuf sb;
+ The `reset` command resets the HEAD, index and worktree to the specified
+-revision. It is isimilar to an `exec git reset --hard <label>`, but
++revision. It is similar to an `exec git reset --hard <label>`, but
+ refuses to overwrite untracked files. If the `reset` command fails, it is
+ rescheduled immediately, with a helpful message how to edit the todo list
+ (this typically happens when a `reset` command was inserted into the todo
 -- 
 2.18.0
 
