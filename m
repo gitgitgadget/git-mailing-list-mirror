@@ -7,31 +7,38 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82AF11F97E
-	for <e@80x24.org>; Sat,  6 Oct 2018 09:03:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5163F1F97E
+	for <e@80x24.org>; Sat,  6 Oct 2018 09:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbeJFQCb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Oct 2018 12:02:31 -0400
-Received: from mail.ao2.it ([92.243.12.208]:45982 "EHLO ao2.it"
+        id S1727762AbeJFQVk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Oct 2018 12:21:40 -0400
+Received: from mail.ao2.it ([92.243.12.208]:46017 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727667AbeJFQCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Oct 2018 12:02:30 -0400
+        id S1727703AbeJFQVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Oct 2018 12:21:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=pIjx3HiOmWzGnQirUtItbYUu1tK62hr11nnJOyUp/X4=;
-        b=lftcw6ODY3KzBbQ2DfGXjb80qBKrsdotd9OYJbLddwbPt/48g2ySxu07IwqerrcFk4OlstZ+VitWTTfmATCqhcP9Lg6/kqHWVpKVr0W+VMwCGMlZmxwXkzS/v1FHn4XcQxyz1fb/KO3oJxsKREEP8e8pvOr8lFQPgqFxmcsEmF1UDaJU+cN7KFS8GiQyxCPdspNxKm/NKu5vb4jUerz4lh74O6BPrDRYa+DNhQg0PDBUVuQcNS6M5zWSSr9IHdh3qQfTSiA4PrRz10sGCpDM5uDJH/ubeordJPUryySsvdWRUfHh0aK8hZuVSusE+fEYy1/CZiVO6KDhJtyfBDSyhw==;
+        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=KNZUA/tH7CylR6yPsWDSqYF4ZGJ5vkFuJIhtjGCME5w=;
+        b=cQh7rVnSHAjgyPTv3LUThCPBpK2m8W/33rdxyP/yhtxbosGp403LurW/7FXbJQJEst6cUz1dAkRQ5DsrnWAbLjF9dVRNAL2PuyHnYYfVFmMzSdf5gb8hYNiLTSzi0vuvGuZa9HA0DQ29jjs/aZIcw7wcQp0AFFcoah/vcSeFWO4j9ZB58OHbqDear1sTMFJDS+jYEeGHaLarl8IaYOaWNJBorpQptHKtZ8joEcVMYqG5lbUJzSZx4cKOLD5p5aF7WwHxQkH8X0pu75fF2CqWf6eq9ni3Kn4aT5oO4IFwo59XjipgZVb6JH0gUlwyP64rc1ojpEelmmijstQG/2k06A==;
 Received: from localhost ([::1] helo=jcn.localdomain)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1g8iOq-0006jS-Rf; Sat, 06 Oct 2018 10:57:24 +0200
-Date:   Sat, 6 Oct 2018 10:59:59 +0200
+        id 1g8ihK-0007Lk-16; Sat, 06 Oct 2018 11:16:30 +0200
+Date:   Sat, 6 Oct 2018 11:19:04 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/grep.c: remote superflous submodule code
-Message-Id: <20181006105959.47f8ccf38281d8bdd07448e7@ao2.it>
-In-Reply-To: <20181005224557.31420-1-sbeller@google.com>
-References: <20181005224557.31420-1-sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v6 08/10] submodule: add a helper to check if it is safe
+ to write to .gitmodules
+Message-Id: <20181006111904.cb45cb24e097ad86f7525fcd@ao2.it>
+In-Reply-To: <CAGZ79kbaeRVBLhYiqzisADHs+Af+c2giXcsCySAEe4jue_rWwA@mail.gmail.com>
+References: <20181005130601.15879-1-ao2@ao2.it>
+        <20181005130601.15879-9-ao2@ao2.it>
+        <CAGZ79kbaeRVBLhYiqzisADHs+Af+c2giXcsCySAEe4jue_rWwA@mail.gmail.com>
 X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
 X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
  ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
@@ -43,40 +50,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri,  5 Oct 2018 15:45:57 -0700
+On Fri, 5 Oct 2018 16:50:10 -0700
 Stefan Beller <sbeller@google.com> wrote:
 
-> In f9ee2fcdfa (grep: recurse in-process using 'struct repository',
-> 2017-08-02), we introduced a call to repo_read_gitmodules in builtin/grep
-> to simplify the submodule handling.
+> >  static int module_config(int argc, const char **argv, const char *prefix)
+> >  {
+> > +       enum {
+> > +               CHECK_WRITEABLE = 1
+> > +       } command = 0;
 > 
-> After ff6f1f564c4 (submodule-config: lazy-load a repository's .gitmodules
-> file, 2017-08-03) this is no longer necessary, but that commit did not
-> cleanup the whole tree, but just show cased the new way how to deal with
-> submodules in ls-files.
-> 
-> Cleanup the only remaining caller to repo_read_gitmodules outside of
-> submodule.c
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Can we have the default named? Then we would only use states
+> from within the enum?
 
-Not sure if I am entitled to formally ack it, but:
+The default would mean:
 
-Acked-by: Antonio Ospite <ao2@ao2.it>
+  "no command passed as a CLI *option*"
 
-> ---
-> 
-> Antonio Ospite writes:
-> > BTW, with Stefan Beller we also identified some unneeded code which
-> > could have been removed to alleviate the issue, but that would not have
-> > solved it completely; so, I am not removing the unnecessary call to
-> > repo_read_gitmodules() builtin/grep.c in this series, possibly this can
-> > become a stand-alone change.
-> 
-> Here is the stand-alone change.
->
+I copied this style from builtin/bisect--helper.c::cmd_bisect__helper()
+and it's also used in builtin/rebase--helper.c
 
-Thank you for sending it.
+I can add a name for the default enum value but I am not sure what it
+should be: NO_COMMAND_OPTION, COMMAND_DEFAULT, MODE_DEFAULT?
 
 Ciao,
    Antonio
