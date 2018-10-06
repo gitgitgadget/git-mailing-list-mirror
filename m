@@ -2,130 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B15F41F97E
-	for <e@80x24.org>; Sat,  6 Oct 2018 16:11:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C042E1F97E
+	for <e@80x24.org>; Sat,  6 Oct 2018 16:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727789AbeJFXNj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Oct 2018 19:13:39 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35550 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725266AbeJFXNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Oct 2018 19:13:39 -0400
-Received: by mail-wr1-f68.google.com with SMTP id w5-v6so16448402wrt.2
-        for <git@vger.kernel.org>; Sat, 06 Oct 2018 09:09:45 -0700 (PDT)
+        id S1727803AbeJFX1G (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Oct 2018 19:27:06 -0400
+Received: from mail-qk1-f177.google.com ([209.85.222.177]:32783 "EHLO
+        mail-qk1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725881AbeJFX1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Oct 2018 19:27:06 -0400
+Received: by mail-qk1-f177.google.com with SMTP id 84-v6so9830804qkf.0
+        for <git@vger.kernel.org>; Sat, 06 Oct 2018 09:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=RhaPtLfOQY1NFg6GbiGiPGsBKsEXgSYEGwuUUp4dY+k=;
-        b=SBpH55CxPtb9Luett8p7t8KkUCsqhJH00NUW02mRcT3QO7MkojeDKeS5ubs+Ateid1
-         047GVlwp4d8V8VT7qu7QCTUS+GU1TI9I50PAJVFPswruANYPyvgmNnvorZJZfU+yuXX9
-         yCuP4Zm7vT+Dg6FJE+X021FVo0ZXxhRQEqvmYs1VZSoJrEHauC25oube6Y44TBvH4jhw
-         j6WPsWjY8QBbfdTBcqPdpdBsD7NhcNTk891GEKMXJ9BHOGZ/IcOQDUML2RDH0VKIuxut
-         gzSEAUAe5qOzeYzz6XyWxoBgxz2/67DZDmm8XoOjnV08DSOPXzu7pdnii5Dw5WfuUu82
-         JBWw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KNcHr0pALxd2eF0OjFRDhVzX41eKlZaTQzNFWch6srU=;
+        b=tmpIFEe8W3qv5nXxGj4NhZTOsb8EfWyWRnA5pkowh5SMSb8fFKaeXQIWc0AMSkd5f7
+         B4tRLGeoWPH25unVo8KRW2xvdoMvO6B6a3aKvdaYNiZS388XmZl0m4vTdBehYj62tUej
+         WL3Axp3RGo+eO79yhrQqtFyVQnSUGzmdBATpx8HioP7Ahe3ZT+E6EbrmHtOZqxw3zk/J
+         9SzZZk2b5P/iV9ICKxo1jQVJDjKNeGhYYeQR6or4n49KQVx9GXcabOGax2nJTm0Lfnv/
+         DYrEhxiR+4szPVVmBhoOXPC4IMlJaYp2U3pzrSbVCBdGnm3+wyZ2m4I6WeXIHPwUPpSP
+         RTxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=RhaPtLfOQY1NFg6GbiGiPGsBKsEXgSYEGwuUUp4dY+k=;
-        b=cJlCL8V1RlHgjfDezXXIPROE60z5G4KuDyXVhbOvIsamkc5PYu8I+R+S9pF+oQc8Cg
-         zJhxuU6ATI3PlKp9nb6tyX7KabLPmD8phLbFxmGmxqS28eIRD2FLSeJKJ3vOFMGTKBq4
-         GJq3p5cZXfUFC6u4cFnd58xZSXjvWTI5vHqXhBANa0QbeW2vruU6tbEu8mF8tTjwleT3
-         UrZ364Q0IK6dKHke0Mt43x2BL4A3o+snm9MbVgjAtm5OKCmvMg47JhIbIutidZVlecK5
-         WjF9EYO1DWjIrn+c5k/kpXm7jnaqYwGcXubG3yIxZXvG9hLGjwlEXEkpqXA153k36Txn
-         //tA==
-X-Gm-Message-State: ABuFfogd1A5eToroM1aTTvZ3ABsJBFepuFDj5W3q1bqYyxYJDjUo/q+1
-        pQBp20H6bBSzilMIKfCwDkE=
-X-Google-Smtp-Source: ACcGV60caTjx47Z77NT+LtARr3ffkX7RhZ12qNDOf/PR1jpVyprbQmvmWzAaY5d03z1AotQBdjp/9g==
-X-Received: by 2002:adf:91e4:: with SMTP id 91-v6mr11695918wri.97.1538842184497;
-        Sat, 06 Oct 2018 09:09:44 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (eka203.neoplus.adsl.tpnet.pl. [83.21.168.203])
-        by smtp.gmail.com with ESMTPSA id z184-v6sm7901216wmz.0.2018.10.06.09.09.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 06 Oct 2018 09:09:42 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@microsoft.com>
-Subject: Re: [PATCH 0/1] v2.19.0-rc1 Performance Regression in 'git merge-base'
-References: <pull.28.git.gitgitgadget@gmail.com>
-Date:   Sat, 06 Oct 2018 18:09:40 +0200
-In-Reply-To: <pull.28.git.gitgitgadget@gmail.com> (Derrick Stolee via
-        GitGitGadget's message of "Thu, 30 Aug 2018 05:58:07 -0700 (PDT)")
-Message-ID: <865zyfys3f.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KNcHr0pALxd2eF0OjFRDhVzX41eKlZaTQzNFWch6srU=;
+        b=Z/R3fsUpPEbx5wctbIQuYw0yTSvCjAJTPB6atOjeXS9M6Kqf2nIF0J8loRZ2Fn4Hz4
+         Kb6cRqOjKebwGPwGFJQ8s1kKY+VsfuCzDNlQ3gXPG/F0PpmVpx9A+YMyY81P9NHt7htS
+         XaSmSTpckKSKiEMjyZT8r6QC55TNQxcUmLSl+JZI9wTsm3x5aK6BSHHSPWJOJaO7AbdA
+         eH3pF1sLyBhGTwmNdpMtUQC5X7yzs72YhKi9IUWwIxbkNCDiMUd362qNsOjFIdXnIEkr
+         ApGEERNnu67mjBvAhHKwa3OMLQZrlkDAAMDmN1yl8sVc25HFt31JpU9xK+PJRKgcaph/
+         GFyg==
+X-Gm-Message-State: ABuFfohrkamKr0BnoMptf0i7l6ftxjBI1XycQgxY7cVuBeBmE/Qtp/9a
+        TfAwnGDDd2+sJNaM4MZhkh7xh+6XAIP1n2LxTWY=
+X-Google-Smtp-Source: ACcGV638Ot5UH6I9Ufv6xMu4XO+sF66JngXVar7TpVo4Q5Lw5BDlkr1fHs7lJw2yjm//NvqmH2sQ/rcTVt1A1Odl1e4=
+X-Received: by 2002:a37:1067:: with SMTP id a100-v6mr12703782qkh.150.1538842988381;
+ Sat, 06 Oct 2018 09:23:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <alpine.DEB.2.21.1810061712260.2402@hadrien>
+In-Reply-To: <alpine.DEB.2.21.1810061712260.2402@hadrien>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 6 Oct 2018 18:22:57 +0200
+Message-ID: <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com>
+Subject: Re: git log -S or -G
+To:     Julia Lawall <julia.lawall@lip6.fr>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sat, Oct 6, 2018 at 5:16 PM Julia Lawall <julia.lawall@lip6.fr> wrote:
+> Git log -S or -G make it possible to find commits that have particular
+> words in the changed lines.  Sometimes it would be helpful to search for
+> words in the removed lines or in the added lines specifically.  From the
+> implementation, I had the impression that this would be easy to implement.
+> The main question would be how to allow the user to specify what is
+> wanted.
 
-> As I was testing the release candidate, I stumbled across a regression in
-> 'git merge-base' as a result of the switch to generation numbers. The com=
-mit
-> message in [PATCH 1/1] describes the topology involved, but you can test =
-it
-> yourself by comparing 'git merge-base v4.8 v4.9' in the Linux kernel. The
-> regression does not show up when running merge-base for tags at least v4.=
-9,
-> which is why I didn't see it when I was testing earlier.
-
-Strange that it happens; I'll take a look.
-
-> The solution is simple, but also will conflict with ds/reachable in next.=
- I
-> can send a similar patch that applies the same diff into commit-reach.c.
->
-> With the integration of generation numbers into most commit walks coming =
-to
-> a close [1], it will be time to re-investigate other options for
-> reachability indexes [2]. As I was digging into the issue with this
-> regression, I discovered a way we can modify our generation numbers and p=
-air
-> them with commit dates to give us a simple-to-compute, immutable
-> two-dimensional reachability index that would be immune to this regressio=
-n.
-> I will investigate that more and report back, but it is more important to
-> fix this regression now.
-
-I am interested in what you have created, especially because commit
-creation dates are imperfect indicators because of clock skew etc.
-
->
-> Thanks, -Stolee
->
-> [1] https://public-inbox.org/git/pull.25.git.gitgitgadget@gmail.com/[PATCH
-> 0/6] Use generation numbers for --topo-order
->
-> [2] https://public-inbox.org/git/86muxcuyod.fsf@gmail.com/[RFC] Other chu=
-nks
-> for commit-graph, part 2 - reachability indexes
-
-Since then I have found few more possible approaches:
-- working with repository metagraph[1], where all chains of commits were
-  replaced by edge, perhaps together with DAG Reduction[2] boosting
-  framework on this metagraph
-- using FELINE-like index (the Graph+Label approch, also known as online
-  search), and for those where this index have false results, use Labels
-  only approach[3]
-
-[1] Xian Tang et. al., "An Optimized Labeling Scheme for Reachability
-    Queries", CMC, vol.55, no.2, pp.267-283, 2018
-[2] Marco Biazzini, Martin Monperrus, Benoit Baudry "On Analyzing the
-    Topology of Commit Histories in Decentralized Version Control
-    Systems", ICSME 2014 (conference paper)
-[3] Junfeng Zhou et. al., "Accelerating reachability query processing
-    based on DAG reduction", The VLDB Journal (2018) 27: 271
-
---
-Jakub Nar=C4=99bski
+As far as I know this isn't possible. The --diff-filter option is
+similar in spirit, but e.g. adding "foo" and then removing it from an
+existing file will both be covered under --diff-filter=M, so that
+isn't what you're looking for.
