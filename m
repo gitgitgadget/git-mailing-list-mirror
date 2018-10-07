@@ -2,153 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A43FE1F97E
-	for <e@80x24.org>; Sun,  7 Oct 2018 11:49:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2D991F97E
+	for <e@80x24.org>; Sun,  7 Oct 2018 13:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726402AbeJGS4H (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Oct 2018 14:56:07 -0400
-Received: from s019.cyon.net ([149.126.4.28]:44288 "EHLO s019.cyon.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726310AbeJGS4G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Oct 2018 14:56:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
-        :Date:Message-ID:References:Cc:To:From:Subject:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=r74mlhi4ZZs+Kzf25oPBzmzam1WiLgHZ/1pRBfu20M8=; b=uIr+dX2UpJHfeCrwR7UwRyTmx8
-        b1IjKSUT0TaGej4VsoT6DSP0GvL8eQjse8Kfju7D9F8YoCVNrRYGpOHITq+E4pXhU0ubp2KG9P8ll
-        6OgUZqt9PjJQ/5NG3hJYoHYRZ+1koO2iKmwtFeg0so7UYKF/ErWj/YzuPJn/nCZ3OhN4HT6REtNFg
-        iYGqSHm1mDknEZEzsulpYPWsikHEQu8/oNDkZvPzmuXzyciO5Bd7TXhnUtyGe6odf9aUSTOqzZ8zR
-        TNKDyczOya4UkCCLJho7TryIUf62rCR3JzXs8I23+v0LcPptDTQNy0twbMiA1/xz9NyH2APgDUhLA
-        iNfCsMjg==;
-Received: from [10.20.10.230] (port=41370 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1g97YV-00BxEV-Fz; Sun, 07 Oct 2018 13:49:05 +0200
-Subject: Re: [PATCH v3] coccicheck: process every source file at once
-From:   Beat Bolli <dev+git@drbeat.li>
+        id S1727951AbeJGUym (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Oct 2018 16:54:42 -0400
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:33222 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726972AbeJGUym (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Oct 2018 16:54:42 -0400
+Received: by mail-wm1-f53.google.com with SMTP id y140-v6so6912912wmd.0
+        for <git@vger.kernel.org>; Sun, 07 Oct 2018 06:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=pMzZtgaoIVDioNtxlcLQ6eovggSxaAxCUOgEBl4URno=;
+        b=Vi+CoEBQQrYkkjXhmil0qIoDnZ4HVbWx7KsoIbejn55pt+1oKj8FSlRqOIbg9eCT/o
+         0JGRP1mZyZO9PVDeCX5CN6XUNORVJTfxU/89dB3kRitvp5stizt6p/s6yDgOyt5E95KI
+         UKwDzqq9kJS1k4+rVZuPC+ZeiUYVfdqwlpYWtLp7qKh+ND2wnGKc2Rjx9wHfC/ikVWdz
+         tdCQOTg8tIaKxzAFK5Uiw4sQ1/0qffyyF7q0FHWEM9VnWINKIweL6RYQiY3LIuZFkmCg
+         CpfJwSogqBrafx0hL73Vg9e352zH/JsoUxmG/kfQliS/roFEs0e41QPr6tLaSbZ44lq9
+         o3yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=pMzZtgaoIVDioNtxlcLQ6eovggSxaAxCUOgEBl4URno=;
+        b=MAFozA/dOILdNEKBRC+iyP7vwP1EWIzFV8WtHyIzLNCD+VODNTVgYiAKD6Bq8r5XLO
+         AH6oT9k6vZeRFp5/gAfUXSC7xucJzqMq+bY5Dvm0Sn7oqhbCMxm5ZjMGNC78I2ydXciV
+         JV7wROv0XLxhCVVSVTojRNXDcOxeOMdGH489DeMLLpsvE3Q5nW+DQ9uSqtp0TEM7eNBs
+         eSIhy0F/zJHWzxREze9cWpwFVX9TOAzz9x+Hvr5aeMKl+z3OXPlahOUU7AEe2toV3zED
+         lJNpioQvQukZ5Uty8lLnTmY59oIJSBaZIXV9kD1rMOww3eDLbrdkqt3iKV6Kz0zXBZTI
+         6H0w==
+X-Gm-Message-State: ABuFfoiZDRzAvnWLCmqbGlaY9IVQBCNm9rcUeqffb7YvwTkPdRHwUEtO
+        vFGg9Pn1zcyCVnM1cELamwAbEB+wDiE=
+X-Google-Smtp-Source: ACcGV60wUTWLyz7EiimwqxJvCaeP3/5z02W685qbL8VK/eL6wZWHs6+488QzHu0JHqs9W5Qxkf0xpw==
+X-Received: by 2002:a1c:9cc9:: with SMTP id f192-v6mr13354174wme.135.1538920044093;
+        Sun, 07 Oct 2018 06:47:24 -0700 (PDT)
+Received: from imac.localdomain ([85.193.139.174])
+        by smtp.gmail.com with ESMTPSA id 62-v6sm16078597wra.48.2018.10.07.06.47.23
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 07 Oct 2018 06:47:23 -0700 (PDT)
+From:   Era <aigner.erik@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.0 \(3445.100.39\))
+Subject: Diff Range Underflow
+Message-Id: <ED62D6B5-9227-4FC9-AB77-7DB4D3835501@gmail.com>
+Date:   Sun, 7 Oct 2018 15:47:22 +0200
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-Newsgroups: gmane.comp.version-control.git
-References: <20181002200710.15721-1-jacob.e.keller@intel.com>
- <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
- <4f705fbc-e1a3-8e27-02ed-39a5c3dcfdcc@drbeat.li>
-Message-ID: <7aa8efab-66f6-e2a5-9196-6d68872e5e34@drbeat.li>
-Date:   Sun, 7 Oct 2018 13:49:02 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <4f705fbc-e1a3-8e27-02ed-39a5c3dcfdcc@drbeat.li>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Mailer: Apple Mail (2.3445.100.39)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07.10.18 13:36, Beat Bolli wrote:
-> On 02.10.18 22:18, Jacob Keller wrote:
->> On Tue, Oct 2, 2018 at 1:07 PM Jacob Keller <jacob.e.keller@intel.com> wrote:
->>>
->>> From: Jacob Keller <jacob.keller@gmail.com>
->>>
->>> make coccicheck is used in order to apply coccinelle semantic patches,
->>> and see if any of the transformations found within contrib/coccinelle/
->>> can be applied to the current code base.
->>>
->>> Pass every file to a single invocation of spatch, instead of running
->>> spatch once per source file.
->>>
->>> This reduces the time required to run make coccicheck by a significant
->>> amount of time:
->>>
->>> Prior timing of make coccicheck
->>>   real    6m14.090s
->>>   user    25m2.606s
->>>   sys     1m22.919s
->>>
->>> New timing of make coccicheck
->>>   real    1m36.580s
->>>   user    7m55.933s
->>>   sys     0m18.219s
->>>
->>> This is nearly a 4x decrease in the time required to run make
->>> coccicheck. This is due to the overhead of restarting spatch for every
->>> file. By processing all files at once, we can amortize this startup cost
->>> across the total number of files, rather than paying it once per file.
->>>
->>> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->>> ---
->>
->> Forgot to add what changed. I dropped the subshell and "||" bit around
->> invoking spatch.
->>
->> Thanks,
->> Jake
->>
->>
->>>  Makefile | 6 ++----
->>>  1 file changed, 2 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/Makefile b/Makefile
->>> index df1df9db78da..da692ece9e12 100644
->>> --- a/Makefile
->>> +++ b/Makefile
->>> @@ -2715,10 +2715,8 @@ endif
->>>  %.cocci.patch: %.cocci $(COCCI_SOURCES)
->>>         @echo '    ' SPATCH $<; \
->>>         ret=0; \
->>> -       for f in $(COCCI_SOURCES); do \
->>> -               $(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
->>> -                       { ret=$$?; break; }; \
->>> -       done >$@+ 2>$@.log; \
->>> +       $(SPATCH) --sp-file $< $(COCCI_SOURCES) $(SPATCH_FLAGS) >$@+ 2>$@.log; \
->>> +       ret=$$?; \
->>>         if test $$ret != 0; \
->>>         then \
->>>                 cat $@.log; \
->>> --
->>> 2.18.0.219.gaf81d287a9da
->>>
-> 
-> Wouldn't the following be even simpler?
-> 
-> diff --git a/Makefile b/Makefile
-> index 5c8307b7c479..a37b2724d526 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2701,12 +2701,7 @@ endif
-> 
->  %.cocci.patch: %.cocci $(COCCI_SOURCES)
->         @echo '    ' SPATCH $<; \
-> -       ret=0; \
-> -       for f in $(COCCI_SOURCES); do \
-> -               $(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
-> -                       { ret=$$?; break; }; \
-> -       done >$@+ 2>$@.log; \
-> -       if test $$ret != 0; \
-> +       if ! $(SPATCH) --sp-file $< $(COCCI_SOURCES) $(SPATCH_FLAGS) 
->> $@+ 2>$@.log; \
+I discovered an apparent underflow when using the =E2=80=94unified=3D0 / =
+-U0 flag with git-show on a merge commit.
+Leaving the flag on its default value or 1 shows the ranges correctly.
 
-The "If !" and the output redirection should be on one line,
-obviously... Sorry about this.
+	$git --no-pager show -z --no-color --pretty=3D%x00%s%x00%b%x00 =
+-U1 3ac9cfed9ce01836dea1fee96c4eceb2df4b6878
 
-Beat
+produces a diff with the following ranges
+
+	@@@ -582,2 -599,19 +582,1 @@@ extension =
+TranslationContentViewControl
+
+changing the flag to -U0 like so
+
+	git --no-pager show -z --no-color --pretty=3D%x00%s%x00%b%x00 =
+-U0 3ac9cfed9ce01836dea1fee96c4eceb2df4b6878
+
+results in the following ranges begin output
+
+	@@@ -583,0 -600,17 +583,18446744073709551615 @@@ extension =
+TranslationContentViewControl
+
+
+Obviously this is some sort of underflow bug.
+Unfortunately I cant share the original repo or diff.
+
+
+Best regards,
+Erik
+
+
+
+
+
+
