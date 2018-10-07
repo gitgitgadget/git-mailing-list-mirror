@@ -6,94 +6,76 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271091F97E
-	for <e@80x24.org>; Sun,  7 Oct 2018 00:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59C4E1F97E
+	for <e@80x24.org>; Sun,  7 Oct 2018 00:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbeJGHxq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Oct 2018 03:53:46 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45078 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbeJGHxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Oct 2018 03:53:45 -0400
-Received: by mail-wr1-f68.google.com with SMTP id q5-v6so17041380wrw.12
-        for <git@vger.kernel.org>; Sat, 06 Oct 2018 17:48:26 -0700 (PDT)
+        id S1725877AbeJGH6b (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Oct 2018 03:58:31 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:46807 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725846AbeJGH6b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Oct 2018 03:58:31 -0400
+Received: by mail-wr1-f41.google.com with SMTP id a2-v6so9986779wrc.13
+        for <git@vger.kernel.org>; Sat, 06 Oct 2018 17:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=YcONVYaHcNROiZk7JE/JGBPUoSmsmza56+mYnVENHcA=;
-        b=g22G+gOcbOC+NrzfESTnyt1R04maiAIjpvFbViIsqxGIWIZV1cBLU4tZaalv9kHe8Y
-         phqKb45pVUdWOTVvs1ZYsyOk/4Bhx6iT9NhaCgrd4T2yXLK0+jCwlc8dgT7R8Z/Sysf4
-         mcV8gfQczv/S1VO9GaYIl9M3Twt6PzTIvIFo+sF2WnLaD1gl7/ZJvXgH2pFQvZV8ovfX
-         QnSfB6i+2Y+NceV+I87tAenkE+cJcl5N6pYUs3ppyh57vxorR5FJHaOaR5I0V9Vckpw2
-         O3QbjeyKhKM/pTPXeXdw2zyY2jNefuv1u+q9N8/tVkHVs0TovDMUivp9AxNuVEvguUsN
-         UFaQ==
+         :user-agent:mime-version;
+        bh=Szeo8LhuWZ0viukDsIEhNcCFQkSGKkVJjLVEgsMW330=;
+        b=Rm29wOJOYz2HfR3/i+Y0toNYhABNbLhNphM74RhGkBFhYH3yDyMX0MbLH/YOthhRvE
+         jdIumo0kwFP8/3lvI9z4E4zkabyOpTFJRk8XqHZFoXJu5aBBF8vSRK9CrmeO+7PA6gPh
+         a2wY7yU8iFYRAZggJCtJgiMbUwz7p835DxrNy7DST+28/ZCnq5qpRB8A3IISB1mWRZpv
+         /ggbrhO00IGXeFMAQK1rTBtOECNyxBKxllZBJ//ugXrlCdj9ReweKW1NZtFTVwAwNQ7g
+         PleWVU02PR7TB0XYkSJEydv2YmsJB9Vnv1v40OcgMl0fyL8tQoQD65BthcAy7GQ67kZE
+         L2Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=YcONVYaHcNROiZk7JE/JGBPUoSmsmza56+mYnVENHcA=;
-        b=O6WLsF1bJKgWuyJIwuBzUlJMKUjzIt3kZc/XdNlHh8NZjnxR1i8UmvRgg4rb9FcEKr
-         hPueEiTipKR9n1Gl7Wx55Cvn9YqfPJoA/TQ8TAD9jN5+424UqsI8yQ7Uw/23blZKrS91
-         27nsDohHU6hcCUKIElsEi7kxDYzu8PAWVPcT5zsvYhMWwNejFmKi+Yg9W1qFPGcgS0+z
-         rQ9V0N/+86qzUG3mo1U8uZWwPfzENu/1Q0G0eTVlYBAqENpgq1a8P3hsq3qCBe9ZDYrH
-         l0Vy/oEJ4dJpwYPRmpGL9bWixvqRkPI0PHNmh6Ucs+OqluHPL+d7q1GJmIimAKyUYVbK
-         4A9g==
-X-Gm-Message-State: ABuFfoj2HYmkBp0iGpRy5rxq35RjdIphrgsl+j4/hjw7awd/A19q/+xX
-        BUDt41N5AgcNAtaPwTkX1UM=
-X-Google-Smtp-Source: ACcGV61rE9XXVlVQyp7i4xu/9arrkoF8RMcODdmbOGyoenoj+OJ6LsC5UIqZ7PTayyjm0ebac8YyJg==
-X-Received: by 2002:adf:ee06:: with SMTP id y6-v6mr13005718wrn.318.1538873305478;
-        Sat, 06 Oct 2018 17:48:25 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u191-v6sm5859244wmd.31.2018.10.06.17.48.24
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Szeo8LhuWZ0viukDsIEhNcCFQkSGKkVJjLVEgsMW330=;
+        b=K7UwdJwSZQbLkfURtfyj/vx7qlsI1BTotX4ReKSlK2MEYYIf8KGqt69ueLgk7s+EQf
+         e5UqIreF5vzdo5LDTaR/wKwyOU0lgGsaiaUyYg0LwF1y/tDCJ9s2v0j+0k6WlHlZ7GQm
+         /MBr3MmM+LAsNba6dqPZnBdOJbtdb6zoXzgX36vSQZngcnrVhSp3yJ+FMSa3mXxVSalx
+         ZzW7qBm0pfExjqqaYdaVUNHmT410UJwJ+1I9zHJc1MdTjjYyZ7g+h8QAGDmTCQWw76ks
+         5GOSSt1xI/vH9q4qNahM5aeVCY5vlU8vbAwXnpmUpFms0a0c6FFqJ5zA8h28VBk3zmjK
+         KIcg==
+X-Gm-Message-State: ABuFfogWcMh1zLzZq6LHom3i8jWwTAq2CL1zn7ViIZW2XpLho9n4zKZq
+        6HtBjAkl2p8aSuJkPXG1XqA=
+X-Google-Smtp-Source: ACcGV61XCPjXYGpheo6s9+/45mj0m5Bkf/A6y5gl61SUUiYBHszVel6e+3h73nPEwr90fTX5eQsM/g==
+X-Received: by 2002:adf:8206:: with SMTP id 6-v6mr12162812wrb.160.1538873590046;
+        Sat, 06 Oct 2018 17:53:10 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 4-v6sm5879634wmt.16.2018.10.06.17.53.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 06 Oct 2018 17:48:24 -0700 (PDT)
+        Sat, 06 Oct 2018 17:53:09 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Julia Lawall <julia.lawall@lip6.fr>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git log -S or -G
-References: <alpine.DEB.2.21.1810061712260.2402@hadrien>
-        <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com>
-Date:   Sun, 07 Oct 2018 09:48:23 +0900
-In-Reply-To: <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 6 Oct
- 2018 18:22:57
-        +0200")
-Message-ID: <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 2/4] transport: do not list refs if possible
+References: <20180925225355.74237-1-jonathantanmy@google.com>
+        <cover.1538075680.git.jonathantanmy@google.com>
+        <61ad64245470e51cb97988e0f2f5ea76c9e2276c.1538075680.git.jonathantanmy@google.com>
+        <CAGZ79kbN9Yu3sSrE+jxKFQyqRVM1eEvqoHCn3Y283biu-R6smw@mail.gmail.com>
+Date:   Sun, 07 Oct 2018 09:53:08 +0900
+In-Reply-To: <CAGZ79kbN9Yu3sSrE+jxKFQyqRVM1eEvqoHCn3Y283biu-R6smw@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 27 Sep 2018 14:38:42 -0700")
+Message-ID: <xmqq8t3avaq3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Sat, Oct 6, 2018 at 5:16 PM Julia Lawall <julia.lawall@lip6.fr> wrote:
->> Git log -S or -G make it possible to find commits that have particular
->> words in the changed lines.  Sometimes it would be helpful to search for
->> words in the removed lines or in the added lines specifically.  From the
->> implementation, I had the impression that this would be easy to implement.
->> The main question would be how to allow the user to specify what is
->> wanted.
+> On Thu, Sep 27, 2018 at 12:24 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> As far as I know this isn't possible. The --diff-filter option is
-> similar in spirit, but e.g. adding "foo" and then removing it from an
-> existing file will both be covered under --diff-filter=M, so that
-> isn't what you're looking for.
+>>
+>> +test_expect_success 'when dynamically fetching missing object, do not list refs' '
+>> +       cat trace &&
+>
+> leftover debug cat?
 
-I agree with Julia that UI to the feature is harder than the
-machinery to implement the feature to add "I am interested in seeing
-a patch that contains a hunk that adds 'foo' but am not interested
-in removal" (or vice versa) for -G.  You tweak
-diffcore-pickaxe.c::diffgrep_consume() and you'are done.
-
-Doing the same for -S is much harder at the machinery level, as it
-performs its thing without internally running "diff" twice, but just
-counts the number of occurrences of 'foo'---that is sufficient for
-its intended use, and more efficient.
-
+It does look that way.
