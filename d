@@ -2,29 +2,29 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,MAILING_LIST_MULTI,
-	PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40E541F97E
-	for <e@80x24.org>; Fri,  5 Oct 2018 20:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6283C1F453
+	for <e@80x24.org>; Fri,  5 Oct 2018 13:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbeJFDcm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Oct 2018 23:32:42 -0400
-Received: from 85.109.139.211.dynamic.ttnet.com.tr ([85.109.139.211]:11497
-        "EHLO 85.109.139.211.dynamic.ttnet.com.tr" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728139AbeJFDcl (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Oct 2018 23:32:41 -0400
-X-Greylist: delayed 713 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Oct 2018 23:32:25 EDT
-Message-ID: <384F9F7D70E8AD92E535D7DA4207384F@vger.kernel.org>
+        id S1728495AbeJEUvp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Oct 2018 16:51:45 -0400
+Received: from [162.212.211.77] ([162.212.211.77]:26442 "EHLO [162.212.211.77]"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728278AbeJEUvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Oct 2018 16:51:45 -0400
+X-Greylist: delayed 349 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Oct 2018 16:51:45 EDT
+Date:   5 Oct 2018 04:26:39 -0500
 From:   <git@vger.kernel.org>
-To:     "1967mokoenatj" <git@vger.kernel.org>
-Subject: Your Secret Life
-Date:   6 Oct 2018 01:21:45 +0200
+X-Priority: 3
+Message-ID: <089672542.201810050452@vger.kernel.org>
+To:     "administrator" <git@vger.kernel.org>
+Subject: Your Account Was Hacked!
 MIME-Version: 1.0
 Content-Type: text/plain; charset="cp-850"
 Content-Transfer-Encoding: 8bit
-X-Mailer: Hbqsfwl kkpjn 8.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -36,7 +36,7 @@ I'm a member of an international hacker group.
 As you could probably have guessed, your account git@vger.kernel.org was hacked, because I sent message you from it.
 
 Now I have access to you accounts!
-For example, your password for git@vger.kernel.org is 1967mokoenatj 
+For example, your password for git@vger.kernel.org is administrator 
 
 Within a period from July 17, 2018 to October 3, 2018, you were infected by the virus we've created, through an adult website you've visited.
 So far, we have access to your messages, social media accounts, and messengers.
