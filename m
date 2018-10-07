@@ -2,114 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8DF1F97E
-	for <e@80x24.org>; Sun,  7 Oct 2018 01:37:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 440B11F97E
+	for <e@80x24.org>; Sun,  7 Oct 2018 05:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbeJGInE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Oct 2018 04:43:04 -0400
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:37164 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726117AbeJGInE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Oct 2018 04:43:04 -0400
-Received: by mail-wm1-f54.google.com with SMTP id 185-v6so5089325wmt.2
-        for <git@vger.kernel.org>; Sat, 06 Oct 2018 18:37:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=B2gXarTe8yhE4re1YQMkHoh3iMtzlujT1SOjrRLvekY=;
-        b=SS0Q/vcHkBOeAWA6LDV+YGZRSJMR14qLuoUolilSR4fS1OoOf5Sc75u+HZBjH4cWtF
-         9os15CqMltn7bRA6DUvh7DBPYqxodtSqkxtMtCmwfA5otwxgAlxeYL0drz/hy1v+fkWK
-         MyZmqpemADo+n5Zdj0Z9ns3mLN4CTd9UgqjfJpemT9qy9qo91QnIpQcQyqIdSridy77Z
-         lehj4zk/c8v5rSGlvrRlWxiEbXjGPYviFfXNW77dYfd7oX/RZulDBLJisah/UhhjSPw1
-         pv0dLlwYtJdoTK8inTrgrI0CQMkTmgC6xAEvaC53o6YWk6IHphYrczVu7dTRAcbD7MHA
-         V2zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=B2gXarTe8yhE4re1YQMkHoh3iMtzlujT1SOjrRLvekY=;
-        b=Ubj2guFYj3YtJeoHsCDqyww85IeldrRpCNUoby9Q5x5JC4HqkWfzvRKNehZ/t4CSSX
-         i7n66b/estf8K7En/dTEuZnsVIkv/yTheQhGr66CMvG23Ax+LaAYRy8G/LdeTzZZbes6
-         iJqQ4JdhYoc/fqPdDamWGUIas/2kDVkS5+eM49h+SEkeWUseTR0HwONi5IwWeByudi5/
-         0i5d+Fg7Mp8wbfGFTgiHWHrtBl0+KRGohaSf2yMc5+rTR6InP/0C/9MDjaRz2NFl3bAq
-         dQ1aVMtZbYRxe6rJjFl1gUvmWozz5D8E8EKrFxSB42Gs6Bty9IWx2leA+tA8gHyRCPZD
-         lGSQ==
-X-Gm-Message-State: ABuFfojYX0l+ebXsvm9GUmzHag+mz5BWu2kBXo8ShiD0XC/ucigrnWIX
-        if2EvirTljJRDBi2ue0NZuc=
-X-Google-Smtp-Source: ACcGV613WNAl+WWH3mcMCe2KmOnD/KKRQFczMeELNxNpayMrl0PI7dVTyOpnB62q2VydUcoY+r/5DA==
-X-Received: by 2002:a1c:cfcb:: with SMTP id f194-v6mr10856259wmg.98.1538876255092;
-        Sat, 06 Oct 2018 18:37:35 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i7-v6sm3529563wmd.41.2018.10.06.18.37.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 06 Oct 2018 18:37:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 3/8] refs: new ref types to make per-worktree refs visible to all worktrees
-References: <20180922180500.4689-1-pclouds@gmail.com>
-        <20180929191029.13994-1-pclouds@gmail.com>
-        <20180929191029.13994-4-pclouds@gmail.com>
-Date:   Sun, 07 Oct 2018 10:37:32 +0900
-In-Reply-To: <20180929191029.13994-4-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sat, 29 Sep 2018 21:10:24 +0200")
-Message-ID: <xmqqva6etu3n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726373AbeJGM1c (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Oct 2018 08:27:32 -0400
+Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:23136
+        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726310AbeJGM1c (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 7 Oct 2018 08:27:32 -0400
+X-IronPort-AV: E=Sophos;i="5.54,351,1534802400"; 
+   d="scan'208";a="281263525"
+Received: from 89-157-201-244.rev.numericable.fr (HELO hadrien) ([89.157.201.244])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 07 Oct 2018 07:21:26 +0200
+Date:   Sun, 7 Oct 2018 07:21:26 +0200 (CEST)
+From:   Julia Lawall <julia.lawall@lip6.fr>
+X-X-Sender: jll@hadrien
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git log -S or -G
+In-Reply-To: <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com>
+Message-ID: <alpine.DEB.2.21.1810070719200.2347@hadrien>
+References: <alpine.DEB.2.21.1810061712260.2402@hadrien> <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com> <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323329-587054967-1538889686=:2347"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 2dd77f9485..9ca2a3706c 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> ...
->  	case REF_TYPE_PSEUDOREF:
->  		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
->  		break;
-> +	case REF_TYPE_OTHER_PSEUDOREF:
-> +		return files_reflog_path_other_worktrees(refs, sb, refname);
-> +	case REF_TYPE_MAIN_PSEUDOREF:
-> +		if (!skip_prefix(refname, "main-worktree/", &refname))
-> +			BUG("ref %s is not a main pseudoref", refname);
-> +		/* passthru */
+--8323329-587054967-1538889686=:2347
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Correct spelling of the colloquial phrase is fallthru, but see
-1cf01a34 ("consistently use "fallthrough" comments in switches",
-2017-09-21) that encourages use of "fallthrough" fully spelled out.
 
-Otherwise you'd see something like this.
 
-    CC refs/files-backend.o
-refs/files-backend.c: In function 'files_ref_path':
-refs/files-backend.c:203:6: error: this statement may fall through [-Werror=implicit-fallthrough=]
-   if (!skip_prefix(refname, "main-worktree/", &refname))
-      ^
-refs/files-backend.c:206:2: note: here
-  case REF_TYPE_OTHER_PSEUDOREF:
-  ^~~~
-refs/files-backend.c: In function 'files_reflog_path':
-refs/files-backend.c:181:6: error: this statement may fall through [-Werror=implicit-fallthrough=]
-   if (!skip_prefix(refname, "main-worktree/", &refname))
-      ^
-refs/files-backend.c:184:2: note: here
-  case REF_TYPE_NORMAL:
-  ^~~~
-cc1: all warnings being treated as errors
-Makefile:2289: recipe for target 'refs/files-backend.o' failed
-make: *** [refs/files-backend.o] Error 1
+On Sun, 7 Oct 2018, Junio C Hamano wrote:
+
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+> > On Sat, Oct 6, 2018 at 5:16 PM Julia Lawall <julia.lawall@lip6.fr> wrote:
+> >> Git log -S or -G make it possible to find commits that have particular
+> >> words in the changed lines.  Sometimes it would be helpful to search for
+> >> words in the removed lines or in the added lines specifically.  From the
+> >> implementation, I had the impression that this would be easy to implement.
+> >> The main question would be how to allow the user to specify what is
+> >> wanted.
+> >
+> > As far as I know this isn't possible. The --diff-filter option is
+> > similar in spirit, but e.g. adding "foo" and then removing it from an
+> > existing file will both be covered under --diff-filter=M, so that
+> > isn't what you're looking for.
+>
+> I agree with Julia that UI to the feature is harder than the
+> machinery to implement the feature to add "I am interested in seeing
+> a patch that contains a hunk that adds 'foo' but am not interested
+> in removal" (or vice versa) for -G.  You tweak
+> diffcore-pickaxe.c::diffgrep_consume() and you'are done.
+>
+> Doing the same for -S is much harder at the machinery level, as it
+> performs its thing without internally running "diff" twice, but just
+> counts the number of occurrences of 'foo'---that is sufficient for
+> its intended use, and more efficient.
+
+There is still the question of whether the number of occurrences of foo
+decreases or increases.
+
+julia
+--8323329-587054967-1538889686=:2347--
