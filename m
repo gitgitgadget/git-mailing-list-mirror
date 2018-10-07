@@ -2,64 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PI_IMPORTANCE_HIGH,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59C4E1F97E
-	for <e@80x24.org>; Sun,  7 Oct 2018 00:53:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5E51F97E
+	for <e@80x24.org>; Sun,  7 Oct 2018 01:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725877AbeJGH6b (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Oct 2018 03:58:31 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:46807 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725846AbeJGH6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Oct 2018 03:58:31 -0400
-Received: by mail-wr1-f41.google.com with SMTP id a2-v6so9986779wrc.13
-        for <git@vger.kernel.org>; Sat, 06 Oct 2018 17:53:11 -0700 (PDT)
+        id S1726264AbeJGIN5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Oct 2018 04:13:57 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36541 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725873AbeJGIN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Oct 2018 04:13:56 -0400
+Received: by mail-wr1-f65.google.com with SMTP id y16so17086047wrw.3
+        for <git@vger.kernel.org>; Sat, 06 Oct 2018 18:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Szeo8LhuWZ0viukDsIEhNcCFQkSGKkVJjLVEgsMW330=;
-        b=Rm29wOJOYz2HfR3/i+Y0toNYhABNbLhNphM74RhGkBFhYH3yDyMX0MbLH/YOthhRvE
-         jdIumo0kwFP8/3lvI9z4E4zkabyOpTFJRk8XqHZFoXJu5aBBF8vSRK9CrmeO+7PA6gPh
-         a2wY7yU8iFYRAZggJCtJgiMbUwz7p835DxrNy7DST+28/ZCnq5qpRB8A3IISB1mWRZpv
-         /ggbrhO00IGXeFMAQK1rTBtOECNyxBKxllZBJ//ugXrlCdj9ReweKW1NZtFTVwAwNQ7g
-         PleWVU02PR7TB0XYkSJEydv2YmsJB9Vnv1v40OcgMl0fyL8tQoQD65BthcAy7GQ67kZE
-         L2Nw==
+        h=sender:from:to:cc:subject:references:importance:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=F3JOSNJ5+Zpnx2maEu5sp//B9hDf9nDupD9bVCVLDCk=;
+        b=H+t+CzjowfEv+c2VQGmnf95BPOpb8b8xCtynuXHFdZBQahLNaWNm2cTWMP7yCSrcvs
+         mnqMRqmNNjtm4jMask+dSAsHNrwuS+c/dEuKAP6h0YjFpkAyfHrgFFxjHqBwjePmSHAY
+         SZIqxQktlOtP2MgBw7/HTiL+2bf4PR98JfOUGqF7bMliT5Hn8JPUv5+cioYYKAB++JAB
+         Ve6ZoSkH29lRXWOO7SbkJaa0rTIdYjcZQYUk7aygesNNE0zh0Vya7Ij4yeLgX3fOn1gJ
+         pBQjFOfaRvgtLonLTav+yQ5HEVwRKQ9GL8d+HzHKWz9JY7btMgHcqCt2AojDmjEMy5Ug
+         mxBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Szeo8LhuWZ0viukDsIEhNcCFQkSGKkVJjLVEgsMW330=;
-        b=K7UwdJwSZQbLkfURtfyj/vx7qlsI1BTotX4ReKSlK2MEYYIf8KGqt69ueLgk7s+EQf
-         e5UqIreF5vzdo5LDTaR/wKwyOU0lgGsaiaUyYg0LwF1y/tDCJ9s2v0j+0k6WlHlZ7GQm
-         /MBr3MmM+LAsNba6dqPZnBdOJbtdb6zoXzgX36vSQZngcnrVhSp3yJ+FMSa3mXxVSalx
-         ZzW7qBm0pfExjqqaYdaVUNHmT410UJwJ+1I9zHJc1MdTjjYyZ7g+h8QAGDmTCQWw76ks
-         5GOSSt1xI/vH9q4qNahM5aeVCY5vlU8vbAwXnpmUpFms0a0c6FFqJ5zA8h28VBk3zmjK
-         KIcg==
-X-Gm-Message-State: ABuFfogWcMh1zLzZq6LHom3i8jWwTAq2CL1zn7ViIZW2XpLho9n4zKZq
-        6HtBjAkl2p8aSuJkPXG1XqA=
-X-Google-Smtp-Source: ACcGV61XCPjXYGpheo6s9+/45mj0m5Bkf/A6y5gl61SUUiYBHszVel6e+3h73nPEwr90fTX5eQsM/g==
-X-Received: by 2002:adf:8206:: with SMTP id 6-v6mr12162812wrb.160.1538873590046;
-        Sat, 06 Oct 2018 17:53:10 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:importance
+         :date:in-reply-to:message-id:user-agent:mime-version;
+        bh=F3JOSNJ5+Zpnx2maEu5sp//B9hDf9nDupD9bVCVLDCk=;
+        b=Jhabut8QC4kw3oYhOnMy4HGbj06GOiyt6U+b178uzoCdmM7Ay/iomRPSFgmnD+i03S
+         ZORpfIq2hAMFAHd2j2h1iSzR8ntfQe8WdQMWG561v5VvotVEUIBDKro1CgBTeHYYf7EU
+         kk/4epm5vvjXDvcT2GPaSVybBvTg2Rl7RjGI1jYjFiQSUk6xpxuroqJY5Wirz/FFHlF5
+         3DGuuLzhopw8ndFFfZb+mZtbXGTMUNIxeESgDd4tq7uxFr+hZL9ouQZ0XlDYnTLoykhN
+         DM4TOeox0ydN2UxUOP/+mKYlrUofXP49gQX6MJRQOAZFM+e5cK9sTZ0BBSH053q4UKGf
+         uPtQ==
+X-Gm-Message-State: ABuFfoiIl4XNFgY8B9rpnYodd+k/HWuXS1YlGtVeMlYv1Dl7PqJvMito
+        wI4rvB2z8M0KhEnVrfe0nqpHOgrGrPU=
+X-Google-Smtp-Source: ACcGV60CEmHBqeCmHGBVC9D3v1ziC8szocVHAQjiLHXzLixOY1+8cyLYF/7hEqw8ifd8+oGj2dqiLA==
+X-Received: by 2002:adf:a3d0:: with SMTP id m16-v6mr12526355wrb.312.1538874511519;
+        Sat, 06 Oct 2018 18:08:31 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 4-v6sm5879634wmt.16.2018.10.06.17.53.09
+        by smtp.gmail.com with ESMTPSA id 63-v6sm6667002wmj.39.2018.10.06.18.08.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 06 Oct 2018 17:53:09 -0700 (PDT)
+        Sat, 06 Oct 2018 18:08:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
-Subject: Re: [RFC PATCH v2 2/4] transport: do not list refs if possible
-References: <20180925225355.74237-1-jonathantanmy@google.com>
-        <cover.1538075680.git.jonathantanmy@google.com>
-        <61ad64245470e51cb97988e0f2f5ea76c9e2276c.1538075680.git.jonathantanmy@google.com>
-        <CAGZ79kbN9Yu3sSrE+jxKFQyqRVM1eEvqoHCn3Y283biu-R6smw@mail.gmail.com>
-Date:   Sun, 07 Oct 2018 09:53:08 +0900
-In-Reply-To: <CAGZ79kbN9Yu3sSrE+jxKFQyqRVM1eEvqoHCn3Y283biu-R6smw@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 27 Sep 2018 14:38:42 -0700")
-Message-ID: <xmqq8t3avaq3.fsf@gitster-ct.c.googlers.com>
+To:     Steve <steve@lonetwin.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-completion.bash: Add completion for stash list
+References: <ef5e9e8da180a5ead70b53d767a8ed4a0666e598.camel@lonetwin.net>
+Importance: high
+Date:   Sun, 07 Oct 2018 10:08:29 +0900
+In-Reply-To: <ef5e9e8da180a5ead70b53d767a8ed4a0666e598.camel@lonetwin.net>
+        (Steve's message of "Thu, 27 Sep 2018 20:59:00 +0100")
+Message-ID: <xmqq36tiva0i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,14 +67,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Steve <steve@lonetwin.net> writes:
 
-> On Thu, Sep 27, 2018 at 12:24 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+> Since stash list accepts git-log options, add the following useful
+> options that make sense in the context of the `git stash list` command:
 >
->>
->> +test_expect_success 'when dynamically fetching missing object, do not list refs' '
->> +       cat trace &&
+>   --name-status --oneline --patch-with-stat
 >
-> leftover debug cat?
+> Signed-off-by: Steven Fernandez <steve@lonetwin.net>
+> ---
+>
+> This is my first patch to the project so please be excuse any process
+> errors.
+> Although, I've tried my best to follow the guidelines in
+> Documentation/SubmittingPatches but I'm not sure if I missed anything.
 
-It does look that way.
+Thanks.  Will queue with manual fix-ups, but since you asked, here
+are the things I'll be fixing up manually, which you may want to
+avoid next time.
+
+ (1) We strongly prefer to see contributor's identity recorded as
+     the "author" of a commit to match the sign-off from the
+     contributor.  Your MSA sent your message with only the more
+     casual version of your first name on the "From: " header, which
+     does not match your sign-off.  It would have been more correct
+     if you added two lines at the beginning of the body of the
+     message, i.e. before "Since stash list accepts...".  The first
+     line would be
+
+	From: Steven Fernandez <steve@lonetwin.net>
+
+     and then you would have a blank line immediately after that.
+     Your "Since stash list accepts..." would become the third line
+     of the body.  That will tell the receiving end that the author
+     identity of the resulting commit should not be "Steve" but
+     should be "Steven Fernandez".
+
+ (2) "git shortlog --no-merges" would show that we tend not to
+     capitalize the first word after "<area>:" on the subject line.
+
+ (3) Your patch is line-wrapped (see below that has with-stat on its
+     own line after the line you intended it to go).
+
+ (4) You somehow generated your patch with "-p0".  It is OK to do
+     whatever for your own use, but patch submission is 
+     communication with others, so don't be original by doing
+     unusual things.
+
+None of the above is something I cannot fix on the receiving end
+myself, but at the same time, it is not something people should be
+wasting maintainer's time on, and small wastes add up.
+
+>  contrib/completion/git-completion.bash | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git contrib/completion/git-completion.bash
+> contrib/completion/git-completion.bash
+> index d63d2dffd..06ec6ca11 100644
+> --- contrib/completion/git-completion.bash
+> +++ contrib/completion/git-completion.bash
+> @@ -2567,6 +2567,9 @@ _git_stash ()
+>  		drop,--*)
+>  			__gitcomp "--quiet"
+>  			;;
+> +		list,--*)
+> +			__gitcomp "--name-status --oneline --patch-
+> with-stat"
+> +			;;
+>  		show,--*|branch,--*)
+>  			;;
+>  		branch,*)
