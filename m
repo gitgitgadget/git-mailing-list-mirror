@@ -2,160 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FF011F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 18:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 711231F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 18:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbeJIBW2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 21:22:28 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:41646 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726529AbeJIBW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 21:22:28 -0400
-Received: by mail-pl1-f196.google.com with SMTP id q17-v6so10420047plr.8
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 11:09:32 -0700 (PDT)
+        id S1726445AbeJIBXR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 21:23:17 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:35512 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbeJIBXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 21:23:17 -0400
+Received: by mail-wr1-f53.google.com with SMTP id w5-v6so21851683wrt.2
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 11:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gVAytk9f9rkr6ixJ8lvF+32eUIQN30kaYtL62ymwnrY=;
-        b=Xsip05ojA+0L2v5CtVysLCrmUdL07iXDELyolluDdXge87jCBupqZJzYw7HWK2M+Vp
-         XElJ6yCoABH+6P/3kvA7vrHrCcrvCdSTbxLvCc6RiyyuFhs4TsP5ZjJEgAXfZ4qWBjQL
-         j2wKVOmLalR9366UAKyqKrEVSqb+JVCHL9cZodzNMJJUPho47nnr7hITCWvB6mOx1pz0
-         Scxr38mhCdpJ4hlLXYVkV7Xj6/WzCLoY8BA29mtvN1XaMuwCU5pj4bXddbq3q4g9shux
-         cVyzeFadq6cAipkgnjMcnVyK7TJLqDqx24Bx+/N3xYgGKw1t+5ohi1ok5VPWRfXdZCBm
-         Qy1Q==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=v/x3yVkGnYno0zmkVFz5Lt5uibUt+qkXGQ6y5Gp3xqo=;
+        b=RktNz8hf86m/OIW4m1pv7XBNhFLh1nzxzVVQVQRO3PoBuIK4jcbQqyJsEWG1/bYKm5
+         zIXZ9eJmq3cC5cq7ggW+WJJ9gxEG8fZj80xIXY/Wy3Itgik1PNTMy+D+ndeGZz0yVSUc
+         Zx/ChJL3BgDRmQvB5r7q81oJdTezW1vLtsU48P26yQz38JtVMOYXUNFTGUjQCb0hLrWc
+         Fwalai4CclwHpel2u1pT4qa3cgM0GruF/l7Wtd1+r0o3eOHCm/p1gNnuj6BWCvDfVI6B
+         o8ojCp00o202HP56NzaC0xrLRkZ1+JC6glVZROTwo1qNSQ0SiDmfiuhdIfYmKuDE25CS
+         k9FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gVAytk9f9rkr6ixJ8lvF+32eUIQN30kaYtL62ymwnrY=;
-        b=qdCirYVKfUgTtgde5Kf29E0jfAO6Oqi84rTaTfBpnQZrE+c/JNaSjWwAo49Nxf4grL
-         u5k9SNJLL6tfbVxvDNb78DmbIA3gsjy+m2ugPhHZn0g6sNPPYUctREefoM2KzZpEzAq1
-         VVC/5lM8DzBt6mGfq/d64LdftZcEFyj0974OyqZUEm0uluUxFsibqboH9ZgGm9mtnn/r
-         NIXn1uZJj/DWnaPlCgMf9Ux0quTR+DCdLoTqy2edd/b4dDtiT+tX1truKqmJaAam3IXi
-         Kp1/USl7cyWh47/YN2DBvOsxp/tea8DFE1T7p9gVmnO20dkO95wLw/HWV2I6ncYVsBpq
-         gf0A==
-X-Gm-Message-State: ABuFfoj0NRhyFIGQVdPBfrATEHFanesz12JsU5BC6IRweRXBMjuXmOVA
-        WCis9B1nXMPTzSvhtyll1MIYH76HlFE=
-X-Google-Smtp-Source: ACcGV63Ahca3c3XrEfvbYOLf+nug/I0ty8UxIePrVa22MIhe7Ag6zMqvD+YgpzmM4o8Kn4cDqGtrWw==
-X-Received: by 2002:a17:902:7246:: with SMTP id c6-v6mr25273119pll.304.1539022171720;
-        Mon, 08 Oct 2018 11:09:31 -0700 (PDT)
-Received: from localhost ([205.175.107.112])
-        by smtp.gmail.com with ESMTPSA id l6-v6sm23995459pfl.169.2018.10.08.11.09.30
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=v/x3yVkGnYno0zmkVFz5Lt5uibUt+qkXGQ6y5Gp3xqo=;
+        b=ivJkxMgpZ0+KLhALebdSG+tpkeXMq29rtF5i+QsvlaApWlUKHBhPzDjJjXeCnpgGWW
+         58AO+cJgC7SFZkkoljSwZYndxZzkX4ZwZlilwadsCNXmtVBFHm1O50LenfFnnSlV+SgY
+         y5AeBmyIyWLEKSYGeGy7i0WcNGLW/m1uFcaYB7E/SlE4Klg1XutP3EOjV1JP5g4DWd91
+         wsaiiZIiVRZKuXuwlxeCgY1W+cJxYp1j5bWHLbLoVF/zQsgG6Bh0G0OxVy6Y6vgM92pW
+         +cPiXBmifwt/J04PAgyBRkmF8/t76K9jjbCwSPfpN4nyyvzXd1SkKLQOeBzD+sXdC0dE
+         XGMQ==
+X-Gm-Message-State: ABuFfohh9fVXLxABV4Oi+15dMNVYi5m5RqjXCMc4EbMIRt3xDlydntuz
+        Ljn56imftU8nNgO985ozw7k=
+X-Google-Smtp-Source: ACcGV62FytXSflq08b1Sy3paufrCphV1R5zZjrp2BGQC8APmonXNHhb3eiuE/hFseA9A9UfS8oPs6w==
+X-Received: by 2002:a5d:4b84:: with SMTP id b4-v6mr18196192wrt.168.1539022219663;
+        Mon, 08 Oct 2018 11:10:19 -0700 (PDT)
+Received: from szeder.dev (x4dbd30b5.dyn.telefonica.de. [77.189.48.181])
+        by smtp.gmail.com with ESMTPSA id p62-v6sm40606722wrc.97.2018.10.08.11.10.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Oct 2018 11:09:31 -0700 (PDT)
-Date:   Mon, 8 Oct 2018 11:09:30 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, sunshine@sunshineco.com,
-        sbeller@google.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH v5 4/4] transport.c: introduce core.alternateRefsPrefixes
-Message-ID: <28cbbe63f73b14315f8b1b7c7049b1f81f27057f.1539021825.git.me@ttaylorr.com>
-References: <cover.1537466087.git.me@ttaylorr.com>
- <cover.1539021825.git.me@ttaylorr.com>
+        Mon, 08 Oct 2018 11:10:18 -0700 (PDT)
+Date:   Mon, 8 Oct 2018 20:10:15 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
+ graph
+Message-ID: <20181008181015.GA23446@szeder.dev>
+References: <87r2h7gmd7.fsf@evledraar.gmail.com>
+ <20181003141732.GO23446@localhost>
+ <87o9cbglez.fsf@evledraar.gmail.com>
+ <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
+ <87lg7ehnps.fsf@evledraar.gmail.com>
+ <20181003185156.GA20709@sigill.intra.peff.net>
+ <a300acae-c7f2-eace-5196-381a99d62c13@gmail.com>
+ <20181003191805.GB16666@sigill.intra.peff.net>
+ <20181008164141.GZ23446@szeder.dev>
+ <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1539021825.git.me@ttaylorr.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The recently-introduced "core.alternateRefsCommand" allows callers to
-specify with high flexibility the tips that they wish to advertise from
-alternates. This flexibility comes at the cost of some inconvenience
-when the caller only wishes to limit the advertisement to one or more
-prefixes.
+On Mon, Oct 08, 2018 at 12:57:34PM -0400, Derrick Stolee wrote:
+> On 10/8/2018 12:41 PM, SZEDER Gábor wrote:
+> >On Wed, Oct 03, 2018 at 03:18:05PM -0400, Jeff King wrote:
+> >>I'm still excited about the prospect of a bloom filter for paths which
+> >>each commit touches. I think that's the next big frontier in getting
+> >>things like "git log -- path" to a reasonable run-time.
+> >There is certainly potential there.  With a (very) rough PoC
+> >experiment, a 8MB bloom filter, and a carefully choosen path I can
+> >achieve a nice, almost 25x speedup:
+> >
+> >   $ time git rev-list --count HEAD -- t/valgrind/valgrind.sh
+> >   6
+> >
+> >   real    0m1.563s
+> >   user    0m1.519s
+> >   sys     0m0.045s
+> >
+> >   $ time GIT_USE_POC_BLOOM_FILTER=y ~/src/git/git rev-list --count HEAD -- t/valgrind/valgrind.sh
+> >   6
+> >
+> >   real    0m0.063s
+> >   user    0m0.043s
+> >   sys     0m0.020s
+> >
+> >   bloom filter total queries: 16269 definitely not: 16195 maybe: 74 false positives: 64 fp ratio: 0.003934
 
-For example, to advertise only tags, a caller using
-'core.alternateRefsCommand' would have to do:
+> Nice! These numbers make sense to me, in terms of how many TREESAME queries
+> we actually need to perform for such a query.
 
-  $ git config core.alternateRefsCommand ' \
-      f() { git -C "$1" for-each-ref \
-              refs/tags --format="%(objectname)" }; f "$@"'
+Yeah...  because you didn't notice that I deliberately cheated :)
 
-The above is cumbersome to write, so let's introduce a
-"core.alternateRefsPrefixes" to address this common case. Instead, the
-caller can run:
+As it turned out, it's not just about the number of diff queries that
+we can spare, but, for the speedup _ratio_, it's more about how
+expensive those diff queries are.
 
-  $ git config core.alternateRefsPrefixes 'refs/tags'
+git.git has a rather flat hierarchy, and 't/' is the 372th entry in
+the current root tree object, while 'valgrind/' is the 923th entry,
+and the diff machinery spends considerable time wading through the
+previous entries.  Notice the "carefully chosen path" remark in my
+previous email; I think this particular path has the highest number of
+preceeding tree entries, and, in addition, 't/' changes rather
+frequently, so the diff machinery often has to scan two relatively big
+tree objects.  Had I chosen 'Documentation/RelNotes/1.5.0.1.txt'
+instead, i.e. another path two directories deep, but whose leading
+path components are both near the beginning of the tree objects, the
+speedup would be much less impressive: 0.282s vs. 0.049s, i.e. "only"
+~5.7x instead of ~24.8x.
 
-Which will behave identically to the longer example using
-"core.alternateRefsCommand".
+> >But I'm afraid it will take a while until I get around to turn it into
+> >something presentable...
+> Do you have the code pushed somewhere public where one could take a look? I
+> Do you have the code pushed somewhere public where one could take a 
+> look? I could provide some early feedback.
 
-Since the value of "core.alternateRefsPrefixes" is appended to 'git
-for-each-ref' and then executed, include a "--" before taking the
-configured value to avoid misinterpreting arguments as flags to 'git
-for-each-ref'.
+Nah, definitely not...  I know full well how embarassingly broken this
+implementation is, I don't need others to tell me that ;)
 
-In the case that the caller wishes to specify multiple prefixes, they
-may separate them by whitespace. If "core.alternateRefsCommand" is set,
-it will take precedence over "core.alternateRefsPrefixes".
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/config.txt           | 7 +++++++
- t/t5410-receive-pack-alternates.sh | 8 ++++++++
- transport.c                        | 5 +++++
- 3 files changed, 20 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c51e82d8a5..a133a709f3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -627,6 +627,13 @@ Note that you cannot generally put `git for-each-ref` directly into the config
- value, as it does not take a repository path as an argument (but you can wrap
- the command above in a shell script).
- 
-+core.alternateRefsPrefixes::
-+	When listing references from an alternate, list only references that begin
-+	with the given prefix. Prefixes match as if they were given as arguments to
-+	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
-+	whitespace. If `core.alternateRefsCommand` is set, setting
-+	`core.alternateRefsPrefixes` has no effect.
-+
- core.bare::
- 	If true this repository is assumed to be 'bare' and has no
- 	working directory associated with it.  If this is the case a
-diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-index 49d0fe44fb..457c20c2a5 100755
---- a/t/t5410-receive-pack-alternates.sh
-+++ b/t/t5410-receive-pack-alternates.sh
-@@ -30,4 +30,12 @@ test_expect_success 'with core.alternateRefsCommand' '
- 	test_cmp expect actual.haves
- '
- 
-+test_expect_success 'with core.alternateRefsPrefixes' '
-+	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
-+	git rev-parse private/branch >expect &&
-+	printf "0000" | git receive-pack fork >actual &&
-+	extract_haves <actual >actual.haves &&
-+	test_cmp expect actual.haves
-+'
-+
- test_done
-diff --git a/transport.c b/transport.c
-index e271b66603..83474add28 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1341,6 +1341,11 @@ static void fill_alternate_refs_command(struct child_process *cmd,
- 		argv_array_pushf(&cmd->args, "--git-dir=%s", repo_path);
- 		argv_array_push(&cmd->args, "for-each-ref");
- 		argv_array_push(&cmd->args, "--format=%(objectname)");
-+
-+		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
-+			argv_array_push(&cmd->args, "--");
-+			argv_array_split(&cmd->args, value);
-+		}
- 	}
- 
- 	cmd->env = local_repo_env;
--- 
-2.19.0.221.g150f307af
