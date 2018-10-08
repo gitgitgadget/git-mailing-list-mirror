@@ -2,115 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4554F1F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 13:43:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67DC01F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 14:01:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbeJHUzK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 16:55:10 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:33088 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726056AbeJHUzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 16:55:09 -0400
-Received: by mail-wr1-f42.google.com with SMTP id e4-v6so20935622wrs.0
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 06:43:21 -0700 (PDT)
+        id S1726664AbeJHVNk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 17:13:40 -0400
+Received: from kecgate02.infosys.com ([122.98.14.32]:50757 "EHLO
+        KECGATE02.infosys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726450AbeJHVNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 17:13:39 -0400
+X-Greylist: delayed 1605 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Oct 2018 17:13:38 EDT
+Received: from KECGATE02.infosys.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id C4732A403B
+        for <git@vger.kernel.org>; Mon,  8 Oct 2018 19:04:39 +0530 (IST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=infosys.com;
+        s=default; t=1539005679;
+        bh=pj4Dh7fFeJyJbRCVKuTnSxcqlII8eH2HSGI0wweskV0=;
+        h=From:To:Subject:Date:References:In-Reply-To;
+        b=KQlilDjZK2jm1ifvyZn/JWC29HApLvxMKr/Ot4IfQ3eg64d/jpAZT4NwqDr7TwdFj
+         0ShT5AUhn6twZpxrj1ssdB8Lb+xbsYHR823DPLtepRoFppph/vLMAyl6k9EwV6uvDg
+         6EoxdlIQpo6oM5z0v2zy77NSMFczYyiiIT6lJEH0=
+Received: from BLRKECHUB15.ad.infosys.com (unknown [10.66.236.43])
+        by KECGATE02.infosys.com (Postfix) with ESMTP id 2BBC0A4066
+        for <git@vger.kernel.org>; Mon,  8 Oct 2018 19:04:39 +0530 (IST)
+Received: from BLREXOHYB04.ad.infosys.com (10.68.8.105) by
+ BLRKECHUB15.ad.infosys.com (10.66.236.43) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Mon, 8 Oct 2018 19:04:58 +0530
+Received: from BLREXOHYB01.ad.infosys.com (10.68.8.68) by
+ BLREXOHYB04.ad.infosys.com (10.68.8.105) with Microsoft SMTP Server (TLS) id
+ 15.0.1395.4; Mon, 8 Oct 2018 19:04:57 +0530
+Received: from BLREDGE03.ad.infosys.com (122.98.14.118) by
+ BLREXOHYB01.ad.infosys.com (10.68.8.68) with Microsoft SMTP Server (TLS) id
+ 15.0.1395.4 via Frontend Transport; Mon, 8 Oct 2018 19:04:57 +0530
+Received: from EUR03-AM5-obe.outbound.protection.outlook.com (213.199.154.115)
+ by edge.infosys.com (122.98.14.118) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Mon, 8 Oct 2018 19:03:34 +0530
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=O+qXu0LpaL8XTzm8PV+5pJ92ApJTND/0YLEhoRqjDfA=;
-        b=a1mwlArhDG1RFpCiNJ9ZioRsMPi6iVmqOqtDf+ZtMsKVC8JrfTW4mlqqeq6CSgDjLd
-         1BSizQTh/juL8xvJHW5fahdbKDM5UHNQgJQrJlwE+v/8G3wMfdUXcwXtFyZ7T/NwY9HW
-         9tiNZ9DKJufph2ULNItcw6XXQ3fnFDVTt+g7PIGgcvkeZuFVPLCDOohL+XDf81S+gvSc
-         GKP43t5oJdsGVYcVOQR6KTeVll3eAfiJ/4/njuMLQTaaVKkrp1IlIl6A7i8ip0eE6usv
-         n6FI81LnhnTek0muNW9DcrEgRIKKoXNjos5+AeM6F5Owc5ucFOtgR72z3zOL1OZbCjGE
-         0uHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=O+qXu0LpaL8XTzm8PV+5pJ92ApJTND/0YLEhoRqjDfA=;
-        b=bkbpPrfXv4khq17X7mXQG+2ywYmpJ30R5xKI33NkghZKbENLYBR9jazlHy1EYiQE+q
-         tyoKJuxci0DDr+wEK5UNyVWqcqrqfnGPbISspLZ2xzDPqMAU2UU5RBuLKtq4Uri8nmS5
-         R01M7IrKC8yiE4LOmY3QkB1s7gbLeSYiNG2xksF1Zn2VnRz/98CwjjE+iCW7xQNbtCnc
-         Q32H3rYDf6UlFxG7GAM4l/4UCdlSWQovlSelROQNkZ9bR5dRCJh7iRuBNaWb6Hb+VtPE
-         63QtLzcQiE00LifKdSXzU5sOT50zKogZ/Mut3mv/Fjuniv74/qXa9KZvIaZ2pbx0dZXU
-         IpQQ==
-X-Gm-Message-State: ABuFfohA3ou4rwP7X+FIfqxXh8koX1TW/5TwW8rw8yS+WKsjAs6rsbgg
-        CVe0q9QtbVJ39z+oe3SjNjk=
-X-Google-Smtp-Source: ACcGV62csNaZAW8cGR5uEGZ0VUnB2JkgKNYCNhHlB8McT416aCn3uv7+LFAQWgBvdUOQsxm9nGkT5Q==
-X-Received: by 2002:a5d:480b:: with SMTP id l11-v6mr10619494wrq.28.1539006200632;
-        Mon, 08 Oct 2018 06:43:20 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id o126-v6sm9610027wmo.3.2018.10.08.06.43.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Oct 2018 06:43:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
-References: <pull.26.git.gitgitgadget@gmail.com> <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
-Date:   Mon, 08 Oct 2018 15:43:18 +0200
-Message-ID: <87bm84a70p.fsf@evledraar.gmail.com>
+ d=infosystechnologies.onmicrosoft.com; s=selector1-infosys-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pj4Dh7fFeJyJbRCVKuTnSxcqlII8eH2HSGI0wweskV0=;
+ b=Zfhq4N+EC28pBvayO/jud0DZBCuaNS72EXT9ckhIbuOWhySLuPn1Csq4gBQffHNf6iE3wAofkOGNI82xYgZm52Zg7nKv7aaBg61myfpyMotyVGwRWAm+Oy1GoCDQckmUIza9QjrJNzQPvX+QH11igJv2EENRp1RnZvWNf+ysl/M=
+Received: from DB6P190MB0264.EURP190.PROD.OUTLOOK.COM (10.165.186.155) by
+ DB6P190MB0231.EURP190.PROD.OUTLOOK.COM (10.172.230.135) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1207.21; Mon, 8 Oct 2018 13:34:55 +0000
+Received: from DB6P190MB0264.EURP190.PROD.OUTLOOK.COM
+ ([fe80::fd00:a20a:3a85:ac4c]) by DB6P190MB0264.EURP190.PROD.OUTLOOK.COM
+ ([fe80::fd00:a20a:3a85:ac4c%3]) with mapi id 15.20.1207.024; Mon, 8 Oct 2018
+ 13:34:55 +0000
+From:   Inderpreet Saini <Inderpreet_Saini@infosys.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: 
+Thread-Index: AQHUXwuWhkHuhV+bj0yj/1C97oPqkaUVWTyg
+Date:   Mon, 8 Oct 2018 13:34:55 +0000
+Message-ID: <DB6P190MB0264D57E910036A91599A09FE3E60@DB6P190MB0264.EURP190.PROD.OUTLOOK.COM>
+References: <CA+cYV6v9RVkcheB+9gZot_tP07RzJuLP6b=gstxhCnzN=PKGPA@mail.gmail.com>
+In-Reply-To: <CA+cYV6v9RVkcheB+9gZot_tP07RzJuLP6b=gstxhCnzN=PKGPA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Inderpreet_Saini@infosys.com; 
+x-originating-ip: [62.189.90.172]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DB6P190MB0231;6:tzGtsrUAtTgmGQLIGKutj3O6eJjl+OQo2yKxAr8kMwAnEAKCMn3YH+GPalxdXA55tKTdXklHs8afVswRjGqwjXhDQMCPXRQWs6RruDiQtMRXcP5IvXnwicgOpXtjLy0vHFKPcV4Yy0k9chg2msXRVx94DToKbchfFSzyDm5aApL6fxXG681cxWbSqARfjjDCMhU0T7l/B1LR89+75s6lj08QPsVrxxqIzFshhL/m08BemSXA25cDZMquxhVrxuwj2ArfkIBy+vIEXpwIRELQg6tNWvH0da9MUz3QY8ofTc667d9EAbsGQI3rcAxMUfVPKFwm/PFOnR+uqZLL/PrZPTK4Z4H90ve3YGHDvId1KsBDJ2tnwSphCnkIcB8KwkYXihQS1E7gzD1RIfJAyeAtdb/T0V1wOGVOjawJTfhgHed9pk/jQKF4DUNJNPnzvtJUVEDMs056iboRYzrjxCwcNA==;5:vmgOndFaLrFXWga/RVYY9lY5bgv4akHZVzpdxzz3FwMaY8Ptl2a8nmyJ+8CnEPon1r3jaBqraY22D+e0KtaLmeQkp4sxMM5iQFNFAPBCMmI0KdX/v4YjQs50lOcf3g2bComrl/CnR9agVGMPke6ni82QNQDJULHOeMeJ22qlwGk=;7:ITeqXvhyInpFcXWTP9NE4dl8/rX94mo7Uf7b/wD0vZ6zwvzQtqV1lw/WVMCNsWH7GFpzMmVmczUlvbip2balLr5HVJx6kPJ/dJ26NDOY5pCFBO5d0LrlDkigfR8kaisocO2I1OsLzNWnSBuO6w/VndlYvn/VKC0JWEWdJ1wxoyY2m0J5qX2796HzA2V4kqK/gPzYDbgwVUDGC6+DCiFtPp2Cyu9rng+hMgb+8YSO3UjPavpWqDQgXlL6/PkcPhfK
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: 8ec7aa3e-4f4b-434c-e17f-08d62d22d582
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600074)(711020)(2017052603328)(7153060)(7193020);SRVR:DB6P190MB0231;
+x-ms-traffictypediagnostic: DB6P190MB0231:
+x-microsoft-antispam-prvs: <DB6P190MB023175E286A851776EC8FC06E3E60@DB6P190MB0231.EURP190.PROD.OUTLOOK.COM>
+x-exchange-antispam-report-test: UriScan:;
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3231355)(944501410)(52105095)(3002001)(10201501046)(93006095)(93001095)(149066)(150057)(6041310)(20161123564045)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(201708071742011)(7699051);SRVR:DB6P190MB0231;BCL:0;PCL:0;RULEID:;SRVR:DB6P190MB0231;
+x-forefront-prvs: 081904387B
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(136003)(346002)(39850400004)(396003)(199004)(189003)(6916009)(7116003)(2906002)(68736007)(486006)(26005)(221173001)(66066001)(33656002)(256004)(5660300001)(2900100001)(19618925003)(8936002)(6116002)(476003)(14454004)(86362001)(6506007)(72206003)(11346002)(3480700004)(71190400001)(6436002)(3846002)(229853002)(4743002)(71200400001)(4270600006)(5640700003)(8676002)(81156014)(80792005)(2501003)(478600001)(7736002)(102836004)(305945005)(446003)(1730700003)(81166006)(55016002)(76176011)(588024002)(53936002)(9686003)(105586002)(106356001)(25786009)(74316002)(2351001)(558084003)(186003)(5250100002)(555874004)(316002)(97736004)(99286004)(7696005)(4000700002)(6246003)(231573002);DIR:OUT;SFP:1102;SCL:1;SRVR:DB6P190MB0231;H:DB6P190MB0264.EURP190.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: infosys.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: LBLQJRt4Z+QIz05SqaO6RQ9Xwb4AYkdikIkhxaqtAmp3jvAQscB7FqqhWtIm3Sopl1hhudCfSO3uIL9ZBrQ3DOOfqvvYlg3t4YTLMZrabbxRb+B0f6Bnti+Save6rhHAHdAfmBGSZXJa6s+nWRmBREsd6R9olKd8fQnYzQHdzZix+r/8FSGdXjnjlV2OeXaM1Ez6sIgY74fl/bP7LGFb4BVpQYDvtjeYia88ItczbrANEFNvGqJ4BKSwWj5ITH9Nsop5jmQNirU2dyEpf7FyN9irTaIuI8syZv5V2YfPsddwVLCarm8HIWxzBX4crF0kV15gyzS/ACoBTJBCo7vGP5LePSD1nkUgDKeA2A5dFyA=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ec7aa3e-4f4b-434c-e17f-08d62d22d582
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Oct 2018 13:34:55.1804
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 63ce7d59-2f3e-42cd-a8cc-be764cff5eb6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6P190MB0231
+X-OriginatorOrg: infosys.com
+X-TM-AS-GCONF: 00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Aug 28 2018, Derrick Stolee via GitGitGadget wrote:
-
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The commit-graph feature is tested in isolation by
-> t5318-commit-graph.sh and t6600-test-reach.sh, but there are many
-> more interesting scenarios involving commit walks. Many of these
-> scenarios are covered by the existing test suite, but we need to
-> maintain coverage when the optional commit-graph structure is not
-> present.
->
-> To allow running the full test suite with the commit-graph present,
-> add a new test environment variable, GIT_TEST_COMMIT_GRAPH. Similar
-> to GIT_TEST_SPLIT_INDEX, this variable makes every Git command try
-> to load the commit-graph when parsing commits, and writes the
-> commit-graph file after every 'git commit' command.
->
-> There are a few tests that rely on commits not existing in
-> pack-files to trigger important events, so manually set
-> GIT_TEST_COMMIT_GRAPH to false for the necessary commands.
->
-> There is one test in t6024-recursive-merge.sh that relies on the
-> merge-base algorithm picking one of two ambiguous merge-bases, and
-> the commit-graph feature changes which merge-base is picked.
->
-
-The test feature itself seems fine, but this consistently fails ever
-since it got introduced (a reset --hard on the commit merged to msater
-in git.git):
-
-    GIT_TEST_COMMIT_GRAPH=true prove -j$(parallel --number-of-cores) t5500-fetch-pack.sh t6001-rev-list-graft.sh t6050-replace.sh
-    Test Summary Report
-    -------------------
-    t6001-rev-list-graft.sh (Wstat: 256 Tests: 14 Failed: 6)
-      Failed tests:  3, 5, 7, 9, 11, 13
-      Non-zero exit status: 1
-    t6050-replace.sh       (Wstat: 256 Tests: 35 Failed: 9)
-      Failed tests:  12-16, 24-25, 30, 35
-      Non-zero exit status: 1
-    t5500-fetch-pack.sh    (Wstat: 256 Tests: 357 Failed: 1)
-      Failed test:  351
-      Non-zero exit status: 1
-
-This is on Linux/Debian 4.17.0-1-amd64. Can you reproduce this? If not I
-can provide more info (-x output etc..).
+dW5zdWJzY3JpYmUgZ2l0DQo=
