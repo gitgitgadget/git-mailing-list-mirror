@@ -2,136 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D72ED1F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 15:01:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C5F91F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 15:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbeJHWNZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 18:13:25 -0400
-Received: from mail-qt1-f182.google.com ([209.85.160.182]:39481 "EHLO
-        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726078AbeJHWNZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 18:13:25 -0400
-Received: by mail-qt1-f182.google.com with SMTP id e22-v6so14197275qto.6
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 08:01:16 -0700 (PDT)
+        id S1726483AbeJHW3P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 18:29:15 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:39072 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726458AbeJHW3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 18:29:15 -0400
+Received: by mail-pl1-f194.google.com with SMTP id w14-v6so10220614plp.6
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 08:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=6SKt9KH3v9fqEUyxTa1vzYOX0m2+LvFLnbISDjdMak8=;
-        b=T9DV8HeThPmF2kr/TEwBWWneFxHemrfOoQBu2sIqxvwhdQtNABzEE2w9fm3qSLKxsO
-         xKIc+xdOkQ37a6usdNvXfD+6+SmYjbWvyaamzR88B5pw9fhVY215drrGrfZboDBleI+e
-         ryqAUO/2MkhahDapy/QKzFehC3xJghrygRHPs7b8WfqbaV1nSHhIMrF/dWIWURaSXIY2
-         +pamowoqKG6FsLj9v7oxC9ZfeHJfL94230fbo1w00heagjbnUIvQbV2ARHijr3HLeFWo
-         tXkTRpkJibTKOLNXkH2BTrtIhd7A4BTI6XiM4NWsRpxA8AXcmT80b5dZhKoYX387/QOI
-         KHdg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cnofc5sBR6IiAYcZ9DjO+h178g7Z7LRNuRrsGhGYrB4=;
+        b=ReTaNDleztQEGfRFoXkX4PIbacKKYER7s+4O26ykA6attegLhtHmdwCw89SjXdqIDl
+         lZki+xeqBTTznSlWBGSy+yjg8aYoTUVmlGz7jhyZJIqdLeEXJSSQWVWzg3yXdsE7KZ1s
+         my0+nZoU0IqK/7CAlbP3U66STQDCy6/1dl+b5OF+kGroQZLPHKndbDGBd5/B8lmc2Nj/
+         h+8LLBDK5qv8EWpyrC38iyHqRJcmFpd/hMm/fMLa4en15JAQHQrq6hN853eN6U+hV8jL
+         ++LTENuIdTax5jt22cmqkONZpLJTtx+gHR99DrUIOuaf1pR5noaBaDEITstkiHG559cY
+         yklw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=6SKt9KH3v9fqEUyxTa1vzYOX0m2+LvFLnbISDjdMak8=;
-        b=FaYfSa3mLZ31Ib0nAoarkddigwWdhfjg5bq9jNewkOcnZ9F5zSo4zvD5DIcN5Wo+Vt
-         OUn8e0SDrogRJPm9ueN/alQGf0GhviEn6ILme9p/knd7jgj90X0A9dZfLxHwZ97LiSN9
-         vRNjD5Iag5JSecpKjOjAl9E9Yc4MCnXGTPRTSyz1ulHnZQuctxFjSmZJ8CX6WP3wduSH
-         e93vcvWBkslWNITseSfGSqnG9mxEsuErdOgwCmEiPfFQru36xbZwuAmAj081mlnlZYRJ
-         bBEbKWQeJkAHKCFjpSmwdMTcmBy7rHieEqP0qA93Fg8BEKgLuw/DJX+iBOnU2JTjOQ4+
-         LIeg==
-X-Gm-Message-State: ABuFfoiZue9B4dqEIwsxmdOtd/UfTFQjA83tZM27xejaXXWQrx+1Fb+b
-        3kN1KZSrW05eRltpR6iTljA=
-X-Google-Smtp-Source: ACcGV62JjPFi7HlgPj0RZ/89LGnm2hh4ccQhniwcCXseLX1zuajLJMcoG75/RLfqJ33G6wcuRRWzwA==
-X-Received: by 2002:a0c:88d5:: with SMTP id 21mr5823953qvo.61.1539010875512;
-        Mon, 08 Oct 2018 08:01:15 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:1c56:381e:537f:a878? ([2001:4898:8010:0:58c:381e:537f:a878])
-        by smtp.gmail.com with ESMTPSA id i27-v6sm9849505qti.57.2018.10.08.08.01.14
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cnofc5sBR6IiAYcZ9DjO+h178g7Z7LRNuRrsGhGYrB4=;
+        b=g5bU2pJC0kF+k/VJdKBNBfltyDCxTTQDMluUMQVyFfAlIxfXl8+Z/BkJky3v0zuFQX
+         G0yL1MHinu7/hUPuGcm6qxaHlnXx15d5CypSGc2dwEWzTLPlZSKZ54tvCPkN5M8djfea
+         bv8G0Ek8+R2fVLHSxzrqbvgttb+mo1JG2/m4BdbcrNN9tut244dbie30lnbNI7PtGo00
+         1vM5CLocv5818NFX6SCtC+zE5xNI75U7r9wTSsb5lsXQyfyfHa2qmcPYKDr5RzRVKSu6
+         Q6OEbeb+7EF29bGMBUgOm3YQH0wtHJ7/Oj43tSrn/R1gYy0t8tY9ViVwPpdeg972z1Qn
+         OZQg==
+X-Gm-Message-State: ABuFfohIjrUkdxL3xchXnMVnfqqAzYihp3ntqWMMIIwepUGXehLApM3Y
+        mQgPCCsJR4VHYb8W0KQVq49DGiY8
+X-Google-Smtp-Source: ACcGV61YpXonfJ5FPmIU4eCeAoaCalEQkkcDISEgVx5oQdrzLmWO2fYCopzKHSWiHDKIcfxR5n9csg==
+X-Received: by 2002:a17:902:7244:: with SMTP id c4-v6mr24591174pll.339.1539011822886;
+        Mon, 08 Oct 2018 08:17:02 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id z26-v6sm13173761pfh.77.2018.10.08.08.17.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Oct 2018 08:01:14 -0700 (PDT)
-Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sbeller@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.26.git.gitgitgadget@gmail.com>
- <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
- <87bm84a70p.fsf@evledraar.gmail.com>
- <a2299be9-0840-da69-ebeb-f64ebe66db5a@gmail.com>
- <877eisa3j4.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ac73c76f-a292-c52d-d56a-631b929d6ce5@gmail.com>
-Date:   Mon, 8 Oct 2018 11:01:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <877eisa3j4.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+        Mon, 08 Oct 2018 08:17:02 -0700 (PDT)
+Date:   Mon, 08 Oct 2018 08:17:02 -0700 (PDT)
+X-Google-Original-Date: Mon, 08 Oct 2018 15:16:56 GMT
+Message-Id: <pull.27.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/3] Add GIT_TEST_MULTI_PACK_INDEX environment variable
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/2018 10:58 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Mon, Oct 08 2018, Derrick Stolee wrote:
->
->> On 10/8/2018 9:43 AM, Ævar Arnfjörð Bjarmason wrote:
->>> On Tue, Aug 28 2018, Derrick Stolee via GitGitGadget wrote:
->>>
->>>> From: Derrick Stolee <dstolee@microsoft.com>
->>>>
->>>> The commit-graph feature is tested in isolation by
->>>> t5318-commit-graph.sh and t6600-test-reach.sh, but there are many
->>>> more interesting scenarios involving commit walks. Many of these
->>>> scenarios are covered by the existing test suite, but we need to
->>>> maintain coverage when the optional commit-graph structure is not
->>>> present.
->>>>
->>>> To allow running the full test suite with the commit-graph present,
->>>> add a new test environment variable, GIT_TEST_COMMIT_GRAPH. Similar
->>>> to GIT_TEST_SPLIT_INDEX, this variable makes every Git command try
->>>> to load the commit-graph when parsing commits, and writes the
->>>> commit-graph file after every 'git commit' command.
->>>>
->>>> There are a few tests that rely on commits not existing in
->>>> pack-files to trigger important events, so manually set
->>>> GIT_TEST_COMMIT_GRAPH to false for the necessary commands.
->>>>
->>>> There is one test in t6024-recursive-merge.sh that relies on the
->>>> merge-base algorithm picking one of two ambiguous merge-bases, and
->>>> the commit-graph feature changes which merge-base is picked.
->>>>
->>> The test feature itself seems fine, but this consistently fails ever
->>> since it got introduced (a reset --hard on the commit merged to msater
->>> in git.git):
->>>
->>>       GIT_TEST_COMMIT_GRAPH=true prove -j$(parallel --number-of-cores) t5500-fetch-pack.sh t6001-rev-list-graft.sh t6050-replace.sh
->>>       Test Summary Report
->>>       -------------------
->>>       t6001-rev-list-graft.sh (Wstat: 256 Tests: 14 Failed: 6)
->>>         Failed tests:  3, 5, 7, 9, 11, 13
->>>         Non-zero exit status: 1
->>>       t6050-replace.sh       (Wstat: 256 Tests: 35 Failed: 9)
->>>         Failed tests:  12-16, 24-25, 30, 35
->>>         Non-zero exit status: 1
->>>       t5500-fetch-pack.sh    (Wstat: 256 Tests: 357 Failed: 1)
->>>         Failed test:  351
->>>         Non-zero exit status: 1
->>>
->>> This is on Linux/Debian 4.17.0-1-amd64. Can you reproduce this? If not I
->>> can provide more info (-x output etc..).
->> I see these failures, too, but I believe they are due to
->> ds/commit-graph-with-grafts not being merged to 'next' yet. The
->> purpose of that branch is to fix these test breaks. The environment
->> variable got merged a lot faster.
->>
->> I just built & tested the 'jch' branch at 515d82d9 with
->> GIT_TEST_COMMIT_GRAPH=1 and they all passed.
-> I should have tested "pu" first. These failures are indeed fixed
-> there. Thanks, and sorry about the noise.
-Thanks for testing with the optional features! It's good to keep them 
-exercised.
+To increase coverage of the multi-pack-index feature, add a
+GIT_TEST_MULTI_PACK_INDEX environment variable similar to other GIT_TEST_*
+variables.
+
+After creating the environment variable and running the test suite with it
+enabled, I found a few bugs in the multi-pack-index implementation. These
+are handled by the first two patches.
+
+I have set up a CI build on Azure Pipelines [1] that runs the test suite
+with a few optional features enabled, including GIT_TEST_MULTI_PACK_INDEX
+and GIT_TEST_COMMIT_GRAPH. I'll use this to watch the features and ensure
+they work well with the rest of the ongoing work. Eventually, we can add
+these variables to the Travis CI scripts.
+
+[1] https://git.visualstudio.com/git/_build?definitionId=4
+
+Derrick Stolee (3):
+  midx: fix broken free() in close_midx()
+  midx: close multi-pack-index on repack
+  multi-pack-index: define GIT_TEST_MULTI_PACK_INDEX
+
+ builtin/repack.c            |  8 ++++++++
+ midx.c                      | 17 +++++++++++++----
+ midx.h                      |  4 ++++
+ t/README                    |  4 ++++
+ t/t5310-pack-bitmaps.sh     |  1 +
+ t/t5319-multi-pack-index.sh |  2 +-
+ t/t9300-fast-import.sh      |  2 +-
+ 7 files changed, 32 insertions(+), 6 deletions(-)
+
+
+base-commit: f84b9b09d40408cf91bbc500d9f190a7866c3e0f
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-27%2Fderrickstolee%2Fmidx-test%2Fupstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-27/derrickstolee/midx-test/upstream-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/27
+-- 
+gitgitgadget
