@@ -7,98 +7,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C5F91F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 15:17:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82EC41F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 15:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbeJHW3P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 18:29:15 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39072 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726458AbeJHW3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 18:29:15 -0400
-Received: by mail-pl1-f194.google.com with SMTP id w14-v6so10220614plp.6
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 08:17:03 -0700 (PDT)
+        id S1726492AbeJHW3R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 18:29:17 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44165 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726458AbeJHW3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 18:29:17 -0400
+Received: by mail-pf1-f194.google.com with SMTP id r9-v6so8368029pff.11
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 08:17:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=cnofc5sBR6IiAYcZ9DjO+h178g7Z7LRNuRrsGhGYrB4=;
-        b=ReTaNDleztQEGfRFoXkX4PIbacKKYER7s+4O26ykA6attegLhtHmdwCw89SjXdqIDl
-         lZki+xeqBTTznSlWBGSy+yjg8aYoTUVmlGz7jhyZJIqdLeEXJSSQWVWzg3yXdsE7KZ1s
-         my0+nZoU0IqK/7CAlbP3U66STQDCy6/1dl+b5OF+kGroQZLPHKndbDGBd5/B8lmc2Nj/
-         h+8LLBDK5qv8EWpyrC38iyHqRJcmFpd/hMm/fMLa4en15JAQHQrq6hN853eN6U+hV8jL
-         ++LTENuIdTax5jt22cmqkONZpLJTtx+gHR99DrUIOuaf1pR5noaBaDEITstkiHG559cY
-         yklw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KP51qsoDsnzDw8hwyR/tzMp85bgwLf40on24ZTmcMNw=;
+        b=CvEEF9art3sdbvipTGb4KL+TS5zysfg7pcKeQFgLE9t0W09T5+K0g4FpA1taE+YQak
+         OqPlnmiHy3qj7j71h/ao4KK+3lkAWTYj/B4S/c12MEbhtF+k3lwxEu7tsaseyJdjNSyS
+         y0Y1Ggz3oZgEJ/ZSaYQ84JpS7ukRfMNhnUZOM3VfNfPw7JJKakuZiLmVUbG5HkGpUqdY
+         ZU1oxZIitYcCimYR6ZBwRKwR6kC7rTZqVkHZmdPUqtDE+7981oLOUP6iFU/5Yv4Zat05
+         vZXK+bghKwE7xbwbujN7MmWYpZbZUjoioUy49/2+RrkJO2AQ/HPvejVnx0essGNFs6IJ
+         3n2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cnofc5sBR6IiAYcZ9DjO+h178g7Z7LRNuRrsGhGYrB4=;
-        b=g5bU2pJC0kF+k/VJdKBNBfltyDCxTTQDMluUMQVyFfAlIxfXl8+Z/BkJky3v0zuFQX
-         G0yL1MHinu7/hUPuGcm6qxaHlnXx15d5CypSGc2dwEWzTLPlZSKZ54tvCPkN5M8djfea
-         bv8G0Ek8+R2fVLHSxzrqbvgttb+mo1JG2/m4BdbcrNN9tut244dbie30lnbNI7PtGo00
-         1vM5CLocv5818NFX6SCtC+zE5xNI75U7r9wTSsb5lsXQyfyfHa2qmcPYKDr5RzRVKSu6
-         Q6OEbeb+7EF29bGMBUgOm3YQH0wtHJ7/Oj43tSrn/R1gYy0t8tY9ViVwPpdeg972z1Qn
-         OZQg==
-X-Gm-Message-State: ABuFfohIjrUkdxL3xchXnMVnfqqAzYihp3ntqWMMIIwepUGXehLApM3Y
-        mQgPCCsJR4VHYb8W0KQVq49DGiY8
-X-Google-Smtp-Source: ACcGV61YpXonfJ5FPmIU4eCeAoaCalEQkkcDISEgVx5oQdrzLmWO2fYCopzKHSWiHDKIcfxR5n9csg==
-X-Received: by 2002:a17:902:7244:: with SMTP id c4-v6mr24591174pll.339.1539011822886;
-        Mon, 08 Oct 2018 08:17:02 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KP51qsoDsnzDw8hwyR/tzMp85bgwLf40on24ZTmcMNw=;
+        b=IvevVERp86MnBrX4u+EAiT3FXOlaCz99NqK4Ds+a6d5lTv0Yqj0FjDAaG280HFJhQP
+         PWvfyYnqQaNGdOcyK1oH1Fq7Zhcs6lbd0IhslCpVEtcsBhq7IVUFqabKRc8kmOIBlZJi
+         w+7x/ZN8z1cJZX1DRYCoBiY3UBwvZ6yDp6Na3ES0qUiBjZ0c59eArtIyYYCep7yV0Ne8
+         bMx3/rqZQiWa1qJGogyJRjYFmDb/gjs4upXXCt/b+DBDmkyeEuJij0z5+ot8zxXhVKXM
+         gIYiW14p2xpusHN1nTK546H0F99YlOY/GMGjAr9hMKvfny+1VqE365y1lfpBWOnqqKZr
+         E/UQ==
+X-Gm-Message-State: ABuFfogOFwGvQtQuYGJ4l2Xf0vHpQTCRtihyukZC2Fi1ISl0RIRg3RY9
+        5j2ZcKIniDXrdZbOV4xllWCwXdbY
+X-Google-Smtp-Source: ACcGV6111tPnuyWc8/Or2/jtOSvdN3ACE5G1yZ8WUeri42qM5A2zAQA6b8Tzsw1heMds5C15X1WEnQ==
+X-Received: by 2002:a63:fd58:: with SMTP id m24-v6mr22098967pgj.132.1539011824275;
+        Mon, 08 Oct 2018 08:17:04 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id z26-v6sm13173761pfh.77.2018.10.08.08.17.01
+        by smtp.gmail.com with ESMTPSA id v190-v6sm26659773pgb.16.2018.10.08.08.17.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Oct 2018 08:17:02 -0700 (PDT)
-Date:   Mon, 08 Oct 2018 08:17:02 -0700 (PDT)
-X-Google-Original-Date: Mon, 08 Oct 2018 15:16:56 GMT
-Message-Id: <pull.27.git.gitgitgadget@gmail.com>
+        Mon, 08 Oct 2018 08:17:03 -0700 (PDT)
+Date:   Mon, 08 Oct 2018 08:17:03 -0700 (PDT)
+X-Google-Original-Date: Mon, 08 Oct 2018 15:16:57 GMT
+Message-Id: <9fcbbe336dffb16b7cb5f4de0163404a81597af1.1539011820.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.27.git.gitgitgadget@gmail.com>
+References: <pull.27.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/3] Add GIT_TEST_MULTI_PACK_INDEX environment variable
+Subject: [PATCH 1/3] midx: fix broken free() in close_midx()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To increase coverage of the multi-pack-index feature, add a
-GIT_TEST_MULTI_PACK_INDEX environment variable similar to other GIT_TEST_*
-variables.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-After creating the environment variable and running the test suite with it
-enabled, I found a few bugs in the multi-pack-index implementation. These
-are handled by the first two patches.
+When closing a multi-pack-index, we intend to close each pack-file
+and free the struct packed_git that represents it. However, this
+line was previously freeing the array of pointers, not the
+pointer itself. This leads to a double-free issue.
 
-I have set up a CI build on Azure Pipelines [1] that runs the test suite
-with a few optional features enabled, including GIT_TEST_MULTI_PACK_INDEX
-and GIT_TEST_COMMIT_GRAPH. I'll use this to watch the features and ensure
-they work well with the rest of the ongoing work. Eventually, we can add
-these variables to the Travis CI scripts.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ midx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1] https://git.visualstudio.com/git/_build?definitionId=4
-
-Derrick Stolee (3):
-  midx: fix broken free() in close_midx()
-  midx: close multi-pack-index on repack
-  multi-pack-index: define GIT_TEST_MULTI_PACK_INDEX
-
- builtin/repack.c            |  8 ++++++++
- midx.c                      | 17 +++++++++++++----
- midx.h                      |  4 ++++
- t/README                    |  4 ++++
- t/t5310-pack-bitmaps.sh     |  1 +
- t/t5319-multi-pack-index.sh |  2 +-
- t/t9300-fast-import.sh      |  2 +-
- 7 files changed, 32 insertions(+), 6 deletions(-)
-
-
-base-commit: f84b9b09d40408cf91bbc500d9f190a7866c3e0f
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-27%2Fderrickstolee%2Fmidx-test%2Fupstream-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-27/derrickstolee/midx-test/upstream-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/27
+diff --git a/midx.c b/midx.c
+index f3e8dbc108..999717b96f 100644
+--- a/midx.c
++++ b/midx.c
+@@ -190,7 +190,7 @@ static void close_midx(struct multi_pack_index *m)
+ 	for (i = 0; i < m->num_packs; i++) {
+ 		if (m->packs[i]) {
+ 			close_pack(m->packs[i]);
+-			free(m->packs);
++			free(m->packs[i]);
+ 		}
+ 	}
+ 	FREE_AND_NULL(m->packs);
 -- 
 gitgitgadget
+
