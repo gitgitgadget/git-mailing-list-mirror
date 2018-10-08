@@ -6,111 +6,89 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E36B71F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 23:02:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 118BE1F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 23:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbeJIGQJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 02:16:09 -0400
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:50249 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726795AbeJIGQJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 02:16:09 -0400
-Received: by mail-wm1-f49.google.com with SMTP id i8-v6so3466921wmg.0
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:02:06 -0700 (PDT)
+        id S1725803AbeJIGXk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 02:23:40 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:34233 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725749AbeJIGXk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 02:23:40 -0400
+Received: by mail-wr1-f48.google.com with SMTP id z4-v6so22500350wrb.1
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=qPrq8IE5j6JMRPsnlCZuroTBoF2bgP5EdSpEYxs7zmM=;
-        b=NkTD2tdJB4tnN4RxL2kmg0AwPuEWRjBfnmb657x0IDIvovQz2t/NeXNfUFldhmoWuF
-         ukjSY+XJX5b4nZPp7SL3ycmqm/fEEjfhIUud+ZYzEa4Khy2bEuEsnCr9Hofe4EBDKeaJ
-         YGPAtg3lSa6Kb2FybqRYwqZlMKg28b7yF31EKtooTcQAbxMs2OgqLT34LiRnzre4G0+s
-         +5wm+nh7UhUYrNwUdAhRnQX/saTzrwN1gqV3iXIFNO2qqMKPXdRZnU3xeVmMsFuipxk/
-         D+w8oEwFLIuCxgsknx2j1Aphk8OwbZrOgYfJuLxl849NAaNcVCiF/aw+GhYhwvfeoxJn
-         grQw==
+         :user-agent:mime-version;
+        bh=ZJpwTuUaj/Wu8cOChcpqb8HoliGWOdWb24kw93RX+9s=;
+        b=fAsDFZ/i7zB2zeNuerq4Y0p6OEy/7IFF9V0bs7jBI92Ol0HJEuqTskfpL3iaQYtt8l
+         fwqnP+Ym/7Oe9W11ims3aEzm3dCYV/eRJcqwkapeBNF+z8+Ac0KAnkkEu50jm4QSpxyi
+         W9n1Uc/QK6CIQ3t4y2UL8hTKZ49ctniuA+Zz/nIZ/+nYloOWGZGLhviVV/UEBRJaFjsk
+         vQgVRkdO9c2zC5nIl5RSE9VWMPekSjzqL3tn2srrqCl9CqvHiP/iKYI7lksRAk0T1lS8
+         NhtxueuWzYxAvKrC6GVWYNTSYwPNJxAo1WoSwCeiy+VY33s/Xv28lS/41rgt/Xc1Qa4Q
+         uc0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=qPrq8IE5j6JMRPsnlCZuroTBoF2bgP5EdSpEYxs7zmM=;
-        b=nucQnUMAaSt1cwLVQG5M4ghAuL3PyeuFNjXVW2SuIuwG11xCGVpK5ms2cKNo5HFRMS
-         /1v0XQdLkxih9RWd25LT7ftJ9PD7fmhCsksvnc+Topv5Z79gzXpjHCkOwi3n3cagcezr
-         Tow9L7bBa0+rGiDw0J4g7J4o5+PqqogI9HVGAQULJR12dK6L0vX6SeTgkPPZifGo3vQg
-         A7b0Dg5Xht71pdm/O6H75fjA5dtBpT3/TxldpFrSrn3+IqkdfeoSAcBJjnOOOocoOOrq
-         hZd8zCfLGGgksqrc3O+jH2UbS95HY1iAd9EoNMP+YtvNX6LJvFhRWs6uK0mbnzyQpbPn
-         mi2g==
-X-Gm-Message-State: ABuFfogr2pZ8h2qrBwvC3P4dxXrJC6PjkaQl3Yk7rdjeSMGJZiacH4fQ
-        2E6miHbg4KsqXheo4u9yl0yIErkUvL8=
-X-Google-Smtp-Source: ACcGV624/1QTt489Subwpd/MjJsb+g0ngaIJ9ixC3mgSlWwLuPTOGirGzHCayk+NiukQM/VrzE+VcA==
-X-Received: by 2002:a1c:e15:: with SMTP id 21-v6mr7462146wmo.35.1539039724876;
-        Mon, 08 Oct 2018 16:02:04 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z89-v6sm42496069wrb.3.2018.10.08.16.02.03
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZJpwTuUaj/Wu8cOChcpqb8HoliGWOdWb24kw93RX+9s=;
+        b=kZR89adntrnUbjPa6b1XPgKJOiKV4UB2fReTVr/TOSfhjMHm895kU1uTMzqM5GVisy
+         hmcJA81rWM/GblrHXjlY80IC/JySIfoKmiIYp/eXC1uVaY1MSG7LQn5TlLmAPQ/Az+El
+         YWZbX9GnDdsWkOcfOqx2B4WEQd/W45w7eA9vYy68j4cPoDep84HBPXQmg1ioWawfVLLP
+         4eu+KmfsGDObNWDAt0HInMU5Bj6C7f+QPWv8Pi7sbCkIA9Nz9d6a82yM4dh+RNDzZvfl
+         85+YJMtQDWVszZGCqXrcIJEvoqdJCbJ/unAPlGKN5PmYGyxF4hwTU7q6fixLd1Mn9HNW
+         YNSQ==
+X-Gm-Message-State: ABuFfohOF/X9DmMxTRWXFjX7vzstikaMdi+3jdrlVbkJwxD4E1yyK5M+
+        RJ4BGvviA0mFCTIdZEPLiOE=
+X-Google-Smtp-Source: ACcGV63ZesF6JchglglA1JAjGKS/XQ//8jrjhuFpSneNK/2L0ERv3jyG/v2Krwf3oOPVFPcTrDCFNg==
+X-Received: by 2002:a5d:618f:: with SMTP id j15-v6mr19459651wru.198.1539040174574;
+        Mon, 08 Oct 2018 16:09:34 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 18-v6sm22673376wmw.26.2018.10.08.16.09.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Oct 2018 16:02:03 -0700 (PDT)
+        Mon, 08 Oct 2018 16:09:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit graph
-References: <87tvm3go42.fsf@evledraar.gmail.com>
-        <20181003133650.GN23446@localhost>
-        <87r2h7gmd7.fsf@evledraar.gmail.com>
-        <20181003141732.GO23446@localhost>
-        <87o9cbglez.fsf@evledraar.gmail.com>
-        <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
-        <87lg7ehnps.fsf@evledraar.gmail.com>
-        <20181003185156.GA20709@sigill.intra.peff.net>
-        <a300acae-c7f2-eace-5196-381a99d62c13@gmail.com>
-        <20181003191805.GB16666@sigill.intra.peff.net>
-        <20181008164141.GZ23446@szeder.dev>
-Date:   Tue, 09 Oct 2018 08:02:03 +0900
-In-Reply-To: <20181008164141.GZ23446@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Mon, 8 Oct 2018 18:41:41 +0200")
-Message-ID: <xmqqd0skt53o.fsf@gitster-ct.c.googlers.com>
+To:     Julia Lawall <julia.lawall@lip6.fr>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git log -S or -G
+References: <alpine.DEB.2.21.1810061712260.2402@hadrien>
+        <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com>
+        <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com>
+        <alpine.DEB.2.21.1810070719200.2347@hadrien>
+Date:   Tue, 09 Oct 2018 08:09:32 +0900
+In-Reply-To: <alpine.DEB.2.21.1810070719200.2347@hadrien> (Julia Lawall's
+        message of "Sun, 7 Oct 2018 07:21:26 +0200 (CEST)")
+Message-ID: <xmqq8t38t4r7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Julia Lawall <julia.lawall@lip6.fr> writes:
 
-> There is certainly potential there.  With a (very) rough PoC
-> experiment, a 8MB bloom filter, and a carefully choosen path I can
-> achieve a nice, almost 25x speedup:
+>> Doing the same for -S is much harder at the machinery level, as it
+>> performs its thing without internally running "diff" twice, but just
+>> counts the number of occurrences of 'foo'---that is sufficient for
+>> its intended use, and more efficient.
 >
->   $ time git rev-list --count HEAD -- t/valgrind/valgrind.sh
->   6
->
->   real    0m1.563s
->   user    0m1.519s
->   sys     0m0.045s
->
->   $ time GIT_USE_POC_BLOOM_FILTER=y ~/src/git/git rev-list --count HEAD -- t/valgrind/valgrind.sh
->   6
->
->   real    0m0.063s
->   user    0m0.043s
->   sys     0m0.020s
+> There is still the question of whether the number of occurrences of foo
+> decreases or increases.
 
-Even though I somehow sense a sign of exaggeration in [v] in the
-pathname, it still is quite respectable.
+Hmph, taking the changes that makes the number of hits decrease
+would catch a subset of "changes that removes 'foo' only---I am not
+interested in the ones that adds 'foo'".  It will avoid getting
+confused by a change that moves an existing 'foo' to another place
+in the same file (as the number of hits does not change), but at the
+same time, it will miss a change that genuinely removes an existing
+'foo' and happens to add a 'foo' at a different place in the same
+file that is unrelated to the original 'foo'.  Depending on the
+definition of "I am only interested in removed ones", that may or
+may not be acceptable.
 
->   bloom filter total queries: 16269 definitely not: 16195 maybe: 74 false positives: 64 fp ratio: 0.003934
->
-> But I'm afraid it will take a while until I get around to turn it into
-> something presentable...
 
-That's OK.  This is an encouraging result.
 
-Just from curiousity, how are you keying the filter?  tree object
-name of the top-level and full path concatenated or something like
-that?
