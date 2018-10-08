@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32BEE1F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 14:54:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D81C21F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 14:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726383AbeJHWHD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 18:07:03 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37543 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbeJHWHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 18:07:02 -0400
-Received: by mail-wr1-f66.google.com with SMTP id y11-v6so10439633wrd.4
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 07:54:55 -0700 (PDT)
+        id S1726461AbeJHWKv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 18:10:51 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40622 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726367AbeJHWKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 18:10:51 -0400
+Received: by mail-wm1-f66.google.com with SMTP id z204-v6so8640596wmc.5
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 07:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=yQp6TDLneR2NTmpuBfsnlEo1fqnKhV5RAGQHxScOVrQ=;
-        b=rK4vKsMCTl8AUo77h1v8UZJP/v1J8lT+4XzL/AdeN1tN6m8NsfvXYIazDk4ek9g1RU
-         n+juFGVH+h2CC9L+q1j3N3YxwvL9kz4Mll48Vj6lEaz8pbRJTO9oS0lbIROTQnE5N/sL
-         e+hgSGLcOzTrCRXufXIbFg2FzGPkQLrcNswdfobGAi1C493t7+8lliZulJpoT/D49m0A
-         SHe99dFlG6fqzYQe4WMwEis74wJr4xQpE4gEzGwN04TKQJXVBa09jxoBnUnzdNEZBuZ/
-         xTk2GSZTxMmyuVe8FoSdapsU17WXNx9SiYtYihP27ZcyCUIE9JZKTTK6cg/snCCj55g6
-         Ecdg==
+        bh=JlSCCBu9CWr1LMMD9nLPcWisgiziejDGfc5z9JX4hFA=;
+        b=NPpLG+fJp5btoDEvFlpEB0roKxZj1kILusxZ3IGy1XqXNJHd9lk6OgOSmX1GIIFo7k
+         7Aa947v4dIPRhxEEmgGqDSlbbBeJnHG9kkB8qmz6BpoFHzmBUYPdUswQBUfIJG09AQZB
+         TCluazNtDE6mPkIXhAMt4DqYtvkrJYvo+NIMW8DcJk2uPpLPLoVGgY47yu7mkfMfDhCm
+         h4YgFqfdhQJaokQbrYdR78j4kPluo61KLASKexk5McW++m3V1cggqgzanhW6FbGipcKf
+         VtcdMKDIDBhy60gXmhx7COGDJbjnvY4+K0Q4nvmCK5bZhmdQj/glTtLNa4nN1fTVs+lf
+         oGFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=yQp6TDLneR2NTmpuBfsnlEo1fqnKhV5RAGQHxScOVrQ=;
-        b=eLJ/EWfmO4umRupchLU7A7qvDl/B4FfYHlsBIyjBEwdI6AWHzdbPtOaLD3Bz2tAVfS
-         ksRNE2wsNMLmacJswu/U9kjQMk+Kz2gCKaLDmcbBfo++bXr9WX3wsfxCzb3AIdhNijm9
-         xiR16V4PlOoKBszUJFrHr4uY3vsP1N4wMLeSyKGJE/vtCgoudkOToiH1QrtAdpP5fVtT
-         cVvUNyW/bM6CqHl5NuVhyBE7k/1BN8mPAcHfBvGKYh0c+i8i0/BJk3v+VevgqAR2ZE2h
-         CWqf8xs+68ihRq/R0HTAZDtlp9udhegG1M6dBuQSLzupAFomWT6MaJwE5boGLM8lgqxQ
-         y30w==
-X-Gm-Message-State: ABuFfoha6zIKwA+rsd18MOuJJA21IujPqJfouK/Vrz0ov6Dw4tDMJ2fc
-        pj5tO+PKt7JFs1Fy3K6/2/rOHC/s
-X-Google-Smtp-Source: ACcGV63qSEzFT6eCl/teLj5V3KFfQ8AEymrZkSolyQFrepynu42AhkFdnEOKFhlWa/Lq7FHX9kNVdw==
-X-Received: by 2002:adf:fe0f:: with SMTP id n15-v6mr15972244wrr.71.1539010494145;
-        Mon, 08 Oct 2018 07:54:54 -0700 (PDT)
+        bh=JlSCCBu9CWr1LMMD9nLPcWisgiziejDGfc5z9JX4hFA=;
+        b=pYzdKqRV1z6rQk0H3ZfnPfBvSHS//gN/zqA4iqARwteSOX5cHfA0GqF/xMPl20m6cb
+         U5sCJ25o8CTOW0nQcEVDK0EIMX79JCPavGAd7QrkUHI13HHQ8MbIVHe8AZPXzgvX2htF
+         wvK4Y1P7/J74sQgZhjT2dcOUr+zTSMEeJQFH7oKhmwzRmmVkq2+Nm2e4o72p5N27YPNh
+         jgHck9HrE1JEBc9Y0ns0rrIfB1miCGPR/jWRC+GvQJwIQUiQo8ze9NcGgPjLQXW/ESbd
+         3kw/PFT5SrcWOdK2WJ4pVI55I8F1Vo8+3ALm3M8YlRwZ/IkbtSjE1OImDAR5xpGbTLJn
+         chWg==
+X-Gm-Message-State: ABuFfogNKCNeMJ49AEM4z9zR30Aw7nh9TfEtELuwRlW5vUlEhEHByW8k
+        DBCFrICHnOYdwblqy1Y/oRWdTbjL
+X-Google-Smtp-Source: ACcGV60e2doL16Rzu3RzRDnWSBYnok7hCrppHRTZPmJO3RuHPjAbQMLDEEk13LkHJiRuWIxKqCS55Q==
+X-Received: by 2002:a1c:a1c6:: with SMTP id k189-v6mr16522432wme.0.1539010721154;
+        Mon, 08 Oct 2018 07:58:41 -0700 (PDT)
 Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id m143-v6sm6989486wmd.29.2018.10.08.07.54.52
+        by smtp.gmail.com with ESMTPSA id l125-v6sm16756263wmb.1.2018.10.08.07.58.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Oct 2018 07:54:52 -0700 (PDT)
+        Mon, 08 Oct 2018 07:58:40 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Fix the racy split index problem
-References: <20180927124434.30835-1-szeder.dev@gmail.com> <871s9fjbcb.fsf@evledraar.gmail.com> <20180927142336.GJ27036@localhost> <87zhw3hsiv.fsf@evledraar.gmail.com> <87k1n6hzwu.fsf@evledraar.gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sbeller@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
+References: <pull.26.git.gitgitgadget@gmail.com> <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com> <87bm84a70p.fsf@evledraar.gmail.com> <a2299be9-0840-da69-ebeb-f64ebe66db5a@gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <87k1n6hzwu.fsf@evledraar.gmail.com>
-Date:   Mon, 08 Oct 2018 16:54:51 +0200
-Message-ID: <878t38a3pg.fsf@evledraar.gmail.com>
+In-reply-to: <a2299be9-0840-da69-ebeb-f64ebe66db5a@gmail.com>
+Date:   Mon, 08 Oct 2018 16:58:39 +0200
+Message-ID: <877eisa3j4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -72,61 +71,60 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Sep 28 2018, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Oct 08 2018, Derrick Stolee wrote:
 
-> On Thu, Sep 27 2018, Ævar Arnfjörð Bjarmason wrote:
->
->> On Thu, Sep 27 2018, SZEDER Gábor wrote:
+> On 10/8/2018 9:43 AM, Ævar Arnfjörð Bjarmason wrote:
+>> On Tue, Aug 28 2018, Derrick Stolee via GitGitGadget wrote:
 >>
->>> On Thu, Sep 27, 2018 at 03:53:24PM +0200, Ævar Arnfjörð Bjarmason wrote:
->>>>
->>>> On Thu, Sep 27 2018, SZEDER Gábor wrote:
->>>>
->>>> > This is the second attempt to fix the racy split index problem, which
->>>> > causes occasional failures in several random test scripts when run
->>>> > with 'GIT_TEST_SPLIT_INDEX=yes'.  The important details are in patches
->>>> > 1 and 5 (corresponding to v1's 3 and 5).
->>>>
->>>> Thanks. I'm running the same sorts of tests I noted in
->>>> https://public-inbox.org/git/87va7ireuu.fsf@evledraar.gmail.com/ on
->>>> this. The fix Jeff had that you noted in
->>>> https://public-inbox.org/git/20180906151439.GA8016@localhost/ is now in
->>>> "master".
->>>>
->>>> I take it your
->>>> https://github.com/szeder/git/commits/racy-split-index-fix is the same
->>>> as this submission?
+>>> From: Derrick Stolee <dstolee@microsoft.com>
 >>>
->>> Yes.
+>>> The commit-graph feature is tested in isolation by
+>>> t5318-commit-graph.sh and t6600-test-reach.sh, but there are many
+>>> more interesting scenarios involving commit walks. Many of these
+>>> scenarios are covered by the existing test suite, but we need to
+>>> maintain coverage when the optional commit-graph structure is not
+>>> present.
 >>>
->>>> Anyway, I'm testing that cherry-picked on top of the
->>>> latest master.
->>>>
->>>> Unfortunate that we couldn't get the isolated test you made in
->>>> https://public-inbox.org/git/20180907034942.GA10370@localhost/
+>>> To allow running the full test suite with the commit-graph present,
+>>> add a new test environment variable, GIT_TEST_COMMIT_GRAPH. Similar
+>>> to GIT_TEST_SPLIT_INDEX, this variable makes every Git command try
+>>> to load the commit-graph when parsing commits, and writes the
+>>> commit-graph file after every 'git commit' command.
 >>>
->>> Nah, that's not an isolated test case, that's only a somewhat
->>> narrowed-down, but rather reliable reproduction recipe while I still
->>> had no idea what was going on :)
+>>> There are a few tests that rely on commits not existing in
+>>> pack-files to trigger important events, so manually set
+>>> GIT_TEST_COMMIT_GRAPH to false for the necessary commands.
 >>>
->>> The _real_ isolated test is the last test in t1701, that's what it
->>> eventually boiled down to.
+>>> There is one test in t6024-recursive-merge.sh that relies on the
+>>> merge-base algorithm picking one of two ambiguous merge-bases, and
+>>> the commit-graph feature changes which merge-base is picked.
+>>>
+>> The test feature itself seems fine, but this consistently fails ever
+>> since it got introduced (a reset --hard on the commit merged to msater
+>> in git.git):
 >>
->> Thanks. I had ~400 runs of the tests I ran before and they were all
->> OK. Now trying also with t1701 (which I hadn't noticed was a new
->> test...).
+>>      GIT_TEST_COMMIT_GRAPH=true prove -j$(parallel --number-of-cores) t5500-fetch-pack.sh t6001-rev-list-graft.sh t6050-replace.sh
+>>      Test Summary Report
+>>      -------------------
+>>      t6001-rev-list-graft.sh (Wstat: 256 Tests: 14 Failed: 6)
+>>        Failed tests:  3, 5, 7, 9, 11, 13
+>>        Non-zero exit status: 1
+>>      t6050-replace.sh       (Wstat: 256 Tests: 35 Failed: 9)
+>>        Failed tests:  12-16, 24-25, 30, 35
+>>        Non-zero exit status: 1
+>>      t5500-fetch-pack.sh    (Wstat: 256 Tests: 357 Failed: 1)
+>>        Failed test:  351
+>>        Non-zero exit status: 1
+>>
+>> This is on Linux/Debian 4.17.0-1-amd64. Can you reproduce this? If not I
+>> can provide more info (-x output etc..).
+> I see these failures, too, but I believe they are due to
+> ds/commit-graph-with-grafts not being merged to 'next' yet. The
+> purpose of that branch is to fix these test breaks. The environment
+> variable got merged a lot faster.
 >
-> Ran that overnight with the same conditions as before. 2683 OK runs and
-> 0 failures (and counting). So it seems like the combination of the two
-> fixed the split index bugs.
+> I just built & tested the 'jch' branch at 515d82d9 with
+> GIT_TEST_COMMIT_GRAPH=1 and they all passed.
 
-I forgot I ad this running, and got up to 45482 OKs and 0 FAILs before
-finally Ctrl+C-ing it now :)
-
->>>> but I
->>>> don't see how it could be added without some very liberal
->>>> getenv("GIT_TEST_blahblah"), so it's probably best to not add it,
->>>> particularly with the C rewrite of git-stash in-flight.
->>>>
->>>> I'll report back when I have enough test data to say how these patches
->>>> affect the intermittent test failures under GIT_TEST_SPLIT_INDEX=yes.
+I should have tested "pu" first. These failures are indeed fixed
+there. Thanks, and sorry about the noise.
