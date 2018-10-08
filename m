@@ -2,93 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 118BE1F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 23:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8E51F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 23:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725803AbeJIGXk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 02:23:40 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:34233 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725749AbeJIGXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 02:23:40 -0400
-Received: by mail-wr1-f48.google.com with SMTP id z4-v6so22500350wrb.1
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:09:35 -0700 (PDT)
+        id S1725828AbeJIGYx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 02:24:53 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35758 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725759AbeJIGYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 02:24:53 -0400
+Received: by mail-ed1-f67.google.com with SMTP id y19-v6so3343edd.2
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZJpwTuUaj/Wu8cOChcpqb8HoliGWOdWb24kw93RX+9s=;
-        b=fAsDFZ/i7zB2zeNuerq4Y0p6OEy/7IFF9V0bs7jBI92Ol0HJEuqTskfpL3iaQYtt8l
-         fwqnP+Ym/7Oe9W11ims3aEzm3dCYV/eRJcqwkapeBNF+z8+Ac0KAnkkEu50jm4QSpxyi
-         W9n1Uc/QK6CIQ3t4y2UL8hTKZ49ctniuA+Zz/nIZ/+nYloOWGZGLhviVV/UEBRJaFjsk
-         vQgVRkdO9c2zC5nIl5RSE9VWMPekSjzqL3tn2srrqCl9CqvHiP/iKYI7lksRAk0T1lS8
-         NhtxueuWzYxAvKrC6GVWYNTSYwPNJxAo1WoSwCeiy+VY33s/Xv28lS/41rgt/Xc1Qa4Q
-         uc0g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QXr4iuuairMtVXcRyi6sxMVCwSYISUmr8neCpE/nfHU=;
+        b=M1rUJVHoOPLPNvMa2GagwinDISXD5VdrwVTMfgzzBB2Phep29+N8moX+LpodOMdjcd
+         fbkxhoUh8YbSRkj1zILWj88eQxLngFVc6A6HjOGGsB57FLduwtQdliMXgSVk0fV55j54
+         nj0lZf4vI5xd0kSXlkJigp0rbkGij1B5MTGvCOCeIhvnLtq7nFwESRRhV5o7yBLQNfkg
+         hNJOEriPhlZYW6eKxb0pvczExh+UUW9Knmqon7/5Jf6SCirHftmUDRZhbGzy9WnvAy7w
+         l1iWNkX3WtjycPuITzSaPp0LPb309cYbvDvUq1u3C0Y8N0DocxBjLtqIpKP3S3YK1ZQW
+         meew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZJpwTuUaj/Wu8cOChcpqb8HoliGWOdWb24kw93RX+9s=;
-        b=kZR89adntrnUbjPa6b1XPgKJOiKV4UB2fReTVr/TOSfhjMHm895kU1uTMzqM5GVisy
-         hmcJA81rWM/GblrHXjlY80IC/JySIfoKmiIYp/eXC1uVaY1MSG7LQn5TlLmAPQ/Az+El
-         YWZbX9GnDdsWkOcfOqx2B4WEQd/W45w7eA9vYy68j4cPoDep84HBPXQmg1ioWawfVLLP
-         4eu+KmfsGDObNWDAt0HInMU5Bj6C7f+QPWv8Pi7sbCkIA9Nz9d6a82yM4dh+RNDzZvfl
-         85+YJMtQDWVszZGCqXrcIJEvoqdJCbJ/unAPlGKN5PmYGyxF4hwTU7q6fixLd1Mn9HNW
-         YNSQ==
-X-Gm-Message-State: ABuFfohOF/X9DmMxTRWXFjX7vzstikaMdi+3jdrlVbkJwxD4E1yyK5M+
-        RJ4BGvviA0mFCTIdZEPLiOE=
-X-Google-Smtp-Source: ACcGV63ZesF6JchglglA1JAjGKS/XQ//8jrjhuFpSneNK/2L0ERv3jyG/v2Krwf3oOPVFPcTrDCFNg==
-X-Received: by 2002:a5d:618f:: with SMTP id j15-v6mr19459651wru.198.1539040174574;
-        Mon, 08 Oct 2018 16:09:34 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 18-v6sm22673376wmw.26.2018.10.08.16.09.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Oct 2018 16:09:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Julia Lawall <julia.lawall@lip6.fr>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git log -S or -G
-References: <alpine.DEB.2.21.1810061712260.2402@hadrien>
-        <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com>
-        <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com>
-        <alpine.DEB.2.21.1810070719200.2347@hadrien>
-Date:   Tue, 09 Oct 2018 08:09:32 +0900
-In-Reply-To: <alpine.DEB.2.21.1810070719200.2347@hadrien> (Julia Lawall's
-        message of "Sun, 7 Oct 2018 07:21:26 +0200 (CEST)")
-Message-ID: <xmqq8t38t4r7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QXr4iuuairMtVXcRyi6sxMVCwSYISUmr8neCpE/nfHU=;
+        b=SPMzjGX3N4TUSqRNwzVl0VQJnRspEuGV0f5mR8sp1PLSSwLsRlluxxbKDLBGIBBa0f
+         ZxpFF8u6zbgyWKFLv9CeUSZw4gSLXipy7fnFIz8qpj/bXsFPn2FSrvpIJWIVcoUNNZjj
+         t4Hp5/HH0MdRgeW2gLPDV5KFiQOhFM/uSP+EwBwCNCLbc2mlhG6FjoQtT0WupeVPukBb
+         GfsBe0LMJSCxBef+E5Hen3NKMVrnD/SxudD040ErQ5NAkYfvZvII8A4dDW6sONlXxDsC
+         5TkWfYP+gGolxVLFb8hom/ub4YRyX/XsiSH+jHKxmWMgicyFXwArAUPLTVl1LMDWZ4Hp
+         sw/w==
+X-Gm-Message-State: ABuFfoihepuHZZ1SSMPzJ7ggxbud4GxQSd359boUiOm7XZitZTSk/xuj
+        Afz/sBmF4Pl2/lS6nvfwsOCXrdnj/l9FmSUslhOmPg==
+X-Google-Smtp-Source: ACcGV61IvWbzNxrB3dFep0aewUBrFFnHvA5FybL4noLvnb/lonCujcepJAuZUY62HWWhKmGFZ01dWKzMKOFdelQdMRc=
+X-Received: by 2002:aa7:c742:: with SMTP id c2-v6mr26876396eds.231.1539040247998;
+ Mon, 08 Oct 2018 16:10:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20181008215701.779099-1-sandals@crustytoothpaste.net> <20181008215701.779099-14-sandals@crustytoothpaste.net>
+In-Reply-To: <20181008215701.779099-14-sandals@crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 8 Oct 2018 16:10:37 -0700
+Message-ID: <CAGZ79kbLqcvH9Zd5fH4NECvuES6FQ+jOFDcv713_5SXa-NvQ3g@mail.gmail.com>
+Subject: Re: [PATCH 13/14] submodule: make zero-oid comparison hash function agnostic
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Julia Lawall <julia.lawall@lip6.fr> writes:
-
->> Doing the same for -S is much harder at the machinery level, as it
->> performs its thing without internally running "diff" twice, but just
->> counts the number of occurrences of 'foo'---that is sufficient for
->> its intended use, and more efficient.
+On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> There is still the question of whether the number of occurrences of foo
-> decreases or increases.
+> With SHA-256, the length of the all-zeros object ID is longer.  Add a
+> function to git-submodule.sh to check if a full hex object ID is the
+> all-zeros value, and use it to check the output we're parsing from git
+> diff-files or diff-index.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
 
-Hmph, taking the changes that makes the number of hits decrease
-would catch a subset of "changes that removes 'foo' only---I am not
-interested in the ones that adds 'foo'".  It will avoid getting
-confused by a change that moves an existing 'foo' to another place
-in the same file (as the number of hits does not change), but at the
-same time, it will miss a change that genuinely removes an existing
-'foo' and happens to add a 'foo' at a different place in the same
-file that is unrelated to the original 'foo'.  Depending on the
-definition of "I am only interested in removed ones", that may or
-may not be acceptable.
-
-
-
+Nice!
