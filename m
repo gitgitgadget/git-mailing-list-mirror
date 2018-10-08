@@ -7,41 +7,43 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53D561F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 22:04:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D08F61F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 22:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725927AbeJIFRw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 01:17:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49404 "EHLO
+        id S1726415AbeJIFRx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 01:17:53 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49412 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725749AbeJIFRw (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 9 Oct 2018 01:17:52 -0400
+        by vger.kernel.org with ESMTP id S1725782AbeJIFRx (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 9 Oct 2018 01:17:53 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e17d:6d35:bfb8:6a25])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5EB736078E;
-        Mon,  8 Oct 2018 22:04:00 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2B23C6078F;
+        Mon,  8 Oct 2018 22:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539036240;
-        bh=dWwBa2cffCy66+Q1ZAee9MksXPsNhrc9M95KWy+Yl4w=;
-        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=cY9xYBiwiBEhIhGfy7ECmSG6M9JRLBswOslLz6xc8JC5yFbeA1WMjiRWpJ9PJl9ZS
-         0G4lfXeW2UeXDBUJTdtxsUmphg7M/typOztNiT2tKkTdb+K4uqoYa26adBJb+1MCj2
-         9wrqihZ9CJqO/EuYdCjLW5OBTKAlG4pAF+4nlit+4xzq+0SRo/SNYdm+HmYHlv6arT
-         QhicHJ3yPWqSBiWBSJrRTlHoynj5K2s0+OWh7xXjK9tajR5kb0g3Dl7zqqEkRwlSYp
-         8MQLfrZI66ZHUMlYtU2xYEUhuQXJ4/msZ/cyNb/XGC0SizX8hEDEWm3q9LYatLZ7ZI
-         tgm+n2QbImHGVEUD5+ZxeMTxBwQstVGIcUfkl5rXeAIUKEnivkJsKu8K5P0PDBAWr3
-         eGqhWiXZm0xJnwkEqiZ8Dzt+7nDAkC5IdFVeNV/eIvy3YKoxQgRt4JxlTz/8/RUpJs
-         VPsCjM76w1B/1dmF/P5/aVsaFysV/xRtlRSemZ8pPDe5MVk1FRA
+        s=default; t=1539036241;
+        bh=9afMoEYWJBKyRF4wNjJffChgD6iu4OJA9mRuDf+LvU4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=vjXNKTSc2Em1G8NXDvw4uMWJgvlGJ3BzU25t6HUqEorhjqEC7hCYgKFzOr0Kp8T8J
+         ynwwaUEYZJAW4QtgyLkyfCjsx9ohSXJdyQ3MuyClcZUwNrLHdzlrIGBO7aOkrae1Tt
+         ayk5tzQHdCnRF/j48h4cnSad66J/+ZfxCbtTCswuOzSpVKhFSphAbFzeqtQmPH6KgV
+         U3FR8n/e60Sr0I1UUJbMNs+VqVsQRdYFyI+FVk7s5kIVDGwU1atWHxvec79jVD5E0q
+         nub0G9XlSvZDKxeKfkN5TbYifTA+sG9ngIiJ5NlrobeaDgDJ9Dmn3oFaWBUrfmmVNO
+         BDtDdF3dv1Z88hOTK97IOHXT+KijcoWe83fuROWZlb0zmGZ2cTG8+g1P3cn9Vf430U
+         7RnkypmrnHCjwqASanDNLgI/aOydyRjmvB1O0tk8KjsueWIm7JmKS98CjMXQbyDWi7
+         7CBsbWi+TQcQyhPWdzk2VjX6GG70yAnNa3HSrCFbyH2QpG/oyq/
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 0/2] EditorConfig file
-Date:   Mon,  8 Oct 2018 22:03:51 +0000
-Message-Id: <20181008220353.780301-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 1/2] editorconfig: provide editor settings for Git developers
+Date:   Mon,  8 Oct 2018 22:03:52 +0000
+Message-Id: <20181008220353.780301-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.331.ge82ca0e54c
+In-Reply-To: <20181008220353.780301-1-sandals@crustytoothpaste.net>
+References: <20181008220353.780301-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
@@ -50,25 +52,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series introduces an EditorConfig file to help developers using any
-editor set their editor's settings in conformance with the Git Project's
-settings.  This is helpful for developers who work on different projects
-with different indentation standards to keep their work in sync.
+Contributors to Git use a variety of editors, each with their own
+configuration files.  Because C lacks the defined norms on how to indent
+and style code that other languages, such as Ruby and Rust, have, it's
+possible for various contributors, especially new ones, to have
+configured their editor to use a style other than the style the Git
+community prefers.
 
-Changes since v2:
-* Add .pl and .pm files.
+To make automatically configuring one's editor easier, provide an
+EditorConfig file.  This is an INI-style configuration file that can be
+used to specify editor settings and can be understood by a wide variety
+of editors.  Some editors include this support natively; others require
+a plugin.  Regardless, providing such a file allows users to
+automatically configure their editor of choice with the correct settings
+by default.
 
-Changes since v1:
-* Add notes to both .editorconfig and .clang-format that they should be
-  kept in sync.
-* Add commit message line length.
+Provide global settings to set the character set to UTF-8 and insert a
+final newline into files.  Provide language-specific settings for C,
+Shell, Perl, and Python files according to what CodingGuidelines already
+specifies.  Since the indentation of other files varies, especially
+certain AsciiDoc files, don't provide any settings for them until a
+clear consensus forward emerges.
 
-brian m. carlson (2):
-  editorconfig: provide editor settings for Git developers
-  editorconfig: indicate settings should be kept in sync
+Set the line length for commit messages to 72 characters, which is the
+generally accepted line length for emails, since we send patches by
+email.
 
- .clang-format |  2 ++
- .editorconfig | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+)
+Don't specify an end of line type.  While the Git community uses
+Unix-style line endings in the repository, some Windows users may use
+Git's auto-conversion support and forcing Unix-style line endings might
+cause problems for those users.
+
+Finally, leave out a root directive, which would prevent reading other
+EditorConfig files higher up in the tree, in case someone wants to set
+the end of line type for their system in such a file.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ .editorconfig | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
  create mode 100644 .editorconfig
 
+diff --git a/.editorconfig b/.editorconfig
+new file mode 100644
+index 0000000000..8667740e1d
+--- /dev/null
++++ b/.editorconfig
+@@ -0,0 +1,14 @@
++[*]
++charset = utf-8
++insert_final_newline = true
++
++[*.{c,h,sh,perl,pl,pm}]
++indent_style = tab
++tab_width = 8
++
++[*.py]
++indent_style = space
++indent_size = 4
++
++[COMMIT_EDITMSG]
++max_line_length = 72
