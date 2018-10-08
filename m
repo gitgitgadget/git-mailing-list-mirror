@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 234681F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 22:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA5A1F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 22:44:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725927AbeJIFqy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 01:46:54 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46334 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbeJIFqy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 01:46:54 -0400
-Received: by mail-ed1-f68.google.com with SMTP id g32-v6so18935234edg.13
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 15:32:57 -0700 (PDT)
+        id S1726160AbeJIF6q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 01:58:46 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:42611 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725823AbeJIF6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 01:58:46 -0400
+Received: by mail-ed1-f49.google.com with SMTP id b7-v6so12412492edd.9
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 15:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=8BSai4Tko0UTY+qwqzL2ydvW4WDncQNOiPitnjnPLgw=;
-        b=FiP0CGFU9CXKSrKAkh9W4NK1qRmeN2IrAvmAXk72k7U8SQ71dT3y0gWeujJbemNm6a
-         2OKTtI528+LwelpmdT39z64cBqaTVVgdHYyvBzxIgz2lCAG8r7FN4wnWydtg6JD52HIt
-         H70cKadjFrX3cnbA2ljyeAOLD5hjg+tYSCWpiE982v5pmL5saHVH6hSPsxLvnD6qTf5A
-         COh7QTilk3PCZiL7mA//o3aKCTlqUr+oKPnquk4Fi0fpcevE7aQyY52yX582nDVZWRl2
-         dI4ZG9m8XCKBX/oIExVK+Yya0tfA1EbKSK6Fo6fOsaa5mguFoS68AZwXv+mGwEDQTsmB
-         O8XA==
+        bh=Nh91m6lERy1nm046YIPd6dXK7iLrbBzX5hPTxRtNVtE=;
+        b=RkBvIYkmfMuaHQB/DEJnMdHvJYrd+TWxz8qFxHnuALMzy0mEh8OIDTxUkwqjlUeX6u
+         f+mDtalLDK6ElllbJWJR9kjqDJaGro6Z3Qz5Sd9rWXto6eBvaV/vgmw/E1Dio2wNovNz
+         qT8a0QUeYR3Kk4+Xq1Lf10WKbb3/+iBnmlN9i4ASZ2ZHlf8JzIy9u5O2KRtKrVCr5llD
+         2M31wFMMxgcQ67b+zUctFeHmUNPeJiIcW8+pwkT+L/NbNYyE2YduDPH1gfYzTTyDSX8N
+         NGEUiTNiDyKPtKR4OfChqXEjMiWAp6fDyiXlCojwb/mcRd+9hwwiC2LoAymZYu4FCREc
+         b5ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=8BSai4Tko0UTY+qwqzL2ydvW4WDncQNOiPitnjnPLgw=;
-        b=UaWZFaGu61gmMNI+hdlNTioXR3YesGN8Vm5dK0HLqEUJrOdWqbkGPD6eZpFl/KE9B5
-         pgqKrOu9JbH4obUULbKpjppxb+fIzsvCjFN9FYO5J6TbAtvz9hCR+xGUxonywltzn/i2
-         8RH0Tfty+8DflrFF0fdaQc1dA4Kk9KoKu8LAzSyIwf4sPZg2s+4wQFHWVy/r0aZ38uug
-         vPdGjfVPXv8/ldrpXohuY01TAXiDP3/GUHTqq1daDsC2VxaavGgkENopbHFNwV9EcM9Q
-         S0RKRjtmTmdm+rpLpGVFVqTbuXK34/FxKDa4Oq7zPjt4LzY2EpfEnEYdQOVIpcKhEL+v
-         4IEg==
-X-Gm-Message-State: ABuFfoiPMFWwM5TuQEacUP351PCNZe9QHYnl6Os3fMzUf9G5Bg7vFWwV
-        NB4QtMk5pRuWd3XUaGCBe4c3FgFCDOaj1sZz1yg/5x6Xzjs=
-X-Google-Smtp-Source: ACcGV61Acy/ssx7KeOlEZ01t72gafrtWKnZH1FGnjjKbOrwSJ7haUe+ID5EgrYKLAXGk9rn++nnpUU4R4N57V5FoSGs=
-X-Received: by 2002:a17:906:9a1:: with SMTP id q1-v6mr4110134eje.126.1539037976394;
- Mon, 08 Oct 2018 15:32:56 -0700 (PDT)
+        bh=Nh91m6lERy1nm046YIPd6dXK7iLrbBzX5hPTxRtNVtE=;
+        b=h6w/UNeRgxHj6Ccj97Tg6gOGjTz2bzYmxG5uyOOPmPrbzSRfTWStjQ06O1/gyIk/sJ
+         6JGKda19yDPoUWYppW7DhNO85pJl1qIX8erBGb/lMT+aR3/8zql59zGbMLCWbCMlhJJh
+         YlLc2Z2LBv94KXAbpf7C1xB2swHPiiRRQBd1rzbiLUc+dqtZGZXsV/o8kJcDDAzl8JHk
+         naJXTfPpHvHtfN5b3WUcb/5s4x/5Y42iNumAQLMCfsb/NqlQjqpP1jdCbswB2raajp07
+         7MU51BU87UMfsQWBeLX4dkuAHwudrRsHXalYdjV8v34CLr2IB0PMdvhVBjYLbLN9BDl8
+         E3vg==
+X-Gm-Message-State: ABuFfojmY69BhYIssT815YBn9zzAZmBV6HcgbXASaHMEpm1jmONvTM3g
+        fanv1tKZJX6Js8hORqjwskU36u4tNLhj/SAwTLGW9m+k1mBSSw==
+X-Google-Smtp-Source: ACcGV63cuK9InKxJkyV9GWOxRSRtwZ9qkb5QubDNM8ZE6sjL/XjgOaQp95bkX9BSZXUqU7uSsSAv3aMwHQxKcbRnPRk=
+X-Received: by 2002:a50:b607:: with SMTP id b7-v6mr9256791ede.215.1539038687117;
+ Mon, 08 Oct 2018 15:44:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181008215701.779099-1-sandals@crustytoothpaste.net> <20181008215701.779099-4-sandals@crustytoothpaste.net>
-In-Reply-To: <20181008215701.779099-4-sandals@crustytoothpaste.net>
+References: <20181008215701.779099-1-sandals@crustytoothpaste.net> <20181008215701.779099-6-sandals@crustytoothpaste.net>
+In-Reply-To: <20181008215701.779099-6-sandals@crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Oct 2018 15:32:45 -0700
-Message-ID: <CAGZ79kYeLiiU5tdO1n=cG3fPDWmezhd=oS=UiS=iZkxz+HfeFg@mail.gmail.com>
-Subject: Re: [PATCH 03/14] builtin/mktree: remove hard-coded constant
+Date:   Mon, 8 Oct 2018 15:44:36 -0700
+Message-ID: <CAGZ79ka97gq5Vc_rp675=o0V+kJgZXhkTX3Da72QRCZwQWcM=g@mail.gmail.com>
+Subject: Re: [PATCH 05/14] pack-revindex: express constants in terms of the_hash_algo
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
@@ -62,28 +62,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> Instead of using a hard-coded constant for the size of a hex object ID,
-> switch to use the computed pointer from parse_oid_hex that points after
-> the parsed object ID.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/mktree.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/mktree.c b/builtin/mktree.c
-> index 2dc4ad6ba8..94e82b8504 100644
-> --- a/builtin/mktree.c
-> +++ b/builtin/mktree.c
-> @@ -98,7 +98,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
->
->         *ntr++ = 0; /* now at the beginning of SHA1 */
->
-> -       path = ntr + 41;  /* at the beginning of name */
-> +       path = (char *)p + 1;  /* at the beginning of name */
+> -       /* This knows the pack format -- the 20-byte trailer
+> +       /* This knows the pack format -- the hash trailer
+>          * follows immediately after the last object data.
 
-... and we need the cast to un-const p such that path takes it.
-Makes sense.
+While at it, fix the comment style?
+
+With or without the nit addressed, this patch (and patches
+1 and 4) are
+
+  Reviewed-by: Stefan Beller <sbeller@google.com>
