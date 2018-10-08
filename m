@@ -2,163 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 612F01F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 17:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D72E1F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 17:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbeJIA0J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 20:26:09 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:43844 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbeJIA0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 20:26:09 -0400
-Received: by mail-qt1-f194.google.com with SMTP id q41-v6so21690387qtq.10
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 10:13:26 -0700 (PDT)
+        id S1726730AbeJIAgd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 20:36:33 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:35987 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726391AbeJIAgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 20:36:33 -0400
+Received: by mail-ot1-f67.google.com with SMTP id k5so7901020ote.3
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 10:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=UMUbxdpCchAg6KqpAQ7TJEVpWBEYfs/aUc6O5yIzDrc=;
-        b=i2BjC1sXzvXJU7PN6EoUYo0SsDxHV8Wrfj5l8tK/mdlKtu0Xh4LVd8ggatLQGDMvf8
-         8ZJyGkFNEjAALpC2u5cBQoGL8GzokwC2Q4dQ4L5VmEh4satZipCfQ6WORgD4pbLykAib
-         K6h3X99lbPTSKdaS35yKVUcgsCaX5UpbQhUsSmlZooPDsMhvgASDwx2VHKNhWCnew8ll
-         WaRzukz6xVWA9H8ZClfP+EGxlRNFin1WpVg9i4hUxuBTo50sKTSRCTwI1enE7bxki6hS
-         1vHPqkdKagZPoiCX/QJlpaJyfJ70m2QNx9mEbhXtkQ2m9NXPKEQDER/TOspnVLCElJ9d
-         Q5tA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PH/9umUvrsBiHESS/vF2Y8bTsgn0D56/2QvWLKqlKAA=;
+        b=V5g7SZX7gBLIJ6fN7ohPE0kmFte3v9FJX+iM0tmTce/hKuWJwL1j80HUkn9NyNauXp
+         YPHM5IRXwgf4WsezRgvo+6WHPiyaJk8+xo0wdwPr/5YceuZ12bw2KtBGjL2lCDx7EACi
+         BU+ar5H6b6BR/RFet5Yw560kI07aLCbGtcjWd7fES3VFwD4kmjvA/EmoQdEPzHqAh4Lh
+         j1TCpios+uU9A6I8rVr6McQJMqmFKoiTE8PDLyDoF9SW/tB7Wv4PvCf+tk+YFFD899GQ
+         zqEuAwGbR4aa1m62I0vlJ5zsiPykzsuiprPEMrU5fEGUjMeG33OF/Me4podvjdiQqJ3x
+         jUTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=UMUbxdpCchAg6KqpAQ7TJEVpWBEYfs/aUc6O5yIzDrc=;
-        b=d+MzWDa0AsJFXUmuJm1Nt5nryw0edjf5R8gl9Ls/ybTkO8bDKvZeCFtGQKziFsPN6f
-         NDk6hunPlzyViSlRHxgbr951WefxSzxoVkGDu9IgwG98PIU3EXz27j3SjCZcdo3KU+ic
-         mznbeGi0KQsab8WcJyCqmm9fjH8X6tJYHS30zEw5d5e8CV2BM+xbYfA8oEjKax7VGP/r
-         ZqFR5gIuYLqjdJUXOIsm7w+xWCx/UghK5OGEYlv46bLOQe7mROH/NbEFp1XycpiEeoY3
-         GISTXMOxboJizqMN5GrPNaIke/Sf3C78KDQ2ma+i9zBCVv9cbwHmgfr7eElSi620xsoM
-         PmwA==
-X-Gm-Message-State: ABuFfoitWACMOAQodsW7kiTslQBQSMoSSq/WssdHTgJRst11ixbonQwC
-        oFAxzU8hYWLxcZ2FlLa5oxA=
-X-Google-Smtp-Source: ACcGV61ZSq/j3+Nkjru9ptYRfdt/LALmmk1FXYfgxEUufzaz68nDFgH+cTpBXt0/PK03/K8VNKk/oA==
-X-Received: by 2002:a0c:d285:: with SMTP id q5mr2951980qvh.46.1539018806182;
-        Mon, 08 Oct 2018 10:13:26 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:1c56:381e:537f:a878? ([2001:4898:8010:0:58c:381e:537f:a878])
-        by smtp.gmail.com with ESMTPSA id k71-v6sm10094106qkh.30.2018.10.08.10.13.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Oct 2018 10:13:25 -0700 (PDT)
-Subject: Re: [PATCH][Outreachy] remove all the inclusions of git-compat-util.h
- in header files
-To:     Ananya Krishna Maram <ananyakittu1997@gmail.com>,
-        christian.couder@gmail.com, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de
-References: <20181008170505.GA13134@manohar-ssh>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
-Date:   Mon, 8 Oct 2018 13:13:26 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PH/9umUvrsBiHESS/vF2Y8bTsgn0D56/2QvWLKqlKAA=;
+        b=JlxPgrpl31MaI0aAihvMIIPUR1WPObHCQiiwS4Fqgev0sXBq4WD0hxLTBncxtvS0cU
+         T8xn+43vpIxy51xEBP6Gs5tJaH9AX2y+xQ30UaNFFhqzNzkt/V/W+1Qv72BwFm8oVOI6
+         x5MEYSdxb9JytsgqKaQeCkhg/YKcqbAu6F+GdGDTxM3k9w3q7/eDZ00S9om+APX2jJVl
+         LjaVoXowRc3nqM8ReKHyft9iqHQg6xkUgiAWLO0gOf7e5cHLDqXzYnufXC3q+rcdarr1
+         TnxPidPGzrMCBwFKvK5DtmCwdtYHNvx4cfQOJmyZLRhgjGKgpNR/gsxtzrFtvVJUf11u
+         bmPw==
+X-Gm-Message-State: ABuFfoihWsJ/+z3fpRx02DiGSOYqdGi0IwAEvQz7GEU9t5CiF+B5B/cT
+        o4JJx7fPJkCZSwMTHB4K8PayiQCAt0rOpJ4sHILp
+X-Google-Smtp-Source: ACcGV605CnPKwv+T6cMuEmZU1gY9J0VjbqF+fWHcyX6Hm50V2IVhRtYa6uq4FtavUu3AtlYJverP7O+L4EsA8eDLT0Y=
+X-Received: by 2002:a9d:6014:: with SMTP id h20mr10535154otj.349.1539019428636;
+ Mon, 08 Oct 2018 10:23:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20181008170505.GA13134@manohar-ssh>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <cover.1533854545.git.matvore@google.com> <cover.1538774738.git.matvore@google.com>
+ <6ca50a28e292f32127ea706a2aef39f834ac7702.1538774738.git.matvore@google.com> <xmqqpnwmvcow.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnwmvcow.fsf@gitster-ct.c.googlers.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Mon, 8 Oct 2018 10:23:36 -0700
+Message-ID: <CAMfpvhJi+T+zRS8pkZkN_x5xYD3gxTjeczm18VLYWtxfb4Zvmw@mail.gmail.com>
+Subject: Re: [PATCH v11 8/8] list-objects-filter: implement filter tree:0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        git@jeffhostetler.com, jeffhost@microsoft.com,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/2018 1:05 PM, Ananya Krishna Maram wrote:
-> Hi All,
-Hello, Ananya! Welcome.
+On Sat, Oct 6, 2018 at 5:10 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> As output made inside test_expect_{succcess,failure} are discarded
+> by default and shown while debugging tests, there is no strong
+> reason to use "grep -q" in our tests.  I saw a few instances of
+> "grep -q" added in this series including this one
+>
+>         test_must_fail grep -q "$file_4" observed
+>
+> that should probably be
+>
+>         ! grep "$file_4" observed
+Yeah, I remember I read in the testing guidelines that you should just
+use ! for non-Git commands since it's not our job to make sure these
+tools are not crashing. Thank you for pointing this out.
 
-> I was searching through #leftovers and found this.
-> https://public-inbox.org/git/CABPp-BGVVXcbZX44er6TO-PUsfEN_6GNYJ1U5cuoN9deaA48OQ@mail.gmail.com/
 >
-> This patch address the task discussed in the above link.
-The discussion above seems to not be intended for your commit message, 
-but it does show up when I run `git am` and provide your email as input. 
-The typical way to avoid this is to place all commentary below the "---" 
-that signifies the commit message is over.
-> From: Ananya Krishan Maram <ananyakittu1997@gmail.com>
+> > +     printf "blob\ncommit\ntree\n" >unique_types.expected &&
+> > ...
+> > +     printf "blob\ntree\n" >expected &&
 >
-> skip the #include of git-compat-util.h since all .c files include it.
->
-> Signed-off-by: Ananya Krishna Maram <ananyakittu1997@gmail.com>
-> ---
->   advice.h             | 1 -
->   commit-graph.h       | 1 -
->   hash.h               | 1 -
->   pkt-line.h           | 1 -
->   t/helper/test-tool.h | 1 -
->   5 files changed, 5 deletions(-)
->
-> diff --git a/advice.h b/advice.h
-> index ab24df0fd..09148baa6 100644
-> --- a/advice.h
-> +++ b/advice.h
-> @@ -1,7 +1,6 @@
->   #ifndef ADVICE_H
->   #define ADVICE_H
->   
-> -#include "git-compat-util.h"
->   
->   extern int advice_push_update_rejected;
->   extern int advice_push_non_ff_current;
-> diff --git a/commit-graph.h b/commit-graph.h
-> index b05047676..0e93c2bed 100644
-> --- a/commit-graph.h
-> +++ b/commit-graph.h
-> @@ -1,7 +1,6 @@
->   #ifndef COMMIT_GRAPH_H
->   #define COMMIT_GRAPH_H
->   
-> -#include "git-compat-util.h"
->   #include "repository.h"
->   #include "string-list.h"
->   #include "cache.h"
-> diff --git a/hash.h b/hash.h
-> index 7c8238bc2..9a4334c5d 100644
-> --- a/hash.h
-> +++ b/hash.h
-> @@ -1,7 +1,6 @@
->   #ifndef HASH_H
->   #define HASH_H
->   
-> -#include "git-compat-util.h"
->   
->   #if defined(SHA1_PPC)
->   #include "ppc/sha1.h"
-> diff --git a/pkt-line.h b/pkt-line.h
-> index 5b28d4347..fdd316494 100644
-> --- a/pkt-line.h
-> +++ b/pkt-line.h
-> @@ -1,7 +1,6 @@
->   #ifndef PKTLINE_H
->   #define PKTLINE_H
->   
-> -#include "git-compat-util.h"
->   #include "strbuf.h"
->   
->   /*
-> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-> index e07495727..24e0a1589 100644
-> --- a/t/helper/test-tool.h
-> +++ b/t/helper/test-tool.h
-> @@ -1,7 +1,6 @@
->   #ifndef __TEST_TOOL_H__
->   #define __TEST_TOOL_H__
->   
-> -#include "git-compat-util.h"
->   
->   int cmd__chmtime(int argc, const char **argv);
->   int cmd__config(int argc, const char **argv);
-I applied these changes locally and confirmed the code compiles, so all 
-.c files including these _do_ include git-compat-util.h properly.
+> Using test_write_lines is probably easier to read.
 
-Thanks,
--Stolee
+Done. Below is an interdiff. Let me know if you want a reroll soon.
+Otherwise, I will send one later this week.
 
+- Matt
+
+diff --git a/t/t5317-pack-objects-filter-objects.sh
+b/t/t5317-pack-objects-filter-objects.sh
+index 510d3537f..d9dccf4d4 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -69,7 +69,7 @@ test_expect_success 'get an error for missing tree object' '
+         test_must_fail git -C r5 pack-objects --rev --stdout
+2>bad_tree <<-EOF &&
+         HEAD
+         EOF
+-        grep -q "bad tree object" bad_tree
++        grep "bad tree object" bad_tree
+ '
+
+ test_expect_success 'setup for tests of tree:0' '
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 53fbf7db8..392caa08f 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -192,7 +192,7 @@ test_expect_success 'use fsck before and after
+manually fetching a missing subtr
+         xargs -n1 git -C dst cat-file -t >fetched_types &&
+
+         sort -u fetched_types >unique_types.observed &&
+-        printf "blob\ncommit\ntree\n" >unique_types.expected &&
++        test_write_lines blob commit tree >unique_types.expected &&
+         test_cmp unique_types.expected unique_types.observed
+ '
+
+diff --git a/t/t6112-rev-list-filters-objects.sh
+b/t/t6112-rev-list-filters-objects.sh
+index c8e3d87c4..08e0c7db6 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -38,8 +38,8 @@ test_expect_success 'specify blob explicitly
+prevents filtering' '
+                  awk -f print_2.awk) &&
+
+         git -C r1 rev-list --objects --filter=blob:none HEAD $file_3
+>observed &&
+-        grep -q "$file_3" observed &&
+-        test_must_fail grep -q "$file_4" observed
++        grep "$file_3" observed &&
++        ! grep "$file_4" observed
+ '
+
+ test_expect_success 'verify emitted+omitted == all' '
+@@ -240,7 +240,7 @@ test_expect_success 'verify tree:0 includes trees
+in "filtered" output' '
+         xargs -n1 git -C r3 cat-file -t >unsorted_filtered_types &&
+
+         sort -u unsorted_filtered_types >filtered_types &&
+-        printf "blob\ntree\n" >expected &&
++        test_write_lines blob tree >expected &&
+         test_cmp expected filtered_types
+ '
