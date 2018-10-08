@@ -2,150 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D72E1F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 17:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B11131F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 18:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726730AbeJIAgd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 20:36:33 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:35987 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726391AbeJIAgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 20:36:33 -0400
-Received: by mail-ot1-f67.google.com with SMTP id k5so7901020ote.3
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 10:23:49 -0700 (PDT)
+        id S1726434AbeJIBWU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 21:22:20 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:46373 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbeJIBWT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 21:22:19 -0400
+Received: by mail-pf1-f196.google.com with SMTP id r64-v6so8706488pfb.13
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 11:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PH/9umUvrsBiHESS/vF2Y8bTsgn0D56/2QvWLKqlKAA=;
-        b=V5g7SZX7gBLIJ6fN7ohPE0kmFte3v9FJX+iM0tmTce/hKuWJwL1j80HUkn9NyNauXp
-         YPHM5IRXwgf4WsezRgvo+6WHPiyaJk8+xo0wdwPr/5YceuZ12bw2KtBGjL2lCDx7EACi
-         BU+ar5H6b6BR/RFet5Yw560kI07aLCbGtcjWd7fES3VFwD4kmjvA/EmoQdEPzHqAh4Lh
-         j1TCpios+uU9A6I8rVr6McQJMqmFKoiTE8PDLyDoF9SW/tB7Wv4PvCf+tk+YFFD899GQ
-         zqEuAwGbR4aa1m62I0vlJ5zsiPykzsuiprPEMrU5fEGUjMeG33OF/Me4podvjdiQqJ3x
-         jUTg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=pYZUB8PMJikgwB1QcKGnaiqA8ijOYTSdbr7on+SmJeA=;
+        b=0AvNHlIlMAWWo4QlwXOhDbddR5gx35vYZc3onEI/yv4jldLJGjXGQ3Yz9R3ojllcjk
+         CNjwb3NNv3M/DnlsMxWgyq02hiGaJFTmTdTLNPjxTbP1/Ho7lBnlnJ+Lt9r4VcrfWKYp
+         5i8s8LUFoiXG3kDCV6ANvSmaBMQ9ZMTLLVYZ/zCpO3TUSQ59JvRHt1Nb97wo9KaY5C0t
+         WmtZtZjrnPW9m79Wa0piuM5gNO08A1C84PPA3FLTeBfU3tVi0PmejlPNcUXV8JdCy2RH
+         620JuxYmXY5ztFXqngP22Pw6PNQwsJSn8RArzEMzQ53nQqbrhXQIL9mK/WkCorJ5ML3p
+         lKYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PH/9umUvrsBiHESS/vF2Y8bTsgn0D56/2QvWLKqlKAA=;
-        b=JlxPgrpl31MaI0aAihvMIIPUR1WPObHCQiiwS4Fqgev0sXBq4WD0hxLTBncxtvS0cU
-         T8xn+43vpIxy51xEBP6Gs5tJaH9AX2y+xQ30UaNFFhqzNzkt/V/W+1Qv72BwFm8oVOI6
-         x5MEYSdxb9JytsgqKaQeCkhg/YKcqbAu6F+GdGDTxM3k9w3q7/eDZ00S9om+APX2jJVl
-         LjaVoXowRc3nqM8ReKHyft9iqHQg6xkUgiAWLO0gOf7e5cHLDqXzYnufXC3q+rcdarr1
-         TnxPidPGzrMCBwFKvK5DtmCwdtYHNvx4cfQOJmyZLRhgjGKgpNR/gsxtzrFtvVJUf11u
-         bmPw==
-X-Gm-Message-State: ABuFfoihWsJ/+z3fpRx02DiGSOYqdGi0IwAEvQz7GEU9t5CiF+B5B/cT
-        o4JJx7fPJkCZSwMTHB4K8PayiQCAt0rOpJ4sHILp
-X-Google-Smtp-Source: ACcGV605CnPKwv+T6cMuEmZU1gY9J0VjbqF+fWHcyX6Hm50V2IVhRtYa6uq4FtavUu3AtlYJverP7O+L4EsA8eDLT0Y=
-X-Received: by 2002:a9d:6014:: with SMTP id h20mr10535154otj.349.1539019428636;
- Mon, 08 Oct 2018 10:23:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pYZUB8PMJikgwB1QcKGnaiqA8ijOYTSdbr7on+SmJeA=;
+        b=gKPVgv30t1QE/M2m+IjDdqfFuAB1UDpLWKUArsoJcumXDgXFZAtDsHEK6Ml1hfzhy2
+         cglEA0be+qgmOvDFivhlhtZ98/s0jmlVRCNM3xAwmg2Fv6bOEisty9XkKagLGDI9aYKD
+         YuJqoDeiOobYbnPLqQBe7kwcabOtNpb1eZlz0RLFrkOlnU6qDHYxMnVRLyw4iU1UnaWJ
+         +qEPRp2b912EvFVYggixWLFFUPB9oZqC8WK6/b8XSGn+8YvDIRrv2pCv9P6lK3ZRfz/p
+         15zTCBtPRS81vVBumDMd7ERrdF+TzImkKAmewMCa4wknWUelgxlyqxuM8R2Yemci3e0h
+         m7wA==
+X-Gm-Message-State: ABuFfoi6ByWwIkXQpzmUeEx8ZcLif/Abv/nwkC4lRgJ8ZCi0+rYS5aco
+        jV690yVyxmEY0YmMfLqu/3lQ32v8/VY=
+X-Google-Smtp-Source: ACcGV61O1R4GHTxd8VCVTZAhgNNZTRH9Oa3mJLsIbj2cfMwj9jJM1hyI4rDiVZVPnL8Dms0wLcYyNg==
+X-Received: by 2002:a63:c044:: with SMTP id z4-v6mr21968126pgi.274.1539022163059;
+        Mon, 08 Oct 2018 11:09:23 -0700 (PDT)
+Received: from localhost ([205.175.107.112])
+        by smtp.gmail.com with ESMTPSA id o2-v6sm36420590pfj.57.2018.10.08.11.09.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Oct 2018 11:09:22 -0700 (PDT)
+Date:   Mon, 8 Oct 2018 11:09:20 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, sunshine@sunshineco.com,
+        sbeller@google.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH v5 0/4] Filter alternate references
+Message-ID: <cover.1539021825.git.me@ttaylorr.com>
+References: <cover.1537466087.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1538774738.git.matvore@google.com>
- <6ca50a28e292f32127ea706a2aef39f834ac7702.1538774738.git.matvore@google.com> <xmqqpnwmvcow.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnwmvcow.fsf@gitster-ct.c.googlers.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Mon, 8 Oct 2018 10:23:36 -0700
-Message-ID: <CAMfpvhJi+T+zRS8pkZkN_x5xYD3gxTjeczm18VLYWtxfb4Zvmw@mail.gmail.com>
-Subject: Re: [PATCH v11 8/8] list-objects-filter: implement filter tree:0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        git@jeffhostetler.com, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1537466087.git.me@ttaylorr.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 6, 2018 at 5:10 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> As output made inside test_expect_{succcess,failure} are discarded
-> by default and shown while debugging tests, there is no strong
-> reason to use "grep -q" in our tests.  I saw a few instances of
-> "grep -q" added in this series including this one
->
->         test_must_fail grep -q "$file_4" observed
->
-> that should probably be
->
->         ! grep "$file_4" observed
-Yeah, I remember I read in the testing guidelines that you should just
-use ! for non-Git commands since it's not our job to make sure these
-tools are not crashing. Thank you for pointing this out.
+Hi,
 
->
-> > +     printf "blob\ncommit\ntree\n" >unique_types.expected &&
-> > ...
-> > +     printf "blob\ntree\n" >expected &&
->
-> Using test_write_lines is probably easier to read.
+Attached is (what I anticipate to be) the final re-roll of my series to
+introduce 'core.alternateRefsCommand' and 'core.alternateRefsPrefixes'
+in order to limit the ".have" advertisement when pushing over protocol
+v1 to a repository with configured alternates.
 
-Done. Below is an interdiff. Let me know if you want a reroll soon.
-Otherwise, I will send one later this week.
+Not much has changed from last time, expect for:
 
-- Matt
+  - Taking a documentation suggestion from Peff (in 3/4), and
 
-diff --git a/t/t5317-pack-objects-filter-objects.sh
-b/t/t5317-pack-objects-filter-objects.sh
-index 510d3537f..d9dccf4d4 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -69,7 +69,7 @@ test_expect_success 'get an error for missing tree object' '
-         test_must_fail git -C r5 pack-objects --rev --stdout
-2>bad_tree <<-EOF &&
-         HEAD
-         EOF
--        grep -q "bad tree object" bad_tree
-+        grep "bad tree object" bad_tree
- '
+  - Fixing a typo pointed out by Ramsay (in 4/4).
 
- test_expect_success 'setup for tests of tree:0' '
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 53fbf7db8..392caa08f 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -192,7 +192,7 @@ test_expect_success 'use fsck before and after
-manually fetching a missing subtr
-         xargs -n1 git -C dst cat-file -t >fetched_types &&
+I believe that this series is otherwise ready for queueing, if everyone
+else feels sufficiently OK about the changes.
 
-         sort -u fetched_types >unique_types.observed &&
--        printf "blob\ncommit\ntree\n" >unique_types.expected &&
-+        test_write_lines blob commit tree >unique_types.expected &&
-         test_cmp unique_types.expected unique_types.observed
- '
+Thanks in advance for your review.
 
-diff --git a/t/t6112-rev-list-filters-objects.sh
-b/t/t6112-rev-list-filters-objects.sh
-index c8e3d87c4..08e0c7db6 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -38,8 +38,8 @@ test_expect_success 'specify blob explicitly
-prevents filtering' '
-                  awk -f print_2.awk) &&
+Thanks,
+Taylor
 
-         git -C r1 rev-list --objects --filter=blob:none HEAD $file_3
->observed &&
--        grep -q "$file_3" observed &&
--        test_must_fail grep -q "$file_4" observed
-+        grep "$file_3" observed &&
-+        ! grep "$file_4" observed
- '
+Jeff King (1):
+  transport: drop refnames from for_each_alternate_ref
 
- test_expect_success 'verify emitted+omitted == all' '
-@@ -240,7 +240,7 @@ test_expect_success 'verify tree:0 includes trees
-in "filtered" output' '
-         xargs -n1 git -C r3 cat-file -t >unsorted_filtered_types &&
+Taylor Blau (3):
+  transport.c: extract 'fill_alternate_refs_command'
+  transport.c: introduce core.alternateRefsCommand
+  transport.c: introduce core.alternateRefsPrefixes
 
-         sort -u unsorted_filtered_types >filtered_types &&
--        printf "blob\ntree\n" >expected &&
-+        test_write_lines blob tree >expected &&
-         test_cmp expected filtered_types
- '
+ Documentation/config.txt           | 18 +++++++++++++
+ builtin/receive-pack.c             |  3 +--
+ fetch-pack.c                       |  3 +--
+ t/t5410-receive-pack-alternates.sh | 41 ++++++++++++++++++++++++++++++
+ transport.c                        | 38 +++++++++++++++++++++------
+ transport.h                        |  2 +-
+ 6 files changed, 92 insertions(+), 13 deletions(-)
+ create mode 100755 t/t5410-receive-pack-alternates.sh
+
+Range-diff against v4:
+1:  76482a7eba = 1:  e4947f557b transport: drop refnames from for_each_alternate_ref
+2:  120df009df = 2:  3d77a46c61 transport.c: extract 'fill_alternate_refs_command'
+3:  c63864c89a ! 3:  7451b4872a transport.c: introduce core.alternateRefsCommand
+    @@ -42,14 +42,9 @@
+     +	hex object id per line (i.e., the same as produce by `git for-each-ref
+     +	--format='%(objectname)'`).
+     ++
+    -+This is useful when a repository only wishes to advertise some of its
+    -+alternate's references as `.have`'s. For example, to only advertise branch
+    -+heads, configure `core.alternateRefsCommand` to the path of a script which runs
+    -+`git --git-dir="$1" for-each-ref --format='%(objectname)' refs/heads`.
+    -++
+    -+Note that the configured value is executed in a shell, and thus
+    -+linkgit:git-for-each-ref[1] by itself does not work, as scripts have to handle
+    -+the path argument specially.
+    ++Note that you cannot generally put `git for-each-ref` directly into the config
+    ++value, as it does not take a repository path as an argument (but you can wrap
+    ++the command above in a shell script).
+     +
+      core.bare::
+      	If true this repository is assumed to be 'bare' and has no
+4:  0f6cdc7ea4 ! 4:  28cbbe63f7 transport.c: introduce core.alternateRefsPrefixes
+    @@ -39,8 +39,8 @@
+      --- a/Documentation/config.txt
+      +++ b/Documentation/config.txt
+     @@
+    - linkgit:git-for-each-ref[1] by itself does not work, as scripts have to handle
+    - the path argument specially.
+    + value, as it does not take a repository path as an argument (but you can wrap
+    + the command above in a shell script).
+
+     +core.alternateRefsPrefixes::
+     +	When listing references from an alternate, list only references that begin
+    @@ -62,7 +62,7 @@
+
+     +test_expect_success 'with core.alternateRefsPrefixes' '
+     +	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
+    -+	git rev-parse private/branch expect &&
+    ++	git rev-parse private/branch >expect &&
+     +	printf "0000" | git receive-pack fork >actual &&
+     +	extract_haves <actual >actual.haves &&
+     +	test_cmp expect actual.haves
+--
+2.19.0.221.g150f307af
