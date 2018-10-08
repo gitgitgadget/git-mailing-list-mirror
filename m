@@ -2,105 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67DC01F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 14:01:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64E091F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 14:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbeJHVNk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 17:13:40 -0400
-Received: from kecgate02.infosys.com ([122.98.14.32]:50757 "EHLO
-        KECGATE02.infosys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726450AbeJHVNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 17:13:39 -0400
-X-Greylist: delayed 1605 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Oct 2018 17:13:38 EDT
-Received: from KECGATE02.infosys.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id C4732A403B
-        for <git@vger.kernel.org>; Mon,  8 Oct 2018 19:04:39 +0530 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=infosys.com;
-        s=default; t=1539005679;
-        bh=pj4Dh7fFeJyJbRCVKuTnSxcqlII8eH2HSGI0wweskV0=;
-        h=From:To:Subject:Date:References:In-Reply-To;
-        b=KQlilDjZK2jm1ifvyZn/JWC29HApLvxMKr/Ot4IfQ3eg64d/jpAZT4NwqDr7TwdFj
-         0ShT5AUhn6twZpxrj1ssdB8Lb+xbsYHR823DPLtepRoFppph/vLMAyl6k9EwV6uvDg
-         6EoxdlIQpo6oM5z0v2zy77NSMFczYyiiIT6lJEH0=
-Received: from BLRKECHUB15.ad.infosys.com (unknown [10.66.236.43])
-        by KECGATE02.infosys.com (Postfix) with ESMTP id 2BBC0A4066
-        for <git@vger.kernel.org>; Mon,  8 Oct 2018 19:04:39 +0530 (IST)
-Received: from BLREXOHYB04.ad.infosys.com (10.68.8.105) by
- BLRKECHUB15.ad.infosys.com (10.66.236.43) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Mon, 8 Oct 2018 19:04:58 +0530
-Received: from BLREXOHYB01.ad.infosys.com (10.68.8.68) by
- BLREXOHYB04.ad.infosys.com (10.68.8.105) with Microsoft SMTP Server (TLS) id
- 15.0.1395.4; Mon, 8 Oct 2018 19:04:57 +0530
-Received: from BLREDGE03.ad.infosys.com (122.98.14.118) by
- BLREXOHYB01.ad.infosys.com (10.68.8.68) with Microsoft SMTP Server (TLS) id
- 15.0.1395.4 via Frontend Transport; Mon, 8 Oct 2018 19:04:57 +0530
-Received: from EUR03-AM5-obe.outbound.protection.outlook.com (213.199.154.115)
- by edge.infosys.com (122.98.14.118) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Mon, 8 Oct 2018 19:03:34 +0530
+        id S1726362AbeJHVb1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 17:31:27 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34388 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726056AbeJHVb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 17:31:27 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z25-v6so8869207wmf.1
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 07:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=infosystechnologies.onmicrosoft.com; s=selector1-infosys-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pj4Dh7fFeJyJbRCVKuTnSxcqlII8eH2HSGI0wweskV0=;
- b=Zfhq4N+EC28pBvayO/jud0DZBCuaNS72EXT9ckhIbuOWhySLuPn1Csq4gBQffHNf6iE3wAofkOGNI82xYgZm52Zg7nKv7aaBg61myfpyMotyVGwRWAm+Oy1GoCDQckmUIza9QjrJNzQPvX+QH11igJv2EENRp1RnZvWNf+ysl/M=
-Received: from DB6P190MB0264.EURP190.PROD.OUTLOOK.COM (10.165.186.155) by
- DB6P190MB0231.EURP190.PROD.OUTLOOK.COM (10.172.230.135) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1207.21; Mon, 8 Oct 2018 13:34:55 +0000
-Received: from DB6P190MB0264.EURP190.PROD.OUTLOOK.COM
- ([fe80::fd00:a20a:3a85:ac4c]) by DB6P190MB0264.EURP190.PROD.OUTLOOK.COM
- ([fe80::fd00:a20a:3a85:ac4c%3]) with mapi id 15.20.1207.024; Mon, 8 Oct 2018
- 13:34:55 +0000
-From:   Inderpreet Saini <Inderpreet_Saini@infosys.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: 
-Thread-Index: AQHUXwuWhkHuhV+bj0yj/1C97oPqkaUVWTyg
-Date:   Mon, 8 Oct 2018 13:34:55 +0000
-Message-ID: <DB6P190MB0264D57E910036A91599A09FE3E60@DB6P190MB0264.EURP190.PROD.OUTLOOK.COM>
-References: <CA+cYV6v9RVkcheB+9gZot_tP07RzJuLP6b=gstxhCnzN=PKGPA@mail.gmail.com>
-In-Reply-To: <CA+cYV6v9RVkcheB+9gZot_tP07RzJuLP6b=gstxhCnzN=PKGPA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Inderpreet_Saini@infosys.com; 
-x-originating-ip: [62.189.90.172]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DB6P190MB0231;6:tzGtsrUAtTgmGQLIGKutj3O6eJjl+OQo2yKxAr8kMwAnEAKCMn3YH+GPalxdXA55tKTdXklHs8afVswRjGqwjXhDQMCPXRQWs6RruDiQtMRXcP5IvXnwicgOpXtjLy0vHFKPcV4Yy0k9chg2msXRVx94DToKbchfFSzyDm5aApL6fxXG681cxWbSqARfjjDCMhU0T7l/B1LR89+75s6lj08QPsVrxxqIzFshhL/m08BemSXA25cDZMquxhVrxuwj2ArfkIBy+vIEXpwIRELQg6tNWvH0da9MUz3QY8ofTc667d9EAbsGQI3rcAxMUfVPKFwm/PFOnR+uqZLL/PrZPTK4Z4H90ve3YGHDvId1KsBDJ2tnwSphCnkIcB8KwkYXihQS1E7gzD1RIfJAyeAtdb/T0V1wOGVOjawJTfhgHed9pk/jQKF4DUNJNPnzvtJUVEDMs056iboRYzrjxCwcNA==;5:vmgOndFaLrFXWga/RVYY9lY5bgv4akHZVzpdxzz3FwMaY8Ptl2a8nmyJ+8CnEPon1r3jaBqraY22D+e0KtaLmeQkp4sxMM5iQFNFAPBCMmI0KdX/v4YjQs50lOcf3g2bComrl/CnR9agVGMPke6ni82QNQDJULHOeMeJ22qlwGk=;7:ITeqXvhyInpFcXWTP9NE4dl8/rX94mo7Uf7b/wD0vZ6zwvzQtqV1lw/WVMCNsWH7GFpzMmVmczUlvbip2balLr5HVJx6kPJ/dJ26NDOY5pCFBO5d0LrlDkigfR8kaisocO2I1OsLzNWnSBuO6w/VndlYvn/VKC0JWEWdJ1wxoyY2m0J5qX2796HzA2V4kqK/gPzYDbgwVUDGC6+DCiFtPp2Cyu9rng+hMgb+8YSO3UjPavpWqDQgXlL6/PkcPhfK
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-correlation-id: 8ec7aa3e-4f4b-434c-e17f-08d62d22d582
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600074)(711020)(2017052603328)(7153060)(7193020);SRVR:DB6P190MB0231;
-x-ms-traffictypediagnostic: DB6P190MB0231:
-x-microsoft-antispam-prvs: <DB6P190MB023175E286A851776EC8FC06E3E60@DB6P190MB0231.EURP190.PROD.OUTLOOK.COM>
-x-exchange-antispam-report-test: UriScan:;
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(3231355)(944501410)(52105095)(3002001)(10201501046)(93006095)(93001095)(149066)(150057)(6041310)(20161123564045)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(201708071742011)(7699051);SRVR:DB6P190MB0231;BCL:0;PCL:0;RULEID:;SRVR:DB6P190MB0231;
-x-forefront-prvs: 081904387B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(136003)(346002)(39850400004)(396003)(199004)(189003)(6916009)(7116003)(2906002)(68736007)(486006)(26005)(221173001)(66066001)(33656002)(256004)(5660300001)(2900100001)(19618925003)(8936002)(6116002)(476003)(14454004)(86362001)(6506007)(72206003)(11346002)(3480700004)(71190400001)(6436002)(3846002)(229853002)(4743002)(71200400001)(4270600006)(5640700003)(8676002)(81156014)(80792005)(2501003)(478600001)(7736002)(102836004)(305945005)(446003)(1730700003)(81166006)(55016002)(76176011)(588024002)(53936002)(9686003)(105586002)(106356001)(25786009)(74316002)(2351001)(558084003)(186003)(5250100002)(555874004)(316002)(97736004)(99286004)(7696005)(4000700002)(6246003)(231573002);DIR:OUT;SFP:1102;SCL:1;SRVR:DB6P190MB0231;H:DB6P190MB0264.EURP190.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: infosys.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: LBLQJRt4Z+QIz05SqaO6RQ9Xwb4AYkdikIkhxaqtAmp3jvAQscB7FqqhWtIm3Sopl1hhudCfSO3uIL9ZBrQ3DOOfqvvYlg3t4YTLMZrabbxRb+B0f6Bnti+Save6rhHAHdAfmBGSZXJa6s+nWRmBREsd6R9olKd8fQnYzQHdzZix+r/8FSGdXjnjlV2OeXaM1Ez6sIgY74fl/bP7LGFb4BVpQYDvtjeYia88ItczbrANEFNvGqJ4BKSwWj5ITH9Nsop5jmQNirU2dyEpf7FyN9irTaIuI8syZv5V2YfPsddwVLCarm8HIWxzBX4crF0kV15gyzS/ACoBTJBCo7vGP5LePSD1nkUgDKeA2A5dFyA=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Mu3SSZJRzuzDju673/xFPB9I2Kxq1n5J6AzDi4VhXhU=;
+        b=ZyA1D9p6zkBiHZDVGdk4YkcnB2F8gNgvoeEVDh/J/9cqdTgoH+dLD6i4Xou+WHcVM5
+         +m1khJa4Q7rS8yKaotqa/ClnYIKj7goMa9r5RD4bQtI4lRYadx089BYfy7KxkAWa0DCt
+         PDMdWwGhq8x1MldNgINR88+9VV4PQx0vqE3DIP0zZcvmSPRj0X3MuaDP3xUJBkuLPC5/
+         689tz5ANcPgPmOuePQLeQVldNBZQxT9LIm4mN+VDglvzHh6sjEg9or+mF5x0K8YsKz0v
+         IWBnsyamuLrzocyA2oErbIJY4seRX4VAto+KrjkKBhVzQoq8FKJdPMZ7f05JD6Prk6JG
+         HgIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Mu3SSZJRzuzDju673/xFPB9I2Kxq1n5J6AzDi4VhXhU=;
+        b=rqu1ecbuz8pVe8dXm1DLQvWL6jtGiYnl1Ho/9dgkfRIVHNmWO6rzKoJPp/Moc29OKL
+         1MQ2KK2M1+IrZWXwLQVpsZGSJd+r0Y2g34lOyo84uZvJf0DSUKdsF8VFKARBIUYTv0bX
+         8MfsmFvXlb/Ax5t1rCGYTkGvDQJoG2YrFZzcy0M/tXir6HDYfZhjxdqhtIR4mH2F+NKr
+         YiAYZ+yMkfwNTMBVeSy3Hsl5Vm+qOvBS8eqrciPzV5wk1iND841vXON7E8J1OpgFY5jp
+         2Xq2vOMQXCkH3YLwH7AHWkq1jJ6jou7+SMvWHyro6+NuySgtH5FvIxMzPPlLv8xRQans
+         kzlA==
+X-Gm-Message-State: ABuFfohQDwD1UyiB8akFmwb+HoHtGUUE5eRKCAbjz6slokyBHAt6czR1
+        biZ3eXvswiD/3gZ/dz/kao5S8VFq
+X-Google-Smtp-Source: ACcGV62vk3vXqglvsuj8hdlm/NACM0ciRrpTaJt7tiLzCcH39RogGJwXWUwiyXFSr3fVONeow1FY9A==
+X-Received: by 2002:a1c:981:: with SMTP id 123-v6mr15138207wmj.130.1539008368558;
+        Mon, 08 Oct 2018 07:19:28 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id e14-v6sm14483396wrs.69.2018.10.08.07.19.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Oct 2018 07:19:27 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Alex Vandiver <alexmv@dropbox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: t3404.6 breaks on master under GIT_FSMONITOR_TEST
+References: <87k1vwn9qe.fsf@evledraar.gmail.com> <87sh2mrefa.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <87sh2mrefa.fsf@evledraar.gmail.com>
+Date:   Mon, 08 Oct 2018 16:19:26 +0200
+Message-ID: <87a7noa5ch.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ec7aa3e-4f4b-434c-e17f-08d62d22d582
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Oct 2018 13:34:55.1804
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 63ce7d59-2f3e-42cd-a8cc-be764cff5eb6
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6P190MB0231
-X-OriginatorOrg: infosys.com
-X-TM-AS-GCONF: 00
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-dW5zdWJzY3JpYmUgZ2l0DQo=
+
+On Thu, Sep 06 2018, Ævar Arnfjörð Bjarmason wrote:
+
+> On Thu, Feb 01 2018, Ævar Arnfjörð Bjarmason wrote:
+>
+>> The GIT_FSMONITOR_TEST variable allows you to roundtrip the fsmonitor
+>> codpath in the whole test suite. On both Debian & CentOS this breaks for
+>> me:
+>>
+>>     (cd t && GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all ./t3404-rebase-interactive.sh -i)
+>>
+>> Whereas this works:
+>>
+>>     (cd t && GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all GIT_SKIP_TESTS=t3404.6 ./t3404-rebase-interactive.sh -i)
+>>
+>> The entirety of the rest of the test suite still passes with
+>> GIT_FSMONITOR_TEST.
+>>
+>> This has been failing ever since GIT_FSMONITOR_TEST was introduced in
+>> 883e248b8a ("fsmonitor: teach git to optionally utilize a file system
+>> monitor to speed up detecting new or changed files.", 2017-09-22). Under
+>> -v -x -i:
+>>
+>>     + echo test_must_fail: command succeeded: env FAKE_LINES=exec_echo_foo_>file1 1 git rebase -i HEAD^
+>>     test_must_fail: command succeeded: env FAKE_LINES=exec_echo_foo_>file1 1 git rebase -i HEAD^
+>>     + return 1
+>>     error: last command exited with $?=1
+>>     not ok 6 - rebase -i with the exec command checks tree cleanness
+>>     #
+>>     #               git checkout master &&
+>>     #               set_fake_editor &&
+>>     #               test_must_fail env FAKE_LINES="exec_echo_foo_>file1 1" git rebase -i HEAD^ &&
+>>
+>> Maybe once this is fixed running the test suite under GIT_FSMONITOR_TEST
+>> would be a useful Travis target, but I don't know the current status of
+>> adding new options to Travis.
+>
+> *Poke* at this again. Ben, or anyone else with knowledge of fsmonitor:
+> Can you reproduce this?
+>
+> This failure along with the one I noted in
+> https://public-inbox.org/git/87tvn2remn.fsf@evledraar.gmail.com/ is
+> failing the tests on Linux when run with GIT_FSMONITOR_TEST.
+>
+> I'm looking at this again because SZEDER's patches to the split index
+> reminded me again that we have these long-standing failures in rare test
+> modes (see
+> https://public-inbox.org/git/87va7ireuu.fsf@evledraar.gmail.com/ for the
+> split index discussion).
+
+For what it's worth this is still broken, but more importantly (I'm not
+just keeping bumping the same thing) the only thing that's now broken
+under fsmonitor. I.e. my skip config is now GIT_SKIP_TESTS="t3404.7"
+whereas before 43f1180814 ("git-mv: allow submodules and fsmonitor to
+work together", 2018-09-10) I needed to add "t7411.3 t7411.4" to that.
