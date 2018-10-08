@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8E51F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 23:10:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CFD31F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 23:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725828AbeJIGYx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 02:24:53 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35758 "EHLO
+        id S1725794AbeJIGch (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 02:32:37 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35848 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725759AbeJIGYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 02:24:53 -0400
-Received: by mail-ed1-f67.google.com with SMTP id y19-v6so3343edd.2
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:10:48 -0700 (PDT)
+        with ESMTP id S1725749AbeJIGch (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 02:32:37 -0400
+Received: by mail-ed1-f67.google.com with SMTP id c26-v6so11998edt.3
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=QXr4iuuairMtVXcRyi6sxMVCwSYISUmr8neCpE/nfHU=;
-        b=M1rUJVHoOPLPNvMa2GagwinDISXD5VdrwVTMfgzzBB2Phep29+N8moX+LpodOMdjcd
-         fbkxhoUh8YbSRkj1zILWj88eQxLngFVc6A6HjOGGsB57FLduwtQdliMXgSVk0fV55j54
-         nj0lZf4vI5xd0kSXlkJigp0rbkGij1B5MTGvCOCeIhvnLtq7nFwESRRhV5o7yBLQNfkg
-         hNJOEriPhlZYW6eKxb0pvczExh+UUW9Knmqon7/5Jf6SCirHftmUDRZhbGzy9WnvAy7w
-         l1iWNkX3WtjycPuITzSaPp0LPb309cYbvDvUq1u3C0Y8N0DocxBjLtqIpKP3S3YK1ZQW
-         meew==
+        bh=8FqjpZCvH5/659pLRz9ScIQ8IdP+/Wi4mabnbjdiiI8=;
+        b=f0ubZDcv9pWNOn8vn/+G711NLsJEPXIF33up2X8qCPEw6KpJpd62ABCPloS1y7Tmrl
+         nNgtrWL3bsLPQdppHiSzlPRp67y/rxeDP/cE1f1zXp7TYaHVCW9AqDl+gnt0BTolDkuJ
+         CB7VgZxfwEKHQ2OTC9rI9aVmSGxGyZqufgxXHnjEAiH7eeZSzDnjXBOAReIwILq8+Xh0
+         XU1XflEHxcj7PUDBwt1hEIbgF8enFaMdOSdpYAbVOs/Hi7oEcPB8u8//DQzvgn5E1ypL
+         BAaUro3zvo8wdFOfLK13z9LK5TOIj1acyrQ9ke4ue8GdB1Xd42C47smAUWebCv8/3gq3
+         bqoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QXr4iuuairMtVXcRyi6sxMVCwSYISUmr8neCpE/nfHU=;
-        b=SPMzjGX3N4TUSqRNwzVl0VQJnRspEuGV0f5mR8sp1PLSSwLsRlluxxbKDLBGIBBa0f
-         ZxpFF8u6zbgyWKFLv9CeUSZw4gSLXipy7fnFIz8qpj/bXsFPn2FSrvpIJWIVcoUNNZjj
-         t4Hp5/HH0MdRgeW2gLPDV5KFiQOhFM/uSP+EwBwCNCLbc2mlhG6FjoQtT0WupeVPukBb
-         GfsBe0LMJSCxBef+E5Hen3NKMVrnD/SxudD040ErQ5NAkYfvZvII8A4dDW6sONlXxDsC
-         5TkWfYP+gGolxVLFb8hom/ub4YRyX/XsiSH+jHKxmWMgicyFXwArAUPLTVl1LMDWZ4Hp
-         sw/w==
-X-Gm-Message-State: ABuFfoihepuHZZ1SSMPzJ7ggxbud4GxQSd359boUiOm7XZitZTSk/xuj
-        Afz/sBmF4Pl2/lS6nvfwsOCXrdnj/l9FmSUslhOmPg==
-X-Google-Smtp-Source: ACcGV61IvWbzNxrB3dFep0aewUBrFFnHvA5FybL4noLvnb/lonCujcepJAuZUY62HWWhKmGFZ01dWKzMKOFdelQdMRc=
-X-Received: by 2002:aa7:c742:: with SMTP id c2-v6mr26876396eds.231.1539040247998;
- Mon, 08 Oct 2018 16:10:47 -0700 (PDT)
+        bh=8FqjpZCvH5/659pLRz9ScIQ8IdP+/Wi4mabnbjdiiI8=;
+        b=sj+lTaZ7aTa8+4apL84nHaoVFjoSik4BO7WLSl2rEa7ScUHDsevZCK1//p2codcZjE
+         yiHxZmGLDwrt/0cOR1jVHBf+ZCLnIXrUiKTpsLJ7QAjNltD4aRfp9CAPdH8cER+lWiVt
+         oX/jyG2s23JRtpwiAVcBSVYNz3CBc+9N0Lk6clKaMUopv7Fl6Vx0it+hhAd82cFJZEfE
+         8NpEtJIi7XlhTTpEymkz8LwMqNuav6YJd1rwJ+Z6Lk1QJUxYq98xXPzXa+6bhwaXrxlL
+         eN0dshnBNisuK81pfv9OwHHYGgcXUzoep9mRmQVtpA+0oLz45BQxnFIIaoMlD0T7yNkf
+         71pg==
+X-Gm-Message-State: ABuFfojVq1f27Dpz40NcZCpcktCF8h/5W7boux/LasZg8oS77yyHOf6u
+        9MJfYU8EIZdeZGV227DAeNTm+2vakckTHBnqRY2k0wpR4TQ=
+X-Google-Smtp-Source: ACcGV61M/gwcJeSF8L2+1YySrvP/RgKGxt1ClD9vZZWg6TQhow9URpxfQCf8zLWf2udZMBLEZ5qq7cL068r6aI0NAYA=
+X-Received: by 2002:a50:aca2:: with SMTP id x31-v6mr30874805edc.76.1539040710833;
+ Mon, 08 Oct 2018 16:18:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181008215701.779099-1-sandals@crustytoothpaste.net> <20181008215701.779099-14-sandals@crustytoothpaste.net>
-In-Reply-To: <20181008215701.779099-14-sandals@crustytoothpaste.net>
+References: <20181008215701.779099-1-sandals@crustytoothpaste.net> <20181008215701.779099-15-sandals@crustytoothpaste.net>
+In-Reply-To: <20181008215701.779099-15-sandals@crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Oct 2018 16:10:37 -0700
-Message-ID: <CAGZ79kbLqcvH9Zd5fH4NECvuES6FQ+jOFDcv713_5SXa-NvQ3g@mail.gmail.com>
-Subject: Re: [PATCH 13/14] submodule: make zero-oid comparison hash function agnostic
+Date:   Mon, 8 Oct 2018 16:18:19 -0700
+Message-ID: <CAGZ79kZ+Kmo4QkatN7MufPy7UNT9_qb4om8J5oGB0D5aH+PtkQ@mail.gmail.com>
+Subject: Re: [PATCH 14/14] rerere: convert to use the_hash_algo
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
@@ -65,12 +65,19 @@ X-Mailing-List: git@vger.kernel.org
 On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
 >
-> With SHA-256, the length of the all-zeros object ID is longer.  Add a
-> function to git-submodule.sh to check if a full hex object ID is the
-> all-zeros value, and use it to check the output we're parsing from git
-> diff-files or diff-index.
+> Since this data is stored in the .git directory, it makes sense for us
+> to use the same hash algorithm for it as for everything else.  Convert
+> the remaining uses of SHA-1 to use the_hash_algo.  Use GIT_MAX_RAWSZ for
+> allocations.  Rename various struct members, local variables, and a
+> function to be named "hash" instead of "sha1".
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
+>  rerere.c | 81 +++++++++++++++++++++++++++++---------------------------
+>  1 file changed, 42 insertions(+), 39 deletions(-)
 
-Nice!
+I have reviewed all patches and had minor questions on some of them,
+all others look good to me.
+
+Thanks,
+Stefan
