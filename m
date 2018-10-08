@@ -2,115 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63BC51F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 16:57:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3AAD1F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 17:05:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbeJIAKO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 20:10:14 -0400
-Received: from mail-qk1-f179.google.com ([209.85.222.179]:42238 "EHLO
-        mail-qk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726159AbeJIAKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 20:10:14 -0400
-Received: by mail-qk1-f179.google.com with SMTP id g20-v6so12470761qke.9
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 09:57:35 -0700 (PDT)
+        id S1726450AbeJIARw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 20:17:52 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33017 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726348AbeJIARv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 20:17:51 -0400
+Received: by mail-pg1-f194.google.com with SMTP id y18-v6so8120570pge.0
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 10:05:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=rm5oggyJ8mz3sa6Oybejvk3Mq3Mxx9lnH55ISJcP+iQ=;
-        b=a2vrzsxFTc7ZWQCi5nkR8Xnd0diNvntHIAqlhOLl4VF2tDDWArYJWzXr27nyMR3Wc5
-         +r7RCOhgEbWoHtznIAOcHi8JVH7Sd9RBC2rqyiqtfJR1gzWu29hbw6Z1/elNTlx5BLj/
-         1Z/HXxaB0c6Rx4UpMZAm819Y6B/hjPfZ0a8spTllqWWv2kKymZ5seUiWzklKen0izZoh
-         qEPpjgCzbACYJ2kV1gKAoSZsxvC08HYbL4VSeKyP9xWsuKLHYQpQ7e7hPxImAPHpG3vO
-         0a1jNvOZ6+STHfTbTdihfrykV0/Xe/4Gl/gceoa2nbRnr1D9sHLnYg87Sm8i/EZHwkxE
-         2LRA==
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=G4zHh+AbFpioT/y4cfgQUl9FMrBiwXM5OJtPeHJ2r+0=;
+        b=l6QWZlEBL+cXaW2kW52F65UlKmFwiF7MGhBn1MKlQJqJT1U3kOMDP2qgLcxYCxm8zD
+         QPV+UzeZDep8Pjl2gD+V07Jd9gbyVCZkqRy2YMmiQ5luMP3NkRoz9u1XotiYiOfhNjT4
+         zoeKGnFjcmdiVT/moZ6h/rE51LA0D1RjAYGMq+PgsVtdrdICguaghZtslVJwQaqJn1o1
+         U7G8yoMKtomSiHg5jyw/5pOBCbqwDfec4j83MZ66cmVrb/wr0EsQ95OtIlwkwNiSC1xC
+         RH0Zjvj8Pmwk7/lourxP5PT0+dAgdX6qTrYg6LSe/ABITkLmcfTwuprkJLJ+MYkPEt0K
+         udDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=rm5oggyJ8mz3sa6Oybejvk3Mq3Mxx9lnH55ISJcP+iQ=;
-        b=b7Cj0RBVW96kQROFyPbV08lTxNywD/ZwLgDE1VoiwdkXho+sOdPyWbNgzKca0leMMA
-         dRSztGTwqW8UzfSFFql94pdlI9Pslh5dLyQP6zYZHk1QqNZe4dLY7wBBoDth824UOWzi
-         B9+JiWpY0YKlmYdnxQtmvqTxDVMXQvNFX6W6kiR7O1+SlI/Kt1cmKBUA+hNKyVE/perN
-         6qJ01gNaX9PzwHgoxg8Fb+tcDBzjQAhRrRVbPwyxUTFJeTLLqqesqLFAOVX4Qc3osxQl
-         HET0ESxEM6LAOrtxuXUxkBKe/nUiu4MnybzOwX7wQhq76rH9SCiTCnIF9tMxwLZ7JWFq
-         xpgw==
-X-Gm-Message-State: ABuFfogyPAohb51X7TIWED5CyKgzuuCIZSSY97d8m+q2DmusOafuovvN
-        GmDr+GhxKAABGzqTXBmK5IE=
-X-Google-Smtp-Source: ACcGV62BZL3dOv0Y0/xpwWj3TTx3Wngv0f3IwGmjuYfzpFU6W43Ki6jctGuAxeqxoyatFxGoxRq6Sw==
-X-Received: by 2002:a37:ccd5:: with SMTP id n82-v6mr19037410qkl.16.1539017854579;
-        Mon, 08 Oct 2018 09:57:34 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:1c56:381e:537f:a878? ([2001:4898:8010:0:58c:381e:537f:a878])
-        by smtp.gmail.com with ESMTPSA id p51-v6sm9979207qta.61.2018.10.08.09.57.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Oct 2018 09:57:33 -0700 (PDT)
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
- graph
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <87tvm3go42.fsf@evledraar.gmail.com>
- <20181003133650.GN23446@localhost> <87r2h7gmd7.fsf@evledraar.gmail.com>
- <20181003141732.GO23446@localhost> <87o9cbglez.fsf@evledraar.gmail.com>
- <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
- <87lg7ehnps.fsf@evledraar.gmail.com>
- <20181003185156.GA20709@sigill.intra.peff.net>
- <a300acae-c7f2-eace-5196-381a99d62c13@gmail.com>
- <20181003191805.GB16666@sigill.intra.peff.net>
- <20181008164141.GZ23446@szeder.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
-Date:   Mon, 8 Oct 2018 12:57:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=G4zHh+AbFpioT/y4cfgQUl9FMrBiwXM5OJtPeHJ2r+0=;
+        b=BbQpXMC9pT3Fxnyxc+hLeAJkvuoOks6DtaS9JzjJhCptW9p/EyLIA7tQlroDRhM94b
+         wFnY7vgmnPNK5Ukoa4LrAFH27V8eW7lq5LdrWL7pQcgy9qA776TQzjEikQvx5JjZQgTM
+         WB9lo1LN6aLTBPHPZQ0T2Q7nur7hvpvniE6z8FE1ziNAT38R+VXtbGKPA1yQJMxojEDB
+         0DxDGkxpvMF9TxWNzpwFpW1NtRj4Pg/u8g6YIrEFFaOAjGOqNEHNsHoems7CCaus20I6
+         fgqfGJZRf/9URltFVk80l+nN4jZypQSL73XmCmfiuMVTZKDA0ojgBqCHb9LFGzzFhhTP
+         6olQ==
+X-Gm-Message-State: ABuFfojDNGXoKfTCnIMXz0keCdDVPO0HZ0S9S8fybwS0VIBWGJT9nkdB
+        cDWQ991hfxd+bBjENy/2joTj61rl
+X-Google-Smtp-Source: ACcGV63Wheb3vgEhFA+TWEzPADcvqS7rKk7tW0xE01k0FoF0jD0PzUoVgwcYwUTmBGmCN7jhmDh4Dw==
+X-Received: by 2002:a62:9402:: with SMTP id m2-v6mr26247828pfe.255.1539018311599;
+        Mon, 08 Oct 2018 10:05:11 -0700 (PDT)
+Received: from manohar-ssh ([116.75.87.35])
+        by smtp.gmail.com with ESMTPSA id t12-v6sm18381326pgg.72.2018.10.08.10.05.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Oct 2018 10:05:10 -0700 (PDT)
+Date:   Mon, 8 Oct 2018 17:05:05 +0000
+From:   Ananya Krishna Maram <ananyakittu1997@gmail.com>
+To:     christian.couder@gmail.com, git@vger.kernel.org,
+        Johannes.Schindelin@gmx.de
+Subject: [PATCH][Outreachy] remove all the inclusions of git-compat-util.h in
+ header files
+Message-ID: <20181008170505.GA13134@manohar-ssh>
 MIME-Version: 1.0
-In-Reply-To: <20181008164141.GZ23446@szeder.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/2018 12:41 PM, SZEDER Gábor wrote:
-> On Wed, Oct 03, 2018 at 03:18:05PM -0400, Jeff King wrote:
->> I'm still excited about the prospect of a bloom filter for paths which
->> each commit touches. I think that's the next big frontier in getting
->> things like "git log -- path" to a reasonable run-time.
-> There is certainly potential there.  With a (very) rough PoC
-> experiment, a 8MB bloom filter, and a carefully choosen path I can
-> achieve a nice, almost 25x speedup:
->
->    $ time git rev-list --count HEAD -- t/valgrind/valgrind.sh
->    6
->
->    real    0m1.563s
->    user    0m1.519s
->    sys     0m0.045s
->
->    $ time GIT_USE_POC_BLOOM_FILTER=y ~/src/git/git rev-list --count HEAD -- t/valgrind/valgrind.sh
->    6
->
->    real    0m0.063s
->    user    0m0.043s
->    sys     0m0.020s
->
->    bloom filter total queries: 16269 definitely not: 16195 maybe: 74 false positives: 64 fp ratio: 0.003934
-Nice! These numbers make sense to me, in terms of how many TREESAME 
-queries we actually need to perform for such a query.
-> But I'm afraid it will take a while until I get around to turn it into
-> something presentable...
-Do you have the code pushed somewhere public where one could take a 
-look? I could provide some early feedback.
+Hi All, 
+I was searching through #leftovers and found this.
+https://public-inbox.org/git/CABPp-BGVVXcbZX44er6TO-PUsfEN_6GNYJ1U5cuoN9deaA48OQ@mail.gmail.com/
 
-Thanks,
--Stolee
+This patch address the task discussed in the above link. 
+
+From: Ananya Krishan Maram <ananyakittu1997@gmail.com>
+
+skip the #include of git-compat-util.h since all .c files include it.
+
+Signed-off-by: Ananya Krishna Maram <ananyakittu1997@gmail.com>
+---
+ advice.h             | 1 -
+ commit-graph.h       | 1 -
+ hash.h               | 1 -
+ pkt-line.h           | 1 -
+ t/helper/test-tool.h | 1 -
+ 5 files changed, 5 deletions(-)
+
+diff --git a/advice.h b/advice.h
+index ab24df0fd..09148baa6 100644
+--- a/advice.h
++++ b/advice.h
+@@ -1,7 +1,6 @@
+ #ifndef ADVICE_H
+ #define ADVICE_H
+ 
+-#include "git-compat-util.h"
+ 
+ extern int advice_push_update_rejected;
+ extern int advice_push_non_ff_current;
+diff --git a/commit-graph.h b/commit-graph.h
+index b05047676..0e93c2bed 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -1,7 +1,6 @@
+ #ifndef COMMIT_GRAPH_H
+ #define COMMIT_GRAPH_H
+ 
+-#include "git-compat-util.h"
+ #include "repository.h"
+ #include "string-list.h"
+ #include "cache.h"
+diff --git a/hash.h b/hash.h
+index 7c8238bc2..9a4334c5d 100644
+--- a/hash.h
++++ b/hash.h
+@@ -1,7 +1,6 @@
+ #ifndef HASH_H
+ #define HASH_H
+ 
+-#include "git-compat-util.h"
+ 
+ #if defined(SHA1_PPC)
+ #include "ppc/sha1.h"
+diff --git a/pkt-line.h b/pkt-line.h
+index 5b28d4347..fdd316494 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -1,7 +1,6 @@
+ #ifndef PKTLINE_H
+ #define PKTLINE_H
+ 
+-#include "git-compat-util.h"
+ #include "strbuf.h"
+ 
+ /*
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index e07495727..24e0a1589 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -1,7 +1,6 @@
+ #ifndef __TEST_TOOL_H__
+ #define __TEST_TOOL_H__
+ 
+-#include "git-compat-util.h"
+ 
+ int cmd__chmtime(int argc, const char **argv);
+ int cmd__config(int argc, const char **argv);
+-- 
+2.19.0.272.ga00e0029e
+
