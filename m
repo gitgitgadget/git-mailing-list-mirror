@@ -2,381 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 466161F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 13:38:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4554F1F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 13:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726689AbeJHUts (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Oct 2018 16:49:48 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:46924 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726427AbeJHUts (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Oct 2018 16:49:48 -0400
-Received: from [192.168.2.240] ([92.28.142.68])
-        by smtp.talktalk.net with SMTP
-        id 9VjRglSx8oI6L9VjSgW8gE; Mon, 08 Oct 2018 14:37:59 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1539005879;
-        bh=dP0o3MYQ592qIpMdoDk+JzsYPIxyJTguou8UjZ27JEQ=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=jLxXYXRafdSHp/B7laAu5UsP7n9qyl4JUPQkPpSEJM8GcXLmmFe136sOlzr9kxfWI
-         Cxb6vo6lm/pCZot1ivlVkLZZD6EbGppKUWyC310OERHEhmXrblgZgqsSsChtk4EQKR
-         29vB/SaxQaddi29CHJYMwbJxaOnZy60w7KBuvgks=
-X-Originating-IP: [92.28.142.68]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
- a=UGDAwvN9cmeZh0o4udnnNw==:17 a=IkcTkHD0fZMA:10 a=pBoiBGr16XAn0NSo9gkA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 4/4] rebase --skip: clean up commit message after a
- failed fixup/squash
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Stefan Beller <sbeller@google.com>
-References: <CAPig+cRrS0_nYJJY=O6cboV630sNQHPV5QGrQdD8MW-sYzNFGQ@mail.gmail.com>
- <cover.1524862093.git.johannes.schindelin@gmx.de>
- <08609b5f2d5bc7f3f6d010088db4b58695dfbd64.1524862093.git.johannes.schindelin@gmx.de>
- <4bd08893-52b4-3a01-d546-4884e2762670@talktalk.net>
- <nycvar.QRO.7.76.6.1810021546500.2034@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <2861c8c3-9c49-de59-277a-21c2857bb914@talktalk.net>
-Date:   Mon, 8 Oct 2018 14:37:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726483AbeJHUzK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Oct 2018 16:55:10 -0400
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:33088 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726056AbeJHUzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Oct 2018 16:55:09 -0400
+Received: by mail-wr1-f42.google.com with SMTP id e4-v6so20935622wrs.0
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 06:43:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=O+qXu0LpaL8XTzm8PV+5pJ92ApJTND/0YLEhoRqjDfA=;
+        b=a1mwlArhDG1RFpCiNJ9ZioRsMPi6iVmqOqtDf+ZtMsKVC8JrfTW4mlqqeq6CSgDjLd
+         1BSizQTh/juL8xvJHW5fahdbKDM5UHNQgJQrJlwE+v/8G3wMfdUXcwXtFyZ7T/NwY9HW
+         9tiNZ9DKJufph2ULNItcw6XXQ3fnFDVTt+g7PIGgcvkeZuFVPLCDOohL+XDf81S+gvSc
+         GKP43t5oJdsGVYcVOQR6KTeVll3eAfiJ/4/njuMLQTaaVKkrp1IlIl6A7i8ip0eE6usv
+         n6FI81LnhnTek0muNW9DcrEgRIKKoXNjos5+AeM6F5Owc5ucFOtgR72z3zOL1OZbCjGE
+         0uHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=O+qXu0LpaL8XTzm8PV+5pJ92ApJTND/0YLEhoRqjDfA=;
+        b=bkbpPrfXv4khq17X7mXQG+2ywYmpJ30R5xKI33NkghZKbENLYBR9jazlHy1EYiQE+q
+         tyoKJuxci0DDr+wEK5UNyVWqcqrqfnGPbISspLZ2xzDPqMAU2UU5RBuLKtq4Uri8nmS5
+         R01M7IrKC8yiE4LOmY3QkB1s7gbLeSYiNG2xksF1Zn2VnRz/98CwjjE+iCW7xQNbtCnc
+         Q32H3rYDf6UlFxG7GAM4l/4UCdlSWQovlSelROQNkZ9bR5dRCJh7iRuBNaWb6Hb+VtPE
+         63QtLzcQiE00LifKdSXzU5sOT50zKogZ/Mut3mv/Fjuniv74/qXa9KZvIaZ2pbx0dZXU
+         IpQQ==
+X-Gm-Message-State: ABuFfohA3ou4rwP7X+FIfqxXh8koX1TW/5TwW8rw8yS+WKsjAs6rsbgg
+        CVe0q9QtbVJ39z+oe3SjNjk=
+X-Google-Smtp-Source: ACcGV62csNaZAW8cGR5uEGZ0VUnB2JkgKNYCNhHlB8McT416aCn3uv7+LFAQWgBvdUOQsxm9nGkT5Q==
+X-Received: by 2002:a5d:480b:: with SMTP id l11-v6mr10619494wrq.28.1539006200632;
+        Mon, 08 Oct 2018 06:43:20 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id o126-v6sm9610027wmo.3.2018.10.08.06.43.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Oct 2018 06:43:19 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
+References: <pull.26.git.gitgitgadget@gmail.com> <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
+Date:   Mon, 08 Oct 2018 15:43:18 +0200
+Message-ID: <87bm84a70p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1810021546500.2034@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKl0Io+GZOCCST6wNZ9i4ZLDF+CxKW/mqUQpXmZkxO8rUtBQaQo57QWcaADpo4ewTxKYVFNX+OKDCwp1XLgSzKM8pKmpDuDIko0q9WZV9swNCJfUhUZs
- E9MWl87XsUEOAwXOhHRJErPrTFy3nr6J16LSNbvPjWojudvi2urVahHm1IkyRvt+ru9nIguEzJ0nludovnzpJbJxSyWjOJV5hFGcQxoiAO+/WvUtdLpNdKBZ
- W0FJWm4N2e1HhqVM+eMjjBiMjkVMpf1nIYG/j500kBRcTgl9CP3Un/9A94RxLZfNJWDteo2ixQtsUOO4NvTT/+fg+jY3zugqqS9B7gssWS3nIcxRThUq1yRE
- d5YCFklk
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
 
-On 02/10/2018 14:50, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> [sorry, I just got to this mail now]
+On Tue, Aug 28 2018, Derrick Stolee via GitGitGadget wrote:
 
-Don't worry, I'm impressed you remembered it, I'd completely forgotten 
-about it.
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The commit-graph feature is tested in isolation by
+> t5318-commit-graph.sh and t6600-test-reach.sh, but there are many
+> more interesting scenarios involving commit walks. Many of these
+> scenarios are covered by the existing test suite, but we need to
+> maintain coverage when the optional commit-graph structure is not
+> present.
+>
+> To allow running the full test suite with the commit-graph present,
+> add a new test environment variable, GIT_TEST_COMMIT_GRAPH. Similar
+> to GIT_TEST_SPLIT_INDEX, this variable makes every Git command try
+> to load the commit-graph when parsing commits, and writes the
+> commit-graph file after every 'git commit' command.
+>
+> There are a few tests that rely on commits not existing in
+> pack-files to trigger important events, so manually set
+> GIT_TEST_COMMIT_GRAPH to false for the necessary commands.
+>
+> There is one test in t6024-recursive-merge.sh that relies on the
+> merge-base algorithm picking one of two ambiguous merge-bases, and
+> the commit-graph feature changes which merge-base is picked.
+>
 
-> 
-> On Sun, 6 May 2018, Phillip Wood wrote:
-> 
->> On 27/04/18 21:48, Johannes Schindelin wrote:
->>>
->>> During a series of fixup/squash commands, the interactive rebase builds
->>> up a commit message with comments. This will be presented to the user in
->>> the editor if at least one of those commands was a `squash`.
->>>
->>> In any case, the commit message will be cleaned up eventually, removing
->>> all those intermediate comments, in the final step of such a
->>> fixup/squash chain.
->>>
->>> However, if the last fixup/squash command in such a chain fails with
->>> merge conflicts, and if the user then decides to skip it (or resolve it
->>> to a clean worktree and then continue the rebase), the current code
->>> fails to clean up the commit message.
->>>
->>> This commit fixes that behavior.
->>>
->>> The fix is quite a bit more involved than meets the eye because it is
->>> not only about the question whether we are `git rebase --skip`ing a
->>> fixup or squash. It is also about removing the skipped fixup/squash's
->>> commit message from the accumulated commit message. And it is also about
->>> the question whether we should let the user edit the final commit
->>> message or not ("Was there a squash in the chain *that was not
->>> skipped*?").
->>>
->>> For example, in this case we will want to fix the commit message, but
->>> not open it in an editor:
->>>
->>> 	pick	<- succeeds
->>> 	fixup	<- succeeds
->>> 	squash	<- fails, will be skipped
->>>
->>> This is where the newly-introduced `current-fixups` file comes in real
->>> handy. A quick look and we can determine whether there was a non-skipped
->>> squash. We only need to make sure to keep it up to date with respect to
->>> skipped fixup/squash commands. As a bonus, we can even avoid committing
->>> unnecessarily, e.g. when there was only one fixup, and it failed, and
->>> was skipped.
->>>
->>> To fix only the bug where the final commit message was not cleaned up
->>> properly, but without fixing the rest, would have been more complicated
->>> than fixing it all in one go, hence this commit lumps together more than
->>> a single concern.
->>>
->>> For the same reason, this commit also adds a bit more to the existing
->>> test case for the regression we just fixed.
->>>
->>> The diff is best viewed with --color-moved.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>>   sequencer.c                | 113 ++++++++++++++++++++++++++++++++-----
->>>   t/t3418-rebase-continue.sh |  35 ++++++++++--
->>>   2 files changed, 131 insertions(+), 17 deletions(-)
->>>
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 56166b0d6c7..cec180714ef 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> [...]
->>> @@ -2804,19 +2801,107 @@ static int commit_staged_changes(struct replay_opts *opts)
->>>   		if (get_oid_hex(rev.buf, &to_amend))
->>>   			return error(_("invalid contents: '%s'"),
->>>   				rebase_path_amend());
->>> -		if (oidcmp(&head, &to_amend))
->>> +		if (!is_clean && oidcmp(&head, &to_amend))
->>>   			return error(_("\nYou have uncommitted changes in your "
->>>   				       "working tree. Please, commit them\n"
->>>   				       "first and then run 'git rebase "
->>>   				       "--continue' again."));
->>> +		/*
->>> +		 * When skipping a failed fixup/squash, we need to edit the
->>> +		 * commit message, the current fixup list and count, and if it
->>> +		 * was the last fixup/squash in the chain, we need to clean up
->>> +		 * the commit message and if there was a squash, let the user
->>> +		 * edit it.
->>> +		 */
->>> +		if (is_clean && !oidcmp(&head, &to_amend) &&
->>> +		    opts->current_fixup_count > 0 &&
->>> +		    file_exists(rebase_path_stopped_sha())) {
->>> +			const char *p = opts->current_fixups.buf;
->>> +			int len = opts->current_fixups.len;
->>> +
->>> +			opts->current_fixup_count--;
->>> +			if (!len)
->>> +				BUG("Incorrect current_fixups:\n%s", p);
->>> +			while (len && p[len - 1] != '\n')
->>> +				len--;
->>> +			strbuf_setlen(&opts->current_fixups, len);
->>> +			if (write_message(p, len, rebase_path_current_fixups(),
->>> +					  0) < 0)
->>> +				return error(_("could not write file: '%s'"),
->>> +					     rebase_path_current_fixups());
->>> +
->>> +			/*
->>> +			 * If a fixup/squash in a fixup/squash chain failed, the
->>> +			 * commit message is already correct, no need to commit
->>> +			 * it again.
->>> +			 *
->>> +			 * Only if it is the final command in the fixup/squash
->>> +			 * chain, and only if the chain is longer than a single
->>> +			 * fixup/squash command (which was just skipped), do we
->>> +			 * actually need to re-commit with a cleaned up commit
->>> +			 * message.
->>> +			 */
->>> +			if (opts->current_fixup_count > 0 &&
->>> +			    !is_fixup(peek_command(todo_list, 0))) {
->>> +				final_fixup = 1;
->>> +				/*
->>> +				 * If there was not a single "squash" in the
->>> +				 * chain, we only need to clean up the commit
->>> +				 * message, no need to bother the user with
->>> +				 * opening the commit message in the editor.
->>> +				 */
->>> +				if (!starts_with(p, "squash ") &&
->>> +				    !strstr(p, "\nsquash "))
->>> +					flags = (flags & ~EDIT_MSG) | CLEANUP_MSG;
->>> +			} else if (is_fixup(peek_command(todo_list, 0))) {
->>> +				/*
->>> +				 * We need to update the squash message to skip
->>> +				 * the latest commit message.
->>> +				 */
->>> +				struct commit *commit;
->>> +				const char *path = rebase_path_squash_msg();
->>> +
->>> +				if (parse_head(&commit) ||
->>> +				    !(p = get_commit_buffer(commit, NULL)) ||
->>> +				    write_message(p, strlen(p), path, 0)) {
->>> +					unuse_commit_buffer(commit, p);
->>> +					return error(_("could not write file: "
->>> +						       "'%s'"), path);
->>> +				}
->>
->> I think it should probably recreate the fixup message as well. If there
->> is a sequence
->>
->> pick commit
->> fixup a
->> fixup b
->> fixup c
->>
->> and 'fixup b' gets skipped then when 'fixup c' is applied the user will
->> be prompted to edit the message unless rebase_path_fixup_msg() exists.
-> 
-> I was already on my way to fix this when I encountered this mail 30
-> minutes ago, but when I tried to implement the regression test, I took a
-> step back: apart from "disk full" and "pilot error", there is really no
-> good reason for the `message-squash` file not being able to be written.
+The test feature itself seems fine, but this consistently fails ever
+since it got introduced (a reset --hard on the commit merged to msater
+in git.git):
 
-Ah, I should perhaps have cut the patch a line higher to make it clearer 
-I was not talking about the error condition. The code rewrites 
-'message-squash' to remove the commit message from the skipped 
-fixup/squash. However if we have skipped a fixup and there are no 
-preceding squash commands then when rebase stopped for the user to fix 
-the merge conflicts it removed the 'message-fixup' file. I thought (and 
-still think) it would be nice if 'rebase --skip' recreated the 
-'message-fixup' file so that the user is not unnecessarily prompted to 
-edit the commit message at the end of the fixup chain but it's not the 
-end of the world if it stays as it is now.
+    GIT_TEST_COMMIT_GRAPH=true prove -j$(parallel --number-of-cores) t5500-fetch-pack.sh t6001-rev-list-graft.sh t6050-replace.sh
+    Test Summary Report
+    -------------------
+    t6001-rev-list-graft.sh (Wstat: 256 Tests: 14 Failed: 6)
+      Failed tests:  3, 5, 7, 9, 11, 13
+      Non-zero exit status: 1
+    t6050-replace.sh       (Wstat: 256 Tests: 35 Failed: 9)
+      Failed tests:  12-16, 24-25, 30, 35
+      Non-zero exit status: 1
+    t5500-fetch-pack.sh    (Wstat: 256 Tests: 357 Failed: 1)
+      Failed test:  351
+      Non-zero exit status: 1
 
-Best Wishes
-
-Phillip
-
-> 
-> And in both cases, a benign `git status` will show the latest command,
-> i.e. the one that failed.
-> 
-> In other words: I now deem this such a corner case that it is not worth
-> spending more time on the error message than we already did...
-> 
-> Ciao,
-> Dscho
-> 
->>
->> Best Wishes
->>
->> Phillip
->>
->>> +				unuse_commit_buffer(commit, p);
->>> +			}
->>> +		}
->>>   
->>>   		strbuf_release(&rev);
->>>   		flags |= AMEND_MSG;
->>>   	}
->>>   
->>> -	if (run_git_commit(rebase_path_message(), opts, flags))
->>> +	if (is_clean) {
->>> +		const char *cherry_pick_head = git_path_cherry_pick_head();
->>> +
->>> +		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
->>> +			return error(_("could not remove CHERRY_PICK_HEAD"));
->>> +		if (!final_fixup)
->>> +			return 0;
->>> +	}
->>> +
->>> +	if (run_git_commit(final_fixup ? NULL : rebase_path_message(),
->>> +			   opts, flags))
->>>   		return error(_("could not commit staged changes."));
->>>   	unlink(rebase_path_amend());
->>> +	if (final_fixup) {
->>> +		unlink(rebase_path_fixup_msg());
->>> +		unlink(rebase_path_squash_msg());
->>> +	}
->>> +	if (opts->current_fixup_count > 0) {
->>> +		/*
->>> +		 * Whether final fixup or not, we just cleaned up the commit
->>> +		 * message...
->>> +		 */
->>> +		unlink(rebase_path_current_fixups());
->>> +		strbuf_reset(&opts->current_fixups);
->>> +		opts->current_fixup_count = 0;
->>> +	}
->>>   	return 0;
->>>   }
->>>   
->>> @@ -2828,14 +2913,16 @@ int sequencer_continue(struct replay_opts *opts)
->>>   	if (read_and_refresh_cache(opts))
->>>   		return -1;
->>>   
->>> +	if (read_populate_opts(opts))
->>> +		return -1;
->>>   	if (is_rebase_i(opts)) {
->>> -		if (commit_staged_changes(opts))
->>> +		if ((res = read_populate_todo(&todo_list, opts)))
->>> +			goto release_todo_list;
->>> +		if (commit_staged_changes(opts, &todo_list))
->>>   			return -1;
->>>   	} else if (!file_exists(get_todo_path(opts)))
->>>   		return continue_single_pick();
->>> -	if (read_populate_opts(opts))
->>> -		return -1;
->>> -	if ((res = read_populate_todo(&todo_list, opts)))
->>> +	else if ((res = read_populate_todo(&todo_list, opts)))
->>>   		goto release_todo_list;
->>>   
->>>   	if (!is_rebase_i(opts)) {
->>> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
->>> index 3874f187246..03bf1b8a3b3 100755
->>> --- a/t/t3418-rebase-continue.sh
->>> +++ b/t/t3418-rebase-continue.sh
->>> @@ -88,14 +88,14 @@ test_expect_success 'rebase passes merge strategy options correctly' '
->>>   	git rebase --continue
->>>   '
->>>   
->>> -test_expect_failure '--skip after failed fixup cleans commit message' '
->>> +test_expect_success '--skip after failed fixup cleans commit message' '
->>>   	test_when_finished "test_might_fail git rebase --abort" &&
->>>   	git checkout -b with-conflicting-fixup &&
->>>   	test_commit wants-fixup &&
->>>   	test_commit "fixup! wants-fixup" wants-fixup.t 1 wants-fixup-1 &&
->>>   	test_commit "fixup! wants-fixup" wants-fixup.t 2 wants-fixup-2 &&
->>>   	test_commit "fixup! wants-fixup" wants-fixup.t 3 wants-fixup-3 &&
->>> -	test_must_fail env FAKE_LINES="1 fixup 2 fixup 4" \
->>> +	test_must_fail env FAKE_LINES="1 fixup 2 squash 4" \
->>>   		git rebase -i HEAD~4 &&
->>>   
->>>   	: now there is a conflict, and comments in the commit message &&
->>> @@ -103,11 +103,38 @@ test_expect_failure '--skip after failed fixup cleans commit message' '
->>>   	grep "fixup! wants-fixup" out &&
->>>   
->>>   	: skip and continue &&
->>> -	git rebase --skip &&
->>> +	echo "cp \"\$1\" .git/copy.txt" | write_script copy-editor.sh &&
->>> +	(test_set_editor "$PWD/copy-editor.sh" && git rebase --skip) &&
->>> +
->>> +	: the user should not have had to edit the commit message &&
->>> +	test_path_is_missing .git/copy.txt &&
->>>   
->>>   	: now the comments in the commit message should have been cleaned up &&
->>>   	git show HEAD >out &&
->>> -	! grep "fixup! wants-fixup" out
->>> +	! grep "fixup! wants-fixup" out &&
->>> +
->>> +	: now, let us ensure that "squash" is handled correctly &&
->>> +	git reset --hard wants-fixup-3 &&
->>> +	test_must_fail env FAKE_LINES="1 squash 4 squash 2 squash 4" \
->>> +		git rebase -i HEAD~4 &&
->>> +
->>> +	: the first squash failed, but there are two more in the chain &&
->>> +	(test_set_editor "$PWD/copy-editor.sh" &&
->>> +	 test_must_fail git rebase --skip) &&
->>> +
->>> +	: not the final squash, no need to edit the commit message &&
->>> +	test_path_is_missing .git/copy.txt &&
->>> +
->>> +	: The first squash was skipped, therefore: &&
->>> +	git show HEAD >out &&
->>> +	test_i18ngrep "# This is a combination of 2 commits" out &&
->>> +
->>> +	(test_set_editor "$PWD/copy-editor.sh" && git rebase --skip) &&
->>> +	git show HEAD >out &&
->>> +	test_i18ngrep ! "# This is a combination" out &&
->>> +
->>> +	: Final squash failed, but there was still a squash &&
->>> +	test_i18ngrep "# This is a combination of 2 commits" .git/copy.txt
->>>   '
->>>   
->>>   test_expect_success 'setup rerere database' '
->>>
->>
->>
-
+This is on Linux/Debian 4.17.0-1-amd64. Can you reproduce this? If not I
+can provide more info (-x output etc..).
