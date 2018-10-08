@@ -2,105 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B447D1F97E
-	for <e@80x24.org>; Mon,  8 Oct 2018 22:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC3F81F97E
+	for <e@80x24.org>; Mon,  8 Oct 2018 23:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbeJIGNu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 02:13:50 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36899 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbeJIGNu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 02:13:50 -0400
-Received: by mail-ed1-f67.google.com with SMTP id c22-v6so19004717edc.4
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 15:59:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=E78O2526mVfyxG2tOquIED0eYggoOGK+VJMKcBHKDq4=;
-        b=psvgSVKjaZee6uV8QknZHdQeaQaHEnJtmHjhHbbfzqGdh5xHTREtTZmX9b4SRKSANZ
-         JYBWxiKMCf+vTDcjAsgataQQCl/gdT/w/MBQK62sAPfilWlkw0Yesj5j6VEOwpKcPWur
-         Xn0mpKTWZrhz84APusf7Wx1b24GQeQrvnRBtTYTG3yxqirbNvPJYEhHD6gx6JvjHhhkD
-         STX1SNbIdwT6y8//hctsnodr+dUSEd1H8hW4onOhsJD4qSoF9q0m343XQxwDCnJC8Jwv
-         0DV7X+dBc4qJP1HwboMdGNhdlx1mtqwfcmYE0vq0HrzTPhF1pkDhLXg4tzhmIhJhh7Tg
-         VPPA==
+        id S1726722AbeJIGPl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 02:15:41 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:41423 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbeJIGPk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 02:15:40 -0400
+Received: by mail-qk1-f195.google.com with SMTP id 23-v6so10731552qkh.8
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 16:01:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=E78O2526mVfyxG2tOquIED0eYggoOGK+VJMKcBHKDq4=;
-        b=qBASYmP/1HU9+jLykkPeDuqsFZ1ACQc3Fp5rqRZsIUeEbfBOpKvMKB0yZ59hv83n7K
-         aCbDcg0xMv2nDv7V+7fhocVebbqhRFt379tuJkoJR6SZsxgNs0LBbcl3uuINC1mWQIBw
-         sHhh8+GeFLPlGhikwc7SBq1+/7BoOThkF1Yk0Z0rEvrGTN+R+Uj1ZyPWkCY+mH4JnZBt
-         DOiFXWkmPoS1Zz/r/qFJdaII0tWQGJMljggThMjIHbFsAJySlwNycB7Uwt8XipuayZKT
-         lSYszyv4F9SjQ6NrTearBSHMosWm//GdNcEjfFufjB9NyBdXFcOsaTrT0eTtYT20Vj+o
-         2pew==
-X-Gm-Message-State: ABuFfojKD5H9NrK9mPuMAqu5hgleINK7dWhjscSzSO+O1diF6m+GRVAa
-        RHrbHh3eUH3wXU0nQG/6BxkpZgGP4mZ9J291ZEFlrw==
-X-Google-Smtp-Source: ACcGV633eW7Q8Y4WEKdf+wrQ1JfcdZx/fqeh4A805icZ09FoO7GDOuUhwf/EtHm45KkeJ8i2IWiKw9Njls+YqS5sJXU=
-X-Received: by 2002:a50:b607:: with SMTP id b7-v6mr9300804ede.215.1539039587434;
- Mon, 08 Oct 2018 15:59:47 -0700 (PDT)
+        bh=2vewbEgdsHIw17CCi+ugMFnKuDHvzRwxuo+z/w6+Zr8=;
+        b=nwHVfF1yGToeHkvAmKedyHIFjcNBPXh9KpyEYOnqU79SJPyk0dePm8BN1uQdHCmCNz
+         r8o0jhabFngwE85eDyDLtP5O66XZnB9clHhYFG9+4jdIqtLP6CAhJx9/QdQxb7qmmmqY
+         hMgEuxl4sN9AGXxGmu8tn116Kp0ChqP9E72Of7PmesIJnYa6lBR5JDyYadqWM2brI/LW
+         hV7PtWmUHq70Ir804tku6Gz7jySA2Lv3eKpd/gpKfRkCnJAouHQkHL7Zd+aXEjsPhrsq
+         aF2JILJP4dINEmGcA1KW8+yt37wqhaOqpDlMCzZONUyTOZokm3WDQjfTD8xsJdE6EWri
+         eCbg==
+X-Gm-Message-State: ABuFfoiD6npAnN2/36FpKpgNqb0Q2UcCjfFjmnGsTAEB6NCPdewJmfAQ
+        EdGveaRw6XhazMAUWOBAF/SKdDZF9mSXj5oxk1R0og==
+X-Google-Smtp-Source: ACcGV60wLEUYGTPrvIKCPqA4GU25sEuvhiCMnzu1B9iJFmClbCBTcg0hVfx/I5nuv+GQKpvvVuAxu6IAFL4uibFlIkQ=
+X-Received: by 2002:a37:8fc7:: with SMTP id r190-v6mr19525060qkd.36.1539039698162;
+ Mon, 08 Oct 2018 16:01:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181008215701.779099-1-sandals@crustytoothpaste.net> <20181008215701.779099-7-sandals@crustytoothpaste.net>
-In-Reply-To: <20181008215701.779099-7-sandals@crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Oct 2018 15:59:36 -0700
-Message-ID: <CAGZ79kbirX6i+qkig6R1YOAsv=0BirhAVkar+AdBLyHgkrXYyg@mail.gmail.com>
-Subject: Re: [PATCH 06/14] packfile: express constants in terms of the_hash_algo
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Duy Nguyen <pclouds@gmail.com>
+References: <20181008215701.779099-1-sandals@crustytoothpaste.net>
+ <20181008215701.779099-3-sandals@crustytoothpaste.net> <CAGZ79kYvW2PFdLfvd3W_t6rPs=oMBDxgMEgDRLtC4MHyo6MXVQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kYvW2PFdLfvd3W_t6rPs=oMBDxgMEgDRLtC4MHyo6MXVQ@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 8 Oct 2018 19:01:27 -0400
+Message-ID: <CAPig+cS5VdYq1ZOrP9oPwpXZ3ZmSV3_QdQAHiz5fV1Tc1uEF9A@mail.gmail.com>
+Subject: Re: [PATCH 02/14] builtin/repack: replace hard-coded constant
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+On Mon, Oct 8, 2018 at 6:27 PM Stefan Beller <sbeller@google.com> wrote:
+> On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > -               if (line.len != 40)
+> > -                       die("repack: Expecting 40 character sha1 lines only from pack-objects.");
+> > +               if (line.len != the_hash_algo->hexsz)
+> > +                       die("repack: Expecting full hex object ID lines only from pack-objects.");
 >
-> Replace uses of GIT_SHA1_RAWSZ with references to the_hash_algo to avoid
-> dependence on a particular hash length.
+> This is untranslated as it is plumbing? If so, maybe
+>
+>     if (is_sha1(the_hash_algo)
+>         die("repack: Expecting 40 character sh...
+>     else
+>         die(repack: Expecting full hex object ID in %s, of length %d",
+>             the_hash_algo->name,
+>             the_hash_algo->hexsz);
 
-Unlike the previous patches, this is dealing directly with packfiles,
-which (I would think) carry their own hash function selector?
-(i.e. packfiles up to version 4 are sha1 hardcoded and version
-5 and onwards will have a hash type field. Usually that hash type would
-match what is in the_repository, but you could obtain packfiles
-out of band, or the translation table that we plan to have might
-be part of the packfile/idx file?)
-
-
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  packfile.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/packfile.c b/packfile.c
-> index 841b36182f..17f993b5bf 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1121,13 +1121,14 @@ int unpack_object_header(struct packed_git *p,
->  void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1)
->  {
->         unsigned i;
-> +       const unsigned hashsz = the_hash_algo->rawsz;
->         for (i = 0; i < p->num_bad_objects; i++)
-> -               if (hasheq(sha1, p->bad_object_sha1 + GIT_SHA1_RAWSZ * i))
-> +               if (hasheq(sha1, p->bad_object_sha1 + hashsz * i))
->                         return;
->         p->bad_object_sha1 = xrealloc(p->bad_object_sha1,
->                                       st_mult(GIT_MAX_RAWSZ,
->                                               st_add(p->num_bad_objects, 1)));
-> -       hashcpy(p->bad_object_sha1 + GIT_SHA1_RAWSZ * p->num_bad_objects, sha1);
-> +       hashcpy(p->bad_object_sha1 + hashsz * p->num_bad_objects, sha1);
->         p->num_bad_objects++;
->  }
->
+Special-casing for SHA-1 seems overkill for an error message. A script
+expecting this particular error condition and this particular error
+message would be fragile indeed.
