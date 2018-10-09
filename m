@@ -2,213 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D84011F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 13:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03C851F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 14:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726503AbeJIVI2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 17:08:28 -0400
-Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:9987 "EHLO
-        mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726445AbeJIVI2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 9 Oct 2018 17:08:28 -0400
-X-IronPort-AV: E=Sophos;i="5.54,360,1534802400"; 
-   d="scan'208";a="281560780"
-Received: from 89-157-201-244.rev.numericable.fr (HELO hadrien) ([89.157.201.244])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 Oct 2018 15:51:23 +0200
-Date:   Tue, 9 Oct 2018 15:51:22 +0200 (CEST)
-From:   Julia Lawall <julia.lawall@lip6.fr>
-X-X-Sender: jll@hadrien
-To:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git log -S or -G
-In-Reply-To: <87lg77cmr1.fsf@evledraar.gmail.com>
-Message-ID: <alpine.DEB.2.21.1810091549530.2430@hadrien>
-References: <alpine.DEB.2.21.1810061712260.2402@hadrien> <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com> <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com> <alpine.DEB.2.21.1810070719200.2347@hadrien> <xmqq8t38t4r7.fsf@gitster-ct.c.googlers.com>
- <20181009032124.GE6250@sigill.intra.peff.net> <xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.com> <87lg77cmr1.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+        id S1726488AbeJIV2r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 17:28:47 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:42716 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726415AbeJIV2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 17:28:46 -0400
+Received: by mail-qk1-f193.google.com with SMTP id g20-v6so988754qke.9
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 07:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=kN7nYo+K0KsBlPUx9OaYYK0g7+yg2FiTcwWomq7bypw=;
+        b=hHXkj2mJTKjnk3A21zrbMin/U009V8MBvo4BTV/hK9AtTX1nj9CiVWEVFAkZxtOe7O
+         z4F7zuqlTBMUwQbblyjnyL7c0i1g2t9NWs/Lq18QnMY/LAJrDKuO6+0uK0YNLdzqhkvG
+         Hjtg4F6JctgNk9xcDNSzGnLPp76PYjY8PL/nTNAJK2eww80FQhH9tgpD9FVIp2exNEo+
+         OD9l/GMzhvVSqwHOggvc8EOwpDiOqouhP62ztnvirQwq+NA5QTjMbNGWgMhbbUWEKIiz
+         TsotPFwFy9Z96qanpYhv6r5F1i8Uyua1LJEstFNAYDMRRB0GAumimYL1qFj1nm25ki3A
+         IViQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=kN7nYo+K0KsBlPUx9OaYYK0g7+yg2FiTcwWomq7bypw=;
+        b=ST4iO7C7CmJR4komTpKI55Ac/UPIvUuhCC5Qk6Kvwue1HJPnJnSVnReL4G3SZdwh3j
+         u8j05NwyJJNlxLAGj8azlo10hikdiLd+CEhFAeWvzwq1Ihyir8ChXmm7XsPHTionvVDI
+         +xsh8c1/+Bze9tsKugAL/zqY9jSH9Qco5WU2Awd8BAuKIfumOzlW3dJz08EGW1Sq5EkK
+         nlHZs58cWchgTx6RfrxRT6+pyquHNhPRcADi+tzPBHBaGUp1W3WQaWF5K8cRUQ666rWE
+         yFBthXoVgDreIAPbTld4X6wekM0k0D7c2kxAPGkCHe58woXexVJe0rEJBHMjz6AksmgY
+         UqCQ==
+X-Gm-Message-State: ABuFfohiYOKNoWEzUFCvxPzzcElx4HQwcXEn+KkwBtB3tAARJYVn1kA+
+        Tc5CMkPeOsRB4qkzgOv/yHc=
+X-Google-Smtp-Source: ACcGV63GJ/I/TWnTdfifF1lPtrYeVDVRTTp7mp52e/kSeChK6kKMphvCNXLNchsCySLpy1tqRf/qVA==
+X-Received: by 2002:ae9:f810:: with SMTP id x16-v6mr10808198qkh.334.1539094297211;
+        Tue, 09 Oct 2018 07:11:37 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id 135-v6sm9849102qkm.65.2018.10.09.07.11.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 Oct 2018 07:11:34 -0700 (PDT)
+Subject: Re: [PATCH 2/3] midx: close multi-pack-index on repack
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Stefan Beller <sbeller@google.com>
+References: <pull.27.git.gitgitgadget@gmail.com>
+ <725ebadc92a91469eed089eb501b705c2dd2c627.1539011820.git.gitgitgadget@gmail.com>
+ <xmqq4ldvqyci.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8b5dbe3d-b382-bf48-b524-d9e8a074ac4d@gmail.com>
+Date:   Tue, 9 Oct 2018 10:11:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-402867390-1539093083=:2430"
+In-Reply-To: <xmqq4ldvqyci.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 10/9/2018 5:10 AM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> diff --git a/builtin/repack.c b/builtin/repack.c
+>> index c6a7943d5c..7925bb976e 100644
+>> --- a/builtin/repack.c
+>> +++ b/builtin/repack.c
+>> @@ -432,6 +432,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>>   
+>>   			if (!midx_cleared) {
+>>   				/* if we move a packfile, it will invalidated the midx */
+>> +				if (the_repository->objects) {
+>> +					close_midx(the_repository->objects->multi_pack_index);
+>> +					the_repository->objects->multi_pack_index = NULL;
+>> +				}
+>>   				clear_midx_file(get_object_directory());
+>>   				midx_cleared = 1;
+> It somehow looks like a bit of layering violation, doesn't it?  When
+> we are clearing a midx file, don't we always want to do this as well?
 
---8323329-402867390-1539093083=:2430
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+You're right. It did feel a bit wrong. In v2, I'll replace this commit 
+with a refactor of clear_midx_file() to do that. One tricky part is that 
+we need to clear the file even if the in-memory struct hasn't been 
+initialized, but I think passing a repository will suffice for that.
 
+CC Stefan: Is there a plan to make get_object_directory() take a 
+repository parameter?
 
+Thanks,
 
-On Tue, 9 Oct 2018, Ævar Arnfjörð Bjarmason wrote:
+-Stolee
 
->
-> On Tue, Oct 09 2018, Junio C Hamano wrote:
->
-> > Jeff King <peff@peff.net> writes:
-> >
-> >> I think that is the best we could do for "-S", though, which is
-> >> inherently about counting hits.
-> >>
-> >> For "-G", we are literally grepping the diff. It does not seem
-> >> unreasonable to add the ability to grep only "-" or "+" lines, and the
-> >> interface for that should be pretty straightforward (a tri-state flag to
-> >> look in remove, added, or both lines).
-> >
-> > Yeah, here is a lunchtime hack that hasn't even been compile tested.
-> >
-> >  diff.c             |  4 ++++
-> >  diff.h             |  2 ++
-> >  diffcore-pickaxe.c | 22 ++++++++++++++++++++--
-> >  3 files changed, 26 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/diff.c b/diff.c
-> > index f0c7557b40..d1f2780844 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -5068,6 +5068,10 @@ int diff_opt_parse(struct diff_options *options,
-> >  	}
-> >  	else if (!strcmp(arg, "--pickaxe-all"))
-> >  		options->pickaxe_opts |= DIFF_PICKAXE_ALL;
-> > +	else if (!strcmp(arg, "--pickaxe-ignore-add"))
-> > +		options->pickaxe_opts |= DIFF_PICKAXE_IGNORE_ADD;
-> > +	else if (!strcmp(arg, "--pickaxe-ignore-del"))
-> > +		options->pickaxe_opts |= DIFF_PICKAXE_IGNORE_DEL;
-> >  	else if (!strcmp(arg, "--pickaxe-regex"))
-> >  		options->pickaxe_opts |= DIFF_PICKAXE_REGEX;
-> >  	else if ((argcount = short_opt('O', av, &optarg))) {
-> > diff --git a/diff.h b/diff.h
-> > index a30cc35ec3..147c47ace7 100644
-> > --- a/diff.h
-> > +++ b/diff.h
-> > @@ -358,6 +358,8 @@ int git_config_rename(const char *var, const char *value);
-> >  				 DIFF_PICKAXE_KIND_OBJFIND)
-> >
-> >  #define DIFF_PICKAXE_IGNORE_CASE	32
-> > +#define DIFF_PICKAXE_IGNORE_ADD	64
-> > +#define DIFF_PICKAXE_IGNORE_DEL 128
-> >
-> >  void diffcore_std(struct diff_options *);
-> >  void diffcore_fix_diff_index(struct diff_options *);
-> > diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-> > index 800a899c86..826dde6bd4 100644
-> > --- a/diffcore-pickaxe.c
-> > +++ b/diffcore-pickaxe.c
-> > @@ -16,6 +16,7 @@ typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
-> >
-> >  struct diffgrep_cb {
-> >  	regex_t *regexp;
-> > +	struct diff_options *diff_options;
-> >  	int hit;
-> >  };
-> >
-> > @@ -23,9 +24,14 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
-> >  {
-> >  	struct diffgrep_cb *data = priv;
-> >  	regmatch_t regmatch;
-> > +	unsigned pickaxe_opts = data->diff_options->pickaxe_opts;
-> >
-> >  	if (line[0] != '+' && line[0] != '-')
-> >  		return;
-> > +	if ((pickaxe_opts & DIFF_PICKAXE_IGNORE_ADD) &&	line[0] == '+')
-> > +		return;
-> > +	if ((pickaxe_opts & DIFF_PICKAXE_IGNORE_DEL) &&	line[0] == '-')
-> > +		return;
-> >  	if (data->hit)
-> >  		/*
->
-> Looks good, but I wonder if a more general version of this couldn't be
-> that instead of returning early if the line doesn't start with +/-
-> above, we have an option to skip that early return.
->
-> Then you can simply specify a regex that starts by matching a + or - at
-> the start of the line, but you also get the poweruser tool of matching
-> lines around those lines, as tweaked by the -U option. I.e. this:
->
-> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-> index 800a899c86..90625a110c 100644
-> --- a/diffcore-pickaxe.c
-> +++ b/diffcore-pickaxe.c
-> @@ -24,15 +24,13 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
->         struct diffgrep_cb *data = priv;
->         regmatch_t regmatch;
->
-> -       if (line[0] != '+' && line[0] != '-')
-> -               return;
->         if (data->hit)
->                 /*
->                  * NEEDSWORK: we should have a way to terminate the
->                  * caller early.
->                  */
->                 return;
-> -       data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
-> +       data->hit = !regexec_buf(data->regexp, line, len, 1,
->                                  &regmatch, 0);
->  }
->
-> That patch obviously breaks existing -G, so it would need to be
-> optional, but allows me e.g. on git.git to do:
->
->     ~/g/git/git --exec-path=/home/avar/g/git log -G'^ .*marc\.info' -p -U2 -- README.md
->
-> To find a change whose first line of context is a line mentioning
-> marc.info, and then I can use -G'^\+<rx>' to find added lines matching
-> <rx> etc.
-
-Do -G's accumulate?  I had the impression that only the last one was taken
-into account, but I didn't check the code on that.
-
-julia
-
->
-> Then the --pickaxe-ignore-add and --pickaxe-ignore-del options in your
-> patch could just be implemented in terms of that feature, i.e. by
-> implicitly adding a "^-" or "^\+" to the beginning of the regex,
-> respectively, and implicitly turning on a new --pickaxe-raw-lines or
-> whatever we'd call it.
->
-> >  		 * NEEDSWORK: we should have a way to terminate the
-> > @@ -45,13 +51,20 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
-> >  	xpparam_t xpp;
-> >  	xdemitconf_t xecfg;
-> >
-> > -	if (!one)
-> > +	if (!one) {
-> > +		if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_ADD)
-> > +			return 0;
-> >  		return !regexec_buf(regexp, two->ptr, two->size,
-> >  				    1, &regmatch, 0);
-> > -	if (!two)
-> > +	}
-> > +	if (!two) {
-> > +		if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_DEL)
-> > +			return 0;
-> >  		return !regexec_buf(regexp, one->ptr, one->size,
-> >  				    1, &regmatch, 0);
-> > +	}
-> >
-> > +	ecbdata.diff_options = o;
-> >  	/*
-> >  	 * We have both sides; need to run textual diff and see if
-> >  	 * the pattern appears on added/deleted lines.
-> > @@ -113,6 +126,11 @@ static int has_changes(mmfile_t *one, mmfile_t *two,
-> >  {
-> >  	unsigned int one_contains = one ? contains(one, regexp, kws) : 0;
-> >  	unsigned int two_contains = two ? contains(two, regexp, kws) : 0;
-> > +
-> > +	if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_ADD)
-> > +		return one_contains > two_contains;
-> > +	if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_DEL)
-> > +		return one_contains < two_contains;
-> >  	return one_contains != two_contains;
-> >  }
-> >
->
---8323329-402867390-1539093083=:2430--
