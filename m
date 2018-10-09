@@ -2,159 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1F271F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 02:16:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67E751F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 03:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726510AbeJIJay (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 05:30:54 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:39161 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbeJIJay (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 05:30:54 -0400
-Received: by mail-lj1-f193.google.com with SMTP id p1-v6so31285ljg.6
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 19:16:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0O9ZWLgQsXblipWmzZ3DhYEc6qSfo5eLQVrfKCj7maA=;
-        b=F6xmg7zLvtw+Z/kZ8xVbT3CWZL/Q6doYfpTGzPaOmMUPRO/Im4UC7hwQahR977ZeCz
-         j5VVt/50G1v8Q2nqbSkVT3Prz4lBSYIddzYdnTrLZ1Uo+m6pJDsdCNFfeVTHr1XdVxdG
-         +pH9hwbnQLBJz7p5qVWhgMP0fTa5BCI+RL48Jh+CIIewfgzwzvmihD+oE7Mref4nhukY
-         Ej9oyhL0nrcBq6kG2PBR8PSxoOusRo/GHrvky2l5Li+YGcnkL3U4FuPmgUdgaKVngR9D
-         PjI9lFkVBR1+TZq0jifij+tjFRJ9jn15rJ+IpxUuwW/HJvhVMy7nn1Am/s1oy7ewzDGW
-         /M1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0O9ZWLgQsXblipWmzZ3DhYEc6qSfo5eLQVrfKCj7maA=;
-        b=qb8UVhPuF0Gow7DmCQWAY5Q2ICf2Bf9T35BKBDrXZ5Tg6P3QJEiolTrSzg3cHnZbwx
-         z6hc+9LYePnj4AM3PzWrkU/SGklTy6EF75ZKp5GQ02NvYzr9fb60CQdDFJpBc1bQXiZV
-         5cr/gCBYUZ0VFakaPYw8iIyhm3oTSvts+acjdC2IhftF2F8Hvg/Fe+CUNrOqf6cxjIW0
-         ZcLM/WD5zQ6NgyhdeJLgvEW0dAoAbiEiTq9/1fTXM1SsMvDhp6GmNjk5jAO6WUcGygKN
-         MPm6yLskxy4hwOudOwhcUjeqAibL1HAZcJ3uENzf3Z0oi/6+vqL9iIvO7F4ahlT4y3QI
-         FlQg==
-X-Gm-Message-State: ABuFfojJfVxSZ65R9LWtjif3Pqt5D10Eg6k5JQDaxnbvMYJkNM78BOX3
-        g5XPoL8EUPJ7md9T6OceW3okH2qhqpCKK6g5tLQ=
-X-Google-Smtp-Source: ACcGV63S/A8z7ifqVT0Jq6fuT2WqUNeeIRXmnArQxhoxc7lkvoYepmgYOe16gi0sEkFy6TCl8RYUOUUANdtOhAufSXk=
-X-Received: by 2002:a2e:9047:: with SMTP id n7-v6mr14139507ljg.10.1539051376606;
- Mon, 08 Oct 2018 19:16:16 -0700 (PDT)
+        id S1725823AbeJIKWu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 06:22:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46862 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725749AbeJIKWu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 06:22:50 -0400
+Received: (qmail 7525 invoked by uid 109); 9 Oct 2018 03:08:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Oct 2018 03:08:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10380 invoked by uid 111); 9 Oct 2018 03:07:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 08 Oct 2018 23:07:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Oct 2018 23:08:03 -0400
+Date:   Mon, 8 Oct 2018 23:08:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
+ graph
+Message-ID: <20181009030803.GA6250@sigill.intra.peff.net>
+References: <87o9cbglez.fsf@evledraar.gmail.com>
+ <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
+ <87lg7ehnps.fsf@evledraar.gmail.com>
+ <20181003185156.GA20709@sigill.intra.peff.net>
+ <a300acae-c7f2-eace-5196-381a99d62c13@gmail.com>
+ <20181003191805.GB16666@sigill.intra.peff.net>
+ <20181008164141.GZ23446@szeder.dev>
+ <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+ <20181008181015.GA23446@szeder.dev>
+ <9ad5f166-f7c5-de79-0f86-f1f952cd33d2@gmail.com>
 MIME-Version: 1.0
-References: <20181008170505.GA13134@manohar-ssh> <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
-In-Reply-To: <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
-From:   Ananya Krishna Maram <ananyakittu1997@gmail.com>
-Date:   Tue, 9 Oct 2018 07:46:05 +0530
-Message-ID: <CA+=o6KHNyj2FymzGEwt6=tTHF=Eqy=OPz_Z1KD+Ryi6kdFemJQ@mail.gmail.com>
-Subject: Re: [PATCH][Outreachy] remove all the inclusions of git-compat-util.h
- in header files
-To:     stolee@gmail.com
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9ad5f166-f7c5-de79-0f86-f1f952cd33d2@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 8 Oct 2018 at 22:43, Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 10/8/2018 1:05 PM, Ananya Krishna Maram wrote:
-> > Hi All,
-> Hello, Ananya! Welcome.
->
-> > I was searching through #leftovers and found this.
-> > https://public-inbox.org/git/CABPp-BGVVXcbZX44er6TO-PUsfEN_6GNYJ1U5cuoN9deaA48OQ@mail.gmail.com/
-> >
-> > This patch address the task discussed in the above link.
-> The discussion above seems to not be intended for your commit message,
-> but it does show up when I run `git am` and provide your email as input.
-> The typical way to avoid this is to place all commentary below the "---"
+On Mon, Oct 08, 2018 at 02:29:47PM -0400, Derrick Stolee wrote:
 
-Sorry, I didn't know that. Shall I re submit the patch with proper commentary.
+> > > > But I'm afraid it will take a while until I get around to turn it into
+> > > > something presentable...
+> > > Do you have the code pushed somewhere public where one could take a look? I
+> > > Do you have the code pushed somewhere public where one could take a
+> > > look? I could provide some early feedback.
+> > Nah, definitely not...  I know full well how embarassingly broken this
+> > implementation is, I don't need others to tell me that ;)
+> There are two questions that I was hoping to answer by looking at your code:
+> 
+> 1. How do you store your Bloom filter? Is it connected to the commit-graph
+> and split on a commit-by-commit basis (storing "$path" as a key), or is it
+> one huge Bloom filter (storing "$commitid:$path" as key)?
 
-> that signifies the commit message is over.
-> > From: Ananya Krishan Maram <ananyakittu1997@gmail.com>
-> >
-> > skip the #include of git-compat-util.h since all .c files include it.
-> >
-> > Signed-off-by: Ananya Krishna Maram <ananyakittu1997@gmail.com>
-> > ---
-> >   advice.h             | 1 -
-> >   commit-graph.h       | 1 -
-> >   hash.h               | 1 -
-> >   pkt-line.h           | 1 -
-> >   t/helper/test-tool.h | 1 -
-> >   5 files changed, 5 deletions(-)
-> >
-> > diff --git a/advice.h b/advice.h
-> > index ab24df0fd..09148baa6 100644
-> > --- a/advice.h
-> > +++ b/advice.h
-> > @@ -1,7 +1,6 @@
-> >   #ifndef ADVICE_H
-> >   #define ADVICE_H
-> >
-> > -#include "git-compat-util.h"
-> >
-> >   extern int advice_push_update_rejected;
-> >   extern int advice_push_non_ff_current;
-> > diff --git a/commit-graph.h b/commit-graph.h
-> > index b05047676..0e93c2bed 100644
-> > --- a/commit-graph.h
-> > +++ b/commit-graph.h
-> > @@ -1,7 +1,6 @@
-> >   #ifndef COMMIT_GRAPH_H
-> >   #define COMMIT_GRAPH_H
-> >
-> > -#include "git-compat-util.h"
-> >   #include "repository.h"
-> >   #include "string-list.h"
-> >   #include "cache.h"
-> > diff --git a/hash.h b/hash.h
-> > index 7c8238bc2..9a4334c5d 100644
-> > --- a/hash.h
-> > +++ b/hash.h
-> > @@ -1,7 +1,6 @@
-> >   #ifndef HASH_H
-> >   #define HASH_H
-> >
-> > -#include "git-compat-util.h"
-> >
-> >   #if defined(SHA1_PPC)
-> >   #include "ppc/sha1.h"
-> > diff --git a/pkt-line.h b/pkt-line.h
-> > index 5b28d4347..fdd316494 100644
-> > --- a/pkt-line.h
-> > +++ b/pkt-line.h
-> > @@ -1,7 +1,6 @@
-> >   #ifndef PKTLINE_H
-> >   #define PKTLINE_H
-> >
-> > -#include "git-compat-util.h"
-> >   #include "strbuf.h"
-> >
-> >   /*
-> > diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-> > index e07495727..24e0a1589 100644
-> > --- a/t/helper/test-tool.h
-> > +++ b/t/helper/test-tool.h
-> > @@ -1,7 +1,6 @@
-> >   #ifndef __TEST_TOOL_H__
-> >   #define __TEST_TOOL_H__
-> >
-> > -#include "git-compat-util.h"
-> >
-> >   int cmd__chmtime(int argc, const char **argv);
-> >   int cmd__config(int argc, const char **argv);
-> I applied these changes locally and confirmed the code compiles, so all
-> .c files including these _do_ include git-compat-util.h properly.
->
-> Thanks,
-> -Stolee
->
+I guess you've probably thought all of this through for your
+implementation, but let me pontificate.
+
+I'd have done it as one fixed-size filter per commit. Then you should be
+able to hash the path keys once, and apply the result as a bitwise query
+to each individual commit (I'm assuming that it's constant-time to
+access the filter for each, as an index into an mmap'd array, with the
+offset coming from a commit-graph entry we'd be able to look up anyway).
+
+I think it would also be easier to deal with maintenance, since each
+filter is independent (IIRC, you cannot delete from a bloom filter
+without re-adding all of the other keys).
+
+The obvious downside is that it's O(commits) storage instead of O(1).
+
+Now let me ponder a bit further afield. A bloom filter lets us answer
+the question "did this commit (probably) touch these paths?". But it
+does not let us answer "which paths did this commit touch?".
+
+That second one is less useful than you might think, because we almost
+always care about not just the names of the paths, but their actual
+object ids. Think about a --raw diff, or even traversing for
+reachability (where if we knew the tree-diff cheaply, we could avoid
+asking "have we seen this yet?" on most of the tree entries). The names
+alone can make that a bit faster, but in the worst case you still have
+to walk the whole tree to find their entries.
+
+But there's also a related question: how do we match pathspec patterns?
+For a changed path like "foo/bar/baz", I imagine a bloom filter would
+mark all of "foo", "foo/bar", and "foo/bar/baz". But what about "*.c"? I
+don't think a bloom filter can answer that.
+
+At least not by itself. If we imagine that the commit-graph also had an
+alphabetized list of every path in every tree, then it's easy: apply the
+glob to that list once to get a set of concrete paths, and then query
+the bloom filters for those. And that list actually isn't too big. The
+complete set of paths in linux.git is only about 300k gzipped (I think
+that's the most relevant measure, since it's an obvious win to avoid
+repeating shared prefixes of long paths).
+
+Imagine we have that list. Is a bloom filter still the best data
+structure for each commit? At the point that we have the complete
+universe of paths, we could give each commit a bitmap of changed paths.
+That lets us ask "did this commit touch these paths" (collect the bits
+from the list of paths, then check for 1's), as well as "what paths did
+we touch" (collect the 1 bits, and then index the path list).  Those
+bitmaps should compress very well via EWAH or similar (most of them
+would be huge stretches of 0's punctuated by short runs of 1's).
+
+So that seems promising to me (or at least not an obvious dead-end). I
+do think maintenance gets to be a headache, though. Adding new paths
+potentially means reordering the bitmaps, which means O(commits) work to
+"incrementally" update the structure. (Unless you always add the new
+paths at the end, but then you lose fast lookups in the list; that might
+be an acceptable tradeoff).
+
+And finally, there's one more radical option: could we actually store a
+real per-commit tree-diff cache? I.e., imagine that each commit had the
+equivalent of a --raw diff easily accessible, including object ids. That
+would allow:
+
+  - fast pathspec matches, including globs
+
+  - fast --raw output (and faster -p output, since we can skip the tree
+    entirely)
+
+  - fast reachability traversals (we only need to bother to look at the
+    objects for changed entries)
+
+where "fast" is basically O(size of commit's changes), rather than
+O(size of whole tree). This was one of the big ideas of packv4 that
+never materialized. You can _almost_ do it with packv2, since after all,
+we end up storing many trees as deltas. But those deltas are byte-wise
+so it's hard for a reader to convert them directly into a pure-tree
+diff (they also don't mention the "deleted" data, so it's really only
+half a diff).
+
+So let's imagine we'd store such a cache external to the regular object
+data (i.e., as a commit-graph entry). The "log --raw" diff of linux.git
+has 1.7M entries. The paths should easily compress to a single 32-bit
+integer (e.g., as an index into a big path list). The oids are 20 bytes.
+Add a few bytes for modes. That's about 80MB. Big, but not impossibly
+so. Maybe pushing it for true gigantic repos, though.
+
+Those numbers are ignoring merges, too. The meaning of "did this commit
+touch that path" is a lot trickier for a merge commit, and I think may
+depend on context. I'm not sure how even a bloom filter solution would
+handle that (I was assuming we'd mostly punt and let merges fall back to
+opening up the trees).
+
+Phew. That was a lot. I don't want to derail any useful work either of
+you is doing. These are just things I've been thinking over (or even in
+some cases experimenting with), and I think it's worth laying all the
+options on the table. I won't be surprised if you'd considered and
+rejected any of these alternate approaches, but I'd be curious to hear
+the counter-arguments. :)
+
+-Peff
