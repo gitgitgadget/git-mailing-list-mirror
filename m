@@ -2,91 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30C3D1F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 01:07:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1F271F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 02:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbeJIIVz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 04:21:55 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:38156 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726434AbeJIIVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 04:21:54 -0400
-Received: by mail-wr1-f48.google.com with SMTP id a13-v6so22659320wrt.5
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 18:07:31 -0700 (PDT)
+        id S1726510AbeJIJay (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 05:30:54 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:39161 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbeJIJay (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 05:30:54 -0400
+Received: by mail-lj1-f193.google.com with SMTP id p1-v6so31285ljg.6
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 19:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=zGYYuG6u+mZxCt7y/1kNyrUDs4NMIDJIPIfFzLYpb5w=;
-        b=TNeu9I3qGAnUwtRmXgwv6ogH1r9GD4pIcecxARr+RfvPvsQyyQktg3pQ/3Ou3ZRLbQ
-         EQMYDExBmx3ZZAvafFmVyaP3jw6WS1BF1tC1u2hwNG06vcURoqx/LIUPHLMjOHbkVPLO
-         TGPnBXEYCTdTHtMkJepJf7a2iYbpwZzcyJtZmPe2tXACOsQHX1WD97QQXrcx1Bh+Rv1L
-         ToxnkCYf3mDYHrhVEtGbsIWhlinKLjYigfKtMMvu1wv5QRN5fermpT/rNTD8Yfhiw8au
-         IGkaAt59tbNFJ6hxnASKofE0WwXF90B6bvvWG3aeQPTPowj3x7JIBjXKOFy4z+V6ARfe
-         U0DA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0O9ZWLgQsXblipWmzZ3DhYEc6qSfo5eLQVrfKCj7maA=;
+        b=F6xmg7zLvtw+Z/kZ8xVbT3CWZL/Q6doYfpTGzPaOmMUPRO/Im4UC7hwQahR977ZeCz
+         j5VVt/50G1v8Q2nqbSkVT3Prz4lBSYIddzYdnTrLZ1Uo+m6pJDsdCNFfeVTHr1XdVxdG
+         +pH9hwbnQLBJz7p5qVWhgMP0fTa5BCI+RL48Jh+CIIewfgzwzvmihD+oE7Mref4nhukY
+         Ej9oyhL0nrcBq6kG2PBR8PSxoOusRo/GHrvky2l5Li+YGcnkL3U4FuPmgUdgaKVngR9D
+         PjI9lFkVBR1+TZq0jifij+tjFRJ9jn15rJ+IpxUuwW/HJvhVMy7nn1Am/s1oy7ewzDGW
+         /M1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=zGYYuG6u+mZxCt7y/1kNyrUDs4NMIDJIPIfFzLYpb5w=;
-        b=D0SXlGuESGkgbXCq359+4fErpEbTDfcl2iwXUev1cn7FzNAhAzHCwzQ8EXQPMGSbg3
-         YtSksS5+7OCLTnXz8WaTXFQXptN2bZfMG36W923qsqgKHvZBzOKCoLd5WK465/h344xC
-         j3syNri3fzAbOAAQvHpuO3TlzqGuV0Dtz0wV+H+IV7z153SaIg+Z7I9WzjHmdlzEm543
-         Ti/JJd/YI3K7cWm6xzJg0Nno9omug+K88e0n9cahNq1XqyefXv7KErebB0VDf6mOtJFw
-         AZ5OobanzBIdcRUFOyn5ClwGWSv4QqNA0//fGYQd/W9wtkxxoQfCt+wjzA4Wv0MO0nAo
-         u0xQ==
-X-Gm-Message-State: ABuFfoiVXjIqnaI9hGvmQHXdWs1/B+9qhOHG5Z7CtlEZdO6AAgfnrrRg
-        /FD6uD6c926uvqBj/aBTzsA=
-X-Google-Smtp-Source: ACcGV62BR2IpgTVsh1iMr97JVeiprHCLyf9OgigyFyUuKlsnMX6x36Xbzi69IbUUzDajD9Koj5GmBA==
-X-Received: by 2002:a5d:6748:: with SMTP id l8-v6mr1417593wrw.197.1539047250209;
-        Mon, 08 Oct 2018 18:07:30 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z12-v6sm6480801wrv.46.2018.10.08.18.07.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Oct 2018 18:07:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Nicolas Pitre <nico@cam.org>, Nix <nix@esperi.org.uk>,
-        Steven Grimm <koreth@midwinter.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: What's so special about objects/17/ ?
-References: <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-        <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-        <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
-        <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
-        <alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
-        <87k1mta9x5.fsf@evledraar.gmail.com>
-        <xmqqpnwltu8s.fsf@gitster-ct.c.googlers.com>
-        <87h8hwafof.fsf@evledraar.gmail.com>
-Date:   Tue, 09 Oct 2018 10:07:28 +0900
-In-Reply-To: <87h8hwafof.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 08 Oct 2018 12:36:16 +0200")
-Message-ID: <xmqqzhvorkq7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0O9ZWLgQsXblipWmzZ3DhYEc6qSfo5eLQVrfKCj7maA=;
+        b=qb8UVhPuF0Gow7DmCQWAY5Q2ICf2Bf9T35BKBDrXZ5Tg6P3QJEiolTrSzg3cHnZbwx
+         z6hc+9LYePnj4AM3PzWrkU/SGklTy6EF75ZKp5GQ02NvYzr9fb60CQdDFJpBc1bQXiZV
+         5cr/gCBYUZ0VFakaPYw8iIyhm3oTSvts+acjdC2IhftF2F8Hvg/Fe+CUNrOqf6cxjIW0
+         ZcLM/WD5zQ6NgyhdeJLgvEW0dAoAbiEiTq9/1fTXM1SsMvDhp6GmNjk5jAO6WUcGygKN
+         MPm6yLskxy4hwOudOwhcUjeqAibL1HAZcJ3uENzf3Z0oi/6+vqL9iIvO7F4ahlT4y3QI
+         FlQg==
+X-Gm-Message-State: ABuFfojJfVxSZ65R9LWtjif3Pqt5D10Eg6k5JQDaxnbvMYJkNM78BOX3
+        g5XPoL8EUPJ7md9T6OceW3okH2qhqpCKK6g5tLQ=
+X-Google-Smtp-Source: ACcGV63S/A8z7ifqVT0Jq6fuT2WqUNeeIRXmnArQxhoxc7lkvoYepmgYOe16gi0sEkFy6TCl8RYUOUUANdtOhAufSXk=
+X-Received: by 2002:a2e:9047:: with SMTP id n7-v6mr14139507ljg.10.1539051376606;
+ Mon, 08 Oct 2018 19:16:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20181008170505.GA13134@manohar-ssh> <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
+In-Reply-To: <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
+From:   Ananya Krishna Maram <ananyakittu1997@gmail.com>
+Date:   Tue, 9 Oct 2018 07:46:05 +0530
+Message-ID: <CA+=o6KHNyj2FymzGEwt6=tTHF=Eqy=OPz_Z1KD+Ryi6kdFemJQ@mail.gmail.com>
+Subject: Re: [PATCH][Outreachy] remove all the inclusions of git-compat-util.h
+ in header files
+To:     stolee@gmail.com
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Mon, 8 Oct 2018 at 22:43, Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 10/8/2018 1:05 PM, Ananya Krishna Maram wrote:
+> > Hi All,
+> Hello, Ananya! Welcome.
+>
+> > I was searching through #leftovers and found this.
+> > https://public-inbox.org/git/CABPp-BGVVXcbZX44er6TO-PUsfEN_6GNYJ1U5cuoN9deaA48OQ@mail.gmail.com/
+> >
+> > This patch address the task discussed in the above link.
+> The discussion above seems to not be intended for your commit message,
+> but it does show up when I run `git am` and provide your email as input.
+> The typical way to avoid this is to place all commentary below the "---"
 
-> Depending on how we're counting there's at least two.
+Sorry, I didn't know that. Shall I re submit the patch with proper commentary.
 
-I thought you were asking "why the special sentinel is not 0{40}?"
-You counted the number of reasons why 0{40} is used to stand in for
-a real value, but that was the number I didn't find interesting in
-the scope of this discussion, i.e. "why the special sample is 17?"
-
-I vaguely recall we also used 0{39}1 for something else long time
-ago; I offhand do not recall if we still do, or we got rid of it.
+> that signifies the commit message is over.
+> > From: Ananya Krishan Maram <ananyakittu1997@gmail.com>
+> >
+> > skip the #include of git-compat-util.h since all .c files include it.
+> >
+> > Signed-off-by: Ananya Krishna Maram <ananyakittu1997@gmail.com>
+> > ---
+> >   advice.h             | 1 -
+> >   commit-graph.h       | 1 -
+> >   hash.h               | 1 -
+> >   pkt-line.h           | 1 -
+> >   t/helper/test-tool.h | 1 -
+> >   5 files changed, 5 deletions(-)
+> >
+> > diff --git a/advice.h b/advice.h
+> > index ab24df0fd..09148baa6 100644
+> > --- a/advice.h
+> > +++ b/advice.h
+> > @@ -1,7 +1,6 @@
+> >   #ifndef ADVICE_H
+> >   #define ADVICE_H
+> >
+> > -#include "git-compat-util.h"
+> >
+> >   extern int advice_push_update_rejected;
+> >   extern int advice_push_non_ff_current;
+> > diff --git a/commit-graph.h b/commit-graph.h
+> > index b05047676..0e93c2bed 100644
+> > --- a/commit-graph.h
+> > +++ b/commit-graph.h
+> > @@ -1,7 +1,6 @@
+> >   #ifndef COMMIT_GRAPH_H
+> >   #define COMMIT_GRAPH_H
+> >
+> > -#include "git-compat-util.h"
+> >   #include "repository.h"
+> >   #include "string-list.h"
+> >   #include "cache.h"
+> > diff --git a/hash.h b/hash.h
+> > index 7c8238bc2..9a4334c5d 100644
+> > --- a/hash.h
+> > +++ b/hash.h
+> > @@ -1,7 +1,6 @@
+> >   #ifndef HASH_H
+> >   #define HASH_H
+> >
+> > -#include "git-compat-util.h"
+> >
+> >   #if defined(SHA1_PPC)
+> >   #include "ppc/sha1.h"
+> > diff --git a/pkt-line.h b/pkt-line.h
+> > index 5b28d4347..fdd316494 100644
+> > --- a/pkt-line.h
+> > +++ b/pkt-line.h
+> > @@ -1,7 +1,6 @@
+> >   #ifndef PKTLINE_H
+> >   #define PKTLINE_H
+> >
+> > -#include "git-compat-util.h"
+> >   #include "strbuf.h"
+> >
+> >   /*
+> > diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+> > index e07495727..24e0a1589 100644
+> > --- a/t/helper/test-tool.h
+> > +++ b/t/helper/test-tool.h
+> > @@ -1,7 +1,6 @@
+> >   #ifndef __TEST_TOOL_H__
+> >   #define __TEST_TOOL_H__
+> >
+> > -#include "git-compat-util.h"
+> >
+> >   int cmd__chmtime(int argc, const char **argv);
+> >   int cmd__config(int argc, const char **argv);
+> I applied these changes locally and confirmed the code compiles, so all
+> .c files including these _do_ include git-compat-util.h properly.
+>
+> Thanks,
+> -Stolee
+>
