@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 783D91F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 19:35:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A3671F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 19:35:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727584AbeJJCxm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 22:53:42 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45825 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726607AbeJJCxl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 22:53:41 -0400
-Received: by mail-wr1-f68.google.com with SMTP id q5-v6so3078545wrw.12
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 12:35:11 -0700 (PDT)
+        id S1727596AbeJJCxq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 22:53:46 -0400
+Received: from mail-wm1-f48.google.com ([209.85.128.48]:52434 "EHLO
+        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726607AbeJJCxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 22:53:45 -0400
+Received: by mail-wm1-f48.google.com with SMTP id 189-v6so3029948wmw.2
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 12:35:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=b3O25GXctm7QLEpcINjbdJcMBfwUQzdZJNrpvy0FGII=;
-        b=fYEXX9KpQxOIvww+l5NR8JNoyyryKu3LqKuvrvZX4vnPT0etKswUYVsvf+Rlyzw7EF
-         L9IkcqbD5rjWddUq6wA72qpkTaCwlrnnacReWvrUz3hiJynM4Q8eKlB0/onJmxQVM/W+
-         scnx3FjiDUxLRTOqJAWq3C/N85hlqGYyrhkITBqDfr913N70opZj4e2+YCoX1ZuuNyCh
-         GZZ9r/r/GTxOJFOeN+vC1JCORMabORZGw0dzyK6QBdi+csBFWfzycDx6uvyEE04cWzMs
-         2bPe0TIpzssg5CzP3NmwUZUKIuf6q5Bt3wOvS7PkBYWBElxCZnuXC8ByKNgUvUyZ893I
-         QXFw==
+        bh=9gfnS2N3qsH54HXWCUsy8mbWNITMc7fg3pnFCfzgrCk=;
+        b=oy6nt1K/eRlyhwMn1YnW/HiIOF/eBOzNLrnuPoydm+GSCoX8RncudSaeiEo4GQATI8
+         zJUN88v3XyxzfN4EgZoIgliVqI6dSjFMCAxrRJklhBWxrotx9kVloYj9jvuukQyNgg+J
+         ax9CREHmhjRuWjlJ5lcDAukO6VIfm8f4e1q6K5bTKnwFVsqMIponqdI40cn0NAjbLjyU
+         1KLGo9jelIgA/Zid1nt7TQWyfGx535BPp9JVVny4WSR3pm67x36w0VtKNTFIFa5pdjZx
+         NgOxD9sH3TCN856Jzxm6VpSQ/p1D3/SL0TMeUO3bI2+4HD6U6REdTqk0YjwXPtQLSElK
+         5OFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=b3O25GXctm7QLEpcINjbdJcMBfwUQzdZJNrpvy0FGII=;
-        b=OUnNT/nM/pYW0k0KcAPXA8a0aklmvqklpu+JF9roPfWIklGFHl1xZrM5BRCiWj3vue
-         lCEgwSfml5B75w4+Dwno8jVCtaYX1pTx653WIDqP75ApQtNZMlCPyYMOBKlK8pLVU+Nk
-         RUdAF51GhJMVi+VEbHtApieTEL96+H13lXxV7hsRS7A5RokPkBDA6XR/U/62LToYUtlq
-         AJQ4Xx71BWazTWBdej7IeI5M/VERDbWA3Q+1/wDTZryZuLKqqpxNGEf1cunpxgdH9PqE
-         N0HNQAhSL9Fx2RfelmLAKXGprA/D/1gdvw8Jkt/fWaUaQ/hEuEGtXk4MRxvPgiXihcMG
-         E2Gw==
-X-Gm-Message-State: ABuFfoiuIvA9gAu6CC0YXiVq4b/hRuNcjIgSVtYMQ9VgAeCBetoQgtWZ
-        aSPG/L7snRKGnxFX3lL/Nr/O7X9P
-X-Google-Smtp-Source: ACcGV61VLZZTb6O4bKwrYYW8gwCx6Os3RX46Ff1au2XxAuUonyriAMybuYUnToy8Vi35xOrAtURqwA==
-X-Received: by 2002:a5d:6692:: with SMTP id l18-v6mr22949313wru.154.1539113710263;
-        Tue, 09 Oct 2018 12:35:10 -0700 (PDT)
+        bh=9gfnS2N3qsH54HXWCUsy8mbWNITMc7fg3pnFCfzgrCk=;
+        b=hezeBTEbdbQ/pqqAmtAExpwB3He9qCTPKlooYHs3v8ywJWbwhVwLP+4bfY9I9BaoDm
+         T6yfmbb1MwYXv1ssYtg3/bKr0+cWB7AE8U4FwoZh2DJznLCLjEDaSeFdF6PDNGFVcu/q
+         9W6C69l7ZyPYfhg7kgm1i77V1oE6XiMUJja8U9IuyInCSQd7LcfmbzUiotLApT80ZTnX
+         RjhbDt5ydR5Wo3Co84UXSUfZUHvbtqbo/PImew7xO48oWrXpP4+fDTEuvNR7yfjzdd0C
+         afIUwWnopQOmy6ui91Xe+whIlL/K6btogDQdLp0/20FmUntxrHxG5lJHG93SML63OlXr
+         IxQA==
+X-Gm-Message-State: ABuFfojGqVuZVVgXdlgnTFNltZAKpPlxCyVgewOKooHvO4L2a2udbj4B
+        YdA/SXOllYrRvYG0JCP2LnWYipt4
+X-Google-Smtp-Source: ACcGV62owx7h4bxGhPVad0UHwJRopYOtmaOHSjvhLiCzIF//cwBPDdpn8Jsc3jQvBwIj1o6P2bBITw==
+X-Received: by 2002:a1c:8fcc:: with SMTP id r195-v6mr3158278wmd.44.1539113712474;
+        Tue, 09 Oct 2018 12:35:12 -0700 (PDT)
 Received: from localhost.localdomain (x4dbd5132.dyn.telefonica.de. [77.189.81.50])
-        by smtp.gmail.com with ESMTPSA id e6-v6sm18823117wrc.70.2018.10.09.12.35.08
+        by smtp.gmail.com with ESMTPSA id e6-v6sm18823117wrc.70.2018.10.09.12.35.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 09 Oct 2018 12:35:09 -0700 (PDT)
+        Tue, 09 Oct 2018 12:35:11 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
@@ -57,73 +57,194 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 0/4] Bloom filter experiment
-Date:   Tue,  9 Oct 2018 21:34:41 +0200
-Message-Id: <20181009193445.21908-1-szeder.dev@gmail.com>
+Subject: [PATCH 1/4] Add a (very) barebones Bloom filter implementation
+Date:   Tue,  9 Oct 2018 21:34:42 +0200
+Message-Id: <20181009193445.21908-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.1.409.g0a0ee5eb6b
-In-Reply-To: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+In-Reply-To: <20181009193445.21908-1-szeder.dev@gmail.com>
 References: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+ <20181009193445.21908-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To keep the ball rolling, here is my proof of concept in a somewhat
-cleaned-up form, with still plenty of rough edges.
-
-You can play around with it like this:
-
-  $ GIT_USE_POC_BLOOM_FILTER=$((8*1024*1024*8)) git commit-graph write
-  Computing commit graph generation numbers: 100% (52801/52801), done.
-  Computing bloom filter: 100% (52801/52801), done.
-  # Yeah, I even added progress indicator! :)
-  $ GIT_TRACE_BLOOM_FILTER=2 GIT_USE_POC_BLOOM_FILTER=y git rev-list --count --full-history HEAD -- t/valgrind/valgrind.sh
-  886
-  20:40:24.783699 revision.c:486          bloom filter total queries: 66095 definitely not: 64953 maybe: 1142 false positives: 256 fp ratio: 0.003873
-
-The value of $GIT_USE_POC_BLOOM_FILTER only really matters when writing
-the Bloom filter, and it specifies the number of bits in the filter's
-bitmap, IOW the above command creates a 8MB Bloom filter.  To make use
-of the filter the variable can be anything non-empty.
-
-Writing the Bloom filter is very slow as it is (yeah, that's why
-bothered with the progress indicator ;).  I wrote about it in patch 2's
-commit message: the cause for about half of the slowness is rather
-obvious, but I don't (yet) know what's responsible for the other half.
-
-
-Not a single test...  but I've run loops over all files in git.git
-comparing 'git rev-list HEAD -- $file's output with and without the
-Bloom filter, and, surprisingly, they match.  My quick'n'dirty
-experiments usually don't fare this well...
-
-
-It's also available at:
-
-  https://github.com/szeder/git bloom-filter-experiment
-
-
-SZEDER Gábor (4):
-  Add a (very) barebones Bloom filter implementation
-  commit-graph: write a Bloom filter containing changed paths for each
-    commit
-  revision.c: use the Bloom filter to speed up path-limited revision
-    walks
-  revision.c: add GIT_TRACE_BLOOM_FILTER for a bit of statistics
-
+---
  Makefile       |   1 +
- bloom-filter.c | 103 +++++++++++++++++++++++++++++++++++++++
- bloom-filter.h |  39 +++++++++++++++
- commit-graph.c | 116 ++++++++++++++++++++++++++++++++++++++++++++
- pathspec.h     |   1 +
- revision.c     | 129 +++++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 389 insertions(+)
+ bloom-filter.c | 103 +++++++++++++++++++++++++++++++++++++++++++++++++
+ bloom-filter.h |  39 +++++++++++++++++++
+ 3 files changed, 143 insertions(+)
  create mode 100644 bloom-filter.c
  create mode 100644 bloom-filter.h
 
+diff --git a/Makefile b/Makefile
+index 13e1c52478..850eafb3ee 100644
+--- a/Makefile
++++ b/Makefile
+@@ -827,6 +827,7 @@ LIB_OBJS += base85.o
+ LIB_OBJS += bisect.o
+ LIB_OBJS += blame.o
+ LIB_OBJS += blob.o
++LIB_OBJS += bloom-filter.o
+ LIB_OBJS += branch.o
+ LIB_OBJS += bulk-checkin.o
+ LIB_OBJS += bundle.o
+diff --git a/bloom-filter.c b/bloom-filter.c
+new file mode 100644
+index 0000000000..7dce0e35fa
+--- /dev/null
++++ b/bloom-filter.c
+@@ -0,0 +1,103 @@
++#include "cache.h"
++#include "bloom-filter.h"
++
++void bloom_filter_init(struct bloom_filter *bf, uint32_t bit_size)
++{
++	if (bit_size % CHAR_BIT)
++		BUG("invalid size for bloom filter");
++
++	bf->nr_entries = 0;
++	bf->bit_size = bit_size;
++	bf->bits = xmalloc(bit_size / CHAR_BIT);
++}
++
++void bloom_filter_free(struct bloom_filter *bf)
++{
++	bf->nr_entries = 0;
++	bf->bit_size = 0;
++	FREE_AND_NULL(bf->bits);
++}
++
++
++void bloom_filter_set_bits(struct bloom_filter *bf, const uint32_t *offsets,
++			   int nr_offsets, int nr_entries)
++{
++	int i;
++	for (i = 0; i < nr_offsets; i++) {
++		uint32_t byte_offset = (offsets[i] % bf->bit_size) / CHAR_BIT;
++		unsigned char mask = 1 << offsets[i] % CHAR_BIT;
++		bf->bits[byte_offset] |= mask;
++	}
++	bf->nr_entries += nr_entries;
++}
++
++int bloom_filter_check_bits(struct bloom_filter *bf, const uint32_t *offsets,
++			    int nr)
++{
++	int i;
++	for (i = 0; i < nr; i++) {
++		uint32_t byte_offset = (offsets[i] % bf->bit_size) / CHAR_BIT;
++		unsigned char mask = 1 << offsets[i] % CHAR_BIT;
++		if (!(bf->bits[byte_offset] & mask))
++			return 0;
++	}
++	return 1;
++}
++
++
++void bloom_filter_add_hash(struct bloom_filter *bf, const unsigned char *hash)
++{
++	uint32_t offsets[GIT_MAX_RAWSZ / sizeof(uint32_t)];
++	hashcpy((unsigned char*)offsets, hash);
++	bloom_filter_set_bits(bf, offsets,
++			     the_hash_algo->rawsz / sizeof(*offsets), 1);
++}
++
++int bloom_filter_check_hash(struct bloom_filter *bf, const unsigned char *hash)
++{
++	uint32_t offsets[GIT_MAX_RAWSZ / sizeof(uint32_t)];
++	hashcpy((unsigned char*)offsets, hash);
++	return bloom_filter_check_bits(bf, offsets,
++			the_hash_algo->rawsz / sizeof(*offsets));
++}
++
++void hashxor(const unsigned char *hash1, const unsigned char *hash2,
++	     unsigned char *out)
++{
++	int i;
++	for (i = 0; i < the_hash_algo->rawsz; i++)
++		out[i] = hash1[i] ^ hash2[i];
++}
++
++/* hardcoded for now... */
++static GIT_PATH_FUNC(git_path_bloom, "objects/info/bloom")
++
++int bloom_filter_load(struct bloom_filter *bf)
++{
++	int fd = open(git_path_bloom(), O_RDONLY);
++
++	if (fd < 0)
++		return -1;
++
++	read_in_full(fd, &bf->nr_entries, sizeof(bf->nr_entries));
++	read_in_full(fd, &bf->bit_size, sizeof(bf->bit_size));
++	if (bf->bit_size % CHAR_BIT)
++		BUG("invalid size for bloom filter");
++	bf->bits = xmalloc(bf->bit_size / CHAR_BIT);
++	read_in_full(fd, bf->bits, bf->bit_size / CHAR_BIT);
++
++	close(fd);
++
++	return 0;
++}
++
++void bloom_filter_write(struct bloom_filter *bf)
++{
++	int fd = xopen(git_path_bloom(), O_WRONLY | O_CREAT | O_TRUNC, 0666);
++
++	write_in_full(fd, &bf->nr_entries, sizeof(bf->nr_entries));
++	write_in_full(fd, &bf->bit_size, sizeof(bf->bit_size));
++	write_in_full(fd, bf->bits, bf->bit_size / CHAR_BIT);
++
++	close(fd);
++}
+diff --git a/bloom-filter.h b/bloom-filter.h
+new file mode 100644
+index 0000000000..94d0af1708
+--- /dev/null
++++ b/bloom-filter.h
+@@ -0,0 +1,39 @@
++#ifndef BLOOM_FILTER_H
++#define BLOOM_FILTER_H
++
++#include "git-compat-util.h"
++
++struct bloom_filter {
++	uint32_t nr_entries;
++	uint32_t bit_size;
++	unsigned char *bits;
++};
++
++
++void bloom_filter_init(struct bloom_filter *bf, uint32_t bit_size);
++void bloom_filter_free(struct bloom_filter *bf);
++
++void bloom_filter_set_bits(struct bloom_filter *bf, const uint32_t *offsets,
++			   int nr_offsets, int nr_enries);
++int bloom_filter_check_bits(struct bloom_filter *bf, const uint32_t *offsets,
++			    int nr);
++
++/*
++ * Turns the given (SHA1) hash into 5 unsigned ints, and sets the bits at
++ * those positions (modulo the bitmap's size) in the Bloom filter.
++ */
++void bloom_filter_add_hash(struct bloom_filter *bf, const unsigned char *hash);
++/*
++ * Turns the given (SHA1) hash into 5 unsigned ints, and checks the bits at
++ * those positions (modulo the bitmap's size) in the Bloom filter.
++ * Returns 1 if all those bits are set, 0 otherwise.
++ */
++int bloom_filter_check_hash(struct bloom_filter *bf, const unsigned char *hash);
++
++void hashxor(const unsigned char *hash1, const unsigned char *hash2,
++	     unsigned char *out);
++
++int bloom_filter_load(struct bloom_filter *bf);
++void bloom_filter_write(struct bloom_filter *bf);
++
++#endif
 -- 
 2.19.1.409.g0a0ee5eb6b
 
