@@ -2,137 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CBB31F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 21:11:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E16B41F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 21:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbeJJE37 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 00:29:59 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37731 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725837AbeJJE37 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 00:29:59 -0400
-Received: by mail-ed1-f65.google.com with SMTP id c22-v6so3024225edc.4
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 14:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3lgSLWG7AO1LIgt42Mp65PUxoo49qUFQwHVxcbU6xx0=;
-        b=Dkw3JsjLiKNd7S31cer6SAW0VsYRvB4gFVe/QPr5/+ecqdfJy0+lec9Z9coh37WYl/
-         90kWmCHt2LH/bNYkgbngW6Iyg0OR3qP9whcoIsvNuMTsTKHm+yw2o49bO/eglP1ucAL3
-         Vbzp5KYGP2FxSrDQbXssC373ellRaoTwnM9M7Bv/DQq2dehCneER6Jqp+uTdqPxyjDTn
-         gn77u1KUoSqgf2HUBNNv/84Fj76raeZhfSr++4l0923fR3ES6ESAwacAt83bssVe3WBD
-         Z3IUuKTkV8Cr/iXieWIHXlW2aAzjGv+D9O688iNzizivxtMYFvNWs5jV+LcyUIdbjMCO
-         dAFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3lgSLWG7AO1LIgt42Mp65PUxoo49qUFQwHVxcbU6xx0=;
-        b=Dw+gszpFusJzbKUFHCJc2NpjUvnrDH6eoWV7fL+He8blS0RZ/uSD9YrYV6XTQIzQ7u
-         o4HtuJINYzXaSeOdKd3XMzDDWo191JGZZzXuV8HWZ3nk23Ah/v4EvhbfuelChctjkuYo
-         6wt+fSyqQq3QwPNbT5GacoQJtU//hGWYJUhFdQ/Raj9l36mtHFERSlVsa2NishM5w4w6
-         4VXUgs2N8MQ+mD2q0iCY8Ld9Ir/1CUFXqp2xbddsMYQC1jVMDuT04zbnfZUqvpkvq51v
-         m8sYdk/vJD1+5vn9IqDrdkqG90FccEcTaWkOtoGBJtfrwTf/Wx6UHGCD5oav3VncpNjU
-         xGbQ==
-X-Gm-Message-State: ABuFfohsH3TEkzSc169etfruFvYN6gPglZjsZ76C3BTZvFMhNmN8osQT
-        GO6UQEvBxuWtkJ7LFZslq/QgmdRrQbdjlQiQuBvoow==
-X-Google-Smtp-Source: ACcGV621dQFs3hruWpIX+w6eR7+dUIaalQ1TqmeEJb244GdLAlrbZ2fA85EUM4116Nd0xmQ1SdsB4WpX+r15MGa7K4M=
-X-Received: by 2002:aa7:d9cf:: with SMTP id v15-v6mr37200592eds.25.1539119467656;
- Tue, 09 Oct 2018 14:11:07 -0700 (PDT)
+        id S1727471AbeJJEdm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 00:33:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34692 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726862AbeJJEdm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 00:33:42 -0400
+Received: (qmail 9584 invoked by uid 109); 9 Oct 2018 21:14:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Oct 2018 21:14:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10099 invoked by uid 111); 9 Oct 2018 21:14:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 09 Oct 2018 17:14:00 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Oct 2018 17:14:50 -0400
+Date:   Tue, 9 Oct 2018 17:14:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Bloom Filters (was Re: We should add a "git gc --auto" after
+ "git clone" due to commit graph)
+Message-ID: <20181009211449.GB9563@sigill.intra.peff.net>
+References: <a300acae-c7f2-eace-5196-381a99d62c13@gmail.com>
+ <20181003191805.GB16666@sigill.intra.peff.net>
+ <20181008164141.GZ23446@szeder.dev>
+ <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+ <20181008181015.GA23446@szeder.dev>
+ <9ad5f166-f7c5-de79-0f86-f1f952cd33d2@gmail.com>
+ <20181009030803.GA6250@sigill.intra.peff.net>
+ <f877020c-3098-e4c4-ad64-cca57f764b91@gmail.com>
+ <20181009184647.GA7014@sigill.intra.peff.net>
+ <ec3ca377-0434-322e-4ab9-49e27f96f4af@gmail.com>
 MIME-Version: 1.0
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20180924100604.32208-4-phillip.wood@talktalk.net> <CAGZ79kZjAaLE7G=q9sBeEL_+Q2ufYBTn6p9TDCF8cYFd3k+0oQ@mail.gmail.com>
- <b3d29d34-616d-5d12-bb86-19ea488a766d@talktalk.net>
-In-Reply-To: <b3d29d34-616d-5d12-bb86-19ea488a766d@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 9 Oct 2018 14:10:56 -0700
-Message-ID: <CAGZ79kYjeqME-tt89Fp=Wt0hAW0FVAyZ00ftN5XTOkFSn7Kq9A@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/3] diff: add --color-moved-ws=allow-mixed-indentation-change
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ec3ca377-0434-322e-4ab9-49e27f96f4af@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> As I said above I've more or less come to the view that the correctness
-> of pythonic indentation is orthogonal to move detection as it affects
-> all additions, not just those that correspond to moved lines.
+On Tue, Oct 09, 2018 at 03:03:08PM -0400, Derrick Stolee wrote:
 
-Makes sense.
+> > I wonder if Roaring does better here.
+> 
+> In these sparse cases, usually Roaring will organize the data as "array
+> chunks" which are simply lists of the values. The thing that makes this
+> still compressible is that we store two bytes per entry, as the entries are
+> grouped by a common most-significant two bytes. SInce you say ~120k unique
+> paths, the Roaring bitmap would have two or three chunks per bitmap (and
+> those chunks could be empty). The overhead to store the chunk positions,
+> types, and lengths does come at a cost, but it's more like 32 bytes _per
+> commit_.
 
-> > What is your use case, what kind of content do you process that
-> > this patch would help you?
->
-> I wrote this because I was re-factoring some shell code than was using a
-> indentation step of four spaces but with tabs in the leading indentation
-> which the current mode does not handle.
+Hmph. It really sounds like we could do better with a custom RLE
+solution. But that makes me feel like I'm missing something, because
+surely I can't invent something better than the state of the art in a
+simple thought experiment, right?
 
-Ah that is good to know.
+I know what I'm proposing would be quite bad for random access, but my
+impression is that EWAH is the same. For the scale of bitmaps we're
+talking about, I think linear/streaming access through the bitmap would
+be OK.
 
-I was thinking whether we want to generalize the move detection into a more
-generic "detect and fade out uninteresting things" and not just focus on white
-spaces (but these are most often the uninteresting things).
+> > So at any rate, I do think it would not be out of the question to store
+> > bitmaps like this. I'm much more worried about the maintenance cost of
+> > adding new entries incrementally. I think it's only feasible if we give
+> > up sorting, and then I wonder what other problems that might cause.
+> The patch below gives me a starting point to try the Bloom filter approach
+> and see what the numbers are like. You did all the "git" stuff like
+> computing the changed paths, so thanks!
 
-Over the last year we had quite a couple of large refactorings, that
-would have helped by that:
-* For example the hash transition plan had a lot of patches that
-  were basically s/char *sha1/struct object oid/ or some variation thereof.
-* Introducing struct repository
+Great, I hope it can be useful. I almost wrote it as perl consuming the
+output of "log --format=%h --name-only", but realized I didn't have a
+perl ewah implementation handy.
 
-I used the word diff to look at those patches, which helped a lot, but
-maybe a mode that would allow me to mark this specific replacement
-uninteresting would be even better.
-Maybe this can be done as a piggyback on top of the move detection as
-a "move in place, but with uninteresting pattern". The problem of this
-is that the pattern needs to be accounted for when hashing the entries
-into the hashmaps, which is easy when doing white spaces only.
+You'll probably want to tweak this part:
 
+> > +	prepare_revision_walk(&revs);
+> > +	while ((commit = get_revision(&revs))) {
+> > +		data.commit = commit;
+> > +		diff_tree_combined_merge(commit, 0, &revs);
+> > +	}
 
-> >> +       if (a->s == DIFF_SYMBOL_PLUS)
-> >> +               *delta = la - lb;
-> >> +       else
-> >> +               *delta = lb - la;
-> >
-> > When writing the original feature I had reasons
-> > not to rely on the symbol, as you could have
-> > moved things from + to - (or the other way round)
-> > and added or removed indentation. That is what the
-> > `current_longer` is used for. But given that you only
-> > count here, we can have negative numbers, so it
-> > would work either way for adding or removing indentation.
-> >
-> > But then, why do we need to have a different sign
-> > depending on the sign of the line?
->
-> The check means that we get the same delta whichever way round the lines
-> are compared. I think I added this because without it the highlighting
-> gets broken if there is increase in indentation followed by an identical
-> decrease on the next line.
+...to handle merges in a particular way. This will actually ignore
+merges totally. You could add "-m" to the revision arguments to get a
+per-parent diff, but of course you'd see those in your callback
+individually. If you want to do _just_ the first parent diff, I think
+you'll have to pick it apart manually, like:
 
-But wouldn't we want to get that highlighted?
-I do not quite understand the scenario, yet. Are both indented
-and dedented part of the same block?
+  while ((commit = get_revision(&revs))) {
+	struct object_id *parent_oid;
 
+	/* ignore non-first parents, but handle root commits like --root */
+	if (commit->parents)
+		parent = &commit->parents->item->object.oid;
+	else
+		parent = the_hash_algo->empty_tree;
 
-> >
-> >> +       } else {
-> >> +               BUG("no color_moved_ws_allow_indentation_change set");
-> >
-> > Instead of the BUG here could we have a switch/case (or if/else)
-> > covering the complete space of delta->have_string instead?
-> > Then we would not leave a lingering bug in the code base.
->
-> I'm not sure what you mean, we cover all the existing
-> color_moved_ws_handling values, I added the BUG() call to pick up future
-> omissions if another mode is added. (If we go for a single mode none of
-> this matters)
+	diff_tree_oid(parent, &commit->oid, ...);
+  }
 
-Ah, makes sense!
+-Peff
