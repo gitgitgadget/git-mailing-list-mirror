@@ -2,103 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78FC21F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 21:37:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 621531F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 22:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727455AbeJJE4Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 00:56:24 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35486 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725837AbeJJE4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 00:56:24 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w5-v6so3415874wrt.2
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 14:37:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=S6LBCoUG1MDNpbS+EVpsr9HxZNEGCWP8UsYY0aOZvE4=;
-        b=pfZ/F/JaMF179H4yfsfR5Hr8m09MvqzmsCdmf7/1aDXuND6X55Xz40jl9aMIUzwfU9
-         cZU1A1s7N1sLaS1ajAhSvXSGtvTooPX52tEftqJzc5dl/ffQ90p+xpGgaQpHE14kaeoD
-         qmgsyEXuH0nxhsmBujJrbaeYXPL3TuIy+6hpS/q47sCthd840WOBnChChYrH2UnmwR9I
-         0W5jnnrPT7ufZVxDnN7x/bjyGmE0kOZAcQJ1HlK7DJ7UQqp84Vq3RK0vJGT+iCaNCua1
-         TVnH/GkN8vsH7WQz6GeHOZF/Tw5sC84bGChhCrAPTpv6rqGdmaYv8YYKXNZL2Ksbiaxe
-         svGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=S6LBCoUG1MDNpbS+EVpsr9HxZNEGCWP8UsYY0aOZvE4=;
-        b=AdSu27+IYnpFnPoGAwcpvq8lGF/KeZxTtd6W+bwoebmLBKSJRDOqb9EnlwIaDKi+VN
-         Ly5VEnS0EpmMxSmMZ7MDJgRCdLXhztFXP5a1TDxO99SfzCPpkEgb2JWpZ510J+UkgJW1
-         IG+XRiaPjzwhydtWzvz29kdpRHhM/4dM4KQlaNEZHgnqw4btiHcUTVk49wHFkld1hOcA
-         r9DnzDF7c7kGdPWxioFGNA38bmSLhmAYzZPwcgJ2QLAdIJhQghB8snuGENXvWOBTfuuQ
-         6tc0OORPNnDLTHhbdw/ou6Y87HpmMIIgu/DtXqiLXOyg7DijBbRVmktgw5RP+gdwbGBi
-         eRtQ==
-X-Gm-Message-State: ABuFfohoqiQ1zsH+7KCVYCeeo8OS/VPuFx128ocVq7yRqVE3YSmxcr/b
-        xeYbK6fR2oEitJ2+Qx3aFi300UOv
-X-Google-Smtp-Source: ACcGV62+Li1M9Hd26pNfWNQMaUnr78o/vrjfHrabckIJNUKIK+F/9VI7BkX2ynMQ8nFwBkn4Qz39yQ==
-X-Received: by 2002:adf:8547:: with SMTP id 65-v6mr19122328wrh.69.1539121047557;
-        Tue, 09 Oct 2018 14:37:27 -0700 (PDT)
-Received: from szeder.dev (x4dbd5132.dyn.telefonica.de. [77.189.81.50])
-        by smtp.gmail.com with ESMTPSA id 62-v6sm27053284wra.48.2018.10.09.14.37.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Oct 2018 14:37:25 -0700 (PDT)
-Date:   Tue, 9 Oct 2018 23:37:24 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
+        id S1727939AbeJJFoa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 01:44:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49652 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725860AbeJJFo3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Oct 2018 01:44:29 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e17d:6d35:bfb8:6a25])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 980016077F;
+        Tue,  9 Oct 2018 22:25:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1539123922;
+        bh=PZlJ99D27pVDgeeOW0jifTfn6gToUYHoNO4XxshFW2k=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=AKfYrqdcPL7A908hpfqMXMr4sLhJ6zv84RR2+0W+X1HrIuQPuR579lHC+2dy90yaS
+         0iPDx6OxWdxGK31fi5VAE2zhADyMoqkhX7ftRYTmEydhNpWZE3F2mWuHo732w6LG6k
+         Ux3cypno6vIV5h7rAoTeb90G0ntjmG8eqjt7ylKXGA0eOtRQ7IqxqdxyPacXE3ADG5
+         eTL0H2JuTln1djzNeByVDyQBZ61rnNJ2lOHOniQOIrwcK0dhKnJl5EKi0teWRAR6gK
+         09Zbo+tfScpaM3uux2O6YJJuIOQqNc641t5/duXR8kDpCqOG8hCczSmPM7PV1YojPZ
+         MZE4Azvz0uwE98QcRynaK04jBOZBzLg/1wVSSImtQnvZ8y3mXE12ipbHbsfg1Ebk22
+         HIoqHmqGEQ845HntK7o2KJxiu0r5CuykcR4JN2uW1vAoDbFZmCxY87UTKVrFdrpxIr
+         9mao0ErgBUpaW/ecAPIjjh8hE3KKjD9Ck55xqfIqBlrvlUSvcyk
+Date:   Tue, 9 Oct 2018 22:25:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/4] commit-graph: write a Bloom filter containing
- changed paths for each commit
-Message-ID: <20181009213724.GC23446@szeder.dev>
-References: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
- <20181009193445.21908-1-szeder.dev@gmail.com>
- <20181009193445.21908-3-szeder.dev@gmail.com>
- <20181009210620.GA9563@sigill.intra.peff.net>
+Subject: Re: [PATCH 06/14] packfile: express constants in terms of
+ the_hash_algo
+Message-ID: <20181009222516.GR432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <20181008215701.779099-1-sandals@crustytoothpaste.net>
+ <20181008215701.779099-7-sandals@crustytoothpaste.net>
+ <CAGZ79kbirX6i+qkig6R1YOAsv=0BirhAVkar+AdBLyHgkrXYyg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="QU0xYvH/CPhunj+E"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181009210620.GA9563@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAGZ79kbirX6i+qkig6R1YOAsv=0BirhAVkar+AdBLyHgkrXYyg@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 09, 2018 at 05:06:20PM -0400, Jeff King wrote:
-> On Tue, Oct 09, 2018 at 09:34:43PM +0200, SZEDER Gábor wrote:
-> 
-> > Creating the Bloom filter is sloooow.  Running it on git.git takes
-> > about 23s on my hardware, while
-> > 
-> >   git log --format='%H%n%P' --name-only --all >/dev/null
-> > 
-> > gathers all the information necessary for that in about 5.3s.
-> 
-> That command won't open the trees for merges at all. But your
-> implementation here looks like it does a diff against each parent of a
-> merge.
 
-Yeah, it does so, because that is what try_to_simplify_commit() /
-rev_compare_tree() will do while traversing the history.
+--QU0xYvH/CPhunj+E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Adding "-m" would be a more accurate comparison, I think.
-> 
-> Though I find that puzzling, because "-m --name-only" seems to take
-> about 20x longer, not 3x. So perhaps I'm missing something.
+On Mon, Oct 08, 2018 at 03:59:36PM -0700, Stefan Beller wrote:
+> On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+> > Replace uses of GIT_SHA1_RAWSZ with references to the_hash_algo to avoid
+> > dependence on a particular hash length.
+>=20
+> Unlike the previous patches, this is dealing directly with packfiles,
+> which (I would think) carry their own hash function selector?
+> (i.e. packfiles up to version 4 are sha1 hardcoded and version
+> 5 and onwards will have a hash type field. Usually that hash type would
+> match what is in the_repository, but you could obtain packfiles
+> out of band, or the translation table that we plan to have might
+> be part of the packfile/idx file?)
 
-Ugh, indeed.
+Yeah, the transition plan doesn't specify a format for pack files, but
+we may end up needing one.  We definitely have a specified format for
+index files already, and that's where the translation table will be.
+Anything other than the pack index and the loose object index in the
+=2Egit directory will have the same algorithm as the rest of the
+repository, so technically we could use any pack format as long as it
+lives in the .git directory.
 
+This code is mostly here on an interim basis to let us compile with a
+fully SHA-256 (no SHA-1) Git.  Once that piece is done, we can move on
+to a stage 4 Git, which can do either only SHA-256, or only SHA-1, where
+we'll learn about various pack file formats and detecting the algorithm
+=66rom them.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--QU0xYvH/CPhunj+E
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlu9KssACgkQv1NdgR9S
+9otltw//dc9/16Gj2catfm0sE0LwBJFlhBsqkvYPk8O0T22+wL3gNvDIRzj+r4a2
+tz5MKmjt9gPePJy0QaLA0lN7Vz389RTfPQgOHj7yo++HnnF69UVQxQnBfmj+9DIl
+GTnxS+DwooXdRlyd5l20T3BrlZXOAa9Cq5LVcE/Ut2qcE/SVLX6N3sYUAt6ZxS/5
+S4ZcoSkDKWHBl/nqaAdr5hUul/9YRJmwSoNtj0W0ifatsAb7o/PnooztRQFel9jy
+ubV5/pTnDj9hncMH9/Ylu29WDrRebgz7iStgUUJf16Nt2era0EFRdX8Tk17HiK85
+GM1otkBhK2txElQXzOCTtbrGQPlccxIYai0eIjtzqsS1g9aX6PzkYPZQ33NvL8QO
+m+1Q6uAeRFf1LpRYQh/8njo/KpKq/Cl046U2/uuUczIYvH9FlfI8hRHMY7xxmGtC
+bcqP+hgcKu14+uexhpG6PAPLBmilEjT/w80AVZC+9PB74MxIUy4B5eXGs4KGopId
+QHM8Ez1OT4g4Tucl+PjQrbD2cgPXzsWMe6Qfb4oPV47+bUQtpLrCVMVBZ4882QbY
+jpNhTFhHGT8ozEkpn9ifOHqNq1tunpNIwLE3YboDb7kwQ6Z7tS0sJEEReXtfHHc8
+jLE/zpnsxVMq1LwfsadvcbetK1vd5HHLprSKRgx7tDKUcqe7OJI=
+=SPxs
+-----END PGP SIGNATURE-----
+
+--QU0xYvH/CPhunj+E--
