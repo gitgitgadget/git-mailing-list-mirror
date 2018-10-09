@@ -2,105 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PI_IMPORTANCE_HIGH,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BC851F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 03:59:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 734461F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 03:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726582AbeJILOC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 07:14:02 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:35861 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725759AbeJILOC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 07:14:02 -0400
-Received: by mail-ed1-f53.google.com with SMTP id c26-v6so378375edt.3
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 20:59:08 -0700 (PDT)
+        id S1726646AbeJILOd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 07:14:33 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39673 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725803AbeJILOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 07:14:33 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y144-v6so338695wmd.4
+        for <git@vger.kernel.org>; Mon, 08 Oct 2018 20:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OZr8pHOW1pcs3WLmOhLsr5bvMhOgG60c6vft1xVgHf4=;
-        b=Iyu9fr5DOBZzYJ0LFr3wg2XtdfEkWhtKeumghFepOEG9tCy2dbFEYHvfZE1v+NPq0M
-         gGMccRVfn+TGVqNl7cfosYOG8483pQr7XHFqlmDcZ3zkLIgP5MQllSMHxXfmbv76QFQr
-         nvgDlt81BJXawAdftOuP6rRCZLiYMphbecdkn+OBvNwgA9/zSAwlsTjXdYBxzWrF5XKS
-         b7m0l/Ac0QwTDM3oAvgjwRGm7echmhzzFEms46KPAn1JROMIMHFXoAQmq3aWwMx0s6Hr
-         zYO2HEmmy4xQcunX8Lv1ah4gdq2KzVrsziPkzDL/E1CUYHBuvuivIo/VNXS+Zv75ME9Y
-         wOTg==
+        h=sender:from:to:cc:subject:references:importance:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=1hmqP38/XjyS7Rkqo6e3PZn4Gy/7WVfqD9R6VbrHu8g=;
+        b=m4sCbIQeT6ek/CT4/Q7LKhZH9lvZVy/5e+5KbUVSJ301TAS311+CyptgdjlRC5wrqI
+         rF777l/jz2bUj4Zr/yHE8B6NLZr45NK+jc1mLsUrNs8ap6rEbqSCwnBgPezk+HCMjjNn
+         grdSFQ0ICrRKSDAiUNBv6lzFQaGIHK6QbxhweJFfpG8uFtmmahI6CODGmTZpxqlxkrbF
+         N6tFCH9rCwXV7WweMN2QtrIK7+VJPa89SXq+5a8DFN91JfeR6mBJCqVFNeTgS61fxIwo
+         H9AsVZ5nR7agD/3bkfvWPwOisXCBhPlvsh2G98Aq/k3aLn1kN4cpEidqM+whkl8n+XDR
+         r4qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OZr8pHOW1pcs3WLmOhLsr5bvMhOgG60c6vft1xVgHf4=;
-        b=D4t49N7C+cUEcO+hPu+L2taLDcVHpf14lSSp/yfIc8XEsPVtrVM+XySZH3aIly4Sgz
-         eYknETUhBLqSwA3cVE3KPrkgLBfnq9rAXs4cNqpBMhSjgBvGw58Z4BPTR4feBtP4fHTL
-         bRMvKgF6V6pSCzA6kUOnOgc7YyWSTS5U4ReSliHeVp9+b2F9GwCncFvdU5RmGNUvw/9T
-         GHM7bXc1fEXz2h2oddwY0CMEtevmyXNR2AEXcyOexdP/kPT3zDV9y0WHooU17N8lymL7
-         XjLV4Ir8wn1k4apKyPgEnElFnNYk8RdtHGRct720YyLWi00bELoeyEMTpqAdE5squJn+
-         9uXg==
-X-Gm-Message-State: ABuFfohJ333xCa6jpY4mADgNUCc1WjzX1jhvtp++FXo6Gnd42+qe2vat
-        3p2JIYXWFV4iOGSDbMJ9ixWEV0jvVG8inqAEZeE=
-X-Google-Smtp-Source: ACcGV60tKF3GdJMWCnRP3AiJTMrdZlXQDOgnRdc15URdujg3PvzN/IdfU6SmYvmxp65KubKwhH52XG+LxpiGKgRP6TA=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr11087739edh.154.1539057548153;
- Mon, 08 Oct 2018 20:59:08 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:importance
+         :date:in-reply-to:message-id:user-agent:mime-version;
+        bh=1hmqP38/XjyS7Rkqo6e3PZn4Gy/7WVfqD9R6VbrHu8g=;
+        b=jWrP5LgPrzPJps5fu6vMVvhdtZzrwZMnSvntGC4TX1SgeObP86mxcKlUkJr1Ymelta
+         6x33kZBhnhpgWg5zEeTgusFC7hNMW717XwnoZkwuLrbrPkZwpi9zufTfBgSTiWxBJIRo
+         oYeBKXFnngeMCd+cPvPyoZ6Bs9O9ZJ0yAV363VaAskPUh/HKxWzLvzowCZn8ioU74ixb
+         doCVz0MDwk6cQ5/hPMEfz/C0XewL7Ym46l6xFg6rXbbu/YtekEbX04MKiCIa/bZf1H5L
+         JKy/LLMNB9IFn5adEckoBn8H9S2IhlQWv+wvQsixrcsfmEkEsBFJhG5WhYY3Ji1z0egk
+         sebQ==
+X-Gm-Message-State: ABuFfojtgvlszqibo66Ek9dZQpPCmDa2cFVCe4202iYnNDzMScOeL0Ip
+        tMOjK6R10mhgu3QmGF9UmLk=
+X-Google-Smtp-Source: ACcGV62JmgnZ8qMKaGId/P76eoyzfjoWWBEAuUgdYJB835LHm7KRxf9+skBtKJPYFwqGhuFuFW4jiw==
+X-Received: by 2002:a1c:958d:: with SMTP id x135-v6mr493097wmd.46.1539057578661;
+        Mon, 08 Oct 2018 20:59:38 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w2-v6sm1268921wre.57.2018.10.08.20.59.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Oct 2018 20:59:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/1] rebase -i: introduce the 'break' command
+References: <pull.43.git.gitgitgadget@gmail.com>
+        <b358178548bdc9134d4e4b83b1d0384ebb257a72.1538578818.git.gitgitgadget@gmail.com>
+        <xmqq1s9424ig.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1810051409220.2034@tvgsbejvaqbjf.bet>
+Importance: high
+Date:   Tue, 09 Oct 2018 12:59:37 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1810051409220.2034@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Fri, 5 Oct 2018 17:36:55 +0200
+        (DST)")
+Message-ID: <xmqq1s8zsrbq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <alpine.DEB.2.21.1810061712260.2402@hadrien> <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com>
- <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com> <alpine.DEB.2.21.1810070719200.2347@hadrien>
- <xmqq8t38t4r7.fsf@gitster-ct.c.googlers.com> <20181009032124.GE6250@sigill.intra.peff.net>
-In-Reply-To: <20181009032124.GE6250@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 8 Oct 2018 20:58:56 -0700
-Message-ID: <CA+P7+xpnVeWrW5r6uj4E4NSFPjhA_f0iwaCTJb8-WFqZChHEvA@mail.gmail.com>
-Subject: Re: git log -S or -G
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Julia Lawall <julia.lawall@lip6.fr>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 8, 2018 at 8:22 PM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Oct 09, 2018 at 08:09:32AM +0900, Junio C Hamano wrote:
->
-> > Julia Lawall <julia.lawall@lip6.fr> writes:
-> >
-> > >> Doing the same for -S is much harder at the machinery level, as it
-> > >> performs its thing without internally running "diff" twice, but just
-> > >> counts the number of occurrences of 'foo'---that is sufficient for
-> > >> its intended use, and more efficient.
-> > >
-> > > There is still the question of whether the number of occurrences of foo
-> > > decreases or increases.
-> >
-> > Hmph, taking the changes that makes the number of hits decrease
-> > would catch a subset of "changes that removes 'foo' only---I am not
-> > interested in the ones that adds 'foo'".  It will avoid getting
-> > confused by a change that moves an existing 'foo' to another place
-> > in the same file (as the number of hits does not change), but at the
-> > same time, it will miss a change that genuinely removes an existing
-> > 'foo' and happens to add a 'foo' at a different place in the same
-> > file that is unrelated to the original 'foo'.  Depending on the
-> > definition of "I am only interested in removed ones", that may or
-> > may not be acceptable.
->
-> I think that is the best we could do for "-S", though, which is
-> inherently about counting hits.
->
-> For "-G", we are literally grepping the diff. It does not seem
-> unreasonable to add the ability to grep only "-" or "+" lines, and the
-> interface for that should be pretty straightforward (a tri-state flag to
-> look in remove, added, or both lines).
->
-> -Peff
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yea. I know I've wanted something like this in the past.
+> Hi Junio,
+>
+> On Fri, 5 Oct 2018, Junio C Hamano wrote:
+>
+>> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>> 
+>> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> >
+>> > The 'edit' command can be used to cherry-pick a commit and then
+>> > immediately drop out of the interactive rebase, with exit code 0, to let
+>> > the user amend the commit, or test it, or look around.
+>>  ...
+>> If one wants to emulate this with the versions of Git that are
+>> currently deployed, would it be sufficient to insert "exec false"
+>> instead of "break"?
+>
+> There is one crucial difference: the exit code.
 
-Thanks,
-Jake
+OK, and it was good that you explicitly said "with exit code 0" in
+the log message.  Together with the idea to update the doc I floated
+earlier, this probably is worth documenting, too.
+
+>> I think the earlier request asked for 'pause' (I didn't dig the list
+>> archive very carefully, though),
+>
+> No need to: I mentioned it in the cover letter. Here is the link again,
+> for your convenience:
+> https://public-inbox.org/git/20180118183618.39853-3-sbeller@google.com/
+
+No, you misunderstood.  I knew what message in the immediate past
+triggered this patch and that wasn't what I "could have dug for but
+didn't".  "The earlier request" I meant was another one I recall
+that was made long time ago---that was what I "could have dug for
+but didn't".
+
+> Good initial version. I would like it to be a bit more precise about who
+> exits with what status. How about this:
+
+Sounds good.  It is likely that I'll either forget or will continue
+to be too busy to pick textual pieces and assemble together myself,
+so I'll leave it as a left over bit for somebody reading from the
+sideline to send in a finished version if they care deeply enough
+;-)
+
+Thanks.
+
