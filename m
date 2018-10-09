@@ -2,171 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4D351F97F
-	for <e@80x24.org>; Tue,  9 Oct 2018 18:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3955E1F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 18:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbeJJB7G (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 21:59:06 -0400
-Received: from mail-io1-f73.google.com ([209.85.166.73]:53450 "EHLO
-        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726434AbeJJB7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 21:59:06 -0400
-Received: by mail-io1-f73.google.com with SMTP id t22-v6so2219141ioc.20
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 11:40:46 -0700 (PDT)
+        id S1726486AbeJJCDf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 22:03:35 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:41508 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726460AbeJJCDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 22:03:35 -0400
+Received: by mail-ed1-f51.google.com with SMTP id x31-v6so2653992edd.8
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 11:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=/OyocjDuBAhJCghRcuzEjo9oJ6iiTZEQgXiEohxbzqY=;
-        b=bgTOeSaFJujtpk6KuOdhOnJVkldDDLHadQTLoDNpbxZYg8hBjvet7UvTNLsXmIMcCF
-         CzxyKfAquhU8KVEsOiBG4gwJRWkvBf+kP3i8Xwfc9TXLUDw8mQKK7+jFCwbZ8na01LM6
-         5qbKqzcETP9cAEgsQn2gEzjPV0eyYWmA2D1JEXh9ihGYD0CKHtIIG3CO1q5ENSX44wBI
-         ZbjkTTIWeVlKaiJorbRz9pt18sMb3T8e4jEVgxeywNE0GpUzC1QqHwo82Rczt/wHWgNc
-         r15m8miGiXlaILyy/U7d4PmRN4BPJ1VOG8E0xcjhqq1yIJUswcJjoLhzfEFF1w13CRbH
-         nPBw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=5M0TTBjkvrnLpHEqXVrMpTNEG7trvLsyWmiAil6Hfvo=;
+        b=JKFc0yen77uGE6eTRFzxp6+FSbVLk8wZ5BBaOYKgqDscVOWfVoNpjsp13JLJ429uA0
+         yYQnTZETCSa1t5LeHM4zydAJdRemrormM8RBS+GFp6osXWS1E45q6EBTWtVoX/HULN5B
+         Uc6H91L1PmqsjmgoUouI15a2b/OutdI1ztEE0OUvjk7fXvQ3TMw00aXyjDxgxu67xLU/
+         VNIEJr3V7YFhyOO47dy+KPuX20XoalGWGATl9gwP1GcAKx/U8WeHyjvWIJwGMI3WK7Kh
+         LGGQI1wbyF27OLDB3YhLmSomJ2XiMBLJu3QOlQNedgE0QOsnTbk5WITfoe2trPUi1iWW
+         FoXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=/OyocjDuBAhJCghRcuzEjo9oJ6iiTZEQgXiEohxbzqY=;
-        b=Jgx1+KOnFB2UGEEqGarn8YIz1h5swoh29ssVbVaY7yNylx6b/3LxysH3Nq0ijHQxj+
-         6N2EHSk3VzV0BlGt9O6t/qHJzcoMoO+uGuW0ls31ijc6pYLi90G5XfSRzQxmMhpBfMk3
-         YjFtuaLagpYGDIfjL6F3zOZCuPh6NThTjbcej12rZZA2efZRcVFWUyNuzNwS8oHgwOvO
-         1tZaWWNTLZT21lmWOtSKWA+xeJGNFpGm0XCYRjYYKyUsadoISzSbqTRVhgFMS1IIov90
-         UtofuVFCfO47ilzWt4bAp6hhsQJGHpHRhW6xc+/993TDm3Gg45hgT96rjHqMFhTaJGiS
-         w96g==
-X-Gm-Message-State: ABuFfoiJ5nkA//uo3N0bx7zuOZ3Dtdb09pN4eL1sdit0hzi7h0T/pYBu
-        EH/Jm/IDON4NiDaKAq6DEPWQBsE9OEa4oucCv0KMIifv1s5speTfYZ9w0Et7Q+DUv9YMAiELXtK
-        O9daY8H6ZcF9sE+4um2D3D9YZaVolYFlpi89q3ZfSgj5NZmTeOBYU++mPNSfsolcN6ZCW/756+K
-        GI
-X-Google-Smtp-Source: ACcGV62SyX0qGn2jDbKpZwvQTQ31vpn48efEeMSBG3zPYCOo8++aoq0qfgZlOXoPR3mOarAV+pHjDjoj9VwGjOJJoDeO
-X-Received: by 2002:a24:2153:: with SMTP id e80-v6mr21774887ita.1.1539110446315;
- Tue, 09 Oct 2018 11:40:46 -0700 (PDT)
-Date:   Tue,  9 Oct 2018 11:40:37 -0700
-In-Reply-To: <20181008214816.42856-1-jonathantanmy@google.com>
-Message-Id: <20181009184037.246871-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181008214816.42856-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH v2] cache-tree: skip some blob checks in partial clone
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
-        peartben@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=5M0TTBjkvrnLpHEqXVrMpTNEG7trvLsyWmiAil6Hfvo=;
+        b=GTfecbubgyJINrydSHmk2Z9TbosLbN45RqKgIP+VfQwnhxPtVutwUH5dkZ1vMWweP3
+         K+eVTxUA1Rbddrv1Lkzjv9Ac6/2bbE+z+SxiO+5MRgllUdpuHNhCo61zMYWEBBGhGWbq
+         nHGGd10ZdWE3WAFEjIdPIhd/dEnS6ocnm/Vj0n3BKJBOlkDx6Kg1csMsnSQsZslsPc5O
+         I5PyGk/1YCjB7nH6QVTK9aPU0PkfJbEl8po/4YXeZ5Xph+oxxGK79Pc+JMEnZNWCtecm
+         M4lzVETxB8U9souW4rN0t/hJIJa3cuCICdfq0sE3r6fYybDz8cx7qLU7I1gqGaGk1cxb
+         dANg==
+X-Gm-Message-State: ABuFfogRluBno3a7mirX5yew8QP4sWNtWU65L+iDoGKgJ7tTbX2FLjSW
+        Q8u0YwcJjBF1JeqKo0MdlpQ=
+X-Google-Smtp-Source: ACcGV63GXOw+GHrzLQ3Q1rOHx0BAavctA+YBzARZVACK89c0Iw/zj5E2byuZ/AL+hC7E/ANDoBdw5Q==
+X-Received: by 2002:a17:906:4ac2:: with SMTP id u2-v6mr29467275ejt.202.1539110713762;
+        Tue, 09 Oct 2018 11:45:13 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id q3-v6sm3730260ejb.0.2018.10.09.11.45.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 09 Oct 2018 11:45:12 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Bloom Filters (was Re: We should add a "git gc --auto" after "git clone" due to commit graph)
+References: <87o9cbglez.fsf@evledraar.gmail.com>
+        <CAGZ79kbYX79Pk=xR3hY6NHaRQd7KMWwvacNVyW8=QpLorzXihQ@mail.gmail.com>
+        <87lg7ehnps.fsf@evledraar.gmail.com>
+        <20181003185156.GA20709@sigill.intra.peff.net>
+        <a300acae-c7f2-eace-5196-381a99d62c13@gmail.com>
+        <20181003191805.GB16666@sigill.intra.peff.net>
+        <20181008164141.GZ23446@szeder.dev>
+        <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+        <20181008181015.GA23446@szeder.dev>
+        <9ad5f166-f7c5-de79-0f86-f1f952cd33d2@gmail.com>
+        <20181009030803.GA6250@sigill.intra.peff.net>
+        <f877020c-3098-e4c4-ad64-cca57f764b91@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <f877020c-3098-e4c4-ad64-cca57f764b91@gmail.com>
+Date:   Tue, 09 Oct 2018 20:45:11 +0200
+Message-ID: <87ftxfez7s.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a partial clone, whenever a sparse checkout occurs, the existence of
-all blobs in the index is verified, whether they are included or
-excluded by the .git/info/sparse-checkout specification. This
-significantly degrades performance because a lazy fetch occurs whenever
-the existence of a missing blob is checked.
 
-This is because cache_tree_update() checks the existence of all objects
-in the index, whether or not CE_SKIP_WORKTREE is set on them. Teach
-cache_tree_update() to skip checking CE_SKIP_WORKTREE objects when the
-repository is a partial clone. This improves performance for sparse
-checkout and also other operations that use cache_tree_update().
+On Tue, Oct 09 2018, Derrick Stolee wrote:
 
-Instead of completely removing the check, an argument could be made that
-the check should instead be replaced by a check that the blob is
-promised, but for performance reasons, I decided not to do this.
-If the user needs to verify the repository, it can be done using fsck
-(which will notify if a tree points to a missing and non-promised blob,
-whether the blob is included or excluded by the sparse-checkout
-specification).
+> The filter needs to store every path that would be considered "not
+> TREESAME". It can't store wildcards, so you would need to evaluate the
+> wildcard and test all of those paths individually (not a good idea).
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Changes from v1:
+If full paths are stored, yes, But have you considered instead of
+storing paths, storing all trigrams that can be extracted from changed
+paths at that commit?
 
-After feedback, I restricted this to partial clone. Once restricted, I
-agree with Ben that this can be done for all users of
-cache_tree_update(), not just unpack-trees, so I have removed the
-ability to control the behavior using a flag.
+I.e. instead of a change to "t/t0000-basic.sh" storing
+"t/t0000-basic.sh" we'd store ["t/t", "/t0", "t00", "000", "00-" ...]
+etc.
 
-I also took the opportunity to simplify the missing check by using a
-variable.
----
- cache-tree.c                     |  6 +++++-
- t/t1090-sparse-checkout-scope.sh | 33 ++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 1 deletion(-)
+That sort of approach would mean that e.g. "t*000*", "*asi*.sh"
+etc. could all be indexed, and as long as we could find three
+consecutive bytes of fixed string we'd have a chance to short-circuit,
+but would need to degrade to a full tree unpack for e.g. "t*". We could
+also special-case certain sub-three-char indexes, or to
+"bi-grams". E.g. to be able to index '*.c' or 't*' (first char at the
+beginning of a string only).
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 5ce51468f0..f210481f9b 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -326,6 +326,7 @@ static int update_one(struct cache_tree *it,
- 		unsigned mode;
- 		int expected_missing = 0;
- 		int contains_ita = 0;
-+		int ce_missing_ok;
- 
- 		path = ce->name;
- 		pathlen = ce_namelen(ce);
-@@ -355,8 +356,11 @@ static int update_one(struct cache_tree *it,
- 			i++;
- 		}
- 
-+		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
-+			(repository_format_partial_clone &&
-+			 ce_skip_worktree(ce));
- 		if (is_null_oid(oid) ||
--		    (mode != S_IFGITLINK && !missing_ok && !has_object_file(oid))) {
-+		    (!ce_missing_ok && !has_object_file(oid))) {
- 			strbuf_release(&buffer);
- 			if (expected_missing)
- 				return -1;
-diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
-index 25d7c700f6..090b7fc3d3 100755
---- a/t/t1090-sparse-checkout-scope.sh
-+++ b/t/t1090-sparse-checkout-scope.sh
-@@ -63,4 +63,37 @@ test_expect_success 'return to full checkout of master' '
- 	test "$(cat b)" = "modified"
- '
- 
-+test_expect_success 'in partial clone, sparse checkout only fetches needed blobs' '
-+	test_create_repo server &&
-+	git clone "file://$(pwd)/server" client &&
-+
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	echo a >server/a &&
-+	echo bb >server/b &&
-+	mkdir server/c &&
-+	echo ccc >server/c/c &&
-+	git -C server add a b c/c &&
-+	git -C server commit -m message &&
-+
-+	test_config -C client core.sparsecheckout 1 &&
-+	test_config -C client extensions.partialclone origin &&
-+	echo "!/*" >client/.git/info/sparse-checkout &&
-+	echo "/a" >>client/.git/info/sparse-checkout &&
-+	git -C client fetch --filter=blob:none origin &&
-+	git -C client checkout FETCH_HEAD &&
-+
-+	git -C client rev-list HEAD \
-+		--quiet --objects --missing=print >unsorted_actual &&
-+	(
-+		printf "?" &&
-+		git hash-object server/b &&
-+		printf "?" &&
-+		git hash-object server/c/c
-+	) >unsorted_expect &&
-+	sort unsorted_actual >actual &&
-+	sort unsorted_expect >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.19.0.271.gfe8321ec05.dirty
-
+It would mean having to check more things in the bloom filter for each
+commit, but that's going to be hot in cache at that point so it'll
+probably beat unpacking trees by far, and we could short-circuit exit at
+the first one that returned false.
