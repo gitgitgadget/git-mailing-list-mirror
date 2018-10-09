@@ -7,119 +7,83 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D12041F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 17:38:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B98E1F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 17:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726481AbeJJA4Q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 20:56:16 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:35662 "EHLO
+        id S1727180AbeJJA7I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 20:59:08 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:38491 "EHLO
         mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726418AbeJJA4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 20:56:16 -0400
-Received: by mail-ed1-f48.google.com with SMTP id y19-v6so2490939edd.2
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 10:38:12 -0700 (PDT)
+        with ESMTP id S1726415AbeJJA7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 20:59:08 -0400
+Received: by mail-ed1-f48.google.com with SMTP id c1-v6so2486743ede.5
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 10:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7mwNdoo1fhI6dY3SvRc7t+1whVUzw1wrdVztjjzyzD0=;
-        b=SHZL8AfZUhTJ2p/F9Nbr6qlOZoGxWuBvBWSgqWp5XDr83VZ5Ggh+hcuZibmfZwzSft
-         3SJ9S4lhl9rA3T28nwX1b4HOIxYIsHNfEjZiusB98iTkFuWlzKgCF550PBeVtMcDSou5
-         I3VEGhs8gyA3qTM21KWEokwYK05O+N+SbG03W4KoQZhKJbSD68l4KhYdNUNG01in6rMb
-         CAJBKmbgdXUqPfCTlRbMTNrH6shdQmVT9jgfksL6Kj85tSa/NgDk9KtSbYt2HToj8yWi
-         HJN4nfPSHrM3ueTRlq0/4htfa7S2570SS8o7vPmqq+WIaMn81Xikds7OZhqvGFrDrW3h
-         bfUg==
+         :cc:content-transfer-encoding;
+        bh=PIBXcjk5oIB9dU9MoOCTrDcSo2m1GLuYEujoWGmhybw=;
+        b=voVSNVmaP2figxffdFaZBt9eJuGOI260fzPfG5G51Ber4o5Y2Dn4uzpwPbM07srlaO
+         rbRG998GV1FrBoK4FY6cuBM6dd9jH5KQa+gC6jENJFYJ6VTFJL8Cev83wPHaYrfX/5Zg
+         bSb7Bx2Vt/D/WiaIJ0LyK2nSblBcym+tpAuO+vaygEYUlIegE/kVXCNzqHLgW4xHUbCM
+         AOdxexq0LtfyUOiCbeNJf8BeDeZsodhLhZHKZrKPfyN6vIyMIYudhuR0bhtHtzEsNG+W
+         SGV3gjixXyKW8dStXZrjyX2AokNG9Le/+IShKyYZdCxF/jDVHMRpIazWgRYi50fk0pI5
+         o+jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7mwNdoo1fhI6dY3SvRc7t+1whVUzw1wrdVztjjzyzD0=;
-        b=mQjrr+7JI6hiUOqbtwAtWMjP08BJvVvFZglpSAGURazkF8N77LlyxCBPW5vFxOV+DN
-         8rn959LPHeVASeLxR6Q/W6drss3jgVPru7lRO6J/jWG2Q5xG3ypeSDne8fH8D1zlrprj
-         xLzLt8Fu+1XXxBYuYxVC+5pX9Awphdsf3/MRbNIEy112Qxqq+26QqkPaLnskugRDn1hh
-         5OFUH0vq7hoCfgjNWd6uPF+3eIqAt7xZFte0cLqXH4bKPBmlg5IVcsuoo+ENv1IcPTBH
-         0RITF3SoUuKLKLliO8ZlQRPpS7QrvSClIAQfMzNexoz+7sEujPwcn3M1ebZUhICfRbQb
-         H/vQ==
-X-Gm-Message-State: ABuFfojyG55wJsZL8mLgkCAEBuvJsLoHKzbVvEDBf2hrj18So4Egac1d
-        uE/Uug84W6LMmQ5BzCGos0QzynbFUtT31getJyLcaA==
-X-Google-Smtp-Source: ACcGV63FzLqolWFyXAVQesgE9LxxGMfPvVi9kxkWJ1owoKtyO3PxbiokaqFH6n684euNucpkXyfBhrwmkaD453HvASM=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr15090030edh.154.1539106690927;
- Tue, 09 Oct 2018 10:38:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PIBXcjk5oIB9dU9MoOCTrDcSo2m1GLuYEujoWGmhybw=;
+        b=QHFRjJGPMLdXf9cSTZNkaAqNCuhfSCwRmIUaNzvUlTjDIe0lJI43t25IQDxD2ly6FC
+         wAotuSw3gKqeiyZMhKRuJx8ROZXNqtdtyRmhbtU2piwfGLMC42e0Jb8bzN4HLGKnbNt+
+         3EBM9vVNIq51YugpY4m1UyUAJjyF63msFAEDuMa9nyDUmL+eF3wVk2v2Vl0e5hurxWsF
+         IpwGdLWLZYMSMwRpPoOVFfk8nKSZyxKhd6kVcySKiOwfVWoLDN+kEzBa6Tm6VE779IPz
+         1+Zb+VYaYyr3bNdzjWKFTLMssbS4imVOX1rOAco/xfOjic9Dly7WlrVJMJFTLaDABgvi
+         4T3Q==
+X-Gm-Message-State: ABuFfoiCHXP+bcfQv//G1SUFbjW/y2xRovZbB0HY5F0ho//IoiVzFU3/
+        +0dnAIxnIXjuIY3xmlT6WqbcJSeeHbxDxIKJkPHmag==
+X-Google-Smtp-Source: ACcGV62X2IvWKTcG+mR8FZlWMGFgOoJuT0RZu8vfjH5PVGHCn+6DnnBXo3aPVaOSPrxGxNLecHpWGwnNSSPSHr5TIYs=
+X-Received: by 2002:a50:9931:: with SMTP id k46-v6mr36512768edb.85.1539106861692;
+ Tue, 09 Oct 2018 10:41:01 -0700 (PDT)
 MIME-Version: 1.0
 References: <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
  <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
  <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
  <alpine.LFD.0.9999.0709051438460.21186@xanadu.home> <87k1mta9x5.fsf@evledraar.gmail.com>
- <xmqqpnwltu8s.fsf@gitster-ct.c.googlers.com> <xmqqlg79tta8.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kZq3xtsbscrRFD8CSn++yrvdM6Ux+nkQ3AamgabXtPL+w@mail.gmail.com> <xmqq4ldwszh8.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4ldwszh8.fsf@gitster-ct.c.googlers.com>
+ <xmqqpnwltu8s.fsf@gitster-ct.c.googlers.com> <87h8hwafof.fsf@evledraar.gmail.com>
+ <xmqqzhvorkq7.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhvorkq7.fsf@gitster-ct.c.googlers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 9 Oct 2018 10:37:59 -0700
-Message-ID: <CAGZ79ka5kKrSqPCWFMDetRLYxDqcguJUzJXDex9q-VMwT-ABAw@mail.gmail.com>
+Date:   Tue, 9 Oct 2018 10:40:50 -0700
+Message-ID: <CAGZ79kbASAXMfKR95CNiJpRFTTq6DKho2v=UfpLG=_jnVCTTUA@mail.gmail.com>
 Subject: Re: What's so special about objects/17/ ?
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         nico@cam.org, Nick Alcock <nix@esperi.org.uk>,
         koreth@midwinter.com,
         Linus Torvalds <torvalds@linux-foundation.org>,
-        git <git@vger.kernel.org>
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 8, 2018 at 6:03 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Oct 8, 2018 at 6:07 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Stefan Beller <sbeller@google.com> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> > On Sun, Oct 7, 2018 at 1:07 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> Junio C Hamano <gitster@pobox.com> writes:
-> >
-> >> > ...
-> >> > by general public and I do not have to explain the choice to the
-> >> > general public ;-)
-> >>
-> >> One thing that is more important than "why not 00 but 17?" to answer
-> >> is why a hardcoded number rather than a runtime random.  It is for
-> >> repeatability.
-> >
-> > Let's talk about repeatability vs statistics for a second. ;-)
+> > Depending on how we're counting there's at least two.
 >
-> Oh, I think I misled you by saying "more important".
+> I thought you were asking "why the special sentinel is not 0{40}?"
+> You counted the number of reasons why 0{40} is used to stand in for
+> a real value, but that was the number I didn't find interesting in
+> the scope of this discussion, i.e. "why the special sample is 17?"
 >
-> I didn't mean that it is more important to stick to the "use
-> hardcoded value" design decision than sticking to "use 17".  I've
-> made sure that everybody would understnd choosing any arbitrary byte
-> value other than "17" does not make the resulting Git any better nor
-> worse.
+> I vaguely recall we also used 0{39}1 for something else long time
+> ago; I offhand do not recall if we still do, or we got rid of it.
 
-Yes, I totally get that. We could have chosen 42 just because.
-
-
->  But discussing the design decision to use hardcoded value is
-> "more important", as that affects the balance between the end-user
-> experience and debuggability, and I tried to help those who do not
-> know the history by giving the fact that choice was made for the
-> latter and not for other hidden reasons, that those who would
-> propose to change the system may have to keep in mind.
-
-From an end users point of view, the auto gc kicks in at random.
-(Maybe it's just me, but I don't keep track of the loose object count ;-)
-
-For debuggability, we could design a system that allows for debugging,
-e.g. "When GIT_AUTO_GC_BIN is set, use the number as set, otherwise
-take a random slot".
-
-> Sorry if you mistook it as if I were saying that it is important to
-> keep the design to use a hardcoded byte value.  That wasn't what the
-> message was about.
-
-I understood very well that the choice of value was arbitrary and you
-do not have a convincing story as to why 17 (and not say 23, but such
-a story is not required, as all slots are equal from a design perspective).
-
-I do challenge the decision to take a hardcoded value, though, as it
-yields better properties for the end users IMHO, whereas debugging
-this specific case does not seem to be important to me.
+gitk still shows changes added to the index as 0{39}1, whereas
+changes not added yet are marked as 0{40}.
