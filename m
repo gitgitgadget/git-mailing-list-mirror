@@ -2,81 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3432B1F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 05:53:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 848DF1F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 06:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725927AbeJINIs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 09:08:48 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53922 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725861AbeJINIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 09:08:47 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y11-v6so496706wma.3
-        for <git@vger.kernel.org>; Mon, 08 Oct 2018 22:53:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=arpwoIhfyXAzLoqPX31eGyAlqILOFNWSJmNt3BaSioE=;
-        b=n6x+45Ai/iH9Dtd7gdGnpz0JcPhI2pssJIQdCe4x70i9LayeDqMHHEFvBm5JJYyx8N
-         Eoluk7048EPA5/vl1hm+UEvZXbs4gDhLvDv26XzBXIWUyQQ28bKJRxHh3COpZDH+XKLc
-         DaLRZgrfPDduofUNCBaYQCckj6RAOZGpT1hoYnoD1JNYn7DSte5/kLwJxZ05fargs2Fv
-         hnAvCnIWqVQZivMjqq4V7S5ScAAOHNBVA4qpbQFqq56xofUUl5ohwbE3zJqQyujvH8Cj
-         OSyCeKmmWS8ssPgOp7c8tBFyaV2ZxiSkeTSvBIAM40rL/m1ptS3VwMs7Jo5qVmfzdg87
-         7GHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=arpwoIhfyXAzLoqPX31eGyAlqILOFNWSJmNt3BaSioE=;
-        b=Yl7Rlo3z0Fj6unxQ0XzROZNX+xOIex5UQO5Ir/0lPxlUvV4tFmm+h7veMP8Phe9gHX
-         tJTC+xl6ad7jtdIZPLaO8usA6hPr9bH7bRTogGqP6tV27S+WT3IuxLghDKPaaSg8myhj
-         YaOnqOsa0z2SzKR6CxoM3iwOmtgoN6+PcG3gD7y8rdgHACh34KZ36wcPygPXKjy2xtYH
-         LzYTeiWF84p+YX2Xnkd84YSR3zOf3V2PQfzlutfDB2UVPW/S6ic3x8dFASVJzIZMU6Dc
-         NKgJESyPK98I5xGixa6vLnauiYPPh4ZlRDewkzl9258ZhBWxLev+cgN2bysTd9EXknRb
-         F2dQ==
-X-Gm-Message-State: ABuFfohT3xRmM1v2kqPGMAX8xzdrZnmhnmlKQ4MyX2+2p+pcidCtZN+8
-        WUWi3tGzVMvPACn6kQw5zUcwUjJih/A=
-X-Google-Smtp-Source: ACcGV61efCcDLmQ73bITt3cXh9lm+ihehSxc7QLAy1DYRBPzSfRDRu+ZYn/trCo/9/uQbeH7AKYRrQ==
-X-Received: by 2002:a1c:e15:: with SMTP id 21-v6mr681537wmo.35.1539064412867;
-        Mon, 08 Oct 2018 22:53:32 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b1-v6sm11828917wrt.43.2018.10.08.22.53.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Oct 2018 22:53:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sbeller@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
-References: <pull.26.git.gitgitgadget@gmail.com>
-        <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
-        <87bm84a70p.fsf@evledraar.gmail.com>
-        <a2299be9-0840-da69-ebeb-f64ebe66db5a@gmail.com>
-Date:   Tue, 09 Oct 2018 14:53:31 +0900
-In-Reply-To: <a2299be9-0840-da69-ebeb-f64ebe66db5a@gmail.com> (Derrick
-        Stolee's message of "Mon, 8 Oct 2018 10:45:21 -0400")
-Message-ID: <xmqqd0sjr7hg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726573AbeJINym (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 09:54:42 -0400
+Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:34691
+        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725887AbeJINym (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 9 Oct 2018 09:54:42 -0400
+X-IronPort-AV: E=Sophos;i="5.54,359,1534802400"; 
+   d="scan'208";a="281497157"
+Received: from 89-157-201-244.rev.numericable.fr (HELO hadrien) ([89.157.201.244])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 Oct 2018 08:39:15 +0200
+Date:   Tue, 9 Oct 2018 08:39:15 +0200 (CEST)
+From:   Julia Lawall <julia.lawall@lip6.fr>
+X-X-Sender: jll@hadrien
+To:     Jacob Keller <jacob.keller@gmail.com>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: git log -S or -G
+In-Reply-To: <CA+P7+xpnVeWrW5r6uj4E4NSFPjhA_f0iwaCTJb8-WFqZChHEvA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1810090837270.2430@hadrien>
+References: <alpine.DEB.2.21.1810061712260.2402@hadrien> <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com> <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com> <alpine.DEB.2.21.1810070719200.2347@hadrien> <xmqq8t38t4r7.fsf@gitster-ct.c.googlers.com>
+ <20181009032124.GE6250@sigill.intra.peff.net> <CA+P7+xpnVeWrW5r6uj4E4NSFPjhA_f0iwaCTJb8-WFqZChHEvA@mail.gmail.com>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
 
-> I see these failures, too, but I believe they are due to
-> ds/commit-graph-with-grafts not being merged to 'next' yet. The
-> purpose of that branch is to fix these test breaks. The environment
-> variable got merged a lot faster.
 
-A separate "ping" would have helped me.  Will merge it down to
-'next'.
+On Mon, 8 Oct 2018, Jacob Keller wrote:
+
+> On Mon, Oct 8, 2018 at 8:22 PM Jeff King <peff@peff.net> wrote:
+> >
+> > On Tue, Oct 09, 2018 at 08:09:32AM +0900, Junio C Hamano wrote:
+> >
+> > > Julia Lawall <julia.lawall@lip6.fr> writes:
+> > >
+> > > >> Doing the same for -S is much harder at the machinery level, as it
+> > > >> performs its thing without internally running "diff" twice, but just
+> > > >> counts the number of occurrences of 'foo'---that is sufficient for
+> > > >> its intended use, and more efficient.
+> > > >
+> > > > There is still the question of whether the number of occurrences of foo
+> > > > decreases or increases.
+> > >
+> > > Hmph, taking the changes that makes the number of hits decrease
+> > > would catch a subset of "changes that removes 'foo' only---I am not
+> > > interested in the ones that adds 'foo'".  It will avoid getting
+> > > confused by a change that moves an existing 'foo' to another place
+> > > in the same file (as the number of hits does not change), but at the
+> > > same time, it will miss a change that genuinely removes an existing
+> > > 'foo' and happens to add a 'foo' at a different place in the same
+> > > file that is unrelated to the original 'foo'.  Depending on the
+> > > definition of "I am only interested in removed ones", that may or
+> > > may not be acceptable.
+> >
+> > I think that is the best we could do for "-S", though, which is
+> > inherently about counting hits.
+> >
+> > For "-G", we are literally grepping the diff. It does not seem
+> > unreasonable to add the ability to grep only "-" or "+" lines, and the
+> > interface for that should be pretty straightforward (a tri-state flag to
+> > look in remove, added, or both lines).
+> >
+> > -Peff
+>
+> Yea. I know I've wanted something like this in the past.
+
+It could also be nice to be able to specify multiple patterns, with and
+and or between them.  So -A&-B would be remove A somewhere and remove B
+somewhere.
+
+julia
