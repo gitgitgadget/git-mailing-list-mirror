@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CBAD1F97F
-	for <e@80x24.org>; Tue,  9 Oct 2018 22:54:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52EFF1F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 23:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726445AbeJJGN2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 02:13:28 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49676 "EHLO
+        id S1726608AbeJJGT7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 02:19:59 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49690 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725750AbeJJGN2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Oct 2018 02:13:28 -0400
+        by vger.kernel.org with ESMTP id S1726479AbeJJGT6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Oct 2018 02:19:58 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e17d:6d35:bfb8:6a25])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 01B4E6077F;
-        Tue,  9 Oct 2018 22:54:14 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EE9966077F;
+        Tue,  9 Oct 2018 23:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539125655;
-        bh=cIqLjc8+jQPSgtIJ+GnwkDEmzpW6ujJAwUR6vQDc5p0=;
+        s=default; t=1539126043;
+        bh=ls3c16+NWibAbksgMgKSUtv9BH8ecbDjlPuQESxPqUI=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=bxd8TJdkkDGu/bLahD9b1HNNwNkRYAaVvMZY04BzpPWezizTq094NKZuIH5CiKGPe
-         63QVnN0IGVxL/gNKia7IeqiCR3iARggxUtVhLjKyjG6PViq0iqecqXs7jGhxvPKZME
-         g1IREodZGYYZLi0JWdq+5CJ7NaurJIg4qJYGSKwBQDW94kEA9gRt1Jb9FIRv2m85eb
-         MdOy6jKbEmoohaw8xniC8uM1DEw/6aAtP0rJDPPhIFrtTy8SLKmbKNZrz+hdh6NLlD
-         X8EHgSN2PLC0yIo/HqBaAheGLz8zy8cgmwIW7b+9k56xsFX616ObguTrSdbfIe8Aoc
-         X777G4BryN5hPMOZJRnDSJt/1iZ6+a3ZQYjvfYfPUPlcLzPg7+aJaUS7a71sUdqEM2
-         VrXRN7WlgDhzEAdxH71vgaayXDa31laugPPB1YO5mYx3ucSI8gGWsAnSjR3XkAqqQg
-         +UKHZkTUQYxqmkeP4eCB6aVS0ZMQ+NxbeyIZtAQ/uGksc3+bgiW
-Date:   Tue, 9 Oct 2018 22:54:10 +0000
+        b=da5pZIttP6fatLYO6Cfxp2ANMMeWHwpgs6C5ywaij1DrowiFm7Zt3OMoYDP+ROWWH
+         IcAfIpG7QZnhTIE51L/+wPKFRfZPQoauBDSYpTv/r8kur42Zl81zKAzkQ+h5vvRl6S
+         Ono1mh7HxwvPhbOgBWN0pKHWQ/8qDTzuQ7eYBgY/E5DhGLBsXV8zqjRcg2bHULeYYS
+         fN7hQ/eAJzmCw5jXyfUxUDTV65DqHfGfZqsZqbZc913hLdl50J1sZaZjWT9UME0g8e
+         kQmDgcYLdFCytu6t2OSUxDjf0Sfor5sq9kNEnLoj4h5SGM1Gu15sMzndo4Z03+2CL2
+         zAfSQAkKlfNJjAZhbyhR4Gg5T4+AFB0q8ommB9MrQanNSGXcQqLDST+eSsxTuoa9/U
+         Wa4SIzDVFGq6dc+5g813+JyqQUJTTRlhulaRuXzpAwVrjxeWSWOUT6GwcGJKGCbB6Z
+         FWdZdY47i+X3WkCTnGtCNr2zvYGDPQVkn/Mz2HwfVwrLjX5o29N
+Date:   Tue, 9 Oct 2018 23:00:38 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 06/14] packfile: express constants in terms of
- the_hash_algo
-Message-ID: <20181009225410.GT432229@genre.crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 02/14] builtin/repack: replace hard-coded constant
+Message-ID: <20181009230038.GU432229@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        Duy Nguyen <pclouds@gmail.com>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 References: <20181008215701.779099-1-sandals@crustytoothpaste.net>
- <20181008215701.779099-7-sandals@crustytoothpaste.net>
- <CAGZ79kbirX6i+qkig6R1YOAsv=0BirhAVkar+AdBLyHgkrXYyg@mail.gmail.com>
- <20181009222516.GR432229@genre.crustytoothpaste.net>
- <CAGZ79kbADWhuwk=7jzht5wZkESgT5ZqhhBOkGYGkC1HSSvExEA@mail.gmail.com>
+ <20181008215701.779099-3-sandals@crustytoothpaste.net>
+ <CAGZ79kYvW2PFdLfvd3W_t6rPs=oMBDxgMEgDRLtC4MHyo6MXVQ@mail.gmail.com>
+ <CAPig+cS5VdYq1ZOrP9oPwpXZ3ZmSV3_QdQAHiz5fV1Tc1uEF9A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JViz224v3YRbOSfM"
+        protocol="application/pgp-signature"; boundary="zMXjX+MeVRpM4hLZ"
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbADWhuwk=7jzht5wZkESgT5ZqhhBOkGYGkC1HSSvExEA@mail.gmail.com>
+In-Reply-To: <CAPig+cS5VdYq1ZOrP9oPwpXZ3ZmSV3_QdQAHiz5fV1Tc1uEF9A@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.17.0-1-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -69,51 +68,62 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---JViz224v3YRbOSfM
+--zMXjX+MeVRpM4hLZ
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 09, 2018 at 03:34:17PM -0700, Stefan Beller wrote:
-> On Tue, Oct 9, 2018 at 3:25 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > This code is mostly here on an interim basis to let us compile with a
-> > fully SHA-256 (no SHA-1) Git.  Once that piece is done, we can move on
-> > to a stage 4 Git, which can do either only SHA-256, or only SHA-1, where
-> > we'll learn about various pack file formats and detecting the algorithm
-> > from them.
+On Mon, Oct 08, 2018 at 07:01:27PM -0400, Eric Sunshine wrote:
+> On Mon, Oct 8, 2018 at 6:27 PM Stefan Beller <sbeller@google.com> wrote:
+> > On Mon, Oct 8, 2018 at 2:57 PM brian m. carlson
+> > <sandals@crustytoothpaste.net> wrote:
+> > > -               if (line.len !=3D 40)
+> > > -                       die("repack: Expecting 40 character sha1 line=
+s only from pack-objects.");
+> > > +               if (line.len !=3D the_hash_algo->hexsz)
+> > > +                       die("repack: Expecting full hex object ID lin=
+es only from pack-objects.");
+> >
+> > This is untranslated as it is plumbing? If so, maybe
+> >
+> >     if (is_sha1(the_hash_algo)
+> >         die("repack: Expecting 40 character sh...
+> >     else
+> >         die(repack: Expecting full hex object ID in %s, of length %d",
+> >             the_hash_algo->name,
+> >             the_hash_algo->hexsz);
 >=20
-> This second paragraph really helps to put things into perspective, thanks!
-> I assume this interim base of code only applies to this patch?
-> (In that case maybe put it into the commit message?)
+> Special-casing for SHA-1 seems overkill for an error message. A script
+> expecting this particular error condition and this particular error
+> message would be fragile indeed.
 
-That comment will apply to most of the changes to the packfile code,
-whether in this series or in future series.  However, after your
-question, I was indeed going to put it into the commit message when I
-reroll.
+Yeah, I don't think a special case is needed here.  Moreover, since we
+just invoked pack-objects ourselves and are now reading the output of
+it, seeing this error message means that someone has broken Git in a
+significant way.  The end user should never see this message.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---JViz224v3YRbOSfM
+--zMXjX+MeVRpM4hLZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.10 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlu9MZEACgkQv1NdgR9S
-9otsYQ/+I5bmRIEXk8mzZhI6rEY6Jp8knHAydt0CYd6mjdf3IAz1X/u+THHFNAVS
-obpFt4fsxD9N69hcdakdVx5f5SSDuZgByKX1wGU+pI3g0lCqGU4iM8ROVRviCQGK
-t3X81XlliDP0VmPTNAKm1cU4zSBuuHgBC3zVL0mEBGRxaG5zSLMCcKbic5P1k5lY
-2GoKRTX1HV5zcfmHiaq+9sNaz3OHunVPyKpQUvHQ32slTQQkxGX3eOiJ5oHsg3rk
-DYQPoHWNTGCDUUKZdB46RSZzEEoVomusmdsFVYmiXhERZOsKj1uX3vGplwwLIXzL
-ekBux9dhd/QbM2HWzFVQoUNFm4kugBBRpZ/o81bAz5k4fR5wCZ0lYqoSO9G1V50a
-KmyA//hQV99uA8Ulltv/YZwA3OfndpNWzVYHnv+fecEkG13wCVu3aVJ3YQh4ZG41
-LbY0zaJ2Pw9yP50fT22xYJxBfNbJn4Eq9XyPoNgX2q2duNZs/vGLBigUM7pVux+E
-Nc36gXGoA09VzEV7ExnaaE1I/shr33Fi7mhWtnxuYMCDtQaxEdOl5fihRPPSX6vb
-V5qfhWm0I1eKLY/Ko20sCDz4v733BJviLlc766Nh/A1y3TgsgUqdqT7Qh0YmI9nK
-J/8PymOHRNVawzjfLLoBkd0itpPFIhxZA1a2faHSGRLE+HqEQlk=
-=d6RA
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlu9MxYACgkQv1NdgR9S
+9otmxQ/6A2zMTQLbCRtOT6yI+JVpbVie84uN7gqA1htvjyodZOaesO3W1iUCD2Hu
+yuhTDJD/B2Q0F5+9gvIxNJ5JtRVBZAsAAPg1IEhuypWPxmUoxaEjnaDTSqhhOXVU
+ajG0pESsxwfMeLZqSnKUrBlfypb5wAHcPxSBf8vAtWoc6nWz4+vWMfPrb1h/5GU5
+KoHTNTgyuHyB5Y+H/7M4RspeJUyx/DAwSzpRWqzIhfciutN3tCixLgcgriqz9FHn
+YNC9t7rHYecUSDRm9hpIWg0PPpEZ0LSzj+nROzJ0jILbKHBBtDHqLBXGmhttjTyh
+UKBWcn4EC+M6skcUz7Y+2LE1nnK1oiBf5C97k1Sq6PHdZ1/kzNLNpQoQnBL+FInl
+QUDVTZinL6vL52sCjRv9Y5A1dh7voIhgbn4gfyNRw1h+AHzHx3y01C8Md0x2gqCc
+pbxBD5s+hOjnqZIR4DVk2O/1Zc8tGWIGWpdaDvhi7dY4mO1zGEUUzVG2qupYQz3s
+gOC/PQOUMrkBFALcQkiOMWvJU5uhfoot1T7hFFtZ3FVkHh4yfZoDfz0RNyVSSH/8
+AL9xELMGuSEIXrVGAe1ljMZxEdXG3cuAGGMLWm6k3HyHRS1DbMkeyKVahef7qJt1
+PrCXYBGF8eIot5GGPgMuW1GrBZ+y05AEe4KY5+DQZH2d9ODd8dM=
+=hyj1
 -----END PGP SIGNATURE-----
 
---JViz224v3YRbOSfM--
+--zMXjX+MeVRpM4hLZ--
