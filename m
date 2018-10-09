@@ -7,103 +7,166 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B17C1F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 18:36:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4D351F97F
+	for <e@80x24.org>; Tue,  9 Oct 2018 18:40:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbeJJByW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 21:54:22 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:44023 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726434AbeJJByW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 21:54:22 -0400
-Received: by mail-qt1-f201.google.com with SMTP id j24-v6so2515162qtn.10
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 11:36:04 -0700 (PDT)
+        id S1726525AbeJJB7G (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 21:59:06 -0400
+Received: from mail-io1-f73.google.com ([209.85.166.73]:53450 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726434AbeJJB7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 21:59:06 -0400
+Received: by mail-io1-f73.google.com with SMTP id t22-v6so2219141ioc.20
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 11:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=+NXNfaiWGWlTRJSDSJS8Iwb4I5qbfrnXz8U4JFwkOBA=;
-        b=XoZ5quba2axkbVppEUUbsM+FIKtKpt8napf8qTo3ixoNXHu/JMSc2PiUlB6NdMEjkv
-         olAQ+mnxt4AFf6rp0pmHgy//v4YRjgCU1h3dBhQdrToMEO/DmqdhO5pbPY57MUZwoZhY
-         xtCqT86yj+W2Iimc5TLU1Cuqjo24VqLZLEYUbDa9MA7KFo3B3xn6MKQXzPubWukurNWt
-         DYP+epJTwHJCtvyAbgDB4MqzrwX5+Um+niZP3aM9nLRc2DnuJzydgoldU00AjVQOAQFB
-         U7DTpd7mWJEyJlUGgPbeFMaFqAx5vyLJJ7S+5iTi1xIWw4lfItdElU6WTiisY70q7L50
-         oLyg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=/OyocjDuBAhJCghRcuzEjo9oJ6iiTZEQgXiEohxbzqY=;
+        b=bgTOeSaFJujtpk6KuOdhOnJVkldDDLHadQTLoDNpbxZYg8hBjvet7UvTNLsXmIMcCF
+         CzxyKfAquhU8KVEsOiBG4gwJRWkvBf+kP3i8Xwfc9TXLUDw8mQKK7+jFCwbZ8na01LM6
+         5qbKqzcETP9cAEgsQn2gEzjPV0eyYWmA2D1JEXh9ihGYD0CKHtIIG3CO1q5ENSX44wBI
+         ZbjkTTIWeVlKaiJorbRz9pt18sMb3T8e4jEVgxeywNE0GpUzC1QqHwo82Rczt/wHWgNc
+         r15m8miGiXlaILyy/U7d4PmRN4BPJ1VOG8E0xcjhqq1yIJUswcJjoLhzfEFF1w13CRbH
+         nPBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=+NXNfaiWGWlTRJSDSJS8Iwb4I5qbfrnXz8U4JFwkOBA=;
-        b=Bj5B2IKfwC2sameW+O7rXvla6jSb6FpK8b9WuYawiJgSMEqZ3SHbqIrKK+EZTnRy54
-         kBkvNewZEy/gB/1NtAA4sB6Px9YuotsqEZ+QOH9Lo4Rscj99J5piFrNITFNMUHSvBFDs
-         6nR/HmYZWMolV4zp9JbMBCxXip/fsqpilgrg0sxttgLq/HxUxdsS8wnelHqzz8z3937q
-         jH/S1Y7bqujLwaHRXadEn1ZFkyiXA1WZQmkOXvCpfJwfGN6mbzs6zITcm5GCWu6NniW2
-         iRwukNAy3zwpuhn36X0DoDZOSYf9/nWHWoV915bONXFU1/GfmV3e9C7oLDq7TF5Y9GH8
-         S59w==
-X-Gm-Message-State: ABuFfoiHhInVJMN40bEBuSKVv4fnt6thxy9HF9JyTdbayMgvSF0yjrmF
-        hfTaA3QQYMdL22d5jkQB10tXCWINL1cs
-X-Google-Smtp-Source: ACcGV60GFTuufnEL88++TNKPC+UYlXfx85OvN7IdmJIWhM5DhRSsm/9Kb0Obzc2iyutInYxOnSKuvNbcU/tC
-X-Received: by 2002:aed:23ac:: with SMTP id j41-v6mr22225728qtc.5.1539110164055;
- Tue, 09 Oct 2018 11:36:04 -0700 (PDT)
-Date:   Tue,  9 Oct 2018 11:35:49 -0700
-Message-Id: <20181009183549.195316-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=/OyocjDuBAhJCghRcuzEjo9oJ6iiTZEQgXiEohxbzqY=;
+        b=Jgx1+KOnFB2UGEEqGarn8YIz1h5swoh29ssVbVaY7yNylx6b/3LxysH3Nq0ijHQxj+
+         6N2EHSk3VzV0BlGt9O6t/qHJzcoMoO+uGuW0ls31ijc6pYLi90G5XfSRzQxmMhpBfMk3
+         YjFtuaLagpYGDIfjL6F3zOZCuPh6NThTjbcej12rZZA2efZRcVFWUyNuzNwS8oHgwOvO
+         1tZaWWNTLZT21lmWOtSKWA+xeJGNFpGm0XCYRjYYKyUsadoISzSbqTRVhgFMS1IIov90
+         UtofuVFCfO47ilzWt4bAp6hhsQJGHpHRhW6xc+/993TDm3Gg45hgT96rjHqMFhTaJGiS
+         w96g==
+X-Gm-Message-State: ABuFfoiJ5nkA//uo3N0bx7zuOZ3Dtdb09pN4eL1sdit0hzi7h0T/pYBu
+        EH/Jm/IDON4NiDaKAq6DEPWQBsE9OEa4oucCv0KMIifv1s5speTfYZ9w0Et7Q+DUv9YMAiELXtK
+        O9daY8H6ZcF9sE+4um2D3D9YZaVolYFlpi89q3ZfSgj5NZmTeOBYU++mPNSfsolcN6ZCW/756+K
+        GI
+X-Google-Smtp-Source: ACcGV62SyX0qGn2jDbKpZwvQTQ31vpn48efEeMSBG3zPYCOo8++aoq0qfgZlOXoPR3mOarAV+pHjDjoj9VwGjOJJoDeO
+X-Received: by 2002:a24:2153:: with SMTP id e80-v6mr21774887ita.1.1539110446315;
+ Tue, 09 Oct 2018 11:40:46 -0700 (PDT)
+Date:   Tue,  9 Oct 2018 11:40:37 -0700
+In-Reply-To: <20181008214816.42856-1-jonathantanmy@google.com>
+Message-Id: <20181009184037.246871-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0
-Subject: [PATCH] builtin/grep.c: remote superflous submodule code
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, ao2@ao2.it
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+References: <20181008214816.42856-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [PATCH v2] cache-tree: skip some blob checks in partial clone
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        peartben@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In f9ee2fcdfa (grep: recurse in-process using 'struct repository',
-2017-08-02), we introduced a call to repo_read_gitmodules in builtin/grep
-to simplify the submodule handling.
+In a partial clone, whenever a sparse checkout occurs, the existence of
+all blobs in the index is verified, whether they are included or
+excluded by the .git/info/sparse-checkout specification. This
+significantly degrades performance because a lazy fetch occurs whenever
+the existence of a missing blob is checked.
 
-After ff6f1f564c4 (submodule-config: lazy-load a repository's .gitmodules
-file, 2017-08-03) this is no longer necessary, but that commit did not
-cleanup the whole tree, but just show cased the new way how to deal with
-submodules in ls-files.
+This is because cache_tree_update() checks the existence of all objects
+in the index, whether or not CE_SKIP_WORKTREE is set on them. Teach
+cache_tree_update() to skip checking CE_SKIP_WORKTREE objects when the
+repository is a partial clone. This improves performance for sparse
+checkout and also other operations that use cache_tree_update().
 
-It claimed that grep would still need some explicit handling, but that is
-not the call to repo_read_gitmodules (applying this patch on top of
-ff6f1f564c4 still keep the test suite happy, specifically
-t7814-grep-recurse-submodules, which contains a test
-"grep history with moved submoules")
+Instead of completely removing the check, an argument could be made that
+the check should instead be replaced by a check that the blob is
+promised, but for performance reasons, I decided not to do this.
+If the user needs to verify the repository, it can be done using fsck
+(which will notify if a tree points to a missing and non-promised blob,
+whether the blob is included or excluded by the sparse-checkout
+specification).
 
-The special handling is the call to gitmodules_config_oid which was added
-already in 74ed43711f (grep: enable recurse-submodules to work on
-<tree> objects, 2016-12-16), but then was still named
-gitmodules_config_sha1.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Acked-by: Antonio Ospite <ao2@ao2.it>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
+Changes from v1:
 
-This is a resend of origin/sb/grep-submodule-cleanup,
-and I think picking ff6f1f564c4 as the base for the series would
-also be appropriate.
+After feedback, I restricted this to partial clone. Once restricted, I
+agree with Ben that this can be done for all users of
+cache_tree_update(), not just unpack-trees, so I have removed the
+ability to control the behavior using a flag.
 
-Stefan
+I also took the opportunity to simplify the missing check by using a
+variable.
+---
+ cache-tree.c                     |  6 +++++-
+ t/t1090-sparse-checkout-scope.sh | 33 ++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 1 deletion(-)
 
-
- builtin/grep.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 601f801158..a6272b9c2f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -427,8 +427,6 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 	if (repo_submodule_init(&submodule, superproject, path))
- 		return 0;
+diff --git a/cache-tree.c b/cache-tree.c
+index 5ce51468f0..f210481f9b 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -326,6 +326,7 @@ static int update_one(struct cache_tree *it,
+ 		unsigned mode;
+ 		int expected_missing = 0;
+ 		int contains_ita = 0;
++		int ce_missing_ok;
  
--	repo_read_gitmodules(&submodule);
--
- 	/*
- 	 * NEEDSWORK: This adds the submodule's object directory to the list of
- 	 * alternates for the single in-memory object store.  This has some bad
+ 		path = ce->name;
+ 		pathlen = ce_namelen(ce);
+@@ -355,8 +356,11 @@ static int update_one(struct cache_tree *it,
+ 			i++;
+ 		}
+ 
++		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
++			(repository_format_partial_clone &&
++			 ce_skip_worktree(ce));
+ 		if (is_null_oid(oid) ||
+-		    (mode != S_IFGITLINK && !missing_ok && !has_object_file(oid))) {
++		    (!ce_missing_ok && !has_object_file(oid))) {
+ 			strbuf_release(&buffer);
+ 			if (expected_missing)
+ 				return -1;
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+index 25d7c700f6..090b7fc3d3 100755
+--- a/t/t1090-sparse-checkout-scope.sh
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -63,4 +63,37 @@ test_expect_success 'return to full checkout of master' '
+ 	test "$(cat b)" = "modified"
+ '
+ 
++test_expect_success 'in partial clone, sparse checkout only fetches needed blobs' '
++	test_create_repo server &&
++	git clone "file://$(pwd)/server" client &&
++
++	test_config -C server uploadpack.allowfilter 1 &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++	echo a >server/a &&
++	echo bb >server/b &&
++	mkdir server/c &&
++	echo ccc >server/c/c &&
++	git -C server add a b c/c &&
++	git -C server commit -m message &&
++
++	test_config -C client core.sparsecheckout 1 &&
++	test_config -C client extensions.partialclone origin &&
++	echo "!/*" >client/.git/info/sparse-checkout &&
++	echo "/a" >>client/.git/info/sparse-checkout &&
++	git -C client fetch --filter=blob:none origin &&
++	git -C client checkout FETCH_HEAD &&
++
++	git -C client rev-list HEAD \
++		--quiet --objects --missing=print >unsorted_actual &&
++	(
++		printf "?" &&
++		git hash-object server/b &&
++		printf "?" &&
++		git hash-object server/c/c
++	) >unsorted_expect &&
++	sort unsorted_actual >actual &&
++	sort unsorted_expect >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
-2.19.0
+2.19.0.271.gfe8321ec05.dirty
 
