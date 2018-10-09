@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13F41F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 11:59:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DE3F1F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 11:59:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbeJITPz (ORCPT <rfc822;e@80x24.org>);
+        id S1726678AbeJITP4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 15:15:56 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:32848 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726491AbeJITPz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 9 Oct 2018 15:15:55 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:34830 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726160AbeJITPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 15:15:53 -0400
-Received: by mail-ed1-f68.google.com with SMTP id y19-v6so1430559edd.2
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 04:59:16 -0700 (PDT)
+Received: by mail-ed1-f66.google.com with SMTP id h13-v6so1440334edq.0
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 04:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=rasmusvillemoes.dk; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zhMDVfNznqjcUO+ycKjNTSJVv06LYKubyTeqk0ipeVw=;
-        b=Q4JQPPivvMryJ5kUoOLtTxEGYxTod1XySdbByZLuowz0ycDkOB+J1A7sbxPGa1aiHc
-         zcwj99g8ecK8VIkcyfQFQdwX6yjy8UEEsoAocTkewtNutu/AE2fsCzcQV6PtVKaTe1Bx
-         VhOt2WCf9muCvh2WC7j40FCs+DA/QphydUVBs=
+        bh=j6wGanSTic0GkmIJIBk/1Ka+z5Jfcd7Opj4cU5OaPNg=;
+        b=eM7Rg4wnsyeIgLye4lQ2XWbG7c+4FKpzT1uiCQcRM+zj+vF8fPY1q8Ra2uCLINOelZ
+         bIupQRua4vWLzBfpqCSCuZOCreyHOSGsBAXKwMf/b/QWADgxSJusY2iXVdfV2zGgD7gK
+         Pk4UpAdWsbouB5HQQBqEv7jyeNzNhmKXmI9ws=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zhMDVfNznqjcUO+ycKjNTSJVv06LYKubyTeqk0ipeVw=;
-        b=kbxoZB0cRxWepXX1aBmnui5VCYpmcRsfsfTbpY3EUKuAM+rJ16adSL4umBIY8i+iqy
-         qA1KfM8Spl3VzH6Vox/xYwP3Bz6felGoMCinluoz+EJtBCkjXKoXmX3KQFOs/iDsEOXc
-         bZp2JsoZ25AeIFeaeUNwKMUaptAU5F0RtEpuYLpZ8gCbNR2A2XaFOVKAbrfSqE5m1HRg
-         BlAGrSEbqpmiKEI1/ZVCSw1lVfhQ2+alGTE2Z/mUy9KpB67/37MX+dn9pPEHaytwbSQb
-         5DAtKkt+21Tz3h6wwi3+8+WCzJxr27+47ji2nKzHsKeSFOnyDi/QSiBix/tmgxncAhKB
-         spXQ==
-X-Gm-Message-State: ABuFfogZ9LrQ4pV5hWuL5nGZHCWwOuGQ1L9xGaiGpK7MgASDHs4WYYVm
-        N23UKKtcpm3woCwnOeAW/YaBz0Pkn8Y=
-X-Google-Smtp-Source: ACcGV63l1jNSANvo8cvu+Fvg9de+LLvAj8rzHcRMppzsgAxpvCiWlKKtrpxM+aGVX+IG69RpqiwMGg==
-X-Received: by 2002:a50:9a81:: with SMTP id p1-v6mr22831476edb.112.1539086355003;
-        Tue, 09 Oct 2018 04:59:15 -0700 (PDT)
+        bh=j6wGanSTic0GkmIJIBk/1Ka+z5Jfcd7Opj4cU5OaPNg=;
+        b=jCoYHJw1hwSjNWXCeF7vc9PELR8g3YmfeGYmqw7b7diDGUKQjD354b7lYO9TVcMlGG
+         2ncHGVjFQoMtGOEEtmlohxiNfKZZ5p2aau/fGyyBvMEMbaR3UNMl7MOK8sEoXznffd0w
+         7LZFaC6B3YIV+bxh+yGTTHt1C8YbsHKFGQV9y2XWv1xsMDdMHC+16tt6ZOORharlmvpN
+         j+NJ7zjEz1BUq1+aerTuwemKFWhJTTIo6e64/BwNpWwA1DIvS+YBjrygq6xstLGHAEAd
+         gTpfRvYuKK1ssVVzgSHZ4OwPNrsl0t9I6A3q2jfHe5uWGYsdMctmDwD/kZFa/8avgTPI
+         e7oA==
+X-Gm-Message-State: ABuFfojMlH1HjNUj/vnWfS8D93oheBSwP2nXWSWQl/mKPM3mOa+nI5yV
+        TFg7kG9hMQOrzdgxFKvLOY1pJmbKlCY=
+X-Google-Smtp-Source: ACcGV60yRi7IhUBPbO+gzeGftHRMjipMeq4+yxFdkvgiysR182J61jmg3DLxxTg63skJ9mOPmFYuhg==
+X-Received: by 2002:a05:6402:6d8:: with SMTP id n24mr33144545edy.99.1539086356323;
+        Tue, 09 Oct 2018 04:59:16 -0700 (PDT)
 Received: from prevas-ravi.vestasvisitor.net ([193.47.71.171])
-        by smtp.gmail.com with ESMTPSA id o4-v6sm3522556ejx.30.2018.10.09.04.59.13
+        by smtp.gmail.com with ESMTPSA id o4-v6sm3522556ejx.30.2018.10.09.04.59.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 09 Oct 2018 04:59:14 -0700 (PDT)
+        Tue, 09 Oct 2018 04:59:15 -0700 (PDT)
 From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Duy Nguyen <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>,
         Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [PATCH v4 1/3] help: redirect to aliased commands for "git cmd --help"
-Date:   Tue,  9 Oct 2018 13:59:07 +0200
-Message-Id: <20181009115909.16648-2-rv@rasmusvillemoes.dk>
+Subject: [PATCH v4 2/3] git.c: handle_alias: prepend alias info when first argument is -h
+Date:   Tue,  9 Oct 2018 13:59:08 +0200
+Message-Id: <20181009115909.16648-3-rv@rasmusvillemoes.dk>
 X-Mailer: git-send-email 2.19.1.4.g721af0fda3
 In-Reply-To: <20181009115909.16648-1-rv@rasmusvillemoes.dk>
 References: <20181003114242.9858-1-rv@rasmusvillemoes.dk>
@@ -65,85 +65,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As discussed in the thread for v1 of this patch [1] [2], this changes the
-rules for "git foo --help" when foo is an alias.
+Most git commands respond to -h anywhere in the command line, or at
+least as a first and lone argument, by printing the usage
+information. For aliases, we can provide a little more information that
+might be useful in interpreting/understanding the following output by
+prepending a line telling that the command is an alias, and for what.
 
-(1) When invoked as "git help foo", we continue to print the "foo is
-aliased to bar" message and nothing else.
+When one invokes a simple alias, such as "cp = cherry-pick"
+with -h, this results in
 
-(2) If foo is an alias for a shell command, print "foo is aliased to
-!bar" as usual.
+$ git cp -h
+'cp' is aliased to 'cherry-pick'
+usage: git cherry-pick [<options>] <commit-ish>...
+...
 
-(3) Otherwise, print "foo is aliased to bar" to the standard error
-stream, and then break the alias string into words and pretend as if
-"git word[0] --help" were called.
+When the alias consists of more than one word, this provides the
+additional benefit of informing the user which options are implicit in
+using the alias, e.g. with "cp = cherry-pick -n":
 
-Getting the man page for git-cherry-pick directly with "git cp --help"
-is consistent with "--help" generally providing more comprehensive help
-than "-h". Printing the alias definition to stderr means that in certain
-cases (e.g. if help.format=web or if the pager uses an alternate screen
-and does not clear the terminal), one has
-
+$ git cp -h
 'cp' is aliased to 'cherry-pick -n'
+usage: git cherry-pick [<options>] <commit-ish>...
+...
 
-above the prompt when one returns to the terminal/quits the pager, which
-is a useful reminder that using 'cp' has some flag implicitly set. There
-are cases where this information vanishes or gets scrolled
-away, but being printed to stderr, it should never hurt.
+For shell commands, we cannot know how it responds to -h, but printing
+this line to stderr should not hurt, and can help in figuring out what
+is happening in a case like
 
-[1] https://public-inbox.org/git/20180926102636.30691-1-rv@rasmusvillemoes.dk/
-[2] https://public-inbox.org/git/20180926184914.GC30680@sigill.intra.peff.net/
+$ git sc -h
+'sc' is aliased to '!somecommand'
+somecommand: invalid option '-h'
 
+Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 ---
- builtin/help.c | 34 +++++++++++++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 3 deletions(-)
+ git.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 8d4f6dd301..e0e3fe62e9 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -415,9 +415,37 @@ static const char *check_git_cmd(const char* cmd)
- 
- 	alias = alias_lookup(cmd);
- 	if (alias) {
--		printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
--		free(alias);
--		exit(0);
-+		const char **argv;
-+		int count;
-+
-+		/*
-+		 * handle_builtin() in git.c rewrites "git cmd --help"
-+		 * to "git help --exclude-guides cmd", so we can use
-+		 * exclude_guides to distinguish "git cmd --help" from
-+		 * "git help cmd". In the latter case, or if cmd is an
-+		 * alias for a shell command, just print the alias
-+		 * definition.
-+		 */
-+		if (!exclude_guides || alias[0] == '!') {
-+			printf_ln(_("'%s' is aliased to '%s'"), cmd, alias);
-+			free(alias);
-+			exit(0);
-+		}
-+		/*
-+		 * Otherwise, we pretend that the command was "git
-+		 * word0 --help". We use split_cmdline() to get the
-+		 * first word of the alias, to ensure that we use the
-+		 * same rules as when the alias is actually
-+		 * used. split_cmdline() modifies alias in-place.
-+		 */
-+		fprintf_ln(stderr, _("'%s' is aliased to '%s'"), cmd, alias);
-+		count = split_cmdline(alias, &argv);
-+		if (count < 0)
-+			die(_("bad alias.%s string: %s"), cmd,
-+			    split_cmdline_strerror(count));
-+		free(argv);
-+		UNLEAK(alias);
-+		return alias;
- 	}
- 
- 	if (exclude_guides)
+diff --git a/git.c b/git.c
+index a6f4b44af5..0211c2d4c0 100644
+--- a/git.c
++++ b/git.c
+@@ -318,6 +318,9 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	alias_command = (*argv)[0];
+ 	alias_string = alias_lookup(alias_command);
+ 	if (alias_string) {
++		if (*argcp > 1 && !strcmp((*argv)[1], "-h"))
++			fprintf_ln(stderr, _("'%s' is aliased to '%s'"),
++				   alias_command, alias_string);
+ 		if (alias_string[0] == '!') {
+ 			struct child_process child = CHILD_PROCESS_INIT;
+ 			int nongit_ok;
 -- 
 2.19.1.4.g721af0fda3
 
