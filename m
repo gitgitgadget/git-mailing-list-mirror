@@ -6,82 +6,118 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 848DF1F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 06:39:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 236591F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 08:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbeJINym (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 09:54:42 -0400
-Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:34691
-        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725887AbeJINym (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 9 Oct 2018 09:54:42 -0400
-X-IronPort-AV: E=Sophos;i="5.54,359,1534802400"; 
-   d="scan'208";a="281497157"
-Received: from 89-157-201-244.rev.numericable.fr (HELO hadrien) ([89.157.201.244])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 09 Oct 2018 08:39:15 +0200
-Date:   Tue, 9 Oct 2018 08:39:15 +0200 (CEST)
-From:   Julia Lawall <julia.lawall@lip6.fr>
-X-X-Sender: jll@hadrien
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: git log -S or -G
-In-Reply-To: <CA+P7+xpnVeWrW5r6uj4E4NSFPjhA_f0iwaCTJb8-WFqZChHEvA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1810090837270.2430@hadrien>
-References: <alpine.DEB.2.21.1810061712260.2402@hadrien> <CACBZZX6PmG=-8563eYE4z98yvHePenZf_Kz1xgpse0ngjB5QyA@mail.gmail.com> <xmqqd0smvay0.fsf@gitster-ct.c.googlers.com> <alpine.DEB.2.21.1810070719200.2347@hadrien> <xmqq8t38t4r7.fsf@gitster-ct.c.googlers.com>
- <20181009032124.GE6250@sigill.intra.peff.net> <CA+P7+xpnVeWrW5r6uj4E4NSFPjhA_f0iwaCTJb8-WFqZChHEvA@mail.gmail.com>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+        id S1725927AbeJIP1C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 11:27:02 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:57306 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbeJIP1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 11:27:02 -0400
+Received: from [IPv6:2a02:ab04:3b9:5e00::3] (2a02-ab04-03b9-5e00-0000-0000-0000-0003.dynamic.v6.chello.sk [IPv6:2a02:ab04:3b9:5e00::3])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: andrewsh)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 1FE3627774D;
+        Tue,  9 Oct 2018 09:11:18 +0100 (BST)
+Subject: Re: refreshing the gitk colour scheme
+From:   Andrej Shadura <andrew.shadura@collabora.co.uk>
+To:     git@vger.kernel.org
+References: <7641bc4d-bc0d-845b-3c3e-4071fc184e12@collabora.co.uk>
+Cc:     Paul Mackerras <paulus@ozlabs.org>
+Openpgp: preference=signencrypt
+Autocrypt: addr=andrew.shadura@collabora.co.uk; prefer-encrypt=mutual;
+ keydata=
+ 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
+ UuW1fO3lmRpcLq680uTO+9V+8FQHeQ==
+Organization: Collabora
+Message-ID: <8f7c60b4-b8c2-af37-1705-d67b9b6deeb5@collabora.co.uk>
+Date:   Tue, 9 Oct 2018 10:11:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <7641bc4d-bc0d-845b-3c3e-4071fc184e12@collabora.co.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+Just a ping for opinions. I can provide a patch if the changes make sense.
 
-On Mon, 8 Oct 2018, Jacob Keller wrote:
+On 12/05/18 15:14, Andrej Shadura wrote:
+> Hello everyone,
+> 
+> I’ve been using Gitk with the following colour settings for a year or
+> so, and I found it much more convenient to use that the current default,
+> so I’d like to propose to make them the defaults. These colours are
+> slightly less 80’s i.e. they’re using colours outside of the ‘classic’
+> 16 colour palette for a more pleasing visual experience.
+> 
+> set headbgcolor #98ff5e
+> set remotebgcolor #bae2ff
+> set tagbgcolor #f3fb57
+> set mainheadcirclecolor #ffeb74
+> set indexcirclecolor green
+> set circlecolors {white #08b5ed gray blue blue}
+> 
+> I also found it may be a good idea to disable auto-selection of the
+> commit hash by default, since it overwrites whatever content was in the
+> selection clipboard, and also pollutes the clipboard history if the user
+> is using a clipboard manager:
+> 
+> set autoselect 0
+> 
+> Here’s one more change which I am not proposing for inclusion, but I
+> found it more æsthetically pleasing than the default:
+> 
+> set mainfont {FreeSans 11}
 
-> On Mon, Oct 8, 2018 at 8:22 PM Jeff King <peff@peff.net> wrote:
-> >
-> > On Tue, Oct 09, 2018 at 08:09:32AM +0900, Junio C Hamano wrote:
-> >
-> > > Julia Lawall <julia.lawall@lip6.fr> writes:
-> > >
-> > > >> Doing the same for -S is much harder at the machinery level, as it
-> > > >> performs its thing without internally running "diff" twice, but just
-> > > >> counts the number of occurrences of 'foo'---that is sufficient for
-> > > >> its intended use, and more efficient.
-> > > >
-> > > > There is still the question of whether the number of occurrences of foo
-> > > > decreases or increases.
-> > >
-> > > Hmph, taking the changes that makes the number of hits decrease
-> > > would catch a subset of "changes that removes 'foo' only---I am not
-> > > interested in the ones that adds 'foo'".  It will avoid getting
-> > > confused by a change that moves an existing 'foo' to another place
-> > > in the same file (as the number of hits does not change), but at the
-> > > same time, it will miss a change that genuinely removes an existing
-> > > 'foo' and happens to add a 'foo' at a different place in the same
-> > > file that is unrelated to the original 'foo'.  Depending on the
-> > > definition of "I am only interested in removed ones", that may or
-> > > may not be acceptable.
-> >
-> > I think that is the best we could do for "-S", though, which is
-> > inherently about counting hits.
-> >
-> > For "-G", we are literally grepping the diff. It does not seem
-> > unreasonable to add the ability to grep only "-" or "+" lines, and the
-> > interface for that should be pretty straightforward (a tri-state flag to
-> > look in remove, added, or both lines).
-> >
-> > -Peff
->
-> Yea. I know I've wanted something like this in the past.
-
-It could also be nice to be able to specify multiple patterns, with and
-and or between them.  So -A&-B would be remove A somewhere and remove B
-somewhere.
-
-julia
+-- 
+Cheers,
+  Andrej
