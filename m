@@ -6,33 +6,33 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90C3D1F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 23:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E64551F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 23:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbeJJGcu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 02:32:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34870 "HELO cloud.peff.net"
+        id S1726903AbeJJGdX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 02:33:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34882 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725750AbeJJGcu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 02:32:50 -0400
-Received: (qmail 14404 invoked by uid 109); 9 Oct 2018 23:13:34 -0000
+        id S1725750AbeJJGdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 02:33:23 -0400
+Received: (qmail 14469 invoked by uid 109); 9 Oct 2018 23:14:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Oct 2018 23:13:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Oct 2018 23:14:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11300 invoked by uid 111); 9 Oct 2018 23:12:42 -0000
+Received: (qmail 11327 invoked by uid 111); 9 Oct 2018 23:13:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 09 Oct 2018 19:12:42 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 09 Oct 2018 19:13:15 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Oct 2018 19:13:32 -0400
-Date:   Tue, 9 Oct 2018 19:13:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Oct 2018 19:14:05 -0400
+Date:   Tue, 9 Oct 2018 19:14:05 -0400
 From:   Jeff King <peff@peff.net>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PoC -- do not apply 1/3] initial tree-bitmap proof of concept
-Message-ID: <20181009231331.GA23730@sigill.intra.peff.net>
+Subject: [PoC -- do not apply 2/3] test-tree-bitmap: add "dump" mode
+Message-ID: <20181009231405.GB23730@sigill.intra.peff.net>
 References: <20181009231250.GA19342@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,198 +43,161 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This teaches "gen" mode (formerly the only mode) to include
+the list of paths, and to prefix each bitmap with its
+matching oid.
+
+The "dump" mode can then read that back in and generate the
+list of changed paths. This should be almost identical to:
+
+  git rev-list --all |
+  git diff-tree --stdin --name-only -t
+
+The one difference is the sort order: git's diff output is
+in tree-sort order, so a subtree "foo" sorts like "foo/",
+which is after "foo.bar". Whereas the bitmap path list has a
+true byte sort, which puts "foo.bar" after "foo".
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile                    |   1 +
- t/helper/test-tree-bitmap.c | 167 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 168 insertions(+)
- create mode 100644 t/helper/test-tree-bitmap.c
+ t/helper/test-tree-bitmap.c | 104 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 102 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 13e1c52478..f6e823f2d6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -751,6 +751,7 @@ TEST_PROGRAMS_NEED_X += test-parse-options
- TEST_PROGRAMS_NEED_X += test-pkt-line
- TEST_PROGRAMS_NEED_X += test-svn-fe
- TEST_PROGRAMS_NEED_X += test-tool
-+TEST_PROGRAMS_NEED_X += test-tree-bitmap
- 
- TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
- 
 diff --git a/t/helper/test-tree-bitmap.c b/t/helper/test-tree-bitmap.c
-new file mode 100644
-index 0000000000..bc5cf0e514
---- /dev/null
+index bc5cf0e514..6f8833344a 100644
+--- a/t/helper/test-tree-bitmap.c
 +++ b/t/helper/test-tree-bitmap.c
-@@ -0,0 +1,167 @@
-+#include "cache.h"
-+#include "revision.h"
-+#include "diffcore.h"
-+#include "argv-array.h"
-+#include "ewah/ewok.h"
+@@ -112,6 +112,14 @@ static void collect_paths(struct hashmap *paths)
+ 	QSORT(sorted, i, pathmap_entry_strcmp);
+ 	for (i = 0; i < n; i++)
+ 		sorted[i]->pos = i;
 +
-+/* map of pathnames to bit positions */
-+struct pathmap_entry {
-+	struct hashmap_entry ent;
-+	unsigned pos;
-+	char path[FLEX_ARRAY];
-+};
++	/* dump it while we have the sorted order in memory */
++	for (i = 0; i < n; i++) {
++		printf("%s", sorted[i]->path);
++		putchar('\0');
++	}
++	putchar('\0');
 +
-+static int pathmap_entry_hashcmp(const void *unused_cmp_data,
-+				 const void *entry,
-+				 const void *entry_or_key,
-+				 const void *keydata)
-+{
-+	const struct pathmap_entry *a = entry;
-+	const struct pathmap_entry *b = entry_or_key;
-+	const char *key = keydata;
+ 	free(sorted);
+ }
+ 
+@@ -142,6 +150,8 @@ static void generate_bitmap(struct diff_queue_struct *q,
+ 
+ 	ewah = bitmap_to_ewah(bitmap);
+ 	ewah_serialize_strbuf(ewah, &out);
 +
-+	return strcmp(a->path, key ? key : b->path);
++	fwrite(data->commit->object.oid.hash, 1, GIT_SHA1_RAWSZ, stdout);
+ 	fwrite(out.buf, 1, out.len, stdout);
+ 
+ 	trace_printf("bitmap %s %u %u",
+@@ -154,14 +164,104 @@ static void generate_bitmap(struct diff_queue_struct *q,
+ 	bitmap_free(bitmap);
+ }
+ 
+-int cmd_main(int argc, const char **argv)
++static void do_gen(void)
+ {
+ 	struct hashmap paths;
+-
+ 	setup_git_directory();
+ 	collect_paths(&paths);
+ 
+ 	walk_paths(generate_bitmap, &paths);
 +}
 +
-+static int pathmap_entry_strcmp(const void *va, const void *vb)
++static void show_path(size_t pos, void *data)
 +{
-+	struct pathmap_entry *a = *(struct pathmap_entry **)va;
-+	struct pathmap_entry *b = *(struct pathmap_entry **)vb;
-+	return strcmp(a->path, b->path);
++	const char **paths = data;
++
++	/* assert(pos < nr_paths), but we didn't pass the latter in */
++	printf("%s\n", paths[pos]);
 +}
 +
-+struct walk_paths_data {
-+	struct hashmap *paths;
-+	struct commit *commit;
-+};
-+
-+static void walk_paths(diff_format_fn_t fn, struct hashmap *paths)
++static void do_dump(void)
 +{
-+	struct argv_array argv = ARGV_ARRAY_INIT;
-+	struct rev_info revs;
-+	struct walk_paths_data data;
-+	struct commit *commit;
++	struct strbuf in = STRBUF_INIT;
++	const char *cur;
++	size_t remain;
 +
-+	argv_array_pushl(&argv, "rev-list",
-+			 "--all", "-t", "--no-renames",
-+			 NULL);
-+	init_revisions(&revs, NULL);
-+	setup_revisions(argv.argc, argv.argv, &revs, NULL);
-+	revs.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	revs.diffopt.format_callback = fn;
-+	revs.diffopt.format_callback_data = &data;
++	const char **paths = NULL;
++	size_t alloc_paths = 0, nr_paths = 0;
 +
-+	data.paths = paths;
++	/* slurp stdin; in the real world we'd mmap all this */
++	strbuf_read(&in, 0, 0);
++	cur = in.buf;
++	remain = in.len;
 +
-+	prepare_revision_walk(&revs);
-+	while ((commit = get_revision(&revs))) {
-+		data.commit = commit;
-+		diff_tree_combined_merge(commit, 0, &revs);
++	/* read path for each bit; in the real world this would be separate */
++	while (remain) {
++		const char *end = memchr(cur, '\0', remain);
++		if (!end) {
++			error("truncated input while reading path");
++			goto out;
++		}
++		if (end == cur) {
++			/* empty field signals end of paths */
++			cur++;
++			remain--;
++			break;
++		}
++
++		ALLOC_GROW(paths, nr_paths + 1, alloc_paths);
++		paths[nr_paths++] = cur;
++
++		remain -= end - cur + 1;
++		cur = end + 1;
 +	}
 +
-+	reset_revision_walk();
-+	argv_array_clear(&argv);
-+}
++	/* read the bitmap for each commit */
++	while (remain) {
++		struct object_id oid;
++		struct ewah_bitmap *ewah;
++		ssize_t len;
 +
-+static void collect_commit_paths(struct diff_queue_struct *q,
-+				 struct diff_options *opts,
-+				 void *vdata)
-+{
-+	struct walk_paths_data *data = vdata;
-+	int i;
++		if (remain < GIT_SHA1_RAWSZ) {
++			error("truncated input reading oid");
++			goto out;
++		}
++		hashcpy(oid.hash, (const unsigned char *)cur);
++		cur += GIT_SHA1_RAWSZ;
++		remain -= GIT_SHA1_RAWSZ;
 +
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		const char *path = p->one->path;
-+		struct pathmap_entry *entry;
-+		struct hashmap_entry lookup;
++		ewah = ewah_new();
++		len = ewah_read_mmap(ewah, cur, remain);
++		if (len < 0) {
++			ewah_free(ewah);
++			goto out;
++		}
 +
-+		hashmap_entry_init(&lookup, strhash(path));
-+		entry = hashmap_get(data->paths, &lookup, path);
-+		if (entry)
-+			continue; /* already present */
++		printf("%s\n", oid_to_hex(&oid));
++		ewah_each_bit(ewah, show_path, paths);
 +
-+		FLEX_ALLOC_STR(entry, path, path);
-+		entry->ent = lookup;
-+		hashmap_put(data->paths, entry);
-+	}
-+}
-+
-+/* assign a bit position to all possible paths */
-+static void collect_paths(struct hashmap *paths)
-+{
-+	struct pathmap_entry **sorted;
-+	size_t i, n;
-+	struct hashmap_iter iter;
-+	struct pathmap_entry *entry;
-+
-+	/* grab all unique paths */
-+	hashmap_init(paths, pathmap_entry_hashcmp, NULL, 0);
-+	walk_paths(collect_commit_paths, paths);
-+
-+	/* and assign them bits in sorted order */
-+	n = hashmap_get_size(paths);
-+	ALLOC_ARRAY(sorted, n);
-+	i = 0;
-+	for (entry = hashmap_iter_first(paths, &iter);
-+	     entry;
-+	     entry = hashmap_iter_next(&iter)) {
-+		assert(i < n);
-+		sorted[i++] = entry;
-+	}
-+	QSORT(sorted, i, pathmap_entry_strcmp);
-+	for (i = 0; i < n; i++)
-+		sorted[i]->pos = i;
-+	free(sorted);
-+}
-+
-+/* generate the bitmap for a single commit */
-+static void generate_bitmap(struct diff_queue_struct *q,
-+			    struct diff_options *opts,
-+			    void *vdata)
-+{
-+	struct walk_paths_data *data = vdata;
-+	struct bitmap *bitmap = bitmap_new();
-+	struct ewah_bitmap *ewah;
-+	struct strbuf out = STRBUF_INIT;
-+	size_t i;
-+
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		const char *path = p->one->path;
-+		struct pathmap_entry *entry;
-+		struct hashmap_entry lookup;
-+
-+		hashmap_entry_init(&lookup, strhash(path));
-+		entry = hashmap_get(data->paths, &lookup, path);
-+		if (!entry)
-+			BUG("mysterious path appeared: %s", path);
-+
-+		bitmap_set(bitmap, entry->pos);
++		ewah_free(ewah);
++		cur += len;
++		remain -= len;
 +	}
 +
-+	ewah = bitmap_to_ewah(bitmap);
-+	ewah_serialize_strbuf(ewah, &out);
-+	fwrite(out.buf, 1, out.len, stdout);
-+
-+	trace_printf("bitmap %s %u %u",
-+		     oid_to_hex(&data->commit->object.oid),
-+		     (unsigned)q->nr,
-+		     (unsigned)out.len);
-+
-+	strbuf_release(&out);
-+	ewah_free(ewah);
-+	bitmap_free(bitmap);
++out:
++	free(paths);
++	strbuf_release(&in);
 +}
 +
 +int cmd_main(int argc, const char **argv)
 +{
-+	struct hashmap paths;
++	const char *usage_msg = "test-tree-bitmap <gen|dump>";
 +
-+	setup_git_directory();
-+	collect_paths(&paths);
-+
-+	walk_paths(generate_bitmap, &paths);
-+
-+	return 0;
-+}
++	if (!argv[1])
++		usage(usage_msg);
++	else if (!strcmp(argv[1], "gen"))
++		do_gen();
++	else if (!strcmp(argv[1], "dump"))
++		do_dump();
++	else
++		usage(usage_msg);
+ 
+ 	return 0;
+ }
 -- 
 2.19.1.550.g7610f1eecb
 
