@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C2501F97E
-	for <e@80x24.org>; Tue,  9 Oct 2018 19:35:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF6971F97E
+	for <e@80x24.org>; Tue,  9 Oct 2018 19:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727635AbeJJCxu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Oct 2018 22:53:50 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45834 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727365AbeJJCxt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Oct 2018 22:53:49 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q5-v6so3078852wrw.12
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 12:35:18 -0700 (PDT)
+        id S1727686AbeJJCxv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Oct 2018 22:53:51 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44063 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726607AbeJJCxv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Oct 2018 22:53:51 -0400
+Received: by mail-wr1-f67.google.com with SMTP id 63-v6so3082036wra.11
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 12:35:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BrYg18aC4qSavPIhHK6aGXOPkakGhmtIS5bR4onhJts=;
-        b=dqAGvRNjHIB8lCm65mub7LAIgwbZFa+sbsmFsU/Ajam20oszrlvBtNutSJiE7XtQ2P
-         lISU9yNHnhQx3ZHZeB0Q0Mz073xGtm4aJM5wXnKu+Nn9gGPrw0Ij0ouYbgHM0xu8avpk
-         pSAA8dR+b6ZJDX72IFgafhCQEKGMaHFvIVmEVEcBfizFg756c1fSQfjDkMDhadHSQZ5E
-         MnR2E9oZ66M4LJh0Jox6xeWsvycCA4yDRVepVnQP9aP5/YjDU6PzUM3l6bnsZhCm8H2b
-         jT4wJDQih8LMcNBF8buofmG16LGoscsLcWD682jkEVqWbaTd+C90zV9lI+YoL41gNu1V
-         vhJQ==
+        bh=iVJcHum4GPzV9FkwKAa60v7gfpwY9N/vdrhDr9mbPvc=;
+        b=KBGRxWFQYtm24UFNhliHT+k930BR35rbQsA2sj7YFU/io0VBRtQoO9/EFEglNNF7TX
+         MfKQTCE6QbRvYSyo4uAhMuhvSTWacM7SO30afeOxtCI40ph32ky7xMR96kfVB9EiRkn7
+         ufGgA3fzUW8Ns1RpOrOH8UBO3KXgsum+mJs4ggeTXkX9hajqzZblEAQnpcehX0XhnDtL
+         phoIIyuF2Ao0hVHE0qEkkcvpEFHQ9vilCdAN38mdf2g9Cco3HaXhPW5h4c510hQOb6QU
+         9Topg20NSDkEhpx+BxvusoVmJvbLiw7B8ZM7UwsC98CYrNfXrWG0D+JR9UwwrWiD4B57
+         +TPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BrYg18aC4qSavPIhHK6aGXOPkakGhmtIS5bR4onhJts=;
-        b=hrdSlO9UqG1aB3fRnmOav8wsHTAY1dKArFMWtiNrvTi7vY//mvNWNdehkHJDNo12mo
-         4JdjsVqW2bphO7ODAlgSPzPY9t9Lg1UVJ8sIDckWv9NjzmNfbnDP0Z6aweJU2IBmWHCI
-         YZMyr7lE/XFk5ryMu9MHxA62vrEwyOjwdW1lzCGBsPZNgTP7fHSDANWsT230hiLcvcSh
-         9ifJp/jGwqCAQTDB77EV5ao6kWay4xeXb/DBZ/XsxxCMAbTHtCb8ChU4Eqo0ViD4EhWD
-         Pngw5Ob5YqGVKVzBgSp+bF2b5U+VWS1G7sR74wa239zFK5YGgKd9LvXqlbTSs65wL0/K
-         QQLg==
-X-Gm-Message-State: ABuFfoh4Y/pmmH21U1JvTMCPnB7UTuwY2XwGw/l1XsuzBDW35AQ001y5
-        hVgl7YkSr3VR84f63TeNWN+DC96R
-X-Google-Smtp-Source: ACcGV61WeCZcwkqIihlEM7zlyztelOoRUZ9e8P8VbYk9AQYpHdOUFVNUpX/QKmbKerSN9w3H2os+kA==
-X-Received: by 2002:a05:6000:12c5:: with SMTP id l5mr20564619wrx.215.1539113716967;
-        Tue, 09 Oct 2018 12:35:16 -0700 (PDT)
+        bh=iVJcHum4GPzV9FkwKAa60v7gfpwY9N/vdrhDr9mbPvc=;
+        b=kel6WnZstVAqGRwbOMLKZ5duh0Ay5w0+4VTv75tpHCwPtCk7oPpev1BGWK285dvPqX
+         FQSWf8ut5OfIch6v9MyhKD/C0iN3yA3cQyfJWAMwoxQAbEtRfmZJy2VjQ+YOGXNnxV71
+         KOYdfNq1mQM28a7z7rjLvgd7lKjxzsDry2hwPNO5FVY4HrB/OwZcgzI1UjxCGzJvDHv6
+         SIOooceHvzLS+Nn9IoUGxxkqfcBKaeGlHywgv9j8s0dbS01VZhQSdsxiKkobAhPa0UyL
+         YTPSV3/1r7DJudHNNCK+GGhgt5UxHTUiu47kuSpDEclPgU3F4PJYEgYqK4+2/lfZhLw0
+         D/hQ==
+X-Gm-Message-State: ABuFfojwtxvSaqtcDVMlIQP7KHj5taTvEIseTrIMuXyBIjtP7sbQfzcT
+        FA5IiSeJtYv0OkFu6wgavmg+kFJQ
+X-Google-Smtp-Source: ACcGV60If2eYURwZSlPDiFvGO2IqidUYEpufWS0uzwSU/1BAx2FefKs188FQdKcXnT9juyeNantnNA==
+X-Received: by 2002:adf:c594:: with SMTP id m20-v6mr21120970wrg.30.1539113718690;
+        Tue, 09 Oct 2018 12:35:18 -0700 (PDT)
 Received: from localhost.localdomain (x4dbd5132.dyn.telefonica.de. [77.189.81.50])
-        by smtp.gmail.com with ESMTPSA id e6-v6sm18823117wrc.70.2018.10.09.12.35.15
+        by smtp.gmail.com with ESMTPSA id e6-v6sm18823117wrc.70.2018.10.09.12.35.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 09 Oct 2018 12:35:16 -0700 (PDT)
+        Tue, 09 Oct 2018 12:35:17 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
         Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/4] revision.c: use the Bloom filter to speed up path-limited revision walks
-Date:   Tue,  9 Oct 2018 21:34:44 +0200
-Message-Id: <20181009193445.21908-4-szeder.dev@gmail.com>
+Subject: [PATCH 4/4] revision.c: add GIT_TRACE_BLOOM_FILTER for a bit of statistics
+Date:   Tue,  9 Oct 2018 21:34:45 +0200
+Message-Id: <20181009193445.21908-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.1.409.g0a0ee5eb6b
 In-Reply-To: <20181009193445.21908-1-szeder.dev@gmail.com>
 References: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
@@ -71,176 +71,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When $GIT_USE_POC_BLOOM_FILTER is set to a non-empty value, the
-revision walk will use the Bloom filter to speed up a path-limited
-revision walk.
+It will output something like this:
 
-Load the Bloom filter in prepare_revision_walk(); probably not the
-best place for it, but it should suffice for experiementing with 'git
-rev-list'.
-
-Checking the Bloom filter is plugged into rev_compare_tree(), the
-function that compares the given paths in a commit to one of its
-parents.  If checking the Bloom filter returns that the interesting
-paths did not change, then it won't bother with the running the
-expensive diff.
-
-Add a new field to 'struct pathspec' to hold the SHA of the path, so
-that hash is computed only once and then reused when checking each
-commit.
+  $ GIT_TRACE_BLOOM_FILTER=2 GIT_USE_POC_BLOOM_FILTER=y git rev-list --count --full-history HEAD -- t/valgrind/valgrind.sh
+  886
+  17:24:42.915053 revision.c:484          bloom filter total queries: 66095 definitely not: 64953 maybe: 1142 false positives: 256 fp ratio: 0.003873
 ---
- pathspec.h |  1 +
- revision.c | 97 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 98 insertions(+)
+ revision.c | 34 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/pathspec.h b/pathspec.h
-index a6525a6551..565a26d91e 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -47,6 +47,7 @@ struct pathspec {
- 			} match_mode;
- 		} *attr_match;
- 		struct attr_check *attr_check;
-+		unsigned char name_hash[GIT_MAX_RAWSZ];
- 	} *items;
- };
- 
 diff --git a/revision.c b/revision.c
-index c5d0cb6599..3565785ca6 100644
+index 3565785ca6..2f3f73b4dd 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -27,6 +27,7 @@
- #include "commit-reach.h"
- #include "commit-graph.h"
- #include "prio-queue.h"
-+#include "bloom-filter.h"
+@@ -467,6 +467,25 @@ static void file_change(struct diff_options *options,
+ /* Another static... */
+ static struct bloom_filter bf;
  
- volatile show_early_output_fn_t show_early_output;
- 
-@@ -463,6 +464,62 @@ static void file_change(struct diff_options *options,
- 	options->flags.has_changes = 1;
- }
- 
-+/* Another static... */
-+static struct bloom_filter bf;
++static struct trace_key trace_bloom_filter = TRACE_KEY_INIT(BLOOM_FILTER);
++static int trace_bloom_filter_atexit_registered;
++static unsigned int bloom_filter_count_maybe;
++static unsigned int bloom_filter_count_definitely_not;
++static unsigned int bloom_filter_count_false_positive;
 +
-+static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
-+						 struct commit *parent,
-+						 struct commit *commit)
++static void print_bloom_filter_stats_atexit(void)
 +{
-+	unsigned char p_c_hash[GIT_MAX_RAWSZ];
-+	int i;
-+
-+	if (!bf.bits)
-+		return -1;
-+	/*
-+	 * If a commit is not in the 'commit-graph' file, then it's not in
-+	 * the Bloom filter either, so any query into that would report
-+	 * back a false negative, which is unacceptable.
-+	 *
-+	 * The writer of the Bloom filter must ensure that all commits that
-+	 * go into the 'commit-graph' go into the Bloom filter as well.
-+	 *
-+	 * If we won't tie the Bloom filter to the commit-graph tightly,
-+	 * then we'll have to come up with another means to prevent such
-+	 * false negatives.
-+	 */
-+	if (!the_repository->objects->commit_graph)
-+		return -1;
-+	if (commit->generation == GENERATION_NUMBER_INFINITY)
-+		return -1;
-+
-+	hashxor(parent->object.oid.hash, commit->object.oid.hash, p_c_hash);
-+
-+	for (i = 0; i < revs->pruning.pathspec.nr; i++) {
-+		struct pathspec_item *pi = &revs->pruning.pathspec.items[i];
-+		unsigned char hash[GIT_MAX_RAWSZ];
-+
-+		hashxor(pi->name_hash, p_c_hash, hash);
-+		if (bloom_filter_check_hash(&bf, hash)) {
-+			/*
-+			 * At least one of the interesting pathspecs differs,
-+			 * so we can return early and let the diff machinery
-+			 * make sure that they indeed differ.
-+			 *
-+			 * Note: the diff machinery will look at all the given
-+			 * paths; a possible future optimization might bring
-+			 * the Bloom filter and the diff machinery closer to
-+			 * each other, so the diff won't waste time looking
-+			 * at those paths that the Bloom filter have found
-+			 * unchanged.
-+			 */
-+			return 1;
-+		}
-+	}
-+
-+	return 0;
++	unsigned int total = bloom_filter_count_maybe +
++			     bloom_filter_count_definitely_not;
++	trace_printf_key(&trace_bloom_filter,
++			 "bloom filter total queries: %d definitely not: %d maybe: %d false positives: %d fp ratio: %f\n",
++			 total,
++			 bloom_filter_count_definitely_not,
++			 bloom_filter_count_maybe,
++			 bloom_filter_count_false_positive,
++			 (1.0 * bloom_filter_count_false_positive) / total);
 +}
 +
- static int rev_compare_tree(struct rev_info *revs,
- 			    struct commit *parent, struct commit *commit)
- {
-@@ -492,6 +549,9 @@ static int rev_compare_tree(struct rev_info *revs,
- 			return REV_TREE_SAME;
+ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
+ 						 struct commit *parent,
+ 						 struct commit *commit)
+@@ -513,10 +532,12 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
+ 			 * at those paths that the Bloom filter have found
+ 			 * unchanged.
+ 			 */
++			bloom_filter_count_maybe++;
+ 			return 1;
+ 		}
  	}
  
-+	if (!check_maybe_different_in_bloom_filter(revs, parent, commit))
-+		return REV_TREE_SAME;
-+
- 	tree_difference = REV_TREE_SAME;
- 	revs->pruning.flags.has_changes = 0;
- 	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
-@@ -3106,6 +3166,40 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
- 	}
- }
- 
-+void prepare_to_use_bloom_filter(struct rev_info *revs)
-+{
-+	const char *env = getenv("GIT_USE_POC_BLOOM_FILTER");
-+	int i;
-+
-+	if (!env || !*env)
-+		return;
-+
-+	for (i = 0; i < revs->pruning.pathspec.nr; i++) {
-+		struct pathspec_item *pi = &revs->pruning.pathspec.items[i];
-+		const char *path = pi->match;
-+		git_hash_ctx ctx;
-+		size_t len = strlen(path);
-+
-+		/*
-+		 * TODO: What about wildcards?  We'd probably just want to
-+		 * ignore the Bloom filter then.
-+		 */
-+		the_hash_algo->init_fn(&ctx);
-+		the_hash_algo->update_fn(&ctx, path,
-+					 path[len - 1] == '/' ? len - 1 : len);
-+		the_hash_algo->final_fn(pi->name_hash, &ctx);
-+	}
-+
-+	if (bf.bits)
-+		/* Already loaded. */
-+		return;
-+
-+	if (bloom_filter_load(&bf) < 0) {
-+		warning("you wanted to use the Bloom filter, but it couldn't be loaded");
-+		return;
-+	}
-+}
-+
- int prepare_revision_walk(struct rev_info *revs)
- {
- 	int i;
-@@ -3155,6 +3249,9 @@ int prepare_revision_walk(struct rev_info *revs)
- 		simplify_merges(revs);
- 	if (revs->children.name)
- 		set_children(revs);
-+
-+	prepare_to_use_bloom_filter(revs);
-+
++	bloom_filter_count_definitely_not++;
  	return 0;
  }
  
+@@ -525,6 +546,7 @@ static int rev_compare_tree(struct rev_info *revs,
+ {
+ 	struct tree *t1 = get_commit_tree(parent);
+ 	struct tree *t2 = get_commit_tree(commit);
++	int bloom_ret;
+ 
+ 	if (!t1)
+ 		return REV_TREE_NEW;
+@@ -549,7 +571,8 @@ static int rev_compare_tree(struct rev_info *revs,
+ 			return REV_TREE_SAME;
+ 	}
+ 
+-	if (!check_maybe_different_in_bloom_filter(revs, parent, commit))
++	bloom_ret = check_maybe_different_in_bloom_filter(revs, parent, commit);
++	if (bloom_ret == 0)
+ 		return REV_TREE_SAME;
+ 
+ 	tree_difference = REV_TREE_SAME;
+@@ -557,6 +580,8 @@ static int rev_compare_tree(struct rev_info *revs,
+ 	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
+ 			   &revs->pruning) < 0)
+ 		return REV_TREE_DIFFERENT;
++	if (bloom_ret == 1 && tree_difference == REV_TREE_SAME)
++		bloom_filter_count_false_positive++;
+ 	return tree_difference;
+ }
+ 
+@@ -3198,6 +3223,13 @@ void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 		warning("you wanted to use the Bloom filter, but it couldn't be loaded");
+ 		return;
+ 	}
++
++	if (trace_want(&trace_bloom_filter)) {
++		if (!trace_bloom_filter_atexit_registered) {
++			atexit(print_bloom_filter_stats_atexit);
++			trace_bloom_filter_atexit_registered = 1;
++		}
++	}
+ }
+ 
+ int prepare_revision_walk(struct rev_info *revs)
 -- 
 2.19.1.409.g0a0ee5eb6b
 
