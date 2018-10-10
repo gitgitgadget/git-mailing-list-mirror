@@ -8,102 +8,76 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C29F01F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 12:43:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF341F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 12:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726656AbeJJUFD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 16:05:03 -0400
-Received: from mail-qt1-f174.google.com ([209.85.160.174]:34296 "EHLO
-        mail-qt1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726562AbeJJUFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 16:05:03 -0400
-Received: by mail-qt1-f174.google.com with SMTP id o17-v6so5421969qtr.1
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 05:43:03 -0700 (PDT)
+        id S1726617AbeJJUNv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 16:13:51 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54964 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726573AbeJJUNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 16:13:51 -0400
+Received: by mail-wm1-f67.google.com with SMTP id r63-v6so5352014wma.4
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 05:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=S87/ubb9MwSqsZKl+AFNRq8ZOQLla4MK26u7ibS5mxo=;
-        b=rbgiJSPi5yRYgJfhJddIoYI4WVaR9FeZPuIOTXx0gfQ8ab4ZjLcNMD6OyDModhQpuy
-         23NPAKc3ZMLVqYehHYt4Bc4ee1oR08CJJzaDOOvQ5k7QGStAoDiJegovIjR+mtzsEAhS
-         mMplDo42niati1PZzSwYGkEjch2Sk99MjQh1CMNXk9bBpPcGt4FTfYF3/Cne8XYgw5aG
-         +SB6CcOV9rii9YscntfzOSpz9cxlqQH3EXZ8qsDEV0zwRE5HLZZcLaNQNwZgpzHEhjy6
-         nsnH4wkq7/2Huf/roZIGUeEzwM+4R0H3gEXKHla5FbYU2D8py5VMA7P512r13qYKB7Pa
-         nMRg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=j5C6RD7j5xe0NxxYeMsTHqjQe/C8YrlLSldn1adb0Mo=;
+        b=Boy50830NvvCirXKzG0HU9edk60qiBotMIiDmpsZZynEqSfUAJg9xMR675xb/VArOl
+         d3GBpiTdPW8zXv4PTniMQ2YxwPOiPgDmjzLHPK4grLO0gXSWcNiO3gWPfxPEdbgW5gtQ
+         P5nrz2X9bv1d6B6gvQGyjIuTO3fFXNiI5TFogoYC6bQaR/FfUQtn+HGbiQyNnJXxTEbI
+         H4ZWYZnfX/un5D4rVl8qgZXyLemnU4msfErWJ6yitbdC/Ho22U9aGzahzQKwORobNpAz
+         n+eisvXn50Xvb8cRzURCebjmTNThZB1y1j7MW68urrK6jqcLQG3JQSSiEKMltCpNmPrO
+         uP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=S87/ubb9MwSqsZKl+AFNRq8ZOQLla4MK26u7ibS5mxo=;
-        b=PEEEWa1JVsSwex2XD4WmbVP4vyZ0Qq28ZDuqa3YCYpxw7Nke3kPyVCe8HNWNO1ZAXU
-         N+bnHbBM84ZLRT3UwI91Cr7N6g5GbOFQX8VDF5NeWn4dCn0atVV69RKVu0JECLs+vtCW
-         7/ewCJXzjJmqgbmFLg0xahoDKS7S+BiyfxJ1ka4wsqLsILWd8RpPwb45z+ZwSkrq+oPx
-         c6xGqt7RFkuOt19JAtdlX9pCiUt5SVC5NOoJaIdpVhWlvIEZPqjLtjlKTMwJ/xE+ayHA
-         ltseDMm9exrmGEAzPlKfRZcev6vyrocwf1k6UMgoRdFD5Dv8eSjwOAVAZ83PCH+zn9Co
-         M6fA==
-X-Gm-Message-State: ABuFfohDRy9dCR7Pl0Ls1uA3h5Sj49WUqsL0p1ngHH0hTnjTQLXNqBfe
-        3Di0vE/+4uLpoPUaPaO7XMnsBFXFLnIDYNY/qKg=
-X-Google-Smtp-Source: ACcGV60fbrcBpK69zs47ztv2WIKsinFn9GXr3SLI9uqyrYlToJQ265007N9+bo7twLMRq5djI9KDsiVgERhP3urcxiI=
-X-Received: by 2002:a0c:f9ce:: with SMTP id j14-v6mr26541761qvo.177.1539175382459;
- Wed, 10 Oct 2018 05:43:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=j5C6RD7j5xe0NxxYeMsTHqjQe/C8YrlLSldn1adb0Mo=;
+        b=jujWyNiLkTD+XlCd6PxQcWSwDdTKHeUQPcaacBCH4g9/Ft1GWdb2C06nlPn3VfSx1H
+         1y/4aFLrjmbkwztrpQlqnLBmn7z2XuKBX3GE25tQ6yCjJkDQ4FT4FWcLLWAsPTDJ3UUv
+         QLsAUuYW/eBW5/fYU2Dqr0mbjRRfgjCAnoR0p826eO11MnGHxncjlt9O1ndoQZLKzXwq
+         EoeUyfaN38HvegoP5NZwjFtAtxICQT3DIl+8REmy89q0X4E4NmCCsYvQFth8fcgj+430
+         JwpkJ4sTsibbYtDRVyJTrgq+5TGy+uVz2Q7ZzaIwCK53KRYbQCMiM9BLGLo6MWeZ7iII
+         d5UQ==
+X-Gm-Message-State: ABuFfoj+nskAPv1QfhiCfrXCft2TIVtuBl63NLZ6ymnb01MYUHr6IxrV
+        V5YYlgJvCAwPNY2zJXM2Fy8=
+X-Google-Smtp-Source: ACcGV60CtEROywz7M2iTfuplAafhf/aQwTq+YBmdDP+znIsCygEbzNfw00khOXuB2+n42qNlMPXnhg==
+X-Received: by 2002:a1c:cfcb:: with SMTP id f194-v6mr764497wmg.98.1539175906991;
+        Wed, 10 Oct 2018 05:51:46 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id q16-v6sm19072602wrn.41.2018.10.10.05.51.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 05:51:46 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Cc:     git@vger.kernel.org, Joe Perches <joe@perches.com>
+Subject: Re: [PATCH 3/3] send-email: also pick up cc addresses from -by trailers
+References: <20181010111351.5045-1-rv@rasmusvillemoes.dk> <20181010111351.5045-4-rv@rasmusvillemoes.dk>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181010111351.5045-4-rv@rasmusvillemoes.dk>
+Date:   Wed, 10 Oct 2018 14:51:45 +0200
+Message-ID: <8736teezha.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAOO0rQKZ6rgH136oOhQ+LCgptv-RfKXMpTTrC86EUExABgg-Lg@mail.gmail.com>
- <87bm82fcmm.fsf@evledraar.gmail.com> <87a7nmf9zj.fsf@evledraar.gmail.com> <CAOO0rQ+3BPydQUaY67REd3-W9co-92DYa=TAUaGurN+QQUvSwg@mail.gmail.com>
-In-Reply-To: <CAOO0rQ+3BPydQUaY67REd3-W9co-92DYa=TAUaGurN+QQUvSwg@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 10 Oct 2018 14:42:50 +0200
-Message-ID: <CACBZZX5OvhzYS9SteA-PAqDA_WCDy-hfJmXJG8w5+brQfa8RyQ@mail.gmail.com>
-Subject: Re: Translation to Portuguese
-To:     Thiago Saife <tsaiferodrigues@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 10, 2018 at 2:41 PM Thiago Saife <tsaiferodrigues@gmail.com> wr=
-ote:
->
-> Hi Avar.
->
-> What it means? I should not continue the translation? Because
-> Brazilian Portuguese states as Translations started for, but it's not
-> finished yet.
 
-I misunderstood and thought you meant the translation of the git program it=
-self.
+On Wed, Oct 10 2018, Rasmus Villemoes wrote:
 
-I don't know what book you mean or how it's translated, sorry.
+> -				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+> +				next if $suppress_cc{'sob'} and $what =~ /^Signed-off-by$/i;
+> +				next if $suppress_cc{'misc-by'}
+> +					and $what =~ /-by$/i and $what !~ /^Signed-off-by$/i;
+>  				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
 
-> On Wed, Oct 10, 2018 at 6:04 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> >
-> > On Wed, Oct 10 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> > > On Mon, Oct 08 2018, Thiago Saife wrote:
-> > >
-> > >> Hello Git Team.
-> > >>
-> > >> I would like to help to continue the books' translation to Brazilian
-> > >> Portuguese and I don't know how to proceed. Thanks in advance for yo=
-ur
-> > >> help.
-> > >
-> > > That would be great. Have you seen
-> > > https://github.com/git/git/blob/master/po/README ? It describes how t=
-o
-> > > create a new language. Also CC-ing the l10n coordinator, Jiang.
-> >
-> > It has been pointed out to me off-list (thanks) that I missed the part
-> > where you mention a 'book', and we already have a Portugese translation
-> > of Git. Sorry!
->
->
->
-> --
-> Thiago Saife
-> (11) 97236-8742
+Looks good, FWIW I was curious if this could be:
+
+    next if $suppress_cc{'misc-by'} and $what =~ /(?<!^Signed-off)-by$/;
+
+But found that as soon as you add a /i Perl will barf on it, and in any
+case makes sense to be less clever about regex features.
