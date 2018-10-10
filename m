@@ -7,48 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 948A31F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 21:50:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 009BE1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 21:50:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbeJKFOR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:14:17 -0400
-Received: from mail-io1-f73.google.com ([209.85.166.73]:49742 "EHLO
-        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbeJKFOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:14:16 -0400
-Received: by mail-io1-f73.google.com with SMTP id k9-v6so5936099iob.16
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:50:11 -0700 (PDT)
+        id S1726007AbeJKFOT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:14:19 -0400
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:35158 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725856AbeJKFOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:14:19 -0400
+Received: by mail-yw1-f74.google.com with SMTP id i20-v6so3781789ywe.2
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=SSWU8JIO5zVEtT0irrT6kLsYafvZPj1GZu9a1fHhw1A=;
-        b=mK1jC4gCP3tYBpA9lNhDsPpDXwoaC2ZwkFujZkzF2tnXIP5DajgljzqpdBzZrFCDAy
-         FiOB7zSYvA8Ve3/U2Fyq+eAN/Az+ZzHoSF38W2L6WPWW+cZ+Bx36ZyaJvXeuLiXTSfyz
-         iu2QFlB/DaftVKPYZlpwS1IzOASl5bRDXX1m5cTeX645KmbVdEZbkytjKEkyjZBzHIH+
-         TM7cxSh5gvdQeSDTcATeDBNeuyz2mS3G+UDL/56x4YwLJ2c0K+hvl1cOv9B+sMF0oZpJ
-         z5rbhVvxsK3o5fM13KEq2aobjKT2tdVFmn1GOqrHJeiYTarZmzMfA8vzTk3Dml/UxTjz
-         beEw==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=1iXIDOW89tjebeBqF/Oz1JJUe+ARiDAxPsK7dMrUv6o=;
+        b=tL2z01TC/pgOV4o9+X1qB7QmFTDEtVcV4Q1bXakLRLMOpHWiCVGRYdSa566sxxYe4u
+         Rq0zsuDIILWExCuY7dWVbUdDlXE0uj5h0nheka3DRvGx++lXGcMOa+SBrS0BkycEaY30
+         CpiIYIySa/52oHg7GXvu7rDDCqCiAjoT4LddzmFhrLNShc7zpmp7NAk96eUxQX1tdGq6
+         HAkmQfPgfTFP15UCSD3LQmScbW596ZpPNNjNam6HwD/NWtB2dqL2hiog3q9a1AUSr0PV
+         UKafO7fi3o8kjhL8uLaryyHUDWQ/RPtpOdQSWvkDlpJ6JratLE0O5Y1ohEPv+qfY1Drj
+         BJFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=SSWU8JIO5zVEtT0irrT6kLsYafvZPj1GZu9a1fHhw1A=;
-        b=HimgqtGJ9AvmZYSb6Kb9t/hKD3DDc4qWDk8R/don2n4b7sVyBJvBcd0oWsYTqMblTc
-         6tvkqhreAK9GL1e06kk8eUnD71PnL59MoV+rzjCVDWX9RKpfobCrNSA1lUHT/vgmt/uv
-         H5cU2ijYdmvDU8JvcXkojsWQBzNg4VsEZd1JQNHlS3/x5uEZrblZTh7ubleFmjIY4i+v
-         WPkjfaiQ9HDUNSGXb2hSthzYp/3af+QJl3lgpIdwLK6KWRkcAYAQtW9fJkgmOOdZE1rr
-         iHg49Hs/PUdlWm/wNI7jYA4JVqAH18Bwg7/zC11s7ALs3i1cxQdllZsbyIFH3/9f0RFz
-         AFJA==
-X-Gm-Message-State: ABuFfogb4JvroS4jzvD4B4NiqnPmOYB/mHHzUPXAyf5XstYFYNcVqqh/
-        uV7Xfsx+niovmzJBcnr8HEhrTPB3Hx/PQq1zShJ5JkQHGRVhN+HUlv0H47sukDXG1g9CmwNZxbA
-        SlueAULNHNlzbGearaClr5gxhUfUX10WEc4+XzrhXXXTis9Rn2He8rQ578uEM
-X-Google-Smtp-Source: ACcGV63rj8t9WPCjMxmdHyu8MQIXKqW4k6T48mEA30VVz89+QGvt+wLZyOjFojxyXjYN3EwJ91vfwbU1yHGw
-X-Received: by 2002:a24:dd45:: with SMTP id t66-v6mr2277248itf.5.1539208211265;
- Wed, 10 Oct 2018 14:50:11 -0700 (PDT)
-Date:   Wed, 10 Oct 2018 14:49:59 -0700
-Message-Id: <20181010215008.233529-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=1iXIDOW89tjebeBqF/Oz1JJUe+ARiDAxPsK7dMrUv6o=;
+        b=Y218qlzDpNXESY04+o9eD3FWf8tIzv/PQoWcOJJ3/OPQvylYsdtWuVUH+w1b41ZxMg
+         E67jIe0ElWFvmHS2Uc6AZvQCEjxOEk41t6HieDxAUkMjqX9WKn+APePAVyr1y2IfZ6+l
+         n28rcdOv/63YY3t/0ngwqyhIwJTNU6BcOMwzVZ8YEH3MrprHhzs3Gdvva90l/acyhAoP
+         aW6VR6CQl7hcqV9nbNtT43Hzj8RZ5tcnDjZ6aWVS0/6vKUyZp0/+gvtuWGy79dhMr9rA
+         HxYFhsbCHeXysZqrSJmcnWOjD0OJfBXzAhWjHaofWLJXY3dYzL4NHERKkDjtLh6DTpfW
+         M8xA==
+X-Gm-Message-State: ABuFfohHXNHDi+9UmUsgn4ib/+BlFdCpvLzXmj6C7f8Dno72WC66imDT
+        y6tBRY67f0K3nGWwK+jc7s4ddsxB0iRjRJzJx/wC5iRW3/FCAqHZA5Swk+kHlcJYkltsM3Jpo+/
+        gcewkZK9lJ6a59c2+1v3bpZykQGKzKvS9F1vTVn5wCONK/smJ7YxkAZjK41sz
+X-Google-Smtp-Source: ACcGV62Vg4lCM+hdWWy+HwLUCkgEouLhPsfg3wGnEj1wLUPWp5dzYEWKGXhFy26CLBzAMXHb2kR52Yar2Oac
+X-Received: by 2002:a25:1286:: with SMTP id 128-v6mr17493997ybs.30.1539208213800;
+ Wed, 10 Oct 2018 14:50:13 -0700 (PDT)
+Date:   Wed, 10 Oct 2018 14:50:00 -0700
+In-Reply-To: <20181010215008.233529-1-sbeller@google.com>
+Message-Id: <20181010215008.233529-2-sbeller@google.com>
 Mime-Version: 1.0
+References: <20181010215008.233529-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH v5 0/9] fetch: make sure submodule oids are fetched
+Subject: [PATCH v5 1/9] sha1-array: provide oid_array_filter
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -58,38 +62,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is nearly the same as sent in [1], with one commit message fixed.
-[1] https://public-inbox.org/git/20180925194755.105578-1-sbeller@google.com/
-and replaces sb/submodule-recursive-fetch-gets-the-tip.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/technical/api-oid-array.txt |  5 +++++
+ sha1-array.c                              | 17 +++++++++++++++++
+ sha1-array.h                              |  3 +++
+ 3 files changed, 25 insertions(+)
 
-Thanks,
-Stefan
-
-Stefan Beller (9):
-  sha1-array: provide oid_array_filter
-  submodule.c: fix indentation
-  submodule.c: sort changed_submodule_names before searching it
-  submodule.c: move global changed_submodule_names into fetch submodule
-    struct
-  submodule.c: do not copy around submodule list
-  repository: repo_submodule_init to take a submodule struct
-  submodule: fetch in submodules git directory instead of in worktree
-  fetch: retry fetching submodules if needed objects were not fetched
-  builtin/fetch: check for submodule updates for non branch fetches
-
- Documentation/technical/api-oid-array.txt |   5 +
- builtin/fetch.c                           |  14 +-
- builtin/grep.c                            |  17 +-
- builtin/ls-files.c                        |  12 +-
- builtin/submodule--helper.c               |   2 +-
- repository.c                              |  27 +--
- repository.h                              |  11 +-
- sha1-array.c                              |  17 ++
- sha1-array.h                              |   3 +
- submodule.c                               | 275 +++++++++++++++++-----
- t/t5526-fetch-submodules.sh               |  23 +-
- 11 files changed, 311 insertions(+), 95 deletions(-)
-
+diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
+index 9febfb1d52..c97428c2c3 100644
+--- a/Documentation/technical/api-oid-array.txt
++++ b/Documentation/technical/api-oid-array.txt
+@@ -48,6 +48,11 @@ Functions
+ 	is not sorted, this function has the side effect of sorting
+ 	it.
+ 
++`oid_array_filter`::
++	Apply the callback function `want` to each entry in the array,
++	retaining only the entries for which the function returns true.
++	Preserve the order of the entries that are retained.
++
+ Examples
+ --------
+ 
+diff --git a/sha1-array.c b/sha1-array.c
+index b94e0ec0f5..d922e94e3f 100644
+--- a/sha1-array.c
++++ b/sha1-array.c
+@@ -77,3 +77,20 @@ int oid_array_for_each_unique(struct oid_array *array,
+ 	}
+ 	return 0;
+ }
++
++void oid_array_filter(struct oid_array *array,
++		      for_each_oid_fn want,
++		      void *cb_data)
++{
++	unsigned nr = array->nr, src, dst;
++	struct object_id *oids = array->oid;
++
++	for (src = dst = 0; src < nr; src++) {
++		if (want(&oids[src], cb_data)) {
++			if (src != dst)
++				oidcpy(&oids[dst], &oids[src]);
++			dst++;
++		}
++	}
++	array->nr = dst;
++}
+diff --git a/sha1-array.h b/sha1-array.h
+index 232bf95017..55d016c4bf 100644
+--- a/sha1-array.h
++++ b/sha1-array.h
+@@ -22,5 +22,8 @@ int oid_array_for_each(struct oid_array *array,
+ int oid_array_for_each_unique(struct oid_array *array,
+ 			      for_each_oid_fn fn,
+ 			      void *data);
++void oid_array_filter(struct oid_array *array,
++		      for_each_oid_fn want,
++		      void *cbdata);
+ 
+ #endif /* SHA1_ARRAY_H */
 -- 
 2.19.0
 
