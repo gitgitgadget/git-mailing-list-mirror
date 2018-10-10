@@ -2,158 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32A2B1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 11:14:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 984A61F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 11:27:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726725AbeJJSfv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 14:35:51 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42518 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726607AbeJJSfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 14:35:51 -0400
-Received: by mail-ed1-f65.google.com with SMTP id b7-v6so4543712edd.9
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 04:14:10 -0700 (PDT)
+        id S1726721AbeJJSsx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 14:48:53 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:35718 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726503AbeJJSsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 14:48:53 -0400
+Received: by mail-wm1-f49.google.com with SMTP id e187-v6so5366073wmf.0
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 04:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LHkXNhIjpWezbfLp3zJ/9TZ53JCOgvmTw6ydBDf9F8Y=;
-        b=Cqbg7srp/Go/ciIV31xxlR+8G00yNxG+zevrM3yDte16JRrAN0YHhGTIt8n2xwvAG3
-         23UMBMh2Nznebkya3xJyxAWPoGEDYHU0QeWPGPp4L3PKkOjDfcSJAXKOCLUcKUlTEBDP
-         QQgm7hofZAwJFKDFUvMPHDKp5NBtcrvBE5q/M=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=kPhxuWipEp4ODLvmws0SdFK43K+nih4S5lMhlOZOxw0=;
+        b=KLcR3C9Ea0sAU+AbU85/sK/W9PBZBs02X0K5+CnNvy9ECWppL5UaeJP2Sh5oHENa5M
+         NFOgn++9M0eb+rkA2lQx0cBCDbyfWvY8N07s2H5S01kYPwVQ+RkF6DcAtEQT1HFw+5rm
+         tyV8mcKrScKj4M5YJC+scRTHUhHMD3az2cU0xVoq4vdNEg4HIN/TkP29Xn1X2KwyBqC1
+         qJxMzuO2Civ1vAz7fxu+z7+yNv0A89nPsnEQy8bGAdd6OvDroZ8SN+d/qN98MMJIvnUZ
+         fMqiXnNYK+HnHufZQk/HOfU4V91rmfbHHxFR6TlGZjICs4NqIHFD/u5TYgkafZg2m8yC
+         83Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LHkXNhIjpWezbfLp3zJ/9TZ53JCOgvmTw6ydBDf9F8Y=;
-        b=DzX906WQJRFTEbo4TA8k67WwQKgYsLBeBN5Hq2bLeL+tuRRKWBKCtv8CtahIWXTS4y
-         1nJo5gLmCEQRw3dz7+TJWmvzPmiVNQoXmbGhiReF4FMjGKVxJ3G5ZXzTmWiFElbCRFNl
-         ZMkE6AYFZABlqrFK/awJivqe365RJGPk/40lF6eeMEmLuZfBzN5dX+0cGKPO1fhO7Cj1
-         wd3mJq9WENU9Y65wSYeDedMjGAVLGQa8ol1LKVomgMtz2jGWycplCCqF5+1RFn36qLby
-         +99pZSOqLBzUZ9amw128FsP0SBYMQo8M3YIyaHenYj34JbLgNIIjf5qLYZcdr2/oSpkJ
-         Z1Iw==
-X-Gm-Message-State: ABuFfogcOoLC0gFtbLR4c80T6dI1/f5U5VHgzLyONJZJyZHWo4d2+DIh
-        GHM5Z1nfozVM9e1I0ntVGOBqW2hZHzU=
-X-Google-Smtp-Source: ACcGV60M/T3SIxO40rNgpGICxXtp85/gKCsciGAIvMKb70q8mSiLJDr0nrT9cjN9SqNiFpOTtMeQNw==
-X-Received: by 2002:a50:8d1b:: with SMTP id s27-v6mr41203656eds.107.1539170049512;
-        Wed, 10 Oct 2018 04:14:09 -0700 (PDT)
-Received: from prevas-ravi.vestasvisitor.net ([193.47.71.171])
-        by smtp.gmail.com with ESMTPSA id e10-v6sm4154596ejl.25.2018.10.10.04.14.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Oct 2018 04:14:08 -0700 (PDT)
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-To:     git@vger.kernel.org
-Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>,
-        Joe Perches <joe@perches.com>
-Subject: [PATCH 3/3] send-email: also pick up cc addresses from -by trailers
-Date:   Wed, 10 Oct 2018 13:13:51 +0200
-Message-Id: <20181010111351.5045-4-rv@rasmusvillemoes.dk>
-X-Mailer: git-send-email 2.19.1.6.g084f1d7761
-In-Reply-To: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
-References: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=kPhxuWipEp4ODLvmws0SdFK43K+nih4S5lMhlOZOxw0=;
+        b=akW9/bXdIIpLZH+yh7xuRKfSrMxewniKdZPiksBYIxtAoNHOMcEfTzVZBK2Z3/ANJ4
+         Gu+i/s7B9kfpL4vTDGr+jtgQqmUh2PG1kMRM/P+MubiGMDArXeC9Jpano08rw0PWSWIk
+         Zmwa/eqAJfmk9k94tg7kOKtGZzf3VCi+AR3xJ7da8+m4lV/zx69p3LLMSd+4EBcNclTD
+         4XmsmPr1AVVWrteruIa4fqZoEv+omRmscPtPgK9/NugHIGYr103HysMw6cEsNh8xxVcm
+         FQUXR02RTFWkezrDT89xRSQhfZq5psxOlGK2333c835fAc9NXlop8oaUnFECdf9ozSb+
+         +oLg==
+X-Gm-Message-State: ABuFfohvxQ9I4V/xIVTO3qqGlmjvNbV1DTOFviHgBbeSTD7rD6tjbBJJ
+        TyV/2udlD57bMa2j0qPZX3k=
+X-Google-Smtp-Source: ACcGV63y2aV4OMuA27ofYb694+0jf/U8cnLZQyi+2wXaGfrABGBGxTO1+O4njWKbZYBlVfFIrY8Y7w==
+X-Received: by 2002:a1c:af07:: with SMTP id y7-v6mr570721wme.33.1539170828390;
+        Wed, 10 Oct 2018 04:27:08 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id b5-v6sm18482562wrr.94.2018.10.10.04.27.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 04:27:07 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, e@80x24.org,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git svn clone/fetch hits issues with gc --auto
+References: <CACPiFCJZ83sqE7Gaj2pa12APkBF5tau-C6t4_GrXBWDwcMnJHg@mail.gmail.com>
+        <CACPiFCKQq--xrMf1nF=1MmC+eESE_aKms3yogoRwCY=YxcOWXA@mail.gmail.com>
+        <20181009234502.oxzfwirjcew2sxrm@dcvr>
+        <xmqqd0sims6s.fsf@gitster-ct.c.googlers.com>
+        <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com>
+Date:   Wed, 10 Oct 2018 13:27:06 +0200
+Message-ID: <878t36f3ed.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When rerolling a patch series, including various Reviewed-by etc. that
-may have come in, it is quite convenient to have git-send-email
-automatically cc those people.
 
-So pick up any *-by lines, with a new suppression category 'misc-by',
-but special-case Signed-off-by, since that already has its own
-suppression category. It seems natural to make 'misc-by' implied by
-'body'.
+On Wed, Oct 10 2018, Martin Langhoff wrote:
 
-Based-on-patch-by: Joe Perches <joe@perches.com>
-Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
----
- Documentation/git-send-email.txt |  5 ++++-
- git-send-email.perl              | 14 ++++++++------
- 2 files changed, 12 insertions(+), 7 deletions(-)
+> Looking around, Jonathan Tan's "[PATCH] gc: do not warn about too many
+> loose objects" makes sense to me.
+>
+> - remove unactionable warning
+> - as the warning is gone, no gc.log is produced
+> - subsequent gc runs don't exit due to gc.log
+>
+> My very humble +1 on that.
+>
+> As for downsides... if we have truly tons of _recent_ loose objects,
+> it'll ... take disk space? I'm fine with that.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index ea6ea512fe..f6010ac68b 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -329,8 +329,11 @@ Automating
-   patch body (commit message) except for self (use 'self' for that).
- - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
-   for self (use 'self' for that).
-+- 'misc-by' will avoid including anyone mentioned in Acked-by,
-+  Reviewed-by, Tested-by and other "-by" lines in the patch body,
-+  except Signed-off-by (use 'sob' for that).
- - 'cccmd' will avoid running the --cc-cmd.
--- 'body' is equivalent to 'sob' + 'bodycc'.
-+- 'body' is equivalent to 'sob' + 'bodycc' + 'misc-by'.
- - 'all' will suppress all auto cc values.
- --
- +
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 1916159d2a..7a6391e5d8 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -94,7 +94,7 @@ sub usage {
-     --identity              <str>  * Use the sendemail.<id> options.
-     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
--    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
-+    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, misc-by, all.
-     --[no-]cc-cover                * Email Cc: addresses in the cover letter.
-     --[no-]to-cover                * Email To: addresses in the cover letter.
-     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
-@@ -454,13 +454,13 @@ sub read_config {
- if (@suppress_cc) {
- 	foreach my $entry (@suppress_cc) {
- 		die sprintf(__("Unknown --suppress-cc field: '%s'\n"), $entry)
--			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
-+			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|misc-by)$/;
- 		$suppress_cc{$entry} = 1;
- 	}
- }
- 
- if ($suppress_cc{'all'}) {
--	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
-+	foreach my $entry (qw (cccmd cc author self sob body bodycc misc-by)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
-@@ -471,7 +471,7 @@ sub read_config {
- $suppress_cc{'sob'} = !$signed_off_by_cc if defined $signed_off_by_cc;
- 
- if ($suppress_cc{'body'}) {
--	foreach my $entry (qw (sob bodycc)) {
-+	foreach my $entry (qw (sob bodycc misc-by)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'body'};
-@@ -1681,7 +1681,7 @@ sub process_file {
- 	# Now parse the message body
- 	while(<$fh>) {
- 		$message .=  $_;
--		if (/^(Signed-off-by|Cc): (.*)/i) {
-+		if (/^([a-z-]*-by|Cc): (.*)/i) {
- 			chomp;
- 			my ($what, $c) = ($1, $2);
- 			# strip garbage for the address we'll use:
-@@ -1691,7 +1691,9 @@ sub process_file {
- 			if ($sc eq $sender) {
- 				next if ($suppress_cc{'self'});
- 			} else {
--				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
-+				next if $suppress_cc{'sob'} and $what =~ /^Signed-off-by$/i;
-+				next if $suppress_cc{'misc-by'}
-+					and $what =~ /-by$/i and $what !~ /^Signed-off-by$/i;
- 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
- 			}
- 			if ($c !~ /.+@.+|<.+>/) {
--- 
-2.19.1.6.g084f1d7761
+As Jeff's
+https://public-inbox.org/git/20180716175103.GB18636@sigill.intra.peff.net/
+and my https://public-inbox.org/git/878t69dgvx.fsf@evledraar.gmail.com/
+note it's a bit more complex than that.
 
+I.e.:
+
+ - The warning is actionable, you can decide to up your expiration
+   policy.
+
+ - We use this warning as a proxy for "let's not run for a day",
+   otherwise we'll just grind on gc --auto trying to consolidate
+   possibly many hundreds of K of loose objects only to find none of
+   them can be pruned because the run into the expiry policy. With the
+   warning we retry that once per day, which sucks less.
+
+ - This conflation of the user-visible warning and the policy is an
+   emergent effect of how the different gc pieces interact, which as I
+   note in the linked thread(s) sucks.
+
+   But we can't just yank one piece away (as Jonathan's patch does)
+   without throwing the baby out with the bathwater.
+
+   It will mean that e.g. if you have 10k loose objects in your git.git,
+   and created them just now, that every time you run anything that runs
+   "gc --auto" we'll fork to the background, peg a core at 100% CPU for
+   2-3 minutes or whatever it is, only do get nowhere and do the same
+   thing again in ~3 minutes when you run your next command.
+
+ - I think you may be underestimating some of the cases where this ends
+   up taking a huge amount of disk space (and now we'll issue at least
+   *some*) warning. See my
+   https://public-inbox.org/git/87fu6bmr0j.fsf@evledraar.gmail.com/
+   where a repo's .git went from 2.5G to 30G due to being stuck in this
+   mode.
+
+> For more aggressive gc options, thoughts:
+>
+>  - Do we always consider git gc --prune=now "safe" in a "won't delete
+> stuff the user is likely to want" sense? For example -- are the
+> references from reflogs enough safety?
+
+The --prune=now command is not generally safe for the reasons noted in
+the "NOTES" section in "git help gc".
+
+>  - Even if we don't, for some commands it should be safe to run git gc
+> --prune=now at the end of the process, for example an import that
+> generates a new git repo (git svn clone).
+
+Yeah I don't see a problem with that, I didn't know about this
+interesting use-case, i.e. that "git svn clone" will create a lot of
+loose objects.
+
+As seen in my
+https://public-inbox.org/git/87tvm3go42.fsf@evledraar.gmail.com/ I'm
+working on making "gc --auto" run at the end of clone for unrelated
+reasons, i.e. so we generate the commit-graph, seems like "git svn
+clone" could do something similar.
+
+So it's creating a lot of garbage during its cloning process that can
+just be immediately thrown away? What is it doing? Using the object
+store as a scratch pad for its own temporary state?
+
+> m
+> On Tue, Oct 9, 2018 at 10:49 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Forwarding to Jonathan, as I think this is an interesting supporting
+>> vote for the topic that we were stuck on.
+>>
+>> Eric Wong <e@80x24.org> writes:
+>>
+>> > Martin Langhoff <martin.langhoff@gmail.com> wrote:
+>> >> Hi folks,
+>> >>
+>> >> Long time no see! Importing a 3GB (~25K revs, tons of files) SVN repo
+>> >> I hit the gc error:
+>> >>
+>> >> warning: There are too many unreachable loose objects; run 'git prune'
+>> >> to remove them.
+>> >> gc --auto: command returned error: 255
+>> >
+>> > GC can be annoying when that happens... For git-svn, perhaps
+>> > this can be appropriate to at least allow the import to continue:
+>> >
+>> > diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+>> > index 76b2965905..9b0caa3d47 100644
+>> > --- a/perl/Git/SVN.pm
+>> > +++ b/perl/Git/SVN.pm
+>> > @@ -999,7 +999,7 @@ sub restore_commit_header_env {
+>> >  }
+>> >
+>> >  sub gc {
+>> > -     command_noisy('gc', '--auto');
+>> > +     eval { command_noisy('gc', '--auto') };
+>> >  };
+>> >
+>> >  sub do_git_commit {
+>> >
+>> >
+>> > But yeah, somebody else who works on git regularly could
+>> > probably stop repack from writing thousands of loose
+>> > objects (and instead write a self-contained pack with
+>> > those objects, instead).  I haven't followed git closely
+>> > lately, myself.
