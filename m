@@ -2,82 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF341F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 12:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D2EC1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 12:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbeJJUNv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 16:13:51 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54964 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726573AbeJJUNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 16:13:51 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r63-v6so5352014wma.4
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 05:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=j5C6RD7j5xe0NxxYeMsTHqjQe/C8YrlLSldn1adb0Mo=;
-        b=Boy50830NvvCirXKzG0HU9edk60qiBotMIiDmpsZZynEqSfUAJg9xMR675xb/VArOl
-         d3GBpiTdPW8zXv4PTniMQ2YxwPOiPgDmjzLHPK4grLO0gXSWcNiO3gWPfxPEdbgW5gtQ
-         P5nrz2X9bv1d6B6gvQGyjIuTO3fFXNiI5TFogoYC6bQaR/FfUQtn+HGbiQyNnJXxTEbI
-         H4ZWYZnfX/un5D4rVl8qgZXyLemnU4msfErWJ6yitbdC/Ho22U9aGzahzQKwORobNpAz
-         n+eisvXn50Xvb8cRzURCebjmTNThZB1y1j7MW68urrK6jqcLQG3JQSSiEKMltCpNmPrO
-         uP6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=j5C6RD7j5xe0NxxYeMsTHqjQe/C8YrlLSldn1adb0Mo=;
-        b=jujWyNiLkTD+XlCd6PxQcWSwDdTKHeUQPcaacBCH4g9/Ft1GWdb2C06nlPn3VfSx1H
-         1y/4aFLrjmbkwztrpQlqnLBmn7z2XuKBX3GE25tQ6yCjJkDQ4FT4FWcLLWAsPTDJ3UUv
-         QLsAUuYW/eBW5/fYU2Dqr0mbjRRfgjCAnoR0p826eO11MnGHxncjlt9O1ndoQZLKzXwq
-         EoeUyfaN38HvegoP5NZwjFtAtxICQT3DIl+8REmy89q0X4E4NmCCsYvQFth8fcgj+430
-         JwpkJ4sTsibbYtDRVyJTrgq+5TGy+uVz2Q7ZzaIwCK53KRYbQCMiM9BLGLo6MWeZ7iII
-         d5UQ==
-X-Gm-Message-State: ABuFfoj+nskAPv1QfhiCfrXCft2TIVtuBl63NLZ6ymnb01MYUHr6IxrV
-        V5YYlgJvCAwPNY2zJXM2Fy8=
-X-Google-Smtp-Source: ACcGV60CtEROywz7M2iTfuplAafhf/aQwTq+YBmdDP+znIsCygEbzNfw00khOXuB2+n42qNlMPXnhg==
-X-Received: by 2002:a1c:cfcb:: with SMTP id f194-v6mr764497wmg.98.1539175906991;
-        Wed, 10 Oct 2018 05:51:46 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id q16-v6sm19072602wrn.41.2018.10.10.05.51.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 05:51:46 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     git@vger.kernel.org, Joe Perches <joe@perches.com>
-Subject: Re: [PATCH 3/3] send-email: also pick up cc addresses from -by trailers
-References: <20181010111351.5045-1-rv@rasmusvillemoes.dk> <20181010111351.5045-4-rv@rasmusvillemoes.dk>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181010111351.5045-4-rv@rasmusvillemoes.dk>
-Date:   Wed, 10 Oct 2018 14:51:45 +0200
-Message-ID: <8736teezha.fsf@evledraar.gmail.com>
+        id S1726918AbeJJUTl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 16:19:41 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53283 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726562AbeJJUTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 16:19:41 -0400
+Received: from [10.49.78.48] ([95.208.58.46]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LoJDJ-1fU0TU06xt-00gKDG; Wed, 10
+ Oct 2018 14:57:33 +0200
+Received: from [10.49.78.48] ([95.208.58.46]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LoJDJ-1fU0TU06xt-00gKDG; Wed, 10
+ Oct 2018 14:57:33 +0200
+Date:   Wed, 10 Oct 2018 14:57:35 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: builtin stash/rebase, was Re: What's cooking in git.git (Oct 2018,
+ #01; Wed, 10)
+In-Reply-To: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810101203571.2034@tvgsbejvaqbjf.bet>
+References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9hN9juWIvlfmC1gdKlBPBSRrxpujRp65LEk41W+9VDH+XqQuwVo
+ 70STNOZjw/s5nG8WjW3Xur3zpuq7JSSWdinWtSuofeDeu8tEdTZjjQhrRWkaZrkgWePX8MX
+ uZ2qQNlRfNGFyzh5Ar8//vkbZYEyM2Ef32qrMX3H4JqMjjs4GSzr1rXKnuDy8cYOypIMEfw
+ ZQPhz5RklLPUdfPgy9dcg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IdtfRE5rHVw=:lBvFK+Ky+yI9JPHX5UAI4v
+ Ajp54loH99Ykae3PKA19x05sgEsH4eyyfxzLuPLg48NjgguGDia0QtuHm6XUzDTWo9OeyL15f
+ uLJmvvDEtK/rTjYj4UR3qAmjLs780u0C0cts0qTHbm0oYhAE8rKEDb4mIeYEuDRvPi4wiwQCN
+ 1HNKFmuTOfL93ihbtCWdczWn6Dhpln5gYyaPebvU77G8/rNzC6eBzsENadSfs/gNlRJRl1d8g
+ IASHecFTyTkv+Kc8d7f/8IDl1MInzT9nJ5UEr/dyM7iSfaXFe93nJQddh9YTlgjA3cbyjmhyr
+ k0Sqpdr6iZoSPDoh8loyfRFmHDUCM7Zsp59M71nzZkuniQAf2gIcgXjaGVFt0S7KV9F+fwM1e
+ priISwKSRCbUPFBMh1duFRP3VKQf6Lg2W1kCx5cKdxT+2g2OJHMbZ4XbXs/MRi5YokQ/vhywS
+ ukMKep9pW87YmkAkkBBQsagAYyjbt58OtE+AnivQ65l6jlPAqdT77CJMNla3EvjylBjGqPdsv
+ e2jwJSIXvD01O9uUIYbeWgmBeLMQxzNoCUk/nQtzI3pObmo6Ey7791H0ovWIc/4SYizJu4G+1
+ 4ARVFYSQn0js4SmPdhGEaS1x9AdqhkSyumansA+GZQgZWJK3N5BhV0xEt3I2cXl3FPXUNCJkP
+ PEhjea8iWFH0y69RsRgBdla1bIr+f1/VmT3zgavXB5UipheOGT4rsnvVA0LQWSPR0aNh0hkFq
+ gRkVJk6+W2C00FvT+aAIYBC0gDo+zOJ7Ai8ZwQfKes8kRhdsyaoPUB9XwPBs3WaSVCxx5sl3T
+ S3gS5F9wO06D0BWu0lvzv4VfznUsQzOwtefGTwVUYYVYKcTDng=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Wed, Oct 10 2018, Rasmus Villemoes wrote:
+On Wed, 10 Oct 2018, Junio C Hamano wrote:
 
-> -				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
-> +				next if $suppress_cc{'sob'} and $what =~ /^Signed-off-by$/i;
-> +				next if $suppress_cc{'misc-by'}
-> +					and $what =~ /-by$/i and $what !~ /^Signed-off-by$/i;
->  				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+> We haven't seen much complaints and breakages reported against the
+> two big "rewrite in C" topics around "rebase"; perhaps it is a good
+> time to merge them to 'next' soonish to cook them for a few weeks
+> before moving them to 'master'?
 
-Looks good, FWIW I was curious if this could be:
+I would be in favor, as long as the fixup patches I have in Git for
+Windows made it in:
 
-    next if $suppress_cc{'misc-by'} and $what =~ /(?<!^Signed-off)-by$/;
+https://github.com/git-for-windows/git/commit/6bc7024aecdb1aeb2760c519f7b26e6e5ef21051
+    fixup! builtin rebase: support `-C` and `--whitespace=<type>`
 
-But found that as soon as you add a /i Perl will barf on it, and in any
-case makes sense to be less clever about regex features.
+https://github.com/git-for-windows/git/commit/1e6a1c510ffeae5bb0a4bda7f0528a8213728837
+    fixup! builtin rebase: support `--gpg-sign` option
+
+https://github.com/git-for-windows/git/commit/ddb6e5ca19d5cdd318bc4bcbb7f7f3fb0892c8cc
+    fixup! rebase -i: implement the main part of interactive rebase as a builtin
+
+https://github.com/git-for-windows/git/commit/2af24038a95a3879aa0c29d91a43180b9465247e
+    fixup! stash: convert apply to builtin
+
+It seems that Alban picked up the `rebase -i` one, but the other three
+have not made it into `pu` yet (the two `rebase` ones are really my fault,
+I did not yet find time).
+
+Speaking about the two `rebase` ones: they are simple fixup! commits,
+could I trouble you to fetch and cherry-pick them into `pu`, or would you
+prefer if I sent another iteration of `rebase-in-c-4-opts`?
+
+Ciao,
+Dscho
