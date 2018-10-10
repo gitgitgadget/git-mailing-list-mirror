@@ -2,146 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 037291F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 21:51:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C93011F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 21:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725897AbeJKFPw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:15:52 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:36562 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbeJKFPv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:15:51 -0400
-Received: by mail-pl1-f196.google.com with SMTP id y11-v6so3144575plt.3
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:51:46 -0700 (PDT)
+        id S1725879AbeJKFS0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:18:26 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53032 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbeJKFS0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:18:26 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 189-v6so6989889wmw.2
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=M47+UlcmQQYiwHwypJU/H/Mc8KKxXhnS3KcKyCK6Wh8=;
-        b=DBOHnPxpEHMRWcOmgDxf0Jjl4KeLiqzXLoQR4gvdDPOGWl3NXram++AIl02748JNqM
-         EAs5dAjqwxAsfKZQje6wCgDrO36FcBu/hemL2l9JlMiIrD8144fKG2wipnDzLKYMFKBy
-         r9XqyOPzzaWUwPtZWj+Bmnj1IBnV7UBRmw+NA9LuVjc8OJ3Wli9HEyETdXwYOLyntg1R
-         wC9wtTbe+xSU4zPtkp+Ob1t1UcwvQvqeyx5oocSRmLhF2k6Kf4r0TQRblSx3YPIkCl5b
-         PXks08fp06aWLCEhKugo4EAJJ63Am7W9kJn8o7S6nWflXIOxD+MZO9jvp4+3dYaxYDWa
-         3Q4A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=joHtBdyVKVXK0cA4cj7X8m6b43EV9cqz6i65BIXmjQs=;
+        b=NmAZiVvOlcdUcUcdw3JX5NxfPamilVeVSQqdZ1WAeIIv9ksvsyPiHrPNczHawwC9vb
+         xiIjYnfHrbEA8ycrn62Ulo4bh0Dg3yWdFVZ8pZ8oLNyx3DJ46i9eOPrtAn7zgiQ9S0hU
+         Y9YF1PfR/JDH6zTKWd+9IrickGmmLxeg47wuUeUa5uigIhg+BPJGrQNXINWCpvqjjeSD
+         Lajalak12gfyLVoaansHTkvqHFsOknPW5Peywx7vSx9CawGeRhH8MPD0WlUWjrZ8pAPy
+         72ez/LYaqNG9JiX7kHeJngkd2S1SbXm6HmTyF+XPk4elGr4d682vNOoOEqYwGRXwBwVN
+         JSSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=M47+UlcmQQYiwHwypJU/H/Mc8KKxXhnS3KcKyCK6Wh8=;
-        b=jxWdpEAL4fN6241pOGwNw/Sj3/YGCWwkqOKquTkIeA7md6YbpKy4+QnXguogY3YkdV
-         osMWic6V3GBgX7+YR3zsIq8gjHKvlA5d3xSMDYovD7WlPB/OF/4OHe9aqWZDmH39KVYs
-         Sz6WIhGQaRTbo4FqUS5KELZLjQ9jj2Xc29ZRL2qRxUXn6m/+NEJGEDEkZfKBnmvKJUH/
-         AFp7zC5PTo+enAMaS8ogUFg5aG/tIfFV0JTs1MEQjydKZQ5jmXP7HAZ3oH+JHmCKAjGn
-         w7p9qjfJf1u/1DLqvbxpystCY56vzEtFCaZr80o9GrWm8DIVz+TVniC+UDW4YC+jBOQ/
-         ofOg==
-X-Gm-Message-State: ABuFfohPKrTvOwR78Gus1rQMHe5bT2SO0h9m4OC20eo+jn5h7jJSA4BY
-        u2M+AdF5mBBJrPmHYggod74=
-X-Google-Smtp-Source: ACcGV62Bh5Db+av1127YMGCxBFrCCfHcFpMKcztvkrpw5d2Ny9wTwECzxpRrmRrzaLLW60X2tymOmQ==
-X-Received: by 2002:a17:902:b7cb:: with SMTP id v11-v6mr34707403plz.79.1539208305801;
-        Wed, 10 Oct 2018 14:51:45 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id a86-v6sm35369813pfg.106.2018.10.10.14.51.45
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=joHtBdyVKVXK0cA4cj7X8m6b43EV9cqz6i65BIXmjQs=;
+        b=Ulf2212mizCFxqos5bFk68ERtuVywih35b3o3qKIbTA6ooiNTInLlNajxhi2q/HJo1
+         gYy+dPJrPSbALJ/inyF76K5QrEgWvDEeKmGw+lpqCC7tlgnrm6sQA5WO5fKPqrvM7Ov2
+         cXf/p3Nl9pm4ZUsYs9Z29fZX+rQ3mOYut7lUKtCZ2XXDOxjjZtqIGsx0781CIrQ9HBv7
+         iGpe2Wbk3HLg/BgN9RmGqnqIyYMgE8If53FAKswY3GErkgPYFcyxPSmEPbs13YHIbGkF
+         8LoBMw194qsKDm4sEd1Uf1dwVpVFB6S3he1zmEsBTEraFEOjDcXtL9GLs48dYaysvO5t
+         J5nQ==
+X-Gm-Message-State: ABuFfoilMdc1lNBQy3wxkXGvXPL3W0lxSpWBDYNsuCRgThcSYh+axRLB
+        YbpmpQPO+EpughDMHn5zjHk=
+X-Google-Smtp-Source: ACcGV637F+tGvYzH418aPTYYtQu7KgXbmica2Uh7k8szsusYOHzmYubHomA6sFxZosenh0L/OGgCpA==
+X-Received: by 2002:a1c:9cc9:: with SMTP id f192-v6mr2365048wme.135.1539208457314;
+        Wed, 10 Oct 2018 14:54:17 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id s132-v6sm11503629wme.14.2018.10.10.14.54.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 14:51:45 -0700 (PDT)
-Date:   Wed, 10 Oct 2018 14:51:43 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        Wed, 10 Oct 2018 14:54:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gc: introduce an --auto-exit-code option for undoing
- 3029970275
-Message-ID: <20181010215143.GB231512@aiede.svl.corp.google.com>
-References: <20181010174624.GC8786@sigill.intra.peff.net>
- <20181010192732.13918-1-avarab@gmail.com>
- <20181010205611.GA195252@aiede.svl.corp.google.com>
- <87sh1declw.fsf@evledraar.gmail.com>
- <20181010211428.GA231512@aiede.svl.corp.google.com>
- <xmqqin29lc0s.fsf@gitster-ct.c.googlers.com>
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] push: add an advice on unqualified <dst> push
+References: <20181010104145.25610-1-avarab@gmail.com>
+        <20181010104145.25610-3-avarab@gmail.com>
+        <20181010205505.GB12949@sigill.intra.peff.net>
+Date:   Thu, 11 Oct 2018 06:54:15 +0900
+In-Reply-To: <20181010205505.GB12949@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 10 Oct 2018 16:55:06 -0400")
+Message-ID: <xmqqbm81lb7c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqin29lc0s.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> Perhaps this reporting could also print the message from a previous
->> run, so you could write:
->>
->> 	git gc --detached-status || exit
->> 	git gc --auto; # perhaps also passing --detach
->>
->> (Names still open for bikeshedding.)
+>> Fix both of those, now the message will look like this instead:
+>> 
+>>     $ ./git-push avar v2.19.0^{commit}:newbranch -n
+>>     error: unable to push to unqualified destination: newbranch
+>>     hint: The destination refspec neither matches an existing
+>>     hint: ref on the remote nor begins with refs/, and we are
+>>     hint: unable to guess a prefix based on the source ref.
+>>     hint:
+>>     hint: The <src> part of the refspec is a commit object.
+>>     hint: Did you mean to create a new branch by pushing to
+>>     hint: 'v2.19.0^{commit}:refs/heads/newbranch'?
+>>     error: failed to push some refs to 'git@github.com:avar/git.git'
+>> 
+>> When trying to push a tag, tree or a blob we suggest that perhaps the
+>> user meant to push them to refs/tags/ instead.
 >
-> When the command is given --detached-exit-code/status option, what
-> does it do?  Does it perform the "did an earlier run left gc.log?"
-> and report the result and nothing else?  In other words, is it a
-> pure replacement for "test -e .git/gc.log"?
+> This is much better, and I love the customized behavior based on the
+> object type.
+>
+> I wonder if we could reword the first paragraph to be a little less
+> confusing, and spell out what we tried already. E.g., something like:
+>
+>   The destination you provided is not a full refname (i.e., starting
+>   with "ref"). Git tried to guess what you meant by:
 
-My intent was the latter.  In other words, in the idiom
+s|ref|refs/|; I fully agree that "unqualified destination" was a
+poor way to communicate the failure to those who would likely hit
+this error path, because somebody who can ell what's qualified and
+what's not would not be triggering the error in the first place.
 
-	do_something_async &
-	... a lot of time passes ...
-	wait
+>     - looking for a matching branch or tag on the remote side
+>
+>     - looking at the refname of the local source
+>
+>   but neither worked.
+>
+>   The <src> part of the refspec is a commit object.
+>   Did you mean...
 
-it is something like the replacement for "wait".
+Looks great.
 
-More precisely,
+> I'm not sure about saying "branch or tag" in the first bullet. It's
+> friendlier to most users, but less technically correct (if you said
+> "notes/foo", I believe we'd match an existing "refs/notes/foo", because
+> it's really just using the normal lookup rules).
 
-	git gc --detached-status || exit
+An alternative may be "looking for a ref that matches %s on the
+remote side".  I am no longer a total newbie, so I cannot tell how
+well that message would help one to connect notes/foo one just typed
+with refs/notes/foo that potentially exists on the remote side.
 
-would mean something like
+> Also, as an aside, I wonder if we should allow "heads/foo" to work as
+> "refs/heads/foo" (even when no such ref already exists). But that is
+> totally orthogonal to changing the message.
 
-	if test -e .git/gc.log	# Error from previous gc --detach?
-	then
-		cat >&2 .git/gc.log	# Report the error.
-		exit 1
-	fi
-
->                                              Or does it do some of
-> the "auto-gc" prep logic like guestimating loose object count and
-> have that also in its exit status (e.g. "from the gc.log left
-> behind, we know that we failed to reduce loose object count down
-> sufficiently after finding there are more than 6700 earlier, but now
-> we do not have that many loose object, so there is nothing to
-> complain about the presence of gc.log")?
-
-Depending on the use case, a user might want to avoid losing
-information about the results of a previous "git gc --detach" run,
-even if they no longer apply.  For example, a user might want to
-collect the error message for monitoring or later log analysis, to
-track down intermittent gc errors that go away on their own.
-
-A separate possible use case might be a
-
-	git gc --needs-auto-gc
-
-command that detects whether an auto gc is needed.  With that, a
-caller that only wants to learn about errors if auto gc is needed
-could run
-
-	if git gc --needs-auto-gc
-	then
-		git gc --detached-status || exit
-	fi
-
-> I am bad at naming myself, but worse at guessing what others meant
-> with a new thing that was given a new name whose name is fuzzy,
-> so... ;-)
-
-No problem.  I'm mostly trying to tease out more details about the use
-case.
-
-Thanks,
-Jonathan
+I am neutral on this point but agree that it is better done outside
+this patch.
