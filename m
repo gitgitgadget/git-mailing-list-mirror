@@ -2,105 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7BE61F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 09:14:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 462401F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 09:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726479AbeJJQfP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 12:35:15 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:39479 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725827AbeJJQfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 12:35:14 -0400
-Received: by mail-it1-f194.google.com with SMTP id w200-v6so6921848itc.4
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 02:13:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=d5rjPAT0SWEQOQp/x71JcDzVn3MKFBapBET2cKBHGRE=;
-        b=Hjtjw+3bLHfy4UyXZFzybRR3K3Pi4nxf+xiVNaEZEZR5dKeIXngZPtwu+ICWBjvwij
-         p2sgtOndVpEGWRvwyT6Zd8zD+A33oxjzcAOgj1uihtuso/iMWIJBddrepqAqPEYzPeQM
-         8mSQvyffSu3Jjf3KUIeAsfM/mRFniJZS/MwoBKb2btG5c9zi6nOSKmTvebJgnfhV8oGs
-         f5dR5AyUYgXpAuZBlUK8+XX2qxSRylFSB0V0+A+2VJQVLK6xmadNOUwDtAEUorpYHBmX
-         mNprsVyxzA8ashALrMStC8HAy6WdxpXWzM7Fhz6esDhUrmRIqGpTu8npjD1E30Hy6DQ+
-         9Oig==
+        id S1726665AbeJJQuk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 12:50:40 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:36756 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726579AbeJJQuk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 12:50:40 -0400
+Received: by mail-qt1-f193.google.com with SMTP id u34-v6so4858437qth.3
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 02:29:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=d5rjPAT0SWEQOQp/x71JcDzVn3MKFBapBET2cKBHGRE=;
-        b=cMtOfcUhKjvD8DxalJpqwO3op2bnmsrdcs+VBr2dO+oPk3cHYMhRMT2IiZZ7i8OhvO
-         2Yt5tDi7fCLN6v+Sslw6N5wawKcUte7NwO6V7nr0GjOPl1vbZSHdK2Gc1uAhbT77nC3Z
-         rdQRJTGtVBRIjxMIwsxO2HY+uOiWIQQH1qASICu9nRJAQpiOz6fCf1rSGcg/I7fy/iTW
-         HOe02v0YGaQ1ml4Av1RHxF3wdhxInnwHq3AbzUiZkzX/ksJHsx/0EeYc7UD0O855WupH
-         8ieUB7JLgDlpvpPxul5C7iZYkhUqO+2bt46BMdmFnUN8nhC78nZYA9U5trzyn4Zfd2ct
-         H0lw==
-X-Gm-Message-State: ABuFfojHJYfeUA2RVXn9c8xev0Nqpgbsah+nCJ/PPOdznMayKQ46hQcj
-        HWz4u7wJSEpAHc6ag0oBIuB8xa/hhBZhHqeBSU4=
-X-Google-Smtp-Source: ACcGV62w7ucQ/AoTh6wAD7NfMCmR68qDraeG7E6QaF+DgTKqvrjyilleuJMgmFBIp/1iJ4IMAUMPJvMXrdERb9w6u4k=
-X-Received: by 2002:a24:cac6:: with SMTP id k189-v6mr72532itg.168.1539162839018;
- Wed, 10 Oct 2018 02:13:59 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=EfxI1RZqYim+/GMx8g+OlFcw5qk8AXEdlVVL/9AlBYw=;
+        b=O0G7e6rwNNlhD521NknVGZYNTtBINYkWvssJLpoAazXuLZueynrAZQxzkLaXDN6c3x
+         aTvMtWiKPBE5RzNkijiQIxQgjGsjJ6sulMgo75CvhKlnBK7UO4u+CnHFAYHROgQ/D/DW
+         jcgIpax6mZNLUEvi0qrs7OfZdEzY3zCSEnVWQzyiymlQhmModa3/E0RKsY5S8t3/5yDV
+         Qok1XHcRmDx9JUri11q5EU+xgMOeDm+fRsTKUZN4t88/dYrOZmHafUexH2Pp/CcibkQk
+         fAlAVqGjbDI6o9wMPrrBMDmsqe8hMWHeLWUiVnPSOOyuT/qEAsphO9FdCY2Sc8dpVg9N
+         9X7w==
+X-Gm-Message-State: ABuFfojXgeJSI4Kz8hxN3vzjUQ0nCKJUfmSsxJVNYZZXYaFd7GvQVvHN
+        bwCxnCidacBBDiHVB+lo4kwY2TdpMjjy2xEte6c=
+X-Google-Smtp-Source: ACcGV631jmsljsnBo9MWBjuEr8sBw3XJYBa9hq7V3pNvwM3HD0IQuIeRQ8HCfGU6kcsAFAqZsxfJwK9I7enrBJPSjBE=
+X-Received: by 2002:ac8:73c5:: with SMTP id v5-v6mr3180664qtp.352.1539163760933;
+ Wed, 10 Oct 2018 02:29:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181008170505.GA13134@manohar-ssh> <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
- <xmqqd0sjpgw1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1810100856570.2034@tvgsbejvaqbjf.bet>
- <xmqq4ldumbo1.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4ldumbo1.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 10 Oct 2018 11:13:46 +0200
-Message-ID: <CAP8UFD1_CH-OGytqcLya0GdFAM3=TLpgwiXQCO__9GSR6SXe_Q@mail.gmail.com>
-Subject: Re: [PATCH][Outreachy] remove all the inclusions of git-compat-util.h
- in header files
+References: <20181009182006.9446-1-daniels@umanovskis.se> <xmqq8t36q1k6.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8t36q1k6.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 10 Oct 2018 05:29:09 -0400
+Message-ID: <CAPig+cTp-cFKX2Kqj-yV7OtgmxDo7Mp7i0TUXU7JGYdgtbHiug@mail.gmail.com>
+Subject: Re: [PATCH 0/2] branch: introduce --current display option
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>, ananyakittu1997@gmail.com,
-        git <git@vger.kernel.org>
+Cc:     daniels@umanovskis.se, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 10, 2018 at 10:46 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Oct 9, 2018 at 4:59 PM Junio C Hamano <gitster@pobox.com> wrote:
+> My inclination is to recommend to:
 >
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>  (1) name the "show the current one" not "--current" but with some
+>      verb
 >
-> > Personally, I find the "whoever is picking it up should do the thinking=
-"
-> > much too harsh for a first-time contributor who specifically came throu=
-gh
-> > the Outreachy program, i.e. expected to have a gentle introduction into
-> > the project, and into the ways we work.
->
-> Oh, absolutely I agree.
->
-> Any random discussion participant can say "left over bits" in any
-> random message with an idea that is left on the table.  Looking for
-> it may narrow the set messages to be examined, but the query result
-> will inevitably be still full of chaff.  It is not a very good match
-> for "gentle introduction" material for GSoC/Outreachy microprojects.
->
-> List of reasonable low-hanging fruits is hard to maintain, as the
-> cost of building and maintaining such a list would easily outweigh
-> the cost (and fun) of picking these low-hanging fruits yourself X-<.
->
-> I do not think of a good solution to help newcomers offhand.
+>  (2) display nothing when there is no current branch (i.e. detached
+>      HEAD) and without any error.
 
-In the "How to find other ideas for microprojects" on
-https://git.github.io/SoC-2018-Microprojects/ there is already the
-following:
-
-"When you find something you are interested to work on, please ask
-first on the mailing list if it=E2=80=99s worth doing and if it=E2=80=99s a=
-ppropriate
-for a microproject before starting to work on what you find. Even if
-it looks straightforward, there could be hidden reasons why it is too
-difficult or just inappropriate."
-
-So I think one solution to this problem is already proposed on our web site=
-.
+Sensible suggestions. Also, please documentation any new option(s) in
+Documentation/git-branch.txt.
