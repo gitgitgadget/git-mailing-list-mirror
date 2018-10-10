@@ -2,172 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6FB51F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 22:07:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B22D31F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 22:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726036AbeJKFbx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:31:53 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40052 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbeJKFbx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:31:53 -0400
-Received: by mail-ed1-f66.google.com with SMTP id r1-v6so6375398edd.7
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:07:43 -0700 (PDT)
+        id S1725977AbeJKFip (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:38:45 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37668 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725968AbeJKFip (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:38:45 -0400
+Received: by mail-wr1-f65.google.com with SMTP id y11-v6so7406286wrd.4
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=nWQ0rvXDVIrcQoXMzCSGka/jiyh0gYAeOvC/ut+Oo2s=;
-        b=qXad/zgxC8kZVN4gv5j53JgJrT4dSa21mV9OgK4HcK5hxGkAIgrn8t0aHdqnzS2Ag+
-         cpbJ/c0T3hK5nS+wZyUmKo6/Yankhl4EJwtl897z3IIt0W342Q+K7n/QTv+cO4G1pAs+
-         uuItWgPAze8MovZqUh+6ii+1tJ2G8Lg5kv/GBkkqPx+vFo8ElY8bzPLQ/ce7xg8FtXAm
-         tEcn/zYR1Yy32AxALPT3N5hxVusn9x0SRkBjQyf/Wyo05yU375cCWYMcPERZFNkscQ+k
-         0Bfifdex7dWLWQP68jt0P7THgHQz+5WOXexkNHWkiiDO1tJ+goxjFIDrh7ixqZZV7e2i
-         KeAg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bUaGLwRvxepBLSFqtm6mhmTLHGAyBwx50IxVn/l7l+s=;
+        b=gz+9JJrZOgt6mxXr0rpZAmjh8f9ac3OcCsh1BIoGq+2/IVXmHoN6KjcmgE+U/D7sF5
+         H60xiRtmeSTo4pXNu4I5ed2I+mvVay1/SKWI1n1Yygqfh7+mf+GddRR6Au0Im3qQ3+Kz
+         +Pncn9bu5H2YWEMwJzH8Mzj0E+Y7/AWS7mzJ5A03ufe6KHkI4CAJpvG23lvMPzj1Heti
+         g0AIfdNnm1x+ZabEGoefpwLltEoM+Ckpqr9zGQi0RoS4CoyRHg60SIEyTaw8sshoffTr
+         y7a3vRFS0/hLRevb0n9vK/6zBtgMduXGN/9x6CIuOlwWjEUNFtS+OrFfO+e9VUrgo52k
+         YwfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=nWQ0rvXDVIrcQoXMzCSGka/jiyh0gYAeOvC/ut+Oo2s=;
-        b=sy+uoUquyGyaRnLLa3v6SoKFyWa6oI5kFjubRk92Ql28viSWdh+ItthwmT9bGXshmY
-         w40ye2RtTjiVluZbu7CKd6CGWGprB6F2LtovR51wE1pgiLJbGQ+B/Rc10wTJ0AXTjpY1
-         Fkk6RSzsZpQvCZuDCe8VIuTDhf64bvLYJeMN2h/7dX3nZHAMjgWOtMPEfgC31CAbnk6R
-         J1SJrXwCZ1vXzLO0zV/gx+a5CM23nGpJQeAipVQVKN6nivjQ8Tr8FPm5udcNd4UQ03pf
-         9YexCKNdN7vQqSQJEjQ+XmQInXKMZMzVMO2kK3w1m330fkc0m3q1ZAcZFwW3QcBAUIwT
-         mzCw==
-X-Gm-Message-State: ABuFfoj2R+7gXA8h8EPlUaqrWVvSoFJP5PmcgO177yXns68RlN9FmDFh
-        l9gvz+oyOsa3xgehdw6EVns=
-X-Google-Smtp-Source: ACcGV61Nx8ClWJS1M+4Sr+rqzEkHEXo+9wKu5KtcyL4YnBSebJSPceu5AzeRBfwza8ja9sBK+uX36A==
-X-Received: by 2002:a50:8f23:: with SMTP id 32-v6mr492048edy.158.1539209262984;
-        Wed, 10 Oct 2018 15:07:42 -0700 (PDT)
-Received: from szeder.dev (x4db070c3.dyn.telefonica.de. [77.176.112.195])
-        by smtp.gmail.com with ESMTPSA id p19-v6sm1126290ejw.69.2018.10.10.15.07.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Oct 2018 15:07:41 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 00:07:39 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
- graph
-Message-ID: <20181010220739.GF23446@szeder.dev>
-References: <87tvm3go42.fsf@evledraar.gmail.com>
- <20181003133650.GN23446@localhost>
- <87r2h7gmd7.fsf@evledraar.gmail.com>
- <20181003141732.GO23446@localhost>
- <87o9cbglez.fsf@evledraar.gmail.com>
- <20181003145308.GP23446@localhost>
- <87murvgir6.fsf@evledraar.gmail.com>
- <20181003165926.GR23446@localhost>
- <xmqqpnwo3ow9.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bUaGLwRvxepBLSFqtm6mhmTLHGAyBwx50IxVn/l7l+s=;
+        b=OyFXcBXCI1SK87SJyVGtxk9myzvW0b8qV+xgFS+FBwsk3RvZydLM7umA+QFdm23aEp
+         Utptx30ZJAoWeV+mawamMJkxUWtZnrFJhXJ95CmN7X1DSMPCDDTDsaE7zTdchy3cOyfn
+         uBkzeOQ+AqpvxHVSCkqW4IWDwGgHtVheohtbZWoE71DL8bbRKVuRJY6BHA2KgJ/a/srU
+         spZZ74b8Vhy1oz44VmkRxcUY3lrWafcz8H0eC/+YhGrszk8zLezpXNzd8Uii+ZTNuzdm
+         n6/jOPo4Oiq/5EW3Tg/1/p7FUFIS1nrQGFoOMUP6xqTjrgte2tbKSEkE3kvqcwf4nbuo
+         Pfdg==
+X-Gm-Message-State: ABuFfohpkd4fMq51GQqDE5Nzb5h87v6faSkfrw7BmAJ4vzvhawfjOUOT
+        mz3TyEad+zi1OAIVeObLVmg=
+X-Google-Smtp-Source: ACcGV62bca8e/O3piGhu62pKc2M6AFbmTnr2CRGa/849S4IHTelHMP8OJHt8G9tbQazgChpUH3vO+Q==
+X-Received: by 2002:a5d:6450:: with SMTP id d16-v6mr23091202wrw.64.1539209673882;
+        Wed, 10 Oct 2018 15:14:33 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m2-v6sm16780905wrj.80.2018.10.10.15.14.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 15:14:32 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v5 17/23] userdiff.c: remove implicit dependency on the_index
+References: <20180915161759.8272-1-pclouds@gmail.com>
+        <20180921155739.14407-1-pclouds@gmail.com>
+        <20180921155739.14407-18-pclouds@gmail.com>
+        <20181010145116.GA11772@sigill.intra.peff.net>
+Date:   Thu, 11 Oct 2018 07:14:31 +0900
+In-Reply-To: <20181010145116.GA11772@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 10 Oct 2018 10:51:17 -0400")
+Message-ID: <xmqq7eipla9k.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqpnwo3ow9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 04, 2018 at 11:09:58PM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> >>     git-gc - Cleanup unnecessary files and optimize the local repository
-> >> 
-> >> Creating these indexes like the commit-graph falls under "optimize the
-> >> local repository",
-> >
-> > But it doesn't fall under "cleanup unnecessary files", which the
-> > commit-graph file is, since, strictly speaking, it's purely
-> > optimization.
-> 
-> I won't be actively engaged in this discussion soon, but I must say
-> that "git gc" doing "garbage collection" is merely an implementation
-> detail of optimizing the repository for further use.  And from that
-> point of view, what needs to be updated is the synopsis of the
-> git-gc doc.  It states "X and Y" above, but it actually is "Y by
-> doing X and other things".
+Jeff King <peff@peff.net> writes:
 
-Well, then perhaps the name of the command should be updated, too, to
-better reflect what it actually does...
+> I get why you're doing it: your topic here only cares about removing
+> index dependencies, so you did the minimal thing to move that forward.
+>
+> But if you think about what this function is doing, it is quite clearly
+> dependent on the whole repository, since the userdiff config we're
+> looking up may come from repo config.
 
-> I understand your "by definition there is no garbage immediately
-> after clone" position, and also I would understand if you find it
-> (perhaps philosophically) disturbing that "git clone" may give users
-> a suboptimal repository that immediately needs optimizing [*1*].
-> 
-> But that bridge was crossed long time ago ever since pack transfer
-> was invented.  The data source sends only the pack data stream, and
-> the receiving end is responsible for spending cycles to build .idx
-> file.  Theoretically, .pack should be all that is needed---you
-> should be able to locate any necessary object by parsing the .pack
-> file every time you open it, and .idx is mere optimization.  You can
-> think of the .midx and graph files the same way.
-
-I don't think this is a valid comparison, because, practically, Git
-just didn't work after I deleted all pack index files.  So while they
-can be easily (re)generated, they are essential to make pack files
-usable.  The commit-graph and .midx files, however, can be safely
-deleted, and everything keeps working as before.
-
-OTOH, this is an excellent comparison, and I do think of the .midx and
-graph files the same way as the pack index files.  During a clone, the
-pack index file isn't generated by running a separate 'git gc
-(--auto)', but by clone (or fetch-pack?) running 'git index-pack'.
-The way I see it that should be the case for these other files as well.
-
-And it is much simpler, shorter, and cleaner to either run 'git
-commit-graph ...' or even to call write_commit_graph_reachable()
-directly from cmd_clone(), than to bolt on another option and config
-variable on 'git gc' [1] to coax it into some kind of an "after clone"
-mode, that it shouldn't be doing in the first place.  At least for
-now, so when we'll eventually get as far ...
-
-> I would not be surprised by a future in which the initial index-pack
-> that is responsible for receiving the incoming pack stream and
-> storing that in .pack file(s) while creating corresponding .idx
-> file(s) becomes also responsible for building .midx and graph files
-> in the same pass, or at least smaller number of passes.  Once we
-> gain experience and confidence with these new auxiliary files, that
-> ought to happen naturally.  And at that point, we won't be having
-> this discussion---we'd all happily run index-pack to receive the
-> pack data, because that is pretty much the fundamental requirement
-> to make use of the data.
-
-... that what you wrote here becomes a reality (and I fully agree that
-this is what we should ultimately aim for), then we won't have that
-option and config variable still lying around and requiring
-maintenance because of backwards compatibility.
-
-1 - https://public-inbox.org/git/87in2hgzin.fsf@evledraar.gmail.com/
-
-> [Footnote]
-> 
-> *1* Even without considering these recent invention of auxiliary
->     files, cloning from a sloppily packed server whose primary focus
->     is to avoid spending cycles by not computing better deltas will
->     give the cloner a suboptimal repository.  If we truly want to
->     have an optimized repository ready to be used after cloning, we
->     should run an equivalent of "repack -a -d -f" immediately after
->     "git clone".
-
-I noticed a few times that I got surprisingly large packs from GitHub,
-e.g. there is over 70% size difference between --single-branch cloning
-v2.19.0 from GitHub and from my local clone or from kernel.org (~95MB
-vs. ~55MB vs ~52MB).  After running 'git repack -a -d -f' they all end
-up at ~65MB, which is a nice size reduction for the clone from GitHub,
-but the others just gained 10-13 more MBs.
-
+In the case of userdiff that is pretty much limited to read-only
+operation, I fully agree, but in more general cases, we would need
+to pass both the repository and an in-core index separately, I would
+say.  Imagine doing a partial commit, where we construct a separate
+istate that is not the "repo's index" and use that to write out a
+tree object to be wrapped in a new commit, and update the current
+branch ref.
