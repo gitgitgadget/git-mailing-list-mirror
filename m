@@ -6,71 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7087A1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 01:10:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6ABB1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 01:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726488AbeJJIaB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 04:30:01 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41193 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbeJJIaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 04:30:01 -0400
-Received: by mail-wr1-f66.google.com with SMTP id x12-v6so3740363wru.8
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 18:10:19 -0700 (PDT)
+        id S1726616AbeJJIjF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 04:39:05 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41868 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbeJJIjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 04:39:04 -0400
+Received: by mail-wr1-f67.google.com with SMTP id x12-v6so3753602wru.8
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 18:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=RyOA/R0eU7Ufl8DpKw9YIL1HfasBnx0lpNZTZ2y0TiI=;
-        b=dgMFHohThGmUFQOvJTaVsPbCoI3luIry7+DoMp4IInXqscqRuW3q7lbcdTbHTKxi5f
-         Qo5ixoPJJ1K5nFEP0kvN//sj29NBmqbpWB81C7PTcrUgSrmKFGF72rb60QyDo6nhfBC+
-         BdHVzSXm60zCFGNV0MRYiMO1SdkQ1reYYDCKyIGDoi81xL0ooW6cm3pjJgZA4ezC+p/n
-         9kVDSUiB2JNLTV5Lg260NYkOSEmoUhP7WWk5JT/XswqZarHZ4iKZOPd5tYeY45hIgEqq
-         k8X9fQ1gOtJOJeX3Mo+UlHIH2WP3muHB6ou2w31lEIxUmFqagVc18Tota+MqRgVUwbEH
-         4BDg==
+        bh=XyQb0vW8kJhXaLEGTccYAknreIOGrIANyurfstZnKVE=;
+        b=Rn3VAjKQx4+Qx7eDA6+nu+3IenSIunAlY5prVeeW+fHcgEqf2F5kJl95tS5lPjILrx
+         UlwyLqJURmtQsVUS5PE6TDJB6c0wl4LHWgN2wWVlnsf1u0kxOWL3NrFGfFduRZuEiB38
+         OV1rmO0O7cX1qIqJP97bMhMk3O/kjQnBNcmfT6wLJedPIVr1wLwXtJDPfw/b1CFopKyl
+         jhURI9AMMA9xR1+XoRP8288AvtwcJvHk+ysWpA3Oo22RZ4IbD72ChIuHOcWc1rvcxVKk
+         tHbfgDcQJCO85tnfCKBnfQR1joW9qw+aUGl/T57ZcNtOKwOCjNAJhPPPX0s4zEWMmwN7
+         A93w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=RyOA/R0eU7Ufl8DpKw9YIL1HfasBnx0lpNZTZ2y0TiI=;
-        b=G5BJ3oPIxDB3HikvLkZcpL5mnwbcT9/1qi4N6cD6f3O+htlMYy8fZmqFpxjbbDUnNb
-         itZ1mB7XZD0JyUEdxISTjt/qq6hqOBL4hH4LYA+JCr4Bikn9CLNsJgUMXaYDwtqtG/3O
-         A35db9ZdVTLznKxaNR/CvpmEw1YsuX527i7AgredU+yuXOq00udkLT1poDrTvPjHpmPL
-         pSXKVU+JwQFdaiL9f/siFWEYgM92C+PT3T9AYpy2bAktz6/QwodAYIZbV4V/oU76JenE
-         /WxCAoOk8gTFK7L74El0NJ68UvSvkTegHCgSmkXONpdj4aTdeyU+mvjpJY5HIe8n0KVj
-         10lQ==
-X-Gm-Message-State: ABuFfohBncNNIUgQl9tQf/k58JxbvEMJrNIj+C7x2IZbEEEqivtO39bW
-        oX65FktB7RZFZMB4LLuR48k=
-X-Google-Smtp-Source: ACcGV63YsyiCoxw7kiWQDkf1QRTYr+zxnTMiS1P/OBKQx20Nww87Zwa9kXaRMd4jxDg3JpUxn/7N0g==
-X-Received: by 2002:a5d:6490:: with SMTP id r16-v6mr20014582wru.99.1539133818646;
-        Tue, 09 Oct 2018 18:10:18 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z8-v6sm15662438wrr.67.2018.10.09.18.10.17
+        bh=XyQb0vW8kJhXaLEGTccYAknreIOGrIANyurfstZnKVE=;
+        b=kx81bpDuG9SyxPsCV+dJKkT4y9FAkBz8CevvET7T3tg5op3UUXfZYXLjyhgaNhNa63
+         qKAxmm2YZfNxExcXUxN8YlC2unEMXWopA5WAn91OVb5P1UhBLla1BtMcGQFzVmTkEllO
+         oSNkJPuouw4/3wcPPBCIUMzQcak8h8DrqV4ZSKLEN1WG7XU2np3oc6jj7iXRfPbpQurq
+         mO0H4ByMa/vKkqCHqoTQqJ5ITu2X08CIyjQjR2CJpP2QvHXYmYHGxhkvJzdhcog03k63
+         ZjYetnXLsbB2gKm/N6kIim6YrbCCKcUZuVIs4hUjS1lcWYtiCQ8Z/Ah2Eum95CCOwU5K
+         PMxA==
+X-Gm-Message-State: ABuFfoho9haVNLZtqoqGTaloG4OhMip6lR/LoyuO/WOjYw6WubWmI8lJ
+        aZU87K0Turlzggq9gcNmNWM=
+X-Google-Smtp-Source: ACcGV60HubiltAr4g5ewezKEF55xZm4sgv3Uy4x7QuefPFfNgwzkYmsT06VWJNJGWGPPM8uWo1OTDg==
+X-Received: by 2002:adf:f043:: with SMTP id t3-v6mr20736056wro.92.1539134360679;
+        Tue, 09 Oct 2018 18:19:20 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b124-v6sm9196876wmg.47.2018.10.09.18.19.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 09 Oct 2018 18:10:17 -0700 (PDT)
+        Tue, 09 Oct 2018 18:19:19 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        nico@cam.org, Nick Alcock <nix@esperi.org.uk>,
-        koreth@midwinter.com,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        git <git@vger.kernel.org>
-Subject: Re: What's so special about objects/17/ ?
-References: <7vr6lcj2zi.fsf@gitster.siamese.dyndns.org>
-        <alpine.LFD.0.999.0709042355030.19879@evo.linux-foundation.org>
-        <20070905074206.GA31750@artemis.corp> <87odgh0zn6.fsf@hades.wkstn.nix>
-        <46DEF1FA.4050500@midwinter.com> <877in50y7p.fsf@hades.wkstn.nix>
-        <alpine.LFD.0.9999.0709051438460.21186@xanadu.home>
-        <87k1mta9x5.fsf@evledraar.gmail.com>
-        <xmqqpnwltu8s.fsf@gitster-ct.c.googlers.com>
-        <xmqqlg79tta8.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZq3xtsbscrRFD8CSn++yrvdM6Ux+nkQ3AamgabXtPL+w@mail.gmail.com>
-        <xmqq4ldwszh8.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79ka5kKrSqPCWFMDetRLYxDqcguJUzJXDex9q-VMwT-ABAw@mail.gmail.com>
-Date:   Wed, 10 Oct 2018 10:10:16 +0900
-In-Reply-To: <CAGZ79ka5kKrSqPCWFMDetRLYxDqcguJUzJXDex9q-VMwT-ABAw@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 9 Oct 2018 10:37:59 -0700")
-Message-ID: <xmqqmurmobd3.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peartben@gmail.com
+Subject: Re: [PATCH v2] cache-tree: skip some blob checks in partial clone
+References: <20181008214816.42856-1-jonathantanmy@google.com>
+        <20181009184037.246871-1-jonathantanmy@google.com>
+Date:   Wed, 10 Oct 2018 10:19:18 +0900
+In-Reply-To: <20181009184037.246871-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 9 Oct 2018 11:40:37 -0700")
+Message-ID: <xmqqh8huoay1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -79,17 +66,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
->> Oh, I think I misled you by saying "more important".
->> ...
-> I do challenge the decision to take a hardcoded value, though, ...
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-I do not find any reason why you need to say "though" here.  If you
-understood the message you are responding to that use of hardcoded
-value was chosen not to help the end-user experience, it should have
-been clear that we are in agreement.
+> After feedback, I restricted this to partial clone. Once restricted, I
+> agree with Ben that this can be done for all users of
+> cache_tree_update(), not just unpack-trees, so I have removed the
+> ability to control the behavior using a flag.
 
-I also sometimes find certain people here are unnecessarily
-combative in their discussion.  It this just some language issue?
+Makes sense.  Great.
 
+> I also took the opportunity to simplify the missing check by using a
+> variable.
+>  
+> +		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
+> +			(repository_format_partial_clone &&
+> +			 ce_skip_worktree(ce));
+>  		if (is_null_oid(oid) ||
+> -		    (mode != S_IFGITLINK && !missing_ok && !has_object_file(oid))) {
+> +		    (!ce_missing_ok && !has_object_file(oid))) {
 
+OK.  "An attempt to check out null object is bad, and otherwise,
+unless we determined that it is OK to lack the object recorded in
+ce, it is bad too.  By the way, the way we determine if it is OK to
+be missing the object is given above".  Easier to read than the
+original.
