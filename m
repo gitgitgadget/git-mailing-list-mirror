@@ -2,82 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 807CB1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 22:26:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DAA61F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 22:27:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726008AbeJKFuY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:50:24 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36539 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725968AbeJKFuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:50:24 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a8-v6so7300864wmf.1
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=68fjZjzgLqlHm7KntaNwo3JeSC7HhtZjKzOX/Edz3L8=;
-        b=FmlmkVkT/3+rqvirH/Gf8DMHBnsRjhleqrn9rXKRuT32Q4PBRHN4kSxPpoQcTGRx10
-         2P6LQdPQAiBLCEZPnX3lw7Kd39N/1js2hfJWwbHkp4i4UyyncExhPNTjU99V6eAf692c
-         rXEmu/qqKEGEXxC+tzs/DaZTv4vc7zxWnLD4E9jvtHMqewpT5+h3+gBo5I0ySuxDmAeH
-         +YICShjpRAwh7LM2j1VYv6yg75EjUb8D4wreoszLL8+BsLuHnXNpsoYsAshZ8cCZUFcc
-         t8AY/J0g+aIoOe2AT2eqmZz8Yzi5cRKKBPES7vMJKi/z5wyTxqGaSkze4osj7QlEP7bE
-         65Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=68fjZjzgLqlHm7KntaNwo3JeSC7HhtZjKzOX/Edz3L8=;
-        b=IxsZm2nveNbcfUA/SUK0PrRgduR7fEm7hGwJKN2MbkX5+5KcwC8+RKocABuK8ipgwP
-         M8xm+65J0ZSv1WWreNnsGI4lcEh0AtYSBydyXhnGLtNxEDLC92g9BPucSgTCErdfPKkE
-         w6WLFiX2P6XY1t+0lOWZQ4F3RUthbGSamPRisjFsEd5xt0vPDKFBw7CK5QUAaMR8YHsk
-         yYJQp6F9DkFjoDrmAfMU/X+YLX8ZEYgP7n9t1weLDnqcJYMBklMZkhMz0OXlSD+zQnFz
-         spswUYnSasjYc+TjS0tFrNNE6miWfoZi4gS5ZG1bbCu1Z9/Pzvp5EGxn49ejQ9EYS4+c
-         hvpQ==
-X-Gm-Message-State: ABuFfogRVDqHVesQ0LkN29oln9nl97eXIYx9FmCXnwjzVM2z3dwvXLDg
-        RUXkm9zeXBn9lZm/vI9eLsI=
-X-Google-Smtp-Source: ACcGV63rhLqeCYqkAwdL5p7tOEGXmTbU8S4acQAMIKEuHD9nKIV+lrByqtdPrxGJ2D3jGfKAMpznTg==
-X-Received: by 2002:a1c:924d:: with SMTP id u74-v6mr2480838wmd.105.1539210371467;
-        Wed, 10 Oct 2018 15:26:11 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m143-v6sm17006378wmd.29.2018.10.10.15.26.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 15:26:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniels Umanovskis <daniels@umanovskis.se>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: move git-rev-parse from porcelain to plumbing
-References: <20181010213726.26111-1-daniels@umanovskis.se>
-Date:   Thu, 11 Oct 2018 07:26:10 +0900
-In-Reply-To: <20181010213726.26111-1-daniels@umanovskis.se> (Daniels
-        Umanovskis's message of "Wed, 10 Oct 2018 23:37:26 +0200")
-Message-ID: <xmqqy3b5jv5p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726066AbeJKFvO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:51:14 -0400
+Received: from newman.cs.utexas.edu ([128.83.139.110]:50603 "EHLO
+        newman.cs.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725968AbeJKFvO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:51:14 -0400
+Received: from vyasa.cs.utexas.edu (vyasa.cs.utexas.edu [128.83.130.99])
+        by newman.cs.utexas.edu (8.14.4/8.14.4/Debian-4.1ubuntu1) with ESMTP id w9AMQvur034698
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 Oct 2018 17:26:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs.utexas.edu;
+        s=default; t=1539210419;
+        bh=J+QaBRIl+VZkbUlQ1oVKg9a95ECPuHM8FMiB1d709LQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=f4Ib0h3gA1p3Oq23AMHYAZlnHlaIgBnHx7AOyZtexHsvetiP0noZv04XifNEDmFm0
+         +4sYVJH3Mv2zIO7CU2Zmjq7AHmT/R1h9AFoCEyBSjjvNNNR3gx2sNjy+hIB/MuguUu
+         wjsDS+ymDeqVF8i6uGsZ8a6ivrCAcjD5HmYQHpDc=
+Received: (from mihir@localhost)
+        by vyasa.cs.utexas.edu (8.15.2/8.15.2/Submit) id w9AMQvuF019912;
+        Wed, 10 Oct 2018 17:26:57 -0500
+From:   Mihir Mehta <mihir@cs.utexas.edu>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Mihir Mehta <mihir@cs.utexas.edu>
+Subject: [PATCH] doc: fix a typo and clarify a sentence
+Date:   Wed, 10 Oct 2018 17:26:54 -0500
+Message-Id: <20181010222654.19871-1-mihir@cs.utexas.edu>
+X-Mailer: git-send-email 2.19.0
+In-Reply-To: <xmqq36tdla1a.fsf@gitster-ct.c.googlers.com>
+References: <xmqq36tdla1a.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.9 (newman.cs.utexas.edu [128.83.139.110]); Wed, 10 Oct 2018 17:26:59 -0500 (CDT)
+X-Virus-Scanned: clamav-milter 0.98.7 at newman
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniels Umanovskis <daniels@umanovskis.se> writes:
+I noticed that git-merge-base was unlikely to actually be a git command,
+and tried it in my shell. Seeing that it doesn't work, I cleaned up two
+places in the docs where it appears.
 
-> git-rev-parse mostly seems like plumbing, and is more usd in
-> scripts than in regular use. Online it's often mentioned as
-> a plumbing command. Nonetheless it's listed under porcelain
-> interrogators in `man git`. It seems appropriate to formally
-> move git-rev-parse to plumbing interrogators.
+Signed-off-by: Mihir Mehta <mihir@cs.utexas.edu>
+---
+ Documentation/git-diff.txt                  | 4 ++--
+ Documentation/howto/update-hook-example.txt | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Correct.  "ancillary" category ended up with full of Porcelain, it
-seems, but there still are plumbing commands there, and this is a
-prime example that should not be mixed up with Porcelain commands.
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index b180f1fa5..030f162f3 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -72,10 +72,10 @@ two blob objects, or changes between two files on disk.
+ 	This form is to view the changes on the branch containing
+ 	and up to the second <commit>, starting at a common ancestor
+ 	of both <commit>.  "git diff A\...B" is equivalent to
+-	"git diff $(git-merge-base A B) B".  You can omit any one
++	"git diff $(git merge-base A B) B".  You can omit any one
+ 	of <commit>, which has the same effect as using HEAD instead.
+ 
+-Just in case if you are doing something exotic, it should be
++Just in case you are doing something exotic, it should be
+ noted that all of the <commit> in the above description, except
+ in the last two forms that use ".." notations, can be any
+ <tree>.
+diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
+index a5193b1e5..89821ec74 100644
+--- a/Documentation/howto/update-hook-example.txt
++++ b/Documentation/howto/update-hook-example.txt
+@@ -80,7 +80,7 @@ case "$1" in
+       info "The branch '$1' is new..."
+     else
+       # updating -- make sure it is a fast-forward
+-      mb=$(git-merge-base "$2" "$3")
++      mb=$(git merge-base "$2" "$3")
+       case "$mb,$2" in
+         "$2,$mb") info "Update is fast-forward" ;;
+ 	*)	  noff=y; info "This is not a fast-forward update.";;
+-- 
+2.19.0
 
-Among the remaining ones in the list, cherry and get-tar-commit-id
-are probably better classified as plumbing.  I do not know why
-cherry is marked for completion; perhaps some crazy people use that
-on the command line?
