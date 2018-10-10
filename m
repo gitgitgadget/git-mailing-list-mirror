@@ -2,195 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C54B51F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 20:56:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E92C1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 20:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725916AbeJKEUU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 00:20:20 -0400
-Received: from mail.weplayciv.com ([162.221.200.53]:35250 "EHLO
-        mail.weplayciv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725822AbeJKEUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 00:20:20 -0400
-Received: from localhost.localdomain (c-3985e555.02-149-6c6b7013.bbcust.telenor.se [85.229.133.57])
-        by mail.weplayciv.com (Postfix) with ESMTPSA id 5F8879444AE;
-        Wed, 10 Oct 2018 13:56:25 -0700 (PDT)
-From:   Daniels Umanovskis <daniels@umanovskis.se>
-To:     git@vger.kernel.org
-Cc:     Daniels Umanovskis <daniels@umanovskis.se>
-Subject: [PATCH v2 1/1] branch: introduce --show-current display option
-Date:   Wed, 10 Oct 2018 22:54:32 +0200
-Message-Id: <20181010205432.11990-2-daniels@umanovskis.se>
-X-Mailer: git-send-email 2.19.1.330.g93276587c.dirty
-In-Reply-To: <20181010205432.11990-1-daniels@umanovskis.se>
-References: <20181010205432.11990-1-daniels@umanovskis.se>
+        id S1725989AbeJKEXn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 00:23:43 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:37943 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725969AbeJKEXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 00:23:43 -0400
+Received: by mail-ed1-f66.google.com with SMTP id c1-v6so6243271ede.5
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 13:59:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Z1mF9rSDZF6x3zD2kILaSQtoBFDkVs6k0+NPLiIBubs=;
+        b=DHnhcJcE8tk37wl3TB11nKHQsq1QI+9FQDboAi0NV26PmOVNVBKOy3bljsqQ2Ne+/h
+         X9cdbl4QFReAVj4HcsFIl6uFdOckuCPp6AI6lu78pbsXqT0N5apCauDuRv/orQr2orq8
+         M8RSzlSHSon0quV+QAak78l9AaBioXeKdx32MlvI8i5npPKBv9h8pJFutB/wR1l/HGgB
+         AfP3BwTt9k7HoSS3G3DM5fa+28MlgSOSec9lJ4nEB8Nbc5HI2dt1Mv/e51tO8P0ZfR5C
+         Yz1qJ5DNUnIKmmxUaI3BajTUvYNEb6cg/6pBFBqT1m6DZ23LyOT8hFWDhe8CKXrT5iag
+         AVug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Z1mF9rSDZF6x3zD2kILaSQtoBFDkVs6k0+NPLiIBubs=;
+        b=QtJwT/vpcwdfVJDbMDuqbVBp0D+tTS+f6eetRTDnPNEdDPv/HBqLSXZqAfCtRxweSl
+         f+BfzACsi8VNcxJR0i4iy5uNWIXUW2hswLlBYq5jrTC5u0F8VYpwA+371zo9cxcS5+Ne
+         YZMZQDE4YNC8JpGlzBVQ3rur7l4Kw9DeLgLIzUzEYpRoOlmv8pls+tkGKJYXChY3sMvO
+         ijnOw4pRpaEY7AqCEdNksAk4Uvcg1As/xDvU0p21IrPmOToVUI/SOV0KrsRlmYUo8r2D
+         jwv+scMfAjQbJuOz4pYmO4hhpcduuNv70RAHA5wYU9tPfTVfdJWcQjIgjuARpG8AX9HT
+         zLZg==
+X-Gm-Message-State: ABuFfoidsEJTf59nznxQYtWjWPsiEVzgth7GbwQzvFF/1PuyNEhUKDvJ
+        yxftrno8hWa5XYzh1+3zaYM=
+X-Google-Smtp-Source: ACcGV60M3tYm0bJw5txNtn0VUnuvc3TLZZ3fwRNcAQYc6NVoG0LckqFn6X5BcOyc9SwWF7drirEmRQ==
+X-Received: by 2002:a05:6402:884:: with SMTP id e4mr45652097edy.1.1539205186917;
+        Wed, 10 Oct 2018 13:59:46 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id j22-v6sm7455053edr.96.2018.10.10.13.59.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 13:59:46 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] gc: introduce an --auto-exit-code option for undoing 3029970275
+References: <20181010174624.GC8786@sigill.intra.peff.net> <20181010192732.13918-1-avarab@gmail.com> <20181010203531.GA12949@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181010203531.GA12949@sigill.intra.peff.net>
+Date:   Wed, 10 Oct 2018 22:59:45 +0200
+Message-ID: <87tvltecvy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When called with --show-current, git branch will print the current
-branch name and terminate. Only the actual name gets printed,
-without refs/heads. In detached HEAD state, nothing is output.
 
-Intended both for scripting and interactive/informative use.
-Unlike git branch --list, no filtering is needed to just get the
-branch name.
+On Wed, Oct 10 2018, Jeff King wrote:
 
-Signed-off-by: Daniels Umanovskis <daniels@umanovskis.se>
----
- Documentation/git-branch.txt |  6 +++++-
- builtin/branch.c             | 21 ++++++++++++++++--
- t/t3203-branch-output.sh     | 41 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 65 insertions(+), 3 deletions(-)
+> On Wed, Oct 10, 2018 at 07:27:32PM +0000, Ævar Arnfjörð Bjarmason wrote:
+>
+>> Add an --auto-exit-code variable and a corresponding 'gc.autoExitCode'
+>> configuration option to optionally bring back the 'git gc --auto' exit
+>> code behavior as it existed between 2.6.3..2.19.0 (inclusive).
+>>
+>> This was changed in 3029970275 ("gc: do not return error for prior
+>> errors in daemonized mode", 2018-07-16). The motivation for that patch
+>> was to appease 3rd party tools whose treatment of the 'git gc --auto'
+>> exit code is different from that of git core where it has always been
+>> ignored.
+>
+> OK. I wouldn't want to use this myself, but I think you've made clear
+> why you find it useful. So I don't mind making it an optional behavior
+> (and it probably beats you trying to poke at the logfile yourself).
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index bf5316ffa..0babb9b1b 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git branch' [--color[=<when>] | --no-color] [-r | -a]
--	[--list] [-v [--abbrev=<length> | --no-abbrev]]
-+	[--list] [--show-current] [-v [--abbrev=<length> | --no-abbrev]]
- 	[--column[=<options>] | --no-column] [--sort=<key>]
- 	[(--merged | --no-merged) [<commit>]]
- 	[--contains [<commit]] [--no-contains [<commit>]]
-@@ -160,6 +160,10 @@ This option is only applicable in non-verbose mode.
- 	branch --list 'maint-*'`, list only the branches that match
- 	the pattern(s).
- 
-+--show-current::
-+	Print the name of the current branch. In detached HEAD state,
-+	nothing is printed.
-+
- -v::
- -vv::
- --verbose::
-diff --git a/builtin/branch.c b/builtin/branch.c
-index c396c4153..ab03073b2 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -443,6 +443,17 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	free(to_free);
- }
- 
-+static void print_current_branch_name()
-+{
-+	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
-+	const char *shortname;
-+	if (refname == NULL || !strcmp(refname, "HEAD"))
-+		return;
-+	if (!skip_prefix(refname, "refs/heads/", &shortname))
-+		die(_("unexpected symbolic ref for HEAD: %s"), refname);
-+	puts(shortname);
-+}
-+
- static void reject_rebase_or_bisect_branch(const char *target)
- {
- 	struct worktree **worktrees = get_worktrees(0);
-@@ -581,6 +592,7 @@ static int edit_branch_description(const char *branch_name)
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
-+	int show_current = 0;
- 	int reflog = 0, edit_description = 0;
- 	int quiet = 0, unset_upstream = 0;
- 	const char *new_upstream = NULL;
-@@ -620,6 +632,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('c', "copy", &copy, N_("copy a branch and its reflog"), 1),
- 		OPT_BIT('C', NULL, &copy, N_("copy a branch, even if target exists"), 2),
- 		OPT_BOOL('l', "list", &list, N_("list branch names")),
-+		OPT_BOOL(0, "show-current", &show_current, N_("show current branch name")),
- 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
-@@ -662,14 +675,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
- 			     0);
- 
--	if (!delete && !rename && !copy && !edit_description && !new_upstream && !unset_upstream && argc == 0)
-+	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
-+	    !show_current && !unset_upstream && argc == 0)
- 		list = 1;
- 
- 	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr ||
- 	    filter.no_commit)
- 		list = 1;
- 
--	if (!!delete + !!rename + !!copy + !!new_upstream +
-+	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
- 	    list + unset_upstream > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
-@@ -697,6 +711,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (!argc)
- 			die(_("branch name required"));
- 		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
-+	} else if (show_current) {
-+		print_current_branch_name();
-+		return 0;
- 	} else if (list) {
- 		/*  git branch --local also shows HEAD when it is detached */
- 		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index ee6787614..e9bc3b05f 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -100,6 +100,47 @@ test_expect_success 'git branch -v pattern does not show branch summaries' '
- 	test_must_fail git branch -v branch*
- '
- 
-+test_expect_success 'git branch `--show-current` shows current branch' '
-+	cat >expect <<-\EOF &&
-+	branch-two
-+	EOF
-+	git checkout branch-two &&
-+	git branch --current >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git branch `--show-current` is silent when detached HEAD' '
-+	git checkout HEAD^0 &&
-+	git branch --current >actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'git branch `--show-current` works properly when tag exists' '
-+	cat >expect <<-\EOF &&
-+	branch-and-tag-name
-+	EOF
-+	git checkout -b branch-and-tag-name &&
-+	git tag branch-and-tag-name &&
-+	git branch --current >actual &&
-+	git checkout branch-one &&
-+	git branch -d branch-and-tag-name &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git branch `--show-current` works properly with worktrees' '
-+	cat >expect <<-\EOF &&
-+	branch-one
-+	branch-two
-+	EOF
-+	git checkout branch-one &&
-+	git branch --current >actual &&
-+	git worktree add worktree branch-two &&
-+	cd worktree &&
-+	git branch --current >>../actual &&
-+	cd .. &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'git branch shows detached HEAD properly' '
- 	cat >expect <<EOF &&
- * (HEAD detached at $(git rev-parse --short HEAD^0))
--- 
-2.19.1.330.g93276587c.dirty
+[...]
 
+> I'm not sure if the config is going to actually help that much, though.
+> The callers within Git will generally ignore the exit code anyway. So
+> for those cases, setting it will at best do nothing, and at worst it may
+> confuse the few stragglers (e.g., the git-svn one under recent
+> discussion).
+
+Yeah git internals don't care, but we've never advertised the
+combination of --auto and gc.autoDetach=true as being something
+internal-only, so e.g. I wrote stuff expecting errors, and one might run
+"git gc --auto" in a repo whose .git/objects state is uncertain to see
+if it needed repack (and have a shell integration that reports
+failures...).
+
+> Callers who _are_ prepared to act on the exit code probably ought to
+> just use --auto-exit-code in their invocation.
+>
+> That said, I'm not entirely opposed to the matching config. There's
+> enough history here that somebody might want a sledgehammer setting to
+> go back to the old behavior.
+
+If it's not a config option then as git is upgraded I'll need to change
+my across-server invocation to be some variant of checking git version,
+then etiher using the --auto-exit-code option or not (which'll error on
+older gits). Easier to be able to just drop in a config setting before
+the upgrade.
