@@ -2,82 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 334361F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 13:59:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29C2B1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 14:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbeJJVWM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 17:22:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35444 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726515AbeJJVWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 17:22:12 -0400
-Received: (qmail 22743 invoked by uid 109); 10 Oct 2018 13:59:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 10 Oct 2018 13:59:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17138 invoked by uid 111); 10 Oct 2018 13:59:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Oct 2018 09:59:02 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Oct 2018 09:59:52 -0400
-Date:   Wed, 10 Oct 2018 09:59:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v3] coccicheck: process every source file at once
-Message-ID: <20181010135952.GA2933@sigill.intra.peff.net>
-References: <20181002200710.15721-1-jacob.e.keller@intel.com>
- <CA+P7+xoqKG84n5EMKbajuZoXrOKZMudZ6CT-OKzz8XYyTYaCWQ@mail.gmail.com>
- <CA+P7+xo=cY2nSHk99CETvba-nZ_jOan5YgpDUjaD=cpTs2ub3A@mail.gmail.com>
- <20181005124048.GT23446@localhost>
- <20181005162517.GB11254@sigill.intra.peff.net>
- <20181005183904.GV23446@localhost>
- <20181005190216.GB17482@sigill.intra.peff.net>
- <20181005195413.GX23446@localhost>
- <20181009031542.GD6250@sigill.intra.peff.net>
- <20181010114441.GD23446@szeder.dev>
+        id S1726693AbeJJVai (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 17:30:38 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:55517 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726664AbeJJVai (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 17:30:38 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 206-v6so5646647wmb.5
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 07:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=TTwNGyJv/eGDYzd5za95XWZ4a6trOgrQ8Fz4/lbgGcE=;
+        b=ikwj88C70hbJFT+ssANx+adRn36SbahKwOCSm0MtNLxRzwlOkC1/pIOBCe+KJgF9hF
+         tMkzRz7x8D4rmZdotGbp7wG4okwKb+8B4b3BSza/PLAY3Nlk5ySmVKgtdJVJLsdCXM3C
+         6Rt2+lhZ04/mI/xO8vHbMtmkaDEblNkOd45MDOz0izj1sih+xPSxS6saYZ1kOiQ+7/9O
+         je4h7IqotneDyEnWXQ3Dwaq6SwDUndePn7aU3gkwLl8+TNX4YTEeVQIAS1SGbn4Zkd2I
+         bgCJ4syaZv5nz+j7PIwF8kutOTy45bqI8K2yPMlSA6CmivpAF3r0z4M7Wxd3C4ll2WuB
+         tExQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=TTwNGyJv/eGDYzd5za95XWZ4a6trOgrQ8Fz4/lbgGcE=;
+        b=Q5XACEOOZFCELgyncm9B7oOfcL2zMwSuHSeKJK1NjtODTF62RJLIkK05xqReDQQ49o
+         xKi/4Ce2jUu5otgzS0slCLHs7LQbdzaQZTyiHKhSppgYSj+iSJVp7/2RKJy3g80yVNvA
+         wc/tgxVBk++4TaZW+j6jY9B0D+wcR0N5G14cgE5y1tmSzlAv2+dkcLcZ6W7rD/0J3lJ3
+         5R9IYmlNHcZcEoFVFtg8EZh0M2CFSwabNt3EgWgtRv8bmYufL7HFvs55cOM0z3fg+dAR
+         s29bn7MNCve2c+2XdxBQKwehE6Miz3zM2Q4d2RUzmKbDQskfm4K9Xpe4rHxjEg9oyJ1F
+         7TqA==
+X-Gm-Message-State: ABuFfojZ1QELhnJMhxDrUeBlxsrzGFjOtbX6xe5FB0wqypWBNX4m2igY
+        iNRsya7Br+WWlTRSKYRXerk=
+X-Google-Smtp-Source: ACcGV63WD99wThwqSfsxeR+VaxgTz6zoubVOSuPdqJxkWSTuge2NX2NA58Q78RGp2g7WhYyn+OfRLA==
+X-Received: by 2002:a1c:c012:: with SMTP id q18-v6mr1041665wmf.150.1539180496583;
+        Wed, 10 Oct 2018 07:08:16 -0700 (PDT)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id y65-v6sm13881069wmg.40.2018.10.10.07.08.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 07:08:15 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] mingw: bump the minimum Windows version to Vista
+References: <pull.44.git.gitgitgadget@gmail.com> <2b127d9669aa7b73ced7611b6e77044f5efed11d.1538595818.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <2b127d9669aa7b73ced7611b6e77044f5efed11d.1538595818.git.gitgitgadget@gmail.com>
+Date:   Wed, 10 Oct 2018 16:08:14 +0200
+Message-ID: <87zhvlevxt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181010114441.GD23446@szeder.dev>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 10, 2018 at 01:44:41PM +0200, SZEDER Gábor wrote:
 
-> > So that's really weird and counter-intuitive, since we should be doing
-> > strictly less work. I know that spatch tries to parallelize itself,
-> > though from my tests, 1.0.4 does not. I wonder if the version in Travis
-> > differs in that respect and starts too many threads, and the extra time
-> > is going to contention and context switches.
-> 
-> I don't think it does any parallel work.
-> 
-> Here is the timing again from my previous email:
-> 
->   960.50user 22.59system 16:23.74elapsed 99%CPU (0avgtext+0avgdata 1606156maxresident)k
-> 
-> Notice that 16:23 is 983s, and that it matches the sum of the user and
-> system times.  I usually saw this kind of timing with CPU-intensive
-> single-threaded programs, and if there were any parallelization, then I
-> would expect the elapsed time to be at least somewhat smaller than the
-> other two.
+On Wed, Oct 03 2018, Johannes Schindelin via GitGitGadget wrote:
 
-Ah, right, I should have been able to figure that out myself. So scratch
-that theory. My "hypervisor stalling our memory reads" theory is still
-plausible, but I don't know how we would test it.
+> Quite some time ago, a last plea to the XP users out there who want to
+> see Windows XP support in Git for Windows, asking them to get engaged
+> and help, vanished into the depths of the universe.
+>
+> We tried for a long time to play nice with the last remaining XP users
+> who somehow manage to build Git from source, but a recent update of
+> mingw-w64 (7.0.0.5233.e0c09544 -> 7.0.0.5245.edf66197) finally dropped
+> the last sign of XP support, and Git for Windows' SDK is no longer able
+> to build core Git's `master` branch as a consequence. (Git for Windows'
+> `master` branch already bumped the minimum Windows version to Vista a
+> while ago, so it is fine.)
+>
+> It is time to require Windows Vista or later to build Git from source.
+> This, incidentally, lets us use quite a few nice new APIs.
+>
+> It also means that we no longer need the inet_pton() and inet_ntop()
+> emulation, which is nice.
 
-I guess in some sense it doesn't matter. If it's slower, we're not
-likely to be able to fix that. So I guess we just need the fallback to
-the current behavior.
+Earlier in this series you add a:
 
--Peff
+#if defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x600
+...
+#endif
+
+Shouldn't that now be something like:
+
+#if defined(_WIN32_WINNT)
+#if _WIN32_WINNT >= 0x600
+...
+#else
+#error "You need at least Windows Vista to build Git!"
+#endif
+#endif
+
+Or do we catch users building on non-supported versions earlier somehow
+(i.e. not just with a flood of compilation errors).
+
+> diff --git a/config.mak.uname b/config.mak.uname
+> index e47af72e01..8acdeb71fd 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -381,8 +381,6 @@ ifeq ($(uname_S),Windows)
+>  	NO_PYTHON = YesPlease
+>  	BLK_SHA1 = YesPlease
+>  	ETAGS_TARGET = ETAGS
+> -	NO_INET_PTON = YesPlease
+> -	NO_INET_NTOP = YesPlease
+>  	NO_POSIX_GOODIES = UnfortunatelyYes
+>  	NATIVE_CRLF = YesPlease
+>  	DEFAULT_HELP_FORMAT = html
+> @@ -529,8 +527,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>  	NO_REGEX = YesPlease
+>  	NO_PYTHON = YesPlease
+>  	ETAGS_TARGET = ETAGS
+> -	NO_INET_PTON = YesPlease
+> -	NO_INET_NTOP = YesPlease
+>  	NO_POSIX_GOODIES = UnfortunatelyYes
+>  	DEFAULT_HELP_FORMAT = html
+>  	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
+
+So before we were defining NO_INET_{PTON,NTOP} because XP needed it, but
+doing so on all Windows versions, is there other compat stuff there
+that's just catering to the lowest common denominator, and if so
+shouldn't that be version checked against the NT version?
+
+Both of the above are just questions I was curious about since I saw
+your <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>, and
+shouldn't bee seen as bumping this to "this needs a re-roll" or it
+should be delayed in getting to master.
