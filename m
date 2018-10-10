@@ -2,112 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23CB41F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 14:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7BB11F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 14:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726810AbeJJVlI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 17:41:08 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:44876 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726562AbeJJVlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 17:41:07 -0400
-Received: by mail-wr1-f45.google.com with SMTP id 63-v6so5950450wra.11
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 07:18:44 -0700 (PDT)
+        id S1726762AbeJJVrL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 17:47:11 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39262 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726562AbeJJVrL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 17:47:11 -0400
+Received: by mail-wr1-f67.google.com with SMTP id 61-v6so5972228wrb.6
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 07:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mc1Z80aSJdN6iNwTsLGrNHFfv9Fts/PdCIK3JtMTUoo=;
-        b=AsUI5/8KW0vYWT963a7DIh4z/A11OjDCVRlIpIEVXRQn2vAoDgI9IKOHytIczU7ApW
-         EUgmMrgsBFRAyn3S1mtv8kVsmEO1Z81gVReFE5vA1sKxbWeFBgjjqGKZtdB4KR4l4kJy
-         yC5RQ2cnZVh/xK5Nd4F7e6+II6+2LNLquuLH9uYaT0f6ynlymnyjOMwLbHNmXH1yb9RR
-         MBA9qB8IT0ySDd+lzh+DKURSFlzLXemNxp/M5sqrJOX/1QplCtRUfGkN4m8fEOF82+sa
-         7Vt1BwAZ7w8Bz4goBO5WHFkpuIfakx4dP561VL3BwGUduB371wbuuJ8QIXF6D/FmjyqT
-         Bqsw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Qt0SkGoQcKAdZozDP/WYfDMHhtJrwoT8HlfTiy36ieg=;
+        b=cNpsRs2OCsqZ9q2ahQe5wSWOpjsxlR2WtnaeikPY/BdRU1Q72gz1eLK6e+/jp6FIFC
+         3yvbW+1hpqeGW6M6zkfRAR0H0Ulq5lZaSuFgyqTcLZRXZfrJW+KttxpnFjUwMft1Jjem
+         izPD+eCaQP8yTAjtSjkl+wl2jJp5KbgtfZ2JjKPUjagYKzu5PI2eFQv/CBIzF0a8TeW9
+         VgSXs4AJKdFK0isQkOmeGkiCbW5ZyqRwUW4zlnlhdhM9FjibijutCMvkBpwTAjWVnfL/
+         e1a26nZ+ABd0tqSii/404Qos5CZmYStxZ8lVN76oQZIkHcrDT4YWA+BvmIy1qb+f5oql
+         TsrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mc1Z80aSJdN6iNwTsLGrNHFfv9Fts/PdCIK3JtMTUoo=;
-        b=eJhNlPkmadoCpFvFmzY+n29Ha8mQgZddjl4NDTnubwP0nNV1GgqVFZT71xvcbiAPaq
-         dM52FuAut3BBCcM2OV3lGSB4lyMxnjhlrOaZmfgregUkPC87ALGRhb9e3hsy+rVO3RyV
-         f4qQq000pyBkaRuzoUX+R687/PDwKw9iOO4eLronhsIsrkIrgWsLCQ8n6bVCObBbnUjx
-         VaUAPi1Bo0Q7sOo37rJ8Pd5Tibf3cbZT2NOE5jnxSTNVANsFnX8I3kOryxlSaNldVs17
-         LlicJLBjN3u5PM8EipvtOVVv0bTP+KmaaYCwsXFNseHQX7kdxHXC3oax155vUfSflKFB
-         Jk2A==
-X-Gm-Message-State: ABuFfoimnDFyqzrFSGHFTg1kyRMJiKMQU1MX74xKUTfjbBHAYzzJAiM1
-        VOBulvFkEN4bDrHTSIj+pEk=
-X-Google-Smtp-Source: ACcGV62JDVaCEE8lel+/Gxdthfbf1cInaC5lxL77tqLeId7woedcH/jyekIpUzGOGnjwSa6I/N8fZg==
-X-Received: by 2002:adf:d082:: with SMTP id y2-v6mr17291842wrh.314.1539181123581;
-        Wed, 10 Oct 2018 07:18:43 -0700 (PDT)
-Received: from localhost ([31.127.45.92])
-        by smtp.gmail.com with ESMTPSA id h78-v6sm15580129wmd.4.2018.10.10.07.18.42
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Qt0SkGoQcKAdZozDP/WYfDMHhtJrwoT8HlfTiy36ieg=;
+        b=Drhi7uUrPME6AGj4vo65VN87u7vuqU4sGkkSivRGFuXz/qr5nBjNjb8Yz70nSsbkzS
+         KBAd9AWobR6x4QkJiPE2n1EF86DBMD0P482pbukpUb1ivtfIMDzF/e5mNZQII6Ex82p4
+         VQfHzvfcqF3eDnfYKpAS5BX21lCAdiKBV7JNGYHWofY+HTsVwYpzRQfbYv8krrOlgx2G
+         wrK8Ice4i0ql+V5042Z6sFEOnq7DAkgVHotl0Fyko1kAtDkIQsTBjjbtDUzKJ3QEDs+G
+         cv4j4gnDDeOFO9DkI0chKez8EEEKPeqL0Vp824tbBixASqs0ab3Nm5DMiYtUatosR4t9
+         U1rA==
+X-Gm-Message-State: ABuFfojUBmHNF/ApB9TqwfHeVIddxofq+IJL0pIcADuonbwDtafaT/i+
+        J3sCpc4M6aVocBkZxNh16ec=
+X-Google-Smtp-Source: ACcGV61V05wHOBowVCjTT11K5v2GLIeEpqb+rOjJ4mgQq34GhEcEGMv8TuRg9+9CFry58gYpSfsnQA==
+X-Received: by 2002:a5d:44ce:: with SMTP id z14-v6mr20395998wrr.286.1539181485138;
+        Wed, 10 Oct 2018 07:24:45 -0700 (PDT)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id q200-v6sm18424689wmd.2.2018.10.10.07.24.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 07:18:42 -0700 (PDT)
-Date:   Wed, 10 Oct 2018 15:18:41 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
+        Wed, 10 Oct 2018 07:24:44 -0700 (PDT)
+Date:   Wed, 10 Oct 2018 15:24:34 +0100
+From:   Rafael =?iso-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
-Message-ID: <20181010141841.GA17445@hank.intra.tgummerer.com>
-References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+Cc:     Daniels Umanovskis <daniels@umanovskis.se>, git@vger.kernel.org
+Subject: Re: [PATCH 0/2] branch: introduce --current display option
+Message-ID: <20181010142423.GA3390@rigel>
+References: <20181009182006.9446-1-daniels@umanovskis.se>
+ <xmqq8t36q1k6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq8t36q1k6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/10, Junio C Hamano wrote:
-> * ps/stash-in-c (2018-08-31) 20 commits
->  - stash: replace all `write-tree` child processes with API calls
->  - stash: optimize `get_untracked_files()` and `check_changes()`
->  - stash: convert `stash--helper.c` into `stash.c`
->  - stash: convert save to builtin
->  - stash: make push -q quiet
->  - stash: convert push to builtin
->  - stash: convert create to builtin
->  - stash: convert store to builtin
->  - stash: mention options in `show` synopsis
->  - stash: convert show to builtin
->  - stash: convert list to builtin
->  - stash: convert pop to builtin
->  - stash: convert branch to builtin
->  - stash: convert drop and clear to builtin
->  - stash: convert apply to builtin
->  - stash: add tests for `git stash show` config
->  - stash: rename test cases to be more descriptive
->  - stash: update test cases conform to coding guidelines
->  - stash: improve option parsing test coverage
->  - sha1-name.c: add `get_oidf()` which acts like `get_oid()`
-> 
->  "git stash" rewritten in C.
-> 
->  Undecided.  This also has been part of my personal build.  I do not
->  offhand recall if this also had the same exposure to the end users
->  as "rebase" and "rebase -i".  I am tempted to merge this to 'next'
->  soonish.
-> 
->  Opinions?
+On Wed, Oct 10, 2018 at 05:59:05AM +0900, Junio C Hamano wrote:
+>
+> But I do not think that is what is going on.  There is "--list" that
+> lists branches whose name match given patterns, and at the end-user
+> level (I haven't seen the implementation) this is another mode of
+> that operation that limits itself to the one that is currently
+> checked out
+>
 
-There was a v9 of this series [*1*], which hasn't been picked up yet.
-Was that intentional, or an oversight?
+Given the idea that showing the current branch is a particular case of
+what --list does, one option could be to treat the 'HEAD' pattern
+specially.
 
-I left some comments on that iteration.  Some were just style nits,
-but I think at least [*2*] should be addressed before we merge this
-down to master, not sure if any of my other comments apply to v8 as
-well.  I'm happy to send fixup patches, or a patches on top of
-this series for that and my other comments, should they apply to v8,
-or wait for Paul-Sebastian to send a re-roll.  What do you prefer?
+[After writing another version of this email, I found that we
+already special case the pattern 'HEAD']
 
-[*1*]: <cover.1537913094.git.ungureanupaulsebastian@gmail.com>
-[*2*]: <20180930174848.GE2253@hank.intra.tgummerer.com>
+$git branch; already treats the 'HEAD' pattern specially to print
+something like: "* (HEAD detached at e83c516331)" when the HEAD is
+detached. But returns without output when the HEAD is attached.
+
+We could make $git branch --list HEAD; print the current branch
+paralleling nicely with what $git rev-parse --abrev-ref HEAD; already
+does when given attached and detached HEAD; But keeping the perks of the
+more human-readable output (color, * marker, formatting, etc).
+
+Since the output of git branch isn't meant to be parsable, changing this
+behaviour shouldn't affect users, and introduce the feature without the
+need of new options.
+
+But I suspect this approach may be diverging from the spirit of this
+patch.
+
+From my time spent on #git, I find that the concept of 'HEAD' is
+something that many new users misunderstand. So, if the original
+motivation behind this patch is to be able to determine the current
+branch without using the concept of 'HEAD', my suggestion falls short.
+
+Cheers,
+Rafael Ascensão
+
