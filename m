@@ -2,222 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C9E91F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 21:56:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6FB51F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 22:07:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725879AbeJKFU4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:20:56 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35796 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbeJKFU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:20:56 -0400
-Received: by mail-ed1-f65.google.com with SMTP id y19-v6so6368435edd.2
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:56:48 -0700 (PDT)
+        id S1726036AbeJKFbx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:31:53 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:40052 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbeJKFbx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:31:53 -0400
+Received: by mail-ed1-f66.google.com with SMTP id r1-v6so6375398edd.7
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=A3nc0NwKBr3kTQfvdd1lygCgKQik0XuNCd13/sn1Ejc=;
-        b=pARAxW0nhasqbmRYkRA5tmp2E8ZQTFAG2kDsrbT36Ep+vcJ9XOypvK/QK9DkN+lkIb
-         6Ia7YF3FqgHL298ZltZKHdr8jsBO41hH8r565Oxbim+4xo+5cOZw8sIJ13juxa1mUpWG
-         /qQGURm6lyY3iaVe74/eRBh/kU6q784Ic2FsODdvjxBu76Ehz5u7+F/YuI5TbWDTSwlc
-         pMelCjaI8t6Pcv7eLFKB/sm7ugsJbMna7nQkZysszf9d6jEUkVpK8XB0M15x4H2ha8Ew
-         3UadWE+yo2k/c6/I8y029naQEb7qTWUYSEQ+BnvwlyuwzDu3vMccGJpQbCqAFTyCKfL9
-         FAnw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=nWQ0rvXDVIrcQoXMzCSGka/jiyh0gYAeOvC/ut+Oo2s=;
+        b=qXad/zgxC8kZVN4gv5j53JgJrT4dSa21mV9OgK4HcK5hxGkAIgrn8t0aHdqnzS2Ag+
+         cpbJ/c0T3hK5nS+wZyUmKo6/Yankhl4EJwtl897z3IIt0W342Q+K7n/QTv+cO4G1pAs+
+         uuItWgPAze8MovZqUh+6ii+1tJ2G8Lg5kv/GBkkqPx+vFo8ElY8bzPLQ/ce7xg8FtXAm
+         tEcn/zYR1Yy32AxALPT3N5hxVusn9x0SRkBjQyf/Wyo05yU375cCWYMcPERZFNkscQ+k
+         0Bfifdex7dWLWQP68jt0P7THgHQz+5WOXexkNHWkiiDO1tJ+goxjFIDrh7ixqZZV7e2i
+         KeAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=A3nc0NwKBr3kTQfvdd1lygCgKQik0XuNCd13/sn1Ejc=;
-        b=MEvlwMicmeYD4rzFen8E2nvOgkswV/tIVm5s/79p2wx3UcRIagGRP8j5yNZFPm92el
-         c8pT39XClFXX0iO7bu/SlVz2b+veRZ82qKEM6HR1BrH/z1Zp4d3ZbC+YjjSaMLlMPAHQ
-         p74SkcVBWi9aYHljhqHz1NCXsHRvtH1qpA6tT0c9en8dpL9+C+OZXsWQW0gAUuSmPDOn
-         XkJKInbiCPMiRxF3W/2Nb7xYUlpLNCCWH79Kzjjbjm6W2ZkxQfUtC4s2hMM6zU3hOb8n
-         ljmIIdf/ZYS5jkzQvvbkTu0jA4T248Ey7OHBRvOvddsIUqxUdC0yPt2mBdXWZmeNikS2
-         nlbg==
-X-Gm-Message-State: ABuFfognFkVk6b5KwBZ/d2w00IYzXnZ7rbLG0iaCDkFJr2Z/SS7S8MIx
-        2Uyb+itCqY6nPRFK3wgGKbWUOi2gHck=
-X-Google-Smtp-Source: ACcGV63MPue6XA4OZc2fZmqz0CqYH4iPmcu7Y9vEmQ0DJari/auVi8ZZ/M9AgxG/tU9XZ/XkLUVbWg==
-X-Received: by 2002:a17:906:5387:: with SMTP id g7-v6mr34937077ejo.174.1539208607438;
-        Wed, 10 Oct 2018 14:56:47 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id w56-v6sm8654516edd.78.2018.10.10.14.56.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 14:56:46 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=nWQ0rvXDVIrcQoXMzCSGka/jiyh0gYAeOvC/ut+Oo2s=;
+        b=sy+uoUquyGyaRnLLa3v6SoKFyWa6oI5kFjubRk92Ql28viSWdh+ItthwmT9bGXshmY
+         w40ye2RtTjiVluZbu7CKd6CGWGprB6F2LtovR51wE1pgiLJbGQ+B/Rc10wTJ0AXTjpY1
+         Fkk6RSzsZpQvCZuDCe8VIuTDhf64bvLYJeMN2h/7dX3nZHAMjgWOtMPEfgC31CAbnk6R
+         J1SJrXwCZ1vXzLO0zV/gx+a5CM23nGpJQeAipVQVKN6nivjQ8Tr8FPm5udcNd4UQ03pf
+         9YexCKNdN7vQqSQJEjQ+XmQInXKMZMzVMO2kK3w1m330fkc0m3q1ZAcZFwW3QcBAUIwT
+         mzCw==
+X-Gm-Message-State: ABuFfoj2R+7gXA8h8EPlUaqrWVvSoFJP5PmcgO177yXns68RlN9FmDFh
+        l9gvz+oyOsa3xgehdw6EVns=
+X-Google-Smtp-Source: ACcGV61Nx8ClWJS1M+4Sr+rqzEkHEXo+9wKu5KtcyL4YnBSebJSPceu5AzeRBfwza8ja9sBK+uX36A==
+X-Received: by 2002:a50:8f23:: with SMTP id 32-v6mr492048edy.158.1539209262984;
+        Wed, 10 Oct 2018 15:07:42 -0700 (PDT)
+Received: from szeder.dev (x4db070c3.dyn.telefonica.de. [77.176.112.195])
+        by smtp.gmail.com with ESMTPSA id p19-v6sm1126290ejw.69.2018.10.10.15.07.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 10 Oct 2018 15:07:41 -0700 (PDT)
+Date:   Thu, 11 Oct 2018 00:07:39 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git List <git@vger.kernel.org>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 1/2] commit-graph write: add progress output
-References: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com> <20180917153336.2280-2-avarab@gmail.com> <20181010203738.GE23446@szeder.dev>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181010203738.GE23446@szeder.dev>
-Date:   Wed, 10 Oct 2018 23:56:45 +0200
-Message-ID: <87pnwhea8y.fsf@evledraar.gmail.com>
+Subject: Re: We should add a "git gc --auto" after "git clone" due to commit
+ graph
+Message-ID: <20181010220739.GF23446@szeder.dev>
+References: <87tvm3go42.fsf@evledraar.gmail.com>
+ <20181003133650.GN23446@localhost>
+ <87r2h7gmd7.fsf@evledraar.gmail.com>
+ <20181003141732.GO23446@localhost>
+ <87o9cbglez.fsf@evledraar.gmail.com>
+ <20181003145308.GP23446@localhost>
+ <87murvgir6.fsf@evledraar.gmail.com>
+ <20181003165926.GR23446@localhost>
+ <xmqqpnwo3ow9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqpnwo3ow9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Oct 04, 2018 at 11:09:58PM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> >>     git-gc - Cleanup unnecessary files and optimize the local repository
+> >> 
+> >> Creating these indexes like the commit-graph falls under "optimize the
+> >> local repository",
+> >
+> > But it doesn't fall under "cleanup unnecessary files", which the
+> > commit-graph file is, since, strictly speaking, it's purely
+> > optimization.
+> 
+> I won't be actively engaged in this discussion soon, but I must say
+> that "git gc" doing "garbage collection" is merely an implementation
+> detail of optimizing the repository for further use.  And from that
+> point of view, what needs to be updated is the synopsis of the
+> git-gc doc.  It states "X and Y" above, but it actually is "Y by
+> doing X and other things".
 
-On Wed, Oct 10 2018, SZEDER Gábor wrote:
+Well, then perhaps the name of the command should be updated, too, to
+better reflect what it actually does...
 
-> On Mon, Sep 17, 2018 at 03:33:35PM +0000, Ævar Arnfjörð Bjarmason wrote:
->>     $ git -c gc.writeCommitGraph=true gc
->>     [...]
->>     Annotating commits in commit graph: 1565573, done.
->>     Computing commit graph generation numbers: 100% (782484/782484), done.
->
-> While poking around 'commit-graph.c' in my Bloom filter experiment, I
-> saw similar numbers like above, and was confused by the much higher
-> than expected number of annotated commits.  It's about twice as much
-> as the number of commits in the repository, or the number shown on the
-> very next line.
->
->> diff --git a/commit-graph.c b/commit-graph.c
->> index 8a1bec7b8a..2c5d996194 100644
->> --- a/commit-graph.c
->> +++ b/commit-graph.c
->> -static void close_reachable(struct packed_oid_list *oids)
->> +static void close_reachable(struct packed_oid_list *oids, int report_progress)
->>  {
->>  	int i;
->>  	struct commit *commit;
->> +	struct progress *progress = NULL;
->> +	int j = 0;
->>
->> +	if (report_progress)
->> +		progress = start_delayed_progress(
->> +			_("Annotating commits in commit graph"), 0);
->>  	for (i = 0; i < oids->nr; i++) {
->> +		display_progress(progress, ++j);
->>  		commit = lookup_commit(the_repository, &oids->list[i]);
->>  		if (commit)
->>  			commit->object.flags |= UNINTERESTING;
->> @@ -604,6 +616,7 @@ static void close_reachable(struct packed_oid_list *oids)
->>  	 * closure.
->>  	 */
->>  	for (i = 0; i < oids->nr; i++) {
->> +		display_progress(progress, ++j);
->>  		commit = lookup_commit(the_repository, &oids->list[i]);
->>
->>  		if (commit && !parse_commit(commit))
->> @@ -611,19 +624,28 @@ static void close_reachable(struct packed_oid_list *oids)
->>  	}
->
-> The above loops have already counted all the commits, and, more
-> importantly, did all the hard work that takes time and makes the
-> progress indicator useful.
->
->>  	for (i = 0; i < oids->nr; i++) {
->> +		display_progress(progress, ++j);
+> I understand your "by definition there is no garbage immediately
+> after clone" position, and also I would understand if you find it
+> (perhaps philosophically) disturbing that "git clone" may give users
+> a suboptimal repository that immediately needs optimizing [*1*].
+> 
+> But that bridge was crossed long time ago ever since pack transfer
+> was invented.  The data source sends only the pack data stream, and
+> the receiving end is responsible for spending cycles to build .idx
+> file.  Theoretically, .pack should be all that is needed---you
+> should be able to locate any necessary object by parsing the .pack
+> file every time you open it, and .idx is mere optimization.  You can
+> think of the .midx and graph files the same way.
 
-[...]
+I don't think this is a valid comparison, because, practically, Git
+just didn't work after I deleted all pack index files.  So while they
+can be easily (re)generated, they are essential to make pack files
+usable.  The commit-graph and .midx files, however, can be safely
+deleted, and everything keeps working as before.
 
-> This display_progress() call, however, doesn't seem to be necessary.
-> First, it counts all commits for a second time, resulting in the ~2x
-> difference compared to the actual number of commits, and then causing
-> my confusion.  Second, all what this loop is doing is setting a flag
-> in commits that were already looked up and parsed in the above loops.
-> IOW this loop is very fast, and the progress indicator jumps from
-> ~780k right to 1.5M, even on my tiny laptop, so it doesn't need a
-> progress indicator at all.
+OTOH, this is an excellent comparison, and I do think of the .midx and
+graph files the same way as the pack index files.  During a clone, the
+pack index file isn't generated by running a separate 'git gc
+(--auto)', but by clone (or fetch-pack?) running 'git index-pack'.
+The way I see it that should be the case for these other files as well.
 
-You're right, I tried this patch on top:
+And it is much simpler, shorter, and cleaner to either run 'git
+commit-graph ...' or even to call write_commit_graph_reachable()
+directly from cmd_clone(), than to bolt on another option and config
+variable on 'git gc' [1] to coax it into some kind of an "after clone"
+mode, that it shouldn't be doing in the first place.  At least for
+now, so when we'll eventually get as far ...
 
-    diff --git a/commit-graph.c b/commit-graph.c
-    index a686758603..cccd83de72 100644
-    --- a/commit-graph.c
-    +++ b/commit-graph.c
-    @@ -655,12 +655,16 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
-     		if (commit)
-     			commit->object.flags |= UNINTERESTING;
-     	}
-    +	stop_progress(&progress); j = 0;
+> I would not be surprised by a future in which the initial index-pack
+> that is responsible for receiving the incoming pack stream and
+> storing that in .pack file(s) while creating corresponding .idx
+> file(s) becomes also responsible for building .midx and graph files
+> in the same pass, or at least smaller number of passes.  Once we
+> gain experience and confidence with these new auxiliary files, that
+> ought to happen naturally.  And at that point, we won't be having
+> this discussion---we'd all happily run index-pack to receive the
+> pack data, because that is pretty much the fundamental requirement
+> to make use of the data.
 
-     	/*
-     	 * As this loop runs, oids->nr may grow, but not more
-     	 * than the number of missing commits in the reachable
-     	 * closure.
-     	 */
-    +	if (report_progress)
-    +		progress = start_delayed_progress(
-    +			_("Annotating commits in commit graph 2"), 0);
-     	for (i = 0; i < oids->nr; i++) {
-     		display_progress(progress, ++j);
-     		commit = lookup_commit(the_repository, &oids->list[i]);
-    @@ -668,7 +672,11 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
-     		if (commit && !parse_commit(commit))
-     			add_missing_parents(oids, commit);
-     	}
-    +	stop_progress(&progress); j = 0;
+... that what you wrote here becomes a reality (and I fully agree that
+this is what we should ultimately aim for), then we won't have that
+option and config variable still lying around and requiring
+maintenance because of backwards compatibility.
 
-    +	if (report_progress)
-    +		progress = start_delayed_progress(
-    +			_("Annotating commits in commit graph 3"), 0);
-     	for (i = 0; i < oids->nr; i++) {
-     		display_progress(progress, ++j);
-     		commit = lookup_commit(the_repository, &oids->list[i]);
+1 - https://public-inbox.org/git/87in2hgzin.fsf@evledraar.gmail.com/
 
-And on a large repo with around 3 million commits the 3rd progress bar
-doesn't kick in.
+> [Footnote]
+> 
+> *1* Even without considering these recent invention of auxiliary
+>     files, cloning from a sloppily packed server whose primary focus
+>     is to avoid spending cycles by not computing better deltas will
+>     give the cloner a suboptimal repository.  If we truly want to
+>     have an optimized repository ready to be used after cloning, we
+>     should run an equivalent of "repack -a -d -f" immediately after
+>     "git clone".
 
-But if I apply this on top:
+I noticed a few times that I got surprisingly large packs from GitHub,
+e.g. there is over 70% size difference between --single-branch cloning
+v2.19.0 from GitHub and from my local clone or from kernel.org (~95MB
+vs. ~55MB vs ~52MB).  After running 'git repack -a -d -f' they all end
+up at ~65MB, which is a nice size reduction for the clone from GitHub,
+but the others just gained 10-13 more MBs.
 
-    diff --git a/progress.c b/progress.c
-    index 5a99c9fbf0..89cc705bf7 100644
-    --- a/progress.c
-    +++ b/progress.c
-    @@ -58,8 +58,8 @@ static void set_progress_signal(void)
-     	sa.sa_flags = SA_RESTART;
-     	sigaction(SIGALRM, &sa, NULL);
-
-    -	v.it_interval.tv_sec = 1;
-    -	v.it_interval.tv_usec = 0;
-    +	v.it_interval.tv_sec = 0;
-    +	v.it_interval.tv_usec = 250000;
-     	v.it_value = v.it_interval;
-     	setitimer(ITIMER_REAL, &v, NULL);
-     }
-
-I.e. start the timer after 1/4 of a second instead of 1 second, I get
-that progress bar.
-
-So I'm inclined to keep it. It just needs to be 4x the size before it's
-noticeably hanging for 1 second.
-
-That repo isn't all that big compared to what we've heard about out
-there, and inner loops like this have a tendency to accumulate some more
-code over time without a re-visit of why we weren't monitoring progress
-there.
-
-But maybe we can fix the message. We say "Annotating commits in commit
-grap", not "Counting" or whatever. I was trying to find something that
-didn't imply that we were doing this once. One can annotate a thing more
-than once, but maybe ther's a better way to explain this...
-
-We had some more accurate progress reporting in close_reachable(),
-discussed in
-https://public-inbox.org/git/87efe5qqks.fsf@evledraar.gmail.com/ I still
-think the *main* use-case for these things is to just report that we're
-not hanging, so maybe the proper solution is to pick up Duy's patch to
-display a spinner insted of a numeric progress.
-
->>  		commit = lookup_commit(the_repository, &oids->list[i]);
->>
->>  		if (commit)
->>  			commit->object.flags &= ~UNINTERESTING;
->>  	}
->> +	stop_progress(&progress);
->>  }
