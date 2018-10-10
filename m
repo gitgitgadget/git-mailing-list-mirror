@@ -6,58 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA3A1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 02:19:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED0A1F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 02:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbeJJJjb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 05:39:31 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50911 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726932AbeJJJjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 05:39:31 -0400
-Received: by mail-wm1-f68.google.com with SMTP id i8-v6so3699721wmg.0
-        for <git@vger.kernel.org>; Tue, 09 Oct 2018 19:19:38 -0700 (PDT)
+        id S1726989AbeJJJqa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 05:46:30 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38827 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726932AbeJJJqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 05:46:30 -0400
+Received: by mail-wr1-f67.google.com with SMTP id a13-v6so3866617wrt.5
+        for <git@vger.kernel.org>; Tue, 09 Oct 2018 19:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=60gGFbmieufi+BFgZ+LUt9pTxH092pD+J+bOa0bNu2E=;
-        b=IvMnScSySAUA3Y1MfXlsOlye8yT1jq6EecOw0VQIxl87YaCIU2241ljX/jRc7H2Yg0
-         KpeSJohEholL3Kbzz4drTu82JfWa476WIvxutaPO0ygm/dNtxECWTHPPupk4Vu1J012+
-         9mAYxa34tbbIK/kOMA79vibsCBfcDmRlP1L85REaFI5Ad9CjUl4FpT7lpdc0w4L/jW93
-         TlKe7RZNRQKm2VMLuexUEhKep4xaM3l9FRyRF6szIWIP3CoqHNGpkgchCSflMxgKwUMO
-         /zp3thZTBuoCyrMLb9sPQKKh48SgutxYI1DpzbXy9WZkclWMMuOogTu1wvmPe38NeZCz
-         ygQQ==
+        bh=cnAO38NfFrEfy+z2YJqr+p84hmv6kS+M1fHOHaaY22o=;
+        b=oi8ehecCPEnbRwP0Ji56BI+GDB7L/HsnEPo/9kIAbrbgLOZJTPx3kcRNhcpfD8wqxD
+         CP5ZUI5SvYlewcuwt/DnEROg61pqtP1gmHxq0MW43iVyl395j0HFoVDy6CHVFRMaTf8m
+         u3sTVLv+ojIkOIslE28p1HNYxkWmx20YlDD/Pv222Evx0gNf7HQOCUy/FxXeY8Eb22E9
+         Q8Ur8eALTJGktsq3MZl77yU6lesHQyN50VQS1GuCukWgxU04f6QM5ddmblcnevR0A/CL
+         EBfMXq3JEAkGHjfs+AYTQom8wwiuKQMSZdSJXvQeAfruEpnk4gA6YQYHN0I2ReVPDaFg
+         Oqfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=60gGFbmieufi+BFgZ+LUt9pTxH092pD+J+bOa0bNu2E=;
-        b=VgDa0XI95OqTnHHdpFNv3rXMR3QJRDKB+9+sBXg498VmG2jzvQadz6KAvs9sQLQKTJ
-         caymXNDvAKsR/i/OCz5z3376j6TDZexPsKC65Nfsrxchdnh7DLOCgR+ZMQc2qQV3jz2D
-         rBZwlz9inzeF5kjL2gE9KGfyf0frwAyn9Dglev33zQiKDmaO1bR+lOSJyT/ir5c1Tnw0
-         lxa12VXfPo1ehta3EAXYX2yUmie/a2gnb1n6vNs4vEFioxRFDCo6moAICMc8MvFDRIRj
-         XxPuxGJkk6biV9MhBJzsdkcDFEeIHp/UncqgqmJYhYQ9V6VtdPOLpyQZBJ6e2D5i/1fX
-         k9xA==
-X-Gm-Message-State: ABuFfoj4tp3oQ+SsI8s0Y5jrKXD/R6JOtrbHCjPyA38792pUgCkuWYf8
-        IgS30bU91EMyrROWNWwkSRc=
-X-Google-Smtp-Source: ACcGV63vp0jRahcu27i3jQ8G24ZTWqBRu3Xv4oDCXXk6IeWfwJWsF68wOdMkmm5llAja/TqWeoaNOg==
-X-Received: by 2002:a1c:1984:: with SMTP id 126-v6mr3681392wmz.7.1539137977025;
-        Tue, 09 Oct 2018 19:19:37 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 77-v6sm29331506wmv.6.2018.10.09.19.19.36
+        bh=cnAO38NfFrEfy+z2YJqr+p84hmv6kS+M1fHOHaaY22o=;
+        b=GGg8GzmE0N0bTcPYm7EZfcMUkLVEik5b+ahyFtO259IU30iUir35NTpeDNduPWY8wd
+         k28m99VdK2lteX6kk+7aWotND8cZcbijcC8B9FQRy2H8kt+ZCzd5VlrCgxGF1aTNsZ81
+         PVujulMG0a3LTrJR1Q54cur1TlVpQccC257SXpVt+kaHeHPLzuGd6qxfMIR/JbwOuBx+
+         FNKAmPS/zueTCgD+V8uwXcK53WNjheN2VeXVraz3w2P/sBkjRDRfWp0o7Sl3ItpWjjdS
+         bG6YJ/Mvvye8f1eGqQ9Cs5acQoQ/Nmw8YEcu/d9fU52tjr3G/2N/ykk5dGe5xNmL90KQ
+         w9BA==
+X-Gm-Message-State: ABuFfog97CnaCy39oxdQUKZGan4TGbkRgJP26WJMjWREln7wE3Xi/8pL
+        UsEdEejlLaWCD7sVurDkKKs=
+X-Google-Smtp-Source: ACcGV61zUSOtSEekXGT6BeTpjqcLL3uzEl3oQ8Gfj7csoiaXKLzBPWsclpg+YG4e/LxiVHrjso+zYA==
+X-Received: by 2002:adf:9426:: with SMTP id 35-v6mr21909149wrq.54.1539138394678;
+        Tue, 09 Oct 2018 19:26:34 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 65-v6sm16606057wmm.36.2018.10.09.19.26.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 09 Oct 2018 19:19:36 -0700 (PDT)
+        Tue, 09 Oct 2018 19:26:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] fuzz: Add fuzz testing for packfile indices.
-References: <cover.1538693039.git.steadmon@google.com>
-        <60b9daad5c5132811875b6094abf4d87852e4263.1538693039.git.steadmon@google.com>
-Date:   Wed, 10 Oct 2018 11:19:35 +0900
-In-Reply-To: <60b9daad5c5132811875b6094abf4d87852e4263.1538693039.git.steadmon@google.com>
-        (Josh Steadmon's message of "Thu, 4 Oct 2018 16:01:29 -0700")
-Message-ID: <xmqqr2gymtl4.fsf@gitster-ct.c.googlers.com>
+To:     Christian Hesse <list@eworm.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Christian Hesse <mail@eworm.de>
+Subject: Re: [PATCH 1/1] subtree: add build targets 'man' and 'html'
+References: <20181007073036.30643-1-list@eworm.de>
+Date:   Wed, 10 Oct 2018 11:26:32 +0900
+In-Reply-To: <20181007073036.30643-1-list@eworm.de> (Christian Hesse's message
+        of "Sun, 7 Oct 2018 09:30:36 +0200")
+Message-ID: <xmqqmurmmt9j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,20 +66,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Christian Hesse <list@eworm.de> writes:
 
->  ### Fuzz testing
->  #
-> -.PHONY: fuzz-clean fuzz-objs fuzz-compile
-> +.PHONY: fuzz-clean fuzz-objs fuzz-compile fuzz-all
-> ...
->  FUZZ_CFLAGS = $(CFLAGS) -fsanitize-coverage=trace-pc-guard -fsanitize=address
-> ...
+> From: Christian Hesse <mail@eworm.de>
+>
+> We have targets 'install-man' and 'install-html', let's add build
+> targets as well.
+>   ...
+> +man: $(GIT_SUBTREE_DOC)
 > +
-> +fuzz-all: $(FUZZ_PROGRAMS)
+> +html: $(GIT_SUBTREE_HTML)
+> +
 
-I guess I read your mind ;-) Please do this in 1/2 instead of adding
-it at 2/2 as "oops, we'd need it more and more as we add these".
+As 'contrib' material without real maintenance, I do not care too
+deeply, but shouldn't this change be more like this to avoid
+duplicating the list of targets?
 
 
+diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
+index 5c6cc4ab2c..4a10a020a0 100644
+--- a/contrib/subtree/Makefile
++++ b/contrib/subtree/Makefile
+@@ -59,17 +59,21 @@ $(GIT_SUBTREE): $(GIT_SUBTREE_SH)
+ 
+ doc: $(GIT_SUBTREE_DOC) $(GIT_SUBTREE_HTML)
+ 
++man: $(GIT_SUBTREE_DOC)
++
++html: $(GIT_SUBTREE_HTML)
++
+ install: $(GIT_SUBTREE)
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+ 	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(gitexecdir)
+ 
+ install-doc: install-man install-html
+ 
+-install-man: $(GIT_SUBTREE_DOC)
++install-man: man
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+ 	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
+ 
+-install-html: $(GIT_SUBTREE_HTML)
++install-html: html
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
+ 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
+ 
+@@ -94,4 +98,4 @@ clean:
+ 	$(RM) $(GIT_SUBTREE)
+ 	$(RM) *.xml *.html *.1
+ 
+-.PHONY: FORCE
++.PHONY: FORCE man html install-man install-html
 
