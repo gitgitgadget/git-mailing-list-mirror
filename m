@@ -2,192 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 984A61F97F
-	for <e@80x24.org>; Wed, 10 Oct 2018 11:27:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BEAA1F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 11:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726721AbeJJSsx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 14:48:53 -0400
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:35718 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726503AbeJJSsx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 14:48:53 -0400
-Received: by mail-wm1-f49.google.com with SMTP id e187-v6so5366073wmf.0
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 04:27:09 -0700 (PDT)
+        id S1726663AbeJJTDX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 15:03:23 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:40403 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726523AbeJJTDX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 15:03:23 -0400
+Received: by mail-ot1-f65.google.com with SMTP id w67so4990906ota.7
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 04:41:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=kPhxuWipEp4ODLvmws0SdFK43K+nih4S5lMhlOZOxw0=;
-        b=KLcR3C9Ea0sAU+AbU85/sK/W9PBZBs02X0K5+CnNvy9ECWppL5UaeJP2Sh5oHENa5M
-         NFOgn++9M0eb+rkA2lQx0cBCDbyfWvY8N07s2H5S01kYPwVQ+RkF6DcAtEQT1HFw+5rm
-         tyV8mcKrScKj4M5YJC+scRTHUhHMD3az2cU0xVoq4vdNEg4HIN/TkP29Xn1X2KwyBqC1
-         qJxMzuO2Civ1vAz7fxu+z7+yNv0A89nPsnEQy8bGAdd6OvDroZ8SN+d/qN98MMJIvnUZ
-         fMqiXnNYK+HnHufZQk/HOfU4V91rmfbHHxFR6TlGZjICs4NqIHFD/u5TYgkafZg2m8yC
-         83Hw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UQq+JjGx5FY+yHuzPwWmZqDqHe0aRRpKVv2wZwhQIzU=;
+        b=vDYRxB8KsAlLEsZG0+lOWW/mPirxtdm5F3o0omsAvXcxe2nDSbFpeq5CZIOydnyaBP
+         uK5apHTH4EG7HJotk9jCpbv91JBWIAvx4gV0HFw2mMhVNeA/XHT2atXZhV5Gzy81gR3S
+         HXxAms9ZcXfjioBWy3Rk7Ysg0RYBX4dPhJLkl0WafmGc+3z+tI/F7k5b8/KHFnML5HFU
+         +4gbpUyu37DIZ+cY2e4MkPvWzeoE2gOqrclf+as9iS+o9tbX6a8VNsGSxEPAodB+x6Xa
+         UShmR6An9E099KZypzWuDPF1FuOym31Zzhz8cHZyuebxbgSDr/7s/k47bTo0nunZKbKc
+         qrZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=kPhxuWipEp4ODLvmws0SdFK43K+nih4S5lMhlOZOxw0=;
-        b=akW9/bXdIIpLZH+yh7xuRKfSrMxewniKdZPiksBYIxtAoNHOMcEfTzVZBK2Z3/ANJ4
-         Gu+i/s7B9kfpL4vTDGr+jtgQqmUh2PG1kMRM/P+MubiGMDArXeC9Jpano08rw0PWSWIk
-         Zmwa/eqAJfmk9k94tg7kOKtGZzf3VCi+AR3xJ7da8+m4lV/zx69p3LLMSd+4EBcNclTD
-         4XmsmPr1AVVWrteruIa4fqZoEv+omRmscPtPgK9/NugHIGYr103HysMw6cEsNh8xxVcm
-         FQUXR02RTFWkezrDT89xRSQhfZq5psxOlGK2333c835fAc9NXlop8oaUnFECdf9ozSb+
-         +oLg==
-X-Gm-Message-State: ABuFfohvxQ9I4V/xIVTO3qqGlmjvNbV1DTOFviHgBbeSTD7rD6tjbBJJ
-        TyV/2udlD57bMa2j0qPZX3k=
-X-Google-Smtp-Source: ACcGV63y2aV4OMuA27ofYb694+0jf/U8cnLZQyi+2wXaGfrABGBGxTO1+O4njWKbZYBlVfFIrY8Y7w==
-X-Received: by 2002:a1c:af07:: with SMTP id y7-v6mr570721wme.33.1539170828390;
-        Wed, 10 Oct 2018 04:27:08 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id b5-v6sm18482562wrr.94.2018.10.10.04.27.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 04:27:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Martin Langhoff <martin.langhoff@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UQq+JjGx5FY+yHuzPwWmZqDqHe0aRRpKVv2wZwhQIzU=;
+        b=nleInkQ4Xe5KPyC8Kgds/zZDCjhJd8OzIKSI9MpdQU8DmaNeqCOHVd1RuzgeXFKVB2
+         b4jSbZpwIzowekhcH/k89gA6weYG/HEj6t6Onf25HE8e3eApQbg7bQ0takhQ7YPi6YFQ
+         aTCDOqAYWNfILyj5H1epWXN6kiA7g9ruqq3Vqdbga6KzNpZGf3r7vEwhjfym7TocnUo7
+         dqxr6ZmYC0AqHSPdRX1TPFovFr2RfDpafOZcQ7ak3vV51FQ6q4dRQ1QKV+yj+RpdJi8V
+         cXu2zLmHpw/2/fZWwKamxcxKDnEQ1vFvzAdvey3C/FUJEhBWOlCHpHPqN/So0R9Xq/TL
+         3NEQ==
+X-Gm-Message-State: ABuFfoiBGni1cUXARjHHvmzxeoSn4mfgYUJtbQTn/Xfh4EuptyOrBk8Y
+        O6shJXu3DBg+SwjhjCnOq6UnrN+BIEVjgoTOs+A=
+X-Google-Smtp-Source: ACcGV63SZgVG0RyuE67kCEjAVnIv3f/O6elw4jz+RknYlj87xzX1CQE6qjc7YXkkN9iTCF1jPQCqYWFiF8qi7NsHWnw=
+X-Received: by 2002:a9d:30c2:: with SMTP id r2mr18807068otg.143.1539171697346;
+ Wed, 10 Oct 2018 04:41:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <CACPiFCJZ83sqE7Gaj2pa12APkBF5tau-C6t4_GrXBWDwcMnJHg@mail.gmail.com>
+ <CACPiFCKQq--xrMf1nF=1MmC+eESE_aKms3yogoRwCY=YxcOWXA@mail.gmail.com>
+ <20181009234502.oxzfwirjcew2sxrm@dcvr> <xmqqd0sims6s.fsf@gitster-ct.c.googlers.com>
+ <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com> <878t36f3ed.fsf@evledraar.gmail.com>
+In-Reply-To: <878t36f3ed.fsf@evledraar.gmail.com>
+From:   Martin Langhoff <martin.langhoff@gmail.com>
+Date:   Wed, 10 Oct 2018 07:41:25 -0400
+Message-ID: <CACPiFCKMF2di=waQ5reRtjUFEjuE6DkxxLcN-YnF-SqgE_m=_Q@mail.gmail.com>
+Subject: Re: git svn clone/fetch hits issues with gc --auto
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>, e@80x24.org,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: git svn clone/fetch hits issues with gc --auto
-References: <CACPiFCJZ83sqE7Gaj2pa12APkBF5tau-C6t4_GrXBWDwcMnJHg@mail.gmail.com>
-        <CACPiFCKQq--xrMf1nF=1MmC+eESE_aKms3yogoRwCY=YxcOWXA@mail.gmail.com>
-        <20181009234502.oxzfwirjcew2sxrm@dcvr>
-        <xmqqd0sims6s.fsf@gitster-ct.c.googlers.com>
-        <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com>
-Date:   Wed, 10 Oct 2018 13:27:06 +0200
-Message-ID: <878t36f3ed.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Oct 10, 2018 at 7:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> As Jeff's
+> https://public-inbox.org/git/20180716175103.GB18636@sigill.intra.peff.net=
+/
+> and my https://public-inbox.org/git/878t69dgvx.fsf@evledraar.gmail.com/
+> note it's a bit more complex than that.
 
-On Wed, Oct 10 2018, Martin Langhoff wrote:
+Ok, my bad for not reading the whole thread :-) thanks for the kind explana=
+tion.
 
-> Looking around, Jonathan Tan's "[PATCH] gc: do not warn about too many
-> loose objects" makes sense to me.
->
-> - remove unactionable warning
-> - as the warning is gone, no gc.log is produced
-> - subsequent gc runs don't exit due to gc.log
->
-> My very humble +1 on that.
->
-> As for downsides... if we have truly tons of _recent_ loose objects,
-> it'll ... take disk space? I'm fine with that.
+>  - The warning is actionable, you can decide to up your expiration
+>    policy.
 
-As Jeff's
-https://public-inbox.org/git/20180716175103.GB18636@sigill.intra.peff.net/
-and my https://public-inbox.org/git/878t69dgvx.fsf@evledraar.gmail.com/
-note it's a bit more complex than that.
+A newbie-ish user shouldn't need to know git's internal store model
+_and the nuances of its special cases_ got get through.
 
-I.e.:
 
- - The warning is actionable, you can decide to up your expiration
-   policy.
+>  - We use this warning as a proxy for "let's not run for a day"
 
- - We use this warning as a proxy for "let's not run for a day",
-   otherwise we'll just grind on gc --auto trying to consolidate
-   possibly many hundreds of K of loose objects only to find none of
-   them can be pruned because the run into the expiry policy. With the
-   warning we retry that once per day, which sucks less.
+Oh, so _that's_ the trick with creating gc.log? I then understand the
+idea of changing to exit 0.
 
- - This conflation of the user-visible warning and the policy is an
-   emergent effect of how the different gc pieces interact, which as I
-   note in the linked thread(s) sucks.
+But it's far from clear, and a clear _flag_, and not spitting again
+the same warning, or differently-worded warning would be better.
 
-   But we can't just yank one piece away (as Jonathan's patch does)
-   without throwing the baby out with the bathwater.
+"We won't try running gc, a recent run was deemed pointless until some
+time passes. Nothing to worry about."
 
-   It will mean that e.g. if you have 10k loose objects in your git.git,
-   and created them just now, that every time you run anything that runs
-   "gc --auto" we'll fork to the background, peg a core at 100% CPU for
-   2-3 minutes or whatever it is, only do get nowhere and do the same
-   thing again in ~3 minutes when you run your next command.
+>  - This conflation of the user-visible warning and the policy is an
+>    emergent effect of how the different gc pieces interact, which as I
+>    note in the linked thread(s) sucks.
 
- - I think you may be underestimating some of the cases where this ends
-   up taking a huge amount of disk space (and now we'll issue at least
-   *some*) warning. See my
-   https://public-inbox.org/git/87fu6bmr0j.fsf@evledraar.gmail.com/
-   where a repo's .git went from 2.5G to 30G due to being stuck in this
-   mode.
+It sure does, and that aspect should be easy to fix...(?)
 
-> For more aggressive gc options, thoughts:
->
->  - Do we always consider git gc --prune=now "safe" in a "won't delete
-> stuff the user is likely to want" sense? For example -- are the
-> references from reflogs enough safety?
+> So it's creating a lot of garbage during its cloning process that can
+> just be immediately thrown away? What is it doing? Using the object
+> store as a scratch pad for its own temporary state?
 
-The --prune=now command is not generally safe for the reasons noted in
-the "NOTES" section in "git help gc".
+Yeah, thats suspicious and I don't know why. I've worked on other
+importers and while those needed 'gc' to generate packs, they didn't
+generate garbage objects. After gc, the repo was "clean".
 
->  - Even if we don't, for some commands it should be safe to run git gc
-> --prune=now at the end of the process, for example an import that
-> generates a new git repo (git svn clone).
+cheers,
 
-Yeah I don't see a problem with that, I didn't know about this
-interesting use-case, i.e. that "git svn clone" will create a lot of
-loose objects.
 
-As seen in my
-https://public-inbox.org/git/87tvm3go42.fsf@evledraar.gmail.com/ I'm
-working on making "gc --auto" run at the end of clone for unrelated
-reasons, i.e. so we generate the commit-graph, seems like "git svn
-clone" could do something similar.
 
-So it's creating a lot of garbage during its cloning process that can
-just be immediately thrown away? What is it doing? Using the object
-store as a scratch pad for its own temporary state?
-
-> m
-> On Tue, Oct 9, 2018 at 10:49 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Forwarding to Jonathan, as I think this is an interesting supporting
->> vote for the topic that we were stuck on.
->>
->> Eric Wong <e@80x24.org> writes:
->>
->> > Martin Langhoff <martin.langhoff@gmail.com> wrote:
->> >> Hi folks,
->> >>
->> >> Long time no see! Importing a 3GB (~25K revs, tons of files) SVN repo
->> >> I hit the gc error:
->> >>
->> >> warning: There are too many unreachable loose objects; run 'git prune'
->> >> to remove them.
->> >> gc --auto: command returned error: 255
->> >
->> > GC can be annoying when that happens... For git-svn, perhaps
->> > this can be appropriate to at least allow the import to continue:
->> >
->> > diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
->> > index 76b2965905..9b0caa3d47 100644
->> > --- a/perl/Git/SVN.pm
->> > +++ b/perl/Git/SVN.pm
->> > @@ -999,7 +999,7 @@ sub restore_commit_header_env {
->> >  }
->> >
->> >  sub gc {
->> > -     command_noisy('gc', '--auto');
->> > +     eval { command_noisy('gc', '--auto') };
->> >  };
->> >
->> >  sub do_git_commit {
->> >
->> >
->> > But yeah, somebody else who works on git regularly could
->> > probably stop repack from writing thousands of loose
->> > objects (and instead write a self-contained pack with
->> > those objects, instead).  I haven't followed git closely
->> > lately, myself.
+m
+--=20
+ martin.langhoff@gmail.com
+ - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
+ - don't be distracted        ~  http://github.com/martin-langhoff
+   by shiny stuff
