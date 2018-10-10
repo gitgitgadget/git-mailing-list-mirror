@@ -7,117 +7,187 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60AEA1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 22:49:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A570E1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 22:55:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726008AbeJKGNl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 02:13:41 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35578 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725968AbeJKGNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 02:13:41 -0400
-Received: by mail-ed1-f68.google.com with SMTP id y19-v6so6461315edd.2
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:49:25 -0700 (PDT)
+        id S1726034AbeJKGTq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 02:19:46 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39531 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725968AbeJKGTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 02:19:46 -0400
+Received: by mail-ed1-f66.google.com with SMTP id d15-v6so6456253edq.6
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:55:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=6gNRd1S4BH96VMJ+oeMUjw3ryjtWE/ypI/A+65ZXzmc=;
-        b=tc2iatTt2o8Qktxc9v46uZatVay1+594unTIuLDd4ND1d457HaZPzgBRYVgwoaHc3H
-         YnO5bmTd7X7gmACtb3laWZO2hZKj25x6Wi6OxKdrZjxVO6PP6G9+ovLwdHVUfFcROWL2
-         +GToktllrIOrdM3iYdxjM8qP+Qn5XxACwfvSJ7SPAjMB7t2+GZEoJYrX5w2iaxjsqiqB
-         kTOqFc1dSrx6yFg90eqeALbOd2jlQntDv1hemptpzb9DbYJ6IGuMWLjcnkEj/tpomi3T
-         EbWcUp07K1+RvV8DYY1l4xyiPtUtptlH93M2Z9BKNgvm7hoxL4RqvjbapBhoLNy7yV0I
-         zLqQ==
+        bh=z1284AfIm5YNFXJETe6v9GvTgh09VV847ug+A+f4urc=;
+        b=az9NFztri0OIe+vU4uGhImbYDKBlTqBxA44QVj9fYrbG+LqsZBaDTJKRixO3K2iAkk
+         XiDHPXt1qMx/cwOvjf7eNtBn/y77luProAhD3L3ldwJ24HCDiKFlnpqaxZxh+7/kr91h
+         QrIN+VhnfEo/GzTKi5wXeLDhG6+dLCjVr0956aB4vF0Mj/hWY3OR5eVBVevmWE6daIO8
+         rQkCwtR1ShT/MjVeaKIuraHzQR8HCFxpjVnSFo0zSA3rHewT9MKwAvVbV5G1pWupla8/
+         q0H/sTxUVBKRHGstVLWJxBeRf1SyR1WhZxW7XNhDZa2fo7pM3sIX6UgCkpOioqjVuY1s
+         sYsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=6gNRd1S4BH96VMJ+oeMUjw3ryjtWE/ypI/A+65ZXzmc=;
-        b=pQ1OE6ycbj8ggKKjESoeX7yQzhu33MGEGlRHu2oU2QaOD//3vqaXz2SyXMSitgzmbg
-         ysXcGm+mA5FisJzEhXII3VZipIit9mIgtQeg49FJTESnfLFBax2MzLUGtUbISDVVCnYq
-         +pEPUtlUTZVPnyuq5bwXnUekGVaWR8XcQRCDnO4GMVWS15AF5wTk5mO2Thv6BDlRDpPj
-         bW57MwKcI16BF/lErAg/Vjp5DRe514Np4/8vVSr6n7L7kp5bJru5RNgmjPTNUmwUwnPs
-         XIBjEuxCy6OcIbLaqQ9euIvUtZhPn0eSNzWeo07SLXO1kiAiHj+XK72jpvXODOd1jCKw
-         yDrw==
-X-Gm-Message-State: ABuFfohndQa1mpQp/Y5lp1+KHelNk0rfPiEnwVl1YSVJ6WTHWAdPBRpQ
-        cXJlEGGYS2mz9GJ20wq9fJtZOZIJZALW+To+6LNOPnY7gGuHAw==
-X-Google-Smtp-Source: ACcGV60kGDnchPJBoRXz6FquznNypzjsgaHEMpJ7vTh0rvlWxGmaHnxgtZK+HGtq/FW3dNHCmy+8t9+pLltIRRh8hVI=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr22884518edh.154.1539211764389;
- Wed, 10 Oct 2018 15:49:24 -0700 (PDT)
+        bh=z1284AfIm5YNFXJETe6v9GvTgh09VV847ug+A+f4urc=;
+        b=NXk3vcfgea0JduJZxMt4xl6KYIHKAaRmJad0tiGhlGFZPpw2He0Jj1GsWG5hHvu8jS
+         1Ho1JNG/fu8vGi9+l3Uf9fH+gamnNWRKfLhC0CIfzNyheR4Y+0/huKbYuTHPh5zWxSig
+         szizwM0lPWqSvyS7IzjmS8KW+moFQ3mFD8Byp5veqdNBwemTJBe4D+5nJ72xZvEL0o+v
+         nUwzeSZ/jmY6w3cKKWhVcFsRU9UthfMHLsZWtIOxdZawGCMrWs8ao31RvpTUVkyZOI2V
+         tRWP5XMpcMdhTIVcL099P5Xx02TmlK7wqU7NaWej/exHpsQFlmKwbASXZDUFLOykzYZ2
+         mLZg==
+X-Gm-Message-State: ABuFfohn104nQx5saSZZPYpLRgiU2qL35+VhI3rk/c3OCKyVuNNSrPdQ
+        TvJOrRMfVv3Yw3csbBZeBiJ0zRKCSYCsYnIfZcSn4w==
+X-Google-Smtp-Source: ACcGV63t331SOYAs4O0oVLd/qFSCNuGb4h5JhMShhBwEKe4qQQyVQqtZcKXqqEhMqoW8MEG8yXLNlaWUTJhnCFWmBAE=
+X-Received: by 2002:a50:9931:: with SMTP id k46-v6mr44285591edb.85.1539212126836;
+ Wed, 10 Oct 2018 15:55:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181009183549.195316-1-sbeller@google.com> <20181010001037.74709-1-jonathantanmy@google.com>
-In-Reply-To: <20181010001037.74709-1-jonathantanmy@google.com>
+References: <20181005130601.15879-1-ao2@ao2.it> <20181005130601.15879-10-ao2@ao2.it>
+ <CAGZ79kZTQB29SuB52Efk-j7jX11BRU_RFiX+znttvP2tFRaNvg@mail.gmail.com> <20181010205645.e1529eff9099805029b1d6ef@ao2.it>
+In-Reply-To: <20181010205645.e1529eff9099805029b1d6ef@ao2.it>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 10 Oct 2018 15:49:13 -0700
-Message-ID: <CAGZ79kbZ35OEh=2JiZuOHgG-P3a3PeSP5hgrXX-tQh9feOQsjQ@mail.gmail.com>
-Subject: Re: [PATCH] builtin/grep.c: remote superflous submodule code
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Antonio Ospite <ao2@ao2.it>,
-        git <git@vger.kernel.org>
+Date:   Wed, 10 Oct 2018 15:55:15 -0700
+Message-ID: <CAGZ79kZ5HRcTsfWRbOW-kQg2UFBf6suc+7px_FbCSPwcOE5w3g@mail.gmail.com>
+Subject: Re: [PATCH v6 09/10] submodule: support reading .gitmodules when it's
+ not in the working tree
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 9, 2018 at 5:10 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+On Wed, Oct 10, 2018 at 11:56 AM Antonio Ospite <ao2@ao2.it> wrote:
 >
-> > It claimed that grep would still need some explicit handling, but that is
-> > not the call to repo_read_gitmodules (applying this patch on top of
-> > ff6f1f564c4 still keep the test suite happy, specifically
-> > t7814-grep-recurse-submodules, which contains a test
-> > "grep history with moved submoules")
+> On Mon, 8 Oct 2018 15:19:00 -0700
+> Stefan Beller <sbeller@google.com> wrote:
 >
-> Firstly, spelling of "remove" and "superfluous" in the commit title.
+> > > +test_expect_success 'not writing gitmodules config file when it is not checked out' '
+> > > +        test_must_fail git -C super submodule--helper config submodule.submodule.url newurl
+> >
+> > This only checks the exit code, do we also want to check for
+> >
+> >     test_path_is_missing .gitmodules ?
+> >
 >
-> I don't think the "grep history with moved submodules" test exercises
-> much. That test only tests the superproject > submodule case, but we
-> need a superproject > submodule > sub-submodule case, because what is
-> being removed is a call to repo_read_gitmodules() on a repository
-> ("struct repository submodule") that has a superproject ("struct
-> repository *superproject"). In other words, we need a submodule that has
-> its own gitmodules.
-
-Right; we do have a test 'grep and nested submodules', which still passes.
-I added another test, that would grep through nested submodules in
-the history (not checked out), but that would not work on nested submodules
-with or without this patch applied. (As the nested submodule is not checked
-out, is_submodule_active(repo, path) would return false and we'd not dive
-into the nested submodule.
-
-I looked into ao/submodule-wo-gitmodules-checked-out, as that touches
-this area of code as well and promises to allow working with submodules
-when .gitmodules is not checked out, it doesn't help this use case, either.
-
-That is (as Antonio diagnosed), due to get_oid not working with a repository
-handle, yet.
-
-> > The special handling is the call to gitmodules_config_oid which was added
-> > already in 74ed43711f (grep: enable recurse-submodules to work on
-> > <tree> objects, 2016-12-16), but then was still named
-> > gitmodules_config_sha1.
+> OK, I agree, let's re-check also *after* we tried and failed to set
+> a config value, just to be sure that the code does not get accidentally
+> changed in the future to create the file. I'll add the check.
 >
-> If you're stating that gitmodules_config_oid() is where the .gitmodules
-> file is lazily loaded, it doesn't seem to be that way, because that
-> function works only on the_repository (at least on 'master' and 'next').
-
-yes, that is why nested submodules do not work currently when they
-are not in the working tree.
-
+> > > +test_expect_success 'initialising submodule when the gitmodules config is not checked out' '
+> > > +       git -C super submodule init
+> > > +'
+> > > +
+> > > +test_expect_success 'showing submodule summary when the gitmodules config is not checked out' '
+> > > +       git -C super submodule summary
+> > > +'
+> >
+> > Same for these, is the exit code enough, or do we want to look at
+> > specific things?
+> >
 >
-> > This is a resend of origin/sb/grep-submodule-cleanup,
-> > and I think picking ff6f1f564c4 as the base for the series would
-> > also be appropriate.
+> Except for the "summary" test which was not even exercising the
+> config_from_gitmodule path,  checking exist status should be sufficient
+> to verify that "submodule--helper config" does not fail, but we can
+> surely do better.
 >
-> Any particular reason why you suggest that commit (which is more than a
-> year old)? It seems that basing this on 'master' is fine.
+> I will add checks to confirm that not only the commands exited without
+> errors but they also achieved the desired effect, to validate the actual
+> high-level use case advertised by the test file. This should be more
+> future-proof.
+>
+> And I think I'll merge the summary and the update tests.
+>
+> > > +
+> > > +test_expect_success 'updating submodule when the gitmodules config is not checked out' '
+> > > +       (cd submodule &&
+> > > +               echo file2 >file2 &&
+> > > +               git add file2 &&
+> > > +               git commit -m "add file2 to submodule"
+> > > +       ) &&
+> > > +       git -C super submodule update
+> >
+> > git status would want to be clean afterwards?
+>
+> Mmh, this should have been "submodule update --remote" in the first
+> place to have any effect, I'll take the chance and rewrite this test in
+> a different way and also check the effect of the update operation, and
+> the repository status.
+>
+> I'll be something like this:
+>
+> ORIG_SUBMODULE=$(git -C submodule rev-parse HEAD)
+> ORIG_UPSTREAM=$(git -C upstream rev-parse HEAD)
+> ORIG_SUPER=$(git -C super rev-parse HEAD)
+>
+> test_expect_success 're-updating submodule when the gitmodules config is not checked out' '
+>         test_when_finished "git -C submodule reset --hard $ORIG_SUBMODULE;
+>                             git -C upstream reset --hard $ORIG_UPSTREAM;
+>                             git -C super reset --hard $ORIG_SUPER;
+>                             git -C upstream submodule update --remote;
+>                             git -C super pull;
+>                             git -C super submodule update --remote" &&
+>         (cd submodule &&
+>                 echo file2 >file2 &&
+>                 git add file2 &&
+>                 test_tick &&
+>                 git commit -m "add file2 to submodule"
+>         ) &&
+>         (cd upstream &&
+>                 git submodule update --remote &&
+>                 git add submodule &&
+>                 test_tick &&
+>                 git commit -m "Update submodule"
+>         ) &&
+>         git -C super pull &&
+>         # The --for-status options reads the gitmdoules config
 
-After more analysis, I think we'd want to wait for Antonios series to land
-and then build on top of that, while also getting get_oid converted.
+gitmodules
 
-Regarding this patch, let's retract it for now and revisit it once we have
-more submodule infrastructure working.
+>         git -C super submodule summary --for-status >actual &&
+>         cat >expect <<-\EOF &&
+>         * submodule 951c301...a939200 (1):
 
-Thanks,
+hardcoding hash values burdens the plan to migrate to another
+hash function,
+
+    rev1=$(git -C submodule rev-parse --short HEAD^)
+    rev2=$(git -C submodule rev-parse --short HEAD)
+
+and then use ${rev1}..${rev2} ?
+
+
+>           < add file2 to submodule
+>
+>         EOF
+>         test_cmp expect actual &&
+>         # Test that the update actually succeeds
+>         test_path_is_missing super/submodule/file2 &&
+>         git -C super submodule update &&
+>         test_cmp submodule/file2 super/submodule/file2 &&
+>         git -C super status --short >output &&
+>         test_must_be_empty output
+> '
+>
+> Maybe a little overkill?
+
+Wow, very thorough! You might call it overkill, but now that you have it...
+
+> The "upstream" repo will be added in test 1 to better clarify the roles
+> of the involved repositories.
+>
+> The commit ids should be stable because of test_tick, shouldn't they?
+
+Yes, but see
+Documentation/technical/hash-function-transition.txt
+that a couple people are working on. Let's be nice to them. :-)
+
 Stefan
