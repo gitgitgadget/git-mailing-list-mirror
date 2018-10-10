@@ -2,287 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 964901F97F
-	for <e@80x24.org>; Wed, 10 Oct 2018 18:53:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C4941F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 18:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbeJKCQr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 22:16:47 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35773 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727031AbeJKCQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 22:16:47 -0400
-Received: by mail-pl1-f196.google.com with SMTP id f8-v6so2966269plb.2
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 11:53:20 -0700 (PDT)
+        id S1726925AbeJKCTe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 22:19:34 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:43860 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726734AbeJKCTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 22:19:34 -0400
+Received: by mail-ed1-f54.google.com with SMTP id y20-v6so5915498eds.10
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 11:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:date:from:to:cc:message-id:in-reply-to:references;
-        bh=SXKQ2sPk2gWsRhUz+uEBrvAaIdQcCkTrDhufh+Oa0HE=;
-        b=tJgb4Mg2YYBdkU46KC3KcoMSUG10wQ6KaEf9/g0E3CyavZ7tugSV6zBjaH8Btk2lhp
-         UBjHDU9NTdcvWHkHhd5TymewOwsjlV8lqSh2jiv1yfaJ/fejJFa0RKrr0uHczzk4vsxi
-         6rhOB3b3aoGNh8l67FPTb/fuGgxBAKgTAq9O2iDil1fTTsWys45yeYd4VIx8FLWBwVNx
-         QMA2ma1tySLK50LIrPBstjxW4Ln3cC5DGbT/OvJ+0Gow1t42GgRcsfIh9CFz3gyU1DzY
-         VhOL4EsTaA1EaJDDeMUQp0giW3kx9lU8duvHQ+6NnSLpQZ0HWNooBq1zz1X5IIBnMSmI
-         lEAQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=VpzKXJxnCinKU2AX6PKhfnHVgtyzj5OEihM692yRdKM=;
+        b=T4g45+usQHTQpFImHOorUsHrnl4iM9KJNAxxjtoim68ZVgNMtdvHhpJVTnyibcAjrj
+         99yDyIHpHmNkS3RmoEZUUflwpktWXHjLSFv5UQdib2GEJcVSQ/eU8kifqBX+ucghhuTL
+         dCbTnAYLs5nZGBcIGddpiqX1wEjEFaLBRlu8z86URtOMLRFeAJlB0GHigwSK4bJ6XgRv
+         hCP9mH+YYz6eruqAEgoM0QGSnbnP87pYemHjLrD1qsQGxPjZDVsS2/jecZ6VMResevNN
+         nqYmlaosdqBwZfXsZOIn+3jLVvXdE1v+Fydo3SwoR0SukW/K7a5bYDuWh3Ld0I1fYraO
+         Mogw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:date:from:to:cc:message-id:in-reply-to
-         :references;
-        bh=SXKQ2sPk2gWsRhUz+uEBrvAaIdQcCkTrDhufh+Oa0HE=;
-        b=pWE+1hOy4ZhfzX3khTHwU8KCzqNKm697xzp4/B+xVcMFjlKProBIGGoAE3Jh7Ke8Os
-         UBL9W0oR7b253WGaEnBmFLuycH/fEFh2hcT+FY5Zew8dzUlOTrh8y8I3mGRR0y6O6iPd
-         DwkVtrDe/J4sKogLb7kM5RXI1pXv4sZPDBx8DapqcwdCXKPV8yOdCbgM8OrdqHOk0Raa
-         I9KWY70DVE8Qg7E+T6O8fsTiBzS6fitih9v9qV3Qy/8JLRqV22JxpYqDpA6XLWfE4Uwb
-         sdEbXZv2CM3lLxRJcBb2juT479UUdJ3ezN73yjwYhtOlHTuLCADLrgx4x4oq38Cu2Nim
-         6bcw==
-X-Gm-Message-State: ABuFfoi4Gv39yBF0uOQcQqeaiHRmYm9GGWAy33cK4GfvgjFSK4BNZNqp
-        tCgbKMdbfMUL60RqZhTgEmc=
-X-Google-Smtp-Source: ACcGV62/BWZNC0RlH7rZ0btHjXQwQNseu/drSAHaOGmPNJe7Gp8D0VsLvWu4Hs9Hdpt9E9nnV24fBg==
-X-Received: by 2002:a17:902:b08e:: with SMTP id p14-v6mr34415979plr.241.1539197600080;
-        Wed, 10 Oct 2018 11:53:20 -0700 (PDT)
-Received: from gmail.com ([109.236.90.209])
-        by smtp.gmail.com with ESMTPSA id r65-v6sm34824161pfj.5.2018.10.10.11.53.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 11:53:19 -0700 (PDT)
-Subject: `--rebase-merges' still failing badly
-Date:   Wed, 10 Oct 2018 18:51:17 -0000
-From:   Michael Witten <mfwitten@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org
-Message-ID: <645452fda0ae411d86487b76aaac8151-mfwitten@gmail.com>
-In-Reply-To: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VpzKXJxnCinKU2AX6PKhfnHVgtyzj5OEihM692yRdKM=;
+        b=d7eEc9WWAI1b60WSUPhdjRPmfQ0P9p7zrHEDRXZUx6tmxNEmrMFg4sceQ58G3BaoQ4
+         YznnAm7BVcGk0xNV2lN/7GllQTf1HAwVR3mvS/TdlUqpGHv6q4/ANgyqdmS5RP3+IA8W
+         17kYFbVUR6On3fQVf5syiLBdI8Jy+1/DHZns7aYatHQJDdX6lu4Zudal2PDXv6Ga9i2+
+         5cHxsKqk0qn+kbwIswiiUyG50oAJWtYGCXXRbnRIlrhyfshGE45eYAGP7L5FzI89XJqU
+         pT6dVFSwjL1cHHUiXv8mVcvfXdad2irXhYi/8Lk30XJBzFVverbW6YrojblA2QHhPzGJ
+         WEuQ==
+X-Gm-Message-State: ABuFfojbOcjhElHauaqCe1sjNAIMvthuXaxQSztAgqEmLjcSBlaZkdeK
+        G0UxUf2qrbpJIZvc7VEcaTuLfCyZjrpk4IJMowXkgg==
+X-Google-Smtp-Source: ACcGV61EeRgNka5LLVzKKRJ7b/6XZrENLgtuzcD8lP8m/Fs6MbcDrDKt5mwyiOCRTzsAMnxH4NNtz+L5b6JgyjcJo0M=
+X-Received: by 2002:a17:906:3557:: with SMTP id s23-v6mr34955531eja.128.1539197763115;
+ Wed, 10 Oct 2018 11:56:03 -0700 (PDT)
+MIME-Version: 1.0
 References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 10 Oct 2018 11:55:51 -0700
+Message-ID: <CAGZ79kYJGMOtroLhPwOdhWewXf3X_b0QOgiUb65pyJ7xJ-whQw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 10 Oct 2018 14:43:46 +0900, Junio wrote:
+> * pw/diff-color-moved-ws-fix (2018-10-04) 5 commits
+>  - diff --color-moved: fix a memory leak
+>  - diff --color-moved-ws: fix another memory leak
+>  - diff --color-moved-ws: fix a memory leak
+>  - diff --color-moved-ws: fix out of bounds string access
+>  - diff --color-moved-ws: fix double free crash
+>
+>  Various fixes to "diff --color-moved-ws".
+>
+>  What's the status of this topic?
 
-> We haven't seen  much complaints and breakages  reported against the
-> two big "rewrite in C" topics  around "rebase"; perhaps it is a good
-> time to merge  them to 'next' soonish  to cook them for  a few weeks
-> before moving them to 'master'?
+Per [1] ("The whole series is
+Reviewed-by: Stefan Beller <sbeller@google.com>"),
+I would suggest merging to 'next'.
 
-In my opinion, the `--rebase-merges' feature has been broken since the
-beginning, and the builtin version should  be fixed before it is moved
-ahead. In short: "labels" are brittle; see below for tests.
+[1] https://public-inbox.org/git/CAGZ79kbamUK=3Dd+-ejy9vopDiVZF7OVOngz1Zx9y=
+04VR3HnmoXg@mail.gmail.com/
 
-Also, here are some quick *additional* thoughts:
+> * sb/strbuf-h-update (2018-09-29) 1 commit
+>  - strbuf.h: format according to coding guidelines
+>
+>  Code clean-up to serve as a BCP example.
+>
+>  What's the status of this one after the discussion thread stopped here?
+>  cf. <CAGZ79kbV6QjsFKcD2uG_P9j1AvzSNQSi-_jXGQ9w0YU9fjhEGg@mail.gmail.com>
 
-    * Labels should be simply "r0", "r1", ... "rN".
+I was waiting for more discussion and stricter guidelines,
+which never happened.
 
-          * The current, long label names are just cumbersome.
-          * The embedded comments are already more than enough.
-          * "r" is short for "revision" or "reset" or "remember", etc.
-          * "r" is  located on a  QWERTY keyboard such that  it's very
-            easy to type "rN", where "N" is a number.
+The only controversial issue about this patch is whether we want
+to name all parameters or only when we feel like it.
 
-    * Why is the command "label" and not "branch"? Every other related
-      command looks  like a normal  git command: "reset"  and "merge".
-      Make it "branch".
+Peff did not seem to care about this particular detail
+https://public-inbox.org/git/20180929073827.GD2174@sigill.intra.peff.net/
 
-    * In my experience, there's a lot of this boiler plate:
+You suggested to embrace it further and use caps for the parameter
+names in the docs comment.
+https://public-inbox.org/git/xmqq8t3lb8uu.fsf@gitster-ct.c.googlers.com/
 
-          pick 12345
-          label r1
-          reset r0
-          merge r1
+The patch as-is just adds names everywhere.
+I'd be happy to resend with either
+(a) not enforcing names everywhere, but only as needed or
+(b) having names everywhere, capitalizing them NAMES in
+    the doc comment.
 
-      How about instead, use git's existing ideas:
+I am tempted to ask for
+(c) take as-is, defer the rewording of doc strings for a follow up patch.
 
-          pick 12345
-          reset r0
-          merge ORIG_HEAD
+> * sb/grep-submodule-cleanup (2018-10-10) 1 commit
+>  - builtin/grep.c: remove superfluous submodule code
+>
+>  Code clean-up.
+>
+>  cf. <20181010001037.74709-1-jonathantanmy@google.com>
 
-      Or, maybe git in general  should treat `-' as `ORIG_HEAD' (which
-      would be similar to how `git checkout' understands `-'), thereby
-      allowing a very quick idiomatic string of commands:
+Will resend.
 
-          pick 12345
-          reset r0
-          merge -
 
-      In truth, I don't really know the semantics of `ORIG_HEAD', so
-      maybe those should be nailed down and documented more clearly;
-      I would like it to work as in the following:
+> * bw/submodule-name-to-dir (2018-08-10) 2 commits
+>  - submodule: munge paths to submodule git directories
+>  - submodule: create helper to build paths to submodule gitdirs
+>
+>  In modern repository layout, the real body of a cloned submodule
+>  repository is held in .git/modules/ of the superproject, indexed by
+>  the submodule name.  URLencode the submodule name before computing
+>  the name of the directory to make sure they form a flat namespace.
+>
+>  Kicked back to 'pu', expecting further work on the topic.
+>  cf. <CAGZ79kYnbjaPoWdda0SM_-_X77mVyYC7JO61OV8nm2yj3Q1OvQ@mail.gmail.com>
 
-          pick 12345
-                     # label r1 (pretend)
-          reset r0   # Store r1 in ORIG_HEAD
-          pick 67890 # Do NOT touch ORIG_HEAD
-          merge -    # Same as merge -C abcde r1
+Thanks.
 
-      Anyway, this  kind of unspoken  behavior would make  *writing* a
-      new history by hand much more pleasant.
+>
+> * sb/submodule-move-head-with-corruption (2018-08-28) 2 commits
+>  - submodule.c: warn about missing submodule git directories
+>  - t2013: add test for missing but active submodule
+>
+>  Will discard and wait for a cleaned-up rewrite.
+>  cf. <20180907195349.GA103699@aiede.svl.corp.google.com>
 
-    * Why not just `--merges' instead of `--rebase-merges'? Or, better
-      yet,  just make  it  the default  behavior;  the special  option
-      should instead be:
+Yeah I think discarding this is the right move.
 
-          --flatten
+> * sb/submodule-recursive-fetch-gets-the-tip (2018-09-12) 9 commits
+>  - builtin/fetch: check for submodule updates for non branch fetches
+>  - fetch: retry fetching submodules if sha1 were not fetched
+>  - submodule: fetch in submodules git directory instead of in worktree
+>  - submodule.c: do not copy around submodule list
+>  - submodule: move global changed_submodule_names into fetch submodule st=
+ruct
+>  - submodule.c: sort changed_submodule_names before searching it
+>  - submodule.c: fix indentation
+>  - sha1-array: provide oid_array_filter
+>  - string-list: add string_list_{pop, last} functions
+>
+>  "git fetch --recurse-submodules" may not fetch the necessary commit
+>  that is bound to the superproject, which is getting corrected.
+>
+>  Expecting a reroll.
+>  cf. <b16af8c0-0435-0de4-ed6c-53888d6190af@ramsayjones.plus.com>
 
-      This option would simply tell `git rebase' to prepare an initial
-      todo list without merges.
+is fixed in
+https://public-inbox.org/git/20180917213559.126404-7-sbeller@google.com/
 
-Thanks for this great feature.
+>  cf. <CAGZ79kbavjVbTqXsmtjW6=3Djhkq47_p3mc6=3D92xOp4_mfhqDtvw@mail.gmail.=
+com>
 
-I'm only complaining so much because it's such a useful feature, and I
-want it  to be  even better, because  I'll  probably use it  A LOT; it
-should have been available since the start as a natural consequence of
-the way git works.
+That is fixed locally
 
-Sincerely,
-Michael Witten
+>  cf. <CAGZ79kZKKf9N8yx9EuCRZhrZS_mA2218PouEG7aHDhK2bJGEdA@mail.gmail.com>
 
----------------
+That has been addressed via
+https://public-inbox.org/git/20180925194755.105578-1-sbeller@google.com/
 
-Unfortunately,   both  the   legacy   version  and   the  rewrite   of
-`--rebase-merges'  display  a  bug  that  makes  this  feature  fairly
-unusable in  practice; it tries  to create  a "label" (i.e.,  a branch
-name) from a commit log summary  line, and the result is often invalid
-(or just  plain irritating to work  with). In particular, it  fails on
-typical characters, including at least these:
+Will resend after a local review.
 
-    :/\?.*[]
+> * pk/rebase-in-c-6-final (2018-10-09) 1 commit
+>  - rebase: default to using the builtin rebase
+>  (this branch uses ag/rebase-i-in-c, js/rebase-in-c-5.5-work-with-rebase-=
+i-in-c, pk/rebase-in-c, pk/rebase-in-c-2-basic, pk/rebase-in-c-3-acts, pk/r=
+ebase-in-c-4-opts and pk/rebase-in-c-5-test; is tangled with ag/sequencer-r=
+educe-rewriting-todo, jc/rebase-in-c-5-test-typofix and js/rebase-i-break.)
+>
+>  The final step of rewriting "rebase -i" in C.
+>
+>  Undecided.
+>  I've been using this (i.e. the whole "rebase -i" and "rebase"
+>  rewritten in C) in my personal build, and I also know users on
+>  Windows port have been using it with the last feature release.  I
+>  am tempted to merge the whole thing to 'next' soonish.
+>
+>  Opinions?  It's the last chance to remove any existing and avoid
+>  any future "oops, that was wrong, and here is a fix-up"
+>  embarrassment in these topics.
 
-To see this, first define some POSIX shell functions:
+Yes, please merge to next.
 
-    test()
-    {
-        (
-            set -e
-            summary=$1
-            d=/tmp/repo ##### WARNING. CHANGE IF NECESSARY.
-            rm -rf "$d"; mkdir -p "$d"; cd "$d"
-            git init -q
-            echo a > a; git add a; git commit -q -m a
-            git branch base
-            echo b > b; git add b; git commit -q -m b
-            git reset -q --hard HEAD^
-            git merge -q --no-ff -m "$summary" ORIG_HEAD
-            git log --graph --oneline
-            git rebase --rebase-merges base
-        ); status=$?
-        echo
-        return "$status"
-    }
-
-    Test()
-    {
-        if test "$@" 1>/dev/null 2>&1; then
-            echo '    good'; return 0
-        else
-            echo '    fail'; return 1
-        fi
-    }
-
-Then, try various commit summaries (see below for results):
-
-    test c
-    test 'combine these into a merge: a and b'
-    Test ab:
-    Test a:b
-    Test :
-    Test a/b
-    Test 'Now supports /regex/'
-    Test ab/
-    Test /ab
-    Test /
-    Test 'a\b'
-    Test '\'
-    Test 'Maybe this works?'
-    Test '?'
-    Test 'This does not work.'
-    Test 'This works. Strange!'
-    Test .git
-    Test .
-    Test 'Cast each pointer to *void'
-    Test '*'
-    Test 'return a[1] not a[0]'
-    Test '[ does not work'
-    Test '['
-    Test '] does work'
-    Test ']'
-
-Here are the results of pasting the above commands into my terminal:
-
-    $ test c
-    warning: templates not found in ../install/share/git-core/templates
-    *   1992d07 (HEAD -> master) c
-    |\
-    | * 34555b5 b
-    |/
-    * 338db9b (base) a
-    Successfully rebased and updated refs/heads/master.
-
-    $ test 'combine these into a merge: a and b'
-    warning: templates not found in ../install/share/git-core/templates
-    *   4202c49 (HEAD -> master) combine these into a merge: a and b
-    |\
-    | * 34555b5 b
-    |/
-    * 338db9b (base) a
-    error: refusing to update ref with bad name 'refs/rewritten/combine-these-into-a-merge:-a-and-b'
-    hint: Could not execute the todo command
-    hint:
-    hint:     label combine-these-into-a-merge:-a-and-b
-    hint:
-    hint: It has been rescheduled; To edit the command before continuing, please
-    hint: edit the todo list first:
-    hint:
-    hint:     git rebase --edit-todo
-    hint:     git rebase --continue
-
-    $ Test ab:
-        fail
-    $ Test a:b
-        fail
-    $ Test :
-        fail
-    $ Test a/b
-        good
-    $ Test 'Now supports /regex/'
-        fail
-    $ Test ab/
-        fail
-    $ Test /ab
-        fail
-    $ Test /
-        fail
-    $ Test 'a\b'
-        fail
-    $ Test '\'
-        fail
-    $ Test 'Maybe this works?'
-        fail
-    $ Test '?'
-        fail
-    $ Test 'This does not work.'
-        fail
-    $ Test 'This works. Strange!'
-        good
-    $ Test .git
-        fail
-    $ Test .
-        fail
-    $ Test 'Cast each pointer to *void'
-        fail
-    $ Test '*'
-        fail
-    $ Test 'return a[1] not a[0]'
-        fail
-    $ Test '[ does not work'
-        fail
-    $ Test '['
-        fail
-    $ Test '] does work'
-        good
-    $ Test ']'
-        good
+Stefan
