@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C91251F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 10:41:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF0F91F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 10:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726523AbeJJSDb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 14:03:31 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43292 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726468AbeJJSDa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 14:03:30 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n1-v6so5137621wrt.10
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 03:41:57 -0700 (PDT)
+        id S1726573AbeJJSDc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 14:03:32 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44734 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726468AbeJJSDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 14:03:32 -0400
+Received: by mail-wr1-f65.google.com with SMTP id 63-v6so5141889wra.11
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 03:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Fw5lyk+g9Dp2tVGYMoGnsShT/gnJScbEGeUdYsWxpn8=;
-        b=PlBU/G1y61WvSV5U7rUg74IIjGZYbXKNbwn/OBoFq/YYglETW7rzHz5TyWPel1MZib
-         GcXG0Jzxksov12uPrLj76NSqQpOiG+unxsA3ziitEug2lUoYMXmioOM/DflshZ3dck8I
-         otOmIA+LPO8W++qt9e0DAB/3PyZYTth7G310yTdqeXE4/8COZbwtIGmmz9siZgfaSpFX
-         mRB8o0G8zPV28Xm4P/bFy4DWzFV2iufBU1f/NnnyGpMdjD9MbOyMJShWVqOiOSs8ojow
-         3LqgY2DeDwO99jVDoE56/rQPjDzDMLWUzenuNJ+LHGhzJGXIYu49zIjl6oogP7C5VjnR
-         Lb5g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/SogEvI+QR/SZ8InTpcT/2/7TKlSSCqIszUdmVMPRTc=;
+        b=CzrGm0zXLKGJg7K+mPBU9WbR3F2OUpEej2FMszw8B0x5/1ByV25J8jKX80WTIamwiP
+         qxM30zNPEyeyidtOh0Bb+MqdEGzRNbogCDsPTfE6pi5UxFjXwiKO5Ha6RR9ZXGnRAR/q
+         +pnbaaZOy5oqfDxIca410jj2nPOTx5cCyUy9uSnfiJE0Kwl+Aixb8Kk+YOIttLSYNMEa
+         Pdipl79JjTDskHH3P1U7QF0djxCkuUMnm6c6G+kuuYv1bpOn+52YDwXvN6AcG0nvjY23
+         BKPZhVslRrfCRxJR5NPLH82JKYASrYUKXKzgSaaBHHOZjZPcn97dJH8lCDcO3E4XJRUn
+         54xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Fw5lyk+g9Dp2tVGYMoGnsShT/gnJScbEGeUdYsWxpn8=;
-        b=WQC9clVeNmYLQWvSV3QDE5UOKgsTHW1YBXfmJegk6VCTVR4KmiYzsJEr2N3w9wgc9G
-         zUN5cqBxJwcDaxCVysLMaKn8py8yRu4z3XQZ9tS2pY1u2qOYdMrNyQRKi6O2XZWQfjUY
-         vI2EvPdXuquZH+kuptlX++3MY/1sUxY6gLYTICtQ6co2rPnZBXfL2BLuHtS8MKVu4jqW
-         pIR5IYubtNk2aZnQrv5JdTrlrl5rX/Zs8Jg1a13YiTYPEdJEAY2F7pR/c/Zxws75c5yD
-         kcskRJUr+dzsa2HgXx7M0WG09kDavkuKPkNhgdhcyu2OAUcjT8LjxTUKiOGyo/j4wB/B
-         NQYQ==
-X-Gm-Message-State: ABuFfojrgH1wPguAo65Mv/JuEYnzfubLkJsqoo9+2QxtyXjgSWzV6Whh
-        o4JKzkCZPavW1Hun2gNSt74/dils
-X-Google-Smtp-Source: ACcGV60LsE04kGlspiH/fR8WJqlOnnU80OSmteHUTItkaZqa1oSDev6ErUXjm9lcMxEYz4fp4dfhvg==
-X-Received: by 2002:adf:e607:: with SMTP id p7-v6mr23131808wrm.254.1539168115846;
-        Wed, 10 Oct 2018 03:41:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/SogEvI+QR/SZ8InTpcT/2/7TKlSSCqIszUdmVMPRTc=;
+        b=Sag+MW94D2iNdga75Z/73s5KtRLVtf4oxviEmDFoLPJShuuLfg+bs+lmy3yEoy88HM
+         4jR4bhsnyEwRk56tRqbUiruwRvTay57tQPWguiyOALh6p77wSYyo/Li+b42BJ00Cn9hm
+         T8hzJiwhJ+aTKEgJnQrbU6F7LlFvygeN0sA4qwa1L7R7AlMRH+igv/DZ6e3hP4cyrp4a
+         0qQdXnKMAENNPkIuNc2I2Dzed8T2EDK5uMkA1RzUKN8t167gIPw+cuBVN3FkUJaH3JQf
+         1XX+pWiW4oWzKVjhl5ngGozpnHwBfhbddUtDikKKpqO8Xs2VEuPYM9tW7+Vw3CUDcxqP
+         2ALA==
+X-Gm-Message-State: ABuFfoi68xXQexT6kF23rXnbTCtwAB46trT34BA2BIODUhNbSBCVp9Vs
+        gBJR1JPQrKEuIlf2URXPxO/ldh9V
+X-Google-Smtp-Source: ACcGV62TIrXaRfUB8xeGuWMjRG3VqdPu8Cvhlh/9m2435egprVLUo1xGAQNT8w2GwUq4AGqs1Un/xQ==
+X-Received: by 2002:adf:f4c3:: with SMTP id h3-v6mr17426827wrp.259.1539168117581;
+        Wed, 10 Oct 2018 03:41:57 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 204-v6sm16061644wmh.25.2018.10.10.03.41.54
+        by smtp.gmail.com with ESMTPSA id 204-v6sm16061644wmh.25.2018.10.10.03.41.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Oct 2018 03:41:55 -0700 (PDT)
+        Wed, 10 Oct 2018 03:41:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] add an advice on unqualified <dst> push
-Date:   Wed, 10 Oct 2018 10:41:43 +0000
-Message-Id: <20181010104145.25610-1-avarab@gmail.com>
+Subject: [PATCH 1/2] i18n: remote.c: mark error(...) messages for translation
+Date:   Wed, 10 Oct 2018 10:41:44 +0000
+Message-Id: <20181010104145.25610-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.390.gf3a00b506f
+In-Reply-To: <20181010104145.25610-1-avarab@gmail.com>
+References: <20181010104145.25610-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,32 +69,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Years ago I accidentally deleted the "master" branch at work (due to
-git push origin $emptyvar:master), and while I could tell from the
-reflogs what SHA-1 I needed on the other side ran into the fairly
-cryptic error message, certainly to me when the adrenaline is flowing
-and you've just ruined something in production.
+Mark up the error(...) messages in remote.c for translation. The likes
+of "unable to push to unqualified destination" are relatively big
+parts of the UI, i.e. error messages shown when "git push" fails.
 
-So this series makes that error message better, and suggests to the
-user how they can fix the situation, first I needed to mark some
-strings in remote.c for i18n.
+I don't think any of these are plumbing, an the entire test suite
+passes when running the tests with GIT_GETTEXT_POISON=1 (after
+building with GETTEXT_POISON).
 
-It would be better if we could just give the user a full command to
-copy/paste, i.e. what the ran but with refs/{heads,tags}/<their-ref>,
-but between passing the remote name down, and handling any push
-options I think it's better for now just to suggest the refspec.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ remote.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-Ævar Arnfjörð Bjarmason (2):
-  i18n: remote.c: mark error(...) messages for translation
-  push: add an advice on unqualified <dst> push
-
- Documentation/config.txt |  7 ++++
- advice.c                 |  2 +
- advice.h                 |  1 +
- remote.c                 | 86 +++++++++++++++++++++++++++++++---------
- t/t5505-remote.sh        | 25 ++++++++++++
- 5 files changed, 102 insertions(+), 19 deletions(-)
-
+diff --git a/remote.c b/remote.c
+index 682f2a01f9..cc5553acc2 100644
+--- a/remote.c
++++ b/remote.c
+@@ -406,7 +406,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 		if (!remote->receivepack)
+ 			remote->receivepack = v;
+ 		else
+-			error("more than one receivepack given, using the first");
++			error(_("more than one receivepack given, using the first"));
+ 	} else if (!strcmp(subkey, "uploadpack")) {
+ 		const char *v;
+ 		if (git_config_string(&v, key, value))
+@@ -414,7 +414,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 		if (!remote->uploadpack)
+ 			remote->uploadpack = v;
+ 		else
+-			error("more than one uploadpack given, using the first");
++			error(_("more than one uploadpack given, using the first"));
+ 	} else if (!strcmp(subkey, "tagopt")) {
+ 		if (!strcmp(value, "--no-tags"))
+ 			remote->fetch_tags = -1;
+@@ -707,7 +707,7 @@ static void query_refspecs_multiple(struct refspec *rs,
+ 	int find_src = !query->src;
+ 
+ 	if (find_src && !query->dst)
+-		error("query_refspecs_multiple: need either src or dst");
++		error(_("query_refspecs_multiple: need either src or dst"));
+ 
+ 	for (i = 0; i < rs->nr; i++) {
+ 		struct refspec_item *refspec = &rs->items[i];
+@@ -735,7 +735,7 @@ int query_refspecs(struct refspec *rs, struct refspec_item *query)
+ 	char **result = find_src ? &query->src : &query->dst;
+ 
+ 	if (find_src && !query->dst)
+-		return error("query_refspecs: need either src or dst");
++		return error(_("query_refspecs: need either src or dst"));
+ 
+ 	for (i = 0; i < rs->nr; i++) {
+ 		struct refspec_item *refspec = &rs->items[i];
+@@ -995,12 +995,12 @@ static int match_explicit_lhs(struct ref *src,
+ 		 * way to delete 'other' ref at the remote end.
+ 		 */
+ 		if (try_explicit_object_name(rs->src, match) < 0)
+-			return error("src refspec %s does not match any.", rs->src);
++			return error(_("src refspec %s does not match any."), rs->src);
+ 		if (allocated_match)
+ 			*allocated_match = 1;
+ 		return 0;
+ 	default:
+-		return error("src refspec %s matches more than one.", rs->src);
++		return error(_("src refspec %s matches more than one."), rs->src);
+ 	}
+ }
+ 
+@@ -1041,30 +1041,30 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 		if (starts_with(dst_value, "refs/"))
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+ 		else if (is_null_oid(&matched_src->new_oid))
+-			error("unable to delete '%s': remote ref does not exist",
++			error(_("unable to delete '%s': remote ref does not exist"),
+ 			      dst_value);
+ 		else if ((dst_guess = guess_ref(dst_value, matched_src))) {
+ 			matched_dst = make_linked_ref(dst_guess, dst_tail);
+ 			free(dst_guess);
+ 		} else
+-			error("unable to push to unqualified destination: %s\n"
+-			      "The destination refspec neither matches an "
+-			      "existing ref on the remote nor\n"
+-			      "begins with refs/, and we are unable to "
+-			      "guess a prefix based on the source ref.",
++			error(_("unable to push to unqualified destination: %s\n"
++				"The destination refspec neither matches an "
++				"existing ref on the remote nor\n"
++				"begins with refs/, and we are unable to "
++				"guess a prefix based on the source ref."),
+ 			      dst_value);
+ 		break;
+ 	default:
+ 		matched_dst = NULL;
+-		error("dst refspec %s matches more than one.",
++		error(_("dst refspec %s matches more than one."),
+ 		      dst_value);
+ 		break;
+ 	}
+ 	if (!matched_dst)
+ 		return -1;
+ 	if (matched_dst->peer_ref)
+-		return error("dst ref %s receives from more than one src.",
+-		      matched_dst->name);
++		return error(_("dst ref %s receives from more than one src."),
++			     matched_dst->name);
+ 	else {
+ 		matched_dst->peer_ref = allocated_src ?
+ 					matched_src :
+@@ -1763,7 +1763,7 @@ int get_fetch_map(const struct ref *remote_refs,
+ 			if (!starts_with((*rmp)->peer_ref->name, "refs/") ||
+ 			    check_refname_format((*rmp)->peer_ref->name, 0)) {
+ 				struct ref *ignore = *rmp;
+-				error("* Ignoring funny ref '%s' locally",
++				error(_("* Ignoring funny ref '%s' locally"),
+ 				      (*rmp)->peer_ref->name);
+ 				*rmp = (*rmp)->next;
+ 				free(ignore->peer_ref);
+@@ -2131,7 +2131,7 @@ static int parse_push_cas_option(struct push_cas_option *cas, const char *arg, i
+ 	else if (!colon[1])
+ 		oidclr(&entry->expect);
+ 	else if (get_oid(colon + 1, &entry->expect))
+-		return error("cannot parse expected object name '%s'", colon + 1);
++		return error(_("cannot parse expected object name '%s'"), colon + 1);
+ 	return 0;
+ }
+ 
 -- 
 2.19.1.390.gf3a00b506f
 
