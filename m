@@ -2,114 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EBD81F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 18:36:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F6461F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 18:38:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727260AbeJKB7h (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 21:59:37 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:38615 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbeJKB7h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 21:59:37 -0400
-Received: by mail-wr1-f42.google.com with SMTP id a13-v6so6861080wrt.5
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 11:36:13 -0700 (PDT)
+        id S1727013AbeJKCBv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 22:01:51 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34586 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726525AbeJKCBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 22:01:50 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w19-v6so5888466eds.1
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 11:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=nfHYRBt6KmNlouDjjV0jkBQsWaTLtEf7mBcjgtxNYWs=;
-        b=nvRM2kLn67jZrw6dqrxy2LZoxc4EYXrN0KRdx9xA95jSzEzTNYNt57U/hXsTUKbv3J
-         YwtnhqcHP5ZHZNLNQNvhaJCHz5hU3Rn4sj+T1FgAOnShUpwuN0LBwwLjyaepE4n4KjT5
-         xkV+OnfGngb27udHqM03plISzHHk7IGqZ9LABoQA7rk8Yki8vb+7dZD30UhG+KqNeGw3
-         rW0LNfHGsjayRze3Uu9bSZGpKwHDd4p7yj6voQ6aMzXU0SieHRWdm8rTAQ1ESJiQM+qE
-         NC54qmJara+qDAqQDb0i0oDN1lJV1Bon7hEJDcsKk+wQRsgnwovP9oapECjo5XYvSWtI
-         HySg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SC/2mhJWRsMmg+vrPoNGyylm1z6ZpOw9EE/tggo4ZtY=;
+        b=RDwVIcTHK5R8L/8OAxsbISmlU7Ysq/iOeVGPv3aWm9oFj++TDDfDdh91mtUY2F9PqB
+         46JT59AH85kcHi3nSZHXPvHAn0odFPQ5GTiJqkRrKfjICnYlKIT6tpt95rESOmpj7SeA
+         cJhZ+0qHBC55/dYAQdkot/9b9xrE8QzuhyAlh+Lgo9X8JlyqKe/zRufTvWuqYLPR84DH
+         MNR5mOLzXQcxIBxo/NVP6wxeYMSUPqfZEm3I0MrJoruwwYwY7PIDADRrAUJ7p0AsVQMk
+         YbTDkingdLFRnAfLk9WnjqSwqzBI6CTCm6RmtfRAyoiyOBVrRAe8K3Va6lceBx3TSAcN
+         EwRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=nfHYRBt6KmNlouDjjV0jkBQsWaTLtEf7mBcjgtxNYWs=;
-        b=scaH4aegEODAxKrVN090KM0F/Gr7Tsj2LQsKolecIIi8xb0jCN34nM/E3NjTlHFivU
-         tzGZ5v2+pMSp+h2RIHHcGF7ENmhsIhZG5s8wMNpODFPuC1ac9EeIVBHj+rGQR7VJ63+A
-         RoKqN4VLoebUKB1dVixePIdCTbcQ69TMtCEMqKZIrqetEIJ5cvx62UYTi/sHTpTtw94h
-         2rzfIYEcfpTAXugMNYPJ4hbz5uTl9MnihZYosLH0hwCwrQF7WMYoJtw+3ntpu0bW9kSd
-         5lH177TgzzSoOknFHtg6Bi9GmuXLM9uL/+4tyTBprScceiZgQHTwxr0rtZPJl+KGyjAZ
-         +c+g==
-X-Gm-Message-State: ABuFfojIvyVweZ4n23jS4D8RzDUh1EWPGZABHpYP+tCJsbCmoCpjHhtS
-        Tr65ftOD3ZjZY0/z2K9cGvCyvf5M
-X-Google-Smtp-Source: ACcGV63xf1i44bpBfblCEg8mUrs7UafZiEnFG1eU4FjbhPNOq3XLBnBlqDNGaloKcIKHuETDiqM/Qw==
-X-Received: by 2002:adf:8461:: with SMTP id 88-v6mr23389082wrf.251.1539196572368;
-        Wed, 10 Oct 2018 11:36:12 -0700 (PDT)
-Received: from ?IPv6:2001:a62:81d:ab01:5442:f733:1c55:6988? ([2001:a62:81d:ab01:5442:f733:1c55:6988])
-        by smtp.googlemail.com with ESMTPSA id b1-v6sm15455901wrt.43.2018.10.10.11.36.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Oct 2018 11:36:11 -0700 (PDT)
-Subject: Re: Git svn bug on merging svn branches
-To:     =?UTF-8?B?0JDRgNGC0LXQvCDQodC10LzQtdC90L7Qsg==?= 
-        <artem.semenov@jarillolabs.com>, git@vger.kernel.org
-References: <49aa05bf-1848-51ca-8b98-5f1796dd8bdf@jarillolabs.com>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Message-ID: <a74ed565-124c-0047-57ae-5857ab644b23@gmail.com>
-Date:   Wed, 10 Oct 2018 20:36:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=SC/2mhJWRsMmg+vrPoNGyylm1z6ZpOw9EE/tggo4ZtY=;
+        b=SqMlBbR3+9zZpGZH5q0gAMLt7KjlXX9nLOrvcpdrQvPYfpox6Zett6ugS914QIYXKj
+         w938S0zigT85qvlF8O/PnEn16rR0vrlHuFBvd5d1Y1+f0O4E3KcJ/kIDOvXkSB11zHDd
+         0PGHSXXuMNt3gG1/4QpCXcVrUC+cYmUPHzaLxupuJDTkaGffWtKyIIoYuzD4tB2o1nkc
+         CKDfk4VJGlEYUoliGFjtoglPWeGcCsBl/k0Y28/AuoqiUWyU8hvc9Sr+PMnptSjRTVtx
+         Tj2UaQGQYlhKJDHdeieH2OJ74U3pg65OAuLJ0tXL9Ztw3f3ME/ZPbPYqeXXUTCtBqF6G
+         JpAQ==
+X-Gm-Message-State: ABuFfojzN5lTFhnYJfCnwPogq9YBcF4x1WUdy/zjRYnlDa3pYNxuoaBT
+        V0fimXPJOr01ILYJBOkd7yo=
+X-Google-Smtp-Source: ACcGV62ooBrBCJN25UfEDhmrdW2JkqHKmhjZQOomgXKNIF9GPQLUI7/5NDgqo4bnnRslddKrYA5HPA==
+X-Received: by 2002:a17:906:7c96:: with SMTP id w22-v6mr34992650ejo.36.1539196705436;
+        Wed, 10 Oct 2018 11:38:25 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id t10-v6sm2146165eda.2.2018.10.10.11.38.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 11:38:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Martin Langhoff <martin.langhoff@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, e@80x24.org,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git svn clone/fetch hits issues with gc --auto
+References: <CACPiFCJZ83sqE7Gaj2pa12APkBF5tau-C6t4_GrXBWDwcMnJHg@mail.gmail.com> <CACPiFCKQq--xrMf1nF=1MmC+eESE_aKms3yogoRwCY=YxcOWXA@mail.gmail.com> <20181009234502.oxzfwirjcew2sxrm@dcvr> <xmqqd0sims6s.fsf@gitster-ct.c.googlers.com> <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com> <878t36f3ed.fsf@evledraar.gmail.com> <CACPiFCKMF2di=waQ5reRtjUFEjuE6DkxxLcN-YnF-SqgE_m=_Q@mail.gmail.com> <875zyaf2f1.fsf@evledraar.gmail.com> <20181010165152.GA180779@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181010165152.GA180779@aiede.svl.corp.google.com>
+Date:   Wed, 10 Oct 2018 20:38:23 +0200
+Message-ID: <87va69ejfk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <49aa05bf-1848-51ca-8b98-5f1796dd8bdf@jarillolabs.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-Am 10.10.2018 um 01:38 schrieb Артем Семенов:
-> Hello.
-> 
-> Git svn bug on merging svn branches:
-> 
-> Svn repository (branches tag trunk).
-> 
-> 1. Add a some file by svn tools.
-> 2. Create a new branch by svn tools (e.g. br1) .
-> 3. Create a new branch by svn tools on branch br1 (e.g. br2).
-> 4. Add some changes to file f1 in branch br1. Commit by svn tools.
-> 5. Clone repository by git svn.
-> 6. Create two local branches – br1_svn (on origin/br1) and br2_svn (on
-> origin/br2);
-> 7. Checkout to br2_svn. Add some changes (e.g add file f2). Execute git
-> add, git commit.
-> 8. Execute “git merge br1_svn”.
-> 9. Checkout to br1_svn.
-> 10. Execute “git svn info” - URL refers to br1. (URL:
-> https://127.0.0.1/svn/branchtest/branches/br1)
-> 11. Execute “git merge br2_svn”.
-> 12. Execute “git svn info” - URL refers to br2. (URL:
-> https://127.0.0.1/svn/branchtest/branches/br2)
+On Wed, Oct 10 2018, Jonathan Nieder wrote:
 
-The "CAVEAT" section in the git-svn manual already contains some text about
-your case:
+> Hi,
+>
+> Ævar Arnfjörð Bjarmason wrote:
+>
+>> I'm just saying it's hard in this case to remove one piece without the
+>> whole Jenga tower collapsing, and it's probably a good idea in some of
+>> these cases to pester the user about what he wants, but probably not via
+>> gc --auto emitting the same warning every time, e.g. in one of these
+>> threads I suggested maybe "git status" should emit this.
+>
+> I have to say, I don't have a lot of sympathy for this.
+>
+> I've been running with the patches I sent before for a while now, and
+> the behavior that they create is great.  I think we can make further
+> refinements on top.  To put it another way, I haven't actually
+> experienced any bad knock-on effects, and I think other feature
+> requests can be addressed separately.
+>
+> I do have sympathy for some wishes for changes to "git gc --auto"
+> behavior (I think it should be synchronous regardless of config and
+> the asynchrony should move to being requested explicitly through a
+> command line option by the callers within Git) but I don't understand
+> why this holds up a change that IMHO is wholly positive for users.
+>
+> To put it another way, I am getting the feeling that the objections to
+> that series were theoretical, while the practical benefits of the
+> patch are pretty immediate and real.  I'm happy to help anyone who
+> wants to polish it but time has shown no one is working on that, so...
 
-       If you do merge, note the following rule: git svn dcommit will attempt
-       to commit on top of the SVN commit named in
+[I wrote this before seeing Jeff's reply, but just to bo clear...]
 
-           git log --grep=^git-svn-id: --first-parent -1
+Yes, like Jeff says I'm not referring to your gitster/jn/gc-auto with
+this "Jenga tower" comment.
 
-       You must therefore ensure that the most recent commit of the branch you
-       want to dcommit to is the first parent of the merge. Chaos will ensue
-       otherwise, especially if the first parent is an older commit on the
-       same SVN branch.
+Re that patch: I've said what I think about tools printing error
+messages saying "I can't do stuff" while not returning a non-zero exit
+code, so I won't repeat that here. But whatever anyone thinks of that
+it's ultimately a rather trivial detail, and doesn't have any knock-on
+effects on the rest of git-gc behavior.
 
-The paragraphs before these lines give more reasons to avoid a non-linear
-history in SVN branches.
+I'm talking about the "gc: do not warn about too many loose objects"
+patch and similar approaches. FWIW what I'm describing in
+<878t36f3ed.fsf@evledraar.gmail.com> isn't some theoretical concern. In
+some large repositories at work that experience a lot of branch churn
+and have fetch.prune / fetch.pruneTags turned on active checkouts very
+quickly get to the default 6700 limit.
 
-Best regards
-Andreas Heiduk
+I've currently found that gc.pruneExpire=4.days.ago is close to a sweet
+spot of avoiding that issue for now, while not e.g. gc-ing a loose
+object someone committed on Friday before the same time on Monday, but
+before I tweaked that, but with the default of 2.weeks we'd much more
+regularly see the problem described in [1].
+
+But as noted in the various GC threads linked from this one that sort of
+solution within the confines of the current implementation and
+configuration promises we've made, which lead to all sorts of stupidity.
+
+1. https://public-inbox.org/git/87inc89j38.fsf@evledraar.gmail.com/
