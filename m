@@ -2,147 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 711AE1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 22:37:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60AEA1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 22:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726215AbeJKGBj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 02:01:39 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39915 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbeJKGBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 02:01:39 -0400
-Received: by mail-ed1-f65.google.com with SMTP id d15-v6so6426765edq.6
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:37:24 -0700 (PDT)
+        id S1726008AbeJKGNl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 02:13:41 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35578 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725968AbeJKGNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 02:13:41 -0400
+Received: by mail-ed1-f68.google.com with SMTP id y19-v6so6461315edd.2
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:49:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iAFmZf1H2JbHpjcG1MAYkMRFUaxwyhxpxZPBNBBG0h4=;
-        b=f6e7f8XGdnZlzXQ45sCUnOa/AwJIRbMhBP7QZYD7bo/R+Ym/lKmwMsWTzhj3P2Stx/
-         3I3EqOsEzp6CqvtNnz3YUkPD/ET18QAVeF1FS7T8hgLqS+LIuFAt1YG62YvaKnVFejEA
-         JYkXohY+vxa7uJN7/wtwmwgOCxncykRLllI0pqkPBv48MnP2phl/58y8V0xW2ALATgEo
-         OVkeKsuQW5IA9IXDdp0P6Rm8JBKfNTAakO6mELKMqRo9hsUUKcscsx0oQnDntjTbDT1s
-         GFsUFe/T4CZ2ApYi5UM9wR87oLERujw1LZt0lNDo7l/IbhfM/0rLDmZQin3RqLwm3noU
-         uTGw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6gNRd1S4BH96VMJ+oeMUjw3ryjtWE/ypI/A+65ZXzmc=;
+        b=tc2iatTt2o8Qktxc9v46uZatVay1+594unTIuLDd4ND1d457HaZPzgBRYVgwoaHc3H
+         YnO5bmTd7X7gmACtb3laWZO2hZKj25x6Wi6OxKdrZjxVO6PP6G9+ovLwdHVUfFcROWL2
+         +GToktllrIOrdM3iYdxjM8qP+Qn5XxACwfvSJ7SPAjMB7t2+GZEoJYrX5w2iaxjsqiqB
+         kTOqFc1dSrx6yFg90eqeALbOd2jlQntDv1hemptpzb9DbYJ6IGuMWLjcnkEj/tpomi3T
+         EbWcUp07K1+RvV8DYY1l4xyiPtUtptlH93M2Z9BKNgvm7hoxL4RqvjbapBhoLNy7yV0I
+         zLqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=iAFmZf1H2JbHpjcG1MAYkMRFUaxwyhxpxZPBNBBG0h4=;
-        b=guANOq9ECM+u60srXazLKt3jKXn4/muCgAKuK+eM/tgR6hKhrIno6JrucIk7EaqKHj
-         uImjmpnYNKI4O/PDuFB7MvxsKSy3TNxpvUgqbtTdDPqiBF8TAu1SE9n/rpgASo/bhI3l
-         V5H9EnhtDFEpQ43BEkd2BCmekdycREq1pT6MM9FK8ciB/BF68C+sClraMwbbBBNvdqkD
-         4R73b6cT44tK93bhn7SMxReDZiuhkJ18zkH+SLe0USuFGd7oFFLnuqxeeSgzQcP5ZEMG
-         Hs+tWJ/FcFfkhBJxNpDdOxU9q+fiByIdkkKM8FC4yZLVuy2NiLve3+F4uu9YWor6ATxZ
-         sFmg==
-X-Gm-Message-State: ABuFfoiYPxhQcypcGCufQwAtbdpPcOLjG7I56RjrNHRCBBOT/C3RM3fb
-        Nmo33dJReIj5BArsdxkSHzR3rg/YE+A=
-X-Google-Smtp-Source: ACcGV626iuRGVg6oo8T30lvHk9RbUZ61Qk6jJO89nOJmFOwZ1Af7NjwKmpxAYUxQuAPPnwP4ED2XbA==
-X-Received: by 2002:a17:906:2545:: with SMTP id j5-v6mr35081448ejb.229.1539211043398;
-        Wed, 10 Oct 2018 15:37:23 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id g52-v6sm8312830edb.91.2018.10.10.15.37.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 15:37:22 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 1/2] commit-graph write: add progress output
-References: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com> <20180917153336.2280-2-avarab@gmail.com> <20181010203738.GE23446@szeder.dev> <87pnwhea8y.fsf@evledraar.gmail.com> <20181010221951.GG23446@szeder.dev>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181010221951.GG23446@szeder.dev>
-Date:   Thu, 11 Oct 2018 00:37:21 +0200
-Message-ID: <87murle8da.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6gNRd1S4BH96VMJ+oeMUjw3ryjtWE/ypI/A+65ZXzmc=;
+        b=pQ1OE6ycbj8ggKKjESoeX7yQzhu33MGEGlRHu2oU2QaOD//3vqaXz2SyXMSitgzmbg
+         ysXcGm+mA5FisJzEhXII3VZipIit9mIgtQeg49FJTESnfLFBax2MzLUGtUbISDVVCnYq
+         +pEPUtlUTZVPnyuq5bwXnUekGVaWR8XcQRCDnO4GMVWS15AF5wTk5mO2Thv6BDlRDpPj
+         bW57MwKcI16BF/lErAg/Vjp5DRe514Np4/8vVSr6n7L7kp5bJru5RNgmjPTNUmwUwnPs
+         XIBjEuxCy6OcIbLaqQ9euIvUtZhPn0eSNzWeo07SLXO1kiAiHj+XK72jpvXODOd1jCKw
+         yDrw==
+X-Gm-Message-State: ABuFfohndQa1mpQp/Y5lp1+KHelNk0rfPiEnwVl1YSVJ6WTHWAdPBRpQ
+        cXJlEGGYS2mz9GJ20wq9fJtZOZIJZALW+To+6LNOPnY7gGuHAw==
+X-Google-Smtp-Source: ACcGV60kGDnchPJBoRXz6FquznNypzjsgaHEMpJ7vTh0rvlWxGmaHnxgtZK+HGtq/FW3dNHCmy+8t9+pLltIRRh8hVI=
+X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr22884518edh.154.1539211764389;
+ Wed, 10 Oct 2018 15:49:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20181009183549.195316-1-sbeller@google.com> <20181010001037.74709-1-jonathantanmy@google.com>
+In-Reply-To: <20181010001037.74709-1-jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 10 Oct 2018 15:49:13 -0700
+Message-ID: <CAGZ79kbZ35OEh=2JiZuOHgG-P3a3PeSP5hgrXX-tQh9feOQsjQ@mail.gmail.com>
+Subject: Re: [PATCH] builtin/grep.c: remote superflous submodule code
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Antonio Ospite <ao2@ao2.it>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Oct 10 2018, SZEDER Gábor wrote:
-
-> On Wed, Oct 10, 2018 at 11:56:45PM +0200, Ævar Arnfjörð Bjarmason wrote:
->> On Wed, Oct 10 2018, SZEDER Gábor wrote:
+On Tue, Oct 9, 2018 at 5:10 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
->> >>  	for (i = 0; i < oids->nr; i++) {
->> >> +		display_progress(progress, ++j);
->>
->> [...]
->>
->> > This display_progress() call, however, doesn't seem to be necessary.
->> > First, it counts all commits for a second time, resulting in the ~2x
->> > difference compared to the actual number of commits, and then causing
->> > my confusion.  Second, all what this loop is doing is setting a flag
->> > in commits that were already looked up and parsed in the above loops.
->> > IOW this loop is very fast, and the progress indicator jumps from
->> > ~780k right to 1.5M, even on my tiny laptop, so it doesn't need a
->> > progress indicator at all.
->>
->> You're right, I tried this patch on top:
+> > It claimed that grep would still need some explicit handling, but that is
+> > not the call to repo_read_gitmodules (applying this patch on top of
+> > ff6f1f564c4 still keep the test suite happy, specifically
+> > t7814-grep-recurse-submodules, which contains a test
+> > "grep history with moved submoules")
 >
-> [...]
+> Firstly, spelling of "remove" and "superfluous" in the commit title.
 >
->> And on a large repo with around 3 million commits the 3rd progress bar
->> doesn't kick in.
->>
->> But if I apply this on top:
->>
-> [...]
->>
->> I.e. start the timer after 1/4 of a second instead of 1 second, I get
->> that progress bar.
->>
->> So I'm inclined to keep it. It just needs to be 4x the size before it's
->> noticeably hanging for 1 second.
+> I don't think the "grep history with moved submodules" test exercises
+> much. That test only tests the superproject > submodule case, but we
+> need a superproject > submodule > sub-submodule case, because what is
+> being removed is a call to repo_read_gitmodules() on a repository
+> ("struct repository submodule") that has a superproject ("struct
+> repository *superproject"). In other words, we need a submodule that has
+> its own gitmodules.
+
+Right; we do have a test 'grep and nested submodules', which still passes.
+I added another test, that would grep through nested submodules in
+the history (not checked out), but that would not work on nested submodules
+with or without this patch applied. (As the nested submodule is not checked
+out, is_submodule_active(repo, path) would return false and we'd not dive
+into the nested submodule.
+
+I looked into ao/submodule-wo-gitmodules-checked-out, as that touches
+this area of code as well and promises to allow working with submodules
+when .gitmodules is not checked out, it doesn't help this use case, either.
+
+That is (as Antonio diagnosed), due to get_oid not working with a repository
+handle, yet.
+
+> > The special handling is the call to gitmodules_config_oid which was added
+> > already in 74ed43711f (grep: enable recurse-submodules to work on
+> > <tree> objects, 2016-12-16), but then was still named
+> > gitmodules_config_sha1.
 >
-> Just to clarify: are you worried about a 1 second hang in an approx. 12
-> million commit repository?  If so, then I'm unconvinced, that's not
-> even a blip on the radar, and the misleading numbers are far worse.
+> If you're stating that gitmodules_config_oid() is where the .gitmodules
+> file is lazily loaded, it doesn't seem to be that way, because that
+> function works only on the_repository (at least on 'master' and 'next').
 
-It's not a blip on the runtime, but the point of these progress bars in
-general is so we don't have a UI where there's no UI differnce between
-git hanging and just doing work in some tight loop in the background,
-and even 1 second when you're watching something is noticeable if it
-stalls.
+yes, that is why nested submodules do not work currently when they
+are not in the working tree.
 
-Also it's 1 second on a server where I had 128G of RAM. I think even a
-"trivial" flag change like this would very much change if e.g. the
-system was under memory pressure or was swapping.
-
-And as noted code like this tends to change over time, that loop might
-get more expensive, so let's future proof by having all the loops over N
-call the progress code.
-
-When I wrote this the intent was just "report progress". So that it's
-counting anything is just an implementation detail of how progress.c
-works now.
-
-This was the reference to Duy's patch, i.e. instead of spewing numbers
-at the user here let's just render a spinner. Then we no longer need to
-make judgement calls about which loop over N is expensive right now, and
-which one isn't, and if any of them will result in reporting a 2N number
-while the user might be more familiar with or expecting N.
-
->> That repo isn't all that big compared to what we've heard about out
->> there, and inner loops like this have a tendency to accumulate some more
->> code over time without a re-visit of why we weren't monitoring progress
->> there.
->>
->> But maybe we can fix the message. We say "Annotating commits in commit
->> grap", not "Counting" or whatever. I was trying to find something that
->> didn't imply that we were doing this once. One can annotate a thing more
->> than once, but maybe ther's a better way to explain this...
 >
-> IMO just remove it.
+> > This is a resend of origin/sb/grep-submodule-cleanup,
+> > and I think picking ff6f1f564c4 as the base for the series would
+> > also be appropriate.
+>
+> Any particular reason why you suggest that commit (which is more than a
+> year old)? It seems that basing this on 'master' is fine.
+
+After more analysis, I think we'd want to wait for Antonios series to land
+and then build on top of that, while also getting get_oid converted.
+
+Regarding this patch, let's retract it for now and revisit it once we have
+more submodule infrastructure working.
+
+Thanks,
+Stefan
