@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBFD11F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 21:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D921F1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 21:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725988AbeJKFOp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:14:45 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:45570 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbeJKFOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:14:45 -0400
-Received: by mail-qt1-f201.google.com with SMTP id l6-v6so6588641qtc.12
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:50:39 -0700 (PDT)
+        id S1725939AbeJKFOx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:14:53 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:55028 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725856AbeJKFOx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:14:53 -0400
+Received: by mail-qt1-f202.google.com with SMTP id i64-v6so6606152qtb.21
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 14:50:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=z1QtzaQ4i/gEwNO2APR2R4QOqvRnv2ZwzWSyBwFXHUY=;
-        b=EWqBtG+96y2iWO95vl+OMImgaPeWXFbYF7S0iXH4h6A6bOfUNkYD7rU+CkvLBK55aw
-         DuKYeS6//g0wJJqN1qN7aKKdgN8wCSBBG83mVwga6tPXij/k43FKs98lbsIoQfzzbtHL
-         NBMOy/Zhr2ygCT2WH92Moslwf/FOTYN/aDa9SDbFEGlUupuVilecYAkYRVgVlex38/x6
-         2/iKv26fJHAJLiDCexM4wRts8JP3Gkyo+AaeB3QqO9TkW9rn8KQnZ/fJ6v93D/xFGxoJ
-         sPcv2U2K70XY9GYEQthXlMPFSolWXEtzLDNNgAYHTb35hTWPeKkWCScJg+bnHC9b2AvA
-         zkug==
+        bh=5j5hT2IBgig73JxDXYFZtw/2y/EKtMsQ1QXXNgx+0qg=;
+        b=RBatzevfjUiZSYPfXjmotUSJgw9M0qBRnuM+1vrX2VgxuXRDqCwtNgCCczBvyoNbWe
+         /vMcoxbnR8VNZ8oPsi1oRdimImVux2X/ZDoMalNveOrRmKbeGwz+4XuS4DmGjAz79B29
+         j7Da/YB7O+x+TNoPusAkLWPzUs8yow4skJLr7W/SP7LJGe9Pi0ZQ8Twz3CESlXKhDriH
+         qu44mhcaZ3yeAmXfLhFP6nx6ePYBIAdfr5PBn6WGKNeyBRGHLW37FpaMtsf/2Cx+eGfM
+         VnIOcn6mUoHtgsX7Y9v1vmLxTUxAPgEiU+kNNKJzCbXqvFCevxbaoGhSNCDP651TOlCt
+         Zb5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=z1QtzaQ4i/gEwNO2APR2R4QOqvRnv2ZwzWSyBwFXHUY=;
-        b=RoEIhbvZljRQ5X1cZ1EDMaEqkR55hbaAt3Ris5eMx0Bnz+KboC1JE+FJ5IN2078yam
-         OeyDiIk+I9IVsKYEK9sXw9FDxkqROcr8JODuhW0EVOqNOsJCWb/Z5jmzSlK+L0CIFmka
-         jG0W8Og9P2m5Y/c2izUVHBoz2CXTXDQf0U0/WzATz7Y5c4PAsfyZyUlg+79JsNi8sF5A
-         6Mw7dEGOTAG8TzEJ3u1WlarfYygx9cwlyrUCc5Xn1VxDOoSnl8KB3aECvubIrwUofcE9
-         zd88zUKxPoGqoyQN8u72bIFaYF9NfvvGU3fTL9F0fjxc1RVt+rokQacrqKWE1pzmJ6V0
-         jAcg==
-X-Gm-Message-State: ABuFfogcoKNbWtPL1deJzGhmwmVJiXaaHzkL6f4YcS5yh3UmTGL1HVKY
-        oNaDeqadaQHOrayil5boT3Q+GcxBd1nqnAndoEMVivh0ntWUnPTyEuBsDREdsk2y+cVPqpqA/Wz
-        9KptuX7TPZwfEtojJnBdRISfyB2kF4txKLAlKYvIsxWMZFmrUBqMPEWJ4Gf/8
-X-Google-Smtp-Source: ACcGV60NtSa20KGctTRokS9Atu3CWQOGhsJtevITIyHjtEY3urduMw6xleTtMR20/8kwqzG2iUmPAvbR4FMc
-X-Received: by 2002:a0c:8870:: with SMTP id 45mr1939223qvm.4.1539208239139;
- Wed, 10 Oct 2018 14:50:39 -0700 (PDT)
-Date:   Wed, 10 Oct 2018 14:50:05 -0700
+        bh=5j5hT2IBgig73JxDXYFZtw/2y/EKtMsQ1QXXNgx+0qg=;
+        b=bIZFupZ1fCa0uISNMjWFkdLkjhrdAlwzSr29kTNnvzrqMp/Uo8QW3X9sSRSSnlU7Md
+         bzoto0XrLNwmFK++PcZIiDeKNrOnkdVVdZVFd8JWmYCv7XcEMblJCgOLJC/Trv0zQSYi
+         yHjakIZFB5OI3hSsBZ7oCFPiEZAfnKFz9PYse6dPNT0xy4sjjdLsNOxZNv3spt3y/r3n
+         QUwmmc/oQlvA3O7Npt/loKse7Nlsph27BvLEsulhmrpRJQFU3He7RYJCKnPU9N2qN8qG
+         rI1R11RFMDkg40c1mwqud246nYMHl+UYTeK7LNhssT8Nbwz3r2mr+h8RDJ+JvV+EW8Jn
+         aZpw==
+X-Gm-Message-State: ABuFfojETYwXK8PGEVGQxsmsDqwcm72zClc265ojc3zZvcbYOo1h3vlP
+        N5QS7PFTmYIZbn2MEEpNcPkuk5cMpiygpK5F/Scg3rIY+5ycoHqFhGdYifStZgJAS5onqs55kHO
+        dqERbREUIkp1rNANiokeGcLuVdczewca2LLXrHzN73nbIRjot7RTwG8buiRwA
+X-Google-Smtp-Source: ACcGV61seMsOtim08TMHfIqVQgQtkSQpiZafxe+Qpi9+rpW+a4EkyGfoQZWzMRwqz6W79CqX5iPZ2Wi1SdEq
+X-Received: by 2002:ac8:2397:: with SMTP id q23-v6mr1895001qtq.55.1539208247465;
+ Wed, 10 Oct 2018 14:50:47 -0700 (PDT)
+Date:   Wed, 10 Oct 2018 14:50:06 -0700
 In-Reply-To: <20181010215008.233529-1-sbeller@google.com>
-Message-Id: <20181010215008.233529-7-sbeller@google.com>
+Message-Id: <20181010215008.233529-8-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181010215008.233529-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH v5 6/9] repository: repo_submodule_init to take a submodule struct
+Subject: [PATCH v5 7/9] submodule: fetch in submodules git directory instead
+ of in worktree
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,208 +63,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When constructing a struct repository for a submodule for some revision
-of the superproject where the submodule is not contained in the index,
-it may not be present in the working tree currently either. In that
-siutation giving a 'path' argument is not useful. Upgrade the
-repo_submodule_init function to take a struct submodule instead.
+This patch started as a refactoring to make 'get_next_submodule' more
+readable, but upon doing so, I realized that "git fetch" of the submodule
+actually doesn't need to be run in the submodules worktree. So let's run
+it in its git dir instead.
 
-While we are at it, overhaul the repo_submodule_init function by renaming
-the submodule repository struct, which is to be initialized, to a name
-that is not confused with the struct submodule as easily.
+That should pave the way towards fetching submodules that are currently
+not checked out.
 
-Also move its documentation into the header file.
+This patch leaks the cp->dir in get_next_submodule, as any further
+callback in run_processes_parallel doesn't have access to the child
+process any more. In an early iteration of this patch, the function
+get_submodule_repo_for directly returned the string containing the
+git directory, which would be a better design choice for this patch.
+
+However the next patch both fixes the memory leak of cp->dir and also has
+a use case for using the full repository handle of the submodule, so
+it makes sense to introduce the get_submodule_repo_for here already.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/grep.c              | 17 ++++++++++-------
- builtin/ls-files.c          | 12 +++++++-----
- builtin/submodule--helper.c |  2 +-
- repository.c                | 27 ++++++++++-----------------
- repository.h                | 11 +++++++++--
- 5 files changed, 37 insertions(+), 32 deletions(-)
+ submodule.c                 | 51 +++++++++++++++++++++++++++----------
+ t/t5526-fetch-submodules.sh |  7 ++++-
+ 2 files changed, 44 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 601f801158..81c53c862b 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -418,16 +418,19 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 			  const struct object_id *oid,
- 			  const char *filename, const char *path)
- {
--	struct repository submodule;
-+	struct repository subrepo;
-+	const struct submodule *sub = submodule_from_path(superproject,
-+							  &null_oid, path);
+diff --git a/submodule.c b/submodule.c
+index dd478ed70b..3f791f2277 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -481,6 +481,12 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 			 DEFAULT_GIT_DIR_ENVIRONMENT);
+ }
+ 
++static void prepare_submodule_repo_env_in_gitdir(struct argv_array *out)
++{
++	prepare_submodule_repo_env_no_git_dir(out);
++	argv_array_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
++}
 +
- 	int hit;
- 
- 	if (!is_submodule_active(superproject, path))
- 		return 0;
- 
--	if (repo_submodule_init(&submodule, superproject, path))
-+	if (repo_submodule_init(&subrepo, superproject, sub))
- 		return 0;
- 
--	repo_read_gitmodules(&submodule);
-+	repo_read_gitmodules(&subrepo);
- 
- 	/*
- 	 * NEEDSWORK: This adds the submodule's object directory to the list of
-@@ -440,7 +443,7 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 	 * object.
- 	 */
- 	grep_read_lock();
--	add_to_alternates_memory(submodule.objects->objectdir);
-+	add_to_alternates_memory(subrepo.objects->objectdir);
- 	grep_read_unlock();
- 
- 	if (oid) {
-@@ -465,14 +468,14 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 
- 		init_tree_desc(&tree, data, size);
- 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
--				object->type == OBJ_COMMIT, &submodule);
-+				object->type == OBJ_COMMIT, &subrepo);
- 		strbuf_release(&base);
- 		free(data);
- 	} else {
--		hit = grep_cache(opt, &submodule, pathspec, 1);
-+		hit = grep_cache(opt, &subrepo, pathspec, 1);
- 	}
- 
--	repo_clear(&submodule);
-+	repo_clear(&subrepo);
- 	return hit;
+ /* Helper function to display the submodule header line prior to the full
+  * summary output. If it can locate the submodule objects directory it will
+  * attempt to lookup both the left and right commits and put them into the
+@@ -1227,6 +1233,29 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
+ 	return spf->default_option;
  }
  
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 7f9919a362..4d1649c1b3 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -206,17 +206,19 @@ static void show_files(struct repository *repo, struct dir_struct *dir);
- static void show_submodule(struct repository *superproject,
- 			   struct dir_struct *dir, const char *path)
++static struct repository *get_submodule_repo_for(struct repository *r,
++						 const struct submodule *sub)
++{
++	struct repository *ret = xmalloc(sizeof(*ret));
++
++	if (repo_submodule_init(ret, r, sub)) {
++		/*
++		 * No entry in .gitmodules? Technically not a submodule,
++		 * but historically we supported repositories that happen to be
++		 * in-place where a gitlink is. Keep supporting them.
++		 */
++		struct strbuf gitdir = STRBUF_INIT;
++		strbuf_repo_worktree_path(&gitdir, r, "%s/.git", sub->path);
++		if (repo_init(ret, gitdir.buf, NULL)) {
++			strbuf_release(&gitdir);
++			return NULL;
++		}
++		strbuf_release(&gitdir);
++	}
++
++	return ret;
++}
++
+ static int get_next_submodule(struct child_process *cp,
+ 			      struct strbuf *err, void *data, void **task_cb)
  {
--	struct repository submodule;
-+	struct repository subrepo;
-+	const struct submodule *sub = submodule_from_path(superproject,
-+							  &null_oid, path);
+@@ -1234,12 +1263,11 @@ static int get_next_submodule(struct child_process *cp,
+ 	struct submodule_parallel_fetch *spf = data;
  
--	if (repo_submodule_init(&submodule, superproject, path))
-+	if (repo_submodule_init(&subrepo, superproject, sub))
- 		return;
+ 	for (; spf->count < spf->r->index->cache_nr; spf->count++) {
+-		struct strbuf submodule_path = STRBUF_INIT;
+-		struct strbuf submodule_git_dir = STRBUF_INIT;
+ 		struct strbuf submodule_prefix = STRBUF_INIT;
+ 		const struct cache_entry *ce = spf->r->index->cache[spf->count];
+-		const char *git_dir, *default_argv;
++		const char *default_argv;
+ 		const struct submodule *submodule;
++		struct repository *repo;
+ 		struct submodule default_submodule = SUBMODULE_INIT;
  
--	if (repo_read_index(&submodule) < 0)
-+	if (repo_read_index(&subrepo) < 0)
- 		die("index file corrupt");
- 
--	show_files(&submodule, dir);
-+	show_files(&subrepo, dir);
- 
--	repo_clear(&submodule);
-+	repo_clear(&subrepo);
- }
- 
- static void show_ce(struct repository *repo, struct dir_struct *dir,
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 247881189f..8214e77688 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2038,7 +2038,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
- 	if (!sub)
- 		BUG("We could get the submodule handle before?");
- 
--	if (repo_submodule_init(&subrepo, the_repository, path))
-+	if (repo_submodule_init(&subrepo, the_repository, sub))
- 		die(_("could not get a repository handle for submodule '%s'"), path);
- 
- 	if (!repo_config_get_string(&subrepo, "core.worktree", &cw)) {
-diff --git a/repository.c b/repository.c
-index 5dd1486718..aabe64ee5d 100644
---- a/repository.c
-+++ b/repository.c
-@@ -166,30 +166,23 @@ int repo_init(struct repository *repo,
- 	return -1;
- }
- 
--/*
-- * Initialize 'submodule' as the submodule given by 'path' in parent repository
-- * 'superproject'.
-- * Return 0 upon success and a non-zero value upon failure.
-- */
--int repo_submodule_init(struct repository *submodule,
-+int repo_submodule_init(struct repository *subrepo,
- 			struct repository *superproject,
--			const char *path)
-+			const struct submodule *sub)
- {
--	const struct submodule *sub;
- 	struct strbuf gitdir = STRBUF_INIT;
- 	struct strbuf worktree = STRBUF_INIT;
- 	int ret = 0;
- 
--	sub = submodule_from_path(superproject, &null_oid, path);
- 	if (!sub) {
- 		ret = -1;
- 		goto out;
- 	}
- 
--	strbuf_repo_worktree_path(&gitdir, superproject, "%s/.git", path);
--	strbuf_repo_worktree_path(&worktree, superproject, "%s", path);
-+	strbuf_repo_worktree_path(&gitdir, superproject, "%s/.git", sub->path);
-+	strbuf_repo_worktree_path(&worktree, superproject, "%s", sub->path);
- 
--	if (repo_init(submodule, gitdir.buf, worktree.buf)) {
-+	if (repo_init(subrepo, gitdir.buf, worktree.buf)) {
- 		/*
- 		 * If initilization fails then it may be due to the submodule
- 		 * not being populated in the superproject's worktree.  Instead
-@@ -201,16 +194,16 @@ int repo_submodule_init(struct repository *submodule,
- 		strbuf_repo_git_path(&gitdir, superproject,
- 				     "modules/%s", sub->name);
- 
--		if (repo_init(submodule, gitdir.buf, NULL)) {
-+		if (repo_init(subrepo, gitdir.buf, NULL)) {
- 			ret = -1;
- 			goto out;
+ 		if (!S_ISGITLINK(ce->ce_mode))
+@@ -1274,16 +1302,12 @@ static int get_next_submodule(struct child_process *cp,
+ 			continue;
  		}
- 	}
  
--	submodule->submodule_prefix = xstrfmt("%s%s/",
--					      superproject->submodule_prefix ?
--					      superproject->submodule_prefix :
--					      "", path);
-+	subrepo->submodule_prefix = xstrfmt("%s%s/",
-+					    superproject->submodule_prefix ?
-+					    superproject->submodule_prefix :
-+					    "", sub->path);
- 
- out:
- 	strbuf_release(&gitdir);
-diff --git a/repository.h b/repository.h
-index 9f16c42c1e..a9c7a5baa5 100644
---- a/repository.h
-+++ b/repository.h
-@@ -116,9 +116,16 @@ void repo_set_worktree(struct repository *repo, const char *path);
- void repo_set_hash_algo(struct repository *repo, int algo);
- void initialize_the_repository(void);
- int repo_init(struct repository *r, const char *gitdir, const char *worktree);
--int repo_submodule_init(struct repository *submodule,
+-		strbuf_repo_worktree_path(&submodule_path, spf->r, "%s", ce->name);
+-		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
+ 		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
+-		git_dir = read_gitfile(submodule_git_dir.buf);
+-		if (!git_dir)
+-			git_dir = submodule_git_dir.buf;
+-		if (is_directory(git_dir)) {
++		repo = get_submodule_repo_for(spf->r, submodule);
++		if (repo) {
+ 			child_process_init(cp);
+-			cp->dir = strbuf_detach(&submodule_path, NULL);
+-			prepare_submodule_repo_env(&cp->env_array);
++			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
++			cp->dir = xstrdup(repo->gitdir);
+ 			cp->git_cmd = 1;
+ 			if (!spf->quiet)
+ 				strbuf_addf(err, "Fetching submodule %s%s\n",
+@@ -1293,10 +1317,11 @@ static int get_next_submodule(struct child_process *cp,
+ 			argv_array_push(&cp->args, default_argv);
+ 			argv_array_push(&cp->args, "--submodule-prefix");
+ 			argv_array_push(&cp->args, submodule_prefix.buf);
 +
-+/*
-+ * Initialize the repository 'subrepo' as the submodule given by the
-+ * struct submodule 'sub' in parent repository 'superproject'.
-+ * Return 0 upon success and a non-zero value upon failure.
-+ */
-+struct submodule;
-+int repo_submodule_init(struct repository *subrepo,
- 			struct repository *superproject,
--			const char *path);
-+			const struct submodule *sub);
- void repo_clear(struct repository *repo);
++			repo_clear(repo);
++			free(repo);
+ 			ret = 1;
+ 		}
+-		strbuf_release(&submodule_path);
+-		strbuf_release(&submodule_git_dir);
+ 		strbuf_release(&submodule_prefix);
+ 		if (ret) {
+ 			spf->count++;
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 6c2f9b2ba2..42692219a1 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -566,7 +566,12 @@ test_expect_success 'fetching submodule into a broken repository' '
  
- /*
+ 	test_must_fail git -C dst status &&
+ 	test_must_fail git -C dst diff &&
+-	test_must_fail git -C dst fetch --recurse-submodules
++
++	# git-fetch cannot find the git directory of the submodule,
++	# so it will do nothing, successfully, as it cannot distinguish between
++	# this broken submodule and a submodule that was just set active but
++	# not cloned yet
++	git -C dst fetch --recurse-submodules
+ '
+ 
+ test_expect_success "fetch new commits when submodule got renamed" '
 -- 
 2.19.0
 
