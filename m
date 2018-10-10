@@ -2,86 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 667731F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 09:04:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7BE61F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 09:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726910AbeJJQ0F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 12:26:05 -0400
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:38122 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbeJJQ0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 12:26:05 -0400
-Received: by mail-wm1-f54.google.com with SMTP id 193-v6so4824072wme.3
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 02:04:51 -0700 (PDT)
+        id S1726479AbeJJQfP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 12:35:15 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:39479 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725827AbeJJQfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 12:35:14 -0400
+Received: by mail-it1-f194.google.com with SMTP id w200-v6so6921848itc.4
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 02:13:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=C5m2dEOqXcNjAnX3chg2WN5H9EWdrL5+V/BawC4NS3E=;
-        b=mKe+YFyzT5NUdBmeHjyqpvi1/AHBY4o9o6cgVBwd7D7/K1hixkQOLjA10P0PFEXzn5
-         RAiwEDuAHf9vIDchFUT6Z5Jvr+bu2kYpXvM5rQnx+ypkGTDueYLiVqNqJX8jdLGD4slp
-         4LcrxrdxPemVbIsjOHDwuaYLK6B16pUrbs2IRBLo08au8y0RZCdJKnBE1AuFjJXV8IMn
-         1Ks7hiTkVHZfaBbjoT/r4EwZGA40ZxVyqpIo9VCwk15CQTYjepam/jRhTJ6I5qUQ/JEr
-         FFdgY0FbUqGzofsWGicXLdQA8uBlY6qltHQ/0qHBzV9z+usED+Z4+ho7bWA4wGEi0Nwj
-         /yUA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=d5rjPAT0SWEQOQp/x71JcDzVn3MKFBapBET2cKBHGRE=;
+        b=Hjtjw+3bLHfy4UyXZFzybRR3K3Pi4nxf+xiVNaEZEZR5dKeIXngZPtwu+ICWBjvwij
+         p2sgtOndVpEGWRvwyT6Zd8zD+A33oxjzcAOgj1uihtuso/iMWIJBddrepqAqPEYzPeQM
+         8mSQvyffSu3Jjf3KUIeAsfM/mRFniJZS/MwoBKb2btG5c9zi6nOSKmTvebJgnfhV8oGs
+         f5dR5AyUYgXpAuZBlUK8+XX2qxSRylFSB0V0+A+2VJQVLK6xmadNOUwDtAEUorpYHBmX
+         mNprsVyxzA8ashALrMStC8HAy6WdxpXWzM7Fhz6esDhUrmRIqGpTu8npjD1E30Hy6DQ+
+         9Oig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=C5m2dEOqXcNjAnX3chg2WN5H9EWdrL5+V/BawC4NS3E=;
-        b=R1ZdTBSRf0zrsKifEf23pQ3U0lFF3ZHw58YnwuDD0eZ7bi4KvE2a0nla7fE3gOBnl3
-         PKZR5fsUOGspwIZHTpGn9/DixHOnEqCr8wCr/FDcZZUBaj5kShtMT1IQHoBog7uokNpn
-         S+r70nkxTTr62zIMXZapyj7axQ7IlJVTtJ4X28K1gxZXUuq2QCPlI+TzLPdgKzQqqq9v
-         EOanXe0xtCItkm+G9jvTl+6vmJJ801oECvHdjcid0PjuzGx5XXjbcZ3jVgWdML+bZ1n6
-         0ELIYgtsuYhPqIBrnlYRWe2rNHBVjaP6nCrBsmxINeSnXjlQsmRR95V+cPWqDGCrEk4e
-         tXxQ==
-X-Gm-Message-State: ABuFfoj+rM9hFgZ9xIPnzOH1OOaHmvnX4ZdmM5eo1d9F5buGRXM+B5CK
-        PE9VjvdP6WRmWUMW+v24kBXABDR4
-X-Google-Smtp-Source: ACcGV62Xk2Np62M6V8eHUVQMRVvYEXq9kGYVljikUUeCFLQkTY2/qHo0O4h0XuWYkPxWDek/Qt0vHQ==
-X-Received: by 2002:a1c:adce:: with SMTP id w197-v6mr114681wme.11.1539162290730;
-        Wed, 10 Oct 2018 02:04:50 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id s10-v6sm8658515wmf.15.2018.10.10.02.04.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 02:04:49 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Thiago Saife <tsaiferodrigues@gmail.com>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: Translation to Portuguese
-References: <CAOO0rQKZ6rgH136oOhQ+LCgptv-RfKXMpTTrC86EUExABgg-Lg@mail.gmail.com> <87bm82fcmm.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <87bm82fcmm.fsf@evledraar.gmail.com>
-Date:   Wed, 10 Oct 2018 11:04:48 +0200
-Message-ID: <87a7nmf9zj.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=d5rjPAT0SWEQOQp/x71JcDzVn3MKFBapBET2cKBHGRE=;
+        b=cMtOfcUhKjvD8DxalJpqwO3op2bnmsrdcs+VBr2dO+oPk3cHYMhRMT2IiZZ7i8OhvO
+         2Yt5tDi7fCLN6v+Sslw6N5wawKcUte7NwO6V7nr0GjOPl1vbZSHdK2Gc1uAhbT77nC3Z
+         rdQRJTGtVBRIjxMIwsxO2HY+uOiWIQQH1qASICu9nRJAQpiOz6fCf1rSGcg/I7fy/iTW
+         HOe02v0YGaQ1ml4Av1RHxF3wdhxInnwHq3AbzUiZkzX/ksJHsx/0EeYc7UD0O855WupH
+         8ieUB7JLgDlpvpPxul5C7iZYkhUqO+2bt46BMdmFnUN8nhC78nZYA9U5trzyn4Zfd2ct
+         H0lw==
+X-Gm-Message-State: ABuFfojHJYfeUA2RVXn9c8xev0Nqpgbsah+nCJ/PPOdznMayKQ46hQcj
+        HWz4u7wJSEpAHc6ag0oBIuB8xa/hhBZhHqeBSU4=
+X-Google-Smtp-Source: ACcGV62w7ucQ/AoTh6wAD7NfMCmR68qDraeG7E6QaF+DgTKqvrjyilleuJMgmFBIp/1iJ4IMAUMPJvMXrdERb9w6u4k=
+X-Received: by 2002:a24:cac6:: with SMTP id k189-v6mr72532itg.168.1539162839018;
+ Wed, 10 Oct 2018 02:13:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20181008170505.GA13134@manohar-ssh> <b1824db3-1c0d-6851-2f5a-800cc88ee50f@gmail.com>
+ <xmqqd0sjpgw1.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1810100856570.2034@tvgsbejvaqbjf.bet>
+ <xmqq4ldumbo1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4ldumbo1.fsf@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 10 Oct 2018 11:13:46 +0200
+Message-ID: <CAP8UFD1_CH-OGytqcLya0GdFAM3=TLpgwiXQCO__9GSR6SXe_Q@mail.gmail.com>
+Subject: Re: [PATCH][Outreachy] remove all the inclusions of git-compat-util.h
+ in header files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>, ananyakittu1997@gmail.com,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Oct 10 2018, Ævar Arnfjörð Bjarmason wrote:
-
-> On Mon, Oct 08 2018, Thiago Saife wrote:
+On Wed, Oct 10, 2018 at 10:46 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> Hello Git Team.
->>
->> I would like to help to continue the books' translation to Brazilian
->> Portuguese and I don't know how to proceed. Thanks in advance for your
->> help.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> That would be great. Have you seen
-> https://github.com/git/git/blob/master/po/README ? It describes how to
-> create a new language. Also CC-ing the l10n coordinator, Jiang.
+> > Personally, I find the "whoever is picking it up should do the thinking=
+"
+> > much too harsh for a first-time contributor who specifically came throu=
+gh
+> > the Outreachy program, i.e. expected to have a gentle introduction into
+> > the project, and into the ways we work.
+>
+> Oh, absolutely I agree.
+>
+> Any random discussion participant can say "left over bits" in any
+> random message with an idea that is left on the table.  Looking for
+> it may narrow the set messages to be examined, but the query result
+> will inevitably be still full of chaff.  It is not a very good match
+> for "gentle introduction" material for GSoC/Outreachy microprojects.
+>
+> List of reasonable low-hanging fruits is hard to maintain, as the
+> cost of building and maintaining such a list would easily outweigh
+> the cost (and fun) of picking these low-hanging fruits yourself X-<.
+>
+> I do not think of a good solution to help newcomers offhand.
 
-It has been pointed out to me off-list (thanks) that I missed the part
-where you mention a 'book', and we already have a Portugese translation
-of Git. Sorry!
+In the "How to find other ideas for microprojects" on
+https://git.github.io/SoC-2018-Microprojects/ there is already the
+following:
+
+"When you find something you are interested to work on, please ask
+first on the mailing list if it=E2=80=99s worth doing and if it=E2=80=99s a=
+ppropriate
+for a microproject before starting to work on what you find. Even if
+it looks straightforward, there could be hidden reasons why it is too
+difficult or just inappropriate."
+
+So I think one solution to this problem is already proposed on our web site=
+.
