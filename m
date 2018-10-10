@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E012E1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 19:32:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95ADD1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 19:36:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727388AbeJKC4X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 22:56:23 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43488 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727351AbeJKC4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 22:56:22 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n1-v6so7004550wrt.10
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 12:32:45 -0700 (PDT)
+        id S1727351AbeJKC7p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 22:59:45 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36312 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726911AbeJKC7o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 22:59:44 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a8-v6so6933646wmf.1
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 12:36:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=3f/RceIOgWWDsTX8rbMDJZXRmeTjCbRrUztJf3Mw7FM=;
-        b=ZGbf+5R1VmoRdiuZXuVUV8IE2oxcu7rv1FJO4CW09h0KnK00TpDZYuntzQ4o2VKphu
-         sNhMkT177QEg8O/FSoKo7T6RW2xcVLFsaWaXpia9wD277SHyEXOBlRL5EP8khXFvytvx
-         Cpl/w0+YAfLwgOUjaSyxAXxYewokNyVl+lSy4EzV4MgWV0bmLcx6Ft9DT72cH22Zcc0u
-         8zIDcFJzsoYdaaXHilhO/fIFbc/5scAFrKhYN3TLYN7Co24kKdT8NIZL1oD+aydIzlCV
-         A9OvDmbhct22FOi5KgzGuq73PNvg9+UeyZGMOXZeFWlCpZJRN0Z9w2PetjVlJdoQK53F
-         OCKw==
+        bh=PHSbu69oXUOc/nCG657mMgdah4B+o2XuIVoeY9X8ALY=;
+        b=JJHCePyCKRVy2WDs1BZN+qffNSQMn0ukzjAzeWuqpMyEZreIwFT6jKfPEIM0Bbj6ud
+         pjfH7BM5IOrVADtCnPUg7lXhgBy8KFFSYobkHFf1YAdX6hnFsVp9Z7XI/3wPyMEqTZJ6
+         x5cYBnzb8jvy8NYzghd4FN0FJTQb4M1kdauZkFRAWAvC6jaHVSyhf2L4rtpXoq5lkUUq
+         S6D+44oPV/oXOlU/ORV1xPgfIhKG+tjoZ7LooFef+tgdnJxEWmlUEQI/1d/b/xOc23O9
+         H+U8fR+AGPRnKNQnPcqrq/5Xz2jXkW7cT8LA47DiAd39GHMzAT/o9J6d7bX3vjO9uUC9
+         AOcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=3f/RceIOgWWDsTX8rbMDJZXRmeTjCbRrUztJf3Mw7FM=;
-        b=qp2XmrPBsCauLjJK4FK6kIpsb6irzwXrJ+UedFu9xJIre++KkYx9mxmElbgfOpjeDK
-         4xRpf5tr5B7K3NSdJ9dZppXiA9lx+HkSvGP7RoONc/k+DJRVNaNzW22Hyxq+SnY28Pft
-         56yGodrvO/CCCJBK5cZ01a5PRK4NdKFNeqlbB/jSKaCoqsZ+oZuYI/0qO4P0nWnLd9AZ
-         ExuGquycKtafgpn2NiQKiy9Eq0CvsQ8BZrfZsE2M0kcsEiNS3+XwdRV+pHOBNlryIV8s
-         Av13a1J/t2DVqn+Q0XIEiDC0MlyTruM/SFP7CQ3H0/Rtup/x5oe6ztkTQR3BD2xWZemP
-         MwAA==
-X-Gm-Message-State: ABuFfoiUJAbhcjAP8rN9fGWVp4E4Z1v+0kzkUjxWdSCXs5najkC10Pvt
-        81Hiz42DYi0lhETSjJ2qP9c1qWSvdHo=
-X-Google-Smtp-Source: ACcGV61g31wb4DYlGMXCGyIDv9ve1lLfL/owVp44TifkE0bHu7xqo2QG32dOQWL0kkOAtE0dJhWC3g==
-X-Received: by 2002:a5d:5601:: with SMTP id l1-v6mr6177304wrv.209.1539199964600;
-        Wed, 10 Oct 2018 12:32:44 -0700 (PDT)
+        bh=PHSbu69oXUOc/nCG657mMgdah4B+o2XuIVoeY9X8ALY=;
+        b=jbQLd5u8TawTzSj23UrgkJjDbrcdJAnrx6HJH4Fc3y9w8KYhU9+SM87lhQw/++K53J
+         aVo651Z+pKjHDusOFZx2h+DZuI9OUJRqLsqqMpf3yA1LCKhVsRZpgFDwWp9jQ8QjC3zf
+         0KllsP3v2rBg/H/RNk5JF9djnM70AJmsZh5/pkHTaM/rvIPDwn2VyFla8MrhJWYMJHKL
+         OWC9CG4gmGASJeuUKZZ025p3JpaEQ9PYIaxZqKJQHGlFX3+T2Bgap+5JQmKQSRZzvv+1
+         xBia4Ek/ijyFJB7QChZNV6rE1tHBAi0WNTKlCBx7ttgJ7RE33vjPXVGFrvu26D7zJV1v
+         4kaQ==
+X-Gm-Message-State: ABuFfojtIBBdDrgaYz4IVErZv9dej+9gR1hEGxYm+rmUXyrBjsT5fwMs
+        R9PJVFVrOf6S9+TwzIHlGSxPxi110JE=
+X-Google-Smtp-Source: ACcGV6049+e/0IDWSsNZZjtp9Y7tWbzFBdOfOgF+q4rkj985SN5zK/DFudu19DbamFd1iy9Tqpiu3g==
+X-Received: by 2002:a1c:bce:: with SMTP id 197-v6mr1890256wml.15.1539200166128;
+        Wed, 10 Oct 2018 12:36:06 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 74-v6sm18588567wmi.23.2018.10.10.12.32.43
+        by smtp.gmail.com with ESMTPSA id z8-v6sm23346688wrp.63.2018.10.10.12.36.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Oct 2018 12:32:43 -0700 (PDT)
+        Wed, 10 Oct 2018 12:36:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] gc: remove redundant check for gc_auto_threshold
-Date:   Wed, 10 Oct 2018 19:32:35 +0000
-Message-Id: <20181010193235.17359-1-avarab@gmail.com>
+Subject: [PATCH] revert & cherry-pick: run git gc --auto
+Date:   Wed, 10 Oct 2018 19:35:57 +0000
+Message-Id: <20181010193557.19052-1-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.390.gf3a00b506f
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -68,47 +67,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Checking gc_auto_threshold in too_many_loose_objects() was added in
-17815501a8 ("git-gc --auto: run "repack -A -d -l" as necessary.",
-2007-09-17) when need_to_gc() itself was also reliant on
-gc_auto_pack_limit before its early return:
+Expand on the work started in 095c741edd ("commit: run git gc --auto
+just before the post-commit hook", 2018-02-28) to run "gc --auto" in
+more commands where new objects can be created.
 
-    gc_auto_threshold <= 0 && gc_auto_pack_limit <= 0
-
-When that check was simplified to just checking "gc_auto_threshold <=
-0" in b14d255ba8 ("builtin-gc.c: allow disabling all auto-gc'ing by
-assigning 0 to gc.auto", 2008-03-19) this unreachable code should have
-been removed. We only call too_many_loose_objects() from within
-need_to_gc() itself, which will return if this condition holds, and in
-cmd_gc() which will return before ever getting to "auto_gc &&
-too_many_loose_objects()" if "auto_gc && !need_to_gc()" is true
-earlier in the function.
+The notably missing commands are now "rebase" and "stash". Both are
+being rewritten in C, so any use of "gc --auto" there can wait for
+that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
 
-I had this in my tree as part of some general gc cleanups I was
-working on, but since it's trivially considered as a stand-alone topic
-and unlikely to conflict with anything I or anyone else has planned
-I'm sending it as a one-off.
+After reading the "Users are encouraged to run this task..." paragraph
+in the git-gc manpage I was wondering if due to gc --auto all over the
+place now (including recently in git-commit with a patch of mine) if
+we shouldn't change that advice.
 
- builtin/gc.c | 3 ---
- 1 file changed, 3 deletions(-)
+I'm meaning to send some doc changes to git-gc.txt, but in the
+meantime let's address this low-hanging fruit of running gc --auto
+when we revert or cherry-pick commits, which can like git-commit
+create a significant amount of loose objects.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 2b592260e9..5f25a35dfc 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -157,9 +157,6 @@ static int too_many_loose_objects(void)
- 	int num_loose = 0;
- 	int needed = 0;
+ builtin/revert.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 9a66720cfc..1b20902910 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -209,6 +209,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ {
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
++	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
  
--	if (gc_auto_threshold <= 0)
--		return 0;
--
- 	dir = opendir(git_path("objects/17"));
- 	if (!dir)
- 		return 0;
+ 	if (isatty(0))
+ 		opts.edit = 1;
+@@ -217,6 +218,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 	res = run_sequencer(argc, argv, &opts);
+ 	if (res < 0)
+ 		die(_("revert failed"));
++	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+ 	return res;
+ }
+ 
+@@ -224,11 +226,13 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
++	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+ 
+ 	opts.action = REPLAY_PICK;
+ 	sequencer_init_config(&opts);
+ 	res = run_sequencer(argc, argv, &opts);
+ 	if (res < 0)
+ 		die(_("cherry-pick failed"));
++	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+ 	return res;
+ }
 -- 
 2.19.1.390.gf3a00b506f
 
