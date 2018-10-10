@@ -2,82 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 485991F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 13:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F57A1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 13:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726666AbeJJU0g (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 16:26:36 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60723 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726206AbeJJU0g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 16:26:36 -0400
-Received: from [10.49.78.48] ([95.208.58.46]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiDHj-1fNv3J0TPn-00nMoT; Wed, 10
- Oct 2018 15:04:26 +0200
-Received: from [10.49.78.48] ([95.208.58.46]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiDHj-1fNv3J0TPn-00nMoT; Wed, 10
- Oct 2018 15:04:26 +0200
-Date:   Wed, 10 Oct 2018 15:04:28 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/mingw-wants-vista-or-above, was Re: What's cooking in git.git
- (Oct 2018, #01; Wed, 10)
-In-Reply-To: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>
+        id S1726761AbeJJUfp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 16:35:45 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:45485 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726713AbeJJUfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 16:35:45 -0400
+Received: by mail-wr1-f51.google.com with SMTP id q5-v6so5672804wrw.12
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 06:13:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=gPXchfQ9emxUD65KyAJCpnJla5N6v67mAa6VFCLT5Jk=;
+        b=CZZ2xzIJ9bIVfW5YxzBtOkZ+mmUhA/cRXRS1meMlD1f585FlB8Bb8e1Ml7juENaNz3
+         DjfIntJ4ismcinSbGk60JRMDKHllWyhWirQ+UTE++Rn4ZppVIglSQbGsfiKWZtdkel8y
+         p2twzb+Iv1TwUpmTQCpz7l3AaJucciQeTriV2dTbf3x3f+wJwARmQhQVvu4Wh0OcbPYB
+         7hXomhCo8nmldbccVmOVQ+OxxygnMscOO6k3suXmX6EU0VyePIZGjnIOCQ33t6Esq0a5
+         omdv5vXH+kBaa/uriC3ldbc52iZZCB+zD5dpSlfu5rWDgtETbwCMoe+I4IDm/uI9VieJ
+         aHIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gPXchfQ9emxUD65KyAJCpnJla5N6v67mAa6VFCLT5Jk=;
+        b=Tll7QGsOWXr9DdEDu2aarbD/2hUujN7GdKFP9+9GoB7KN/ucoEOXDbtN92EHoXcul0
+         lj/B8NN+laPiwcVTGtpcdju2JTheWoJRfbWmnJHXXWheOlAqzghcW4xIj9fWSYjh+Nk2
+         KFpIOmUTtxwdH0kbkg0P9Lmf/UMa1f+/tI7j1j4Db+vQBSoovZYn+nTbnfM52I3pQdKn
+         swSHtx9ic4XxDiM88B8ojA+eyzSASFBtVSE9DPVKzD0+94YX8MykLygiEsK2rkwUzSFL
+         GMWh1A0yLd2CmsN5W1vHRrq6fXinLxOh4cMM8BO4WNhmATrRHWvlrGLUKHvJFrPoEp5i
+         aB8w==
+X-Gm-Message-State: ABuFfoh4mibSHw8L1u4kIqJumQJqmrcEnO8sw3s1r4YsJUGFzQIibBR0
+        NY1yJW/ARvfLynIoze+rolXt8cT+D3E=
+X-Google-Smtp-Source: ACcGV63qC6lQA22Grz/yDvaL9x+GGTSzo8hD7rF78W7o8I+HGsPGmUbwTMBt3f0n4hw3BHg073Bl4Q==
+X-Received: by 2002:adf:9367:: with SMTP id 94-v6mr24771126wro.211.1539177215694;
+        Wed, 10 Oct 2018 06:13:35 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o126-v6sm16223901wmo.3.2018.10.10.06.13.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 06:13:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: js/mingw-wants-vista-or-above, was Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
 References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>
+Date:   Wed, 10 Oct 2018 22:13:33 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Wed, 10 Oct 2018 15:04:28 +0200
+        (DST)")
+Message-ID: <xmqqr2gykkqq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UYMrJJkZqg48NBBnVQ+FCbe64tBvwqN+nn+o/fO9W/9r8KRitlD
- 3ttX9xuHU0AheUip+/Q6arqposiaFLX8ENh11GmKYEVDJQulG84rIn7uBTEScrUqnAYq9nF
- nyqextBzaMdgjz4EEMzUX5zOpMQSpEXfL0nVF45ZALebv5Xk0xYpmitBPHpdsIv5K11HKda
- nEViNqGv6R9CZHWZSr49w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:O7CKvvOW94o=:hNEV3brf5pMkP4m/1Pt3ox
- HoIdI7fxlnK6nxJVVABMvJjJ1Zv5ebP+FTWW5YMhnnAZO2dY3aopCIIP+4FbWvDzK9Hv8aUAT
- LQdhj2bUIO3xZWZQ2uNWVT6C3/FN2351RgvDDwHQRSEmFRahnevQiYhQ/kFKsqfuuCVEWs1v6
- jUFoLCkmeRQE7fXNRDaA3GvCUf0PQQtfDL8YTDuICuACskTJ6hdLXKr4k1eyyDu80kX0X1aYF
- LO4P34+CiFNV+QJ72GurGRGp2+klLGUsCmbqtnJIHlOmZRFH0z7X/Gfq4w4UT/KLfAPuaJMOR
- H2p8Qi3YHPXYHpahlGnvinH8hqvPP53rA16HSTYIH1wtyNYg/iOP8sr8zseCoszKX1rSab5SX
- 63lsgtWVW04JdhULC++cvowHIn8N5rXr1wLy3IKQkH1AllBRQhmvKmf9LP4SHSyhbK5EkBvzy
- UqOiiMWLdL6JPCj0MXYRbsQnGuh2JB3Vjb7IXx2DMp8X8NdehXdehHdIICN7C7mgwJ47obYPP
- eQOFXThoyNiZKqcTCqDLWVE5V4S6F+v3aBablXfJbIJz18BRCx46fLVhYtNc+SduoITXOzt8O
- nWAO9ZDChtHDmhqSlL/0VSLghY7YahY+WWXomdqttMlEDX7n/pvF8cimaSctz+OSVJUpA6GeY
- H56grdcS6LyYLA0ovlkdGqf+HJYYex0ZpbH0tsDAlOUtJ/uQAyKje2jC5t8mu17+mhA06osTA
- ZNISqetzbGX04JNhqKmi18BnFPen4zzUCvH79e+V1ZtgBtsu4dN2q0e4f9ukivBqsW5HCgoWc
- 41IlbCjLDS5MPQ4jssVIrjcN2Xnku+MbRND1mbwiBQSZlxn6Yw=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 10 Oct 2018, Junio C Hamano wrote:
+> Hi Junio,
+>
+> On Wed, 10 Oct 2018, Junio C Hamano wrote:
+>
+>> * js/mingw-wants-vista-or-above (2018-10-04) 3 commits
+>>  - mingw: bump the minimum Windows version to Vista
+>>  - mingw: set _WIN32_WINNT explicitly for Git for Windows
+>>  - compat/poll: prepare for targeting Windows Vista
+>> 
+>>  The minimum version of Windows supported by Windows port fo Git is
+>>  now set to Vista.
+>> 
+>>  Will merge to 'next'.
+>
+> Could I ask you to fast-track this to `master`? The code in `master`
+> unfortunately no longer compiles in a current Git for Windows SDK, meaning
+> that all of our Continuous Testing fails as long as these patches are not
+> merged.
 
-> * js/mingw-wants-vista-or-above (2018-10-04) 3 commits
->  - mingw: bump the minimum Windows version to Vista
->  - mingw: set _WIN32_WINNT explicitly for Git for Windows
->  - compat/poll: prepare for targeting Windows Vista
-> 
->  The minimum version of Windows supported by Windows port fo Git is
->  now set to Vista.
-> 
->  Will merge to 'next'.
+Absolutely.  There is no point keeping it in 'pu', as nobody would
+touch it in my tree until it hits 'next' and probably 'master' and
+the change would get wider exposure to folks to whom it matters in
+your tree anyway.
 
-Could I ask you to fast-track this to `master`? The code in `master`
-unfortunately no longer compiles in a current Git for Windows SDK, meaning
-that all of our Continuous Testing fails as long as these patches are not
-merged.
-
-I do not see how this could affect non-Windows builds, so everybody else
-should be unaffected anyway.
-
-Thanks,
-Dscho
+Thanks for pinging.
