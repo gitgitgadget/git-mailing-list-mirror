@@ -2,122 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05C0B1F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 13:00:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 485991F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 13:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbeJJUWM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 16:22:12 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:52106 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726600AbeJJUWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 16:22:12 -0400
-Received: by mail-wm1-f41.google.com with SMTP id 143-v6so5350319wmf.1
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 06:00:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JhZ86nVGke+xnw5D6P5zwCfw1psb8Viha3S+DVvMWLs=;
-        b=e8JtQLEZ6eNLg3XGa37P4BSbXkgqpnPLpT/99JdEBdtAXAGYJVGVpkY3GPYKsRXBTi
-         jmD3L0aJ9knHMR3KH5pLEpbvks62MBbZvuta4SBkg283l0DUfuXxqrE6Wt3cXkeWGdfc
-         0tZ7QZ3+SDhzf5cwGw7BvHRaFhRnSH3vzg9Fkh/YaQRhZww5Rgt6/thTqRxQHtiKApRd
-         gupomxcgtrxk6dlF0j2LZwE4EScR4Bha/bjCGJAR+Htx2Q9zHbI3tOT2MBPh8RgUBDrL
-         BnjIm+6Wo0/0SYeAW6coGrZDcZ8fTTcN25KEuBn75lSaq9ffNGfE5hBmAsQyfK/9sSMR
-         ic5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JhZ86nVGke+xnw5D6P5zwCfw1psb8Viha3S+DVvMWLs=;
-        b=LbO/6qpsQ5x9bZB9n1lTZEDTzvTwu3sHEQnJuTeOEYm2A4yHP73jKHhtZPIys8AKJh
-         8iClM2/75+ezc/88+qW5U5YQ3x0XuzYvWjApZ+GiLKaoHh56amJHy98WxfeEI97W8dKP
-         2tuTS6bb6NucCIGHvPQS4r0bCx1wEo3wtbpAUAsJi1oOpnWb839x283Mj4HcDENEt8c+
-         wnZDCo5LmK4ws/8TxTUzlt/+vWanNeOTArFzyhWAIiqUqO5jHUVRkiWzXfVNcRqAGG7I
-         eM3NqRzrfD7/bRGTpOTsFvFOcyYAOS74+be9BfgW664sTC2ysJy54GouSH0mmlZ5mS0e
-         DJ7g==
-X-Gm-Message-State: ABuFfogpxcxASZDVlRlUiRx8pWACx8Z/VUyNlD8xVM1PIBOmL1sn57t6
-        Hg3xyXBHsMlL8Ji1HzcCncr9Ss+5zx7EUMYEkcM=
-X-Google-Smtp-Source: ACcGV62+CISYlZO1sMbkQhgMiwxOiJLalKdEqhkisOTWmEzIppV7msiOjNphp1mH8TwBbdhClfhgoT8nc3NfDQS6Il8=
-X-Received: by 2002:a1c:2846:: with SMTP id o67-v6mr832879wmo.60.1539176405949;
- Wed, 10 Oct 2018 06:00:05 -0700 (PDT)
+        id S1726666AbeJJU0g (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 16:26:36 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60723 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726206AbeJJU0g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 16:26:36 -0400
+Received: from [10.49.78.48] ([95.208.58.46]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiDHj-1fNv3J0TPn-00nMoT; Wed, 10
+ Oct 2018 15:04:26 +0200
+Received: from [10.49.78.48] ([95.208.58.46]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiDHj-1fNv3J0TPn-00nMoT; Wed, 10
+ Oct 2018 15:04:26 +0200
+Date:   Wed, 10 Oct 2018 15:04:28 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/mingw-wants-vista-or-above, was Re: What's cooking in git.git
+ (Oct 2018, #01; Wed, 10)
+In-Reply-To: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>
+References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAOO0rQKZ6rgH136oOhQ+LCgptv-RfKXMpTTrC86EUExABgg-Lg@mail.gmail.com>
- <87bm82fcmm.fsf@evledraar.gmail.com> <87a7nmf9zj.fsf@evledraar.gmail.com>
- <CAOO0rQ+3BPydQUaY67REd3-W9co-92DYa=TAUaGurN+QQUvSwg@mail.gmail.com> <CACBZZX5OvhzYS9SteA-PAqDA_WCDy-hfJmXJG8w5+brQfa8RyQ@mail.gmail.com>
-In-Reply-To: <CACBZZX5OvhzYS9SteA-PAqDA_WCDy-hfJmXJG8w5+brQfa8RyQ@mail.gmail.com>
-From:   Thiago Saife <tsaiferodrigues@gmail.com>
-Date:   Wed, 10 Oct 2018 09:59:29 -0300
-Message-ID: <CAOO0rQLA9d3DyNUAfdkN=aMu5o-AJ_Z+1ucnv0rk_PkFvC=A4g@mail.gmail.com>
-Subject: Re: Translation to Portuguese
-To:     avarab@gmail.com
-Cc:     git@vger.kernel.org, worldhello.net@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UYMrJJkZqg48NBBnVQ+FCbe64tBvwqN+nn+o/fO9W/9r8KRitlD
+ 3ttX9xuHU0AheUip+/Q6arqposiaFLX8ENh11GmKYEVDJQulG84rIn7uBTEScrUqnAYq9nF
+ nyqextBzaMdgjz4EEMzUX5zOpMQSpEXfL0nVF45ZALebv5Xk0xYpmitBPHpdsIv5K11HKda
+ nEViNqGv6R9CZHWZSr49w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O7CKvvOW94o=:hNEV3brf5pMkP4m/1Pt3ox
+ HoIdI7fxlnK6nxJVVABMvJjJ1Zv5ebP+FTWW5YMhnnAZO2dY3aopCIIP+4FbWvDzK9Hv8aUAT
+ LQdhj2bUIO3xZWZQ2uNWVT6C3/FN2351RgvDDwHQRSEmFRahnevQiYhQ/kFKsqfuuCVEWs1v6
+ jUFoLCkmeRQE7fXNRDaA3GvCUf0PQQtfDL8YTDuICuACskTJ6hdLXKr4k1eyyDu80kX0X1aYF
+ LO4P34+CiFNV+QJ72GurGRGp2+klLGUsCmbqtnJIHlOmZRFH0z7X/Gfq4w4UT/KLfAPuaJMOR
+ H2p8Qi3YHPXYHpahlGnvinH8hqvPP53rA16HSTYIH1wtyNYg/iOP8sr8zseCoszKX1rSab5SX
+ 63lsgtWVW04JdhULC++cvowHIn8N5rXr1wLy3IKQkH1AllBRQhmvKmf9LP4SHSyhbK5EkBvzy
+ UqOiiMWLdL6JPCj0MXYRbsQnGuh2JB3Vjb7IXx2DMp8X8NdehXdehHdIICN7C7mgwJ47obYPP
+ eQOFXThoyNiZKqcTCqDLWVE5V4S6F+v3aBablXfJbIJz18BRCx46fLVhYtNc+SduoITXOzt8O
+ nWAO9ZDChtHDmhqSlL/0VSLghY7YahY+WWXomdqttMlEDX7n/pvF8cimaSctz+OSVJUpA6GeY
+ H56grdcS6LyYLA0ovlkdGqf+HJYYex0ZpbH0tsDAlOUtJ/uQAyKje2jC5t8mu17+mhA06osTA
+ ZNISqetzbGX04JNhqKmi18BnFPen4zzUCvH79e+V1ZtgBtsu4dN2q0e4f9ukivBqsW5HCgoWc
+ 41IlbCjLDS5MPQ4jssVIrjcN2Xnku+MbRND1mbwiBQSZlxn6Yw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ok, no problem.
+Hi Junio,
 
-Regards,
-On Wed, Oct 10, 2018 at 9:43 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Wed, Oct 10, 2018 at 2:41 PM Thiago Saife <tsaiferodrigues@gmail.com> =
-wrote:
-> >
-> > Hi Avar.
-> >
-> > What it means? I should not continue the translation? Because
-> > Brazilian Portuguese states as Translations started for, but it's not
-> > finished yet.
->
-> I misunderstood and thought you meant the translation of the git program =
-itself.
->
-> I don't know what book you mean or how it's translated, sorry.
->
-> > On Wed, Oct 10, 2018 at 6:04 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> > >
-> > >
-> > > On Wed, Oct 10 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> > >
-> > > > On Mon, Oct 08 2018, Thiago Saife wrote:
-> > > >
-> > > >> Hello Git Team.
-> > > >>
-> > > >> I would like to help to continue the books' translation to Brazili=
-an
-> > > >> Portuguese and I don't know how to proceed. Thanks in advance for =
-your
-> > > >> help.
-> > > >
-> > > > That would be great. Have you seen
-> > > > https://github.com/git/git/blob/master/po/README ? It describes how=
- to
-> > > > create a new language. Also CC-ing the l10n coordinator, Jiang.
-> > >
-> > > It has been pointed out to me off-list (thanks) that I missed the par=
-t
-> > > where you mention a 'book', and we already have a Portugese translati=
-on
-> > > of Git. Sorry!
-> >
-> >
-> >
-> > --
-> > Thiago Saife
-> > (11) 97236-8742
+On Wed, 10 Oct 2018, Junio C Hamano wrote:
 
+> * js/mingw-wants-vista-or-above (2018-10-04) 3 commits
+>  - mingw: bump the minimum Windows version to Vista
+>  - mingw: set _WIN32_WINNT explicitly for Git for Windows
+>  - compat/poll: prepare for targeting Windows Vista
+> 
+>  The minimum version of Windows supported by Windows port fo Git is
+>  now set to Vista.
+> 
+>  Will merge to 'next'.
 
+Could I ask you to fast-track this to `master`? The code in `master`
+unfortunately no longer compiles in a current Git for Windows SDK, meaning
+that all of our Continuous Testing fails as long as these patches are not
+merged.
 
---=20
-Thiago Saife
-(11) 97236-8742
+I do not see how this could affect non-Windows builds, so everybody else
+should be unaffected anyway.
+
+Thanks,
+Dscho
