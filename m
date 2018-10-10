@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 566431F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 11:48:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0801F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 12:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726562AbeJJTKJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 15:10:09 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52814 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbeJJTKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 15:10:09 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 189-v6so5132788wmw.2
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 04:48:21 -0700 (PDT)
+        id S1726607AbeJJTnt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 15:43:49 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44578 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726579AbeJJTns (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 15:43:48 -0400
+Received: by mail-wr1-f66.google.com with SMTP id 63-v6so5490497wra.11
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 05:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=yzFqUiokXD2FU3F6NloKU1bI1OsH+T/yZfkGqnVOVzU=;
-        b=IQAAXfS0f874i1gXWGAuLPD924zgwKz/Y3gHylmcfqOkSfipOhYTHAkoAaJdqGc3jm
-         XP3IVacgsLGTkHr9LDA2/ZER1NBMldx8y09Ubs5Zrb5OlMuXQXp/x8OTI6FH+aQJWCR6
-         Ci43pmIRvqiU4nbKoRm2Gk/Zu9nUJc3Fwc5tEm3L0tipVLJMLzWInsFgVc/eN2YMVS1N
-         6qHwpVu+jNMV3VPTLRKrTXIMdexjhMDqng3RD0Qm5vkYQTOFnaYW24ywHRKxNBUu6/fx
-         dhHPsQLf1tXPOurO8Ey5nanL80VsK34HCih+E9iGbdc9qS+inYjcffWQZtd0wQRr5BwS
-         Y21A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=ib5XtjnUcVO7Hz4nw1AwX4sPMvl2EIchXIRL9JgrfBU=;
+        b=pzbSnh0NrhknS/Uwn1yU/qpvH0z2Rx2HDHR2hU6AE1InsA7GXOsRMzX+AhHVF7EKXo
+         CIzP7AEiJs5yrcWqB6gZY8vGnNzRYlx7PpyVS05XGy16spqv5XfSBte/NmIWEF5lSDRz
+         RON3/pBGmGLfFszv2gqWea7Sdeyi3+U26iL7oSj0SNGatm/kmj2Jp0W6rMQHgI+Ic5LS
+         H4+GD2swWPoCwzbryeysItuK7uZC3mrMqKQZSLRSL1gh4g+vhUyGQQiFHCT1vp4J6yKC
+         EVfUnq6ofIElpZL4unrAeSUBiUOF1r9XqQtGKxs45oFLp+LK29/jNOO8aHyXEVvqeJ9g
+         OEsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=yzFqUiokXD2FU3F6NloKU1bI1OsH+T/yZfkGqnVOVzU=;
-        b=C03ia/HR6t6YUjYWDUpfVCFc+bLPiYAwduX+DGKhd4pvrlLQbE7fs0bY46dMCi23XC
-         CpZQBHWirJKWA5TFCE3zGY1XvUHPGhSnCZG2t+LOcyuBEfk6hPbWlUCMcDW2ruFbvdvY
-         ieP4Teg/tZRqGEj8AAUNWXv9i5BvTZumzi1+nNG4mRAwaMeSqnOvxD5uYGTYriUsT3r7
-         o9O3KjxL83rV7azmcMLN76qlvK4pTVWLjS9SZGu6A6uAYNhrLh20UMXjyAn/kWLfBidn
-         as5JvOckLgClM3FLhJL2nHAw3bhtWUGNq7TKJeIYLPvpoeSV8J9fDWy4WNqzvPojgYhN
-         GQ5Q==
-X-Gm-Message-State: ABuFfoh07nJf9Wj05aPLmQBXCQqfKzr8w3tTHZa08uHFjOQlnKKzgbxb
-        bHKCSZbfYzEdYcndBYJFcmOgKA8nZg8=
-X-Google-Smtp-Source: ACcGV63SB/q+OL9Q0vJL/kXtiIZLn1i/3LYy3cneomTm4Fklhli4rTBgvGnQFcL8vDzFhiGqM3KaBA==
-X-Received: by 2002:a1c:578c:: with SMTP id l134-v6mr620888wmb.135.1539172100218;
-        Wed, 10 Oct 2018 04:48:20 -0700 (PDT)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id 12-v6sm21458326wms.11.2018.10.10.04.48.19
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ib5XtjnUcVO7Hz4nw1AwX4sPMvl2EIchXIRL9JgrfBU=;
+        b=TVM+yVhlMrMrtYGIVerLVDOCFpudwzFAEQV5Lfwiuwednsq/03YpKo9N/L48cF9Uss
+         2fOwz3vvc4ENbE7sY6rRUixO13zUvU1W4QQGEvrZUAQQXkDGO936tKGzk2gFPM1739Zm
+         bNpsAxi1m2/Yml5CaOiuqvv8wHLqbwa4mu2E1yZA+m1oCLXBTVoOEVM08R1inCM5el4H
+         OG1yowOUgWpQT4iumeQXmNoXF9S6t0yvxCNK6Ykh0i0S+ZYPA+x51iyV6v1lCSExwCM3
+         ze3nVXWNq4rP8St0tDXtRwaR8gtjteZi+dA0jgR15jyFqlEt11gVHr7VOnBNCJ6dLWt3
+         0NcQ==
+X-Gm-Message-State: ABuFfohkIvlMjkHFIrrOKou+T8qLcAVz3yI/ZZWb9Ij3JuSC4BiKowG0
+        3sTqFP8pjfizn8FxgKZQpnOVooYMSkU=
+X-Google-Smtp-Source: ACcGV63Lqqr630dbgvVD6fc8YMzLd7cGKuZsHNesNfecPpYER64cqzmJhmyNAayZfs3YZkDf4Kbueg==
+X-Received: by 2002:a5d:6608:: with SMTP id n8-v6mr24257826wru.281.1539174110825;
+        Wed, 10 Oct 2018 05:21:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l70-v6sm35719236wma.0.2018.10.10.05.21.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 04:48:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Martin Langhoff <martin.langhoff@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        Wed, 10 Oct 2018 05:21:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Martin Langhoff <martin.langhoff@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>, e@80x24.org,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: git svn clone/fetch hits issues with gc --auto
@@ -62,11 +61,12 @@ References: <CACPiFCJZ83sqE7Gaj2pa12APkBF5tau-C6t4_GrXBWDwcMnJHg@mail.gmail.com>
         <xmqqd0sims6s.fsf@gitster-ct.c.googlers.com>
         <CACPiFCL0oTjN+-aYgKEDtKC0gYwkv6RLMwakdJV85PJ5XQej6g@mail.gmail.com>
         <878t36f3ed.fsf@evledraar.gmail.com>
-        <CACPiFCKMF2di=waQ5reRtjUFEjuE6DkxxLcN-YnF-SqgE_m=_Q@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CACPiFCKMF2di=waQ5reRtjUFEjuE6DkxxLcN-YnF-SqgE_m=_Q@mail.gmail.com>
-Date:   Wed, 10 Oct 2018 13:48:18 +0200
-Message-ID: <875zyaf2f1.fsf@evledraar.gmail.com>
+Date:   Wed, 10 Oct 2018 21:21:48 +0900
+In-Reply-To: <878t36f3ed.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 10 Oct 2018 13:27:06 +0200")
+Message-ID: <xmqqzhvmkn4z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -75,66 +75,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Wed, Oct 10 2018, Martin Langhoff wrote:
+>  - We use this warning as a proxy for "let's not run for a day",
+>    otherwise we'll just grind on gc --auto trying to consolidate
+>    possibly many hundreds of K of loose objects only to find none of
+>    them can be pruned because the run into the expiry policy. With the
+>    warning we retry that once per day, which sucks less.
+>
+>  - This conflation of the user-visible warning and the policy is an
+>    emergent effect of how the different gc pieces interact, which as I
+>    note in the linked thread(s) sucks.
+>
+>    But we can't just yank one piece away (as Jonathan's patch does)
+>    without throwing the baby out with the bathwater.
+>
+>    It will mean that e.g. if you have 10k loose objects in your git.git,
+>    and created them just now, that every time you run anything that runs
+>    "gc --auto" we'll fork to the background, peg a core at 100% CPU for
+>    2-3 minutes or whatever it is, only do get nowhere and do the same
+>    thing again in ~3 minutes when you run your next command.
 
-> On Wed, Oct 10, 2018 at 7:27 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> As Jeff's
->> https://public-inbox.org/git/20180716175103.GB18636@sigill.intra.peff.net/
->> and my https://public-inbox.org/git/878t69dgvx.fsf@evledraar.gmail.com/
->> note it's a bit more complex than that.
->
-> Ok, my bad for not reading the whole thread :-) thanks for the kind explanation.
->
->>  - The warning is actionable, you can decide to up your expiration
->>    policy.
->
-> A newbie-ish user shouldn't need to know git's internal store model
-> _and the nuances of its special cases_ got get through.
+We probably can keep the "let's not run for a day" safety while
+pretending that "git gc -auto" succeeded for callers like "git svn"
+so that these callers do not hae to do "eval { ... }" to hide our
+exit code, no?
 
-Oh yeah, don't get me wrong. I think this whole thing sucks, and as the
-linked threads show I've run into various sucky edge cases of this.
+I think that is what Jonathan's patch (jn/gc-auto) does.
 
-I'm just saying it's hard in this case to remove one piece without the
-whole Jenga tower collapsing, and it's probably a good idea in some of
-these cases to pester the user about what he wants, but probably not via
-gc --auto emitting the same warning every time, e.g. in one of these
-threads I suggested maybe "git status" should emit this.
+From: Jonathan Nieder <jrnieder@gmail.com>
+Date: Mon, 16 Jul 2018 23:57:40 -0700
+Subject: [PATCH] gc: do not return error for prior errors in daemonized mode
 
->
->>  - We use this warning as a proxy for "let's not run for a day"
->
-> Oh, so _that's_ the trick with creating gc.log? I then understand the
-> idea of changing to exit 0.
->
-> But it's far from clear, and a clear _flag_, and not spitting again
-> the same warning, or differently-worded warning would be better.
->
-> "We won't try running gc, a recent run was deemed pointless until some
-> time passes. Nothing to worry about."
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 95c8afd07b..ce8a663a01 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -438,9 +438,15 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ 	return NULL;
+ }
+ 
+-static void report_last_gc_error(void)
++/*
++ * Returns 0 if there was no previous error and gc can proceed, 1 if
++ * gc should not proceed due to an error in the last run. Prints a
++ * message and returns -1 if an error occured while reading gc.log
++ */
++static int report_last_gc_error(void)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
++	int ret = 0;
+...
+ 	if (len < 0)
++		ret = error_errno(_("cannot read '%s'"), gc_log_path);
++	else if (len > 0) {
++		/*
++		 * A previous gc failed.  Report the error, and don't
++		 * bother with an automatic gc run since it is likely
++		 * to fail in the same way.
++		 */
++		warning(_("The last gc run reported the following. "
+ 			       "Please correct the root cause\n"
+ 			       "and remove %s.\n"
+ 			       "Automatic cleanup will not be performed "
+ 			       "until the file is removed.\n\n"
+ 			       "%s"),
+ 			    gc_log_path, sb.buf);
++		ret = 1;
++	}
+ 	strbuf_release(&sb);
+ done:
+ 	free(gc_log_path);
++	return ret;
+ }
+ 
+I.e. report_last_gc_error() returns 1 when finds that the previous
+attempt to "gc --auto" failed.  And then
 
-Yup. That would be better. Right now we don't write anything
-machine-readable to the log, and we'd need to start doing that. E.g. we
-could just as well be reporting that gc --auto is segfaulting and that's
-why you have all this garbage. We just "cat" it.
+@@ -561,7 +576,13 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n"));
+ 		}
+ 		if (detach_auto) {
+-			report_last_gc_error(); /* dies on error */
++			int ret = report_last_gc_error();
++			if (ret < 0)
++				/* an I/O error occured, already reported */
++				exit(128);
++			if (ret == 1)
++				/* Last gc --auto failed. Skip this one. */
++				return 0;
 
->>  - This conflation of the user-visible warning and the policy is an
->>    emergent effect of how the different gc pieces interact, which as I
->>    note in the linked thread(s) sucks.
->
-> It sure does, and that aspect should be easy to fix...(?)
->
->> So it's creating a lot of garbage during its cloning process that can
->> just be immediately thrown away? What is it doing? Using the object
->> store as a scratch pad for its own temporary state?
->
-> Yeah, thats suspicious and I don't know why. I've worked on other
-> importers and while those needed 'gc' to generate packs, they didn't
-> generate garbage objects. After gc, the repo was "clean".
+... it exits with 0 without bothering to rerun "gc".
 
-I tried to find this out in my reply-to-myself in
-https://public-inbox.org/git/877eiqf2nk.fsf@evledraar.gmail.com/
+So it won't get stuck for 3 minutes; the repository after "gc
+--auto" punts will stay to be suboptimal for a day, and the user
+kill not get an "actionable" error notice (due to this hiding of
+previous error), hence cannot make changes that may help like
+shortening expiry period, though.
 
-But as noted just looked at this briefly, and I don't use git-svn for
-years now, so I don't know and might be missing something.
