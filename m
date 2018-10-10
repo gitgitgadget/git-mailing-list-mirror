@@ -2,66 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B22D31F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 22:14:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCA0F1F97E
+	for <e@80x24.org>; Wed, 10 Oct 2018 22:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbeJKFip (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 01:38:45 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37668 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725968AbeJKFip (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 01:38:45 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y11-v6so7406286wrd.4
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:14:35 -0700 (PDT)
+        id S1726050AbeJKFkz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 01:40:55 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34273 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbeJKFky (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 01:40:54 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w19-v6so6405799eds.1
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 15:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bUaGLwRvxepBLSFqtm6mhmTLHGAyBwx50IxVn/l7l+s=;
-        b=gz+9JJrZOgt6mxXr0rpZAmjh8f9ac3OcCsh1BIoGq+2/IVXmHoN6KjcmgE+U/D7sF5
-         H60xiRtmeSTo4pXNu4I5ed2I+mvVay1/SKWI1n1Yygqfh7+mf+GddRR6Au0Im3qQ3+Kz
-         +Pncn9bu5H2YWEMwJzH8Mzj0E+Y7/AWS7mzJ5A03ufe6KHkI4CAJpvG23lvMPzj1Heti
-         g0AIfdNnm1x+ZabEGoefpwLltEoM+Ckpqr9zGQi0RoS4CoyRHg60SIEyTaw8sshoffTr
-         y7a3vRFS0/hLRevb0n9vK/6zBtgMduXGN/9x6CIuOlwWjEUNFtS+OrFfO+e9VUrgo52k
-         YwfA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=mu3KAdScN/FVTOuA6u2QMEF92R9XRu9wgPxB1E0rP1I=;
+        b=tDxrP8kS3xeDxd2FVNMk5N4XIvs4Mr336Abg+5xnDnbNcodcbpZKZjuvBGGD97zFBf
+         HDF+OknrulR1So5iz8TAQvaM/Iykp8nJH7DUjPhMiyT+Q9Lp1Xdj1taoy6bf17kVU+X7
+         kPtmHcRcN/bN3kxvikvDjbcLnPbgfxY679FChWkEpaBQ2mSAowYTij3ah70Y7ScmqC5u
+         /8DwPbDN7AarSlzz3K/pyosqTV7L8kemmFZ0Uc1XKsDlqqkeh6UtBwrBxCXL86hE96SM
+         +rumhc22D9eO/5PAxXw4mctUpFYn039dKJ714jmJS6XjYp9w/mPBn054gao7v0dqXS6p
+         oTVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bUaGLwRvxepBLSFqtm6mhmTLHGAyBwx50IxVn/l7l+s=;
-        b=OyFXcBXCI1SK87SJyVGtxk9myzvW0b8qV+xgFS+FBwsk3RvZydLM7umA+QFdm23aEp
-         Utptx30ZJAoWeV+mawamMJkxUWtZnrFJhXJ95CmN7X1DSMPCDDTDsaE7zTdchy3cOyfn
-         uBkzeOQ+AqpvxHVSCkqW4IWDwGgHtVheohtbZWoE71DL8bbRKVuRJY6BHA2KgJ/a/srU
-         spZZ74b8Vhy1oz44VmkRxcUY3lrWafcz8H0eC/+YhGrszk8zLezpXNzd8Uii+ZTNuzdm
-         n6/jOPo4Oiq/5EW3Tg/1/p7FUFIS1nrQGFoOMUP6xqTjrgte2tbKSEkE3kvqcwf4nbuo
-         Pfdg==
-X-Gm-Message-State: ABuFfohpkd4fMq51GQqDE5Nzb5h87v6faSkfrw7BmAJ4vzvhawfjOUOT
-        mz3TyEad+zi1OAIVeObLVmg=
-X-Google-Smtp-Source: ACcGV62bca8e/O3piGhu62pKc2M6AFbmTnr2CRGa/849S4IHTelHMP8OJHt8G9tbQazgChpUH3vO+Q==
-X-Received: by 2002:a5d:6450:: with SMTP id d16-v6mr23091202wrw.64.1539209673882;
-        Wed, 10 Oct 2018 15:14:33 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m2-v6sm16780905wrj.80.2018.10.10.15.14.32
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=mu3KAdScN/FVTOuA6u2QMEF92R9XRu9wgPxB1E0rP1I=;
+        b=rMK4emyq+FHKSbXpPyZdz2vs+dq+0fek/rNcKD/zA0DDr14kPLDCwObG6hd0VM3Tn7
+         i0+wvAnpzOj6MiIrhqY1Hzf4va9oCaczMl8SEgvgmP1u2Bt2U/5VyvUhrDiwm4iocySC
+         8tYAU6Z3/JSIVuMUF5JNoz5lAoDFxX4hJNrr3ua6DaIPmciy59Ozv4gTaiZfcCAqBJqb
+         rCu4dxn/F1UTNEIdffohg2kbhD4m2kLh0RqNwhojk/QEhMA4yUMltxKhMyCNyLFja0hw
+         dnE6HqugW6gaV012B7braWETZo9yX8umkgLcUZx5g7uFxGWWwyBebvgiR5uVUBnQ2cxK
+         qK3Q==
+X-Gm-Message-State: ABuFfojddIwkZ0YbHS/6deEhhcsAOH6CW/+sBPzy+c/S3X/89L84huFE
+        DMnl+Cy4vkc4tQzxT+DFnoX1CJlmtwI=
+X-Google-Smtp-Source: ACcGV63yfyrgZPhadWqq4Q2xsKFGUoE3lkCq0xGBrPHrO/oyZN/YYwXWe8qQzJjC1GDzIBX30XGySA==
+X-Received: by 2002:a50:d596:: with SMTP id v22-v6mr43854139edi.226.1539209802917;
+        Wed, 10 Oct 2018 15:16:42 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id x14-v6sm8087938edb.84.2018.10.10.15.16.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 15:14:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v5 17/23] userdiff.c: remove implicit dependency on the_index
-References: <20180915161759.8272-1-pclouds@gmail.com>
-        <20180921155739.14407-1-pclouds@gmail.com>
-        <20180921155739.14407-18-pclouds@gmail.com>
-        <20181010145116.GA11772@sigill.intra.peff.net>
-Date:   Thu, 11 Oct 2018 07:14:31 +0900
-In-Reply-To: <20181010145116.GA11772@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 10 Oct 2018 10:51:17 -0400")
-Message-ID: <xmqq7eipla9k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 10 Oct 2018 15:16:42 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gc: introduce an --auto-exit-code option for undoing 3029970275
+References: <20181010174624.GC8786@sigill.intra.peff.net>
+        <20181010192732.13918-1-avarab@gmail.com>
+        <20181010205611.GA195252@aiede.svl.corp.google.com>
+        <87sh1declw.fsf@evledraar.gmail.com>
+        <20181010211428.GA231512@aiede.svl.corp.google.com>
+        <xmqqin29lc0s.fsf@gitster-ct.c.googlers.com>
+        <20181010215143.GB231512@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181010215143.GB231512@aiede.svl.corp.google.com>
+Date:   Thu, 11 Oct 2018 00:16:40 +0200
+Message-ID: <87o9c1e9br.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -69,19 +73,111 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> I get why you're doing it: your topic here only cares about removing
-> index dependencies, so you did the minimal thing to move that forward.
+On Wed, Oct 10 2018, Jonathan Nieder wrote:
+
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> But if you think about what this function is doing, it is quite clearly
-> dependent on the whole repository, since the userdiff config we're
-> looking up may come from repo config.
+>>> Perhaps this reporting could also print the message from a previous
+>>> run, so you could write:
+>>>
+>>> 	git gc --detached-status || exit
+>>> 	git gc --auto; # perhaps also passing --detach
+>>>
+>>> (Names still open for bikeshedding.)
+>>
+>> When the command is given --detached-exit-code/status option, what
+>> does it do?  Does it perform the "did an earlier run left gc.log?"
+>> and report the result and nothing else?  In other words, is it a
+>> pure replacement for "test -e .git/gc.log"?
+>
+> My intent was the latter.  In other words, in the idiom
+>
+> 	do_something_async &
+> 	... a lot of time passes ...
+> 	wait
+>
+> it is something like the replacement for "wait".
+>
+> More precisely,
+>
+> 	git gc --detached-status || exit
+>
+> would mean something like
+>
+> 	if test -e .git/gc.log	# Error from previous gc --detach?
+> 	then
+> 		cat >&2 .git/gc.log	# Report the error.
+> 		exit 1
+> 	fi
+>
+>>                                              Or does it do some of
+>> the "auto-gc" prep logic like guestimating loose object count and
+>> have that also in its exit status (e.g. "from the gc.log left
+>> behind, we know that we failed to reduce loose object count down
+>> sufficiently after finding there are more than 6700 earlier, but now
+>> we do not have that many loose object, so there is nothing to
+>> complain about the presence of gc.log")?
+>
+> Depending on the use case, a user might want to avoid losing
+> information about the results of a previous "git gc --detach" run,
+> even if they no longer apply.  For example, a user might want to
+> collect the error message for monitoring or later log analysis, to
+> track down intermittent gc errors that go away on their own.
+>
+> A separate possible use case might be a
+>
+> 	git gc --needs-auto-gc
+>
+> command that detects whether an auto gc is needed.  With that, a
+> caller that only wants to learn about errors if auto gc is needed
+> could run
+>
+> 	if git gc --needs-auto-gc
+> 	then
+> 		git gc --detached-status || exit
+> 	fi
+>
+>> I am bad at naming myself, but worse at guessing what others meant
+>> with a new thing that was given a new name whose name is fuzzy,
+>> so... ;-)
+>
+> No problem.  I'm mostly trying to tease out more details about the use
+> case.
 
-In the case of userdiff that is pretty much limited to read-only
-operation, I fully agree, but in more general cases, we would need
-to pass both the repository and an in-core index separately, I would
-say.  Imagine doing a partial commit, where we construct a separate
-istate that is not the "repo's index" and use that to write out a
-tree object to be wrapped in a new commit, and update the current
-branch ref.
+Likewise, so don't take the following as an assertion of fact, but more
+of a fact-finding mission:
+
+We could add something like this --detached-status / --needs-auto-gc,
+but I don't need it, and frankly I can't think of a reason for why
+anyone would want to use these.
+
+The entire point of having gc --auto in the first place is that you
+don't care when exactly GC happens, you're happy with whenever git
+decides it's needed.
+
+So why would anyone need a --needs-auto-gc? If your criteria for doing
+GC exactly matches that of gc --auto then ... you just run gc --auto, if
+it isn't (e.g. if you're using Microsoft's Windows repo) you're not
+using gc --auto in the first place, and neither --needs-auto-gc nor
+--auto is useful to you.
+
+So maybe I'm missing something here, but a --needs-auto-gc just seems
+like a gratuitous exposure of an internal implementation detail whose
+only actionable result is doing what we're doing with "gc --auto" now,
+i.e. just run gc.
+
+Which is what I'm doing by running "gc --auto" across a set of servers
+and looking at the exit code. If it's been failing I get an error, if
+there's no need to gc nothing happens, and if it hasn't been failing and
+it just so happens that it's time to GC then fine, now was as good a
+time as any.
+
+So if we assume that for the sake of argument there's no point in a
+--detached-status either. My only reason for ever caring about that
+status is when I run "gc --auto" and it says it can't fork() itself so
+it fails. Since I'm using "gc --auto" I have zero reason to even ask
+that question unless I'm OK with kicking off a gc run as a side-effect,
+so why split up the two? It just introduces a race condition for no
+benefit.
