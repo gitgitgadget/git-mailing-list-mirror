@@ -8,57 +8,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EC861F97E
-	for <e@80x24.org>; Wed, 10 Oct 2018 07:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAF761F97F
+	for <e@80x24.org>; Wed, 10 Oct 2018 08:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726582AbeJJPUS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Oct 2018 11:20:18 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:44753 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725837AbeJJPUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Oct 2018 11:20:18 -0400
-Received: by mail-wr1-f54.google.com with SMTP id 63-v6so4546147wra.11
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 00:59:19 -0700 (PDT)
+        id S1726942AbeJJPZL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Oct 2018 11:25:11 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:32789 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726647AbeJJPZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Oct 2018 11:25:11 -0400
+Received: by mail-wr1-f48.google.com with SMTP id e4-v6so4595064wrs.0
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 01:04:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=ADq/aLw6xTtSUg/Q++WasvIBvTSl5u1/MMjYqDe7q6A=;
-        b=WSlzCe39IbzN8W7ABXPLsvBlsm3jS0DCitb7TayJwXClftDNNgdEsnC115+wd0l3gK
-         tRXDZGPWVs/uE8z1PoTXH4HqpiUTR7/lt7rjGuoKUsnpgysZiPTqF9cduKkFonLRpIUw
-         kM2034o9RCxpQYjIxx4LNck0Qmjk/8cRqPslhJPz1RcA0WSsNkIF4VcMaOOYHSsvX4um
-         QfLuuKxqTe87fGXJei0Wk1Hl28wodWNvyOIpr6+fIPLN6pZ7jWvR7xcDZ9LJ36AbDv2S
-         RLSNHQl25kGmpc3AkIPGhGa1tluy9ioq7jdeXRQfTv2XUDJRVMC/TNN0TS7lRVd7lWiK
-         NcCQ==
+        bh=ldlhMc2sdedv/KcWZVnYcE6BdIoLhcBdf7uBU48MO6g=;
+        b=D6bDWjab/yqljCc5nwqblt4eOfVg/prqgPGyewv1G/f9Nb3A49hBb4fRTAnzZMCYXz
+         wwTGbXSIltTelJU8VpPRBy1ZhzwyJg7Bg7IeC/KIP0TkH+VGM1zeQd14YTxAM/wilP/R
+         Ac7iOscx6CeVQLndevKlRMw1gee8vpMtl1IZx0kjb/KYIINkauZLBBzF+QPyX02Y7QUD
+         I8GzPYdMEt7C/SWq8GypkBZ1nGhH8KPg+AGi84FOczOdyACWj71gIzcOLk3tOQzyxjcJ
+         j9pRRcLjSdsGMIEgDJhXpwUKJuOEftkg05XHWawuSFtNd3xSH1XWcVKLln/WoTebIGA+
+         LftA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=ADq/aLw6xTtSUg/Q++WasvIBvTSl5u1/MMjYqDe7q6A=;
-        b=ZV7/41Y28g0784d2dVPhjBf1M4rFltd19W8G+Rl+Jn9Py7s4LVgrFVko+XNwl0XIp+
-         ATljWi8flu98u021ZykbOj9PU6pHXt4ILBHL7OyTkYCCjJ98uVWtubkjCjy8d9WH/+F2
-         nIpc+9DmBipcn0R8QimB0G+QXMWIFOZUWWDz78UWwWG3oKvC8jkpguqRI/KUTZTJnr7S
-         PvIMfzd6iTpmj8hddjQvUzR+u6Qg9pY2502VW5CQpIXVNICVPX1e3SmrZXOAA7wzwlG+
-         ZUKxhc+tGWZ/Qp8KHbW5IUlPpIBJ0GCV3ni/Lu8wtvKJFm+idrRyg+9XM6lCOu2gT2I3
-         dlYA==
-X-Gm-Message-State: ABuFfogauRVmslaemhbK56/2jOL4JBsdwSYMUo78KYgmXIEpZ5R4LvS1
-        /5F3psGzXJ649osj0mZwgS8=
-X-Google-Smtp-Source: ACcGV63tYYROitW8bEhECVI1+lDrFXFd8S6orYsnR2IYxTXZ5iPQ9OmpEWYo+CcvBvuLsUFQ2QJafA==
-X-Received: by 2002:adf:fd83:: with SMTP id d3-v6mr4274789wrr.25.1539158358852;
-        Wed, 10 Oct 2018 00:59:18 -0700 (PDT)
+        bh=ldlhMc2sdedv/KcWZVnYcE6BdIoLhcBdf7uBU48MO6g=;
+        b=iA8wbDMGCIVVRjyzC+n8sU1QtGjXtD48pkDAU3D053d5RHZuDUq9RNymk7zRWNxxt/
+         O09D387zF50dmsZeaofEMuElMvRBLp4Yvx9qmGIJ6gymXcW+OI9gBp0yBUgsMUY/jfSS
+         DsSpUxLTOl+2OgGhjNZ6m5FjekWDP0y3fhAhlfM+ISBUg5hTTnIpj4iZvdRHQcYHtamC
+         t0duALJl4UP139ZyDi6ZXJsn8Gvn8pU+8h6BvFAMeUj26TxKawrkP2s9uTS2hxMAC6G2
+         x3NIOHoLwDP/ViIcYCPsbYRxZ2hNW4ihIX+MUyIFL8QD6tjjJyPfNDTe+njIO9NBVyVQ
+         M+dA==
+X-Gm-Message-State: ABuFfoh2uqMxN09ob0wOh9AWSpX1htgevD8eiNp8mSqxEslhq2sTOYNU
+        NtBJ9mMa0F/39D09sXsXZMZcdyJl
+X-Google-Smtp-Source: ACcGV61lAdzu+8hXMoA8a0z+UmF8fJZnXMb/OEfPx2Qs9gg5okb+wVBFsq8b3mN974ps/YiN9TTbUQ==
+X-Received: by 2002:adf:cd0c:: with SMTP id w12-v6mr23613103wrm.67.1539158650564;
+        Wed, 10 Oct 2018 01:04:10 -0700 (PDT)
 Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id h18-v6sm19689725wrb.82.2018.10.10.00.59.17
+        by smtp.gmail.com with ESMTPSA id t3-v6sm1291671wru.47.2018.10.10.01.04.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 00:59:17 -0700 (PDT)
+        Wed, 10 Oct 2018 01:04:09 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
-References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn clone/fetch hits issues with gc --auto
+References: <CACPiFCJZ83sqE7Gaj2pa12APkBF5tau-C6t4_GrXBWDwcMnJHg@mail.gmail.com> <CACPiFCKQq--xrMf1nF=1MmC+eESE_aKms3yogoRwCY=YxcOWXA@mail.gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 10 Oct 2018 09:59:16 +0200
-Message-ID: <87efcyfd0r.fsf@evledraar.gmail.com>
+In-reply-to: <CACPiFCKQq--xrMf1nF=1MmC+eESE_aKms3yogoRwCY=YxcOWXA@mail.gmail.com>
+Date:   Wed, 10 Oct 2018 10:04:09 +0200
+Message-ID: <87d0sifcsm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -67,21 +68,44 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Oct 10 2018, Junio C Hamano wrote:
+On Tue, Oct 09 2018, Martin Langhoff wrote:
 
-> * jk/drop-ancient-curl (2017-08-09) 5 commits
->  - http: #error on too-old curl
->  - curl: remove ifdef'd code never used with curl >=7.19.4
->  - http: drop support for curl < 7.19.4
->  - http: drop support for curl < 7.16.0
->  - http: drop support for curl < 7.11.1
+> Hi folks,
 >
->  Some code in http.c that has bitrot is being removed.
+> Long time no see! Importing a 3GB (~25K revs, tons of files) SVN repo
+> I hit the gc error:
 >
->  Expecting a reroll.
+> warning: There are too many unreachable loose objects; run 'git prune'
+> to remove them.
+> gc --auto: command returned error: 255
+>
+> I don't seem to be the only one --
+> https://stackoverflow.com/questions/35738680/avoiding-warning-there-are-too-many-unreachable-loose-objects-during-git-svn
+>
+> Looking at code history, it dropped the ability to pass options to git
+> repack when it was converted it to using git gc.
+>
+> Experimentally I find that tweaking it to run git gc --auto
+> --prune=5.minutes.ago works well, while --prune=now breaks it.
+> Attempts to commit fail with missing objects.
+>
+> - Why does --prune=now break it? Perhaps "gc" runs in the background,
+> and races with the commit being prepared?
+>
+> - Would it be safe, sane to apply --prune=some.value on _clone_?
+>
+> - During _fetch_, --prune=some.value seems risky. In a checkout being
+> actively used for development or merging it'd risk pruning objects
+> users expect to be there for recovery. Would there be a safe, sane
+> way?
+>
+> - Is there a safer, saner value than 5 minutes?
 
-There's been no activity on this for 6 months since I sent a "hey what's
-going on with it" E-Mail in:
-https://public-inbox.org/git/20180404204920.GA15402@sigill.intra.peff.net/
+What you've found is the least sucky way to work around this right now,
+but see my
+https://public-inbox.org/git/87inc89j38.fsf@evledraar.gmail.com/ and
+https://public-inbox.org/git/87d0vmck55.fsf@evledraar.gmail.com/ for
+some prior (and recent) discussion of this problem on-list.
 
-Maybe it should just be dropped?
+FWIW this has nothing to do with git-svn per-se, and also e.g. happens
+to me when I do a 'git fetch --all' sometimes on git.git.
