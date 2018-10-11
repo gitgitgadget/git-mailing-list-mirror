@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 975991F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 16:57:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88E281F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 17:06:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730492AbeJLAZn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 20:25:43 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37235 "EHLO
+        id S1730812AbeJLAec (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 20:34:32 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37313 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730301AbeJLAZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 20:25:43 -0400
-Received: by mail-wr1-f67.google.com with SMTP id y11-v6so10485278wrd.4
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 09:57:36 -0700 (PDT)
+        with ESMTP id S1727795AbeJLAec (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 20:34:32 -0400
+Received: by mail-wr1-f67.google.com with SMTP id y11-v6so10514624wrd.4
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 10:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=7Ld+utAaAwsd3G3tpQloqo2CVyyaI0SlybUkp949w7s=;
-        b=ofYxVkSv/nm2FinkZ16MuNT4stSHkkTgwJhWgOq0Ihxi0O3bqTVuScgC4chnOxtkIM
-         DvW1ukAh7E86Z+hUIi5VLLiVGWZiCPlwk3VneEyUKkUgCwRWdavKI3H7DxmdHseOHZ+R
-         9xc6SSfwCWbe4V0amSr0Gmamz8nzHuek4hETh46UREvPRwV+iI5O23fCfS0vNSr/gxN1
-         FgEQI2vDKZzP47kQAUFYlx9snFbiV4ezXuif/c0g+JLVETvWidEQzLcAAsrxPYAtQBQI
-         dX8SdmH7PkozEr5Vg2iEukXnsjMlXsehxqnJ2qQUhPO7J57HyhR3go5Ro8rAkg9P2jCj
-         iAUw==
+        bh=CTZMNQsNBL0paP0iKsTh3p0/cgHsQwFcQmAiH+MbLdI=;
+        b=CNOuv0qpsVFSOyu8toM2qFJVlsPDjW27UAsL1t11kugTAcxZjpbiq9eltPEVYQXIZG
+         +WezVuljK/1zGtdD2u61ywxWBR4Y/tAg68Vox2qc1O/j+2JEIXI95u6gQjIgUpji0L55
+         U6Q/aD5ciZDnDCx4hvwYaDk3zCZ/JxTOcVFQiX9I5y8QgqAY0E5KPIc63sAxcbnxcWO1
+         ncTwojl7A2a9dbtZDjGvsQD5OXbsz3NH30ROy6YIySiML4oKhmaFy4c/EAUmOryt4JMS
+         54GpDKcjVk5DyNUEGplO/Q2VLvn38VqCqOOJkJyIDG77Kr/ZRyWf3QWF2HY9KgrsBDT+
+         9fCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=7Ld+utAaAwsd3G3tpQloqo2CVyyaI0SlybUkp949w7s=;
-        b=uOBtSe2vT6DM85T0lmme+Hy2dgfEzuB5sWANEnDPmRZj75hlsb+4tf64OJfgjUZfmc
-         NG07jbOYqcTP1MbhDJEMZggu9QnvI7sj7XwXd6LW/QetLXoaUjncmarLuImLGPqg2l70
-         H3mWr+fQQeCyueT2abzL70Xw3v1Myu1UB3a9MIhDmxVsidOrLQr3whOEjgYTfyreYl15
-         nJA1QHTnh1EGgKrh4jsjQXDexXNKuGNrGMI37eXmCCz/4ZWm6XHI1cnjC9xudGeKgCHR
-         LGhZNECWl4vwj1u+RlF1DFCBlymRkbNybvHn2+xgzVNx9Rj3PHhpUXN2SvaGc0LzrRCr
-         M/MQ==
-X-Gm-Message-State: ABuFfoig3dcTvOxOdG4KMptbv/qg+ym5w2u/IL7lz+urrk53mdGwjAH8
-        uYtRY1SV8id6gV/0gp8lS+k=
-X-Google-Smtp-Source: ACcGV61RcXBmrDI5jLBQzOpVCEpD2TFgPma5YdtYpI78IL9CFZJgtPAproS3zYUKoiNjVONW51ZZkA==
-X-Received: by 2002:adf:9021:: with SMTP id h30-v6mr2461762wrh.248.1539277056102;
-        Thu, 11 Oct 2018 09:57:36 -0700 (PDT)
+        bh=CTZMNQsNBL0paP0iKsTh3p0/cgHsQwFcQmAiH+MbLdI=;
+        b=TEajxsAwyIlIKZQSYcQOCAdKwAbuxvNoOczKAXMb8PyEwSof7b3N4mTCIQr8mPVAea
+         9sS+/C82tRuYGwEgTEY4LTJylbHkQtPk/UwGORG+Uh1iWl0wktKArS5hhlH67BH0mg0u
+         PENqLrQBxACq9urhvSSJXRvXoascQNMDM3z9IQgM/Dsfwdv2SR9toLR85TqPPmjk6aka
+         9f/qqjGXF8sjvanmebpqe2g3G8T9oe7tNDMao4HSA2XqHcXTLuUFryQW2Fx1nwEE/1Mr
+         H7Buh5FO27Ka4ZzbN4tbiajp7Io11utWZA5D1Ku/u8eK+Bd9ug4suoaFlA+o41Ehumto
+         Wk2w==
+X-Gm-Message-State: ABuFfojoeDkHFfCtKkex2BdYCF9M1XuBmGNspi4TogDfFxCLwphZUKSs
+        +SeKZ+WOcBsT7COZNu0Kv5w=
+X-Google-Smtp-Source: ACcGV62V+ARYoDlB2PivTf07IfC9b2i/jekxWDMNm/6BZjRUXSBYqsJ9X/q1ks/F53rwfjJLZtXIzA==
+X-Received: by 2002:a5d:4d09:: with SMTP id z9-v6mr2334269wrt.298.1539277583852;
+        Thu, 11 Oct 2018 10:06:23 -0700 (PDT)
 Received: from [192.168.0.104] (AToulouse-658-1-60-162.w92-136.abo.wanadoo.fr. [92.136.157.162])
-        by smtp.gmail.com with ESMTPSA id v1-v6sm23837095wrd.24.2018.10.11.09.57.34
+        by smtp.gmail.com with ESMTPSA id 4-v6sm17030149wmt.16.2018.10.11.10.06.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Oct 2018 09:57:35 -0700 (PDT)
-Subject: Re: [PATCH 04/15] sequencer: refactor sequencer_add_exec_commands()
- to work on a todo_list
+        Thu, 11 Oct 2018 10:06:23 -0700 (PDT)
+Subject: Re: [PATCH 08/15] sequencer: change complete_action() to use the
+ refactored functions
 To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
 References: <20181007195418.25752-1-alban.gruin@gmail.com>
- <20181007195418.25752-5-alban.gruin@gmail.com>
- <6188911e-fd21-4c7c-885d-a15d2b46aa86@talktalk.net>
+ <20181007195418.25752-9-alban.gruin@gmail.com>
+ <d0adf861-3046-f0b6-3217-c89d92319e43@talktalk.net>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
@@ -100,12 +100,12 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  Up74CgX7geoMmEYmsYH+P0DR/+yBqgiWgpPtLAdD9ALwVgvdQs/zZCvBLrXMLd5kEIbtFoTG
  +n3xU7zare4Jcz45Tt4/ECsGGIt6rul+J9HBjuCG8STEbmTtlauZmZ4uGf2uxpj0H3cPzwgE
  9NQcuwgB9Z4DVNTZYA6LMAi57ITqC84t2RfaYbOk+7iSI1kLBtZzdwU=
-Message-ID: <6c55857a-ce3c-f9fc-18c6-d7cef2976931@gmail.com>
-Date:   Thu, 11 Oct 2018 18:57:27 +0200
+Message-ID: <d14281c1-6beb-50fe-e9aa-3d8555aa307d@gmail.com>
+Date:   Thu, 11 Oct 2018 19:06:22 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <6188911e-fd21-4c7c-885d-a15d2b46aa86@talktalk.net>
+In-Reply-To: <d0adf861-3046-f0b6-3217-c89d92319e43@talktalk.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -114,46 +114,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-thanks for taking the time to review my patches.
-
-Le 11/10/2018 à 13:25, Phillip Wood a écrit :
+Le 11/10/2018 à 15:51, Phillip Wood a écrit :
 > On 07/10/2018 20:54, Alban Gruin wrote:
->> @@ -4419,15 +4406,38 @@ int sequencer_add_exec_commands(const char
->> *commands)
->>       }
->>         /* insert or append final <commands> */
->> -    if (insert >= 0 && insert < todo_list.nr)
->> -        strbuf_insert(buf, todo_list.items[insert].offset_in_buf +
->> +    if (insert >= 0 && insert < todo_list->nr)
->> +        strbuf_insert(buf, todo_list->items[insert].offset_in_buf +
->>                     offset, commands, commands_len);
->>       else if (insert >= 0 || !offset)
->>           strbuf_add(buf, commands, commands_len);
->>   -    i = write_message(buf->buf, buf->len, todo_file, 0);
->> +    if (todo_list_parse_insn_buffer(buf->buf, todo_list))
->> +        BUG("unusable todo list");}
+>> +    if (rewrite_file(todo_file, new_todo.buf.buf, new_todo.buf.len) <
+>> 0) {
+>> +        todo_list_release(&new_todo);
+>> +        return error_errno(_("could not write '%s'"), todo_file);
+>> +    }
 > 
-> It is a shame to have to re-parse the todo list, I wonder how difficult
-> it would be to adjust the todo_list item array as the exec commands are
-> inserted. The same applies to the next couple of patches
+> rewrite_file() can truncate the old version of the file if there is an
+> error when writing the new version, I think it would be better to use
+> write_message() instead as that atomically updates the file. The same
+> applies to patch 5 (refactor rearrange_squash()) after which I think
+> there will be no callers to rewrite_file() so it can be deleted.
+
+You’re right, I didn’t notice that.
+
 > 
-
-Good question.
-
-This function inserts an `exec' command after every `pick' command.
-These commands are stored in a dynamically allocated list, grew with
-ALLOW_GROW().
-
-If we want to keep the current structure, we would have to grow the size
-of the list by 1 and move several element to the end every time we want
-to add an `exec' command.  It would not be very effective.  Perhaps I
-should use a linked list here, instead.  It may also work well with
-rearrange_squash() and skip_unnecessary_picks().
-
-Maybe we could even get rid of the strbuf at some point.
-
 > Best Wishes
 > 
 > Phillip
