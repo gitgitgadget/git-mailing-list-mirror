@@ -2,286 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 272A91F97F
-	for <e@80x24.org>; Thu, 11 Oct 2018 19:11:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9DF61F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 19:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729933AbeJLCkP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 22:40:15 -0400
-Received: from mail-io1-f74.google.com ([209.85.166.74]:50067 "EHLO
-        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729557AbeJLCkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 22:40:14 -0400
-Received: by mail-io1-f74.google.com with SMTP id k9-v6so8827473iob.16
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 12:11:41 -0700 (PDT)
+        id S1726754AbeJLD1l (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 23:27:41 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43661 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726071AbeJLD1k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 23:27:40 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n1-v6so11007153wrt.10
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 12:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=q3zHjk5w/DGctd5XkipjWR6G/gm2AAYHYF5Mq+ztQ6Q=;
-        b=atQ26UwZW7jqAInRE/XyfFGab67SnjjAhOEmS/gev3oqF5ebkP5l3N/+Q6c7nRvW4H
-         dQ6PSmxuXjfpRJ6nAUT897NuTACjME2lHjTqk5tLRxYlOtgEIS51YUeFWTUDXVmTtTlW
-         FNOC+wMF6962SX8G56HspMfcSiXta/fGZDFd+4DA5nTWhnbJbVQJwGdBRBUrWoyF9B3K
-         HvthGfkne2h7KKnLd+02acAVmfoxCqjDeyU6wJHY7+yCIIBFwTSdTB4jNANh51Uk8Y8m
-         kXuZun16Lc0O9NScLdIUAZGRF3m3nMzSjXW7r652331uh29G090/XIbMOSKGB/iFLjon
-         AHZg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SUeL0ar9AWZwWNtZZih3ZZVdVjD863K4cfkA6XAdtF8=;
+        b=iD5OnLSU45jSKyunxrhRzPI4YD2bzGgk9LFY/x36OXlZcsciO8q7P6TcI4rsU8laBd
+         kIAxrCeGIOztdHUrWDiOBijuKdEOQOuwbs7y9kosxsCuuXhbbhvfBAoK5a1yP5pNAHWJ
+         OLzzoz5pFzpIF6eXhv1LRb1j4gcFkN5rrlrePnLq5iv92fFuI+M1TB2zrhVRaP/JnaJ3
+         1UE0xIgDh/Bl+UUXpHs2ZgNhGLGGdw3sewKMsIyvlRHCQ+7mCwnwyGqsJNzwE0hNU27H
+         YQfCIc2xnNaUHN0sI+i7Pffn8g36EjqhCYrChumiggm5zzJdWCr2yTVt6N4YFEYEwfBq
+         hHuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=q3zHjk5w/DGctd5XkipjWR6G/gm2AAYHYF5Mq+ztQ6Q=;
-        b=uCSQbLqInT3JbAdxbG+ATJ6DFLbIri+OUQiQaEReouFRGZNnnmS1YlL3YG1MlBR452
-         Ac3bP1146fodmHcrlqx0b6j6Y77fyWmUTC04eRs1oWi5s+K7hgBWd9xVwANllMjuoHbn
-         8xC8aF74ECqBs2OaCpNBt44KsDYpVWqjp7FcYajeK27TNY4QTn6XBKJ5xVX4NTmk52Ag
-         Q2nSyBRZbquMJS7SbGXX08Wlygekk/MGwyZYUMW9uIHPcbdqWvY/briknMt5FOcB8sdE
-         nG+yGP7qVIe5liv6up+PIsbGiWcmC4kvALPh625+JlwIEfqFkZUiE+eSFVJn6zib6ytk
-         DWEw==
-X-Gm-Message-State: ABuFfohtVQswRZ66WESlGLSzDSBAUOs3l2IYlZ419WMQxjYu/srDdrFh
-        RNTCmr0kRW3NrzKCTREGx8G9f76yh5INaoLUO7HOFH5QVrMacxjFHqeohkCZ3+lUV5nNmD5NjSC
-        65An+07YqwsJnMvwTbEBuLbaD34BLoOiLzw/81wjNjuM9btTF2CsrwcxOT1WZGNOmJ2UXcZyhpO
-        D9
-X-Google-Smtp-Source: ACcGV639AN87NBXcsSmTAAaHj2ubbHSkdflg3MootO49mfXIwUQ/WoZ6K1gmc2H13KQIJyrtp+V1FPSYdvxc3iz34U1t
-X-Received: by 2002:a24:fe01:: with SMTP id w1-v6mr5517525ith.0.1539285101165;
- Thu, 11 Oct 2018 12:11:41 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 12:11:31 -0700
-In-Reply-To: <2f49b953-4e07-0eb6-05b8-90d2eb72994b@gmail.com>
-Message-Id: <20181011191131.154425-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <2f49b953-4e07-0eb6-05b8-90d2eb72994b@gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH] Per-commit and per-parent filters for 2 parents
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
-        peff@peff.net, avarab@gmail.com, szeder.dev@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=SUeL0ar9AWZwWNtZZih3ZZVdVjD863K4cfkA6XAdtF8=;
+        b=iTr9JQ7M8yIPZM/TXa+F2qAugYQ4cbXoCU380e5l/hVd6Vf9Em6RGQ3oBTpruLf/Ys
+         4cl7NBYEz9Va/5QDPlB+30cNewqkepUSOjViqQl84mnRlVCwP7/yZel6C+rS3XLZwNCb
+         gc2sZN8dEmxvbmPMlw8mn3L7O1l9gQqSn67PlJbWZPR2y2G7jwQ28n9Q92IoDlt3PlQm
+         +3RZxMDnu/BcqvVBTDwoApWmWkM/m2ks4d1yUgN2vRXbEN+8SPR+EqJqNFH0hVL0AHWD
+         aMfLU3DLXrXpMBaX39LXVsnEUvAqvk/MF0sl0lmyWUPIdxzviPcTMxG/JTIKK6Tn6h42
+         Kn6w==
+X-Gm-Message-State: ABuFfogfp4bwp9BZTSWnU1+RySB+aD2m463tnuGpodrVb4sl9PqcVBqA
+        mbWKFEKWCtrzs70dWzrsjB0=
+X-Google-Smtp-Source: ACcGV61oUfDytzlnuEvHRgEctYlgGIaixEwn/oII8dj7HLx5BsrVXdqs9lmsXg8dxCwX7k2IK+RDsQ==
+X-Received: by 2002:adf:9367:: with SMTP id 94-v6mr2945474wro.211.1539287931402;
+        Thu, 11 Oct 2018 12:58:51 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-60-162.w92-136.abo.wanadoo.fr. [92.136.157.162])
+        by smtp.gmail.com with ESMTPSA id e133-v6sm27307569wma.42.2018.10.11.12.58.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Oct 2018 12:58:50 -0700 (PDT)
+Subject: Re: [PATCH 10/15] rebase-interactive: use todo_list_transform() in
+ edit_todo_list()
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20181007195418.25752-1-alban.gruin@gmail.com>
+ <20181007195418.25752-11-alban.gruin@gmail.com>
+ <f95102e3-3968-361f-2e2a-a22989519480@talktalk.net>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <60846277-93f6-1514-26d8-2878be7b8f1c@gmail.com>
+Date:   Thu, 11 Oct 2018 21:58:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <f95102e3-3968-361f-2e2a-a22989519480@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-> One main benefit of storing on Bloom filter per commit is to avoid
-> recomputing hashes at every commit. Currently, this patch only improves
-> locality when checking membership at the cost of taking up more space.
-> Drop the dependence on the parent oid and then we can save the time
-> spent hashing during history queries.
+Le 11/10/2018 à 17:16, Phillip Wood a écrit :
+> On 07/10/2018 20:54, Alban Gruin wrote:
+>> Just like complete_action(), edit_todo_list() used a
+>> function (transform_todo_file()) that read the todo-list from the disk
+>> and wrote it back, resulting in useless disk accesses.
+>>
+>> This changes edit_todo_list() to call directly todo_list_transform()
+>> instead.
+>>
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>> ---
+>>   rebase-interactive.c | 40 +++++++++++++++++++---------------------
+>>   1 file changed, 19 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/rebase-interactive.c b/rebase-interactive.c
+>> index 7c7f720a3d..f42d48e192 100644
+>> --- a/rebase-interactive.c
+>> +++ b/rebase-interactive.c
+>> @@ -78,39 +78,37 @@ void append_todo_help(unsigned edit_todo, unsigned
+>> keep_empty,
+>>     int edit_todo_list(unsigned flags)
+>>   {
+>> -    struct strbuf buf = STRBUF_INIT;
+>>       const char *todo_file = rebase_path_todo();
+>> +    struct todo_list todo_list = TODO_LIST_INIT;
+>> +    int res = 0;
+>>   -    if (strbuf_read_file(&buf, todo_file, 0) < 0)
+>> +    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>>           return error_errno(_("could not read '%s'."), todo_file);
+>>   -    strbuf_stripspace(&buf, 1);
+>> -    if (write_message(buf.buf, buf.len, todo_file, 0)) {
+>> -        strbuf_release(&buf);
+>> -        return -1;
+>> -    }
+>> -
+>> -    strbuf_release(&buf);
+>> +    strbuf_stripspace(&todo_list.buf, 1);
+>> +    if (!todo_list_parse_insn_buffer(todo_list.buf.buf, &todo_list))
+>> +        todo_list_transform(&todo_list, flags | TODO_LIST_SHORTEN_IDS);
+>>   -    transform_todo_file(flags | TODO_LIST_SHORTEN_IDS);
+>> -
+>> -    if (strbuf_read_file(&buf, todo_file, 0) < 0)
+>> -        return error_errno(_("could not read '%s'."), todo_file);
+>> +    append_todo_help(1, 0, &todo_list.buf);
+>>   -    append_todo_help(1, 0, &buf);
+> 
+> I think this patch is fine, I was just wondering if you meant to move
+> the call to append_todo_help() above the blank line?
+> 
 
-I've removed the hashing of the parent OID here and tried having
-per-parent and per-commit hashes for the first 2 parents of each commit
-instead of only 1, thus doubling the filter size. The results are not
-much of an improvement though:
+No
 
-bloom filter total queries: 66409 definitely not: 56424 maybe: 9985 false positives: 9099 fp ratio: 0.137015
-0:01.17
----
- bloom-filter.c | 25 ++++++++++++-------------
- bloom-filter.h |  4 ++--
- commit-graph.c | 13 ++++++++-----
- revision.c     | 11 +++++------
- 4 files changed, 27 insertions(+), 26 deletions(-)
+> Best Wishes
+> 
+> Phillip
+> 
 
-diff --git a/bloom-filter.c b/bloom-filter.c
-index 39b453908f..10c73c45ae 100644
---- a/bloom-filter.c
-+++ b/bloom-filter.c
-@@ -11,7 +11,7 @@ void bloom_filter_init(struct bloom_filter *bf, uint32_t commit_nr, uint32_t bit
- 	bf->nr_entries = 0;
- 	bf->commit_nr = commit_nr;
- 	bf->bit_size = bit_size;
--	bf->bits = xcalloc(1, commit_nr * bit_size / CHAR_BIT);
-+	bf->bits = xcalloc(1, 2 * commit_nr * bit_size / CHAR_BIT);
- }
- 
- void bloom_filter_free(struct bloom_filter *bf)
-@@ -22,24 +22,24 @@ void bloom_filter_free(struct bloom_filter *bf)
- }
- 
- 
--static void bloom_filter_set_bits(struct bloom_filter *bf, uint32_t graph_pos, const uint32_t *offsets,
-+static void bloom_filter_set_bits(struct bloom_filter *bf, uint32_t graph_pos, int parent_index, const uint32_t *offsets,
- 			   int nr_offsets, int nr_entries)
- {
- 	int i;
- 	for (i = 0; i < nr_offsets; i++) {
--		uint32_t byte_offset = (offsets[i] % bf->bit_size + graph_pos * bf->bit_size) / CHAR_BIT;
-+		uint32_t byte_offset = (offsets[i] % bf->bit_size + (2 * graph_pos + parent_index) * bf->bit_size) / CHAR_BIT;
- 		unsigned char mask = 1 << offsets[i] % CHAR_BIT;
- 		bf->bits[byte_offset] |= mask;
- 	}
- 	bf->nr_entries += nr_entries;
- }
- 
--static int bloom_filter_check_bits(struct bloom_filter *bf, uint32_t graph_pos, const uint32_t *offsets,
-+static int bloom_filter_check_bits(struct bloom_filter *bf, uint32_t graph_pos, int parent_index, const uint32_t *offsets,
- 			    int nr)
- {
- 	int i;
- 	for (i = 0; i < nr; i++) {
--		uint32_t byte_offset = (offsets[i] % bf->bit_size + graph_pos * bf->bit_size) / CHAR_BIT;
-+		uint32_t byte_offset = (offsets[i] % bf->bit_size + (2 * graph_pos + parent_index) * bf->bit_size) / CHAR_BIT;
- 		unsigned char mask = 1 << offsets[i] % CHAR_BIT;
- 		if (!(bf->bits[byte_offset] & mask))
- 			return 0;
-@@ -48,19 +48,18 @@ static int bloom_filter_check_bits(struct bloom_filter *bf, uint32_t graph_pos,
- }
- 
- 
--void bloom_filter_add_hash(struct bloom_filter *bf, uint32_t graph_pos, const unsigned char *hash)
-+void bloom_filter_add_hash(struct bloom_filter *bf, uint32_t graph_pos, int parent_index, const unsigned char *hash)
- {
- 	uint32_t offsets[GIT_MAX_RAWSZ / sizeof(uint32_t)];
- 	hashcpy((unsigned char*)offsets, hash);
--	bloom_filter_set_bits(bf, graph_pos, offsets,
--			     the_hash_algo->rawsz / sizeof(*offsets), 1);
-+	bloom_filter_set_bits(bf, graph_pos, parent_index, offsets, the_hash_algo->rawsz / sizeof(*offsets), 1);
- }
- 
--int bloom_filter_check_hash(struct bloom_filter *bf, uint32_t graph_pos, const unsigned char *hash)
-+int bloom_filter_check_hash(struct bloom_filter *bf, uint32_t graph_pos, int parent_index, const unsigned char *hash)
- {
- 	uint32_t offsets[GIT_MAX_RAWSZ / sizeof(uint32_t)];
- 	hashcpy((unsigned char*)offsets, hash);
--	return bloom_filter_check_bits(bf, graph_pos, offsets,
-+	return bloom_filter_check_bits(bf, graph_pos, parent_index, offsets,
- 			the_hash_algo->rawsz / sizeof(*offsets));
- }
- 
-@@ -87,8 +86,8 @@ int bloom_filter_load(struct bloom_filter *bf)
- 	read_in_full(fd, &bf->bit_size, sizeof(bf->bit_size));
- 	if (bf->bit_size % CHAR_BIT)
- 		BUG("invalid size for bloom filter");
--	bf->bits = xmalloc(bf->commit_nr * bf->bit_size / CHAR_BIT);
--	read_in_full(fd, bf->bits, bf->commit_nr * bf->bit_size / CHAR_BIT);
-+	bf->bits = xmalloc(2 * bf->commit_nr * bf->bit_size / CHAR_BIT);
-+	read_in_full(fd, bf->bits, 2 * bf->commit_nr * bf->bit_size / CHAR_BIT);
- 
- 	close(fd);
- 
-@@ -102,7 +101,7 @@ void bloom_filter_write(struct bloom_filter *bf)
- 	write_in_full(fd, &bf->nr_entries, sizeof(bf->nr_entries));
- 	write_in_full(fd, &bf->commit_nr, sizeof(bf->commit_nr));
- 	write_in_full(fd, &bf->bit_size, sizeof(bf->bit_size));
--	write_in_full(fd, bf->bits, bf->commit_nr * bf->bit_size / CHAR_BIT);
-+	write_in_full(fd, bf->bits, 2 * bf->commit_nr * bf->bit_size / CHAR_BIT);
- 
- 	close(fd);
- }
-diff --git a/bloom-filter.h b/bloom-filter.h
-index 607649b8db..20e0527451 100644
---- a/bloom-filter.h
-+++ b/bloom-filter.h
-@@ -18,13 +18,13 @@ void bloom_filter_free(struct bloom_filter *bf);
-  * Turns the given (SHA1) hash into 5 unsigned ints, and sets the bits at
-  * those positions (modulo the bitmap's size) in the Bloom filter.
-  */
--void bloom_filter_add_hash(struct bloom_filter *bf, uint32_t graph_pos, const unsigned char *hash);
-+void bloom_filter_add_hash(struct bloom_filter *bf, uint32_t graph_pos, int parent_index, const unsigned char *hash);
- /*
-  * Turns the given (SHA1) hash into 5 unsigned ints, and checks the bits at
-  * those positions (modulo the bitmap's size) in the Bloom filter.
-  * Returns 1 if all those bits are set, 0 otherwise.
-  */
--int bloom_filter_check_hash(struct bloom_filter *bf, uint32_t graph_pos, const unsigned char *hash);
-+int bloom_filter_check_hash(struct bloom_filter *bf, uint32_t graph_pos, int parent_index, const unsigned char *hash);
- 
- void hashxor(const unsigned char *hash1, const unsigned char *hash2,
- 	     unsigned char *out);
-diff --git a/commit-graph.c b/commit-graph.c
-index d21d555611..ca869c10e1 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -716,6 +716,7 @@ static void add_changes_to_bloom_filter(struct bloom_filter *bf,
- 					struct commit *parent,
- 					struct commit *commit,
- 					int index,
-+					int parent_index,
- 					struct diff_options *diffopt)
- {
- 	int i;
-@@ -738,7 +739,6 @@ static void add_changes_to_bloom_filter(struct bloom_filter *bf,
- 		do {
- 			git_hash_ctx ctx;
- 			unsigned char name_hash[GIT_MAX_RAWSZ];
--			unsigned char hash[GIT_MAX_RAWSZ];
- 
- 			p = strchrnul(p + 1, '/');
- 
-@@ -754,8 +754,7 @@ static void add_changes_to_bloom_filter(struct bloom_filter *bf,
- 			the_hash_algo->update_fn(&ctx, path, p - path);
- 			the_hash_algo->final_fn(name_hash, &ctx);
- 
--			hashxor(name_hash, parent->object.oid.hash, hash);
--			bloom_filter_add_hash(bf, index, hash);
-+			bloom_filter_add_hash(bf, index, parent_index, name_hash);
- 		} while (*p);
- 
- 		diff_free_filepair(diff_queued_diff.queue[i]);
-@@ -784,9 +783,13 @@ static void fill_bloom_filter(struct bloom_filter *bf,
- 		struct commit *commit = commits[i];
- 		struct commit_list *parent = commit->parents;
- 
--		if (parent)
--			add_changes_to_bloom_filter(bf, parent->item, commit, i,
-+		if (parent) {
-+			add_changes_to_bloom_filter(bf, parent->item, commit, i, 0,
- 						    &revs.diffopt);
-+			if (parent->next)
-+				add_changes_to_bloom_filter(bf, parent->next->item, commit, i, 1,
-+							    &revs.diffopt);
-+		}
- 
- 		display_progress(progress, i);
- 	}
-diff --git a/revision.c b/revision.c
-index 5a433a5878..5478d08344 100644
---- a/revision.c
-+++ b/revision.c
-@@ -488,6 +488,7 @@ static void print_bloom_filter_stats_atexit(void)
- 
- static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 						 struct commit *parent,
-+						 int parent_index,
- 						 struct commit *commit)
- {
- 	int i;
-@@ -513,10 +514,8 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 
- 	for (i = 0; i < revs->pruning.pathspec.nr; i++) {
- 		struct pathspec_item *pi = &revs->pruning.pathspec.items[i];
--		unsigned char hash[GIT_MAX_RAWSZ];
- 
--		hashxor(pi->name_hash, parent->object.oid.hash, hash);
--		if (bloom_filter_check_hash(&bf, commit->graph_pos, hash)) {
-+		if (bloom_filter_check_hash(&bf, commit->graph_pos, parent_index, pi->name_hash)) {
- 			/*
- 			 * At least one of the interesting pathspecs differs,
- 			 * so we can return early and let the diff machinery
-@@ -568,8 +567,8 @@ static int rev_compare_tree(struct rev_info *revs,
- 			return REV_TREE_SAME;
- 	}
- 
--	if (!nth_parent) {
--		bloom_ret = check_maybe_different_in_bloom_filter(revs, parent, commit);
-+	if (nth_parent <= 1) {
-+		bloom_ret = check_maybe_different_in_bloom_filter(revs, parent, nth_parent, commit);
- 		if (bloom_ret == 0)
- 			return REV_TREE_SAME;
- 	}
-@@ -579,7 +578,7 @@ static int rev_compare_tree(struct rev_info *revs,
- 	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
- 			   &revs->pruning) < 0)
- 		return REV_TREE_DIFFERENT;
--	if (!nth_parent) {
-+	if (nth_parent <= 1) {
- 		if (bloom_ret == 1 && tree_difference == REV_TREE_SAME)
- 			bloom_filter_count_false_positive++;
- 	}
--- 
-2.19.0.271.gfe8321ec05.dirty
+Cheers,
+Alban
 
