@@ -2,134 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D33591F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 10:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99AD31F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 10:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728348AbeJKRpp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 13:45:45 -0400
-Received: from mail-it1-f173.google.com ([209.85.166.173]:51750 "EHLO
-        mail-it1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728342AbeJKRpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 13:45:45 -0400
-Received: by mail-it1-f173.google.com with SMTP id 74-v6so12636091itw.1
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 03:19:07 -0700 (PDT)
+        id S1727170AbeJKRwH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 13:52:07 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44691 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726666AbeJKRwH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 13:52:07 -0400
+Received: by mail-ed1-f66.google.com with SMTP id z21-v6so7733615edb.11
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 03:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dana-is.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=+8+6jgXS0bwm3em7tmC2t33LaTnJW9/y+vn+pmtf2zg=;
-        b=Lk4k4IdtPQ1QxQiRzDpT7JOxya0WXIkFmsABw+d0gZW6jmbYbwokNOTWusAOHiHb1S
-         fsTDu5qKGxJUqXwSatWe4/TNXlZOaaMOUR1I5GkmlBHRvecKJUEy1TMKkm4E0ALaacWP
-         1USgpRtkciuHWg7jmKbCItD975AJWoOJgvJHm21QW5zdFoXQNeD6iplb/p1gb6W69qZN
-         70bxhBNUbIHGtYuEBSiZhAlKntIJE15FRJF22cfdurX1JLL148BoesZZR8W/9jLDYeF0
-         AgaGMCFPcYGQLvISGEB3nxD/qyS3am8xQA+WbKfW3ewboDvx5WIbxTJZ5HKIfh4xzyA/
-         2CcA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=xCUjgPsHKEGLvxbVwbCbZkcRy5juJPST/uMVbCJCgkk=;
+        b=B+EvFVlEzaug/dqUIWpYJsi4NQS1zx7jQrdHOb9CoSHkEbKiqeR8p/OunuZb0Gisum
+         1gHKpgWByCK6tn/ZdxBTrxCWrOgRULdOIJLOgom3gkexOPTCrWkutHg/stiKtDAU965+
+         N7afi7kILeyG+ZokwMC3JY3O0dX65GKAlDRk/MNpTXp1Xne7j1o/fMmSxvE35tQaca/J
+         zXEiO4NX8DH/jppjhWtpji/1YekjSJUt9sR4tWSrqbZ9qP4M4tQs5eVy7PT/W1LDGVpy
+         69n9IjE6q7Y2LYJnwsrtvH4ht+KyAMdrazv97lfVthC4jt6KQXGKo+OPk8A4QNT8tTw5
+         IF2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=+8+6jgXS0bwm3em7tmC2t33LaTnJW9/y+vn+pmtf2zg=;
-        b=oZjTWhv8ckEZvIyywoYb4AkLc+W5nDHxboQ/7PXND0KPix3/KflfptWWRr2X923iE7
-         mcp/Btd3oXOi4k8rY/1iglJppxQP6e9pXgouE97YtwL1OWsKkOc2zBoUlN4WhVK8M5Gb
-         AIe4vm+MQv++fmYiEkYKIo+OefPFb2ecxvnMt+g/rO+y5XWKKaj6sm/Wu7KeOXSBGL5d
-         fmIkupsVBMp2pYMbQAeIwTRzQ7klThLSJv0eq7lDomUwl7/O2nnZYctyQq9PQtwJ2fUZ
-         y0qgWwuodnTSm5uC0R815m/UmS/Et1q+c8Hqrh1bXcidkB0cgfZjizoWGZo03oMQtDIu
-         IPSQ==
-X-Gm-Message-State: ABuFfogUhlAwYd0tZcyePIVkAZXVA6D8lCb/n9TspzPRsdYEmtF1oTjQ
-        +Xu8qtCQb/lCJeTSfKPPxB8U56EUYUQ=
-X-Google-Smtp-Source: ACcGV62hWAFALnwa+tD+OUmiKwMm618FhxZOk7jFuhkC3AYSX5l79yJbtUlkJz1Zp7XwRuIVDj3Kcg==
-X-Received: by 2002:a24:83c1:: with SMTP id d184-v6mr874029ite.16.1539253147181;
-        Thu, 11 Oct 2018 03:19:07 -0700 (PDT)
-Received: from heartswap.lan.dana.is (173-21-17-19.client.mchsi.com. [173.21.17.19])
-        by smtp.gmail.com with ESMTPSA id o18-v6sm7882216ioa.83.2018.10.11.03.19.06
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=xCUjgPsHKEGLvxbVwbCbZkcRy5juJPST/uMVbCJCgkk=;
+        b=osdcSVWbEAbQId68djYoA69wh6vPCNqW6a4HF0h5KKy4BCHfoCOrgXkbgQt5+LwOVR
+         2AaomR2LWaFkM+E8VWp87VryVj/rkyN3NTZlMhXda81Vi/7Dc0Hi3IQz37Xp82XhgvAO
+         bnJL1pj5RMJJGPsPHnLsajyLVUNluFQuDI7TnUmNjrnZ0P4uoGRN9pIPNB/A1KKcUNT3
+         gn7IV4Y0YjdBp6M6RVX3a55JuwSaNjdZVn8V8KPOUr1zag7CHAMy2VLMmSNErwyml0GG
+         SNtGVpmsraTsxc8XgroLBv9/sxTB9aJNC5Q6U1ENRB8ptOdS7eBqEz0tD7M8pUfyzrd1
+         OBhA==
+X-Gm-Message-State: ABuFfojZcg/Dxy/WsFAjILiIdQlO/2KdiK36Sosl2fY7IiQrd3LpGvFy
+        43tjhgpS/1H+bUo81EUuVvg=
+X-Google-Smtp-Source: ACcGV61BUA8ryjhwc/fxuB+6nXZ87q1/QfXz+Jd4ebOzZWhrbShGrkPeYx48NpHyrxH3whryez64Zg==
+X-Received: by 2002:a50:9247:: with SMTP id j7-v6mr1919060eda.124.1539253528671;
+        Thu, 11 Oct 2018 03:25:28 -0700 (PDT)
+Received: from szeder.dev (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
+        by smtp.gmail.com with ESMTPSA id w56-v6sm8884652edw.79.2018.10.11.03.25.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Oct 2018 03:19:06 -0700 (PDT)
-From:   dana <dana@dana.is>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.4 \(3445.8.2\))
-Subject: [BUG] gitignore documentation inconsistent with actual behaviour
-Message-Id: <C16A9F17-0375-42F9-90A9-A92C9F3D8BBA@dana.is>
-Date:   Thu, 11 Oct 2018 05:19:06 -0500
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.8.2)
+        Thu, 11 Oct 2018 03:25:27 -0700 (PDT)
+Date:   Thu, 11 Oct 2018 12:25:25 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revert & cherry-pick: run git gc --auto
+Message-ID: <20181011102525.GH23446@szeder.dev>
+References: <20181010193557.19052-1-avarab@gmail.com>
+ <20f33df8-7ba8-af26-e0c8-16152345c85b@talktalk.net>
+ <87ftxceqxc.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87ftxceqxc.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Thu, Oct 11, 2018 at 12:08:47PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Oct 11 2018, Phillip Wood wrote:
+> 
+> > Hi Ævar
+> >
+> > On 10/10/2018 20:35, Ævar Arnfjörð Bjarmason wrote:
+> >> Expand on the work started in 095c741edd ("commit: run git gc --auto
+> >> just before the post-commit hook", 2018-02-28) to run "gc --auto" in
+> >> more commands where new objects can be created.
+> >>
+> >> The notably missing commands are now "rebase" and "stash". Both are
+> >> being rewritten in C, so any use of "gc --auto" there can wait for
+> >> that.
+> >
+> > If cherry-pick, revert or 'rebase -i' edit the commit message then they
+> > fork 'git commit' so gc --auto will be run there anyway.
+> 
+> Yeah it seems I totally screwed up the testing for this patch, first it
+> doesn't even compile because I'm not including run-command.h, I *did*
+> fix that, but while wrangling a few things didn't commit that *sigh*.
+> 
+> And yeah, there's some invocations where we now run gc --auto twice,
+> i.e. if you do revert, but not revert --no-edit, and not on cherry-pick,
+> but on cherry-pick --edit.
+> 
+> So yeah, this really needs to be re-thought.
+> 
+> > I wonder if it would be better to call 'gc --auto' from sequencer.c at
+> > the end of a string of successful picks, that would cover cherry-pick,
+> > 'rebase -iu' and revert. With 'rebase -i' it might be nice to avoid
+> > calling 'gc --auto' until the very end, rather than every time we stop
+> > for an edit but that is probably more trouble than it is worth.
+> 
+> That seems a lot better indeed. I.e. running it from the sequencer. I do
+> wonder if there should be some smarts about running it in the middle of
+> a sequence, i.e. think of a case where we're rebasing 10k commits, which
+> is a gc need similar to what happens in the middle of "git svn
+> clone". So maybe something where we gc --auto in the sequencer for every
+> Nth commit, and at the end.
 
-I'm a contributor to ripgrep, which is a grep-like tool that supports =
-using
-gitignore files to control which files are searched in a repo (or any =
-other
-directory tree). ripgrep's support for the patterns in these files is =
-based on
-git's official documentation, as seen here:
-
-  https://git-scm.com/docs/gitignore
-
-One of the most common reports on the ripgrep bug tracker is that it =
-does not
-allow patterns like the following real-world examples, where a ** is =
-used along
-with other text within the same path component:
-
-  **/**$$*.java
-  **.orig
-  **local.properties
-  !**.sha1
-
-The reason it doesn't allow them is that the gitignore documentation =
-explicitly
-states that they're invalid:
-
-  A leading "**" followed by a slash means match in all directories...
-
-  A trailing "/**" matches everything inside...
-
-  A slash followed by two consecutive asterisks then a slash matches =
-zero or
-  more directories...
-
-  Other consecutive asterisks are considered invalid.
-
-git itself happily accepts these patterns, however, apparently treating =
-the **
-like a single * without fnmatch(3)'s FNM_PATHNAME flag set (in other =
-words, it
-matches / as a regular character, thus crossing directory boundaries).
-
-ripgrep's developer is loathe to reverse-engineer this undocumented =
-behaviour,
-and so the reports keep coming, both for ripgrep itself and for =
-down-stream
-consumers of it and its ignore crate (including most notably Microsoft's =
-VS Code
-editor).
-
-My request: Assuming that git's actual handling of these patterns is =
-intended,
-would it be possible to make it 'official' and explicitly add it to the
-documentation?
-
-References (the first one is the main bug):
-
-https://github.com/BurntSushi/ripgrep/issues/373
-https://github.com/BurntSushi/ripgrep/issues/507
-https://github.com/BurntSushi/ripgrep/issues/859
-https://github.com/BurntSushi/ripgrep/issues/945
-https://github.com/BurntSushi/ripgrep/issues/1080
-https://github.com/BurntSushi/ripgrep/issues/1082
-https://github.com/Microsoft/vscode/issues/24050
-
-dana
+How would that affect setups with 'gc.autoDetach = false', or, more
+importantly, platforms, where 'git gc --auto' always runs in the
+foreground?
 
