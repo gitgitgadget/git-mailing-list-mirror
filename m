@@ -2,111 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D40471F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 09:20:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 999841F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 09:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728333AbeJKQrO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 12:47:14 -0400
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:40689 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726205AbeJKQrN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 12:47:13 -0400
-Received: by mail-ed1-f46.google.com with SMTP id r1-v6so7575339edd.7
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:20:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uber.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=jzngKKeDmhuGUWHOHaofYFCxiGaXfxvhj2odfZ+XkU0=;
-        b=l2orVFzE6ivfFv+vttTQwFxOFs7kLPTTAcnWd/maOHujgdXgh4wwvqcHDqpw8cKaBj
-         8dVWojzb6Vuyh2T4ux8CSpFYqZDRElQsioS+FBBTKL2En8oYv0ZizRVJxCpWcSsxSOm6
-         29wI07ZfCm/UcsVq+9b4n8lrcJhMb+9zYJ9d8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jzngKKeDmhuGUWHOHaofYFCxiGaXfxvhj2odfZ+XkU0=;
-        b=bVjd+zjtMLtTsTkC7+If8ArzeZFUOLxf8FK5NmIOIuMTAWSEZrbQhzU0S3WPdPdeiI
-         +Dw7IaDA7UI7DamRQ8Un7j0hiIkOVooeZdslkE+or9fRlWhD5RF5OriZ4wfWVXnwYXTD
-         siz8PUGt0dSYDmPdoQgS8zXHAMnMoRYYP5dy9gRhnWl2aJFxro4N2A1/Bjh9a4muD1tI
-         mdoy31LiBgGpEVIaLOgZYZvPI1KTGxp25XtGke53hmS9mxxYPO0ncs9xIlafM1K/SqWY
-         f2zDdzzP/Tiwlrq5/4xeIRzyj4/gsVFeVGz0j3pHUSLAJMVceJmM4WrBqEgYiW4N++7p
-         YWNg==
-X-Gm-Message-State: ABuFfoiE9gbpcBZ5uP5rbS3YjPtg+F8EHxW35zSEr0FHTgdHeMsfniDv
-        s/f37m/YMMByqXQMm1t25D5pMwbRqp+xKpoaf0meWjIiE4M=
-X-Google-Smtp-Source: ACcGV63UroOjPYGEL03Qs7LNfkmfUsv4zkMv3zT+GqaG6ZRklS8HVrjITc69kdbiqvfk3h4txYpc0izDY8GhkeliLrk=
-X-Received: by 2002:a50:b128:: with SMTP id k37-v6mr1579632edd.183.1539249647607;
- Thu, 11 Oct 2018 02:20:47 -0700 (PDT)
+        id S1727132AbeJKQtj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 12:49:39 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:42877 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbeJKQti (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 12:49:38 -0400
+Received: from [192.168.2.201] ([92.28.142.68])
+        by smtp.talktalk.net with SMTP
+        id AXBXgyXUiVlGZAXBXgSUy0; Thu, 11 Oct 2018 10:23:12 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1539249792;
+        bh=BdBJEv4sQ1orY26rbrdEeoXTMUXCtsgEIlgw6n0aIEY=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=dthgENIsy/NSj0wS7LfOeRvEYVpd73VKdT3EtzVMhJN5HSxMJogV4KOYL5aPIcFaK
+         hwUk7i9XPVVIpuyHbRl2Ju4uTnJCvqKEHja+JvKKfBEuqbv4w47IWpMPGMdSDOeN0+
+         VYA4Rdy+MIOvMsJGBWoWi/jUvX1wvz+nv4Olovlw=
+X-Originating-IP: [92.28.142.68]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
+ a=UGDAwvN9cmeZh0o4udnnNw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=PTeFIYmOIKF4yK0wqroA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] revert & cherry-pick: run git gc --auto
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20181010193557.19052-1-avarab@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <20f33df8-7ba8-af26-e0c8-16152345c85b@talktalk.net>
+Date:   Thu, 11 Oct 2018 10:23:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-From:   Arturas Moskvinas <arturas@uber.com>
-Date:   Thu, 11 Oct 2018 12:20:36 +0300
-Message-ID: <CAGY-PBgsG-T3JY=awszwGMpFx+jDx-a1FcV0s6vR067bSqgZaA@mail.gmail.com>
-Subject: Git wire protocol v2 fails fetching shallow changes with `pack has
- XXX unresolved deltas` on large repos with lots of tags Inbox x
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20181010193557.19052-1-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfKs0ppNZMq4VsxyKLpDHQDemJr770IfG9SRuj19pQC5pGZ9DxS0azqyYvsHfjfe2CifQ9q9kW41erydnODky+ZoRgws42GFHW6TPJEQW8rM7SWwbh3WZ
+ GeAj0a3+vrPDF/sHTLFnNmRv4DlNAgUHgq2CFbCDLtCNDzFe+/lLoeFyCJe2SAcy+tMl/mF1Y623eG0vU4ZjPHZdOPQhciIJzWY7FMFntf6AhX7I1R90634U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Ævar
 
-On large repositories with lots of tags - git wire protocol v2 fails
-to fetch shallow changes, it fails with error `pack has XXX unresolved
-deltas`. Unfortunately I didn't find easy way to reproduce it except
-cloning+fetching chromium repository, the way jenkins does.
-Reproduction steps:
-```
-$ git clone --mirror https://chromium.googlesource.com/chromium/src chromium
-Cloning into bare repository 'chromium'...
-remote: Sending approximately 12.66 GiB ...
-remote: Counting objects: 8523271, done
-remote: Finding sources: 100% (8399287/8399287)
-remote: Total 19829104 (delta 11897257), reused 19828780 (delta 11897257)
-Receiving objects: 100% (19829104/19829104), 20.45 GiB | 29.17 MiB/s, done.
-Resolving deltas: 100% (11897257/11897257), done
-$ mkdir chromium-test
-$ cd chromium-test
-$ git init
-Initialized empty Git repository in /home/arturas/.git/
-$ git -c protocol.version=2 fetch --tags file://$(pwd)/../chromium/
-+refs/heads/*:refs/remotes/origin/* --depth=1
-remote: Enumerating objects: 4614683, done.
-remote: Counting objects: 100% (4614683/4614683), done.
-remote: Compressing objects: 100% (1556691/1556691), done.
-Receiving objects: 100% (4614683/4614683), 8.29 GiB | 24.71 MiB/s, done.
-remote: Total 4614683 (delta 3470249), reused 3989191 (delta 2923800)
-Resolving deltas: 100% (3470249/3470249), done.
-From file:///home/arturas/chromium-test/../chromium
- * [new branch]                ignore/bar      -> origin/ignore/bar
- * [new branch]                ignore/foo      -> origin/ignore/foo
- * [new branch]                infra/config    -> origin/infra/config
- * [new branch]                lkgr            -> origin/lkgr
- * [new branch]                master          -> origin/master
- * [new tag]                   10.0.601.0      -> 10.0.601.0
-...
-$ git -c protocol.version=2 fetch --tags file://$(pwd)/../chromium/
-+refs/heads/*:refs/remotes/origin/* --depth=1
-remote: Enumerating objects: 642969, done.
-remote: Counting objects: 100% (588314/588314), done.
-remote: Compressing objects: 100% (240564/240564), done.
-Receiving objects: 100% (571353/571353), 967.83 MiB | 10.52 MiB/s, done.
-remote: Total 571353 (delta 372206), reused 497895 (delta 310113)
-Resolving deltas:  99% (371726/372206), completed with 5582 local objects.
-fatal: pack has 480 unresolved deltas
-fatal: index-pack failed
-$ git --version
-git version 2.19.1
-```
-No changes are needed in mirrored repository. Crash happens both with
-2.18.0 and 2.19.1 git versions. Having repository locally is not
-required but reduces test runtime, you can quite reliably reproduce
-issue when fetching over net directly from chromium.orgbypassing
-mirroring step.
+On 10/10/2018 20:35, Ævar Arnfjörð Bjarmason wrote:
+> Expand on the work started in 095c741edd ("commit: run git gc --auto
+> just before the post-commit hook", 2018-02-28) to run "gc --auto" in
+> more commands where new objects can be created.
+> 
+> The notably missing commands are now "rebase" and "stash". Both are
+> being rewritten in C, so any use of "gc --auto" there can wait for
+> that.
 
---
-Arturas Moskvinas
+If cherry-pick, revert or 'rebase -i' edit the commit message then they
+fork 'git commit' so gc --auto will be run there anyway. I wonder if it
+would be better to call 'gc --auto' from sequencer.c at the end of a
+string of successful picks, that would cover cherry-pick, 'rebase -iu'
+and revert. With 'rebase -i' it might be nice to avoid calling 'gc
+--auto' until the very end, rather than every time we stop for an edit
+but that is probably more trouble than it is worth.
+
+Best Wishes
+
+Phillip
+
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> 
+> After reading the "Users are encouraged to run this task..." paragraph
+> in the git-gc manpage I was wondering if due to gc --auto all over the
+> place now (including recently in git-commit with a patch of mine) if
+> we shouldn't change that advice.
+> 
+> I'm meaning to send some doc changes to git-gc.txt, but in the
+> meantime let's address this low-hanging fruit of running gc --auto
+> when we revert or cherry-pick commits, which can like git-commit
+> create a significant amount of loose objects.
+> 
+>  builtin/revert.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 9a66720cfc..1b20902910 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -209,6 +209,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct replay_opts opts = REPLAY_OPTS_INIT;
+>  	int res;
+> +	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+>  
+>  	if (isatty(0))
+>  		opts.edit = 1;
+> @@ -217,6 +218,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>  	res = run_sequencer(argc, argv, &opts);
+>  	if (res < 0)
+>  		die(_("revert failed"));
+> +	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+>  	return res;
+>  }
+>  
+> @@ -224,11 +226,13 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct replay_opts opts = REPLAY_OPTS_INIT;
+>  	int res;
+> +	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+>  
+>  	opts.action = REPLAY_PICK;
+>  	sequencer_init_config(&opts);
+>  	res = run_sequencer(argc, argv, &opts);
+>  	if (res < 0)
+>  		die(_("cherry-pick failed"));
+> +	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+>  	return res;
+>  }
+> 
+
