@@ -7,48 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39FEE1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 21:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D29F71F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 21:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbeJLErD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 00:47:03 -0400
-Received: from mail-io1-f74.google.com ([209.85.166.74]:33836 "EHLO
-        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbeJLErD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 00:47:03 -0400
-Received: by mail-io1-f74.google.com with SMTP id y3-v6so9195454iob.1
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 14:17:58 -0700 (PDT)
+        id S1726798AbeJLErF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 00:47:05 -0400
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:47925 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726210AbeJLErF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 00:47:05 -0400
+Received: by mail-pg1-f201.google.com with SMTP id o18-v6so7559717pgv.14
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 14:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=dme8qhhcnqeTIjMFt2ETKNBE+mclOGW530yf5DU2+Ec=;
-        b=gt61NAzpytx/Wb1Jlnl3PeeevePuYTVAcgv9xfTOMq7r0pDkRYjXFE/hg3XvK+WG66
-         qGmdkcaXznDoAf5n61kzvxsuXfiygJBVtwi6uvK6SXs8IsgqUy8NylLYAs1yvEcKvHpY
-         upjiS7tEtSAPHmrcCHUJUaui1TjXkWq0rE0MawCwshuodcLMa5DvjJbFtG9L1lQCTd/G
-         zaRjV9dDCSTFbYIv8cPcuwsgdlcITtaqDhM7aAYJHQS++XloTQIeMVxxnh+NM43JyqF+
-         7x4OmNJYNF8/kzkUR5QmqsWcmrkhl6yn651yiyQ1ROnysNqY+CVMtxQyUljfzC/abW8J
-         heyA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=c4g6PS10JROHZRLjL5kGuzM/VPwtNxbm0jJv8njRjUM=;
+        b=DLbEPM4ib7vHXYrCuEYVDXkJ707iRsBzU2mBA01xo2mVuf3ztB4kYTBwpk0MgZFHbg
+         CmUSlz9jb8ePJDmU8zUpRsfYzfiFpx7rehgxAKwLrTW7bnOjHo+oqeWBm5vYk762SK+X
+         5WqjvN/dIvsgZyC6EGdYg67sR4uH0+Ji1sR+Ctt1FEVZbD1pYO2znM3+a3UThz9wUTZ/
+         hbUMz407Ll1plcf5UPNR4446mBD5kL8sANSW0WsWLzVwQ3W/et4PQQ1EVAxYn5tDHp9j
+         zHODUay3Mt4szOC7rgL91L1GAlrb00hIj8n99piLzQW8c4r/MKu3pmWvCNTF6e8Ap/3e
+         ZTIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=dme8qhhcnqeTIjMFt2ETKNBE+mclOGW530yf5DU2+Ec=;
-        b=N3dCY8iEgCMsV1N7lkXzPvYLnWCwx5+ooUpLjZI1fITaM4c47N7TRZFO+QKbaWea27
-         4nnFIVyTLUhUTyvOqUSHqctx9wC3NJRonCw9ab7KexP/xktAnkMyZHUcTKRYoDEO+z9u
-         fC+5/0L6esGpbhSBJuoxPHze1NGEQYNH8/or28sZa9wt11XZa21gM0+ZLmSeUPSk1uZI
-         LCfepZqFVBFnEcGLco03CXe9xuj1zx1LMCrJj1GJpv5p3krdsA9u0fLNXO8W2I4JZUER
-         18NrGa/vvrw2RWUfOLULoc65WU8GvBGddxG2qmPo0AGWM/cPtBTFklEjCmrGvY9BWRuO
-         mbvQ==
-X-Gm-Message-State: ABuFfojK3i3yrXj9aPB6IaOAcosdrv4Q2iuuHrXvNUJzl1KCljr03CIB
-        Y5EnCpiNhPjh/8MfQU+v6FhdbEUIrJh4RsW4s5vLKlB3c5XQR1qMXhuMEiZWIIyKl2A4EeaHdox
-        hcBWggUzPXkw6mrD00TzFFdECXks3qXSrvDIz+19oDvrcEWWzrsWO+vYq72M+
-X-Google-Smtp-Source: ACcGV60YNdBnB7UJyziWBvIjfP8dhJRFfFWy2l/tcoQ1aFzTQIrzggMwT3Ctq4nDUKumY9uAC7sxK7+kQHTY
-X-Received: by 2002:a05:660c:145:: with SMTP id r5mr2949877itk.25.1539292678054;
- Thu, 11 Oct 2018 14:17:58 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 14:17:35 -0700
-Message-Id: <20181011211754.31369-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=c4g6PS10JROHZRLjL5kGuzM/VPwtNxbm0jJv8njRjUM=;
+        b=tMg3sJq4Xeg76sc9MQT/9G7yB40mcgYWZrTEomFadclL0QnTI5EHn2WoICAqYJNi/I
+         Vvm2fiO3S3p7obugnYgM0gJ6u/hqwZUkDZrVT+HNA6MdK+OzligSfgO38qFXQnrTQRYU
+         O2ipfxWZJw8UoXGvoWeRe/rsSxwCQIY/2QBExaXPQZ+Cp/3P5/7WACcgJOaM2Wz+tsoV
+         eFIDJpzjpJ58hwdrG21HO7Gj+iBzuTczpk0lgW+Wt48XCOIuhmhd2A6p2DPZ10ZHMt6y
+         dgJcwRTLxnV1VDBAcBUmLxQlvUNqO9JJDq3D4c8BfDDaNhBFsj3+Y17fsBgxUVFoVd+4
+         rgbw==
+X-Gm-Message-State: ABuFfojUGf71ocr/LLrxF8XqwUw2BKiCJWKwi5PzMLiay85YFSQLO9Nv
+        iQF2MlLSzHidDsa9ql3xuEUXOX7E2yN+SqRANB4hAL+B81QiDMcIqPTUwlzxZKngiuQFzF3LfFp
+        cFLATg5GStEhjK76tmIHOM9MQRLEra4VmFa3nLKvKbzYi72XzQyjqfAPhqbnq
+X-Google-Smtp-Source: ACcGV61AKldR8kvoO+ejMF3PESwzRGm7gUZSNAYPmON/Zzs5WmgY3zB2yGx3+vqaMs7+Zez0d3qQcR2cmGp7
+X-Received: by 2002:a65:4888:: with SMTP id n8-v6mr1647789pgs.15.1539292680154;
+ Thu, 11 Oct 2018 14:18:00 -0700 (PDT)
+Date:   Thu, 11 Oct 2018 14:17:36 -0700
+In-Reply-To: <20181011211754.31369-1-sbeller@google.com>
+Message-Id: <20181011211754.31369-2-sbeller@google.com>
 Mime-Version: 1.0
+References: <20181011211754.31369-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [RFC PATCH 00/19] Bring more repository handles into our code base
+Subject: [PATCH 01/19] sha1_file: allow read_object to read objects in
+ arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
@@ -58,154 +63,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This applies on nd/the-index (b3c7eef9b05) and is the logical continuation of
-the object store series, which I sent over the last year.
+Allow read_object (a file local functon in sha1_file) to
+handle arbitrary repositories by passing the repository down
+to oid_object_info_extended.
 
-The previous series did take a very slow and pedantic approach,
-using a #define trick, see cfc62fc98c for details, but it turns out,
-that it doesn't work:
-   When changing the signature of widely used functions, it burdens the
-   maintainer in resolving the semantic conflicts.
-   
-   In the orginal approach this was called a feature, as then we can ensure
-   that not bugs creep into the code base during the merge window (while such
-   a refactoring series wanders from pu to master). It turns out this
-   was not well received and was just burdensome.
-   
-   The #define trick doesn't buy us much to begin with when dealing with
-   non-merge-conflicts.  For example, see deref_tag at tag.c:68, which got
-   the repository argument in 286d258d4f (tag.c: allow deref_tag to handle
-   arbitrary repositories, 2018-06-28) but lost its property of working on any
-   repository while 8c4cc32689 (tag: don't warn if target is missing but
-   promised, 2018-07-12) was in flight simultaneously.
-   
-   Another example of failure of this approach is seen in patch 5, which
-   shows that the pedantry was missed.
-        
-This series takes another approach as it doesn't change the signature of
-functions, but introduces new functions that can deal with arbitrary 
-repositories, keeping the old function signature around using a shallow wrapper.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ sha1-file.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Additionally each patch adds a semantic patch, that would port from the old to
-the new function. These semantic patches are all applied in the very last patch,
-but we could omit applying the last patch if it causes too many merge conflicts
-and trickl in the semantic patches over time when there are no merge conflicts.
-
-
-The original goal of all these refactoring series was to remove add_submodule_odb 
-in submodule.c, which was partially reached with this series. I'll investigate the
-remaining calls in another series, but it shows we're close to be done with these
-large refactorings as far as I am concerned.
-
-Thanks,
-Stefan
-
-Stefan Beller (19):
-  sha1_file: allow read_object to read objects in arbitrary repositories
-  packfile: allow has_packed_and_bad to handle arbitrary repositories
-  object-store: allow read_object_file_extended to read from arbitrary
-    repositories
-  object-store: prepare read_object_file to deal with arbitrary
-    repositories
-  object: parse_object to honor its repository argument
-  commit: allow parse_commit* to handle arbitrary repositories
-  commit.c: allow paint_down_to_common to handle arbitrary repositories
-  commit.c: allow merge_bases_many to handle arbitrary repositories
-  commit.c: allow remove_redundant to handle arbitrary repositories
-  commit: allow get_merge_bases_many_0 to handle arbitrary repositories
-  commit: prepare get_merge_bases to handle arbitrary repositories
-  commit: prepare get_commit_buffer to handle arbitrary repositories
-  commit: prepare in_merge_bases[_many] to handle arbitrary repositories
-  commit: prepare repo_unuse_commit_buffer to handle arbitrary
-    repositories
-  commit: prepare logmsg_reencode to handle arbitrary repositories
-  pretty: prepare format_commit_message to handle arbitrary repositories
-  submodule: use submodule repos for object lookup
-  submodule: don't add submodule as odb for push
-  Apply semantic patches from previous patches
-
- apply.c                                 |   6 +-
- archive.c                               |   5 +-
- bisect.c                                |   5 +-
- blame.c                                 |  15 +--
- builtin/am.c                            |   2 +-
- builtin/blame.c                         |   4 +-
- builtin/cat-file.c                      |  21 +++--
- builtin/checkout.c                      |   4 +-
- builtin/commit.c                        |  13 ++-
- builtin/describe.c                      |   4 +-
- builtin/difftool.c                      |   3 +-
- builtin/fast-export.c                   |   7 +-
- builtin/fmt-merge-msg.c                 |   8 +-
- builtin/grep.c                          |   2 +-
- builtin/index-pack.c                    |   8 +-
- builtin/log.c                           |   4 +-
- builtin/merge-base.c                    |   2 +-
- builtin/merge-tree.c                    |   9 +-
- builtin/mktag.c                         |   3 +-
- builtin/name-rev.c                      |   2 +-
- builtin/notes.c                         |  12 ++-
- builtin/pack-objects.c                  |  22 +++--
- builtin/reflog.c                        |   5 +-
- builtin/replace.c                       |   2 +-
- builtin/shortlog.c                      |   5 +-
- builtin/show-branch.c                   |   4 +-
- builtin/tag.c                           |   4 +-
- builtin/unpack-file.c                   |   2 +-
- builtin/unpack-objects.c                |   3 +-
- builtin/verify-commit.c                 |   2 +-
- bundle.c                                |   2 +-
- combine-diff.c                          |   2 +-
- commit-graph.c                          |   8 +-
- commit.c                                | 120 ++++++++++++++----------
- commit.h                                |  67 ++++++++++---
- config.c                                |   2 +-
- contrib/coccinelle/the_repository.cocci | 114 ++++++++++++++++++++++
- diff.c                                  |   3 +-
- dir.c                                   |   2 +-
- entry.c                                 |   3 +-
- fast-import.c                           |   7 +-
- fsck.c                                  |   9 +-
- grep.c                                  |   3 +-
- http-push.c                             |   3 +-
- log-tree.c                              |   3 +-
- mailmap.c                               |   2 +-
- match-trees.c                           |   4 +-
- merge-blobs.c                           |   6 +-
- merge-recursive.c                       |  13 +--
- negotiator/default.c                    |   6 +-
- negotiator/skipping.c                   |   2 +-
- notes-cache.c                           |   5 +-
- notes-merge.c                           |   4 +-
- notes-utils.c                           |   2 +-
- notes.c                                 |  10 +-
- object-store.h                          |  13 ++-
- object.c                                |   2 +-
- packfile.c                              |   5 +-
- packfile.h                              |   2 +-
- pretty.c                                |  33 ++++---
- pretty.h                                |   7 +-
- read-cache.c                            |   5 +-
- remote-testsvn.c                        |   4 +-
- remote.c                                |   2 +-
- rerere.c                                |   5 +-
- revision.c                              |  12 +--
- sequencer.c                             |  55 ++++++-----
- sha1-file.c                             |  22 +++--
- sha1-name.c                             |   9 +-
- shallow.c                               |   4 +-
- streaming.c                             |   2 +-
- submodule-config.c                      |   3 +-
- submodule.c                             |  51 +++++++---
- t/helper/test-revision-walking.c        |   3 +-
- tag.c                                   |   5 +-
- tree-walk.c                             |   6 +-
- tree.c                                  |   5 +-
- walker.c                                |   2 +-
- xdiff-interface.c                       |   2 +-
- 79 files changed, 571 insertions(+), 278 deletions(-)
- create mode 100644 contrib/coccinelle/the_repository.cocci
-
+diff --git a/sha1-file.c b/sha1-file.c
+index 308d5e20e2..647068a836 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1361,7 +1361,9 @@ int oid_object_info(struct repository *r,
+ 	return type;
+ }
+ 
+-static void *read_object(const unsigned char *sha1, enum object_type *type,
++static void *read_object(struct repository *r,
++			 const unsigned char *sha1,
++			 enum object_type *type,
+ 			 unsigned long *size)
+ {
+ 	struct object_id oid;
+@@ -1373,7 +1375,7 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ 
+ 	hashcpy(oid.hash, sha1);
+ 
+-	if (oid_object_info_extended(the_repository, &oid, &oi, 0) < 0)
++	if (oid_object_info_extended(r, &oid, &oi, 0) < 0)
+ 		return NULL;
+ 	return content;
+ }
+@@ -1414,7 +1416,7 @@ void *read_object_file_extended(const struct object_id *oid,
+ 		lookup_replace_object(the_repository, oid) : oid;
+ 
+ 	errno = 0;
+-	data = read_object(repl->hash, type, size);
++	data = read_object(the_repository, repl->hash, type, size);
+ 	if (data)
+ 		return data;
+ 
+@@ -1755,7 +1757,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 
+ 	if (has_loose_object(oid))
+ 		return 0;
+-	buf = read_object(oid->hash, &type, &len);
++	buf = read_object(the_repository, oid->hash, &type, &len);
+ 	if (!buf)
+ 		return error(_("cannot read sha1_file for %s"), oid_to_hex(oid));
+ 	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), len) + 1;
 -- 
 2.19.0
 
