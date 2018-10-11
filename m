@@ -6,83 +6,93 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5310C1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 08:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 657A41F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 08:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727769AbeJKPtD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 11:49:03 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43003 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbeJKPtD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 11:49:03 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g15-v6so8600963wru.9
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 01:22:51 -0700 (PDT)
+        id S1727966AbeJKPvR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 11:51:17 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51799 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726893AbeJKPvR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 11:51:17 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 143-v6so7993500wmf.1
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 01:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WfimVTVH1nvGtXHXtutdyH0RzpAiFz3w5IXhM4t03lY=;
-        b=bASJ85ChtSl5VEE7XLUIYKutx8x+AgiRplsUVultQEkXojq5RrVLbQu32T2iRG5gRL
-         jc5Bg3zGcRap3fjUmvrQ5o7EMxzr5t4YAtkku833G+zeGHGNeC89/tZYQDapqXHRXiFA
-         eYkxD2HQkU/dzOeMg2icwNjiLVR6e0mnyfPA63d0+1u2DVx7Ma2r2+rQ+ceuH6fsgPbp
-         tCZC/izW9CJdi5EUnajn8c0YxAdQNwW8dBLuZutUvh5BSGlau6emCvvSNZuTxOIaXVEl
-         QyECi35Dl4G5kS5f0ZEuBfY5Q+qKfZBlsnoSDQV6O1TDMab6K60JrVbldpnioTWTStn9
-         PZgA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=py1zbIaq5wqMeIpYhmwUWC839mb+/V97AeTvSoVs/gg=;
+        b=piZOjzV8jTTPt5WwbsSH8+rM6fqVx7sADtuNU6CoUB42w9tiOraVqiQVsVFp7Xdksv
+         kiVVRR1YTAsANgIrFXFt+cNw/K0IS0Ye6yeMjHnuB3400YcuBL9YPqMGypC2PFLTxgEZ
+         P2o40FCkqpHvXYV0Lk3/Rc6e9qIIfsR3y6al9gwoUuFttuywxtLmN9RMVOfSDf9JvSIF
+         Js58Kbw1saiUwgDRaLpW7v1aesPilTfBz5gA6HidkpTAWb978HVdHzRjo76QPYx+M9P4
+         wytjHcDNP95cFVavZUoBeMgDSvV43K5nLC3XeanqSk6g3q5Wuo7WgTDabpxVWu6rLFPx
+         KIig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WfimVTVH1nvGtXHXtutdyH0RzpAiFz3w5IXhM4t03lY=;
-        b=SKLdOTrP/F5Un8GyzcBoq4Z+futxJHolQCN/IXnVZoRFlkAZAk74yQ+Wl8Tjh03lBk
-         Ga4f2SQIKDkWv/G3xrTdYWZSGc93iMroXdAJ4iuQVIQZ1mR3Tosz1wSunYInf0f8d8Mf
-         IpCPpS3mQa/tcd6POTQED8rtPq5sEG29g3Tr73gaUImDBZYifyu3ZnXC0scfvaa5VidG
-         yGzF2Pau/6+l9Qv/21tknJE2KDrbTUX01P6VNkxyry9zm6rX5jK5LlMCyObjWR6JTKrW
-         9S9SsYRjBVqxstQ+QEaWWMzKjh+sHiIdw1SozQfZ+F+0/3Z+RG8S/9SN7rNTALorRx/+
-         RwEQ==
-X-Gm-Message-State: ABuFfoijMzY/0V2mopOBH8azDIYrHxVsQ7tk7LmdUDxRoeWqy5utEBuZ
-        mSf0koIZdvhqFgsxfpRYRBc=
-X-Google-Smtp-Source: ACcGV61op6tHizuWZ4p81rHSzPa3lXJenyfSxW2YU4Gnx28Qz9g+0jU74dowPXU709yqRuIJRLwWAA==
-X-Received: by 2002:a5d:4b84:: with SMTP id b4-v6mr634383wrt.168.1539246170168;
-        Thu, 11 Oct 2018 01:22:50 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=py1zbIaq5wqMeIpYhmwUWC839mb+/V97AeTvSoVs/gg=;
+        b=ZwxoE0ipYjsSqPHFRVqXa4nXUvCmixpsCNJFnNYrbWmcG9gTsZswq0ZkmL5ikYwgSs
+         V3GHh6+BP080uOnuve41urUzVb3+nShYSyjeq9ITVDv4HEDSFt0G9ai6dMSW9Oa80LGQ
+         Ax0TkAg3GNYoSvdAxp0oAZSuVRwQoCMyOfyT70hZPZwDK4oypvMDVuji+4brS+/9wHfP
+         zcT26ZloWgJuf2U5sl6bs1keitFXOTqNvBr5L+e0ZoUbztFWgjw7DyMFPN/q2KAoTT+2
+         Ny1zmrQfqcUZ35CnvOy2rGREqsjGTVulM74+WI8zEfDyAbs3a4C1a7ydgNHO+wEQ9f96
+         4JtA==
+X-Gm-Message-State: ABuFfojUUUO7VyksPwAR0HUNMtyZ6rdVgQCkTOhpjIAnGKkGowncyxGi
+        UVVIuGlVpYinNge7iGYpOBs=
+X-Google-Smtp-Source: ACcGV60tkdz6nDFHprAU/9rDgnwJnPEh7PSpCaLbxHzzbX8PCVekWzyOzCCH7/t8xiYDOdnLOz0KEQ==
+X-Received: by 2002:a1c:2846:: with SMTP id o67-v6mr775909wmo.60.1539246303935;
+        Thu, 11 Oct 2018 01:25:03 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p1-v6sm19430388wrs.40.2018.10.11.01.22.49
+        by smtp.gmail.com with ESMTPSA id k63-v6sm18404308wmd.46.2018.10.11.01.25.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 01:22:49 -0700 (PDT)
+        Thu, 11 Oct 2018 01:25:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/3] send-email: only consider lines containing @ or <> for automatic Cc'ing
-References: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
-        <20181010111351.5045-3-rv@rasmusvillemoes.dk>
-        <871s8yez74.fsf@evledraar.gmail.com>
-        <7b03da07-4301-1b42-b8a2-a29e4e1f80d0@rasmusvillemoes.dk>
-        <xmqqk1mpggpq.fsf@gitster-ct.c.googlers.com>
-        <f5c401a6-f329-1076-ab4b-2f52915047bf@rasmusvillemoes.dk>
-Date:   Thu, 11 Oct 2018 17:22:48 +0900
-In-Reply-To: <f5c401a6-f329-1076-ab4b-2f52915047bf@rasmusvillemoes.dk> (Rasmus
-        Villemoes's message of "Thu, 11 Oct 2018 09:06:10 +0200")
-Message-ID: <xmqqr2gwgaef.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Lucas De Marchi <lucas.demarchi@intel.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        lucas.de.marchi@gmail.com
+Subject: Re: [PATCH] range-diff: allow to diff files regardless submodule
+References: <20181010150916.4295-1-lucas.demarchi@intel.com>
+        <87in29dj55.fsf@evledraar.gmail.com>
+Date:   Thu, 11 Oct 2018 17:25:02 +0900
+In-Reply-To: <87in29dj55.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 11 Oct 2018 09:42:14 +0200")
+Message-ID: <xmqqmurkgaap.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> So, it seems you're ok with this tightening, but some comment on the
-> non-interactive use case should be made in the commit log? Or am I
-> misunderstanding?
+> On Wed, Oct 10 2018, Lucas De Marchi wrote:
+>
+>> Do like it's done in grep so mode doesn't end up as
+>> 0160000, which means range-diff doesn't work if one has
+>> "submodule.diff = log" in the configuration. Without this
+>> while using range-diff I only get a
+>>
+>>     Submodule a 0000000...0000000 (new submodule)
+>
+> I'm not familiar enough with this to tell what the real problem is
+> that's being solved from the commit message, but if it means that now
+> range-diff works in some configuration, presumably that can be reduced
+> to a simple set of commands that didn't work before but now does, and
+> therefore a test in t/t3206-range-diff.sh.
 
-I do not think we need any immediate action on this step.  I was
-just wondering if we want two classes of "I am not running you
-interactively, so assume I said 'yes' when you need to ask me any
-confirmation on X and Y" and "I am not running you interactively,
-so assume I said 'no' for safety when you need to ask me any
-confirmation on Z" supported in the future.  Lines with both @ and
-<> fall into the first class, while lines with only <> fall into the
-second camp, I would guess.
+Yes, I agree on both counts (i.e. it was totally unclear what
+problem is being solved and what the root cause of the problem is,
+and we would want a new test to protect this "fix" from getting
+broken in the future.
 
+Thanks.
