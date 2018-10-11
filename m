@@ -2,121 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_ABUSE_SURBL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FCB21F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 03:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEFA21F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 06:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727245AbeJKKpl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 06:45:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36670 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726247AbeJKKpl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 06:45:41 -0400
-Received: (qmail 24516 invoked by uid 109); 11 Oct 2018 03:20:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Oct 2018 03:20:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25628 invoked by uid 111); 11 Oct 2018 03:19:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Oct 2018 23:19:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Oct 2018 23:20:28 -0400
-Date:   Wed, 10 Oct 2018 23:20:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PoC -- do not apply 3/3] test-tree-bitmap: replace ewah with
- custom rle encoding
-Message-ID: <20181011032027.GC25067@sigill.intra.peff.net>
-References: <20181009231250.GA19342@sigill.intra.peff.net>
- <20181009231441.GC23730@sigill.intra.peff.net>
- <xmqqr2gyobw4.fsf@gitster-ct.c.googlers.com>
+        id S1728091AbeJKNcO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 09:32:14 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43227 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727080AbeJKNcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 09:32:13 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n1-v6so8178824wrt.10
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 23:06:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=L9BrhCtHjmMp4r610p6stKp3BXB7Zb4LFtkxukLo4i4=;
+        b=D1V6w5HbWUunmkbZiLHK86syw7ga1oO/b6RARYJVPEw/RYyrpWgAVUgdboYsQCFUxN
+         /rusJI3mm0P23aB5fF779FDWkBZHTOXGutXMr0AjLVBTieVi9bOuw8mAUaE89bEFsYZZ
+         r13wBb2kAbNfCGHuFogMmSFR/tWevvRe3b+L6IzS5dg30a+LV5//R6canDA7b6LVlEXx
+         AblYwR2WR/hcd2CbtP0q7aYWDJU6gQ8EzYerWA8jSOpKsITooHwRf799pYPoMuKWjqWb
+         W+RrdJSG5vuRzZzdVtv9aCb6BUIuRRhUYpKoIf/obp+MbOJpZku0VmOiprTHZlph7dsN
+         r93A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=L9BrhCtHjmMp4r610p6stKp3BXB7Zb4LFtkxukLo4i4=;
+        b=Vibkq6MLq9bSx5Orp2Sd7y4NCI2rWjXoDyqNv2S3pgF+r24NoppqozFHRBjrBFdu1x
+         d8wM+66IbgaqxJbOuL/24leToK0RM2Clb2jnaMcqYw1I12XNF64Xhu6Iw+4zUHeiZq4m
+         YJwOmRzbmHX1a0FORUI+gzUFW74Yi/VrqmOR7ZzX8cYymzyRFMBgUe0ODZbIF6OXccBH
+         Rx6aNX8/lPQAXZAEdSNPNeq3ylOx2Yy/3Umf7cHPzHAI31E1kSaTPE7EB9yfjPCo6DfB
+         mQqQOBkbrZOXXUJBivNrAomTtsa8V5qFuCTtrCzCSy0iIMMZaICYomaNhd6H/1ec/4AQ
+         QTVg==
+X-Gm-Message-State: ABuFfohe/V7zUpw7eZO+gVH11J17dUjS703LoGpmFzHqkA4S7alZtcMe
+        haI00OewPT7wA4VpCUqqh+GQIuo+msw=
+X-Google-Smtp-Source: ACcGV60vHvv87NepOrZKo7g8pheXi0zPtnbIunBKsy4RuSLl68vr04QdTjClXhTjZZpxGNsLd42fjA==
+X-Received: by 2002:a5d:69c2:: with SMTP id s2-v6mr196748wrw.232.1539237989012;
+        Wed, 10 Oct 2018 23:06:29 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l67-v6sm47143792wma.20.2018.10.10.23.06.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 23:06:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/3] send-email: only consider lines containing @ or <> for automatic Cc'ing
+References: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
+        <20181010111351.5045-3-rv@rasmusvillemoes.dk>
+        <871s8yez74.fsf@evledraar.gmail.com>
+        <7b03da07-4301-1b42-b8a2-a29e4e1f80d0@rasmusvillemoes.dk>
+Date:   Thu, 11 Oct 2018 15:06:25 +0900
+In-Reply-To: <7b03da07-4301-1b42-b8a2-a29e4e1f80d0@rasmusvillemoes.dk> (Rasmus
+        Villemoes's message of "Wed, 10 Oct 2018 15:29:56 +0200")
+Message-ID: <xmqqk1mpggpq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr2gyobw4.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 10, 2018 at 09:58:51AM +0900, Junio C Hamano wrote:
+Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
 
-> > +static void bitmap_to_rle(struct strbuf *out, struct bitmap *bitmap)
-> > +{
-> > +	int curval = 0; /* count zeroes, then ones, then zeroes, etc */
-> > +	size_t run = 0;
-> > +	size_t word;
-> > +	size_t orig_len = out->len;
-> > +
-> > +	for (word = 0; word < bitmap->word_alloc; word++) {
-> > +		int bit;
-> > +
-> > +		for (bit = 0; bit < BITS_IN_EWORD; bit++) {
-> > +			int val = !!(bitmap->words[word] & (((eword_t)1) << bit));
-> > +			if (val == curval)
-> > +				run++;
-> > +			else {
-> > +				strbuf_add_varint(out, run);
-> > +				curval = 1 - curval; /* flip 0/1 */
-> > +				run = 1;
-> > +			}
-> > +		}
-> 
-> OK.  I find it a bit disturbing to see that the loop knows a bit too
-> much about how "struct bitmap" is implemented, but that is a complaint
-> against the bitmap API, not this new user of the API.
+> I considered that (and also had a version where I simply insisted on a @
+> being present), but that means the user no longer would get prompted
+> about the cases where the address was just slightly obfuscated, e.g. the
+>
+> Cc: John Doe <john at doe.com>
+>
+> cases, which would be a regression, I guess. So I do want to pass such
+> cases through, and have them be dealt with when process_address_list
+> gets called.
 
-Heh, again, this is not really meant to be production code. I'm not at
-all happy about inventing a new compressed bitmap format here, and I'd
-want to investigate the state of the art a bit more. In particular, the
-worst case here is quite bad, and I wonder if there are formats that can
-select the best encoding when writing a bitmap (naive RLE when it's
-good, something else other times).
+We are only tightening with this patch, and we were passing any
+random things through with the original code anyway, so without
+[PATCH 3/3], this step must be making it only better, but I have to
+wonder one thing.
 
-I also suspect part of why this does better is that other formats are
-optimized less for our case. We really don't care about setting or
-looking at a few bits part way through a bitmap. Our bitmaps are small
-enough that we don't mind streaming through a whole one. It's just that
-we have so _many_ of them that we want to be meticulous about wasted
-bytes.
+You keep saying "get prompted" but are we sure we always stop and
+ask (and preferrably---fail and abort when the end user is not
+available at the terminal to interact) when we have such a
+questionable address?
 
-Whatever format we choose, I think it would become part of the bitmap.c
-file, and internal details would be OK to access there. I just put it
-here to keep the patch simple.
-
-> We do not try to handle the case where bitmap has bits that is not
-> multiple of BITS_IN_EWORD and instead pretend that size of such a
-> bitmap can be rounded up, because we ignore trailing 0-bit anyway,
-> and we know the "struct bitmap" would pad with 0-bit at the tail?
-
-Right. We do not know the "real" number of zero bits at all. It's just
-assumed that there are infinite zeroes trailing off the end (and this is
-how "struct bitmap" works, since it is the one that does not bother to
-keep a separate size pointer).
-
-> > +	/*
-> > +	 * ugh, varint does not seem to have a way to prevent reading past
-> > +	 * the end of the buffer. We'll do a length check after each one,
-> > +	 * so the worst case is bounded.
-> > +	 */
-> 
-> Sorry about that :-).
-
-:) We may want to address that. I know we did some hardening about
-reading off the end of .pack and .idx files. But it seems like any user
-of decode_varint() may read up to 16 bytes past the end of a buffer.
-
-We seem to only use them for the $GIT_DIR/index, though. Anybody with a
-"struct hashfile" result at least has a 20-byte trailer we can
-accidentally read from. But I wouldn't be surprised if there's a way to
-trick it in practice.
-
--Peff
