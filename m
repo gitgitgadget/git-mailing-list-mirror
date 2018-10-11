@@ -7,59 +7,71 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA371F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 22:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C828B1F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 22:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725902AbeJLFv0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 01:51:26 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:38927 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725763AbeJLFv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 01:51:26 -0400
-Received: by mail-pg1-f202.google.com with SMTP id i189-v6so7684501pge.6
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:22:08 -0700 (PDT)
+        id S1727006AbeJLGBd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 02:01:33 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43679 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726854AbeJLGBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 02:01:33 -0400
+Received: by mail-ed1-f68.google.com with SMTP id y20-v6so9736837eds.10
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=8UK0cE6AnIBmpY93IJqmhLvWY3mHUto/xY7aaVXkOBs=;
-        b=n1c9KMtXGUlfCSAPwwNNDSlbHcNeS0KVFuP5jZCv4yOR3Z06/Ai5MMW1dTsIAR5oHc
-         xuT2tn7tDFXmqmn50+o//Gz+NdkcWW+2BG2vzU8UD3jUNfwBoB17a/172W9C9oybGNpf
-         YHIFJqWL+Gjpox/RuMgX+uhTMbbm1JILCedlVLiL5ARRWUcI1dzxDecl7W8vKXd+ghcr
-         LL8o4Zq59S2zhfYToqVBPYq3upFA5JGU7agIUyf5KdtIqYGKvXo9hrCx8OS+kmYfubkf
-         OGp32jxpiVzGktXmE52jcpQ/UNIUGKfC829EEmuTYbM/28Pt6KSi8u1e2KrRQAEU4vv0
-         xhGg==
+        bh=l8ORR2xoHNf7/2sIXVTVEfdU3kOHTHc++FgGodSvmzw=;
+        b=n0zdtkuVysEZmtyISmC21zutFxNc/tj1CNh85ECWpUZkF51tDcErNWWnsjnGOMjmRZ
+         zq3tAjJ0nDIuLmqvqMvbayS6SVUBOa45s/hDqEQDCG17cl2CCqt923aqWMKZaVGufkx3
+         yB+tVBAb8xwsYxHP1+x3MI6HO62K6OUSKSE9LeS8b6vTv5Ogscl65Cto8ZVJyusV1P88
+         17jqyDt9F/y/RByIEv0BJpBgWprDJBVIILGwmh0F1UHCMEh/cNt/wDj2VsvmbloF5lkc
+         dJvSl+Dch8NcbjkavpGu0ZHujXys84w69Q7lIpI4sBvpRUKe6b3h4Z86hMC1EqfQltpJ
+         wfmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=8UK0cE6AnIBmpY93IJqmhLvWY3mHUto/xY7aaVXkOBs=;
-        b=bSaU6/be2gdhwXd1JeAASVwtsMdm3MaI4pk7Wmcgf0B6HDcop20Sl8xk2ee63RNOgi
-         TlGM9YxolgrxxeDMWHmbxq1KhHDJ9jz4Pugft+QDSzaVdzua1Tr5pCnw0DsTPWCG1V2I
-         0rwmujugCYyhtODAJBT6u/FRO/alCijmtsmTCpP8HUgcqe+SSpZMJm3rRJ+bmjrqwnCQ
-         2uvPrzvDVl3NGaZI8jhosCj0sFKPl9UsN/TbQOnNyd05yqW404/F+t37XUJJ9RYzZh0I
-         P0iNET0UJel8k0f9CCAQxNEDT+y5F13UxU1GAaT5df6j6ziK3xZnMWYaoVHmROZHc/jR
-         57Kw==
-X-Gm-Message-State: ABuFfohHx4L0XHvfowz4pUhgnnAjLZ1dZ3FTetpRUppOH5jH7exBsFAL
-        sia3HmgLue2mXdBzUCg5yxq1UEzWWYOIqfCtaWzX
-X-Google-Smtp-Source: ACcGV62Q+QRI1Mk7INUDdKtuhPVCkbMRF+UBpB1uJOF0npplnJUsDM7j2biyHm8vOID8tgNRjY/lpisNCWd1i8Y3yS81
-X-Received: by 2002:a63:6844:: with SMTP id d65-v6mr1840296pgc.17.1539296528050;
- Thu, 11 Oct 2018 15:22:08 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 15:22:04 -0700
-In-Reply-To: <20181011211754.31369-17-sbeller@google.com>
-Message-Id: <20181011222204.187928-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181011211754.31369-17-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH 16/19] pretty: prepare format_commit_message to handle
- arbitrary repositories
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l8ORR2xoHNf7/2sIXVTVEfdU3kOHTHc++FgGodSvmzw=;
+        b=RbvhvL8h3AzEPUJdP/N6VQ4AzyYPIcgYPva/tFHg0ek3g/G+lh4gyTXtPrVjt9Z4KD
+         tlARn5Hz7sCPp1YzlKa0HQAibDLxVoPfxr2ls/NEvqbsKDPn0Cq9iz6Ze1Y38Hm53Fbr
+         kPr3CVJ6cDnnzcdy0ohNE4j6j+Bs2jydp4sjEXDswvkbHvD9GoPKD8r+4kRNbEPB4KUC
+         LiB5Ub0Mv6jB3VLaHBPgs052ERLChgvl/7GSJ5HoX4eluzkVD6paDo3Y75qeg86Sq42G
+         T3spCB6LAQH5Z22YCXzEkohyC4S6/CgyxHfrpCnYXTk95G0JloEigUaqgQEIozbUz//9
+         WZ8Q==
+X-Gm-Message-State: ABuFfogyeOTZmnwizhLIHgBTAO/w26yfvP5yGAsgs/HHyDB41uhVoxIC
+        gY/Prmf0mkD3jYPDCz6Dw2usPdadSzGu2LdYUUf8CO7uqh4=
+X-Google-Smtp-Source: ACcGV63oslHsjpFOKwQU84amlrZey0mLOJmQ0EQfRGZ2Xl4UksJ6wDEnY5+dAMvacGHZC+9HK2hF9lrVrrUdiRb3ZzE=
+X-Received: by 2002:a17:906:2da9:: with SMTP id g9-v6mr4420076eji.67.1539297132113;
+ Thu, 11 Oct 2018 15:32:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.25.v2.git.gitgitgadget@gmail.com> <pull.25.v3.git.gitgitgadget@gmail.com>
+ <020b2f50c5703e8291577b008fdfa567093c6eab.1537551564.git.gitgitgadget@gmail.com>
+In-Reply-To: <020b2f50c5703e8291577b008fdfa567093c6eab.1537551564.git.gitgitgadget@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 11 Oct 2018 15:32:01 -0700
+Message-ID: <CAGZ79kYttgMUeQk7fvXGk2+SF10PS8yqsgNH47HBQLfNqShpMQ@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] revision.c: refactor basic topo-order logic
+To:     gitgitgadget@gmail.com
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patches 6-16 are all quite straightforward, and are reviewed-by: me.
+On Fri, Sep 21, 2018 at 10:39 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+[...]
+> For the test above, I specifically selected a path that is changed
+> frequently, including by merge commits. A less-frequently-changed
+> path (such as 'README') has similar end-to-end time since we need
+> to walk the same number of commits (before determining we do not
+> have 100 hits). However, get get the benefit that the output is
+
+"get get"
