@@ -2,94 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EC9E1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 11:24:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46DDB1F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 11:25:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727370AbeJKSu5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 14:50:57 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40031 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726996AbeJKSu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 14:50:57 -0400
-Received: by mail-ed1-f65.google.com with SMTP id r1-v6so7904544edd.7
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 04:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=z+tGws3GfjXwIcFh4JlHe94GFYgDqK0b0hncFdcoOmE=;
-        b=VBWcxspRQ6brYPNKgYnGBAuoTi1DFdntMqVeNd1BWhke7oVPZhNzd3A4sLVCCXzORK
-         y47JexLQD2HcDunrwjR0RfL8GjGoDKdWxttA73rX/D4W5CPjnYX+aTpB4SHuVJC9p5vi
-         QHknWN6nmkwghSJix/pnN4oPmJhfOc+bnMzVaTUJN3nLBRqdNigIqT525nHAiAnUjbFX
-         s4v2OnGll1cDYptVHbihwgA85x22NxzFZ+s1D1DajAfOk65hnxP2NwwAdedCRjjWa55a
-         SHRRQ/9pQKpjWzWljehqP9V0fpYWMxUBINE9MdxS044dyi/DmfgZmo0gMVqvW971fJxD
-         ZRpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=z+tGws3GfjXwIcFh4JlHe94GFYgDqK0b0hncFdcoOmE=;
-        b=MKF7KmpvPHlVvMs5woE2oRJoKVG/ImU8V9zbmh+UUlLOQOMmRO/deWFsLMs7eDc/A9
-         lTsyHAo57DZxcoZum2nRICEKleVGkFcJoNy1kSXetwJZ+ZTixMTznaQGp+9enqFrT1HV
-         MKo3VFB9Mxz4xT0+/13X4qIwUh+gNMSnBMnv/MuLDoK1JqG7LAlzgBxFov0Z6OhWvus7
-         y4zt6Fh5PX9DvHkfB4ed6ZpXDbMyzaZEjVRj+fu9ENFU/TbO/W13z7a79wqwzwtqzRSi
-         blHTzTE2/4CbARWJq/GJotVgKxoCGB18huURhPprG9P/BDktRICi48KN6KFP8gyRyeZI
-         mzGw==
-X-Gm-Message-State: ABuFfoh7ujElnZrZgDMRrYGIS9dgP2mhv5aYrT27bYq0npMGahLSh8xu
-        c2h2oTQjL6F/lnzuDgYFdvE=
-X-Google-Smtp-Source: ACcGV61aS6vR2fGu6oJIIl09OtwMvnzByAMF0xyB9RdECqxN5WXe8BguS9mza115h1nDEQncztK2SA==
-X-Received: by 2002:a50:9471:: with SMTP id q46-v6mr2191553eda.70.1539257048042;
-        Thu, 11 Oct 2018 04:24:08 -0700 (PDT)
-Received: from szeder.dev (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
-        by smtp.gmail.com with ESMTPSA id y8-v6sm9907338edd.43.2018.10.11.04.24.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Oct 2018 04:24:07 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 13:24:00 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] revert & cherry-pick: run git gc --auto
-Message-ID: <20181011112400.GA19800@szeder.dev>
-References: <20181010193557.19052-1-avarab@gmail.com>
- <20f33df8-7ba8-af26-e0c8-16152345c85b@talktalk.net>
- <87ftxceqxc.fsf@evledraar.gmail.com>
- <20181011102525.GH23446@szeder.dev>
- <87efcwepqc.fsf@evledraar.gmail.com>
+        id S1726799AbeJKSw1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 14:52:27 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:58890 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbeJKSw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 14:52:26 -0400
+Received: from [192.168.2.240] ([92.28.142.68])
+        by smtp.talktalk.net with SMTP
+        id AZ5zgynVlVlGZAZ5zgSaKx; Thu, 11 Oct 2018 12:25:36 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1539257136;
+        bh=BWfWWr/3ahGfRfnfplKbVdDkk3hCGYYhTIyNXabNJsg=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=f42PsNJzvRiNc8ksjETWeP73M+rgiFzUwZZTYOvZ9cu89OOj5UunBbyTDxG8aIJPK
+         xH6UrXSxmyMPpgYVb58fOOZEpjUfbbvEzav9bc2iF01Nne5HQK7k3sxMb5k3O9SCAX
+         5pK9ezqb1mRFkG+omEbEoaPVTIupd3TTyElNy1m4=
+X-Originating-IP: [92.28.142.68]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
+ a=UGDAwvN9cmeZh0o4udnnNw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=IAWz5USDbM__wxkDbm4A:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 04/15] sequencer: refactor sequencer_add_exec_commands()
+ to work on a todo_list
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20181007195418.25752-1-alban.gruin@gmail.com>
+ <20181007195418.25752-5-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <6188911e-fd21-4c7c-885d-a15d2b46aa86@talktalk.net>
+Date:   Thu, 11 Oct 2018 12:25:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87efcwepqc.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20181007195418.25752-5-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOXV2KmWWGKKGWOikrguYPu9/PSubJw1Gdx0mbzcZZf5vW1Mj43HRGmCSNPwDyMrHqvRQowtN04bcwErwfhoZDu4IsTXYLUFxyc0o5wWEVOtZilOWwy+
+ PMp5dxox+UBaOZyOWfTISVmWEVyGnNsQ5iGtGyCwVvwMUzCZQPCDp5DuR0nYR3YU0WQElTf6yBQ5+b1ixQLto+JeNvzxmzSZeALHgWs3TuEFUbl2XLEQ+29U
+ clU2UywbG2vGjiQsY3ngjlmaH2frk05rPojlXRMEmEE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 11, 2018 at 12:34:35PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> I see we define NO_POSIX_GOODIES on Windows/MinGW, so those don't
-> demonize "gc", but then I'm confused by this which seems to imply the
-> opposite: https://github.com/Microsoft/vscode/issues/29901
+On 07/10/2018 20:54, Alban Gruin wrote:
+> This refactors sequencer_add_exec_commands() to work on a todo_list to
+> avoid redundant reads and writes to the disk.
+> 
+> sequencer_add_exec_commands() still reads the todo list from the disk,
+> as it is needed by rebase -p.  todo_list_add_exec_commands() works on a
+> todo_list structure, and reparses it at the end.
+> 
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>   sequencer.c | 56 +++++++++++++++++++++++++++++++----------------------
+>   1 file changed, 33 insertions(+), 23 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 8dda61927c..6d998f21a4 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4370,34 +4370,21 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
+>   	return 0;
+>   }
+>   
+> -/*
+> - * Add commands after pick and (series of) squash/fixup commands
+> - * in the todo list.
+> - */
+> -int sequencer_add_exec_commands(const char *commands)
+> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
+> +					const char *commands)
+>   {
+> -	const char *todo_file = rebase_path_todo();
+> -	struct todo_list todo_list = TODO_LIST_INIT;
+> -	struct strbuf *buf = &todo_list.buf;
+> +	struct strbuf *buf = &todo_list->buf;
+>   	size_t offset = 0, commands_len = strlen(commands);
+>   	int i, insert;
+>   
+> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> -		return error(_("could not read '%s'."), todo_file);
+> -
+> -	if (todo_list_parse_insn_buffer(todo_list.buf.buf, &todo_list)) {
+> -		todo_list_release(&todo_list);
+> -		return error(_("unusable todo list: '%s'"), todo_file);
+> -	}
+> -
+>   	/*
+>   	 * Insert <commands> after every pick. Here, fixup/squash chains
+>   	 * are considered part of the pick, so we insert the commands *after*
+>   	 * those chains if there are any.
+>   	 */
+>   	insert = -1;
+> -	for (i = 0; i < todo_list.nr; i++) {
+> -		enum todo_command command = todo_list.items[i].command;
+> +	for (i = 0; i < todo_list->nr; i++) {
+> +		enum todo_command command = todo_list->items[i].command;
+>   
+>   		if (insert >= 0) {
+>   			/* skip fixup/squash chains */
+> @@ -4408,7 +4395,7 @@ int sequencer_add_exec_commands(const char *commands)
+>   				continue;
+>   			}
+>   			strbuf_insert(buf,
+> -				      todo_list.items[insert].offset_in_buf +
+> +				      todo_list->items[insert].offset_in_buf +
+>   				      offset, commands, commands_len);
+>   			offset += commands_len;
+>   			insert = -1;
+> @@ -4419,15 +4406,38 @@ int sequencer_add_exec_commands(const char *commands)
+>   	}
+>   
+>   	/* insert or append final <commands> */
+> -	if (insert >= 0 && insert < todo_list.nr)
+> -		strbuf_insert(buf, todo_list.items[insert].offset_in_buf +
+> +	if (insert >= 0 && insert < todo_list->nr)
+> +		strbuf_insert(buf, todo_list->items[insert].offset_in_buf +
+>   			      offset, commands, commands_len);
+>   	else if (insert >= 0 || !offset)
+>   		strbuf_add(buf, commands, commands_len);
+>   
+> -	i = write_message(buf->buf, buf->len, todo_file, 0);
+> +	if (todo_list_parse_insn_buffer(buf->buf, todo_list))
+> +		BUG("unusable todo list");}
 
-I don't think it implies that.
+It is a shame to have to re-parse the todo list, I wonder how difficult 
+it would be to adjust the todo_list item array as the exec commands are 
+inserted. The same applies to the next couple of patches
 
-The last comment starts with "Code calls git fetch periodically".  I
-presume that it does so in the background (to prevent blocking the UI
-until 'git fetch' runs), therefore 'git gc --auto' starts already in
-the background.  Furthermore, notice that 'git prune' on that
-screenshot has two 'git.exe' parents: I think its parent is 'git gc
---auto' and its grandparent is 'git fetch'.  Now, if that 'git gc
---auto' were to go to the background as a result of our daemonize(),
-then the grandparent 'git fetch' would have very likely exited
-already.
+Best Wishes
+
+Phillip
+
+> +
+> +/*
+> + * Add commands after pick and (series of) squash/fixup commands
+> + * in the todo list.
+> + */
+> +int sequencer_add_exec_commands(const char *commands)
+> +{
+> +	const char *todo_file = rebase_path_todo();
+> +	struct todo_list todo_list = TODO_LIST_INIT;
+> +	int res;
+> +
+> +	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> +		return error(_("could not read '%s'."), todo_file);
+> +
+> +	if (todo_list_parse_insn_buffer(todo_list.buf.buf, &todo_list)) {
+> +		todo_list_release(&todo_list);
+> +		return error(_("unusable todo list: '%s'"), todo_file);
+> +	}
+> +
+> +	todo_list_add_exec_commands(&todo_list, commands);
+> +	res = write_message(todo_list.buf.buf, todo_list.buf.len, todo_file, 0);
+>   	todo_list_release(&todo_list);
+> -	return i;
+> +
+> +	return res;
+>   }
+>   
+>   int transform_todos(unsigned flags)
+> 
 
