@@ -2,102 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26D1A1F97E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BB9A1F97E
 	for <e@80x24.org>; Thu, 11 Oct 2018 22:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727072AbeJLGKY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 02:10:24 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:50786 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726647AbeJLGKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 02:10:24 -0400
-Received: by mail-qt1-f202.google.com with SMTP id n1-v6so10188920qtb.17
+        id S1727086AbeJLGKZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 02:10:25 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39584 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbeJLGKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 02:10:25 -0400
+Received: by mail-wr1-f66.google.com with SMTP id 61-v6so11382827wrb.6
         for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=nLp7mWlNZN3WbUNvE5PEPR2WPA0StUMpH6fycLvwHlQ=;
-        b=Tu5I0bIWmy7xQu5vqHrLWp906U9+dHC+5ic4rj2hKA8HO8BadBlEPwdlWkgHk9SSTf
-         TcY5Kgy4GeuDhH/lfWiokLlgR0lr4Omo6NTY+HL+xCVZmVCIsEmoorQ7fbxGsRUMT7iL
-         EGeWDrOH/CnRibyigf13HCZtSqHnXda8PWKD2/X6iopDf9Y8eD6KzY4/gvVxKPyCo/jc
-         /6u7wRsPbulotZngDlRWVJU06uVLDYoACkA1+z6ZNvq4amQYiycgxuUJWeGe9iiCqeH8
-         Io+ECIvOY/S0KIU1r9V4xob7N0BGX237QtR2be6jPhC0VIgw14/migGkQCZrWD8Wu3CM
-         qcVg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=0+gkzfMN0XMZULrTH0Jlr2vq4bjN78SCnj88IHu4elQ=;
+        b=qA5pgTru1V4fYv853PqQlWmVghUhtFFyFfWXH6H3urL3ErwMSc119tKUYkKCP0QOzI
+         IVpHvpDTI5J0zDg8JLgPjtUdt8wwDeFUZjniRaek+iPr8NJFwPfLaGFK4kptD+WgKdUq
+         QyU3B3+RWA13UAQp6tbfgyGbeMQ76wIJHIzepscHEZ3VBpgJNnyTnEBfrTKD71BAFNzT
+         IfsRO0PUks41bjYRppUlyU2kYXQC9jIp4zPXXjzObhuM34h6wjdH6ZPeNUj6ZR+w7TjG
+         C5cLNF1WR6LcocsVxCsCiPDSigNqNvo/g3bXPPp/TJa9+WDtirDyF20qavcunS2Qmqj0
+         dVZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=nLp7mWlNZN3WbUNvE5PEPR2WPA0StUMpH6fycLvwHlQ=;
-        b=FPu6Gyeor/aX88Dfq5rBktjNSO9FmHJpgeKKzc1nepR72oFGGQZMwBYwXzKUloNGW4
-         g/vVOGDB1ltfF80o2KWx9/GdsutfOABaGf6j1S4XQpBTYwfW6yAWNVxgGSyraamzd9U4
-         nvCELYTafHTAI6X/fbzLj6YjUvJ/2NCABCdoHV1MUuzlcnMzOmwADttmuK7bxLDMJi76
-         fiVF7RZneo6rY8O3utsYne7YSpqFUOQWGaZWkUEfouUnk3rgmYTGykfjPoywK66NjpSz
-         bIaTfD1dX8nngEv3XqDKjKAK5u2lu0ndNVNQGrkwpYm404RQ/817qDECmg6EK/FYmGb5
-         mtJg==
-X-Gm-Message-State: ABuFfogeFVMpO04ncF0jzUzF+0v/+TJHl7FpFMGq6hRsbHkgpyYVWy+m
-        QBRYYMy0zFsDLDhzqOIHKwuW3ZvjwnuLGJQ9v+jj
-X-Google-Smtp-Source: ACcGV62SzUM8VWnNftyRgywAEi+8bpG2gzysNhRMfMUpRsG7ysV+R5OqEeRBjmrkJjkpaB4fPzYjQf9+Hh32wr8LVsCn
-X-Received: by 2002:ac8:2ef7:: with SMTP id i52-v6mr3030089qta.34.1539297662598;
- Thu, 11 Oct 2018 15:41:02 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 15:40:52 -0700
-In-Reply-To: <20181011211754.31369-18-sbeller@google.com>
-Message-Id: <20181011224052.191281-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181011211754.31369-18-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH 17/19] submodule: use submodule repos for object lookup
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0+gkzfMN0XMZULrTH0Jlr2vq4bjN78SCnj88IHu4elQ=;
+        b=GxQTWR0sRm94AQaHLvoRnIkrUG62bM9Xx772z9mtJMocEDfAFsLAAwXnf+UVOpj8Wf
+         +rWyT6eaqxHO8LmibeMrYr0m5XzhzXQGXZA8PO7NWHhKLFVcDsSo8+Oo+BxBPBkm1U7W
+         XYBw3My7ZigoUhzjKI/nf+nhPpvnNbk6Dl39Pqu6TDS7Ij3C4OFPKA4XtoGt/ilnfRrJ
+         9d4vtR0Fi39yjVv1/9EJsAb4mOtI7plZr/THJIZC8BVDL5CEnJ8kwFA4uJHWMVemRCmK
+         m6pKFMIra6UiLVBR4Ij18jfnbFppioChWS1W0kvNRCAk7oJVgNu4iZVNoI+H5PlH1bQq
+         jEwg==
+X-Gm-Message-State: ABuFfojUdvpw/mV6MEpKM0O3zx4we9TwVKUDCCkd+I9m+Zm5CZcPvU5h
+        HG5QsCr9iayeGlP3cZjJfxA=
+X-Google-Smtp-Source: ACcGV60FCwBvtz2lmi9XjvUt7/YVirWUpkn/R5xlhmrfWwD057tb6kyb2yg61ea7YYBZ1E+kFWLR8Q==
+X-Received: by 2002:adf:81e1:: with SMTP id 88-v6mr3556290wra.19.1539297661558;
+        Thu, 11 Oct 2018 15:41:01 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c14-v6sm23656094wmh.44.2018.10.11.15.41.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 11 Oct 2018 15:41:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
+References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+        <42930bb1-502b-b168-be12-92aee526a258@talktalk.net>
+Date:   Fri, 12 Oct 2018 07:40:59 +0900
+In-Reply-To: <42930bb1-502b-b168-be12-92aee526a258@talktalk.net> (Phillip
+        Wood's message of "Wed, 10 Oct 2018 14:58:39 +0100")
+Message-ID: <xmqqa7nkf6o4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +/*
-> + * Initialize 'out' based on the provided submodule path.
-> + *
-> + * Unlike repo_submodule_init, this tolerates submodules not present
-> + * in .gitmodules. NEEDSWORK: The repo_submodule_init behavior is
-> + * preferrable. This function exists only to preserve historical behavior.
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-What do you mean by "The repo_submodule_init behavior is preferable"? If
-we need to preserve historical behavior, then it seems that the most
-preferable one is something that meets our needs (like open_submodule()
-in this patch).
+> On 10/10/2018 06:43, Junio C Hamano wrote:
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+>> the integration branches, but I am still holding onto them.
+>>
+>> * pw/diff-color-moved-ws-fix (2018-10-04) 5 commits
+>>   - diff --color-moved: fix a memory leak
+>>   - diff --color-moved-ws: fix another memory leak
+>>   - diff --color-moved-ws: fix a memory leak
+>>   - diff --color-moved-ws: fix out of bounds string access
+>>   - diff --color-moved-ws: fix double free crash
+>>
+>>   Various fixes to "diff --color-moved-ws".
+>>
+>>   What's the status of this topic?
+>
+> I think it is ready for next - Stefan was happy with the last iteration.
 
-> +static int open_submodule(struct repository *out, const char *path)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +
-> +	if (submodule_to_gitdir(&sb, path) || repo_init(out, sb.buf, NULL)) {
-> +		strbuf_release(&sb);
-> +		return -1;
-> +	}
-> +
-> +	out->submodule_prefix = xstrdup(path);
+This is not about your fixes, but I was skimming the color-moved
+support in general as a final sanity check to move this forward and
+noticed that
 
-Do we need to set submodule_prefix?
+	$ git diff --color-moved-ws=ignore-any master...
 
-> @@ -507,7 +533,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
->  	else if (is_null_oid(two))
->  		message = "(submodule deleted)";
->  
-> -	if (add_submodule_odb(path)) {
-> +	if (open_submodule(sub, path) < 0) {
+does not do anything interesting, which is broken at at least two
+points.
 
-This function, as a side effect, writes the open repository to "sub" for
-its caller to use. I think it's better if its callers open "sub" and
-then pass it to show_submodule_header() if successful. If opening the
-submodule is expected to fail sometimes (like it seems here), then we
-can allow callers to also pass NULL, and document what happens when NULL
-is passed.
+ * There is no "ignore-any" supported by the feature---I think that
+   the parser for the option should have noticed and barfed, but it
+   did not.  It merely emitted a message to the standard output and
+   let it scroll away with the huge diff before the reader noticed
+   it.
 
-Also, repositories open in this way should also be freed.
+ * After fixing ignore-any to one of the supported option
+   (e.g. "ignore-all-spaces"), the color-moved feature still did not
+   trigger.  I think the presence of --color-moved-ws by itself is a
+   hint that the user wants --color-moved to be used.  If it turns
+   out that there are some valid use cases where --color-moved-ws
+   may have to be set but the color-moved feature should not be
+   enabled, then
+
+	diff --color-moved-ws=ignore-all-space --no-color-moved
+
+   can be used to countermand this, of course.
+
+Am I missing something or are these mere small sloppiness in the
+current code?
+
+
+
