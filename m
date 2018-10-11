@@ -6,58 +6,52 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4D4A1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 02:00:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3B31F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 02:15:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726693AbeJKJZm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 05:25:42 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:40627 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725971AbeJKJZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 05:25:42 -0400
-Received: by mail-wr1-f41.google.com with SMTP id d2-v6so7776237wro.7
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 19:00:45 -0700 (PDT)
+        id S1726830AbeJKJkk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 05:40:40 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36864 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbeJKJkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 05:40:39 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y11-v6so7788351wrd.4
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 19:15:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=L+nou+N7b7k23zlw47ylYEDrzczHyGBuueUJdFh6Rds=;
-        b=SpTXwtGVoJjU37JRmGhcRildgOfOanjsYpqpUW/NMQOvld3X5q33sb2ygApp8vEvpe
-         LdpsNEnzLycP0t6EolAA17IGG4co3aj5Qz9CLddqBOiqz7AvHa0tugsTHLIPq3FwExzI
-         nH/tkBkVB1+ZPvOkkDnwqBQsSIHO4UZoxvXxzBmaZhBr+Gczwa2p5mbwqRCgx/nlVRkR
-         MIKcCQcCubhXbuNf1aAVKoTdAYRjIo9FNQ3f6DmL6Mh5mgqnhL2P1u5yS+/t5BCs5uKt
-         u4DR51gj02bLSRavbqYSvitB2eRtUjxww8NNlmMSjo7owibtOfRm9yKnwnvlp4+J0v2X
-         SClA==
+        h=sender:from:to:subject:date:message-id:user-agent:mime-version;
+        bh=3bkCxwcYXC99dY2RUNJyhKCVtHET1NsKLp8JUUbra08=;
+        b=pcg77ZsFT5SKi6dl080/a622eA8KVGmHFIdq+WaAiNDe0BYhM3a3m46PavNCMVBFe8
+         9k7vbXsh++yS5OHeOYaHIjz8fXi9SKIpjpCayyW+VV35EbSemPjngOCqekn2Zn7GY2vh
+         nGHiF8OPGZX4b6g7zGRhp6wq/4X5KXTPsY6KdwyYD0Cl5O/GKekJ++CtZx62SvyRpDew
+         c2fTRu1igYnHC5p1E+QE9lwBWt9VMP4cKGOwF+jI38BnXaQKO9ILs6i/26LHUOVP4+VP
+         r/FbusQu+B8l+E6/wt4LqFDCkZTiBEWAHEs7+DZQIwnnmxFsu0LVrZ+CqVrZKGfd5Ize
+         B9cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=L+nou+N7b7k23zlw47ylYEDrzczHyGBuueUJdFh6Rds=;
-        b=sX6vk9F6YdqmKUl03V7NyWuzZ3cgzdtjaJRdJkxSz8RbNpZA9BZO+WNAGQawJmvyAR
-         WCmXZhaUZz+cT3OzxO6ZU6w/wY1/V3aPBSc7YKVesvBm6i9H/44htw7cpMVYibcTRuKG
-         VBf8qEyuYWMxqct6q1K/I9ZOboieBMj/ckUhhejTVtDszkEhz4dnbyaIYN2TeayO1d03
-         RBDCFl8zUXHPbg09F8zEWLlWlWieKraIbZbdM6v9PzGTpubde58elVQrVpmX+htBC/Ej
-         BL7rayLJAwrk7GtAfoewNKavkrKn1MVnbSZOMmQO7kILpjvUz3goGrjjKQIiz9sX+d1Q
-         U9bQ==
-X-Gm-Message-State: ABuFfohuFS6lgN8W13l69qbXWjmV6XR6BlhGocthMpNqfpmSCGEKhUQq
-        2KaoJuOjPuW8UvrrOHI/w28=
-X-Google-Smtp-Source: ACcGV63EDkZ5dzIV7EGI3/yzoTg9io46g6hqDTHhZv7tbV6XXd8fFh7eNTsRFDLrd7Sma4jr1xTWXg==
-X-Received: by 2002:adf:f2d0:: with SMTP id d16-v6mr26894765wrp.258.1539223244490;
-        Wed, 10 Oct 2018 19:00:44 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k25-v6sm46485305wre.18.2018.10.10.19.00.43
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :user-agent:mime-version;
+        bh=3bkCxwcYXC99dY2RUNJyhKCVtHET1NsKLp8JUUbra08=;
+        b=YcmKlDW325NX7wzL6fZJmX6KVusdFzyyej9N5G2ce9qSNSjHFSGBZ1RKCpqVWkP2xm
+         OmwGadCzRz5/SOkjKLrb47YMM9MoZdSvz+tzJUOflIPUNIbaJBHFMhjO9b2rOFN9jQhm
+         Zo/7SkCSPOPZoUAN41yb3vhiyNjmM+tWZx6JiXAVzNazSKn/DsvCagkKLCQwsLzlncBc
+         yCwdH/M9PiHlrbUBaaHzOqzrQjs71HF1/c/Gp4RWTeNF7G93NR4dgkJCQCDqRTWC3bjn
+         B0FXsx78jik08AzDeLawItOVBv/s4M4IyErjL6wnYzrYAOgiTZdBuGOppgGaMl09xiKt
+         cJxg==
+X-Gm-Message-State: ABuFfogkB+8IFVA0Iw/60OWYDLzh4/XFur7D78pQk0fBagD0UvPXqLsa
+        ELZp8jkhslEh1kgFpuuw1NNhDuL61Bs=
+X-Google-Smtp-Source: ACcGV62Ah4S9Rp0MizjLhM9vk8xgsM17om8KpYq4KclCm4trPyEtf5bKLF65QQeRTvFd6V7IaPpIPA==
+X-Received: by 2002:adf:8523:: with SMTP id 32-v6mr26769049wrh.72.1539224138412;
+        Wed, 10 Oct 2018 19:15:38 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 201-v6sm19540313wmf.30.2018.10.10.19.15.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 19:00:43 -0700 (PDT)
+        Wed, 10 Oct 2018 19:15:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
-References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kYJGMOtroLhPwOdhWewXf3X_b0QOgiUb65pyJ7xJ-whQw@mail.gmail.com>
-Date:   Thu, 11 Oct 2018 11:00:42 +0900
-In-Reply-To: <CAGZ79kYJGMOtroLhPwOdhWewXf3X_b0QOgiUb65pyJ7xJ-whQw@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 10 Oct 2018 11:55:51 -0700")
-Message-ID: <xmqqa7nli6np.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] fixup! builtin rebase: support `--gpg-sign` option
+Date:   Thu, 11 Oct 2018 11:15:36 +0900
+Message-ID: <xmqqzhvlgref.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,31 +60,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 27 Sep 2018 14:48:17 +0200
 
->> * pw/diff-color-moved-ws-fix (2018-10-04) 5 commits
-> I would suggest merging to 'next'.
+The `--gpg-sign` option takes an *optional* argument, not a mandatory
+one.
 
-OK.
+This was discovered as part of the investigation of
+https://github.com/git-for-windows/git/issues/1836.
 
->> * sb/strbuf-h-update (2018-09-29) 1 commit
-> The patch as-is just adds names everywhere.
-> I'd be happy to resend with either
-> (a) not enforcing names everywhere, but only as needed or
-> (b) having names everywhere, capitalizing them NAMES in
->     the doc comment.
->
-> I am tempted to ask for
-> (c) take as-is, defer the rewording of doc strings for a follow up patch.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-As long as the planned update eventually comes before all of us
-forget, (c) is fine by me.  I'll mark it to be merged to 'next' for
-now, and follow through that plan, unless somebody else stops me
-before it happens.
+ * I am sending this out as I want to mimize the number of
+   non-trivial changes that come into my tree without hitting the
+   list archive.
 
->> * sb/submodule-recursive-fetch-gets-the-tip (2018-09-12) 9 commits
-> Will resend after a local review.
+ builtin/rebase.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-OK.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index a28bfbd62f..43bc6f7915 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1030,8 +1030,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "autosquash", &options.autosquash,
+ 			 N_("move commits that begin with "
+ 			    "squash!/fixup! under -i")),
+-		OPT_STRING('S', "gpg-sign", &gpg_sign,
+-			   N_("gpg-sign?"), N_("GPG-sign commits")),
++		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
++			N_("GPG-sign commits"),
++			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 		OPT_STRING_LIST(0, "whitespace", &whitespace,
+ 				N_("whitespace"), N_("passed to 'git apply'")),
+ 		OPT_SET_INT('C', 0, &opt_c, N_("passed to 'git apply'"),
+-- 
+2.19.1-328-g5a0cc8aca7
 
-Thanks for helping me in updating the status for various topics.
