@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 630E41F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 09:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 936C91F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 09:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728404AbeJKRJy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 13:09:54 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41597 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728373AbeJKRJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 13:09:54 -0400
-Received: by mail-ed1-f67.google.com with SMTP id x31-v6so7628330edd.8
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:43:23 -0700 (PDT)
+        id S1728405AbeJKRJ4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 13:09:56 -0400
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:39808 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726215AbeJKRJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 13:09:56 -0400
+Received: by mail-ed1-f53.google.com with SMTP id d15-v6so7633905edq.6
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PgSnHPmvDcgGC3D5mJ/lyYZ+UynD+cy6sVm85rVUZQw=;
-        b=c1LVKVcd0P8Wo5CyJoyw/ytd6XGEHYEzYESpZaNJ6EmrJ7f3x4iqcxhdgoZYs94i8y
-         8DGKmWhx14LsOk1R4yHRzLOUrDr5ClkC1qFAsS+cBi3EmGCkCdb0lqkh7NqXNQit+ZFu
-         sOwgcBrF/EMMbEFcBxO+n8M+9ry1pRyvN9i+2UYr7pOiBYGmySavl25R057FJNmG8JvP
-         CI4wc97nt712DbKJsx5TWWZw9wxybiCuX50SZz+njbITh7Eu7HpHxxgK6EAsQTC5es2F
-         HeBZYA4q2foLOXaair9eVM4mwO0QK5w9MljgHdJCM7zPOTj7ycNOeeBeulLR6pJNOyH+
-         Szvw==
+        bh=z62qd8G79LYBuSDHlJjKDOX8nlBPJPeyRF6HZX1vh4g=;
+        b=m9nCZWQToG554qcqivj+N8S00ETRPnhoB4XbjavCZufMv0NL5/iNQI+o2pvziFD5G1
+         MDDU2O/ZiLPnT6++tpQurPnizCQ6LpVHZh5IIGcv2a/JR2wxYTobX7ZpDHxWzJSHAkTt
+         3CXefZ7zLZSPe+HngkND2L8Gxdda3ilpHczqy7lqaCLHetopElU+UfvNoSIY+qf+xDIV
+         t8T8ClL/Ac6JzOlCc9ajxINwy+EOqjkHmZQ7glNzZI8bs0ZWN9AmIaJ61lv28lm63N7z
+         jK+JSkA8eC+I1rTLINdqBCTLKNrPIyyDU7CVzp4o0+/hoKiHl/kI8ExKdpMQF8ppHaza
+         oz+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PgSnHPmvDcgGC3D5mJ/lyYZ+UynD+cy6sVm85rVUZQw=;
-        b=I4rvZqJjfhseoutKJZcVc3YDTmgVVM9WdycQDzr+LZvlU1qCxHn9SA8RVWJN6K+5EF
-         exoGBMcuwSYINisSD2WMJktP3ATChyiHrxEk0Ndbh6HVXW9k+CEQteTPqE2GvhKA72QU
-         W1njgB710bIU5FKLbSu0U0LkoUdzJbHlKsICnTt52q6P3niNl+uZ5LOFmWV0++4XOjRc
-         IPZf+LUeNvkG2+X39xJ35m/JfvB4y8CA1pnx9DSqMUNnAgeTOM4NCJ+wi1M7404cL9o3
-         xYD0gWeKrRidPn8pGZ3uiP9zX6ttyIAX0jA1NOtgGFKf0ynHQW4CVW/Wmp3k7DGJJGFw
-         UaTQ==
-X-Gm-Message-State: ABuFfogi7Ul3CMEEqBm2nI4pOGqXE2kEfk55AnOGDLUNHuBP9xOioxY9
-        xlZSv3DPA+h4b+SsaGj/efY=
-X-Google-Smtp-Source: ACcGV62jqB5hr+5IonsqxmoIww4XjOVUxEZXDhibrHsCmYDPbKe8TZoandrBXeGRj4ttBFDa3edcaw==
-X-Received: by 2002:a17:906:168b:: with SMTP id s11-v6mr1386656ejd.228.1539251002800;
-        Thu, 11 Oct 2018 02:43:22 -0700 (PDT)
+        bh=z62qd8G79LYBuSDHlJjKDOX8nlBPJPeyRF6HZX1vh4g=;
+        b=n4WRl84oUsPZRG5EcZ3MvUSd8ZjNOWLcGra2ddHevo3J5KqY0G9xC2ZcQtcsNp1LTE
+         yMwdlLm26ASKzHm5PVm+ftwQmGd3K426ZGoHGnCmum9ErLi2GAvs404hulB3t+s/056m
+         n6TYtxjm6sC8QhGFIFM+iQBzmO/0Me0iAziDprw+QE7W68WRiY5U+FxZfgmSPH4XNtaN
+         ZXwc1gb6YUEi7Fi0+/GK4m0FGRbgRz9iV5tiyUXxAP2MBvuPLI8i60+vYHWVIiP7rfjW
+         IDXmbHsYZYdghE+iAZK1472nMRFdKeU5MrKfy+2VIw/Q1Xn4vcMoozwo/I2ykuWDbIi+
+         nwZA==
+X-Gm-Message-State: ABuFfoiT3UiMaBM6DSimHSbis1JdHaY8v8IV3ZCa4DON+61rcjI3QwT2
+        3z9ikl+qACA0aNsu0OOPzxyrVhKA
+X-Google-Smtp-Source: ACcGV62cSc0/q5G6hCTsUYXCQTNd1UcmzbzKD3PLjtoYDHZY1r1YfQ7kKhbtxaoYMsxeuNwT5Gn04g==
+X-Received: by 2002:a50:b246:: with SMTP id o64-v6mr1776686edd.80.1539251004287;
+        Thu, 11 Oct 2018 02:43:24 -0700 (PDT)
 Received: from localhost.localdomain (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
-        by smtp.gmail.com with ESMTPSA id q25-v6sm7034721eda.18.2018.10.11.02.43.21
+        by smtp.gmail.com with ESMTPSA id q25-v6sm7034721eda.18.2018.10.11.02.43.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Oct 2018 02:43:21 -0700 (PDT)
+        Thu, 11 Oct 2018 02:43:23 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
         git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 5/6] split-index: don't compare cached data of entries already marked for split index
-Date:   Thu, 11 Oct 2018 11:43:08 +0200
-Message-Id: <20181011094309.18626-6-szeder.dev@gmail.com>
+Subject: [PATCH v4 6/6] split-index: smudge and add racily clean cache entries to split index
+Date:   Thu, 11 Oct 2018 11:43:09 +0200
+Message-Id: <20181011094309.18626-7-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.1.465.gaff195083f
 In-Reply-To: <20181011094309.18626-1-szeder.dev@gmail.com>
 References: <20180928162459.17138-1-szeder.dev@gmail.com>
@@ -73,184 +73,236 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When unpack_trees() constructs a new index, it copies cache entries
-from the original index [1].  prepare_to_write_split_index() has to
-deal with this, and it has a dedicated code path for copied entries
-that are present in the shared index, where it compares the cached
-data in the corresponding copied and original entries.  If the cached
-data matches, then they are considered the same; if it differs, then
-the copied entry will be marked for inclusion as a replacement entry
-in the just about to be written split index by setting the
-CE_UPDATE_IN_BASE flag.
+Ever since the split index feature was introduced [1], refreshing a
+split index is prone to a variant of the classic racy git problem.
 
-However, a cache entry already has its CE_UPDATE_IN_BASE flag set upon
-reading the split index, if the entry already has a replacement entry
-there, or upon refreshing the cached stat data, if the corresponding
-file was modified.  The state of this flag is then preserved when
-unpack_trees() copies a cache entry from the shared index.
+Consider the following sequence of commands updating the split index
+when the shared index contains a racily clean cache entry, i.e. an
+entry whose cached stat data matches with the corresponding file in
+the worktree and the cached mtime matches that of the index:
 
-So modify prepare_to_write_split_index() to check the copied cache
-entries' CE_UPDATE_IN_BASE flag first, and skip the thorough
-comparison of cached data if the flag is already set.  Those couple of
-lines comparing the cached data would then have too many levels of
-indentation, so extract them into a helper function.
+  echo "cached content" >file
+  git update-index --split-index --add file
+  echo "dirty worktree" >file    # size stays the same!
+  # ... wait ...
+  git update-index --add other-file
 
-Note that comparing the cached data in copied and original entries in
-the shared index might actually be entirely unnecessary.  In theory
-all code paths refreshing the cached stat data of an entry in the
-shared index should set the CE_UPDATE_IN_BASE flag in that entry, and
-unpack_trees() should preserve this flag when copying cache entries.
-This means that the cached data is only ever changed if the
-CE_UPDATE_IN_BASE flag is set as well.  Our test suite seems to
-confirm this: instrumenting the conditions in question and running the
-test suite repeatedly with 'GIT_TEST_SPLIT_INDEX=yes' showed that the
-cached data in a copied entry differs from the data in the shared
-entry only if its CE_UPDATE_IN_BASE flag is indeed set.
+Normally, when a non-split index is updated, then do_write_index()
+(the function responsible for writing all kinds of indexes, "regular",
+split, and shared) recognizes racily clean cache entries, and writes
+them with smudged stat data, i.e. with file size set to 0.  When
+subsequent git commands read the index, they will notice that the
+smudged stat data doesn't match with the file in the worktree, and
+then go on to check the file's content and notice its dirtiness.
 
-In practice, however, our test suite doesn't have 100% coverage,
-GIT_TEST_SPLIT_INDEX is inherently random, and I certainly can't claim
-to possess complete understanding of what goes on in unpack_trees()...
-Therefore I kept the comparison of the cached data when
-CE_UPDATE_IN_BASE is not set, just in case that an unnoticed or future
-code path were to accidentally miss setting this flag upon refreshing
-the cached stat data or unpack_trees() were to drop this flag while
-copying a cache entry.
+In the above example, however, in the second 'git update-index'
+prepare_to_write_split_index() decides which cache entries stored only
+in the shared index should be replaced in the new split index.  Alas,
+this function never looks out for racily clean cache entries, and
+since the file's stat data in the worktree hasn't changed since the
+shared index was written, it won't be replaced in the new split index.
+Consequently, do_write_index() doesn't even get this racily clean
+cache entry, and can't smudge its stat data.  Subsequent git commands
+will then see that the index has more recent mtime than the file and
+that the (not smudged) cached stat data still matches with the file in
+the worktree, and, ultimately, will erroneously consider the file
+clean.
 
-[1] Note that when unpack_trees() constructs the new index and decides
-    that a cache entry should now refer to different content than what
-    was recorded in the original index (e.g. 'git read-tree -m
-    HEAD^'), then that can't really be considered a copy of the
-    original, but rather the creation of a new entry.  Notably and
-    pertinent to the split index feature, such a new entry doesn't
-    have a reference to the original's shared index entry anymore,
-    i.e. its 'index' field is set to 0.  Consequently, such an entry
-    is treated by prepare_to_write_split_index() as an entry not
-    present in the shared index and it will be added to the new split
-    index, while the original entry will be marked as deleted, and
-    neither the above discussion nor the changes in this patch apply
-    to them.
+Modify prepare_to_write_split_index() to recognize racily clean cache
+entries, and mark them to be added to the split index.  Note that
+there are two places where it should check raciness: first those cache
+entries that are only stored in the shared index, and then those that
+have been copied by unpack_trees() from the shared index while it
+constructed a new index.  This way do_write_index() will get these
+racily clean cache entries as well, and will then write them with
+smudged stat data to the new split index.
+
+This change makes all tests in 't1701-racy-split-index.sh' pass, so
+flip the two 'test_expect_failure' tests to success.  Also add the '#'
+(as in nr. of trial) to those tests' description that were omitted
+when the tests expected failure.
+
+Note that after this change if the index is split when it contains a
+racily clean cache entry, then a smudged cache entry will be written
+both to the new shared and to the new split indexes.  This doesn't
+affect regular git commands: as far as they are concerned this is just
+an entry in the split index replacing an outdated entry in the shared
+index.  It did affect a few tests in 't1700-split-index.sh', though,
+because they actually check which entries are stored in the split
+index; a previous patch in this series has already made the necessary
+adjustments in 't1700'.  And racily clean cache entries and index
+splitting are rare enough to not worry about the resulting duplicated
+smudged cache entries, and the additional complexity required to
+prevent them is not worth it.
+
+Several tests failed occasionally when the test suite was run with
+'GIT_TEST_SPLIT_INDEX=yes'.  Here are those that I managed to trace
+back to this racy split index problem, starting with those failing
+more frequently, with a link to a failing Travis CI build job for
+each.  The highlighted line [2] shows when the racy file was written,
+which is not always in the failing test but in a preceeding setup
+test.
+
+  t3903-stash.sh:
+    https://travis-ci.org/git/git/jobs/385542084#L5858
+
+  t4024-diff-optimize-common.sh:
+    https://travis-ci.org/git/git/jobs/386531969#L3174
+
+  t4015-diff-whitespace.sh:
+    https://travis-ci.org/git/git/jobs/360797600#L8215
+
+  t2200-add-update.sh:
+    https://travis-ci.org/git/git/jobs/382543426#L3051
+
+  t0090-cache-tree.sh:
+    https://travis-ci.org/git/git/jobs/416583010#L3679
+
+There might be others, e.g. perhaps 't1000-read-tree-m-3way.sh' and
+others using 'lib-read-tree-m-3way.sh', but I couldn't confirm yet.
+
+[1] In the branch leading to the merge commit v2.1.0-rc0~45 (Merge
+    branch 'nd/split-index', 2014-07-16).
+
+[2] Note that those highlighted lines are in the 'after failure' fold,
+    and your browser might unhelpfully fold it up before you could
+    take a good look.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- split-index.c | 89 +++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 72 insertions(+), 17 deletions(-)
+ cache.h                     |  2 ++
+ read-cache.c                |  2 +-
+ split-index.c               | 42 ++++++++++++++++++++++++++++++++++++-
+ t/t1701-racy-split-index.sh |  8 ++-----
+ 4 files changed, 46 insertions(+), 8 deletions(-)
 
-diff --git a/split-index.c b/split-index.c
-index 548272ec33..187b910f5b 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -188,6 +188,30 @@ void merge_base_index(struct index_state *istate)
- 	si->saved_cache_nr = 0;
+diff --git a/cache.h b/cache.h
+index 4d014541ab..3f419b6c79 100644
+--- a/cache.h
++++ b/cache.h
+@@ -781,6 +781,8 @@ extern void *read_blob_data_from_index(const struct index_state *, const char *,
+ #define CE_MATCH_REFRESH		0x10
+ /* don't refresh_fsmonitor state or do stat comparison even if CE_FSMONITOR_VALID is true */
+ #define CE_MATCH_IGNORE_FSMONITOR 0X20
++extern int is_racy_timestamp(const struct index_state *istate,
++			     const struct cache_entry *ce);
+ extern int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+ extern int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
+ 
+diff --git a/read-cache.c b/read-cache.c
+index 7b1354d759..8f644f68b4 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -337,7 +337,7 @@ static int is_racy_stat(const struct index_state *istate,
+ 		);
  }
  
-+/*
-+ * Compare most of the fields in two cache entries, i.e. all except the
-+ * hashmap_entry and the name.
-+ */
-+static int compare_ce_content(struct cache_entry *a, struct cache_entry *b)
-+{
-+	const unsigned int ondisk_flags = CE_STAGEMASK | CE_VALID |
-+					  CE_EXTENDED_FLAGS;
-+	unsigned int ce_flags = a->ce_flags;
-+	unsigned int base_flags = b->ce_flags;
-+	int ret;
-+
-+	/* only on-disk flags matter */
-+	a->ce_flags &= ondisk_flags;
-+	b->ce_flags &= ondisk_flags;
-+	ret = memcmp(&a->ce_stat_data, &b->ce_stat_data,
-+		     offsetof(struct cache_entry, name) -
-+		     offsetof(struct cache_entry, ce_stat_data));
-+	a->ce_flags = ce_flags;
-+	b->ce_flags = base_flags;
-+
-+	return ret;
-+}
-+
- void prepare_to_write_split_index(struct index_state *istate)
+-static int is_racy_timestamp(const struct index_state *istate,
++int is_racy_timestamp(const struct index_state *istate,
+ 			     const struct cache_entry *ce)
  {
- 	struct split_index *si = init_split_index(istate);
-@@ -207,13 +231,28 @@ void prepare_to_write_split_index(struct index_state *istate)
- 		 */
- 		for (i = 0; i < istate->cache_nr; i++) {
- 			struct cache_entry *base;
--			/* namelen is checked separately */
--			const unsigned int ondisk_flags =
--				CE_STAGEMASK | CE_VALID | CE_EXTENDED_FLAGS;
--			unsigned int ce_flags, base_flags, ret;
- 			ce = istate->cache[i];
--			if (!ce->index)
-+			if (!ce->index) {
-+				/*
-+				 * During simple update index operations this
-+				 * is a cache entry that is not present in
-+				 * the shared index.  It will be added to the
-+				 * split index.
-+				 *
-+				 * However, it might also represent a file
-+				 * that already has a cache entry in the
-+				 * shared index, but a new index has just
-+				 * been constructed by unpack_trees(), and
-+				 * this entry now refers to different content
-+				 * than what was recorded in the original
-+				 * index, e.g. during 'read-tree -m HEAD^' or
-+				 * 'checkout HEAD^'.  In this case the
-+				 * original entry in the shared index will be
-+				 * marked as deleted, and this entry will be
-+				 * added to the split index.
-+				 */
- 				continue;
-+			}
- 			if (ce->index > si->base->cache_nr) {
- 				ce->index = 0;
- 				continue;
-@@ -227,18 +266,34 @@ void prepare_to_write_split_index(struct index_state *istate)
- 				ce->index = 0;
- 				continue;
+ 	return (!S_ISGITLINK(ce->ce_mode) &&
+diff --git a/split-index.c b/split-index.c
+index 187b910f5b..875f538802 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -259,8 +259,39 @@ void prepare_to_write_split_index(struct index_state *istate)
  			}
--			ce_flags = ce->ce_flags;
--			base_flags = base->ce_flags;
--			/* only on-disk flags matter */
--			ce->ce_flags   &= ondisk_flags;
--			base->ce_flags &= ondisk_flags;
--			ret = memcmp(&ce->ce_stat_data, &base->ce_stat_data,
--				     offsetof(struct cache_entry, name) -
--				     offsetof(struct cache_entry, ce_stat_data));
--			ce->ce_flags = ce_flags;
--			base->ce_flags = base_flags;
--			if (ret)
--				ce->ce_flags |= CE_UPDATE_IN_BASE;
-+			/*
-+			 * This is the copy of a cache entry that is present
-+			 * in the shared index, created by unpack_trees()
-+			 * while it constructed a new index.
-+			 */
-+			if (ce->ce_flags & CE_UPDATE_IN_BASE) {
-+				/*
-+				 * Already marked for inclusion in the split
-+				 * index, either because the corresponding
-+				 * file was modified and the cached stat data
-+				 * was refreshed, or because the original
-+				 * entry already had a replacement entry in
-+				 * the split index.
-+				 * Nothing to do.
-+				 */
-+			} else {
-+				/*
-+				 * Thoroughly compare the cached data to see
-+				 * whether it should be marked for inclusion
-+				 * in the split index.
-+				 *
-+				 * This comparison might be unnecessary, as
-+				 * code paths modifying the cached data do
-+				 * set CE_UPDATE_IN_BASE as well.
-+				 */
-+				if (compare_ce_content(ce, base))
+ 			ce->ce_flags |= CE_MATCHED; /* or "shared" */
+ 			base = si->base->cache[ce->index - 1];
+-			if (ce == base)
++			if (ce == base) {
++				/* The entry is present in the shared index. */
++				if (ce->ce_flags & CE_UPDATE_IN_BASE) {
++					/*
++					 * Already marked for inclusion in
++					 * the split index, either because
++					 * the corresponding file was
++					 * modified and the cached stat data
++					 * was refreshed, or because there
++					 * is already a replacement entry in
++					 * the split index.
++					 * Nothing more to do here.
++					 */
++				} else if (!ce_uptodate(ce) &&
++					   is_racy_timestamp(istate, ce)) {
++					/*
++					 * A racily clean cache entry stored
++					 * only in the shared index: it must
++					 * be added to the split index, so
++					 * the subsequent do_write_index()
++					 * can smudge its stat data.
++					 */
 +					ce->ce_flags |= CE_UPDATE_IN_BASE;
++				} else {
++					/*
++					 * The entry is only present in the
++					 * shared index and it was not
++					 * refreshed.
++					 * Just leave it there.
++					 */
++				}
+ 				continue;
 +			}
- 			discard_cache_entry(base);
- 			si->base->cache[ce->index - 1] = ce;
- 		}
+ 			if (ce->ce_namelen != base->ce_namelen ||
+ 			    strcmp(ce->name, base->name)) {
+ 				ce->index = 0;
+@@ -281,6 +312,15 @@ void prepare_to_write_split_index(struct index_state *istate)
+ 				 * the split index.
+ 				 * Nothing to do.
+ 				 */
++			} else if (!ce_uptodate(ce) &&
++				   is_racy_timestamp(istate, ce)) {
++				/*
++				 * A copy of a racily clean cache entry from
++				 * the shared index.  It must be added to
++				 * the split index, so the subsequent
++				 * do_write_index() can smudge its stat data.
++				 */
++				ce->ce_flags |= CE_UPDATE_IN_BASE;
+ 			} else {
+ 				/*
+ 				 * Thoroughly compare the cached data to see
+diff --git a/t/t1701-racy-split-index.sh b/t/t1701-racy-split-index.sh
+index fbb77046da..5dc221ef38 100755
+--- a/t/t1701-racy-split-index.sh
++++ b/t/t1701-racy-split-index.sh
+@@ -148,7 +148,7 @@ done
+ 
+ for trial in $trials
+ do
+-	test_expect_failure "update the split index when a racily clean cache entry is stored only in the shared index $trial" '
++	test_expect_success "update the split index when a racily clean cache entry is stored only in the shared index #$trial" '
+ 		rm -f .git/index .git/sharedindex.* &&
+ 
+ 		# The next three commands must be run within the same
+@@ -170,8 +170,6 @@ do
+ 		# entry of racy-file is only stored in the shared index.
+ 		# A corresponding replacement cache entry with smudged
+ 		# stat data should be added to the new split index.
+-		#
+-		# Alas, such a smudged replacement entry is not added!
+ 		git update-index --add other-file &&
+ 
+ 		# Subsequent git commands should notice the smudged
+@@ -182,7 +180,7 @@ done
+ 
+ for trial in $trials
+ do
+-	test_expect_failure "update the split index after unpack trees() copied a racily clean cache entry from the shared index $trial" '
++	test_expect_success "update the split index after unpack trees() copied a racily clean cache entry from the shared index #$trial" '
+ 		rm -f .git/index .git/sharedindex.* &&
+ 
+ 		# The next three commands must be run within the same
+@@ -205,8 +203,6 @@ do
+ 		# index.  A corresponding replacement cache entry
+ 		# with smudged stat data should be added to the new
+ 		# split index.
+-		#
+-		# Alas, such a smudged replacement entry is not added!
+ 		git read-tree -m HEAD &&
+ 
+ 		# Subsequent git commands should notice the smudged
 -- 
 2.19.1.465.gaff195083f
 
