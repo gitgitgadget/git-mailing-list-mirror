@@ -2,70 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC3EF1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 00:38:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 484C41F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 01:04:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726034AbeJKIDN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 04:03:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36452 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725971AbeJKIDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 04:03:13 -0400
-Received: (qmail 17711 invoked by uid 109); 11 Oct 2018 00:38:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Oct 2018 00:38:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24408 invoked by uid 111); 11 Oct 2018 00:37:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Oct 2018 20:37:42 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Oct 2018 20:38:32 -0400
-Date:   Wed, 10 Oct 2018 20:38:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] gc: introduce an --auto-exit-code option for undoing
- 3029970275
-Message-ID: <20181011003832.GE13853@sigill.intra.peff.net>
-References: <20181010174624.GC8786@sigill.intra.peff.net>
- <20181010192732.13918-1-avarab@gmail.com>
- <20181010203531.GA12949@sigill.intra.peff.net>
- <87tvltecvy.fsf@evledraar.gmail.com>
+        id S1726007AbeJKI2i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 04:28:38 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33162 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbeJKI2i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 04:28:38 -0400
+Received: by mail-wr1-f66.google.com with SMTP id e4-v6so7711674wrs.0
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 18:03:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qkwIfBurbqbnBiRz4c3oNdG0IeVV6S2dYHdYsK1jgy0=;
+        b=aZCMzHOvDo1i/WYPySV2Zfwhulo2j9+6X3Gi31FipJo+4uZ9f6BtyzxVOeVNcAyIPi
+         aQ35m9074ABbHCIT/j1JfXuA4IVSRNOAnTXMmzT45Ak6e3LdNHJXy+JC5pUcm8vacrSp
+         FWfTA35kj7QNv2GrVhdguDUbfnSxVP4OgIwh0498CPwCPIf7+QO+fZma/PMUUEIE1VTH
+         p2dFE6gKeU460wW25h7YgFrqRtttD+QeGC44D3sp9lAiPCTlkjZDMbLKPOoJ57iSVte/
+         w/mxFlzKd9sQL/YXh+Li6DBE5z0FqcoZX8VlWMc12FHBkv5qQVcfCGGQkst8MjbP/qj+
+         mGRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qkwIfBurbqbnBiRz4c3oNdG0IeVV6S2dYHdYsK1jgy0=;
+        b=QafoHCOdjE3cO8J088AslMj4gPjk+EWN6rEsIQWUxBnpSQKFrTJ/P6B1FzG4bqy9Uf
+         /cfdNoJJdnTaZFPubh76JcQjdvyDHjvpMZiDNCczt8cLBkqtGw+dtAmZGTenrnVPMmDQ
+         1i98NWNWQpgaqWVXyUNhE4ynft4Uz2zelRY2tepIed/2cbraBkocU07i04a+ricyTxTL
+         KAz2Ab5zEZ+ZQ7MRx8nC8yQKKjNhNfQu5B43smILhwdGqPgsgsyL9cAZcUKox2N0s2UK
+         Bz3g4YmGN5ls6yAkFcibb0A+sVGQT/0QlaUR03860CFP/TQTw3+HO2ZcSBY7fQsnXgTt
+         0emQ==
+X-Gm-Message-State: ABuFfohESehlKmjEkzJym3L/+DeAGCdAuJC3RsVO+6u67uYYtWp4TF7D
+        yOtsFGI/XLtyR8XrBUyOXBg=
+X-Google-Smtp-Source: ACcGV60cyczowTvjthzW1ahvYMJ6e5VcVB9jDzrw8a4wu5uQXSmLQkwlusd1mrpaBU+od1T7eSrhNQ==
+X-Received: by 2002:a5d:4706:: with SMTP id y6-v6mr24398252wrq.256.1539219829105;
+        Wed, 10 Oct 2018 18:03:49 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id r131-v6sm16100965wmb.32.2018.10.10.18.03.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Oct 2018 18:03:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] ref-filter: free memory from used_atom
+References: <CAL21BmkdUiNgr4NqpwTdi9f47i85s8oXCZMmVx5VyNKotL78uA@mail.gmail.com>
+        <0102016657e7cfee-f1343b1e-9a85-4cae-990a-cc7177ea8487-000000@eu-west-1.amazonses.com>
+Date:   Thu, 11 Oct 2018 10:03:46 +0900
+In-Reply-To: <0102016657e7cfee-f1343b1e-9a85-4cae-990a-cc7177ea8487-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Tue, 9 Oct 2018 08:18:21 +0000")
+Message-ID: <xmqq5zy9jnv1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tvltecvy.fsf@evledraar.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 10, 2018 at 10:59:45PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> > Callers who _are_ prepared to act on the exit code probably ought to
-> > just use --auto-exit-code in their invocation.
-> >
-> > That said, I'm not entirely opposed to the matching config. There's
-> > enough history here that somebody might want a sledgehammer setting to
-> > go back to the old behavior.
-> 
-> If it's not a config option then as git is upgraded I'll need to change
-> my across-server invocation to be some variant of checking git version,
-> then etiher using the --auto-exit-code option or not (which'll error on
-> older gits). Easier to be able to just drop in a config setting before
-> the upgrade.
+> Release memory from used_atom variable.
 
-Yeah, that's the "there's enough history here" that I was referring to,
-but I hadn't quite thought through a concrete example. That makes sense.
+That much readers would know from a quick look of the patch text.
 
-(Though I also think the other part of the thread is reasonable, too,
-where we'd just have a command to abstract away "cat .git/gc.log" into
-"git gc --show-detached-log" or something).
+Without knowing what you are aiming at, it is impossible to judge if
+the patch is a good change.
 
--Peff
+Seeing FREE_AND_NULL(array->items) in the same function makes me
+think that the designer of ref_array_clear() function would want
+this sequence of events to work correctly in an ideal future:
+
+ * Do a ref-filter operation by calling filter_refs(), receiving the
+   result into an array..
+
+ * Do another ref-filter by calling filter_refs(), using different
+   criteria, receiving the result into a different array.
+
+ * Iterate over the resulting refs in the first array, and call
+   format_ref_array_item().
+
+ * ref_array_clear() the first array, as the caller is done with it.
+
+ * Iterate over the resulting refs in the second array, and call
+   format_ref_array_item().
+
+ * ref_array_clear() the second array, as the caller is done with
+   it.
+
+However, I think it would make it impossible for the second call to
+work correctly if this code freed used_atom without clearing, and
+not re-initializing the used_atom_cnt etc.
+
+If on the other hand, the only thing you are interested in is to
+just discard pieces of memory we no longer use, and you are not
+interested in helping to move us closer to the world in which we can
+call filter_refs() twice, then the change this patch makes is
+sufficient.
+
+And the place to answer the "what are you aiming at?" question is in
+the proposed commit log message.
+
+In an ideal future, I _think_ the file-scope static variables in
+ref-filter.c like used_atom and used_atom_cnt should become fields
+of a new structure (say "struct ref_filter"), with initializer and
+uninitializer ref_filter_new() and ref_filter_destroy().  When that
+happens, I think FREE_AND_NULL(used_atom) + used_atom_cnt=0 should
+become part of ref_filter_destroy(), not part of ref_array_clear().
+
+But we are not there yet, and a clean-up patch like this does not
+have to be a step towards that goal.
+
+> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+> ---
+>  ref-filter.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index e1bcb4ca8a197..1b71d08a43a84 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1996,6 +1996,9 @@ void ref_array_clear(struct ref_array *array)
+>  {
+>  	int i;
+>  
+> +	for (i = 0; i < used_atom_cnt; i++)
+> +		free((char *)used_atom[i].name);
+> +	free(used_atom);
+>  	for (i = 0; i < array->nr; i++)
+>  		free_array_item(array->items[i]);
+>  	FREE_AND_NULL(array->items);
+>
+> --
+> https://github.com/git/git/pull/538
