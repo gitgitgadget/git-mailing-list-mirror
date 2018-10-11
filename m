@@ -2,131 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 046681F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 01:50:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 433B21F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 01:53:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726071AbeJKJPF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 05:15:05 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:43981 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725989AbeJKJPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 05:15:05 -0400
-Received: by mail-pf1-f196.google.com with SMTP id p24-v6so3531248pff.10
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 18:50:10 -0700 (PDT)
+        id S1726052AbeJKJSk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 05:18:40 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:36199 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725989AbeJKJSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 05:18:40 -0400
+Received: by mail-wm1-f47.google.com with SMTP id a8-v6so7590492wmf.1
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 18:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hseb1RYNR/LCA0Pttk121DPYqMmMLxJL6j4WnXNq6u8=;
-        b=au447G2Fszx7PV7TQxDr7eaO24ldzKxDwd3DPRc9QRRcKKPc4Tv7r7IOsv6nMggLSB
-         jBq+aZoK7tQjU90sl06jRmqsOVq9qlVs8SaN81C2E8Hn5239Cn2B8N6Vxgf3fpCZQudt
-         MI5fjiw4PIy7dUEYGRCv03ZycPw5eAqQK3Ct61Oez/MZ3IJ5++ZByb9NU6OrE9sZwp8f
-         DzQV7z0wJ23FkMP5nBdZqVQn2/bmkFtaO4MJrVXCRIBgsb2WxVeEJLmPibA4nTQLGaOo
-         26RwO8hKEi4LfwsArOJrheFEAbfpv8CIny+Bsg31hGCAHjNZzmsXljMALv3pb9h3osYe
-         2YEQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UNjp1Yzgg5c/8SBGYSb3i3qNKT8cPxvqvZTP/n0PeRU=;
+        b=sLj4JcVrmW2kBNdV6vgjaZhx9emHD/oCoqWY0L2MWsbj6bwx0vMM7v12QeWOxJGeXo
+         +DM39hWawopOUDPo58yuH0VtbKASGBIvaKfOAFw4R98J3M5BWEO748Y2ydHyid4dgh++
+         WVlPQxA1KQmFq2ZCsua/iGzT3bqcT5KJaVTZJsFWo9F7gnEQULhtQi5VQ3Kuciu1JW3S
+         U77wFOcSxK9DsZMK8liYvK+GGD2BiByEc2XXtBrmw9bGOpw56Owoe+PY0IjwJrgx1TCm
+         kvP8OOuVWaBevcYE8ZIAEIGoFKU/OWrdzJaUE3hhpcwYPAC7KR4Ku8gVwQ8ICI7eWr3a
+         9XIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hseb1RYNR/LCA0Pttk121DPYqMmMLxJL6j4WnXNq6u8=;
-        b=E4sX/48Kv02Yx7cCHQZmOfH3MuKD7uEYVyJI1OQRUaUHJHXL2cWqTZJHPdchExkc5i
-         gDGIIHXk+DR+CLMMZ6CQf+jJrDK+NAAo1r+csIhnpIZQ0lD0vzXLFRHoV7CS810Rp8YJ
-         mNE1H2oP29Qgd2rbzetM/7OpD1dRv9SiTHv4jajYo7j4AJzYF/gYYZUhSmjTUyzOXuxq
-         daSWjTzWgujb8dFE9G96ISYviH4iPVlC+ePMAkU4/3k9McP5BcW6HHLcITeDTz6T4l4N
-         qg9V1Sx9FM+ipqVqvPZSnXgzxnSO9Mtyo5mgl2ichHeJXa+FZQSKuKbnFvv+fBbiU+a7
-         hz7g==
-X-Gm-Message-State: ABuFfohUeyr36mcntjAbZUUwtm+LNHgmQjVwRkqanrIAI/pG/CynMZY0
-        SLPhRK6JDZzVxz8xM1cZbBM=
-X-Google-Smtp-Source: ACcGV6005ZLs3cpT4bWaU3W0EuWVMNJnY5h+MNuKSv2kxPH7RDUfUG1o2y78SU+RoqY2jWrD6TMjCA==
-X-Received: by 2002:a62:ff09:: with SMTP id b9-v6mr36947368pfn.46.1539222609733;
-        Wed, 10 Oct 2018 18:50:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id s2-v6sm25429070pgo.90.2018.10.10.18.50.08
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UNjp1Yzgg5c/8SBGYSb3i3qNKT8cPxvqvZTP/n0PeRU=;
+        b=mJGlmZgZkoieI4gTkK8Dk/IxtEPlYVaUSuEKfNq7xiayAfRjL8uY0/GhYtlczT2HZR
+         RqtxjIls98EDWsoEGKKdeEtThB6+1dvXB7ivUAX8EABQiahjbDKlc1GhjOALJwwsUlHt
+         bfOvdaW+AQJn0ejdvQ+tEeAv70Vnjtvfmy5QT07c03pBO2kCcORnk1kmcSfuWPL4NSxA
+         +PyDW4giiGC3LGCP69BEtn11zNnsHj/9J78otr1zHvNw3cfURca5VLNyWMW35XqOJIHu
+         BbOh6Dw4DeFsDm86XoQGGPHlQl3OilQ05Lv7COhMJU0iGJhqXS9NqcTIqkSkwZnGk9Xk
+         XrJw==
+X-Gm-Message-State: ABuFfoioySTn6ABTEW1pmJEvcCcRZw+MPFCVzEm7Rgco64Kxa3OPRRcB
+        V0mcnpqFx2acHO1+DcnF93s=
+X-Google-Smtp-Source: ACcGV63SZwZIaXfGF+WNNJA2CqCluEr7/oPunv+AHDMF/Kkpb1AUrISPN5xBTkzyIJgFAKEJdFtPQw==
+X-Received: by 2002:a1c:e717:: with SMTP id e23-v6mr2688393wmh.145.1539222823784;
+        Wed, 10 Oct 2018 18:53:43 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b8-v6sm16105540wme.1.2018.10.10.18.53.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 18:50:09 -0700 (PDT)
-Date:   Wed, 10 Oct 2018 18:50:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [RFC PATCH 6/6] commit-reach: fix first-parent heuristic
-Message-ID: <20181011015007.GA40329@aiede.svl.corp.google.com>
-References: <2ba9d81a-5578-a81c-a7d9-179864cb4277@gmail.com>
- <20180906151309.66712-1-dstolee@microsoft.com>
- <20180906151309.66712-7-dstolee@microsoft.com>
+        Wed, 10 Oct 2018 18:53:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Alban Gruin <alban.gruin@gmail.com>,
+        Joel Teichroeb <joel@teichroeb.net>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
+References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
+        <3362a7a4-bb03-66a1-0f3f-929fd4b09195@kdbg.org>
+Date:   Thu, 11 Oct 2018 10:53:42 +0900
+In-Reply-To: <3362a7a4-bb03-66a1-0f3f-929fd4b09195@kdbg.org> (Johannes Sixt's
+        message of "Wed, 10 Oct 2018 23:25:11 +0200")
+Message-ID: <xmqqlg75i6zd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180906151309.66712-7-dstolee@microsoft.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Derrick Stolee wrote:
+> Am 10.10.18 um 07:43 schrieb Junio C Hamano:
+>> We haven't seen much complaints and breakages reported against the
+>> two big "rewrite in C" topics around "rebase"; perhaps it is a good
+>> time to merge them to 'next' soonish to cook them for a few weeks
+>> before moving them to 'master'?
+>
+> Please let me express my sincerest gratitude to Alban, Joel,
+> Paul-Sebastian, Pratik, and Dscho. It is such a pleasure to work with
+> the builtin rebase and stash commands on Windows now. I am using them
+> since a month or two, and they work extremely well for me.
+>
+> Thank you all for your hard work!
 
->  commit-reach.c        | 4 +++-
->  t/t6600-test-reach.sh | 2 +-
->  2 files changed, 4 insertions(+), 2 deletions(-)
+OK.  With another Ack from Dscho, I'd feel safe to merge the
+"rebase" topics 'next' and start cooking.  "stash" seems to be
+almost there but I think it deserves a chance for a final touch-up
+before hitting 'next' (see another thread with Thomas).
 
-I like this testing technique, and the test passes for me.
-
-Except: if I put
-
-	CC = cc -m32
-	NO_OPENSSL = YesPlease
-	NO_CURL = YesPlease
-
-in config.mak (the first line to force 32-bit pointers, the others
-to avoid some dependencies on libs that I don't have 32-bit versions
-of), then the test fails for me:
-
- $ ./t6600-test-reach.sh -v -x -i
- [...]
- expecting success:
-         cp commit-graph-full .git/objects/info/commit-graph &&
-         run_and_check_trace2 can_all_from_reach_with_flag num_walked 19 input \
-                 "test-tool reach can_all_from_reach"
-
- ++ cp commit-graph-full .git/objects/info/commit-graph
- ++ run_and_check_trace2 can_all_from_reach_with_flag num_walked 19 input 'test-tool reach can_all_from_r
- each'
- ++ CATEGORY=can_all_from_reach_with_flag
- ++ KEY=num_walked
- ++ VALUE=19
- ++ INPUT=input
- ++ COMMAND='test-tool reach can_all_from_reach'
- +++ pwd
- ++ GIT_TR2_PERFORMANCE='/usr/local/google/home/jrn/src/git/t/trash directory.t6600-test-reach/perf-log.t
- xt'
- ++ test-tool reach can_all_from_reach
- can_all_from_reach(X,Y):1
- ++ cat perf-log.txt
- ++ grep 'category:can_all_from_reach_with_flag key:num_walked value:19'
- error: last command exited with $?=1
- not ok 11 - can_all_from_reach:perf
- #
- #               cp commit-graph-full .git/objects/info/commit-graph &&
- #               run_and_check_trace2 can_all_from_reach_with_flag num_walked 19 input \
- #                       "test-tool reach can_all_from_reach"
- #
-
-When I cat perf-log.txt, I see
-
-  ..category:can_all_from_reach_with_flag key:num_walked value:20
-
-instead of the expected 19.
-
-Known issue?
-
-Thanks,
-Jonathan
+Thanks.
