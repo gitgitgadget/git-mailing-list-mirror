@@ -2,102 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDF5A1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 02:18:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC5C81F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 02:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbeJKJnN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 05:43:13 -0400
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:35141 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725971AbeJKJnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 05:43:13 -0400
-Received: by mail-wm1-f44.google.com with SMTP id e187-v6so7690070wmf.0
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 19:18:11 -0700 (PDT)
+        id S1726868AbeJKKNq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 06:13:46 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39621 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726788AbeJKKNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 06:13:46 -0400
+Received: by mail-wr1-f65.google.com with SMTP id 61-v6so7844508wrb.6
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 19:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dCRtyPlM7JTfstToNdcQpfrAGeTYSfNu/v0jT8LVKVs=;
-        b=Ib9IXFkj9B1T/lW55+9j1kBtFwSAxHvL2rmsS7XgS5QXcti/j3Czvxaf/umWw0Z1Ed
-         sm/JFk2mgnOetzymN8PrdrQMAwInFpAyF1vrpxtaNr2pEwapMDRd4IlAmlAE1/p/QdKA
-         c9bFXgKLXptYTXeuXmDnq3HT3Hx97PD3D5mtsp7ceY+PfT7xo/5sZ2wByZBqN1USP0IK
-         FbClTVNr4ELb9Ltg1hqG0HGjZeDtULC/Xiar9v4bO0blLvPAK6OoGkkbLq2rSkYoz5Ly
-         6CKAckXkrx1zF+udpPq8p2xjMdrtB857BAe2k1DCGwgI1Z3MAQ/hVWwY/NQZEVSgHRl6
-         bS5A==
+        h=subject:date:from:to:cc:message-id:in-reply-to:references;
+        bh=YCD6T23HEfVqwCeB3BdNW/fxI/sKwDh0EsdHc5lfNW0=;
+        b=sCszbE6rnaqejphgqCWQghsUGzHnqFD0D8ycTLoo2z93oLwVEbz82UPdhuHHRiGA1o
+         3EQesfPmFZS6Eg7kCKONKsMCO0jwfxpjTGTBBIL5kySihWf1bK9JyDGmrc/Eb9vXySVR
+         9AaRFDyIkRJJ4DvFWbjKS6nZovit2teHT7/8f+TytzUhlS2US4D4vkFtfqPBdnCyFUM0
+         uc86WsCL2R9CEBZpoc9IPwU/JexLhHPMOeB1aQo5qyi1hBe1V6veez12iWe/d8G8aWPd
+         sCz9/erh9IqcbgujrmlzxuQakiI5LEHPl1s9NAeC8rcMjZJdx60s9miLyv1hBb6Bu2k8
+         vJgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dCRtyPlM7JTfstToNdcQpfrAGeTYSfNu/v0jT8LVKVs=;
-        b=sEf3cdQTpCzhttHrqsKUEp/jljdCkVOpOHOWeUxnRjwusa8eddMisC4cDjgRmobjKV
-         wtEU1tMzXuj21Sejf5pClAH4DlvXc2+U+bW6PJiXVo1uih2CoKQ/vuyqNwLXdonTDs2U
-         0SBSAmrmJLmsm0pwqXZWKBnfm87bafwCOv640GqkqUEkaGIIQWcvJl17vfBm6O1snMbU
-         upqKn8d3JRUHPtmsdXu6CHLY1I7AWHi80ZXzN7DcA/h7s4kPW5PtZDsL18fOMS4x3JIi
-         ciTFjk25UjpcMDpStxnfmajbpGP4c2UHULhN38YcpNJe0kuRX4BlZtrKRUbY6FgSDzWk
-         RmyA==
-X-Gm-Message-State: ABuFfogyNSlhc8ohs+k1U4YO740rduoHZn3+5bmI17dt6lh41lNfocS7
-        Egby9NAM8diVTZ5lvzZwWaQ=
-X-Google-Smtp-Source: ACcGV60V3XucKHxEdfvJ0ZMGn63JLxaraDuBBW4WLKGt4AOpk1L711WhxTEymCtCUi+LBO27+aruAA==
-X-Received: by 2002:a1c:234c:: with SMTP id j73-v6mr13632wmj.68.1539224290883;
-        Wed, 10 Oct 2018 19:18:10 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e196-v6sm13241812wmf.43.2018.10.10.19.18.10
+        h=x-gm-message-state:subject:date:from:to:cc:message-id:in-reply-to
+         :references;
+        bh=YCD6T23HEfVqwCeB3BdNW/fxI/sKwDh0EsdHc5lfNW0=;
+        b=k4MuBtNganWkHUkdBvLzZE3RIVlwwysB9Bm3B6Uv3PPUE2X2N5lz2M4fP7SNzDIoIj
+         UtDSPPcycwzSHLOhCg/jhxdTgw/jIxsYhNrFQXmCfC5w2sOw7oB5sWkA6C/3m+mGGsQV
+         XfEI86rSedyAopH0qcLtYiDHee5wnOuxYH2rTTdYYS0NRDD1Y89n01TDmaaj/xq24oVm
+         TR9HVbQXXmjbJn5Zpy2Oy92LfWKTI49M6qPa2dEVSO9DROstRIlKyI0MeGawzri3J+Q/
+         HKE/l8J+vdD91qb1zoDB6AiaheO8egLxK3cxskG0zR78mJl4eW377vK9KHaQHlYUFqUU
+         HksQ==
+X-Gm-Message-State: ABuFfojrHiDKnjwV6Kpb/M0Ry5HXxM+5RqvuvE26WFsE5DN//wLLhg2l
+        F7AW6tmAa9UHBrB2e+yzJMc=
+X-Google-Smtp-Source: ACcGV61oicNUZmlaPy5+wNG6lw1F308WdJZg6Dwiwn9F0QPUXrntw6iFnzDIaDKa62AL0DrMPUpWxw==
+X-Received: by 2002:adf:e681:: with SMTP id r1-v6mr26148284wrm.294.1539226119502;
+        Wed, 10 Oct 2018 19:48:39 -0700 (PDT)
+Received: from gmail.com ([216.218.222.12])
+        by smtp.gmail.com with ESMTPSA id j6-v6sm19109102wru.20.2018.10.10.19.48.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 19:18:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: builtin stash/rebase, was Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
+        Wed, 10 Oct 2018 19:48:38 -0700 (PDT)
+Subject: Re: `--rebase-merges' still failing badly
+Date:   Thu, 11 Oct 2018 02:44:20 -0000
+From:   Michael Witten <mfwitten@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org
+Message-ID: <9a2bd0246038424ab1cdfa68f07cdd4d-mfwitten@gmail.com>
+In-Reply-To: <xmqqsh1djtij.fsf@gitster-ct.c.googlers.com>
 References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1810101203571.2034@tvgsbejvaqbjf.bet>
-Date:   Thu, 11 Oct 2018 11:18:09 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1810101203571.2034@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 10 Oct 2018 14:57:35 +0200
-        (DST)")
-Message-ID: <xmqqtvltgra6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+            <645452fda0ae411d86487b76aaac8151-mfwitten@gmail.com>
+            <xmqqsh1djtij.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, 11 Oct 2018 08:01:40 +0900, Junio wrote:
 
-> https://github.com/git-for-windows/git/commit/6bc7024aecdb1aeb2760c519f7b26e6e5ef21051
->     fixup! builtin rebase: support `-C` and `--whitespace=<type>`
+> Michael Witten <mfwitten@gmail.com> writes:
+>
+>> On Wed, 10 Oct 2018 14:43:46 +0900, Junio wrote:
+>>
+>>> We haven't seen  much complaints and breakages  reported against the
+>>> two big "rewrite in C" topics  around "rebase"; perhaps it is a good
+>>> time to merge  them to 'next' soonish  to cook them for  a few weeks
+>>> before moving them to 'master'?
+>>
+>> In my opinion, the `--rebase-merges' feature has been broken since the
+>> beginning, and the builtin version should  be fixed before it is moved
+>> ahead.
+>
+> [...]
+>
+> If "rebase-merges" has been broken since  the beginning, as long as the
+> "rewrite in C" topics  around "rebase" do not make it  even worse, I do
+> not think it is a good move  to block the topics moving forward. If the
+> feature were so  broken that it is not practically  useful, then people
+> wouldn't be using it  in the versions of Git before  the rewrite, so it
+> won't harm  anybody if  the same  feature in  the rewritten  version is
+> equally (or even  more severely) broken, as long as  the other parts of
+> the feature works at least equally well compared to the older version.
+>
+> We are not in the business of hostage taking.
+>
+> What  *should*  block  the  rewrited  version  is  a  regression,  i.e.
+> something that used  to work well no longer works  or works differently
+> in such a way that established workflows need to be adjusted.
+>
+> [...] I do not think that is a reason to keep "rewrite in C" waiting in
+> 'pu'.
 
-For c7ee2134d4 (rebase-in-c-4-opts); a single liner that is
-obviously correct.
+* Your logic  is appealing,  and I  nearly pursuaded  myself by  the same
+  reasoning to submit my email as  a separate discussion, as you suggest.
+  However, what convinced me otherwise is the following:
 
-> https://github.com/git-for-windows/git/commit/1e6a1c510ffeae5bb0a4bda7f0528a8213728837
->     fixup! builtin rebase: support `--gpg-sign` option
+      The  closer you  move  the rewrite  to  a fast-forward-only  public
+      branch  name, the  more  likely downstream  projects  are going  to
+      set  up  new,  long-lived  releases around  this  very  useful  but
+      nevertheless broken feature.
 
-For 28a02c5a79 (rebase-in-c-4-opts); the change looks correct (see a
-separate message).
+  The moment you announce a new release, there are going to be a bunch of
+  people who grab that release and then  NEVER look back, and so the rest
+  of us will be stuck with this problem for who knows how long.
 
-> https://github.com/git-for-windows/git/commit/ddb6e5ca19d5cdd318bc4bcbb7f7f3fb0892c8cc
->     fixup! rebase -i: implement the main part of interactive rebase as a builtin
+  So, not only is this an appeal  to the authors to fix this problem, but
+  its also  an appeal  to you to  make sure that the  next  major release
+  includes the fix.
 
-You said Alban already has this in the update, which I took
-yesterday, so I'll ignore this one.
+* Also, I say the following without irony or tongue in cheek:
 
-> https://github.com/git-for-windows/git/commit/2af24038a95a3879aa0c29d91a43180b9465247e
->     fixup! stash: convert apply to builtin
+      Maybe, no one  has complained  because  few people  are using  this
+      feature yet, or  their commit summaries are  simplistic, or they've
+      got workarounds (as I've got).
 
-I think we are expecting another round of update, so I'll ignore
-this one for now, too.
+  Not  only must  this feature  be turned  on explicitly,  but `git'  has
+  existed for  over a decade  *without* it;  users who are  interested in
+  sophisticated management of commit history have already developed other
+  ways  to achieve  the  same result  (I  know I  did),  or their  commit
+  messages are  so simplistic that  the bug  is never triggered,  or they
+  just plan around it by automatically running a quick search/replace for
+  the offending characters or for the irritating "labels".
 
-> Speaking about the two `rebase` ones: they are simple fixup! commits,
-> could I trouble you to fetch and cherry-pick them into `pu`, or would you
-> prefer if I sent another iteration of `rebase-in-c-4-opts`?
+  If the last decade has shown  us anything, it's that git's fundamentals
+  are  so good  that programmers  can get  around any  bug on  their own,
+  without having to appeal to others  for help. And, what is a programmer
+  if not someone who is used to making things Just Work [Damnit]?
 
-Rebuilding 4 will involve rebuilding all the later ones anyway, so
-I'll just try doing it myself and report back if I saw issues.
-Thanks.
+  As an illustration,  consider the recent `break' command  that is being
+  added to the repertoire of `git  rebase -i'. Hell, I (and probably many
+  others) have been doing that for YEARS with:
 
+      x false
+
+  No need for a "new" command. I bet that 10 years from now,  people will
+  *still* be using their own ways,  and will *still* be totally oblivious
+  to the existence of `break'.
+
+  That is to say, I wouldn't put much faith in the degree to which people
+  report issues. The programming world has a lot of itchy backs, and just
+  as many personal inventions for scratching them.
+
+As always, thanks for taking the time to review everyone's input.
+
+Sincerely,
+Michael Witten
