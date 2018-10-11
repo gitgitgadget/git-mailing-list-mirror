@@ -2,118 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 116DC1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 20:36:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6465B1F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 20:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726227AbeJLEFO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 00:05:14 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43565 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725819AbeJLEFO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 00:05:14 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n1-v6so11105100wrt.10
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 13:36:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=icn1sdIod36KWWnKJfkNkCVTXEnzRnITftkTEKnOTpA=;
-        b=nmIfsgbDsXeu+aNR6AVMkBHseCzu9lEFrnMbqgomC93kDOhJQJHUEkxQr70byGrWcW
-         5eelUIpqsAu2epH5cc0Smt+oo3enRUBtJahUcBBBA4waKOgFMKdUiK1OaNMwfbCf4bNH
-         OJsF1Ztnxm8+rLu5F1L/ilFsBEr25/aj/L4SG7oQlBmnq9hRSfpOFgpG8/W8+rTKaU5r
-         AAKTwXglM2SDT5YpTgHvUb1h98MUKut/k6MJrK0UFr9oxFIZwIQKPqCehnL1+Alm/SBo
-         /Iw3FDr/bQtEi//AF/0ryFXlGqdpxMJr1yPN7yRKw5gbQe4EFhahnBMXBfDw0g6jNri2
-         Qing==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=icn1sdIod36KWWnKJfkNkCVTXEnzRnITftkTEKnOTpA=;
-        b=jZpx6H0xnF0H2DtgLwNmDM4w9hgkwcWPXPwKc9E/sNHuI1xGnooyS6rc9FseYjee3H
-         8zPVdYHaLE6ofX55NPkatVhhh4VfJR3/nHkxEwiTjlouEHFbvS64vZgLig56HU5D2sbB
-         Q4R4ChVZza32y7lYsyyOEj32ZGKcFcKFGYowXh6CqrTo0kgFu+MqW6cg4hgBLTOA7JmM
-         PdQHAs6AF0v0peoXq6ig0PTuf/nmStOmrNWHA8j1IqeSzJLBgKC0G3h3kFsLfFGGdv48
-         +6k2qNQUSJdR0Xhshj6dx0vzioveWEVqlhXCKn6pTL/evpBtol30XzFPNzBP+mceYObY
-         ZlwQ==
-X-Gm-Message-State: ABuFfogIm+9+PHM6aB4VUDNesSEsdlSdGp199tv66+IK/Xy7JgU6DOQ4
-        fQPYZq9mGSFcx350gWgNQVkP0u8e
-X-Google-Smtp-Source: ACcGV63SdNiv/+bxEB4Buf8kCPT0HtCTNfW61HKnuQwuOZ86KTnvdlUKvOUVTuB34RF9+clNA7BRew==
-X-Received: by 2002:a5d:60c3:: with SMTP id x3-v6mr2998181wrt.193.1539290177836;
-        Thu, 11 Oct 2018 13:36:17 -0700 (PDT)
-Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
-        by smtp.gmail.com with ESMTPSA id o201-v6sm25933064wmg.16.2018.10.11.13.36.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 13:36:16 -0700 (PDT)
-Date:   Thu, 11 Oct 2018 21:35:28 +0100
-From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Daniels Umanovskis <daniels@umanovskis.se>, git@vger.kernel.org
+        id S1726074AbeJLEPV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 00:15:21 -0400
+Received: from mail.weplayciv.com ([162.221.200.53]:32794 "EHLO
+        mail.weplayciv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbeJLEPV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 00:15:21 -0400
+Received: from [192.168.0.105] (c-3985e555.02-149-6c6b7013.bbcust.telenor.se [85.229.133.57])
+        by mail.weplayciv.com (Postfix) with ESMTPSA id 0646594EC03;
+        Thu, 11 Oct 2018 13:46:22 -0700 (PDT)
 Subject: Re: [PATCH v2 1/1] branch: introduce --show-current display option
-Message-ID: <20181011203518.GA2385@rigel>
+To:     =?UTF-8?Q?Rafael_Ascens=c3=a3o?= <rafa.almas@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 References: <20181010205432.11990-1-daniels@umanovskis.se>
  <20181010205432.11990-2-daniels@umanovskis.se>
- <20181011003440.GD13853@sigill.intra.peff.net>
- <20181011154319.GA6386@rigel>
+ <20181011003440.GD13853@sigill.intra.peff.net> <20181011154319.GA6386@rigel>
  <1409ebd2-d72c-fbd6-bf5c-777342723ca2@umanovskis.se>
- <20181011175136.GA8825@sigill.intra.peff.net>
+ <20181011175136.GA8825@sigill.intra.peff.net> <20181011203518.GA2385@rigel>
+From:   Daniels Umanovskis <daniels@umanovskis.se>
+Openpgp: preference=signencrypt
+Autocrypt: addr=daniels@umanovskis.se; prefer-encrypt=mutual; keydata=
+ xsBNBFKoLuABCADTUslhPOYPDA+TmmmJr7l5Ybrp7dUTs9A8O6Vkd3ucNeZQue+3lS3/VJwG
+ ZPJprysTdFEeZkJWEleO9rYNe4l4EciaqaRjXRR9r95qEqgf7tc37RU003VNxkuvJnweKypJ
+ 5G247dy6Z3ORMKw8usX4uO+tsxsZqXprgSJJyU1QPMMT9oc5Qyec9ny5GdhRCIbwhVI9y6Q4
+ RPpI4Czh9s1Mau0V0Yf9eOoW2zPlD8R67AUZ+myR6Eg9T71STAdYYEy9+EA/G27kc8J+yB43
+ NQZ9sAFbMdundbISUoAALxqzC672u83YoTsHdFEzztz76PkY7KpDKH8Kd4Qzr0NZSHAzABEB
+ AAHNKkRhbmllbHMgVW1hbm92c2tpcyA8ZGFuaWVsc0B1bWFub3Zza2lzLnNlPsLAeAQTAQIA
+ IgUCUqgu4AIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQUfamH/05PVqFzgf/Xf0y
+ Kx6kovYltkRZovLL+YNQ8ung4dCleC4MHegkscndLX3zgIu7VgqniLWjEnkFA5g/MaKwzKir
+ YR9pvb5WlEXjK/Rh1LY+W7laBuGwJHXoPTHb843OGAuGoxbyRXiylsICx95/W0m9UZea/8xM
+ 6kmIEh1cD+g0Pd7VkCUm7SnOQSEHSnqvsspsGpFe4GuB+8X8dVOCa/4IRMwDSj5JDwX4gmlH
+ DF1k4+gqvEzBgNX+ayA+uME0BN1PJ4u/iqo680F5DQGTOBXZCug+nlxYb7gJQXhFVlvdG5uh
+ TypRTzCvC/aPAcULaHoCz9M6hwJgvoO/IK4uvEXY7P+qN7Xxtc7ATQRSqC7gAQgA4+8pYlGe
+ 1s7CFYl2OaHLLeupVpXd6eDMhi4NDKA/0Qnr/VnuF/VaPQ79KEiNDl1HMV1yoXzuQsdvfeQc
+ DsnchnJI/YhlSF6m67jG5PQtkcrGqEB87f0JQ1mcgwpJCQx4EzvMlHbg6O9k0vIsP3O8+v7h
+ +a8n78gKVUm/nMqIT939eqxtmccfIbiE/KKbigiOwUpiOrUAk8TR4dZ8U2YtIU5WnWhGIJeK
+ fzLLHO2Gb5uk4toQBq4fEUW4I6Ar8blHmo1vHvG+gWWKeZA0n2sxjqGpfnGNZNyd4fkh728F
+ reiGd2lWA/vB4m9Oh9auOKIOFdgUlDgSK2TvuALrzUmUbQARAQABwsBfBBgBAgAJBQJSqC7g
+ AhsMAAoJEFH2ph/9OT1aC/sH/2JWo3MEK7/gpIfAFgqBsxWAeggbiBnu06NTc7u5G2q2znzN
+ MhWlHEr8tOtPwV/6IxoZsHEdyUxBvM90vtmRnYoDL0S/xiwlimUuA+GxPFEN67HjEik3NJQU
+ in36Q69hT3HyzG4pyWB2Uk6cx6D+4tMdSCHcO5wxjFPIFHL7/2YLpUfLWHXVdtxT6/2Roo+G
+ +Wx2BSEgXqGR2i0HLZUqU0Oz/BHxLTtef+dUAWu0FmByPChoN92+0CLWEm/s5mBaCsMHd76v
+ NIofCYEIBFTeTe2hKuBv4D5UtZNCz7MucSzG1tIOWg+vifpLm69WNfXhvpiZ8GDCLeL2Bs09
+ msVfFOM=
+Message-ID: <3b6f9f63-8512-4fb3-7506-5b149370724f@umanovskis.se>
+Date:   Thu, 11 Oct 2018 22:46:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
+In-Reply-To: <20181011203518.GA2385@rigel>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181011175136.GA8825@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 11, 2018 at 06:36:02PM +0200, Daniels Umanovskis wrote:
-> I am not a fan because it would be yet another inconsistency in the Git
-> command interface.
+On 10/11/18 10:35 PM, Rafael Ascensão wrote:
+> The output of the proposed command is also a bit inconsistent with the
+> usual output given by git branch, specifically the space alignment on
+> the left, color and * marker.
 
-The output of the proposed command is also a bit inconsistent with the
-usual output given by git branch, specifically the space alignment on
-the left, color and * marker.
+The proposed command therefore takes a new switch. It's definitely not
+perfect, but doesn't give the existing --list new and different behavior.
 
-In addition to not respecting --color, it also ignores --verbose and
---format. At this stage it's closer to what I would expect from
-$git rev-parse --abbrev-ref HEAD; than something coming out of
-$git branch; Resolving HEAD makes it consistent with rest.
+> At this stage it's closer to what I would expect from
+> $git rev-parse --abbrev-ref HEAD;
 
-On Thu, Oct 11, 2018 at 01:51:36PM -0400, Jeff King wrote:
-> Yeah, I agree.
-
-Not sure which parts you meant, so I'll assume you didn't agree
-with me.
-
-I doesn't seem far fetched to ask for an overview of my current branch,
-feature1, feature2 and all hotfixes with something like:
-
-  $ git branch --verbose --list HEAD feature1 feature2 hotfix-*;
-
-The 'what's my current branch' could be just a particular case of this
-form.
-
-My defense to treat HEAD specially comes in the form that from the user
-perspective, HEAD is already being resolved to a commit when HEAD is
-detached (Showing the detached at <hash> message.)
-
-Is there a strong reason to *not* "resolve" HEAD when it is attached?
-Would it be that bad to have some DWIM behaviour here? After all, as
-HEAD is an invalid name for a branch, nothing would ever match it
-anyways.
-
-
-Thanks for the input. :)
---
-Cheers
-Rafael Ascensão
-
+The proposal is largely to have similar output to that command, yes. I
+expect that "show current branch" is something that's available in the
+branch command, even completely disregarding questions of whether it's
+API stable, etc.
