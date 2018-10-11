@@ -2,92 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25FF41F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 22:45:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E716C1F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 22:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727042AbeJLGOv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 02:14:51 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40515 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725840AbeJLGOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 02:14:51 -0400
-Received: by mail-wr1-f68.google.com with SMTP id d2-v6so11399813wro.7
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:45:27 -0700 (PDT)
+        id S1726568AbeJLGWz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 02:22:55 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46210 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbeJLGWz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 02:22:55 -0400
+Received: by mail-ed1-f66.google.com with SMTP id g32-v6so9753111edg.13
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=uADxuNd8TPwPloySTXfxEJwtFUwLSMle3PTdnO03upI=;
-        b=LE43PWiLOjGWZs2+CsAy76qLWGOg2IuvYmkG91YRxWvCIXFVtl5mLUgxixH+zFEMQf
-         Iz8lANYmE7ckzPAL59ugHl5gPq0aId8/ls5nd47BF7M6CNx/yeDqpIONdBOJtEDFSnq1
-         2q0RGyuBMfZigtybthn53tewD+q9qVWR1fXkE/WEc7kqnW9Z7EpD+Y0HP0iZIxEMV/93
-         X3e+7wSD1HCVnn1pd1L64I7pH5ePLTh+hYinaYc5quhOPk591yzhSbgrruEFgEs1D+RA
-         SkyBa6j//5km+6zLGO5jm+3UpquD4x7xkTnuXE+zipsOpefWQgcQjl0eWlH3ylUPG/z5
-         h0yw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JLuJML2EtMWajszO0qrDjrdkeUMqg2cSzmsvksbYpRs=;
+        b=AtLyjLHYN81w3ufOzjoSzZ4YRgTBgVUpKa6185OnSeY0GpZuLdn4PtZULcaYzlbIAD
+         NWxsJUPtVjj7zKVQs9s5GMfgSh/sO65jHFiiiAyC6sOIoaig39NocdIujmF5/T/qkEa2
+         BljmseZ10032IAQWi+40cnpDic721VrO5UrNMZx9ULY/EB1KUkJOer2cUPiJi2IOG4uW
+         aHBz2gUccbkqaLfoglzSYKFHmSZkGhkFQqgINXzaZqykOlI+wwRrdg1NVw+RZY9qlmX9
+         OVmqV8kAme+Au4MQ1cpv3GdX6CeaxSGn67i4mpsiWVYn0/K42qrjBtmuuBdKXr1Vprf/
+         vBzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=uADxuNd8TPwPloySTXfxEJwtFUwLSMle3PTdnO03upI=;
-        b=kDpjcKMyaIVo/SMX+2P0j/oC8J2A/kQzCNAjRwHAO+wjRliuXJGL/pUaISNZhKTXSz
-         wkNYWfOx+nrbCM2cwjSEG/Cke+dlZqGp3bdEyl7wBnwZWxrWgJ7s1SvcBVJcJ6W7NOOQ
-         eVGxX6cbDttHGJakDiSJziS4aj5H4QAjfJFrORURc5rRR2NlZsIVnta7NtQ6m2g1yZ0q
-         H1nKnJr9nLW0+r1eEp4kgkWfZYKJGW3uJTulngz6Vxf1rf8fbpgQrC/v+ee43gZtlSaZ
-         yec++xLCJlCT0UJ/dgnlSmgHfOcLhmpJrjdj6gjFjuFj3+kAMLvVUk0pLetIZZmav4Ui
-         2ilQ==
-X-Gm-Message-State: ABuFfogs5lH3A20SSA0PADo4rPhbNndeDaUOsIgtNyi45vvEX6WwUpvl
-        4HHTbazBtsKZZAjD7J4KH+ajOO3TT7k=
-X-Google-Smtp-Source: ACcGV60XSuBU0Y45wTQlHTlcJMPVR2ty0NrKLV5HZNEyPucp7MeA5Tg9hBfMOqlFh5cLVFM6WS8k6g==
-X-Received: by 2002:adf:c187:: with SMTP id x7-v6mr3113975wre.233.1539297926931;
-        Thu, 11 Oct 2018 15:45:26 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n11-v6sm34079549wra.26.2018.10.11.15.45.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 15:45:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] push: add an advice on unqualified <dst> push
-References: <20181010104145.25610-1-avarab@gmail.com>
-        <20181010104145.25610-3-avarab@gmail.com>
-        <20181010205505.GB12949@sigill.intra.peff.net>
-        <87r2gxebsi.fsf@evledraar.gmail.com>
-Date:   Fri, 12 Oct 2018 07:45:24 +0900
-In-Reply-To: <87r2gxebsi.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 10 Oct 2018 23:23:25 +0200")
-Message-ID: <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JLuJML2EtMWajszO0qrDjrdkeUMqg2cSzmsvksbYpRs=;
+        b=ZztQwZj1+WZyxYlZTDEEbY0d8gCkpbNXrtTThmQ+N72zlHisEqFMq1H6BHyMWLUqcF
+         hY3qDAYENwZiEL5FQlzANp8Tl0S/PZVh6hQkG0WNjOlbIl1rLrv/3OqZyrnxG48vSKBr
+         m0zkdcfQJXRCVHNe+XDO0os8MdYX+k5XcO6yGOlGl946Jt5LYVLo+pXSmVqIxrMjQEwc
+         fKusKJLD98t/IyEqC1xtB7EIrbCtImwtKYHRq3Z9xEs7/PZbYMIRJPuXeFD3bnVs6HRC
+         ahlrzm6DK0jk5yS3K+XC6irp+5RQZHaYcL0k23TVRwiPix9/HpJWXAW95fagLSH+nA8v
+         bz5A==
+X-Gm-Message-State: ABuFfogwwE6qYdipcHx9SrVTJBsipX82YJfv/NsGazJb7eRuhWj5M1Yv
+        wqORIInBBPUppQygfBQWHCwoKnSb
+X-Google-Smtp-Source: ACcGV63MqTEgxAfEqTLoCBdqw7kUzqGyYWM34041OXPQXHPsxWT68uAjchr2Ypg2B3QBVofuDM08Ww==
+X-Received: by 2002:a17:906:e0d5:: with SMTP id gl21-v6mr4443193ejb.92.1539298409394;
+        Thu, 11 Oct 2018 15:53:29 -0700 (PDT)
+Received: from szeder.dev (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
+        by smtp.gmail.com with ESMTPSA id l42-v6sm9004259edb.24.2018.10.11.15.53.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Oct 2018 15:53:28 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 00:53:26 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Daniels Umanovskis <daniels@umanovskis.se>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] branch: introduce --show-current display option
+Message-ID: <20181011225326.GC19800@szeder.dev>
+References: <20181010205432.11990-1-daniels@umanovskis.se>
+ <20181010205432.11990-2-daniels@umanovskis.se>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20181010205432.11990-2-daniels@umanovskis.se>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Wed, Oct 10, 2018 at 10:54:32PM +0200, Daniels Umanovskis wrote:
 
-> On Wed, Oct 10 2018, Jeff King wrote:
->
->> This is much better, and I love the customized behavior based on the
->> object type.
->>
->> I wonder if we could reword the first paragraph to be a little less
->> confusing, and spell out what we tried already. E.g., something like:
->> ...
->
-> Yeah that makes sense. I was trying to avoid touching the existing
-> wording to make this more surgical, but you came up with it, and since
-> you don't like it I'll just change that too.
+[...]
 
-OK, for now I'll mark these two patches "read" in my inbox and
-forget about them, expecting that a reroll of 2/2 with improved
-messages would appear not in too distant future.
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index ee6787614..e9bc3b05f 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -100,6 +100,47 @@ test_expect_success 'git branch -v pattern does not show branch summaries' '
+>  	test_must_fail git branch -v branch*
+>  '
+>  
+> +test_expect_success 'git branch `--show-current` shows current branch' '
+> +	cat >expect <<-\EOF &&
+> +	branch-two
+> +	EOF
+> +	git checkout branch-two &&
 
-Thanks, both.
+Up to this point everything talked about '--show-current' ...
+
+> +	git branch --current >actual &&
+
+... but here and in all the following tests you run
+
+  git branch --current
+
+which then fails with "error: unknown option `current'"
+
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'git branch `--show-current` is silent when detached HEAD' '
+> +	git checkout HEAD^0 &&
+> +	git branch --current >actual &&
+> +	test_must_be_empty actual
+> +'
+> +
+> +test_expect_success 'git branch `--show-current` works properly when tag exists' '
+> +	cat >expect <<-\EOF &&
+> +	branch-and-tag-name
+> +	EOF
+> +	git checkout -b branch-and-tag-name &&
+> +	git tag branch-and-tag-name &&
+> +	git branch --current >actual &&
+> +	git checkout branch-one &&
+> +	git branch -d branch-and-tag-name &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'git branch `--show-current` works properly with worktrees' '
+> +	cat >expect <<-\EOF &&
+> +	branch-one
+> +	branch-two
+> +	EOF
+> +	git checkout branch-one &&
+> +	git branch --current >actual &&
+> +	git worktree add worktree branch-two &&
+> +	cd worktree &&
+> +	git branch --current >>../actual &&
+> +	cd .. &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'git branch shows detached HEAD properly' '
+>  	cat >expect <<EOF &&
+>  * (HEAD detached at $(git rev-parse --short HEAD^0))
+> -- 
+> 2.19.1.330.g93276587c.dirty
+> 
