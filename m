@@ -2,260 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 364DF1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 09:45:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19D351F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 09:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726399AbeJKRM0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 13:12:26 -0400
-Received: from mail-lf1-f49.google.com ([209.85.167.49]:36000 "EHLO
-        mail-lf1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbeJKRMZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 13:12:25 -0400
-Received: by mail-lf1-f49.google.com with SMTP id d4-v6so6185177lfa.3
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:45:53 -0700 (PDT)
+        id S1727593AbeJKRUf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 13:20:35 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:41643 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726035AbeJKRUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 13:20:34 -0400
+Received: by mail-ed1-f52.google.com with SMTP id x31-v6so7657689edd.8
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=NpwmCWFjNnwZIEXIQgKnO5ocRMzxfAodox2Hns+JjS8=;
-        b=sHXkreAEbLYjWORYx3nyVdZ3BJYpMLFkez9zlQpdy6z9hM8AmxU9yXCLC0t7axxVo9
-         eLbyHdkMHDFzcQKUIoCM8NYG8u4a80Kndq/obAhuXasGdz2o8E8xpHGtCACnFFmHzhw5
-         OsPN1MyvjUeR4mKIj99hwZIXASlk/7MMnM/AxLjnOT1NijJM2cDchMBSrb/l/xhgRnSO
-         8Cxz9oXPssWeEXen0iD68PkeIVwzSVoSDksS+5LPDvTgI0axFUcZZlFdByT4NzkYcJCI
-         UPOa1l8LdyhNC20UvqOA5Dy0mvXH7vriAdBc8YuiFH114X8OQdw9vykvdQxSnptkyOrQ
-         ahsw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZXyIO3vqlc0wqtHQ3Ukc8Yx2BNIFMmJiQmeF13nZs0g=;
+        b=eIAmScSWX3hWC9TN2oeof2eFqEEt/SkSEE/HPQmTc8xB1gu7aIIN1JBFptaELX3uFL
+         pZ71S9wdOeQJEmK+5rrICc/xV4BQW3uPePOqpRJpOe1iuvHDvnQZRmcJ+92IGiRgNX5+
+         5XEdU+mAKiNlwqSEZWR50/RhgrGoYLbA+8t6x99vIbokWSu1J59TfIHQtyeAnETa/ZbN
+         hk4ZbpN40vQ60B5ap70dOYu8BzvVxG8wEIa2E40fgGltM8m3btXFu3j5tKbz13cmMD48
+         73JEb5rxqGedTte/T3CT2ZgU+zugT6d7wla5QL+wfZmb1JmtCQIltx2vqULUJ0RZ0WAU
+         U3Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=NpwmCWFjNnwZIEXIQgKnO5ocRMzxfAodox2Hns+JjS8=;
-        b=l+dLqoLzB5u5Gr5bMx1U4hC15ROMMRQO7od8DZ8+vJzRXMiNEyz+84aFU3Bunw2VYd
-         UicG6FscfIdWAg0t2g18mPywzaFljt7baPmmV7QPeYVb+WNxdfGkFz1hijW2plUlVwG/
-         zpZe0YWbD1rYrHxwGtue8Qo3a5nKGyFm1vzW2qPEgqnjLgoglM2Mo9fwSzGgK+8tlnJl
-         sIbffulrFFbejApiNxpuxCtSejWMP3l67o9nrudXCDyTnIXGD/UPbeDVt3ohDgGmizqJ
-         N+n1UERwrzCGrqcWqosK3LCuEjMeg063Es5RnK/sEqh6oAu7WblRHTbbFp6A2IBkQkcr
-         78mQ==
-X-Gm-Message-State: ABuFfogKZGQYP1RCUPp6RRU6I0k0SGzjklXqqXFmxizK2qvMIfc9yNJq
-        fSBRHOpD5CsFYHyBHkEkPuNL5lcMVODwDHrg16g8GJh2
-X-Google-Smtp-Source: ACcGV61okXx0OFUzNJBtlG71M5sNH8kQW9Ufu+3YAVqLmGP1qPS90nxxD7hSjwz8GDlydzAcYyu8n1D4XPeY0bR0ah0=
-X-Received: by 2002:ac2:434d:: with SMTP id o13-v6mr639231lfl.129.1539251152604;
- Thu, 11 Oct 2018 02:45:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZXyIO3vqlc0wqtHQ3Ukc8Yx2BNIFMmJiQmeF13nZs0g=;
+        b=Mxue51PUGT+1h5wfQLK1iJvBVHw217MEf+pwuX7U7hziuYQS/0YenY6q3e/0k4OnAo
+         lUU/N9NGhOVFAHjZ6cAVK/fmzvxfSpKMtIYFTxDVgun5MJ1HFVKPxyVzp8HOD2Y8ig4j
+         6CXonI2PfaVBgmjP3oiO+nHgO1AhflqKh92YBYGvGuidgfcb4U8UVl/8/j+BbJ1FYdTS
+         8/XtoUG0eWwpeWdOEsuO+nOViD7/qx6OMR5ieSSi//h2qDVuXGAeI8mfr/D8sErqXBGl
+         A/ORnJb5jilJTY4GYAbfpD+mwj/uAKQ8JFwcBbebH26yNyF8NJD8aRreByEw6AeAvHys
+         4r3A==
+X-Gm-Message-State: ABuFfogyjdoRmsEDBXCk/aCmMNR4YOQ1jFoxtFwLirv1700780/w78bp
+        SwvLMDL/CjSHrA9q0xK0N+4=
+X-Google-Smtp-Source: ACcGV60rYUdArKCOhm/Iu0HI5MULlam1IKHfeNVrAGSsrqKdg7c5JJYy7gkuzIFZVN3rf/CjMVYRBg==
+X-Received: by 2002:a50:a1c6:: with SMTP id 64-v6mr1719554edk.88.1539251641091;
+        Thu, 11 Oct 2018 02:54:01 -0700 (PDT)
+Received: from localhost.localdomain (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
+        by smtp.gmail.com with ESMTPSA id y8-v6sm9793574edd.43.2018.10.11.02.53.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 11 Oct 2018 02:53:59 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 7/6] split-index: BUG() when cache entry refers to non-existing shared entry
+Date:   Thu, 11 Oct 2018 11:53:57 +0200
+Message-Id: <20181011095357.19061-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.1.465.gaff195083f
+In-Reply-To: <20181011094309.18626-1-szeder.dev@gmail.com>
+References: <20181011094309.18626-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-From:   Himanshu Singh <himanshu.kumar.singh@gmail.com>
-Date:   Thu, 11 Oct 2018 15:15:41 +0530
-Message-ID: <CAB5xbUV3HM0afTuD3PGZoLM2t04A+SH9Ue-tY4-tLS3pv6UC2w@mail.gmail.com>
-Subject: [version 2.19.1] gpg issue in new Git for Windows release version 2.19.1
-To:     git@vger.kernel.org,
-        "himanshu.kumar.singh" <himanshu.kumar.singh@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000002bec2f0577f0d6d9"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---0000000000002bec2f0577f0d6d9
-Content-Type: text/plain; charset="UTF-8"
+When the split index feature is in use, then a cache entry is:
 
-Hi,
-I use git-repo which makes use of Git for Windows and also uses the
-gpg tool bundled in Git for Windows.
+  - either only present in the split index, in which case its 'index'
+    field must be 0,
 
-I am able to run the git-repo with Git-2.18.0-64-bit.exe, but recently
-I updated the Git to  new release of Git for Windows 2.19.1 and that
-does not work with git-repo tool. I found that basic issue is not with
-Git, but with gpg bundled with latest Git version.
+  - or it should refer to an existing entry in the shared index, i.e.
+    the 'index' field can't be greater than the size of the shared
+    index.
 
-I have tested both version for below 4 cases and here are the test
-results in below table:
+If a cache entry were to refer to a non-existing entry in the shared
+index, then that's a sign of something being wrong in the index state,
+either as a result of a bug in dealing with the split/shared index
+entries, or perhaps a (potentially unrelated) memory corruption issue.
 
-Case Test Description Result For Git-2.18.0-64-bit.exe Result For
-Git-2.19.1-64-bit.exe
-CASE1: gpg import with default GNUPG Home [Result: SUCCESS for both versions]
-CASE2: gpg import with setting environment variable for GNUPGHOME and
-path provided in git style [Result: SUCCESS for both versions]
-CASE3: gpg import with setting environment variable for GNUPGHOME and
-path provided in windows style single slash \ is escaped by providing
-double slash \\ [Result: SUCCESS for 2.18.0 but FAILED for 2.19.1]
-CASE4: gpg import with setting environment variable for GNUPGHOME and
-path provided in windows style with single slash \  replaced with
-forward slash / [Result: SUCCESS for 2.18.0 but FAILED for 2.19.1]
+prepare_to_write_split_index() already has a condition to catch cache
+entries with such bogus 'index' field, but instead of calling BUG() it
+just sets cache entry's 'index = 0', and the entry will then be
+written to the new split index.
 
-I know the gpg version is changed in 2.19 release.
-But somehow the Git-Repo tool, which I am using, creates GNUPGHOME
-path as per CASE3 above. So right now I am able to use the tool with
-older version of Git. It may be issue in future to not upgrade Git.
-Please see if this makes any sense to fix this thing in gpg.
+Don't write a new index file from bogus index state, and call BUG()
+upon encountering an cache entry referring to a non-existing shared
+index entry.
 
+Running the test suite repeatedly with 'GIT_TEST_SPLIT_INDEX=yes'
+doesn't trigger this condition.
 
-Here is the output with CASE3 (complete logs attached with the mail)
-==============================================================================================================
-=== CASE3: NOT Working with setting environment variable for GNUPGHOME
-and path provided in windows style ====
-=== IT LOOKS Like concatenate the current working directory to the
-value of GNUPGHOME ========================
-==============================================================================================================
-hsingh@HSINGH-LT MINGW64 /c/gpgTesting
-$ export GNUPGHOME=C:\\gpgTesting\\.gnupg
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
 
-hsingh@HSINGH-LT MINGW64 /c/gpgTesting
-$ echo $GNUPGHOME
-C:\gpgTesting\.gnupg
+A follow-up to:
 
-hsingh@HSINGH-LT MINGW64 /c/gpgTesting
-$ gpg --import
-gpg: keyblock resource
-'/c/gpgTesting/C:\gpgTesting\.gnupg/pubring.kbx': No such file or
-directory
-
-gpg: signal Interrupt caught ... exiting
+  https://public-inbox.org/git/20180927134324.GI27036@localhost/
 
 
---
-Thanks,
-Himanshu Singh.
+ split-index.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---0000000000002bec2f0577f0d6d9
-Content-Type: text/plain; charset="US-ASCII"; 
-	name="gpg_testing_log_with_git _version 2.19.1.windows.1.txt"
-Content-Disposition: attachment; 
-	filename="gpg_testing_log_with_git _version 2.19.1.windows.1.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jn4edibe1>
-X-Attachment-Id: f_jn4edibe1
+diff --git a/split-index.c b/split-index.c
+index 875f538802..5820412dc5 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -254,8 +254,8 @@ void prepare_to_write_split_index(struct index_state *istate)
+ 				continue;
+ 			}
+ 			if (ce->index > si->base->cache_nr) {
+-				ce->index = 0;
+-				continue;
++				BUG("ce refers to a shared ce at %d, which is beyond the shared index size %d",
++				    ce->index, si->base->cache_nr);
+ 			}
+ 			ce->ce_flags |= CE_MATCHED; /* or "shared" */
+ 			base = si->base->cache[ce->index - 1];
+-- 
+2.19.1.465.gaff195083f
 
-PT09PT09PT09PT09PT09PT09PT0NCj09PSBWZXJzaW9uIEluZm8gPT09IA0KPT09PT09PT09PT09
-PT09PT09PT0NCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGdpdCAt
-LXZlcnNpb24NCmdpdCB2ZXJzaW9uIDIuMTkuMS53aW5kb3dzLjENCg0KaHNpbmdoQEhTSU5HSC1M
-VCBNSU5HVzY0IC9jL2dwZ1Rlc3RpbmcNCiQgZ3BnIC0tdmVyc2lvbg0KZ3BnIChHbnVQRykgMi4y
-LjktdW5rbm93bg0KbGliZ2NyeXB0IDEuOC4zDQpDb3B5cmlnaHQgKEMpIDIwMTggRnJlZSBTb2Z0
-d2FyZSBGb3VuZGF0aW9uLCBJbmMuDQpMaWNlbnNlIEdQTHYzKzogR05VIEdQTCB2ZXJzaW9uIDMg
-b3IgbGF0ZXIgPGh0dHBzOi8vZ251Lm9yZy9saWNlbnNlcy9ncGwuaHRtbD4NClRoaXMgaXMgZnJl
-ZSBzb2Z0d2FyZTogeW91IGFyZSBmcmVlIHRvIGNoYW5nZSBhbmQgcmVkaXN0cmlidXRlIGl0Lg0K
-VGhlcmUgaXMgTk8gV0FSUkFOVFksIHRvIHRoZSBleHRlbnQgcGVybWl0dGVkIGJ5IGxhdy4NCg0K
-SG9tZTogL2MvVXNlcnMvaHNpbmdoLy5nbnVwZw0KU3VwcG9ydGVkIGFsZ29yaXRobXM6DQpQdWJr
-ZXk6IFJTQSwgRUxHLCBEU0EsIEVDREgsIEVDRFNBLCBFRERTQQ0KQ2lwaGVyOiBJREVBLCAzREVT
-LCBDQVNUNSwgQkxPV0ZJU0gsIEFFUywgQUVTMTkyLCBBRVMyNTYsIFRXT0ZJU0gsDQogICAgICAg
-IENBTUVMTElBMTI4LCBDQU1FTExJQTE5MiwgQ0FNRUxMSUEyNTYNCkhhc2g6IFNIQTEsIFJJUEVN
-RDE2MCwgU0hBMjU2LCBTSEEzODQsIFNIQTUxMiwgU0hBMjI0DQpDb21wcmVzc2lvbjogVW5jb21w
-cmVzc2VkLCBaSVAsIFpMSUIsIEJaSVAyDQoNCg0KDQoNCj09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT0NCj09PSBDQVNFMTogV29ya2luZyB3aXRoIGRlZmF1bHQg
-R05VUEcgSG9tZSA9PT0NCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT0NCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGdwZyAtLWlt
-cG9ydA0KZ3BnOiBrZXlib3ggJy9jL1VzZXJzL2hzaW5naC8uZ251cGcvcHVicmluZy5rYngnIGNy
-ZWF0ZWQNCg0KZ3BnOiBzaWduYWwgSW50ZXJydXB0IGNhdWdodCAuLi4gZXhpdGluZw0KDQoNCg0K
-DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPT09IENBU0Uy
-OiBXb3JraW5nIHdpdGggc2V0dGluZyBlbnZpcm9ubWVudCB2YXJpYWJsZSBmb3IgR05VUEdIT01F
-IGFuZCBwYXRoIHByb3ZpZGVkIGluIGdpdCBzdHlsZSA9PT0NCj09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09DQpoc2luZ2hASFNJTkdILUxUIE1JTkdXNjQgL2MvZ3Bn
-VGVzdGluZw0KJCBleHBvcnQgR05VUEdIT01FPS9DL2dwZ1Rlc3RpbmcvLmdudXBnDQoNCmhzaW5n
-aEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGVjaG8gJEdOVVBHSE9NRQ0KL0Mv
-Z3BnVGVzdGluZy8uZ251cGcNCg0KaHNpbmdoQEhTSU5HSC1MVCBNSU5HVzY0IC9jL2dwZ1Rlc3Rp
-bmcNCiQgZ3BnIC0taW1wb3J0DQpncGc6IGtleWJveCAnL0MvZ3BnVGVzdGluZy8uZ251cGcvcHVi
-cmluZy5rYngnIGNyZWF0ZWQNCg0KZ3BnOiBzaWduYWwgSW50ZXJydXB0IGNhdWdodCAuLi4gZXhp
-dGluZw0KDQoNCg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PQ0KPT09IENBU0UzOiBOT1QgV29ya2luZyB3aXRoIHNldHRpbmcgZW52aXJvbm1l
-bnQgdmFyaWFibGUgZm9yIEdOVVBHSE9NRSBhbmQgcGF0aCBwcm92aWRlZCBpbiB3aW5kb3dzIHN0
-eWxlID09PT0NCj09PSBJVCBMT09LUyBMaWtlIGNvbmNhdGVuYXRlIHRoZSBjdXJyZW50IHdvcmtp
-bmcgZGlyZWN0b3J5IHRvIHRoZSB2YWx1ZSBvZiBHTlVQR0hPTUUgPT09PT09PT09PT09PT09PT09
-PT09PT09DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PQ0KaHNpbmdoQEhTSU5HSC1MVCBNSU5HVzY0IC9jL2dwZ1Rlc3RpbmcNCiQgZXhwb3J0IEdO
-VVBHSE9NRT1DOlxcZ3BnVGVzdGluZ1xcLmdudXBnDQoNCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2
-NCAvYy9ncGdUZXN0aW5nDQokIGVjaG8gJEdOVVBHSE9NRQ0KQzpcZ3BnVGVzdGluZ1wuZ251cGcN
-Cg0KaHNpbmdoQEhTSU5HSC1MVCBNSU5HVzY0IC9jL2dwZ1Rlc3RpbmcNCiQgZ3BnIC0taW1wb3J0
-DQpncGc6IGtleWJsb2NrIHJlc291cmNlICcvYy9ncGdUZXN0aW5nL0M6XGdwZ1Rlc3RpbmdcLmdu
-dXBnL3B1YnJpbmcua2J4JzogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeQ0KDQpncGc6IHNpZ25h
-bCBJbnRlcnJ1cHQgY2F1Z2h0IC4uLiBleGl0aW5nDQoNCg0KDQoNCj09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQo9
-PT0gQ0FTRTQ6IE5PVCBXb3JraW5nIHdpdGggc2V0dGluZyBlbnZpcm9ubWVudCB2YXJpYWJsZSBm
-b3IgR05VUEdIT01FIGFuZCBwYXRoIHByb3ZpZGVkIGluIHdpbmRvd3Mgc3R5bGUgd2l0aCBmb3J3
-YXJkIHNsYXNoID09PQ0KPT09IElUIExPT0tTIExpa2UgY29uY2F0ZW5hdGUgdGhlIGN1cnJlbnQg
-d29ya2luZyBkaXJlY3RvcnkgdG8gdGhlIHZhbHVlIG9mIEdOVVBHSE9NRSA9PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQpoc2luZ2hASFNJ
-TkdILUxUIE1JTkdXNjQgL2MvZ3BnVGVzdGluZw0KJCBleHBvcnQgR05VUEdIT01FPUM6L2dwZ1Rl
-c3RpbmcvLmdudXBnDQoNCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQok
-IGVjaG8gJEdOVVBHSE9NRQ0KQzovZ3BnVGVzdGluZy8uZ251cGcNCg0KaHNpbmdoQEhTSU5HSC1M
-VCBNSU5HVzY0IC9jL2dwZ1Rlc3RpbmcNCiQgZ3BnIC0taW1wb3J0DQpncGc6IEZhdGFsOiBjYW4n
-dCBjcmVhdGUgZGlyZWN0b3J5ICcvYy9ncGdUZXN0aW5nL0M6L2dwZ1Rlc3RpbmcvLmdudXBnJzog
-Tm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeQ0KDQpoc2luZ2hASFNJTkdILUxUIE1JTkdXNjQgL2Mv
-Z3BnVGVzdGluZw0KJA==
---0000000000002bec2f0577f0d6d9
-Content-Type: text/plain; charset="US-ASCII"; 
-	name="gpg_testing_log_with_git _version 2.18.0.windows.1.txt"
-Content-Disposition: attachment; 
-	filename="gpg_testing_log_with_git _version 2.18.0.windows.1.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jn4edib80>
-X-Attachment-Id: f_jn4edib80
-
-PT09PT09PT09PT09PT09PT09PT0NCj09PSBWZXJzaW9uIEluZm8gPT09IA0KPT09PT09PT09PT09
-PT09PT09PT0NCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGdpdCAt
-LXZlcnNpb24NCmdpdCB2ZXJzaW9uIDIuMTguMC53aW5kb3dzLjENCg0KaHNpbmdoQEhTSU5HSC1M
-VCBNSU5HVzY0IC9jL2dwZ1Rlc3RpbmcNCiQgZ3BnIC0tdmVyc2lvbg0KZ3BnIChHbnVQRykgMS40
-LjIyDQpDb3B5cmlnaHQgKEMpIDIwMTUgRnJlZSBTb2Z0d2FyZSBGb3VuZGF0aW9uLCBJbmMuDQpM
-aWNlbnNlIEdQTHYzKzogR05VIEdQTCB2ZXJzaW9uIDMgb3IgbGF0ZXIgPGh0dHA6Ly9nbnUub3Jn
-L2xpY2Vuc2VzL2dwbC5odG1sPg0KVGhpcyBpcyBmcmVlIHNvZnR3YXJlOiB5b3UgYXJlIGZyZWUg
-dG8gY2hhbmdlIGFuZCByZWRpc3RyaWJ1dGUgaXQuDQpUaGVyZSBpcyBOTyBXQVJSQU5UWSwgdG8g
-dGhlIGV4dGVudCBwZXJtaXR0ZWQgYnkgbGF3Lg0KDQpIb21lOiB+Ly5nbnVwZw0KU3VwcG9ydGVk
-IGFsZ29yaXRobXM6DQpQdWJrZXk6IFJTQSwgUlNBLUUsIFJTQS1TLCBFTEctRSwgRFNBDQpDaXBo
-ZXI6IElERUEsIDNERVMsIENBU1Q1LCBCTE9XRklTSCwgQUVTLCBBRVMxOTIsIEFFUzI1NiwgVFdP
-RklTSCwNCiAgICAgICAgQ0FNRUxMSUExMjgsIENBTUVMTElBMTkyLCBDQU1FTExJQTI1Ng0KSGFz
-aDogTUQ1LCBTSEExLCBSSVBFTUQxNjAsIFNIQTI1NiwgU0hBMzg0LCBTSEE1MTIsIFNIQTIyNA0K
-Q29tcHJlc3Npb246IFVuY29tcHJlc3NlZCwgWklQLCBaTElCLCBCWklQMg0KDQoNCg0KDQo9PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQo9PT0gQ0FTRTE6IFdv
-cmtpbmcgd2l0aCBkZWZhdWx0IEdOVVBHIEhvbWUgPT09DQo9PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09DQpoc2luZ2hASFNJTkdILUxUIE1JTkdXNjQgL2MvZ3Bn
-VGVzdGluZw0KJCBncGcgLS1pbXBvcnQNCmdwZzoga2V5cmluZyBgL2MvVXNlcnMvaHNpbmdoLy5n
-bnVwZy9zZWNyaW5nLmdwZycgY3JlYXRlZA0KZ3BnOiBrZXlyaW5nIGAvYy9Vc2Vycy9oc2luZ2gv
-LmdudXBnL3B1YnJpbmcuZ3BnJyBjcmVhdGVkDQoNCmdwZzogSW50ZXJydXB0IGNhdWdodCAuLi4g
-ZXhpdGluZw0KDQoNCg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PQ0KPT09IENBU0UyOiBXb3JraW5nIHdpdGggc2V0dGluZyBlbnZpcm9ubWVudCB2YXJpYWJs
-ZSBmb3IgR05VUEdIT01FIGFuZCBwYXRoIHByb3ZpZGVkIGluIGdpdCBzdHlsZSA9PT0NCj09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQpoc2luZ2hASFNJTkdILUxU
-IE1JTkdXNjQgL2MvZ3BnVGVzdGluZw0KJCBleHBvcnQgR05VUEdIT01FPS9DL2dwZ1Rlc3Rpbmcv
-LmdudXBnDQoNCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGVjaG8g
-JEdOVVBHSE9NRQ0KL0MvZ3BnVGVzdGluZy8uZ251cGcNCg0KaHNpbmdoQEhTSU5HSC1MVCBNSU5H
-VzY0IC9jL2dwZ1Rlc3RpbmcNCiQgZ3BnIC0taW1wb3J0DQpncGc6IFdBUk5JTkc6IHVuc2FmZSBw
-ZXJtaXNzaW9ucyBvbiBob21lZGlyIGAvQy9ncGdUZXN0aW5nLy5nbnVwZycNCmdwZzoga2V5cmlu
-ZyBgL0MvZ3BnVGVzdGluZy8uZ251cGcvc2VjcmluZy5ncGcnIGNyZWF0ZWQNCmdwZzoga2V5cmlu
-ZyBgL0MvZ3BnVGVzdGluZy8uZ251cGcvcHVicmluZy5ncGcnIGNyZWF0ZWQNCg0KZ3BnOiBJbnRl
-cnJ1cHQgY2F1Z2h0IC4uLiBleGl0aW5nDQoNCg0KDQoNCj09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPT09IENBU0UzOiBXb3JraW5nIHdpdGggc2V0dGlu
-ZyBlbnZpcm9ubWVudCB2YXJpYWJsZSBmb3IgR05VUEdIT01FIGFuZCBwYXRoIHByb3ZpZGVkIGlu
-IHdpbmRvd3Mgc3R5bGUgPT09DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT0NCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGV4
-cG9ydCBHTlVQR0hPTUU9QzpcXGdwZ1Rlc3RpbmdcXC5nbnVwZw0KDQpoc2luZ2hASFNJTkdILUxU
-IE1JTkdXNjQgL2MvZ3BnVGVzdGluZw0KJCBncGcgLS1pbXBvcnQNCmdwZzogV0FSTklORzogdW5z
-YWZlIHBlcm1pc3Npb25zIG9uIGhvbWVkaXIgYEM6XGdwZ1Rlc3RpbmdcLmdudXBnJw0KZ3BnOiBr
-ZXlyaW5nIGBDOlxncGdUZXN0aW5nXC5nbnVwZy9zZWNyaW5nLmdwZycgY3JlYXRlZA0KZ3BnOiBr
-ZXlyaW5nIGBDOlxncGdUZXN0aW5nXC5nbnVwZy9wdWJyaW5nLmdwZycgY3JlYXRlZA0KDQpncGc6
-IEludGVycnVwdCBjYXVnaHQgLi4uIGV4aXRpbmcNCg0KDQoNCg0KPT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPT09IENB
-U0U0OiBXb3JraW5nIHdpdGggc2V0dGluZyBlbnZpcm9ubWVudCB2YXJpYWJsZSBmb3IgR05VUEdI
-T01FIGFuZCBwYXRoIHByb3ZpZGVkIGluIHdpbmRvd3Mgc3R5bGUgd2l0aCBmb3J3YXJkIHNsYXNo
-ID09PQ0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PQ0KaHNpbmdoQEhTSU5HSC1MVCBNSU5HVzY0IC9jL2dwZ1Rlc3RpbmcN
-CiQgZXhwb3J0IEdOVVBHSE9NRT1DOi9ncGdUZXN0aW5nLy5nbnVwZw0KDQpoc2luZ2hASFNJTkdI
-LUxUIE1JTkdXNjQgL2MvZ3BnVGVzdGluZw0KJCBlY2hvICRHTlVQR0hPTUUNCkM6L2dwZ1Rlc3Rp
-bmcvLmdudXBnDQoNCmhzaW5naEBIU0lOR0gtTFQgTUlOR1c2NCAvYy9ncGdUZXN0aW5nDQokIGdw
-ZyAtLWltcG9ydA0KZ3BnOiBXQVJOSU5HOiB1bnNhZmUgcGVybWlzc2lvbnMgb24gaG9tZWRpciBg
-QzovZ3BnVGVzdGluZy8uZ251cGcnDQpncGc6IGtleXJpbmcgYEM6L2dwZ1Rlc3RpbmcvLmdudXBn
-L3NlY3JpbmcuZ3BnJyBjcmVhdGVkDQpncGc6IGtleXJpbmcgYEM6L2dwZ1Rlc3RpbmcvLmdudXBn
-L3B1YnJpbmcuZ3BnJyBjcmVhdGVkDQoNCmdwZzogSW50ZXJydXB0IGNhdWdodCAuLi4gZXhpdGlu
-Zw0KDQpoc2luZ2hASFNJTkdILUxUIE1JTkdXNjQgL2MvZ3BnVGVzdGluZw==
---0000000000002bec2f0577f0d6d9--
