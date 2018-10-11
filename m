@@ -2,199 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 601951F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 11:08:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60E201F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 11:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbeJKSez (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 14:34:55 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:39391 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726666AbeJKSey (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 14:34:54 -0400
-Received: by mail-wm1-f52.google.com with SMTP id y144-v6so8899273wmd.4
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 04:08:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=JkwyGeSRxboUkHJRnQZCm7f3THvWzR0hUOFPnJoZDkw=;
-        b=JBivAbfVNNzY0TEnF98E716myQtoS5ZmKJX+BqeShofE8hVV2r/MoMl5CY7aZOjsk5
-         ftBPAUllrlkN/tL3A7MOlfY5QpMg/EMrZNyqwFbiSSIWM45FJ3jBdTGvSLbwXndjrpDT
-         XXKSCA6LUQXNw5IwOnzVrhoEdGpDtnZ9WhHVdHDOhAV4gm5CEpwE24CKjNN3Be/kzPod
-         JolD6fQP8O64xKKGyTahqQPJk7gqMenca1j5O9g4O6oSKlnpRDZtb03sPhhUdk/bSHo7
-         TjeMIPShBZHsWOCHwFTHvzrYy2SSqW0bP3zh4i2d21Xwc0keerJW2b1JiesOaP/W4TO3
-         AjXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=JkwyGeSRxboUkHJRnQZCm7f3THvWzR0hUOFPnJoZDkw=;
-        b=NDk1e67pSWF/BvnzvBhT0oQIPq/YiJvxb+MqZIYlZG3BQBf8jeZturg0ZNgPdN8iNu
-         Sfl1kSutHojhCpXry5Cn96UbJT1ukuBjILnKX5+gfbjxpZuI1IMKR6wUNkhPwpxkXYjs
-         AKQv6Hq169mdn9OkymR3wRiahhNUalgxZW0iFYuMS3a1yHyrnGOuC9jzhPi9RgCOcH1D
-         JBRsxdC9fywqojlUsCgWgRf/KeIEXOMm4KQqL14OZnFZtoKTcY+0Myz2g00Pvsgosxu6
-         aBVIPVZD59dd+xJtMbT7AaKZHxbM7IMfXmsUYuNjPJt6hOGmzCDvLzeCFtUn6kIJYGDt
-         yZnw==
-X-Gm-Message-State: ABuFfogVcMDjG3jiSzduG+81yaWETb9B7SweMGH2xUndTPTW2Tc1gw1E
-        n/J41mvBCPLCu+bBC4Cfat3GllEnsWc=
-X-Google-Smtp-Source: ACcGV62TR6NWpdNX9PQg2gzocZI764wlOCqbly2BqSZA1Gm33YvkLtHbyTEw3uVaFFo7GKHNtD25XA==
-X-Received: by 2002:a1c:f312:: with SMTP id q18-v6mr1288511wmq.14.1539256087976;
-        Thu, 11 Oct 2018 04:08:07 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id u5-v6sm37328878wru.16.2018.10.11.04.08.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 04:08:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     dana <dana@dana.is>
-Cc:     git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [BUG] gitignore documentation inconsistent with actual behaviour
-References: <C16A9F17-0375-42F9-90A9-A92C9F3D8BBA@dana.is>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <C16A9F17-0375-42F9-90A9-A92C9F3D8BBA@dana.is>
-Date:   Thu, 11 Oct 2018 13:08:06 +0200
-Message-ID: <87bm80eo6h.fsf@evledraar.gmail.com>
+        id S1728397AbeJKSlV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 14:41:21 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:32503 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727258AbeJKSlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 14:41:21 -0400
+Received: from [192.168.2.240] ([92.28.142.68])
+        by smtp.talktalk.net with SMTP
+        id AYvHgylIMVlGZAYvIgSZpA; Thu, 11 Oct 2018 12:14:32 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1539256472;
+        bh=K+ZDzMfn4PbinNTjvZrbpTqKJytvFZNf1jCPvg0/E/8=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Jimbe6vgXwOsx1d82HNxxO8F87ldJDXWhwpCTc2OhU+73lloRj7XqnO80Ozhl4y2r
+         NlUkrAb94s0JJsD/YaRdrXLT1wvM4KITTIVocQyKa5Aa71NM65q47c72SCxpjAa78e
+         36R7qEmN+vCCYWGi2FcIoPMO9FHMH7GMJYMMp9WE=
+X-Originating-IP: [92.28.142.68]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
+ a=UGDAwvN9cmeZh0o4udnnNw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=wLTIuke6hT3HaiiqlOQA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] revert & cherry-pick: run git gc --auto
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20181010193557.19052-1-avarab@gmail.com>
+ <20f33df8-7ba8-af26-e0c8-16152345c85b@talktalk.net>
+ <87ftxceqxc.fsf@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <65275c82-1fc0-8f89-8c13-562b73f3ffcf@talktalk.net>
+Date:   Thu, 11 Oct 2018 12:14:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <87ftxceqxc.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfIRz3T0WCj3UW+NIHoZt3PLRgqicaHcNB2qq9E4VdezApN8lHfn0WAvwZrqIiG0N/xJbaeCox7UDxeJPIc/Hf3iTSeSQCMIQFUHiCzrplUFBUZ/FqDcj
+ NGUtvE/L2L05LP99jSDefKnonHegOSYnbCfBjJTLfDyL86ZPX+pF7vlpCFGBz7PkeHSNYhmypORlazQpnLR6iD+fGYLqTed9sUvKQRZjan9huK7hJlbQlrQ2
+ Ek2dI+EbBx3Z05tWMBlQeJWnmk/ntIMeNY2yUPXajJAiBZiWAxT2wWYDcPjmag46ghgEpqNSu48n0RapikmsRg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
+On 11/10/2018 11:08, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Oct 11 2018, Phillip Wood wrote:
+> 
+>> Hi Ævar
+>>
+>> On 10/10/2018 20:35, Ævar Arnfjörð Bjarmason wrote:
+>>> Expand on the work started in 095c741edd ("commit: run git gc --auto
+>>> just before the post-commit hook", 2018-02-28) to run "gc --auto" in
+>>> more commands where new objects can be created.
+>>>
+>>> The notably missing commands are now "rebase" and "stash". Both are
+>>> being rewritten in C, so any use of "gc --auto" there can wait for
+>>> that.
+>>
+>> If cherry-pick, revert or 'rebase -i' edit the commit message then they
+>> fork 'git commit' so gc --auto will be run there anyway.
+> 
+> Yeah it seems I totally screwed up the testing for this patch, first it
+> doesn't even compile because I'm not including run-command.h, I *did*
+> fix that, but while wrangling a few things didn't commit that *sigh*.
+> 
+> And yeah, there's some invocations where we now run gc --auto twice,
+> i.e. if you do revert, but not revert --no-edit, and not on cherry-pick,
+> but on cherry-pick --edit.
+> 
+> So yeah, this really needs to be re-thought.
+> 
+>> I wonder if it would be better to call 'gc --auto' from sequencer.c at
+>> the end of a string of successful picks, that would cover cherry-pick,
+>> 'rebase -iu' and revert. With 'rebase -i' it might be nice to avoid
+>> calling 'gc --auto' until the very end, rather than every time we stop
+>> for an edit but that is probably more trouble than it is worth.
+> 
+> That seems a lot better indeed. I.e. running it from the sequencer. I do
+> wonder if there should be some smarts about running it in the middle of
+> a sequence, i.e. think of a case where we're rebasing 10k commits, which
+> is a gc need similar to what happens in the middle of "git svn
+> clone". So maybe something where we gc --auto in the sequencer for every
+> Nth commit, and at the end.
 
-On Thu, Oct 11 2018, dana wrote:
+That sounds like a good idea. It would be nice if need_to_gc() was in 
+libgit, then we could avoid the cost of forking unless we actually need 
+to gc. Looking at builtin/gc.c there seem to be quite a few global 
+variables so transforming it to library code may not be that straight 
+forward.
 
-> Hello,
->
-> I'm a contributor to ripgrep, which is a grep-like tool that supports using
-> gitignore files to control which files are searched in a repo (or any other
-> directory tree). ripgrep's support for the patterns in these files is based on
-> git's official documentation, as seen here:
->
->   https://git-scm.com/docs/gitignore
->
-> One of the most common reports on the ripgrep bug tracker is that it does not
-> allow patterns like the following real-world examples, where a ** is used along
-> with other text within the same path component:
->
->   **/**$$*.java
->   **.orig
->   **local.properties
->   !**.sha1
->
-> The reason it doesn't allow them is that the gitignore documentation explicitly
-> states that they're invalid:
->
->   A leading "**" followed by a slash means match in all directories...
->
->   A trailing "/**" matches everything inside...
->
->   A slash followed by two consecutive asterisks then a slash matches zero or
->   more directories...
->
->   Other consecutive asterisks are considered invalid.
->
-> git itself happily accepts these patterns, however, apparently treating the **
-> like a single * without fnmatch(3)'s FNM_PATHNAME flag set (in other words, it
-> matches / as a regular character, thus crossing directory boundaries).
->
-> ripgrep's developer is loathe to reverse-engineer this undocumented behaviour,
-> and so the reports keep coming, both for ripgrep itself and for down-stream
-> consumers of it and its ignore crate (including most notably Microsoft's VS Code
-> editor).
->
-> My request: Assuming that git's actual handling of these patterns is intended,
-> would it be possible to make it 'official' and explicitly add it to the
-> documentation?
->
-> References (the first one is the main bug):
->
-> https://github.com/BurntSushi/ripgrep/issues/373
-> https://github.com/BurntSushi/ripgrep/issues/507
-> https://github.com/BurntSushi/ripgrep/issues/859
-> https://github.com/BurntSushi/ripgrep/issues/945
-> https://github.com/BurntSushi/ripgrep/issues/1080
-> https://github.com/BurntSushi/ripgrep/issues/1082
-> https://github.com/Microsoft/vscode/issues/24050
+Best Wishes
 
-Yeah those docs seem wrong. In general the docs for the matching
-function are quite bad. I have on my TODO list to factor this out into
-some gitwildmatch manpage, but right now the bit in gitignore is all we
-have.
+Phillip
 
-Our matching function comes from rsync originally, whose manpage says:
+>>
+>>>
+>>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>>> ---
+>>>
+>>> After reading the "Users are encouraged to run this task..." paragraph
+>>> in the git-gc manpage I was wondering if due to gc --auto all over the
+>>> place now (including recently in git-commit with a patch of mine) if
+>>> we shouldn't change that advice.
+>>>
+>>> I'm meaning to send some doc changes to git-gc.txt, but in the
+>>> meantime let's address this low-hanging fruit of running gc --auto
+>>> when we revert or cherry-pick commits, which can like git-commit
+>>> create a significant amount of loose objects.
+>>>
+>>>   builtin/revert.c | 4 ++++
+>>>   1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/builtin/revert.c b/builtin/revert.c
+>>> index 9a66720cfc..1b20902910 100644
+>>> --- a/builtin/revert.c
+>>> +++ b/builtin/revert.c
+>>> @@ -209,6 +209,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>>>   {
+>>>   	struct replay_opts opts = REPLAY_OPTS_INIT;
+>>>   	int res;
+>>> +	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+>>>
+>>>   	if (isatty(0))
+>>>   		opts.edit = 1;
+>>> @@ -217,6 +218,7 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>>>   	res = run_sequencer(argc, argv, &opts);
+>>>   	if (res < 0)
+>>>   		die(_("revert failed"));
+>>> +	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+>>>   	return res;
+>>>   }
+>>>
+>>> @@ -224,11 +226,13 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+>>>   {
+>>>   	struct replay_opts opts = REPLAY_OPTS_INIT;
+>>>   	int res;
+>>> +	const char *argv_gc_auto[] = {"gc", "--auto", NULL};
+>>>
+>>>   	opts.action = REPLAY_PICK;
+>>>   	sequencer_init_config(&opts);
+>>>   	res = run_sequencer(argc, argv, &opts);
+>>>   	if (res < 0)
+>>>   		die(_("cherry-pick failed"));
+>>> +	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+>>>   	return res;
+>>>   }
+>>>
 
-    use ’**’ to match anything, including slashes.
-
-I believe this is accurate as far as the implementation goes. You can
-also see the rather exhaustive tests here:
-https://github.com/git/git/blob/master/t/t3070-wildmatch.sh
-
-Note the different behavior with e.g. --glob-pathspecs v.s. the
-default. There's also stuff like:
-
-    $ grep diff=perl .gitattributes
-    *.perl eol=lf diff=perl
-    *.pl eof=lf diff=perl
-    *.pm eol=lf diff=perl
-    $ git ls-files ":(attr:diff=perl)" | wc -l
-    65
-
-And then the exclude syntax. This is not in .gitignore:
-
-    $ git ls-files ":(exclude)*.pm" ":(attr:diff=perl)" | wc -l
-    41
-    $ git ls-files ":^*.pm" ":(attr:diff=perl)" | wc -l
-    41
-
-I.e. we have wildmatch() on one hand and then the pathspec matching.
-
-For an unrelated thing I have been thinking of adding a new plumbing
-command who'd get input like this on stdin:
-
-    1 text t/t0202/test.pl\0\0
-    2 text perl/Git.pm\0\0
-    3 text *.pm\0\0
-    4 text :^*.pm"\0:(attr:diff=perl)\0\0
-    5 match glob,icase\04\03\0\0
-    6 match icase\04\02\0\0
-    7 match \04\01\0\0
-
-Which would return (in any order):
-
-    1 OK
-    2 OK
-    3 OK
-    4 OK
-    5 NO
-    6 NO
-    7 YES
-
-Or whatever. I.e. something where you can as a batch feed various
-strings into a program in a batch, and then ask how some of them would
-match against each other.
-
-The reason for this is to extend something like git-multimail[1] with a
-config where users can subscribe to changes to paths as declared by git
-pathspecs, and be informed about which of the glob rules they defined
-matched their config.
-
-Right now you'd need to e.g. for a "git push" run each match rule for
-each user with such config against each changed path in each commit
-that's pushed, but plumbing like this would allow for feeding arbitrary
-combinations of those in and ask what matches against what.
-
-The reason I'm on this tangent is to ask whether if such a thing
-existed, if it's something you can see something like ripgrep
-using. I.e. ask git given its .gitignore and .gitattributes what thing
-matches one of its pathspecs instead of carrying your own bug-compatible
-implementation.
-
-1. https://github.com/git-multimail/git-multimail/
