@@ -2,178 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46DDB1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 11:25:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C42ED1F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 11:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726799AbeJKSw1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 14:52:27 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:58890 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726102AbeJKSw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 14:52:26 -0400
-Received: from [192.168.2.240] ([92.28.142.68])
-        by smtp.talktalk.net with SMTP
-        id AZ5zgynVlVlGZAZ5zgSaKx; Thu, 11 Oct 2018 12:25:36 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1539257136;
-        bh=BWfWWr/3ahGfRfnfplKbVdDkk3hCGYYhTIyNXabNJsg=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=f42PsNJzvRiNc8ksjETWeP73M+rgiFzUwZZTYOvZ9cu89OOj5UunBbyTDxG8aIJPK
-         xH6UrXSxmyMPpgYVb58fOOZEpjUfbbvEzav9bc2iF01Nne5HQK7k3sxMb5k3O9SCAX
-         5pK9ezqb1mRFkG+omEbEoaPVTIupd3TTyElNy1m4=
-X-Originating-IP: [92.28.142.68]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=UGDAwvN9cmeZh0o4udnnNw==:117
- a=UGDAwvN9cmeZh0o4udnnNw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=IAWz5USDbM__wxkDbm4A:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 04/15] sequencer: refactor sequencer_add_exec_commands()
- to work on a todo_list
-To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20181007195418.25752-1-alban.gruin@gmail.com>
- <20181007195418.25752-5-alban.gruin@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <6188911e-fd21-4c7c-885d-a15d2b46aa86@talktalk.net>
-Date:   Thu, 11 Oct 2018 12:25:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1728114AbeJKTFg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 15:05:36 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46989 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727056AbeJKTFg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 15:05:36 -0400
+Received: by mail-ed1-f68.google.com with SMTP id g32-v6so7916676edg.13
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 04:38:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=9jdO5RSeknqXV3qs/d8RcN/834e/8cXrQxO+vyOoZJQ=;
+        b=MkJ5s3HvDJlXEcbta2oTPR5aFV1i9Zbq+39EoI6Qh1sooZeybmyOOXnZLT/OW35iGq
+         qot8HwMCHIynEbSXDDBfCKFPwQ/dOyshf/yNAT8LUpLVP8CeY+BqlsRRQ+TZYr91agzZ
+         c6kMr3VXc00g+eXQlMGM6h9pwHGrH/W2FowkYGUw/eTpk0NTy/zS5vGvUPFrDBj1CLr7
+         HYpTu9goWKYCykgp0JAU0hUS1hYl928DHipnww830JwASrOtuORjIuiMtCZRj50dEHdH
+         DRnq3Te4gVQKu754gvWxReIsD5nGxQjkdPU494RTAPBIZoyHD8LSe0bJLS7k5YeHuBxJ
+         PBSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=9jdO5RSeknqXV3qs/d8RcN/834e/8cXrQxO+vyOoZJQ=;
+        b=iT51C4YCiZdnJOGYpOeFpMWYgxFVZRXhhOTk4QsDRn2RsWKCoXYCCdFlgbkNy6SHWH
+         qFm9aE4blbeNVt1Dq9Hcbd4CXlKVo9hDozPC+jNjtuD2+dUeSlOEh2f19ew1MuuesjDF
+         gbRK859ZH7moqFexM60GoSG4XOsnhCFa5cEYN09o8vovh+2GSo9qTfhyApj9Q9NGii7q
+         gaGXsUmHsJLktTSarjTJRxGos0WW2YZ7527r2/kO90tSirKoE5Su60fyy4sEoHpHA0S7
+         Cw0wUgzGZgxN6TjHRwuwlPpZVmk/KacVGQIbXj6uGz7d1oAC7FOlReC/LsjPZz2ZB2+X
+         Fqfg==
+X-Gm-Message-State: ABuFfojMrGy2AlmqzZZGLJbHBKFqnhR4UxtqXTsT5hjEXoXwA6iVP1R6
+        AeazWCl2whcO7UfkUAOeKcw=
+X-Google-Smtp-Source: ACcGV611W2a4XJ8l8V1MVq/lh+waiqNu7S7JKRHIj/qog2IZHhxfPleOvWvimBJqUeYgFv6tjAasDg==
+X-Received: by 2002:a50:eb42:: with SMTP id z2-v6mr2219276edp.126.1539257924670;
+        Thu, 11 Oct 2018 04:38:44 -0700 (PDT)
+Received: from szeder.dev (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
+        by smtp.gmail.com with ESMTPSA id dv2-v6sm4200919ejb.10.2018.10.11.04.38.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Oct 2018 04:38:43 -0700 (PDT)
+Date:   Thu, 11 Oct 2018 13:38:41 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v4 0/6] Fix the racy split index problem
+Message-ID: <20181011113841.GB19800@szeder.dev>
+References: <20180928162459.17138-1-szeder.dev@gmail.com>
+ <20181011094309.18626-1-szeder.dev@gmail.com>
+ <87d0sgepmo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181007195418.25752-5-alban.gruin@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOXV2KmWWGKKGWOikrguYPu9/PSubJw1Gdx0mbzcZZf5vW1Mj43HRGmCSNPwDyMrHqvRQowtN04bcwErwfhoZDu4IsTXYLUFxyc0o5wWEVOtZilOWwy+
- PMp5dxox+UBaOZyOWfTISVmWEVyGnNsQ5iGtGyCwVvwMUzCZQPCDp5DuR0nYR3YU0WQElTf6yBQ5+b1ixQLto+JeNvzxmzSZeALHgWs3TuEFUbl2XLEQ+29U
- clU2UywbG2vGjiQsY3ngjlmaH2frk05rPojlXRMEmEE=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87d0sgepmo.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/10/2018 20:54, Alban Gruin wrote:
-> This refactors sequencer_add_exec_commands() to work on a todo_list to
-> avoid redundant reads and writes to the disk.
+On Thu, Oct 11, 2018 at 12:36:47PM +0200, Ævar Arnfjörð Bjarmason wrote:
 > 
-> sequencer_add_exec_commands() still reads the todo list from the disk,
-> as it is needed by rebase -p.  todo_list_add_exec_commands() works on a
-> todo_list structure, and reparses it at the end.
+> On Thu, Oct 11 2018, SZEDER Gábor wrote:
 > 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->   sequencer.c | 56 +++++++++++++++++++++++++++++++----------------------
->   1 file changed, 33 insertions(+), 23 deletions(-)
+> > Fourth and hopefully final round of fixing occasional test failures when
+> > run with 'GIT_TEST_SPLIT_INDEX=yes'.  The only code change is the
+> > extraction of a helper function to compare two cache entries' content,
+> > and then a couple of minor log message clarifications.  The range-diff
+> > below is rather clear on that.
 > 
-> diff --git a/sequencer.c b/sequencer.c
-> index 8dda61927c..6d998f21a4 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4370,34 +4370,21 @@ int sequencer_make_script(FILE *out, int argc, const char **argv,
->   	return 0;
->   }
->   
-> -/*
-> - * Add commands after pick and (series of) squash/fixup commands
-> - * in the todo list.
-> - */
-> -int sequencer_add_exec_commands(const char *commands)
-> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
-> +					const char *commands)
->   {
-> -	const char *todo_file = rebase_path_todo();
-> -	struct todo_list todo_list = TODO_LIST_INIT;
-> -	struct strbuf *buf = &todo_list.buf;
-> +	struct strbuf *buf = &todo_list->buf;
->   	size_t offset = 0, commands_len = strlen(commands);
->   	int i, insert;
->   
-> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
-> -		return error(_("could not read '%s'."), todo_file);
-> -
-> -	if (todo_list_parse_insn_buffer(todo_list.buf.buf, &todo_list)) {
-> -		todo_list_release(&todo_list);
-> -		return error(_("unusable todo list: '%s'"), todo_file);
-> -	}
-> -
->   	/*
->   	 * Insert <commands> after every pick. Here, fixup/squash chains
->   	 * are considered part of the pick, so we insert the commands *after*
->   	 * those chains if there are any.
->   	 */
->   	insert = -1;
-> -	for (i = 0; i < todo_list.nr; i++) {
-> -		enum todo_command command = todo_list.items[i].command;
-> +	for (i = 0; i < todo_list->nr; i++) {
-> +		enum todo_command command = todo_list->items[i].command;
->   
->   		if (insert >= 0) {
->   			/* skip fixup/squash chains */
-> @@ -4408,7 +4395,7 @@ int sequencer_add_exec_commands(const char *commands)
->   				continue;
->   			}
->   			strbuf_insert(buf,
-> -				      todo_list.items[insert].offset_in_buf +
-> +				      todo_list->items[insert].offset_in_buf +
->   				      offset, commands, commands_len);
->   			offset += commands_len;
->   			insert = -1;
-> @@ -4419,15 +4406,38 @@ int sequencer_add_exec_commands(const char *commands)
->   	}
->   
->   	/* insert or append final <commands> */
-> -	if (insert >= 0 && insert < todo_list.nr)
-> -		strbuf_insert(buf, todo_list.items[insert].offset_in_buf +
-> +	if (insert >= 0 && insert < todo_list->nr)
-> +		strbuf_insert(buf, todo_list->items[insert].offset_in_buf +
->   			      offset, commands, commands_len);
->   	else if (insert >= 0 || !offset)
->   		strbuf_add(buf, commands, commands_len);
->   
-> -	i = write_message(buf->buf, buf->len, todo_file, 0);
-> +	if (todo_list_parse_insn_buffer(buf->buf, todo_list))
-> +		BUG("unusable todo list");}
+> Looks good. I'm not going to run the stress test I did on v5 on this
+> since the changes are just moving existing code into a fuction, unless
+> you'd like me to or think there's a reason to that is.
 
-It is a shame to have to re-parse the todo list, I wonder how difficult 
-it would be to adjust the todo_list item array as the exec commands are 
-inserted. The same applies to the next couple of patches
+FWIW, I intend to carry this patch below and use it in tests both
+locally and on Travis CI.  I could never trigger any of those three
+conditions by repeated test runs with 'GIT_TEST_SPLIT_INDEX=yes', or
+by deliberately constructing tricky scenarios where they might be
+triggered.
 
-Best Wishes
+Perhaps with enough time I'll get lucky eventually :)
 
-Phillip
+If it's not too much trouble, then perhaps you could pick it up as
+well?  While testing previous versions of this series it turned out
+that your setup has much more "luck" in finding problematic timings
+than mine.
 
-> +
-> +/*
-> + * Add commands after pick and (series of) squash/fixup commands
-> + * in the todo list.
-> + */
-> +int sequencer_add_exec_commands(const char *commands)
-> +{
-> +	const char *todo_file = rebase_path_todo();
-> +	struct todo_list todo_list = TODO_LIST_INIT;
-> +	int res;
-> +
-> +	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
-> +		return error(_("could not read '%s'."), todo_file);
-> +
-> +	if (todo_list_parse_insn_buffer(todo_list.buf.buf, &todo_list)) {
-> +		todo_list_release(&todo_list);
-> +		return error(_("unusable todo list: '%s'"), todo_file);
-> +	}
-> +
-> +	todo_list_add_exec_commands(&todo_list, commands);
-> +	res = write_message(todo_list.buf.buf, todo_list.buf.len, todo_file, 0);
->   	todo_list_release(&todo_list);
-> -	return i;
-> +
-> +	return res;
->   }
->   
->   int transform_todos(unsigned flags)
-> 
 
+diff --git a/split-index.c b/split-index.c
+index 5820412dc5..4af535e236 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -254,8 +254,8 @@ void prepare_to_write_split_index(struct index_state *istate)
+ 				continue;
+ 			}
+ 			if (ce->index > si->base->cache_nr) {
+-				BUG("ce refers to a shared ce at %d, which is beyond the shared index size %d",
+-				    ce->index, si->base->cache_nr);
++				BUG("ce of '%s' refers to a shared ce at %d, which is beyond the shared index size %d",
++				    ce->name, ce->index, si->base->cache_nr);
+ 			}
+ 			ce->ce_flags |= CE_MATCHED; /* or "shared" */
+ 			base = si->base->cache[ce->index - 1];
+@@ -293,10 +293,9 @@ void prepare_to_write_split_index(struct index_state *istate)
+ 				continue;
+ 			}
+ 			if (ce->ce_namelen != base->ce_namelen ||
+-			    strcmp(ce->name, base->name)) {
+-				ce->index = 0;
+-				continue;
+-			}
++			    strcmp(ce->name, base->name))
++				BUG("ce of '%s' refers to the shared ce of a different file '%s'",
++				    ce->name, base->name);
+ 			/*
+ 			 * This is the copy of a cache entry that is present
+ 			 * in the shared index, created by unpack_trees()
+@@ -332,7 +331,8 @@ void prepare_to_write_split_index(struct index_state *istate)
+ 				 * set CE_UPDATE_IN_BASE as well.
+ 				 */
+ 				if (compare_ce_content(ce, base))
+-					ce->ce_flags |= CE_UPDATE_IN_BASE;
++					BUG("ce of '%s' differs from its shared ce, but the CE_UPDATE_IN_BASE flag was not set",
++					    ce->name);
+ 			}
+ 			discard_cache_entry(base);
+ 			si->base->cache[ce->index - 1] = ce;
