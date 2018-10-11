@@ -7,75 +7,77 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFFDA1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 22:03:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 076AA1F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 22:11:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbeJLFcP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 01:32:15 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:32831 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725763AbeJLFcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 01:32:15 -0400
-Received: by mail-ed1-f67.google.com with SMTP id l14-v6so722582edq.0
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:03:01 -0700 (PDT)
+        id S1726399AbeJLFke (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 01:40:34 -0400
+Received: from mail-yb1-f201.google.com ([209.85.219.201]:53251 "EHLO
+        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725854AbeJLFke (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 01:40:34 -0400
+Received: by mail-yb1-f201.google.com with SMTP id t15-v6so5185307ybl.20
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=siP5rOIHTFg6fW3U0JxEdfgLatSOWUrx6uplGRfNdA4=;
-        b=rn3ZwUFO8GSkyjJCDDyYyDp6f7+Ye8QBi1fWu6oqKJoPhkcctfqyU6yTlJCjqod1vZ
-         SymlO9WEVMdR7HnMoIW8CYJ1So52JOzHSApBtnXz/LTi8qMQt5b1p+HL0mxC9vxQDwsc
-         t38JsKlQ6L9DCTkfHQAvxlzTAOJOpV9oTADgOmJnoYz7qOA0Gx1QVg0bGAj7OaCZNsJA
-         MRLzrUUbfcV9kl1l+Mi4dDVaWMr+qHB68YI1ruCpTeknpwaZfm4CHL1XqAxvxbHMUebI
-         dDtLnTxVbgiBM+2INvimn+kNkgoEFrNhk3Cr52dBiXNh8W2YwMD6YtwTkvwhFf4Lc6cz
-         mxlg==
+        bh=XoFF+s3QQH7UcgK5WQMJWp6FVcLPKTMk+Vg9HZojQ2k=;
+        b=h4jQnbZdv6kCMnkq0FkxXBSWev16mjfkNOcHwf+o28LnH7v6pd1nmJjc1CmtMKlth1
+         Ihe8JiIpt9R/pURdb9k1xDGyUL3ldkNThIHh51H5x1zRXW2TIoCAKE32DDY3tidk653D
+         z0Az/WfCk5knl+/hL9u9R2fhvBiI6gyIQn41rDlQ244C5B0sEnMY6GcXZlwD6tl8exyh
+         kzJEGBmtaIrkSfx7bdBSYaxVoOSpNLSPXqYgOXA5QFgVw3jMSoKM6UIV8FMIiPV2WOj5
+         HP3ARy1O56CFaHLp9Awiqy5br332+2Dxo7vgdbjmMATk7t38P0IYspYeqQRmYbajV1nX
+         Gy7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=siP5rOIHTFg6fW3U0JxEdfgLatSOWUrx6uplGRfNdA4=;
-        b=rSiEUG4OF06pQzOx6RmA+Ox/IZhSBk3FiIycanxSFuCcdh6MbwpTYZ6rvgwjzHkwUr
-         KLx75p5kYGeWDJVsWBjQf0x3g2qVMfA1vp+3Px0rP8uIVL1WkfLv58rGmTed21Hqon0B
-         74iOC6koBBhShwc00GvGQqbQIBsxMrPeSiTEXwJ5Qq0VRdeCIuKVj9sRutShB7nbIed7
-         NPxfPadDv43GUuKuIySoQHn/hBdfmqSHIrwXbM7oOM5rPEvBxwDzpaxC5ZE1YRJEIHjp
-         UF2ZN6ksGw9JikyCaJaL7Lg1RTTD3ONs9StZ+y2J1MKPQSEnpxfogmbc6ZT+fUDgKsba
-         +I5A==
-X-Gm-Message-State: ABuFfoiz4HJK2PQQqHLmMbWySwZOwvMs7/D09BcGyMAGCydvDfHZ2y9w
-        NSmsuAH+w1stf1jrIaQi0PWElfgGc7amqo6XJXleQw==
-X-Google-Smtp-Source: ACcGV60dO0/n+FkuDjXgw8K8MLl5HtJTOjYTCC2jJNbQIyozOaVHogW5QJK+uo8N2BkpgdGuIN3Bx9NoomHikC3rVAo=
-X-Received: by 2002:aa7:d709:: with SMTP id t9-v6mr5359745edq.231.1539295380262;
- Thu, 11 Oct 2018 15:03:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20181011211754.31369-5-sbeller@google.com> <20181011220147.183266-1-jonathantanmy@google.com>
-In-Reply-To: <20181011220147.183266-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 11 Oct 2018 15:02:49 -0700
-Message-ID: <CAGZ79ka7Kv51SpqiGdZTr4fA7iAJ1aw-h41NuQPqLutBGaTSfw@mail.gmail.com>
-Subject: Re: [PATCH 04/19] object-store: prepare read_object_file to deal with
- arbitrary repositories
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=XoFF+s3QQH7UcgK5WQMJWp6FVcLPKTMk+Vg9HZojQ2k=;
+        b=Rek1PhCZm8JEME7UHPDGkCFivrwjH2rr9pm0iPQ89MTKXFENVvZDK80Y+ITcd6jSay
+         IO1HMSyvDczmRLhCCXFAAdn54ul8LrLqz+42Wy0uwQy/xLjwe0XjXHsUQaAQC/oAzEnK
+         mj8n48kfUjC+6dmkG8pwHPlR05qVZYAhnSNG0xa8CXS5ylG4CfT+aAgXNqyt0HhObAwH
+         EECeVG3dEtB+VTkeGNxID+Fkhjds76hJELFfYJIKD4ECB7mflvvzXff/OSYakDD7eiya
+         7Uw6eyP65Ch/CDLeoOK3ovBmHdWyGy5vg/v+KoXA/eO3Z6E6lMmaUjYPTwqx2Ci4vk9b
+         nxuA==
+X-Gm-Message-State: ABuFfogXkW03/7fd9a/tWYxgr5bSQpcMD60Ot30gS9ftmY4GqKa/fmLl
+        Vt/B6Mr9f5tsKBo9mT03cW3SNL0qE0nvQHLzB9xS
+X-Google-Smtp-Source: ACcGV61cOAS1f9QKs08xHdvEfRsjzvvSKN+4eihlHhF/pIVMJcI2y/rwnCBEQSOy7VuX1dbdy0IaZwFsjyyIi/XA/eSC
+X-Received: by 2002:a25:1f86:: with SMTP id f128-v6mr1840116ybf.64.1539295878792;
+ Thu, 11 Oct 2018 15:11:18 -0700 (PDT)
+Date:   Thu, 11 Oct 2018 15:11:14 -0700
+In-Reply-To: <20181011211754.31369-6-sbeller@google.com>
+Message-Id: <20181011221114.186377-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181011211754.31369-6-sbeller@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH 05/19] object: parse_object to honor its repository argument
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 11, 2018 at 3:01 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > Introduce repo_read_object_file which takes the repository argument, and
-> > hide the original read_object_file as a macro behind
-> > NO_THE_REPOSITORY_COMPATIBILITY_MACROS, which we planned for in
-> > e675765235 (diff.c: remove implicit dependency on the_index, 2018-09-21)
->
-> That commit didn't seem to plan for anything - it just seems to add a
-> new function with the name "repo_" preprended and define a macro if
-> NO_THE_REPOSITORY_COMPATIBILITY_MACROS is not set, just like this patch.
-> Maybe s/which we planned for in/just like in/.
+> In 8e4b0b6047 (object.c: allow parse_object to handle
+> arbitrary repositories, 2018-06-28), we forgot to pass the
+> repository down to the read_object_file.
 
-I was reading too much into
+[snip]
 
-    The plan is these macros will always be defined for all library files
-    and the macros are only accessible in builtin/
+> @@ -270,7 +270,7 @@ struct object *parse_object(struct repository *r, const struct object_id *oid)
+>  		return lookup_object(r, oid->hash);
+>  	}
+>  
+> -	buffer = read_object_file(oid, &type, &size);
+> +	buffer = repo_read_object_file(r, oid, &type, &size);
 
-of that commit message.
+There is still the matter of the 2 invocations of has_object_file()
+earlier in this function. The first one probably can be replaced with
+oid_object_info_extended() (see the definition of
+has_sha1_file_with_flags() to see how to do it), and the second one
+looks redundant to me and can be removed. Apart from that, I don't see
+any other invocations that need to be converted, so parse_object() will
+indeed fully honor its repository argument.
