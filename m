@@ -6,99 +6,93 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6C71F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 06:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C83631F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 06:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726846AbeJKNuD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 09:50:03 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50816 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726047AbeJKNuD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 09:50:03 -0400
-Received: by mail-wm1-f67.google.com with SMTP id i8-v6so7665595wmg.0
-        for <git@vger.kernel.org>; Wed, 10 Oct 2018 23:24:16 -0700 (PDT)
+        id S1726906AbeJKOUU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 10:20:20 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:34872 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726047AbeJKOUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 10:20:20 -0400
+Received: by mail-wr1-f49.google.com with SMTP id w5-v6so8325022wrt.2
+        for <git@vger.kernel.org>; Wed, 10 Oct 2018 23:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=hobnQp6sCLMU6YQXei5IiwUNduLA3q4Krv8eWyrIpKI=;
-        b=fI+nKlELrioGPJY44Ik2Fuma872e6IEupP2tYi0Pos0hgH7TJZ9dRsELz5NzhbqmbI
-         IzXSvbR6G3l54zcxxZanPq78EVmxMcvqs7/x8V62foD4d939BT5mNgUew5jHPfIpzqr6
-         er27YUz1kJVprWmQJv4CzepTqtuD/lAocAtjcZRuJbqnZDPQX499GzW4ltw1sTOyZ1kI
-         AQ6+jdkTZT71bWwgujZPZK3c7yxuDPcI5bmKKD+mUqyFbgnmO15pERgONN9/fF+SZ2Yi
-         zmOpIWoUZRTOAwT5DRbtprCymTRw+KXRV2loUWVD3LADeMVPeLP3gk1HYbOBZuyDC/Uq
-         90eA==
+         :user-agent:mime-version;
+        bh=Rr37BLSInkJg83K/0id31pNFvvfYewJsUXUPN61+ZJ0=;
+        b=qpqKOwTNgOv05RD0iKHguZouoshybU54tJryChCaEsUUg/8eWRPS/bu58gcL7mGokO
+         PREoW13mAGcMurlICwoMU2aay+jTSNcFWZAOHflSkyC1KZISj6/dzKrno8YSAdoK9Ybo
+         0RK4eqsm2qrHwp0y7gKBoSRT9nY4I/T4nym27SmIEA730gPyCEpJ8kEX7xLZzIL2cH2g
+         g59kQHv6KxW7JhUxRFArJGnnKbgamn8L1QuWm/QLPiutqCrStsyCSC9hlIyMiolT3jpQ
+         l+J3mh7zzzhIrHvthmZ9wO66pYmrOY8iDGBdMWBo9l1GR2jj9bMsnhaV9OPBa9Af2AZ3
+         XrAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=hobnQp6sCLMU6YQXei5IiwUNduLA3q4Krv8eWyrIpKI=;
-        b=mgDZeZ3AJx8U4HcwDAvRb4tJaXZ2nSk3AEeZioGM0wm0MTHegNTp8vryzs0x01AGxZ
-         DWoRauivUZ4EIcwnnEp262mOtyePAZJPGWCx735VC4DjMJMeQldqumZ5XoHOyCNo7Eqn
-         ltJTrnj58uNG2BDYH3+78HOVKh+uT5OZDnnOUTEYL5x4BeBX/o9CvhzHm8j6x3rwWRIf
-         tAZW83d4uGQ0vZlkdrLBZu56Dbt0vDWVlifjItT0j+wUIzdH3rYZA9yFHimnqs1MFAeX
-         ivHsJXznVLfZAGogxc9lmEK3vl5Q0B0SFrRQBhwWDNQXEaISNAob7E1xAns4VCswSdP9
-         yJ2Q==
-X-Gm-Message-State: ABuFfoizWY4w0y+zCMho+iSejSZN259POPoyMWmFZYGNO1sHfv9oPvSv
-        eYxRhmsb3NYUVLLoYlfcIxY=
-X-Google-Smtp-Source: ACcGV61AlqqM0qVEgvGa4Jhby62Cu2Za3KIersPkecVSMJY7sn20V7ufYSj7YZq87hyL/N0PJSilbA==
-X-Received: by 2002:a1c:c683:: with SMTP id w125-v6mr449282wmf.117.1539239055069;
-        Wed, 10 Oct 2018 23:24:15 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Rr37BLSInkJg83K/0id31pNFvvfYewJsUXUPN61+ZJ0=;
+        b=U2devPKzQST5c01ht/hSbDNaxjuBjVeqQxmSIjiHHk+mcmeFzN3SzICd79BkGCYYkT
+         f3nm1bUt5EstC5B7FAWc+5IWjaW9SAVeuizPQBgygSOFyvq1EGJ+KA4dqrijy8Qhvcfd
+         aEU8T80UQgr3oTFjqsOAXe5P9fY/RkRlI6sZmKXIARJP+uPOMISeFqDLoWiv8+cI1dAO
+         chAYbW0LdneDNrJ+1MdqefuP5qnus2NgTOUE0ATy5gBSdHrPxqPxk6j1iok93a3mMnqY
+         jD2U2FASdzF5mU2HXt1M/WfBJj8GBRkZl4C9V6P4/rLLAxAGPabWy9ofPfVl8Gf+bbKw
+         QBwA==
+X-Gm-Message-State: ABuFfogYeMCMGT1z+4kEjBPTNXn1IB76sDTrNumBc+jzdvIeDw3lKeGe
+        MtZPuwJk+8B6Fhxb9fl8Xxg=
+X-Google-Smtp-Source: ACcGV63/0q5KWxl5tmoQFy2NLHJ/oMe6VaxpSXXx/VRj+fYcnAnMfy3IBhH4kIHsKk5iV5Ut70uReQ==
+X-Received: by 2002:a5d:6242:: with SMTP id m2-v6mr331378wrv.162.1539240866116;
+        Wed, 10 Oct 2018 23:54:26 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j46-v6sm41289483wre.91.2018.10.10.23.24.13
+        by smtp.gmail.com with ESMTPSA id s1-v6sm17473735wrw.35.2018.10.10.23.54.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Oct 2018 23:24:13 -0700 (PDT)
+        Wed, 10 Oct 2018 23:54:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] mingw: bump the minimum Windows version to Vista
-References: <pull.44.git.gitgitgadget@gmail.com>
-        <2b127d9669aa7b73ced7611b6e77044f5efed11d.1538595818.git.gitgitgadget@gmail.com>
-        <87zhvlevxt.fsf@evledraar.gmail.com>
-Date:   Thu, 11 Oct 2018 15:24:13 +0900
-In-Reply-To: <87zhvlevxt.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 10 Oct 2018 16:08:14 +0200")
-Message-ID: <xmqq8t35gfw2.fsf@gitster-ct.c.googlers.com>
+To:     Daniels Umanovskis <daniels@umanovskis.se>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] branch: introduce --show-current display option
+References: <20181010205432.11990-1-daniels@umanovskis.se>
+        <20181010205432.11990-2-daniels@umanovskis.se>
+Date:   Thu, 11 Oct 2018 15:54:23 +0900
+In-Reply-To: <20181010205432.11990-2-daniels@umanovskis.se> (Daniels
+        Umanovskis's message of "Wed, 10 Oct 2018 22:54:32 +0200")
+Message-ID: <xmqq4ldtgehs.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Daniels Umanovskis <daniels@umanovskis.se> writes:
 
->> It also means that we no longer need the inet_pton() and inet_ntop()
->> emulation, which is nice.
->
-> Earlier in this series you add a:
->
-> #if defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x600
-> ...
-> #endif
->
-> Shouldn't that now be something like:
->
-> #if defined(_WIN32_WINNT)
-> #if _WIN32_WINNT >= 0x600
-> ...
-> #else
-> #error "You need at least Windows Vista to build Git!"
-> #endif
-> #endif
->
-> Or do we catch users building on non-supported versions earlier somehow
-> (i.e. not just with a flood of compilation errors).
+> +static void print_current_branch_name()
+> +{
+> +	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+> +	const char *shortname;
+> +	if (refname == NULL || !strcmp(refname, "HEAD"))
+> +		return;
 
-That sounds like a reasonable thing to be curious about.
+Is it a normal situation to have refname==NULL, or is it something
+worth reporting as an error?
 
-> Both of the above are just questions I was curious about since I saw
-> your <nycvar.QRO.7.76.6.1810101502220.2034@tvgsbejvaqbjf.bet>, and
-> shouldn't bee seen as bumping this to "this needs a re-roll" or it
-> should be delayed in getting to master.
+Without passing the &flag argument, I do not think there is a
+reliable way to ask resolve_ref_unsafe() if "HEAD" is a symbolic
+ref.
+
+	int flag;
+	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, &flag);
+	const char *branchname;
+
+	if (!refname)
+		die(...);
+	else if (!(flag & REF_ISSYMREF))
+		return; /* detached HEAD */
+	else if (skip_prefix(refname, "refs/heads/", &branchname))
+		puts(branchname);
+	else
+		die("HEAD (%s) points outside refs/heads/?", refname);
+
+or something like that?
