@@ -8,144 +8,101 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ED9E1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 07:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4991F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 07:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726933AbeJKPDp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 11:03:45 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35804 "EHLO
+        id S1726933AbeJKPIV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 11:08:21 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37530 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726135AbeJKPDp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 11:03:45 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w5-v6so8461493wrt.2
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 00:37:43 -0700 (PDT)
+        with ESMTP id S1726219AbeJKPIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 11:08:20 -0400
+Received: by mail-wr1-f67.google.com with SMTP id y11-v6so8459910wrd.4
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 00:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XgdYq0AAv7UCQGh+BGpW6LhSgXbp+11nvdxidLCucaA=;
-        b=YaJ8Ck0Qhhpr37S6Sy/Rs1xEgeymNImlWx3rsSfJZDSd2LsMbpmGrREamIkyeFkWf2
-         2emTkaJn51FHgYsHBhRWM7f3gM2XA7rmcPtKNwbIdTo8ig0JvHSz+LT64zJhwl3MdI1g
-         JWcv0AhD6DOM0pxIvR86OvtBg7TTnsNujZn6WD/xp8EYcF/UbYfTmo99hmN3GAtNhdyG
-         1TmJhezJisQbbSakzLgOCB8U0SKAsftcvuad9W6H+Se5WRYxjXLDErq9OASGGn4Mm6It
-         +19x02eSB2ZrY3k6XhohmA8HW22+lBm4nvvfjMJnG8ppJqHJHl4PaCGLjzk3SCi1dE+D
-         Z2VA==
+         :message-id:mime-version;
+        bh=7dZTN/SxKVctHI40TRCeIIt9my8nvY6DBUHYuF4x0XM=;
+        b=Fo21Ni5/4QvumeQAdNjXX1HsnurpL4uZJbnIkVrL8yBdeV3tYSKNNgpaMbOejmVlYk
+         aLLxwbC4gu1l57+34iHHyoNG7q+ihuQcoHizamJznhLWJBn3oQjJJfAvI7P2VRYvnHyH
+         PeUlvzfusXZaAwjhQ9RhOJ6SrYLUoK66PHCxjIS4UmDEF/Cnarkmjmsf+e+lSjWpxFmm
+         ZwtQ+lQGMG7zUiBZ/xbEgNX1c7Fbj1QcFyPwtWGpdx4UXZO0pe6Guc1x8jQWR/a7Vjz1
+         A5a8qC+VupK4mFBVrpF43TPh2WjpvXmYieS6CtU6daV8StgENGEIxd50vVYZL9/vKvjj
+         fyXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XgdYq0AAv7UCQGh+BGpW6LhSgXbp+11nvdxidLCucaA=;
-        b=uC7tEz0F8WcuPqSqX6h+7LiVmBt43v3zBc/dlaa2UQSmXRAUisXOh9b1kePCaVdib2
-         rKt9OiszsrNvmsvX0bA52cLKsq+9HTBJYjFmB3k6Azru6PPxvfXABHZb4Zx3Z7bqvcCD
-         sYLE6KC04cuW6Ex6s9W0oYaFoGN12KT5NxxUP77PJT8h9Y43Zs/U6aaW7MjhaH2SDugl
-         F5CLoRytRo2qSMaZquBGAU1N5DJygrP1AAuNKnGwnuv4KlBmHstkfwQj8M7VT35bIvGT
-         BrZYxFqfiaj4Sr8wiTeKmr7MdqcCijPQpCuuaGWkpkPUbUXQvWufB4WLmJi5TyXQ2AuU
-         XrUw==
-X-Gm-Message-State: ABuFfohHM8v1QrFKw9l34Vc16mTSD7Q/iZhG8unAU2QCiJ4vNPbB19Eg
-        79IbvxwOWgO4zcOpuAuyjMY=
-X-Google-Smtp-Source: ACcGV63+isK5RjgfJSY0/o7SDiq+du4tmBLhDNrflNn7RI6JtF3Mvv07cqnEh7CzxDeaunrFgsuMYQ==
-X-Received: by 2002:adf:e7cb:: with SMTP id e11-v6mr471364wrn.27.1539243462352;
-        Thu, 11 Oct 2018 00:37:42 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version;
+        bh=7dZTN/SxKVctHI40TRCeIIt9my8nvY6DBUHYuF4x0XM=;
+        b=ZPxkrcHmVbywWZnjU/8ITv0Mvk1WHd9c+UcABhOY4J6V08jTVaIptmB6uBXu8fjLwi
+         rUFsrDZpY56CFWL2ZtDlfuN3hNJJ+Bb8hQ5Urm96gLu2nU78zR4hzT2MlaUdZl+vNT6N
+         rQW8hLgsW6PQk/Gr5/ROjGfYeHe4chZFp+XsbC2Cu5XPR449rCKEjxVM1YCpqbibaGGg
+         IcZwShbgeymYlax4EyR//J4LePKvE+a1DEzQFZrl4wwB/CsGyf0XgKMHn0tjR6PcvCMY
+         eUkjs/n+mNwq9ASRyzhqpJd28hGLzMAxTASynpPdvSL0Y+ZuW922pNTDaT3dMZwd9163
+         aEnQ==
+X-Gm-Message-State: ABuFfojCTZGaXJ6UmYxjOzy45rhbxlrTS4qqtyhPzkVhl1hmICL8q9tA
+        YOjFqRlT7KMuEUj3hSY+QpI=
+X-Google-Smtp-Source: ACcGV63TvMWq7fhZW/oDD4ZQTLsdZxYjJECiTcYrK8S9TbSTwiGvq2CKIk/F9pfky7y8ks1BMbZNQQ==
+X-Received: by 2002:adf:e842:: with SMTP id d2-v6mr428718wrn.175.1539243736725;
+        Thu, 11 Oct 2018 00:42:16 -0700 (PDT)
 Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id l67-v6sm47532175wma.20.2018.10.11.00.37.41
+        by smtp.gmail.com with ESMTPSA id b81-v6sm17338267wmh.47.2018.10.11.00.42.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 00:37:41 -0700 (PDT)
+        Thu, 11 Oct 2018 00:42:15 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, stolee@gmail.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH 0/2] Per-commit filter proof of concept
-References: <20181009193445.21908-1-szeder.dev@gmail.com> <cover.1539219248.git.jonathantanmy@google.com>
+To:     Lucas De Marchi <lucas.demarchi@intel.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>, lucas.de.marchi@gmail.com
+Subject: Re: [PATCH] range-diff: allow to diff files regardless submodule
+References: <20181010150916.4295-1-lucas.demarchi@intel.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <cover.1539219248.git.jonathantanmy@google.com>
-Date:   Thu, 11 Oct 2018 09:37:40 +0200
-Message-ID: <87k1mpdjcr.fsf@evledraar.gmail.com>
+In-reply-to: <20181010150916.4295-1-lucas.demarchi@intel.com>
+Date:   Thu, 11 Oct 2018 09:42:14 +0200
+Message-ID: <87in29dj55.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Oct 11 2018, Jonathan Tan wrote:
+On Wed, Oct 10 2018, Lucas De Marchi wrote:
 
-> Using per-commit filters and restricting the bloom filter to a single
-> parent increases the relative power of the filter in omitting tree
-> inspections compared to the original (107/53096 vs 1183/66459), but the
-> lack of coverage w.r.t. the non-first parents had a more significant
-> effect than I thought (1.29s vs .24s). It might be best to have one
-> filter for each (commit, parent) pair (or, at least, the first two
-> parents of each commit - we probably don't need to care that much about
-> octopus merges) - this would take up more disk space than if we only
-> store filters for the first parent, but is still less than the original
-> example of storing information for all commits in one filter.
+> Do like it's done in grep so mode doesn't end up as
+> 0160000, which means range-diff doesn't work if one has
+> "submodule.diff = log" in the configuration. Without this
+> while using range-diff I only get a
 >
-> There are more possibilities like dynamic filter sizing, different
-> hashing, and hashing to support wildcard matches, which I haven't looked
-> into.
+>     Submodule a 0000000...0000000 (new submodule)
 
-Another way to deal with that is to havet the filter store change since
-the merge base, from an E-Mail of mine back in May[1] when this was
-discussed:
+I'm not familiar enough with this to tell what the real problem is
+that's being solved from the commit message, but if it means that now
+range-diff works in some configuration, presumably that can be reduced
+to a simple set of commands that didn't work before but now does, and
+therefore a test in t/t3206-range-diff.sh.
 
-    From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    Date: Fri, 04 May 2018 22:36:07 +0200
-    Message-ID: <87h8nnxio8.fsf@evledraar.gmail.com> (raw)
-
-    On Fri, May 04 2018, Jakub Narebski wrote:
-
-    (Just off-the cuff here and I'm surely about to be corrected by
-    Derrick...)
-
-    > * What to do about merge commits, and octopus merges in particular?
-    >   Should Bloom filter be stored for each of the parents?  How to ensure
-    >   fast access then (fixed-width records) - use large edge list?
-
-    You could still store it fixed with, you'd just say that if you
-    encounter a merge with N parents the filter wouldn't store files changed
-    in that commit, but rather whether any of the N (including the merge)
-    had changes to files as of the their common merge-base.
-
-    Then if they did you'd need to walk all sides of the merge where each
-    commit would also have the filter to figure out where the change(s)
-    was/were, but if they didn't you could skip straight to the merge base
-    and keep walking.
-    [...]
-
-Ideas are cheap and I don't have any code to back that up, just thought
-I'd mention it if someone found it interesting.
-
-Thinking about this again I wonder if something like that could be
-generalized more, i.e. in the abstract the idea is really whether we can
-store a filter for N commits so we can skip across N in the walk as an
-optimization, doing this for merges is just an implementation detail.
-
-So what if the bloom filters were this sort of structure:
-
-    <commit_the_filter_is_for> = [<bloom bitmap>, <next commit with filter>]
-
-So e.g. given a history like ("-> " = parent relationship)
-
-    A -> B
-    B -> C
-    C -> D
-    E -> F
-
-We could store:
-
-    A -> B [<bloom bitmap for A..D>, D]
-    B -> C
-    C -> D
-    D -> E [<bloom bitmap for D..F>, F]
-    E -> F
-    F -> G [<bloom bitmap for F..G>, G]
-
-Note how the bitmaps aren't evenly spaced. That's because some algorithm
-would have walked the graph and e.g. decided that from A..D we had few
-enough changes that the bitmap should apply for 4 commits, and then 3
-for the next set etc. Whether some range was worth extending could just
-be a configurable implementation detail.
-
-1. https://public-inbox.org/git/87h8nnxio8.fsf@evledraar.gmail.com/
+> instead of the diff between the revisions.
+>
+> Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+> ---
+>  range-diff.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/range-diff.c b/range-diff.c
+> index 60edb2f518..bd8083f2d1 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -354,7 +354,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
+>  {
+>  	struct diff_filespec *spec = alloc_filespec(name);
+>
+> -	fill_filespec(spec, &null_oid, 0, 0644);
+> +	fill_filespec(spec, &null_oid, 0, 0100644);
+>  	spec->data = (char *)p;
+>  	spec->size = strlen(p);
+>  	spec->should_munmap = 0;
