@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B70C1F97E
+	by dcvr.yhbt.net (Postfix) with ESMTP id E59F01F97E
 	for <e@80x24.org>; Thu, 11 Oct 2018 09:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728388AbeJKRJu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Oct 2018 13:09:50 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:37838 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726215AbeJKRJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Oct 2018 13:09:50 -0400
-Received: by mail-ed1-f45.google.com with SMTP id c22-v6so7635908edc.4
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:43:19 -0700 (PDT)
+        id S1728397AbeJKRJw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Oct 2018 13:09:52 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45783 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726215AbeJKRJv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Oct 2018 13:09:51 -0400
+Received: by mail-ed1-f67.google.com with SMTP id v18-v6so7615440edq.12
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 02:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+NC+nmqR2Ce6MrjsF7+pY2dMCTec4HEYgScbFFXh/GQ=;
-        b=LMH4mlFX+iHYlZS6RGzoiBN1pzFjNRoXP1FCys+/uEp/UYBbRI85tgnQk8MW9rjwLQ
-         qgyiap3guSP2YrY8crjRU/R5CKVowPmrwW2KSjo+sgu5oX6lS4o4C46UOvUWJ7hFXwAb
-         UYirmlXmbI9FvuYfR5UpQA88QHOy2gOuu7CTTdpBbwtwrnbHI98yqsUJ3FnxVVOuM5tL
-         5IgbRnK2XxXWlCzsD9ir1/NgZeoOnZ1maJSqQ10ZgGrWf/K7eIie9N5O/TOTkTJNwNoP
-         nD3nFVs3SYiGP8SnbB3o4XPeB3WYYgBpx24QpCWZOCtVB7NzK3a4QzgBKlbdw7CPl9pH
-         uKog==
+        bh=iI3ONfwKO/q4cufdB/EfqPEqef0V8CWWEci9eF1WVas=;
+        b=o07fasBanUHcrfsYbcnFRiqgKf0d96qaSbnLWxNi+b9eZT62to+rUZlfQlPvu4xauA
+         aKMh/HLIaeW1crB2xqHrYgb/jg3LYs3HznPbVivSJcRwQ6xBHHyqAqoFxuLDyRFHo9FH
+         JuYStUVCV0mQ3uw3aPFaqliz2Zkr7iihtteik4S3uPwGAhAKjPzCQ4YsUmGOH/RgsN0Z
+         E/W+2hJYWQ11QHFuXbXV8xcE+wsoPXriUPGGAxt92F7w6N/cK+9Znf8M1WYJWpq5G8ty
+         mgoNbGcX+ZPfK72qzMKF/GSlsNYNfIFU/1vwfQmhp2W9pXGbzeq2vxLxauul2NyCRbp+
+         s7JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+NC+nmqR2Ce6MrjsF7+pY2dMCTec4HEYgScbFFXh/GQ=;
-        b=KavQPUigHKJYS4cNxn/BuAEoy1jUSj3OFQjCzwMEWbPUlEtd/ZQfXryeYgKizDGOMC
-         OKSBKHjJLZhsqRDeW5fquyAKS36u5lEP52QX57eow8o24lD9PptepPgZWya/igXMgFSI
-         zEaSklUm0SymhYTX8LDBEtJog9JYoGnv7ROsvzMvK91rzDoodoIH66UiOs1Ez3o70EcG
-         SjlOgP8GKvBafqQslHaPQ0Ub3WQvsBMEoSO/qnczDRN24pYb7pelRpBKkfYqZckEqJUI
-         q+uYsIiDTUJkFNofaE9idn+ttPy0jEqUXXRqvEUYZGfFj6CxKvmDgKzlQsD0/hHggjXs
-         IQww==
-X-Gm-Message-State: ABuFfoixWuuQWt5Me4uVJpkeFbVCw00fKCl/OUfhx5H5fVS8ZuSKeZ4o
-        0Lff4XY+tG+kbYCUhMm0VpU=
-X-Google-Smtp-Source: ACcGV60LsUyFfkAaOGY4WHj0J32TKPDnMVtWKMpwLYTrgWfQMW12WDVMgD2dPokKvoR0IG0QefFW7w==
-X-Received: by 2002:a50:cdd8:: with SMTP id h24-v6mr1719210edj.151.1539250997771;
-        Thu, 11 Oct 2018 02:43:17 -0700 (PDT)
+        bh=iI3ONfwKO/q4cufdB/EfqPEqef0V8CWWEci9eF1WVas=;
+        b=oFLCFyxr0P1fb24zvBEblHw0aUfAU1RogbHsUKu98CjwQYelKW/FUOWid7ncwAT3YZ
+         ARXlEL4Wwq5Jk/Hcb+3ezKfvhI1UIiDJ2gRmCr2/Yi5aq8M0LPkbp3OwqAr290yCFst9
+         iuVDXBiNchcPoJ5ROsVC97WzbG9Sbr+YoHlBxZdSxCQTL4dnKWymklA59hpa9iFHlTOs
+         6R8eNbAZuKHLYn0IdX0u1Cj7i606S8w91cQ9KOkz1LbQKSXPjfJGYizJ+6YIXCxBVKoX
+         9T4U81uWIv2L3px5fzsJfrtFPt0i9u+owZ/NU5rOqBSfQFtm7YxAaAMsRKcJIVklPWO6
+         Z3Ww==
+X-Gm-Message-State: ABuFfojyY6jrwzOi+sQEZNLjDh5cqF0Ro53ddX/z6oZ/U45xUb8Ltdxh
+        yhzn2IZzUzKgH4eRtlklzm0=
+X-Google-Smtp-Source: ACcGV61G6xtwxurRHUNUUTz1SFA3EtfNq5pYwtli/24uqmLETEowcvIDav3kJ1jzZH/xiZhj6CrbMg==
+X-Received: by 2002:a17:906:3f4e:: with SMTP id f14-v6mr1342880ejj.62.1539251001047;
+        Thu, 11 Oct 2018 02:43:21 -0700 (PDT)
 Received: from localhost.localdomain (x4dbd43b4.dyn.telefonica.de. [77.189.67.180])
-        by smtp.gmail.com with ESMTPSA id q25-v6sm7034721eda.18.2018.10.11.02.43.16
+        by smtp.gmail.com with ESMTPSA id q25-v6sm7034721eda.18.2018.10.11.02.43.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Oct 2018 02:43:16 -0700 (PDT)
+        Thu, 11 Oct 2018 02:43:19 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Duy Nguyen <pclouds@gmail.com>,
         Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
         git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 2/6] split-index: add tests to demonstrate the racy split index problem
-Date:   Thu, 11 Oct 2018 11:43:05 +0200
-Message-Id: <20181011094309.18626-3-szeder.dev@gmail.com>
+Subject: [PATCH v4 4/6] split-index: count the number of deleted entries
+Date:   Thu, 11 Oct 2018 11:43:07 +0200
+Message-Id: <20181011094309.18626-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.1.465.gaff195083f
 In-Reply-To: <20181011094309.18626-1-szeder.dev@gmail.com>
 References: <20180928162459.17138-1-szeder.dev@gmail.com>
@@ -73,384 +73,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since the split index feature was introduced [1], refreshing a
-split index is prone to a variant of the classic racy git problem.
-There are a couple of unrelated tests in the test suite that
-occasionally fail when run with 'GIT_TEST_SPLIT_INDEX=yes', but
-'t1700-split-index.sh', the only test script focusing solely on split
-index, has never noticed this issue, because it only cares about how
-the index is split under various circumstances and all the different
-ways to turn the split index feature on and off.
+'struct split_index' contains the field 'nr_deletions', whose name
+with the 'nr_' prefix suggests that it contains the number of deleted
+cache entries.  However, barring its initialization to 0, this field
+is only ever set to 1, indicating that there is at least one deleted
+entry, but not the number of deleted entries.  Luckily, this doesn't
+cause any issues (other than confusing the reader, that is), because
+the only place reading this field uses it in the same sense, i.e.: 'if
+(si->nr_deletions)'.
 
-Add a dedicated test script 't1701-racy-split-index.sh' to exercise
-the split index feature in racy situations as well; kind of a
-"t0010-racy-git.sh for split index" but with modern style (the tests
-do everything in &&-chained list of commands in 'test_expect_...'
-blocks, and use 'test_cmp' for more informative output on failure).
+To avoid confusion, we could either rename this field to something
+like 'has_deletions' to make its name match its role, or make it a
+counter of deleted cache entries to match its name.
 
-The tests cover the following sequences of index splitting, updating,
-and racy file modifications, with the last two cases demonstrating the
-racy split index problem:
-
-  1. Split the index while adding a racily clean file:
-
-       echo "cached content" >file
-       git update-index --split-index --add file
-       echo "dirty worktree" >file    # size stays the same
-
-     This case already works properly.  Even though the cache entry's
-     stat data matches with the modifid file in the worktree,
-     subsequent git commands will notice that the (split) index and
-     the file have the same mtime, and then will go on to check the
-     file's content and notice its dirtiness.
-
-  2. Add a racily clean file to an already split index:
-
-       git update-index --split-index
-       echo "cached content" >file
-       git update-index --add file
-       echo "dirty worktree" >file
-
-     This case already works properly.  After the second 'git
-     update-index' writes the newly added file's cache entry to the
-     new split index, it basically works in the same way as case #1.
-
-  3. Split the index when it (i.e. the not yet splitted index)
-     contains a racily clean cache entry, i.e. an entry whose cached
-     stat data matches with the corresponding file in the worktree and
-     the cached mtime matches that of the index:
-
-       echo "cached content" >file
-       git update-index --add file
-       echo "dirty worktree" >file
-       # ... wait ...
-       git update-index --split-index --add other-file
-
-     This case already works properly.  The shared index is written by
-     do_write_index(), i.e. the same function that is responsible for
-     writing "regular" and split indexes as well.  This function
-     cleverly notices the racily clean cache entry, and writes the
-     entry to the new shared index with smudged stat data, i.e. file
-     size set to 0.  When subsequent git commands read the index, they
-     will notice that the smudged stat data doesn't match with the
-     file in the worktree, and then go on to check the file's content
-     and notice its dirtiness.
-
-  4. Update the split index when it contains a racily clean cache
-     entry:
-
-       git update-index --split-index
-       echo "cached content" >file
-       git update-index --add file
-       echo "dirty worktree" >file
-       # ... wait ...
-       git update-index --add other-file
-
-     This case already works properly.  After the second 'git
-     update-index' the newly added file's cache entry is only stored
-     in the split index.  If a cache entry is present in the split
-     index (even if it is a replacement of an outdated entry in the
-     shared index), then it will always be included in the new split
-     index on subsequent split index updates (until the file is
-     removed or a new shared index is written), independently from
-     whether the entry is racily clean or not.  When do_write_index()
-     writes the new split index, it notices the racily clean cache
-     entry, and smudges its stat date.  Subsequent git commands
-     reading the index will notice the smudged stat data and then go
-     on to check the file's content and notice its dirtiness.
-
-  5. Update the split index when a racily clean cache entry is stored
-     only in the shared index:
-
-       echo "cached content" >file
-       git update-index --split-index --add file
-       echo "dirty worktree" >file
-       # ... wait ...
-       git update-index --add other-file
-
-     This case fails due to the racy split index problem.  In the
-     second 'git update-index' prepare_to_write_split_index() decides,
-     among other things, which cache entries stored only in the shared
-     index should be replaced in the new split index.  Alas, this
-     function never looks out for racily clean cache entries, and
-     since the file's stat data in the worktree hasn't changed since
-     the shared index was written, the entry won't be replaced in the
-     new split index.  Consequently, do_write_index() doesn't even get
-     this racily clean cache entry, and can't smudge its stat data.
-     Subsequent git commands will then see that the index has more
-     recent mtime than the file and that the (not smudged) cached stat
-     data still matches with the file in the worktree, and,
-     ultimately, will erroneously consider the file clean.
-
-  6. Update the split index after unpack_trees() copied a racily clean
-     cache entry from the shared index:
-
-       echo "cached content" >file
-       git update-index --split-index --add file
-       echo "dirty worktree" >file
-       # ... wait ...
-       git read-tree -m HEAD
-
-     This case fails due to the racy split index problem.  This
-     basically fails for the same reason as case #5 above, but there
-     is one important difference, which warrants the dedicated test.
-     While that second 'git update-index' in case #5 updates
-     index_state in place, in this case 'git read-tree -m' calls
-     unpack_trees(), which throws out the entire index, and constructs
-     a new one from the (potentially updated) copies of the original's
-     cache entries.  Consequently, when prepare_to_write_split_index()
-     gets to work on this reconstructed index, it takes a different
-     code path than in case #5 when deciding which cache entries in
-     the shared index should be replaced.  The result is the same,
-     though: the racily clean cache entry goes unnoticed, it isn't
-     added to the split index with smudged stat data, and subsequent
-     git commands will then erroneously consider the file clean.
-
-Note that in the last two 'test_expect_failure' cases I omitted the
-'#' (as in nr. of trial) from the tests' description on purpose for
-now, as it breakes the TAP output [2]; it will be added at the end of
-the series, when those two tests will be flipped to
-'test_expect_success'.
-
-[1] In the branch leading to the merge commit v2.1.0-rc0~45 (Merge
-    branch 'nd/split-index', 2014-07-16).
-
-[2] In the TAP output a '#' should separate the test's description
-    from the TODO directive emitted by 'test_expect_failure'.  The
-    additional '#' in "#$trial" interferes with this, the test harness
-    won't recognize the TODO directive, and will report that those
-    tests failed unexpectedly.
+Let's make it a counter, to keep it in sync with the related field
+'nr_replacements', which does contain the number of replaced cache
+entries.  This will also give developers debugging the split index
+code easy access to the number of deleted cache entries.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t1701-racy-split-index.sh | 218 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 218 insertions(+)
- create mode 100755 t/t1701-racy-split-index.sh
+ split-index.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1701-racy-split-index.sh b/t/t1701-racy-split-index.sh
-new file mode 100755
-index 0000000000..fbb77046da
---- /dev/null
-+++ b/t/t1701-racy-split-index.sh
-@@ -0,0 +1,218 @@
-+#!/bin/sh
-+
-+# This test can give false success if your machine is sufficiently
-+# slow or all trials happened to happen on second boundaries.
-+
-+test_description='racy split index'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	# Only split the index when the test explicitly says so.
-+	sane_unset GIT_TEST_SPLIT_INDEX &&
-+	git config splitIndex.maxPercentChange 100 &&
-+
-+	echo "cached content" >racy-file &&
-+	git add racy-file &&
-+	git commit -m initial &&
-+
-+	echo something >other-file &&
-+	# No raciness with this file.
-+	test-tool chmtime =-20 other-file &&
-+
-+	echo "+cached content" >expect
-+'
-+
-+check_cached_diff () {
-+	git diff-index --patch --cached $EMPTY_TREE racy-file >diff &&
-+	tail -1 diff >actual &&
-+	test_cmp expect actual
-+}
-+
-+trials="0 1 2 3 4"
-+for trial in $trials
-+do
-+	test_expect_success "split the index while adding a racily clean file #$trial" '
-+		rm -f .git/index .git/sharedindex.* &&
-+
-+		# The next three commands must be run within the same
-+		# second (so both writes to racy-file result in the same
-+		# mtime) to create the interesting racy situation.
-+		echo "cached content" >racy-file &&
-+
-+		# Update and split the index.  The cache entry of
-+		# racy-file will be stored only in the shared index.
-+		git update-index --split-index --add racy-file &&
-+
-+		# File size must stay the same.
-+		echo "dirty worktree" >racy-file &&
-+
-+		# Subsequent git commands should notice that racy-file
-+		# and the split index have the same mtime, and check
-+		# the content of the file to see if it is actually
-+		# clean.
-+		check_cached_diff
-+	'
-+done
-+
-+for trial in $trials
-+do
-+	test_expect_success "add a racily clean file to an already split index #$trial" '
-+		rm -f .git/index .git/sharedindex.* &&
-+
-+		git update-index --split-index &&
-+
-+		# The next three commands must be run within the same
-+		# second.
-+		echo "cached content" >racy-file &&
-+
-+		# Update the split index.  The cache entry of racy-file
-+		# will be stored only in the split index.
-+		git update-index --add racy-file &&
-+
-+		# File size must stay the same.
-+		echo "dirty worktree" >racy-file &&
-+
-+		# Subsequent git commands should notice that racy-file
-+		# and the split index have the same mtime, and check
-+		# the content of the file to see if it is actually
-+		# clean.
-+		check_cached_diff
-+	'
-+done
-+
-+for trial in $trials
-+do
-+	test_expect_success "split the index when the index contains a racily clean cache entry #$trial" '
-+		rm -f .git/index .git/sharedindex.* &&
-+
-+		# The next three commands must be run within the same
-+		# second.
-+		echo "cached content" >racy-file &&
-+
-+		git update-index --add racy-file &&
-+
-+		# File size must stay the same.
-+		echo "dirty worktree" >racy-file &&
-+
-+		# Now wait a bit to ensure that the split index written
-+		# below will get a more recent mtime than racy-file.
-+		sleep 1 &&
-+
-+		# Update and split the index when the index contains
-+		# the racily clean cache entry of racy-file.
-+		# A corresponding replacement cache entry with smudged
-+		# stat data should be added to the new split index.
-+		git update-index --split-index --add other-file &&
-+
-+		# Subsequent git commands should notice the smudged
-+		# stat data in the replacement cache entry and that it
-+		# doesnt match with the file the worktree.
-+		check_cached_diff
-+	'
-+done
-+
-+for trial in $trials
-+do
-+	test_expect_success "update the split index when it contains a new racily clean cache entry #$trial" '
-+		rm -f .git/index .git/sharedindex.* &&
-+
-+		git update-index --split-index &&
-+
-+		# The next three commands must be run within the same
-+		# second.
-+		echo "cached content" >racy-file &&
-+
-+		# Update the split index.  The cache entry of racy-file
-+		# will be stored only in the split index.
-+		git update-index --add racy-file &&
-+
-+		# File size must stay the same.
-+		echo "dirty worktree" >racy-file &&
-+
-+		# Now wait a bit to ensure that the split index written
-+		# below will get a more recent mtime than racy-file.
-+		sleep 1 &&
-+
-+		# Update the split index when the racily clean cache
-+		# entry of racy-file is only stored in the split index.
-+		# An updated cache entry with smudged stat data should
-+		# be added to the new split index.
-+		git update-index --add other-file &&
-+
-+		# Subsequent git commands should notice the smudged
-+		# stat data.
-+		check_cached_diff
-+	'
-+done
-+
-+for trial in $trials
-+do
-+	test_expect_failure "update the split index when a racily clean cache entry is stored only in the shared index $trial" '
-+		rm -f .git/index .git/sharedindex.* &&
-+
-+		# The next three commands must be run within the same
-+		# second.
-+		echo "cached content" >racy-file &&
-+
-+		# Update and split the index.  The cache entry of
-+		# racy-file will be stored only in the shared index.
-+		git update-index --split-index --add racy-file &&
-+
-+		# File size must stay the same.
-+		echo "dirty worktree" >racy-file &&
-+
-+		# Now wait a bit to ensure that the split index written
-+		# below will get a more recent mtime than racy-file.
-+		sleep 1 &&
-+
-+		# Update the split index when the racily clean cache
-+		# entry of racy-file is only stored in the shared index.
-+		# A corresponding replacement cache entry with smudged
-+		# stat data should be added to the new split index.
-+		#
-+		# Alas, such a smudged replacement entry is not added!
-+		git update-index --add other-file &&
-+
-+		# Subsequent git commands should notice the smudged
-+		# stat data.
-+		check_cached_diff
-+	'
-+done
-+
-+for trial in $trials
-+do
-+	test_expect_failure "update the split index after unpack trees() copied a racily clean cache entry from the shared index $trial" '
-+		rm -f .git/index .git/sharedindex.* &&
-+
-+		# The next three commands must be run within the same
-+		# second.
-+		echo "cached content" >racy-file &&
-+
-+		# Update and split the index.  The cache entry of
-+		# racy-file will be stored only in the shared index.
-+		git update-index --split-index --add racy-file &&
-+
-+		# File size must stay the same.
-+		echo "dirty worktree" >racy-file &&
-+
-+		# Now wait a bit to ensure that the split index written
-+		# below will get a more recent mtime than racy-file.
-+		sleep 1 &&
-+
-+		# Update the split index after unpack_trees() copied the
-+		# racily clean cache entry of racy-file from the shared
-+		# index.  A corresponding replacement cache entry
-+		# with smudged stat data should be added to the new
-+		# split index.
-+		#
-+		# Alas, such a smudged replacement entry is not added!
-+		git read-tree -m HEAD &&
-+
-+		# Subsequent git commands should notice the smudged
-+		# stat data.
-+		check_cached_diff
-+	'
-+done
-+
-+test_done
+diff --git a/split-index.c b/split-index.c
+index 84f067e10d..548272ec33 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -111,7 +111,7 @@ static void mark_entry_for_delete(size_t pos, void *data)
+ 		die("position for delete %d exceeds base index size %d",
+ 		    (int)pos, istate->cache_nr);
+ 	istate->cache[pos]->ce_flags |= CE_REMOVE;
+-	istate->split_index->nr_deletions = 1;
++	istate->split_index->nr_deletions++;
+ }
+ 
+ static void replace_entry(size_t pos, void *data)
 -- 
 2.19.1.465.gaff195083f
 
