@@ -2,70 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D698A1F97E
-	for <e@80x24.org>; Thu, 11 Oct 2018 22:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6B051F97E
+	for <e@80x24.org>; Thu, 11 Oct 2018 22:59:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726116AbeJLG1s (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 02:27:48 -0400
-Received: from mail.weplayciv.com ([162.221.200.53]:38046 "EHLO
-        mail.weplayciv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbeJLG1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 02:27:48 -0400
-Received: from [192.168.0.105] (c-3985e555.02-149-6c6b7013.bbcust.telenor.se [85.229.133.57])
-        by mail.weplayciv.com (Postfix) with ESMTPSA id 19A2E94EC03;
-        Thu, 11 Oct 2018 15:58:21 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] branch: introduce --show-current display option
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-References: <20181010205432.11990-1-daniels@umanovskis.se>
- <20181010205432.11990-2-daniels@umanovskis.se>
- <20181011225326.GC19800@szeder.dev> <20181011225652.GD19800@szeder.dev>
-From:   Daniels Umanovskis <daniels@umanovskis.se>
-Openpgp: preference=signencrypt
-Autocrypt: addr=daniels@umanovskis.se; prefer-encrypt=mutual; keydata=
- xsBNBFKoLuABCADTUslhPOYPDA+TmmmJr7l5Ybrp7dUTs9A8O6Vkd3ucNeZQue+3lS3/VJwG
- ZPJprysTdFEeZkJWEleO9rYNe4l4EciaqaRjXRR9r95qEqgf7tc37RU003VNxkuvJnweKypJ
- 5G247dy6Z3ORMKw8usX4uO+tsxsZqXprgSJJyU1QPMMT9oc5Qyec9ny5GdhRCIbwhVI9y6Q4
- RPpI4Czh9s1Mau0V0Yf9eOoW2zPlD8R67AUZ+myR6Eg9T71STAdYYEy9+EA/G27kc8J+yB43
- NQZ9sAFbMdundbISUoAALxqzC672u83YoTsHdFEzztz76PkY7KpDKH8Kd4Qzr0NZSHAzABEB
- AAHNKkRhbmllbHMgVW1hbm92c2tpcyA8ZGFuaWVsc0B1bWFub3Zza2lzLnNlPsLAeAQTAQIA
- IgUCUqgu4AIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQUfamH/05PVqFzgf/Xf0y
- Kx6kovYltkRZovLL+YNQ8ung4dCleC4MHegkscndLX3zgIu7VgqniLWjEnkFA5g/MaKwzKir
- YR9pvb5WlEXjK/Rh1LY+W7laBuGwJHXoPTHb843OGAuGoxbyRXiylsICx95/W0m9UZea/8xM
- 6kmIEh1cD+g0Pd7VkCUm7SnOQSEHSnqvsspsGpFe4GuB+8X8dVOCa/4IRMwDSj5JDwX4gmlH
- DF1k4+gqvEzBgNX+ayA+uME0BN1PJ4u/iqo680F5DQGTOBXZCug+nlxYb7gJQXhFVlvdG5uh
- TypRTzCvC/aPAcULaHoCz9M6hwJgvoO/IK4uvEXY7P+qN7Xxtc7ATQRSqC7gAQgA4+8pYlGe
- 1s7CFYl2OaHLLeupVpXd6eDMhi4NDKA/0Qnr/VnuF/VaPQ79KEiNDl1HMV1yoXzuQsdvfeQc
- DsnchnJI/YhlSF6m67jG5PQtkcrGqEB87f0JQ1mcgwpJCQx4EzvMlHbg6O9k0vIsP3O8+v7h
- +a8n78gKVUm/nMqIT939eqxtmccfIbiE/KKbigiOwUpiOrUAk8TR4dZ8U2YtIU5WnWhGIJeK
- fzLLHO2Gb5uk4toQBq4fEUW4I6Ar8blHmo1vHvG+gWWKeZA0n2sxjqGpfnGNZNyd4fkh728F
- reiGd2lWA/vB4m9Oh9auOKIOFdgUlDgSK2TvuALrzUmUbQARAQABwsBfBBgBAgAJBQJSqC7g
- AhsMAAoJEFH2ph/9OT1aC/sH/2JWo3MEK7/gpIfAFgqBsxWAeggbiBnu06NTc7u5G2q2znzN
- MhWlHEr8tOtPwV/6IxoZsHEdyUxBvM90vtmRnYoDL0S/xiwlimUuA+GxPFEN67HjEik3NJQU
- in36Q69hT3HyzG4pyWB2Uk6cx6D+4tMdSCHcO5wxjFPIFHL7/2YLpUfLWHXVdtxT6/2Roo+G
- +Wx2BSEgXqGR2i0HLZUqU0Oz/BHxLTtef+dUAWu0FmByPChoN92+0CLWEm/s5mBaCsMHd76v
- NIofCYEIBFTeTe2hKuBv4D5UtZNCz7MucSzG1tIOWg+vifpLm69WNfXhvpiZ8GDCLeL2Bs09
- msVfFOM=
-Message-ID: <7dba54b1-bfba-bb8b-0f56-bdd0f0410e16@umanovskis.se>
-Date:   Fri, 12 Oct 2018 00:58:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <20181011225652.GD19800@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S1726154AbeJLG26 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 02:28:58 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:49702 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725824AbeJLG26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 02:28:58 -0400
+Received: by mail-pf1-f202.google.com with SMTP id a64-v6so9996267pfg.16
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 15:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=cayZt+GTVSfUQsUx8VusOV0a0wAPZwQawdteJTATC2M=;
+        b=jNntz+s41bspsWrd1LXSpS7AiwPUjt0s9rxkWh0AsHbE91PMraUH44X9l79wtfWsyL
+         ARsC0wAigtIFWV/WtU/s027f6Ns7fOur/3gxZV9Kc+vQRim4m75i4sQqYxPYZCoSAXvc
+         FiIoh+9Ko5FPCtiRltiTM3SSnADifwyUAoAcltvm9ZwB9NnEcbhllSlPDPKuLkv/VEnD
+         3K7lqu5nnWQnCaY9eK8im2xA76qipaVr045GB9X5zR5C0373zBCdPqz/rXAhOTNThbaL
+         El2EgxVpadY1ITGp9RZbQ88Uu234Jt2ckLgamYO/b1Xo6BGP+MEd6Ib9Ee9tAN9hIvRF
+         vA4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=cayZt+GTVSfUQsUx8VusOV0a0wAPZwQawdteJTATC2M=;
+        b=QeCeXnF5Tt5P5Z9lBPMnUGXFb2adWqYpKq2cfcndZmccZdYyDodl3Sjv1zDwnyKWZ7
+         +spa7KHUdMzldVaChW+DdAweRbBXzSLpqIOqav8D7jnIMZTQvu+K3hjRJL5pYq5IqWPD
+         SSg3Z6lVb5HHJv1uqfCadTl23bl+63UPx7/Zl6uECVmMIVLeEUYWhXS0oGKVBUKXVYEM
+         D8UW2Xqwvq0lOEXPPoyWIngWB0n/wuS6TFZ97XjDDBd6ixgcd/dnzlUEvZcjKUYXFUr5
+         9x9bkZSYZTXAljBZI3do2aQR0gxWDgd70bDolCfQ3q0SGKn53F12CJlilwDis9xd6WYT
+         UKRw==
+X-Gm-Message-State: ABuFfog4i9/hrOlHJgwHnammDOaC2nQcYSjbZva0dvIdaZb0l1U0GLQD
+        MDfm+aliK52GIeHCFsJKzcuvuTWG9j8j
+X-Google-Smtp-Source: ACcGV60uUqVeubpHxaZhR+BAXVysFoVRegkxpudv5n5TxFiDCc69wKomsgCmkiFXi4reatBmQo0Yi/xeIur0
+X-Received: by 2002:a62:c29a:: with SMTP id w26-v6mr1903599pfk.13.1539298771935;
+ Thu, 11 Oct 2018 15:59:31 -0700 (PDT)
+Date:   Thu, 11 Oct 2018 15:59:28 -0700
+In-Reply-To: <xmqqa7nkf6o4.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20181011225928.76051-1-sbeller@google.com>
+Mime-Version: 1.0
+References: <xmqqa7nkf6o4.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0
+Subject: [PATCH] diff.c: die on unknown color-moved ws mode
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, phillip.wood@talktalk.net, sbeller@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12/18 12:56 AM, SZEDER Gábor wrote:
-> Ah, OK, just noticed v3 which has already fixed this.
-> 
-Yeah - squashed the wrong commits locally for v2. Thanks for pointing
-this out anyway!
+Noticed-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+--- 
+
+
+   There is no "ignore-any" supported by the feature---I think that
+   the parser for the option should have noticed and barfed, but it
+   did not.  It merely emitted a message to the standard output and
+   let it scroll away with the huge diff before the reader noticed
+   it.
+   
+Addressed in this patch.
+
+   Am I missing something [...] ?
+
+Note that this parsing is used for both the parsing from command line
+as well as options, i.e.
+
+  git config diff.colorMovedWS asdf
+  git format-patch HEAD^
+fatal: ignoring unknown color-moved-ws mode 'asdf'
+  git config --unset diff.colorMovedWS
+
+(format-patch parses these color specific things, but doesn't apply it)
+   
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/diff.c b/diff.c
+index 145cfbae59..bdf4535d69 100644
+--- a/diff.c
++++ b/diff.c
+@@ -313,7 +313,7 @@ static int parse_color_moved_ws(const char *arg)
+ 		else if (!strcmp(sb.buf, "allow-indentation-change"))
+ 			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
+ 		else
+-			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
++			die(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
+ 
+ 		strbuf_release(&sb);
+ 	}
+-- 
+2.19.0
+
