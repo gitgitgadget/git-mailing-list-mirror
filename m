@@ -7,127 +7,101 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E411A1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 09:37:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 403331F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 09:39:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728149AbeJLRIr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 13:08:47 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60299 "EHLO mout.gmx.net"
+        id S1728153AbeJLRKf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 13:10:35 -0400
+Received: from mout.gmx.net ([212.227.15.19]:36351 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728104AbeJLRIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 13:08:47 -0400
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0La2Xx-1foAvK2o85-00ljAp; Fri, 12
- Oct 2018 11:37:11 +0200
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0La2Xx-1foAvK2o85-00ljAp; Fri, 12
- Oct 2018 11:37:11 +0200
-Date:   Fri, 12 Oct 2018 11:37:11 +0200 (DST)
+        id S1728104AbeJLRKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 13:10:35 -0400
+Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskfZ-1fVP2045CD-012IVZ; Fri, 12
+ Oct 2018 11:38:58 +0200
+Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskfZ-1fVP2045CD-012IVZ; Fri, 12
+ Oct 2018 11:38:58 +0200
+Date:   Fri, 12 Oct 2018 11:38:58 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff.c: pass sign_index to emit_line_ws_markup
-In-Reply-To: <20181010232459.251289-1-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1810121136490.45@tvgsbejvaqbjf.bet>
-References: <20181010232459.251289-1-sbeller@google.com>
+Subject: Re: [PATCH] fixup! builtin rebase: support `--gpg-sign` option
+In-Reply-To: <xmqqzhvlgref.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810121138310.45@tvgsbejvaqbjf.bet>
+References: <xmqqzhvlgref.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:IbdsHo9l20VQI1Ve46rt3lNV1Vbv3PqELDFmyEyEqa0CQcNOp4d
- GSqf1Rj3WjUx+QQcf0TnuyWHl8XnqHMpJe8FsSOvdxRo77etRqeMUJammPN7uJMSeFymL6I
- dCXBZpRD8ij33a0Os1Jh+nKY4O9PKGWgO3zIF8XhLikRef7YAt8jHYV8O0U85/D5fK4LQph
- Avzk8Ztugc6RklqEuiOEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CgbK6SzANSs=:yXK8nRnupt+R1231GFM617
- 5QpVQUCWWT75+ZONrzW8dEw+dXP9dmu+0k5eLWtPyjYRFSFd6Yq6u7+xuW51C5lJakRwIU83D
- 3pRL+6frsvvLXmbbgQYv5H5M71xhctTkDKIBz9yJNL/AqWh8G/5UlgNPUlVFuiHXnb1xZXubB
- sFA6J7U/NU6qys/q+xKqC+uLg5vyWdw7JWyN0WXCI/ZtAkvJCv80fkWF028n6SSveCwShY4jW
- aKjoN34GglvUazZLwA1DEuSmtudruzjQWotFY6qJ5Kt+nVbHU3ohtT0gX1Qs5VC1bFkm5jq+1
- inWn7VOVnoBQ6Vbg1U55HfbLnZESAoy6uPAPBmSqZLD/tfYc5hnJ3rrUrZQVEx/BmSWa1oQNh
- sfjrMynOXk/Z6KoLOi1aPsuc3Til2Pq0MeYH983Y7mh6pgl15xvKJ+m3T8eSsXIdtz+9p1zaE
- r8Roupumlv05GOKQSVdaiciepuS9Y23Gwfc/g1eqqW8buk3btQnJ1GwrT94Aq6wCc4mE4dCYt
- +avHWWNxTwWhZem9FkxGSQcC8iNnWDJmhvY6v3vH5ZfOMJq4Lga7W8EruqMBmRTlzUR+CU6HR
- UID9VGSRl1lwmOuO65DIJdd2TGLf9NPYSZWjU/T9nIgHvaHkK78x9dd2p9RkXhXNLNcegW4Hv
- 7mSnQL43hxQIenjZANoZ167rE8vF7yWutzYCcbOiY58/I30IacJ1ARU+3H7gky1m4o0hVYSK7
- WYcAFlCnXWC47TLE4T9L0aZGVlCZWw65a87wvxpknHl1LcXrTNuyT0S2pC9Fh9DlKOE7Ro/kV
- ZWBjcXCENlu00Zcb53OQpME8eUvX0Xy/BoA95vwCOM4dnf6TrU=
+X-Provags-ID: V03:K1:7mkjV397J7oYM3R1nK3QHbF8pbe0R2uU6W89eGYmhCf6OqHrpNc
+ 3FfZStBv1/DjfAcN9AMwI47RWSb+vR/gYT3vSHsj8XtAfQCF7WYFef0SpKCe6MmVrnW294i
+ 1oBdNjCmcld93wjq8EsXp2z9lJlZR9XYtyIIBNFZXayQ/d/dsrNQBmt4f4PqjScH3WjaHkx
+ HMqIlAOSlmW9k8H+hZzwg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rgQXpxHSrx8=:KU/3rDVhryKMtm//1HLS0/
+ JlbYkeSG2aTW0CZTDT/kgcXtKSoVngqWyETKGIX1BZ5kk29143OrIdGaSZ3fRdfwWc3dZliNu
+ xd/kw9eaKBXz0ffq1yJz9iKwbHokY8B3dA78ayincqQMM/nwgOeaR83waGP041yy6XmXXdj6b
+ 8WcRUpGde9BjfOjFrgPeCS+csP85+hCRsgdFsyILRAQNXa0elrnWaoQrl48LXoEgvjm6LoV2Q
+ Ck+AxXisDjCF9ycFyh+PQamxlBGvyWKPCcWd4+yMOUfBf4sqAuI27jriZsmM0dcTa7bLHBgTC
+ G+7w0hKl7T+/Tq4jsBWGL8ytmTyif58zloAlPm2eIG2DkjbwMqxGlriTp7dpGajDwLMQUFa0N
+ J1mxpifMNjj/mNLDzbbhZ2Paq0bHr6lJGsLVIJYJVw/14e1gSAuTmKSz2Xj9q1GBj8JJYgrD4
+ t0CHtxIvHhcOJKMKMZi//aD/rWf+9I4LMLOToZ4LxLeAvOSr/+j7+3yiyxpW1XgDOXqqrCU1a
+ n8pzSNdKy+5PJFiZd3fNfB0fksi9mXVCxVR0NFLJMvgHG9G0509SgD+7Rj0MHENZI9VtMwTGI
+ W+4Xkmp4Lo4gcQDtzjbb+h9iz3TrId3HV33KKhd66lCEXxXxkMG+Y06Yny7dyNLT32R0BtaIO
+ 8coHwsqkVGKHvV1EosQc1bvXFYsqWAxRa/SotB5YVsPE/10DFtf9hDQLvpPb1JBcKNFKZEd6Q
+ VIgE1pqyRwBZF1TL8Lp7CJkUiw5dXSDRH1luT1pLi4CosggsUr+7pnblPNZdSHWTKyC6AGNVn
+ 4efvA+PTrGIPHK2O9upX3sojMC9eTqCel17fQ6brg99UMVV3Mo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Junio,
 
-On Wed, 10 Oct 2018, Stefan Beller wrote:
+On Thu, 11 Oct 2018, Junio C Hamano wrote:
 
-> Instead of passing the sign directly to emit_line_ws_markup, pass only the
-> index to lookup the sign in diff_options->output_indicators.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Thu, 27 Sep 2018 14:48:17 +0200
 > 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+> The `--gpg-sign` option takes an *optional* argument, not a mandatory
+> one.
+> 
+> This was discovered as part of the investigation of
+> https://github.com/git-for-windows/git/issues/1836.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
 > 
-> I still have this patch laying around, it simplifies the diff code
-> a tiny bit.
+>  * I am sending this out as I want to mimize the number of
+>    non-trivial changes that come into my tree without hitting the
+>    list archive.
 
-And I still like it (obviously, was my idea :-))
+Thanks, *much* appreciated.
 
-Thanks,
+Ciao,
 Dscho
 
 > 
-> Stefan
+>  builtin/rebase.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
->  diff.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index f0c7557b40..9e895f2191 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1202,10 +1202,11 @@ static void dim_moved_lines(struct diff_options *o)
->  static void emit_line_ws_markup(struct diff_options *o,
->  				const char *set_sign, const char *set,
->  				const char *reset,
-> -				char sign, const char *line, int len,
-> +				int sign_index, const char *line, int len,
->  				unsigned ws_rule, int blank_at_eof)
->  {
->  	const char *ws = NULL;
-> +	int sign = o->output_indicators[sign_index];
->  
->  	if (o->ws_error_highlight & ws_rule) {
->  		ws = diff_get_color_opt(o, DIFF_WHITESPACE);
-> @@ -1285,8 +1286,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  				set = diff_get_color_opt(o, DIFF_FILE_OLD);
->  		}
->  		emit_line_ws_markup(o, set_sign, set, reset,
-> -				    o->output_indicators[OUTPUT_INDICATOR_CONTEXT],
-> -				    line, len,
-> +				    OUTPUT_INDICATOR_CONTEXT, line, len,
->  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
->  		break;
->  	case DIFF_SYMBOL_PLUS:
-> @@ -1330,8 +1330,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
->  		}
->  		emit_line_ws_markup(o, set_sign, set, reset,
-> -				    o->output_indicators[OUTPUT_INDICATOR_NEW],
-> -				    line, len,
-> +				    OUTPUT_INDICATOR_NEW, line, len,
->  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
->  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
->  		break;
-> @@ -1375,8 +1374,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
->  		}
->  		emit_line_ws_markup(o, set_sign, set, reset,
-> -				    o->output_indicators[OUTPUT_INDICATOR_OLD],
-> -				    line, len,
-> +				    OUTPUT_INDICATOR_OLD, line, len,
->  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
->  		break;
->  	case DIFF_SYMBOL_WORDS_PORCELAIN:
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index a28bfbd62f..43bc6f7915 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1030,8 +1030,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "autosquash", &options.autosquash,
+>  			 N_("move commits that begin with "
+>  			    "squash!/fixup! under -i")),
+> -		OPT_STRING('S', "gpg-sign", &gpg_sign,
+> -			   N_("gpg-sign?"), N_("GPG-sign commits")),
+> +		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
+> +			N_("GPG-sign commits"),
+> +			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+>  		OPT_STRING_LIST(0, "whitespace", &whitespace,
+>  				N_("whitespace"), N_("passed to 'git apply'")),
+>  		OPT_SET_INT('C', 0, &opt_c, N_("passed to 'git apply'"),
 > -- 
-> 2.19.0
+> 2.19.1-328-g5a0cc8aca7
 > 
 > 
