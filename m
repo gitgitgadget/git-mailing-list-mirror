@@ -2,104 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97D7E1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 18:54:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 747091F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 19:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726799AbeJMC2q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 22:28:46 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36388 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726697AbeJMC2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 22:28:45 -0400
-Received: by mail-pl1-f195.google.com with SMTP id y11-v6so6334360plt.3
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 11:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6TSlcT/jm3ydLd7GU8tDeh8ZVq+aL2A0oYQlLItlMho=;
-        b=A7l4d1PXISIyUBc3MhtFSgZkTvB86WSIOz1LDrtK0AFhi9OKfPOwk0yrcrxqvYQKkY
-         2D4rGXYKsYrkhryptBHHImZEx18wTTQvJWOdqFdAa7HO1YkGpFhr51MzjDHQfrcdBNUY
-         VQSpbwjnhkiOyakOymErPeZtMnaR2DgC5IIZRaf3tdhLo1hba5zjFgYFM7tfuy1VMktG
-         4w8u9Hh7O4/Cs4Yv6G7H64ciG8CPWKMvTEBR/0c0uso5/DfeZ2Ew3jItbEpC9gtzI1VA
-         7dO+6ktO6T4QEg7w5Nkl7r9T86+x++sXljRRsqIymkEiVg94R4gVXn+5PEPSs+ETS2Od
-         JsQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6TSlcT/jm3ydLd7GU8tDeh8ZVq+aL2A0oYQlLItlMho=;
-        b=eX7iTgfHNlZHIDZWmu3v+gC0D8/JNyt9g+KXkhzyEpvrL0kXacMpAenu6rTbI1SHGt
-         rq+/ZImWQvuvxvOREEsMqoBBE5vIFiHqtUSLQy9y5LK5dsWjjnYAR2dyL7PQidQ9KVG+
-         U6EzfeV5Xhju9XYiU002gxFPWNo1dXPKmke6oUgoMGwE11Or2aoayaXF1wz8emi7ZgD3
-         9glbXsGppgoli+BI9vd+siNggnTt4vyuBG/qPUEKcJNdfjg22KkqtAZEZj5/XOAdwH80
-         llwsSVWiEGtlYGg2jmkz8BLdRSzcv7qgsCj5DeBKbJ4X3Fn9i3nf6ffWoeM7qfP9WyB+
-         gYIg==
-X-Gm-Message-State: ABuFfohG2To5sJis3kwrfTbE+eBoKm3IfuNjfMCLL+h8/9AhDrcvh6sf
-        YDdsCOYta1RCf+dUR/5OUbM=
-X-Google-Smtp-Source: ACcGV61+/DXFsRYnpZYqbb3HBYj6hMqJWYkCt2DxPz4YuOC5j3yiXrHg+lI4t0W4O49fx13gNm4u6A==
-X-Received: by 2002:a17:902:4001:: with SMTP id b1-v6mr7087261pld.89.1539370492461;
-        Fri, 12 Oct 2018 11:54:52 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id d18-v6sm2656373pgd.86.2018.10.12.11.54.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Oct 2018 11:54:51 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 11:54:50 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH] config.mak.dev: add -Wformat
-Message-ID: <20181012185450.GB52080@aiede.svl.corp.google.com>
-References: <20181012184037.15076-1-t.gummerer@gmail.com>
- <20181012184549.GC4917@sigill.intra.peff.net>
+        id S1726134AbeJMCnS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 22:43:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39168 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725851AbeJMCnS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 22:43:18 -0400
+Received: (qmail 32398 invoked by uid 109); 12 Oct 2018 19:09:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 12 Oct 2018 19:09:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13522 invoked by uid 111); 12 Oct 2018 19:08:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 12 Oct 2018 15:08:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Oct 2018 15:09:20 -0400
+Date:   Fri, 12 Oct 2018 15:09:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] ref-filter: free item->value and item->value->s
+Message-ID: <20181012190920.GD4917@sigill.intra.peff.net>
+References: <0102016657e7cfee-f1343b1e-9a85-4cae-990a-cc7177ea8487-000000@eu-west-1.amazonses.com>
+ <0102016657e7d087-be1f65a3-be3e-4b15-95f1-7570d258c70d-000000@eu-west-1.amazonses.com>
+ <xmqqzhvli8kl.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181012184549.GC4917@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqzhvli8kl.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Oct 12, 2018 at 07:40:37PM +0100, Thomas Gummerer wrote:
+On Thu, Oct 11, 2018 at 10:19:22AM +0900, Junio C Hamano wrote:
 
->> 801fa63a90 ("config.mak.dev: add -Wformat-security", 2018-09-08) added
->> the -Wformat-security to the flags set in config.mak.dev.  In the gcc
->> man page this is documented as:
->>
->>          If -Wformat is specified, also warn about uses of format
->>          functions that represent possible security problems.  [...]
->>
->> That commit did however not add the -Wformat flag, and -Wformat is not
->> specified anywhere else by default, so the added -Wformat-security had
->> no effect.  Newer versions of gcc (gcc 8.2.1 in this particular case)
->> warn about this and thus compilation fails with this option set.
-[...]
-> -Wformat is part of -Wall, which we already turn on by default (even for
-> non-developer builds).
->
-> So I don't think we need to do anything more, though I'm puzzled that
-> you saw a failure. Do you set CFLAGS explicitly in your config.mak to
-> something that doesn't include -Wall?
+> > @@ -1373,36 +1379,31 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+> >  		}
+> >  	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
+> >  		if (stat_tracking_info(branch, &num_ours, &num_theirs,
+> > -				       NULL, AHEAD_BEHIND_FULL) < 0)
+> > +				       NULL, AHEAD_BEHIND_FULL) < 0) {
+> > +			*s = xstrdup("");
+> >  			return;
+> 
+> It is a bit sad that we need to sprinkle xstrdup() all over the
+> place, but I do not offhand think of a better alternative to ensure
+> that it is safe to blindly free the .s field.
 
-Thomas, do you use autoconf to generate config.mak.autogen?  I'm
-wondering if that produces a CFLAGS that doesn't include -Wall.
+I think the root of the problem is that the current code needs
+_something_ in the "s" field to know that the value has already been
+filled in.
 
-> I'm not opposed to making config.mak.dev a bit more redundant to handle
-> this case, but we'd probably want to include all of -Wall, since it
-> contains many other warnings we'd want to make sure are enabled.
+If there were a separate flag for "filled", then this could just be
+NULL (and the later code that builds the output would have to realize
+to replace that with an empty string).
 
-Do you mean putting -Wall instead of -Wformat?
+I think in the long run, we'd ideally have one of two code structures:
 
-Should we add -Wextra too?  From a quick test, it seems to build okay.
+  - a single pass, without iterating over the used atoms list
+    repeatedly. E.g., the way oid_object_info() takes a struct
+    representing the set of items that the caller is interested in, and
+    then fills it in as it digs for information.
 
-Thanks,
-Jonathan
+  - individual atoms could write directly to an output strbuf, avoiding
+    the extra allocation and copy altogether (that would help these
+    cases that are just copying an empty string, but also the ones that
+    really are allocating a piece of data and end up copying it.
+
+I'm OK with this approach in the meantime, though. There's a fair bit of
+refactoring to get to either of those end-states, and this clears up the
+confusing memory ownership issues. And I don't think for-each-ref is
+_too_ sensitive to a few extra mallocs (as compared to say, cat-file's
+formatter, which is often run once per object).
+
+I didn't dig into the valgrind errors you saw, but I'd guess they are
+the result of this patch missing one of these cases (if not a string
+literal like "", perhaps a const pointer into another heap string).
+
+-Peff
