@@ -2,112 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 792AD1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 10:01:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4B111F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 11:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728361AbeJLRco (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 13:32:44 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:44296 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728011AbeJLRco (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 13:32:44 -0400
-Received: by mail-ed1-f54.google.com with SMTP id z21-v6so10942560edb.11
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 03:01:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6iAKgPT97Jg9clAxks9SOSGWH+oPxLH6vzfmdlek9p8=;
-        b=KBKYW/8x9sI13nXE2ZU+HBzercbJk5VQTbvkKIvOVGt6Kjh2ggG7lwHt5GjUkcnhD1
-         KsF1N9pOBUItZ9sEamLKmjzvL4eGX4O+eEtgY4HKQo6K4sBg/rKK9O84rPoV+zXt7II+
-         pn8eN5ZTO1xNYTYrYggHGY8HfN0bfnD2aK26pQ6X7jgs88edLbuLQnfzItSrbzzHls+z
-         XIxNErkYqj122JIE625QM/y/VmFQN14vYg1gqCGZ6+OTQquiguVbVwQ+e5ICDib7HAVF
-         NOvSwAEC1CLRbUFl5HYztsH1niYx3+1LZmmlD1wmrqnLrrYOiHNvwRFHq3h0Mv8Wf+K9
-         BK+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6iAKgPT97Jg9clAxks9SOSGWH+oPxLH6vzfmdlek9p8=;
-        b=T8PiOLruIUBgBieMFkclU3ca07GhFKxRoHwGjffeWtNddvWMZoMZGxmGGTBIm1lCCz
-         oBUIHnsn5ok2D3cerTCB3xEhdBXE/zo1LR1RoXXvBn1Rgdpnb+1NZT5rIqBJX3pO+MQM
-         2Poq+GgLhaFZnIGlZiAzmkT8Fp10xIFRdsjYxgHrZJlqFxyZ8TWP3fxugpXbtOVN0BWb
-         9zyw1r5bwvLWadWi6mTujPOU7ycemkR3+6giYjO14J7o54NPM0+BAhjrsyjW+nFo7nsw
-         Y7ugf8QwBD7s7ABGB44Tfp8RZpKNT3vCGoR2n4mAha44jrnlXilGOHtxhq3UJICPR4Kl
-         fpQA==
-X-Gm-Message-State: ABuFfoi4qpby+ofye+WOjKRAt9UkjiAZ8SgWfOUoG0Eob43Rh0rY4AzP
-        qQPT9lKI2LJAR+RwKWY8qqfu1sNX
-X-Google-Smtp-Source: ACcGV61dFtPR5mcTAsNksDKYlFuaoAxKf8TOVF9u0mpG/1XGoFQwWxvuert5ZzB7B/dkG4zU9vm5Ug==
-X-Received: by 2002:a50:b246:: with SMTP id o64-v6mr8265724edd.80.1539338465207;
-        Fri, 12 Oct 2018 03:01:05 -0700 (PDT)
-Received: from szeder.dev (x4dbe4f29.dyn.telefonica.de. [77.190.79.41])
-        by smtp.gmail.com with ESMTPSA id y16-v6sm400269eds.45.2018.10.12.03.01.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Oct 2018 03:01:04 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 12:01:01 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@talktalk.net>,
+        id S1726917AbeJLSlu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 14:41:50 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:59130 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725854AbeJLSlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 14:41:50 -0400
+Received: from [192.168.2.201] ([92.22.37.149])
+        by smtp.talktalk.net with SMTP
+        id AvKJgpQv2whzSAvKJgof0o; Fri, 12 Oct 2018 12:09:52 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1539342592;
+        bh=0EEgqIUwOT5d53FPZLFRLxLbCdCYEgVQr4CUIusyP+w=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=NrFDplITLCPV61BDwRyIsCyKlw1+q8E4neuVIteXRfvUNcuxAD4cHP4AayinWwVaE
+         RiAzl0lH97kwXzqExbRx871etzh7q2FPT5LZDwqmmDO0wPfy7rLA9R4a8td/Kt8X1b
+         ytAu6j0b3O7nNo1yCMfkIbE1Cgdev0LBls7T2Q7o=
+X-Originating-IP: [92.22.37.149]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=nqOWhaM9XRsRdUafe8zwgQ==:117
+ a=nqOWhaM9XRsRdUafe8zwgQ==:17 a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8
+ a=xWCtVjafHelC0wMDnX8A:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] rebase -i: introduce the 'break' command
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/15] sequencer: make sequencer_make_script() write its
- script to a strbuf
-Message-ID: <20181012100101.GE19800@szeder.dev>
-References: <20181007195418.25752-1-alban.gruin@gmail.com>
- <20181007195418.25752-8-alban.gruin@gmail.com>
+References: <pull.43.git.gitgitgadget@gmail.com>
+ <pull.43.v2.git.gitgitgadget@gmail.com>
+ <c74e02c4b643652d43108c1a5a675df0fae5f059.1539161632.git.gitgitgadget@gmail.com>
+ <fd14c00f-65d5-f5d6-5f0e-ee0de7593a38@talktalk.net>
+ <nycvar.QRO.7.76.6.1810121035190.45@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <3e2f9343-8b01-c6e5-9425-1665920cc920@talktalk.net>
+Date:   Fri, 12 Oct 2018 12:09:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1810121035190.45@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181007195418.25752-8-alban.gruin@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfFhHxNM3xJPKLxuQsW7eM95S0irAh0WzTTJNkm6qJprCtBDVmEP43R1rd0ypihFLqQ5mQKOiOub2qYOtqul5lN4IFV4YdVhNQfTkTlGesDmFHwK7P8Gy
+ qURGtXMRsgbWR4MPcHXDmEYZebOMSWXb0vljmJJuNX1Q40E7grXsE4XRsVODsCDN8xQrgPw4n1Hr1yaDwdwQkng9LUvVmip09MqdlGt4ixCmzb63tJ47/XIn
+ fCCsXaFdGhGLwcJ3xW/LtQL0slxOzvBEDUwJXfg2ODoDnH8FP/tT45jotzpYqhuWHrLECwNtpAPLLjOZIIj0/HAeaqmVNqcDO8GIx1uXmypXFdvgUVjF+hrU
+ uhGJ9Uyj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 07, 2018 at 09:54:10PM +0200, Alban Gruin wrote:
+Hi Johannes
+On 12/10/2018 09:35, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> On Thu, 11 Oct 2018, Phillip Wood wrote:
+> 
+>> I think this would be a useful addition to rebase, there's one small
+>> comment below.
+>>
+>> On 10/10/2018 09:53, Johannes Schindelin via GitGitGadget wrote:
+>>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>>
+>>> The 'edit' command can be used to cherry-pick a commit and then
+>>> immediately drop out of the interactive rebase, with exit code 0, to let
+>>> the user amend the commit, or test it, or look around.
+>>>
+>>> Sometimes this functionality would come in handy *without*
+>>> cherry-picking a commit, e.g. to interrupt the interactive rebase even
+>>> before cherry-picking a commit, or immediately after an 'exec' or a
+>>> 'merge'.
+>>>
+>>> This commit introduces that functionality, as the spanking new 'break'
+>>> command.
+>>>
+>>> Suggested-by: Stefan Beller <sbeller@google.com>
+>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>> ---
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 30a7fe3958..dfb8d1c974 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4083,7 +4083,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
->  }
->  
->  static int make_script_with_merges(struct pretty_print_context *pp,
-> -				   struct rev_info *revs, FILE *out,
-> +				   struct rev_info *revs, struct strbuf *out,
->  				   unsigned flags)
->  {
->  	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
-> @@ -4230,7 +4230,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->  	 * gathering commits not yet shown, reversing the list on the fly,
->  	 * then outputting that list (labeling revisions as needed).
->  	 */
-> -	fprintf(out, "%s onto\n", cmd_label);
-> +	strbuf_addf(out, "%s onto\n", cmd_label);
->  	for (iter = tips; iter; iter = iter->next) {
->  		struct commit_list *list = NULL, *iter2;
->  
-> @@ -4240,9 +4240,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->  		entry = oidmap_get(&state.commit2label, &commit->object.oid);
->  
->  		if (entry)
-> -			fprintf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
-> +			strbuf_addf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
->  		else
-> -			fprintf(out, "\n");
-> +			strbuf_addf(out, "\n");
+>>> diff --git a/sequencer.c b/sequencer.c
+>>> index 8dd6db5a01..b209f8af46 100644
+>>> --- a/sequencer.c
+>>> +++ b/sequencer.c
 
-Please use plain strbuf_add() here.
+>>> @@ -3293,6 +3295,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>>>  			unlink(rebase_path_stopped_sha());
+>>>  			unlink(rebase_path_amend());
+>>>  			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+>>> +
+>>> +			if (item->command == TODO_BREAK)
+>>> +				break;
+>>
+>> Normally when rebase stops it prints a message to say where it has got
+>> to and how to continue, it might be useful to do the same here
+> 
+> That's a very valid point. I'll think of something.
 
-Or strbuf_complete_line()?  Dunno, as seen in the previous hunk, 'out'
-won't be empty at this point.
+I'm not sure what gets left on the screen from the previous picks but
+something to say what the last pick/exec was and maybe what the current
+HEAD is would be useful I think. One thing has just occurred to me -
+what does git status say (and does it still work - I'm not sure how much
+parsing it does on the todo and done files) if it is run while rebase is
+stopped on a break command?
 
+Best Wishes
+
+Phillip
