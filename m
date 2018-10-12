@@ -2,222 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C87901FCEF
-	for <e@80x24.org>; Fri, 12 Oct 2018 21:17:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 307A91F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 21:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725918AbeJMEwF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 00:52:05 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:52478 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725785AbeJMEwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 00:52:05 -0400
-Received: from localhost.localdomain (d202-252.icpnet.pl [109.173.202.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgorny)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id C485F335CDA;
-        Fri, 12 Oct 2018 21:17:41 +0000 (UTC)
-From:   =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-Subject: [PATCH v3] gpg-interface.c: detect and reject multiple signatures on commits
-Date:   Fri, 12 Oct 2018 23:09:28 +0200
-Message-Id: <20181012210928.18033-1-mgorny@gentoo.org>
-X-Mailer: git-send-email 2.19.1
+        id S1726122AbeJMFAU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 01:00:20 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:39094 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725785AbeJMFAU (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 13 Oct 2018 01:00:20 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w9CLNeXW011256;
+        Fri, 12 Oct 2018 14:25:55 -0700
+Received: from mail.palantir.com ([8.4.231.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2mxtwhajtg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Fri, 12 Oct 2018 14:25:55 -0700
+Received: from sj-prod-exch-02.YOJOE.local (10.160.10.15) by
+ sj-prod-exch-02.YOJOE.local (10.160.10.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Fri, 12 Oct 2018 14:25:53 -0700
+Received: from EX02-WEST.YOJOE.local (10.160.10.131) by
+ sj-prod-exch-02.YOJOE.local (10.160.10.15) with Microsoft SMTP Server
+ (version=TLS1_0, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.1.1531.3
+ via Frontend Transport; Fri, 12 Oct 2018 14:25:53 -0700
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ EX02-WEST.YOJOE.local (10.160.10.131) with Microsoft SMTP Server id
+ 14.3.319.2; Fri, 12 Oct 2018 14:25:53 -0700
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech
+ [10.100.71.66])        by smtp-transport.yojoe.local (Postfix) with ESMTPS id
+ 623BF209F04D;  Fri, 12 Oct 2018 14:25:53 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     <git@vger.kernel.org>
+CC:     <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/4] More merge cleanups
+Date:   Fri, 12 Oct 2018 14:25:47 -0700
+Message-ID: <20181012212551.7689-1-newren@gmail.com>
+X-Mailer: git-send-email 2.19.0.235.g7c386e1068
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-10-12_14:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=410 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1810120214
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-GnuPG supports creating signatures consisting of multiple signature
-packets.  If such a signature is verified, it outputs all the status
-messages for each signature separately.  However, git currently does not
-account for such scenario and gets terribly confused over getting
-multiple *SIG statuses.
+This series builds on en/merge-cleanup.  Technically, this could be
+broken into three separate topics with only one of them depending on
+en/merge-cleanup, but I have a subsequent series that depends on both
+en/merge-cleanup and the fixes here, so I'm submitting these four
+patches as a set.
 
-For example, if a malicious party alters a signed commit and appends
-a new untrusted signature, git is going to ignore the original bad
-signature and report untrusted commit instead.  However, %GK and %GS
-format strings may still expand to the data corresponding
-to the original signature, potentially tricking the scripts into
-trusting the malicious commit.
+Elijah Newren (4):
+  t6036: add testcase where virtual merge base contains nested conflicts
+  merge-recursive: increase marker length with depth of recursion
 
-Given that the use of multiple signatures is quite rare, git does not
-support creating them without jumping through a few hoops, and finally
-supporting them properly would require extensive API improvement, it
-seems reasonable to just reject them at the moment.
+    Improving diff3 conflict markers in the face of arbitrarily deeply
+    nested conflicts
 
-Signed-off-by: Michał Górny <mgorny@gentoo.org>
----
- gpg-interface.c          | 94 +++++++++++++++++++++++++++-------------
- t/t7510-signed-commit.sh | 26 +++++++++++
- 2 files changed, 91 insertions(+), 29 deletions(-)
+  merge-recursive: improve auto-merging messages with path collisions
 
-Changes in v3: reworked the whole loop to iterate over lines rather
-than scanning the whole buffer, as requested.  Now it also catches
-duplicate instances of the same status.
+    Simple attempt at wording improvement
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index db17d65f8..480aab4ee 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -75,48 +75,84 @@ void signature_check_clear(struct signature_check *sigc)
- 	FREE_AND_NULL(sigc->key);
- }
- 
-+/* An exclusive status -- only one of them can appear in output */
-+#define GPG_STATUS_EXCLUSIVE	(1<<0)
-+
- static struct {
- 	char result;
- 	const char *check;
-+	unsigned int flags;
- } sigcheck_gpg_status[] = {
--	{ 'G', "\n[GNUPG:] GOODSIG " },
--	{ 'B', "\n[GNUPG:] BADSIG " },
--	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
--	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
--	{ 'E', "\n[GNUPG:] ERRSIG "},
--	{ 'X', "\n[GNUPG:] EXPSIG "},
--	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
--	{ 'R', "\n[GNUPG:] REVKEYSIG "},
-+	{ 'G', "GOODSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'B', "BADSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'U', "TRUST_NEVER", 0 },
-+	{ 'U', "TRUST_UNDEFINED", 0 },
-+	{ 'E', "ERRSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'X', "EXPSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'Y', "EXPKEYSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'R', "REVKEYSIG ", GPG_STATUS_EXCLUSIVE },
- };
- 
- static void parse_gpg_output(struct signature_check *sigc)
- {
- 	const char *buf = sigc->gpg_status;
-+	const char *line, *next;
- 	int i;
--
--	/* Iterate over all search strings */
--	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
--		const char *found, *next;
--
--		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
--			found = strstr(buf, sigcheck_gpg_status[i].check);
--			if (!found)
--				continue;
--			found += strlen(sigcheck_gpg_status[i].check);
--		}
--		sigc->result = sigcheck_gpg_status[i].result;
--		/* The trust messages are not followed by key/signer information */
--		if (sigc->result != 'U') {
--			next = strchrnul(found, ' ');
--			sigc->key = xmemdupz(found, next - found);
--			/* The ERRSIG message is not followed by signer information */
--			if (*next && sigc-> result != 'E') {
--				found = next + 1;
--				next = strchrnul(found, '\n');
--				sigc->signer = xmemdupz(found, next - found);
-+	int had_exclusive_status = 0;
-+
-+	/* Iterate over all lines */
-+	for (line = buf; *line; line = strchrnul(line+1, '\n')) {
-+		while (*line == '\n')
-+			line++;
-+		/* Skip lines that don't start with GNUPG status */
-+		if (strncmp(line, "[GNUPG:] ", 9))
-+			continue;
-+		line += 9;
-+
-+		/* Iterate over all search strings */
-+		for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-+			if (!strncmp(line, sigcheck_gpg_status[i].check,
-+					strlen(sigcheck_gpg_status[i].check))) {
-+				line += strlen(sigcheck_gpg_status[i].check);
-+
-+				if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE)
-+					had_exclusive_status++;
-+
-+				sigc->result = sigcheck_gpg_status[i].result;
-+				/* The trust messages are not followed by key/signer information */
-+				if (sigc->result != 'U') {
-+					next = strchrnul(line, ' ');
-+					free(sigc->key);
-+					sigc->key = xmemdupz(line, next - line);
-+					/* The ERRSIG message is not followed by signer information */
-+					if (*next && sigc->result != 'E') {
-+						line = next + 1;
-+						next = strchrnul(line, '\n');
-+						free(sigc->signer);
-+						sigc->signer = xmemdupz(line, next - line);
-+					}
-+				}
-+
-+				break;
- 			}
- 		}
- 	}
-+
-+	/*
-+	 * GOODSIG, BADSIG etc. can occur only once for each signature.
-+	 * Therefore, if we had more than one then we're dealing with multiple
-+	 * signatures.  We don't support them currently, and they're rather
-+	 * hard to create, so something is likely fishy and we should reject
-+	 * them altogether.
-+	 */
-+	if (had_exclusive_status > 1) {
-+		sigc->result = 'E';
-+		/* Clear partial data to avoid confusion */
-+		if (sigc->signer)
-+			FREE_AND_NULL(sigc->signer);
-+		if (sigc->key)
-+			FREE_AND_NULL(sigc->key);
-+	}
- }
- 
- int check_signature(const char *payload, size_t plen, const char *signature,
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 4e37ff8f1..180f0be91 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -234,4 +234,30 @@ test_expect_success GPG 'check config gpg.format values' '
- 	test_must_fail git commit -S --amend -m "fail"
- '
- 
-+test_expect_success GPG 'detect fudged commit with double signature' '
-+	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
-+	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
-+		sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig1.sig &&
-+	gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
-+	cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combined.asc &&
-+	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s/^/ /" \
-+		double-combined.asc > double-gpgsig &&
-+	sed -e "/committer/r double-gpgsig" double-base >double-commit &&
-+	git hash-object -w -t commit double-commit >double-commit.commit &&
-+	test_must_fail git verify-commit $(cat double-commit.commit) &&
-+	git show --pretty=short --show-signature $(cat double-commit.commit) >double-actual &&
-+	grep "BAD signature from" double-actual &&
-+	grep "Good signature from" double-actual
-+'
-+
-+test_expect_success GPG 'show double signature with custom format' '
-+	cat >expect <<-\EOF &&
-+	E
-+
-+
-+	EOF
-+	git log -1 --format="%G?%n%GK%n%GS" $(cat double-commit.commit) >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+  merge-recursive: Avoid showing conflicts with merge branch before HEAD
+
+    Conflict markers are expected to be shown in a certain order
+
+ ll-merge.c                        |   4 +-
+ ll-merge.h                        |   1 +
+ merge-recursive.c                 |  59 +++++++++--
+ t/t6036-recursive-corner-cases.sh | 159 +++++++++++++++++++++++++++++-
+ 4 files changed, 208 insertions(+), 15 deletions(-)
+
 -- 
-2.19.1
+2.19.0.235.g7c386e1068
 
