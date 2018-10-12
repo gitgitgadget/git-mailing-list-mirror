@@ -7,162 +7,93 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3054F1F97E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 915941F97E
 	for <e@80x24.org>; Fri, 12 Oct 2018 13:14:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728635AbeJLUqu (ORCPT <rfc822;e@80x24.org>);
+        id S1728643AbeJLUqv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 16:46:51 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36523 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728354AbeJLUqu (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 12 Oct 2018 16:46:50 -0400
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:40688 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728354AbeJLUqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 16:46:49 -0400
-Received: by mail-pf1-f182.google.com with SMTP id s5-v6so6189498pfj.7
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 06:14:25 -0700 (PDT)
+Received: by mail-pf1-f193.google.com with SMTP id l81-v6so6199634pfg.3
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 06:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=emi+1pVIxPB/X03Gr/+MdJOenKDume5GgbU72ObEnnY=;
-        b=UwXFpQbDFEvRQRIVGO22mvu6L1vzJmg9yguZAmEwyJuuXjeCjfg6Gkj23hnORgeS9a
-         9JivULjozy9PwP598WePYnIiBysXAd+9+s4ntAIRLgBCQdXK4tgMR4ukkaNOo38+9Lne
-         vsYEO9CNXTwbNus7zqLHPwQ2jgVndz39D6ntdXGzmOMKBrW2mVYaARfM1RywSwCRQBao
-         eQZeh8A2i+vB7KdUIFzrzHKY73MasvA4xxfwdzueh4WZFXJOMr+lpiiPG1Vq66g9+Lrk
-         6JGVgnkbNScklDvrTYh7BD1qtaIqLH3LeDCLXLl8ETtFc2lyVlQUPANZdtKBdJtZUHnu
-         Co7g==
+        bh=4/UGQ/7mythW0rZr0mU9g6mUu2AWRRZi03i+4TrW1kU=;
+        b=KxwJ6LA761tMsy9zeiISDNJt/TGG9f6qSLpLjPxPTtw3mit3fj9il4e7fG5e6iMz4k
+         Lu3+38IoS+qUd5Jl50oEhQm0je7V8e0uJqUq2DxHnYPnHxMuU2m53X84CPrPMZPVuDoj
+         MoNTiUC4WFrLc793LxDexlI2+eA2FJXxaGR+5s+vdPgVyAtjGBnexHQiDEXsZABhy+bs
+         Pjm5g/eAGcYEseJfYKvBTMydOw+NhA0UxFJ9739qixWGy+tfc4rRbV/Ik8i4Fi6tPcWn
+         xoiDg7rRBh1HwS14jZr7+eOgH+qg256AAT4aErPv9VTqNcoEgjBr7SHNDquzyqAQpBLn
+         3YZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=emi+1pVIxPB/X03Gr/+MdJOenKDume5GgbU72ObEnnY=;
-        b=kmSLeriHdt9QSHqYDWB9Qn0EtYSgkQJeacViNqY+43Nec1LNSK560Gacx2oyvHU9ob
-         HpK4w7jqp7JMBs1c8rp9n/z+pNS0do9T4mbhqWFBzYAvGlE9A1SMMavcPmO8LvIcj/+D
-         HjawWLWsr2eLlmANGw6lDcKMcMU2j+LzlLfXPUwzc5KBDs+0poXXs60ArOxwkKLxIAyg
-         8SoFSsLvhoB+0XZJJSoBGt2TI5K3GhMvsEVdK6NBSs6lcJ6pfs6TTgdU3CFT4QgBqCpj
-         HglsenJxmHxLtxELK+k6NkxnHO9R/3haueXx5QirC81+UH12kwcOaT8cTkDxW1A0MLZJ
-         voMw==
-X-Gm-Message-State: ABuFfogARFdA41safgrEYnQskkjzxtj4SOlI+TRDrOhTmrNv/hT5Hf88
-        HEHNFh6dXY5rs8Y7DZPWwciGRF7l
-X-Google-Smtp-Source: ACcGV63FCcDcm0u9+6xw6ikkvjcaHJSk1iPS6RlG9Erxl8Mp89Lz7tCpwNbf4CwBSyXcs37Z67WRlw==
-X-Received: by 2002:a63:fb09:: with SMTP id o9-v6mr5528644pgh.333.1539350064314;
-        Fri, 12 Oct 2018 06:14:24 -0700 (PDT)
+        bh=4/UGQ/7mythW0rZr0mU9g6mUu2AWRRZi03i+4TrW1kU=;
+        b=MNy3nSFCncibEpCCYnPwBej2L0/rvC3dKqMtWRrIyrHLiZKdevvulIAklJT7/xs2kk
+         IrGimHO6K7c1V8GrupqDbqHGXqieMVluPCUSaZdXU7dAoRlKgll2LtRSW491QK8utyyM
+         hldEzyGHOEVTiCkyneIK8X0gjnfyJkWYyLzlN3XRE374eSsQ+qMvVvFgKeOKjCf6ZLL4
+         kh6QEEKNMxM9ZXaLlyxG03LzfBetifSjcMG9NbF/FmaE7dpA4t2g/zBspx3wynQMzP7I
+         wYOI7kQNf/mVg9kw48+G3KinVlc/k0I1qI+xLWcoW1mEMWTUBX6sQtHbp7lB/GAm4KM6
+         mX+A==
+X-Gm-Message-State: ABuFfoh+BYuHUnxZfxm8Zv7o9AqG4ovORiah8TT8Epl1oeWE4qWdqbHQ
+        L9iuVSlETAsH2UdJITAMarLPHG5m
+X-Google-Smtp-Source: ACcGV63jwHmHR3aW8ZxjfFJm1SCEoMlj2ruYHitt1HOUVWU62HbhWv+Cy7laycVubHQMBzD0ue2InA==
+X-Received: by 2002:a63:6c84:: with SMTP id h126-v6mr5537524pgc.237.1539350065833;
+        Fri, 12 Oct 2018 06:14:25 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id l83-v6sm4075034pfi.172.2018.10.12.06.14.22
+        by smtp.gmail.com with ESMTPSA id c79-v6sm2521201pfc.92.2018.10.12.06.14.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Oct 2018 06:14:23 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 06:14:23 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Oct 2018 13:14:19 GMT
-Message-Id: <pull.43.v3.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.43.v2.git.gitgitgadget@gmail.com>
+        Fri, 12 Oct 2018 06:14:24 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 06:14:24 -0700 (PDT)
+X-Google-Original-Date: Fri, 12 Oct 2018 13:14:20 GMT
+Message-Id: <92512a82d27b57dedf9dc9423dfac2efcb229031.1539350061.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.43.v3.git.gitgitgadget@gmail.com>
 References: <pull.43.v2.git.gitgitgadget@gmail.com>
+        <pull.43.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 0/2] rebase -i: introduce the 'break' command
+Subject: [PATCH v3 1/2] rebase -i: clarify what happens on a failed `exec`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan asked a while back
-[https://public-inbox.org/git/20180118183618.39853-3-sbeller@google.com/] 
-for a todo command in interactive rebases that would essentially perform the
-"stop" part of the edit command, but without the "pick" part: interrupt the
-interactive rebase, with exit code 0, letting the user do things and stuff
-and look around, with the idea of continuing the rebase later (using git
-rebase --continue).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch introduces that, based on ag/rebase-i-in-c.
+We had not documented previously what happens when an `exec` command in
+an interactive rebase fails. Now we do.
 
-Changes since v2:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/git-rebase.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- * Fixed two typos.
- * When interrupting the rebase, break now outputs a message.
-
-Changes since v1:
-
- * Wrapped the commit message correctly.
- * Added a preparatory patch to mention what happens in case an exec fails.
- * Mentioned the break command in the git-rebase(1) documentation.
-
-Cc: Stefan Beller sbeller@google.com [sbeller@google.com]Cc: Eric Sunshine 
-sunshine@sunshineco.com [sunshine@sunshineco.com]
-
-Johannes Schindelin (2):
-  rebase -i: clarify what happens on a failed `exec`
-  rebase -i: introduce the 'break' command
-
- Documentation/git-rebase.txt |  6 +++++-
- rebase-interactive.c         |  1 +
- sequencer.c                  | 24 +++++++++++++++++++++++-
- t/lib-rebase.sh              |  2 +-
- t/t3418-rebase-continue.sh   |  9 +++++++++
- 5 files changed, 39 insertions(+), 3 deletions(-)
-
-
-base-commit: 34b47315d9721a576b9536492cca0c11588113a2
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-43%2Fdscho%2Frebase-i-break-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-43/dscho/rebase-i-break-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/43
-
-Range-diff vs v2:
-
- 1:  2eefdb4874 ! 1:  92512a82d2 rebase -i: clarify what happens on a failed `exec`
-     @@ -15,8 +15,8 @@
-       	Append "exec <cmd>" after each line creating a commit in the
-       	final history. <cmd> will be interpreted as one or more shell
-      -	commands.
-     -+	commands. Anz command that fails will interrupt the rebase,
-     -+	withe exit code 1.
-     ++	commands. Any command that fails will interrupt the rebase,
-     ++	with exit code 1.
-       +
-       You may execute several commands by either using one instance of `--exec`
-       with several commands:
- 2:  c74e02c4b6 ! 2:  d44b425709 rebase -i: introduce the 'break' command
-     @@ -71,13 +71,37 @@
-       		if (bol != eol)
-       			return error(_("%s does not accept arguments: '%s'"),
-       				     command_to_string(item->command), bol);
-     +@@
-     + 	return update_ref(NULL, "ORIG_HEAD", &oid, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-     + }
-     + 
-     ++static int stopped_at_head(void)
-     ++{
-     ++	struct object_id head;
-     ++	struct commit *commit;
-     ++	struct commit_message message;
-     ++
-     ++	if (get_oid("HEAD", &head) || !(commit = lookup_commit(&head)) ||
-     ++	    parse_commit(commit) || get_message(commit, &message))
-     ++		fprintf(stderr, _("Stopped at HEAD\n"));
-     ++	else {
-     ++		fprintf(stderr, _("Stopped at %s\n"), message.label);
-     ++		free_message(commit, &message);
-     ++	}
-     ++	return 0;
-     ++
-     ++}
-     ++
-     + static const char rescheduled_advice[] =
-     + N_("Could not execute the todo command\n"
-     + "\n"
-      @@
-       			unlink(rebase_path_stopped_sha());
-       			unlink(rebase_path_amend());
-       			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
-      +
-      +			if (item->command == TODO_BREAK)
-     -+				break;
-     ++				return stopped_at_head();
-       		}
-       		if (item->command <= TODO_SQUASH) {
-       			if (is_rebase_i(opts))
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 091eb53faa..d9771bd25b 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -420,7 +420,8 @@ idea unless you know what you are doing (see BUGS below).
+ --exec <cmd>::
+ 	Append "exec <cmd>" after each line creating a commit in the
+ 	final history. <cmd> will be interpreted as one or more shell
+-	commands.
++	commands. Any command that fails will interrupt the rebase,
++	with exit code 1.
+ +
+ You may execute several commands by either using one instance of `--exec`
+ with several commands:
 -- 
 gitgitgadget
+
