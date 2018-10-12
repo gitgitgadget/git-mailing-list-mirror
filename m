@@ -7,160 +7,98 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 854751F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 18:23:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AE771F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 18:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbeJMB52 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 21:57:28 -0400
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:44999 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726668AbeJMB51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 21:57:27 -0400
-Received: by mail-ed1-f52.google.com with SMTP id z21-v6so12283836edb.11
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 11:23:40 -0700 (PDT)
+        id S1726907AbeJMCOc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 22:14:32 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42745 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbeJMCOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 22:14:32 -0400
+Received: by mail-wr1-f68.google.com with SMTP id g15-v6so14449862wru.9
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 11:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=q5dhjUSPUHvVslXjX/zeXEkXkrfuiTrp/Jq+CpQtwgU=;
-        b=YRLKzawJysHVm7WMHvhuAP2ySRATISYC5Lgl45A2SJx+2YQtBoUONYh1ar4tPMEOXs
-         SAd/n+9S6EKh7vxsO4SuwGn0gN82GwkqDkcJHyThv877IiyMm5EihzLpYaz2HSg/eB4p
-         YA8MTLoPtNub/jc8edkHbF3CPGx0tJcmnnmeq4Swv8orthONKLCWhrU9ulKcuyaAYiP7
-         YF+i1d9yjz+5UefXE9hXmTwMW1KmadErRDPqn0hMbcatbJ/zHZ6lCMvcldleD966WkF3
-         jaKkLJhfTbGRrnLnSY9bvoGLG/PDhZcAwgF55ZrwbDaOgwiSyy2AQxjlydPDdUMXTG86
-         dZ5g==
+        bh=U+SCkoh6TZ2iBFSHdd7HQBlMzESxj43ZeSCtW6RUYYI=;
+        b=o6vGFauhBqahU1cs2pSawcTgFAbBs63AS9phT+rJVXU2hu/GQtVx63p1u0y9/b4dmH
+         aILrYraFQcy3cJ2U2glWGVRjmdCOwvYutuQnjtzAP72w51OG0NtyzpUKveRRvsJfsSv/
+         9StsTEqmyFo+B911GOjvhU97dloei80ZptHSJYIqbBJcUOuj6lacxSCKGAHQmBi3T2Kc
+         pSzFHHPYu3derkgrY8PxOBcZP0Jo6/ira6RxW9IMS1mzfPDTQjWxV/Ox5vhOc8fRDE/7
+         n9Do5dwea28VrW9MOQRqSNMJ5JfIhTnGuQYiR/eK9jG/OxQhJEM6ZvuNh1yEt37wxIKm
+         5GtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=q5dhjUSPUHvVslXjX/zeXEkXkrfuiTrp/Jq+CpQtwgU=;
-        b=SV/yXO7+xrsxVbvwMHAPDK6oU7rL5nWINpHby4uxytIdLjj4liD0sz4yvJyR/6YM1V
-         BQZTHcUbB3pAHlc+B0EE4z4YfnfGHrVF2b3zqSmZWQC3qixE4lUYW9SSpgr3R15avtMP
-         1qYosforKZ8JaPAjvFRJq4imR7AQBY2/7ncL7fkGI71yrViq8ra0+YwdtPNCwrblCSod
-         dhnsWmaFV/I89jApJHwX+iQPxHeE5i8MbpaudvBP38hhXsEENO7KxtqO+tNfu0Vh0UP+
-         c6yowSEQRu4vp1/53/E+Rv8pOTvhHVTM8nUHXFOYUy6edvwAUzYknJmieR/VJfcLXA7q
-         OU7g==
-X-Gm-Message-State: ABuFfohvyNCXK5lWPlnruQ5Hm2TsYBMBdlg7j/MaSu8LLPOkwy0TLSmR
-        PXjDgvykrMxP6nebQ7Rf5ukAUQ6Y0w08wOrVNRAFKw==
-X-Google-Smtp-Source: ACcGV62d0yOprltM4W/YemdMwtJSn/gzzMN32Xc39FI67bHgtq5Mg4MJ4tgrf48b+AhCBwYJX7rXBKX1S/MbZ5b6+Ic=
-X-Received: by 2002:aa7:d412:: with SMTP id z18-v6mr10803290edq.26.1539368619166;
- Fri, 12 Oct 2018 11:23:39 -0700 (PDT)
-MIME-Version: 1.0
-From:   Sergey Andreenko <andreenkosa@gmail.com>
-Date:   Fri, 12 Oct 2018 11:23:28 -0700
-Message-ID: <CAD1gVxMg0ZiKqFABrnwt0v_=wr2X_3ErkR92RmCAtFQnuM+L5w@mail.gmail.com>
-Subject: issue: strange `git diff --numstat` behavior.
+        bh=U+SCkoh6TZ2iBFSHdd7HQBlMzESxj43ZeSCtW6RUYYI=;
+        b=RDa9czWl/kbi8j9wW70h28BhCzozgjF3Cb+O0YEws5GD2bPg7VC+gmA42O6UtngY8y
+         kv+CF547J+6+3wgJ1v4yUQMViFVsztyMB4Ho4ZatEyDjtB2fwvRh0s9XmLwap8uA5yP+
+         KBXUdG6Qh3mmb23WE3n7URmDcyoOUHg1GRQv3H3fifVHTj4m+eNxv8n3PP+I7Z58eRae
+         AzB+4G8LE691XQvL0Nr8EB7cK41hTgP6LDsnzuSVPoqyWjiMm9YYKfi2oO0d1xBDv/Su
+         aM0hDv9YOTrLwyb4H82C1YJsqQRrFRMfAAUKX9am1AoKmAc4mDbW93Gq+usnHsG10DPV
+         mrdw==
+X-Gm-Message-State: ABuFfog11kA1t3n9FmCT5vGiO9gGJ0pZWr0l/16GW1fFYbGAVDspzSWC
+        Bmy4v/dPiGh03q/cHfXczDi+5+BI
+X-Google-Smtp-Source: ACcGV63DTxydcPyLcUzBHiaPXRATxMjhtOVMZWXc4MBmEklsmveyO62hgqdO34FbNVOHWCLmLIyMbw==
+X-Received: by 2002:adf:bf11:: with SMTP id p17-v6mr6083898wrh.235.1539369640866;
+        Fri, 12 Oct 2018 11:40:40 -0700 (PDT)
+Received: from localhost ([31.127.45.92])
+        by smtp.gmail.com with ESMTPSA id t3-v6sm2093900wru.47.2018.10.12.11.40.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 12 Oct 2018 11:40:39 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Jeff King <peff@peff.net>, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH] config.mak.dev: add -Wformat
+Date:   Fri, 12 Oct 2018 19:40:37 +0100
+Message-Id: <20181012184037.15076-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.19.1.937.g12227c8702.dirty
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git diff =E2=80=93numstat FOLDER1 FOLDER2 works strange when run from a git
-controlled folder.
+801fa63a90 ("config.mak.dev: add -Wformat-security", 2018-09-08) added
+the -Wformat-security to the flags set in config.mak.dev.  In the gcc
+man page this is documented as:
 
-The output shrinks some symbols in the diff file paths.
+         If -Wformat is specified, also warn about uses of format
+         functions that represent possible security problems.  [...]
 
+That commit did however not add the -Wformat flag, and -Wformat is not
+specified anywhere else by default, so the added -Wformat-security had
+no effect.  Newer versions of gcc (gcc 8.2.1 in this particular case)
+warn about this and thus compilation fails with this option set.
 
+Fix that, and make -Wformat-security actually useful by adding the
+-Wformat flag as well.  git compiles cleanly with both these flags
+applied.
 
-For example:
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
 
-Create a folder and call git init, for example: `C:\test`.
+Sorry for not catching this before the patch made it to next.  
 
-              mkdir C:\test
+ config.mak.dev | 1 +
+ 1 file changed, 1 insertion(+)
 
-              cd C:\test
+diff --git a/config.mak.dev b/config.mak.dev
+index 92d268137f..bf6f943452 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -7,6 +7,7 @@ CFLAGS += -pedantic
+ CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
+ endif
+ CFLAGS += -Wdeclaration-after-statement
++CFLAGS += -Wformat
+ CFLAGS += -Wformat-security
+ CFLAGS += -Wno-format-zero-length
+ CFLAGS += -Wold-style-definition
+-- 
+2.19.1.937.g12227c8702.dirty
 
-              git init
-
-Create two folders with to diff. For example: ` C:\diff`, `C:\base`
-and put a file in them with a diff (for example `1.txt` with `1` in
-base and `1.txt` with 2 in diff).
-
-              mkdir C:\base
-
-              mkdir C:\diff
-
-              echo. 12>C:\base\1.txt
-
-              echo 13>C:\diff\1.txt
-
-Run git diff:
-
-pushd C:\
-
-git.exe diff --numstat "C:\diff" "C:\base"
-
-Output will be:
-
-1       1       "C:\\diff/1.txt" =3D> "C:\\base/1.txt"
-
-Now move into C:\test and run it again:
-
-pushd C:\test
-
-git.exe diff --numstat "C:\diff" "C:\base"
-
-1       1       "C:\\diff/1.txt" =3D> "C:\\base/1.txt"
-
-Now create a folder in `C:\test`, for example `one`:
-
-mkdir one
-
-cd one
-
-git.exe diff --numstat "C:\diff" "C:\base"
-
-
-
-output will be:
-
-              0       1       {iff =3D> ase}/1.txt
-
-So (folder_name_length) symbols were cut from the path (=E2=80=9CC:\\d=E2=
-=80=9D and =E2=80=9CC:\\b=E2=80=9D).
-
-
-
-Is any way to avoid that? I have checked several git versions and they
-all do the same.
-
-
-
-Commands to repro:
-
-mkdir C:\test
-
-cd C:\test
-
-git init
-
-mkdir C:\base
-
-mkdir C:\diff
-
-echo. 12>C:\base\1.txt
-
-echo 13>C:\diff\1.txt
-
-pushd C:\
-
-git.exe diff --numstat "C:\diff" "C:\base"
-
-pushd C:\test
-
-git.exe diff --numstat "C:\diff" "C:\base"
-
-mkdir one
-
-cd one
-
-git.exe diff --numstat "C:\diff" "C:\base"
-
-
-
-Best Regards,
-
-Sergey Andrenko
