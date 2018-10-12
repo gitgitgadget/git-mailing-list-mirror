@@ -2,183 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AF141F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 22:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFC981F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 23:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725954AbeJMGFk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 02:05:40 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33699 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725926AbeJMGFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 02:05:39 -0400
-Received: by mail-ed1-f66.google.com with SMTP id l14-v6so3815818edq.0
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 15:31:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QY1u56ZJm6P1QvpGwbOLVY4Ju4xeR4VBa/jIe8ZHbAE=;
-        b=TnrZ2YLjvuBWou8iZzENE51Yg6gEt3pbnwsUKYk+oIcJJTqiMRf3OQY1nqMpdMJtbk
-         35r2/T+LpX/j//DLgHxkVzuQr9N3iZn0ag31yOsVFGxEbrhJQ6cgSzCNX4yAebatHmUl
-         0Aubvl+se1d4OAJyLweKDhHKv+jckI2qIsfixRtdX/2d/LtqDIrUmtCc5lWiBHRfn72s
-         eD1Lx9k+rV1mMjoiJHbf0YW1ryrnLz3dkxtlOSuFmY8DkI9SHRwabYNfhzZ4R+ZrqqdG
-         RvUh3XcXagHrQnscBvGmetkiHS4YNapKHsuCi9SM2b6owGPC+MOEKiiMvaWSTVzzdVvc
-         rxOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QY1u56ZJm6P1QvpGwbOLVY4Ju4xeR4VBa/jIe8ZHbAE=;
-        b=gJuNYFwI9dy8m5msxp23Fxj3Cbfzh/w4PIzRYcZrcr+WJyXX5SE/IPWGxI/JzJozVz
-         fvjlsG1DgA+pNitT2PPjxaTXmE1mkk6pPU9MjbPLnpZPXnrVuIgg5RVQr/eIrtt0pt2s
-         LQdpeLJ2MRSVZFjC1u9B1Q2H7YUj9W2v9KNa9R3CN6/qeh++t3Tqy5kQ0ysMENtyRjzb
-         uQDvETPcPLmJCVMNhGzawHJWJRktymKzub3yaePfe80m1n3uq04iTShiGo3E576qbmCP
-         KP7EW1AFtS4HfC5ZqjR6EBC9dQvyPg7TUUvQgtf4BT/OuS9Cv4r1n4IbRzrSt3+s6cyU
-         l9zQ==
-X-Gm-Message-State: ABuFfogE+AOfMyx3ig7ZkT/e1krFevDkZn5h6tZUsf/98HuoGEUqNbLx
-        e50cU2TNrCw99k+wQs2pWM9NWYvAgv3VBvPBFUqYcw==
-X-Google-Smtp-Source: ACcGV61jzM6mN/frJvVEnHfE+06fgiKLU5hiFz5kCdEQtsdrmXqH99hBNi2HF7sM0nhC06hF2/F/H28lrkQ5NxwcQtE=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr11487571edh.154.1539383464297;
- Fri, 12 Oct 2018 15:31:04 -0700 (PDT)
+        id S1726021AbeJMGwb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 02:52:31 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50412 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726005AbeJMGwb (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 13 Oct 2018 02:52:31 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c8b6:8cda:9f33:1bf5])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4D32361B73;
+        Fri, 12 Oct 2018 23:17:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1539386267;
+        bh=q+WTRNXLc9EqN7FDTi5Xn8pz3SZVqbSHSEGiQEKG7Ik=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=bGqXgchyGMiVh0MamomPSpBbaBLBN5ny1hselBCpW8Vv9tO/ixQ+QgSWf4QaE4R8J
+         NkBaXdlVFPBgNZnkvrP6WRFGDtJWGRjz4m+Y/QZeAlrikKlLGBknakqH3yQ1zztU0u
+         ifYktH7hJS5vARP49dNoGQJhIHBKQedViVgzhHPnFUF5f3sC/WbfQTNTGd5Dxyb3sc
+         7lzsCtvJIw3lqCVB2yq79s7wFQjxNfX2CBRjKXoyfyeZXzxAMxRAg6j03rhEC0uRy2
+         NuEaCZHRVWWpqkgO2fzbx5dgRiBB3wwfn/dq0gyW1GFNSf8pZ9g6JhvnjqWKmmpcWp
+         fvONPJSn7u1dneSBpnyLA9+UHFH0elQprGA/Q//jmZxiauPfkpdnDOUhz28Im5IqGj
+         NhEfpNgsw18VLdPSAUd2Q6oEhfIiEg9YvTsXK0F0Sg43TNKSfr7hOZ9NCV5IfLufWW
+         Np2cE51+h8+wEES75ICCexLN0nKDu+Z47dp0V1zHWiP1cww0HZZ
+Date:   Fri, 12 Oct 2018 23:17:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        git@vger.kernel.org, t.gummerer@gmail.com, sunshine@sunshineco.com,
+        gitster@pobox.com
+Subject: Re: [PATCH] range-diff: allow to diff files regardless submodule
+Message-ID: <20181012231742.GZ432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        Lucas De Marchi <lucas.demarchi@intel.com>, git@vger.kernel.org,
+        t.gummerer@gmail.com, sunshine@sunshineco.com, gitster@pobox.com
+References: <20181010150916.4295-1-lucas.demarchi@intel.com>
+ <20181011000233.GX432229@genre.crustytoothpaste.net>
+ <CAKi4VALL5nnLfo4ZxtifKE1JmcmUQ6F-9GSAQEMxXLjKsCtSmg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1810121122260.45@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <cover.1538516853.git.steadmon@google.com> <cover.1539305180.git.steadmon@google.com>
- <70986cec32880db16568d85c351b33e9a8e16f1c.1539305180.git.steadmon@google.com>
-In-Reply-To: <70986cec32880db16568d85c351b33e9a8e16f1c.1539305180.git.steadmon@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 12 Oct 2018 15:30:52 -0700
-Message-ID: <CAGZ79kbuVRAceWF5cb4JAk=ss_4sEKthwxMG2wM+gLWbUdcTVQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] protocol: advertise multiple supported versions
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/3zO87W6OPidGKTZ"
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1810121122260.45@tvgsbejvaqbjf.bet>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 11, 2018 at 6:02 PM <steadmon@google.com> wrote:
->
-> From: Josh Steadmon <steadmon@google.com>
->
-> Currently the client advertises that it supports the wire protocol
-> version set in the protocol.version config. However, not all services
-> support the same set of protocol versions. When connecting to
-> git-receive-pack, the client automatically downgrades to v0 if
-> config.protocol is set to v2, but this check is not performed for other
-> services.
->
-> This patch creates a protocol version registry. Individual commands
-> register all the protocol versions they support prior to communicating
-> with a server. Versions should be listed in preference order; the
-> version specified in protocol.version will automatically be moved to the
-> front of the registry.
->
-> The protocol version registry is passed to remote helpers via the
-> GIT_PROTOCOL environment variable.
->
-> Clients now advertise the full list of registered versions. Servers
-> select the first recognized version from this advertisement.
 
-I like this patch from the users point of view (i.e. inside fetch/push etc),
-and I need to through the details in connect/protocol as that seems
-to be a lot of new code, but hides the complexity very well.
+--/3zO87W6OPidGKTZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +       register_allowed_protocol_version(protocol_v2);
-> +       register_allowed_protocol_version(protocol_v1);
-> +       register_allowed_protocol_version(protocol_v0);
+On Fri, Oct 12, 2018 at 11:24:43AM +0200, Johannes Schindelin wrote:
+>=20
+>=20
+> On Thu, 11 Oct 2018, Lucas De Marchi wrote:
+>=20
+> > On Wed, Oct 10, 2018 at 5:02 PM brian m. carlson
+> > <sandals@crustytoothpaste.net> wrote:
+> > >
+> > > On Wed, Oct 10, 2018 at 08:09:16AM -0700, Lucas De Marchi wrote:
+> > > > Do like it's done in grep so mode doesn't end up as
+> > > > 0160000, which means range-diff doesn't work if one has
+> > > > "submodule.diff =3D log" in the configuration. Without this
+> > > > while using range-diff I only get a
+> > > >
+> > > >     Submodule a 0000000...0000000 (new submodule)
+> > > >
+> > > > instead of the diff between the revisions.
+> > > >
+> > > > Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+> > > > ---
+> > > >  range-diff.c | 2 +-
+> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/range-diff.c b/range-diff.c
+> > > > index 60edb2f518..bd8083f2d1 100644
+> > > > --- a/range-diff.c
+> > > > +++ b/range-diff.c
+> > > > @@ -354,7 +354,7 @@ static struct diff_filespec *get_filespec(const=
+ char *name, const char *p)
+> > > >  {
+> > > >       struct diff_filespec *spec =3D alloc_filespec(name);
+> > > >
+> > > > -     fill_filespec(spec, &null_oid, 0, 0644);
+> > > > +     fill_filespec(spec, &null_oid, 0, 0100644);
+> > >
+> > > If we have a system that has different mode values from the common Un=
+ix
+> > > ones, is this still correct or does it need to change?
+> >=20
+> > From what I can see this would still be correct, or at least git-grep
+> > implementation would be broken.
+>=20
+> As you can see from the Windows port: we are stuck with the simplistic
+> POSIX permissions in Git, and platforms that have a different permission
+> system have to emulate it.
 
-Would it make sense to have a
+I think I may not have explained myself well.  There are a small number
+of POSIXy systems which have mode bits that differ from the common ones
+(e.g., a plain file is something other than 0100000).  I think one
+person mentioned on the list that they have a homebrew Unix that works
+this way, and I think I may have heard of some minor commercial Unices
+that work this way as well.
 
-    register_allowed_protocol_versions(protocol_v2, protocol_v1,
-protocol_v0, NULL);
+My question was intended to ask whether we should be using an
+OS-provided constant (e.g., S_IFREG) that represented that value
+differently because it was a system value or whether it was the internal
+Git representation.
 
-similar to argv_array_pushl  or would that be overengineered?
+I hadn't intended to inquire about Windows, as I was fairly confident
+that this syntax does indeed work there through our compatibility layers
+(because it has in the past even when we've had these kinds of issues on
+other Unices).  But I'm glad that you chimed in and confirmed that it
+does.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> @@ -1085,10 +1085,9 @@ static struct child_process *git_connect_git(int fd[2], char *hostandport,
->                     target_host, 0);
->
->         /* If using a new version put that stuff here after a second null byte */
-> -       if (version > 0) {
-> +       if (strcmp(version_advert->buf, "version=0")) {
->                 strbuf_addch(&request, '\0');
-> -               strbuf_addf(&request, "version=%d%c",
-> -                           version, '\0');
-> +               strbuf_addf(&request, "%s%c", version_advert->buf, '\0');
+--/3zO87W6OPidGKTZ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-It's a bit unfortunate to pass around the string, but reading through
-the following
-lines seems like it is easiest.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
 
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvBK5YACgkQv1NdgR9S
+9oskNBAAlcG8tyHAWFPxdIFlnR7ltOdAcL9uHhzVtYHyw9Jl3MJIXn0wKjW+WMT6
+6frBFqi7l6WkWBEq71xi7/FrcSITEovE7XlWhspH1FhWyNfldBKeVbdrG147ReUN
+XlXRWznVRI7BPENBSZEPXaOdy/5cUGUdx7BaFYHi7C0M4DTTtrsl44s+7R0uBljb
+c70emXC7uiYbDqryQWI+z3s+VNMY/1mse3fy4oNwAKchGlXWUn6HSXZGYp23nm5q
+9AwqixvaJsGHvw1+6jX3G9ImlT8GmL1JLR5SCzDS5af2QmnVbZz6YTzzz4FrqPVb
+PRZmNp45at/mKUINj+4ubWh3T3YlbKc+IIcWqPj58ev2PbovixiQiu7SY03pEA1c
+8clPqOjOle+B8vMDpIo3Yvvcbc6EgNLfTtY2eMlTZJqZR8cK+5sbjgBV2YBuKslc
+/aYc3jgaA4zrADj+QaE58a9JGZCA9XqzXyOHnVQHwghTB59Tv1cjgNsMxAFSrPj9
+7wDuQVCRY1u/NVKB0xlrjLEpfZgGkoaBPR52X+kc8f+WPZwlaKl/AZo7yV/NPj0N
+kRgXwQz96XwIPGa+lEY4B8K54TcXpglptaxndO1XBmnXpTvdAhExyBQwNSwrgu9+
+S8oVvfzJ2ea3A6GV6Gb2xR8w/kjOsnc+5Y7QxwhOI0XJokFTcxo=
+=Lpiz
+-----END PGP SIGNATURE-----
 
-> @@ -1226,16 +1226,10 @@ struct child_process *git_connect(int fd[2], const char *url,
->  {
->         char *hostandport, *path;
->         struct child_process *conn;
-> +       struct strbuf version_advert = STRBUF_INIT;
->         enum protocol protocol;
-> -       enum protocol_version version = get_protocol_version_config();
->
-> -       /*
-> -        * NEEDSWORK: If we are trying to use protocol v2 and we are planning
-> -        * to perform a push, then fallback to v0 since the client doesn't know
-> -        * how to push yet using v2.
-> -        */
-> -       if (version == protocol_v2 && !strcmp("git-receive-pack", prog))
-> -               version = protocol_v0;
-> +       get_client_protocol_version_advertisement(&version_advert);
-
-Nice to have this special casing gone!
-
-> diff --git a/protocol.c b/protocol.c
-> index 5e636785d1..f788269c47 100644
-> +
-> +static const char protocol_v0_string[] = "0";
-> +static const char protocol_v1_string[] = "1";
-> +static const char protocol_v2_string[] = "2";
-> +
-...
-> +/* Return the text representation of a wire protocol version. */
-> +static const char *format_protocol_version(enum protocol_version version)
-> +{
-> +       switch (version) {
-> +       case protocol_v0:
-> +               return protocol_v0_string;
-> +       case protocol_v1:
-> +               return protocol_v1_string;
-> +       case protocol_v2:
-> +               return protocol_v2_string;
-> +       case protocol_unknown_version:
-> +               die(_("Unrecognized protocol version"));
-> +       }
-> +       die(_("Unrecognized protocol_version"));
-> +}
-
-Up to now we have the textual representation that can easily
-be constructed from protocol_version by using e.g.
-    sprintf(buf, "%d", version);
-which is why I initially thought this could be worded way
-shorter, but I guess this is more future proof?
-
-
-> +
->  enum protocol_version get_protocol_version_config(void)
->  {
->         const char *value;
-> @@ -30,6 +55,79 @@ enum protocol_version get_protocol_version_config(void)
->         return protocol_v0;
->  }
->
-> +void register_allowed_protocol_version(enum protocol_version version)
-> +{
-> +       if (have_advertised_versions_already)
-> +               error(_("attempting to register an allowed protocol version after advertisement"));
-
-This would be a
-    BUG(...)
-instead?
+--/3zO87W6OPidGKTZ--
