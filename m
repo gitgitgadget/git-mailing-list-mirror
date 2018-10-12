@@ -2,97 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 821481F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 13:55:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80B901F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 14:01:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728639AbeJLV1v convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 12 Oct 2018 17:27:51 -0400
-Received: from esg256-2.itc.swri.org ([129.162.232.95]:45126 "EHLO
-        esg256-2.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728574AbeJLV1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 17:27:51 -0400
-Received: from smtp.swri.org (MBX260.adm.swri.edu [129.162.29.125])
-        by esg256-2.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w9CDtG7e112826
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 08:55:16 -0500
-Received: from MBX260.adm.swri.edu (129.162.29.125) by MBX260.adm.swri.edu
- (129.162.29.125) with Microsoft SMTP Server (TLS) id 15.0.1395.4; Fri, 12 Oct
- 2018 08:55:16 -0500
-Received: from MBX260.adm.swri.edu ([10.10.10.3]) by MBX260.adm.swri.edu
- ([10.10.10.3]) with mapi id 15.00.1395.000; Fri, 12 Oct 2018 08:55:16 -0500
-From:   "Strain, Roger L." <roger.strain@swri.org>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH] subtree: performance improvement for finding unexpected
- parent commits
-Thread-Topic: [PATCH] subtree: performance improvement for finding unexpected
- parent commits
-Thread-Index: AQHUYjLUwFEWpYYRRUCIS3R5181j5aUboeMA
-Date:   Fri, 12 Oct 2018 13:55:16 +0000
-Message-ID: <b4163622de7442849e7f3f118db0c0ea@MBX260.adm.swri.edu>
-References: <20181012135218.14439-1-rstrain@swri.org>
-In-Reply-To: <20181012135218.14439-1-rstrain@swri.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [129.162.26.93]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1728579AbeJLVeX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 17:34:23 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33330 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727556AbeJLVeX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 17:34:23 -0400
+Received: by mail-wr1-f67.google.com with SMTP id e4-v6so13582723wrs.0
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 07:01:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=rrnrvDeom/IT8xJxfU49h6Bq9oKZtSiAy/qLVG04B0w=;
+        b=uLmWjGQF7Yozj+PK5YXeb/qMct/FryAZli/4V/aodpmOZGkkyYdKasw9RiVIFJJAO7
+         hQiywSFsWVS0ZRfJCFt7mXwe+CgCwKYhvSOvWyb8j+BbJ098kaWVjVes8el/CtyLoltx
+         2u0uNzsywv4lVGuGeWI4P3oUcHETsBOhHdzlW6wezSUhI6XUrtgmI8dozqXooUVdnMhG
+         DDi+8z6SOqVjTGgJT4rjrA944+ZCcdcnPr6dku0qA8gncUPfn5HJeZkGwazCAPRk+QM4
+         yYJ2yz0ov282g7c0cUi1FFGr8THTrkGd84uiOE67N/eQZ1cBZyfcaFiT6zD0PjwZNLUj
+         gb2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rrnrvDeom/IT8xJxfU49h6Bq9oKZtSiAy/qLVG04B0w=;
+        b=RkN71dNFsUQqtSX7nj5Suzci48lRJbYiMlmxeNTyq7aQYYxJS8uk4xx7cnQYQ1Sd8U
+         ssugNIxNS/LO9Hnhb3CFXleACLFsnA+5DBDHZQBoFyw130+kKFJ0Rnl08bnoW8LrvWC4
+         1YeSPgNmz3eUwzfR5vq9iE+kQWTicXbAJ/Dxc2IMBG44J7vTP8reYuzN51bJxVsd56nJ
+         l1lbZhzLqk6TINapnJZRLdGhSYY/fwJvAoir02uHqPLDPjEfmbaoYRHJcb4oE2wAvPtP
+         tr3NCFtFRv8sLpXi145cxZ92YRHhnoXtRiNVK/yUVksZh5NGk2zdwN0cVOxmbQX3O3Us
+         oPvg==
+X-Gm-Message-State: ABuFfogcwB2+gYIkYlwKHNg+eOSvyOUEBMSznZLjTHXB+o6riAXZA3JE
+        TJbMtLX6Av4opPd1fj8q0igIiQq+4P0=
+X-Google-Smtp-Source: ACcGV63zTKeGXteXIqDX8m144KnJTZKbhGDBliMaWEotsVnCSMFH9xLE2j9Sawf0+NhMhu+rhmlBSw==
+X-Received: by 2002:adf:d082:: with SMTP id y2-v6mr5321734wrh.314.1539352906087;
+        Fri, 12 Oct 2018 07:01:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n15-v6sm782449wrm.27.2018.10.12.07.01.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 12 Oct 2018 07:01:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>
+Subject: Re: [PATCH v3 0/2] rebase -i: introduce the 'break' command
+References: <pull.43.v2.git.gitgitgadget@gmail.com>
+        <pull.43.v3.git.gitgitgadget@gmail.com>
+Date:   Fri, 12 Oct 2018 23:01:43 +0900
+In-Reply-To: <pull.43.v3.git.gitgitgadget@gmail.com> (Johannes Schindelin via
+        GitGitGadget's message of "Fri, 12 Oct 2018 06:14:23 -0700 (PDT)")
+Message-ID: <xmqqva679sc8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-10-12_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1810120138
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Original failed to include the note that this patch is for the 'next' branch, my apologies.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> -----Original Message-----
-> From: Roger Strain <rstrain@swri.org>
-> Sent: Friday, October 12, 2018 8:52 AM
-> To: git@vger.kernel.org
-> Cc: Strain, Roger L. <roger.strain@swri.org>
-> Subject: [PATCH] subtree: performance improvement for finding
-> unexpected parent commits
-> 
-> After testing a previous patch at larger scale, a performance issue was
-> detected when using git show to locate parent revisions, with a single run of
-> the git show command taking 2 seconds or longer in a complex repo.
-> When the command is required tens or hundreds of times in a run of the
-> script, the additional wait time is unaccepatable. Replacing the command
-> with git rev-parse resulted in significantly increased performance, with the
-> command in question returning instantly.
-> 
-> Signed-off-by: Roger Strain <rstrain@swri.org>
-> Thanks-to: Junio C Hamano <gitster@pobox.com>
-> ---
->  contrib/subtree/git-subtree.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 1c157dbd9..147201dc6 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -633,7 +633,7 @@ process_split_commit () {
->  	else
->  		# processing commit without normal parent information;
->  		# fetch from repo
-> -		parents=$(git show -s --pretty=%P "$rev")
-> +		parents=$(git rev-parse "$rev^@")
->  		extracount=$(($extracount + 1))
->  	fi
-> 
-> --
-> 2.19.1
+> This patch introduces that, based on ag/rebase-i-in-c.
+>
+> Changes since v2:
+>
+>  * Fixed two typos.
+>  * When interrupting the rebase, break now outputs a message.
 
+I was about to merge the whole collection of topics to 'next', but
+this came to stop me just in time.
+
+The typofixes are appreciated of course, and look trivially correct.
+
+I find that the if() condition that does too many side-effect-full
+operations in stopped-at-head shows bad taste.  It is still short
+enough to understand what each step is trying to do, but would
+encourage others who later may touch the code to make it even more
+complex.
+
+But it is a short and isolated static helper function, so I won't
+complain too loudly.
+
+Will replace and requeue.
+
+Thanks.
