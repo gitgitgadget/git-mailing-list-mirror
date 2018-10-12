@@ -2,218 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD07A1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 13:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9181E1F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 13:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728670AbeJLUqw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 16:46:52 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:40725 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728667AbeJLUqw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 16:46:52 -0400
-Received: by mail-pg1-f193.google.com with SMTP id n31-v6so5841836pgm.7
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 06:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yRcZO08AMwfu94oKwcRzM9e3tm7gKNl1kq2VUmqpeYU=;
-        b=eVHV1UNacV6bhaudVPDG6X+4OvU61Bdq5lErfjIuMG2ANi6gaQtcjghoIvE0UbB+Q/
-         IqXvrQBz0AiIIzk4WZp+fRDqD3xrBCZKDB1VCBP9kPE7tjr1IRYXYRK5a2yMlJ2oPrrl
-         +1INDJTbIScCw4PSSh5Y0saguLrOkCG9OBtuZizs/p7eyWrsGl0SycNC74qjrktUdKlf
-         ePjPywonzXqruNAfYsz7aKQDLY5qHOMNHz5BxNTv/Tw4fRHj4OLy1LORDJq2jheHFySO
-         0qENxILqonDbUEAl2ED6VikkMHgsPWmiO2KW2Sl93B8o9CHIS67Dw0xoGEV0JD13dNiK
-         Q3JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yRcZO08AMwfu94oKwcRzM9e3tm7gKNl1kq2VUmqpeYU=;
-        b=gkVFz8KM6lvsFi2WzgHN0cafA1kmznJCnz+RB6jMxiZKJEFk1+R1EGUE+Bx1Jt97gH
-         fattcMylbwxw8kFR/PUCk1vZAHbV6uEhXQcDbLB4PYB3ChrmuawTuL97QokZ2NmsQdk/
-         JyaGZfhOVC4jBqFWfhi4DJMomK4L4ayJhxd3dIMOrMIyA6gVq4mhfSkW6GFXR6SW/b/Y
-         GVdZJmwYr5ct2KDrdzl325c978hzpiU503IxgCKwAopTj/uj4xbhWVl73nuTJSP64RMN
-         7OsnvMkZ8zgcyRPjAf2n/dqzr5G+bUqm3gXr1HU/FIsaoBp90vI3LqHvmUkBZVh8gIhN
-         1xGQ==
-X-Gm-Message-State: ABuFfoikwQ28M6rPeqJlihpKSSU+I5dOS7B8WUIukqAaJHJJwQCZhOaD
-        ZdPMVaRxijRc/LjlUim4FHHaEUtv
-X-Google-Smtp-Source: ACcGV61PE5p8olf0EuZTLcZi2o53GYYWg49QlAxx8FOB2qXPIKglILMz83bVNMgSHTV7gX45yGcGQA==
-X-Received: by 2002:a65:65c6:: with SMTP id y6-v6mr5374366pgv.233.1539350067251;
-        Fri, 12 Oct 2018 06:14:27 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id a190-v6sm2003994pge.47.2018.10.12.06.14.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Oct 2018 06:14:26 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 06:14:26 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Oct 2018 13:14:21 GMT
-Message-Id: <d44b425709d11eed833558c8bedfe4aeaa230e24.1539350061.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.43.v3.git.gitgitgadget@gmail.com>
-References: <pull.43.v2.git.gitgitgadget@gmail.com>
-        <pull.43.v3.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 2/2] rebase -i: introduce the 'break' command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1728628AbeJLVGd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 17:06:33 -0400
+Received: from mail.weplayciv.com ([162.221.200.53]:41304 "EHLO
+        mail.weplayciv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727774AbeJLVGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 17:06:33 -0400
+Received: from ragnarok.t3.se (109-124-178-16.customer.t3.se [109.124.178.16])
+        by mail.weplayciv.com (Postfix) with ESMTPSA id D28B094476D;
+        Fri, 12 Oct 2018 06:34:02 -0700 (PDT)
+From:   Daniels Umanovskis <daniels@umanovskis.se>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Daniels Umanovskis <daniels@umanovskis.se>
+Subject: [PATCH v4] branch: introduce --show-current display option
+Date:   Fri, 12 Oct 2018 15:33:21 +0200
+Message-Id: <20181012133321.20580-1-daniels@umanovskis.se>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com>
+References: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+When called with --show-current, git branch will print the current
+branch name and terminate. Only the actual name gets printed,
+without refs/heads. In detached HEAD state, nothing is output.
 
-The 'edit' command can be used to cherry-pick a commit and then
-immediately drop out of the interactive rebase, with exit code 0, to let
-the user amend the commit, or test it, or look around.
+Intended both for scripting and interactive/informative use.
+Unlike git branch --list, no filtering is needed to just get the
+branch name.
 
-Sometimes this functionality would come in handy *without*
-cherry-picking a commit, e.g. to interrupt the interactive rebase even
-before cherry-picking a commit, or immediately after an 'exec' or a
-'merge'.
-
-This commit introduces that functionality, as the spanking new 'break'
-command.
-
-Suggested-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Daniels Umanovskis <daniels@umanovskis.se>
 ---
- Documentation/git-rebase.txt |  3 +++
- rebase-interactive.c         |  1 +
- sequencer.c                  | 24 +++++++++++++++++++++++-
- t/lib-rebase.sh              |  2 +-
- t/t3418-rebase-continue.sh   |  9 +++++++++
- 5 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index d9771bd25b..6b71694b0d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -561,6 +561,9 @@ By replacing the command "pick" with the command "edit", you can tell
- the files and/or the commit message, amend the commit, and continue
- rebasing.
+Compared to v3, fixed up test cases according to Junio's input
+
+ Documentation/git-branch.txt |  6 +++++-
+ builtin/branch.c             | 25 +++++++++++++++++++++++--
+ t/t3203-branch-output.sh     | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 71 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index bf5316ffa..0babb9b1b 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git branch' [--color[=<when>] | --no-color] [-r | -a]
+-	[--list] [-v [--abbrev=<length> | --no-abbrev]]
++	[--list] [--show-current] [-v [--abbrev=<length> | --no-abbrev]]
+ 	[--column[=<options>] | --no-column] [--sort=<key>]
+ 	[(--merged | --no-merged) [<commit>]]
+ 	[--contains [<commit]] [--no-contains [<commit>]]
+@@ -160,6 +160,10 @@ This option is only applicable in non-verbose mode.
+ 	branch --list 'maint-*'`, list only the branches that match
+ 	the pattern(s).
  
-+To interrupt the rebase (just like an "edit" command would do, but without
-+cherry-picking any commit first), use the "break" command.
++--show-current::
++	Print the name of the current branch. In detached HEAD state,
++	nothing is printed.
 +
- If you just want to edit the commit message for a commit, replace the
- command "pick" with the command "reword".
- 
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 0f4119cbae..78f3263fc1 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -14,6 +14,7 @@ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
- "s, squash <commit> = use commit, but meld into previous commit\n"
- "f, fixup <commit> = like \"squash\", but discard this commit's log message\n"
- "x, exec <command> = run command (the rest of the line) using shell\n"
-+"b, break = stop here (continue rebase later with 'git rebase --continue')\n"
- "d, drop <commit> = remove commit\n"
- "l, label <label> = label current HEAD with a name\n"
- "t, reset <label> = reset HEAD to a label\n"
-diff --git a/sequencer.c b/sequencer.c
-index 8dd6db5a01..ee3961ec63 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1416,6 +1416,7 @@ enum todo_command {
- 	TODO_SQUASH,
- 	/* commands that do something else than handling a single commit */
- 	TODO_EXEC,
-+	TODO_BREAK,
- 	TODO_LABEL,
- 	TODO_RESET,
- 	TODO_MERGE,
-@@ -1437,6 +1438,7 @@ static struct {
- 	{ 'f', "fixup" },
- 	{ 's', "squash" },
- 	{ 'x', "exec" },
-+	{ 'b', "break" },
- 	{ 'l', "label" },
- 	{ 't', "reset" },
- 	{ 'm', "merge" },
-@@ -1964,7 +1966,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- 	padding = strspn(bol, " \t");
- 	bol += padding;
- 
--	if (item->command == TODO_NOOP) {
-+	if (item->command == TODO_NOOP || item->command == TODO_BREAK) {
- 		if (bol != eol)
- 			return error(_("%s does not accept arguments: '%s'"),
- 				     command_to_string(item->command), bol);
-@@ -3247,6 +3249,23 @@ static int checkout_onto(struct replay_opts *opts,
- 	return update_ref(NULL, "ORIG_HEAD", &oid, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+ -v::
+ -vv::
+ --verbose::
+diff --git a/builtin/branch.c b/builtin/branch.c
+index c396c4153..46f91dc06 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -443,6 +443,21 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	free(to_free);
  }
  
-+static int stopped_at_head(void)
++static void print_current_branch_name(void)
 +{
-+	struct object_id head;
-+	struct commit *commit;
-+	struct commit_message message;
-+
-+	if (get_oid("HEAD", &head) || !(commit = lookup_commit(&head)) ||
-+	    parse_commit(commit) || get_message(commit, &message))
-+		fprintf(stderr, _("Stopped at HEAD\n"));
-+	else {
-+		fprintf(stderr, _("Stopped at %s\n"), message.label);
-+		free_message(commit, &message);
-+	}
-+	return 0;
-+
++	int flags;
++	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
++	const char *shortname;
++	if (!refname)
++		die(_("could not resolve HEAD"));
++	else if (!(flags & REF_ISSYMREF))
++		return;
++	else if (skip_prefix(refname, "refs/heads/", &shortname))
++		puts(shortname);
++	else
++		die(_("HEAD (%s) points outside of refs/heads/"), refname);
 +}
 +
- static const char rescheduled_advice[] =
- N_("Could not execute the todo command\n"
- "\n"
-@@ -3293,6 +3312,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			unlink(rebase_path_stopped_sha());
- 			unlink(rebase_path_amend());
- 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
-+
-+			if (item->command == TODO_BREAK)
-+				return stopped_at_head();
- 		}
- 		if (item->command <= TODO_SQUASH) {
- 			if (is_rebase_i(opts))
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 25a77ee5cb..584604ee63 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -49,7 +49,7 @@ set_fake_editor () {
- 		case $line in
- 		squash|fixup|edit|reword|drop)
- 			action="$line";;
--		exec*)
-+		exec*|break)
- 			echo "$line" | sed 's/_/ /g' >> "$1";;
- 		"#")
- 			echo '# comment' >> "$1";;
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index c145dbac38..185a491089 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -239,5 +239,14 @@ test_rerere_autoupdate -m
- GIT_SEQUENCE_EDITOR=: && export GIT_SEQUENCE_EDITOR
- test_rerere_autoupdate -i
- test_rerere_autoupdate --preserve-merges
-+unset GIT_SEQUENCE_EDITOR
-+
-+test_expect_success 'the todo command "break" works' '
-+	rm -f execed &&
-+	FAKE_LINES="break exec_>execed" git rebase -i HEAD &&
-+	test_path_is_missing execed &&
-+	git rebase --continue &&
-+	test_path_is_file execed
-+'
+ static void reject_rebase_or_bisect_branch(const char *target)
+ {
+ 	struct worktree **worktrees = get_worktrees(0);
+@@ -581,6 +596,7 @@ static int edit_branch_description(const char *branch_name)
+ int cmd_branch(int argc, const char **argv, const char *prefix)
+ {
+ 	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
++	int show_current = 0;
+ 	int reflog = 0, edit_description = 0;
+ 	int quiet = 0, unset_upstream = 0;
+ 	const char *new_upstream = NULL;
+@@ -620,6 +636,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('c', "copy", &copy, N_("copy a branch and its reflog"), 1),
+ 		OPT_BIT('C', NULL, &copy, N_("copy a branch, even if target exists"), 2),
+ 		OPT_BOOL('l', "list", &list, N_("list branch names")),
++		OPT_BOOL(0, "show-current", &show_current, N_("show current branch name")),
+ 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
+ 		OPT_BOOL(0, "edit-description", &edit_description,
+ 			 N_("edit the description for the branch")),
+@@ -662,14 +679,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
+ 			     0);
  
- test_done
+-	if (!delete && !rename && !copy && !edit_description && !new_upstream && !unset_upstream && argc == 0)
++	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
++	    !show_current && !unset_upstream && argc == 0)
+ 		list = 1;
+ 
+ 	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr ||
+ 	    filter.no_commit)
+ 		list = 1;
+ 
+-	if (!!delete + !!rename + !!copy + !!new_upstream +
++	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
+ 	    list + unset_upstream > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+@@ -697,6 +715,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!argc)
+ 			die(_("branch name required"));
+ 		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
++	} else if (show_current) {
++		print_current_branch_name();
++		return 0;
+ 	} else if (list) {
+ 		/*  git branch --local also shows HEAD when it is detached */
+ 		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index ee6787614..1bf708dff 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -100,6 +100,49 @@ test_expect_success 'git branch -v pattern does not show branch summaries' '
+ 	test_must_fail git branch -v branch*
+ '
+ 
++test_expect_success 'git branch `--show-current` shows current branch' '
++	cat >expect <<-\EOF &&
++	branch-two
++	EOF
++	git checkout branch-two &&
++	git branch --show-current >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git branch `--show-current` is silent when detached HEAD' '
++	git checkout HEAD^0 &&
++	git branch --show-current >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'git branch `--show-current` works properly when tag exists' '
++	cat >expect <<-\EOF &&
++	branch-and-tag-name
++	EOF
++	test_when_finished "git branch -D branch-and-tag-name" &&
++	git checkout -b branch-and-tag-name &&
++	test_when_finished "git tag -d branch-and-tag-name" &&
++	git tag branch-and-tag-name &&
++	git branch --show-current >actual &&
++	git checkout branch-one &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git branch `--show-current` works properly with worktrees' '
++	cat >expect <<-\EOF &&
++	branch-one
++	branch-two
++	EOF
++	git checkout branch-one &&
++	git worktree add worktree branch-two &&
++	(
++		git branch --show-current &&
++		cd worktree &&
++		git branch --show-current
++	) >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git branch shows detached HEAD properly' '
+ 	cat >expect <<EOF &&
+ * (HEAD detached at $(git rev-parse --short HEAD^0))
 -- 
-gitgitgadget
+2.11.0
+
