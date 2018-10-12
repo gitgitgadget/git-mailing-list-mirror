@@ -6,89 +6,70 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE89A1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 03:20:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C1C91F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 03:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbeJLKuy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 06:50:54 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38916 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbeJLKuy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 06:50:54 -0400
-Received: by mail-wr1-f66.google.com with SMTP id 61-v6so11802663wrb.6
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 20:20:37 -0700 (PDT)
+        id S1727068AbeJLKxA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 06:53:00 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33063 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726280AbeJLKxA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 06:53:00 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y140-v6so17056993wmd.0
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 20:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1yao+W+j832FuT2z0rnMcqdR94U4Isssl6+g6X5QdyY=;
-        b=Ez2wpGsXLDFBxpj/ohcyw0hth8KQb8bA0d6yw02lMTIlM8otjRLtHxcw24uIXccod9
-         ScjM9btX6XLgvITAqJNW6J6Jr8/4j3rSL7YUkXOrHpJ4WehWI5nWgJ3xG2+QzYULYwmY
-         EQKcG+ktuSQDJvn9Js7hZJa7LQKs5J6T8gpnMkQ0yHJv14KaNtUXr66/ZoxOQlXqSMXq
-         YQMs9yzX1IrL4ybb7uG4cbh4QqMrfX6HPVhB28YoRkM8/nGe7/0wgOBn5vYxc/1AG3f+
-         CwZgJ2aac4lrKZlbQQvBVfO3j95hFVSvHdAvOcLYDxd3iF3MfAKQbxIDmK9xPB+8ad9B
-         QUlw==
+         :user-agent:mime-version;
+        bh=MNntpcRR7uoGS6v7GjXN9mjs/eXpbCFMrxUAlHoWYYk=;
+        b=keFbbj4HinvzorMDpuLVbIEiF1SL+ocYwv/kNazaQTGTJCcs6PMvrLmRo6Gepm+hJf
+         RLbLpoMsIpsE4DsQToPFNKwlvo/FuojvGqhn2AIR/3BmQQbuj1QdRPazHKeZ454fkn14
+         JAek/sGRIzDAoNmaUPS/wtzyxYeKk1TN/+OYZeAlct3vcMRm/+nXRg303ZfpsQVIkAn+
+         MBAfsrV+vII19lIJOmfukbAibIfB36gTmegN8aiVYXMrojcH1gJiPzI/qXyXSM7M5+qN
+         0KyzCXrJsKA9cAToJCO7edaqlYm0oVRRmo2Ej9KFXTF/slvAgf96jiFV7wupVfsbi/NG
+         E52g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=1yao+W+j832FuT2z0rnMcqdR94U4Isssl6+g6X5QdyY=;
-        b=cCdhCF6HL3c1DV3k1XxdSLiq80YQnodBN/Z4GJoxODQ3Sf7JlYU2CDZI+B3UEx16O2
-         x+zO+YoJ+0TeqQIpzW7eGWnm3HNBF8EUhecIoGg7QwbiOKZpoEOUdBaUSWz7THTnW1Ux
-         isIf1XefNBgiPdI3dtTLCQF3lViNjaxIWtDxh1RzZsR7RJi3g7eMixx+KmspRFWHiTL8
-         0uyNcJSQMdMSAMBN5200Jcqqsd0eJASTCDMYsUcm3LXofkhFnZi8cyb0uSegiLEJe/Sy
-         +0K9XOkK16DZYyVCa/yY3PVgFlDNRtPRHLMMhzv9/wxXq/MPawQCChmU+9X1A9CePLSy
-         Q71g==
-X-Gm-Message-State: ABuFfogq9acEFXHKaVehnY2NlGd/dt8REZihHnG3xOxFI1TLh/IY5+8T
-        8JIgGImXsrWrxg8m3MCZrMAIIM0GAMA=
-X-Google-Smtp-Source: ACcGV62RelMHmQkLg4X4xnt+cKuaP2vjqQ3/UCjusBR0OxDxiek5BLFTxe27BI0JYo0Ncyxnch3SeA==
-X-Received: by 2002:a05:6000:114e:: with SMTP id d14mr3598032wrx.301.1539314436856;
-        Thu, 11 Oct 2018 20:20:36 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t66-v6sm128969wmt.5.2018.10.11.20.20.36
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=MNntpcRR7uoGS6v7GjXN9mjs/eXpbCFMrxUAlHoWYYk=;
+        b=ClV97+NCQw3ppJo8DNSwr288TCKMkDl3QiwwhKUjQbxWOjuNVIhTfyypZH7ysCc3cs
+         hIC2pUGZkp1Dc0qVC5jsstRqK6/+bSxWFCeOAXAx5nkZ1iujh/Y7x4zOUWeWFr+mO9VK
+         AfqAUvCf4+S5gK07L+p4BZZMHPUpAAdisQTDsmM5Ur+v3doV936vGBj9SKT73MOowY4Y
+         BjwaQOq+z3INH9KHN53ZsduxRqHVI7uFySvQJClEGUvTBpzYrXiYBK3znC77C2qHovX0
+         2usGBfIzJjPZYwygICRND5jD2R0T4rvsku0mroKFlsrHO6mzmh1okblUuD2yURw38s8w
+         iwlQ==
+X-Gm-Message-State: ABuFfohspcuG0dBvt+pqZ+FCpI5msDSIy7wcdVF2wcajOu88SuGwr72q
+        myzsu2vTNfjxdUQdvDnqGiso0YkmiY4=
+X-Google-Smtp-Source: ACcGV61CSJjY3z62sSsTax6P0A9oZcunh96TgSFfCALzih+goGZMoyEOjm0w7PkqWg/96zcPCVUg6g==
+X-Received: by 2002:a1c:13c4:: with SMTP id 187-v6mr3792100wmt.66.1539314561855;
+        Thu, 11 Oct 2018 20:22:41 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o17-v6sm19143913wro.2.2018.10.11.20.22.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 20:20:36 -0700 (PDT)
+        Thu, 11 Oct 2018 20:22:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 0/6] Fix the racy split index problem
-References: <20180928162459.17138-1-szeder.dev@gmail.com>
-        <20181011094309.18626-1-szeder.dev@gmail.com>
-        <87d0sgepmo.fsf@evledraar.gmail.com>
-Date:   Fri, 12 Oct 2018 12:20:35 +0900
-In-Reply-To: <87d0sgepmo.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 11 Oct 2018 12:36:47 +0200")
-Message-ID: <xmqqpnwfdf5o.fsf@gitster-ct.c.googlers.com>
+To:     Noam Postavsky <npostavs@users.sourceforge.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6] log: fix coloring of certain octupus merge shapes
+References: <20181010003743.17198-1-npostavs@users.sourceforge.net>
+        <xmqqzhvmmv8v.fsf@gitster-ct.c.googlers.com>
+        <CAM-tV--Jzq6DOAfWtvk3FVX3=TT8X6bvu_4VfaJQY=M0mSQV4w@mail.gmail.com>
+Date:   Fri, 12 Oct 2018 12:22:39 +0900
+In-Reply-To: <CAM-tV--Jzq6DOAfWtvk3FVX3=TT8X6bvu_4VfaJQY=M0mSQV4w@mail.gmail.com>
+        (Noam Postavsky's message of "Thu, 11 Oct 2018 20:23:46 -0400")
+Message-ID: <xmqqlg73df28.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+I'll do the s/octu/octo/; again on the title while queuing.
 
-> On Thu, Oct 11 2018, SZEDER Gábor wrote:
->
->> Fourth and hopefully final round of fixing occasional test failures when
->> run with 'GIT_TEST_SPLIT_INDEX=yes'.  The only code change is the
->> extraction of a helper function to compare two cache entries' content,
->> and then a couple of minor log message clarifications.  The range-diff
->> below is rather clear on that.
->
-> Looks good. I'm not going to run the stress test I did on v5 on this
-> since the changes are just moving existing code into a fuction, unless
-> you'd like me to or think there's a reason to that is.
+Let's merge this to 'next'.
 
-Thanks, both.  Let's merge this round to 'next'; it would be OK to
-do any further tweaks incrementally on top.
-
+Thanks.
 
