@@ -6,79 +6,89 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED4DF1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 03:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE89A1F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 03:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbeJLKtS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 06:49:18 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:39911 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbeJLKtS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 06:49:18 -0400
-Received: by mail-wm1-f67.google.com with SMTP id y144-v6so11372695wmd.4
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 20:19:01 -0700 (PDT)
+        id S1726336AbeJLKuy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 06:50:54 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38916 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbeJLKuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 06:50:54 -0400
+Received: by mail-wr1-f66.google.com with SMTP id 61-v6so11802663wrb.6
+        for <git@vger.kernel.org>; Thu, 11 Oct 2018 20:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PwsnjpPynJ0fGSW57E4oBEcqxoiihAywWxQv/kB7FIQ=;
-        b=rnTnsHA7ptnvjMZBl8bATLzmIMv9FSm/wwMoU/ILBK6Hvsq0YYZ3TqaZCaxcD/KPfa
-         EbaHRV3XtQ1d6bSKoBzlGaeZv8rpTZYSquwslnJWbDy8BoizpPjQmnT17ebGwq+6Xezq
-         FykeO78O1K+7nhlQNiWoVtkn4NBF0dcK1mZ1KChgZCx7nRORz71b6ASmVcxCqy2R+dFN
-         xAZsyEvg9fBL7K7XztL7fnMbkQmyoKd5Zvm8qdKfEh+JRB4hhRVtMHLk6spSncvjE9pE
-         2RUz/6x2y7UNXcjXs+/8eRi2i8B25ud0QC8xWYlDJi2s7x8AZL5buFhWOXg1Dhv95faH
-         +b0g==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1yao+W+j832FuT2z0rnMcqdR94U4Isssl6+g6X5QdyY=;
+        b=Ez2wpGsXLDFBxpj/ohcyw0hth8KQb8bA0d6yw02lMTIlM8otjRLtHxcw24uIXccod9
+         ScjM9btX6XLgvITAqJNW6J6Jr8/4j3rSL7YUkXOrHpJ4WehWI5nWgJ3xG2+QzYULYwmY
+         EQKcG+ktuSQDJvn9Js7hZJa7LQKs5J6T8gpnMkQ0yHJv14KaNtUXr66/ZoxOQlXqSMXq
+         YQMs9yzX1IrL4ybb7uG4cbh4QqMrfX6HPVhB28YoRkM8/nGe7/0wgOBn5vYxc/1AG3f+
+         CwZgJ2aac4lrKZlbQQvBVfO3j95hFVSvHdAvOcLYDxd3iF3MfAKQbxIDmK9xPB+8ad9B
+         QUlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PwsnjpPynJ0fGSW57E4oBEcqxoiihAywWxQv/kB7FIQ=;
-        b=XE3zge4gi6c6thdHrKUjFmXz0I53UH6e/6dPmUDvXRnJ7fK4bHtmZzff08c9pSBZYo
-         ot2qy/qAKMG+GHKun8YhLXQZo4YIB8erRj44x8MeA54v1tU6hOCyG8XrddmobJOY6HRv
-         YmCdrQCqhdoj6ZMln/P/aUXE4Q5E9ssqOw86Lg6uCl3iSvfJBFpfrdljHtncJbfkEj/y
-         eKKntJSi6d5ZKUcniEQ/wBKQ8vPVekWwOLmdFpoPmI8G+Zc+opsAkwyzUUVWnBAI2kg7
-         Ijoj1xko0bHvwjiI+JeBDu68F6iGikvpppJjhnRfV2rll1TmrC/glyuAUsMAghiECmNl
-         YGcw==
-X-Gm-Message-State: ABuFfoiN4/35f4hiEUZ1fRrZ8OXxCCoKpJakRDEcdUuS7T3PLBT5WMG3
-        uHIq/ufzfxRId7XADH0k3l8p7i7VC/w=
-X-Google-Smtp-Source: ACcGV62AHvbeJvKhMnlqQETce41Pi/uRH0E+iIIsSONtqd3RO+VM3tIhqkGnQkO4MgfxVmlpQAgYDQ==
-X-Received: by 2002:a1c:e12:: with SMTP id 18-v6mr3579003wmo.30.1539314340714;
-        Thu, 11 Oct 2018 20:19:00 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=1yao+W+j832FuT2z0rnMcqdR94U4Isssl6+g6X5QdyY=;
+        b=cCdhCF6HL3c1DV3k1XxdSLiq80YQnodBN/Z4GJoxODQ3Sf7JlYU2CDZI+B3UEx16O2
+         x+zO+YoJ+0TeqQIpzW7eGWnm3HNBF8EUhecIoGg7QwbiOKZpoEOUdBaUSWz7THTnW1Ux
+         isIf1XefNBgiPdI3dtTLCQF3lViNjaxIWtDxh1RzZsR7RJi3g7eMixx+KmspRFWHiTL8
+         0uyNcJSQMdMSAMBN5200Jcqqsd0eJASTCDMYsUcm3LXofkhFnZi8cyb0uSegiLEJe/Sy
+         +0K9XOkK16DZYyVCa/yY3PVgFlDNRtPRHLMMhzv9/wxXq/MPawQCChmU+9X1A9CePLSy
+         Q71g==
+X-Gm-Message-State: ABuFfogq9acEFXHKaVehnY2NlGd/dt8REZihHnG3xOxFI1TLh/IY5+8T
+        8JIgGImXsrWrxg8m3MCZrMAIIM0GAMA=
+X-Google-Smtp-Source: ACcGV62RelMHmQkLg4X4xnt+cKuaP2vjqQ3/UCjusBR0OxDxiek5BLFTxe27BI0JYo0Ncyxnch3SeA==
+X-Received: by 2002:a05:6000:114e:: with SMTP id d14mr3598032wrx.301.1539314436856;
+        Thu, 11 Oct 2018 20:20:36 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c184-v6sm123712wma.15.2018.10.11.20.18.59
+        by smtp.gmail.com with ESMTPSA id t66-v6sm128969wmt.5.2018.10.11.20.20.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 20:18:59 -0700 (PDT)
+        Thu, 11 Oct 2018 20:20:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH v8 0/7] speed up index load through parallelization
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20181010155938.20996-1-peartben@gmail.com>
-Date:   Fri, 12 Oct 2018 12:18:59 +0900
-In-Reply-To: <20181010155938.20996-1-peartben@gmail.com> (Ben Peart's message
-        of "Wed, 10 Oct 2018 11:59:31 -0400")
-Message-ID: <xmqqwoqndf8c.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v4 0/6] Fix the racy split index problem
+References: <20180928162459.17138-1-szeder.dev@gmail.com>
+        <20181011094309.18626-1-szeder.dev@gmail.com>
+        <87d0sgepmo.fsf@evledraar.gmail.com>
+Date:   Fri, 12 Oct 2018 12:20:35 +0900
+In-Reply-To: <87d0sgepmo.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 11 Oct 2018 12:36:47 +0200")
+Message-ID: <xmqqpnwfdf5o.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> From: Ben Peart <benpeart@microsoft.com>
+> On Thu, Oct 11 2018, SZEDER Gábor wrote:
 >
-> Fixed issues identified in review the most impactful probably being plugging
-> some leaks and improved error handling.  Also added better error messages
-> and some code cleanup to code I'd touched.
+>> Fourth and hopefully final round of fixing occasional test failures when
+>> run with 'GIT_TEST_SPLIT_INDEX=yes'.  The only code change is the
+>> extraction of a helper function to compare two cache entries' content,
+>> and then a couple of minor log message clarifications.  The range-diff
+>> below is rather clear on that.
 >
-> The biggest change in the interdiff is the impact of renaming ieot_offset to
-> ieot_start and ieot_work to ieot_blocks in hopes of making it easier to read
-> and understand the code.
+> Looks good. I'm not going to run the stress test I did on v5 on this
+> since the changes are just moving existing code into a fuction, unless
+> you'd like me to or think there's a reason to that is.
 
-Thanks, I think this one is ready to be in 'next' and any further
-tweaks can be done incrementally.
+Thanks, both.  Let's merge this round to 'next'; it would be OK to
+do any further tweaks incrementally on top.
+
 
