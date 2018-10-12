@@ -2,129 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71AC11F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 13:52:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80E321F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 13:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728646AbeJLVYm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 17:24:42 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45158 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728354AbeJLVYm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 17:24:42 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q5-v6so13535971wrw.12
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 06:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NYja0fhTFHR55d0QgdX2EheFtjs0WeUtf1Ho6kzN0Gw=;
-        b=WptuUvt5Q3+OdE19s+Tftu4YK0YAWiqfrLFdftBfFeaXYWNSWfDEBeU4u/HBLchwd9
-         n0feLW8HxMjY4BRhFkw/KjfD4+uRYjbthv9c3r9Gyonp/QuiPnaM8Hpa4ffjIREx+Svb
-         +YkYs/2H8stPlmkJ6TGs7vKXXzv6zTUjUmCxofkR0FpnRzDTS3X1SoPym1fNJbPrf2Ny
-         OA2YTnMIDzpYtFR+MA6bhRe8orJSs2xhrW3Gf7mQuRsVaEj7s/0Z9QbT+6Biu1fu4QgU
-         Dha8wm1S9DuPI9AtOxwrObptI6iN3mcv9uwMs0q+57nNYz6DEmAdHgS4CXL9vpp/8bGV
-         bU8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=NYja0fhTFHR55d0QgdX2EheFtjs0WeUtf1Ho6kzN0Gw=;
-        b=Sg2WBEtXuTvVO0NzogwB8Ggw/yH9Nuf6FLCJADboyFY0rBmxeUYnBHa3AdKvYRzBh/
-         gz2CRxs29rt6zn60s82hmV8fM9oi5dxkHDJvjBhP+rX3AMbv9u/BMFvo8WII+NL90oYb
-         NCXLd67y1jd8QVAJE/6zkSN8y1Rasaaz1Zeo9k27khzgVPMz5WGAa1YRCuyPnVcrmonh
-         uGpMrYz1Y3GsyyhFs6JHAGG2F3y3siLjekKAVKTaQupHfThSTgk8jtf1fa2GPrHx0JFN
-         dpX2CvMxIU0MWOv7rRGzCKRDfJH381OHULQDK+ad9itZO8i0iqVjHWsLgUV/nRGnlu+M
-         Ouhw==
-X-Gm-Message-State: ABuFfoi/lzdkRQ3/ma4UhYvxbNY9F+ca3p1CJPJmDTwL9dlbxfbUQt+y
-        rPBSNTO+SQIqX9WL5weTyI0=
-X-Google-Smtp-Source: ACcGV60Yt/ndDfF94TmtEEiET8tl5NBR9zxamvvxJ43UiWBOqMB7A9hDSjU6xsUXzqjLoIwn/gn4bw==
-X-Received: by 2002:a05:6000:111:: with SMTP id o17mr5660294wrx.279.1539352327527;
-        Fri, 12 Oct 2018 06:52:07 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j46-v6sm1695571wre.91.2018.10.12.06.52.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Oct 2018 06:52:06 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Martin Koegler <martin.koegler@chello.at>
-Subject: Re: [PATCH] zlib.c: use size_t for size
-References: <xmqqsh1bbq36.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1810121150050.45@tvgsbejvaqbjf.bet>
-Date:   Fri, 12 Oct 2018 22:52:05 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1810121150050.45@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 12 Oct 2018 11:54:31 +0200 (DST)")
-Message-ID: <xmqqzhvj9ssa.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728734AbeJLVZI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 17:25:08 -0400
+Received: from esg260-1.itc.swri.org ([129.162.252.140]:58065 "EHLO
+        esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728354AbeJLVZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 17:25:07 -0400
+Received: from pps.reinject (esg260-1.itc.swri.edu [127.0.0.1])
+        by esg260-1.itc.swri.edu (8.16.0.22/8.16.0.22) with ESMTPS id w9CDqYN5044209
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 08:52:34 -0500
+Received: from esg260-1.itc.swri.edu (esg260-1.itc.swri.edu [127.0.0.1])
+        by pps.reinject (8.16.0.20/8.16.0.20) with SMTP id w9CDqYgC044203
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 08:52:34 -0500
+Received: from rlstrain.wireless.dyn.datasys.swri.edu (virtual-FW-D10.netmgmt.swri.edu [129.162.230.100])
+        by esg260-1.itc.swri.edu with ESMTP id w9CDqXxr044200;
+        Fri, 12 Oct 2018 08:52:33 -0500
+From:   Roger Strain <rstrain@swri.org>
+To:     git@vger.kernel.org
+Cc:     Roger Strain <rstrain@swri.org>
+Subject: [PATCH] subtree: performance improvement for finding unexpected parent commits
+Date:   Fri, 12 Oct 2018 08:52:18 -0500
+Message-Id: <20181012135218.14439-1-rstrain@swri.org>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-10-12_11:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
+ priorityscore=1501 malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1810120138
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+After testing a previous patch at larger scale, a performance issue was
+detected when using git show to locate parent revisions, with a single
+run of the git show command taking 2 seconds or longer in a complex repo.
+When the command is required tens or hundreds of times in a run of the
+script, the additional wait time is unaccepatable. Replacing the command
+with git rev-parse resulted in significantly increased performance, with
+the command in question returning instantly.
 
-> Hi Junio,
->
-> On Fri, 12 Oct 2018, Junio C Hamano wrote:
->
->> From: Martin Koegler <martin.koegler@chello.at>
->> Date: Thu, 10 Aug 2017 20:13:08 +0200
->> 
->> Signed-off-by: Martin Koegler <martin.koegler@chello.at>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->> 
->>  * I made minimal adjustments to make the change apply to today's
->>    codebase.  I still find some choices and mixing of off_t and
->>    size_t done by the patch a bit iffy, and some arith may need to
->>    become st_addX().  Extra set of eyes are very much appreciated.
->> 
->>  builtin/pack-objects.c | 10 +++++-----
->>  cache.h                | 10 +++++-----
->>  pack-check.c           |  6 +++---
->>  pack.h                 |  2 +-
->>  packfile.h             |  2 +-
->>  wrapper.c              |  8 ++++----
->>  zlib.c                 |  8 ++++----
->>  7 files changed, 23 insertions(+), 23 deletions(-)
->> 
->> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->> index e6316d294d..b9ca04eb8a 100644
->> --- a/builtin/pack-objects.c
->> +++ b/builtin/pack-objects.c
->> @@ -266,15 +266,15 @@ static void copy_pack_data(struct hashfile *f,
->>  		struct packed_git *p,
->>  		struct pack_window **w_curs,
->>  		off_t offset,
->> -		off_t len)
->> +		size_t len)
->>  {
->>  	unsigned char *in;
->> -	unsigned long avail;
->> +	size_t avail;
->>  
->>  	while (len) {
->>  		in = use_pack(p, w_curs, offset, &avail);
->>  		if (avail > len)
->
-> Do we have to be careful to handle sizeof(off_t) != sizeof(size_t) here? I
-> guess we would receive a compiler warning about different sizes in that
-> case, but it makes me worry.
+Signed-off-by: Roger Strain <rstrain@swri.org>
+Thanks-to: Junio C Hamano <gitster@pobox.com>
+---
+ contrib/subtree/git-subtree.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yup, you just said exactly the same thing as I already said in the
-part you quoted.  I still find the mixed use of off_t and size_t in
-this patch iffy, and that was the secondary reason why the patch was
-kept in the stalled state for so long.  The primary reason was that
-nobody tried to dust it off and reignite the topic so far---which I
-am trying to correct, but as I said, this is just minimally adjusted
-to today's codebase, without any attempt to improve relative to the
-original patch.
-
-I think we are in agreement in that this is not making things worse,
-as we are already in the mixed arith territory before this patch.
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 1c157dbd9..147201dc6 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -633,7 +633,7 @@ process_split_commit () {
+ 	else
+ 		# processing commit without normal parent information;
+ 		# fetch from repo
+-		parents=$(git show -s --pretty=%P "$rev")
++		parents=$(git rev-parse "$rev^@")
+ 		extracount=$(($extracount + 1))
+ 	fi
+ 
+-- 
+2.19.1
 
