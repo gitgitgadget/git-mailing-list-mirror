@@ -2,144 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D6981F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 09:26:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E411A1F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 09:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728088AbeJLQ6M (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 12:58:12 -0400
-Received: from mout.gmx.net ([212.227.17.22]:36109 "EHLO mout.gmx.net"
+        id S1728149AbeJLRIr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 13:08:47 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60299 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727808AbeJLQ6M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 12:58:12 -0400
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJGFi-1gDdnx3Qug-002svd; Fri, 12
- Oct 2018 11:26:32 +0200
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJGFi-1gDdnx3Qug-002svd; Fri, 12
- Oct 2018 11:26:32 +0200
-Date:   Fri, 12 Oct 2018 11:26:29 +0200 (DST)
+        id S1728104AbeJLRIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 13:08:47 -0400
+Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0La2Xx-1foAvK2o85-00ljAp; Fri, 12
+ Oct 2018 11:37:11 +0200
+Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0La2Xx-1foAvK2o85-00ljAp; Fri, 12
+ Oct 2018 11:37:11 +0200
+Date:   Fri, 12 Oct 2018 11:37:11 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Lucas De Marchi <lucas.demarchi@intel.com>
-cc:     lucas.de.marchi@gmail.com, avarab@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, sunshine@sunshineco.com, t.gummerer@gmail.com
-Subject: Re: [PATCH v2] range-diff: allow to diff files regardless
- submodule
-In-Reply-To: <20181011081750.24240-1-lucas.demarchi@intel.com>
-Message-ID: <nycvar.QRO.7.76.6.1810121124570.45@tvgsbejvaqbjf.bet>
-References: <CAKi4VAL+qSObOABeNHVXGytE9aB3sUJtecE5jYF6_ZfDA+J0ZQ@mail.gmail.com> <20181011081750.24240-1-lucas.demarchi@intel.com>
+To:     Stefan Beller <sbeller@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] diff.c: pass sign_index to emit_line_ws_markup
+In-Reply-To: <20181010232459.251289-1-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1810121136490.45@tvgsbejvaqbjf.bet>
+References: <20181010232459.251289-1-sbeller@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dNKEhO1v5rTgxPBtD6RV5wSn63O+I9PEBZq5d1pWp6z1KpEWNFi
- rze4gIIyv8V7oO3Y5Mtv6m+OQrzzi9WGK+8Zzd6L9sVQObwZ1Qwl7SG/I7bXHOO7Fc1HhVf
- /ZXYi2Yt5dS5dmE6cBBu3yRZxIrzfk/RvRq0yreso/h6VYWr9IDy7tVCudfgx0hDF6W4+Tr
- v9OCmWRSsdGYYsJ6YmGdw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sn31UobKvcU=:1UuJNJntGwsSnUYSNZxASv
- kVAN+1CxVnzzuNkH7GkFngUTHR01PjqRrKl5eg00kNf1D/3PP0Cie5jYRbxX/DWvOjqnv22wR
- 52QKE56TpFDfT323xXq6VjGuY3ARh2XrVQV9TJuucunZttfnNkU4HRs2jv7VSulRC4K09iga+
- FWnJ+1zGQ89ginKNmElY9fvnPqdPaAJaTiLQHR+h3XzI+aD/xuev/bA+u87EBEGgIfCS+0/c2
- yZk1YWvGnEUvlHBICRopw0dzYuVpU2QDOxAOKUBrArsRVH2lNoIZUkuIJsSYwGejzPhVpJJ8e
- QaTy4XoAGzdxYuntCg9wIlRayRD799IaYyENZFwL2KsSyYdcy4KAYpbXgRfCB+TRpN5w0qy7I
- Cmk1W5+y6T9eSpV0caBMKnYc/35oqTKMzL6GHl4n45PvuZkACX2hLsIKZcLrPdqYdKYT99Wve
- fvYnjDQNwUy9ClUVHxaUpboCJWOr8QRjNkqX3xV5seXZ9Iiv0uepohnPtruDj74DDEvpUAMWR
- RRBsSD7JuS4rLiI3P6I5HnUy55h20pzvN6jX9cF/p4OiXKzL/8bucfEjXjB5hfRyjfX7B2D2p
- meFkGDf0GuNalE705++AwiF4zQVPUumromE3KXvBKHNn9VDDQjfoDcjbOAZcNfswyNxz61Chr
- yEgHGcqMrFgYXwcWMIyz7jUvVNNJQ87ZYxvGYzuxexLwYDtSIvEra1DeMryRsoz+VVKXhW2Qi
- 4koKsNtFWEYssVI0EmmuxhoMCpq+so6UJdYQjEM6BQHMiuHBgGQrBFtcixV6BRs8lQ02wLUB3
- VPKifyyMXCmY75H8SBYtBbcB4yQsCxMFOxvAMvEeaqEavUxzFo=
+X-Provags-ID: V03:K1:IbdsHo9l20VQI1Ve46rt3lNV1Vbv3PqELDFmyEyEqa0CQcNOp4d
+ GSqf1Rj3WjUx+QQcf0TnuyWHl8XnqHMpJe8FsSOvdxRo77etRqeMUJammPN7uJMSeFymL6I
+ dCXBZpRD8ij33a0Os1Jh+nKY4O9PKGWgO3zIF8XhLikRef7YAt8jHYV8O0U85/D5fK4LQph
+ Avzk8Ztugc6RklqEuiOEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CgbK6SzANSs=:yXK8nRnupt+R1231GFM617
+ 5QpVQUCWWT75+ZONrzW8dEw+dXP9dmu+0k5eLWtPyjYRFSFd6Yq6u7+xuW51C5lJakRwIU83D
+ 3pRL+6frsvvLXmbbgQYv5H5M71xhctTkDKIBz9yJNL/AqWh8G/5UlgNPUlVFuiHXnb1xZXubB
+ sFA6J7U/NU6qys/q+xKqC+uLg5vyWdw7JWyN0WXCI/ZtAkvJCv80fkWF028n6SSveCwShY4jW
+ aKjoN34GglvUazZLwA1DEuSmtudruzjQWotFY6qJ5Kt+nVbHU3ohtT0gX1Qs5VC1bFkm5jq+1
+ inWn7VOVnoBQ6Vbg1U55HfbLnZESAoy6uPAPBmSqZLD/tfYc5hnJ3rrUrZQVEx/BmSWa1oQNh
+ sfjrMynOXk/Z6KoLOi1aPsuc3Til2Pq0MeYH983Y7mh6pgl15xvKJ+m3T8eSsXIdtz+9p1zaE
+ r8Roupumlv05GOKQSVdaiciepuS9Y23Gwfc/g1eqqW8buk3btQnJ1GwrT94Aq6wCc4mE4dCYt
+ +avHWWNxTwWhZem9FkxGSQcC8iNnWDJmhvY6v3vH5ZfOMJq4Lga7W8EruqMBmRTlzUR+CU6HR
+ UID9VGSRl1lwmOuO65DIJdd2TGLf9NPYSZWjU/T9nIgHvaHkK78x9dd2p9RkXhXNLNcegW4Hv
+ 7mSnQL43hxQIenjZANoZ167rE8vF7yWutzYCcbOiY58/I30IacJ1ARU+3H7gky1m4o0hVYSK7
+ WYcAFlCnXWC47TLE4T9L0aZGVlCZWw65a87wvxpknHl1LcXrTNuyT0S2pC9Fh9DlKOE7Ro/kV
+ ZWBjcXCENlu00Zcb53OQpME8eUvX0Xy/BoA95vwCOM4dnf6TrU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lucas,
+Hi Stefan,
 
-On Thu, 11 Oct 2018, Lucas De Marchi wrote:
+On Wed, 10 Oct 2018, Stefan Beller wrote:
 
-> Do like it's done in grep so mode doesn't end up as
-> 0160000, which means range-diff doesn't work if one has
-> "submodule.diff = log" in the configuration. Without this
-> while using range-diff I only get a
+> Instead of passing the sign directly to emit_line_ws_markup, pass only the
+> index to lookup the sign in diff_options->output_indicators.
 > 
->     Submodule a 0000000...0000000 (new submodule)
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 > 
-> instead of the diff between the revisions.
-> 
-> Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+> I still have this patch laying around, it simplifies the diff code
+> a tiny bit.
 
-Thank you for this contribution, which I am glad to ACK.
+And I still like it (obviously, was my idea :-))
 
-I am especially happy that you added a regression test so that we are
-confident not to break this again.
-
-Ciao,
+Thanks,
 Dscho
 
-> ---
->  range-diff.c          |  2 +-
->  t/t3206-range-diff.sh | 29 +++++++++++++++++++++++++++++
->  2 files changed, 30 insertions(+), 1 deletion(-)
 > 
-> diff --git a/range-diff.c b/range-diff.c
-> index 60edb2f518..bd8083f2d1 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -354,7 +354,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
+> Stefan
+> 
+>  diff.c | 12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
+> 
+> diff --git a/diff.c b/diff.c
+> index f0c7557b40..9e895f2191 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1202,10 +1202,11 @@ static void dim_moved_lines(struct diff_options *o)
+>  static void emit_line_ws_markup(struct diff_options *o,
+>  				const char *set_sign, const char *set,
+>  				const char *reset,
+> -				char sign, const char *line, int len,
+> +				int sign_index, const char *line, int len,
+>  				unsigned ws_rule, int blank_at_eof)
 >  {
->  	struct diff_filespec *spec = alloc_filespec(name);
+>  	const char *ws = NULL;
+> +	int sign = o->output_indicators[sign_index];
 >  
-> -	fill_filespec(spec, &null_oid, 0, 0644);
-> +	fill_filespec(spec, &null_oid, 0, 0100644);
->  	spec->data = (char *)p;
->  	spec->size = strlen(p);
->  	spec->should_munmap = 0;
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> index 045aca1c18..6aae364171 100755
-> --- a/t/t3206-range-diff.sh
-> +++ b/t/t3206-range-diff.sh
-> @@ -122,6 +122,35 @@ test_expect_success 'changed commit' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'changed commit with sm config' '
-> +	git range-diff --no-color --submodule=log topic...changed >actual &&
-> +	cat >expected <<-EOF &&
-> +	1:  4de457d = 1:  a4b3333 s/5/A/
-> +	2:  fccce22 = 2:  f51d370 s/4/A/
-> +	3:  147e64e ! 3:  0559556 s/11/B/
-> +	    @@ -10,7 +10,7 @@
-> +	      9
-> +	      10
-> +	     -11
-> +	    -+B
-> +	    ++BB
-> +	      12
-> +	      13
-> +	      14
-> +	4:  a63e992 ! 4:  d966c5c s/12/B/
-> +	    @@ -8,7 +8,7 @@
-> +	     @@
-> +	      9
-> +	      10
-> +	    - B
-> +	    + BB
-> +	     -12
-> +	     +B
-> +	      13
-> +	EOF
-> +	test_cmp expected actual
-> +'
-> +
->  test_expect_success 'no commits on one side' '
->  	git commit --amend -m "new message" &&
->  	git range-diff master HEAD@{1} HEAD
+>  	if (o->ws_error_highlight & ws_rule) {
+>  		ws = diff_get_color_opt(o, DIFF_WHITESPACE);
+> @@ -1285,8 +1286,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  				set = diff_get_color_opt(o, DIFF_FILE_OLD);
+>  		}
+>  		emit_line_ws_markup(o, set_sign, set, reset,
+> -				    o->output_indicators[OUTPUT_INDICATOR_CONTEXT],
+> -				    line, len,
+> +				    OUTPUT_INDICATOR_CONTEXT, line, len,
+>  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
+>  		break;
+>  	case DIFF_SYMBOL_PLUS:
+> @@ -1330,8 +1330,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
+>  		}
+>  		emit_line_ws_markup(o, set_sign, set, reset,
+> -				    o->output_indicators[OUTPUT_INDICATOR_NEW],
+> -				    line, len,
+> +				    OUTPUT_INDICATOR_NEW, line, len,
+>  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
+>  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
+>  		break;
+> @@ -1375,8 +1374,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
+>  		}
+>  		emit_line_ws_markup(o, set_sign, set, reset,
+> -				    o->output_indicators[OUTPUT_INDICATOR_OLD],
+> -				    line, len,
+> +				    OUTPUT_INDICATOR_OLD, line, len,
+>  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+>  		break;
+>  	case DIFF_SYMBOL_WORDS_PORCELAIN:
 > -- 
-> 2.19.1.1.g8c3cf03f71
+> 2.19.0
 > 
 > 
