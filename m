@@ -7,85 +7,127 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A64E1F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 07:59:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EFA41F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 08:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727791AbeJLPbI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 11:31:08 -0400
-Received: from mout.gmx.net ([212.227.15.19]:42261 "EHLO mout.gmx.net"
+        id S1727529AbeJLPjb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 11:39:31 -0400
+Received: from mout.gmx.net ([212.227.17.20]:41287 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727434AbeJLPbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 11:31:08 -0400
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbMmA-1fnPVF0JYY-00kujI; Fri, 12
- Oct 2018 09:59:51 +0200
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbMmA-1fnPVF0JYY-00kujI; Fri, 12
- Oct 2018 09:59:51 +0200
-Date:   Fri, 12 Oct 2018 09:59:51 +0200 (DST)
+        id S1726761AbeJLPjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 11:39:31 -0400
+Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxu7U-1fYSiW0E32-015JgJ; Fri, 12
+ Oct 2018 10:08:12 +0200
+Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxu7U-1fYSiW0E32-015JgJ; Fri, 12
+ Oct 2018 10:08:12 +0200
+Date:   Fri, 12 Oct 2018 10:08:12 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3 0/1] Teach the builtin rebase about the builtin
- interactive rebase
-In-Reply-To: <xmqqy3bavdmk.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810120957480.45@tvgsbejvaqbjf.bet>
-References: <pull.23.v2.git.gitgitgadget@gmail.com>        <pull.23.v3.git.gitgitgadget@gmail.com> <xmqqy3bavdmk.fsf@gitster-ct.c.googlers.com>
+cc:     Christian Hesse <list@eworm.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Hesse <mail@eworm.de>
+Subject: Re: [PATCH 1/1] subtree: add build targets 'man' and 'html'
+In-Reply-To: <xmqqmurmmt9j.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810121006180.45@tvgsbejvaqbjf.bet>
+References: <20181007073036.30643-1-list@eworm.de> <xmqqmurmmt9j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mYgMsEDflwNkjtcboFAk+LT+UHOWlRwvDJOZlMz7S+6vdM1GCwz
- O8HXV8CeldrRv2FxDZyvkaKdSfjCZJugeEnUWJyQCbmX0U2MHQ6xBS2WcGqrRKXH3mUAMZR
- KdWuzEV0qRyqkU3IeuTblrdTUeyZcQQfRvBRrrlqhvLy3Cf1E0Mkmr+0owugB1Fwqb7jzdm
- 9H7P7zqsCj4k09G2LB1Kw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BN6H7Dw0TJA=:HBRPnCi/gGNo/fGEM8uffq
- rkRGQqb7cPeq1Q/npThmdruHxIS9XSAbtiIzBHd/XfSi5crY5fuvEcuCnaDzt50rwJtXlwd44
- uudiX3aFKGMuGQ42jvf2jdmw1YATljCuciIFyuZiI1Erp9Dovh2OrL04CVEYNYkSnX1LPXi13
- EJZ1WobNAyak6GwNoi8rE0au97ZR6WVtrwNWkFNBW6HFvn7MuqGZVy4Pq3HTrjq3lHcSFk0oN
- MIOswHCBsw7Nv2fXQX31Bwe7/nzSU5A19p2g1R2AAueb0Ln+zgMoVcQySyZY8GjDeIHcE1AFz
- y7cfHRMToWHrORZtBHv7zA3KuqCTqduaSSrRwtN5YLF7If2csCDNWipN73NlzuGyXJ08wfuWb
- JUMT/+Pqq2w8FL8RziLRZbIff6mgNh5S7ve/eFKGlWUF6Ii+osW+zcEguYHPkFQe4WMGrNj5H
- AtVkaAvMJLr/w9omNz1eH1ueiOYEVyhdkLr+EPQ+1nrsb72nXd7aMqR2nvMjiN1h2mvk9jr/V
- KQw2yTLmJmO/4++/LfCjUwjGd4ZEcsmT+9WMYMbYi77bS63bdnN9+yBUGZ8RIxIKRy2ZbCYc4
- k9QC/kMMClTymYJwkT+o74SJMkbbT2dAxjf/l0egzmki0m/EmIP9VFJgCf2bPP/506KGhU+jU
- bqaAVTGRiYnmRx36tbrMewO4hwHaC5o7S1hx917jbSqJeeAl14VApV2BHQ6WGxjId630eoXy7
- IaUogE2xfe+rtHDRTII7uBqS2/sS/czpby3RKymbhh0yF/5ZR0dkpCEOTWLDAnBX40epah6C2
- iJfPn8nqhC7YrOVsIYdkQq/K6qdryWyaDx0nyjtDNyj8Gp8FX8=
+Content-Type: multipart/mixed; boundary="8323328-972809272-1539331693=:45"
+X-Provags-ID: V03:K1:dGc6AnyMfQ7ahGJcLcdMub1i+/a0gQrQGjhfqZcVFfP7o+o5F+k
+ KcDGIqOpBR38pII934OxYOf5//p75qq9N4CsIpDI8sEDnUrCsW2P4J9f+tE4fYWFSWJ0N5+
+ 2kuz0Qkg3IEqX17htOd9MRPdoKY2tXMCakU5CR04O5CO5VLdvBfYGn9gMZwqYh3P1BURc5d
+ MEznuZ16+dbJw5rBwGhIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZGMbxkjZFs0=:hsB4fopfiT3pfVq33AMe+s
+ tgwHCZlMnIMgSZJb0pEP/s/D7rxVpC1dVbKW+Y10vISodoaMs+N+LiFxW3J2DtHorQ7bgG+mk
+ ioroQpEcgu6v7elhwMiKWAYpV4qsNuZmedAmrbAFxqVa5/ZBHCeKBU8sy3jQpezH+Gibzkb+7
+ NgCvoi4cfEq6E5FM1YY5TCUq/kw8CFTZOEF19MkKNZ6ZKTqUYEyi0CsnvBznd9AphF8O3i/81
+ D7GnHNUU6cN+5D33NVpyEKJB8h2KtgLwlpDm9wLuEvCb1aw86I2Q41x/6RDZBcc15wwX6DVa2
+ TuaD/4uMomYheE+TvqAB6aNVBCcq6hh5HAR52KQgSbDRo7FgN1dLxTfAf0S0hEB8JcNkTJdDV
+ 4rvMbWj4Hv36xkzwvVyVqdwcavLFJaKk4hoAkp4f+AQ0hvFMNRjMwZRQlycUXkYbB9rmph4MM
+ w6Pc8x5Nr9Yv29dxULMUoNviG5RI1eXhsR0xRk+tlcT/oyINpwGEKuV5pBYOi4jMKOgkY7DDH
+ NBwWRrfqo97FLGDSGqsbjBj24YAEGTsTlz8+uck+YCL9Wt0D1z65LF7kxtpevqCbxTBpkX+lj
+ g8PdXj74fyVMJk9POIuP5XE6LzOVY4BNRprnnP7uN+4GJbyLSj1DKZAUyHqMYhKHX+cVtBtgj
+ BfrSEe/ySkkXDjW39/VNV3cafL4Qln6OfBuh/rmUwd3gPWMqqWtjVitIPjMgfcEQJ+d9vgmi1
+ Wny6JFXZb8Z5Gf4kZyOkKPOsGz929JfaRhUT1a+wbj0WKBaFgd0jLU/8xndbmoOBYrs4PxMBT
+ 1VAZnVQW47DwqmEPSdcPHpG1tvUqxOYx/B9/UupCOnRdIONChY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sun, 7 Oct 2018, Junio C Hamano wrote:
+--8323328-972809272-1539331693=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+
+
+On Wed, 10 Oct 2018, Junio C Hamano wrote:
+
+> Christian Hesse <list@eworm.de> writes:
 > 
-> > Note: while this patch targets pk/rebase-in-c-6-final, it will not work
-> > correctly without ag/rebase-i-in-c. So my suggestion is to rewrite the 
-> > pk/rebas-in-c-6-final branch by first merging ag/rebase-i-in-c, then
-> > applying this here patch, and only then cherry-pick "rebase: default to
-> > using the builtin rebase".
+> > From: Christian Hesse <mail@eworm.de>
+> >
+> > We have targets 'install-man' and 'install-html', let's add build
+> > targets as well.
+> >   ...
+> > +man: $(GIT_SUBTREE_DOC)
+> > +
+> > +html: $(GIT_SUBTREE_HTML)
+> > +
 > 
-> Is this a stale comment in the context of v3, where we pretty much
-> know how the resulting topic should intertwine with other topics?  I
-> am trying to see if I have do to anything differently this time, or
-> just replacing the single commit while keeping the structure around
-> that commit the same is fine.
+> As 'contrib' material without real maintenance, I do not care too
+> deeply, but shouldn't this change be more like this to avoid
+> duplicating the list of targets?
 
-Just replacing the single commit. For technical reasons, I still have to
-target pk/rebase-in-c-6-final in my branch.
-
-> Also, I see there is a new iteration v8 of ag/rebase-i-in-c on the
-> list, sent on Sep 27th (you were CC'ed but I suspect it was before
-> you came back).  Are you happy with that update?
-
-To be quite honest, I did not yet have time to look over it, but I
-verified that it has my suggested fix for the -S option.
+Ævar mentioned that he'd like this to graduate from contrib into core, and
+I had briefly looked at making subtree a built-in to that end. IOW please
+do not get too used to subtree being in contrib.
 
 Ciao,
 Dscho
+
+> 
+> 
+> diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
+> index 5c6cc4ab2c..4a10a020a0 100644
+> --- a/contrib/subtree/Makefile
+> +++ b/contrib/subtree/Makefile
+> @@ -59,17 +59,21 @@ $(GIT_SUBTREE): $(GIT_SUBTREE_SH)
+>  
+>  doc: $(GIT_SUBTREE_DOC) $(GIT_SUBTREE_HTML)
+>  
+> +man: $(GIT_SUBTREE_DOC)
+> +
+> +html: $(GIT_SUBTREE_HTML)
+> +
+>  install: $(GIT_SUBTREE)
+>  	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+>  	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(gitexecdir)
+>  
+>  install-doc: install-man install-html
+>  
+> -install-man: $(GIT_SUBTREE_DOC)
+> +install-man: man
+>  	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
+>  	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
+>  
+> -install-html: $(GIT_SUBTREE_HTML)
+> +install-html: html
+>  	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
+>  	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
+>  
+> @@ -94,4 +98,4 @@ clean:
+>  	$(RM) $(GIT_SUBTREE)
+>  	$(RM) *.xml *.html *.1
+>  
+> -.PHONY: FORCE
+> +.PHONY: FORCE man html install-man install-html
+> 
+> 
+--8323328-972809272-1539331693=:45--
