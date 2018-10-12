@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBDA31F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 20:02:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730151F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 20:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbeJMDg1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 23:36:27 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:36428 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726525AbeJMDg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 23:36:27 -0400
-Received: by mail-qk1-f202.google.com with SMTP id r77-v6so12931577qke.3
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 13:02:19 -0700 (PDT)
+        id S1726854AbeJMDgf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 23:36:35 -0400
+Received: from mail-io1-f73.google.com ([209.85.166.73]:37473 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbeJMDgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 23:36:35 -0400
+Received: by mail-io1-f73.google.com with SMTP id t4-v6so1456303iof.4
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 13:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=xGB3iaG24ENYmribhvhEyA7K13f6XdqGs4LVyw71YAg=;
-        b=OIpwEkk7kwtZNy9R/0iKeb5avz5qQ4M15KWui5vtz8pdB/H7RH4rDMI3khbjqav7y6
-         DTvCXjKaKU2UZyCdFNF7pg2tSllhPJpsv+Af0VM8Iw/TqcpcDArliHgLdN0JSn7b07zJ
-         sJCMtY0FQ5IyTsYoAYFLhCoW0DAjzKbmLfqY5MO1TZ+3AvM08P8pMD6gYpWwguTyfbSO
-         Fo6zKbScLrtNs2ZxOZiBP2AFWQ9Ex+mlhdzP5rlZAPs/C46kMeHl1HobjRRQSFjriYeU
-         CdkXdWYOVtQa4l1krMskP/49iezFegKW/IrEHzNejyjOP8sXy79vBodXOXGC0tTaggx7
-         nuEQ==
+        bh=X8etmNkm5cahn3Xe4oNKVyMsNgBR7cAD6/dP6b1S2is=;
+        b=qEN3ACQKJPcbkAb+a15FxybPbjd1VIqTBDO2m71qpgxZpsqgdtKsUWxj8SzggnuMpo
+         2dFIKNNuXJfDnFPA7prWNaHiF/1YLzcKqdt9coGerkym9ZpMIFy1D+is+zaNjRhBqZtg
+         amDYMLwCduuIIf6bLgrgMtZFXGSN2p7ny5hB9F/M613f845gm3xs8yzFn3EMq49kkurh
+         ax/AO4/+HYLEZTWzw5JL6Is53RvIR61qheDJ2Ik6KnWzq5yEpjL1Tw4fFllEigJ01QKz
+         XyZ8B6tWeSvfwtvcnp78XYcuqI5HAsVMD+ALHo7MPURatwqpAwOFpS/CuLlh2knE9ZwE
+         vQXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=xGB3iaG24ENYmribhvhEyA7K13f6XdqGs4LVyw71YAg=;
-        b=NMP1tH5+9/Q6uF9CcXEJbnJoBrcWSndOXNRzMdA/ipBqHIHejzdV7Be8U/ZPRHOoaw
-         5/ZYVifrKTsIE5Hh2LQ4+K7KlofQ4NPcLevoB0p9a6CtAmnOr+Z+ZfeUXXLv4Ne2uiq/
-         no2aTmqQ1eOcr8JQ8qD06xhjbYtAz9FtJMmmqZTLrzHmrdWRm+kZLdMfdCDY98cWqHNo
-         2BPR6RRXCSCItKUAOlnKkNtvXq9eFEvrb4I7+D38v7n04DJDAQFfWgLWD3O9JtPjY5EG
-         A7cNbyK5GHBUrvJmBLXb7zTj/Pr95bJgC/5rkjqkOD1tqp9xWmpDiPY7F4NLM+OBsMF1
-         vyYg==
-X-Gm-Message-State: ABuFfoimpaOc4awMnfK5hdXjUpfUN3P+DeSSKXxsHyqjKI8FLYKobQDg
-        b+VcMOQUVHEat7LKoI92dwmwlwiZuJXgY2eGJvmY5DsIqLb+J+f/f8yLL1rbu+5Q0qV4VBQsJTD
-        T5L0b8FyGIbEvT0CkgG48BIhDMvvMWLIcdXTQGDcKprQn6uwvxFaowj2hJvU=
-X-Google-Smtp-Source: ACcGV63y6N/W/ApdWgxR1lTEIXsPVpd3J2wuD/i/H9q5yPI4fvRcWg0obFe1zyu0hut5JaWfNWcSf3Tn9Jz6
-X-Received: by 2002:ac8:7108:: with SMTP id z8-v6mr6285562qto.56.1539374539256;
- Fri, 12 Oct 2018 13:02:19 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 13:01:43 -0700
+        bh=X8etmNkm5cahn3Xe4oNKVyMsNgBR7cAD6/dP6b1S2is=;
+        b=AJddb/4Ao5rWjrVNXO9dSsLv+GKZvBlJSwCXDcxjko3odnW4YKrOxkyYr8vjzNzIlr
+         4mWDwy13sYGf1YgsjoiaSWDaaOBuLpzLS6UdM2xX0kzJkReqNFRT2ImdRN3SQZEyJgMs
+         nvWdR61PQbIX8ZmrtMx4SQUAFuobtAnvjFReLjmy71kGs6Tqwq66AGKyMSoE52J27ZAB
+         qM1wWRtOpzbtJ58R40DHH6lnpPEqyX4JKk39boDErd6dveThZC1gqEjJv2uY+ckjn3rq
+         dEmleKGRsDScP8I4FO42WBnbmsiJR5lePhNWh+D5w4BJL169l3vRBRr1TR/8ye5AQ8vQ
+         VQxw==
+X-Gm-Message-State: ABuFfojDUjuAW2qz8YeEkbyvrN1LY22aSG8eb8EQmIuxkmZsdQ24mE1D
+        oEP6RVr/7sMzkXSV8C+5a8YEbon19TI2zmUxMMF2inY0WiFfL0csR+ezCajfyjOI40fjzycLDHi
+        HMXwkzrx8f8/g0U26r36SqhZey/DBXL5Bv6duy+1GP7tUGqxJQ3qE2hooBPg=
+X-Google-Smtp-Source: ACcGV63potSKCAVK1kfnLl0vHdhdspC1oGlNf0wDefwd10X1W+zz7eOt5IP6hTe7TmzMksm9hgEprcZye3hZ
+X-Received: by 2002:a24:2153:: with SMTP id e80-v6mr6223991ita.1.1539374547648;
+ Fri, 12 Oct 2018 13:02:27 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 13:01:44 -0700
 In-Reply-To: <cover.1539373969.git.matvore@google.com>
-Message-Id: <42ad5623bab52b8207831eab4a4f27e47a318e36.1539373969.git.matvore@google.com>
+Message-Id: <0d1285a0ec412846e5417ec524a866f6b2c39d82.1539373969.git.matvore@google.com>
 Mime-Version: 1.0
 References: <cover.1533854545.git.matvore@google.com> <cover.1539373969.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.1.331.ge82ca0e54c-goog
-Subject: [PATCH v12 2/8] list-objects: refactor to process_tree_contents
+Subject: [PATCH v12 3/8] list-objects: always parse trees gently
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, sbeller@google.com,
@@ -65,118 +65,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will be used in a follow-up patch to reduce indentation needed when
-invoking the logic conditionally. i.e. rather than:
-
-if (foo) {
-	while (...) {
-		/* this is very indented */
-	}
-}
-
-we will have:
-
-if (foo)
-	process_tree_contents(...);
+If parsing fails when revs->ignore_missing_links and
+revs->exclude_promisor_objects are both false, we print the OID anyway
+in the die("bad tree object...") call, so any message printed by
+parse_tree_gently() is superfluous.
 
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- list-objects.c | 68 ++++++++++++++++++++++++++++++--------------------
- 1 file changed, 41 insertions(+), 27 deletions(-)
+ list-objects.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/list-objects.c b/list-objects.c
-index 584518a3f..ccc529e5e 100644
+index ccc529e5e..f9b51db7a 100644
 --- a/list-objects.c
 +++ b/list-objects.c
-@@ -94,6 +94,46 @@ static void process_gitlink(struct traversal_context *ctx,
- 	/* Nothing to do */
- }
- 
-+static void process_tree(struct traversal_context *ctx,
-+			 struct tree *tree,
-+			 struct strbuf *base,
-+			 const char *name);
-+
-+static void process_tree_contents(struct traversal_context *ctx,
-+				  struct tree *tree,
-+				  struct strbuf *base)
-+{
-+	struct tree_desc desc;
-+	struct name_entry entry;
-+	enum interesting match = ctx->revs->diffopt.pathspec.nr == 0 ?
-+		all_entries_interesting : entry_not_interesting;
-+
-+	init_tree_desc(&desc, tree->buffer, tree->size);
-+
-+	while (tree_entry(&desc, &entry)) {
-+		if (match != all_entries_interesting) {
-+			match = tree_entry_interesting(&entry, base, 0,
-+						       &ctx->revs->diffopt.pathspec);
-+			if (match == all_entries_not_interesting)
-+				break;
-+			if (match == entry_not_interesting)
-+				continue;
-+		}
-+
-+		if (S_ISDIR(entry.mode))
-+			process_tree(ctx,
-+				     lookup_tree(the_repository, entry.oid),
-+				     base, entry.path);
-+		else if (S_ISGITLINK(entry.mode))
-+			process_gitlink(ctx, entry.oid->hash,
-+					base, entry.path);
-+		else
-+			process_blob(ctx,
-+				     lookup_blob(the_repository, entry.oid),
-+				     base, entry.path);
-+	}
-+}
-+
- static void process_tree(struct traversal_context *ctx,
- 			 struct tree *tree,
- 			 struct strbuf *base,
-@@ -101,10 +141,6 @@ static void process_tree(struct traversal_context *ctx,
- {
- 	struct object *obj = &tree->object;
+@@ -143,8 +143,6 @@ static void process_tree(struct traversal_context *ctx,
  	struct rev_info *revs = ctx->revs;
--	struct tree_desc desc;
--	struct name_entry entry;
--	enum interesting match = revs->diffopt.pathspec.nr == 0 ?
--		all_entries_interesting: entry_not_interesting;
  	int baselen = base->len;
  	enum list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_DO_SHOW;
- 	int gently = revs->ignore_missing_links ||
-@@ -144,29 +180,7 @@ static void process_tree(struct traversal_context *ctx,
- 	if (base->len)
- 		strbuf_addch(base, '/');
+-	int gently = revs->ignore_missing_links ||
+-		     revs->exclude_promisor_objects;
  
--	init_tree_desc(&desc, tree->buffer, tree->size);
--
--	while (tree_entry(&desc, &entry)) {
--		if (match != all_entries_interesting) {
--			match = tree_entry_interesting(&entry, base, 0,
--						       &revs->diffopt.pathspec);
--			if (match == all_entries_not_interesting)
--				break;
--			if (match == entry_not_interesting)
--				continue;
--		}
--
--		if (S_ISDIR(entry.mode))
--			process_tree(ctx,
--				     lookup_tree(the_repository, entry.oid),
--				     base, entry.path);
--		else if (S_ISGITLINK(entry.mode))
--			process_gitlink(ctx, entry.oid->hash, base, entry.path);
--		else
--			process_blob(ctx,
--				     lookup_blob(the_repository, entry.oid),
--				     base, entry.path);
--	}
-+	process_tree_contents(ctx, tree, base);
+ 	if (!revs->tree_objects)
+ 		return;
+@@ -152,7 +150,7 @@ static void process_tree(struct traversal_context *ctx,
+ 		die("bad tree object");
+ 	if (obj->flags & (UNINTERESTING | SEEN))
+ 		return;
+-	if (parse_tree_gently(tree, gently) < 0) {
++	if (parse_tree_gently(tree, 1) < 0) {
+ 		if (revs->ignore_missing_links)
+ 			return;
  
- 	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn) {
- 		r = ctx->filter_fn(LOFS_END_TREE, obj,
 -- 
 2.19.1.331.ge82ca0e54c-goog
 
