@@ -2,63 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEDD31F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 16:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95C341F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 16:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728744AbeJLXsk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 19:48:40 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:64732 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728735AbeJLXsk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 19:48:40 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42WtGj0hknz5tld;
-        Fri, 12 Oct 2018 18:15:25 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 54B2241A8;
-        Fri, 12 Oct 2018 18:15:24 +0200 (CEST)
-Subject: Re: [PATCH v3 4/7] revision.c: begin refactoring --topo-order logic
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.25.v2.git.gitgitgadget@gmail.com>
- <pull.25.v3.git.gitgitgadget@gmail.com>
- <fd1a0ab7cdaa06fd99f86fec51b483238f588296.1537551564.git.gitgitgadget@gmail.com>
- <xmqqwoqnbrmw.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <fa365691-e8ae-4aa8-5c76-b5c8c925c2f8@kdbg.org>
-Date:   Fri, 12 Oct 2018 18:15:24 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1728751AbeJLX42 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 19:56:28 -0400
+Received: from mail-it1-f180.google.com ([209.85.166.180]:36956 "EHLO
+        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728424AbeJLX42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 19:56:28 -0400
+Received: by mail-it1-f180.google.com with SMTP id e74-v6so18980521ita.2
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 09:23:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sYH6vQ9cWwrgt+DhCpIpyh58uu2BIYRxO/HbbJyw95c=;
+        b=qlDj5WA4FX5d3q841xKYDI4j/F5AgsR4kSaqDstr7ROywnSR3szaCvtVY9NsKtxiMZ
+         L7rEbGl+E5hDB3zGMRzr/nEFPfV+Ou64DbZ4ENDGHZfi9B612YqVa9aAJSxwrS/A8GyD
+         QALExaoppV3m4oe/tNIciSHq9hFFUuvMGQ2FLmB57i2bi7xMLiUDTTwImX1I3s6Z02t3
+         DwC+nsfmEMtG0z/n/cAPvdeVWXageatKqxZ0IXJy38DHquXQFgrm1IhlNWj2ESs5Ynu2
+         HlPdNSE7HjviD1ZSZlznYpveCDoTrmUTDzVgDDnngox+nQDVA4p+KI84+CpqclOGiKbL
+         Idiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sYH6vQ9cWwrgt+DhCpIpyh58uu2BIYRxO/HbbJyw95c=;
+        b=Ha1hmP5mWRDMsdGgMmGJEvAjmdINOiF6YeyaiS7wLgnro2+ZYj1DLaqwvnzif8TGJA
+         zAa1GwTLOdPSZiJtYdRgV83AM4+cKjXFHEutFvQFgrPgNANUB3nK0hQ8oyK8b7fxce8J
+         5k5E6bLQeYosuFz/SN4aLNN0XseYM+c1z2pg7pki8uggfvbVeUZqPyB906REkJ7OdPJX
+         HYGSmUzmK/GTAOXku8z4TR+UOXTFrw2ps5RZRgewbDaySF4yjXUHaxz7UXgDzW+KSIPo
+         bpvmDLH1wyTC1sV/cHv0IVOVJZcUFsKg17C455OpqHKW6iyl8+JFgArdGcZpIUybGAiF
+         m0gQ==
+X-Gm-Message-State: ABuFfoi0bZk5mS1yXNVQIA9oAgHV8FxjbDpln8GA4eXksEW0Ftjyfe4G
+        E+98B+legpG0qoCMlpZUti/GbtN+1qrWvhxluTTlog==
+X-Google-Smtp-Source: ACcGV60xWIaxEqMpuGsnhncHmTZxF7gmuRQwDWe6PKZdZcgoLquxbst10XtJaO7D4gih13aiLpUV/FLneHYj3rH22kY=
+X-Received: by 2002:a02:31d:: with SMTP id y29-v6mr5461689jad.98.1539361392643;
+ Fri, 12 Oct 2018 09:23:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqwoqnbrmw.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Farhan Khan <khanzf@gmail.com>
+Date:   Fri, 12 Oct 2018 12:22:19 -0400
+Message-ID: <CAFd4kYCTuLMZ6UDk49MASbZfhwjgUcmfeyd6jZS5QO9-LnzLCw@mail.gmail.com>
+Subject: Does git load index file into memory?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.10.18 um 08:33 schrieb Junio C Hamano:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> +struct topo_walk_info {};
->> +
->> +static void init_topo_walk(struct rev_info *revs)
->> +{
->> +	struct topo_walk_info *info;
->> +	revs->topo_walk_info = xmalloc(sizeof(struct topo_walk_info));
->> +	info = revs->topo_walk_info;
->> +	memset(info, 0, sizeof(struct topo_walk_info));
-> 
-> There is no member in the struct at this point.  Are we sure this is
-> safe?  Just being curious.
+Hi all,
 
-sizeof cannot return 0. sizeof(struct topo_walk_info) will be 1 here.
+Does git load the entire index file into memory when it wants to
+edit/view it? I ask because I wonder if this can become a problem with
+the index file becomes arbitrarily large, like for the Linux kernel.
 
--- Hannes
+Thanks,
+--
+Farhan Khan
+PGP Fingerprint: B28D 2726 E2BC A97E 3854 5ABE 9A9F 00BC D525 16EE
