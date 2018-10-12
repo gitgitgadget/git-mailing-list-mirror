@@ -2,99 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EA811F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 08:36:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2D391F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 08:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727808AbeJLQIO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 12:08:14 -0400
-Received: from mout.gmx.net ([212.227.17.22]:43243 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727370AbeJLQIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 12:08:14 -0400
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M93Jp-1gNHPO3sA1-00CO3v; Fri, 12
- Oct 2018 10:36:48 +0200
-Received: from DESKTOP-QUA364F ([89.204.153.145]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M93Jp-1gNHPO3sA1-00CO3v; Fri, 12
- Oct 2018 10:36:48 +0200
-Date:   Fri, 12 Oct 2018 10:36:46 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 1/2] rebase -i: clarify what happens on a failed
- `exec`
-In-Reply-To: <xmqqva68gaqz.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810121036090.45@tvgsbejvaqbjf.bet>
-References: <pull.43.git.gitgitgadget@gmail.com> <pull.43.v2.git.gitgitgadget@gmail.com> <2eefdb4874d36f14aac79b24c0f6216911f2143e.1539161632.git.gitgitgadget@gmail.com> <CAPig+cRMOOqGdiCqprUqiSXCa5SZDRy-kJSvdRmwY_uvynwoXQ@mail.gmail.com>
- <xmqqva68gaqz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727992AbeJLQNY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 12:13:24 -0400
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:51442 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727983AbeJLQNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 12:13:23 -0400
+Received: by mail-wm1-f54.google.com with SMTP id 143-v6so11429968wmf.1
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 01:42:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=U8irCWCx0PUaoK0y+y+0Gm+x+d7l1dkPkZLYD3tK5LY=;
+        b=NYEqbV38HC9lyD2CBuRvSk73/ZfAfLm6Zmn3zEaT2A4+w5RDW9neK7IHiO6uZjc0d4
+         4UkjyFwBAyhp5acPm8zQUkikN44DI3nxcEDlMKtMV/Uzlf6eu+ZDDImsolSgFD3RKmex
+         DHcLj8ytmy1VLYJvppz9aPRV1IjbZj01TxvOcDiY0hri1YrS4COUd7gMmn2ObHN8DMXV
+         Nl4OOZzy/xm6YWB+ZukWfbQKkcK2dWso89nyeb8Y8cdjEd4EhQ3u+0EhcVW6l5mJiWPB
+         YmU+/QzxizkdB1pEaSlRvrisu4s0y+WKBV38tHxHWcO4XYPANRBoAPPFZ0IYoWIAKjZt
+         Q8pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=U8irCWCx0PUaoK0y+y+0Gm+x+d7l1dkPkZLYD3tK5LY=;
+        b=RNrCQn6bq38DJgDVT8Z/eVRGCns+mPbzZ1qg11nYh7LhYf+79Gb1YqdRev90pE4vXk
+         O3xv+fwk4w/k9Uo3NPSizsSJukdwyG7pFOAsUH/ma+m0ZSB9+Z6rG5SQQzLgJWytg9YF
+         02c53XVH0tliZn/UFbhyoWaKAug0M7YXqwWxr66CGZtjySlpU8JOL7am+pDKqHAnYy+E
+         3rBoY3oEtzCWZokEavyyF/9v9qSiKWS4+HxV7k7VhT6Dea1eUC3FmcfKkSq+Ss1SkFaz
+         u73Mn4Sr2GnWd+uK0Jxr+XhX6V/n/FnVNamzk3kaqbpKp03MnW5ciT0fqcWNQOQbaZ2I
+         D9wA==
+X-Gm-Message-State: ABuFfognYBvotnnrclGSJqtI0V70Zyg5y39RM5T/bcNE9CkAzpt9zQJe
+        CC9SmjrHWKx3K7fDOlI2s/Q=
+X-Google-Smtp-Source: ACcGV60QI7LyLh4EvY3uEk1Aeg9X/GN8ccSuZg9ZHPxpg8G0hI17KNAX+zsLxXnULQvJ39SCCNTJDw==
+X-Received: by 2002:a1c:c2c3:: with SMTP id s186-v6mr4458389wmf.16.1539333720081;
+        Fri, 12 Oct 2018 01:42:00 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y65-v6sm570310wmg.40.2018.10.12.01.41.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 12 Oct 2018 01:41:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Ananya Krishna Maram <ananyakittu1997@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] [Outreachy] git/userdiff.c fix regex pattern error
+References: <20181004113015.GA30901@manohar-ssh>
+        <nycvar.QRO.7.76.6.1810041624290.73@tvgsbejvaqbjf.bet>
+        <CA+=o6KFN-p901GiJzj5BquU2RKCVTOKarGpjjuqsASN_uqGZSQ@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1810041718480.73@tvgsbejvaqbjf.bet>
+        <CA+=o6KHxwYdYsvFDzBaG1q2jvgtN5f4LruD5k=dqei8workWfQ@mail.gmail.com>
+        <xmqq7eiuwsm7.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1810120955090.45@tvgsbejvaqbjf.bet>
+Date:   Fri, 12 Oct 2018 17:41:58 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1810120955090.45@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 12 Oct 2018 09:57:25 +0200 (DST)")
+Message-ID: <xmqqftxbblpl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:f+ZnRAfUn2rs+BzVTFTYGrhne0HfnoySxz/UDBW6CoYhVe0amEK
- EMVGwFYb3OorRCnDVK+oKD5qlSOFXEiN/RBZ0pCITxRMcFdqwqByva8I3Imx/pK0RiXkePp
- MaBJvYlNkMcV0E2HQXmmozuAyTlC+SjdqUbm6zaWkcWOjvjeFnl6NOAzieDrYRbc0U4huh6
- Eb59mFJUNRfROaAAz2sZw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7QoLz8POU9g=:3Q4aJQsFamvgjkohkIOe0x
- 2/mojFNfhgu4swIkcVhMZSzhp4LabwyDBWHZ6W2Yp6WsjoWTPzXPQ1FxdNQZiSb80mTxPQBpd
- N8l4hTxOaP9fqCLjUb9r6kaRuUSvW2eg5OvW25L7BdV0WVD9t9aW/9aKnkmObfsXxomNJSoW6
- Urox6jFeZU9wWDQ9AoQvt51RhzSLA0Y1e5clDqvOkveVoRePrxzLlMe42/fbDeadOiB6NDfcG
- 2aF4o4o2El6P2Gxa4xjR7M++DP+cvbeA9hmEun/276FqAkt2rHFrEWBOgYkU7g9RHJ9WCtYzr
- W0qANLjG0BNmMSwowliQNKNFUzIvQcaLEQln9r2KgS9LP5DwY0t+ecbq7pF+nEqzxCsC5/ZiM
- 6ZgJSFjR6nyWEh0UiV/AlGHpFty2O94d6kAkO0PoLtc4LXULGs2m/KIj1s9NyrPaRuiidbaXe
- PpTd0iWkhE/az87exi+772WZ4QbI690MBRnG9RdM5TzoCxDDMlzwb0fRKyWjTGDqWFyMnkWjr
- 14NJwC3f1XAOLBm/oHz+ModA51J9mu1OFoRoWjAth6OnFoSq0xhNqZoQbdza2sxh67ZBggbjS
- a9iJuATtPUAz4c/rOWphYW5ByFBct92NlhtkAoI8iFNlrMahmA0sljE39lEVIQFPEe5B6JVmB
- E0rE/ijthdNWZ4X9Y1iPhqsgiWQ2LAoMmtAVcVzs5Ne2NxSOFmjID8a92jfKTdtdrEvaRs0tx
- qStH+jwUbF2BMyrv3IF2IXPi313wwl5nWX3zf7kYVeYoEXsc5OLgo+aqhg5t50AkvXNMMroRK
- p9OV5cODoO4O0YKuMO9Waz+6+Jqq49rJvOQ3GgXlDyu8JUz9q8=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Eric,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, 11 Oct 2018, Junio C Hamano wrote:
+> On Sun, 7 Oct 2018, Junio C Hamano wrote:
+>
+>> And then there is an unnamed misdesigned language that has a
+>> regmatch() function, which takes a string that contains a regular
+>> expression, but somehow requires that string to begin and end with a
+>> slash for no justifiable reason ;-).
+>
+> It makes more sense once you realize that /<regexp>/ is a very nice
+> syntactic construct to obtain an instance of a regular expression object,
+> rather than a string describing one.
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> 
-> > On Wed, Oct 10, 2018 at 4:54 AM Johannes Schindelin via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >> We had not documented previously what happens when an `exec` command in
-> >> an interactive rebase fails. Now we do.
-> >>
-> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> ---
-> >> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> >> @@ -420,7 +420,8 @@ idea unless you know what you are doing (see BUGS below).
-> >>  --exec <cmd>::
-> >>         Append "exec <cmd>" after each line creating a commit in the
-> >>         final history. <cmd> will be interpreted as one or more shell
-> >> -       commands.
-> >> +       commands. Anz command that fails will interrupt the rebase,
-> >> +       withe exit code 1.
-> >
-> > s/Anz/Any/
-> > s/withe/with/
+In Perl, qr/<regexp>/ is often how you use that syntactic construct.
 
-These tyopes will be fxied in the nxet itaretion.
+The unnamed misdesigned language literally uses a string whose
+content is /<regexp>/; iow, 
 
-Ciao,
-Dhsco
+	preg_match('/a.*b/', ...)
 
-> 
-> Heh, I know I am not good at spelling, either, but hopefully I am a
-> bit more careful than leaving as many typoes as I have added lines
-> in my patch X-<.  After all, it's not a race to send in patches as
-> quickly as possible.
-> 
-> Queued.  Thanks, both.
-> 
+is what you see, and there is no "regex object involved.  As far as
+the function is concerned, it is receiving a string, that represents
+a regexp.  There is no reason to require the pattern _string_ to
+begin and end with slash, but somehow they do.
+
+> But in C, we do not have objects, so the way to describe a regular
+> expression is a string (which you have to compile into an opaque data
+> structure before applying it).
+
+Absolutely.  C does not have regexp object literal and the literal
+you write to represent a regexp is just a string that you would pass
+to functions like regcomp().  But at least C is not so brain-dead to
+require slashes on either end of that string ;-)
