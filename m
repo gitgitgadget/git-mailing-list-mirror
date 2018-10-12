@@ -2,123 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 518A71F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 01:22:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 075501F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 01:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726907AbeJLIwo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 04:52:44 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52094 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726172AbeJLIwo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 04:52:44 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 143-v6so10662290wmf.1
-        for <git@vger.kernel.org>; Thu, 11 Oct 2018 18:22:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wN1Dt5K70XhgZaWLbo3RRSLnX/aqcQqNcff5vacQWo8=;
-        b=disQ+bZ3MNnKzAfT/cQC4tG0DEmnAeaB30cB/9LPEKBLFXMohmojYhKytq/W+YS6v9
-         0hHOUQ1q1U63nMJxwbbdAJraU0VKosTtMVoP/cIeO5ROoP0ZDYRPf4tjQuFjmA5s6T4o
-         CbcLZyy6RVseAQly+EmuARY5cKrJc8LemZPw3668FpEERgjwCZHayJ9w4pKKngK6iXZ2
-         AzCQEtIqQiJR6fD6r9JtxR/4a4ssT0qrXdWaz0yGJJJMBtEE3tQnAOk/YxdKa0jCYDKQ
-         A1bbjglymuyiNMf6F2Igp0OPv6UBoUfBhYYoLgg7P3/sk5IAcG3FNPYAjLa0LQz7qRmB
-         OTKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wN1Dt5K70XhgZaWLbo3RRSLnX/aqcQqNcff5vacQWo8=;
-        b=fzKeaxd/lM6j0Fj3xHtJYPq2hDGCTVxi2LAmXoPNPG22+eABLlvoSgByNAJNqiIE42
-         LVpyI7imSFd90ur4ElXXzSD6VFiyT/ZG62zc5q5Fw12jPupyeNp2CvTZG3ykTo0pH7o/
-         UOXUA4m+6r+2gDtQIIQrNoPeBdFllwPra/TFvZ3cKVMMgW07GLJhEVu2p1kIqoWonPnJ
-         c9ZOk1cVoB6hrOZIq3oKhJ5fXp6WPm18D7xJlNwSF/G0xBLZAWGspcAOjkHrCADhxKK8
-         c326jnQ9XELDD+omEIKpOP6p8ghaj5AxCtNoXrGqv4Qe8TAEzUaC/L8+SQNIH2X+TARo
-         cfcQ==
-X-Gm-Message-State: ABuFfohETWChEhVxwumGmAp1WmDrZLIVtGJT/TS7fN3XoMH1A2sgGoJr
-        vGAA1lCEMThe748nVFxSudQ=
-X-Google-Smtp-Source: ACcGV630RuNwAs4zsvsJ/chvpT6z4RAGtE4RcckktZfcAEmMxPdy/KTQF7YFpk4/7u3maKuRTdudRA==
-X-Received: by 2002:a1c:3ec3:: with SMTP id l186-v6mr3348946wma.84.1539307368999;
-        Thu, 11 Oct 2018 18:22:48 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e142-v6sm57537887wmf.20.2018.10.11.18.22.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Oct 2018 18:22:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, phillip.wood@talktalk.net
-Subject: Re: [PATCH] diff.c: die on unknown color-moved ws mode
-References: <xmqqa7nkf6o4.fsf@gitster-ct.c.googlers.com>
-        <20181011225928.76051-1-sbeller@google.com>
-Date:   Fri, 12 Oct 2018 10:22:46 +0900
-In-Reply-To: <20181011225928.76051-1-sbeller@google.com> (Stefan Beller's
-        message of "Thu, 11 Oct 2018 15:59:28 -0700")
-Message-ID: <xmqqin28dkm1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726775AbeJLJVD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 05:21:03 -0400
+Received: from bmmpf2702.jpx1.mp.cheetahdigital.com ([106.185.82.116]:46808
+        "EHLO bmmpf2702.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725850AbeJLJVD (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 12 Oct 2018 05:21:03 -0400
+X-Greylist: delayed 1205 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Oct 2018 05:21:02 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1539309064;
+        s=spex.201608; d=spex.jp;
+        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=Vd/fbxixZl9yiV6cgpCo+YmH6lTwQHLGW1VG4aOtKaw=;
+        b=pzeqOE0C3b6lMvhDV7OenkkS3ATWcqjKj74nsEVC586trAc/CdEoA0qVfjTKRIyn
+        /lIMitGvA5p+BN+lDCKJ46Rx2uuA8zK3uolKc76XGP5VXBYJY4ucdnDfm9AMsDEvztZ
+        RO5JRAkQ8xb7sKMlyQB0PB6H2uFJmQawbeM6DChs=
+Date:   Fri, 12 Oct 2018 10:30:38 +0900 (JST)
+From:   MARKETING & SALES PROMOTION EXPO Show Management <spex-en@spex.jp>
+Reply-To: spworld@reedexpo.co.jp
+To:     git@vger.kernel.org
+Message-Id: <1539307838433.2018100532.rxjp006.0.18668.00000000@ad145se.mpse.jp>
+Subject: =?utf-8?B?TUFSS0VUSU5HICYgU0FMRVMgUFJPTU9USU9OIEVYUA==?=
+ =?utf-8?B?TyDigJMgRXhoaWJpdCBhdCBKYXBhbidzIGdyb3dpbmcgYQ==?=
+ =?utf-8?B?ZHZlcnRpc2luZyBtYXJrZXQgdG8gZXhwYW5kIHlvdXI=?=
+ =?utf-8?B?IGJ1c2luZXNzIGluIEphcGFuL0FzaWEtUGFjaWZpYyE=?=
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Dear International Sales & Marketing Director
+Zhejiang Wuchuan Industrial Co., Ltd,
 
-> Noticed-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> --- 
->
->
->    There is no "ignore-any" supported by the feature---I think that
->    the parser for the option should have noticed and barfed, but it
->    did not.  It merely emitted a message to the standard output and
->    let it scroll away with the huge diff before the reader noticed
->    it.
->    
-> Addressed in this patch.
->
->    Am I missing something [...] ?
->
-> Note that this parsing is used for both the parsing from command line
-> as well as options, i.e.
+This is Reed Exhibitions Japan Ltd., organiser of MARKETING & SALES PROMOTION EXPO [June].
 
-Hmph, is it our convention for a value that is not yet known to the
-current version of Git found in a configuration file to cause it to
-die?  I somehow thought that command line options are checked more
-strictly and configuration variables are parsed more leniently.
+MARKETING & SALES PROMOTION EXPO [June] is Japan's largest trade show for marketing & sales promotion products and solutions.
+Are you interested in exporting your products or expanding your business in Japan/Asia-Pacific?
 
-If that is the case, the place that dies need to be raised in the
-callchain; iow, instead of dying inside the parser, it is necessary
-to let it only detect a problem and allow the caller to decide what
-to do with the problem, I would think.
+If yes, why not exhibit at MARKETING & SALES PROMOTION EXPO [June]?
+https://www.sp-world.jp/en/
 
->   git config diff.colorMovedWS asdf
->   git format-patch HEAD^
-> fatal: ignoring unknown color-moved-ws mode 'asdf'
->   git config --unset diff.colorMovedWS
+---NOW is your time to enter Japan!--------------
+
+- Strong growth in the Japanese advertising market
+   <8% Market Growth from 2012 to 2017>
+   　$US 53,000 million → $US 57,000 million　 (*1)
+   　The market has been growing continuously for 6 years!
+
+- Trends
+   In preparation to the 2020 Olympics in Japan, companies are spending a lot of money on advertising and novelty.
+--------------------------------------------------
+
+If you are planning on expanding your business in Japan/Asia-Pacific region, why not exhibit at MARKETING & SALES PROMOTION EXPO [June]?
+
+In the next June show, 650 exhibitors and 44,000 visitors are expected to gather. (*2)
+Many buyers and importers are waiting for your products to come to Japan!
+
+Please fill in the Reply Form below to receive detailed information on exhibiting.
+Show Management will assist you with the latest booth availability, cost estimation and any other inquiries.
+
+====== Reply Form ================================
+mailto:spworld@reedexpo.co.jp
+Company Name:
+Contact Person:
+Email:
+TEL:
+Main Products:
+Your Request
+(  ) Cost Information
+(  ) Available Booth Locations
+(  ) Information on Packaged Booths
+(  ) Other (                             )
+===================================================
+
+We look forward to hearing from you soon.
+
+Sincerely,
+
+MARKETING & SALES PROMOTION EXPO Show Management
+Reed Exhibitions Japan Ltd.
+TEL: +81-3-3349-8505
+mailto:spworld@reedexpo.co.jp
+
+-----------------------------------------
+MARKETING & SALES PROMOTION EXPO [June]
+Date: June 19 (Wed.) - 21 (Fri.), 2019
+Venue: Tokyo Big Sight, Japan
+https://www.sp-world.jp/en/
+-----------------------------------------
+
+(*1) Figures from DENTSU INC.
+(*2) Expected
+
+ID:E36-G1402-0075
 
 
 
->
-> (format-patch parses these color specific things, but doesn't apply it)
->    
->  diff.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/diff.c b/diff.c
-> index 145cfbae59..bdf4535d69 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -313,7 +313,7 @@ static int parse_color_moved_ws(const char *arg)
->  		else if (!strcmp(sb.buf, "allow-indentation-change"))
->  			ret |= COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE;
->  		else
-> -			error(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
-> +			die(_("ignoring unknown color-moved-ws mode '%s'"), sb.buf);
->  
->  		strbuf_release(&sb);
->  	}
+
+
+
+
+
+
+
+
+
+
+This message is delivered to you to provide details of exhibitions and conferences organized, co-organized, or managed by Reed Exhibitions Japan Ltd.
+If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
+
+<Update contact information>
+Please click the URL below and follow the directions on the website to update your e-mail and other information.
+https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
+
+<Remove from list>
+Please reply to this mail changing the subject to "REMOVE FROM LIST".
+You will not receive any further information on this exhibition/conference.
