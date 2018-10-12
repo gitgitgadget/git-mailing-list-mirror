@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEE021F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 15:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1C771F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 15:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729109AbeJLWpg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 18:45:36 -0400
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:46063 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728804AbeJLWpg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 18:45:36 -0400
-Received: by mail-qt1-f180.google.com with SMTP id e10-v6so14155107qtq.12
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 08:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Zbe2GV3I5FyXVqKC7b2AKdQuJ4qpURLsbPxUj/4uFRw=;
-        b=a5q5vZOLNUqdGqnuNTtbGrb7Lt8/MFdpuu0QQoALPnGy1xnZ6c2Ldn6s213p+Y69sT
-         PNZYy5EnySHAvYeSH0rN2/4qJKcWB+o8nqLzryu1EI8Izd6IGTxtNiw0umAdfntjyHs/
-         2ZEpFgr5+UIB+yeMZj2HoKiCvHVXlZMnzMozZancTKVfIPJ6caDP4Bj22kKtNj54nicv
-         mxIVr1wyZCrVZYUb4ZZuZFV7yLohhpOT9oKb9moK5cLojCbfnEhymKFoZInirLpCht56
-         cJaIiafRcMZbifZglEVcGi9upyApCfyREQe30Fm9f9t6fditSYFEbedp8kQkYlowY2A8
-         LFFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Zbe2GV3I5FyXVqKC7b2AKdQuJ4qpURLsbPxUj/4uFRw=;
-        b=k+KismhoYa9AfcTTliQ2/1IF/MKVjGGnpHkx50Ow2cyLVm47NlFkh7aiCVFAj/4M1E
-         cCzhlb8gZ+Ii1iJTKecwNv8dcwiJ7rQyRoqZ/R9yC7e1AjhXpb7hs61WZUDCnJyyFLhk
-         jt06KYjBlKVu8yvM9pTXsXXQvNVq+N50HNsaMlVpYt6m7FpQWfKZ25zDbrKGtxpQJv0O
-         A+CXqozCsuuKnkkTcMbWdAHSz4JTQoDDNzMvLQ2FDb1TYOkfckP4osXovixMBhgsLbp4
-         4KoL8TwCIK51pCReAAqhD+d/gyehIw0jIsfxQ3+6dh1HULTsDdc4qKmKXHYaFG/SukxY
-         xBng==
-X-Gm-Message-State: ABuFfoiBfYqVjW42/niJXUzayIAXwnyt+rMW6GkNqha+x7ZMYIZNR5Oh
-        D783CswEGPP6S3gIX8JhIgk=
-X-Google-Smtp-Source: ACcGV62wnRwBW5KCsrDjpFrW2lKtzrrEspyklrbNzrzft1V9rzIdENrGS22xsWAxg7qEe/2K9nvVzA==
-X-Received: by 2002:a05:6214:88:: with SMTP id n8mr6234567qvr.176.1539357160956;
-        Fri, 12 Oct 2018 08:12:40 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:e9ec:1ddb:856c:2858? ([2001:4898:8010:0:d322:1ddb:856c:2858])
-        by smtp.gmail.com with ESMTPSA id v5-v6sm662083qkf.26.2018.10.12.08.12.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Oct 2018 08:12:40 -0700 (PDT)
-Subject: Re: [PATCH v3 1/2] commit-graph write: add progress output
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-References: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com>
- <20180917153336.2280-2-avarab@gmail.com> <20181010203738.GE23446@szeder.dev>
- <xmqqa7njd7bi.fsf@gitster-ct.c.googlers.com>
- <877eindx03.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f7a0cbee-863c-61d3-4959-5cec8b43c705@gmail.com>
-Date:   Fri, 12 Oct 2018 11:12:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1729128AbeJLXE4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 19:04:56 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35561 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728896AbeJLXE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 19:04:56 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LztHH-1fY60T4AOR-0152Pw; Fri, 12
+ Oct 2018 17:31:51 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LztHH-1fY60T4AOR-0152Pw; Fri, 12
+ Oct 2018 17:31:51 +0200
+Date:   Fri, 12 Oct 2018 17:31:50 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>
+Subject: Re: [PATCH v3 2/2] rebase -i: introduce the 'break' command
+In-Reply-To: <xmqqr2gv9ryx.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810121730360.561@tvgsbejvaqbjf.bet>
+References: <pull.43.v2.git.gitgitgadget@gmail.com> <pull.43.v3.git.gitgitgadget@gmail.com> <d44b425709d11eed833558c8bedfe4aeaa230e24.1539350061.git.gitgitgadget@gmail.com> <xmqqr2gv9ryx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <877eindx03.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jA6go0ehzLgI49gVjXLOjHJ8RNl3egeD7m7oPo9aPq1wHu5Eup4
+ raYVgWJI1USpiYHqRGtNXN+ZIrllHaF/YxAX3df/jHOMqyqhu1ccS13BzeJLDYGSztYfpus
+ 8Gyz87UTtN8JsqTHcfR4cMHU+k23bZoFHbH/cCa5+V7EJkByDnd7KpW2yQF36VPYwDHo20U
+ Wh07ASjE4u7YXZGcyYNhA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RZRsHi44meY=:pBiAbcEaJJTFSDoIs85U2l
+ SihXBL7yPEf71KK0TECiC2gLLZhzqlapAisRElTrUy5UpuwEjDkLT+rPUa1fU99RJInyUANWe
+ 5+ORXdavaSAwThcRblAuAdEimdWCo61OAnS7OjVEw8WbgNssQJY3EpkClsdv+hp/TYSVW6VUX
+ z5VT1kKV4CMZMIMajexx9qB0s9KKlNdZ7WuY+mBZuszUMnu2rLquC9JtE0Zlab30ikfeCDyPQ
+ yrH4rs1JMNPsaLEEzZVNT3qSwj9H55/Cpi8Guitor8COOndrHVXvIqk1PZlhFFtzqugUA5cYa
+ OKSeig1dt+i7eUFJASTm8SfsX2r/qLRTC4s2dOrXk8kzmoOFA4I4SNXlCrDJo8qwFjtn5M1mH
+ uK69w+nd+muWV8na2XsK+9v/MnfOiEYZJdhdy4VAfcGML15rxjdKIcvaKTmr37Q4sqC4c0joU
+ mEONudwO1ChW5skeCLG0il79GmLuk3ru0cpgT54T6YFL3VisIchUq3QMYR2rlUleXNYWAutns
+ VfrQiBI8Ztyao6mRzeYkqMTxfd4KtVXujCdbCr9cQJ/cUNu3XYd0VUiFeGRrpRlLHwOsVLR0d
+ 68Dyur45PX2LstXiNPmBbUc2Yr6mViKnORMlKdA2wsO5NJ8g0654SyzBOGLxFg6V/4NlEAdNe
+ mKeaXSS2YGUMaL8q9wehom3Zzd7jreGsa5fYiAZ9ZYewvOJZ6rsAGhfLV7OO/df5bUuQu601P
+ 2+oco6ZNV31iHZzpUyBjDTKlKF9EOMD6/HN/zq9/u3qRFMZLjFjmtUnoE2xv1y7baunuBXd+e
+ 0yCJCgEquywo3E9y5OEG94EKOuRh1fXZvLFEJEzOy/HCdqrXis=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12/2018 11:07 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Fri, Oct 12 2018, Junio C Hamano wrote:
->
->> Makes sense. If this second iteration were also time consuming,
->> then it probably is a good idea to split these into two separate
->> phases?  "Counting 1...N" followed by "Inspecting 1...N" or
->> something like that.  Of course, if the latter does not take much
->> time, then doing without any progress indicator is also fine.
-> That's a good point. Derrick: If the three loops in close_reachable()
-> had to be split up into different progress stages and given different
-> names what do you think they should be? Now it's "Annotating commits in
-> commit graph" for all of them.
+Hi Junio,
 
-The following is the best I can think of right now:
+On Fri, 12 Oct 2018, Junio C Hamano wrote:
 
-1. Loading known commits.
-2. Expanding reachable commits.
-3. Clearing commit marks.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > @@ -3293,6 +3312,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+> >  			unlink(rebase_path_stopped_sha());
+> >  			unlink(rebase_path_amend());
+> >  			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+> > +
+> > +			if (item->command == TODO_BREAK)
+> > +				return stopped_at_head();
+> >  		}
+> 
+> The earlier one had "break;" here, which broke out of the while()
+> loop, let the control reach "if (is_reabse_i(opts)) {" block after
+> the loop, and the block would have noticed that current < nr and
+> returned 0.  So from the point of view of the overall control flow
+> of the caller of this function, there is no change relative to v2.
+> The only difference in v3 is that stopped_at_head() gives a useful
+> message.
 
--Stolee
+Well, I should have called out this `break;` -> `return 0;` change, too,
+as I think it makes the code flow *a lot* more obvious. As you say, I
+relied earlier on the next loop to return early, but that is not what the
+`edit` command does: it returns out of the first loop, too.
+
+> 
+> Good.
+
+Thanks,
+Dscho
+> 
+> 
