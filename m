@@ -7,151 +7,99 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA281F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 18:50:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97D7E1F97E
+	for <e@80x24.org>; Fri, 12 Oct 2018 18:54:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726273AbeJMCYc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Oct 2018 22:24:32 -0400
-Received: from mail-pg1-f172.google.com ([209.85.215.172]:45825 "EHLO
-        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbeJMCYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Oct 2018 22:24:32 -0400
-Received: by mail-pg1-f172.google.com with SMTP id t70-v6so6231375pgd.12
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 11:50:40 -0700 (PDT)
+        id S1726799AbeJMC2q (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Oct 2018 22:28:46 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36388 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbeJMC2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Oct 2018 22:28:45 -0400
+Received: by mail-pl1-f195.google.com with SMTP id y11-v6so6334360plt.3
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 11:54:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=QlmQ+sIgRv6XY/j2MiaiPOVq3T1cbVt9lvd/5icxbN0=;
-        b=U0fJnC6G5MEZIKAl8pZ+O3fvjgYI+oeV/5kDQbC5Qb7rh17KrkdMrd2zCsSutRwXfe
-         RRyR0YJXTmq8TsGx1Nnk28SEjJtTchmH+KvPABmlO/RiwJpl0NJFN06/0nSZkl9xC52K
-         Seazlo4ebKaoLt+ELvmlvJWD13R1u+TtccX2pwSnKZrmf2pU+svttX/FPOb9h2rtf++/
-         Sw10r7nnVmzs6Fhhcla8OH/L+KSakUFwSLMhK3BUyTl3MVCCJckKC5qIYMIfOMsxk6rq
-         JZHvlGOqRjaIlBYNx6PW/CzpI1oB0iI/auWolWxzMNcjDCr2oc5CNmQZwZ9sKu7mLT5h
-         qpDw==
+        bh=6TSlcT/jm3ydLd7GU8tDeh8ZVq+aL2A0oYQlLItlMho=;
+        b=A7l4d1PXISIyUBc3MhtFSgZkTvB86WSIOz1LDrtK0AFhi9OKfPOwk0yrcrxqvYQKkY
+         2D4rGXYKsYrkhryptBHHImZEx18wTTQvJWOdqFdAa7HO1YkGpFhr51MzjDHQfrcdBNUY
+         VQSpbwjnhkiOyakOymErPeZtMnaR2DgC5IIZRaf3tdhLo1hba5zjFgYFM7tfuy1VMktG
+         4w8u9Hh7O4/Cs4Yv6G7H64ciG8CPWKMvTEBR/0c0uso5/DfeZ2Ew3jItbEpC9gtzI1VA
+         7dO+6ktO6T4QEg7w5Nkl7r9T86+x++sXljRRsqIymkEiVg94R4gVXn+5PEPSs+ETS2Od
+         JsQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QlmQ+sIgRv6XY/j2MiaiPOVq3T1cbVt9lvd/5icxbN0=;
-        b=fxU39FnYsqLtRTpqWHk4BWJz4fLH6xNIdUYlZTX6kEVSGpSWEFPKErtIaZtjgi/sVi
-         NQrRLixw4G23ZqilWX3/zevC83zh2kIULiR75d77JHyEwETZebAluJpUTYZer1mA7b7E
-         QoNAvpSh9+ieUvFxeYYGG4IkQE2RvB/i1NXzQ1p9CWHeyOTKtzm3upiDBsK2pphZcl4O
-         jMQS1IxoxQTDZdJxw+ESSjmZfsAhe+gCZIpJsiBytVnLmt6NZMZEYNMUbU/58vwAL1aL
-         8PpI6IsMWlJSacNGsQ28OYIM4JeA1FIsNtoUD87bGrqrdble2NwCikPXRv1GmXvsHHuw
-         aCVg==
-X-Gm-Message-State: ABuFfoiUM3Et0QJGFHYoT4tZOnAFH/4HAv3xgnuEDvr2MCLfkJi3Qcl0
-        dPPg6wrnkXIfcGTAMVOkgjrsn9EA
-X-Google-Smtp-Source: ACcGV63R1SvVZfUMXwim+nUDkV+Eh1CGkiXz0iCzpAr6vUYw7X/iGguHvKB5tBa2cIb0yUgKhTWO9g==
-X-Received: by 2002:a63:a09:: with SMTP id 9-v6mr6577069pgk.318.1539370239497;
-        Fri, 12 Oct 2018 11:50:39 -0700 (PDT)
+        bh=6TSlcT/jm3ydLd7GU8tDeh8ZVq+aL2A0oYQlLItlMho=;
+        b=eX7iTgfHNlZHIDZWmu3v+gC0D8/JNyt9g+KXkhzyEpvrL0kXacMpAenu6rTbI1SHGt
+         rq+/ZImWQvuvxvOREEsMqoBBE5vIFiHqtUSLQy9y5LK5dsWjjnYAR2dyL7PQidQ9KVG+
+         U6EzfeV5Xhju9XYiU002gxFPWNo1dXPKmke6oUgoMGwE11Or2aoayaXF1wz8emi7ZgD3
+         9glbXsGppgoli+BI9vd+siNggnTt4vyuBG/qPUEKcJNdfjg22KkqtAZEZj5/XOAdwH80
+         llwsSVWiEGtlYGg2jmkz8BLdRSzcv7qgsCj5DeBKbJ4X3Fn9i3nf6ffWoeM7qfP9WyB+
+         gYIg==
+X-Gm-Message-State: ABuFfohG2To5sJis3kwrfTbE+eBoKm3IfuNjfMCLL+h8/9AhDrcvh6sf
+        YDdsCOYta1RCf+dUR/5OUbM=
+X-Google-Smtp-Source: ACcGV61+/DXFsRYnpZYqbb3HBYj6hMqJWYkCt2DxPz4YuOC5j3yiXrHg+lI4t0W4O49fx13gNm4u6A==
+X-Received: by 2002:a17:902:4001:: with SMTP id b1-v6mr7087261pld.89.1539370492461;
+        Fri, 12 Oct 2018 11:54:52 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id l26-v6sm4071614pfg.161.2018.10.12.11.50.38
+        by smtp.gmail.com with ESMTPSA id d18-v6sm2656373pgd.86.2018.10.12.11.54.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Oct 2018 11:50:38 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 11:50:37 -0700
+        Fri, 12 Oct 2018 11:54:51 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 11:54:50 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-Subject: Re: [RFC PATCH 00/19] Bring more repository handles into our code
- base
-Message-ID: <20181012185037.GA52080@aiede.svl.corp.google.com>
-References: <20181011211754.31369-1-sbeller@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] config.mak.dev: add -Wformat
+Message-ID: <20181012185450.GB52080@aiede.svl.corp.google.com>
+References: <20181012184037.15076-1-t.gummerer@gmail.com>
+ <20181012184549.GC4917@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20181011211754.31369-1-sbeller@google.com>
+In-Reply-To: <20181012184549.GC4917@sigill.intra.peff.net>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King wrote:
+> On Fri, Oct 12, 2018 at 07:40:37PM +0100, Thomas Gummerer wrote:
 
-Stefan Beller wrote:
-
-> This applies on nd/the-index (b3c7eef9b05) and is the logical continuation of
-> the object store series, which I sent over the last year.
->
-> The previous series did take a very slow and pedantic approach,
-> using a #define trick, see cfc62fc98c for details, but it turns out,
-> that it doesn't work:
-
-Thanks for the heads up --- this will remind me to review this new
-series more carefully, since it differs from what was reviewed before.
-
-I think this will be easiest to review with --function-context.  I can
-generate that diff locally, so no need to resend.
-
->    When changing the signature of widely used functions, it burdens the
->    maintainer in resolving the semantic conflicts.
->
->    In the orginal approach this was called a feature, as then we can ensure
->    that not bugs creep into the code base during the merge window (while such
->    a refactoring series wanders from pu to master). It turns out this
->    was not well received and was just burdensome.
-
-I don't agree with this characterization.
-
-The question of who resolves conflicts is separate from the question
-of whether conflicts appear, which is in turn separate from the
-question of whether the build breaks.
-
-I consider making the build break when a caller tries to use a
-half-converted function too early to be a very useful feature.  There
-is a way to do that in C++ that allows decoupled conversions, but the
-C version forced an ordering of the conversions.  It seems that the
-pain was caused by the combination of
-
- 1. that coupling, which forced an ordering on the conversions and
-    prevented us from ordering the patches in an order based on
-    convenience of integration (unlike e.g. the "struct object_id"
-    series which was able to proceed by taking a batch covering a
-    quiet area of the tree at a time)
-
- 2. as you mentioned, removal of old API at the same time of addition
- of new API forced callers across the tree to update at once
-
- 3. the lack of having decided how to handle the anticipated churn
-
-Now most of the conversions are done (thanks much for that) so the
-ordering (1) is not the main remaining pain point.  Thanks for
-tackling the other two in this series.
-
-I want future API changes to be easier.  That means tackling the
-following questions up front:
-
- i. Where does this fit in Rusty's API rating scheme
-    <http://sweng.the-davies.net/Home/rustys-api-design-manifesto>?
-    Does misuse (or misconverted callers) break the build, break
-    visibly at runtime, or are the effects more subtle?
-
- ii. Is there good test coverage for the new API?  Are there tests
-     that need to be migrated?
-
- iii. Is there a way to automatically migrate callers, or does this
-      require manual, error-prone work (thanks for tackling that in
-      this one.)
-
- iv. How are we planning to handle multiple patches in flight?  Will
-     the change produce merge conflicts?  How can others on the list
-     help the maintainer with integrating this set of changes?
-
- iv. Is the ending point cleaner than where we started?
-
-The #define trick you're referring to was a way of addressing (i).
-
+>> 801fa63a90 ("config.mak.dev: add -Wformat-security", 2018-09-08) added
+>> the -Wformat-security to the flags set in config.mak.dev.  In the gcc
+>> man page this is documented as:
+>>
+>>          If -Wformat is specified, also warn about uses of format
+>>          functions that represent possible security problems.  [...]
+>>
+>> That commit did however not add the -Wformat flag, and -Wformat is not
+>> specified anywhere else by default, so the added -Wformat-security had
+>> no effect.  Newer versions of gcc (gcc 8.2.1 in this particular case)
+>> warn about this and thus compilation fails with this option set.
 [...]
->  79 files changed, 571 insertions(+), 278 deletions(-)
+> -Wformat is part of -Wall, which we already turn on by default (even for
+> non-developer builds).
+>
+> So I don't think we need to do anything more, though I'm puzzled that
+> you saw a failure. Do you set CFLAGS explicitly in your config.mak to
+> something that doesn't include -Wall?
 
-Most of the increase is in the coccinelle file and in improved
-documentation.
+Thomas, do you use autoconf to generate config.mak.autogen?  I'm
+wondering if that produces a CFLAGS that doesn't include -Wall.
 
-It appears that some patches use a the_index-style
-NO_THE_REPOSITORY_COMPATIBILITY_MACROS backward compatibility synonym
-and others don't.  Can you say a little more about this aspect of the
-approach?  Would the compatibility macros go away eventually?
+> I'm not opposed to making config.mak.dev a bit more redundant to handle
+> this case, but we'd probably want to include all of -Wall, since it
+> contains many other warnings we'd want to make sure are enabled.
+
+Do you mean putting -Wall instead of -Wformat?
+
+Should we add -Wextra too?  From a quick test, it seems to build okay.
 
 Thanks,
 Jonathan
