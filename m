@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BE221F97E
-	for <e@80x24.org>; Fri, 12 Oct 2018 23:57:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C043F1F97E
+	for <e@80x24.org>; Sat, 13 Oct 2018 00:01:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725978AbeJMH2X (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 03:28:23 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:46185 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725954AbeJMH2X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 03:28:23 -0400
-Received: by mail-pf1-f196.google.com with SMTP id r64-v6so6917272pfb.13
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 16:53:36 -0700 (PDT)
+        id S1726017AbeJMHf4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 03:35:56 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44833 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbeJMHf4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Oct 2018 03:35:56 -0400
+Received: by mail-ed1-f66.google.com with SMTP id z21-v6so12892816edb.11
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VzsTaGPWu4XOUJJhbACzfXfOXGuLKQPoKPquwy86ezw=;
-        b=JRVY+GdSzor0rTgdZ6BqTN3aLIvczRlTCAawJTa35kGmLK4kVSih9Ax8s/xlpB1md5
-         akje5MHbWUXksqDRk/2s2QmSnXiWOe+164cURF7MlsusxyZgaLhbWjKl4BRMUTH16AFv
-         H91Xm/RhzQtYNiYdtk8Upd1sIR6PcdaBRdcHEyXWscZlCSRQVJvF/GFKA0U0fFVlvMMM
-         m1rZPsit3Z3W/EXyelBDM6SR644RJnjjSh/zwnxzZYZ6Q9wKJxDuu7ZbLfmjPNXdp50u
-         Pqo6TGEAif4ldy58MYLKeXOfrmmuaPrDIguuZwsCEkQk/wfgWO7dOf+lDEM/nwqjZL28
-         yRlw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YN2unw0DaZoaYwoWvPoP1sQaMMA7tiVIXy9gzVbSLiY=;
+        b=MU5sGQFUWjfLaSxEmdswDT9KzHanOUq4Q6iydp6ltwUYms5eUzcLusQ4319hUI/abK
+         +9k1MGu2Lk2Yzo6m7ySg9DMu+gM8BfvCEJ/EFSRITg6fJgimDxNUOGVGvCOpDCewi1ny
+         A5Hoi6q+mdApOuhIoDceEPcv1MKfv2S0BT65vaD7V0eR02+AEu4schzIc2yb4yaSw1NR
+         e1/vtkIhep2w+bhMaRKEb7tAdypVLB8LFut8WrBKCcrmR0PXjnXab+laRR8zjSvvHVKL
+         HOxsDrmt5Q4ve7E9e9WFAYcMMFe/ceTFXZm9nWx4IS4ucfSyA4QRqYhdtrmqWqmgCbzd
+         bcYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VzsTaGPWu4XOUJJhbACzfXfOXGuLKQPoKPquwy86ezw=;
-        b=HRzcGLeBCvfnqHgxHCGyix//kTf6kPzs1D0d0leGvHQ81vOOZnBHNAdYahpieKSqkx
-         elusAWjTgxQbsM5ePwf+2azLWJnSka3bzLyXKbg1WN4IgMBFdkrcGZnU0WTJmFywxESk
-         8wCL4OeXFLJEADikwWc0TLXJcMwD1d70FRYBs9oeyar8i/vz9CXCYgKILUcIV4Lgi6M/
-         537OgK/3qDDrNfHglnpjtR66C132gEteM97N+uFV/wQjTjHS2gY4mVXxq7nK487WcLDJ
-         ELUyBh5qJNyLXqNTYNy9FmWXOtrMErVcKCOEyTXXp73VHhxpExwTzRN06WXuiIe5fUY2
-         atLg==
-X-Gm-Message-State: ABuFfoiy8UnUUpCD1M+kVTNjSwNRHKEgFaoYnivBRaU9QYOVqMnZ2+/5
-        1BHxgVhjmuPCtixcTUuMC28=
-X-Google-Smtp-Source: ACcGV61lq4A50SEw9jtkZkEFpPuKvidNkIEXMK5KWW+OnNjVmoWjoefR+l/tCIODH6zkaGxQM0a56Q==
-X-Received: by 2002:a62:2542:: with SMTP id l63-v6mr8308370pfl.64.1539388415789;
-        Fri, 12 Oct 2018 16:53:35 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id e131-v6sm4155895pfc.52.2018.10.12.16.53.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Oct 2018 16:53:35 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 16:53:33 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] protocol: limit max protocol version per service
-Message-ID: <20181012235333.GF52080@aiede.svl.corp.google.com>
-References: <cover.1538516853.git.steadmon@google.com>
- <59357266bd86e8e0ace9217a97717129a6f76188.1538516853.git.steadmon@google.com>
- <CAGZ79kbD=P__8GU9rV87wREF_MbQA9i2ij6C2qXyaJfqHD3Szg@mail.gmail.com>
- <20181003213349.GA32105@google.com>
- <CAGZ79kZP7y3v8hrhKKP_FT7+uyUSWO5s8w13-c67QWdzme1-Qw@mail.gmail.com>
- <20181005001817.GB32105@google.com>
- <CAGZ79kbSF5XM72SOQH7XNyjeCLqQ+AuxOqMPTspjOgk-jEgrzw@mail.gmail.com>
- <20181010235303.GB12177@google.com>
- <20181012233207.GE52080@aiede.svl.corp.google.com>
- <20181012234504.GC12177@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YN2unw0DaZoaYwoWvPoP1sQaMMA7tiVIXy9gzVbSLiY=;
+        b=kKHJw4W7MkhmrosW7jhjesaoBaFdR+pcOqJN0IsOsBlgyGzK1KUy78DxZot3bBplTV
+         B0s+0w1aIDL0CviNkfm41axywqAepl6MZMsGsrsEjBd/PyI+MPCg7KNAAaxt7dKNyH/n
+         gFtV+Qh1DM7sIJ162M8pjp7L4XNG0NsWYp1PZ8z0m1udRn/koLLhQ54AzO6UjQMTgpRJ
+         uQJc9/njxdNDV/vyDR8BWuEhQRVLPvumgNTYqlXghZzR//QgikfvGcxFkMM0u7flBILu
+         nXWc4/M9VbXCaLCMYFWRnpnmgzu6SPq45FCyStauGm6dfMsZDhcfn5PENwjadB5LY0DW
+         ecfg==
+X-Gm-Message-State: ABuFfoiNgMOYjpFcvIO6f6By6b3wRdY2nRkJdESMlcnYjoj40Xi7oMO/
+        DRwDMb6Km/ZiPlochaFHd4ZQNmfGiN2dn4FZQeFfcA==
+X-Google-Smtp-Source: ACcGV63LDqyr9VABefuvZpAP3TaY0OnXiqYWJYy4xt91FAHZSonyTgW6nSInjpDkQQpLIqPrXggpUJcQ4auPcvnjZ/A=
+X-Received: by 2002:a17:906:1f13:: with SMTP id w19-v6mr9175543ejj.65.1539388866328;
+ Fri, 12 Oct 2018 17:01:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181012234504.GC12177@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20181011211754.31369-6-sbeller@google.com> <20181011221114.186377-1-jonathantanmy@google.com>
+In-Reply-To: <20181011221114.186377-1-jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 12 Oct 2018 17:00:55 -0700
+Message-ID: <CAGZ79kbr-K3OARrn=3dGTmeMUUVVHPw3fp9zX=vy3pJrv8g2Tg@mail.gmail.com>
+Subject: Re: [PATCH 05/19] object: parse_object to honor its repository argument
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon wrote:
-> On 2018.10.12 16:32, Jonathan Nieder wrote:
->> Josh Steadmon wrote:
-
->>> For now, I'm going to try adding an --allowed_versions flag for the
->>> remote helpers, but if anyone has a better idea, let me know.
->>
->> I forgot to mention: the stateless-connect remote helper capability is
->> still experimental so you're free to change its interface (e.g. to
->> change the syntax of the stateless-connect command it provides).
+On Thu, Oct 11, 2018 at 3:11 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> For v2 of this patch, I ended up using GIT_PROTOCOL to pass the version
-> string to the remote helpers.
+> > In 8e4b0b6047 (object.c: allow parse_object to handle
+> > arbitrary repositories, 2018-06-28), we forgot to pass the
+> > repository down to the read_object_file.
+>
+> [snip]
+>
+> > @@ -270,7 +270,7 @@ struct object *parse_object(struct repository *r, const struct object_id *oid)
+> >               return lookup_object(r, oid->hash);
+> >       }
+> >
+> > -     buffer = read_object_file(oid, &type, &size);
+> > +     buffer = repo_read_object_file(r, oid, &type, &size);
+>
+> There is still the matter of the 2 invocations of has_object_file()
+> earlier in this function. The first one probably can be replaced with
+> oid_object_info_extended() (see the definition of
+> has_sha1_file_with_flags() to see how to do it), and the second one
+> looks redundant to me and can be removed. Apart from that, I don't see
+> any other invocations that need to be converted, so parse_object() will
+> indeed fully honor its repository argument.
 
-Makes sense.  Thanks. :)
+I will convert the has_{sha1, object}_file[_with_flags] functions
+before this patch in a resend and just pass along the repository.
+
+I'll defer the change of logic to another patch to be followed up later.
