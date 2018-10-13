@@ -6,86 +6,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 674CD1F97E
-	for <e@80x24.org>; Sat, 13 Oct 2018 07:56:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F79C1F97E
+	for <e@80x24.org>; Sat, 13 Oct 2018 07:58:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726202AbeJMPc4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 11:32:56 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34135 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726026AbeJMPc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 11:32:56 -0400
-Received: by mail-wr1-f66.google.com with SMTP id l6-v6so15271144wrt.1
-        for <git@vger.kernel.org>; Sat, 13 Oct 2018 00:56:45 -0700 (PDT)
+        id S1726163AbeJMPeS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 11:34:18 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35575 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbeJMPeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Oct 2018 11:34:17 -0400
+Received: by mail-wr1-f68.google.com with SMTP id w5-v6so15701194wrt.2
+        for <git@vger.kernel.org>; Sat, 13 Oct 2018 00:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=f5fJ6R5wzauubSRkAXYu5t95jzf8a9MPedfg0c5kkZM=;
-        b=Qe3BkJbxmD8RZKhachrGNn1ocT7BhMzfnTM7W/VGJNYKWTE3RQT1OrmD3vvopRo8XY
-         Czf6FF+nFP1h6JwITisJAkL7vbDFzOtdUD0UMjudn2ikJzXoqKT/5dduoKk4LfLu34dj
-         ev0s9w6FJxbB1RaGBKHVdZtMaFVp0pfDcvtE80JOUpioT9NDPknHnYTr8lK5BKhoAjq/
-         JTOJbbmWvbbatPwJeplS0I5iHMYNvu71LmYOdE7scoUxzU1FeG4lphv6WNVsZ7TIZ/aO
-         llu645eMVb/tVXXboyU6ooqI+8UXuoyQPwAbXKIPK9t1Or/teHY1Lqx3jGlCjmsUYfk6
-         hWUg==
+         :user-agent:mime-version;
+        bh=qWDvIhx9U/9LJbN5W6Nd6hXRPH3Q01IvjL41lxzZHIw=;
+        b=QkinTY+ajdQfrj+JzUp1s6GNNqHOfRWToSV8dcqr46aCUd+GA28lE+RDidZuHD4WUH
+         itJWz6zNGEKa8VMnwe/aJbIi++EI9lMPDhct7Q1J5s/sENFaojBk1ucmJFIH3QlJBk+F
+         gyj/c6APWKdSZ+k/S2+jB01JvOVIFPmS+9lHqbSyiks5dIIR1wQmYkysRcFvA6cbjhuX
+         NGpoMwITdXy/LPZ+I6dV7vfZQTN9lY6LIMjDM1Nf6SxdiaUvRtoXKkejhhLoSEmZBPQR
+         t3ml8wryPQEQHZTeXUTMWz/UT4wnV++Szwp4DoqplDqjPb1KHo/KC5RRvuEcUgNIQwtx
+         7CCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=f5fJ6R5wzauubSRkAXYu5t95jzf8a9MPedfg0c5kkZM=;
-        b=JqbSvobj7Gaj9R/fBQp30Fyd5lkNEdS0sbsUzoVAkpw3DeuPQwiUDeQiuB3cFs6ERL
-         BC3a5OgSz313r6kn8HjAlVtnYO9lvAV8jwuLq8c6D0ohd5JZE47/NFtOg/wvdu18tflv
-         kjbCHP/oHXSykycC7igTp9vpKFsi8A0DCquBxeoMYFA8ILxydKAH/1ZXe0VFd8Zwe5Ir
-         uraYmIyreGd1Eth7eX78Ki5FKiupiCFB9jgfhmFcLS6u+JIyqULBcTDTv1mjQp4gfqji
-         Up7h2nbvCNW0FeZc6BpsYTUVxGv3taacoVrIq8VJTJJ1iSxYhIx3q1Rb7atb5Zz0txZA
-         +IXQ==
-X-Gm-Message-State: ABuFfojFH4Vske7vie+CFvKj7YW/luRlN5m7eX2XXvUHD0sQX5ehqxxf
-        YQNJvnyctleH2Kx5PnQbVRA=
-X-Google-Smtp-Source: ACcGV61XRuXdE53Xqc7Jm13PG+qnzO/gkG+XN6vreYVrFj4OqD08dNoCGMzTt9HcjF7UO9xMR0BKUw==
-X-Received: by 2002:a5d:4208:: with SMTP id n8-v6mr7296271wrq.260.1539417404528;
-        Sat, 13 Oct 2018 00:56:44 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qWDvIhx9U/9LJbN5W6Nd6hXRPH3Q01IvjL41lxzZHIw=;
+        b=N8G+YnjLn5TVMxI1SuJS2VaxWQynxV294SdCfL1NCLw5mJDCbE47+VeEW66z+28w4c
+         bWpltp4C6fq3nKBzsAkWEmgjbspS9TP9eH1i0lKvz6aUHboiJzosopj4wwyQyJLDohPd
+         Dm3l4QArRhhAhTd5WD6l1vr2UOKoJSbgD6z2Xjnx9A/wqKPFlDq3Mp2F0/qHjJ5/eV/R
+         svdNxGs3uZV4iHcttw0ewqLRuzBsGNdnwdJ+raG6MlZOhVxrc4EXe0AdjmeyCAwaQkoW
+         HPi9/TgTQdT1CiyP1B9UOyvF++sCfuLsA0Box3a9IxBIBCSnL0eS4x5qNecyd/s9Z658
+         oLlA==
+X-Gm-Message-State: ABuFfoiy6aAvve/TFztoSYNmcn3fO2KoZ+ig+9EAzP52J9cuUwVtXDaM
+        PKxjRMwTOeHO0nN3MgyGzl4=
+X-Google-Smtp-Source: ACcGV62OXD1Ve8Ko6QeP2P2Di0wYBqLCIgy9WUIYQltA/8MIME6O9imvfXtz/8/JXsNvMqLsmSJolw==
+X-Received: by 2002:adf:90a2:: with SMTP id i31-v6mr7214266wri.77.1539417486549;
+        Sat, 13 Oct 2018 00:58:06 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t194-v6sm3996026wmd.48.2018.10.13.00.56.41
+        by smtp.gmail.com with ESMTPSA id b139-v6sm7132731wmd.36.2018.10.13.00.58.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 13 Oct 2018 00:56:42 -0700 (PDT)
+        Sat, 13 Oct 2018 00:58:05 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Brandon Casey <drafnel@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] gc: remove redundant check for gc_auto_threshold
-References: <20181010193235.17359-1-avarab@gmail.com>
-        <CA+sFfMeOpj4V+KszboVVQSoaW2yDgpfDNGwK9ZrNfGmOOAhPtQ@mail.gmail.com>
-        <xmqqk1mpjru2.fsf@gitster-ct.c.googlers.com>
-        <87h8hsexdm.fsf@evledraar.gmail.com>
-Date:   Sat, 13 Oct 2018 16:56:41 +0900
-In-Reply-To: <87h8hsexdm.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 11 Oct 2018 09:49:25 +0200")
-Message-ID: <xmqq8t329t52.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Josh Steadmon <steadmon@google.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] protocol: limit max protocol version per service
+References: <cover.1538516853.git.steadmon@google.com>
+        <59357266bd86e8e0ace9217a97717129a6f76188.1538516853.git.steadmon@google.com>
+        <CAGZ79kbD=P__8GU9rV87wREF_MbQA9i2ij6C2qXyaJfqHD3Szg@mail.gmail.com>
+        <20181003213349.GA32105@google.com>
+        <CAGZ79kZP7y3v8hrhKKP_FT7+uyUSWO5s8w13-c67QWdzme1-Qw@mail.gmail.com>
+        <20181005001817.GB32105@google.com>
+        <CAGZ79kbSF5XM72SOQH7XNyjeCLqQ+AuxOqMPTspjOgk-jEgrzw@mail.gmail.com>
+        <20181010235303.GB12177@google.com>
+        <20181012233207.GE52080@aiede.svl.corp.google.com>
+        <20181012234504.GC12177@google.com>
+        <20181012235333.GF52080@aiede.svl.corp.google.com>
+Date:   Sat, 13 Oct 2018 16:58:04 +0900
+In-Reply-To: <20181012235333.GF52080@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Fri, 12 Oct 2018 16:53:33 -0700")
+Message-ID: <xmqq4ldq9t2r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Yeah, that's me :) I have some WIP gc cleanup, but want to sit on it a
-> bit before I submit it to think about the best way to do things.
+> Josh Steadmon wrote:
+>> On 2018.10.12 16:32, Jonathan Nieder wrote:
+>>> Josh Steadmon wrote:
 >
-> So in the meantime I was sending out a few WIP bits that I expected
-> could be reviewed stand-alone.
+>>>> For now, I'm going to try adding an --allowed_versions flag for the
+>>>> remote helpers, but if anyone has a better idea, let me know.
+>>>
+>>> I forgot to mention: the stateless-connect remote helper capability is
+>>> still experimental so you're free to change its interface (e.g. to
+>>> change the syntax of the stateless-connect command it provides).
+>>
+>> For v2 of this patch, I ended up using GIT_PROTOCOL to pass the version
+>> string to the remote helpers.
+>
+> Makes sense.  Thanks. :)
 
-I dunno.  Unless the real body of the changes that "depend" on this
-small change comes before people forget the connection between them,
-I think it is detrimental to churn the codebase like this.  If the
-real body of the changes do not conflict with other topics in flight
-when it materializes, then having this small clean-up as a
-preparatory step in that real series would cost us nothing---that
-clean-up would not conflict with other things either.  If the real
-thing would conflict and need to be adjusted to play well with other
-topics before submission, having this small clean-up as a
-preparatory step in that real series would cost us nothing, either.
+Yeah, it does.
