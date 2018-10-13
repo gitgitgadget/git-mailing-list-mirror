@@ -2,89 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1365B1F97E
-	for <e@80x24.org>; Sat, 13 Oct 2018 00:44:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFB961F97E
+	for <e@80x24.org>; Sat, 13 Oct 2018 00:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726419AbeJMITA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 04:19:00 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:45224 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726086AbeJMITA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 04:19:00 -0400
-Received: by mail-pg1-f202.google.com with SMTP id q143-v6so10444935pgq.12
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:44:02 -0700 (PDT)
+        id S1726363AbeJMIdq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 04:33:46 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:54592 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726299AbeJMIdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Oct 2018 04:33:45 -0400
+Received: by mail-pl1-f201.google.com with SMTP id v4-v6so10652929plz.21
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=oNstZzPAdaIsqmMUsxImT08lg5tjNi0Sy8MwdNWSjCk=;
-        b=PoXrrlArolXjUsIrMc1kVUWGoZTdhVTClG8xKNgWhw6XVzj/iqRsmeBzOdNZdg7UHj
-         1Tp7Lq1zOmqllsLFcyh9BVE16pqJ7s+BF5ZCLbxMXQksnwaEsybjJJx6eMTx9b9mLf56
-         blaHpRuwoDOLdmk0Ow+cHlev63ddLuHbJb2TTFkrq1As0R3wXM53KGjzRPnO7wwLzslb
-         jzATSFiX4PIVfUV8zpbc+NWarvAeUKZddOsj79SO3aECDzKJl3z5Ld64hb2NDoVrRcPk
-         K/dBwa16GurG5adcnSRoHbs7GFfDEig6z6lUcRtlyyh00/Vj6ON14mHzwWb6T/nsHW6b
-         8j4Q==
+        bh=WFBpSyDKxVA82ztttPC6Q0UUb6Kpo8R7NNQjdudiW4U=;
+        b=D6zupKRL7o2feHqkISRAO5hN4btmLfM8BrMDSyURkIyqDzfh4SEG1kYxDi5fkwJuKb
+         MZbda+2b4htnzpEXIy1G3dgeEom16bQ+ahqOc3DXWlt/XhImja4MYJ6e0WgeKS53kj5x
+         8Hq4Lmi21nrJyuF0pBTSrbdKbKSyvyTOXSboENEnyOhmlq3WHqbwsvlj02suwkONGzPW
+         Y/MNfgoIFd3GDoYDUt+U4P3a6+VR/b40Caj19TRHpbcv8V/BMLbpA4GyVHtTisxoNSQQ
+         j+UNba2pdy/7bcWfubbVufha39qs/RGxqD3aeEllJKy1rBPLL6IMUtKPEvzyQsh/zeRF
+         JZug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=oNstZzPAdaIsqmMUsxImT08lg5tjNi0Sy8MwdNWSjCk=;
-        b=sLtTKOpi9QHraw4AYLW5R2OJFi3PCFBkOJK+c2lvk1vJXQ+CGVi0YnByUI99jSA/10
-         XM/ufn8X3334iM+EBYY76qPQ4/njLnl1O89K9RFY7YTYA1AupZhgFDz7Wem1lNkr83LP
-         qiq2hcqTGjp4bN31gtzJ9geMDAX3DFL/GcMR8B5dZUHvJo0RHhF+dUWicCn0A88cpgwT
-         cNeu+shx8gIeb30RoG98oT3toZtahtzZrlja5mkoTPf9X2yPIknGCngIFRihbma4fzNn
-         5/XA/N8PlBJgHYB4Iz/i92rCN7buptnVgam0VD2Tt8mqbouj+1WtnEcH5uVFifjGSLCL
-         aW1g==
-X-Gm-Message-State: ABuFfohspC8Hwg0OioJfUebcAZIRJZkMRxCDU6uLmJfIRybVNUNrtltZ
-        lnSQAmxI5g0OMfWleQfp02rqNgTip6TppiASI9Sb
-X-Google-Smtp-Source: ACcGV634tSuSBGnkvqXr7xcrWW3jL/nDQzoBO3EhTn3NQ5PBq1UKLwh8syIBrsl/kh6NtEQJdsM1wYC9L/9a6g7oc19y
-X-Received: by 2002:a62:cc4e:: with SMTP id a75-v6mr4531151pfg.38.1539391441648;
- Fri, 12 Oct 2018 17:44:01 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 17:43:56 -0700
-In-Reply-To: <CAGY-PBgsG-T3JY=awszwGMpFx+jDx-a1FcV0s6vR067bSqgZaA@mail.gmail.com>
-Message-Id: <20181013004356.257709-1-jonathantanmy@google.com>
+        bh=WFBpSyDKxVA82ztttPC6Q0UUb6Kpo8R7NNQjdudiW4U=;
+        b=oco7VAWjF0d98wJphFMeJCzlDyc7r78t85r38VLaBfwkeYNVPloFmXwfC1R0usGZjd
+         bG/4znZ6gu0VNSOJW8Y1SyFq1N/uEyF5IK/sK0Q6p5TbmHm0cEcP4rkvDoQEZhixwxag
+         e/zxnkCuUlZ/rbGRlfNeioAXj4S91Csnm7Kp/W+ovQWeUDyqd/1K+MkU+gcxbQ3pY9V7
+         RxxNYz1MMFxARQJn7oevPKIPEMGjJW49KYFAgNSHbVbmZompbeZu5M8YQWHtEjNraLDM
+         BnhnEB7HAni9UiZyqJHltjSsM3rXSaC+LOSxcr8+M++5h05XM0z7wbwsPvsSxxBhPT5/
+         mIfQ==
+X-Gm-Message-State: ABuFfoj6TdbFhfWf1iVkalnxAGqoddc+BcSOTenWJorVt5pZt1ebT11X
+        W02YiYA7jMbnrzlTIKO+wN7gGlxyVc2PWBSdn5bUAvQgLC8bPu/PwsZdcMIj8kgWaELqqkorlGc
+        2fc398VdWJpuf1ltvVJm1ny6Nkm5ROriRndQvAUIEXOtXUTJFUOxbgHROV1swi3g=
+X-Google-Smtp-Source: ACcGV616p/RBAEm9Zdodv9IE0saGF0N+Z+92rrjI44NQnT5HSGji765bojwacH14ES1rVLcJKqNbJ/GD3E6Dog==
+X-Received: by 2002:a62:660b:: with SMTP id a11-v6mr4551521pfc.24.1539392323174;
+ Fri, 12 Oct 2018 17:58:43 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 17:58:39 -0700
+In-Reply-To: <cover.1538693039.git.steadmon@google.com>
+Message-Id: <cover.1539391439.git.steadmon@google.com>
 Mime-Version: 1.0
-References: <CAGY-PBgsG-T3JY=awszwGMpFx+jDx-a1FcV0s6vR067bSqgZaA@mail.gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: Git wire protocol v2 fails fetching shallow changes with `pack
- has XXX unresolved deltas` on large repos with lots of tags Inbox x
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     arturas@uber.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+References: <cover.1538693039.git.steadmon@google.com>
+X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
+Subject: [PATCH v2 0/2] add fuzzing targets for use with OSS-Fuzz
+From:   steadmon@google.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Josh Steadmon <steadmon@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On large repositories with lots of tags - git wire protocol v2 fails
-> to fetch shallow changes, it fails with error `pack has XXX unresolved
-> deltas`. Unfortunately I didn't find easy way to reproduce it except
-> cloning+fetching chromium repository, the way jenkins does.
-> Reproduction steps:
+From: Josh Steadmon <steadmon@google.com>
 
-[snip]
+V2 of this series pulls the compiler flags out of the Makefile, to be
+provided by the user depending on the combination of compiler and
+fuzzing engine in use. This also makes it more compatible with
+OSS-Fuzz's build process.
 
-Thanks for your bug report and reproduction steps. I managed to
-reproduce your issue and took a look.
+Josh Steadmon (2):
+  fuzz: Add basic fuzz testing target.
+  fuzz: Add fuzz testing for packfile indices.
 
-The main issue seems to be that with v2, upload-pack doesn't pass
-"--shallow X" to pack-objects (the write_one_shallow() callback is never
-called, even if I change the "if (shallow_nr)" to "if (1)"), so
-pack-objects probably doesn't know that some objects cannot be used as
-delta bases. (With v0, write_one_shallow() is indeed called.) The issue
-probably lies in how v0 and v2 handle client-provided shallows
-differently.
+ .gitignore          |  3 +++
+ Makefile            | 33 +++++++++++++++++++++++++++++++++
+ fuzz-pack-headers.c | 14 ++++++++++++++
+ fuzz-pack-idx.c     | 13 +++++++++++++
+ packfile.c          | 44 +++++++++++++++++++++++++-------------------
+ packfile.h          | 13 +++++++++++++
+ 6 files changed, 101 insertions(+), 19 deletions(-)
+ create mode 100644 fuzz-pack-headers.c
+ create mode 100644 fuzz-pack-idx.c
 
-There also seems to be another issue in that negotiation occurs
-differently in these 2 protocols - I see the full list of "have" lines
-being sent in the final request to the server in v0, but a very limited
-list in v2. This might be because of the ref prefix limiting in v2, but
-I haven't fully investigated it.
+Range-diff against v1:
+1:  9456c41798 ! 1:  446d8081b1 fuzz: Add basic fuzz testing target.
+    @@ -32,6 +32,9 @@
+      
+     +FUZZ_OBJS += fuzz-pack-headers.o
+     +
+    ++# Always build fuzz objects even if not testing, to prevent bit-rot.
+    ++all:: $(FUZZ_OBJS)
+    ++
+     +FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
+     +
+      # Empty...
+    @@ -46,14 +49,13 @@
+      	git.o
+      ifndef NO_CURL
+     @@
+    - cocciclean:
+    - 	$(RM) contrib/coccinelle/*.cocci.patch*
+    - 
+    --clean: profile-clean coverage-clean cocciclean
+    -+clean: profile-clean coverage-clean cocciclean fuzz-clean
+    - 	$(RM) *.res
+    - 	$(RM) $(OBJECTS)
+      	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+    + 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+    + 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
+    ++	$(RM) $(FUZZ_PROGRAMS)
+    + 	$(RM) -r bin-wrappers $(dep_dirs)
+    + 	$(RM) -r po/build/
+    + 	$(RM) *.pyc *.pyo */*.pyc */*.pyo command-list.h $(ETAGS_TARGET) tags cscope*
+     @@
+      cover_db_html: cover_db
+      	cover -report html -outputdir cover_db_html cover_db
+    @@ -61,24 +63,24 @@
+     +
+     +### Fuzz testing
+     +#
+    -+.PHONY: fuzz-clean fuzz-objs fuzz-compile
+    -+
+    -+FUZZ_CFLAGS = $(CFLAGS) -fsanitize-coverage=trace-pc-guard -fsanitize=address
+    -+FUZZ_LDFLAGS = $(FUZZ_CFLAGS)
+    -+
+    -+
+    -+fuzz-clean:
+    -+	$(RM) $(FUZZ_PROGRAMS) $(FUZZ_OBJS)
+    -+
+    -+fuzz-objs: $(FUZZ_OBJS)
+    ++# Building fuzz targets generally requires a special set of compiler flags that
+    ++# are not necessarily appropriate for general builds, and that vary greatly
+    ++# depending on the compiler version used.
+    ++#
+    ++# An example command to build against libFuzzer from LLVM 4.0.0:
+    ++#
+    ++# make CC=clang CXX=clang++ \
+    ++#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+    ++#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
+    ++#      fuzz-all
+    ++#
+    ++.PHONY: fuzz-all
+     +
+    -+fuzz-compile:
+    -+	$(MAKE) CC=clang LD=clang CFLAGS="$(FUZZ_CFLAGS)" \
+    -+		LDFLAGS="$(FUZZ_LDFLAGS)" all fuzz-objs
+    ++$(FUZZ_PROGRAMS): all
+    ++	$(QUIET_LINK)$(CXX) $(CFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
+    ++		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+     +
+    -+$(FUZZ_PROGRAMS): fuzz-compile
+    -+	clang++ $(FUZZ_LDFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) $(XDIFF_OBJS) \
+    -+		$(EXTLIBS) git.o $@.o /usr/lib/llvm-4.0/lib/libFuzzer.a -o $@
+    ++fuzz-all: $(FUZZ_PROGRAMS)
+     
+      diff --git a/fuzz-pack-headers.c b/fuzz-pack-headers.c
+      new file mode 100644
+2:  581eb8f817 ! 2:  c7b5a03d81 fuzz: Add fuzz testing for packfile indices.
+    @@ -24,23 +24,8 @@
+      FUZZ_OBJS += fuzz-pack-headers.o
+     +FUZZ_OBJS += fuzz-pack-idx.o
+      
+    - FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
+    - 
+    -@@
+    - 
+    - ### Fuzz testing
+    - #
+    --.PHONY: fuzz-clean fuzz-objs fuzz-compile
+    -+.PHONY: fuzz-clean fuzz-objs fuzz-compile fuzz-all
+    - 
+    - FUZZ_CFLAGS = $(CFLAGS) -fsanitize-coverage=trace-pc-guard -fsanitize=address
+    - FUZZ_LDFLAGS = $(FUZZ_CFLAGS)
+    -@@
+    - $(FUZZ_PROGRAMS): fuzz-compile
+    - 	clang++ $(FUZZ_LDFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) $(XDIFF_OBJS) \
+    - 		$(EXTLIBS) git.o $@.o /usr/lib/llvm-4.0/lib/libFuzzer.a -o $@
+    -+
+    -+fuzz-all: $(FUZZ_PROGRAMS)
+    + # Always build fuzz objects even if not testing, to prevent bit-rot.
+    + all:: $(FUZZ_OBJS)
+     
+      diff --git a/fuzz-pack-idx.c b/fuzz-pack-idx.c
+      new file mode 100644
+-- 
+2.19.0.605.g01d371f741-goog
 
-I'll look some more into this.
