@@ -2,246 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 054441F97E
-	for <e@80x24.org>; Sat, 13 Oct 2018 00:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 334181F97E
+	for <e@80x24.org>; Sat, 13 Oct 2018 00:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726515AbeJMIdu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 04:33:50 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:55408 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726299AbeJMIdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 04:33:50 -0400
-Received: by mail-pf1-f201.google.com with SMTP id 14-v6so13471109pfk.22
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:58:47 -0700 (PDT)
+        id S1726707AbeJMIe0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 04:34:26 -0400
+Received: from mail-pl1-f176.google.com ([209.85.214.176]:46601 "EHLO
+        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726086AbeJMIe0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Oct 2018 04:34:26 -0400
+Received: by mail-pl1-f176.google.com with SMTP id v5-v6so6643912plz.13
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=mmwZjDMPDOyOr06mrGOlugZsWKMVJwTQQ1Sted8pKE0=;
-        b=TF9XlxOGijIlavAc2/chiY8emppPD+sJdquIeF0jBUvGtjR1XuoGt7rkHUqKJHwq0I
-         Em3+Z56JvQjIjqMx8+P93iYAm2isbq3IgcFZ3jf4OTF8MPxEt5D4UiTQQJj/dz7XEdk9
-         dSbxcNWUwnlwZoIJ3yVFYO7vlNxZ94fQWoITnjSwVS2dnYgTtLqX8d/K+IeV1rTbAJ1p
-         a7VQaqVI2gZgf5/ZeKVg7AgF/JLr/quXWNdMEkLdyEKuUpacWKy//0Zw4FwdFPUT8Vdm
-         3PIRxf9YaF91bK2SDDmxmOFCRm4qf7dROL6FHqjLDAzpy/cY7l2PNjRVAIYVgCOu4mpI
-         IgjA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TstEenVcD9dtm0gKpxBLxgiUK+JtbO5wqAf6oc/UT/w=;
+        b=vUij+8r57SHOcn1534j4Do+M1oeK6Qmtuepvqbsy6XkffLegklfEnZ8tJmEUj2Qjzg
+         SFNczMh0+nJwVmLnHSYFgxEVH4KRxim6DeYxCQDHV8UeYFvlmHDIFTQKc4B+VTRSqdzx
+         s6NdnoBENvtTd8cz1nX7o20/psEf+prPmPhgsQRbdLJWWqJPBKkD2JsOAjE0grBLz9Eh
+         jO8gKL4W2cgcp+Uu558WqmDrOz79Bod+BMUGB5r/D2k8ZN0G2xFy0/UlU3RhQNcTjAIs
+         fpuuOu/z4hTT//uHIERiTK/sZKRm2lW64hCtv5sUU/Mx//PuevBhsdeFg1jLJY2HjO3C
+         fsTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=mmwZjDMPDOyOr06mrGOlugZsWKMVJwTQQ1Sted8pKE0=;
-        b=Wu9sB16m3PGHk3+/7SU2Qt8UvCVGvgXJNRzs41r1bVj69cjKHMf9uAj+n5CC6kaYly
-         G0jsy8WQrQZh+4I+E8UHT36/e056ATAcWXden2LrYiF1hkAM1iG/ePE3p9sx02hw/b/T
-         cnUSoNqoF3wyp3kJ7FWCiyt+HSdwmbrcLe8q+gFX5+SfJkrBITKlNP4XUcHVjLRAU1qF
-         IkKsya3Bof46KGdfCjXNtvr3MY98+06r9JAWxSaC8AtRfI55JRgigZxq5vh6buZHdeMc
-         X6anpYj+hq7Of/jwFAbFG1Kabzbd1X1OQs+m8KIdFaSDqDhcKN2i83zfEHcuUKLHOBZu
-         j9ig==
-X-Gm-Message-State: ABuFfoibpujPpmwgPmvbE/QzFfvWlqO0ahkrZqs5mMyTHCQUBlvHgfFe
-        j4DU8PzcByysuJvL8E8qHmWIyRHyvfPoqhrtRusPMHY6BJeLddhdtx3iFdPtKsaFRxdbLyliigx
-        xXDupcoKF18GyBufSeZB5eNqaisSQF0uGYeo3anuTzshB49NtMfG00aswpmpUVns=
-X-Google-Smtp-Source: ACcGV63hbgmRQZOqsAMy8yPas29pyuS03uwBckjus57WikFNUXeCF177tcnGKkqPGwt2mAtJHHSnRguqx3qWIw==
-X-Received: by 2002:a62:4b18:: with SMTP id y24-v6mr4352348pfa.64.1539392327436;
- Fri, 12 Oct 2018 17:58:47 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 17:58:41 -0700
-In-Reply-To: <cover.1539391439.git.steadmon@google.com>
-Message-Id: <c7b5a03d810bee0289cccedd5f433fca2867904c.1539391439.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <cover.1538693039.git.steadmon@google.com> <cover.1539391439.git.steadmon@google.com>
-X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v2 2/2] fuzz: Add fuzz testing for packfile indices.
-From:   steadmon@google.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TstEenVcD9dtm0gKpxBLxgiUK+JtbO5wqAf6oc/UT/w=;
+        b=tnoheLAgjdhOVdhBbjwgt8eGvJ95/r6e81/pB8pDXi3pVs3LgNe1v9WRBrU8RjHAR3
+         rK42on3exINsxdAq3MW8eDBeGxkq0p87WdNqIzJ14dTGza1QABmeITYeYbOpS8cLFykA
+         AJlxkRzZ+41w9nBX+w8rkJAz4c9RLGZ/WSR23yVXz+dkFNSJXZdDeSKo1U5J/0vTTWz1
+         IRqudgwCuguiFS30D0lLLknT3ExwrpsRPJvrDbOatxcOubmkK8Lvrx2ZVZpzkTTgeFWq
+         JPnP7g4okufR0mgkq+5OEKN390UzSiPu8ERmdRPW4VSBnYPYoAmSS61nzMtyrImdgyY3
+         +OBQ==
+X-Gm-Message-State: ABuFfogJe3zzLAZrAdTyhnyZCNBGDXbSZmbUiK/uC6t+xswRva7L9vg0
+        MOlKydyrhZQgGklRjbfO28ccM0ejW1rxdw==
+X-Google-Smtp-Source: ACcGV62PRtTeD7wkD+9BxpC85l+DWYaVgkD4evLM+42AqDRnbjj/AJ7+5Z8yk2pxnFUItyvahEGGzg==
+X-Received: by 2002:a17:902:654e:: with SMTP id d14-v6mr7934018pln.292.1539392363978;
+        Fri, 12 Oct 2018 17:59:23 -0700 (PDT)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id y185-v6sm3669235pgd.8.2018.10.12.17.59.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 12 Oct 2018 17:59:23 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 17:59:18 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] fuzz: Add basic fuzz testing target.
+Message-ID: <20181013005918.GD12177@google.com>
+References: <cover.1538693039.git.steadmon@google.com>
+ <bfe4f2f965528ca2a45864857051b9835970ff07.1538693039.git.steadmon@google.com>
+ <xmqqva6amtt7.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqva6amtt7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Josh Steadmon <steadmon@google.com>
+On 2018.10.10 11:14, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> > +FUZZ_OBJS += fuzz-pack-headers.o
+> > +
+> > +FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
+> > +
+> > ...
+> > +### Fuzz testing
+> > +#
+> > +.PHONY: fuzz-clean fuzz-objs fuzz-compile
+> 
+> I take it that you anticipate the fuzz programs in the future all
+> be named fuzz-$(blah), whose source is fuzz-$(blah).o (even though
+> we may grow some common code that may be linked with them, which can
+> be done by tweaking the rule for the $(FUZZ_PROGRAMS) target).  Am I
+> reading you correctly?  Would fuzz-{clean,objs,compile} risk squatting
+> on nicer names we may want to use for $(blah) down the line?
 
-Breaks the majority of check_packed_git_idx() into a separate function,
-load_idx(). The latter function operates on arbitrary buffers, which
-makes it suitable as a fuzzing test target.
+Yes, that's correct. I've reworked the rules to be more compatible with
+how OSS-Fuzz expects to build these targets, and now "fuzz-all" is
+the only remaining special target.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- .gitignore      |  1 +
- Makefile        |  1 +
- fuzz-pack-idx.c | 13 +++++++++++++
- packfile.c      | 44 +++++++++++++++++++++++++-------------------
- packfile.h      | 13 +++++++++++++
- 5 files changed, 53 insertions(+), 19 deletions(-)
- create mode 100644 fuzz-pack-idx.c
+> > + ...
+> > +$(FUZZ_PROGRAMS): fuzz-compile
+> > +	clang++ $(FUZZ_LDFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) $(XDIFF_OBJS) \
+> > +		$(EXTLIBS) git.o $@.o /usr/lib/llvm-4.0/lib/libFuzzer.a -o $@
+> 
+> Is the expected usage pattern to know a single fuzz-* program the
+> builder wants to build, to run "make fuzz-pack-headers"?  If not, it
+> also would be a good idea to have something like
+> 
+>     fuzz-build-all:: $(FUZZ_PROGRAMS)
+>     .PHONY: fuzz-build-all
+> 
+> perhaps?
+> 
+> Also, in the final version we unleash to general developer audience,
+> we'd want to support "make V=1" (and "make" that is "$(QUIET)").
 
-diff --git a/.gitignore b/.gitignore
-index 87a28b3115..64b3377d40 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -1,5 +1,6 @@
- /fuzz_corpora
- /fuzz-pack-headers
-+/fuzz-pack-idx
- /GIT-BUILD-OPTIONS
- /GIT-CFLAGS
- /GIT-LDFLAGS
-diff --git a/Makefile b/Makefile
-index 7f5a19b8ab..1b3d893090 100644
---- a/Makefile
-+++ b/Makefile
-@@ -685,6 +685,7 @@ SCRIPTS = $(SCRIPT_SH_INS) \
- ETAGS_TARGET = TAGS
- 
- FUZZ_OBJS += fuzz-pack-headers.o
-+FUZZ_OBJS += fuzz-pack-idx.o
- 
- # Always build fuzz objects even if not testing, to prevent bit-rot.
- all:: $(FUZZ_OBJS)
-diff --git a/fuzz-pack-idx.c b/fuzz-pack-idx.c
-new file mode 100644
-index 0000000000..0c3d777aac
---- /dev/null
-+++ b/fuzz-pack-idx.c
-@@ -0,0 +1,13 @@
-+#include "object-store.h"
-+#include "packfile.h"
-+
-+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
-+
-+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
-+{
-+	struct packed_git p;
-+
-+	load_idx("fuzz-input", GIT_SHA1_RAWSZ, (void *)data, size, &p);
-+
-+	return 0;
-+}
-diff --git a/packfile.c b/packfile.c
-index 841b36182f..86074a76e9 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -80,10 +80,8 @@ void pack_report(void)
- static int check_packed_git_idx(const char *path, struct packed_git *p)
- {
- 	void *idx_map;
--	struct pack_idx_header *hdr;
- 	size_t idx_size;
--	uint32_t version, nr, i, *index;
--	int fd = git_open(path);
-+	int fd = git_open(path), ret;
- 	struct stat st;
- 	const unsigned int hashsz = the_hash_algo->rawsz;
- 
-@@ -101,16 +99,32 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
- 	idx_map = xmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	close(fd);
- 
--	hdr = idx_map;
-+	ret = load_idx(path, hashsz, idx_map, idx_size, p);
-+
-+	if (ret)
-+		munmap(idx_map, idx_size);
-+
-+	return ret;
-+}
-+
-+int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
-+	     size_t idx_size, struct packed_git *p)
-+{
-+	struct pack_idx_header *hdr = idx_map;
-+	uint32_t version, nr, i, *index;
-+
-+	if (idx_size < 4 * 256 + hashsz + hashsz)
-+		return error("index file %s is too small", path);
-+	if (idx_map == NULL)
-+		return error("empty data");
-+
- 	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
- 		version = ntohl(hdr->idx_version);
--		if (version < 2 || version > 2) {
--			munmap(idx_map, idx_size);
-+		if (version < 2 || version > 2)
- 			return error("index file %s is version %"PRIu32
- 				     " and is not supported by this binary"
- 				     " (try upgrading GIT to a newer version)",
- 				     path, version);
--		}
- 	} else
- 		version = 1;
- 
-@@ -120,10 +134,8 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
- 		index += 2;  /* skip index header */
- 	for (i = 0; i < 256; i++) {
- 		uint32_t n = ntohl(index[i]);
--		if (n < nr) {
--			munmap(idx_map, idx_size);
-+		if (n < nr)
- 			return error("non-monotonic index %s", path);
--		}
- 		nr = n;
- 	}
- 
-@@ -135,10 +147,8 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
- 		 *  - hash of the packfile
- 		 *  - file checksum
- 		 */
--		if (idx_size != 4*256 + nr * (hashsz + 4) + hashsz + hashsz) {
--			munmap(idx_map, idx_size);
-+		if (idx_size != 4 * 256 + nr * (hashsz + 4) + hashsz + hashsz)
- 			return error("wrong index v1 file size in %s", path);
--		}
- 	} else if (version == 2) {
- 		/*
- 		 * Minimum size:
-@@ -157,20 +167,16 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
- 		unsigned long max_size = min_size;
- 		if (nr)
- 			max_size += (nr - 1)*8;
--		if (idx_size < min_size || idx_size > max_size) {
--			munmap(idx_map, idx_size);
-+		if (idx_size < min_size || idx_size > max_size)
- 			return error("wrong index v2 file size in %s", path);
--		}
- 		if (idx_size != min_size &&
- 		    /*
- 		     * make sure we can deal with large pack offsets.
- 		     * 31-bit signed offset won't be enough, neither
- 		     * 32-bit unsigned one will be.
- 		     */
--		    (sizeof(off_t) <= 4)) {
--			munmap(idx_map, idx_size);
-+		    (sizeof(off_t) <= 4))
- 			return error("pack too large for current definition of off_t in %s", path);
--		}
- 	}
- 
- 	p->index_version = version;
-diff --git a/packfile.h b/packfile.h
-index 442625723d..6c4037605d 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -164,4 +164,17 @@ extern int has_pack_index(const unsigned char *sha1);
-  */
- extern int is_promisor_object(const struct object_id *oid);
- 
-+/*
-+ * Expose a function for fuzz testing.
-+ *
-+ * load_idx() parses a block of memory as a packfile index and puts the results
-+ * into a struct packed_git.
-+ *
-+ * This function should not be used directly. It is exposed here only so that we
-+ * have a convenient entry-point for fuzz testing. For real uses, you should
-+ * probably use open_pack_index() or parse_pack_index() instead.
-+ */
-+extern int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
-+		    size_t idx_size, struct packed_git *p);
-+
- #endif
--- 
-2.19.0.605.g01d371f741-goog
-
+Done and done.
