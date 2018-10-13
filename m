@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFB961F97E
-	for <e@80x24.org>; Sat, 13 Oct 2018 00:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 857C81F97E
+	for <e@80x24.org>; Sat, 13 Oct 2018 00:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726363AbeJMIdq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Oct 2018 04:33:46 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:54592 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726299AbeJMIdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Oct 2018 04:33:45 -0400
-Received: by mail-pl1-f201.google.com with SMTP id v4-v6so10652929plz.21
-        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:58:43 -0700 (PDT)
+        id S1726435AbeJMIdt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Oct 2018 04:33:49 -0400
+Received: from mail-it1-f202.google.com ([209.85.166.202]:57206 "EHLO
+        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726299AbeJMIds (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Oct 2018 04:33:48 -0400
+Received: by mail-it1-f202.google.com with SMTP id f18so15010927itk.6
+        for <git@vger.kernel.org>; Fri, 12 Oct 2018 17:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=WFBpSyDKxVA82ztttPC6Q0UUb6Kpo8R7NNQjdudiW4U=;
-        b=D6zupKRL7o2feHqkISRAO5hN4btmLfM8BrMDSyURkIyqDzfh4SEG1kYxDi5fkwJuKb
-         MZbda+2b4htnzpEXIy1G3dgeEom16bQ+ahqOc3DXWlt/XhImja4MYJ6e0WgeKS53kj5x
-         8Hq4Lmi21nrJyuF0pBTSrbdKbKSyvyTOXSboENEnyOhmlq3WHqbwsvlj02suwkONGzPW
-         Y/MNfgoIFd3GDoYDUt+U4P3a6+VR/b40Caj19TRHpbcv8V/BMLbpA4GyVHtTisxoNSQQ
-         j+UNba2pdy/7bcWfubbVufha39qs/RGxqD3aeEllJKy1rBPLL6IMUtKPEvzyQsh/zeRF
-         JZug==
+        bh=GOTqwL2Ajx/3q8IaaiY9Tv/8YHBWHnENX1ekzD/2PRM=;
+        b=jBQsIrUJ6eZ1+XHbIyctdyDZsx44wI/f7058rXn4tKhYF3r0A1tqUy5jwMCzJmTLot
+         IJnJkEMEu5W3jIlXfNjLWgespYN+uNzQGDiYEvIp2uVF8GVfRLf4lej9f6JoVr+Nh+FF
+         DAd9vKfTRn+/c/dxrWCa790m8zrJMOAPfKGT0YeOOZoo4J/ri9HQNGNbqcEosxd2O3y6
+         i/wAgqKaPR/olMnRhWtRx1JbknAd/2nng2fjdtadKei7zbgZ8VwFj92oxStF4tRxcpQI
+         TxueFsuVlms7KQ1ZtDhecL+eOrMYvwnkB4NZbiGdMS1v+Nh38o/kJNf51aZA5gbC+QPW
+         ZZkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=WFBpSyDKxVA82ztttPC6Q0UUb6Kpo8R7NNQjdudiW4U=;
-        b=oco7VAWjF0d98wJphFMeJCzlDyc7r78t85r38VLaBfwkeYNVPloFmXwfC1R0usGZjd
-         bG/4znZ6gu0VNSOJW8Y1SyFq1N/uEyF5IK/sK0Q6p5TbmHm0cEcP4rkvDoQEZhixwxag
-         e/zxnkCuUlZ/rbGRlfNeioAXj4S91Csnm7Kp/W+ovQWeUDyqd/1K+MkU+gcxbQ3pY9V7
-         RxxNYz1MMFxARQJn7oevPKIPEMGjJW49KYFAgNSHbVbmZompbeZu5M8YQWHtEjNraLDM
-         BnhnEB7HAni9UiZyqJHltjSsM3rXSaC+LOSxcr8+M++5h05XM0z7wbwsPvsSxxBhPT5/
-         mIfQ==
-X-Gm-Message-State: ABuFfoj6TdbFhfWf1iVkalnxAGqoddc+BcSOTenWJorVt5pZt1ebT11X
-        W02YiYA7jMbnrzlTIKO+wN7gGlxyVc2PWBSdn5bUAvQgLC8bPu/PwsZdcMIj8kgWaELqqkorlGc
-        2fc398VdWJpuf1ltvVJm1ny6Nkm5ROriRndQvAUIEXOtXUTJFUOxbgHROV1swi3g=
-X-Google-Smtp-Source: ACcGV616p/RBAEm9Zdodv9IE0saGF0N+Z+92rrjI44NQnT5HSGji765bojwacH14ES1rVLcJKqNbJ/GD3E6Dog==
-X-Received: by 2002:a62:660b:: with SMTP id a11-v6mr4551521pfc.24.1539392323174;
- Fri, 12 Oct 2018 17:58:43 -0700 (PDT)
-Date:   Fri, 12 Oct 2018 17:58:39 -0700
-In-Reply-To: <cover.1538693039.git.steadmon@google.com>
-Message-Id: <cover.1539391439.git.steadmon@google.com>
+        bh=GOTqwL2Ajx/3q8IaaiY9Tv/8YHBWHnENX1ekzD/2PRM=;
+        b=foIR9uVPio5c2USvZqcWg+F0ooeukDVpoN1j7PRiw2rGvSyNcJX/BfMsBBNjcch6O4
+         3/v+3Eyb5Z4duL/sQSFjwxGaYOotXtOyO2tOK+Ng0py1ANxFEF4IF0iZTc/5M1tEUqla
+         tt+moVxmNhGOIrQvWeFWB3/feNFuwB/C0XFAPYO0k2nEzVem1QPn4+UEXd5tb4X0P5ID
+         GMHaAe1ohLn4Zu0+on43GgSFKjrZZa+w86rBLuesLay62/VRl6LLeuYtqDdTp7KnNvsn
+         AlpyY5eFI04bgp2VDVoKLo+1t7iGIKxUYRJpK6OLLN6Ogy+EFu/DmJhKrET2T7jd0OaZ
+         TgQg==
+X-Gm-Message-State: ABuFfogAeDlLgTTYU/iau1eGPIcNLMm7p+Rfvm/5Hc91w1aGpgxrjfTv
+        NOD8WkNwFbKRcRf8sEGGp41ov0jCVP0so5Xf6po/IXmCMAI3ya9aR8RTJ6Rg1/oKYABframgzyl
+        ik205uEEb5Xt0/wDbK97sjoANOTG2R+cWKXfxSMPNrv/OB2P2b6JIVYdQRkKiZGE=
+X-Google-Smtp-Source: ACcGV60CKMRxQm5SAEJrlg9QyHQJHZI15dKdGg4jqn3DZBaCRy+0jkjqZZAXiuamyyHVyRVN5AM7eoxFhqT7SQ==
+X-Received: by 2002:a24:dd45:: with SMTP id t66-v6mr9818977itf.5.1539392325407;
+ Fri, 12 Oct 2018 17:58:45 -0700 (PDT)
+Date:   Fri, 12 Oct 2018 17:58:40 -0700
+In-Reply-To: <cover.1539391439.git.steadmon@google.com>
+Message-Id: <446d8081b1a05250e69ae56a4fa41923039c69f6.1539391439.git.steadmon@google.com>
 Mime-Version: 1.0
-References: <cover.1538693039.git.steadmon@google.com>
+References: <cover.1538693039.git.steadmon@google.com> <cover.1539391439.git.steadmon@google.com>
 X-Mailer: git-send-email 2.19.0.605.g01d371f741-goog
-Subject: [PATCH v2 0/2] add fuzzing targets for use with OSS-Fuzz
+Subject: [PATCH v2 1/2] fuzz: Add basic fuzz testing target.
 From:   steadmon@google.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Josh Steadmon <steadmon@google.com>
@@ -64,126 +64,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Josh Steadmon <steadmon@google.com>
 
-V2 of this series pulls the compiler flags out of the Makefile, to be
-provided by the user depending on the combination of compiler and
-fuzzing engine in use. This also makes it more compatible with
-OSS-Fuzz's build process.
+fuzz-pack-headers.c provides a fuzzing entry point compatible with
+libFuzzer (and possibly other fuzzing engines).
 
-Josh Steadmon (2):
-  fuzz: Add basic fuzz testing target.
-  fuzz: Add fuzz testing for packfile indices.
-
- .gitignore          |  3 +++
- Makefile            | 33 +++++++++++++++++++++++++++++++++
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ .gitignore          |  2 ++
+ Makefile            | 32 ++++++++++++++++++++++++++++++++
  fuzz-pack-headers.c | 14 ++++++++++++++
- fuzz-pack-idx.c     | 13 +++++++++++++
- packfile.c          | 44 +++++++++++++++++++++++++-------------------
- packfile.h          | 13 +++++++++++++
- 6 files changed, 101 insertions(+), 19 deletions(-)
+ 3 files changed, 48 insertions(+)
  create mode 100644 fuzz-pack-headers.c
- create mode 100644 fuzz-pack-idx.c
 
-Range-diff against v1:
-1:  9456c41798 ! 1:  446d8081b1 fuzz: Add basic fuzz testing target.
-    @@ -32,6 +32,9 @@
-      
-     +FUZZ_OBJS += fuzz-pack-headers.o
-     +
-    ++# Always build fuzz objects even if not testing, to prevent bit-rot.
-    ++all:: $(FUZZ_OBJS)
-    ++
-     +FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
-     +
-      # Empty...
-    @@ -46,14 +49,13 @@
-      	git.o
-      ifndef NO_CURL
-     @@
-    - cocciclean:
-    - 	$(RM) contrib/coccinelle/*.cocci.patch*
-    - 
-    --clean: profile-clean coverage-clean cocciclean
-    -+clean: profile-clean coverage-clean cocciclean fuzz-clean
-    - 	$(RM) *.res
-    - 	$(RM) $(OBJECTS)
-      	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
-    + 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
-    + 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
-    ++	$(RM) $(FUZZ_PROGRAMS)
-    + 	$(RM) -r bin-wrappers $(dep_dirs)
-    + 	$(RM) -r po/build/
-    + 	$(RM) *.pyc *.pyo */*.pyc */*.pyo command-list.h $(ETAGS_TARGET) tags cscope*
-     @@
-      cover_db_html: cover_db
-      	cover -report html -outputdir cover_db_html cover_db
-    @@ -61,24 +63,24 @@
-     +
-     +### Fuzz testing
-     +#
-    -+.PHONY: fuzz-clean fuzz-objs fuzz-compile
-    -+
-    -+FUZZ_CFLAGS = $(CFLAGS) -fsanitize-coverage=trace-pc-guard -fsanitize=address
-    -+FUZZ_LDFLAGS = $(FUZZ_CFLAGS)
-    -+
-    -+
-    -+fuzz-clean:
-    -+	$(RM) $(FUZZ_PROGRAMS) $(FUZZ_OBJS)
-    -+
-    -+fuzz-objs: $(FUZZ_OBJS)
-    ++# Building fuzz targets generally requires a special set of compiler flags that
-    ++# are not necessarily appropriate for general builds, and that vary greatly
-    ++# depending on the compiler version used.
-    ++#
-    ++# An example command to build against libFuzzer from LLVM 4.0.0:
-    ++#
-    ++# make CC=clang CXX=clang++ \
-    ++#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
-    ++#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
-    ++#      fuzz-all
-    ++#
-    ++.PHONY: fuzz-all
-     +
-    -+fuzz-compile:
-    -+	$(MAKE) CC=clang LD=clang CFLAGS="$(FUZZ_CFLAGS)" \
-    -+		LDFLAGS="$(FUZZ_LDFLAGS)" all fuzz-objs
-    ++$(FUZZ_PROGRAMS): all
-    ++	$(QUIET_LINK)$(CXX) $(CFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
-    ++		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
-     +
-    -+$(FUZZ_PROGRAMS): fuzz-compile
-    -+	clang++ $(FUZZ_LDFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) $(XDIFF_OBJS) \
-    -+		$(EXTLIBS) git.o $@.o /usr/lib/llvm-4.0/lib/libFuzzer.a -o $@
-    ++fuzz-all: $(FUZZ_PROGRAMS)
-     
-      diff --git a/fuzz-pack-headers.c b/fuzz-pack-headers.c
-      new file mode 100644
-2:  581eb8f817 ! 2:  c7b5a03d81 fuzz: Add fuzz testing for packfile indices.
-    @@ -24,23 +24,8 @@
-      FUZZ_OBJS += fuzz-pack-headers.o
-     +FUZZ_OBJS += fuzz-pack-idx.o
-      
-    - FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
-    - 
-    -@@
-    - 
-    - ### Fuzz testing
-    - #
-    --.PHONY: fuzz-clean fuzz-objs fuzz-compile
-    -+.PHONY: fuzz-clean fuzz-objs fuzz-compile fuzz-all
-    - 
-    - FUZZ_CFLAGS = $(CFLAGS) -fsanitize-coverage=trace-pc-guard -fsanitize=address
-    - FUZZ_LDFLAGS = $(FUZZ_CFLAGS)
-    -@@
-    - $(FUZZ_PROGRAMS): fuzz-compile
-    - 	clang++ $(FUZZ_LDFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) $(XDIFF_OBJS) \
-    - 		$(EXTLIBS) git.o $@.o /usr/lib/llvm-4.0/lib/libFuzzer.a -o $@
-    -+
-    -+fuzz-all: $(FUZZ_PROGRAMS)
-    + # Always build fuzz objects even if not testing, to prevent bit-rot.
-    + all:: $(FUZZ_OBJS)
-     
-      diff --git a/fuzz-pack-idx.c b/fuzz-pack-idx.c
-      new file mode 100644
+diff --git a/.gitignore b/.gitignore
+index 9d1363a1eb..87a28b3115 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,3 +1,5 @@
++/fuzz_corpora
++/fuzz-pack-headers
+ /GIT-BUILD-OPTIONS
+ /GIT-CFLAGS
+ /GIT-LDFLAGS
+diff --git a/Makefile b/Makefile
+index 13e1c52478..7f5a19b8ab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -590,6 +590,8 @@ XDIFF_OBJS =
+ VCSSVN_OBJS =
+ GENERATED_H =
+ EXTRA_CPPFLAGS =
++FUZZ_OBJS =
++FUZZ_PROGRAMS =
+ LIB_OBJS =
+ PROGRAM_OBJS =
+ PROGRAMS =
+@@ -682,6 +684,13 @@ SCRIPTS = $(SCRIPT_SH_INS) \
+ 
+ ETAGS_TARGET = TAGS
+ 
++FUZZ_OBJS += fuzz-pack-headers.o
++
++# Always build fuzz objects even if not testing, to prevent bit-rot.
++all:: $(FUZZ_OBJS)
++
++FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
++
+ # Empty...
+ EXTRA_PROGRAMS =
+ 
+@@ -2250,6 +2259,7 @@ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST
+ OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
+ 	$(XDIFF_OBJS) \
+ 	$(VCSSVN_OBJS) \
++	$(FUZZ_OBJS) \
+ 	common-main.o \
+ 	git.o
+ ifndef NO_CURL
+@@ -2937,6 +2947,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
++	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) -r bin-wrappers $(dep_dirs)
+ 	$(RM) -r po/build/
+ 	$(RM) *.pyc *.pyo */*.pyc */*.pyo command-list.h $(ETAGS_TARGET) tags cscope*
+@@ -3061,3 +3072,24 @@ cover_db: coverage-report
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
+ 
++
++### Fuzz testing
++#
++# Building fuzz targets generally requires a special set of compiler flags that
++# are not necessarily appropriate for general builds, and that vary greatly
++# depending on the compiler version used.
++#
++# An example command to build against libFuzzer from LLVM 4.0.0:
++#
++# make CC=clang CXX=clang++ \
++#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
++#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
++#      fuzz-all
++#
++.PHONY: fuzz-all
++
++$(FUZZ_PROGRAMS): all
++	$(QUIET_LINK)$(CXX) $(CFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
++		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
++
++fuzz-all: $(FUZZ_PROGRAMS)
+diff --git a/fuzz-pack-headers.c b/fuzz-pack-headers.c
+new file mode 100644
+index 0000000000..99da1d0fd3
+--- /dev/null
++++ b/fuzz-pack-headers.c
+@@ -0,0 +1,14 @@
++#include "packfile.h"
++
++int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
++
++int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
++{
++	enum object_type type;
++	unsigned long len;
++
++	unpack_object_header_buffer((const unsigned char *)data,
++				    (unsigned long)size, &type, &len);
++
++	return 0;
++}
 -- 
 2.19.0.605.g01d371f741-goog
 
