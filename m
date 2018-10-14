@@ -7,84 +7,102 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 646CC1F97E
-	for <e@80x24.org>; Sun, 14 Oct 2018 12:30:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD5711F97E
+	for <e@80x24.org>; Sun, 14 Oct 2018 12:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726187AbeJNUJX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Oct 2018 16:09:23 -0400
-Received: from mail-it1-f176.google.com ([209.85.166.176]:35638 "EHLO
-        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbeJNUJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Oct 2018 16:09:22 -0400
-Received: by mail-it1-f176.google.com with SMTP id p64-v6so23947780itp.0
-        for <git@vger.kernel.org>; Sun, 14 Oct 2018 05:28:31 -0700 (PDT)
+        id S1726257AbeJNUOc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Oct 2018 16:14:32 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:38710 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726129AbeJNUOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Oct 2018 16:14:32 -0400
+Received: by mail-it1-f195.google.com with SMTP id i76-v6so23940565ita.3
+        for <git@vger.kernel.org>; Sun, 14 Oct 2018 05:33:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3Ek17nvAzeJd37AelATHUTJRLbbDDf10gsUohXgUITY=;
-        b=jiJjvKiCo22rBtl4VMUwUrm+idTXsNJwhRBTNW8Il3zgYBtEMssBkN3l+cOX1SjztA
-         Eym5nwc/QgXU6vHY/TOtt8Y7t/HdMCA1kHg34p4VEyRpFOSucP0qqY4mV6A6vDTv2Hf+
-         u51IE+qIeTah/NxyWRlLZ6YH6sqwXo/nNNaUQwgnfxvaR8fUaNNLFj3JNo0IQfqdSicx
-         CTVP2Azl8k9pHNsVgixh5MgO8S9ClSQtvnFr7lbgV5etEGw2LsFI8rduO9uGmf36l4KS
-         /Stz9Ilnx+8McXxEfLeCOnigLlQPjef3b2+CzSbqOwodjBDDMP5Rl2smc4U1m95lw5xb
-         UTWw==
+         :cc:content-transfer-encoding;
+        bh=0a/qNpej46fvxXODj6/OrAIx9QCWdEMzb3Xa4R62L5k=;
+        b=EXJUNcudqyKk7/5pyEHQq4G0tS/0KTc/xXoBRKTr2lbNi4dDPpIhsKuL0M+4ENzRRW
+         DLgPjwCh9UN1VHq1paXBm1uiyASn+L3mIvAjz/tJlzewL0vGbGx5OJECM6BagGZdiYQX
+         kw20MfouNNDjiX0hrfosNGIaMnLVIkAok1qy7XYbe9jWaj2l8FKN5OQlEFLBxdA/b/rE
+         4IbjRFDMOj+dpWsi/AcwkVWOs8o354xySlBL8atkRqKJOFzBZO1t438vANU3WVNDI1lQ
+         J4Wu9buUTCeUuvH263Id5AhkQK4zbjrl9gPf1HpLFrrhx4fbMBkLknt5nNdLmJRXR9kk
+         HwcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3Ek17nvAzeJd37AelATHUTJRLbbDDf10gsUohXgUITY=;
-        b=rDCFMDbSBp3EGYUapGBPHowZ34WG5zPv8hotOQhzc+3Euss3j2WH8V5BqD3Wiazr6F
-         EHYTxhtwtz5V3rUa4lmL/JcGnW6GmFeAH1NBK01DMDRxsB/Y0XS73HAYqHzBvA4l3pxy
-         Cz5YIWcBjwrD9M2zRHrd+J8jCq+xP0rG1x7TS9wTteObFxEflO76+HCW2au7F0qPF/20
-         blRszPmifARYf3swPJWnfgWNTwL0ObptNIE6ozCQg4OIDPQyfwrktYP61+xkJJYcX0+T
-         luRP06NvYdI2pUxYiLoAp6CH44h1eW6IEQMk+kEfTAxEn8dOrGsMIA65k4tOGEqIKTFW
-         SHpw==
-X-Gm-Message-State: ABuFfoj2zc3Nez97aKWjjaUvSwr4x/kGOp6KeZX2h4mZIFmjtg8MmjKX
-        Bqw1LVsIM6f7ticRbghQnNPBJ2zyIk1swHTtBxo=
-X-Google-Smtp-Source: ACcGV62StY2KLWg8dLhuwPynnf0+ulhZlSK0aYbid/FgTzRhLuM3GF6WQnf8xA6ASVDzHD7fBeY9LcdCNVgRyxE32Yw=
-X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr9806697itc.123.1539520111569;
- Sun, 14 Oct 2018 05:28:31 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0a/qNpej46fvxXODj6/OrAIx9QCWdEMzb3Xa4R62L5k=;
+        b=P3+8lGP4gFLbnX7MkbPFP9IO/57U/siGzS21fviEpU/IIPX6CCpcZOdPZx9wky2c+T
+         2pCkfSGSfVRA4Or79Row81v/2F/7fnEdKI/JllRzaRQm9Nkqu860U1FNH1Hi1OoknEzC
+         g2TnFHkjmZ57qT0LBVVriJjGepqP8G5guJPTyBL6a6yLyZfGLBSyTUf3LwdnTzNZMht5
+         pQPLIYaRqeXAt1iBGYtQJxNhlsJ4mNdPSladARk35+5wjboLv4+ovRi84mplxEvju+5T
+         1Z6pCcKSpJrwiNTflKPt3dTF+EQ22QMmNp5B9D+D/wGTPRkQ3+URJzyW8TsuUpZit1HC
+         zZFw==
+X-Gm-Message-State: ABuFfogk8dPC4nmGRwV7yvATwUxOhXTIQ9enWT2JUiDWZCvDCikACLLI
+        INgLegA9toKid1QQwHTiBNJCt+gMnmEj9FPvykEubg==
+X-Google-Smtp-Source: ACcGV63X1V80NUhLQqyb3oA6+13xDZ4OQI9utSlwE7Mbcrlw1cMCKjD8ePO1KyL7QkEQ6HWg1OKUcesSw/6JQpFtLGE=
+X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr9950982itg.70.1539520419205;
+ Sun, 14 Oct 2018 05:33:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com> <20181010155938.20996-1-peartben@gmail.com>
-In-Reply-To: <20181010155938.20996-1-peartben@gmail.com>
+References: <20180915161759.8272-1-pclouds@gmail.com> <20180921155739.14407-1-pclouds@gmail.com>
+ <20180921155739.14407-18-pclouds@gmail.com> <20181010145116.GA11772@sigill.intra.peff.net>
+In-Reply-To: <20181010145116.GA11772@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 14 Oct 2018 14:28:05 +0200
-Message-ID: <CACsJy8CyG0DWPyq5cSUteFUiz1ZCpmmVFjYjt8Gxm3Hnvd5q9g@mail.gmail.com>
-Subject: Re: [PATCH v8 0/7] speed up index load through parallelization
-To:     Ben Peart <peartben@gmail.com>
+Date:   Sun, 14 Oct 2018 14:33:13 +0200
+Message-ID: <CACsJy8AF4ZqL67NyuAbjW=M=0-Bhuh6j+DY8ACbRGauWL81T=A@mail.gmail.com>
+Subject: Re: [PATCH v5 17/23] userdiff.c: remove implicit dependency on the_index
+To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 10, 2018 at 5:59 PM Ben Peart <peartben@gmail.com> wrote:
-> @@ -3460,14 +3479,18 @@ static struct index_entry_offset_table *read_ieot_extension(const char *mmap, si
+On Wed, Oct 10, 2018 at 4:51 PM Jeff King <peff@peff.net> wrote:
 >
->         /* validate the version is IEOT_VERSION */
->         ext_version = get_be32(index);
-> -       if (ext_version != IEOT_VERSION)
-> +       if (ext_version != IEOT_VERSION) {
-> +              error("invalid IEOT version %d", ext_version);
-
-Please wrap this string in _() so that it can be translated.
-
->                return NULL;
-> +       }
->         index += sizeof(uint32_t);
+> On Fri, Sep 21, 2018 at 05:57:33PM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 >
->         /* extension size - version bytes / bytes per entry */
->         nr = (extsize - sizeof(uint32_t)) / (sizeof(uint32_t) + sizeof(uint32_t));
-> -       if (!nr)
-> +       if (!nr) {
-> +              error("invalid number of IEOT entries %d", nr);
+> > diff --git a/diff.c b/diff.c
+> > index 140d0e86df..5256b9eabc 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -2093,23 +2093,25 @@ static void diff_words_flush(struct emit_callba=
+ck *ecbdata)
+> >       }
+> >  }
+> >
+> > -static void diff_filespec_load_driver(struct diff_filespec *one)
+> > +static void diff_filespec_load_driver(struct diff_filespec *one,
+> > +                                   struct index_state *istate)
+>
+> I hadn't looked at this topic until today, when I tried merging next
+> with some of my other local bits and ran into conflicts. I found the
+> idea of passing index_state here, rather than the whole "struct
+> repository", a bit curious.
+>
+> I get why you're doing it: your topic here only cares about removing
+> index dependencies, so you did the minimal thing to move that forward.
+>
+> But if you think about what this function is doing, it is quite clearly
+> dependent on the whole repository, since the userdiff config we're
+> looking up may come from repo config.
+>
+> So I think in the long run this probably should take a repository
+> argument, and use r->index instead of a separate istate argument. That
+> said, I'm not totally opposed to taking this incremental step and
+> letting somebody later sort out the config portions. I wonder if it
+> would be worth calling that out in the commit message to help that later
+> person. But I guess it is a bit late if this is already in next.
 
-Ditto. And reporting extsize may be more useful than nr, which we know
-is zero, but we don't know why it's calculated zero unless we know
-extsize.
--- 
+Maybe. When I made this series, I tried to reduce the access scope as
+much as possible. If it turns out it needs more, we can always turn
+"struct index_state *" into "struct repository *" later,
+--=20
 Duy
