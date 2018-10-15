@@ -2,145 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A14451F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 17:32:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F131F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 17:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726651AbeJPBSz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 21:18:55 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:42421 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726585AbeJPBSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 21:18:55 -0400
-Received: by mail-ed1-f54.google.com with SMTP id b7-v6so18617350edd.9
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 10:32:42 -0700 (PDT)
+        id S1726691AbeJPBTs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 21:19:48 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:45495 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726585AbeJPBTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 21:19:48 -0400
+Received: by mail-qt1-f193.google.com with SMTP id e10-v6so22385543qtq.12
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 10:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=O7B9IINkz/E7lAGlGBvg3p9IONVCOCprXYcJ100+EF0=;
-        b=BcEI2fPQFc+3ioDapxlACW+hcL1zgs9/r/zlC7Uhwtxc+J/L+4IqCdf/r2CDH2nUlx
-         yWDwgOJbhTWLviYmX8PRqf8rNWZy8hXzi52lYgT+Yhag2tzGM5UQImJdcsWHOO3Yg75Y
-         YA5ta3FJ7oh9gy7wDySIeJZlqGjlhAkmh3Lmjt86g/5tH/tQ0vNLOqsbL5ixvTGaV3ie
-         oYoaZbb5G3KkFpgtF/k+KI9Z8m1HdtKplKPhrwnG7uUXMnlCzLklYUmrPaaHQgbobQih
-         2jG5P7nfuz4wuNLTKO92HegMamNMmJSoWyl13/WhrcrpGjrZIn1KVMBPmk1rLaP3/pzb
-         +54Q==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9zv/K7HBHwrxTYfupAJMnqEMSsEFCQ1W/JhQXB/ZPY8=;
+        b=eHUqD53VSbpTYGUBSGn9z7qQ1A1KboU1IRFfWugc68YfVpzDIvaKB/IfLp32TedQw7
+         UoUTHOXPA/cdswD6/YnNRTxPzEPSvaKanuFemsTfDYVzPmpBSHiNtREjuKghXXH4wN5T
+         qhQoG987pUTtNrkhAOHlxJreK87qzNhlNPvH+DW9rsSWxLy3UoG7QujjjiJosuEZE6q3
+         zh2v/k20RkDxAA8GXTVn39PvfJ+brLHBOdi3JekaOrUtHZWhuFESoxXBJLyeQWywDuZN
+         tvVICGWhXgf8sJJyWHT09mXuRc/rBpmn6UbKylrIrXF4xINDnguaZSQRLVmmyEdC9xLn
+         D74A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=O7B9IINkz/E7lAGlGBvg3p9IONVCOCprXYcJ100+EF0=;
-        b=QpU5m3Fb8p+xAiYCmP+xC//eY2qpZm8E4ZpBS4mjHsxwKpSj155rM0IjJkLqI7huLg
-         wa7rx5GiH2a0aLGuSrIegYcbMYqT/OT0ksb8HBXePYZsRG0qHBeJWBVi0kyPxcypyHWD
-         JabrcEA/4Rn8BMUS01NVIpRu8NBSi64JJ4EyGrssmFg2lijd7TuCKEnFTdprxbsj/NxU
-         CcQDxDm87fLKirCTzdHt9TlYurFJ0gS68sEFTavDSnd48aApP7VF3fbwnb6VTqi9b5LI
-         PjIKYQ9zPUuqLEbU81X/gl/Xg0fjDfLRms4lWn6Jn8KdDvZoI+fYjy3YykXWhAcI2edF
-         t99w==
-X-Gm-Message-State: ABuFfoiH/Uxpm43GHH07ZtAy3A8BRmAfixCJ+Xrdkuj1Y3SRWAyg6j2u
-        3yp4DEZhmgY83w91tOO4fUlU3LK7WKeHObb7Xabwfw==
-X-Google-Smtp-Source: ACcGV60xcW2i1LS2ynyrLMsGMJhLAgJSaJzmhDV4wYEm7GyzYyC6ocK9wS8ipocl2Hq5JzZ1PZdowDEcZPfWEBglqk4=
-X-Received: by 2002:aa7:d9cf:: with SMTP id v15-v6mr25379453eds.25.1539624761827;
- Mon, 15 Oct 2018 10:32:41 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9zv/K7HBHwrxTYfupAJMnqEMSsEFCQ1W/JhQXB/ZPY8=;
+        b=ZxEAyoSjnaHC1BUlR5KbbFG6cP3XFCTfjNWCvIed/FMBtrPEkAsyx4E9InhKKkH5D2
+         Usq9lUOsDeUNxmrecIh1J5OCeHZKHvBkmWm1sgiBaKV7/sCxBg4CP65wygwF95E1gDbz
+         ZzrTVwSKbtHgdG7Ls+xS5fh8xJo8qOwkEKGB1qxS1srLyQgTnLHJHoda1wRReE7PSLyv
+         qCuInfUMsaOvwQW3r08jPhOjJ3mmQHjFVNOhBwaBYTw2/mOOKrVNJShsjcGKXODczEDC
+         CclWk1ImxVwK9EOn1PMwTuCMQ1bwdX1yZs68eg7G1zUUse9iQUGckmHiwmk6tOJWvpvT
+         UliA==
+X-Gm-Message-State: ABuFfojlOk+voab1vSoEhtjEO/Le60M1o90Zt4B47MWsBd9409hkHU91
+        bidnZcoCRkY3ZXVwFLv3768=
+X-Google-Smtp-Source: ACcGV61VQNRMPhdB58YP/KeT7KnwdDWTwiHKNDii2ZgmIqHT+Hj2apvhyyajggKf/aHPkQc13B34Ww==
+X-Received: by 2002:ac8:65cd:: with SMTP id t13-v6mr16759791qto.260.1539624815544;
+        Mon, 15 Oct 2018 10:33:35 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id n67-v6sm10359718qkh.66.2018.10.15.10.33.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Oct 2018 10:33:34 -0700 (PDT)
+Subject: Re: [PATCH v8 0/7] speed up index load through parallelization
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181010155938.20996-1-peartben@gmail.com>
+ <CACsJy8CyG0DWPyq5cSUteFUiz1ZCpmmVFjYjt8Gxm3Hnvd5q9g@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <3a7fb135-95e3-9dab-ca31-8daadc5cf80c@gmail.com>
+Date:   Mon, 15 Oct 2018 13:33:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <xmqqh8hr9pxb.fsf@gitster-ct.c.googlers.com> <CAGZ79kZGEMWpr7aqeqXbC4bkmsCCiW+1pxbEV4T0vfsYG+_3iA@mail.gmail.com>
- <xmqqd0seac9y.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0seac9y.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 15 Oct 2018 10:32:30 -0700
-Message-ID: <CAGZ79kYQfSHkk-cxxL5zz3sj6gYigPFw4zccA46poOYY-fBeSA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2018, #02; Sat, 13)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACsJy8CyG0DWPyq5cSUteFUiz1ZCpmmVFjYjt8Gxm3Hnvd5q9g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 12, 2018 at 6:03 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stefan Beller <sbeller@google.com> writes:
->
-> >> * sb/submodule-recursive-fetch-gets-the-tip (2018-10-11) 9 commits
-> >>  . builtin/fetch: check for submodule updates for non branch fetches
-> >>  . fetch: retry fetching submodules if needed objects were not fetched
-> >>  . submodule: fetch in submodules git directory instead of in worktree
-> >>  . repository: repo_submodule_init to take a submodule struct
-> >>  . submodule.c: do not copy around submodule list
-> >>  . submodule.c: move global changed_submodule_names into fetch submodu=
-le struct
-> >>  . submodule.c: sort changed_submodule_names before searching it
-> >>  . submodule.c: fix indentation
-> >>  . sha1-array: provide oid_array_filter
-> >>
-> >>  "git fetch --recurse-submodules" may not fetch the necessary commit
-> >>  that is bound to the superproject, which is getting corrected.
-> >>
-> >>  Ejected for now, as it has fallouts in places like t/helper/.
-> >
-> > This is the first time I hear about that, I'll look into that.
-> > The tipmost commit there is also shoddy, I'll redo that.
->
-> This is the first time I saw the breakage with this series, but I
-> would not be suprised, as this was rerolled recently.  Who knows
-> what got changed in this series and in other topics---any new
-> interaction can arise and that is a normal part of distributed
-> development.
+fixup! IEOT error messages
 
-I performed the same merge last week, and the range-diff indicates,
-that your version of next was further ahead than mine.
+Enable localizing new error messages and improve the error message for
+invalid IEOT extension sizes.
 
-The breakage itself comes from
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
+  read-cache.c | 4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
 
-t/helper/test-submodule-nested-repo-config.c: In function
-=E2=80=98cmd__submodule_nested_repo_config=E2=80=99:
-t/helper/test-submodule-nested-repo-config.c:20:54: warning: passing
-argument 3 of =E2=80=98repo_submodule_init=E2=80=99 from incompatible point=
-er type
-[-Wincompatible-pointer-types]
-  if (repo_submodule_init(&submodule, the_repository, argv[1])) {
-                                                      ^~~~
-In file included from ./cache.h:17:0,
-                 from ./submodule-config.h:4,
-                 from t/helper/test-submodule-nested-repo-config.c:2:
-./repository.h:126:5: note: expected =E2=80=98const struct submodule *=E2=
-=80=99 but
-argument is of type =E2=80=98const char *=E2=80=99
- int repo_submodule_init(struct repository *subrepo,
-     ^~~~~~~~~~~~~~~~~~~
+diff --git a/read-cache.c b/read-cache.c
+index 7acc2c86f4..f9fa6a7979 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3480,7 +3480,7 @@ static struct index_entry_offset_table 
+*read_ieot_extension(const char *mmap, si
+         /* validate the version is IEOT_VERSION */
+         ext_version = get_be32(index);
+         if (ext_version != IEOT_VERSION) {
+-	       error("invalid IEOT version %d", ext_version);
++	       error(_("invalid IEOT version %d"), ext_version);
+  	       return NULL;
+         }
+         index += sizeof(uint32_t);
+@@ -3488,7 +3488,7 @@ static struct index_entry_offset_table 
+*read_ieot_extension(const char *mmap, si
+         /* extension size - version bytes / bytes per entry */
+         nr = (extsize - sizeof(uint32_t)) / (sizeof(uint32_t) + 
+sizeof(uint32_t));
+         if (!nr) {
+-	       error("invalid number of IEOT entries %d", nr);
++	       error(_("invalid IEOT extension size %d"), extsize);
+  	       return NULL;
+         }
+         ieot = xmalloc(sizeof(struct index_entry_offset_table)
+-- 
+2.18.0.windows.1
 
-which is introduced by
-commit c369da44610acc5e56213b8784d4250ae619fdb9
-  (origin/ao/submodule-wo-gitmodules-checked-out)
-Author: Antonio Ospite <ao2@ao2.it>
-Date:   2018-10-05 15:06
 
-    t/helper: add test-submodule-nested-repo-config
 
-    Add a test tool to exercise config_from_gitmodules(), in particular for
-    the case of nested submodules.
-
-    Add also a test to document that reading the submoudles config of neste=
-d
-    submodules does not work yet when the .gitmodules file is not in the
-    working tree but it still in the index.
-
-    This is because the git API does not always make it possible access the
-    object store  of an arbitrary repository (see get_oid() usage in
-    config_from_gitmodules()).
-
-    When this git limitation gets fixed the aforementioned use case will be
-    supported too.
-
-    Signed-off-by: Antonio Ospite <ao2@ao2.it>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-My resend will take that into account, building on Antonios series.
-
-Thanks,
-Stefan
+On 10/14/2018 8:28 AM, Duy Nguyen wrote:
+> On Wed, Oct 10, 2018 at 5:59 PM Ben Peart <peartben@gmail.com> wrote:
+>> @@ -3460,14 +3479,18 @@ static struct index_entry_offset_table *read_ieot_extension(const char *mmap, si
+>>
+>>          /* validate the version is IEOT_VERSION */
+>>          ext_version = get_be32(index);
+>> -       if (ext_version != IEOT_VERSION)
+>> +       if (ext_version != IEOT_VERSION) {
+>> +              error("invalid IEOT version %d", ext_version);
+> 
+> Please wrap this string in _() so that it can be translated.
+> 
+>>                 return NULL;
+>> +       }
+>>          index += sizeof(uint32_t);
+>>
+>>          /* extension size - version bytes / bytes per entry */
+>>          nr = (extsize - sizeof(uint32_t)) / (sizeof(uint32_t) + sizeof(uint32_t));
+>> -       if (!nr)
+>> +       if (!nr) {
+>> +              error("invalid number of IEOT entries %d", nr);
+> 
+> Ditto. And reporting extsize may be more useful than nr, which we know
+> is zero, but we don't know why it's calculated zero unless we know
+> extsize.
+> 
