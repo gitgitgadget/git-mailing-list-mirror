@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E58E1F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCD901F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726765AbeJOR4n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 13:56:43 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35119 "EHLO
+        id S1726779AbeJOR4p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 13:56:45 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:32846 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbeJOR4n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 13:56:43 -0400
-Received: by mail-pg1-f196.google.com with SMTP id v133-v6so8946114pgb.2
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:08 -0700 (PDT)
+        with ESMTP id S1726515AbeJOR4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 13:56:44 -0400
+Received: by mail-pg1-f196.google.com with SMTP id y18-v6so8957519pge.0
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m+Q5LWWbECpKHe2DgxjH7XinVp7qDLxZn6Hxn62fG+8=;
-        b=jLQvwKdoiQYnOWnqN4KSrHYwt+XHKPLEDBrMPTmpqzOdCxIYFWwBX7BMCMm2Q+ZjgX
-         uxi+YnbTezTbwiFe1VzzJf8yRxqKV4V4PZ63JPxW5bYdyUmDj8fjr99uuO80YAxRe2kC
-         DsZCe5DCWlyKK83E50XTYTd6lIYMh8+eWvXuKTSWJz/eEsMsAh6eSHzjWcNbliDcHuVc
-         UWpoWmicTiTAmRNwMp10kfGOghigJS8DPbteNTJh1J9Ji1TiT/MFlPAeBx0yxsk+9PT8
-         vxfTIwUUkl3/r3n+FXJs1u6gi9qOQFTUSUwpPx8/0FNeMzLqAy1sLVz9vHYLwBvGHUSX
-         dYlw==
+        bh=yFkau5tDO8LmM1081q0gbLHr4nrIvvPiu6EaqDQgqgI=;
+        b=Cfa+RVJD5QJWjiGKimNWCmzRDBcqvcnWV+9oU+ZDR31LPNZ3cMqx2irtasf/8GBM/T
+         FGBtXyb8qae8IMAetsijX2kr68Mt675Vk/EpKqUthvh8BeZfzY1hvjwDwpplMY26urGk
+         /EhBYmRGNhGwdlJ0e70nPmKGoul+ttBEcJWvwk3Zax6lwDC3iQ1F93K6mIafJcxeBVQT
+         i7MNUEN8G4a2r0eeZWFE/OscQUSaEqAm/adXFYXz0DcZQQBESDhyb9o8lrF12SYc3naQ
+         5kKysrkOLkcDVv23eD6tTkeaB7c+PXNKLKp+u4TnO067NBNj9aX8LCA//j7/y8XK+dni
+         O/+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m+Q5LWWbECpKHe2DgxjH7XinVp7qDLxZn6Hxn62fG+8=;
-        b=iB2s8XkwIldU87/4fKxgxbXFrul0CRww0bBU/VLpwEsqhvZtc1Uw4JUkUTlt7GVblf
-         TTTPjhwfGRdjhPJpokXd+MsldjvkAEE2XniSG7YZsIxiERJzbBy5xLYzL5UOt9EyZJ6u
-         8vL/8k0/2aKtlVOZ+pldd0i6EFoM48KqeCxX+mq4rvuBUtD9rZU1ZGF6m+uXTDTIB4eR
-         0AUxLFtS5AMhYg2u+jOjxNPeQxesiT+en+Q6+eWtkmA3ktYhDslCokl8lSRfJC6jrcvJ
-         XojObrx/GurlWndTfKNNPFzOlO2vemDjrLfaKEHbaIldwIcdeDTWZp8guTHGWlCIgQtD
-         tLlw==
-X-Gm-Message-State: ABuFfoiyCLblGW6Ij0wDVqeqVOEhe5zcdsjjm5Lt8eAi3lPiMkUg+RGt
-        7DY96yEWBUf47SyheMdkWNBo4Cfy
-X-Google-Smtp-Source: ACcGV61+EC6Pe7TPtHKX4JSui974ISHOhQ9c6CAPeRnnSbK3bKdodwAgVaxfgZP8o8WiyHkB5Nl/Sw==
-X-Received: by 2002:a62:36c3:: with SMTP id d186-v6mr16553432pfa.133.1539598327643;
-        Mon, 15 Oct 2018 03:12:07 -0700 (PDT)
+        bh=yFkau5tDO8LmM1081q0gbLHr4nrIvvPiu6EaqDQgqgI=;
+        b=HPZvUS+kyvM/0nwRfiV7n+Q6Y9hD6o/Aw4jjFbRfFDjMmcloBBr1TYH0gTx7N5i1ab
+         y1p/VTCPV6xwqThrWKzQlAkcoLpCqEqiUYg6yCrwVdPJsp2t72m8hQVZixpdvLuzwdLf
+         TfooL1zcHP8VUlrM0jTz/0OYxwb3m/bAv+SHsvHv4mYYdOMsPJT19tqW400OPl2yNqhE
+         DamTCqR+gxS7Q8dk0NdjoB2J2Rbq3VZAU0TuDHWRy0YknWIegmDeUNaB8K/Ide2920pl
+         Oq5Q9hAzy9cLMGm0Walp4iSqPT0XpxJCwFf7DNGcieKn0gOTyqKChTU+rsYbzLLYaY6h
+         72vA==
+X-Gm-Message-State: ABuFfoj2VQ/EX8k/WZTqlzbciEq41bPDxU2iS07h9m1m2Cc0db+l8B4K
+        40m+pCHiGbeYuyXGjlniffwE8nVf
+X-Google-Smtp-Source: ACcGV60x5WdD6YLnZqGGc2gA8kiBPl45AAvHLXbCkOU5+SX3rJuAgLY2F0k7f0xSw9BZzxxVOvwhhw==
+X-Received: by 2002:a63:680a:: with SMTP id d10-v6mr15301433pgc.7.1539598329248;
+        Mon, 15 Oct 2018 03:12:09 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id j25-v6sm11812203pff.116.2018.10.15.03.12.06
+        by smtp.gmail.com with ESMTPSA id j64-v6sm11556849pge.15.2018.10.15.03.12.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 03:12:06 -0700 (PDT)
-Date:   Mon, 15 Oct 2018 03:12:06 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Oct 2018 10:11:48 GMT
-Message-Id: <1a22efe849d6da79f2c639c62a1483361a130238.1539598316.git.gitgitgadget@gmail.com>
+        Mon, 15 Oct 2018 03:12:08 -0700 (PDT)
+Date:   Mon, 15 Oct 2018 03:12:08 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Oct 2018 10:11:49 GMT
+Message-Id: <12d6137f8d2ccc2041bed8d56d88a09b1db0fd77.1539598316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v2.git.gitgitgadget@gmail.com>
 References: <pull.31.git.gitgitgadget@gmail.com>
         <pull.31.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 06/13] Add a build definition for Azure DevOps
+Subject: [PATCH v2 07/13] tests: introduce `test_atexit`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,386 +71,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This commit adds an azure-pipelines.yml file which is Azure DevOps'
-equivalent to Travis CI's .travis.yml.
+When running the p4 daemon or `git daemon`, we want to kill it at the
+end of the test script.
 
-To make things a bit easier to understand, we refrain from using the
-`matrix` feature here because (while it is powerful) it can be a bit
-confusing to users who are not familiar with CI setups. Therefore, we
-use a separate phase even for similar configurations (such as GCC vs
-Clang on Linux, GCC vs Clang on macOS).
+So far, we do this "manually".
 
-Also, we make use of the shiny new feature we just introduced where the
-test suite can output JUnit-style .xml files. This information is made
-available in a nice UI that allows the viewer to filter by phase and/or
-test number, and to see trends such as: number of (failing) tests, time
-spent running the test suite, etc.
+However, in the next few commits we want to teach the test suite to
+optionally re-run scripts with different options, therefore we will have
+to have a consistent way to stop daemons.
+
+Let's introduce `test_atexit`, which is loosely modeled after
+`test_when_finished` (but has a broader scope: rather than running the
+commands after the current test case, run them when the test script
+finishes, and also run them when the `--immediate` option is in effect).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- azure-pipelines.yml   | 319 ++++++++++++++++++++++++++++++++++++++++++
- ci/mount-fileshare.sh |  26 ++++
- 2 files changed, 345 insertions(+)
- create mode 100644 azure-pipelines.yml
- create mode 100755 ci/mount-fileshare.sh
+ t/t0000-basic.sh        | 18 ++++++++++++++++++
+ t/test-lib-functions.sh | 29 +++++++++++++++++++++++++++++
+ t/test-lib.sh           |  4 ++++
+ 3 files changed, 51 insertions(+)
 
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-new file mode 100644
-index 0000000000..b5749121d2
---- /dev/null
-+++ b/azure-pipelines.yml
-@@ -0,0 +1,319 @@
-+resources:
-+- repo: self
-+  fetchDepth: 1
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 391f910c6a..8c5faa6ce1 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -821,6 +821,24 @@ test_expect_success 'tests clean up even on failures' "
+ 	EOF
+ "
+ 
++test_expect_success 'test_atexit is run' "
++	test_must_fail run_sub_test_lib_test \
++		atexit-cleanup 'Run atexit commands' -i <<-\\EOF &&
++	test_expect_success 'tests clean up even after a failure' '
++		> ../../clean-atexit &&
++		test_atexit rm ../../clean-atexit &&
++		> ../../also-clean-atexit &&
++		test_atexit rm ../../also-clean-atexit &&
++		> ../../dont-clean-atexit &&
++		(exit 1)
++	'
++	test_done
++	EOF
++	test_path_exists dont-clean-atexit &&
++	test_path_is_missing clean-atexit &&
++	test_path_is_missing also-clean-atexit
++"
 +
-+phases:
-+- phase: linux_clang
-+  displayName: linux-clang
-+  condition: succeeded()
-+  queue:
-+    name: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+ test_expect_success 'test_oid setup' '
+ 	test_oid_init
+ '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 78d8c3783b..d7dd0c1be9 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -891,6 +891,35 @@ test_when_finished () {
+ 		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_cleanup"
+ }
+ 
++# This function can be used to schedule some commands to be run
++# unconditionally at the end of the test script, e.g. to stop a daemon:
++#
++#	test_expect_success 'test git daemon' '
++#		git daemon &
++#		daemon_pid=$! &&
++#		test_atexit "kill $daemon_pid" &&
++#		hello world
++#	'
 +
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin &&
-+
-+       export CC=clang || exit 1
-+
-+       ci/install-dependencies.sh
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux-clang'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: linux_gcc
-+  displayName: linux-gcc
-+  condition: succeeded()
-+  queue:
-+    name: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin || exit 1
-+
-+       ci/install-dependencies.sh
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux-gcc'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: osx_clang
-+  displayName: osx-clang
-+  condition: succeeded()
-+  queue:
-+    name: Hosted macOS
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       export CC=clang
-+
-+       ci/install-dependencies.sh
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'osx-clang'
-+      platform: macOS
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: osx_gcc
-+  displayName: osx-gcc
-+  condition: succeeded()
-+  queue:
-+    name: Hosted macOS
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       ci/install-dependencies.sh
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'osx-gcc'
-+      platform: macOS
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: gettext_poison
-+  displayName: GETTEXT_POISON
-+  condition: succeeded()
-+  queue:
-+    name: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev &&
-+
-+       export jobname=GETTEXT_POISON || exit 1
-+
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'gettext-poison'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: windows
-+  displayName: Windows
-+  condition: succeeded()
-+  queue:
-+    name: Hosted VS2017
-+    timeoutInMinutes: 240
-+  steps:
-+  - powershell: |
-+       # Helper to check the error level of the latest command (exit with error when appropriate)
-+       function c() { if (!$?) { exit(1) } }
-+
-+       if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
-+         net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no; c
-+         cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\; c
-+       }
-+
-+       # Add build agent's MinGit to PATH
-+       $env:PATH = $env:AGENT_HOMEDIRECTORY +"\externals\\git\cmd;" +$env:PATH
-+
-+       # Helper to initialize (or update) a Git worktree
-+       function init ($path, $url, $set_origin) {
-+           if (Test-Path $path) {
-+               cd $path; c
-+               if (Test-Path .git) {
-+                   git init; c
-+               } else {
-+                   git status
-+               }
-+           } else {
-+               git init $path; c
-+               cd $path; c
-+           }
-+           git config core.autocrlf false; c
-+           git config core.untrackedCache true; c
-+           if (($set_origin -ne 0) -and !(git config remote.origin.url)) {
-+               git remote add origin $url; c
-+           }
-+           git fetch --depth=1 $url master; c
-+           git reset --hard FETCH_HEAD; c
-+           git clean -df; c
-+       }
-+
-+       # Initialize Git for Windows' SDK
-+       $sdk_path = "$(Build.SourcesDirectory)\git-sdk-64"
-+       init "$sdk_path" "https://dev.azure.com/git-for-windows/git-sdk-64/_git/git-sdk-64" 0
-+       init usr\src\build-extra https://github.com/git-for-windows/build-extra 1
-+
-+       cd "$(Build.SourcesDirectory)"; c
-+
-+       $env:HOME = "$(Build.SourcesDirectory)"
-+       $env:MSYSTEM = "MINGW64"
-+       git-sdk-64\git-cmd --command=usr\\bin\\bash.exe -lc @"
-+         . ci/lib.sh
-+
-+         make -j10 DEVELOPER=1 NO_PERL=1 || exit 1
-+         NO_PERL=1 NO_SVN_TESTS=1 GIT_TEST_OPTS=\"--quiet --write-junit-xml\" time make -j15 -k DEVELOPER=1 test || {
-+           NO_PERL=1 NO_SVN_TESTS=1 GIT_TEST_OPTS=\"-i -v -x\" make -k -C t failed; exit 1
-+         }
-+
-+         save_good_tree
-+       "@
-+       c
-+
-+       if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
-+         cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
-+       }
-+    displayName: 'build & test'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'windows'
-+      platform: Windows
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: linux32
-+  displayName: Linux32
-+  condition: succeeded()
-+  queue:
-+    name: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get -y install \
-+           apt-transport-https \
-+           ca-certificates \
-+           curl \
-+           software-properties-common &&
-+       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
-+       sudo add-apt-repository \
-+          "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-+          $(lsb_release -cs) \
-+          stable" &&
-+       sudo apt-get update &&
-+       sudo apt-get -y install docker-ce &&
-+
-+       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS=-j3 bash -lxc ci/run-linux32-docker.sh || exit 1
-+
-+       sudo chmod a+r t/out/TEST-*.xml
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-linux32-docker.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux32'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+
-+- phase: static_analysis
-+  displayName: StaticAnalysis
-+  condition: succeeded()
-+  queue:
-+    name: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get install -y coccinelle &&
-+
-+       export jobname=StaticAnalysis &&
-+
-+       ci/run-static-analysis.sh || exit 1
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-static-analysis.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+
-+- phase: documentation
-+  displayName: Documentation
-+  condition: succeeded()
-+  queue:
-+    name: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get install -y asciidoc xmlto asciidoctor &&
-+
-+       export ALREADY_HAVE_ASCIIDOCTOR=yes. &&
-+       export jobname=Documentation &&
-+
-+       ci/test-documentation.sh || exit 1
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/test-documentation.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-diff --git a/ci/mount-fileshare.sh b/ci/mount-fileshare.sh
-new file mode 100755
-index 0000000000..5fb5f74b70
---- /dev/null
-+++ b/ci/mount-fileshare.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+die () {
-+	echo "$*" >&2
-+	exit 1
++test_atexit () {
++	# We cannot detect when we are in a subshell in general, but by
++	# doing so on Bash is better than nothing (the test will
++	# silently pass on other shells).
++	test "${BASH_SUBSHELL-0}" = 0 ||
++	error "bug in test script: test_atexit does nothing in a subshell"
++	test_atexit_cleanup="{ $*
++		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_atexit_cleanup"
 +}
 +
-+test $# = 4 ||
-+die "Usage: $0 <share> <username> <password> <mountpoint"
++test_atexit_handler () {
++	test : != "$test_atexit_cleanup" || return 0
 +
-+mkdir -p "$4" || die "Could not create $4"
++	setup_malloc_check
++	test_eval_ "$test_atexit_cleanup"
++	test_atexit_cleanup=:
++	teardown_malloc_check
++}
 +
-+case "$(uname -s)" in
-+Linux)
-+	sudo mount -t cifs -o vers=3.0,username="$2",password="$3",dir_mode=0777,file_mode=0777,serverino "$1" "$4"
-+	;;
-+Darwin)
-+	pass="$(echo "$3" | sed -e 's/\//%2F/g' -e 's/+/%2B/g')" &&
-+	mount -t smbfs,soft "smb://$2:$pass@${1#//}" "$4"
-+	;;
-+*)
-+	die "No support for $(uname -s)"
-+	;;
-+esac ||
-+die "Could not mount $4"
+ # Most tests can use the created repository, but some may need to create more.
+ # Usage: test_create_repo <directory>
+ test_create_repo () {
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 7ed0013f6d..6f9c1f5300 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -413,6 +413,7 @@ test_external_has_tap=0
+ 
+ die () {
+ 	code=$?
++	test_atexit_handler || code=$?
+ 	if test -n "$GIT_EXIT_OK"
+ 	then
+ 		exit $code
+@@ -826,9 +827,12 @@ write_junit_xml_testcase () {
+ 	junit_have_testcase=t
+ }
+ 
++test_atexit_cleanup=:
+ test_done () {
+ 	GIT_EXIT_OK=t
+ 
++	test -n "$immediate" || test_atexit_handler
 +
+ 	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+ 	then
+ 		test -n "$junit_have_testcase" || {
 -- 
 gitgitgadget
 
