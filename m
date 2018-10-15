@@ -6,276 +6,155 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EFFD1F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 03:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B49A1F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 03:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726474AbeJOLPC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 07:15:02 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38064 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726098AbeJOLPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 07:15:01 -0400
-Received: by mail-wm1-f67.google.com with SMTP id 193-v6so17991266wme.3
-        for <git@vger.kernel.org>; Sun, 14 Oct 2018 20:31:41 -0700 (PDT)
+        id S1726422AbeJOL0W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 07:26:22 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35192 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726262AbeJOL0V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 07:26:21 -0400
+Received: by mail-wr1-f65.google.com with SMTP id w5-v6so19499130wrt.2
+        for <git@vger.kernel.org>; Sun, 14 Oct 2018 20:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=8S8byHykTmOaM1Bx+4kF/vpvC5i4tghur6eeUM/wdpo=;
-        b=jyDa4xC4xkn1IXltvKIvOYfkDre4EKYmkTivDAcAJ8nImMv/LdhdyRpYOPJHkIgs1u
-         CzWjbQdvF+1fgX88DtX1rPQn6BA9OUxBuVpri5M5HENM55KUhM8h8x4RMlkTO1mO6q+Y
-         a0iq2XLcZoSR7CwyWYX9A142PmpXiOfRXF4VF+eU8vEKQjoIsJuRLoZeAr2jG6+NDgr9
-         ueMPDya0V8qXBvxQel7cI3GpYSOgwyd0wNTV3l5W2p2GOOkiwG11JKgyZdZAYBJxB5iR
-         +5EcCizPNgExEFpX3FiQSa/NcA11W3vqb/xzWAOUZOyD/Qmd019UPIo/dCa1tZDf+rx5
-         hcng==
+         :user-agent:mime-version;
+        bh=rYU2/dg36yUl8hXRnrf1aFrwcoT1Aw/uY0/5riezsSA=;
+        b=H1+0zYXs+MLxQelelK9NrEKxJTH3t9NIYHv0H+HaTEqbqOL0F/x4y3Es55OGEmPoG/
+         ucWt6WZmC38H732a6aC4RmASH+KzPNNl6Ii0S+Df/z9Sxuyme2nQsfIQYsT95r6CPa/O
+         +gMxPyJJuT4f4h+CcCv6+SKcUcwRfbhPqOXZTwoXsHlD9IqKzKgQzICnYvabazQ5EK3J
+         xuIV8FbyalXOYccydXcFPl5CJG+F2lJwM3lfWABNcYkbvnlcZSbSJ/Fe6b3ZcbOeMVci
+         9xexj4KJBWhdfakh0w3XNe9ta0hAR3nKaxHzxQNlcdljMkNAAdJLrEizcesIZOb3MNIl
+         SRjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=8S8byHykTmOaM1Bx+4kF/vpvC5i4tghur6eeUM/wdpo=;
-        b=eO2ZcySIbsmb3he08XEjtfBu75sn4FbOcXydSGMEPPB0+GCI7LmTIB2MS22wPTZqEE
-         IAAdvd7LWKS9tEzMAUWk22u4xveqbytet/Lb0V13Pe5kIFnUJ3u+r5Q5FdcOd+9RkU+O
-         F+ykVFc/Qko0JKdKay9d0cuAH7ZIcnQs91S4ef+04OZZG4bXy0SqFTQNUqUHQPIE3YT2
-         zYZhxNKykCIEtDmIX2jhqxAalH3VoOAKZGDeJy74RHjxmrD/Ecn8dJh7ImXeeN7ANLM+
-         zRCvtIIJ7e04si8ML5vKja5nSlsgJ0++XRGeB8Vv4LsnMGsTCVra7o+Xkm5STZ3RZF5c
-         WPHQ==
-X-Gm-Message-State: ABuFfojsctPOA1DzNYE8QNV20ytV4MJ+CKvwl4MudTeLJ+WgxVMArZGE
-        b/+C5Y9Km/bR0qzrrYNOPOlN5JiSuFs=
-X-Google-Smtp-Source: ACcGV62eUzngwkd5eWYjnF9jIwAh565V6Ok2/faWP6HyYmEu7PIV/lTE9tLeubyYTk5T7ryDqRO9jA==
-X-Received: by 2002:a1c:b90c:: with SMTP id j12-v6mr12289420wmf.32.1539574300418;
-        Sun, 14 Oct 2018 20:31:40 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rYU2/dg36yUl8hXRnrf1aFrwcoT1Aw/uY0/5riezsSA=;
+        b=ThTcZxcWGkuN3AyJ9f0rInaO0KOZ/8sTVteY6CJbNygqfv4zXrKtQ1cc7X6srKl0TE
+         wkLaNsvzWISUZHk04onU9d0aeW8Y35NlVfZTDsia/Te0gkv7VFm6e9H86Oy3XFJmcU5r
+         X748OT1JVFxGjg00H9l15Kou0aLmwnAfAbfG7HiFyNzrwNBdUYMQfnMotZBl4+zb63ag
+         r3y3Gzn+rb4U5QQDC1imOdaibnBMyoMc218kPtqkL2BFrsA2yACdE0ezL+k5lEXKTiJI
+         4rKZxnAwIcPbvNcNeUgQBD1bcrv5uIfHon9IImlZfLMujoLQRUt3h62VObiyJoX7yqWC
+         RY1A==
+X-Gm-Message-State: ABuFfoj3H7uOLbneB0W2GMdxidzuseKVr8Drr10jrc1gfTMitexajSSK
+        a9zPH4oAdQ/8O0RoGLFE1GY=
+X-Google-Smtp-Source: ACcGV62hfHll78ICoZfgr6pu+Kkttrcgh0YRuYssHfenNLZj0sZOhnBKHu9KIECmFR7/MPK62upV7Q==
+X-Received: by 2002:adf:8065:: with SMTP id 92-v6mr12525986wrk.23.1539574979141;
+        Sun, 14 Oct 2018 20:42:59 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 18-v6sm13581412wmw.26.2018.10.14.20.31.39
+        by smtp.gmail.com with ESMTPSA id c14-v6sm10869719wmh.44.2018.10.14.20.42.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 14 Oct 2018 20:31:39 -0700 (PDT)
+        Sun, 14 Oct 2018 20:42:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3] gpg-interface.c: detect and reject multiple signatures on commits
-References: <20181012210928.18033-1-mgorny@gentoo.org>
-Date:   Mon, 15 Oct 2018 12:31:38 +0900
-In-Reply-To: <20181012210928.18033-1-mgorny@gentoo.org> (=?utf-8?Q?=22Mich?=
- =?utf-8?Q?a=C5=82_G=C3=B3rny=22's?=
-        message of "Fri, 12 Oct 2018 23:09:28 +0200")
-Message-ID: <xmqqva636g2t.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, git@jeffhostetler.com,
+        jeffhost@microsoft.com, peff@peff.net, stefanbeller@gmail.com,
+        jonathantanmy@google.com, pclouds@gmail.com
+Subject: Re: [PATCH v12 0/8] filter: support for excluding all trees and blobs
+References: <cover.1533854545.git.matvore@google.com>
+        <cover.1539373969.git.matvore@google.com>
+        <xmqqd0sc6ilk.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 15 Oct 2018 12:42:57 +0900
+In-Reply-To: <xmqqd0sc6ilk.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 15 Oct 2018 11:37:11 +0900")
+Message-ID: <xmqqr2gr6fjy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michał Górny <mgorny@gentoo.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> GnuPG supports creating signatures consisting of multiple signature
-> packets.  If such a signature is verified, it outputs all the status
-> messages for each signature separately.  However, git currently does not
-> account for such scenario and gets terribly confused over getting
-> multiple *SIG statuses.
+> Matthew DeVore <matvore@google.com> writes:
 >
-> For example, if a malicious party alters a signed commit and appends
-> a new untrusted signature, git is going to ignore the original bad
-> signature and report untrusted commit instead.  However, %GK and %GS
-> format strings may still expand to the data corresponding
-> to the original signature, potentially tricking the scripts into
-> trusting the malicious commit.
+>> Here is a re-roll-up since I haven't received any additional corrections for
+>> almost a week.
 >
-> Given that the use of multiple signatures is quite rare, git does not
-> support creating them without jumping through a few hoops, and finally
-> supporting them properly would require extensive API improvement, it
-> seems reasonable to just reject them at the moment.
->
-> Signed-off-by: Michał Górny <mgorny@gentoo.org>
-> ---
->  gpg-interface.c          | 94 +++++++++++++++++++++++++++-------------
->  t/t7510-signed-commit.sh | 26 +++++++++++
->  2 files changed, 91 insertions(+), 29 deletions(-)
->
-> Changes in v3: reworked the whole loop to iterate over lines rather
-> than scanning the whole buffer, as requested.  Now it also catches
-> duplicate instances of the same status.
->
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index db17d65f8..480aab4ee 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -75,48 +75,84 @@ void signature_check_clear(struct signature_check *sigc)
->  	FREE_AND_NULL(sigc->key);
->  }
->  
-> +/* An exclusive status -- only one of them can appear in output */
-> +#define GPG_STATUS_EXCLUSIVE	(1<<0)
-> +
->  static struct {
->  	char result;
->  	const char *check;
-> +	unsigned int flags;
->  } sigcheck_gpg_status[] = {
-> -	{ 'G', "\n[GNUPG:] GOODSIG " },
-> -	{ 'B', "\n[GNUPG:] BADSIG " },
-> -	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
-> -	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
-> -	{ 'E', "\n[GNUPG:] ERRSIG "},
-> -	{ 'X', "\n[GNUPG:] EXPSIG "},
-> -	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
-> -	{ 'R', "\n[GNUPG:] REVKEYSIG "},
-> +	{ 'G', "GOODSIG ", GPG_STATUS_EXCLUSIVE },
-> +	{ 'B', "BADSIG ", GPG_STATUS_EXCLUSIVE },
-> +	{ 'U', "TRUST_NEVER", 0 },
-> +	{ 'U', "TRUST_UNDEFINED", 0 },
-> +	{ 'E', "ERRSIG ", GPG_STATUS_EXCLUSIVE },
-> +	{ 'X', "EXPSIG ", GPG_STATUS_EXCLUSIVE },
-> +	{ 'Y', "EXPKEYSIG ", GPG_STATUS_EXCLUSIVE },
-> +	{ 'R', "REVKEYSIG ", GPG_STATUS_EXCLUSIVE },
->  };
->  
->  static void parse_gpg_output(struct signature_check *sigc)
->  {
->  	const char *buf = sigc->gpg_status;
-> +	const char *line, *next;
->  	int i;
-> -
-> -	/* Iterate over all search strings */
-> -	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-> -		const char *found, *next;
-> -
-> -		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
-> -			found = strstr(buf, sigcheck_gpg_status[i].check);
-> -			if (!found)
-> -				continue;
-> -			found += strlen(sigcheck_gpg_status[i].check);
-> -		}
-> -		sigc->result = sigcheck_gpg_status[i].result;
-> -		/* The trust messages are not followed by key/signer information */
-> -		if (sigc->result != 'U') {
-> -			next = strchrnul(found, ' ');
-> -			sigc->key = xmemdupz(found, next - found);
-> -			/* The ERRSIG message is not followed by signer information */
-> -			if (*next && sigc-> result != 'E') {
-> -				found = next + 1;
-> -				next = strchrnul(found, '\n');
-> -				sigc->signer = xmemdupz(found, next - found);
-> +	int had_exclusive_status = 0;
-> +
-> +	/* Iterate over all lines */
-> +	for (line = buf; *line; line = strchrnul(line+1, '\n')) {
-> +		while (*line == '\n')
-> +			line++;
-> +		/* Skip lines that don't start with GNUPG status */
-> +		if (strncmp(line, "[GNUPG:] ", 9))
-> +			continue;
-> +		line += 9;
+> Sorry, but doesn't this topic already sit in 'next'?  If so, please make
+> these small clean-ups as incremental patches.
 
-You do not want to count to 9 yourself.  Instead
+Here is what I'd queue for now, with forged s-o-by from you ;-).
 
-	if (!skip_prefix(line, "[GNUPG:] ", &line))
-		continue;
+Thanks.
 
+-- >8 --
+From: Matthew DeVore <matvore@google.com>
+Date: Fri, 12 Oct 2018 13:01:41 -0700
+Subject: [PATCH] filter-trees: code clean-up of tests
 
-> +		/* Iterate over all search strings */
-> +		for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-> +			if (!strncmp(line, sigcheck_gpg_status[i].check,
-> +					strlen(sigcheck_gpg_status[i].check))) {
-> +				line += strlen(sigcheck_gpg_status[i].check);
+A few trivial updates to test to match the current best practices.
 
-Likewise.
+ - avoid "grep -q" that strips potentially useful output from running
+   tests under "-v".
 
-> +				if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE)
-> +					had_exclusive_status++;
+ - use test_write_lines to prepare multi-line expected output file
 
-"has" is fine, but I think existing code elsewhere we use "seen" for
-things like this.
+ - reserve use of test_must_fail to "git" commands.
 
-> +				sigc->result = sigcheck_gpg_status[i].result;
-> +				/* The trust messages are not followed by key/signer information */
-> +				if (sigc->result != 'U') {
-> +					next = strchrnul(line, ' ');
-> +					free(sigc->key);
-> +					sigc->key = xmemdupz(line, next - line);
-> +					/* The ERRSIG message is not followed by signer information */
-> +					if (*next && sigc->result != 'E') {
-> +						line = next + 1;
-> +						next = strchrnul(line, '\n');
-> +						free(sigc->signer);
-> +						sigc->signer = xmemdupz(line, next - line);
-> +					}
-> +				}
-> +				break;
->  			}
->  		}
->  	}
+Signed-off-by: Matthew DeVore <matvore@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5317-pack-objects-filter-objects.sh | 2 +-
+ t/t5616-partial-clone.sh               | 2 +-
+ t/t6112-rev-list-filters-objects.sh    | 6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-So unless U/E, we expect to see a key, and unless E, we also expect
-there is a signer; we keep the last value we see in the sequence in
-sigc.  Because all of these that are not U are marked exclusive, if
-we check if sigc->key already has value at the point you free the
-sigc->key field above, we can see if there is a duplicate record
-that are of "exclusive" type?  I am not suggesting to lose the
-addition of "flags = GPG_STATUS_EXCLUSIVE|0" field, but trying to
-see if I am getting the logic right.
-
-For gpg_status that is !GPG_STATUS_EXCLUSIVE (i.e. "U"), we do not
-do any replacement of already seen .key/.signer, and all the cases
-that we do the replacement are GPG_STATUS_EXCLUSIVE, which we know
-will become an error in the code below when we do see twice.  So it
-is fine not to check if .key/.signer we see twice are the same or
-different.  It is an error even if we see the same .key/.signer
-twice---having two records is already wrong no matter whose key/sign
-it is.
-
-OK, so the whole thing makes sense to me.
-
-Having said that, if we wanted to short-circuit, I think
-
-                for (each line) {
-                        for (each sigcheck_gpg_status[]) {
-                                if (not the one on line)
-                                        continue;
-                                if (sigc->result != 'U') {
-                                        if (sigc->key)
-                                                goto found_dup;
-                                        sigc->key = make a copy;
-                                        if (*next && sigc->result != 'E') {
-                                                if (sigc->signer)
-                                                        goto found_dup;
-                                                sigc->signer = make a copy;
-                                        }
-                                }
-                                break;
-                        }
-                }
-                return;
-
-        found_dup:
-                sigc->result = 'E';
-                FREE_AND_NULL(sigc->signer);
-                FREE_AND_NULL(sigc->key);
-                return;
-		
-would also be fine.
-
-> +
-> +	/*
-> +	 * GOODSIG, BADSIG etc. can occur only once for each signature.
-> +	 * Therefore, if we had more than one then we're dealing with multiple
-> +	 * signatures.  We don't support them currently, and they're rather
-> +	 * hard to create, so something is likely fishy and we should reject
-> +	 * them altogether.
-> +	 */
-> +	if (had_exclusive_status > 1) {
-> +		sigc->result = 'E';
-> +		/* Clear partial data to avoid confusion */
-> +		if (sigc->signer)
-> +			FREE_AND_NULL(sigc->signer);
-> +		if (sigc->key)
-> +			FREE_AND_NULL(sigc->key);
-
-I think it is OK to use FREE_AND_NULL() unconditionally (just like
-we can use free(x) on x==NULL).
-
-> +	}
->  }
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index 510d3537f6..d9dccf4d4d 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -69,7 +69,7 @@ test_expect_success 'get an error for missing tree object' '
+ 	test_must_fail git -C r5 pack-objects --rev --stdout 2>bad_tree <<-EOF &&
+ 	HEAD
+ 	EOF
+-	grep -q "bad tree object" bad_tree
++	grep "bad tree object" bad_tree
+ '
+ 
+ test_expect_success 'setup for tests of tree:0' '
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 53fbf7db88..392caa08fd 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -192,7 +192,7 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
+ 	xargs -n1 git -C dst cat-file -t >fetched_types &&
+ 
+ 	sort -u fetched_types >unique_types.observed &&
+-	printf "blob\ncommit\ntree\n" >unique_types.expected &&
++	test_write_lines blob commit tree >unique_types.expected &&
+ 	test_cmp unique_types.expected unique_types.observed
+ '
+ 
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
+index 2cbb81d3bb..d24f9d5b5a 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -38,8 +38,8 @@ test_expect_success 'specify blob explicitly prevents filtering' '
+ 		 awk -f print_2.awk) &&
+ 
+ 	git -C r1 rev-list --objects --filter=blob:none HEAD $file_3 >observed &&
+-	grep -q "$file_3" observed &&
+-	test_must_fail grep -q "$file_4" observed
++	grep "$file_3" observed &&
++	! grep "$file_4" observed
+ '
+ 
+ test_expect_success 'verify emitted+omitted == all' '
+@@ -241,7 +241,7 @@ test_expect_success 'verify tree:0 includes trees in "filtered" output' '
+ 	xargs -n1 git -C r3 cat-file -t >unsorted_filtered_types &&
+ 
+ 	sort -u unsorted_filtered_types >filtered_types &&
+-	printf "blob\ntree\n" >expected &&
++	test_write_lines blob tree >expected &&
+ 	test_cmp expected filtered_types
+ '
+ 
+-- 
+2.19.1-328-g5a0cc8aca7
 
