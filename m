@@ -7,95 +7,87 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 608101F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44B131F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 10:14:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726915AbeJOR4x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 13:56:53 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42124 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726868AbeJOR4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 13:56:53 -0400
-Received: by mail-pf1-f194.google.com with SMTP id f26-v6so9427975pfn.9
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:18 -0700 (PDT)
+        id S1726817AbeJOR7T (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 13:59:19 -0400
+Received: from mail-pg1-f176.google.com ([209.85.215.176]:41783 "EHLO
+        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726760AbeJOR7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 13:59:18 -0400
+Received: by mail-pg1-f176.google.com with SMTP id 23-v6so8938532pgc.8
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=uVPhXeh89yk5WHqhnJElovYyBG2HPAq9b4dHJaQ+mjM=;
-        b=f9eJptoyW9M+JJkkq2na20LqBFS4snNhqmKDUtUlRA1bAfUj+m3ZZMKzjnyEJ2JeFM
-         l3YnkBE8LmgXYtWsl2W5QR3nIfHeoQqACO1szFh+KBtJ4d9pUmBTgcC0rCUjVkHnRTJm
-         J+ZGhSbei6yxZhr6IO2yGb6clzvlJO2ldTJACJIQ50tax+kgoe/tVjk0kwWZhTvqmO4+
-         28QV84WXrboqdnu7qVLH5pxT/glp6smDcgpYrOkOYLqYg3Qokgk4hpOO2Bkf2e0s2DVK
-         xhCfPo13TRFtR6YhmisybGe1M/larPzKASKD8kH8SnMCMMrkwnvAv7/oH497EKn7clkW
-         5dGQ==
+        h=date:message-id:from:subject:mime-version:content-transfer-encoding
+         :fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=kLE8v2pVXTx4zT7E35/HvvVPjiqKfTNDbRzF4hO/aWU=;
+        b=UvkxadR1ZgTLI0ivj2iWKNXdwaLEbkAQZkWEN1T0epD4EwEd2jQEiPoxWxCLebxlVj
+         DxWngAYwU5j5KNoJJZgsXyJzBzm/idZei69vNAqNfUoPkfhiePvJQLSFeby/8lUn0/mV
+         AksnVKU12qysJ2z3rkWtZ9STvYRbrptcphEQKcjh5BjHLzrsP6fLEpMTM8JjePJLRMoY
+         Zf2lESLOS1c30rJWDEozZCabOkLm6I54pJ5NPwbDYNEBUO8MLumfwmC38P/TfWpv5VVk
+         0D7rXeC/EAaM1ZO9CE0qe2/kdHO+xdmQ1Sytkrny8BiSScZZLYNjsRNPWo6RvCOAFizQ
+         l04A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uVPhXeh89yk5WHqhnJElovYyBG2HPAq9b4dHJaQ+mjM=;
-        b=kV3hKB1nctnJGbpGZUxxE+wk5yDnwpNXne8IhdwKoAwpOxSt6nzC/7wKUzIDMm3cOD
-         6S4jkKvf9F6JW7yUPLxRlY7VkoZkAwee7m9Y22JwFuVhOwSm4MH8YL/Qv3wI5nCyY9kb
-         iDNOLM0mWX1l6ytTDiF1+UYk56FGS3pB9iWtGw87TfVGinAGfMldoFQVONdLoXODbc2A
-         qR/Sh/9cUtLa3D12lI6Wa8gOAE2BWu8j8zarVQbHXRaxvxE+Q6yyFePBUJwJ273UkiiO
-         JMegZ/TruLWiXt2nboAASOpHqAUwpD1x4BIuQ1BU/yJvAuvnc+jmtdE9VETbBjLgQKnB
-         3sEQ==
-X-Gm-Message-State: ABuFfogFvABMRlI/pqV2IwYx3SctgplOAZk0BCuHE9cHUXP0m9/CThOO
-        I84cZBoB/zZz+Vknqw4VaLvA7qHY
-X-Google-Smtp-Source: ACcGV637DehbJEFyBYyZJfKZoTvrvpJqNb5LHDaeeIFCD7k0yEovN3VewkouBz4uKte2O6VpZEf4Sg==
-X-Received: by 2002:a62:c68e:: with SMTP id x14-v6mr9124937pfk.151.1539598337849;
-        Mon, 15 Oct 2018 03:12:17 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=kLE8v2pVXTx4zT7E35/HvvVPjiqKfTNDbRzF4hO/aWU=;
+        b=KY5+IwHwjySirnnZuUCQaz1hwhsYu0vKTwMUcIp+RUx6sOz6U4yhk1Q7PZNUf0f8ai
+         xGnnyT2mXS8DcVx1EeL0FPstr3b+mNsF/07wIxERV1X6x9b8dNYt/H7rjYE9yBfBn7kR
+         cuqK/5Ut/Ih8QwfppqHIqYVWX/sNYNSKwpTxheRLcfH1O9Ge2fmT6bJuf1iP0kcpUU7/
+         iAk5lqZoMcNwVcCNH4TsRcfRCuYjsGx2RDSCj/ti7F4lKJgWJur/D6fpXbeM67qKfNDS
+         3+SIuHeggRFY7GxsZdN/gb8r+j+XJqx1o3xZbZPW8aPimHmUDuplNvDzTjn3JcZdn9KO
+         ZxEg==
+X-Gm-Message-State: ABuFfojfrr0seiRf0AWtwF3YOX42W2pq6lKEUUkfVMy6wU90Kel2mWBZ
+        I0+MTMBxYRIBwxR2mq4ZUL4ht8GJ
+X-Google-Smtp-Source: ACcGV60iKv5jb0qUyGgKMrXo/W0O+6G1dA/WxMUhTtPFOFFtiaFuN4VV30RcR402lipQeE0BVu/okg==
+X-Received: by 2002:a63:4a0e:: with SMTP id x14-v6mr15206148pga.34.1539598483099;
+        Mon, 15 Oct 2018 03:14:43 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id d18-v6sm11506807pgd.86.2018.10.15.03.12.16
+        by smtp.gmail.com with ESMTPSA id h87-v6sm19354236pfj.78.2018.10.15.03.14.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 03:12:17 -0700 (PDT)
-Date:   Mon, 15 Oct 2018 03:12:17 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Oct 2018 10:11:55 GMT
-Message-Id: <0a53f371350146ecd01b44f0f42da447d7573689.1539598316.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.31.v2.git.gitgitgadget@gmail.com>
-References: <pull.31.git.gitgitgadget@gmail.com>
-        <pull.31.v2.git.gitgitgadget@gmail.com>
+        Mon, 15 Oct 2018 03:14:42 -0700 (PDT)
+Date:   Mon, 15 Oct 2018 03:14:42 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Oct 2018 10:14:37 GMT
+Message-Id: <pull.46.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 13/13] travis: fix skipping tagged releases
+Subject: [PATCH 0/3] Allow choosing the SSL backend cURL uses (plus related patches)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This topic branch brings support for choosing cURL's SSL backend (a feature
+developed in Git for Windows' context) at runtime via http.sslBackend, and
+two more patches that are related (and only of interest for Windows users).
 
-When building a PR, TRAVIS_BRANCH refers to the *target branch*.
-Therefore, if a PR targets `master`, and `master` happened to be tagged,
-we skipped the build by mistake.
+Brendan Forster (1):
+  http: add support for disabling SSL revocation checks in cURL
 
-Fix this by using TRAVIS_PULL_REQUEST_BRANCH (i.e. the *source branch*)
-when available, falling back to TRAVIS_BRANCH (i.e. for CI builds, also
-known as "push builds").
+Johannes Schindelin (2):
+  http: add support for selecting SSL backends at runtime
+  http: when using Secure Channel, ignore sslCAInfo by default
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- ci/lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/config.txt | 21 ++++++++++++
+ http.c                   | 71 +++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 91 insertions(+), 1 deletion(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 584abcd529..e1858ae609 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -3,7 +3,7 @@
- if test true = "$TRAVIS"
- then
- 	# We are running within Travis CI
--	CI_BRANCH="$TRAVIS_BRANCH"
-+	CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
- 	CI_COMMIT="$TRAVIS_COMMIT"
- 	CI_JOB_ID="$TRAVIS_JOB_ID"
- 	CI_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
+
+base-commit: 5a0cc8aca797dbd7d2be3b67458ff880ed45cddf
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-46%2Fdscho%2Fhttp-ssl-backend-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-46/dscho/http-ssl-backend-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/46
 -- 
 gitgitgadget
