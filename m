@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871681F97E
-	for <e@80x24.org>; Mon, 15 Oct 2018 00:02:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5734B1F97E
+	for <e@80x24.org>; Mon, 15 Oct 2018 00:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726512AbeJOHpF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 03:45:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50574 "EHLO
+        id S1726528AbeJOHpH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 03:45:07 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50580 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726487AbeJOHpE (ORCPT
+        by vger.kernel.org with ESMTP id S1726444AbeJOHpE (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 15 Oct 2018 03:45:04 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 72DD561B83;
-        Mon, 15 Oct 2018 00:02:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 985E661B82;
+        Mon, 15 Oct 2018 00:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1539561740;
-        bh=TxBGW6kI35xH8pKYdfEu2uX8VVyCdYUbCN1x2GNYOVM=;
+        bh=lk3zoBfcaMgdtZKQJfSk16mesbk7eXWLsgQNgRVDvjc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=AYulpTIHIJ0CMgjV39NFdQJ4uEPlg/W4X9fkwlQvK/SjR+Vu58GVzLoGYAl1ow4IB
-         p81/oAlC0haTASO1KhMk9X1xOEPNvLBfyHLTOlRgg4ip1iDcM/5w6Wi/bsNo8PbqU/
-         2e5c8ftnMy/3YXBd6Oco44z0nGUVm3Q7MTFghLbPqEmxvtDKPVUjqsqqHC35gEocGG
-         9SvJhWw9ekLkb+/kGzxjWGSRl1+HXjK4IcLZu8w18Cm1JA1rMkmJz0bPLnLnxZhsOa
-         y8xRN2hWh4CKzYo6dWcE0m8d+I74zQ4vluLcpHizKrLfodPdTEXuggcbZXQM4mBiwE
-         KUb4EftBIeiangAfHHwrL09DxAJ4LpuyxNcg5YmWa16Z8nT14boJ+xGse1xR0EeXyH
-         WJIprYwmU4R/UrPVn+yD14DfW+LAXbOKkfSrmN73M/M1nSAhmOAWQTTKau25cleeqa
-         bme+Yo1qeUkJ5S7IH8gIhqKx7L9KYsxQaEJEX6RGrF4ifibtHXT
+        b=KUf+sF752uSRyqywTiHdQ7tBGKp+iVGeiOFsBYdwdnmzAk0twwgj7VQ0Ggghl285M
+         UIw3eHCnacatNkzq1MRsvw7oh4JtxpIDk4XbtVLfh30w2LRtBsG2NyZMZiK3VhteFu
+         GTOIy3is1Bcncr6NoBlbc3Wxkllns3hiH71xm4F1LLr9nx2JxvlXZRweOdZFvEs0Dm
+         VAm1QYmXVc79wJvgUEoLI/wqXLpKzPubbYs89Mpq28uVTNuD0DsKsAzwpUtO7Vim+m
+         mNCEsfk+815aysF9MaCYPia5+HR8MrJPZWv9FHn3Vd4NOE6YFovnPDUux0LEZYCRVh
+         2Eyd/LCgddmy//ic5sZN33+dMVAmjQ3pG+08uUCbJqbEK2FGiw4EARlq8XpAl3m146
+         CrzB6/b60FSPtCcUZJYH7rH8gsirhI4uuUkGeaS6ZnlMLsZHJL+cwztwNmxcRM/9Di
+         hqgYSFLIYRa8/WxzJbsEaESVimqZp1ixkODMcqYojj1XpVrEC7j
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 09/15] upload-pack: express constants in terms of the_hash_algo
-Date:   Mon, 15 Oct 2018 00:01:56 +0000
-Message-Id: <20181015000202.951965-10-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 08/15] refs/packed-backend: express constants using the_hash_algo
+Date:   Mon, 15 Oct 2018 00:01:55 +0000
+Message-Id: <20181015000202.951965-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.568.g152ad8e336
 In-Reply-To: <20181015000202.951965-1-sandals@crustytoothpaste.net>
 References: <20181015000202.951965-1-sandals@crustytoothpaste.net>
@@ -54,58 +54,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert all uses of the GIT_SHA1_HEXSZ to use the_hash_algo so that they
-are appropriate for any given hash length.
+Switch uses of GIT_SHA1_HEXSZ to use the_hash_algo so that they are
+appropriate for the any given hash length.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- upload-pack.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ refs/packed-backend.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 62a1000f44..1aae5dd828 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -443,6 +443,7 @@ static int do_reachable_revlist(struct child_process *cmd,
- 	struct object *o;
- 	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
- 	int i;
-+	const unsigned hexsz = the_hash_algo->hexsz;
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 74e2996e93..c01c7f5901 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -274,8 +274,8 @@ struct snapshot_record {
+ static int cmp_packed_ref_records(const void *v1, const void *v2)
+ {
+ 	const struct snapshot_record *e1 = v1, *e2 = v2;
+-	const char *r1 = e1->start + GIT_SHA1_HEXSZ + 1;
+-	const char *r2 = e2->start + GIT_SHA1_HEXSZ + 1;
++	const char *r1 = e1->start + the_hash_algo->hexsz + 1;
++	const char *r2 = e2->start + the_hash_algo->hexsz + 1;
  
- 	cmd->argv = argv;
- 	cmd->git_cmd = 1;
-@@ -461,7 +462,7 @@ static int do_reachable_revlist(struct child_process *cmd,
- 		goto error;
+ 	while (1) {
+ 		if (*r1 == '\n')
+@@ -297,7 +297,7 @@ static int cmp_packed_ref_records(const void *v1, const void *v2)
+  */
+ static int cmp_record_to_refname(const char *rec, const char *refname)
+ {
+-	const char *r1 = rec + GIT_SHA1_HEXSZ + 1;
++	const char *r1 = rec + the_hash_algo->hexsz + 1;
+ 	const char *r2 = refname;
  
- 	namebuf[0] = '^';
--	namebuf[GIT_SHA1_HEXSZ + 1] = '\n';
-+	namebuf[hexsz + 1] = '\n';
- 	for (i = get_max_object_index(); 0 < i; ) {
- 		o = get_indexed_object(--i);
- 		if (!o)
-@@ -470,11 +471,11 @@ static int do_reachable_revlist(struct child_process *cmd,
- 			o->flags &= ~TMP_MARK;
- 		if (!is_our_ref(o))
- 			continue;
--		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
--		if (write_in_full(cmd->in, namebuf, GIT_SHA1_HEXSZ + 2) < 0)
-+		memcpy(namebuf + 1, oid_to_hex(&o->oid), hexsz);
-+		if (write_in_full(cmd->in, namebuf, hexsz + 2) < 0)
- 			goto error;
- 	}
--	namebuf[GIT_SHA1_HEXSZ] = '\n';
-+	namebuf[hexsz] = '\n';
- 	for (i = 0; i < src->nr; i++) {
- 		o = src->objects[i].item;
- 		if (is_our_ref(o)) {
-@@ -484,8 +485,8 @@ static int do_reachable_revlist(struct child_process *cmd,
- 		}
- 		if (reachable && o->type == OBJ_COMMIT)
- 			o->flags |= TMP_MARK;
--		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
--		if (write_in_full(cmd->in, namebuf, GIT_SHA1_HEXSZ + 1) < 0)
-+		memcpy(namebuf, oid_to_hex(&o->oid), hexsz);
-+		if (write_in_full(cmd->in, namebuf, hexsz + 1) < 0)
- 			goto error;
- 	}
- 	close(cmd->in);
+ 	while (1) {
+@@ -344,7 +344,7 @@ static void sort_snapshot(struct snapshot *snapshot)
+ 		if (!eol)
+ 			/* The safety check should prevent this. */
+ 			BUG("unterminated line found in packed-refs");
+-		if (eol - pos < GIT_SHA1_HEXSZ + 2)
++		if (eol - pos < the_hash_algo->hexsz + 2)
+ 			die_invalid_line(snapshot->refs->path,
+ 					 pos, eof - pos);
+ 		eol++;
+@@ -456,7 +456,7 @@ static void verify_buffer_safe(struct snapshot *snapshot)
+ 		return;
+ 
+ 	last_line = find_start_of_record(start, eof - 1);
+-	if (*(eof - 1) != '\n' || eof - last_line < GIT_SHA1_HEXSZ + 2)
++	if (*(eof - 1) != '\n' || eof - last_line < the_hash_algo->hexsz + 2)
+ 		die_invalid_line(snapshot->refs->path,
+ 				 last_line, eof - last_line);
+ }
+@@ -796,7 +796,7 @@ static int next_record(struct packed_ref_iterator *iter)
+ 
+ 	iter->base.flags = REF_ISPACKED;
+ 
+-	if (iter->eof - p < GIT_SHA1_HEXSZ + 2 ||
++	if (iter->eof - p < the_hash_algo->hexsz + 2 ||
+ 	    parse_oid_hex(p, &iter->oid, &p) ||
+ 	    !isspace(*p++))
+ 		die_invalid_line(iter->snapshot->refs->path,
+@@ -826,7 +826,7 @@ static int next_record(struct packed_ref_iterator *iter)
+ 
+ 	if (iter->pos < iter->eof && *iter->pos == '^') {
+ 		p = iter->pos + 1;
+-		if (iter->eof - p < GIT_SHA1_HEXSZ + 1 ||
++		if (iter->eof - p < the_hash_algo->hexsz + 1 ||
+ 		    parse_oid_hex(p, &iter->peeled, &p) ||
+ 		    *p++ != '\n')
+ 			die_invalid_line(iter->snapshot->refs->path,
