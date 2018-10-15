@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C71821F97E
-	for <e@80x24.org>; Mon, 15 Oct 2018 00:02:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 871681F97E
+	for <e@80x24.org>; Mon, 15 Oct 2018 00:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726499AbeJOHpE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 03:45:04 -0400
+        id S1726512AbeJOHpF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 03:45:05 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:50574 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726469AbeJOHpD (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Oct 2018 03:45:03 -0400
+        by vger.kernel.org with ESMTP id S1726487AbeJOHpE (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 15 Oct 2018 03:45:04 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE79F61B81;
-        Mon, 15 Oct 2018 00:02:18 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 72DD561B83;
+        Mon, 15 Oct 2018 00:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539561739;
-        bh=RlUXsatHq7KX+yJvyOwV+bf7cgYLyKyVsXAd+M4fSBQ=;
+        s=default; t=1539561740;
+        bh=TxBGW6kI35xH8pKYdfEu2uX8VVyCdYUbCN1x2GNYOVM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=VYhZo9nrfzqAZO1NDBI3kBpBbDYLxhvBsQvCxyAi5JLU4etSBqZWKukxk52W/tN9O
-         RkciD2os/wjrsS3ML+b7gXTIHg42fRZsEle6gZNGkvekzBxN4hyzonGIwGTo2u5wX9
-         KkHXcLlB4QwBHp4xh2BoD+tdycOSo7K2NhvG5dKqVDOVggXTQuLivaFiFEBE+cQnLM
-         8ZWEmfLyJ3yJacMpCuEl2Iym48Rx2vbNcKCE4g9RmNmNh36aMoVBpR0TBwraOqKu12
-         Rk/7KLrrZLgxLVfoGBxTqSytFQQcu0ME3d2tYVPjTFIFQaXAVcBPvlT1sYbeHOTwmD
-         UlBY62q9fygILOVTunkqXxKnXbh0FMxS5YmAkz4fnrapeCLtuwO1gsdk1WW5YKl+AE
-         +vW6U0VsKdbmpLkEJ3sJ101gEPuiGZeW4NrDTCF9xsxzZPADyHY84P+sWNNjF5ZShQ
-         yS6IgccTDJQ6zVcCF9b6JeWRfTGwapX6aLcGg54IdHl4GAY6UCI
+        b=AYulpTIHIJ0CMgjV39NFdQJ4uEPlg/W4X9fkwlQvK/SjR+Vu58GVzLoGYAl1ow4IB
+         p81/oAlC0haTASO1KhMk9X1xOEPNvLBfyHLTOlRgg4ip1iDcM/5w6Wi/bsNo8PbqU/
+         2e5c8ftnMy/3YXBd6Oco44z0nGUVm3Q7MTFghLbPqEmxvtDKPVUjqsqqHC35gEocGG
+         9SvJhWw9ekLkb+/kGzxjWGSRl1+HXjK4IcLZu8w18Cm1JA1rMkmJz0bPLnLnxZhsOa
+         y8xRN2hWh4CKzYo6dWcE0m8d+I74zQ4vluLcpHizKrLfodPdTEXuggcbZXQM4mBiwE
+         KUb4EftBIeiangAfHHwrL09DxAJ4LpuyxNcg5YmWa16Z8nT14boJ+xGse1xR0EeXyH
+         WJIprYwmU4R/UrPVn+yD14DfW+LAXbOKkfSrmN73M/M1nSAhmOAWQTTKau25cleeqa
+         bme+Yo1qeUkJ5S7IH8gIhqKx7L9KYsxQaEJEX6RGrF4ifibtHXT
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 07/15] packfile: express constants in terms of the_hash_algo
-Date:   Mon, 15 Oct 2018 00:01:54 +0000
-Message-Id: <20181015000202.951965-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 09/15] upload-pack: express constants in terms of the_hash_algo
+Date:   Mon, 15 Oct 2018 00:01:56 +0000
+Message-Id: <20181015000202.951965-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.568.g152ad8e336
 In-Reply-To: <20181015000202.951965-1-sandals@crustytoothpaste.net>
 References: <20181015000202.951965-1-sandals@crustytoothpaste.net>
@@ -54,37 +54,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace uses of GIT_SHA1_RAWSZ with references to the_hash_algo to avoid
-dependence on a particular hash length.
-
-It's likely that in the future, we'll update the pack format to indicate
-what hash algorithm it uses, and then this code will change.  However,
-at least on an interim basis, make it easier to develop on a pure
-SHA-256 Git by using the_hash_algo here.
+Convert all uses of the GIT_SHA1_HEXSZ to use the_hash_algo so that they
+are appropriate for any given hash length.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- packfile.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ upload-pack.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 841b36182f..17f993b5bf 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1121,13 +1121,14 @@ int unpack_object_header(struct packed_git *p,
- void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1)
- {
- 	unsigned i;
-+	const unsigned hashsz = the_hash_algo->rawsz;
- 	for (i = 0; i < p->num_bad_objects; i++)
--		if (hasheq(sha1, p->bad_object_sha1 + GIT_SHA1_RAWSZ * i))
-+		if (hasheq(sha1, p->bad_object_sha1 + hashsz * i))
- 			return;
- 	p->bad_object_sha1 = xrealloc(p->bad_object_sha1,
- 				      st_mult(GIT_MAX_RAWSZ,
- 					      st_add(p->num_bad_objects, 1)));
--	hashcpy(p->bad_object_sha1 + GIT_SHA1_RAWSZ * p->num_bad_objects, sha1);
-+	hashcpy(p->bad_object_sha1 + hashsz * p->num_bad_objects, sha1);
- 	p->num_bad_objects++;
- }
+diff --git a/upload-pack.c b/upload-pack.c
+index 62a1000f44..1aae5dd828 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -443,6 +443,7 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 	struct object *o;
+ 	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
+ 	int i;
++	const unsigned hexsz = the_hash_algo->hexsz;
  
+ 	cmd->argv = argv;
+ 	cmd->git_cmd = 1;
+@@ -461,7 +462,7 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 		goto error;
+ 
+ 	namebuf[0] = '^';
+-	namebuf[GIT_SHA1_HEXSZ + 1] = '\n';
++	namebuf[hexsz + 1] = '\n';
+ 	for (i = get_max_object_index(); 0 < i; ) {
+ 		o = get_indexed_object(--i);
+ 		if (!o)
+@@ -470,11 +471,11 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 			o->flags &= ~TMP_MARK;
+ 		if (!is_our_ref(o))
+ 			continue;
+-		memcpy(namebuf + 1, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
+-		if (write_in_full(cmd->in, namebuf, GIT_SHA1_HEXSZ + 2) < 0)
++		memcpy(namebuf + 1, oid_to_hex(&o->oid), hexsz);
++		if (write_in_full(cmd->in, namebuf, hexsz + 2) < 0)
+ 			goto error;
+ 	}
+-	namebuf[GIT_SHA1_HEXSZ] = '\n';
++	namebuf[hexsz] = '\n';
+ 	for (i = 0; i < src->nr; i++) {
+ 		o = src->objects[i].item;
+ 		if (is_our_ref(o)) {
+@@ -484,8 +485,8 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 		}
+ 		if (reachable && o->type == OBJ_COMMIT)
+ 			o->flags |= TMP_MARK;
+-		memcpy(namebuf, oid_to_hex(&o->oid), GIT_SHA1_HEXSZ);
+-		if (write_in_full(cmd->in, namebuf, GIT_SHA1_HEXSZ + 1) < 0)
++		memcpy(namebuf, oid_to_hex(&o->oid), hexsz);
++		if (write_in_full(cmd->in, namebuf, hexsz + 1) < 0)
+ 			goto error;
+ 	}
+ 	close(cmd->in);
