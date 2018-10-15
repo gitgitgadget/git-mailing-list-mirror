@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCFC51F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B7B71F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbeJOR4l (ORCPT <rfc822;e@80x24.org>);
+        id S1726687AbeJOR4l (ORCPT <rfc822;e@80x24.org>);
         Mon, 15 Oct 2018 13:56:41 -0400
-Received: from mail-pg1-f180.google.com ([209.85.215.180]:40111 "EHLO
-        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbeJOR4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 13:56:40 -0400
-Received: by mail-pg1-f180.google.com with SMTP id n31-v6so8936888pgm.7
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:05 -0700 (PDT)
+Received: from mail-pg1-f175.google.com ([209.85.215.175]:40107 "EHLO
+        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbeJOR4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 13:56:41 -0400
+Received: by mail-pg1-f175.google.com with SMTP id n31-v6so8936909pgm.7
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gPWGZ2JCNoc3E32GHvBNMmbF54a9B105ZM2Iy8SOCJM=;
-        b=qWI7EwOG8P9u4YERwiDlbJ3jCFM+7tGZADwAsUURyxPL3IzCeELkLh+xjJhevhY2tl
-         tUEYdRowyB8ofr/ZGqGGYn0GJnow7BpRXjOAvc5b2hO2IBkJkGaLmy7vrTwU1G6dZ/Dh
-         0f+9ho8knuxisNgo8osMg6RVxJzSNU6oHt7MRvRPeTVHgI6fEhxxlbrWt4dzYB3RAOTw
-         RMkk/vMH8ZfvLZAfHBy9c5tIX5PM2Pc3Fgx3Fgg89RPhHvstYqKAbtggM7qwKMBYkghl
-         +AyV6SFQ4HQrMX1inrWEB+44ffC6k0hS/gE5BNxMAfNSxAX3cR4pV+YiSSrKm936GzSL
-         DTLA==
+        bh=JZVxgyN5sZUoXAxIQHhjlagC+s+gaWu0xi40fYlv55g=;
+        b=KQYzVVo1ZT4TEH0LIIcKwCtWTDnBSSRxEHE8SY+iAg82x7kDm0SGZeqV1nKRFqQDNg
+         x8IfMGE+fvU84YqlP/oGxi0J2oigrOHhoUKUSReiw3AELjDdYi8Obeej5Q6bGIlthqtr
+         F+U2NjT6wSo/tWNAnjPFSavGfuLNfSgMCcqgQyGmnqhXSnIPiKOF9FOAIjRhxkjlb64/
+         KtI+zCKcefKTkYjF+A8TE/B0aEzNgkXufsYi7zFhHi5nYQ5kEemLM4BIac3GoSWqfdZy
+         fzpiRM/LIMX8mhSJ+BtvaZA/A30nzS4GRz/DanU+90XeHNkTD29Z3oq2TiT4G7+A7rnt
+         mstA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gPWGZ2JCNoc3E32GHvBNMmbF54a9B105ZM2Iy8SOCJM=;
-        b=QoiiEwQheJZqK2Fr4CVCTZ6oqyQZnsZzpfb6TNobWVhtXNWHDmAwnL1N58lVlHZ/c2
-         kZ5/FejRexJ8DL2tMzoB7WwsUj8eTul4Gyq468StVum/d1I9AdwIK8bilrCsD2PRsioU
-         7sRv0PMOOfk4u6CeqO3wMcwgxldyjGoG4ALIbTF5L6bJFTshULqWzjg6kQz+dRQGHrqf
-         rBsZGNKWtHM8ItNsmofaMZCQ+hlUROcWwmxtAvKjCvyRLAlL94vNAbX4HqVTEJXzC1vT
-         yWYV22ObGIl6Aqg61z25OnqA+Y3l8er727yxkY2EtfUVKzaf/6aVGKWzhcZwGeQ03jfS
-         Fwyw==
-X-Gm-Message-State: ABuFfoiYhl8UlJRJyqK2uXC6GTvTm12ATg2dFCTeGfEoAYBYxUN3rB7z
-        lS/bD4IfXQ35kXt1LhAMcTvZZVuO
-X-Google-Smtp-Source: ACcGV61qcBQg+NOwBEYIpL4kaTVFbnJTEeJP/vX8/qaM7gCsuKuGNUeObqIRaOsFZNiDL9IgXhmvEA==
-X-Received: by 2002:a62:9fc4:: with SMTP id v65-v6mr17071182pfk.130.1539598324830;
-        Mon, 15 Oct 2018 03:12:04 -0700 (PDT)
+        bh=JZVxgyN5sZUoXAxIQHhjlagC+s+gaWu0xi40fYlv55g=;
+        b=dJ3sh6KILoDeL4Wt5kNwJXchFbCJQeS/+bYoAbaBGJNsdCWF15ZCo8c2aEBbQDwFr2
+         0hTueoMLYzs2bSt2LWD6jXbSIMgg5XGzb539kKPr4K8ICjQRqK+M2ooArV0n/z/rNPGV
+         M307N6KREzoYdTYB9fwRYAVdJkl658ixvpfXRF3+Lb5dX778+3DdyPz51qyllBQD5RZ6
+         a02GvRNsmg70mhpSKaBFnBITfZpNS0ksvb3s8BpYIz/betMNY5t6J8Ok/uT/IwFlDyIB
+         2NDioj5Qb7U+RZEly5qkCkq9j0Iv/2nUXjfngF9WWyrDIw0IVu/x7APAfgE2u5ydQOrC
+         kV5A==
+X-Gm-Message-State: ABuFfohTm/+JuM3zNvJQmJGHpg+Zzc5J5IlBUf7GwlXMGqDorY1WYlMW
+        1mZSAAt6ibhpmAvmgiueeCK4ykmz
+X-Google-Smtp-Source: ACcGV63mMs1IuqjWoL+ZTP5rviJuBfD9RArytL71W3hgmEmAkX9QYUAkTNIfV4npRtN8xsIWey9UOg==
+X-Received: by 2002:a63:1411:: with SMTP id u17-v6mr15185679pgl.247.1539598326259;
+        Mon, 15 Oct 2018 03:12:06 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id 68-v6sm13286480pfg.136.2018.10.15.03.12.03
+        by smtp.gmail.com with ESMTPSA id v84-v6sm14856242pfk.12.2018.10.15.03.12.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 03:12:04 -0700 (PDT)
-Date:   Mon, 15 Oct 2018 03:12:04 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Oct 2018 10:11:46 GMT
-Message-Id: <cf4c5ae47007651a95cbfc56f126326429e17999.1539598316.git.gitgitgadget@gmail.com>
+        Mon, 15 Oct 2018 03:12:05 -0700 (PDT)
+Date:   Mon, 15 Oct 2018 03:12:05 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Oct 2018 10:11:47 GMT
+Message-Id: <486d1d25183fc7b0de599a0791ed41a87cc176cb.1539598316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v2.git.gitgitgadget@gmail.com>
 References: <pull.31.git.gitgitgadget@gmail.com>
         <pull.31.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 04/13] tests: optionally write results as JUnit-style .xml
+Subject: [PATCH v2 05/13] ci/lib.sh: add support for Azure Pipelines
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,195 +71,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This will come in handy when publishing the results of Git's test suite
-during an automated Azure DevOps run.
+This patch introduces a conditional arm that defines some environment
+variables and a function that displays the URL given the job id (to
+identify previous runs for known-good trees).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/.gitignore  |  1 +
- t/test-lib.sh | 98 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 99 insertions(+)
+ ci/lib.sh | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/t/.gitignore b/t/.gitignore
-index 348715f0e4..91cf5772fe 100644
---- a/t/.gitignore
-+++ b/t/.gitignore
-@@ -2,3 +2,4 @@
- /test-results
- /.prove
- /chainlinttmp
-+/out/
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3f95bfda60..7ed0013f6d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -288,6 +288,9 @@ do
- 	--verbose-log)
- 		verbose_log=t
- 		shift ;;
-+	--write-junit-xml)
-+		write_junit_xml=t
-+		shift ;;
- 	*)
- 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
- 	esac
-@@ -431,11 +434,24 @@ trap 'exit $?' INT
- # the test_expect_* functions instead.
- 
- test_ok_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		write_junit_xml_testcase "$*"
-+	fi
- 	test_success=$(($test_success + 1))
- 	say_color "" "ok $test_count - $@"
- }
- 
- test_failure_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		junit_insert="<failure message=\"not ok $test_count -"
-+		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
-+		junit_insert="$junit_insert $(xml_attr_encode \
-+			"$(printf '%s\n' "$@" | sed 1d)")"
-+		junit_insert="$junit_insert</failure>"
-+		write_junit_xml_testcase "$1" "      $junit_insert"
-+	fi
- 	test_failure=$(($test_failure + 1))
- 	say_color error "not ok $test_count - $1"
- 	shift
-@@ -444,11 +460,19 @@ test_failure_ () {
- }
- 
- test_known_broken_ok_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		write_junit_xml_testcase "$* (breakage fixed)"
-+	fi
- 	test_fixed=$(($test_fixed+1))
- 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
- }
- 
- test_known_broken_failure_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		write_junit_xml_testcase "$* (known breakage)"
-+	fi
- 	test_broken=$(($test_broken+1))
- 	say_color warn "not ok $test_count - $@ # TODO known breakage"
- }
-@@ -706,6 +730,10 @@ test_start_ () {
- 	test_count=$(($test_count+1))
- 	maybe_setup_verbose
- 	maybe_setup_valgrind
-+	if test -n "$write_junit_xml"
-+	then
-+		junit_start=$(test-tool date getnanos)
-+	fi
- }
- 
- test_finish_ () {
-@@ -743,6 +771,13 @@ test_skip () {
- 
- 	case "$to_skip" in
- 	t)
-+		if test -n "$write_junit_xml"
-+		then
-+			message="$(xml_attr_encode "$skipped_reason")"
-+			write_junit_xml_testcase "$1" \
-+				"      <skipped message=\"$message\" />"
-+		fi
-+
- 		say_color skip >&3 "skipping test: $@"
- 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
- 		: true
-@@ -758,9 +793,58 @@ test_at_end_hook_ () {
- 	:
- }
- 
-+write_junit_xml () {
-+	case "$1" in
-+	--truncate)
-+		>"$junit_xml_path"
-+		junit_have_testcase=
-+		shift
-+		;;
-+	esac
-+	printf '%s\n' "$@" >>"$junit_xml_path"
-+}
-+
-+xml_attr_encode () {
-+	# We do not translate CR to &#x0d; because BSD sed does not handle
-+	# \r in the regex. In practice, the output should not even have any
-+	# carriage returns.
-+	printf '%s\n' "$@" |
-+	sed -e 's/&/\&amp;/g' -e "s/'/\&apos;/g" -e 's/"/\&quot;/g' \
-+		-e 's/</\&lt;/g' -e 's/>/\&gt;/g' \
-+		-e 's/	/\&#x09;/g' -e 's/$/\&#x0a;/' -e '$s/&#x0a;$//' |
-+	tr -d '\012\015'
-+}
-+
-+write_junit_xml_testcase () {
-+	junit_attrs="name=\"$(xml_attr_encode "$this_test.$test_count $1")\""
-+	shift
-+	junit_attrs="$junit_attrs classname=\"$this_test\""
-+	junit_attrs="$junit_attrs time=\"$(test-tool \
-+		date getnanos $junit_start)\""
-+	write_junit_xml "$(printf '%s\n' \
-+		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
-+	junit_have_testcase=t
-+}
-+
- test_done () {
- 	GIT_EXIT_OK=t
- 
-+	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
-+	then
-+		test -n "$junit_have_testcase" || {
-+			junit_start=$(test-tool date getnanos)
-+			write_junit_xml_testcase "all tests skipped"
-+		}
-+
-+		# adjust the overall time
-+		junit_time=$(test-tool date getnanos $junit_suite_start)
-+		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
-+			<"$junit_xml_path" >"$junit_xml_path.new"
-+		mv "$junit_xml_path.new" "$junit_xml_path"
-+
-+		write_junit_xml "  </testsuite>" "</testsuites>"
-+	fi
-+
- 	if test -z "$HARNESS_ACTIVE"
- 	then
- 		test_results_dir="$TEST_OUTPUT_DIRECTORY/test-results"
-@@ -996,6 +1080,7 @@ then
- else
- 	mkdir -p "$TRASH_DIRECTORY"
- fi
-+
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
- cd -P "$TRASH_DIRECTORY" || exit 1
-@@ -1009,6 +1094,19 @@ then
- 	test_done
- fi
- 
-+if test -n "$write_junit_xml"
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 8532555b4e..584abcd529 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -19,6 +19,29 @@ then
+ 	BREW_INSTALL_PACKAGES="git-lfs gettext"
+ 	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+ 	export GIT_TEST_OPTS="--verbose-log -x --immediate"
++elif test -n "$SYSTEM_TASKDEFINITIONSURI"
 +then
-+	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
-+	mkdir -p "$junit_xml_dir"
-+	junit_xml_base=${0##*/}
-+	junit_xml_path="$junit_xml_dir/TEST-${junit_xml_base%.sh}.xml"
-+	junit_attrs="name=\"${junit_xml_base%.sh}\""
-+	junit_attrs="$junit_attrs timestamp=\"$(TZ=UTC \
-+		date +%Y-%m-%dT%H:%M:%S)\""
-+	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
-+	junit_suite_start=$(test-tool date getnanos)
-+fi
++	# We are running in Azure Pipelines
++	CI_BRANCH="$BUILD_SOURCEBRANCH"
++	CI_COMMIT="$BUILD_SOURCEVERSION"
++	CI_JOB_ID="$BUILD_BUILDID"
++	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
++	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
++	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
++	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
++	CC="${CC:-gcc}"
 +
- # Provide an implementation of the 'yes' utility
- yes () {
- 	if test $# = 0
++	# use a subdirectory of the cache dir (because the file share is shared
++	# among *all* phases)
++	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
++
++	url_for_job_id () {
++		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
++	}
++
++	BREW_INSTALL_PACKAGES=
++	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
++	export GIT_TEST_OPTS="--quiet --write-junit-xml"
+ fi
+ 
+ skip_branch_tip_with_tag () {
 -- 
 gitgitgadget
 
