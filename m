@@ -2,328 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A2541F97E
-	for <e@80x24.org>; Mon, 15 Oct 2018 00:02:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4611F97E
+	for <e@80x24.org>; Mon, 15 Oct 2018 00:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726566AbeJOHp0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 03:45:26 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50638 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726530AbeJOHp0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Oct 2018 03:45:26 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A0FCE61B73;
-        Mon, 15 Oct 2018 00:02:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539561761;
-        bh=OC3fDgp4b9OsHC6sXy2aqapI/WcpRWU711G1JorbVsM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=npPAp2n5KzzJ+WxA+2LixJkYDjnz6oCpv4lV8SITiiz+mwQrNCE1ilyq1fa4HRZSg
-         ZezuWgwS5FtXPiC57nJCUTdAVRxt8gOL86/PMf+egKRGyW9d1LUm5YoJISdHIzrjjS
-         lQIRll2rVm5jylIbsN3m3WCnfOEmx0QbwU8rXxLVK38IxDuE8ARWdZ0VJX3vEmbSq8
-         4AiATWDcjaGCH/0e+80dsQmNyjtD/duN6ZQR++W7kuh8EY2vCQsif7HYzUEecYlUF2
-         CFTqP1xqq8OjiZd9lFHETHD2SqelynPTlNYWrCyfHyyR5jB8DQ///PkT/J+nq0zmO4
-         UL2YnLf1VYTnJPPZ4ycY/80aNib/t5ZhY+bNU2WWzPKuyK+NXqWFzCbfiyhuPen9qp
-         OVdOdXwCO4m4ZXzB+53JTyWJErTMbrVZUMW2MleBTH56VxXHkEO+gkFiF0I9L1CE7I
-         HbuOJDnvzpL4s8sroenfmV8QxRfXCmmkgo2h/RT8vyRw6jjGoqh
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 15/15] rerere: convert to use the_hash_algo
-Date:   Mon, 15 Oct 2018 00:02:02 +0000
-Message-Id: <20181015000202.951965-16-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.19.1.568.g152ad8e336
-In-Reply-To: <20181015000202.951965-1-sandals@crustytoothpaste.net>
-References: <20181015000202.951965-1-sandals@crustytoothpaste.net>
+        id S1726499AbeJOIVI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 04:21:08 -0400
+Received: from avasout03.plus.net ([84.93.230.244]:41180 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726186AbeJOIVI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 04:21:08 -0400
+Received: from [10.0.2.15] ([80.189.70.193])
+        by smtp with ESMTPA
+        id Bqtjgw8qpO2g2BqtkgZmT9; Mon, 15 Oct 2018 01:38:16 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=DKChHRFb c=1 sm=1 tr=0
+ a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
+ a=IkcTkHD0fZMA:10 a=updfGnVDxfHR-Zj7dXAA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [RFC/PATCH] headers: normalize the spelling of some header guards
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <2804aa4e-c078-c981-be93-27e6e58b2042@ramsayjones.plus.com>
+ <20181014235950.GA13510@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <f04c2f71-fe0f-a935-d49d-c71684b7558c@ramsayjones.plus.com>
+Date:   Mon, 15 Oct 2018 01:38:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20181014235950.GA13510@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNrtcrP1ZnqPx852wKnmT1mmvD9cAMlWPf3yENfzlmLjEVDqh8JvbLPcj+aAiAjMUOpYcbq69Yz6q2x1WZ9O3lMRxGNvEG+2GvhVear6aSt/C3YWxgj7
+ 6ofqqYbeAkP6t9AnR4X5uk5qoTlzwb8KLRTmoRg0ktQANhlhl387QCDa+tECDnu32Otqwr7XyZpmgg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since this data is stored in the .git directory, it makes sense for us
-to use the same hash algorithm for it as for everything else.  Convert
-the remaining uses of SHA-1 to use the_hash_algo.  Use GIT_MAX_RAWSZ for
-allocations.  Rename various struct members, local variables, and a
-function to be named "hash" instead of "sha1".
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- rerere.c | 81 +++++++++++++++++++++++++++++---------------------------
- 1 file changed, 42 insertions(+), 39 deletions(-)
 
-diff --git a/rerere.c b/rerere.c
-index 7aa149e849..ceb98015ff 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -29,7 +29,7 @@ static int rerere_dir_alloc;
- #define RR_HAS_POSTIMAGE 1
- #define RR_HAS_PREIMAGE 2
- static struct rerere_dir {
--	unsigned char sha1[20];
-+	unsigned char hash[GIT_MAX_HEXSZ];
- 	int status_alloc, status_nr;
- 	unsigned char *status;
- } **rerere_dir;
-@@ -52,7 +52,7 @@ static void free_rerere_id(struct string_list_item *item)
- 
- static const char *rerere_id_hex(const struct rerere_id *id)
- {
--	return sha1_to_hex(id->collection->sha1);
-+	return sha1_to_hex(id->collection->hash);
- }
- 
- static void fit_variant(struct rerere_dir *rr_dir, int variant)
-@@ -115,7 +115,7 @@ static int is_rr_file(const char *name, const char *filename, int *variant)
- static void scan_rerere_dir(struct rerere_dir *rr_dir)
- {
- 	struct dirent *de;
--	DIR *dir = opendir(git_path("rr-cache/%s", sha1_to_hex(rr_dir->sha1)));
-+	DIR *dir = opendir(git_path("rr-cache/%s", sha1_to_hex(rr_dir->hash)));
- 
- 	if (!dir)
- 		return;
-@@ -133,24 +133,24 @@ static void scan_rerere_dir(struct rerere_dir *rr_dir)
- 	closedir(dir);
- }
- 
--static const unsigned char *rerere_dir_sha1(size_t i, void *table)
-+static const unsigned char *rerere_dir_hash(size_t i, void *table)
- {
- 	struct rerere_dir **rr_dir = table;
--	return rr_dir[i]->sha1;
-+	return rr_dir[i]->hash;
- }
- 
- static struct rerere_dir *find_rerere_dir(const char *hex)
- {
--	unsigned char sha1[20];
-+	unsigned char hash[GIT_MAX_RAWSZ];
- 	struct rerere_dir *rr_dir;
- 	int pos;
- 
--	if (get_sha1_hex(hex, sha1))
-+	if (get_sha1_hex(hex, hash))
- 		return NULL; /* BUG */
--	pos = sha1_pos(sha1, rerere_dir, rerere_dir_nr, rerere_dir_sha1);
-+	pos = sha1_pos(hash, rerere_dir, rerere_dir_nr, rerere_dir_hash);
- 	if (pos < 0) {
- 		rr_dir = xmalloc(sizeof(*rr_dir));
--		hashcpy(rr_dir->sha1, sha1);
-+		hashcpy(rr_dir->hash, hash);
- 		rr_dir->status = NULL;
- 		rr_dir->status_nr = 0;
- 		rr_dir->status_alloc = 0;
-@@ -207,26 +207,27 @@ static void read_rr(struct string_list *rr)
- 		return;
- 	while (!strbuf_getwholeline(&buf, in, '\0')) {
- 		char *path;
--		unsigned char sha1[20];
-+		unsigned char hash[GIT_MAX_RAWSZ];
- 		struct rerere_id *id;
- 		int variant;
-+		const unsigned hexsz = the_hash_algo->hexsz;
- 
- 		/* There has to be the hash, tab, path and then NUL */
--		if (buf.len < 42 || get_sha1_hex(buf.buf, sha1))
-+		if (buf.len < hexsz + 2 || get_sha1_hex(buf.buf, hash))
- 			die(_("corrupt MERGE_RR"));
- 
--		if (buf.buf[40] != '.') {
-+		if (buf.buf[hexsz] != '.') {
- 			variant = 0;
--			path = buf.buf + 40;
-+			path = buf.buf + hexsz;
- 		} else {
- 			errno = 0;
--			variant = strtol(buf.buf + 41, &path, 10);
-+			variant = strtol(buf.buf + hexsz + 1, &path, 10);
- 			if (errno)
- 				die(_("corrupt MERGE_RR"));
- 		}
- 		if (*(path++) != '\t')
- 			die(_("corrupt MERGE_RR"));
--		buf.buf[40] = '\0';
-+		buf.buf[hexsz] = '\0';
- 		id = new_rerere_id_hex(buf.buf);
- 		id->variant = variant;
- 		string_list_insert(rr, path)->util = id;
-@@ -360,7 +361,7 @@ static void rerere_strbuf_putconflict(struct strbuf *buf, int ch, size_t size)
- }
- 
- static int handle_conflict(struct strbuf *out, struct rerere_io *io,
--			   int marker_size, git_SHA_CTX *ctx)
-+			   int marker_size, git_hash_ctx *ctx)
- {
- 	enum {
- 		RR_SIDE_1 = 0, RR_SIDE_2, RR_ORIGINAL
-@@ -398,10 +399,12 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
- 			strbuf_addbuf(out, &two);
- 			rerere_strbuf_putconflict(out, '>', marker_size);
- 			if (ctx) {
--				git_SHA1_Update(ctx, one.buf ? one.buf : "",
--					    one.len + 1);
--				git_SHA1_Update(ctx, two.buf ? two.buf : "",
--					    two.len + 1);
-+				the_hash_algo->update_fn(ctx, one.buf ?
-+							 one.buf : "",
-+							 one.len + 1);
-+				the_hash_algo->update_fn(ctx, two.buf ?
-+							 two.buf : "",
-+							 two.len + 1);
- 			}
- 			break;
- 		} else if (hunk == RR_SIDE_1)
-@@ -430,18 +433,18 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
-  * Return 1 if conflict hunks are found, 0 if there are no conflict
-  * hunks and -1 if an error occured.
-  */
--static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
-+static int handle_path(unsigned char *hash, struct rerere_io *io, int marker_size)
- {
--	git_SHA_CTX ctx;
-+	git_hash_ctx ctx;
- 	struct strbuf buf = STRBUF_INIT, out = STRBUF_INIT;
- 	int has_conflicts = 0;
--	if (sha1)
--		git_SHA1_Init(&ctx);
-+	if (hash)
-+		the_hash_algo->init_fn(&ctx);
- 
- 	while (!io->getline(&buf, io)) {
- 		if (is_cmarker(buf.buf, '<', marker_size)) {
- 			has_conflicts = handle_conflict(&out, io, marker_size,
--							sha1 ? &ctx : NULL);
-+							hash ? &ctx : NULL);
- 			if (has_conflicts < 0)
- 				break;
- 			rerere_io_putmem(out.buf, out.len, io);
-@@ -452,8 +455,8 @@ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_siz
- 	strbuf_release(&buf);
- 	strbuf_release(&out);
- 
--	if (sha1)
--		git_SHA1_Final(sha1, &ctx);
-+	if (hash)
-+		the_hash_algo->final_fn(hash, &ctx);
- 
- 	return has_conflicts;
- }
-@@ -462,7 +465,7 @@ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_siz
-  * Scan the path for conflicts, do the "handle_path()" thing above, and
-  * return the number of conflict hunks found.
-  */
--static int handle_file(const char *path, unsigned char *sha1, const char *output)
-+static int handle_file(const char *path, unsigned char *hash, const char *output)
- {
- 	int has_conflicts = 0;
- 	struct rerere_io_file io;
-@@ -484,7 +487,7 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- 		}
- 	}
- 
--	has_conflicts = handle_path(sha1, (struct rerere_io *)&io, marker_size);
-+	has_conflicts = handle_path(hash, (struct rerere_io *)&io, marker_size);
- 
- 	fclose(io.input);
- 	if (io.io.wrerror)
-@@ -814,7 +817,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 	 */
- 	for (i = 0; i < conflict.nr; i++) {
- 		struct rerere_id *id;
--		unsigned char sha1[20];
-+		unsigned char hash[GIT_MAX_RAWSZ];
- 		const char *path = conflict.items[i].string;
- 		int ret;
- 
-@@ -823,7 +826,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 		 * conflict ID.  No need to write anything out
- 		 * yet.
- 		 */
--		ret = handle_file(path, sha1, NULL);
-+		ret = handle_file(path, hash, NULL);
- 		if (ret != 0 && string_list_has_string(rr, path)) {
- 			remove_variant(string_list_lookup(rr, path)->util);
- 			string_list_remove(rr, path, 1);
-@@ -831,7 +834,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 		if (ret < 1)
- 			continue;
- 
--		id = new_rerere_id(sha1);
-+		id = new_rerere_id(hash);
- 		string_list_insert(rr, path)->util = id;
- 
- 		/* Ensure that the directory exists. */
-@@ -942,7 +945,7 @@ static int rerere_mem_getline(struct strbuf *sb, struct rerere_io *io_)
- 	return 0;
- }
- 
--static int handle_cache(const char *path, unsigned char *sha1, const char *output)
-+static int handle_cache(const char *path, unsigned char *hash, const char *output)
- {
- 	mmfile_t mmfile[3] = {{NULL}};
- 	mmbuffer_t result = {NULL, 0};
-@@ -1001,7 +1004,7 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
- 	 * Grab the conflict ID and optionally write the original
- 	 * contents with conflict markers out.
- 	 */
--	has_conflicts = handle_path(sha1, (struct rerere_io *)&io, marker_size);
-+	has_conflicts = handle_path(hash, (struct rerere_io *)&io, marker_size);
- 	strbuf_release(&io.input);
- 	if (io.io.output)
- 		fclose(io.io.output);
-@@ -1012,7 +1015,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- {
- 	const char *filename;
- 	struct rerere_id *id;
--	unsigned char sha1[20];
-+	unsigned char hash[GIT_MAX_RAWSZ];
- 	int ret;
- 	struct string_list_item *item;
- 
-@@ -1020,12 +1023,12 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	 * Recreate the original conflict from the stages in the
- 	 * index and compute the conflict ID
- 	 */
--	ret = handle_cache(path, sha1, NULL);
-+	ret = handle_cache(path, hash, NULL);
- 	if (ret < 1)
- 		return error(_("could not parse conflict hunks in '%s'"), path);
- 
- 	/* Nuke the recorded resolution for the conflict */
--	id = new_rerere_id(sha1);
-+	id = new_rerere_id(hash);
- 
- 	for (id->variant = 0;
- 	     id->variant < id->collection->status_nr;
-@@ -1037,7 +1040,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 		if (!has_rerere_resolution(id))
- 			continue;
- 
--		handle_cache(path, sha1, rerere_path(id, "thisimage"));
-+		handle_cache(path, hash, rerere_path(id, "thisimage"));
- 		if (read_mmfile(&cur, rerere_path(id, "thisimage"))) {
- 			free(cur.ptr);
- 			error(_("failed to update conflicted state in '%s'"), path);
-@@ -1069,7 +1072,7 @@ static int rerere_forget_one_path(const char *path, struct string_list *rr)
- 	 * conflict in the working tree, run us again to record
- 	 * the postimage.
- 	 */
--	handle_cache(path, sha1, rerere_path(id, "preimage"));
-+	handle_cache(path, hash, rerere_path(id, "preimage"));
- 	fprintf_ln(stderr, _("Updated preimage for '%s'"), path);
- 
- 	/*
+On 15/10/18 00:59, Jeff King wrote:
+> On Sun, Oct 14, 2018 at 09:13:09PM +0100, Ramsay Jones wrote:
+> 
+>> This patch is marked RFC because I am not aware of any policy with
+>> regard to header guard spelling. Having said that, apart from the
+>> fetch-negotiator.h header, all of these headers are using a reserved
+>> identifier (see C99 Standard 7.1.3).
+>>
+>> These headers were found, thus:
+>>
+>>   $ git grep -n -E '^#ifn?def ' -- '*.h' | grep 'h\:1\:' | grep -v '^compat' | grep -v -E '[A-Z_]*_H$'
+>>   alias.h:1:#ifndef __ALIAS_H__
+>>   commit-reach.h:1:#ifndef __COMMIT_REACH_H__
+>>   fetch-negotiator.h:1:#ifndef FETCH_NEGOTIATOR
+>>   midx.h:1:#ifndef __MIDX_H__
+>>   t/helper/test-tool.h:1:#ifndef __TEST_TOOL_H__
+>>   vcs-svn/fast_export.h:1:#ifndef FAST_EXPORT_H_
+>>   vcs-svn/line_buffer.h:1:#ifndef LINE_BUFFER_H_
+>>   vcs-svn/sliding_window.h:1:#ifndef SLIDING_WINDOW_H_
+>>   vcs-svn/svndiff.h:1:#ifndef SVNDIFF_H_
+>>   vcs-svn/svndump.h:1:#ifndef SVNDUMP_H_
+> 
+> I think the ones with a trailing underscore are actually OK according to
+> the standard (not sure if your "all of these" was including the ones in
+> vcs-svn ;) ).
+
+Yes, trailing underscore is fine - "all of these" meant the
+headers in the patch, with the noted exception of fetch-negotiator.h.
+
+> I'm in favor of normalizing even the ones that aren't illegal, though
+> I'm OK either way on the vcs-svn bits if they're going away anyway.
+
+I wasn't sure about vcs-svn, but assumed that they might go
+away soon (hence the cc: list). I will be happy to add them
+to the patch, if that is not the case.
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
