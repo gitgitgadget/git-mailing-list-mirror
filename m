@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 929771F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id A83BA1F453
 	for <e@80x24.org>; Mon, 15 Oct 2018 11:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726526AbeJOS7N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 14:59:13 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:37659 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726319AbeJOS7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 14:59:13 -0400
-Received: by mail-pf1-f193.google.com with SMTP id j23-v6so9513484pfi.4
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 04:14:26 -0700 (PDT)
+        id S1726534AbeJOS7P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 14:59:15 -0400
+Received: from mail-pg1-f180.google.com ([209.85.215.180]:46655 "EHLO
+        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726319AbeJOS7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 14:59:15 -0400
+Received: by mail-pg1-f180.google.com with SMTP id a5-v6so8996005pgv.13
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 04:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=diamand.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ffdq98kySWVmKhM7VB6+p5/IbsOlzT1X5C/f8NIg+6o=;
-        b=MAGo/h+VA6qTNT1ibKFaGE2nrHAgz1YTOWA8pJdWNUfv8jvmqnaKPjvV5ce2gZYQFZ
-         WuCCCnpQi56EszVqwDIRQagJ7oQUN5bv9F8Cvvlz7vbkFNHBnxtGSA55jJZJTrN0LIO/
-         n1ck5yl/Dpa3ZGJxqW0rynqlZqSP4eC9foYW8=
+        bh=n9DLn3N8MxdlWF/xOd4AOanOLPC39tDsYeob6yjt69I=;
+        b=FGyDmmbRlRsLugGko4ed35nGsOjZFBdWouDM95hVtKXQA/Ut6IKdplGAR9hJN0b47U
+         W+w+NanghevMi394xaAYlt/7GhsimjJ3+nYF9itNY35zN3LJGAYeoLEh/H9sqHZvAF/Q
+         nw7YvBsnp+XgZ18akYHi+ccsgJiZctLoUrNPE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ffdq98kySWVmKhM7VB6+p5/IbsOlzT1X5C/f8NIg+6o=;
-        b=iEKZObKrnEMRkV/jHRPVEHtEctsKLsE1jkAp/A0fs8SM3AaEmjEXJxmdXHW8IlsOhF
-         5F/Fuh/YpFp2SNrPvAT2XaQhzUL7b0C+JH1srIC7EPOBBd5RFPWD8BIkGB15QFHIZF64
-         UN0tcvy+TAUYb/vuEB4UrDUhi511uPxRLfl1YZ+2PNtNTq4j6YXe4maQ27jxKd3hPrwU
-         qQRGFT7117Qydy4d8ziolHEAORM1q4whLXPO5w8W7bSjFdLp6dO+lIaV9taUJwNc0Jru
-         Rwt8fyuSaISyUwRhvkEnfV6sGnyEfaHkD5SnXvwH8XO6QSpPZkJA0pA+mPV8gjuSBRPG
-         IppA==
-X-Gm-Message-State: ABuFfogr877znAptuLIwGiZ7g2qGyEvsieiFWM8395uBqdlGx/rJmSsL
-        rk3WsDqlEK7iLtozqtetZxALvoF6zdqXtihv
-X-Google-Smtp-Source: ACcGV63C0KTEKxoJMRxK9z1/UMl7tgHBIJhCLEqoR8HNZxYvYloEzoa2UgJNMQX073gEnlxhBBaAPg==
-X-Received: by 2002:a63:8c0b:: with SMTP id m11-v6mr15785653pgd.422.1539602065481;
-        Mon, 15 Oct 2018 04:14:25 -0700 (PDT)
+        bh=n9DLn3N8MxdlWF/xOd4AOanOLPC39tDsYeob6yjt69I=;
+        b=ElwMNLzOb1roAv17pY/QcpSCv4MGFE/EG2lE2U+a2m86lyJS+kDRVzxnTf363/ob1Z
+         v/8ddZNXEL24OUVpcRuJbfYbzeOfC5NKOPPR8+UQlNJeqCQvk9oMby1kqIqpMZEW9GLX
+         KFE78ezNQwN4exa/ZyMTx/UVq8zzsW0LOalJTcKXkrwQLnGcYuJwdNksMon4KE34mejO
+         ThknlgMq344OM4WF4iVCeOcbi8gUqbYaJqnq8+PBtPiAjFkaHLmDkmznwVEbESCpxg8m
+         4vXX/gudjN0wMsgr6oQEHdWP0KtpnXqadCb12cdZkIpn9IV//7maUGNGZgXrx13GOOZG
+         bu1A==
+X-Gm-Message-State: ABuFfohxMadAyaD3IRsQWSxLz2kwemJmh8ziwcKkGADw0HHCEYbKIF/g
+        gk9aRn8r4yLRMcOiXiNo2IakVS9OU5f8Nkjf
+X-Google-Smtp-Source: ACcGV605HoGXUzZTx4qnC+YJC75xMBZMrh2Icy+IGCc6c2FlEoYWrJEeH/OQOK/+y7MvkJ5S/wydxQ==
+X-Received: by 2002:a62:7a81:: with SMTP id v123-v6mr17487906pfc.240.1539602066902;
+        Mon, 15 Oct 2018 04:14:26 -0700 (PDT)
 Received: from lgd-kipper.hsd1.ca.comcast.net ([2601:646:8581:1fcf:8286:f2ff:fe24:931b])
-        by smtp.gmail.com with ESMTPSA id e22-v6sm11352461pfi.61.2018.10.15.04.14.24
+        by smtp.gmail.com with ESMTPSA id e22-v6sm11352461pfi.61.2018.10.15.04.14.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 04:14:24 -0700 (PDT)
+        Mon, 15 Oct 2018 04:14:26 -0700 (PDT)
 From:   Luke Diamand <luke@diamand.org>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
@@ -57,9 +57,9 @@ Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         larsxschneider@gmail.com, Lex Spoon <lex@lexspoon.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Luke Diamand <luke@diamand.org>
-Subject: [PATCHv2 1/3] git-p4: do not fail in verbose mode for missing 'fileSize' key
-Date:   Mon, 15 Oct 2018 12:14:06 +0100
-Message-Id: <20181015111408.17618-2-luke@diamand.org>
+Subject: [PATCHv2 2/3] git-p4: unshelve into refs/remotes/p4-unshelved, not refs/remotes/p4/unshelved
+Date:   Mon, 15 Oct 2018 12:14:07 +0100
+Message-Id: <20181015111408.17618-3-luke@diamand.org>
 X-Mailer: git-send-email 2.19.1.331.gae0ed827e6
 In-Reply-To: <20181015111408.17618-1-luke@diamand.org>
 References: <20181015111408.17618-1-luke@diamand.org>
@@ -70,35 +70,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If deleting or moving a file, sometimes P4 doesn't report the file size.
+The branch detection code looks for branches under refs/remotes/p4/...
+and can end up getting confused if there are unshelved changes in
+there as well. This happens in the function p4BranchesInGit().
 
-The code handles this just fine but some logging crashes. Stop this
-happening.
-
-There was some earlier discussion on the list about this:
-
-https://public-inbox.org/git/xmqq1sqpp1vv.fsf@gitster.mtv.corp.google.com/
+Instead, put the unshelved changes into refs/remotes/p4-unshelved/<N>.
 
 Signed-off-by: Luke Diamand <luke@diamand.org>
 ---
- git-p4.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/git-p4.txt | 6 +++---
+ git-p4.py                | 3 ++-
+ t/t9832-unshelve.sh      | 6 +++---
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index 41780a5aa9..6c0017e36e 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -174,7 +174,7 @@ $ git p4 submit --update-shelve 1234 --update-shelve 2345
+ Unshelve
+ ~~~~~~~~
+ Unshelving will take a shelved P4 changelist, and produce the equivalent git commit
+-in the branch refs/remotes/p4/unshelved/<changelist>.
++in the branch refs/remotes/p4-unshelved/<changelist>.
+ 
+ The git commit is created relative to the current origin revision (HEAD by default).
+ If the shelved changelist's parent revisions differ, git-p4 will refuse to unshelve;
+@@ -182,13 +182,13 @@ you need to be unshelving onto an equivalent tree.
+ 
+ The origin revision can be changed with the "--origin" option.
+ 
+-If the target branch in refs/remotes/p4/unshelved already exists, the old one will
++If the target branch in refs/remotes/p4-unshelved already exists, the old one will
+ be renamed.
+ 
+ ----
+ $ git p4 sync
+ $ git p4 unshelve 12345
+-$ git show refs/remotes/p4/unshelved/12345
++$ git show p4-unshelved/12345
+ <submit more changes via p4 to the same files>
+ $ git p4 unshelve 12345
+ <refuses to unshelve until git is in sync with p4 again>
 diff --git a/git-p4.py b/git-p4.py
-index 7fab255584..5701bad06a 100755
+index 5701bad06a..76c18a22e9 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -2775,7 +2775,10 @@ def streamOneP4File(self, file, contents):
-         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
-         relPath = self.encodeWithUTF8(relPath)
-         if verbose:
--            size = int(self.stream_file['fileSize'])
-+            if 'fileSize' in self.stream_file:
-+                size = int(self.stream_file['fileSize'])
-+            else:
-+                size = 0 # deleted files don't get a fileSize apparently
-             sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
-             sys.stdout.flush()
+@@ -3956,7 +3956,8 @@ def __init__(self):
+         ]
+         self.verbose = False
+         self.noCommit = False
+-        self.destbranch = "refs/remotes/p4/unshelved"
++        self.destbranch = "refs/remotes/p4-unshelved"
++        self.origin = "p4/master"
+ 
+     def renameBranch(self, branch_name):
+         """ Rename the existing branch to branch_name.N
+diff --git a/t/t9832-unshelve.sh b/t/t9832-unshelve.sh
+index 48ec7679b8..c3d15ceea8 100755
+--- a/t/t9832-unshelve.sh
++++ b/t/t9832-unshelve.sh
+@@ -54,8 +54,8 @@ EOF
+ 		cd "$git" &&
+ 		change=$(last_shelved_change) &&
+ 		git p4 unshelve $change &&
+-		git show refs/remotes/p4/unshelved/$change | grep -q "Further description" &&
+-		git cherry-pick refs/remotes/p4/unshelved/$change &&
++		git show refs/remotes/p4-unshelved/$change | grep -q "Further description" &&
++		git cherry-pick refs/remotes/p4-unshelved/$change &&
+ 		test_path_is_file file2 &&
+ 		test_cmp file1 "$cli"/file1 &&
+ 		test_cmp file2 "$cli"/file2 &&
+@@ -88,7 +88,7 @@ EOF
+ 		cd "$git" &&
+ 		change=$(last_shelved_change) &&
+ 		git p4 unshelve $change &&
+-		git diff refs/remotes/p4/unshelved/$change.0 refs/remotes/p4/unshelved/$change | grep -q file3
++		git diff refs/remotes/p4-unshelved/$change.0 refs/remotes/p4-unshelved/$change | grep -q file3
+ 	)
+ '
  
 -- 
 2.19.1.331.gae0ed827e6
