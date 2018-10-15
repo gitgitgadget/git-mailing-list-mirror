@@ -7,167 +7,161 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C93591F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 10:14:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9588C1F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 10:14:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726927AbeJOR7U (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 13:59:20 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41601 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726760AbeJOR7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 13:59:20 -0400
-Received: by mail-pl1-f195.google.com with SMTP id q17-v6so9072120plr.8
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:14:45 -0700 (PDT)
+        id S1726929AbeJOR7W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 13:59:22 -0400
+Received: from mail-pl1-f177.google.com ([209.85.214.177]:40111 "EHLO
+        mail-pl1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726760AbeJOR7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 13:59:21 -0400
+Received: by mail-pl1-f177.google.com with SMTP id 1-v6so9066219plv.7
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XPR6UWqsjqif9jAgEp08erZbJ04slvH4snftfy0ci7Q=;
-        b=UL5MK6GVO0U/0QIB6d39tWH6NkIuz/pocupMt/F4wBcc6zq9vxlP5pCPthBC1iJG5U
-         E5ItFYzkPAuRtZ3/CqKKR5K4VhF+GmGuVmU6MUfCoKBLdGORyjMovlvAwJsonzda8ARX
-         tOQpjgL9vTjGta2oh3PCWbmpGH0ozI837XUag2DR7d+WYRUtcR89sNNbW7uNch3bRc8T
-         kcPiiYYke+TEat0Cjj/PRaStxFIiLGc6nS/9hfNzQGn26si4NsFnPbnmcAShEQGVIBsg
-         MCTx6i6rj3zkdRIxLw4uCXGK0EAvc80DbcAWcOUfqI3P9/s38ZKHBwZE1PLLbnP7n4P5
-         1AbQ==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=qF6OLnoAWzxdKIW4zYidSI0LKATt0JQ7Pprvo/95nvY=;
+        b=ottL5zmIJMSHEgR7FUrFphBlQu3L4LlOr6x6klg/6irOOVuWq8ZXuvsWO9BfN1EpL2
+         p51kvoPVsL8Vl1YPbCgOWbBJJ0np5wRsAiwKySdbmJ9qKrx9NBU47Um6raWhH09nJgcc
+         CSorpDaJ4o/ORKDDZDgI2dk1HsPb4Ggg/tsXVL2o8xHo6r3pkCm8iyO5Op8Qr07vG7g7
+         5HXKNIS637wdxYDGqMBraFdTETCAMs/GbjReAbGQtT541UsjmM1ov+yuNZi0RpLCXMNe
+         V60vUw29CC88uHcWwOXiUcb+IEDC978LoOJa/VANxOUj+JR44Axr8RACvwVt2AL0SZrt
+         Vr4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XPR6UWqsjqif9jAgEp08erZbJ04slvH4snftfy0ci7Q=;
-        b=r6vo9CWp172ukXnh5Rh72A3QL3joCMNGjvVjd1pfUPhOPQJVViSLfq6nbpeLU0jaKq
-         UQaDbEDspiuX87tFjsQDcxFckhY8acw1nXvT6wsFMUYXDls5DPJFEquqXo++P7NWyAVO
-         01X4D0W8wWEtRvUXe6x//vSCxFK35VDpfXw6EX1dxqx/qu6fM31tVo3AGv2tDVD/B71U
-         qC+VZoByqOTipyUsi+Zb1AZAjGng8lPEmqC+Yd2Wj9G3qSeHDOzpuxM6fN2uUrTIolx8
-         9MnO2Kt2FtE3EH2Gv5KTKr/P6MCngaDvALRNDYsxzIXgBZVKNKMf7woFfo5RtXlg5JKT
-         c8RA==
-X-Gm-Message-State: ABuFfogW5PjUiMk6VCNNRNr6VUNXwoflRMAqfcsIVCG6ufV0qLK4A+3J
-        JelH1yYRzFsJG6ufXeGsgqW52OOn
-X-Google-Smtp-Source: ACcGV63QywO+eTpYyStjESRZDjR+PQLPfGXFbHcE9CWLmIl7D+yCrw01wyp/uQHGdnXvcFvAQlG8ZQ==
-X-Received: by 2002:a17:902:1004:: with SMTP id b4-v6mr1289568pla.172.1539598484467;
-        Mon, 15 Oct 2018 03:14:44 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id h6-v6sm12976366pgn.84.2018.10.15.03.14.43
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qF6OLnoAWzxdKIW4zYidSI0LKATt0JQ7Pprvo/95nvY=;
+        b=Kw32AfvB5kkVqiu+EajpRHznpYS8bvxtFduCdlyIO7jexQX3/6muglxCqRNhXLHk8Z
+         +g/4aujXrIH2z6Dlg/LsqoKxzuuWZfDoonnEmiPfPctuHuvSpoWNFUfwerLGH3pofV5r
+         57mhi3h9ol6nSkEaSEAfNFy0v+kGKW3p9Yeo5O4/TROcBAdP0x1A8Lyx6HOx1XgfTNGK
+         986+dfqP2vXzh2/Wk6qETUEYl3YtUZNiViIQPi5MExBrIHkXiopv3PjNLXZWtD3PM4wz
+         ukNJhx2vEW76lDuqQkBk0t5gWIlGcfLf+361VTcxshiI91cht/fZ46NIQa4+Z9WCcXg2
+         PXLw==
+X-Gm-Message-State: ABuFfogbn/3M5tiTpUOh7woTkmWpHVQs6/4uguwNtOXdmKn5eBloJjay
+        1Z3rFtBMDnBmY5dBxYjMDOQBRVS6
+X-Google-Smtp-Source: ACcGV62l3CXipS6wMJp1XSsKFL1IO+TJdMdvpe4xWKhMT4LHuLBiVkHwTrh4gOlGLqcOML7dlTTQVA==
+X-Received: by 2002:a17:902:33c3:: with SMTP id b61-v6mr16747148plc.52.1539598485907;
+        Mon, 15 Oct 2018 03:14:45 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id u69-v6sm19325726pfk.68.2018.10.15.03.14.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 03:14:43 -0700 (PDT)
-Date:   Mon, 15 Oct 2018 03:14:43 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Oct 2018 10:14:38 GMT
-Message-Id: <8c5ecdb6c9a73405036672db8bc1e36c5c6c6951.1539598481.git.gitgitgadget@gmail.com>
+        Mon, 15 Oct 2018 03:14:45 -0700 (PDT)
+Date:   Mon, 15 Oct 2018 03:14:45 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Oct 2018 10:14:39 GMT
+Message-Id: <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.46.git.gitgitgadget@gmail.com>
 References: <pull.46.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/3] http: add support for selecting SSL backends at runtime
+From:   "Brendan Forster via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 2/3] http: add support for disabling SSL revocation checks in
+ cURL
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Brendan Forster <github@brendanforster.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Brendan Forster <github@brendanforster.com>
 
-As of version 7.56.0, curl supports being compiled with multiple SSL
-backends.
+This adds support for a new http.schannelCheckRevoke config value.
 
-This patch adds the Git side of that feature: by setting http.sslBackend
-to "openssl" or "schannel", Git for Windows can now choose the SSL
-backend at runtime.
+This config value is only used if http.sslBackend is set to "schannel",
+which forces cURL to use the Windows Certificate Store when validating
+server certificates associated with a remote server.
 
-This comes in handy on Windows because Secure Channel ("schannel") is
-the native solution, accessing the Windows Credential Store, thereby
-allowing for enterprise-wide management of certificates. For historical
-reasons, Git for Windows needs to support OpenSSL still, as it has
-previously been the only supported SSL backend in Git for Windows for
-almost a decade.
+This config value should only be set to "false" if you are in an
+environment where revocation checks are blocked by the network, with
+no alternative options.
 
-The patch has been carried in Git for Windows for over a year, and is
-considered mature.
+This is only supported in cURL 7.44 or later.
 
+Note: an earlier iteration tried to use the config setting
+http.schannel.checkRevoke, but the http.* config settings can be limited
+to specific URLs via http.<url>.* (which would mistake `schannel` for a
+URL).
+
+Helped by Agustín Martín Barbero.
+
+Signed-off-by: Brendan Forster <github@brendanforster.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config.txt |  5 +++++
- http.c                   | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ Documentation/config.txt |  8 ++++++++
+ http.c                   | 17 +++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1546833213..7d38f0bf1a 100644
+index 7d38f0bf1a..d569ebd49e 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1984,6 +1984,11 @@ http.sslCAPath::
- 	with when fetching or pushing over HTTPS. Can be overridden
- 	by the `GIT_SSL_CAPATH` environment variable.
+@@ -1989,6 +1989,14 @@ http.sslBackend::
+ 	This option is ignored if cURL lacks support for choosing the SSL
+ 	backend at runtime.
  
-+http.sslBackend::
-+	Name of the SSL backend to use (e.g. "openssl" or "schannel").
-+	This option is ignored if cURL lacks support for choosing the SSL
-+	backend at runtime.
++http.schannelCheckRevoke::
++	Used to enforce or disable certificate revocation checks in cURL
++	when http.sslBackend is set to "schannel". Defaults to `true` if
++	unset. Only necessary to disable this if Git consistently errors
++	and the message is about checking the revocation status of a
++	certificate. This option is ignored if cURL lacks support for
++	setting the relevant SSL option at runtime.
 +
  http.pinnedpubkey::
  	Public key of the https service. It may either be the filename of
  	a PEM or DER encoded public key file or a string starting with
 diff --git a/http.c b/http.c
-index 98ff122585..7fb37a061b 100644
+index 7fb37a061b..8998056b60 100644
 --- a/http.c
 +++ b/http.c
-@@ -155,6 +155,8 @@ static struct active_request_slot *active_queue_head;
+@@ -157,6 +157,8 @@ static char *cached_accept_language;
  
- static char *cached_accept_language;
+ static char *http_ssl_backend;
  
-+static char *http_ssl_backend;
++static int http_schannel_check_revoke = 1;
 +
  size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
  {
  	size_t size = eltsize * nmemb;
-@@ -302,6 +304,12 @@ static int http_options(const char *var, const char *value, void *cb)
- 		curl_ssl_try = git_config_bool(var, value);
+@@ -310,6 +312,11 @@ static int http_options(const char *var, const char *value, void *cb)
  		return 0;
  	}
-+	if (!strcmp("http.sslbackend", var)) {
-+		free(http_ssl_backend);
-+		http_ssl_backend = xstrdup_or_null(value);
+ 
++	if (!strcmp("http.schannelcheckrevoke", var)) {
++		http_schannel_check_revoke = git_config_bool(var, value);
 +		return 0;
 +	}
 +
  	if (!strcmp("http.minsessions", var)) {
  		min_curl_sessions = git_config_int(var, value);
  #ifndef USE_CURL_MULTI
-@@ -995,6 +1003,33 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	git_config(urlmatch_config_entry, &config);
- 	free(normalized_url);
+@@ -811,6 +818,16 @@ static CURL *get_curl_handle(void)
+ 	}
+ #endif
  
-+#if LIBCURL_VERSION_NUM >= 0x073800
-+	if (http_ssl_backend) {
-+		const curl_ssl_backend **backends;
-+		struct strbuf buf = STRBUF_INIT;
-+		int i;
-+
-+		switch (curl_global_sslset(-1, http_ssl_backend, &backends)) {
-+		case CURLSSLSET_UNKNOWN_BACKEND:
-+			strbuf_addf(&buf, _("Unsupported SSL backend '%s'. "
-+					    "Supported SSL backends:"),
-+					    http_ssl_backend);
-+			for (i = 0; backends[i]; i++)
-+				strbuf_addf(&buf, "\n\t%s", backends[i]->name);
-+			die("%s", buf.buf);
-+		case CURLSSLSET_NO_BACKENDS:
-+			die(_("Could not set SSL backend to '%s': "
-+			      "cURL was built without SSL backends"),
-+			    http_ssl_backend);
-+		case CURLSSLSET_TOO_LATE:
-+			die(_("Could not set SSL backend to '%s': already set"),
-+			    http_ssl_backend);
-+		case CURLSSLSET_OK:
-+			break; /* Okay! */
-+		}
-+	}
++	if (http_ssl_backend && !strcmp("schannel", http_ssl_backend) &&
++	    !http_schannel_check_revoke) {
++#if LIBCURL_VERSION_NUM >= 0x072c00
++		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
++#else
++		warning("CURLSSLOPT_NO_REVOKE not applied to curl SSL options because\n"
++			"your curl version is too old (>= 7.44.0)");
 +#endif
++	}
 +
- 	if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
- 		die("curl_global_init failed");
+ 	if (http_proactive_auth)
+ 		init_curl_http_auth(result);
  
 -- 
 gitgitgadget
