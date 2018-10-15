@@ -2,104 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 824521F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 21:24:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7CA91F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 22:03:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbeJPFLn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 01:11:43 -0400
-Received: from mx.mylinuxtime.de ([195.201.174.144]:45372 "EHLO
-        mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbeJPFLn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 01:11:43 -0400
-X-Greylist: delayed 580 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Oct 2018 01:11:41 EDT
-Received: from leda (p5B1019A6.dip0.t-ipconnect.de [91.16.25.166])
-        (using TLSv1.2 with cipher DHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by mx.mylinuxtime.de (Postfix) with ESMTPSA id C18E6C456D;
-        Mon, 15 Oct 2018 23:15:02 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.mylinuxtime.de C18E6C456D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-        t=1539638103; bh=CaC/chNxgUUDHEOFu27Y3DhI/OBganZMre64v4tRQqY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References;
-        b=fyZqRkgOZT3a60pP4K9pywWzunIc0JZBrc+lK89OQzywp91+j8Jvok5fb9YMmkacA
-         xgEfCv6G60XzWAY5LW8Q1KmX5KKA9jTkyIUTLkRvVlKik3DG0uH2BJJEdtdKOciTd4
-         8iLfWpcff5G21Hf/EDRw+7dZCKsdlD/fyCIZees8=
-Date:   Mon, 15 Oct 2018 23:15:01 +0200
-From:   Christian Hesse <list@eworm.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] subtree: add build targets 'man' and 'html'
-Message-ID: <20181015231501.5a7524b0@leda>
-In-Reply-To: <xmqqmurmmt9j.fsf@gitster-ct.c.googlers.com>
-References: <20181007073036.30643-1-list@eworm.de>
-        <xmqqmurmmt9j.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;|\QFlOg>\Bt!b#{;dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;ftj!Hxx\1@;LM)Pz)|B%1#sfF;s;,N?*K*^)
-Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
+        id S1726703AbeJPFuu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 01:50:50 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43014 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726106AbeJPFuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 01:50:50 -0400
+Received: by mail-wr1-f66.google.com with SMTP id n1-v6so23078711wrt.10
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 15:03:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2piBkyu72aWHL9b8cy/Vd5mVhGQA/bQV2OAarx255X8=;
+        b=oPUnbwBDBnzu1i6IF7x3dGFdWD63m7VoGqBC2RDn5WVL5++UE3ztS2MyHRIyoH6+BE
+         1uVIWmGuEu/WwVXp/YhGEV+S1xFRKYglq1Z36DUwjTPSyBxqw/18hcZ/tGXuxa0M4MqS
+         Njafi5cx994WdbK2yGK6SzMFWhgo17yQ7yi0TQ3yL81UXkhpPtvTd3ljChzRAmYc1SI5
+         Fhb14kqtTjCEKnjS/HZ49eQy0Ne8mCJpF+cA5l567TvjuPjKTe0sGJ5JmqksiB5QdhA4
+         BF4Q0LmMUrKKEITHxZKB7msxJ8O+rcCA62o7rQEO/7aumBwzqA0S/50lA327eNuBu2O6
+         HPBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2piBkyu72aWHL9b8cy/Vd5mVhGQA/bQV2OAarx255X8=;
+        b=BRjPMNRLGf9QfCya6hsYbadT/VEcvRtDSb+JhxcniV1tpgU2vVS6o8FzriysbfOjFa
+         9tkGn25XpM9fn9MT9IHq9NUHYB+kf3pzb4HNeV9q4bpPbt6ASBWGmANqfeKhVVv3Jh5x
+         CQfNQIlgrLNtmKElYT6rUIlJqcgGMXpXR5K6YlpqczKvjgzlrbRUyKbeweX4WupeyBiv
+         T0ywQxdwK1VpxPfo/WDiRJCh0TcvhCBWxPzX3j64akuxx4hBVfLjyOsjxXomMai47WnE
+         3NJx+sbxPs9LFQWdDmY6GHk5Db1Qbm5qBKNVECaTQWY2gtwKqt3REjxPUbAwmrJFZE5A
+         6ksg==
+X-Gm-Message-State: ABuFfohBBA/3578Uuxip89mj7HG/p71LAKJRsE4lLep+GX5ol0QRYSDe
+        AXj+MutefkW2fMniL7igxOMlU4Us
+X-Google-Smtp-Source: ACcGV60O6d4PRnKTspkpLDHA3IpOg1G6QkoFuvpbS3mmZ7Qas9V0pQuBdABxXAlf4i+CdDRapif/1A==
+X-Received: by 2002:adf:ba87:: with SMTP id p7-v6mr15123304wrg.203.1539641021190;
+        Mon, 15 Oct 2018 15:03:41 -0700 (PDT)
+Received: from localhost ([31.127.45.92])
+        by smtp.gmail.com with ESMTPSA id v16-v6sm9350083wru.31.2018.10.15.15.03.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 15 Oct 2018 15:03:40 -0700 (PDT)
+Date:   Mon, 15 Oct 2018 23:03:38 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v10 19/21] stash: convert `stash--helper.c` into `stash.c`
+Message-ID: <20181015220338.GB4883@hank.intra.tgummerer.com>
+References: <cover.1539553398.git.ungureanupaulsebastian@gmail.com>
+ <004f2b2e3e8c4d1069a808034f3d6fe16853085c.1539553398.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/p9h=jKz_LK9xjbT8jCMCtEf"; protocol="application/pgp-signature"
-Authentication-Results: mx.mylinuxtime.de;
-        auth=pass smtp.auth=mail@eworm.de smtp.mailfrom=list@eworm.de
-X-Rspamd-Server: mx
-X-Stat-Signature: 7spdrs9dtqhxbq7kxub73r5aysewj7c9
-X-Rspamd-Queue-Id: C18E6C456D
-X-Spamd-Result: default: False [-4.70 / 15.00];
-         ARC_NA(0.00)[];
-         FROM_HAS_DN(0.00)[];
-         TO_MATCH_ENVRCPT_ALL(0.00)[];
-         MIME_GOOD(-0.20)[multipart/signed,text/plain];
-         TO_DN_ALL(0.00)[];
-         RCPT_COUNT_TWO(0.00)[2];
-         NEURAL_HAM(-3.00)[-0.999,0];
-         SIGNED_PGP(-2.00)[];
-         RCVD_COUNT_ZERO(0.00)[0];
-         FROM_EQ_ENVFROM(0.00)[];
-         MID_RHS_NOT_FQDN(0.50)[];
-         ASN(0.00)[asn:3320, ipnet:91.0.0.0/10, country:DE];
-         RCVD_TLS_ALL(0.00)[]
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <004f2b2e3e8c4d1069a808034f3d6fe16853085c.1539553398.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/p9h=jKz_LK9xjbT8jCMCtEf
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On 10/15, Paul-Sebastian Ungureanu wrote:
+> The old shell script `git-stash.sh`  was removed and replaced
+> entirely by `builtin/stash.c`. In order to do that, `create` and
+> `push` were adapted to work without `stash.sh`. For example, before
+> this commit, `git stash create` called `git stash--helper create
+> --message "$*"`. If it called `git stash--helper create "$@"`, then
+> some of these changes wouldn't have been necessary.
+> 
+> This commit also removes the word `helper` since now stash is
+> called directly and not by a shell script.
+> 
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
+> @@ -1138,7 +1133,6 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  			fprintf_ln(stderr, _("You do not have "
+>  					     "the initial commit yet"));
+>  		ret = -1;
+> -		*stash_msg = NULL;
+>  		goto done;
+>  	} else {
+>  		head_commit = lookup_commit(the_repository, &info->b_commit);
+> @@ -1146,7 +1140,6 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  
+>  	if (!check_changes(ps, include_untracked)) {
+>  		ret = 1;
+> -		*stash_msg = NULL;
+>  		goto done;
+>  	}
+>  
+> @@ -1167,7 +1160,6 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  			fprintf_ln(stderr, _("Cannot save the current "
+>  					     "index state"));
+>  		ret = -1;
+> -		*stash_msg = NULL;
+>  		goto done;
+>  	}
+>  
+> @@ -1178,14 +1170,12 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  				fprintf_ln(stderr, _("Cannot save "
+>  						     "the untracked files"));
+>  			ret = -1;
+> -			*stash_msg = NULL;
+>  			goto done;
+>  		}
+>  		untracked_commit_option = 1;
+>  	}
+>  	if (patch_mode) {
+>  		ret = stash_patch(info, ps, patch, quiet);
+> -		*stash_msg = NULL;
+>  		if (ret < 0) {
+>  			if (!quiet)
+>  				fprintf_ln(stderr, _("Cannot save the current "
+> @@ -1200,7 +1190,6 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  				fprintf_ln(stderr, _("Cannot save the current "
+>  						     "worktree state"));
+>  			ret = -1;
+> -			*stash_msg = NULL;
+>  			goto done;
+>  		}
+>  	}
+> @@ -1210,7 +1199,7 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  	else
+>  		strbuf_addf(&stash_msg_buf, "On %s: %s", branch_name,
+>  			    *stash_msg);
+> -	*stash_msg = strbuf_detach(&stash_msg_buf, NULL);
+> +	*stash_msg = xstrdup(stash_msg_buf.buf);
+>  
+>  	/*
+>  	 * `parents` will be empty after calling `commit_tree()`, so there is
+> @@ -1244,30 +1233,23 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+>  
+>  static int create_stash(int argc, const char **argv, const char *prefix)
+>  {
+> -	int include_untracked = 0;
+>  	int ret = 0;
+>  	char *stash_msg = NULL;
+>  	struct stash_info info;
+>  	struct pathspec ps;
+> -	struct option options[] = {
+> -		OPT_BOOL('u', "include-untracked", &include_untracked,
+> -			 N_("include untracked files in stash")),
+> -		OPT_STRING('m', "message", &stash_msg, N_("message"),
+> -			 N_("stash message")),
+> -		OPT_END()
+> -	};
+> +	struct strbuf stash_msg_buf = STRBUF_INIT;
+>  
+> -	argc = parse_options(argc, argv, prefix, options,
+> -			     git_stash_helper_create_usage,
+> -			     0);
+> +	/* Starting with argv[1], since argv[0] is "create" */
+> +	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
+> +	stash_msg = stash_msg_buf.buf;
 
-Junio C Hamano <gitster@pobox.com> on Wed, 2018/10/10 11:26:
-> As 'contrib' material without real maintenance, I do not care too
-> deeply, but shouldn't this change be more like this to avoid
-> duplicating the list of targets?
+stash_msg is just a pointer to stash_msg_buf.buf here..
+>  
+>  	memset(&ps, 0, sizeof(ps));
+> -	ret = do_create_stash(ps, &stash_msg, include_untracked, 0, &info,
+> -			      NULL, 0);
+> +	ret = do_create_stash(ps, &stash_msg, 0, 0, &info, NULL, 0);
+>  
+>  	if (!ret)
+>  		printf_ln("%s", oid_to_hex(&info.w_commit));
+>  
+> +	strbuf_release(&stash_msg_buf);
 
-Probably, yes.
-Do you want to add this yourself or do you want me to send an updated patch
-or one on top of the last change?
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
+We release the strbuf here, which means stash_msg_buf.buf is now
+'strbuf_slopbuf', which is a global variable and can't be free'd.  If
+stash_msg is not changed within do_create_stash, it is now pointing to
+'strbuf_slopbuf', and we try to free that below, which makes git
+crash in t3903.44, which breaks bisection.
 
---Sig_/p9h=jKz_LK9xjbT8jCMCtEf
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+>  	free(stash_msg);
+>  
+>  	/*
 
------BEGIN PGP SIGNATURE-----
+I think the following diff fixes memory management, by making
+do_push_stash responsible for freeing stash_msg when it's done with
+it, while the callers of do_create_stash have to free the parameter
+they pass in (although it may be pointing to something different than
+what was passed in).
 
-iQEzBAEBCAAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAlvFA1UACgkQiUUh18yA
-9HbZJAf+O2VRe4SEUlu6eUWcTLhbAoauWvodwkd4G/cXtPvzQGoWSWTNkUWSaCyu
-/Kk3bEyMvFECouyOh3+bchNZuyDzectG1PDwcRZGhFkHLsaO8A6b349rQt6Qj5IO
-n/TXJOs1RrHm1BteOADYJNXhMc3OHfA2Q20tXHtLKqcKL+uUnBcbR0CNBHG67lrp
-Qeyn+t5T6UA0j3GG3jLu3UB4IJ96dmCrBD694/gNCtgchKVqtt1BTGF2CCUxGANw
-xEK3AhVUUp+cQpjRP9VojNogkJYo47nAq6i9N11NjJiINvwEQrv7p34Mi58N+oDM
-vGJUhsdKqd6n//wpSqjGJq2DnIuBPA==
-=GDob
------END PGP SIGNATURE-----
+diff --git a/builtin/stash.c b/builtin/stash.c
+index e945c13c42..3b50f4bd53 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1199,6 +1199,7 @@ static int do_create_stash(struct pathspec ps, char **stash_msg,
+ 	else
+ 		strbuf_addf(&stash_msg_buf, "On %s: %s", branch_name,
+ 			    *stash_msg);
++	free(*stash_msg);
+ 	*stash_msg = xstrdup(stash_msg_buf.buf);
+ 
+ 	/*
+@@ -1241,7 +1242,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+ 
+ 	/* Starting with argv[1], since argv[0] is "create" */
+ 	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
+-	stash_msg = stash_msg_buf.buf;
++	stash_msg = xstrdup(stash_msg_buf.buf);
+ 
+ 	memset(&ps, 0, sizeof(ps));
+ 	ret = do_create_stash(ps, &stash_msg, 0, 0, &info, NULL, 0);
+@@ -1522,7 +1523,7 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	memset(&ps, 0, sizeof(ps));
+-	ret = do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
++	ret = do_push_stash(ps, xstrdup_or_null(stash_msg), quiet, keep_index, patch_mode,
+ 			    include_untracked);
+ 
+ 	strbuf_release(&buf);
 
---Sig_/p9h=jKz_LK9xjbT8jCMCtEf--
+The above, as well as the some of the changes I quoted above should
+probably be squashed in to the relevant patches, rather than being
+part of this patch ("stash: convert create to builtin", and "stash:
+convert save to builtin").
