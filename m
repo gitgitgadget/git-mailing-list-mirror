@@ -2,139 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03FE51F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 19:43:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95FEB1F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 20:19:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726906AbeJPD3v (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 23:29:51 -0400
-Received: from mail-qt1-f179.google.com ([209.85.160.179]:39016 "EHLO
-        mail-qt1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726713AbeJPD3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 23:29:50 -0400
-Received: by mail-qt1-f179.google.com with SMTP id e22-v6so22919854qto.6
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 12:43:10 -0700 (PDT)
+        id S1725960AbeJPEGS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 00:06:18 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:42360 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725889AbeJPEGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 00:06:18 -0400
+Received: by mail-oi1-f194.google.com with SMTP id w81-v6so16158332oiw.9
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 13:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=3dwPeIsovbfFG1xnje9kec0xTLlcM6r7XfDPl9RYHJw=;
-        b=q4iQMKiFDkUF/NhSrCQJmKrNqJ3Z7k+E7rJJeVcVZVPIp/I4DFBZStHzRF6tqxpFOs
-         Bg0MVd1RYB7kdSltyICo/bsB16INf3yD4XvgELcQhkec61FovWjQdWzjtdYfWQTCZyv9
-         Bh3Ph8wDg81XoiwkvAFJAwIHwmT7zGUXQghsBAQulMygog0Zy3sw6XEgmkWzwJB2R9Py
-         XN1ihnrOtE8/zIsuhe0BAiKwbVZj93EXlb5Mf4MUTM96fE7L8bMeuMBY/JkJUmwmdtpm
-         Y3Fpbgd/rOpTDagZ4WWDSWfabuyMs0X+SdK+fygU+iEcvJXVEXMrE1A0oBOgXtZTEdCj
-         C3aQ==
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WMMaXzJ6wA4bwhesp3uKP61VVNgUntJOkqJBcleaG3I=;
+        b=jaDpH3+RD1bgaNe9Uc7Eg408Xwi/4YRzyOA1AUJ7HoLVyPA5kqlaoux+mMHYCSCasQ
+         35iW+xvYcdaHnC3Kc64fmstvk9ArZUXF5RAVfX+hD6uHGyc8DnuIBPhnyb4MFz9xXh6A
+         ZuYDuZQ7RmFk22Hl2oIT+iYRYW1mQaiphTvSk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=3dwPeIsovbfFG1xnje9kec0xTLlcM6r7XfDPl9RYHJw=;
-        b=VHNc/SJu/mIM4yVirQuYBJBji5muDAKPHLpzci+m+GmmU4ChLbivF3Y6ZCNakOjnck
-         UhPhHjn+rzB7hM2Hk12vM6FkSMuIh4Yz7LmcfNzOLwiXy6FA/WmwwePR6cCUdPD1+HAz
-         G2DbdXxs10ib74cQvkrv+oWo6FepOntS7ExPoL2IkPPw2M+pefkDe85+QXn4XBhhgwkv
-         k2u3NleyAaPNIRbyNP+JYFhFkKJp0+2N8DyO8AIneJNqk2fsAl8mK2Sy59lfdgBsOxRX
-         jruVQMYOdi5N8DhNmvr8DFQIeGZBFqcxhvconYIraj62yp2E/GNb014R+OP6RdUtasTw
-         f71g==
-X-Gm-Message-State: ABuFfojZPT+ou8JTfbkqHevLFY9rzblPIg4bOBVWHZy9s4NFCp0kH5dg
-        d8nb9YDpQqAaof888nS3MGiYAS3S
-X-Google-Smtp-Source: ACcGV60CHU1fuGOM8lBHUa1oHyMZZ39Q10MBrHsYbr17eFOgEdUfpEpaQ9idHAdNX6mm5kT2tS7jTw==
-X-Received: by 2002:aed:3983:: with SMTP id m3-v6mr18155106qte.164.1539632589925;
-        Mon, 15 Oct 2018 12:43:09 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:a017:1942:43e1:ced3? ([2001:4898:8010:0:894d:1942:43e1:ced3])
-        by smtp.gmail.com with ESMTPSA id c34-v6sm8798277qkh.40.2018.10.15.12.43.08
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 12:43:09 -0700 (PDT)
-Subject: Re: Git Test Coverage Report (Monday, Oct 15)
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Git List <git@vger.kernel.org>
-References: <6be9fe04-138d-01b7-91c1-6c029ab7c9be@gmail.com>
-Message-ID: <1f6513e1-24f1-496a-2f3b-6ed6e96b99d1@gmail.com>
-Date:   Mon, 15 Oct 2018 15:43:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WMMaXzJ6wA4bwhesp3uKP61VVNgUntJOkqJBcleaG3I=;
+        b=L4hpmzAsMmF+tunEjMIsOTj0G3BelwIkW5dBgY4OHl8fFYXfrLxSZ5/GjquAIzF1oB
+         v2uY5SBVrDpYYmn1X0YsX6epLM0hLFP42iwD11bYfLW1lOZHf1042SDAU9mnAAeiltH7
+         NY/Xycz25OEZFdkLQfXAXbYLzYbVQB1ThSbwTNPslNriUXFiE//wSIDUf1Ce6/fFiM6W
+         kS2fOLkrtdPnSHhl7sRRYVdnIiwDQqfYiowyjgxbszbuUgRPtycumMBruS1NgdK9wcTi
+         wkf+pu01SyMNCd0jtITZgh6LDUO6vhatVkZb1WkvoXJOx14IvBFYwUBb37WJrOPcSDH3
+         HzjA==
+X-Gm-Message-State: ABuFfojuvLVzKfvOOQI7axJk9BcyuxWiNMwQIVuExaJRMtkA2MoE0jrm
+        YoOWRb16VNr2R72C5kBv8S4Iu/7N4dwFuEnCg6Lx2w==
+X-Google-Smtp-Source: ACcGV63wqoNXabYRpzIp268GGUMyT/cfmZyQHhy3WpgZk62ibDlRidB4Oqm6ngBN0Jn+E+ftjduoaguwXmlM7LuHSfY=
+X-Received: by 2002:aca:f4c2:: with SMTP id s185-v6mr10179742oih.245.1539634768492;
+ Mon, 15 Oct 2018 13:19:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <6be9fe04-138d-01b7-91c1-6c029ab7c9be@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <pull.31.git.gitgitgadget@gmail.com> <pull.31.v2.git.gitgitgadget@gmail.com>
+ <3e2193a73de0b68d5a38f1792642c828f4aed1db.1539598316.git.gitgitgadget@gmail.com>
+ <CAE5ih79cNkVVQOkaeJifSqkcp=HGmRb3a=jJC=g08iV8dYRyXg@mail.gmail.com> <nycvar.QRO.7.76.6.1810151657080.4546@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1810151657080.4546@tvgsbejvaqbjf.bet>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Mon, 15 Oct 2018 21:19:17 +0100
+Message-ID: <CAE5ih78gCgJgeXasdm6j+hO8Bk+_zk_-o5FqkMTr-q7fKDej9Q@mail.gmail.com>
+Subject: Re: [PATCH v2 09/13] git-p4: use `test_atexit` to kill the daemon
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     gitgitgadget@gmail.com, Git Users <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/15/2018 12:24 PM, Derrick Stolee wrote:
+On Mon, 15 Oct 2018 at 16:02, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> Uncovered code in 'jch' (22f2f0f) and not in 'next' (152ad8e)
-> -------------------------------------------------------------
+> Hi Luke,
 >
-> prio-queue.c
-> 2d181390f3 94) return queue->array[queue->nr - 1].data;
-(I have a fix to cover this in my private branch for this topic.)
+> On Mon, 15 Oct 2018, Luke Diamand wrote:
+>
+> > On Mon, 15 Oct 2018 at 11:12, Johannes Schindelin via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> > >
+> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > >
+> > > This should be more reliable than the current method, and prepares the
+> > > test suite for a consistent way to clean up before re-running the tests
+> > > with different options.
+> > >
+> >
+> > I'm finding that it's leaving p4d processes lying around.
+>
+> That's a bummer!
+>
+> > e.g.
+> >
+> > $ ./t9820-git-p4-editor-handling.sh
+> > <passes>
+> > $ ./t9820-git-p4-editor-handling.sh
+> > <fails>
+>
+> Since I do not currently have a setup with p4d installed, can you run that
+> with `sh -x ...` and see whether this code path is hit?
+
+All you need to do is to put p4 and p4d in your PATH.
+
+https://www.perforce.com/downloads/helix-core-p4d
+https://www.perforce.com/downloads/helix-command-line-client-p4
+
+The server is free to use for a small number of users, you don't need
+to do anything to make it go.
+
 
 >
-> revision.c
-> 4943d28849 2931) return;
-> 4943d28849 2934) return;
-> 4943d28849 2937) c->object.flags |= UNINTERESTING;
-> 4943d28849 2940) return;
-> 4943d28849 2943) mark_parents_uninteresting(c);
-> 4943d28849 2966) return;
-> 4943d28849 2969) return;
-> 4943d28849 2974) return;
-> 4943d28849 3022) init_author_date_slab(&info->author_date);
-> 4943d28849 3023) info->topo_queue.compare = 
-> compare_commits_by_author_date;
-> 4943d28849 3024) info->topo_queue.cb_data = &info->author_date;
-> 4943d28849 3025) break;
-> 4943d28849 3038) continue;
-> 4943d28849 3048) record_author_date(&info->author_date, c);
-> 6c04ff3001 3086) if (!revs->ignore_missing_links)
-> 6c04ff3001 3087) die("Failed to traverse parents of commit %s",
-> 4943d28849 3088) oid_to_hex(&commit->object.oid));
-> 4943d28849 3096) continue;
-Looks like a number of these lines are important to cover, but are not 
-covered by tests that _also_ specify '--topo-order'. I bet I can cover 
-more of these by overriding the sort logic to use the new algorithm if 
-GIT_TEST_COMMIT_GRAPH is specified. Or, should I create yet another test 
-variable to cover these cases?
-
-(Note: I run these coverage reports with a variety of optional test 
-variables.)
-
-> Uncovered code in 'next' (152ad8e) and not in 'master' (5a0cc8a)
-> ----------------------------------------------------------------
-> builtin/rev-list.c
-> 7c0fe330d5 builtin/rev-list.c 227) die("unexpected missing %s object 
-> '%s'",
-> 7c0fe330d5 builtin/rev-list.c 228)     type_name(obj->type), 
-> oid_to_hex(&obj->oid));
+>  test_done () {
+>         GIT_EXIT_OK=t
 >
-> commit-graph.c
-> 5cef295f28   67) return 0;
-> 20fd6d5799   79) return 0;
-These are two ways to say the commit-graph should not be used, but are 
-not covered by tests currently. One is if we say "is the repo shallow?" 
-which happens to return when the repo has grafts (but we keep the check 
-here in case the way shallows are implemented changes) and the other is 
-if the repo is not initialized, but I fixed the test-helpers that had 
-not initialized the repo yet.
+> +       test -n "$immediate" || test_atexit_handler
+> +
+
++ test -n
++ test_atexit_handler
+./t9820-git-p4-editor-handling.sh: 764:
+./t9820-git-p4-editor-handling.sh: test_atexit_handler: not found
+
+Is that expected?
+
+
+
+
+>         if test -n "$write_junit_xml" && test -n "$junit_xml_path"
+>         then
 >
-> Uncovered code in 'master' (5a0cc8a) and not in (fe8321ec05)
-> -----------------------------------------------------------------
-> builtin/fsck.c
-> 66ec0390e7 builtin/fsck.c 862) midx_argv[2] = "--object-dir";
-> 66ec0390e7 builtin/fsck.c 863) midx_argv[3] = alt->path;
-> 66ec0390e7 builtin/fsck.c 864) if (run_command(&midx_verify))
-> 66ec0390e7 builtin/fsck.c 865) errors_found |= ERROR_COMMIT_GRAPH;
-These are underneath the "for all alternates" loop, and _should_ be 
-covered with the coming GIT_TEST_MULTI_PACK_INDEX test variable.
+> > And also
+> >
+> > $ ./t9800-git-p4-basic.sh
+> > <starts running tests, but I get bored easily>
+> > Ctrl-C
+>
+> Oh, you're right. I think I need to do something in this line:
+>
+>         trap 'exit $?' INT
+>
+> in t/test-lib.sh, something like
+>
+>         trap 'exit_code=$?; test_atexit_handler; exit $exit_code' INT
+>
+> would you agree? (And: could you test?)
+
+Not sure.
+Send me a patch and I can try it out.
 
 Thanks,
--Stolee
+Luke
