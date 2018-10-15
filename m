@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 258AC1F453
-	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B15D31F453
+	for <e@80x24.org>; Mon, 15 Oct 2018 10:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726854AbeJOR4u (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Oct 2018 13:56:50 -0400
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:38603 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbeJOR4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Oct 2018 13:56:50 -0400
-Received: by mail-pl1-f169.google.com with SMTP id q19-v6so5993211pll.5
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:15 -0700 (PDT)
+        id S1726864AbeJOR4v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Oct 2018 13:56:51 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:42921 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbeJOR4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Oct 2018 13:56:51 -0400
+Received: by mail-pl1-f196.google.com with SMTP id c8-v6so9058473plo.9
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 03:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mvvHsQO1GjK40FP4netT5PvH72cbiJBboalGZL/DDPQ=;
-        b=vZg4RJ2Iv9iKNjRs6zZpRwCNz4Uk4vkA7eDG8jxdmxRDjo6fvaaTtuIfOtH85t4JqX
-         xv0wsfKBrNRI/6ZNUUUMBjYLXfHtGjUJ8s6C39QCrllYO6wevVx0DuAQGwbp3+Bb389w
-         1mIXApji1pJ2ygTcPqAO1ONRACIhGHVeJbCv32mM5SNL8K0S8f7yQu1OPkiCUVrOpofv
-         wX+hND1TszI/Y317Nrlcc49y2zUMLpdittSloVgFpHobdBzEleBwpzZx8QmkemuYx0Jn
-         N3HuHc+pALYlP+Pa+zpka6nE8rs3NCU3Ov/+CpWLCYO2LM5VS/an6xsa9/Sq2O0p1tPv
-         uCDA==
+        bh=KzlLIGxx9+aqELb0V5crwgVyly++qKQCjMv9vKGoJAE=;
+        b=OIozRRVGW8uw7Sb9vq5eBhW28mLigrmqi0HHYRMfwfSYKh53/S2W5w8KyK8WXAVjCB
+         Wbddbul4bcvmu+HDfspbxq6H+KgAbXjjqt2tUkeMzeVQ2esB7wUG5rvRfBJ2kD5MVOkH
+         a0FQlf6l0HXsaVno09gN5P9m2Tm0anlqu7995ynKSSp//FC4vnOuk6D3jhZ9z3hiNll3
+         OyDFlJvFiA0Zje65rtg6lyX8z0oHuB58Apx9Kmj1gUS7TxKjvZT0eat3NINAQQEEl61X
+         9c2k4oMYwaDyM5VuQBdIqT6J6T/lmiPBfiSbJ63Kz4tXmUN4UEguIqcwNEfwU7wxKe3U
+         1u1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mvvHsQO1GjK40FP4netT5PvH72cbiJBboalGZL/DDPQ=;
-        b=Ac7zRqYJCFeeyY2PapnoV49gdRna7bNVI/wOBPHPD/I3+LRqi/663QZ68urp5QEfiz
-         /LX5pc1mYjCXkPbC30wGHSHevgBoq+0lX0fRfYJL7yD+cq8dYXY+nuPqkYUkFpBPMw2c
-         Er5hw4jy/EG9l/MIO5+abnAbyDQ7tlk+uqa1Qa/OBHZNLRrhFycOgRK1QC//JB+DoRJm
-         6inMGbJOSfeUyu3Vqu7fJL0x8IzO+q+rOSkLq7ZyRNybyGBQWExTRbfiN2WumdzwOj/x
-         XoZwbBMBsFGObAOvwrWFOhVuiPnOXAnGr1019odRD0s8uqr/Z5+RKdK8+wW98qrLnfrY
-         LHpQ==
-X-Gm-Message-State: ABuFfohXBjcHr+onZmAVvtdGOoPZqHkRbRJgdT4RtRIgxub8Q+xv5XWg
-        1ZfcEcL7hUsQhOTho2WE6p8FT3ln
-X-Google-Smtp-Source: ACcGV63cE+zXoOeeQW+oqKZdL+XQZ28MnDgXNMFNcCx0p9tLH9rjwKAMFISIPWy3LZ5X7DAUscWGSg==
-X-Received: by 2002:a17:902:9a98:: with SMTP id w24-v6mr16707713plp.109.1539598335090;
-        Mon, 15 Oct 2018 03:12:15 -0700 (PDT)
+        bh=KzlLIGxx9+aqELb0V5crwgVyly++qKQCjMv9vKGoJAE=;
+        b=HaoEzKJ7hVrdc8Wpet0lSxDQ7VgUBxAkIbevixT3hSOj2FuCPCrtDbUFqGBRwPhNJA
+         /h1g7H8YUKn4A60VEQdNqXWqiGbpgS596MGVD/4ExBmqyQfutZBJ4Z8kfMPUpTimKG+I
+         bW+0mXtmXbAcYhxgP85DlqD+kGId+04mfj+xzVAjwyVzFg2ddQDHPiJuctXw/vw1Fj3I
+         NkLrGV+qGKb3DEg+uEyLPpx42WQcNlRgbZ6dwR4vtli3WuUQ60ysaNx6J9MKJapS6w45
+         6BxKRufS2DPL0TFiNuNYwNzXCmAZfvt5CFX+HJXahN0eTcdDsDImhSZ3miyeSPSI/wYB
+         Mblg==
+X-Gm-Message-State: ABuFfoiEsRvoGQgn47KeUlYndBJvWGCoizhG3OjI9XTFQULxy10YAGMP
+        UXlH+sT/JqwX+sq2O4uDJ1c1wdnA
+X-Google-Smtp-Source: ACcGV62O/XE4b35IkwDmNwtgUHfKe+uwhLpgRUb1gqWMi2Jz6sP00IYJP+T/+Arka3gdW5FhZQDWcQ==
+X-Received: by 2002:a17:902:5993:: with SMTP id p19-v6mr16427307pli.260.1539598336460;
+        Mon, 15 Oct 2018 03:12:16 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id y85-v6sm19534108pfa.120.2018.10.15.03.12.13
+        by smtp.gmail.com with ESMTPSA id c2-v6sm12160099pfn.95.2018.10.15.03.12.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Oct 2018 03:12:14 -0700 (PDT)
-Date:   Mon, 15 Oct 2018 03:12:14 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Oct 2018 10:11:53 GMT
-Message-Id: <2466a48aa3eedc703263c2b63c9c7b5f13f0194a.1539598316.git.gitgitgadget@gmail.com>
+        Mon, 15 Oct 2018 03:12:15 -0700 (PDT)
+Date:   Mon, 15 Oct 2018 03:12:15 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Oct 2018 10:11:54 GMT
+Message-Id: <d112b3fe86e2d5168161cd3edf9616ff7bec3319.1539598316.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v2.git.gitgitgadget@gmail.com>
 References: <pull.31.git.gitgitgadget@gmail.com>
         <pull.31.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 11/13] tests: record more stderr with --write-junit-xml in
- case of failure
+Subject: [PATCH v2 12/13] README: add a build badge (status of the Azure
+ Pipelines build)
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,48 +72,22 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Sometimes, failures in a test case are actually caused by issues in
-earlier test cases.
-
-To make it easier to see those issues, let's attach the output from
-before the failing test case (i.e. stdout/stderr since the previous
-failing test case, or the start of the test script). This will be
-visible in the "Attachments" of the details of the failed test.
+Just like so many other OSS projects, we now also have a build badge.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib.sh | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 8a60e39364..5f62418f9c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -479,6 +479,9 @@ test_failure_ () {
- 			"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")"
- 		>"$GIT_TEST_TEE_OUTPUT_FILE"
- 		junit_insert="$junit_insert</failure>"
-+		junit_insert="$junit_insert<system-err>$(xml_attr_encode \
-+			"$(cat "$GIT_TEST_TEE_OUTPUT_FILE.err")")</system-err>"
-+		>"$GIT_TEST_TEE_OUTPUT_FILE.err"
- 		write_junit_xml_testcase "$1" "      $junit_insert"
- 	fi
- 	test_failure=$(($test_failure + 1))
-@@ -763,9 +766,12 @@ test_start_ () {
- 	then
- 		junit_start=$(test-tool date getnanos)
- 
--		# truncate output
--		test -z "$GIT_TEST_TEE_OUTPUT_FILE" ||
--		>"$GIT_TEST_TEE_OUTPUT_FILE"
-+		# append to future <system-err>; truncate output
-+		test -z "$GIT_TEST_TEE_OUTPUT_FILE" || {
-+			cat "$GIT_TEST_TEE_OUTPUT_FILE" \
-+				>>"$GIT_TEST_TEE_OUTPUT_FILE.err"
-+			>"$GIT_TEST_TEE_OUTPUT_FILE"
-+		}
- 	fi
- }
+diff --git a/README.md b/README.md
+index f920a42fad..bf4780c22d 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,5 @@
++[![Build Status](https:/dev.azure.com/git/git/_apis/build/status/test-git.git)](https://dev.azure.com/git/git/_build/latest?definitionId=2)
++
+ Git - fast, scalable, distributed revision control system
+ =========================================================
  
 -- 
 gitgitgadget
