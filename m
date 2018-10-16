@@ -2,108 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4ECE1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 22:46:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC9F51F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727188AbeJQGig (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 02:38:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50934 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726697AbeJQGig (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 02:38:36 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ABFD861B72;
-        Tue, 16 Oct 2018 22:45:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539729960;
-        bh=IxjVJPrpsZFCm8n7JGwsVEIum9fdjVhv+fqdukXsQUY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=iRiq2KS+C6nxDas/Kfxl/8h4AZIPd6+4OKC2RfvszmiK1wAkuvKx4qYcXS1NFprzQ
-         aLsaLrni6SyRscSMojANFyKQJPwd4SCHTT6vW82tc/bzbuPoDNg5jhqDBI91xTZ1qP
-         GgnRXEtRN0xDhrhqb0wvleSVGwEj/T6Bktt/nMxZzsYAiWhWbq906riJn2yokEz4dQ
-         2/n+wYo6XNR3nihjNnqR3lKGlqCFwHI36LPY6vrUhi2HiRhIYrfaZ4jjNdU00paTMu
-         SSGKPEmkTRmj/v1rk5EYCDsz2itqgvZ/oXgXKhbnJT+KM9mIdDJ2JqGu6Av1nX6/o8
-         u7vXX1AQuZYvO7leWcIoHjBUSOtRdIg0pyRe+R0ZN6L0R3dDUJj9M3i2DuF9q7aY5v
-         PVV/rwq3idpxJDwL2Nfk8srkSLxuOPljueDUea1Xa1fywAkojlyobo63M5m01h2WVd
-         hBgbF/X9OGNWbUhe/6wdiVFuF48Wz6hkBqHw/ZUqsgRJeRPKEaD
-Date:   Tue, 16 Oct 2018 22:45:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 00/13] Base SHA-256 implementation
-Message-ID: <20181016224555.GE432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <20181015021900.1030041-1-sandals@crustytoothpaste.net>
- <xmqq7eii35h8.fsf@gitster-ct.c.googlers.com>
+        id S1727157AbeJQHCS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:02:18 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34513 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbeJQHCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:02:18 -0400
+Received: by mail-wr1-f66.google.com with SMTP id l6-v6so27042926wrt.1
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:09:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=b4WCzEcfDljX1F9VnSweqwav9nd2br4bwGPp0boEOwk=;
+        b=by8zJyalw4bu2O5M3U6dGTbHLVr3ophD1oO9cwWUVATR4KoocZILTpozU7oTXvSMu6
+         3fs7vnCoc/UNeeMYTvQvOcCrTqTgj1G+qX2v+YbXxscobN1LH1aNOEPrhFHYeGAVJolG
+         gA2MnR9f4ql2Lwo6k8CF2XzWoWDJvs4m3EiT5IPcTv8arEeyPZZcDKiA3vX1CUJ7pxjC
+         PPtQIOFdpMiCwaVGkc9nWWBLbAKnH1psqMqBXQ2RO4qpjMW+h3mNnNNSkwXn4wUBoJYW
+         bilKDXPligIGuwYnbNDROBcMlCZkoBc0Mlq3K+hM0aomoweuCc1iGrZMUZRbM+QfUIE1
+         AbIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=b4WCzEcfDljX1F9VnSweqwav9nd2br4bwGPp0boEOwk=;
+        b=VHOdktlLvenxHfar6UKU/jS58sRgxl1gk9CoG6lHSOa5gaOKj5fXb0fG/KQG7vBjE3
+         4+5NgqPXRDXBPNEZQPncOVnedOPy70N1hTeN1ThIk1w7QpWYJ/vxOEjaVFOKKBUUdpja
+         JrS6LraZS12qzLI0cL1WylC+Xp1AIrRzL3sLRT82U3ZC8MQnvATMlEDI55NFAWSo5tOh
+         f4YmE+9VKouK5gM0NwEAbFi0A1pIznepjCRA+JjdL4eZ2CXMtYJxQpKg2B0qOvAyPqqM
+         zigIk9LHFidre3F+oiWoTRW1/M8JTfzVehnwiCbNz5Ee2t5F0lxXYUUGu46elLlBzEcx
+         zhiQ==
+X-Gm-Message-State: ABuFfogVpU7bVehus79ixk8qDQ44emLqj1Y3ZRYwDhbNxUCy6CaAwzNt
+        wlFCSB2rHiiyv5PswoOwIgE=
+X-Google-Smtp-Source: ACcGV63iszG8tg9sa2/YOkH1CPC1wv/Lco5egnlUikKrog67b1PaD20avrZKWOb6QFlB28Ntvfp9AA==
+X-Received: by 2002:a05:6000:50:: with SMTP id k16mr13132357wrx.103.1539731376929;
+        Tue, 16 Oct 2018 16:09:36 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h78-v6sm118337wmd.4.2018.10.16.16.09.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Oct 2018 16:09:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
+References: <pull.10.git.gitgitgadget@gmail.com>
+        <816821eec9ba476ccdfbfdf6e3cdd3619743ea2e.1531746012.git.gitgitgadget@gmail.com>
+        <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
+        <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
+        <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
+        <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
+        <20181005165157.GC11254@sigill.intra.peff.net>
+        <dca35e44-a763-bcf0-f457-b8dab53815cf@web.de>
+        <20181005190847.GC17482@sigill.intra.peff.net>
+        <c05f192b-4e89-48b0-1c23-b43ec6fdb74b@web.de>
+        <20181005194223.GA19428@sigill.intra.peff.net>
+        <c141fb44-904f-e8b6-119f-7d2d6bcfd81a@web.de>
+Date:   Wed, 17 Oct 2018 08:09:34 +0900
+Message-ID: <xmqqr2gpxzdd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0tV5B2PPHN9RaBP7"
-Content-Disposition: inline
-In-Reply-To: <xmqq7eii35h8.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+René Scharfe <l.s.r@web.de> writes:
 
---0tV5B2PPHN9RaBP7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Apart from that the macro is simple and doesn't use any tricks or
+> added checks.  It just sets up boilerplate functions to offer type-safe
+> sorting.
+> ...
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5f2e90932f..491230fc57 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1066,6 +1066,21 @@ static inline void sane_qsort(void *base, size_t nmemb, size_t size,
+>  		qsort(base, nmemb, size, compar);
+>  }
+>  
+> +#define DECLARE_SORT(scope, name, elemtype) \
+> +scope void name(elemtype, size_t)
+> +
+> +#define DEFINE_SORT(scope, name, elemtype, one, two)			\
+> +static int name##_compare(const elemtype, const elemtype);		\
+> +static int name##_compare_void(const void *a, const void *b)		\
+> +{									\
+> +	return name##_compare(a, b);					\
+> +}									\
+> +scope void name(elemtype base, size_t nmemb)				\
+> +{									\
+> +	QSORT(base, nmemb, name##_compare_void);			\
+> +}									\
+> +static int name##_compare(const elemtype one, const elemtype two)
 
-On Tue, Oct 16, 2018 at 01:01:07PM +0900, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> >  t/t0014-hash.sh                       |  54 ++++++++
-> >  create mode 100755 t/t0014-hash.sh
->=20
-> If I am not mistaken, 0014 is already used by another topic in
-> flight, and will cause test-lint failure on 'pu'.
+... and here comes the body of the comparison function that takes
+two "things" we are about, i.e. elements of the array being sorted.
 
-This series was written a while back.  I'll rename it.  Feel free to
-wait for v3 before picking it up.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---0tV5B2PPHN9RaBP7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvGaiMACgkQv1NdgR9S
-9ovmAg//fdexpa0Jxl35IBKNu/eVs5qhbPeJlJROB6MzsF9MHQmqzBSzQ0AdS/Kw
-Yss1WNFv8RIaIq1bClAa+32OxlzciBQ7cPBcN2JG/oH1fKGvcB6+BX2YajkHY4Ap
-1sIyB2478VzCXab2itja1j69Mzx3NeaFzkqwtosiLn99Q4xZEEh4H3HPUfQgqubG
-PFmj05nsIXLm6FJ9uT0sf77Phtz2elaWfFZEnOfwrAIu7UbMfBecSLsT/rfd0+lp
-6EJeSiZqjinNxz9gHXqP1rjOaGygebBATzUiq0kLwIKxKFG/ijYCzn2g1B5lUkFk
-3AIK2qYKIBk63Hfl1WlraPxwdEcA1UQj/scz0XCs91ZC1c2W6zp559GsHj5ksVVM
-2rSIGUFjMlTKOWl+3532OcoDp6sQkcoCT73PxRyGh6cnw/xIQEOnEdi+Q8eJnztw
-VVo1bQIT7q/1/vddy4sVK/KftG7mOawWiUepdcUwziPj5fn91gMTkHRjDj9lo0dG
-EFUPub+gSoQbL+HLdB12BzEQIbJlds+u9st0zXqn+Ok8awguxVLy5MMzaI5ds6nF
-0KMDoEAUW/aeARLfj9HHwUjxwagIlJYV2wwgWDJ1AmFmC4pqwU++NKKHhnudtw4s
-gQ6lDUOnElqMDQXT620RL1wOBmFbXkqxljoCqtnFvw51/AyE8EA=
-=wBQG
------END PGP SIGNATURE-----
-
---0tV5B2PPHN9RaBP7--
+Quite cleanly done and the result looks pleasant, at least to me.
