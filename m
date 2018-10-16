@@ -2,114 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD5AD1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C29A41F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:45:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727195AbeJQHgL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:36:11 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50964 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727020AbeJQHgL (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 03:36:11 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3ED8061B72;
-        Tue, 16 Oct 2018 23:43:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539733400;
-        bh=hU5raW3a2MDj/NOmp5WVvPfAZEKuOlKK3gBHmcZKCnE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=CzPPcegORKZeCoEv5Qspu6TDRXKoclfjR2wnWtONjK2tTjLzrRjF6rz6LlOlhI9Sj
-         1CIb/AETgii+ryQ14jLnQ+OPiueEgprUmzpBbdiVc+VfobSxyPBpIV7BEyWJIeSeSQ
-         vI4hPvkMbcx+EtcJwxXrQ8twjoj89TxmKnY5FCbtaqPRhrmlr7vmzZS1HIwo5u6E8E
-         AQbNXZf6vabg4cLc38T1pV90PKzRSSqJAmG+IMuowvV/T1t305wpLgkr3eXMmdGfw5
-         8FlGjyHXWD4VOv/qmqqe4pmEwYKrraHyy9fe3D8kyW+nDOeCSOi+UOI08NIzxxIDoA
-         j4wHYfDOPfRxscXF2Q+C4SQEw7kguaKGuyXW3GKMlBxmehUUj2FF8n6R7I6Sk4BLNQ
-         gdKKRhQzLLQ/zwVorQS8gLLRClIm2Ptzw5CL1SqcjpDzeKjwBe0UI9vWhxFn/mrwgs
-         s81rXv6ILkOIaWQSXI5fFoTyDAICBGsv/BWcs6KXkD8uty7BViH
-Date:   Tue, 16 Oct 2018 23:43:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] pack-objects (mingw): demonstrate a segmentation
- fault with large deltas
-Message-ID: <20181016234315.GG432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.47.git.gitgitgadget@gmail.com>
- <eb6d10133ac9b1977db81ff9c243e77639226f85.1539723766.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZEJJ1/LkT8WyxxO+"
-Content-Disposition: inline
-In-Reply-To: <eb6d10133ac9b1977db81ff9c243e77639226f85.1539723766.git.gitgitgadget@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1727088AbeJQHim (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:38:42 -0400
+Received: from mail-oi1-f201.google.com ([209.85.167.201]:43156 "EHLO
+        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727064AbeJQHim (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:38:42 -0400
+Received: by mail-oi1-f201.google.com with SMTP id o204-v6so16886036oif.10
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:45:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=lINBeYhQ2S7sN/UgrP7cgP7SFTke4BBc4QZO9c8QnII=;
+        b=lH2J37Sl0wpqGUi8H9WJ+YiUux93MYh2aJM0E/8945N6nZFYjYZ2cliCt6mellO9Wl
+         2hgqjU8NtU9m9QJ7uh3AqdkRPAGcz8pKwuLj6svWyULOISdGxgKOh+LMSfN0kZ7toMZd
+         JmicDq4Y4V6H/JmFwydnKhB2OK1YdY1FYKGiSQLbqIxU2doEEYE7ke3j0CpdImvud7Mn
+         ZwBxsqOs2sHVkdALWX3WgMpJnol3XSEYE3mvv8vmvT3q3QLUKMp1kq0m+jw6VgpA4+SW
+         aLkr3M4Mnf1Ztx30LZf8x8STrUUTrlgZ42h4cm6bryrAgxV91jPrGbn83RPi+oaq7/l+
+         GwQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=lINBeYhQ2S7sN/UgrP7cgP7SFTke4BBc4QZO9c8QnII=;
+        b=GR5WMuXp9jHjLHhaJPc3rQjOA2d/+d8U5+duylitCbplFpzFx3pzij6APyApitDcjT
+         Gkek3gB4V5m0WvDxXzgDVJgteAnrNJewntjZ6umDOeg+DK1tvQhhN+Cpkx8frJIgrjGV
+         FWebPR+EetpRX3IcOPqJAH2e3ZCPlADA/j4RfeSZGEkEB7KEN5NGjZAz4TliUC8pLIV6
+         YIdRJj2n9AofmqMb/e2ty4x0Vy9JVFqGJRbyGn7893AaS1P81dd5vPCrJn1qrZQKvMkZ
+         VYsbeky0yj3RJb0RxtBMcGG9gn8GB7Wb1FqUo/rZMaEzC62UNeHf85KfTwyb8DF9PXAv
+         bnkg==
+X-Gm-Message-State: ABuFfohImk6Dgr3F3BeeDFF+SBWdUhxBxvh3zdZi6Xx9lAwlt3l+3jAt
+        gz5nOB+OF8R1djTccx5te75J3qz4KGqZ
+X-Google-Smtp-Source: ACcGV62sBJnPkoUMUnJ2zMZu8gRmLv114aKcsSPZT2uYWd8gcUMeoks/KpDn8QrO/youXQ3eEyjrCRWPWuHY
+X-Received: by 2002:a9d:b9:: with SMTP id w54mr19587473oti.30.1539733555978;
+ Tue, 16 Oct 2018 16:45:55 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 16:45:50 -0700
+Message-Id: <20181016234550.216587-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0
+Subject: [PATCH] builtin/submodule--helper: remove debugging leftover tracing
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I noticed 74d4731da1 (submodule--helper: replace connect-gitdir-workingtree
+by ensure-core-worktree, 2018-08-13) had two leftover debugging statements
+when reading The coverage report [1]. Remove them.
 
---ZEJJ1/LkT8WyxxO+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+https://public-inbox.org/git/e30a9c05-87d8-1f2b-182c-6d6a5fefe43c@gmail.com/
 
-On Tue, Oct 16, 2018 at 02:02:50PM -0700, Johannes Schindelin via GitGitGad=
-get wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->=20
-> There is a problem in the way 9ac3f0e5b3e4 (pack-objects: fix
-> performance issues on packing large deltas, 2018-07-22) initializes that
-> mutex in the `packing_data` struct. The problem manifests in a
-> segmentation fault on Windows, when a mutex (AKA critical section) is
-> accessed without being initialized. (With pthreads, you apparently do
-> not really have to initialize them?)
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-This is a good catch.  You do have to initialize a pthread mutex, but on
-amd64 Linux the default initializer is all zeros, so since we use a
-static variable, it happens to coincidentally have the right value, so
-we don't notice.
+To be applied on (or squashed into the tip of)
+  sb/submodule-update-in-c
 
-Thanks for fixing this.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+ builtin/submodule--helper.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---ZEJJ1/LkT8WyxxO+
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5c9d1fb496..c7d3841ffc 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1459,7 +1459,6 @@ static void determine_submodule_update_strategy(struct repository *r,
+ 	key = xstrfmt("submodule.%s.update", sub->name);
+ 
+ 	if (update) {
+-		trace_printf("parsing update");
+ 		if (parse_submodule_update_strategy(update, out) < 0)
+ 			die(_("Invalid update mode '%s' for submodule path '%s'"),
+ 				update, path);
+@@ -1468,7 +1467,6 @@ static void determine_submodule_update_strategy(struct repository *r,
+ 			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
+ 				val, path);
+ 	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
+-		trace_printf("loaded thing");
+ 		out->type = sub->update_strategy.type;
+ 		out->command = sub->update_strategy.command;
+ 	} else
+-- 
+2.19.0
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvGd5MACgkQv1NdgR9S
-9oudEg/8CsQ+6KtSKH50pk9tBswuGCXGsxv1RJ0VK4im6rwFgVMEv+xWxN2B29l/
-nJd7gR29wf8ytWEK1tJMLU6ws3wWPHk5yXPl+8R2ZrPq8+v6n/x+Iaci1rCfEa/7
-euS7W4I6/LoZSiahccbLaxT/TdD/8IYTX5Qj/8a/sUFHekDVEiW6lYGPEptbiom7
-vvlWl700T1eSRABgeEacwkPcxH4yEwEmHTH365JM+YmacP4lQrWMswFymfJjx4d9
-oJ8SUZquX3PCF98ZCBu31WWu/K/PuDLbGqq8nxl+RhDjJUOC85P0/XJ9j983hRCm
-KbVUV8jWRtrKRAG7u/RCc38lYcvc3eZ6/3pwlEpAdiMXK5zGz1f6fHK90QakGbFG
-6p9XLFKzr4VUKQmtiVB93q8pguaKlKlO8CivFnu8FMWNea0CoMo8aWy+YquWwYJ7
-wXlvKo0ANeHItuz34Oe1ze+3D0DVNCg4AOoRGjY9yprH4U4H8ldMtQjJECnkmw3K
-YYsCpdWAcFU9x6Y7CAeabmQq5XkcxN71yWV+qWuvCL+LnryzX8+sh+IPhTjPExGR
-UPqOXksN+QRa3fgJ3BIIxMzoaGDjnA2kT2uvtFp50mqmBT4hBRcuYPeTJhXgSbwp
-c1KGdm4jyXNRml3wpHMAUiIQ0p+CqPrvEb7OCfmzKjFLaWpNs88=
-=cL6H
------END PGP SIGNATURE-----
-
---ZEJJ1/LkT8WyxxO+--
