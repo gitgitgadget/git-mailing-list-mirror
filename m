@@ -2,96 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C29A41F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:45:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A99C1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727088AbeJQHim (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:38:42 -0400
-Received: from mail-oi1-f201.google.com ([209.85.167.201]:43156 "EHLO
-        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbeJQHim (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:38:42 -0400
-Received: by mail-oi1-f201.google.com with SMTP id o204-v6so16886036oif.10
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=lINBeYhQ2S7sN/UgrP7cgP7SFTke4BBc4QZO9c8QnII=;
-        b=lH2J37Sl0wpqGUi8H9WJ+YiUux93MYh2aJM0E/8945N6nZFYjYZ2cliCt6mellO9Wl
-         2hgqjU8NtU9m9QJ7uh3AqdkRPAGcz8pKwuLj6svWyULOISdGxgKOh+LMSfN0kZ7toMZd
-         JmicDq4Y4V6H/JmFwydnKhB2OK1YdY1FYKGiSQLbqIxU2doEEYE7ke3j0CpdImvud7Mn
-         ZwBxsqOs2sHVkdALWX3WgMpJnol3XSEYE3mvv8vmvT3q3QLUKMp1kq0m+jw6VgpA4+SW
-         aLkr3M4Mnf1Ztx30LZf8x8STrUUTrlgZ42h4cm6bryrAgxV91jPrGbn83RPi+oaq7/l+
-         GwQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=lINBeYhQ2S7sN/UgrP7cgP7SFTke4BBc4QZO9c8QnII=;
-        b=GR5WMuXp9jHjLHhaJPc3rQjOA2d/+d8U5+duylitCbplFpzFx3pzij6APyApitDcjT
-         Gkek3gB4V5m0WvDxXzgDVJgteAnrNJewntjZ6umDOeg+DK1tvQhhN+Cpkx8frJIgrjGV
-         FWebPR+EetpRX3IcOPqJAH2e3ZCPlADA/j4RfeSZGEkEB7KEN5NGjZAz4TliUC8pLIV6
-         YIdRJj2n9AofmqMb/e2ty4x0Vy9JVFqGJRbyGn7893AaS1P81dd5vPCrJn1qrZQKvMkZ
-         VYsbeky0yj3RJb0RxtBMcGG9gn8GB7Wb1FqUo/rZMaEzC62UNeHf85KfTwyb8DF9PXAv
-         bnkg==
-X-Gm-Message-State: ABuFfohImk6Dgr3F3BeeDFF+SBWdUhxBxvh3zdZi6Xx9lAwlt3l+3jAt
-        gz5nOB+OF8R1djTccx5te75J3qz4KGqZ
-X-Google-Smtp-Source: ACcGV62sBJnPkoUMUnJ2zMZu8gRmLv114aKcsSPZT2uYWd8gcUMeoks/KpDn8QrO/youXQ3eEyjrCRWPWuHY
-X-Received: by 2002:a9d:b9:: with SMTP id w54mr19587473oti.30.1539733555978;
- Tue, 16 Oct 2018 16:45:55 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 16:45:50 -0700
-Message-Id: <20181016234550.216587-1-sbeller@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0
-Subject: [PATCH] builtin/submodule--helper: remove debugging leftover tracing
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727195AbeJQHlE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:41:04 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54505 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727087AbeJQHlD (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 03:41:03 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id C0FBF221A9;
+        Tue, 16 Oct 2018 19:48:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 16 Oct 2018 19:48:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=
+        subject:to:references:from:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=n
+        FhMJTCNC1y/Bk8pUIpC79RTEJ12lnTfRXZVZ+2w/7g=; b=cUczpOmTfz+G2iZho
+        4jr8a5l+PX5b2AZkKwgj5R7SsPWO0Vi7coXpVRq7TWsrJrGpXgdBAdx1+CH+OBN1
+        ShZhmdAS/n9GSq3FTl214dtYPe+ojbx/nVZ3DL8wNrjzUE3zZR7l8XV9foD5VY1c
+        qV8Z3F/ANV9IOdQCB5uTZDEPWbmY0MriZkWgt1FvG0D8dRMxkHC7sabQTTSfcANv
+        u8N+duRt5QL6npBCNy9AOGFK76RS9NGDwe0eDUXd62eCQDLr/pH08ppdDvNOrlZh
+        3mYnZEMNGQzUTTkQ1rq0STKaaw6+u6Ei1BjhEbmFUdvy/6fnb8clcWGpcQR4Gqyy
+        ZVEjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=nFhMJTCNC1y/Bk8pUIpC79RTEJ12lnTfRXZVZ+2w/
+        7g=; b=nsp0s4K2r+/eFnPRVmG2V60VeZYe3/slDXoWoNg1XFqq1SYGbJqn0csJf
+        QFvXI4dRbzkAgjEsX+g8jpGitcwXxz/KnFozgAT3bwPnsDKRRM009MrD68Dzvo2y
+        0m0+ee5m6qH8s2yBYL4RcE7/CS8XKoAtFO5B+YwOx1MmC49w830PFTwqkZSq8rjm
+        hMMCHSNb6AJc6AaSbOLG2iGcY/OhA0Mp8+U+OHEFELuF2c3d0Pu+TNAMBHwuRVfP
+        MvaEVDtCmQUI5a1mpjPoOLLvQ8LQoXGbA2oPg2CgNDUzxfylDGWpFLMdS7gULWhg
+        Oe1ki8mqVH5bTfeDRWS6HADK4457Q==
+X-ME-Sender: <xms:v3jGW1jd2uVjK8mYmyHr1xK69b9IFiAF_sLwOB09xtPTZPugsihsaQ>
+X-ME-Proxy: <xmx:v3jGW6aZwQTDI-8RR5kIAYEWhDZ1NOxo0vR6ujDoldYnPqjATP06Bg>
+    <xmx:v3jGW-Je9_W98qua79BX7xOky2IxaOhbBlc_cUKEwVdOb1YMcIZx3w>
+    <xmx:v3jGWxGRGv2CZLwKQKGF0JRjR27-3DYvSfeWwlxnAN-Anf7wzvTLpg>
+    <xmx:v3jGW9uAWSr9_1XMj6AZcvXdywuM_LK2awUTy0GvZnX8OfGNPBYNiQ>
+    <xmx:v3jGW4ujkiQXRqUQahan-vyP1Mco6uO0cnrL_5S1s8EI6BXijWPWDw>
+    <xmx:v3jGW6V_Y3WbVcf1X_QgpXSXLJ0dJ4zmLyf8W0o_zVVwUoW26-JDQA>
+Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 06947E4124;
+        Tue, 16 Oct 2018 19:48:14 -0400 (EDT)
+Subject: Re: problem with not being able to enforce git content filters
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <5d4966c8-8171-9a0a-5120-f7c151c2b81f@stason.org>
+ <20181016232636.GF432229@genre.crustytoothpaste.net>
+From:   Stas Bekman <stas@stason.org>
+Organization: Hope, Humanized
+Message-ID: <038d40b9-0b35-b93f-9377-7c0bb12bce8e@stason.org>
+Date:   Tue, 16 Oct 2018 16:48:13 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <20181016232636.GF432229@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed 74d4731da1 (submodule--helper: replace connect-gitdir-workingtree
-by ensure-core-worktree, 2018-08-13) had two leftover debugging statements
-when reading The coverage report [1]. Remove them.
 
-https://public-inbox.org/git/e30a9c05-87d8-1f2b-182c-6d6a5fefe43c@gmail.com/
+>> And the devs honestly try to do their best to remember to configure the
+>> filters, but for some reason they disappear for them, don't ask me why,
+>> I don't know. This is an open source project team, not a work place.
+> 
+> This sounds like it could be easily solved by continuous integration.
+> You could set up a job on any of a variety of services that checks that
+> a pull request or other commit is clean when when the filter runs.  If
+> it doesn't pass, the code doesn't merge.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+This is an excellent idea wrt to PRs. Thank you, Brian! I will implement
+that.
 
-To be applied on (or squashed into the tip of)
-  sb/submodule-update-in-c
+It doesn't help with direct commits to master, since CI would be
+detecting it after it was committed. And when that happens we all know
+that already because 'git pull' fails.
 
- builtin/submodule--helper.c | 2 --
- 1 file changed, 2 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5c9d1fb496..c7d3841ffc 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1459,7 +1459,6 @@ static void determine_submodule_update_strategy(struct repository *r,
- 	key = xstrfmt("submodule.%s.update", sub->name);
- 
- 	if (update) {
--		trace_printf("parsing update");
- 		if (parse_submodule_update_strategy(update, out) < 0)
- 			die(_("Invalid update mode '%s' for submodule path '%s'"),
- 				update, path);
-@@ -1468,7 +1467,6 @@ static void determine_submodule_update_strategy(struct repository *r,
- 			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
- 				val, path);
- 	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
--		trace_printf("loaded thing");
- 		out->type = sub->update_strategy.type;
- 		out->command = sub->update_strategy.command;
- 	} else
 -- 
-2.19.0
-
+________________________________________________
+Stas Bekman       <'))))><       <'))))><
+https://stasosphere.com  https://chestofbooks.com
+https://experientialsexlab.com https://stason.org
+https://stasosphere.com/experience-life/my-books
