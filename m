@@ -6,58 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D3D11F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:09:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 434771F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:11:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727062AbeJQHCb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:02:31 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37628 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727159AbeJQHCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:02:31 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y11-v6so27424458wrd.4
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:09:51 -0700 (PDT)
+        id S1726982AbeJQHE3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:04:29 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:40031 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbeJQHE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:04:29 -0400
+Received: by mail-wr1-f54.google.com with SMTP id d2-v6so27470165wro.7
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=sYq8i55PzQJhizvnZBRJdfwzidMpLfcuIioleYbmoKw=;
-        b=GIyIvzhyXPxgBsoTrVbi39w1vr1hPJWLX4ZAN61845ubljTo0m7cjkpzqJMW9CH//m
-         KxBNacmaWL66FYHbFIjQswd3Ssu3rPkSqlasoJOfY5a66PSe8BRpoHmcONmD/rt6LJGt
-         omoif08rUxGvGfJTiFuXrfezMM14fP1PHlP+c/Pzt48xB9XC+W8DD18fpodOmYmtpeIJ
-         zvdPmkqZCQooCW9HAC4mRABM78TmMvR7LUR9GyJ/1+AyPtQJeyZ6kDApBkgbYuB21Om7
-         c6+BIEewlh5JdaLKOXmAv4Joo4M7Qt+lEtKjdiGrYJqKpGZ/8RhzqH66Wu2EzF+C8thS
-         TO1Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Thz5j993gUVJcim/5pH4/NS0kW42qiHR3b+sE0zqw4c=;
+        b=rL4VFnuAo4j99YJh4tToj99mcYuVP7OG5/GVe3wZhk6sEwz4jt4V/xEDQEC9YyH8se
+         We1u1DEI5UAyh22Yi7tXdJD5SFdBVg9FtzOlXTGRYYIuceobqITOnPgvC5uV7r+7kPff
+         IJOpjlMF3ABCfGCDztqu92lva1rtQZh89vXIhfUyCyuyclBxE6CMAHbI3A0kBrnAVrrH
+         uNP1dEIPWvgVw3S9sk7mAxlF+VkCrsOKLYFR4YjDEkF2T+TqKX6p+1LE6dTRnz5jneXS
+         RX6A9RM7zFzU4h+rc1JngX7Lf402CZ81ZjTFyTQRa8yl3pXO0U4Lpt/0bFVVcO+fbDFr
+         vOTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=sYq8i55PzQJhizvnZBRJdfwzidMpLfcuIioleYbmoKw=;
-        b=BtQzEPi+DciSsCRrRCtNBepGp3uKACjR/ZqKHjgCOCRlcjbJRnMXfUMgEEKoz13H7E
-         rbbuSIKql8S7MjNqrEbFDYH0CY0QJttbRwYtuUQ8b0o2DJyZ2i8OEbU95YD5aZDUraJC
-         Bt9nAGAQSJDn+pwKr8KWEatZ+Ctg6Ffe3b1Om0Er1OMcrTIvFy7w3/L3wCnZX84DPRDc
-         HaBz+1vKVohLweuMzXwq1ulkCMNcBVqeL68PnFyS5u6Bbtlo2MJTHLQXiilsewddI0dW
-         RGZPuCIgs+CZ7A4Uje4LQPC3pirI9drzWSVruw6yvCTMP/MeOcEi6FJV8idAk3nU8XRn
-         XR1g==
-X-Gm-Message-State: ABuFfoja399f/pPsJaTsdqvps4xNgxRPn2cBaPw2ecQ1d9AZ2uwiaDOL
-        3jkKsbKiZ4xrXcjxZ1P1I/w=
-X-Google-Smtp-Source: ACcGV62hY/E8d4zxFZ384709XTauMZnhjvwhdrzts9Da3bV0h0tqSi8CoVl5WgDmxszT/BzRPAA6SA==
-X-Received: by 2002:a5d:620b:: with SMTP id y11-v6mr20521271wru.105.1539731390326;
-        Tue, 16 Oct 2018 16:09:50 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Thz5j993gUVJcim/5pH4/NS0kW42qiHR3b+sE0zqw4c=;
+        b=Ug16nCtSGvYqUXj8dg0NTwogh5kP8VgBQI1jzcznyNt4vib61j8T+pCouGyVqLiKyH
+         IEFesR6/1U4gRiVo1iXleB8XR8Ln5/ZJiRo6hr+aKxrA+MNYwgq5gXy9G4liJIDVaANB
+         nZ1O9S/YAM8IJMTRtkxIOaFktMeq8k1kl0hGZInGMUsWVjTVh8HhVvD2UmNkVEuL78/w
+         QzXY/zNib+YdntHt/s4pQ3+yQzkZ2J5m3iPNCirZut5fKpD/D23ait0ag8da2DvkYarX
+         OxNz9dFZjvWMo1EbTJKY9uC0yEhYbY9uEwi2TiDpBz0abjkZ+Oi1E9XzCaKhNj1sTz94
+         3/nQ==
+X-Gm-Message-State: ABuFfohposWlYtFiuYovS/q8bRA+2hZT/HmNW3J6TavV1eFIjhzn9VAY
+        ObQy0PPJtP6GI6rw4Vk/x+Q=
+X-Google-Smtp-Source: ACcGV61L78kIAGGv3oCqbtCKQJgIJGCgSDyuOmrWxgCEvkQ11Z3Kv2K4vUrWDWC46DoWtbOFjR5amA==
+X-Received: by 2002:adf:94c2:: with SMTP id 60-v6mr20240364wrr.247.1539731507900;
+        Tue, 16 Oct 2018 16:11:47 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o201-v6sm105536wmg.16.2018.10.16.16.09.49
+        by smtp.gmail.com with ESMTPSA id n3-v6sm20510770wrr.62.2018.10.16.16.11.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Oct 2018 16:09:49 -0700 (PDT)
+        Tue, 16 Oct 2018 16:11:47 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Daniels Umanovskis <daniels@umanovskis.se>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v4] branch: introduce --show-current display option
-References: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com>
-        <20181012133321.20580-1-daniels@umanovskis.se>
-        <CAPig+cRCfO=3BB6bvDSKLKkhiSA-4=p4-zZkAXvN446_6B1_HA@mail.gmail.com>
-Date:   Wed, 17 Oct 2018 08:09:48 +0900
-Message-ID: <xmqqk1mhxzcz.fsf@gitster-ct.c.googlers.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2018, #02; Sat, 13)
+References: <xmqqh8hr9pxb.fsf@gitster-ct.c.googlers.com>
+        <20181016212008.GA249669@google.com>
+Date:   Wed, 17 Oct 2018 08:11:46 +0900
+In-Reply-To: <20181016212008.GA249669@google.com> (Josh Steadmon's message of
+        "Tue, 16 Oct 2018 14:20:08 -0700")
+Message-ID: <xmqqftx5xz9p.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,59 +66,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
->> +test_expect_success 'git branch `--show-current` works properly when tag exists' '
->> +       cat >expect <<-\EOF &&
->> +       branch-and-tag-name
->> +       EOF
->> +       test_when_finished "git branch -D branch-and-tag-name" &&
->> +       git checkout -b branch-and-tag-name &&
->> +       test_when_finished "git tag -d branch-and-tag-name" &&
->> +       git tag branch-and-tag-name &&
->> +       git branch --show-current >actual &&
->> +       git checkout branch-one &&
->
-> This cleanup "checkout" needs to be encapsulated within a
-> test_when_finished(), doesn't it? Preferably just after the "git
-> checkout -b" invocation.
+> The first two patches (test cleanup and packet_reader refactor) are OK,
+> but the latter two will break the archive command when an old client
+> attempts to talk to a new server (due to the version advertisement
+> problem noted in [1]). Sorry that I didn't catch that these had made it
+> into next.
 
-In the meantime, here is what I'll have in 'pu' on top.
-
- t/t3203-branch-output.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 1bf708dffc..d1f4fec9de 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -119,12 +119,14 @@ test_expect_success 'git branch `--show-current` works properly when tag exists'
- 	cat >expect <<-\EOF &&
- 	branch-and-tag-name
- 	EOF
--	test_when_finished "git branch -D branch-and-tag-name" &&
-+	test_when_finished "
-+		git checkout branch-one
-+		git branch -D branch-and-tag-name
-+	" &&
- 	git checkout -b branch-and-tag-name &&
- 	test_when_finished "git tag -d branch-and-tag-name" &&
- 	git tag branch-and-tag-name &&
- 	git branch --show-current >actual &&
--	git checkout branch-one &&
- 	test_cmp expect actual
- '
- 
-@@ -137,8 +139,7 @@ test_expect_success 'git branch `--show-current` works properly with worktrees'
- 	git worktree add worktree branch-two &&
- 	(
- 		git branch --show-current &&
--		cd worktree &&
--		git branch --show-current
-+		git -C worktree branch --show-current
- 	) >actual &&
- 	test_cmp expect actual
- '
--- 
-2.19.1-328-g5a0cc8aca7
-
+Thanks.  Will hld.
