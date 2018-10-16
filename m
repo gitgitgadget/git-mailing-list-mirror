@@ -2,201 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDF0E1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 10:22:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 813A51F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 10:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727050AbeJPSMO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 14:12:14 -0400
-Received: from mout.gmx.net ([212.227.17.20]:47995 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726165AbeJPSMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 14:12:14 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNqcR-1gJCvI3bhr-007U7Y; Tue, 16
- Oct 2018 12:22:27 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNqcR-1gJCvI3bhr-007U7Y; Tue, 16
- Oct 2018 12:22:27 +0200
-Date:   Tue, 16 Oct 2018 12:22:30 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v10 00/21] Convert "git stash" to C builtin
-In-Reply-To: <20181015221040.GD4883@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1810161205530.4546@tvgsbejvaqbjf.bet>
-References: <https://public-inbox.org/git/cover.1537913094.git.ungureanupaulsebastian@gmail.com/> <cover.1539553398.git.ungureanupaulsebastian@gmail.com> <20181015221040.GD4883@hank.intra.tgummerer.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726935AbeJPSUU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 14:20:20 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43524 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726083AbeJPSUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 14:20:20 -0400
+Received: by mail-ed1-f68.google.com with SMTP id y20-v6so20773488eds.10
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 03:30:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fZnEaGRh+BNqBNgIUqla7DRNq1VPRi8S2sg0lYKOF8g=;
+        b=lmQTBAfQLO2mSombEIj5qoxKjM2H7GZuDN0NEy+CLGDOzvMOtXtNMw/TtCxg48M3DK
+         2uujF4CnQqfStWgUGzxatvY61qnLHpqjvvQpEHcqKclNApww5MhJJcm0qbYYCaIbfO3A
+         QFBalW20Ls/jnXuogtlhDM2uU3zt4yhcVaiUsFA8fwEZKXrHqETIq9BitytW/ofK29kc
+         AglZOtYb3hLLnYRPyMvezdr0Tk0f19GghZkA+i3mFtUeBn9RDPtrBiolgnv0RAAV0FrX
+         IdSjB29I2jOplatiHYuhpMXqg89R/KzwfTc8ZxIRCupjg1G9heFhXwGHJMZP1khyGBVs
+         eYsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fZnEaGRh+BNqBNgIUqla7DRNq1VPRi8S2sg0lYKOF8g=;
+        b=VbDDyx7SxE9yoJPA689FyNbI9+XnCPRU4ThkiLUccyNqEJUki4vcT31x/UWlUMQKi4
+         qQsPR11R3jDbre/1aTzl0qLHKN2JiQFQQ5yveEXXZgXqi1DC5KDJrhBPWLVs8mA9I6gj
+         RNtFYdaSd5GmMM/mkuUnpOt51HwAvYYycMc1OLnTQrGd/SgQAgt0meaTlKLlVw6oy44h
+         RsidZInuMH7Chz8w62n6VLxrzrTsTz4rQH7hBR2F6loN0u1PzUGuv5bPr7ulvCBgH7hX
+         Et03tko2TT3KBRThNoWo0cPfRkdqflB3ETjeTaxp8/xn27zyRWYhFCpqzWaKk/y089aV
+         GaWg==
+X-Gm-Message-State: ABuFfoirBGvP3p+EOcyoQQUAx4ZkLEQua6q1laHouTLgJOyJT99f+f5+
+        EcQdYFZmPA99Ao50r3umcks=
+X-Google-Smtp-Source: ACcGV61BitWzUAwNhMBLaT06wx4ai4chB7iXhHmLG0SBgYEsEsyHfe6Z1fysdTR1iaWAFHhJa5de+A==
+X-Received: by 2002:a17:906:40cd:: with SMTP id a13-v6mr22999318ejk.14.1539685832866;
+        Tue, 16 Oct 2018 03:30:32 -0700 (PDT)
+Received: from szeder.dev (x4d0caaf1.dyn.telefonica.de. [77.12.170.241])
+        by smtp.gmail.com with ESMTPSA id c11-v6sm2842486ejr.6.2018.10.16.03.30.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Oct 2018 03:30:31 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 12:30:29 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/13] Offer to run CI/PR builds in Azure Pipelines
+Message-ID: <20181016103029.GL19800@szeder.dev>
+References: <pull.31.git.gitgitgadget@gmail.com>
+ <pull.31.v2.git.gitgitgadget@gmail.com>
+ <20181015142215.GB1764@syl.hsd1.wa.comcast.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nstQ9GHoM9OwoEgJmEM1cJHjrNTBl1QigWrxLUOZWpmu0tvTSvP
- JC0aqm9ESnMurGAt133csDSnH3iIgcfut7tMnaSSImhxMXxE3V5cJQFktyvlZhFSvw/er4a
- zfVApxNkPiM7mcsNnh6AcNCpBLaErNTD44Lw/NVo/XvPdNltgbHd4B1+b3JdHr7fQFYY8rA
- SL7d9+l3/NF0at0fFThMQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:w2/v6D9GMGU=:PdkipUDwQY5/UQdMmhKOaS
- mPtP4SUDsSY9ewQ4D6ljsf7y0COi57ovZEf8vTq2qOjCIQsuSYI481rECJtmJc2csSgmyytND
- r4PgexsQdttrHLf5o03lsqDX5GVpdnW6V90GNz5QhddjfjhPDLk/ywQ3yMFhX2cjAbBRKXocM
- JVKd+9ZsLLoT0WhlAHVRyBzg4Z2Fdr7I6seKy0QNXYm6ztcWGRtccarLMfrXcv8uhGk7cOWTe
- 7AP1WrmPyQ6o/3xhOilmlJTuV3sDptXsBWWQzqZ0GHzqeUNS0M3bG/U6hkiDgBgaFNz99mhIq
- Gr6QnkqWB9iqgqLoX74KSY93FHFxXBqyHdmUps76IeIVcqZK0Qakc7wlO3m5VjZdN/Zp61vBO
- sPCvdmfQ65J6QlWnZ0Br4041N3uFNBTHePYH6Mp3Y5f0pldLRCwNLQb1XLyz3n8YnncxTINWC
- quXH5K5APeWFuj025OHO7sJmrVJHdCh1z5aYyEDwVqcck6bQLF9ayA/g2bry7xeTj1D8At9OY
- tDYgZ/i+f9VUz4WDBA0y4jwBvQPCgONs/vMTECTJcpo6YU2DWCdNZFuOFD12fwFALLf/eEe10
- 1cveNZwwgjHQEoCijNLUdxjfn1RIr03wWKDsHNGAdHEv7/u3/ckyWZBs5JN9XdxrkQs+7oh0C
- 76nDWWRJEC0RE9MITPcrfYhUZy0Q1pyr6EmMGG7U7sfweZJGDMQggPhQb4S2n5bitWMpgWVEQ
- lNafUmEG07GnCu7+V3aRDXipE9rCeRaT6SSq+i7TFvKqfFr4C+8weguz+Z+ewNTaQEzd1o1nd
- EACKX/qf7UPTGSsqN+c74Z7Wmw5VPwQG2J7YEjnajsSc2KbrNU=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181015142215.GB1764@syl.hsd1.wa.comcast.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+On Mon, Oct 15, 2018 at 07:22:15AM -0700, Taylor Blau wrote:
+> Would we like to abandon Travis as our main CI service for upstream
+> git.git, and build on Azure Pipelines only?
 
-On Mon, 15 Oct 2018, Thomas Gummerer wrote:
+It's not only about "upstream git.git", but also about contributors,
+who might have enabled Travis CI integration on their forks on GitHub.
+Having a '.travis.yml' and associated 'ci/*' scripts in git.git makes
+it possible for them to easily build and test their branches on their
+own.
 
->  2:  63f2e0e6f9 !  2:  2d45985676 strbuf.c: add `strbuf_join_argv()`
->     @@ -14,19 +14,17 @@
->       	strbuf_setlen(sb, sb->len + sb2->len);
->       }
->       
->     -+const char *strbuf_join_argv(struct strbuf *buf,
->     -+			     int argc, const char **argv, char delim)
->     ++void strbuf_join_argv(struct strbuf *buf,
->     ++		      int argc, const char **argv, char delim)
-
-While the patch series does not use the return value, I have to ask
-whether it would really be useful to change it to return `void`. I could
-imagine that there may already be quite a few code paths that would love
-to use strbuf_join_argv(), *and* would benefit from the `const char *`
-return value.
-
-In other words: just because the *current* patches do not make use of that
-quite convenient return value does not mean that we should remove that
-convenience.
-
->  7:  a2abd1b4bd !  8:  974dbaa492 stash: convert apply to builtin
->     @@ -370,18 +370,20 @@
->      +
->      +			if (diff_tree_binary(&out, &info->w_commit)) {
->      +				strbuf_release(&out);
->     -+				return -1;
->     ++				return error(_("Could not generate diff %s^!."),
->     ++					     oid_to_hex(&info->w_commit));
-
-Please start the argument of an `error()` call with a lower-case letter.
-
->      +			}
->      +
->      +			ret = apply_cached(&out);
->      +			strbuf_release(&out);
->      +			if (ret)
->     -+				return -1;
->     ++				return error(_("Conflicts in index."
->     ++					       "Try without --index."));
-
-Same here.
-
->      +
->      +			discard_cache();
->      +			read_cache();
->      +			if (write_cache_as_tree(&index_tree, 0, NULL))
->     -+				return -1;
->     ++				return error(_("Could not save index tree"));
-
-And here.
-
-> 15:  bd827be103 ! 15:  989db67e9a stash: convert create to builtin
->     @@ -119,7 +119,6 @@
->      +static int check_changes(struct pathspec ps, int include_untracked)
->      +{
->      +	int result;
->     -+	int ret = 0;
-
-I was curious about this change, and could not find it in the
-git-stash-v10 tag of https://github.com/ungps/git...
-
-> 18:  1c501ad666 ! 18:  c90e30173a stash: convert save to builtin
->     @@ -72,8 +72,10 @@
->      +			     git_stash_helper_save_usage,
->      +			     PARSE_OPT_KEEP_DASHDASH);
->      +
->     -+	if (argc)
->     -+		stash_msg = (char*) strbuf_join_argv(&buf, argc, argv, ' ');
->     ++	if (argc) {
->     ++		strbuf_join_argv(&buf, argc, argv, ' ');
->     ++		stash_msg = buf.buf;
->     ++	}
-
-Aha! So there *was* a user of that return value. I really would prefer a
-non-void return value here.
-
-> 19:  c4401b21db ! 19:  4360ea875d stash: convert `stash--helper.c` into `stash.c`
->     @@ -264,9 +320,9 @@
->      -	argc = parse_options(argc, argv, prefix, options,
->      -			     git_stash_helper_create_usage,
->      -			     0);
->     -+	/* Startinf with argv[1], since argv[0] is "create" */
->     -+	stash_msg = (char*) strbuf_join_argv(&stash_msg_buf, argc - 1,
->     -+					     ++argv, ' ');
->     ++	/* Starting with argv[1], since argv[0] is "create" */
->     ++	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
->     ++	stash_msg = stash_msg_buf.buf;
-
-Again, I would strongly prefer the convenience of assigning the return
-value directly, rather than having two lines.
-
->     @@ -375,10 +425,8 @@
->      +			 * they need to be immediately followed by a string
->      +			 * (i.e.`-m"foobar"` or `--message="foobar"`).
->      +			 */
->     -+			if ((strlen(argv[i]) > 2 &&
->     -+			     !strncmp(argv[i], "-m", 2)) ||
->     -+			    (strlen(argv[i]) > 10 &&
->     -+			     !strncmp(argv[i], "--message=", 10)))
->     ++			if (starts_with(argv[i], "-m") ||
->     ++			    starts_with(argv[i], "--message="))
-
-Very nice.
-
-> 20:  92dc11fd16 ! 20:  a384b05008 stash: optimize `get_untracked_files()` and `check_changes()`
->     @@ -52,7 +52,6 @@
->      +static int check_changes_tracked_files(struct pathspec ps)
->       {
->       	int result;
->     --	int ret = 0;
-
-I also wonder about this change, in light of...
-
->       	struct rev_info rev;
->       	struct object_id dummy;
->      -	struct strbuf out = STRBUF_INIT;
->     @@ -99,8 +98,8 @@
->      -	if (!check_changes(ps, include_untracked)) {
->      +	if (!check_changes(ps, include_untracked, &untracked_files)) {
->       		ret = 1;
-
-this here line. How does that work, if `ret` is removed? And why didn't
-the `make DEVELOPER=1` complain about that unused `ret` variable before?
-
->     - 		*stash_msg = NULL;
->       		goto done;
->     + 	}
->      @@
->       		goto done;
-
-The rest of the changes looks pretty sensible to me (indentation/wrapping
-changes, mostly, with a couple of commit message/typo fixes thrown in).
-
-Maybe you have a commit hash, or even better, a tag in a public Git
-repository somewhere, so that Paul can pick it up more easily (and compare
-the changes with his latest local branch)?
-
-Thank you!
-Dscho
