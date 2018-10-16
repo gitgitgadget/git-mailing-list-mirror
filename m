@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEDD91F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 07:39:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1E131F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 07:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726982AbeJPP2l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 11:28:41 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37284 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726649AbeJPP2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 11:28:41 -0400
-Received: by mail-ed1-f66.google.com with SMTP id c22-v6so20313741edc.4
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 00:39:33 -0700 (PDT)
+        id S1726994AbeJPP2v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 11:28:51 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39330 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726649AbeJPP2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 11:28:50 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d15-v6so20304523edq.6
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 00:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=rasmusvillemoes.dk; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8gbRzLEm5Vnu9GUpKJ6505F5LBVI1wi7wTqzsEOyec4=;
-        b=dIpVPNXD79wePMjGnAUFJkvFNaWy3q/t7wvRWLxvc7f6JObe4JxTGFVNP2vw5GHt7B
-         L8jTI4K+ocdo9qZMWc81Psr5hZPRQJ3z2vivGV8fDcJ+HcsBuw6Yv6ic9N3H07UZATp0
-         ccHYOHCHzoWth3NMQLCrvU4cllXdJnShQByxk=
+        bh=pndbho1JTYlAgSTBbPgtKLpVz2ohrCt15jtlqQq/yaQ=;
+        b=KVTdRQuzB7bd7lSHJv5RXZVNyY16cbIHI0BzKMLylTU8bTM9UvUatS0JNbkts8OlhH
+         gjocQBTywrkNxbAOsVmCMpcK5/nG+MY/QEk8Da5Y7n9OwDO8udgYufdXVsybuCujjulM
+         jaiDK/i9XwL6XZc1Egqv88Z5FDz1AgD3mWcqg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8gbRzLEm5Vnu9GUpKJ6505F5LBVI1wi7wTqzsEOyec4=;
-        b=WX8uvjvBXJzJudoT5G35OEgjZCqyoOaTMQ9FgNtVwfnAXX+LXE0og5tijAJschHSKC
-         qVbXLNZ5+Rs4rOjoJeOa64fs8H9CFAm+/dTIJLgu+aZW5tYw0Fr8+3Cha0CJsLjYA5Su
-         jpAEjrBXXvMe9VuyNr7wUsguEPcT7ULi4b7C1LWsocGsXY0FB4dqatPOzqNXbKpTWuhQ
-         m3Jpxyv6tGwyW9EWvdQOOBwJ2ws97r5nvS12+DhP2KaDr2hyZp4l62u+6TcxybVY9P3j
-         OjaynMEXiF2rSzSav4jpmHIkEiiftx6sp7ZjlXmWyKtAB1R4/uNngHrFEG0pdGxtzPFd
-         hI2g==
-X-Gm-Message-State: ABuFfoiViEcfP+6rYPOiwkWM1yaYlF+nX4ThYzpTEiqgb23Ow5Z2bQUy
-        n5ZcDzK50PSHxSo1I8WJEgO13nvjVrI=
-X-Google-Smtp-Source: ACcGV63/cXZHoN1KsJHaK8s3AwEo1RFw6LrktmD7ChuA+UMtLDKnMhxbZ83N49C0zWmAT28zIeSXew==
-X-Received: by 2002:a17:906:c19:: with SMTP id s25-v6mr15401777ejf.140.1539675572604;
-        Tue, 16 Oct 2018 00:39:32 -0700 (PDT)
+        bh=pndbho1JTYlAgSTBbPgtKLpVz2ohrCt15jtlqQq/yaQ=;
+        b=hnFWQMYlkb5KVsTIDGTrdZ3nK7mY/YEGpByQ6MIqEZkRVWWMtabfyo9h6+D8uIyRs6
+         3nbouiaKIm+uSU8oJOsgyB9MyMnwTokAfbh2ETmHlbtDMQDXnHcn6VeybHZfIX74Eq42
+         lkw/7W4pjIwLRx4MO2jke5Mfa1SVquINBvGyZ0Lr/iX+TbhoDewaHA0+sKCj4jNZTgOb
+         xsi/EBfFwNtxADQGCHAriZpvZF+E12HwRFYQ7YDWogjfWYJeG3+GjARd6APx+3fmkKEW
+         AhisXss1sLwoegHePIDK0hs/g4fYG8XcGhfrQEl6aHXfd2O1o+3OOv11lkwm4QMDs9oT
+         3Eog==
+X-Gm-Message-State: ABuFfoiWMRR4bZTB59vCW/cBqZ+5m4aldddaZJN4hr5dHo4LvOp3YnDl
+        BzJNIE4sGLDBuf8RPXL3hc/y7Ynthk0=
+X-Google-Smtp-Source: ACcGV62bGqsodn8ASXI06PN97dCrCkGVU64XcVpPwuK/npYKorY47yP4qDClOSb8XHEItYApl5KGjg==
+X-Received: by 2002:a17:906:755d:: with SMTP id a29-v6mr21904595ejn.84.1539675581476;
+        Tue, 16 Oct 2018 00:39:41 -0700 (PDT)
 Received: from prevas-ravi.vestasvisitor.net ([193.47.71.171])
-        by smtp.gmail.com with ESMTPSA id q18-v6sm2774661ejr.8.2018.10.16.00.39.31
+        by smtp.gmail.com with ESMTPSA id q18-v6sm2774661ejr.8.2018.10.16.00.39.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 16 Oct 2018 00:39:32 -0700 (PDT)
+        Tue, 16 Oct 2018 00:39:40 -0700 (PDT)
 From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: [PATCH v2 1/3] Documentation/git-send-email.txt: style fixes
-Date:   Tue, 16 Oct 2018 09:39:21 +0200
-Message-Id: <20181016073923.28134-2-rv@rasmusvillemoes.dk>
+Subject: [PATCH v2 2/3] send-email: only consider lines containing @ or <> for automatic Cc'ing
+Date:   Tue, 16 Oct 2018 09:39:22 +0200
+Message-Id: <20181016073923.28134-3-rv@rasmusvillemoes.dk>
 X-Mailer: git-send-email 2.19.1.6.gbde171bbf5
 In-Reply-To: <20181016073923.28134-1-rv@rasmusvillemoes.dk>
 References: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
@@ -64,39 +64,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For consistency, add full stops in a few places and outdent a line by
-one space.
+While the address sanitizations routines do accept local addresses, that
+is almost never what is meant in a Cc or Signed-off-by trailer.
+
+Looking through all the signed-off-by lines in the linux kernel tree
+without a @, there are mostly two patterns: Either just a full name, or
+a full name followed by <user at domain.com> (i.e., with the word at
+instead of a @), and minor variations. For cc lines, the same patterns
+appear, along with lots of "cc stable" variations that do not actually
+name stable@vger.kernel.org
+
+  Cc: stable # introduced pre-git times
+  cc: stable.kernel.org
+
+In the <user at domain.com> cases, one gets a chance to interactively
+fix it. But when there is no <> pair, it seems we end up just using the
+first word as a (local) address.
+
+As the number of cases where a local address really was meant is
+likely (and anecdotally) quite small compared to the number of cases
+where we end up cc'ing a garbage address, insist on at least a @ or a <>
+pair being present.
+
+This is also preparation for the next patch, where we are likely to
+encounter even more non-addresses in -by lines, such as
+
+  Reported-by: Coverity
+  Patch-generated-by: Coccinelle
 
 Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
 ---
- Documentation/git-send-email.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ git-send-email.perl | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 465a4ecbed..ea6ea512fe 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -321,16 +321,16 @@ Automating
- 	auto-cc of:
- +
- --
--- 'author' will avoid including the patch author
--- 'self' will avoid including the sender
-+- 'author' will avoid including the patch author.
-+- 'self' will avoid including the sender.
- - 'cc' will avoid including anyone mentioned in Cc lines in the patch header
-   except for self (use 'self' for that).
- - 'bodycc' will avoid including anyone mentioned in Cc lines in the
-   patch body (commit message) except for self (use 'self' for that).
- - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
--   for self (use 'self' for that).
-+  for self (use 'self' for that).
- - 'cccmd' will avoid running the --cc-cmd.
--- 'body' is equivalent to 'sob' + 'bodycc'
-+- 'body' is equivalent to 'sob' + 'bodycc'.
- - 'all' will suppress all auto cc values.
- --
- +
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2be5dac337..1916159d2a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1694,6 +1694,11 @@ sub process_file {
+ 				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
+ 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+ 			}
++			if ($c !~ /.+@.+|<.+>/) {
++				printf("(body) Ignoring %s from line '%s'\n",
++					$what, $_) unless $quiet;
++				next;
++			}
+ 			push @cc, $c;
+ 			printf(__("(body) Adding cc: %s from line '%s'\n"),
+ 				$c, $_) unless $quiet;
 -- 
 2.19.1.6.gbde171bbf5
 
