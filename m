@@ -2,105 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 867E91F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 07:57:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADCA01F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 07:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbeJPPqS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 11:46:18 -0400
-Received: from mx.mylinuxtime.de ([195.201.174.144]:54552 "EHLO
-        mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726934AbeJPPqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 11:46:18 -0400
-Received: from leda.eworm.de (unknown [87.190.244.126])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.mylinuxtime.de (Postfix) with ESMTPSA id E34F9C7320;
-        Tue, 16 Oct 2018 09:57:05 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.mylinuxtime.de E34F9C7320
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-        t=1539676626; bh=+0z+i9etrpsrWu//ToD3nCor2RAKlY/ZMLC/TBpJhl4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=f1J/Mp36WADvKr0oLK5zScWbdjsf5IP65d1HqhhmYiT3l9eUqOaRWLX8Zjw1ZhauN
-         CZSj5UfXSfZiLQxDvemCX3Khb0lv2OR2AHUt4yejhjmjdnYGN9FKgBaYixo4uGPKSj
-         riwHm85TbMmwWDyTRYllTlh4WdSU4lwkpKXXfMFY=
-Received: by leda.eworm.de (Postfix, from userid 1000)
-        id 58405102973; Tue, 16 Oct 2018 09:56:35 +0200 (CEST)
-From:   Christian Hesse <list@eworm.de>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Christian Hesse <mail@eworm.de>
-Subject: [PATCH 1/1] subtree: make install targets depend on build targets
-Date:   Tue, 16 Oct 2018 09:56:24 +0200
-Message-Id: <20181016075624.30176-1-list@eworm.de>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <xmqq8t2y1o4y.fsf@gitster-ct.c.googlers.com>
-References: <xmqq8t2y1o4y.fsf@gitster-ct.c.googlers.com>
+        id S1727008AbeJPPq4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 11:46:56 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46828 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726934AbeJPPq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 11:46:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n11-v6so24184832wru.13
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 00:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IRZJ/LO0rQm+ygcftKB6fymugEdBvM1uFmyPZQ/Bpe4=;
+        b=V2o9fjyyOX3fl78BqUzg2YYYZnpIhZhAUBvG5eUZ3Nf7XsQh+jOJy+BBL8fqfq+QZf
+         vmBIVS53tq+o69/tb//U6hZrZIz1RIfSmnYoDAT5ZnmUneAwPv2oR7RHkHwa+E6eU/ux
+         ag/atEwYOK5U0jjrwyK/s7UtE208NUbLowji9RalLpeWUieZ3/MBi4l2jdjSam6rm5IY
+         HSE3F3TUN54ctnkT5EsrDXHvtfJJ1vrFpZcRcGSvzZXJGqexdwEZHBSKllQbDZQY3IjY
+         3Us+AdrXM4PJFc+w/x0tQyDv6TpFq3dQ6Qm6K0iZNaZhaPbwT93r2hWWcyuvuUSs3Ems
+         Glaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IRZJ/LO0rQm+ygcftKB6fymugEdBvM1uFmyPZQ/Bpe4=;
+        b=mLyvBnTYQbgUmY0MwWPEGF95MAwJqA9InyxWH+Fgu7elEkDWdR7JMEsg4yT8mvt/iy
+         +uyS63gukvn5RXzzPqN8MoHmYO0xypWRWW5mGxYvWoPVspQP0M7fNglGftje0rhu1e9F
+         6+nb8xqf3y7j4X29pUiX98mZIf+5mrVnFsZ3KqsZ2WFLRatC7uLRyMBVi8FG15ngTmzJ
+         WUcoFT8mLJXGEyjnt6bE3I4xHQCkkOop7n9tv2qBhjwF0FG3+gejaf6ZQsHhxtNr7Ji8
+         g2JmrqIuCt8KD5BXGE58M4xjShNR49Ej5MTmGUUKXONi6i5XGjERuYL2zXxOC7XTnvx0
+         M/FA==
+X-Gm-Message-State: ABuFfojsZyJ2fRugkm5Hbntx54Darq1vmgCOzzrtE9dQ4repajuUjcSV
+        IrRPC8NxT4C9tqP1tHWAgEuHOswm3uk=
+X-Google-Smtp-Source: ACcGV61hI5Zk/ohbI2IPLxfR86GJcssjJGOyIvkcXDZ9PvvsQhb5VDLUTtaYJKABRdxQgGJ163vHKQ==
+X-Received: by 2002:adf:f3c7:: with SMTP id g7-v6mr16683863wrp.229.1539676663353;
+        Tue, 16 Oct 2018 00:57:43 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i6-v6sm11010814wrq.4.2018.10.16.00.57.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Oct 2018 00:57:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] send-email: Also pick up cc addresses from -by trailers
+References: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
+        <20181016073923.28134-1-rv@rasmusvillemoes.dk>
+Date:   Tue, 16 Oct 2018 16:57:41 +0900
+In-Reply-To: <20181016073923.28134-1-rv@rasmusvillemoes.dk> (Rasmus
+        Villemoes's message of "Tue, 16 Oct 2018 09:39:20 +0200")
+Message-ID: <xmqq36t6z5l6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
-Authentication-Results: mx.mylinuxtime.de;
-        auth=pass smtp.auth=smtp-only@eworm.de smtp.mailfrom=eworm@leda.eworm.de
-X-Rspamd-Server: mx
-X-Stat-Signature: 3cybc1ndhfcgjypsxakq6sjbrkqfytqo
-X-Rspamd-Queue-Id: E34F9C7320
-X-Spamd-Result: default: False [0.80 / 15.00];
-         ARC_NA(0.00)[];
-         RCVD_VIA_SMTP_AUTH(0.00)[];
-         FROM_HAS_DN(0.00)[];
-         RCPT_COUNT_THREE(0.00)[3];
-         TO_MATCH_ENVRCPT_ALL(0.00)[];
-         R_MISSING_CHARSET(2.50)[];
-         MIME_GOOD(-0.10)[text/plain];
-         BROKEN_CONTENT_TYPE(1.50)[];
-         TO_DN_ALL(0.00)[];
-         MID_CONTAINS_FROM(1.00)[];
-         NEURAL_HAM(-2.92)[-0.974,0];
-         FORGED_SENDER(0.30)[list@eworm.de,eworm@leda.eworm.de];
-         RCVD_TLS_LAST(0.00)[];
-         ASN(0.00)[asn:3320, ipnet:87.128.0.0/10, country:DE];
-         FROM_NEQ_ENVFROM(0.00)[list@eworm.de,eworm@leda.eworm.de];
-         BAYES_HAM(-1.48)[91.54%];
-         RCVD_COUNT_TWO(0.00)[2]
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Hesse <mail@eworm.de>
+Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
 
-Now that we have build targets let the install targets depend on them.
-Also make the targets phony.
+> This series extends the logic in git-send-email so that addresses
+> appearing in various *-by: trailers (e.g. Reviewed-by, Acked-by,
+> Tested-by) are picked up and added to the Cc list, in addition to the
+> current logic that picks up Cc: and Signed-off-by: lines.
 
-Signed-off-by: Christian Hesse <mail@eworm.de>
----
- contrib/subtree/Makefile | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Thanks.  Will replace.  I think this is ready for 'next' so let's
+see if somebody else have more comments for a few days and then
+start merging it down.
 
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 6906aae441..4a10a020a0 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -69,11 +69,11 @@ install: $(GIT_SUBTREE)
- 
- install-doc: install-man install-html
- 
--install-man: $(GIT_SUBTREE_DOC)
-+install-man: man
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
- 	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
- 
--install-html: $(GIT_SUBTREE_HTML)
-+install-html: html
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
- 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
- 
-@@ -98,4 +98,4 @@ clean:
- 	$(RM) $(GIT_SUBTREE)
- 	$(RM) *.xml *.html *.1
- 
--.PHONY: FORCE
-+.PHONY: FORCE man html install-man install-html
