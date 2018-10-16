@@ -2,118 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-10.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIMWL_WL_MED,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96E361F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:41:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD5AD1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:43:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727289AbeJQHeX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:34:23 -0400
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:50432 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727020AbeJQHeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:34:23 -0400
-Received: by mail-pg1-f201.google.com with SMTP id r16-v6so18483486pgv.17
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=HXO+ymd4hvejkT2LVUQIS40ii5FqVe6kiJbuFH9OZXI=;
-        b=U8xajiLYOGJokvb24hzNMZ6jCOynzTgXVseqIt62o5La/C4PfIntsYVHL+ShRqctY3
-         IvkfuROXMepIgZnWfeLo7ZEy5V5igARcyo+hp/tpmNIVhZT/aYL/kuFrm5L2Y/uULf2b
-         6aK4hzechiluRS1VORYb3JWaQWa6dw9xk4Sy9H8c3tc41D75LJeYpFqRaUnzUrmvnp02
-         jcBq77YPGzoZ6KJgWX4uAWvfLdgsEg08HBcIuDROcqpPYSX89MbgKHWxNixMnnqJs3A+
-         nlm3V20XQS1GccqhmJBVNiImbqf8nzAsQ/c8Rb62BAqRFuGV2jjFsrWJlxFIPw74+F0q
-         GImg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=HXO+ymd4hvejkT2LVUQIS40ii5FqVe6kiJbuFH9OZXI=;
-        b=l2D+j7gpnqf9y/50cWYKPEYYKTIw0QK6RsbovyxjDHqzhEeRk662OBNll6MBrO8xYS
-         JfTwZ3fLGD76y/KYsKS6CBZCq5X0z4GRprqOSFTihFav3nvli8mlmPevssFjDbNND2l9
-         HgZdhMErmHQe+i1lj2vfOBvPv00+j0McU7ho2Ob7gLbOIYD3MAErWorK0d7iAViWghqs
-         o3aK1h9HPFcfekiPt1fgyVh9iFn03d1Lu9XYiH7UlSy2fzlO4skMLo7xxjLBREPLNDvs
-         VVqBJ6AXXItzFw0CpIW0nSURJzqCYdA9MG4FdupoF725PL8VBPMaGDguyya6n2lk0yBJ
-         2D2A==
-X-Gm-Message-State: ABuFfojJHz4F3lbRLDGukhuCnlFC9yzWRjQn4ojkgm6lArO8ykswrTMK
-        nyeU1MXqHfu7WugNRW8sv0qaSQDN+qdvIkhEhdeG
-X-Google-Smtp-Source: ACcGV61XPywmDyeBELCffUuyZfZz3oUIM9Z+czItBi7n5/2x3HGIkdnzB57Y8WWjfz421j9BMIwd5EqwYuidRSLczy6x
-X-Received: by 2002:a63:c40e:: with SMTP id h14-v6mr11554879pgd.53.1539733297234;
- Tue, 16 Oct 2018 16:41:37 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 16:41:29 -0700
-In-Reply-To: <61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com>
-Message-Id: <20181016234129.194138-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH 0/4] Bloom filter experiment
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     stolee@gmail.com
-Cc:     szeder.dev@gmail.com, git@vger.kernel.org, peff@peff.net,
-        gitster@pobox.com, avarab@gmail.com, sbeller@google.com,
-        pclouds@gmail.com, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1727195AbeJQHgL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:36:11 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50964 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727020AbeJQHgL (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 03:36:11 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3ED8061B72;
+        Tue, 16 Oct 2018 23:43:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1539733400;
+        bh=hU5raW3a2MDj/NOmp5WVvPfAZEKuOlKK3gBHmcZKCnE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=CzPPcegORKZeCoEv5Qspu6TDRXKoclfjR2wnWtONjK2tTjLzrRjF6rz6LlOlhI9Sj
+         1CIb/AETgii+ryQ14jLnQ+OPiueEgprUmzpBbdiVc+VfobSxyPBpIV7BEyWJIeSeSQ
+         vI4hPvkMbcx+EtcJwxXrQ8twjoj89TxmKnY5FCbtaqPRhrmlr7vmzZS1HIwo5u6E8E
+         AQbNXZf6vabg4cLc38T1pV90PKzRSSqJAmG+IMuowvV/T1t305wpLgkr3eXMmdGfw5
+         8FlGjyHXWD4VOv/qmqqe4pmEwYKrraHyy9fe3D8kyW+nDOeCSOi+UOI08NIzxxIDoA
+         j4wHYfDOPfRxscXF2Q+C4SQEw7kguaKGuyXW3GKMlBxmehUUj2FF8n6R7I6Sk4BLNQ
+         gdKKRhQzLLQ/zwVorQS8gLLRClIm2Ptzw5CL1SqcjpDzeKjwBe0UI9vWhxFn/mrwgs
+         s81rXv6ILkOIaWQSXI5fFoTyDAICBGsv/BWcs6KXkD8uty7BViH
+Date:   Tue, 16 Oct 2018 23:43:15 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] pack-objects (mingw): demonstrate a segmentation
+ fault with large deltas
+Message-ID: <20181016234315.GG432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.47.git.gitgitgadget@gmail.com>
+ <eb6d10133ac9b1977db81ff9c243e77639226f85.1539723766.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ZEJJ1/LkT8WyxxO+"
+Content-Disposition: inline
+In-Reply-To: <eb6d10133ac9b1977db81ff9c243e77639226f85.1539723766.git.gitgitgadget@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> | Implementation | Queries | Maybe | FP # | FP %=C2=A0 |
-> |----------------|---------|-------|------|-------|
-> | Szeder=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 66095=C2=A0=C2=
-=A0 | 1142=C2=A0 | 256=C2=A0 | 0.38% |
-> | Jonathan=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 66459=C2=A0=C2=A0 | 107=
-=C2=A0=C2=A0 | 89=C2=A0=C2=A0 | 0.16% |
-> | Stolee=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 53025=C2=A0=C2=
-=A0 | 492=C2=A0=C2=A0 | 479=C2=A0 | 0.90% |
+
+--ZEJJ1/LkT8WyxxO+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Oct 16, 2018 at 02:02:50PM -0700, Johannes Schindelin via GitGitGad=
+get wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >=20
-> (Note that we must have used different starting points, which is why my=
-=20
-> "Queries" is so much smaller.)
+> There is a problem in the way 9ac3f0e5b3e4 (pack-objects: fix
+> performance issues on packing large deltas, 2018-07-22) initializes that
+> mutex in the `packing_data` struct. The problem manifests in a
+> segmentation fault on Windows, when a mutex (AKA critical section) is
+> accessed without being initialized. (With pthreads, you apparently do
+> not really have to initialize them?)
 
-I suspect it's because your bloom filter implementation covers only the
-first parent (if I'm understanding get_bloom_filter() correctly). When I
-only covered the first parent in my initial test (see patch 2 of [1]), I
-got (following the columns in the table above):
+This is a good catch.  You do have to initialize a pthread mutex, but on
+amd64 Linux the default initializer is all zeros, so since we use a
+static variable, it happens to coincidentally have the right value, so
+we don't notice.
 
-  53096 107 89 0.001676
+Thanks for fixing this.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Also, I think that the rejecting power (Queries - Maybe)/(Total tree
-comparisons if no bloom filters were used) needs to be in the evaluation
-criteria somewhere, as that indicates how many tree comparisons we
-managed to avoid.
+--ZEJJ1/LkT8WyxxO+
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Also, we probably should also test on a file that changes more
-frequently :-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
 
-[1] https://public-inbox.org/git/cover.1539219248.git.jonathantanmy@google.=
-com/
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvGd5MACgkQv1NdgR9S
+9oudEg/8CsQ+6KtSKH50pk9tBswuGCXGsxv1RJ0VK4im6rwFgVMEv+xWxN2B29l/
+nJd7gR29wf8ytWEK1tJMLU6ws3wWPHk5yXPl+8R2ZrPq8+v6n/x+Iaci1rCfEa/7
+euS7W4I6/LoZSiahccbLaxT/TdD/8IYTX5Qj/8a/sUFHekDVEiW6lYGPEptbiom7
+vvlWl700T1eSRABgeEacwkPcxH4yEwEmHTH365JM+YmacP4lQrWMswFymfJjx4d9
+oJ8SUZquX3PCF98ZCBu31WWu/K/PuDLbGqq8nxl+RhDjJUOC85P0/XJ9j983hRCm
+KbVUV8jWRtrKRAG7u/RCc38lYcvc3eZ6/3pwlEpAdiMXK5zGz1f6fHK90QakGbFG
+6p9XLFKzr4VUKQmtiVB93q8pguaKlKlO8CivFnu8FMWNea0CoMo8aWy+YquWwYJ7
+wXlvKo0ANeHItuz34Oe1ze+3D0DVNCg4AOoRGjY9yprH4U4H8ldMtQjJECnkmw3K
+YYsCpdWAcFU9x6Y7CAeabmQq5XkcxN71yWV+qWuvCL+LnryzX8+sh+IPhTjPExGR
+UPqOXksN+QRa3fgJ3BIIxMzoaGDjnA2kT2uvtFp50mqmBT4hBRcuYPeTJhXgSbwp
+c1KGdm4jyXNRml3wpHMAUiIQ0p+CqPrvEb7OCfmzKjFLaWpNs88=
+=cL6H
+-----END PGP SIGNATURE-----
 
-> The increase in false-positive percentage is expected in my=20
-> implementation. I'm using the correct filter sizes to hit a <1% FP=20
-> ratio. This could be lowered by changing the settings, and the size=20
-> would dynamically grow. For my Git repo (which contains=20
-> git-for-windows/git and microsoft/git) this implementation grows the=20
-> commmit-graph file from 5.8 MB to 7.3 MB (1.5 MB total, compared to=20
-> Szeder's 8MB filter). For 105,260 commits, that rounds out to less than=
-=20
-> 20 bytes per commit (compared to Jonathan's 256 bytes per commit).
-
-Mine has 256 bits per commit, which is 32 bytes per commit (still more
-than yours).
-
-Having said all that, thanks for writing up your version - in
-particular, variable sized filters (like in yours) seem to be the way to
-go.
-
-> We'll see how much time I have to do this polish, but I think the=20
-> benefit is proven.
-
-Agreed.
+--ZEJJ1/LkT8WyxxO+--
