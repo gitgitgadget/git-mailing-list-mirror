@@ -2,123 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C82D1F454
-	for <e@80x24.org>; Tue, 16 Oct 2018 22:22:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF6EE1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 22:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727097AbeJQGPR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 02:15:17 -0400
-Received: from mail-ot1-f73.google.com ([209.85.210.73]:43933 "EHLO
-        mail-ot1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726048AbeJQGPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 02:15:17 -0400
-Received: by mail-ot1-f73.google.com with SMTP id d34so17843594otb.10
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:22:47 -0700 (PDT)
+        id S1727181AbeJQG0I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 02:26:08 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:45180 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbeJQG0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 02:26:08 -0400
+Received: by mail-ed1-f46.google.com with SMTP id v18-v6so22942818edq.12
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=7KdaMJDDy01UOk03DidlkGouFIuGmTYcyCI/SNGDyRw=;
-        b=NmXwAP4b1Xw04pHhDAoRIK6AGgia9bhJStXbCHIx+gEuwzA4qOShhCjWrDEcX6tG6W
-         NaMu2iqa7ZsRHKQqB67YnH5iJA2MtDmiNPJCD9d0/ZP0DRnuWLUlUxxUmn6dAUNfELhT
-         vorvyCSVq09zECcsaRvTfu+mHVdShIjkXHrlMEOhEx8t01GJ1mhwA1gh94iFsRGqaz4X
-         XJMI4fQOBQ86AAGW0czRPA9DzCKLhDBo4cbfclna08+qQpDP53zrUY1dSNtDqpQE+ncu
-         kINFq1jtO4Uw0F77W7qOWpeZzn9N/W2i2V2tLM1+vV+rAqGocjAL2rJtvgCbtQCOgQdH
-         7HYg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=s/rvNy3xFwMSaJD3WJOdPjq70eYY2rrQGiMW1x8iUBc=;
+        b=C/fe5ERDxvW/HQowiQcPOtKHqzC9W2z9fW/sMF3S5EfpSWoXrmy3JZY2FZDFmsg8/Q
+         2XyGa+J+El+rFv8XbG0hUE7v2FRIRFRmTuuZc2mR8/x1UKhIH9jqbX2lwWV0V+pdWl9W
+         RqcIQjaqwdh/jy8luwMe/fwMlA/osvVIA3pte/IpHMt9S/h7yBvJPL1IJxc5DeM96blp
+         21LIzpFGqnnFR3pcMMrNLPRWboNwt9jqqnfnnseiGX/kfzSt9eSNiEU46PHUH8lBHPql
+         HN2USsK8W8q/bWeai0TkPbwTWFqkybCBZ31yKJWFCYkX5WWvr85MdilhgdIoCqZwH6LX
+         SSxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=7KdaMJDDy01UOk03DidlkGouFIuGmTYcyCI/SNGDyRw=;
-        b=AY9I4CHbyWp6oair08AhhOidRyuL27yppUYMf92zBj0tIRJEDI1/EWMB15zMdfZ524
-         i560KvYUysvqx+SoTU1AFY7Zp4Ks9CNJLNfBqp4Rg92oYIy8MOUOf49ZgOZtpYOrXHz9
-         kozoIpgJ98ZyJnzTU7GJiyLyppKKeAdw6YAyj8sQjZJlNC/uVPAl7V+IB/ig3Vdx4gBp
-         eVGmK63Rb0JkNrwycI+R2F53sVFb9ip9s/YlacvjUR6jnAX6T0Ty76YFS9N/4yE6eZwr
-         iU8DG02wBKNF0ztG/EnPrk9If+y1dV21JtW8NleZ83xvj8yIYcj3pdKyiPoYnsL2IGk5
-         Agcw==
-X-Gm-Message-State: ABuFfoij/JcSyKLITURS23HeMRYADEQ9JqTW5W/XbSNLv3gEa/Nq20Ao
-        f8LAOxlH2tsZ8ev6gYRfJ+zYc1lnbcI96oUUy/Hm
-X-Google-Smtp-Source: ACcGV61I7zDOxF66CcElvY2UVe0lPalHXm+4eO1gDDIBS5AyYKuqQl7Shfq0v07EMm5LSuF+p2wdaDHDnFP5uobBSAqJ
-X-Received: by 2002:a9d:2572:: with SMTP id j47mr19917024otd.24.1539728567517;
- Tue, 16 Oct 2018 15:22:47 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 15:22:43 -0700
-In-Reply-To: <20181016174304.GA221682@aiede.svl.corp.google.com>
-Message-Id: <20181016222243.58620-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181016174304.GA221682@aiede.svl.corp.google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     jrnieder@gmail.com
-Cc:     christian.couder@gmail.com, sbeller@google.com,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Ben.Peart@microsoft.com, jonathantanmy@google.com,
-        pclouds@gmail.com, mh@glandium.org, larsxschneider@gmail.com,
-        e@80x24.org, chriscool@tuxfamily.org, jeffhost@microsoft.com,
-        sunshine@sunshineco.com, dev+git@drbeat.li
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=s/rvNy3xFwMSaJD3WJOdPjq70eYY2rrQGiMW1x8iUBc=;
+        b=ecMWKP7EXi95FnZ2sWCSNuN+ZPCqV5mRS2i7cm3TgHfPnb6OFwVMV3nFyzNZEnySND
+         sAUYfDQ5oRlUNozRCjH3SKbi6MO62ADFyPIriI/oPq7gA6c8xtK1IdCFLo4PtLvjZN0+
+         B4KB68Utoah3uJcnXLBWVeYJl3KpMgixZXsu+zQqIGCzxmEQ6je1pxVzRgPh7l7soXc6
+         xEQXiKLMAmBANogae2u7oZx5ZzrP0AwRg+AWxIolXM37P/hBWdT+gwYRBCU+Jj4Q/BCh
+         xWVdA/jtTu6IlHBN5h5np8q6VM96EvGApWOBPUgjecS1s7tv4hCY9YAyVVDlfxRAp4/P
+         8Gqw==
+X-Gm-Message-State: ABuFfohHn8MJfhsxJEkKZQFgl5B4aUtJIjNdPLI6x/uH8NoaYI9pXjSq
+        7ldO4rMc1mZXm5ZX/6mWsujcYgeS
+X-Google-Smtp-Source: ACcGV60g6w9dUZNKA11iv1GEGPva4FNCLwD3luc4WHvlBz3lkTIZxPyy8g/my9r6/pF/N4MpoQp7nA==
+X-Received: by 2002:a50:af61:: with SMTP id g88-v6mr33604909edd.220.1539729214326;
+        Tue, 16 Oct 2018 15:33:34 -0700 (PDT)
+Received: from szeder.dev (x4d0caaf1.dyn.telefonica.de. [77.12.170.241])
+        by smtp.gmail.com with ESMTPSA id a27-v6sm6470779edc.46.2018.10.16.15.33.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Oct 2018 15:33:33 -0700 (PDT)
+Date:   Wed, 17 Oct 2018 00:33:30 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: On overriding make variables from the environment...
+Message-ID: <20181016223330.GP19800@szeder.dev>
+References: <20181016184537.GN19800@szeder.dev>
+ <20181016215456.GB96853@aiede.svl.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181016215456.GB96853@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  1. Teaching partial clone to attempt to fetch missing objects from
->     multiple remotes instead of only one.  This is useful because you
->     can have a server that is nearby and cheaper to serve from (some
->     kind of local cache server) that you make requests to first before
->     falling back to the canonical source of objects.
-
-Quoting the above definition of (1) for reference. I think Jonathan
-Nieder has covered the relevant points well - I'll just expand on (1).
-
-> So much for the current setup.  For (1), I believe you are proposing to
-> still have only one effective <promisor-id>, so it doesn't necessarily
-> require modifying the extensions.* configuration.  Instead, the idea is
-> that when trying to access an object, we would follow one of a list of
-> steps:
+On Tue, Oct 16, 2018 at 02:54:56PM -0700, Jonathan Nieder wrote:
+> SZEDER Gábor wrote:
+> > Our Makefile has lines like these:
+> >
+> >   CFLAGS = -g -O2 -Wall
+> >   CC = cc
+> >   AR = ar
+> >   SPATCH = spatch
+> >
+> > Note the use of '=', not '?='.
+> [...]
+> > I'm not sure what to do.  I'm fine with updating our 'ci/' scripts to
+> > explicitly respect CC in the environment (either by running 'make
+> > CC=$CC' or by writing $CC into 'config.mak').  Or I could update our
+> > Makefile to use '?=' for specific variables, but:
 > 
->  1. First, check the local object store. If it's there, we're done.
->  2. Second, try alternates --- maybe the object is in one of those!
->  3. Now, try promisor remotes, one at a time, in user-configured order.
-> 
-> In other words, I think that for (1) all we would need is a new
-> configuration
-> 
-> 	[object]
-> 		missingObjectRemote = local-cache-remote
-> 		missingObjectRemote = origin
-> 
-> The semantics would be that when trying to access a promised object,
-> we attempt to fetch from these remotes one at a time, in the order
-> specified.  We could require that the remote named in
-> extensions.partialClone be one of the listed remotes, without having
-> to care where it shows up in the list.
+> That's a good question.  I don't have a strong opinion myself, so I
+> tend to trust larger projects like Linux to have thought this through
+> more, and they use 'CC = cc' as well.
 
-Or allow extensions.partialClone=<R> wherein <R> is not in the
-missingObjectRemote, in which case <R> is tried first, so that we don't
-have to reject some configurations.
+I don't think Linux is a good example to follow in this case, see e.g.
+6d62c983f7 (Makefile: Change the default compiler from "gcc" to "cc",
+2011-12-20) (in short: Git is supposed to be buildable with compilers
+other than GCC as well, while Linux not really, so they can hardcode
+'CC = gcc').
 
-> That way, we get the benefit (1) without having to change the
-> semantics of extensions.partialClone and without having to care about
-> the order of sections in the config.  What do you think?
+Also, the projects I have on hand usually have 'CC = gcc' hardcoded in
+their Makefiles, too, but those Makefiles were generated by their
+./configure script (which in turn by ./autogen.sh...), and those tend
+to write CC from the environment into the generated Makefiles.
 
-Let's define the promisor remotes of a repository as those in
-missingObjectRemote or extensions.partialClone (currently, we talk about
-"the promisor remote" (singular), defined in extensions.partialClone).
-
-Overall, this seems like a reasonable idea to me, if we keep the
-restriction that we can only fetch with filter from a promisor remote.
-This allows us to extend the definition of a promisor object in a
-manner consistent to the current definition - to say "a promisor object
-is one promised by at least one promisor remote" (currently, "a promisor
-object is promised by the promisor remote").
-
-In the presence of missingObjectRemote, old versions of Git, when lazily
-fetching, would only know to try the extensions.partialClone remote. But
-this is safe because existing data wouldn't be clobbered (since we're
-not using ideas like adding meaning to the contents of the .promisor
-file). Also, other things like fsck and gc still work.
