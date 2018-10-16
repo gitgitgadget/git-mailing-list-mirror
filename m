@@ -2,181 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 939AE1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 22:36:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D8BD1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 22:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727333AbeJQG3W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 02:29:22 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45330 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727304AbeJQG3V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 02:29:21 -0400
-Received: by mail-pg1-f193.google.com with SMTP id t70-v6so11514499pgd.12
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:36:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=9dub4UGRgjLu0zkHm8JWsQaxviQeUr5UMnvk5A7Kz7Q=;
-        b=S7fz5WUmqNWjbSSPG0hwVGXflJU8qoFAqCJ3NXAlg+PlTKX9+LOoTnMzZo30MU2Sbz
-         pYDvabKHnzFSe/meA6L6P2KaR8q32eNWf3aBU8oDAZQi/jScDZbKgD6J8hjtIIvFVMV/
-         yvvDwKlLy6fnnjuoRxNtV56VL8y65NAZ7JyzGKvF02jezDixxbdZVwq2q38zStmTFNRN
-         Dsi3rPUXh2gVkUM5474dez5uBQSdDsztGQJ0pLeKhl/3KEGpxVN6qGWRtxN8+rRZUBI5
-         e/byHz4qLgrhM6suifbT5gguZx+LdmYZvir7/BKeDDfwVGzhcGFpu/hZlsKLsz037/wP
-         WN7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9dub4UGRgjLu0zkHm8JWsQaxviQeUr5UMnvk5A7Kz7Q=;
-        b=WuszB3ldLVIveFiU6LwYKQ81SgPIsKxGN/q6YHF3skjuH7D9FY4SxNBFMMFQDcJoy8
-         qYLaIzFf/zrUXg0zwtRDfb2TEFFD7ZDs0UTvTo58+Umzpi1lYVViiIT/+MNVJwR5CzrB
-         u9GdVBJqhyEZXQPJLXfX3yt2LhAgzP05ecNm26csCU03OFLOKy27G8wnehr6lCscvDlk
-         N9yWEY4yuM5yKMm5r4vGjOTwTjZhDqgdxLytlSBq9bThoi6rF5zgY5AJasV0+Bm64e8N
-         fMEGu6N/KuLemj3dfUIEM/3jfA1kVL0NhRfulV0cnuDL9ha0Gp1O+atb2yuJyIOclryT
-         AqQQ==
-X-Gm-Message-State: ABuFfogXngefg+73r4Kg3HO/FmO9O+nvccIehGWxRe8lcjBtak9LTJev
-        bz1NEyrRGivXLBqGSh2vyh6m7Zmb
-X-Google-Smtp-Source: ACcGV61sU6jR8RN479MiLmElno2FzsUTExVuDAaS7euq4v6Nb4jOHpd0nuR4YPXmpP7eyeIP6WcEnQ==
-X-Received: by 2002:a63:df4f:: with SMTP id h15-v6mr21138304pgj.94.1539729407700;
-        Tue, 16 Oct 2018 15:36:47 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id q25-v6sm23054959pfk.154.2018.10.16.15.36.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Oct 2018 15:36:46 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 15:36:46 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Oct 2018 22:36:32 GMT
-Message-Id: <a21febe1128cbaf69f2201598d9efee6f6a4b2d8.1539729393.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.25.v4.git.gitgitgadget@gmail.com>
-References: <pull.25.v3.git.gitgitgadget@gmail.com>
-        <pull.25.v4.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 7/7] t6012: make rev-list tests more interesting
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727003AbeJQGb5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 02:31:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50914 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726048AbeJQGb5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 02:31:57 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 499A261B72;
+        Tue, 16 Oct 2018 22:39:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1539729562;
+        bh=GdTm6GgJP/br5ilvV1vjU6pB1HdaWuD3Y6OH7Q3X+10=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=VAcDnrEFLisM8iksyLhhFkPv37p+/MfYQBgfPh5GgN8M7rzN+ZYtIBG8wqRAC7+qB
+         cWU8jY6CsKiLyu5vWNONnl8WiB/vDg9Cm4jweQhOTpOa7TpTWGQ2LtPYdCAhbxCDND
+         q7RPr5RvS1cCoynOi0crQvtSFrUSzlia5yN9DOfRv4DMl1c/JpBiJ6loAxKek8CHz6
+         JZ49f8wHOhCte09LI3Bj/Lxfh2120mpdO2GvgJiIy0T3fM3VIYkI34oRSRGimAK/15
+         +pqzbJ20n1t8Fybp1vUTDWLYbOyNe9zJocWLagA5kcrUap5HMnnYYT1ApcsnOyjRgE
+         Gg8jQIK9xhVuiZAf4GrZOL7hJNLoH7xyfqhpvUQu8YP1J55JQhAMiQhxg1xbZJioiM
+         MVAocSQni2n1VxFyikY3Qu21HfWxgRg7StVj5OPC/gFGU6jUXTiFFgFwTgBzk4uUTw
+         6ln9hQ8HSlXxPBbS6XZK9AgZTvvVxsS0P7JZH6EYgRXOgcjdNGp
+Date:   Tue, 16 Oct 2018 22:39:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 13/13] commit-graph: specify OID version for SHA-256
+Message-ID: <20181016223917.GC432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+References: <20181015021900.1030041-1-sandals@crustytoothpaste.net>
+ <20181015021900.1030041-14-sandals@crustytoothpaste.net>
+ <xmqqk1mi4pn0.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="o8DTQsiwS+K7TY1f"
+Content-Disposition: inline
+In-Reply-To: <xmqqk1mi4pn0.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
 
-As we are working to rewrite some of the revision-walk machinery,
-there could easily be some interesting interactions between the
-options that force topological constraints (--topo-order,
---date-order, and --author-date-order) along with specifying a
-path.
+--o8DTQsiwS+K7TY1f
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Add extra tests to t6012-rev-list-simplify.sh to add coverage of
-these interactions. To ensure interesting things occur, alter the
-repo data shape to have different orders depending on topo-, date-,
-or author-date-order.
+On Tue, Oct 16, 2018 at 11:00:19AM +0900, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > Since the commit-graph code wants to serialize the hash algorithm into
+> > the data store, specify a version number for each supported algorithm.
+> > Note that we don't use the values of the constants themselves, as they
+> > are internal and could change in the future.
+> >
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> >  commit-graph.c | 9 ++++++++-
+> >  1 file changed, 8 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index 7a28fbb03f..e587c21bb6 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@ -45,7 +45,14 @@ char *get_commit_graph_filename(const char *obj_dir)
+> > =20
+> >  static uint8_t oid_version(void)
+> >  {
+> > -	return 1;
+> > +	switch (hash_algo_by_ptr(the_hash_algo)) {
+> > +		case GIT_HASH_SHA1:
+> > +			return 1;
+> > +		case GIT_HASH_SHA256:
+> > +			return 2;
+> > +		default:
+> > +			BUG("unknown hash algorithm");
+> > +	}
+>=20
+> Style: align switch/case.
 
-When testing using GIT_TEST_COMMIT_GRAPH, this assists in covering
-the new logic for topo-order walks using generation numbers. The
-extra tests can be added indepently.
+Will fix.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t6012-rev-list-simplify.sh | 45 ++++++++++++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 9 deletions(-)
+> Shouldn't this be just using GIT_HASH_* constants instead?  Are we
+> expecting that it would be benefitial to allow more than one "oid
+> version" even within a same GIT_HASH_*?
 
-diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-index b5a1190ffe..a10f0df02b 100755
---- a/t/t6012-rev-list-simplify.sh
-+++ b/t/t6012-rev-list-simplify.sh
-@@ -12,6 +12,22 @@ unnote () {
- 	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
- }
- 
-+#
-+# Create a test repo with interesting commit graph:
-+#
-+# A--B----------G--H--I--K--L
-+#  \  \           /     /
-+#   \  \         /     /
-+#    C------E---F     J
-+#        \_/
-+#
-+# The commits are laid out from left-to-right starting with
-+# the root commit A and terminating at the tip commit L.
-+#
-+# There are a few places where we adjust the commit date or
-+# author date to make the --topo-order, --date-order, and
-+# --author-date-order flags produce different output.
-+
- test_expect_success setup '
- 	echo "Hi there" >file &&
- 	echo "initial" >lost &&
-@@ -21,10 +37,18 @@ test_expect_success setup '
- 
- 	git branch other-branch &&
- 
-+	git symbolic-ref HEAD refs/heads/unrelated &&
-+	git rm -f "*" &&
-+	echo "Unrelated branch" >side &&
-+	git add side &&
-+	test_tick && git commit -m "Side root" &&
-+	note J &&
-+	git checkout master &&
-+
- 	echo "Hello" >file &&
- 	echo "second" >lost &&
- 	git add file lost &&
--	test_tick && git commit -m "Modified file and lost" &&
-+	test_tick && GIT_AUTHOR_DATE=$(($test_tick + 120)) git commit -m "Modified file and lost" &&
- 	note B &&
- 
- 	git checkout other-branch &&
-@@ -63,13 +87,6 @@ test_expect_success setup '
- 	test_tick && git commit -a -m "Final change" &&
- 	note I &&
- 
--	git symbolic-ref HEAD refs/heads/unrelated &&
--	git rm -f "*" &&
--	echo "Unrelated branch" >side &&
--	git add side &&
--	test_tick && git commit -m "Side root" &&
--	note J &&
--
- 	git checkout master &&
- 	test_tick && git merge --allow-unrelated-histories -m "Coolest" unrelated &&
- 	note K &&
-@@ -103,14 +120,24 @@ check_result () {
- 	check_outcome success "$@"
- }
- 
--check_result 'L K J I H G F E D C B A' --full-history
-+check_result 'L K J I H F E D C G B A' --full-history --topo-order
-+check_result 'L K I H G F E D C B J A' --full-history
-+check_result 'L K I H G F E D C B J A' --full-history --date-order
-+check_result 'L K I H G F E D B C J A' --full-history --author-date-order
- check_result 'K I H E C B A' --full-history -- file
- check_result 'K I H E C B A' --full-history --topo-order -- file
- check_result 'K I H E C B A' --full-history --date-order -- file
-+check_result 'K I H E B C A' --full-history --author-date-order -- file
- check_result 'I E C B A' --simplify-merges -- file
-+check_result 'I E C B A' --simplify-merges --topo-order -- file
-+check_result 'I E C B A' --simplify-merges --date-order -- file
-+check_result 'I E B C A' --simplify-merges --author-date-order -- file
- check_result 'I B A' -- file
- check_result 'I B A' --topo-order -- file
-+check_result 'I B A' --date-order -- file
-+check_result 'I B A' --author-date-order -- file
- check_result 'H' --first-parent -- another-file
-+check_result 'H' --first-parent --topo-order -- another-file
- 
- check_result 'E C B A' --full-history E -- lost
- test_expect_success 'full history simplification without parent' '
--- 
-gitgitgadget
+I really would like to have us rely not rely explicitly on those values.
+We don't serialize them anywhere else, and they're explicitly documented
+as not being suitable for serialization.  If we were writing this fresh
+today, we'd probably use the format_version field, which is designed for
+this purpose, or simply omit the field altogether.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--o8DTQsiwS+K7TY1f
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvGaJUACgkQv1NdgR9S
+9otFQw//Q2m6OPpoMXlpFtOTKvBwpNxCTlzy1T4hCyMiW9x+KAXexVMsnm5it3U8
+ySqu5B0y+f8IKjm3r0mGoieJnWl8/x95o5ACQM0Ce4QwnjhCEuKNq2n4nQP0mr+V
+tnT/NJtgIeoq6Q1mGjfjBkP9oFew/i39t++NSnAMG0vFb9Etj0ZZHrTJK/YyXGeU
+VbYcmYbvPXFJnGFeROxWuP2FVsUNNQy5lCufBSz3PDW9Ah40AYxUx0/utFT06ZWW
+N+UXdSqQLbnuTTyc+FV8Kn0iQp4FnD2HG6XeC45M5j+024Vi5PsyKp7W5+nz2oEX
+Ys0mOfF+wUvXNPFrCSa90tZsCKTQBaQs9jPXyO2w1JK8y6i4Lj3FdbJbTrt2A8+X
+QFohe7wBZ+lnbgUApwYSjWk6CgrqKIp2GizMYwsTRZFu53gNFv59zNwc4P9oMUJk
+oL/UX6/DRGBuBfmGj6dMtV7eLgxL5FYjnOFlW3O+/XP3Fi4Lgv9lzCYvkJimmhm2
+4XT7KO6DmswANFIgyyWEarLxSgYVwetdH4oGUM9nxQqL+Ed5w9MV0rK73AbPTB6J
+8AknpzsKfjRXFQbY9fkaHH9qhYBq/ZcfQXricGsOXnNY03RqQE+MrQYUhREx39Nm
+NpDJlY6gp5SM+4ce7zTz1zY1ypXrPofxs4/NOwO0rVrlAELHsmA=
+=tQ/W
+-----END PGP SIGNATURE-----
+
+--o8DTQsiwS+K7TY1f--
