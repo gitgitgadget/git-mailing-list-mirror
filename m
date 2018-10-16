@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0647D1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:36:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 346C51F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727348AbeJQH3L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:29:11 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:41139 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727208AbeJQH3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:29:11 -0400
-Received: by mail-qt1-f201.google.com with SMTP id j60-v6so26161135qtb.8
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:26 -0700 (PDT)
+        id S1727352AbeJQH3N (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:29:13 -0400
+Received: from mail-io1-f73.google.com ([209.85.166.73]:33878 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727208AbeJQH3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:29:13 -0400
+Received: by mail-io1-f73.google.com with SMTP id y3-v6so23073218iob.1
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lJ5XnWmMwZgP2dNtMbW8UO/ykc24nZuOEeoq/IQXo6U=;
-        b=jKPPDtJ+gDybqw6SaM908zJXt8TE/o85ziZl1ATOSlx+xGh3JewcoJ+ClgYzv6I+Ap
-         2mDvfEVNWm9WD4VOEs+FB48h37jjOxgxvS9K0qT3s+bngjJ4PTlxK64mZgpVtXm+CKJl
-         minyD5FSK/hjE3XmNs9nETr4h8Y834+A2HVNt26zvMKUrSeCw/OG3snuCmJLNl3lGWf0
-         elKidj1IqY0fWBNE27sQzyE7Z3bUWkz8WiPzSVKZ94KmPKdkKyS8qJQUgoZfTwmerwGd
-         zzcqy17baQKdnc2y+TjzFislO9wAOqrbvSPfxiB1kpwmmArZLaocEuwMFaXRj9X4v3qP
-         NSPg==
+        bh=3gHZxvmy6BQ5j1K5mVW5xHRXGJDY/6tRKrsUKBLQlXw=;
+        b=dPpFAJ5JW1XVyO97lZ/mfmoAS4/kI+2de9hRw1+uHW4y7r84d9oCxUuLyIMkvhmBt1
+         C3C2V5VUXA/D1axjuaGxUMUNsxnNkqq3seWLMLdGVgFeHm7sproX22hVgFy4swsDFnuc
+         KWgU08sNOCwHI11od8kVWoHdxaZlCbocrv9qv/UWF2Wyi5ssx42xSjaHkrt3cYWEDA9F
+         FXelD5RT0kLHC9ASPinKZmZckuRlFIcvTgNy51QPx+VEHpZZ0iaGY87en7MbikTYyBXb
+         IiEhO9wi6ErzlSMJG1qmAmL7jsCz9PVUCzppyKtZiCBokhGUdgniKZB7CPVC3qMIKMjE
+         praA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lJ5XnWmMwZgP2dNtMbW8UO/ykc24nZuOEeoq/IQXo6U=;
-        b=jhk2L3VXMd0Ry8a8wO0YgyM8WKBnW7dp8u9suUjlzIPrSaIuNCEuCmX/GyIeD1a2wb
-         afqYFWxl/45sTX6yyReIpNkBeEKt4o3YKkkVV9EBYWwqB0dhaChAarZ/kopGOAZZX8VP
-         3kKynW2OKYR9qsZVGuCAHUhG3pGu9vj5MUaQT5yEzj8Kqat0eInKIMXCoJx+4aW8hdEo
-         0YerSm+6h/WE1VQuYMLXC51hrmrvKnekxz2gyIg2Acpg7IQYksWmAbU+iYpeqW/MTvyx
-         12SpHFTF/Xa08VBAy9ZFLIlHgcKfIYKO/WnHbr1d5lDZhzoGqakfDCyhNohau8GUnurp
-         3gHA==
-X-Gm-Message-State: ABuFfogj4ojLMmiU9sHHF7JxzsdqwgeJd9/VBWsobW+J5lA5HwyJIoF6
-        pr82gx6QCy4YPvYprlcnvR4xzpKsmXa4icxp5cRL+8UO4qh4MpN+PR0l50P5sGJuL9BoE8EQw7O
-        PChmUHAPAlHppTl9/CWNmIZhJyuIlxgoZz9shhAzIpYv9iTIRH/8oz7aksLBz
-X-Google-Smtp-Source: ACcGV62JmhhwUF+lhpskG5mjni36G3Hy1Ksyof9v8ADfGq7o9wc1MnO4dWsbBmufKoQN+LfznNMSD/P5y8sU
-X-Received: by 2002:a0c:88b2:: with SMTP id 47mr19355242qvn.58.1539732985803;
- Tue, 16 Oct 2018 16:36:25 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 16:35:44 -0700
+        bh=3gHZxvmy6BQ5j1K5mVW5xHRXGJDY/6tRKrsUKBLQlXw=;
+        b=LkW2qnkVAdeRT3YJm66hR/MJXl7Jri5s8opmpT0gh/jx2KfHk6wGChBnrVEAFbLdk9
+         VvCSKqDH5cTA2FWg1FT+2oiTq1WugtAuhWbsjHxISl0M5bnjAGnXHzn3uJSn1ToxEzpx
+         5BepK1xA0YbG/Cx4ym9GGrhui1IHDvQhjHjCvgsPCnaUogdi8ilIHjhQY/u+Bn+IXPzb
+         D03JFzS53OCJRXmqo/x3FISSaQUhC8Ijw1Pi+uABoJuA05p/dR4G46JPAz5NbCZGwhYn
+         uCYVq9iMcY8xePH1C6DT6sEqeUzt/P4UjACTU29jgs9WxQ7i5YS3MWDfnL9eYG1Cc1Nb
+         RyAQ==
+X-Gm-Message-State: ABuFfohuFC8tY3jrzHLAz7FB8qzRtya6j68sJtJgj4pyWa+TOJ5Rogtr
+        ta4QrVECi5e9Jm4r55sD6VBOxk0sMHuAdELEauoHXUzDZ9DFvYgiBwIPvS93m0oEdlj/HI6RdK2
+        I0WFIbdz5gMSd5wUM/WI6cP3RJHjo2uywuLJ2aBkdrPSK0SwgO+0cefO/suCI
+X-Google-Smtp-Source: AJdET5dDAtKJoljfoD4+grGbMrsleJg1ckYW663Mxr8CExIeBYL4wwrmwyzHizzFkgxsebtYVnT/iWodNIAk
+X-Received: by 2002:a05:660c:b0c:: with SMTP id f12mr179746itk.22.1539732988016;
+ Tue, 16 Oct 2018 16:36:28 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 16:35:45 -0700
 In-Reply-To: <20181016233550.251311-1-sbeller@google.com>
-Message-Id: <20181016233550.251311-14-sbeller@google.com>
+Message-Id: <20181016233550.251311-15-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181016233550.251311-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH 13/19] commit-reach: prepare in_merge_bases[_many] to handle
- arbitrary repositories
+Subject: [PATCH 14/19] commit: prepare get_commit_buffer to handle arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
@@ -65,106 +64,68 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit-reach.c                          | 15 +++++++++------
- commit-reach.h                          | 12 ++++++++++--
- contrib/coccinelle/the_repository.cocci | 16 ++++++++++++++++
- 3 files changed, 35 insertions(+), 8 deletions(-)
+ commit.c                                | 8 +++++---
+ commit.h                                | 7 ++++++-
+ contrib/coccinelle/the_repository.cocci | 8 ++++++++
+ 3 files changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/commit-reach.c b/commit-reach.c
-index aa3cde5c8a..1877f356e3 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -309,16 +309,17 @@ int is_descendant_of(struct commit *commit, struct commit_list *with_commit)
- /*
-  * Is "commit" an ancestor of one of the "references"?
-  */
--int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit **reference)
-+int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
-+			     int nr_reference, struct commit **reference)
- {
- 	struct commit_list *bases;
- 	int ret = 0, i;
- 	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
- 
--	if (parse_commit(commit))
-+	if (repo_parse_commit(r, commit))
- 		return ret;
- 	for (i = 0; i < nr_reference; i++) {
--		if (parse_commit(reference[i]))
-+		if (repo_parse_commit(r, reference[i]))
- 			return ret;
- 		if (reference[i]->generation < min_generation)
- 			min_generation = reference[i]->generation;
-@@ -327,7 +328,7 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit *
- 	if (commit->generation > min_generation)
- 		return ret;
- 
--	bases = paint_down_to_common(the_repository, commit,
-+	bases = paint_down_to_common(r, commit,
- 				     nr_reference, reference,
- 				     commit->generation);
- 	if (commit->object.flags & PARENT2)
-@@ -341,9 +342,11 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit *
- /*
-  * Is "commit" an ancestor of (i.e. reachable from) the "reference"?
-  */
--int in_merge_bases(struct commit *commit, struct commit *reference)
-+int repo_in_merge_bases(struct repository *r,
-+			struct commit *commit,
-+			struct commit *reference)
- {
--	return in_merge_bases_many(commit, 1, &reference);
-+	return repo_in_merge_bases_many(r, commit, 1, &reference);
+diff --git a/commit.c b/commit.c
+index fe942754e2..cc5321af8c 100644
+--- a/commit.c
++++ b/commit.c
+@@ -297,13 +297,15 @@ const void *get_cached_commit_buffer(struct repository *r, const struct commit *
+ 	return v->buffer;
  }
  
- struct commit_list *reduce_heads(struct commit_list *heads)
-diff --git a/commit-reach.h b/commit-reach.h
-index 52667d64ac..a0d4a29d25 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -27,8 +27,16 @@ struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
- struct commit_list *get_octopus_merge_bases(struct commit_list *in);
- 
- int is_descendant_of(struct commit *commit, struct commit_list *with_commit);
--int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit **reference);
--int in_merge_bases(struct commit *commit, struct commit *reference);
-+int repo_in_merge_bases(struct repository *r,
-+			struct commit *commit,
-+			struct commit *reference);
-+int repo_in_merge_bases_many(struct repository *r,
-+			     struct commit *commit,
-+			     int nr_reference, struct commit **reference);
+-const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
++const void *repo_get_commit_buffer(struct repository *r,
++				   const struct commit *commit,
++				   unsigned long *sizep)
+ {
+-	const void *ret = get_cached_commit_buffer(the_repository, commit, sizep);
++	const void *ret = get_cached_commit_buffer(r, commit, sizep);
+ 	if (!ret) {
+ 		enum object_type type;
+ 		unsigned long size;
+-		ret = read_object_file(&commit->object.oid, &type, &size);
++		ret = repo_read_object_file(r, &commit->object.oid, &type, &size);
+ 		if (!ret)
+ 			die("cannot read commit object %s",
+ 			    oid_to_hex(&commit->object.oid));
+diff --git a/commit.h b/commit.h
+index 58a0c5409b..b8437f66e2 100644
+--- a/commit.h
++++ b/commit.h
+@@ -117,7 +117,12 @@ const void *get_cached_commit_buffer(struct repository *, const struct commit *,
+  * from disk. The resulting memory should not be modified, and must be given
+  * to unuse_commit_buffer when the caller is done.
+  */
+-const void *get_commit_buffer(const struct commit *, unsigned long *size);
++const void *repo_get_commit_buffer(struct repository *r,
++				   const struct commit *,
++				   unsigned long *size);
 +#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
-+#define in_merge_bases(c1, c2) repo_in_merge_bases(the_repository, c1, c2)
-+#define in_merge_bases_many(c1, n, cs) repo_in_merge_bases_many(the_repository, c1, n, cs)
++#define get_commit_buffer(c, s) repo_get_commit_buffer(the_repository, c, s)
 +#endif
  
  /*
-  * Takes a list of commits and returns a new list where those
+  * Tell the commit subsytem that we are done with a particular commit buffer.
 diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccinelle/the_repository.cocci
-index 5e037fe428..8c6a71bf64 100644
+index 8c6a71bf64..4018e6eaf7 100644
 --- a/contrib/coccinelle/the_repository.cocci
 +++ b/contrib/coccinelle/the_repository.cocci
-@@ -91,3 +91,19 @@ expression G;
- + repo_get_merge_bases_many_dirty(the_repository,
+@@ -107,3 +107,11 @@ expression G;
+ - in_merge_bases_many(
+ + repo_in_merge_bases_many(the_repository,
    E, F, G);
- 
-+@@
-+expression E;
-+expression F;
-+@@
-+- in_merge_bases(
-++ repo_in_merge_bases(the_repository,
-+  E, F);
 +
 +@@
 +expression E;
 +expression F;
-+expression G;
 +@@
-+- in_merge_bases_many(
-++ repo_in_merge_bases_many(the_repository,
-+  E, F, G);
++- get_commit_buffer(
+++ repo_get_commit_buffer(the_repository,
++  E, F);
 -- 
 2.19.0
 
