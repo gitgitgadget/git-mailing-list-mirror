@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37C6A1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:36:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0FE41F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbeJQH3P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:29:15 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:50990 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727208AbeJQH3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:29:15 -0400
-Received: by mail-pl1-f201.google.com with SMTP id ba5-v6so15666340plb.17
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:30 -0700 (PDT)
+        id S1727370AbeJQH3S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:29:18 -0400
+Received: from mail-io1-f74.google.com ([209.85.166.74]:47914 "EHLO
+        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727208AbeJQH3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:29:18 -0400
+Received: by mail-io1-f74.google.com with SMTP id c21-v6so23225276ioi.14
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ReCRIleJDeibh9gTQRtBubKvPIUIX1xgVfM26n5rPI0=;
-        b=IxAJF1cRDJ/GjMkdMfLpLn4G53ND4wsfEQLDJg1ArJAlyr5Fhj27Xw46tcvgE6+AH4
-         xj7sns+7Rz/mzaFb93tt48SFHqkh7ZfPxotSsukAJ6C8T+nUF1067SB1y62KSvovPK9z
-         A9Xg1tc2Lk3jXRtHUFmNeGsfnb1w7SaIYk2ZmgzyLHPFccin+MoDkst4x3tdrsDBtHWF
-         v4lNbAMVwUWar1RZEh3smoAm22VeA4ivs/AGUsDK5C+LBRb0HrFI04TGI9DZzCf218yq
-         RHGaUELJ3rgk6hGtGr3+3xS/7WcraDvU0HZfOFZCoB4qyFq3CJNyEZAkdaX7Y9SuOvUX
-         D8gA==
+        bh=kf7dkkDmp9teoinVZKskkWrxffP1vLtclk6rRR7i+F4=;
+        b=sVp41HCKOlY3AvPnep5YKmTWsL50zWcFB1DW6Z9jp08T7RjAUD8me4OiHMpUPyrObm
+         jTyGN7BMRplGQMCke78iIjKI/L0MWxGgJYiaJkUgF0ly9Fdm+049z/fbt+O2MHuVHDhE
+         70JsmcLJnXodf3Ql648k7Aps3uwIEvVtAuIqqi4T1xo0xpFJUSEEW0f+YeCM3gcjrrdn
+         eeaoforwcnNriT7pa3u4PKoz/10iY5b8rYRoF3hRLt4YQ/pkgyJ0IcN+bNcfYeKTzCau
+         5Ay66BR92ivTaj5Xe96ybWyomWkQFCVdwMjolwvHRElUa8oyq6FkAJaDWROXqXEm6RpP
+         4L2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ReCRIleJDeibh9gTQRtBubKvPIUIX1xgVfM26n5rPI0=;
-        b=sFMmoeZYNdJjqzyEKVoxdTkIAHhjJ6VVyhaMcXuxzWU4zrESky+PM+HQ6NqQA/u3OX
-         5O76f4Ttosa2dvPi0CBtIniiSEmmzBw5runeew4XmyaQ+bqY9RK/iY9KBc1p0cEFipVC
-         FuJ4WmzT2KDcqahn8E1yQUTCU8yx0UCPeISX9W2Krn3Y+D8aWpy4vxCJMFKS5SCzRrr1
-         OooalHT5uGehjR//MyieByPw3ACuzWUVpDGcVVg/3igCnLgIty4eMvDa6youEsQfG634
-         1ryq7ZHxdxLZpDXjMVMbSwZxU+I60+NxfRVmsMLY5xXbS4MHZiiE41qWIyddxnThrDCn
-         7NDQ==
-X-Gm-Message-State: ABuFfojtlRotGpJwKM35c+kI/AL3NtirE3MEe1y359OX/cnNw9c2AnOx
-        gIq5FnxLbb8+BXI9/pXfX6w2wRGM7banZVH3KiD+or6gI8Nux/13J3rfoHjzu3aRHYvXlW2w0bX
-        xUgDHRlrDP6ejDuSwTI8DvZzs42zA6JleUR5TlMFyMZmyDT7pcQLWkoxg/U3A
-X-Google-Smtp-Source: ACcGV610k9WD8CD1uhHkgyzwUlQL3ncGL6m46Liyy32X7am04ZvzbEQE6HZLtLEEmsWwpuzi/iyAzE564/PL
-X-Received: by 2002:a63:d347:: with SMTP id u7-v6mr11584972pgi.30.1539732990240;
- Tue, 16 Oct 2018 16:36:30 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 16:35:46 -0700
+        bh=kf7dkkDmp9teoinVZKskkWrxffP1vLtclk6rRR7i+F4=;
+        b=gYDu4sHvhOwNUOUS8zepzcloderE9/f80EqOY/6lGWAmga2+QjsU4TOlQcTXLcippV
+         hCgTuqs+b9yKSSI9fp2ZKQ1vziX/npk5bo27AeTJViOl3LD+SClMBsA9BVdOcE5/h6p8
+         3DyTd+o1YtUx4k8YenCgH3sI3TVkU2qlxZk+boUDDpWDEjbGbDLXSwQsxsnVEZA2dX+W
+         dq8qlYWfAozRGdruCSNbW8KNkpvV77dETORzpP9HXA/yM00PFgKzviGQAqbwQNwVMz4n
+         2nhzzKByCBkqqDVZPVCOqrOZXKyNhc9gALWqrHqGK1XIDqMbTuk9FS1uwQWjfI6tYU0n
+         3ubg==
+X-Gm-Message-State: ABuFfohCIRErE7WRXEJRLPNzSsDCv+LlQ+aVQCusysYHBH/0CA3MDhWs
+        kWydKuPSkLpkXZU27i3+4XU5OXSvCPAAbIiJAy8oZf7RqJ61boJkqbt59TmeywYecOqyMhX5MAV
+        oguYbFoXLVLlJ8arwBQxC7M63IjbQcK5GkRCor0V/hFbMenDE+1DnG845l5qs
+X-Google-Smtp-Source: ACcGV63M9jqzZkM2es6cxQxjQV9X3WfKVMSI6h5UW+CE8dIGpwKtZa6jatfGBlHlao/j96FoR7ZZEqT+cRnd
+X-Received: by 2002:a24:2153:: with SMTP id e80-v6mr18770229ita.1.1539732992549;
+ Tue, 16 Oct 2018 16:36:32 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 16:35:47 -0700
 In-Reply-To: <20181016233550.251311-1-sbeller@google.com>
-Message-Id: <20181016233550.251311-16-sbeller@google.com>
+Message-Id: <20181016233550.251311-17-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181016233550.251311-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH 15/19] commit: prepare repo_unuse_commit_buffer to handle
- arbitrary repositories
+Subject: [PATCH 16/19] commit: prepare logmsg_reencode to handle arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
+Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -64,65 +64,91 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- commit.c                                | 6 ++++--
- commit.h                                | 7 ++++++-
- contrib/coccinelle/the_repository.cocci | 8 ++++++++
- 3 files changed, 18 insertions(+), 3 deletions(-)
+ commit.h                                |  8 ++++++++
+ contrib/coccinelle/the_repository.cocci |  9 +++++++++
+ pretty.c                                | 13 +++++++------
+ 3 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index cc5321af8c..8e7b1138f7 100644
---- a/commit.c
-+++ b/commit.c
-@@ -318,10 +318,12 @@ const void *repo_get_commit_buffer(struct repository *r,
- 	return ret;
- }
- 
--void unuse_commit_buffer(const struct commit *commit, const void *buffer)
-+void repo_unuse_commit_buffer(struct repository *r,
-+			      const struct commit *commit,
-+			      const void *buffer)
- {
- 	struct commit_buffer *v = buffer_slab_peek(
--		the_repository->parsed_objects->buffer_slab, commit);
-+		r->parsed_objects->buffer_slab, commit);
- 	if (!(v && v->buffer == buffer))
- 		free((void *)buffer);
- }
 diff --git a/commit.h b/commit.h
-index b8437f66e2..f3ef497723 100644
+index f3ef497723..b69a4b140d 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -130,7 +130,12 @@ const void *repo_get_commit_buffer(struct repository *r,
-  * from an earlier call to get_commit_buffer.  The buffer may or may not be
-  * freed by this call; callers should not access the memory afterwards.
-  */
--void unuse_commit_buffer(const struct commit *, const void *buffer);
-+void repo_unuse_commit_buffer(struct repository *r,
-+			      const struct commit *,
-+			      const void *buffer);
+@@ -180,6 +180,14 @@ extern int has_non_ascii(const char *text);
+ extern const char *logmsg_reencode(const struct commit *commit,
+ 				   char **commit_encoding,
+ 				   const char *output_encoding);
++const char *repo_logmsg_reencode(struct repository *r,
++				 const struct commit *commit,
++				 char **commit_encoding,
++				 const char *output_encoding);
 +#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
-+#define unuse_commit_buffer(c, b) repo_unuse_commit_buffer(the_repository, c, b)
++#define logmsg_reencode(c, enc, out) repo_logmsg_reencode(the_repository, c, enc, out)
 +#endif
++
+ extern const char *skip_blank_lines(const char *msg);
  
- /*
-  * Free any cached object buffer associated with the commit.
+ /** Removes the first commit from a list sorted by date, and adds all
 diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccinelle/the_repository.cocci
-index 4018e6eaf7..516f19ffee 100644
+index 516f19ffee..f5b42cfc62 100644
 --- a/contrib/coccinelle/the_repository.cocci
 +++ b/contrib/coccinelle/the_repository.cocci
-@@ -115,3 +115,11 @@ expression F;
- - get_commit_buffer(
- + repo_get_commit_buffer(the_repository,
+@@ -123,3 +123,12 @@ expression F;
+ - unuse_commit_buffer(
+ + repo_unuse_commit_buffer(the_repository,
    E, F);
 +
 +@@
 +expression E;
 +expression F;
++expression G;
 +@@
-+- unuse_commit_buffer(
-++ repo_unuse_commit_buffer(the_repository,
-+  E, F);
++- logmsg_reencode(
+++ repo_logmsg_reencode(the_repository,
++  E, F, G);
+diff --git a/pretty.c b/pretty.c
+index 98cf5228f9..26e44472bb 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -595,14 +595,15 @@ static char *replace_encoding_header(char *buf, const char *encoding)
+ 	return strbuf_detach(&tmp, NULL);
+ }
+ 
+-const char *logmsg_reencode(const struct commit *commit,
+-			    char **commit_encoding,
+-			    const char *output_encoding)
++const char *repo_logmsg_reencode(struct repository *r,
++				 const struct commit *commit,
++				 char **commit_encoding,
++				 const char *output_encoding)
+ {
+ 	static const char *utf8 = "UTF-8";
+ 	const char *use_encoding;
+ 	char *encoding;
+-	const char *msg = get_commit_buffer(commit, NULL);
++	const char *msg = repo_get_commit_buffer(r, commit, NULL);
+ 	char *out;
+ 
+ 	if (!output_encoding || !*output_encoding) {
+@@ -630,7 +631,7 @@ const char *logmsg_reencode(const struct commit *commit,
+ 		 * the cached copy from get_commit_buffer, we need to duplicate it
+ 		 * to avoid munging the cached copy.
+ 		 */
+-		if (msg == get_cached_commit_buffer(the_repository, commit, NULL))
++		if (msg == get_cached_commit_buffer(r, commit, NULL))
+ 			out = xstrdup(msg);
+ 		else
+ 			out = (char *)msg;
+@@ -644,7 +645,7 @@ const char *logmsg_reencode(const struct commit *commit,
+ 		 */
+ 		out = reencode_string(msg, output_encoding, use_encoding);
+ 		if (out)
+-			unuse_commit_buffer(commit, msg);
++			repo_unuse_commit_buffer(r, commit, msg);
+ 	}
+ 
+ 	/*
 -- 
 2.19.0
 
