@@ -2,120 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9255B1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 16:10:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12471F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 17:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbeJQABQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 20:01:16 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:33578 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbeJQABQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 20:01:16 -0400
-Received: by mail-io1-f66.google.com with SMTP id l25-v6so16871571ioj.0
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 09:10:08 -0700 (PDT)
+        id S1729094AbeJQBFg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 21:05:36 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:35208 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728423AbeJQBFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 21:05:35 -0400
+Received: by mail-ed1-f41.google.com with SMTP id y19-v6so22110247edd.2
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 10:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hVbiZR7NapeSLXNXDDhp1/MD+Q9Z+ocgrJ/uWg0Y2uc=;
-        b=uAyzyBkD47nda9HoTPUw+wWQy9ikvMsFSAChNlggUUXkA4mIsPRbOoaQGBICnv+5fJ
-         joBXu+gIpAFqvlBK68lM3zUvg2GBIH18mD7OWD542rfrM3+zkYubtTA0MJgQZWD9Nu2X
-         1ScuF9d2HY/rgPQHQqbHAPDxkIwXtrks+hotrQrz238geD0Dy8knHzI9rQkAv8hMw+d5
-         GQFuH3h9wL6ahcL9nh00pqHZjy7VKI3ycCFJpy6wCLXq6rLZ/MUN586L9RqBbad3w1SN
-         d84nzj7uOumMTvqwtcyv3Rg09J75ytGjxYo9dK2B6G6a4Isp6+ZQltD6ZNeBRLDwzc7B
-         0z2Q==
+        bh=Wo7tTg643FVx+H1D7a+oiFbPSkhwbxEN10egzrHXfZo=;
+        b=YqnCLgQ8VflAp7qTXwEflicxyzaAEFljeO7EeQdvhkRNOVZPzr6Z3wom+N+O500vy0
+         7pz9+TuijpKapIos6npcStl00jMR9xddqAaBa48mAk0j6sxAF1wM9XWt8vhY2Lz3Zn1n
+         C4+aTQgNbEakjWFLrieDiAdnHpYR4xJXBfll9OtpvsSzyx3JwEwJn6RSQ5Zu/4rtpG9t
+         VyE509kb/vrqtM6SDAcXRXEMdXATToLkSC8uwpwLyqr4mFDxRy0smM58z6TP+25F2ohZ
+         appM9LAXKBc5ap7xpTEeuYGrXqmrgHcBmFFca+cX+vJ2/MnjhSkAHhe4egVeyTXdeq/7
+         vPTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hVbiZR7NapeSLXNXDDhp1/MD+Q9Z+ocgrJ/uWg0Y2uc=;
-        b=HaKEIqh3E3ULxp6i7gTu0rVmccsdHo90dQZbCRToRL7c7rkKmruG4Q84P9pc8NqpV8
-         4xbr7mW817h0fe3t1QJ3VwEi1cvuivdJVXJd2j1ANmTrMnqQT0uf9Jz5i/k1zHytrTkz
-         yt7p6txdvmsonsUc58e06JGZbHgMQnOSPnn+NH84u4DPd+bVbtEk2XKkABm+OMc/9X6v
-         7Wvaip3IJ3a5P80xuu0KSaNBwvuk2gb/W0+vXTA/Oy3NRana6FxSAM0ixr+nQU75iTTD
-         nRiiuGCoaFTXEWcxg1dsXvAjSIfeu88ryJpRMq2Loes0UmuAHUDL8fXMLQJOHNyJJdhI
-         uykA==
-X-Gm-Message-State: ABuFfojJeoweLrqUqag9lFBklnrpVOPmXEUYeop8J0+eEI1S7c2RNaed
-        1k+5nS8IR/0RAS48i4u9rTCRISSm1p/3iJmFwSE=
-X-Google-Smtp-Source: ACcGV63C7kq9uNUVpvqty1dF7k6xYs7/yvwoFzoHMBf9QG4M4VxjFjU/LHICNskwx1CP2rHat5ouur9HMcACmtAG5qU=
-X-Received: by 2002:a6b:8f93:: with SMTP id r141-v6mr15133837iod.118.1539706208116;
- Tue, 16 Oct 2018 09:10:08 -0700 (PDT)
+        bh=Wo7tTg643FVx+H1D7a+oiFbPSkhwbxEN10egzrHXfZo=;
+        b=HVSt2wM2AdYt+Sefdeelt7JUIeCmluvxOFx4yNYioI6C8bK4acHrdyKvSdiGuAjJ/t
+         z9nqNg7Gqs/QTEdYIVGAilrEmYm3xL9aBuEmUSWvgUjBjc5EHns1P0kL6SFvOd2L7sbf
+         C7CQ3G2wrG0DIv3Y0+1rShJzx4HLx1RH1vzXR658EJOQmCZD2p277dp2PK6oMilbVEEf
+         Bqjv3UFOFsyhsCUJez5j2dXUDHm8C3N5C61L6QyVs8IYlWMLsByE4jKjThcQ4eCuhvNO
+         692rJYp+7EK1cN9mIpymvxahsBQJTsEUSaIODmfmue8/SB2x0c+Wjja9QPv4StVTHXqd
+         00cw==
+X-Gm-Message-State: ABuFfojwvYorzFAUVRdCnN7t/+7+G4FtkY7UjkesuxvBaqQwO/RfFdok
+        Aeze00GRUP4tNkYVZztoJzCY90N9h4JhObWLadPCHg==
+X-Google-Smtp-Source: ACcGV63Nq560xQqkbYFaTnFa/4CZ7Fo6ee0vNzjKP91Mk5R2sjiEuL7XB676gpBu8vO42xqjyk91Sak//WfuFm5z6H4=
+X-Received: by 2002:a50:ba89:: with SMTP id x9-v6mr17597551ede.191.1539710051106;
+ Tue, 16 Oct 2018 10:14:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181015021900.1030041-1-sandals@crustytoothpaste.net>
- <20181015021900.1030041-14-sandals@crustytoothpaste.net> <CACsJy8C6o9PAHsm+t7Rijg6jsz5dXZ5pT79nYGdGbKuK6gGTLQ@mail.gmail.com>
- <fbd59390-42ee-8c06-74b7-1e7081680913@gmail.com>
-In-Reply-To: <fbd59390-42ee-8c06-74b7-1e7081680913@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 16 Oct 2018 18:09:41 +0200
-Message-ID: <CACsJy8Bg6BpQp4dDXzs8Y_d6RHW9ti4+FLqnAqGwW8F-SWUnPg@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] commit-graph: specify OID version for SHA-256
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqq8t36mk4t.fsf@gitster-ct.c.googlers.com> <42930bb1-502b-b168-be12-92aee526a258@talktalk.net>
+ <xmqqa7nkf6o4.fsf@gitster-ct.c.googlers.com> <ca3b162d-d1c6-1ed1-cb20-4232d91f7b51@talktalk.net>
+ <xmqqbm7zb81z.fsf@gitster-ct.c.googlers.com> <9521f0a8-efa7-46d7-1aeb-aea700fc2fed@talktalk.net>
+In-Reply-To: <9521f0a8-efa7-46d7-1aeb-aea700fc2fed@talktalk.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 16 Oct 2018 10:13:59 -0700
+Message-ID: <CAGZ79kZqnbmMS_iE6hAXtA5F=_PZUrAiND1W5ictO1QMR-_wxg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2018, #01; Wed, 10)
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 16, 2018 at 6:01 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Tue, Oct 16, 2018 at 6:39 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+> > If you mean "--color-moved-ws=no" (or "--no-color-moved-ws") as a
+> > way to countermand an earlier --color-moved-ws=<something> on the
+> > command line, I fully agree that it is a good idea.
 >
-> On 10/16/2018 11:35 AM, Duy Nguyen wrote:
-> > On Mon, Oct 15, 2018 at 4:23 AM brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> >> Since the commit-graph code wants to serialize the hash algorithm into
-> >> the data store, specify a version number for each supported algorithm.
-> >> Note that we don't use the values of the constants themselves, as they
-> >> are internal and could change in the future.
-> >>
-> >> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> >> ---
-> >>   commit-graph.c | 9 ++++++++-
-> >>   1 file changed, 8 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/commit-graph.c b/commit-graph.c
-> >> index 7a28fbb03f..e587c21bb6 100644
-> >> --- a/commit-graph.c
-> >> +++ b/commit-graph.c
-> >> @@ -45,7 +45,14 @@ char *get_commit_graph_filename(const char *obj_dir)
-> >>
-> >>   static uint8_t oid_version(void)
-> >>   {
-> >> -       return 1;
-> >> +       switch (hash_algo_by_ptr(the_hash_algo)) {
-> >> +               case GIT_HASH_SHA1:
-> >> +                       return 1;
-> >> +               case GIT_HASH_SHA256:
-> >> +                       return 2;
-> > Should we just increase this field to uint32_t and store format_id
-> > instead? That will keep oid version unique in all data formats.
-> Both the commit-graph and multi-pack-index store a single byte for the
-> hash version, so that ship has sailed (without incrementing the full
-> file version number in each format).
+> Oh I assumed --no-color-moved-ws was allowed but it isn't it. Allowing
+> --color-moved-ws=no as well would match what is allowed for
+> --color-moved. I'll try and look at that.
 
-And it's probably premature to add the oid version field when multiple
-hash support has not been fully realized. Now we have different ways
-of storing hash id and need separate mappings.
-
-I would go for incrementing file version. Otherwise maybe we just
-update format_id to be one byte instead, and the way of storing hash
-version in commit-graph will be used everywhere.
-
-> It may be good to make this method accessible to both formats. I'm not
-> sure if Brian's branch is built on top of the multi-pack-index code.
-> Probably best to see if ds/multi-pack-verify is in the history.
->
-> Thanks,
-> -Stolee
-
-
-
--- 
-Duy
+Thanks for taking a look!
+Stefan
