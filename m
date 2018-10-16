@@ -2,135 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 192491F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 12:57:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 242611F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 13:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbeJPUr4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 16:47:56 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36017 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726778AbeJPUr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 16:47:56 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y16so25411976wrw.3
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 05:57:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=GX4Hp1tF5M7kK8GIVwRLSbh7HK4MMIY+gEUI4Ev44kw=;
-        b=EaAjXbnD/fAviIC6vY4Rzm7qzUj4r/wLqyscX5pCS5GlrUkKsMqfYMAWwCMt7s/n0B
-         Updbcu6Wf2+1FH8xwp8XyzBxPQJg7ASjO8Gccdy+2OB5dwcZfOwkXSh13dlHTC1dVdbN
-         vBb0KPq73OYqRAkoyO1yPE0ckNvTUY+cRrDyO8BWK/4TRLgnKg/8Vt01xPXs+jviM2PL
-         Y4u8eYbxfB1dktl3mVDznfKJQfYR4r6ZZ2HbghGlUEx6JjfDyxa3z4JD4jog+Qj0l7yi
-         /KZjT/nJaV4zY2pjQXFLPezvfX+3NkAQ4latw+aMQKTfMZo20AI2+F978QpqJDnFRpU2
-         kaUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=GX4Hp1tF5M7kK8GIVwRLSbh7HK4MMIY+gEUI4Ev44kw=;
-        b=Do1N26X56Z0Q857SYblmbDaavzkiYkFMbidM6I4xRu+fh1Wz2NZ4vavKbEyA+BOfw3
-         I25PviUjR+KJvVwJGBgheP2Wxc8ze4USXZHLDRJUZwuaAfAOv/AoNqxJWUAcLw6NCom2
-         ZxOcWHFDkGsw8fDdU5JZelxh/jPQVPeMClyk3Lmj6wNGgIZrLSMbPDzj7JByKYA6yYJ2
-         kikH0QCzcJdDmT80Go9VHn7NH6muxo23EVh5Bo+al9b0VndfMPxE8/ebOwU9JYLZjbix
-         ds5cBksi4DSbStmLqej6HZT+BDE5u2CrLSjrxrNc93wF+Dgrj8ENEfQPOnVtSc9snSw1
-         o3yA==
-X-Gm-Message-State: ABuFfohvmvacLW1KSkogM6loTNvAua1njYOPGuvST+JrmdRM5RrQadYB
-        uB6Fvm6YU3OzT3XpH8YDbaA=
-X-Google-Smtp-Source: ACcGV63n8C+e+a4dUew/Mpz2CjKHmaabxFZVDDdodKDekWN22QYzw7LXhDIJtYJTyuwPH0kJHW4ecA==
-X-Received: by 2002:a5d:404b:: with SMTP id w11-v6mr17395216wrp.147.1539694652729;
-        Tue, 16 Oct 2018 05:57:32 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id o7-v6sm9915189wma.17.2018.10.16.05.57.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Oct 2018 05:57:31 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 0/4] Bloom filter experiment
-References: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com> <20181009193445.21908-1-szeder.dev@gmail.com> <61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com> <xmqqlg6y1ovh.fsf@gitster-ct.c.googlers.com> <8c66cbe3-6830-05cb-f3bb-be2e4902e8f5@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <8c66cbe3-6830-05cb-f3bb-be2e4902e8f5@gmail.com>
-Date:   Tue, 16 Oct 2018 14:57:30 +0200
-Message-ID: <87zhvecamd.fsf@evledraar.gmail.com>
+        id S1727013AbeJPUxD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 16:53:03 -0400
+Received: from mout.gmx.net ([212.227.17.20]:40893 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727002AbeJPUxD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 16:53:03 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgMCe-1fp9ah1yS4-00ni3v; Tue, 16
+ Oct 2018 15:02:35 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgMCe-1fp9ah1yS4-00ni3v; Tue, 16
+ Oct 2018 15:02:35 +0200
+Date:   Tue, 16 Oct 2018 15:02:38 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 10/13] tests: include detailed trace logs with
+ --write-junit-xml upon failure
+In-Reply-To: <20181016100438.GK19800@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1810161455200.4546@tvgsbejvaqbjf.bet>
+References: <pull.31.git.gitgitgadget@gmail.com> <pull.31.v2.git.gitgitgadget@gmail.com> <ae3c42519abff7ef32c767f9587ef7f0160033ed.1539598316.git.gitgitgadget@gmail.com> <20181016100438.GK19800@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-23946581-1539694958=:4546"
+X-Provags-ID: V03:K1:UqTrFfKGl5g1lJgIutvnzNValqtEeLTpDsA8jkdf4e2Ti4AVUKo
+ skGOcbIgpdmqv1S0in/RWahpnba2VkwzkH2k14RovetubmC9fkDJz0HVBTSimgO/FumcP+G
+ XYSrnq6h3LkwNdePxQSpEBK+ddsmmyJpDdOYzDRetohrvmhjdY2pbJUJCzLO58lxp2TZH3w
+ X/rlkV7rcGrrb8SJDiW2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JB/FF3BKahQ=:wsJVbPTepjhW6X/XXNbTe6
+ /SqWA16+c86ghHHb2r7neJAfQJtFrDbmZ40ol88rDgt7TgsDPmHbjusMV7rmln2x5UDE1xEwY
+ BtRTbDlQNMColkO4k1P0LraMdR4AvAi1JW0/DQVpupcBy+FrJhmo0ArImlvmgtpVRz05qCjXF
+ 4jtS2AlFaEdf87WHN15j1FPW0g+pFYdi6BZYMOwOhJFtEzNVO1Agi16gCylIr+FEljwX0Ej7l
+ cQ3ypXKSOF9d/w6PWzvPESQ9jUFkTYihIh8vI8p2dx4uuRh2UBqSefB1GdCQ4oQ7+7GClfSqJ
+ LFBuLC4B8cKnXb4Y3IzMJsbPy7oyMIkUCIRpv+091Ts/iIafzNs7C1Z55dXNDdjphAbtZTdWr
+ u3umuymuKfaX4KSroo7FkDihUCYgpE1OxUyS8DpGUTGudWy9rQ2j/E4rI+n3dQo1/BxlB7k0L
+ 0lMDV9f97IJ6rmOsCuhkR7ixG6cUq08I8CZP4C4AESZtuNEvKx41mda9bOKCpE5hsW1Mx6ILj
+ oOeasTo2nm0FXhiyLbwNJVfA40fNpe9F8zhjmKUlUE8DHHIyHC23+5JHJWQHrBrV4W/7sBnIw
+ 9C18rDbRQxpJmoTAqVg7CzfQgZ61kDH1Wl9TGcAGNW38/m7hwtLxqATLWWqEQkkGBXCrxVngm
+ lQxtz15DZfuqOWHjtanejv6MJW84VWA3pRVSiqkvHz/nfG/EnJdjqAKDXuddzoXOBXaeUIsAK
+ IU5xrGM5f1lAX1+V7GCRFcnHfTvwAifL743ewzxoeI4j91RrXD/Q91ssKwv8PgcZr18Nht59V
+ or10XsSZKzCpzV+euCmYd/3AbFNoQRgNYHRcdKkxmTHwfm7K2M=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, Oct 16 2018, Derrick Stolee wrote:
+--8323328-23946581-1539694958=:4546
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> On 10/16/2018 12:45 AM, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>
->>> 2. The filters are sized according to the number of changes in each
->>> commit, with a minimum of one 64-bit word.
->>> ...
->>> 6. When we compute the Bloom filters, we don't store a filter for
->>> commits whose first-parent diff has more than 512 paths.
->> Just being curious but was 512 taken out of thin air or is there
->> some math behind it, e.g. to limit false positive rate down to
->> certain threshold?  With a wide-enough bitset, you could store
->> arbitrary large number of paths with low enough false positive, I
->> guess, but is there a point where there is too many paths in the
->> change that gives us diminishing returns and not worth having a
->> filter in the first place?
-> 512 is somewhat arbitrary, but having a maximum size is not.
->> In a normal source-code-control context, the set of paths modified
->> by any single commit ought to be a small subset of the entire paths,
->> and whole-tree changes ought to be fairly rare.  In a project for
->> which that assumption does not hold, it might help to have a
->> negative bloom filter (i.e. "git log -- A" asks "does the commit
->> modify A?" and the filter would say "we know it does not, because we
->> threw all the paths that are not touched to the bloom filter"), but
->> I think that would optimize for a wrong case.
->
-> A commit with many changed paths is very rare. The 512 I picked above
-> is enough to cover 99% of commits in each of the repos I sampled when
-> first investigating Bloom filters.
->
-> When a Bloom filter response says "maybe yes" (in our case, "maybe not
-> TREESAME"), then we need to verify that it is correct. In the extreme
-> case that every path is changed, then the Bloom filter does nothing
-> but add extra work.
->
-> These extreme cases are also not unprecedented: in our Azure Repos
-> codebase, we were using core.autocrlf to smudge CRLFs to LFs, but
-> when it was time to dogfood VFS for Git, we needed to turn off the
-> smudge filter. So, there is one commit that converts every LF to a
-> CRLF in every text file. Storing a Bloom filter for those ~250,000
-> entries would take ~256KB for essentially no value. By not storing a
-> filter for this commit, we go immediately to the regular TREESAME
-> check, which would happen for most pathspecs.
->
-> This is all to say: having a maximum size is good. 512 is big enough
-> to cover _most_ commits, but not so big that we may store _really_ big
-> filters.
+Hi Gábor,
 
-Makes sense. 512 is good enough to hardcode initially, but I couldn't
-tell from briefly skimming the patches if it was possible to make this
-size dynamic per-repo when the graph/filter is written.
+On Tue, 16 Oct 2018, SZEDER Gábor wrote:
 
-I.e. we might later add some discovery step where we look at N number of
-commits at random, until we're satisfied that we've come up with some
-average/median number of total (recursive) tree entries & how many tend
-to be changed per-commit.
+> On Mon, Oct 15, 2018 at 03:12:12AM -0700, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > The JUnit XML format lends itself to be presented in a powerful UI,
+> > where you can drill down to the information you are interested in very
+> > quickly.
+> > 
+> > For test failures, this usually means that you want to see the detailed
+> > trace of the failing tests.
+> > 
+> > With Travis CI, we passed the `--verbose-log` option to get those
+> > traces. However, that seems excessive, as we do not need/use the logs in
+> 
+> As someone who has dug into a few occasional failures found by Travis
+> CI, I'd say that the output of '--verbose-log -x' is not excessive,
+> but downright essential.
 
-I.e. I can imagine repositories (with some automated changes) where we
-have 10k files and tend to change 1k per commit, or ones with 10k files
-where we tend to change just 1-10 per commit, which would mean a
-larger/smaller filter would be needed / would do.
+I agree that the output is essential for drilling down into failures. This
+paragraph, however, talks about the general case: where there are *no*
+failures. See here:
+
+> > almost all of those cases: only when a test fails do we have a way to
+> > include the trace.
+> > 
+> > So let's do something different when using Azure DevOps: let's run all
+> > the tests with `--quiet` first, and only if a failure is encountered,
+> > try to trace the commands as they are executed.
+> > 
+> > Of course, we cannot turn on `--verbose-log` after the fact. So let's
+> > just re-run the test with all the same options, adding `--verbose-log`.
+> > And then munging the output file into the JUnit XML on the fly.
+> > 
+> > Note: there is an off chance that re-running the test in verbose mode
+> > "fixes" the failures (and this does happen from time to time!). That is
+> > a possibility we should be able to live with.
+> 
+> Any CI system worth its salt should provide as much information about
+> any failures as possible, especially when it was lucky enough to
+> stumble upon a rare and hard to reproduce non-deterministic failure.
+
+I would agree with you if more people started to pay attention to our CI
+failures. And if we had some sort of a development model where a CI
+failure would halt development on that particular topic until the failure
+is fixed, with the responsibility assigned to somebody to fix it.
+
+This is not the case here, though. pu is broken for ages, at least on
+Windows, and even a *single* topic is enough to do that. And this is even
+worse with flakey tests. I cannot remember *how often* I saw CI failures
+in t5570-git-daemon.sh, for example. It is rare enough that it is obvious
+that this is a problem of the *regression test*, rather than a problem of
+the code that is to be tested.
+
+So I would suggest to go forward with my proposed strategy for the moment,
+right up until the time when we have had the resources to fix t5570, for
+starters.
+
+Ciao,
+Dscho
+
+> > Ideally, we would label this as "Passed upon rerun", and Azure
+> > Pipelines even know about that outcome, but it is not available when
+> > using the JUnit XML format for now:
+> > https://github.com/Microsoft/azure-pipelines-agent/blob/master/src/Agent.Worker/TestResults/JunitResultReader.cs
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+--8323328-23946581-1539694958=:4546--
