@@ -2,118 +2,266 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06B891F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 19:30:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7A7E1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 19:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727309AbeJQDWS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 23:22:18 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:41835 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727097AbeJQDWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 23:22:18 -0400
-Received: by mail-ed1-f68.google.com with SMTP id x31-v6so22511775edd.8
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 12:30:21 -0700 (PDT)
+        id S1727266AbeJQDvz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 23:51:55 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36377 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727165AbeJQDvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 23:51:55 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y16so27005117wrw.3
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 12:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Sd4zjTXiMGfRoZRWhxxiwFnEPtY8YcYIQmCRGStUxyE=;
-        b=sfijUD6eQocOPJPdybRT+FQTVUrDWmo2HIsn05shs7KhH9h6jTHDBhB8DY1CYzG7iX
-         jVgpmwW2z3+09Sbobi5mNmr7VCz6g9qmiSX+B2qv/YByHxlMAl53yh0Kwj7mYdNohmWd
-         Hx+uvMvSKT0y/nTLbGVYJLT99+sVWfqKdl4Cs+Mx8DnxxZjE3lP+CVqcA0/vbonhpV90
-         5eu9RAZHK1SSuZaOncuvy0RmcnGT2isk2P8DD2OZuuEmwYL6Bq5U6/iEP1PZLWjXBPZ/
-         RTHOFyK2sl3mqvl6b0l5l0XfagMvcabvgE7mLFOqPkqc1eq1H4IwDtuqw5CfAgM4MBwC
-         SDCA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=L7PeOkfJ0URGXywVT21phU1/TnsHEiyOGk182Dg1BuY=;
+        b=Yt8tBBSosrI0C8F5FFPfvKEX1ehavWuL10ZSFiO84D7gnZ/1HUwzSqVTrLwQKlEr8+
+         rPP8STLThKFVBzrgIO8LSvRmNw1vwvh2ll5sK2zruus5EpMoeHr8VweBcBnc9DtY5pri
+         CfPuPlfbLONEuzycVhtiOVEC0in3/j4UDuDM7K/cX9nwkB9/qZSi+7cLkAsMpGNHP20w
+         LrV17BR0OjjzJq5upNgEMSSKgfOk9jfXVG2Cz8Q567XsQgPS9DR/OfxjWoCxIr+/v1NC
+         BfCHfqMNHdgBUd5O9vlwOObSwwJMTceWBgQUdWa5+Z3Fhm9gyzzGFoHAYA3A0DMHv1Ca
+         EwLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Sd4zjTXiMGfRoZRWhxxiwFnEPtY8YcYIQmCRGStUxyE=;
-        b=t1DgvtCRInxNTsPjFo6AL7GOYaIUbbm0mclzbJditqGfeVzzZUmwwrdn3Ws8rLxcpk
-         i8Ws1UDHmJ3RMRx/PKOFgH0oGcrIJXXcEYzl4DzAcfFINdWkxB2s1yExMy4oO8ksd7Sc
-         6g6yrWaMGdM56OI00QopHHKpdcG+7DmO6RWE9yrjuzSv5MtFRc2894EpWxDda0O9dfLs
-         2U5MCizyygWreoU4ZAmW+rUVWgJrmt6dyxu/j9Xu+Rm7svKC66Iv23lQe88jp6cY3L6L
-         tWSIYD4FXG19wYu33Ne6ebUCLgaagIAV4Mq1eZoeWXDXvCtPjhzeCWtkCN2NNo+1fXxF
-         OBmA==
-X-Gm-Message-State: ABuFfohvHe5lmeNXDava4MUkeyyWVzt3EKMeJD8GyOVfej/F3eLRwnci
-        pq/n8e99ObM8PWT6tvv6thFkIW8LewqFwQAEcZbc/Q==
-X-Google-Smtp-Source: ACcGV6314n8QHCodgPYAKW26lNBoStt5qD4pDpVho+BPG5VZnK3hDv5EaX1ReRX9eIXQc+GV0kAjgxipTd8OGNYATeo=
-X-Received: by 2002:a17:906:2da9:: with SMTP id g9-v6mr24854687eji.67.1539718220161;
- Tue, 16 Oct 2018 12:30:20 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=L7PeOkfJ0URGXywVT21phU1/TnsHEiyOGk182Dg1BuY=;
+        b=PrquBmRvmndhwRmcVRnYj2Psm7d132SJcl/hkbhBykq3seuUjF4MUBmZ5F2CxKk0O2
+         0K3RviMxYh5fDX2SzC5GOKjbul8+2iFA1g0IqOvhFQoqtHWnAmsNATDuJxVMAObCCsJm
+         TwA1qKIA+P1rQRUWdh9hEWhEh6xTilgRDqPdzTN9WdPGKf5SgcBlVycN+lrUArShGRM2
+         TRROT8CaOXHLyLFrqAKVgOBAO17yjiod3G9aLh+Yt/DRdqO2ZNOZCPUrJ+cdy6kk8piZ
+         qmPEGtxvLoBrQ58VIzd0pZ7ltN7G0E2EIvpexjHpZzBSu7GnPxoag7iHpASmxint+dnw
+         Ry6A==
+X-Gm-Message-State: ABuFfoj1MULaX3MFf4sr4sgnMGETe4fGZUmeIx0vYp1qAYnO8YfiS+5B
+        GZ8w7B2NZuh5a1oWm/WWy2aqQJwP
+X-Google-Smtp-Source: ACcGV61cGL9XTqu5O4hhf8SHfEalJlf9Qp4MJ0do6I5JZDwLZrPy4sBEAVQRGJVDfxGgyG6WiJO7SQ==
+X-Received: by 2002:adf:fb89:: with SMTP id a9-v6mr18601435wrr.219.1539719991287;
+        Tue, 16 Oct 2018 12:59:51 -0700 (PDT)
+Received: from localhost ([31.127.45.92])
+        by smtp.gmail.com with ESMTPSA id k1-v6sm13940906wrl.39.2018.10.16.12.59.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Oct 2018 12:59:50 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 20:59:49 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v10 00/21] Convert "git stash" to C builtin
+Message-ID: <20181016195949.GE4883@hank.intra.tgummerer.com>
+References: <https://public-inbox.org/git/cover.1537913094.git.ungureanupaulsebastian@gmail.com/>
+ <cover.1539553398.git.ungureanupaulsebastian@gmail.com>
+ <20181015221040.GD4883@hank.intra.tgummerer.com>
+ <nycvar.QRO.7.76.6.1810161205530.4546@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20181011211754.31369-18-sbeller@google.com> <20181011224052.191281-1-jonathantanmy@google.com>
-In-Reply-To: <20181011224052.191281-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 16 Oct 2018 12:30:09 -0700
-Message-ID: <CAGZ79kYS7at89igHdg163mcZGmsOXO1jj6iBqSZF_VuMEh=g9A@mail.gmail.com>
-Subject: Re: [PATCH 17/19] submodule: use submodule repos for object lookup
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1810161205530.4546@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 11, 2018 at 3:41 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > +/*
-> > + * Initialize 'out' based on the provided submodule path.
-> > + *
-> > + * Unlike repo_submodule_init, this tolerates submodules not present
-> > + * in .gitmodules. NEEDSWORK: The repo_submodule_init behavior is
-> > + * preferrable. This function exists only to preserve historical behavior.
->
-> What do you mean by "The repo_submodule_init behavior is preferable"? If
-> we need to preserve historical behavior, then it seems that the most
-> preferable one is something that meets our needs (like open_submodule()
-> in this patch).
->
-> > +static int open_submodule(struct repository *out, const char *path)
-> > +{
-> > +     struct strbuf sb = STRBUF_INIT;
-> > +
-> > +     if (submodule_to_gitdir(&sb, path) || repo_init(out, sb.buf, NULL)) {
-> > +             strbuf_release(&sb);
-> > +             return -1;
-> > +     }
-> > +
-> > +     out->submodule_prefix = xstrdup(path);
->
-> Do we need to set submodule_prefix?
->
-> > @@ -507,7 +533,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
-> >       else if (is_null_oid(two))
-> >               message = "(submodule deleted)";
-> >
-> > -     if (add_submodule_odb(path)) {
-> > +     if (open_submodule(sub, path) < 0) {
->
-> This function, as a side effect, writes the open repository to "sub" for
-> its caller to use. I think it's better if its callers open "sub" and
-> then pass it to show_submodule_header() if successful. If opening the
-> submodule is expected to fail sometimes (like it seems here), then we
-> can allow callers to also pass NULL, and document what happens when NULL
-> is passed.
+On 10/16, Johannes Schindelin wrote:
+> Hi Thomas,
+> 
+> On Mon, 15 Oct 2018, Thomas Gummerer wrote:
+> 
+> >  2:  63f2e0e6f9 !  2:  2d45985676 strbuf.c: add `strbuf_join_argv()`
+> >     @@ -14,19 +14,17 @@
+> >       	strbuf_setlen(sb, sb->len + sb2->len);
+> >       }
+> >       
+> >     -+const char *strbuf_join_argv(struct strbuf *buf,
+> >     -+			     int argc, const char **argv, char delim)
+> >     ++void strbuf_join_argv(struct strbuf *buf,
+> >     ++		      int argc, const char **argv, char delim)
+> 
+> While the patch series does not use the return value, I have to ask
+> whether it would really be useful to change it to return `void`. I could
+> imagine that there may already be quite a few code paths that would love
+> to use strbuf_join_argv(), *and* would benefit from the `const char *`
+> return value.
 
-Thanks for the review of the whole series!
+Fair enough.  I did suggest changing the return type to void here, as
+I found the API a bit odd compared to the rest of the strbuf API,
+however after looking at this again I agree with you, and returning a
+const char * here does seem more helpful.  Sorry about the confusion
+Paul-Sebastian!
 
-I have redone this series, addressing all your comments. I addressed
-this comment differently than suggested, and put the submodule
-repository argument at the end of the parameter list, such that it
-goes with all the other arguments to be filled in.
+> In other words: just because the *current* patches do not make use of that
+> quite convenient return value does not mean that we should remove that
+> convenience.
+>
+> >  7:  a2abd1b4bd !  8:  974dbaa492 stash: convert apply to builtin
+> >     @@ -370,18 +370,20 @@
+> >      +
+> >      +			if (diff_tree_binary(&out, &info->w_commit)) {
+> >      +				strbuf_release(&out);
+> >     -+				return -1;
+> >     ++				return error(_("Could not generate diff %s^!."),
+> >     ++					     oid_to_hex(&info->w_commit));
+> 
+> Please start the argument of an `error()` call with a lower-case letter.
 
-I was about to resend the series, but test-merged with the other
-submodule series in flight (origin/sb/submodule-recursive-fetch-gets-the-tip)
-which had some conflicts that I can easily resolve by rebasing on top.
+I think this comes from your fixup! commit ;) But I do agree, these should be
+lower-case.
 
-It conflicts a lot when merging to next, due to the latest patch
-("Apply semantic patches from previous patches"), so I am not sure
-how to proceed properly. Maybe we'd omit that patch and
-run 'make coccicheck' on next to apply the semantic patches
-there instead.
+> >      +			}
+> >      +
+> >      +			ret = apply_cached(&out);
+> >      +			strbuf_release(&out);
+> >      +			if (ret)
+> >     -+				return -1;
+> >     ++				return error(_("Conflicts in index."
+> >     ++					       "Try without --index."));
+> 
+> Same here.
+> 
+> >      +
+> >      +			discard_cache();
+> >      +			read_cache();
+> >      +			if (write_cache_as_tree(&index_tree, 0, NULL))
+> >     -+				return -1;
+> >     ++				return error(_("Could not save index tree"));
+> 
+> And here.
+> 
+> > 15:  bd827be103 ! 15:  989db67e9a stash: convert create to builtin
+> >     @@ -119,7 +119,6 @@
+> >      +static int check_changes(struct pathspec ps, int include_untracked)
+> >      +{
+> >      +	int result;
+> >     -+	int ret = 0;
+> 
+> I was curious about this change, and could not find it in the
+> git-stash-v10 tag of https://github.com/ungps/git...
+
+This line has been removed in v10, but did exist in v9, so
+the git-stash-v10 should indeed not have this line.  I suggested
+removing it in [*1*], because it breaks compilation with DEVELOPER=1
+at this step.
+
+> > 18:  1c501ad666 ! 18:  c90e30173a stash: convert save to builtin
+> >     @@ -72,8 +72,10 @@
+> >      +			     git_stash_helper_save_usage,
+> >      +			     PARSE_OPT_KEEP_DASHDASH);
+> >      +
+> >     -+	if (argc)
+> >     -+		stash_msg = (char*) strbuf_join_argv(&buf, argc, argv, ' ');
+> >     ++	if (argc) {
+> >     ++		strbuf_join_argv(&buf, argc, argv, ' ');
+> >     ++		stash_msg = buf.buf;
+> >     ++	}
+> 
+> Aha! So there *was* a user of that return value. I really would prefer a
+> non-void return value here.
+
+Right, I'd argue we're mis-using the API here though.  do_push_stash
+who we later pass stash_msg to takes ownership and later free's the
+memory before returning.  This doesn't cause issues in the test suite
+at the moment, because do_create_stash() doesn't always free stash_msg
+before assigning a new value to the pointer, but would cause issues
+when do_create_stash exits early.
+
+Rather than the solution I proposed in I think it would be nicer to
+use 'stash_msg = strbuf_detach(...)' above.
+
+I'm still happy with the function returning buf->buf as const char *,
+but I'm not sure we should use that return value here.
+
+> > 19:  c4401b21db ! 19:  4360ea875d stash: convert `stash--helper.c` into `stash.c`
+> >     @@ -264,9 +320,9 @@
+> >      -	argc = parse_options(argc, argv, prefix, options,
+> >      -			     git_stash_helper_create_usage,
+> >      -			     0);
+> >     -+	/* Startinf with argv[1], since argv[0] is "create" */
+> >     -+	stash_msg = (char*) strbuf_join_argv(&stash_msg_buf, argc - 1,
+> >     -+					     ++argv, ' ');
+> >     ++	/* Starting with argv[1], since argv[0] is "create" */
+> >     ++	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
+> >     ++	stash_msg = stash_msg_buf.buf;
+> 
+> Again, I would strongly prefer the convenience of assigning the return
+> value directly, rather than having two lines.
+
+This is a similar case as above, where I think using strbuf_detach
+would be best, again instead of the 'xstrdup()' I mentioned in [*2*].
+
+> >     @@ -375,10 +425,8 @@
+> >      +			 * they need to be immediately followed by a string
+> >      +			 * (i.e.`-m"foobar"` or `--message="foobar"`).
+> >      +			 */
+> >     -+			if ((strlen(argv[i]) > 2 &&
+> >     -+			     !strncmp(argv[i], "-m", 2)) ||
+> >     -+			    (strlen(argv[i]) > 10 &&
+> >     -+			     !strncmp(argv[i], "--message=", 10)))
+> >     ++			if (starts_with(argv[i], "-m") ||
+> >     ++			    starts_with(argv[i], "--message="))
+> 
+> Very nice.
+> 
+> > 20:  92dc11fd16 ! 20:  a384b05008 stash: optimize `get_untracked_files()` and `check_changes()`
+> >     @@ -52,7 +52,6 @@
+> >      +static int check_changes_tracked_files(struct pathspec ps)
+> >       {
+> >       	int result;
+> >     --	int ret = 0;
+> 
+> I also wonder about this change, in light of...
+
+The double - in the beginning of the range diff indicates that the
+removal of this line was removed from this particular patch (the
+removal is now done in patch 15 instead).  I think this is one of
+those cases where the range-diff is a bit hard to interpret,
+especially without the --dual-color mode :)
+
+> >       	struct rev_info rev;
+> >       	struct object_id dummy;
+> >      -	struct strbuf out = STRBUF_INIT;
+> >     @@ -99,8 +98,8 @@
+> >      -	if (!check_changes(ps, include_untracked)) {
+> >      +	if (!check_changes(ps, include_untracked, &untracked_files)) {
+> >       		ret = 1;
+> 
+> this here line. How does that work, if `ret` is removed? And why didn't
+> the `make DEVELOPER=1` complain about that unused `ret` variable before?
+
+This is a different function, the above is in the
+'check_changes_tracked_files()' function, while we are in the
+'do_create_stash()' function, which has a local 'ret' variable.
+
+> 
+> >     - 		*stash_msg = NULL;
+> >       		goto done;
+> >     + 	}
+> >      @@
+> >       		goto done;
+> 
+> The rest of the changes looks pretty sensible to me (indentation/wrapping
+> changes, mostly, with a couple of commit message/typo fixes thrown in).
+> 
+> Maybe you have a commit hash, or even better, a tag in a public Git
+> repository somewhere, so that Paul can pick it up more easily (and compare
+> the changes with his latest local branch)?
+
+The range-diff here between Paul's v9 and v10 series.  I just applied
+both series, and sent out the range-diff in case someone else prefered
+not applying both series, or fetching both from Paul's repo, but
+reading the range-diff (and I got you to comment on it, which I
+already found helpful :)).  There are no changes of my own included in
+this.
+
+> Thank you!
+> Dscho
+
+[*1*]: https://public-inbox.org/git/20181002201940.GH2253@hank.intra.tgummerer.com/
+[*2*]: https://public-inbox.org/git/20181015220338.GB4883@hank.intra.tgummerer.com/
