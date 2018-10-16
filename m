@@ -2,86 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SUSPICIOUS_RECIPS shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD3B1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 15:18:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DD0F1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 15:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727336AbeJPXJS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 19:09:18 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:54275 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727100AbeJPXJR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 19:09:17 -0400
-Received: by mail-it1-f194.google.com with SMTP id l191-v6so33571979ita.4
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 08:18:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=M8ZIW+O7uoAE1m/QCwudb3XewbhglQ7ggE9kHyOsZe4=;
-        b=WFY8I+i7Jh3JtjOvvzh3BfylX3hmCa+fsDZnF+LF4iJLVXGd/BMZb5UQQTfdGgwSk7
-         jYBbfd7kZi2MerfVUfSX5FSZJCYNQckWIVvbABr7AazJA/yu8cxwQlsJ/Pxayps04lPF
-         YtVOnhamjw2gFma0nhWBiaXr5CWECRgK/wq3ep8iTY6cqgdZevUwkcDhbm8jLrw/r50c
-         LwpoRCPyyrBgrTZv6gpTa0BQcy3L8Q1l0bnoMVtMuWW9rvkudsufjlFWTYMUjlk5WTjH
-         5TfU+ngczrPBYBP0/r6TMtsPqdmwHCQzoqOEBkcU4+2VwmMzt98gSbYG+tEJW50XWEw4
-         /MUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M8ZIW+O7uoAE1m/QCwudb3XewbhglQ7ggE9kHyOsZe4=;
-        b=hcVOAEgiFyr3dTTQtqOQuXRWMN5d38wSNnka8yShVCR1PpqYNN6k77nsLBAgXHPAPq
-         NoWbUtvNIPGA/22nGYZHJEsfd47LxcBfF7p509VnNkdRtsImuq4TahMoop+qGdVZPmH3
-         jdn7JgxeD5vgIsrNhIRxyCJgye7jgxyUo3nG5xYh7VzHMoF5Pw3LcrR74bEKLN7rG0Z5
-         shbLIXL9b+TUDmafIfz7XJF01WYwGF3Lq6xG9GhOwvx/lrZIF49PmaUgQGBV+XUtl4Lx
-         ns4W1CB7qIwjrgdBnHem8tnFjjYjeoRKUMC3vxGKfkFlHlHqLrVJFg1ybn2BlHiy2Psa
-         FBIA==
-X-Gm-Message-State: ABuFfog4zyJ5E2qQTzHLwP5scP7cMxmQN4X402k2WO9bgOITqj7G4o67
-        Qos06Kdiedc/FTyQI8vPAS7dWpH1eeZvX7k8JYc=
-X-Google-Smtp-Source: ACcGV63PMLBPKehp8lkF4rZu2FOyERHta3+SC0HoJCUVSj464vSLa33LikRjbXP6ChGYrc9iYwW2rqtgY+SjHEdkU8w=
-X-Received: by 2002:a24:a343:: with SMTP id p64-v6mr14031726ite.10.1539703101179;
- Tue, 16 Oct 2018 08:18:21 -0700 (PDT)
+        id S1727059AbeJPXTb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 19:19:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42312 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726978AbeJPXTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 19:19:31 -0400
+Received: (qmail 7262 invoked by uid 109); 16 Oct 2018 15:28:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 16 Oct 2018 15:28:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11007 invoked by uid 111); 16 Oct 2018 15:27:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 16 Oct 2018 11:27:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Oct 2018 11:28:31 -0400
+Date:   Tue, 16 Oct 2018 11:28:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brendan Forster via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Brendan Forster <github@brendanforster.com>
+Subject: Re: [PATCH 2/3] http: add support for disabling SSL revocation
+ checks in cURL
+Message-ID: <20181016152831.GA29432@sigill.intra.peff.net>
+References: <pull.46.git.gitgitgadget@gmail.com>
+ <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>
+ <xmqq1s8q34g2.fsf@gitster-ct.c.googlers.com>
+ <20181016063323.GA25933@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1810161424390.4546@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20181015021900.1030041-1-sandals@crustytoothpaste.net> <20181015021900.1030041-2-sandals@crustytoothpaste.net>
-In-Reply-To: <20181015021900.1030041-2-sandals@crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 16 Oct 2018 17:17:53 +0200
-Message-ID: <CACsJy8DPBkRyPYF7Vfh0bQHJDvDZcmp54wjzRxG4Ho40SkMTSg@mail.gmail.com>
-Subject: Re: [PATCH v2 01/13] sha1-file: rename algorithm to "sha1"
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1810161424390.4546@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 15, 2018 at 4:21 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> The transition plan anticipates us using a syntax such as "^{sha1}" for
-> disambiguation.  Since this is a syntax some people will be typing a
-> lot, it makes sense to provide a short, easy-to-type syntax.  Omitting
-> the dash doesn't create any ambiguity, but it does make it shorter and
+On Tue, Oct 16, 2018 at 02:25:57PM +0200, Johannes Schindelin wrote:
 
-"but" or "and"? I think both clauses are on the same side ... or did
-you mean omitting the dash does create ambiguity?
+> > > That ">=" is hard to grok.  I think you meant it to be pronounced
+> > > "requries at least", but that is not a common reading.  People more
+> > > commonly pronounce it "is greater than or equal to".
+> > 
+> > This seemed oddly familiar:
+> > 
+> >   https://public-inbox.org/git/8da9d436-88b9-7959-dd9c-65bdd376bf54@mail.mipt.ru/
+> > 
+> > Since this one is clearly copied from there, it may be worth fixing the
+> > original.
+> 
+> Good memory. I just integrated the patch here. It was not signed off, but
+> it is too obvious to be protected under copyright, so I re-did it, adding
+> a nice commit message.
 
-> easier to type, especially for touch typists.  In addition, the
-> transition plan already uses "sha1" in this context.
->
-> Rename the name of SHA-1 implementation to "sha1".
->
-> Note that this change creates no backwards compatibility concerns, since
-> we haven't yet used this field in any serialized data formats.
+Yay, thank you (I considered doing the same, but was scratching my head
+over how to deal with authorship and signoff).
 
-But we're not going to use this _string_ in any data format either
-because we'll stick to format_id field anyway, right?
--- 
-Duy
+-Peff
