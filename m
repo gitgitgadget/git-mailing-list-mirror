@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A5C1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 18:14:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 460711F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 18:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727392AbeJQCFt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 22:05:49 -0400
-Received: from mail-it1-f202.google.com ([209.85.166.202]:38790 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727006AbeJQCFt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 22:05:49 -0400
-Received: by mail-it1-f202.google.com with SMTP id d10so26860754itk.3
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 11:14:09 -0700 (PDT)
+        id S1727398AbeJQCF5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 22:05:57 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:43773 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727374AbeJQCF5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 22:05:57 -0400
+Received: by mail-qk1-f202.google.com with SMTP id n64-v6so24521507qkd.10
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 11:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=cwEaVOQsZKeLZkIk0ya0bf1ynrWZWRCKcmUMzgnv1dc=;
-        b=gELAxh+6BFQrzX2XKmAcAU8tePVnMlzt0vRtu1R9sbYcMZwu4r6X6VLRnyypn5W7De
-         uR5HqawZyZuMcyK7ouAdVZecSY8y2Q08AZBEbuuKaDMZxhkv5etJsosv2J6EZfse48g5
-         gISYa8dWEIHR7ja1zPtaArg+fIvqzuhij6crgw0AzUHvkye+7xv2ex/apBeRIX2TPx6R
-         CroF47rsBJ9s9I74jU5vuEdRoo3USwIeD+lPgi+8zAU8YiZV9UUZZVqMvCnIdPbzaVw9
-         sWPXZ4GxtheSKPtBT3fNpiYdSyYi+yufuutwB0Xa+IGGMD8ge1/qsocPfOhT9x1V5Los
-         X4Cg==
+        bh=2x1aCinTAd7uZZxZ5ghUhVczgLCHwB3MUQ5qGGy6Nk8=;
+        b=Rfqg0EEcoelYl+IcYM+hpBX03YTxKRfeIktgmYqUAdx++WfrTYNbMPaP83HMf0txfF
+         2JdpRzzvxP9/NhAPLCYYroFqhjcoE5l7CjJz21Bqkm/y/IGck0blVSMGh99M/S5RIoQQ
+         FtvWegt9Wzrdh02AxdLTZTYwdowkoBduAzYRxHuLh6ZqCwh2/DWRO8Al82v8u5QpbFy7
+         jurHKL4AZqfiqPM/j+wK7bujtBxHHyfd7HuBzDJEDXRuG5G4tzWd9JXHnKE4hDQjMs8p
+         Fi2tZPLWobWtO5p1qTACFStVttTEP+ZThElB3B6kh3mpG9BEa3tV5tCJJR5/lkaJ5ony
+         jNFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=cwEaVOQsZKeLZkIk0ya0bf1ynrWZWRCKcmUMzgnv1dc=;
-        b=lY7f18SqbhkExo38MJCrCAxFi2Zl0nGd2S9t05uJdqof+gLBecFrEfhACNUjaZk9ms
-         EmkU69cher7GrJe03zVlwEmchaq7Y7bJJrJE99AMatMSYZ7xS+jtJSC0GRg9Fynru479
-         BgGWDjCv7Npeig5NnrrAA2qJzGZUiXNwYOo/yeoIGs2EFRsWylLMFSDM7enSwjqCFnYm
-         rx3itjAUlaFzXbfFOV2k0j9MM0Nvl85iqEciaAKD87tDq7WlbLjmLpB8bphD+RiD4V+G
-         +OlFQGreDXV4XyxPB1PHjqnwHTPl3wR1IPfENhvk46LXfwO5IyStIHtIOKcYDax8ukXi
-         0UsQ==
-X-Gm-Message-State: ABuFfogKVmlSoVQVXAUern/jxXUIKMdAvOHzTYf6skpX4pVgy5zuNZdf
-        9+p3SO/NHhEbBkGNbY9lsf48dFp/4Q9B
-X-Google-Smtp-Source: ACcGV62lDM5CoAmXiCN51Z5IivJr+sQ/KbZAOy4jM87ynX+B/Ru70uyj2UELlb2YccXzlusfEYea5V8QeHjp
-X-Received: by 2002:a24:8903:: with SMTP id s3-v6mr17738771itd.26.1539713648969;
- Tue, 16 Oct 2018 11:14:08 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 11:13:25 -0700
+        bh=2x1aCinTAd7uZZxZ5ghUhVczgLCHwB3MUQ5qGGy6Nk8=;
+        b=I9A4X8EAZCefKrVnXmcyQ/zM1jBfLblcTrvjZWE+MlVTpp7cS6zQoY3j2vk4k2iIAf
+         rjvb4XqNVHRfh9er9ExiSyl60ykBfSaZl2swP6haChLkmslhlK3inbEW4qeobl2kpL/Y
+         zYLOzUKJkOKzcDoAgudl4Osh/aaT26H8VJGCD8ssJxQXViqblplE68WxT/NTizWY3MsX
+         itnp0e0lvZoAnisJIR2tv3UL1kDE4Ex27UaZbK6Vcd1e9X5NOcqvE4oRtOpsMMgWgt2z
+         bUrvF8AW3eTBG2Bzva8TenjUn76fM1tyLp6xbTauLSw8/d+URj9HHY7raR1Rv4zAnGBP
+         Trqg==
+X-Gm-Message-State: ABuFfohlPwzUJdlTUan6zyIqEVwE62xtYkKyuFfuGpuNjkWA75frmPcc
+        /RuqB3x7poQOwYHwyNkZ3hB8WX+SCwjI
+X-Google-Smtp-Source: ACcGV60F2W98TCUdqWG3D7f+RK+GDjy10f+bK0MGBA5TTBKvPkVLUAF6swayiau9fwLln3Tl2LseKNQsIQag
+X-Received: by 2002:a37:4ed5:: with SMTP id c204-v6mr17925726qkb.24.1539713657647;
+ Tue, 16 Oct 2018 11:14:17 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 11:13:26 -0700
 In-Reply-To: <20181016181327.107186-1-sbeller@google.com>
-Message-Id: <20181016181327.107186-8-sbeller@google.com>
+Message-Id: <20181016181327.107186-9-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181016181327.107186-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH 7/9] submodule: fetch in submodules git directory instead of
- in worktree
+Subject: [PATCH 8/9] fetch: retry fetching submodules if needed objects were
+ not fetched
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
@@ -62,146 +62,373 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch started as a refactoring to make 'get_next_submodule' more
-readable, but upon doing so, I realized that "git fetch" of the submodule
-actually doesn't need to be run in the submodules worktree. So let's run
-it in its git dir instead.
+Currently when git-fetch is asked to recurse into submodules, it dispatches
+a plain "git-fetch -C <submodule-dir>" (with some submodule related options
+such as prefix and recusing strategy, but) without any information of the
+remote or the tip that should be fetched.
 
-That should pave the way towards fetching submodules that are currently
-not checked out.
+This works surprisingly well in some workflows (such as using submodules
+as a third party library), while not so well in other scenarios, such
+as in a Gerrit topic-based workflow, that can tie together changes
+(potentially across repositories) on the server side. One of the parts
+of such a Gerrit workflow is to download a change when wanting to examine
+it, and you'd want to have its submodule changes that are in the same
+topic downloaded as well. However these submodule changes reside in their
+own repository in their own ref (refs/changes/<int>).
 
-This patch leaks the cp->dir in get_next_submodule, as any further
-callback in run_processes_parallel doesn't have access to the child
-process any more. In an early iteration of this patch, the function
-get_submodule_repo_for directly returned the string containing the
-git directory, which would be a better design choice for this patch.
+Retry fetching a submodule by object name if the object id that the
+superproject points to, cannot be found.
 
-However the next patch both fixes the memory leak of cp->dir and also has
-a use case for using the full repository handle of the submodule, so
-it makes sense to introduce the get_submodule_repo_for here already.
+This retrying does not happen when the "git fetch" done at the
+superproject is not storing the fetched results in remote
+tracking branches (i.e. instead just recording them to
+FETCH_HEAD) in this step. A later patch will fix this.
+
+builtin/fetch used to only inspect submodules when they were fetched
+"on-demand", as in either on/off case it was clear whether the submodule
+needs to be fetched. However to know whether we need to try fetching the
+object ids, we need to identify the object names, which is done in this
+function check_for_new_submodule_commits(), so we'll also run that code
+in case the submodule recursion is set to "on".
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- submodule.c                 | 51 +++++++++++++++++++++++++++----------
- t/t5526-fetch-submodules.sh |  7 ++++-
- 2 files changed, 44 insertions(+), 14 deletions(-)
+ builtin/fetch.c             |   9 +-
+ submodule.c                 | 185 ++++++++++++++++++++++++++++++------
+ t/t5526-fetch-submodules.sh |  16 ++++
+ 3 files changed, 177 insertions(+), 33 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 61bec5d213..95c44bf6ff 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -700,8 +700,7 @@ static int update_local_ref(struct ref *ref,
+ 			what = _("[new ref]");
+ 		}
+ 
+-		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+-		    (recurse_submodules != RECURSE_SUBMODULES_ON))
++		if (recurse_submodules != RECURSE_SUBMODULES_OFF)
+ 			check_for_new_submodule_commits(&ref->new_oid);
+ 		r = s_update_ref(msg, ref, 0);
+ 		format_display(display, r ? '!' : '*', what,
+@@ -716,8 +715,7 @@ static int update_local_ref(struct ref *ref,
+ 		strbuf_add_unique_abbrev(&quickref, &current->object.oid, DEFAULT_ABBREV);
+ 		strbuf_addstr(&quickref, "..");
+ 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
+-		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+-		    (recurse_submodules != RECURSE_SUBMODULES_ON))
++		if (recurse_submodules != RECURSE_SUBMODULES_OFF)
+ 			check_for_new_submodule_commits(&ref->new_oid);
+ 		r = s_update_ref("fast-forward", ref, 1);
+ 		format_display(display, r ? '!' : ' ', quickref.buf,
+@@ -731,8 +729,7 @@ static int update_local_ref(struct ref *ref,
+ 		strbuf_add_unique_abbrev(&quickref, &current->object.oid, DEFAULT_ABBREV);
+ 		strbuf_addstr(&quickref, "...");
+ 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
+-		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+-		    (recurse_submodules != RECURSE_SUBMODULES_ON))
++		if (recurse_submodules != RECURSE_SUBMODULES_OFF)
+ 			check_for_new_submodule_commits(&ref->new_oid);
+ 		r = s_update_ref("forced-update", ref, 1);
+ 		format_display(display, r ? '!' : '+', quickref.buf,
 diff --git a/submodule.c b/submodule.c
-index cbefe5f54d..30c06507e3 100644
+index 30c06507e3..7246b776f3 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -495,6 +495,12 @@ void prepare_submodule_repo_env(struct argv_array *out)
- 			 DEFAULT_GIT_DIR_ENVIRONMENT);
- }
+@@ -1141,8 +1141,12 @@ struct submodule_parallel_fetch {
+ 	int result;
  
-+static void prepare_submodule_repo_env_in_gitdir(struct argv_array *out)
-+{
-+	prepare_submodule_repo_env_no_git_dir(out);
-+	argv_array_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
-+}
-+
- /* Helper function to display the submodule header line prior to the full
-  * summary output. If it can locate the submodule objects directory it will
-  * attempt to lookup both the left and right commits and put them into the
-@@ -1241,6 +1247,29 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
+ 	struct string_list changed_submodule_names;
++	struct get_next_submodule_task **retry;
++	int retry_nr, retry_alloc;
+ };
+-#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, STRING_LIST_INIT_DUP }
++#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, \
++		  STRING_LIST_INIT_DUP, \
++		  NULL, 0, 0}
+ 
+ static void calculate_changed_submodule_paths(
+ 	struct submodule_parallel_fetch *spf)
+@@ -1247,6 +1251,56 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
  	return spf->default_option;
  }
  
-+static struct repository *get_submodule_repo_for(struct repository *r,
-+						 const struct submodule *sub)
++struct get_next_submodule_task {
++	struct repository *repo;
++	const struct submodule *sub;
++	unsigned free_sub : 1; /* Do we need to free the submodule? */
++	struct oid_array *commits;
++};
++
++static const struct submodule *get_default_submodule(const char *path)
 +{
-+	struct repository *ret = xmalloc(sizeof(*ret));
++	struct submodule *ret = NULL;
++	const char *name = default_name_or_path(path);
 +
-+	if (repo_submodule_init(ret, r, sub)) {
-+		/*
-+		 * No entry in .gitmodules? Technically not a submodule,
-+		 * but historically we supported repositories that happen to be
-+		 * in-place where a gitlink is. Keep supporting them.
-+		 */
-+		struct strbuf gitdir = STRBUF_INIT;
-+		strbuf_repo_worktree_path(&gitdir, r, "%s/.git", sub->path);
-+		if (repo_init(ret, gitdir.buf, NULL)) {
-+			strbuf_release(&gitdir);
-+			return NULL;
-+		}
-+		strbuf_release(&gitdir);
-+	}
++	if (!name)
++		return NULL;
 +
-+	return ret;
++	ret = xmalloc(sizeof(*ret));
++	memset(ret, 0, sizeof(*ret));
++	ret->path = name;
++	ret->name = name;
++
++	return (const struct submodule *) ret;
 +}
 +
++static struct get_next_submodule_task *get_next_submodule_task_create(
++	struct repository *r, const char *path)
++{
++	struct get_next_submodule_task *task = xmalloc(sizeof(*task));
++	memset(task, 0, sizeof(*task));
++
++	task->sub = submodule_from_path(r, &null_oid, path);
++	if (!task->sub) {
++		task->sub = get_default_submodule(path);
++		task->free_sub = 1;
++	}
++
++	return task;
++}
++
++static void get_next_submodule_task_release(struct get_next_submodule_task *p)
++{
++	if (p->free_sub)
++		free((void*)p->sub);
++	p->free_sub = 0;
++	p->sub = NULL;
++
++	if (p->repo)
++		repo_clear(p->repo);
++	FREE_AND_NULL(p->repo);
++}
++
+ static struct repository *get_submodule_repo_for(struct repository *r,
+ 						 const struct submodule *sub)
+ {
+@@ -1273,39 +1327,35 @@ static struct repository *get_submodule_repo_for(struct repository *r,
  static int get_next_submodule(struct child_process *cp,
  			      struct strbuf *err, void *data, void **task_cb)
  {
-@@ -1248,12 +1277,11 @@ static int get_next_submodule(struct child_process *cp,
+-	int ret = 0;
  	struct submodule_parallel_fetch *spf = data;
  
  	for (; spf->count < spf->r->index->cache_nr; spf->count++) {
--		struct strbuf submodule_path = STRBUF_INIT;
--		struct strbuf submodule_git_dir = STRBUF_INIT;
- 		struct strbuf submodule_prefix = STRBUF_INIT;
+-		struct strbuf submodule_prefix = STRBUF_INIT;
++		int recurse_config;
  		const struct cache_entry *ce = spf->r->index->cache[spf->count];
--		const char *git_dir, *default_argv;
-+		const char *default_argv;
- 		const struct submodule *submodule;
-+		struct repository *repo;
- 		struct submodule default_submodule = SUBMODULE_INIT;
+ 		const char *default_argv;
+-		const struct submodule *submodule;
+-		struct repository *repo;
+-		struct submodule default_submodule = SUBMODULE_INIT;
++		struct get_next_submodule_task *task;
  
  		if (!S_ISGITLINK(ce->ce_mode))
-@@ -1288,16 +1316,12 @@ static int get_next_submodule(struct child_process *cp,
+ 			continue;
+ 
+-		submodule = submodule_from_path(spf->r, &null_oid, ce->name);
+-		if (!submodule) {
+-			const char *name = default_name_or_path(ce->name);
+-			if (name) {
+-				default_submodule.path = name;
+-				default_submodule.name = name;
+-				submodule = &default_submodule;
+-			}
++		task = get_next_submodule_task_create(spf->r, ce->name);
++
++		if (!task->sub) {
++			free(task);
++			continue;
+ 		}
+ 
+-		switch (get_fetch_recurse_config(submodule, spf))
++		recurse_config = get_fetch_recurse_config(task->sub, spf);
++
++		switch (recurse_config)
+ 		{
+ 		default:
+ 		case RECURSE_SUBMODULES_DEFAULT:
+ 		case RECURSE_SUBMODULES_ON_DEMAND:
+-			if (!submodule ||
++			if (!task->sub ||
+ 			    !string_list_lookup(
+ 					&spf->changed_submodule_names,
+-					submodule->name))
++					task->sub->name))
+ 				continue;
+ 			default_argv = "on-demand";
+ 			break;
+@@ -1316,12 +1366,12 @@ static int get_next_submodule(struct child_process *cp,
  			continue;
  		}
  
--		strbuf_repo_worktree_path(&submodule_path, spf->r, "%s", ce->name);
--		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
- 		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
--		git_dir = read_gitfile(submodule_git_dir.buf);
--		if (!git_dir)
--			git_dir = submodule_git_dir.buf;
--		if (is_directory(git_dir)) {
-+		repo = get_submodule_repo_for(spf->r, submodule);
-+		if (repo) {
+-		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
+-		repo = get_submodule_repo_for(spf->r, submodule);
+-		if (repo) {
++		task->repo = get_submodule_repo_for(spf->r, task->sub);
++		if (task->repo) {
++			struct strbuf submodule_prefix = STRBUF_INIT;
  			child_process_init(cp);
--			cp->dir = strbuf_detach(&submodule_path, NULL);
--			prepare_submodule_repo_env(&cp->env_array);
-+			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-+			cp->dir = xstrdup(repo->gitdir);
+ 			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
+-			cp->dir = xstrdup(repo->gitdir);
++			cp->dir = task->repo->gitdir;
  			cp->git_cmd = 1;
  			if (!spf->quiet)
  				strbuf_addf(err, "Fetching submodule %s%s\n",
-@@ -1307,10 +1331,11 @@ static int get_next_submodule(struct child_process *cp,
+@@ -1330,18 +1380,51 @@ static int get_next_submodule(struct child_process *cp,
+ 			argv_array_pushv(&cp->args, spf->args.argv);
  			argv_array_push(&cp->args, default_argv);
  			argv_array_push(&cp->args, "--submodule-prefix");
- 			argv_array_push(&cp->args, submodule_prefix.buf);
 +
-+			repo_clear(repo);
-+			free(repo);
- 			ret = 1;
- 		}
--		strbuf_release(&submodule_path);
--		strbuf_release(&submodule_git_dir);
- 		strbuf_release(&submodule_prefix);
- 		if (ret) {
++			strbuf_addf(&submodule_prefix, "%s%s/",
++						       spf->prefix,
++						       task->sub->path);
+ 			argv_array_push(&cp->args, submodule_prefix.buf);
+ 
+-			repo_clear(repo);
+-			free(repo);
+-			ret = 1;
+-		}
+-		strbuf_release(&submodule_prefix);
+-		if (ret) {
  			spf->count++;
++			*task_cb = task;
++
++			strbuf_release(&submodule_prefix);
+ 			return 1;
++		} else {
++			get_next_submodule_task_release(task);
++			free(task);
+ 		}
+ 	}
++
++	if (spf->retry_nr) {
++		struct get_next_submodule_task *task = spf->retry[spf->retry_nr - 1];
++		struct strbuf submodule_prefix = STRBUF_INIT;
++		spf->retry_nr--;
++
++		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, task->sub->path);
++
++		child_process_init(cp);
++		prepare_submodule_repo_env_in_gitdir(&cp->env_array);
++		cp->git_cmd = 1;
++		cp->dir = task->repo->gitdir;
++
++		argv_array_init(&cp->args);
++		argv_array_pushv(&cp->args, spf->args.argv);
++		argv_array_push(&cp->args, "on-demand");
++		argv_array_push(&cp->args, "--submodule-prefix");
++		argv_array_push(&cp->args, submodule_prefix.buf);
++
++		/* NEEDSWORK: have get_default_remote from s--h */
++		argv_array_push(&cp->args, "origin");
++		oid_array_for_each_unique(task->commits,
++					  append_oid_to_argv, &cp->args);
++
++		*task_cb = task;
++		strbuf_release(&submodule_prefix);
++		return 1;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1349,20 +1432,68 @@ static int fetch_start_failure(struct strbuf *err,
+ 			       void *cb, void *task_cb)
+ {
+ 	struct submodule_parallel_fetch *spf = cb;
++	struct get_next_submodule_task *task = task_cb;
+ 
+ 	spf->result = 1;
+ 
++	get_next_submodule_task_release(task);
+ 	return 0;
+ }
+ 
++static int commit_exists_in_sub(const struct object_id *oid, void *data)
++{
++	struct repository *subrepo = data;
++
++	enum object_type type = oid_object_info(subrepo, oid, NULL);
++
++	return type != OBJ_COMMIT;
++}
++
+ static int fetch_finish(int retvalue, struct strbuf *err,
+ 			void *cb, void *task_cb)
+ {
+ 	struct submodule_parallel_fetch *spf = cb;
++	struct get_next_submodule_task *task = task_cb;
++	const struct submodule *sub;
++
++	struct string_list_item *it;
++	struct oid_array *commits;
+ 
+ 	if (retvalue)
+ 		spf->result = 1;
+ 
++	if (!task)
++		return 0;
++
++	sub = task->sub;
++	if (!sub)
++		goto out;
++
++	it = string_list_lookup(&spf->changed_submodule_names, sub->name);
++	if (!it)
++		goto out;
++
++	commits = it->util;
++	oid_array_filter(commits,
++			 commit_exists_in_sub,
++			 task->repo);
++
++	/* Are there commits that do not exist? */
++	if (commits->nr) {
++		/* We already tried fetching them, do not try again. */
++		if (task->commits)
++			return 0;
++
++		task->commits = commits;
++		ALLOC_GROW(spf->retry, spf->retry_nr + 1, spf->retry_alloc);
++		spf->retry[spf->retry_nr] = task;
++		spf->retry_nr++;
++		return 0;
++	}
++
++out:
++	get_next_submodule_task_release(task);
++
+ 	return 0;
+ }
+ 
 diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 6c2f9b2ba2..42692219a1 100755
+index 42692219a1..af12c50e7d 100755
 --- a/t/t5526-fetch-submodules.sh
 +++ b/t/t5526-fetch-submodules.sh
-@@ -566,7 +566,12 @@ test_expect_success 'fetching submodule into a broken repository' '
- 
- 	test_must_fail git -C dst status &&
- 	test_must_fail git -C dst diff &&
--	test_must_fail git -C dst fetch --recurse-submodules
-+
-+	# git-fetch cannot find the git directory of the submodule,
-+	# so it will do nothing, successfully, as it cannot distinguish between
-+	# this broken submodule and a submodule that was just set active but
-+	# not cloned yet
-+	git -C dst fetch --recurse-submodules
+@@ -605,4 +605,20 @@ test_expect_success "fetch new commits when submodule got renamed" '
+ 	test_cmp expect actual
  '
  
- test_expect_success "fetch new commits when submodule got renamed" '
++test_expect_success "fetch new commits on-demand when they are not reachable" '
++	git checkout --detach &&
++	C=$(git -C submodule commit-tree -m "new change outside refs/heads" HEAD^{tree}) &&
++	git -C submodule update-ref refs/changes/1 $C &&
++	git update-index --cacheinfo 160000 $C submodule &&
++	git commit -m "updated submodule outside of refs/heads" &&
++	D=$(git rev-parse HEAD) &&
++	git update-ref refs/changes/2 $D &&
++	(
++		cd downstream &&
++		git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
++		git -C submodule cat-file -t $C &&
++		git checkout --recurse-submodules FETCH_HEAD
++	)
++'
++
+ test_done
 -- 
 2.19.0
 
