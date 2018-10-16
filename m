@@ -2,76 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 434771F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:11:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B34401F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726982AbeJQHE3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:04:29 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:40031 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbeJQHE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:04:29 -0400
-Received: by mail-wr1-f54.google.com with SMTP id d2-v6so27470165wro.7
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:11:48 -0700 (PDT)
+        id S1727087AbeJQHG3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:06:29 -0400
+Received: from mail-ot1-f74.google.com ([209.85.210.74]:41469 "EHLO
+        mail-ot1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbeJQHG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:06:29 -0400
+Received: by mail-ot1-f74.google.com with SMTP id v40so17921087ote.8
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Thz5j993gUVJcim/5pH4/NS0kW42qiHR3b+sE0zqw4c=;
-        b=rL4VFnuAo4j99YJh4tToj99mcYuVP7OG5/GVe3wZhk6sEwz4jt4V/xEDQEC9YyH8se
-         We1u1DEI5UAyh22Yi7tXdJD5SFdBVg9FtzOlXTGRYYIuceobqITOnPgvC5uV7r+7kPff
-         IJOpjlMF3ABCfGCDztqu92lva1rtQZh89vXIhfUyCyuyclBxE6CMAHbI3A0kBrnAVrrH
-         uNP1dEIPWvgVw3S9sk7mAxlF+VkCrsOKLYFR4YjDEkF2T+TqKX6p+1LE6dTRnz5jneXS
-         RX6A9RM7zFzU4h+rc1JngX7Lf402CZ81ZjTFyTQRa8yl3pXO0U4Lpt/0bFVVcO+fbDFr
-         vOTw==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=gjgCJBkHQCX5i7dUXtiNs0PYAbihDxCqNpUfoAnfFlc=;
+        b=vzhkJjQxPVARHHYfR0IQstoFetnmPBWKpZHo2JS9c+7xPTR27Vv6u6rzR2w5z4IwUn
+         4ic3MWVm1obTauZ+HVr43mRHF0zRZsDSj0Xj1k5GQCFf4W+FWpUbUrWt25wjTpsw36Sl
+         r9sB1gjlz9bho1xHNunRwhBi2KQ8F9shl0UOli9qg9EZOOxJgHa4lRZ8BUyfGFVVWptR
+         m2zLAHLMncbK4Xz8cL/AdWLsCu/Q8km7WwaMdaptg/4toItB1fHBaWd72ZCXzFQjXQYk
+         4x0UZXxATKbIjQoYlBLaQPT4ZCbX1ZUihaj+oX4qc/5dtQjY4ncl1Rl8SZL1j8PvY8+U
+         gGgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Thz5j993gUVJcim/5pH4/NS0kW42qiHR3b+sE0zqw4c=;
-        b=Ug16nCtSGvYqUXj8dg0NTwogh5kP8VgBQI1jzcznyNt4vib61j8T+pCouGyVqLiKyH
-         IEFesR6/1U4gRiVo1iXleB8XR8Ln5/ZJiRo6hr+aKxrA+MNYwgq5gXy9G4liJIDVaANB
-         nZ1O9S/YAM8IJMTRtkxIOaFktMeq8k1kl0hGZInGMUsWVjTVh8HhVvD2UmNkVEuL78/w
-         QzXY/zNib+YdntHt/s4pQ3+yQzkZ2J5m3iPNCirZut5fKpD/D23ait0ag8da2DvkYarX
-         OxNz9dFZjvWMo1EbTJKY9uC0yEhYbY9uEwi2TiDpBz0abjkZ+Oi1E9XzCaKhNj1sTz94
-         3/nQ==
-X-Gm-Message-State: ABuFfohposWlYtFiuYovS/q8bRA+2hZT/HmNW3J6TavV1eFIjhzn9VAY
-        ObQy0PPJtP6GI6rw4Vk/x+Q=
-X-Google-Smtp-Source: ACcGV61L78kIAGGv3oCqbtCKQJgIJGCgSDyuOmrWxgCEvkQ11Z3Kv2K4vUrWDWC46DoWtbOFjR5amA==
-X-Received: by 2002:adf:94c2:: with SMTP id 60-v6mr20240364wrr.247.1539731507900;
-        Tue, 16 Oct 2018 16:11:47 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm20510770wrr.62.2018.10.16.16.11.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Oct 2018 16:11:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2018, #02; Sat, 13)
-References: <xmqqh8hr9pxb.fsf@gitster-ct.c.googlers.com>
-        <20181016212008.GA249669@google.com>
-Date:   Wed, 17 Oct 2018 08:11:46 +0900
-In-Reply-To: <20181016212008.GA249669@google.com> (Josh Steadmon's message of
-        "Tue, 16 Oct 2018 14:20:08 -0700")
-Message-ID: <xmqqftx5xz9p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=gjgCJBkHQCX5i7dUXtiNs0PYAbihDxCqNpUfoAnfFlc=;
+        b=aiJ6rTvpik2FbuX+CpMl+CopsK7gHQcrl5AQxg12+5uzXmB2VaJf0nqQimibXZLFKC
+         ZvymaxXc//hTsbKhOq1wWeM/VWpowlScVvZI9DHrgzAUSUKFLkFrlwdWvCgw+Tc65Ike
+         hE7iRMvSYGNBz9HSkmJWCecA74SgKood13JC6HMD892ywaarLRMaanGzv3Dt97vDEN5R
+         9kAIQk3Wu7+5IQSLC12XjsQEUAQ0GdTwmZi4NpxiLe1w5bqyktkySwAF4NFftHxVuISY
+         /pZ9TSmfY4Ji02uZIFu08FGemZUaGWqKMXSOQagI4eDzJIAv7NPbVrb2hYaj3CbuHJMM
+         gitQ==
+X-Gm-Message-State: ABuFfoj5mbAQ/Spmxj2ZYJL6vaJs+2QAjZQWj3EpjnLxsfNoo+RWHwzt
+        yfebI6VWzC+qauVIgB49UZkvVg/yi3iz+MDhbtmQ
+X-Google-Smtp-Source: ACcGV62/nFA6M/v67y/7/wU7jH9YueEdp9gMVp0mNTFJlHfdCy9hfVJhfSRbJmYevFCyW3ZmyLr933Zl0Huj5i6wWGr1
+X-Received: by 2002:a9d:3f90:: with SMTP id r16mr20159801otc.38.1539731628606;
+ Tue, 16 Oct 2018 16:13:48 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 16:13:43 -0700
+In-Reply-To: <CAGZ79kYS7at89igHdg163mcZGmsOXO1jj6iBqSZF_VuMEh=g9A@mail.gmail.com>
+Message-Id: <20181016231343.189184-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAGZ79kYS7at89igHdg163mcZGmsOXO1jj6iBqSZF_VuMEh=g9A@mail.gmail.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH 17/19] submodule: use submodule repos for object lookup
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sbeller@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+> Thanks for the review of the whole series!
+> 
+> I have redone this series, addressing all your comments. I addressed
+> this comment differently than suggested, and put the submodule
+> repository argument at the end of the parameter list, such that it
+> goes with all the other arguments to be filled in.
 
-> The first two patches (test cleanup and packet_reader refactor) are OK,
-> but the latter two will break the archive command when an old client
-> attempts to talk to a new server (due to the version advertisement
-> problem noted in [1]). Sorry that I didn't catch that these had made it
-> into next.
+Sounds good.
 
-Thanks.  Will hld.
+> I was about to resend the series, but test-merged with the other
+> submodule series in flight (origin/sb/submodule-recursive-fetch-gets-the-tip)
+> which had some conflicts that I can easily resolve by rebasing on top.
+
+I presume you are talking about [1]? Maybe consider rebasing that one on
+top of this instead, since this is just a refactoring whereas
+submodule-recursive-fetch-gets-the-tip changes functionality, from what
+I understand of patches 8 and 9.
+
+[1] https://public-inbox.org/git/20181016181327.107186-1-sbeller@google.com/
+
+> It conflicts a lot when merging to next, due to the latest patch
+> ("Apply semantic patches from previous patches"), so I am not sure
+> how to proceed properly. Maybe we'd omit that patch and
+> run 'make coccicheck' on next to apply the semantic patches
+> there instead.
+
+Omitting the patch sounds good to me. For me, just stating that you have
+excluded any coccinelle-generated patches in order to ease merging into
+the various branches is sufficient, and people can test the coccinelle
+patches included by running "make coccicheck" then "patch -p1
+<contrib/coccinelle/the_repository.cocci.patch".
