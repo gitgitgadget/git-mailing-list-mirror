@@ -7,99 +7,87 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634111F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 786551F453
 	for <e@80x24.org>; Tue, 16 Oct 2018 21:02:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbeJQEzD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 00:55:03 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40896 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725960AbeJQEzC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 00:55:02 -0400
-Received: by mail-pf1-f193.google.com with SMTP id g21-v6so5050429pfi.7
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 14:02:49 -0700 (PDT)
+        id S1727086AbeJQEzE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 00:55:04 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35968 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725960AbeJQEzE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 00:55:04 -0400
+Received: by mail-pf1-f196.google.com with SMTP id l81-v6so12054011pfg.3
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 14:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=wxtyDV6t4uv+Mgr8MRPk9fGyoixiM87h1/o2nIWyM7o=;
-        b=D3oaBiV1GKQg3G91rS+QnUriuflaP+tC/DFCb6LOSl7UBAdGzWornljprMurSkcPqs
-         wyH2MdLjagW4wmv9Xq2NW6U9xZ0YPq6Bg2+hv0a4lJ35VffgsanmKrZ/hjJkeEexIxzm
-         E9Yq8wBSQoF060YI/qG51cxUzlU7y3VlvlnqG0LETPYQk+5g03ZGY6fzP1FohvWmwzTy
-         JyrOjYDdMRzJttwoYQyq0z0G4PGfm8dxYMfFOs7Z/7W1MwAcT3mXuJ0tV/+zLGLzcOE3
-         w3c3ja+Ohd/XKs1pBdM6l7d2C5bF2uFGaPmoyrrhIQzYi1GNHmNH8iuFBIvMi+gkvTLi
-         PZHw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+0hudgD5U21xaWUm5jU/uM+up9mp8pBozRZkrLKlBd8=;
+        b=Nr73Cbm8HH/ZIzsesULAKhGKBGFVymHiX+/ETx5s6INZaQCnz6A2SjoRiiJRCGJVr6
+         v7LdKtPWZmyUD7NALYcJuuYncyL/xo3h8aDyjW76s2sjWXU2lj6GAjXNN5vujtC789/m
+         skkoUKVFqbbz5HGj5j+Pqcl78vSLAmZwanGuw+fJx96o2UcBp0lCRq9tVeHYRJOs4O/P
+         eKffZ0z0/xSZX3snCMwP2iUCPE9XvWGcQZtME5CCU1o6VrtTBF44SvyOB8JZyXHc9UDQ
+         6vmi6AE1nQ+iuY5QdN4PJdH3VoHzfGkIAxFqoqzHGNc/9+xZOFG4V0cEAXMQsly3z/lz
+         xUIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=wxtyDV6t4uv+Mgr8MRPk9fGyoixiM87h1/o2nIWyM7o=;
-        b=K9Nm7E0cA0K75+C6cq6OejYx42PTyCkcvqo3JhqCK/dGqVqoHrl9dNdcCjeFyRCKqm
-         ysGg/VQk945kZoIWR51dSfKPKMuR0mL3W1VusxInoMxR1g7+/ERzhF3PVYK/b+MGRil1
-         wPcG/V+UYHTG0iyXccBpMkpOpUkRAC1iDhsRSQLF+WJ6XFKZtGL1JXi3xqY+53BV2Sal
-         jzR5kFC6KGEgNGVJ6e8JDDnYEfVg5E3qDSOTrZxWzsu/86gCmOiDHO/gUXoATIgG9Sa7
-         SbtURz/0ZGMBXG4QZBcZiG+JyQf4nT/XbmxB7MBxQd9gbihGwOEdfjd4jGEU0TOxro6N
-         JBfw==
-X-Gm-Message-State: ABuFfojkweMTLCWafqvDNgfLzhfEeE6+EcfG0M7wHRUoTWXYecDqqv2n
-        zknPvADNRfJad6pUJbRmVr7zity/
-X-Google-Smtp-Source: ACcGV620PywAXdijS6Vjh5vna2oL5R1niEGq5+3SCI+q/mVPd2zaGWwN8PUA+p0bRK1XODrRqcVN+A==
-X-Received: by 2002:a63:5a0d:: with SMTP id o13-v6mr21770468pgb.267.1539723768765;
-        Tue, 16 Oct 2018 14:02:48 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+0hudgD5U21xaWUm5jU/uM+up9mp8pBozRZkrLKlBd8=;
+        b=QcE+mDljtFReZOzIm8eB19uYTiXYsoTVyO3qjTblPIyvYAxd4QrqGt/Ez5B5tsfmJ6
+         jYuinkD9C/ig6SUyrIwmM2uehRCn14Sa+Q30i0lTGMyCrNYDPhY+I4dY1VVvofJ8eodl
+         KYahw/q1h7zZK2ijb8QEQUOcopp7Z1z7iOmuns0jjM5ri6haBlq28WmFGMV+Q1KFMd09
+         ryZH+hNbGP4pMm1zBesqXc7Y1x8sjlyZTcMYkFEYAJ+Avt/zOOQk4bN0p+3Qx1/OlXw6
+         8vALM1RRmVhNii/4xb7gsuSI0uU6JTz6r4f24wR+hl6361EW700zlhd/Dk9f1tI6odRv
+         7ToQ==
+X-Gm-Message-State: ABuFfoiWI8NZMXPfPcedgOzA1mPcYgdWmQgLqNLD/QnmP/lffqogXgQx
+        sB4TNMaNzUBK1J0+7ZdceLo2IyMH
+X-Google-Smtp-Source: ACcGV63bSPXN1TXFq+UwnqMJ2eCfOVq5cvTWJUAJhmvop/T6oIPTDj+9VVC9WnmZDDOwhQqHRqsljQ==
+X-Received: by 2002:a63:c54a:: with SMTP id g10-v6mr21277789pgd.201.1539723770224;
+        Tue, 16 Oct 2018 14:02:50 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id x17-v6sm17103572pfn.59.2018.10.16.14.02.47
+        by smtp.gmail.com with ESMTPSA id h32-v6sm6877429pgb.94.2018.10.16.14.02.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Oct 2018 14:02:47 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 14:02:47 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Oct 2018 21:02:42 GMT
-Message-Id: <pull.47.git.gitgitgadget@gmail.com>
-From:   "Jameson Miller via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/3] Fix gc segfault
+        Tue, 16 Oct 2018 14:02:49 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 14:02:49 -0700 (PDT)
+X-Google-Original-Date: Tue, 16 Oct 2018 21:02:43 GMT
+Message-Id: <4b752704bd1dd676823d735757e8ed5e48eeba07.1539723766.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.47.git.gitgitgadget@gmail.com>
+References: <pull.47.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/3] Fix typo 'detla' -> 'delta'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 9ac3f0e (pack-objects: fix performance issues on packing large deltas,
-2018-07-22), a mutex was introduced that is used to guard the call to set
-the delta size. This commit added code to initialize it, but at an incorrect
-spot: in init_threaded_search(), while the call to oe_set_delta_size() (and
-hence to packing_data_lock()) can happen in the call chain check_object() <- 
-get_object_details() <-prepare_pack() <- cmd_pack_objects(), which is long
-before theprepare_pack() function calls ll_find_deltas() (which initializes
-the threaded search).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Another tell-tale that the mutex was initialized in an incorrect spot is
-that the function to initialize it lives in builtin/, while the code that
-uses the mutex is defined in a libgit.a header file.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ pack-objects.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Let's use a more appropriate function: prepare_packing_data(), which not
-only lives in libgit.a, but has to be called before thepacking_data struct
-is used that contains that mutex.
-
-Johannes Schindelin (3):
-  Fix typo 'detla' -> 'delta'
-  pack-objects (mingw): demonstrate a segmentation fault with large
-    deltas
-  pack-objects (mingw): initialize `packing_data` mutex in the correct
-    spot
-
- builtin/pack-objects.c        |  1 -
- pack-objects.c                |  3 +++
- pack-objects.h                |  2 +-
- t/t5321-pack-large-objects.sh | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 36 insertions(+), 2 deletions(-)
- create mode 100755 t/t5321-pack-large-objects.sh
-
-
-base-commit: 5a0cc8aca797dbd7d2be3b67458ff880ed45cddf
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-47%2Fjamill%2Ffix-gc-segfault-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-47/jamill/fix-gc-segfault-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/47
+diff --git a/pack-objects.h b/pack-objects.h
+index 2ca39cfcfe..86ee93feb4 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -377,7 +377,7 @@ static inline unsigned long oe_delta_size(struct packing_data *pack,
+ 		return e->delta_size_;
+ 
+ 	/*
+-	 * pack->detla_size[] can't be NULL because oe_set_delta_size()
++	 * pack->delta_size[] can't be NULL because oe_set_delta_size()
+ 	 * must have been called when a new delta is saved with
+ 	 * oe_set_delta().
+ 	 * If oe_delta() returns NULL (i.e. default state, which means
 -- 
 gitgitgadget
+
