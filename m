@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 496601F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 22:36:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA4C11F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 22:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727282AbeJQG3O (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 02:29:14 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42745 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727247AbeJQG3M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 02:29:12 -0400
-Received: by mail-pf1-f194.google.com with SMTP id f26-v6so12144371pfn.9
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:36:39 -0700 (PDT)
+        id S1727303AbeJQG3R (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 02:29:17 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39436 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727247AbeJQG3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 02:29:16 -0400
+Received: by mail-pl1-f195.google.com with SMTP id e67-v6so2699057plb.6
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SJ+lmcE+SHOiaT/fYfkqaXMRwOhfW/HXswdUqQ9heU4=;
-        b=Wcud3eGpYhhNRMnGjvMP348dedvLSubESDbTXa3No4qXriflzszpnJgiPRt/FidzOj
-         LHUHPzTmpXsogxWM8CW1NJuZjAada4jxvjVgphY/m2oPigaSOup6AG0LKxM5LrRjTiPZ
-         mj8fArpB1AV0AiduWOLUxn8FY5p6ZL6lpQ6SUV34OHXJRa8imKmy+OD4qK9Mi3TSooUk
-         EGcgv2sSPtiK/OFt6tV2n7nO6pOZwWn04id9DUgVhAlunxfTyhpyF+Q6Em8/4Yu3RSVL
-         z7Trl+3XJy33YSrnf+tfpW60DgrTfNKvrJnbI/1nP1/RD1O83QX0TsEYV7QB+eDWzpRb
-         Y5cw==
+        bh=kxsxfuatUGnB3bzwSX68mZcKrbJkiLhKQcgRuUNHX/w=;
+        b=uu5NqKlbDTFEBwUCY96nW273ELyakiol5JJQf8xPfFBocsW0DSg9J3CMcHI9umKtzb
+         1gkvVd8Un3Utcmo528HutO5hilhc+4bk0YQVHiU2UpuqAhdHfmOsmc8yfQodHKzi3ut4
+         U/eifHbQ9FNFBG0VFA5voSjVII8dOg8lvokc+u1WVs0ndNhupH57RY8bmbu4BOUhpfeV
+         XwyxDM49m/45BTMD0uRfKzk9a4f1MaA86THQeexn09U0LcJrmIFcQA5T6HdF3YkzzBgm
+         bPaGUFnx4/Dq4rZgj6Y5cD9XqQ7cgYeuftI84gOm9P1j5thltTt0iC6UPtdRVP1sTHIl
+         Zdvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SJ+lmcE+SHOiaT/fYfkqaXMRwOhfW/HXswdUqQ9heU4=;
-        b=GWzei/ofUkbNE6h2oVd8XdpxchiFmrUiFpks121IVCLyknvVB0n3+SOoeiI4/GVVYo
-         luLQLrJlfRmuTfa1Jjwu7yX6mFCkEcILK548NzhORiRCXB9yYd7x4Bc/1AMiP4aHjTR4
-         gl1EwBhmTvECCU7YzKHiqk6v1+R0XbbNPgbb/x9wgWPGj6vHizKQVKl8WwkfA8+VLU0N
-         Oig/WgJ/d8hMouQcOkabi36xgBB7oMPejH+1rJsElXk+ZVFEQsMWoVQQbpVxJE4lAaPG
-         eZzdtmwUtGGcIeDiZ5Ln/sGI3UINuD5Tj0U8sWCEEKg9DW96ygyVxRX6g2BSk9UJM7Lu
-         Ps4w==
-X-Gm-Message-State: ABuFfogJ5fIdTdRt0tpabVaWSdxevwMBVgScJOzrMnAk8PYRswN5a22M
-        kYhIeumpgzgL445JLvIkTVr8JNf7
-X-Google-Smtp-Source: ACcGV60ciWKdNPyNhnGAdiuF5yBtYd6qkIaL5LaJY9r3jLbm++Tu2PTMb2w2qxyKHIyalfxxiWHZhQ==
-X-Received: by 2002:a62:c252:: with SMTP id l79-v6mr23759939pfg.141.1539729399028;
-        Tue, 16 Oct 2018 15:36:39 -0700 (PDT)
+        bh=kxsxfuatUGnB3bzwSX68mZcKrbJkiLhKQcgRuUNHX/w=;
+        b=iSLl0svTXWTmGNaj63Q8GB/V9OPONfHhU/GnX7RKt0GIYgwZvp3vVsM07b8K/LeFIk
+         cyWld+u1djddXvrgnS4hiw61CFVXjsV6Jd2/FzhttfnUToE+kOwTF41JE/7gdAY7wyLc
+         iTG7tSXA+BIPOwdEcwu58k1wNXV8FHINpkTr6CFiqMHLH5geIcv4gOtzl4C9BK0Zb+6J
+         WZKhmXAKI59wJjG+OkjVS231k9guMgFxZi4LjyiIUqV33dyFkqrF6QxkNcFmINrcguu/
+         1Y7X6bKXfYBxaXW1v+x0VO+B44UN3ELLvUaL/j+KAp4a0eHF8Sh/ZNbtKFVgFL/v6zKV
+         jqqQ==
+X-Gm-Message-State: ABuFfohd8WVlyPyZK7emPb3ZHs4qMNz60v4HS0WdbTwMn+5g59M/81mf
+        yOW8OpljnHTM5vQ0GZCX2SIgsbA5
+X-Google-Smtp-Source: ACcGV60HyYPvCfcZjK8ffwnqBkOGvJ3aqKaa54Vm0toUI2mZxAZKiVw/Xwc9DNGh8kugZ7eZE8D8Gw==
+X-Received: by 2002:a17:902:848f:: with SMTP id c15-v6mr22718778plo.119.1539729403345;
+        Tue, 16 Oct 2018 15:36:43 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id h32-v6sm7017961pgb.94.2018.10.16.15.36.37
+        by smtp.gmail.com with ESMTPSA id o131-v6sm24468079pgo.53.2018.10.16.15.36.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Oct 2018 15:36:37 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 15:36:37 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Oct 2018 22:36:26 GMT
-Message-Id: <2358cfd5edde4f749ee237f6b9f643444c62b900.1539729393.git.gitgitgadget@gmail.com>
+        Tue, 16 Oct 2018 15:36:42 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 15:36:42 -0700 (PDT)
+X-Google-Original-Date: Tue, 16 Oct 2018 22:36:29 GMT
+Message-Id: <cd9eef96885a811196ab0b851a98de4455b950ab.1539729393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.25.v4.git.gitgitgadget@gmail.com>
 References: <pull.25.v3.git.gitgitgadget@gmail.com>
         <pull.25.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 1/7] prio-queue: add 'peek' operation
+Subject: [PATCH v4 4/7] revision.c: begin refactoring --topo-order logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,118 +71,178 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When consuming a priority queue, it can be convenient to inspect
-the next object that will be dequeued without actually dequeueing
-it. Our existing library did not have such a 'peek' operation, so
-add it as prio_queue_peek().
+When running 'git rev-list --topo-order' and its kin, the topo_order
+setting in struct rev_info implies the limited setting. This means
+that the following things happen during prepare_revision_walk():
 
-Add a reference-level comparison in t/helper/test-prio-queue.c
-so this method is exercised by t0009-prio-queue.sh. Further, add
-a test that checks the behavior when the compare function is NULL
-(i.e. the queue becomes a stack).
+* revs->limited implies we run limit_list() to walk the entire
+  reachable set. There are some short-cuts here, such as if we
+  perform a range query like 'git rev-list COMPARE..HEAD' and we
+  can stop limit_list() when all queued commits are uninteresting.
+
+* revs->topo_order implies we run sort_in_topological_order(). See
+  the implementation of that method in commit.c. It implies that
+  the full set of commits to order is in the given commit_list.
+
+These two methods imply that a 'git rev-list --topo-order HEAD'
+command must walk the entire reachable set of commits _twice_ before
+returning a single result.
+
+If we have a commit-graph file with generation numbers computed, then
+there is a better way. This patch introduces some necessary logic
+redirection when we are in this situation.
+
+In v2.18.0, the commit-graph file contains zero-valued bytes in the
+positions where the generation number is stored in v2.19.0 and later.
+Thus, we use generation_numbers_enabled() to check if the commit-graph
+is available and has non-zero generation numbers.
+
+When setting revs->limited only because revs->topo_order is true,
+only do so if generation numbers are not available. There is no
+reason to use the new logic as it will behave similarly when all
+generation numbers are INFINITY or ZERO.
+
+In prepare_revision_walk(), if we have revs->topo_order but not
+revs->limited, then we trigger the new logic. It breaks the logic
+into three pieces, to fit with the existing framework:
+
+1. init_topo_walk() fills a new struct topo_walk_info in the rev_info
+   struct. We use the presence of this struct as a signal to use the
+   new methods during our walk. In this patch, this method simply
+   calls limit_list() and sort_in_topological_order(). In the future,
+   this method will set up a new data structure to perform that logic
+   in-line.
+
+2. next_topo_commit() provides get_revision_1() with the next topo-
+   ordered commit in the list. Currently, this simply pops the commit
+   from revs->commits.
+
+3. expand_topo_walk() provides get_revision_1() with a way to signal
+   walking beyond the latest commit. Currently, this calls
+   add_parents_to_list() exactly like the old logic.
+
+While this commit presents method redirection for performing the
+exact same logic as before, it allows the next commit to focus only
+on the new logic.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- prio-queue.c               |  9 +++++++++
- prio-queue.h               |  6 ++++++
- t/helper/test-prio-queue.c | 26 ++++++++++++++++++--------
- t/t0009-prio-queue.sh      | 14 ++++++++++++++
- 4 files changed, 47 insertions(+), 8 deletions(-)
+ revision.c | 42 ++++++++++++++++++++++++++++++++++++++----
+ revision.h |  4 ++++
+ 2 files changed, 42 insertions(+), 4 deletions(-)
 
-diff --git a/prio-queue.c b/prio-queue.c
-index a078451872..d3f488cb05 100644
---- a/prio-queue.c
-+++ b/prio-queue.c
-@@ -85,3 +85,12 @@ void *prio_queue_get(struct prio_queue *queue)
- 	}
- 	return result;
+diff --git a/revision.c b/revision.c
+index e18bd530e4..2dcde8a8ac 100644
+--- a/revision.c
++++ b/revision.c
+@@ -25,6 +25,7 @@
+ #include "worktree.h"
+ #include "argv-array.h"
+ #include "commit-reach.h"
++#include "commit-graph.h"
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
+@@ -2454,7 +2455,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	if (revs->diffopt.objfind)
+ 		revs->simplify_history = 0;
+ 
+-	if (revs->topo_order)
++	if (revs->topo_order && !generation_numbers_enabled(the_repository))
+ 		revs->limited = 1;
+ 
+ 	if (revs->prune_data.nr) {
+@@ -2892,6 +2893,33 @@ static int mark_uninteresting(const struct object_id *oid,
+ 	return 0;
  }
+ 
++struct topo_walk_info {};
 +
-+void *prio_queue_peek(struct prio_queue *queue)
++static void init_topo_walk(struct rev_info *revs)
 +{
-+	if (!queue->nr)
-+		return NULL;
-+	if (!queue->compare)
-+		return queue->array[queue->nr - 1].data;
-+	return queue->array[0].data;
++	struct topo_walk_info *info;
++	revs->topo_walk_info = xmalloc(sizeof(struct topo_walk_info));
++	info = revs->topo_walk_info;
++	memset(info, 0, sizeof(struct topo_walk_info));
++
++	limit_list(revs);
++	sort_in_topological_order(&revs->commits, revs->sort_order);
 +}
-diff --git a/prio-queue.h b/prio-queue.h
-index d030ec9dd6..682e51867a 100644
---- a/prio-queue.h
-+++ b/prio-queue.h
-@@ -46,6 +46,12 @@ extern void prio_queue_put(struct prio_queue *, void *thing);
-  */
- extern void *prio_queue_get(struct prio_queue *);
- 
-+/*
-+ * Gain access to the "thing" that would be returned by
-+ * prio_queue_get, but do not remove it from the queue.
-+ */
-+extern void *prio_queue_peek(struct prio_queue *);
 +
- extern void clear_prio_queue(struct prio_queue *);
- 
- /* Reverse the LIFO elements */
-diff --git a/t/helper/test-prio-queue.c b/t/helper/test-prio-queue.c
-index 9807b649b1..5bc9c46ea5 100644
---- a/t/helper/test-prio-queue.c
-+++ b/t/helper/test-prio-queue.c
-@@ -22,14 +22,24 @@ int cmd__prio_queue(int argc, const char **argv)
- 	struct prio_queue pq = { intcmp };
- 
- 	while (*++argv) {
--		if (!strcmp(*argv, "get"))
--			show(prio_queue_get(&pq));
--		else if (!strcmp(*argv, "dump")) {
--			int *v;
--			while ((v = prio_queue_get(&pq)))
--			       show(v);
--		}
--		else {
-+		if (!strcmp(*argv, "get")) {
-+			void *peek = prio_queue_peek(&pq);
-+			void *get = prio_queue_get(&pq);
-+			if (peek != get)
-+				BUG("peek and get results do not match");
-+			show(get);
-+		} else if (!strcmp(*argv, "dump")) {
-+			void *peek;
-+			void *get;
-+			while ((peek = prio_queue_peek(&pq))) {
-+				get = prio_queue_get(&pq);
-+				if (peek != get)
-+					BUG("peek and get results do not match");
-+				show(get);
-+			}
-+		} else if (!strcmp(*argv, "stack")) {
-+			pq.compare = NULL;
-+		} else {
- 			int *v = malloc(sizeof(*v));
- 			*v = atoi(*argv);
- 			prio_queue_put(&pq, v);
-diff --git a/t/t0009-prio-queue.sh b/t/t0009-prio-queue.sh
-index e56dfce668..3941ad2528 100755
---- a/t/t0009-prio-queue.sh
-+++ b/t/t0009-prio-queue.sh
-@@ -47,4 +47,18 @@ test_expect_success 'notice empty queue' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<'EOF'
-+3
-+2
-+6
-+4
-+5
-+1
-+8
-+EOF
-+test_expect_success 'stack order' '
-+	test-tool prio-queue stack 8 1 5 4 6 2 3 dump >actual &&
-+	test_cmp expect actual
-+'
++static struct commit *next_topo_commit(struct rev_info *revs)
++{
++	return pop_commit(&revs->commits);
++}
 +
- test_done
++static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
++{
++	if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
++		if (!revs->ignore_missing_links)
++			die("Failed to traverse parents of commit %s",
++			    oid_to_hex(&commit->object.oid));
++	}
++}
++
+ int prepare_revision_walk(struct rev_info *revs)
+ {
+ 	int i;
+@@ -2928,11 +2956,13 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		commit_list_sort_by_date(&revs->commits);
+ 	if (revs->no_walk)
+ 		return 0;
+-	if (revs->limited)
++	if (revs->limited) {
+ 		if (limit_list(revs) < 0)
+ 			return -1;
+-	if (revs->topo_order)
+-		sort_in_topological_order(&revs->commits, revs->sort_order);
++		if (revs->topo_order)
++			sort_in_topological_order(&revs->commits, revs->sort_order);
++	} else if (revs->topo_order)
++		init_topo_walk(revs);
+ 	if (revs->line_level_traverse)
+ 		line_log_filter(revs);
+ 	if (revs->simplify_merges)
+@@ -3257,6 +3287,8 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 
+ 		if (revs->reflog_info)
+ 			commit = next_reflog_entry(revs->reflog_info);
++		else if (revs->topo_walk_info)
++			commit = next_topo_commit(revs);
+ 		else
+ 			commit = pop_commit(&revs->commits);
+ 
+@@ -3278,6 +3310,8 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 
+ 			if (revs->reflog_info)
+ 				try_to_simplify_commit(revs, commit);
++			else if (revs->topo_walk_info)
++				expand_topo_walk(revs, commit);
+ 			else if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
+ 				if (!revs->ignore_missing_links)
+ 					die("Failed to traverse parents of commit %s",
+diff --git a/revision.h b/revision.h
+index 2b30ac270d..fd4154ff75 100644
+--- a/revision.h
++++ b/revision.h
+@@ -56,6 +56,8 @@ struct rev_cmdline_info {
+ #define REVISION_WALK_NO_WALK_SORTED 1
+ #define REVISION_WALK_NO_WALK_UNSORTED 2
+ 
++struct topo_walk_info;
++
+ struct rev_info {
+ 	/* Starting list */
+ 	struct commit_list *commits;
+@@ -245,6 +247,8 @@ struct rev_info {
+ 	const char *break_bar;
+ 
+ 	struct revision_sources *sources;
++
++	struct topo_walk_info *topo_walk_info;
+ };
+ 
+ int ref_excluded(struct string_list *, const char *path);
 -- 
 gitgitgadget
 
