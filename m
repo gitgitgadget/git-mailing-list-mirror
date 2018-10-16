@@ -6,65 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F29A91F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 04:27:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2249D1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 04:45:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729245AbeJPMQG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 08:16:06 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:45333 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729069AbeJPMQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 08:16:05 -0400
-Received: by mail-wr1-f50.google.com with SMTP id q5-v6so23727583wrw.12
-        for <git@vger.kernel.org>; Mon, 15 Oct 2018 21:27:39 -0700 (PDT)
+        id S1727375AbeJPMdl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 08:33:41 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38779 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726780AbeJPMdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 08:33:41 -0400
+Received: by mail-wr1-f66.google.com with SMTP id a13-v6so23758404wrt.5
+        for <git@vger.kernel.org>; Mon, 15 Oct 2018 21:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=zlU6QlLA29Z25/UbBB5WJ0NIK/H5KC30D/p0Cumr83I=;
-        b=dmPc0djY1KFL9vka7eIDM/aiUnEkjmAmxVRnp/ElEZhhMS8ZdR1JR9UXgOtmC+T0Uq
-         TDsFY/mPTYBzd0ijDtURv9bFEObb6RXAjVVjjSjNAh/4X0uyyO9W5N8S72gpSaO2Se6p
-         jJuL3yFi48kgzMiLbZLHWWDoyxh+sAuMQl60kfCb3ba5WUVtxvFKMpXuXBy5pxbZhH+r
-         3yrkcSCwpgE1OBvpIPuQeDxHsMiNMfM3zqfDYtvP+zQMrvfpdFPNzhAZhduIznNPexPk
-         R4fdy6x+n9jrwB7GvGedcEUr3MF5yxNe+sGMmTwe/jqYMGbprn043/FBjEhLKBU1oZRb
-         qkeA==
+        bh=SdNBmZDXd9YB1t1+bALOaTWjQCmpv5YZ4mii+SAn5cQ=;
+        b=UCiXSHUsxbEiI/IBSzzO3PTo/6zGpmpYwVOCfoTkLBeIDP7XS5t+L00TaL3K9vpRiM
+         Iy5EOcDu8fk6+X4yXEgkjU8ZEENu+QNV1jOaGaNHy3A6rKnntoIKh284KHPKKzPmRtmT
+         NmRMLxieNinoPJJOj7h2R5wHySxBV/pRafNePWq9tjNApmWHimDTjN1DvvmTeoyrga8c
+         uyMdNtT57PAszt4n8tGRTObP/xvmby01XqHPE6Beka9mtz4XmviIYVCUen4ir7lNIPET
+         1prFLQsOo5ieTMexlz+oXCKj3NcotWOlA/EHneWY9QLWxTuswShkpB09K4l9zNKv5JL0
+         hNWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=zlU6QlLA29Z25/UbBB5WJ0NIK/H5KC30D/p0Cumr83I=;
-        b=Z8HvjSKAwIJUSvModYpOTX+Wku1NHmrLDvP8uGvvPc+/cPTgmHTBjYLzqr9f/6HPRB
-         P0NE9gI/9PItsD4cqkl4V/poO80IPy72d10bhap3hg7Kp4RPBBCQ7X0MRvNGHcPkzhEi
-         3yW0OAM/R2RYNtRJlqQLw/DkxSeYhI4ex4ZIWpYoZMDiNBbcLs3jejNcoypBueoD6KIQ
-         WXfEyT1OytmqMzb0KjZpl7vnK32TLh0qW4hlIQ+k1zCiQuQxw3Hcv/kifGCFiPSna+cF
-         bA9J/Blvq9eVDhUVoEWVYzzHamKU+Wyh4xXCTX9RXTnAhOHx5RjvIE48H0W2jh24qP/a
-         iMSA==
-X-Gm-Message-State: ABuFfogMglWzmb0AmjL1taTRAiXAYKAqCLsWjNQ7wuGTtWHvdjnYcajJ
-        xulJesH6BSBiwLC7BCN+xwi4+8ENVww=
-X-Google-Smtp-Source: ACcGV62WNGAScRvFHft5X5Bf7/qP29CJQb01wxgOCSc+dMqRhLMhcdXjvd7VkIOfn9rcXVuvxlaqyg==
-X-Received: by 2002:adf:f785:: with SMTP id q5-v6mr15851736wrp.86.1539664058345;
-        Mon, 15 Oct 2018 21:27:38 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d16-v6sm9558163wrw.78.2018.10.15.21.27.37
+        bh=SdNBmZDXd9YB1t1+bALOaTWjQCmpv5YZ4mii+SAn5cQ=;
+        b=MjvfNXTIVfl3F0A0muimbL1nlZTvAeM4rySoW0gDgPFkbs+hND4fEJ/5PjBJ2l/c07
+         +9tsmeOA2fOc5T11My3J4tSlXGjdstHwgJWh2F6+dNFx3JXdqs6AQh102R2Zety/+NvM
+         ONDMRMc5vfnposrpfFrTsYNmULAhgGRGipJyEJCEZckEqZNYO8NT494jD87mWgZVa+SR
+         kb4bN6RSj5KBEmWfiG88XYp5vRyxMw6ppy4PYk3UQrlI6LKkS9eH2lFzLworySdPnFm5
+         IBNvLUnNfqEx+Z1vIU4YArIZYVWoE/UXA8K33BdjwzWv5opwkkiKdzVy5mCV7uQQbA46
+         B8Zw==
+X-Gm-Message-State: ABuFfoh0ANtlXr9J7hfmIDn++cTWsvpXtfmukV8KQfGpZezBSZXPiZgQ
+        jnqw2BfgOOlMBI6h0lMIy2E=
+X-Google-Smtp-Source: ACcGV619CKviHj1O9o2m5yESPj9klTaU3p7Ecrt4IdwbSWonVc+EwIbZmWkBO/4OggUTBexam6xs5g==
+X-Received: by 2002:adf:fb4b:: with SMTP id c11-v6mr16456533wrs.117.1539665108731;
+        Mon, 15 Oct 2018 21:45:08 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u10-v6sm9595028wrt.59.2018.10.15.21.45.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 15 Oct 2018 21:27:37 -0700 (PDT)
+        Mon, 15 Oct 2018 21:45:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Chen Bin <chenbin.sh@gmail.com>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        George Vanburgh <gvanburgh@bloomberg.net>,
-        Merland Romain <merlorom@yahoo.fr>,
-        Vinicius Kursancew <viniciusalexandre@gmail.com>,
-        larsxschneider@gmail.com, Lex Spoon <lex@lexspoon.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCHv2 0/3] git-p4: improved unshelving - small fixes
-References: <20181015111408.17618-1-luke@diamand.org>
-Date:   Tue, 16 Oct 2018 13:27:36 +0900
-In-Reply-To: <20181015111408.17618-1-luke@diamand.org> (Luke Diamand's message
-        of "Mon, 15 Oct 2018 12:14:05 +0100")
-Message-ID: <xmqqtvlm1pon.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 0/4] Bloom filter experiment
+References: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com>
+        <20181009193445.21908-1-szeder.dev@gmail.com>
+        <61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com>
+Date:   Tue, 16 Oct 2018 13:45:06 +0900
+In-Reply-To: <61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com> (Derrick
+        Stolee's message of "Mon, 15 Oct 2018 10:39:45 -0400")
+Message-ID: <xmqqlg6y1ovh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,25 +72,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> This is the same as my earlier patch other than fixing the
-> documentation to reflect the change to the destination branch,
-> as noticed by Junio.
+> 2. The filters are sized according to the number of changes in each
+> commit, with a minimum of one 64-bit word.
+> ...
+> 6. When we compute the Bloom filters, we don't store a filter for
+> commits whose first-parent diff has more than 512 paths.
 
-Also you set up when-finished driver for clean-up before running
-clone, which I think is a good change, too.
+Just being curious but was 512 taken out of thin air or is there
+some math behind it, e.g. to limit false positive rate down to
+certain threshold?  With a wide-enough bitset, you could store
+arbitrary large number of paths with low enough false positive, I
+guess, but is there a point where there is too many paths in the
+change that gives us diminishing returns and not worth having a
+filter in the first place?
 
-Will replace.  Thanks.
+In a normal source-code-control context, the set of paths modified
+by any single commit ought to be a small subset of the entire paths,
+and whole-tree changes ought to be fairly rare.  In a project for
+which that assumption does not hold, it might help to have a
+negative bloom filter (i.e. "git log -- A" asks "does the commit
+modify A?" and the filter would say "we know it does not, because we
+threw all the paths that are not touched to the bloom filter"), but
+I think that would optimize for a wrong case.
 
->
-> Luke Diamand (3):
->   git-p4: do not fail in verbose mode for missing 'fileSize' key
->   git-p4: unshelve into refs/remotes/p4-unshelved, not
->     refs/remotes/p4/unshelved
->   git-p4: fully support unshelving changelists
->
->  Documentation/git-p4.txt | 10 ++---
->  git-p4.py                | 90 +++++++++++++++++++++++-----------------
->  t/t9832-unshelve.sh      | 75 ++++++++++++++++++++++++++-------
->  3 files changed, 117 insertions(+), 58 deletions(-)
