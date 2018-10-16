@@ -2,127 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89F001F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 18:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 987721F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 18:45:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727478AbeJQCGG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 22:06:06 -0400
-Received: from mail-it1-f202.google.com ([209.85.166.202]:42526 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727395AbeJQCGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 22:06:06 -0400
-Received: by mail-it1-f202.google.com with SMTP id v125-v6so26843640ita.7
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 11:14:26 -0700 (PDT)
+        id S1727159AbeJQCh3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 22:37:29 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:39352 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbeJQCh3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 22:37:29 -0400
+Received: by mail-ed1-f45.google.com with SMTP id d15-v6so22382861edq.6
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 11:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Nfr1jpOQmzwQFPfOqjexMqzJUD/hwxx48KXiGXgBQ3s=;
-        b=ZUq2OTYcUEW9NT/yB3Ka2Mo2EZ0sA7Vjhaz+9b+eYZ2C7m5m9Yyo/tX0vX1q0BFtDI
-         4Q1tBBnQRCKGi5aOzFoRGyNEERxkiudutcXfPeEnRWS/wABtpFcQuF+9x7ZxYLdTeisM
-         5QPi9iSGJmIgokyKYRAXPWHbJ3CGhcij9k52kG/zB0UDzp20VJHfqnbnvoaDqSqVSfuW
-         N5sfPmST37pPc5q3Ds7DyPUzKilueWXwtUXJUuVgks8rbp8DARyYHuCU7Q1KPOTe6fhe
-         VSXN4KSTDtq5tj2O8oNBnv3QN7D1nFiK2rpf9uAMi13fmYo00rL6FF2M9o0dfhzWE/AT
-         D6sg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=FS+eXcXNGaRTHh5orgXJRIfXSfwDisF5iL0SmXHntLc=;
+        b=uv+5Le2l9jPADGgbfGDJZbiWQvDBSH3qTe2Ev/ih65YDlBUMgkkK1xwJIqHZH56Hpx
+         YHZJUxvv/59piFM5xFPnqqQrPzHcUzgwEtjQ0xZxLp5/j+mifeEGKOEbM0adchmq0nkG
+         QaRbJcU/pCo7MOfxhFsp64n1QVazw0lf3/KBL5c3u4SPvtZanv7BqtwVQ5DyBM/qn72L
+         Y8MXp0Kof3btUf94rRQVqX6O2Yo3uiFr6Fumc3s8oP9HtKsbvD+LWYromoCCpfuUQbvP
+         Mgdrcs2xCJ21C4pm8dbz+YANfYdM8s22FG8JfLTqJLcrm2yxrAuGBTCEQZBrQHaBuJe1
+         2c3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Nfr1jpOQmzwQFPfOqjexMqzJUD/hwxx48KXiGXgBQ3s=;
-        b=dipPLVITuJAu6tM70Zo+eSYUJJCrVGXlX9ZRttzQ77s/bDXpPRZXdsk1ZvzGvb3cHX
-         2f95u2f+W8uO0ZOJMIoHil4we2jqrY8gXSCN8letleFa7B8rUvUGXjQPubA4TcSv9n+C
-         CPmqg1MO+maWvnz2JLetuva3mRALTtPFmQH9HmXG6zF/ZaTE2wPmQDs4kGuD2qCeGiuk
-         LCunxx5artFtmLag8hep1p1Na592AJF8UpWwwWtSYJBq1/uX31Cxiu5BJ8HhFS54kGWy
-         GpreWHGcjnKg5jALKWd7LNgiAxjV+RqRqNlMxeNjp50/RWYesAp9BRJG58BNZgY5kSDS
-         0iUg==
-X-Gm-Message-State: ABuFfohSshP3T2t0/RaeYikccSa5/hh0Uy28R2zps/TlR8dsSNsHMceG
-        +Ck+W5iJJeNf9y7N1IDRqvla/3xpAbkr
-X-Google-Smtp-Source: ACcGV6145UWlF8+qnjZm8F6CuXM40BIqxP9+Ubvb5sI/UKFoh8Ia0MRmJGcQZrfykDHi5iCuCmdS+1HDVj9m
-X-Received: by 2002:a24:5517:: with SMTP id e23-v6mr20995909itb.1.1539713666437;
- Tue, 16 Oct 2018 11:14:26 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 11:13:27 -0700
-In-Reply-To: <20181016181327.107186-1-sbeller@google.com>
-Message-Id: <20181016181327.107186-10-sbeller@google.com>
-Mime-Version: 1.0
-References: <20181016181327.107186-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0
-Subject: [PATCH 9/9] builtin/fetch: check for submodule updates for non branch fetches
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=FS+eXcXNGaRTHh5orgXJRIfXSfwDisF5iL0SmXHntLc=;
+        b=gqUejIbLwebF14Mg4HQaVV0Ni3LLML3cnn1Tu4rqwyBdztzYe1sLQwNRkmQcjPSfrN
+         T3VBO0sgwx8irTXw04X+CNn466OKWASOCrCmtwWgNfJrda+YG0GgU8xgwFjJDuR7ykWj
+         rZkTb4JWb659cfxZU55LMmcLtX6bo5wh+pquGWYyMJfGVI0HO0iOaunBiCmb18fXDq1V
+         b4tARMZtTNLDCFBmacusQ3WZY4suybRqPmJs23yAUwAN2eg/1bp1vwY2HSUzH1dpswGj
+         DNaWJhLVySJkkJxv3awwalfNP2BVlEgWLwglumDJCPCbkR0ZcTxfVA2iSmrbRgQtob2G
+         ZPBw==
+X-Gm-Message-State: ABuFfojGXy6eCcQHexP8l4+WGRl98ImF8KP2l79hOdTwhd9GD+kCytYB
+        PRDhJ4Hm4Mov4C5bXc6akZvqIa9z
+X-Google-Smtp-Source: ACcGV62gYcEOc99voy0j0GHid9LijodwyYskLQQ1KRu3f/kZ3A6pulIFGIqZq25Y5e20Fks8X4smnQ==
+X-Received: by 2002:a50:b36e:: with SMTP id r43-v6mr32460305edd.284.1539715540875;
+        Tue, 16 Oct 2018 11:45:40 -0700 (PDT)
+Received: from szeder.dev (x4d0caaf1.dyn.telefonica.de. [77.12.170.241])
+        by smtp.gmail.com with ESMTPSA id w56-v6sm5681034edw.79.2018.10.16.11.45.39
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Oct 2018 11:45:39 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 20:45:37 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Subject: On overriding make variables from the environment...
+Message-ID: <20181016184537.GN19800@szeder.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Gerrit, the code review tool, has a different workflow than our mailing
-list based approach. Usually users upload changes to a Gerrit server and
-continuous integration and testing happens by bots. Sometimes however a
-user wants to checkout a change locally and look at it locally. For this
-use case, Gerrit offers a command line snippet to copy and paste to your
-terminal, which looks like
+Our Makefile has lines like these:
 
-  git fetch https://<host>/gerrit refs/changes/<id> &&
-  git checkout FETCH_HEAD
+  CFLAGS = -g -O2 -Wall
+  CC = cc
+  AR = ar
+  SPATCH = spatch
 
-For Gerrit changes that contain changing submodule gitlinks, it would be
-easy to extend both the fetch and checkout with the '--recurse-submodules'
-flag, such that this command line snippet would produce the state of a
-change locally.
+Note the use of '=', not '?='.  This means that these variables can be
+overridden from the command line, i.e. 'make CC=gcc-X.Y' will build
+with that particular GCC version, but not from the environment, i.e.
+'CC=gcc-X.Y make' will still build with 'cc'.
 
-However the functionality added in the previous patch, which would
-ensure that we fetch the objects in the submodule that the gitlink pointed
-at, only works for remote tracking branches so far, not for FETCH_HEAD.
+This can be confusing for developers who come from other projects
+where they used to run 'CC=whatever make'.
 
-Make sure that fetching a superproject to its FETCH_HEAD, also respects
-the existence checks for objects in the submodule recursion.
+And our build jobs on Travis CI are badly affected by this.  We have
+dedicated build jobs to build Git with GCC and Clang both on Linux and
+OSX from the very beginning (522354d70f (Add Travis CI support,
+2015-11-27)).  But guess how Travis CI specifies which compiler to
+use!  With 'export CC=gcc' and 'export CC=clang', respectively.
+Consequently, our Clang Linux build job has always used gcc, because
+that's where 'cc' points at on Linux by default, while the GCC OSX
+build job has always used Clang.  Oh, well.  Furthermore, see
+37fa4b3c78 (travis-ci: run gcc-8 on linux-gcc jobs, 2018-05-19), where
+Duy added an 'export CC=gcc-8' in an attempt to use a more modern
+compiler, but this had no effect either.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/fetch.c             | 5 ++++-
- t/t5526-fetch-submodules.sh | 2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+I'm not sure what to do.  I'm fine with updating our 'ci/' scripts to
+explicitly respect CC in the environment (either by running 'make
+CC=$CC' or by writing $CC into 'config.mak').  Or I could update our
+Makefile to use '?=' for specific variables, but:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 95c44bf6ff..ea6ecd123e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -887,11 +887,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				rc |= update_local_ref(ref, what, rm, &note,
- 						       summary_width);
- 				free(ref);
--			} else
-+			} else {
-+				check_for_new_submodule_commits(&rm->old_oid);
- 				format_display(&note, '*',
- 					       *kind ? kind : "branch", NULL,
- 					       *what ? what : "HEAD",
- 					       "FETCH_HEAD", summary_width);
-+			}
-+
- 			if (note.len) {
- 				if (verbosity >= 0 && !shown_url) {
- 					fprintf(stderr, _("From %.*s\n"),
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index af12c50e7d..a509eabb04 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -615,7 +615,7 @@ test_expect_success "fetch new commits on-demand when they are not reachable" '
- 	git update-ref refs/changes/2 $D &&
- 	(
- 		cd downstream &&
--		git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
-+		git fetch --recurse-submodules origin refs/changes/2 &&
- 		git -C submodule cat-file -t $C &&
- 		git checkout --recurse-submodules FETCH_HEAD
- 	)
--- 
-2.19.0
+  - I'm afraid to break somebody's setup relying on the current
+    behavior and CC having different values in the environment and in
+    'config.mak'.
+
+  - Where to stop, IOW which variables should be set with '?='?
+    CFLAGS, LDFLAGS, CC, AR, ..., SPATCH, SPATCH_FLAGS?  Dunno.  We
+    already have 'STRIP ?= strip' and there are variables that are
+    checked explicitly (e.g. 'DEVELOPER=y make' works).
+
+    Note also that prior to b05701c5b4 (Make CFLAGS overridable from
+    make command line., 2005-08-06) our Makefile used 'CC?=gcc' as
+    well.
 
