@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 842901F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 22:36:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 496601F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 22:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727292AbeJQG3Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 02:29:16 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:37830 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727247AbeJQG3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 02:29:15 -0400
-Received: by mail-pl1-f196.google.com with SMTP id u6-v6so8947677plz.4
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:36:42 -0700 (PDT)
+        id S1727282AbeJQG3O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 02:29:14 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42745 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727247AbeJQG3M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 02:29:12 -0400
+Received: by mail-pf1-f194.google.com with SMTP id f26-v6so12144371pfn.9
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 15:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=y1zQlUARm7GbYNl3NtJpUgMhk/cSFyvMqeULyUEQfWc=;
-        b=ZteN7PdkYCdvEjIyHvZpKLhrjLaq58/JYjdfbo2/kKblujho7XQxI7DNmIutwVZP5V
-         3Z43qLL1lGgpltrrPwhKpYHeiV6CRCYMANIPUcRYQoH2U7aZvWk9HrYRtFZSIgx30PEC
-         h7ZROZ9KjLmqb4l0nWZqtv/Ryt8Z6A7/YaaTtiK0G2hhE2PmHU5OV3pFxb7Ti8gAZbRA
-         u3sfb3LrSLCy4PCXTllH0+N9dxrKssCmndRm/pzHK36Zq+Gu1fs0e56niEuPAVltTHph
-         Uq7wEjiSV4/1BXfkhZDFSjNcG+RvOlbkwSbdaTUZtWjm6xxWffpdJYC4EDUPK+ieeg/E
-         9aSA==
+        bh=SJ+lmcE+SHOiaT/fYfkqaXMRwOhfW/HXswdUqQ9heU4=;
+        b=Wcud3eGpYhhNRMnGjvMP348dedvLSubESDbTXa3No4qXriflzszpnJgiPRt/FidzOj
+         LHUHPzTmpXsogxWM8CW1NJuZjAada4jxvjVgphY/m2oPigaSOup6AG0LKxM5LrRjTiPZ
+         mj8fArpB1AV0AiduWOLUxn8FY5p6ZL6lpQ6SUV34OHXJRa8imKmy+OD4qK9Mi3TSooUk
+         EGcgv2sSPtiK/OFt6tV2n7nO6pOZwWn04id9DUgVhAlunxfTyhpyF+Q6Em8/4Yu3RSVL
+         z7Trl+3XJy33YSrnf+tfpW60DgrTfNKvrJnbI/1nP1/RD1O83QX0TsEYV7QB+eDWzpRb
+         Y5cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y1zQlUARm7GbYNl3NtJpUgMhk/cSFyvMqeULyUEQfWc=;
-        b=qWHhFBiOhvYEmkrd2XFmfdV9YUafyxy2w+3nOYfggmmEYDLQoLXLkYGtf0lPou+WK/
-         QoCSgK+35wI6rpRz6jV3OIjBurkDACZW7O6mom38mXRuPbcp++fRh3Gv/sVIDVwAPLzd
-         4WNNJOzAGpbeeyyXC97stt9xpnitah1UaBn8lyIR94t1nsKoPGi7WsIvuTHwCaKDfiyN
-         Eu5G8xpZbdM4HB4jGgW3BfiW9cGt3XwL8AjHblHAyVNF5T32X8lNOPj+A2uBdHh3QJtP
-         r6uH7cJNprvohcPzA2MYcRLsoDnlawPTrF41WNv08AuX0Heyj39k3R3rpGOezL5uaWSf
-         RWYw==
-X-Gm-Message-State: ABuFfogGaSP73n6dtgnvFcw2r4B9mB8gndPZ5moelOTaHTHM2e6akwjT
-        iDwDin5rqIczN/nwaUbyHQIv+wnK
-X-Google-Smtp-Source: ACcGV630ifs+YMp4ceyiKr0qf6QuEpWgnPeXo5zSotp6WvZRM1qBg8fB0aHFzf318QIzPI2+nJP/5A==
-X-Received: by 2002:a17:902:4103:: with SMTP id e3-v6mr23219979pld.236.1539729401903;
-        Tue, 16 Oct 2018 15:36:41 -0700 (PDT)
+        bh=SJ+lmcE+SHOiaT/fYfkqaXMRwOhfW/HXswdUqQ9heU4=;
+        b=GWzei/ofUkbNE6h2oVd8XdpxchiFmrUiFpks121IVCLyknvVB0n3+SOoeiI4/GVVYo
+         luLQLrJlfRmuTfa1Jjwu7yX6mFCkEcILK548NzhORiRCXB9yYd7x4Bc/1AMiP4aHjTR4
+         gl1EwBhmTvECCU7YzKHiqk6v1+R0XbbNPgbb/x9wgWPGj6vHizKQVKl8WwkfA8+VLU0N
+         Oig/WgJ/d8hMouQcOkabi36xgBB7oMPejH+1rJsElXk+ZVFEQsMWoVQQbpVxJE4lAaPG
+         eZzdtmwUtGGcIeDiZ5Ln/sGI3UINuD5Tj0U8sWCEEKg9DW96ygyVxRX6g2BSk9UJM7Lu
+         Ps4w==
+X-Gm-Message-State: ABuFfogJ5fIdTdRt0tpabVaWSdxevwMBVgScJOzrMnAk8PYRswN5a22M
+        kYhIeumpgzgL445JLvIkTVr8JNf7
+X-Google-Smtp-Source: ACcGV60ciWKdNPyNhnGAdiuF5yBtYd6qkIaL5LaJY9r3jLbm++Tu2PTMb2w2qxyKHIyalfxxiWHZhQ==
+X-Received: by 2002:a62:c252:: with SMTP id l79-v6mr23759939pfg.141.1539729399028;
+        Tue, 16 Oct 2018 15:36:39 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id i184-v6sm21263524pfg.88.2018.10.16.15.36.40
+        by smtp.gmail.com with ESMTPSA id h32-v6sm7017961pgb.94.2018.10.16.15.36.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Oct 2018 15:36:41 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 15:36:41 -0700 (PDT)
-X-Google-Original-Date: Tue, 16 Oct 2018 22:36:28 GMT
-Message-Id: <12a3f6d3670834f19b38f5e23ef83cdf80a58c33.1539729393.git.gitgitgadget@gmail.com>
+        Tue, 16 Oct 2018 15:36:37 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 15:36:37 -0700 (PDT)
+X-Google-Original-Date: Tue, 16 Oct 2018 22:36:26 GMT
+Message-Id: <2358cfd5edde4f749ee237f6b9f643444c62b900.1539729393.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.25.v4.git.gitgitgadget@gmail.com>
 References: <pull.25.v3.git.gitgitgadget@gmail.com>
         <pull.25.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 3/7] test-reach: add rev-list tests
+Subject: [PATCH v4 1/7] prio-queue: add 'peek' operation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,111 +71,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The rev-list command is critical to Git's functionality. Ensure it
-works in the three commit-graph environments constructed in
-t6600-test-reach.sh. Here are a few important types of rev-list
-operations:
+When consuming a priority queue, it can be convenient to inspect
+the next object that will be dequeued without actually dequeueing
+it. Our existing library did not have such a 'peek' operation, so
+add it as prio_queue_peek().
 
-* Basic: git rev-list --topo-order HEAD
-* Range: git rev-list --topo-order compare..HEAD
-* Ancestry: git rev-list --topo-order --ancestry-path compare..HEAD
-* Symmetric Difference: git rev-list --topo-order compare...HEAD
+Add a reference-level comparison in t/helper/test-prio-queue.c
+so this method is exercised by t0009-prio-queue.sh. Further, add
+a test that checks the behavior when the compare function is NULL
+(i.e. the queue becomes a stack).
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t6600-test-reach.sh | 84 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ prio-queue.c               |  9 +++++++++
+ prio-queue.h               |  6 ++++++
+ t/helper/test-prio-queue.c | 26 ++++++++++++++++++--------
+ t/t0009-prio-queue.sh      | 14 ++++++++++++++
+ 4 files changed, 47 insertions(+), 8 deletions(-)
 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index 9d65b8b946..288f703b7b 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -243,4 +243,88 @@ test_expect_success 'commit_contains:miss' '
- 	test_three_modes commit_contains --tag
+diff --git a/prio-queue.c b/prio-queue.c
+index a078451872..d3f488cb05 100644
+--- a/prio-queue.c
++++ b/prio-queue.c
+@@ -85,3 +85,12 @@ void *prio_queue_get(struct prio_queue *queue)
+ 	}
+ 	return result;
+ }
++
++void *prio_queue_peek(struct prio_queue *queue)
++{
++	if (!queue->nr)
++		return NULL;
++	if (!queue->compare)
++		return queue->array[queue->nr - 1].data;
++	return queue->array[0].data;
++}
+diff --git a/prio-queue.h b/prio-queue.h
+index d030ec9dd6..682e51867a 100644
+--- a/prio-queue.h
++++ b/prio-queue.h
+@@ -46,6 +46,12 @@ extern void prio_queue_put(struct prio_queue *, void *thing);
+  */
+ extern void *prio_queue_get(struct prio_queue *);
+ 
++/*
++ * Gain access to the "thing" that would be returned by
++ * prio_queue_get, but do not remove it from the queue.
++ */
++extern void *prio_queue_peek(struct prio_queue *);
++
+ extern void clear_prio_queue(struct prio_queue *);
+ 
+ /* Reverse the LIFO elements */
+diff --git a/t/helper/test-prio-queue.c b/t/helper/test-prio-queue.c
+index 9807b649b1..5bc9c46ea5 100644
+--- a/t/helper/test-prio-queue.c
++++ b/t/helper/test-prio-queue.c
+@@ -22,14 +22,24 @@ int cmd__prio_queue(int argc, const char **argv)
+ 	struct prio_queue pq = { intcmp };
+ 
+ 	while (*++argv) {
+-		if (!strcmp(*argv, "get"))
+-			show(prio_queue_get(&pq));
+-		else if (!strcmp(*argv, "dump")) {
+-			int *v;
+-			while ((v = prio_queue_get(&pq)))
+-			       show(v);
+-		}
+-		else {
++		if (!strcmp(*argv, "get")) {
++			void *peek = prio_queue_peek(&pq);
++			void *get = prio_queue_get(&pq);
++			if (peek != get)
++				BUG("peek and get results do not match");
++			show(get);
++		} else if (!strcmp(*argv, "dump")) {
++			void *peek;
++			void *get;
++			while ((peek = prio_queue_peek(&pq))) {
++				get = prio_queue_get(&pq);
++				if (peek != get)
++					BUG("peek and get results do not match");
++				show(get);
++			}
++		} else if (!strcmp(*argv, "stack")) {
++			pq.compare = NULL;
++		} else {
+ 			int *v = malloc(sizeof(*v));
+ 			*v = atoi(*argv);
+ 			prio_queue_put(&pq, v);
+diff --git a/t/t0009-prio-queue.sh b/t/t0009-prio-queue.sh
+index e56dfce668..3941ad2528 100755
+--- a/t/t0009-prio-queue.sh
++++ b/t/t0009-prio-queue.sh
+@@ -47,4 +47,18 @@ test_expect_success 'notice empty queue' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'rev-list: basic topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 commit-3-6 commit-2-6 commit-1-6 \
-+		commit-6-5 commit-5-5 commit-4-5 commit-3-5 commit-2-5 commit-1-5 \
-+		commit-6-4 commit-5-4 commit-4-4 commit-3-4 commit-2-4 commit-1-4 \
-+		commit-6-3 commit-5-3 commit-4-3 commit-3-3 commit-2-3 commit-1-3 \
-+		commit-6-2 commit-5-2 commit-4-2 commit-3-2 commit-2-2 commit-1-2 \
-+		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
-+	>expect &&
-+	run_three_modes git rev-list --topo-order commit-6-6
-+'
-+
-+test_expect_success 'rev-list: first-parent topo-order' '
-+	git rev-parse \
-+		commit-6-6 \
-+		commit-6-5 \
-+		commit-6-4 \
-+		commit-6-3 \
-+		commit-6-2 \
-+		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
-+	>expect &&
-+	run_three_modes git rev-list --first-parent --topo-order commit-6-6
-+'
-+
-+test_expect_success 'rev-list: range topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 commit-3-6 commit-2-6 commit-1-6 \
-+		commit-6-5 commit-5-5 commit-4-5 commit-3-5 commit-2-5 commit-1-5 \
-+		commit-6-4 commit-5-4 commit-4-4 commit-3-4 commit-2-4 commit-1-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+		commit-6-2 commit-5-2 commit-4-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+	>expect &&
-+	run_three_modes git rev-list --topo-order commit-3-3..commit-6-6
-+'
-+
-+test_expect_success 'rev-list: range topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 \
-+		commit-6-5 commit-5-5 commit-4-5 \
-+		commit-6-4 commit-5-4 commit-4-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+		commit-6-2 commit-5-2 commit-4-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+	>expect &&
-+	run_three_modes git rev-list --topo-order commit-3-8..commit-6-6
-+'
-+
-+test_expect_success 'rev-list: first-parent range topo-order' '
-+	git rev-parse \
-+		commit-6-6 \
-+		commit-6-5 \
-+		commit-6-4 \
-+		commit-6-3 \
-+		commit-6-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+	>expect &&
-+	run_three_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
-+'
-+
-+test_expect_success 'rev-list: ancestry-path topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 commit-3-6 \
-+		commit-6-5 commit-5-5 commit-4-5 commit-3-5 \
-+		commit-6-4 commit-5-4 commit-4-4 commit-3-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+	>expect &&
-+	run_three_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
-+'
-+
-+test_expect_success 'rev-list: symmetric difference topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 \
-+		commit-6-5 commit-5-5 commit-4-5 \
-+		commit-6-4 commit-5-4 commit-4-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+		commit-6-2 commit-5-2 commit-4-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+		commit-3-8 commit-2-8 commit-1-8 \
-+		commit-3-7 commit-2-7 commit-1-7 \
-+	>expect &&
-+	run_three_modes git rev-list --topo-order commit-3-8...commit-6-6
++cat >expect <<'EOF'
++3
++2
++6
++4
++5
++1
++8
++EOF
++test_expect_success 'stack order' '
++	test-tool prio-queue stack 8 1 5 4 6 2 3 dump >actual &&
++	test_cmp expect actual
 +'
 +
  test_done
