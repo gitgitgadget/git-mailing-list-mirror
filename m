@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F5C91F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 12:34:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406991F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 12:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727095AbeJPUYX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 16:24:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60021 "EHLO mout.gmx.net"
+        id S1727112AbeJPU22 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 16:28:28 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53923 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726595AbeJPUYW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 16:24:22 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LdLw5-1flcR10QXx-00iV69; Tue, 16
- Oct 2018 14:34:02 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LdLw5-1flcR10QXx-00iV69; Tue, 16
- Oct 2018 14:34:02 +0200
-Date:   Tue, 16 Oct 2018 14:34:04 +0200 (DST)
+        id S1726718AbeJPU22 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 16:28:28 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmrZY-1fiXRL2a0S-00h6Mz; Tue, 16
+ Oct 2018 14:38:07 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmrZY-1fiXRL2a0S-00h6Mz; Tue, 16
+ Oct 2018 14:38:07 +0200
+Date:   Tue, 16 Oct 2018 14:38:09 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] mingw: use domain information for default email
-In-Reply-To: <CAPig+cRaBRP9f3sR8suZxC+Y2_UZaBMbMcpjsRUY+mGN+nyXkQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1810161433220.4546@tvgsbejvaqbjf.bet>
-References: <pull.45.git.gitgitgadget@gmail.com> <271a5f57cef00d24ee33e99839cf3890e561efe7.1539596822.git.gitgitgadget@gmail.com> <CAPig+cRaBRP9f3sR8suZxC+Y2_UZaBMbMcpjsRUY+mGN+nyXkQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] getpwuid(mingw): provide a better default for the
+ user name
+In-Reply-To: <CAPig+cRbOOrC5_jCnR2ohMZWoYXfNqvWtj3m_JTpudJhV1mQng@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1810161436480.4546@tvgsbejvaqbjf.bet>
+References: <pull.45.git.gitgitgadget@gmail.com> <11025b1639785577924b2020fb20d076308e9c69.1539596822.git.gitgitgadget@gmail.com> <CAPig+cRbOOrC5_jCnR2ohMZWoYXfNqvWtj3m_JTpudJhV1mQng@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:L5w+HPgw1aK15qoWdrDrpKo++vGsuTvjJCjf/+J0LgZ5kSMZJZf
- 12HqZXz6EmgxT4JAFxGaGS+AUm60T89sIpXzNw+WKmsbczXmbRQUJ8mJHGS3uVlIAPtiwvy
- fbLdxOKuXg8riS9FN+rz3cjULAQwANTE0t1G+oE1hhhgXPt0nsrXp7cmxZwfRhXbsE8/3R4
- nFGnjgSW0qcM0Pnw1XSUA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:t9kWSNY4ZS8=:XXk0pztDFhtd7DNOfmEkPz
- KfVsdRk6Po7OJT0VYrPRCmAKyFrmao8Z/u3VwNgQB77E+TuDh32nsbeRtw/acnQKIRqHfOQfg
- bAvl1LMZ8Q9tghOxVQpzcvtEhQWn7DKeSfHG0nIWdcr+9AS8KCtZm1P8LhZqYFy3Tv7Zspw44
- jFh4iIoqAbnCV5Spu8ihK2Py1qLQkZpl2z2iuSdjpKkPk9U6rgktLS1TVlom9KlMAR78czsv/
- x+y3T0rzFD5dx20Lhh640C+784kn0AX6c4owbglaz9XD1a1khQjiRQBUe1/xu5R80BFbXe1Mv
- SC1enieoMiiUaQKVcRJ9lzW2NAXDYa56hjrOMAqmzXkQvi8p40SV5Y1SiaP/Pyb2lRCxxYgjF
- 1G8GRf8hURIiKCzNljdGvfWaAq7NPtn86FQdJvf6vejdBuQf9n8hhH4J0V5c5GWd4zG+9rlDV
- Q69ek4t8KTr+rxiAU04CzmisNn9qywTcb4lgZSYfFhrVjaWWpa5USjtkP6CYUerD5yI7ntrvB
- Mi5wfBzs97IpXVpxssi3rqFmKuS2Ogzuk5/vz6vENYM+BEMrmgL3Dyo6WJaNdhmHMSB5o2GOC
- dDA8tOVHQiqy0Pf5d7QALjGzHPxKQOYVoVCHs3P1uspi1tbFD6hBAX/eIlFFfwD2ywwX9u5QS
- hRbeuARpycnqkSvMnQ2qynP4SiWIC/nXxBz5/2eR+XWcZqHGsECrcP4FjU8n+d4QrPoqAkBEC
- oyd2+mTq5hHTbtF8mY39jC7tyMHYWB5Tv+rZL6TQ6tv5gxnZ4g+oG4krCuCD85F6oK5hVRicv
- nUjS5EYn6WMUTFwM9sdqmGailosHaq1sI4l118uhPSKK6z+Y/o=
+X-Provags-ID: V03:K1:rRC91hspNJHn/syqIxpprR2Zr1ZiDOo6sYWZfWL8zhtxymZ2eR9
+ 1Wq/VmrfC09/zXN5jE/Pi1/09wntGEOehFVDLyaXoXju/TdNu1UIq1HuEUojv3iyljcN9Ya
+ wcRkvFSzjMjSlXCCxz4p9ejfSeCuEw7ConWoUPa4UFkUB3hwwn4m8K9bGF8HxXqRqzDwF79
+ owDIe1Tcav4083s2fzkcQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:b4HaUSF4Ls8=:9fYaG5F+PoxDmsBFsVsZFo
+ O6df0XpqZndiWJPgNoQRiFZQOFCTdSIsGY+kkEb94VON25CB+Rq3hh68upvAZS+B9t6yViAx6
+ k5AFm+Jme6ReHxug7Xycdcp631PA7sQSJH/kWbvDhlixW43hsXwWykOYwvsCZ54PF5kWrjGzt
+ 5/p+M3LauvUYWUAUS+sp8Qa4R1/inE7MLG57ezBMzT/B5SWRehveX3BZBcomu2GYLN7RvhBLI
+ keyqPtuEDqqdlizImLnhRZq8/VVfa0ahR1CgBKp2PQ4lXViPs97PNbkcp5EPT4pvgUMj5ghRS
+ iTd4x7I821PsPksY+fhOSAyGeneuNNC8ZB37q6crgcRLd72L9Pl+Kdnr6TC1zeSXwgx2EA34f
+ TQp8S7bf8Vi1xbH/7Lc8WQnrzXiIi6qWz7ZQQ1ifv4WB0ZindqYr2LujPD0rSRsF738DQHVu7
+ W3QIbvS4Isd7uLQ2XYpKzgi+g9+ecMk4BnZ7xt2meepnmdaRRf22Mv4YslLRtQO8CCtXNTUWW
+ EwC94Vldpgb8CuDZcmy0FIOsVhKT/eOgpE/JiA6+opBOiHCmMYfpQLW6ODhk/14OSA3CHjMfY
+ suvUxdBpSJdXWfqA4yEVLu9QsnZK65VXHAgyQqRdNee6zNSSClS8x02Cs6bFctjcHjw3L6MLd
+ WCx0Qaxc/KT8QQKsOYjY1S0enZaPp5vn6YhU8AlGjxCwpfU3fd0vN9++e7CoEpTrM4dtIqY8i
+ dyvMX0kjscbC1s3g2p9VPFu/nmY48nDtrmCxPgyuKEebqIbkxzGNFds1EJx5SKQqebr37Xchq
+ e3CChHckU1+MHu0InTgFL/q5ceF5nJ/RIN8ZselW6Pt9bkqgQc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,42 +64,44 @@ On Mon, 15 Oct 2018, Eric Sunshine wrote:
 
 > On Mon, Oct 15, 2018 at 5:47 AM Johannes Schindelin via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
-> > When a user is registered in a Windows domain, it is really easy to
-> > obtain the email address. So let's do that.
+> > We do have the excellent GetUserInfoEx() function to obtain more
+> > detailed information of the current user (if the user is part of a
+> > Windows domain); Let's use it.
 > > [...]
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
 > > diff --git a/compat/mingw.c b/compat/mingw.c
-> > @@ -1826,6 +1826,11 @@ static char *get_extended_user_info(enum EXTENDED_NAME_FORMAT type)
-> > +char *mingw_query_user_email(void)
+> > @@ -1798,6 +1799,33 @@ int mingw_getpagesize(void)
+> > +static char *get_extended_user_info(enum EXTENDED_NAME_FORMAT type)
 > > +{
-> > +       return get_extended_user_info(NameUserPrincipal);
-> > +}
-> > diff --git a/ident.c b/ident.c
-> > @@ -168,6 +168,9 @@ const char *ident_default_email(void)
-> > +               } else if ((email = query_user_email()) && email[0]) {
-> > +                       strbuf_addstr(&git_default_email, email);
-> > +                       free((char *)email);
+> > +       DECLARE_PROC_ADDR(secur32.dll, BOOL, GetUserNameExW,
+> > +               enum EXTENDED_NAME_FORMAT, LPCWSTR, PULONG);
+> > +       static wchar_t wbuffer[1024];
 > 
-> If query_user_email(), which calls get_extended_user_info(), returns
-> NULL, then we do nothing (and don't worry about freeing the result).
-> However, if query_user_email() returns a zero-length allocated string,
-> then this conditional will leak that string (due to the email[0]
-> check). From patch 2/3, we see in get_extended_user_info():
-> 
-> +static char *get_extended_user_info(enum EXTENDED_NAME_FORMAT type)
-> +{
-> +       if (GetUserNameExW(type, wbuffer, &len)) {
-> +               char *converted = xmalloc((len *= 3));
-> +               if (xwcstoutf(converted, wbuffer, len) >= 0)
-> +                       return converted;
-> 
-> that it may possibly return a zero-length string (due to the ">=0").
-> Do we care about this potential leak (or is GetUserNameExW()
-> guaranteed never to return such a string)?
+> Does this need to be static? It's not being returned to the caller.
 
-Quite honestly, I think that this is so rare an instance (if it *can*
-happen at all) that I simply don't care ;-)
+It does not. Fixed.
+
+> > +       len = ARRAY_SIZE(wbuffer);
+> > +       if (GetUserNameExW(type, wbuffer, &len)) {
+> > +               char *converted = xmalloc((len *= 3));
+
+Oh wow. I *just* realized this. It is an off-by-one: the `xmalloc()` call
+needs to receive `len + 1` to accommodate for the trailing NUL. Will fix,
+too.
 
 Ciao,
 Dscho
+
+> > +               if (xwcstoutf(converted, wbuffer, len) >= 0)
+> > +                       return converted;
+> > +               free(converted);
+> > +       }
+> 
+> If xwcstoutf() fails, 'converted' is freed; otherwise, the allocated
+> 'converted' is stored in the caller's statically held 'passwd' struct.
+> Okay.
+> 
+> > +       return NULL;
+> > +}
+> 
