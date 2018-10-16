@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE3461F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 15:35:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCD661F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 15:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbeJPX0c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 19:26:32 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:55286 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727006AbeJPX0b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 19:26:31 -0400
-Received: by mail-it1-f196.google.com with SMTP id l191-v6so33654499ita.4
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 08:35:32 -0700 (PDT)
+        id S1727158AbeJPX2H (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 19:28:07 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:34646 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbeJPX2H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 19:28:07 -0400
+Received: by mail-io1-f66.google.com with SMTP id w2-v6so16827474ioc.1
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 08:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Ky+1ZHktGy1XIl1I8VHP5XMB41+5Ger03+wAfTnAXOI=;
-        b=VynGC8qud0lBuhz/eEfS8frf3n22YEDox7HtEytmAqDrSkTHFeaeNr9yHI6EXix/kQ
-         I6gRLOzkm1Mw7bncbVmioxxIAIwJHOhqcE/GDfEr7afQUYvytsq4LyxbD/uIP8OFNeHM
-         /KVfibBkAiLZCLh9YGqYGxSGviU3YBK9sEARLnTTUGaLmib6IFuxGWcJZH2IdWfByoF3
-         hsIVHM4edUXh1X1T2r452uFl8aV7sIHhiWI8i4j9h3QiNvc1RkzQr4r02JStKFBHv5b8
-         ZCRIxDWGNrF3KmfDEQWTXcURc8b14HDuNBLieZU9MKLJlsDY/y5VHOKBTSn4ufk+Qc8P
-         dDWA==
+        bh=NXHEwnejCJ4Nixg1lFPRAD6+7ttfuf8eMN9keIb6IUU=;
+        b=I6kbFOLTCtB0vXYTs0WFENxWSRMk8wLK9OE3ripqlQAhf9JORAP7nsY+Rr4OvgaxC6
+         mkxpto5ayfQdGmbhpVE94qJiSG9D801HkULkATG4c/4wvcm8nmfPPgKSfZSYSzEeahMU
+         Gbqgslwf11e1m1CWz4SI2Eo5x+N06IigDk/wXLM9Mhb17gsi/tx215p4hqPddbjy+2Ii
+         GRj1QN4MMLZ8dOeHB2ibMlTW+IBheAGxqMTnZjRFk9hhfaDY+YPBRoi7vUnVVIN6yTpR
+         dZJW7HfiE4XIx86gKGUuTXDMwgmQ/OqArH5hCy7KZGMaYhA1UqQeOHXePhGi+z91wcW4
+         Rarg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ky+1ZHktGy1XIl1I8VHP5XMB41+5Ger03+wAfTnAXOI=;
-        b=QrFQsWgtPGwbsY77LjsBCenf5co0Ba9cTA0aY9TleK+JHBAew0hTvlXbmx2erMA2y4
-         ZTTD1z97iMrokyz9hXERFlMb2gpjfga1eD7iCuElRKVTQZtQ43xwVgNa0CShYYua/SaV
-         tGK0BrwkjSNmp/xZfol2LeEFm/TEMx+1u1UpZTuixVpsNSvvQad/VRV+KBREDcidXFVN
-         9i/nZgZdXpadMm9LUrVJI68kFqT52KDWWh9UmIoIsq/vMsUka+GDDZHZcyFjWLVamk3w
-         oqEG9mHNFY4K1G3EUP5XQeMJ6ex2x0/bxexmwnOhb0aGtPluSs4R/ESVmqT+D3Yf1qSh
-         yK6A==
-X-Gm-Message-State: ABuFfogtUiSKRYzfBErHsL/HKQRoPEADTwAFhrCluF4z1kkAsLc7+Pnq
-        yhl84A6bVN1sig47GXi4za6sgg7NviIOJQ/hRLE=
-X-Google-Smtp-Source: ACcGV609YC1lpyjqH3X1E+yt6EJNS75CVR5KNz59lFknFw23d9v1LqBpPotB5sf6cpUO0SFFibQ+W+lYYwl0nbcW6Ik=
-X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr16358165itg.70.1539704131736;
- Tue, 16 Oct 2018 08:35:31 -0700 (PDT)
+        bh=NXHEwnejCJ4Nixg1lFPRAD6+7ttfuf8eMN9keIb6IUU=;
+        b=lP1QvDKzscKCh4pLTvejjG6ZFBFsOAmqDlj72sDJv+eixwnnlL2MMcmhm6soNf0k4/
+         6LWX1GwU5ZTSLA21Q1JwaechSaxbiTN7trcRw7JO25JAZXZ0yXXwscz27k1ebV1R/DTj
+         X7qXavsI7I7JRw/uHEw7XW4c+myfPHCcuW38f3tKta4kCE2+YD1Rf34uLayWDTRaU8R4
+         SwrYxYW5hK8Jm26kOes7fnKjpihRcAqj5fefjRCeednJoDQaV/WjemORmVgJZnUaP6tf
+         hi5cRxoFsJGWhuaW3VuzKeCnLnyq/2LhaYXSSzyce6rH5lKdBW1UnKgFMc0+CWAfoaKX
+         Me8A==
+X-Gm-Message-State: ABuFfogc6zuYtnKSqloBRJnb3Z2he6gWq6TeODPhDPYJh9/p2DPrsrvG
+        kYlAy6rhnbhoLfDuriZtlTtiwuIfApSp0AgZyKI=
+X-Google-Smtp-Source: ACcGV626raokD+IeRksdJy8oL1Oh/43ZpJMsvF8c9ACldSb4UnWIuOVdyvAjsgkzyWWm+T8IBqgpuDFHnRgN/KGwaQI=
+X-Received: by 2002:a6b:8b97:: with SMTP id n145-v6mr12735328iod.282.1539704226553;
+ Tue, 16 Oct 2018 08:37:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181015021900.1030041-1-sandals@crustytoothpaste.net> <20181015021900.1030041-14-sandals@crustytoothpaste.net>
-In-Reply-To: <20181015021900.1030041-14-sandals@crustytoothpaste.net>
+References: <20181015021900.1030041-1-sandals@crustytoothpaste.net> <20181015021900.1030041-13-sandals@crustytoothpaste.net>
+In-Reply-To: <20181015021900.1030041-13-sandals@crustytoothpaste.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 16 Oct 2018 17:35:05 +0200
-Message-ID: <CACsJy8C6o9PAHsm+t7Rijg6jsz5dXZ5pT79nYGdGbKuK6gGTLQ@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] commit-graph: specify OID version for SHA-256
+Date:   Tue, 16 Oct 2018 17:36:40 +0200
+Message-ID: <CACsJy8B3cK7VUfRYBa+Tqnke6gJ6FT9u+AsffAcGJQhQ5wcjvQ@mail.gmail.com>
+Subject: Re: [PATCH v2 12/13] hash: add an SHA-256 implementation using OpenSSL
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
@@ -62,42 +62,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 15, 2018 at 4:23 AM brian m. carlson
+On Mon, Oct 15, 2018 at 4:22 AM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
 >
-> Since the commit-graph code wants to serialize the hash algorithm into
-> the data store, specify a version number for each supported algorithm.
-> Note that we don't use the values of the constants themselves, as they
-> are internal and could change in the future.
+> We already have OpenSSL routines available for SHA-1, so add routines
+> for SHA-256 as well.
+
+Since we have "hash-speed" tool now, it would be great to keep some
+numbers of these hash implementations in the commit message (and maybe
+sha1 as well just for comparison).
+
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  commit-graph.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>  Makefile | 7 +++++++
+>  hash.h   | 2 ++
+>  2 files changed, 9 insertions(+)
 >
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 7a28fbb03f..e587c21bb6 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -45,7 +45,14 @@ char *get_commit_graph_filename(const char *obj_dir)
+> diff --git a/Makefile b/Makefile
+> index 3d91555a81..3164e2aeee 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -183,6 +183,8 @@ all::
+>  #
+>  # Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
+>  #
+> +# Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
+> +#
+>  # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
+>  #
+>  # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
+> @@ -1638,6 +1640,10 @@ endif
+>  endif
+>  endif
 >
->  static uint8_t oid_version(void)
->  {
-> -       return 1;
-> +       switch (hash_algo_by_ptr(the_hash_algo)) {
-> +               case GIT_HASH_SHA1:
-> +                       return 1;
-> +               case GIT_HASH_SHA256:
-> +                       return 2;
+> +ifdef OPENSSL_SHA256
+> +       EXTLIBS += $(LIB_4_CRYPTO)
+> +       BASIC_CFLAGS += -DSHA256_OPENSSL
+> +else
+>  ifdef GCRYPT_SHA256
+>         BASIC_CFLAGS += -DSHA256_GCRYPT
+>         EXTLIBS += -lgcrypt
+> @@ -1645,6 +1651,7 @@ else
+>         LIB_OBJS += sha256/block/sha256.o
+>         BASIC_CFLAGS += -DSHA256_BLK
+>  endif
+> +endif
+>
+>  ifdef SHA1_MAX_BLOCK_SIZE
+>         LIB_OBJS += compat/sha1-chunked.o
+> diff --git a/hash.h b/hash.h
+> index 9df562f2f6..9df06d56b4 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -17,6 +17,8 @@
+>
+>  #if defined(SHA256_GCRYPT)
+>  #include "sha256/gcrypt.h"
+> +#elif defined(SHA256_OPENSSL)
+> +#include <openssl/sha.h>
+>  #else
+>  #include "sha256/block/sha256.h"
+>  #endif
 
-Should we just increase this field to uint32_t and store format_id
-instead? That will keep oid version unique in all data formats.
 
-> +               default:
-> +                       BUG("unknown hash algorithm");
-> +       }
->  }
->
->  static struct commit_graph *alloc_commit_graph(void)
+
 -- 
 Duy
