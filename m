@@ -2,165 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 175A21F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 07:39:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB9921F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 07:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727087AbeJPP2z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 11:28:55 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:43327 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbeJPP2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 11:28:54 -0400
-Received: by mail-ed1-f65.google.com with SMTP id y20-v6so20297718eds.10
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 00:39:45 -0700 (PDT)
+        id S1727099AbeJPPfY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 11:35:24 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45995 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbeJPPfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 11:35:23 -0400
+Received: by mail-wr1-f65.google.com with SMTP id q5-v6so24239013wrw.12
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 00:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VqzXTukhLqC813DsnUwOg5tYq5g4s4ggOPE98hqHr2c=;
-        b=KITQTfrzdcspbKuvIrpvC9vMq4VUYuJ4uqQKs7oJUCaUwOMzTZiLwEuIkMp8qef1ER
-         TUrpbEydLAZcvtR/K7l0vIdpTCM+zZeeIsD0XuZUq6gTFth9+BaV5MxonhwFZiSOLAuN
-         CqsEJePoGH9WnJPn4C9gJx4jqA7pa2nUTTfF4=
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NwwFCToG/nFIhcrjxKzDPeWp8vB2MoC+/Jg5b+FyAEs=;
+        b=XafuolmbY+BlVG+5yEw2YW8/17ArTkPXdRWEdjpLhSHaD8Co/kurPxyA6AdKXohK1q
+         gOsMrCKJmw/VxiIaVSApYjZIzx5NRXwwRgfuwHrtQdDDIv2gaT4d2ox87imVZu1fPcmE
+         ayvT01gDZZ2VO5rsOdIiEP/KniwG7lkCc4TrEXDqX4rtO8IqWpkpNmpFL/hUwlx5NXdF
+         nQBkWILrovxUKJmycNNvjvEKTXbFF+5oqLvG73S16rAtjkPWb7Wf8gyMl1iZhSiFJKdZ
+         hPaCxpqAX8s0k1vIqRYRmsb6ZASQObDeT6DWcBAMROuoF6amj5Mx6QzjeDw2dV2DReKz
+         MQWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VqzXTukhLqC813DsnUwOg5tYq5g4s4ggOPE98hqHr2c=;
-        b=j2CV2ji9k1W4GkDClUki5hnERC+xvRgGBVmFk4N7xFl+jlI6zJi+HddoM/TmJf8jVK
-         B2kMovLZHXP7A9ns0s3SNDTRMy1Ees2wQSWNpsRrv2RsYcV3cG0UCLZYlBlmZjhM8Te8
-         n9p/n82OIRLqntdR3extlv89Qo/1YHfTvNVBQf5myJVILgaUgNHtkUjKNHsi93FoJ4Aa
-         N6ROR0lNbqFAitn6KBYHvyKBiknAdLlhh/9JStvMhWewq4KGadex+s03/UXVQ/OoKasq
-         Eq91ehlaBB9yPCryyQGoB3HrjOJlIe2xXnnmSfZFZkEhrCy6acUU/2ch1o9+szhmIr2V
-         sCsQ==
-X-Gm-Message-State: ABuFfoigtoLcbtUervanRgVTs9C/GI5HCeCyWldmOBdyX3gJdxggrMIa
-        zZcz82ULyA3UqZ2DzJlSgYPi+5S8XOE=
-X-Google-Smtp-Source: ACcGV638QiEHd2JjoQvotNmuiQWJsOdBXq2TzGoYNecIvlrlJ8xor+PIA5Rve2tt+/i2T/PNiN6Cbw==
-X-Received: by 2002:a50:eb97:: with SMTP id y23-v6mr28397652edr.38.1539675584812;
-        Tue, 16 Oct 2018 00:39:44 -0700 (PDT)
-Received: from prevas-ravi.vestasvisitor.net ([193.47.71.171])
-        by smtp.gmail.com with ESMTPSA id q18-v6sm2774661ejr.8.2018.10.16.00.39.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 16 Oct 2018 00:39:44 -0700 (PDT)
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Rasmus Villemoes <rv@rasmusvillemoes.dk>,
-        Joe Perches <joe@perches.com>
-Subject: [PATCH v2 3/3] send-email: also pick up cc addresses from -by trailers
-Date:   Tue, 16 Oct 2018 09:39:23 +0200
-Message-Id: <20181016073923.28134-4-rv@rasmusvillemoes.dk>
-X-Mailer: git-send-email 2.19.1.6.gbde171bbf5
-In-Reply-To: <20181016073923.28134-1-rv@rasmusvillemoes.dk>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NwwFCToG/nFIhcrjxKzDPeWp8vB2MoC+/Jg5b+FyAEs=;
+        b=irDjZgJAl0schTtsc/akjrJNMBVsa96jZzQuX/IOi+k+BVFunMv77VLRw0iAbUM2CH
+         j811jdJmA8ODFEeNYjU0Wfe7hM4TQm5JucaZS5c65D9enY3OkUKLidUAgZmiVHddJW7u
+         1TmiEcziOKEgRI55QXScyqO1KE/jLquK3ndLbrXQt49suw1aHj6Re3B4IWmFQrueea/q
+         YYKlOqNI5S8qMV7Lt7FdD+gYBwd1nP8IHDCtMR5Wiz9Bq9665MszdWi6Ke3+o80b/ILf
+         nZGS/ENdIV3XdJHtd6vtU/GDlb03W2OkPdxVfEfwe7PqmqZK/JH1WxQiF0DQc6/saw5r
+         O8Hw==
+X-Gm-Message-State: ABuFfojf89F191v9kHg47BN1EhWS4TlSwnCBN1zXDOmlE3Y457K0Qtn3
+        hbuL9eBJPjTgPID2Qrnx3W2u8ztEc2I=
+X-Google-Smtp-Source: ACcGV602rlBSBypQ3NAIfRnuwsYBWLCac40L+TLZZa5VY/lRqyWgp0A9xaczKPv+XdLPXe0YkwjqEQ==
+X-Received: by 2002:adf:eac5:: with SMTP id o5-v6mr16751538wrn.284.1539675972635;
+        Tue, 16 Oct 2018 00:46:12 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w4-v6sm9810474wra.83.2018.10.16.00.46.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Oct 2018 00:46:11 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Cc:     git@vger.kernel.org, Joe Perches <joe@perches.com>
+Subject: Re: [PATCH 3/3] send-email: also pick up cc addresses from -by trailers
 References: <20181010111351.5045-1-rv@rasmusvillemoes.dk>
- <20181016073923.28134-1-rv@rasmusvillemoes.dk>
+        <20181010111351.5045-4-rv@rasmusvillemoes.dk>
+        <xmqqd0shgg66.fsf@gitster-ct.c.googlers.com>
+        <5651069a-4879-096d-082d-58d8f0158958@rasmusvillemoes.dk>
+        <xmqqo9buzb67.fsf@gitster-ct.c.googlers.com>
+        <ef80210d-f440-06c5-a1eb-7b3737f73adb@rasmusvillemoes.dk>
+Date:   Tue, 16 Oct 2018 16:46:10 +0900
+In-Reply-To: <ef80210d-f440-06c5-a1eb-7b3737f73adb@rasmusvillemoes.dk> (Rasmus
+        Villemoes's message of "Tue, 16 Oct 2018 09:17:46 +0200")
+Message-ID: <xmqq7eiiz64d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When rerolling a patch series, including various Reviewed-by etc. that
-may have come in, it is quite convenient to have git-send-email
-automatically cc those people.
+Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
 
-So pick up any *-by lines, with a new suppression category 'misc-by',
-but special-case Signed-off-by, since that already has its own
-suppression category. It seems natural to make 'misc-by' implied by
-'body'.
+>> It may be surprising to existing users that
+>> the command now suddenly adds more addresses the user did not think
+>> would be added, but it would probably be easy enough for them to
+>> work around. 
+>
+> Yeah, I thought about that, but unfortunately the whole auto-cc business
+> is not built around some config options where we can add a new and
+> default false. Also note that there are also cases currently where the
+> user sends off a patch series and is surprised that lots of intended
+> recipients were not cc'ed (that's how I picked this subject up again; I
 
-Based-on-patch-by: Joe Perches <joe@perches.com>
-Signed-off-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
----
- Documentation/git-send-email.txt |  5 ++++-
- git-send-email.perl              | 19 ++++++++++++-------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+That "also note ... people who are not familiar are surprised" is,
+quite honestly, irrelevant.  The behaviour is documented, and the
+users are supposed to be used to it.  Changing the behaviour in
+quite a different way from what existing users are used to is a very
+different matter.  No matter how you cut it, change of behaviour
+like this is a regression for some existing users, while helping
+others, and it does not matter if it helps many more users than it
+hurts---a regression is a regression to those who are affected
+negatively.  
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index ea6ea512fe..f6010ac68b 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -329,8 +329,11 @@ Automating
-   patch body (commit message) except for self (use 'self' for that).
- - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
-   for self (use 'self' for that).
-+- 'misc-by' will avoid including anyone mentioned in Acked-by,
-+  Reviewed-by, Tested-by and other "-by" lines in the patch body,
-+  except Signed-off-by (use 'sob' for that).
- - 'cccmd' will avoid running the --cc-cmd.
--- 'body' is equivalent to 'sob' + 'bodycc'.
-+- 'body' is equivalent to 'sob' + 'bodycc' + 'misc-by'.
- - 'all' will suppress all auto cc values.
- --
- +
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 1916159d2a..58c6aa9d0e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -94,7 +94,7 @@ sub usage {
-     --identity              <str>  * Use the sendemail.<id> options.
-     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
--    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
-+    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, misc-by, all.
-     --[no-]cc-cover                * Email Cc: addresses in the cover letter.
-     --[no-]to-cover                * Email To: addresses in the cover letter.
-     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
-@@ -454,13 +454,13 @@ sub read_config {
- if (@suppress_cc) {
- 	foreach my $entry (@suppress_cc) {
- 		die sprintf(__("Unknown --suppress-cc field: '%s'\n"), $entry)
--			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
-+			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|misc-by)$/;
- 		$suppress_cc{$entry} = 1;
- 	}
- }
- 
- if ($suppress_cc{'all'}) {
--	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
-+	foreach my $entry (qw (cccmd cc author self sob body bodycc misc-by)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
-@@ -471,7 +471,7 @@ sub read_config {
- $suppress_cc{'sob'} = !$signed_off_by_cc if defined $signed_off_by_cc;
- 
- if ($suppress_cc{'body'}) {
--	foreach my $entry (qw (sob bodycc)) {
-+	foreach my $entry (qw (sob bodycc misc-by)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'body'};
-@@ -1681,7 +1681,7 @@ sub process_file {
- 	# Now parse the message body
- 	while(<$fh>) {
- 		$message .=  $_;
--		if (/^(Signed-off-by|Cc): (.*)/i) {
-+		if (/^([a-z-]*-by|Cc): (.*)/i) {
- 			chomp;
- 			my ($what, $c) = ($1, $2);
- 			# strip garbage for the address we'll use:
-@@ -1691,8 +1691,13 @@ sub process_file {
- 			if ($sc eq $sender) {
- 				next if ($suppress_cc{'self'});
- 			} else {
--				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
--				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
-+				if ($what =~ /^Signed-off-by$/i) {
-+					next if $suppress_cc{'sob'};
-+				} elsif ($what =~ /-by$/i) {
-+					next if $suppress_cc{'misc-by'};
-+				} elsif ($what =~ /Cc/i) {
-+					next if $suppress_cc{'bodycc'};
-+				}
- 			}
- 			if ($c !~ /.+@.+|<.+>/) {
- 				printf("(body) Ignoring %s from line '%s'\n",
--- 
-2.19.1.6.gbde171bbf5
+At least this is a deliberate one we are making, and I think it is
+OK as long as both the change in behaviour and the way to get back
+the old behaviour are advertised properly.
+
+Thanks.
 
