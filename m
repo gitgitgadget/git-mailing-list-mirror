@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15EF41F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:36:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D691E1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 23:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727192AbeJQH2s (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:28:48 -0400
-Received: from mail-ot1-f73.google.com ([209.85.210.73]:49196 "EHLO
-        mail-ot1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727020AbeJQH2s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 03:28:48 -0400
-Received: by mail-ot1-f73.google.com with SMTP id j47so18225391ota.16
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:03 -0700 (PDT)
+        id S1727214AbeJQH2v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 03:28:51 -0400
+Received: from mail-yb1-f202.google.com ([209.85.219.202]:57045 "EHLO
+        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727208AbeJQH2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 03:28:50 -0400
+Received: by mail-yb1-f202.google.com with SMTP id y12-v6so13663440ybg.23
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=r6pZnj6NNpuuleQyLYwbmCqXJeAhN5KJ5Dg6i/99Mwc=;
-        b=WkxVLO4/zcWWiJzyR0wSXcOGFMX8ljTkXRk88A9fE+HtnEgYtbabxyUS5xmHeleIBf
-         KTAE2g5RdsUgoe4rTM5CIjDAuEBPFGOtsJIDbWNQHw3b0fVRONbJkZ8chqBmG9F2jpRP
-         bCv0Dz2ia4BUnjR15gxlysK6KCiikhaQuiHEgHtuxxnpYXm0mcoUMJDaCbUxWErGCZww
-         FAowxUNrKVA/fYCovCUVDeds/W1vXRgDyZAT4+/FNsWYKtn3+qsoWHSTfodKhiY2cmqt
-         NfnyQeVBu9NW9VfsbolMPbGPkOLnB3MyF6x2W1FGWExYe8HrJcc5lrzq7fwalDNWL6Uv
-         pg9w==
+        bh=eskJwk4pnUYO394rRuJy3bhhNNUW4Dxfs+Q24LiF+Ic=;
+        b=g/FwXom73CDqsipdlfoiq3vLTO/8TJubcj5YcK0M7tjiO8zLD0+MmJKMg2gq0UvpO8
+         ish3LS/8hpNO5MEUqPz6HaEhLXI30rInxx654LWKQPEqWgt8AMzHJeZ5OqjCNvH4FHLL
+         A5QV3sAW9C2WlDoEq9giqhr24V/5mb7UoKSIjdzBQ7bBtgHYRMZPybo09HOmEEH+Yih5
+         41/gTHEyQ+/CuQ2GxH+7yVkU6OeXSOpPpdMScdIMMXVfG/F6AzUhBei9CvVfaszHWgvm
+         xpT+dj46c4dKWH88bZzvnWf+h3o+SquCwifFxMFWpWp/YUMzl52z3pEQMsMqaJYPtlHE
+         iw3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=r6pZnj6NNpuuleQyLYwbmCqXJeAhN5KJ5Dg6i/99Mwc=;
-        b=mzLkmZY2ZRvJQcFxtpH/uSacTGs8qtT2TqDVZJwldO383E0KxqHaRZYQVcYmv0KrWO
-         Tc5Zs+mfoJexMkTA187FxSjOrBzhhqUtY3DU8XTQMSDMznMf6RtsKNZu/2SkIAwyYxUK
-         YIRGPr59l27cRKxdLBwskDsXa+/HPZSsH3UGgtf2Irwadb1RTIyQtDBgKAoMw0pU4+LJ
-         wyiw8MarwbBjADfikdIMhYru9lViXZe5gL4YWIQ2nLjDKEVt1CAPwFO9m4kf7L3BUG6Y
-         SGIntZLtY7/cANWl6AQ0VmqTaNQCqY+bu/FZxQ6ujPA1om+TYGe+zyBE341OZVr2RnWs
-         dhNg==
-X-Gm-Message-State: ABuFfohUaOC9BdVfacFpCFlNJ+W6j7IEDNuDJ66KO3yMlWUuWmJw55Ea
-        J3VLUDGZWspYdtwxJkgeRx5qBE8Nw61hUolweUWqivRpIwIuso/tw29Fuv81fhvrGSSpzwsdNeZ
-        k6sstT1YkRNpQ61BxXIliyY5vBQTvPVI53yUIdnL7g+REPkIqmeP+R9dSCTUq
-X-Google-Smtp-Source: ACcGV62RaxZ3Wp1jiBS+h52FVgKwLxUnfL2P2TXJ+8O8wAENgWTv7VCL57kC/5o8PPOiuUfLQ8KBWXxsP5gV
-X-Received: by 2002:a9d:4a0b:: with SMTP id h11mr19512089otf.65.1539732962989;
- Tue, 16 Oct 2018 16:36:02 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 16:35:34 -0700
+        bh=eskJwk4pnUYO394rRuJy3bhhNNUW4Dxfs+Q24LiF+Ic=;
+        b=eBdGdi0ssV9mY/fcnXPqjcO6MKT0TjSESJy80wGxdqFvnTp4J6h3c6kq08N1mHHgWv
+         7ZGNh1+SdF9mTeCY9QXpliLF2+HE9lIPPazyHUrSDhKS9JMJ8Jd/C+PyuazsuLBbPlkW
+         uPsmODuMfv1uj4uuZMKnyURsoS6xAxXDDyFLf+lDecCgeKK2w03rL5CyyQi50ENSMOU9
+         QdXyjk7lSuQN/qWAoVc5v9BV3B+U/Xon7JUZcf7Uc6029iak10GgzqOeBP9y3VFVV3k9
+         m7+i8N4lgj3QwDMfKXxs+Mm/+YKlgNp1QWIlMFHAxfIsOjkpw8KKFqLvzp/k2qzy3mIE
+         Rl0A==
+X-Gm-Message-State: ABuFfohTFgbZ925DKQSghDhqgCAxN4C7I6aE42BzUaGiMzW9uIlzC1aO
+        hTXDuZ94CtM4Z3mVASxfdyTaIvlN984ipK+PiJ40V7dko4aXi2GwC8XsgE4yhBUTto8oWa+cfps
+        +vzirKaE/j/B7Xtt3sz6PvcsviVsRWcJ+ILaXqhghFsxEg0Xnj7mld18owgq7
+X-Google-Smtp-Source: ACcGV62x2FmUc6GTXRuXkoAhpzgZBKXCvSjg9iI8XVvnzbpNK49KuKy4vyxNVALbX58GiHC9Z94ZrPDGw+MM
+X-Received: by 2002:a25:5f4b:: with SMTP id h11-v6mr2802364ybm.67.1539732965257;
+ Tue, 16 Oct 2018 16:36:05 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 16:35:35 -0700
 In-Reply-To: <20181016233550.251311-1-sbeller@google.com>
-Message-Id: <20181016233550.251311-4-sbeller@google.com>
+Message-Id: <20181016233550.251311-5-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181016233550.251311-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH 03/19] object-store: allow read_object_file_extended to read
- from arbitrary repositories
+Subject: [PATCH 04/19] object-store: prepare read_object_file to deal with
+ arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
@@ -64,90 +64,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-read_object_file_extended is not widely used, so migrate it all at once.
+As read_object_file is a widely used function (which is also regularly used
+in new code in flight between master..pu), changing its signature is painful
+is hard, as other series in flight rely on the original signature. It would
+burden the maintainer if we'd just change the signature.
+
+Introduce repo_read_object_file which takes the repository argument, and
+hide the original read_object_file as a macro behind
+NO_THE_REPOSITORY_COMPATIBILITY_MACROS, similar to
+e675765235 (diff.c: remove implicit dependency on the_index, 2018-09-21)
+
+Add a coccinelle patch to convert existing callers, but do not apply
+the resulting patch from 'make coccicheck' to keep the diff of this
+patch small.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- object-store.h |  5 +++--
- sha1-file.c    | 11 ++++++-----
- streaming.c    |  2 +-
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ contrib/coccinelle/the_repository.cocci | 13 +++++++++++++
+ object-store.h                          | 10 ++++++++--
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+ create mode 100644 contrib/coccinelle/the_repository.cocci
 
+diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccinelle/the_repository.cocci
+new file mode 100644
+index 0000000000..3c7fa70502
+--- /dev/null
++++ b/contrib/coccinelle/the_repository.cocci
+@@ -0,0 +1,13 @@
++// This file is used for the ongoing refactoring of
++// bringing the index or repository struct in all of
++// our code base.
++
++@@
++expression E;
++expression F;
++expression G;
++@@
++- read_object_file(
+++ repo_read_object_file(the_repository,
++  E, F, G)
++
 diff --git a/object-store.h b/object-store.h
-index 67e66227d9..6bb0ccbf05 100644
+index 6bb0ccbf05..41ceebca48 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -146,12 +146,13 @@ void sha1_file_name(struct repository *r, struct strbuf *buf, const unsigned cha
- 
- void *map_sha1_file(struct repository *r, const unsigned char *sha1, unsigned long *size);
- 
--extern void *read_object_file_extended(const struct object_id *oid,
-+extern void *read_object_file_extended(struct repository *r,
-+				       const struct object_id *oid,
+@@ -150,10 +150,16 @@ extern void *read_object_file_extended(struct repository *r,
+ 				       const struct object_id *oid,
  				       enum object_type *type,
  				       unsigned long *size, int lookup_replace);
- static inline void *read_object_file(const struct object_id *oid, enum object_type *type, unsigned long *size)
+-static inline void *read_object_file(const struct object_id *oid, enum object_type *type, unsigned long *size)
++static inline void *repo_read_object_file(struct repository *r,
++					  const struct object_id *oid,
++					  enum object_type *type,
++					  unsigned long *size)
  {
--	return read_object_file_extended(oid, type, size, 1);
-+	return read_object_file_extended(the_repository, oid, type, size, 1);
+-	return read_object_file_extended(the_repository, oid, type, size, 1);
++	return read_object_file_extended(r, oid, type, size, 1);
  }
++#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
++#define read_object_file(oid, type, size) repo_read_object_file(the_repository, oid, type, size)
++#endif
  
  /* Read and unpack an object file into memory, write memory to an object file */
-diff --git a/sha1-file.c b/sha1-file.c
-index 13b3c5cb79..ce47524679 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1403,7 +1403,8 @@ int pretend_object_file(void *buf, unsigned long len, enum object_type type,
-  * deal with them should arrange to call read_object() and give error
-  * messages themselves.
-  */
--void *read_object_file_extended(const struct object_id *oid,
-+void *read_object_file_extended(struct repository *r,
-+				const struct object_id *oid,
- 				enum object_type *type,
- 				unsigned long *size,
- 				int lookup_replace)
-@@ -1413,10 +1414,10 @@ void *read_object_file_extended(const struct object_id *oid,
- 	const char *path;
- 	struct stat st;
- 	const struct object_id *repl = lookup_replace ?
--		lookup_replace_object(the_repository, oid) : oid;
-+		lookup_replace_object(r, oid) : oid;
- 
- 	errno = 0;
--	data = read_object(the_repository, repl->hash, type, size);
-+	data = read_object(r, repl->hash, type, size);
- 	if (data)
- 		return data;
- 
-@@ -1428,11 +1429,11 @@ void *read_object_file_extended(const struct object_id *oid,
- 		die(_("replacement %s not found for %s"),
- 		    oid_to_hex(repl), oid_to_hex(oid));
- 
--	if (!stat_sha1_file(the_repository, repl->hash, &st, &path))
-+	if (!stat_sha1_file(r, repl->hash, &st, &path))
- 		die(_("loose object %s (stored in %s) is corrupt"),
- 		    oid_to_hex(repl), path);
- 
--	if ((p = has_packed_and_bad(the_repository, repl->hash)) != NULL)
-+	if ((p = has_packed_and_bad(r, repl->hash)) != NULL)
- 		die(_("packed object %s (stored in %s) is corrupt"),
- 		    oid_to_hex(repl), p->pack_name);
- 
-diff --git a/streaming.c b/streaming.c
-index d1e6b2dce6..c843a1230f 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -490,7 +490,7 @@ static struct stream_vtbl incore_vtbl = {
- 
- static open_method_decl(incore)
- {
--	st->u.incore.buf = read_object_file_extended(oid, type, &st->size, 0);
-+	st->u.incore.buf = read_object_file_extended(the_repository, oid, type, &st->size, 0);
- 	st->u.incore.read_ptr = 0;
- 	st->vtbl = &incore_vtbl;
- 
+ int oid_object_info(struct repository *r, const struct object_id *, unsigned long *);
 -- 
 2.19.0
 
