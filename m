@@ -2,166 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0DCF1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 21:58:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6879B1F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 22:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726935AbeJQFvU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 01:51:20 -0400
-Received: from mail-io1-f73.google.com ([209.85.166.73]:33015 "EHLO
-        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725960AbeJQFvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 01:51:20 -0400
-Received: by mail-io1-f73.google.com with SMTP id c5-v6so23054039ioa.0
-        for <git@vger.kernel.org>; Tue, 16 Oct 2018 14:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=ogNy3XiSjfKWbFEmTgNDSTgZhju+8i58n5d1ZJT5HJ4=;
-        b=BfmJFidWU+25j5V3938N7I8xQioiPRud0yIL8r7LI0eqQ1jh53N7TY58Tz4kW/5r2g
-         SsmEGxzkaqUOBz8bb3xWx0AO78YJlX70IYviFrOKa/SCVM5ZDJNq77cS4IwRGjyb1183
-         0/LKpACy4Xq/w/nT1EJb1ZKwmvghX6XPYtpXy5xOB8I+pRv/UFcSHlbwszGfXwxjsWJt
-         qF0D4F1sft7+CoUhc0D5ZM5GvTd9z7234P7qqVcDAaOJzF2IqxeF32GdUOP4CaB3/zK6
-         s8iE43+jX8oC4IHjS7LX4/oji13NByH10TfPgld5TmNyFGqPN1UwPPOKqWQDLA8zb+Mq
-         uB7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=ogNy3XiSjfKWbFEmTgNDSTgZhju+8i58n5d1ZJT5HJ4=;
-        b=XokoiGHI9t6GgktSbZftHdlMX+Ls9BA+nHQDgtpo3w1f3NTxfH2NQMLqpJSj8RVCGy
-         7QYh1kebNYQ7avrS7oK6n/V5Rapt7gg7nsDFYKYSxsFYXu+D/0zCFmY2GJ6pwgSbdwsO
-         PFoSuYJ8avQDIQKjBXa9HixPiswEqQMVmbUZeODx7V9xZysVouf4RDyOBq3VBydZyGiz
-         DkU5lyO1eb4Bt5+87NidLeskBPm52k7EiXLY+8Fwy2FheepU4kME0JD9u++a9Xq9el2R
-         X/0QvuKD5KuGKGOmy6pXSSJCnlqnHUNrxnYBsFHJm4ERpCEPMrDXTeqOmUd5Y+exHtk9
-         fkeA==
-X-Gm-Message-State: ABuFfoigd1OavcPv3nIv0wSIdilOluYKh/wzpbHEoCgDcrOsWuGLK2t5
-        k2plrD9chvW5THCpIBBRc5hrb/uf0Is8q5l4beH85CGeRbHXA+EWv6Ssl09Eq9qNIk2rRRiEeWS
-        xDrcEhH5MxxP3PBeAuNhcAaz7Puu2PSGRVasK68WNSNRIC5Ge3uSAaI7VjmWJ+BvbicfDC7fNl/
-        Hj
-X-Google-Smtp-Source: ACcGV60xTUnyEcc7E1oShL5hfoz5M7TMvMEIlpWbAhvP7hj44IPTn5FLWlv/1MoEA3OwtZdQkSsKzeet+ggE30LVbPsk
-X-Received: by 2002:a24:c7:: with SMTP id 190-v6mr21003ita.2.1539727135262;
- Tue, 16 Oct 2018 14:58:55 -0700 (PDT)
-Date:   Tue, 16 Oct 2018 14:58:50 -0700
-Message-Id: <20181016215850.47821-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH] upload-pack: clear flags before each v2 request
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, arturas@uber.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1726697AbeJQGF2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 02:05:28 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:34553 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725960AbeJQGF2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 02:05:28 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 9331C22102;
+        Tue, 16 Oct 2018 18:13:00 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 16 Oct 2018 18:13:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=
+        subject:to:cc:references:from:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=/
+        HBT2ZH+NtsIxVGfVyQu+6gGYanUYQZEM1Ho0nIpmiE=; b=p1QQzFOfTjkAWnhBS
+        sa1HT8SKFMF2x5lAyfo7ks1iZztXDzYql1X50HaX5PziZo5WhkJYF53625I98Ntg
+        0QaZbiY08gwnF0SyIC6RUBjNnSkYNlh3fH+li9wuX2BgYn4joQ91vi4jG/DvMhyW
+        jD6lsjKK9R9eGXtJAaYz1YQEdcEqQHZVorQNgA2w4pTzN33wfUzmNGrDwGZpST0r
+        /YI1qwpPjWtiXbvDn933VC+zX9XrztuZCn4MGd9jaoN4GaP6uqKbXVP0Q+El9Rek
+        17EWGSOgEj6I1+/QlYWUZVhXcmT2BVnIgn3vccnf0htDFtlO9iZCR9u1kBdBKLf8
+        XG+EA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=/HBT2ZH+NtsIxVGfVyQu+6gGYanUYQZEM1Ho0nIpm
+        iE=; b=ioWbQDAtldDunqp6QB/6AeBELAH9L6QIO615muZkhfZUoc6aCCc4eqt44
+        eKN1l0N907cWg1mGz9u4iTGaCDfEY5Qzv/sEVaB6Q4PNpo1y0jmqfIxi887BIDAe
+        KFx8J4oMXz6p7jRovrbUk8XNWe092vu5z4G8YPhh2ICYmu7Dk8s+bBCVDy7hNZnS
+        d50xJtICEGR/HfeDVDh4YMzIu+NbfHinHtSV3ZI0z6v19OYedNiTjNjjBDLq8rC+
+        qMHZwlKWP9mP6SooZzxk7a+4MMTB7eyR9APl/twX2m5HaPokLdlYVZ7vUtxrMvdB
+        an0qzvQp+30QQQHFNXYLr3iL5jjKw==
+X-ME-Sender: <xms:bGLGW0YhEvKmwC261SMki36F2B2tLabxvl_cIYog0R-mIUr9qd_7ZQ>
+X-ME-Proxy: <xmx:bGLGW5YVAIz8eYICHEtmqtvBXbeJInkeGwJjwdZFB6FaAa5YmNB5Kw>
+    <xmx:bGLGW8g_lLQXKfkLYokgOK_lUaPNtwNuk41AVP6bUguBl3_kNcx2Ww>
+    <xmx:bGLGW1P0IQ4RkdpWvof39SmDfwzno6T8aEEFJazgOUdheyezd_xXFQ>
+    <xmx:bGLGW2v-XhBzrdcYdBnoPn2somdAOkz5JI7BLvuGkQ2YHKpTMVByxQ>
+    <xmx:bGLGW41sKvy6rExf1OYRCyjLjWEY61c3K4OzF5bwMiUjtGG_qxVUEw>
+    <xmx:bGLGW509sXJ3BPztlVBOGQdu2J4rU5-JwYqippXgiizFVZmM2DbSbw>
+Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
+        by mail.messagingengine.com (Postfix) with ESMTPA id CA3E9E405D;
+        Tue, 16 Oct 2018 18:12:59 -0400 (EDT)
+Subject: Re: problem with not being able to enforce git content filters
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+References: <5d4966c8-8171-9a0a-5120-f7c151c2b81f@stason.org>
+ <87y3axd21q.fsf@evledraar.gmail.com>
+From:   Stas Bekman <stas@stason.org>
+Organization: Hope, Humanized
+Message-ID: <a6dcfee6-595b-2375-e9cb-71da74ed80bb@stason.org>
+Date:   Tue, 16 Oct 2018 15:12:58 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <87y3axd21q.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Suppose a server has the following commit graph:
+On 2018-10-16 02:17 PM, Ævar Arnfjörð Bjarmason wrote:
+[...]
+>> We can't use server-side hooks to enforce this because the project is on
+>> github.
+> 
+> Ultimately git's a distributed system and we won't ever be able to
+> enforce that users in their local copies use filters, and they might
+> edit stuff e.g. in the GitHub UI directly, or with some other git
+> implementation.
 
- A   B
-  \ /
-   O
+In this particular case github won't be a problem, since for the problem
+to appear it has to be executed on the user side. Editing directly in
+github UI is not a problem.
 
-We create a client by cloning A from the server with depth 1, and add
-many commits to it (so that future fetches span multiple requests due to
-lengthy negotiation). If it then fetches B using protocol v2, the fetch
-spanning multiple requests, the resulting packfile does not contain O
-even though the client did report that A is shallow.
+Just to give a little big more context to the issue in first place. A
+jupyter notebook is a json file that contains the source code, the
+outputs from executing that code and the unique user environment bits.
+We want to "git" the source code but not the rest. Otherwise merging is
+a hell. Hence the stripping.
 
-This is because upload_pack_v2() can be called multiple times while
-processing the same session. During the 2nd and all subsequent
-invocations, some object flags remain from the previous invocations. In
-particular, CLIENT_SHALLOW remains, preventing process_shallow() from
-adding client-reported shallows to the "shallows" array, and hence
-pack-objects not knowing about these client-reported shallows.
+There are other approaches to solve this problem, besides stripping, but
+ they all require some kind of pre-processing before committing the file.
 
-Therefore, teach upload_pack_v2() to clear object flags at the start of
-each invocation.
+> So if you have such special needs maybe consider hosting your own setup
+> where you can have pre-receive hooks, or within GitHub e.g. enforce that
+> all things must go through merge requests, and have some robot that
+> checks that the content to be merged has gone through filters before
+> being approved.
 
-(One alternative is to reduce or eliminate usage of object flags in
-protocol v2, but that doesn't seem feasible because almost all 8 flags
-are used pervasively in v2 code.)
+Yes, that would be ideal. But I doubt this is going to happen, I'm just
+a contributing developer, not the creator/owner of the project. And as I
+said this affects anybody who collaborates on jupyter notebooks, not
+just in our project. I think there are several millions of them on github.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This was noticed by Arturas Moskvinas <arturas@uber.com> in [1]. The
-reproduction steps given were to repeat a shallow fetch twice in
-succession, but I found it easier to write a more understandable test if
-I made the 2nd fetch an ordinary fetch. In any case, I also reran the
-original reproduction steps, and the fetch completes without error.
+> *Picks up flag*. For the purposes of us trying to understand this report
+> it would be really useful to boil what's happening down to some
+> step-by-step reproducible recipe.
+> 
+> I.e. with some dummy filter configured & not configured how does "git
+> pull" end up breaking, and in this case you're alluding to git simply
+> forgetting config, how would that happen?
 
-This patch doesn't cover the negotiation issue that I mentioned in my
-previous reply [2].
+The problem of 'git pull' and 'git status' and 'git stash' is presented
+in details here:
+https://stackoverflow.com/questions/51883227/git-pull-stash-conflicts-with-a-git-filter
+and more here:
+https://github.com/kynan/nbstripout/issues/65
+https://github.com/jupyter/nbdime/issues/410#issuecomment-412999758
 
-[1] https://public-inbox.org/git/CAGY-PBgsG-T3JY=awszwGMpFx+jDx-a1FcV0s6vR067bSqgZaA@mail.gmail.com/
-[2] https://public-inbox.org/git/20181013004356.257709-1-jonathantanmy@google.com/
----
- t/t5702-protocol-v2.sh | 25 +++++++++++++++++++++++++
- upload-pack.c          |  5 +++++
- 2 files changed, 30 insertions(+)
+The problem of configuration disappearing I sadly have no input. It
+doesn't happen to me, and all I get from others is that it first works,
+and then it doesn't. Perhaps it has something to do with some of them
+using windows. I don't know, sorry.
 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 88a886975d..70b88385ba 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -429,6 +429,31 @@ test_expect_success 'fetch supports include-tag and tag following' '
- 	git -C client cat-file -e $(git -C client rev-parse annotated_tag)
- '
- 
-+test_expect_success 'upload-pack respects client shallows' '
-+	rm -rf server client trace &&
-+
-+	git init server &&
-+	test_commit -C server base &&
-+	test_commit -C server client_has &&
-+
-+	git clone --depth=1 "file://$(pwd)/server" client &&
-+
-+	# Add extra commits to the client so that the whole fetch takes more
-+	# than 1 request (due to negotiation)
-+	for i in $(seq 1 32)
-+	do
-+		test_commit -C client c$i
-+	done &&
-+
-+	git -C server checkout -b newbranch base &&
-+	test_commit -C server client_wants &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-+		fetch origin newbranch &&
-+	# Ensure that protocol v2 is used
-+	grep "git< version 2" trace
-+'
-+
- # Test protocol v2 with 'http://' transport
- #
- . "$TEST_DIRECTORY"/lib-httpd.sh
-diff --git a/upload-pack.c b/upload-pack.c
-index 62a1000f44..de7de1de38 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -37,6 +37,9 @@
- #define CLIENT_SHALLOW	(1u << 18)
- #define HIDDEN_REF	(1u << 19)
- 
-+#define ALL_FLAGS (THEY_HAVE | OUR_REF | WANTED | COMMON_KNOWN | SHALLOW | \
-+		NOT_SHALLOW | CLIENT_SHALLOW | HIDDEN_REF)
-+
- static timestamp_t oldest_have;
- 
- static int deepen_relative;
-@@ -1393,6 +1396,8 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 	enum fetch_state state = FETCH_PROCESS_ARGS;
- 	struct upload_pack_data data;
- 
-+	clear_object_flags(ALL_FLAGS);
-+
- 	git_config(upload_pack_config, NULL);
- 
- 	upload_pack_data_init(&data);
+>> The bottom line it sucks and I hope that you can help with offering a
+>> programmatic solution, rather than recommending creating a police
+>> department.
+> 
+> I think it would be great to have .gitconfig in-repo support, but a lot
+> of security & UI problems need to be surmounted before that would
+> happen, here's some previous ramblings of mine on that issue:
+> https://public-inbox.org/git/?q=87zi6eakkt.fsf%40evledraar.gmail.com
+> 
+> It now occurs to me that a rather minimal proof-of-concept version of
+> that would be:
+> 
+>  1. On repository clone, detect if HEAD:.gitconfig exists
+> 
+>  2. If it does, and we trust $(git config -f <untrusted file> -l)
+>     enough, emit some advice() output saying the project suggests
+>     setting config so-and-so, and that you could run the following one
+>     liner(s) to set it if you agree.
+> 
+>  3. Once we have that we could eventually nudge our way towards
+>     something like what I suggested in the linked threads above,
+>     i.e. consuming some subset of that config directly from the repo's
+>     HEAD:.gitconfig
+
+I like it, Ævar!
+
+I feel doing the check and prompting the user on the first push/commit
+after clone would be a better. It'd be too easy for the user to skip
+that step on git clone. In our particular case we want it where the
+problem is introduced, which is on commit, and not on clone. I hope it
+makes sense.
+
+
 -- 
-2.19.0.271.gfe8321ec05.dirty
-
+________________________________________________
+Stas Bekman       <'))))><       <'))))><
+https://stasosphere.com  https://chestofbooks.com
+https://experientialsexlab.com https://stason.org
+https://stasosphere.com/experience-life/my-books
