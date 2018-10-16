@@ -2,179 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89A441F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 20:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A16521F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 20:36:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbeJQEMM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 00:12:12 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:37370 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725960AbeJQEMM (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 00:12:12 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id w9GKHe2R029294;
-        Tue, 16 Oct 2018 13:20:03 -0700
-Received: from mail.palantir.com (mxw2.palantir.com [66.70.54.22] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2n3dkjn6s7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Tue, 16 Oct 2018 13:20:03 -0700
-Received: from sj-prod-exch-02.YOJOE.local (10.160.10.15) by
- sj-prod-exch-02.YOJOE.local (10.160.10.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Tue, 16 Oct 2018 13:20:02 -0700
-Received: from EX02-WEST.YOJOE.local (10.160.10.131) by
- sj-prod-exch-02.YOJOE.local (10.160.10.15) with Microsoft SMTP Server
- (version=TLS1_0, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.1.1531.3
- via Frontend Transport; Tue, 16 Oct 2018 13:20:02 -0700
-Received: from smtp-transport.yojoe.local (10.129.56.124) by
- EX02-WEST.YOJOE.local (10.160.10.131) with Microsoft SMTP Server id
- 14.3.319.2; Tue, 16 Oct 2018 13:19:59 -0700
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech
- [10.100.71.66])        by smtp-transport.yojoe.local (Postfix) with ESMTPS id
- A7C1321F89E2;  Tue, 16 Oct 2018 13:19:59 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     <gitster@pobox.com>
-CC:     <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 2/2] merge-recursive: avoid showing conflicts with merge branch before HEAD
-Date:   Tue, 16 Oct 2018 13:19:48 -0700
-Message-ID: <20181016201948.16025-3-newren@gmail.com>
-X-Mailer: git-send-email 2.19.1.280.g0c175526bf
-In-Reply-To: <20181016201948.16025-1-newren@gmail.com>
-References: <20181012212551.7689-1-newren@gmail.com>
- <20181016201948.16025-1-newren@gmail.com>
+        id S1726430AbeJQE2s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 00:28:48 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44233 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726048AbeJQE2s (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 00:28:48 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 6D0E82079B
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:39 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 16 Oct 2018 16:36:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=to
+        :from:subject:message-id:date:mime-version:content-type
+        :content-transfer-encoding; s=fm1; bh=DTIcOlpv8ZZ1YaXnuV9msKOvqy
+        8SQaxQ4PDS2BJvAuQ=; b=Vf85T1Il73iwDf/WT0YL0yCst7yi/rZpK9VWkuSbw2
+        jCHX8xbyp/m6P14jN4JonjjFOarGKmKyEWJrM+XUsDb5dmrLc9GY8c7MOql/2mJD
+        xSFyf2iEBIzr5U18wU7/SbB4pxJyMWOcUMh4Y2NRF0gUOt9aaf8h9StudSKfmK2F
+        5GnDIONDRBC3+ifJ3XyoCiJiK7U4aBRB0geWXqRuJe8Fpk14gX3qpRBQzDNzhR9q
+        H698wqJkS11OBqmLwofW9ntipXeA6PW8nxAUB8kKlOmWWsSSRLqZxYDpAoHat3gG
+        EADo6FWU24g9Ev3+p3D3X84TDbknsc/hncBeSfwTweGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=DTIcOl
+        pv8ZZ1YaXnuV9msKOvqy8SQaxQ4PDS2BJvAuQ=; b=WfkwKIN3y1O9UiUQO2sPmY
+        YicYjjLaLVJp0wlHSOSaxW+6x/kUoXdCoyuo1OfsBLDIFArQTRca0PIBgzhKCtQH
+        AhjKBUcXSTMqc9EDphsH8WseeCqAhYQBQcrW54nfdphSHxqU5mYO0+77ZWu/4NXn
+        D6zvrok30vmESJMrlElW+wkRosChvlzqUVgqVzqZqnbO+Avsdu9A9faSZ9u81BxX
+        3KK2S0bjaTpErjku4DfsKYNU81clWNWtQf3fqLr2oHhi28rUH7Xi7yVvKZ6kZBO/
+        XQ3XOpXd/kX0baBkhyLj4QBSxsUR0LcZ5qZMPSSTyQqLWPT7ZzA6t5PD61QZsPGQ
+        ==
+X-ME-Sender: <xms:10vGW3n-tRaUoWwkR_aaiKLN9cf8EsK8jhUiNNY2SqssLkROtcFKcA>
+X-ME-Proxy: <xmx:10vGW7lTQuYh5I8pZAmbKbmUn4B41mlrEXy64JJmhrWhdgmdHF2abA>
+    <xmx:10vGW_epd10kYxHASy4zycRRaDSesmkbwibRw5QExsdzARz2_sEUHA>
+    <xmx:10vGW143xpG4ADdmSwBG1HFPrPXL-qMNpZjRhdDml2bZ6egyV6Bq0Q>
+    <xmx:10vGWw9iY12UoL6O-VNhyPvNixsLU22f5yrW0WVcYLT-6SKmQMMzWw>
+    <xmx:10vGWzDLxuMiT055VGV8yiQOre1CYzE-etF8SoVlcToK7Yl2UwpUqw>
+    <xmx:10vGW7Eq6vM2RaOkt_4ld2RqHZ5EmwplhplVERbEL1BAzawRsXluMA>
+Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
+        by mail.messagingengine.com (Postfix) with ESMTPA id CF6DCE447F
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 16:36:38 -0400 (EDT)
+To:     git@vger.kernel.org
+From:   Stas Bekman <stas@stason.org>
+Subject: problem with not being able to enforce git content filters
+Organization: Hope, Humanized
+Message-ID: <5d4966c8-8171-9a0a-5120-f7c151c2b81f@stason.org>
+Date:   Tue, 16 Oct 2018 13:36:37 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-10-16_14:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1810160169
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We want to load unmerged entries from HEAD into the index at stage 2 and
-from MERGE_HEAD into stage 3.  Similarly, folks expect merge conflicts
-to look like
+Hi,
 
-    <<<<<<<< HEAD
-    content from our side
-    ========
-    content from their side
-    >>>>>>>> MERGE_HEAD
+TL;DR
 
-not
+Our open source project dev team has a continuous problem with git
+content filters, because developers don't always have them configured.
 
-    <<<<<<<< MERGE_HEAD
-    content from their side
-    ========
-    content from our side
-    >>>>>>>> HEAD
+We need a way for git to support content filters w/o using user's
+.gitconfig. Otherwise it leads to an inconsistent behavior and messed up
+git checkouts.
 
-The correct order usually comes naturally and for free, but with renames
-we often have data in the form {rename_branch, other_branch}, and
-working relative to the rename first (e.g. for rename/add) is more
-convenient elsewhere in the code.  Address the slight impedance
-mismatch by having some functions re-call themselves with flipped
-arguments when the branch order is reversed.
+=================================================
 
-Note that setup_rename_conflict_info() has one asymmetry in it, in
-setting dst_entry1->processed=0 but not doing similarly for
-dst_entry2->processed.  When dealing with rename/rename and similar
-conflicts, we do not want the processing to happen twice, so the
-desire to only set one of the entries to unprocessed is intentional.
-So, while this change modifies which branch's entry will be marked as
-unprocessed, that dovetails nicely with putting HEAD first so that we
-get the index stage entries and conflict markers in the right order.
+Full story:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-recursive.c                 | 33 ++++++++++++++++++++++++++++++-
- t/t6036-recursive-corner-cases.sh |  8 ++++----
- 2 files changed, 36 insertions(+), 5 deletions(-)
+We use a version of the nbstripout content filter
+(https://github.com/kynan/nbstripout), which removes user-specific
+information from the jupyter notebooks during commit. But the problem
+would be the same with any one way clean filter.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 8a47e54e2f..16980db7f9 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -228,7 +228,26 @@ static inline void setup_rename_conflict_info(enum rename_type rename_type,
- 					      struct stage_data *src_entry1,
- 					      struct stage_data *src_entry2)
- {
--	struct rename_conflict_info *ci = xcalloc(1, sizeof(struct rename_conflict_info));
-+	struct rename_conflict_info *ci;
-+
-+	/*
-+	 * When we have two renames involved, it's easiest to get the
-+	 * correct things into stage 2 and 3, and to make sure that the
-+	 * content merge puts HEAD before the other branch if we just
-+	 * ensure that branch1 == o->branch1.  So, simply flip arguments
-+	 * around if we don't have that.
-+	 */
-+	if (dst_entry2 && branch1 != o->branch1) {
-+		setup_rename_conflict_info(rename_type,
-+					   pair2,      pair1,
-+					   branch2,    branch1,
-+					   dst_entry2, dst_entry1,
-+					   o,
-+					   src_entry2, src_entry1);
-+		return;
-+	}
-+
-+	ci = xcalloc(1, sizeof(struct rename_conflict_info));
- 	ci->rename_type = rename_type;
- 	ci->pair1 = pair1;
- 	ci->branch1 = branch1;
-@@ -1283,6 +1302,18 @@ static int merge_mode_and_contents(struct merge_options *o,
- 				   const char *branch2,
- 				   struct merge_file_info *result)
- {
-+	if (o->branch1 != branch1) {
-+		/*
-+		 * It's weird getting a reverse merge with HEAD on the bottom
-+		 * side of the conflict markers and the other branch on the
-+		 * top.  Fix that.
-+		 */
-+		return merge_mode_and_contents(o, one, b, a,
-+					       filename,
-+					       branch2, branch1,
-+					       extra_marker_size, result);
-+	}
-+
- 	result->merge = 0;
- 	result->clean = 1;
- 
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index 59e52c5a09..e1cef58f2a 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -230,13 +230,13 @@ test_expect_success 'git detects differently handled merges conflict' '
- 			:2:new_a :3:new_a &&
- 		test_cmp expect actual &&
- 
--		git cat-file -p B:new_a >ours &&
--		git cat-file -p C:new_a >theirs &&
-+		git cat-file -p C:new_a >ours &&
-+		git cat-file -p B:new_a >theirs &&
- 		>empty &&
- 		test_must_fail git merge-file \
--			-L "Temporary merge branch 2" \
--			-L "" \
- 			-L "Temporary merge branch 1" \
-+			-L "" \
-+			-L "Temporary merge branch 2" \
- 			ours empty theirs &&
- 		sed -e "s/^\([<=>]\)/\1\1\1/" ours >expect &&
- 		git cat-file -p :1:new_a >actual &&
+First the setup:
+https://github.com/kynan/nbstripout#manual-filter-installation
+
+=================================================
+Set up a git filter using nbstripout as follows:
+
+git config filter.nbstripout.clean '/path/to/nbstripout'
+git config filter.nbstripout.smudge cat
+git config filter.nbstripout.required true
+
+Create a file .gitattributes or .git/info/attributes with:
+
+*.ipynb filter=nbstripout
+
+Apply the filter for git diff of *.ipynb files:
+
+git config diff.ipynb.textconv '/path/to/nbstripout -t'
+
+In file .gitattributes or .git/info/attributes add:
+
+*.ipynb diff=ipynb
+
+=================================================
+
+The problem is that it can't be enforced.
+
+When it's not enforced, we end up with some devs using it and others
+don't, or more often is the same dev sometimes doesn't have it configured.
+
+When a person has a stripped out notebook checked out, when another
+person commits un-stripped out notebook, it leads to: invalid `git
+status` reports, `git pull` breaks, `git stash` doesn't work, since it
+tries to stash using the filters, and `git pull' can never succeed
+because it thinks that it'll overwrite the local changes, but `git diff`
+returns no changes.
+
+So the only solution when this happens is to disable the filters, clean
+up the mess, re-enable the filters. Many people just make a new clone -
+ouch!
+
+And the biggest problem is that it affects all users who may have the
+filters enabled, e.g. because they worked on a PR, and not just devs -
+i.e. the repercussions are much bigger than just a few devs affected.
+
+We can't use server-side hooks to enforce this because the project is on
+github.
+
+And the devs honestly try to do their best to remember to configure the
+filters, but for some reason they disappear for them, don't ask me why,
+I don't know. This is an open source project team, not a work place.
+
+You can see some related complaints here:
+https://github.com/kynan/nbstripout/issues/65#issuecomment-430346894
+https://stackoverflow.com/questions/51883227/git-pull-stash-conflicts-with-a-git-filter
+and I can find you a whole bunch more if you need more evidence.
+
+==================================================
+
+Proposed solution:
+
+There needs to be a way for a project to define content filters w/o
+going via user's .gitconfig configuration, since due to git's security
+it can't be distributed to all users and must be enabled manually by
+each user, which is just not the right solution in this case.
+
+Of course, I'm open to other suggestions that may help this issue.
+
+"Tell your developers they must configure the filters" is not it - I
+tried it for a long time and in vain. If you look at our install
+instructions: https://github.com/fastai/fastai#developer-install
+
+  git clone https://github.com/fastai/fastai
+  cd fastai
+  tools/run-after-git-clone
+
+It already includes an instruction to run a script which enables the
+filters, but this doesn't seem to help (and no, it's not a problem with
+the script). The devs report that the configuration is there for a
+while, and then suddenly it is not there, I don't know why. Perhaps they
+make a new clone and forget to re-enable the filters, perhaps they
+disable them to clean up and forget to reenable them, I can't tell.
+
+The bottom line it sucks and I hope that you can help with offering a
+programmatic solution, rather than recommending creating a police
+department.
+
+Thank you for listening.
+
 -- 
-2.19.1.280.g0c175526bf
-
+________________________________________________
+Stas Bekman       <'))))><       <'))))><
+https://stasosphere.com  https://chestofbooks.com
+https://experientialsexlab.com https://stason.org
+https://stasosphere.com/experience-life/my-books
