@@ -2,136 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0161F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 12:53:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 192491F453
+	for <e@80x24.org>; Tue, 16 Oct 2018 12:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727028AbeJPUnn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Oct 2018 16:43:43 -0400
-Received: from mout.gmx.net ([212.227.15.18]:34579 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726778AbeJPUnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Oct 2018 16:43:43 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhAAr-1fyq4N1jdp-00MHKA; Tue, 16
- Oct 2018 14:53:18 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhAAr-1fyq4N1jdp-00MHKA; Tue, 16
- Oct 2018 14:53:18 +0200
-Date:   Tue, 16 Oct 2018 14:53:21 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 05/13] ci/lib.sh: add support for Azure Pipelines
-In-Reply-To: <20181016094344.GJ19800@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1810161452040.4546@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com> <pull.31.v2.git.gitgitgadget@gmail.com> <486d1d25183fc7b0de599a0791ed41a87cc176cb.1539598316.git.gitgitgadget@gmail.com> <20181016094344.GJ19800@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727066AbeJPUr4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Oct 2018 16:47:56 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36017 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726778AbeJPUr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Oct 2018 16:47:56 -0400
+Received: by mail-wr1-f65.google.com with SMTP id y16so25411976wrw.3
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 05:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=GX4Hp1tF5M7kK8GIVwRLSbh7HK4MMIY+gEUI4Ev44kw=;
+        b=EaAjXbnD/fAviIC6vY4Rzm7qzUj4r/wLqyscX5pCS5GlrUkKsMqfYMAWwCMt7s/n0B
+         Updbcu6Wf2+1FH8xwp8XyzBxPQJg7ASjO8Gccdy+2OB5dwcZfOwkXSh13dlHTC1dVdbN
+         vBb0KPq73OYqRAkoyO1yPE0ckNvTUY+cRrDyO8BWK/4TRLgnKg/8Vt01xPXs+jviM2PL
+         Y4u8eYbxfB1dktl3mVDznfKJQfYR4r6ZZ2HbghGlUEx6JjfDyxa3z4JD4jog+Qj0l7yi
+         /KZjT/nJaV4zY2pjQXFLPezvfX+3NkAQ4latw+aMQKTfMZo20AI2+F978QpqJDnFRpU2
+         kaUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=GX4Hp1tF5M7kK8GIVwRLSbh7HK4MMIY+gEUI4Ev44kw=;
+        b=Do1N26X56Z0Q857SYblmbDaavzkiYkFMbidM6I4xRu+fh1Wz2NZ4vavKbEyA+BOfw3
+         I25PviUjR+KJvVwJGBgheP2Wxc8ze4USXZHLDRJUZwuaAfAOv/AoNqxJWUAcLw6NCom2
+         ZxOcWHFDkGsw8fDdU5JZelxh/jPQVPeMClyk3Lmj6wNGgIZrLSMbPDzj7JByKYA6yYJ2
+         kikH0QCzcJdDmT80Go9VHn7NH6muxo23EVh5Bo+al9b0VndfMPxE8/ebOwU9JYLZjbix
+         ds5cBksi4DSbStmLqej6HZT+BDE5u2CrLSjrxrNc93wF+Dgrj8ENEfQPOnVtSc9snSw1
+         o3yA==
+X-Gm-Message-State: ABuFfohvmvacLW1KSkogM6loTNvAua1njYOPGuvST+JrmdRM5RrQadYB
+        uB6Fvm6YU3OzT3XpH8YDbaA=
+X-Google-Smtp-Source: ACcGV63n8C+e+a4dUew/Mpz2CjKHmaabxFZVDDdodKDekWN22QYzw7LXhDIJtYJTyuwPH0kJHW4ecA==
+X-Received: by 2002:a5d:404b:: with SMTP id w11-v6mr17395216wrp.147.1539694652729;
+        Tue, 16 Oct 2018 05:57:32 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id o7-v6sm9915189wma.17.2018.10.16.05.57.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Oct 2018 05:57:31 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 0/4] Bloom filter experiment
+References: <a66afe22-0523-c785-91e6-bf545683c67d@gmail.com> <20181009193445.21908-1-szeder.dev@gmail.com> <61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com> <xmqqlg6y1ovh.fsf@gitster-ct.c.googlers.com> <8c66cbe3-6830-05cb-f3bb-be2e4902e8f5@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <8c66cbe3-6830-05cb-f3bb-be2e4902e8f5@gmail.com>
+Date:   Tue, 16 Oct 2018 14:57:30 +0200
+Message-ID: <87zhvecamd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1579034729-1539694402=:4546"
-X-Provags-ID: V03:K1:EMUAP+UocOiBNBqgbbfotV02ct8zj3xyfh2e6kKLlqltHZZa/1Q
- FAQQWv+s9vOiiLYVBoZTXMbZO+d9TEZUCIml/KnlGb2EaiTXCqNv32YR8KlBHNl+IlHGJTu
- rt/zUjiIgs2RzPv8vI+WHgmdaNgxboG4zIsTYOJzzT6Rwj6EhAKlAOSRiDFHV6m4NKOrZw4
- 5dO++jxyXO7j4hbEML+4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RETEm5DweV8=:KHS6P5luxRRDB2tLnseCiz
- CkBzLkQpGKv0d8AqTeIIAgiChZ/4T0hYNkWtTJESt1VDMCXbDfsfXtl2+s9XsSOsybosFEo2j
- D1XFxSBDfeHTzcjN5r/fY7rQhHPpxPD3szUJzX+Rr5MeQTXCDVCLUwct82rfnS91qNN2bMGK7
- sT0xqHaDBqLxelCEAKK4GmwiQJh66hdUo6JyrQlx8v6kPny7y5ReoM/xkn79Kk4JEp9UuqVer
- Hs81V5yTHiJwuZHakg686gZVdnSEuov9xeL8geoEpQsvS3wTqeh6Xi9HIocHMLiX/uT68G4Pi
- HcjlNxwZkaVSjlzC/oreYfxmyHb2zxYUktIVmLYbi2hJSy05bBcChFyuzLI5GU4EJunHtR1iY
- LzR/qH/6tOH6gDZES3ZC5wEDn3xondJK/gsStMR2gyCTzOGZDER7wAv2bvzFdjP4MkFwTIV0L
- lFKlz2pihpGF043RSf/6BTXtvg0SkG2bewkxCrKwHbYurTtLs8OQr0igd+t0qxanECJEyRGSm
- PfDIuAQ0F81D9z+CXWA/O/ESUkfBS+fKOZFHkmpPK34EY5+2qxD6XU+PAtUs4x7k36FUapXJL
- MyMHBPGSzjDkoKx+Q7V0FmSSCjIesD/zVJaPvxcHpCWk5x3EOnl3yzRjR1MGoiyVJgUGBmDRS
- yDPb0FyMbtdgzkOIDDUdVUtLGz4kjO1iPtp4/JHcyoqCzuyD0rWjvWYL7ZXmqRy8XYR29bpLM
- uNcNpeD9wjipHJ29/Mv17rl4mDNsAvp7Y34a3mRDzokElfNhf1f+if+/9OlmgrCFYIt9rLZAV
- NQE1yeRRCmJpY3WhQ6I4SYGnycpmccKh2l13Xe9KZtuJqkMpyw=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1579034729-1539694402=:4546
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Tue, Oct 16 2018, Derrick Stolee wrote:
 
-Hi Gábor,
+> On 10/16/2018 12:45 AM, Junio C Hamano wrote:
+>> Derrick Stolee <stolee@gmail.com> writes:
+>>
+>>> 2. The filters are sized according to the number of changes in each
+>>> commit, with a minimum of one 64-bit word.
+>>> ...
+>>> 6. When we compute the Bloom filters, we don't store a filter for
+>>> commits whose first-parent diff has more than 512 paths.
+>> Just being curious but was 512 taken out of thin air or is there
+>> some math behind it, e.g. to limit false positive rate down to
+>> certain threshold?  With a wide-enough bitset, you could store
+>> arbitrary large number of paths with low enough false positive, I
+>> guess, but is there a point where there is too many paths in the
+>> change that gives us diminishing returns and not worth having a
+>> filter in the first place?
+> 512 is somewhat arbitrary, but having a maximum size is not.
+>> In a normal source-code-control context, the set of paths modified
+>> by any single commit ought to be a small subset of the entire paths,
+>> and whole-tree changes ought to be fairly rare.  In a project for
+>> which that assumption does not hold, it might help to have a
+>> negative bloom filter (i.e. "git log -- A" asks "does the commit
+>> modify A?" and the filter would say "we know it does not, because we
+>> threw all the paths that are not touched to the bloom filter"), but
+>> I think that would optimize for a wrong case.
+>
+> A commit with many changed paths is very rare. The 512 I picked above
+> is enough to cover 99% of commits in each of the repos I sampled when
+> first investigating Bloom filters.
+>
+> When a Bloom filter response says "maybe yes" (in our case, "maybe not
+> TREESAME"), then we need to verify that it is correct. In the extreme
+> case that every path is changed, then the Bloom filter does nothing
+> but add extra work.
+>
+> These extreme cases are also not unprecedented: in our Azure Repos
+> codebase, we were using core.autocrlf to smudge CRLFs to LFs, but
+> when it was time to dogfood VFS for Git, we needed to turn off the
+> smudge filter. So, there is one commit that converts every LF to a
+> CRLF in every text file. Storing a Bloom filter for those ~250,000
+> entries would take ~256KB for essentially no value. By not storing a
+> filter for this commit, we go immediately to the regular TREESAME
+> check, which would happen for most pathspecs.
+>
+> This is all to say: having a maximum size is good. 512 is big enough
+> to cover _most_ commits, but not so big that we may store _really_ big
+> filters.
 
-On Tue, 16 Oct 2018, SZEDER Gábor wrote:
+Makes sense. 512 is good enough to hardcode initially, but I couldn't
+tell from briefly skimming the patches if it was possible to make this
+size dynamic per-repo when the graph/filter is written.
 
-> On Mon, Oct 15, 2018 at 03:12:05AM -0700, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > 
-> > This patch introduces a conditional arm that defines some environment
-> > variables and a function that displays the URL given the job id (to
-> > identify previous runs for known-good trees).
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  ci/lib.sh | 23 +++++++++++++++++++++++
-> >  1 file changed, 23 insertions(+)
-> > 
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index 8532555b4e..584abcd529 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -19,6 +19,29 @@ then
-> >  	BREW_INSTALL_PACKAGES="git-lfs gettext"
-> 
-> So we install these two additional packages in the macOS build jobs on
-> Travis CI ...
-> 
-> >  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-> >  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
-> > +elif test -n "$SYSTEM_TASKDEFINITIONSURI"
-> > +then
-> > +	# We are running in Azure Pipelines
-> > +	CI_BRANCH="$BUILD_SOURCEBRANCH"
-> > +	CI_COMMIT="$BUILD_SOURCEVERSION"
-> > +	CI_JOB_ID="$BUILD_BUILDID"
-> > +	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
-> > +	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
-> > +	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
-> > +	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
-> > +	CC="${CC:-gcc}"
-> > +
-> > +	# use a subdirectory of the cache dir (because the file share is shared
-> > +	# among *all* phases)
-> > +	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
-> > +
-> > +	url_for_job_id () {
-> > +		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
-> > +	}
-> > +
-> > +	BREW_INSTALL_PACKAGES=
-> 
-> ... but not on Azure Pipelines.  Is this mere oversight or
-> intentional?  If it's intentional, then I think the commit message
-> should mention why.
+I.e. we might later add some discovery step where we look at N number of
+commits at random, until we're satisfied that we've come up with some
+average/median number of total (recursive) tree entries & how many tend
+to be changed per-commit.
 
-Both packages are already available on Azure Pipelines' VMs. I will
-mention this in the commit message.
-
-Thanks,
-Dscho
-
-> 
-> > +	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
-> > +	export GIT_TEST_OPTS="--quiet --write-junit-xml"
-> >  fi
-> >  
-> >  skip_branch_tip_with_tag () {
-> > -- 
-> > gitgitgadget
-> > 
-> 
---8323328-1579034729-1539694402=:4546--
+I.e. I can imagine repositories (with some automated changes) where we
+have 10k files and tend to change 1k per commit, or ones with 10k files
+where we tend to change just 1-10 per commit, which would mean a
+larger/smaller filter would be needed / would do.
