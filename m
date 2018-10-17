@@ -2,108 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7F591F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 09:40:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A4DB1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 10:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbeJQRfM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 13:35:12 -0400
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:35333 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726636AbeJQRfM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 13:35:12 -0400
-Received: by mail-wm1-f45.google.com with SMTP id e187-v6so1436039wmf.0
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 02:40:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=fbhhO4P1WzCw7jpWgm86cOh7tOMQu5rfXGs+UgyFBl0=;
-        b=jbksCzlCtfkI07/5W/xKMUdprMfhAFDhosHMBnRNMVhTcEgmU9AebtYNw4OTaDE8uO
-         TJMmjhNmU6nc8BMDd8iPF0sZncscvVXvXMSmx7wsSv26qyB+6kkH9H2Fp4FglKlcR+im
-         06Z0Cvj8u1ZCIXY01vZomiZWOlP8U46j8hKd/MIz29NiqzGbIexE9ZRm2wMyiUa3nlAH
-         U46t9T/2zy1/a+aEX275QqLAz12py0crvliXN3fYxT4DiBVyfUIqrVLt3bGmz/DtvD4c
-         oN6iOyr7IcmJggy3Bw3tH4RbG8m51q5aM6M91/KVh99jpPFg3YgW/OBNL7kajoF5on38
-         SdPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=fbhhO4P1WzCw7jpWgm86cOh7tOMQu5rfXGs+UgyFBl0=;
-        b=B/ycU+oHClwL0zLBGtPQqodWIAJGlUxZPIBgf9wAAs9NlV4sr0xNp0boo0wMMPO0m9
-         A2E7tDuCkjtwuvBJ5kpIgHy/zoyvn7Jolrmudv7cQEeQB+shXhAjfWhlUp+Oq0BCjmF7
-         uVOvBrvmvwieiW/FYj4HkTbI50JRVXu6jATS/PmtD5RDA2UnGVUJfCVA2FQGuuQe2B9V
-         689OQE44N5SfV7kAq3Xg7UYdmZxUB5Zr7NOoogx/wL8fUO+nh+h8oTnE+VV2KtUpitJo
-         48OilbKsQlxNfcVQ93bHp3C/yi4Quqwf8xpu8ymSltpkc+79+y7DVzvTwoPGXOGJjgEq
-         D65w==
-X-Gm-Message-State: ABuFfogN7lgnH0T/jtgdBMWwBkX82wdUjWWlX/vWA/VVIany9ok/TWzN
-        rPLrmtCREcgltYqlFfdQUEk=
-X-Google-Smtp-Source: ACcGV61/R7wo6q7BUHPM3q9RaIlGnNQbZBJ77QFMw43yf/w/DAWDQxjvHwwYqDpk6fTGzhDDQ1B9Yg==
-X-Received: by 2002:a1c:2984:: with SMTP id p126-v6mr2134399wmp.5.1539769219044;
-        Wed, 17 Oct 2018 02:40:19 -0700 (PDT)
-Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
-        by smtp.gmail.com with ESMTPSA id n11-v6sm11945319wrx.17.2018.10.17.02.40.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Oct 2018 02:40:18 -0700 (PDT)
-Date:   Wed, 17 Oct 2018 10:39:43 +0100
-From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
-To:     Daniels Umanovskis <daniels@umanovskis.se>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH v4] branch: introduce --show-current display option
-Message-ID: <20181017093655.GA11811@rigel>
-References: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com>
- <20181012133321.20580-1-daniels@umanovskis.se>
+        id S1727054AbeJQSJN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 14:09:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43260 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726964AbeJQSJN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 14:09:13 -0400
+Received: (qmail 19939 invoked by uid 109); 17 Oct 2018 10:14:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 10:14:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19262 invoked by uid 111); 17 Oct 2018 10:13:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 06:13:24 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 06:14:12 -0400
+Date:   Wed, 17 Oct 2018 06:14:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] pack-objects (mingw): initialize `packing_data`
+ mutex in the correct spot
+Message-ID: <20181017101411.GA12554@sigill.intra.peff.net>
+References: <pull.47.git.gitgitgadget@gmail.com>
+ <8979693922364ef2e4a84a29298b081e86fa9ffa.1539723766.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181012133321.20580-1-daniels@umanovskis.se>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <8979693922364ef2e4a84a29298b081e86fa9ffa.1539723766.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 12, 2018 at 03:33:21PM +0200, Daniels Umanovskis wrote:
-> Intended both for scripting and interactive/informative use.
-> Unlike git branch --list, no filtering is needed to just get the
-> branch name.
+On Tue, Oct 16, 2018 at 02:02:52PM -0700, Johannes Schindelin via GitGitGadget wrote:
 
-Are we going forward with advertising this as a scriptable alternative?
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> In 9ac3f0e5b3e4 (pack-objects: fix performance issues on packing large
+> deltas, 2018-07-22), a mutex was introduced that is used to guard the
+> call to set the delta size. This commit even added code to initialize
+> it, but at an incorrect spot: in `init_threaded_search()`, while the
+> call to `oe_set_delta_size()` (and hence to `packing_data_lock()`) can
+> happen in the call chain `check_object()` <- `get_object_details()` <-
+> `prepare_pack()` <- `cmd_pack_objects()`, which is long before the
+> `prepare_pack()` function calls `ll_find_deltas()` (which initializes
+> the threaded search).
+> 
+> Another tell-tale that the mutex was initialized in an incorrect spot is
+> that the function to initialize it lives in builtin/, while the code
+> that uses the mutex is defined in a libgit.a header file.
+> 
+> Let's use a more appropriate function: `prepare_packing_data()`, which
+> not only lives in libgit.a, but *has* to be called before the
+> `packing_data` struct is used that contains that mutex.
 
-> +	} else if (show_current) {
-> +		print_current_branch_name();
-> +		return 0;
+Nicely explained. I think this is a good solution.
 
-Do we need the slightly different check done in
-print_current_branch_name() ? A very similar check is already done early
-in cmd_branch.
+Both before and after your patch, we do still take the lock even in
+single-threaded scenarios (the case you found where we are not yet in
+the delta search phase, but also when --threads=1). I think that should
+be fine.  It looks like we do that with the other locks in
+pack-objects.c already.
 
-builtin/branch.c:671
-	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
-	if (!head)
-		die(_("Failed to resolve HEAD as a valid ref."));
-	if (!strcmp(head, "HEAD"))
-		filter.detached = 1;
-	else if (!skip_prefix(head, "refs/heads/", &head))
-		die(_("HEAD not found below refs/heads!"));
+In index-pack.c, we check a threads_active flag before looking at the
+lock, which could be another possible solution. I doubt it's any faster,
+though (which is why I assume index-pack.c does it). Locking/unlocking a
+mutex should not really be much slower than checking the conditional
+flag in the first place.
 
-What's being proposed can be achieved with
+Which is all a roundabout way of saying "looks good to me".
 
-+	} else if (show_current) {
-+		if (!filter.detached)
-+			puts(head);
-+		return 0;
-
-without failing tests.
-
---
-Cheers,
-Rafael Ascensão
+-Peff
