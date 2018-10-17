@@ -6,84 +6,69 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01F5E1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 08:33:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 930581F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 08:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbeJQQ2S (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 12:28:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43186 "HELO cloud.peff.net"
+        id S1726904AbeJQQdq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 12:33:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43204 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726967AbeJQQ2S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 12:28:18 -0400
-Received: (qmail 16276 invoked by uid 109); 17 Oct 2018 08:33:42 -0000
+        id S1726112AbeJQQdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 12:33:46 -0400
+Received: (qmail 16472 invoked by uid 109); 17 Oct 2018 08:39:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 08:33:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 08:39:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18177 invoked by uid 111); 17 Oct 2018 08:32:53 -0000
+Received: (qmail 18203 invoked by uid 111); 17 Oct 2018 08:38:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 04:32:53 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 04:38:20 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 04:33:41 -0400
-Date:   Wed, 17 Oct 2018 04:33:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 04:39:07 -0400
+Date:   Wed, 17 Oct 2018 04:39:07 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
-Message-ID: <20181017083340.GB31932@sigill.intra.peff.net>
-References: <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
- <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
- <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
- <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
- <20181005165157.GC11254@sigill.intra.peff.net>
- <dca35e44-a763-bcf0-f457-b8dab53815cf@web.de>
- <20181005190847.GC17482@sigill.intra.peff.net>
- <c05f192b-4e89-48b0-1c23-b43ec6fdb74b@web.de>
- <20181005194223.GA19428@sigill.intra.peff.net>
- <c141fb44-904f-e8b6-119f-7d2d6bcfd81a@web.de>
+To:     Tao Qingyun <taoqy@ls-a.me>
+Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] builtin/branch.c: remove useless branch_get
+Message-ID: <20181017083906.GC31932@sigill.intra.peff.net>
+References: <20181015171707.GB1301@sigill.intra.peff.net>
+ <20181016145428.2901-1-taoqy@ls-a.me>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c141fb44-904f-e8b6-119f-7d2d6bcfd81a@web.de>
+In-Reply-To: <20181016145428.2901-1-taoqy@ls-a.me>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 14, 2018 at 04:29:06PM +0200, René Scharfe wrote:
+On Tue, Oct 16, 2018 at 10:54:28PM +0800, Tao Qingyun wrote:
 
-> Anyway, drove the generative approach a bit further, and came up with
-> the new DEFINE_SORT below.  I'm unsure about the name; perhaps it should
-> be called DEFINE_SORT_BY_COMPARE_FUNCTION_BODY, but that's a bit long.
-> It handles casts and const attributes behind the scenes and avoids
-> repetition, but looks a bit weird, as it is placed where a function
-> signature would go.
+> branch_get sometimes returns current_branch, which can be NULL (e.g., if
+> you're on a detached HEAD). Try:
 > 
-> Apart from that the macro is simple and doesn't use any tricks or
-> added checks.  It just sets up boilerplate functions to offer type-safe
-> sorting.
+>   $ git branch HEAD
+>   fatal: no such branch 'HEAD'
 > 
-> diffcore-rename.c and refs/packed-backend.c receive special treatment in
-> the patch because their compare functions are used outside of sorting as
-> well.  I made them take typed pointers nevertheless and used them from
-> DEFINE_SORT; the wrapper generated by that macro is supposed to be
-> private.  Given that such reuse is rare and I think we don't need a way
-> to make it public.
+>   $ git branch ''
+>   fatal: no such branch ''
 > 
-> What do y'all think about this direction?
+> However, it seems weird that we'd check those cases here (and provide
+> such lousy messages). And indeed, dropping that and letting us
+> eventually hit create_branch() gives a much better message:
+> 
+>   $ git branch HEAD
+>   fatal: 'HEAD' is not a valid branch name.
+> 
+>   $ git branch ''
+>   fatal: '' is not a valid branch name.
 
-I think it's the best we're likely to do, and is an improvement on the
-status quo.
+This explanation is perfect, of course. ;)
 
-The patch looks overall sane to me. I think DEFINE_SORT() is a fine
-name.
+I still wondered if you had another motivation hinted at in your
+original mail, though (some weirdness with running branch_get early).
+It's OK if there isn't one, but I just want to make sure we capture all
+of the details.
 
-I think given a macro parameter "foo" you could generate sort_by_foo()
-and compare_foo(), which would eliminate the extra layer in those
-two cases you mentioned. But I'm also fine with the approach you've
-shown here.
+Other than that question, the patch looks good to me.
 
 -Peff
