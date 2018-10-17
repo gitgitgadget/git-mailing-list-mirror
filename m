@@ -2,119 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16CFE1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 01:26:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4ED1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 02:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbeJQJUE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 05:20:04 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:50823 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726936AbeJQJUD (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 05:20:03 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 8039521F73;
-        Tue, 16 Oct 2018 21:26:51 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 16 Oct 2018 21:26:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=
-        subject:to:references:from:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=l
-        MQ89ta2bwiXiqJ7/gWiMnTktQhe9qxcH1icImuPmmk=; b=hagir1GDrfeOryceB
-        8nYOcRtBxn2Cm12O2ONmWxMzmCVgFEUmLs5yOUVTA6MWxkp/BaJQZ7CW7VESL5jH
-        sH3Uwp1T9YBekJJwHekkdUBHhUD/ZGJQ5LRBqqhF4H6G7+OBESnSGAn3PmKL0eXm
-        z242nKQMcTz1pj+h7vKyIuWrUVFnaqvQ8CruoR0GF7bywO89jjj8q6334bpiXEYT
-        bZlcQ0MtbJGr03XG9wEH0tTSzZs6CxcN3+ydqXFNqyYVvnZaUvAIfDmuLorZdcYP
-        5LuPJ9VabegGJapI+OJ42bUZVW35J16Gn+TeCj508Y1bUC4B7NZVi2cLJ9aiQp9+
-        x2b1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=lMQ89ta2bwiXiqJ7/gWiMnTktQhe9qxcH1icImuPm
-        mk=; b=T+8fCnxZlpCExdUAhXKCJUzj1fbAi6SQTpGD6G4QbgA4Nq2edH+VlgSw8
-        yvMWOOOykfHjnCZIATnx5UmE0wVirVMyHFlh2C2XvIuMRuJ54ui4FItTubnR4McF
-        deZ+W0+RRn+95EhOnm6c/HxscunglRMgkPlLLfOsBNPWssrsy/FiUGG8vMPOYnUv
-        FAd9VpzjM303h5KpKSNzahoGifd1K9T9eCRfEIyd8s/38yK5zTCJ6rYnQsIua1cW
-        TEumEhLiyP2/AVB5o+4uNFs3WBNFjfNnGJkfevb502829WAkEGec/byUqWLYJVvl
-        9de/ihlgmjlcP7FAc+0ZjbfIK1b4g==
-X-ME-Sender: <xms:24_GWx3XBLGFTOQ91TCG4lJNpm-gtQ3SzAQ5AXGRKgcFHv9SVyL_Kg>
-X-ME-Proxy: <xmx:24_GWzFb89L5GjrECT_8I_fsEwq1ONCDq60kZtyVNfIMX5oBc7ZM2g>
-    <xmx:24_GWzKFeJBplNY3bX269H_yZSLChUu6MlAPFXz8C__T9_qcslWlxg>
-    <xmx:24_GW36rhjKD5uOyAA1MBxKbu3BBtumPLpRIheNMdvPhlRbk6ztZWw>
-    <xmx:24_GW0loVwsKjdAQBtKWJaX4tkq_1MWs3AZob1wr7K2bm9D_vcMZJw>
-    <xmx:24_GW0ST0xKXILwJZwrHaK8mQqoiFi6azwxpgc1EkMbcmdAIPnJikg>
-    <xmx:24_GW33mjVewmENtedBn-ZUm5z7FiGsOTjWyHmIAoI0sHO7SVfhwXQ>
-Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id D0159E405D;
-        Tue, 16 Oct 2018 21:26:50 -0400 (EDT)
-Subject: Re: problem with not being able to enforce git content filters
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <5d4966c8-8171-9a0a-5120-f7c151c2b81f@stason.org>
- <20181016232636.GF432229@genre.crustytoothpaste.net>
- <038d40b9-0b35-b93f-9377-7c0bb12bce8e@stason.org>
- <20181017005424.GH432229@genre.crustytoothpaste.net>
-From:   Stas Bekman <stas@stason.org>
-Organization: Hope, Humanized
-Message-ID: <8660554f-9f48-af67-fbe2-f5aee5e61b09@stason.org>
-Date:   Tue, 16 Oct 2018 18:26:49 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1727243AbeJQKid (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 06:38:33 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:44850 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726988AbeJQKid (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 06:38:33 -0400
+Received: by mail-pg1-f193.google.com with SMTP id g2-v6so11763949pgu.11
+        for <git@vger.kernel.org>; Tue, 16 Oct 2018 19:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ub5vtr5JFABgNYXjk44F7S9K5VqvDKfsSfYDaRixkQA=;
+        b=QsLK6JTXmOYk1YELTqIUdYk0YGTNBQVJ0UQ7vpqjaYdW0bfnBBjtDhoa1K5Q9N4cV8
+         rxw2JtJhDXQE5jvfM/5l7LsF1vN1aQuMxXE52Eb6zkcKXK+/4VxQsAhICGrdFnloDlC5
+         ueLLS2GExHJejC/e/+CfcuGx6I/HhWFXSdAAu/4chQ9nkqdgSSN2MkICyDDG21jM12Ep
+         Kpe3wA6oNwuHcueR60YEvyoUKDU0dkVS8pndAmz7ZdkXp1AO5NwI5t+zyMuvaD6rZ5S0
+         stbER7gOsU0R5qMqRjsuL97LRjhvJ6eBdOo2WcqeWyoXgpAZwKz1V3hAGnNLCpdkrh6v
+         aOmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ub5vtr5JFABgNYXjk44F7S9K5VqvDKfsSfYDaRixkQA=;
+        b=P0fcH6NZBfOFVW7WXlGOPHmu8ie9KADEFwha0zM995fJOHTzCPj3lPa61EFKo6UKem
+         3xH5tRJo4mYLqykIG4YQ8thFFrslrdJ4ksrQL3RcWV4q1Ec4F+jyCfJBY3NZp4Hq7NPp
+         DtgI1NL/2JIOw/OglwfE7IxI5BY8mm9QMcT7ejAUUmWqG1UejG3xKUUsfIx8lfkgqkb2
+         dLTgvdJdxAXZ2tw9UYVJ7ayzScYox3ebYEMNzzdXy9s2Rk2yPAq3tYcyZGIyIlXGHwVV
+         F8RWsZR4/QwV/xEw5Qzs3KvM3L3T3bgn9eKcpmm0bk7szg7u/nApqp6c9hBK/KFakGp1
+         FlCQ==
+X-Gm-Message-State: ABuFfohcxyXFzBSpvIeVkp7YI0jvlsQvHvC6O9bKSq0wRTadQpuj00kC
+        p56d715Uiq845pT/DMxJA9ybLuV+
+X-Google-Smtp-Source: ACcGV63aeI6r1y8Gx5XclEr/JRSHg/IPH55f54XrBRoX4g/lTYveriYc+hVizZXB3iBIPaDgSOqKfQ==
+X-Received: by 2002:a63:1806:: with SMTP id y6-v6mr23099371pgl.187.1539744306527;
+        Tue, 16 Oct 2018 19:45:06 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id o131-v6sm24866952pgo.53.2018.10.16.19.45.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Oct 2018 19:45:05 -0700 (PDT)
+Date:   Tue, 16 Oct 2018 19:45:03 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Christian Hesse <list@eworm.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Hesse <mail@eworm.de>
+Subject: Re: [PATCH 1/1] subtree: make install targets depend on build targets
+Message-ID: <20181017024503.GA117170@aiede.svl.corp.google.com>
+References: <xmqq8t2y1o4y.fsf@gitster-ct.c.googlers.com>
+ <20181016075624.30176-1-list@eworm.de>
 MIME-Version: 1.0
-In-Reply-To: <20181017005424.GH432229@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181016075624.30176-1-list@eworm.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-10-16 05:54 PM, brian m. carlson wrote:
+Hi,
+
+Christian Hesse wrote:
+
+> --- a/contrib/subtree/Makefile
+> +++ b/contrib/subtree/Makefile
+> @@ -69,11 +69,11 @@ install: $(GIT_SUBTREE)
 [...]
->> It doesn't help with direct commits to master, since CI would be
->> detecting it after it was committed. And when that happens we all know
->> that already because 'git pull' fails.
-> 
-> Typically projects that have CI set up don't allow direct pushes to
-> master, since that tends to allow to bypass CI, or they allow it only in
-> exceptional circumstances (e.g., reverts).  Also, typically most
-> projects want to have some sort of review before code (resp. documents,
-> other contributions) are merged.  Most Git hosting platforms, including
-> GitHub, offer protected branches, so it's something to consider.
-> 
-> There is a possible alternative, and that's that if your project has
-> some sort of build file (e.g., a Makefile), you can set it up to
-> automatically insert hooks or git configuration into developers'
-> systems, optionally only if it's in a Git repository.  For example, you
-> could add a pre-commit hook that fails if the filters are disabled.
-> 
-> These are the approaches that tend to work well for most projects.  I
-> tend to prefer the CI approach with restricted branches because often I
-> want to customize my hooks, but your project will decide what works best
-> for it.
+> -install-html: $(GIT_SUBTREE_HTML)
+> +install-html: html
 
-Yes, Brian, what you're sharing makes total sense when things are setup
-this way, but this is not the case with the project I'm contributing to.
-This one is setup, commit first, review later, due to having too few hands.
+This broke the build for me:
 
-And I have already setup a CI to detect misconfigured systems. It'll
-catch RPs in time, and everything else post-commit. Let's hope the
-developers will watch the status of their commits and will react quickly
-to fix their setup and mend the broken commit, when they see their
-commit broke things. That's as good as it can get in this particular
-situation I understand.
+ make[2]: Entering directory '/build/git-2.19.1+next.20181016/contrib/subtree'
+ install -m 644 html /build/git-2.19.1+next.20181016/debian/tmp/usr/share/doc/git/html
+ install: cannot stat 'html': No such file or directory
+ make[2]: *** [Makefile:78: install-html] Error 1
 
-Thank you, Brian and Ævar for your support and very helpful suggestions.
+The rule says
 
--- 
-________________________________________________
-Stas Bekman       <'))))><       <'))))><
-https://stasosphere.com  https://chestofbooks.com
-https://experientialsexlab.com https://stason.org
-https://stasosphere.com/experience-life/my-books
+ install-html: html
+	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
+	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
+
+and $^ substitutes to "html" after this change.  How was this patch
+tested?
+
+Thanks,
+Jonathan
