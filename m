@@ -2,251 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF26E1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 14:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 029B31F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 16:12:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbeJQWy1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 18:54:27 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51119 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726990AbeJQWy1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 18:54:27 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmK3e-1fdBLH0Xvm-00ZwpF; Wed, 17
- Oct 2018 16:58:17 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmK3e-1fdBLH0Xvm-00ZwpF; Wed, 17
- Oct 2018 16:58:17 +0200
-Date:   Wed, 17 Oct 2018 16:58:21 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/13] Add a build definition for Azure DevOps
-In-Reply-To: <20181016191250.GO19800@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1810171512100.4546@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com> <pull.31.v2.git.gitgitgadget@gmail.com> <1a22efe849d6da79f2c639c62a1483361a130238.1539598316.git.gitgitgadget@gmail.com> <20181016191250.GO19800@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727791AbeJRAJL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 20:09:11 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44240 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727016AbeJRAJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 20:09:11 -0400
+Received: by mail-ed1-f66.google.com with SMTP id z21-v6so25400879edb.11
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 09:12:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=V+BQ6Nv2m//JYMen3mnfz09e5OetS4w2GCYxdHphYWs=;
+        b=DYDdej760CWvjaheI+Qo+2e4/FPz1PHg3ua2I1ADZe6nmMocgAGnvpLpEzvl9ivbuR
+         hHFYRhqusLplWCauZsfJqibnYRWYeMRU4BLgKzlpmNHvdBREomG6owUfLm8Resxmgkqr
+         v/rPwdUtFPGhE6PmJ4AWVDxRERuLwPxKZgFbwqnZZh5UZcQhgOV6JTuRi7Alq1arzfmj
+         4edhiOZV1jCFTgrbqxt7gsEI1lCnzYxFyv4S8ZzTi590IaMsioFXtHqhwWo1Ouby9oeD
+         OKNzSLxz8vYwtV5XV7t1eQqyK32r3XGuqQkVil4NiJbNIclvmwq8kY6xR9g4GzFFIdKx
+         9fYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=V+BQ6Nv2m//JYMen3mnfz09e5OetS4w2GCYxdHphYWs=;
+        b=let5DJNmRU2eGBU8n+uvyhlRKVOX5UwNTIrirRpC+o4awiu9Oqyg4SICdUh8Qjy1h3
+         kKbFvjkV/W6jeuYNBWwfhQ/OhiJyldgmRBLUHnu94a8YZN3IEFxof9KYu78wfY0AKsze
+         eJejmp+xOAdmSm+l9Peg6YCfpPqvMomrf0q9vonmFhQ9uiq/LzyAZKUVh+7N1Ie2BIdC
+         UDfcoUeNMhCBqO75GieBP5Alst+8mPrVd9VSg2hlK7fyJ7sF1u14Vk+mSKtrHK/UG+Lg
+         wfpb2kibrfX3ymvWCL3Sn0DKlrTjo2lMHSYAw4WCJPuiZpu+vRYw23ahKvUR25eyuiHm
+         esNQ==
+X-Gm-Message-State: ABuFfojiG0FP6jpxKzoOn3eofIcb0d1ULXTOrls7vzmn07lt/q9W3HNl
+        WMwv9IMSCsveUieXENuR7sLaHgT8
+X-Google-Smtp-Source: ACcGV62JbPldOBrawL+gicnzVy01DHf49b/Cl2ETzopMM1NJSJDoNTJVFUA2rrXk8GrR6/9KqS3p9w==
+X-Received: by 2002:a50:eb42:: with SMTP id z2-v6mr1048776edp.126.1539792764760;
+        Wed, 17 Oct 2018 09:12:44 -0700 (PDT)
+Received: from szeder.dev (x4db11ffa.dyn.telefonica.de. [77.177.31.250])
+        by smtp.gmail.com with ESMTPSA id k42-v6sm6494959ede.94.2018.10.17.09.12.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Oct 2018 09:12:43 -0700 (PDT)
+Date:   Wed, 17 Oct 2018 18:12:41 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 10/13] Add a base implementation of SHA-256 support
+Message-ID: <20181017161241.GS19800@szeder.dev>
+References: <20181015021900.1030041-1-sandals@crustytoothpaste.net>
+ <20181015021900.1030041-11-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1992613047-1539788302=:4546"
-X-Provags-ID: V03:K1:IezK4IVNrz6a6SntRZYQUGQCXApNl6wzRviiRm+28eYTP4KXz0D
- +OVwylkSYJGtX2rV1Auo0IJUyo3QX4+kEFBv5jDgh4LLyUjReTUr5rdbR1weIBhGHHmZMa/
- E9Df5nQlos5OM/1BGlBXQjLO+kTm1TPE/SiHAyN9BzViUlGpnxdbYgPz6D+oyRQj2yIMBrx
- iOhR8xp23/eVd60qLIE1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r9C3Ta29/+I=:938M/qUU/a7A8rCB4BUkgh
- cBfxlz/3e4dedkVBo7UfxlMaC83eR9VDITixrQXkWuny1ZE8C5y1ygBdpv4JgzMrMAekVtkLC
- WMLy1/jvypKSvNAOY3rBPOu3LqZXuEDknp5J8/6FGxrCiGJZ94EW60BNW9Es8zXXVFu22/IGa
- Zdk2BL8dgvb+LxzzPBm8ZdmAdcQoOd03OMfQFTlp7FubTPMXFNHVPtXpNl0N4SNLHHVQWlq5G
- RmEs5ORF+t9XbUoxf5AcKSIAwgb1UDqx6IMAHcpvfTKwljgi0gmnp2PzKwrZnnmiiWPTzfsyc
- WkI5muVMOg2GXEeCdhiKHzYuwRkFXlXGZmmnUyXv3fsbmu525ZVBuSdk0YPpRX9PPXbRp9Pyf
- gktKZyDf+2W/7yuG3vfgUrkSLBlRleEsnQtca41JsO20gkuaqTZt90D8Uh6ygktjv/yHbkFBG
- sKv39t82SYxSJiOGRDi107DN7vB7l8SM0/YTTKiAN7UF+Lp2OSnLNGymchbI0FkfEiUi09ChE
- Yd0VWlgAzgObVvXpeUs0wRpNGKWwTOkjR4Ibx32+QC+uEQ/jHRjlrFcuk7HY1ir8vQceib7z2
- r9VDb3qBRkVChj6+Dnc3Q5IgLy+n2+xsz1HmYbGBnyA9xABn5Uz+4eQWz2VlBf4grfFmJjCl9
- KAMmR9gLaA/3sYkUDv8y3cOd5q1M7az5XXZ9Ox3yOop1/goQLIO17w70Wc3LeQ3JSbVyTakUy
- Z+ZZIHRSISw/TOtfce5taS0AGjvWLWI8gAbBoQgKduo4e0ayyKTlZH99AnP4nuFu74+LNPQQs
- bIc//1A2bYpNwzxAE17c8smKOx4TLcJFxeeVHigs7S0kN8gFms=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181015021900.1030041-11-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1992613047-1539788302=:4546
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi Gábor,
-
-On Tue, 16 Oct 2018, SZEDER Gábor wrote:
-
-> On Mon, Oct 15, 2018 at 03:12:06AM -0700, Johannes Schindelin via GitGitGadget wrote:
-> > diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-> > new file mode 100644
-> > index 0000000000..b5749121d2
-> > --- /dev/null
-> > +++ b/azure-pipelines.yml
-> > @@ -0,0 +1,319 @@
-> > +resources:
-> > +- repo: self
-> > +  fetchDepth: 1
-> > +
-> > +phases:
-> > +- phase: linux_clang
-> > +  displayName: linux-clang
-> > +  condition: succeeded()
-> > +  queue:
-> > +    name: Hosted Ubuntu 1604
-> > +  steps:
-> > +  - bash: |
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-> > +
-> > +       sudo apt-get update &&
-> > +       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin &&
-> > +
-> > +       export CC=clang || exit 1
-> > +
-> > +       ci/install-dependencies.sh
-> 
-> I think you would want to 'exit 1' when this script fails.
-> This applies to other build jobs (erm, phases?) below as well.
-
-True.
-
-FWIW the nomenclature is "build" or "job" or "build job" for the entire
-run, from what I understand. The "phase" is the individual chunk that is
-run in an individual agent, i.e. you can have a single job running test on
-different OSes in separate phases.
-
-> > +       ci/run-build-and-tests.sh || {
-> > +           ci/print-test-failures.sh
-> > +           exit 1
-> > +       }
-> > +
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-> > +    displayName: 'ci/run-build-and-tests.sh'
-> > +    env:
-> > +      GITFILESHAREPWD: $(gitfileshare.pwd)
-> > +  - task: PublishTestResults@2
-> > +    displayName: 'Publish Test Results **/TEST-*.xml'
-> > +    inputs:
-> > +      mergeTestResults: true
-> > +      testRunTitle: 'linux-clang'
-> > +      platform: Linux
-> > +      publishRunAttachments: false
-> > +    condition: succeededOrFailed()
-> > +
-> > +- phase: linux_gcc
-> > +  displayName: linux-gcc
-> > +  condition: succeeded()
-> > +  queue:
-> > +    name: Hosted Ubuntu 1604
-> > +  steps:
-> > +  - bash: |
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-> > +
-> > +       sudo apt-get update &&
-> > +       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin || exit 1
-> > +
-> 
-> On Travis CI the Linux GCC build job uses gcc-8 instead of whatever
-> the default is in that old-ish Ubuntu LTS; see 37fa4b3c78 (travis-ci:
-> run gcc-8 on linux-gcc jobs, 2018-05-19).
-
-I'll add those dependencies explicitly. It does seem, however, from a
-cursory look at the log, that gcc-8 should not even be picked up, as it is
-set via the environment variable `CC` (which, as you point out in
-below-referenced thread, is not respected):
+On Mon, Oct 15, 2018 at 02:18:57AM +0000, brian m. carlson wrote:
+> diff --git a/sha256/block/sha256.c b/sha256/block/sha256.c
+> new file mode 100644
+> index 0000000000..18350c161a
+> --- /dev/null
+> +++ b/sha256/block/sha256.c
+> @@ -0,0 +1,180 @@
+> +#include "git-compat-util.h"
+> +#include "./sha256.h"
+> +
+> +#define BLKSIZE blk_SHA256_BLKSIZE
+> +
+> +void blk_SHA256_Init(blk_SHA256_CTX *ctx)
+> +{
+> +	ctx->offset = 0;
+> +	ctx->length = 0;
+> +	ctx->state[0] = 0x6A09E667UL;
+> +	ctx->state[1] = 0xBB67AE85UL;
+> +	ctx->state[2] = 0x3C6EF372UL;
+> +	ctx->state[3] = 0xA54FF53AUL;
+> +	ctx->state[4] = 0x510E527FUL;
+> +	ctx->state[5] = 0x9B05688CUL;
+> +	ctx->state[6] = 0x1F83D9ABUL;
+> +	ctx->state[7] = 0x5BE0CD19UL;
+> +}
+> +
+> +static inline uint32_t ror(uint32_t x, unsigned n)
+> +{
+> +	return (x >> n) | (x << (32 - n));
+> +}
+> +
+> +#define Ch(x,y,z)       (z ^ (x & (y ^ z)))
+> +#define Maj(x,y,z)      (((x | y) & z) | (x & y))
+> +#define S(x, n)         ror((x),(n))
+> +#define R(x, n)         ((x)>>(n))
+> +#define Sigma0(x)       (S(x, 2) ^ S(x, 13) ^ S(x, 22))
+> +#define Sigma1(x)       (S(x, 6) ^ S(x, 11) ^ S(x, 25))
+> +#define Gamma0(x)       (S(x, 7) ^ S(x, 18) ^ R(x, 3))
+> +#define Gamma1(x)       (S(x, 17) ^ S(x, 19) ^ R(x, 10))
 
 [...]
-2018-10-16T10:00:36.0177072Z ++ '[' linux-gcc = linux-gcc ']'
-2018-10-16T10:00:36.0177380Z ++ export CC=gcc-8
-2018-10-16T10:00:36.0177630Z ++ CC=gcc-8
-2018-10-16T10:00:36.0177917Z ++ case "$jobname"
+
+> +#define RND(a,b,c,d,e,f,g,h,i,ki)                    \
+> +	t0 = h + Sigma1(e) + Ch(e, f, g) + ki + W[i];   \
+> +	t1 = Sigma0(a) + Maj(a, b, c);                  \
+> +	d += t0;                                        \
+> +	h  = t0 + t1;
+> +
+> +	RND(S[0],S[1],S[2],S[3],S[4],S[5],S[6],S[7],0,0x428a2f98);
+
 [...]
 
-(see https://dev.azure.com/git/git/_build/results?buildId=192&view=logs)
+> +#undef RND
+> +
+> +	for (i = 0; i < 8; i++) {
+> +		ctx->state[i] = ctx->state[i] + S[i];
+> +	}
+> +}
+> +
+> +#define MIN(x, y) ((x) < (y) ? (x) : (y))
 
-> > +       ci/install-dependencies.sh
-> > +       ci/run-build-and-tests.sh || {
-> > +           ci/print-test-failures.sh
-> > +           exit 1
-> > +       }
-> > +
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-> > +    displayName: 'ci/run-build-and-tests.sh'
-> > +    env:
-> > +      GITFILESHAREPWD: $(gitfileshare.pwd)
-> > +  - task: PublishTestResults@2
-> > +    displayName: 'Publish Test Results **/TEST-*.xml'
-> > +    inputs:
-> > +      mergeTestResults: true
-> > +      testRunTitle: 'linux-gcc'
-> > +      platform: Linux
-> > +      publishRunAttachments: false
-> > +    condition: succeededOrFailed()
-> > +
-> > +- phase: osx_clang
-> > +  displayName: osx-clang
-> > +  condition: succeeded()
-> > +  queue:
-> > +    name: Hosted macOS
-> > +  steps:
-> > +  - bash: |
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-> > +
-> > +       export CC=clang
-> > +
-> > +       ci/install-dependencies.sh
-> > +       ci/run-build-and-tests.sh || {
-> > +           ci/print-test-failures.sh
-> > +           exit 1
-> > +       }
-> > +
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-> > +    displayName: 'ci/run-build-and-tests.sh'
-> > +    env:
-> > +      GITFILESHAREPWD: $(gitfileshare.pwd)
-> > +  - task: PublishTestResults@2
-> > +    displayName: 'Publish Test Results **/TEST-*.xml'
-> > +    inputs:
-> > +      mergeTestResults: true
-> > +      testRunTitle: 'osx-clang'
-> > +      platform: macOS
-> > +      publishRunAttachments: false
-> > +    condition: succeededOrFailed()
-> > +
-> > +- phase: osx_gcc
-> > +  displayName: osx-gcc
-> > +  condition: succeeded()
-> > +  queue:
-> > +    name: Hosted macOS
-> > +  steps:
-> > +  - bash: |
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-> > +
-> 
-> Here you should 'export CC=gcc', because on macOS 'cc' is 'clang' by
-> default.
-> 
-> Note, however, that setting 'CC' in the environment alone has no
-> effect on the build process, it will still use 'cc'.  Keep an eye on
-> where this thread will lead to:
-> 
->   https://public-inbox.org/git/20181016184537.GN19800@szeder.dev/T/#u
+On macOS there is a MIN macro already defined in the system headers,
+resulting in the following error:
 
-Will do.
+      CC sha256/block/sha256.o
+  sha256/block/sha256.c:133:9: error: 'MIN' macro redefined [-Werror,-Wmacro-redefined]
+  #define MIN(x, y) ((x) < (y) ? (x) : (y))
+          ^
+  /usr/include/sys/param.h:215:9: note: previous definition is here
+  #define MIN(a,b) (((a)<(b))?(a):(b))
+          ^
+  1 error generated.
+  make: *** [sha256/block/sha256.o] Error 1
 
-Thanks,
-Dscho
+A simple "#undef MIN" solves this issue.  However, I wonder whether we
+should #undef the other #define directives as well, just to be sure
+(and perhaps overly cautious).
 
-> 
-> > +       ci/install-dependencies.sh
-> > +       ci/run-build-and-tests.sh || {
-> > +           ci/print-test-failures.sh
-> > +           exit 1
-> > +       }
-> > +
-> > +       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-> > +    displayName: 'ci/run-build-and-tests.sh'
-> > +    env:
-> > +      GITFILESHAREPWD: $(gitfileshare.pwd)
-> > +  - task: PublishTestResults@2
-> > +    displayName: 'Publish Test Results **/TEST-*.xml'
-> > +    inputs:
-> > +      mergeTestResults: true
-> > +      testRunTitle: 'osx-gcc'
-> > +      platform: macOS
-> > +      publishRunAttachments: false
-> > +    condition: succeededOrFailed()
-> > +
-> 
---8323328-1992613047-1539788302=:4546--
+> +void blk_SHA256_Update(blk_SHA256_CTX *ctx, const void *data, size_t len)
+> +{
+> +	const unsigned char *in = data;
+> +	size_t n;
+> +	ctx->length += len;
+> +	while (len > 0) {
+> +		if (!ctx->offset && len >= BLKSIZE) {
+> +			blk_SHA256_Transform(ctx, in);
+> +			in += BLKSIZE;
+> +			len -= BLKSIZE;
+> +		} else {
+> +			n = MIN(len, (BLKSIZE - ctx->offset));
+> +			memcpy(ctx->buf + ctx->offset, in, n);
+> +			ctx->offset += n;
+> +			in += n;
+> +			len -= n;
+> +			if (ctx->offset == BLKSIZE) {
+> +				blk_SHA256_Transform(ctx, ctx->buf);
+> +				ctx->offset = 0;
+> +			}
+> +		}
+> +	}
+> +}
+> +
+> +void blk_SHA256_Final(unsigned char *digest, blk_SHA256_CTX *ctx)
+> +{
+> +	const unsigned trip = BLKSIZE - sizeof(ctx->length);
+> +	int i;
+> +
+> +	ctx->length <<= 3;
+> +	ctx->buf[ctx->offset++] = 0x80;
+> +
+> +	if (ctx->offset > trip) {
+> +		memset(ctx->buf + ctx->offset, 0, BLKSIZE - ctx->offset);
+> +		blk_SHA256_Transform(ctx, ctx->buf);
+> +		ctx->offset = 0;
+> +	}
+> +
+> +	memset(ctx->buf + ctx->offset, 0, BLKSIZE - ctx->offset - sizeof(ctx->length));
+> +
+> +	put_be64(ctx->buf + trip, ctx->length);
+
+Some GCC versions (e.g. gcc-4.8 with -O2 -Wall -Werror) complain about
+the above line:
+
+      CC sha256/block/sha256.o
+  sha256/block/sha256.c: In function ‘blk_SHA256_Final’:
+  sha256/block/sha256.c:174:2: error: dereferencing type-punned pointer will break strict-aliasing rules [-Werror=strict-aliasing]
+    put_be64(ctx->buf + trip, ctx->length);
+    ^
+  cc1: all warnings being treated as errors
+  make: *** [sha256/block/sha256.o] Error 1
+
+Something like this makes it compile:
+
+  void *ptr = ctx->buf + trip;
+  put_be64(ptr, ctx->length);
+
+However, it's not immediately obvious to me why the compiler
+complains, or why that intermediate void* variable makes any
+difference, but now it's not the time to put on my language lawyer
+hat.
+
+Perhaps an old compiler bug?  Clang in general, newer GCC versions, or
+gcc-4.8 with -Wall -Werror but without -O2 don't seem to be affected.
+
+
+> +	blk_SHA256_Transform(ctx, ctx->buf);
+> +
+> +	/* copy output */
+> +	for (i = 0; i < 8; i++, digest += sizeof(uint32_t))
+> +		put_be32(digest, ctx->state[i]);
+> +}
