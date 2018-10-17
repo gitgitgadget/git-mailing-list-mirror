@@ -2,66 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E50A71F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 18:20:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 968A61F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 18:22:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbeJRCRE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 22:17:04 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:35290 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727610AbeJRCRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 22:17:04 -0400
-Received: by mail-qt1-f196.google.com with SMTP id d21-v6so18815338qtq.2
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 11:20:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fdAMQzgNlK5qZA0L9cdR8PUe7sMR8zK7k6n/K0ukvFI=;
-        b=HkmWt1tIc4fnt1OIIXVa+qNMOwI33mKqALlgHhVlM5nSMMWp8Fly1Atp52/Wysn/U9
-         aN69wlqvak555PVJ1PUqEEAQfAAEbLavDnZV/m3DirQw27ZU+Ejd/4bqHd8YhPuaaE0H
-         qUZZbtNqxF6eVZhFYbhu3343oF55i4pJmIl5LW5J3qOajL0E7zu3U9Ez9pRiPdx6lcpB
-         k/L6nhKVEo0SQu6JVloi46PSQILN39uwhm+OWQAr9jKtYHHHSSyck+KIukVjyMCpQW9D
-         bEhqfI+a4bdpiQAs9qzPjs37IF+zqi3nSimlqZd7Ali1/YnlOY5XOPPeKhTUz5HZWR+d
-         xzWA==
-X-Gm-Message-State: ABuFfoim2Y7AJTk4FplojeXYu6vt++wwDm/utV721N0jAm8jeaAioCGe
-        G6/OK3hft8vZYCFZhfbwzwV6Hes2K5sLZ+Zd93M=
-X-Google-Smtp-Source: ACcGV60l8+DuQwADWRL83RLpo4WcNoJmsTzZGfhpKAp/Zpt2XsuzpqMS/e3SPpxpWU1bnEYKMru7tNV55q3QnpDo1r8=
-X-Received: by 2002:ac8:3097:: with SMTP id v23-v6mr25282444qta.335.1539800410659;
- Wed, 17 Oct 2018 11:20:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20181017164021.15204-1-peartben@gmail.com> <20181017164021.15204-3-peartben@gmail.com>
-In-Reply-To: <20181017164021.15204-3-peartben@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 17 Oct 2018 14:19:59 -0400
-Message-ID: <CAPig+cQ3ia78pLtnHSq8tM3B-XnFgWhwowJxwacYEEzXosJ16g@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] reset: add new reset.quietDefault config setting
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        id S1728095AbeJRCTv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 22:19:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43728 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727672AbeJRCTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 22:19:51 -0400
+Received: (qmail 7358 invoked by uid 109); 17 Oct 2018 18:22:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 18:22:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21775 invoked by uid 111); 17 Oct 2018 18:22:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 14:22:09 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 14:22:56 -0400
+Date:   Wed, 17 Oct 2018 14:22:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Ben Peart <peartben@gmail.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Ben Peart <benpeart@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v1 1/2] reset: don't compute unstaged changes after reset
+ when --quiet
+Message-ID: <20181017182255.GC28326@sigill.intra.peff.net>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181017164021.15204-2-peartben@gmail.com>
+ <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 17, 2018 at 12:40 PM Ben Peart <peartben@gmail.com> wrote:
-> Add a reset.quietDefault config setting that sets the default value of the
-> --quiet flag when running the reset command.  This enables users to change
-> the default behavior to take advantage of the performance advantages of
-> avoiding the scan for unstaged changes after reset.  Defaults to false.
+On Wed, Oct 17, 2018 at 02:14:32PM -0400, Eric Sunshine wrote:
 
-As with the previous patch, my knee-jerk reaction is that this really
-feels wrong being tied to --quiet. It's particularly unintuitive.
+> > diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+> > @@ -95,7 +95,9 @@ OPTIONS
+> >  --quiet::
+> > -       Be quiet, only report errors.
+> > +       Be quiet, only report errors.  Can optimize the performance of reset
+> > +       by avoiding scaning all files in the repo looking for additional
+> > +       unstaged changes.
+> 
+> s/scaning/scanning/
+> 
+> However, I'm not convinced that this should be documented here or at
+> least in this fashion. When I read this new documentation before
+> reading the commit message, I was baffled by what it was trying to say
+> since --quiet'ness is a superficial quality, not an optimizer. My
+> knee-jerk reaction is that it doesn't belong in end-user documentation
+> at all since it's an implementation detail, however, I can see that
+> such knowledge could be handy for people in situations which would be
+> helped by this. That said, if you do document it, this doesn't feel
+> like the correct place to do so; it should be in a "Discussion"
+> section or something. (Who would expect to find --quiet documentation
+> talking about optimizations? Likely, nobody.)
 
-What I _could_ see, and what would feel more natural is if you add a
-new option (say, --optimize) which is more general, incorporating
-whatever optimizations become available in the future, not just this
-one special-case. A side-effect of --optimize is that it implies
---quiet, and that is something which can and should be documented.
+Yeah, I had the same thought. You'd probably choose --quiet because you
+want it, you know, quiet.
 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+Whereas for the new config variable, you'd probably set it not because
+you want it quiet all the time, but because you want to get some time
+savings. So there it does make sense to me to explain.
+
+Other than that, this seems like an obvious and easy win. It does feel a
+little hacky (you're really losing something in the output, and ideally
+we'd just be able to give that answer quickly), but this may be OK as a
+hack in the interim.
+
+The sad thing is just that it's user-facing, so we have to respect it
+forever. I almost wonder if there should be a global core.optimizeMessages
+or something that tries to tradeoff less information for speed in all
+commands, but makes no promises about which. Then a user with a big repo
+who sets it once will get the benefit as more areas are identified (I
+think "status" already has a similar case with ahead/behind)? And vice
+versa, as some messages get faster to produce, they can be dropped from
+that option.
+
+I dunno. Maybe that is a stupid idea, and people really do want to
+control it on a per-message basis.
+
+-Peff
