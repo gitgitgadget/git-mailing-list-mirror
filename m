@@ -2,108 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C95341F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 10:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7012F1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 12:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbeJQSeO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 14:34:14 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:50893 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726768AbeJQSeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 14:34:14 -0400
-Received: by mail-it1-f193.google.com with SMTP id k206-v6so1731087ite.0
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 03:39:08 -0700 (PDT)
+        id S1727114AbeJQUAz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 16:00:55 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41538 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727013AbeJQUAz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 16:00:55 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x31-v6so24589732edd.8
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 05:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pewNFdfLqpyEzYqdAVfk4Hy2U+Fu7jLJ7PaZBwrQ0/U=;
-        b=JwMkFE5YsN7ZqphwvWm54PZ68f5PBaqBvYTYhwKymAStpFQcJQo7Vk0QZbIv3OLyKE
-         GSbeZWQ2WPatb1Yz0GVLtzGHPyhI+uAHMRIVFsbeEz/10CPjausKugpTqj8MEh0iGDxs
-         lFFrWK6ej9MYV9BpL1IRMzuPA6GHOXur0QMwLSCFNny/E9SI17evFsLly5h72l07aeey
-         Lb6R0rsypbrLqz/nFHd+Eh5pWjDt7EURfCBpiB5MrpxhUKB7hRBHDyz3SvktX60/2wWC
-         y8yjs32aoMWPUQ2kr+3+lUa0hpx3pUJmth53OaW7NG+FEkkXp58cRbEFSSAXr67Pn7px
-         ySZw==
+        d=uber.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KqDvBz6uKMSNEGcRcJ+dWRuxPsorHd04dAqkp/qgj+o=;
+        b=AbnpbVtoegMhangUSk+b8zYQtWzcMSiAznG1aiyG00bcn3ADRW+Yn1TAxB3eIgoVUY
+         HOGokzxSAaXhWa8SixOMypBhG2+iRAqXzrIzUS18f9pw7XTehJWqEirr7s45SWzwiuRE
+         xgW1xitIAP2NVggZmSOhHsi/JCcw8NJnSA2r4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pewNFdfLqpyEzYqdAVfk4Hy2U+Fu7jLJ7PaZBwrQ0/U=;
-        b=McV2Rv7xTJLv2oD5OCBrd/wAHSUR/lWXVDWRsYNFut7fWeegzjh1oFCQgiuMNwhzLc
-         98ZB2AIZAkHw/gK5RAFiAbjCQ0dzkARtH9g4i2po8Ukro86uceJSNxALfLqmyGGEU6ox
-         J88qh7MyvIpo8I1ndUxh4bdud+iV9+mEKwa+AieGs0Ymra3WJXHAszKAkytJv+DiohGL
-         lGQJ8NLnhcyKRDWkLy02aielGM3aWdPvNTbrg6Kf2fBeRfrfBT1bbm3j+2kqd2yrwq7e
-         KgfQUV2b0NlaQL1z7ACeEsV1Z4gmIw62/hzz9h5at/T4wd89Dx8z/M70B+BSE1cy918U
-         wvVA==
-X-Gm-Message-State: ABuFfoic2u5VwYLKlYE7PFLSwhgM3dfnUiN2jpBujoFNf7mOMleWh2Lh
-        sQf7EjsonmUfO0d+Y/wCo2E=
-X-Google-Smtp-Source: ACcGV63ndaPg3UBqdOxghND41Mt6I9B1ebsDkdCxhwnAwqEkSo+vLAgb9SQKlm/XE4QfB4SIjcQ2bw==
-X-Received: by 2002:a24:368d:: with SMTP id l135-v6mr1079527itl.76.1539772747981;
-        Wed, 17 Oct 2018 03:39:07 -0700 (PDT)
-Received: from flurp.local (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id o194-v6sm757883ito.11.2018.10.17.03.39.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Oct 2018 03:39:07 -0700 (PDT)
-Date:   Wed, 17 Oct 2018 06:39:02 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Daniels Umanovskis <daniels@umanovskis.se>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v4] branch: introduce --show-current display option
-Message-ID: <20181017103902.GA12137@flurp.local>
-References: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com>
- <20181012133321.20580-1-daniels@umanovskis.se>
- <CAPig+cRCfO=3BB6bvDSKLKkhiSA-4=p4-zZkAXvN446_6B1_HA@mail.gmail.com>
- <xmqqk1mhxzcz.fsf@gitster-ct.c.googlers.com>
- <CAPig+cRwy2Xhq7uJJ0OfY2nRZgPK9yHr=G+KMKuWx-PXyWv8Gg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1810171211440.4546@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KqDvBz6uKMSNEGcRcJ+dWRuxPsorHd04dAqkp/qgj+o=;
+        b=IPo9xd6w1Ot3xV+YvU3HhT4LOk+HzNqrkZHAgQtGUCW+9tlOvWGIb32/4qQqzrjXyJ
+         yiAuiNqJsu1E6X1wvtFkKNY+0VwKUHez1yuR95wYrWoHTdSEc9JTwJF4ctVGQT/62/9B
+         xR98u4EohwHdFYJwWDQkcpZ/OnKbrCjUO4qPWbItwSR96KFLdxc8Avc2rHWiq3tr8I92
+         Qh/sA2s6K4alk+CabrXnG7aRqDnGV4qngNTNSDI7mIwzwxANJWYMFDfZyJc10auAPCzo
+         DypSN0xcaUrXVRgx8LKt1zy1famiotkAP4QS0EYcGaeqTdARweZ5JnpNNqO5N97/TPlf
+         iWAA==
+X-Gm-Message-State: ABuFfoh+Im3WBRkQYwa+rOlMw/x78TH4TQJKwQ4xeeHENUFUiMoT1iP8
+        Of2xFn6F6/arqq3TXQjC4Q8XCigUu3tot2A/B/+JWg==
+X-Google-Smtp-Source: ACcGV61wcLS05rJYtEO8C3BpzlRQosP5eu+MpNk13Iksk1QvQvDu4qcBSgyrHr6rPpye4RuAgfg1yJ+VZ6OWB7QQIRc=
+X-Received: by 2002:a50:b1c4:: with SMTP id n4-v6mr422031edd.128.1539777928926;
+ Wed, 17 Oct 2018 05:05:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1810171211440.4546@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20181016215850.47821-1-jonathantanmy@google.com>
+In-Reply-To: <20181016215850.47821-1-jonathantanmy@google.com>
+From:   Arturas Moskvinas <arturas@uber.com>
+Date:   Wed, 17 Oct 2018 15:05:17 +0300
+Message-ID: <CAGY-PBiH1fKebjgCfrcCTpC9Xue7guqYoE51UpBQJ30zJoxGeQ@mail.gmail.com>
+Subject: Re: [PATCH] upload-pack: clear flags before each v2 request
+To:     jonathantanmy@google.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 17, 2018 at 6:18 AM Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I realized yesterday that the &&-chain linting we use for every single
-> test case takes a noticeable chunk of time:
+Hello,
+
+I can confirm that shallow clones are no longer failing.
+
+--
+Arturas Moskvinas
+
+On Wed, Oct 17, 2018 at 12:58 AM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
->         $ time ./t0006-date.sh --quiet
->         real    0m20.973s
->         $ time ./t0006-date.sh --quiet --no-chain-lint
->         real    0m13.607s
+> Suppose a server has the following commit graph:
 >
-> My suspicion: it is essentially the `(exit 117)` that adds about 100ms to
-> every of those 67 test cases.
-
-The subshell chain-linter adds a 'sed' and 'grep' invocation to each test which doesn't help. (v1 of the subshell chain-linter only added a 'sed', but that changed with v2.)
-
-> With that in mind, I would like to suggest that we should start to be very
-> careful about using subshells in our test suite.
-
-You could disable the subshell chain-linter like this if you want test the (exit 117) goop in isolation:
-
---- 8< ---
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3f95bfda60..48323e503c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -675,8 +675,7 @@ test_run_ () {
- 		trace=
- 		# 117 is magic because it is unlikely to match the exit
- 		# code of other programs
--		if $(printf '%s\n' "$1" | sed -f "$GIT_BUILD_DIR/t/chainlint.sed" | grep -q '?![A-Z][A-Z]*?!') ||
--			test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
-+		if test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
- 		then
- 			error "bug in the test script: broken &&-chain or run-away HERE-DOC: $1"
- 		fi
---- 8< ---
+>  A   B
+>   \ /
+>    O
+>
+> We create a client by cloning A from the server with depth 1, and add
+> many commits to it (so that future fetches span multiple requests due to
+> lengthy negotiation). If it then fetches B using protocol v2, the fetch
+> spanning multiple requests, the resulting packfile does not contain O
+> even though the client did report that A is shallow.
+>
+> This is because upload_pack_v2() can be called multiple times while
+> processing the same session. During the 2nd and all subsequent
+> invocations, some object flags remain from the previous invocations. In
+> particular, CLIENT_SHALLOW remains, preventing process_shallow() from
+> adding client-reported shallows to the "shallows" array, and hence
+> pack-objects not knowing about these client-reported shallows.
+>
+> Therefore, teach upload_pack_v2() to clear object flags at the start of
+> each invocation.
+>
+> (One alternative is to reduce or eliminate usage of object flags in
+> protocol v2, but that doesn't seem feasible because almost all 8 flags
+> are used pervasively in v2 code.)
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> This was noticed by Arturas Moskvinas <arturas@uber.com> in [1]. The
+> reproduction steps given were to repeat a shallow fetch twice in
+> succession, but I found it easier to write a more understandable test if
+> I made the 2nd fetch an ordinary fetch. In any case, I also reran the
+> original reproduction steps, and the fetch completes without error.
+>
+> This patch doesn't cover the negotiation issue that I mentioned in my
+> previous reply [2].
+>
+> [1] https://public-inbox.org/git/CAGY-PBgsG-T3JY=awszwGMpFx+jDx-a1FcV0s6vR067bSqgZaA@mail.gmail.com/
+> [2] https://public-inbox.org/git/20181013004356.257709-1-jonathantanmy@google.com/
+> ---
+>  t/t5702-protocol-v2.sh | 25 +++++++++++++++++++++++++
+>  upload-pack.c          |  5 +++++
+>  2 files changed, 30 insertions(+)
+>
+> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+> index 88a886975d..70b88385ba 100755
+> --- a/t/t5702-protocol-v2.sh
+> +++ b/t/t5702-protocol-v2.sh
+> @@ -429,6 +429,31 @@ test_expect_success 'fetch supports include-tag and tag following' '
+>         git -C client cat-file -e $(git -C client rev-parse annotated_tag)
+>  '
+>
+> +test_expect_success 'upload-pack respects client shallows' '
+> +       rm -rf server client trace &&
+> +
+> +       git init server &&
+> +       test_commit -C server base &&
+> +       test_commit -C server client_has &&
+> +
+> +       git clone --depth=1 "file://$(pwd)/server" client &&
+> +
+> +       # Add extra commits to the client so that the whole fetch takes more
+> +       # than 1 request (due to negotiation)
+> +       for i in $(seq 1 32)
+> +       do
+> +               test_commit -C client c$i
+> +       done &&
+> +
+> +       git -C server checkout -b newbranch base &&
+> +       test_commit -C server client_wants &&
+> +
+> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
+> +               fetch origin newbranch &&
+> +       # Ensure that protocol v2 is used
+> +       grep "git< version 2" trace
+> +'
+> +
+>  # Test protocol v2 with 'http://' transport
+>  #
+>  . "$TEST_DIRECTORY"/lib-httpd.sh
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 62a1000f44..de7de1de38 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -37,6 +37,9 @@
+>  #define CLIENT_SHALLOW (1u << 18)
+>  #define HIDDEN_REF     (1u << 19)
+>
+> +#define ALL_FLAGS (THEY_HAVE | OUR_REF | WANTED | COMMON_KNOWN | SHALLOW | \
+> +               NOT_SHALLOW | CLIENT_SHALLOW | HIDDEN_REF)
+> +
+>  static timestamp_t oldest_have;
+>
+>  static int deepen_relative;
+> @@ -1393,6 +1396,8 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
+>         enum fetch_state state = FETCH_PROCESS_ARGS;
+>         struct upload_pack_data data;
+>
+> +       clear_object_flags(ALL_FLAGS);
+> +
+>         git_config(upload_pack_config, NULL);
+>
+>         upload_pack_data_init(&data);
+> --
+> 2.19.0.271.gfe8321ec05.dirty
+>
