@@ -2,153 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 959D61F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 04:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B2CC1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 05:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727291AbeJQL5U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 07:57:20 -0400
-Received: from mail.nudt.edu.cn ([202.197.9.11]:40336 "EHLO nudt.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727111AbeJQL5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 07:57:20 -0400
-X-Greylist: delayed 417 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Oct 2018 07:57:19 EDT
-Received: by ajax-webmail-app2 (Coremail) ; Wed, 17 Oct 2018 11:58:15 +0800
- (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-X-Originating-IP: [119.39.248.76]
-Date:   Wed, 17 Oct 2018 11:58:15 +0800 (GMT+08:00)
-From:   =?UTF-8?B?54mb5pet?= <niuxu16@nudt.edu.cn>
-To:     git <git@vger.kernel.org>
-Subject: Recommendations for updating error() to error_errno()
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 5.0.3_preview build
- 20151102(76855.8176) Copyright (c) 2002-2018 www.mailtech.cn nudt
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S1727035AbeJQNjW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 09:39:22 -0400
+Received: from ms90.vtex.lt ([82.135.219.78]:53015 "EHLO ms90.vtex.lt"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726944AbeJQNjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 09:39:22 -0400
+X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Oct 2018 09:39:21 EDT
+Received: (qmail 8248 invoked by uid 210); 17 Oct 2018 05:38:03 -0000
+Received: from boole.vtex.vmt by ms90 (envelope-from <s4uliu5@gmail.com>, uid 201) with qmail-scanner-2.08st 
+ (clamdscan: 0.99.3/25043. spamassassin: 3.3.2. perlscan: 2.08st.  
+ Clear:RC:1(10.0.0.8):. 
+ Processed in 0.053757 secs); 17 Oct 2018 05:38:03 -0000
+Received: from boole.vtex.vmt (10.0.0.8)
+  by lili.vtex.vmt with ESMTPS (DHE-RSA-AES256-GCM-SHA384 encrypted); 17 Oct 2018 05:38:03 -0000
+Received: (qmail 2947 invoked from network); 17 Oct 2018 05:38:03 -0000
+Received: from s2u.vtex.vmt (10.5.0.15)
+  by boole.vtex.vmt with SMTP; 17 Oct 2018 05:38:03 -0000
+From:   Saulius Gurklys <s4uliu5@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Saulius Gurklys <s4uliu5@gmail.com>
+Subject: [PATCH] doc: fix small typo in git show-branch
+Date:   Wed, 17 Oct 2018 08:37:41 +0300
+Message-Id: <20181017053741.25875-1-s4uliu5@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Message-ID: <6849fb3c.10199.166802c8ef3.Coremail.niuxu16@nudt.edu.cn>
-X-CM-TRANSID: SIAQrABHp1RYs8ZbuBgQBg--.16274W
-X-CM-SenderInfo: xqlx53qrw603lgwovvfxof0/1tbiAQEBDFC8UnQBZQAAsj
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWDJw
-        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-        daVFxhVjvjDU=
+Content-Transfer-Encoding: 7BIT
+X-Qmail-Scanner-2.08st: added fake Content-Type header
+Content-Type:   text/plain; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksDQpPdXIgdGVhbSB3b3JrcyBvbiBlbmhhbmNlIGxvZ2dpbmcgcHJhY3RpY2VzIGJ5IGxlYXJu
-aW5nIGZyb20gaGlzdG9yaWNhbCBsb2fCoHJldmlzaW9ucyBpbiBldm9sdXRpb24uDQpBbmQgd2Ug
-ZmluZCB0aHJlZSBwYXRjaGVzIHRoYXQgdXBkYXRlIGVycm9yKC4uLiwgc3RyZXJyb3IoZXJybXAp
-KSB0byBlcnJvcl9lcnJubyguLi4pLg0KDQpXaGlsZSBhcHBseWluZyB0aGlzIHJ1bGUgdG8gZ2l0
-LTIuMTQuMiwgd2UgZmluZCA5IG1pc3NlZCBzcG90IGluIGZpbGUgcmVmcy9maWxlcy1iYWNrZW5k
-LmMsIDEgaW4gYXBwbHkuYywgMiBpbiB0cmFjZS5jLCA0IGluIGRpci1pdGVyYXRvci5jOi4NCg0K
-SGVyZSBhcmUgdGhlIG1pc3NlZCBzcG90czoNCjEpIExpbmUgMTczNCBpbiBmaWxlIGdpdC0yLjE0
-LjIvcmVmcy9maWxlcy1iYWNrZW5kLmM6DQpyZXQgPSByYWNlcHJvb2ZfY3JlYXRlX2ZpbGUocGF0
-aC5idWYsIHJlbmFtZV90bXBfbG9nX2NhbGxiYWNrLCAmY2IpOw0KaWYgKHJldCkgew0KCWlmIChl
-cnJubyA9PSBFSVNESVIpDQoJCWVycm9yKCJkaXJlY3Rvcnkgbm90IGVtcHR5OiAlcyIsIHBhdGgu
-YnVmKTsNCgllbHNlDQoJCWVycm9yKCJ1bmFibGUgdG8gbW92ZSBsb2dmaWxlICVzIHRvICVzOiAl
-cyIsDQoJCQl0bXAuYnVmLCBwYXRoLmJ1ZiwNCgkJCXN0cmVycm9yKGNiLnRydWVfZXJybm8pKTsN
-Cn0NCg0KMikgTGluZSAxNzk1IGluIGZpbGUgZ2l0LTIuMTQuMi9yZWZzL2ZpbGVzLWJhY2tlbmQu
-YzogDQppZiAobG9nICYmIHJlbmFtZShzYl9vbGRyZWYuYnVmLCB0bXBfcmVuYW1lZF9sb2cuYnVm
-KSkgew0KCXJldCA9IGVycm9yKCJ1bmFibGUgdG8gbW92ZSBsb2dmaWxlIGxvZ3MvJXMgdG8gbG9n
-cy8iVE1QX1JFTkFNRURfTE9HIjogJXMiLA0KCQkJb2xkcmVmbmFtZSwgc3RyZXJyb3IoZXJybm8p
-KTsNCglnb3RvIG91dDsNCn0NCg0KMykgTGluZSAxODgwLCAxODg0IGluIGZpbGUgZ2l0LTIuMTQu
-Mi9yZWZzL2ZpbGVzLWJhY2tlbmQuYzoNCnJvbGxiYWNrbG9nOg0KCWlmIChsb2dtb3ZlZCAmJiBy
-ZW5hbWUoc2JfbmV3cmVmLmJ1Ziwgc2Jfb2xkcmVmLmJ1ZikpDQoJCWVycm9yKCJ1bmFibGUgdG8g
-cmVzdG9yZSBsb2dmaWxlICVzIGZyb20gJXM6ICVzIiwNCgkJCW9sZHJlZm5hbWUsIG5ld3JlZm5h
-bWUsIHN0cmVycm9yKGVycm5vKSk7DQoJaWYgKCFsb2dtb3ZlZCAmJiBsb2cgJiYNCgkgICAgcmVu
-YW1lKHRtcF9yZW5hbWVkX2xvZy5idWYsIHNiX29sZHJlZi5idWYpKQ0KCQllcnJvcigidW5hYmxl
-IHRvIHJlc3RvcmUgbG9nZmlsZSAlcyBmcm9tIGxvZ3MvIlRNUF9SRU5BTUVEX0xPRyI6ICVzIiwN
-CgkJCW9sZHJlZm5hbWUsIHN0cmVycm9yKGVycm5vKSk7DQo0KSBMaW5lIDIyNDcgaW4gZmlsZSBn
-aXQtMi4xNC4yL3JlZnMvZmlsZXMtYmFja2VuZC5jOg0KaWYgKGNvbW1pdF9yZWYobG9jaykgPCAw
-KQ0KCXJldHVybiBlcnJvcigidW5hYmxlIHRvIHdyaXRlIHN5bXJlZiBmb3IgJXM6ICVzIiwgcmVm
-bmFtZSwNCgkJICAgICBzdHJlcnJvcihlcnJubykpOw0KDQo1KSBMaW5lIDIzNjYgaW4gZmlsZSBn
-aXQtMi4xNC4yL3JlZnMvZmlsZXMtYmFja2VuZC5jOg0KaWYgKGZzZWVrKGxvZ2ZwLCAwLCBTRUVL
-X0VORCkgPCAwKQ0KCXJldCA9IGVycm9yKCJjYW5ub3Qgc2VlayBiYWNrIHJlZmxvZyBmb3IgJXM6
-ICVzIiwNCgkJICAgIHJlZm5hbWUsIHN0cmVycm9yKGVycm5vKSk7DQoNCjYpIExpbmUgMjM3OCwg
-MjM4NCBpbiBmaWxlIGdpdC0yLjE0LjIvcmVmcy9maWxlcy1iYWNrZW5kLmM6DQppZiAoZnNlZWso
-bG9nZnAsIHBvcyAtIGNudCwgU0VFS19TRVQpKSB7DQoJcmV0ID0gZXJyb3IoImNhbm5vdCBzZWVr
-IGJhY2sgcmVmbG9nIGZvciAlczogJXMiLA0KCSAgICByZWZuYW1lLCBzdHJlcnJvcihlcnJubykp
-Ow0KICAgICAgICBicmVhazsNCn0gDQpucmVhZCA9IGZyZWFkKGJ1ZiwgY250LCAxLCBsb2dmcCk7
-DQppZiAobnJlYWQgIT0gMSkgew0KCXJldCA9IGVycm9yKCJjYW5ub3QgcmVhZCAlZCBieXRlcyBm
-cm9tIHJlZmxvZyBmb3IgJXM6ICVzIiwNCgkgICAgY250LCByZWZuYW1lLCBzdHJlcnJvcihlcnJu
-bykpOw0KCWJyZWFrOw0KfQ0KDQo3KSBMaW5lIDMzMTIgaW4gZmlsZSBnaXQtMi4xNC4yL3JlZnMv
-ZmlsZXMtYmFja2VuZC5jOg0KY2IubmV3bG9nID0gZmRvcGVuX2xvY2tfZmlsZSgmcmVmbG9nX2xv
-Y2ssICJ3Iik7DQppZiAoIWNiLm5ld2xvZykgew0KCWVycm9yKCJjYW5ub3QgZmRvcGVuICVzICgl
-cykiLA0KCSAgICAgIGdldF9sb2NrX2ZpbGVfcGF0aCgmcmVmbG9nX2xvY2spLCBzdHJlcnJvcihl
-cnJubykpOw0KCWdvdG8gZmFpbHVyZTsNCn0NCg0KOCkgTGluZSAzMzM3IGluIGZpbGUgZ2l0LTIu
-MTQuMi9yZWZzL2ZpbGVzLWJhY2tlbmQuYzoNCmlmIChjbG9zZV9sb2NrX2ZpbGUoJnJlZmxvZ19s
-b2NrKSkgew0KICAgICAgICBzdGF0dXMgfD0gZXJyb3IoImNvdWxkbid0IHdyaXRlICVzOiAlcyIs
-IGxvZ19maWxlLA0KCSAgIHN0cmVycm9yKGVycm5vKSk7DQoNCjkpIExpbmUgMzM0OCBpbiBmaWxl
-IGdpdC0yLjE0LjIvcmVmcy9maWxlcy1iYWNrZW5kLmM6DQpzdGF0aWMgaW50IGZpbGVzX3JlZmxv
-Z19leHBpcmUoc3RydWN0IHJlZl9zdG9yZSAqcmVmX3N0b3JlLC4uLg0Kew0KCS4uLg0KCQl9IGVs
-c2UgaWYgKGNvbW1pdF9sb2NrX2ZpbGUoJnJlZmxvZ19sb2NrKSkgew0KCQkJc3RhdHVzIHw9IGVy
-cm9yKCJ1bmFibGUgdG8gd3JpdGUgcmVmbG9nICclcycgKCVzKSIsDQoJCQkJCWxvZ19maWxlLCBz
-dHJlcnJvcihlcnJubykpOw0KDQoxMCkgTGluZSA0ODU5IGluIGZpbGUgZ2l0LTIuMTQuMi9hcHBs
-eS5jOg0KZmQgPSBvcGVuKGFyZywgT19SRE9OTFkpOw0KaWYgKGZkIDwgMCkgew0KCWVycm9yKF8o
-ImNhbid0IG9wZW4gcGF0Y2ggJyVzJzogJXMiKSwgYXJnLCBzdHJlcnJvcihlcnJubykpOw0KCXJl
-cyA9IC0xMjg7DQoJZnJlZSh0b19mcmVlKTsNCglnb3RvIGVuZDsNCn0NCg0KMTEpIExpbmUgNjQg
-aW4gZmlsZSBnaXQtMi4xNC4yL3RyYWNlLmM6DQppbnQgZmQgPSBvcGVuKHRyYWNlLCBPX1dST05M
-WSB8IE9fQVBQRU5EIHwgT19DUkVBVCwgMDY2Nik7DQppZiAoZmQgPT0gLTEpIHsNCgl3YXJuaW5n
-KCJjb3VsZCBub3Qgb3BlbiAnJXMnIGZvciB0cmFjaW5nOiAlcyIsDQoJCXRyYWNlLCBzdHJlcnJv
-cihlcnJubykpOw0KDQoxMikgTGluZSAxMzMgaW4gZmlsZSBnaXQtMi4xNC4yL3RyYWNlLmM6DQpz
-dGF0aWMgdm9pZCB0cmFjZV93cml0ZShzdHJ1Y3QgdHJhY2Vfa2V5ICprZXksIGNvbnN0IHZvaWQg
-KmJ1ZiwgdW5zaWduZWQgbGVuKQ0Kew0KCWlmICh3cml0ZV9pbl9mdWxsKGdldF90cmFjZV9mZChr
-ZXkpLCBidWYsIGxlbikgPCAwKSB7DQoJCW5vcm1hbGl6ZV90cmFjZV9rZXkoJmtleSk7DQoJCXdh
-cm5pbmcoInVuYWJsZSB0byB3cml0ZSB0cmFjZSBmb3IgJXM6ICVzIiwNCgkJCWtleS0+a2V5LCBz
-dHJlcnJvcihlcnJubykpOw0KDQoxMykgTGluZSA3NCBpbiBmaWxlIGdpdC0yLjE0LjIvZGlyLWl0
-ZXJhdG9yLmM6DQpsZXZlbC0+ZGlyID0gb3BlbmRpcihpdGVyLT5iYXNlLnBhdGguYnVmKTsNCmlm
-ICghbGV2ZWwtPmRpciAmJiBlcnJubyAhPSBFTk9FTlQpIHsNCgl3YXJuaW5nKCJlcnJvciBvcGVu
-aW5nIGRpcmVjdG9yeSAlczogJXMiLA0KCQlpdGVyLT5iYXNlLnBhdGguYnVmLCBzdHJlcnJvcihl
-cnJubykpOw0KICAgICAgICAvKiBQb3BwaW5nIHRoZSBsZXZlbCBpcyBoYW5kbGVkIGJlbG93ICov
-DQp9DQoNCjE0KSBMaW5lIDEyNSwgMTI4IGluIGZpbGUgZ2l0LTIuMTQuMi9kaXItaXRlcmF0b3Iu
-YzoNCmRlID0gcmVhZGRpcihsZXZlbC0+ZGlyKTsNCmlmICghZGUpIHsNCgkvKiBUaGlzIGxldmVs
-IGlzIGV4aGF1c3RlZDsgcG9wIHVwIGEgbGV2ZWwuICovDQoJaWYgKGVycm5vKSB7DQoJCXdhcm5p
-bmcoImVycm9yIHJlYWRpbmcgZGlyZWN0b3J5ICVzOiAlcyIsDQoJCQlpdGVyLT5iYXNlLnBhdGgu
-YnVmLCBzdHJlcnJvcihlcnJubykpOw0KCX0gZWxzZSBpZiAoY2xvc2VkaXIobGV2ZWwtPmRpcikp
-DQoJCXdhcm5pbmcoImVycm9yIGNsb3NpbmcgZGlyZWN0b3J5ICVzOiAlcyIsDQoJCQlpdGVyLT5i
-YXNlLnBhdGguYnVmLCBzdHJlcnJvcihlcnJubykpOw0KDQoxNSkgTGluZSAxNDMgaW4gZmlsZSBn
-aXQtMi4xNC4yL2Rpci1pdGVyYXRvci5jOg0KaWYgKGxzdGF0KGl0ZXItPmJhc2UucGF0aC5idWYs
-ICZpdGVyLT5iYXNlLnN0KSA8IDApIHsNCglpZiAoZXJybm8gIT0gRU5PRU5UKQ0KCQl3YXJuaW5n
-KCJlcnJvciByZWFkaW5nIHBhdGggJyVzJzogJXMiLA0KCQkJaXRlci0+YmFzZS5wYXRoLmJ1ZiwN
-CgkJCXN0cmVycm9yKGVycm5vKSk7DQoNCjE2KSBMaW5lIDE3NCBpbiBmaWxlIGdpdC0yLjE0LjIv
-ZGlyLWl0ZXJhdG9yLmM6DQppZiAobGV2ZWwtPmRpciAmJiBjbG9zZWRpcihsZXZlbC0+ZGlyKSkg
-ew0KCXN0cmJ1Zl9zZXRsZW4oJml0ZXItPmJhc2UucGF0aCwgbGV2ZWwtPnByZWZpeF9sZW4pOw0K
-CXdhcm5pbmcoImVycm9yIGNsb3NpbmcgZGlyZWN0b3J5ICVzOiAlcyIsDQogICAgICAgICAgIGl0
-ZXItPmJhc2UucGF0aC5idWYsIHN0cmVycm9yKGVycm5vKSk7DQoNCkZvbGxvd2luZyBhcmUgdGhl
-IDUgcGF0Y2hlcyB0aGF0IHN1cHBvcnQgb3VyIG9waW5pb246DQoxKSBMaW5lIDIxODIgaW4gZmls
-ZSBnaXQvdmVyc2lvbnMvZ2l0LTIuOC42L2NvbmZpZy5jOg0KIAlpZiAoY29tbWl0X2xvY2tfZmls
-ZShsb2NrKSA8IDApIHsNCi0JCWVycm9yKCJjb3VsZCBub3Qgd3JpdGUgY29uZmlnIGZpbGUgJXM6
-ICVzIiwgY29uZmlnX2ZpbGVuYW1lLA0KLQkJICAgICAgc3RyZXJyb3IoZXJybm8pKTsNCisJCWVy
-cm9yX2Vycm5vKCJjb3VsZCBub3Qgd3JpdGUgY29uZmlnIGZpbGUgJXMiLCBjb25maWdfZmlsZW5h
-bWUpOw0KIAkJcmV0ID0gQ09ORklHX05PX1dSSVRFOw0KIAkJbG9jayA9IE5VTEw7DQogCQlnb3Rv
-IG91dF9mcmVlOw0KIAl9DQoNCjIpIExpbmUgMjM4OSBpbiBmaWxlIGdpdC92ZXJzaW9ucy9naXQt
-Mi44LjYvY29uZmlnLmM6DQogdW5sb2NrX2FuZF9vdXQ6DQogCWlmIChjb21taXRfbG9ja19maWxl
-KGxvY2spIDwgMCkNCi0JCXJldCA9IGVycm9yKCJjb3VsZCBub3Qgd3JpdGUgY29uZmlnIGZpbGUg
-JXM6ICVzIiwNCi0JCQkgICAgY29uZmlnX2ZpbGVuYW1lLCBzdHJlcnJvcihlcnJubykpOw0KKwkJ
-cmV0ID0gZXJyb3JfZXJybm8oImNvdWxkIG5vdCB3cml0ZSBjb25maWcgZmlsZSAlcyIsDQorCQkJ
-CSAgY29uZmlnX2ZpbGVuYW1lKTsNCiBvdXQ6DQogCWZyZWUoZmlsZW5hbWVfYnVmKTsNCg0KMykg
-TGluZSAxODI1IGluIGZpbGUgZ2l0L3ZlcnNpb25zL2dpdC0yLjguNi9mYXN0LWltcG9ydC5jOg0K
-IAlkdW1wX21hcmtzX2hlbHBlcihmLCAwLCBtYXJrcyk7DQogCWlmIChjb21taXRfbG9ja19maWxl
-KCZtYXJrX2xvY2spKSB7DQotCQlmYWlsdXJlIHw9IGVycm9yKCJVbmFibGUgdG8gd3JpdGUgZmls
-ZSAlczogJXMiLA0KLQkJCWV4cG9ydF9tYXJrc19maWxlLCBzdHJlcnJvcihlcnJubykpOw0KKwkJ
-ZmFpbHVyZSB8PSBlcnJvcl9lcnJubygiVW5hYmxlIHRvIHdyaXRlIGZpbGUgJXMiLA0KKwkJCQkg
-ICAgICAgZXhwb3J0X21hcmtzX2ZpbGUpOw0KDQo0KSBMaW5lIDg2MyBpbiBmaWxlIGdpdC0yLjgu
-Ni9iaXNlY3QuYzogDQogCS8qIENyZWF0ZSBmaWxlIEJJU0VDVF9BTkNFU1RPUlNfT0suICovDQog
-CWZkID0gb3BlbihmaWxlbmFtZSwgT19DUkVBVCB8IE9fVFJVTkMgfCBPX1dST05MWSwgMDYwMCk7
-DQogCWlmIChmZCA8IDApDQotCQl3YXJuaW5nKCJjb3VsZCBub3QgY3JlYXRlIGZpbGUgJyVzJzog
-JXMiLA0KLQkJCWZpbGVuYW1lLCBzdHJlcnJvcihlcnJubykpOw0KKwkJd2FybmluZ19lcnJubygi
-Y291bGQgbm90IGNyZWF0ZSBmaWxlICclcyciLA0KKwkJCSAgICAgIGZpbGVuYW1lKTsNCiAJZWxz
-ZQ0KIAkJY2xvc2UoZmQpOw0KDQo1KSBMaW5lIDc4IGluIGZpbGUgZ2l0LTIuOC42L2lkZW50LmMN
-CiAJbWFpbG5hbWUgPSBmb3BlbigiL2V0Yy9tYWlsbmFtZSIsICJyIik7DQogCWlmICghbWFpbG5h
-bWUpIHsNCiAJCWlmIChlcnJubyAhPSBFTk9FTlQpDQotCQkJd2FybmluZygiY2Fubm90IG9wZW4g
-L2V0Yy9tYWlsbmFtZTogJXMiLA0KLQkJCQlzdHJlcnJvcihlcnJubykpOw0KKwkJCXdhcm5pbmdf
-ZXJybm8oImNhbm5vdCBvcGVuIC9ldGMvbWFpbG5hbWUiKTsNCiAJCXJldHVybiAtMTsNCiAJfQ0K
-DQpUaGFua3MgZm9yIHJlYWRpbmcsIHdlIGFyZSBsb29raW5nIGZvcndhcmQgdG8geW91ciByZXBs
-eSBhYm91dCB0aGUgY29ycmVjdG5lc3Mgb2Ygb3VyIHN1Z2dlc3Rpb24uDQpNYXkgeW91IGEgZ29v
-ZCBkYXkgXl4NCg0KQmVzdCByZWdhcmRzLA0KWHUNCg==
+Fix small typo as in document <glob> is used not <globs>.
+
+Signed-off-by: Saulius Gurklys <s4uliu5@gmail.com>
+---
+ Documentation/git-show-branch.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+index 262db049d..4a0137122 100644
+--- a/Documentation/git-show-branch.txt
++++ b/Documentation/git-show-branch.txt
+@@ -19,7 +19,7 @@ DESCRIPTION
+ -----------
+ 
+ Shows the commit ancestry graph starting from the commits named
+-with <rev>s or <globs>s (or all refs under refs/heads
++with <rev>s or <glob>s (or all refs under refs/heads
+ and/or refs/tags) semi-visually.
+ 
+ It cannot show more than 29 branches and commits at a time.
+-- 
+2.19.1
+
