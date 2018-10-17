@@ -2,97 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1C9A1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 21:55:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 072B91F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 22:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbeJRFx3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 01:53:29 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:43810 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725966AbeJRFx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 01:53:29 -0400
-Received: by mail-qk1-f201.google.com with SMTP id n64-v6so29294733qkd.10
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 14:55:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=ek4kPoHaB8nRBsnVHpEXIDPnpjaXGKAKvDJvM7iwjXo=;
-        b=pPGuV3BWNFnt6jR69HMBh5J27UGc+TI2hQDAabezw7n3lIvSQbNtq0aFKtMN28rzXa
-         2yE4MACVjiP+/3xQtzrqUQTgKd9Hr3eBQKS2lzLRbtGfJrXFqczY4wbtTaPKbPNC6aiE
-         ezBBA+mAQ4w7PJPBItUvRq1m+ilzZ8eSqNpTyoN1Mcz9ch2N84Q/RE7hNErf0TvC0DRN
-         RwlLFqSoapSKg30FSgbT+IGWLKouNCo986T0yiI4ihbmXI1ZSBCWs4JIFeHogM7uXizw
-         iaXWCwzrecNHiedtVsXUZuohTmQeePmiCqABNFTie7P3/ox+dVkYNSh2z5lcnBkwhEta
-         wgqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ek4kPoHaB8nRBsnVHpEXIDPnpjaXGKAKvDJvM7iwjXo=;
-        b=An9RnccvwMvXFXlH+7Q/e6ljCfM1fmoL3rcb8h53078v7TgJ9UgBtK0A88i2jEqqku
-         oevwI+2ByOltWHNua2iW3w4vv5qmtDpgaUoBiUB4HAlkUBmPrOlsUYxDiewGeSRpEw5z
-         VZDsDMXrtZH6A6VBM/+WFfDozbym/Xznb2WFBfzvrOpDcp/w2Yk6mYHe8uvDraoBay2W
-         AUTg5w6ghv56Qvr49UHT1mjrNelNeY7FxH9EJu6ms8nlWndLVFggyWq4CiAAakxFT2sq
-         qaEhpbTuRLU7utZPOPN5AIFQVXeGweWpQ1zlU0YIF6oDViB78DzIjmNUS710/e/ETewI
-         JwgA==
-X-Gm-Message-State: ABuFfoiN/jHYpU9u1wIqD5YhpikSXCX7ROghduHyexpGuQgB5z1N5NLv
-        owZq14Mqw5uTNpWQx/C1VC15TqvkFP0ofs5Yz6Dd
-X-Google-Smtp-Source: ACcGV620sVVdEMFUePY61mlE3upStHu1cJyM4VpgiHCIk3YINYz8/Bd9pd5K4MLnoUc8gS41zhei8kuUu7QRCFV6CwQ9
-X-Received: by 2002:a0c:99ed:: with SMTP id y45mr6251121qve.7.1539813348852;
- Wed, 17 Oct 2018 14:55:48 -0700 (PDT)
-Date:   Wed, 17 Oct 2018 14:55:45 -0700
-In-Reply-To: <20181016181327.107186-7-sbeller@google.com>
-Message-Id: <20181017215545.202278-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181016181327.107186-7-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH 6/9] repository: repo_submodule_init to take a submodule struct
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727193AbeJRGLM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 02:11:12 -0400
+Received: from avasout03.plus.net ([84.93.230.244]:56075 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727014AbeJRGLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 02:11:11 -0400
+Received: from [10.0.2.15] ([80.189.70.193])
+        by smtp with ESMTPA
+        id Cu4Eg28nUO2g2Cu4Ggc2XF; Wed, 17 Oct 2018 23:13:28 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=DKChHRFb c=1 sm=1 tr=0
+ a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5vPtxjDGDqfxd3Dcu84A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v2] headers: normalize the spelling of some header guards
+Message-ID: <b33346d2-88bb-989a-356b-43a7c357a7dd@ramsayjones.plus.com>
+Date:   Wed, 17 Oct 2018 23:13:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfBaAJvmuTA4WaKuWWPLBvGBQi6kCTzy5y2kRVW/Llg52m19BPouE43WgZQrX0Q+jf2M33+MkCS4PG6JmzRisgkWeM2khnYmT7nb57EJ6IwiDI+FXeN66
+ WKCYZtUmw6m587jB2TpW1O8RAkb/7nByEB/efRBOp139t677gMZHCT4/9UvtkRt+zSkOlLZA+jxhHg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> When constructing a struct repository for a submodule for some revision
-> of the superproject where the submodule is not contained in the index,
-> it may not be present in the working tree currently either. In that
-> siutation giving a 'path' argument is not useful. Upgrade the
-> repo_submodule_init function to take a struct submodule instead.
 
-Are there ways for other code to create a struct submodule without using
-submodule_from_path()? If yes, maybe outline them here and say that this
-makes repo_submodule_init() more useful, since it can now be used with
-those methods.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-> While we are at it, overhaul the repo_submodule_init function by renaming
-> the submodule repository struct, which is to be initialized, to a name
-> that is not confused with the struct submodule as easily.
+Hi Junio,
 
-"Overhaul" is probably not the right word for just a rename of a local
-variable. Also mention the other functions in which you did this rename
-(or just say "repo_submodule_init() and other functions").
+Since I didn't get any adverse comments, this version has the RFC
+label removed. Also, given that it seems the vcs-svn directory is
+not going away soon, I have included those headers this time as well.
 
-> +/*
-> + * Initialize the repository 'subrepo' as the submodule given by the
-> + * struct submodule 'sub' in parent repository 'superproject'.
-> + * Return 0 upon success and a non-zero value upon failure.
-> + */
-> +struct submodule;
-> +int repo_submodule_init(struct repository *subrepo,
->  			struct repository *superproject,
-> -			const char *path);
-> +			const struct submodule *sub);
+[Note: my email client (thunderbird) was updated yesterday to 60.2.1.
+As a result of recent reports, I sent this patch to myself and applied
+it with 'git am' and ... the results seem to be fine! ;-) Famous last
+words!]
 
-From this description, I would expect "sub" to not be allowed to be
-NULL, but from the code I don't think that's the case. Should we
-prohibit NULL (and add checks to all repo_submodule_init()'s callers) or
-document that a NULL sub is allowed (and what happens in that case)?
+Thanks.
+
+ATB,
+Ramsay Jones
+
+ alias.h                  | 4 ++--
+ commit-reach.h           | 4 ++--
+ fetch-negotiator.h       | 4 ++--
+ midx.h                   | 4 ++--
+ t/helper/test-tool.h     | 4 ++--
+ vcs-svn/fast_export.h    | 4 ++--
+ vcs-svn/line_buffer.h    | 4 ++--
+ vcs-svn/sliding_window.h | 4 ++--
+ vcs-svn/svndiff.h        | 4 ++--
+ vcs-svn/svndump.h        | 4 ++--
+ 10 files changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/alias.h b/alias.h
+index 79933f2457..aef4843bb7 100644
+--- a/alias.h
++++ b/alias.h
+@@ -1,5 +1,5 @@
+-#ifndef __ALIAS_H__
+-#define __ALIAS_H__
++#ifndef ALIAS_H
++#define ALIAS_H
+ 
+ struct string_list;
+ 
+diff --git a/commit-reach.h b/commit-reach.h
+index 7d313e2975..122a23a24d 100644
+--- a/commit-reach.h
++++ b/commit-reach.h
+@@ -1,5 +1,5 @@
+-#ifndef __COMMIT_REACH_H__
+-#define __COMMIT_REACH_H__
++#ifndef COMMIT_REACH_H
++#define COMMIT_REACH_H
+ 
+ #include "commit-slab.h"
+ 
+diff --git a/fetch-negotiator.h b/fetch-negotiator.h
+index ddb44a22dc..9e3967ce66 100644
+--- a/fetch-negotiator.h
++++ b/fetch-negotiator.h
+@@ -1,5 +1,5 @@
+-#ifndef FETCH_NEGOTIATOR
+-#define FETCH_NEGOTIATOR
++#ifndef FETCH_NEGOTIATOR_H
++#define FETCH_NEGOTIATOR_H
+ 
+ struct commit;
+ 
+diff --git a/midx.h b/midx.h
+index ce80b91c68..ee83702309 100644
+--- a/midx.h
++++ b/midx.h
+@@ -1,5 +1,5 @@
+-#ifndef __MIDX_H__
+-#define __MIDX_H__
++#ifndef MIDX_H
++#define MIDX_H
+ 
+ #include "repository.h"
+ 
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index e4890566da..71f470b871 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -1,5 +1,5 @@
+-#ifndef __TEST_TOOL_H__
+-#define __TEST_TOOL_H__
++#ifndef TEST_TOOL_H
++#define TEST_TOOL_H
+ 
+ #include "git-compat-util.h"
+ 
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+index 60b79c35b9..9dcf9337c1 100644
+--- a/vcs-svn/fast_export.h
++++ b/vcs-svn/fast_export.h
+@@ -1,5 +1,5 @@
+-#ifndef FAST_EXPORT_H_
+-#define FAST_EXPORT_H_
++#ifndef FAST_EXPORT_H
++#define FAST_EXPORT_H
+ 
+ struct strbuf;
+ struct line_buffer;
+diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
+index ee23b4f490..e192aedea2 100644
+--- a/vcs-svn/line_buffer.h
++++ b/vcs-svn/line_buffer.h
+@@ -1,5 +1,5 @@
+-#ifndef LINE_BUFFER_H_
+-#define LINE_BUFFER_H_
++#ifndef LINE_BUFFER_H
++#define LINE_BUFFER_H
+ 
+ #include "strbuf.h"
+ 
+diff --git a/vcs-svn/sliding_window.h b/vcs-svn/sliding_window.h
+index b43a825cba..189c32d84c 100644
+--- a/vcs-svn/sliding_window.h
++++ b/vcs-svn/sliding_window.h
+@@ -1,5 +1,5 @@
+-#ifndef SLIDING_WINDOW_H_
+-#define SLIDING_WINDOW_H_
++#ifndef SLIDING_WINDOW_H
++#define SLIDING_WINDOW_H
+ 
+ #include "strbuf.h"
+ 
+diff --git a/vcs-svn/svndiff.h b/vcs-svn/svndiff.h
+index 74eb464bab..10a2cbc40e 100644
+--- a/vcs-svn/svndiff.h
++++ b/vcs-svn/svndiff.h
+@@ -1,5 +1,5 @@
+-#ifndef SVNDIFF_H_
+-#define SVNDIFF_H_
++#ifndef SVNDIFF_H
++#define SVNDIFF_H
+ 
+ struct line_buffer;
+ struct sliding_view;
+diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
+index b8eb12954e..26faed5968 100644
+--- a/vcs-svn/svndump.h
++++ b/vcs-svn/svndump.h
+@@ -1,5 +1,5 @@
+-#ifndef SVNDUMP_H_
+-#define SVNDUMP_H_
++#ifndef SVNDUMP_H
++#define SVNDUMP_H
+ 
+ int svndump_init(const char *filename);
+ int svndump_init_fd(int in_fd, int back_fd);
+-- 
+2.19.0
