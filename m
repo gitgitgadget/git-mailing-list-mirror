@@ -2,79 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D22DC1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 12:58:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB6011F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 13:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727016AbeJQUyJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 16:54:09 -0400
-Received: from smtpbg299.qq.com ([184.105.67.99]:57582 "EHLO smtpbg299.qq.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726961AbeJQUyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 16:54:09 -0400
-X-QQ-mid: Xesmtp5t1539781100tkpje0fed
-Received: from localhost.localdomain (unknown [101.88.191.6])
-        by esmtp4.qq.com (ESMTP) with 
-        id ; Wed, 17 Oct 2018 20:58:19 +0800 (CST)
-X-QQ-SSF: 01000000000000F0F5100700000000Z
-X-QQ-FEAT: bNuxihfphIJFhEdRBxw25jq+n+0BXJNV/RfLvZkclTcfPXjCoBxQTZZLHleRP
-        r2M99b5UrohiuYSq4NKiwasHAno4xaNr4CYa/pIeiFsB/gSsOeCUd8KkJtG7nABx1ST6qHK
-        +CoFQQynzdq85bj/U6h+VO1pw0ljSmGcByhERYHQi6NsDoHG2e9f3agY9EMYvHj6xDsjtAQ
-        mExQaTdtxfz6p6ftlyjAorwNwzO2P8nUkTnaaNwP5/KcB14Rj5sz/cj7/Q/Gl5PK05mieuy
-        NK2XG+FLm3yLpS
-X-QQ-GoodBg: 0
-From:   Tao Qingyun <taoqy@ls-a.me>
-To:     peff@peff.net
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2] builtin/branch.c: remove useless branch_get
-Date:   Wed, 17 Oct 2018 20:58:18 +0800
-Message-Id: <20181017125818.1872-1-taoqy@ls-a.me>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20181017083906.GC31932@sigill.intra.peff.net>
-References: <20181017083906.GC31932@sigill.intra.peff.net>
-MIME-Version: 1.0
+        id S1727028AbeJQU4K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 16:56:10 -0400
+Received: from mail-pl1-f174.google.com ([209.85.214.174]:44266 "EHLO
+        mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726961AbeJQU4J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 16:56:09 -0400
+Received: by mail-pl1-f174.google.com with SMTP id p25-v6so12656538pli.11
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 06:00:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=NnFyGlyr0LvYjXJWiRgezwBoznpYtESshQcllYM9nmw=;
+        b=KcZuZV8euz3SsaA8382H038K1RyiZEJWaXkP6R6rog4YD/8RIyEjlUiK2dN+xWMF9p
+         zn01Am+7KX1JmRsqMhU6N4RFQbWagcYhZ1PwIF5cKmU8/bwwCM0IHLdDAm/C7lm1adq+
+         GyNyr3Oze0KhTQZpyQ03ZzbsuKTSYzr+Hz1owyOJKmHIlq5BwgaicuevD4BEzMl42+OT
+         LWVSKBIMVNAMSs2odkuSelEi2DsMiz/Yuk1oNBuQOHNwlAFTX40NUz1li7JvC9cEu1P/
+         emiX/oJx1qESNTnsB7kUljnyTH4BSriNzQf24XbbCYZ+gkeS0ThfpM19VkX/+2ZQcAT8
+         sRGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NnFyGlyr0LvYjXJWiRgezwBoznpYtESshQcllYM9nmw=;
+        b=NWB9LxUllLGl9qoDEXOCWNIpFpwar/KMr4Dm0iAcBjqh/XUZ40hO9/M5BZbT8z39eR
+         f3WBaXMsdJy/op4XoX7ZzbxFo45llFkwqeyAxIzvOuyyoEO5k/mv+H0qZflq2XkgxLwC
+         03mDj/23MysbNEvdvaXRHm8hIJ0hvDOhbpK9vxwVTCeKS4lzE7ziDd4VYGQiA2k+XneN
+         hvSbITJGz2HejW5JHf3dsxkV2o7TfJ3uUkxgn460vQdsR4TFIJzwOEweVuR1HMtPLhfV
+         kGYuEzPVEpCvxu2VxCDDW6rMoYSsgbR/nJM+rE77QISCYMVT+d7SShGJdMKm6RJasjHc
+         94tQ==
+X-Gm-Message-State: ABuFfogz4iEq3+8cRLz3Kxt136dZbz4DG2+w0/6d+oTMpLA7QgBV05OU
+        Wwl/hMJi46I3Y1Mbpx0ZcbRc6l/C
+X-Google-Smtp-Source: ACcGV61bLbzJ1hND1h22y+3AcePqM+jtxc2uA/dxmJyZSqms6weViOQaUvmfVbCxF7DLRdyFWFK46g==
+X-Received: by 2002:a17:902:d704:: with SMTP id w4-v6mr26176736ply.230.1539781233317;
+        Wed, 17 Oct 2018 06:00:33 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id w127-v6sm24687837pfd.112.2018.10.17.06.00.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Oct 2018 06:00:32 -0700 (PDT)
+Date:   Wed, 17 Oct 2018 06:00:32 -0700 (PDT)
+X-Google-Original-Date: Wed, 17 Oct 2018 13:00:29 GMT
+Message-Id: <pull.49.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Run GIT_TEST_COMMIT_GRAPH and GIT_TEST_MULTI_PACK_INDEX during CI
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-X-QQ-FName: 11615ACF54D148FE9BCB9664EEF12A4B
-X-QQ-LocalIP: 10.198.131.167
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > branch_get sometimes returns current_branch, which can be NULL (e.g., if
-> > you're on a detached HEAD). Try:
-> > 
-> >   $ git branch HEAD
-> >   fatal: no such branch 'HEAD'
-> > 
-> >   $ git branch ''
-> >   fatal: no such branch ''
-> > 
-> > However, it seems weird that we'd check those cases here (and provide
-> > such lousy messages). And indeed, dropping that and letting us
-> > eventually hit create_branch() gives a much better message:
-> > 
-> >   $ git branch HEAD
-> >   fatal: 'HEAD' is not a valid branch name.
-> > 
-> >   $ git branch ''
-> >   fatal: '' is not a valid branch name.
-> 
-> This explanation is perfect, of course. ;)
-> 
-> I still wondered if you had another motivation hinted at in your
-> original mail, though (some weirdness with running branch_get early).
-> It's OK if there isn't one, but I just want to make sure we capture all
-> of the details.
-> 
+Our CI scripts include a step to run the test suite with certain optional
+variables enabled. Now that all branches should build and have tests succeed
+with GIT_TEST_COMMIT_GRAPH and GIT_TEST_MULTI_PACK_INDEX enabled, add those
+variables to that stage.
 
-Yes, this explanation is perfect. ;)
+Note: the GIT_TEST_MULTI_PACK_INDEX variable has not merged all the way
+down, so will be ignored if this series is merged faster than that one.
+However, it is safe to make these changes orthogonally as all (known) test
+breaks with GIT_TEST_MULTI_PACK_INDEX=1 are fixed in the topic that
+introduces the variable.
 
-> Other than that question, the patch looks good to me.
-> 
-> -Peff
+I also created a build definition on Azure Pipelines that runs the test
+suite with different subsets of the test variables, split by the following
+types:
 
+1) Index options 2) Commit-graph 3) Multi-pack-index
+
+These builds are found at [1]. There are benefits to testing the variables
+all together but also separately. I didn't want to create new stages in the
+CI scripts to avoid consuming extra resources.
+
+This series is based on js/vsts-ci to avoid conflicts with that series, but
+is not necessarily a hard dependence.
+
+Thanks, -Stolee
+
+[1] https://git.visualstudio.com/git/_build?definitionId=4Build definition
+that tests Git with different arrangements of GIT_TEST_* variables.
+
+Derrick Stolee (1):
+  ci: add optional test variables
+
+ ci/run-build-and-tests.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+
+base-commit: d82963f34cf6921ed29d1fc2d96b16acf9005159
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-49%2Fderrickstolee%2Fci-vars-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-49/derrickstolee/ci-vars-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/49
+-- 
+gitgitgadget
