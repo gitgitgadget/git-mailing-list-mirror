@@ -2,101 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D7C81F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 09:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7F591F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 09:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbeJQRT5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 13:19:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43242 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726482AbeJQRT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 13:19:57 -0400
-Received: (qmail 18266 invoked by uid 109); 17 Oct 2018 09:25:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 09:25:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18786 invoked by uid 111); 17 Oct 2018 09:24:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 05:24:20 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 05:25:07 -0400
-Date:   Wed, 17 Oct 2018 05:25:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH] test-tool: show tool list on error
-Message-ID: <20181017092506.GA15503@sigill.intra.peff.net>
+        id S1726989AbeJQRfM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 13:35:12 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:35333 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbeJQRfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 13:35:12 -0400
+Received: by mail-wm1-f45.google.com with SMTP id e187-v6so1436039wmf.0
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 02:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=fbhhO4P1WzCw7jpWgm86cOh7tOMQu5rfXGs+UgyFBl0=;
+        b=jbksCzlCtfkI07/5W/xKMUdprMfhAFDhosHMBnRNMVhTcEgmU9AebtYNw4OTaDE8uO
+         TJMmjhNmU6nc8BMDd8iPF0sZncscvVXvXMSmx7wsSv26qyB+6kkH9H2Fp4FglKlcR+im
+         06Z0Cvj8u1ZCIXY01vZomiZWOlP8U46j8hKd/MIz29NiqzGbIexE9ZRm2wMyiUa3nlAH
+         U46t9T/2zy1/a+aEX275QqLAz12py0crvliXN3fYxT4DiBVyfUIqrVLt3bGmz/DtvD4c
+         oN6iOyr7IcmJggy3Bw3tH4RbG8m51q5aM6M91/KVh99jpPFg3YgW/OBNL7kajoF5on38
+         SdPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fbhhO4P1WzCw7jpWgm86cOh7tOMQu5rfXGs+UgyFBl0=;
+        b=B/ycU+oHClwL0zLBGtPQqodWIAJGlUxZPIBgf9wAAs9NlV4sr0xNp0boo0wMMPO0m9
+         A2E7tDuCkjtwuvBJ5kpIgHy/zoyvn7Jolrmudv7cQEeQB+shXhAjfWhlUp+Oq0BCjmF7
+         uVOvBrvmvwieiW/FYj4HkTbI50JRVXu6jATS/PmtD5RDA2UnGVUJfCVA2FQGuuQe2B9V
+         689OQE44N5SfV7kAq3Xg7UYdmZxUB5Zr7NOoogx/wL8fUO+nh+h8oTnE+VV2KtUpitJo
+         48OilbKsQlxNfcVQ93bHp3C/yi4Quqwf8xpu8ymSltpkc+79+y7DVzvTwoPGXOGJjgEq
+         D65w==
+X-Gm-Message-State: ABuFfogN7lgnH0T/jtgdBMWwBkX82wdUjWWlX/vWA/VVIany9ok/TWzN
+        rPLrmtCREcgltYqlFfdQUEk=
+X-Google-Smtp-Source: ACcGV61/R7wo6q7BUHPM3q9RaIlGnNQbZBJ77QFMw43yf/w/DAWDQxjvHwwYqDpk6fTGzhDDQ1B9Yg==
+X-Received: by 2002:a1c:2984:: with SMTP id p126-v6mr2134399wmp.5.1539769219044;
+        Wed, 17 Oct 2018 02:40:19 -0700 (PDT)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id n11-v6sm11945319wrx.17.2018.10.17.02.40.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 17 Oct 2018 02:40:18 -0700 (PDT)
+Date:   Wed, 17 Oct 2018 10:39:43 +0100
+From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
+To:     Daniels Umanovskis <daniels@umanovskis.se>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH v4] branch: introduce --show-current display option
+Message-ID: <20181017093655.GA11811@rigel>
+References: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com>
+ <20181012133321.20580-1-daniels@umanovskis.se>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181012133321.20580-1-daniels@umanovskis.se>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before we switched to one big test-tool binary, if you
-forgot the name of a tool, you could use tab-completion in
-the shell to get a hint. But these days, all you get is:
+On Fri, Oct 12, 2018 at 03:33:21PM +0200, Daniels Umanovskis wrote:
+> Intended both for scripting and interactive/informative use.
+> Unlike git branch --list, no filtering is needed to just get the
+> branch name.
 
-  $ t/helper/test-tool approxidate
-  fatal: There is no test named 'approxidate'
+Are we going forward with advertising this as a scriptable alternative?
 
-and you're stuck reading the source code to find it. Let's
-print a list of the available tools in this case.
+> +	} else if (show_current) {
+> +		print_current_branch_name();
+> +		return 0;
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Not really user-facing, but this bugged me enough earlier to write the
-patch. ;)
+Do we need the slightly different check done in
+print_current_branch_name() ? A very similar check is already done early
+in cmd_branch.
 
-Some of the individual tools have nice help, too (try
-"t/helper/test-tool date", which shows the approxidate command I was
-looking for), but some of them could probably stand to improve their
-friendliness (try "t/helper/test-tool config"). I think it's fine for
-people to improve them over time if and when they get annoyed.
+builtin/branch.c:671
+	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+	if (!head)
+		die(_("Failed to resolve HEAD as a valid ref."));
+	if (!strcmp(head, "HEAD"))
+		filter.detached = 1;
+	else if (!skip_prefix(head, "refs/heads/", &head))
+		die(_("HEAD not found below refs/heads!"));
 
- t/helper/test-tool.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+What's being proposed can be achieved with
 
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 6b5836dc1b..5df8b682aa 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -55,13 +55,23 @@ static struct test_cmd cmds[] = {
- 	{ "write-cache", cmd__write_cache },
- };
- 
-+static NORETURN void die_usage(void)
-+{
-+	size_t i;
-+
-+	fprintf(stderr, "usage: test-tool <toolname> [args]\n");
-+	for (i = 0; i < ARRAY_SIZE(cmds); i++)
-+		fprintf(stderr, "  %s\n", cmds[i].name);
-+	exit(128);
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	int i;
- 
- 	BUG_exit_code = 99;
- 	if (argc < 2)
--		die("I need a test name!");
-+		die_usage();
- 
- 	for (i = 0; i < ARRAY_SIZE(cmds); i++) {
- 		if (!strcmp(cmds[i].name, argv[1])) {
-@@ -70,5 +80,6 @@ int cmd_main(int argc, const char **argv)
- 			return cmds[i].fn(argc, argv);
- 		}
- 	}
--	die("There is no test named '%s'", argv[1]);
-+	error("there is no tool named '%s'", argv[1]);
-+	die_usage();
- }
--- 
-2.19.1.790.g519f91cad4
++	} else if (show_current) {
++		if (!filter.detached)
++			puts(head);
++		return 0;
+
+without failing tests.
+
+--
+Cheers,
+Rafael Ascensão
