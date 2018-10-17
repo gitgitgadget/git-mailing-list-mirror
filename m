@@ -7,103 +7,103 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB6011F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 13:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D121B1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 13:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727028AbeJQU4K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 16:56:10 -0400
-Received: from mail-pl1-f174.google.com ([209.85.214.174]:44266 "EHLO
-        mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726961AbeJQU4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 16:56:09 -0400
-Received: by mail-pl1-f174.google.com with SMTP id p25-v6so12656538pli.11
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 06:00:34 -0700 (PDT)
+        id S1727227AbeJQU4M (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 16:56:12 -0400
+Received: from mail-pg1-f171.google.com ([209.85.215.171]:38553 "EHLO
+        mail-pg1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726961AbeJQU4L (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 16:56:11 -0400
+Received: by mail-pg1-f171.google.com with SMTP id f8-v6so12510848pgq.5
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 06:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=NnFyGlyr0LvYjXJWiRgezwBoznpYtESshQcllYM9nmw=;
-        b=KcZuZV8euz3SsaA8382H038K1RyiZEJWaXkP6R6rog4YD/8RIyEjlUiK2dN+xWMF9p
-         zn01Am+7KX1JmRsqMhU6N4RFQbWagcYhZ1PwIF5cKmU8/bwwCM0IHLdDAm/C7lm1adq+
-         GyNyr3Oze0KhTQZpyQ03ZzbsuKTSYzr+Hz1owyOJKmHIlq5BwgaicuevD4BEzMl42+OT
-         LWVSKBIMVNAMSs2odkuSelEi2DsMiz/Yuk1oNBuQOHNwlAFTX40NUz1li7JvC9cEu1P/
-         emiX/oJx1qESNTnsB7kUljnyTH4BSriNzQf24XbbCYZ+gkeS0ThfpM19VkX/+2ZQcAT8
-         sRGw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=URDLp/vNf0fxCZhrrG7SptIxF6iKeIe78OjoAVxM/OI=;
+        b=VRzEHujDzpqbPZJJqy4Qh8lQ8acWxCoYDxqpPHeYUlO7n07euHze3ZI8GaX7g3ZeZA
+         YiKmC1FqESPZOa7E5Kdg2encM5c9t7mjRY/432nBKwAW6eMbGXtXtPXlKb4sr8u14deH
+         chfy/D/D33Z/M1zFnIRgoeY2/qRORG11Lnr2YXqhpwNlcdQnzTjtQtfglD5tDEY7y/uO
+         TPjITluTX8YmGHHapxvTYWx/JOrk6MiL8BKUwbnWwUaMBBnjxMSs5WmaA2ufB0Ae0L/9
+         UrffIQrEs4jWgiUf9c3o5Izn794Uy77/WyqfJeaOxPwQJfxjq6mDJZY6Yvu/qLTHlEjn
+         QZvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NnFyGlyr0LvYjXJWiRgezwBoznpYtESshQcllYM9nmw=;
-        b=NWB9LxUllLGl9qoDEXOCWNIpFpwar/KMr4Dm0iAcBjqh/XUZ40hO9/M5BZbT8z39eR
-         f3WBaXMsdJy/op4XoX7ZzbxFo45llFkwqeyAxIzvOuyyoEO5k/mv+H0qZflq2XkgxLwC
-         03mDj/23MysbNEvdvaXRHm8hIJ0hvDOhbpK9vxwVTCeKS4lzE7ziDd4VYGQiA2k+XneN
-         hvSbITJGz2HejW5JHf3dsxkV2o7TfJ3uUkxgn460vQdsR4TFIJzwOEweVuR1HMtPLhfV
-         kGYuEzPVEpCvxu2VxCDDW6rMoYSsgbR/nJM+rE77QISCYMVT+d7SShGJdMKm6RJasjHc
-         94tQ==
-X-Gm-Message-State: ABuFfogz4iEq3+8cRLz3Kxt136dZbz4DG2+w0/6d+oTMpLA7QgBV05OU
-        Wwl/hMJi46I3Y1Mbpx0ZcbRc6l/C
-X-Google-Smtp-Source: ACcGV61bLbzJ1hND1h22y+3AcePqM+jtxc2uA/dxmJyZSqms6weViOQaUvmfVbCxF7DLRdyFWFK46g==
-X-Received: by 2002:a17:902:d704:: with SMTP id w4-v6mr26176736ply.230.1539781233317;
-        Wed, 17 Oct 2018 06:00:33 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=URDLp/vNf0fxCZhrrG7SptIxF6iKeIe78OjoAVxM/OI=;
+        b=KvjHHeP+DAzbk/0K9DNxCDXFfdf8qvpLJ5jA3qIN0nufmo5VPOSmaripbT1z4qHeMO
+         VfSalYSYLE1QxC/Pd6lYkl+7CrzSso4wJlcpXbexfpZ4jO5Prc0HVW1O2UdYGDN4Z3fh
+         NiWx5qZ+sRoN2XW+3C10PatCrH2A6UJNH21LuzPNUreNfzRwxrSvYeu8S9P/WOPkC834
+         32gkF47uCmqwn5tOKsgFQlSFGrfnkc3xK5Kv875gAbs4g6HN7065NWeSSIYfxvsov88o
+         HbD5eZMRLUUww6zW2HhVK92GY5gaOfMugjLFG/zVohYKG3+IdI3JXPJtNUQVmZIJdP2y
+         AOXQ==
+X-Gm-Message-State: ABuFfoj84r2j13qBU8Ar9vOBxa4gP5+fwD9arATnxItWULNuQ/HtF6O/
+        C2yPiuMj+4CCal3TgPfyAeC7ulTq
+X-Google-Smtp-Source: ACcGV61lGNkA9MwmFFkenK7rZfkLlTqUzNDJk7d28Eh/bOG2kObWvlNgbmuBktJsfTnUnH+yTUiM2Q==
+X-Received: by 2002:a63:6746:: with SMTP id b67-v6mr24553584pgc.310.1539781234886;
+        Wed, 17 Oct 2018 06:00:34 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id w127-v6sm24687837pfd.112.2018.10.17.06.00.31
+        by smtp.gmail.com with ESMTPSA id r1-v6sm32115490pgo.81.2018.10.17.06.00.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Oct 2018 06:00:32 -0700 (PDT)
-Date:   Wed, 17 Oct 2018 06:00:32 -0700 (PDT)
-X-Google-Original-Date: Wed, 17 Oct 2018 13:00:29 GMT
-Message-Id: <pull.49.git.gitgitgadget@gmail.com>
+        Wed, 17 Oct 2018 06:00:34 -0700 (PDT)
+Date:   Wed, 17 Oct 2018 06:00:34 -0700 (PDT)
+X-Google-Original-Date: Wed, 17 Oct 2018 13:00:30 GMT
+Message-Id: <9363be0b9d6d06ec14cdcda37ca4dab72e69e3bb.1539781230.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.49.git.gitgitgadget@gmail.com>
+References: <pull.49.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Run GIT_TEST_COMMIT_GRAPH and GIT_TEST_MULTI_PACK_INDEX during CI
+Subject: [PATCH 1/1] ci: add optional test variables
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our CI scripts include a step to run the test suite with certain optional
-variables enabled. Now that all branches should build and have tests succeed
-with GIT_TEST_COMMIT_GRAPH and GIT_TEST_MULTI_PACK_INDEX enabled, add those
-variables to that stage.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Note: the GIT_TEST_MULTI_PACK_INDEX variable has not merged all the way
-down, so will be ignored if this series is merged faster than that one.
-However, it is safe to make these changes orthogonally as all (known) test
-breaks with GIT_TEST_MULTI_PACK_INDEX=1 are fixed in the topic that
-introduces the variable.
+The commit-graph and multi-pack-index features introduce optional
+data structures that are not required for normal Git operations.
+It is important to run the normal test suite without them enabled,
+but it is helpful to also run the test suite using them.
 
-I also created a build definition on Azure Pipelines that runs the test
-suite with different subsets of the test variables, split by the following
-types:
+Our continuous integration scripts include a second test stage that
+runs with optional GIT_TEST_* variables enabled. Add the following
+two variables to that stage:
 
-1) Index options 2) Commit-graph 3) Multi-pack-index
+  GIT_TEST_COMMIT_GRAPH
+  GIT_TEST_MULTI_PACK_INDEX
 
-These builds are found at [1]. There are benefits to testing the variables
-all together but also separately. I didn't want to create new stages in the
-CI scripts to avoid consuming extra resources.
+This will slow down the operation, as we build a commit-graph file
+after every 'git commit' operation and build a multi-pack-index
+during every 'git repack' operation. However, it is important that
+future changes are compatible with these features.
 
-This series is based on js/vsts-ci to avoid conflicts with that series, but
-is not necessarily a hard dependence.
-
-Thanks, -Stolee
-
-[1] https://git.visualstudio.com/git/_build?definitionId=4Build definition
-that tests Git with different arrangements of GIT_TEST_* variables.
-
-Derrick Stolee (1):
-  ci: add optional test variables
-
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  ci/run-build-and-tests.sh | 2 ++
  1 file changed, 2 insertions(+)
 
-
-base-commit: d82963f34cf6921ed29d1fc2d96b16acf9005159
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-49%2Fderrickstolee%2Fci-vars-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-49/derrickstolee/ci-vars-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/49
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index e28ac2fb9a..db342bb6a8 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -15,6 +15,8 @@ then
+ 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
+ 	export GIT_TEST_OE_SIZE=10
+ 	export GIT_TEST_OE_DELTA_SIZE=5
++	export GIT_TEST_COMMIT_GRAPH=1
++	export GIT_TEST_MULTI_PACK_INDEX=1
+ 	make --quiet test
+ fi
+ 
 -- 
 gitgitgadget
