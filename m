@@ -2,115 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4E681F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 08:32:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01F5E1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 08:33:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbeJQQ1K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 12:27:10 -0400
-Received: from mail.nudt.edu.cn ([202.197.9.11]:43832 "EHLO nudt.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726967AbeJQQ1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 12:27:09 -0400
-Received: by ajax-webmail-app2 (Coremail) ; Wed, 17 Oct 2018 16:34:06 +0800
- (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-X-Originating-IP: [43.250.201.107]
-Date:   Wed, 17 Oct 2018 16:34:06 +0800 (GMT+08:00)
-From:   =?UTF-8?B?54mb5pet?= <niuxu16@nudt.edu.cn>
-To:     git <git@vger.kernel.org>
-Subject: Recommendations for  adding strerror() in log statament
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 5.0.3_preview build
- 20151102(76855.8176) Copyright (c) 2002-2018 www.mailtech.cn nudt
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=UTF-8
+        id S1727040AbeJQQ2S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 12:28:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43186 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726967AbeJQQ2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 12:28:18 -0400
+Received: (qmail 16276 invoked by uid 109); 17 Oct 2018 08:33:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 08:33:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18177 invoked by uid 111); 17 Oct 2018 08:32:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 04:32:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 04:33:41 -0400
+Date:   Wed, 17 Oct 2018 04:33:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
+Message-ID: <20181017083340.GB31932@sigill.intra.peff.net>
+References: <d1b58614-989f-5998-6c53-c19eee409a2f@web.de>
+ <dd798e76-922f-a113-4408-e3892bee3b44@gmail.com>
+ <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
+ <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
+ <20181005165157.GC11254@sigill.intra.peff.net>
+ <dca35e44-a763-bcf0-f457-b8dab53815cf@web.de>
+ <20181005190847.GC17482@sigill.intra.peff.net>
+ <c05f192b-4e89-48b0-1c23-b43ec6fdb74b@web.de>
+ <20181005194223.GA19428@sigill.intra.peff.net>
+ <c141fb44-904f-e8b6-119f-7d2d6bcfd81a@web.de>
 MIME-Version: 1.0
-Message-ID: <4413c65c.101fa.16681291a04.Coremail.niuxu16@nudt.edu.cn>
-X-CM-TRANSID: SIAQrABHp1T_88ZbdoERBg--.16301W
-X-CM-SenderInfo: xqlx53qrw603lgwovvfxof0/1tbiAQEBDFC8UnQCigABsO
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-        daVFxhVjvjDU=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c141fb44-904f-e8b6-119f-7d2d6bcfd81a@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-Our team works on enhance logging practices by learning from historical log revisions in evolution.
-And we find 2 patches that add strerror() to the log statement which is printed when the return value of commit_lock_file() is smaller than 0.
+On Sun, Oct 14, 2018 at 04:29:06PM +0200, René Scharfe wrote:
 
-While applying this rule to git-2.14.2, we find 3 missed spots. 
-We suggest to add strerror() or just use error_errno() instead of error().
+> Anyway, drove the generative approach a bit further, and came up with
+> the new DEFINE_SORT below.  I'm unsure about the name; perhaps it should
+> be called DEFINE_SORT_BY_COMPARE_FUNCTION_BODY, but that's a bit long.
+> It handles casts and const attributes behind the scenes and avoids
+> repetition, but looks a bit weird, as it is placed where a function
+> signature would go.
+> 
+> Apart from that the macro is simple and doesn't use any tricks or
+> added checks.  It just sets up boilerplate functions to offer type-safe
+> sorting.
+> 
+> diffcore-rename.c and refs/packed-backend.c receive special treatment in
+> the patch because their compare functions are used outside of sorting as
+> well.  I made them take typed pointers nevertheless and used them from
+> DEFINE_SORT; the wrapper generated by that macro is supposed to be
+> private.  Given that such reuse is rare and I think we don't need a way
+> to make it public.
+> 
+> What do y'all think about this direction?
 
-Here are the missed spots:
-1) Line 307 in file git-2.14.2/sequencer.c:
-static int write_message(const void *buf, size_t len, const char *filename,
-			 int append_eol)
-{
-	...
-	if (append_eol && write(msg_fd, "\n", 1) < 0) {
-		rollback_lock_file(&msg_file);
-		return error_errno(_("could not write eol to '%s'"), filename);
-	}
-	if (commit_lock_file(&msg_file) < 0) {
-		rollback_lock_file(&msg_file);
-		return error(_("failed to finalize '%s'."), filename);
-	}
+I think it's the best we're likely to do, and is an improvement on the
+status quo.
 
-2) Line 1582 in file git-2.14.2/sequencer.c:
-static int save_head(const char *head)
-{
-	...
-	strbuf_addf(&buf, "%s\n", head);
-	if (write_in_full(fd, buf.buf, buf.len) < 0) {
-		rollback_lock_file(&head_lock);
-		return error_errno(_("could not write to '%s'"),
-				   git_path_head_file());
-	}
-	if (commit_lock_file(&head_lock) < 0) {
-		rollback_lock_file(&head_lock);
-		return error(_("failed to finalize '%s'."), git_path_head_file());
-	}
+The patch looks overall sane to me. I think DEFINE_SORT() is a fine
+name.
 
-3) Line 1706 in file git-2.14.2/sequencer.c:
-static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
-{
-	...
-	if (write_in_full(fd, todo_list->buf.buf + offset,
-			todo_list->buf.len - offset) < 0)
-		return error_errno(_("could not write to '%s'"), todo_path);
-	if (commit_lock_file(&todo_lock) < 0)
-		return error(_("failed to finalize '%s'."), todo_path);
+I think given a macro parameter "foo" you could generate sort_by_foo()
+and compare_foo(), which would eliminate the extra layer in those
+two cases you mentioned. But I'm also fine with the approach you've
+shown here.
 
-
-Following are the 2 patches that support our opinion:
-1) Line 2147 in file git-2.6.4/config.c:
- 	if (commit_lock_file(lock) < 0) {
--		error("could not commit config file %s", config_filename);
-+		error("could not write config file %s: %s", config_filename,
-+		      strerror(errno));
- 		ret = CONFIG_NO_WRITE;
- 		lock = NULL;
- 		goto out_free;
- 	}
-
-2) Line 2333 in file git-2.6.4/config.c:
- unlock_and_out:
- 	if (commit_lock_file(lock) < 0)
--		ret = error("could not commit config file %s", config_filename);
-+		ret = error("could not write config file %s: %s",
-+			    config_filename, strerror(errno));
- out:
- 	free(filename_buf);
-
-Thanks for reading, we are looking forward to your reply about the correctness of our suggestion~
-May you a good day ^^
-
-Best regards,
-Xu
-
+-Peff
