@@ -2,80 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 672461F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 18:14:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 344651F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 18:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727993AbeJRCLg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 22:11:36 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:33172 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727082AbeJRCLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 22:11:36 -0400
-Received: by mail-qk1-f196.google.com with SMTP id 84-v6so17122955qkf.0
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 11:14:44 -0700 (PDT)
+        id S1728087AbeJRCMY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 22:12:24 -0400
+Received: from mail-lj1-f178.google.com ([209.85.208.178]:34621 "EHLO
+        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727374AbeJRCMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 22:12:23 -0400
+Received: by mail-lj1-f178.google.com with SMTP id j17-v6so25257449lja.1
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 11:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=tH3rjuZC82qJi6fh1Uo9A7j8QTJCCdEvCaIp4XTHaVo=;
+        b=RfaVBggBhJHp6N9mQYXMUgiFWkidCg+j2FrFiO4vU6I/BHvR54d/OXaQKIRCCn80wF
+         264fC7nsWDhyGFA5+hH6m8FTjxEFNa2uz1GZNJ254SkOBdwPAUq6p8fMF4pJ7p+ZRFxq
+         ffJv6CyVxfwXGGZXm5bHnrd4+V3GTqCuvFpwaIGnQ32wu1i3cAEzMSYpml/b9BiQqMJG
+         HXozWp7j1n9wmdcFbhNgQhDzu+dTD1muXK0zHJFM1dKLjD6xVeTMNSNVThJ1yOMdSdsc
+         LnCXwkH3l48XM3sGDnjtzH2qoy9zSHiGUctd7Obl+ccC0+M6rI9251x+v3dUoF0ixEeO
+         UjBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=T7P7lbHjNFTLd3aBZP5y3nDOiu9M78MrMDEsnmIj8hE=;
-        b=t6Ca2I6KZYoAaCmYjWNYpC+4dpTnmrqXKd/DN462/NSG1ChQ5aYDHDfP5DtDpuuCoy
-         dGkuCtrwzWyVl433UwySsreAco1OmKJPVTsSfv/XprOyFheBRwUnmEL8bL34O8Rm09j6
-         zctT97mw+kN8Q7xHYTmfDxagvLqTh6Y4an0vqWbgyH3pbyTR6khnBeOhJlSaIKzOGHjp
-         xLLXg2XFmBrNIZ5p5E7YUhsU70VFwQtYunlEZu0Cg4zEPFEw49ZuHwDBwdQoF16WFS3q
-         m8VotK3MY5IsDeiPTaRmhrY0r42ReocPiyFqkCj/fi11JKxumQuZvj0CWn+CYpo9ol9b
-         vFBA==
-X-Gm-Message-State: ABuFfogRpT7kd9YOciHm18SYZaPnxBZHfT5lPE32UftBzBXCzV+cKGz8
-        akK7LA+aQmrIfd3g1HsHQ6MBX2JCGUTY7EXVx1E=
-X-Google-Smtp-Source: ACcGV61vpaLU9fJnICqii7rQiF9fbreXNkFWj4ss6cnXS61hA2IvwXrC1OcFIhvL1usiMCVHh/kPg2zaGqTy5c0t2VI=
-X-Received: by 2002:a37:9f90:: with SMTP id i138-v6mr25086174qke.152.1539800084240;
- Wed, 17 Oct 2018 11:14:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=tH3rjuZC82qJi6fh1Uo9A7j8QTJCCdEvCaIp4XTHaVo=;
+        b=JHU1D90Mut4y57kJJu+yXy/OYMx/FreT/IMlDTuhAsqCzBxk8hT1DkZ7rY6pfXugj0
+         B3XoJ8ilRAIVmETtrdHQAJAXCe5eIEiVRgaRapITTVD9uLJb5Hsh3sBUik+1IhymZ9Cn
+         UzIGB+0AtViNPLTPfPrDEK7ptbDC7Z7deC1+7jb8ehV1y4fRKcqwNT/JS0n2N9VOdau5
+         7+5kLxBy+D6Rr5mXwH5tf+lTvPk5s1omiKmf2vceBHBcr8Znp0Njm93zErECCFZUCHSY
+         Q412iaNIvjx9br171mcVAipADIb6HI971R8gU3u+B34FQmta+zyeK+2b3Ai3IRCN4WE+
+         kJDQ==
+X-Gm-Message-State: ABuFfoi+pe5peWbHXuOq5bmx5VamrlhyTpPkoZZzx0AFalKx1IvwhAWB
+        u/oQQ3CvxbSdIhoHQ4uB6X3eb90b+AJW6KIVpGx9VwbT
+X-Google-Smtp-Source: ACcGV61DibH28zQT2ot+C0D/QdcIQ/oZ4Aj/P39p+uQibyn0tVjyEikB9XzpKCGZ1RMCqBuXpMB2CynXtex6BP5dxh8=
+X-Received: by 2002:a2e:2997:: with SMTP id p23-v6mr17431549ljp.12.1539800130230;
+ Wed, 17 Oct 2018 11:15:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181017164021.15204-1-peartben@gmail.com> <20181017164021.15204-2-peartben@gmail.com>
-In-Reply-To: <20181017164021.15204-2-peartben@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 17 Oct 2018 14:14:32 -0400
-Message-ID: <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] reset: don't compute unstaged changes after reset
- when --quiet
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Wed, 17 Oct 2018 13:15:18 -0500
+X-Google-Sender-Auth: 2tVYfJxYGScHIMKWpNiF_t4DqTE
+Message-ID: <CAHd499BSVRytaFKOUhE=A4Zv+MMx=uKrWKUcT13QwzOCZWhEtg@mail.gmail.com>
+Subject: Sort output of diff --stat?
+To:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 17, 2018 at 12:40 PM Ben Peart <peartben@gmail.com> wrote:
-> When git reset is run with the --quiet flag, don't bother finding any
-> additional unstaged changes as they won't be output anyway.  This speeds up
-> the git reset command by avoiding having to lstat() every file looking for
-> changes that aren't going to be reported anyway.
->
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
-> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-> @@ -95,7 +95,9 @@ OPTIONS
->  --quiet::
-> -       Be quiet, only report errors.
-> +       Be quiet, only report errors.  Can optimize the performance of reset
-> +       by avoiding scaning all files in the repo looking for additional
-> +       unstaged changes.
+I'd like to sort the output of `git diff --stat` such that files are
+listed in descending order based on number of lines changed. The
+closest solution I've found online[1] has several readability issues.
+I'd rather see a built-in solution in git, if one exists. Can anyone
+recommend a solution?
 
-s/scaning/scanning/
-
-However, I'm not convinced that this should be documented here or at
-least in this fashion. When I read this new documentation before
-reading the commit message, I was baffled by what it was trying to say
-since --quiet'ness is a superficial quality, not an optimizer. My
-knee-jerk reaction is that it doesn't belong in end-user documentation
-at all since it's an implementation detail, however, I can see that
-such knowledge could be handy for people in situations which would be
-helped by this. That said, if you do document it, this doesn't feel
-like the correct place to do so; it should be in a "Discussion"
-section or something. (Who would expect to find --quiet documentation
-talking about optimizations? Likely, nobody.)
+[1]: https://gist.github.com/jakub-g/7599177
