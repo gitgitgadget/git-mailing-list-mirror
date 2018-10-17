@@ -2,194 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4C71F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 13:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DFBF1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 14:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727211AbeJQVtm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 17:49:42 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:36192 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727014AbeJQVtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 17:49:42 -0400
-Received: by mail-ot1-f46.google.com with SMTP id x4so24823497otg.3
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 06:53:53 -0700 (PDT)
+        id S1727669AbeJQWZZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 18:25:25 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:32860 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726974AbeJQWZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 18:25:25 -0400
+Received: by mail-ed1-f43.google.com with SMTP id l14-v6so16097520edq.0
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 07:29:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=8w37t6rYVP0K7y374zbrzM7+MPcQFcUyJHeIUVn9qH8=;
+        b=L+sUVlKx1fIsRHxkkYq8Sag79mfMg/9Hp0jujpKAgWyuUFuwXbjKIbyPRYIipE2bXH
+         9HfKIT+BSqI/hINhvY+ByyJNnwSntjIFyKHCsaC64eLqBvJ9FP6krX1NCEuoewxooXrf
+         vCZMp70OgGFYE+9GfqL0umpFxk6ztANXrs71D3IfYL69lsaPiAQeGAYj7aV2nPlGMj9S
+         CScueQPECQIM5MRva6YgyywYd8kiFuMmR8rTrDX4T0V1l9RHEZVFTAZx7OWZEEIOFHiA
+         MuyCIBuQT0kT7PoVhmGSjcwE+6Mhlp8l/eVMPaOwtyvQxGaYbdeXgI7flHjWvqvlHQ8p
+         bLuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kX3W81HOUI/t3T9OznE2q2bSiHo44LRqSHtz3AqwCrY=;
-        b=szbNBwWkyfWdwJAiidVUJcPRrRyOs1KsEDDxGQv0DIw/ExAyoQGh7NIStXXbkU5kXG
-         qY/NZbN4Hknkeo/JxZwbr1pwOVoIXnR6iY/cVXjVgtZofWkoNiYYoXmcjOaXJbXIZPM5
-         P3zs18EW0IuM9vAZdDi/8wURUSgYOgpTLPkPpM2kMXng4QOO8aeoaDLDSmdS8CYLLdMJ
-         ppMKYaDDfbzbRGrK59sht2UuVIfqLifz2h6KEJL9vC8BifirHStqtpfKyO52o430S9rX
-         1+CxMgF7klX86pnfsCC8UUTljDZmhUCdVc9G0Iq3afE52jlTGSd2ed1imFieSxfu7KS3
-         voOA==
-X-Gm-Message-State: ABuFfoiPfGv6Y11I0+GDLYrlSr4O32j3NBi0gzKpRfyR901MIz/2Of8V
-        caN2geJzfX6lJEjzarYI7/tZF0C5sTOKL2K8p3eL6g==
-X-Google-Smtp-Source: ACcGV61wjoVeKEYpJ+ivuYTJCSYzchb+DBNGW2z3CULOS4HBBjk70au2d2x6CD8IkIS4mWVzJigsRpA7V548u4ySVts=
-X-Received: by 2002:a9d:3203:: with SMTP id t3mr15838538otc.187.1539784433071;
- Wed, 17 Oct 2018 06:53:53 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=8w37t6rYVP0K7y374zbrzM7+MPcQFcUyJHeIUVn9qH8=;
+        b=BYG/dgZnPIumLvU9OwdO2ZkOp6yr8pG+qxlZ3dKqIMPGQpe3/G1tcPG+Yc8XFIPxW5
+         HwJwyMkHNG8wXWcevEAA4JaSAtqwSFFlu30feFcE2sBq4sB2jOUW2aGb4XxEgyI5T0wX
+         3uDw2WWMDs3YaTwP8xkS7I2imjL2aInJ+9izezF2ggHVHl6dNlfO3JFuzFy3qIH7a69n
+         3Mgv04/Hw3bcSAXro3bGdC+3JYJwKTJrD2bN37JAUoadz1Zw9SSFXhMy8isIwKxaWKrO
+         NfpCzxObewJoa6JDBQZdV56wGFoEXOj+hanAb/zSh0bFF0yruIpL18eNFvbNRwSM7H46
+         U7xg==
+X-Gm-Message-State: ABuFfogeh+pA2P9GVKjYjU93zmT4ImEmacojvJNBLP10QMfcWN8lt/t6
+        4yV3DntqG0KT82Kn7d9uDmWWpXLw
+X-Google-Smtp-Source: ACcGV63N0S8EJP+5guEi9+Q1UJ77JSqPEN/mo+Ntb8Lk7N0kTUHeZ98s7gnpIk/fs27W/XTZP7l1Bw==
+X-Received: by 2002:a17:906:d20d:: with SMTP id w13-v6mr27044240ejz.5.1539786566667;
+        Wed, 17 Oct 2018 07:29:26 -0700 (PDT)
+Received: from szeder.dev (x4db11ffa.dyn.telefonica.de. [77.177.31.250])
+        by smtp.gmail.com with ESMTPSA id i1-v6sm6916707edg.3.2018.10.17.07.29.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Oct 2018 07:29:25 -0700 (PDT)
+Date:   Wed, 17 Oct 2018 16:29:23 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: On overriding make variables from the environment...
+Message-ID: <20181017142923.GR19800@szeder.dev>
+References: <20181016184537.GN19800@szeder.dev>
+ <20181016215456.GB96853@aiede.svl.corp.google.com>
+ <20181016223330.GP19800@szeder.dev>
+ <20181016224001.GC96853@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-References: <20181016212438.30176-1-agruenba@redhat.com> <20181017091215.GA2052@sigill.intra.peff.net>
-In-Reply-To: <20181017091215.GA2052@sigill.intra.peff.net>
-From:   Andreas Gruenbacher <agruenba@redhat.com>
-Date:   Wed, 17 Oct 2018 15:53:41 +0200
-Message-ID: <CAHc6FU5mXL2j=jL=LqtRt30uBt8tGop350FnwK845fci-Qc=tg@mail.gmail.com>
-Subject: Re: [RFC] revision: Add --sticky-default option
-To:     peff@peff.net
-Cc:     git@vger.kernel.org, Bob Peterson <rpeterso@redhat.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181016224001.GC96853@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 17 Oct 2018 at 11:12, Jeff King <peff@peff.net> wrote:
-> On Tue, Oct 16, 2018 at 11:24:38PM +0200, Andreas Gruenbacher wrote:
-> > here's a long-overdue update of my proposal from August 29:
+On Tue, Oct 16, 2018 at 03:40:01PM -0700, Jonathan Nieder wrote:
+> SZEDER Gábor wrote:
+> > On Tue, Oct 16, 2018 at 02:54:56PM -0700, Jonathan Nieder wrote:
+> >> SZEDER Gábor wrote:
+> 
+> >>> Our Makefile has lines like these:
+> >>>
+> >>>   CFLAGS = -g -O2 -Wall
+> >>>   CC = cc
+> >>>   AR = ar
+> >>>   SPATCH = spatch
+> [...]
+> >>> I'm not sure what to do.  I'm fine with updating our 'ci/' scripts to
+> >>> explicitly respect CC in the environment (either by running 'make
+> >>> CC=$CC' or by writing $CC into 'config.mak').  Or I could update our
+> >>> Makefile to use '?=' for specific variables, but:
+> >>
+> >> That's a good question.  I don't have a strong opinion myself, so I
+> >> tend to trust larger projects like Linux to have thought this through
+> >> more, and they use 'CC = cc' as well.
 > >
-> >   [RFC] revision: Don't let ^<rev> cancel out the default <rev>
-> >
-> > Does this look more acceptable that my first shot?
->
-> I think it's going in the right direction.
->
-> The name "--sticky-default" did not immediately make clear to me what it
-> does. Is there some name that would be more obvious?
+> > I don't think Linux is a good example to follow in this case, see e.g.
+> > 6d62c983f7 (Makefile: Change the default compiler from "gcc" to "cc",
+> > 2011-12-20) (in short: Git is supposed to be buildable with compilers
+> > other than GCC as well, while Linux not really, so they can hardcode
+> > 'CC = gcc').
+> 
+> Nowadays Linux builds with clang as well.  People also have other
+> reasons to override the CC setting (cross-compiling, etc) and to
+> override other settings like CFLAGS.
+> 
+> > Also, the projects I have on hand usually have 'CC = gcc' hardcoded in
+> > their Makefiles, too, but those Makefiles were generated by their
+> > ./configure script (which in turn by ./autogen.sh...), and those tend
+> > to write CC from the environment into the generated Makefiles.
+> 
+> Yes, I think that's what makes travis's setup normally work.  It makes
+> sense to me since ./configure is expected to have more implicit or
+> automatic behavior.  For "make", I kind of like that it doesn't depend
+> on environment variables that I am not thinking about when debugging a
+> reported build problem.
+> 
+> When building Git without autoconf, the corresponding place for
+> settings is config.mak.  Would it make sense for the ci scripts to
+> write a config.mak file?
 
-It's the best I could think of. Better ideas, anyone?
+A first I though it doesn't, but it turns out it acually does.
 
-> > Some commands like 'log' default to HEAD if no other revisions are
-> > specified on the command line or otherwise.  Currently, excludes
-> > (^<rev>) cancel out that default, so when a command only excludes
-> > revisions (e.g., 'git log ^origin/master'), it will produce no output.
-> >
-> > With the --sticky-default option, the default becomes more "sticky" and
-> > is no longer canceled out by excludes.
-> >
-> > This is useful in wrappers that exclude certain revisions: for example,
-> > a simple alias l='git log --sticky-default ^origin/master' will show the
-> > revisions between origin/master and HEAD when invoked without arguments,
-> > and 'l foo' will show the revisions between origin/master and foo.
->
-> Your explanation makes sense.
->
-> > ---
-> >  revision.c     | 31 +++++++++++++++++++++++++++----
-> >  revision.h     |  1 +
-> >  t/t4202-log.sh |  6 ++++++
->
-> We'd probably want an update to Documentation/rev-list-options.txt (I
-> notice that "--default" is not covered there; that might be worth
-> fixing, too)>
+'ci/run-build-and-tests.sh' basically runs:
 
-Ok.
+  make
+  make test
 
-> > +static int has_revisions(struct rev_info *revs)
-> > +{
-> > +     struct rev_cmdline_info *info = &revs->cmdline;
-> > +
-> > +     return info->nr != 0;
-> > +}
->
-> So this function is going to replace this flag:
->
-> > @@ -2401,8 +2423,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
-> >                       argv_array_pushv(&prune_data, argv + i);
-> >                       break;
-> >               }
-> > -             else
-> > -                     got_rev_arg = 1;
-> >       }
->
-> Are we sure that every that hits that "else" is going to trigger
-> info->nr (and vice versa)?
->
-> If I say "--tags", I think we may end up with entries in revs->cmdline,
-> but would not have set got_rev_arg. That's captured separately in
-> revs->rev_input_given. But your cancel_default logic:
->
-> > @@ -2431,7 +2451,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
-> >               opt->tweak(revs, opt);
-> >       if (revs->show_merge)
-> >               prepare_show_merge(revs);
-> > -     if (revs->def && !revs->pending.nr && !revs->rev_input_given && !got_rev_arg) {
-> > +     cancel_default = revs->sticky_default ?
-> > +                      has_interesting_revisions(revs) :
-> > +                      has_revisions(revs);
-> > +     if (revs->def && !revs->rev_input_given && !cancel_default) {
->
-> doesn't handle that. So if I do:
->
->   git rev-list --count --sticky-default --default HEAD --not --tags
->
-> I should see everything in HEAD that's not tagged. But we don't even
-> look at cancel_default, because !revs->rev_input_given is not true.
->
-> I think you could solve that by making the logic more like:
->
->   if (revs->sticky_default)
->         cancel_default = has_interesting_revisions();
->   else
->         cancel_default = !revs->rev_input_given && !got_rev_arg;
->
-> which leaves the non-sticky case exactly as it is today.
+I naively put a 'CC=$CC' argument at the end of the first command,
+thinking it should Just Work...  but then that second 'make test' got
+all clever on me, said "* new build flags", and then proceeded to
+rebuild everything with the default 'cc'.  (With the additional
+complication, that on Travis CI we actually run 'make --quiet test',
+which rebuilds everything, well, quietly...  so the rebuild itself is
+not even visible in the build logs.)
 
-Right, I've reworked that.
+So, then it's either 'config.mak', or passing a 'CC=$CC' argument to
+_all_ make commands, including those that are not supposed to build
+anything, but only run the tests.  I find the latter aesthetically not
+particularly pleasing.
 
-> > diff --git a/revision.h b/revision.h
-> > index 2b30ac270..570fa1a6d 100644
-> > --- a/revision.h
-> > +++ b/revision.h
-> > @@ -92,6 +92,7 @@ struct rev_info {
-> >
-> >       unsigned int early_output;
-> >
-> > +     unsigned int    sticky_default:1;
-> >       unsigned int    ignore_missing:1,
-> >                       ignore_missing_links:1;
->
-> Maybe it would make sense to put this next to "const char *def"?
->
-> The bitfield would not be as efficient, but I don't think we care about
-> packing rev_info tightly.
-
-Ok.
-
-> > diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> > index 153a50615..9517a65da 100755
-> > --- a/t/t4202-log.sh
-> > +++ b/t/t4202-log.sh
-> > @@ -213,6 +213,12 @@ test_expect_success 'git show <commits> leaves list of commits as given' '
-> >       test_cmp expect actual
-> >  '
-> >
-> > +printf "sixth\nfifth\n" > expect
-> > +test_expect_success '--sticky-default ^<rev>' '
-> > +     git log --pretty="tformat:%s" --sticky-default ^HEAD~2 > actual &&
-> > +     test_cmp expect actual
-> > +'
->
-> Yuck, t4202 is a mix of older and newer styles. I'm OK with this as-is
-> because you've matched the surrounding code, but these days I'd probably
-> write:
->
->   test_expect_success '--sticky-default ^<rev>' '
->         {
->                 echo sixth
->                 echo fifth
->         } >expect &&
->         git log --format=%s --sticky-default ^HEAD~2 >actual &&
->         test_cmp expect actual
->   '
-
-I don't really want to get hung up on such details. test_write_lines
-doesn't seem bad, either.
-
-Thanks,
-Andreas
