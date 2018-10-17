@@ -2,98 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A99C1F453
-	for <e@80x24.org>; Tue, 16 Oct 2018 23:48:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5F91F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 00:54:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727195AbeJQHlE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 03:41:04 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54505 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727087AbeJQHlD (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 03:41:03 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id C0FBF221A9;
-        Tue, 16 Oct 2018 19:48:15 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 16 Oct 2018 19:48:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=
-        subject:to:references:from:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=n
-        FhMJTCNC1y/Bk8pUIpC79RTEJ12lnTfRXZVZ+2w/7g=; b=cUczpOmTfz+G2iZho
-        4jr8a5l+PX5b2AZkKwgj5R7SsPWO0Vi7coXpVRq7TWsrJrGpXgdBAdx1+CH+OBN1
-        ShZhmdAS/n9GSq3FTl214dtYPe+ojbx/nVZ3DL8wNrjzUE3zZR7l8XV9foD5VY1c
-        qV8Z3F/ANV9IOdQCB5uTZDEPWbmY0MriZkWgt1FvG0D8dRMxkHC7sabQTTSfcANv
-        u8N+duRt5QL6npBCNy9AOGFK76RS9NGDwe0eDUXd62eCQDLr/pH08ppdDvNOrlZh
-        3mYnZEMNGQzUTTkQ1rq0STKaaw6+u6Ei1BjhEbmFUdvy/6fnb8clcWGpcQR4Gqyy
-        ZVEjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=nFhMJTCNC1y/Bk8pUIpC79RTEJ12lnTfRXZVZ+2w/
-        7g=; b=nsp0s4K2r+/eFnPRVmG2V60VeZYe3/slDXoWoNg1XFqq1SYGbJqn0csJf
-        QFvXI4dRbzkAgjEsX+g8jpGitcwXxz/KnFozgAT3bwPnsDKRRM009MrD68Dzvo2y
-        0m0+ee5m6qH8s2yBYL4RcE7/CS8XKoAtFO5B+YwOx1MmC49w830PFTwqkZSq8rjm
-        hMMCHSNb6AJc6AaSbOLG2iGcY/OhA0Mp8+U+OHEFELuF2c3d0Pu+TNAMBHwuRVfP
-        MvaEVDtCmQUI5a1mpjPoOLLvQ8LQoXGbA2oPg2CgNDUzxfylDGWpFLMdS7gULWhg
-        Oe1ki8mqVH5bTfeDRWS6HADK4457Q==
-X-ME-Sender: <xms:v3jGW1jd2uVjK8mYmyHr1xK69b9IFiAF_sLwOB09xtPTZPugsihsaQ>
-X-ME-Proxy: <xmx:v3jGW6aZwQTDI-8RR5kIAYEWhDZ1NOxo0vR6ujDoldYnPqjATP06Bg>
-    <xmx:v3jGW-Je9_W98qua79BX7xOky2IxaOhbBlc_cUKEwVdOb1YMcIZx3w>
-    <xmx:v3jGWxGRGv2CZLwKQKGF0JRjR27-3DYvSfeWwlxnAN-Anf7wzvTLpg>
-    <xmx:v3jGW9uAWSr9_1XMj6AZcvXdywuM_LK2awUTy0GvZnX8OfGNPBYNiQ>
-    <xmx:v3jGW4ujkiQXRqUQahan-vyP1Mco6uO0cnrL_5S1s8EI6BXijWPWDw>
-    <xmx:v3jGW6V_Y3WbVcf1X_QgpXSXLJ0dJ4zmLyf8W0o_zVVwUoW26-JDQA>
-Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 06947E4124;
-        Tue, 16 Oct 2018 19:48:14 -0400 (EDT)
+        id S1726951AbeJQIrg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 04:47:36 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50996 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726168AbeJQIrg (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Oct 2018 04:47:36 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2895261B72;
+        Wed, 17 Oct 2018 00:54:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1539737670;
+        bh=Am4JaYIuPPuOYys8wfugLChoYdGw184bqJKu7HSgV5w=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=TnA8+m9DQyioIce6pzr97QuUisEhvC76u7YKbVAF5oYVXAjuyoRGNwwZ4LLKAl5eo
+         D2mCRD+Ww6zMa6U5GWerBXaPWdyOI66DoqzOmIZ2SUDE/az+3oH/tZTazmc+E1+A6R
+         IOEC/adBUL21SF3+ftrWrSkutqnRtchoJ5y1yUQ1EjtmgN2EYS3+8vrNlvk1zjuO7V
+         mlwQF+q5uRk2wkWdi+r+9isoHH9vxM1xhZGld7YdE94tAJJVebGBQRKmilGJEZxZLK
+         IFlBACFYlRAqA9zqBA15gBgcNqC6cxPm50x5F8rgVYDq1X/p9fQMPRGh4lzuuju7nb
+         uxoY21GsJcl3yQZLIXZn/KgHpH4zRJk/nvgbBwjJAXOhxKWxw4LRlvppeSYPYSkqGu
+         JSlAeNW22O/7HUioIoDMwyJoKUDQJ1ktlGfIOf4S9uiLyK5YNFGstWMt+ukfZ3q5RC
+         17dm5OpwyJc0Cdu9CHWwqoDJmTrKmhbfWEXZGmKc4WpKt/TdEKf
+Date:   Wed, 17 Oct 2018 00:54:24 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Stas Bekman <stas@stason.org>
+Cc:     git@vger.kernel.org
 Subject: Re: problem with not being able to enforce git content filters
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+Message-ID: <20181017005424.GH432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stas Bekman <stas@stason.org>, git@vger.kernel.org
 References: <5d4966c8-8171-9a0a-5120-f7c151c2b81f@stason.org>
  <20181016232636.GF432229@genre.crustytoothpaste.net>
-From:   Stas Bekman <stas@stason.org>
-Organization: Hope, Humanized
-Message-ID: <038d40b9-0b35-b93f-9377-7c0bb12bce8e@stason.org>
-Date:   Tue, 16 Oct 2018 16:48:13 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ <038d40b9-0b35-b93f-9377-7c0bb12bce8e@stason.org>
 MIME-Version: 1.0
-In-Reply-To: <20181016232636.GF432229@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="xVNRhe5Alm/fDnuT"
+Content-Disposition: inline
+In-Reply-To: <038d40b9-0b35-b93f-9377-7c0bb12bce8e@stason.org>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
->> And the devs honestly try to do their best to remember to configure the
->> filters, but for some reason they disappear for them, don't ask me why,
->> I don't know. This is an open source project team, not a work place.
-> 
-> This sounds like it could be easily solved by continuous integration.
-> You could set up a job on any of a variety of services that checks that
-> a pull request or other commit is clean when when the filter runs.  If
-> it doesn't pass, the code doesn't merge.
+--xVNRhe5Alm/fDnuT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is an excellent idea wrt to PRs. Thank you, Brian! I will implement
-that.
+On Tue, Oct 16, 2018 at 04:48:13PM -0700, Stas Bekman wrote:
+>=20
+> >> And the devs honestly try to do their best to remember to configure the
+> >> filters, but for some reason they disappear for them, don't ask me why,
+> >> I don't know. This is an open source project team, not a work place.
+> >=20
+> > This sounds like it could be easily solved by continuous integration.
+> > You could set up a job on any of a variety of services that checks that
+> > a pull request or other commit is clean when when the filter runs.  If
+> > it doesn't pass, the code doesn't merge.
+>=20
+> This is an excellent idea wrt to PRs. Thank you, Brian! I will implement
+> that.
+>=20
+> It doesn't help with direct commits to master, since CI would be
+> detecting it after it was committed. And when that happens we all know
+> that already because 'git pull' fails.
 
-It doesn't help with direct commits to master, since CI would be
-detecting it after it was committed. And when that happens we all know
-that already because 'git pull' fails.
+Typically projects that have CI set up don't allow direct pushes to
+master, since that tends to allow to bypass CI, or they allow it only in
+exceptional circumstances (e.g., reverts).  Also, typically most
+projects want to have some sort of review before code (resp. documents,
+other contributions) are merged.  Most Git hosting platforms, including
+GitHub, offer protected branches, so it's something to consider.
 
+There is a possible alternative, and that's that if your project has
+some sort of build file (e.g., a Makefile), you can set it up to
+automatically insert hooks or git configuration into developers'
+systems, optionally only if it's in a Git repository.  For example, you
+could add a pre-commit hook that fails if the filters are disabled.
 
--- 
-________________________________________________
-Stas Bekman       <'))))><       <'))))><
-https://stasosphere.com  https://chestofbooks.com
-https://experientialsexlab.com https://stason.org
-https://stasosphere.com/experience-life/my-books
+These are the approaches that tend to work well for most projects.  I
+tend to prefer the CI approach with restricted branches because often I
+want to customize my hooks, but your project will decide what works best
+for it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--xVNRhe5Alm/fDnuT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvGiEAACgkQv1NdgR9S
+9ovyow/5AUvW3qR/WnaMGtON40pHsQGGFUNREJCZL0PJMkm+xKr3sL1deoOfz1dM
+EkmQfLfwOlvIXH1/wxuMcGhO1cOYSfjVv/FRRSsj3ZyJz2BoIUM5fFeAYu79BYlj
+8A/Xptyw1Gc69JtX0xbw0gaqlYyJVl7YHta1k6/cZOFZYHxIBMyN3YvfgC2uC6Xj
+CFOw0mmuB08efW9IynDSRElqBZPJ4tog3Uj+HDK/yDM7xxA0NfWskxSiA7o4FKBs
+qLKlZXygI3g2npXfEPM7CvfTEOJwFKUlfG5rf47TBA4zkkOKzZVWjhV4F1T9r6UQ
+uR6mIzmbptvyjXT6Ud0g3LESRs9Kc1KytD4ry4VzBgyOqZ0fUOL+ZPnPewzUaLhV
+ppepjJXZGOnIcM0+n9ykN3wNqxIjF19FVvddgsKsoD+3fnQ3nCU5fPDi0pLk0Wv9
+OSjsb9QNjwqDn8pRsEJ6Qr15drz0yr0JrZ7erRKEzUfqP5GhW25eISkWOBYYOoC7
+JJ12ZTHrKzvS/H6nDM2Cu5c1fWJbfjnWzcpCboZjQBmyD06LYq28t6TQl/xuOAE+
+A+Ipxd9HmDVzu3m/2rZ+pZzNr66jN1RlwBZ2rychzp2ujcNJKOl4/P3xOopgnfXP
+uvSse7mmMt27asFwAUdUoajpz+RiCXC30qVIs9kKqx0zzMrrYZA=
+=fnAH
+-----END PGP SIGNATURE-----
+
+--xVNRhe5Alm/fDnuT--
