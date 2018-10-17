@@ -7,59 +7,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AABB1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 13:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF2291F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 13:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727255AbeJQU6b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 16:58:31 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:43414 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727000AbeJQU6a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 16:58:30 -0400
-Received: by mail-ua1-f66.google.com with SMTP id c89so4706623uac.10
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 06:02:54 -0700 (PDT)
+        id S1727262AbeJQU7w (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 16:59:52 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:42105 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727249AbeJQU7w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 16:59:52 -0400
+Received: by mail-vs1-f67.google.com with SMTP id e126so20688369vsc.9
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 06:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=B6rQ3CM/rQhQ3VqVgjhXLqGYwoSRhHooadW3EEyxowA=;
-        b=WHT7509jpD8UtagBFtsi8QbP61w1UljZhiVNClidhLc8Uc/QO3x5MzCu339cC00i+s
-         5pRcJQL9mM6VLKUBuZygAEDwrwgZ7T8WALRQfkJeeTJJlMQJNetV2HW3ffm7x6Z9WnUa
-         5y9TEEQtjUiEoL1plklrKN1ABFVuuNxMQwwxLv2wL0lNT+aOlgv/0fdbp06HARb3izPt
-         5QETUdTc+dN6awmSX2u1q8Ax9E50sV4rug2NExLalGY1HS9GruhGECh6tSqhmGPp21hk
-         f8dBB8LDlKsQmr1Jvydb/0I85zWC4EFA6S8hcAla4MTtd+ClsUXQIuYnp5ff/WxCq7wn
-         sYAA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=S8uWggcrBZvrn2rUt7/uU2YSN70m1IGWO9pvEhPEzxc=;
+        b=Uq46WwZl5nN9dmjCh5yNZMKN7b1UZdeSobKSRryRQr5PA+joXeIx5oxV7woTsCWAgQ
+         lgrg+pKwO89hPuubhQ9kaPy0QnaqT2cug1JFdLCJ3zF6KBd6JUB3QNWpTGmO5rRUK9jP
+         W3AQw40cMxIsLteVbiNQ3booCowipUJBBXd3u1yvj1BWoQCo03DYzb9tNe5gQBMeOkd8
+         RUL700iWATD3QTbcaUomoBRQELUkAQ0147UNmUoynbW9AwI1f7S55KW2Ol7JZ1GnMD/0
+         CeqRj5BOM72x+iVgX+ZgzVNjE5+tN8dUMxIToCf8OIkV377n9d1L49ANEZvm2I0qrq1Q
+         xJBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=B6rQ3CM/rQhQ3VqVgjhXLqGYwoSRhHooadW3EEyxowA=;
-        b=n+W38BYklOs4slwP2EVGghqcl7C2IARd9hhPuthSkcJpVd706u8m29y2qq+ZggQhXt
-         hLIc1SAoW8dQ+v7V2ybbT4YS/Y9YtzO2x7lpRVXgdag0Ucy/WD+/Kb4/usxkMccrtPZ6
-         gxKYmyQQaRlAYHbNcAsgEIDto0fHX0nwLse6hT3q+PbvP9O5Mv2LPr9DN+gXK0nFUOfA
-         8605+o1OWSyBOl/N2rnl4FKcwspb/pOuWvGHEu5LrpKEpCyXskx4nb+4sIDpiNVLlG9H
-         x/wIRo8HvxHBWP6uMUtl6oV+flVJnLEVVQi7TzOUF9DR4QMh/ziv4D9cp6SRaeX9dIoN
-         7cgA==
-X-Gm-Message-State: ABuFfogiun2QuT87wDXqA0/Y0vs9n3TTp118NcyzMv5XShn4GcKgX2Yq
-        I6ltvDRWEE6+t2KJZ3eptc1QkeiV
-X-Google-Smtp-Source: ACcGV61O+ruxK18c0mFvLqdbLNd/riIFGPloeQQAsZZRkrxJsIxvR5lhJsM0id0iZTIJXJRlDjkzOQ==
-X-Received: by 2002:ab0:24a:: with SMTP id 68-v6mr11377349uas.25.1539781373444;
-        Wed, 17 Oct 2018 06:02:53 -0700 (PDT)
+        bh=S8uWggcrBZvrn2rUt7/uU2YSN70m1IGWO9pvEhPEzxc=;
+        b=GsXBovjVNsuBcNgthKdi7NsdANmC0k6mKXop2/fgZaFb6R2XIEaAM1OFQrdSTVjLXl
+         mcgeINkZMT+PmmlxwtWqrwRNLobwqS8yt/sX2nJVUcBF5E8FiaRtZICHj1IfybZmraXx
+         lrqclWgyFIeQgLRp/2t6HtSWj9zb+F3AyvTz146T/HwBaOy4xypor8TebvASxTrGM8qm
+         VJ+BJmK+TgZCfqNdOuMwDIaoF6HL1eIHBUCrw4CuDUVdS0dbBPK2fLeo1Zb4eglxaJby
+         uZPVRH+foOjkYq65H/pWCvA+DmSHKQEwzRGZ5Xsf6VbvPJsziC0DNeMXTDSvgrnbIKFW
+         hVPg==
+X-Gm-Message-State: ABuFfoi4JmHvbUiYPwMuQFkYFURRmLj3eY33XcsRzY3MLmwa5GAz6Sjd
+        PCah2QoOr+/2XP5EdkLmusE=
+X-Google-Smtp-Source: ACcGV60M0+QKpbt81c/6wI8ESsl7JzQ6l7iBpDzs2SM1GOwTLaYk6qssE7cX053v1s8IMbXg4SN0RQ==
+X-Received: by 2002:a67:9858:: with SMTP id a85mr10426590vse.163.1539781455077;
+        Wed, 17 Oct 2018 06:04:15 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:8586:348a:8c9:d17b? ([2001:4898:8010:0:6ebc:348a:8c9:d17b])
-        by smtp.gmail.com with ESMTPSA id y205sm2372546vsc.6.2018.10.17.06.02.52
+        by smtp.gmail.com with ESMTPSA id j71-v6sm3361251vkj.38.2018.10.17.06.04.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Oct 2018 06:02:52 -0700 (PDT)
-Subject: Re: [PATCH] test-tool: show tool list on error
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20181017092506.GA15503@sigill.intra.peff.net>
+        Wed, 17 Oct 2018 06:04:14 -0700 (PDT)
+Subject: Re: [PATCH 0/1] Run GIT_TEST_COMMIT_GRAPH and
+ GIT_TEST_MULTI_PACK_INDEX during CI
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.49.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b8791c01-05be-20aa-f4e9-40eaa547f1c8@gmail.com>
-Date:   Wed, 17 Oct 2018 09:02:51 -0400
+Message-ID: <d0a90195-5e13-8c12-f04e-ae0705a512b7@gmail.com>
+Date:   Wed, 17 Oct 2018 09:04:11 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <20181017092506.GA15503@sigill.intra.peff.net>
+In-Reply-To: <pull.49.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -68,27 +71,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/17/2018 5:25 AM, Jeff King wrote:
-> Before we switched to one big test-tool binary, if you
-> forgot the name of a tool, you could use tab-completion in
-> the shell to get a hint. But these days, all you get is:
->
->    $ t/helper/test-tool approxidate
->    fatal: There is no test named 'approxidate'
->
-> and you're stuck reading the source code to find it. Let's
-> print a list of the available tools in this case.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Not really user-facing, but this bugged me enough earlier to write the
-> patch. ;)
->
-> Some of the individual tools have nice help, too (try
-> "t/helper/test-tool date", which shows the approxidate command I was
-> looking for), but some of them could probably stand to improve their
-> friendliness (try "t/helper/test-tool config"). I think it's fine for
-> people to improve them over time if and when they get annoyed.
-This will improve contributors' lives! Thanks.
-
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+On 10/17/2018 9:00 AM, Derrick Stolee via GitGitGadget wrote:
+> [1] https://git.visualstudio.com/git/_build?definitionId=4
+Newlines are hard. Sorry for the formatting issues when translating from 
+a PR description.
+> Build definition
+> that tests Git with different arrangements of GIT_TEST_* variables.
+Thanks,
+-Stolee
