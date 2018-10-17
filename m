@@ -2,140 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DFBF1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 14:29:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C306E1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 14:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727669AbeJQWZZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 18:25:25 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:32860 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726974AbeJQWZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 18:25:25 -0400
-Received: by mail-ed1-f43.google.com with SMTP id l14-v6so16097520edq.0
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 07:29:27 -0700 (PDT)
+        id S1727596AbeJQW1p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 18:27:45 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:39094 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727032AbeJQW1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 18:27:45 -0400
+Received: by mail-it1-f194.google.com with SMTP id m15so2699443itl.4
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 07:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=8w37t6rYVP0K7y374zbrzM7+MPcQFcUyJHeIUVn9qH8=;
-        b=L+sUVlKx1fIsRHxkkYq8Sag79mfMg/9Hp0jujpKAgWyuUFuwXbjKIbyPRYIipE2bXH
-         9HfKIT+BSqI/hINhvY+ByyJNnwSntjIFyKHCsaC64eLqBvJ9FP6krX1NCEuoewxooXrf
-         vCZMp70OgGFYE+9GfqL0umpFxk6ztANXrs71D3IfYL69lsaPiAQeGAYj7aV2nPlGMj9S
-         CScueQPECQIM5MRva6YgyywYd8kiFuMmR8rTrDX4T0V1l9RHEZVFTAZx7OWZEEIOFHiA
-         MuyCIBuQT0kT7PoVhmGSjcwE+6Mhlp8l/eVMPaOwtyvQxGaYbdeXgI7flHjWvqvlHQ8p
-         bLuQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=wkEUXkwSKCyrh7qx6s+u4ZqI6UUjH0eOck2vCsmwV+U=;
+        b=iAEm7EzvvlRuGM9dCuXU4zFfwaOMcKvixw7TVltuILnh3yrJxh+2INwLPFOgshocpO
+         vfPTyeNxqTDoYXHm8gVGGoGvayXeosIE/AOFJD87lrZy0/q8dkpiK+RF0vlP8flcBLXg
+         OwtPnh4CBDkKtMSD0YzBgCyO9yw7aDoUnGNYaUGH4V4ef2Qrt2LGvsOgKV6KFVkpp7b8
+         c2OJYNUfBNGPNY1T/vNadV7wuTajSn1CPSC+dkjmgxuZkWgiTvSVYIXbhJyia3f6l4DY
+         j0TfetKFw3y8iREPpBd1Oj93XVszFGJh4RjVwRU/vo1TzSHsquKFZDMONe6Oqpmyn0kY
+         VO1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=8w37t6rYVP0K7y374zbrzM7+MPcQFcUyJHeIUVn9qH8=;
-        b=BYG/dgZnPIumLvU9OwdO2ZkOp6yr8pG+qxlZ3dKqIMPGQpe3/G1tcPG+Yc8XFIPxW5
-         HwJwyMkHNG8wXWcevEAA4JaSAtqwSFFlu30feFcE2sBq4sB2jOUW2aGb4XxEgyI5T0wX
-         3uDw2WWMDs3YaTwP8xkS7I2imjL2aInJ+9izezF2ggHVHl6dNlfO3JFuzFy3qIH7a69n
-         3Mgv04/Hw3bcSAXro3bGdC+3JYJwKTJrD2bN37JAUoadz1Zw9SSFXhMy8isIwKxaWKrO
-         NfpCzxObewJoa6JDBQZdV56wGFoEXOj+hanAb/zSh0bFF0yruIpL18eNFvbNRwSM7H46
-         U7xg==
-X-Gm-Message-State: ABuFfogeh+pA2P9GVKjYjU93zmT4ImEmacojvJNBLP10QMfcWN8lt/t6
-        4yV3DntqG0KT82Kn7d9uDmWWpXLw
-X-Google-Smtp-Source: ACcGV63N0S8EJP+5guEi9+Q1UJ77JSqPEN/mo+Ntb8Lk7N0kTUHeZ98s7gnpIk/fs27W/XTZP7l1Bw==
-X-Received: by 2002:a17:906:d20d:: with SMTP id w13-v6mr27044240ejz.5.1539786566667;
-        Wed, 17 Oct 2018 07:29:26 -0700 (PDT)
-Received: from szeder.dev (x4db11ffa.dyn.telefonica.de. [77.177.31.250])
-        by smtp.gmail.com with ESMTPSA id i1-v6sm6916707edg.3.2018.10.17.07.29.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Oct 2018 07:29:25 -0700 (PDT)
-Date:   Wed, 17 Oct 2018 16:29:23 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: On overriding make variables from the environment...
-Message-ID: <20181017142923.GR19800@szeder.dev>
-References: <20181016184537.GN19800@szeder.dev>
- <20181016215456.GB96853@aiede.svl.corp.google.com>
- <20181016223330.GP19800@szeder.dev>
- <20181016224001.GC96853@aiede.svl.corp.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=wkEUXkwSKCyrh7qx6s+u4ZqI6UUjH0eOck2vCsmwV+U=;
+        b=Thx8GoI9DBawIhVqw1Mve2j1ZJnJDwCPaxH6eonY+2zUnkiyewNe0HBAok94JIwCUe
+         /g2L4m081vjR7nsL+vdtxGzBA2jq8H43AzEVxNCYiexDvJWro6IFQhMfpJEcVArl5l0w
+         NPR9dshbAtqLv9Fkc994rhTGS2UGv2uu3ilFDQBN53eyEcWRcDdeqj7QSohSSM96PTRI
+         3Xv4ynzCmbtjoNzVu/+5bd7YUFnH38hYZQVwAS2hDkV8lFeap7M436K0O2Ldw5X/Ks9Y
+         HANhtzKQXlRlcZuQblS8+fsMqdDSMKNHMXtYfSEFzPlBba1GqF4HWKJv/cURwvkS8Ju6
+         FpiA==
+X-Gm-Message-State: ABuFfohBoYZtt95hjsCPVeeWIbBx9KKeOENciK0kzHyCPCpIf9xR99iT
+        yFTN3sbQZznB1mn/uwS/MzzKEDbg6EQRb1EHrz8g9g==
+X-Google-Smtp-Source: ACcGV63f38PQ7C10n2cNytMHbUjAqsXx9Lw15dNZX+iwK6jnRc3gYE2kCjxtvOCyif8jDzWJtchGtfElqGII5hDIlSw=
+X-Received: by 2002:a24:a343:: with SMTP id p64-v6mr1606728ite.10.1539786706352;
+ Wed, 17 Oct 2018 07:31:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181016224001.GC96853@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20181015021900.1030041-1-sandals@crustytoothpaste.net>
+ <20181015021900.1030041-14-sandals@crustytoothpaste.net> <CACsJy8C6o9PAHsm+t7Rijg6jsz5dXZ5pT79nYGdGbKuK6gGTLQ@mail.gmail.com>
+ <fbd59390-42ee-8c06-74b7-1e7081680913@gmail.com> <CACsJy8Bg6BpQp4dDXzs8Y_d6RHW9ti4+FLqnAqGwW8F-SWUnPg@mail.gmail.com>
+ <20181016224404.GD432229@genre.crustytoothpaste.net>
+In-Reply-To: <20181016224404.GD432229@genre.crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 17 Oct 2018 16:31:19 +0200
+Message-ID: <CACsJy8C9nySzG0Uqs6_5V2rXHkAKr-ShXU7N9sPp4N5z=D0zQA@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] commit-graph: specify OID version for SHA-256
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 16, 2018 at 03:40:01PM -0700, Jonathan Nieder wrote:
-> SZEDER Gábor wrote:
-> > On Tue, Oct 16, 2018 at 02:54:56PM -0700, Jonathan Nieder wrote:
-> >> SZEDER Gábor wrote:
-> 
-> >>> Our Makefile has lines like these:
-> >>>
-> >>>   CFLAGS = -g -O2 -Wall
-> >>>   CC = cc
-> >>>   AR = ar
-> >>>   SPATCH = spatch
-> [...]
-> >>> I'm not sure what to do.  I'm fine with updating our 'ci/' scripts to
-> >>> explicitly respect CC in the environment (either by running 'make
-> >>> CC=$CC' or by writing $CC into 'config.mak').  Or I could update our
-> >>> Makefile to use '?=' for specific variables, but:
-> >>
-> >> That's a good question.  I don't have a strong opinion myself, so I
-> >> tend to trust larger projects like Linux to have thought this through
-> >> more, and they use 'CC = cc' as well.
+On Wed, Oct 17, 2018 at 12:44 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> > > >>   static uint8_t oid_version(void)
+> > > >>   {
+> > > >> -       return 1;
+> > > >> +       switch (hash_algo_by_ptr(the_hash_algo)) {
+> > > >> +               case GIT_HASH_SHA1:
+> > > >> +                       return 1;
+> > > >> +               case GIT_HASH_SHA256:
+> > > >> +                       return 2;
+> > > > Should we just increase this field to uint32_t and store format_id
+> > > > instead? That will keep oid version unique in all data formats.
+> > > Both the commit-graph and multi-pack-index store a single byte for the
+> > > hash version, so that ship has sailed (without incrementing the full
+> > > file version number in each format).
 > >
-> > I don't think Linux is a good example to follow in this case, see e.g.
-> > 6d62c983f7 (Makefile: Change the default compiler from "gcc" to "cc",
-> > 2011-12-20) (in short: Git is supposed to be buildable with compilers
-> > other than GCC as well, while Linux not really, so they can hardcode
-> > 'CC = gcc').
-> 
-> Nowadays Linux builds with clang as well.  People also have other
-> reasons to override the CC setting (cross-compiling, etc) and to
-> override other settings like CFLAGS.
-> 
-> > Also, the projects I have on hand usually have 'CC = gcc' hardcoded in
-> > their Makefiles, too, but those Makefiles were generated by their
-> > ./configure script (which in turn by ./autogen.sh...), and those tend
-> > to write CC from the environment into the generated Makefiles.
-> 
-> Yes, I think that's what makes travis's setup normally work.  It makes
-> sense to me since ./configure is expected to have more implicit or
-> automatic behavior.  For "make", I kind of like that it doesn't depend
-> on environment variables that I am not thinking about when debugging a
-> reported build problem.
-> 
-> When building Git without autoconf, the corresponding place for
-> settings is config.mak.  Would it make sense for the ci scripts to
-> write a config.mak file?
+> > And it's probably premature to add the oid version field when multiple
+> > hash support has not been fully realized. Now we have different ways
+> > of storing hash id and need separate mappings.
+>
+> Honestly, anything in the .git directory that is not the v3 pack indexes
+> or the loose object file should be in exactly one hash algorithm.  We
+> could simply just leave this value at 1 all the time and ignore the
+> field, since we already know what algorithm it will use.
 
-A first I though it doesn't, but it turns out it acually does.
-
-'ci/run-build-and-tests.sh' basically runs:
-
-  make
-  make test
-
-I naively put a 'CC=$CC' argument at the end of the first command,
-thinking it should Just Work...  but then that second 'make test' got
-all clever on me, said "* new build flags", and then proceeded to
-rebuild everything with the default 'cc'.  (With the additional
-complication, that on Travis CI we actually run 'make --quiet test',
-which rebuilds everything, well, quietly...  so the rebuild itself is
-not even visible in the build logs.)
-
-So, then it's either 'config.mak', or passing a 'CC=$CC' argument to
-_all_ make commands, including those that are not supposed to build
-anything, but only run the tests.  I find the latter aesthetically not
-particularly pleasing.
-
+In this particular case, I agree, but not as a general principle. It's
+nice to have independence for fsck-like tools. I don't know if we have
+a tool that simply validates commit-graph file format (and not trying
+to access any real object). But for such a tool, I guess we can just
+pass the hash algorithm from command line. The user would have to
+guess a bit.
+-- 
+Duy
