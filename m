@@ -2,67 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B2CC1F453
-	for <e@80x24.org>; Wed, 17 Oct 2018 05:45:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F194C1F453
+	for <e@80x24.org>; Wed, 17 Oct 2018 08:23:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727035AbeJQNjW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Oct 2018 09:39:22 -0400
-Received: from ms90.vtex.lt ([82.135.219.78]:53015 "EHLO ms90.vtex.lt"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726944AbeJQNjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Oct 2018 09:39:22 -0400
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Oct 2018 09:39:21 EDT
-Received: (qmail 8248 invoked by uid 210); 17 Oct 2018 05:38:03 -0000
-Received: from boole.vtex.vmt by ms90 (envelope-from <s4uliu5@gmail.com>, uid 201) with qmail-scanner-2.08st 
- (clamdscan: 0.99.3/25043. spamassassin: 3.3.2. perlscan: 2.08st.  
- Clear:RC:1(10.0.0.8):. 
- Processed in 0.053757 secs); 17 Oct 2018 05:38:03 -0000
-Received: from boole.vtex.vmt (10.0.0.8)
-  by lili.vtex.vmt with ESMTPS (DHE-RSA-AES256-GCM-SHA384 encrypted); 17 Oct 2018 05:38:03 -0000
-Received: (qmail 2947 invoked from network); 17 Oct 2018 05:38:03 -0000
-Received: from s2u.vtex.vmt (10.5.0.15)
-  by boole.vtex.vmt with SMTP; 17 Oct 2018 05:38:03 -0000
-From:   Saulius Gurklys <s4uliu5@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Saulius Gurklys <s4uliu5@gmail.com>
-Subject: [PATCH] doc: fix small typo in git show-branch
-Date:   Wed, 17 Oct 2018 08:37:41 +0300
-Message-Id: <20181017053741.25875-1-s4uliu5@gmail.com>
-X-Mailer: git-send-email 2.19.1
+        id S1727028AbeJQQR6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Oct 2018 12:17:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43172 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726691AbeJQQR5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Oct 2018 12:17:57 -0400
+Received: (qmail 15903 invoked by uid 109); 17 Oct 2018 08:23:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Oct 2018 08:23:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18137 invoked by uid 111); 17 Oct 2018 08:22:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Oct 2018 04:22:34 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2018 04:23:22 -0400
+Date:   Wed, 17 Oct 2018 04:23:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jacques Bodin-Hullin <j.bodinhullin@monsieurbiz.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Typo `dashes ?` -> `dashes?`
+Message-ID: <20181017082321.GA31932@sigill.intra.peff.net>
+References: <01020166741c381f-bd183f7f-725d-4b4f-9f5f-804560b2b00b-000000@eu-west-1.amazonses.com>
+ <20181015172041.GC1301@sigill.intra.peff.net>
+ <CAAwZSqAk+D-6y9ArT_tAychwLnNUANinLPYX-ciXJDmyv+J7FA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-X-Qmail-Scanner-2.08st: added fake Content-Type header
-Content-Type:   text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAAwZSqAk+D-6y9ArT_tAychwLnNUANinLPYX-ciXJDmyv+J7FA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix small typo as in document <glob> is used not <globs>.
+On Mon, Oct 15, 2018 at 09:31:54PM +0200, Jacques Bodin-Hullin wrote:
 
-Signed-off-by: Saulius Gurklys <s4uliu5@gmail.com>
----
- Documentation/git-show-branch.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> I've just updated the PR with the `error(` change.
+> 
+> Also I did the change for the question mark at the end, because you are
+> right, when we read it, it sounds better.
+> 
+> Do I need to put back the patch in this thread? It's here:
+> https://patch-diff.githubusercontent.com/raw/git/git/pull/540.patch
 
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 262db049d..4a0137122 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -19,7 +19,7 @@ DESCRIPTION
- -----------
- 
- Shows the commit ancestry graph starting from the commits named
--with <rev>s or <globs>s (or all refs under refs/heads
-+with <rev>s or <glob>s (or all refs under refs/heads
- and/or refs/tags) semi-visually.
- 
- It cannot show more than 29 branches and commits at a time.
--- 
-2.19.1
+The commit looks good, though you may want to expand the commit message
+a little (it's not really a typo, but more of a style fix).
 
+The next step would normally be to send the patch to the list (ideally
+in this thread), with "[PATCH v2]" in the subject.
+
+It looks like you're using SubmitGit. I don't remember offhand how it
+works for sending re-rolls like this, but I think it's possible. If you
+run into trouble, you might try instead using GitGitGadget, which is a
+similar PR->mail gateway that is a little more featureful:
+
+  https://github.com/gitgitgadget/gitgitgadget
+
+-Peff
