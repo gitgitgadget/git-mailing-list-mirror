@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 935171F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 10:00:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 337DE1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 10:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727987AbeJRSBA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 14:01:00 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:44884 "EHLO
+        id S1728004AbeJRSBB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 14:01:01 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:9293 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727981AbeJRSBA (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727719AbeJRSBA (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Oct 2018 14:01:00 -0400
 Received: from lindisfarne.localdomain ([92.26.121.144])
         by smtp.talktalk.net with SMTP
-        id D56VgJF7wbZX5D56hgkniR; Thu, 18 Oct 2018 11:00:43 +0100
+        id D56VgJF7wbZX5D56hgkniX; Thu, 18 Oct 2018 11:00:44 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1539856843;
-        bh=T62OXjZH3GqFJmUirrEecnCqMn1pnIq4R4pxhPCNAUc=;
+        s=cmr1711; t=1539856844;
+        bh=iClE0U8zxAwkrx86q1LMc+Y/ukuPArfwyTYJ7LEzm/w=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=n7eNmrAqGnyLdT+3uJAYquBqNByNW8bYwEXRFEQzTSqsIZ2/sDQH/LNuuHcy+caci
-         AeicIVMOSj4KTFoDMhogvjglrmaKvYfexe9e3Z+tcUa9y09v+EGg/yFrpS7Ti6BwLV
-         Ns/IB+mkgYKNuMVz+gUqqBHrbjaWMuapl8efplBE=
+        b=fDCfMagXS0IgyZRdWi9xcn43YBE8oJ1dLQ32m7XkIYl7fPAZgLridb6u60L7OZE+W
+         c32f+sYmXSSCmNJIF6rtGPfpaw6TS5ebpY7JmrxpnteEu0QkwB5eAl2JufHoFYyxzO
+         nY0l1UtEVMxDXhRgS2aaH8f8k3hfaZLI6j8pZZ7E=
 X-Originating-IP: [92.26.121.144]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=AM9PLn0bJgvrHi3wmEITIQ==:117
- a=AM9PLn0bJgvrHi3wmEITIQ==:17 a=evINK-nbAAAA:8 a=Ci-q4SUaBBSLNT-odzMA:9
- a=_FElnbUD08B2i4wl:21 a=5JVnrwbNiQWVHTK8:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=AM9PLn0bJgvrHi3wmEITIQ==:17 a=evINK-nbAAAA:8 a=jAbL0x3HlbHIGo4u6YsA:9
+ a=ayfHRXvC4A7m-KMB:21 a=q43gRipxSBSK2way:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 2/5] am: improve author-script error reporting
-Date:   Thu, 18 Oct 2018 11:00:20 +0100
-Message-Id: <20181018100023.7327-3-phillip.wood@talktalk.net>
+Subject: [PATCH v2 3/5] am: rename read_author_script()
+Date:   Thu, 18 Oct 2018 11:00:21 +0100
+Message-Id: <20181018100023.7327-4-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20181018100023.7327-1-phillip.wood@talktalk.net>
 References: <20180912101029.28052-1-phillip.wood@talktalk.net>
@@ -47,9 +47,9 @@ References: <20180912101029.28052-1-phillip.wood@talktalk.net>
 MIME-Version: 1.0
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfKmVpjlB4rrh4zSBTAcx5gLMG6nVgNV/ttGT1fgM9wEHzwxzM/V0+CB3MacMwWJZT+JzzHf0SgdQMQR1Bf9cTSXO45dPKXSWnSwMQJKozLaxIvTZ2JQu
- aCRCtK8UBh6ROMqXQCPYucvmqBYA9FgcjBDRgYoxd2V/hlmMX7nAB/TTl8sTqz9/MnyfUMdlzqO3ay/uYh8n7BeCFJX5ItfvYtq+qBjpuLB+DSwYjya1wfJW
- ERJCuAf8gEAEAgqJhA6MCYhNBZZMPAaVneZhPiF0BoKdOljQnp506wBWBqYCKq592dkBvabPekyu/NLG2gSC0qaMyTkwQIjnOXFEWxXpIvc=
+X-CMAE-Envelope: MS4wfAsVYKTc4CIZIgAUreipP67Poo4KBGci1jdjD51Dka7U9ae+tnAaI0ur6bJ2si+xvUG9A6Sn1LbpRebcJ5/bYnqo3/Tz33/Cgr2xFsF/tVDK6SH0WIA7
+ ykUrTIXLGkLtmt+rwNI/xhhAXBC0pSw1y1qTqGtEVZTHZEh3/UGMj3qeWHsFx7S+BhAUyIsxXzmNzUxehrpWnO1hLSUMoskF/wsi1I2iWFB9sHYyVuGhDAuM
+ BcVdxGs/faQ45G+hfDV+uiw+uBHguPC5pMb1VbZCVp2qg8ahHvI9t/cNTFU3erH2xIbrsPgdXUDbAWtECNWWOEeFlVsx7PzJ4gJ//Sy3J2w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,99 +57,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If there are errors in a user edited author-script there was no
-indication of what was wrong. This commit adds some specific error messages
-depending on the problem. It also relaxes the requirement that the
-variables appear in a specific order in the file to match the behavior
-of 'rebase --interactive'.
+Rename read_author_script() in preparation for adding a shared
+read_author_script() function to libgit.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/am.c | 49 +++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 39 insertions(+), 10 deletions(-)
+ builtin/am.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index b68578bc3f..d42b725273 100644
+index d42b725273..991d13f9a2 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -270,8 +270,11 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
- 		struct string_list_item *item;
- 		char *np;
- 		char *cp = strchr(buf, '=');
--		if (!cp)
--			return -1;
-+		if (!cp) {
-+			np = strchrnul(buf, '\n');
-+			return error(_("unable to parse '%.*s'"),
-+				     (int) (np - buf), buf);
-+		}
- 		np = strchrnul(cp, '\n');
- 		*cp++ = '\0';
- 		item = string_list_append(list, buf);
-@@ -280,7 +283,8 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
- 		*np = '\0';
- 		cp = sq_dequote(cp);
- 		if (!cp)
--			return -1;
-+			return error(_("unable to dequote value of '%s'"),
-+				     item->string);
- 		item->util = xstrdup(cp);
- 	}
- 	return 0;
-@@ -308,6 +312,7 @@ static int read_author_script(struct am_state *state)
+@@ -306,7 +306,7 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
+  * script, and thus if the file differs from what this function expects, it is
+  * better to bail out than to do something that the user does not expect.
+  */
+-static int read_author_script(struct am_state *state)
++static int read_am_author_script(struct am_state *state)
+ {
+ 	const char *filename = am_path(state, "author-script");
  	struct strbuf buf = STRBUF_INIT;
- 	struct string_list kv = STRING_LIST_INIT_DUP;
- 	int retval = -1; /* assume failure */
-+	int i, name_i = -2, email_i = -2, date_i = -2, err = 0;
- 	int fd;
+@@ -441,7 +441,7 @@ static void am_load(struct am_state *state)
+ 		BUG("state file 'last' does not exist");
+ 	state->last = strtol(sb.buf, NULL, 10);
  
- 	assert(!state->author_name);
-@@ -326,14 +331,38 @@ static int read_author_script(struct am_state *state)
- 	if (parse_key_value_squoted(buf.buf, &kv))
- 		goto finish;
+-	if (read_author_script(state) < 0)
++	if (read_am_author_script(state) < 0)
+ 		die(_("could not parse author script"));
  
--	if (kv.nr != 3 ||
--	    strcmp(kv.items[0].string, "GIT_AUTHOR_NAME") ||
--	    strcmp(kv.items[1].string, "GIT_AUTHOR_EMAIL") ||
--	    strcmp(kv.items[2].string, "GIT_AUTHOR_DATE"))
-+	for (i = 0; i < kv.nr; i++) {
-+		if (!strcmp(kv.items[i].string, "GIT_AUTHOR_NAME")) {
-+			if (name_i >= 0)
-+				name_i = error(_("'GIT_AUTHOR_NAME' already given"));
-+			else
-+				name_i = i;
-+		} else if (!strcmp(kv.items[i].string, "GIT_AUTHOR_EMAIL")) {
-+			if (email_i >= 0)
-+				email_i = error(_("'GIT_AUTHOR_EMAIL' already given"));
-+			else
-+				email_i = i;
-+		} else if (!strcmp(kv.items[i].string, "GIT_AUTHOR_DATE")) {
-+			if (date_i >= 0)
-+				date_i = error(_("'GIT_AUTHOR_DATE' already given"));
-+			else
-+				date_i = i;
-+		} else {
-+			err = error(_("unknown variable '%s'"),
-+				    kv.items[i].string);
-+		}
-+	}
-+	if (name_i == -2)
-+		error(_("missing 'GIT_AUTHOR_NAME'"));
-+	if (email_i == -2)
-+		error(_("missing 'GIT_AUTHOR_EMAIL'"));
-+	if (date_i == -2)
-+		error(_("missing 'GIT_AUTHOR_DATE'"));
-+	if (date_i < 0 || email_i < 0 || date_i < 0 || err)
- 		goto finish;
--	state->author_name = kv.items[0].util;
--	state->author_email = kv.items[1].util;
--	state->author_date = kv.items[2].util;
-+	state->author_name = kv.items[name_i].util;
-+	state->author_email = kv.items[email_i].util;
-+	state->author_date = kv.items[date_i].util;
- 	retval = 0;
- finish:
- 	string_list_clear(&kv, !!retval);
+ 	read_commit_msg(state);
 -- 
 2.19.0
 
