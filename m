@@ -6,61 +6,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C911A1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 03:23:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C89661F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 03:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727290AbeJRLWS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 07:22:18 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45709 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727260AbeJRLWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 07:22:17 -0400
-Received: by mail-wr1-f67.google.com with SMTP id f17-v6so143797wrs.12
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 20:23:29 -0700 (PDT)
+        id S1727350AbeJRLjn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 07:39:43 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37123 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727297AbeJRLjm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 07:39:42 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 185-v6so4224852wmt.2
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 20:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=grdZOIzaa+qWSnTqhS5ejYArNTGptLhzqZubkGWumEY=;
-        b=gSnmmlFHoxAcOBJ3yDcvE2d+cxHMH8U7vyvhPRiJG3remGqRbGgl+KpXq/j45N0RRJ
-         lN+lEVMzJ3j6cyGwG62y1+5LiXeS13Dwp2y3GV3YQMgo+mPLcae2zv0zveyjFhkLqQ1B
-         5mgiYsPeqL45STF4kH7ZZOR4Oynr2RFKwNoq1c2bVrNyLXB8AoSlf/Y6YZOkf/pPZBKH
-         sK1FIeOGa0uLUgfeN1jhJ6csUzRDIqz8OqFA0TB1m8d+RuBWwLbtM7e1pa538celtAWV
-         CHBn1D7XkrsSipLt3ZhTHDXOOVOvbz4sqQ2sQYooIYhZnrz6lPQQIGrowxTCOUk3KHk4
-         6s9w==
+        bh=CGIqkfklHtFntDlGOWyfWN7nEON4vMLgBAZj2PlsDbs=;
+        b=g3ZiLWsqvJ5egNtqHz3VmofBlZX0w1Qegc9cxHPlcJq4Wxwjs0mhgnpdHBKzeO22Lg
+         2N4Y8JnAuyoFjrEx2Vuz1GyIMyq8ANqzK6+yBf/sGm5LCHjWwM45q1KCZOfvg3kyBM7m
+         vdNklsUsQZ+L7dbiJuH1Lq8gF1v6rnA9Wox9T2q2Xp8GH+QzvnoakVLNbyDABBIqvpRc
+         K2m4gxXRkXGnEUpEm7DpcpAqWmxuiMXUayULWXqiDvmuQQ9Xj7LKNH7sTJLCx9GZwJaO
+         +TT3bjvlREGz5BnyrA3qmXH6tdx/Wh61p1J4Iv23/jLDHdXtey1QqscbPR8yZJat/DOu
+         NM3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=grdZOIzaa+qWSnTqhS5ejYArNTGptLhzqZubkGWumEY=;
-        b=NvmzQ+gQblbPkeki5fJ6S1UYgf408l0z+RMDsDiUgisnpgcUIxfWCy/24Lm/zIbPcu
-         J/PKI7kqkOMhZBRr09sqa8v9+BOa1bSX3zXA8+SASLkImjKXa9/CSk8Ta9jJXOcI4jJz
-         nSNv+GW1rhPwbymaNUHiK+Y1wAwpsaZ+BVCwwK8eA34W/DY340l+SG1Bsth9AD51HHZG
-         s8JoQPFx0iqHQJgqraVd8uwY4oQMQA60vut6i4Wstr0TG4R8JYoTu1u4DNfj5kqqM3ut
-         sJUx9is8kSJWxDpQ53zSwP4CxeQhwnoQbAwI7QmiagfDqCN+uvKrrEAL99SNLq7Fbwwi
-         ctrA==
-X-Gm-Message-State: ABuFfogfB6XC0hpi2hQqHdL8btgQlK9Ay2rT+l5JOfq9AR/ho9UXMkHF
-        /J8LueL1PBOY4kzv0Y79oTA=
-X-Google-Smtp-Source: ACcGV63eQMqUjQ8cizZkJxKUROEbBI7Wmp2t9mpzubxlrFVJqfhVrCSxKyj7cKc/jf0SzSVIUunIDQ==
-X-Received: by 2002:adf:ff90:: with SMTP id j16-v6mr25724177wrr.296.1539833008362;
-        Wed, 17 Oct 2018 20:23:28 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x17-v6sm16903500wrs.84.2018.10.17.20.23.27
+        bh=CGIqkfklHtFntDlGOWyfWN7nEON4vMLgBAZj2PlsDbs=;
+        b=A81Ak1amOhsMHnhnZheC5ddgSTOwVV0kIKbEmUeBIICEPCxRQN6MT7kET+aivFes+J
+         is8E2lArMNQnv9bLnFJdscmj08NOnlJnv9bp6ytG+hHuuPjgAFjFPG3RrMWyg3dB1q31
+         i7Bx0ThoDlnLbvOm5YOl9PPzgc638+oN8VkDnqe+plY00Njf8j4q2PXwOpnlGapcmQsc
+         2besCj0YG2++40Vp8cXVGER/LR8YKqBe3ffOkeuoHz9e1eMOujuknYc7At98hQnnDm/N
+         BvoxMV8JswQLH+GBWN/13WuC2Ydq4zlHB9B42TBYHZhAbyabcNCtuCcCdU/ROZET8LpE
+         YjRw==
+X-Gm-Message-State: ABuFfoiitFBs51V1RLr7zPq65f7roytuUOfUmqG/yrQLb1paf/lnQz3S
+        g1tMzA2TsUUPaR2XXm9dh1I=
+X-Google-Smtp-Source: ACcGV60EIm2oi3QX9VXfhZodOiEh+ZP/lp0djMsv/AsacgyC5TaGbvtGNbcbf4yKshuzGnsE0pkU5A==
+X-Received: by 2002:a1c:b402:: with SMTP id d2-v6mr5506011wmf.37.1539834050117;
+        Wed, 17 Oct 2018 20:40:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t18-v6sm6770672wrm.26.2018.10.17.20.40.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Oct 2018 20:23:27 -0700 (PDT)
+        Wed, 17 Oct 2018 20:40:49 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Andreas Gruenbacher <agruenba@redhat.com>, git@vger.kernel.org,
-        Bob Peterson <rpeterso@redhat.com>
-Subject: Re: [RFC] revision: Add --sticky-default option
-References: <20181016212438.30176-1-agruenba@redhat.com>
-        <20181017091215.GA2052@sigill.intra.peff.net>
-        <CAHc6FU5mXL2j=jL=LqtRt30uBt8tGop350FnwK845fci-Qc=tg@mail.gmail.com>
-        <20181017181350.GB28326@sigill.intra.peff.net>
-Date:   Thu, 18 Oct 2018 12:23:26 +0900
-In-Reply-To: <20181017181350.GB28326@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 17 Oct 2018 14:13:51 -0400")
-Message-ID: <xmqqva60uedt.fsf@gitster-ct.c.googlers.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Ben Peart <peartben@gmail.com>, Git List <git@vger.kernel.org>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH v1 1/2] reset: don't compute unstaged changes after reset when --quiet
+References: <20181017164021.15204-1-peartben@gmail.com>
+        <20181017164021.15204-2-peartben@gmail.com>
+        <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
+        <20181017182255.GC28326@sigill.intra.peff.net>
+Date:   Thu, 18 Oct 2018 12:40:48 +0900
+In-Reply-To: <20181017182255.GC28326@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 17 Oct 2018 14:22:56 -0400")
+Message-ID: <xmqqpnw7vs5b.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,41 +72,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I'd probably call it something verbose and boring like
-> --use-default-with-uninteresting or --default-on-negative.
-> I dunno.
+> Whereas for the new config variable, you'd probably set it not because
+> you want it quiet all the time, but because you want to get some time
+> savings. So there it does make sense to me to explain.
+>
+> Other than that, this seems like an obvious and easy win. It does feel a
+> little hacky (you're really losing something in the output, and ideally
+> we'd just be able to give that answer quickly), but this may be OK as a
+> hack in the interim.
 
-These two names are improvement, but there needs a hint that the
-change we are interested in is to use default even when revs are
-given as long as ALL of them are negative ones.  Which in turn means
-there is NO positive ones given.  
+After "git reset --quiet -- this/area/" with this change, any
+operation you'd do next that needs to learn if working tree files
+are different from what is recorded in the index outside that area
+will have to spend more cycles, because the refresh done by "reset"
+is now limited to the area.  So if your final goal is "make 'reset'
+as fast as possible", this is an obvious and easy win.  For other
+goals, i.e. "make the overall experience of using Git feel faster",
+it is not so obvious to me, though.
 
-So perhaps "--use-default-without-any-positive".
+If we somehow know that it is much less important in your setup that
+the cached stat bits in the index is kept up to date (e.g. perhaps
+you are more heavily relying on fsmonitor and are happy with it),
+then I suspect that we could even skip the refreshing altogether and
+gain more performance, without sacrificing the "overall experience
+of using Git" at all, which would be even better.
 
-Having said that, I have to wonder how serious a breakage we are
-going to cause to established users and scripts if we made this
-change without any explicit option.  After all, it would be rather
-obvious that people will get a history with some commits (or none at
-all) when they were expecting no output that the "default behaviour"
-has changed.  I also wonder how would scripts take advantage of the
-current "defeat --default as soon as we see any rev, even a negative
-one"---in short, I am not sure if the theoretical regression this
-new "option" is trying to avoid is worth avoiding in the first
-place.
-
-Is there a way to say "usually this command has built-in --default=HEAD
-behaviour, but I am declining that" already, i.e. 
-
-    $ git log --no-default $REVS
-
-that will result in an empty set if we accept the change proposed
-here but make it unconditional?  If so "This and future versions of
-Git will honor the --default even when there are other revisions
-given on the command line, as long as they are ALL negative ones.
-This is a backward incompatibile change, but you can update your
-scripts with '--no-default' if you do not like the new behaviour" in
-the release notes may be a viable alternative way forward.
-
-If there is no such way in the released versions of Git, then that
-would not work, and a strict opt-in like the approach taken by the
-proposed patch would become necessary.
+> The sad thing is just that it's user-facing, so we have to respect it
+> forever. I almost wonder if there should be a global core.optimizeMessages
+> or something that tries to tradeoff less information for speed in all
+> commands, but makes no promises about which. Then a user with a big repo
+> who sets it once will get the benefit as more areas are identified (I
+> think "status" already has a similar case with ahead/behind)? And vice
+> versa, as some messages get faster to produce, they can be dropped from
+> that option.
+>
+> I dunno. Maybe that is a stupid idea, and people really do want to
+> control it on a per-message basis.
+>
+> -Peff
