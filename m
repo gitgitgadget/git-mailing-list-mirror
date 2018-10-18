@@ -2,79 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 956D11F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 19:09:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D58441F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 19:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726816AbeJSDLx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 23:11:53 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36245 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726173AbeJSDLx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 23:11:53 -0400
-Received: by mail-ed1-f65.google.com with SMTP id c26-v6so29268981edt.3
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 12:09:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kf4Dxsz64RiAFvw/JQGBtGjFFikok0hmrzPyRFkYTJM=;
-        b=SpW7nQhfJZ8RJmIMGGu/sQmD9QjQFGukn588j9at/q6VzGbYHw2FvXdh4y7FiRngGH
-         HJ8IVWY6kcq6VsJRt1nJelgOCncQusfnuA/Ww1d1Y/2nn2xqFTVoBUvyK/X5DmolK0m3
-         PzUdPeTjVGj+4F4jBHkD1YeOMQe3/8DfJ/Kv26pMWnIPojsofP0438aVbq4vLbzy52/M
-         VycQ4OJywRjCijYfRSrLEGpB12GPIhleFTrAsl0VinZ43/LjqEdreenYOTOe+BQ4pgkI
-         +bdVJ2lAda56+D4rXjkRgGUZ216BaB1rcaBaWO0y9E/ymgU3hsYP+iMwT8zneq06aWY8
-         clwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kf4Dxsz64RiAFvw/JQGBtGjFFikok0hmrzPyRFkYTJM=;
-        b=KB17YlySX+Vw9Z1uMDngIM2IoZ1gq7PploEEoMgqgNvX3zc9Omz8qxILqh1zgHt6gf
-         2htIpgQYdraNxp5ZObWD0/Mh6o8wyA5txSHarzb7k0uirzScWg4XW9RHWlQs1NMkAT71
-         GdinSYFkap96CnpXFRNEY9aisb4TfEMg/KWOBpOZ9l9Hah/S8BLMcggwwmaQ7876rMyG
-         W1U4rc+ndHfBlnLEDak76jNnxeZAskq24MC6MgLxHAm2zBAMPxsTXSG7hxlQQoutOPTw
-         MbObV8/h9yBz3QZZ/bVs1NBA4e70Cg7szq+sXFGzroAsRKk+UJ0whHcFgZPtsytDXqYE
-         O3Gw==
-X-Gm-Message-State: ABuFfoijb3xnH1K2FiUWbhqAiDepQTcQt70U6kwp7FTmEfuuHrxey6YT
-        eHdo7g1ENFW/n5fJ/LoYYlWJsB++95zWXOujMNDfVqgAqao=
-X-Google-Smtp-Source: ACcGV61arzvi8AbmNDMHdv8SiB36WnSRG7WkQvsLT5eay/aDnkGmklz82izQSbpDQ3yHMfp45StzAPTjYCZyzS/XRa0=
-X-Received: by 2002:a50:aca2:: with SMTP id x31-v6mr4205779edc.76.1539889767111;
- Thu, 18 Oct 2018 12:09:27 -0700 (PDT)
+        id S1726626AbeJSDOJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 23:14:09 -0400
+Received: from mout.web.de ([217.72.192.78]:49991 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726494AbeJSDOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 23:14:09 -0400
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6DuI-1fOwEu2ecM-00y6e9; Thu, 18
+ Oct 2018 21:11:42 +0200
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6DuI-1fOwEu2ecM-00y6e9; Thu, 18
+ Oct 2018 21:11:42 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1 1/1] index_bulk_checkin(): Take off_t, not size_t
+Date:   Thu, 18 Oct 2018 21:11:40 +0200
+Message-Id: <20181018191140.23318-1-tboegi@web.de>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
 MIME-Version: 1.0
-References: <20181016181327.107186-5-sbeller@google.com> <20181017212624.196598-1-jonathantanmy@google.com>
-In-Reply-To: <20181017212624.196598-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 18 Oct 2018 12:09:16 -0700
-Message-ID: <CAGZ79kZHhmoBf26z3_Lk-yQEXztpGdWX-FfsRnvaKRCwETZ9XA@mail.gmail.com>
-Subject: Re: [PATCH 4/9] submodule.c: move global changed_submodule_names into
- fetch submodule struct
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:Ka17EbJN/7GMyn7Kf6jbHHl+9/ZsxFo2hGaxYIRJh0OdwDEA9JE
+ dSCb23Zn1hHmpBYGg5h7CwFgCn0ko4JluX+7Nq1PIUy69b1glcEPV8egn/7YkfT80+3I+iW
+ cxbpD8Gy8sJZuMD6LReKhh2xNGbwp/rCWvpmc8kQeoGsnZibE3XVyJakXjvsePOZ71BrBPr
+ AA6bOWtgeodD8JoOYUOCA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LBSTzfN406E=:ZS4SbpGE7dnrXDwlZbx1vB
+ yE45xVky5MM2QhzUNvdIf7UAPoS72ej/W1mxoQDGeuaH6RBwHaMCYzAw0OtH1acxpW9JHZDNV
+ Bx6Mz7hdeBTupn9HBRj7aaxQkTu5MqMY+k6NGIC4G9h6yPgZcNz7v26i0HyuwokcusJ60IbYr
+ ZtV3id+IH/3KRfrjJqpLyLeu0NYwu4JDg9Fx/hT5nfouGvkFBtF72Vxgw1ZXN6PNGEak5W8kR
+ VOm5juaoNg1qHyaLLrn9qZ7tHI/XnCuxcTCtT/ccLmh1ylf72g5KB49mK/t5K9e22cncNrwkK
+ exfro/Pvi0gQf8XkVvvjLNsJNRCgySDipSwzJ2MI8/MPemqXHs3AU+T0AquizNLd9UAw7PsmL
+ ObN7hzZTPKCYpAgX5pOPB9MoEh06Urn69llXqM4yrGG8I3Tf0jKwStKsVWB2gBgV0UcYYyeY4
+ QANZbcTAts25ENKSTXkiWI0KaN2XTTL4oOM/5cHjYiUFJ3yzBG9Wwx/9zFoWaSPAvkhrfpJfv
+ YSur75/1CvWOPj3ZTJn16amLC8bgPvau899L/dLfIqfslvvkGFPqQFhPLFqowERA/I9XOcbL5
+ OqKlSqA/XnqS9ZsFkNXxgFviVlybrHz8gXAxQmjVU88Mwxvy8DUYDQISZC73hkI0hGSp6sEg+
+ 9QrwFVZlRV6PZmX9dQqioxM/kTqJqO+F1sH1HjfnOKULoC4aGx+AV7cn22nq2Jaq69WSs1SsR
+ m2k3MxHvAuFvSAyzDue5xvnwKqAmidwrYYIYXEJhxYlCjgUfx+dENQQvnOeU2dkhrJd0NPXyg
+ 5YSQKp4GF6VEtjkFPrWIIGMpKx8CkGKRhWbkjs7auoJAX2ZxTw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 17, 2018 at 2:26 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > The `changed_submodule_names` are only used for fetching, so let's make it
-> > part of the struct that is passed around for fetching submodules.
->
-> Keep the titles of commit messages to 50 characters or under.
+From: Torsten Bögershausen <tboegi@web.de>
 
-renamed
+When streaming data from disk into a blob, use off_t instead of
+size_t, which is a better choice for file length.
 
->
-> > +static void calculate_changed_submodule_paths(
-> > +     struct submodule_parallel_fetch *spf)
->
-> Instead of taking the entire struct, could this just take the list of
-> changed submodule names instead?
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
 
-I think so, done.
+This is based on an old patch from 2017, which never made it to the list.
+I think it make sense to have off_t/size_t more consistent,
+reviews/comments are welcome.
+
+bulk-checkin.c | 4 ++--
+ bulk-checkin.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 409ecb566b..2631e82d6c 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -189,7 +189,7 @@ static void prepare_to_stream(struct bulk_checkin_state *state,
+ 
+ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 			   struct object_id *result_oid,
+-			   int fd, size_t size,
++			   int fd, off_t size,
+ 			   enum object_type type, const char *path,
+ 			   unsigned flags)
+ {
+@@ -258,7 +258,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ }
+ 
+ int index_bulk_checkin(struct object_id *oid,
+-		       int fd, size_t size, enum object_type type,
++		       int fd, off_t size, enum object_type type,
+ 		       const char *path, unsigned flags)
+ {
+ 	int status = deflate_to_pack(&state, oid, fd, size, type,
+diff --git a/bulk-checkin.h b/bulk-checkin.h
+index f438f93811..09b2affdf3 100644
+--- a/bulk-checkin.h
++++ b/bulk-checkin.h
+@@ -7,7 +7,7 @@
+ #include "cache.h"
+ 
+ extern int index_bulk_checkin(struct object_id *oid,
+-			      int fd, size_t size, enum object_type type,
++			      int fd, off_t size, enum object_type type,
+ 			      const char *path, unsigned flags);
+ 
+ extern void plug_bulk_checkin(void);
+-- 
+2.19.0.271.gfe8321ec05
+
