@@ -2,401 +2,247 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3A1F1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 18:05:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9C671F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 18:15:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729905AbeJSCHn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 22:07:43 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:45522 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729893AbeJSCHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 22:07:42 -0400
-Received: by mail-lj1-f196.google.com with SMTP id j4-v6so28549887ljc.12
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 11:05:32 -0700 (PDT)
+        id S1728914AbeJSCRh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 22:17:37 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:46109 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728644AbeJSCRh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 22:17:37 -0400
+Received: by mail-qt1-f194.google.com with SMTP id d8-v6so35344327qtk.13
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 11:15:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cTxB4efU9wZ03jLpurLVXFS5i7q/BAbsLAf4IYQZuqw=;
-        b=tCSHP2nkElrRzEItq9steta4xq60J4UZIMgNBGzkf+7WEjKLPHTb5AaKy4DXhf7FNN
-         e/gKM/uP5ygfYv4wMKJZMiVLSQKMvKu8e5Lq0xIQsMQfQ7EZjh8mKHgzj7CmxNkLIpGc
-         KnlD3xIiLaDdJ0m7J0PdB8BQckWY+1jCkiugAsqvYCqfCsfxxFpMy9pcCsdwf2Hq+vha
-         broatTlqxe6jCKIubJ9xtXV0GlciAQN49J0mZRk/KqZHlXvJz2AD1lJ1U+HpH+ZU351y
-         tw8wj+wzoUFjkybbx6n7Dh0oflJaJk/Ob6QVpR3Xir2oSAplGTQDETCfW4AeavdYnOl8
-         /uWg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fMTF3oTC3i2GSDn8z5iePlCPYRdcMYfy9fwdjVnPoGw=;
+        b=CFoaAft4r+ZQvcA/xdroaRaFdFf09LAePPtaTyrzb2agTVdHo20ypZitXkreQComk/
+         PBe3efNTwDkdjC7g53EOSWmHJKC6Mw3DIxRttxvdRnFja/471waD2ejmjYQKolFWiM3C
+         ES2RAJQEIUXlKwvwZk5CQ2J7Xc8d7DA87DyuFYe5ItTsrYF3M3kZcEKFt0cEDLwsXDB+
+         TW+uFdcV5iPhb4lnkwJtWTTtKq93+HTsxWkJbGFIlbSDqrG0n7OX+5pItpTWfhOVS192
+         WU7vk0NgfcEl9/0vM2aC06HmBqwl3ZB/mOI9PQ/jzW+9800Fq3nlm6EwtLfVLfqk2yL8
+         jOzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cTxB4efU9wZ03jLpurLVXFS5i7q/BAbsLAf4IYQZuqw=;
-        b=uAZDQvuA0sihqAUW1t3fgrtD8W8v1PQ1bmQB3owptxWyLaSeRKzqb+y69liOztumgE
-         5ee//ipG5pw9P/MG7B9gup4aNdGv9PgiYw7t1EIs6hoQAAykfffXsQd9WDiW+1xqPYpD
-         s8McQeuXNF2FykXBrMoRkQtW3RJuP8WCoPlWkoQ2xh2DHga5d44/R03/4jIqPmfhWyyc
-         ecVGyB/5Pmp2kvFSFGdAv4gxN38db9hEwmUl+IdvM8BfjorV48WXHHaQHMIHzD6LJd4c
-         AMxW1HlCJhNlRFMFETle5scQde11T3Xiqxm6n5tV6A9KZzB75uTtAcPqOwsYUGjJ+xob
-         bjAg==
-X-Gm-Message-State: ABuFfognFmWtmBmwBflC3hWKjB4aKy5tRSJ1c7qkp/2iLsImDQwF9sb2
-        fRtImFA1p1dNOYwfOp321HGy4EAj
-X-Google-Smtp-Source: ACcGV61xas3sVZawLf7NIjM13bWY/5t7sXh6XPNhQXUWXhj2a6zyB+peicfF1B/pF79Y3Mhqeocqcg==
-X-Received: by 2002:a2e:4502:: with SMTP id s2-v6mr20912517lja.44.1539885931500;
-        Thu, 18 Oct 2018 11:05:31 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i20-v6sm1063930lfc.36.2018.10.18.11.05.29
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fMTF3oTC3i2GSDn8z5iePlCPYRdcMYfy9fwdjVnPoGw=;
+        b=jULMOk7adMi8ICJeBaP+McJpo+v0LWpJ9IAeJCP10yULq8ON2IsKsTKbq4JaPbNh6p
+         xCRXuXZRXnX5sglkS2AE+4sggfMeF5NLLtdpQT+RE7Y4XlKykVJUxxQBVef9i+bDek3N
+         oxUiCys3L+jZx0k2DPWEE6m3CpCKSeMkkBhiVsiiGaPYmAdr/UDNYij+FgJpfsudmXLr
+         Yr6UhEC5KFNBGkrvpbKpgj2RFjERx6xkCYG8REQ7LSF8Peml9A1d4n0cByQDmsLGdQgG
+         IB1Ap5v4hZr73UsFX5oZ5oPDNFQQbCx0cBSGpQN+NwbTbDtJGZdyLg8HxunuObXCBswB
+         K4oQ==
+X-Gm-Message-State: ABuFfogL/G4j9oywUI8G9IZYA/Oj0JgYLfCMxtgBigDUoC49/L0FVJ2W
+        5aCmYAWanSP4wMzIwH0oq38=
+X-Google-Smtp-Source: ACcGV632qb2KWkW7JYtJuXai6uDhU0I+zYDM7SmhC7EzsE6d3A3HEtbVmiNi6R1pPp7Or0KKJ81W+Q==
+X-Received: by 2002:a0c:ae76:: with SMTP id z51-v6mr31629379qvc.108.1539886526808;
+        Thu, 18 Oct 2018 11:15:26 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id q21-v6sm17048647qta.77.2018.10.18.11.15.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Oct 2018 11:05:30 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH/RFC] thread-utils: better wrapper to avoid #ifdef NO_PTHREADS
-Date:   Thu, 18 Oct 2018 20:05:22 +0200
-Message-Id: <20181018180522.17642-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.1.647.g708186aaf9
-In-Reply-To: <20181018170934.GA21138@sigill.intra.peff.net>
-References: <20181018170934.GA21138@sigill.intra.peff.net>
+        Thu, 18 Oct 2018 11:15:25 -0700 (PDT)
+Subject: Re: [PATCH v1 1/2] reset: don't compute unstaged changes after reset
+ when --quiet
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Ben Peart <benpeart@microsoft.com>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181017164021.15204-2-peartben@gmail.com>
+ <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
+ <20181017182255.GC28326@sigill.intra.peff.net>
+ <xmqqpnw7vs5b.fsf@gitster-ct.c.googlers.com>
+ <20181018063628.GA23537@sigill.intra.peff.net>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <5b4d46c2-ac0b-8a44-5e99-b0926ea764d3@gmail.com>
+Date:   Thu, 18 Oct 2018 14:15:24 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181018063628.GA23537@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 18, 2018 at 7:09 PM Jeff King <peff@peff.net> wrote:
-> > In this particular case though I think we should be able to avoid so
-> > much #if if we make a wrapper for pthread api that would return an
-> > error or something when pthread is not available. But similar
-> > situation may happen elsewhere too.
->
-> Yeah, I think that is generally the preferred method anyway, just
-> because of readability and simplicity.
 
-I've wanted to do this for a while, so let's test the water and see if
-it's well received.
 
-This patch is a proof of concept that adds just enough macros so that
-I can build index-pack.c on a single thread mode with zero #ifdef
-related to NO_PTHREADS.
+On 10/18/2018 2:36 AM, Jeff King wrote:
+> On Thu, Oct 18, 2018 at 12:40:48PM +0900, Junio C Hamano wrote:
+> 
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> Whereas for the new config variable, you'd probably set it not because
+>>> you want it quiet all the time, but because you want to get some time
+>>> savings. So there it does make sense to me to explain.
+>>>
+>>> Other than that, this seems like an obvious and easy win. It does feel a
+>>> little hacky (you're really losing something in the output, and ideally
+>>> we'd just be able to give that answer quickly), but this may be OK as a
+>>> hack in the interim.
+>>
+>> After "git reset --quiet -- this/area/" with this change, any
+>> operation you'd do next that needs to learn if working tree files
+>> are different from what is recorded in the index outside that area
+>> will have to spend more cycles, because the refresh done by "reset"
+>> is now limited to the area.  So if your final goal is "make 'reset'
+>> as fast as possible", this is an obvious and easy win.  For other
+>> goals, i.e. "make the overall experience of using Git feel faster",
+>> it is not so obvious to me, though.
 
-Besides readability and simplicity, it reduces the chances of breaking
-conditional builds (e.g. you rename a variable name but forgot that
-the variable is in #if block that is not used by your
-compiler/platform).
+The final goal is to make git faster (especially on larger repos) and 
+this proposal accomplishes that.  Let's look at why that is.
 
-Performance-wise I don't think there is any loss for single thread
-mode. I rely on compilers recognizing HAVE_THREADS being a constant
-and remove dead code or at least optimize in favor of non-dead code.
+By scoping down (or eliminating) what refresh_index() has to lstat() at 
+the end of the reset command, clearly the reset command is faster.  Yes, 
+the index isn't as "fresh" because not everything was updated but that 
+doesn't typically impact the performance of subsequent commands.
 
-Memory-wise, yes we use some more memory in single thread mode. But we
-don't have zillions of mutexes or thread id, so a bit extra memory
-does not worry me so much.
+On the next command, git still has to lstat() every file because it 
+isn't sure what changes could have happened in the file system.  As a 
+result, the overall impact is that we have had to lstat() every file one 
+fewer times between the two commands.  A net win overall.
 
-Hmm?
----
- Makefile             |  2 +-
- builtin/index-pack.c | 68 ++++++++++++--------------------------------
- thread-utils.c       | 30 +++++++++++++++++++
- thread-utils.h       | 38 +++++++++++++++++++++++--
- 4 files changed, 84 insertions(+), 54 deletions(-)
+In addition, the preload_index() code that does the lstat() command is 
+highly optimized across multiple threads (and on Windows takes advantage 
+of the fscache).  This means that it can lstat() every file _much_ 
+faster than the single threaded loop in refresh_index().  This also 
+makes the overall performance of the pair of git commands faster as we 
+got rid of the slow lstat() loop and kept the fast one.
 
-diff --git a/Makefile b/Makefile
-index 5bf1af369e..ef852031bd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -981,6 +981,7 @@ LIB_OBJS += sub-process.o
- LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += tempfile.o
-+LIB_OBJS += thread-utils.o
- LIB_OBJS += tmp-objdir.o
- LIB_OBJS += trace.o
- LIB_OBJS += trailer.o
-@@ -1664,7 +1665,6 @@ ifdef NO_PTHREADS
- else
- 	BASIC_CFLAGS += $(PTHREAD_CFLAGS)
- 	EXTLIBS += $(PTHREAD_LIBS)
--	LIB_OBJS += thread-utils.o
- endif
- 
- ifdef HAVE_PATHS_H
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2004e25da2..bbd66ca025 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -42,9 +42,7 @@ struct base_data {
- };
- 
- struct thread_local {
--#ifndef NO_PTHREADS
- 	pthread_t thread;
--#endif
- 	struct base_data *base_cache;
- 	size_t base_cache_used;
- 	int pack_fd;
-@@ -98,8 +96,6 @@ static uint32_t input_crc32;
- static int input_fd, output_fd;
- static const char *curr_pack;
- 
--#ifndef NO_PTHREADS
--
- static struct thread_local *thread_data;
- static int nr_dispatched;
- static int threads_active;
-@@ -179,26 +175,6 @@ static void cleanup_thread(void)
- 	free(thread_data);
- }
- 
--#else
--
--#define read_lock()
--#define read_unlock()
--
--#define counter_lock()
--#define counter_unlock()
--
--#define work_lock()
--#define work_unlock()
--
--#define deepest_delta_lock()
--#define deepest_delta_unlock()
--
--#define type_cas_lock()
--#define type_cas_unlock()
--
--#endif
--
--
- static int mark_link(struct object *obj, int type, void *data, struct fsck_options *options)
- {
- 	if (!obj)
-@@ -364,22 +340,20 @@ static NORETURN void bad_object(off_t offset, const char *format, ...)
- 
- static inline struct thread_local *get_thread_data(void)
- {
--#ifndef NO_PTHREADS
--	if (threads_active)
--		return pthread_getspecific(key);
--	assert(!threads_active &&
--	       "This should only be reached when all threads are gone");
--#endif
-+	if (HAVE_THREADS) {
-+		if (threads_active)
-+			return pthread_getspecific(key);
-+		assert(!threads_active &&
-+		       "This should only be reached when all threads are gone");
-+	}
- 	return &nothread_data;
- }
- 
--#ifndef NO_PTHREADS
- static void set_thread_data(struct thread_local *data)
- {
- 	if (threads_active)
- 		pthread_setspecific(key, data);
- }
--#endif
- 
- static struct base_data *alloc_base_data(void)
- {
-@@ -1092,7 +1066,6 @@ static void resolve_base(struct object_entry *obj)
- 	find_unresolved_deltas(base_obj);
- }
- 
--#ifndef NO_PTHREADS
- static void *threaded_second_pass(void *data)
- {
- 	set_thread_data(data);
-@@ -1116,7 +1089,6 @@ static void *threaded_second_pass(void *data)
- 	}
- 	return NULL;
- }
--#endif
- 
- /*
-  * First pass:
-@@ -1213,7 +1185,6 @@ static void resolve_deltas(void)
- 		progress = start_progress(_("Resolving deltas"),
- 					  nr_ref_deltas + nr_ofs_deltas);
- 
--#ifndef NO_PTHREADS
- 	nr_dispatched = 0;
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
- 		init_thread();
-@@ -1229,7 +1200,6 @@ static void resolve_deltas(void)
- 		cleanup_thread();
- 		return;
- 	}
--#endif
- 
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
-@@ -1531,11 +1501,11 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
- 		if (nr_threads < 0)
- 			die(_("invalid number of threads specified (%d)"),
- 			    nr_threads);
--#ifdef NO_PTHREADS
--		if (nr_threads != 1)
--			warning(_("no threads support, ignoring %s"), k);
--		nr_threads = 1;
--#endif
-+		if (!HAVE_THREADS) {
-+			if (nr_threads != 1)
-+				warning(_("no threads support, ignoring %s"), k);
-+			nr_threads = 1;
-+		}
- 		return 0;
- 	}
- 	return git_default_config(k, v, cb);
-@@ -1723,12 +1693,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 				nr_threads = strtoul(arg+10, &end, 0);
- 				if (!arg[10] || *end || nr_threads < 0)
- 					usage(index_pack_usage);
--#ifdef NO_PTHREADS
--				if (nr_threads != 1)
--					warning(_("no threads support, "
--						  "ignoring %s"), arg);
--				nr_threads = 1;
--#endif
-+				if (!HAVE_THREADS) {
-+					if (nr_threads != 1)
-+						warning(_("no threads support, "
-+							  "ignoring %s"), arg);
-+					nr_threads = 1;
-+				}
- 			} else if (starts_with(arg, "--pack_header=")) {
- 				struct pack_header *hdr;
- 				char *c;
-@@ -1791,14 +1761,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (strict)
- 		opts.flags |= WRITE_IDX_STRICT;
- 
--#ifndef NO_PTHREADS
--	if (!nr_threads) {
-+	if (HAVE_THREADS && !nr_threads) {
- 		nr_threads = online_cpus();
- 		/* An experiment showed that more threads does not mean faster */
- 		if (nr_threads > 3)
- 			nr_threads = 3;
- 	}
--#endif
- 
- 	curr_pack = open_pack_file(pack_name);
- 	parse_pack_header();
-diff --git a/thread-utils.c b/thread-utils.c
-index a2135e0743..d205a474e0 100644
---- a/thread-utils.c
-+++ b/thread-utils.c
-@@ -20,6 +20,9 @@
- 
- int online_cpus(void)
- {
-+#ifdef NO_PTHREADS
-+	return 1;
-+#else
- #ifdef _SC_NPROCESSORS_ONLN
- 	long ncpus;
- #endif
-@@ -59,10 +62,12 @@ int online_cpus(void)
- #endif
- 
- 	return 1;
-+#endif
- }
- 
- int init_recursive_mutex(pthread_mutex_t *m)
- {
-+#ifndef NO_PTHREADS
- 	pthread_mutexattr_t a;
- 	int ret;
- 
-@@ -74,4 +79,29 @@ int init_recursive_mutex(pthread_mutex_t *m)
- 		pthread_mutexattr_destroy(&a);
- 	}
- 	return ret;
-+#else
-+	return ENOSYS;
-+#endif
-+}
-+
-+#ifdef NO_PTHREADS
-+int dummy_pthread_create(pthread_t *pthread, const void *attr,
-+			 void *(*fn)(void *), void *data)
-+{
-+	return ENOSYS;
- }
-+
-+int dummy_pthread_init(void *data)
-+{
-+	/*
-+	 * Do nothing.
-+	 *
-+	 * The main purpose of this function is to break compiler's
-+	 * flow analysis or it may realize that functions like
-+	 * pthread_mutex_init() is no-op, which means the (static)
-+	 * variable is not used/initialized at all and trigger
-+	 * -Wunused-variable
-+	 */
-+	return ENOSYS;
-+}
-+#endif
-diff --git a/thread-utils.h b/thread-utils.h
-index d9a769d190..b8c6500c42 100644
---- a/thread-utils.h
-+++ b/thread-utils.h
-@@ -4,12 +4,44 @@
- #ifndef NO_PTHREADS
- #include <pthread.h>
- 
--extern int online_cpus(void);
--extern int init_recursive_mutex(pthread_mutex_t*);
-+#define HAVE_THREADS 1
- 
- #else
- 
--#define online_cpus() 1
-+#define HAVE_THREADS 0
-+
-+/*
-+ * macros instead of typedefs because pthread definitions may have
-+ * been pulled in by some system dependencies even though the user
-+ * wants to disable pthread.
-+ */
-+#define pthread_t int
-+#define pthread_mutex_t int
-+
-+#define pthread_mutex_init(mutex, attr) dummy_pthread_init(mutex)
-+#define pthread_mutex_lock(mutex)
-+#define pthread_mutex_unlock(mutex)
-+#define pthread_mutex_destroy(mutex)
-+
-+#define pthread_key_create(key, attr) dummy_pthread_init(key)
-+#define pthread_key_delete(key)
-+
-+#define pthread_create(thread, attr, fn, data) \
-+	dummy_pthread_create(thread, attr, fn, data)
-+#define pthread_join(thread, reval) ENOSYS
-+
-+#define pthread_setspecific(key, data)
-+#define pthread_getspecific(key) NULL
-+
-+int dummy_pthread_create(pthread_t *pthread, const void *attr,
-+			 void *(*fn)(void *), void *data);
-+
-+int dummy_pthread_init(void *);
- 
- #endif
-+
-+int online_cpus(void);
-+int init_recursive_mutex(pthread_mutex_t*);
-+
-+
- #endif /* THREAD_COMPAT_H */
--- 
-2.19.1.647.g708186aaf9
+Here are some numbers to demonstrate that.  These are hot cache numbers 
+as they are easier to generate.  Cold cache numbers make the net perf 
+win significantly better as the cost for the reset jumps from 2.43 
+seconds to 7.16 seconds.
 
+0.32 git add asdf
+0.31 git -c reset.quiet=true reset asdf
+1.34 git status
+1.97 Total
+
+
+0.32 git add asdf
+2.43 git -c reset.quiet=false reset asdf
+1.32 git status
+4.07 Total
+
+Note the status command after the reset doesn't really change as it 
+still must lstat() every file (the 0.02 difference is well within the 
+variability of run to run differences).
+
+FWIW, none of these numbers are using fsmonitor.
+
+
+
+There was additional discussion about whether this should be tied to the 
+"--quiet" option and how it should be documented.
+
+One option would be to change the default behavior of reset so that it 
+doesn't do the refresh_index() call at all.  This speeds up reset by 
+default so there are no user discoverability issues but changes the 
+default behavior which is an issue.
+
+Another option that was suggested was to add a separate flag that could 
+be passed to reset so that the "quiet" and "fast" options don't get 
+conflated.  I don't care for that option because the two options (at 
+this point and for the foreseeable future) would be identical in 
+behavior from the end users perspective.
+
+It was also suggested that there be a single "fast and quiet" option for 
+all of git instead of separate options for each command.  I worry about 
+that because now we're forcing users to choose between the "fast and 
+quiet" version of git and the "slow and noisy" version.  How do we help 
+them decide which they want?  That seems difficult to explain so that 
+they can make a rational choice and also hard to discover.  I also have 
+to wonder who would say "give me the slow and noisy version please." :)
+
+I'd prefer we systematically move towards a model where the default 
+values that are chosen for various settings throughout the code are all 
+configurable via settings.  All defaults by necessity make certain 
+assumptions about user preference, data shape, machine performance, etc 
+and if those assumptions don't match the user's environment then the 
+hard coded defaults aren't appropriate.  We do our best but its going to 
+be hit or miss.
+
+A consistent way to be able to change those defaults would be very 
+useful in those circumstances.  To be clear, I'm not proposing we do a 
+wholesale update of our preferences model at this point in time - that 
+seems like a significant undertaking and I don't want to tie this 
+specific optimization to a potential change in how default settings work.
+
+
+To move this forward, here is what I propose:
+
+1) If the '--quiet' flag is passed, we silently take advantage of the 
+fact we can avoid having to do an "extra" lstat() of every file and 
+scope the refresh_index() call to those paths that we know have changed.
+
+2) I can remove the note in the documentation of --quiet which I only 
+added to facilitate discoverability.
+
+3) I can also edit the documentation for reset.quietDefault (maybe I 
+should rename that to "reset.quiet"?) so that it does not discuss the 
+potential performance impact.
+
+4) To improve the discoverability of the enhanced performance, I could 
+add logic similar to what exists for "status --uno" and if 
+refresh_index() takes > x seconds, prompt the user with something like:
+
+"It took %.2f seconds to enumerate unstaged changes after reset. 'reset 
+--quiet' may speed it up. Set the config setting reset.quiet to true to 
+make this the default."
+
+
+>>
+>> If we somehow know that it is much less important in your setup that
+>> the cached stat bits in the index is kept up to date (e.g. perhaps
+>> you are more heavily relying on fsmonitor and are happy with it),
+>> then I suspect that we could even skip the refreshing altogether and
+>> gain more performance, without sacrificing the "overall experience
+>> of using Git" at all, which would be even better.
+> 
+> Yeah, I assumed that Ben was using fsmonitor. I agree if we can just use
+> that to make this output faster, that would be the ideal. This is the
+> "later the message would get faster to produce" I hinted at in my
+> earlier message.
+> 
+> So I think we are in agreement. It just isn't clear to me how much work
+> it would take to get to the "ideal". If it's long enough, then this kind
+> of hackery may be useful in the meantime.
+> 
+
+I actually started my effort to speed up reset by attempting to 
+multi-thread refresh_index().  You can see a work in progress at:
+
+https://github.com/benpeart/git/pull/new/refresh-index-multithread-gvfs
+
+The patch doesn't always work as it is still not thread safe.  When it 
+works, it's great but I ran into to many difficulties trying to debug 
+the remaining threading issues (even adding print statements would 
+change the timing and the repro would disappear).  It will take a lot of 
+code review to discover and fix the remaining non-thread safe code paths.
+
+In addition, the optimized code path that takes advantage of fsmonitor, 
+uses multiple threads, fscache, etc _already exists_ in preload_index(). 
+  Trying to recreate all those optimizations in refresh_index() is (as I 
+discovered) a daunting task.
+
+This patch was tiny/trivial in comparison and provided all the 
+performance benefits so seems like a much better option at this point in 
+time.  For now, I suggest we just use that existing path as it provides 
+the benefits without the significant additional work and complexity.
+
+> -Peff
+> 
