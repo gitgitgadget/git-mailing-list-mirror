@@ -2,97 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75D381F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 21:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B91611F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 21:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726902AbeJSFEO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 01:04:14 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:50709 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbeJSFEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 01:04:14 -0400
-Received: by mail-qt1-f202.google.com with SMTP id f62-v6so3707007qtb.17
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 14:01:23 -0700 (PDT)
+        id S1725906AbeJSFSt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 01:18:49 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:36677 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725139AbeJSFSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 01:18:49 -0400
+Received: by mail-it1-f196.google.com with SMTP id c85-v6so2187840itd.1
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 14:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=l1jpV1M1BtTAqM1k1kRyNVGmDswo0Hcsdo0WLwYbfHI=;
-        b=G02zcN3ACX74/uMfnQ+OYM73Ifig46AHO/M1u7lzfjj7mRh0I6A6coM/t9QPc5wys3
-         1ZpNitniYqHFo/dav+LtMjJnCQQPXaz+5RsalxY7pbNQysdqx3C+uvs1qRU4WcRNLv8u
-         KYkJXvm1U0hp2JsoTjxM8cMZbVndILGF+YePptbBPf+vzpGP+AraZ8cFXL6upLD2s71H
-         CnPHsKRrfZtO3vEXU9E2N4vpKyVcQQ1HXXg/HwEpUVdFP1MO1QdBJUNxHy2Vi5HQUSuK
-         fJOFvZi2FD3/10kbVe+0An+013uut17SCMNFARR0ijRv8lAprrD7AHgXhrcAhD/P7F2o
-         lboA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=4MNgtrLPhDuMHHK0vkdtggUkadOmmLMfoHbH9DVwMB4=;
+        b=NwsGxtUqjCI9q5QHrPAqf02+GTMt5A/zNQqbf6P/k4VjDesDTtDVXBYqif8jkL/b9z
+         Cht7zWoFhXXd3uAD9JhEQVRPLocB1GDsiA6NGbHjSD8maceApgms0kw21PETz9lsIcUn
+         MHG2uJl1fkjynInpA/nuQbaLps1kV/qWLSYaV72/jUdqHXOvKnVarewlEUoJZWbLdAqA
+         8DtG+o7GdhQyL/I7rWKQqU8miC2uhVxqkNOy/jD7U9NZe34C5KY4H1UQzTs943i5x7WN
+         idb6WnjLSuUMcfCg0OKCCQRo47+71cpiW2ipT6ZMDtG1uke+/01LUqVSSVTXRm4rvOas
+         SaYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=l1jpV1M1BtTAqM1k1kRyNVGmDswo0Hcsdo0WLwYbfHI=;
-        b=lKavhHcibZ8UFGQ82ydRos33c5jd8alMkHAbVypwsgQSl0glMF1eaAe7wLwZX5utzc
-         kCekmi49wEBNQiSCLrY8ow+xmtXIdMGFpueKxmewRMPSlVpmfW+DpGn+20OdYdkvgDuC
-         cJuqMpTfL8tOOHpZO7qq6Acz5g8Z2wNozuncMbG/IuCL45w82N5IOjaVpEuz4V7KzIK3
-         Z4HI9RLwUJOELdQfYfYEdEZ4kn4x7MjCEHy0lPs7LTeRDOAVJ/pri5z/AwyiIkxF6GJi
-         BhlJ5C7ZXI00c0bi2hlfXcaTctU6q+l3jayFcL5oc3UrdNzUux3Cvggrl45nS6iB37Da
-         1iXg==
-X-Gm-Message-State: ABuFfohkR4dLS3VzZZthc2IYk8b9SA9RNaKP05SwqieOdzSTeKz/iVRJ
-        6IODFmeeXjeCjrUTdfqlekNZbEwrUFHd6N/5ufW5
-X-Google-Smtp-Source: ACcGV60joQ/IasX4pm3UlaM9H9YRKOXPk5pwi5jf7SbEQXEPP97I3G40IaSWxgb0S9Jkl/nK+57L8OmWA9nMW83n9bkH
-X-Received: by 2002:a0c:d022:: with SMTP id u31mr9074947qvg.35.1539896483021;
- Thu, 18 Oct 2018 14:01:23 -0700 (PDT)
-Date:   Thu, 18 Oct 2018 14:01:19 -0700
-In-Reply-To: <20181018183758.81186-1-sbeller@google.com>
-Message-Id: <20181018210119.149727-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181018183758.81186-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [RFC PATCH 0/2] Bring the_repository into cmd_foo
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4MNgtrLPhDuMHHK0vkdtggUkadOmmLMfoHbH9DVwMB4=;
+        b=kRY89pFSSEzOz00B8q7u1n+SBOKIQWz54+gxyrlXMtm3WtbfJqn+cKGdcEh3gZmWrC
+         Jo3zLvm0SaDYRfZ07oXO93H73SkJZoA19aZ6Dgn6YU45OIUtoUiuGkydg8kCOvGpo1PW
+         G+4tGI5iJGjUBAlmlFyspgomzb/l2Y5i3BnncZnjMPsOyurPM52QbhXkrQhAI9Ekl8KC
+         E99ThP0Diix865s33RzJbHkKV7s2OMT7mJtTDVQo5+5GfUbMfIlYBrhrGfuRzM2aFChz
+         /PPsDDfi+txsJGXOvF0xLZkn2v7+YFszhtxJjmAldbv1d4ya9MbJMO6eDxVcD7LbktbG
+         gXSA==
+X-Gm-Message-State: ABuFfoj7ZA7qdrZg6BvSTmEieiFArNsiWi99GIuU4T5DeV/Mi5BgQBY1
+        7NWZXHAlq9vN3ndu6sUyo5nYs67Y
+X-Google-Smtp-Source: ACcGV62YRU+0L9gQcKhQkbi74RXNGG3etNTcPdMCQlgt8A9QjqD0AShO+vJaBZ9dtBjeG7ovBW9x4Q==
+X-Received: by 2002:a24:d30d:: with SMTP id n13-v6mr1475458itg.97.1539897355093;
+        Thu, 18 Oct 2018 14:15:55 -0700 (PDT)
+Received: from ola-842mrw1.ad.garmin.com ([204.77.163.55])
+        by smtp.gmail.com with ESMTPSA id g18-v6sm6640593iob.79.2018.10.18.14.15.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 18 Oct 2018 14:15:54 -0700 (PDT)
+From:   Joshua Watt <jpewhacker@gmail.com>
+X-Google-Original-From: Joshua Watt <JPEWhacker@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Joshua Watt <JPEWhacker@gmail.com>
+Subject: [PATCH] send-email: explicitly disable authentication
+Date:   Thu, 18 Oct 2018 16:15:27 -0500
+Message-Id: <20181018211527.25597-1-JPEWhacker@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Or instead we could accelerate the long term plan of removing a
-> > hard coded the_repository and have each cmd builtin take an additional
-> > repository pointer from the init code, such that we'd bring all of Git to
-> > work on arbitrary repositories. Then the standard test suite should be
-> > okay, as there is no special case for the_repository any more.
-> 
-> Demo'd in this RFC series for git-merge-base.
-> 
-> The core idea is found in patch 1,
-> and the proof of concept is found in patch 2.
+It can be necessary to disable SMTP authentication by a mechanism other
+than sendemail.smtpuser being undefined. For example, if the user has
+sendemail.smtpuser set globally but wants to disable authentication
+locally in one repository.
 
-I don't think working around the_repository is sufficient, as there are
-other ways to access the same repository state (the_index, directly
-accessing files through file I/O). Instead I would prefer a test like in
-t/test-repository.c - each patch set would probably only need one test
-for the last function converted, since typically the last function uses
-every other function converted.
+--smtp-auth and sendemail.smtpauth now understand the value 'none' which
+means to disable authentication completely, even if an authentication
+user is specified.
 
-Also, even if we decided that working around the_repository is
-sufficient, I don't think this get_the_repository() is a good approach.
-If (or when) we decide to convert all builtins to not use
-the_repository, we would have to clean up all such calls.
+The value 'none' is lower case to avoid conflicts with any RFC 4422
+authentication mechanisms.
 
-Better would be to pass the_repository from the invoker of the cmd
-builtin, and reuse NO_THE_REPOSITORY_COMPATIBILITY_MACROS in the
-builtin. (I haven't thought much about how to transition to this, but
-one way might be to extend "struct cmd_struct" in git.c to also have a
-new-style function pointer, and #define GIT_CMD(c, f, o) {c, NULL, o, f}
-or something like that.)
+Signed-off-by: Joshua Watt <JPEWhacker@gmail.com>
+---
+ Documentation/git-send-email.txt | 4 +++-
+ git-send-email.perl              | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-This doesn't directly address the fact that the builtin might call lib
-code that indirectly references the_repository, but I think that this
-won't be an issue because by the time we're ready to convert builtins to
-not use the_repository, most if not all of the lib code would have
-NO_THE_REPOSITORY_COMPATIBILITY_MACROS defined anyway.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 465a4ecbe..751a4851e 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -190,7 +190,9 @@ $ git send-email --smtp-auth="PLAIN LOGIN GSSAPI" ...
+ If at least one of the specified mechanisms matches the ones advertised by the
+ SMTP server and if it is supported by the utilized SASL library, the mechanism
+ is used for authentication. If neither 'sendemail.smtpAuth' nor `--smtp-auth`
+-is specified, all mechanisms supported by the SASL library can be used.
++is specified, all mechanisms supported by the SASL library can be used. The
++special value 'none' maybe specified to completely disable authentication
++independently of `--smtp-user`
+ 
+ --smtp-pass[=<password>]::
+ 	Password for SMTP-AUTH. The argument is optional: If no
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2be5dac33..4a74cd350 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -82,7 +82,8 @@ sub usage {
+                                      Pass an empty string to disable certificate
+                                      verification.
+     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
+-    --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms.
++    --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms, or
++                                     "none" to disable authentication.
+                                      This setting forces to use one of the listed mechanisms.
+     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+ 
+@@ -1241,7 +1242,7 @@ sub smtp_host_string {
+ # (smtp_user was not specified), and 0 otherwise.
+ 
+ sub smtp_auth_maybe {
+-	if (!defined $smtp_authuser || $auth) {
++	if (!defined $smtp_authuser || $auth || $smtp_auth eq "none") {
+ 		return 1;
+ 	}
+ 
+-- 
+2.17.1
+
