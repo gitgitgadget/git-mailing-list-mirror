@@ -7,51 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F1541F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 18:38:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22E2B1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 18:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728498AbeJSClB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 22:41:01 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:37463 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726424AbeJSClB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 22:41:01 -0400
-Received: by mail-pg1-f202.google.com with SMTP id u43-v6so15124464pgn.4
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 11:38:43 -0700 (PDT)
+        id S1728533AbeJSClE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 22:41:04 -0400
+Received: from mail-oi1-f201.google.com ([209.85.167.201]:39767 "EHLO
+        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726424AbeJSClD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 22:41:03 -0400
+Received: by mail-oi1-f201.google.com with SMTP id d23-v6so21259778oib.6
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 11:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=kq9UxjoERGNW4jksFWUYlqB2PHUw2ML24mY9io35lAU=;
-        b=KEbZV/jkJbRWAfzDJtX4A1H8Fn5u/qnVzuB98qv79b61VUgVstknhNPAO6QRpYF58T
-         bV71pAeEon38WOn6AwgJkgO8PT3dTQ5BpHsxB8PW8lArplB0zpryVuq9f4tMJ4m+1piV
-         mdkW9aU6cVKpVi1iRH4aYNqUF6QV4pwNMoQgJAJqbaMCrrpI01izR4qK01ySS6jA7euo
-         DXUj/zrToB3IbxHThwxVJLVYsUxmqJFzHfVvEyNj4DH1v3ZDIBk5PhjIMLyeJSf8i2Om
-         RjA24yz4RL4QnP/hc8UOrILXQ2RRoudyagacklmLrTUp/Eq47nWQ83lgN2LhsQNEcKwG
-         Puqg==
+        bh=40tLCCS66N059thyNV0K+9T6RZVgjK1KcJeEPbkQFrc=;
+        b=TQGmqJg+vnMcvNSJiEiV+qznWy18hI71ojuNZ6QjL+dpQrE6KcRJjhFtaA+DO+mwZC
+         aosfJant6Oq9Yh/aN9g6IBbgeynTXKQ0eVDCFVj4hcHn7uaqEkCqXNkbnqdS4NiozsEY
+         7YYK//n5eapfDcZynTOIhONK4RKYeMDZWHGspUTBoutjOQtRXoGymtYibxeM3+/muwzG
+         VCQrVqjVGGPJmBZMIwMYYVfZpDQ0/C8tabTo6o0+WncpRWEC2ZiW6PkOlAC1ewlbxFDy
+         onDI3Cc4xWIlq5y1/prKFSpMLL0LY6mXrsbwB+8GRiwiTamIk52thYa3FdBzjeUvVyjz
+         jcLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=kq9UxjoERGNW4jksFWUYlqB2PHUw2ML24mY9io35lAU=;
-        b=Qq/6SF8vzIqFs3Kbap1FhsWtGSJhl7aKF8qLcmY2NvKsA19xZOMCACVaZ4lvEmai+t
-         HLfNLr9viPu+a9g3mGkQwAK4bufvF6H/qXqWgvm12oniO4aUvkL1Cejs6tfMtauoUOZn
-         QeIazXxrLZ5bufMfGzgxvd8Dm9ODKcjrFhFk4dEzE5lDXtUdtN3d2m6HMZD1IuhdVvDo
-         U3HQ75NwWyiDhnxpf74Sob9bZBZ8X9nrPqnwXoaGT5sVm6cbvRTXOUJvgjGGc7nHntfU
-         qE6gw4sWmlsskP227JmLXnTW5+lMLYH90dGwxWcWn8ejHkXh5MlNqrOVS+gZ0kf/08uA
-         bx/A==
-X-Gm-Message-State: ABuFfojH5M8hv+9OW9BbqWLgcDgMc7ky4W2+rxB9Q0BElLFKG1Wf2Gae
-        F3FsnzdSCclyhJ0igqc2ARs2W67FNE39
-X-Google-Smtp-Source: ACcGV63wWcWN+l5HkYdmKyDFDiZfoDbEjIoIsUFPtkoOMDTG9u2WBFQQ9KmwI5PYFICzD/YCLR/y1XFjrS98
-X-Received: by 2002:a62:a9b:: with SMTP id 27-v6mr15101433pfk.56.1539887923504;
- Thu, 18 Oct 2018 11:38:43 -0700 (PDT)
-Date:   Thu, 18 Oct 2018 11:37:56 -0700
-In-Reply-To: <CAGZ79kbpXQURMsZY15_k3rJ-dyH0i4qAGDv8umM8Hmx10ZdMMA@mail.gmail.com>
-Message-Id: <20181018183758.81186-1-sbeller@google.com>
+        bh=40tLCCS66N059thyNV0K+9T6RZVgjK1KcJeEPbkQFrc=;
+        b=aO8EBFQYgK4hnaOMjliodRY/Mwq6u5YifRUqee2ZE7GMeo+iAjs8vLFzJr1ScR2c4R
+         OKSNhz8AGrPBPFjo3/y3x3To1Qk7szLapdDTYkQZQtvOcMOEcnMRkxqIQ9HcSFCD2BJY
+         9MERxCbqCK93YiFlhuNJ54QjTdWo5+xWkpeIhmPJ8kjofoQVa9JwgR4lJz4iTV1+a/MQ
+         FujmMSZk2oEeMS9NOJPiZvsdNIQHu+UVBOucd7+twgW32zae1i758X1D9dBpDgdpXP/N
+         h4UHRaFu5pnxIm+fgFnpe7Nz2/ahhC/luFF+pppZNSn7Y/WixE0kxpJDTX27C63bNFFC
+         97IQ==
+X-Gm-Message-State: ABuFfojNWkgLbuhrNM28VZphFSHHzyZnvuL/bh1OXaXu5PLlNZLdlnDS
+        Wh/YzNHKx4pvFj0dYk7ZsMjy+dB839Jm
+X-Google-Smtp-Source: ACcGV62bf00xo/gGwj3kcscw9CL6RMby6MnUsK0nbUg/KlWIzO+qlAnZBDtu8UCuG2wjjszeK8jsA8h6LdW4
+X-Received: by 2002:aca:d407:: with SMTP id l7-v6mr25788112oig.41.1539887925900;
+ Thu, 18 Oct 2018 11:38:45 -0700 (PDT)
+Date:   Thu, 18 Oct 2018 11:37:57 -0700
+In-Reply-To: <20181018183758.81186-1-sbeller@google.com>
+Message-Id: <20181018183758.81186-2-sbeller@google.com>
 Mime-Version: 1.0
 References: <CAGZ79kbpXQURMsZY15_k3rJ-dyH0i4qAGDv8umM8Hmx10ZdMMA@mail.gmail.com>
+ <20181018183758.81186-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [RFC PATCH 0/2] Bring the_repository into cmd_foo
+Subject: [RFC PATCH 1/2] repository: have get_the_repository() to remove
+ the_repository dependency
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com, stolee@gmail.com
@@ -61,36 +63,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Wed, Oct 17, 2018 at 5:41 AM Derrick Stolee <stolee@gmail.com> wrote:
->> I had one high-level question: How are we testing that these "arbitrary
->> repository" changes are safe?
-> [...]
-> Or instead we could accelerate the long term plan of removing a
-> hard coded the_repository and have each cmd builtin take an additional
-> repository pointer from the init code, such that we'd bring all of Git to
-> work on arbitrary repositories. Then the standard test suite should be
-> okay, as there is no special case for the_repository any more.
+The struct 'the_repo' contains all data that of the main repository.
+As we move more and more globals into this struct, the usual way of
+accessing these is using 'the_repository', which can be used as a drop in
+replacement for accessing the migrated globals.
 
-Demo'd in this RFC series for git-merge-base.
+However during the migration of globals into the repository object, it is
+not clear if some code path rely on the_repository or can work on an
+arbitrary repository (as we'd eventually want for submodules) due to the
+excessive use of the_repository throughout the code base.
 
-The core idea is found in patch 1,
-and the proof of concept is found in patch 2.
+To address this, introduce a function 'get_the_repository(void)' which
+will return the main repository and set the_repository to NULL when the
+environment variable GIT_NO_THE_REPOSITORY is set.
 
-What do you think?
+This function is to be strictly used only at the beginning of builtin
+command to assign it to a local repository pointer that we'll use to
+pass through the code base.
 
-Thanks,
-Stefan
+By having the possibility to set the_repository to NULL, we'll get
+a segfault when we try to access the_repository instead of using the
+handle that we pass around.
 
-Stefan Beller (3):
-  repository: have get_the_repository() to remove the_repository
-    dependency
-  builtin/merge-base.c: do not rely on the_repository any more
+This approach let's us have the_repository in the setup code, which
+in its current form is not yet able to transition into a world where
+the repository handle is passed around and only test the passing around
+of the repository handle for later stage code.
 
- builtin/merge-base.c  | 67 ++++++++++++++++++++++++++-----------------
- repository.c          | 10 +++++++
- repository.h          | 13 ++++++++-
- t/t6010-merge-base.sh |  3 +-
+Eventually in the future the setup code will produce the repository
+handle and each 'cmd_foo(int argc, char **argv)' builtin would get the
+repository via an additional parameter.
 
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ repository.c | 10 ++++++++++
+ repository.h | 13 ++++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/repository.c b/repository.c
+index 5dd1486718..aaaababb88 100644
+--- a/repository.c
++++ b/repository.c
+@@ -20,6 +20,16 @@ void initialize_the_repository(void)
+ 	repo_set_hash_algo(&the_repo, GIT_HASH_SHA1);
+ }
+ 
++struct repository *get_the_repository(void)
++{
++	struct repository *r = the_repository;
++
++	if (getenv("GIT_NO_THE_REPOSITORY"))
++		the_repository = NULL;
++
++	return r;
++}
++
+ static void expand_base_dir(char **out, const char *in,
+ 			    const char *base_dir, const char *def_in)
+ {
+diff --git a/repository.h b/repository.h
+index 9f16c42c1e..26f5d64f68 100644
+--- a/repository.h
++++ b/repository.h
+@@ -114,13 +114,24 @@ void repo_set_gitdir(struct repository *repo, const char *root,
+ 		     const struct set_gitdir_args *extra_args);
+ void repo_set_worktree(struct repository *repo, const char *path);
+ void repo_set_hash_algo(struct repository *repo, int algo);
+-void initialize_the_repository(void);
+ int repo_init(struct repository *r, const char *gitdir, const char *worktree);
+ int repo_submodule_init(struct repository *submodule,
+ 			struct repository *superproject,
+ 			const char *path);
+ void repo_clear(struct repository *repo);
+ 
++/*
++ * Initializes the repository 'the_repository', which is used in the transition
++ * phase of moving globals into the repository struct.
++ */
++void initialize_the_repository(void);
++
++/*
++ * To be called once; after the call use only returned repository, and do not
++ * use the_repository any more
++ */
++struct repository *get_the_repository(void);
++
+ /*
+  * Populates the repository's index from its index_file, an index struct will
+  * be allocated if needed.
 -- 
 2.19.0
 
