@@ -6,91 +6,88 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7398A1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 02:03:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B42BD1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 02:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727335AbeJRKCQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 06:02:16 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43310 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727299AbeJRKCP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 06:02:15 -0400
-Received: by mail-wr1-f66.google.com with SMTP id n1-v6so31773717wrt.10
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 19:03:41 -0700 (PDT)
+        id S1727271AbeJRKDo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 06:03:44 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51275 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727114AbeJRKDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 06:03:44 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 143-v6so3770606wmf.1
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 19:05:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=uSA/RzbGE01QcNz2Jvk+VnbJNJOAV4gooh4VLJncbJM=;
-        b=WTfSyzbyR2stFyb5yvoe4GZ3VYRObNj8wVAqOk/mI07pTupYIXeY454HGaUcyOrKlH
-         Msla4KQT1kpZxuuQoZhRRzGQbLMvTr9KJbjZgYi0DK0q4H4BhgkqmGh2o4KW3BnL/FGN
-         HGkLllVeorDAZJjRg5uuKwhTwXNCVmYqlPl6i0UWyjPuuUj+RXUMfQLh+OLZkgU4weSk
-         UBj88Vk7MWyz2vdhtOcGhLa4ftOyF2tMH6lcdaswN9sLlFOQbuDGrnYTziwAsCSOmDCc
-         4wJtQ9T1ry7RQmGG6y2c/N75ZbJ3Y8OulsE76f0LnrcBzylLRsZDdrG/2jSypuxU+ZSw
-         2k4A==
+         :user-agent:mime-version;
+        bh=pPmCthxwi/6pqViq677eBeyPqf/a2ZIrl1WC+5wOwJM=;
+        b=uVTEl3F9ruz4dWpGR18CyGu0bx/A9UCJgqTJMc+G1BtSs3HB8isKLnkLig75IpS1oj
+         NkBfOK1HQvUlmWHeo7yFxTWnfkdPjLQz2r+kJRzAotAmaq9VHwRG2PDUzf0n3bkX2+vW
+         vNGQc4JYWPdspIAHnk3AjlUUFTMmcK0ymrs0dO8M1nis0xT2MtDXE5gVNj6PTYGmMtxj
+         YyhCHtAAOwm3Cjk72KxZfW6BW/rlmeL9E6foEYnPNjHRkbG3xVpq6vTgCZkgvpMiKUXd
+         fuoQLeEPPoyA6v27lFgI6ryXqCxXKYK+pWlwmP8nPTEqPyRUAobE3hNVj2+mCTsESsSK
+         +1wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=uSA/RzbGE01QcNz2Jvk+VnbJNJOAV4gooh4VLJncbJM=;
-        b=XSZHOX7ePuaM2c9lBCJ99qNGIDSxWwewh0Epmw8U/MlwEV21PQZ2ZvDUK4wEQlWnoo
-         D5H8Uh4lxnjVQve5vEY9/yO2K8QCW/eDbMLGPAt5SpMtfAcBg7vkCzYmrYyvClKw7Y6V
-         xG045VRx0K+HhWtIXhTzjDV62Qk6nQwnXTNR+B93T6p7F0pNDFd8U1qA2hUCXqCfpGa7
-         0X8RshmKvFZFX857EElNhayQ0ISgJtc/UYj/q+q9CqYZNyyTrSMFaVmX2oAhGpfJYNv3
-         PrG9fqqPTLU9BVMj0IW2WJ0nUrbFa7VfQQz7m0tO8mkKFxh1tEFGTl0KiW02O93MCcTh
-         el/A==
-X-Gm-Message-State: ABuFfojx29CeA45arS/zwQo4ks4fTohX6SZBDWrpVqQuGHHEqGpOGNUF
-        Ktuj27v0ExZLxsV0mA2drSDn3+mWYZE=
-X-Google-Smtp-Source: ACcGV63VpFAVauGuUr8dX0/yoTkkBksgIrReKMMwI7+goov+dmPYF7vTML6a3Zf4a4J+so8wZWua+w==
-X-Received: by 2002:adf:db8e:: with SMTP id u14-v6mr27205623wri.217.1539828220747;
-        Wed, 17 Oct 2018 19:03:40 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=pPmCthxwi/6pqViq677eBeyPqf/a2ZIrl1WC+5wOwJM=;
+        b=Vhlkwhgs6O0XS4EbjPNDKdZ8va3YqhQaM7PuQIsDJSOcDv7HtPKiiZdxOsOtpLfOZL
+         OKsBF3ZjDKvevNwaheDhv4dSAm6k3V8je0SK2fnQ/NiVDLU7JRFXEWTp4eZUZT1CeK7l
+         MmojXVd+ASJceYtdWONAEI3/gndrCuSuNX/IR0ieb5CXa60HuNv4ULCr6dtqX4Pp+f7y
+         a0c+m3akdZdnF7uFL+YjGzfibkakwIQMS2S4D4+xvhpxfLniNGYHb/1bQO2uQBTc9ISN
+         9C7N9B5Co1YAR98iP6f+6ZmZqTw5ayuAerRX9dYfNYRHKj76fVdAn+1puwitKJHKMQiB
+         ouKQ==
+X-Gm-Message-State: ABuFfogFYvQXkuZ6eIp3FBTdqwu0eN1sA4PmZsGRDi2dlJf/o1jIS6Uu
+        dEIavb1Uev3mexgcAwn7/YE=
+X-Google-Smtp-Source: ACcGV61giFicPbkrWWriG9UCuM0xx7L6XIk5WBQJQneZGbTnzh/iC/qSIZNBm5kWzPOtWBV+sjnbGA==
+X-Received: by 2002:a1c:80d4:: with SMTP id b203-v6mr5397075wmd.100.1539828309090;
+        Wed, 17 Oct 2018 19:05:09 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s7-v6sm1300146wmd.0.2018.10.17.19.03.39
+        by smtp.gmail.com with ESMTPSA id p7-v6sm2679089wrt.10.2018.10.17.19.05.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Oct 2018 19:03:39 -0700 (PDT)
+        Wed, 17 Oct 2018 19:05:08 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/9] Offer to run CI/PR builds in Visual Studio Team Services
-References: <pull.31.git.gitgitgadget@gmail.com>
-        <8736t7dzan.fsf@evledraar.gmail.com>
-        <CACsJy8DeA0Zko4+ZM5F2L6YO5rpvL9LX3H9NB_bVCyO2mJFUzg@mail.gmail.com>
-        <CAP8UFD3cpXpyx-AtTybPirzduFR7TfhFf2woa-_CU46DN3RaXw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.1810152032140.4546@tvgsbejvaqbjf.bet>
-        <xmqqd0sa1omm.fsf@gitster-ct.c.googlers.com>
-        <CACBZZX59vT1CTiUPfPZDJUSRH=NSzmWiabux=KRdTUFa1R=5bw@mail.gmail.com>
-Date:   Thu, 18 Oct 2018 11:03:38 +0900
-In-Reply-To: <CACBZZX59vT1CTiUPfPZDJUSRH=NSzmWiabux=KRdTUFa1R=5bw@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 16 Oct
- 2018 11:14:06
-        +0200")
-Message-ID: <xmqqo9bsvwn9.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Christian Hesse <list@eworm.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Hesse <mail@eworm.de>
+Subject: Re: [PATCH 1/1] subtree: make install targets depend on build targets
+References: <xmqq8t2y1o4y.fsf@gitster-ct.c.googlers.com>
+        <20181016075624.30176-1-list@eworm.de>
+        <20181017024503.GA117170@aiede.svl.corp.google.com>
+Date:   Thu, 18 Oct 2018 11:05:07 +0900
+In-Reply-To: <20181017024503.GA117170@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 16 Oct 2018 19:45:03 -0700")
+Message-ID: <xmqqk1mgvwks.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> sites could do the same polling and mirroring.  I am just too lazy
->> to open a new account at yet another hosting site to add that for
->> loop, but I may choose to when I am absolutely bored and nothing
->> else to do ;-).
+>> -install-html: $(GIT_SUBTREE_HTML)
+>> +install-html: html
 >
-> Do you mind if I squat gitlab.com/git/git in the meantime (i.e. create
-> an org etc.) and have it mirror github.com/git/git?, I'll hand the
+> This broke the build for me:
+>
+>  make[2]: Entering directory '/build/git-2.19.1+next.20181016/contrib/subtree'
+>  install -m 644 html /build/git-2.19.1+next.20181016/debian/tmp/usr/share/doc/git/html
+>  install: cannot stat 'html': No such file or directory
+>  make[2]: *** [Makefile:78: install-html] Error 1
+>
+> The rule says
+>
+>  install-html: html
+> 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
+> 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
+>
+> and $^ substitutes to "html" after this change.  How was this patch
+> tested?
 
-Obviously somebody who is not even interested in obtaining an
-account would appreciate, not just "would not mind", if a trusted
-member in the community did that for the community ;-)
-
-Thanks.
+Gah, that was silly of me.
