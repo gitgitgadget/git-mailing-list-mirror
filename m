@@ -2,123 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44E081F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 00:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 119E51F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 00:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727258AbeJRIEg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 04:04:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51306 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727090AbeJRIEg (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 Oct 2018 04:04:36 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:90d0:bd19:fb95:28cb])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A218961B72;
-        Thu, 18 Oct 2018 00:06:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1539821184;
-        bh=m+iiWCrndwyofBAweyFSM4C6gcFwVH7H2XB7Ap4i1HU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=u+PMHaJg9ZQtULVOqK/LW0T3smRl3I0PBEgjh7qyvR6XczTLtwe0Pv2epV4G3cina
-         aU/z5Hn2NMGncXfKjncjS+/3phxvjhnMfM+eb9++aEgl9QbsdbGdQCHN44g8zjs0sS
-         LkDaZisQnGL9TWAVWysJtB6Kn2/i8Rmnvto1d3eOQrefpO/8+awUWc4aUElRxy6ZGz
-         y6zy55hwuPhVyQ2dcc2TAw0t8tqtXgQnEVippfaRuOzN1d8uJHqNlFk12OUrySgxS2
-         WgZ51rC+W9MA3TyT6nxDZlAHYgjeLFHfC3Nv3ImLcQuQ9LBn5k6CN8+m0MvLYYH735
-         as5nOv/JXsV09qdmrk4niZUnclOtIu26Wxar7piFUvLPym0HJSfERVyPHXLNPcX7l0
-         QYp+ecuGq+FeEgUdOkey1CQ7046dmN9bNxL/9PwalaXiiJc4zAF5tj7yNugOgiiDRx
-         tLw5vfwpv9bN8FsgOOUGezcBmr4DERQnlT/eoLE2eEQeGLB4C3Q
-Date:   Thu, 18 Oct 2018 00:06:19 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 13/13] commit-graph: specify OID version for SHA-256
-Message-ID: <20181018000618.GM432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <20181015021900.1030041-1-sandals@crustytoothpaste.net>
- <20181015021900.1030041-14-sandals@crustytoothpaste.net>
- <CACsJy8C6o9PAHsm+t7Rijg6jsz5dXZ5pT79nYGdGbKuK6gGTLQ@mail.gmail.com>
- <fbd59390-42ee-8c06-74b7-1e7081680913@gmail.com>
- <CACsJy8Bg6BpQp4dDXzs8Y_d6RHW9ti4+FLqnAqGwW8F-SWUnPg@mail.gmail.com>
- <20181016224404.GD432229@genre.crustytoothpaste.net>
- <CACsJy8C9nySzG0Uqs6_5V2rXHkAKr-ShXU7N9sPp4N5z=D0zQA@mail.gmail.com>
+        id S1727186AbeJRIYS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 04:24:18 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:34972 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726644AbeJRIYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 04:24:18 -0400
+Received: by mail-oi1-f194.google.com with SMTP id 22-v6so22635596oiz.2
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 17:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VO7OZbSpIQd4Deol9pr7jMT1miXj6EkGlzx+GqvBQQg=;
+        b=HWef2Yc6MXnanNm8fuUUL3Q2gCYqviWSK68195OfIMY7FI++fgH6tEKY+IuGseQ9w6
+         P880dL/I/I6fxMHdF5vYofxvYhI+z+rXeRRg1gqUl2Xa/3is8UbMlILzCw8sFMPVLpMe
+         vrRSu3I6flVm0K1GTyIS7iThG2BnxPu2Cu55ksUO53CGgNjLEscvK8O+gb8kBh9tpO+4
+         O+fvrqGxv0fes2z+A6zw6CMVivl13IbR7m2f5IazF9mOJiPmdIOlJ246axxXJ5OitMgo
+         RxnSbJeuc26WSyrkNdIgTpeBp+fcWtamDzmKvLsPfUJNJUIyqzl/A4nsV38hbL5yQOgq
+         hl7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VO7OZbSpIQd4Deol9pr7jMT1miXj6EkGlzx+GqvBQQg=;
+        b=PRxUJctly/rjgQWOlhclI405ziu4zPXWn7rnMnRqg5fLCIkVGHwOqCqiRfEjZtgpSf
+         lh4XwbN2e/PB89rVSDSt6UPeZYnSBWDBjxeBEgMqV/rMMZh0+J6oV6qQDSHKkDfhCwL3
+         yL8N7T8pf6ZxY0ZpJOQ80fiatZjR4iPFj9NscwguKo8J2Ovzld0Ura0OVSSAj7qJWEhS
+         f7kKnibmnweGNZaYvVEYh7CnI+hlosCrkWyYlSY5Cgzo0a8y16eNq0qkgJGT2THCQ6jd
+         KyvXIXaeDNVx69T63skjnqWcLfF0ig5yI4FaHhMLrRw9i/NjHi8LNi6weCOf+wgTz9TX
+         1pDw==
+X-Gm-Message-State: ABuFfojSx4H7GogUHhuUD7u9OTVhyHyYrPIETDaqBQBypgxCDtpd7b3Z
+        v6ujEF3DaQby/exBMbdkkll8dKQRhivvss6ZxKVI
+X-Google-Smtp-Source: ACcGV62b5aD9ERl3FNOwhtQR5sDqYZmpNDP1rBJUxSV1tzgJR/k7LmahOAaOpQOMM4pIbswXVqTCe9jndZrtJzbNMqI=
+X-Received: by 2002:aca:cc12:: with SMTP id c18-v6mr14728808oig.150.1539822363274;
+ Wed, 17 Oct 2018 17:26:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nV0Xx5nODoP5kWxY"
-Content-Disposition: inline
-In-Reply-To: <CACsJy8C9nySzG0Uqs6_5V2rXHkAKr-ShXU7N9sPp4N5z=D0zQA@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <cover.1539298957.git.matvore@google.com> <fe4cf0841d500a46ad8f10c00818b467023d0ffc.1539298957.git.matvore@google.com>
+ <xmqqa7ng86i6.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqa7ng86i6.fsf@gitster-ct.c.googlers.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Wed, 17 Oct 2018 17:25:51 -0700
+Message-ID: <CAMfpvhK=CgamUGTa9b308WRA1Dw4w0Qbt8a4LiKVLFaW6nMwBQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/3] list-objects: support for skipping tree traversal
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        git@jeffhostetler.com, jeffhost@microsoft.com,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Oct 14, 2018 at 4:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> This step looks more like "ow, we could have done the tree:0 support
+> that is in 'next' better" than a part of "here is a series to do
+> tree:N for non zero value of N".
+>
+> If that is the case, I'd prefer to see this step polished enough
+> before [2-3/3] of this RFC is worked on, so that we can merge the
+> tree:0 (but not yet tree:N) support that is solid down to 'master'
+> soonish.
+That's fair. So I will prioritize this patch above the rest of the
+patchset and send it separately in the future.
 
---nV0Xx5nODoP5kWxY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> OK, so "not collecting omits" is synonymous to "N==0, we aren't
+> doing tree at any level", and at this point in the series before the
+> support for N>0 is introduced, we'd always take this "else" clause
+> because tree:0 is the only thing we support?
+Actually "not collecting omits" and depth==0 are orthogonal concepts.
+"Collect omits" is the logic needed to implement the
+--filter-print-omitted flag on git rev-list. You can do this when
+depth==0 (it will actually print all the trees and blobs recursively).
+"Collect omits" is tested *with* tree:0 in test t6112 in the test
+labeled 'verify tree:0 includes trees in "filtered" output'
 
-On Wed, Oct 17, 2018 at 04:31:19PM +0200, Duy Nguyen wrote:
-> On Wed, Oct 17, 2018 at 12:44 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > Honestly, anything in the .git directory that is not the v3 pack indexes
-> > or the loose object file should be in exactly one hash algorithm.  We
-> > could simply just leave this value at 1 all the time and ignore the
-> > field, since we already know what algorithm it will use.
->=20
-> In this particular case, I agree, but not as a general principle. It's
-> nice to have independence for fsck-like tools. I don't know if we have
-> a tool that simply validates commit-graph file format (and not trying
-> to access any real object). But for such a tool, I guess we can just
-> pass the hash algorithm from command line. The user would have to
-> guess a bit.
+IOW, both branches here are important even in this patch. If we are
+collecting omits, then we can't skip the tree because omits collecting
+is recursive. Otherwise, we *can* skip the tree.
 
-I'm going to drop this patch for now.  I'll send a follow-up series
-later which bumps the format version for this and the multi-pack index
-and serializes them with the four-byte value.  I probably should have
-caught this earlier, but unfortunately I don't always have the time to
-look at every series that hits the list.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+But maybe printing omits should not be recursive? The decision was
+never discussed. The code to not be recursive is simpler, because we
+don't need this if/else. Recursiveness is counter-intuitive since we
+would "skip" a tree and at the same time print its contents.
 
---nV0Xx5nODoP5kWxY
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> Style: our modern style is to use {} around the body which is a
+> single statement on the else clause when the body of the
+> corresponding if clause needs {} around (and vice versa), so
+>
+Fixed, and I didn't realize I was supposed to be hugging "else" with
+the curly braces. What you say is what CodingGuidelines says to do.
+Thanks for pointing that out.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+>
+> Even when failed_parse==true, i.e. we found that the tree object's
+> data cannot be understood, if we have skip-tree bit set, that means
+> we do not care---we won't be descending into its children anyway.
+>
+Yes.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvHznoACgkQv1NdgR9S
-9ovFWQ//eVJh1IUIY5lJRpCYUTmonx6og0rG7zo1eIiH3PJGhHMN4BRkjut2hgfi
-jbiuOT3iEwWlORFTAJdKxk5EhCJMi1MwydmVWNjR4U/NvZkzf7VKpoCuJemOZ73q
-F7QOifjPOc/9H/xLW+nb9yFGGWMgMj4hSrVCdnQ1D6p/L2pBQHytFWOUt9mmvn3r
-fhZG1c+yRijyJiBp7JTnA5yul0/DqNtewq/Cd31Zl9Y2lg2TNF5Wlw7jxul7ECM+
-/8V/9jsjsWAfawZruW3i8KZvdYkFfLgJ10Htlo6euER4E+BshDqHnWEdcvLrg42D
-joI5sspP5TSTcM6lTeZPZrFZ5XQH7Agq+3oDeUDYtEpXW+yP5gqNkxYtCjiCkeao
-XLnRXFe0m7oI9NFXD5bfwt+C4hWYrxfgvOc20TqNCzxZLhoTk7/Z8x6bVa6/jgjv
-/UzVKj/MYr4LxJBzOSLUxctoKtS2IWrX9Zxo3gg3VkXYci5ndoTUKCJYtJ1mjH8V
-29dq5m5fKvSdgFMQ5z3vTOzepFQiA91gIrw2wbu/lWpjJrYatbQ5+VeLZ5pusUfW
-3ecK6pNXtWyNdin9qTEpflMK64UAqhPyitvQB005VLF2qt3m9v/tn30TxNywGYt/
-hgsJYfFuNUhtKtd/c3h5eG78N9CmmIdy4qltaBbeWB29h9dxL58=
-=VS6Q
------END PGP SIGNATURE-----
+> > +# Make sure tree:0 does not iterate through any trees.
+> > +
+> > +test_expect_success 'filter a GIANT tree through tree:0' '
+> > +     GIT_TRACE=1 git -C r3 rev-list \
+> > +             --objects --filter=tree:0 HEAD 2>filter_trace &&
+> > +     grep "Skipping contents of tree [.][.][.]" filter_trace >actual &&
+>
+> Here you are not jus tmaking sure SKIP_TREE bit is set for some
+> tree, but it is set when base->buf is an empty string (i.e. the top
+> level tree)?  Which makes sense, and the next text makes sure that
+> between the two commits, the number of total "top level" trees is 2,
+> but I wonder if it is more direct to also make sure that the code is
+> not even seeing or skipping any tree inside these top level trees
+> (i.e. the same message but for ""!=base->buf should never appear in
+> the trace).
+Makes sense. I added another check in this test for other "Skipping" messages.
 
---nV0Xx5nODoP5kWxY--
+Thank you for reviewing.
