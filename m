@@ -6,75 +6,83 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99F1A1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 06:33:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8129D1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 06:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727459AbeJROcg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 10:32:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44388 "HELO cloud.peff.net"
+        id S1727371AbeJROf7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 10:35:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44398 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727378AbeJROcg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 10:32:36 -0400
-Received: (qmail 15061 invoked by uid 109); 18 Oct 2018 06:33:09 -0000
+        id S1727328AbeJROf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 10:35:59 -0400
+Received: (qmail 15433 invoked by uid 109); 18 Oct 2018 06:36:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Oct 2018 06:33:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Oct 2018 06:36:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27433 invoked by uid 111); 18 Oct 2018 06:32:19 -0000
+Received: (qmail 27455 invoked by uid 111); 18 Oct 2018 06:35:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Oct 2018 02:32:19 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Oct 2018 02:35:42 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2018 02:33:06 -0400
-Date:   Thu, 18 Oct 2018 02:33:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2018 02:36:29 -0400
+Date:   Thu, 18 Oct 2018 02:36:29 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] ref-filter: free memory from used_atom
-Message-ID: <20181018063306.GA23497@sigill.intra.peff.net>
-References: <CAL21BmkdUiNgr4NqpwTdi9f47i85s8oXCZMmVx5VyNKotL78uA@mail.gmail.com>
- <0102016657e7cfee-f1343b1e-9a85-4cae-990a-cc7177ea8487-000000@eu-west-1.amazonses.com>
- <xmqq5zy9jnv1.fsf@gitster-ct.c.googlers.com>
- <xmqqa7njevu2.fsf@gitster-ct.c.googlers.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Ben Peart <peartben@gmail.com>, Git List <git@vger.kernel.org>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH v1 1/2] reset: don't compute unstaged changes after reset
+ when --quiet
+Message-ID: <20181018063628.GA23537@sigill.intra.peff.net>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181017164021.15204-2-peartben@gmail.com>
+ <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
+ <20181017182255.GC28326@sigill.intra.peff.net>
+ <xmqqpnw7vs5b.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa7njevu2.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnw7vs5b.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 12, 2018 at 11:35:01AM +0900, Junio C Hamano wrote:
+On Thu, Oct 18, 2018 at 12:40:48PM +0900, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Jeff King <peff@peff.net> writes:
 > 
-> > Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+> > Whereas for the new config variable, you'd probably set it not because
+> > you want it quiet all the time, but because you want to get some time
+> > savings. So there it does make sense to me to explain.
+> >
+> > Other than that, this seems like an obvious and easy win. It does feel a
+> > little hacky (you're really losing something in the output, and ideally
+> > we'd just be able to give that answer quickly), but this may be OK as a
+> > hack in the interim.
 > 
-> These three patches seem to cause t6300 to fail with an attempt to
-> free an invalid pointer in "git for-each-ref --format='%(push)'"
-> (6300.25)
+> After "git reset --quiet -- this/area/" with this change, any
+> operation you'd do next that needs to learn if working tree files
+> are different from what is recorded in the index outside that area
+> will have to spend more cycles, because the refresh done by "reset"
+> is now limited to the area.  So if your final goal is "make 'reset'
+> as fast as possible", this is an obvious and easy win.  For other
+> goals, i.e. "make the overall experience of using Git feel faster",
+> it is not so obvious to me, though.
+> 
+> If we somehow know that it is much less important in your setup that
+> the cached stat bits in the index is kept up to date (e.g. perhaps
+> you are more heavily relying on fsmonitor and are happy with it),
+> then I suspect that we could even skip the refreshing altogether and
+> gain more performance, without sacrificing the "overall experience
+> of using Git" at all, which would be even better.
 
-I dug into this a bit. I think it's actually a misapplication of the
-patches on your side. Applying them locally works, but your
-ot/ref-filter-plug-leaks branch does not.
+Yeah, I assumed that Ben was using fsmonitor. I agree if we can just use
+that to make this output faster, that would be the ideal. This is the
+"later the message would get faster to produce" I hinted at in my
+earlier message.
 
-The patch below on top of your branch helps. :)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index f4ff80eca0..4255de1d75 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1567,7 +1567,6 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 					continue;
- 			}
- 			free((char *)v->s); /* we will definitely re-init it on the next line */
--			free((char *)v->s);
- 			fill_remote_ref_details(atom, refname, branch, &v->s);
- 			continue;
- 		} else if (starts_with(name, "color:")) {
-
-Presumably it came from the manual comment-style fixup.
-
-With that fix, the tests run fine for me under ASan/UBSan (with the
-exception of t5310, but that's fixed already in a parallel topic).
+So I think we are in agreement. It just isn't clear to me how much work
+it would take to get to the "ideal". If it's long enough, then this kind
+of hackery may be useful in the meantime.
 
 -Peff
