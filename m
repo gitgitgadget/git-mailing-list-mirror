@@ -2,109 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D58441F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 19:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D7871F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 19:11:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbeJSDOJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 23:14:09 -0400
-Received: from mout.web.de ([217.72.192.78]:49991 "EHLO mout.web.de"
+        id S1726848AbeJSDOP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 23:14:15 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:50392 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726494AbeJSDOJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 23:14:09 -0400
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6DuI-1fOwEu2ecM-00y6e9; Thu, 18
- Oct 2018 21:11:42 +0200
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6DuI-1fOwEu2ecM-00y6e9; Thu, 18
- Oct 2018 21:11:42 +0200
-From:   tboegi@web.de
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/1] index_bulk_checkin(): Take off_t, not size_t
-Date:   Thu, 18 Oct 2018 21:11:40 +0200
-Message-Id: <20181018191140.23318-1-tboegi@web.de>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
+        id S1726494AbeJSDOP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 23:14:15 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42bdvS700Kz5tmN;
+        Thu, 18 Oct 2018 21:11:48 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B5B351AAF;
+        Thu, 18 Oct 2018 21:11:48 +0200 (CEST)
+Subject: Re: [PATCH] diff: don't attempt to strip prefix from absolute Windows
+ paths
+To:     Stefan Beller <sbeller@google.com>
+Cc:     andreenkosa@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>
+References: <CAD1gVxMg0ZiKqFABrnwt0v_=wr2X_3ErkR92RmCAtFQnuM+L5w@mail.gmail.com>
+ <xmqqr2gu8dsx.fsf@gitster-ct.c.googlers.com>
+ <ae6fc699-6e09-2979-40dc-9cc49f4f8365@kdbg.org>
+ <CAGZ79kYChLNDB_f1KR2k7G9FvHkX7x_yXdhxMRpLFWpRR0SoPg@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <a9a51e28-208d-d8dd-a868-bc2f8cc79598@kdbg.org>
+Date:   Thu, 18 Oct 2018 21:11:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:Ka17EbJN/7GMyn7Kf6jbHHl+9/ZsxFo2hGaxYIRJh0OdwDEA9JE
- dSCb23Zn1hHmpBYGg5h7CwFgCn0ko4JluX+7Nq1PIUy69b1glcEPV8egn/7YkfT80+3I+iW
- cxbpD8Gy8sJZuMD6LReKhh2xNGbwp/rCWvpmc8kQeoGsnZibE3XVyJakXjvsePOZ71BrBPr
- AA6bOWtgeodD8JoOYUOCA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LBSTzfN406E=:ZS4SbpGE7dnrXDwlZbx1vB
- yE45xVky5MM2QhzUNvdIf7UAPoS72ej/W1mxoQDGeuaH6RBwHaMCYzAw0OtH1acxpW9JHZDNV
- Bx6Mz7hdeBTupn9HBRj7aaxQkTu5MqMY+k6NGIC4G9h6yPgZcNz7v26i0HyuwokcusJ60IbYr
- ZtV3id+IH/3KRfrjJqpLyLeu0NYwu4JDg9Fx/hT5nfouGvkFBtF72Vxgw1ZXN6PNGEak5W8kR
- VOm5juaoNg1qHyaLLrn9qZ7tHI/XnCuxcTCtT/ccLmh1ylf72g5KB49mK/t5K9e22cncNrwkK
- exfro/Pvi0gQf8XkVvvjLNsJNRCgySDipSwzJ2MI8/MPemqXHs3AU+T0AquizNLd9UAw7PsmL
- ObN7hzZTPKCYpAgX5pOPB9MoEh06Urn69llXqM4yrGG8I3Tf0jKwStKsVWB2gBgV0UcYYyeY4
- QANZbcTAts25ENKSTXkiWI0KaN2XTTL4oOM/5cHjYiUFJ3yzBG9Wwx/9zFoWaSPAvkhrfpJfv
- YSur75/1CvWOPj3ZTJn16amLC8bgPvau899L/dLfIqfslvvkGFPqQFhPLFqowERA/I9XOcbL5
- OqKlSqA/XnqS9ZsFkNXxgFviVlybrHz8gXAxQmjVU88Mwxvy8DUYDQISZC73hkI0hGSp6sEg+
- 9QrwFVZlRV6PZmX9dQqioxM/kTqJqO+F1sH1HjfnOKULoC4aGx+AV7cn22nq2Jaq69WSs1SsR
- m2k3MxHvAuFvSAyzDue5xvnwKqAmidwrYYIYXEJhxYlCjgUfx+dENQQvnOeU2dkhrJd0NPXyg
- 5YSQKp4GF6VEtjkFPrWIIGMpKx8CkGKRhWbkjs7auoJAX2ZxTw=
+In-Reply-To: <CAGZ79kYChLNDB_f1KR2k7G9FvHkX7x_yXdhxMRpLFWpRR0SoPg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+Am 18.10.18 um 20:49 schrieb Stefan Beller:
+> On Thu, Oct 18, 2018 at 11:38 AM Johannes Sixt <j6t@kdbg.org> wrote:
+> 
+>> There is one peculiarity, though: [...]
+> 
+> The explanation makes sense, and the code looks good.
+> Do we want to have a test for this niche case?
+> 
 
-When streaming data from disk into a blob, use off_t instead of
-size_t, which is a better choice for file length.
+Good point. That would be the following. But give me a day or two to
+cross-check on Windows and whether it really catches the breakage.
 
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
-
-This is based on an old patch from 2017, which never made it to the list.
-I think it make sense to have off_t/size_t more consistent,
-reviews/comments are welcome.
-
-bulk-checkin.c | 4 ++--
- bulk-checkin.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 409ecb566b..2631e82d6c 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -189,7 +189,7 @@ static void prepare_to_stream(struct bulk_checkin_state *state,
+diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+index 453e6c35eb..6e0dd6f9e5 100755
+--- a/t/t4053-diff-no-index.sh
++++ b/t/t4053-diff-no-index.sh
+@@ -127,4 +127,14 @@ test_expect_success 'diff --no-index from repo subdir respects config (implicit)
+ 	test_cmp expect actual.head
+ '
  
- static int deflate_to_pack(struct bulk_checkin_state *state,
- 			   struct object_id *result_oid,
--			   int fd, size_t size,
-+			   int fd, off_t size,
- 			   enum object_type type, const char *path,
- 			   unsigned flags)
- {
-@@ -258,7 +258,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- }
- 
- int index_bulk_checkin(struct object_id *oid,
--		       int fd, size_t size, enum object_type type,
-+		       int fd, off_t size, enum object_type type,
- 		       const char *path, unsigned flags)
- {
- 	int status = deflate_to_pack(&state, oid, fd, size, type,
-diff --git a/bulk-checkin.h b/bulk-checkin.h
-index f438f93811..09b2affdf3 100644
---- a/bulk-checkin.h
-+++ b/bulk-checkin.h
-@@ -7,7 +7,7 @@
- #include "cache.h"
- 
- extern int index_bulk_checkin(struct object_id *oid,
--			      int fd, size_t size, enum object_type type,
-+			      int fd, off_t size, enum object_type type,
- 			      const char *path, unsigned flags);
- 
- extern void plug_bulk_checkin(void);
--- 
-2.19.0.271.gfe8321ec05
-
++test_expect_success 'diff --no-index from repo subdir with absolute paths' '
++	cat <<-EOF >expect &&
++	1	1	$(pwd)/non/git/{a => b}
++	EOF
++	test_expect_code 1 \
++		git -C repo/sub diff --numstat \
++		"$(pwd)/non/git/a" "$(pwd)/non/git/b" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
