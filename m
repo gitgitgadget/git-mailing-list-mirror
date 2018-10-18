@@ -6,61 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77A591F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 02:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0B951F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 02:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727260AbeJRKHo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 06:07:44 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41007 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727108AbeJRKHo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 06:07:44 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q7-v6so3938550wrr.8
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 19:09:08 -0700 (PDT)
+        id S1727337AbeJRK2q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 06:28:46 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39815 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727290AbeJRK2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 06:28:46 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y144-v6so4083010wmd.4
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 19:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=72OT0D/H5MAq/jAG6YGEEpQmvajJWLUYCy9mscNTy3Q=;
-        b=j4gdm/efYlpIBZcEL07pDkz8ySxhejZVHAsDupgOuJybmOWCMKCcYtofWoCCAGdLBM
-         oiSMGgqUsFozjjAZY+qqeDQcSQ3uURoC9o49aWs1HN2AtvStGZ1DswxzCGviCeaxaSzD
-         KEHzSMwMGXgTX+ZjspnanOCW8GgwymOLqH+SPX2nKx4BbcG5SaWrdNP4tirfN8lUfngL
-         hoVlIkL4pI4TtmPmUcrUDYdKCqGzrjnFEy5aboq5UxMTxApmhqdQFWvvsXlct25kTCHC
-         IxqtEVwJ6rmTqOTi6Y7uOA8mSIJnWlQKJidvkk9UozYrDZCWwqABAAVTfwLd36JxNkIr
-         s1CA==
+        bh=6i1sv4wNbXHxPYDcX/pu77aoj/jPtKrFTs7/GW4Cxo8=;
+        b=RQtyEJtJS9ZFZaJCdzBnB7aN+MUzaNP0Lvcz+sNds0tyErqqCv4XgEgV+v3hQUIcqG
+         NyrpzBUUyZ0gvcppBYyMb/SXrOEhPMwVWewgdPqZ17OwzpoK0jo3SR+zVwvxC410Xohw
+         WnU9raQBeTgbDt1/OwGg/YIDcF0d6Czi46twTSQ7Wpf7eP6ISEEa5aHdC+i7ydrJWhGo
+         x7BHz+7XfhwnqUk5+BMgL4CddWya1AZm2+GOkLx5KGzh51yPNRdRyYRXKJ+BpBthREMU
+         8H8OuGFtuVEgnUWno/+7vvjJ7OeEXjuiEz2JEFfVskOJ9R0zKD+rsY5Uj6QfOpM/MLlj
+         3iIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=72OT0D/H5MAq/jAG6YGEEpQmvajJWLUYCy9mscNTy3Q=;
-        b=buGp8RYFg94qGav1d2Mnjp1CgXmCI74qUdz0U0vS1BJubvMVlhY+r3AEXK/oIbBngO
-         DA2b5lVuXygkX7vmNfZq8ccGsXmke1irs5XowJTKVoYLERFrZyCCFJ4DXVn4M23pBz5a
-         AvTF2qUpX8Xwa9LX0YiHsTeXnU/IEnt70OeiZB6I4Xrcd2SJASe9sC90POxIoXsaexQi
-         xq4/t3aqq4IggLZ6ETWNJ4fCRC7paK9OX8WQHkvM2oJc2QnXFzh8OHgmS9JyAtII4h1Z
-         ZCGI9jmx04iPaDPf8QquJ5P/maLzny7UCL0AosXI5BzTU9sZe1pWV8Fob8Uq7jUNP5n5
-         K11Q==
-X-Gm-Message-State: ABuFfoj9U7knQnkAEloOG7x721b/pM/OYRop0lKJPbh4U5dBKVLekMuJ
-        h/OPR6/65uGQs3p3qrSNo3E=
-X-Google-Smtp-Source: ACcGV61Ei68J3qDvLQQn2myaOvnhByZMtFBQj41YSFwpzGeUUi6r5BPpgIF0NLrWE2O2BefA5q9uEA==
-X-Received: by 2002:adf:fd83:: with SMTP id d3-v6mr25892006wrr.25.1539828547896;
-        Wed, 17 Oct 2018 19:09:07 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 18-v6sm3884048wmw.26.2018.10.17.19.09.07
+        bh=6i1sv4wNbXHxPYDcX/pu77aoj/jPtKrFTs7/GW4Cxo8=;
+        b=lcdtAuRZba7gs6QvX62iJpOxCeXEmpYBnadQQ7Tod24OeqFlOyR+hHRR780Jd8zk7e
+         QD3ZqZxPg1ndIbEWQZLOvxuAwhCGfsvZxD0ghHfEu41rf4HTKzrV0z0oHsoVm9sUJFD+
+         dWFLTtvQ6VAPki8r2l92B1Zl+WAiqHMxMFJHGKpMF7V8qla0H4yhGiTpco1qIhUNKX1T
+         uEk3jONASEqjwKl9MBe659xN39v0YbfWYT+rRrU/3M3GUeCH28NePiYbTK2fF7n5UBeG
+         XheWW/2nRKBOR0yqPdNMrfm6sHlsP/uFHo8Feua8BdwQXzmNSBPSyTUS9UCIKz3sZWBd
+         Pnmw==
+X-Gm-Message-State: ABuFfojeAItfsqskCJbZvLag4seyejOsW3iHT3bZRS0Tv44dgWZF7ox/
+        m9/d8hLFZPKGx9EaL1+tgnxn7B4QLjI=
+X-Google-Smtp-Source: ACcGV621w+GtpZFSAKF8ELtyGv9XftpO79OUF2PVjs3nyURynJ06NXP/Zf2k5lSQgbznvAoOs/RewQ==
+X-Received: by 2002:a1c:9e93:: with SMTP id h141-v6mr5529624wme.56.1539829806251;
+        Wed, 17 Oct 2018 19:30:06 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s7-v6sm1335748wmd.0.2018.10.17.19.30.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Oct 2018 19:09:07 -0700 (PDT)
+        Wed, 17 Oct 2018 19:30:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Christian Hesse <list@eworm.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] subtree: make install targets depend on build targets
-References: <xmqq8t2y1o4y.fsf@gitster-ct.c.googlers.com>
-        <20181016075624.30176-1-list@eworm.de>
-        <20181017024503.GA117170@aiede.svl.corp.google.com>
-Date:   Thu, 18 Oct 2018 11:09:06 +0900
-In-Reply-To: <20181017024503.GA117170@aiede.svl.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 16 Oct 2018 19:45:03 -0700")
-Message-ID: <xmqqftx4vwe5.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/9] Resending sb/submodule-recursive-fetch-gets-the-tip
+References: <20181016181327.107186-1-sbeller@google.com>
+Date:   Thu, 18 Oct 2018 11:30:03 +0900
+In-Reply-To: <20181016181327.107186-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 16 Oct 2018 11:13:18 -0700")
+Message-ID: <xmqqbm7svvf8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,56 +65,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> The rule says
->
->  install-html: html
-> 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
-> 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
->
-> and $^ substitutes to "html" after this change.
+> This is based on ao/submodule-wo-gitmodules-checked-out.
 
-Sorry about that.
+Thanks.  I had an impression that we were not entirely happy with
+the topic and are expecting a reroll, but let's hope that the part
+we expect to be updated won't have much overlaps.
 
-From: Junio C Hamano <gitster@pobox.com>
-Date: Thu, 18 Oct 2018 11:07:17 +0900
-Subject: [PATCH] Revert "subtree: make install targets depend on build targets"
+> A range-diff below shows how picking a different base changed the patches,
+> apart from that no further adjustments have been made.
 
-This reverts commit 744f7c4c314dc0e7816ac05520e8358c8318187a.
-
-These targets do depend on the fact that each prereq is explicitly
-listed via their use of $^, which I failed to notice, and broke the
-build.
----
- contrib/subtree/Makefile | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 4a10a020a0..6906aae441 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -69,11 +69,11 @@ install: $(GIT_SUBTREE)
- 
- install-doc: install-man install-html
- 
--install-man: man
-+install-man: $(GIT_SUBTREE_DOC)
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(man1dir)
- 	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
- 
--install-html: html
-+install-html: $(GIT_SUBTREE_HTML)
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
- 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
- 
-@@ -98,4 +98,4 @@ clean:
- 	$(RM) $(GIT_SUBTREE)
- 	$(RM) *.xml *.html *.1
- 
--.PHONY: FORCE man html install-man install-html
-+.PHONY: FORCE
--- 
-2.19.1-450-ga4b8ab5363
-
-
+Thanks.  Let's see how well this plays together with other topics in 'pu'.q
