@@ -2,89 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A690E1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 17:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 816CF1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 17:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728570AbeJSBLa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 21:11:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44976 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727391AbeJSBLa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 21:11:30 -0400
-Received: (qmail 18439 invoked by uid 109); 18 Oct 2018 17:09:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Oct 2018 17:09:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32213 invoked by uid 111); 18 Oct 2018 17:08:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Oct 2018 13:08:47 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2018 13:09:34 -0400
-Date:   Thu, 18 Oct 2018 13:09:34 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] config.mak.dev: enable -Wunused-function
-Message-ID: <20181018170934.GA21138@sigill.intra.peff.net>
-References: <20181018070522.GA29499@sigill.intra.peff.net>
- <CACsJy8BOL+QOb3Vdh8RKbra-DDbJVyznTbCJgjK5h8L2y0H7yg@mail.gmail.com>
+        id S1726608AbeJSB0h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 21:26:37 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36389 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbeJSB0h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 21:26:37 -0400
+Received: by mail-pg1-f194.google.com with SMTP id f18-v6so14512206pgv.3
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 10:24:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=sJdMJF8EAVtTNBxbC/Incn1FMG0n1fWcTlsmkt9IYRs=;
+        b=lpbw+S8wdeG3qhF+PST6dZZgUEE6nISudgEvScoOTe7DDL9OSJjaWDDEgaAJwcWOJg
+         LuZQCP43sfRdasKATD+S5gFIt/esmxNtp2PgNAbxeZkJY78olWwhu62FzsU/DHH6a+1j
+         qUTUxqMUYGNqp931pOJ+bElv6izthLAOx8vZxzEOjIk4mu+fvS78S8l6AtGCrduccPyn
+         9FWqBLvrO42vsJxsKeX0Wji50zA9eH2YK5IYpRl42WRsYrnyZDR+ATm4gDXuO4IFO4VJ
+         WJvt/upLp4+ZxZDzWLgoKnqna9df0+BomkCPAzad68m0kn7sUpuwIgEcG/7tTqxyjePS
+         GwzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sJdMJF8EAVtTNBxbC/Incn1FMG0n1fWcTlsmkt9IYRs=;
+        b=LOHebfFwo47HcE2iE/f16zuf0X+eXj+prabZxG/395JjqM9hcbwtHpRHUpWdwiPe90
+         AUd7fArnZXEJUAiLgVOyxU6c1d5KBhevhiRGvKKJ+vz/ayA3druk6BIpAzCnN04tmhl/
+         LcQNjmS7j6IzF/I0H5K3cSveFKyfqamabthjZyk575RL+TUvmXJe3lF7L3LqXKO2SUHl
+         AaAsxkZqVfqFnkCbq/d3I8iV6+hC0w7J3iYhuykc+mCkAUEnUT9wTVciQo237rklgjAQ
+         pH6c+BdCNF4nQBZ53K4egD6WvJw+hh/caL/B2TzMhj6IZJIXRc0mDuv5TQ0P3lcFVYwq
+         zDcg==
+X-Gm-Message-State: ABuFfojklBJJf+pU9u4KjvLIYY1bn7O8j2/WgbvWMYjUiOFLgucsYCyX
+        HjjNXxwOL/Ehrh+AFIhFx4g6GJDe
+X-Google-Smtp-Source: ACcGV60aMHq1Lq+M47J8ohcoDwrrYsda8hKjhIYtwtaNpysit2/d9aiLNXrGIl7+HHEyfYtngUOjTQ==
+X-Received: by 2002:a62:221c:: with SMTP id i28-v6mr31604162pfi.196.1539883479394;
+        Thu, 18 Oct 2018 10:24:39 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id q123-v6sm13735850pfq.169.2018.10.18.10.24.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Oct 2018 10:24:38 -0700 (PDT)
+Date:   Thu, 18 Oct 2018 10:24:38 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Oct 2018 17:24:35 GMT
+Message-Id: <pull.51.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] commit-reach: fix first-parent heuristic
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BOL+QOb3Vdh8RKbra-DDbJVyznTbCJgjK5h8L2y0H7yg@mail.gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 18, 2018 at 05:48:16PM +0200, Duy Nguyen wrote:
+I originally reported this fix [1] after playing around with the trace2
+series for measuring performance. Since trace2 isn't merging quickly, I
+pulled the performance fix patch out and am sending it on its own. The only
+difference here is that we don't have the tracing to verify the performance
+fix in the test script.
 
-> >   - conditional compilation, where we may or may not need a
-> >     static helper. These generally fall into one of two
-> >     categories:
-> >
-> >       - the call should not be conditional, but rather the
-> >         function body itself should be (and may just be a
-> >         no-op on one side of the #if). That keeps the
-> >         conditional pollution out of the main code.
-> >
-> >       - call-chains of static helpers should all be in the
-> >         same #if block, so they are all-or-nothing
-> 
-> Grouping is not always desired because it could break better function
-> layout. Have a look at read-cache.c where _ieot_extension functions
-> are #if'd because the only call sites are from pthread code (#if'd far
-> away).
+See the patch message for details about the fix.
 
-True, though as long as they are triggered by the same set of #if
-conditions, that is fine. Putting them in the same block  is just an
-easy way to make sure that is the case. ;)
+Thanks, -Stolee
 
-> In this particular case though I think we should be able to avoid so
-> much #if if we make a wrapper for pthread api that would return an
-> error or something when pthread is not available. But similar
-> situation may happen elsewhere too.
+[1] 
+https://public-inbox.org/git/20180906151309.66712-7-dstolee@microsoft.com/
 
-Yeah, I think that is generally the preferred method anyway, just
-because of readability and simplicity.
+[RFC PATCH 6/6] commit-reach: fix first-parent heuristic
 
-> Having said that, if people do consider MAYBE_UNUSED before #if'ing
-> everywhere (and opening up more conditional build problems in future),
-> I think this change is fine.
+Derrick Stolee (1):
+  commit-reach: fix first-parent heuristic
 
-I'd like to use it as a last resort, certainly. Mostly the fact that we
-compile cleanly _now_ makes me think that it probably won't be that hard
-to keep it going.
+ commit-reach.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-I think the biggest potential problem with this is going to be obscure
-configurations where some functions are used or not used. So somebody
-silencing a compiler warning may inadvertently break another case if
-they're not careful. But that's already a problem to some degree (and
-part of why we try to push the conditionality out to the whole-function
-level).
 
--Peff
+base-commit: a4b8ab5363a32f283a61ef3a962853556d136c0e
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-51%2Fderrickstolee%2Ffirst-parent-heuristic-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-51/derrickstolee/first-parent-heuristic-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/51
+-- 
+gitgitgadget
