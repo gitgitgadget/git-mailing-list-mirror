@@ -2,96 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E12FA1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 00:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DB051F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 01:53:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727247AbeJRIpy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 04:45:54 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:37900 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727040AbeJRIpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 04:45:54 -0400
-Received: by mail-pg1-f202.google.com with SMTP id e6-v6so21337298pge.5
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 17:47:36 -0700 (PDT)
+        id S1727108AbeJRJvj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 05:51:39 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36742 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727040AbeJRJvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 05:51:39 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y16so31771564wrw.3
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 18:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=GlgvzzyXHj4lt+6Oo51oqln/iR5VbB+pfiXMI1bm1k8=;
-        b=OAgPo4OYpHyBmaMJSWlQf5Zpnj5eWJQXL+F5yTIF8vBqpYRh2O2IXAxOREV6fq/BA8
-         Ooj4yPhv4iySq+JAQ0Ei2h4ann3ZUuNi1yc1y8H/buUhLx55lFtjTT2ecnHmhQ9EmVOx
-         eWN1L30exA0WPjCGU+9xLo1RfxYgX9aznNfXmyJ8dOsWmBcTFVwEkWYc2B9x9etz8ji3
-         W/Y4KUfD43BmQ+LkVgr6vTViIQ0kXttbv4Wx22mDNM/FGhZs4/SHzzVxU/M0hiz9wlzM
-         7plx5ElSYXHz+8woH4SVqcJrtyDv4irJaj7+9RPckbu3j+S9dXYXambOmjq1KWLfF3tv
-         1u0w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=la++EzlJEwmo/80ArgFOFKcxo/vaxZUkvzMFCGajJFQ=;
+        b=NTZR1y1x9zp5nGkOHGGeFVp/qUy1ctUI4zILxPRKaEo8CrxGpbgaDdKpQnVwcSddof
+         9T99giK8NawZZoGlAndpKaKbsKPBc96UR7Mpx4XLnZfA6I6ZpWad0wZqhXeo5j3RsN8n
+         7QMt/XIAJQVg2cMCIVW3SctRCRfZSP2SXD4DKvKkV9S34XWV8e4W3UvbJ8vG6Fwodj2w
+         JCgXy1bOD+/tk8agsQt0klF2y6vya18vJxSjTRxMusYf3VoUHpSbIcgtW0GRhGZFuKsA
+         /VhLLSodfFTMGKhf0SKtXwe6pt+G1ODvPQ84gH2x4+jphu6mLcYPhARUUMAF81rUOCFt
+         QEQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=GlgvzzyXHj4lt+6Oo51oqln/iR5VbB+pfiXMI1bm1k8=;
-        b=ZIS3R1mcrbvryHG+3IOxRTwvEDmJR/gx74ZVGPyY2Mw+CANXVDklV2022CwRWUcPc+
-         Xb1N8DIufqoECoork3bMXjqdUXobcsU1eDORvvGzVVuZHSJtIZzyoccxJ398xwKHqp9e
-         pn4r6RfT5Wf24lIFax1V3XnXjCUcM0v9wVeDqI4P9ESDAHCwe7czDBvESD5bxVf/1WCC
-         U77Qy3uA33/gQC7EW+Z2qivzDv0gym+P0QQRv5iwyojrLxnrvMXhtOgcBrko8COZr4/g
-         OScP/mP8zo01xXbmHXNxaHyP406ox2hveUX6QhK25VfJptrz1plk8ahYpo2l/cwlC50c
-         I4NA==
-X-Gm-Message-State: ABuFfoiFm9cKgHQBBgHwHvqcfCAR50CmyqtsdyRqWgd3v5c7D1GQO89+
-        iXwCxF1JX2dxTuI64wFTuaZZzDFLj47IInt8beGs
-X-Google-Smtp-Source: ACcGV630+oU5Z7u/5AU1o4ZlisNBRHgW6bINNdQ3278h1tWzdFr960I71P9aMJco6iqO2d/KhDBAxpSWkdddLiHjORrn
-X-Received: by 2002:a62:4853:: with SMTP id v80-v6mr14195297pfa.10.1539823655876;
- Wed, 17 Oct 2018 17:47:35 -0700 (PDT)
-Date:   Wed, 17 Oct 2018 17:47:32 -0700
-In-Reply-To: <20181016181327.107186-10-sbeller@google.com>
-Message-Id: <20181018004732.141825-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181016181327.107186-10-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH 9/9] builtin/fetch: check for submodule updates for non
- branch fetches
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=la++EzlJEwmo/80ArgFOFKcxo/vaxZUkvzMFCGajJFQ=;
+        b=U8gCz51c616jxNN1DDUrxJxCMrn0JTPa4snImRcxruLEWWWxE/49fB/9L89Rb39Cg4
+         Tt8hogQGQELd+vdWQNtho0Ftc0jYLu+TLpF2DxrgHS6utHbXVdNJp2GmJgts3Nv6TOjp
+         YKZaDkY2VYWIXqVbKbW7bFXdIRYhEPr7+oIDCJO4GoEccjOXnhWGE7tS6Oz8a2N2lgBW
+         hAXQfdcBh0Lq25rnK7LB90wLSx+9ElwIFCvBbgtAH5wYHDUTkxzkL2LbTZnw8CR6JPhY
+         35RXHuNt5GOHk9a2KTTseWFOuZkfwJBGKds7LtwFnG9ggpNaPyQslXBLO5BrjE1BHpA1
+         T/ew==
+X-Gm-Message-State: ABuFfogYyLTLENEpo88HNYfuBQ6TKG9Yh07/n91SLe9YVO6QJtzErQ0o
+        tPBjjMN1Cwvj8H+yzeZN0K4=
+X-Google-Smtp-Source: ACcGV62hb3TzgMphb0bw3KVAmf7pfWn3+hg1IW4uR6kpnZEh8rI+ONE1owzvcJqdGukWV1sghSAf0A==
+X-Received: by 2002:adf:f7c1:: with SMTP id a1-v6mr24477729wrq.152.1539827585926;
+        Wed, 17 Oct 2018 18:53:05 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e133-v6sm2266539wma.42.2018.10.17.18.53.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 17 Oct 2018 18:53:04 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Brendan Forster via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Brendan Forster <github@brendanforster.com>
+Subject: Re: [PATCH 2/3] http: add support for disabling SSL revocation checks in cURL
+References: <pull.46.git.gitgitgadget@gmail.com>
+        <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>
+        <xmqq1s8q34g2.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1810161225310.4546@tvgsbejvaqbjf.bet>
+Date:   Thu, 18 Oct 2018 10:53:03 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1810161225310.4546@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Tue, 16 Oct 2018 14:22:03 +0200
+        (DST)")
+Message-ID: <xmqq1s8oxbpc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> @@ -887,11 +887,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
->  				rc |= update_local_ref(ref, what, rm, &note,
->  						       summary_width);
->  				free(ref);
-> -			} else
-> +			} else {
-> +				check_for_new_submodule_commits(&rm->old_oid);
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Does this need to be guarded with a recurse_submodules check, just like
-in update_local_ref()?
+>> In any case, you can use "http.<url>.$variable" to say "I want the
+>> http.$variable to be in effect but only when I am talking to <url>".
+>> Does it make sense for this new variable, too?  That is, does it
+>> benefit the users to be able to do something like this?
+>> 
+>>     [http] schannelCheckRevoke = no
+>>     [http "https://microsoft.com/"] schannelCheckRevoke = yes
+>> 
+>> I am guessing that the answer is yes.
+>
+> Frankly, I do not know.  Does it hurt, though?
 
-Also, this warrants a comment - this is here because there is some code
-later that requires the new submodule commits to be registered, and the
-other branch does not require it only because update_local_ref() calls
-it.
+I did not and I do not think it would.  I was wondering if the
+ability to be able to specify these per destination is something
+very useful and deserves to be called out in the doc, together with
+...
 
-> @@ -615,7 +615,7 @@ test_expect_success "fetch new commits on-demand when they are not reachable" '
->  	git update-ref refs/changes/2 $D &&
->  	(
->  		cd downstream &&
-> -		git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
-> +		git fetch --recurse-submodules origin refs/changes/2 &&
->  		git -C submodule cat-file -t $C &&
->  		git checkout --recurse-submodules FETCH_HEAD
->  	)
+>> I guess the same comment applies to the previous step, but I suspect
+>> that the code structure may not allow us to switch the SSL backend
+>> so late in the game (e.g. "when talking to microsoft, use schannel,
+>> but when talking to github, use openssl").
 
-I think there should be a new test - we can tell from the code that just
-because fetching to FETCH_HEAD works doesn't mean that fetching to a ref
-works, and vice versa.
+... this bit.
 
-Also, can you make the test fetch 2 refs? So that we know that it works
-with more than one.
+> Crucially, this fails. The short version is: this is good! Because it
+> means that Git used the OpenSSL backend, as clearly intended.
+>
+> <skip if="uninterested in the details">
+> Why does it fail?
+> ...
+> </skip>
+
+So there may still be some polishing needed, but as long as people
+are not using the "per destination" thing, the code is already good?
+That is something we may want to document.
+
+Thanks.
