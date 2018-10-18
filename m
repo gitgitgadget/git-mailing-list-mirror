@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97BC51F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 07:08:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D55791F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 07:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727521AbeJRPII (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 11:08:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44470 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726131AbeJRPII (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 11:08:08 -0400
-Received: (qmail 17619 invoked by uid 109); 18 Oct 2018 07:08:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Oct 2018 07:08:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27699 invoked by uid 111); 18 Oct 2018 07:07:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Oct 2018 03:07:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2018 03:08:32 -0400
-Date:   Thu, 18 Oct 2018 03:08:32 -0400
-From:   Jeff King <peff@peff.net>
+        id S1727467AbeJRP2f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 11:28:35 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:60346
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726323AbeJRP2e (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 Oct 2018 11:28:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1539847734;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=qHOAeeraypiH5GJbyi/PWxoubnajRBErQEHhE481sb0=;
+        b=LdozsS33fO1o50I4tDRHQzmCE8FnDvVl7EFt/bwrACrji3WIjwCoQyX+XGNKWCXa
+        vZqjhVrCeDTfGO5WqB7SO6BfloIKmDzKCCnrlLHWlgGgCtW2Nqbx87VE2I+ixd8OPMF
+        elBr5+wU9OeAqc0ce2RILok4pPzHGNStHBGIXlVk=
+From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] config.mak.dev: enable -Wunused-function
-Message-ID: <20181018070831.GA29542@sigill.intra.peff.net>
-References: <20181018070522.GA29499@sigill.intra.peff.net>
+Message-ID: <010201668613c46c-c42176a8-e4b9-4f31-a384-3ed9848377ef-000000@eu-west-1.amazonses.com>
+In-Reply-To: <010201668613c3de-23d41696-1476-4949-9834-a31adeb0650e-000000@eu-west-1.amazonses.com>
+References: <010201668613c3de-23d41696-1476-4949-9834-a31adeb0650e-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2 2/3] ls-remote: release memory instead of UNLEAK
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181018070522.GA29499@sigill.intra.peff.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 18 Oct 2018 07:28:54 +0000
+X-SES-Outgoing: 2018.10.18-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 18, 2018 at 03:05:22AM -0400, Jeff King wrote:
+Use ref_array_clear() to release memory instead of UNLEAK macros.
 
-> diff --git a/config.mak.dev b/config.mak.dev
-> index 92d268137f..bbeeff44fe 100644
-> --- a/config.mak.dev
-> +++ b/config.mak.dev
-> @@ -34,7 +34,6 @@ ifeq ($(filter extra-all,$(DEVOPTS)),)
->  CFLAGS += -Wno-empty-body
->  CFLAGS += -Wno-missing-field-initializers
->  CFLAGS += -Wno-sign-compare
-> -CFLAGS += -Wno-unused-function
->  CFLAGS += -Wno-unused-parameter
+Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+---
+ builtin/ls-remote.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-By the way, I wondered how close we were to being able to use
--Wunused-parameter. The answer is "not very".
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 1a25df7ee15b4..6a0cdec30d2d7 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -151,6 +151,6 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	UNLEAK(sorting);
+-	UNLEAK(ref_array);
++	ref_array_clear(&ref_array);
+ 	return status;
+ }
 
-However, I've been digging into the results, and it does find a number
-of bugs. I'm 168 (rough) patches deep right now, and I have it compiling
-cleanly. Most of those are just annotations, but I'll start posting
-fixes as I organize and clean them up.
-
--Peff
+--
+https://github.com/git/git/pull/538
