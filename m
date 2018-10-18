@@ -2,101 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 607941F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 18:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F1541F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 18:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728457AbeJSCkq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 22:40:46 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:47672 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726424AbeJSCkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 22:40:45 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42bd8y2lZbz5tlb;
-        Thu, 18 Oct 2018 20:38:26 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 71CB11AAF;
-        Thu, 18 Oct 2018 20:38:25 +0200 (CEST)
-Subject: [PATCH] diff: don't attempt to strip prefix from absolute Windows
- paths
-To:     Sergey Andreenko <andreenkosa@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <CAD1gVxMg0ZiKqFABrnwt0v_=wr2X_3ErkR92RmCAtFQnuM+L5w@mail.gmail.com>
- <xmqqr2gu8dsx.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <ae6fc699-6e09-2979-40dc-9cc49f4f8365@kdbg.org>
-Date:   Thu, 18 Oct 2018 20:38:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqr2gu8dsx.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1728498AbeJSClB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 22:41:01 -0400
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:37463 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726424AbeJSClB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 22:41:01 -0400
+Received: by mail-pg1-f202.google.com with SMTP id u43-v6so15124464pgn.4
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 11:38:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=kq9UxjoERGNW4jksFWUYlqB2PHUw2ML24mY9io35lAU=;
+        b=KEbZV/jkJbRWAfzDJtX4A1H8Fn5u/qnVzuB98qv79b61VUgVstknhNPAO6QRpYF58T
+         bV71pAeEon38WOn6AwgJkgO8PT3dTQ5BpHsxB8PW8lArplB0zpryVuq9f4tMJ4m+1piV
+         mdkW9aU6cVKpVi1iRH4aYNqUF6QV4pwNMoQgJAJqbaMCrrpI01izR4qK01ySS6jA7euo
+         DXUj/zrToB3IbxHThwxVJLVYsUxmqJFzHfVvEyNj4DH1v3ZDIBk5PhjIMLyeJSf8i2Om
+         RjA24yz4RL4QnP/hc8UOrILXQ2RRoudyagacklmLrTUp/Eq47nWQ83lgN2LhsQNEcKwG
+         Puqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=kq9UxjoERGNW4jksFWUYlqB2PHUw2ML24mY9io35lAU=;
+        b=Qq/6SF8vzIqFs3Kbap1FhsWtGSJhl7aKF8qLcmY2NvKsA19xZOMCACVaZ4lvEmai+t
+         HLfNLr9viPu+a9g3mGkQwAK4bufvF6H/qXqWgvm12oniO4aUvkL1Cejs6tfMtauoUOZn
+         QeIazXxrLZ5bufMfGzgxvd8Dm9ODKcjrFhFk4dEzE5lDXtUdtN3d2m6HMZD1IuhdVvDo
+         U3HQ75NwWyiDhnxpf74Sob9bZBZ8X9nrPqnwXoaGT5sVm6cbvRTXOUJvgjGGc7nHntfU
+         qE6gw4sWmlsskP227JmLXnTW5+lMLYH90dGwxWcWn8ejHkXh5MlNqrOVS+gZ0kf/08uA
+         bx/A==
+X-Gm-Message-State: ABuFfojH5M8hv+9OW9BbqWLgcDgMc7ky4W2+rxB9Q0BElLFKG1Wf2Gae
+        F3FsnzdSCclyhJ0igqc2ARs2W67FNE39
+X-Google-Smtp-Source: ACcGV63wWcWN+l5HkYdmKyDFDiZfoDbEjIoIsUFPtkoOMDTG9u2WBFQQ9KmwI5PYFICzD/YCLR/y1XFjrS98
+X-Received: by 2002:a62:a9b:: with SMTP id 27-v6mr15101433pfk.56.1539887923504;
+ Thu, 18 Oct 2018 11:38:43 -0700 (PDT)
+Date:   Thu, 18 Oct 2018 11:37:56 -0700
+In-Reply-To: <CAGZ79kbpXQURMsZY15_k3rJ-dyH0i4qAGDv8umM8Hmx10ZdMMA@mail.gmail.com>
+Message-Id: <20181018183758.81186-1-sbeller@google.com>
+Mime-Version: 1.0
+References: <CAGZ79kbpXQURMsZY15_k3rJ-dyH0i4qAGDv8umM8Hmx10ZdMMA@mail.gmail.com>
+X-Mailer: git-send-email 2.19.0
+Subject: [RFC PATCH 0/2] Bring the_repository into cmd_foo
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git diff can be invoked with absolute paths. Typically, this triggers
-the --no-index case. Then the absolute paths remain in the file names
-that are printed in the output.
+> On Wed, Oct 17, 2018 at 5:41 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> I had one high-level question: How are we testing that these "arbitrary
+>> repository" changes are safe?
+> [...]
+> Or instead we could accelerate the long term plan of removing a
+> hard coded the_repository and have each cmd builtin take an additional
+> repository pointer from the init code, such that we'd bring all of Git to
+> work on arbitrary repositories. Then the standard test suite should be
+> okay, as there is no special case for the_repository any more.
 
-There is one peculiarity, though: When the command is invoked from a
-a sub-directory in a repository, then it is attempted to strip the
-sub-directory from the beginning of relative paths. Yet, to detect a
-relative path the code just checks for an initial forward slash.
-This mistakes a Windows style path like D:/base as a relative path
-and the output looks like this, for example:
+Demo'd in this RFC series for git-merge-base.
 
-  D:\test\one>git -P diff --numstat D:\base D:\diff
-  1       1       {ase => iff}/1.txt
+The core idea is found in patch 1,
+and the proof of concept is found in patch 2.
 
-where the correct output should be
+What do you think?
 
-  D:\test\one>git -P diff --numstat D:\base D:\diff
-  1       1       D:/{base => diff}/1.txt
+Thanks,
+Stefan
 
-If the sub-directory where 'git diff' is invoked is sufficiently deep
-that the prefix becomes longer than the path to be printed, then the
-subsequent code even accesses the paths out of bounds!
+Stefan Beller (3):
+  repository: have get_the_repository() to remove the_repository
+    dependency
+  builtin/merge-base.c: do not rely on the_repository any more
 
-Use is_absolute_path() to detect Windows style absolute paths.
+ builtin/merge-base.c  | 67 ++++++++++++++++++++++++++-----------------
+ repository.c          | 10 +++++++
+ repository.h          | 13 ++++++++-
+ t/t6010-merge-base.sh |  3 +-
 
-One might wonder whether the check for a directory separator that
-is visible in the patch context should be changed from == '/' to
-is_dir_sep() or not. It turns out not to be necessary. That code
-only ever investigates paths that have undergone pathspec
-normalization, after which there are only forward slashes even on
-Windows.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- diff.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index f0c7557b40..d18eb198f2 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4267,12 +4267,12 @@ static void diff_fill_oid_info(struct diff_filespec *one)
- static void strip_prefix(int prefix_length, const char **namep, const char **otherp)
- {
- 	/* Strip the prefix but do not molest /dev/null and absolute paths */
--	if (*namep && **namep != '/') {
-+	if (*namep && !is_absolute_path(*namep)) {
- 		*namep += prefix_length;
- 		if (**namep == '/')
- 			++*namep;
- 	}
--	if (*otherp && **otherp != '/') {
-+	if (*otherp && !is_absolute_path(*otherp)) {
- 		*otherp += prefix_length;
- 		if (**otherp == '/')
- 			++*otherp;
 -- 
-2.19.1.406.g1aa3f475f3
+2.19.0
+
