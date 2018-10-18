@@ -2,106 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 378081F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 20:12:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85F01F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 20:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726680AbeJSEPB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 00:15:01 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:43910 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725751AbeJSEPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 00:15:01 -0400
-Received: by mail-oi1-f181.google.com with SMTP id s69-v6so25044873oie.10
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 13:12:23 -0700 (PDT)
+        id S1727126AbeJSEqU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 00:46:20 -0400
+Received: from mail-it1-f202.google.com ([209.85.166.202]:38308 "EHLO
+        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbeJSEqU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 00:46:20 -0400
+Received: by mail-it1-f202.google.com with SMTP id d10so1482283itk.3
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 13:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=neosmart.net; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=NWMtk9B+0E/vhsYURmEOhqwFObMatVZ2oHHl9/BLB5Q=;
-        b=nrV3x7NKAEfNEpCtq0woi/CZnMpwftHXXNA6oAyn4xgyPpjzwuo+M++2DYGaalgJpO
-         vPvc8/zwe5u3A4iXmWLcdCzXZBgrDxIAgBxbEAW7T/MxCUURGbGgM7PGejJpJJdGr6n3
-         dP/439bDiOJNhqsB3KVB2noW2Pqa1jKWcdKwQ=
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Tl4X264t7uZiHEoayofFk2puWUO70Q73q1epExM0rV8=;
+        b=g+FdUL8zzQqEfj9t07mGx/zgbN1G4Oew4+ulZ/w2KFuMHXFR2+a2jthyK7fkmH+qmW
+         6B7F9CWdtokS47boRmo6+MqNKjfDdUeEu8fTUmI1BuZLocZsjrus5yLRhwY3lQbxczCs
+         osyaeHqKLTEwl7EkeHHGINjfZkOV2z9UpYwkpxfpT+gJ2ZGc9/NPxnlEI1XZo0of4G/x
+         /I8wlLqySc/ic5Ucrw2OlroI8ou3ygS7oTqC/RKEOrv+Zci/Uguc4Y6MEXQQMkoZG6QV
+         67KCDSOvZu8e2NtDJZ7xzF7fz6Vx704h8H+5BrLFrE2Y+hjYc71QgBOht23ssS22hrej
+         dx+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=NWMtk9B+0E/vhsYURmEOhqwFObMatVZ2oHHl9/BLB5Q=;
-        b=MaUm2pi+CVBEntnQpMyq9StcN7qHQtug2bupOgLsp6mTxtpvgtn0H7tBMC0alCcoN4
-         NgNVKBSmBsmLc7aXiz1N93kj4Kj2fbtD2PurFeEgp/Z/x6Sc10RgC8Spf+AmfC8WKJSl
-         eS9U22hFjtxUPtgU3m8CLSXr/dhJMupyiYSYoqS4kKk+q8j4GhznU0Um/JcIkhrwfdyd
-         hCgrORGHd66G/xZ4r6fBFFJPTegoFr5/frnIK3tbX7NSIoBvek7MT73/1d8M+XoKAjR/
-         XyM1fguIGkxGGKxbeuB8H6wQg6qKX/7AqS6rH4YPo7DM/xSkGKNfHPiQZgiRPKkzS06E
-         +IbQ==
-X-Gm-Message-State: ABuFfoiD0+qZ0xbrXpUERC/RGspwAxsdfC8RXkXJTXgkQhGGZOUTF4t4
-        fcEAhC1jjBMrD4SaNYuvJLqWnsyDy3aSQEljRZv8nevEXQa5CA==
-X-Google-Smtp-Source: ACcGV63XB0nCrC8W7mEPmwSMxICS3fGfY0MCbBgzwzAEBzd3SxzVmVR09xJBFdH1HGijd4LjYPqYz1f5YJtz3BB+8Q8=
-X-Received: by 2002:aca:4083:: with SMTP id n125-v6mr17752322oia.108.1539893542623;
- Thu, 18 Oct 2018 13:12:22 -0700 (PDT)
-MIME-Version: 1.0
-From:   Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Date:   Thu, 18 Oct 2018 15:12:09 -0500
-Message-ID: <CACcTrKfVZsRC8y-89mnj6LnRHnT6ivQCHpc0p5ABXk4kds6MbA@mail.gmail.com>
-Subject: Shouldn't git be able to apply diffs that it created with --ignore-whitespace?
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Tl4X264t7uZiHEoayofFk2puWUO70Q73q1epExM0rV8=;
+        b=Ab3Fzq+sTpUbEsHfZGMfKgj77u4wSvGwjq9Ifs73yWcDNxGiedbeznK0SMKJXuvyYg
+         sT2dmrVEZoo6ilK0af3Es4VmTO5YhcXBCi7fGCNuJp/BmTmewxDiR330fpkVLQI5YYKt
+         6pyO3HeRzWJANwox9IfJstzbc1xRwFrQP17qtq0xbrSw5aCvSuvz9ghD9q7SwuSCi539
+         c8xCxEcnpK5LSdl2auB3zsrZqFyy86iWgNiKWu8vohpuzOPrFBvRDrFEMLWDzyc6Uns5
+         azYDb2rION/otYkJ7k6QYuqNH5Up53H/G4Fh/zTSd2M9G2d5akXZb2C4PlJfxoY2pEEB
+         cE/Q==
+X-Gm-Message-State: ABuFfogwAzUsUpdjmf/ew8kruHLbugvLXv6ylJeH5EH82WdFVjfNYAgt
+        PdPQaTm55S+KJynxc4zLfUdbwCrPTIsKtNvYaHMsXJfae5pHqCNVY8cjh3kka9NfYZo6PM33uXd
+        KC8AIG8qFlGf3HqAzg/1e2VrrVkM91GmHsT96UAK0zb5FMLLUl962emlMmG/kNVvwl0DiKSyJ4E
+        1G
+X-Google-Smtp-Source: ACcGV62fXtB4MZQXHnI9Gw6dunxowMOpp6MwAeiLbhr4ZbI/bjCjXiBusva5QGpmncNgGd9HLdmdC0tsdHigWI3b5F5A
+X-Received: by 2002:a24:6cc2:: with SMTP id w185-v6mr22474896itb.5.1539895413216;
+ Thu, 18 Oct 2018 13:43:33 -0700 (PDT)
+Date:   Thu, 18 Oct 2018 13:43:26 -0700
+In-Reply-To: <20181016215850.47821-1-jonathantanmy@google.com>
+Message-Id: <cover.1539893192.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181016215850.47821-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [PATCH v2 0/3] Clear flags before each v2 request
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello again all,
+To explain the differences in this version of the patch set, I'll quote
+an email [1] from Junio:
 
-I think I've previously broached this subject before, but I think I perhaps
-wasn't clear enough about what I was trying to do or why I feel that git is at
-fault here.
+[1] https://public-inbox.org/git/xmqq5zxzvnq1.fsf@gitster-ct.c.googlers.com/
 
-(I'm running git 2.19.1)
+> The change to the code itself sort-of makes sense (I say sort-of
+> because I didn't carefully look at the callers to see if they mind
+> getting all these flags cleared, but the ones that are cleared are
+> the ones that are involved mostly in the negotiation and shold be
+> OK).
 
-Starting with a fully-committed, not-dirty codebase, I open(ed) a poorly
-formatted, mixed-whitespace file (that I absolutely did not author!) under
-version control and make some very localized changes. My editor, being very
-smart and helpful, fixes up the line ending on save, and I exit.
+I have included 2 additional patches for these reasons:
 
-At this point, my source file contains a) deliberate changes I want, and b)
-whitespace changes I wish I could commit but that should not be a part of my
-patch.
+ - After reading the section of Junio's email quoted above, I took
+   another look at the flags, and found that not only is state stored in
+   the flags between invocations of upload_pack_v2(), state is also
+   stored in the want_obj and have_obj global variables. The additional
+   patches help clean those up.
 
-Shouldn't the following workflow be supported:
+ - To help reviewers who want to see if the callers mind getting all 8
+   flags cleared, I have included a discussion of all 8 flags in the
+   commit message of patch 3. The additional patches made the discussion
+   easier.
 
-~> git diff -w > foo.diff
-~> git reset --hard
-~> git apply [--ignore-whitespace] < foo.diff
+Responses to other points:
 
-Because that throws an error in this case:
+> Hmph, what if commit O had a long history behind it?  
+> 
+> Should fetching of B result in fetching the whole history?
 
-> error: patch failed: includes/helpers/class.phpmailer.php:1182
-> error: includes/helpers/class.phpmailer.php: patch does not apply
+I think so - when we fetch without --depth or any similar arguments, I
+think it's reasonable to have all objects referenced by the fetched
+tips.
 
-I feel like this did work, once upon a time. Perhaps prior to the same that
-broke `git add -p` when whitespace was mangled on editor exit/save (2b8ea7f3c7)?
+> Would we
+> notice that now all of A's parents are available locally and declare
+> that the repository is no longer shallow?
 
-To help debug this, I'm attaching the output of the following taken after I've
-made my changes to the file and wish to generate a clean diff, the former of
-which applies just fine after `git reset --hard`, while the latter does not:
+We could, but I think this is outside the scope of this patch set.
 
-~> git diff > with_whitespace.diff
-~> git diff -w > without_whitespace.diff
+> Use test_seq instead, or you'll get hit by test-lint?
 
-(I can also privately share the original file off-list if needed.)
+Thanks for the pointer to test-lint. I've used test_seq, and checked
+that test-lint doesn't print any errors.
 
-I don't believe the list allows binary attachments and because we're dealing
-with line-ending mangling I definitely do not want to include them inline, so
-I've uploaded them here:
+> Applied on 'master' or 'maint', this new test does not pass even
+> with s/seq/test_&/, so there may be something else wrong with it,
+> though.
 
-* http://share.neosmart.net/View/Index/nGujqm.diff
-* http://share.neosmart.net/View/Index/f4dkVF.diff
+Thanks - there was a copy-and-paste error (should have grepped for
+"fetch< version 2", not "git< version 2").
 
-(You can download them as-is by clicking the floppy icon in the top-right)
+Jonathan Tan (3):
+  upload-pack: make have_obj not global
+  upload-pack: make want_obj not global
+  upload-pack: clear flags before each v2 request
 
-With thanks,
+ t/t5702-protocol-v2.sh |  25 +++++++
+ upload-pack.c          | 153 ++++++++++++++++++++++++-----------------
+ 2 files changed, 115 insertions(+), 63 deletions(-)
 
-Mahmoud Al-Qudsi
-NeoSmart Technologies
+-- 
+2.19.0.271.gfe8321ec05.dirty
+
