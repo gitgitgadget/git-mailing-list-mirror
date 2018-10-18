@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFAB01F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 20:43:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 848FD1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 20:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727308AbeJSEqZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 00:46:25 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:42149 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725934AbeJSEqZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 00:46:25 -0400
-Received: by mail-vk1-f201.google.com with SMTP id w73-v6so8678164vkd.9
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 13:43:38 -0700 (PDT)
+        id S1727418AbeJSEq1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 00:46:27 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:35869 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbeJSEq0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 00:46:26 -0400
+Received: by mail-qt1-f201.google.com with SMTP id u28-v6so34006544qtu.3
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 13:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=iCKvsRsr5nJXYVe96HFASrsxna2OJL0z0AVVQei1yiQ=;
-        b=dfxhZgyzufhMk8Ac0MPYOrF6iIZXLFqdRaC+ibhhQqVpAczHdVoGr3SmAWzWC3opNZ
-         iTBIFt7JTeH7epfeCsuShjvgUslbkJ1BIU7krD478fg9S4raY3UZNArcXBKufYXWdCRr
-         Hplh245LUcuvxOwHoQcVryv2F/DnMfcGUrsNVjHsmjdIKVfUBfCyCkE8jvu4QMWKqwgq
-         6xzQ/JaFpVccHThiVtVHvC8/PFv5pk+6+sdMTeq44HP6WVCbfgel+J7uu9uFjQOjhgaz
-         Ceq0aqdtkvyruOxLuffEY55LAdCHREEOlx/4de4BB8GA5tf6ArQglx+uX+ouE5uLv5V8
-         x3qA==
+        bh=NSzVcoZSc+icWJS0d/8THM3sqajd5P7VQopNBNBjuwQ=;
+        b=Wnye9thuV8QVXHlMZ+6Gdde1Aoy/vuaRbd4I5TPC8GrYOHjndA6/2/+5kxfpBBcYhW
+         vmwMLqr9sol5WA1jpEM7KuB5WFbf6A2wuklpuFZWphW4fZqMDe4eY0uQkKy+HGFo8ek7
+         3I2j6Ecs6V9oFCXwlTJBazfoQ5Sx7RIKPg9T7S3kDM3fifbjtLloVlHwJ8whHhX2Qnip
+         AJKJBwXP/FlGoYcXd1K856ULoI0UMgXtr4hZaTaBlRXdXEmUgm01nwODDTaHWvmEOnAw
+         WAhaiAD/LUAYUnusN6RgTWCrvN0i7IT+d2UZyro7+bKHk0/Ux8rurI9iuM2hi+BsbfiN
+         gHDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=iCKvsRsr5nJXYVe96HFASrsxna2OJL0z0AVVQei1yiQ=;
-        b=A6Ydq4Wl43aiBltcNZGvEqJh5WkUd2KZGm3X4wSs/EIegBiMgSk2VpgkL9HRLMsR06
-         fsC1gB74HyJozKrqt1EcoWF5dcH2Xzl7zmRm5v/ENW7s3q20EZrREgYcdt1CmX0YUdx8
-         BiYCw7hmA3Fs2Q0fqZyjrurORWalY1DfAqg1CPxqP/pk28Z8fFyWJN5rTukLdZC5ITFw
-         z84V/AUcUoVZI0Ar9C48tLh4NrR46Znes/SXuaYEMQfq05MF66rhw7H5LquQ1ehczsCC
-         tZdvC4+Hsr5zdTcv4IG3rjzWQUQXJoRwZvqLAnrmYUpfe/BGnfinUEWI6miVawjQpHhC
-         AmdQ==
-X-Gm-Message-State: ABuFfohOveTB18sANMtl85vcxg0aVAhn7HAJlmV01InuWKfLfl9KoITO
-        bOMoL7jkSHlFvjnguKwkog7/fn8WIeTwjHNw9tOVoPihpyzllFwFJCy11VV8RsE+RPngCwSfC2o
-        G7neGPvN3e/1NZK+zOevYU8+sGKksGqKcrbm31gZqq393BlTPsVqlgG2SVlWf6BbPK9jRtlfcfQ
-        Tv
-X-Google-Smtp-Source: ACcGV63VF/Jgtr2cuoWruX/iEXH5/ns2RiSn1p9vcubTWXGVct1dstaqzeVWKOJoIs8Qi2s7XKDNvEUf9H97kFFFEbdY
-X-Received: by 2002:a1f:85cd:: with SMTP id h196mr6676207vkd.2.1539895417800;
- Thu, 18 Oct 2018 13:43:37 -0700 (PDT)
-Date:   Thu, 18 Oct 2018 13:43:28 -0700
+        bh=NSzVcoZSc+icWJS0d/8THM3sqajd5P7VQopNBNBjuwQ=;
+        b=jcDIYCztWV3sIVBqJqHUOnnxzBbkI1PsWijCBO/mKLKIYGSh2u0JtDZUaOiZgzBqkM
+         z285Vic0Ff88Gkv3AxOs6vTsObdyhyqVXX7Z/0Vg2eBbdi9meB6i4N9u6EsZyKXlov5R
+         HIyiTIGumpTXTMICMHDtrsH4YKfbR+occV3jQTXzsG4Vtn7BaRlvgwIuqjrE7Pp9y0ke
+         7pTSkaicPora4hMjsJ//HsLyhqKVznfhFgRgx8TU0lvJNsM/rUOfCMY7LhhRkaGR43po
+         bs0lnGqxxA4KqgnDRHpSBwoEcj8jtgIv5HRjtla98YgNntMN/VHuuXJ/3Xvm2niEUv39
+         kzFw==
+X-Gm-Message-State: ABuFfogL3Kwhcwzokxevo6iozv3GHQLkSs5VHh3judS/8sltrPCzcW25
+        MLzVkFjOQEghPDER3UqGETYpH0D1Hf5yrrP6orAOaici0x5CgHuZ3Pe7X78+ZzQtzLMCYBllAIA
+        k4nmPljFok1Ui3/n2icf4X0s0oO/9e5oZOHWxIVDxFo+a0PcRQkdjBENPrMi7jE/SuZ/z7f70mA
+        Ci
+X-Google-Smtp-Source: ACcGV61SgUBNpW2oylcGbLQupYl5UiYhMxbmaeDob/TQ7kM3ghRyx7kzO4cWTSDjJsabNC4UjpxkCn+OTEz4h1ZcJp1o
+X-Received: by 2002:ac8:396b:: with SMTP id t40-v6mr25470005qtb.16.1539895420220;
+ Thu, 18 Oct 2018 13:43:40 -0700 (PDT)
+Date:   Thu, 18 Oct 2018 13:43:29 -0700
 In-Reply-To: <cover.1539893192.git.jonathantanmy@google.com>
-Message-Id: <3853c006257c418ee5179aa7c35c9e9e31eeef1f.1539893192.git.jonathantanmy@google.com>
+Message-Id: <d50b8bc81f4380ee4dea87e9131d67aeddfffe48.1539893192.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20181016215850.47821-1-jonathantanmy@google.com> <cover.1539893192.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH v2 2/3] upload-pack: make want_obj not global
+Subject: [PATCH v2 3/3] upload-pack: clear flags before each v2 request
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -63,433 +63,141 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Because upload_pack_v2() can be invoked multiple times in the same
-process, the static variable want_obj may not be empty when it is
-invoked. To make further analysis of this situation easier, make the
-variable local; analysis will be done in a subsequent patch.
+Suppose a server has the following commit graph:
 
-The new local variable in upload_pack_v2() is static to preserve
-existing behavior; this is not necessary in upload_pack() because
-upload_pack() is only invoked once per process.
+ A   B
+  \ /
+   O
+
+We create a client by cloning A from the server with depth 1, and add
+many commits to it (so that future fetches span multiple requests due to
+lengthy negotiation). If it then fetches B using protocol v2, the fetch
+spanning multiple requests, the resulting packfile does not contain O
+even though the client did report that A is shallow.
+
+This is because upload_pack_v2() can be called multiple times while
+processing the same session. During the 2nd and all subsequent
+invocations, some object flags remain from the previous invocations. In
+particular, CLIENT_SHALLOW remains, preventing process_shallow() from
+adding client-reported shallows to the "shallows" array, and hence
+pack-objects not knowing about these client-reported shallows.
+
+Therefore, teach upload_pack_v2() to clear object flags at the start of
+each invocation. This has some other results:
+
+ - THEY_HAVE gates addition of objects to have_obj in process_haves().
+   Previously in upload_pack_v2(), have_obj needed to be static because
+   once an object is added to have_obj, it is never readded and thus we
+   needed to retain the contents of have_obj between invocations. Now
+   that flags are cleared, this is no longer necessary. This patch does
+   not change the behavior of ok_to_give_up() (THEY_HAVE is still set on
+   each "have") and got_oid() (used only in non-v2)); THEY_HAVE is not
+   used in any other function.
+
+ - WANTED gates addition of objects to want_obj in parse_want() and
+   parse_want_ref(). It is also used in receive_needs(), but that is
+   only used in non-v2. For the same reasons as THEY_HAVE, want_obj no
+   longer needs to be static in upload_pack_v2().
+
+ - CLIENT_SHALLOW is changed as discussed above.
+
+Clearing of the other 5 flags does not affect functionality in v2. (Note
+that in non-v2, upload_pack() is only called once per process, so each
+invocation starts with blank flags anyway.)
+
+ - OUR_REF is only used in non-v2.
+
+ - COMMON_KNOWN is only used as a scratch flag in ok_to_give_up().
+
+ - SHALLOW is passed to invocations in deepen() and
+   deepen_by_rev_list(), but upload-pack doesn't use it.
+
+ - NOT_SHALLOW is used by send_shallow() and send_unshallow(), but
+   invocations of those functions are always preceded by code that sets
+   NOT_SHALLOW on the appropriate objects.
+
+ - HIDDEN_REF is only used in non-v2.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- upload-pack.c | 116 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 66 insertions(+), 50 deletions(-)
+ t/t5702-protocol-v2.sh | 25 +++++++++++++++++++++++++
+ upload-pack.c          | 13 +++++++++----
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 88a886975d..4adc4b00e3 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -429,6 +429,31 @@ test_expect_success 'fetch supports include-tag and tag following' '
+ 	git -C client cat-file -e $(git -C client rev-parse annotated_tag)
+ '
+ 
++test_expect_success 'upload-pack respects client shallows' '
++	rm -rf server client trace &&
++
++	git init server &&
++	test_commit -C server base &&
++	test_commit -C server client_has &&
++
++	git clone --depth=1 "file://$(pwd)/server" client &&
++
++	# Add extra commits to the client so that the whole fetch takes more
++	# than 1 request (due to negotiation)
++	for i in $(test_seq 1 32)
++	do
++		test_commit -C client c$i
++	done &&
++
++	git -C server checkout -b newbranch base &&
++	test_commit -C server client_wants &&
++
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
++		fetch origin newbranch &&
++	# Ensure that protocol v2 is used
++	grep "fetch< version 2" trace
++'
++
+ # Test protocol v2 with 'http://' transport
+ #
+ . "$TEST_DIRECTORY"/lib-httpd.sh
 diff --git a/upload-pack.c b/upload-pack.c
-index cb2401f90d..451bf47e7f 100644
+index 451bf47e7f..42c5ec44cf 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -52,7 +52,6 @@ static int no_progress, daemon_mode;
- #define ALLOW_ANY_SHA1	07
- static unsigned int allow_unadvertised_object_request;
- static int shallow_nr;
--static struct object_array want_obj;
- static struct object_array extra_edge_obj;
- static unsigned int timeout;
- static int keepalive = 5;
-@@ -98,7 +97,8 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- 	return 0;
- }
+@@ -37,6 +37,9 @@
+ #define CLIENT_SHALLOW	(1u << 18)
+ #define HIDDEN_REF	(1u << 19)
  
--static void create_pack_file(const struct object_array *have_obj)
-+static void create_pack_file(const struct object_array *have_obj,
-+			     const struct object_array *want_obj)
++#define ALL_FLAGS (THEY_HAVE | OUR_REF | WANTED | COMMON_KNOWN | SHALLOW | \
++		NOT_SHALLOW | CLIENT_SHALLOW | HIDDEN_REF)
++
+ static timestamp_t oldest_have;
+ 
+ static int deepen_relative;
+@@ -1409,10 +1412,10 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
  {
- 	struct child_process pack_objects = CHILD_PROCESS_INIT;
- 	char data[8193], progress[128];
-@@ -159,9 +159,9 @@ static void create_pack_file(const struct object_array *have_obj)
- 	if (shallow_nr)
- 		for_each_commit_graft(write_one_shallow, pipe_fd);
- 
--	for (i = 0; i < want_obj.nr; i++)
-+	for (i = 0; i < want_obj->nr; i++)
- 		fprintf(pipe_fd, "%s\n",
--			oid_to_hex(&want_obj.objects[i].item->oid));
-+			oid_to_hex(&want_obj->objects[i].item->oid));
- 	fprintf(pipe_fd, "--not\n");
- 	for (i = 0; i < have_obj->nr; i++)
- 		fprintf(pipe_fd, "%s\n",
-@@ -337,19 +337,21 @@ static int got_oid(const char *hex, struct object_id *oid,
- 	return 0;
- }
- 
--static int ok_to_give_up(const struct object_array *have_obj)
-+static int ok_to_give_up(const struct object_array *have_obj,
-+			 struct object_array *want_obj)
- {
- 	uint32_t min_generation = GENERATION_NUMBER_ZERO;
- 
- 	if (!have_obj->nr)
- 		return 0;
- 
--	return can_all_from_reach_with_flag(&want_obj, THEY_HAVE,
-+	return can_all_from_reach_with_flag(want_obj, THEY_HAVE,
- 					    COMMON_KNOWN, oldest_have,
- 					    min_generation);
- }
- 
--static int get_common_commits(struct object_array *have_obj)
-+static int get_common_commits(struct object_array *have_obj,
-+			      struct object_array *want_obj)
- {
- 	struct object_id oid;
- 	char last_hex[GIT_MAX_HEXSZ + 1];
-@@ -367,7 +369,7 @@ static int get_common_commits(struct object_array *have_obj)
- 
- 		if (!line) {
- 			if (multi_ack == 2 && got_common
--			    && !got_other && ok_to_give_up(have_obj)) {
-+			    && !got_other && ok_to_give_up(have_obj, want_obj)) {
- 				sent_ready = 1;
- 				packet_write_fmt(1, "ACK %s ready\n", last_hex);
- 			}
-@@ -388,7 +390,7 @@ static int get_common_commits(struct object_array *have_obj)
- 			switch (got_oid(arg, &oid, have_obj)) {
- 			case -1: /* they have what we do not */
- 				got_other = 1;
--				if (multi_ack && ok_to_give_up(have_obj)) {
-+				if (multi_ack && ok_to_give_up(have_obj, want_obj)) {
- 					const char *hex = oid_to_hex(&oid);
- 					if (multi_ack == 2) {
- 						sent_ready = 1;
-@@ -581,7 +583,7 @@ static int has_unreachable(struct object_array *src)
- 	return 1;
- }
- 
--static void check_non_tip(void)
-+static void check_non_tip(struct object_array *want_obj)
- {
- 	int i;
- 
-@@ -592,14 +594,14 @@ static void check_non_tip(void)
- 	 */
- 	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1))
- 		goto error;
--	if (!has_unreachable(&want_obj))
-+	if (!has_unreachable(want_obj))
- 		/* All the non-tip ones are ancestors of what we advertised */
- 		return;
- 
- error:
- 	/* Pick one of them (we know there at least is one) */
--	for (i = 0; i < want_obj.nr; i++) {
--		struct object *o = want_obj.objects[i].item;
-+	for (i = 0; i < want_obj->nr; i++) {
-+		struct object *o = want_obj->objects[i].item;
- 		if (!is_our_ref(o))
- 			die("git upload-pack: not our ref %s",
- 			    oid_to_hex(&o->oid));
-@@ -620,7 +622,8 @@ static void send_shallow(struct commit_list *result)
- 	}
- }
- 
--static void send_unshallow(const struct object_array *shallows)
-+static void send_unshallow(const struct object_array *shallows,
-+			   struct object_array *want_obj)
- {
- 	int i;
- 
-@@ -644,7 +647,7 @@ static void send_unshallow(const struct object_array *shallows)
- 			parents = ((struct commit *)object)->parents;
- 			while (parents) {
- 				add_object_array(&parents->item->object,
--						 NULL, &want_obj);
-+						 NULL, want_obj);
- 				parents = parents->next;
- 			}
- 			add_object_array(object, NULL, &extra_edge_obj);
-@@ -655,7 +658,7 @@ static void send_unshallow(const struct object_array *shallows)
- }
- 
- static void deepen(int depth, int deepen_relative,
--		   struct object_array *shallows)
-+		   struct object_array *shallows, struct object_array *want_obj)
- {
- 	if (depth == INFINITE_DEPTH && !is_repository_shallow(the_repository)) {
- 		int i;
-@@ -678,38 +681,40 @@ static void deepen(int depth, int deepen_relative,
- 	} else {
- 		struct commit_list *result;
- 
--		result = get_shallow_commits(&want_obj, depth,
-+		result = get_shallow_commits(want_obj, depth,
- 					     SHALLOW, NOT_SHALLOW);
- 		send_shallow(result);
- 		free_commit_list(result);
- 	}
- 
--	send_unshallow(shallows);
-+	send_unshallow(shallows, want_obj);
- }
- 
- static void deepen_by_rev_list(int ac, const char **av,
--			       struct object_array *shallows)
-+			       struct object_array *shallows,
-+			       struct object_array *want_obj)
- {
- 	struct commit_list *result;
- 
- 	result = get_shallow_commits_by_rev_list(ac, av, SHALLOW, NOT_SHALLOW);
- 	send_shallow(result);
- 	free_commit_list(result);
--	send_unshallow(shallows);
-+	send_unshallow(shallows, want_obj);
- }
- 
- /* Returns 1 if a shallow list is sent or 0 otherwise */
- static int send_shallow_list(int depth, int deepen_rev_list,
- 			     timestamp_t deepen_since,
- 			     struct string_list *deepen_not,
--			     struct object_array *shallows)
-+			     struct object_array *shallows,
-+			     struct object_array *want_obj)
- {
- 	int ret = 0;
- 
- 	if (depth > 0 && deepen_rev_list)
- 		die("git upload-pack: deepen and deepen-since (or deepen-not) cannot be used together");
- 	if (depth > 0) {
--		deepen(depth, deepen_relative, shallows);
-+		deepen(depth, deepen_relative, shallows, want_obj);
- 		ret = 1;
- 	} else if (deepen_rev_list) {
- 		struct argv_array av = ARGV_ARRAY_INIT;
-@@ -726,11 +731,11 @@ static int send_shallow_list(int depth, int deepen_rev_list,
- 			}
- 			argv_array_push(&av, "--not");
- 		}
--		for (i = 0; i < want_obj.nr; i++) {
--			struct object *o = want_obj.objects[i].item;
-+		for (i = 0; i < want_obj->nr; i++) {
-+			struct object *o = want_obj->objects[i].item;
- 			argv_array_push(&av, oid_to_hex(&o->oid));
- 		}
--		deepen_by_rev_list(av.argc, av.argv, shallows);
-+		deepen_by_rev_list(av.argc, av.argv, shallows, want_obj);
- 		argv_array_clear(&av);
- 		ret = 1;
- 	} else {
-@@ -815,7 +820,7 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
- 	return 0;
- }
- 
--static void receive_needs(void)
-+static void receive_needs(struct object_array *want_obj)
- {
- 	struct object_array shallows = OBJECT_ARRAY_INIT;
- 	struct string_list deepen_not = STRING_LIST_INIT_DUP;
-@@ -893,7 +898,7 @@ static void receive_needs(void)
- 			if (!((allow_unadvertised_object_request & ALLOW_ANY_SHA1) == ALLOW_ANY_SHA1
- 			      || is_our_ref(o)))
- 				has_non_tip = 1;
--			add_object_array(o, NULL, &want_obj);
-+			add_object_array(o, NULL, want_obj);
- 		}
- 	}
- 
-@@ -905,7 +910,7 @@ static void receive_needs(void)
- 	 * by another process that handled the initial request.
- 	 */
- 	if (has_non_tip)
--		check_non_tip();
-+		check_non_tip(want_obj);
- 
- 	if (!use_sideband && daemon_mode)
- 		no_progress = 1;
-@@ -914,7 +919,7 @@ static void receive_needs(void)
- 		return;
- 
- 	if (send_shallow_list(depth, deepen_rev_list, deepen_since,
--			      &deepen_not, &shallows))
-+			      &deepen_not, &shallows, want_obj))
- 		packet_flush(1);
- 	object_array_clear(&shallows);
- }
-@@ -1040,6 +1045,7 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- void upload_pack(struct upload_pack_options *options)
- {
- 	struct string_list symref = STRING_LIST_INIT_DUP;
-+	struct object_array want_obj = OBJECT_ARRAY_INIT;
- 
- 	stateless_rpc = options->stateless_rpc;
- 	timeout = options->timeout;
-@@ -1063,11 +1069,11 @@ void upload_pack(struct upload_pack_options *options)
- 	if (options->advertise_refs)
- 		return;
- 
--	receive_needs();
-+	receive_needs(&want_obj);
- 	if (want_obj.nr) {
- 		struct object_array have_obj = OBJECT_ARRAY_INIT;
--		get_common_commits(&have_obj);
--		create_pack_file(&have_obj);
-+		get_common_commits(&have_obj, &want_obj);
-+		create_pack_file(&have_obj, &want_obj);
- 	}
- }
- 
-@@ -1117,7 +1123,7 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
- 	string_list_clear(&data->deepen_not, 0);
- }
- 
--static int parse_want(const char *line)
-+static int parse_want(const char *line, struct object_array *want_obj)
- {
- 	const char *arg;
- 	if (skip_prefix(line, "want ", &arg)) {
-@@ -1139,7 +1145,7 @@ static int parse_want(const char *line)
- 
- 		if (!(o->flags & WANTED)) {
- 			o->flags |= WANTED;
--			add_object_array(o, NULL, &want_obj);
-+			add_object_array(o, NULL, want_obj);
- 		}
- 
- 		return 1;
-@@ -1148,7 +1154,8 @@ static int parse_want(const char *line)
- 	return 0;
- }
- 
--static int parse_want_ref(const char *line, struct string_list *wanted_refs)
-+static int parse_want_ref(const char *line, struct string_list *wanted_refs,
-+			  struct object_array *want_obj)
- {
- 	const char *arg;
- 	if (skip_prefix(line, "want-ref ", &arg)) {
-@@ -1167,7 +1174,7 @@ static int parse_want_ref(const char *line, struct string_list *wanted_refs)
- 		o = parse_object_or_die(&oid, arg);
- 		if (!(o->flags & WANTED)) {
- 			o->flags |= WANTED;
--			add_object_array(o, NULL, &want_obj);
-+			add_object_array(o, NULL, want_obj);
- 		}
- 
- 		return 1;
-@@ -1192,16 +1199,18 @@ static int parse_have(const char *line, struct oid_array *haves)
- }
- 
- static void process_args(struct packet_reader *request,
--			 struct upload_pack_data *data)
-+			 struct upload_pack_data *data,
-+			 struct object_array *want_obj)
- {
- 	while (packet_reader_read(request) != PACKET_READ_FLUSH) {
- 		const char *arg = request->line;
- 		const char *p;
- 
- 		/* process want */
--		if (parse_want(arg))
-+		if (parse_want(arg, want_obj))
- 			continue;
--		if (allow_ref_in_want && parse_want_ref(arg, &data->wanted_refs))
-+		if (allow_ref_in_want &&
-+		    parse_want_ref(arg, &data->wanted_refs, want_obj))
- 			continue;
- 		/* process have line */
- 		if (parse_have(arg, &data->haves))
-@@ -1296,7 +1305,8 @@ static int process_haves(struct oid_array *haves, struct oid_array *common,
- }
- 
- static int send_acks(struct oid_array *acks, struct strbuf *response,
--		     const struct object_array *have_obj)
-+		     const struct object_array *have_obj,
-+		     struct object_array *want_obj)
- {
- 	int i;
- 
-@@ -1311,7 +1321,7 @@ static int send_acks(struct oid_array *acks, struct strbuf *response,
- 				 oid_to_hex(&acks->oid[i]));
- 	}
- 
--	if (ok_to_give_up(have_obj)) {
-+	if (ok_to_give_up(have_obj, want_obj)) {
- 		/* Send Ready */
- 		packet_buf_write(response, "ready\n");
- 		return 1;
-@@ -1321,7 +1331,8 @@ static int send_acks(struct oid_array *acks, struct strbuf *response,
- }
- 
- static int process_haves_and_send_acks(struct upload_pack_data *data,
--				       struct object_array *have_obj)
-+				       struct object_array *have_obj,
-+				       struct object_array *want_obj)
- {
- 	struct oid_array common = OID_ARRAY_INIT;
- 	struct strbuf response = STRBUF_INIT;
-@@ -1330,7 +1341,7 @@ static int process_haves_and_send_acks(struct upload_pack_data *data,
- 	process_haves(&data->haves, &common, have_obj);
- 	if (data->done) {
- 		ret = 1;
--	} else if (send_acks(&common, &response, have_obj)) {
-+	} else if (send_acks(&common, &response, have_obj, want_obj)) {
- 		packet_buf_delim(&response);
- 		ret = 1;
- 	} else {
-@@ -1366,7 +1377,8 @@ static void send_wanted_ref_info(struct upload_pack_data *data)
- 	packet_delim(1);
- }
- 
--static void send_shallow_info(struct upload_pack_data *data)
-+static void send_shallow_info(struct upload_pack_data *data,
-+			      struct object_array *want_obj)
- {
- 	/* No shallow info needs to be sent */
- 	if (!data->depth && !data->deepen_rev_list && !data->shallows.nr &&
-@@ -1377,9 +1389,10 @@ static void send_shallow_info(struct upload_pack_data *data)
- 
- 	if (!send_shallow_list(data->depth, data->deepen_rev_list,
- 			       data->deepen_since, &data->deepen_not,
--			       &data->shallows) &&
-+			       &data->shallows, want_obj) &&
- 	    is_repository_shallow(the_repository))
--		deepen(INFINITE_DEPTH, data->deepen_relative, &data->shallows);
-+		deepen(INFINITE_DEPTH, data->deepen_relative, &data->shallows,
-+		       want_obj);
- 
- 	packet_delim(1);
- }
-@@ -1398,6 +1411,8 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
+ 	enum fetch_state state = FETCH_PROCESS_ARGS;
  	struct upload_pack_data data;
- 	/* NEEDSWORK: make this non-static */
- 	static struct object_array have_obj;
-+	/* NEEDSWORK: make this non-static */
-+	static struct object_array want_obj;
+-	/* NEEDSWORK: make this non-static */
+-	static struct object_array have_obj;
+-	/* NEEDSWORK: make this non-static */
+-	static struct object_array want_obj;
++	struct object_array have_obj = OBJECT_ARRAY_INIT;
++	struct object_array want_obj = OBJECT_ARRAY_INIT;
++
++	clear_object_flags(ALL_FLAGS);
  
  	git_config(upload_pack_config, NULL);
  
-@@ -1407,7 +1422,7 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 	while (state != FETCH_DONE) {
- 		switch (state) {
- 		case FETCH_PROCESS_ARGS:
--			process_args(request, &data);
-+			process_args(request, &data, &want_obj);
+@@ -1464,6 +1467,8 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
+ 	}
  
- 			if (!want_obj.nr) {
- 				/*
-@@ -1429,17 +1444,18 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 			}
- 			break;
- 		case FETCH_SEND_ACKS:
--			if (process_haves_and_send_acks(&data, &have_obj))
-+			if (process_haves_and_send_acks(&data, &have_obj,
-+							&want_obj))
- 				state = FETCH_SEND_PACK;
- 			else
- 				state = FETCH_DONE;
- 			break;
- 		case FETCH_SEND_PACK:
- 			send_wanted_ref_info(&data);
--			send_shallow_info(&data);
-+			send_shallow_info(&data, &want_obj);
+ 	upload_pack_data_clear(&data);
++	object_array_clear(&have_obj);
++	object_array_clear(&want_obj);
+ 	return 0;
+ }
  
- 			packet_write_fmt(1, "packfile\n");
--			create_pack_file(&have_obj);
-+			create_pack_file(&have_obj, &want_obj);
- 			state = FETCH_DONE;
- 			break;
- 		case FETCH_DONE:
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
