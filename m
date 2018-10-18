@@ -2,138 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7066F1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 08:05:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C27F1F454
+	for <e@80x24.org>; Thu, 18 Oct 2018 09:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727434AbeJRQE5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 12:04:57 -0400
-Received: from mx.mylinuxtime.de ([195.201.174.144]:35528 "EHLO
-        mx.mylinuxtime.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbeJRQE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 12:04:57 -0400
-Received: from leda (unknown [IPv6:2001:470:99c1:708:d357:a202:545c:8439])
-        (using TLSv1.2 with cipher DHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by mx.mylinuxtime.de (Postfix) with ESMTPSA id 2DCD6DB669;
-        Thu, 18 Oct 2018 10:05:06 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.mylinuxtime.de 2DCD6DB669
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
-        t=1539849907; bh=ZtYpmGdfNM+gkTftDAbU9h0+Idw7nNPu0yjSWyO1AJY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References;
-        b=AGoi7iSVEwfbPLsFjUghbE61RyMH7fWGG22NliYGtgJJ6Vec96gK4PnKJ/p1QXRnV
-         C9Cv4B6868HjyXpDued+D90FxrOnY2gHn5MSjnRrsWmKlKLmgWOxT/Ipc0k7gc4LaW
-         x6iGAIKaMokKd86PRP/ozhfbMUzGxYPdIMaRGbrM=
-Date:   Thu, 18 Oct 2018 10:05:04 +0200
-From:   Christian Hesse <list@eworm.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] subtree: make install targets depend on build
- targets
-Message-ID: <20181018100504.053e4827@leda>
-In-Reply-To: <xmqqftx4vwe5.fsf@gitster-ct.c.googlers.com>
-References: <xmqq8t2y1o4y.fsf@gitster-ct.c.googlers.com>
-        <20181016075624.30176-1-list@eworm.de>
-        <20181017024503.GA117170@aiede.svl.corp.google.com>
-        <xmqqftx4vwe5.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;|\QFlOg>\Bt!b#{;dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;ftj!Hxx\1@;LM)Pz)|B%1#sfF;s;,N?*K*^)
-Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
+        id S1727719AbeJRRve (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 13:51:34 -0400
+Received: from mout.gmx.net ([212.227.17.20]:35435 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727431AbeJRRve (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 13:51:34 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LpwZn-1fkJmO0lip-00flXV; Thu, 18
+ Oct 2018 11:51:15 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LpwZn-1fkJmO0lip-00flXV; Thu, 18
+ Oct 2018 11:51:15 +0200
+Date:   Thu, 18 Oct 2018 11:51:18 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Daniels Umanovskis <daniels@umanovskis.se>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v4] branch: introduce --show-current display option
+In-Reply-To: <20181017103902.GA12137@flurp.local>
+Message-ID: <nycvar.QRO.7.76.6.1810181146250.4546@tvgsbejvaqbjf.bet>
+References: <xmqqva68dqip.fsf@gitster-ct.c.googlers.com> <20181012133321.20580-1-daniels@umanovskis.se> <CAPig+cRCfO=3BB6bvDSKLKkhiSA-4=p4-zZkAXvN446_6B1_HA@mail.gmail.com> <xmqqk1mhxzcz.fsf@gitster-ct.c.googlers.com> <CAPig+cRwy2Xhq7uJJ0OfY2nRZgPK9yHr=G+KMKuWx-PXyWv8Gg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1810171211440.4546@tvgsbejvaqbjf.bet> <20181017103902.GA12137@flurp.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/c3K0nuuhTA=G2GZ_2sqZ2PW"; protocol="application/pgp-signature"
-Authentication-Results: mx.mylinuxtime.de;
-        auth=pass smtp.auth=mail@eworm.de smtp.mailfrom=list@eworm.de
-X-Rspamd-Server: mx
-X-Stat-Signature: mpztn3sy9y8s3da1txw9gabcbob3x148
-X-Rspamd-Queue-Id: 2DCD6DB669
-X-Spamd-Result: default: False [-4.70 / 15.00];
-         ARC_NA(0.00)[];
-         BAYES_HAM(-0.00)[15.46%];
-         FROM_HAS_DN(0.00)[];
-         RCPT_COUNT_THREE(0.00)[4];
-         TO_MATCH_ENVRCPT_ALL(0.00)[];
-         FREEMAIL_ENVRCPT(0.00)[gmail.com];
-         MIME_GOOD(-0.20)[multipart/signed,text/plain];
-         TO_DN_ALL(0.00)[];
-         NEURAL_HAM(-3.00)[-0.999,0];
-         SIGNED_PGP(-2.00)[];
-         RCVD_COUNT_ZERO(0.00)[0];
-         FROM_EQ_ENVFROM(0.00)[];
-         MID_RHS_NOT_FQDN(0.50)[];
-         ASN(0.00)[asn:6939, ipnet:2001:470::/32, country:US];
-         FREEMAIL_CC(0.00)[gmail.com];
-         RCVD_TLS_ALL(0.00)[]
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:voU14rvmJ/tDk4H4pqxyaPsgMhQqerAHfexaC9EuTBCnfusru8G
+ j8OkpYHGsWgeP2vDX7WSLP8fGhvz5iCMysKDhp8c5wPa06QERvAlUCf1WCAKwZFlqzauRHe
+ yxnAHYFpJHssOAv7hCcEfgwS0vNZWBcfUixhUVHiC4NMNyzrk+ODzq/3vASqhsMLReGURTv
+ GkQ6BvHMhL0ZpV+4lsptQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:26PijWLXiRg=:8WHNcTGDgAeWuiqocvC5z+
+ UYKN8UbqfOQITtDJrQhX49Vw3OvbJMsrsMx/ct1yItJeJQVKqed3YN/nFb67BGahuUATmSC53
+ xNPu/oTBYXYHS+CrAhaNAGOn9e2qEoeUB2QxgYGZVlOvDYARUI62uNGFFbNAy0ihi+Wm1Li+l
+ d2daTWMCtsNUNcR7+tlnLlMdx388opSMLhX2rm6s1buHyumI/nNrz7SbjJseLF0X1nCqBQxqv
+ h3dhu8NFBNUEaOhD0MWX0cPgtqPnjjLxAbeFGjVI7SLYgmhhFV053ll8WP5c4IYAZYH/WetYy
+ HY0JPLTiYbE/sOzQ/4OFXLN9vy4xgBqyEb31dzd4IhM1rpT/bmIYVocN1bpWr1/8EHfIU1ygh
+ HiPVMCvyj9TgTbJWeauaT1ICYSJ41IHUqbcNXFJpfjHyxaVKCb17tb4XDuEyw3qcp/CI/hghI
+ iXeYf7KOsCDlLMRGfbHXhANkIRnxsniSbxlh+38WSv/oyOS3L70E7p9AVhIzBYe1sVTPP1Wre
+ E+Z5xNNtu0egGC5eua8JGlG5lLNZDcyTeIClzmXqgGWMIAG5X1CfctWiCBfCuFnH+uuxrlsv7
+ RlU+Fozj2GPx0Ph71uQ/2cn0NPq0syCOSH5my02GXA3q910eoJTimOLO0hCBRq1yIosCCUvWS
+ AFSX4U/5FJx+eVVP0vAupxaC8ChcKkUjqPamK/lny6P321i6I438Iaw5RhSgKWA3MGr5STMgF
+ i2i0MA0S7M4K4G1RYWCj+Mor7zpEiZ+JlB+vqK9Zxp2u2tsBKiM07s15fvianSJWeTMIg4ECR
+ 0ReT69f7R2o8sj5Hc7hDz4EK8cFilmRxEDueofi73qPgK+GJKA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/c3K0nuuhTA=G2GZ_2sqZ2PW
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hi Eric,
 
-Junio C Hamano <gitster@pobox.com> on Thu, 2018/10/18 11:09:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->=20
-> > The rule says
+On Wed, 17 Oct 2018, Eric Sunshine wrote:
+
+> On Wed, Oct 17, 2018 at 6:18 AM Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > I realized yesterday that the &&-chain linting we use for every single
+> > test case takes a noticeable chunk of time:
 > >
-> >  install-html: html
-> > 	$(INSTALL) -d -m 755 $(DESTDIR)$(htmldir)
-> > 	$(INSTALL) -m 644 $^ $(DESTDIR)$(htmldir)
+> >         $ time ./t0006-date.sh --quiet
+> >         real    0m20.973s
+> >         $ time ./t0006-date.sh --quiet --no-chain-lint
+> >         real    0m13.607s
 > >
-> > and $^ substitutes to "html" after this change. =20
->=20
-> Sorry about that.
->=20
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Thu, 18 Oct 2018 11:07:17 +0900
-> Subject: [PATCH] Revert "subtree: make install targets depend on build
-> targets"
->=20
-> This reverts commit 744f7c4c314dc0e7816ac05520e8358c8318187a.
->=20
-> These targets do depend on the fact that each prereq is explicitly
-> listed via their use of $^, which I failed to notice, and broke the
-> build.
->
-> [...]
->
-> @@ -98,4 +98,4 @@ clean:
->  	$(RM) $(GIT_SUBTREE)
->  	$(RM) *.xml *.html *.1
-> =20
-> -.PHONY: FORCE man html install-man install-html
-> +.PHONY: FORCE
+> > My suspicion: it is essentially the `(exit 117)` that adds about 100ms to
+> > every of those 67 test cases.
+> 
+> The subshell chain-linter adds a 'sed' and 'grep' invocation to each test which doesn't help. (v1 of the subshell chain-linter only added a 'sed', but that changed with v2.)
+> 
+> > With that in mind, I would like to suggest that we should start to be very
+> > careful about using subshells in our test suite.
+> 
+> You could disable the subshell chain-linter like this if you want test the (exit 117) goop in isolation:
+> 
+> --- 8< ---
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 3f95bfda60..48323e503c 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -675,8 +675,7 @@ test_run_ () {
+>  		trace=
+>  		# 117 is magic because it is unlikely to match the exit
+>  		# code of other programs
+> -		if $(printf '%s\n' "$1" | sed -f "$GIT_BUILD_DIR/t/chainlint.sed" | grep -q '?![A-Z][A-Z]*?!') ||
+> -			test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
+> +		if test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
+>  		then
+>  			error "bug in the test script: broken &&-chain or run-away HERE-DOC: $1"
+>  		fi
+> --- 8< ---
 
-We could keep the phony part at least...
+You're right! This is actually responsible for about five of those seven
+seconds. The subshell still hurts a little, as it means that every single
+of the almost 20,000 test cases we have gets slowed down by ~0.03s, which
+amounts to almost 10 minutes.
 
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
+This is "only" for the Windows phase of our Continuous Testing, of course.
+Yet I think we can do better than this.
 
---Sig_/c3K0nuuhTA=G2GZ_2sqZ2PW
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+How difficult/involved, do you think, would it be to add a t/helper/
+command for chain linting?
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAlvIPrAACgkQiUUh18yA
-9Ha6fwf6AvkQYmC4xqOI3yE7ha//jUFep7reDMfVAiZerPaUJQq00fUCt//gn2t0
-25C5ZL6KkGEMJK3m2w1laZMTgrkroY8RYZ01j9MUPweAIjndc9dXJ33yATnRaqK7
-QWSPcZrWWXOjsEim65kOCcN7yqO/0yiMJMWmMixDvscwnaAllCuD5YKdWFjp0GOh
-9mGsS8XhmCfN6qD3IxhSwBdeXL9vuIXYI+dzUCbY7IAynGXxJQc9YAxi3Rwk5ZRV
-9cXdCV4NLjwMgaFqzldOYCfRRr56ngXIaRRddGt4RDjSbLpJ4hc3PUtrvAonZqSc
-FTo16vvLhFm76+/CtWHSTeglxQT20g==
-=snN6
------END PGP SIGNATURE-----
-
---Sig_/c3K0nuuhTA=G2GZ_2sqZ2PW--
+Ciao,
+Dscho
