@@ -6,57 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5B361F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 03:47:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAB91F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 04:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727437AbeJRLqE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 07:46:04 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36061 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727297AbeJRLqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 07:46:04 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a8-v6so4189233wmf.1
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 20:47:11 -0700 (PDT)
+        id S1727378AbeJRMjR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 08:39:17 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52940 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727351AbeJRMjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 08:39:17 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 189-v6so3999007wmw.2
+        for <git@vger.kernel.org>; Wed, 17 Oct 2018 21:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HH/ExK/89MUK/rQUPLQwhlqjsmiZrchZILef8zgfbOI=;
-        b=bex+9W+AG9GI0eyIAqVWsGkMNVIuUO42dl1Z5UeZaD/Rpsf+WLHHLiqKqjcshbwLZM
-         J/XOkIkh+vmpaq08MS3TTQ2OHmvPoEhokqcCwBG9lWw3SOEsvvO4hRnOuT7tOOElTc8Y
-         sXe/B7AFuKJt/q5uM3gywJekeZ/vnAOa+Pk1aMhCa8D0A+dSglGf/574N7Yg1AqTUgo4
-         GBaBKnJOhPGQYDClRRWiNBINP3LbKnW0Al3xacGV+c1oF8A3imd23wOrP+z4bXfc/CJA
-         0tfLV1K+NF0rilo08yoKdweXwMKCPgpxu2dH/mOHPfoZjItVP5bsHnb/SiRkawWjT279
-         Wj+g==
+        bh=FDEKAIA0tR0ffeHXZfGIGSew2y9CGpk9whTne2s0jHw=;
+        b=fh6Xk2OAeKiW38WV8xZm0MnkdF9EOK163oHIAxODP5ygMP1Jb0JHnPcSAnK9fDPCBr
+         mY2OKKd6EPBfjIsOfkU+0UdRd1zKH1glhhfelaomwyIG6Qzo8pK8VQw6EHZLcg9Lmj4w
+         5CrWTohkqCES8hJyaxvNKI67fKbzou9rcY5+Y+oBgOWJ3t9ovFdWLPufCB/f2PlgFwn8
+         BjCGulFKvrfYJFHxhV39tg6NA59PUEPf3FrB3GN2tMKfPIctqMSV3L0E5mHUZOpjliO+
+         MqeeiOzM2H7O/mKMZZZOCPom9ArT2jdocuFSscUPhxaehu9pQvtVusSjbh/RkN6jmluP
+         Y8bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HH/ExK/89MUK/rQUPLQwhlqjsmiZrchZILef8zgfbOI=;
-        b=YunGhZwZCp8BFlpGmThk7/UwGa0QS8oeIiNC9RuFEhmOw/EYH5o3jFd5IyYSi0Q4Z6
-         Hp5myE+/u+8mozofu68BfRDyqpHkgHuHSKIyEjttK+9bVdNnRLq3rQBNQBs9UIyu5zAf
-         Jexd729KVs8ldHL/+OPyj+tnWXumPmAbQyBbX3r4mFqzdQvN+76kwMWu4hhY4EAMElkK
-         M80IVbC9AgIAhZBRikconx2mS644GG0tX4X5OpzbI3XtUPLK5RDSJfmWA3e2Q9p6T46d
-         a88+EZsv/dtdyOUcQAnmGk7Q6fdJTWTeOSzRxjXDrfXrBX1bLpycn1mZMkGVb7p1TPuU
-         7Znw==
-X-Gm-Message-State: ABuFfoi4KW0kWZAzf72B5e7XYtf41BFt2UNQhStz+ss4CbJoZ6ccj7z8
-        dcM66pTbjqSUWJiAb1T19zc=
-X-Google-Smtp-Source: ACcGV62OHPc/mRlMdCbXh5wMYEIV+KkUR3p3BOTQgXQant3u85aNUc/rbYVVFqI/j2zB3xAKLyMzyQ==
-X-Received: by 2002:a1c:710:: with SMTP id 16-v6mr5513965wmh.22.1539834429856;
-        Wed, 17 Oct 2018 20:47:09 -0700 (PDT)
+        bh=FDEKAIA0tR0ffeHXZfGIGSew2y9CGpk9whTne2s0jHw=;
+        b=RNerXun2OQ/fgMilIVS0y6KNhUlBx+5oPbGioMGVdrkjEbXxVeW8Y0ezgcX6gVUq+A
+         h3YmG+eSgOy4SNag9CfLmbU+JtIOrlCLxcvZYevYiwq9sfnjFs8TzZ+mATBIFPZ4Ao4+
+         UJ37wzpXHH3+yOZpKo1juc8ugxbBfF51+O85xblBXBVQcto392h2WATg4xJOCzyV8qUZ
+         ihrpa3RCR6gPLIboVff116JHHE7O8y2qXwa+UVQNRD5fZX2/fBkszJeKklOyVEQEqCAe
+         UyX3ecFAo6nB5AXczX1liOX+gKI8de+/oij1J+Ep/Q+l8bwv/oMNLOU+6dsztH6L0yW2
+         OsAg==
+X-Gm-Message-State: ABuFfoj3ffZYxPnUrINhBITisnO7WUJgCajFYDvfsRoJyZ1MBzkGGoyH
+        EmrmjXcr7keMFNsHN6p89LQ=
+X-Google-Smtp-Source: ACcGV63s7DMWYFniX73dIPfzRY1XI/hXZsUn8g1rDJQuPfTXRIlG2dQkgQXSPfVZ2rcx2c53CjddQA==
+X-Received: by 2002:a1c:3a92:: with SMTP id h140-v6mr5407089wma.69.1539837613019;
+        Wed, 17 Oct 2018 21:40:13 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c13-v6sm16956881wrm.50.2018.10.17.20.47.09
+        by smtp.gmail.com with ESMTPSA id x16-v6sm13185549wro.28.2018.10.17.21.40.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Oct 2018 20:47:09 -0700 (PDT)
+        Wed, 17 Oct 2018 21:40:11 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Use commit-graph by default
-References: <pull.50.git.gitgitgadget@gmail.com>
-Date:   Thu, 18 Oct 2018 12:47:08 +0900
-In-Reply-To: <pull.50.git.gitgitgadget@gmail.com> (Derrick Stolee via
-        GitGitGadget's message of "Wed, 17 Oct 2018 13:33:10 -0700 (PDT)")
-Message-ID: <xmqqlg6vvrur.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
+        jrn@google.com, sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v2] list-objects: support for skipping tree traversal
+References: <20181018003915.60237-1-matvore@google.com>
+Date:   Thu, 18 Oct 2018 13:40:11 +0900
+In-Reply-To: <20181018003915.60237-1-matvore@google.com> (Matthew DeVore's
+        message of "Wed, 17 Oct 2018 17:39:15 -0700")
+Message-ID: <xmqqh8hjvpec.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,55 +66,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Matthew DeVore <matvore@google.com> writes:
 
-> The commit-graph feature is starting to stabilize. Based on what is in
-> master right now, we have:
+> The tree:0 filter does not need to traverse the trees that it has
+> filtered out, so optimize list-objects and list-objects-filter to skip
+> traversing the trees entirely. Before this patch, we iterated over all
+> children of the tree, and did nothing for all of them, which was
+> wasteful.
 >
-> Git 2.18:
->
->  * Ability to write commit-graph (requires user interaction).
->    
->    
->  * Commit parsing is faster when commit-graph exists.
->    
->    
->  * Must have core.commitGraph true to use.
->    
->    
->
-> Git 2.19:
->
->  * Ability to write commit-graph on GC with gc.writeCommitGraph.
->    
->    
->  * Generation numbers written in commit-graph
->    
->    
->  * A few reachability algorithms make use of generation numbers.
->    
->    
->
-> (queued for) master:
->
->  * The test suite passes with GIT_TEST_COMMIT_GRAPH=1
->    
->    
->  * 'git commit-graph write' has progress indicators.
->    
->    
->  * The commit-graph is automatically disabled when grafts or replace-objects
->    exist.
+> Signed-off-by: Matthew DeVore <matvore@google.com>
+> ---
 
-If I recall correctly, one more task that was discussed but hasn't
-been addressed well is how the generation and incremental update of
-it should integrate with the normal repository maintenance workflow
-(perhaps "gc --auto").  If we are going to turn it on by default, it
-would be good to see if we can avoid multiple independent walks done
-over the same history graph by repack, prune and now commit-graph,
-before such a change happens.
-
-Thanks.
-
-
-
+Thanks, will queue.
