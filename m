@@ -2,97 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81F2C1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 19:36:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A32D41F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 19:56:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726463AbeJSDig (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 23:38:36 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:32814 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbeJSDif (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 23:38:35 -0400
-Received: by mail-qt1-f196.google.com with SMTP id q40-v6so35726148qte.0
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 12:36:05 -0700 (PDT)
+        id S1726963AbeJSD7S (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 23:59:18 -0400
+Received: from mail-io1-f44.google.com ([209.85.166.44]:35855 "EHLO
+        mail-io1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726507AbeJSD7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 23:59:18 -0400
+Received: by mail-io1-f44.google.com with SMTP id p4-v6so21716573iom.3
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 12:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=gFeAiXZuziZ2jxpyPSF9OZ02aLASOnl4NFgc+m/zpwM=;
-        b=ekacOf1gxD+fb3pf5pYnDkjHYx1DcBFxkGpp2DXZ/kvg72edgxRMhyV2V/AN87beOi
-         DS1nYc7VzOvxlzORbtwLRvWbtAGSMEWfwUlpUmfVFHkb2TH34cyG5rgW80jozxSX7zK8
-         XSP4pq/FGoEqYuEDt2yiiuuosp+/ugoWkOeGhySPZDbLjWmnQ2sLO9NICxalDHsuPGk3
-         AzfnJ88E0zSS7KpX87+JFJ++wv1IekKd9gkdUzKAQ5Vp61HTX7T5nSr16+j9MMPHB6Gf
-         hIOLa/zjSIkx8exlL/4wM9rb+38vgtRd7g3qoPWtXM5hLzDfcTSUWiUynvNrGOqhHg8C
-         jtxQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kNO9lg6M7D/h+sz9qLzhn/2c8ajlWQYgh/LRPYQb9JQ=;
+        b=DCtyHRtFGd4UawAmBXT5CHyOj9csn5DQ3gPVuu/DDHla+AuKdHD9F6+dF7LmAMeWq/
+         JN0T9OwlX2EixaPq48j8+d1ITS97Jo708feAS4QI8Cke7gQvH0zJx1Y/LsX1HK17EUFg
+         yvLhdtQ+LqK2nEIK83TSwb+qGe269qRJUeeucSHa52bMbAiVFjNjLkFHNWeNO2nUgW13
+         eBLiM20GLgfSXgFaO39+ZErXhRUrXddDgJ8CjoTVEwcW85ztlet4GEom4RqkcUmPEbVp
+         SuGJhGn9j+PdIvUuj6nQRIWse7r+fsNB22jiS77kLhH64EIZJK11tJMi2LtvTdT52Kkj
+         nnYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=gFeAiXZuziZ2jxpyPSF9OZ02aLASOnl4NFgc+m/zpwM=;
-        b=T6ejjfw3fBOeQL/1Pzhd2ct2x7WS2ty6j2nUUcrQZcU3bej9p3OyMyY7JwjZlZiQZI
-         s+83VV6INM2Fm8JOBLS6hZAIGuxFUe+yMS3KPlWzaBojvP4arASzdVj5uONd0N2s354r
-         w8pJo/5aM+BM6i7sMTLmU2HMOU0NsM3XdEdzZqFeVVcFmgYwCexGXNsYyNXLFBFxsAvK
-         uj3il3PBrQIQaJGWW6qWfU6ZSLZgYz3+X4NzLjmKvMN5k35aRph/XxcHeUAalZcrUdYb
-         8VbaUbETewVE3Zo+1LenEHkDYfkdG7KuQ2pMo7K0IubKUKnmlt6eM9qsPUuD3zCcoN9H
-         u1ig==
-X-Gm-Message-State: ABuFfoiN2No+OhBE2katY8gNpRAAESsHWuZyPg7rn1dH73UrePKgufP2
-        XGOZSbyG6a4jntzmYfdwD40=
-X-Google-Smtp-Source: ACcGV619FC2bApp5dwzzTYq/VL1RdLwj03nYIIL+g453uQnkx6uKBappzGHZUqwC57pYUjby3Hg65A==
-X-Received: by 2002:a0c:88d5:: with SMTP id 21mr31313259qvo.61.1539891365104;
-        Thu, 18 Oct 2018 12:36:05 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:e0ed:6621:9414:4d4e? ([2001:4898:8010:0:ca23:6621:9414:4d4e])
-        by smtp.gmail.com with ESMTPSA id k185-v6sm13946148qkd.27.2018.10.18.12.36.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Oct 2018 12:36:04 -0700 (PDT)
-Subject: Re: [PATCH] multi-pack-index: avoid dead store for struct progress
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     dstolee@microsoft.com
-References: <20181018185920.22975-1-carenas@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <16e462a7-cdd6-9d5d-d740-d5241485787b@gmail.com>
-Date:   Thu, 18 Oct 2018 15:36:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:63.0) Gecko/20100101
- Thunderbird/63.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kNO9lg6M7D/h+sz9qLzhn/2c8ajlWQYgh/LRPYQb9JQ=;
+        b=OcHIMnQiaF2Xc343HvmN1QekAIHzYfb05hCUVEQZbNWgNJouSX8f/rKpiCN2nXY5d6
+         qDbyL5yPhk8ijR9lkaTkFWP4GLisJqAzouLTy+1wXsKGeS/8ZcsAk75HidgqKCmXfi2L
+         czauEybMu4fBwRHrpn59tuBPUJLmhHOBKv3DHbmIL9dQbwsxbHfWCSEDsFKE1jR8tw92
+         DSncrN/zNYsBih+UP0RQ8SiWfvcq9Ka0Te+mpEIOShtFtlQYVmKSHqWz7VTKR8sG06XN
+         8Liao2KhYMRqsbItwpdpbr1780Qdcp93FG0ib6GhrnOeYr+v6NPplVw43Y2FoPkRVN4w
+         FxWw==
+X-Gm-Message-State: AGRZ1gI5sQ0uvE1DNmT8UZG+wip0sCwZjRpNX1zZ/Rpg8IkCe001+C7M
+        qj3qmu2PnyMxtv2f4N1EM7NGaxVdLF/+5lcblJ/hlQ==
+X-Google-Smtp-Source: AJdET5czdE3iUqglnfUHVHi8lmXo3hf+zWNTIaSIyks/ZcSzPHXtUM/9IEzcmJT/bPxj0JEOglINWQ3K1wviihjcYdw=
+X-Received: by 2002:a6b:8fcb:: with SMTP id r194-v6mr1237129iod.266.1539892602966;
+ Thu, 18 Oct 2018 12:56:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20181018185920.22975-1-carenas@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20181018185920.22975-1-carenas@gmail.com> <16e462a7-cdd6-9d5d-d740-d5241485787b@gmail.com>
+In-Reply-To: <16e462a7-cdd6-9d5d-d740-d5241485787b@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Thu, 18 Oct 2018 12:56:32 -0700
+Message-ID: <CAPUEspixnjOm7YAuCgCTfmWf28kF8jCACD=-VHNDAeL2Gu8mQQ@mail.gmail.com>
+Subject: Re: [PATCH] multi-pack-index: avoid dead store for struct progress
+To:     stolee@gmail.com
+Cc:     git@vger.kernel.org, dstolee@microsoft.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/18/2018 2:59 PM, Carlo Marcelo Arenas Belón wrote:
-> it is initialized unconditionally by a call to start_progress
-> below.
+On Thu, Oct 18, 2018 at 12:36 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->   midx.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/midx.c b/midx.c
-> index ea2f3ffe2e..4fac0cd08a 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -941,7 +941,7 @@ static void midx_report(const char *fmt, ...)
->   int verify_midx_file(const char *object_dir)
->   {
->   	uint32_t i;
-> -	struct progress *progress = NULL;
-> +	struct progress *progress;
->   	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
->   	verify_midx_error = 0;
->   
-This makes sense as a cleanup. Is there a tool that reports a wasted 
-initialization that you used to find this?
+> Is there a tool that reports a wasted
+> initialization that you used to find this?
 
--Stolee
+I'd used clang's analyzer recently to track a similar issue before in a
+different codebase, but not for this specific case.
+
+Carlo
