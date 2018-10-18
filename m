@@ -2,107 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 458BB1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 06:09:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99F1A1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 06:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727471AbeJROJQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 10:09:16 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44764 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727414AbeJROJQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 10:09:16 -0400
-Received: by mail-wr1-f66.google.com with SMTP id 63-v6so32150102wra.11
-        for <git@vger.kernel.org>; Wed, 17 Oct 2018 23:09:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SEoDeQuiGrIQtr5WOLVu56c0LDMYJ9g96cKNGfXdu+w=;
-        b=BMm+oNicoSnW3fxnYJsq/JTdRa+usnEBFl5xGmFZ3tU5JNoNxW8R2jWxlznM1Lhobp
-         JhzdRT0+7jQ/itH2rwa0luxM9Z/wxv50Oyl7w+FBYZ0Xi/3vnHZZatG1EycgHIqoZ551
-         PjgQkx1v3ZBwO9oqvmXqSYS0neKxEjXs+QPngYkDUgoUTPBCB4t08Ebq/vOpNT3rW1r4
-         NvGd/cuJgW5DuD/tqiphM2xZxCfOEHe7A8YDG0aJxzpRsfuZjpQXPw50QF3YCo22nyen
-         AQ/55r2FyI3KmLbBzNDue8cuD7xRENOHRi7c70NYY6pWnRS4JzWyYalyXgbXcC3tjgxE
-         aLqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SEoDeQuiGrIQtr5WOLVu56c0LDMYJ9g96cKNGfXdu+w=;
-        b=RVcW1uNrua1/HdcJLU2PjRruL43p6M/p99EmUEL89s0F6/IHehnA8jVG4p3yWdvQzJ
-         cXr08VgOmyOEB5nigKBEwvT3R3XISWalTo348JPY2J9kK4K6pymqbaOG+WcyqwRNI4RB
-         nfPNYuxHAuGfpSa0JC2G34cRIfIn9wVYL/ZXgR/bllwgrV3/wiFaECUBQ/jLtRVcjOQA
-         EXX8ZZjHd1EPcSlXWAfI3Eccq1Dter7N3Vljx7wTYLbP8buuZkpmhlakK1j0Ul6948Hr
-         UukYhaD84UyxzcwyQS3t/1nVS4hJCf0W4jok5FXIMRpON/BOkgnitlVdE5OHgiEkJm2U
-         rm4g==
-X-Gm-Message-State: ABuFfohVHKEs7H0uvGjBD1oRg6HHidOb8vv6DrsbApzhMKCT3c34+TTr
-        Qd4XA5vkKdOTFoIjReDzetCs7nAMCvM=
-X-Google-Smtp-Source: ACcGV61qkJwPnpAfQvSTn4Jpvil/NJzqHqSP1nNjiNCGuLsiBBxIXFy1MiUI6mZFh6m9+1e49xp4qQ==
-X-Received: by 2002:adf:9464:: with SMTP id 91-v6mr27328717wrq.200.1539842992327;
-        Wed, 17 Oct 2018 23:09:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm16364628wra.37.2018.10.17.23.09.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Oct 2018 23:09:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] merge-recursive: avoid showing conflicts with merge branch before HEAD
-References: <20181012212551.7689-1-newren@gmail.com>
-        <20181016201948.16025-1-newren@gmail.com>
-        <20181016201948.16025-3-newren@gmail.com>
-Date:   Thu, 18 Oct 2018 15:09:49 +0900
-In-Reply-To: <20181016201948.16025-3-newren@gmail.com> (Elijah Newren's
-        message of "Tue, 16 Oct 2018 13:19:48 -0700")
-Message-ID: <xmqqva5zu6oi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727459AbeJROcg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 10:32:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44388 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727378AbeJROcg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 10:32:36 -0400
+Received: (qmail 15061 invoked by uid 109); 18 Oct 2018 06:33:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Oct 2018 06:33:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27433 invoked by uid 111); 18 Oct 2018 06:32:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Oct 2018 02:32:19 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2018 02:33:06 -0400
+Date:   Thu, 18 Oct 2018 02:33:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] ref-filter: free memory from used_atom
+Message-ID: <20181018063306.GA23497@sigill.intra.peff.net>
+References: <CAL21BmkdUiNgr4NqpwTdi9f47i85s8oXCZMmVx5VyNKotL78uA@mail.gmail.com>
+ <0102016657e7cfee-f1343b1e-9a85-4cae-990a-cc7177ea8487-000000@eu-west-1.amazonses.com>
+ <xmqq5zy9jnv1.fsf@gitster-ct.c.googlers.com>
+ <xmqqa7njevu2.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa7njevu2.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Oct 12, 2018 at 11:35:01AM +0900, Junio C Hamano wrote:
 
-> @@ -1283,6 +1302,18 @@ static int merge_mode_and_contents(struct merge_options *o,
->  				   const char *branch2,
->  				   struct merge_file_info *result)
->  {
-> +	if (o->branch1 != branch1) {
-> +		/*
-> +		 * It's weird getting a reverse merge with HEAD on the bottom
-> +		 * side of the conflict markers and the other branch on the
-> +		 * top.  Fix that.
-> +		 */
-> +		return merge_mode_and_contents(o, one, b, a,
-> +					       filename,
-> +					       branch2, branch1,
-> +					       extra_marker_size, result);
-> +	}
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+> 
+> These three patches seem to cause t6300 to fail with an attempt to
+> free an invalid pointer in "git for-each-ref --format='%(push)'"
+> (6300.25)
 
-Will queue with the following squashed in.
+I dug into this a bit. I think it's actually a misapplication of the
+patches on your side. Applying them locally works, but your
+ot/ref-filter-plug-leaks branch does not.
 
-Thanks.
+The patch below on top of your branch helps. :)
 
- merge-recursive.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+diff --git a/ref-filter.c b/ref-filter.c
+index f4ff80eca0..4255de1d75 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1567,7 +1567,6 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 					continue;
+ 			}
+ 			free((char *)v->s); /* we will definitely re-init it on the next line */
+-			free((char *)v->s);
+ 			fill_remote_ref_details(atom, refname, branch, &v->s);
+ 			continue;
+ 		} else if (starts_with(name, "color:")) {
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 16980db7f9..73b5710386 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1310,8 +1310,7 @@ static int merge_mode_and_contents(struct merge_options *o,
- 		 */
- 		return merge_mode_and_contents(o, one, b, a,
- 					       filename,
--					       branch2, branch1,
--					       extra_marker_size, result);
-+					       branch2, branch1, result);
- 	}
- 
- 	result->merge = 0;
+Presumably it came from the manual comment-style fixup.
+
+With that fix, the tests run fine for me under ASan/UBSan (with the
+exception of t5310, but that's fixed already in a parallel topic).
+
+-Peff
