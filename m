@@ -2,113 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7095E1F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 17:01:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A690E1F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 17:09:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbeJSBDk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 21:03:40 -0400
-Received: from avasout02.plus.net ([212.159.14.17]:52562 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727294AbeJSBDj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 21:03:39 -0400
-Received: from [10.0.2.15] ([80.189.70.193])
-        by smtp with ESMTPA
-        id DBg9goVQD4OhTDBgAgNL1r; Thu, 18 Oct 2018 18:01:47 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=NKr7BXyg c=1 sm=1 tr=0
- a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
- a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=toPC2ywZNuCD_NLFrwsA:9 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
+        id S1728570AbeJSBLa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 21:11:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44976 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727391AbeJSBLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 21:11:30 -0400
+Received: (qmail 18439 invoked by uid 109); 18 Oct 2018 17:09:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Oct 2018 17:09:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32213 invoked by uid 111); 18 Oct 2018 17:08:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Oct 2018 13:08:47 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2018 13:09:34 -0400
+Date:   Thu, 18 Oct 2018 13:09:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH] config.mak.dev: enable -Wunused-function
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Message-ID: <20181018170934.GA21138@sigill.intra.peff.net>
 References: <20181018070522.GA29499@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <3295c759-473b-f279-5443-f915fd0b1061@ramsayjones.plus.com>
-Date:   Thu, 18 Oct 2018 18:01:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ <CACsJy8BOL+QOb3Vdh8RKbra-DDbJVyznTbCJgjK5h8L2y0H7yg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181018070522.GA29499@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCmcrc+ipywwT+w55gCPei1T2bjNRmxPV6E2GzCBKZuQjl3HxN5p+igXdnbLkBPxOqFxUxB5PhBVglubhMqHKWOsQriboF0YgV5dlQ/PC04A1i7TPAmh
- qBy43tDVvTycLOIqN0BhIWWkvND0xvPtNdcgEYXvnbNzMPZAB5xsCXzzRmxCdq01fxElBOdh1s96Iw==
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BOL+QOb3Vdh8RKbra-DDbJVyznTbCJgjK5h8L2y0H7yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Oct 18, 2018 at 05:48:16PM +0200, Duy Nguyen wrote:
 
+> >   - conditional compilation, where we may or may not need a
+> >     static helper. These generally fall into one of two
+> >     categories:
+> >
+> >       - the call should not be conditional, but rather the
+> >         function body itself should be (and may just be a
+> >         no-op on one side of the #if). That keeps the
+> >         conditional pollution out of the main code.
+> >
+> >       - call-chains of static helpers should all be in the
+> >         same #if block, so they are all-or-nothing
+> 
+> Grouping is not always desired because it could break better function
+> layout. Have a look at read-cache.c where _ieot_extension functions
+> are #if'd because the only call sites are from pthread code (#if'd far
+> away).
 
-On 18/10/2018 08:05, Jeff King wrote:
-> We explicitly omitted -Wunused-function when we added
-> -Wextra, but there is no need: the current code compiles
-> cleanly with it. And it's worth having, since it can let you
-> know when there are cascading effects from a cleanup (e.g.,
-> deleting one function lets you delete its static helpers).
-> 
-> There are cases where we may need an unused function to
-> exist, but we can handle these easily:
-> 
->   - macro-generated code like commit-slab; there we have the
->     MAYBE_UNUSED annotation to silence the compiler
-> 
->   - conditional compilation, where we may or may not need a
->     static helper. These generally fall into one of two
->     categories:
-> 
->       - the call should not be conditional, but rather the
-> 	function body itself should be (and may just be a
-> 	no-op on one side of the #if). That keeps the
-> 	conditional pollution out of the main code.
-> 
->       - call-chains of static helpers should all be in the
->         same #if block, so they are all-or-nothing
-> 
->     And if there's some case that doesn't cover, we still
->     have MAYBE_UNUSED as a fallback.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  config.mak.dev | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/config.mak.dev b/config.mak.dev
-> index 92d268137f..bbeeff44fe 100644
-> --- a/config.mak.dev
-> +++ b/config.mak.dev
-> @@ -34,7 +34,6 @@ ifeq ($(filter extra-all,$(DEVOPTS)),)
->  CFLAGS += -Wno-empty-body
->  CFLAGS += -Wno-missing-field-initializers
->  CFLAGS += -Wno-sign-compare
-> -CFLAGS += -Wno-unused-function
->  CFLAGS += -Wno-unused-parameter
->  endif
->  endif
-> 
+True, though as long as they are triggered by the same set of #if
+conditions, that is fine. Putting them in the same block  is just an
+easy way to make sure that is the case. ;)
 
-Heh, as luck would have it, tonight I had an -Wunused-function
-warning on cygwin, but not Linux, when building the 'pu' branch.
+> In this particular case though I think we should be able to avoid so
+> much #if if we make a wrapper for pthread api that would return an
+> error or something when pthread is not available. But similar
+> situation may happen elsewhere too.
 
-[On linux, I am using DEVELOPER=1 in my config.mak etc., whereas
-on cygwin I am still using an explicit (but very similar) list
-of -W args.]
+Yeah, I think that is generally the preferred method anyway, just
+because of readability and simplicity.
 
-I haven't looked too deeply, but this seems to be caused by
-Junio's commit 42c89ea70a ("SQUASH??? - convert the other user of
-string-list as db", 2018-10-17) which removes a call to the
-add_existing() function - the subject of the warning.
+> Having said that, if people do consider MAYBE_UNUSED before #if'ing
+> everywhere (and opening up more conditional build problems in future),
+> I think this change is fine.
 
-[BTW there is another 'static add_existing()' in builtin/show_ref.c]
+I'd like to use it as a last resort, certainly. Mostly the fact that we
+compile cleanly _now_ makes me think that it probably won't be that hard
+to keep it going.
 
-ATB,
-Ramsay Jones
+I think the biggest potential problem with this is going to be obscure
+configurations where some functions are used or not used. So somebody
+silencing a compiler warning may inadvertently break another case if
+they're not careful. But that's already a problem to some degree (and
+part of why we try to push the conditionality out to the whole-function
+level).
 
+-Peff
