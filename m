@@ -6,42 +6,41 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32C831F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 12:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D1481F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 12:24:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726497AbeJRUSz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 16:18:55 -0400
-Received: from mail-ot1-f47.google.com ([209.85.210.47]:33455 "EHLO
-        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726480AbeJRUSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 16:18:55 -0400
-Received: by mail-ot1-f47.google.com with SMTP id q50so29542530otd.0
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 05:18:09 -0700 (PDT)
+        id S1726609AbeJRUYx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 16:24:53 -0400
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:45029 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726506AbeJRUYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 16:24:53 -0400
+Received: by mail-oi1-f174.google.com with SMTP id u74-v6so23800839oia.11
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 05:24:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YXgeujVD7xwkMHXMcqtshrtyahoxlGFUTPIL7jjhLKE=;
-        b=cGg035/L+mfoYKOdSqYqZ0OIlfY1kvluOH2RazINreapnkAnGD3lXOJtc+IEK3ZB65
-         0dGIHTDjum9f/BFTV1j7eZMOgugV0lxF6WWwAz9bzEtSSp9XUlUck6kiTiDhdQq6jdrS
-         ZWk1uu0YnzqczK+Y1yW8apdURlNwE/n6ipaWfEw/3s8BtAjgO25u0khMsaMpLoc4cOXY
-         VBQ1lSy1tv52xaUrXe/OKBNTXIXF47NtP9QmBrjG4TAgDFCqyYmYUimK2QP9FB8siOdW
-         bsBRZFbQ0rDnmmchasGlQfWSkS9wTCEaGA1zgz1lvT8rgXwGmeHD7X3ncluy6zmaWGyP
-         mexQ==
-X-Gm-Message-State: ABuFfojeBdqdSqYeUFiTlWi4H/feWFBUpJEJVO4FNrz4l4CDa0l4GVVg
-        Ny+iyvEsMWzwLV57zhW/2ZxtK7a0LRqqHZANeiqDMQ==
-X-Google-Smtp-Source: ACcGV62B4Lb0/oc+GD6r9r+4NNxFONedvSIl6lQ2zvlXp2iBK12dKwvHovY4IWisRaOTFdEzFZynxBddr42YRXKXS/I=
-X-Received: by 2002:a9d:3203:: with SMTP id t3mr18165307otc.187.1539865089306;
- Thu, 18 Oct 2018 05:18:09 -0700 (PDT)
+        bh=EUELdlOoKtZjDh6LknklKBKYuqkdM4G+97RcG9UiQ2I=;
+        b=WTpxUfT7ApH+hivfaLRP8Od1S+hHarojvHJ+GRgg64eeXUnpPBijJJ/KcGpMiq5YLt
+         CxcoCVDKIibJ9+lfsJe/HxarLUf25Pw9i4Py4ijIkWLTCIHFtI+wmB7sVJGyAQ/iMWqg
+         BJ+EkFg/wivY2qt8xDbJ/U3GI9yEg06WGe3IiP4217R3JOszcAY6pWaoFutfRKnPYG7e
+         O1K+dOWxZY6PJ+slwGz+O/9hKi5YYhK1lduj9bIHuflG7pRkssiv3Wwnzz1+gj6DwTtO
+         grZx9AnoNtvheFHnE6BRwsXoKnkHCZe7MgzwjpPjIkA5dJgXDz1GT8Hbr+xcXaJ2WlMg
+         VVZA==
+X-Gm-Message-State: ABuFfoiImjpXM3bUem3ktJWPhpZz86Ow3xGEh2HREQSXC7OmMaSvyG+l
+        fhRth8hb6ZoSCppO81Q6jSF5BERHtRcuNTmvZnBtIg==
+X-Google-Smtp-Source: ACcGV63mWl3xw7d+FLbavwEkjmUQHaKwpK3h+uRXdfBT649AXbWLTNUth0uVP/D6P0Pq4FqO++RUDMHn12JcHPRn5hY=
+X-Received: by 2002:aca:50c1:: with SMTP id e184-v6mr15380565oib.264.1539865446445;
+ Thu, 18 Oct 2018 05:24:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20181016212438.30176-1-agruenba@redhat.com> <20181017091215.GA2052@sigill.intra.peff.net>
  <CAHc6FU5mXL2j=jL=LqtRt30uBt8tGop350FnwK845fci-Qc=tg@mail.gmail.com>
  <20181017181350.GB28326@sigill.intra.peff.net> <xmqqva60uedt.fsf@gitster-ct.c.googlers.com>
- <20181018064845.GB23537@sigill.intra.peff.net> <xmqqlg6vu4dw.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlg6vu4dw.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqva60uedt.fsf@gitster-ct.c.googlers.com>
 From:   Andreas Gruenbacher <agruenba@redhat.com>
-Date:   Thu, 18 Oct 2018 14:17:58 +0200
-Message-ID: <CAHc6FU7m=ikPyvzh0ztyOgfQjGD0oKEfGVxeRPRBy1Lh0VD+Fg@mail.gmail.com>
+Date:   Thu, 18 Oct 2018 14:23:54 +0200
+Message-ID: <CAHc6FU4n0uiK64G_srb-B0b+Ut39fxMyyjZfYM_EogOtGXZzUQ@mail.gmail.com>
 Subject: Re: [RFC] revision: Add --sticky-default option
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     peff@peff.net, git@vger.kernel.org,
@@ -52,67 +51,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 18 Oct 2018 at 08:59, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, 18 Oct 2018 at 05:23, Junio C Hamano <gitster@pobox.com> wrote:
 > Jeff King <peff@peff.net> writes:
-> > Just to play devil's advocate, how about this:
-> >
-> >   git log --branches=jk/* --not origin/master
-> >
-> > Right now that shows nothing if there are no matching branches. But I
-> > think under the proposed behavior, it would start showing HEAD, which
-> > seems counter-intuitive.
-> >
-> > Or are we going to count any positive selector as a positive ref, even
-> > if it matches nothing?
 >
-> That sounds like an intuitive behaviour of the command, but I may
-> change my mind when I look at other examples.
+> > I'd probably call it something verbose and boring like
+> > --use-default-with-uninteresting or --default-on-negative.
+> > I dunno.
 >
-> When viewing that "--branches=jk/*" example in isolation, yes, these
-> positive selectors that could produce positive revs should defeat
-> the --default, especially when it is built-in (like "log").
-
-I agree, that's the kind of behavior I had in mind. (And I think
-that's also what the code implements.)
-
-> When given by the user, I am not sure.  With something like this:
+> These two names are improvement, but there needs a hint that the
+> change we are interested in is to use default even when revs are
+> given as long as ALL of them are negative ones.  Which in turn means
+> there is NO positive ones given.
 >
->         git rev-list --default=HEAD --branches=jk/* ^master
+> So perhaps "--use-default-without-any-positive".
 >
-> clearly the user anticipates that jk/* may or may not produce any
-> positive refs; otherwise there is no point specifying the default.
-
-With positive selectors, it is meaningful if the selectors match
-nothing. So in the above example, if jk/* matches nothing, I would
-really expect no output, and the default should not be applied.
-So we should just document that --default=<rev> only sets the default
-in case the default is used.
-
-> But anyway...
+> Having said that, I have to wonder how serious a breakage we are
+> going to cause to established users and scripts if we made this
+> change without any explicit option.  After all, it would be rather
+> obvious that people will get a history with some commits (or none at
+> all) when they were expecting no output that the "default behaviour"
+> has changed.  I also wonder how would scripts take advantage of the
+> current "defeat --default as soon as we see any rev, even a negative
+> one"---in short, I am not sure if the theoretical regression this
+> new "option" is trying to avoid is worth avoiding in the first
+> place.
 >
-> > I could buy that, though it means that the
-> > command above is subtly different from one or both of:
-> >
-> >   branches() {
-> >     git for-each-ref --format='%(refname)' refs/heads/jk/*
-> >   }
-> >
-> >   # is --stdin a selector, too?
-> >   branches | git log --stdin --not origin/master
-
-Yes, it's a positive selector (since --not doesn't apply to --stdin).
-
-> >   # here we have no idea that the user did a query and must show HEAD
-> >   git log $(branches) --not origin/master
-
-In this case, 'git log' is more used like git rev-list which doesn't
-default to HEAD. The 'git log --no-default' would neatly restore
-sanity here.
-
-> OK, scrap that---just as I predicted a few minutes ago, I now think
-> that "do we have a positive selector that can produce zero or more
-> result?" is an ill-defined question X-<.
+> Is there a way to say "usually this command has built-in --default=HEAD
+> behaviour, but I am declining that" already, i.e.
 >
-> Thanks for a doze of sanity.
+>     $ git log --no-default $REVS
+>
+> that will result in an empty set if we accept the change proposed
+> here but make it unconditional?  If so "This and future versions of
+> Git will honor the --default even when there are other revisions
+> given on the command line, as long as they are ALL negative ones.
+> This is a backward incompatibile change, but you can update your
+> scripts with '--no-default' if you do not like the new behaviour" in
+> the release notes may be a viable alternative way forward.
+
+That would certainly work for me.
 
 Andreas
+
+> If there is no such way in the released versions of Git, then that
+> would not work, and a strict opt-in like the approach taken by the
+> proposed patch would become necessary.
