@@ -2,100 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 594711F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 07:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEB531F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 07:30:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727571AbeJRPa2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 11:30:28 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42940 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727523AbeJRPa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Oct 2018 11:30:28 -0400
-Received: by mail-wr1-f68.google.com with SMTP id r17-v6so72648wrt.9
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 00:30:47 -0700 (PDT)
+        id S1727600AbeJRPae (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 11:30:34 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:36099 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727431AbeJRPae (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 11:30:34 -0400
+Received: by mail-wr1-f51.google.com with SMTP id y16so32436679wrw.3
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 00:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=8K7djETruL4t7+IdB2wN0z2+5+5VJWHr6oZFBVxU+r4=;
-        b=CrZGbhclETc3a5gVU4UmTLeopSjQB6TKWbbtQGMieKyc9Brn94dl+ssWrLgHxHNDOZ
-         2J5nzpZfMawOvtxmmaH5STpKbZ+d9RZVndbYyouA441AJZPDXgI1gVq5eje1HZx6ky4c
-         pGaLTA3bJCsfS/09iEFa4aOBKua3aW/vIxmL2WuyDIR/NCDWKwDjKX5Ve8CULsm0TqRF
-         Igt5dyw8IT/X/aAPJYOD2NtjSCuWZN6QJgYAssJN6TXEmdxHLhxRQId379Ymh2Ke8HEk
-         aBibtAHtTfgSvrF3NlrUACMCbbEJl/jEmQCIyPutnawmosNQu82ItOBL2Khj9Dq8M2yn
-         +erQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lDBbc8bMhaK0bVSiv6PTGfZXJW2jBYnyYvEp31h0Bvg=;
+        b=Pr99RI3vnuwsOE8mVoZr8HVwekIKRFxrAwu2LnUpUCNHp3AIhRSsC/5RuYS9RqUdA2
+         +s4oGUSs3tWQDO/w1u3TTTjIsCXxPe4gnqkgxUOTR05XPcqhvrrxq4VQK4e38qTuDGCt
+         MD7q0Ghxz16QXkkJDjRsEm0uPZcp4pyczjh02LurAlsWsgBeo3CGLI5pjrXMnIr3alFk
+         oFZLrcLfDpQPrvztLuaTv5+SlLboxbH/FL+2ciqd+ampyiwaHDU/BmD6vDTQq3dxhDiW
+         qzKSS2cMf7OywEyHvsQNoK5dxQbPkjjG+8/6scucAQtecwoeHIlMPQ/J7Xvc+N008q07
+         fSkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=8K7djETruL4t7+IdB2wN0z2+5+5VJWHr6oZFBVxU+r4=;
-        b=ueJpXwRKzOvJb9DqhKn/G5JskF1JjEIbBuCoGkQ9TNAb3oeFbfXwMrFYTPIAOmfRyO
-         q0cbjMXkvexjJa7TTj50sPr9JHsZ5nU/sjERM+Fuq+c4QzjfxQ5cveYMsARdZ01DM7Ql
-         uabGruzRhcC0CvUD59ml/7rUvg2K/XG/nSRHkgBnN1+y3uGxGoitDm7ogw8k/8Gv0kuT
-         MFdaZ5Fz6b2cYPtVYasHIWAINJxfN0z8jLhiK2V3lt5Yws+9uO7r+gc56p1YDRnai16K
-         2zkto68N7DMxxr0LAPPVWTMHQczRTy9mwvFH3hgVn+dBws4rBkVSu3wxX74EqMHg9Vbo
-         kAwg==
-X-Gm-Message-State: ABuFfoi2RMiizGkMIZRG1gUEmjPOmLz9YBG2uHPTFGliBIQxlBnjWCJk
-        V0ky2cTCoIgz65YcmpOS5pNhIs3w7aY=
-X-Google-Smtp-Source: ACcGV60Cjjj7A/ey99ZqTbW49Ofupel8PBjmerRthWF3xhJRqWJ7zkTbZZ2WMwq78br0mioXRI+iHw==
-X-Received: by 2002:adf:e842:: with SMTP id d2-v6mr25440928wrn.175.1539847846910;
-        Thu, 18 Oct 2018 00:30:46 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x15-v6sm11726626wrt.90.2018.10.18.00.30.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Oct 2018 00:30:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/9] Resending sb/submodule-recursive-fetch-gets-the-tip
-References: <20181016181327.107186-1-sbeller@google.com>
-Date:   Thu, 18 Oct 2018 16:30:45 +0900
-In-Reply-To: <20181016181327.107186-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 16 Oct 2018 11:13:18 -0700")
-Message-ID: <xmqqa7nb67a2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lDBbc8bMhaK0bVSiv6PTGfZXJW2jBYnyYvEp31h0Bvg=;
+        b=VKCATIO4WAiRVXBc54DF2BM1qYWWAxMJX9JOSSdtsHzqMonIDOIhIEzLiLgupLT5XU
+         b3S2eiSe/pyKlfsIG2eGjUd14Dd3nC8rBDrWmNGWvR4B4QFwKq/GknYfFPNVR0NAak80
+         NBhKVMX92rZQf/OvTxYI/Ef1E26AUQxNUCTr2fW6lft/v5CFqV1FzBH6Es/C8nXGPA71
+         dhe3XIt36cu7DUfB3CI2IijV1HNFK5jEtJKg+pdxFbzJHvDLWdzu571aobBc+iNkKR9G
+         3UwouzTHkcFTnzmRUB168jA1isjOcrwz+b/vldN2fm+7cRmCLusTEtZoYhQRkoyCNVqW
+         d/Gw==
+X-Gm-Message-State: ABuFfojCGKL+GqiObHlwWfl3Larzoo8scPeD0cUhgfRqqiO8LSSR1sKB
+        sqpXP0rzcTV8jQvAjHMvRcuOTtG2fTjgFvPnYdY=
+X-Google-Smtp-Source: ACcGV63V4iKCU/8mfyCyOeEh1TJ0007BEA99dkIrirBKEiVB4nAQb7PVIVdlYTqx/mNaifFQX1goxzfAol3Kgf7UpdI=
+X-Received: by 2002:adf:f404:: with SMTP id g4-v6mr6231099wro.198.1539847853213;
+ Thu, 18 Oct 2018 00:30:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAL21BmkdUiNgr4NqpwTdi9f47i85s8oXCZMmVx5VyNKotL78uA@mail.gmail.com>
+ <0102016657e7cfee-f1343b1e-9a85-4cae-990a-cc7177ea8487-000000@eu-west-1.amazonses.com>
+ <xmqq5zy9jnv1.fsf@gitster-ct.c.googlers.com> <xmqqa7njevu2.fsf@gitster-ct.c.googlers.com>
+ <20181018063306.GA23497@sigill.intra.peff.net> <xmqqr2gnu4sb.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2gnu4sb.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Thu, 18 Oct 2018 10:26:58 +0300
+Message-ID: <CAL21BmkK+xtFPn7zdBY7VF2Fb_=92MEwAHh4HSrNa4VKjf-b3w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] ref-filter: free memory from used_atom
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> This is based on ao/submodule-wo-gitmodules-checked-out.
+=D1=87=D1=82, 18 =D0=BE=D0=BA=D1=82. 2018 =D0=B3. =D0=B2 9:51, Junio C Hama=
+no <gitster@pobox.com>:
 >
-> This resends origin/sb/submodule-recursive-fetch-gets-the-tip, resolving
-> the issues pointed out via origin/xxx/sb-submodule-recursive-fetch-gets-the-tip-in-pu
-> by basing this series on origin/ao/submodule-wo-gitmodules-checked-out
+> Jeff King <peff@peff.net> writes:
+>
+> > Presumably it came from the manual comment-style fixup.
+>
+> Wow, that was embarrassing.  Thanks for catching it.
 
-Applying this round to the result of merging ao/submodule-* to
-'master' requires this to work, it seems, as you've introduced a
-call to repo-init thing in the meantime with another topic.
-
-Subject: [PATCH] fixup! repository: repo_submodule_init to take a submodule struct
-
----
- builtin/submodule--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5f8a804a6e..015aa1471f 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2037,7 +2037,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
- 	if (!sub)
- 		BUG("We could get the submodule handle before?");
- 
--	if (repo_submodule_init(&subrepo, the_repository, path))
-+	if (repo_submodule_init(&subrepo, the_repository, sub))
- 		die(_("could not get a repository handle for submodule '%s'"), path);
- 
- 	if (!repo_config_get_string(&subrepo, "core.worktree", &cw)) {
--- 
-2.19.1-450-ga4b8ab5363
-
+Jeff, thanks a lot!
+I just sent new version where I fixed all known issues including that comme=
+nt.
+>
+> >
+> > With that fix, the tests run fine for me under ASan/UBSan (with the
+> > exception of t5310, but that's fixed already in a parallel topic).
+> >
+> > -Peff
