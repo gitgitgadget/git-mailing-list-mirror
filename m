@@ -2,344 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A11751F453
-	for <e@80x24.org>; Thu, 18 Oct 2018 07:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 594711F453
+	for <e@80x24.org>; Thu, 18 Oct 2018 07:30:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727481AbeJRP2h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Oct 2018 11:28:37 -0400
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:48232
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727454AbeJRP2g (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 Oct 2018 11:28:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1539847734;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=8D1LqhAmq6fOqlTq7wYd8ACPTMBOWpz6hXti3pdMlDU=;
-        b=eqbxguv5AzYPaef6kIKZR4NiJlf3qbgPyHzC+OMDytB09wdlDqff+CwuT1AOKugM
-        bHPzz1TXzj5QgVQOlgWYdYCg8SW31YhK6kOzxfwoDanB+1wAOpZ7rEza/XZKjDrSqtb
-        jJljbpPETSPeEqXBx9U+JBX6J41w7UZXg3nwV7GU=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <010201668613c4dd-aa890c7f-39a9-4d01-b242-e38fb4ab9518-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201668613c3de-23d41696-1476-4949-9834-a31adeb0650e-000000@eu-west-1.amazonses.com>
-References: <010201668613c3de-23d41696-1476-4949-9834-a31adeb0650e-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 3/3] ref-filter: free item->value and item->value->s
+        id S1727571AbeJRPa2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Oct 2018 11:30:28 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42940 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727523AbeJRPa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Oct 2018 11:30:28 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r17-v6so72648wrt.9
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 00:30:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8K7djETruL4t7+IdB2wN0z2+5+5VJWHr6oZFBVxU+r4=;
+        b=CrZGbhclETc3a5gVU4UmTLeopSjQB6TKWbbtQGMieKyc9Brn94dl+ssWrLgHxHNDOZ
+         2J5nzpZfMawOvtxmmaH5STpKbZ+d9RZVndbYyouA441AJZPDXgI1gVq5eje1HZx6ky4c
+         pGaLTA3bJCsfS/09iEFa4aOBKua3aW/vIxmL2WuyDIR/NCDWKwDjKX5Ve8CULsm0TqRF
+         Igt5dyw8IT/X/aAPJYOD2NtjSCuWZN6QJgYAssJN6TXEmdxHLhxRQId379Ymh2Ke8HEk
+         aBibtAHtTfgSvrF3NlrUACMCbbEJl/jEmQCIyPutnawmosNQu82ItOBL2Khj9Dq8M2yn
+         +erQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8K7djETruL4t7+IdB2wN0z2+5+5VJWHr6oZFBVxU+r4=;
+        b=ueJpXwRKzOvJb9DqhKn/G5JskF1JjEIbBuCoGkQ9TNAb3oeFbfXwMrFYTPIAOmfRyO
+         q0cbjMXkvexjJa7TTj50sPr9JHsZ5nU/sjERM+Fuq+c4QzjfxQ5cveYMsARdZ01DM7Ql
+         uabGruzRhcC0CvUD59ml/7rUvg2K/XG/nSRHkgBnN1+y3uGxGoitDm7ogw8k/8Gv0kuT
+         MFdaZ5Fz6b2cYPtVYasHIWAINJxfN0z8jLhiK2V3lt5Yws+9uO7r+gc56p1YDRnai16K
+         2zkto68N7DMxxr0LAPPVWTMHQczRTy9mwvFH3hgVn+dBws4rBkVSu3wxX74EqMHg9Vbo
+         kAwg==
+X-Gm-Message-State: ABuFfoi2RMiizGkMIZRG1gUEmjPOmLz9YBG2uHPTFGliBIQxlBnjWCJk
+        V0ky2cTCoIgz65YcmpOS5pNhIs3w7aY=
+X-Google-Smtp-Source: ACcGV60Cjjj7A/ey99ZqTbW49Ofupel8PBjmerRthWF3xhJRqWJ7zkTbZZ2WMwq78br0mioXRI+iHw==
+X-Received: by 2002:adf:e842:: with SMTP id d2-v6mr25440928wrn.175.1539847846910;
+        Thu, 18 Oct 2018 00:30:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x15-v6sm11726626wrt.90.2018.10.18.00.30.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 18 Oct 2018 00:30:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/9] Resending sb/submodule-recursive-fetch-gets-the-tip
+References: <20181016181327.107186-1-sbeller@google.com>
+Date:   Thu, 18 Oct 2018 16:30:45 +0900
+In-Reply-To: <20181016181327.107186-1-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 16 Oct 2018 11:13:18 -0700")
+Message-ID: <xmqqa7nb67a2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 18 Oct 2018 07:28:54 +0000
-X-SES-Outgoing: 2018.10.18-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Release item->value.
-Initialize item->value->s dynamically and then release its resources.
-Release some local variables.
+Stefan Beller <sbeller@google.com> writes:
 
-Final goal of this patch is to reduce number of memory leaks.
+> This is based on ao/submodule-wo-gitmodules-checked-out.
+>
+> This resends origin/sb/submodule-recursive-fetch-gets-the-tip, resolving
+> the issues pointed out via origin/xxx/sb-submodule-recursive-fetch-gets-the-tip-in-pu
+> by basing this series on origin/ao/submodule-wo-gitmodules-checked-out
 
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+Applying this round to the result of merging ao/submodule-* to
+'master' requires this to work, it seems, as you've introduced a
+call to repo-init thing in the meantime with another topic.
+
+Subject: [PATCH] fixup! repository: repo_submodule_init to take a submodule struct
+
 ---
- ref-filter.c | 96 +++++++++++++++++++++++++++++-----------------------
- 1 file changed, 54 insertions(+), 42 deletions(-)
+ builtin/submodule--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 70f1d13ab3beb..ca52ee4608c2a 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -875,7 +875,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 		if (deref)
- 			name++;
- 		if (!strcmp(name, "objecttype"))
--			v->s = type_name(oi->type);
-+			v->s = xstrdup(type_name(oi->type));
- 		else if (!strcmp(name, "objectsize")) {
- 			v->value = oi->size;
- 			v->s = xstrfmt("%lu", oi->size);
-@@ -899,9 +899,9 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
- 		if (deref)
- 			name++;
- 		if (!strcmp(name, "tag"))
--			v->s = tag->tag;
-+			v->s = xstrdup(tag->tag);
- 		else if (!strcmp(name, "type") && tag->tagged)
--			v->s = type_name(tag->tagged->type);
-+			v->s = xstrdup(type_name(tag->tagged->type));
- 		else if (!strcmp(name, "object") && tag->tagged)
- 			v->s = xstrdup(oid_to_hex(&tag->tagged->oid));
- 	}
-@@ -1032,7 +1032,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
- 	v->value = timestamp;
- 	return;
-  bad:
--	v->s = "";
-+	v->s = xstrdup("");
- 	v->value = 0;
- }
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5f8a804a6e..015aa1471f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2037,7 +2037,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
+ 	if (!sub)
+ 		BUG("We could get the submodule handle before?");
  
-@@ -1227,7 +1227,7 @@ static void fill_missing_values(struct atom_value *val)
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct atom_value *v = &val[i];
- 		if (v->s == NULL)
--			v->s = "";
-+			v->s = xstrdup("");
- 	}
- }
+-	if (repo_submodule_init(&subrepo, the_repository, path))
++	if (repo_submodule_init(&subrepo, the_repository, sub))
+ 		die(_("could not get a repository handle for submodule '%s'"), path);
  
-@@ -1273,7 +1273,8 @@ static inline char *copy_advance(char *dst, const char *src)
- static const char *lstrip_ref_components(const char *refname, int len)
- {
- 	long remaining = len;
--	const char *start = refname;
-+	const char *start = xstrdup(refname);
-+	const char *to_free = start;
- 
- 	if (len < 0) {
- 		int i;
-@@ -1294,20 +1295,24 @@ static const char *lstrip_ref_components(const char *refname, int len)
- 	while (remaining > 0) {
- 		switch (*start++) {
- 		case '\0':
--			return "";
-+			free((char *)to_free);
-+			return xstrdup("");
- 		case '/':
- 			remaining--;
- 			break;
- 		}
- 	}
- 
-+	start = xstrdup(start);
-+	free((char *)to_free);
- 	return start;
- }
- 
- static const char *rstrip_ref_components(const char *refname, int len)
- {
- 	long remaining = len;
--	char *start = xstrdup(refname);
-+	const char *start = xstrdup(refname);
-+	const char *to_free = start;
- 
- 	if (len < 0) {
- 		int i;
-@@ -1327,9 +1332,10 @@ static const char *rstrip_ref_components(const char *refname, int len)
- 
- 	while (remaining-- > 0) {
- 		char *p = strrchr(start, '/');
--		if (p == NULL)
--			return "";
--		else
-+		if (p == NULL) {
-+			free((char *)to_free);
-+			return xstrdup("");
-+		} else
- 			p[0] = '\0';
- 	}
- 	return start;
-@@ -1344,7 +1350,7 @@ static const char *show_ref(struct refname_atom *atom, const char *refname)
- 	else if (atom->option == R_RSTRIP)
- 		return rstrip_ref_components(refname, atom->rstrip);
- 	else
--		return refname;
-+		return xstrdup(refname);
- }
- 
- static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
-@@ -1358,7 +1364,7 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 				       NULL, AHEAD_BEHIND_FULL) < 0) {
- 			*s = xstrdup(msgs.gone);
- 		} else if (!num_ours && !num_theirs)
--			*s = "";
-+			*s = xstrdup("");
- 		else if (!num_ours)
- 			*s = xstrfmt(msgs.behind, num_theirs);
- 		else if (!num_theirs)
-@@ -1373,36 +1379,31 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 		}
- 	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
- 		if (stat_tracking_info(branch, &num_ours, &num_theirs,
--				       NULL, AHEAD_BEHIND_FULL) < 0)
-+				       NULL, AHEAD_BEHIND_FULL) < 0) {
-+			*s = xstrdup("");
- 			return;
--
-+		}
- 		if (!num_ours && !num_theirs)
--			*s = "=";
-+			*s = xstrdup("=");
- 		else if (!num_ours)
--			*s = "<";
-+			*s = xstrdup("<");
- 		else if (!num_theirs)
--			*s = ">";
-+			*s = xstrdup(">");
- 		else
--			*s = "<>";
-+			*s = xstrdup("<>");
- 	} else if (atom->u.remote_ref.option == RR_REMOTE_NAME) {
- 		int explicit;
- 		const char *remote = atom->u.remote_ref.push ?
- 			pushremote_for_branch(branch, &explicit) :
- 			remote_for_branch(branch, &explicit);
--		if (explicit)
--			*s = xstrdup(remote);
--		else
--			*s = "";
-+		*s = xstrdup(explicit ? remote : "");
- 	} else if (atom->u.remote_ref.option == RR_REMOTE_REF) {
- 		int explicit;
- 		const char *merge;
- 
- 		merge = remote_ref_for_branch(branch, atom->u.remote_ref.push,
- 					      &explicit);
--		if (explicit)
--			*s = xstrdup(merge);
--		else
--			*s = "";
-+		*s = xstrdup(explicit ? merge : "");
- 	} else
- 		BUG("unhandled RR_* enum");
- }
-@@ -1451,7 +1452,7 @@ char *get_head_description(void)
- static const char *get_symref(struct used_atom *atom, struct ref_array_item *ref)
- {
- 	if (!ref->symref)
--		return "";
-+		return xstrdup("");
- 	else
- 		return show_ref(&atom->u.refname, ref->symref);
- }
-@@ -1510,7 +1511,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 		ref->symref = resolve_refdup(ref->refname, RESOLVE_REF_READING,
- 					     NULL, NULL);
- 		if (!ref->symref)
--			ref->symref = "";
-+			ref->symref = xstrdup("");
- 	}
- 
- 	/* Fill in specials first */
-@@ -1536,20 +1537,23 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			refname = get_symref(atom, ref);
- 		else if (starts_with(name, "upstream")) {
- 			const char *branch_name;
--			v->s = "";
- 			/* only local branches may have an upstream */
- 			if (!skip_prefix(ref->refname, "refs/heads/",
--					 &branch_name))
-+					 &branch_name)) {
-+				v->s = xstrdup("");
- 				continue;
-+			}
- 			branch = branch_get(branch_name);
- 
- 			refname = branch_get_upstream(branch, NULL);
- 			if (refname)
- 				fill_remote_ref_details(atom, refname, branch, &v->s);
-+			else
-+				v->s = xstrdup("");
- 			continue;
- 		} else if (atom->u.remote_ref.push) {
- 			const char *branch_name;
--			v->s = "";
-+			v->s = xstrdup("");
- 			if (!skip_prefix(ref->refname, "refs/heads/",
- 					 &branch_name))
- 				continue;
-@@ -1562,10 +1566,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 				if (!refname)
- 					continue;
- 			}
-+			/* We will definitely re-init v->s on the next line. */
-+			free((char *)v->s);
- 			fill_remote_ref_details(atom, refname, branch, &v->s);
- 			continue;
- 		} else if (starts_with(name, "color:")) {
--			v->s = atom->u.color;
-+			v->s = xstrdup(atom->u.color);
- 			continue;
- 		} else if (!strcmp(name, "flag")) {
- 			char buf[256], *cp = buf;
-@@ -1574,7 +1580,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			if (ref->flag & REF_ISPACKED)
- 				cp = copy_advance(cp, ",packed");
- 			if (cp == buf)
--				v->s = "";
-+				v->s = xstrdup("");
- 			else {
- 				*cp = '\0';
- 				v->s = xstrdup(buf + 1);
-@@ -1584,40 +1590,42 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
- 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
--				v->s = "*";
-+				v->s = xstrdup("*");
- 			else
--				v->s = " ";
-+				v->s = xstrdup(" ");
- 			continue;
- 		} else if (starts_with(name, "align")) {
- 			v->handler = align_atom_handler;
--			v->s = "";
-+			v->s = xstrdup("");
- 			continue;
- 		} else if (!strcmp(name, "end")) {
- 			v->handler = end_atom_handler;
--			v->s = "";
-+			v->s = xstrdup("");
- 			continue;
- 		} else if (starts_with(name, "if")) {
- 			const char *s;
--			v->s = "";
- 			if (skip_prefix(name, "if:", &s))
- 				v->s = xstrdup(s);
-+			else
-+				v->s = xstrdup("");
- 			v->handler = if_atom_handler;
- 			continue;
- 		} else if (!strcmp(name, "then")) {
- 			v->handler = then_atom_handler;
--			v->s = "";
-+			v->s = xstrdup("");
- 			continue;
- 		} else if (!strcmp(name, "else")) {
- 			v->handler = else_atom_handler;
--			v->s = "";
-+			v->s = xstrdup("");
- 			continue;
- 		} else
- 			continue;
- 
- 		if (!deref)
--			v->s = refname;
-+			v->s = xstrdup(refname);
- 		else
- 			v->s = xstrfmt("%s^{}", refname);
-+		free((char *)refname);
- 	}
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
-@@ -1988,6 +1996,10 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- static void free_array_item(struct ref_array_item *item)
- {
- 	free((char *)item->symref);
-+	if (item->value) {
-+		free((char *)item->value->s);
-+		free(item->value);
-+	}
- 	free(item);
- }
- 
+ 	if (!repo_config_get_string(&subrepo, "core.worktree", &cw)) {
+-- 
+2.19.1-450-ga4b8ab5363
 
---
-https://github.com/git/git/pull/538
