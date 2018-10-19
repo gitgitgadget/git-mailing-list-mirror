@@ -6,59 +6,59 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 030931F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 04:57:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 679761F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 05:25:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727033AbeJSNCC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 09:02:02 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45336 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726542AbeJSNCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 09:02:01 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f17-v6so4183863wrs.12
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 21:57:38 -0700 (PDT)
+        id S1727261AbeJSN3b (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 09:29:31 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55411 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727083AbeJSN3b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 09:29:31 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 206-v6so2329957wmb.5
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 22:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=S0Q+oWyx65xBWlolPRDvYl/bF07nbBGYyoLfK0GnefM=;
-        b=md4ecHrBK0yRIJkg/Yb0wOIbjXEkPYSCkm4d4Dc5V/U0xee4BnI4yQ32viQLW4bNPt
-         V3nq0Exk34wLhtAEEsk0OkluSiB6d17llUuMgYRXnJYTnfIz0BSUOELtiGsqbesIQRSf
-         orZMbE8ZISBeegJA7nKvy3sxEZIwhcnisWW1QZ3tO33Nl017JMZCjtnH3ab463MjAR47
-         NBh/Yz9HSug9GoJdlRSVB8GNteXH/s412I7fRbwjN2GeecB4miuiF5z4Vya5e1Ldupqq
-         2oA0cDnkiAKvCtum3gxlUBbY5yuuf76MQdjMn+Z4DsrYP0m6lggVFCZ/a5ngoejLW+vL
-         tJkg==
+        bh=uJO3kJZIkUgnyOVnBJmYRjtw/An20G9f7T7ZaWVaZRU=;
+        b=Evs/CBAM0OkrETZKU34JsBw7UYvvmOHQUpvo5P1YDwBdSiD0r7I+w+4UMGyD3aIHoP
+         5WZX/EtKYFRYfATnjxUi3IY6oDTPB2TYiq3RAXU2PTI7zuZMfOC+a5J/FGlKCKg8UXtw
+         2hQFRMy1uFXECbCRDBKq12ABoYzIcInYkktG9vt5Om8CWHazLtC955vPQypTYSL74Uuu
+         ZPe1pIaVU6UcPj5AVHuREtxjkd/vnD31gH4mAX3JHTSiR8BbIwD29TgAV4Dvlmohs+4c
+         iuUa0o1CwhsM/qPnzOyFfZc/HrYVfUkDGDezn4cNAgu6YJY6lFRA1yBwf/7xEICo4skd
+         tgJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=S0Q+oWyx65xBWlolPRDvYl/bF07nbBGYyoLfK0GnefM=;
-        b=AWZOxuqTr2K9msWOa245iLtNdwhfYvdwrE8DfhVlrYG9hjJCBG/ILKp72XaUMnwKIO
-         Q538RdGrk6QOvLiRaDYH52sTNkoynHg9RZxDKw52hQ+wgzOWGrG47s9K84ygh06SLEAL
-         8IhVocin7XCmCpIcprFW/4PzMz7EoDKKucFzOzmxliaz7BDtVBGqr1nu3+VLkSbbuakl
-         zdfPi8X+W4NTD5+cYF13F96HLMQCxC7JEzMo6zvCwZuX9Bch48qnOnkKY4IE3e3lVClm
-         XSqm3tLzHyrthAXKLKdtVcN8YxTjAsyZsmlNU9IWxpAizsLJj6t2E7JufVhgXTE8Titw
-         RnRA==
-X-Gm-Message-State: ABuFfohniaAb+CVyDQvDfvTCJFPrHbkVQqOCz0LhYW9eU1+wGoAcW3A8
-        uuMY1YaLjecig5o0tlHAQX0vB5C6qAE=
-X-Google-Smtp-Source: ACcGV62m8lMr6Nz6EyTM1/Vqv36ZnwDyIh88cZuaIezxx2IXc/s+D1iWzhRhCOSk3gEjnus5vw/pag==
-X-Received: by 2002:a05:6000:50:: with SMTP id k16mr24016643wrx.103.1539925056502;
-        Thu, 18 Oct 2018 21:57:36 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m136-v6sm2533259wmb.4.2018.10.18.21.57.35
+        bh=uJO3kJZIkUgnyOVnBJmYRjtw/An20G9f7T7ZaWVaZRU=;
+        b=qf796VH008SsAbPsR2VhI55ra5aQ23Wm6V2WrQDlVjb7FmPz9q9CPWLbbNBc4vE+Jx
+         z3ykWhLqXzhgmIRsj7/jm+oFSaAi5lQAsUdmJz/GtKZPEW5bdyUsAyGX5WTQgeK3jce3
+         jJDZqbdvpcrRhmNqTuHaXHOLfKg4AXYLoDOS7VTGkrsCY3XmkJOC0QA9sgYNlq7Rz1Jz
+         aJorsO5PWUFDHTBFdbvmC78iD7bJRPMEXFNJQBFv1fNG8SbFiWBwook285mpplWgRdoP
+         Heq1dDWoDDhsEf78BEBU6bD0Ngs/HfW451XKvwmMEyA9JHLXJpV1Vw+iiaNYHOGfVPMz
+         kSYw==
+X-Gm-Message-State: ABuFfojNYRito4mL9y0k/d1fov7XjwkOZzST/yWk/hhji4nxoytic71B
+        tmiS0eJhJzO+fyybMJPMleI=
+X-Google-Smtp-Source: ACcGV60R1tsnKEcIBEvKSnFHtE9VieC6icmRS2QM2CiSu1ROp8nKH/GZ1hfowEzjzE1DwiszM6Pt4g==
+X-Received: by 2002:a1c:9816:: with SMTP id a22-v6mr3143894wme.13.1539926700445;
+        Thu, 18 Oct 2018 22:25:00 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h78-v6sm2643717wmd.4.2018.10.18.22.24.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Oct 2018 21:57:35 -0700 (PDT)
+        Thu, 18 Oct 2018 22:24:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Rajesh Madamanchi <rmadamanchi@gmail.com>
-Subject: [PATCH] receive: denyCurrentBranch=updateinstead should not blindly update
-References: <CANahLXm7O6scvLdaL6bm14d5oGM5Zp+S-rpQDo554ssagRFNoQ@mail.gmail.com>
-        <xmqqsh124wqb.fsf@gitster-ct.c.googlers.com>
-        <xmqq4ldi38u7.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 19 Oct 2018 13:57:35 +0900
-In-Reply-To: <xmqq4ldi38u7.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 19 Oct 2018 12:37:36 +0900")
-Message-ID: <xmqqpnw61qkg.fsf_-_@gitster-ct.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] commit-reach: fix first-parent heuristic
+References: <pull.51.git.gitgitgadget@gmail.com>
+        <53ebceb7f11d1e1ea39ae4ca86850190ae839eff.1539883476.git.gitgitgadget@gmail.com>
+Date:   Fri, 19 Oct 2018 14:24:58 +0900
+In-Reply-To: <53ebceb7f11d1e1ea39ae4ca86850190ae839eff.1539883476.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Thu, 18 Oct 2018
+        10:24:40 -0700 (PDT)")
+Message-ID: <xmqqd0s61pat.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,86 +67,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The handling of receive.denyCurrentBranch=updateInstead was added to
-a switch statement that handles other values of the variable, but
-all the other case arms only checked a condition to reject the
-attempted push, or let later logic in the same function to still
-intervene, so that a push that does not fast-forward (which is
-checked after the switch statement in question) is still rejected.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-But the handling of updateInstead incorrectly took immediate effect,
-without giving other checks a chance to intervene.
+> We can also re-run the performance tests from commit 4fbcca4e
+> "commit-reach: make can_all_from_reach... linear".
+>
+> Performance was measured on the Linux repository using
+> 'test-tool reach can_all_from_reach'. The input included rows seeded by
+> tag values. The "small" case included X-rows as v4.[0-9]* and Y-rows as
+> v3.[0-9]*. This mimics a (very large) fetch that says "I have all major
+> v3 releases and want all major v4 releases." The "large" case included
+> X-rows as "v4.*" and Y-rows as "v3.*". This adds all release-candidate
+> tags to the set, which does not greatly increase the number of objects
+> that are considered, but does increase the number of 'from' commits,
+> demonstrating the quadratic nature of the previous code.
 
-Instead of calling update_worktree() that causes the side effect
-immediately, just note the fact that we will need to call the
-funciton later, and first give other checks chance to reject the
-request.  After the update-hook gets a chance to reject the push
-(which happens as the last step in a series of checks), call
-update_worktree() when we earlier detected the need to.
-
-Reported-by: Rajesh Madamanchi
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/receive-pack.c | 12 +++++++++---
- t/t5516-fetch-push.sh  |  8 +++++++-
- 2 files changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 95740f4f0e..79ee320948 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1026,6 +1026,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	const char *ret;
- 	struct object_id *old_oid = &cmd->old_oid;
- 	struct object_id *new_oid = &cmd->new_oid;
-+	int do_update_worktree = 0;
- 
- 	/* only refs/... are allowed */
- 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
-@@ -1051,9 +1052,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 				refuse_unconfigured_deny();
- 			return "branch is currently checked out";
- 		case DENY_UPDATE_INSTEAD:
--			ret = update_worktree(new_oid->hash);
--			if (ret)
--				return ret;
-+			/* pass -- let other checks intervene first */
-+			do_update_worktree = 1;
- 			break;
- 		}
- 	}
-@@ -1118,6 +1118,12 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		return "hook declined";
- 	}
- 
-+	if (do_update_worktree) {
-+		ret = update_worktree(new_oid->hash);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	if (is_null_oid(new_oid)) {
- 		struct strbuf err = STRBUF_INIT;
- 		if (!parse_object(the_repository, old_oid)) {
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 7a8f56db53..7316365a24 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1577,7 +1577,13 @@ test_expect_success 'receive.denyCurrentBranch = updateInstead' '
- 		test $(git -C .. rev-parse master) = $(git rev-parse HEAD) &&
- 		git diff --quiet &&
- 		git diff --cached --quiet
--	)
-+	) &&
-+
-+	# (6) updateInstead intervened by fast-forward check
-+	test_must_fail git push void master^:master &&
-+	test $(git -C void rev-parse HEAD) = $(git rev-parse master) &&
-+	git -C void diff --quiet &&
-+	git -C void diff --cached --quiet
- '
- 
- test_expect_success 'updateInstead with push-to-checkout hook' '
--- 
-2.19.1-450-ga4b8ab5363
-
+These micro-benchmarks are interesting, but we should also remember
+to describe the impact of the bug being fixed in the larger picture.
+What end-user visible operations are affected?  Computing merge-base?
+Finding if a push fast-forwards?  Something else?
