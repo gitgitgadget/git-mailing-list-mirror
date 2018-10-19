@@ -2,114 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF0B1F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 16:12:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAA591F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 16:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727724AbeJTAT3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 20:19:29 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42744 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727282AbeJTAT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 20:19:29 -0400
-Received: by mail-qt1-f194.google.com with SMTP id j46-v6so38878330qtc.9
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 09:12:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RafJZrSVIwfb9lBFq8Y4u0oa5Ww9W19YFPsDy/lATdk=;
-        b=IkOe6g7LB/SuDXnIZWtAsqCNx5ycYa6osV4G7adz248SsUYX1PbAtIT5lR3W96x8gy
-         Nzy7/rpEOXINkT8695b9gTCJNSLs42tqnHefnJ/xmrAyrBwUVAo1Af2ejWI6s6mEX76s
-         pHnQzbVsZfrjlIwHIFF9jY6aYG1iKQtEKwryUelDzd7cHlqTjUQCtBfbjqCq4OanKWF3
-         mU0D9KGW14spobjykktEiqnOLNFVfYbt7DIvOX4FLlLkMuvUXXfN8hwQ/x2sfpXc6i63
-         dnviDy2JWj1+hSRA+NDXmm8dUEuQXEsDrzpLOrTixcKzkHbGS4tpka0w7IoMa/QTpwqD
-         8CSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=RafJZrSVIwfb9lBFq8Y4u0oa5Ww9W19YFPsDy/lATdk=;
-        b=S7JDJ05iKyB9qHwUwqKgNY4BBTS3mnHMOP9UuXIdYReLHn17qYsuuu8GqMYxPIxMvi
-         0LVMeighVk9Q6xm8f4HnO01U94i5W6zFalxZcnhqlyRwQycA6EHq/+kzazdCO6s/xAXw
-         V8EqadVHw0xw04IwX+cLurOOkREZMdsDBHqGhn9oLLa3dOt0lJEghPonrnbX2CuXIz2B
-         AgFIZYj1CNPseTh0hYbvaC05OiCyM+3KvL0xuCCtW90793yJXI2KqCf0H1dT45QhUORF
-         B0rf3migv3w74fDzhsbEzFfT9WzBSdbPcbSVjaCyzVRLPyoSaklO2CEw77zFCpozsd55
-         Ij0w==
-X-Gm-Message-State: ABuFfoh/73lg/yoOGaz4jkxx5ZbIpfe9CudpGHaCC8/u+1jH7geZqsJw
-        VTW5rh7LYKaNpwDiPtUw+qmnm78N5Po=
-X-Google-Smtp-Source: ACcGV62UOnpM0uIp6kQFfFpKGqvgWvQl82zV3mh6paZMstKmUkiYs/XPQr7RaXiqVz7voLHg5vhgRw==
-X-Received: by 2002:ac8:7287:: with SMTP id v7-v6mr34308002qto.126.1539965562653;
-        Fri, 19 Oct 2018 09:12:42 -0700 (PDT)
-Received: from localhost.localdomain (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id l27-v6sm3666485qkj.79.2018.10.19.09.12.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Oct 2018 09:12:41 -0700 (PDT)
-From:   Ben Peart <peartben@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, benpeart@microsoft.com, peartben@gmail.com,
-        peff@peff.net, sunshine@sunshineco.com
-Subject: [PATCH v2 3/3] reset: warn when refresh_index() takes more than 2 seconds
-Date:   Fri, 19 Oct 2018 12:12:28 -0400
-Message-Id: <20181019161228.17196-4-peartben@gmail.com>
-X-Mailer: git-send-email 2.18.0.windows.1
-In-Reply-To: <20181019161228.17196-1-peartben@gmail.com>
-References: <20181017164021.15204-1-peartben@gmail.com>
- <20181019161228.17196-1-peartben@gmail.com>
+        id S1727603AbeJTA1L (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 20:27:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46456 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727219AbeJTA1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 20:27:11 -0400
+Received: (qmail 23958 invoked by uid 109); 19 Oct 2018 16:20:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 19 Oct 2018 16:20:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12521 invoked by uid 111); 19 Oct 2018 16:19:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 19 Oct 2018 12:19:35 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Oct 2018 12:20:22 -0400
+Date:   Fri, 19 Oct 2018 12:20:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 19/24] submodule.c: remove implicit dependency on
+ the_index
+Message-ID: <20181019162021.GA14778@sigill.intra.peff.net>
+References: <20180826100314.5137-1-pclouds@gmail.com>
+ <20180903180932.32260-1-pclouds@gmail.com>
+ <20180903180932.32260-20-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180903180932.32260-20-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Peart <benpeart@microsoft.com>
+On Mon, Sep 03, 2018 at 08:09:27PM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-refresh_index() is done after a reset command as an optimization.  Because
-it can be an expensive call, warn the user if it takes more than 2 seconds
-and tell them how to avoid it using the --quiet command line option or
-reset.quiet config setting.
+> diff --git a/submodule.c b/submodule.c
+> index 50cbf5f13e..c0c1224760 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -766,7 +766,8 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
+>   * have a corresponding 'struct oid_array' (in the 'util' field) which lists
+>   * what the submodule pointers were updated to during the change.
+>   */
+> -static void collect_changed_submodules(struct string_list *changed,
+> +static void collect_changed_submodules(struct index_state *istate,
+> +				       struct string_list *changed,
+>  				       struct argv_array *argv)
+>  {
+>  	struct rev_info rev;
 
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
----
- builtin/reset.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+This function doesn't actually make use of the newly added "istate" (nor
+does it use the_index, so there's not a spot that forgot to get
+converted). Is this in preparation for more refactoring, or is it just a
+mistake and can be dropped?
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 3b43aee544..d95a27d52e 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -25,6 +25,8 @@
- #include "submodule.h"
- #include "submodule-config.h"
+I don't see anything in the "Kill the_index, final part" series that
+would need it.
+
+If this can be dropped, then most of the other changes here can, too,
+because they're just pushing the unused parameter down the stack. I.e.:
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 798ecf7faf..49e6f87b31 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -945,7 +945,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		int ret = 0;
+ 		if ((recurse_submodules == RECURSE_SUBMODULES_ON ||
+ 		     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) &&
+-		    submodule_touches_in_range(&the_index, &rebase_fork_point, &curr_head))
++		    submodule_touches_in_range(&rebase_fork_point, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
+ 		if (!autostash) {
+ 			struct commit_list *list = NULL;
+diff --git a/submodule.c b/submodule.c
+index 5635dbda13..55298a4dab 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -767,8 +767,7 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
+  * have a corresponding 'struct oid_array' (in the 'util' field) which lists
+  * what the submodule pointers were updated to during the change.
+  */
+-static void collect_changed_submodules(struct index_state *UNUSED(istate),
+-				       struct string_list *changed,
++static void collect_changed_submodules(struct string_list *changed,
+ 				       struct argv_array *argv)
+ {
+ 	struct rev_info rev;
+@@ -933,8 +932,7 @@ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
+ 	return 0;
+ }
  
-+#define REFRESH_INDEX_DELAY_WARNING_IN_MS (2 * 1000)
-+
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
- 	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
-@@ -376,9 +378,19 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
- 			if (read_from_tree(&pathspec, &oid, intent_to_add))
- 				return 1;
--			if (!quiet && get_git_work_tree())
-+			if (!quiet && get_git_work_tree()) {
-+				uint64_t t_begin, t_delta_in_ms;
-+
-+				t_begin = getnanotime();
- 				refresh_index(&the_index, flags, NULL, NULL,
- 					      _("Unstaged changes after reset:"));
-+				t_delta_in_ms = (getnanotime() - t_begin) / 1000000;
-+				if (t_delta_in_ms > REFRESH_INDEX_DELAY_WARNING_IN_MS) {
-+					printf(_("\nIt took %.2f seconds to enumerate unstaged changes after reset.  You can\n"
-+						"use '--quiet' to avoid this.  Set the config setting reset.quiet to true\n"
-+						"to make this the default."), t_delta_in_ms / 1000.0);
-+				}
-+			}
- 		} else {
- 			int err = reset_index(&oid, reset_type, quiet);
- 			if (reset_type == KEEP && !err)
--- 
-2.18.0.windows.1
-
+-int find_unpushed_submodules(struct index_state *istate,
+-			     struct oid_array *commits,
++int find_unpushed_submodules(struct oid_array *commits,
+ 			     const char *remotes_name,
+ 			     struct string_list *needs_pushing)
+ {
+@@ -948,7 +946,7 @@ int find_unpushed_submodules(struct index_state *istate,
+ 	argv_array_push(&argv, "--not");
+ 	argv_array_pushf(&argv, "--remotes=%s", remotes_name);
+ 
+-	collect_changed_submodules(istate, &submodules, &argv);
++	collect_changed_submodules(&submodules, &argv);
+ 
+ 	for_each_string_list_item(name, &submodules) {
+ 		struct oid_array *commits = name->util;
+@@ -1049,8 +1047,7 @@ static void submodule_push_check(const char *path, const char *head,
+ 		die("process for submodule '%s' failed", path);
+ }
+ 
+-int push_unpushed_submodules(struct index_state *istate,
+-			     struct oid_array *commits,
++int push_unpushed_submodules(struct oid_array *commits,
+ 			     const struct remote *remote,
+ 			     const struct refspec *rs,
+ 			     const struct string_list *push_options,
+@@ -1059,7 +1056,7 @@ int push_unpushed_submodules(struct index_state *istate,
+ 	int i, ret = 1;
+ 	struct string_list needs_pushing = STRING_LIST_INIT_DUP;
+ 
+-	if (!find_unpushed_submodules(istate, commits,
++	if (!find_unpushed_submodules(commits,
+ 				      remote->name, &needs_pushing))
+ 		return 1;
+ 
+@@ -1118,7 +1115,7 @@ void check_for_new_submodule_commits(struct object_id *oid)
+ 	oid_array_append(&ref_tips_after_fetch, oid);
+ }
+ 
+-static void calculate_changed_submodule_paths(struct index_state *istate)
++static void calculate_changed_submodule_paths(void)
+ {
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
+@@ -1139,7 +1136,7 @@ static void calculate_changed_submodule_paths(struct index_state *istate)
+ 	 * Collect all submodules (whether checked out or not) for which new
+ 	 * commits have been recorded upstream in "changed_submodule_names".
+ 	 */
+-	collect_changed_submodules(istate, &changed_submodules, &argv);
++	collect_changed_submodules(&changed_submodules, &argv);
+ 
+ 	for_each_string_list_item(name, &changed_submodules) {
+ 		struct oid_array *commits = name->util;
+@@ -1166,8 +1163,7 @@ static void calculate_changed_submodule_paths(struct index_state *istate)
+ 	initialized_fetch_ref_tips = 0;
+ }
+ 
+-int submodule_touches_in_range(struct index_state *istate,
+-			       struct object_id *excl_oid,
++int submodule_touches_in_range(struct object_id *excl_oid,
+ 			       struct object_id *incl_oid)
+ {
+ 	struct string_list subs = STRING_LIST_INIT_DUP;
+@@ -1185,7 +1181,7 @@ int submodule_touches_in_range(struct index_state *istate,
+ 		argv_array_push(&args, oid_to_hex(excl_oid));
+ 	}
+ 
+-	collect_changed_submodules(istate, &subs, &args);
++	collect_changed_submodules(&subs, &args);
+ 	ret = subs.nr;
+ 
+ 	argv_array_clear(&args);
+@@ -1356,7 +1352,7 @@ int fetch_populated_submodules(struct repository *r,
+ 	argv_array_push(&spf.args, "--recurse-submodules-default");
+ 	/* default value, "--submodule-prefix" and its value are added later */
+ 
+-	calculate_changed_submodule_paths(r->index);
++	calculate_changed_submodule_paths();
+ 	run_processes_parallel(max_parallel_jobs,
+ 			       get_next_submodule,
+ 			       fetch_start_failure,
+diff --git a/submodule.h b/submodule.h
+index ca861abe5a..8ab04e2327 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -102,16 +102,13 @@ int add_submodule_odb(const char *path);
+  * Checks if there are submodule changes in a..b. If a is the null OID,
+  * checks b and all its ancestors instead.
+  */
+-int submodule_touches_in_range(struct index_state *istate,
+-			       struct object_id *a,
++int submodule_touches_in_range(struct object_id *a,
+ 			       struct object_id *b);
+-int find_unpushed_submodules(struct index_state *istate,
+-			     struct oid_array *commits,
++int find_unpushed_submodules(struct oid_array *commits,
+ 			     const char *remotes_name,
+ 			     struct string_list *needs_pushing);
+ struct refspec;
+-int push_unpushed_submodules(struct index_state *istate,
+-			     struct oid_array *commits,
++int push_unpushed_submodules(struct oid_array *commits,
+ 			     const struct remote *remote,
+ 			     const struct refspec *rs,
+ 			     const struct string_list *push_options,
+diff --git a/transport.c b/transport.c
+index d0764fee19..4bf7fa5365 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1172,8 +1172,7 @@ int transport_push(struct transport *transport,
+ 					oid_array_append(&commits,
+ 							  &ref->new_oid);
+ 
+-			if (!push_unpushed_submodules(&the_index,
+-						      &commits,
++			if (!push_unpushed_submodules(&commits,
+ 						      transport->remote,
+ 						      rs,
+ 						      transport->push_options,
+@@ -1197,8 +1196,7 @@ int transport_push(struct transport *transport,
+ 					oid_array_append(&commits,
+ 							  &ref->new_oid);
+ 
+-			if (find_unpushed_submodules(&the_index,
+-						     &commits,
++			if (find_unpushed_submodules(&commits,
+ 						     transport->remote->name,
+ 						     &needs_pushing)) {
+ 				oid_array_clear(&commits);
