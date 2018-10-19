@@ -7,93 +7,84 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32621F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 23:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2581D1F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 23:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726866AbeJTH1k (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 03:27:40 -0400
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:39572 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726349AbeJTH1j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 03:27:39 -0400
-Received: by mail-pg1-f201.google.com with SMTP id n5-v6so4001763pgv.6
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 16:19:31 -0700 (PDT)
+        id S1727261AbeJTH1m (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 03:27:42 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:44511 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726349AbeJTH1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 03:27:42 -0400
+Received: by mail-qt1-f201.google.com with SMTP id q48-v6so38520616qte.11
+        for <git@vger.kernel.org>; Fri, 19 Oct 2018 16:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to
-         :content-transfer-encoding;
-        bh=l4SGLPDVfQ4+GVtK8OGRLuUzxCuPyq8Z1Afm0Ve2y2c=;
-        b=tRr5xHaF5xvm1qva3Z1X7R+lIryw0pF6aEdHiG1Pedn0rWevJ0I1QyujHGO/ElfB6B
-         Jy9GOWgSOvoHE3Lh/0r9d9PNdhWnBAsv7zF8nbjOqwL0HcDNKzW08Pav+wIN2w3H92eo
-         tBouDv8Oye3Vtlv6nfRcpx5o68eOKmHO0RKPp/39wQvRctNeWHhJoc/HTJrq7ItQ6NOd
-         WcOl8KSUkDcWsat6sgoREReyIx1TD77iRQyuapXKOPwfl+S67ysMQWeQ6U8gfSeGuJ5m
-         5vfsNFnh6EYspsOTecXvuGcuG6vHbfb7ybCRAdMVDPvEu7AuU0pkPg6QeKj6Xh6dFnqv
-         SE7w==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=9Ijr0LmVda4IEhkSXChi2WossRwrtUybF/wzO+mnnm0=;
+        b=D3OIZ0tpwlnRndoyVy7og0Y3I2rwqMF4neb0Ha08THVjeoddtdlrHEr1Rpx7qMWCgL
+         ZGUILi/08y3kPnTvktJklzabWqY58uQ3FmktlQVI6aUGYIBkRMfi6QgGYE1Qy+SjAewh
+         hpAIQUSmnYr4osliCJ7VOX6ApacXhJEkSJRIJLFsRgFIzoVhvWSds153EUs/j0PUyXuK
+         nUEZmJSdIVPCFel0pASWEIJmVokS7V5KoyWyS2fwUsBFJkTX6lzsTGa5C8B6XNzmUsMN
+         CdDzDjtDu4HsT8u6W+4Ez4Rbe2YQ8SB+CRQhKJPb8uxU8H/KYYNlwNud6oG4BJSe7C4J
+         vWSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to
-         :content-transfer-encoding;
-        bh=l4SGLPDVfQ4+GVtK8OGRLuUzxCuPyq8Z1Afm0Ve2y2c=;
-        b=oZTe5NNY7eQ8XqFmNdtw0JcpeI0AXmfI04rz7xbLboNrcOmMsUx80tMWzPwNYv2G0z
-         6ws6Q6ex3gTt3EIg0v5E7QW4jRH8QJ9JopPXHfaCO29Pxffv6Hm2ECa/LzhdIkBV0WyQ
-         Jamo1YhhSbTm8O5Du0OalqecF6RA6twCd7Cu7oYrjvNHYQ3fNxJi05NDFvzhiIAsnedS
-         RiLnTpcaJBUOOMEVtJI71q8xZat1cJUj+eoNa+FgsYcET8oGgm7eX3764iHaD6AO+Fn5
-         liftg6jZwNpX5m9Qik55MmP/p2juXeD5VNl6U6F6nk8rkDEDSJluvTgccLV87hS4Ujg9
-         kN2w==
-X-Gm-Message-State: ABuFfojAtmQKBAg0j+8kkM6p6CWOeRzsnkYI9doRdS5R4WQJc5PYhrhU
-        90wEPgPva3HH2H5GnX/JB03OmI0MQXc47Inu8aH5Vv9hBWuNVP5VR36649vxUroLE1n/Qm0P8gH
-        iXsUdE7JquFlYwfTVgwbyFnpnPGOueY8UgSj3pFQAIBbF5hrcM3BlsaoSVSGtKGo=
-X-Google-Smtp-Source: ACcGV61dgIoNEYNDthLCEQcevyC8I1CiaW9oh57ZsQZcqDXI0akbYEtXVfBpAX8tcJ9h1Q4pfH/JIGZi0TyVPA==
-X-Received: by 2002:a63:1b03:: with SMTP id b3-v6mr17893813pgb.13.1539991171407;
- Fri, 19 Oct 2018 16:19:31 -0700 (PDT)
-Date:   Fri, 19 Oct 2018 16:19:27 -0700
-Message-Id: <cover.1539990488.git.steadmon@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=9Ijr0LmVda4IEhkSXChi2WossRwrtUybF/wzO+mnnm0=;
+        b=RMfWN5GO5H5FhsaCzUnp20eT35bGukWZVfEyVrJt4g2gY5AcMo8k2KuIV3ze0uKwvW
+         E0xN4d24OA9+XudOm2fyU+yVdiMDnzI2dOJbILKIFBA9UXaQrC28034CEUvFmqb+/XV6
+         6uT4zx0ff0vRRltBkdq3lymVkSOFOoP1jA2P73CwvG9tIKZYodL7ORol+dSOdKWnjR+g
+         /HIkIoMa1AKTaUzuXmc2iE9fv0t5E5jtITeNbuHCHC6yafmHvLNBuszhWzcTeHd1halj
+         fiqp2jgcMsUnkW1SwOAv0CuvQw84urt1wCHOh1QPxMaqr6O0xbSN8ORAGhCUZOnju+eu
+         PMtA==
+X-Gm-Message-State: ABuFfogrg8FuKF+K0iU3t+USX5zQY4wkXUhWPT3Mp0LyCLaMX+jM/I7M
+        XnUUXm8E4MYmEM4fWShAGv2F+r4ICVGmFR8NZ5m2uUCcbze2pTa1OpOxOklEqe21E1G4/b1oGFi
+        AYcKWVncY3j9l2cx+nJXn2yFGS1sCZy6iZLh+GgcPjkMMfzUnAe000b0uNH3DltQ=
+X-Google-Smtp-Source: ACcGV60T3paJN/sqJqle0X2Uz706204L4wSDKw3iDj3IEOUmuzI9fBYChNFDXiD1zjTCsyX+DbDoYqnwlg8yjQ==
+X-Received: by 2002:a37:9943:: with SMTP id b64-v6mr3729315qke.35.1539991174221;
+ Fri, 19 Oct 2018 16:19:34 -0700 (PDT)
+Date:   Fri, 19 Oct 2018 16:19:28 -0700
+In-Reply-To: <cover.1539990488.git.steadmon@google.com>
+Message-Id: <b1f8e288dde9a9dd46386524189da66c7ad2c333.1539990488.git.steadmon@google.com>
 Mime-Version: 1.0
+References: <cover.1539990488.git.steadmon@google.com>
 X-Mailer: git-send-email 2.19.1.568.g152ad8e336-goog
-Subject: [PATCH 0/1] Fix format detection when archiving remotely
+Subject: [PATCH 1/1] archive: init archivers before determining format
 From:   steadmon@google.com
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, git-archive does not properly determine the desired archive
-format when both --output and --remote are provided, because
-run_remote_archiver() does not initialize the archivers prior to calling
-archive_format_from_filename(). This results in the remote archiver
-always returning a TAR file, regardless of the requested format.
+When passing both --remote and --output to git-archive, initialize the
+archivers before attempting to determine the format from the output
+filename. Without initialization, the format cannot be determined.
 
-This patch initializes the TAR and ZIP archivers before calling
-archive_format_from_filename(), which fixes format detection.
-
-Steps to reproduce:
-
-=E2=88=AB git version
-git version 2.19.1.568.g152ad8e336-goog
-=E2=88=AB cd ~/src/git
-=E2=88=AB git archive --output ~/good.zip HEAD
-=E2=88=AB file ~/good.zip
-/home/steadmon/good.zip: Zip archive data, at least v1.0 to extract
-=E2=88=AB git archive --output ~/bad.zip --remote=3D. HEAD
-=E2=88=AB file ~/bad.zip
-/home/steadmon/bad.zip: POSIX tar archive
-
-(apply patch and build)
-
-=E2=88=AB ./bin-wrappers/git archive --output ~/fixed.zip --remote=3D. HEAD
-=E2=88=AB file ~/fixed.zip
-/home/steadmon/fixed.zip: Zip archive data, at least v1.0 to extract
-
-
-Josh Steadmon (1):
-  archive: init archivers before determining format
-
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
  builtin/archive.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
---=20
+diff --git a/builtin/archive.c b/builtin/archive.c
+index e74f675390..dd3283a247 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -45,7 +45,10 @@ static int run_remote_archiver(int argc, const char **argv,
+ 	 * it.
+ 	 */
+ 	if (name_hint) {
+-		const char *format = archive_format_from_filename(name_hint);
++		const char *format;
++		init_tar_archiver();
++		init_zip_archiver();
++		format = archive_format_from_filename(name_hint);
+ 		if (format)
+ 			packet_write_fmt(fd[1], "argument --format=%s\n", format);
+ 	}
+-- 
 2.19.1.568.g152ad8e336-goog
 
