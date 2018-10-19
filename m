@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96CE01F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 19:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF6961F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 19:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbeJTDit (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 23:38:49 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47538 "EHLO
+        id S1727867AbeJTDiu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 23:38:50 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:33236 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727754AbeJTDis (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Oct 2018 23:38:48 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id w9JJS8md010737;
-        Fri, 19 Oct 2018 12:31:19 -0700
+        by vger.kernel.org with ESMTP id S1727772AbeJTDit (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Oct 2018 23:38:49 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id w9JJNkqb028046;
+        Fri, 19 Oct 2018 12:31:20 -0700
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2n65vthh6b-1
+        by mx0a-00153501.pphosted.com with ESMTP id 2n6h853fnm-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Fri, 19 Oct 2018 12:31:19 -0700
+        Fri, 19 Oct 2018 12:31:20 -0700
 Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Fri, 19 Oct 2018 12:31:17 -0700
+ 15.1.1531.3; Fri, 19 Oct 2018 12:31:18 -0700
 Received: from EX02-WEST.YOJOE.local (10.160.10.131) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
  (version=TLS1_0, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.1.1531.3
- via Frontend Transport; Fri, 19 Oct 2018 12:31:17 -0700
+ via Frontend Transport; Fri, 19 Oct 2018 12:31:18 -0700
 Received: from smtp-transport.yojoe.local (10.129.56.124) by
  EX02-WEST.YOJOE.local (10.160.10.131) with Microsoft SMTP Server id
  14.3.319.2; Fri, 19 Oct 2018 12:31:13 -0700
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech
  [10.100.71.66])        by smtp-transport.yojoe.local (Postfix) with ESMTPS id
- 54A262101E7F;  Fri, 19 Oct 2018 12:31:14 -0700 (PDT)
+ 413BB2101E7C;  Fri, 19 Oct 2018 12:31:14 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     <git@vger.kernel.org>
 CC:     <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 4/8] merge-recursive: new function for better colliding conflict resolutions
-Date:   Fri, 19 Oct 2018 12:31:07 -0700
-Message-ID: <20181019193111.12051-5-newren@gmail.com>
+Subject: [PATCH v3 1/8] Add testcases for consistency in file collision conflict handling
+Date:   Fri, 19 Oct 2018 12:31:04 -0700
+Message-ID: <20181019193111.12051-2-newren@gmail.com>
 X-Mailer: git-send-email 2.19.0.230.g45940724d5
 In-Reply-To: <20181019193111.12051-1-newren@gmail.com>
 References: <20181014020537.17991-1-newren@gmail.com>
@@ -53,7 +53,7 @@ Content-Type:   text/plain; charset=US-ASCII
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-10-19_09:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1807170000 definitions=main-1810190172
@@ -62,236 +62,197 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are three conflict types that represent two (possibly entirely
-unrelated) files colliding at the same location:
+Add testcases dealing with file collisions for the following types of
+conflicts:
   * add/add
   * rename/add
   * rename/rename(2to1)
 
-These three conflict types already share more similarity than might be
-immediately apparent from their description: (1) the handling of the
-rename variants already involves removing any entries from the index
-corresponding to the original file names[*], thus only leaving entries
-in the index for the colliding path; (2) likewise, any trace of the
-original file name in the working tree is also removed.  So, in all
-three cases we're left with how to represent two colliding files in both
-the index and the working copy.
-
-[*] Technically, this isn't quite true because rename/rename(2to1)
-conflicts in the recursive (o->call_depth > 0) case do an "unrename"
-since about seven years ago.  But even in that case, Junio felt
-compelled to explain that my decision to "unrename" wasn't necessarily
-the only or right answer -- search for "Comment from Junio" in t6036 for
-details.
-
-My initial motivation for looking at these three conflict types was that
-if the handling of these three conflict types is the same, at least in
-the limited set of cases where a renamed file is unmodified on the side
-of history where the file is not renamed, then a significant performance
-improvement for rename detection during merges is possible.  However,
-while that served as motivation to look at these three types of
-conflicts, the actual goal of this new function is to try to improve the
-handling for all three cases, not to merely make them the same as each
-other in that special circumstance.
-
-=== Handling the working tree ===
-
-The previous behavior for these conflict types in regards to the
-working tree (assuming the file collision occurs at 'foo') was:
-  * add/add does a two-way merge of the two files and records it as 'foo'.
-  * rename/rename(2to1) records the two different files into two new
-    uniquely named files (foo~HEAD and foo~$MERGE), while removing 'foo'
-    from the working tree.
-  * rename/add records the two different files into two different
-    locations, recording the add at foo~$SIDE and, oddly, recording
-    the rename at foo (why is the rename more important than the add?)
-
-So, the question for what to write to the working tree boils down to
-whether the two colliding files should be two-way merged and recorded in
-place, or recorded into separate files.  As per discussion on the git
-mailing lit, two-way merging was deemed to always be preferred, as that
-makes these cases all more like content conflicts that users can handle
-from within their favorite editor, IDE, or merge tool.  Note that since
-renames already involve a content merge, rename/add and
-rename/rename(2to1) conflicts could result in nested conflict markers.
-
-=== Handling of the index ===
-
-For a typical rename, unpack_trees() would set up the index in the
-following fashion:
-           old_path  new_path
-   stage1: 5ca1ab1e  00000000
-   stage2: f005ba11  00000000
-   stage3: 00000000  b0a710ad
-And merge-recursive would rewrite this to
-           new_path
-   stage1: 5ca1ab1e
-   stage2: f005ba11
-   stage3: b0a710ad
-Removing old_path from the index means the user won't have to `git rm
-old_path` manually every time a renamed path has a content conflict.
-It also means they can use `git checkout [--ours|--theirs|--conflict|-m]
-new_path`, `git diff [--ours|--theirs]` and various other commands that
-would be difficult otherwise.
-
-This strategy becomes a problem when we have a rename/add or
-rename/rename(2to1) conflict, however, because then we have only three
-slots to store blob sha1s and we need either four or six.  Previously,
-this was handled by continuing to delete old_path from the index, and
-just outright ignoring any blob shas from old_path.  That had the
-downside of deleting any trace of changes made to old_path on the other
-side of history.  This function instead does a three-way content merge of
-the renamed file, and stores the blob sha1 for that at either stage2 or
-stage3 for new_path (depending on which side the rename came from).  That
-has the advantage of bringing information about changes on both sides and
-still allows for easy resolution (no need to git rm old_path, etc.), but
-does have the downside that if the content merge had conflict markers,
-then what we store in the index is the sha1 of a blob with conflict
-markers.  While that is a downside, it seems less problematic than the
-downsides of any obvious alternatives, and certainly makes more sense
-than the previous handling.  Further, it has a precedent in that when we
-do recursive merges, we may accept a file with conflict markers as the
-resolution for the merge of the merge-bases, which will then show up in
-the index of the outer merge at stage 1 if a conflict exists at the outer
-level.
+All these conflict types simplify down to two files "colliding"
+and should thus be handled similarly.  This means that rename/add and
+rename/rename(2to1) conflicts need to be modified to behave the same as
+add/add conflicts currently do: the colliding files should be two-way
+merged (instead of the current behavior of writing the two colliding
+files out to separate temporary unique pathnames).  Add testcases which
+check this; subsequent commits will fix the conflict handling to make
+these tests pass.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+ t/t6042-merge-rename-corner-cases.sh | 162 +++++++++++++++++++++++++++
+ 1 file changed, 162 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index f795c92a69..24d979022e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1559,6 +1559,127 @@ static struct diff_filespec *filespec_from_entry(struct diff_filespec *target,
- 	return target;
- }
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index b97aca7fa2..b6fed2cb9a 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -937,4 +937,166 @@ test_expect_failure 'mod6-check: chains of rename/rename(1to2) and rename/rename
+ 	)
+ '
  
-+#if 0 // #if-0-ing avoids unused function warning; will make live in next commit
-+static int handle_file_collision(struct merge_options *o,
-+				 const char *collide_path,
-+				 const char *prev_path1,
-+				 const char *prev_path2,
-+				 const char *branch1, const char *branch2,
-+				 const struct object_id *a_oid,
-+				 unsigned int a_mode,
-+				 const struct object_id *b_oid,
-+				 unsigned int b_mode)
-+{
-+	struct merge_file_info mfi;
-+	struct diff_filespec null, a, b;
-+	char *alt_path = NULL;
-+	const char *update_path = collide_path;
++test_conflicts_with_adds_and_renames() {
++	sideL=$1
++	sideR=$2
++	expect=$3
 +
-+	/*
-+	 * In the recursive case, we just opt to undo renames
-+	 */
-+	if (o->call_depth && (prev_path1 || prev_path2)) {
-+		/* Put first file (a_oid, a_mode) in its original spot */
-+		if (prev_path1) {
-+			if (update_file(o, 1, a_oid, a_mode, prev_path1))
-+				return -1;
-+		} else {
-+			if (update_file(o, 1, a_oid, a_mode, collide_path))
-+				return -1;
-+		}
++	# Setup:
++	#          L
++	#         / \
++	#   master   ?
++	#         \ /
++	#          R
++	#
++	# Where:
++	#   Both L and R have files named 'three' which collide.  Each of
++	#   the colliding files could have been involved in a rename, in
++	#   which case there was a file named 'one' or 'two' that was
++	#   modified on the opposite side of history and renamed into the
++	#   collision on this side of history.
++	#
++	# Questions:
++	#   1) The index should contain both a stage 2 and stage 3 entry
++	#      for the colliding file.  Does it?
++	#   2) When renames are involved, the content merges are clean, so
++	#      the index should reflect the content merges, not merely the
++	#      version of the colliding file from the prior commit.  Does
++	#      it?
++	#   3) There should be a file in the worktree named 'three'
++	#      containing the two-way merged contents of the content-merged
++	#      versions of 'three' from each of the two colliding
++	#      files.  Is it present?
++	#   4) There should not be any three~* files in the working
++	#      tree
++	test_expect_success "setup simple $sideL/$sideR conflict" '
++		test_create_repo simple_${sideL}_${sideR} &&
++		(
++			cd simple_${sideL}_${sideR} &&
 +
-+		/* Put second file (b_oid, b_mode) in its original spot */
-+		if (prev_path2) {
-+			if (update_file(o, 1, b_oid, b_mode, prev_path2))
-+				return -1;
-+		} else {
-+			if (update_file(o, 1, b_oid, b_mode, collide_path))
-+				return -1;
-+		}
++			# Create some related files now
++			for i in $(test_seq 1 10)
++			do
++				echo Random base content line $i
++			done >file_v1 &&
++			cp file_v1 file_v2 &&
++			echo modification >>file_v2 &&
 +
-+		/* Don't leave something at collision path if unrenaming both */
-+		if (prev_path1 && prev_path2)
-+			remove_file(o, 1, collide_path, 0);
++			cp file_v1 file_v3 &&
++			echo more stuff >>file_v3 &&
++			cp file_v3 file_v4 &&
++			echo yet more stuff >>file_v4 &&
 +
-+		return 0;
-+	}
++			# Use a tag to record both these files for simple
++			# access, and clean out these untracked files
++			git tag file_v1 $(git hash-object -w file_v1) &&
++			git tag file_v2 $(git hash-object -w file_v2) &&
++			git tag file_v3 $(git hash-object -w file_v3) &&
++			git tag file_v4 $(git hash-object -w file_v4) &&
++			git clean -f &&
 +
-+	/* Remove rename sources if rename/add or rename/rename(2to1) */
-+	if (prev_path1)
-+		remove_file(o, 1, prev_path1,
-+			    o->call_depth || would_lose_untracked(prev_path1));
-+	if (prev_path2)
-+		remove_file(o, 1, prev_path2,
-+			    o->call_depth || would_lose_untracked(prev_path2));
++			# Setup original commit (or merge-base), consisting of
++			# files named "one" and "two" if renames were involved.
++			touch irrelevant_file &&
++			git add irrelevant_file &&
++			if [ $sideL = "rename" ]
++			then
++				git show file_v1 >one &&
++				git add one
++			fi &&
++			if [ $sideR = "rename" ]
++			then
++				git show file_v3 >two &&
++				git add two
++			fi &&
++			test_tick && git commit -m initial &&
 +
-+	/*
-+	 * Remove the collision path, if it wouldn't cause dirty contents
-+	 * or an untracked file to get lost.  We'll either overwrite with
-+	 * merged contents, or just write out to differently named files.
-+	 */
-+	if (was_dirty(o, collide_path)) {
-+		output(o, 1, _("Refusing to lose dirty file at %s"),
-+		       collide_path);
-+		update_path = alt_path = unique_path(o, collide_path, "merged");
-+	} else if (would_lose_untracked(collide_path)) {
-+		/*
-+		 * Only way we get here is if both renames were from
-+		 * a directory rename AND user had an untracked file
-+		 * at the location where both files end up after the
-+		 * two directory renames.  See testcase 10d of t6043.
-+		 */
-+		output(o, 1, _("Refusing to lose untracked file at "
-+			       "%s, even though it's in the way."),
-+		       collide_path);
-+		update_path = alt_path = unique_path(o, collide_path, "merged");
-+	} else {
-+		/*
-+		 * FIXME: It's possible that the two files are identical
-+		 * and that the current working copy happens to match, in
-+		 * which case we are unnecessarily touching the working
-+		 * tree file.  It's not a likely enough scenario that I
-+		 * want to code up the checks for it and a better fix is
-+		 * available if we restructure how unpack_trees() and
-+		 * merge-recursive interoperate anyway, so punting for
-+		 * now...
-+		 */
-+		remove_file(o, 0, collide_path, 0);
-+	}
++			git branch L &&
++			git branch R &&
 +
-+	/* Store things in diff_filespecs for functions that need it */
-+	memset(&a, 0, sizeof(struct diff_filespec));
-+	memset(&b, 0, sizeof(struct diff_filespec));
-+	null.path = a.path = b.path = (char *)collide_path;
-+	oidcpy(&null.oid, &null_oid);
-+	null.mode = 0;
-+	oidcpy(&a.oid, a_oid);
-+	a.mode = a_mode;
-+	a.oid_valid = 1;
-+	oidcpy(&b.oid, b_oid);
-+	b.mode = b_mode;
-+	b.oid_valid = 1;
++			# Handle the left side
++			git checkout L &&
++			if [ $sideL = "rename" ]
++			then
++				git mv one three
++			else
++				git show file_v2 >three &&
++				git add three
++			fi &&
++			if [ $sideR = "rename" ]
++			then
++				git show file_v4 >two &&
++				git add two
++			fi &&
++			test_tick && git commit -m L &&
 +
-+	if (merge_mode_and_contents(o, &null, &a, &b, collide_path,
-+				    branch1, branch2, o->call_depth * 2, &mfi))
-+		return -1;
-+	mfi.clean &= !alt_path;
-+	if (update_file(o, mfi.clean, &mfi.oid, mfi.mode, update_path))
-+		return -1;
-+	if (!mfi.clean && !o->call_depth &&
-+	    update_stages(o, collide_path, NULL, &a, &b))
-+		return -1;
-+	free(alt_path);
-+	/*
-+	 * FIXME: If both a & b both started with conflicts (only possible
-+	 * if they came from a rename/rename(2to1)), but had IDENTICAL
-+	 * contents including those conflicts, then in the next line we claim
-+	 * it was clean.  If someone cares about this case, we should have the
-+	 * caller notify us if we started with conflicts.
-+	 */
-+	return mfi.clean;
++			# Handle the right side
++			git checkout R &&
++			if [ $sideL = "rename" ]
++			then
++				git show file_v2 >one &&
++				git add one
++			fi &&
++			if [ $sideR = "rename" ]
++			then
++				git mv two three
++			else
++				git show file_v4 >three &&
++				git add three
++			fi &&
++			test_tick && git commit -m R
++		)
++	'
++
++	test_expect_$expect "check simple $sideL/$sideR conflict" '
++		(
++			cd simple_${sideL}_${sideR} &&
++
++			git checkout L^0 &&
++
++			# Merge must fail; there is a conflict
++			test_must_fail git merge -s recursive R^0 &&
++
++			# Make sure the index has the right number of entries
++			git ls-files -s >out &&
++			test_line_count = 3 out &&
++			git ls-files -u >out &&
++			test_line_count = 2 out &&
++			# Ensure we have the correct number of untracked files
++			git ls-files -o >out &&
++			test_line_count = 1 out &&
++
++			# Nothing should have touched irrelevant_file
++			git rev-parse >actual      \
++				:0:irrelevant_file \
++				:2:three           \
++				:3:three           &&
++			git rev-parse >expected        \
++				master:irrelevant_file \
++				file_v2                \
++				file_v4                &&
++			test_cmp expected actual &&
++
++			# Make sure we have the correct merged contents for
++			# three
++			git show file_v1 >expected &&
++			cat <<-\EOF >>expected &&
++			<<<<<<< HEAD
++			modification
++			=======
++			more stuff
++			yet more stuff
++			>>>>>>> R^0
++			EOF
++
++			test_cmp expected three
++		)
++	'
 +}
-+#endif
 +
- static int handle_file(struct merge_options *o,
- 			struct diff_filespec *rename,
- 			int stage,
++test_conflicts_with_adds_and_renames rename rename failure
++test_conflicts_with_adds_and_renames rename add    failure
++test_conflicts_with_adds_and_renames add    rename failure
++test_conflicts_with_adds_and_renames add    add    success
++
+ test_done
 -- 
 2.19.1.1079.gae8ff35a65
 
