@@ -2,117 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 800CB1F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 00:33:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 422D31F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 00:34:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbeJSIhE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 04:37:04 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42507 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725934AbeJSIhE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 04:37:04 -0400
-Received: by mail-pg1-f195.google.com with SMTP id i4-v6so14956078pgq.9
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 17:33:28 -0700 (PDT)
+        id S1726534AbeJSIic (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 04:38:32 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51685 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725910AbeJSIic (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 04:38:32 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 143-v6so1966859wmf.1
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 17:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+cmmSb9bwA2DooqTXUBi6RKMGVSQWnNHxCjltyuET3M=;
-        b=sJqdNPFuT7fJBBSg13oN3oOSuA3/t9StCOaxXlkaIiP8EoxO2uFPIJeo/LDagz3IhQ
-         SGJNLKLSoUfAtyMSg3UBT2wqWqWs6eJB86/FrHtoOivLXGHtr6vrF3EGFZ8ycbys9wy6
-         EC0k6r65RevqtqO5MWwIU+Oe5yY5sFPPIdX0Zj1mORPQbn+Rh21b6hNKTkSvgk6drKte
-         7kmlXESfqkSoNSDzY7JXgVP2vJvufn1JOo8k7NqIP3pQgLunU/DO5BofP2P1mmVIq2D4
-         mVDe+uyYbGyr0p8wGkhDj3HjB1D5hzlqzAsAnNe22l/ZkfZeQ5T/Q0DA5oJ/U/q++BiL
-         OmBg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vHnWYTxae+/gpC3i9JPfYZ820vhrQQq4i2tPtaWBw4A=;
+        b=nqtZ0F87D6HeTKTbxXnJ+ByAdcZJlhoZJ/CuotPvWuczsyAiYpq2PRLsQcBtDRlvan
+         9r7ETGqz3pI3M70iBA2lv1EqK/jyYoC3GbKY4yiBa2C0y2JLRrUsx3Y+xmYznEsisv1j
+         xj1sjoEHZBIVJIKVmOOg6KDd5Qkjx1ojg08K3qyc7uhWUFG1H5xnMTeak8eX/+f7qwiP
+         LQsohLcBiGfHCLjL+BvZni3kYJ4BA6kwOmelMuzU71dNH9mKzJh+KMw9vAS0q1C7Uiwj
+         NhQhrOjH6TOrhiFGGZfyv5F1SzUWTo2nzFzvRzJaN/zX/TKlRv7sKC60PcbPaqKbbGDq
+         gB4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+cmmSb9bwA2DooqTXUBi6RKMGVSQWnNHxCjltyuET3M=;
-        b=a1THCwqWnteFfshwbBZtKQ77Tnpfu2sDjxcmy+nqiiOBuC3nRWG9Mlz7L0bT1COvOG
-         LOMVvu2lKYrE0+atIwfI6WvmYamr/RDGFimKmBxyqVut+6iMUDvRNVktaVYThLR57JmX
-         1Ul8SzdtKIss8fdbAGX3zD8OJc4wztc5YOmloEIcI+k4uWq2p2oKPbgvOvzS4FJYoHTb
-         UvvJkRiza9TcB5LzzxWEPtWC1aME3jn4cwOCWqyGaTnPcsk6TNacux6F1FYc91/5haBL
-         3tlT8zdOvCmwq2ZWLJ4so+46KBDfY6cFn0EP1pcNLrBUz34LvoNSDVWCE28WicVkiTYW
-         fGhA==
-X-Gm-Message-State: ABuFfojcULuuF/7sVhdZLVVjKTHY71151HJ06WXe8OOKKTzJ8r5Odozt
-        0JwOacbo1uKPgWclpqOABv8=
-X-Google-Smtp-Source: ACcGV60WuSplczbJ6828Agg25S5QGvp4oe/d13uldCEknoXLpnF1do8CbxlnJarYm7fK0ysj4zh21w==
-X-Received: by 2002:a62:c68e:: with SMTP id x14-v6mr24681465pfk.151.1539909208252;
-        Thu, 18 Oct 2018 17:33:28 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id z22-v6sm22802588pgv.24.2018.10.18.17.33.26
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vHnWYTxae+/gpC3i9JPfYZ820vhrQQq4i2tPtaWBw4A=;
+        b=Qmxt+kzl5vPlWM2onYjv6mmVMjd0vmojYDIZcYOxgUZQgwhqVAD94qPECrLZy2ZOVZ
+         /cMxwqhKHXBf0ubUfA4QBshTNwRSvhzPZ5+z7gOhvCjzIlDp/IiyTQ3t8XBtWAWaV0Qb
+         Vb4q1g82Zhg/Qhxi1/EIgmVhEeOjvLdH7r+LiOZru0e3krkUX2qiYn+qnYbWJxR2MxZj
+         36t8Me2h0qLJo69a5fJg8cKlKJ1yljrKfKCzHIG2zsz9tEY/Bi1wKgNfHc4TzJV1Gdmn
+         k2b5wpOhVHgN0VSh05WhDwB6VVEehHiMEPAH5Wm64iyrxiSkBRs0DWuHbUTVCRB2kwuH
+         iXQQ==
+X-Gm-Message-State: ABuFfoh2fTYIkIrqxDSTm2RvGIuSgR8CZezZzYS8/Xi7JphaOq9WYFJI
+        +Nhw/7qmdvbfPmttiORh9+o=
+X-Google-Smtp-Source: ACcGV60VwXM1oqxM+iDVED8UYKlJP0bU6ldSgGfEtFDxnfZbCNuxwBdNmGzOVc0QW+BtrD0WyAYTlA==
+X-Received: by 2002:a1c:8154:: with SMTP id c81-v6mr2383061wmd.140.1539909294681;
+        Thu, 18 Oct 2018 17:34:54 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m143-v6sm1913478wmd.29.2018.10.18.17.34.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Oct 2018 17:33:27 -0700 (PDT)
-Date:   Thu, 18 Oct 2018 17:33:25 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        christian.couder@gmail.com, sbeller@google.com,
-        git@vger.kernel.org, peff@peff.net, Ben.Peart@microsoft.com,
-        pclouds@gmail.com, mh@glandium.org, larsxschneider@gmail.com,
-        e@80x24.org, chriscool@tuxfamily.org, jeffhost@microsoft.com,
-        sunshine@sunshineco.com, dev+git@drbeat.li
-Subject: Re: [PATCH v4 9/9] Documentation/config: add
- odb.<name>.promisorRemote
-Message-ID: <20181019003325.GA30421@aiede.svl.corp.google.com>
-References: <20181016174304.GA221682@aiede.svl.corp.google.com>
- <20181016222243.58620-1-jonathantanmy@google.com>
- <xmqqwoqe4xev.fsf@gitster-ct.c.googlers.com>
+        Thu, 18 Oct 2018 17:34:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH v1 1/2] reset: don't compute unstaged changes after reset when --quiet
+References: <20181017164021.15204-1-peartben@gmail.com>
+        <20181017164021.15204-2-peartben@gmail.com>
+        <CAPig+cSiE-M9QMch4WE7y4cib1FBUNiaR2pGGtbDuqiz6juhaw@mail.gmail.com>
+        <20181017182255.GC28326@sigill.intra.peff.net>
+        <xmqqpnw7vs5b.fsf@gitster-ct.c.googlers.com>
+        <20181018063628.GA23537@sigill.intra.peff.net>
+        <5b4d46c2-ac0b-8a44-5e99-b0926ea764d3@gmail.com>
+Date:   Fri, 19 Oct 2018 09:34:52 +0900
+In-Reply-To: <5b4d46c2-ac0b-8a44-5e99-b0926ea764d3@gmail.com> (Ben Peart's
+        message of "Thu, 18 Oct 2018 14:15:24 -0400")
+Message-ID: <xmqqo9bq4vv7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwoqe4xev.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->> Jonathan Nieder wrote:
+Ben Peart <peartben@gmail.com> writes:
 
->>> 	[object]
->>> 		missingObjectRemote = local-cache-remote
->>> 		missingObjectRemote = origin
->>
->> In the presence of missingObjectRemote, old versions of Git, when lazily
->> fetching, would only know to try the extensions.partialClone remote. But
->> this is safe because existing data wouldn't be clobbered (since we're
->> not using ideas like adding meaning to the contents of the .promisor
->> file). Also, other things like fsck and gc still work.
+> Note the status command after the reset doesn't really change as it
+> still must lstat() every file (the 0.02 difference is well within the
+> variability of run to run differences).
+
+Of course, it would not make an iota of difference, whether reset
+refreshes the cached stat index fully, to the cost of later lstat().
+What the refreshing saves is having to scan the contents to find that
+the file is unchanged at runtime.
+
+If your lstat() is not significantly faster than opening and
+scanning the file, the optimization based on the cached-stat
+information becomes moot.  In a working tree full of unmodified
+files, stale cached-stat info in the index will cause us to compare
+the contents and waste a lot of time, and that is what refreshing
+avoids.  If the "status" in your test sequence do not have to do
+that (e.g. the cached-stat information is already up-to-date and
+there is no point running refresh in reset), then I'd expect no
+difference between these two tests.
+
+> To move this forward, here is what I propose:
 >
-> It is a good idea to implicitly include the promisor-remote to the
-> set of secondary places to consult to help existing versions of Git,
-> but once the repository starts fetching incomplete subgraphs and
-> adding new object.missingobjectremote [*1*], these versions of Git
-> will stop working correctly, so I am not sure if it is all that
-> useful approach for compatibility in practice.
+> 1) If the '--quiet' flag is passed, we silently take advantage of the
+> fact we can avoid having to do an "extra" lstat() of every file and
+> scope the refresh_index() call to those paths that we know have
+> changed.
 
-Can you spell this out for me more?  Do you mean that a remote from
-this list might make a promise that the original partialClone remote
-can't keep?
+That's pretty much what the patch under discussion does.
 
-If we're careful to only page in objects that were promised by the
-original partialClone remote, then a promise "I promise to supply you
-on demand with any object directly or indirectly reachable from any
-object you have fetched from me" from the partialClone remote should
-be enough.
+> 2) I can remove the note in the documentation of --quiet which I only
+> added to facilitate discoverability.
 
-> [Footnote]
->
-> *1* That name with two "object" in it sounds horrible.
+Quite honestly, I am not sure if this (meaning #1 above) alone need
+to be even discoverable.  Those who want --quiet output would use
+it, those who want to be told which paths are modified would not,
+and those who want to quickly be told which paths are modified would
+not be helped by the limited refresh anyway, so "with --quiet you
+can make it go faster" would not help anybody.
 
-Sorry about that.  Another name used while discussing this was
-objectAccess.promisorRemote.  As long as the idea is clear (that this
-means "remotes to use when attempting to obtain an object that is not
-already available locally"), I am not attached to any particular name.
+> 3) I can also edit the documentation for reset.quietDefault (maybe I
+> should rename that to "reset.quiet"?) so that it does not discuss the
+> potential performance impact.
 
-Thanks,
-Jonathan
+I think reset.quiet (or reset.verbosity) is a good thing to have
+regardless.
+
