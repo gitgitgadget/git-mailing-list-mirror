@@ -2,62 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9671F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 14:52:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1F4D1F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 14:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727610AbeJSW7O (ORCPT <rfc822;e@80x24.org>);
+        id S1727630AbeJSW7P (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 18:59:15 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:35805 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727492AbeJSW7O (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 19 Oct 2018 18:59:14 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:34778 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726664AbeJSW7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 18:59:14 -0400
-Received: by mail-lf1-f66.google.com with SMTP id n26-v6so6772024lfl.1
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 07:52:45 -0700 (PDT)
+Received: by mail-lj1-f196.google.com with SMTP id o14-v6so31121537ljj.2
+        for <git@vger.kernel.org>; Fri, 19 Oct 2018 07:52:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RonBt4Cqb/kDe3nboghyGp87QDXg8lcdE88q2Wn0BGc=;
-        b=F/iknlSa06I46fDUnKbZAIYJHetlcdA1LBgMYgauTrig7V6KLQbS+mTdnABQdn1M66
-         UzHaQJFRYkDUcbzLbAYsCRZX50ZAbaVHPggwpqtPA+KIIH9Y/LI8fFuQQx18F7p/sL+u
-         EL3Nu6S/pTIZn5AR1jrBXV1Ybi2l0hB3+BwqeZrnXG7+PUEsuXAV3VhLnXTh9KNpoBZv
-         6EebFkN3w31+476cIXStu1udBxVstylY2SJ+wh3iNwDrygMtSJxFHrnYfPwyljzW2bIv
-         LbSoJPDMs4eWYJ1stKi7B4K3QjDo/tawT3Uk+qg01wzEEE4s65Dr1vAOvvl+3AedVHV5
-         fjQg==
+        bh=7Vbi19/ChPsYLaFnOm7ahsyPrzFymaFSS+Cl4srI4Go=;
+        b=GPXFVDRYO1WJNposWb0Uj7bf7gDhca9mg7CnFRTUGD2NT93JBxwPaYdJ6KyPh6rhA3
+         1iZ5YKfkHzZ8UgUk8LniVHLc0UYliTUJbAZyfKSUPO6DJNAcC7tsMav7pJsUko5ecQDz
+         sUj8kdEK4amowk+AOlPYDukvcTMj8uYLrux6EHqc81uCHJSHIWMxau/cYE13vsVLBDKm
+         i39ZMHOM3k/zbYcbNUpPd6xWUaq0z1blhpzl5NrUdmtMMtxyxkZ4Vr5yP4si8mt/e1Ha
+         QhoQVfF5nN/wcpwPIJPMgPdlQNdYMycpw9oc0GvcSm6g8wzFllBgwQcUleJWKlR6FI/K
+         i/4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RonBt4Cqb/kDe3nboghyGp87QDXg8lcdE88q2Wn0BGc=;
-        b=GWJUyS9gt3fLjYjF2sSehOzm/PkbFLjTGwUQT3cU3QJDqvyVgO56loWDBZ3QsNRavj
-         qRT2TIy1LUQDmIdsCchiFdYGsnUpmYhuGvA+EwabHNiW09WHZMfePxvOYrcxtXYZeopU
-         rnM00rE2zLwYGQ/SOMUcD586P1HraD4WwDhoVzVy7BwmPGUzKaONo3P0BMpqA8CmT1Lw
-         BQ8j9M3/V9ldl24pEsXfjmHomxjKCykz81wDoVa+/YIGCdHvND7y1CsP7vjH4Se9D7Dg
-         QOCmMWgcqFCaQXkAi9QKfJGihvhRCXN0F9HRFtW16dYen8lTKlTe9PnrRefVUd2ZqxF+
-         n+hw==
-X-Gm-Message-State: ABuFfoi0yIM0yqspFY2fD/6lky5wwoJ/VAM+9+ytSZt1eXItzAlRkJ2L
-        JAb5HJB71tWZDaB9AuqJVeC5QQnx
-X-Google-Smtp-Source: ACcGV62jV2PIYThJ12dX/Z1BRhXlAfWq4xkyNVZEHqDb9/0guVjvKiRQiH/ogvhHbXizfpZao92+bg==
-X-Received: by 2002:a19:2a4b:: with SMTP id f72mr1610536lfl.139.1539960764173;
-        Fri, 19 Oct 2018 07:52:44 -0700 (PDT)
+        bh=7Vbi19/ChPsYLaFnOm7ahsyPrzFymaFSS+Cl4srI4Go=;
+        b=uHws95utD2C+UF0QW3Dbwc8Hro6fPDiEqC+PZMDP81j79iO/tD1Kiu3vGZI2UMg7IF
+         G0dYRXHXYnXRkir32dk3anhdacmzijn2cSpI0SGhQ+BOpEwpe56boeZ42V8m5vDD8hsS
+         F0f0GixzWjGJdZb19YzqP98qfKVVoPIjuIItzRu6qXmMtUP+ezfufSO71z/VmXQW3BfV
+         ZalXfEZb8gvX7VL7Y5rbv6y5QMYAd3zn+7X92vc+1XF6EMWKO8Mg8AggSXsFVs6g/qbW
+         cQRP2z4UgxlQrDYJFVy21TVkSn/4vWuw5mU6tccTXZ2z3DefnV/Bg16kJG5ZOMGCeC1l
+         PA6Q==
+X-Gm-Message-State: ABuFfohC3kNW2V8AbTv8lzXahh+Uk8JZpP4Y6pOvFyHVyIRfqLsjvKbH
+        r93ZklxgSRdipV+mYH/VD2Dgp+XG
+X-Google-Smtp-Source: ACcGV62U25MrhsIL3c034z8gKwuBjF6szdP6hfNwrgIkX3zrYkWEtElqhXY320Jk/FpfFA/mNpd0+w==
+X-Received: by 2002:a2e:88da:: with SMTP id a26-v6mr22783775ljk.85.1539960765523;
+        Fri, 19 Oct 2018 07:52:45 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g64-v6sm4002414lfe.87.2018.10.19.07.52.42
+        by smtp.gmail.com with ESMTPSA id g64-v6sm4002414lfe.87.2018.10.19.07.52.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Oct 2018 07:52:43 -0700 (PDT)
+        Fri, 19 Oct 2018 07:52:44 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/19] wt-status.c: remove implicit dependency the_repository
-Date:   Fri, 19 Oct 2018 16:52:20 +0200
-Message-Id: <20181019145237.16079-3-pclouds@gmail.com>
+Subject: [PATCH 03/19] list-objects-filter.c: remove implicit dependency on the_index
+Date:   Fri, 19 Oct 2018 16:52:21 +0200
+Message-Id: <20181019145237.16079-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181019145237.16079-1-pclouds@gmail.com>
 References: <20181019145237.16079-1-pclouds@gmail.com>
@@ -71,108 +72,97 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- ref-filter.c |  2 +-
- wt-status.c  | 18 ++++++++++--------
- wt-status.h  |  4 +++-
- 3 files changed, 14 insertions(+), 10 deletions(-)
+ list-objects-filter.c | 7 +++++--
+ list-objects-filter.h | 1 +
+ list-objects.c        | 3 +++
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 2a05619211..d6d3923eb2 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1412,7 +1412,7 @@ char *get_head_description(void)
- 	struct strbuf desc = STRBUF_INIT;
- 	struct wt_status_state state;
- 	memset(&state, 0, sizeof(state));
--	wt_status_get_state(&state, 1);
-+	wt_status_get_state(the_repository, &state, 1);
- 	if (state.rebase_in_progress ||
- 	    state.rebase_interactive_in_progress) {
- 		if (state.branch)
-diff --git a/wt-status.c b/wt-status.c
-index 0378bc2a48..3632276236 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -756,7 +756,7 @@ void wt_status_collect(struct wt_status *s)
- 		wt_status_collect_changes_index(s);
- 	wt_status_collect_untracked(s);
- 
--	wt_status_get_state(&s->state, s->branch && !strcmp(s->branch, "HEAD"));
-+	wt_status_get_state(s->repo, &s->state, s->branch && !strcmp(s->branch, "HEAD"));
- 	if (s->state.merge_in_progress && !has_unmerged(s))
- 		s->committable = 1;
- }
-@@ -1483,7 +1483,8 @@ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
- 	return 1;
- }
- 
--static void wt_status_get_detached_from(struct wt_status_state *state)
-+static void wt_status_get_detached_from(struct repository *r,
-+					struct wt_status_state *state)
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index a0ba78b20c..8825e2a5ab 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -38,6 +38,7 @@ static enum list_objects_filter_result filter_blobs_none(
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct index_state *istate,
+ 	void *filter_data_)
  {
- 	struct grab_1st_switch_cbdata cb;
- 	struct commit *commit;
-@@ -1500,7 +1501,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
- 	    /* sha1 is a commit? match without further lookup */
- 	    (oideq(&cb.noid, &oid) ||
- 	     /* perhaps sha1 is a tag, try to dereference to a commit */
--	     ((commit = lookup_commit_reference_gently(the_repository, &oid, 1)) != NULL &&
-+	     ((commit = lookup_commit_reference_gently(r, &oid, 1)) != NULL &&
- 	      oideq(&cb.noid, &commit->object.oid)))) {
- 		const char *from = ref;
- 		if (!skip_prefix(from, "refs/tags/", &from))
-@@ -1557,30 +1558,31 @@ int wt_status_check_bisect(const struct worktree *wt,
- 	return 0;
- }
- 
--void wt_status_get_state(struct wt_status_state *state,
-+void wt_status_get_state(struct repository *r,
-+			 struct wt_status_state *state,
- 			 int get_detached_from)
+ 	struct filter_blobs_none_data *filter_data = filter_data_;
+@@ -94,6 +95,7 @@ static enum list_objects_filter_result filter_blobs_limit(
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct index_state *istate,
+ 	void *filter_data_)
  {
- 	struct stat st;
- 	struct object_id oid;
+ 	struct filter_blobs_limit_data *filter_data = filter_data_;
+@@ -200,6 +202,7 @@ static enum list_objects_filter_result filter_sparse(
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct index_state *istate,
+ 	void *filter_data_)
+ {
+ 	struct filter_sparse_data *filter_data = filter_data_;
+@@ -216,7 +219,7 @@ static enum list_objects_filter_result filter_sparse(
+ 		dtype = DT_DIR;
+ 		val = is_excluded_from_list(pathname, strlen(pathname),
+ 					    filename, &dtype, &filter_data->el,
+-					    &the_index);
++					    istate);
+ 		if (val < 0)
+ 			val = filter_data->array_frame[filter_data->nr].defval;
  
--	if (!stat(git_path_merge_head(the_repository), &st)) {
-+	if (!stat(git_path_merge_head(r), &st)) {
- 		state->merge_in_progress = 1;
- 	} else if (wt_status_check_rebase(NULL, state)) {
- 		;		/* all set */
--	} else if (!stat(git_path_cherry_pick_head(the_repository), &st) &&
-+	} else if (!stat(git_path_cherry_pick_head(r), &st) &&
- 			!get_oid("CHERRY_PICK_HEAD", &oid)) {
- 		state->cherry_pick_in_progress = 1;
- 		oidcpy(&state->cherry_pick_head_oid, &oid);
- 	}
- 	wt_status_check_bisect(NULL, state);
--	if (!stat(git_path_revert_head(the_repository), &st) &&
-+	if (!stat(git_path_revert_head(r), &st) &&
- 	    !get_oid("REVERT_HEAD", &oid)) {
- 		state->revert_in_progress = 1;
- 		oidcpy(&state->revert_head_oid, &oid);
- 	}
+@@ -279,7 +282,7 @@ static enum list_objects_filter_result filter_sparse(
+ 		dtype = DT_REG;
+ 		val = is_excluded_from_list(pathname, strlen(pathname),
+ 					    filename, &dtype, &filter_data->el,
+-					    &the_index);
++					    istate);
+ 		if (val < 0)
+ 			val = frame->defval;
+ 		if (val > 0) {
+diff --git a/list-objects-filter.h b/list-objects-filter.h
+index a6f6b4990b..dfa29595d1 100644
+--- a/list-objects-filter.h
++++ b/list-objects-filter.h
+@@ -58,6 +58,7 @@ typedef enum list_objects_filter_result (*filter_object_fn)(
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
++	struct index_state *istate,
+ 	void *filter_data);
  
- 	if (get_detached_from)
--		wt_status_get_detached_from(state);
-+		wt_status_get_detached_from(r, state);
- }
- 
- static void wt_longstatus_print_state(struct wt_status *s)
-diff --git a/wt-status.h b/wt-status.h
-index 84653595e3..9dde7091f6 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -134,7 +134,9 @@ void wt_status_prepare(struct wt_status *s, struct repository *repo);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
- void wt_status_collect_free_buffers(struct wt_status *s);
--void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
-+void wt_status_get_state(struct repository *repo,
-+			 struct wt_status_state *state,
-+			 int get_detached_from);
- int wt_status_check_rebase(const struct worktree *wt,
- 			   struct wt_status_state *state);
- int wt_status_check_bisect(const struct worktree *wt,
+ typedef void (*filter_free_fn)(void *filter_data);
+diff --git a/list-objects.c b/list-objects.c
+index 0c2989d5ca..f9d36dabf2 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -51,6 +51,7 @@ static void process_blob(struct rev_info *revs,
+ 	if (!(obj->flags & USER_GIVEN) && filter_fn)
+ 		r = filter_fn(LOFS_BLOB, obj,
+ 			      path->buf, &path->buf[pathlen],
++			      &the_index,
+ 			      filter_data);
+ 	if (r & LOFR_MARK_SEEN)
+ 		obj->flags |= SEEN;
+@@ -136,6 +137,7 @@ static void process_tree(struct rev_info *revs,
+ 	if (!(obj->flags & USER_GIVEN) && filter_fn)
+ 		r = filter_fn(LOFS_BEGIN_TREE, obj,
+ 			      base->buf, &base->buf[baselen],
++			      &the_index,
+ 			      filter_data);
+ 	if (r & LOFR_MARK_SEEN)
+ 		obj->flags |= SEEN;
+@@ -175,6 +177,7 @@ static void process_tree(struct rev_info *revs,
+ 	if (!(obj->flags & USER_GIVEN) && filter_fn) {
+ 		r = filter_fn(LOFS_END_TREE, obj,
+ 			      base->buf, &base->buf[baselen],
++			      &the_index,
+ 			      filter_data);
+ 		if (r & LOFR_MARK_SEEN)
+ 			obj->flags |= SEEN;
 -- 
 2.19.1.647.g708186aaf9
 
