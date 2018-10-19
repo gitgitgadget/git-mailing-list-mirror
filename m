@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 124041F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 14:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 460771F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 14:53:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727673AbeJSW7Y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 18:59:24 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:39562 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727642AbeJSW7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 18:59:23 -0400
-Received: by mail-lj1-f196.google.com with SMTP id p1-v6so31091971ljg.6
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 07:52:55 -0700 (PDT)
+        id S1727705AbeJSW71 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 18:59:27 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:46806 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727596AbeJSW70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 18:59:26 -0400
+Received: by mail-lf1-f66.google.com with SMTP id p143-v6so14416797lfp.13
+        for <git@vger.kernel.org>; Fri, 19 Oct 2018 07:52:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=84qzXiIeP9mV0deTSbY4zzVupPShp2lNqVX616TDbXo=;
-        b=X4p2aGdEhwmQ0cxln7/HG4Eq5cCkBnkTR1Nkzvo9AjKwwEkW68x4mPZ0RlZf/KTonq
-         gZVJvgtZ72sG4s89WOmSSGkciSpEobMVgynu/Q8zsUYF8oR9jsZ89RweFsRulgZByCVz
-         O9ShP3iUpfB5pbnym1g/kYwHUmJoq848o3toDHl1o+6oD2LJk8oCNhQWFvQk52xI7ClY
-         o5CMtgEs7DwA32bvDW941htlhKRn0RfyLCTPLUCEBW7D6dRru7ZV5cR27BClliXM5w6U
-         43Q2xIEBuosdALIbJ1zk5R4Ut+rzcdnB6fSGDz8aDhw0IbasxM1qF3VXDGidATlEbpj/
-         8dhQ==
+        bh=NEtBvUThpEHRlOETq3nx4SIUlA7bs6m2FUOX5N2XslI=;
+        b=CXRv3XucMwi4u95FX/GtbIIbKpc/u88aftKox0yUq+w/rwB9gOezR3fq9vqEAwkFR6
+         MYW4B3oy7ucH2FANarB+EPEcQmulspVY5RJRk2wM1PeYtwmf84l/HTB1QsswTTibCe8E
+         9L3XUFKunYPeCSGO9sZIaka+NKZvynAtldle9DmUoD7zJLuk/F6/25hPINb7FyBrQBXS
+         ssS61rLWxfSwe/7KjPEukxaOaOXcJVOK7YnSJBuEovOwdCi8J6RFSi+MZO+hiWZrqXHy
+         4cUG2MhdUYbeiscKaLOdV9TzgDyPaSFfiaed/gHPU3etDE8DKiqZ0hdGq7yj9IWP2zxy
+         dBRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=84qzXiIeP9mV0deTSbY4zzVupPShp2lNqVX616TDbXo=;
-        b=g+juD+UK0ETcoV35c6R06tIpCjQehAPW0kI0MeTivTB/bevzrvo+Sif8BSJhiwU9eE
-         9DHszv4bk5buWg0cJC8HxNPW25td/wJJI9FbxfPtjE3qUBEZLbD0Wx4W/0ZXg3BmStXF
-         3JeGf1Fd++uYcJoXlUbF/021oF2F59/uMNtKW4TqRAv0Ch2pz8xwu8HznxOrLXAWARDq
-         jMKIf1ZkrG10+In8M/c+7x3qn9gxOs4v77gYG5RNVfhlPSbs7VWAhUxx4P7855E3MEK+
-         ROX33nB/DxCkEH++qTxwDeSW7EFkcVaJFS7D0wvdmSC8IfUTc261W8WaNe7TTPygzKg5
-         lZzw==
-X-Gm-Message-State: ABuFfohCE1nKS7qGtktHE7J3h9ZRUJwHps8h/B2F0XW39x+FAYCQUCgR
-        h654R/4Gj2JmZC6Hnjnq6kES7LlH
-X-Google-Smtp-Source: ACcGV62Z/l8G3bPGZTY2zh8u0Nr2TgkRjuOIikeBWUNmmjbZ7uea6r6gtXoorTnob1wgRL73LkPToA==
-X-Received: by 2002:a2e:7312:: with SMTP id o18-v6mr22484243ljc.125.1539960774246;
-        Fri, 19 Oct 2018 07:52:54 -0700 (PDT)
+        bh=NEtBvUThpEHRlOETq3nx4SIUlA7bs6m2FUOX5N2XslI=;
+        b=CHxnqjILxXTT/W6iEePGmyPRbowvdhJYIPf+bqVb1jIQYf6HapVlQCqoa6TCXsySyF
+         dAHBgH5NH1pTkRvlHKaaExT5NFadACEhJgXh0dNEvTS5BdRuVz4aa5ExR8wyezeNnt3l
+         +nC9Yw20LNdaCD61GDssR14TNzeujBqJgcekNlcRSO/VoX80pTcxbSroiwjHbm33X6yC
+         iLin+ggNfKuP42d/x6aN67/VuGxmJi1G9S74RLgIL6O1+62iAoEGlKMfXphyqrsX78zt
+         0PU5sVOTz+rkYT+C7BebW2qeK6MZs/zo7cLdrJm9GV8nEetZVnNxOkhAcajJipE1EzHF
+         k3BQ==
+X-Gm-Message-State: ABuFfoif+TVS63Em3TazDY8iZGMDVxcXS++I+oqFbJId8nKdb5zPUbmK
+        yQ+zRGUerU5aUz8r9qpAYjY5z+hO
+X-Google-Smtp-Source: ACcGV621yJg6fQbXbzU8fdGJClrW0YUlKanh8DZOSQ5TqVFOwjsg7a9IHYXjCOS/ZuV7+OPdyFodAw==
+X-Received: by 2002:a19:8d11:: with SMTP id p17-v6mr3069124lfd.116.1539960777756;
+        Fri, 19 Oct 2018 07:52:57 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g64-v6sm4002414lfe.87.2018.10.19.07.52.53
+        by smtp.gmail.com with ESMTPSA id g64-v6sm4002414lfe.87.2018.10.19.07.52.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Oct 2018 07:52:53 -0700 (PDT)
+        Fri, 19 Oct 2018 07:52:57 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/19] checkout: avoid the_index when possible
-Date:   Fri, 19 Oct 2018 16:52:28 +0200
-Message-Id: <20181019145237.16079-11-pclouds@gmail.com>
+Subject: [PATCH 13/19] transport.c: remove implicit dependency on the_index
+Date:   Fri, 19 Oct 2018 16:52:31 +0200
+Message-Id: <20181019145237.16079-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181019145237.16079-1-pclouds@gmail.com>
 References: <20181019145237.16079-1-pclouds@gmail.com>
@@ -69,23 +69,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+note, there's still another hidden dependency related to this: even
+though we pass a repo to transport_push() we still use
+is_bare_repository() which pretty much assumes the_repository (and
+some other global state).
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/checkout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/push.c | 3 ++-
+ transport.c    | 7 ++++---
+ transport.h    | 3 ++-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index acdafc6e4c..38b28c20e2 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -284,7 +284,7 @@ static int checkout_paths(const struct checkout_opts *opts,
- 		return run_add_interactive(revision, "--patch=checkout",
- 					   &opts->pathspec);
+diff --git a/builtin/push.c b/builtin/push.c
+index d09a42062c..efb3e38a8d 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -355,7 +355,8 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
  
--	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
-+	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
- 	if (read_cache_preload(&opts->pathspec) < 0)
- 		return error(_("index file corrupt"));
+ 	if (verbosity > 0)
+ 		fprintf(stderr, _("Pushing to %s\n"), transport->url);
+-	err = transport_push(transport, rs, flags, &reject_reasons);
++	err = transport_push(the_repository, transport,
++			     rs, flags, &reject_reasons);
+ 	if (err != 0) {
+ 		fprintf(stderr, "%s", push_get_color(PUSH_COLOR_ERROR));
+ 		error(_("failed to push some refs to '%s'"), transport->url);
+diff --git a/transport.c b/transport.c
+index f4ffbd96cb..b86b2b12c6 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1105,7 +1105,8 @@ static int run_pre_push_hook(struct transport *transport,
+ 	return ret;
+ }
+ 
+-int transport_push(struct transport *transport,
++int transport_push(struct repository *repo,
++		   struct transport *transport,
+ 		   struct refspec *rs, int flags,
+ 		   unsigned int *reject_reasons)
+ {
+@@ -1172,7 +1173,7 @@ int transport_push(struct transport *transport,
+ 					oid_array_append(&commits,
+ 							  &ref->new_oid);
+ 
+-			if (!push_unpushed_submodules(&the_index,
++			if (!push_unpushed_submodules(repo->index,
+ 						      &commits,
+ 						      transport->remote,
+ 						      rs,
+@@ -1197,7 +1198,7 @@ int transport_push(struct transport *transport,
+ 					oid_array_append(&commits,
+ 							  &ref->new_oid);
+ 
+-			if (find_unpushed_submodules(&the_index,
++			if (find_unpushed_submodules(repo->index,
+ 						     &commits,
+ 						     transport->remote->name,
+ 						     &needs_pushing)) {
+diff --git a/transport.h b/transport.h
+index 9baeca2d7a..f2ee7c4f49 100644
+--- a/transport.h
++++ b/transport.h
+@@ -223,7 +223,8 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
+ #define REJECT_FETCH_FIRST     0x08
+ #define REJECT_NEEDS_FORCE     0x10
+ 
+-int transport_push(struct transport *connection,
++int transport_push(struct repository *repo,
++		   struct transport *connection,
+ 		   struct refspec *rs, int flags,
+ 		   unsigned int * reject_reasons);
  
 -- 
 2.19.1.647.g708186aaf9
