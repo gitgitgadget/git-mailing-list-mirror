@@ -2,81 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E520A1F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 16:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9E81F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 16:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727883AbeJTBE3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 21:04:29 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33360 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727549AbeJTBE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 21:04:28 -0400
-Received: by mail-ed1-f67.google.com with SMTP id l14-v6so23092964edq.0
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 09:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=z7Ya+4D3+BIG81geiHDhNXocDEZyfXha97ouPzNoVGU=;
-        b=gIZ/uwtbbqxBvTmrubyQ+3Lvu1zWDEdJuA7m5fE45KMzwyOrzCexXLA8TMFlB65YUT
-         NtcSbvSN9Pb7tfcUDXjyHzAKJP8lArWQFD6dEhZ9fHKkmfWaSdSo1RqNkr4G00OVaqfn
-         EgfvxWSo8k2HM/gxYKU6q5wuxrAXgyh5PA+EJnsFbQF/x/lDiFEauMtLZYvJQwAruVvV
-         jqKKxuiGqC4JC34KcHMEYixH+dXNZkuWuVVMMeNK2c82z7eXECvOoMtBlIWBL6fdd8KB
-         Ml2Yr3nJ3Xq59zzWTuMtO+VHjEmA6t9UWXWEZ2lwXZUaNf2M1WEdyvBytTU9I/fLAws/
-         keiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=z7Ya+4D3+BIG81geiHDhNXocDEZyfXha97ouPzNoVGU=;
-        b=hoB9YMzoraOw5tUf2vvs2pPHSfGyeBPORB6AZS/KusVhvyOdMwX2QRQqX09CJoOG9t
-         8srG6u+vEh9OEyDV+H0AkKsg7x1lppqVtu0UVhm7sp6FhERAhZgyipjDSLkfsjY2PGQt
-         9Og12uwwTB+ndE7IInG9sKOnXYi46qstRRJdyHIXsqfF8K3EPaQTqyWD2R/iAeb3ygrF
-         e/hN3ZUt4LfPHS9XTRTZ0eIsTHXk5l5tSqUhwaPY6RGMTo47w+I0GJ4aq7Iq3pAd2g/x
-         ASEE04NMZg/Qgzjl5auQOhBmVUi6kSVV7Jz5P/cPAH2SA/RWjkCzexiK0qB/3nK5dVCA
-         BklA==
-X-Gm-Message-State: ABuFfogxivZEOApc4/8BXLwexOOSh4MQQt9ZTlNWgs1NHG5hJez5rXYt
-        91nSw4TXngGWFO8MO0QJrb+fbTqg6mEUJoeMUtlmm5n5xINZUg==
-X-Google-Smtp-Source: ACcGV60UtjGqE/cl0CaHjmYbhXcx4SySg8vis5hdulZoUxI2DYro6i8NJt01CK7ZO44JtfrB/JQJQCE/m9/kDXSUFtE=
-X-Received: by 2002:aa7:d70a:: with SMTP id t10-v6mr2251214edq.231.1539968251910;
- Fri, 19 Oct 2018 09:57:31 -0700 (PDT)
+        id S1727977AbeJTBFH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 21:05:07 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:42739 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727549AbeJTBFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 21:05:07 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42cBtm5VHNz5tlF;
+        Fri, 19 Oct 2018 18:58:08 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 2903E1AB2;
+        Fri, 19 Oct 2018 18:58:08 +0200 (CEST)
+Subject: [PATCH v2] diff: don't attempt to strip prefix from absolute Windows
+ paths
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, andreenkosa@gmail.com,
+        git <git@vger.kernel.org>
+References: <CAD1gVxMg0ZiKqFABrnwt0v_=wr2X_3ErkR92RmCAtFQnuM+L5w@mail.gmail.com>
+ <xmqqr2gu8dsx.fsf@gitster-ct.c.googlers.com>
+ <ae6fc699-6e09-2979-40dc-9cc49f4f8365@kdbg.org>
+ <CAGZ79kYChLNDB_f1KR2k7G9FvHkX7x_yXdhxMRpLFWpRR0SoPg@mail.gmail.com>
+ <a9a51e28-208d-d8dd-a868-bc2f8cc79598@kdbg.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <2ca9d427-38fb-ff6e-4e2f-1947d86e6273@kdbg.org>
+Date:   Fri, 19 Oct 2018 18:58:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-References: <20180826100314.5137-1-pclouds@gmail.com> <20180903180932.32260-1-pclouds@gmail.com>
- <20180903180932.32260-20-pclouds@gmail.com> <20181019162021.GA14778@sigill.intra.peff.net>
- <CACsJy8CGLRi64WzNUM-6NUm3i0JW7+ptfh7+NhiSb7J9Qb0u0w@mail.gmail.com> <20181019164237.GA24740@sigill.intra.peff.net>
-In-Reply-To: <20181019164237.GA24740@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 19 Oct 2018 09:57:18 -0700
-Message-ID: <CAGZ79kb4ZabdxUKmzkK_rJn4wbT-hT2N9gGRvoPQwZmBq8isGg@mail.gmail.com>
-Subject: Re: [PATCH v2 19/24] submodule.c: remove implicit dependency on the_index
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <a9a51e28-208d-d8dd-a868-bc2f8cc79598@kdbg.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> >
-> > Yeah. Killing the_index is just the first small step (didn't look that
-> > small when I started). Now it's all about the_repository ;-) and we
-> > have like 400 references of it just in library code.
->
-> I suspect it is much worse than that, even. There are many spots that
-> likely are relying on global data that _should_ be in the repository
-> struct but aren't yet. I don't think there's even an easy way to count
-> those. ;)
+git diff can be invoked with absolute paths. Typically, this triggers
+the --no-index case. Then the absolute paths remain in the file names
+that are printed in the output.
 
-This is a very interesting part of the discussion,
-please note the series "RFC Bring the_repository into cmd_foo"[1]
-as that proposes one way how to deal with this, exposing the
-repository/index changes into the existing test suite.
+There is one peculiarity, though: When the command is invoked from a
+a sub-directory in a repository, then it is attempted to strip the
+sub-directory from the beginning of relative paths. Yet, to detect a
+relative path the code just checks for an initial forward slash.
+This mistakes a Windows style path like "D:/base" as a relative path
+and the output looks like this, for example:
 
-[1] https://public-inbox.org/git/20181018183758.81186-1-sbeller@google.com/
+  D:\dir\test\one>git -P diff --numstat D:\dir\base D:\dir\diff
+  1       1       ir/{base => diff}/1.txt
 
-I'll read on.
+where the correct output should be
+
+  D:\dir\test\one>git -P diff --numstat D:\dir\base D:\dir\diff
+  1       1       D:/dir/{base => diff}/1.txt
+
+If the sub-directory where 'git diff' is invoked is sufficiently deep
+that the prefix becomes longer than the path to be printed, then the
+subsequent code accesses the path out of bounds.
+
+Use is_absolute_path() to detect Windows style absolute paths.
+
+One might wonder whether the check for a directory separator that
+is visible in the patch context should be changed from == '/' to
+is_dir_sep() or not. It turns out not to be necessary. That code
+only ever investigates paths that have undergone pathspec
+normalization, after which there are only forward slashes even on
+Windows.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+v2:
+- added a test that demonstrates the problem on Windows
+- changed the example in the commit message to clarify that this is
+  about truncated paths, not about failure to detect common prefix
+
+ diff.c                   |  4 ++--
+ t/t4053-diff-no-index.sh | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index f0c7557b40..d18eb198f2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4267,12 +4267,12 @@ static void diff_fill_oid_info(struct diff_filespec *one)
+ static void strip_prefix(int prefix_length, const char **namep, const char **otherp)
+ {
+ 	/* Strip the prefix but do not molest /dev/null and absolute paths */
+-	if (*namep && **namep != '/') {
++	if (*namep && !is_absolute_path(*namep)) {
+ 		*namep += prefix_length;
+ 		if (**namep == '/')
+ 			++*namep;
+ 	}
+-	if (*otherp && **otherp != '/') {
++	if (*otherp && !is_absolute_path(*otherp)) {
+ 		*otherp += prefix_length;
+ 		if (**otherp == '/')
+ 			++*otherp;
+diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+index 453e6c35eb..6e0dd6f9e5 100755
+--- a/t/t4053-diff-no-index.sh
++++ b/t/t4053-diff-no-index.sh
+@@ -127,4 +127,14 @@ test_expect_success 'diff --no-index from repo subdir respects config (implicit)
+ 	test_cmp expect actual.head
+ '
+ 
++test_expect_success 'diff --no-index from repo subdir with absolute paths' '
++	cat <<-EOF >expect &&
++	1	1	$(pwd)/non/git/{a => b}
++	EOF
++	test_expect_code 1 \
++		git -C repo/sub diff --numstat \
++		"$(pwd)/non/git/a" "$(pwd)/non/git/b" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.19.1.406.g1aa3f475f3
