@@ -6,120 +6,114 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E6C81F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 01:58:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E21E1F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 02:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726534AbeJSKCD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 06:02:03 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54887 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbeJSKCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 06:02:03 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r63-v6so2070801wma.4
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 18:58:09 -0700 (PDT)
+        id S1726562AbeJSKKX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 06:10:23 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39994 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbeJSKKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 06:10:23 -0400
+Received: by mail-wm1-f67.google.com with SMTP id z204-v6so2136683wmc.5
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 19:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oCxylyKcl5rIwUZtodqyWfGJWwwg+3K4FemIfIEWSuk=;
-        b=q+MdcA5XpXRea685aKlgVZSg+y7vpO8eFMR3uSaqmZgpA//8nhtwuEvgyalOnGNeA+
-         WcZ8t/S+O+ixZfNS3nLoafdUPc/cg8Vs+gbWzBOTNJ24+aVzhj/gedOZdRU4HrDy6oGz
-         AAzlDCsd203LGL2PrDfmCAVaozWM8BfPxH6t08oeijR0l5oa3TyzdWRq6VHfMpbwZLkG
-         prTiwtWj+vtHbgurD2Z0Y/8ZG6g5PuzrX4J07MINdPqLl2GVzQiwtOtLXroOyAFM26KA
-         wBaENfeSLxpE/wkT0OokA+i2BmlXhGXcr+hWqsbEBeMl5af/lrBLtCiCnMsivavDHgLd
-         m+hg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=cLw0z1HGKZvjjenE2hVtwf7Qt7rhKF7rJf7g2aSD+Vw=;
+        b=fsbhWCsF0WCpEdNQMPjf94aDqqh11j2Z7MjeoaBKZkpfWJxyimJiZyaTeUjVvumtpU
+         8TUn24XT41bZ7FOYWW/ajbJ+MIhVaKeStKji/kCkGE/9UiHoW9BAusw9V5yJQHY6ZaDJ
+         s4KCGTai1/Fnz88o5L98ZVDDEKhf8LRKebH6l9GEmMeFsI2bk3Q+1cUayTrkBAUm9UwJ
+         w4lbT7aUXv8DZv/55H9lb/oCpXFWL8Zv8Ow0nMA4EqeBGgmtHxf3qod2H4SHpKzYuU+s
+         Vge721uHUBy/Aoddimo/HJMJgbAv+lNPrLoeTXbleuGuCSCVndhSA+tNJy8qTpfcy1Kj
+         BlyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=oCxylyKcl5rIwUZtodqyWfGJWwwg+3K4FemIfIEWSuk=;
-        b=ClgbiTX/4P6TrZpdSUmSZ+1NF0O0M+/t6QNWT1ko2fZO+MPLTiwSxGSpxSP/7NLFXD
-         vEVb9dqxXnM5aP7PPG0kGmtipleCzYGro3X7pqdhVvvGqn3G6NlP16e2nbCq026dVJ/0
-         xRF+wocvEuUZXWy+fPTS3K6ZdAvEINBcLAmCgVLLMxnYt20+qIQ6WaY99J+hIjnERu43
-         gCQugV1bMB00Cm2mkEZS2i33zCIchstNsg43Rue9FQv2421JjCGFXwfG7kx89tneJ0J7
-         +RQ/r6zfGJAM+8lthZjB6FCZ6Zh7Dh/eyCZ/9AL/NFaATfyjqNRg56u57Pq+o4Kl7Uk7
-         8r/A==
-X-Gm-Message-State: ABuFfogLgpFIoRL90juuuTsgE5KDv3Q0K9pcjRHdkKHqICteRhMhHhpp
-        EgHF9hjLGnZClTOHz+jWggc=
-X-Google-Smtp-Source: ACcGV61dJcW0NQMuQHH+l9RtLt8TsYZKLbmWHjDn64i1ug/NKJ+XbywFBrhvKt4V8WkksJxMESP0Lw==
-X-Received: by 2002:a1c:1c0c:: with SMTP id c12-v6mr2554564wmc.18.1539914288842;
-        Thu, 18 Oct 2018 18:58:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e14-v6sm22488113wrt.76.2018.10.18.18.58.07
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cLw0z1HGKZvjjenE2hVtwf7Qt7rhKF7rJf7g2aSD+Vw=;
+        b=CpqW2pY/PZtnriDdBlPFBGjprmdEgSRBJTiIFznKc1668grwI4iGX7D/qEEpz427JA
+         PqS5WlEhERBUtSNC9VGnUqATFLZRuiLtoKbAl7jkRsrhDWMvvdZK6v3fAw+L21caZlr1
+         9aZzWmDX+aRAdFuII+u1FHLEn7janklh1jllhDNSHV86u5hrLzcWOVxUjyaIXA7uR5RP
+         LelVmtIIQ9qBvhqhvX97TIdouFJe+zcyEFVrxGdLK3+H8FiCUlytNK1Blt/sty6U4pxp
+         W9TW2O0PpXKBXBjKxe6EtBAh773teUCROj9c+J398QwaR43jB3luGu78gbKdztD6bFa9
+         Cevw==
+X-Gm-Message-State: ABuFfohIBlixLfC6Iz0cCqjkm40edaJ9gVL4MzxGcvGO0iik+Drae8G1
+        eKmAOL07+m+tu0uOllA3uRE=
+X-Google-Smtp-Source: ACcGV63DRpIJ7CnMJVGB4JxAAjdOnqGgQmHK/hMHw93r4pZhfXCeI/JFbREuCac97asJzkPWTJ3eIA==
+X-Received: by 2002:a1c:b9cf:: with SMTP id j198-v6mr2606745wmf.57.1539914787280;
+        Thu, 18 Oct 2018 19:06:27 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e133-v6sm1434161wma.42.2018.10.18.19.06.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Oct 2018 18:58:07 -0700 (PDT)
+        Thu, 18 Oct 2018 19:06:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] index_bulk_checkin(): Take off_t, not size_t
-References: <20181018191140.23318-1-tboegi@web.de>
-Date:   Fri, 19 Oct 2018 10:58:06 +0900
-In-Reply-To: <20181018191140.23318-1-tboegi@web.de> (tboegi's message of "Thu,
-        18 Oct 2018 21:11:40 +0200")
-Message-ID: <xmqq36t24s0h.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 02/13] ci/lib.sh: encapsulate Travis-specific things
+References: <pull.31.git.gitgitgadget@gmail.com>
+        <pull.31.v2.git.gitgitgadget@gmail.com>
+        <815152e0f57d545ae2fae7429c16e5be497746be.1539598316.git.gitgitgadget@gmail.com>
+        <20181018220106.GU19800@szeder.dev>
+Date:   Fri, 19 Oct 2018 11:06:25 +0900
+In-Reply-To: <20181018220106.GU19800@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Fri, 19 Oct 2018 00:01:06 +0200")
+Message-ID: <xmqqy3au3d26.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> bulk-checkin.c | 4 ++--
->  bulk-checkin.h | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
-
-If you lost SP in your editor, then it is OK but if format-patch
-lost it for some reason, plasee tell me as we need to find the bug.
-
+> On Mon, Oct 15, 2018 at 03:12:00AM -0700, Johannes Schindelin via GitGitGadget wrote:
+>> diff --git a/ci/lib.sh b/ci/lib.sh
+>> index 06970f7213..8532555b4e 100755
+>> --- a/ci/lib.sh
+>> +++ b/ci/lib.sh
+>> @@ -1,5 +1,26 @@
+>>  # Library of functions shared by all CI scripts
+>>  
+>> +if test true = "$TRAVIS"
+>> +then
+>> +...
+>> +	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+>> +	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+>> +fi
 >
-> diff --git a/bulk-checkin.c b/bulk-checkin.c
-> index 409ecb566b..2631e82d6c 100644
-> --- a/bulk-checkin.c
-> +++ b/bulk-checkin.c
-> @@ -189,7 +189,7 @@ static void prepare_to_stream(struct bulk_checkin_state *state,
->  
->  static int deflate_to_pack(struct bulk_checkin_state *state,
->  			   struct object_id *result_oid,
-> -			   int fd, size_t size,
-> +			   int fd, off_t size,
+> Please set all these variables ...
 
-The size is once casted to uintmax_t for recording in the object
-header (which is fine), and then passed to stream_to_pack(), which
-still takes, and more importantly, does comparisons and chunking in,
-size_t after this patch.  Without xsize_t() around size passed in
-the call to stream_to_pack(), you may silently be truncating off_t
-down to size_t in this function.
+Do you mean "VAR=VAL; export VAR" is kosher, "export VAR=VAL" is
+not?
 
-> @@ -258,7 +258,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
->  }
->  
->  int index_bulk_checkin(struct object_id *oid,
-> -		       int fd, size_t size, enum object_type type,
-> +		       int fd, off_t size, enum object_type type,
->  		       const char *path, unsigned flags)
->  {
->  	int status = deflate_to_pack(&state, oid, fd, size, type,
+>> @@ -81,7 +102,6 @@ check_unignored_build_artifacts ()
+>>  # and installing dependencies.
+>>  set -ex
+>
+> ... after we turn on 'set -x', so the variables' values will be
+> visible in the logs.
 
-This one is a thin wrapper around deflate_to_pack() above.
+Ah, no, you didn't.  Although I think both are valid points, I think
+ci/lib.sh is expected to be used only inside a more predictable
+environment (e.g. we know the shell used is not a random POSIX shell
+but one that is happy with "export VAR=VAL"), so it should be OK.
+Showing the values of these variables in the log may still be good
+idea.
 
-Its sole caller is sha1-file.c::index_stream() and takes size_t from
-its callers, and passes size_t to index_bulk_checkin().
+> (Or move this 'set -ex' to the beginning of the script?  Then we
+> could perhaps avoid similar issues in the future.)
 
-The sole caller of index_stream(), sha1-file.c::index_fd(), wants to
-pass st->st_size, and it uses xsize_t() because index_stream() and
-callchain underneath currently take size_t.  You want that callchain
-to take off_t with this patch.
-
-The whole purpose of stream_to_pack() is to take potentially large
-input from the file on the filesystem, chop that into manageable
-chunks and feed the underlying hashing and deflating machinery that
-takes possibly smaller integer types to represent the sizes of data
-they take in a single call, so once that function is taught to take
-ofs_t I think you can say you converted the entire callchain from
-index_fd() down.
-
-So, this looks like a good starting step, but I suspect it needs one
-more level of digging for it to become truly useful.
+Sure (provided that it is an issue to begin with---if we are
+interested in the value of TRAVIS_BRANCH, for example, being able to
+see it only because "CI_BRANCH=$TRAVIS_BRANCH" assignment is made
+feels a bit sideways---we'd be better off explicitly logging
+anything we are interested in in the longer term, no?).
