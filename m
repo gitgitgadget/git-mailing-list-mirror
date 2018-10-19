@@ -2,86 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7078D1F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 00:16:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 800CB1F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 00:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbeJSITq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 04:19:46 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46938 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725910AbeJSITq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 04:19:46 -0400
-Received: by mail-wr1-f67.google.com with SMTP id n11-v6so35462763wru.13
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 17:16:14 -0700 (PDT)
+        id S1726261AbeJSIhE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 04:37:04 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:42507 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725934AbeJSIhE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 04:37:04 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i4-v6so14956078pgq.9
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 17:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=8LTXTabS2fP3R9dQlDLWAMuKP1Gxjv5/TsYIAH8ruD8=;
-        b=BeXd9ojyBN1HLLbZMhYp74fmBaFlVfP6TsY55ijTnIMBCkdlw2j8acn7Y5xsXxIPvb
-         9zDS8UvIyO+j4/CmUCESMMPzHBYy7uGjGS1vjl0X57hcm0POSlsef3hDka0UvMPTV2Rb
-         Q4bHvX0uZHWAYZSj0BE/Njp2Y+10tkWT54GFAcjtBM5gDw1dyUHlQlNGlJ59NZexIwrp
-         WrLCjhVDS3Nj69d6pEeRZMGWrAi+psecnNmy9PWOzMcNzIL/cmYIpCm2rYIcl44A5dqL
-         vStGDpr4yM/k5w0jkTD7F9sQ9IjL9fIWhhTXDW7OpvWZBfN8jbxQ27HBaH9k/xx4qisx
-         4nPw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+cmmSb9bwA2DooqTXUBi6RKMGVSQWnNHxCjltyuET3M=;
+        b=sJqdNPFuT7fJBBSg13oN3oOSuA3/t9StCOaxXlkaIiP8EoxO2uFPIJeo/LDagz3IhQ
+         SGJNLKLSoUfAtyMSg3UBT2wqWqWs6eJB86/FrHtoOivLXGHtr6vrF3EGFZ8ycbys9wy6
+         EC0k6r65RevqtqO5MWwIU+Oe5yY5sFPPIdX0Zj1mORPQbn+Rh21b6hNKTkSvgk6drKte
+         7kmlXESfqkSoNSDzY7JXgVP2vJvufn1JOo8k7NqIP3pQgLunU/DO5BofP2P1mmVIq2D4
+         mVDe+uyYbGyr0p8wGkhDj3HjB1D5hzlqzAsAnNe22l/ZkfZeQ5T/Q0DA5oJ/U/q++BiL
+         OmBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=8LTXTabS2fP3R9dQlDLWAMuKP1Gxjv5/TsYIAH8ruD8=;
-        b=GEtGZKf4xHCu4HoW111a+CbbTXPMDNvTlR7cIIT5hHWm7YKaSNFQ3sIP3uLCLd81QY
-         NxrZaQ+2/zozs/07OPbZBXZ6n2fDAzi2FK2yjniPCxUcMTG3CUVtzs1BaLmGrCzzKxtX
-         KbAlNQa2pVOv/10SQUnUQBCWk1cB6Yl9HPicTP9jEoLy5USvcmmQlJfydd84ReRU32Pe
-         9L6dV/K9MHv+I1Mvk1cqPjRLCbIO19FgLnStkJDbATisepuiaSW3e/kfa5cWnRzqhpDj
-         9iOGkpiEQTgIGtcG23cxGqH+pdpCxteUDBYux0wPPScZv8Yy7bG6xzC1cuqOLyhdnyo+
-         1mPg==
-X-Gm-Message-State: ABuFfoiwxuWGSteHvRI7tySLNmobT7zDOi+qIaZ69U3PwKG8u/7Th7a4
-        C860USarg5q/7DX2Cz7wzQk=
-X-Google-Smtp-Source: ACcGV60oLVEEiXsVk6NhQQ3nU4M5ihZFJBNUwGkhV2Km7TTbGtciVpwmp4ZywMtehwbzxhoIQGj0hQ==
-X-Received: by 2002:adf:ce10:: with SMTP id p16-v6mr29462221wrn.118.1539908173774;
-        Thu, 18 Oct 2018 17:16:13 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 74-v6sm1802149wmi.23.2018.10.18.17.16.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+cmmSb9bwA2DooqTXUBi6RKMGVSQWnNHxCjltyuET3M=;
+        b=a1THCwqWnteFfshwbBZtKQ77Tnpfu2sDjxcmy+nqiiOBuC3nRWG9Mlz7L0bT1COvOG
+         LOMVvu2lKYrE0+atIwfI6WvmYamr/RDGFimKmBxyqVut+6iMUDvRNVktaVYThLR57JmX
+         1Ul8SzdtKIss8fdbAGX3zD8OJc4wztc5YOmloEIcI+k4uWq2p2oKPbgvOvzS4FJYoHTb
+         UvvJkRiza9TcB5LzzxWEPtWC1aME3jn4cwOCWqyGaTnPcsk6TNacux6F1FYc91/5haBL
+         3tlT8zdOvCmwq2ZWLJ4so+46KBDfY6cFn0EP1pcNLrBUz34LvoNSDVWCE28WicVkiTYW
+         fGhA==
+X-Gm-Message-State: ABuFfojcULuuF/7sVhdZLVVjKTHY71151HJ06WXe8OOKKTzJ8r5Odozt
+        0JwOacbo1uKPgWclpqOABv8=
+X-Google-Smtp-Source: ACcGV60WuSplczbJ6828Agg25S5QGvp4oe/d13uldCEknoXLpnF1do8CbxlnJarYm7fK0ysj4zh21w==
+X-Received: by 2002:a62:c68e:: with SMTP id x14-v6mr24681465pfk.151.1539909208252;
+        Thu, 18 Oct 2018 17:33:28 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id z22-v6sm22802588pgv.24.2018.10.18.17.33.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Oct 2018 17:16:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rajesh Madamanchi <rmadamanchi@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: receive.denyCurrentBranch=updateInstead updates working tree even when receive.denyNonFastForwards rejects push
-References: <CANahLXm7O6scvLdaL6bm14d5oGM5Zp+S-rpQDo554ssagRFNoQ@mail.gmail.com>
-Date:   Fri, 19 Oct 2018 09:16:12 +0900
-In-Reply-To: <CANahLXm7O6scvLdaL6bm14d5oGM5Zp+S-rpQDo554ssagRFNoQ@mail.gmail.com>
-        (Rajesh Madamanchi's message of "Tue, 16 Oct 2018 13:54:48 -0500")
-Message-ID: <xmqqsh124wqb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 18 Oct 2018 17:33:27 -0700 (PDT)
+Date:   Thu, 18 Oct 2018 17:33:25 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        christian.couder@gmail.com, sbeller@google.com,
+        git@vger.kernel.org, peff@peff.net, Ben.Peart@microsoft.com,
+        pclouds@gmail.com, mh@glandium.org, larsxschneider@gmail.com,
+        e@80x24.org, chriscool@tuxfamily.org, jeffhost@microsoft.com,
+        sunshine@sunshineco.com, dev+git@drbeat.li
+Subject: Re: [PATCH v4 9/9] Documentation/config: add
+ odb.<name>.promisorRemote
+Message-ID: <20181019003325.GA30421@aiede.svl.corp.google.com>
+References: <20181016174304.GA221682@aiede.svl.corp.google.com>
+ <20181016222243.58620-1-jonathantanmy@google.com>
+ <xmqqwoqe4xev.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwoqe4xev.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rajesh Madamanchi <rmadamanchi@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>> Jonathan Nieder wrote:
 
-> Hi, I am looking to report the below behavior when seems incorrect to
-> me when receive.denyCurrentBranch is set to updateInstead and
-> receive.denyNonFastForwards is set to true.
+>>> 	[object]
+>>> 		missingObjectRemote = local-cache-remote
+>>> 		missingObjectRemote = origin
+>>
+>> In the presence of missingObjectRemote, old versions of Git, when lazily
+>> fetching, would only know to try the extensions.partialClone remote. But
+>> this is safe because existing data wouldn't be clobbered (since we're
+>> not using ideas like adding meaning to the contents of the .promisor
+>> file). Also, other things like fsck and gc still work.
+>
+> It is a good idea to implicitly include the promisor-remote to the
+> set of secondary places to consult to help existing versions of Git,
+> but once the repository starts fetching incomplete subgraphs and
+> adding new object.missingobjectremote [*1*], these versions of Git
+> will stop working correctly, so I am not sure if it is all that
+> useful approach for compatibility in practice.
 
-It seems that we took a lazy but incorrect route while adding the
-DENY_UPDATE_INSTEAD hack to builtin/receive-pack.c::update() and new
-code went to a wrong place in a series of checks.  Everythng else in
-the same switch() statement either refuses or just decides to let
-later step to update without taking actual action, so that later
-checks such as "the new tip commit must have been transferred", "the
-new tip must be a fast-forward of the old tip", etc., but the one
-for DENY_UPDATE_INSTEAD immediately calls update_worktree() there.
-It should be changed to decide to later call the function when
-everybody else in the series of checks agrees that it is OK to let
-this push accepted, and then the actual call is made somewhere near
-where we call run_update_hook(), probably after the hook says it is
-OK to update.
+Can you spell this out for me more?  Do you mean that a remote from
+this list might make a promise that the original partialClone remote
+can't keep?
 
+If we're careful to only page in objects that were promised by the
+original partialClone remote, then a promise "I promise to supply you
+on demand with any object directly or indirectly reachable from any
+object you have fetched from me" from the partialClone remote should
+be enough.
+
+> [Footnote]
+>
+> *1* That name with two "object" in it sounds horrible.
+
+Sorry about that.  Another name used while discussing this was
+objectAccess.promisorRemote.  As long as the idea is clear (that this
+means "remotes to use when attempting to obtain an object that is not
+already available locally"), I am not attached to any particular name.
+
+Thanks,
+Jonathan
