@@ -2,120 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF891F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 12:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A585D1F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 13:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727261AbeJSUw2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 16:52:28 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:34734 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727170AbeJSUw2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 16:52:28 -0400
-Received: by mail-ed1-f49.google.com with SMTP id w19-v6so31328689eds.1
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 05:46:29 -0700 (PDT)
+        id S1727445AbeJSVqd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 17:46:33 -0400
+Received: from mail-vk1-f173.google.com ([209.85.221.173]:39640 "EHLO
+        mail-vk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727189AbeJSVqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 17:46:33 -0400
+Received: by mail-vk1-f173.google.com with SMTP id y69so3767322vkd.6
+        for <git@vger.kernel.org>; Fri, 19 Oct 2018 06:40:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VmXV148T5CXUuZDdhbSs4NqBQ8MOrUZ1qUNnTUYmMWs=;
-        b=IG9G25rcesbBPEFxo5sLX//kb2TapgnY4Q6yOd/xP/0YTT8mXLJAYTpCwo9pYbC6qm
-         y6BB4sFIbBSQmycK/OUgQ3L9pvxay6HTSBFf42AQFZuq2f5Z0B7kyXX/5zU4GwhYAhmz
-         AjJ4VaFiqJE4KCeroBgY2YF5z2Al84QD4Wx4bHRN5gPIjrEiakAhXssz0gruUMBV00gP
-         vLXh2DRwD3BZjUeP+MBbiXwXwk0RkLFDElt9r3r/zqEAMMqcSPqW3XRQf+iOcpVg4gDX
-         w+w53UEoc2rFFIkM0/V6Qj+v5zmYTNN16zfQupSxg2xKhnoUWTdLBmr/pbVuqrkSstyn
-         KFZQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=hsycDTHWMfihgtkBheqNyl4wH4V3XIjVDgCBJioUCP0=;
+        b=sAH3dudrfDEmczJOz7iLh4/XOO0vYhf2HseyQNfuM2EjKd13/HDdXRJYlv4x7x0TI/
+         +ZGZIBKvy+IT4VW8n8iETXeWSLhVWq1321HFYc3iMpAYrj5mFHiEF+Ukt47Dmt12RZBH
+         3am0EPu2tMnlv3kjfxfxYn7q/fJTWn2SV4QscwlmK8q7DalxfKrro5ZJE/gANs6kluy2
+         wxj5VW3O0ivopxFwqbjUNMYr5CYdEGqtyPq13WZM3K09XlyoiGaTtxx3aj1kYU5ualms
+         lUfaUWtegcB9P9b25yQvEkutm+x54Ll0T2QolO5WjXCoHCs75Abvc6fJyu0fO1XmZLdP
+         v37A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VmXV148T5CXUuZDdhbSs4NqBQ8MOrUZ1qUNnTUYmMWs=;
-        b=Ef+jmjR1s2QdhLCTsrC5f8rkg6TPsqoZT0/PWWV42tcwqLqNu3diPl+uA1AwhPo0Hq
-         ydu5tQ/RfVPNepaw+B8j9zoeC0WmHaTx7ZLIS4rvm5mcs4xla2Rny18cS8xIL/5LixtZ
-         z2DbkF4cQRTXDsxoFCruhYQUf94NIUhei3YCK67nWFO2qOHc4yWLgvnmOPedxYyzkfZ4
-         n+xRy6hohistV0R69U2ScXXFXP76Fu83pHML0c5WHnoOFTWfDxMRUnW5xrLk41252uF/
-         zqAbHhGkgiEHxkmM1GBrGZBAiDHHLCP3+/ikStKPvLiGd9s6LmR1nyAVMrOwpGPIW7ux
-         RU3A==
-X-Gm-Message-State: ABuFfoi6GWiueXXXLizrB9DXOsOYCTKCldkXv8nOMQABX3kCisqGG/zI
-        ThpDLosFOm0L8UcCeWuL0Qg=
-X-Google-Smtp-Source: ACcGV618oRD0vw2+qpRxyTiV6+8DwA52cQiV0LVSAaDdg4N3YEvSUBlvB5dUiVTf/sbafdXzB7gp8Q==
-X-Received: by 2002:a17:906:b857:: with SMTP id ga23-v6mr31456409ejb.222.1539953188385;
-        Fri, 19 Oct 2018 05:46:28 -0700 (PDT)
-Received: from szeder.dev (x4db1e3c6.dyn.telefonica.de. [77.177.227.198])
-        by smtp.gmail.com with ESMTPSA id 9-v6sm4859686ejw.46.2018.10.19.05.46.26
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=hsycDTHWMfihgtkBheqNyl4wH4V3XIjVDgCBJioUCP0=;
+        b=GHIweewakENiQUCLbhlXDvEhWukdjHs2ttGWRPNzwvKJvf/xKw5ne9PTM37W66iS74
+         7B0nbZn7qXgV2Omg9WofRgrdxMe1yGFUYUh9mMeqNfZTIovOn0IDxvZD6GzkT/mONpe8
+         GhWPlRyZmJaRvxbed3+0rB+WaHy+LVoIU02S34LrNuP8Ul7h84qVPqv0qU738zMTaGf/
+         KwfkcPGS7/BumLeFhQukIiSQxcoKZz8tTR9tXBksHh23ntn3oZjjULlVE4dJ9+GpeWxj
+         MyWluQaAcC9qjN+BJFT+ag7ct3tKKvwdYYnzEOqh1KQ7/p534ydxuBseFGvyO2+fxCwK
+         ShBw==
+X-Gm-Message-State: ABuFfogJEDs8E7/lMGH2urmd4zG4gWsvvM2xbPJ52YkZHexm6QFUuwBc
+        KWhmU5h/D/9ek/XYCkj2oPoAhhAM
+X-Google-Smtp-Source: ACcGV63PUUjCSx6mYyS+vrffp1Fx6Nq9AdSofN5my6vdHXqnrmUYHYNYeCp2X2869hbjpGDRVSNZhg==
+X-Received: by 2002:a1f:6e0f:: with SMTP id j15mr9586265vkc.49.1539956421866;
+        Fri, 19 Oct 2018 06:40:21 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:e0ed:6621:9414:4d4e? ([2001:4898:8010:0:ca23:6621:9414:4d4e])
+        by smtp.gmail.com with ESMTPSA id r123-v6sm6761408vka.16.2018.10.19.06.40.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Oct 2018 05:46:27 -0700 (PDT)
-Date:   Fri, 19 Oct 2018 14:46:25 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org
+        Fri, 19 Oct 2018 06:40:21 -0700 (PDT)
 Subject: Re: What's cooking in git.git (Oct 2018, #04; Fri, 19)
-Message-ID: <20181019124625.GB30222@szeder.dev>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <xmqq8t2u1nkh.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <529dfd89-a5c9-fb14-fe9c-bb2fd78a59fd@gmail.com>
+Date:   Fri, 19 Oct 2018 09:40:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:63.0) Gecko/20100101
+ Thunderbird/63.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 In-Reply-To: <xmqq8t2u1nkh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 19, 2018 at 03:02:22PM +0900, Junio C Hamano wrote:
-> Two large set of topics on "rebase in C" and "rebase -i in C" are
-> now in 'next'.
+On 10/19/2018 2:02 AM, Junio C Hamano wrote:
+>
+> * ds/ci-commit-graph-and-midx (2018-10-19) 1 commit
+>   - ci: add optional test variables
+>
+>   One of our CI tests to run with "unusual/experimental/random"
+>   settings now also uses commti-graph and midx.
+>
+>   Will merge to 'next'.
 
-I see occasional failures in 't5520-pull.sh':
+s/commti-graph/commit-graph/
 
-expecting success: 
-	test_config rebase.autostash true &&
-	test_pull_autostash --rebase
+> * ds/test-multi-pack-index (2018-10-09) 3 commits
+>   - multi-pack-index: define GIT_TEST_MULTI_PACK_INDEX
+>   - midx: close multi-pack-index on repack
+>   - midx: fix broken free() in close_midx()
+>
+>   Tests for the recently introduced multi-pack index machinery.
+>
+>   Expecting a reroll.
+>   cf. <8b5dbe3d-b382-bf48-b524-d9e8a074ac4d@gmail.com>
 
-+ test_config rebase.autostash true
-+ config_dir=
-+ test rebase.autostash = -C
-+ test_when_finished test_unconfig  'rebase.autostash'
-+ test 0 = 0
-+ test_cleanup={ test_unconfig  'rebase.autostash'
-		} && (exit "$eval_ret"); eval_ret=$?; :
-+ git config rebase.autostash true
-+ test_pull_autostash --rebase
-+ git reset --hard before-rebase
-HEAD is now at 12212b3 new file
-+ echo dirty
-+ git add new_file
-+ git pull --rebase . copy
-From .
- * branch            copy       -> FETCH_HEAD
-Created autostash: 5417697
-HEAD is now at 12212b3 new file
-First, rewinding head to replay your work on top of it...
-Applying: new file
-Applying autostash resulted in conflicts.
-Your changes are safe in the stash.
-You can run "git stash pop" or "git stash drop" at any time.
-+ test_cmp_rev HEAD^ copy
-+ git rev-parse --verify HEAD^
-+ git rev-parse --verify copy
-+ test_cmp expect.rev actual.rev
-+ diff -u expect.rev actual.rev
-+ cat new_file
-cat: new_file: No such file or directory
-+ test  = dirty
-error: last command exited with $?=1
-not ok 25 - pull --rebase succeeds with dirty working directory and rebase.autostash set
+A reroll exists: 
+https://public-inbox.org/git/pull.27.v2.git.gitgitgadget@gmail.com/
 
-When running t5520 in a loop, it tends to fail between 10-40
-iterations, even when the machine is not under heavy load.
-
-It appears that these failures started with commit 5541bd5b8f (rebase:
-default to using the builtin rebase, 2018-08-08), i.e. tip of
-'pk/rebase-in-c-6-final', but it's a "flip the big switch" commit, so
-not very useful...
+Thanks,
+-Stolee
 
