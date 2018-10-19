@@ -7,104 +7,408 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BB211F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7B031F453
 	for <e@80x24.org>; Fri, 19 Oct 2018 19:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbeJTDiq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 23:38:46 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:33214 "EHLO
+        id S1727846AbeJTDis (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 23:38:48 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:33228 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727631AbeJTDiq (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Oct 2018 23:38:46 -0400
+        by vger.kernel.org with ESMTP id S1727772AbeJTDir (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Oct 2018 23:38:47 -0400
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id w9JJNkqW028046;
-        Fri, 19 Oct 2018 12:31:16 -0700
+        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id w9JJNg6C028015;
+        Fri, 19 Oct 2018 12:31:18 -0700
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2n6h853fnh-1
+        by mx0a-00153501.pphosted.com with ESMTP id 2n6h853fnj-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Fri, 19 Oct 2018 12:31:16 -0700
+        Fri, 19 Oct 2018 12:31:18 -0700
 Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Fri, 19 Oct 2018 12:31:14 -0700
+ 15.1.1531.3; Fri, 19 Oct 2018 12:31:16 -0700
 Received: from EX02-WEST.YOJOE.local (10.160.10.131) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
  (version=TLS1_0, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.1.1531.3
- via Frontend Transport; Fri, 19 Oct 2018 12:31:14 -0700
+ via Frontend Transport; Fri, 19 Oct 2018 12:31:16 -0700
 Received: from smtp-transport.yojoe.local (10.129.56.124) by
  EX02-WEST.YOJOE.local (10.160.10.131) with Microsoft SMTP Server id
  14.3.319.2; Fri, 19 Oct 2018 12:31:13 -0700
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech
  [10.100.71.66])        by smtp-transport.yojoe.local (Postfix) with ESMTPS id
- 3CE5B2101E7B;  Fri, 19 Oct 2018 12:31:14 -0700 (PDT)
+ 46FDE2101E7D;  Fri, 19 Oct 2018 12:31:14 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     <git@vger.kernel.org>
 CC:     <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 0/8] Improve path collision conflict resolutions
-Date:   Fri, 19 Oct 2018 12:31:03 -0700
-Message-ID: <20181019193111.12051-1-newren@gmail.com>
+Subject: [PATCH v3 2/8] t6036, t6042: testcases for rename collision of already conflicting files
+Date:   Fri, 19 Oct 2018 12:31:05 -0700
+Message-ID: <20181019193111.12051-3-newren@gmail.com>
 X-Mailer: git-send-email 2.19.0.230.g45940724d5
-In-Reply-To: <20181014020537.17991-1-newren@gmail.com>
+In-Reply-To: <20181019193111.12051-1-newren@gmail.com>
 References: <20181014020537.17991-1-newren@gmail.com>
+ <20181019193111.12051-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-10-19_09:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=848 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1807170000 definitions=main-1810190172
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series depends on en/merge-cleanup-more and is built on that
-series.  (It merges cleanly to master, next, and pu).
+When a single file is renamed, it can also be modified, yielding the
+possibility of that renamed file having content conflicts.  If two
+different such files are renamed into the same location, then two-way
+merging those files may result in nested conflicts.  Add a testcase that
+makes sure we get this case correct, and uses different lengths of
+conflict markers to differentiate between the different nestings.
 
-This series makes all the "file collision" conflict types be handled
-consistently; making them all behave like add/add (as suggested by
-Jonathan[1] and Junio[2]).  These types are:
-  * add/add
-  * rename/add
-  * rename/rename(2to1)
-  * each rename/add piece of a rename/rename(1to2)/add[/add] conflict
+Also add another case with an extra (i.e. third) level of conflict
+markers due to using merge.conflictstyle=diff3 and the virtual merge
+base also having conflicts present.
 
-Changes since v2:
-  * Removed RFC label (en/merge-cleanup-more is now pu -- in fact, v2
-    of that series is in pu; also, I'm starting to build other series
-    on this one which has increased my confidence in it)
-  * patch for increasing marker length with depth of recursion has been
-    pulled from the en/merge-cleanup-more series and added to this series
-  * Fixed an incorrect sentence in a commit message that was leftover
-    from v1.
-  
-[1] https://public-inbox.org/git/20180312213521.GB58506@aiede.svl.corp.google.com/
-[2] https://public-inbox.org/git/CAPc5daVu8vv9RdGON8JiXEO3ycDVqQ38ySzZc-cpo+AQcAKXjA@mail.gmail.com
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t6036-recursive-corner-cases.sh    | 194 +++++++++++++++++++++++++++
+ t/t6042-merge-rename-corner-cases.sh | 118 ++++++++++++++++
+ 2 files changed, 312 insertions(+)
 
-
-Elijah Newren (8):
-  Add testcases for consistency in file collision conflict handling
-  t6036, t6042: testcases for rename collision of already conflicting
-    files
-  merge-recursive: increase marker length with depth of recursion
-  merge-recursive: new function for better colliding conflict
-    resolutions
-  merge-recursive: fix rename/add conflict handling
-  merge-recursive: improve handling for rename/rename(2to1) conflicts
-  merge-recursive: use handle_file_collision for add/add conflicts
-  merge-recursive: improve rename/rename(1to2)/add[/add] handling
-
- ll-merge.c                           |   4 +-
- ll-merge.h                           |   1 +
- merge-recursive.c                    | 528 ++++++++++++++++-----------
- t/t6036-recursive-corner-cases.sh    | 379 ++++++++++++++++++-
- t/t6042-merge-rename-corner-cases.sh | 333 ++++++++++++++++-
- t/t6043-merge-rename-directories.sh  | 107 +++---
- 6 files changed, 1060 insertions(+), 292 deletions(-)
-
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index e1cef58f2a..78138a7fb4 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -1402,4 +1402,198 @@ test_expect_failure 'check conflicting modes for regular file' '
+ 	)
+ '
+ 
++# Setup:
++#          L1---L2
++#         /  \ /  \
++#   master    X    ?
++#         \  / \  /
++#          R1---R2
++#
++# Where:
++#   master has two files, named 'b' and 'a'
++#   branches L1 and R1 both modify each of the two files in conflicting ways
++#
++#   L2 is a merge of R1 into L1; more on it later.
++#   R2 is a merge of L1 into R1; more on it later.
++#
++#   X is an auto-generated merge-base used when merging L2 and R2.
++#   since X is a merge of L1 and R1, it has conflicting versions of each file
++#
++#   More about L2 and R2:
++#     - both resolve the conflicts in 'b' and 'a' differently
++#     - L2 renames 'b' to 'm'
++#     - R2 renames 'a' to 'm'
++#
++#   In the end, in file 'm' we have four different conflicting files (from
++#   two versions of 'b' and two of 'a').  In addition, if
++#   merge.conflictstyle is diff3, then the base version also has
++#   conflict markers of its own, leading to a total of three levels of
++#   conflict markers.  This is a pretty weird corner case, but we just want
++#   to ensure that we handle it as well as practical.
++
++test_expect_success "setup nested conflicts" '
++	test_create_repo nested_conflicts &&
++	(
++		cd nested_conflicts &&
++
++		# Create some related files now
++		for i in $(test_seq 1 10)
++		do
++			echo Random base content line $i
++		done >initial &&
++
++		cp initial b_L1 &&
++		cp initial b_R1 &&
++		cp initial b_L2 &&
++		cp initial b_R2 &&
++		cp initial a_L1 &&
++		cp initial a_R1 &&
++		cp initial a_L2 &&
++		cp initial a_R2 &&
++
++		test_write_lines b b_L1 >>b_L1 &&
++		test_write_lines b b_R1 >>b_R1 &&
++		test_write_lines b b_L2 >>b_L2 &&
++		test_write_lines b b_R2 >>b_R2 &&
++		test_write_lines a a_L1 >>a_L1 &&
++		test_write_lines a a_R1 >>a_R1 &&
++		test_write_lines a a_L2 >>a_L2 &&
++		test_write_lines a a_R2 >>a_R2 &&
++
++		# Setup original commit (or merge-base), consisting of
++		# files named "b" and "a"
++		cp initial b &&
++		cp initial a &&
++		echo b >>b &&
++		echo a >>a &&
++		git add b a &&
++		test_tick && git commit -m initial &&
++
++		git branch L &&
++		git branch R &&
++
++		# Handle the left side
++		git checkout L &&
++		mv -f b_L1 b &&
++		mv -f a_L1 a &&
++		git add b a &&
++		test_tick && git commit -m "version L1 of files" &&
++		git tag L1 &&
++
++		# Handle the right side
++		git checkout R &&
++		mv -f b_R1 b &&
++		mv -f a_R1 a &&
++		git add b a &&
++		test_tick && git commit -m "verson R1 of files" &&
++		git tag R1 &&
++
++		# Create first merge on left side
++		git checkout L &&
++		test_must_fail git merge R1 &&
++		mv -f b_L2 b &&
++		mv -f a_L2 a &&
++		git add b a &&
++		git mv b m &&
++		test_tick && git commit -m "left merge, rename b->m" &&
++		git tag L2 &&
++
++		# Create first merge on right side
++		git checkout R &&
++		test_must_fail git merge L1 &&
++		mv -f b_R2 b &&
++		mv -f a_R2 a &&
++		git add b a &&
++		git mv a m &&
++		test_tick && git commit -m "right merge, rename a->m" &&
++		git tag R2
++	)
++'
++
++test_expect_failure "check nested conflicts" '
++	(
++		cd nested_conflicts &&
++
++		git clean -f &&
++		git checkout L2^0 &&
++
++		# Merge must fail; there is a conflict
++		test_must_fail git -c merge.conflictstyle=diff3 merge -s recursive R2^0 &&
++
++		# Make sure the index has the right number of entries
++		git ls-files -s >out &&
++		test_line_count = 2 out &&
++		git ls-files -u >out &&
++		test_line_count = 2 out &&
++		# Ensure we have the correct number of untracked files
++		git ls-files -o >out &&
++		test_line_count = 1 out &&
++
++		# Create a and b from virtual merge base X
++		git cat-file -p master:a >base &&
++		git cat-file -p L1:a >ours &&
++		git cat-file -p R1:a >theirs &&
++		test_must_fail git merge-file --diff3 \
++			-L "Temporary merge branch 1" \
++			-L "merged common ancestors"  \
++			-L "Temporary merge branch 2" \
++			ours  \
++			base  \
++			theirs &&
++		sed -e "s/^\([<|=>]\)/\1\1/" ours >vmb_a &&
++
++		git cat-file -p master:b >base &&
++		git cat-file -p L1:b >ours &&
++		git cat-file -p R1:b >theirs &&
++		test_must_fail git merge-file --diff3 \
++			-L "Temporary merge branch 1" \
++			-L "merged common ancestors"  \
++			-L "Temporary merge branch 2" \
++			ours  \
++			base  \
++			theirs &&
++		sed -e "s/^\([<|=>]\)/\1\1/" ours >vmb_b &&
++
++		# Compare :2:m to expected values
++		git cat-file -p L2:m >ours &&
++		git cat-file -p R2:b >theirs &&
++		test_must_fail git merge-file --diff3  \
++			-L "HEAD:m"                    \
++			-L "merged common ancestors:b" \
++			-L "R2^0:b"                    \
++			ours                           \
++			vmb_b                          \
++			theirs                         &&
++		sed -e "s/^\([<|=>]\)/\1\1/" ours >m_stage_2 &&
++		git cat-file -p :2:m >actual &&
++		test_cmp m_stage_2 actual &&
++
++		# Compare :3:m to expected values
++		git cat-file -p L2:a >ours &&
++		git cat-file -p R2:m >theirs &&
++		test_must_fail git merge-file --diff3  \
++			-L "HEAD:a"                    \
++			-L "merged common ancestors:a" \
++			-L "R2^0:m"                    \
++			ours                           \
++			vmb_a                          \
++			theirs                         &&
++		sed -e "s/^\([<|=>]\)/\1\1/" ours >m_stage_3 &&
++		git cat-file -p :3:m >actual &&
++		test_cmp m_stage_3 actual &&
++
++		# Compare m to expected contents
++		>empty &&
++		cp -a m_stage_2 expected_final_m &&
++		test_must_fail git merge-file --diff3 \
++			-L "HEAD"                     \
++			-L "merged common ancestors"  \
++			-L "R2^0"                     \
++			expected_final_m              \
++			empty                         \
++			m_stage_3                     &&
++		test_cmp expected_final_m m
++	)
++'
++
+ test_done
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index b6fed2cb9a..5e69e60b48 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -1099,4 +1099,122 @@ test_conflicts_with_adds_and_renames rename add    failure
+ test_conflicts_with_adds_and_renames add    rename failure
+ test_conflicts_with_adds_and_renames add    add    success
+ 
++# Setup:
++#          L
++#         / \
++#   master   ?
++#         \ /
++#          R
++#
++# Where:
++#   master has two files, named 'one' and 'two'.
++#   branches L and R both modify 'one', in conflicting ways.
++#   branches L and R both modify 'two', in conflicting ways.
++#   branch L also renames 'one' to 'three'.
++#   branch R also renames 'two' to 'three'.
++#
++#   So, we have four different conflicting files that all end up at path
++#   'three'.
++test_expect_success "setup nested conflicts from rename/rename(2to1)" '
++	test_create_repo nested_conflicts_from_rename_rename &&
++	(
++		cd nested_conflicts_from_rename_rename &&
++
++		# Create some related files now
++		for i in $(test_seq 1 10)
++		do
++			echo Random base content line $i
++		done >file_v1 &&
++
++		cp file_v1 file_v2 &&
++		cp file_v1 file_v3 &&
++		cp file_v1 file_v4 &&
++		cp file_v1 file_v5 &&
++		cp file_v1 file_v6 &&
++
++		echo one  >>file_v1 &&
++		echo uno  >>file_v2 &&
++		echo eins >>file_v3 &&
++
++		echo two  >>file_v4 &&
++		echo dos  >>file_v5 &&
++		echo zwei >>file_v6 &&
++
++		# Setup original commit (or merge-base), consisting of
++		# files named "one" and "two".
++		mv file_v1 one &&
++		mv file_v4 two &&
++		git add one two &&
++		test_tick && git commit -m english &&
++
++		git branch L &&
++		git branch R &&
++
++		# Handle the left side
++		git checkout L &&
++		git mv one three &&
++		mv -f file_v2 three &&
++		mv -f file_v5 two &&
++		git add two three &&
++		test_tick && git commit -m spanish &&
++
++		# Handle the right side
++		git checkout R &&
++		git mv two three &&
++		mv -f file_v3 one &&
++		mv -f file_v6 three &&
++		git add one three &&
++		test_tick && git commit -m german
++	)
++'
++
++test_expect_failure "check nested conflicts from rename/rename(2to1)" '
++	(
++		cd nested_conflicts_from_rename_rename &&
++
++		git checkout L^0 &&
++
++		# Merge must fail; there is a conflict
++		test_must_fail git merge -s recursive R^0 &&
++
++		# Make sure the index has the right number of entries
++		git ls-files -s >out &&
++		test_line_count = 2 out &&
++		git ls-files -u >out &&
++		test_line_count = 2 out &&
++		# Ensure we have the correct number of untracked files
++		git ls-files -o >out &&
++		test_line_count = 1 out &&
++
++		# Compare :2:three to expected values
++		git cat-file -p master:one >base &&
++		git cat-file -p L:three >ours &&
++		git cat-file -p R:one >theirs &&
++		test_must_fail git merge-file    \
++			-L "HEAD:three"  -L ""  -L "R^0:one" \
++			ours             base   theirs &&
++		sed -e "s/^\([<=>]\)/\1\1/" ours >L-three &&
++		git cat-file -p :2:three >expect &&
++		test_cmp expect L-three &&
++
++		# Compare :2:three to expected values
++		git cat-file -p master:two >base &&
++		git cat-file -p L:two >ours &&
++		git cat-file -p R:three >theirs &&
++		test_must_fail git merge-file    \
++			-L "HEAD:two"  -L ""  -L "R^0:three" \
++			ours           base   theirs &&
++		sed -e "s/^\([<=>]\)/\1\1/" ours >R-three &&
++		git cat-file -p :3:three >expect &&
++		test_cmp expect R-three &&
++
++		# Compare three to expected contents
++		>empty &&
++		test_must_fail git merge-file    \
++			-L "HEAD"  -L ""  -L "R^0" \
++			L-three    empty  R-three &&
++		test_cmp three L-three
++	)
++'
++
+ test_done
 -- 
-2.19.1.1036.gce51225f01.dirty
+2.19.1.1079.gae8ff35a65
 
