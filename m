@@ -2,75 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 884E81F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 18:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E22761F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 19:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727526AbeJTClA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 22:41:00 -0400
-Received: from kitenet.net ([66.228.36.95]:49232 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727193AbeJTClA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 22:41:00 -0400
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1539974016; bh=p8s1bBBzOUwO9kot86TiepI0HOXKqRuNO1F6gPQN9Dw=;
-        h=Date:From:To:Subject:From;
-        b=FVYEdNmQ08HP5relv853F7fHwzm5K+Fk7ayDilmmPSDNKSM8ADeFbhHf+XbAodeF0
-         QyRTfhGD1dRriiqunsUOhG7aIlTPZiCBEIvrEd8hTwiIzgDI/nkGPy2jz3VgeyBV1/
-         0fJh76578rCbBiJ9HcmVOwphDB3im08A8rCb1NYs=
-Date:   Fri, 19 Oct 2018 14:33:35 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     git@vger.kernel.org
-Subject: git ls-files --with-tree documentation
-Message-ID: <20181019183335.GA12353@kitenet.net>
+        id S1727839AbeJTDLj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 23:11:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46828 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727526AbeJTDLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 23:11:39 -0400
+Received: (qmail 31169 invoked by uid 109); 19 Oct 2018 19:04:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 19 Oct 2018 19:04:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14271 invoked by uid 111); 19 Oct 2018 19:03:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 19 Oct 2018 15:03:30 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Oct 2018 15:04:16 -0400
+Date:   Fri, 19 Oct 2018 15:04:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: unused parameters in merge-recursive.c
+Message-ID: <20181019190416.GB24418@sigill.intra.peff.net>
+References: <20181019171827.GA21091@sigill.intra.peff.net>
+ <CABPp-BHobf8wbBsXF97scNQCzkxQukziODRXq6JOOWq61cAd9g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CABPp-BHobf8wbBsXF97scNQCzkxQukziODRXq6JOOWq61cAd9g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-       --with-tree=<tree-ish>
-           When using --error-unmatch to expand the user supplied <file> (i.e.
-           path pattern) arguments to paths, pretend that paths which were
-           removed in the index since the named <tree-ish> are still present.
-           Using this option with -s or -u options does not make any sense.
+On Fri, Oct 19, 2018 at 10:58:19AM -0700, Elijah Newren wrote:
 
-This seems to say that it only affects it when --error-unmatch is used,
-but in fact it goes deeper; for example I can use it to list files that
-are present in either the current work tree or some other branch:
+> > In most cases I've been trying to determine the "bug versus cruft" thing
+> > myself, but I fear that merge-recursive exceeds my abilities here. ;)
+> 
+> These ones all look like cruft to me.  I dug through them and tried
+> looking through history and old submissions for my guesses and how
+> they ended up here; details below.
 
-joey@darkstar:/tmp/v> git checkout foo
-joey@darkstar:/tmp/v> git ls-files --with-tree=master
-in-foo
-in-master
-joey@darkstar:/tmp/v> git ls-files
-in-foo
-joey@darkstar:/tmp/v> git ls-tree master 
-100644 blob 0242cc10fdf4e9afdfd0928c2a209d4545780168	in-master
+Good, that makes things easier. :)
 
-This is very useful behavior, but I'm not sure if I should rely on it
-behaving this way in the future, given the documentation.
+> >  static int handle_rename_via_dir(struct merge_options *o,
+> >                                  struct diff_filepair *pair,
+> > -                                const char *rename_branch,
+> > -                                const char *other_branch)
+> > +                                const char *rename_branch)
+> 
+> Given the similarity in function signature to handle_rename_delete(),
+> it's possible I copied the function and then started editing.  Whether
+> I was lazily doing that, or if I really added that parameter because I
+> thought I was going to add an informational message to the user that
+> used it, or something else, I don't know.  But I agree, it's just not
+> needed and could be added back later if someone did find a use for it.
 
-t/t3060-ls-files-with-tree.sh does indeed test that it
-"should add entries from named tree", and it does it without using
---error-unmatch.
+Yeah, this was the one I was most worried about.
 
-How about changing the documentation to something like this to make
-more explicit what it does.
+Thanks for confirming. I'm preparing a bunch of similar cleanups, so
+I'll roll this into that series.
 
-       --with-tree=<tree-ish>
-           Treat all files in the <tree-ish> as if they were present in the index.
-           When using --error-unmatch to expand the user supplied <file> (i.e.
-           path pattern) arguments to paths, this has the effect that paths which were
-           removed in the index since the named <tree-ish> are still present.
-           Using this option with -s or -u options does not make any sense.
-
--- 
-see shy jo
+-Peff
