@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A585D1F453
-	for <e@80x24.org>; Fri, 19 Oct 2018 13:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38D181F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 13:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727445AbeJSVqd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 17:46:33 -0400
-Received: from mail-vk1-f173.google.com ([209.85.221.173]:39640 "EHLO
-        mail-vk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727189AbeJSVqd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 17:46:33 -0400
-Received: by mail-vk1-f173.google.com with SMTP id y69so3767322vkd.6
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 06:40:22 -0700 (PDT)
+        id S1727655AbeJSWFR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 18:05:17 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:38463 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727651AbeJSWFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 18:05:16 -0400
+Received: by mail-ed1-f45.google.com with SMTP id c1-v6so31550355ede.5
+        for <git@vger.kernel.org>; Fri, 19 Oct 2018 06:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=hsycDTHWMfihgtkBheqNyl4wH4V3XIjVDgCBJioUCP0=;
-        b=sAH3dudrfDEmczJOz7iLh4/XOO0vYhf2HseyQNfuM2EjKd13/HDdXRJYlv4x7x0TI/
-         +ZGZIBKvy+IT4VW8n8iETXeWSLhVWq1321HFYc3iMpAYrj5mFHiEF+Ukt47Dmt12RZBH
-         3am0EPu2tMnlv3kjfxfxYn7q/fJTWn2SV4QscwlmK8q7DalxfKrro5ZJE/gANs6kluy2
-         wxj5VW3O0ivopxFwqbjUNMYr5CYdEGqtyPq13WZM3K09XlyoiGaTtxx3aj1kYU5ualms
-         lUfaUWtegcB9P9b25yQvEkutm+x54Ll0T2QolO5WjXCoHCs75Abvc6fJyu0fO1XmZLdP
-         v37A==
+        d=uber.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ccgEu2h5crHbUUWxyRSzJM/9xjymQ7FKzMfjVX81qJM=;
+        b=e8y1kqySayxXA6uDnWuE53KqEg8uZvHpg5Bvq3gKoqGSOv1ff/lXxyl4ItgcIkLze3
+         rS6jpev1SOJuI8XkHtUrmBmMXgb8ccZQGJFv3NW1eYyjPC2CSJFllO8Q7qORbqiaaWO9
+         JYjW0B0HbehDNU4oHEWRg9QDl6vkFVZ19G2O0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=hsycDTHWMfihgtkBheqNyl4wH4V3XIjVDgCBJioUCP0=;
-        b=GHIweewakENiQUCLbhlXDvEhWukdjHs2ttGWRPNzwvKJvf/xKw5ne9PTM37W66iS74
-         7B0nbZn7qXgV2Omg9WofRgrdxMe1yGFUYUh9mMeqNfZTIovOn0IDxvZD6GzkT/mONpe8
-         GhWPlRyZmJaRvxbed3+0rB+WaHy+LVoIU02S34LrNuP8Ul7h84qVPqv0qU738zMTaGf/
-         KwfkcPGS7/BumLeFhQukIiSQxcoKZz8tTR9tXBksHh23ntn3oZjjULlVE4dJ9+GpeWxj
-         MyWluQaAcC9qjN+BJFT+ag7ct3tKKvwdYYnzEOqh1KQ7/p534ydxuBseFGvyO2+fxCwK
-         ShBw==
-X-Gm-Message-State: ABuFfogJEDs8E7/lMGH2urmd4zG4gWsvvM2xbPJ52YkZHexm6QFUuwBc
-        KWhmU5h/D/9ek/XYCkj2oPoAhhAM
-X-Google-Smtp-Source: ACcGV63PUUjCSx6mYyS+vrffp1Fx6Nq9AdSofN5my6vdHXqnrmUYHYNYeCp2X2869hbjpGDRVSNZhg==
-X-Received: by 2002:a1f:6e0f:: with SMTP id j15mr9586265vkc.49.1539956421866;
-        Fri, 19 Oct 2018 06:40:21 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:e0ed:6621:9414:4d4e? ([2001:4898:8010:0:ca23:6621:9414:4d4e])
-        by smtp.gmail.com with ESMTPSA id r123-v6sm6761408vka.16.2018.10.19.06.40.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Oct 2018 06:40:21 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Oct 2018, #04; Fri, 19)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq8t2u1nkh.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <529dfd89-a5c9-fb14-fe9c-bb2fd78a59fd@gmail.com>
-Date:   Fri, 19 Oct 2018 09:40:20 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:63.0) Gecko/20100101
- Thunderbird/63.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ccgEu2h5crHbUUWxyRSzJM/9xjymQ7FKzMfjVX81qJM=;
+        b=pGBI6b79y7RDIfgqQ5jfC0HqlwqdSgZ5gu4T43I6B+ONntpSHFNxh+lgsI+dGoyc7d
+         XuDZwA0x9sJynb5f2w+leHj8bRtvTxi7U9Nk0vepqlMn47UU7ZRFEm/YezsylyhvQH5z
+         k+n3cHY+iwS/nvFW2xiDOvxuOL+CPBlLiBVVvIIK+05dLjThg3JkrbQkzDs73e+E10Co
+         MuINiLjrI8xXsFzOkfTVHAZu4P4PrBPh8n4eFGjOZvyYYV01lyD+3ocsMJN7ksG7/ESB
+         5TpOmDa+pC+VpXGHYspFC3k7FymitV57kLevymlGCZV4DLFXJEeERrGkmno8nQGXBpGX
+         B0/Q==
+X-Gm-Message-State: ABuFfohW4hBjk1FF9IcS0fuNYFmJc0Vwy5YzOVEY4kBuNLdUV539dM/6
+        Tjsh36P7rOA6tiabyFunLNoDqturOrPaE6fsmZ31xg==
+X-Google-Smtp-Source: ACcGV62wW4tyChrJfUjFSIlGzgxjcoxN4FnNLmPBI9K6FE1DcTNKRqvFQTanbVkdWOmhymaP0kHOr91LQ4IvSHhR5+k=
+X-Received: by 2002:a17:906:704f:: with SMTP id r15-v6mr31273864ejj.131.1539957539900;
+ Fri, 19 Oct 2018 06:58:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq8t2u1nkh.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <CAGY-PBgsG-T3JY=awszwGMpFx+jDx-a1FcV0s6vR067bSqgZaA@mail.gmail.com>
+ <20181017205340.190036-1-jonathantanmy@google.com>
+In-Reply-To: <20181017205340.190036-1-jonathantanmy@google.com>
+From:   Arturas Moskvinas <arturas@uber.com>
+Date:   Fri, 19 Oct 2018 16:58:49 +0300
+Message-ID: <CAGY-PBiKaKwhjyHCDF5Crq6z-D17WMW5iqUjfSNiQqaHcZP0dw@mail.gmail.com>
+Subject: Re: Git wire protocol v2 fails fetching shallow changes with `pack
+ has XXX unresolved deltas` on large repos with lots of tags Inbox x
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/19/2018 2:02 AM, Junio C Hamano wrote:
->
-> * ds/ci-commit-graph-and-midx (2018-10-19) 1 commit
->   - ci: add optional test variables
->
->   One of our CI tests to run with "unusual/experimental/random"
->   settings now also uses commti-graph and midx.
->
->   Will merge to 'next'.
+Hello,
 
-s/commti-graph/commit-graph/
+Unfortunately I do not have for such step. On one of our internal
+repositories it is failing but unreliably when fetching from remote.
 
-> * ds/test-multi-pack-index (2018-10-09) 3 commits
->   - multi-pack-index: define GIT_TEST_MULTI_PACK_INDEX
->   - midx: close multi-pack-index on repack
->   - midx: fix broken free() in close_midx()
+--
+Arturas Moskvinas
+
+On Wed, Oct 17, 2018 at 11:53 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
->   Tests for the recently introduced multi-pack index machinery.
+> > No changes are needed in mirrored repository. Crash happens both with
+> > 2.18.0 and 2.19.1 git versions. Having repository locally is not
+> > required but reduces test runtime, you can quite reliably reproduce
+> > issue when fetching over net directly from chromium.orgbypassing
+> > mirroring step.
 >
->   Expecting a reroll.
->   cf. <8b5dbe3d-b382-bf48-b524-d9e8a074ac4d@gmail.com>
-
-A reroll exists: 
-https://public-inbox.org/git/pull.27.v2.git.gitgitgadget@gmail.com/
-
-Thanks,
--Stolee
-
+> Do you have the reproduction steps for this? If I run
+>
+>   git -c protocol.version=2 fetch --tags \
+>     https://chromium.googlesource.com/chromium/src \
+>     +refs/heads/*:refs/remotes/origin/* --depth=1
+>
+> repeatedly in the same repository, it succeeds. (And I've checked with
+> GIT_TRACE_PACKET that it uses protocol v2.)
