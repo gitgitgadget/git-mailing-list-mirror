@@ -6,62 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC501F454
-	for <e@80x24.org>; Fri, 19 Oct 2018 00:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7078D1F453
+	for <e@80x24.org>; Fri, 19 Oct 2018 00:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727404AbeJSIE5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Oct 2018 04:04:57 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43359 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725906AbeJSIE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Oct 2018 04:04:57 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n1-v6so35510710wrt.10
-        for <git@vger.kernel.org>; Thu, 18 Oct 2018 17:01:32 -0700 (PDT)
+        id S1726245AbeJSITq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Oct 2018 04:19:46 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46938 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725910AbeJSITq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Oct 2018 04:19:46 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n11-v6so35462763wru.13
+        for <git@vger.kernel.org>; Thu, 18 Oct 2018 17:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=/Y6uHERoDr1U8LOBrWPkIRJ0UZf3/08wdo+bdiCwQ2A=;
-        b=iVgMoFInEkMSGU0MQmoYPJbUstnV3uY3Q25YeEe3by+UWShQJElupAilL9tCoQByXS
-         rYWMGy7EdUe2umHW8LdUoy/lXHjjWE1Pxg8rZlkJ93qhcIlTmuHDmpfe57pXhjG4FROr
-         NhcBYwThtJlmD6E2MuRrQCUUqleaTviBpA5tyTymUyaJ5oB0RdoYD0D+1Sli9o9DeC3A
-         iOkyargXtCHY2iBUZx9FFiHHYY+bY1S4wyMLOzUVWAN9meym+2Ori2e7KZmqn7TCPcvw
-         6A+TqObB3/2wDFmjSDc16ea+0R2GTICzJa9mzQKymq9VnB78NUlEqVTJ8chvIM/GvWc0
-         9yFg==
+        bh=8LTXTabS2fP3R9dQlDLWAMuKP1Gxjv5/TsYIAH8ruD8=;
+        b=BeXd9ojyBN1HLLbZMhYp74fmBaFlVfP6TsY55ijTnIMBCkdlw2j8acn7Y5xsXxIPvb
+         9zDS8UvIyO+j4/CmUCESMMPzHBYy7uGjGS1vjl0X57hcm0POSlsef3hDka0UvMPTV2Rb
+         Q4bHvX0uZHWAYZSj0BE/Njp2Y+10tkWT54GFAcjtBM5gDw1dyUHlQlNGlJ59NZexIwrp
+         WrLCjhVDS3Nj69d6pEeRZMGWrAi+psecnNmy9PWOzMcNzIL/cmYIpCm2rYIcl44A5dqL
+         vStGDpr4yM/k5w0jkTD7F9sQ9IjL9fIWhhTXDW7OpvWZBfN8jbxQ27HBaH9k/xx4qisx
+         4nPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=/Y6uHERoDr1U8LOBrWPkIRJ0UZf3/08wdo+bdiCwQ2A=;
-        b=sB3e4WDaImb/msCTk9QmXNLEhD4omo3PiA7nFqj65bWhnCoFN9Oj8KDnNjszp8QJiA
-         GmI19CTiKwndpR5dbQ46Lu/rDMo7mvNoJWmukIkW03dvzr2GMgJtHYhJzK7INH9PjtZa
-         0l7fbetGOGxyb62Aav3slMt1Nr8XAy/i+iCSD4EBkkO3lAjzCgWZrl3Q8H7/irSSePHs
-         Z4aUtKT6wdzi6CW3CDcS0hSSQPUIHA21Ebpz3KsJ1MuYuG8U0zuU2+XucC0UAJcMVZV/
-         eDAkbF9Lz3M4MlttkEtVbiLLCHjt8dejAzcXZN1yxuWkmf9K1M4WLBv5fLWUnjybZGT+
-         02Mw==
-X-Gm-Message-State: ABuFfojwETtFt/LMBEg2i57ra1lYFCvA27ueKyJBJGPkrCOClxHH8sNA
-        AlruD55Gr3zfM841sM1AnBw=
-X-Google-Smtp-Source: ACcGV61dvjyMuDg7zCsL5+THUuR7N2sqi/t3/U80SwkryIXvV7Ibv9eoRyEai50yaOYZycd22hvG1Q==
-X-Received: by 2002:adf:cf0b:: with SMTP id o11-v6mr30907619wrj.272.1539907290966;
-        Thu, 18 Oct 2018 17:01:30 -0700 (PDT)
+        bh=8LTXTabS2fP3R9dQlDLWAMuKP1Gxjv5/TsYIAH8ruD8=;
+        b=GEtGZKf4xHCu4HoW111a+CbbTXPMDNvTlR7cIIT5hHWm7YKaSNFQ3sIP3uLCLd81QY
+         NxrZaQ+2/zozs/07OPbZBXZ6n2fDAzi2FK2yjniPCxUcMTG3CUVtzs1BaLmGrCzzKxtX
+         KbAlNQa2pVOv/10SQUnUQBCWk1cB6Yl9HPicTP9jEoLy5USvcmmQlJfydd84ReRU32Pe
+         9L6dV/K9MHv+I1Mvk1cqPjRLCbIO19FgLnStkJDbATisepuiaSW3e/kfa5cWnRzqhpDj
+         9iOGkpiEQTgIGtcG23cxGqH+pdpCxteUDBYux0wPPScZv8Yy7bG6xzC1cuqOLyhdnyo+
+         1mPg==
+X-Gm-Message-State: ABuFfoiwxuWGSteHvRI7tySLNmobT7zDOi+qIaZ69U3PwKG8u/7Th7a4
+        C860USarg5q/7DX2Cz7wzQk=
+X-Google-Smtp-Source: ACcGV60oLVEEiXsVk6NhQQ3nU4M5ihZFJBNUwGkhV2Km7TTbGtciVpwmp4ZywMtehwbzxhoIQGj0hQ==
+X-Received: by 2002:adf:ce10:: with SMTP id p16-v6mr29462221wrn.118.1539908173774;
+        Thu, 18 Oct 2018 17:16:13 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i7-v6sm28401833wrb.30.2018.10.18.17.01.28
+        by smtp.gmail.com with ESMTPSA id 74-v6sm1802149wmi.23.2018.10.18.17.16.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Oct 2018 17:01:29 -0700 (PDT)
+        Thu, 18 Oct 2018 17:16:13 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     jrnieder@gmail.com, christian.couder@gmail.com, sbeller@google.com,
-        git@vger.kernel.org, peff@peff.net, Ben.Peart@microsoft.com,
-        pclouds@gmail.com, mh@glandium.org, larsxschneider@gmail.com,
-        e@80x24.org, chriscool@tuxfamily.org, jeffhost@microsoft.com,
-        sunshine@sunshineco.com, dev+git@drbeat.li
-Subject: Re: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
-References: <20181016174304.GA221682@aiede.svl.corp.google.com>
-        <20181016222243.58620-1-jonathantanmy@google.com>
-Date:   Fri, 19 Oct 2018 09:01:28 +0900
-In-Reply-To: <20181016222243.58620-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 16 Oct 2018 15:22:43 -0700")
-Message-ID: <xmqqwoqe4xev.fsf@gitster-ct.c.googlers.com>
+To:     Rajesh Madamanchi <rmadamanchi@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: receive.denyCurrentBranch=updateInstead updates working tree even when receive.denyNonFastForwards rejects push
+References: <CANahLXm7O6scvLdaL6bm14d5oGM5Zp+S-rpQDo554ssagRFNoQ@mail.gmail.com>
+Date:   Fri, 19 Oct 2018 09:16:12 +0900
+In-Reply-To: <CANahLXm7O6scvLdaL6bm14d5oGM5Zp+S-rpQDo554ssagRFNoQ@mail.gmail.com>
+        (Rajesh Madamanchi's message of "Tue, 16 Oct 2018 13:54:48 -0500")
+Message-ID: <xmqqsh124wqb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,32 +65,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Rajesh Madamanchi <rmadamanchi@gmail.com> writes:
 
->> 	[object]
->> 		missingObjectRemote = local-cache-remote
->> 		missingObjectRemote = origin
->> 
-> In the presence of missingObjectRemote, old versions of Git, when lazily
-> fetching, would only know to try the extensions.partialClone remote. But
-> this is safe because existing data wouldn't be clobbered (since we're
-> not using ideas like adding meaning to the contents of the .promisor
-> file). Also, other things like fsck and gc still work.
+> Hi, I am looking to report the below behavior when seems incorrect to
+> me when receive.denyCurrentBranch is set to updateInstead and
+> receive.denyNonFastForwards is set to true.
 
-It is a good idea to implicitly include the promisor-remote to the
-set of secondary places to consult to help existing versions of Git,
-but once the repository starts fetching incomplete subgraphs and
-adding new object.missingobjectremote [*1*], these versions of Git
-will stop working correctly, so I am not sure if it is all that
-useful approach for compatibility in practice.
+It seems that we took a lazy but incorrect route while adding the
+DENY_UPDATE_INSTEAD hack to builtin/receive-pack.c::update() and new
+code went to a wrong place in a series of checks.  Everythng else in
+the same switch() statement either refuses or just decides to let
+later step to update without taking actual action, so that later
+checks such as "the new tip commit must have been transferred", "the
+new tip must be a fast-forward of the old tip", etc., but the one
+for DENY_UPDATE_INSTEAD immediately calls update_worktree() there.
+It should be changed to decide to later call the function when
+everybody else in the series of checks agrees that it is OK to let
+this push accepted, and then the actual call is made somewhere near
+where we call run_update_hook(), probably after the hook says it is
+OK to update.
 
-
-[Footnote]
-
-*1* That name with two "object" in it sounds horrible.  I think the
-same keyname in 'core' section may sit better (this feature sounds
-more 'core' than other cruft that crept into 'core' section over
-time).  
-
-Or "odb.remoteAlternate" (as opposed to object/info/alternates that
-are local alternates), perhaps.
