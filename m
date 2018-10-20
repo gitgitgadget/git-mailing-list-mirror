@@ -2,104 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE98E1F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 06:47:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C70A81F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 07:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbeJTO5K (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 10:57:10 -0400
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:42300 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbeJTO5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 10:57:09 -0400
-Received: by mail-qt1-f180.google.com with SMTP id j46-v6so40857004qtc.9
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 23:47:47 -0700 (PDT)
+        id S1727152AbeJTPSx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 11:18:53 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:44185 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726642AbeJTPSx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 11:18:53 -0400
+Received: by mail-pl1-f193.google.com with SMTP id d23-v6so3368007pls.11
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 00:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4xWjnfbDJQx1VNMTXOtnijRaNW/XJYc9Wm+5G3ShFOs=;
-        b=iWN6usggLmQCKxQGBCQZk+Tlznt1S0xKQSIJ55x0+FqjR9DkPfnsuLfZ1FwN96SMNx
-         aSBjGQkT/ptjgtpxy6JbDcE8H4IZZsfigyJWJFiSi4XYuuQvsNEEXeQePWAz+2+QZQKC
-         DmuiM320eeXGM3rACmivO9lGttmONJH6BtLKqgexulwUoH1RVXfRMPGxmH6iO4u6kxy+
-         Qzcal6J95bTSJVhAzfm3inshNJh2Un4HqLfwTyZDjsD6b0S8HAuVjJBsXNJZeaPgTbpN
-         OZl5pZCdvOXY+ZIN4GChxPhym+fuCHeYccM6zZ+QW6+S5H9LytcQ6e3W0sOdjp/Ptr2x
-         FYRw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uxIdwquJzE+I4wk2f5VFdTkSq/hdx7XMK96EnQDf1Qk=;
+        b=OIJM4r97Frj4nkcTNIA5Yw1e1Vdmuge+vyC+eLjEGGFkFcdfFM83cneKyqs84AwUX7
+         F62g2cqohhKvDlGTbcxzq7y8GQ+O2Wvp1M3YMEbVtVCBlZHJIqvve5XNUVrmHXBfLhDE
+         e/Up+57YYpotFdjmdhfVg4eWVyStxBoyUQdOBpbn1nkdzyxBUvvL0kBoozvXgZN0moWn
+         uCO9PCnnxuiXdyPHFnvMOSpi6lNRO3xSqUZBc5XZ1hlwhoU/HhMOq50Nxt/05TPwwsEv
+         6DVMUNpCSLfT9Q45ze5yZeRgJ+uk0mCpsr/zG1km8hthm2KrLGSiLjAdJ/2WtLqcFcHo
+         GE/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4xWjnfbDJQx1VNMTXOtnijRaNW/XJYc9Wm+5G3ShFOs=;
-        b=QRClX0gMmzEvW2+KQhe+LLU1geTXloBiksoDCBCq3SNDQIiHlqYbe/LXhuMlgT59sc
-         g+WFQRt57EjzjkczTH3/mcV7Vr9xl+mQNuJs+XXGHi3v85n1YZrZCeyS8+aX1M61rHxg
-         B0QRbQzvF5ZrwzevVk8ljvRF8FV5VihgL0XKr+C3cbwXOrcN4fdNczq/PWTnUanPsujH
-         BUUsGjRTtBOK1VSeDOQTV6bFw3mon+6V12+569hQfYs1otnFF1/I+VMm2XfMB4bUfYK1
-         5UXh51+yp+z5XLe3C4MaZW2iEP6Z+x6s0P+0E7RoogLluwsUvS+3OAhH+7lt3NjNbfAt
-         5vZg==
-X-Gm-Message-State: ABuFfoj40Wa2J0D7RrAX9aeMTySNMPTvUYFH6zuBa4tZgA5sKLbzZOaC
-        oPCYkWBuyMCq7Y+WzTrnv/Q8NB4jO/DHKkEH+Ss=
-X-Google-Smtp-Source: ACcGV639MvZ02QjwWoctI/CozTtUUDx31U9u9AdKTByy60daPIIn9GaDiZ8+7EpUFyzrD6jAtauL/r7gecIlfHNC9wY=
-X-Received: by 2002:ac8:6754:: with SMTP id n20-v6mr36292248qtp.70.1540018066665;
- Fri, 19 Oct 2018 23:47:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uxIdwquJzE+I4wk2f5VFdTkSq/hdx7XMK96EnQDf1Qk=;
+        b=Rc2dHve9O7gbvR5cJyJKXtfKDX5R33Nv/oWcsF8zg9XjDPVrh/GyvDP+kubVv0wHAw
+         iP8LWwgnngBIZleYQeHKYjYk94eXRgLxVg6Fc3WiOJC3nD+Omk6eaP3+rz7bssH6ok2t
+         4Syc60v9PGiMfmuH6J5ILY/IgZvcqeWV3a3b0wP14N1Gm1ZcHmeTGjxLiInv0m4duqCu
+         aq08f+YGZgGsrqpUH/htCN84w1jI9Y0q1xGnK9r5K4UITYLU3m6fFeGhfWPNBy/BJiwF
+         tFynwSX/mlED+9t2arLbg4keTC+BW/lqtBtm/eNu79oh6SihwMj3xtmTNPAB75zjBiTj
+         oyeg==
+X-Gm-Message-State: ABuFfoiqEaUlrHPYmKKwc94dmqVEomiE4sgFwQNd7NZ8jCdRBPpJWy9r
+        yyWL89KvURSK7mQ61LzqLVE7fNWt
+X-Google-Smtp-Source: ACcGV62jC+gpHW7NUy0Ha9YxISnkrlNOmmN9cyYByz2ejsyCa6Dj4BNKmcWso8BUract/1FZdTzVhg==
+X-Received: by 2002:a17:902:24b:: with SMTP id 69-v6mr37992277plc.280.1540019367628;
+        Sat, 20 Oct 2018 00:09:27 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id b10-v6sm38570211pfe.148.2018.10.20.00.09.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 20 Oct 2018 00:09:26 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH] builtin/receive-pack: dead initializer for retval in check_nonce
+Date:   Sat, 20 Oct 2018 00:08:59 -0700
+Message-Id: <20181020070859.48172-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-References: <CAJKt3eP+BZkfK_yn3KYWMgmJB8_18UFr5eizmdGOY_4vM5=AYA@mail.gmail.com>
-In-Reply-To: <CAJKt3eP+BZkfK_yn3KYWMgmJB8_18UFr5eizmdGOY_4vM5=AYA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 20 Oct 2018 08:47:35 +0200
-Message-ID: <CAP8UFD3CDwu7OVgVmEgP2Se_bxYszcze68_bXT7=wgZaxncpzg@mail.gmail.com>
-Subject: Re: How to start contributing
-To:     trickygitninja@gmail.com
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+NONCE_BAD is explicitly set when needed with the fallback
+instead as NONCE_SLOP
 
-On Thu, Oct 18, 2018 at 2:51 PM =CE=A0=CE=BB=CE=AC=CF=84=CF=89=CE=BD =CE=9A=
-=CE=B9=CE=BF=CF=81=CF=80=CE=B5=CE=BB=CE=AF=CE=B4=CE=B7=CF=82
-<trickygitninja@gmail.com> wrote:
->
-> Hello,
->
-> I=E2=80=99m a computer science student and I=E2=80=99m interested in cont=
-ributing to git.
-> I=E2=80=99ve read the GSoC git page with the ideas and micro-projects as =
-I=E2=80=99m
-> interested in participating next summer.
-> I=E2=80=99ve also read the Documentation at the GitHub mirror.
-> I=E2=80=99ve never worked on such large project and I don=E2=80=99t know =
-where to start from.
-> I=E2=80=99ve picked this microproject from the GSoC page:
->
-> Make =E2=80=9Cgit tag =E2=80=93contains <id>=E2=80=9D less chatty if <id>=
- is invalid
-> =E2=80=9Cgit tag =E2=80=93 contains <id>=E2=80=9D prints the whole help t=
-ext if <id> is
-> invalid. It should only show the error message instead.
-> Thread: https://public-inbox.org/git/20160118215433.GB24136@sigill.intra.=
-peff.net/
->
-> This bug is solved using the 3rd option, but I suspect that it=E2=80=99s =
-still
-> here because the 2nd option is preferred.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ builtin/receive-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I think it should probably have been removed from the micro-project
-list. I am CC'ing Peff as he wrote the email listing the different
-options to solve the original issue and may think otherwise.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 95740f4f0e..ecce3d4043 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -507,7 +507,7 @@ static const char *check_nonce(const char *buf, size_t len)
+ 	char *nonce = find_header(buf, len, "nonce", NULL);
+ 	timestamp_t stamp, ostamp;
+ 	char *bohmac, *expect = NULL;
+-	const char *retval = NONCE_BAD;
++	const char *retval;
+ 
+ 	if (!nonce) {
+ 		retval = NONCE_MISSING;
+-- 
+2.19.1
 
-> How should I tackle this?
-
-It's a good first step to ask first on the list as you did if it is a
-good micro-project or not. Unfortunately in this case I think you
-might want to try to find another micro-project.
-
-Thanks,
-Christian.
