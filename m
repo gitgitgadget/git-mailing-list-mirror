@@ -2,219 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 601171F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 19:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B95951F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 19:30:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727423AbeJUDl5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 23:41:57 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:51178 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726507AbeJUDl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 23:41:56 -0400
-Received: from localhost.localdomain (d202-252.icpnet.pl [109.173.202.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgorny)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id E724B335C5A;
-        Sat, 20 Oct 2018 19:30:26 +0000 (UTC)
-From:   =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
-Subject: [PATCH v4] gpg-interface.c: detect and reject multiple signatures on commits
-Date:   Sat, 20 Oct 2018 21:30:20 +0200
-Message-Id: <20181020193020.28517-1-mgorny@gentoo.org>
-X-Mailer: git-send-email 2.19.1
+        id S1727512AbeJUDmK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 23:42:10 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:32864 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726507AbeJUDmK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 23:42:10 -0400
+Received: by mail-it1-f195.google.com with SMTP id h6-v6so6694617ith.0
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 12:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=iQP/AVwr3C7wpulKz59oUHr2tvH79Y4hkI0JUIPeZ0o=;
+        b=eMIIl7eEa8bLGW0Dwj//AHObh6D4C/k0yxfRuIP7FcW1Rh7YQo3AL34x3C50RxCVR0
+         NPHLVsBYhYhJ/H3UE6hwI6UcpEMcW27B5BPPzYQGwslJzrPMSaUTmKcIn5f+OlJVH/ul
+         M+BZabbb3lhssZCBezgu3aG0UXqE26FeFbaZcXxjmSI9plbPNnsBR2/Knv6YLl2qpsLQ
+         B753+qAMvemZ4exoAoX5heMnxqvhhi5ChJ32xlSG5ZuYp8y3GgDywkMRLzcvp+GaNPif
+         UigVkTWb5iswjQalSi1niUm03hkkQR0qAIEJdnrkHpFpb+M9yLVVnouJSjVJ+UuQiuhI
+         gLPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iQP/AVwr3C7wpulKz59oUHr2tvH79Y4hkI0JUIPeZ0o=;
+        b=ltdysozoFx/D0X2vL2+cNXUCJbhQpP4CRSQy15+mA51s35Tw4KFdMd1TONRS4tVnIf
+         yHZoBBUxhnhTkMEVGgkvoOwGjClO4HWFLQcPrTCuelRSxvraLa/Dfv6zv0fSzuZNDHq0
+         rqF6fCiBik9S6GDGnQS/yiHKcYlobgER1ieD1pi4+OMZQKQUnkTu/IlRyK7E/4w5yCuQ
+         lbqkQTrOi4wNDd9iw1t9vhatOCojGqfgkfjYRh42UhzTRd55kPP8Gf/7vHMKlkLgqP+0
+         2uKkHxGepSaSge0nGLHAigROQWn0f9Egb/HEOGkPHEn1MkyrR1fUlMcO9gctO2aLTD+y
+         3Q3g==
+X-Gm-Message-State: ABuFfog/a7mFJvdCzF3e0Y96lRpUn4+IWxfTVyrdzi9gXzy4+Qc7mIkM
+        zNdieuSLwWZHMQSsA/Js0xxkQYcfSy74HTdNHk0=
+X-Google-Smtp-Source: ACcGV606TILLmh6OZ3va2yhVmNewU5DNY77N6WjqykQZKLDo3TGfpmyJ7Dr1+AR1x3ZkUgasTaTKiFbtEjalRIxiDN0=
+X-Received: by 2002:a02:69cf:: with SMTP id e198-v6mr1269077jac.130.1540063841475;
+ Sat, 20 Oct 2018 12:30:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20181020123848.2785-1-pclouds@gmail.com> <87d0s4ctds.fsf@evledraar.gmail.com>
+In-Reply-To: <87d0s4ctds.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 20 Oct 2018 21:30:14 +0200
+Message-ID: <CACsJy8ADfhRk9eUJG+FE4k_D5sZvBOu47Vm4Gkae1XiOVtZyjQ@mail.gmail.com>
+Subject: Re: [PATCH 00/59] Split config.txt
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-GnuPG supports creating signatures consisting of multiple signature
-packets.  If such a signature is verified, it outputs all the status
-messages for each signature separately.  However, git currently does not
-account for such scenario and gets terribly confused over getting
-multiple *SIG statuses.
+On Sat, Oct 20, 2018 at 9:25 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> And sometimes like in the case of git-gc(1) we have gc.* config
+> documented in two places with different prose that needs to be updated
+> in two places in a CONFIGURATION section. This series allows us to just
+> unify the two and do an "include" in two places, and more generally have
+> the convention that a given command that uses configuration could have
+> that config both documented in git-config(1), and the same docs in its
+> own manpage.
+>
+> Is doing some post-cleanup like that your eventual goal after this
+> series?
 
-For example, if a malicious party alters a signed commit and appends
-a new untrusted signature, git is going to ignore the original bad
-signature and report untrusted commit instead.  However, %GK and %GS
-format strings may still expand to the data corresponding
-to the original signature, potentially tricking the scripts into
-trusting the malicious commit.
-
-Given that the use of multiple signatures is quite rare, git does not
-support creating them without jumping through a few hoops, and finally
-supporting them properly would require extensive API improvement, it
-seems reasonable to just reject them at the moment.
-
-Signed-off-by: Michał Górny <mgorny@gentoo.org>
----
- gpg-interface.c          | 90 +++++++++++++++++++++++++++-------------
- t/t7510-signed-commit.sh | 26 ++++++++++++
- 2 files changed, 87 insertions(+), 29 deletions(-)
-
-Changes in v4:
-* switched to using skip_prefix(),
-* renamed the variable to seen_exclusive_status,
-* made the loop terminate early on first duplicate status seen.
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index db17d65f8..efe2c0d38 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -75,48 +75,80 @@ void signature_check_clear(struct signature_check *sigc)
- 	FREE_AND_NULL(sigc->key);
- }
- 
-+/* An exclusive status -- only one of them can appear in output */
-+#define GPG_STATUS_EXCLUSIVE	(1<<0)
-+
- static struct {
- 	char result;
- 	const char *check;
-+	unsigned int flags;
- } sigcheck_gpg_status[] = {
--	{ 'G', "\n[GNUPG:] GOODSIG " },
--	{ 'B', "\n[GNUPG:] BADSIG " },
--	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
--	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
--	{ 'E', "\n[GNUPG:] ERRSIG "},
--	{ 'X', "\n[GNUPG:] EXPSIG "},
--	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
--	{ 'R', "\n[GNUPG:] REVKEYSIG "},
-+	{ 'G', "GOODSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'B', "BADSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'U', "TRUST_NEVER", 0 },
-+	{ 'U', "TRUST_UNDEFINED", 0 },
-+	{ 'E', "ERRSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'X', "EXPSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'Y', "EXPKEYSIG ", GPG_STATUS_EXCLUSIVE },
-+	{ 'R', "REVKEYSIG ", GPG_STATUS_EXCLUSIVE },
- };
- 
- static void parse_gpg_output(struct signature_check *sigc)
- {
- 	const char *buf = sigc->gpg_status;
-+	const char *line, *next;
- 	int i;
--
--	/* Iterate over all search strings */
--	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
--		const char *found, *next;
--
--		if (!skip_prefix(buf, sigcheck_gpg_status[i].check + 1, &found)) {
--			found = strstr(buf, sigcheck_gpg_status[i].check);
--			if (!found)
--				continue;
--			found += strlen(sigcheck_gpg_status[i].check);
--		}
--		sigc->result = sigcheck_gpg_status[i].result;
--		/* The trust messages are not followed by key/signer information */
--		if (sigc->result != 'U') {
--			next = strchrnul(found, ' ');
--			sigc->key = xmemdupz(found, next - found);
--			/* The ERRSIG message is not followed by signer information */
--			if (*next && sigc-> result != 'E') {
--				found = next + 1;
--				next = strchrnul(found, '\n');
--				sigc->signer = xmemdupz(found, next - found);
-+	int seen_exclusive_status = 0;
-+
-+	/* Iterate over all lines */
-+	for (line = buf; *line; line = strchrnul(line+1, '\n')) {
-+		while (*line == '\n')
-+			line++;
-+		/* Skip lines that don't start with GNUPG status */
-+		if (!skip_prefix(line, "[GNUPG:] ", &line))
-+			continue;
-+
-+		/* Iterate over all search strings */
-+		for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-+			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
-+				if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE) {
-+					if (++seen_exclusive_status > 1)
-+						goto found_duplicate_status;
-+				}
-+
-+				sigc->result = sigcheck_gpg_status[i].result;
-+				/* The trust messages are not followed by key/signer information */
-+				if (sigc->result != 'U') {
-+					next = strchrnul(line, ' ');
-+					free(sigc->key);
-+					sigc->key = xmemdupz(line, next - line);
-+					/* The ERRSIG message is not followed by signer information */
-+					if (*next && sigc->result != 'E') {
-+						line = next + 1;
-+						next = strchrnul(line, '\n');
-+						free(sigc->signer);
-+						sigc->signer = xmemdupz(line, next - line);
-+					}
-+				}
-+
-+				break;
- 			}
- 		}
- 	}
-+	return;
-+
-+found_duplicate_status:
-+	/*
-+	 * GOODSIG, BADSIG etc. can occur only once for each signature.
-+	 * Therefore, if we had more than one then we're dealing with multiple
-+	 * signatures.  We don't support them currently, and they're rather
-+	 * hard to create, so something is likely fishy and we should reject
-+	 * them altogether.
-+	 */
-+	sigc->result = 'E';
-+	/* Clear partial data to avoid confusion */
-+	FREE_AND_NULL(sigc->signer);
-+	FREE_AND_NULL(sigc->key);
- }
- 
- int check_signature(const char *payload, size_t plen, const char *signature,
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 4e37ff8f1..180f0be91 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -234,4 +234,30 @@ test_expect_success GPG 'check config gpg.format values' '
- 	test_must_fail git commit -S --amend -m "fail"
- '
- 
-+test_expect_success GPG 'detect fudged commit with double signature' '
-+	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
-+	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
-+		sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig1.sig &&
-+	gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
-+	cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combined.asc &&
-+	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s/^/ /" \
-+		double-combined.asc > double-gpgsig &&
-+	sed -e "/committer/r double-gpgsig" double-base >double-commit &&
-+	git hash-object -w -t commit double-commit >double-commit.commit &&
-+	test_must_fail git verify-commit $(cat double-commit.commit) &&
-+	git show --pretty=short --show-signature $(cat double-commit.commit) >double-actual &&
-+	grep "BAD signature from" double-actual &&
-+	grep "Good signature from" double-actual
-+'
-+
-+test_expect_success GPG 'show double signature with custom format' '
-+	cat >expect <<-\EOF &&
-+	E
-+
-+
-+	EOF
-+	git log -1 --format="%G?%n%GK%n%GS" $(cat double-commit.commit) >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.19.1
-
+I did see the possibility of including command-specific config in
+individual command man page. But I'm not planning on doing it myself.
+Some command man page is already pretty long, plus sometimes we rely
+on the core.* part which should not be included in per-command man
+page...
+--=20
+Duy
