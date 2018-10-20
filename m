@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F8451F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 459551F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727546AbeJTUtj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:39 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:40839 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727531AbeJTUtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:39 -0400
-Received: by mail-lj1-f195.google.com with SMTP id r83-v6so33086507ljr.7
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:17 -0700 (PDT)
+        id S1727565AbeJTUtm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:42 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:35522 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727531AbeJTUtl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:41 -0400
+Received: by mail-lf1-f67.google.com with SMTP id d7-v6so6542126lfi.2
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kmZc/ioNqREdJ93qnMcNG6ezpJI8mT09GpEeyQ9cjxE=;
-        b=C1TKQwtH2WudNyySwHgI3j0cxtuSU46pnKfbpjJMJV11tHyYl+VNj4vULCBKCZQqTv
-         TmAtX0YUeQBtPoSlflYhjQoqFSbT3mmpa1DAr/bcpoa/6eHko+3UrxJu3WwjfVHFQqmV
-         Z+I1Ul5Aym5KLpoe9iXILKGcYhWOn2GVjC6cV2ROAduoBlAzhSaXCCSZHsfWaLPjuw7+
-         UPryqaFVsRAUpRc1gjyqbzR0KplnOORVgt7tcQl/qm1KMpw+a7+8w3u1d5577C4e6dhM
-         X+cqD6eEwBoatA5GJNPYyH3cbDtL6ab4vWYXiO/g9+Oyo6EcvGlAXzSXqm8KCMGT58CL
-         QTZw==
+        bh=Zy78mJxw+JQMJ4FD8qmcUz2lhcQhL7o755G8d49fOnk=;
+        b=Dw8z/skRQ+mu3S9rrzzH2uGjBC6R4ZyBjP9o+hKuLV0hfFJu2YAV7efX4qTvIa9TiY
+         Uyl6dy8AM73bliuDSTcCTs71aWut+6XICDbU/fmIP0dUZ6Evygj8Y4VM+4H+J40MOOuE
+         XGsL/uHhCvkBoc5yaYKV7DIrUxFo1gy1lIZYUvMGpV0HH87ViSHlQ+APeVqYtVSR2uE3
+         VYfyPbDkDJQ2pLLUq2ax5VXAID0oyyeqIwPY0olNEiEcI6OrLRfuT8WJA1G3nDYqm2n6
+         RH4NkwPpdqwZutx9Hek8SqCJnodtnGjRlXHqHN/YqjIkqKrie3tngOXGL8Fab/Jasuor
+         34yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kmZc/ioNqREdJ93qnMcNG6ezpJI8mT09GpEeyQ9cjxE=;
-        b=Cp1Wo/YGFwWZW5/7zHi4fMKpkfvqGCi0i95ZfCZeScQOgJdWgqVcGxRxr+TuuS0QlZ
-         u3XwixiCS5d0yWYlPy8D0Qb/lsXgO64G2mravm1vWZFTGnWm5bts/g8lF7B5KsUUd2fS
-         AJGol5BvrfLaDAgrzfFeqVepy0WPejebS+DH1Y19VyDvX2xBtC2MkHTWJhR99pxM3P0d
-         D+y5V2KL4p2hXdL9StnbU77CK4Cx6vS6zTiZDPpLCFuCcSIWGlbQDcIpN+oBKlah6O7K
-         deZWIA+BDYCl+3nMfRNBvY2VlYbU/NiNdIgsF6UeNT0bIMieCDanKRFGJhWLCkbOV2sO
-         jKWw==
-X-Gm-Message-State: AGRZ1gL8h57QljeAE+BOPDXlZcYnmg6EnbHThjsMaaA3RX7h/PcXeqWW
-        GLCaYI886sTjGBK7xlEwWYzwpr1m
-X-Google-Smtp-Source: AJdET5d9rghvO5ZJQOO/Of6Su4kTkGvE5SW5ysz5NqF9VtV153GcWts+kfA0my7ER3wZKRE6G5dN2A==
-X-Received: by 2002:a2e:c52:: with SMTP id o18-v6mr899914ljd.94.1540039156300;
-        Sat, 20 Oct 2018 05:39:16 -0700 (PDT)
+        bh=Zy78mJxw+JQMJ4FD8qmcUz2lhcQhL7o755G8d49fOnk=;
+        b=AQNnG4WOJ6p+0gnPIDJpraXmnLi3T4aJCdzm0EXalrslX0vXTsKSMMYyljmIz9k0xq
+         IUlJGHH29bqRrd2nanxLTaquOzmEd9kbH/3FKAI4f9l3hdDraL3Ga9kzz5Pof0JQTo+A
+         xLjwCE4Azvda1BMw3srj8vLTrhyqIvTlMvl31DJ/FzBFGC+6OowvNW9NiN23JdtgwV+2
+         SnRgFaV8PHWYnDmoC7RVff6zDqMql5hp1eiEWphgBYj2klGe/501o0Y9wKilN/qMZXMo
+         dzLw+bn7o7Q3jMY285s1CG4Lwp8yhasX76QfITZw66CClq7CBSHyqNEl7zWZdO+Z87/4
+         292Q==
+X-Gm-Message-State: ABuFfojSuC+Wk/DW/ej8it396mIo8Kzwo3tfihH4l7QVzEB4c01A6E0C
+        /ZSrgYUriWpc0mz51bc0RGzIJXlM
+X-Google-Smtp-Source: ACcGV63/IdTNIz9ECrFBFN1+Pk1tpHj+Q0YbwdX5/1fbWCprxwEomXrRww1zMaxXGGUFaGRADAT1Iw==
+X-Received: by 2002:a19:f514:: with SMTP id j20-v6mr5271375lfb.13.1540039159345;
+        Sat, 20 Oct 2018 05:39:19 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.15
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:15 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:18 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 17/59] config.txt: move difftool.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:06 +0200
-Message-Id: <20181020123848.2785-18-pclouds@gmail.com>
+Subject: [PATCH 19/59] config.txt: move filter.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:08 +0200
+Message-Id: <20181020123848.2785-20-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,57 +71,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt          | 15 +--------------
- Documentation/difftool-config.txt | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 14 deletions(-)
- create mode 100644 Documentation/difftool-config.txt
+ Documentation/config.txt        | 10 +---------
+ Documentation/filter-config.txt |  9 +++++++++
+ 2 files changed, 10 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/filter-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d1509dd25e..f38e0a8334 100644
+index 66791f0918..7c7dde188c 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -321,20 +321,7 @@ include::completion-config.txt[]
+@@ -329,15 +329,7 @@ include::fetch-config.txt[]
  
- include::diff-config.txt[]
+ include::format-config.txt[]
  
--difftool.<tool>.path::
--	Override the path for the given tool.  This is useful in case
--	your tool is not in the PATH.
+-filter.<driver>.clean::
+-	The command which is used to convert the content of a worktree
+-	file to a blob upon checkin.  See linkgit:gitattributes[5] for
+-	details.
 -
--difftool.<tool>.cmd::
--	Specify the command to invoke the specified diff tool.
--	The specified command is evaluated in shell with the following
--	variables available:  'LOCAL' is set to the name of the temporary
--	file containing the contents of the diff pre-image and 'REMOTE'
--	is set to the name of the temporary file containing the contents
--	of the diff post-image.
--
--difftool.prompt::
--	Prompt before each invocation of the diff tool.
-+include::difftool-config.txt[]
+-filter.<driver>.smudge::
+-	The command which is used to convert the content of a blob
+-	object to a worktree file upon checkout.  See
+-	linkgit:gitattributes[5] for details.
++include::filter-config.txt[]
  
- fastimport.unpackLimit::
- 	If the number of objects imported by linkgit:git-fast-import[1]
-diff --git a/Documentation/difftool-config.txt b/Documentation/difftool-config.txt
+ fsck.<msg-id>::
+ 	During fsck git may find issues with legacy data which
+diff --git a/Documentation/filter-config.txt b/Documentation/filter-config.txt
 new file mode 100644
-index 0000000000..6762594480
+index 0000000000..90dfe0ba5a
 --- /dev/null
-+++ b/Documentation/difftool-config.txt
-@@ -0,0 +1,14 @@
-+difftool.<tool>.path::
-+	Override the path for the given tool.  This is useful in case
-+	your tool is not in the PATH.
++++ b/Documentation/filter-config.txt
+@@ -0,0 +1,9 @@
++filter.<driver>.clean::
++	The command which is used to convert the content of a worktree
++	file to a blob upon checkin.  See linkgit:gitattributes[5] for
++	details.
 +
-+difftool.<tool>.cmd::
-+	Specify the command to invoke the specified diff tool.
-+	The specified command is evaluated in shell with the following
-+	variables available:  'LOCAL' is set to the name of the temporary
-+	file containing the contents of the diff pre-image and 'REMOTE'
-+	is set to the name of the temporary file containing the contents
-+	of the diff post-image.
-+
-+difftool.prompt::
-+	Prompt before each invocation of the diff tool.
++filter.<driver>.smudge::
++	The command which is used to convert the content of a blob
++	object to a worktree file upon checkout.  See
++	linkgit:gitattributes[5] for details.
 -- 
 2.19.1.647.g708186aaf9
 
