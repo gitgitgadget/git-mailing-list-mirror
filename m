@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 079F51F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFF151F453
 	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727672AbeJTUuP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:50:15 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:43197 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727652AbeJTUuO (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727670AbeJTUuO (ORCPT <rfc822;e@80x24.org>);
         Sat, 20 Oct 2018 16:50:14 -0400
-Received: by mail-lf1-f65.google.com with SMTP id p34-v6so27138013lfg.10
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:53 -0700 (PDT)
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44829 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727630AbeJTUuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:50:13 -0400
+Received: by mail-lj1-f196.google.com with SMTP id v6-v6so33058910ljc.11
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2/sNaApBIyBZ7A54y0FtXxH1ysQkFibSOpvKt+9LCN4=;
-        b=N0C8FvEtjzfCiobMymiFQXWSEiYcSRmv5NedYsgpSSFzlcIiszareozbtxFDmAYuEQ
-         fG3qT2RfXQjBNbQHTXL0S8je/04IXb0Jq417E17zA5mbPg5E/BwqXWX3kPCVqLGqxlgY
-         H/yQtXMhmdNQNSH4CKKAwTs5aqAcGZ6GnGdoXZW0cC3MfS6uZp2bBnDxW2Lv2MBf3VxQ
-         KBtMu1UVnVVuUYrT4hxFdF0w7WvTGJy3avP5WCvs1yQ54NnbvfrfOt66oTiP4tc31/N0
-         +a00ydJ1WhWwQ5mg2q6ClCt1tck9cN/sCnvVFLBZ2HRcYWxJkorPPy9dlDxX00gGcTkA
-         d5wA==
+        bh=/Le9E207ycCQIOQPXFNBdzwcvde4uwacQBcDxwooFvU=;
+        b=LylOkapbslik03nNKkoYNfMDwUargAJLEibiWiBF4s5n4pHTK3iWugyOx/YCgqSznx
+         YAjHLCgOvnJM+zLLKWm62EGSOhLMZGv1gGVYE1itqAKEnFwr6YV5jy7K64Dc60/ljaEz
+         j21jwJCoPO29zrKKxT2xzf4j4p7yD+CPqnyPvJMBWQFtC6Iv+l/VkCgcF7jT324wJPq2
+         P0WjPuCwZz9t9RgUeAEBrVOEKezryt1ZWfBGUxFMna+oCYDR5RqW6mJlI5C9CSUpdWGd
+         koUGXnksRkyMKqFMREwHMrE5w5p202Q0yrWdZy2jf1kAKB+yRDxujlkKIpGbLFcZS7eX
+         d/PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2/sNaApBIyBZ7A54y0FtXxH1ysQkFibSOpvKt+9LCN4=;
-        b=ge4ecncKMem95f+mInK5jCK28I8iP0gvJcih/fL3tiXC6mS+pKZKoe03KrCZ9163Ke
-         EhVNM3SDYJObV2UHsbfsafEKxtkAfi9/WPjoKWTsBy7nkihUWYEn1oiVOyUoBbcC+eoP
-         KXt1jiK/WtyC2myS8/BctUTvTYOAL+0fip9iSs7MevQtiVhWleAHWR8OekxYzuL9xduL
-         /EX96NFw7/Bq17S44EEmoLaJkzp5pTEj2OzS2ajYHLtZuUD/DGYlXwOK3ubkU0VM8Zur
-         nNHtNUZATvSCGcpkP8yMj829B4gH2j1VQzsHftgkfpguSXFNtRNGoTndN0TbMbqP5AeY
-         DHxQ==
-X-Gm-Message-State: ABuFfohuNt01VTEz8iG6qVxqmliNK6bsLbLk1gyJ0Zd4Jq3+x7Z0HAil
-        RKqBCemrpyru0aaUk8eD7lYZnNgr
-X-Google-Smtp-Source: ACcGV62kGY1TyBevL7LiXjM8jH46/LiTLGIgYF5E2VBJhUnSv/ym713/2gzrfwsSDhINfH8q7W9brg==
-X-Received: by 2002:a19:5710:: with SMTP id l16-v6mr5675822lfb.71.1540039192117;
-        Sat, 20 Oct 2018 05:39:52 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=/Le9E207ycCQIOQPXFNBdzwcvde4uwacQBcDxwooFvU=;
+        b=JKKx0yiP1Nr2/tNyILnnZfMjl4cWCL19HBegy2iifDyEiZdGNFYG8PmV4V6UFb/0YM
+         qKVJDumJyhCZjc6zD49xkvlJgggw63QA/yBe24Kn5MWYj7jmk2/l92egq/6TwHjzsN/W
+         IXv7IYc377kPUxrCVPuvghCQHE+eaJtMcXP4+t2QScZRVmv0VGtCbXDg3pBezejyiZ/r
+         fbAzkigGYa5lRA5Khn2eKz6r3CzjwyltFj/IaVe6Nm63jtLr4Bwc16MNUGfT/QqqWaeZ
+         0GyaflFxa+tX036GrRHBEObCzxBe2DvU8d3VrL1RbdmH5Wq8lVi5GJkLZFOSkhOdzf08
+         ajRg==
+X-Gm-Message-State: ABuFfoheYSzod8yGrNe4kKu5otkcuufY2GrNeePgnCeYkcM7ZbBZq3x6
+        RzD9UQECjwQJX0WSVM+4/P2+BpZZ
+X-Google-Smtp-Source: AJdET5fWm2i2eQl7n5aeBCW5TReewLO3Oj/EJgcR3cgOALO/D3d55BuAtCtW2l146hZPWtIHFpDJxQ==
+X-Received: by 2002:a2e:5d8f:: with SMTP id v15-v6mr1094119lje.86.1540039191101;
         Sat, 20 Oct 2018 05:39:51 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 20 Oct 2018 05:39:50 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 36/59] config.txt: move man.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:25 +0200
-Message-Id: <20181020123848.2785-37-pclouds@gmail.com>
+Subject: [PATCH 35/59] config.txt: move mailmap.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:24 +0200
+Message-Id: <20181020123848.2785-36-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,53 +71,59 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt     | 13 +------------
- Documentation/man-config.txt | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 12 deletions(-)
- create mode 100644 Documentation/man-config.txt
+ Documentation/config.txt         | 16 +---------------
+ Documentation/mailmap-config.txt | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 15 deletions(-)
+ create mode 100644 Documentation/mailmap-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c057a290a4..72222c113f 100644
+index ca178e2651..c057a290a4 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -620,18 +620,7 @@ include::mailinfo-config.txt[]
+@@ -618,21 +618,7 @@ include::log-config.txt[]
  
- include::mailmap-config.txt[]
+ include::mailinfo-config.txt[]
  
--man.viewer::
--	Specify the programs that may be used to display help in the
--	'man' format. See linkgit:git-help[1].
+-mailmap.file::
+-	The location of an augmenting mailmap file. The default
+-	mailmap, located in the root of the repository, is loaded
+-	first, then the mailmap file pointed to by this variable.
+-	The location of the mailmap file may be in a repository
+-	subdirectory, or somewhere outside of the repository itself.
+-	See linkgit:git-shortlog[1] and linkgit:git-blame[1].
 -
--man.<tool>.cmd::
--	Specify the command to invoke the specified man viewer. The
--	specified command is evaluated in shell with the man page
--	passed as argument. (See linkgit:git-help[1].)
--
--man.<tool>.path::
--	Override the path for the given tool that may be used to
--	display help in the 'man' format. See linkgit:git-help[1].
-+include::man-config.txt[]
+-mailmap.blob::
+-	Like `mailmap.file`, but consider the value as a reference to a
+-	blob in the repository. If both `mailmap.file` and
+-	`mailmap.blob` are given, both are parsed, with entries from
+-	`mailmap.file` taking precedence. In a bare repository, this
+-	defaults to `HEAD:.mailmap`. In a non-bare repository, it
+-	defaults to empty.
++include::mailmap-config.txt[]
  
- include::merge-config.txt[]
- 
-diff --git a/Documentation/man-config.txt b/Documentation/man-config.txt
+ man.viewer::
+ 	Specify the programs that may be used to display help in the
+diff --git a/Documentation/mailmap-config.txt b/Documentation/mailmap-config.txt
 new file mode 100644
-index 0000000000..a727d987a8
+index 0000000000..48cbc30722
 --- /dev/null
-+++ b/Documentation/man-config.txt
-@@ -0,0 +1,12 @@
-+man.viewer::
-+	Specify the programs that may be used to display help in the
-+	'man' format. See linkgit:git-help[1].
++++ b/Documentation/mailmap-config.txt
+@@ -0,0 +1,15 @@
++mailmap.file::
++	The location of an augmenting mailmap file. The default
++	mailmap, located in the root of the repository, is loaded
++	first, then the mailmap file pointed to by this variable.
++	The location of the mailmap file may be in a repository
++	subdirectory, or somewhere outside of the repository itself.
++	See linkgit:git-shortlog[1] and linkgit:git-blame[1].
 +
-+man.<tool>.cmd::
-+	Specify the command to invoke the specified man viewer. The
-+	specified command is evaluated in shell with the man page
-+	passed as argument. (See linkgit:git-help[1].)
-+
-+man.<tool>.path::
-+	Override the path for the given tool that may be used to
-+	display help in the 'man' format. See linkgit:git-help[1].
++mailmap.blob::
++	Like `mailmap.file`, but consider the value as a reference to a
++	blob in the repository. If both `mailmap.file` and
++	`mailmap.blob` are given, both are parsed, with entries from
++	`mailmap.file` taking precedence. In a bare repository, this
++	defaults to `HEAD:.mailmap`. In a non-bare repository, it
++	defaults to empty.
 -- 
 2.19.1.647.g708186aaf9
 
