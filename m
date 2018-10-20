@@ -2,64 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6A5E1F454
-	for <e@80x24.org>; Sat, 20 Oct 2018 19:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25E851F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 23:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727744AbeJUDxQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 23:53:16 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:43479 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727727AbeJUDxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 23:53:16 -0400
-Received: by mail-ed1-f66.google.com with SMTP id y20-v6so34339941eds.10
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 12:41:45 -0700 (PDT)
+        id S1726905AbeJUHl6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Oct 2018 03:41:58 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51915 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbeJUHl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Oct 2018 03:41:58 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 143-v6so6760952wmf.1
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 16:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=dI3k6XWxRN4m0wJvpALpwoYimyj6cYgPTbTyWFTGpTc=;
-        b=L26Nzj/+jrgSmlQM4rmJuJq2pOCJ15aGa7sxAwcBISCqAl9syzyPQd1Hg7ogib8U7j
-         3tz3v2JOMQBLeiavSGLmToGRnTlm7pOGrmAuorRZ/rRi1H6iEOuPcP40GTd2rzq78JvB
-         hy8LJdCpmHhVgWy9xPWqdW64QoZnRO1QyTlGnu4QBCIgOLO8IC66swoNzUdg4YXhg75p
-         45ZBEsZwutzo9b1dR2o0RfvLpfeAmAvP+DKgoif8uGHfrtvh+ihZ98Wd+hKDJxkRwvjo
-         zFIT5vdP1D3rtJ5+IzaE8py8r+9PgMYw/XjlXmDBHH90b7zWXAQ5VUwvb4fUHoiVvM7K
-         iLhA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=z55d/Gx33ij6cTH4tbIJphOfMq/00PCG6x8oDdxaYqQ=;
+        b=FPmmU/ghapFBQ5VR4KkVGQCf6INBuCwRpvkQ/NmzI5c9dAGftOzrRR/D1fdsoKzfLN
+         Z77kUm6YuOC1+pH+KPKA6AfVuFyBit4gdee1mdrmU9YSjal9i5y3h4CwnAoPsULhcwil
+         /FZGrYi8ukQYvcAal1+iVbz6zt9NOYLRff1DLmR3f5yiqXc7BH+nzMQNCGbQCEhU17QR
+         o9+fcTXTXto7NfFXorqfSuNEmduPGEXr3aoqY3mXHdNg1gKUe5iTUMIJi274l8M4tWxV
+         7+up85GtyOu1RCbu5b51I0CQ8V4tYHqEQmSZuaTwJ1YdZeNXK27/EykVIOxS/QlyXNod
+         4Sdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=dI3k6XWxRN4m0wJvpALpwoYimyj6cYgPTbTyWFTGpTc=;
-        b=pazvzvgQX0R03u400KDiD0YmIsmoh3JcZ3Ol5A0R0bp2m+ouCFAjsbvahTHxmWC39a
-         2lCOQZAzFxtcgJ8jp5vPXKXxlKkM2sUVRtjFlRpNdBOKvSyKqzoikrr8VnJGSyQ1k8C/
-         sHhCoAn5SGeakAoVi99GZT1Zi1jgUQ5uOLPPgCZtdSUqJ7x7xAva8gf2yTRiuIbe2gK3
-         0ZOeVcX44jiktBnJkgdV/vDrr9hnBK2xHI6BaC9oFcS4jC19tytIm6lt7dVmc5hJ+KlO
-         MGtuh8WVbwgOoGZSYPrF8NgrYWFmLKWtnJFdwKmyfz84iHU1HLi5/mRi+ZbJpXDhyQXk
-         7tcg==
-X-Gm-Message-State: ABuFfogM72qSDyX08ehFCu+FwfVU5OBCOBX00wnlAJjGyVwRrqLJ32IU
-        YoN14fGyNa/QroP34Yg7DSI=
-X-Google-Smtp-Source: ACcGV61vvnPfzm/UrXIQPVeQ5LfQP2vNYuF7lwQZogR4/xfoacXuwTOKubsZ8+Ijz37y5eGU24FeAA==
-X-Received: by 2002:a17:906:5c0d:: with SMTP id e13-v6mr33313695ejq.183.1540064504501;
-        Sat, 20 Oct 2018 12:41:44 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id w8-v6sm10003620eda.37.2018.10.20.12.41.43
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=z55d/Gx33ij6cTH4tbIJphOfMq/00PCG6x8oDdxaYqQ=;
+        b=gp/tE1DBDK+tFbnBucwBa7wRnpTPWwPF1tMMoWn4wjpxQefeRDbeWayps3DAxugl1g
+         44JFrJka7Mjsdes01NdxxsftFAa8vjWGKvD2NN0Cy9rsoppnJ9FvVm10CMGwBKWXWAQx
+         s994zoxWqTp1/auNMZO2+nWF9/+7LkdjV/h0mZVuA+tMu56qAnE7E0WYUoPUkOxZYxKJ
+         nGgiha6hhlG/DxVz+EnIXnXffPbiMQkIgTk0/hAsIZh4cFFoLuj6QMCNpJWWNcUXmnXi
+         NIMVImYg15vSay/0z0OsG05qmHs83AzvjhUEqt+SmGREs0/+19TKAn1AneEgAj52Eleo
+         PAaw==
+X-Gm-Message-State: ABuFfoioObu83StFYXim/lQoGLX/EjON9LHO/BlUj+b/XwdfRvJBThI0
+        CSR69LblyVuotvmgl0pJ1Nc=
+X-Google-Smtp-Source: ACcGV61zQiWgGCszek58QlhVgnX1l1HrPpVX//6TDkyC26WYDhhLl4+o266CAzp7CFcl35D6roeHhg==
+X-Received: by 2002:a1c:dac7:: with SMTP id r190-v6mr10469543wmg.137.1540078186536;
+        Sat, 20 Oct 2018 16:29:46 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id b5-v6sm25972068wrr.94.2018.10.20.16.29.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 20 Oct 2018 12:41:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Sat, 20 Oct 2018 16:29:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
 Subject: Re: [PATCH 00/59] Split config.txt
-References: <20181020123848.2785-1-pclouds@gmail.com> <87d0s4ctds.fsf@evledraar.gmail.com> <CACsJy8ADfhRk9eUJG+FE4k_D5sZvBOu47Vm4Gkae1XiOVtZyjQ@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CACsJy8ADfhRk9eUJG+FE4k_D5sZvBOu47Vm4Gkae1XiOVtZyjQ@mail.gmail.com>
-Date:   Sat, 20 Oct 2018 21:41:42 +0200
-Message-ID: <87bm7ocsnd.fsf@evledraar.gmail.com>
+References: <20181020123848.2785-1-pclouds@gmail.com>
+        <87d0s4ctds.fsf@evledraar.gmail.com>
+Date:   Sun, 21 Oct 2018 08:29:44 +0900
+In-Reply-To: <87d0s4ctds.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sat, 20 Oct 2018 21:25:51 +0200")
+Message-ID: <xmqqr2gkyz6f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -68,71 +70,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Sat, Oct 20 2018, Duy Nguyen wrote:
+> I had a slight bias against this when you started this, since I'm one of
+> these odd people who don't mind ~20k line files if the line count isn't
+> contributing to inherent complexity, e.g. in the case of config.txt you
+> could just use the search function all in one file.
 
-> On Sat, Oct 20, 2018 at 9:25 PM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> And sometimes like in the case of git-gc(1) we have gc.* config
->> documented in two places with different prose that needs to be updated
->> in two places in a CONFIGURATION section. This series allows us to just
->> unify the two and do an "include" in two places, and more generally have
->> the convention that a given command that uses configuration could have
->> that config both documented in git-config(1), and the same docs in its
->> own manpage.
->>
->> Is doing some post-cleanup like that your eventual goal after this
->> series?
->
-> I did see the possibility of including command-specific config in
-> individual command man page. But I'm not planning on doing it myself.
-> Some command man page is already pretty long, plus sometimes we rely
-> on the core.* part which should not be included in per-command man
-> page...
+After typing "less Documentation/config.txt" and realizing that I
+have to open another file (which one?) to find how we described the
+push.default config, I am already experiencing a lot stronger bias
+against this.
 
-I might follow-up with some of that after this lands then. We wouldn't
-include all config (including core.*) that affects the command, but just
-command-specific stuff like gc.* or worktree.*.
+But I know it will pass.  Once this ~60 patch series completes, my
+irritation would peak, because at that point I would not be able to
+even do "git grep push.config Documentation/config*", but I would no
+longer be reaching for "less Documentation/config.txt" anymore at
+that point.  Once Documentation/$group-config.txt (which I think is
+a mistake) are renamed to Documentation/$something/$group.txt, then
+I know I can do "less Doc<TAB>/$some<TAB>/$gro<TAB>" to get my ease
+of use back.  There will still be an annoyance caused by having to
+open another file when reading description of branch.<name>.merge in
+branch-config.txt and seeing a reference to push.default, though.
 
-Due to limitations of ASCIIDOC link syntax we often just mention "blah
-blah can be also configured as somecmd.config, see
-linkgit:git-config[1]", e.g. one example I recently added is at:
-https://git-scm.com/docs/git-fetch#_pruning
+And the end result makes it impossible to place a description of a
+new variable in a wrong section.  It still is possible to mistakenly
+insert a variable in a wrong place in the right section that
+requires a fix like 8578037b ("config.txt: reorder blame stuff to
+keep config keys sorted", 2018-08-04), but we do not fix all the
+problems under the sky in one series ;-).
 
-Then the user clicks on that, and ends up in this giant manpage and they
-need to use their browser search. Both far that web experience and for
-reading with "man" it would be nicer to be able to say "see the
-CONFIGURATION section below" which would have that included.
-
-But arguably better would be consistently being able to know where the
-primary documentation is. E.g. for worktree.guessRemote (not picking on
-you in particular, it was just easy because worktree.* is only one
-config var) we have:
-
-in git-config(1):
-
-    worktree.guessRemote::
-    	With `add`, if no branch argument, and neither of `-b` nor
-    	`-B` nor `--detach` are given, the command defaults to
-    	creating a new branch from HEAD.  If `worktree.guessRemote` is
-    	set to true, `worktree add` tries to find a remote-tracking
-    	branch whose name uniquely matches the new branch name.  If
-    	such a branch exists, it is checked out and set as "upstream"
-    	for the new branch.  If no such match can be found, it falls
-    	back to creating a new branch from the current HEAD.
-
-In git-worktree(1)
-
-    --[no-]guess-remote::
-    	With `worktree add <path>`, without `<commit-ish>`, instead
-    	of creating a new branch from HEAD, if there exists a tracking
-    	branch in exactly one remote matching the basename of `<path>`,
-    	base the new branch on the remote-tracking branch, and mark
-    	the remote-tracking branch as "upstream" from the new branch.
-    +
-    This can also be set up as the default behaviour by using the
-    `worktree.guessRemote` config option.
-
-Mostly they're saying the same, but all in different words, so you need
-to carefully read both to really make sure you got it. There's many of
-those cases, would be good if we could unify all or most of them.
+So after saying all of the above, I am moderately supportive of this
+series.
