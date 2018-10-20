@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27F881F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF44B1F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727459AbeJTUtZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:25 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:37844 "EHLO
+        id S1727430AbeJTUtX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:23 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:44777 "EHLO
         mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727382AbeJTUtZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:25 -0400
-Received: by mail-lj1-f194.google.com with SMTP id 63-v6so33121598ljs.4
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:04 -0700 (PDT)
+        with ESMTP id S1727382AbeJTUtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:23 -0400
+Received: by mail-lj1-f194.google.com with SMTP id v6-v6so33057915ljc.11
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4JEenVR9za5HZ4eY/6eB9B9/u9N8IKGgMi9L0bn2PMQ=;
-        b=RKfs8n4zksLP/eWmTbPicGcQes/II9HMVxCeE5Yqwb55YAQ+9e86ZLbjLo+wdtZIhu
-         2ZKbQsP+OjMD2m4guXK8KzIIqtUa09x8NxyRxQD2xThSmWtKqUdDi6ew8b3uNPEs2+D4
-         LNoM96Ahc8atz6hqyTQ2NfayoLnQRDl3/hhEIBuirU2g+Kc81l9t5SHRuOH3ngGKzCD+
-         PYbyhWq+td90utO+ZBTiOF/Ycb99YoL4aGgYJLgFXCVnDWC9IFMe0ksSK4fR6C0pl/ui
-         jzHT70jMOjlAzopG+codxBaUpjgbC+RU79/HYeIBKeBmzNAY2kqU3O2VjXSOHUEfqygW
-         AcEw==
+        bh=gFRP4rtb7lqT/qAET2p1hdlIVKin8ebEJAL50hZPLVY=;
+        b=s3InJy9wyFSdvC6yLIf5ybvtrT2nDFqYflwTeE8aTyFDzl++a8Me296P3kxzQmkiKO
+         k7ArGxfWOp3XMAYuYrCgcMT0aOq1UONKLOV6ZolCOO4HgzQN4myGb3twMUqOGwmhpUFQ
+         3tMH/XwhaOF0Bt2ltGwp9sMJ01S1eRizYcE/OZn2P/Ssjzb+qLRI3zP/N9E+Cz19uguz
+         h5BBsVEysAZxHrpAJn7T+gyF0aEUk/Y/RIb0bwMZ1sYFsB0nc7QdEcnffnhHJTpQui25
+         /mlwBtwUMigsNHWowVHI+D/oGB57h4hjnBCOnMXZwE59O0jII6CAkalwN7+6jSpdhVnl
+         Ze2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4JEenVR9za5HZ4eY/6eB9B9/u9N8IKGgMi9L0bn2PMQ=;
-        b=gf3kbqDJqXXCtpgEreTq9SyATAHCMXA/jJzp7OR+0bZ8IR13OjiEZG5/QC2AbQLTUg
-         yS31AKm+UXrmZ+CqR1QzPrO4btaZB7difq+qV6TL0iLkw3jTvkAEoTmv7n5GOOjDtfC7
-         W2BSDtfRPN5Qni445hBfqRyvCVWS4t08KiF8V9PKPZvmVBg4kcnQrBcg35Bt9/fWNDX3
-         MlzzUuPj9zJC2j/+W0wtnmeWRMRglAQtIpW3Yf4Qm7LtujZ+xCnmMraqtES8DbXRbCWP
-         19AtjW5SFE8jo1mPo0ySi+X6FGTV1zirwMlx/xIdPprZU3pGZ5V4NxJFfEM+hh/8GA7e
-         tsCw==
-X-Gm-Message-State: ABuFfoh/eAC6Tncti1XjVMOli4cvKUtXqDQX1HMFRwwY7ns/hsTLrKzR
-        96r7GuE8H1ND1mRDHM4zVhHZnGEi
-X-Google-Smtp-Source: ACcGV62s+hXwxU4rbNXqt8Ebs3G/ycxbP+aAwJoxPEL6XjTnrJGihj0QOrPw0w/XCpGHc/zwolf8ew==
-X-Received: by 2002:a2e:80d2:: with SMTP id r18-v6mr28042726ljg.100.1540039143206;
-        Sat, 20 Oct 2018 05:39:03 -0700 (PDT)
+        bh=gFRP4rtb7lqT/qAET2p1hdlIVKin8ebEJAL50hZPLVY=;
+        b=uD03nK69NsJvWezn36lQH2HLLB8TsABh8ftaMk6rkjpksM/PTtowopNUb+jlfdZcHW
+         J4ASqNvz9d8AD3u7L8A9bF51JQIrbkDvEj1gFnW9v1id4fG3Hdf3yEVtM5rsuPCLc6sF
+         ptYn2AJPg3lt+Gl8Odtr6sENRPexM4cUQMNg5s2Zu1ViBqDUGvNlTbnTW9pR885aGK9H
+         VxHC0+OgYundiXRD8Jr/BarpYRlsqTzAJB462NesR8JS4+vOJImKaRU4CO+ZQqdWf/OG
+         TK8ffMUWOYTNlZjwW2AjKvYI1boZ7Mc5mLL9z2kcw19Z3pLeOtlPC6iBSh77nKI2FpYy
+         QVOg==
+X-Gm-Message-State: AGRZ1gIUyPLvvNhFcVm8bpL+fvb01dMAmDC3lz7I5QRDYAk3XE08KMKW
+        hteWsWWKaIdEHEG4VDbaix1B9Xgi
+X-Google-Smtp-Source: AJdET5dWZU/HMVjUYKEgn4tOe3kXFB6mW3LNGZ40ihihq7GxVpORDpEco91qY/n7RZTf+IB12g9jEA==
+X-Received: by 2002:a2e:9b04:: with SMTP id u4-v6mr6323450lji.29.1540039141039;
+        Sat, 20 Oct 2018 05:39:01 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.02
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.38.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:02 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:00 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 06/59] config.txt: move apply.* to a separate file
-Date:   Sat, 20 Oct 2018 14:37:55 +0200
-Message-Id: <20181020123848.2785-7-pclouds@gmail.com>
+Subject: [PATCH 04/59] config.txt: move alias.* to a separate file
+Date:   Sat, 20 Oct 2018 14:37:53 +0200
+Message-Id: <20181020123848.2785-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,51 +71,65 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/apply-config.txt | 11 +++++++++++
- Documentation/config.txt       | 12 +-----------
- 2 files changed, 12 insertions(+), 11 deletions(-)
- create mode 100644 Documentation/apply-config.txt
+ Documentation/alias-config.txt | 18 ++++++++++++++++++
+ Documentation/config.txt       | 19 +------------------
+ 2 files changed, 19 insertions(+), 18 deletions(-)
+ create mode 100644 Documentation/alias-config.txt
 
-diff --git a/Documentation/apply-config.txt b/Documentation/apply-config.txt
+diff --git a/Documentation/alias-config.txt b/Documentation/alias-config.txt
 new file mode 100644
-index 0000000000..8fb8ef763d
+index 0000000000..0b14178314
 --- /dev/null
-+++ b/Documentation/apply-config.txt
-@@ -0,0 +1,11 @@
-+apply.ignoreWhitespace::
-+	When set to 'change', tells 'git apply' to ignore changes in
-+	whitespace, in the same way as the `--ignore-space-change`
-+	option.
-+	When set to one of: no, none, never, false tells 'git apply' to
-+	respect all whitespace differences.
-+	See linkgit:git-apply[1].
-+
-+apply.whitespace::
-+	Tells 'git apply' how to handle whitespaces, in the same way
-+	as the `--whitespace` option. See linkgit:git-apply[1].
++++ b/Documentation/alias-config.txt
+@@ -0,0 +1,18 @@
++alias.*::
++	Command aliases for the linkgit:git[1] command wrapper - e.g.
++	after defining "alias.last = cat-file commit HEAD", the invocation
++	"git last" is equivalent to "git cat-file commit HEAD". To avoid
++	confusion and troubles with script usage, aliases that
++	hide existing Git commands are ignored. Arguments are split by
++	spaces, the usual shell quoting and escaping is supported.
++	A quote pair or a backslash can be used to quote them.
+++
++If the alias expansion is prefixed with an exclamation point,
++it will be treated as a shell command.  For example, defining
++"alias.new = !gitk --all --not ORIG_HEAD", the invocation
++"git new" is equivalent to running the shell command
++"gitk --all --not ORIG_HEAD".  Note that shell commands will be
++executed from the top-level directory of a repository, which may
++not necessarily be the current directory.
++`GIT_PREFIX` is set as returned by running 'git rev-parse --show-prefix'
++from the original current directory. See linkgit:git-rev-parse[1].
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 29dd694438..db259129b0 100644
+index a52e0b3592..5b46310dd4 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -297,17 +297,7 @@ include::alias-config.txt[]
+@@ -293,24 +293,7 @@ include::core-config.txt[]
  
- include::am-config.txt[]
+ include::add-config.txt[]
  
--apply.ignoreWhitespace::
--	When set to 'change', tells 'git apply' to ignore changes in
--	whitespace, in the same way as the `--ignore-space-change`
--	option.
--	When set to one of: no, none, never, false tells 'git apply' to
--	respect all whitespace differences.
--	See linkgit:git-apply[1].
--
--apply.whitespace::
--	Tells 'git apply' how to handle whitespaces, in the same way
--	as the `--whitespace` option. See linkgit:git-apply[1].
-+include::apply-config.txt[]
+-alias.*::
+-	Command aliases for the linkgit:git[1] command wrapper - e.g.
+-	after defining "alias.last = cat-file commit HEAD", the invocation
+-	"git last" is equivalent to "git cat-file commit HEAD". To avoid
+-	confusion and troubles with script usage, aliases that
+-	hide existing Git commands are ignored. Arguments are split by
+-	spaces, the usual shell quoting and escaping is supported.
+-	A quote pair or a backslash can be used to quote them.
+-+
+-If the alias expansion is prefixed with an exclamation point,
+-it will be treated as a shell command.  For example, defining
+-"alias.new = !gitk --all --not ORIG_HEAD", the invocation
+-"git new" is equivalent to running the shell command
+-"gitk --all --not ORIG_HEAD".  Note that shell commands will be
+-executed from the top-level directory of a repository, which may
+-not necessarily be the current directory.
+-`GIT_PREFIX` is set as returned by running 'git rev-parse --show-prefix'
+-from the original current directory. See linkgit:git-rev-parse[1].
++include::alias-config.txt[]
  
- blame.blankBoundary::
- 	Show blank commit object name for boundary commits in
+ am.keepcr::
+ 	If true, git-am will call git-mailsplit for patches in mbox format
 -- 
 2.19.1.647.g708186aaf9
 
