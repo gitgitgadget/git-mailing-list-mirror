@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D35FD1F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9441A1F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727710AbeJTUu3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:50:29 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:40884 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727692AbeJTUu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:50:29 -0400
-Received: by mail-lj1-f196.google.com with SMTP id r83-v6so33087473ljr.7
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:07 -0700 (PDT)
+        id S1727714AbeJTUub (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:50:31 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:41628 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727706AbeJTUub (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:50:31 -0400
+Received: by mail-lj1-f195.google.com with SMTP id u21-v6so33076126lja.8
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ADiVqlUm/b0kdF+Gkq/SFbu25n54BU53BlFuUamW26Y=;
-        b=g2gQ7GLzq/YlGqYnRvoidWpj8QEpukqsWo0kMyRfQh5mxZdIQrVeE0uWVI8nYnLHJa
-         tsfecIs4Cgt3dU5GfniOH9Unlro78Z0myDnbUKqR+jNvYirQZiM8f68Nmrts8C58hva5
-         21Jjl2A2QgRy2OPlDI3/4J868s3IlcFKR21LoGJzhs0AlGagBmCTo3QYQy1bWOmHw/G6
-         VFH6HnBNB0SuTLVfLFTWPM8iJm/zXxR15mww8H3ZhwOK5+AliwrfxDVBD/zzpIO54Svq
-         c6ObTtxFkfdakEz8laqmzrcINiOyq6Aam/MnpSK1EPesZirMk+CY08y3sTg0ls+QDdLf
-         E6kA==
+        bh=yH94TrhZF2ayZTJ+c1L6TIwrTpWMhMUBh5nEHxR2In0=;
+        b=Yph3O0tAGwMYgusEnSajwHWrj2Pvnj9vz3nUZszFMZIoyv68H9K2kXV1tpTTJKqmOw
+         HD8V02F/gWo4Uc60RXZld9p1q+cqnLQtPjJKsA71hk/85fmDh/kWqjs/ul83Ogx6CCNI
+         56Z9/zg55XphQ+exKv8gcVP/hTCvMn/rmQR7uRLwzJDLQG1Ttf/XOFr3oDVMG7q4+Yz2
+         Qi5C9npxCN3IufcVmHo2jhTi484sA0MgrvSBVnGbV3ou84r31bmmnMFBkgqIhiYyPigk
+         AXcxu/pKN9CVzC5/Q2WP7Vm4r7GjX3jzSR5kiVNSfEHmWXZn0XDcPe5Ks2ItIHd9VyA4
+         WN4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ADiVqlUm/b0kdF+Gkq/SFbu25n54BU53BlFuUamW26Y=;
-        b=jBK5GoLmzAQtwZSYMRFGBfN3O068QIZxhHYwnZeZpl51/cx94oREk5cIRI7JveFI3c
-         MmGSKLCUJ/kiYK6INGtugd50SkZXF9/T8yzE54xHhdWfP/7BogF4Y3SNXau51a+eodqJ
-         jr6xpVDjxsiK98BtsWfTjGjVVEmNNeNd/Q7R+HKx5wsOP3DOU+j2zvwYNpfSC2UOREjb
-         2eUm9MaZsGXsP1XVIq2ww3KuZ9nqpHtCsGj0pZJ3c9bbAxLV++9TuiZBCuGZtb0EKp10
-         FoDfVzK8JZ3AqSqFRC8sUg6h+VfSNfF0hbrR+hJ36nXENq+BpylIKX2OcK9LmuvetW2v
-         epwg==
-X-Gm-Message-State: ABuFfoiKy+ugvzHb8pzCok9HRqA84GtmBEQwBoQAI5l/PH1euK3HOiiJ
-        PO1zi/nLJQtcbYWuCkG+n503xRWN
-X-Google-Smtp-Source: ACcGV62o7rftqmo0K95tJ+O6fLxqfH98Fjl4IQUelpXL/pbNZQ21NOptXXP2FcTXvQIweExXYL09Wg==
-X-Received: by 2002:a2e:1241:: with SMTP id t62-v6mr24483511lje.81.1540039206634;
-        Sat, 20 Oct 2018 05:40:06 -0700 (PDT)
+        bh=yH94TrhZF2ayZTJ+c1L6TIwrTpWMhMUBh5nEHxR2In0=;
+        b=RPxoLlORdQ/kOykjfEDEB+C1Bnlw2+xduxpVMg0pPtzYMCPCf0DjTRrxYje1AmoUF2
+         lJ1qErvyt2dv8jHnVCSS7LD2sztMx3rJq+hsOw1g3TWwetpjFDwF0Xu5zhhOtgTZ5VYt
+         jbGgo+tttFv6ew/iYUQpQiQWKCo6kHuczbYo7TxsyNOv40IrYY3urEg90BWCxSHWORSf
+         kUC24apaQyQYlPUCaKOHPlhU+AgdT9XBGSeefZ9KvB1Dp5VE0kdb6Vkc1aoBu/c44+Qj
+         PmjgyCD7NpNsiNgQtiBKa3AxH1wjjfN/dtz39mi7Z+AmqTe+TGBU6yOolCnvf30TyFDV
+         s1CA==
+X-Gm-Message-State: ABuFfojrkEfQZIo/5S8uEyux4Z1R+x8K9FimeNVwJ+PBVcQ53I7S0XwD
+        YB+yRMfCF1iH6pLNQ2C0QS3Opz0e
+X-Google-Smtp-Source: ACcGV615dkhYuyrqsLO+P+4DFWH3yl8Lay4MLHhwKctvQxtMyF8lpF31qidigVLeUGTtFpU6hePleQ==
+X-Received: by 2002:a2e:5159:: with SMTP id b25-v6mr27339291lje.156.1540039207835;
+        Sat, 20 Oct 2018 05:40:07 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.05
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:40:05 -0700 (PDT)
+        Sat, 20 Oct 2018 05:40:06 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 42/59] config.txt: move protocol.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:31 +0200
-Message-Id: <20181020123848.2785-43-pclouds@gmail.com>
+Subject: [PATCH 43/59] config.txt: move remote.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:32 +0200
+Message-Id: <20181020123848.2785-44-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,157 +71,185 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt          | 65 +------------------------------
- Documentation/protocol-config.txt | 64 ++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+), 64 deletions(-)
- create mode 100644 Documentation/protocol-config.txt
+ Documentation/config.txt        | 79 +--------------------------------
+ Documentation/remote-config.txt | 78 ++++++++++++++++++++++++++++++++
+ 2 files changed, 79 insertions(+), 78 deletions(-)
+ create mode 100644 Documentation/remote-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 364e5fdbf1..f57b494041 100644
+index f57b494041..71844cf8e3 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -634,70 +634,7 @@ include::pager-config.txt[]
+@@ -644,84 +644,7 @@ include::rebase-config.txt[]
  
- include::pretty-config.txt[]
+ include::receive-config.txt[]
  
--protocol.allow::
--	If set, provide a user defined default policy for all protocols which
--	don't explicitly have a policy (`protocol.<name>.allow`).  By default,
--	if unset, known-safe protocols (http, https, git, ssh, file) have a
--	default policy of `always`, known-dangerous protocols (ext) have a
--	default policy of `never`, and all other protocols have a default
--	policy of `user`.  Supported policies:
+-remote.pushDefault::
+-	The remote to push to by default.  Overrides
+-	`branch.<name>.remote` for all branches, and is overridden by
+-	`branch.<name>.pushRemote` for specific branches.
+-
+-remote.<name>.url::
+-	The URL of a remote repository.  See linkgit:git-fetch[1] or
+-	linkgit:git-push[1].
+-
+-remote.<name>.pushurl::
+-	The push URL of a remote repository.  See linkgit:git-push[1].
+-
+-remote.<name>.proxy::
+-	For remotes that require curl (http, https and ftp), the URL to
+-	the proxy to use for that remote.  Set to the empty string to
+-	disable proxying for that remote.
+-
+-remote.<name>.proxyAuthMethod::
+-	For remotes that require curl (http, https and ftp), the method to use for
+-	authenticating against the proxy in use (probably set in
+-	`remote.<name>.proxy`). See `http.proxyAuthMethod`.
+-
+-remote.<name>.fetch::
+-	The default set of "refspec" for linkgit:git-fetch[1]. See
+-	linkgit:git-fetch[1].
+-
+-remote.<name>.push::
+-	The default set of "refspec" for linkgit:git-push[1]. See
+-	linkgit:git-push[1].
+-
+-remote.<name>.mirror::
+-	If true, pushing to this remote will automatically behave
+-	as if the `--mirror` option was given on the command line.
+-
+-remote.<name>.skipDefaultUpdate::
+-	If true, this remote will be skipped by default when updating
+-	using linkgit:git-fetch[1] or the `update` subcommand of
+-	linkgit:git-remote[1].
+-
+-remote.<name>.skipFetchAll::
+-	If true, this remote will be skipped by default when updating
+-	using linkgit:git-fetch[1] or the `update` subcommand of
+-	linkgit:git-remote[1].
+-
+-remote.<name>.receivepack::
+-	The default program to execute on the remote side when pushing.  See
+-	option --receive-pack of linkgit:git-push[1].
+-
+-remote.<name>.uploadpack::
+-	The default program to execute on the remote side when fetching.  See
+-	option --upload-pack of linkgit:git-fetch-pack[1].
+-
+-remote.<name>.tagOpt::
+-	Setting this value to --no-tags disables automatic tag following when
+-	fetching from remote <name>. Setting it to --tags will fetch every
+-	tag from remote <name>, even if they are not reachable from remote
+-	branch heads. Passing these flags directly to linkgit:git-fetch[1] can
+-	override this setting. See options --tags and --no-tags of
+-	linkgit:git-fetch[1].
+-
+-remote.<name>.vcs::
+-	Setting this to a value <vcs> will cause Git to interact with
+-	the remote with the git-remote-<vcs> helper.
+-
+-remote.<name>.prune::
+-	When set to true, fetching from this remote by default will also
+-	remove any remote-tracking references that no longer exist on the
+-	remote (as if the `--prune` option was given on the command line).
+-	Overrides `fetch.prune` settings, if any.
+-
+-remote.<name>.pruneTags::
+-	When set to true, fetching from this remote by default will also
+-	remove any local tags that no longer exist on the remote if pruning
+-	is activated in general via `remote.<name>.prune`, `fetch.prune` or
+-	`--prune`. Overrides `fetch.pruneTags` settings, if any.
 -+
----
--
--* `always` - protocol is always able to be used.
--
--* `never` - protocol is never able to be used.
--
--* `user` - protocol is only able to be used when `GIT_PROTOCOL_FROM_USER` is
--  either unset or has a value of 1.  This policy should be used when you want a
--  protocol to be directly usable by the user but don't want it used by commands which
--  execute clone/fetch/push commands without user input, e.g. recursive
--  submodule initialization.
--
----
--
--protocol.<name>.allow::
--	Set a policy to be used by protocol `<name>` with clone/fetch/push
--	commands. See `protocol.allow` above for the available policies.
--+
--The protocol names currently used by git are:
--+
----
--  - `file`: any local file-based path (including `file://` URLs,
--    or local paths)
--
--  - `git`: the anonymous git protocol over a direct TCP
--    connection (or proxy, if configured)
--
--  - `ssh`: git over ssh (including `host:path` syntax,
--    `ssh://`, etc).
--
--  - `http`: git over http, both "smart http" and "dumb http".
--    Note that this does _not_ include `https`; if you want to configure
--    both, you must do so individually.
--
--  - any external helpers are named by their protocol (e.g., use
--    `hg` to allow the `git-remote-hg` helper)
----
--
--protocol.version::
--	Experimental. If set, clients will attempt to communicate with a
--	server using the specified protocol version.  If unset, no
--	attempt will be made by the client to communicate using a
--	particular protocol version, this results in protocol version 0
--	being used.
--	Supported versions:
--+
----
--
--* `0` - the original wire protocol.
--
--* `1` - the original wire protocol with the addition of a version string
--  in the initial response from the server.
--
--* `2` - link:technical/protocol-v2.html[wire protocol version 2].
--
----
-+include::protocol-config.txt[]
+-See also `remote.<name>.prune` and the PRUNING section of
+-linkgit:git-fetch[1].
++include::remote-config.txt[]
  
- include::pull-config.txt[]
- 
-diff --git a/Documentation/protocol-config.txt b/Documentation/protocol-config.txt
+ remotes.<group>::
+ 	The list of remotes which are fetched by "git remote update
+diff --git a/Documentation/remote-config.txt b/Documentation/remote-config.txt
 new file mode 100644
-index 0000000000..bfccc07491
+index 0000000000..6c4cad83a2
 --- /dev/null
-+++ b/Documentation/protocol-config.txt
-@@ -0,0 +1,64 @@
-+protocol.allow::
-+	If set, provide a user defined default policy for all protocols which
-+	don't explicitly have a policy (`protocol.<name>.allow`).  By default,
-+	if unset, known-safe protocols (http, https, git, ssh, file) have a
-+	default policy of `always`, known-dangerous protocols (ext) have a
-+	default policy of `never`, and all other protocols have a default
-+	policy of `user`.  Supported policies:
++++ b/Documentation/remote-config.txt
+@@ -0,0 +1,78 @@
++remote.pushDefault::
++	The remote to push to by default.  Overrides
++	`branch.<name>.remote` for all branches, and is overridden by
++	`branch.<name>.pushRemote` for specific branches.
++
++remote.<name>.url::
++	The URL of a remote repository.  See linkgit:git-fetch[1] or
++	linkgit:git-push[1].
++
++remote.<name>.pushurl::
++	The push URL of a remote repository.  See linkgit:git-push[1].
++
++remote.<name>.proxy::
++	For remotes that require curl (http, https and ftp), the URL to
++	the proxy to use for that remote.  Set to the empty string to
++	disable proxying for that remote.
++
++remote.<name>.proxyAuthMethod::
++	For remotes that require curl (http, https and ftp), the method to use for
++	authenticating against the proxy in use (probably set in
++	`remote.<name>.proxy`). See `http.proxyAuthMethod`.
++
++remote.<name>.fetch::
++	The default set of "refspec" for linkgit:git-fetch[1]. See
++	linkgit:git-fetch[1].
++
++remote.<name>.push::
++	The default set of "refspec" for linkgit:git-push[1]. See
++	linkgit:git-push[1].
++
++remote.<name>.mirror::
++	If true, pushing to this remote will automatically behave
++	as if the `--mirror` option was given on the command line.
++
++remote.<name>.skipDefaultUpdate::
++	If true, this remote will be skipped by default when updating
++	using linkgit:git-fetch[1] or the `update` subcommand of
++	linkgit:git-remote[1].
++
++remote.<name>.skipFetchAll::
++	If true, this remote will be skipped by default when updating
++	using linkgit:git-fetch[1] or the `update` subcommand of
++	linkgit:git-remote[1].
++
++remote.<name>.receivepack::
++	The default program to execute on the remote side when pushing.  See
++	option --receive-pack of linkgit:git-push[1].
++
++remote.<name>.uploadpack::
++	The default program to execute on the remote side when fetching.  See
++	option --upload-pack of linkgit:git-fetch-pack[1].
++
++remote.<name>.tagOpt::
++	Setting this value to --no-tags disables automatic tag following when
++	fetching from remote <name>. Setting it to --tags will fetch every
++	tag from remote <name>, even if they are not reachable from remote
++	branch heads. Passing these flags directly to linkgit:git-fetch[1] can
++	override this setting. See options --tags and --no-tags of
++	linkgit:git-fetch[1].
++
++remote.<name>.vcs::
++	Setting this to a value <vcs> will cause Git to interact with
++	the remote with the git-remote-<vcs> helper.
++
++remote.<name>.prune::
++	When set to true, fetching from this remote by default will also
++	remove any remote-tracking references that no longer exist on the
++	remote (as if the `--prune` option was given on the command line).
++	Overrides `fetch.prune` settings, if any.
++
++remote.<name>.pruneTags::
++	When set to true, fetching from this remote by default will also
++	remove any local tags that no longer exist on the remote if pruning
++	is activated in general via `remote.<name>.prune`, `fetch.prune` or
++	`--prune`. Overrides `fetch.pruneTags` settings, if any.
 ++
-+--
-+
-+* `always` - protocol is always able to be used.
-+
-+* `never` - protocol is never able to be used.
-+
-+* `user` - protocol is only able to be used when `GIT_PROTOCOL_FROM_USER` is
-+  either unset or has a value of 1.  This policy should be used when you want a
-+  protocol to be directly usable by the user but don't want it used by commands which
-+  execute clone/fetch/push commands without user input, e.g. recursive
-+  submodule initialization.
-+
-+--
-+
-+protocol.<name>.allow::
-+	Set a policy to be used by protocol `<name>` with clone/fetch/push
-+	commands. See `protocol.allow` above for the available policies.
-++
-+The protocol names currently used by git are:
-++
-+--
-+  - `file`: any local file-based path (including `file://` URLs,
-+    or local paths)
-+
-+  - `git`: the anonymous git protocol over a direct TCP
-+    connection (or proxy, if configured)
-+
-+  - `ssh`: git over ssh (including `host:path` syntax,
-+    `ssh://`, etc).
-+
-+  - `http`: git over http, both "smart http" and "dumb http".
-+    Note that this does _not_ include `https`; if you want to configure
-+    both, you must do so individually.
-+
-+  - any external helpers are named by their protocol (e.g., use
-+    `hg` to allow the `git-remote-hg` helper)
-+--
-+
-+protocol.version::
-+	Experimental. If set, clients will attempt to communicate with a
-+	server using the specified protocol version.  If unset, no
-+	attempt will be made by the client to communicate using a
-+	particular protocol version, this results in protocol version 0
-+	being used.
-+	Supported versions:
-++
-+--
-+
-+* `0` - the original wire protocol.
-+
-+* `1` - the original wire protocol with the addition of a version string
-+  in the initial response from the server.
-+
-+* `2` - link:technical/protocol-v2.html[wire protocol version 2].
-+
-+--
++See also `remote.<name>.prune` and the PRUNING section of
++linkgit:git-fetch[1].
 -- 
 2.19.1.647.g708186aaf9
 
