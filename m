@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 673851F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0FF91F453
 	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727469AbeJTUt0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:26 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:40818 "EHLO
+        id S1727488AbeJTUt3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:29 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:38696 "EHLO
         mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727289AbeJTUtZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:25 -0400
-Received: by mail-lj1-f195.google.com with SMTP id r83-v6so33086102ljr.7
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:01 -0700 (PDT)
+        with ESMTP id S1727289AbeJTUt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:28 -0400
+Received: by mail-lj1-f195.google.com with SMTP id k11-v6so1112140lja.5
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=labR+SuX0c0y4ZNNYYpSxxWzZd8IPiF6lKvHv2qxCUc=;
-        b=ru87CdMhyWqtr1anF0FxpoJfN3/GTc843ok6Nj3hhHdL2kgLJ8R6W5VV4J/Uy8PdNx
-         /gtwllus/zs3X8a5JMxi8ON6a7WpZC6JFSQE7ObmXkXaQOjsqk5niXiOU6slBJukH571
-         RxjK+2Ssj2MBxi6d3+7047BzAOjH6glN64E5T7zm7ZraknKpE+eBuZyfGhyl9ydg5+yH
-         zmTnrHsRqVoq+nZzrWT6lo7UHdBdqLwEgyufObXCJ+gyqEAKP00rj8oYO1sxuIF5OvUV
-         lEb0JRlAKoGZCoaosOBsGuWX+aKSNx1BTKGka8iHqFSMNDro+fFBDPmBJGcfuD5J7b1G
-         1JgA==
+        bh=P2zm1QOPFGoZh+KGHhYpMbDfPMoFbSl+O7+U238Qp+4=;
+        b=Bpe6D/7w2DA23UaGmSAushaF16aWkGgT2odiG+Aa8eFEqSSK0WuntmC9JJF3pMD6tJ
+         VD2rJFP8ILgZXnel56GayGolzBgUq7rIFO2QIptt2pkuqTOVO2Sm9eKFrXawlSvGamR4
+         msIPw0rZ/LdFin4gd9Z+5JCnnBMYN1/AdGaLUfHHrqUNO3Sm0IPCGWR6kHeyQ+NNGx9Q
+         9bxB1C9pFNSP8EG1pZKeCVe9QldvwB0xNDBQPgf8HctFl6Zv/y+epu2PsVCqh4tu+WqN
+         yCcfYTQwken8N9CTg1qNuctsC7E10bLtTHXpSwKkABRk+gEr3Kl8fYLGfv/1Eue45Iwg
+         H2Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=labR+SuX0c0y4ZNNYYpSxxWzZd8IPiF6lKvHv2qxCUc=;
-        b=mHKZkxjr0pA1uKEcN9MD9czIxvZowgp3yIzR4+m6Af3+6x8YN5411CuoU35EkPcKut
-         nnSdV39rZ7yrnxMTKT7gfOKm98ZfuL6MOKWk3XsKkzDcap9l6eGHQj1foaVnN5lQqCHj
-         0pZHL14sCCjsENwa8yNslAHRbyZ9ugF8Ec2wa95cqSP6M+KhGlR+KX89+qJu0l7CsEab
-         W6ESJFGawp/7Sx/QWZOcCd7KUW8rJmck0DQ3/aRn1hXT/AafYQjQ9M9AvNJWYc4JN+Jv
-         pp5P1D3ZFKL/EO2MHY7svwzwNgQt4tcGcltruwEQYpM+F21ayJcMz9X2x91fRIlIAivR
-         g2Mw==
-X-Gm-Message-State: ABuFfogsrGPLqtzYQWhmzLpyHrFOCptaggSFQbKPJGKVNOotsx+6FS0u
-        Ryj9BazxkiRIBdj8+gWT/oaC/kPg
-X-Google-Smtp-Source: AJdET5d218QdkD/WMPGk68wSkQPQM91OrPqW5oo2uwCqKvQHHf+RSSYYRNgBZXGM2VfL1sruHJiyQw==
-X-Received: by 2002:a2e:8945:: with SMTP id b5-v6mr801986ljk.20.1540039139046;
-        Sat, 20 Oct 2018 05:38:59 -0700 (PDT)
+        bh=P2zm1QOPFGoZh+KGHhYpMbDfPMoFbSl+O7+U238Qp+4=;
+        b=cGQDkjs0NxreMmf2B1wWRMVCJjQ++BzmLYJvEyIWzz3PZPGvfB5/cV72WdodSTGkBU
+         JHaYHgxADimYpTJ+18uH9qG8iafaXrDZeyhGBZfz3Yj/cWnPWShXDv9Wl6RlMU0CrUOs
+         Y0asx427Wl1BqlHOUgRySpoEd4TVhNSt5wURsCrLdEOd38XhPIeu/xMT/XGbGPRmd5HU
+         5QtSkBQrVZ3yNF/mdylWDymDnRNiK+NyWAE1grwPv19xwiVdK/mYzqnkFh+d4HZl3hCQ
+         1P6fm9t/YZS+yc7g3zQufN/KgHQq2PwB0rhheYoh1QWbJWzRuHicsReDxqrtX1tMBhOj
+         KjPA==
+X-Gm-Message-State: ABuFfog8a99gGpm67nTMiLrxb2pv2dt1sncMpUk7us+NmsJRWmXO55dX
+        +2L6Ol4/tf5CMjAyq34jrWc6vzoC
+X-Google-Smtp-Source: ACcGV62lngGLid3eE9JEpm8Sgwz2OICj21pUhS+LAZcJdih1cDvkKQpuifl/Hjoo7TKmW4XtVsu0fw==
+X-Received: by 2002:a2e:52ca:: with SMTP id n71-v6mr24361876lje.54.1540039145447;
+        Sat, 20 Oct 2018 05:39:05 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.38.57
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:38:58 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:04 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/59] config.txt: move core.* to a separate file
-Date:   Sat, 20 Oct 2018 14:37:51 +0200
-Message-Id: <20181020123848.2785-3-pclouds@gmail.com>
+Subject: [PATCH 08/59] config.txt: move branch.* to a separate file
+Date:   Sat, 20 Oct 2018 14:37:57 +0200
+Message-Id: <20181020123848.2785-9-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,1217 +71,233 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt      | 595 +---------------------------------
- Documentation/core-config.txt | 594 +++++++++++++++++++++++++++++++++
- 2 files changed, 595 insertions(+), 594 deletions(-)
- create mode 100644 Documentation/core-config.txt
+ Documentation/branch-config.txt | 102 +++++++++++++++++++++++++++++++
+ Documentation/config.txt        | 103 +-------------------------------
+ 2 files changed, 103 insertions(+), 102 deletions(-)
+ create mode 100644 Documentation/branch-config.txt
 
+diff --git a/Documentation/branch-config.txt b/Documentation/branch-config.txt
+new file mode 100644
+index 0000000000..019d60ede2
+--- /dev/null
++++ b/Documentation/branch-config.txt
+@@ -0,0 +1,102 @@
++branch.autoSetupMerge::
++	Tells 'git branch' and 'git checkout' to set up new branches
++	so that linkgit:git-pull[1] will appropriately merge from the
++	starting point branch. Note that even if this option is not set,
++	this behavior can be chosen per-branch using the `--track`
++	and `--no-track` options. The valid settings are: `false` -- no
++	automatic setup is done; `true` -- automatic setup is done when the
++	starting point is a remote-tracking branch; `always` --
++	automatic setup is done when the starting point is either a
++	local branch or remote-tracking
++	branch. This option defaults to true.
++
++branch.autoSetupRebase::
++	When a new branch is created with 'git branch' or 'git checkout'
++	that tracks another branch, this variable tells Git to set
++	up pull to rebase instead of merge (see "branch.<name>.rebase").
++	When `never`, rebase is never automatically set to true.
++	When `local`, rebase is set to true for tracked branches of
++	other local branches.
++	When `remote`, rebase is set to true for tracked branches of
++	remote-tracking branches.
++	When `always`, rebase will be set to true for all tracking
++	branches.
++	See "branch.autoSetupMerge" for details on how to set up a
++	branch to track another branch.
++	This option defaults to never.
++
++branch.sort::
++	This variable controls the sort ordering of branches when displayed by
++	linkgit:git-branch[1]. Without the "--sort=<value>" option provided, the
++	value of this variable will be used as the default.
++	See linkgit:git-for-each-ref[1] field names for valid values.
++
++branch.<name>.remote::
++	When on branch <name>, it tells 'git fetch' and 'git push'
++	which remote to fetch from/push to.  The remote to push to
++	may be overridden with `remote.pushDefault` (for all branches).
++	The remote to push to, for the current branch, may be further
++	overridden by `branch.<name>.pushRemote`.  If no remote is
++	configured, or if you are not on any branch, it defaults to
++	`origin` for fetching and `remote.pushDefault` for pushing.
++	Additionally, `.` (a period) is the current local repository
++	(a dot-repository), see `branch.<name>.merge`'s final note below.
++
++branch.<name>.pushRemote::
++	When on branch <name>, it overrides `branch.<name>.remote` for
++	pushing.  It also overrides `remote.pushDefault` for pushing
++	from branch <name>.  When you pull from one place (e.g. your
++	upstream) and push to another place (e.g. your own publishing
++	repository), you would want to set `remote.pushDefault` to
++	specify the remote to push to for all branches, and use this
++	option to override it for a specific branch.
++
++branch.<name>.merge::
++	Defines, together with branch.<name>.remote, the upstream branch
++	for the given branch. It tells 'git fetch'/'git pull'/'git rebase' which
++	branch to merge and can also affect 'git push' (see push.default).
++	When in branch <name>, it tells 'git fetch' the default
++	refspec to be marked for merging in FETCH_HEAD. The value is
++	handled like the remote part of a refspec, and must match a
++	ref which is fetched from the remote given by
++	"branch.<name>.remote".
++	The merge information is used by 'git pull' (which at first calls
++	'git fetch') to lookup the default branch for merging. Without
++	this option, 'git pull' defaults to merge the first refspec fetched.
++	Specify multiple values to get an octopus merge.
++	If you wish to setup 'git pull' so that it merges into <name> from
++	another branch in the local repository, you can point
++	branch.<name>.merge to the desired branch, and use the relative path
++	setting `.` (a period) for branch.<name>.remote.
++
++branch.<name>.mergeOptions::
++	Sets default options for merging into branch <name>. The syntax and
++	supported options are the same as those of linkgit:git-merge[1], but
++	option values containing whitespace characters are currently not
++	supported.
++
++branch.<name>.rebase::
++	When true, rebase the branch <name> on top of the fetched branch,
++	instead of merging the default branch from the default remote when
++	"git pull" is run. See "pull.rebase" for doing this in a non
++	branch-specific manner.
+++
++When `merges`, pass the `--rebase-merges` option to 'git rebase'
++so that the local merge commits are included in the rebase (see
++linkgit:git-rebase[1] for details).
+++
++When preserve, also pass `--preserve-merges` along to 'git rebase'
++so that locally committed merge commits will not be flattened
++by running 'git pull'.
+++
++When the value is `interactive`, the rebase is run in interactive mode.
+++
++*NOTE*: this is a possibly dangerous operation; do *not* use
++it unless you understand the implications (see linkgit:git-rebase[1]
++for details).
++
++branch.<name>.description::
++	Branch description, can be edited with
++	`git branch --edit-description`. Branch description is
++	automatically added in the format-patch cover letter or
++	request-pull summary.
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a0b0ef582f..27c2a211c0 100644
+index 910dcf1c25..249b90b107 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -289,600 +289,7 @@ other popular tools, and describe them in your documentation.
+@@ -301,108 +301,7 @@ include::apply-config.txt[]
  
- include::advice-config.txt[]
+ include::blame-config.txt[]
  
--core.fileMode::
--	Tells Git if the executable bit of files in the working tree
--	is to be honored.
+-branch.autoSetupMerge::
+-	Tells 'git branch' and 'git checkout' to set up new branches
+-	so that linkgit:git-pull[1] will appropriately merge from the
+-	starting point branch. Note that even if this option is not set,
+-	this behavior can be chosen per-branch using the `--track`
+-	and `--no-track` options. The valid settings are: `false` -- no
+-	automatic setup is done; `true` -- automatic setup is done when the
+-	starting point is a remote-tracking branch; `always` --
+-	automatic setup is done when the starting point is either a
+-	local branch or remote-tracking
+-	branch. This option defaults to true.
+-
+-branch.autoSetupRebase::
+-	When a new branch is created with 'git branch' or 'git checkout'
+-	that tracks another branch, this variable tells Git to set
+-	up pull to rebase instead of merge (see "branch.<name>.rebase").
+-	When `never`, rebase is never automatically set to true.
+-	When `local`, rebase is set to true for tracked branches of
+-	other local branches.
+-	When `remote`, rebase is set to true for tracked branches of
+-	remote-tracking branches.
+-	When `always`, rebase will be set to true for all tracking
+-	branches.
+-	See "branch.autoSetupMerge" for details on how to set up a
+-	branch to track another branch.
+-	This option defaults to never.
+-
+-branch.sort::
+-	This variable controls the sort ordering of branches when displayed by
+-	linkgit:git-branch[1]. Without the "--sort=<value>" option provided, the
+-	value of this variable will be used as the default.
+-	See linkgit:git-for-each-ref[1] field names for valid values.
+-
+-branch.<name>.remote::
+-	When on branch <name>, it tells 'git fetch' and 'git push'
+-	which remote to fetch from/push to.  The remote to push to
+-	may be overridden with `remote.pushDefault` (for all branches).
+-	The remote to push to, for the current branch, may be further
+-	overridden by `branch.<name>.pushRemote`.  If no remote is
+-	configured, or if you are not on any branch, it defaults to
+-	`origin` for fetching and `remote.pushDefault` for pushing.
+-	Additionally, `.` (a period) is the current local repository
+-	(a dot-repository), see `branch.<name>.merge`'s final note below.
+-
+-branch.<name>.pushRemote::
+-	When on branch <name>, it overrides `branch.<name>.remote` for
+-	pushing.  It also overrides `remote.pushDefault` for pushing
+-	from branch <name>.  When you pull from one place (e.g. your
+-	upstream) and push to another place (e.g. your own publishing
+-	repository), you would want to set `remote.pushDefault` to
+-	specify the remote to push to for all branches, and use this
+-	option to override it for a specific branch.
+-
+-branch.<name>.merge::
+-	Defines, together with branch.<name>.remote, the upstream branch
+-	for the given branch. It tells 'git fetch'/'git pull'/'git rebase' which
+-	branch to merge and can also affect 'git push' (see push.default).
+-	When in branch <name>, it tells 'git fetch' the default
+-	refspec to be marked for merging in FETCH_HEAD. The value is
+-	handled like the remote part of a refspec, and must match a
+-	ref which is fetched from the remote given by
+-	"branch.<name>.remote".
+-	The merge information is used by 'git pull' (which at first calls
+-	'git fetch') to lookup the default branch for merging. Without
+-	this option, 'git pull' defaults to merge the first refspec fetched.
+-	Specify multiple values to get an octopus merge.
+-	If you wish to setup 'git pull' so that it merges into <name> from
+-	another branch in the local repository, you can point
+-	branch.<name>.merge to the desired branch, and use the relative path
+-	setting `.` (a period) for branch.<name>.remote.
+-
+-branch.<name>.mergeOptions::
+-	Sets default options for merging into branch <name>. The syntax and
+-	supported options are the same as those of linkgit:git-merge[1], but
+-	option values containing whitespace characters are currently not
+-	supported.
+-
+-branch.<name>.rebase::
+-	When true, rebase the branch <name> on top of the fetched branch,
+-	instead of merging the default branch from the default remote when
+-	"git pull" is run. See "pull.rebase" for doing this in a non
+-	branch-specific manner.
 -+
--Some filesystems lose the executable bit when a file that is
--marked as executable is checked out, or checks out a
--non-executable file with executable bit on.
--linkgit:git-clone[1] or linkgit:git-init[1] probe the filesystem
--to see if it handles the executable bit correctly
--and this variable is automatically set as necessary.
+-When `merges`, pass the `--rebase-merges` option to 'git rebase'
+-so that the local merge commits are included in the rebase (see
+-linkgit:git-rebase[1] for details).
 -+
--A repository, however, may be on a filesystem that handles
--the filemode correctly, and this variable is set to 'true'
--when created, but later may be made accessible from another
--environment that loses the filemode (e.g. exporting ext4 via
--CIFS mount, visiting a Cygwin created repository with
--Git for Windows or Eclipse).
--In such a case it may be necessary to set this variable to 'false'.
--See linkgit:git-update-index[1].
+-When preserve, also pass `--preserve-merges` along to 'git rebase'
+-so that locally committed merge commits will not be flattened
+-by running 'git pull'.
 -+
--The default is true (when core.filemode is not specified in the config file).
--
--core.hideDotFiles::
--	(Windows-only) If true, mark newly-created directories and files whose
--	name starts with a dot as hidden.  If 'dotGitOnly', only the `.git/`
--	directory is hidden, but no other files starting with a dot.  The
--	default mode is 'dotGitOnly'.
--
--core.ignoreCase::
--	Internal variable which enables various workarounds to enable
--	Git to work better on filesystems that are not case sensitive,
--	like APFS, HFS+, FAT, NTFS, etc. For example, if a directory listing
--	finds "makefile" when Git expects "Makefile", Git will assume
--	it is really the same file, and continue to remember it as
--	"Makefile".
+-When the value is `interactive`, the rebase is run in interactive mode.
 -+
--The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
--will probe and set core.ignoreCase true if appropriate when the repository
--is created.
--+
--Git relies on the proper configuration of this variable for your operating
--and file system. Modifying this value may result in unexpected behavior.
+-*NOTE*: this is a possibly dangerous operation; do *not* use
+-it unless you understand the implications (see linkgit:git-rebase[1]
+-for details).
 -
--core.precomposeUnicode::
--	This option is only used by Mac OS implementation of Git.
--	When core.precomposeUnicode=true, Git reverts the unicode decomposition
--	of filenames done by Mac OS. This is useful when sharing a repository
--	between Mac OS and Linux or Windows.
--	(Git for Windows 1.7.10 or higher is needed, or Git under cygwin 1.7).
--	When false, file names are handled fully transparent by Git,
--	which is backward compatible with older versions of Git.
--
--core.protectHFS::
--	If set to true, do not allow checkout of paths that would
--	be considered equivalent to `.git` on an HFS+ filesystem.
--	Defaults to `true` on Mac OS, and `false` elsewhere.
--
--core.protectNTFS::
--	If set to true, do not allow checkout of paths that would
--	cause problems with the NTFS filesystem, e.g. conflict with
--	8.3 "short" names.
--	Defaults to `true` on Windows, and `false` elsewhere.
--
--core.fsmonitor::
--	If set, the value of this variable is used as a command which
--	will identify all files that may have changed since the
--	requested date/time. This information is used to speed up git by
--	avoiding unnecessary processing of files that have not changed.
--	See the "fsmonitor-watchman" section of linkgit:githooks[5].
--
--core.trustctime::
--	If false, the ctime differences between the index and the
--	working tree are ignored; useful when the inode change time
--	is regularly modified by something outside Git (file system
--	crawlers and some backup systems).
--	See linkgit:git-update-index[1]. True by default.
--
--core.splitIndex::
--	If true, the split-index feature of the index will be used.
--	See linkgit:git-update-index[1]. False by default.
--
--core.untrackedCache::
--	Determines what to do about the untracked cache feature of the
--	index. It will be kept, if this variable is unset or set to
--	`keep`. It will automatically be added if set to `true`. And
--	it will automatically be removed, if set to `false`. Before
--	setting it to `true`, you should check that mtime is working
--	properly on your system.
--	See linkgit:git-update-index[1]. `keep` by default.
--
--core.checkStat::
--	When missing or is set to `default`, many fields in the stat
--	structure are checked to detect if a file has been modified
--	since Git looked at it.  When this configuration variable is
--	set to `minimal`, sub-second part of mtime and ctime, the
--	uid and gid of the owner of the file, the inode number (and
--	the device number, if Git was compiled to use it), are
--	excluded from the check among these fields, leaving only the
--	whole-second part of mtime (and ctime, if `core.trustCtime`
--	is set) and the filesize to be checked.
--+
--There are implementations of Git that do not leave usable values in
--some fields (e.g. JGit); by excluding these fields from the
--comparison, the `minimal` mode may help interoperability when the
--same repository is used by these other systems at the same time.
--
--core.quotePath::
--	Commands that output paths (e.g. 'ls-files', 'diff'), will
--	quote "unusual" characters in the pathname by enclosing the
--	pathname in double-quotes and escaping those characters with
--	backslashes in the same way C escapes control characters (e.g.
--	`\t` for TAB, `\n` for LF, `\\` for backslash) or bytes with
--	values larger than 0x80 (e.g. octal `\302\265` for "micro" in
--	UTF-8).  If this variable is set to false, bytes higher than
--	0x80 are not considered "unusual" any more. Double-quotes,
--	backslash and control characters are always escaped regardless
--	of the setting of this variable.  A simple space character is
--	not considered "unusual".  Many commands can output pathnames
--	completely verbatim using the `-z` option. The default value
--	is true.
--
--core.eol::
--	Sets the line ending type to use in the working directory for
--	files that have the `text` property set when core.autocrlf is false.
--	Alternatives are 'lf', 'crlf' and 'native', which uses the platform's
--	native line ending.  The default value is `native`.  See
--	linkgit:gitattributes[5] for more information on end-of-line
--	conversion.
--
--core.safecrlf::
--	If true, makes Git check if converting `CRLF` is reversible when
--	end-of-line conversion is active.  Git will verify if a command
--	modifies a file in the work tree either directly or indirectly.
--	For example, committing a file followed by checking out the
--	same file should yield the original file in the work tree.  If
--	this is not the case for the current setting of
--	`core.autocrlf`, Git will reject the file.  The variable can
--	be set to "warn", in which case Git will only warn about an
--	irreversible conversion but continue the operation.
--+
--CRLF conversion bears a slight chance of corrupting data.
--When it is enabled, Git will convert CRLF to LF during commit and LF to
--CRLF during checkout.  A file that contains a mixture of LF and
--CRLF before the commit cannot be recreated by Git.  For text
--files this is the right thing to do: it corrects line endings
--such that we have only LF line endings in the repository.
--But for binary files that are accidentally classified as text the
--conversion can corrupt data.
--+
--If you recognize such corruption early you can easily fix it by
--setting the conversion type explicitly in .gitattributes.  Right
--after committing you still have the original file in your work
--tree and this file is not yet corrupted.  You can explicitly tell
--Git that this file is binary and Git will handle the file
--appropriately.
--+
--Unfortunately, the desired effect of cleaning up text files with
--mixed line endings and the undesired effect of corrupting binary
--files cannot be distinguished.  In both cases CRLFs are removed
--in an irreversible way.  For text files this is the right thing
--to do because CRLFs are line endings, while for binary files
--converting CRLFs corrupts data.
--+
--Note, this safety check does not mean that a checkout will generate a
--file identical to the original file for a different setting of
--`core.eol` and `core.autocrlf`, but only for the current one.  For
--example, a text file with `LF` would be accepted with `core.eol=lf`
--and could later be checked out with `core.eol=crlf`, in which case the
--resulting file would contain `CRLF`, although the original file
--contained `LF`.  However, in both work trees the line endings would be
--consistent, that is either all `LF` or all `CRLF`, but never mixed.  A
--file with mixed line endings would be reported by the `core.safecrlf`
--mechanism.
--
--core.autocrlf::
--	Setting this variable to "true" is the same as setting
--	the `text` attribute to "auto" on all files and core.eol to "crlf".
--	Set to true if you want to have `CRLF` line endings in your
--	working directory and the repository has LF line endings.
--	This variable can be set to 'input',
--	in which case no output conversion is performed.
--
--core.checkRoundtripEncoding::
--	A comma and/or whitespace separated list of encodings that Git
--	performs UTF-8 round trip checks on if they are used in an
--	`working-tree-encoding` attribute (see linkgit:gitattributes[5]).
--	The default value is `SHIFT-JIS`.
--
--core.symlinks::
--	If false, symbolic links are checked out as small plain files that
--	contain the link text. linkgit:git-update-index[1] and
--	linkgit:git-add[1] will not change the recorded type to regular
--	file. Useful on filesystems like FAT that do not support
--	symbolic links.
--+
--The default is true, except linkgit:git-clone[1] or linkgit:git-init[1]
--will probe and set core.symlinks false if appropriate when the repository
--is created.
--
--core.gitProxy::
--	A "proxy command" to execute (as 'command host port') instead
--	of establishing direct connection to the remote server when
--	using the Git protocol for fetching. If the variable value is
--	in the "COMMAND for DOMAIN" format, the command is applied only
--	on hostnames ending with the specified domain string. This variable
--	may be set multiple times and is matched in the given order;
--	the first match wins.
--+
--Can be overridden by the `GIT_PROXY_COMMAND` environment variable
--(which always applies universally, without the special "for"
--handling).
--+
--The special string `none` can be used as the proxy command to
--specify that no proxy be used for a given domain pattern.
--This is useful for excluding servers inside a firewall from
--proxy use, while defaulting to a common proxy for external domains.
--
--core.sshCommand::
--	If this variable is set, `git fetch` and `git push` will
--	use the specified command instead of `ssh` when they need to
--	connect to a remote system. The command is in the same form as
--	the `GIT_SSH_COMMAND` environment variable and is overridden
--	when the environment variable is set.
--
--core.ignoreStat::
--	If true, Git will avoid using lstat() calls to detect if files have
--	changed by setting the "assume-unchanged" bit for those tracked files
--	which it has updated identically in both the index and working tree.
--+
--When files are modified outside of Git, the user will need to stage
--the modified files explicitly (e.g. see 'Examples' section in
--linkgit:git-update-index[1]).
--Git will not normally detect changes to those files.
--+
--This is useful on systems where lstat() calls are very slow, such as
--CIFS/Microsoft Windows.
--+
--False by default.
--
--core.preferSymlinkRefs::
--	Instead of the default "symref" format for HEAD
--	and other symbolic reference files, use symbolic links.
--	This is sometimes needed to work with old scripts that
--	expect HEAD to be a symbolic link.
--
--core.alternateRefsCommand::
--	When advertising tips of available history from an alternate, use the shell to
--	execute the specified command instead of linkgit:git-for-each-ref[1]. The
--	first argument is the absolute path of the alternate. Output must contain one
--	hex object id per line (i.e., the same as produce by `git for-each-ref
--	--format='%(objectname)'`).
--+
--Note that you cannot generally put `git for-each-ref` directly into the config
--value, as it does not take a repository path as an argument (but you can wrap
--the command above in a shell script).
--
--core.alternateRefsPrefixes::
--	When listing references from an alternate, list only references that begin
--	with the given prefix. Prefixes match as if they were given as arguments to
--	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
--	whitespace. If `core.alternateRefsCommand` is set, setting
--	`core.alternateRefsPrefixes` has no effect.
--
--core.bare::
--	If true this repository is assumed to be 'bare' and has no
--	working directory associated with it.  If this is the case a
--	number of commands that require a working directory will be
--	disabled, such as linkgit:git-add[1] or linkgit:git-merge[1].
--+
--This setting is automatically guessed by linkgit:git-clone[1] or
--linkgit:git-init[1] when the repository was created.  By default a
--repository that ends in "/.git" is assumed to be not bare (bare =
--false), while all other repositories are assumed to be bare (bare
--= true).
--
--core.worktree::
--	Set the path to the root of the working tree.
--	If `GIT_COMMON_DIR` environment variable is set, core.worktree
--	is ignored and not used for determining the root of working tree.
--	This can be overridden by the `GIT_WORK_TREE` environment
--	variable and the `--work-tree` command-line option.
--	The value can be an absolute path or relative to the path to
--	the .git directory, which is either specified by --git-dir
--	or GIT_DIR, or automatically discovered.
--	If --git-dir or GIT_DIR is specified but none of
--	--work-tree, GIT_WORK_TREE and core.worktree is specified,
--	the current working directory is regarded as the top level
--	of your working tree.
--+
--Note that this variable is honored even when set in a configuration
--file in a ".git" subdirectory of a directory and its value differs
--from the latter directory (e.g. "/path/to/.git/config" has
--core.worktree set to "/different/path"), which is most likely a
--misconfiguration.  Running Git commands in the "/path/to" directory will
--still use "/different/path" as the root of the work tree and can cause
--confusion unless you know what you are doing (e.g. you are creating a
--read-only snapshot of the same index to a location different from the
--repository's usual working tree).
--
--core.logAllRefUpdates::
--	Enable the reflog. Updates to a ref <ref> is logged to the file
--	"`$GIT_DIR/logs/<ref>`", by appending the new and old
--	SHA-1, the date/time and the reason of the update, but
--	only when the file exists.  If this configuration
--	variable is set to `true`, missing "`$GIT_DIR/logs/<ref>`"
--	file is automatically created for branch heads (i.e. under
--	`refs/heads/`), remote refs (i.e. under `refs/remotes/`),
--	note refs (i.e. under `refs/notes/`), and the symbolic ref `HEAD`.
--	If it is set to `always`, then a missing reflog is automatically
--	created for any ref under `refs/`.
--+
--This information can be used to determine what commit
--was the tip of a branch "2 days ago".
--+
--This value is true by default in a repository that has
--a working directory associated with it, and false by
--default in a bare repository.
--
--core.repositoryFormatVersion::
--	Internal variable identifying the repository format and layout
--	version.
--
--core.sharedRepository::
--	When 'group' (or 'true'), the repository is made shareable between
--	several users in a group (making sure all the files and objects are
--	group-writable). When 'all' (or 'world' or 'everybody'), the
--	repository will be readable by all users, additionally to being
--	group-shareable. When 'umask' (or 'false'), Git will use permissions
--	reported by umask(2). When '0xxx', where '0xxx' is an octal number,
--	files in the repository will have this mode value. '0xxx' will override
--	user's umask value (whereas the other options will only override
--	requested parts of the user's umask value). Examples: '0660' will make
--	the repo read/write-able for the owner and group, but inaccessible to
--	others (equivalent to 'group' unless umask is e.g. '0022'). '0640' is a
--	repository that is group-readable but not group-writable.
--	See linkgit:git-init[1]. False by default.
--
--core.warnAmbiguousRefs::
--	If true, Git will warn you if the ref name you passed it is ambiguous
--	and might match multiple refs in the repository. True by default.
--
--core.compression::
--	An integer -1..9, indicating a default compression level.
--	-1 is the zlib default. 0 means no compression,
--	and 1..9 are various speed/size tradeoffs, 9 being slowest.
--	If set, this provides a default to other compression variables,
--	such as `core.looseCompression` and `pack.compression`.
--
--core.looseCompression::
--	An integer -1..9, indicating the compression level for objects that
--	are not in a pack file. -1 is the zlib default. 0 means no
--	compression, and 1..9 are various speed/size tradeoffs, 9 being
--	slowest.  If not set,  defaults to core.compression.  If that is
--	not set,  defaults to 1 (best speed).
--
--core.packedGitWindowSize::
--	Number of bytes of a pack file to map into memory in a
--	single mapping operation.  Larger window sizes may allow
--	your system to process a smaller number of large pack files
--	more quickly.  Smaller window sizes will negatively affect
--	performance due to increased calls to the operating system's
--	memory manager, but may improve performance when accessing
--	a large number of large pack files.
--+
--Default is 1 MiB if NO_MMAP was set at compile time, otherwise 32
--MiB on 32 bit platforms and 1 GiB on 64 bit platforms.  This should
--be reasonable for all users/operating systems.  You probably do
--not need to adjust this value.
--+
--Common unit suffixes of 'k', 'm', or 'g' are supported.
--
--core.packedGitLimit::
--	Maximum number of bytes to map simultaneously into memory
--	from pack files.  If Git needs to access more than this many
--	bytes at once to complete an operation it will unmap existing
--	regions to reclaim virtual address space within the process.
--+
--Default is 256 MiB on 32 bit platforms and 32 TiB (effectively
--unlimited) on 64 bit platforms.
--This should be reasonable for all users/operating systems, except on
--the largest projects.  You probably do not need to adjust this value.
--+
--Common unit suffixes of 'k', 'm', or 'g' are supported.
--
--core.deltaBaseCacheLimit::
--	Maximum number of bytes to reserve for caching base objects
--	that may be referenced by multiple deltified objects.  By storing the
--	entire decompressed base objects in a cache Git is able
--	to avoid unpacking and decompressing frequently used base
--	objects multiple times.
--+
--Default is 96 MiB on all platforms.  This should be reasonable
--for all users/operating systems, except on the largest projects.
--You probably do not need to adjust this value.
--+
--Common unit suffixes of 'k', 'm', or 'g' are supported.
--
--core.bigFileThreshold::
--	Files larger than this size are stored deflated, without
--	attempting delta compression.  Storing large files without
--	delta compression avoids excessive memory usage, at the
--	slight expense of increased disk usage. Additionally files
--	larger than this size are always treated as binary.
--+
--Default is 512 MiB on all platforms.  This should be reasonable
--for most projects as source code and other text files can still
--be delta compressed, but larger binary media files won't be.
--+
--Common unit suffixes of 'k', 'm', or 'g' are supported.
--
--core.excludesFile::
--	Specifies the pathname to the file that contains patterns to
--	describe paths that are not meant to be tracked, in addition
--	to '.gitignore' (per-directory) and '.git/info/exclude'.
--	Defaults to `$XDG_CONFIG_HOME/git/ignore`.
--	If `$XDG_CONFIG_HOME` is either not set or empty, `$HOME/.config/git/ignore`
--	is used instead. See linkgit:gitignore[5].
--
--core.askPass::
--	Some commands (e.g. svn and http interfaces) that interactively
--	ask for a password can be told to use an external program given
--	via the value of this variable. Can be overridden by the `GIT_ASKPASS`
--	environment variable. If not set, fall back to the value of the
--	`SSH_ASKPASS` environment variable or, failing that, a simple password
--	prompt. The external program shall be given a suitable prompt as
--	command-line argument and write the password on its STDOUT.
--
--core.attributesFile::
--	In addition to '.gitattributes' (per-directory) and
--	'.git/info/attributes', Git looks into this file for attributes
--	(see linkgit:gitattributes[5]). Path expansions are made the same
--	way as for `core.excludesFile`. Its default value is
--	`$XDG_CONFIG_HOME/git/attributes`. If `$XDG_CONFIG_HOME` is either not
--	set or empty, `$HOME/.config/git/attributes` is used instead.
--
--core.hooksPath::
--	By default Git will look for your hooks in the
--	'$GIT_DIR/hooks' directory. Set this to different path,
--	e.g. '/etc/git/hooks', and Git will try to find your hooks in
--	that directory, e.g. '/etc/git/hooks/pre-receive' instead of
--	in '$GIT_DIR/hooks/pre-receive'.
--+
--The path can be either absolute or relative. A relative path is
--taken as relative to the directory where the hooks are run (see
--the "DESCRIPTION" section of linkgit:githooks[5]).
--+
--This configuration variable is useful in cases where you'd like to
--centrally configure your Git hooks instead of configuring them on a
--per-repository basis, or as a more flexible and centralized
--alternative to having an `init.templateDir` where you've changed
--default hooks.
--
--core.editor::
--	Commands such as `commit` and `tag` that let you edit
--	messages by launching an editor use the value of this
--	variable when it is set, and the environment variable
--	`GIT_EDITOR` is not set.  See linkgit:git-var[1].
--
--core.commentChar::
--	Commands such as `commit` and `tag` that let you edit
--	messages consider a line that begins with this character
--	commented, and removes them after the editor returns
--	(default '#').
--+
--If set to "auto", `git-commit` would select a character that is not
--the beginning character of any line in existing commit messages.
--
--core.filesRefLockTimeout::
--	The length of time, in milliseconds, to retry when trying to
--	lock an individual reference. Value 0 means not to retry at
--	all; -1 means to try indefinitely. Default is 100 (i.e.,
--	retry for 100ms).
--
--core.packedRefsTimeout::
--	The length of time, in milliseconds, to retry when trying to
--	lock the `packed-refs` file. Value 0 means not to retry at
--	all; -1 means to try indefinitely. Default is 1000 (i.e.,
--	retry for 1 second).
--
--core.pager::
--	Text viewer for use by Git commands (e.g., 'less').  The value
--	is meant to be interpreted by the shell.  The order of preference
--	is the `$GIT_PAGER` environment variable, then `core.pager`
--	configuration, then `$PAGER`, and then the default chosen at
--	compile time (usually 'less').
--+
--When the `LESS` environment variable is unset, Git sets it to `FRX`
--(if `LESS` environment variable is set, Git does not change it at
--all).  If you want to selectively override Git's default setting
--for `LESS`, you can set `core.pager` to e.g. `less -S`.  This will
--be passed to the shell by Git, which will translate the final
--command to `LESS=FRX less -S`. The environment does not set the
--`S` option but the command line does, instructing less to truncate
--long lines. Similarly, setting `core.pager` to `less -+F` will
--deactivate the `F` option specified by the environment from the
--command-line, deactivating the "quit if one screen" behavior of
--`less`.  One can specifically activate some flags for particular
--commands: for example, setting `pager.blame` to `less -S` enables
--line truncation only for `git blame`.
--+
--Likewise, when the `LV` environment variable is unset, Git sets it
--to `-c`.  You can override this setting by exporting `LV` with
--another value or setting `core.pager` to `lv +c`.
--
--core.whitespace::
--	A comma separated list of common whitespace problems to
--	notice.  'git diff' will use `color.diff.whitespace` to
--	highlight them, and 'git apply --whitespace=error' will
--	consider them as errors.  You can prefix `-` to disable
--	any of them (e.g. `-trailing-space`):
--+
--* `blank-at-eol` treats trailing whitespaces at the end of the line
--  as an error (enabled by default).
--* `space-before-tab` treats a space character that appears immediately
--  before a tab character in the initial indent part of the line as an
--  error (enabled by default).
--* `indent-with-non-tab` treats a line that is indented with space
--  characters instead of the equivalent tabs as an error (not enabled by
--  default).
--* `tab-in-indent` treats a tab character in the initial indent part of
--  the line as an error (not enabled by default).
--* `blank-at-eof` treats blank lines added at the end of file as an error
--  (enabled by default).
--* `trailing-space` is a short-hand to cover both `blank-at-eol` and
--  `blank-at-eof`.
--* `cr-at-eol` treats a carriage-return at the end of line as
--  part of the line terminator, i.e. with it, `trailing-space`
--  does not trigger if the character before such a carriage-return
--  is not a whitespace (not enabled by default).
--* `tabwidth=<n>` tells how many character positions a tab occupies; this
--  is relevant for `indent-with-non-tab` and when Git fixes `tab-in-indent`
--  errors. The default tab width is 8. Allowed values are 1 to 63.
--
--core.fsyncObjectFiles::
--	This boolean will enable 'fsync()' when writing object files.
--+
--This is a total waste of time and effort on a filesystem that orders
--data writes properly, but can be useful for filesystems that do not use
--journalling (traditional UNIX filesystems) or that only journal metadata
--and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
--
--core.preloadIndex::
--	Enable parallel index preload for operations like 'git diff'
--+
--This can speed up operations like 'git diff' and 'git status' especially
--on filesystems like NFS that have weak caching semantics and thus
--relatively high IO latencies.  When enabled, Git will do the
--index comparison to the filesystem data in parallel, allowing
--overlapping IO's.  Defaults to true.
--
--core.createObject::
--	You can set this to 'link', in which case a hardlink followed by
--	a delete of the source are used to make sure that object creation
--	will not overwrite existing objects.
--+
--On some file system/operating system combinations, this is unreliable.
--Set this config setting to 'rename' there; However, This will remove the
--check that makes sure that existing object files will not get overwritten.
--
--core.notesRef::
--	When showing commit messages, also show notes which are stored in
--	the given ref.  The ref must be fully qualified.  If the given
--	ref does not exist, it is not an error but means that no
--	notes should be printed.
--+
--This setting defaults to "refs/notes/commits", and it can be overridden by
--the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
--
--core.commitGraph::
--	If true, then git will read the commit-graph file (if it exists)
--	to parse the graph structure of commits. Defaults to false. See
--	linkgit:git-commit-graph[1] for more information.
--
--core.useReplaceRefs::
--	If set to `false`, behave as if the `--no-replace-objects`
--	option was given on the command line. See linkgit:git[1] and
--	linkgit:git-replace[1] for more information.
--
--core.multiPackIndex::
--	Use the multi-pack-index file to track multiple packfiles using a
--	single index. See link:technical/multi-pack-index.html[the
--	multi-pack-index design document].
--
--core.sparseCheckout::
--	Enable "sparse checkout" feature. See section "Sparse checkout" in
--	linkgit:git-read-tree[1] for more information.
--
--core.abbrev::
--	Set the length object names are abbreviated to.  If
--	unspecified or set to "auto", an appropriate value is
--	computed based on the approximate number of packed objects
--	in your repository, which hopefully is enough for
--	abbreviated object names to stay unique for some time.
--	The minimum length is 4.
-+include::core-config.txt[]
+-branch.<name>.description::
+-	Branch description, can be edited with
+-	`git branch --edit-description`. Branch description is
+-	automatically added in the format-patch cover letter or
+-	request-pull summary.
++include::branch-config.txt[]
  
- add.ignoreErrors::
- add.ignore-errors (deprecated)::
-diff --git a/Documentation/core-config.txt b/Documentation/core-config.txt
-new file mode 100644
-index 0000000000..73430b635b
---- /dev/null
-+++ b/Documentation/core-config.txt
-@@ -0,0 +1,594 @@
-+core.fileMode::
-+	Tells Git if the executable bit of files in the working tree
-+	is to be honored.
-++
-+Some filesystems lose the executable bit when a file that is
-+marked as executable is checked out, or checks out a
-+non-executable file with executable bit on.
-+linkgit:git-clone[1] or linkgit:git-init[1] probe the filesystem
-+to see if it handles the executable bit correctly
-+and this variable is automatically set as necessary.
-++
-+A repository, however, may be on a filesystem that handles
-+the filemode correctly, and this variable is set to 'true'
-+when created, but later may be made accessible from another
-+environment that loses the filemode (e.g. exporting ext4 via
-+CIFS mount, visiting a Cygwin created repository with
-+Git for Windows or Eclipse).
-+In such a case it may be necessary to set this variable to 'false'.
-+See linkgit:git-update-index[1].
-++
-+The default is true (when core.filemode is not specified in the config file).
-+
-+core.hideDotFiles::
-+	(Windows-only) If true, mark newly-created directories and files whose
-+	name starts with a dot as hidden.  If 'dotGitOnly', only the `.git/`
-+	directory is hidden, but no other files starting with a dot.  The
-+	default mode is 'dotGitOnly'.
-+
-+core.ignoreCase::
-+	Internal variable which enables various workarounds to enable
-+	Git to work better on filesystems that are not case sensitive,
-+	like APFS, HFS+, FAT, NTFS, etc. For example, if a directory listing
-+	finds "makefile" when Git expects "Makefile", Git will assume
-+	it is really the same file, and continue to remember it as
-+	"Makefile".
-++
-+The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
-+will probe and set core.ignoreCase true if appropriate when the repository
-+is created.
-++
-+Git relies on the proper configuration of this variable for your operating
-+and file system. Modifying this value may result in unexpected behavior.
-+
-+core.precomposeUnicode::
-+	This option is only used by Mac OS implementation of Git.
-+	When core.precomposeUnicode=true, Git reverts the unicode decomposition
-+	of filenames done by Mac OS. This is useful when sharing a repository
-+	between Mac OS and Linux or Windows.
-+	(Git for Windows 1.7.10 or higher is needed, or Git under cygwin 1.7).
-+	When false, file names are handled fully transparent by Git,
-+	which is backward compatible with older versions of Git.
-+
-+core.protectHFS::
-+	If set to true, do not allow checkout of paths that would
-+	be considered equivalent to `.git` on an HFS+ filesystem.
-+	Defaults to `true` on Mac OS, and `false` elsewhere.
-+
-+core.protectNTFS::
-+	If set to true, do not allow checkout of paths that would
-+	cause problems with the NTFS filesystem, e.g. conflict with
-+	8.3 "short" names.
-+	Defaults to `true` on Windows, and `false` elsewhere.
-+
-+core.fsmonitor::
-+	If set, the value of this variable is used as a command which
-+	will identify all files that may have changed since the
-+	requested date/time. This information is used to speed up git by
-+	avoiding unnecessary processing of files that have not changed.
-+	See the "fsmonitor-watchman" section of linkgit:githooks[5].
-+
-+core.trustctime::
-+	If false, the ctime differences between the index and the
-+	working tree are ignored; useful when the inode change time
-+	is regularly modified by something outside Git (file system
-+	crawlers and some backup systems).
-+	See linkgit:git-update-index[1]. True by default.
-+
-+core.splitIndex::
-+	If true, the split-index feature of the index will be used.
-+	See linkgit:git-update-index[1]. False by default.
-+
-+core.untrackedCache::
-+	Determines what to do about the untracked cache feature of the
-+	index. It will be kept, if this variable is unset or set to
-+	`keep`. It will automatically be added if set to `true`. And
-+	it will automatically be removed, if set to `false`. Before
-+	setting it to `true`, you should check that mtime is working
-+	properly on your system.
-+	See linkgit:git-update-index[1]. `keep` by default.
-+
-+core.checkStat::
-+	When missing or is set to `default`, many fields in the stat
-+	structure are checked to detect if a file has been modified
-+	since Git looked at it.  When this configuration variable is
-+	set to `minimal`, sub-second part of mtime and ctime, the
-+	uid and gid of the owner of the file, the inode number (and
-+	the device number, if Git was compiled to use it), are
-+	excluded from the check among these fields, leaving only the
-+	whole-second part of mtime (and ctime, if `core.trustCtime`
-+	is set) and the filesize to be checked.
-++
-+There are implementations of Git that do not leave usable values in
-+some fields (e.g. JGit); by excluding these fields from the
-+comparison, the `minimal` mode may help interoperability when the
-+same repository is used by these other systems at the same time.
-+
-+core.quotePath::
-+	Commands that output paths (e.g. 'ls-files', 'diff'), will
-+	quote "unusual" characters in the pathname by enclosing the
-+	pathname in double-quotes and escaping those characters with
-+	backslashes in the same way C escapes control characters (e.g.
-+	`\t` for TAB, `\n` for LF, `\\` for backslash) or bytes with
-+	values larger than 0x80 (e.g. octal `\302\265` for "micro" in
-+	UTF-8).  If this variable is set to false, bytes higher than
-+	0x80 are not considered "unusual" any more. Double-quotes,
-+	backslash and control characters are always escaped regardless
-+	of the setting of this variable.  A simple space character is
-+	not considered "unusual".  Many commands can output pathnames
-+	completely verbatim using the `-z` option. The default value
-+	is true.
-+
-+core.eol::
-+	Sets the line ending type to use in the working directory for
-+	files that have the `text` property set when core.autocrlf is false.
-+	Alternatives are 'lf', 'crlf' and 'native', which uses the platform's
-+	native line ending.  The default value is `native`.  See
-+	linkgit:gitattributes[5] for more information on end-of-line
-+	conversion.
-+
-+core.safecrlf::
-+	If true, makes Git check if converting `CRLF` is reversible when
-+	end-of-line conversion is active.  Git will verify if a command
-+	modifies a file in the work tree either directly or indirectly.
-+	For example, committing a file followed by checking out the
-+	same file should yield the original file in the work tree.  If
-+	this is not the case for the current setting of
-+	`core.autocrlf`, Git will reject the file.  The variable can
-+	be set to "warn", in which case Git will only warn about an
-+	irreversible conversion but continue the operation.
-++
-+CRLF conversion bears a slight chance of corrupting data.
-+When it is enabled, Git will convert CRLF to LF during commit and LF to
-+CRLF during checkout.  A file that contains a mixture of LF and
-+CRLF before the commit cannot be recreated by Git.  For text
-+files this is the right thing to do: it corrects line endings
-+such that we have only LF line endings in the repository.
-+But for binary files that are accidentally classified as text the
-+conversion can corrupt data.
-++
-+If you recognize such corruption early you can easily fix it by
-+setting the conversion type explicitly in .gitattributes.  Right
-+after committing you still have the original file in your work
-+tree and this file is not yet corrupted.  You can explicitly tell
-+Git that this file is binary and Git will handle the file
-+appropriately.
-++
-+Unfortunately, the desired effect of cleaning up text files with
-+mixed line endings and the undesired effect of corrupting binary
-+files cannot be distinguished.  In both cases CRLFs are removed
-+in an irreversible way.  For text files this is the right thing
-+to do because CRLFs are line endings, while for binary files
-+converting CRLFs corrupts data.
-++
-+Note, this safety check does not mean that a checkout will generate a
-+file identical to the original file for a different setting of
-+`core.eol` and `core.autocrlf`, but only for the current one.  For
-+example, a text file with `LF` would be accepted with `core.eol=lf`
-+and could later be checked out with `core.eol=crlf`, in which case the
-+resulting file would contain `CRLF`, although the original file
-+contained `LF`.  However, in both work trees the line endings would be
-+consistent, that is either all `LF` or all `CRLF`, but never mixed.  A
-+file with mixed line endings would be reported by the `core.safecrlf`
-+mechanism.
-+
-+core.autocrlf::
-+	Setting this variable to "true" is the same as setting
-+	the `text` attribute to "auto" on all files and core.eol to "crlf".
-+	Set to true if you want to have `CRLF` line endings in your
-+	working directory and the repository has LF line endings.
-+	This variable can be set to 'input',
-+	in which case no output conversion is performed.
-+
-+core.checkRoundtripEncoding::
-+	A comma and/or whitespace separated list of encodings that Git
-+	performs UTF-8 round trip checks on if they are used in an
-+	`working-tree-encoding` attribute (see linkgit:gitattributes[5]).
-+	The default value is `SHIFT-JIS`.
-+
-+core.symlinks::
-+	If false, symbolic links are checked out as small plain files that
-+	contain the link text. linkgit:git-update-index[1] and
-+	linkgit:git-add[1] will not change the recorded type to regular
-+	file. Useful on filesystems like FAT that do not support
-+	symbolic links.
-++
-+The default is true, except linkgit:git-clone[1] or linkgit:git-init[1]
-+will probe and set core.symlinks false if appropriate when the repository
-+is created.
-+
-+core.gitProxy::
-+	A "proxy command" to execute (as 'command host port') instead
-+	of establishing direct connection to the remote server when
-+	using the Git protocol for fetching. If the variable value is
-+	in the "COMMAND for DOMAIN" format, the command is applied only
-+	on hostnames ending with the specified domain string. This variable
-+	may be set multiple times and is matched in the given order;
-+	the first match wins.
-++
-+Can be overridden by the `GIT_PROXY_COMMAND` environment variable
-+(which always applies universally, without the special "for"
-+handling).
-++
-+The special string `none` can be used as the proxy command to
-+specify that no proxy be used for a given domain pattern.
-+This is useful for excluding servers inside a firewall from
-+proxy use, while defaulting to a common proxy for external domains.
-+
-+core.sshCommand::
-+	If this variable is set, `git fetch` and `git push` will
-+	use the specified command instead of `ssh` when they need to
-+	connect to a remote system. The command is in the same form as
-+	the `GIT_SSH_COMMAND` environment variable and is overridden
-+	when the environment variable is set.
-+
-+core.ignoreStat::
-+	If true, Git will avoid using lstat() calls to detect if files have
-+	changed by setting the "assume-unchanged" bit for those tracked files
-+	which it has updated identically in both the index and working tree.
-++
-+When files are modified outside of Git, the user will need to stage
-+the modified files explicitly (e.g. see 'Examples' section in
-+linkgit:git-update-index[1]).
-+Git will not normally detect changes to those files.
-++
-+This is useful on systems where lstat() calls are very slow, such as
-+CIFS/Microsoft Windows.
-++
-+False by default.
-+
-+core.preferSymlinkRefs::
-+	Instead of the default "symref" format for HEAD
-+	and other symbolic reference files, use symbolic links.
-+	This is sometimes needed to work with old scripts that
-+	expect HEAD to be a symbolic link.
-+
-+core.alternateRefsCommand::
-+	When advertising tips of available history from an alternate, use the shell to
-+	execute the specified command instead of linkgit:git-for-each-ref[1]. The
-+	first argument is the absolute path of the alternate. Output must contain one
-+	hex object id per line (i.e., the same as produce by `git for-each-ref
-+	--format='%(objectname)'`).
-++
-+Note that you cannot generally put `git for-each-ref` directly into the config
-+value, as it does not take a repository path as an argument (but you can wrap
-+the command above in a shell script).
-+
-+core.alternateRefsPrefixes::
-+	When listing references from an alternate, list only references that begin
-+	with the given prefix. Prefixes match as if they were given as arguments to
-+	linkgit:git-for-each-ref[1]. To list multiple prefixes, separate them with
-+	whitespace. If `core.alternateRefsCommand` is set, setting
-+	`core.alternateRefsPrefixes` has no effect.
-+
-+core.bare::
-+	If true this repository is assumed to be 'bare' and has no
-+	working directory associated with it.  If this is the case a
-+	number of commands that require a working directory will be
-+	disabled, such as linkgit:git-add[1] or linkgit:git-merge[1].
-++
-+This setting is automatically guessed by linkgit:git-clone[1] or
-+linkgit:git-init[1] when the repository was created.  By default a
-+repository that ends in "/.git" is assumed to be not bare (bare =
-+false), while all other repositories are assumed to be bare (bare
-+= true).
-+
-+core.worktree::
-+	Set the path to the root of the working tree.
-+	If `GIT_COMMON_DIR` environment variable is set, core.worktree
-+	is ignored and not used for determining the root of working tree.
-+	This can be overridden by the `GIT_WORK_TREE` environment
-+	variable and the `--work-tree` command-line option.
-+	The value can be an absolute path or relative to the path to
-+	the .git directory, which is either specified by --git-dir
-+	or GIT_DIR, or automatically discovered.
-+	If --git-dir or GIT_DIR is specified but none of
-+	--work-tree, GIT_WORK_TREE and core.worktree is specified,
-+	the current working directory is regarded as the top level
-+	of your working tree.
-++
-+Note that this variable is honored even when set in a configuration
-+file in a ".git" subdirectory of a directory and its value differs
-+from the latter directory (e.g. "/path/to/.git/config" has
-+core.worktree set to "/different/path"), which is most likely a
-+misconfiguration.  Running Git commands in the "/path/to" directory will
-+still use "/different/path" as the root of the work tree and can cause
-+confusion unless you know what you are doing (e.g. you are creating a
-+read-only snapshot of the same index to a location different from the
-+repository's usual working tree).
-+
-+core.logAllRefUpdates::
-+	Enable the reflog. Updates to a ref <ref> is logged to the file
-+	"`$GIT_DIR/logs/<ref>`", by appending the new and old
-+	SHA-1, the date/time and the reason of the update, but
-+	only when the file exists.  If this configuration
-+	variable is set to `true`, missing "`$GIT_DIR/logs/<ref>`"
-+	file is automatically created for branch heads (i.e. under
-+	`refs/heads/`), remote refs (i.e. under `refs/remotes/`),
-+	note refs (i.e. under `refs/notes/`), and the symbolic ref `HEAD`.
-+	If it is set to `always`, then a missing reflog is automatically
-+	created for any ref under `refs/`.
-++
-+This information can be used to determine what commit
-+was the tip of a branch "2 days ago".
-++
-+This value is true by default in a repository that has
-+a working directory associated with it, and false by
-+default in a bare repository.
-+
-+core.repositoryFormatVersion::
-+	Internal variable identifying the repository format and layout
-+	version.
-+
-+core.sharedRepository::
-+	When 'group' (or 'true'), the repository is made shareable between
-+	several users in a group (making sure all the files and objects are
-+	group-writable). When 'all' (or 'world' or 'everybody'), the
-+	repository will be readable by all users, additionally to being
-+	group-shareable. When 'umask' (or 'false'), Git will use permissions
-+	reported by umask(2). When '0xxx', where '0xxx' is an octal number,
-+	files in the repository will have this mode value. '0xxx' will override
-+	user's umask value (whereas the other options will only override
-+	requested parts of the user's umask value). Examples: '0660' will make
-+	the repo read/write-able for the owner and group, but inaccessible to
-+	others (equivalent to 'group' unless umask is e.g. '0022'). '0640' is a
-+	repository that is group-readable but not group-writable.
-+	See linkgit:git-init[1]. False by default.
-+
-+core.warnAmbiguousRefs::
-+	If true, Git will warn you if the ref name you passed it is ambiguous
-+	and might match multiple refs in the repository. True by default.
-+
-+core.compression::
-+	An integer -1..9, indicating a default compression level.
-+	-1 is the zlib default. 0 means no compression,
-+	and 1..9 are various speed/size tradeoffs, 9 being slowest.
-+	If set, this provides a default to other compression variables,
-+	such as `core.looseCompression` and `pack.compression`.
-+
-+core.looseCompression::
-+	An integer -1..9, indicating the compression level for objects that
-+	are not in a pack file. -1 is the zlib default. 0 means no
-+	compression, and 1..9 are various speed/size tradeoffs, 9 being
-+	slowest.  If not set,  defaults to core.compression.  If that is
-+	not set,  defaults to 1 (best speed).
-+
-+core.packedGitWindowSize::
-+	Number of bytes of a pack file to map into memory in a
-+	single mapping operation.  Larger window sizes may allow
-+	your system to process a smaller number of large pack files
-+	more quickly.  Smaller window sizes will negatively affect
-+	performance due to increased calls to the operating system's
-+	memory manager, but may improve performance when accessing
-+	a large number of large pack files.
-++
-+Default is 1 MiB if NO_MMAP was set at compile time, otherwise 32
-+MiB on 32 bit platforms and 1 GiB on 64 bit platforms.  This should
-+be reasonable for all users/operating systems.  You probably do
-+not need to adjust this value.
-++
-+Common unit suffixes of 'k', 'm', or 'g' are supported.
-+
-+core.packedGitLimit::
-+	Maximum number of bytes to map simultaneously into memory
-+	from pack files.  If Git needs to access more than this many
-+	bytes at once to complete an operation it will unmap existing
-+	regions to reclaim virtual address space within the process.
-++
-+Default is 256 MiB on 32 bit platforms and 32 TiB (effectively
-+unlimited) on 64 bit platforms.
-+This should be reasonable for all users/operating systems, except on
-+the largest projects.  You probably do not need to adjust this value.
-++
-+Common unit suffixes of 'k', 'm', or 'g' are supported.
-+
-+core.deltaBaseCacheLimit::
-+	Maximum number of bytes to reserve for caching base objects
-+	that may be referenced by multiple deltified objects.  By storing the
-+	entire decompressed base objects in a cache Git is able
-+	to avoid unpacking and decompressing frequently used base
-+	objects multiple times.
-++
-+Default is 96 MiB on all platforms.  This should be reasonable
-+for all users/operating systems, except on the largest projects.
-+You probably do not need to adjust this value.
-++
-+Common unit suffixes of 'k', 'm', or 'g' are supported.
-+
-+core.bigFileThreshold::
-+	Files larger than this size are stored deflated, without
-+	attempting delta compression.  Storing large files without
-+	delta compression avoids excessive memory usage, at the
-+	slight expense of increased disk usage. Additionally files
-+	larger than this size are always treated as binary.
-++
-+Default is 512 MiB on all platforms.  This should be reasonable
-+for most projects as source code and other text files can still
-+be delta compressed, but larger binary media files won't be.
-++
-+Common unit suffixes of 'k', 'm', or 'g' are supported.
-+
-+core.excludesFile::
-+	Specifies the pathname to the file that contains patterns to
-+	describe paths that are not meant to be tracked, in addition
-+	to '.gitignore' (per-directory) and '.git/info/exclude'.
-+	Defaults to `$XDG_CONFIG_HOME/git/ignore`.
-+	If `$XDG_CONFIG_HOME` is either not set or empty, `$HOME/.config/git/ignore`
-+	is used instead. See linkgit:gitignore[5].
-+
-+core.askPass::
-+	Some commands (e.g. svn and http interfaces) that interactively
-+	ask for a password can be told to use an external program given
-+	via the value of this variable. Can be overridden by the `GIT_ASKPASS`
-+	environment variable. If not set, fall back to the value of the
-+	`SSH_ASKPASS` environment variable or, failing that, a simple password
-+	prompt. The external program shall be given a suitable prompt as
-+	command-line argument and write the password on its STDOUT.
-+
-+core.attributesFile::
-+	In addition to '.gitattributes' (per-directory) and
-+	'.git/info/attributes', Git looks into this file for attributes
-+	(see linkgit:gitattributes[5]). Path expansions are made the same
-+	way as for `core.excludesFile`. Its default value is
-+	`$XDG_CONFIG_HOME/git/attributes`. If `$XDG_CONFIG_HOME` is either not
-+	set or empty, `$HOME/.config/git/attributes` is used instead.
-+
-+core.hooksPath::
-+	By default Git will look for your hooks in the
-+	'$GIT_DIR/hooks' directory. Set this to different path,
-+	e.g. '/etc/git/hooks', and Git will try to find your hooks in
-+	that directory, e.g. '/etc/git/hooks/pre-receive' instead of
-+	in '$GIT_DIR/hooks/pre-receive'.
-++
-+The path can be either absolute or relative. A relative path is
-+taken as relative to the directory where the hooks are run (see
-+the "DESCRIPTION" section of linkgit:githooks[5]).
-++
-+This configuration variable is useful in cases where you'd like to
-+centrally configure your Git hooks instead of configuring them on a
-+per-repository basis, or as a more flexible and centralized
-+alternative to having an `init.templateDir` where you've changed
-+default hooks.
-+
-+core.editor::
-+	Commands such as `commit` and `tag` that let you edit
-+	messages by launching an editor use the value of this
-+	variable when it is set, and the environment variable
-+	`GIT_EDITOR` is not set.  See linkgit:git-var[1].
-+
-+core.commentChar::
-+	Commands such as `commit` and `tag` that let you edit
-+	messages consider a line that begins with this character
-+	commented, and removes them after the editor returns
-+	(default '#').
-++
-+If set to "auto", `git-commit` would select a character that is not
-+the beginning character of any line in existing commit messages.
-+
-+core.filesRefLockTimeout::
-+	The length of time, in milliseconds, to retry when trying to
-+	lock an individual reference. Value 0 means not to retry at
-+	all; -1 means to try indefinitely. Default is 100 (i.e.,
-+	retry for 100ms).
-+
-+core.packedRefsTimeout::
-+	The length of time, in milliseconds, to retry when trying to
-+	lock the `packed-refs` file. Value 0 means not to retry at
-+	all; -1 means to try indefinitely. Default is 1000 (i.e.,
-+	retry for 1 second).
-+
-+core.pager::
-+	Text viewer for use by Git commands (e.g., 'less').  The value
-+	is meant to be interpreted by the shell.  The order of preference
-+	is the `$GIT_PAGER` environment variable, then `core.pager`
-+	configuration, then `$PAGER`, and then the default chosen at
-+	compile time (usually 'less').
-++
-+When the `LESS` environment variable is unset, Git sets it to `FRX`
-+(if `LESS` environment variable is set, Git does not change it at
-+all).  If you want to selectively override Git's default setting
-+for `LESS`, you can set `core.pager` to e.g. `less -S`.  This will
-+be passed to the shell by Git, which will translate the final
-+command to `LESS=FRX less -S`. The environment does not set the
-+`S` option but the command line does, instructing less to truncate
-+long lines. Similarly, setting `core.pager` to `less -+F` will
-+deactivate the `F` option specified by the environment from the
-+command-line, deactivating the "quit if one screen" behavior of
-+`less`.  One can specifically activate some flags for particular
-+commands: for example, setting `pager.blame` to `less -S` enables
-+line truncation only for `git blame`.
-++
-+Likewise, when the `LV` environment variable is unset, Git sets it
-+to `-c`.  You can override this setting by exporting `LV` with
-+another value or setting `core.pager` to `lv +c`.
-+
-+core.whitespace::
-+	A comma separated list of common whitespace problems to
-+	notice.  'git diff' will use `color.diff.whitespace` to
-+	highlight them, and 'git apply --whitespace=error' will
-+	consider them as errors.  You can prefix `-` to disable
-+	any of them (e.g. `-trailing-space`):
-++
-+* `blank-at-eol` treats trailing whitespaces at the end of the line
-+  as an error (enabled by default).
-+* `space-before-tab` treats a space character that appears immediately
-+  before a tab character in the initial indent part of the line as an
-+  error (enabled by default).
-+* `indent-with-non-tab` treats a line that is indented with space
-+  characters instead of the equivalent tabs as an error (not enabled by
-+  default).
-+* `tab-in-indent` treats a tab character in the initial indent part of
-+  the line as an error (not enabled by default).
-+* `blank-at-eof` treats blank lines added at the end of file as an error
-+  (enabled by default).
-+* `trailing-space` is a short-hand to cover both `blank-at-eol` and
-+  `blank-at-eof`.
-+* `cr-at-eol` treats a carriage-return at the end of line as
-+  part of the line terminator, i.e. with it, `trailing-space`
-+  does not trigger if the character before such a carriage-return
-+  is not a whitespace (not enabled by default).
-+* `tabwidth=<n>` tells how many character positions a tab occupies; this
-+  is relevant for `indent-with-non-tab` and when Git fixes `tab-in-indent`
-+  errors. The default tab width is 8. Allowed values are 1 to 63.
-+
-+core.fsyncObjectFiles::
-+	This boolean will enable 'fsync()' when writing object files.
-++
-+This is a total waste of time and effort on a filesystem that orders
-+data writes properly, but can be useful for filesystems that do not use
-+journalling (traditional UNIX filesystems) or that only journal metadata
-+and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
-+
-+core.preloadIndex::
-+	Enable parallel index preload for operations like 'git diff'
-++
-+This can speed up operations like 'git diff' and 'git status' especially
-+on filesystems like NFS that have weak caching semantics and thus
-+relatively high IO latencies.  When enabled, Git will do the
-+index comparison to the filesystem data in parallel, allowing
-+overlapping IO's.  Defaults to true.
-+
-+core.createObject::
-+	You can set this to 'link', in which case a hardlink followed by
-+	a delete of the source are used to make sure that object creation
-+	will not overwrite existing objects.
-++
-+On some file system/operating system combinations, this is unreliable.
-+Set this config setting to 'rename' there; However, This will remove the
-+check that makes sure that existing object files will not get overwritten.
-+
-+core.notesRef::
-+	When showing commit messages, also show notes which are stored in
-+	the given ref.  The ref must be fully qualified.  If the given
-+	ref does not exist, it is not an error but means that no
-+	notes should be printed.
-++
-+This setting defaults to "refs/notes/commits", and it can be overridden by
-+the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
-+
-+core.commitGraph::
-+	If true, then git will read the commit-graph file (if it exists)
-+	to parse the graph structure of commits. Defaults to false. See
-+	linkgit:git-commit-graph[1] for more information.
-+
-+core.useReplaceRefs::
-+	If set to `false`, behave as if the `--no-replace-objects`
-+	option was given on the command line. See linkgit:git[1] and
-+	linkgit:git-replace[1] for more information.
-+
-+core.multiPackIndex::
-+	Use the multi-pack-index file to track multiple packfiles using a
-+	single index. See link:technical/multi-pack-index.html[the
-+	multi-pack-index design document].
-+
-+core.sparseCheckout::
-+	Enable "sparse checkout" feature. See section "Sparse checkout" in
-+	linkgit:git-read-tree[1] for more information.
-+
-+core.abbrev::
-+	Set the length object names are abbreviated to.  If
-+	unspecified or set to "auto", an appropriate value is
-+	computed based on the approximate number of packed objects
-+	in your repository, which hopefully is enough for
-+	abbreviated object names to stay unique for some time.
-+	The minimum length is 4.
+ browser.<tool>.cmd::
+ 	Specify the command to invoke the specified browser. The
 -- 
 2.19.1.647.g708186aaf9
 
