@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 272841F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9E41F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbeJTUt5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:57 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:40463 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727602AbeJTUt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:56 -0400
-Received: by mail-lf1-f66.google.com with SMTP id n3-v6so277337lfe.7
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:35 -0700 (PDT)
+        id S1727608AbeJTUtz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:55 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44811 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727531AbeJTUtz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:55 -0400
+Received: by mail-lj1-f196.google.com with SMTP id v6-v6so33058521ljc.11
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GO1QHN01H56hz9fSYQsF0Cbs+1gK4YWKnXuQJkoyZqQ=;
-        b=SOgoiFtpoR9AKdas3aRRkkDZp1UDAD1X84tzUjVXviPMT3eRWeSNXFI/mPPcfzYWA+
-         SttcQxmxbDuYaRf9gkp6WPkpOFb1bNKW125EInGtNFYzh6f3WqyUfV45xhdnk4QvYkV9
-         7CrJpg2FQDGObe1jraV4MF7cqYs3bVgr6bbTkFIOxLzeZ3vvfUh3xWq6PRrEP+bthW+4
-         1Xid5h8tfQBBCwon1JNoEnzhC+lcfSScxbtyBYFIKMv7vsvr4hhdsElAjmSN1McCp5xV
-         tx9i0F7RB1i1aFrp/hrFGlT+1SxJfoiC0ndlr5Xex1O6RyY2lnX8g+PibElUXyi5Bcr0
-         VLGg==
+        bh=FTjYxrSwO8jrgynBbPNG5rPb56mQrgQjDDUAm8MIGIg=;
+        b=ecFY/HpQRGOtB/BPwoet1EsocAG3osM1Vht3QlvrpYrjg7pT04SGAfTztkAolQjEXR
+         sn3ou1Cr1r//mWQDUXx4Jhhp0fn3AgFsv1H7Mu8KS9CjfyR9e5cy2/VpmUkpTtmWX7k6
+         Js/Gts+rbYNa9WbE8+WqIfIJ0ApktIq6laWRUa8wksnx/43Pl1YbH2lkzov7pd5k665C
+         rOpA7gyxPCjCvVN4/NphU2OaqpC+1j4aNHsb3Qxi4wCQUnvVjxQs3csO1pllNTtYrm51
+         JxiG+lvn3aiKmzxjyAVwEMCsewPse6y6TdIXdNz+w13PPOet4/F6c9rYwFqUTukLev3l
+         nJCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GO1QHN01H56hz9fSYQsF0Cbs+1gK4YWKnXuQJkoyZqQ=;
-        b=f5wQrBSDWI1jzbP8+Ygb7By1wL2mKokSd1PjIv0zL1rcqNAj1U9FyQ1ZvkEj+ZalB7
-         NtaI0S3Gaviu64bffAPU9R9vDuY/7JSsHHsD/RbGbq27++qmHO0D7HogY99hXsRwmq+D
-         XEWbgiNj2QCeWn8Gz5RfGj4yBosHk+jgqVGL1oP9+jIH2uPxl3CIxGlb7T6b2nsSu6KI
-         wHMNBBFsgcXXqZNOJn2fz4xorwgEWDSU49mEUzpyzY5Og8eS/Stqw6CKTCwulWlwEdnY
-         jX6c9HxWzjl+qgS3db0Q2TaLFLZ7RV8MspRD89+KC9Yjj8NRHS50TFdxw0ijs3B6h4Fv
-         xHAw==
-X-Gm-Message-State: ABuFfohLj19dGqemxbjJQoB4l7HGQHIptSj7oC8VvXb6HAMOm/7jm1Pm
-        Xyg8pKQynxlLMwx9+XGKyrg3OhSh
-X-Google-Smtp-Source: ACcGV63HLFQf7JGOu9fEZgUrj01THMNraS2XhVC5ZTYJZ4BucbzhUwV0VPc3R/CZsUJl/BXchf8eug==
-X-Received: by 2002:a19:2583:: with SMTP id l125-v6mr5496851lfl.73.1540039174130;
-        Sat, 20 Oct 2018 05:39:34 -0700 (PDT)
+        bh=FTjYxrSwO8jrgynBbPNG5rPb56mQrgQjDDUAm8MIGIg=;
+        b=t44cR+C3QQJ2B9dtcWx7EjRZ8Qz30Tx5BJLHctljto5RU+WrxVC2+zWNyuqttrIzQd
+         x2B3uO+A7O6+oiP/hz81+Qbo3lq+rgBkWMA0ieB4h38+riCzUpm/Ou5NqcxX0IZ1e/on
+         Erc5eqxW+FFeD6dKpslNs5yaYtRUna1MYr5X3pAMsQcDo9etWswPl1oJHuzw6uR376sa
+         0L6X94RRuQ8q7pevG7zm5B2nXdk9/m+Hzx5tOsEjiPwbSUc7dfJCepg/ihKcTlxoH/sp
+         z29cc/slZvHeu9s+3NIWTNp6Gm1FP42SWjZg4E/Sps50laPsdfRXShJcn774ygHLcRWy
+         DE5w==
+X-Gm-Message-State: ABuFfoiGa2eIvLoXYVcJMY3825RBJW+leFT0A3yXwIUPmiYMZrOHF59B
+        2xN1xQ7oLTQ+wWIxBHiWJb5sPjDc
+X-Google-Smtp-Source: ACcGV63Uk7skrjO8baucGkf/kiax9yzm9J6dopN7474nQj6dbH3Hp3bwlRNyktHUN7ngCfk4q1cOfw==
+X-Received: by 2002:a2e:5215:: with SMTP id g21-v6mr25001371ljb.144.1540039172348;
+        Sat, 20 Oct 2018 05:39:32 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.32
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:33 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:31 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 26/59] config.txt: move help.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:15 +0200
-Message-Id: <20181020123848.2785-27-pclouds@gmail.com>
+Subject: [PATCH 25/59] config.txt: move guitool.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:14 +0200
+Message-Id: <20181020123848.2785-26-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,75 +71,129 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt      | 24 +-----------------------
- Documentation/help-config.txt | 23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 23 deletions(-)
- create mode 100644 Documentation/help-config.txt
+ Documentation/config.txt         | 51 +-------------------------------
+ Documentation/guitool-config.txt | 50 +++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 50 deletions(-)
+ create mode 100644 Documentation/guitool-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 93ec85ab6e..bb49f4c894 100644
+index adab71fd94..93ec85ab6e 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -347,29 +347,7 @@ include::gui-config.txt[]
+@@ -345,56 +345,7 @@ include::gpg-config.txt[]
  
- include::guitool-config.txt[]
+ include::gui-config.txt[]
  
--help.browser::
--	Specify the browser that will be used to display help in the
--	'web' format. See linkgit:git-help[1].
+-guitool.<name>.cmd::
+-	Specifies the shell command line to execute when the corresponding item
+-	of the linkgit:git-gui[1] `Tools` menu is invoked. This option is
+-	mandatory for every tool. The command is executed from the root of
+-	the working directory, and in the environment it receives the name of
+-	the tool as `GIT_GUITOOL`, the name of the currently selected file as
+-	'FILENAME', and the name of the current branch as 'CUR_BRANCH' (if
+-	the head is detached, 'CUR_BRANCH' is empty).
 -
--help.format::
--	Override the default help format used by linkgit:git-help[1].
--	Values 'man', 'info', 'web' and 'html' are supported. 'man' is
--	the default. 'web' and 'html' are the same.
+-guitool.<name>.needsFile::
+-	Run the tool only if a diff is selected in the GUI. It guarantees
+-	that 'FILENAME' is not empty.
 -
--help.autoCorrect::
--	Automatically correct and execute mistyped commands after
--	waiting for the given number of deciseconds (0.1 sec). If more
--	than one command can be deduced from the entered text, nothing
--	will be executed.  If the value of this option is negative,
--	the corrected command will be executed immediately. If the
--	value is 0 - the command will be just shown but not executed.
--	This is the default.
+-guitool.<name>.noConsole::
+-	Run the command silently, without creating a window to display its
+-	output.
 -
--help.htmlPath::
--	Specify the path where the HTML documentation resides. File system paths
--	and URLs are supported. HTML pages will be prefixed with this path when
--	help is displayed in the 'web' format. This defaults to the documentation
--	path of your Git installation.
-+include::help-config.txt[]
+-guitool.<name>.noRescan::
+-	Don't rescan the working directory for changes after the tool
+-	finishes execution.
+-
+-guitool.<name>.confirm::
+-	Show a confirmation dialog before actually running the tool.
+-
+-guitool.<name>.argPrompt::
+-	Request a string argument from the user, and pass it to the tool
+-	through the `ARGS` environment variable. Since requesting an
+-	argument implies confirmation, the 'confirm' option has no effect
+-	if this is enabled. If the option is set to 'true', 'yes', or '1',
+-	the dialog uses a built-in generic prompt; otherwise the exact
+-	value of the variable is used.
+-
+-guitool.<name>.revPrompt::
+-	Request a single valid revision from the user, and set the
+-	`REVISION` environment variable. In other aspects this option
+-	is similar to 'argPrompt', and can be used together with it.
+-
+-guitool.<name>.revUnmerged::
+-	Show only unmerged branches in the 'revPrompt' subdialog.
+-	This is useful for tools similar to merge or rebase, but not
+-	for things like checkout or reset.
+-
+-guitool.<name>.title::
+-	Specifies the title to use for the prompt dialog. The default
+-	is the tool name.
+-
+-guitool.<name>.prompt::
+-	Specifies the general prompt string to display at the top of
+-	the dialog, before subsections for 'argPrompt' and 'revPrompt'.
+-	The default value includes the actual command.
++include::guitool-config.txt[]
  
- http.proxy::
- 	Override the HTTP proxy, normally configured using the 'http_proxy',
-diff --git a/Documentation/help-config.txt b/Documentation/help-config.txt
+ help.browser::
+ 	Specify the browser that will be used to display help in the
+diff --git a/Documentation/guitool-config.txt b/Documentation/guitool-config.txt
 new file mode 100644
-index 0000000000..224bbf5a28
+index 0000000000..43fb9466ff
 --- /dev/null
-+++ b/Documentation/help-config.txt
-@@ -0,0 +1,23 @@
-+help.browser::
-+	Specify the browser that will be used to display help in the
-+	'web' format. See linkgit:git-help[1].
++++ b/Documentation/guitool-config.txt
+@@ -0,0 +1,50 @@
++guitool.<name>.cmd::
++	Specifies the shell command line to execute when the corresponding item
++	of the linkgit:git-gui[1] `Tools` menu is invoked. This option is
++	mandatory for every tool. The command is executed from the root of
++	the working directory, and in the environment it receives the name of
++	the tool as `GIT_GUITOOL`, the name of the currently selected file as
++	'FILENAME', and the name of the current branch as 'CUR_BRANCH' (if
++	the head is detached, 'CUR_BRANCH' is empty).
 +
-+help.format::
-+	Override the default help format used by linkgit:git-help[1].
-+	Values 'man', 'info', 'web' and 'html' are supported. 'man' is
-+	the default. 'web' and 'html' are the same.
++guitool.<name>.needsFile::
++	Run the tool only if a diff is selected in the GUI. It guarantees
++	that 'FILENAME' is not empty.
 +
-+help.autoCorrect::
-+	Automatically correct and execute mistyped commands after
-+	waiting for the given number of deciseconds (0.1 sec). If more
-+	than one command can be deduced from the entered text, nothing
-+	will be executed.  If the value of this option is negative,
-+	the corrected command will be executed immediately. If the
-+	value is 0 - the command will be just shown but not executed.
-+	This is the default.
++guitool.<name>.noConsole::
++	Run the command silently, without creating a window to display its
++	output.
 +
-+help.htmlPath::
-+	Specify the path where the HTML documentation resides. File system paths
-+	and URLs are supported. HTML pages will be prefixed with this path when
-+	help is displayed in the 'web' format. This defaults to the documentation
-+	path of your Git installation.
++guitool.<name>.noRescan::
++	Don't rescan the working directory for changes after the tool
++	finishes execution.
++
++guitool.<name>.confirm::
++	Show a confirmation dialog before actually running the tool.
++
++guitool.<name>.argPrompt::
++	Request a string argument from the user, and pass it to the tool
++	through the `ARGS` environment variable. Since requesting an
++	argument implies confirmation, the 'confirm' option has no effect
++	if this is enabled. If the option is set to 'true', 'yes', or '1',
++	the dialog uses a built-in generic prompt; otherwise the exact
++	value of the variable is used.
++
++guitool.<name>.revPrompt::
++	Request a single valid revision from the user, and set the
++	`REVISION` environment variable. In other aspects this option
++	is similar to 'argPrompt', and can be used together with it.
++
++guitool.<name>.revUnmerged::
++	Show only unmerged branches in the 'revPrompt' subdialog.
++	This is useful for tools similar to merge or rebase, but not
++	for things like checkout or reset.
++
++guitool.<name>.title::
++	Specifies the title to use for the prompt dialog. The default
++	is the tool name.
++
++guitool.<name>.prompt::
++	Specifies the general prompt string to display at the top of
++	the dialog, before subsections for 'argPrompt' and 'revPrompt'.
++	The default value includes the actual command.
 -- 
 2.19.1.647.g708186aaf9
 
