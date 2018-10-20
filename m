@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CFF51F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 654C91F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727738AbeJTUug (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:50:36 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:32807 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727692AbeJTUug (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:50:36 -0400
-Received: by mail-lj1-f195.google.com with SMTP id z21-v6so33118003ljz.0
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:14 -0700 (PDT)
+        id S1727743AbeJTUuh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:50:37 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:36898 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727729AbeJTUuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:50:37 -0400
+Received: by mail-lj1-f196.google.com with SMTP id 63-v6so33123096ljs.4
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fVa8gG3KQx9z1I7+2T5HAnbon06rqilvzFi8WN+ki7s=;
-        b=Kx/i90IYm/OTNqAt/LF87B2zvqCgoyDgkEZR1fOIUgmhyFKBAVo9sLACrsM3ZOr1ZB
-         ZnkTTXg4FIyIfxOvqnSLb7ZI63i4UR+I/JKNahonXFUluSEfHBqXye6ZfhnuwiE25dyV
-         4+XK1CwOD+T/UPkw8RhBdJ/nySOCPwxPvjGFu7Y4fcwRM2Oudw6v1i0HfeuVXvkBFJDo
-         xUNLOkx70HG4S3i2VIzfthAhCQ/OOZV0sIyn2J/XGZ3KbPf7wmSH6oLfeNJC/ILvH1pX
-         sLKGLObHVsrjMFCy3ifbgDs6htkFhTpqNoHPpShoVmXyJvFk97MBU1B0XftjAKN9ACRP
-         K8Hg==
+        bh=A+fZ2W1DKO1AQPA9KQk4WC+0KJbobMi+X7yIJnxUiZQ=;
+        b=KI9pxyuGborZZgUYOui+ADqiGX7z2GFy1XIXB5Fd/wf4vhUUuXrSjaB9LncyabF+SK
+         VVIe/XjeKv1VifDainIojlq7yffgE5MKjeIPy7nnx65LGpxcPWddbR9FyHHVBRA7ELDw
+         SS30s5dz2+QAJMuKMUgQV7P0fLfx1zgKHWe9CiXHRGx9kKx4Oa3OCQRqs3JADh4wjr7c
+         ou5nfI/dsXy+7UanHlgBQNKYx7qbSG7vC1ExiPxdrOWy/auDQTepayiF+iJeByMj5Qcy
+         STZJ+xj2cV82DAG+xUdbzk1Nf/vV0nKRK74vVeEuRj090H+Sl37lA9uZ2r53YmJdWNnd
+         TJAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fVa8gG3KQx9z1I7+2T5HAnbon06rqilvzFi8WN+ki7s=;
-        b=PJBsxsdV243BtLdmM3PzGLBlsslBesHy8zyXt19tg75ZqjygBQRX3l7QfN+zj1cgsJ
-         WfXfaNFTPH+gK2A0k9gIfaiTaB7rJqh7sohRflqw5DQ2djhmjCzhJbi5+8fKNWZjzo/O
-         SK661MZF96/2O47jr5UJnhvhioc1MY5kjSzHX7ZLMf87jZPRfBtQlUEse4CAmEdlVTaP
-         wvGOapCG998tfyiMHXjKsw8G9NbeCFWwbF/6QAy958pUffTZCmbpCUEGpCrt3M/4vpBQ
-         5mBE95fwXUvYGxYbGeJy4NeNLqRJo+1HSxcX0FVPg+KWMbymPo5wk5KM4K5pwxx5jqLE
-         uqNw==
-X-Gm-Message-State: ABuFfoheJLJ87jtUoNPpbexKTKhM8Lgm3+AIT6r4vgdPM4TUzzREgKjK
-        PVAjjyEpMMYeWNBHOJ2QPuw+sj9G
-X-Google-Smtp-Source: ACcGV636kPbGsgHommKHA4N2WQSd5Zf4gr0omgXGm4TdhMHkIYdGTrVbJqbo0JVUJ/UTbBE1Ad1SAw==
-X-Received: by 2002:a2e:3e0b:: with SMTP id l11-v6mr27511150lja.16.1540039213698;
-        Sat, 20 Oct 2018 05:40:13 -0700 (PDT)
+        bh=A+fZ2W1DKO1AQPA9KQk4WC+0KJbobMi+X7yIJnxUiZQ=;
+        b=PVtmmdZ/59xUKlcjWEPlk6p2BWpjULlCoGOTUQ1QSBHTlEoczH5kSkd6Uo3mNV1MKZ
+         XJKODWYDEBoxvkeUVME/P3YbcgkxLB22CF541pXCOzisk8S+M5PU4qNJPe+v+ssUQ45s
+         VbYLt011Z2PZRl/XJ/hs8c6kfWeRRGoyPa3PYVHJDI0xMyo0kXlkequ2u92Y16rtsBpR
+         z0NubwuiXAKGZdMdS50ioZtg5Mgvu9vZRWitr8aMGmt29ezfevOvNDNf3ech6dWRYGqZ
+         t+40gKtKxDD9KsGEXZuvU/1Ttf1c03JwNRsKDt28T6yg/IAYmXMB4syhd45/zs2dEoxu
+         HxHA==
+X-Gm-Message-State: ABuFfohgHw2me6tPZi8Nai3ilyPlPUs8BAV/A5WBTYBR9EOQBQQxzMnQ
+        MeYs507CMTxVt+gUiQ8hSD5Qe/3o
+X-Google-Smtp-Source: ACcGV603lZqM+O8xR1RfLGndz98KgSGaIOcciPn9XNaYcQioAP3tdLYALZ6sGxI63AyEaqMHHhrwDg==
+X-Received: by 2002:a2e:9b8a:: with SMTP id z10-v6mr8637883lji.55.1540039214621;
+        Sat, 20 Oct 2018 05:40:14 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.12
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:40:12 -0700 (PDT)
+        Sat, 20 Oct 2018 05:40:14 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 48/59] config.txt: move showBranch.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:37 +0200
-Message-Id: <20181020123848.2785-49-pclouds@gmail.com>
+Subject: [PATCH 49/59] config.txt: move splitIndex.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:38 +0200
+Message-Id: <20181020123848.2785-50-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,35 +71,77 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt            | 4 +---
- Documentation/showbranch-config.txt | 3 +++
- 2 files changed, 4 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/showbranch-config.txt
+ Documentation/config.txt            | 25 +------------------------
+ Documentation/splitindex-config.txt | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 24 deletions(-)
+ create mode 100644 Documentation/splitindex-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e5454df2f8..6136c5638c 100644
+index 6136c5638c..2330acd840 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -656,9 +656,7 @@ include::sendemail-config.txt[]
+@@ -658,30 +658,7 @@ include::sequencer-config.txt[]
  
- include::sequencer-config.txt[]
+ include::showbranch-config.txt[]
  
--showBranch.default::
--	The default set of branches for linkgit:git-show-branch[1].
--	See linkgit:git-show-branch[1].
-+include::showbranch-config.txt[]
+-splitIndex.maxPercentChange::
+-	When the split index feature is used, this specifies the
+-	percent of entries the split index can contain compared to the
+-	total number of entries in both the split index and the shared
+-	index before a new shared index is written.
+-	The value should be between 0 and 100. If the value is 0 then
+-	a new shared index is always written, if it is 100 a new
+-	shared index is never written.
+-	By default the value is 20, so a new shared index is written
+-	if the number of entries in the split index would be greater
+-	than 20 percent of the total number of entries.
+-	See linkgit:git-update-index[1].
+-
+-splitIndex.sharedIndexExpire::
+-	When the split index feature is used, shared index files that
+-	were not modified since the time this variable specifies will
+-	be removed when a new shared index file is created. The value
+-	"now" expires all entries immediately, and "never" suppresses
+-	expiration altogether.
+-	The default value is "2.weeks.ago".
+-	Note that a shared index file is considered modified (for the
+-	purpose of expiration) each time a new split-index file is
+-	either created based on it or read from it.
+-	See linkgit:git-update-index[1].
++include::splitindex-config.txt[]
  
- splitIndex.maxPercentChange::
- 	When the split index feature is used, this specifies the
-diff --git a/Documentation/showbranch-config.txt b/Documentation/showbranch-config.txt
+ include::ssh-config.txt[]
+ 
+diff --git a/Documentation/splitindex-config.txt b/Documentation/splitindex-config.txt
 new file mode 100644
-index 0000000000..e79ecd9ee9
+index 0000000000..afdb186df8
 --- /dev/null
-+++ b/Documentation/showbranch-config.txt
-@@ -0,0 +1,3 @@
-+showBranch.default::
-+	The default set of branches for linkgit:git-show-branch[1].
-+	See linkgit:git-show-branch[1].
++++ b/Documentation/splitindex-config.txt
+@@ -0,0 +1,24 @@
++splitIndex.maxPercentChange::
++	When the split index feature is used, this specifies the
++	percent of entries the split index can contain compared to the
++	total number of entries in both the split index and the shared
++	index before a new shared index is written.
++	The value should be between 0 and 100. If the value is 0 then
++	a new shared index is always written, if it is 100 a new
++	shared index is never written.
++	By default the value is 20, so a new shared index is written
++	if the number of entries in the split index would be greater
++	than 20 percent of the total number of entries.
++	See linkgit:git-update-index[1].
++
++splitIndex.sharedIndexExpire::
++	When the split index feature is used, shared index files that
++	were not modified since the time this variable specifies will
++	be removed when a new shared index file is created. The value
++	"now" expires all entries immediately, and "never" suppresses
++	expiration altogether.
++	The default value is "2.weeks.ago".
++	Note that a shared index file is considered modified (for the
++	purpose of expiration) each time a new split-index file is
++	either created based on it or read from it.
++	See linkgit:git-update-index[1].
 -- 
 2.19.1.647.g708186aaf9
 
