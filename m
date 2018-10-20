@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86D691F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7C371F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727635AbeJTUuD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:50:03 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:36444 "EHLO
+        id S1727641AbeJTUuG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:50:06 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:40863 "EHLO
         mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727531AbeJTUuD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:50:03 -0400
-Received: by mail-lj1-f194.google.com with SMTP id p89-v6so33111189ljb.3
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:42 -0700 (PDT)
+        with ESMTP id S1727631AbeJTUuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:50:04 -0400
+Received: by mail-lj1-f194.google.com with SMTP id r83-v6so33087031ljr.7
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=S+4e5DECkUG58Ssvw8baeB25w5BbI/toXaFYi2MrpAI=;
-        b=lTiP480Jhyxu9R3cRn5mEhAncpCkkRvkTw/L+JuvTtZHHwxybXUeCgoY/elnDIqzOA
-         Nyyn5RiBo+4+Dg331ICRlie4xZwKK8wAnZEVGs2m6nfKkt//UGTLElaKZpCkDIYBa+RW
-         /oIMo+dY3G+xTwsyJKm3HSvdcvnWZyHkw9S4GGe7EPJN5wqQKMJUAu8cPIbke9skDgGl
-         8it7GwOYCJZbacCydriC7a/XNPPjs5C7xp1Wz1Rq961GC2df4J/V8/Y91a2gawtDH7rD
-         84eJ4EC9UzJlcTWGv6BwRZc9scHrfs61TXaNaIN6rf59GDEtNAW9vokklWyFDEdRZJwt
-         9sig==
+        bh=o63APg7EZKXH+AvNp27WhscBQoDdXKSOyP3CVKuPLs8=;
+        b=CzAgdk416QNPzNca+O43fKoDKnxALEU6r8x76WDA0E4cDGXm2DUVNhMFBVqn8ZpEiz
+         XCzllWhvp2vg5VM3o9dLGQL69Y+x8IBezFixhoCOhtxet6IwyXMyuLcsbU3pT5JiVipE
+         b0f8pdzdXiuo8gmThTISmvZ2tp0J+vjHphZuHMg7eYG7jpvYysz5hKcZmyAYUPziStOi
+         JeZvxbumeUEbv2mJoqQeep/AQ3cwiQDMJD8sdUwOxOwsY8DRNpG2yGabJlxzFlvnjI/j
+         4Jc2G/LbEYs2XLPeIGabfJkzTBgrKYNBpRS7uazYaMFZvtxNmLKphmf5NKtFVeGZLT3u
+         60bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=S+4e5DECkUG58Ssvw8baeB25w5BbI/toXaFYi2MrpAI=;
-        b=IUVOm2f1rWGdBW68E9xVhfEPWl3jJA472jOpu+3ZfeLah6cfsn3qdEUvTYjzw+/SAr
-         Bu0S3pDS2VDE0A/hGvR+Mb7mAhBUveLOg4w8XbftuE81z80uurszmmJoUXaVGKmUtq+L
-         z0sXUqeGJWpA+PoqxdLmodavzYHxs9KshEgkq5HbVLDpMVC77WegP3WRPX36reSweWfS
-         +zmykm8wM3izOvRim/RPUzkVmIkDlS5v/HcKzLiqcSPKuN4mtTdmVD/Jwzp/tfl/1xcq
-         uj3FjidK9meh2wZngJRXi5UpvkT749T1JjlyL/2M1Mr2KpR34TR25PrMlOXFQOfbl60l
-         jWkQ==
-X-Gm-Message-State: ABuFfojQrFQ++q7YuvCU9a5SLJvaDsF2oDh3ah1+uqbGfpF6Ozfj7uzI
-        Ctl2cNOUrnaOuebMpCQwyA9XYNr4
-X-Google-Smtp-Source: ACcGV63kqhwi8/9rFKu0gatZ3q0j5ihZhTgv3z8oziGjSaBLXAKTVADOVQuu/BVMyb8b26jlktWo+w==
-X-Received: by 2002:a2e:9851:: with SMTP id e17-v6mr22401083ljj.143.1540039181075;
-        Sat, 20 Oct 2018 05:39:41 -0700 (PDT)
+        bh=o63APg7EZKXH+AvNp27WhscBQoDdXKSOyP3CVKuPLs8=;
+        b=O5Pa7gUqU1UeCzoXeBd4ichBysd6efDP0sjvaWuUHgd6/dmJuEDn+AC2doHHo8oKbd
+         hCtddki3U53XOv4HE1WnUggzpY6Wz+qSljozeWvdxHm+H9DghMD2fa/5y3XIJ7dopFD4
+         IVtslXgIpkGLpFhEzi2wnYv80Tp3D6K9/gv+AoGqbeAf0wlMl8s4GzobROSSZLpR4wxJ
+         +yJXVg0dxxLPiZ3OUJetcCmbWg1YxcAQqF23y9wQ+1P+0sHgdJ0bY1MO93gJiWwfT/Pg
+         pJeolROVEtwveoFUNMXTTvKOty04fqUQFhxS6tzdgaXPXHZGKivMBVKfyOUyRH4wjMZw
+         XrcQ==
+X-Gm-Message-State: ABuFfog27lMphs8XtWbbwRLl48By+n7zA5PEMNAcRdnZlvLawCTTthSp
+        J+ysAGnBjt+49PmIiLab4LYeXpbf
+X-Google-Smtp-Source: ACcGV62pI1GN/IiVUkE4t4E8lR60EQgpGwfd1q8kpjCB8gSY6d+p9EnUv4WFYIkbtJTChlZqWTGN9A==
+X-Received: by 2002:a2e:8184:: with SMTP id e4-v6mr22460677ljg.138.1540039182316;
+        Sat, 20 Oct 2018 05:39:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.39
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:40 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 29/59] config.txt: move i18n.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:18 +0200
-Message-Id: <20181020123848.2785-30-pclouds@gmail.com>
+Subject: [PATCH 30/59] config.txt: move init.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:19 +0200
+Message-Id: <20181020123848.2785-31-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,49 +71,35 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt       | 11 +----------
- Documentation/index-config.txt | 10 ++++++++++
- 2 files changed, 11 insertions(+), 10 deletions(-)
- create mode 100644 Documentation/index-config.txt
+ Documentation/config.txt      | 4 +---
+ Documentation/init-config.txt | 3 +++
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/init-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ec0f4e2161..5ba7975837 100644
+index 5ba7975837..c91dc2ceef 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -606,16 +606,7 @@ imap::
- 	The configuration variables in the 'imap' section are described
- 	in linkgit:git-imap-send[1].
+@@ -608,9 +608,7 @@ imap::
  
--index.threads::
--	Specifies the number of threads to spawn when loading the index.
--	This is meant to reduce index load time on multiprocessor machines.
--	Specifying 0 or 'true' will cause Git to auto-detect the number of
--	CPU's and set the number of threads accordingly. Specifying 1 or
--	'false' will disable multithreading. Defaults to 'true'.
--
--index.version::
--	Specify the version with which new index files should be
--	initialized.  This does not affect existing repositories.
-+include::index-config.txt[]
+ include::index-config.txt[]
  
- init.templateDir::
- 	Specify the directory from which templates will be copied.
-diff --git a/Documentation/index-config.txt b/Documentation/index-config.txt
+-init.templateDir::
+-	Specify the directory from which templates will be copied.
+-	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
++include::init-config.txt[]
+ 
+ instaweb.browser::
+ 	Specify the program that will be used to browse your working
+diff --git a/Documentation/init-config.txt b/Documentation/init-config.txt
 new file mode 100644
-index 0000000000..4b94b6bedc
+index 0000000000..46fa8c6a08
 --- /dev/null
-+++ b/Documentation/index-config.txt
-@@ -0,0 +1,10 @@
-+index.threads::
-+	Specifies the number of threads to spawn when loading the index.
-+	This is meant to reduce index load time on multiprocessor machines.
-+	Specifying 0 or 'true' will cause Git to auto-detect the number of
-+	CPU's and set the number of threads accordingly. Specifying 1 or
-+	'false' will disable multithreading. Defaults to 'true'.
-+
-+index.version::
-+	Specify the version with which new index files should be
-+	initialized.  This does not affect existing repositories.
++++ b/Documentation/init-config.txt
+@@ -0,0 +1,3 @@
++init.templateDir::
++	Specify the directory from which templates will be copied.
++	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
 -- 
 2.19.1.647.g708186aaf9
 
