@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E56621F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC241F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbeJTUuZ (ORCPT <rfc822;e@80x24.org>);
+        id S1727705AbeJTUu0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:50:26 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:44839 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727692AbeJTUuZ (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 20 Oct 2018 16:50:25 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:36880 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727689AbeJTUuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:50:24 -0400
-Received: by mail-lj1-f193.google.com with SMTP id 63-v6so33122822ljs.4
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:03 -0700 (PDT)
+Received: by mail-lj1-f196.google.com with SMTP id v6-v6so33059186ljc.11
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WvxCDWGJzdwbeWceojoJOblvuON0Xh3qFQMZTNh4Hhs=;
-        b=nzqqp0zM4SrADh9DbJNNZQn2ZesTqBtaRYU6d9qOV1EdvdEsdRV3e1HVt9yPFvZHF9
-         mtgyc7vCE6efwiXjplCqtTcZU2A5Aea5dO+syCuyK2wTtsafyrWvqdqi2QBfHG7+UtUj
-         y+WuVVh+DDIsK9MDfS5YBpv8VianMFeuIU84wXnQysq3XAAN7A5pjSWuiU9/qakLvYYy
-         FCoB5Se3iQh2hTohlpS8J+88I+PWkFgl5E6hBv7CPW4KD/GAHHCIwGJ7Z2XqzcwmPZKW
-         DK+nfkDNVbCOykEHqI0wAjIMPueYTASYyYiUBpGj0JMic09ffwdcYX9lN7vQ06PWzjOH
-         rNdA==
+        bh=bq2v8XG3I6ZXS5wzDWHlkCZnFAQOuFdosvIfGuzxrsM=;
+        b=T4zOovarfUPdCO2Dod7NAIpPM2/zB78TLGpqs8SmKhs47OPdxah0T5+wmcE2H115a3
+         xuf2VTaOFvlgHwmJ0P8sJYWGS0xHdS6dR2Q+C+J5iTvXeQxpz1JVGJHTWzJv6fgEr2Cl
+         87jP+h9UGSMvoq3cP7nCE4AAS6V2nKa/l4VN5Wg/nx7LzMFfcrC6l3rjfYq8YqgaXG2U
+         WY5tkdHPd21BQsitwCqlf76TyAygfYuLD5dDjGgzsVJRApcY9eQoGLJxcYOA9vDVpk0A
+         PcnxN3pkrLNJ047hCfy/q5m1blsdyBCknWtpOH+KB6umFN7+MEGwqCf+yee6DlsJjgwl
+         fgaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WvxCDWGJzdwbeWceojoJOblvuON0Xh3qFQMZTNh4Hhs=;
-        b=jvktc4SA96MjCQd0B0/uQQ4sIuTdx7k0W4PA1w4LPNMlF75FTInKl6D5KGOxV/MgHw
-         FLqEctLcbUhC6is05Dh9bX8oA4o49gabN4KZgyXjjKmayGfy3vPIOoFqK8iM6rf53+hN
-         Nu9pFsVVaTQr08iYKz3t7hPVBdv3uP4t9+vbskqzm2yy4CBA1l3RY93akuLu15+xpjxw
-         kntdWhEXvDEfphvqpXNLDUaYk5hA5h/ruLtGdXtEWB0CAONfwG3ATFZWgDMKT7QtSUax
-         3xOGZv3Jc7N4RN5OdxhXT5/265k+o0v7LZCjEuVABHmW8uLTy2q2XyTMUB4FiIZWPpfz
-         Dqvw==
-X-Gm-Message-State: ABuFfojC210+wVtO7seO1ILC/STL3IvFRcrd9Z3VyvUlCF3mzLREID/Q
-        UQ1NN25X95J8E/P4FMbLjU/BGgLy
-X-Google-Smtp-Source: ACcGV60LzJ5sHNdFwCncA/IdJpUzqnEJG0wNXIDKdzKgx27fpoyF7n7Ksv+KpKAByJWr8jbaWuwIwg==
-X-Received: by 2002:a2e:980f:: with SMTP id a15-v6mr27848062ljj.6.1540039202380;
-        Sat, 20 Oct 2018 05:40:02 -0700 (PDT)
+        bh=bq2v8XG3I6ZXS5wzDWHlkCZnFAQOuFdosvIfGuzxrsM=;
+        b=EYQ38mbAmGrHGutrSoKfGVcbDFGiGLs0pz73WontE35yIIJiNmHMnlNT7s/dZ18GcS
+         MwhSiMuycjeOK4cB1BleKPkVBlNoirGUxSlsTNyWXQOpSZsKLg/+me34Zl3yPijm/Kkx
+         FeaUFRI95d5La+fdNHlAxns6wIy1ZLCdUzeQfXsuzep6t9eq8T5ocedC/qovKca9iBoN
+         aDW6I/cOU8vagBd1L782ETPSyFSlr5pZHZtj0HmuKTGQ7S5gj981QFNKIflCwrxX+rTg
+         qGdi8pUQfKIsoOW3Gqk7bSlyKp5k5mati8QlzGVoPQc6puODbgxgu5AaxdW+CqCwsvLp
+         u33Q==
+X-Gm-Message-State: ABuFfoixm2/G1A5GOtZGlwv56MEyS+tqMkbgrTaFpafxn1QlY25abvAT
+        5MOjKcxdWQ1ck7zVKb/KFFTfarvN
+X-Google-Smtp-Source: ACcGV62F0lae+71Y4qQOD0P8P8AKOwnGyk5iRmuxO82U76pcvJr0lhksA+0S5y2Q9voLFM4OSpXVOw==
+X-Received: by 2002:a2e:8146:: with SMTP id t6-v6mr25367693ljg.32.1540039203394;
+        Sat, 20 Oct 2018 05:40:03 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.01
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:40:01 -0700 (PDT)
+        Sat, 20 Oct 2018 05:40:02 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 40/59] config.txt: move pager.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:29 +0200
-Message-Id: <20181020123848.2785-41-pclouds@gmail.com>
+Subject: [PATCH 41/59] config.txt: move pretty.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:30 +0200
+Message-Id: <20181020123848.2785-42-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,45 +71,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt       | 9 +--------
- Documentation/pager-config.txt | 8 ++++++++
- 2 files changed, 9 insertions(+), 8 deletions(-)
- create mode 100644 Documentation/pager-config.txt
+ Documentation/config.txt        | 10 +---------
+ Documentation/pretty-config.txt |  9 +++++++++
+ 2 files changed, 10 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/pretty-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 45b184b247..656ae3158c 100644
+index 656ae3158c..364e5fdbf1 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -630,14 +630,7 @@ include::notes-config.txt[]
+@@ -632,15 +632,7 @@ include::pack-config.txt[]
  
- include::pack-config.txt[]
+ include::pager-config.txt[]
  
--pager.<cmd>::
--	If the value is boolean, turns on or off pagination of the
--	output of a particular Git subcommand when writing to a tty.
--	Otherwise, turns on pagination for the subcommand using the
--	pager specified by the value of `pager.<cmd>`.  If `--paginate`
--	or `--no-pager` is specified on the command line, it takes
--	precedence over this option.  To disable pagination for all
--	commands, set `core.pager` or `GIT_PAGER` to `cat`.
-+include::pager-config.txt[]
+-pretty.<name>::
+-	Alias for a --pretty= format string, as specified in
+-	linkgit:git-log[1]. Any aliases defined here can be used just
+-	as the built-in pretty formats could. For example,
+-	running `git config pretty.changelog "format:* %H %s"`
+-	would cause the invocation `git log --pretty=changelog`
+-	to be equivalent to running `git log "--pretty=format:* %H %s"`.
+-	Note that an alias with the same name as a built-in format
+-	will be silently ignored.
++include::pretty-config.txt[]
  
- pretty.<name>::
- 	Alias for a --pretty= format string, as specified in
-diff --git a/Documentation/pager-config.txt b/Documentation/pager-config.txt
+ protocol.allow::
+ 	If set, provide a user defined default policy for all protocols which
+diff --git a/Documentation/pretty-config.txt b/Documentation/pretty-config.txt
 new file mode 100644
-index 0000000000..d3731cf66c
+index 0000000000..063c6b63d9
 --- /dev/null
-+++ b/Documentation/pager-config.txt
-@@ -0,0 +1,8 @@
-+pager.<cmd>::
-+	If the value is boolean, turns on or off pagination of the
-+	output of a particular Git subcommand when writing to a tty.
-+	Otherwise, turns on pagination for the subcommand using the
-+	pager specified by the value of `pager.<cmd>`.  If `--paginate`
-+	or `--no-pager` is specified on the command line, it takes
-+	precedence over this option.  To disable pagination for all
-+	commands, set `core.pager` or `GIT_PAGER` to `cat`.
++++ b/Documentation/pretty-config.txt
+@@ -0,0 +1,9 @@
++pretty.<name>::
++	Alias for a --pretty= format string, as specified in
++	linkgit:git-log[1]. Any aliases defined here can be used just
++	as the built-in pretty formats could. For example,
++	running `git config pretty.changelog "format:* %H %s"`
++	would cause the invocation `git log --pretty=changelog`
++	to be equivalent to running `git log "--pretty=format:* %H %s"`.
++	Note that an alias with the same name as a built-in format
++	will be silently ignored.
 -- 
 2.19.1.647.g708186aaf9
 
