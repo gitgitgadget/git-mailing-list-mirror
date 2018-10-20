@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF44B1F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9ED661F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727430AbeJTUtX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:23 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:44777 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727382AbeJTUtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:23 -0400
-Received: by mail-lj1-f194.google.com with SMTP id v6-v6so33057915ljc.11
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:02 -0700 (PDT)
+        id S1727485AbeJTUt2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:28 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:40825 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727373AbeJTUt0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:26 -0400
+Received: by mail-lj1-f196.google.com with SMTP id r83-v6so33086207ljr.7
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gFRP4rtb7lqT/qAET2p1hdlIVKin8ebEJAL50hZPLVY=;
-        b=s3InJy9wyFSdvC6yLIf5ybvtrT2nDFqYflwTeE8aTyFDzl++a8Me296P3kxzQmkiKO
-         k7ArGxfWOp3XMAYuYrCgcMT0aOq1UONKLOV6ZolCOO4HgzQN4myGb3twMUqOGwmhpUFQ
-         3tMH/XwhaOF0Bt2ltGwp9sMJ01S1eRizYcE/OZn2P/Ssjzb+qLRI3zP/N9E+Cz19uguz
-         h5BBsVEysAZxHrpAJn7T+gyF0aEUk/Y/RIb0bwMZ1sYFsB0nc7QdEcnffnhHJTpQui25
-         /mlwBtwUMigsNHWowVHI+D/oGB57h4hjnBCOnMXZwE59O0jII6CAkalwN7+6jSpdhVnl
-         Ze2g==
+        bh=rIauzukfnhacbmfz6JWPibbV9XMllbqB5RfI/vMeMqI=;
+        b=lBIzvY4p9sfVjRgtWOn/nyHeZDEWaKHeFs4I2TaX697Wrpc4Ptt3gSLsl5LmrB0x2B
+         G+I/q1d/lcoAHCrjqBvw/3Cm5IeRX5NPPkErSaoGXsG4tND0KliqpJLpuqsggD5PndIP
+         SAIqnnhr2gnnkkJ79c5ataLgNuHgdvofIM9C7RWQOVBCFAUVMgeYkNLS1jkClRngwd9N
+         erJZ8AJw6k0qwr3g1VP4ZJeM7RFwH0dk+W3UVcID6IiamLO48Hv8YvJeSOkPGY6oMWGs
+         Z60LkIv0kEf5k7gw5RYjHaW25BPYYbKpVuJIV+AqNHKiSCZZE3w03/RqyJo+qlh4KAu1
+         AEIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gFRP4rtb7lqT/qAET2p1hdlIVKin8ebEJAL50hZPLVY=;
-        b=uD03nK69NsJvWezn36lQH2HLLB8TsABh8ftaMk6rkjpksM/PTtowopNUb+jlfdZcHW
-         J4ASqNvz9d8AD3u7L8A9bF51JQIrbkDvEj1gFnW9v1id4fG3Hdf3yEVtM5rsuPCLc6sF
-         ptYn2AJPg3lt+Gl8Odtr6sENRPexM4cUQMNg5s2Zu1ViBqDUGvNlTbnTW9pR885aGK9H
-         VxHC0+OgYundiXRD8Jr/BarpYRlsqTzAJB462NesR8JS4+vOJImKaRU4CO+ZQqdWf/OG
-         TK8ffMUWOYTNlZjwW2AjKvYI1boZ7Mc5mLL9z2kcw19Z3pLeOtlPC6iBSh77nKI2FpYy
-         QVOg==
-X-Gm-Message-State: AGRZ1gIUyPLvvNhFcVm8bpL+fvb01dMAmDC3lz7I5QRDYAk3XE08KMKW
-        hteWsWWKaIdEHEG4VDbaix1B9Xgi
-X-Google-Smtp-Source: AJdET5dWZU/HMVjUYKEgn4tOe3kXFB6mW3LNGZ40ihihq7GxVpORDpEco91qY/n7RZTf+IB12g9jEA==
-X-Received: by 2002:a2e:9b04:: with SMTP id u4-v6mr6323450lji.29.1540039141039;
-        Sat, 20 Oct 2018 05:39:01 -0700 (PDT)
+        bh=rIauzukfnhacbmfz6JWPibbV9XMllbqB5RfI/vMeMqI=;
+        b=UOrgRsK4EIwt6BI/FeA4G91uhuX/4TCxmW8tDXuToBoVt8jMfiOM6VlHzdFINAuUBS
+         ShV7BW7LCvvjos0myzpQFA8AvBww4R3LNTmK1dBB+HlLzyO1NYOv0IVu7a+JNmfWfKG6
+         x6gr2T30MDg8Rdwaht9dIkebjLPQW+psZ28Rp52pjIFapqbkgvsNbeIpld6tB9rq6Qvp
+         9GEXZYwW06ozsWjKt1SxzffzNrfOXjKxQgJ4hLtLY4UFjazSo0RQYz0HVPLbMLnXfBDd
+         ygD81MPdv6h0USoIeK+EKrTkN+2V5WQv1bzRjMrrUow2xhZbdDHwDFh4CFTMvSJQU2ws
+         jadA==
+X-Gm-Message-State: ABuFfoiG0b2u0bSkyW9NGbJ/sQkMG90ZA68EB8hec4WDjmxbmILLC72b
+        sygnTTtsiq5EY1ih+T0V6jVi8M5R
+X-Google-Smtp-Source: ACcGV60r7W+4XAtlnGY/po7Ifb0YY6EqzRi6o9qhrAobOqCoXKuY5Pw8NbxB0mgm5c++Tmbsq1iG9Q==
+X-Received: by 2002:a2e:8146:: with SMTP id t6-v6mr25366170ljg.32.1540039144273;
+        Sat, 20 Oct 2018 05:39:04 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.38.59
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:00 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:03 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 04/59] config.txt: move alias.* to a separate file
-Date:   Sat, 20 Oct 2018 14:37:53 +0200
-Message-Id: <20181020123848.2785-5-pclouds@gmail.com>
+Subject: [PATCH 07/59] config.txt: move blame.* to a separate file
+Date:   Sat, 20 Oct 2018 14:37:56 +0200
+Message-Id: <20181020123848.2785-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,65 +71,71 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/alias-config.txt | 18 ++++++++++++++++++
- Documentation/config.txt       | 19 +------------------
- 2 files changed, 19 insertions(+), 18 deletions(-)
- create mode 100644 Documentation/alias-config.txt
+ Documentation/blame-config.txt | 21 +++++++++++++++++++++
+ Documentation/config.txt       | 22 +---------------------
+ 2 files changed, 22 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/blame-config.txt
 
-diff --git a/Documentation/alias-config.txt b/Documentation/alias-config.txt
+diff --git a/Documentation/blame-config.txt b/Documentation/blame-config.txt
 new file mode 100644
-index 0000000000..0b14178314
+index 0000000000..67b5c1d1e0
 --- /dev/null
-+++ b/Documentation/alias-config.txt
-@@ -0,0 +1,18 @@
-+alias.*::
-+	Command aliases for the linkgit:git[1] command wrapper - e.g.
-+	after defining "alias.last = cat-file commit HEAD", the invocation
-+	"git last" is equivalent to "git cat-file commit HEAD". To avoid
-+	confusion and troubles with script usage, aliases that
-+	hide existing Git commands are ignored. Arguments are split by
-+	spaces, the usual shell quoting and escaping is supported.
-+	A quote pair or a backslash can be used to quote them.
-++
-+If the alias expansion is prefixed with an exclamation point,
-+it will be treated as a shell command.  For example, defining
-+"alias.new = !gitk --all --not ORIG_HEAD", the invocation
-+"git new" is equivalent to running the shell command
-+"gitk --all --not ORIG_HEAD".  Note that shell commands will be
-+executed from the top-level directory of a repository, which may
-+not necessarily be the current directory.
-+`GIT_PREFIX` is set as returned by running 'git rev-parse --show-prefix'
-+from the original current directory. See linkgit:git-rev-parse[1].
++++ b/Documentation/blame-config.txt
+@@ -0,0 +1,21 @@
++blame.blankBoundary::
++	Show blank commit object name for boundary commits in
++	linkgit:git-blame[1]. This option defaults to false.
++
++blame.coloring::
++	This determines the coloring scheme to be applied to blame
++	output. It can be 'repeatedLines', 'highlightRecent',
++	or 'none' which is the default.
++
++blame.date::
++	Specifies the format used to output dates in linkgit:git-blame[1].
++	If unset the iso format is used. For supported values,
++	see the discussion of the `--date` option at linkgit:git-log[1].
++
++blame.showEmail::
++	Show the author email instead of author name in linkgit:git-blame[1].
++	This option defaults to false.
++
++blame.showRoot::
++	Do not treat root commits as boundaries in linkgit:git-blame[1].
++	This option defaults to false.
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a52e0b3592..5b46310dd4 100644
+index db259129b0..910dcf1c25 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -293,24 +293,7 @@ include::core-config.txt[]
+@@ -299,27 +299,7 @@ include::am-config.txt[]
  
- include::add-config.txt[]
+ include::apply-config.txt[]
  
--alias.*::
--	Command aliases for the linkgit:git[1] command wrapper - e.g.
--	after defining "alias.last = cat-file commit HEAD", the invocation
--	"git last" is equivalent to "git cat-file commit HEAD". To avoid
--	confusion and troubles with script usage, aliases that
--	hide existing Git commands are ignored. Arguments are split by
--	spaces, the usual shell quoting and escaping is supported.
--	A quote pair or a backslash can be used to quote them.
--+
--If the alias expansion is prefixed with an exclamation point,
--it will be treated as a shell command.  For example, defining
--"alias.new = !gitk --all --not ORIG_HEAD", the invocation
--"git new" is equivalent to running the shell command
--"gitk --all --not ORIG_HEAD".  Note that shell commands will be
--executed from the top-level directory of a repository, which may
--not necessarily be the current directory.
--`GIT_PREFIX` is set as returned by running 'git rev-parse --show-prefix'
--from the original current directory. See linkgit:git-rev-parse[1].
-+include::alias-config.txt[]
+-blame.blankBoundary::
+-	Show blank commit object name for boundary commits in
+-	linkgit:git-blame[1]. This option defaults to false.
+-
+-blame.coloring::
+-	This determines the coloring scheme to be applied to blame
+-	output. It can be 'repeatedLines', 'highlightRecent',
+-	or 'none' which is the default.
+-
+-blame.date::
+-	Specifies the format used to output dates in linkgit:git-blame[1].
+-	If unset the iso format is used. For supported values,
+-	see the discussion of the `--date` option at linkgit:git-log[1].
+-
+-blame.showEmail::
+-	Show the author email instead of author name in linkgit:git-blame[1].
+-	This option defaults to false.
+-
+-blame.showRoot::
+-	Do not treat root commits as boundaries in linkgit:git-blame[1].
+-	This option defaults to false.
++include::blame-config.txt[]
  
- am.keepcr::
- 	If true, git-am will call git-mailsplit for patches in mbox format
+ branch.autoSetupMerge::
+ 	Tells 'git branch' and 'git checkout' to set up new branches
 -- 
 2.19.1.647.g708186aaf9
 
