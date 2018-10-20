@@ -2,136 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59EE31F454
-	for <e@80x24.org>; Sat, 20 Oct 2018 16:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D07791F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 18:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727603AbeJUBBl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 21:01:41 -0400
-Received: from mout.web.de ([217.72.192.78]:34387 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726593AbeJUBBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 21:01:41 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M1o86-1fKQ4z1QpG-00tiBD; Sat, 20
- Oct 2018 18:45:27 +0200
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M1o86-1fKQ4z1QpG-00tiBD; Sat, 20
- Oct 2018 18:45:27 +0200
-Date:   Sat, 20 Oct 2018 18:45:26 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] builtin/receive-pack: dead initializer for retval in
- check_nonce
-Message-ID: <20181020164526.GA1077@tor.lan>
-References: <20181020070859.48172-1-carenas@gmail.com>
+        id S1727430AbeJUDKR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 23:10:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48026 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727413AbeJUDKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 23:10:17 -0400
+Received: (qmail 1994 invoked by uid 109); 20 Oct 2018 18:58:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 20 Oct 2018 18:58:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24014 invoked by uid 111); 20 Oct 2018 18:58:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 20 Oct 2018 14:58:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Oct 2018 14:58:53 -0400
+Date:   Sat, 20 Oct 2018 14:58:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Tim Schumacher <timschumi@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] alias: detect loops in mixed execution mode
+Message-ID: <20181020185852.GA6234@sigill.intra.peff.net>
+References: <87o9dar9qc.fsf@evledraar.gmail.com>
+ <20181018225739.28857-1-avarab@gmail.com>
+ <20181019220755.GA31563@sigill.intra.peff.net>
+ <87ftx0dg4r.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181020070859.48172-1-carenas@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:gvL4+SXPoU9y/9BOKnwdAJXkJI38ou+bPlMW1JVJR7sC3oNywUl
- dVpRKvl4ioS2WyhRIwNBeqfxf5W99CPD8y43dnvcRP+p4UqbtTyTWBF35TH99jStny54Rs7
- JfIefHEegqyYdcfVhZ7OMT82+qyZBvhTjOEYzl9BoAllepO4vQKLA6WU4dl67/oIe17g6wx
- EKjBvErbs+mCi6oKbCBlA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JTsav8hkZfs=:ihGA0uAjDfAojryDr0MMSI
- az3DvKAYWdG4fz9VvJkXmw78Ueo2k8FcjAzLiLFfLAELvP/1epczfmsyOyIpbU33h1NjDQP3I
- 87NbwsDUQ/xR3hZ+1/KOcysC0cB/E7m8iPiWXDsoERSPx/0fcBghQbT7ZSiy+1mojEn+x0KSa
- o6yBLPq3WrGaHkwxTqSh57JE/QIJw01vaaKeINUnrBq5MDTuuopyjZBdlHmkWShzfBp9EJW84
- a7jbS72by8dQqKzPUhzrTuK4q03qgzgQAsx9aCc4TLF9bYZVdZQY/7NdfyW3pkSot8AOtynls
- N9YPfp9L2ZrJVgDaIn4b3ppwevPdMrfGfWTOeDzIMKZsJIENvi8OYxjZmVzsIDEg8CVH7/Pcq
- j/r81v97x3DS8gDtgDoYpdHKuUV+aTgpK+1Sobc+ljYNtvUZINa3jd6mj/MxI4L8uUN/rV0EM
- JFAxIp4WROXJ8yJYo0m8jbl0sNe23RiTFV9pfj0Ks55Lj65Jo24y175+L62/F3Bz/eo/umC6t
- zPHWTzMv8JKT0/Ez/NTfBjHLBuLGTpvdkddBS1lYa9zZdCqE3AnfGT7T6yDYBsUKqH7sV2uN2
- 8cm6d1xm9cPtKqTAs2wybMeBI/WSYiFcySUNXRpwbT9FFWSiZ7hCD2pmMivk2tyfxRfGbKV2C
- NFdIOnMmKSwAKAyjAedn+kPFjfb2XsFgyuTx1/IFawYd/2AQgf1G86Au+hp1I7ldZuwi6yhMh
- 5tWSRdwRJPcsDYCX+f3/2SKm2D/oW/e5vvc+WnSAsOsFgUheTMSI5mFP/zzHvoRfWGIqpRYfs
- Lde1pzhzIhEgUbXV25ARYlXh2SdwQ==
+In-Reply-To: <87ftx0dg4r.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 20, 2018 at 12:08:59AM -0700, Carlo Marcelo Arenas Belón wrote:
-> NONCE_BAD is explicitly set when needed with the fallback
-> instead as NONCE_SLOP
+On Sat, Oct 20, 2018 at 01:14:28PM +0200, Ã†var ArnfjÃ¶rÃ° Bjarmason wrote:
+
+> > I'd guess this sort of thing is pretty rare. But I wonder if we're
+> > crossing the line of trying to assume too much about what the user's
+> > arbitrary code does.
+> >
+> > A simple depth counter can limit the fork bomb, and with a high enough
+> > depth would be unlikely to trigger a false positive. It could also
+> > protect non-aliases more reasonably, too (e.g., if you have a 1000-deep
+> > git process hierarchy, there's a good chance you've found an infinite
+> > loop in git itself).
 > 
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  builtin/receive-pack.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> I don't think this edge case you're describing is very plausible, and I
+> doubt it exists in the wild.
 > 
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 95740f4f0e..ecce3d4043 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -507,7 +507,7 @@ static const char *check_nonce(const char *buf, size_t len)
->  	char *nonce = find_header(buf, len, "nonce", NULL);
->  	timestamp_t stamp, ostamp;
->  	char *bohmac, *expect = NULL;
-> -	const char *retval = NONCE_BAD;
-> +	const char *retval;
->  
->  	if (!nonce) {
->  		retval = NONCE_MISSING;
+> But going by my personal incredulity and a git release breaking code in
+> the wild would suck, so agree that I need to re-roll this to anticipate
+> that.
 
+I agree it's probably quite rare, if it exists at all. But I also wonder
+how important looping alias protection is. It's also rare, and the
+outcome is usually "gee, I wonder why this is taking so long? ^C".
 
-Thanks for the patch.
-The motivation feels a little bit weak, at least to me.
-Initializing a variable to "BAD" in the beginning can be a good thing
-for two reasons:
-- There is a complex if-elseif chain, which should set retval
-  in any case, this is at least what I expect taking a very quick look at the
-  code:
-	const char *retval = NONCE_BAD;
+At least that's my instinct. I don't remember having run into this at
+all myself (though certainly I have written my fair share of infinite
+loops in other systems, like bash aliases, and that is what happened).
 
-	if (!nonce) {
-		retval = NONCE_MISSING;
-		goto leave;
-	} else if (!push_cert_nonce) {
-		retval = NONCE_UNSOLICITED;
-		goto leave;
-	} else if (!strcmp(push_cert_nonce, nonce)) {
-		retval = NONCE_OK;
-		goto leave;
-	}
-	# And here I started to wonder if we should have an else or not.
-	# Having retval NONCE_BAD set to NONCE:BAD in the beginning makes
-	# it clear, that we are save without the else.
-	# As an alternative, we could have coded like this:
-	
-	const char *retval;
+> I don't have time to write it now, but what do you think about a version
+> of this where we introduce a core.recursionLimit setting, and by default
+> set it to "1" (for one recursion), so by default die just as we do now,
+> but with some advice() saying that we've bailed out early because this
+> looks crazy, but you can set it to e.g. "1000" if you think you know
+> what you're doing, or "0" for no limit.
+> 
+> The reason I'd like to do that is because I think it's *way* more common
+> to do this accidentally than intentionally, and by having a default
+> limit of 1000 we'd print a really long error message, or alternatively
+> would have to get into the mess of de-duplicating the callstack as we
+> print the error.
 
-	if (!nonce) {
-		retval = NONCE_MISSING;
-		goto leave;
-	} else if (!push_cert_nonce) {
-		retval = NONCE_UNSOLICITED;
-		goto leave;
-	} else if (!strcmp(push_cert_nonce, nonce)) {
-		retval = NONCE_OK;
-		goto leave;
-	} else {
-		/* Set to BAD, until we know better further down */
-		retval = NONCE_BAD;
-	}
+Would we print a long error message? I'd assume that we'd just recurse
+for longer and print one error message that says:
 
-# The second reason is that some compilers don't understand this complex
-# stuff either, and through out a warning, like
-# "retval may be uninitialized" or something in that style.
-# This is very compiler dependent.
+  fatal: woah, you're 1000-levels deep in Git commands!
 
-So yes, the current code may seem to be over-eager and ask for optimization,
-but we don't gain more that a couple of nano-seconds or so.
-The good thing is that  we have the code a little bit more robust, when changes are done
-in the future.
+That doesn't help the user find the recursion, but re-running with
+GIT_TRACE=1 would make it pretty clear, I'd think.
 
+> It also has the advantage that if people in the wild really use this
+> they'll chime in about this new annoying core.recursionLimit=1 setting,
+> at the cost of me having annoyed them all by breaking their working
+> code.
 
+Right, I'm not too happy about that annoyance. But it seems clear that I
+think the loop protection is way less important than you do, so I'm
+willing to sacrifice (or more accurately, risk the possibility of
+sacrificing) a lot less for it. :)
 
+I dunno. I doubt it is likely to help or hinder that many people either
+way.
 
+> >> +	cmd_history = strbuf_split_buf(old, strlen(old), ' ', 0);
+> >> +	for (ptr = cmd_history; *ptr; ptr++) {
+> >> +		strbuf_rtrim(*ptr);
+> >> +		string_list_append(cmd_list, (*ptr)->buf);
+> >> +	}
+> >> +	strbuf_list_free(cmd_history);
+> >
+> > Maybe string_list_split() would be a little simpler?
+> 
+> Yeah looks like it. I cargo-culted this from elsewhere without looking
+> at that API. I'll look into it.
+
+I cheated before writing that and confirmed that it does seem to work. ;)
+
+Here's the patch in case it is useful. IMHO we should be trying to get
+rid of strbuf_split, because it's a pretty crappy interface.
+
+diff --git a/git.c b/git.c
+index cba242836c..9d1b66a1fa 100644
+--- a/git.c
++++ b/git.c
+@@ -675,7 +675,6 @@ static void execv_dashed_external(const char **argv)
+ static void init_cmd_history(struct strbuf *env, struct string_list *cmd_list)
+ {
+ 	const char *old = getenv(COMMAND_HISTORY_ENVIRONMENT);
+-	struct strbuf **cmd_history, **ptr;
+ 
+ 	if (!old || !*old)
+ 		return;
+@@ -683,12 +682,7 @@ static void init_cmd_history(struct strbuf *env, struct string_list *cmd_list)
+ 	strbuf_addstr(env, old);
+ 	strbuf_rtrim(env);
+ 
+-	cmd_history = strbuf_split_buf(old, strlen(old), ' ', 0);
+-	for (ptr = cmd_history; *ptr; ptr++) {
+-		strbuf_rtrim(*ptr);
+-		string_list_append(cmd_list, (*ptr)->buf);
+-	}
+-	strbuf_list_free(cmd_history);
++	string_list_split(cmd_list, env->buf, ' ', -1);
+ }
+ 
+ static void add_cmd_history(struct strbuf *env, struct string_list *cmd_list,
+
+-Peff
