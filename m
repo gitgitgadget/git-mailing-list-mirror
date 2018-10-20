@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 842691F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D31E21F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727579AbeJTUto (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:44 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:36445 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727554AbeJTUtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:43 -0400
-Received: by mail-lf1-f67.google.com with SMTP id l1-v6so7358831lfc.3
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:21 -0700 (PDT)
+        id S1727587AbeJTUtq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:46 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:41874 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727531AbeJTUtp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:45 -0400
+Received: by mail-lf1-f66.google.com with SMTP id q39-v6so27120344lfi.8
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JHFwp7npyrJnq8d2j50Ns3jaXWTqWH+WlzzX3aJF3rk=;
-        b=brWqb2J7pMZmmX/C1RIROqM8O76aeQsA9K57EOJf7gSfKOqQxri1ketR6K4kwLBoYR
-         tboqbEwOb3dGtmMxK6YxQb3BPk5Ci3hhjKky55JSS/9VqHU2PwOmG0LQ2IFJ39AzIm/g
-         PG34ekhPZwYMcLWRM/EvRyn+yiSoDdWEkmH+5sp5osKGCyT7gMVU4GyUzFBs6D6LrmGi
-         ULtqZh6VSLnRdldnaLBCTUMMrgToD/E8I7BGsB6lO8AprxllOJ3fr71xmfQX87FuuBxk
-         PwzI2FEuSf2WG2NuUs3thT+iEqie98s7CJSYnnPRV90GVI6sZWxKLE/d/vHNPOzHNUyX
-         XTGQ==
+        bh=kzVS5EDkoC3bFTJuUe/Qj1XinCWgRoNvw69x+NqPmgk=;
+        b=K2aN1Wq6o+SGatirdPEALFwvgSY/4QC4CpacQKxIBVeZU9W57Gn+o529qTRIu2TD/I
+         EdL9/52iLfVV7FoeVRvRJ7MeouKyAkTgdoSn90gDUlFSb9+Wbo0GNMqATITqQFLOeWjb
+         JAUzPEp9JJQ3+uMncJQW+wpBDUQ6KOx4ul3cLKJqUCagrSXEuep/ASMSvwM+eVF3HcSM
+         GEZPWGPZWGCB+3v/LnPcEqCBzBnexlE0PpVn86W7hVdqt1NYQjtUOFAdpQQ56hAewpk9
+         88vvoc7uVHaLGmqYMP3npzDrnfXnEIAfwZqoFkdkLNR3e3G8HFkCd01Ppa0kyqUfwj46
+         X4Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JHFwp7npyrJnq8d2j50Ns3jaXWTqWH+WlzzX3aJF3rk=;
-        b=o/EtX3kRuUMNlnCkBmyUCCOxW4L1nAmltcErkNoiRyifPRg12U/hS6P4WGp0D0y0ON
-         Kq3CbU1Tm9LhpKR4NpaRZZR49/wZEmNKJ4/rWhl+pDZ5w008xD7nmZbv0VTomaSwbGiG
-         6QwfHchQSJoWyBWJFgmv+lQnixCEyxvgaO5vbUOU7ITn/wYT+d5fu1SwipEcDJf9bGIJ
-         BQNaVBpffcQUa7CgsOeMPgH3ULImYQcSI9RB/Jl2Shv2XUyqXh4DOiUkADZAVFNG84KG
-         AamwcLirVY9DvPWC6HAeMnor75o1q6FRFzcWaoVXeEKBOGLGIHYH9uH6fJ0/hjVlsSMN
-         20qQ==
-X-Gm-Message-State: ABuFfohhD+EnCsKfPBCj54pEh93M6FIDJQvzZHYaXTYX6n6zzaDdmfBa
-        PUY3DM0udlCmnePn/gmAzrC87Jc7
-X-Google-Smtp-Source: ACcGV62aYNhZhuq3ruHttxRAoVu6/QoX8uujKF57tOFUAkFk6+qa2F33cs5RU6gnn2XcEfdjjeM4fw==
-X-Received: by 2002:a19:ae11:: with SMTP id f17-v6mr5752632lfc.86.1540039160395;
-        Sat, 20 Oct 2018 05:39:20 -0700 (PDT)
+        bh=kzVS5EDkoC3bFTJuUe/Qj1XinCWgRoNvw69x+NqPmgk=;
+        b=NyHAgsjOl2jr1D0YLqwIL9VwB2EY5q3Bx7C7WN7kc5zoDOcj2yq3yAZyCIgOGKr1Tp
+         b+bYMBjGQPKXceSmkQMlXTk8MCpHVkzJIZz9M3KkfjGd6+ejKkSTLSRVSu59MIdqU/1Q
+         p1eJcLsWBgIXEHiwnyqb7Lmyr/WYF0tvwSKpjHsk308044ANLhxggXLXp+gtCACRn6Y7
+         uwtfAWaASSpNms+p6NtUWtKwvdRzRLkoI2lC4Csrj67khue5FHcQtgu8mmUpRAo/sWO4
+         ga1ElD1uk3FjLyfNWckzF3kfURNmlv8g0BSN8MOFb258r9IbbDVK22AlMKqa+UUsny/7
+         xhoA==
+X-Gm-Message-State: ABuFfoiO2zwQ+7406af8Q6Ka0vg3N550TJeDAUXjhMqlihmtQYr4cDvx
+        yAxPxbnuNzsEBMfMgGOc2KPvQz4S
+X-Google-Smtp-Source: ACcGV63ufr+WcAulkqqRQUW3YFOnqxfaWAYYVBN84T8kLUYsxx1cfBf4ONGf271ds33s0430147rWA==
+X-Received: by 2002:a19:aa8b:: with SMTP id t133-v6mr5325890lfe.92.1540039162473;
+        Sat, 20 Oct 2018 05:39:22 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.19
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:19 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:21 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 20/59] config.txt: move fsck.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:09 +0200
-Message-Id: <20181020123848.2785-21-pclouds@gmail.com>
+Subject: [PATCH 21/59] config.txt: move gc.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:10 +0200
+Message-Id: <20181020123848.2785-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,163 +71,245 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt      | 68 +----------------------------------
- Documentation/fsck-config.txt | 67 ++++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+), 67 deletions(-)
- create mode 100644 Documentation/fsck-config.txt
+ Documentation/config.txt    | 109 +-----------------------------------
+ Documentation/gc-config.txt | 108 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 109 insertions(+), 108 deletions(-)
+ create mode 100644 Documentation/gc-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7c7dde188c..fa26cb1090 100644
+index fa26cb1090..ebef3c867a 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -331,73 +331,7 @@ include::format-config.txt[]
+@@ -333,114 +333,7 @@ include::filter-config.txt[]
  
- include::filter-config.txt[]
+ include::fsck-config.txt[]
  
--fsck.<msg-id>::
--	During fsck git may find issues with legacy data which
--	wouldn't be generated by current versions of git, and which
--	wouldn't be sent over the wire if `transfer.fsckObjects` was
--	set. This feature is intended to support working with legacy
--	repositories containing such data.
--+
--Setting `fsck.<msg-id>` will be picked up by linkgit:git-fsck[1], but
--to accept pushes of such data set `receive.fsck.<msg-id>` instead, or
--to clone or fetch it set `fetch.fsck.<msg-id>`.
--+
--The rest of the documentation discusses `fsck.*` for brevity, but the
--same applies for the corresponding `receive.fsck.*` and
--`fetch.<msg-id>.*`. variables.
--+
--Unlike variables like `color.ui` and `core.editor` the
--`receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>` variables will not
--fall back on the `fsck.<msg-id>` configuration if they aren't set. To
--uniformly configure the same fsck settings in different circumstances
--all three of them they must all set to the same values.
--+
--When `fsck.<msg-id>` is set, errors can be switched to warnings and
--vice versa by configuring the `fsck.<msg-id>` setting where the
--`<msg-id>` is the fsck message ID and the value is one of `error`,
--`warn` or `ignore`. For convenience, fsck prefixes the error/warning
--with the message ID, e.g. "missingEmail: invalid author/committer line
--- missing email" means that setting `fsck.missingEmail = ignore` will
--hide that issue.
--+
--In general, it is better to enumerate existing objects with problems
--with `fsck.skipList`, instead of listing the kind of breakages these
--problematic objects share to be ignored, as doing the latter will
--allow new instances of the same breakages go unnoticed.
--+
--Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
--doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
--will only cause git to warn.
+-gc.aggressiveDepth::
+-	The depth parameter used in the delta compression
+-	algorithm used by 'git gc --aggressive'.  This defaults
+-	to 50.
 -
--fsck.skipList::
--	The path to a list of object names (i.e. one unabbreviated SHA-1 per
--	line) that are known to be broken in a non-fatal way and should
--	be ignored. On versions of Git 2.20 and later comments ('#'), empty
--	lines, and any leading and trailing whitespace is ignored. Everything
--	but a SHA-1 per line will error out on older versions.
+-gc.aggressiveWindow::
+-	The window size parameter used in the delta compression
+-	algorithm used by 'git gc --aggressive'.  This defaults
+-	to 250.
+-
+-gc.auto::
+-	When there are approximately more than this many loose
+-	objects in the repository, `git gc --auto` will pack them.
+-	Some Porcelain commands use this command to perform a
+-	light-weight garbage collection from time to time.  The
+-	default value is 6700.  Setting this to 0 disables it.
+-
+-gc.autoPackLimit::
+-	When there are more than this many packs that are not
+-	marked with `*.keep` file in the repository, `git gc
+-	--auto` consolidates them into one larger pack.  The
+-	default	value is 50.  Setting this to 0 disables it.
+-
+-gc.autoDetach::
+-	Make `git gc --auto` return immediately and run in background
+-	if the system supports it. Default is true.
+-
+-gc.bigPackThreshold::
+-	If non-zero, all packs larger than this limit are kept when
+-	`git gc` is run. This is very similar to `--keep-base-pack`
+-	except that all packs that meet the threshold are kept, not
+-	just the base pack. Defaults to zero. Common unit suffixes of
+-	'k', 'm', or 'g' are supported.
 -+
--This feature is useful when an established project should be accepted
--despite early commits containing errors that can be safely ignored
--such as invalid committer email addresses.  Note: corrupt objects
--cannot be skipped with this setting.
--+
--Like `fsck.<msg-id>` this variable has corresponding
--`receive.fsck.skipList` and `fetch.fsck.skipList` variants.
--+
--Unlike variables like `color.ui` and `core.editor` the
--`receive.fsck.skipList` and `fetch.fsck.skipList` variables will not
--fall back on the `fsck.skipList` configuration if they aren't set. To
--uniformly configure the same fsck settings in different circumstances
--all three of them they must all set to the same values.
--+
--Older versions of Git (before 2.20) documented that the object names
--list should be sorted. This was never a requirement, the object names
--could appear in any order, but when reading the list we tracked whether
--the list was sorted for the purposes of an internal binary search
--implementation, which could save itself some work with an already sorted
--list. Unless you had a humongous list there was no reason to go out of
--your way to pre-sort the list. After Git version 2.20 a hash implementation
--is used instead, so there's now no reason to pre-sort the list.
-+include::fsck-config.txt[]
+-Note that if the number of kept packs is more than gc.autoPackLimit,
+-this configuration variable is ignored, all packs except the base pack
+-will be repacked. After this the number of packs should go below
+-gc.autoPackLimit and gc.bigPackThreshold should be respected again.
+-
+-gc.writeCommitGraph::
+-	If true, then gc will rewrite the commit-graph file when
+-	linkgit:git-gc[1] is run. When using linkgit:git-gc[1]
+-	'--auto' the commit-graph will be updated if housekeeping is
+-	required. Default is false. See linkgit:git-commit-graph[1]
+-	for details.
+-
+-gc.logExpiry::
+-	If the file gc.log exists, then `git gc --auto` will print
+-	its content and exit with status zero instead of running
+-	unless that file is more than 'gc.logExpiry' old.  Default is
+-	"1.day".  See `gc.pruneExpire` for more ways to specify its
+-	value.
+-
+-gc.packRefs::
+-	Running `git pack-refs` in a repository renders it
+-	unclonable by Git versions prior to 1.5.1.2 over dumb
+-	transports such as HTTP.  This variable determines whether
+-	'git gc' runs `git pack-refs`. This can be set to `notbare`
+-	to enable it within all non-bare repos or it can be set to a
+-	boolean value.  The default is `true`.
+-
+-gc.pruneExpire::
+-	When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'.
+-	Override the grace period with this config variable.  The value
+-	"now" may be used to disable this grace period and always prune
+-	unreachable objects immediately, or "never" may be used to
+-	suppress pruning.  This feature helps prevent corruption when
+-	'git gc' runs concurrently with another process writing to the
+-	repository; see the "NOTES" section of linkgit:git-gc[1].
+-
+-gc.worktreePruneExpire::
+-	When 'git gc' is run, it calls
+-	'git worktree prune --expire 3.months.ago'.
+-	This config variable can be used to set a different grace
+-	period. The value "now" may be used to disable the grace
+-	period and prune `$GIT_DIR/worktrees` immediately, or "never"
+-	may be used to suppress pruning.
+-
+-gc.reflogExpire::
+-gc.<pattern>.reflogExpire::
+-	'git reflog expire' removes reflog entries older than
+-	this time; defaults to 90 days. The value "now" expires all
+-	entries immediately, and "never" suppresses expiration
+-	altogether. With "<pattern>" (e.g.
+-	"refs/stash") in the middle the setting applies only to
+-	the refs that match the <pattern>.
+-
+-gc.reflogExpireUnreachable::
+-gc.<pattern>.reflogExpireUnreachable::
+-	'git reflog expire' removes reflog entries older than
+-	this time and are not reachable from the current tip;
+-	defaults to 30 days. The value "now" expires all entries
+-	immediately, and "never" suppresses expiration altogether.
+-	With "<pattern>" (e.g. "refs/stash")
+-	in the middle, the setting applies only to the refs that
+-	match the <pattern>.
+-
+-gc.rerereResolved::
+-	Records of conflicted merge you resolved earlier are
+-	kept for this many days when 'git rerere gc' is run.
+-	You can also use more human-readable "1.month.ago", etc.
+-	The default is 60 days.  See linkgit:git-rerere[1].
+-
+-gc.rerereUnresolved::
+-	Records of conflicted merge you have not resolved are
+-	kept for this many days when 'git rerere gc' is run.
+-	You can also use more human-readable "1.month.ago", etc.
+-	The default is 15 days.  See linkgit:git-rerere[1].
++include::gc-config.txt[]
  
- gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
-diff --git a/Documentation/fsck-config.txt b/Documentation/fsck-config.txt
+ include::gitcvs-config.txt[]
+ 
+diff --git a/Documentation/gc-config.txt b/Documentation/gc-config.txt
 new file mode 100644
-index 0000000000..879c5a29c4
+index 0000000000..c6fbb8a96f
 --- /dev/null
-+++ b/Documentation/fsck-config.txt
-@@ -0,0 +1,67 @@
-+fsck.<msg-id>::
-+	During fsck git may find issues with legacy data which
-+	wouldn't be generated by current versions of git, and which
-+	wouldn't be sent over the wire if `transfer.fsckObjects` was
-+	set. This feature is intended to support working with legacy
-+	repositories containing such data.
-++
-+Setting `fsck.<msg-id>` will be picked up by linkgit:git-fsck[1], but
-+to accept pushes of such data set `receive.fsck.<msg-id>` instead, or
-+to clone or fetch it set `fetch.fsck.<msg-id>`.
-++
-+The rest of the documentation discusses `fsck.*` for brevity, but the
-+same applies for the corresponding `receive.fsck.*` and
-+`fetch.<msg-id>.*`. variables.
-++
-+Unlike variables like `color.ui` and `core.editor` the
-+`receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>` variables will not
-+fall back on the `fsck.<msg-id>` configuration if they aren't set. To
-+uniformly configure the same fsck settings in different circumstances
-+all three of them they must all set to the same values.
-++
-+When `fsck.<msg-id>` is set, errors can be switched to warnings and
-+vice versa by configuring the `fsck.<msg-id>` setting where the
-+`<msg-id>` is the fsck message ID and the value is one of `error`,
-+`warn` or `ignore`. For convenience, fsck prefixes the error/warning
-+with the message ID, e.g. "missingEmail: invalid author/committer line
-+- missing email" means that setting `fsck.missingEmail = ignore` will
-+hide that issue.
-++
-+In general, it is better to enumerate existing objects with problems
-+with `fsck.skipList`, instead of listing the kind of breakages these
-+problematic objects share to be ignored, as doing the latter will
-+allow new instances of the same breakages go unnoticed.
-++
-+Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
-+doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
-+will only cause git to warn.
++++ b/Documentation/gc-config.txt
+@@ -0,0 +1,108 @@
++gc.aggressiveDepth::
++	The depth parameter used in the delta compression
++	algorithm used by 'git gc --aggressive'.  This defaults
++	to 50.
 +
-+fsck.skipList::
-+	The path to a list of object names (i.e. one unabbreviated SHA-1 per
-+	line) that are known to be broken in a non-fatal way and should
-+	be ignored. On versions of Git 2.20 and later comments ('#'), empty
-+	lines, and any leading and trailing whitespace is ignored. Everything
-+	but a SHA-1 per line will error out on older versions.
++gc.aggressiveWindow::
++	The window size parameter used in the delta compression
++	algorithm used by 'git gc --aggressive'.  This defaults
++	to 250.
++
++gc.auto::
++	When there are approximately more than this many loose
++	objects in the repository, `git gc --auto` will pack them.
++	Some Porcelain commands use this command to perform a
++	light-weight garbage collection from time to time.  The
++	default value is 6700.  Setting this to 0 disables it.
++
++gc.autoPackLimit::
++	When there are more than this many packs that are not
++	marked with `*.keep` file in the repository, `git gc
++	--auto` consolidates them into one larger pack.  The
++	default	value is 50.  Setting this to 0 disables it.
++
++gc.autoDetach::
++	Make `git gc --auto` return immediately and run in background
++	if the system supports it. Default is true.
++
++gc.bigPackThreshold::
++	If non-zero, all packs larger than this limit are kept when
++	`git gc` is run. This is very similar to `--keep-base-pack`
++	except that all packs that meet the threshold are kept, not
++	just the base pack. Defaults to zero. Common unit suffixes of
++	'k', 'm', or 'g' are supported.
 ++
-+This feature is useful when an established project should be accepted
-+despite early commits containing errors that can be safely ignored
-+such as invalid committer email addresses.  Note: corrupt objects
-+cannot be skipped with this setting.
-++
-+Like `fsck.<msg-id>` this variable has corresponding
-+`receive.fsck.skipList` and `fetch.fsck.skipList` variants.
-++
-+Unlike variables like `color.ui` and `core.editor` the
-+`receive.fsck.skipList` and `fetch.fsck.skipList` variables will not
-+fall back on the `fsck.skipList` configuration if they aren't set. To
-+uniformly configure the same fsck settings in different circumstances
-+all three of them they must all set to the same values.
-++
-+Older versions of Git (before 2.20) documented that the object names
-+list should be sorted. This was never a requirement, the object names
-+could appear in any order, but when reading the list we tracked whether
-+the list was sorted for the purposes of an internal binary search
-+implementation, which could save itself some work with an already sorted
-+list. Unless you had a humongous list there was no reason to go out of
-+your way to pre-sort the list. After Git version 2.20 a hash implementation
-+is used instead, so there's now no reason to pre-sort the list.
++Note that if the number of kept packs is more than gc.autoPackLimit,
++this configuration variable is ignored, all packs except the base pack
++will be repacked. After this the number of packs should go below
++gc.autoPackLimit and gc.bigPackThreshold should be respected again.
++
++gc.writeCommitGraph::
++	If true, then gc will rewrite the commit-graph file when
++	linkgit:git-gc[1] is run. When using linkgit:git-gc[1]
++	'--auto' the commit-graph will be updated if housekeeping is
++	required. Default is false. See linkgit:git-commit-graph[1]
++	for details.
++
++gc.logExpiry::
++	If the file gc.log exists, then `git gc --auto` will print
++	its content and exit with status zero instead of running
++	unless that file is more than 'gc.logExpiry' old.  Default is
++	"1.day".  See `gc.pruneExpire` for more ways to specify its
++	value.
++
++gc.packRefs::
++	Running `git pack-refs` in a repository renders it
++	unclonable by Git versions prior to 1.5.1.2 over dumb
++	transports such as HTTP.  This variable determines whether
++	'git gc' runs `git pack-refs`. This can be set to `notbare`
++	to enable it within all non-bare repos or it can be set to a
++	boolean value.  The default is `true`.
++
++gc.pruneExpire::
++	When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'.
++	Override the grace period with this config variable.  The value
++	"now" may be used to disable this grace period and always prune
++	unreachable objects immediately, or "never" may be used to
++	suppress pruning.  This feature helps prevent corruption when
++	'git gc' runs concurrently with another process writing to the
++	repository; see the "NOTES" section of linkgit:git-gc[1].
++
++gc.worktreePruneExpire::
++	When 'git gc' is run, it calls
++	'git worktree prune --expire 3.months.ago'.
++	This config variable can be used to set a different grace
++	period. The value "now" may be used to disable the grace
++	period and prune `$GIT_DIR/worktrees` immediately, or "never"
++	may be used to suppress pruning.
++
++gc.reflogExpire::
++gc.<pattern>.reflogExpire::
++	'git reflog expire' removes reflog entries older than
++	this time; defaults to 90 days. The value "now" expires all
++	entries immediately, and "never" suppresses expiration
++	altogether. With "<pattern>" (e.g.
++	"refs/stash") in the middle the setting applies only to
++	the refs that match the <pattern>.
++
++gc.reflogExpireUnreachable::
++gc.<pattern>.reflogExpireUnreachable::
++	'git reflog expire' removes reflog entries older than
++	this time and are not reachable from the current tip;
++	defaults to 30 days. The value "now" expires all entries
++	immediately, and "never" suppresses expiration altogether.
++	With "<pattern>" (e.g. "refs/stash")
++	in the middle, the setting applies only to the refs that
++	match the <pattern>.
++
++gc.rerereResolved::
++	Records of conflicted merge you resolved earlier are
++	kept for this many days when 'git rerere gc' is run.
++	You can also use more human-readable "1.month.ago", etc.
++	The default is 60 days.  See linkgit:git-rerere[1].
++
++gc.rerereUnresolved::
++	Records of conflicted merge you have not resolved are
++	kept for this many days when 'git rerere gc' is run.
++	You can also use more human-readable "1.month.ago", etc.
++	The default is 15 days.  See linkgit:git-rerere[1].
 -- 
 2.19.1.647.g708186aaf9
 
