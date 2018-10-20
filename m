@@ -2,94 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 100E61F454
-	for <e@80x24.org>; Sat, 20 Oct 2018 06:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE98E1F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 06:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbeJTOgU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 10:36:20 -0400
-Received: from mail-io1-f47.google.com ([209.85.166.47]:37537 "EHLO
-        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbeJTOgU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 10:36:20 -0400
-Received: by mail-io1-f47.google.com with SMTP id m16-v6so24284189ioj.4
-        for <git@vger.kernel.org>; Fri, 19 Oct 2018 23:27:01 -0700 (PDT)
+        id S1726642AbeJTO5K (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 10:57:10 -0400
+Received: from mail-qt1-f180.google.com ([209.85.160.180]:42300 "EHLO
+        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726261AbeJTO5J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 10:57:09 -0400
+Received: by mail-qt1-f180.google.com with SMTP id j46-v6so40857004qtc.9
+        for <git@vger.kernel.org>; Fri, 19 Oct 2018 23:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dana-is.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=i9BqQwZdNhzFVa//WYu/569iSRKYey+BVuy8EV38mNM=;
-        b=pfawZ2SWJk7OmG2DFU8yfGH4ZEGhEOEKB3dk0EeegLieJn2Zv4Yp+5W9LNsJH5y2Ca
-         AFirqgBQztf/NYi0BZdZGKJ/v8fSMKcOtWAoaWBp+J8Gx3DpzfPXuC9UXVqZPNWetlXZ
-         1d3K2oNt611iueUdUfz7JLCJQX8JptAV0z2nz9Yld3EYruIwcrV2PnSm/TB4koI0LmV8
-         MdnwjrE3xuPmcURjJJvfxUlRANiPC20R5E8q5ehAq1vts0JTR+KMBjBIqev6Aw/wRIQP
-         QIxld6k/JqFMNB+sM/c08KF1pEclVcqTHE/7QI9DN/E8bxRDbh8lbu2kkra9/vPQvHIr
-         9VKw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4xWjnfbDJQx1VNMTXOtnijRaNW/XJYc9Wm+5G3ShFOs=;
+        b=iWN6usggLmQCKxQGBCQZk+Tlznt1S0xKQSIJ55x0+FqjR9DkPfnsuLfZ1FwN96SMNx
+         aSBjGQkT/ptjgtpxy6JbDcE8H4IZZsfigyJWJFiSi4XYuuQvsNEEXeQePWAz+2+QZQKC
+         DmuiM320eeXGM3rACmivO9lGttmONJH6BtLKqgexulwUoH1RVXfRMPGxmH6iO4u6kxy+
+         Qzcal6J95bTSJVhAzfm3inshNJh2Un4HqLfwTyZDjsD6b0S8HAuVjJBsXNJZeaPgTbpN
+         OZl5pZCdvOXY+ZIN4GChxPhym+fuCHeYccM6zZ+QW6+S5H9LytcQ6e3W0sOdjp/Ptr2x
+         FYRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=i9BqQwZdNhzFVa//WYu/569iSRKYey+BVuy8EV38mNM=;
-        b=NH7IN9y3vWg7lE8j9Et3Po6jDbo6mAcaSjw5+DcVlgH7SfQpA9s6gl8z9MAhVLN9tW
-         lYOXIRNCXmB2jPHEo6BZCKuYQmzVqR2ixMIGJtCgxsUICUJVy5ZkNelPQWbS7kdbR1Fa
-         1o/oxQrgO0PzIi0I4m8SXtTVboUUKGKF6HulCiL5n7Tui0ZC1rtBXWm6mhrMrwCwd0GL
-         4zbsKDfWDdCGcdg7jseHriedR4fPCUtrAIhgnx4OrMe6l900/IyY+GBxFjFjY+QX7Vj7
-         arkhi/epIFodBklnCvbflwdD0JB7r+ik1J1wRViyNZvMG+iPNMCPItjCmPzlT4Ljfx3J
-         pNEg==
-X-Gm-Message-State: AGRZ1gK9oh8CyKQpawuVtVFtpo759HOg7AtPHQRUIiSL6vtR7eeGxRWL
-        1P//VeAwoeuelomJvBS142MlFA==
-X-Google-Smtp-Source: AJdET5es+U+j1V3prGE2/CRXlVaYSPrsmyLbp3DLH+DSVNMmcJpj+bmFwbfb6NUJvOkrP8qMFkMCxw==
-X-Received: by 2002:a6b:500e:: with SMTP id e14-v6mr4850279iob.73.1540016820499;
-        Fri, 19 Oct 2018 23:27:00 -0700 (PDT)
-Received: from heartswap.lan.dana.is (173-21-17-19.client.mchsi.com. [173.21.17.19])
-        by smtp.gmail.com with ESMTPSA id s10-v6sm2365572itb.38.2018.10.19.23.26.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Oct 2018 23:27:00 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 11.4 \(3445.8.2\))
-Subject: Re: [BUG] gitignore documentation inconsistent with actual behaviour
-From:   dana <dana@dana.is>
-In-Reply-To: <CACsJy8CMSQZ7guGAyDqU_xdJrt7BiEDwdtePdfmgagnvSb2p=Q@mail.gmail.com>
-Date:   Sat, 20 Oct 2018 01:26:59 -0500
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, jamslam@gmail.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4xWjnfbDJQx1VNMTXOtnijRaNW/XJYc9Wm+5G3ShFOs=;
+        b=QRClX0gMmzEvW2+KQhe+LLU1geTXloBiksoDCBCq3SNDQIiHlqYbe/LXhuMlgT59sc
+         g+WFQRt57EjzjkczTH3/mcV7Vr9xl+mQNuJs+XXGHi3v85n1YZrZCeyS8+aX1M61rHxg
+         B0QRbQzvF5ZrwzevVk8ljvRF8FV5VihgL0XKr+C3cbwXOrcN4fdNczq/PWTnUanPsujH
+         BUUsGjRTtBOK1VSeDOQTV6bFw3mon+6V12+569hQfYs1otnFF1/I+VMm2XfMB4bUfYK1
+         5UXh51+yp+z5XLe3C4MaZW2iEP6Z+x6s0P+0E7RoogLluwsUvS+3OAhH+7lt3NjNbfAt
+         5vZg==
+X-Gm-Message-State: ABuFfoj40Wa2J0D7RrAX9aeMTySNMPTvUYFH6zuBa4tZgA5sKLbzZOaC
+        oPCYkWBuyMCq7Y+WzTrnv/Q8NB4jO/DHKkEH+Ss=
+X-Google-Smtp-Source: ACcGV639MvZ02QjwWoctI/CozTtUUDx31U9u9AdKTByy60daPIIn9GaDiZ8+7EpUFyzrD6jAtauL/r7gecIlfHNC9wY=
+X-Received: by 2002:ac8:6754:: with SMTP id n20-v6mr36292248qtp.70.1540018066665;
+ Fri, 19 Oct 2018 23:47:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAJKt3eP+BZkfK_yn3KYWMgmJB8_18UFr5eizmdGOY_4vM5=AYA@mail.gmail.com>
+In-Reply-To: <CAJKt3eP+BZkfK_yn3KYWMgmJB8_18UFr5eizmdGOY_4vM5=AYA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 20 Oct 2018 08:47:35 +0200
+Message-ID: <CAP8UFD3CDwu7OVgVmEgP2Se_bxYszcze68_bXT7=wgZaxncpzg@mail.gmail.com>
+Subject: Re: How to start contributing
+To:     trickygitninja@gmail.com
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <7C1E9A1B-9FA6-40C6-95E0-6C90271C37C1@dana.is>
-References: <C16A9F17-0375-42F9-90A9-A92C9F3D8BBA@dana.is>
- <20181020052624.GA31433@duynguyen.home>
- <AFFFEB92-0CFE-45BA-8BE3-105E8963A121@dana.is>
- <CACsJy8CMSQZ7guGAyDqU_xdJrt7BiEDwdtePdfmgagnvSb2p=Q@mail.gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-X-Mailer: Apple Mail (2.3445.8.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20 Oct 2018, at 01:03, Duy Nguyen <pclouds@gmail.com> wrote:
->foo**bar would match foobar as well as foo/bar, foo/x/bar and
->foo/x/y/bar... Its behavior is error prone in my opinion. There's also
->some concerns in early iterations of this "**" support that we would
->need to revisit if we want 'rsync' behavior. I'm not very excited
->about doing that.
+Hi,
 
-That's fair.
+On Thu, Oct 18, 2018 at 2:51 PM =CE=A0=CE=BB=CE=AC=CF=84=CF=89=CE=BD =CE=9A=
+=CE=B9=CE=BF=CF=81=CF=80=CE=B5=CE=BB=CE=AF=CE=B4=CE=B7=CF=82
+<trickygitninja@gmail.com> wrote:
+>
+> Hello,
+>
+> I=E2=80=99m a computer science student and I=E2=80=99m interested in cont=
+ributing to git.
+> I=E2=80=99ve read the GSoC git page with the ideas and micro-projects as =
+I=E2=80=99m
+> interested in participating next summer.
+> I=E2=80=99ve also read the Documentation at the GitHub mirror.
+> I=E2=80=99ve never worked on such large project and I don=E2=80=99t know =
+where to start from.
+> I=E2=80=99ve picked this microproject from the GSoC page:
+>
+> Make =E2=80=9Cgit tag =E2=80=93contains <id>=E2=80=9D less chatty if <id>=
+ is invalid
+> =E2=80=9Cgit tag =E2=80=93 contains <id>=E2=80=9D prints the whole help t=
+ext if <id> is
+> invalid. It should only show the error message instead.
+> Thread: https://public-inbox.org/git/20160118215433.GB24136@sigill.intra.=
+peff.net/
+>
+> This bug is solved using the 3rd option, but I suspect that it=E2=80=99s =
+still
+> here because the 2nd option is preferred.
 
-I guess another point in favour of your second option is that it's =
-essentially
-the same behaviour used by bash (with the `globstar` option) and zsh =
-(with the
-default options); they also give `**` special recursion powers only when =
-used in
-a path component by itself, otherwise it acts like `*`. So there's =
-precedent
-there.
+I think it should probably have been removed from the micro-project
+list. I am CC'ing Peff as he wrote the email listing the different
+options to solve the original issue and may think otherwise.
 
-dana
+> How should I tackle this?
 
+It's a good first step to ask first on the list as you did if it is a
+good micro-project or not. Unfortunately in this case I think you
+might want to try to find another micro-project.
+
+Thanks,
+Christian.
