@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 527F51F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 704441F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727518AbeJTUte (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:34 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:44790 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727289AbeJTUtd (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727523AbeJTUtf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:35 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:33710 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727512AbeJTUtd (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 20 Oct 2018 16:49:33 -0400
-Received: by mail-lj1-f193.google.com with SMTP id v6-v6so33058133ljc.11
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:11 -0700 (PDT)
+Received: by mail-lf1-f66.google.com with SMTP id o21-v6so27164496lfe.0
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=adnGBkQE5hEj+othxFloSyP1k6ObcmtONZhYM4G5mEk=;
-        b=VV+g/fVdoDG4vmwmWA9nViBodxgBd4u3+qICRpUaH2Jn4zcmllcItVP0Cb1Fa2EIBE
-         ic/hmt/+PCDqQFsk6SbVdfO6JaXrxjQoRSVaa1KmZt+2nTmPvfW+HsNN8DE4zad13HqK
-         eSLVEQjW4NoUgna3hjx37TsZfCK7CqoHcUSakE7G5Iu0Vvi5oOL9vBMqaWcIKTLwOzEQ
-         mcxQdn6gxVR/gAKUON3F9fYjhuadXpPGrqF9AkWJP+ACHdPmH4EwiUFAmTinxmcOQp9S
-         fq+QM8ORmrW2WIS+/2RcCBKuC8sDva0EHf2+F7kIBfWF4TMJCp1e8sLhemXZgxU98GMl
-         ThQw==
+        bh=RkmNsw8bBjBhQ3blW5PQot4XFWLRel82tuhZwJvw2Yw=;
+        b=oBwhBo6D8eo3qozLo1gVNBa06zPmJOhmDQE83dGBmQHWbYPUBckwxOtKpgJEfhZ5Qe
+         oubU/HpPRv3uS6EQ4Lw11hZ2t7OOkC9Cdr2iGxXH7tTvoQxPHBhsLVfGxiOutGlGEYFZ
+         yOnTfHub4IbAdKfSDbda94WHgoYb2kT0o5hHnTC9wmC245NeVI2anfzjckjE95q/9bup
+         irBMoT2aKbLgLBTVJuPB0/zIH1++fs5O5hVQkitE1IVYNMQyQ47/J56ayreeV1XJhNYk
+         bVLPGcAmj79xT4ArVlY6EAXlxqhidZ3N3OWkAD4MJyq2GVB2/5MkSFLGrZ9tlwM6d+kA
+         wvpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=adnGBkQE5hEj+othxFloSyP1k6ObcmtONZhYM4G5mEk=;
-        b=bublV8lpCAb4udspNfsOGteaZZI6edInbMScYKbQ1Rh6rsPv5g92KzBmCTPhxJwiFv
-         eMtNP1ug7s0dZYANrIEMln355mvkYgRDg22dop6ig7YLpjeL25+qo0gSTLoFnPJ9GWN5
-         WScasQSFaICe0XrWbcw0eb8MsDyz06GlAzgTcepYHu2wF3vrfKuzcpqJzlPRBuHa4aqK
-         Kkv+/AWig77puChX2+qXA29JWrrO6w5RJb0HnqOZP5QLUmIR2U4K7pHJJu3nAgEAUxCD
-         7Bj3FyzDxvfnTkNC8GieGuEKZizcDxGGbcvBoib8wmLCdaNv4L8E3i2Hn4L3lrAwrPBe
-         qitg==
-X-Gm-Message-State: ABuFfoh7VlUW+fRI7+o3JoYH8aPZBk8RskDE/x08Ub0NVekUVzIoSuEq
-        tnRskTUh43nTq1Y6LUHd5y1EqoXp
-X-Google-Smtp-Source: ACcGV61YJSQ3x9W/80ymF3ztKDGtz35PqFTKyBTzj3VKbm66I6DdcblVzl210r6ai3Eln5U12H04SA==
-X-Received: by 2002:a2e:9b8a:: with SMTP id z10-v6mr8636148lji.55.1540039150741;
-        Sat, 20 Oct 2018 05:39:10 -0700 (PDT)
+        bh=RkmNsw8bBjBhQ3blW5PQot4XFWLRel82tuhZwJvw2Yw=;
+        b=hdo1IVhyN98rvCXC4O0ctwWTbJ8v6cvcM+Y6/+VmvD0zlQ0nTzrn2yFJgeE+NhbFlI
+         EZ//7aJu3AUecituv2iYX2PTZ/LgVfFOMFhbFnxDgS6Gwb6FzcNHLO3rdPNZeS9JfTwc
+         scjH9xdQqdynoxqkypgMWi7wLQAGn5NiUGh7g3bCUKEv0tk0VHFKvF3MvS/ZKm3PKIXU
+         0JG2wqYHWAYXhr0nDe9eyP+zBh5tB78QmUw2zDyaS3+jDcHXHJWVEw1504naMDccCPWq
+         d9+dyLrgLbopHmG+tLtSe0Cg3JRU7gXYcixR5jkhSGX+J4lprCETRkUnD7fd2DmZwSQQ
+         l4wQ==
+X-Gm-Message-State: ABuFfoitqsayyritgAlfv4px2Fm7+VsORNv6kDbSAiGlqI6viDWBTe14
+        iu8l//cC6rD+BHXhArhjbsNcRgEO
+X-Google-Smtp-Source: ACcGV60bVwo1/EgIwG41PmOrBy3OGdNQDdk1axthT6D/qXj6aemHlHpQ7aR0aQkDzFvCH0r7Pa/Fhw==
+X-Received: by 2002:a19:db84:: with SMTP id t4-v6mr5237651lfi.74.1540039151842;
+        Sat, 20 Oct 2018 05:39:11 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.09
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:10 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:11 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 13/59] config.txt: move column.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:02 +0200
-Message-Id: <20181020123848.2785-14-pclouds@gmail.com>
+Subject: [PATCH 14/59] config.txt: move commit.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:03 +0200
+Message-Id: <20181020123848.2785-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,139 +71,87 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/column-config.txt | 55 ++++++++++++++++++++++++++++++++
- Documentation/config.txt        | 56 +--------------------------------
- 2 files changed, 56 insertions(+), 55 deletions(-)
- create mode 100644 Documentation/column-config.txt
+ Documentation/commit-config.txt | 29 +++++++++++++++++++++++++++++
+ Documentation/config.txt        | 30 +-----------------------------
+ 2 files changed, 30 insertions(+), 29 deletions(-)
+ create mode 100644 Documentation/commit-config.txt
 
-diff --git a/Documentation/column-config.txt b/Documentation/column-config.txt
+diff --git a/Documentation/commit-config.txt b/Documentation/commit-config.txt
 new file mode 100644
-index 0000000000..76aa2f29dc
+index 0000000000..2c95573930
 --- /dev/null
-+++ b/Documentation/column-config.txt
-@@ -0,0 +1,55 @@
-+column.ui::
-+	Specify whether supported commands should output in columns.
-+	This variable consists of a list of tokens separated by spaces
-+	or commas:
-++
-+These options control when the feature should be enabled
-+(defaults to 'never'):
-++
-+--
-+`always`;;
-+	always show in columns
-+`never`;;
-+	never show in columns
-+`auto`;;
-+	show in columns if the output is to the terminal
-+--
-++
-+These options control layout (defaults to 'column').  Setting any
-+of these implies 'always' if none of 'always', 'never', or 'auto' are
-+specified.
-++
-+--
-+`column`;;
-+	fill columns before rows
-+`row`;;
-+	fill rows before columns
-+`plain`;;
-+	show in one column
-+--
-++
-+Finally, these options can be combined with a layout option (defaults
-+to 'nodense'):
-++
-+--
-+`dense`;;
-+	make unequal size columns to utilize more space
-+`nodense`;;
-+	make equal size columns
-+--
++++ b/Documentation/commit-config.txt
+@@ -0,0 +1,29 @@
++commit.cleanup::
++	This setting overrides the default of the `--cleanup` option in
++	`git commit`. See linkgit:git-commit[1] for details. Changing the
++	default can be useful when you always want to keep lines that begin
++	with comment character `#` in your log message, in which case you
++	would do `git config commit.cleanup whitespace` (note that you will
++	have to remove the help lines that begin with `#` in the commit log
++	template yourself, if you do this).
 +
-+column.branch::
-+	Specify whether to output branch listing in `git branch` in columns.
-+	See `column.ui` for details.
++commit.gpgSign::
 +
-+column.clean::
-+	Specify the layout when list items in `git clean -i`, which always
-+	shows files and directories in columns. See `column.ui` for details.
++	A boolean to specify whether all commits should be GPG signed.
++	Use of this option when doing operations such as rebase can
++	result in a large number of commits being signed. It may be
++	convenient to use an agent to avoid typing your GPG passphrase
++	several times.
 +
-+column.status::
-+	Specify whether to output untracked files in `git status` in columns.
-+	See `column.ui` for details.
++commit.status::
++	A boolean to enable/disable inclusion of status information in the
++	commit message template when using an editor to prepare the commit
++	message.  Defaults to true.
 +
-+column.tag::
-+	Specify whether to output tag listing in `git tag` in columns.
-+	See `column.ui` for details.
++commit.template::
++	Specify the pathname of a file to use as the template for
++	new commit messages.
++
++commit.verbose::
++	A boolean or int to specify the level of verbose with `git commit`.
++	See linkgit:git-commit[1].
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9e2c6c292b..48ce01f596 100644
+index 48ce01f596..59cae6a895 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -311,61 +311,7 @@ include::clean-config.txt[]
+@@ -313,35 +313,7 @@ include::color-config.txt[]
  
- include::color-config.txt[]
+ include::column-config.txt[]
  
--column.ui::
--	Specify whether supported commands should output in columns.
--	This variable consists of a list of tokens separated by spaces
--	or commas:
--+
--These options control when the feature should be enabled
--(defaults to 'never'):
--+
----
--`always`;;
--	always show in columns
--`never`;;
--	never show in columns
--`auto`;;
--	show in columns if the output is to the terminal
----
--+
--These options control layout (defaults to 'column').  Setting any
--of these implies 'always' if none of 'always', 'never', or 'auto' are
--specified.
--+
----
--`column`;;
--	fill columns before rows
--`row`;;
--	fill rows before columns
--`plain`;;
--	show in one column
----
--+
--Finally, these options can be combined with a layout option (defaults
--to 'nodense'):
--+
----
--`dense`;;
--	make unequal size columns to utilize more space
--`nodense`;;
--	make equal size columns
----
+-commit.cleanup::
+-	This setting overrides the default of the `--cleanup` option in
+-	`git commit`. See linkgit:git-commit[1] for details. Changing the
+-	default can be useful when you always want to keep lines that begin
+-	with comment character `#` in your log message, in which case you
+-	would do `git config commit.cleanup whitespace` (note that you will
+-	have to remove the help lines that begin with `#` in the commit log
+-	template yourself, if you do this).
 -
--column.branch::
--	Specify whether to output branch listing in `git branch` in columns.
--	See `column.ui` for details.
+-commit.gpgSign::
 -
--column.clean::
--	Specify the layout when list items in `git clean -i`, which always
--	shows files and directories in columns. See `column.ui` for details.
+-	A boolean to specify whether all commits should be GPG signed.
+-	Use of this option when doing operations such as rebase can
+-	result in a large number of commits being signed. It may be
+-	convenient to use an agent to avoid typing your GPG passphrase
+-	several times.
 -
--column.status::
--	Specify whether to output untracked files in `git status` in columns.
--	See `column.ui` for details.
+-commit.status::
+-	A boolean to enable/disable inclusion of status information in the
+-	commit message template when using an editor to prepare the commit
+-	message.  Defaults to true.
 -
--column.tag::
--	Specify whether to output tag listing in `git tag` in columns.
--	See `column.ui` for details.
-+include::column-config.txt[]
+-commit.template::
+-	Specify the pathname of a file to use as the template for
+-	new commit messages.
+-
+-commit.verbose::
+-	A boolean or int to specify the level of verbose with `git commit`.
+-	See linkgit:git-commit[1].
++include::commit-config.txt[]
  
- commit.cleanup::
- 	This setting overrides the default of the `--cleanup` option in
+ credential.helper::
+ 	Specify an external helper to be called when a username or
 -- 
 2.19.1.647.g708186aaf9
 
