@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D7991F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D35FD1F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727699AbeJTUuY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:50:24 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:45183 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727652AbeJTUuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:50:24 -0400
-Received: by mail-lf1-f65.google.com with SMTP id c24-v6so677442lfi.12
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:02 -0700 (PDT)
+        id S1727710AbeJTUu3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:50:29 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:40884 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727692AbeJTUu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:50:29 -0400
+Received: by mail-lj1-f196.google.com with SMTP id r83-v6so33087473ljr.7
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:40:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HcBRJQxt9SGWPCOxiMKVC3pyH6cCfaXIKEt8evBxo2A=;
-        b=SGADudFLGIRIdwIyyO3CZiou/iF3BVdnFBI9xpPqu8Awzq4rfc6pfSjP0wROyy4M/z
-         lF5+Je/dMYujg18cOP4JtWWEKBHLx2ZLd2pvoT+njkB8k6iGA1MhlzcOiWgKUA+AU+mL
-         ZAK3ycEHrZPK/tlK0M89doKWO2gd+/YaiHAQq5zVmjtr0ipPthj0JX6phAMQ4zMDXcf/
-         K9Mc+dc0elXruN7SoPt/6O3HaYbUBJFLsOUWz1t5xbxu2ow7mS8HHGP7iAgBOalx3aBw
-         SaLFLMvyHeEhZnivnk4Gu86biBnmgnaTzC5df79fc719S3kuQ1T3zTL36sDTw1id6mQC
-         pebg==
+        bh=ADiVqlUm/b0kdF+Gkq/SFbu25n54BU53BlFuUamW26Y=;
+        b=g2gQ7GLzq/YlGqYnRvoidWpj8QEpukqsWo0kMyRfQh5mxZdIQrVeE0uWVI8nYnLHJa
+         tsfecIs4Cgt3dU5GfniOH9Unlro78Z0myDnbUKqR+jNvYirQZiM8f68Nmrts8C58hva5
+         21Jjl2A2QgRy2OPlDI3/4J868s3IlcFKR21LoGJzhs0AlGagBmCTo3QYQy1bWOmHw/G6
+         VFH6HnBNB0SuTLVfLFTWPM8iJm/zXxR15mww8H3ZhwOK5+AliwrfxDVBD/zzpIO54Svq
+         c6ObTtxFkfdakEz8laqmzrcINiOyq6Aam/MnpSK1EPesZirMk+CY08y3sTg0ls+QDdLf
+         E6kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HcBRJQxt9SGWPCOxiMKVC3pyH6cCfaXIKEt8evBxo2A=;
-        b=fFMO8eIknmwCB5UKHnQGcSrvvHHcNnv7abxRM6YNnTHV4Ra/oHXFmy1nU2NkBQplj8
-         0RJquJIH/554eooeIgkKy0pASg1FT+XPBZnVSn/mSyS67qHcjyHsdeheSK3Uif9yqvjc
-         KqvrQf1VPZmaHnahhg/c+DQS5KydRH9mjKfnhUBtDB+CNOMCHHjPeiR2m/WAhAY3bfbN
-         3o6QXtetSGod1bwMeYBR/LXkI/FVycBOZCTxJjvZW8RSPfgAMRTt+WMjeCgMgVqDLKEF
-         I+z00vWpTyZI1wIjMK/XtvkN8qwaZ73fhZPEknKliJp1LvvzlGlz5ImCW6vw+QKVunJd
-         TlCA==
-X-Gm-Message-State: ABuFfojkbft29PcVaq/rS9FXGc5iu9sxQUkfXxONQSV49XVu41rUl0G7
-        dn1TY5mILgltI4p6zH67ZmVgFBWc
-X-Google-Smtp-Source: ACcGV60WcUeP54itEpCd1l/PJflIqfe4j/n+Ia4LY1ZNXWi+qFPPrkqhW8y8mPgFG0tozmz3cPeaTg==
-X-Received: by 2002:a19:3809:: with SMTP id f9mr347375lfa.148.1540039201237;
-        Sat, 20 Oct 2018 05:40:01 -0700 (PDT)
+        bh=ADiVqlUm/b0kdF+Gkq/SFbu25n54BU53BlFuUamW26Y=;
+        b=jBK5GoLmzAQtwZSYMRFGBfN3O068QIZxhHYwnZeZpl51/cx94oREk5cIRI7JveFI3c
+         MmGSKLCUJ/kiYK6INGtugd50SkZXF9/T8yzE54xHhdWfP/7BogF4Y3SNXau51a+eodqJ
+         jr6xpVDjxsiK98BtsWfTjGjVVEmNNeNd/Q7R+HKx5wsOP3DOU+j2zvwYNpfSC2UOREjb
+         2eUm9MaZsGXsP1XVIq2ww3KuZ9nqpHtCsGj0pZJ3c9bbAxLV++9TuiZBCuGZtb0EKp10
+         FoDfVzK8JZ3AqSqFRC8sUg6h+VfSNfF0hbrR+hJ36nXENq+BpylIKX2OcK9LmuvetW2v
+         epwg==
+X-Gm-Message-State: ABuFfoiKy+ugvzHb8pzCok9HRqA84GtmBEQwBoQAI5l/PH1euK3HOiiJ
+        PO1zi/nLJQtcbYWuCkG+n503xRWN
+X-Google-Smtp-Source: ACcGV62o7rftqmo0K95tJ+O6fLxqfH98Fjl4IQUelpXL/pbNZQ21NOptXXP2FcTXvQIweExXYL09Wg==
+X-Received: by 2002:a2e:1241:: with SMTP id t62-v6mr24483511lje.81.1540039206634;
+        Sat, 20 Oct 2018 05:40:06 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.00
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.40.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:40:00 -0700 (PDT)
+        Sat, 20 Oct 2018 05:40:05 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 39/59] config.txt: move pack.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:28 +0200
-Message-Id: <20181020123848.2785-40-pclouds@gmail.com>
+Subject: [PATCH 42/59] config.txt: move protocol.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:31 +0200
+Message-Id: <20181020123848.2785-43-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,269 +71,157 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt      | 121 +---------------------------------
- Documentation/pack-config.txt | 120 +++++++++++++++++++++++++++++++++
- 2 files changed, 121 insertions(+), 120 deletions(-)
- create mode 100644 Documentation/pack-config.txt
+ Documentation/config.txt          | 65 +------------------------------
+ Documentation/protocol-config.txt | 64 ++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+), 64 deletions(-)
+ create mode 100644 Documentation/protocol-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d1de7ccc89..45b184b247 100644
+index 364e5fdbf1..f57b494041 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -628,126 +628,7 @@ include::mergetool-config.txt[]
+@@ -634,70 +634,7 @@ include::pager-config.txt[]
  
- include::notes-config.txt[]
+ include::pretty-config.txt[]
  
--pack.window::
--	The size of the window used by linkgit:git-pack-objects[1] when no
--	window size is given on the command line. Defaults to 10.
--
--pack.depth::
--	The maximum delta depth used by linkgit:git-pack-objects[1] when no
--	maximum depth is given on the command line. Defaults to 50.
--	Maximum value is 4095.
--
--pack.windowMemory::
--	The maximum size of memory that is consumed by each thread
--	in linkgit:git-pack-objects[1] for pack window memory when
--	no limit is given on the command line.  The value can be
--	suffixed with "k", "m", or "g".  When left unconfigured (or
--	set explicitly to 0), there will be no limit.
--
--pack.compression::
--	An integer -1..9, indicating the compression level for objects
--	in a pack file. -1 is the zlib default. 0 means no
--	compression, and 1..9 are various speed/size tradeoffs, 9 being
--	slowest.  If not set,  defaults to core.compression.  If that is
--	not set,  defaults to -1, the zlib default, which is "a default
--	compromise between speed and compression (currently equivalent
--	to level 6)."
+-protocol.allow::
+-	If set, provide a user defined default policy for all protocols which
+-	don't explicitly have a policy (`protocol.<name>.allow`).  By default,
+-	if unset, known-safe protocols (http, https, git, ssh, file) have a
+-	default policy of `always`, known-dangerous protocols (ext) have a
+-	default policy of `never`, and all other protocols have a default
+-	policy of `user`.  Supported policies:
 -+
--Note that changing the compression level will not automatically recompress
--all existing objects. You can force recompression by passing the -F option
--to linkgit:git-repack[1].
+---
 -
--pack.island::
--	An extended regular expression configuring a set of delta
--	islands. See "DELTA ISLANDS" in linkgit:git-pack-objects[1]
--	for details.
+-* `always` - protocol is always able to be used.
 -
--pack.islandCore::
--	Specify an island name which gets to have its objects be
--	packed first. This creates a kind of pseudo-pack at the front
--	of one pack, so that the objects from the specified island are
--	hopefully faster to copy into any pack that should be served
--	to a user requesting these objects. In practice this means
--	that the island specified should likely correspond to what is
--	the most commonly cloned in the repo. See also "DELTA ISLANDS"
--	in linkgit:git-pack-objects[1].
+-* `never` - protocol is never able to be used.
 -
--pack.deltaCacheSize::
--	The maximum memory in bytes used for caching deltas in
--	linkgit:git-pack-objects[1] before writing them out to a pack.
--	This cache is used to speed up the writing object phase by not
--	having to recompute the final delta result once the best match
--	for all objects is found.  Repacking large repositories on machines
--	which are tight with memory might be badly impacted by this though,
--	especially if this cache pushes the system into swapping.
--	A value of 0 means no limit. The smallest size of 1 byte may be
--	used to virtually disable this cache. Defaults to 256 MiB.
+-* `user` - protocol is only able to be used when `GIT_PROTOCOL_FROM_USER` is
+-  either unset or has a value of 1.  This policy should be used when you want a
+-  protocol to be directly usable by the user but don't want it used by commands which
+-  execute clone/fetch/push commands without user input, e.g. recursive
+-  submodule initialization.
 -
--pack.deltaCacheLimit::
--	The maximum size of a delta, that is cached in
--	linkgit:git-pack-objects[1]. This cache is used to speed up the
--	writing object phase by not having to recompute the final delta
--	result once the best match for all objects is found.
--	Defaults to 1000. Maximum value is 65535.
+---
 -
--pack.threads::
--	Specifies the number of threads to spawn when searching for best
--	delta matches.  This requires that linkgit:git-pack-objects[1]
--	be compiled with pthreads otherwise this option is ignored with a
--	warning. This is meant to reduce packing time on multiprocessor
--	machines. The required amount of memory for the delta search window
--	is however multiplied by the number of threads.
--	Specifying 0 will cause Git to auto-detect the number of CPU's
--	and set the number of threads accordingly.
--
--pack.indexVersion::
--	Specify the default pack index version.  Valid values are 1 for
--	legacy pack index used by Git versions prior to 1.5.2, and 2 for
--	the new pack index with capabilities for packs larger than 4 GB
--	as well as proper protection against the repacking of corrupted
--	packs.  Version 2 is the default.  Note that version 2 is enforced
--	and this config option ignored whenever the corresponding pack is
--	larger than 2 GB.
+-protocol.<name>.allow::
+-	Set a policy to be used by protocol `<name>` with clone/fetch/push
+-	commands. See `protocol.allow` above for the available policies.
 -+
--If you have an old Git that does not understand the version 2 `*.idx` file,
--cloning or fetching over a non native protocol (e.g. "http")
--that will copy both `*.pack` file and corresponding `*.idx` file from the
--other side may give you a repository that cannot be accessed with your
--older version of Git. If the `*.pack` file is smaller than 2 GB, however,
--you can use linkgit:git-index-pack[1] on the *.pack file to regenerate
--the `*.idx` file.
+-The protocol names currently used by git are:
+-+
+---
+-  - `file`: any local file-based path (including `file://` URLs,
+-    or local paths)
 -
--pack.packSizeLimit::
--	The maximum size of a pack.  This setting only affects
--	packing to a file when repacking, i.e. the git:// protocol
--	is unaffected.  It can be overridden by the `--max-pack-size`
--	option of linkgit:git-repack[1].  Reaching this limit results
--	in the creation of multiple packfiles; which in turn prevents
--	bitmaps from being created.
--	The minimum size allowed is limited to 1 MiB.
--	The default is unlimited.
--	Common unit suffixes of 'k', 'm', or 'g' are
--	supported.
+-  - `git`: the anonymous git protocol over a direct TCP
+-    connection (or proxy, if configured)
 -
--pack.useBitmaps::
--	When true, git will use pack bitmaps (if available) when packing
--	to stdout (e.g., during the server side of a fetch). Defaults to
--	true. You should not generally need to turn this off unless
--	you are debugging pack bitmaps.
+-  - `ssh`: git over ssh (including `host:path` syntax,
+-    `ssh://`, etc).
 -
--pack.writeBitmaps (deprecated)::
--	This is a deprecated synonym for `repack.writeBitmaps`.
+-  - `http`: git over http, both "smart http" and "dumb http".
+-    Note that this does _not_ include `https`; if you want to configure
+-    both, you must do so individually.
 -
--pack.writeBitmapHashCache::
--	When true, git will include a "hash cache" section in the bitmap
--	index (if one is written). This cache can be used to feed git's
--	delta heuristics, potentially leading to better deltas between
--	bitmapped and non-bitmapped objects (e.g., when serving a fetch
--	between an older, bitmapped pack and objects that have been
--	pushed since the last gc). The downside is that it consumes 4
--	bytes per object of disk space, and that JGit's bitmap
--	implementation does not understand it, causing it to complain if
--	Git and JGit are used on the same repository. Defaults to false.
-+include::pack-config.txt[]
+-  - any external helpers are named by their protocol (e.g., use
+-    `hg` to allow the `git-remote-hg` helper)
+---
+-
+-protocol.version::
+-	Experimental. If set, clients will attempt to communicate with a
+-	server using the specified protocol version.  If unset, no
+-	attempt will be made by the client to communicate using a
+-	particular protocol version, this results in protocol version 0
+-	being used.
+-	Supported versions:
+-+
+---
+-
+-* `0` - the original wire protocol.
+-
+-* `1` - the original wire protocol with the addition of a version string
+-  in the initial response from the server.
+-
+-* `2` - link:technical/protocol-v2.html[wire protocol version 2].
+-
+---
++include::protocol-config.txt[]
  
- pager.<cmd>::
- 	If the value is boolean, turns on or off pagination of the
-diff --git a/Documentation/pack-config.txt b/Documentation/pack-config.txt
+ include::pull-config.txt[]
+ 
+diff --git a/Documentation/protocol-config.txt b/Documentation/protocol-config.txt
 new file mode 100644
-index 0000000000..edac75c83f
+index 0000000000..bfccc07491
 --- /dev/null
-+++ b/Documentation/pack-config.txt
-@@ -0,0 +1,120 @@
-+pack.window::
-+	The size of the window used by linkgit:git-pack-objects[1] when no
-+	window size is given on the command line. Defaults to 10.
-+
-+pack.depth::
-+	The maximum delta depth used by linkgit:git-pack-objects[1] when no
-+	maximum depth is given on the command line. Defaults to 50.
-+	Maximum value is 4095.
-+
-+pack.windowMemory::
-+	The maximum size of memory that is consumed by each thread
-+	in linkgit:git-pack-objects[1] for pack window memory when
-+	no limit is given on the command line.  The value can be
-+	suffixed with "k", "m", or "g".  When left unconfigured (or
-+	set explicitly to 0), there will be no limit.
-+
-+pack.compression::
-+	An integer -1..9, indicating the compression level for objects
-+	in a pack file. -1 is the zlib default. 0 means no
-+	compression, and 1..9 are various speed/size tradeoffs, 9 being
-+	slowest.  If not set,  defaults to core.compression.  If that is
-+	not set,  defaults to -1, the zlib default, which is "a default
-+	compromise between speed and compression (currently equivalent
-+	to level 6)."
++++ b/Documentation/protocol-config.txt
+@@ -0,0 +1,64 @@
++protocol.allow::
++	If set, provide a user defined default policy for all protocols which
++	don't explicitly have a policy (`protocol.<name>.allow`).  By default,
++	if unset, known-safe protocols (http, https, git, ssh, file) have a
++	default policy of `always`, known-dangerous protocols (ext) have a
++	default policy of `never`, and all other protocols have a default
++	policy of `user`.  Supported policies:
 ++
-+Note that changing the compression level will not automatically recompress
-+all existing objects. You can force recompression by passing the -F option
-+to linkgit:git-repack[1].
++--
 +
-+pack.island::
-+	An extended regular expression configuring a set of delta
-+	islands. See "DELTA ISLANDS" in linkgit:git-pack-objects[1]
-+	for details.
++* `always` - protocol is always able to be used.
 +
-+pack.islandCore::
-+	Specify an island name which gets to have its objects be
-+	packed first. This creates a kind of pseudo-pack at the front
-+	of one pack, so that the objects from the specified island are
-+	hopefully faster to copy into any pack that should be served
-+	to a user requesting these objects. In practice this means
-+	that the island specified should likely correspond to what is
-+	the most commonly cloned in the repo. See also "DELTA ISLANDS"
-+	in linkgit:git-pack-objects[1].
++* `never` - protocol is never able to be used.
 +
-+pack.deltaCacheSize::
-+	The maximum memory in bytes used for caching deltas in
-+	linkgit:git-pack-objects[1] before writing them out to a pack.
-+	This cache is used to speed up the writing object phase by not
-+	having to recompute the final delta result once the best match
-+	for all objects is found.  Repacking large repositories on machines
-+	which are tight with memory might be badly impacted by this though,
-+	especially if this cache pushes the system into swapping.
-+	A value of 0 means no limit. The smallest size of 1 byte may be
-+	used to virtually disable this cache. Defaults to 256 MiB.
++* `user` - protocol is only able to be used when `GIT_PROTOCOL_FROM_USER` is
++  either unset or has a value of 1.  This policy should be used when you want a
++  protocol to be directly usable by the user but don't want it used by commands which
++  execute clone/fetch/push commands without user input, e.g. recursive
++  submodule initialization.
 +
-+pack.deltaCacheLimit::
-+	The maximum size of a delta, that is cached in
-+	linkgit:git-pack-objects[1]. This cache is used to speed up the
-+	writing object phase by not having to recompute the final delta
-+	result once the best match for all objects is found.
-+	Defaults to 1000. Maximum value is 65535.
++--
 +
-+pack.threads::
-+	Specifies the number of threads to spawn when searching for best
-+	delta matches.  This requires that linkgit:git-pack-objects[1]
-+	be compiled with pthreads otherwise this option is ignored with a
-+	warning. This is meant to reduce packing time on multiprocessor
-+	machines. The required amount of memory for the delta search window
-+	is however multiplied by the number of threads.
-+	Specifying 0 will cause Git to auto-detect the number of CPU's
-+	and set the number of threads accordingly.
-+
-+pack.indexVersion::
-+	Specify the default pack index version.  Valid values are 1 for
-+	legacy pack index used by Git versions prior to 1.5.2, and 2 for
-+	the new pack index with capabilities for packs larger than 4 GB
-+	as well as proper protection against the repacking of corrupted
-+	packs.  Version 2 is the default.  Note that version 2 is enforced
-+	and this config option ignored whenever the corresponding pack is
-+	larger than 2 GB.
++protocol.<name>.allow::
++	Set a policy to be used by protocol `<name>` with clone/fetch/push
++	commands. See `protocol.allow` above for the available policies.
 ++
-+If you have an old Git that does not understand the version 2 `*.idx` file,
-+cloning or fetching over a non native protocol (e.g. "http")
-+that will copy both `*.pack` file and corresponding `*.idx` file from the
-+other side may give you a repository that cannot be accessed with your
-+older version of Git. If the `*.pack` file is smaller than 2 GB, however,
-+you can use linkgit:git-index-pack[1] on the *.pack file to regenerate
-+the `*.idx` file.
++The protocol names currently used by git are:
+++
++--
++  - `file`: any local file-based path (including `file://` URLs,
++    or local paths)
 +
-+pack.packSizeLimit::
-+	The maximum size of a pack.  This setting only affects
-+	packing to a file when repacking, i.e. the git:// protocol
-+	is unaffected.  It can be overridden by the `--max-pack-size`
-+	option of linkgit:git-repack[1].  Reaching this limit results
-+	in the creation of multiple packfiles; which in turn prevents
-+	bitmaps from being created.
-+	The minimum size allowed is limited to 1 MiB.
-+	The default is unlimited.
-+	Common unit suffixes of 'k', 'm', or 'g' are
-+	supported.
++  - `git`: the anonymous git protocol over a direct TCP
++    connection (or proxy, if configured)
 +
-+pack.useBitmaps::
-+	When true, git will use pack bitmaps (if available) when packing
-+	to stdout (e.g., during the server side of a fetch). Defaults to
-+	true. You should not generally need to turn this off unless
-+	you are debugging pack bitmaps.
++  - `ssh`: git over ssh (including `host:path` syntax,
++    `ssh://`, etc).
 +
-+pack.writeBitmaps (deprecated)::
-+	This is a deprecated synonym for `repack.writeBitmaps`.
++  - `http`: git over http, both "smart http" and "dumb http".
++    Note that this does _not_ include `https`; if you want to configure
++    both, you must do so individually.
 +
-+pack.writeBitmapHashCache::
-+	When true, git will include a "hash cache" section in the bitmap
-+	index (if one is written). This cache can be used to feed git's
-+	delta heuristics, potentially leading to better deltas between
-+	bitmapped and non-bitmapped objects (e.g., when serving a fetch
-+	between an older, bitmapped pack and objects that have been
-+	pushed since the last gc). The downside is that it consumes 4
-+	bytes per object of disk space, and that JGit's bitmap
-+	implementation does not understand it, causing it to complain if
-+	Git and JGit are used on the same repository. Defaults to false.
++  - any external helpers are named by their protocol (e.g., use
++    `hg` to allow the `git-remote-hg` helper)
++--
++
++protocol.version::
++	Experimental. If set, clients will attempt to communicate with a
++	server using the specified protocol version.  If unset, no
++	attempt will be made by the client to communicate using a
++	particular protocol version, this results in protocol version 0
++	being used.
++	Supported versions:
+++
++--
++
++* `0` - the original wire protocol.
++
++* `1` - the original wire protocol with the addition of a version string
++  in the initial response from the server.
++
++* `2` - link:technical/protocol-v2.html[wire protocol version 2].
++
++--
 -- 
 2.19.1.647.g708186aaf9
 
