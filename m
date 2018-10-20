@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBF3E1F453
-	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 842691F453
+	for <e@80x24.org>; Sat, 20 Oct 2018 12:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727553AbeJTUtl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Oct 2018 16:49:41 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:45144 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727512AbeJTUtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Oct 2018 16:49:40 -0400
-Received: by mail-lf1-f66.google.com with SMTP id c24-v6so676687lfi.12
-        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:19 -0700 (PDT)
+        id S1727579AbeJTUto (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Oct 2018 16:49:44 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:36445 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727554AbeJTUtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Oct 2018 16:49:43 -0400
+Received: by mail-lf1-f67.google.com with SMTP id l1-v6so7358831lfc.3
+        for <git@vger.kernel.org>; Sat, 20 Oct 2018 05:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ml68f6u01c9XT24VWXplI91hzjb44bzeL+cW9QJ2uCo=;
-        b=JuJGpOetBUJSUOsw8sgUZ5DDrpFy5Q6AwSMUxbbd/sLFlvwaeXTz+gfK8w7LDkt7SR
-         4WkwFd/j558djEeyq6yS3CkTEF4F1haCCGnJNgf4smhdVbEIfYfpW1vMomCmt1nHhCKg
-         1uiqfIVlrSuYuh4uOBVL2R/eiL5MIhuQqiKh+A8vthRdH++PjYQT6iAk2NS6De3eIN0R
-         ETz4gWhC99OPpwLNFfR9Rmgchx5uyb/ymfABCqR/Y7xdb6n50QvgTGtR1ybRkl5JBXRk
-         Lw6N8IiUTJmdhNteuZ/d2zAuTWEkTIkMLxNP7q0MGsms3tF9P1KXEQxXurnljdf7pVm7
-         r+Pw==
+        bh=JHFwp7npyrJnq8d2j50Ns3jaXWTqWH+WlzzX3aJF3rk=;
+        b=brWqb2J7pMZmmX/C1RIROqM8O76aeQsA9K57EOJf7gSfKOqQxri1ketR6K4kwLBoYR
+         tboqbEwOb3dGtmMxK6YxQb3BPk5Ci3hhjKky55JSS/9VqHU2PwOmG0LQ2IFJ39AzIm/g
+         PG34ekhPZwYMcLWRM/EvRyn+yiSoDdWEkmH+5sp5osKGCyT7gMVU4GyUzFBs6D6LrmGi
+         ULtqZh6VSLnRdldnaLBCTUMMrgToD/E8I7BGsB6lO8AprxllOJ3fr71xmfQX87FuuBxk
+         PwzI2FEuSf2WG2NuUs3thT+iEqie98s7CJSYnnPRV90GVI6sZWxKLE/d/vHNPOzHNUyX
+         XTGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ml68f6u01c9XT24VWXplI91hzjb44bzeL+cW9QJ2uCo=;
-        b=nN6Y3E7E4IIrxgq1tJqpINe+rm+OczUXzyPBjAdrTGo5YfI3Phc7jDpwW6WzWIqRRI
-         /hth7aj0+VLkdOefBbPhk+FTSBJvGd3ua3airGEkx46lL3bkZLak3nr4ZB7xD3DQMHdt
-         ng1HgtfO4jeaicM1pzUGKelwouHkOqvQbe62b12o5SadEaZOZ09oleHV43fSZsBErqbK
-         Vg1Z/tADVd65K1rVJTfQRjqtK2i5kR1t5tFcYSvrcyzBdonvMJNVQyep5KWyaAIk3gqQ
-         E7pakPt3cs6ZuzLVGzFtlsQGfFepYKdDI8OQn79yAD4oYFMGkz2rGnfwCXe8LW7QBkt/
-         j5Eg==
-X-Gm-Message-State: ABuFfohxQNQLlHZltUsPbHj1a9+RtSJTXYecwBsf5vae2/nbyWBnxp7i
-        2fOmAb8qPTBMsh+Lozd455tOkkvh
-X-Google-Smtp-Source: ACcGV63UAQofmShkiUBRwmxWJHegEpoDChI5Rs1Zs3fuSz01sa0cFN08WRejv1Vao04+K41Iq5VAxg==
-X-Received: by 2002:a19:ee08:: with SMTP id g8mr1091470lfb.72.1540039158030;
-        Sat, 20 Oct 2018 05:39:18 -0700 (PDT)
+        bh=JHFwp7npyrJnq8d2j50Ns3jaXWTqWH+WlzzX3aJF3rk=;
+        b=o/EtX3kRuUMNlnCkBmyUCCOxW4L1nAmltcErkNoiRyifPRg12U/hS6P4WGp0D0y0ON
+         Kq3CbU1Tm9LhpKR4NpaRZZR49/wZEmNKJ4/rWhl+pDZ5w008xD7nmZbv0VTomaSwbGiG
+         6QwfHchQSJoWyBWJFgmv+lQnixCEyxvgaO5vbUOU7ITn/wYT+d5fu1SwipEcDJf9bGIJ
+         BQNaVBpffcQUa7CgsOeMPgH3ULImYQcSI9RB/Jl2Shv2XUyqXh4DOiUkADZAVFNG84KG
+         AamwcLirVY9DvPWC6HAeMnor75o1q6FRFzcWaoVXeEKBOGLGIHYH9uH6fJ0/hjVlsSMN
+         20qQ==
+X-Gm-Message-State: ABuFfohhD+EnCsKfPBCj54pEh93M6FIDJQvzZHYaXTYX6n6zzaDdmfBa
+        PUY3DM0udlCmnePn/gmAzrC87Jc7
+X-Google-Smtp-Source: ACcGV62aYNhZhuq3ruHttxRAoVu6/QoX8uujKF57tOFUAkFk6+qa2F33cs5RU6gnn2XcEfdjjeM4fw==
+X-Received: by 2002:a19:ae11:: with SMTP id f17-v6mr5752632lfc.86.1540039160395;
+        Sat, 20 Oct 2018 05:39:20 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.16
+        by smtp.gmail.com with ESMTPSA id o22-v6sm5759379ljc.79.2018.10.20.05.39.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Oct 2018 05:39:17 -0700 (PDT)
+        Sat, 20 Oct 2018 05:39:19 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 18/59] config.txt: move fastimport.* to a separate file
-Date:   Sat, 20 Oct 2018 14:38:07 +0200
-Message-Id: <20181020123848.2785-19-pclouds@gmail.com>
+Subject: [PATCH 20/59] config.txt: move fsck.* to a separate file
+Date:   Sat, 20 Oct 2018 14:38:09 +0200
+Message-Id: <20181020123848.2785-21-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181020123848.2785-1-pclouds@gmail.com>
 References: <20181020123848.2785-1-pclouds@gmail.com>
@@ -71,45 +71,163 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt            | 9 +--------
- Documentation/fastimport-config.txt | 8 ++++++++
- 2 files changed, 9 insertions(+), 8 deletions(-)
- create mode 100644 Documentation/fastimport-config.txt
+ Documentation/config.txt      | 68 +----------------------------------
+ Documentation/fsck-config.txt | 67 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+), 67 deletions(-)
+ create mode 100644 Documentation/fsck-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f38e0a8334..66791f0918 100644
+index 7c7dde188c..fa26cb1090 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -323,14 +323,7 @@ include::diff-config.txt[]
+@@ -331,73 +331,7 @@ include::format-config.txt[]
  
- include::difftool-config.txt[]
+ include::filter-config.txt[]
  
--fastimport.unpackLimit::
--	If the number of objects imported by linkgit:git-fast-import[1]
--	is below this limit, then the objects will be unpacked into
--	loose object files.  However if the number of imported objects
--	equals or exceeds this limit then the pack will be stored as a
--	pack.  Storing the pack from a fast-import can make the import
--	operation complete faster, especially on slow filesystems.  If
--	not set, the value of `transfer.unpackLimit` is used instead.
-+include::fastimport-config.txt[]
+-fsck.<msg-id>::
+-	During fsck git may find issues with legacy data which
+-	wouldn't be generated by current versions of git, and which
+-	wouldn't be sent over the wire if `transfer.fsckObjects` was
+-	set. This feature is intended to support working with legacy
+-	repositories containing such data.
+-+
+-Setting `fsck.<msg-id>` will be picked up by linkgit:git-fsck[1], but
+-to accept pushes of such data set `receive.fsck.<msg-id>` instead, or
+-to clone or fetch it set `fetch.fsck.<msg-id>`.
+-+
+-The rest of the documentation discusses `fsck.*` for brevity, but the
+-same applies for the corresponding `receive.fsck.*` and
+-`fetch.<msg-id>.*`. variables.
+-+
+-Unlike variables like `color.ui` and `core.editor` the
+-`receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>` variables will not
+-fall back on the `fsck.<msg-id>` configuration if they aren't set. To
+-uniformly configure the same fsck settings in different circumstances
+-all three of them they must all set to the same values.
+-+
+-When `fsck.<msg-id>` is set, errors can be switched to warnings and
+-vice versa by configuring the `fsck.<msg-id>` setting where the
+-`<msg-id>` is the fsck message ID and the value is one of `error`,
+-`warn` or `ignore`. For convenience, fsck prefixes the error/warning
+-with the message ID, e.g. "missingEmail: invalid author/committer line
+-- missing email" means that setting `fsck.missingEmail = ignore` will
+-hide that issue.
+-+
+-In general, it is better to enumerate existing objects with problems
+-with `fsck.skipList`, instead of listing the kind of breakages these
+-problematic objects share to be ignored, as doing the latter will
+-allow new instances of the same breakages go unnoticed.
+-+
+-Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
+-doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
+-will only cause git to warn.
+-
+-fsck.skipList::
+-	The path to a list of object names (i.e. one unabbreviated SHA-1 per
+-	line) that are known to be broken in a non-fatal way and should
+-	be ignored. On versions of Git 2.20 and later comments ('#'), empty
+-	lines, and any leading and trailing whitespace is ignored. Everything
+-	but a SHA-1 per line will error out on older versions.
+-+
+-This feature is useful when an established project should be accepted
+-despite early commits containing errors that can be safely ignored
+-such as invalid committer email addresses.  Note: corrupt objects
+-cannot be skipped with this setting.
+-+
+-Like `fsck.<msg-id>` this variable has corresponding
+-`receive.fsck.skipList` and `fetch.fsck.skipList` variants.
+-+
+-Unlike variables like `color.ui` and `core.editor` the
+-`receive.fsck.skipList` and `fetch.fsck.skipList` variables will not
+-fall back on the `fsck.skipList` configuration if they aren't set. To
+-uniformly configure the same fsck settings in different circumstances
+-all three of them they must all set to the same values.
+-+
+-Older versions of Git (before 2.20) documented that the object names
+-list should be sorted. This was never a requirement, the object names
+-could appear in any order, but when reading the list we tracked whether
+-the list was sorted for the purposes of an internal binary search
+-implementation, which could save itself some work with an already sorted
+-list. Unless you had a humongous list there was no reason to go out of
+-your way to pre-sort the list. After Git version 2.20 a hash implementation
+-is used instead, so there's now no reason to pre-sort the list.
++include::fsck-config.txt[]
  
- include::fetch-config.txt[]
- 
-diff --git a/Documentation/fastimport-config.txt b/Documentation/fastimport-config.txt
+ gc.aggressiveDepth::
+ 	The depth parameter used in the delta compression
+diff --git a/Documentation/fsck-config.txt b/Documentation/fsck-config.txt
 new file mode 100644
-index 0000000000..c1166e330d
+index 0000000000..879c5a29c4
 --- /dev/null
-+++ b/Documentation/fastimport-config.txt
-@@ -0,0 +1,8 @@
-+fastimport.unpackLimit::
-+	If the number of objects imported by linkgit:git-fast-import[1]
-+	is below this limit, then the objects will be unpacked into
-+	loose object files.  However if the number of imported objects
-+	equals or exceeds this limit then the pack will be stored as a
-+	pack.  Storing the pack from a fast-import can make the import
-+	operation complete faster, especially on slow filesystems.  If
-+	not set, the value of `transfer.unpackLimit` is used instead.
++++ b/Documentation/fsck-config.txt
+@@ -0,0 +1,67 @@
++fsck.<msg-id>::
++	During fsck git may find issues with legacy data which
++	wouldn't be generated by current versions of git, and which
++	wouldn't be sent over the wire if `transfer.fsckObjects` was
++	set. This feature is intended to support working with legacy
++	repositories containing such data.
+++
++Setting `fsck.<msg-id>` will be picked up by linkgit:git-fsck[1], but
++to accept pushes of such data set `receive.fsck.<msg-id>` instead, or
++to clone or fetch it set `fetch.fsck.<msg-id>`.
+++
++The rest of the documentation discusses `fsck.*` for brevity, but the
++same applies for the corresponding `receive.fsck.*` and
++`fetch.<msg-id>.*`. variables.
+++
++Unlike variables like `color.ui` and `core.editor` the
++`receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>` variables will not
++fall back on the `fsck.<msg-id>` configuration if they aren't set. To
++uniformly configure the same fsck settings in different circumstances
++all three of them they must all set to the same values.
+++
++When `fsck.<msg-id>` is set, errors can be switched to warnings and
++vice versa by configuring the `fsck.<msg-id>` setting where the
++`<msg-id>` is the fsck message ID and the value is one of `error`,
++`warn` or `ignore`. For convenience, fsck prefixes the error/warning
++with the message ID, e.g. "missingEmail: invalid author/committer line
++- missing email" means that setting `fsck.missingEmail = ignore` will
++hide that issue.
+++
++In general, it is better to enumerate existing objects with problems
++with `fsck.skipList`, instead of listing the kind of breakages these
++problematic objects share to be ignored, as doing the latter will
++allow new instances of the same breakages go unnoticed.
+++
++Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
++doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
++will only cause git to warn.
++
++fsck.skipList::
++	The path to a list of object names (i.e. one unabbreviated SHA-1 per
++	line) that are known to be broken in a non-fatal way and should
++	be ignored. On versions of Git 2.20 and later comments ('#'), empty
++	lines, and any leading and trailing whitespace is ignored. Everything
++	but a SHA-1 per line will error out on older versions.
+++
++This feature is useful when an established project should be accepted
++despite early commits containing errors that can be safely ignored
++such as invalid committer email addresses.  Note: corrupt objects
++cannot be skipped with this setting.
+++
++Like `fsck.<msg-id>` this variable has corresponding
++`receive.fsck.skipList` and `fetch.fsck.skipList` variants.
+++
++Unlike variables like `color.ui` and `core.editor` the
++`receive.fsck.skipList` and `fetch.fsck.skipList` variables will not
++fall back on the `fsck.skipList` configuration if they aren't set. To
++uniformly configure the same fsck settings in different circumstances
++all three of them they must all set to the same values.
+++
++Older versions of Git (before 2.20) documented that the object names
++list should be sorted. This was never a requirement, the object names
++could appear in any order, but when reading the list we tracked whether
++the list was sorted for the purposes of an internal binary search
++implementation, which could save itself some work with an already sorted
++list. Unless you had a humongous list there was no reason to go out of
++your way to pre-sort the list. After Git version 2.20 a hash implementation
++is used instead, so there's now no reason to pre-sort the list.
 -- 
 2.19.1.647.g708186aaf9
 
