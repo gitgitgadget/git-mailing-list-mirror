@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E33961F453
-	for <e@80x24.org>; Sun, 21 Oct 2018 16:40:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CBFD1F453
+	for <e@80x24.org>; Sun, 21 Oct 2018 18:46:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727989AbeJVAyf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Oct 2018 20:54:35 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44612 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727872AbeJVAyf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Oct 2018 20:54:35 -0400
-Received: by mail-wr1-f68.google.com with SMTP id q6-v6so5987175wrw.11
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 09:39:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=SYsEqI+tgsLqRjMoqFR2F+qrShvwsV4VpKaQNEEacIo=;
-        b=lQDA6g6uekBgAoGCsDuRNoPqdEH1AJI1DFZBQVN4XtOIWv5kbHRbJaCBmuNDXn3eUZ
-         0WC7qDZgk8FR1OqiQsPXz3TRkWLumu+TdW9YCwA+KpaTzFgjjxDaSmIX96u9jJE7dfCc
-         B9bq+2hZ9dOi2ZlqqJw31+EwV6gPl39Hxz8038rg8+iwlkIU//CIYq+bSzKNADNDmq5g
-         hljAOa9KaqmARtK09XfgZXVGKNjb5lqBwucpmE7deJoepFfHKGDLEyGeS+iUJ9QA3nGV
-         ROgU8r+Z2SE+lTvbDkzsza+a7CI5z8lwRJE45bxLiDw/x0rEROu+oitslPPLn+1ZDcQ8
-         6+aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SYsEqI+tgsLqRjMoqFR2F+qrShvwsV4VpKaQNEEacIo=;
-        b=E7pHanUzB2HT0a/Q/peaRULfA9De4e0hH3fvf08zj7/NUPSL1ozi3+0O5+ktJZIwHn
-         XK1bwgOOA8AZ8mjD0ahgUYwu1ZWf9zcwLv59Q6se0WTHHBS+/lli/S2fBuzZPkGH8hOU
-         Igtv2hIVed5UNXQkUZEEtKovEIRkUgFn2LQLH65Pa6OltQDl7545DKLPlnGpSiMSTDDl
-         mZ7cDotZeQ+HmGOp1+OagEYdQh1WonNzErz8pBR4sFpdhp5IuzOX/11UmVKtisFy8G/1
-         BYEC1gsvNQbB5MO9ramUqYKbDC5CsrD/RT7FmgV0yLbw70Ny/DcdtxJh/V6EuacegZ3D
-         bf6w==
-X-Gm-Message-State: AGRZ1gId3IbKuZK9i30HlX1vTICM5yK3BuUjd19uc3e43dXS8MkTjl9q
-        S9FaYxLdjTLOfiK7a+n16CGgKMRiqIE=
-X-Google-Smtp-Source: AJdET5caIVuP7jj3nXJdepKd9nc55Pp1zyxJrEujzKSDl6o0Gtnx8utHrFzt1jW0wVwg3tkEshA3RA==
-X-Received: by 2002:adf:9d1f:: with SMTP id k31-v6mr10841497wre.18.1540139981112;
-        Sun, 21 Oct 2018 09:39:41 -0700 (PDT)
-Received: from [192.168.178.21] (2-230-197-194.ip203.fastwebnet.it. [2.230.197.194])
-        by smtp.gmail.com with ESMTPSA id t3-v6sm25923221wru.47.2018.10.21.09.39.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 09:39:40 -0700 (PDT)
-Subject: Re: [PATCH] gitk: Do not mistake unchanged lines with submodule
- changes
+        id S1728032AbeJVDB0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Oct 2018 23:01:26 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37641 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727825AbeJVDB0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Oct 2018 23:01:26 -0400
+Received: from p2520la.lan ([217.235.92.200]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lkwc9-1fe92d2D9p-00alPv; Sun, 21
+ Oct 2018 20:46:10 +0200
+Received: from p2520la.lan ([217.235.92.200]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lkwc9-1fe92d2D9p-00alPv; Sun, 21
+ Oct 2018 20:46:10 +0200
+From:   Tim Schumacher <timschumi@gmx.de>
 To:     git@vger.kernel.org
-Cc:     paulus@ozlabs.org
-References: <20181021163401.4458-1-dummy@example.com>
-From:   Gabriele Mazzotta <gabriele.mzt@gmail.com>
-Message-ID: <fcef23d5-e2b3-cb3a-9ccf-75a0cc126d0b@gmail.com>
-Date:   Sun, 21 Oct 2018 18:39:39 +0200
+Cc:     timschumi@gmx.de
+Subject: [PATCH 1/2] alias: Rework comment about processing aliases
+Date:   Sun, 21 Oct 2018 20:46:18 +0200
+Message-Id: <20181021184619.6688-1-timschumi@gmx.de>
+X-Mailer: git-send-email 2.19.1.450.ga4b8ab536
 MIME-Version: 1.0
-In-Reply-To: <20181021163401.4458-1-dummy@example.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:7PuzMI7Vbu3W6MMinr8Ke/P1Y65DJlmCDHbZ5OhtotMzUu4D0c/
+ 2g/An44dx00OWlZnX9KcheKJhVPUhRTSg4Byc7gvb274BI+sKgxfQ4Efv9cd/8Cu0nYPbfe
+ HJWr//Cu5VZ3QLT4ws+X3YFXoCE7DDH0eplg5dwcRKoKVbuh0WMGURgSYpirrBVAamJHZTZ
+ e3DvXjlSDpS8hzbpVFYkg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g0kJDg3e2dg=:1diPSB5dPeq1Usy5CnSk+A
+ AlmPK7lsLx2DRPDnXUmty4Wve+mlm2OFlodNcDvJ9YxcZrB17J+OJQck5dRp/PjIxOrQzVYzq
+ cwvlgMNsveD1ZG0RjX6XG8qQ3x0mCjeBfkNZMb+oj1ZE3jkiSBEUROeH/4NUsDMWgeMFVLQQ4
+ QatdMATtgfz8Dm2Wp7knJm4/RyFNrL7hmh2bWDGD3LBS9uYZ0Tz5aN5BbemFWcg5MKkKQZQv2
+ fh58SYDwv9CD1vopb9inj8lCn6EwCKKddLshH8PU2o+Sow4JvvjyWAA4mwBLLf9dq7kZwz/uZ
+ zIZrzXredalnDVnGbz4YBW0n9mXwwlCxnXCdXBibSRdJ2bjp0z+6azenFQIDVJkmaWTZI7jbe
+ YRAnh9ytWLA6UmNiTwQa2XdLWLHdaj+rV3iGtwBEX6aEPH+clSSDzehd4DvMixsEI+w9Kcdlq
+ XOcuk97XNCq+cJ2AodW6idikWlcmLiOwq6l0dce0xESzqlILOTySlc9NeQbWJauMGDgV+XGTW
+ Lhk4h77qocsIifCEwfcZUe+4fTC50nlF4KM2zy9n6NU3G8rFX9EBOBCfdCiuIs2eei2limKPc
+ GjfHG+Jwxbi6Lb/i7wMPu73Bribsfl6fN3OIHFGwTG8wRKHvGEho/U3uEr376/E7RimNM8Ysm
+ u+CSYnUX4Zuej45Y/qHv4hwSQ/kh8RMEEJx+MckbsYxiOOtxVxhPJS2AQVCThH5kiC6MuWfjc
+ jeNB6IWgKLRtAliBn6EZTTsYIdrkiyaGs97TuUZP6FeBqfFIetXzXXI3o/dWzil7fh96dIwEo
+ fgNUrFznhl1i85DcLAvuRjdoEn/FA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/10/18 18:34, Dummy Name wrote:
-> From: Gabriele Mazzotta <gabriele.mzt@gmail.com>
-> 
-> Unchanged lines are prefixed with a white-space, thus unchanged lines
-> starting with either " <" or " >" are mistaken for submodule changes.
-> Check if a line starts with either "  <" or "  >" only if we listing
-> the changes of a submodule.
-> 
-> Signed-off-by: Gabriele Mazzotta <gabriele.mzt@gmail.com>
+The old comment's message wasn't really clear and it was in a weird
+location for it to talk about the alias handling process as a whole.
 
-Hi,
+Rephrase and move it to the top of the while() loop to make the
+message more clear.
+---
+ git.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-I accidentally pressed Enter before I could set the committer
-to the correct value. I can resend the patch if necessary.
+diff --git a/git.c b/git.c
+index 6a81ed6fc..0f77bce7d 100644
+--- a/git.c
++++ b/git.c
+@@ -718,6 +718,11 @@ static int run_argv(int *argcp, const char ***argv)
+ 	struct strbuf env = STRBUF_INIT;
+ 
+ 	init_cmd_history(&env, &cmd_list);
++
++	/*
++	 * Check if argv[0] is a command before seeing if it is an
++	 * alias to avoid taking over existing commands
++	 */
+ 	while (1) {
+ 		/*
+ 		 * If we tried alias and futzed with our environment,
+@@ -753,11 +758,6 @@ static int run_argv(int *argcp, const char ***argv)
+ 
+ 		add_cmd_history(&env, &cmd_list, *argv[0]);
+ 
+-		/*
+-		 * It could be an alias -- this works around the insanity
+-		 * of overriding "git log" with "git show" by having
+-		 * alias.log = show
+-		 */
+ 		if (!handle_alias(argcp, argv))
+ 			break;
+ 		done_alias = 1;
+-- 
+2.19.1.450.ga4b8ab536
 
-Regards,
-Gabriele
