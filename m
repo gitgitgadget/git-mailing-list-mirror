@@ -7,93 +7,80 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9931F453
-	for <e@80x24.org>; Sun, 21 Oct 2018 16:34:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E33961F453
+	for <e@80x24.org>; Sun, 21 Oct 2018 16:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727870AbeJVAtM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Oct 2018 20:49:12 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37654 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727763AbeJVAtM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Oct 2018 20:49:12 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g9-v6so1020931wrq.4
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 09:34:20 -0700 (PDT)
+        id S1727989AbeJVAyf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Oct 2018 20:54:35 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44612 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727872AbeJVAyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Oct 2018 20:54:35 -0400
+Received: by mail-wr1-f68.google.com with SMTP id q6-v6so5987175wrw.11
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 09:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EAKldO0n3u/BcFGrg3p3pAObsH+ZGQcF8mJFJmMpLaM=;
-        b=Bl5QSfDj2pyQvc1uqP/+szRBYV2wjpjmcFAkH4cLDcbz0q6KxHJnQuOHhT3cBXpgX8
-         qg20pE0L1rvoJ9s3AinDIQy6WnmjKyPnpprBcafUdQHiQqRJjeehTb6FtzRv/rgonjLR
-         13V34GVatDsYvSRpGBJqfW/QMMYBM9RIvV6szL9woRXwhGv3tM3qQ8bgXy7Yox/fDHcy
-         KCVjkzkL//sCQYkd0EAhBCp4yrdG8qnaih/Zx7a8XT5hqG/icTErjTxaZ1C0A0JKklzj
-         pA7boJ8drtrDNM2Zf91HV+kLY0rMSaCY9L0UpbK6/MNDq2dskZtiWn5BSJaNqUB1DexS
-         +amQ==
+        h=subject:to:cc:references:from:message-id:date:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=SYsEqI+tgsLqRjMoqFR2F+qrShvwsV4VpKaQNEEacIo=;
+        b=lQDA6g6uekBgAoGCsDuRNoPqdEH1AJI1DFZBQVN4XtOIWv5kbHRbJaCBmuNDXn3eUZ
+         0WC7qDZgk8FR1OqiQsPXz3TRkWLumu+TdW9YCwA+KpaTzFgjjxDaSmIX96u9jJE7dfCc
+         B9bq+2hZ9dOi2ZlqqJw31+EwV6gPl39Hxz8038rg8+iwlkIU//CIYq+bSzKNADNDmq5g
+         hljAOa9KaqmARtK09XfgZXVGKNjb5lqBwucpmE7deJoepFfHKGDLEyGeS+iUJ9QA3nGV
+         ROgU8r+Z2SE+lTvbDkzsza+a7CI5z8lwRJE45bxLiDw/x0rEROu+oitslPPLn+1ZDcQ8
+         6+aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EAKldO0n3u/BcFGrg3p3pAObsH+ZGQcF8mJFJmMpLaM=;
-        b=Tb5UMK6ZaMzW+QCQWJsImWXVZE0rmUt51K63Welc0jICig9FSI6ABfD7CyzSRbB52Y
-         V+7LpJVEY4vnSbrpJzORD6h7xyPWu4UlrweTFb/P5OI8FhIsPW42FI1gWuEg7gV1iUiQ
-         Ngl/KkJFtNUkkDtxKewnEOfjZ0ZFn3xmetsKmJf6DH39q/aka0hHq/8lKKZcaSvcrUti
-         Km3qwbuRAUX5vCvMMosQ8u6UkJ9TvzxJRG26r4FOYlKe85+KhTi/bm2ge9lEYHC5B1Ds
-         R+ozWJc9qEuGggYdUrpq2361uvvChIX1qIsIdPTwxeaCVgoxfoEdYT8Ae+jsprt7pdV6
-         G2iA==
-X-Gm-Message-State: AGRZ1gJ2uaBW/kggHr5+3lCgDWpHh/ouP7L3B8YTII2DMJrTwRvT2BUT
-        epFd6gJ7OG16HWsT5PJpm047sie7QTk=
-X-Google-Smtp-Source: AJdET5dDkdTE3n4nrujaON9tvEoxHHrYM2NtB5RS3EW9tVb9fkdTVhqOibozw7StIErGhENI9LwWTA==
-X-Received: by 2002:adf:ec86:: with SMTP id z6-v6mr10979927wrn.45.1540139659172;
-        Sun, 21 Oct 2018 09:34:19 -0700 (PDT)
-Received: from xps13.fritz.box (2-230-197-194.ip203.fastwebnet.it. [2.230.197.194])
-        by smtp.gmail.com with ESMTPSA id i7-v6sm12168990wmd.41.2018.10.21.09.34.17
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SYsEqI+tgsLqRjMoqFR2F+qrShvwsV4VpKaQNEEacIo=;
+        b=E7pHanUzB2HT0a/Q/peaRULfA9De4e0hH3fvf08zj7/NUPSL1ozi3+0O5+ktJZIwHn
+         XK1bwgOOA8AZ8mjD0ahgUYwu1ZWf9zcwLv59Q6se0WTHHBS+/lli/S2fBuzZPkGH8hOU
+         Igtv2hIVed5UNXQkUZEEtKovEIRkUgFn2LQLH65Pa6OltQDl7545DKLPlnGpSiMSTDDl
+         mZ7cDotZeQ+HmGOp1+OagEYdQh1WonNzErz8pBR4sFpdhp5IuzOX/11UmVKtisFy8G/1
+         BYEC1gsvNQbB5MO9ramUqYKbDC5CsrD/RT7FmgV0yLbw70Ny/DcdtxJh/V6EuacegZ3D
+         bf6w==
+X-Gm-Message-State: AGRZ1gId3IbKuZK9i30HlX1vTICM5yK3BuUjd19uc3e43dXS8MkTjl9q
+        S9FaYxLdjTLOfiK7a+n16CGgKMRiqIE=
+X-Google-Smtp-Source: AJdET5caIVuP7jj3nXJdepKd9nc55Pp1zyxJrEujzKSDl6o0Gtnx8utHrFzt1jW0wVwg3tkEshA3RA==
+X-Received: by 2002:adf:9d1f:: with SMTP id k31-v6mr10841497wre.18.1540139981112;
+        Sun, 21 Oct 2018 09:39:41 -0700 (PDT)
+Received: from [192.168.178.21] (2-230-197-194.ip203.fastwebnet.it. [2.230.197.194])
+        by smtp.gmail.com with ESMTPSA id t3-v6sm25923221wru.47.2018.10.21.09.39.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 09:34:18 -0700 (PDT)
-From:   Dummy Name <gabriele.mzt@gmail.com>
-X-Google-Original-From: Dummy Name <dummy@example.com>
+        Sun, 21 Oct 2018 09:39:40 -0700 (PDT)
+Subject: Re: [PATCH] gitk: Do not mistake unchanged lines with submodule
+ changes
 To:     git@vger.kernel.org
-Cc:     paulus@ozlabs.org, Gabriele Mazzotta <gabriele.mzt@gmail.com>
-Subject: [PATCH] gitk: Do not mistake unchanged lines with submodule changes
-Date:   Sun, 21 Oct 2018 18:34:01 +0200
-Message-Id: <20181021163401.4458-1-dummy@example.com>
-X-Mailer: git-send-email 2.19.1
+Cc:     paulus@ozlabs.org
+References: <20181021163401.4458-1-dummy@example.com>
+From:   Gabriele Mazzotta <gabriele.mzt@gmail.com>
+Message-ID: <fcef23d5-e2b3-cb3a-9ccf-75a0cc126d0b@gmail.com>
+Date:   Sun, 21 Oct 2018 18:39:39 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181021163401.4458-1-dummy@example.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Gabriele Mazzotta <gabriele.mzt@gmail.com>
+On 21/10/18 18:34, Dummy Name wrote:
+> From: Gabriele Mazzotta <gabriele.mzt@gmail.com>
+> 
+> Unchanged lines are prefixed with a white-space, thus unchanged lines
+> starting with either " <" or " >" are mistaken for submodule changes.
+> Check if a line starts with either "  <" or "  >" only if we listing
+> the changes of a submodule.
+> 
+> Signed-off-by: Gabriele Mazzotta <gabriele.mzt@gmail.com>
 
-Unchanged lines are prefixed with a white-space, thus unchanged lines
-starting with either " <" or " >" are mistaken for submodule changes.
-Check if a line starts with either "  <" or "  >" only if we listing
-the changes of a submodule.
+Hi,
 
-Signed-off-by: Gabriele Mazzotta <gabriele.mzt@gmail.com>
----
- gitk | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I accidentally pressed Enter before I could set the committer
+to the correct value. I can resend the patch if necessary.
 
-diff --git a/gitk b/gitk
-index a14d7a1..dd4bbbf 100755
---- a/gitk
-+++ b/gitk
-@@ -8191,11 +8191,11 @@ proc parseblobdiffline {ids line} {
- 	} else {
- 	    $ctext insert end "$line\n" filesep
- 	}
--    } elseif {![string compare -length 3 "  >" $line]} {
-+    } elseif {$currdiffsubmod != "" && ![string compare -length 3 "  >" $line]} {
- 	set $currdiffsubmod ""
- 	set line [encoding convertfrom $diffencoding $line]
- 	$ctext insert end "$line\n" dresult
--    } elseif {![string compare -length 3 "  <" $line]} {
-+    } elseif {$currdiffsubmod != "" && ![string compare -length 3 "  <" $line]} {
- 	set $currdiffsubmod ""
- 	set line [encoding convertfrom $diffencoding $line]
- 	$ctext insert end "$line\n" d0
--- 
-2.19.1
-
+Regards,
+Gabriele
