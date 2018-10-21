@@ -2,110 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A72321F453
-	for <e@80x24.org>; Sun, 21 Oct 2018 08:41:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A19671F453
+	for <e@80x24.org>; Sun, 21 Oct 2018 10:01:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727126AbeJUQzA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Oct 2018 12:55:00 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:45581 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726982AbeJUQzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Oct 2018 12:55:00 -0400
-Received: by mail-lj1-f193.google.com with SMTP id j4-v6so34250821ljc.12
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 01:41:25 -0700 (PDT)
+        id S1727465AbeJUSOp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Oct 2018 14:14:45 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:55527 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726980AbeJUSOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Oct 2018 14:14:44 -0400
+Received: by mail-it1-f195.google.com with SMTP id c23-v6so8812491itd.5
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 03:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jkaHtjwOUnHpk+jBvNS31Hz2s2FAw1Dwj894NF/kKCY=;
-        b=LsbOmuUyHplJKLyNh91N4S3//D/+AfFGy3S3BI5eTvAnEw++P+AJBlqi9rqzT4muKM
-         pEVbgeUrYL3TnPNIr1AjGaxP5e3VH/tLOO5eut2nxJ7TnkDH/gMhGxvKCnW45LqqtmFR
-         NercSo4XCyqIWR+6u3Bomp81TS+bHGFA9dklDDQDS7Oqvb1JzLdqhd+a0DWW+uCCUmES
-         31osO6KDIICzIMnUb/ecVHNKPeTvmB9sqWS8D4LKO2RH2eJN5HF+4wgFFGz/sg+z0fYB
-         3ftJ4eR2YBpK/W3aJstdRmD2E4Damf/dJqM82L6j5qRv/aZ8A8e233zLkrzxpMdLaNV0
-         chAQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uEco2cTfiunoWsABbdgb0sOD/QDTpPW1D+42GSDU+7U=;
+        b=seUbj6SzU/XIrcLZKFKkqMvGCAaxyqGmUYAKlGcZ0quil3j1Tzu7FFzLRPOVbFMSan
+         xPGC2Hnnq6muQFTmhAkWuzV3s9mh/Z74Nl9nWuwXcIZHK2nBbHXW6sxnJI29w7f8+su2
+         zxvEjLt++ttargOsrQbbtuEiUHhHHCCUdGtvkmQTaIR5vAXOMfUPPmHIWiiTXEDEIGWC
+         jGsAejVUXTwsOeIobdaQXMwP3QYKCpxNaK0fIEB9aeVcaWyMyLesmxylyEDCcnXFAUCI
+         n62yH5kqLd1yKaZ5yHGK4RpM/XwwSac6kAnKatUQuvnHnkWs0HokXM2W3XTBC6B/tYY4
+         12HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jkaHtjwOUnHpk+jBvNS31Hz2s2FAw1Dwj894NF/kKCY=;
-        b=AgZPvmlhPHWDBAxsZZt9/LECvo9ibjY/Jax1jO9jCROlcuJCbxVCP0ATn/LyL9GAaE
-         1OSAeJ9pD4CFp3cqrvGYcqKrdzSt7mfULPcTU4mTZiy0xRBcB9Tlwmo3kf6Pl+kd+ev7
-         4eZZuzvaj/v+kDMFRb0a5izZJ1kxD+JxeWI/tNJl9i7pt068kCxc4tE0eUUZoU1cGhJk
-         FaI4PGBfXx/il06LDw7ZEYK4j1aETUcUqQt6bV9FP0ftfttyIgFtjgcYnFPiCMUZq6Vm
-         oDS8zIeczlepkdbkIHhNxCY2wxjEBwZfLyecdB51JLasL8Tz3fNk86wSACT+bWtAbrka
-         e3kg==
-X-Gm-Message-State: ABuFfogRbpJat39eygYYWFsPPTLHm1bfAZn61CfVUoBaxLzNN//NdcP/
-        f4Xfcrt8TvwoQn3M4ZfGxjpNhr17
-X-Google-Smtp-Source: ACcGV61+nmjsriqSN0UavB/CpcvkOi9UuS+r27P0OwbIzva5uigUIMeclk0PZtD6LK/u4nDGihuwPQ==
-X-Received: by 2002:a2e:47:: with SMTP id 68-v6mr28840876lja.123.1540111284069;
-        Sun, 21 Oct 2018 01:41:24 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d126-v6sm6163918lfe.75.2018.10.21.01.41.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 01:41:23 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] completion: use __gitcomp_builtin for format-patch
-Date:   Sun, 21 Oct 2018 10:41:02 +0200
-Message-Id: <20181021084102.8318-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.1.647.g708186aaf9
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uEco2cTfiunoWsABbdgb0sOD/QDTpPW1D+42GSDU+7U=;
+        b=R2hQU1Ov8Dn+ljG2waAduB7GnHVgjj0cNRuxLD7+0oeaTGlp6pdnAX0/Myx0ZK7WJd
+         w4pYf9c/fjB1xANq1aKjPJQiKPp+9Q56YrslCDfhYrz4Gw/bQ5tOAKRBdSO7uEPpA/J4
+         KddH+KUzkXYUdcqslmaS1Xi5/6wBFraUDldrzN4c8k33jQ15i+7H4mDH/PzhHOCAevce
+         VhOWPhINovutCOI9lhG5H7nHxPsMPNJCLK4hGoG8ZsW8X6EOMAnZHkYZfg6nqXLRGVAf
+         2IZUAkoNdJcwctbA/OUapJpMvQ7w45AQsPAUAxMptwrKkpPfRxzYkAW7Um48VxWSCM7w
+         fnIA==
+X-Gm-Message-State: ABuFfoj+jeKkc6a3ndZY9/jYllUPaOR30hzQxN9SIEpJHE++/WHRQ4ck
+        KpVvI+M3soHMn6rRphBI/crzpeaxh/iyEA6WDFM=
+X-Google-Smtp-Source: ACcGV61E8a81ubw/SnCsFtSbnZZSbU5TJv48vsOusb4ZBn2D9mnoMxA3o4iQT913jukmUZzItZcg6OzJii678svIMV8=
+X-Received: by 2002:a02:4009:: with SMTP id n9-v6mr33098833jaa.52.1540116058206;
+ Sun, 21 Oct 2018 03:00:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20181020070859.48172-1-carenas@gmail.com> <20181020164526.GA1077@tor.lan>
+In-Reply-To: <20181020164526.GA1077@tor.lan>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sun, 21 Oct 2018 03:00:43 -0700
+Message-ID: <CAPUEspjprhMSCz+tJEUhV8PbmGSuBEi71OCeq8aF=dh23_Zs-g@mail.gmail.com>
+Subject: Re: [PATCH] builtin/receive-pack: dead initializer for retval in check_nonce
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This helps format-patch gain completion for a couple new options,
-notably --range-diff.
+On Sat, Oct 20, 2018 at 9:45 AM Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+>
+> The motivation feels a little bit weak, at least to me.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Of course it will be even better if I could complete the ref for
- --range-diff=, but maybe another day.
+I have to admit, I was sitting on this patch for a while for the same reaso=
+n
+but I should had made a more compelling commit message either way and
+will definitely fix that with v2.
 
- contrib/completion/git-completion.bash | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+the point was that setting the variable to BAD originally seemed to be lega=
+cy
+from the original version of the code, specially considering that the newer
+version was setting it to SLOB at the last "else".
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c8fdcf8644..065b922777 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1533,12 +1533,8 @@ _git_fetch ()
- }
- 
- __git_format_patch_options="
--	--stdout --attach --no-attach --thread --thread= --no-thread
--	--numbered --start-number --numbered-files --keep-subject --signoff
--	--signature --no-signature --in-reply-to= --cc= --full-index --binary
--	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
--	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
--	--output-directory --reroll-count --to= --quiet --notes
-+	--full-index --not --all --no-prefix --src-prefix=
-+	--dst-prefix= --notes
- "
- 
- _git_format_patch ()
-@@ -1551,7 +1547,7 @@ _git_format_patch ()
- 		return
- 		;;
- 	--*)
--		__gitcomp "$__git_format_patch_options"
-+		__gitcomp_builtin format-patch "$__git_format_patch_options"
- 		return
- 		;;
- 	esac
--- 
-2.19.1.647.g708186aaf9
+the code was written in a way that would make all those assignments to BAD
+explicit (even if it wasn't needed, since it was initialized to that
+value) and so
+it would seem better IMHO to use the compiler to remind us that this variab=
+le
+MUST be set to the right value than setting the most likely value by defaul=
+t.
 
+> Initializing a variable to "BAD" in the beginning can be a good thing
+> for two reasons:
+> - There is a complex if-elseif chain, which should set retval
+>   in any case, this is at least what I expect taking a very quick look at=
+ the
+>   code:
+>         const char *retval =3D NONCE_BAD;
+>
+>         if (!nonce) {
+>                 retval =3D NONCE_MISSING;
+>                 goto leave;
+>         } else if (!push_cert_nonce) {
+>                 retval =3D NONCE_UNSOLICITED;
+>                 goto leave;
+>         } else if (!strcmp(push_cert_nonce, nonce)) {
+>                 retval =3D NONCE_OK;
+>                 goto leave;
+>         }
+>         # And here I started to wonder if we should have an else or not.
+>         # Having retval NONCE_BAD set to NONCE:BAD in the beginning makes
+>         # it clear, that we are save without the else.
+>         # As an alternative, we could have coded like this:
+>
+>         const char *retval;
+>
+>         if (!nonce) {
+>                 retval =3D NONCE_MISSING;
+>                 goto leave;
+>         } else if (!push_cert_nonce) {
+>                 retval =3D NONCE_UNSOLICITED;
+>                 goto leave;
+>         } else if (!strcmp(push_cert_nonce, nonce)) {
+>                 retval =3D NONCE_OK;
+>                 goto leave;
+>         } else {
+>                 /* Set to BAD, until we know better further down */
+>                 retval =3D NONCE_BAD;
+>         }
+>
+> # The second reason is that some compilers don't understand this complex
+> # stuff either, and through out a warning, like
+> # "retval may be uninitialized" or something in that style.
+> # This is very compiler dependent.
+
+FWIW I did test with gcc (from 4.9 to 8) and clang 7 (linux) and 10
+(macos) and didn't
+trigger any warning.
+
+> So yes, the current code may seem to be over-eager and ask for optimizati=
+on,
+> but we don't gain more that a couple of nano-seconds or so.
+> The good thing is that  we have the code a little bit more robust, when c=
+hanges are done
+> in the future.
+
+on the other hand was able to trigger a warning if the code was changed so =
+some
+path will leave retval uninitialized (after adding
+-Wmaybe-uninitialized to gcc and -Wsometimes-uninitialized to clang)
+since there was no longer a default of BAD (probably incorrectly) that
+would be returned in case setting retval to the
+right value was forgotten.
+
+Carlo
