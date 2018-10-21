@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF62A1F453
-	for <e@80x24.org>; Sun, 21 Oct 2018 08:09:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00A1C1F453
+	for <e@80x24.org>; Sun, 21 Oct 2018 08:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727348AbeJUQWs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Oct 2018 12:22:48 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:39123 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727291AbeJUQWs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Oct 2018 12:22:48 -0400
-Received: by mail-lj1-f193.google.com with SMTP id p1-v6so34233585ljg.6
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 01:09:16 -0700 (PDT)
+        id S1727363AbeJUQWt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Oct 2018 12:22:49 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:44885 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727219AbeJUQWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Oct 2018 12:22:49 -0400
+Received: by mail-lf1-f68.google.com with SMTP id m18-v6so28081093lfl.11
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 01:09:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZAQtjldgr3Xllzn97vTv0fiD3FA5oTWY2N6klV3tFrI=;
-        b=bh+hT0wkVJQyq0JVf+e9LsSdAjZXxqMvpmuFYhUzx8ca1xAeMU5vYyCTo5zR10n1/N
-         xehmCkphZ1NPR71boeuTwf/fJhplNRXiRU2ozUW2XgBD/DEF6d3xkbaevXs12vHU69CN
-         I2OR/cXctGYfhM6F8OG0V/SxhGbrKCQ3V2eWbKAPNc67mBUkCL1wwukPt1Zg0qkIOlHl
-         aJcsOzSPFubz/TKDbtbH3qXCrveWP9jSLlS4rUtdW2Kvbcuj5ybnZr10tEvQWsrCsJvS
-         H8JmWJshXjoI75CNnFYjBmKIjYpnRqJlLcMTuznA5P9LZMJtUsNuwlVko5e7cgvg3+5k
-         syFQ==
+        bh=KQSJ/OJiKdgDiHynUxM85a5wcFSvPZI24npdJx7rbnc=;
+        b=EDctusfSNmL1YqLUnvz84vZOpjp1Eaqc5Qs9mczX6zX+67P22zmwVPfMHtxh1KAZ1l
+         lzVYzNDG1X0vXSOmayRpjHbeNBMik+t2HyMZazXCa/mxwE2jc6sp0uAPYv+fwcKfOwRS
+         YVqg88jbLWlTYFOOnRnhwQLBRHbBwcpTnNWnX5dGBzzxxECM+bkqoEB1sQaPf30vwQrx
+         eA3uY3BOJZLfi2l6pkrYLWcHcBjRcXcJUCTlDgyncFYwp6AbJWw6ZGIskhXcmqK2s7nw
+         Qljp9o+7bAUi+h5diEANOR/Uo/ejzuVLsA8l/5v4gMbCBBhikBpbmoNIUEyF0460d4wb
+         Va5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZAQtjldgr3Xllzn97vTv0fiD3FA5oTWY2N6klV3tFrI=;
-        b=kafkHG6n+KTnO3i1LsB6KDTLhzlQ4yC7pSXogKKYRPHXt9ppX+1V8rE07HxO2YprXj
-         ViaS9eYTFeWdsmmrjk1X6gYC6Ul0joTNgxuDv1/wQv9gAdDqGICK2hTGinVi44CaikEH
-         FkvmQEDWz0l3fmIN+cMzVpTOsmIOuDdgqBDOY+Z0P2Z9WyaZj9xbRo1bqRQJj5Is+9pW
-         nXPK64qWbHef7EsKL1qP3O8Od9H96/+Ap3SctnN4bVzd1V+TX1WzAdUm+MLGIuIK8ucO
-         UnsXySRQInsvWKwW9jZlgc2JkJjYIKWCv9b4xBtb/Vt+zwdigWIQJbJ+mSvFBtfSiZdy
-         uYaw==
-X-Gm-Message-State: ABuFfoh7BAl2N+nDKCc31B0iP7hZi+4UTXIaRUEdHZ3cU3TSCLqgKNcP
-        ROu4SSZd3Aq/ZbCMMB0aehE=
-X-Google-Smtp-Source: ACcGV61XAhQFGfJG13H6OCIGaXxk+vQJHQVIEeRbTqDgF0p52Uj3mJykh45znkX+RKSgaxbw0zmHkw==
-X-Received: by 2002:a2e:908:: with SMTP id 8-v6mr25886723ljj.1.1540109355197;
-        Sun, 21 Oct 2018 01:09:15 -0700 (PDT)
+        bh=KQSJ/OJiKdgDiHynUxM85a5wcFSvPZI24npdJx7rbnc=;
+        b=GilIxvcSBYGlGwsk5jn8t3zrp/DsdcDXGHAZxjhGpLFP0buMChtWCSdMOQXwubZi6G
+         GazmmJjWDE7xb8AN0qlc7ZHou5Nb5uEVNaakJ3PC6bWWVquvWDJdPstCVICN5LmGHtPg
+         xXCkHZQXxXD0TfVbxe9f1HsVigk5o6FdJmGV3QDskOZ2ADlZuVAtE9KPXOW2DJiDxwFt
+         kMz+RIye2E+BnttzS6LNQD37ZF9JKdcjhybBAoJ7cbEG4VyYkyhmgmRt6KbY8469Jd34
+         3d2i7J2NPXvfNbc000ukyADFtlx4HRiVgJd8/o4TmX6INA3txPFJsnlsAaVb4nPsgSYu
+         7M7A==
+X-Gm-Message-State: ABuFfojsEkNhtRU5d78rkwsl9zszS6pm3SIytKxHRRw+tYHtBaicwRRy
+        gOt13XzuAQIEtc+OuHrfHlQ=
+X-Google-Smtp-Source: ACcGV60O0VD5/mP+ElHnWOcw/ApPyt+P0fpZcwYP7Z8LTVfvHYUH3GnBzn49VvIaJD0ckVpQhXnkhw==
+X-Received: by 2002:a19:1202:: with SMTP id h2mr992945lfi.122.1540109356597;
+        Sun, 21 Oct 2018 01:09:16 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id k9-v6sm6385889lje.51.2018.10.21.01.09.14
+        by smtp.gmail.com with ESMTPSA id k9-v6sm6385889lje.51.2018.10.21.01.09.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 01:09:14 -0700 (PDT)
+        Sun, 21 Oct 2018 01:09:15 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         peff@peff.net, sbeller@google.com
-Subject: [PATCH v3 7/8] fsck: check HEAD and reflog from other worktrees
-Date:   Sun, 21 Oct 2018 10:08:58 +0200
-Message-Id: <20181021080859.3203-8-pclouds@gmail.com>
+Subject: [PATCH v3 8/8] reflog expire: cover reflog from all worktrees
+Date:   Sun, 21 Oct 2018 10:08:59 +0200
+Message-Id: <20181021080859.3203-9-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181021080859.3203-1-pclouds@gmail.com>
 References: <20180929191029.13994-1-pclouds@gmail.com>
@@ -69,176 +69,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fsck is a repo-wide operation and should check all references no
-matter which worktree they are associated to.
-
 Reported-by: Jeff King <peff@peff.net>
-Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/fsck.c  | 55 ++++++++++++++++++++++++++++++++++---------------
- t/t1450-fsck.sh | 35 +++++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+), 17 deletions(-)
+ Documentation/git-reflog.txt |  7 +++++-
+ builtin/reflog.c             | 46 ++++++++++++++++++++++++++++++++----
+ t/t1410-reflog.sh            | 15 ++++++++++++
+ 3 files changed, 63 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 0d39462058..3c3e0f06e7 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -19,6 +19,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "run-command.h"
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 472a6808cd..ff487ff77d 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -20,7 +20,7 @@ depending on the subcommand:
+ 'git reflog' ['show'] [log-options] [<ref>]
+ 'git reflog expire' [--expire=<time>] [--expire-unreachable=<time>]
+ 	[--rewrite] [--updateref] [--stale-fix]
+-	[--dry-run | -n] [--verbose] [--all | <refs>...]
++	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
+ 'git reflog delete' [--rewrite] [--updateref]
+ 	[--dry-run | -n] [--verbose] ref@\{specifier\}...
+ 'git reflog exists' <ref>
+@@ -72,6 +72,11 @@ Options for `expire`
+ --all::
+ 	Process the reflogs of all references.
+ 
++--single-worktree::
++	By default when `--all` is specified, reflogs from all working
++	trees are processed. This option limits the processing to reflogs
++	from the current working tree only.
++
+ --expire=<time>::
+ 	Prune entries older than the specified time. If this option is
+ 	not specified, the expiration time is taken from the
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index b5941c1ff3..7a85e4b164 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -10,6 +10,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "reachable.h"
 +#include "worktree.h"
  
- #define REACHABLE 0x0001
- #define SEEN      0x0002
-@@ -444,7 +445,11 @@ static int fsck_handle_reflog_ent(struct object_id *ooid, struct object_id *noid
- static int fsck_handle_reflog(const char *logname, const struct object_id *oid,
- 			      int flag, void *cb_data)
- {
--	for_each_reflog_ent(logname, fsck_handle_reflog_ent, (void *)logname);
-+	struct strbuf refname = STRBUF_INIT;
-+
-+	strbuf_worktree_ref(cb_data, &refname, logname);
-+	for_each_reflog_ent(refname.buf, fsck_handle_reflog_ent, refname.buf);
-+	strbuf_release(&refname);
+ /* NEEDSWORK: switch to using parse_options */
+ static const char reflog_expire_usage[] =
+@@ -52,6 +53,7 @@ struct collect_reflog_cb {
+ 	struct collected_reflog **e;
+ 	int alloc;
+ 	int nr;
++	struct worktree *wt;
+ };
+ 
+ /* Remember to update object flag allocation in object.h */
+@@ -330,13 +332,27 @@ static int push_tip_to_list(const char *refname, const struct object_id *oid,
  	return 0;
  }
  
-@@ -482,20 +487,34 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
- 	return 0;
- }
- 
--static int fsck_head_link(const char **head_points_at,
-+static int fsck_head_link(const char *head_ref_name,
-+			  const char **head_points_at,
- 			  struct object_id *head_oid);
- 
- static void get_default_heads(void)
- {
-+	struct worktree **worktrees, **p;
- 	const char *head_points_at;
- 	struct object_id head_oid;
- 
--	fsck_head_link(&head_points_at, &head_oid);
--	if (head_points_at && !is_null_oid(&head_oid))
--		fsck_handle_ref("HEAD", &head_oid, 0, NULL);
- 	for_each_rawref(fsck_handle_ref, NULL);
--	if (include_reflogs)
--		for_each_reflog(fsck_handle_reflog, NULL);
-+
-+	worktrees = get_worktrees(0);
-+	for (p = worktrees; *p; p++) {
-+		struct worktree *wt = *p;
-+		struct strbuf ref = STRBUF_INIT;
-+
-+		strbuf_worktree_ref(wt, &ref, "HEAD");
-+		fsck_head_link(ref.buf, &head_points_at, &head_oid);
-+		if (head_points_at && !is_null_oid(&head_oid))
-+			fsck_handle_ref(ref.buf, &head_oid, 0, NULL);
-+		strbuf_release(&ref);
-+
-+		if (include_reflogs)
-+			refs_for_each_reflog(get_worktree_ref_store(wt),
-+					     fsck_handle_reflog, wt);
++static int is_head(const char *refname)
++{
++	switch (ref_type(refname)) {
++	case REF_TYPE_OTHER_PSEUDOREF:
++	case REF_TYPE_MAIN_PSEUDOREF:
++		if (parse_worktree_ref(refname, NULL, NULL, &refname))
++			BUG("not a worktree ref: %s", refname);
++		break;
++	default:
++		break;
 +	}
-+	free_worktrees(worktrees);
- 
- 	/*
- 	 * Not having any default heads isn't really fatal, but
-@@ -584,34 +603,36 @@ static void fsck_object_dir(const char *path)
- 	stop_progress(&progress);
- }
- 
--static int fsck_head_link(const char **head_points_at,
-+static int fsck_head_link(const char *head_ref_name,
-+			  const char **head_points_at,
- 			  struct object_id *head_oid)
++	return !strcmp(refname, "HEAD");
++}
++
+ static void reflog_expiry_prepare(const char *refname,
+ 				  const struct object_id *oid,
+ 				  void *cb_data)
  {
- 	int null_is_error = 0;
+ 	struct expire_reflog_policy_cb *cb = cb_data;
  
- 	if (verbose)
--		fprintf(stderr, "Checking HEAD link\n");
-+		fprintf(stderr, "Checking %s link\n", head_ref_name);
+-	if (!cb->cmd.expire_unreachable || !strcmp(refname, "HEAD")) {
++	if (!cb->cmd.expire_unreachable || is_head(refname)) {
+ 		cb->tip_commit = NULL;
+ 		cb->unreachable_expire_kind = UE_HEAD;
+ 	} else {
+@@ -388,8 +404,19 @@ static int collect_reflog(const char *ref, const struct object_id *oid, int unus
+ {
+ 	struct collected_reflog *e;
+ 	struct collect_reflog_cb *cb = cb_data;
++	struct strbuf newref = STRBUF_INIT;
++
++	/*
++	 * Avoid collecting the same shared ref multiple times because
++	 * they are available via all worktrees.
++	 */
++	if (!cb->wt->is_current && ref_type(ref) == REF_TYPE_NORMAL)
++		return 0;
++
++	strbuf_worktree_ref(cb->wt, &newref, ref);
++	FLEX_ALLOC_STR(e, reflog, newref.buf);
++	strbuf_release(&newref);
  
--	*head_points_at = resolve_ref_unsafe("HEAD", 0, head_oid, NULL);
-+	*head_points_at = resolve_ref_unsafe(head_ref_name, 0, head_oid, NULL);
- 	if (!*head_points_at) {
- 		errors_found |= ERROR_REFS;
--		return error("Invalid HEAD");
-+		return error("Invalid %s", head_ref_name);
- 	}
--	if (!strcmp(*head_points_at, "HEAD"))
-+	if (!strcmp(*head_points_at, head_ref_name))
- 		/* detached HEAD */
- 		null_is_error = 1;
- 	else if (!starts_with(*head_points_at, "refs/heads/")) {
- 		errors_found |= ERROR_REFS;
--		return error("HEAD points to something strange (%s)",
--			     *head_points_at);
-+		return error("%s points to something strange (%s)",
-+			     head_ref_name, *head_points_at);
- 	}
- 	if (is_null_oid(head_oid)) {
- 		if (null_is_error) {
- 			errors_found |= ERROR_REFS;
--			return error("HEAD: detached HEAD points at nothing");
-+			return error("%s: detached HEAD points at nothing",
-+				     head_ref_name);
- 		}
--		fprintf(stderr, "notice: HEAD points to an unborn branch (%s)\n",
--			*head_points_at + 11);
-+		fprintf(stderr, "notice: %s points to an unborn branch (%s)\n",
-+			head_ref_name, *head_points_at + 11);
- 	}
- 	return 0;
- }
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 0f2dd26f74..28201677d5 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -101,6 +101,41 @@ test_expect_success 'HEAD link pointing at a funny place' '
- 	grep "HEAD points to something strange" out
+-	FLEX_ALLOC_STR(e, reflog, ref);
+ 	oidcpy(&e->oid, oid);
+ 	ALLOC_GROW(cb->e, cb->nr + 1, cb->alloc);
+ 	cb->e[cb->nr++] = e;
+@@ -512,7 +539,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ {
+ 	struct expire_reflog_policy_cb cb;
+ 	timestamp_t now = time(NULL);
+-	int i, status, do_all;
++	int i, status, do_all, all_worktrees = 1;
+ 	int explicit_expiry = 0;
+ 	unsigned int flags = 0;
+ 
+@@ -549,6 +576,8 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 			flags |= EXPIRE_REFLOGS_UPDATE_REF;
+ 		else if (!strcmp(arg, "--all"))
+ 			do_all = 1;
++		else if (!strcmp(arg, "--single-worktree"))
++			all_worktrees = 0;
+ 		else if (!strcmp(arg, "--verbose"))
+ 			flags |= EXPIRE_REFLOGS_VERBOSE;
+ 		else if (!strcmp(arg, "--")) {
+@@ -577,10 +606,19 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 
+ 	if (do_all) {
+ 		struct collect_reflog_cb collected;
++		struct worktree **worktrees, **p;
+ 		int i;
+ 
+ 		memset(&collected, 0, sizeof(collected));
+-		for_each_reflog(collect_reflog, &collected);
++		worktrees = get_worktrees(0);
++		for (p = worktrees; *p; p++) {
++			if (!all_worktrees && !(*p)->is_current)
++				continue;
++			collected.wt = *p;
++			refs_for_each_reflog(get_worktree_ref_store(*p),
++					     collect_reflog, &collected);
++		}
++		free_worktrees(worktrees);
+ 		for (i = 0; i < collected.nr; i++) {
+ 			struct collected_reflog *e = collected.e[i];
+ 			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 388b0611d8..3e053532eb 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -368,4 +368,19 @@ test_expect_success 'continue walking past root commits' '
+ 	)
  '
  
-+test_expect_success 'HEAD link pointing at a funny object (from different wt)' '
-+	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
-+	test_when_finished "rm -rf .git/worktrees wt" &&
-+	git worktree add wt &&
-+	mv .git/HEAD .git/SAVED_HEAD &&
-+	echo $ZERO_OID >.git/HEAD &&
-+	# avoid corrupt/broken HEAD from interfering with repo discovery
-+	test_must_fail git -C wt fsck 2>out &&
-+	grep "main-worktree/HEAD: detached HEAD points" out
++test_expect_success 'expire with multiple worktrees' '
++	git init main-wt &&
++	(
++		cd main-wt &&
++		test_tick &&
++		test_commit foo &&
++		git  worktree add link-wt &&
++		test_tick &&
++		test_commit -C link-wt foobar &&
++		test_tick &&
++		git reflog expire --verbose --all --expire=$test_tick &&
++		test_must_be_empty .git/worktrees/link-wt/logs/HEAD
++	)
 +'
 +
-+test_expect_success 'other worktree HEAD link pointing at a funny object' '
-+	test_when_finished "rm -rf .git/worktrees other" &&
-+	git worktree add other &&
-+	echo $ZERO_OID >.git/worktrees/other/HEAD &&
-+	test_must_fail git fsck 2>out &&
-+	grep "worktrees/other/HEAD: detached HEAD points" out
-+'
-+
-+test_expect_success 'other worktree HEAD link pointing at missing object' '
-+	test_when_finished "rm -rf .git/worktrees other" &&
-+	git worktree add other &&
-+	echo "Contents missing from repo" | git hash-object --stdin >.git/worktrees/other/HEAD &&
-+	test_must_fail git fsck 2>out &&
-+	grep "worktrees/other/HEAD: invalid sha1 pointer" out
-+'
-+
-+test_expect_success 'other worktree HEAD link pointing at a funny place' '
-+	test_when_finished "rm -rf .git/worktrees other" &&
-+	git worktree add other &&
-+	echo "ref: refs/funny/place" >.git/worktrees/other/HEAD &&
-+	test_must_fail git fsck 2>out &&
-+	grep "worktrees/other/HEAD points to something strange" out
-+'
-+
- test_expect_success 'email without @ is okay' '
- 	git cat-file commit HEAD >basis &&
- 	sed "s/@/AT/" basis >okay &&
+ test_done
 -- 
 2.19.1.647.g708186aaf9
 
