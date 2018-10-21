@@ -2,98 +2,293 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD3F51F453
-	for <e@80x24.org>; Sun, 21 Oct 2018 19:40:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A98981F453
+	for <e@80x24.org>; Sun, 21 Oct 2018 21:17:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727999AbeJVD4D (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Oct 2018 23:56:03 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:34031 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727323AbeJVD4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Oct 2018 23:56:03 -0400
-Received: by mail-wm1-f66.google.com with SMTP id z25-v6so7696329wmf.1
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 12:40:39 -0700 (PDT)
+        id S1727137AbeJVFdG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 01:33:06 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36624 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbeJVFdG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 01:33:06 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y16so42742924wrw.3
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 14:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=45UWn966oBQCiKImQiKKcv8Dx1a1ifCu5v0J++7F0Jw=;
-        b=StXWNVWMnh4/p3duE7zgVBBTLYKUa4LfWiFr+MuWfZI3jizUJ2+zdgardUAABrOlo8
-         vBljVDdBtT/unYRcxfaebseKcUQY+o+lnYEClKvapIB9ZBLc8H96PakpHDg1Yo7lK0Er
-         W2UCJA/O2BzpjMgilo3qMTxD1NtYF/jxgWd2SYBNUNLRAGU/5f38GclZX3hfnAeSVpfB
-         vZCq4xEx9JI4CZR+7lggKaAN76hUTfshEdLXTrCpTYFn5V8qxKjpYnycxnC05NhfwrAD
-         kIBT0ZBqWeRlxKCKpyKaJar33eRTL5D4sRcjFxTF+uDiTsAY7dWBvtywRjByEPbQtO1E
-         loPQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5i5KA7eseriW1AF7XGAc2/72KMVTE9aLgUjqf/dUE2M=;
+        b=f0ggNyiMZD3kMvIA/FsajQJW0MTeKbSkCEK86b9yxbroc1IXy9qAePqjYwbyLUBO+I
+         9udNnCPUA+vozw5tEQaROc9BE85X1+naHz+XNpURiHHXL4E77EaH/W74wIO2LkvjSRIk
+         4bN6YtAD32GglQa+/OXO2rAbDqAopAY0kshdSoSAj4L7430qhgo8Q6qDaJGuM3Do9h5W
+         o2oSOmTlGXai4GpMwS5JTgpRgj+QLm6U818v4hUxZefYIaB7VYD7WWOi5EDvL04vsnNy
+         YhwcGOtMV5YsN3xjM092PzC7kHqcDi4TTQdWHFTjL/OG44SynQoCwKtqp26ooAxvrQij
+         FyeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=45UWn966oBQCiKImQiKKcv8Dx1a1ifCu5v0J++7F0Jw=;
-        b=ONPm/UlOYZkeK6YhauCH4NBZLJNLHBsOmfcFLz8MpYBk6r8CEPr81Wmt/fctgKz/eX
-         xCY2dydj6xjsvxwdl4hOCKI7cByEa1vGny+m3oEsSEcO0x0C6945UaTDcF2C2VKilD2U
-         /k/IUCXJWnaLGXcxN4SwWiL9JvbbyK0GfOVIFT3pHBDm09YNAfYHMDbdiTxLka0ELpya
-         MVMGxkM3erfQu/wrCW7HbtL0Tr1Wqdt1Ub93I4IKZxXJNYEtJsyVgfRDOIkPhgzY8v5S
-         LCYfOGf06MoroJQHkXvViRFoOO6Q5+l5OCPKuC39fIzLd5gGQ852WeMkv7HLDhtDPWv4
-         WbWA==
-X-Gm-Message-State: ABuFfoiWse2vnpOQl4JqHYA//wGEzE2N05f0UPUDoZIaYL2YkMyVGLnV
-        wt0UEBYvVOF4vkTw8+jRtlA=
-X-Google-Smtp-Source: ACcGV62RpuWEiMzQQeeNxVWTXk0XakiArhraItzP3apCcFC/W39vw4j6wY4GKJR0Dzca4ymYntdQ/Q==
-X-Received: by 2002:a1c:b0b:: with SMTP id 11-v6mr12243816wml.25.1540150838956;
-        Sun, 21 Oct 2018 12:40:38 -0700 (PDT)
-Received: from [10.41.1.6] ([185.220.70.155])
-        by smtp.gmail.com with ESMTPSA id c14-v6sm3925081wrp.8.2018.10.21.12.40.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 12:40:38 -0700 (PDT)
-Subject: Re: [PATCH 29/59] config.txt: move i18n.* to a separate file
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <20181020123848.2785-1-pclouds@gmail.com>
- <20181020123848.2785-30-pclouds@gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <04b95a91-43b3-c12a-4425-84a2f9e3e707@gmail.com>
-Date:   Sun, 21 Oct 2018 21:40:36 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=5i5KA7eseriW1AF7XGAc2/72KMVTE9aLgUjqf/dUE2M=;
+        b=ogJxDkjn6bUeMQTm48/6+rF77BVc9A6KZUJr4085aPw1tRenRBl69oERtKk0Lg+6Q1
+         4gtBfg1Mvn8idJtTEphA4Nf9mRTut08fOkV4BBWGB98KUAUddXdNdJbAcWwRRUViEfQd
+         fXYz/hpbE9GecJMAeQngfLEJ4BrzR69r/Qp2uc2ptjt5wFUqSeWMrzkdjOxNth+m3zQJ
+         1gHZMZcjV5rz912z0wMCLpF8Qjxht1qa0otyXoc34WftFWX9LAZOei0VFx/JE7KoNDAt
+         ee6dTdsx9aEBJcwzSeU9STCcKISwIHejhGbo9OsOw+AWpj+stRpcZrBdISZKoNwsqsbu
+         AoPA==
+X-Gm-Message-State: AGRZ1gLUo/z7uFg0EtL3IVEU8PJInm0JClwG0z7ZQjr1ukQfKT46qo08
+        E9c2AAphliotsFTZ7EJO/Hc=
+X-Google-Smtp-Source: AJdET5eduoiaryQ3C/QCP46z3gALgeX3K8gUPbMltJcU3w1KF0TPN01PLFm6Qn2DCltuhOrZ2QzUmQ==
+X-Received: by 2002:adf:e74c:: with SMTP id c12-v6mr5297858wrn.182.1540156643720;
+        Sun, 21 Oct 2018 14:17:23 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (abps207.neoplus.adsl.tpnet.pl. [83.8.60.207])
+        by smtp.gmail.com with ESMTPSA id t198-v6sm14943626wmd.9.2018.10.21.14.17.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 21 Oct 2018 14:17:22 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 5/7] commit/revisions: bookkeeping before refactoring
+References: <pull.25.v3.git.gitgitgadget@gmail.com>
+        <pull.25.v4.git.gitgitgadget@gmail.com>
+        <f3e291665dae94b7347621ec78721f7e0dcc86d8.1539729393.git.gitgitgadget@gmail.com>
+Date:   Sun, 21 Oct 2018 23:17:21 +0200
+In-Reply-To: <f3e291665dae94b7347621ec78721f7e0dcc86d8.1539729393.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 16 Oct 2018
+        15:36:43 -0700 (PDT)")
+Message-ID: <865zxvgftq.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-In-Reply-To: <20181020123848.2785-30-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Subject line: s/i18n/index/ 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On 20/10/2018 14:38, Nguyễn Thái Ngọc Duy wrote:
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> There are a few things that need to move around a little before
+> making a big refactoring in the topo-order logic:
+>
+> 1. We need access to record_author_date() and
+>    compare_commits_by_author_date() in revision.c. These are used
+>    currently by sort_in_topological_order() in commit.c.
+>
+> 2. Moving these methods to commit.h requires adding the author_slab
+>    definition to commit.h.
+
+Those two changes are connected, and must be kept together.
+
+> 3. The add_parents_to_list() method in revision.c performs logic
+>    around the UNINTERESTING flag and other special cases depending
+>    on the struct rev_info. Allow this method to ignore a NULL 'list'
+>    parameter, as we will not be populating the list for our walk.
+>    Also rename the method to the slightly more generic name
+>    process_parents() to make clear that this method does more than
+>    add to a list (and no list is required anymore).
+
+But as far as I can understand, this change is independent, and it could
+be put into a separate commmit.
+
+The change of function name to process_parents() and allowing for 'list'
+parameter to be NULL are related, though.
+
+>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+
+No need to split, unless there would be v5 anyway, in my opinion.
+
 > ---
->  Documentation/config.txt       | 11 +----------
->  Documentation/index-config.txt | 10 ++++++++++
->  2 files changed, 11 insertions(+), 10 deletions(-)
->  create mode 100644 Documentation/index-config.txt
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ec0f4e2161..5ba7975837 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -606,16 +606,7 @@ imap::
->  	The configuration variables in the 'imap' section are described
->  	in linkgit:git-imap-send[1].
->  
-> -index.threads::
-> -	Specifies the number of threads to spawn when loading the index.
-> -	This is meant to reduce index load time on multiprocessor machines.
-> -	Specifying 0 or 'true' will cause Git to auto-detect the number of
-> -	CPU's and set the number of threads accordingly. Specifying 1 or
-> -	'false' will disable multithreading. Defaults to 'true'.
+>  commit.c   | 11 +++++------
+>  commit.h   |  8 ++++++++
+>  revision.c | 18 ++++++++++--------
+>  3 files changed, 23 insertions(+), 14 deletions(-)
+>
+> diff --git a/commit.c b/commit.c
+> index d0f199e122..861a485e93 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -655,11 +655,10 @@ struct commit *pop_commit(struct commit_list **stac=
+k)
+>  /* count number of children that have not been emitted */
+>  define_commit_slab(indegree_slab, int);
+>=20=20
+> -/* record author-date for each commit object */
+> -define_commit_slab(author_date_slab, timestamp_t);
+> +implement_shared_commit_slab(author_date_slab, timestamp_t);
 
-[...]
+I see that the comment got moved to the site with
+define_shared_commit_slab(), i.e. to commit.h, instead of duplicting
+it.  All right.
+
+Sidenote: Ugh, small_caps preprocessor macros [trickery].
+
+>=20=20
+> -static void record_author_date(struct author_date_slab *author_date,
+> -			       struct commit *commit)
+> +void record_author_date(struct author_date_slab *author_date,
+> +			struct commit *commit)
+>  {
+>  	const char *buffer =3D get_commit_buffer(commit, NULL);
+>  	struct ident_split ident;
+> @@ -684,8 +683,8 @@ fail_exit:
+>  	unuse_commit_buffer(commit, buffer);
+>  }
+>=20=20
+> -static int compare_commits_by_author_date(const void *a_, const void *b_,
+> -					  void *cb_data)
+> +int compare_commits_by_author_date(const void *a_, const void *b_,
+> +				   void *cb_data)
+
+All right, this is straighforward changing record_author_date() and
+compare_commits_by_author_date() from static (file-local) functions to
+exported functions.
+
+>  {
+>  	const struct commit *a =3D a_, *b =3D b_;
+>  	struct author_date_slab *author_date =3D cb_data;
+> diff --git a/commit.h b/commit.h
+> index 2b1a734388..977d397356 100644
+> --- a/commit.h
+> +++ b/commit.h
+> @@ -8,6 +8,7 @@
+>  #include "gpg-interface.h"
+>  #include "string-list.h"
+>  #include "pretty.h"
+> +#include "commit-slab.h"
+>=20=20
+>  #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
+>  #define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
+> @@ -328,6 +329,13 @@ extern int remove_signature(struct strbuf *buf);
+>   */
+>  extern int check_commit_signature(const struct commit *commit, struct si=
+gnature_check *sigc);
+>=20=20
+> +/* record author-date for each commit object */
+> +define_shared_commit_slab(author_date_slab, timestamp_t);
+
+All right, this is needed for record_author_date() function, which is
+now exported.
+
+> +
+> +void record_author_date(struct author_date_slab *author_date,
+> +			struct commit *commit);
+> +
+> +int compare_commits_by_author_date(const void *a_, const void *b_, void =
+*unused);
+
+O.K., this is simply exporting previously static functions.
+
+>  int compare_commits_by_commit_date(const void *a_, const void *b_, void =
+*unused);
+>  int compare_commits_by_gen_then_commit_date(const void *a_, const void *=
+b_, void *unused);
+>=20=20
+> diff --git a/revision.c b/revision.c
+> index 2dcde8a8ac..36458265a0 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -768,8 +768,8 @@ static void commit_list_insert_by_date_cached(struct =
+commit *p, struct commit_li
+>  		*cache =3D new_entry;
+>  }
+>=20=20
+> -static int add_parents_to_list(struct rev_info *revs, struct commit *com=
+mit,
+> -		    struct commit_list **list, struct commit_list **cache_ptr)
+> +static int process_parents(struct rev_info *revs, struct commit *commit,
+> +			   struct commit_list **list, struct commit_list **cache_ptr)
+
+All right, straighforward rename.
+
+>  {
+>  	struct commit_list *parent =3D commit->parents;
+>  	unsigned left_flag;
+> @@ -808,7 +808,8 @@ static int add_parents_to_list(struct rev_info *revs,=
+ struct commit *commit,
+>  			if (p->object.flags & SEEN)
+>  				continue;
+>  			p->object.flags |=3D SEEN;
+> -			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
+> +			if (list)
+> +				commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
+>  		}
+>  		return 0;
+>  	}
+> @@ -847,7 +848,8 @@ static int add_parents_to_list(struct rev_info *revs,=
+ struct commit *commit,
+>  		p->object.flags |=3D left_flag;
+>  		if (!(p->object.flags & SEEN)) {
+>  			p->object.flags |=3D SEEN;
+> -			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
+> +			if (list)
+> +				commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
+
+All right, both of those is about allowing 'list' parameter to be NULL,
+and invoking commit_list_insert_by_date_cached() only if it's not NULL.
+
+>  		}
+>  		if (revs->first_parent_only)
+>  			break;
+> @@ -1091,7 +1093,7 @@ static int limit_list(struct rev_info *revs)
+>=20=20
+>  		if (revs->max_age !=3D -1 && (commit->date < revs->max_age))
+>  			obj->flags |=3D UNINTERESTING;
+> -		if (add_parents_to_list(revs, commit, &list, NULL) < 0)
+> +		if (process_parents(revs, commit, &list, NULL) < 0)
+>  			return -1;
+>  		if (obj->flags & UNINTERESTING) {
+>  			mark_parents_uninteresting(commit);
+> @@ -2913,7 +2915,7 @@ static struct commit *next_topo_commit(struct rev_i=
+nfo *revs)
+>=20=20
+>  static void expand_topo_walk(struct rev_info *revs, struct commit *commi=
+t)
+>  {
+> -	if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
+> +	if (process_parents(revs, commit, &revs->commits, NULL) < 0) {
+>  		if (!revs->ignore_missing_links)
+>  			die("Failed to traverse parents of commit %s",
+>  			    oid_to_hex(&commit->object.oid));
+> @@ -2979,7 +2981,7 @@ static enum rewrite_result rewrite_one(struct rev_i=
+nfo *revs, struct commit **pp
+>  	for (;;) {
+>  		struct commit *p =3D *pp;
+>  		if (!revs->limited)
+> -			if (add_parents_to_list(revs, p, &revs->commits, &cache) < 0)
+> +			if (process_parents(revs, p, &revs->commits, &cache) < 0)
+>  				return rewrite_one_error;
+>  		if (p->object.flags & UNINTERESTING)
+>  			return rewrite_one_ok;
+> @@ -3312,7 +3314,7 @@ static struct commit *get_revision_1(struct rev_inf=
+o *revs)
+>  				try_to_simplify_commit(revs, commit);
+>  			else if (revs->topo_walk_info)
+>  				expand_topo_walk(revs, commit);
+> -			else if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0)=
+ {
+> +			else if (process_parents(revs, commit, &revs->commits, NULL) < 0) {
+>  				if (!revs->ignore_missing_links)
+>  					die("Failed to traverse parents of commit %s",
+>  						oid_to_hex(&commit->object.oid));
+
+All those is just changing the calling convention due to function
+rename.
+
+(I wonder if such simple refactoring could have been done via Coccinelle
+patch).
+
+
+Anyway, looks good to me.
+--
+Jakub Nar=C4=99bski
