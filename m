@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8261F453
-	for <e@80x24.org>; Sun, 21 Oct 2018 08:37:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A72321F453
+	for <e@80x24.org>; Sun, 21 Oct 2018 08:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727096AbeJUQvT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Oct 2018 12:51:19 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:36569 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726980AbeJUQvT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Oct 2018 12:51:19 -0400
-Received: by mail-lj1-f196.google.com with SMTP id p89-v6so34274770ljb.3
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 01:37:44 -0700 (PDT)
+        id S1727126AbeJUQzA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Oct 2018 12:55:00 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:45581 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726982AbeJUQzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Oct 2018 12:55:00 -0400
+Received: by mail-lj1-f193.google.com with SMTP id j4-v6so34250821ljc.12
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 01:41:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Hkp183dhYDDqAJa7O0zWZ/zMwg2aTHpxW/+1lZAMdxI=;
-        b=bjT8rI6T52So81ERIaGKDno4rCUA/Od0S43KBvlIZ0tqBzDelx/Qo4J+HG38/i0IuP
-         jVQlxArudJ291qEINP3Epdi85mBMH/Yc+DoDTYQ62eISE/HQr14FXQE2HiMQctcDmA5f
-         CvIvMN+2GHTX/QnFySf9xIWVeqo/J7PSbh3Yql4DYNBUPUMMeYqDZYidl34KrlXhqxqO
-         0a+I1l+ipOxXdXPwuUM7LrAd4Wfevz1K50rc3s/onoi249cJwXezMni+mUYFjfLFb9Hc
-         lYBz9DsSBV71SAZWxASDzF3G2c+ySp4DvVbkoEmgvZIzSzlZW81FwBhk3NpKk8aOYotM
-         kt8w==
+        bh=jkaHtjwOUnHpk+jBvNS31Hz2s2FAw1Dwj894NF/kKCY=;
+        b=LsbOmuUyHplJKLyNh91N4S3//D/+AfFGy3S3BI5eTvAnEw++P+AJBlqi9rqzT4muKM
+         pEVbgeUrYL3TnPNIr1AjGaxP5e3VH/tLOO5eut2nxJ7TnkDH/gMhGxvKCnW45LqqtmFR
+         NercSo4XCyqIWR+6u3Bomp81TS+bHGFA9dklDDQDS7Oqvb1JzLdqhd+a0DWW+uCCUmES
+         31osO6KDIICzIMnUb/ecVHNKPeTvmB9sqWS8D4LKO2RH2eJN5HF+4wgFFGz/sg+z0fYB
+         3ftJ4eR2YBpK/W3aJstdRmD2E4Damf/dJqM82L6j5qRv/aZ8A8e233zLkrzxpMdLaNV0
+         chAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Hkp183dhYDDqAJa7O0zWZ/zMwg2aTHpxW/+1lZAMdxI=;
-        b=tsYyxpGkxo38kNwdXGc4OQ2OR+USbRljxiBTZ79nbGZ389rCCnz18em+5MZL58hxaU
-         AGgC84F5q5Vg2CNm/xq+Cri3FYjeJjdVcn48Lk06U6dtTOvapZEcYspSI/oZzPv2cLFt
-         vzhbf1QsdYcKpXL5ADJfbCk0ZVOIrMXXE7qXJ7xC6MVBegRrF0q8h5mLDYdscCVrGT93
-         MWh7E9LYDvZW2YAZJH7CkJJuiRtSD/nXbGMPG2LWAZVOmQruFe0vVQHu8xhtbErjBqAE
-         M8/NiWGfAfZUXngGgmWXKMtTgBxV2X7uz1Ov8SO/UdgkH6EC2p3a8pTGACtdaRET5GEx
-         DR6Q==
-X-Gm-Message-State: ABuFfohhcS8f3icwnEpBWk63Cu9c9hBoM6cUprN8z47203bZMmW5x3fA
-        Z6RKUPq46R4Je1oJiXBRH5ra2gBv
-X-Google-Smtp-Source: ACcGV61vJwoekdKwKmndO1x0b4cdAbLNvwe8paRwE+gt7mhdV00tjoasaY2pqitJb7zcB78G97U0/g==
-X-Received: by 2002:a2e:7e07:: with SMTP id z7-v6mr8343178ljc.84.1540111063181;
-        Sun, 21 Oct 2018 01:37:43 -0700 (PDT)
+        bh=jkaHtjwOUnHpk+jBvNS31Hz2s2FAw1Dwj894NF/kKCY=;
+        b=AgZPvmlhPHWDBAxsZZt9/LECvo9ibjY/Jax1jO9jCROlcuJCbxVCP0ATn/LyL9GAaE
+         1OSAeJ9pD4CFp3cqrvGYcqKrdzSt7mfULPcTU4mTZiy0xRBcB9Tlwmo3kf6Pl+kd+ev7
+         4eZZuzvaj/v+kDMFRb0a5izZJ1kxD+JxeWI/tNJl9i7pt068kCxc4tE0eUUZoU1cGhJk
+         FaI4PGBfXx/il06LDw7ZEYK4j1aETUcUqQt6bV9FP0ftfttyIgFtjgcYnFPiCMUZq6Vm
+         oDS8zIeczlepkdbkIHhNxCY2wxjEBwZfLyecdB51JLasL8Tz3fNk86wSACT+bWtAbrka
+         e3kg==
+X-Gm-Message-State: ABuFfogRbpJat39eygYYWFsPPTLHm1bfAZn61CfVUoBaxLzNN//NdcP/
+        f4Xfcrt8TvwoQn3M4ZfGxjpNhr17
+X-Google-Smtp-Source: ACcGV61+nmjsriqSN0UavB/CpcvkOi9UuS+r27P0OwbIzva5uigUIMeclk0PZtD6LK/u4nDGihuwPQ==
+X-Received: by 2002:a2e:47:: with SMTP id 68-v6mr28840876lja.123.1540111284069;
+        Sun, 21 Oct 2018 01:41:24 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id q13-v6sm6273930ljj.72.2018.10.21.01.37.41
+        by smtp.gmail.com with ESMTPSA id d126-v6sm6163918lfe.75.2018.10.21.01.41.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 01:37:42 -0700 (PDT)
+        Sun, 21 Oct 2018 01:41:23 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH] completion: fix __gitcomp_builtin no longer consider extra options
-Date:   Sun, 21 Oct 2018 10:37:31 +0200
-Message-Id: <20181021083731.8009-1-pclouds@gmail.com>
+Subject: [PATCH] completion: use __gitcomp_builtin for format-patch
+Date:   Sun, 21 Oct 2018 10:41:02 +0200
+Message-Id: <20181021084102.8318-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -67,42 +67,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-__gitcomp_builtin() has the main completion list provided by
-
-    git xxx --git-completion-helper
-
-but the caller can also add extra options that is not provided by
---git-completion-helper. The only call site that does this is "git
-difftool" completion.
-
-This support is broken by b221b5ab9b (completion: collapse extra
---no-.. options - 2018-06-06), which adds a special value "--" to mark
-that the rest of the options can be hidden by default. The commit
-forgets the fact that extra options are appended after
-"$(git xxx --git-completion-helper)", i.e. after this "--", and will
-be incorrectly hidden as well.
-
-Prepend the extra options before "$(git xxx --git-completion-helper)"
-to avoid this.
+This helps format-patch gain completion for a couple new options,
+notably --range-diff.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Of course it will be even better if I could complete the ref for
+ --range-diff=, but maybe another day.
+
+ contrib/completion/git-completion.bash | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index db7fd87b6b..c8fdcf8644 100644
+index c8fdcf8644..065b922777 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -400,7 +400,7 @@ __gitcomp_builtin ()
- 	if [ -z "$options" ]; then
- 		# leading and trailing spaces are significant to make
- 		# option removal work correctly.
--		options=" $(__git ${cmd/_/ } --git-completion-helper) $incl "
-+		options=" $incl $(__git ${cmd/_/ } --git-completion-helper) "
- 		for i in $excl; do
- 			options="${options/ $i / }"
- 		done
+@@ -1533,12 +1533,8 @@ _git_fetch ()
+ }
+ 
+ __git_format_patch_options="
+-	--stdout --attach --no-attach --thread --thread= --no-thread
+-	--numbered --start-number --numbered-files --keep-subject --signoff
+-	--signature --no-signature --in-reply-to= --cc= --full-index --binary
+-	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+-	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+-	--output-directory --reroll-count --to= --quiet --notes
++	--full-index --not --all --no-prefix --src-prefix=
++	--dst-prefix= --notes
+ "
+ 
+ _git_format_patch ()
+@@ -1551,7 +1547,7 @@ _git_format_patch ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "$__git_format_patch_options"
++		__gitcomp_builtin format-patch "$__git_format_patch_options"
+ 		return
+ 		;;
+ 	esac
 -- 
 2.19.1.647.g708186aaf9
 
