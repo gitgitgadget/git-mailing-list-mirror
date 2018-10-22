@@ -2,172 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAE0E1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 15:25:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A87E1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 15:36:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728276AbeJVXoH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 19:44:07 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:49224 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727669AbeJVXoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 19:44:07 -0400
-Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgorny)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id 8C496335C8C;
-        Mon, 22 Oct 2018 15:25:06 +0000 (UTC)
-Message-ID: <1540221901.1299.4.camel@gentoo.org>
-Subject: Re: [PATCH v4] gpg-interface.c: detect and reject multiple
- signatures on commits
-From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Mon, 22 Oct 2018 17:25:01 +0200
-In-Reply-To: <7C705597-7AA9-4C4E-904B-CE8C4F01AD24@gentoo.org>
-References: <20181020193020.28517-1-mgorny@gentoo.org>
-         <xmqqin1wyxvz.fsf@gitster-ct.c.googlers.com>
-         <7C705597-7AA9-4C4E-904B-CE8C4F01AD24@gentoo.org>
-Organization: Gentoo
-Content-Type: multipart/signed; micalg="pgp-sha512";
-        protocol="application/pgp-signature"; boundary="=-7IqbfH18CBB4pE4uyUH+"
-X-Mailer: Evolution 3.26.6 
-Mime-Version: 1.0
+        id S1728442AbeJVXzs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 19:55:48 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:35061 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727857AbeJVXzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 19:55:48 -0400
+Received: by mail-lj1-f196.google.com with SMTP id o14-v6so37432951ljj.2
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 08:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JwseJcsDeKOxHkkj2tU3uX2iZw/g9zglK/8b8nw8HhM=;
+        b=NDJEeggxXt5X24MLWcQbZwRQ/9cZboVHaRR/IYjOwMqVl+9Eh5lq9GeKEQG1b8LsKi
+         DMM1MSEIZNbT0my/gGXhOGFKbCR+nexesd+cSPovbcrTSzDnw+Y2Necxa2KQa45fHPx0
+         Kps0DZEOexPNwkY2hK4Wivg+Nc6Fw/NwpyyOB+0e3WKwjBc/2+Lgia+WQmJQ3FKhDSai
+         3W7Sz6bg4zlb98qD8hcdHO9e0DQ9Mc7ngwCVBHK0W7cbT1LBzV2u3ghrROYZurLGloMr
+         mT6X6CzrZLQK0I/e8MT2RY7mCfTqVYINq8hqnkCp/YLMGgGQtBytlzaUQOcZN1qB0pJy
+         xuaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JwseJcsDeKOxHkkj2tU3uX2iZw/g9zglK/8b8nw8HhM=;
+        b=NICU6QYDgGT42ZvSRaPBxiqRuslVr5pxW3I1vAaSnO0rYunbE1AOimQSs1WzC6lEDw
+         HV3t+6ZLzZBSxo2q2HMuTltfev7y7U+79QRtltMJTE4SK2+lhCqMeRaDsLaCyaK8jxyk
+         KhiuZcOkSukopl1o3UsWIgQ4ld6lc/w72AgR0FNW65e4UJhcB62ltL1L87fS+OVsHb6y
+         TpOGf3YEPJO96HQbv/6II498ht8t9f8lKaDy/g8YTx9QYIlnDNpjJdP0Dk2ov7QBeYa/
+         Bjkm6zwNg2+3lDqUSXL8zFkIj7uFqTJJZPXS4v6gXHx9gYXUU6JD/YxwUdeCex8MAf4G
+         yX5Q==
+X-Gm-Message-State: AGRZ1gJxq1ZmWZUQDEhjAIKdGq3VYvoK4pHOYCqtNwfEMYrksKrmJaiS
+        STp0Xi8AnjkJnVTE06z8WDvygoX2
+X-Google-Smtp-Source: ACcGV627sIhsR2IQUAWsFzqpJ4XrBmlj/pm/69Iedtb9LKAlqt3pu1wCnQsp3fQD9aNUF1QAEJBT7Q==
+X-Received: by 2002:a2e:350e:: with SMTP id z14-v6mr11099834ljz.49.1540222604334;
+        Mon, 22 Oct 2018 08:36:44 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id d2-v6sm5312405lfc.11.2018.10.22.08.36.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Oct 2018 08:36:43 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] Poison gettext with the Ook language
+Date:   Mon, 22 Oct 2018 17:36:33 +0200
+Message-Id: <20181022153633.31757-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.1.647.g708186aaf9
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The current gettext() function just replaces all strings with
+'# GETTEXT POISON #' including format strings and hides the things
+that we should be allowed to grep (like branch names, or some other
+codes) even when gettext is poisoned.
 
---=-7IqbfH18CBB4pE4uyUH+
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This patch implements the poisoned _() with a universal and totally
+legit language called Ook [1]. We could actually grep stuff even in
+with this because format strings are preserved.
 
-On Mon, 2018-10-22 at 08:04 +0000, Micha=C5=82 G=C3=B3rny wrote:
-> Dnia October 20, 2018 11:57:36 PM UTC, Junio C Hamano <gitster@pobox.com>=
- napisa=C5=82(a):
-> > Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org> writes:
-> >=20
-> > > GnuPG supports creating signatures consisting of multiple signature
-> > > packets.  If such a signature is verified, it outputs all the status
-> > > messages for each signature separately.  However, git currently does
-> >=20
-> > not
-> > > account for such scenario and gets terribly confused over getting
-> > > multiple *SIG statuses.
-> > >=20
-> > > For example, if a malicious party alters a signed commit and appends
-> > > a new untrusted signature, git is going to ignore the original bad
-> > > signature and report untrusted commit instead.  However, %GK and %GS
-> > > format strings may still expand to the data corresponding
-> > > to the original signature, potentially tricking the scripts into
-> > > trusting the malicious commit.
-> > >=20
-> > > Given that the use of multiple signatures is quite rare, git does not
-> > > support creating them without jumping through a few hoops, and
-> >=20
-> > finally
-> > > supporting them properly would require extensive API improvement, it
-> > > seems reasonable to just reject them at the moment.
-> > >=20
-> > > Signed-off-by: Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>
-> > > ---
-> > >  gpg-interface.c          | 90
-> >=20
-> > +++++++++++++++++++++++++++-------------
-> > >  t/t7510-signed-commit.sh | 26 ++++++++++++
-> > >  2 files changed, 87 insertions(+), 29 deletions(-)
-> > >=20
-> > > Changes in v4:
-> > > * switched to using skip_prefix(),
-> > > * renamed the variable to seen_exclusive_status,
-> > > * made the loop terminate early on first duplicate status seen.
-> >=20
-> > Thanks for sticking to the topic and polishing it further.  Looks
-> > very good. =20
-> >=20
-> > Will replace.
-> >=20
-> > > +	int seen_exclusive_status =3D 0;
-> > > +
-> > > +	/* Iterate over all lines */
-> > > +	for (line =3D buf; *line; line =3D strchrnul(line+1, '\n')) {
-> > > +		while (*line =3D=3D '\n')
-> > > +			line++;
-> > > +		/* Skip lines that don't start with GNUPG status */
-> > > +		if (!skip_prefix(line, "[GNUPG:] ", &line))
-> > > +			continue;
-> > > +
-> > > +		/* Iterate over all search strings */
-> > > +		for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-> > > +			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
-> > > +				if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE) {
-> > > +					if (++seen_exclusive_status > 1)
-> > > +						goto found_duplicate_status;
-> >=20
-> > Very minor point but by not using pre-increment, i.e.
-> >=20
-> > 		if (seen_exclusive_status++)
-> > 			goto found_duplicate_status;
-> >=20
-> > you can use the expression as a "have we already seen?" boolean,
-> > whic may probably be more idiomatic.
-> >=20
-> > The patch is good in the way written as-is, and this is so minor
-> > that it is not worth rerolling to only update this part.
->=20
-> Please don't merge it yet. I gave it some more thought and I think the lo=
-op refactoring may cause TRUST_* to override BADSIG (i.e. upgrade from 'bad=
-' to 'untrusted'). I'm going to verify this when I get home.
->=20
+Long term, we could implement an "ook translator" for test_i18ngrep
+and friends so that they translate English to Ook, allowing us to
+match full text while making sure the text in the code is still marked
+for translation.
 
-I was wrong.  I'm sorry about the noise.  I've reverified the logic,
-and it correct.  That is:
+[1] https://en.wikipedia.org/wiki/Unseen_University#Librarian
 
-1) for trusted signature, only GOODSIG is emitted and 'G' is returned
-correctly,
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ This started out as something fun to do while running the test suite
+ last weekend. But it turns out actually working! If this patch ends
+ up in git.git, the Librarian would be so proud!
 
-2) for untrusted signature, GOODSIG is followed by TRUST_* messages,
-so line-wise TRUST_* check replaces the 'G' with 'U',
+ gettext.c       | 54 +++++++++++++++++++++++++++++++++++++++++++++++++
+ gettext.h       |  7 ++++---
+ t/lib-rebase.sh |  2 +-
+ 3 files changed, 59 insertions(+), 4 deletions(-)
 
-3) for bad signature, only BADSIG is emitted without TRUST_* messages.
-
-Furthermore, GnuPG documentation confirms that TRUST_* is only emitted
-for good signatures [1].
-
-[1]:https://github.com/gpg/gnupg/blob/master/doc/DETAILS#trust_
-
---=20
-Best regards,
-Micha=C5=82 G=C3=B3rny
-
---=-7IqbfH18CBB4pE4uyUH+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlvN685fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
-QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
-EQoTqQ/+LylFQTISgx6NpWexKPAhXXFszRJ+NtiToQuYcLftmNp1gaPApjdjVOfm
-fCvFo0KxfE5BZ1mgC4f8r+6mk6tYSAZgox9Rpfnsbt3XsLOA1KOVYykUSV0Q5/Qd
-jRHG0DOIHccWnb9m8cReRWzmyVcTdek7TYzOl0Tuox9OPkyYRo9Tg7RzdBWH7DjA
-6vCvEkXA3TRygf+3ZowSx4d2OdLJfa5ctc//ouBTi3Xsv6EveYW+WmcaqaV7Zr4z
-IjHDBybhN1uJ2fhisJPxmMMGjF/ggbsdET07iREgHtyomdwdet/AkXTzQ9JjAUIW
-qwkwBXzYpDoCX6A2sbQZBqM2pLbb/tnMchTcOMgLofDkO+kI4iGpOHNWA9GJu3zS
-61zUTiAqSDYETvHaDZcAaan95t4OgZk0vq3lNVq2hQRwwtNSrLSJHuN5Vna6VlLb
-I0nhfu/4l1sizSIMwV0K5sPaEhHuOqqn6VkOJpGXIqhHs0zvjCJO7o0aCRZDulh9
-CmGzTDRiAYlclh7N+L6ulbXjd+FOZyJQx1VrcGWuI6hF9xXhpHjHWbMPE/YvRpl1
-vjjuCRJ0DvpgH8QZp0D4gFEBwKE81q5311HYXFJPmp8js4NUhFe4Pvs9nStHusXH
-czp9ypiSMpUs/W3j6XLXqg+ZQLklyQLQIT+vrxJ4dpeHC1Ge7Ts=
-=F4VD
------END PGP SIGNATURE-----
-
---=-7IqbfH18CBB4pE4uyUH+--
+diff --git a/gettext.c b/gettext.c
+index 7272771c8e..29901e1ddd 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -56,6 +56,60 @@ int use_gettext_poison(void)
+ }
+ #endif
+ 
++const char *gettext_poison(const char *msgid)
++{
++	/*
++	 * gettext() returns a string that is always valid. We would
++	 * need a hash map for that but let's stay simple and keep the
++	 * last 64 gettext() results. Should be more than enough.
++	 */
++	static char *bufs[64];
++	static int i;
++	struct strbuf sb = STRBUF_INIT;
++	char *buf;
++	const char *p;
++	const char *type_specifiers = "diouxXeEfFgGaAcsCSpnm%";
++
++	if (!strchr(msgid, '%'))
++		return "Eek!";
++
++	p = msgid;
++	while (*p) {
++		const char *type;
++		switch (*p) {
++		case '%':
++			/*
++			 * No strict parsing. We simply look for the end of a
++			 * format string
++			 */
++			type = p + 1;
++			while (*type && !strchr(type_specifiers, *type))
++				type++;
++			if (*type)
++				type++;
++			strbuf_add(&sb, p, (int)(type - p));
++			p = type;
++			break;
++		default:
++			if (!isalpha(*p)) {
++				strbuf_addch(&sb, *p);
++				p++;
++				break;
++			}
++			if (isupper(*p))
++				strbuf_addstr(&sb, "Ook");
++			else
++				strbuf_addstr(&sb, "ook");
++			while (isalpha(*p))
++				p++;
++		}
++	}
++	buf = bufs[(i++) % ARRAY_SIZE(bufs)];
++	free(buf);
++	buf = strbuf_detach(&sb, NULL);
++	return buf;
++}
++
+ #ifndef NO_GETTEXT
+ static int test_vsnprintf(const char *fmt, ...)
+ {
+diff --git a/gettext.h b/gettext.h
+index 7eee64a34f..dc9851a06a 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -41,8 +41,9 @@ static inline int gettext_width(const char *s)
+ }
+ #endif
+ 
++const char *gettext_poison(const char *);
+ #ifdef GETTEXT_POISON
+-extern int use_gettext_poison(void);
++int use_gettext_poison(void);
+ #else
+ #define use_gettext_poison() 0
+ #endif
+@@ -51,14 +52,14 @@ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
+ {
+ 	if (!*msgid)
+ 		return "";
+-	return use_gettext_poison() ? "# GETTEXT POISON #" : gettext(msgid);
++	return use_gettext_poison() ? gettext_poison(msgid) : gettext(msgid);
+ }
+ 
+ static inline FORMAT_PRESERVING(1) FORMAT_PRESERVING(2)
+ const char *Q_(const char *msgid, const char *plu, unsigned long n)
+ {
+ 	if (use_gettext_poison())
+-		return "# GETTEXT POISON #";
++		return gettext_poison(msgid);
+ 	return ngettext(msgid, plu, n);
+ }
+ 
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 2ca9fb69d6..1e8440e935 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -29,7 +29,7 @@ set_fake_editor () {
+ 	*/COMMIT_EDITMSG)
+ 		test -z "$EXPECT_HEADER_COUNT" ||
+ 			test "$EXPECT_HEADER_COUNT" = "$(sed -n '1s/^# This is a combination of \(.*\) commits\./\1/p' < "$1")" ||
+-			test "# # GETTEXT POISON #" = "$(sed -n '1p' < "$1")" ||
++			test "$EXPECT_HEADER_COUNT" = "$(sed -n '1s/^# Ook ook ook ook ook \(.*\) ook\./\1/p' < "$1")" ||
+ 			exit
+ 		test -z "$FAKE_COMMIT_MESSAGE" || echo "$FAKE_COMMIT_MESSAGE" > "$1"
+ 		test -z "$FAKE_COMMIT_AMEND" || echo "$FAKE_COMMIT_AMEND" >> "$1"
+-- 
+2.19.1.647.g708186aaf9
 
