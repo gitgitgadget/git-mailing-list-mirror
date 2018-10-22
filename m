@@ -6,62 +6,63 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68A711F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 01:12:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF421F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 01:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726182AbeJVJ2c (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 05:28:32 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39735 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725723AbeJVJ2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 05:28:31 -0400
-Received: by mail-wr1-f67.google.com with SMTP id s18-v6so1242403wrw.6
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:12:13 -0700 (PDT)
+        id S1726694AbeJVJjY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 05:39:24 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53095 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbeJVJjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 05:39:23 -0400
+Received: by mail-wm1-f68.google.com with SMTP id 189-v6so8533352wmw.2
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:23:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=1ScnTKOWxIzkAOe4c3/Y0HWMXADJSMuQ3FgsEgZQ+Rs=;
-        b=gp7RDPcvcbQsUZ6yhBCI8VqYn73ehX0l/0fpd6Y6BphrUXrwCdozAnErVHTcznFUnC
-         /NpIhMB7WBjDqaawxfcRtbbwGGakbYNWKuWK/bML5KmyPCGSbA0htmMcKtMxp4Jnvp8U
-         KFnJLb6P6bQvgH0ZAIqadTcSusuFWQWVGLCQEbhWJbAdhifhN+h8EDk9yGaew8TvrL22
-         q+GjJbBOrkbpszKM2rQhFCNsk8aG2oHDGAwg7ioz+MIVCyajQum7yP9li5PuY07tfOk2
-         BaPFQ1VOLmUK+w0nb7RoxXTCTtkU1q2/kngGWAhLYx6zNblD6PT8ilu4Ag/k1dSEjx4+
-         C5Aw==
+        bh=mpDPw7sRZhsVEkHR68JPqslhN3Im9WRYJ6UD3srqqOM=;
+        b=BnZSXJcow5a9+0PaxHzcjOrNzs6CxMKPhCbniVVL9hJPghM1E35jmtSK/rNJk9yMB/
+         gqPlqdWTacL0UzLzOwuQP6vHJxmVndw3bqSyaQOfx30IhGjMNZlq2Vrf3Bl/nvMi5J3R
+         eOIjfZmagZbxEXWi4HR8kS7SP0wajkEmm1HO0aqV1AEH/UAr7MOU7G1dQIXo2ZaJbVa0
+         PqaRxucZqn86pxVP5E3fYBgQXuQMPc0WU3+ftlOXNKJed80Pe51T3NAhARUcdsCKHIBm
+         2fYn7l4BV3fjVI0V/lEZ3zuHwcsIq3i4JtIQtICAhDztCBkcol0MF0oURBOXqSwjtXnf
+         10zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=1ScnTKOWxIzkAOe4c3/Y0HWMXADJSMuQ3FgsEgZQ+Rs=;
-        b=JZ0Z6tEGkrZk2g/DS/ajDiIbkb03Zq7JnZn+XUw8sXRoVDoFf3ds0VhK5qXFEIRV8c
-         2eM50oKBpDMoUlmgkHo9CnKlqM8snRLkdaCut/Wb8pbw6YnBqygAbv0XApi9iBhywAVz
-         xq760v8l+GxLRUAbAh6QP4iwxPMdUnF600RS2vbrRYUU4DQKOeg+L35zFR/C0i6kgkaO
-         xCd7D1L/m9YS5/BzSCcpezFsnBS3+lFWaGmDpco445fV3bJqi5Z46J/dMsYNiRh3TeNm
-         igqnlMLEUiPnBfN9j2qpeUVvcfvazHWPuaVdIj3YZMhO4mvNgUBbI3gYpqgjryCpu8H0
-         DjqQ==
-X-Gm-Message-State: ABuFfoiOTX8zoW1u3aWqGDRfb+T83sQrpX/96gF+dKSlFy0mWN98kDoW
-        UkES9vocKDD1QZ0REEUVIzI=
-X-Google-Smtp-Source: ACcGV60ZsMRqR8aRLtTHJBPEpGNYZHrLEiR3jtbcAvSADeAZXKLl43O8inQSAUg0rs0mPZxnRVRjUg==
-X-Received: by 2002:a5d:4e87:: with SMTP id e7-v6mr18458024wru.115.1540170732235;
-        Sun, 21 Oct 2018 18:12:12 -0700 (PDT)
+        bh=mpDPw7sRZhsVEkHR68JPqslhN3Im9WRYJ6UD3srqqOM=;
+        b=XYSaNtttoZtCemWN1A1hTLJb/i9EN1bL/4DKWTjTp8OkSKLEZCJXIipKIUrCX+owVi
+         FJ1fzwI29COSfEiHldiCFnTXnUPIWsWbiYw22n47BPqPafwAR3FIqpKE5Ah91IbIbDAc
+         Rs2EwTg8AgsYzUdq1JnNg0iPbcASedzT48gTo5+JnCsXM6W35XMJJnnMpNY7AW6lFrEY
+         lqjVofzhjxCk1IKwVdQf81L1Z/hGrApy8yLYpr7OZRb+BVj2NwshvcirBZpnJat5a9BO
+         6/HuAC+lLVZJtGF2cX/BbDtVoGG+PvwaDkRTXAo/GXg+KhaMq08InBnDjYb2M4+rNux9
+         TTTg==
+X-Gm-Message-State: ABuFfogorcMJ6H33USWKmlTCqY3AkeAeR6f6DIyudu517Dr4r7MQnsVv
+        Eqc30+VwvV48URtGQGfq0eg=
+X-Google-Smtp-Source: ACcGV62nqYvr37xExKN6VmEaRXdH6R5yoAUtifCC5A6cE+4yU534QoVPa4AswB8J/v6WAyHouvfZzg==
+X-Received: by 2002:a1c:2dc5:: with SMTP id t188-v6mr13068414wmt.94.1540171382960;
+        Sun, 21 Oct 2018 18:23:02 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d6-v6sm12425208wrq.27.2018.10.21.18.12.11
+        by smtp.gmail.com with ESMTPSA id p7-v6sm11694835wrt.10.2018.10.21.18.23.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Oct 2018 18:12:11 -0700 (PDT)
+        Sun, 21 Oct 2018 18:23:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 4/7] revision.c: begin refactoring --topo-order logic
-References: <pull.25.v3.git.gitgitgadget@gmail.com>
-        <pull.25.v4.git.gitgitgadget@gmail.com>
-        <cd9eef96885a811196ab0b851a98de4455b950ab.1539729393.git.gitgitgadget@gmail.com>
-        <86h8hfguqc.fsf@gmail.com>
-Date:   Mon, 22 Oct 2018 10:12:10 +0900
-In-Reply-To: <86h8hfguqc.fsf@gmail.com> (Jakub Narebski's message of "Sun, 21
-        Oct 2018 17:55:23 +0200")
-Message-ID: <xmqqa7n6zswl.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Tim Schumacher <timschumi@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] alias: detect loops in mixed execution mode
+References: <87o9dar9qc.fsf@evledraar.gmail.com>
+        <20181018225739.28857-1-avarab@gmail.com>
+        <20181019220755.GA31563@sigill.intra.peff.net>
+        <87ftx0dg4r.fsf@evledraar.gmail.com>
+        <20181020185852.GA6234@sigill.intra.peff.net>
+Date:   Mon, 22 Oct 2018 10:23:01 +0900
+In-Reply-To: <20181020185852.GA6234@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 20 Oct 2018 14:58:53 -0400")
+Message-ID: <xmqq5zxuzsei.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,28 +71,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> So if revs->limited is set (but not because revs->topo_order is set),
-> which means A..B queries, we will be still using the old algorithm.
-> All right, though I wonder if it could be improved in the future
-> (perhaps with the help of other graph labelling / indices than
-> generation numbers, maybe a positive-cut index).
+> I agree it's probably quite rare, if it exists at all. But I also wonder
+> how important looping alias protection is. It's also rare, and the
+> outcome is usually "gee, I wonder why this is taking so long? ^C".
 >
-> Do you have an idea why there is no improvement with the new code in
-> this case?
+> At least that's my instinct. I don't remember having run into this at
+> all myself (though certainly I have written my fair share of infinite
+> loops in other systems, like bash aliases, and that is what happened).
 
-I didn't get the impression that it would not be possible to improve
-the "--topo A..B" case by using generation numbers from this series.
-Isn't it just because the necessary code has not been written yet?
-In addition to what is needed for "--topo P1 P2 P3..." (all
-positive), limited walk needs to notice the bottom boundary and stop
-traversal.  Having generation numbers would make it slightly easier
-than without, as you know that a positive commit you have will not
-be marked UNINTERESTING due to a negative commit whose ancestors
-have not been explored, as long as that negative commit has a higher
-generation number.  But you still need to adjust the traversal logic
-to properly terminate upon hitting UNINTERESTING one, and also
-propagate the bit down the history, which is not needed at all if
-you only want to support the "positive only" case.
+Yup, that instict is shared with me, and I tend to prefer something
+based on a simple counter for that reason.
 
+> Would we print a long error message? I'd assume that we'd just recurse
+> for longer and print one error message that says:
+>
+>   fatal: woah, you're 1000-levels deep in Git commands!
+>
+> That doesn't help the user find the recursion, but re-running with
+> GIT_TRACE=1 would make it pretty clear, I'd think.
+
+Thanks.
