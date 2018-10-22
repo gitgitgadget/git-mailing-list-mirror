@@ -2,93 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BAE41F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 21:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6FA61F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 21:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729348AbeJWFsf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 01:48:35 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:34747 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729062AbeJWFse (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 01:48:34 -0400
-Received: by mail-ed1-f68.google.com with SMTP id w19-v6so39369160eds.1
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 14:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/FqYmyvtsAdeBznlOkDTA+3nCkIpNXqESdc0I0+De0c=;
-        b=tN9XzqkLDtQwoP8mNeldnhWemUh/gpXR6T6GpfEPCIijLZgehTtzLkCtYMr8QKfkJ4
-         4lbqOjBQliu2n+3f9xAoJZwoicBW4S+WUB07IXyU7f3bYNQqzsraCfFp9L2QI7l7oV/M
-         EPGgScOPnRETlEhtyFiK8xTo/TuXd95IbEmjdpMlwCr8j52ADg1Jdn+JIf6GsY5piZK6
-         cq4l1lLvuW8lPcpkw7G5jvUjH+RV1HgRp2Lr89v8/BMQDeziyhbqf8e0QA4WUv8ozlUv
-         3Mzb5P0QxlSPmb77Qg+td+QjuiAjUgksmto5UAXc+wexs2WNhFeU7u8etaS0SNQCcvZT
-         WZxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/FqYmyvtsAdeBznlOkDTA+3nCkIpNXqESdc0I0+De0c=;
-        b=dvoBdGI+5Yv19CqK5/+yP4ZgJsrLz8nP5kdenH5HSjcJNiuBOaMM/PEL+hZ8QlS884
-         6rrC479caa47qtKzATPlf47IWAF7PGDIdjz7oN39EMYf3oIoVcoP0amgfgqDDpr5iz2N
-         l+4Z3xrz7bZgJt0Py6VBeGQ9YpR3P2BUh0qLqFFxM1gA69aFZx9LC49PGEsTtlFPiHMT
-         1tU42olPOEcSsoElJLpd7s/+iKvfOQ177Vm5KLT+MzLpIo6uc0e/sugwmTfQ3Qzf+9Hh
-         ZJs+fEsvI8oWow6fJWJjhRkc/AzPzbdkuy41jL+G3ro36Vbc12eqIvRj47ffp8vl7PEx
-         b2Gg==
-X-Gm-Message-State: AGRZ1gLa8n/npHimWjRfsHvLmZMYBPI8gV0/wizxtj6J+3KPqvUDBi0k
-        g3jbWCO/ecqQ1Zrl4n3dCWI=
-X-Google-Smtp-Source: AJdET5fENv1SQDPTXZ7u8/PnFq6fCRot+CV4lQ8Dy6CA6tdbbTxjCleiW/YMfrOJAgxwZPR1uF3taQ==
-X-Received: by 2002:a50:f5f9:: with SMTP id x54-v6mr4075390edm.166.1540243697971;
-        Mon, 22 Oct 2018 14:28:17 -0700 (PDT)
-Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
-        by smtp.gmail.com with ESMTPSA id c24-v6sm13329282ede.73.2018.10.22.14.28.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Oct 2018 14:28:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Tim Schumacher <timschumi@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] alias: detect loops in mixed execution mode
-References: <87o9dar9qc.fsf@evledraar.gmail.com>
-        <20181018225739.28857-1-avarab@gmail.com>
-        <20181019220755.GA31563@sigill.intra.peff.net>
-        <87ftx0dg4r.fsf@evledraar.gmail.com>
-        <20181020185852.GA6234@sigill.intra.peff.net>
-        <87efckctqa.fsf@evledraar.gmail.com>
-        <20181022211545.GA15713@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181022211545.GA15713@sigill.intra.peff.net>
-Date:   Mon, 22 Oct 2018 23:28:15 +0200
-Message-ID: <877ei9d634.fsf@evledraar.gmail.com>
+        id S1727941AbeJWF7H (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 01:59:07 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55977 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727198AbeJWF7H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 01:59:07 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWSwU-1g7Xx92J10-00Xah9; Mon, 22
+ Oct 2018 23:38:45 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWSwU-1g7Xx92J10-00Xah9; Mon, 22
+ Oct 2018 23:38:45 +0200
+Date:   Mon, 22 Oct 2018 23:38:47 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Alban Gruin <alban.gruin@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2018, #04; Fri, 19)
+In-Reply-To: <xmqqmur8yyi3.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810222306180.4546@tvgsbejvaqbjf.bet>
+References: <xmqq8t2u1nkh.fsf@gitster-ct.c.googlers.com>        <20181019124625.GB30222@szeder.dev>        <6e4fdcdd-6c50-a07e-74b7-1fcd15c33444@gmail.com>        <5f0fb76f-0774-3545-38fc-b86137f747fa@gmail.com> <xmqqmur8yyi3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:URl1eb86WO8GmL9Lx4RMW2HNy198o+T+a/uiDNBDt4VlJDgw7Jh
+ 21faplKuB8Vc81oeidgLUWLjWlThqdOwkdwa8MxLTJcog7D4miXRL57TmPEcELAkOPZB6xI
+ xWIFk/OX7LS9ucU7zNe8wRlkcj3uK7x8AYvtnaYhhi+Y/SfNHz+myhyoNZj/3fzjAY370gT
+ uN0U6r6DRvSEPsZDasR0w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9nJdxLySbyk=:OM2bOCGER2BRjXjPu+N1lI
+ FhtyD2d/SzO5JuApaALXQLImJkXUfyygw8MKFKrCGm7e/tT8r25ptuUoUuLgaAJXsh1eqlph/
+ vduZMRPKwuilHmkVOn/S6PhUH4rtCqEYv4Hb4HmEdP+IxqGxnV5wsA5Ij2usYOBy9IBXuuwsK
+ 64Oa/1eHua+ZODPvUKtZnHRCBYOC4zhxdR9hYGhT5aQHzlK1WSDg4CzfLJgozFKLXl0Tv/qLp
+ zsjmW5FCU28E72r7abd6ZfXNuTlRAA31JB/wM8TXwUNuRD1ZU2LTUWXItP4pyJPEDUW7oPXbu
+ QfI+pgPbqosrLJgjDaNAaauJr1WWp7uAiLG3UbJcfEqpa0exKZcvmTueVofAWKxxQIC88ho0z
+ 1ydgFuEFCPPBd3+Mu/RS7y/ce7w+WO5QpgP4G9I4EfndDpq12Rc0Iktl8c1cwi0yuEZxmhIO+
+ yhSrSYsmKehcr5o6zHxBJLAoVokow/r8pZazdkDEH6CEG44z0aNuN1CsJpwpj7ZZfVA5OKaKE
+ oFLc3AJG+OYWkp01w9QtEwd8lytL0gRPWR57x39zz194S38Xrg30hEQC0tJEtH7E4yK1krva5
+ VS9kH6TYD+Uv4iSpOsJkIsqo1ObjtzFk+9D8VbbStFi4bPz1XajJWko56RRXSUD8cxm/AfV/l
+ g/HyVGqHU7Lrf6VZNzKsDtn37UOUBzX4wms5wGYdKOruZjdS0p50y1JAU1JviaNCyOVlu3xBI
+ AxaJ95BWdumUzo09tip46+WuCBF+i8MOgSa0uUohxPmU4KxPNfOyDl5KRNtuyTHkyThnKB1Uf
+ u0g7D9tEQLkHhwWSgVB0+34I8dCP/E3z5sWluQOYqQ+wSpFhf8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Mon, Oct 22 2018, Jeff King wrote:
+On Sun, 21 Oct 2018, Junio C Hamano wrote:
 
-> On Sat, Oct 20, 2018 at 09:18:21PM +0200, Ævar Arnfjörð Bjarmason wrote:
->
->> We didn't support chained aliases at all before, so I think the odds
->> that people will run into this now will increase as they add "!" to
->> existing aliases, and I'd like to have git's UI friendly enough to tell
->> users what went wrong by default, and not have to resort to the likes of
->> GIT_TRACE=1 which really should be left to powerusers.
->
-> It's true that non-! aliases couldn't recurse before, but couldn't "!"
-> ones always do so?
+> Alban Gruin <alban.gruin@gmail.com> writes:
+> 
+> > The error comes from the call to `git stash apply $stash_id' in
+> > builtin/rebase.c:261.  When $stash_id only contains decimals and no
+> > letters, git-stash tries to apply stash@{$stash_id}[0][1].  Thas was not
+> > a real problem with the shell script, because it did not abbreviate the
+> > object id of the stashed commit, so it was very unlikely that the oid
+> > would contain only digits.  builtin/rebase.c shortens the oid[2], making
+> > this problem more likely to occur.
+> 
+> OK, so make "rebase in C" a faithful conversion of the original, the
+> code that lead to builtin/rebase.c:261 must be fixed not to pass a
+> shortened oid.  I suspect that internally it has a full object name,
+> so not shortening would be the right thing anyway, so regaredless of
+> this bug, it probably makes sense to do the fix.
+> 
+> But as you said, even the scripted version that passed the full
+> object name had a (10/16^40) chance of using a 40-hex that only has
+> [0-9] and caused the same breakage, so such a change to "rebase in
+> C" is sweeping the age old bug under the same rug, in the context of
+> discussing this particular bug.  
+> 
+> I agree with you that it is a better fix to the problem to allow the
+> caller to say "I am giving an oid---it may (or may not---I do not
+> even bother to check) consist of only digits, but do not treat it as
+> an index to the stash reflog."
 
-Yes. I meant that maybe now it's a feature that works for that people
-will start using it, and then convert some of that to !-aliases they
-wouldn't otherwise have written. Just idle speculation...
+We already have a way to say "I am giving you an oid": append `^0` to the
+hash.
+
+I implemented a fix, pushed it up to GitGitGadget, and will submit it
+tomorrow (after a fresh look, and after the build finished):
+https://github.com/gitgitgadget/git/pull/52
+
+Ciao,
+Dscho
