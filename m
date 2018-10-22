@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CBAF1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F431F453
 	for <e@80x24.org>; Mon, 22 Oct 2018 20:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727607AbeJWEnd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 00:43:33 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:41020 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727073AbeJWEnd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 00:43:33 -0400
-Received: by mail-ed1-f66.google.com with SMTP id x31-v6so39212479edd.8
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 13:23:32 -0700 (PDT)
+        id S1727830AbeJWEne (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 00:43:34 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40623 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726082AbeJWEne (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 00:43:34 -0400
+Received: by mail-ed1-f68.google.com with SMTP id r1-v6so39231370edd.7
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 13:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oQZ1PrnKpZLn+VJuEjDpXFOi2wBoTm7OGvW5SJ/9Hso=;
-        b=hwfwFAX+DtFkZzgF2Z0esWrfvzc2aGVyOL9ePalF8GoUD42M9L/irwnVcNXozLLthe
-         OeBLebcU1ccSX7/r5pl2PM9UqzVENc3+5InZhQiTIvhffhTJi53IjxOxYLVp+4ril24Q
-         GcCrP/iTXANTsUQSy/d017uEmgmSBpAXwaRT73EUN+/Vj2xaVTfcDE/toU/L81+pg+9y
-         xNkkOhS64rWgML7qzLFkL0PeFFzdHbCFpWAFxjXTanfYCMOIhPGFAZKUDPfKbBhyuDIH
-         Slmok2vQ8P0+AA0Kppoq/mxQciAx06msUFXB6QGOTUvrmsW/Hrj/l45W8lvm2Kftgil0
-         iQpg==
+        bh=h8Rnf92giVsilwCazR1h6BjeSuQ5sDGeK8YqIJ9U7cg=;
+        b=J2FxuqF1pNLnY8yY7uN7WXh6EAXn6OEC43paV6dlkuT39nXYbsaZmx4LnOUFHWKGyj
+         SBsWCxjT3WmDeiuONzCXNmqqp30JjUPCZ8nVLZ8Tm0ga6LEqaYbh2TBPxc3F2rNxhd2b
+         804nRSjOYk2m/7s6pmMBVUTudJp/IZGeEjNkqgWGTs0me8Z7PTOfP866tfnAQEBQHKMD
+         ba6y30MY5YShRKTKR/mUzrZAVcLzzSN4r3N5I6uMdc7YWgr8k3LoRRiUZ2eBtie15/93
+         U7Jio4CGaYNbVzwZRJzO7zxE9y7LfgMWDMYGL8KiEfJsx4E2ZZrmQPHtZSETHvTxI6TB
+         OQ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oQZ1PrnKpZLn+VJuEjDpXFOi2wBoTm7OGvW5SJ/9Hso=;
-        b=m6troYOFK2aK89wybg0PV8xtOqYj/0hfCCZs8+7DYHOpn+iOMPlAF/lQNYkqTvq9vK
-         DIXeTuSCVZ5ZASDBoZmVA/v72NsrpqfkdsnqdZhmhI082/m2ADnf0G8iikz6sPMpRXPc
-         1MIcI6in2ZxQE8pcqqBACvynoqFrXtaJZLY6dN+/LvmNLQkR124V4wZQvwHrZEdtkXNI
-         gJ5MdFar+28h0qRAJU47l0naieBb2L/e/A6Yl95XscMPl72eHQS95eJ6Fu6HW6ULr04f
-         ONjPf/hHr+x5l8sli7ckve26u3epYO4AjiujocbF77vOzNIAGPYVYmVkpMtfAj8ypV67
-         mzlg==
-X-Gm-Message-State: ABuFfogyjJ440AJfS0B+RAWgl6NSL4cxBTlHxeUsdwGytJljfk9WX+FT
-        6X+AvOE4tKGd/tTv3t1xB4pSDNqk
-X-Google-Smtp-Source: ACcGV62+a9fSOxPnc59HqyuOdSg1Btkzj4lnAOoKd0zhs8HJLH81jqvaOjhTvHBM2ilmKC24EqGulQ==
-X-Received: by 2002:a17:906:5583:: with SMTP id y3-v6mr1606503ejp.79.1540239811412;
-        Mon, 22 Oct 2018 13:23:31 -0700 (PDT)
+        bh=h8Rnf92giVsilwCazR1h6BjeSuQ5sDGeK8YqIJ9U7cg=;
+        b=GsvBd3hD8pFAKqYvrAt6FfXzsSowTcmD2IUa5ikH5i6IBZgY1WqpPfwDlbo3N9kypg
+         WdGHrbK0B0Ekq/9m5ZwtrRvqkT2m4BbqoIqpOk9vqTjOsHyGEGE+3nQcBSTjVUfkZTip
+         1BeFckJG5IElINPhkXI1EBYDARzP6bQp5hvI1n7ARXzYCQd9KCiR+o1wQ835GsCZc7zb
+         GAnZBx4dnCMFs8qu4UBbXuP6x/Ow8r7PCCRBMdY9vyYLHduj2EcrteBcAT8d71hsSwKK
+         DRy96qHwBM5PrtNXQPn7ZJpYOBgiglY7FLOqu2RZZlB7NDl9018ZUa1kiFLo8q3YA6W8
+         na9A==
+X-Gm-Message-State: ABuFfogiNq18HLsHiAzZsqoVF01xeSkajv1H2/NJjIo5jHIVz0FE5UOA
+        mp9iz7pZNj2QpwC7zyxC81J3sZJj
+X-Google-Smtp-Source: ACcGV60sB6HnBXZ5WnlGOTbIRnFznDHunkSZ8HzD/2gzVC5SN8R5JGBN2i+rEyfwBQAuo+TrXxKVZw==
+X-Received: by 2002:aa7:d58a:: with SMTP id r10-v6mr14908252edq.161.1540239812841;
+        Mon, 22 Oct 2018 13:23:32 -0700 (PDT)
 Received: from localhost.localdomain (x4db968d4.dyn.telefonica.de. [77.185.104.212])
-        by smtp.gmail.com with ESMTPSA id h21-v6sm16882228eda.23.2018.10.22.13.23.30
+        by smtp.gmail.com with ESMTPSA id h21-v6sm16882228eda.23.2018.10.22.13.23.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 22 Oct 2018 13:23:30 -0700 (PDT)
+        Mon, 22 Oct 2018 13:23:32 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/8] lib-rebase: loosen GETTEXT_POISON check in fake editor
-Date:   Mon, 22 Oct 2018 22:22:36 +0200
-Message-Id: <20181022202241.18629-4-szeder.dev@gmail.com>
+Subject: [PATCH 4/8] gettext: #ifdef away GETTEXT POISON-related code from _() and Q_()
+Date:   Mon, 22 Oct 2018 22:22:37 +0200
+Message-Id: <20181022202241.18629-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.1.681.g6bd79da3f5
 In-Reply-To: <20181022202241.18629-1-szeder.dev@gmail.com>
 References: <20181022153633.31757-1-pclouds@gmail.com>
@@ -70,34 +70,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fake editor script created by 't/lib-rebase.sh' recognizes GETTEXT
-POSION output when the first line of the file to be edited consists
-solely of the GETTEXT POISON magic string as a comment.  However, a
-later patch will include additional text after that magic string, so
-that check won't work anymore.
+The gettext wrapper functions _() and Q_() contain a GETTEXT
+POISON-related conditional construct even in non-GETTEXT POISON
+builds, though both of those conditions are #define-d to be false
+already at compile time.  Both constructs will grow in a later patch,
+using a GETTEXT POISON-specific enum type and calling another GETTEXT
+POISON-specific function.
 
-So instead of expecting an exact match in the first line, check
-whether there are any lines starting with the commented out magic
-string.
+Prepare for those future changes and hide the GETTEXT POISON-related
+parts of those functions behind an #ifdef.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/lib-rebase.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gettext.h | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 25a77ee5cb..530f8ec0a8 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -29,7 +29,7 @@ set_fake_editor () {
- 	*/COMMIT_EDITMSG)
- 		test -z "$EXPECT_HEADER_COUNT" ||
- 			test "$EXPECT_HEADER_COUNT" = "$(sed -n '1s/^# This is a combination of \(.*\) commits\./\1/p' < "$1")" ||
--			test "# # GETTEXT POISON #" = "$(sed -n '1p' < "$1")" ||
-+			! grep -q "^# # GETTEXT POISON #" ||
- 			exit
- 		test -z "$FAKE_COMMIT_MESSAGE" || echo "$FAKE_COMMIT_MESSAGE" > "$1"
- 		test -z "$FAKE_COMMIT_AMEND" || echo "$FAKE_COMMIT_AMEND" >> "$1"
+diff --git a/gettext.h b/gettext.h
+index 7eee64a34f..c658942f7d 100644
+--- a/gettext.h
++++ b/gettext.h
+@@ -43,22 +43,26 @@ static inline int gettext_width(const char *s)
+ 
+ #ifdef GETTEXT_POISON
+ extern int use_gettext_poison(void);
+-#else
+-#define use_gettext_poison() 0
+ #endif
+ 
+ static inline FORMAT_PRESERVING(1) const char *_(const char *msgid)
+ {
+ 	if (!*msgid)
+ 		return "";
+-	return use_gettext_poison() ? "# GETTEXT POISON #" : gettext(msgid);
++#ifdef GETTEXT_POISON
++	if (use_gettext_poison())
++		return "# GETTEXT POISON #";
++#endif
++	return gettext(msgid);
+ }
+ 
+ static inline FORMAT_PRESERVING(1) FORMAT_PRESERVING(2)
+ const char *Q_(const char *msgid, const char *plu, unsigned long n)
+ {
++#ifdef GETTEXT_POISON
+ 	if (use_gettext_poison())
+ 		return "# GETTEXT POISON #";
++#endif
+ 	return ngettext(msgid, plu, n);
+ }
+ 
 -- 
 2.19.1.681.g6bd79da3f5
 
