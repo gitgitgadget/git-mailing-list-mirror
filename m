@@ -2,93 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 440951F454
-	for <e@80x24.org>; Mon, 22 Oct 2018 08:40:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B5681F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 09:01:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbeJVQ6B (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 12:58:01 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:35737 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728164AbeJVQ6B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 12:58:01 -0400
-Received: by mail-qk1-f193.google.com with SMTP id v68-v6so24797216qka.2
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 01:40:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=5apwgTA2O5FtsnlIal8XuDlqHpKHfgKp1bAxUckiboU=;
-        b=dFBu11GHjJLXp/X5cE5fuEXH25qp+cd4O4+5LBtf4LIppOhkcNxFnN0DvuL6xjXTGo
-         WWoY5ljZXE7bxbl/uXWl76TZtuAz8O2BuNRJ9YwIcDrQ6jNq1fSNNZinX1VQ8Kc2snx9
-         6vGj/T6hAkD5/tq6AqRiEp8nt+QUypQsFg/EG/KWU0nRiWO/ud0+MakX4/tyc+bZbJY6
-         qgo6RK5N996YwE6NB2MljGl2AvZAhAd0+NPyDcxJzk2Cnf0O0Sns/6OBoPd1VgRe2BLR
-         7+EUo8PybcOOztx8Pb46sKjyPJ9jGMV1woA4QpiPZzf2aLVyciBgkUP+2+y8p2nV+HrP
-         6i1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=5apwgTA2O5FtsnlIal8XuDlqHpKHfgKp1bAxUckiboU=;
-        b=cbiWYDcBVvPlcMJZ+APBnNC/cigaA8OV2GcuoPorGc2LO1lnzudgnLBcAWJ/b9ZxiZ
-         9xRTjB+2x7t7PRtwbTSRZSoOK5XsaXUjPrZTSRMPkvms4oTyOW18Eczkea14nVHq+h4n
-         OtvwBs/Dq32RGvvemLhChdlEhUEmRNSKgYwQd1sUAKlI2yTU32YVvvxpBbo1peFb9vto
-         PD7SGyzomweVqHhtUqox+az7vpKpLu640IkTcrCGY30X2Hx+jBqsbCdCsWEQ32EBcB2G
-         6ypeduD7/aCoED992Hr+e3zNpbVthF41eGaolvv5cvMPYZ+bTOGErTPICYt+1M8LPXwR
-         80OQ==
-X-Gm-Message-State: ABuFfoh25yl2+3jLz2feCTIGZkm5CSB/1yIfx0knrTZFpJ654PmcPNr7
-        2sLllwlwzkf5qtx1Ch0o8sQ1l3GU92fDRAE5FDdHuYu4
-X-Google-Smtp-Source: ACcGV62Q8+Mjlsi/AQ5JyKpeeOTFVcid1j+SdCi6BkHmf2xnDkpiyoufec8z+7vGCs/IaQEIwKU+NwD6NqPbMTv8F2o=
-X-Received: by 2002:a37:72c1:: with SMTP id n184-v6mr42527508qkc.133.1540197627171;
- Mon, 22 Oct 2018 01:40:27 -0700 (PDT)
+        id S1727773AbeJVRTS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 13:19:18 -0400
+Received: from mout.gmx.net ([212.227.17.21]:47609 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727554AbeJVRTS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 13:19:18 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0McPvw-1fwzCt25Ts-00HjEN; Mon, 22
+ Oct 2018 11:01:39 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0McPvw-1fwzCt25Ts-00HjEN; Mon, 22
+ Oct 2018 11:01:39 +0200
+Date:   Mon, 22 Oct 2018 11:01:40 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Luca Weiss <luca@z3ntu.xyz>
+cc:     git@vger.kernel.org
+Subject: Re: No --no-gpg-sign option with "git rebase"
+In-Reply-To: <3511237.7GcYbsQxqc@g550jk>
+Message-ID: <nycvar.QRO.7.76.6.1810221100330.4546@tvgsbejvaqbjf.bet>
+References: <22001585.W2CEcL5IrY@g550jk> <nycvar.QRO.7.76.6.1810191729080.4546@tvgsbejvaqbjf.bet> <3511237.7GcYbsQxqc@g550jk>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 22 Oct 2018 10:40:15 +0200
-Message-ID: <CAP8UFD3RKcHbgQ7PzFyJhNRAEc+ktM1HLB-KJB2qL-FiVtir7A@mail.gmail.com>
-Subject: Draft of Git Rev News edition 44
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Luca Milanesio <luca.milanesio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:OD/OYJJflb/G4zVlnON2rsfSXOb0SdgTBp0PXerIlLTf6d22+57
+ Q06xH9d8nlpCY33pgF43Qc/VfgkEWRcnXQFLDhG6SZI/dnllBIL/iixIEQdknc/ObDZWNuQ
+ idt/BVZA7VQhyPbFPTbfPh/4jVeIJ16dk2hRlWO/JPvO0pQk4sUzBwlaSjRV/MCrvL34QUp
+ 33BC1GpQXRW0ybHhNHnQw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KEBGeeEmrtc=:SszYgUhuTScXmzMsIm6+yA
+ XVgl0KyEAgHOsJyIRsBXsV/UO9HO2NELViJdoDItGU5W2fnztD/9h6cO1ZKIf/DilDURbyxuw
+ s9NIZZuvn62Z/+5m3w1ri1TxzGfeWmaP/wzPV8SGgx7Q4QbAv/bI0iakmZmhvHQcgBzUxoYOV
+ BnWJBSa5uODXZuEXTz/Vz8fuu/Fv7MvfnRK9YFD/v2WppWAR6A5q4SPjyo/3fPNS5D477mHJ7
+ 9GqxWtkKzwJ+9ot/COwMsBAKJOqCvrh/12HvV3E5vpCfBPxkl9y+RkU+qVHmh1JYm5S5AD3AQ
+ IBPCNzQJ9+tkxx2aiB9eMC9pImRr53pVoaJDTUtMEJjttzfaIDtBmm5wHCsOOG//2DAd8pS4q
+ HWrSBM4pA8sD0AJOWDxBTYHHJjpfnzoQry9NzHc+C0Q+eOysTtLe1DUEfRLOhm5dLIr3tcyia
+ 1mqVqNeU1ZzmISjBjhPXY6v2M82qHOMg66W7TIfPcwOLQuzzftcvf2be1SdtBZFXah0yRd8FD
+ ggqBQ0McD/zSR78kyP3PDjCsAmnt4lam6kUVlQ7PwkERM8dU/MIZF2sfOFbmpusTdTtKAVk3B
+ mdWprblg9IiZR8jvWYaVqJhKjI7MHJj7Ifxj0K7rFGyDb6K/INAWs+AQbRAmOv445lpMKaiyN
+ vBH6JVyaCXKbMPWsM1/7LFzSMHnyXB0PKXc5KUPBCf0iRWkph3OuA5jxZCc311n75Tdh7V4p3
+ r4/SQNp6FehPw3qjMpsmNrkC3EXfBzJlf9W76Py9Dat7hVOCndLlNEyH43X3aOP1lvM0bSZCq
+ 7/4vYG8jkvE01kN5n9izrx7zfJ57uKzsvTpcEOLJRta4r60a/g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Luca,
 
-A draft of a new Git Rev News edition is available here:
+I re-Cc:ed the Git mailing list (it is in general a very good idea to keep
+it in Cc:, as I could be hit by a bus, for example).
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-44.md
+On Fri, 19 Oct 2018, Luca Weiss wrote:
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+> On Freitag, 19. Oktober 2018 17:30:17 CEST you wrote:
+> 
+> > On Thu, 18 Oct 2018, Luca Weiss wrote:
+> > > See subject, would be quite useful to have this. ("Countermand
+> > > commit.gpgSign configuration variable that is set to force each and
+> > > every commit to be signed.")
+> > 
+> > Have you tried the built-in rebase? It's already available in `next`,
+> > and it is available in Git for Windows as an experimental feature.
+>
+> in the 'next' branch the option "--no-gpg-sign" is actually accepted for
+> git rebase (not listed in "--help" output or the man page though) but
+> git still tries to sign each commit.
 
-  https://github.com/git/git.github.io/issues/311
+Did you get a chance to debug this?
 
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Gabriel and me plan to publish this edition on
-Wednesday October 24th.
-
-Thanks,
-Christian.
+Ciao,
+Johannes
