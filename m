@@ -2,112 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B89811F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 17:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E1C51F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 17:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbeJWCJS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 22:09:18 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40081 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727590AbeJWCJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 22:09:18 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r1-v6so38801256edd.7
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 10:49:48 -0700 (PDT)
+        id S1728634AbeJWCMb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 22:12:31 -0400
+Received: from mail-yb1-f196.google.com ([209.85.219.196]:38114 "EHLO
+        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727590AbeJWCMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 22:12:31 -0400
+Received: by mail-yb1-f196.google.com with SMTP id v92-v6so3785309ybi.5
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 10:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=mjU21LsTSWDE/0gaGJDVDHiBT5kctRiTSWNWRR05Ano=;
-        b=aDSlGnwMHWLdh3l6QnENhSfAMBNJVpsI5EAr1J2rwnhZ2bo6HagUcq8S8nJFdYhXy/
-         n8ol26hpv/VYUf+lMkxNQQSgHWWiFVCAnkwF0ogA01j0h/0KYQbw7VFo9iccueuSPal+
-         B5ImPJ7FGy5SPR3pINdA2Uv8uy3l15WiHHKt+LztX/uRtqrKWQtX5BAUiteW4iEcaAGS
-         6tCpJbjn7tI/uWwtlCad7qi5II90wLk58DNl9oYsPUuv+/Hat5AT2wRt79NmGISCm+QK
-         z4A/guRv0gQKYUOmz8T3lZC5vG4iKMSosDSMBIReie74crF13AhlknZU+nrseJ7s/QJ4
-         w/YQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4Ba4L93T2f33Y38Wve6bQAws5z0TnZi5ERS7sXLjlKU=;
+        b=jOgJ9cQSVVJzoQFz8wUlm/Rt8XuRAX2LDajvimM6z1OmEOug+kWTJrODPZa+kt0tWJ
+         qUCrekdqN1VV2+aHNlUNvftAA9yZygBWzikvh00L7uB2/0+WYBBKa/oJzXtdin2E0UXZ
+         aVgC1slxNF/Ru1C1BBp5UPgwrznSR/B6oHS4qCSFSxIS5uNUtdW7znWoz3M46O9Wgg+W
+         9OlemqJXMNhNz1c+XSFUMrHEnTFJUkdkIvmPl1K7g5kFEcPZuYZ1O2gLLkYzkVQrdPwI
+         uIFdTpXYJbXSD6fh1qRMdOvf9/o2QVUPhbtWMkUVLfGjoO31+G3w0ZH2MmsoYBMGarbw
+         b29A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=mjU21LsTSWDE/0gaGJDVDHiBT5kctRiTSWNWRR05Ano=;
-        b=Nsi0u2RrRjLjsfSDXLMuu8Z28uxsSgTNeLHeR4dHQ8KaazJnmBZJHeymCINvg8aUJg
-         QhAdSeUYlPjGGDMB0M5+hc4eCyn2WFZX7sf3ydwu3Dj3+Xswb0umbSt/HqlhKZtQ9EqI
-         qTzB210A7rB6lQ6Od8ll8HVqd46RYSjG6bCirL9WKB4TGBeGs3C4Pba07vd7p8D1uGSi
-         FBAPPuBZDRF8oa1E5Lu3KQWvsJedVhcQUnl93PwnRP4uJBtswb2MbjpC3JMjPbNe9dGV
-         CIHrvMqLZn3GEDBiI9ixMpM4Ohw72YLY33aoFRjFuiMcfzi3oUmPE8tQzfa1KrScOY3R
-         YoLg==
-X-Gm-Message-State: AGRZ1gJupxFBPHo0gGVpOsORE3cbnssqmXTZ208bxcrnVaqk+UaOnj0M
-        c9B2eCiWEFN06K834gXyFtE=
-X-Google-Smtp-Source: AJdET5cZnbySE1FM6t3dU6vh3xcaPx1vUOA/Dnq40j3gB4UGJz3N+xR6saJN5qqWqS+ZzBcOxy70qQ==
-X-Received: by 2002:a50:f298:: with SMTP id f24-v6mr4313793edm.233.1540230587626;
-        Mon, 22 Oct 2018 10:49:47 -0700 (PDT)
-Received: from szeder.dev (x4db968d4.dyn.telefonica.de. [77.185.104.212])
-        by smtp.gmail.com with ESMTPSA id b26-v6sm10854888edw.0.2018.10.22.10.49.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Oct 2018 10:49:46 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 19:49:44 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] completion: fix __gitcomp_builtin no longer consider
- extra options
-Message-ID: <20181022174944.GH30222@szeder.dev>
-References: <20181021083731.8009-1-pclouds@gmail.com>
- <xmqqr2giwsep.fsf@gitster-ct.c.googlers.com>
- <CACsJy8B-NtKb1sk_CxwB-bffMsy+nDGL2-MpkScBF5vvGHFBjA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4Ba4L93T2f33Y38Wve6bQAws5z0TnZi5ERS7sXLjlKU=;
+        b=Jgn7nVaqGYYEMTAdeyZUrPhGedrKgguMrX1givJhf+aKT7Eq3DRhobRDWUdx5cWdJq
+         gqIKL0pYiHLMoG0F+emYVbtcO8mSeEEwbl7CXEPTzWrcSlSGBU0nmDKzVF/tMYJTa8tP
+         3C2r0dzqjsMn5kDY54OtoT9I398qZpuwfgyJjn9PPNThTDDEcptKjZ8PsCndhtFa3nr4
+         kaJuVEfqto9nxnsmjQ+whMyBykTQN8qoir6wal9kLGfIRQmEwAiGJDMYZqn4jhdSYUi2
+         K4UMTOdsoOKnZKI4GIC2dlhIywXboRdySikRVW7DSnOoifzHBh1GPTderYO3sDxdCT22
+         dAOA==
+X-Gm-Message-State: ABuFfogRKECSWLIRrnyq+1hT8YClAd0YiX4hf+j48ztR2bgM7x9NhJFP
+        ndYw60/iaRq6e2DISWCYxukbjbvM
+X-Google-Smtp-Source: ACcGV60/7kbH7gyAHDnzl3ZAtDVncmAZqDYoYpo31iHWAy6MVgLtU/bAQEon16vcFJGj6Sf6fquflw==
+X-Received: by 2002:a25:1446:: with SMTP id 67-v6mr32067293ybu.155.1540230780432;
+        Mon, 22 Oct 2018 10:53:00 -0700 (PDT)
+Received: from localhost.localdomain ([2605:a601:21d1:5200:620a:c230:ada8:3135])
+        by smtp.gmail.com with ESMTPSA id h6-v6sm2936865ywm.89.2018.10.22.10.52.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 22 Oct 2018 10:52:59 -0700 (PDT)
+From:   Joshua Watt <jpewhacker@gmail.com>
+X-Google-Original-From: Joshua Watt <JPEWhacker@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Joshua Watt <JPEWhacker@gmail.com>
+Subject: [PATCH v2] send-email: explicitly disable authentication
+Date:   Mon, 22 Oct 2018 12:52:48 -0500
+Message-Id: <20181022175248.3940-1-JPEWhacker@gmail.com>
+X-Mailer: git-send-email 2.19.1.543.g99a77c85e.dirty
+In-Reply-To: <20181018211527.25597-1-JPEWhacker@gmail.com>
+References: <20181018211527.25597-1-JPEWhacker@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8B-NtKb1sk_CxwB-bffMsy+nDGL2-MpkScBF5vvGHFBjA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 04:34:16PM +0200, Duy Nguyen wrote:
-> On Mon, Oct 22, 2018 at 5:51 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-> >
-> > > __gitcomp_builtin() has the main completion list provided by
-> > >
-> > >     git xxx --git-completion-helper
-> > >
-> > > but the caller can also add extra options that is not provided by
-> > > --git-completion-helper. The only call site that does this is "git
-> > > difftool" completion.
-> > >
-> > > This support is broken by b221b5ab9b (completion: collapse extra
-> > > --no-.. options - 2018-06-06), which adds a special value "--" to mark
-> > > that the rest of the options can be hidden by default. The commit
-> > > forgets the fact that extra options are appended after
-> > > "$(git xxx --git-completion-helper)", i.e. after this "--", and will
-> > > be incorrectly hidden as well.
-> > >
-> > > Prepend the extra options before "$(git xxx --git-completion-helper)"
-> > > to avoid this.
-> >
-> > Thanks for a clear analysis.  How did you find it?  Got annoyed that
-> > completion of difftool got broken, or discovered while trying to
-> > apply the same trick as difftool completion uses to another one and
-> > seeing that the technique does not work?
-> 
-> I was fixing format-patch completion and was surprised it did not work
-> as expected. Never really used difftool myself :P I only found out
-> about it when I asked myself "why wasn't this breakage found earlier?"
+It can be necessary to disable SMTP authentication by a mechanism other
+than sendemail.smtpuser being undefined. For example, if the user has
+sendemail.smtpuser set globally but wants to disable authentication
+locally in one repository.
 
-Erm...  maybe because there are no tests covering the combination of
-extra options and '--no-..' options in 't9902-completion.sh'?
+--smtp-auth and sendemail.smtpauth now understand the value 'none' which
+means to disable authentication completely, even if an authentication
+user is specified.
 
-(Hint, hint... :)
+The value 'none' is lower case to avoid conflicts with any RFC 4422
+authentication mechanisms.
+
+The user may also specify the command line argument --no-smtp-auth as a
+shorthand for --smtp-auth=none
+
+Signed-off-by: Joshua Watt <JPEWhacker@gmail.com>
+---
+ Documentation/git-send-email.txt | 7 ++++++-
+ git-send-email.perl              | 8 ++++++--
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 465a4ecbe..17993e3c9 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -190,7 +190,9 @@ $ git send-email --smtp-auth="PLAIN LOGIN GSSAPI" ...
+ If at least one of the specified mechanisms matches the ones advertised by the
+ SMTP server and if it is supported by the utilized SASL library, the mechanism
+ is used for authentication. If neither 'sendemail.smtpAuth' nor `--smtp-auth`
+-is specified, all mechanisms supported by the SASL library can be used.
++is specified, all mechanisms supported by the SASL library can be used. The
++special value 'none' maybe specified to completely disable authentication
++independently of `--smtp-user`
+ 
+ --smtp-pass[=<password>]::
+ 	Password for SMTP-AUTH. The argument is optional: If no
+@@ -204,6 +206,9 @@ or on the command line. If a username has been specified (with
+ specified (with `--smtp-pass` or `sendemail.smtpPass`), then
+ a password is obtained using 'git-credential'.
+ 
++--no-smtp-auth::
++	Disable SMTP authentication. Short hand for `--smtp-auth=none`
++
+ --smtp-server=<host>::
+ 	If set, specifies the outgoing SMTP server to use (e.g.
+ 	`smtp.example.com` or a raw IP address).  Alternatively it can
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2be5dac33..7d7e69581 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -82,8 +82,11 @@ sub usage {
+                                      Pass an empty string to disable certificate
+                                      verification.
+     --smtp-domain           <str>  * The domain name sent to HELO/EHLO handshake
+-    --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms.
++    --smtp-auth             <str>  * Space-separated list of allowed AUTH mechanisms, or
++                                     "none" to disable authentication.
+                                      This setting forces to use one of the listed mechanisms.
++    --no-smtp-auth                   Disable SMTP authentication. Shorthand for
++                                     `--smtp-auth=none`
+     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+ 
+     --batch-size            <int>  * send max <int> message per connection.
+@@ -341,6 +344,7 @@ sub signal_handler {
+ 		    "smtp-debug:i" => \$debug_net_smtp,
+ 		    "smtp-domain:s" => \$smtp_domain,
+ 		    "smtp-auth=s" => \$smtp_auth,
++		    "no-smtp-auth" => sub {$smtp_auth = 'none'},
+ 		    "identity=s" => \$identity,
+ 		    "annotate!" => \$annotate,
+ 		    "no-annotate" => sub {$annotate = 0},
+@@ -1241,7 +1245,7 @@ sub smtp_host_string {
+ # (smtp_user was not specified), and 0 otherwise.
+ 
+ sub smtp_auth_maybe {
+-	if (!defined $smtp_authuser || $auth) {
++	if (!defined $smtp_authuser || $auth || $smtp_auth eq "none") {
+ 		return 1;
+ 	}
+ 
+-- 
+2.19.1.543.g99a77c85e.dirty
 
