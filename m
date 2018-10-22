@@ -2,104 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AEDF1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 15:05:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAE0E1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 15:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbeJVXYT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 19:24:19 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:36963 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727554AbeJVXYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 19:24:19 -0400
-Received: by mail-qt1-f196.google.com with SMTP id d14-v6so46644280qto.4
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 08:05:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=ntY0X6gkuAwwUnHOso+jRq99fKHpaCrK4hW01UuO+f4=;
-        b=c5UY1TO9pXV35WZddXx1RgCeo3uS/YBs3ZMRSiZeAOo/Dr4mPx72ubymS4HI9GzJK3
-         0KTiJ/55znldzEKgfiNSDHXoBQ/TppB8s/2pPAEb6nKl4NkLtWDTOKmxWHs8wZsCfDRa
-         AsF3xSxAy0PzULdODY4Kfb/Ln2rdKU43HGKTnISbMMja91EzUHq+DDVky2PTmg2EHcYv
-         ocRow8rx4wirk5CRgRxwklbya/IfYjPZZsinBz/clXJ+ALDeVwZbQo5/FPINrWkkaRQf
-         J4Ss5Q3mmDsWgjyIeGsULA+VxLcJOk4hnEPRPJgQjVvLx0q1wnhmyKDebb5fT/39g1fC
-         H1yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ntY0X6gkuAwwUnHOso+jRq99fKHpaCrK4hW01UuO+f4=;
-        b=AnnYTYwqqtuSznnlxC78z+5ZDgVNaPJX0CDGbggUR2BPIOZL+ZMr35Pzrv87dqI872
-         cIpyUbH1hBSu5GmVy8B64aciux0SLhdO+BPG0sB6cuR46DXRp2eVGeD61IC+ihdV1ZWo
-         iRjL3hE88/k5d7SMzC6eD7SPVsZrJJisVUPsHgvm2aEDPnc77nsl96QltHNtuPtpgnaj
-         iUH1lSc+UgVPQptxxYZLK9bRVEZ4gBpsbVk4qtMn69t/5m6LMzeo1wdDfJu5LNr6hA04
-         gGGtXLkD+rUJnRQW8R6YrPu4HcYDzV14eKQngq1Z4y+fg0HyjUyNWr4w5Nvr/lzoxPHq
-         WW8A==
-X-Gm-Message-State: ABuFfogS9DErRO8VD+0DWKo3mIMsOUDntwlZR8cEaZ0Kllx5D3Ptm6CA
-        QKAO4ep2XwJWPBHIaRbAQD2ay37Fm1w=
-X-Google-Smtp-Source: ACcGV61Gp+RN6Sk/PLxsXO4c/m3lVM6PeBub964aFmIEi5Owr5J/vCZyjAZZjBdHaWyg5sZxrr4jEg==
-X-Received: by 2002:a0c:959a:: with SMTP id s26mr44957058qvs.199.1540220722913;
-        Mon, 22 Oct 2018 08:05:22 -0700 (PDT)
-Received: from localhost.localdomain (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id h25-v6sm5581288qta.89.2018.10.22.08.05.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Oct 2018 08:05:22 -0700 (PDT)
-From:   Ben Peart <peartben@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Ben Peart <benpeart@microsoft.com>
-Subject: [PATCH v1] load_cache_entries_threaded: remove unused src_offset parameter
-Date:   Mon, 22 Oct 2018 11:05:13 -0400
-Message-Id: <20181022150513.18028-1-peartben@gmail.com>
-X-Mailer: git-send-email 2.18.0.windows.1
+        id S1728276AbeJVXoH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 19:44:07 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:49224 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727669AbeJVXoH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 19:44:07 -0400
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id 8C496335C8C;
+        Mon, 22 Oct 2018 15:25:06 +0000 (UTC)
+Message-ID: <1540221901.1299.4.camel@gentoo.org>
+Subject: Re: [PATCH v4] gpg-interface.c: detect and reject multiple
+ signatures on commits
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Mon, 22 Oct 2018 17:25:01 +0200
+In-Reply-To: <7C705597-7AA9-4C4E-904B-CE8C4F01AD24@gentoo.org>
+References: <20181020193020.28517-1-mgorny@gentoo.org>
+         <xmqqin1wyxvz.fsf@gitster-ct.c.googlers.com>
+         <7C705597-7AA9-4C4E-904B-CE8C4F01AD24@gentoo.org>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-7IqbfH18CBB4pE4uyUH+"
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Peart <benpeart@microsoft.com>
 
-Remove the src_offset parameter which is unused as a result of switching
-to the IEOT table of offsets.  Also stop incrementing src_offset in the
-multi-threaded codepath as it is no longer used and could cause confusion.
+--=-7IqbfH18CBB4pE4uyUH+
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
----
+On Mon, 2018-10-22 at 08:04 +0000, Micha=C5=82 G=C3=B3rny wrote:
+> Dnia October 20, 2018 11:57:36 PM UTC, Junio C Hamano <gitster@pobox.com>=
+ napisa=C5=82(a):
+> > Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org> writes:
+> >=20
+> > > GnuPG supports creating signatures consisting of multiple signature
+> > > packets.  If such a signature is verified, it outputs all the status
+> > > messages for each signature separately.  However, git currently does
+> >=20
+> > not
+> > > account for such scenario and gets terribly confused over getting
+> > > multiple *SIG statuses.
+> > >=20
+> > > For example, if a malicious party alters a signed commit and appends
+> > > a new untrusted signature, git is going to ignore the original bad
+> > > signature and report untrusted commit instead.  However, %GK and %GS
+> > > format strings may still expand to the data corresponding
+> > > to the original signature, potentially tricking the scripts into
+> > > trusting the malicious commit.
+> > >=20
+> > > Given that the use of multiple signatures is quite rare, git does not
+> > > support creating them without jumping through a few hoops, and
+> >=20
+> > finally
+> > > supporting them properly would require extensive API improvement, it
+> > > seems reasonable to just reject them at the moment.
+> > >=20
+> > > Signed-off-by: Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org>
+> > > ---
+> > >  gpg-interface.c          | 90
+> >=20
+> > +++++++++++++++++++++++++++-------------
+> > >  t/t7510-signed-commit.sh | 26 ++++++++++++
+> > >  2 files changed, 87 insertions(+), 29 deletions(-)
+> > >=20
+> > > Changes in v4:
+> > > * switched to using skip_prefix(),
+> > > * renamed the variable to seen_exclusive_status,
+> > > * made the loop terminate early on first duplicate status seen.
+> >=20
+> > Thanks for sticking to the topic and polishing it further.  Looks
+> > very good. =20
+> >=20
+> > Will replace.
+> >=20
+> > > +	int seen_exclusive_status =3D 0;
+> > > +
+> > > +	/* Iterate over all lines */
+> > > +	for (line =3D buf; *line; line =3D strchrnul(line+1, '\n')) {
+> > > +		while (*line =3D=3D '\n')
+> > > +			line++;
+> > > +		/* Skip lines that don't start with GNUPG status */
+> > > +		if (!skip_prefix(line, "[GNUPG:] ", &line))
+> > > +			continue;
+> > > +
+> > > +		/* Iterate over all search strings */
+> > > +		for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+> > > +			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
+> > > +				if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE) {
+> > > +					if (++seen_exclusive_status > 1)
+> > > +						goto found_duplicate_status;
+> >=20
+> > Very minor point but by not using pre-increment, i.e.
+> >=20
+> > 		if (seen_exclusive_status++)
+> > 			goto found_duplicate_status;
+> >=20
+> > you can use the expression as a "have we already seen?" boolean,
+> > whic may probably be more idiomatic.
+> >=20
+> > The patch is good in the way written as-is, and this is so minor
+> > that it is not worth rerolling to only update this part.
+>=20
+> Please don't merge it yet. I gave it some more thought and I think the lo=
+op refactoring may cause TRUST_* to override BADSIG (i.e. upgrade from 'bad=
+' to 'untrusted'). I'm going to verify this when I get home.
+>=20
 
-Notes:
-    Base Ref:
-    Web-Diff: https://github.com/benpeart/git/commit/7360721408
-    Checkout: git fetch https://github.com/benpeart/git read-index-multithread-no-src-offset-v1 && git checkout 7360721408
+I was wrong.  I'm sorry about the noise.  I've reverified the logic,
+and it correct.  That is:
 
- read-cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+1) for trusted signature, only GOODSIG is emitted and 'G' is returned
+correctly,
 
-diff --git a/read-cache.c b/read-cache.c
-index f9fa6a7979..6db6f0f220 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2037,7 +2037,7 @@ static void *load_cache_entries_thread(void *_data)
- }
- 
- static unsigned long load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
--			unsigned long src_offset, int nr_threads, struct index_entry_offset_table *ieot)
-+			int nr_threads, struct index_entry_offset_table *ieot)
- {
- 	int i, offset, ieot_blocks, ieot_start, err;
- 	struct load_cache_entries_thread_data *data;
-@@ -2198,7 +2198,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 		ieot = read_ieot_extension(mmap, mmap_size, extension_offset);
- 
- 	if (ieot) {
--		src_offset += load_cache_entries_threaded(istate, mmap, mmap_size, src_offset, nr_threads, ieot);
-+		load_cache_entries_threaded(istate, mmap, mmap_size, nr_threads, ieot);
- 		free(ieot);
- 	} else {
- 		src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
+2) for untrusted signature, GOODSIG is followed by TRUST_* messages,
+so line-wise TRUST_* check replaces the 'G' with 'U',
 
-base-commit: f58b85df6937e3f3d9ef26bb52a513c8ada17ffc
--- 
-2.18.0.windows.1
+3) for bad signature, only BADSIG is emitted without TRUST_* messages.
+
+Furthermore, GnuPG documentation confirms that TRUST_* is only emitted
+for good signatures [1].
+
+[1]:https://github.com/gpg/gnupg/blob/master/doc/DETAILS#trust_
+
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--=-7IqbfH18CBB4pE4uyUH+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlvN685fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQoTqQ/+LylFQTISgx6NpWexKPAhXXFszRJ+NtiToQuYcLftmNp1gaPApjdjVOfm
+fCvFo0KxfE5BZ1mgC4f8r+6mk6tYSAZgox9Rpfnsbt3XsLOA1KOVYykUSV0Q5/Qd
+jRHG0DOIHccWnb9m8cReRWzmyVcTdek7TYzOl0Tuox9OPkyYRo9Tg7RzdBWH7DjA
+6vCvEkXA3TRygf+3ZowSx4d2OdLJfa5ctc//ouBTi3Xsv6EveYW+WmcaqaV7Zr4z
+IjHDBybhN1uJ2fhisJPxmMMGjF/ggbsdET07iREgHtyomdwdet/AkXTzQ9JjAUIW
+qwkwBXzYpDoCX6A2sbQZBqM2pLbb/tnMchTcOMgLofDkO+kI4iGpOHNWA9GJu3zS
+61zUTiAqSDYETvHaDZcAaan95t4OgZk0vq3lNVq2hQRwwtNSrLSJHuN5Vna6VlLb
+I0nhfu/4l1sizSIMwV0K5sPaEhHuOqqn6VkOJpGXIqhHs0zvjCJO7o0aCRZDulh9
+CmGzTDRiAYlclh7N+L6ulbXjd+FOZyJQx1VrcGWuI6hF9xXhpHjHWbMPE/YvRpl1
+vjjuCRJ0DvpgH8QZp0D4gFEBwKE81q5311HYXFJPmp8js4NUhFe4Pvs9nStHusXH
+czp9ypiSMpUs/W3j6XLXqg+ZQLklyQLQIT+vrxJ4dpeHC1Ge7Ts=
+=F4VD
+-----END PGP SIGNATURE-----
+
+--=-7IqbfH18CBB4pE4uyUH+--
 
