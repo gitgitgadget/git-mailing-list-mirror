@@ -2,147 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 655511F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 22:05:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCA0B1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 22:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728716AbeJWG0E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 02:26:04 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:43444 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728312AbeJWG0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 02:26:04 -0400
-Received: by mail-pf1-f193.google.com with SMTP id q1-v6so3265621pfh.10
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 15:05:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1j2SBfqac3BSRx/8Sx7Uklc+VkQbQfl/uDN4sery/Bg=;
-        b=rQzIc+ULVJdmjII3C5MbdheSxAN7j7e3tn6wEJcwdzt/XBx7dsdyI1c5bl3OYTSg0e
-         Wdaevr3HdZ4ipk+Lu6Ul57aqordEVeqh4CJ1R/KOWd9B9Y/lHPSmj9FHHM9oNURjabSw
-         1zVcnBbFHNqpZYx+LZqQUg3O7hj5AFwdvSGGOio+vOfZs/tCJF8IbR4Pst6efX5/XQ+X
-         LkLEAgFp93Kp5e2oSZrHRN4e+x4hakcJwBfcZJ65Z2eC1VvraBghE9j1l8Y1/XliM9nZ
-         t8bVlNVVmR7EaI2pkBY+R0ako3fw/VFgXr6H4nNVVeeFHF/8zK4xb2voTgpSKn8fZoCG
-         O26g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1j2SBfqac3BSRx/8Sx7Uklc+VkQbQfl/uDN4sery/Bg=;
-        b=YxO+FoQGoBFozjGbPoDvgEEINjqkSJMMvm0J92xm0BqjPpYgQ9U7JqK9RHsIR3gIZ6
-         KcsDPA269VhBXaAPlOMFBMSn5ijglKtThM4m05VfzcuZ7uc4Z6sTphcOx7gySDkiEq1D
-         VX3EHnrbcWj0+5QrSA4vVacqYZnZmJIe0RpBh8tjpbzpJ4iApZTxZp+WC2yWGsNLJ4Ju
-         R1buxoxoghsR5nGTYRihtUwoE6ptRvnKljpNYzdzjxSmxWcX/nzMO1MU+oJ8sofW7I0g
-         LL823AcuaPydpg2mxcYVMaikn0Vvt+KOQA6MyZsbx5OsHeJ9/lZ8R8YJsOZqbdoll4Hu
-         1AAQ==
-X-Gm-Message-State: AGRZ1gLNpazyeCo0CJ5AxXudxrdOlkedMdWtGhtL7qjOYGQDPwXCLUHI
-        n6O2xhI6GfW/teGfIBlRUGLHBvVj
-X-Google-Smtp-Source: AJdET5dXrW+4tLkR/wi6CnopCnpSr3Jn9R7ZCeP6PE0P/ZTidl/MUkZ8pR8sIWUrHzgy0wfH1cS1Ag==
-X-Received: by 2002:a65:50c3:: with SMTP id s3-v6mr5534356pgp.355.1540245941231;
-        Mon, 22 Oct 2018 15:05:41 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id m27-v6sm62069414pff.187.2018.10.22.15.05.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Oct 2018 15:05:40 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 15:05:40 -0700 (PDT)
-X-Google-Original-Date: Mon, 22 Oct 2018 22:05:33 GMT
-Message-Id: <1f9ff57d52a72e3795ac4a924e23a64b91b1f83e.1540245934.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.9.v3.git.gitgitgadget@gmail.com>
-References: <pull.9.v2.git.gitgitgadget@gmail.com>
-        <pull.9.v3.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 3/3] repack -ad: prune the list of shallow commits
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728820AbeJWG2K (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 02:28:10 -0400
+Received: from mail-by2nam01on0121.outbound.protection.outlook.com ([104.47.34.121]:10764
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726286AbeJWG2K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 02:28:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qOaG586SYFqzcB2AJeiY0OT7LSKwfhRIoASbvd9drNY=;
+ b=WB8Qf/nHvAC/3oatPV+BYgVhvVpWAq5hHj2QK4kRbypO6H91v3Nh+jnpH7jajp5eHZw7HgM2kkCvpcwU+cMEMZOoz5v7nZket6EmQJ1oFinadNwIz3nyNWalzJOMo8YEiNSLxzUaJaKv4eMVomLhru5IId/OwfGLl/zX8R8O5s8=
+Received: from MW2PR2101MB0970.namprd21.prod.outlook.com (52.132.146.19) by
+ MW2PR2101MB1098.namprd21.prod.outlook.com (52.132.149.27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1294.4; Mon, 22 Oct 2018 22:07:45 +0000
+Received: from MW2PR2101MB0970.namprd21.prod.outlook.com
+ ([fe80::6438:244a:94bd:353e]) by MW2PR2101MB0970.namprd21.prod.outlook.com
+ ([fe80::6438:244a:94bd:353e%3]) with mapi id 15.20.1294.001; Mon, 22 Oct 2018
+ 22:07:45 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "sunshine@sunshineco.com" <sunshine@sunshineco.com>
+Subject: RE: [PATCH v3 1/3] reset: don't compute unstaged changes after reset
+ when --quiet
+Thread-Topic: [PATCH v3 1/3] reset: don't compute unstaged changes after reset
+ when --quiet
+Thread-Index: AQHUagnA+gLbYbdyYkq29jXvxRHQaaUrvBEAgAAXBLA=
+Date:   Mon, 22 Oct 2018 22:07:45 +0000
+Message-ID: <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181022131828.21348-1-peartben@gmail.com>
+ <20181022131828.21348-2-peartben@gmail.com>
+ <nycvar.QRO.7.76.6.1810222244150.4546@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1810222244150.4546@tvgsbejvaqbjf.bet>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=benpeart@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2018-10-22T22:07:43.8213520Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
+ Sensitivity=General
+x-originating-ip: [70.33.148.227]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;MW2PR2101MB1098;6:LLefiROnzZ4gNej9IqVECcRgA3U3IdtEiEz/iwyx+b/HlgDKPDEkzvbJNFKXdntToTSSLHUR1uUbpc1ViKOQhVsNkMTShCLEsRiydcOFIYUpiqCywVXKUog5v5H79coMn5UVtCCP46IBAZ9qN06PvB1qoqSAEMf6KmZq39LEs3j5xe6pEdjkBOQPHYN1vMj5oc3ESPdsWWPQm+b1F3MtNq1XSANSZYThL3bHQClpJz+ikmkxxQ6vga1cb/RQPRB/R6RpXRNbrNkGubY75Jc0lia8WIOdZX//HoxB4WLXnE/LsK83Lj9lS7J2V8MAnzOaQ+SNV4j+sYN59TfXnCgJgx5Ijitm6lDQbYaQdhVSRT4Ij8pAM4/ViTSvZbVyisx7IXP1lsM5XZdNuK7iwGXVX9rh6KrrPJNn431lSX2/Ga1rvMNlc95DD7v2W+1vUvaTIiNh+xzxVMg7142WmK47vw==;5:N85DFkRtgHlE2JgfpUpE5VRG/JuGAjFENXtmXtd4nDNGczpRnx0GtheyFmCZxuFmvkHu3p4wPsBcyku3yto1A2Pi9a1dzQuLI7Wd9Oql8wmWoxHPhx7T7yBcsT0HMUHoimBVHGNFoxTMJu8wN1G6nzxYBNE9Yb4ICCif3uv1n3I=;7:Hq4DGcXWfdrC116UO+RZ+3Uk7bgQolKkIalYFyzWr/mlN3xrCJs+bWTXqRliblzc2qeSIHl2SCPYfS01SsdOh8EU1juOs9V2M679rBmydwmrCKByTjltxR56+hA4M2ryhqLegHTSywZK5ucO1LMK/Q==
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: aff95670-3ac6-48af-59b5-08d6386acbd2
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MW2PR2101MB1098;
+x-ms-traffictypediagnostic: MW2PR2101MB1098:
+x-microsoft-antispam-prvs: <MW2PR2101MB1098ED7B55FE0CCCEC3EDD05F4F40@MW2PR2101MB1098.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(9452136761055)(100324003535756)(26323138287068)(85827821059158)(28532068793085)(89211679590171);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(8220027)(2401047)(5005006)(8121501046)(93006095)(93001095)(10201501046)(3231355)(944501410)(52105095)(2018427008)(3002001)(6055026)(148016)(149066)(150057)(6041310)(20161123560045)(20161123564045)(20161123558120)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(201708071742011)(7699051)(76991095);SRVR:MW2PR2101MB1098;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB1098;
+x-forefront-prvs: 08331F819E
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(136003)(366004)(396003)(376002)(346002)(13464003)(189003)(199004)(39060400002)(4326008)(66066001)(33656002)(478600001)(99286004)(102836004)(76176011)(9686003)(26005)(2900100001)(6436002)(7696005)(55016002)(6346003)(6246003)(25786009)(10290500003)(7736002)(71190400001)(305945005)(71200400001)(53936002)(256004)(53546011)(74316002)(14454004)(10090500001)(72206003)(186003)(8990500004)(106356001)(6506007)(2906002)(54906003)(105586002)(110136005)(93886005)(68736007)(316002)(3846002)(22452003)(6116002)(486006)(97736004)(8676002)(81166006)(11346002)(476003)(8936002)(81156014)(229853002)(86362001)(5250100002)(5660300001)(446003)(86612001);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB1098;H:MW2PR2101MB0970.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-microsoft-antispam-message-info: ImCzdcZClfswaP6/QjxX6eImwZRxo4Md/UpH0NqErhWEsnTxBkNyZ73fWAo4Urx1jC2rpMyGL1YC3VCllk4uXO7zAmSpql/5Yqtjw57a/XTyzZvvjSteHLrGNtfqmUx9Ka0YQxG2N3p58EFPCg3Z3jEz4KgnCroeE3fB4byxv64XppApql6AoQ41qlF8MC8dTsoplv7qznjNL3tIX1zOaLWUVvSI6P0Qk7X4yd0lIKiLCR3FVmDQZumYt9NwT3DzZ+oFedGgMg12f2k3vgjDScF0smKcOxvoZ+QFws6yVziwMafpH6EbDTRR29T2O5Poo7XekeBuJhjF1mYSRjaB5lmcDnJ4TBN8kXRkzrngIqU=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aff95670-3ac6-48af-59b5-08d6386acbd2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Oct 2018 22:07:45.5712
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR2101MB1098
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> -----Original Message-----
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Sent: Monday, October 22, 2018 4:45 PM
+> To: Ben Peart <peartben@gmail.com>
+> Cc: git@vger.kernel.org; gitster@pobox.com; Ben Peart
+> <Ben.Peart@microsoft.com>; peff@peff.net; sunshine@sunshineco.com
+> Subject: Re: [PATCH v3 1/3] reset: don't compute unstaged changes after
+> reset when --quiet
+>=20
+> Hi Ben,
+>=20
+> On Mon, 22 Oct 2018, Ben Peart wrote:
+>=20
+> > From: Ben Peart <benpeart@microsoft.com>
+> >
+> > When git reset is run with the --quiet flag, don't bother finding any
+> > additional unstaged changes as they won't be output anyway.  This speed=
+s
+> up
+> > the git reset command by avoiding having to lstat() every file looking =
+for
+> > changes that aren't going to be reported anyway.
+> >
+> > The savings can be significant.  In a repo with 200K files "git reset"
+> > drops from 7.16 seconds to 0.32 seconds for a savings of 96%.
+>=20
+> That's very nice!
+>=20
+> Those numbers, just out of curiosity, are they on Windows? Or on Linux?
+>=20
 
-`git repack` can drop unreachable commits without further warning,
-making the corresponding entries in `.git/shallow` invalid, which causes
-serious problems when deepening the branches.
+It's safe to assume all my numbers are on Windows. :-)
 
-One scenario where unreachable commits are dropped by `git repack` is
-when a `git fetch --prune` (or even a `git fetch` when a ref was
-force-pushed in the meantime) can make a commit unreachable that was
-reachable before.
+> Ciao,
+> Dscho
 
-Therefore it is not safe to assume that a `git repack -adlf` will keep
-unreachable commits alone (under the assumption that they had not been
-packed in the first place, which is an assumption at least some of Git's
-code seems to make).
 
-This is particularly important to keep in mind when looking at the
-`.git/shallow` file: if any commits listed in that file become
-unreachable, it is not a problem, but if they go missing, it *is* a
-problem. One symptom of this problem is that a deepening fetch may now
-fail with
-
-	fatal: error in object: unshallow <commit-hash>
-
-To avoid this problem, let's prune the shallow list in `git repack` when
-the `-d` option is passed, unless `-A` is passed, too (which would force
-the now-unreachable objects to be turned into loose objects instead of
-being deleted). Additionally, we also need to take `--keep-reachable`
-and `--unpack-unreachable=<date>` into account.
-
-Note: an alternative solution discussed during the review of this patch
-was to teach `git fetch` to simply ignore entries in .git/shallow if the
-corresponding commits do not exist locally. A quick test, however,
-revealed that the .git/shallow file is written during a shallow *clone*,
-in which case the commits do not exist, either, but the "shallow" line
-*does* need to be sent. Therefore, this approach would be a lot more
-finicky than the approach presented by the this patch.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/repack.c         | 6 ++++++
- t/t5537-fetch-shallow.sh | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index c6a7943d5..9217fc832 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -549,6 +549,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		if (!po_args.quiet && isatty(2))
- 			opts |= PRUNE_PACKED_VERBOSE;
- 		prune_packed_objects(opts);
-+
-+		if (!keep_unreachable &&
-+		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
-+		     unpack_unreachable) &&
-+		    is_repository_shallow(the_repository))
-+			prune_shallow(0, 1);
- 	}
- 
- 	if (!no_update_server_info)
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 2d0031703..777c9d1dc 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -186,7 +186,7 @@ EOF
- 	test_cmp expect actual
- '
- 
--test_expect_failure '.git/shallow is edited by repack' '
-+test_expect_success '.git/shallow is edited by repack' '
- 	git init shallow-server &&
- 	test_commit -C shallow-server A &&
- 	test_commit -C shallow-server B &&
--- 
-gitgitgadget
