@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 602231F454
-	for <e@80x24.org>; Mon, 22 Oct 2018 20:23:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A0691F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 20:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727063AbeJWEn3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 00:43:29 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40615 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726082AbeJWEn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 00:43:29 -0400
-Received: by mail-ed1-f67.google.com with SMTP id r1-v6so39231191edd.7
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 13:23:29 -0700 (PDT)
+        id S1727557AbeJWEnb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 00:43:31 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41019 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726082AbeJWEnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 00:43:31 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x31-v6so39212408edd.8
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 13:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1+fcDj7ZfJP3kInABRlsVqqGzJy3P3k3Cx5F8SYWi14=;
-        b=QnmcRcMT4s34WDY4y22i3uAW/0LuWAZ+34QNgPy/SY3CI4xXDwYW/oopL6O6nPGRkA
-         6eUaNQ8C95KYF1/FxDidI2JvFrtuecJeFGfgt1nySuE9NBnNozFuEL+ZftzjN/CH0sYf
-         QD5OdA1FGFj/MhkK+4vu+sB+hG7uPm2e6sj80/B/E8CvW1+hhpT922PPxpfuv6AyFDH6
-         PnQzuqUvNXQKyz+XtiDNgANVB5Z2qfAZ1AJkqLjOaLc0i3hUar6DF6yL5U8pRI+jo5PQ
-         fg2eaWXteWu93W97E9oFE9Vl8LEMdDy7lstmJeRjvY6gXk7czd/51WziD+Vmy9zkFfNa
-         M9VA==
+        bh=RLV53ZJf7uA43yB6DIG8Qt6G8DsPOzNy3uqbadk3Efc=;
+        b=O7KcWvECGperumr2JAo5GWbidJ1kJ6KdosUkwYi6Dhmwmv4e4L7dy4F3GJ8xYOwAGN
+         AMm0uGdL1C6dD3yeOYu/T98IS7WIGHr6WvNhTh2wBMhgOtyEQro4Zpn1wpPWtXleqWB7
+         oF5usooexHe6xSJyaUJ8CfAU/WzEJOaRdHtujkUzjhTkiLb3aVW5qmfuo7kwMzs0MNqF
+         u1bAWzQYKwubqGwunlL+m9E7VpHjAjBVoPlF5iU5tbVIcT0/QlCw/NTfdg47PO3Flw/i
+         UxMJQCeoKe4LrGksQ3JtFCwBJpJEHm5Wu4icPmZ+T+MHhRhX7+P/99If2E2++aTXpiM5
+         R3zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1+fcDj7ZfJP3kInABRlsVqqGzJy3P3k3Cx5F8SYWi14=;
-        b=dsLB7JICWv4EO7qbUlatKV6D9zyw8QYpiCrp+fBDSZsK7oQQQgSkMQB3l2wePOzKCF
-         F6Y3KjpC6dqQSowI3HVBjBRKUC7ZEyTzlDItEP8Gef5zceWFZRhA4BF1xP4Orms9gFxN
-         tX/tAlC3ar52tQ2xKPjVgKVt47XLYG8XdofU9ZMWWRlfc05IYHxp+5A1fXbx54llMj0A
-         OVo6PVlFdC0jL4zjQxmApwXM9NQ4Qf+uYzWACIaigPjGw8yEKsW665WRnR8UfB+cr0a6
-         2WQudBlh3VdPDYGZeghnd2Ggix9eSBaxTmfGxi6kZdQ40xrLnYfSBFwQbo0vkxR9GrnI
-         zYiQ==
-X-Gm-Message-State: AGRZ1gIjzSxervftmdEUPqwR0CenbZSSG9n7SInedSoQu2TfhPfFOMLa
-        eIfEq0FIp3Pu81Ww747VzIkF8hbN
-X-Google-Smtp-Source: AJdET5erRCqsCIG1CSGb5I4OtG2UMSyqmWq0NuKH4eVnEJFOmqn9Vy5gokXtINrke4eoVwo6vjPjMA==
-X-Received: by 2002:a05:6402:135a:: with SMTP id y26mr2463421edw.286.1540239808581;
-        Mon, 22 Oct 2018 13:23:28 -0700 (PDT)
+        bh=RLV53ZJf7uA43yB6DIG8Qt6G8DsPOzNy3uqbadk3Efc=;
+        b=ay7dbFgGJ4HGzZy0IHQxzgsDhj/+KMMwQ4SfEtrUM3w6ZSOHIOFMKxiihkQBXWxjSQ
+         sDGdWi9vTLULJQhq1gPM5hv70uUEmrCzHEcBE07smHckQsEdGNiYO07YQHpDDF/37ld9
+         swFbhUn9JUGgJ8o/iQPhfY+p+OW3BVSC5n9VD0Ms2zEIRAeiWfchEPFloUG4cf1RiLWS
+         4m8L1uptjir5+VMQUi1Ud/dQjOiRPStPFtrY4VLjz0G/MZe0pAC5FSNgpPUPHPL4TnXP
+         4WvgrDrPbLd0bC/8/3RgfSFg/LAIYFE+jx2R7MLBes/OTeBrQ+6+70VTLmXr78JPKU9C
+         Y4QA==
+X-Gm-Message-State: ABuFfogNMY4h7I7abs0Iqw7GEQvZ/yAh4qnSaqbkvzI6rgTQtfYAv+4w
+        OlF2zNq22WW9RLoOWguJzjChtEtH
+X-Google-Smtp-Source: ACcGV62qX+3jXcnFm7K/y8m1KWQ7rPjHLdetKrUTmQIpJ6be9CRCEXaXXF2g69wfXhqGL0jL1XfFDw==
+X-Received: by 2002:a17:906:344b:: with SMTP id d11-v6mr37237774ejb.130.1540239810076;
+        Mon, 22 Oct 2018 13:23:30 -0700 (PDT)
 Received: from localhost.localdomain (x4db968d4.dyn.telefonica.de. [77.185.104.212])
-        by smtp.gmail.com with ESMTPSA id h21-v6sm16882228eda.23.2018.10.22.13.23.27
+        by smtp.gmail.com with ESMTPSA id h21-v6sm16882228eda.23.2018.10.22.13.23.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 22 Oct 2018 13:23:27 -0700 (PDT)
+        Mon, 22 Oct 2018 13:23:29 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 1/8] test-lib.sh: preserve GIT_GETTEXT_POISON from the environment
-Date:   Mon, 22 Oct 2018 22:22:34 +0200
-Message-Id: <20181022202241.18629-2-szeder.dev@gmail.com>
+Subject: [PATCH 2/8] gettext: don't poison if GIT_GETTEXT_POISON is set but empty
+Date:   Mon, 22 Oct 2018 22:22:35 +0200
+Message-Id: <20181022202241.18629-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.1.681.g6bd79da3f5
 In-Reply-To: <20181022202241.18629-1-szeder.dev@gmail.com>
 References: <20181022153633.31757-1-pclouds@gmail.com>
@@ -70,67 +70,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Setting GIT_GETTEXT_POISON can be useful when testing translated
-builds.
+This allows us to run test with non-GETTEXT POISON-ed behavior even in
+a GETTEXT POISON build by running:
 
-However, preserving its value from the environment is not as simple as
-adding it to the list of GIT_* variables that should not be scrubbed
-from the environment:
-
-  - GIT_GETTEXT_POISON should not influence git commands executed
-    during initialization of test-lib and the test repo.
-
-    Save its value before it gets scrubbed from the environment, so it
-    will be unset for the duration of the initialization, and restore
-    its original value after initialization is finished.
-
-  - When testing a GETTEXT_POISON build, 'test-lib.sh' always sets
-    GIT_GETTEXT_POISON to 'YesPlease'.  This was fine while all that
-    mattered was whether it's set or not.  However, the following
-    patches will introduce meaningful values (e.g. "set but empty" to
-    disable poisoning even in a GETTEXT_POISON build), so only set it
-    like this if GIT_GETTEXT_POISON was not set in the environment.
+  GIT_GETTEXT_POISON= ./t1234-foo.sh
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/test-lib.sh | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ Makefile  | 2 +-
+ gettext.c | 9 +++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ea2bbaaa7a..282c05110d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -95,6 +95,16 @@ PAGER=cat
- TZ=UTC
- export LANG LC_ALL PAGER TZ
- EDITOR=:
-+
-+# GIT_GETTEXT_POISON should not influence git commands executed during
-+# initialization of test-lib and the test repo.
-+# Back it up, unset and then restore after initialization is finished.
-+if test -n "${GIT_GETTEXT_POISON-set}"
-+then
-+	git_gettext_poison_backup=$GIT_GETTEXT_POISON
-+	unset GIT_GETTEXT_POISON
-+fi
-+
- # A call to "unset" with no arguments causes at least Solaris 10
- # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
- # deriving from the command substitution clustered with the other
-@@ -1073,7 +1083,12 @@ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
- # Can we rely on git's output in the C locale?
- if test -n "$GETTEXT_POISON"
- then
--	GIT_GETTEXT_POISON=YesPlease
-+	if test -n "${git_gettext_poison_backup-set}"
-+	then
-+		GIT_GETTEXT_POISON=$git_gettext_poison_backup
-+	else
-+		GIT_GETTEXT_POISON=YesPlease
-+	fi
- 	export GIT_GETTEXT_POISON
- 	test_set_prereq GETTEXT_POISON
- else
+diff --git a/Makefile b/Makefile
+index ad880d1fc5..7a165445cd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -365,7 +365,7 @@ all::
+ # Define GETTEXT_POISON if you are debugging the choice of strings marked
+ # for translation.  In a GETTEXT_POISON build, you can turn all strings marked
+ # for translation into gibberish by setting the GIT_GETTEXT_POISON variable
+-# (to any value) in your environment.
++# to a non-empty value in your environment.
+ #
+ # Define JSMIN to point to JavaScript minifier that functions as
+ # a filter to have gitweb.js minified.
+diff --git a/gettext.c b/gettext.c
+index 7272771c8e..a9509a5df3 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -50,8 +50,13 @@ const char *get_preferred_languages(void)
+ int use_gettext_poison(void)
+ {
+ 	static int poison_requested = -1;
+-	if (poison_requested == -1)
+-		poison_requested = getenv("GIT_GETTEXT_POISON") ? 1 : 0;
++	if (poison_requested == -1) {
++		const char *v = getenv("GIT_GETTEXT_POISON");
++		if (v && *v)
++			poison_requested = 1;
++		else
++			poison_requested = 0;
++	}
+ 	return poison_requested;
+ }
+ #endif
 -- 
 2.19.1.681.g6bd79da3f5
 
