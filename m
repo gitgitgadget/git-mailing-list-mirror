@@ -2,115 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 273E61F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 21:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93E791F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 22:05:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728975AbeJWGNm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 02:13:42 -0400
-Received: from mout.web.de ([212.227.17.11]:33889 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727089AbeJWGNm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 02:13:42 -0400
-Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7srs-1fSOno0hTU-00vMi8; Mon, 22
- Oct 2018 23:53:20 +0200
-Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7srs-1fSOno0hTU-00vMi8; Mon, 22
- Oct 2018 23:53:20 +0200
-Subject: Re: [PATCH] commit-reach: fix sorting commits by generation
-To:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>
-References: <20181022211037.22719-1-t.gummerer@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <13bdda53-b751-182b-4aa8-d9a5c03f422d@web.de>
-Date:   Mon, 22 Oct 2018 23:53:19 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <20181022211037.22719-1-t.gummerer@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        id S1728543AbeJWGZ7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 02:25:59 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:44729 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728312AbeJWGZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 02:25:59 -0400
+Received: by mail-pf1-f196.google.com with SMTP id r9-v6so20577325pff.11
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 15:05:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=y/OWMp5B5RBkWNchzhmGGiQC28D/TmGzOPENbxKeD08=;
+        b=MXReJVzONTkCHB8e+KqhNuxRmX5y4+EyjfEw2oJ1XX4IZ7m7NM+NmDpdrhWptq1ocx
+         hZSTx1Bz8atTA/4pYDr9Pn/pAkRDoRO1j0QncTWXZJ9Fg8t6P1vOhrWIYGExXDei5oqJ
+         fvjnfSmNLmSSA8dHBz5Sq8J3X9Y8te0EalRQpj2mLP26S4mJFf/LDBTWidyKJUQkhFmh
+         QQq0NGGNRZ3wFVbulUj6s3VytLh8vqxS4UbFoksqxmqe/RkjAWVvybKqbq/1vK21AoBP
+         xZfNA+pXzP7qwqO9fIkxkLq7Jyfm16Xwe6O9LNDXeV1RPUnvVHjeHuaY6jEm+SiE4Niq
+         EdPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=y/OWMp5B5RBkWNchzhmGGiQC28D/TmGzOPENbxKeD08=;
+        b=HmaLgqkwTz6l6wYnAGUccd+hFTg6UbViKqzIPTGIt5UNZ7EcoGd1Ka4UCKEdRz1ykp
+         8YOC75bX95fBEPNJKpFoGc7IPp6efnLoTuHeTxj7Hu0mEI/EwWkULNlS1oWic7ynQ6MK
+         q6ZVi7A7vqqn9O9i9gRZlIra2D7WyGb1u6zMsulegBJQxKsveZ2b//CMqthBhAO+6Anq
+         Rce2DSWQiLbbkXxwc5UBkL+40ty5yFNxSV1IsJu9v9E50tdYh0x6DmpGeu53JH88MAmr
+         TRsBAwSnweVh1yooA+LqoZdwIbUbZnThuiK0b5I4QNl0yq7ZbjD4DJNna6Q+5dMIjFpT
+         uunA==
+X-Gm-Message-State: AGRZ1gIniRQoZ5+FtQ64jFLE/GMUvcd39m8eJt1gZU+b/w2wfVclIYBJ
+        cTepXffm4wes1I5CoQEZn/d2a8+w
+X-Google-Smtp-Source: AJdET5ew/r3Cqtt2NatoOwK5759Mk9kKMPNpvg+HEPczgHY6buCkM7X0TMeldOIrqoRJIv/V7TBjoQ==
+X-Received: by 2002:a63:9e58:: with SMTP id r24mr4716037pgo.264.1540245936606;
+        Mon, 22 Oct 2018 15:05:36 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id z63-v6sm40644498pfz.31.2018.10.22.15.05.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Oct 2018 15:05:35 -0700 (PDT)
+Date:   Mon, 22 Oct 2018 15:05:35 -0700 (PDT)
+X-Google-Original-Date: Mon, 22 Oct 2018 22:05:30 GMT
+Message-Id: <pull.9.v3.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.9.v2.git.gitgitgadget@gmail.com>
+References: <pull.9.v2.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 0/3] repack -ad: fix after fetch --prune in a shallow repository
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:ihMO0JKOmpPXqQJ7lRtm5ud/rmAc1QIl32DGGaJxAds+skd4Snj
- 41sODpim0InIM25jcZlH6kAZ/4qyVoFeSyP25YKU9Ynp0cEsO/UUsTgYRF5LXlCNQsXskys
- JKiLJcIw+llEkccgQIrvEEBZx8OQstFI2J6ikMU0MWbApyX5i7kYLuTUxXZOtY1Hi4Y4DeC
- N2KPy4SrSCYX7Qm0RleYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e58xgJiLoxw=:E/n0WOIKTA78PbTnI1+nsq
- AoW2VhRMpXJ9pWFjB1/IoG9VPdqp5pxNpuLm9p+NG1tqWjRsEdMNwZ/FOeIpCXYaiNsQDKKMY
- 2k3X6Hvuh7+wxT08KlV2Yx0Kc/IVyby4pfrPCDIn6W64KxzNhEV7L4f0yR6wbXrEow2we65os
- 1AbHshyo3dxMD62iS1SgmP/oW5OohKTQTkY20clfQKoJR/7dX81PDPulyRPkHkQYrAShIDhrF
- YSoQO8hxjpWfWZzF2p2tSR1U26bBKsZbwteeZd+zwDenNq2NpfHbKLWGD1tW+6+VBiXFHLgTw
- GoyvUoJYigUqajE8U9tfr3sL+rXgiM5FzceJlsfPZ3rc7gkC5Ok7C+qtUEy0KCi+9dunKqnMh
- CCgy87+4tc4djsGKqhg2IhzoEQDYjd+ELXyIi5WBrDlejNez5rfyPm6sXmQ/KOl0ojL6ALaXk
- EB0pT8HOr8kwciFXoIYajaNFDbqHch/gFOrY2vsN3VQIlz8fLO8QXa2FVaLb050Gse23u+zdD
- 7pXTfz8xarGJ+woVDcpWKOtMNHQhnCOsZm8PHpu0vtquSQGr7ZA04YLBS6aO4B6fu7bOYIr+R
- ey5MT6YDbO5OsGAclhUAZcwrPqAV/sK7LJjVhtCYnrkpTNhSTIQGDdVPQ24noZk83EyvBWJ93
- nKfZUzm6RK5/rJ9SFujB8SaiecnxiP9sn5Tkw+UkAJcp9L1lgNDJ/bIg1Lie3E6+6RucUcPtf
- 5fxBJf4mNJwhjk7TTyNr78jf+gmNbQbDdG/tLJmKMS4KtLLs7PZAkvxmI/wT9qHuBpvRnvspj
- oqeeW8XE9mTlvx4zcBDHiRuDamaUxcFWwaLPQbz9ol/j3jujMI=
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.10.2018 um 23:10 schrieb Thomas Gummerer:
-> compare_commit_by_gen is used to sort a list of pointers to 'struct
-> commit'.  The comparison function for qsort is called with pointers to
-> the objects it needs to compare, so when sorting a list of 'struct
-> commit *', the arguments are of type 'struct commit **'.  However,
-> currently the comparison function casts it's arguments to 'struct
-> commit *' and uses those, leading to out of bounds memory access and
-> potentially to wrong results.  Fix that.
-> 
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> 
-> I noticed this by running the test suite through valgrind.  I'm not
-> familiar with this code, so I'm not sure why this didn't cause any
-> issues or how they would manifest, but this seems like the right fix
-> for this function either way.
+Under certain circumstances, commits that were reachable can be made
+unreachable, e.g. via git fetch --prune. These commits might have been
+packed already, in which case git repack -adlf will just drop them without
+giving them the usual grace period before an eventual git prune (via git gc)
+prunes them.
 
-Right; I sent a similar patch a while ago, but it seems to have fallen
-through the cracks:
+This is a problem when the shallow file still lists them, which is the
+reason why git prune edits that file. And with the proposed changes, git
+repack -ad will now do the same.
 
-https://public-inbox.org/git/d1b58614-989f-5998-6c53-c19eee409a2f@web.de/
+Reported by Alejandro Pauly.
 
-Anyway, your implied question was discussed back then.  Derrick wrote:
+Changes since v2:
 
-   The reason to sort is to hopefully minimize the amount we walk by 
-   exploring the "lower" commits first. This is a performance-only thing, 
-   not a correctness issue (which is why the bug exists). Even then, it is 
-   just a heuristic.
+ * Fixed a typo in the last commit message.
+ * Added an explanation to the last commit message why we do not simply skip
+   non-existing shallow commits at fetch time.
+ * Introduced a new, "quick prune" mode where prune_shallow() does not try
+   to drop unreachable commits, but only non-existing ones.
+ * Rebased to current master because there were too many merge conflicts for
+   my liking otherwise.
 
-Does b6723e4671 in pu (commit-reach: fix first-parent heuristic) change
-that picture?  Did a quick test and found no performance difference with
-and without the fix on top, i.e. proper sorting didn't seem to matter.
+Changes since v1:
 
->  commit-reach.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/commit-reach.c b/commit-reach.c
-> index bc522d6840..9efddfd7a0 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -516,8 +516,8 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
->  
->  static int compare_commits_by_gen(const void *_a, const void *_b)
->  {
-> -	const struct commit *a = (const struct commit *)_a;
-> -	const struct commit *b = (const struct commit *)_b;
-> +	const struct commit *a = *(const struct commit **)_a;
-> +	const struct commit *b = *(const struct commit **)_b;
->  
->  	if (a->generation < b->generation)
->  		return -1;
-> 
+ * Also trigger prune_shallow() when --unpack-unreachable=<approxidate> was
+   passed to git repack.
+ * No need to trigger prune_shallow() when git repack was called with -k.
 
-Looks good to me.
+Johannes Schindelin (3):
+  repack: point out a bug handling stale shallow info
+  shallow: offer to prune only non-existing entries
+  repack -ad: prune the list of shallow commits
 
-René
+ builtin/prune.c          |  2 +-
+ builtin/repack.c         |  6 ++++++
+ commit.h                 |  2 +-
+ shallow.c                | 22 +++++++++++++++++-----
+ t/t5537-fetch-shallow.sh | 27 +++++++++++++++++++++++++++
+ 5 files changed, 52 insertions(+), 7 deletions(-)
+
+
+base-commit: c4df23f7927d8d00e666a3c8d1b3375f1dc8a3c1
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-9%2Fdscho%2Fshallow-and-fetch-prune-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-9/dscho/shallow-and-fetch-prune-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/9
+
+Range-diff vs v2:
+
+ 1:  d2be40131 ! 1:  ed8559b91 repack: point out a bug handling stale shallow info
+     @@ -48,4 +48,6 @@
+      +		origin "+refs/heads/*:refs/remotes/origin/*"
+      +'
+      +
+     - test_done
+     + . "$TEST_DIRECTORY"/lib-httpd.sh
+     + start_httpd
+     + 
+ -:  --------- > 2:  f085eb4f7 shallow: offer to prune only non-existing entries
+ 2:  c7ee6e008 ! 3:  1f9ff57d5 repack -ad: prune the list of shallow commits
+     @@ -2,15 +2,19 @@
+      
+          repack -ad: prune the list of shallow commits
+      
+     -    While it is true that we never add unreachable commits into pack files
+     -    intentionally (as `git repack`'s documentation states), we must not
+     -    forget that a `git fetch --prune` (or even a `git fetch` when a ref was
+     +    `git repack` can drop unreachable commits without further warning,
+     +    making the corresponding entries in `.git/shallow` invalid, which causes
+     +    serious problems when deepening the branches.
+     +
+     +    One scenario where unreachable commits are dropped by `git repack` is
+     +    when a `git fetch --prune` (or even a `git fetch` when a ref was
+          force-pushed in the meantime) can make a commit unreachable that was
+          reachable before.
+      
+          Therefore it is not safe to assume that a `git repack -adlf` will keep
+          unreachable commits alone (under the assumption that they had not been
+     -    packed in the first place).
+     +    packed in the first place, which is an assumption at least some of Git's
+     +    code seems to make).
+      
+          This is particularly important to keep in mind when looking at the
+          `.git/shallow` file: if any commits listed in that file become
+     @@ -23,8 +27,16 @@
+          To avoid this problem, let's prune the shallow list in `git repack` when
+          the `-d` option is passed, unless `-A` is passed, too (which would force
+          the now-unreachable objects to be turned into loose objects instead of
+     -    being deleted). Additionally, e also need to take `--keep-reachable` and
+     -    `--unpack-unreachable=<date>` into account.
+     +    being deleted). Additionally, we also need to take `--keep-reachable`
+     +    and `--unpack-unreachable=<date>` into account.
+     +
+     +    Note: an alternative solution discussed during the review of this patch
+     +    was to teach `git fetch` to simply ignore entries in .git/shallow if the
+     +    corresponding commits do not exist locally. A quick test, however,
+     +    revealed that the .git/shallow file is written during a shallow *clone*,
+     +    in which case the commits do not exist, either, but the "shallow" line
+     +    *does* need to be sent. Therefore, this approach would be a lot more
+     +    finicky than the approach presented by the this patch.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     @@ -32,15 +44,15 @@
+      --- a/builtin/repack.c
+      +++ b/builtin/repack.c
+      @@
+     - 		if (!quiet && isatty(2))
+     + 		if (!po_args.quiet && isatty(2))
+       			opts |= PRUNE_PACKED_VERBOSE;
+       		prune_packed_objects(opts);
+      +
+      +		if (!keep_unreachable &&
+      +		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
+      +		     unpack_unreachable) &&
+     -+		    is_repository_shallow())
+     -+			prune_shallow(0);
+     ++		    is_repository_shallow(the_repository))
+     ++			prune_shallow(0, 1);
+       	}
+       
+       	if (!no_update_server_info)
+
+-- 
+gitgitgadget
