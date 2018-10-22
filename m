@@ -2,127 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0CBF1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 21:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B946A1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 21:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729561AbeJWGIW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 02:08:22 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33910 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725872AbeJWGIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 02:08:22 -0400
-Received: by mail-pg1-f193.google.com with SMTP id g12-v6so19636963pgs.1
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 14:48:03 -0700 (PDT)
+        id S1729563AbeJWGIf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 02:08:35 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:39226 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbeJWGIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 02:08:34 -0400
+Received: by mail-qt1-f201.google.com with SMTP id 7-v6so11107253qtx.6
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 14:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vEFFjSuO3q8SGIlK5SX60lF1GQJhpS3AO3CuBXTG2Xw=;
-        b=vmE0OnfIU+AAs180gjClYAynBeSzz5zNPUpOtWVtWDpPAabggS38sOZRdiajHY/Moa
-         hrBotNSlkdIQhgqVihulxiYvM3cU2NVYKCTaEh+ebb3jU/IvxwajALBcf00thUbmxyW/
-         l27ew1F+62Ia/fNmWGwmbiR1nefhH3Dc0hlBP3DaMr3MKEf2+DFwqq/D8T2KB0ER74rj
-         UGDAYVRH37CCkxZy5uMW++xz24WFbS31iIjIBp58AWX0szepGLdKU3qWCFo3ejktmzQM
-         sC0eMTwH143xeTmQn8Cx3ExZaM7cZWTAyeRoc/qbC1/jkPk9nFVx+x5+iFqCFwXsMUMZ
-         zKPA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Ly6to11fAMrIXvwVvnB06xCSsmYNDDN1Yje4zw1VoBk=;
+        b=mC/Oknwm+icTqOmY6P9g6y095G2OmLI7KuFopxz6XYU3uZm0YGn5wfYKr5sENae1Eb
+         TI+5QU4G2sa8lhzDMFQD4ROGeC+b+VycR2Ng+H+BfcTC30ZHMjJY97tKHwSyJ0TrOBIu
+         md3Wz3mdnepoa3EmOK0IaWlsaPx5U7loy2+N6zesiZhgpYQg/1Q4Feu9CVadn/2Nhzr8
+         DGsNqKAECrT2K5ZznO46PiZGL+jNxdxR06OFJhTS9OkluzS3PlZbDC5Vqp3JOkFsdKIz
+         NET9IZY3X1qownXUZlpy6IDUAIhaMSEb0q0Rlk/0FuM3SEu9m9Jy4IAhNY3IuLHW8GCA
+         hkqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=vEFFjSuO3q8SGIlK5SX60lF1GQJhpS3AO3CuBXTG2Xw=;
-        b=j7C59//UfkmiJ2XFOgmNf+zbcfEmKXPxNNsaAEKHXAhArkcNADbCJoXdfo/5mGd3IF
-         w6MVutVlVnbLy4U1VhSuma9vDJcdyXLicUHjTDRIQ/4PfYyUU/bMZPS7WkUw1dU/hiIU
-         yugB5VjzgpxebBcI4xcXQUqV7IrsDXmWnP6x6LE8z1DNZExjfzIxxYbxPIaMjjWqzZhP
-         S4+KY6IfesqbB2D7xOOjXztueZhAuAtzIbUxqAur1TX7b3OmnXn256XrvGwJgsflWJUB
-         tKru1B/OUDb26dWNyRRIc8+QZHxuB+VrpEVwqBRMFC7RfFYYH7dmJJ3Y8r+82mWsUQ/W
-         373g==
-X-Gm-Message-State: ABuFfohLhMUUaB7QClmZoSLJZU2FVg89F9X5nYISbJBdG1WDwGUKzbhy
-        bT1hC1K6BNoYwP8b4V9Ti42C4Q==
-X-Google-Smtp-Source: ACcGV63CsD1olKvMfQB1XG+s+jvN68Qpru2aogUU0u3qA8rgLdlljyi0dMIs+1bbLt4qtgoWJEABqg==
-X-Received: by 2002:a63:214d:: with SMTP id s13-v6mr44624570pgm.148.1540244882501;
-        Mon, 22 Oct 2018 14:48:02 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id v189-v6sm42962200pfb.54.2018.10.22.14.48.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Oct 2018 14:48:01 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 14:47:56 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] archive: init archivers before determining format
-Message-ID: <20181022214756.GC233961@google.com>
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Ly6to11fAMrIXvwVvnB06xCSsmYNDDN1Yje4zw1VoBk=;
+        b=qqjd9FBdI96VSlEqYhkhdUspLPXckVlthcbywtvBqfknZb0jvXEe6diKqcJCBUU7Sw
+         zwEaZBR85AZmgB/npHHcJz/bxf5uMQbQq1JIYf+TjbmYt9SACJoqNVjI+AKbBpNVS0+Y
+         iCI8a/h53mmGSHbpfeH2jNCJxfZhk1AElOuOWfNGW20Gr3aISNQ19e63z2PZvjV1kLwi
+         hzv/2oXf8E1HFjMKGvtAhcs/MGDgXgeWv5kT8MLOn09tlxEA3VRHqAwG5UdLBphoztIx
+         6dPUYe9cM9uOdaNd5692v+s1Wlpyphx1/2npF5E30fpTsmHUNPN03wqQiUJ4eyiWaHVM
+         iOWQ==
+X-Gm-Message-State: ABuFfog/lmyYVdYX3BVTbR2a7mdbeEqShIwkgzi/b+Rjy27b8CYOvQau
+        /163WL/TmiSQHj9iBl+D2+zW/1WLl2n+WKTUtN7Bxop8IPhmxcA/F3wVzBhB6kUWr8lONTiwlJt
+        QJhMn0X4aM/hWR7HlvMJZRjNOEdGApSXI8VIGqYHqn+NWICg3vPIIJrztdaZJM2E=
+X-Google-Smtp-Source: ACcGV60vXkrK0UWOrsMp/P0nrvI7LK9Hogq/oDv3534dBzPvZaAAsGNzMS5Tyok47nmcxx9dNR6dR9GLrD2eQg==
+X-Received: by 2002:a0c:b8a0:: with SMTP id y32mr20506191qvf.25.1540244894408;
+ Mon, 22 Oct 2018 14:48:14 -0700 (PDT)
+Date:   Mon, 22 Oct 2018 14:48:11 -0700
+In-Reply-To: <cover.1539990488.git.steadmon@google.com>
+Message-Id: <bc6f20274dfe11f1451745e0accb065544cc59ca.1540244445.git.steadmon@google.com>
+Mime-Version: 1.0
 References: <cover.1539990488.git.steadmon@google.com>
- <b1f8e288dde9a9dd46386524189da66c7ad2c333.1539990488.git.steadmon@google.com>
- <20181019235945.GB7326@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181019235945.GB7326@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Mailer: git-send-email 2.19.1.568.g152ad8e336-goog
+Subject: [PATCH v2] archive: initialize archivers earlier
+From:   steadmon@google.com
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018.10.19 19:59, Jeff King wrote:
-> On Fri, Oct 19, 2018 at 04:19:28PM -0700, steadmon@google.com wrote:
-> 
-> > diff --git a/builtin/archive.c b/builtin/archive.c
-> > index e74f675390..dd3283a247 100644
-> > --- a/builtin/archive.c
-> > +++ b/builtin/archive.c
-> > @@ -45,7 +45,10 @@ static int run_remote_archiver(int argc, const char **argv,
-> >  	 * it.
-> >  	 */
-> >  	if (name_hint) {
-> > -		const char *format = archive_format_from_filename(name_hint);
-> > +		const char *format;
-> > +		init_tar_archiver();
-> > +		init_zip_archiver();
-> > +		format = archive_format_from_filename(name_hint);
-> >  		if (format)
-> >  			packet_write_fmt(fd[1], "argument --format=%s\n", format);
-> 
-> Hrm. This code was added back in 56baa61d01 (archive: move file
-> extension format-guessing lower, 2011-06-21), and your example
-> invocation worked back then!
-> 
-> Unfortunately it was broken by the very next patch in the series,
-> 08716b3c11 (archive: refactor file extension format-guessing,
-> 2011-06-21). I guess that's what I get for not adding regression tests.
-> 
-> It's probably worth mentioning those points in the commit message.
+Initialize archivers as soon as possible when running git-archive and
+git-upload-archive. Various non-obvious behavior depends on having the
+archivers initialized, such as determining the desired archival format
+from the provided filename.
 
-Done.
+Since 08716b3c11 ("archive: refactor file extension format-guessing",
+2011-06-21), archive_format_from_filename() has used the registered
+archivers to match filenames (provided via --output) to archival
+formats. However, when git-archive is executed with --remote, format
+detection happens before the archivers have been registered. This causes
+archives from remotes to always be generated as TAR files, regardless of
+the actual filename (unless an explicit --format is provided).
 
-> Does this work with configured archiver extensions, too? I think so,
-> because we load them via init_tar_archiver().
+This patch fixes that behavior; archival format is determined properly
+from the output filename, even when --remote is used.
 
-If you mean things like .tgz and .tar.gz, then yes, they are affected by
-the bug as well, and this patch fixes them. The test included in v2 uses
-a .tgz file.
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+Helped-by: Jeff King <peff@peff.net>
+---
+ archive.c                | 9 ++++++---
+ archive.h                | 1 +
+ builtin/archive.c        | 2 ++
+ builtin/upload-archive.c | 1 +
+ t/t5000-tar-tree.sh      | 6 ++++++
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
-> Can we avoid repeating the list of archivers here? This needs to stay in
-> sync with the list in write_archive(). I know there are only two, but
-> can we factor out an init_archivers() call or something?
+diff --git a/archive.c b/archive.c
+index c1870105eb..ce0f8a0362 100644
+--- a/archive.c
++++ b/archive.c
+@@ -29,6 +29,12 @@ void register_archiver(struct archiver *ar)
+ 	archivers[nr_archivers++] = ar;
+ }
+ 
++void init_archivers(void)
++{
++	init_tar_archiver();
++	init_zip_archiver();
++}
++
+ static void format_subst(const struct commit *commit,
+                          const char *src, size_t len,
+                          struct strbuf *buf)
+@@ -531,9 +537,6 @@ int write_archive(int argc, const char **argv, const char *prefix,
+ 	git_config_get_bool("uploadarchive.allowunreachable", &remote_allow_unreachable);
+ 	git_config(git_default_config, NULL);
+ 
+-	init_tar_archiver();
+-	init_zip_archiver();
+-
+ 	args.repo = repo;
+ 	argc = parse_archive_args(argc, argv, &ar, &args, name_hint, remote);
+ 	if (!startup_info->have_repository) {
+diff --git a/archive.h b/archive.h
+index d4f97a00f5..21ac010699 100644
+--- a/archive.h
++++ b/archive.h
+@@ -43,6 +43,7 @@ extern void register_archiver(struct archiver *);
+ 
+ extern void init_tar_archiver(void);
+ extern void init_zip_archiver(void);
++extern void init_archivers(void);
+ 
+ typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
+ 					const struct object_id *oid,
+diff --git a/builtin/archive.c b/builtin/archive.c
+index e74f675390..d2455237ce 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -97,6 +97,8 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
+ 			     PARSE_OPT_KEEP_ALL);
+ 
++	init_archivers();
++
+ 	if (output)
+ 		create_output_file(output);
+ 
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 25d9116356..3f35ebcfe8 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -43,6 +43,7 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	/* parse all options sent by the client */
++	init_archivers();
+ 	return write_archive(sent_argv.argc, sent_argv.argv, prefix,
+ 			     the_repository, NULL, 1);
+ }
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 2a97b27b0a..3e95fdf660 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -206,6 +206,12 @@ test_expect_success 'git archive with --output, override inferred format' '
+ 	test_cmp_bin b.tar d4.zip
+ '
+ 
++test_expect_success GZIP 'git archive with --output and --remote uses expected format' '
++	git archive --output=d5.tgz --remote=. HEAD &&
++	gzip -d -c < d5.tgz > d5.tar &&
++	test_cmp_bin b.tar d5.tar
++'
++
+ test_expect_success 'git archive --list outside of a git repo' '
+ 	nongit git archive --list
+ '
+-- 
+2.19.1.568.g152ad8e336-goog
 
-Done.
-
-> We also should probably just call it unconditionally when we start the
-> archiver command (I don't think there are any other bugs like this
-> lurking, but it doesn't cost very much to initialize these; it makes
-> sense to just do it early).
-
-Done.
-
-> Other than those minor points (and the lack of test), your fix looks
-> good to me.
-
-Thanks for the review!
