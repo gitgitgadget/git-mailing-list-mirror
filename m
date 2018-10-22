@@ -6,59 +6,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05CBD1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 03:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20CF51F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 04:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726963AbeJVMH5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 08:07:57 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34960 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbeJVMH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 08:07:56 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w5-v6so43211126wrt.2
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 20:51:13 -0700 (PDT)
+        id S1726999AbeJVMpe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 08:45:34 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39321 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726784AbeJVMpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 08:45:34 -0400
+Received: by mail-wr1-f67.google.com with SMTP id s18-v6so1510634wrw.6
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 21:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=FuIvzDGaFf2e2IY2QVf8jamJrzNtlEP7sID/tdSiukg=;
-        b=E3381a7UfCVpfnD5jCE04twwHj1h33TKv4VuTaoAe7j0G6oL55tBHnYZSWMggcmbIE
-         b0Mzo48XjlkPICjl0vCzHWi6aizLM4RAKuYQZy8ZFiMKNGy9mbXhXoyouLUPsfKLegww
-         SREFwu1zFoUiV8jVyQc+5/cc7CK9NXDB1VzmyWc933hhc6ziKCn/m4Lq1Io1vwT9VaLm
-         Gf6FZMDJbSr4n/ph1AwUVe9nKTCjupmWkl5PoRMbLLuUFiVr61dZRuByTm6XT/AhZ+Ah
-         +qnTMoA31ztdPmifCLFqcEGZx/HI5ylq2T3NZlThnw9kXgDEQA8rY5060Lao7vUS0a5M
-         MJHA==
+        bh=n63sqVIKdWF29aI1Z12GQnGaz495JNzN9dkKC69u570=;
+        b=YpmmYUqeVaRBK6tTbsMzSBcwq//Hz2tVmiICI5KJwhs2DORUhM8khWzXcYHVV+8qum
+         7LjbBOrxZLp+6Mf6ApietrUc3I4rkA3u290Yf3m4Q94kIuLrhopOVywvTIsg5uPGnXIJ
+         boeAVmmPfVcL/Y/drUAGkLsr4oPt1D+UXYBHDMR60FuWqUloxVigEwqA9iGn8JZBtEMM
+         iVs7rBu+zg15CvzeyD+79vdZ+zVUuGb9paaBLmNSY9OMZCKm1mCyhO6yTGXAl9MGAaNr
+         Aij77KpiWKO7jcj4zuYsowVLXTuQBbFIkz7tV+sbnCBO8xohGqnmeu6Cfzhq5+2P+IMu
+         04Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=FuIvzDGaFf2e2IY2QVf8jamJrzNtlEP7sID/tdSiukg=;
-        b=U+v+CGYT5qLfyZPJQX0gthJUsZ8cTOYgC9tQ2aLuDIRTeOj39so9+CWXsLloRy51En
-         icgm9xqP/aN23iTsggSIC3mwg3wzRxPVqCNo83m9WkJtgvyB0IHsFkAt96IZrvGZqXQi
-         C+YfnxMEFkF9HiiolUdhOJtu+Lfg18d1cLLG95rbPX3aJHI2tmYDW5BhaoQXTqORi9bK
-         wYO/Hbs2SrVa7nI7alEnOudN0be2PBRQiD7Hd23DdzRKsj3sO1Ir9NtZ+CgppzqZGD7F
-         x76+1uOPInpV5z4XrzMMrJ9kFWck3Su9CfIQCuRyDaq2v7CBdHEbkzDG/B9ulIb8ED0i
-         /qjQ==
-X-Gm-Message-State: ABuFfog4/hQHljVsO7qdpID2Zb+RqEA5mUvJLJ1Tbx4hUev/yduLIUyR
-        VVzJYJ3q8TdKdyCnnzaV4qg=
-X-Google-Smtp-Source: ACcGV62ifhtE9HBTJtzTSyUNmroXDAqVUBVBp+S9k7l4KxEYQwfE48NOKIZIMcriPX0q+Mg3IiRX8Q==
-X-Received: by 2002:adf:93e6:: with SMTP id 93-v6mr43434713wrp.81.1540180272053;
-        Sun, 21 Oct 2018 20:51:12 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g76-v6sm9748483wmd.25.2018.10.21.20.51.11
+        bh=n63sqVIKdWF29aI1Z12GQnGaz495JNzN9dkKC69u570=;
+        b=ssergPEYaCqfiJqFdgltmzqv1DMd69zRXifX6TjQ0aYtuMWASzWKVxPfK1B9LL1AQs
+         t4gKEvGmFF5o/X2qu0NPQqXdXvT85BI28z6L8ofkDVeuoURVLPKMIsdR4zXavBOhDQ6W
+         aylbd5+zilRIWhdD3v9LxZu/X59L68NkNB1BsceDVIMiLiNQ6/5P9iV1yLZzSbrCimiu
+         AujQrb9U1+lIQVFAOwSJycict9tZ2jpRhUyx7evuoBE63VKIj1+m2NHLCDn+je2YLUDv
+         rG1x9/f5hQVoQMdYOo2zqb1Ad67YXheP/GYnlUym1Y7y1KOPGsYnNcLdPGD0kAB41UPu
+         WWeA==
+X-Gm-Message-State: AGRZ1gJUO42hnpYNOSa6AR8hnid1DZ7DoUh3JAhHoSiiTgtjtO0WH2RJ
+        jqJ99v5IhSOAWWXPeFLOouY=
+X-Google-Smtp-Source: AJdET5fZkklaFLzS9q+ZY8zP8am5aAfwWBYIxgQSMf3cUtUzwZBK/G/KgrS1YeKaHJJGdRQhXG0Plw==
+X-Received: by 2002:a5d:410a:: with SMTP id l10-v6mr3428652wrp.61.1540182523782;
+        Sun, 21 Oct 2018 21:28:43 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e6-v6sm24620202wrc.70.2018.10.21.21.28.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Oct 2018 20:51:11 -0700 (PDT)
+        Sun, 21 Oct 2018 21:28:42 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] completion: fix __gitcomp_builtin no longer consider extra options
-References: <20181021083731.8009-1-pclouds@gmail.com>
-Date:   Mon, 22 Oct 2018 12:51:10 +0900
-In-Reply-To: <20181021083731.8009-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net,
+        sbeller@google.com
+Subject: Re: [PATCH v3 2/8] Add a place for (not) sharing stuff between worktrees
+References: <20180929191029.13994-1-pclouds@gmail.com>
+        <20181021080859.3203-1-pclouds@gmail.com>
+        <20181021080859.3203-3-pclouds@gmail.com>
+Date:   Mon, 22 Oct 2018 13:28:41 +0900
+In-Reply-To: <20181021080859.3203-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
  =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Sun, 21 Oct 2018 10:37:31 +0200")
-Message-ID: <xmqqr2giwsep.fsf@gitster-ct.c.googlers.com>
+        Duy"'s message of "Sun, 21 Oct 2018 10:08:53 +0200")
+Message-ID: <xmqqin1uwqo6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,47 +73,40 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> __gitcomp_builtin() has the main completion list provided by
->
->     git xxx --git-completion-helper
->
-> but the caller can also add extra options that is not provided by
-> --git-completion-helper. The only call site that does this is "git
-> difftool" completion.
->
-> This support is broken by b221b5ab9b (completion: collapse extra
-> --no-.. options - 2018-06-06), which adds a special value "--" to mark
-> that the rest of the options can be hidden by default. The commit
-> forgets the fact that extra options are appended after
-> "$(git xxx --git-completion-helper)", i.e. after this "--", and will
-> be incorrectly hidden as well.
->
-> Prepend the extra options before "$(git xxx --git-completion-helper)"
-> to avoid this.
+> Subject: Re: [PATCH v3 2/8] Add a place for (not) sharing stuff between worktrees
 
-Thanks for a clear analysis.  How did you find it?  Got annoyed that
-completion of difftool got broken, or discovered while trying to
-apply the same trick as difftool completion uses to another one and
-seeing that the technique does not work?
+"a place"?  Missing "in $GIR_DIR" in the descrition made me read the
+above three times before getting what it wanted to say.
 
-Will queue.  Thanks.
+My attempt to improve it, which admittedly is not great, came up with:
 
+worktree: convention to make per-worktree things identifiable in $GIT_DIR
+
+> When multiple worktrees are used, we need rules to determine if
+> something belongs to one worktree or all of them. Instead of keeping
+> adding rules when new stuff comes (*), have a generic rule:
 >
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> - Inside $GIT_DIR, which is per-worktree by default, add
+>   $GIT_DIR/common which is always shared. New features that want to
+>   share stuff should put stuff under this directory.
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index db7fd87b6b..c8fdcf8644 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -400,7 +400,7 @@ __gitcomp_builtin ()
->  	if [ -z "$options" ]; then
->  		# leading and trailing spaces are significant to make
->  		# option removal work correctly.
-> -		options=" $(__git ${cmd/_/ } --git-completion-helper) $incl "
-> +		options=" $incl $(__git ${cmd/_/ } --git-completion-helper) "
->  		for i in $excl; do
->  			options="${options/ $i / }"
->  		done
+> - Inside refs/, which is shared by default except refs/bisect, add
+>   refs/worktree/ which is per-worktree. We may eventually move
+>   refs/bisect to this new location and remove the exception in refs
+>   code.
+>
+> (*) And it may also include stuff from external commands which will
+>     have no way to modify common/per-worktree rules.
+
+OK.  Establishing such a convention is a good role for the core-git
+should play to help third-party tools.
+
+Should this play well with the per-worktree configuration as well?
+Is it better to carve out a configuration variable namespace so that
+certain keys are never read from common ones (or per-worktree ones),
+so that people can tell which ones are what?  I know your current
+design says "this is just another new layer, and the users can hang
+themselves with this new rope".  I am wondering if there is a need
+to do something a bit more structured.
+
+
