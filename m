@@ -2,181 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1DA91F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 21:53:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273E61F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 21:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729534AbeJWGN1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 02:13:27 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:34262 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728723AbeJWGN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 02:13:27 -0400
-Received: by mail-qt1-f201.google.com with SMTP id e19-v6so7256958qtq.1
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 14:53:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=aeAGa2ZNc8hpSJZmZgsZVD7KBAPDVnJEfxtaxPUbd+U=;
-        b=YhjqWpyox5gfG62ZQKwE0jkc9Us+0HLo06ESyxotdhCTQFbsBanAqN68kd2ktC8UeS
-         ife0Eyk8umdDFhP4bMeQAWvpr7CfXPmV5xaNqJSvlfiOW5f8pLjNe5ulITnZuhe7KScv
-         6EnGNS5z+sB6FpyuwqGzaNVxRRKJA57eHixGY62l87Ma0nLDSrf8eOx+yJz2bvxMHNtY
-         VoOp85Pr8TRZ8rTnRkoIzc4NtANMGLK8QoIFEqbMjLDA24t/PllkEq0vcFFGc2dlSiJ+
-         wI7BIRxkOD7x27XFctAXIxUODzdoarPNMz4yH+Yk9+0CRgkoYIFMFf1DSmliE3MAOF7d
-         h8wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=aeAGa2ZNc8hpSJZmZgsZVD7KBAPDVnJEfxtaxPUbd+U=;
-        b=haTJNH/EBNQ5qoiulkjtMP3lF731vuI/o6slzmg3U04aObIsmTa1wH05i0GGXG9cp2
-         yW4S1TLtkxAP5p1au1tVeo5a6R4u7uK+xetSzuC8ENq5TtrqDL69I4rdcv17X0tgg4Fq
-         wN+/aELrXmVIWCJKj3H9xVRpK888MRYQK2GzX+IAckahLmx5txXwtp0DiYJZ98FnYLXK
-         55psgGoZUBdo4Ju06+v7vkl2JCHyKa8LmkTvNefZBrQU0gVv0GPFEkLf2QFjqSuhxeAc
-         8rdDTP2qnB3UUsBKut3lz+cbpqzZwKaeQYOokci3bv2g+SlGivXUcNR6HfU8kg/m/cSJ
-         J0jA==
-X-Gm-Message-State: AGRZ1gJB+Ogt5zQWfxQOD9U99+6bvpizEvg6Z0745vHhuKciZcgF9JjD
-        +xKElnftScAHM1TjAOi7gge72gCEu89H
-X-Google-Smtp-Source: ACcGV60xuurfs0WDQhVkcP0WkM26MPBVkEVdrTbDeKGacCTFKhKmvVUfdSHhYTxls0lHWy7kf7ZXFRq6wC92
-X-Received: by 2002:ac8:6787:: with SMTP id b7-v6mr5606864qtp.1.1540245185999;
- Mon, 22 Oct 2018 14:53:05 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 14:52:36 -0700
-In-Reply-To: <xmqqd0s2y9o9.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20181022215236.72238-1-sbeller@google.com>
-Mime-Version: 1.0
-References: <xmqqd0s2y9o9.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0
-Subject: Bug with "git mv" and submodules, and with "git submodule add
- something --force"
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, juergen.vogl@jku.at,
-        sbeller@google.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1728975AbeJWGNm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 02:13:42 -0400
+Received: from mout.web.de ([212.227.17.11]:33889 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727089AbeJWGNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 02:13:42 -0400
+Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7srs-1fSOno0hTU-00vMi8; Mon, 22
+ Oct 2018 23:53:20 +0200
+Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7srs-1fSOno0hTU-00vMi8; Mon, 22
+ Oct 2018 23:53:20 +0200
+Subject: Re: [PATCH] commit-reach: fix sorting commits by generation
+To:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>
+References: <20181022211037.22719-1-t.gummerer@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <13bdda53-b751-182b-4aa8-d9a5c03f422d@web.de>
+Date:   Mon, 22 Oct 2018 23:53:19 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
+MIME-Version: 1.0
+In-Reply-To: <20181022211037.22719-1-t.gummerer@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:ihMO0JKOmpPXqQJ7lRtm5ud/rmAc1QIl32DGGaJxAds+skd4Snj
+ 41sODpim0InIM25jcZlH6kAZ/4qyVoFeSyP25YKU9Ynp0cEsO/UUsTgYRF5LXlCNQsXskys
+ JKiLJcIw+llEkccgQIrvEEBZx8OQstFI2J6ikMU0MWbApyX5i7kYLuTUxXZOtY1Hi4Y4DeC
+ N2KPy4SrSCYX7Qm0RleYg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e58xgJiLoxw=:E/n0WOIKTA78PbTnI1+nsq
+ AoW2VhRMpXJ9pWFjB1/IoG9VPdqp5pxNpuLm9p+NG1tqWjRsEdMNwZ/FOeIpCXYaiNsQDKKMY
+ 2k3X6Hvuh7+wxT08KlV2Yx0Kc/IVyby4pfrPCDIn6W64KxzNhEV7L4f0yR6wbXrEow2we65os
+ 1AbHshyo3dxMD62iS1SgmP/oW5OohKTQTkY20clfQKoJR/7dX81PDPulyRPkHkQYrAShIDhrF
+ YSoQO8hxjpWfWZzF2p2tSR1U26bBKsZbwteeZd+zwDenNq2NpfHbKLWGD1tW+6+VBiXFHLgTw
+ GoyvUoJYigUqajE8U9tfr3sL+rXgiM5FzceJlsfPZ3rc7gkC5Ok7C+qtUEy0KCi+9dunKqnMh
+ CCgy87+4tc4djsGKqhg2IhzoEQDYjd+ELXyIi5WBrDlejNez5rfyPm6sXmQ/KOl0ojL6ALaXk
+ EB0pT8HOr8kwciFXoIYajaNFDbqHch/gFOrY2vsN3VQIlz8fLO8QXa2FVaLb050Gse23u+zdD
+ 7pXTfz8xarGJ+woVDcpWKOtMNHQhnCOsZm8PHpu0vtquSQGr7ZA04YLBS6aO4B6fu7bOYIr+R
+ ey5MT6YDbO5OsGAclhUAZcwrPqAV/sK7LJjVhtCYnrkpTNhSTIQGDdVPQ24noZk83EyvBWJ93
+ nKfZUzm6RK5/rJ9SFujB8SaiecnxiP9sn5Tkw+UkAJcp9L1lgNDJ/bIg1Lie3E6+6RucUcPtf
+ 5fxBJf4mNJwhjk7TTyNr78jf+gmNbQbDdG/tLJmKMS4KtLLs7PZAkvxmI/wT9qHuBpvRnvspj
+ oqeeW8XE9mTlvx4zcBDHiRuDamaUxcFWwaLPQbz9ol/j3jujMI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 21, 2018 at 7:52 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
-> > Stefan Beller wrote:
-> >
-> >> Maybe for now we can do with just an update of the documentation/bugs
-> >> section and say we cannot move files in and out of submodules?
-> >
-> > I think we have some existing logic to prevent "git add"-ing a file
-> > within a submodule to the superproject, for example.
->
-> There is die_path_inside_submodule() that sanity-checks the pathspec
-> and rejects.  But I think that is done primarily to give an error
-> message and not strictly necesary for correctness.
+Am 22.10.2018 um 23:10 schrieb Thomas Gummerer:
+> compare_commit_by_gen is used to sort a list of pointers to 'struct
+> commit'.  The comparison function for qsort is called with pointers to
+> the objects it needs to compare, so when sorting a list of 'struct
+> commit *', the arguments are of type 'struct commit **'.  However,
+> currently the comparison function casts it's arguments to 'struct
+> commit *' and uses those, leading to out of bounds memory access and
+> potentially to wrong results.  Fix that.
+> 
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+> 
+> I noticed this by running the test suite through valgrind.  I'm not
+> familiar with this code, so I'm not sure why this didn't cause any
+> issues or how they would manifest, but this seems like the right fix
+> for this function either way.
 
-c08397e3aa (pathspec: remove PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE
-flag, 2017-05-11) seems to be relevant here, as that factors out the
-warning.
+Right; I sent a similar patch a while ago, but it seems to have fallen
+through the cracks:
 
-> The real safety of "git add" is its call to dir.c::fill_directory();
-> it collects untracked paths that match the pathspec so that they can
-> be added as new paths, but because it won't cross the module
-> boundary, you won't get such a path in the index to begin with.
+https://public-inbox.org/git/d1b58614-989f-5998-6c53-c19eee409a2f@web.de/
 
-It would not cross the boundary and fail silently as it would
-treat a path into the submodule as a no-op.
+Anyway, your implied question was discussed back then.  Derrick wrote:
 
-> > So "git mv" should learn the same trick.  And perhaps the trick needs
-> > to be moved down a layer (e.g. into the index API).  Hints?
+   The reason to sort is to hopefully minimize the amount we walk by 
+   exploring the "lower" commits first. This is a performance-only thing, 
+   not a correctness issue (which is why the bug exists). Even then, it is 
+   just a heuristic.
 
-Yeah, I think we'd want to teach git-mv about that trick.
+Does b6723e4671 in pu (commit-reach: fix first-parent heuristic) change
+that picture?  Did a quick test and found no performance difference with
+and without the fix on top, i.e. proper sorting didn't seem to matter.
 
-Unfortunately git-mv is one of the last remainders of not
-properly using pathspecs, and die_path_inside_submodule
-expects a pathspec. :-/
+>  commit-reach.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/commit-reach.c b/commit-reach.c
+> index bc522d6840..9efddfd7a0 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -516,8 +516,8 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
+>  
+>  static int compare_commits_by_gen(const void *_a, const void *_b)
+>  {
+> -	const struct commit *a = (const struct commit *)_a;
+> -	const struct commit *b = (const struct commit *)_b;
+> +	const struct commit *a = *(const struct commit **)_a;
+> +	const struct commit *b = *(const struct commit **)_b;
+>  
+>  	if (a->generation < b->generation)
+>  		return -1;
+> 
 
-> You would want to be able to remove a submodule and replace it with
-> a directory, but you can probably do it in two steps, i.e.
->
->         git reset --hard
->         git rm --cached sha1collisiondetection
->         echo Now a regular dir >sha1collisiondetection/READ.ME
->         find sha1collisiondetection ! -type d -print0 |
->         git update-index --add --stdin -z
+Looks good to me.
 
-    "Ignoring path sha1collisiondetection/.git"
-
-Nice!
-
->
-> So from that point of view, forbidding (starting from the same state
-> of our project) this sequence:
->
->         git reset --hard
->         echo Now a regular dir >sha1collisiondetection/READ.ME
->         find sha1collisiondetection ! -type d -print0 |
->         git update-index --add --remove --stdin -z
->
-> that would nuke the submodule and replace it with a directory within
-> which there are files would be OK.  Making the latter's default
-> rejection overridable with ADD_CACHE_OK_TO_REPLACE would also be
-> fine.
-
-I am having trouble of relating these commands to the original git-mv
-across submodule boundaries.
-
-Moving files from the submodule out to the superproject, seems
-to fail properly, though having a less-than-optimal error message:
-
-$ git mv sha1collisiondetection/LICENSE.txt .
-fatal: not under version control, source=sha1collisiondetection/LICENSE.txt, destination=LICENSE.txt
-
-and moving things inside was the original report, below is a proof of concept
-that would yield
-
-./git mv -v cache.h sha1collisiondetection/
-fatal: moving across submodule boundaries not supported, source=cache.h, destination=sha1collisiondetection/cache.h
-
---8<--
-Subject: [WIP/PATCH] builtin/mv.c: disallow moving across submodule boundaries
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/mv.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 80bb967a63..9ec4b2f0a3 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -172,7 +172,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	/* Checking */
- 	for (i = 0; i < argc; i++) {
- 		const char *src = source[i], *dst = destination[i];
--		int length, src_is_dir;
-+		int length, src_is_dir, pos;
- 		const char *bad = NULL;
- 
- 		if (show_only)
-@@ -243,6 +243,13 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		else
- 			string_list_insert(&src_for_dst, dst);
- 
-+		pos = cache_name_pos(dst, strlen(dst));
-+		if (pos < 0) {
-+			pos = -(pos + 1);
-+			if (!S_ISGITLINK(active_cache[pos]->ce_mode))
-+				bad = _("moving across submodule boundaries not supported");
-+		}
-+
- 		if (!bad)
- 			continue;
- 		if (!ignore_errors)
--- 
-2.19.0
-
+René
