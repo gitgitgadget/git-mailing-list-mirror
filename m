@@ -2,136 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B9C01F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 20:17:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00D0E1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 20:23:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726844AbeJWEhV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 00:37:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49530 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725788AbeJWEhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 00:37:21 -0400
-Received: (qmail 11753 invoked by uid 109); 22 Oct 2018 20:17:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Oct 2018 20:17:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9172 invoked by uid 111); 22 Oct 2018 20:16:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Oct 2018 16:16:36 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Oct 2018 16:17:21 -0400
-Date:   Mon, 22 Oct 2018 16:17:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH v1] load_cache_entries_threaded: remove unused src_offset
- parameter
-Message-ID: <20181022201721.GD9917@sigill.intra.peff.net>
-References: <20181022150513.18028-1-peartben@gmail.com>
+        id S1727025AbeJWEnT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 00:43:19 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38609 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726082AbeJWEnS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 00:43:18 -0400
+Received: by mail-ed1-f66.google.com with SMTP id c1-v6so39230441ede.5
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 13:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Fy1Qcr7/U2ZH287A538Lwxfxe3Kb809OmzqiaeT6R+g=;
+        b=Qqsh/y1tp4TFxhIWLG1aaSmIdtxK26+yPWFudJZTVsMVi7tgFyaODnVkbyAvzgNBCr
+         ZcPhuRi4JsAldYAGrosqcRyUQzli3czVHnlaHfXJphKbpS3oPullNOk1eTnqjcQ/lNGZ
+         szjnmhODfz1k+76BbsdQP9Y0x/c8UVqtun0F0DYQJkQ0bq4WhqngSIFwycaG/dprTEYg
+         zHi7fmc86FEdl6XprZRgVTtilOZBHx0PCRufYOKPy+cdzmsHKoaBf+eYeZu6SHf0/E8a
+         Trw6Avws2KLF9ULWEyPd4oVMsebQ1/e4XI6xFdV/or74DMt2yqpOuZmwkbVD6SyS7qla
+         CwjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Fy1Qcr7/U2ZH287A538Lwxfxe3Kb809OmzqiaeT6R+g=;
+        b=hOZ8UkU+m3qrXHOPIbBBX+qPbDcbogTu6AXrMJNBAcfozSgGtXF1YuEs8C7D8+5A1T
+         JOkqNXEL+eEzQlwt5gtBdF5QVB4UDBD5tMuAxP8esR+uxe7m1T9PS0WiEBnF9s5cKgAa
+         iM1z3iUdrx6VMonwa+CmYGUfSYe+mQ+HY02whLMwtPsdUD0+tE29Z7dSCRK4+tx7pIlG
+         Cb+8l33zcJ2KjfymNCz409qS+QyPZTM9g1bAvOZTwyAGzCAak6LpWbzKYlbRhr4xeYUL
+         5q2xbCCqTdsXPDAl7SDC9rrOajLXY5c5LAtNGvNVcszFfX4xV7N3zne5hN95n/lo6+t6
+         V5PQ==
+X-Gm-Message-State: ABuFfogFbjHD7LzdKTanSiWJpxaYVsD/u9o6o5R38byuqsnEGb5h8w67
+        LauRBo0o33VUATIoXN5BqFoiCSuk
+X-Google-Smtp-Source: ACcGV62A8ThUVaWQNNq9gYwuGyKlvKB+7VXqMCGJeTdYLyIFvlf4z0byiCttE8izRPcOMiAMkb0L+w==
+X-Received: by 2002:a17:906:70c3:: with SMTP id g3-v6mr1345286ejk.194.1540239797281;
+        Mon, 22 Oct 2018 13:23:17 -0700 (PDT)
+Received: from localhost.localdomain (x4db968d4.dyn.telefonica.de. [77.185.104.212])
+        by smtp.gmail.com with ESMTPSA id h21-v6sm16882228eda.23.2018.10.22.13.23.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 22 Oct 2018 13:23:16 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0?= <avarab@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] Poison gettext with the Ook language
+Date:   Mon, 22 Oct 2018 22:22:33 +0200
+Message-Id: <20181022202241.18629-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.1.681.g6bd79da3f5
+In-Reply-To: <20181022153633.31757-1-pclouds@gmail.com>
+References: <20181022153633.31757-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181022150513.18028-1-peartben@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 11:05:13AM -0400, Ben Peart wrote:
-
-> From: Ben Peart <benpeart@microsoft.com>
+On Mon, Oct 22, 2018 at 05:36:33PM +0200, Nguyễn Thái Ngọc Duy wrote:
+> The current gettext() function just replaces all strings with
+> '# GETTEXT POISON #' including format strings and hides the things
+> that we should be allowed to grep (like branch names, or some other
+> codes) even when gettext is poisoned.
 > 
-> Remove the src_offset parameter which is unused as a result of switching
-> to the IEOT table of offsets.  Also stop incrementing src_offset in the
-> multi-threaded codepath as it is no longer used and could cause confusion.
+> This patch implements the poisoned _() with a universal and totally
+> legit language called Ook [1]. We could actually grep stuff even in
+> with this because format strings are preserved.
 
-Hmm, OK. We only do threads if we have ieot:
+Once upon a time a GETTEXT_POISON build job failed on me, and the
+error message:
 
->  	if (ieot) {
-> -		src_offset += load_cache_entries_threaded(istate, mmap, mmap_size, src_offset, nr_threads, ieot);
-> +		load_cache_entries_threaded(istate, mmap, mmap_size, nr_threads, ieot);
->  		free(ieot);
->  	} else {
->  		src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
+  error: # GETTEXT POISON #
 
-And we only have ieot if we had an extension_offset:
+was not particularly useful.  Ook wouldn't help with that...
 
-          if (extension_offset && nr_threads > 1)
-                  ieot = read_ieot_extension(mmap, mmap_size, extension_offset);
+So I came up with the following couple of patches that implement a
+"scrambled" format that makes the poisoned output legible for humans
+but still gibberish for machine consumption (i.e. grep-ing the text
+part would still fail):
 
-So later, when we _do_ use src_offset, we know that this code should
-never trigger in the threaded case:
+  error:  U.n.a.b.l.e. .t.o. .c.r.e.a.t.e. .'./home/szeder/src/git/t/trash directory.t1404-update-ref-errors/.git/packed-refs...l.o.c.k.'.:. .File exists...
 
-          if (!extension_offset) {
-                  p.src_offset = src_offset;
-                  load_index_extensions(&p);
-          }
-
-So I think it's right, but it's rather subtle. I wonder if we could do
-it like this:
-
-	unsigned long entry_offset;
-  [...]
-  #ifndef NO_PTHREADS
-	if (ieot)
-		load_cache_entries_threaded(...);
-	else
-		entry_offset = load_all_cache_entries(...);
-  #else
-	entry_offset = load_all_cache_entries(...);
-  [...]
-
-  p.src_offset = src_offset + entry_offset;
-
-and then the compiler could warn us that entry_offset is used
-uninitialized (though I would not be surprised if the compiler gets
-confused in this case).
-
-Not sure if it is worth the trouble or not.
+I have been running GETTEXT_POISON builds with this series for some
+months now, but haven't submitted it yet, because I haven't decided
+yet whether including strings (paths, refs, etc.) in the output as
+they are is a feature or a flaw.  And because it embarrassingly leaks
+every single translated string... :)
 
 
->  static unsigned long load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
-> -			unsigned long src_offset, int nr_threads, struct index_entry_offset_table *ieot)
-> +			int nr_threads, struct index_entry_offset_table *ieot)
+SZEDER Gábor (8):
+  test-lib.sh: preserve GIT_GETTEXT_POISON from the environment
+  gettext: don't poison if GIT_GETTEXT_POISON is set but empty
+  lib-rebase: loosen GETTEXT_POISON check in fake editor
+  gettext: #ifdef away GETTEXT POISON-related code from _() and Q_()
+  gettext: put "# GETTEXT POISON #" string literal into a macro
+  gettext: use an enum for the mode of GETTEXT POISONing
+  gettext: introduce GIT_GETTEXT_POISON=scrambled
+  travis-ci: run GETTEXT POISON build job in scrambled mode, too
 
-If nobody uses it, should we drop the return value, too? Like:
+ Makefile                  |  2 +-
+ ci/lib-travisci.sh        |  1 +
+ ci/run-build-and-tests.sh | 10 +++++--
+ gettext.c                 | 63 +++++++++++++++++++++++++++++++++++----
+ gettext.h                 | 33 +++++++++++++++-----
+ t/lib-rebase.sh           |  2 +-
+ t/test-lib.sh             | 17 ++++++++++-
+ 7 files changed, 110 insertions(+), 18 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 78c9516eb7..4b44a2eae5 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2052,12 +2052,11 @@ static void *load_cache_entries_thread(void *_data)
- 	return NULL;
- }
- 
--static unsigned long load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
--						 int nr_threads, struct index_entry_offset_table *ieot)
-+static void load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
-+					int nr_threads, struct index_entry_offset_table *ieot)
- {
- 	int i, offset, ieot_blocks, ieot_start, err;
- 	struct load_cache_entries_thread_data *data;
--	unsigned long consumed = 0;
- 
- 	/* a little sanity checking */
- 	if (istate->name_hash_initialized)
-@@ -2115,12 +2114,9 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
- 		if (err)
- 			die(_("unable to join load_cache_entries thread: %s"), strerror(err));
- 		mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
--		consumed += p->consumed;
- 	}
- 
- 	free(data);
--
--	return consumed;
- }
- #endif
- 
+-- 
+2.19.1.681.g6bd79da3f5
 
--Peff
