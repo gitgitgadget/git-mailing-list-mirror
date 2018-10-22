@@ -6,89 +6,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77FBF1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 01:01:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68A711F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 01:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726809AbeJVJPK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 05:15:10 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42511 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbeJVJPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 05:15:10 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f8-v6so3493962wro.9
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 17:58:54 -0700 (PDT)
+        id S1726182AbeJVJ2c (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 05:28:32 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39735 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725723AbeJVJ2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 05:28:31 -0400
+Received: by mail-wr1-f67.google.com with SMTP id s18-v6so1242403wrw.6
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=+76UFsMY/tzj+nV+3dSx7pL+Zbx9hoUT46kTUpRJFmQ=;
-        b=MgV1tX5nwKxL3hnNpF/Rspr9rX35H+2QEH78v29tQrrr4EhxnRwM3JviyMxvvNokGP
-         FgGY15SkTonkPTGNIHAGEJCm76JosWjBZBkeNHutIRn1mhNa1L9MFUH7webA+0KKJOVu
-         RcIf1SFJyB/ENMzje6n2th7OnbS7hensOGYVjqBdfkPWfF9HLrKzV/UlS/gBtEDr6Lz3
-         BVtV1LzoDVtAXBEsJIm+7IpjVsOYDWFXnpY5lZGeCIDU8Bg11x8CB+V5DDToHAceQ4tH
-         YF0qV7hpZGGn/CZgDUJcioKUp5ufgBmUmmXVuYCMQcbKFw64dHytXqkqboNtw6i14WFQ
-         kmgA==
+         :user-agent:mime-version;
+        bh=1ScnTKOWxIzkAOe4c3/Y0HWMXADJSMuQ3FgsEgZQ+Rs=;
+        b=gp7RDPcvcbQsUZ6yhBCI8VqYn73ehX0l/0fpd6Y6BphrUXrwCdozAnErVHTcznFUnC
+         /NpIhMB7WBjDqaawxfcRtbbwGGakbYNWKuWK/bML5KmyPCGSbA0htmMcKtMxp4Jnvp8U
+         KFnJLb6P6bQvgH0ZAIqadTcSusuFWQWVGLCQEbhWJbAdhifhN+h8EDk9yGaew8TvrL22
+         q+GjJbBOrkbpszKM2rQhFCNsk8aG2oHDGAwg7ioz+MIVCyajQum7yP9li5PuY07tfOk2
+         BaPFQ1VOLmUK+w0nb7RoxXTCTtkU1q2/kngGWAhLYx6zNblD6PT8ilu4Ag/k1dSEjx4+
+         C5Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=+76UFsMY/tzj+nV+3dSx7pL+Zbx9hoUT46kTUpRJFmQ=;
-        b=cc+eMP0DKoiFDpwMdkQkMXZx/tHH3u8ceF3tUfq/MIm/bVoppus9d6FoaHjfqQC0lB
-         a2WGA3pg5O4h9pI3en32ok+1x9ly1VnzovHPrwHunRbJpthg1jxFZySrsR4Nm2sxUDO7
-         UDb7r/ylSF8cb9dMrvgT/mbevZ3U8HIkSLtv/AfCFDupNyHVpGTwkNFEuFg8AtMcvDdm
-         rvip5PWxMpX2FADTVdIX8qYhzrdfX9AHWkHHilyl2GL47GEzC+fvmUwfcawa4L4sDNcD
-         fLAD+ZcVdkKppgtdHeguFFbdmNolmKJJKMcDNcFgBhwWUqmYV9BpXLpsQPmX75NCJ4fk
-         gIYQ==
-X-Gm-Message-State: ABuFfohOGxo2tpqTrVLFZbE3eZKi2Ev4eveVj8itxUX6MuSN2MJ9QTjv
-        VpREZL4aQMTSg36m4jlJXHQAHk+o
-X-Google-Smtp-Source: ACcGV63Eq2OJKNS3SGTGXiNA3aN05jklr7b98Ij7hF2yZ4BDVETS10bBfEpgopKiomlpEeKRpk7Fxw==
-X-Received: by 2002:adf:8347:: with SMTP id 65-v6mr43122552wrd.264.1540169933075;
-        Sun, 21 Oct 2018 17:58:53 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t77-v6sm15652984wme.18.2018.10.21.17.58.51
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1ScnTKOWxIzkAOe4c3/Y0HWMXADJSMuQ3FgsEgZQ+Rs=;
+        b=JZ0Z6tEGkrZk2g/DS/ajDiIbkb03Zq7JnZn+XUw8sXRoVDoFf3ds0VhK5qXFEIRV8c
+         2eM50oKBpDMoUlmgkHo9CnKlqM8snRLkdaCut/Wb8pbw6YnBqygAbv0XApi9iBhywAVz
+         xq760v8l+GxLRUAbAh6QP4iwxPMdUnF600RS2vbrRYUU4DQKOeg+L35zFR/C0i6kgkaO
+         xCd7D1L/m9YS5/BzSCcpezFsnBS3+lFWaGmDpco445fV3bJqi5Z46J/dMsYNiRh3TeNm
+         igqnlMLEUiPnBfN9j2qpeUVvcfvazHWPuaVdIj3YZMhO4mvNgUBbI3gYpqgjryCpu8H0
+         DjqQ==
+X-Gm-Message-State: ABuFfoiOTX8zoW1u3aWqGDRfb+T83sQrpX/96gF+dKSlFy0mWN98kDoW
+        UkES9vocKDD1QZ0REEUVIzI=
+X-Google-Smtp-Source: ACcGV60ZsMRqR8aRLtTHJBPEpGNYZHrLEiR3jtbcAvSADeAZXKLl43O8inQSAUg0rs0mPZxnRVRjUg==
+X-Received: by 2002:a5d:4e87:: with SMTP id e7-v6mr18458024wru.115.1540170732235;
+        Sun, 21 Oct 2018 18:12:12 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d6-v6sm12425208wrq.27.2018.10.21.18.12.11
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Oct 2018 17:58:51 -0700 (PDT)
+        Sun, 21 Oct 2018 18:12:11 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4] gpg-interface.c: detect and reject multiple signatures on commits
-References: <20181020193020.28517-1-mgorny@gentoo.org>
-        <xmqqin1wyxvz.fsf@gitster-ct.c.googlers.com>
-        <1540105841.1174.1.camel@gentoo.org>
-Date:   Mon, 22 Oct 2018 09:58:50 +0900
-In-Reply-To: <1540105841.1174.1.camel@gentoo.org> (=?utf-8?Q?=22Micha?=
- =?utf-8?Q?=C5=82_G=C3=B3rny=22's?= message of
-        "Sun, 21 Oct 2018 09:10:41 +0200")
-Message-ID: <xmqqefciztit.fsf@gitster-ct.c.googlers.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 4/7] revision.c: begin refactoring --topo-order logic
+References: <pull.25.v3.git.gitgitgadget@gmail.com>
+        <pull.25.v4.git.gitgitgadget@gmail.com>
+        <cd9eef96885a811196ab0b851a98de4455b950ab.1539729393.git.gitgitgadget@gmail.com>
+        <86h8hfguqc.fsf@gmail.com>
+Date:   Mon, 22 Oct 2018 10:12:10 +0900
+In-Reply-To: <86h8hfguqc.fsf@gmail.com> (Jakub Narebski's message of "Sun, 21
+        Oct 2018 17:55:23 +0200")
+Message-ID: <xmqqa7n6zswl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michał Górny <mgorny@gentoo.org> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
->> Very minor point but by not using pre-increment, i.e.
->> 
->> 		if (seen_exclusive_status++)
->> 			goto found_duplicate_status;
->> 
->> you can use the expression as a "have we already seen?" boolean,
->> whic may probably be more idiomatic.
->> 
->> The patch is good in the way written as-is, and this is so minor
->> that it is not worth rerolling to only update this part.
->> 
+> So if revs->limited is set (but not because revs->topo_order is set),
+> which means A..B queries, we will be still using the old algorithm.
+> All right, though I wonder if it could be improved in the future
+> (perhaps with the help of other graph labelling / indices than
+> generation numbers, maybe a positive-cut index).
 >
-> Sure, thanks.  For the record, I've been taught to use pre-increment
-> whenever possible to avoid copying the variable but I suppose it doesn't
-> really matter here.  Just a habit.
+> Do you have an idea why there is no improvement with the new code in
+> this case?
 
-Yes, it's a habit many C++ trained people spread; it just looks
-weird to see a pre-increment of a "have we done this once?" variable
-and end up comparing to see if it is strictly greater than 1
-(i.e. have we reached 2 or more?).
+I didn't get the impression that it would not be possible to improve
+the "--topo A..B" case by using generation numbers from this series.
+Isn't it just because the necessary code has not been written yet?
+In addition to what is needed for "--topo P1 P2 P3..." (all
+positive), limited walk needs to notice the bottom boundary and stop
+traversal.  Having generation numbers would make it slightly easier
+than without, as you know that a positive commit you have will not
+be marked UNINTERESTING due to a negative commit whose ancestors
+have not been explored, as long as that negative commit has a higher
+generation number.  But you still need to adjust the traversal logic
+to properly terminate upon hitting UNINTERESTING one, and also
+propagate the bit down the history, which is not needed at all if
+you only want to support the "positive only" case.
+
