@@ -2,95 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E91E1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 14:34:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D2F11F454
+	for <e@80x24.org>; Mon, 22 Oct 2018 14:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728268AbeJVWxc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 18:53:32 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:35902 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727146AbeJVWxc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 18:53:32 -0400
-Received: by mail-it1-f194.google.com with SMTP id c85-v6so12752821itd.1
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 07:34:43 -0700 (PDT)
+        id S1728353AbeJVW6y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 18:58:54 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:37353 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727742AbeJVW6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 18:58:54 -0400
+Received: by mail-qt1-f193.google.com with SMTP id d14-v6so46524563qto.4
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 07:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3tVO1gC4X4Eha6H7fZqkSEQvQx/TKl+eV2kzbtabH70=;
-        b=WGklUk2ddeUzHslK2RT0uowEOw2uSLWeCmuqMB2h3ABqMIgixs10iL4lff/rbBJ8bL
-         tCpLVzUXtTpGeps/ShQpkgQqRSA9Ms7BJr/ZLsgNOeZQJ2vTHFgrt2Do1toEgvoseeT6
-         60/K+lFVkvdd9sG8cMq8cmqZot1VHoqbvst1KgKpRnKhciMqcdK4zgUS1aSO8jXDfLCE
-         gCYq0e0DS+1CTCriLgpDFJeFMC7N8M9QMOkBoipQKtiy3VWGx6cF57GXkOKm9+5NpuKy
-         ALz11/MhfQy3Ge1OdeKdcfuq4eis0lGApgchMf2jgkWcVYmGEAz8u37shQrsR6u+Fr/r
-         k5ZA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=UHmZHA2i8ULcaW1gr4QH1QPyuxrE3K4nEPinwxhrP/A=;
+        b=cjfG3G1odDhSEGU6eW4IUaNT7yCLlfbNHgLqRaC0wQyio4oV1J9shNRIC7EikqC3v5
+         +/lDslTKyFpRZzH+WlB2suO/fWVhPmwBOibgI64xu2PVJXOkoCCuLfxWvA1o3Zkbksg2
+         MuG4b7Rk8fgnvQuWAC3NZODATGR/OjAM5vCBOxVU1I9IB/Mqu9HSmSc3gcrkW0MvOMZw
+         Zs4beI0kcGTGxxEFvSImUcIDqN+ISqt+NaxHZRFy5ut7x5URUrXthlfzxjqwc69OM8fR
+         0UO22dL4apt/fRLN6pv65jcf5s4g+4jqGgO2ftRvNZDGY8aZsBAAYXntCDJswR5SKp6L
+         Vm6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3tVO1gC4X4Eha6H7fZqkSEQvQx/TKl+eV2kzbtabH70=;
-        b=Z5Rt3Yw5IPld4VbW1uvvN5Z8A1Uwuns+OUf2phYG6g0QCmt0YRV9yTQNxs+KK/HikD
-         2IxyzAUWq4S1VpQNZ/uS/vxtZX2b/WTiizIDT5kmygDLhLxKSmULgX5LgBIv780zK5v1
-         vbz2e27qslRuGagqnmwhTuplvHPcNRAqRa1CG6/NnAmAS6KHhJi4YVoCyp1OVtqWatDr
-         xe4qHqqWRnhiddPXExrYEeTqwB/jowXaQsBjNXvaVRscqji3JLiV1m3KKZzLhRozey96
-         xQEbfLeu/6z5reUuc22kP9qKmygPVF4lYJXvtIOk5I0/rVMwt3o1S+MBcVjeuAS20lcK
-         nNVg==
-X-Gm-Message-State: ABuFfohQ+OUsO5UwcJa5DtkMAlKrJDEpptZujNWDyYm/zCxS7/dtQZ6Y
-        6UAnjJXwVW27gWpkPkNfd/GRLjSJl/8V+OHmNr6osA==
-X-Google-Smtp-Source: ACcGV636jCJKGiZ433c6n59AReKb0qR5rQ95iraF5mDS4m8ZOntknaUJ1eArg1XTCiKdK2u0MURILievStqUHmrtTR8=
-X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr9862604itc.123.1540218883263;
- Mon, 22 Oct 2018 07:34:43 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=UHmZHA2i8ULcaW1gr4QH1QPyuxrE3K4nEPinwxhrP/A=;
+        b=QQtGAS4rYWbJPGW3iVg8Q6QaQy+OBZrEVq6R/St8VadWT7FBgIFslIQ3+uUSjrjfYR
+         iXKXhnbX7JTa/afZV8QAuB+QLiEJ42d7ZEdXDOVZoueZ4Bgjh03WiuqLUxA0nLJA9u/H
+         xKmyMYtzW7fFU69mVrGroBNOFKLo1HX7YQeZDgvyTxF8iye6SlqcInemYH6aWRKjWtSK
+         N/Pq1twmHjA5Wo3s7a0WfzsH0bRAHvv8bX6iJTeRPgIdDOr8nDMO7NY7mub8pXZubVhW
+         hGWAH8cMCO1QTZjHvPQA/869FsFKzjEEqXZT3Iqx6+VghZFOU8zmX3JH6FAj0WFgVF1d
+         zMEw==
+X-Gm-Message-State: ABuFfojbYoi9/AIKaZiwQXo16836CtpwtQEgZ+sZ8zGM6dQVkHnavLl0
+        WnaD8wet0Dm2fGrnStnzipI=
+X-Google-Smtp-Source: ACcGV60+N4QG3z5u4/euQ7tqnllUDXSEYp1nd1L2Q+QuvcjLzXzw9Gi1MAi5/iOm6X4KwLzbV0a2Wg==
+X-Received: by 2002:a0c:9de7:: with SMTP id p39mr45067209qvf.82.1540219202936;
+        Mon, 22 Oct 2018 07:40:02 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id l28-v6sm1460871qkj.33.2018.10.22.07.40.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Oct 2018 07:40:01 -0700 (PDT)
+Subject: Re: [PATCH v8 7/7] read-cache: load cache entries on worker threads
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181010155938.20996-1-peartben@gmail.com>
+ <20181010155938.20996-8-peartben@gmail.com>
+ <20181019161118.GA8100@sigill.intra.peff.net>
+ <xmqqsh0yybg7.fsf@gitster-ct.c.googlers.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <72c8938c-7ffa-a384-55dc-09d90d9cf7f8@gmail.com>
+Date:   Mon, 22 Oct 2018 10:40:00 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20181021083731.8009-1-pclouds@gmail.com> <xmqqr2giwsep.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2giwsep.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 Oct 2018 16:34:16 +0200
-Message-ID: <CACsJy8B-NtKb1sk_CxwB-bffMsy+nDGL2-MpkScBF5vvGHFBjA@mail.gmail.com>
-Subject: Re: [PATCH] completion: fix __gitcomp_builtin no longer consider
- extra options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqsh0yybg7.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 5:51 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > __gitcomp_builtin() has the main completion list provided by
-> >
-> >     git xxx --git-completion-helper
-> >
-> > but the caller can also add extra options that is not provided by
-> > --git-completion-helper. The only call site that does this is "git
-> > difftool" completion.
-> >
-> > This support is broken by b221b5ab9b (completion: collapse extra
-> > --no-.. options - 2018-06-06), which adds a special value "--" to mark
-> > that the rest of the options can be hidden by default. The commit
-> > forgets the fact that extra options are appended after
-> > "$(git xxx --git-completion-helper)", i.e. after this "--", and will
-> > be incorrectly hidden as well.
-> >
-> > Prepend the extra options before "$(git xxx --git-completion-helper)"
-> > to avoid this.
->
-> Thanks for a clear analysis.  How did you find it?  Got annoyed that
-> completion of difftool got broken, or discovered while trying to
-> apply the same trick as difftool completion uses to another one and
-> seeing that the technique does not work?
 
-I was fixing format-patch completion and was surprised it did not work
-as expected. Never really used difftool myself :P I only found out
-about it when I asked myself "why wasn't this breakage found earlier?"
---=20
-Duy
+
+On 10/21/2018 10:14 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Wed, Oct 10, 2018 at 11:59:38AM -0400, Ben Peart wrote:
+>>
+>>> +static unsigned long load_cache_entries_threaded(struct index_state *istate, const char *mmap, size_t mmap_size,
+>>> +			unsigned long src_offset, int nr_threads, struct index_entry_offset_table *ieot)
+>>
+>> The src_offset parameter isn't used in this function.
+>>
+>> In early versions of the series, it was used to feed the p->start_offset
+>> field of each load_cache_entries_thread_data. But after the switch to
+>> ieot, we don't, and instead feed p->ieot_start. But we always begin that
+>> at 0.
+>>
+>> Is that right (and we can drop the parameter), or should this logic:
+>>
+>>> +	offset = ieot_start = 0;
+>>> +	ieot_blocks = DIV_ROUND_UP(ieot->nr, nr_threads);
+>>> +	for (i = 0; i < nr_threads; i++) {
+>>> [...]
+>>
+>> be starting at src_offset instead of 0?
+> 
+> I think "offset" has nothing to do with the offset into the mmapped
+> region of memory.  It is an integer index into a (virtual) array
+> that is a concatenation of ieot->entries[].entries[], and it is
+> correct to count from zero.  The value taken from that array using
+> the index is used to compute the offset into the mmapped region.
+> 
+> Unlike load_all_cache_entries() called from the other side of the
+> same if() statement in the same caller, this does not depend on the
+> fact that the first index entry in the mmapped region appears
+> immediately after the index-file header.  It goes from the offsets
+> into the file that are recorded in the entry offset table that is an
+> index extension, so the sizeof(*hdr) that initializes src_offset is
+> not used by the codepath.
+> 
+> The number of bytes consumed, i.e. its return value from the
+> function, is not really used, either, as the caller does not use
+> src_offset for anything other than updating it with "+=" and passing
+> it to this function (which does not use it) when it calls this
+> function (i.e. when ieot extension exists--and by definition when
+> that extension exists extension_offset is not 0, so we do not make
+> the final load_index_extensions() call in the caller that uses
+> src_offset).
+> 
+
+Thanks for discovering/analyzing this.  You're right, I missed removing 
+this when we switched from a single offset to an array of offsets via 
+the IEOT.  I'll send a patch to fix both issues shortly.
