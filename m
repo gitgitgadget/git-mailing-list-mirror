@@ -7,135 +7,96 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 174191F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 01:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 754E01F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 01:55:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727014AbeJVKHi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 06:07:38 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:37074 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725922AbeJVKHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 06:07:38 -0400
-Received: by mail-qk1-f193.google.com with SMTP id x8-v6so24401269qka.4
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:51:13 -0700 (PDT)
+        id S1727173AbeJVKL5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 06:11:57 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:38806 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726784AbeJVKL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 06:11:57 -0400
+Received: by mail-qk1-f194.google.com with SMTP id p3-v6so4030255qkb.5
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=g+px8ytR+uvFqHTjbObL1LS95HpXI5VtZdqADjH0p0c=;
-        b=N9/QwICGCGbgCtqVMhzEeTdR3uXUIoyRwU6e1gFTz22lIhp0jOCASmj/d3106P3GXM
-         PjDnwNAlpmip4uyvSRbXcer5CrwkOYzRJqUXmkdrPIjJJTyrZh11qGCJJZmg9K5JKLbc
-         dt7OUj4dUxZreIKF7fyT/cvZU0zf0Jafa1axMb+Np/XDl0BpQcMhU+XnTjBdeohmmyDQ
-         G7oj7MNXv37cL5E7axWvQ8LCWhdOvoFdpnPhgjQr1W2/O0IfZv5djQ9W10o3/pYOLM/V
-         e//BSU+uAFrao2jym+jACFLcrz0ikLG2bc6UIT5W85zaQ/rx7x0MS7RVo3824p3pjyMf
-         DEwQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gtEXh2zLU436jwZDFQRNZqAn32+igeNWlQjhqmNfBk0=;
+        b=FDqzQDIiZTMx+X6AnfSwX3mAu1MJ9sblihMbYX3oV6mfaQ1NRmSgFdtEiIg+oLtits
+         UeHin17jC21aArOzHoioc7yMmHxLWeKHhCE2lK0YOUcdoWy+qwsbLl7FoB+ZPV++m6nB
+         BPvZnDpSPNvCk0FrEfPpb2Pn1KLWUndgHoWb6vXIxyO7aK8XgJpmjX7OcM/kJjwvvVtP
+         U3KZasPdIF/t2HnOBTG9bt0GUnSzwvshO71kwVa8Yuk0I1tS1L4oFX9z7SRGwSP0OLzz
+         hDER2oLBThTPEOGKLIMlJ9X51lmboV8+1UOeU9NJWRsS9FfDQ8agBPGm7nW3rukJzcJM
+         86fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=g+px8ytR+uvFqHTjbObL1LS95HpXI5VtZdqADjH0p0c=;
-        b=pPttsJmXrDTWBpmWjeT65gUJNNDtQalEhG/xqsjfSZ5IHTZUB622swaakUmcG8kY6p
-         1kykd9/WtTOdi/nYrrvmvMOtw88sIjsVygzNmo0rSvkcybgpClgiS8d5xTqnlWedOYAz
-         cM7C70irMxbyRXIKe02vfU22lGwx9neFHv6GttevRo+diBRwqP6NdFwU5MivOqjbKD0+
-         JfB4XzhXaRRliHU5KK/saBsUgfN/TUl6h8rLgqxxP60jQkWHC6tND4yEYRklAwFxhNIO
-         C7OQjpEMM2OQElbZ7Ua7/nu/Q/2GqU9WgkftHUz/d2f+sDTwfhbnkT/GlxDFoi71dASx
-         Y4ZA==
-X-Gm-Message-State: ABuFfohiR2ezqrcS0HwRkBKY0aFe5Eqtbiv1EYHriuldsEoQsnERHtm+
-        CUprKpU+/wTQyk7e24/WvUQ=
-X-Google-Smtp-Source: ACcGV63YRjuczR1xlXwQJjp5zOYBm3SQBYoVXEEi1S9Kfqtmgtbm8PjsDYfOsrzzXUG3+VX34gcBGg==
-X-Received: by 2002:a37:b6c5:: with SMTP id g188-v6mr40366704qkf.188.1540173073216;
-        Sun, 21 Oct 2018 18:51:13 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id v23-v6sm8507928qtv.65.2018.10.21.18.51.12
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=gtEXh2zLU436jwZDFQRNZqAn32+igeNWlQjhqmNfBk0=;
+        b=eEWK6QfDnezIcmM0lO4/w8VdCbZIh86yUFd+7tQxdfhnhTAOQY0IWhT9KofbdCCTny
+         l11hepj4rWA1KY5Y1ur/WRvGNFfBVhiE7Vu/6kSHnnbzAYbjtVdWUDHoA54GYqGmG+Ut
+         5Vxdn6XuCNVSIzhLaeARdSqK/aowAbKxvbDfmvn8gKK7fQ9iRaARZuB9Pzdp44lFykdX
+         leeede76mIKQulIciKoLv0dFwctWfcb7Bg+ymX4TU2249/1/tsdR7zhZMuUXK5M/lvTn
+         e92ByLNjOEX4Nprg6LWqyvryuBhf9978BiWFMI60gw9GvJrZeZrDEt6a+duVmDOd8PDp
+         rlcg==
+X-Gm-Message-State: ABuFfogwWbNmT1uFM1cjjvhVRJjw/16wghs6OuVTcOfjdgXN/TB/LnpC
+        Dw0S+sjlerkEXZbDCbxRM5ey1Cb4
+X-Google-Smtp-Source: ACcGV609bc9g0dCumq2nQirktqfG1LsMkDVI2GpeFOAlfY/0C9T7Oq7Zvz7U5j2PQU8gMxCbrraRFw==
+X-Received: by 2002:a37:9941:: with SMTP id b62-v6mr39368373qke.53.1540173332211;
+        Sun, 21 Oct 2018 18:55:32 -0700 (PDT)
+Received: from linux.mshome.net ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id b21-v6sm3234768qkj.9.2018.10.21.18.55.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Oct 2018 18:51:12 -0700 (PDT)
-Subject: Re: [PATCH v4 4/7] revision.c: begin refactoring --topo-order logic
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.25.v3.git.gitgitgadget@gmail.com>
- <pull.25.v4.git.gitgitgadget@gmail.com>
- <cd9eef96885a811196ab0b851a98de4455b950ab.1539729393.git.gitgitgadget@gmail.com>
- <86h8hfguqc.fsf@gmail.com> <xmqqa7n6zswl.fsf@gitster-ct.c.googlers.com>
+        Sun, 21 Oct 2018 18:55:31 -0700 (PDT)
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bb91d5bb-4220-97b9-dd78-5aed39033e58@gmail.com>
-Date:   Sun, 21 Oct 2018 21:51:10 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqa7n6zswl.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, jnareb@gmail.com, gitster@pobox.com
+Subject: [RFC PATCH] revision.c: use new algorithm in A..B case
+Date:   Mon, 22 Oct 2018 01:55:28 +0000
+Message-Id: <20181022015528.141238-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <bb91d5bb-4220-97b9-dd78-5aed39033e58@gmail.com>
+References: <bb91d5bb-4220-97b9-dd78-5aed39033e58@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/21/2018 9:12 PM, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->
->> So if revs->limited is set (but not because revs->topo_order is set),
->> which means A..B queries, we will be still using the old algorithm.
->> All right, though I wonder if it could be improved in the future
->> (perhaps with the help of other graph labelling / indices than
->> generation numbers, maybe a positive-cut index).
->>
->> Do you have an idea why there is no improvement with the new code in
->> this case?
-> I didn't get the impression that it would not be possible to improve
-> the "--topo A..B" case by using generation numbers from this series.
-> Isn't it just because the necessary code has not been written yet?
-> In addition to what is needed for "--topo P1 P2 P3..." (all
-> positive), limited walk needs to notice the bottom boundary and stop
-> traversal.  Having generation numbers would make it slightly easier
-> than without, as you know that a positive commit you have will not
-> be marked UNINTERESTING due to a negative commit whose ancestors
-> have not been explored, as long as that negative commit has a higher
-> generation number.  But you still need to adjust the traversal logic
-> to properly terminate upon hitting UNINTERESTING one, and also
-> propagate the bit down the history, which is not needed at all if
-> you only want to support the "positive only" case.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
 
-Actually, the code has been written, but the problem is the same as the 
-performance issue when I made paint_down_to_common() use generation 
-numbers: the algorithm for deciding what is in the set "reachable from A 
-but not reachable from B" uses commit-date order as a heuristic to avoid 
-walking the entire graph. Yes, the revision parameters specify "limited" 
-in order to call "limit_list()", but it uses the same algorithm to 
-determine the reachable set difference.
+I just wanted to mention that in order to use the new logic for 'git log
+--topo-order A..B', we just need the following patch. It is an extra
+time that sets 'revs->limited' to 1, triggering the old logic.
 
-You can test this yourself! Run the following two commands in the Git 
-repository using v2.19.1:
-
-     time git log --topo-order -10 master >/dev/null
-
-     time git log --topo-order -10 maint..master >/dev/null
-
-I get 0.39s for the first call and 0.01s for the second. (Note: I 
-specified "-10" to ensure we are only writing 10 commits and the output 
-size does not factor into the time.) This is because the first walks the 
-entire history, while the second uses the heuristic walk to identify a 
-much smaller subgraph that the topo-order algorithm uses.
-
-Just as before, by using this algorithm for the B..A case, we are adding 
-an extra restriction on the algorithm: always be correct. This results 
-in us walking a larger set (everything reachable from B or A with 
-generation number at least the smallest generation of a commit reachable 
-from only one).
-
-I believe this can be handled by using a smarter generation number (one 
-that relies on commit date as a heuristic, but still have enough 
-information to guarantee topological relationships), and I've already 
-started testing a few of these directions. It is possible now that we 
-have concrete graph algorithms to use on real repositories. I hope to 
-share a report on my findings in a couple weeks. I'll include how using 
-this algorithm compares to the old algorithm in the B..A case.
+You can use this for comparison purposes, but I'm not ready to do this
+until more performance testing is ready in this case. Since these
+comparison commands are already pretty fast when the diff is small,
+there is less urgency to improve performance here.
 
 Thanks,
-
 -Stolee
+
+ revision.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 472f3994e3..8e5656f7b4 100644
+--- a/revision.c
++++ b/revision.c
+@@ -278,10 +278,8 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 
+ 		if (parse_commit(commit) < 0)
+ 			die("unable to parse commit %s", name);
+-		if (flags & UNINTERESTING) {
++		if (flags & UNINTERESTING)
+ 			mark_parents_uninteresting(commit);
+-			revs->limited = 1;
+-		}
+ 		if (revs->sources) {
+ 			char **slot = revision_sources_at(revs->sources, commit);
+ 
+-- 
+2.19.1
 
