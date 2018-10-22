@@ -7,58 +7,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5A151F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 14:33:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E91E1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 14:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728333AbeJVWvx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 18:51:53 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:36605 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727146AbeJVWvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 18:51:53 -0400
-Received: by mail-it1-f195.google.com with SMTP id c85-v6so12744100itd.1
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 07:33:04 -0700 (PDT)
+        id S1728268AbeJVWxc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 18:53:32 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:35902 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727146AbeJVWxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 18:53:32 -0400
+Received: by mail-it1-f194.google.com with SMTP id c85-v6so12752821itd.1
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 07:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=cy0uCKx6T9LGdGZBWFqyy8GBiQ+C5KWbGGSSpjp0Hec=;
-        b=sa/+pul/NjkZOheYMiTAv5qbmlREZN/0IKTzAnG2MA7VzCxpjlyVRNoDh+NIAuN+YW
-         IVhqXdMAldHRxLGMzONCoecviYvKIyfUZnt1ILjaM70VqDRQqnDxXNlSEXMHKRddp2nU
-         Wn31GTA7hIzdh4mXPYMjbrZdn8FWLqBFLbOztG4VLQ14ARD9+0VKa4dV/0d2e3rSpWOu
-         ftpGZv0YIE9HPZWDb+3Od2T/qSM6FQ6Bq7FvnhC+jzi04YnKrgs1uGND7e8fsF5d9LLg
-         Aaml0TnGDSj4jw2j5D8y3gItdY3lNByQa3X+wCkaIH3VUUUTUKWchOsh+luFilDZ5SAH
-         Sq/g==
+        bh=3tVO1gC4X4Eha6H7fZqkSEQvQx/TKl+eV2kzbtabH70=;
+        b=WGklUk2ddeUzHslK2RT0uowEOw2uSLWeCmuqMB2h3ABqMIgixs10iL4lff/rbBJ8bL
+         tCpLVzUXtTpGeps/ShQpkgQqRSA9Ms7BJr/ZLsgNOeZQJ2vTHFgrt2Do1toEgvoseeT6
+         60/K+lFVkvdd9sG8cMq8cmqZot1VHoqbvst1KgKpRnKhciMqcdK4zgUS1aSO8jXDfLCE
+         gCYq0e0DS+1CTCriLgpDFJeFMC7N8M9QMOkBoipQKtiy3VWGx6cF57GXkOKm9+5NpuKy
+         ALz11/MhfQy3Ge1OdeKdcfuq4eis0lGApgchMf2jgkWcVYmGEAz8u37shQrsR6u+Fr/r
+         k5ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cy0uCKx6T9LGdGZBWFqyy8GBiQ+C5KWbGGSSpjp0Hec=;
-        b=GjyJNmO34cyik42pSXgpWRuMrGd+Uip0Mq0s2IsywZt/I0GvHdOzOH+a1YlYLSLw8u
-         Uq9YoiB1E3RAaXeLvPFcj+n/vyiA3+rF84YPidWXUy+mn5h3O3TYln3YgMK4TICrISTU
-         OyilAAS/A4yohBPnYXZqaLJtGRTPgfUlLA2J+glhzaPn4oXlCYl3sy3raL1s3BFWSRvc
-         Is6taTft3dl02JClBF1dtEIToq+YSNPC3spfT9Y8KvZ+Urv+Bxp3x16Uupwz22jfb4jG
-         aDViQFtZHHf16GM8Wfb+YlyW4awExbQAQzBn+YXJs3RRkp4MvGcELIBnLdwRo2lgMfLa
-         pRpQ==
-X-Gm-Message-State: ABuFfoiLPH0mQydnSJwQdtldxknjMqRCugy8YtdKueI9rpAgDI7O8SN3
-        9V3ByoPIb46KDjRTLWhOSCNfqpU4IKtmcR+4IQo=
-X-Google-Smtp-Source: ACcGV62xgenkedz/QDshnt+fQwgIZ1tgi3ugf4Yj/Axc1hq0+fk/gJax1+YpeohkmQWFQZnfOhV/VZtgqWjDhEmCRyo=
-X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr10112092itg.70.1540218784342;
- Mon, 22 Oct 2018 07:33:04 -0700 (PDT)
+        bh=3tVO1gC4X4Eha6H7fZqkSEQvQx/TKl+eV2kzbtabH70=;
+        b=Z5Rt3Yw5IPld4VbW1uvvN5Z8A1Uwuns+OUf2phYG6g0QCmt0YRV9yTQNxs+KK/HikD
+         2IxyzAUWq4S1VpQNZ/uS/vxtZX2b/WTiizIDT5kmygDLhLxKSmULgX5LgBIv780zK5v1
+         vbz2e27qslRuGagqnmwhTuplvHPcNRAqRa1CG6/NnAmAS6KHhJi4YVoCyp1OVtqWatDr
+         xe4qHqqWRnhiddPXExrYEeTqwB/jowXaQsBjNXvaVRscqji3JLiV1m3KKZzLhRozey96
+         xQEbfLeu/6z5reUuc22kP9qKmygPVF4lYJXvtIOk5I0/rVMwt3o1S+MBcVjeuAS20lcK
+         nNVg==
+X-Gm-Message-State: ABuFfohQ+OUsO5UwcJa5DtkMAlKrJDEpptZujNWDyYm/zCxS7/dtQZ6Y
+        6UAnjJXwVW27gWpkPkNfd/GRLjSJl/8V+OHmNr6osA==
+X-Google-Smtp-Source: ACcGV636jCJKGiZ433c6n59AReKb0qR5rQ95iraF5mDS4m8ZOntknaUJ1eArg1XTCiKdK2u0MURILievStqUHmrtTR8=
+X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr9862604itc.123.1540218883263;
+ Mon, 22 Oct 2018 07:34:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181002160658.15891-1-pclouds@gmail.com> <20181021140228.24941-1-pclouds@gmail.com>
- <20181021140228.24941-3-pclouds@gmail.com> <xmqqefciwphv.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqefciwphv.fsf@gitster-ct.c.googlers.com>
+References: <20181021083731.8009-1-pclouds@gmail.com> <xmqqr2giwsep.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2giwsep.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 Oct 2018 16:32:37 +0200
-Message-ID: <CACsJy8BYJKKdnbNYBR-XNeSE9jpWqby+epMKWo9-wGRjVE8Lfg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] worktree: add per-worktree config files
+Date:   Mon, 22 Oct 2018 16:34:16 +0200
+Message-ID: <CACsJy8B-NtKb1sk_CxwB-bffMsy+nDGL2-MpkScBF5vvGHFBjA@mail.gmail.com>
+Subject: Re: [PATCH] completion: fix __gitcomp_builtin no longer consider
+ extra options
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -66,61 +62,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 6:54 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Oct 22, 2018 at 5:51 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index 552827935a..244560a35e 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -2,8 +2,9 @@ CONFIGURATION FILE
-> >  ------------------
+> > __gitcomp_builtin() has the main completion list provided by
 > >
-> >  The Git configuration file contains a number of variables that affect
-> > -the Git commands' behavior. The `.git/config` file in each repository
-> > -is used to store the configuration for that repository, and
-> > +the Git commands' behavior. The files `.git/config` and optionally
-> > +`config.worktree` (see `extensions.worktreeConfig` below) in each
-> > +repository are used to store the configuration for that repository, an=
-d
-> >  `$HOME/.gitconfig` is used to store a per-user configuration as
-> >  fallback values for the `.git/config` file. The file `/etc/gitconfig`
-> >  can be used to store a system-wide default configuration.
-> > @@ -371,6 +372,13 @@ advice.*::
-> >               editor input from the user.
-> >  --
+> >     git xxx --git-completion-helper
 > >
-> > +extensions.worktreeConfig::
-> > +     If set, by default "git config" reads from both "config" and
-> > +     "config.worktree" file from GIT_DIR in that order. In
-> > +     multiple working directory mode, "config" file is shared while
-> > +     "config.worktree" is per-working directory (i.e., it's in
-> > +     GIT_COMMON_DIR/worktrees/<id>/config.worktree)
-> > +
+> > but the caller can also add extra options that is not provided by
+> > --git-completion-helper. The only call site that does this is "git
+> > difftool" completion.
+> >
+> > This support is broken by b221b5ab9b (completion: collapse extra
+> > --no-.. options - 2018-06-06), which adds a special value "--" to mark
+> > that the rest of the options can be hidden by default. The commit
+> > forgets the fact that extra options are appended after
+> > "$(git xxx --git-completion-helper)", i.e. after this "--", and will
+> > be incorrectly hidden as well.
+> >
+> > Prepend the extra options before "$(git xxx --git-completion-helper)"
+> > to avoid this.
 >
-> This obviously conflicts with your 59-patch series, but more
-> importantly
->
->  - I notice that this is the only description of extensions.* key in
->    the configuration files.  Don't we have any other extension
->    defined, and if so shouldn't we be describing them already (not
->    as a part of this series, obviously)?
+> Thanks for a clear analysis.  How did you find it?  Got annoyed that
+> completion of difftool got broken, or discovered while trying to
+> apply the same trick as difftool completion uses to another one and
+> seeing that the technique does not work?
 
-Right. We have two extensions already but it's described in
-technical/repository-format.txt. I'll move this extension there
-because it's written "This document will serve as the master list for
-extensions." in that document.
-
->  - If we are going to describe other extensions.* keys, do we want
->    extensions-config.txt file to split this (and others) out and
->    later rename it to config/extensions.txt?  Or do we want to
->    collect related things together by logically not by name and have
->    this extension described in config/worktree.txt instead, perhaps
->    separate from other extensions.* keys?
-
-I think we would go with config/extensions.txt because if grouping
-logically, I'm not sure where extensions.preciousObjects and
-extensions.partialClone would go.
+I was fixing format-patch completion and was surprised it did not work
+as expected. Never really used difftool myself :P I only found out
+about it when I asked myself "why wasn't this breakage found earlier?"
 --=20
 Duy
