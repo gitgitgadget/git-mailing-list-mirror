@@ -6,63 +6,60 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF421F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 01:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 328401F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 01:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbeJVJjY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 05:39:24 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53095 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725884AbeJVJjX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 05:39:23 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 189-v6so8533352wmw.2
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:23:04 -0700 (PDT)
+        id S1726851AbeJVJ55 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 05:57:57 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:32960 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726808AbeJVJ55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 05:57:57 -0400
+Received: by mail-wr1-f67.google.com with SMTP id u1-v6so7260533wrn.0
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 18:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=mpDPw7sRZhsVEkHR68JPqslhN3Im9WRYJ6UD3srqqOM=;
-        b=BnZSXJcow5a9+0PaxHzcjOrNzs6CxMKPhCbniVVL9hJPghM1E35jmtSK/rNJk9yMB/
-         gqPlqdWTacL0UzLzOwuQP6vHJxmVndw3bqSyaQOfx30IhGjMNZlq2Vrf3Bl/nvMi5J3R
-         eOIjfZmagZbxEXWi4HR8kS7SP0wajkEmm1HO0aqV1AEH/UAr7MOU7G1dQIXo2ZaJbVa0
-         PqaRxucZqn86pxVP5E3fYBgQXuQMPc0WU3+ftlOXNKJed80Pe51T3NAhARUcdsCKHIBm
-         2fYn7l4BV3fjVI0V/lEZ3zuHwcsIq3i4JtIQtICAhDztCBkcol0MF0oURBOXqSwjtXnf
-         10zQ==
+        bh=jolnB/FXpB/RLtdHH/cC62RKXTcFPJSZ5nOIMZs8Oms=;
+        b=HFTSur3E443j5eKvMCaoIL7ww9FgHG9U5ixeeIAV+l4eMsUJpJOLGalkP+E2qpA2xj
+         Iuv+KmzPtpDPm2NS3PtxLqjtdT8FT3vRjbFVDvKdLpnajATWclt+TKHDvAdo6ZsiAANI
+         rvfkL1xMlGGas48S+nnpcedAQmxHJ5J5claGh5U7PdZW1pLoPc8EM5wgp5jGokYdSxxb
+         kBgJEFnJ9SFgax7Ivl3FX2TF6CmIaH9bKhh4/mJRQtD3Kdjvwwu0z5cYMpJERcQHjIDd
+         B0WkvTPo3hmsIEdJLPwim3ru88yM82Pxo5HIqi4FrCsl7lSZe9esENUj6OisAngsSZ6w
+         a2Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=mpDPw7sRZhsVEkHR68JPqslhN3Im9WRYJ6UD3srqqOM=;
-        b=XYSaNtttoZtCemWN1A1hTLJb/i9EN1bL/4DKWTjTp8OkSKLEZCJXIipKIUrCX+owVi
-         FJ1fzwI29COSfEiHldiCFnTXnUPIWsWbiYw22n47BPqPafwAR3FIqpKE5Ah91IbIbDAc
-         Rs2EwTg8AgsYzUdq1JnNg0iPbcASedzT48gTo5+JnCsXM6W35XMJJnnMpNY7AW6lFrEY
-         lqjVofzhjxCk1IKwVdQf81L1Z/hGrApy8yLYpr7OZRb+BVj2NwshvcirBZpnJat5a9BO
-         6/HuAC+lLVZJtGF2cX/BbDtVoGG+PvwaDkRTXAo/GXg+KhaMq08InBnDjYb2M4+rNux9
-         TTTg==
-X-Gm-Message-State: ABuFfogorcMJ6H33USWKmlTCqY3AkeAeR6f6DIyudu517Dr4r7MQnsVv
-        Eqc30+VwvV48URtGQGfq0eg=
-X-Google-Smtp-Source: ACcGV62nqYvr37xExKN6VmEaRXdH6R5yoAUtifCC5A6cE+4yU534QoVPa4AswB8J/v6WAyHouvfZzg==
-X-Received: by 2002:a1c:2dc5:: with SMTP id t188-v6mr13068414wmt.94.1540171382960;
-        Sun, 21 Oct 2018 18:23:02 -0700 (PDT)
+        bh=jolnB/FXpB/RLtdHH/cC62RKXTcFPJSZ5nOIMZs8Oms=;
+        b=QeNFuzhVdD7+1rAUpcU4POTj49aRNsETheY5QPWV88D85cIdu4jCNaXU8o1fm5By0P
+         Y4Z60u0StWwumq/0ddwNfIQFD9mlVRopepgXfHBxjmX8/eEBHSlRhHyTvmOEFzHfDoGA
+         2EIbYZqfxz8MeQryH8zmn6PweY1ZRKJsfb+o9xXEtXMRx0wC8mccFSg2MgYGcjwAUmOS
+         SdgRsGVODt7X5bLSFg5rgfX3QRwGOge5ngVCrCKt7IdAuhC9HeoSCXwdoWsP0pBRNRcn
+         6ziNSzDomz3yl3zBepxyCj6vC3vaaLu0FBPZTcz8gw6JMcGuCLFBZ0M5LDsnCsNyZgam
+         cHVw==
+X-Gm-Message-State: ABuFfogYWbJq4Ayfj6G1u44xFH68j42EIZDgHil+z/+K11JlNYVn/KSJ
+        564wI8xC7JUkBqVK8R/rePg=
+X-Google-Smtp-Source: ACcGV61o4GOE2KKbyFn5+G/vzlJegiqH1pmjYBxLDiJjDzQiQW7qU81zfXBml/yuOHDE0R2EiAleCg==
+X-Received: by 2002:adf:80c7:: with SMTP id 65-v6mr43112536wrl.57.1540172493437;
+        Sun, 21 Oct 2018 18:41:33 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p7-v6sm11694835wrt.10.2018.10.21.18.23.01
+        by smtp.gmail.com with ESMTPSA id w4-v6sm31644527wra.83.2018.10.21.18.41.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Oct 2018 18:23:02 -0700 (PDT)
+        Sun, 21 Oct 2018 18:41:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Tim Schumacher <timschumi@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] alias: detect loops in mixed execution mode
-References: <87o9dar9qc.fsf@evledraar.gmail.com>
-        <20181018225739.28857-1-avarab@gmail.com>
-        <20181019220755.GA31563@sigill.intra.peff.net>
-        <87ftx0dg4r.fsf@evledraar.gmail.com>
-        <20181020185852.GA6234@sigill.intra.peff.net>
-Date:   Mon, 22 Oct 2018 10:23:01 +0900
-In-Reply-To: <20181020185852.GA6234@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 20 Oct 2018 14:58:53 -0400")
-Message-ID: <xmqq5zxuzsei.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] Add GIT_TEST_MULTI_PACK_INDEX environment variable
+References: <pull.27.git.gitgitgadget@gmail.com>
+        <pull.27.v2.git.gitgitgadget@gmail.com>
+        <38aff549-9582-9879-9b3d-81cf5b1c3e24@gmail.com>
+Date:   Mon, 22 Oct 2018 10:41:31 +0900
+In-Reply-To: <38aff549-9582-9879-9b3d-81cf5b1c3e24@gmail.com> (Derrick
+        Stolee's message of "Fri, 12 Oct 2018 13:41:02 -0400")
+Message-ID: <xmqqy3aqycz8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,25 +68,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> I agree it's probably quite rare, if it exists at all. But I also wonder
-> how important looping alias protection is. It's also rare, and the
-> outcome is usually "gee, I wonder why this is taking so long? ^C".
->
-> At least that's my instinct. I don't remember having run into this at
-> all myself (though certainly I have written my fair share of infinite
-> loops in other systems, like bash aliases, and that is what happened).
+>> base-commit: 5a0cc8aca797dbd7d2be3b67458ff880ed45cddf
+> I should explicitly mention that this base commit is different as
+> otherwise I will conflict with ds/multi-pack-verify with the new
+> prototype in midx.h.
 
-Yup, that instict is shared with me, and I tend to prefer something
-based on a simple counter for that reason.
+There indeed is a tiny textual conflict, and in this case it may not
+matter that much, but please make it a habit to refrain from doing
+such a rebase in general.  It makes it impossible to compare the new
+round in the same context that the old round was inspected and has
+been tested, unless such a textual conflict avoidance is undone.
 
-> Would we print a long error message? I'd assume that we'd just recurse
-> for longer and print one error message that says:
->
->   fatal: woah, you're 1000-levels deep in Git commands!
->
-> That doesn't help the user find the recursion, but re-running with
-> GIT_TRACE=1 would make it pretty clear, I'd think.
+A good rule of thumb is to build on the same base, attempt a trial
+merge to 'master' (and 'next' and 'pu' if you are inclined to), and
+see how bad a conflict you get.  And if the conflict is something
+you can trivially resolve and the resolution would bring the code to
+the same state as you would get if you rebased, then you are better
+off not rebasing and let the maintainer deal with the merge.  You
+cannot control what other contributor would do to the code while you
+are working on it, so having to resolve these tiny textual conflicts
+is not "an unnecessary added burden" to me (having to backport to
+see the new round in the same context as the old round is, though).
+
+Of course, if you truly depend on some recent addition that happend
+since your old base, please do not hesitate to rebase.
 
 Thanks.
