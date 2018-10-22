@@ -7,55 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69B411F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 14:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5A151F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 14:33:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728295AbeJVWom (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 18:44:42 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:36256 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727584AbeJVWom (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 18:44:42 -0400
-Received: by mail-it1-f196.google.com with SMTP id c85-v6so12708962itd.1
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 07:25:54 -0700 (PDT)
+        id S1728333AbeJVWvx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 18:51:53 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:36605 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727146AbeJVWvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 18:51:53 -0400
+Received: by mail-it1-f195.google.com with SMTP id c85-v6so12744100itd.1
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 07:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=+/+MwIS3hUELGRa1RYGE7iFLa91h0oz3U0ny6TmVk5I=;
-        b=NB1qE7/Evx/WdyVAZBm4icGvUbwqdzuDX0gQ39mPi4X4emm2Fh5L+3vADdZo/MSsR8
-         yiocwAjg6mhqMHM0b4YsYD/8xrHMrflPAQduJcYOZWhRtUlqJ+CJMvekiXrcmPa1u3aq
-         jQ9Q0eb6eEAzq9zBONBTTf/GArGSvLY3J+yQsDS68O1uVCE0+iZRfY9zG3hel10h1+yE
-         AwUplu8gi1eRrDvhw4e3JQ/Fl2gqRYoJP6J6X726yexbJnwtC875Zwx5MA/DLwSA8OFa
-         VVssBvL1RO1nIiUHfoDZrEdMjBHxgGxUKfkhCijKQIohz9qBz8l9k+eeXyv2T9PG/L3Z
-         eXQQ==
+        bh=cy0uCKx6T9LGdGZBWFqyy8GBiQ+C5KWbGGSSpjp0Hec=;
+        b=sa/+pul/NjkZOheYMiTAv5qbmlREZN/0IKTzAnG2MA7VzCxpjlyVRNoDh+NIAuN+YW
+         IVhqXdMAldHRxLGMzONCoecviYvKIyfUZnt1ILjaM70VqDRQqnDxXNlSEXMHKRddp2nU
+         Wn31GTA7hIzdh4mXPYMjbrZdn8FWLqBFLbOztG4VLQ14ARD9+0VKa4dV/0d2e3rSpWOu
+         ftpGZv0YIE9HPZWDb+3Od2T/qSM6FQ6Bq7FvnhC+jzi04YnKrgs1uGND7e8fsF5d9LLg
+         Aaml0TnGDSj4jw2j5D8y3gItdY3lNByQa3X+wCkaIH3VUUUTUKWchOsh+luFilDZ5SAH
+         Sq/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+/+MwIS3hUELGRa1RYGE7iFLa91h0oz3U0ny6TmVk5I=;
-        b=OA0pinMyC4rQpTpU9r999P/i1bTNmf2g0edCDU/1+/Ze6mh6pXR5hWnPncznQ1CnP1
-         KcixeGLO41eaZCoCK78Hj6sT1eY0Tr+3IWDO/BUbLu0uPxsTJixWX/5dU4ATYU1+Iv6b
-         Yc2vU0JeGHgyQrbNAzVoK9IJz9bF82Vf3NZ87x0b3eFbE+OkFr71nV1jrqrmMN/9TS9n
-         bPCpDJF9A0b2yFb3eCSd8uV7bs4G98oYctWXlAthTFJcp6WcwtS0yECeg5WCdhjLeqFn
-         QJm5qGp/H58gKLFLo557mSx8uuATPPnBjpgWb/lWsiqV6+F3kYMOvBwD41Mb16VT2g7X
-         KV7g==
-X-Gm-Message-State: ABuFfojeaurxN2edMbbjDSKczWJkTxMcgx6G+kkmTPlIrfnBI6dNxrXG
-        iHlJDhSqj9gFlQi3SjlOKwweJqYFGfCSYwTst90=
-X-Google-Smtp-Source: ACcGV61yzFk+LAKnkRgm+ioppUaBx0rnyHjASSOGbofNVNOuVX12zM8qB81lwK61L/Th9FJhMCG32J+J+9Y9EfpCllE=
-X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr10090416itg.70.1540218354104;
- Mon, 22 Oct 2018 07:25:54 -0700 (PDT)
+        bh=cy0uCKx6T9LGdGZBWFqyy8GBiQ+C5KWbGGSSpjp0Hec=;
+        b=GjyJNmO34cyik42pSXgpWRuMrGd+Uip0Mq0s2IsywZt/I0GvHdOzOH+a1YlYLSLw8u
+         Uq9YoiB1E3RAaXeLvPFcj+n/vyiA3+rF84YPidWXUy+mn5h3O3TYln3YgMK4TICrISTU
+         OyilAAS/A4yohBPnYXZqaLJtGRTPgfUlLA2J+glhzaPn4oXlCYl3sy3raL1s3BFWSRvc
+         Is6taTft3dl02JClBF1dtEIToq+YSNPC3spfT9Y8KvZ+Urv+Bxp3x16Uupwz22jfb4jG
+         aDViQFtZHHf16GM8Wfb+YlyW4awExbQAQzBn+YXJs3RRkp4MvGcELIBnLdwRo2lgMfLa
+         pRpQ==
+X-Gm-Message-State: ABuFfoiLPH0mQydnSJwQdtldxknjMqRCugy8YtdKueI9rpAgDI7O8SN3
+        9V3ByoPIb46KDjRTLWhOSCNfqpU4IKtmcR+4IQo=
+X-Google-Smtp-Source: ACcGV62xgenkedz/QDshnt+fQwgIZ1tgi3ugf4Yj/Axc1hq0+fk/gJax1+YpeohkmQWFQZnfOhV/VZtgqWjDhEmCRyo=
+X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr10112092itg.70.1540218784342;
+ Mon, 22 Oct 2018 07:33:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181021084102.8318-1-pclouds@gmail.com> <20181022101719.GE30222@szeder.dev>
-In-Reply-To: <20181022101719.GE30222@szeder.dev>
+References: <20181002160658.15891-1-pclouds@gmail.com> <20181021140228.24941-1-pclouds@gmail.com>
+ <20181021140228.24941-3-pclouds@gmail.com> <xmqqefciwphv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqefciwphv.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 Oct 2018 16:25:27 +0200
-Message-ID: <CACsJy8DUrVJu0HN7kuCeo4iV5aimWbYtr+E-7kenPVDx90DpGw@mail.gmail.com>
-Subject: Re: [PATCH] completion: use __gitcomp_builtin for format-patch
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Date:   Mon, 22 Oct 2018 16:32:37 +0200
+Message-ID: <CACsJy8BYJKKdnbNYBR-XNeSE9jpWqby+epMKWo9-wGRjVE8Lfg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] worktree: add per-worktree config files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        Taylor Blau <me@ttaylorr.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,53 +66,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 12:17 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
+On Mon, Oct 22, 2018 at 6:54 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Sun, Oct 21, 2018 at 10:41:02AM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
-> > This helps format-patch gain completion for a couple new options,
-> > notably --range-diff.
-> >
-> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> > ---
-> >  Of course it will be even better if I could complete the ref for
-> >  --range-diff=3D, but maybe another day.
-> >
-> >  contrib/completion/git-completion.bash | 10 +++-------
-> >  1 file changed, 3 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-> > index c8fdcf8644..065b922777 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -1533,12 +1533,8 @@ _git_fetch ()
-> >  }
-> >
-> >  __git_format_patch_options=3D"
-> > -     --stdout --attach --no-attach --thread --thread=3D --no-thread
-> > -     --numbered --start-number --numbered-files --keep-subject --signo=
-ff
-> > -     --signature --no-signature --in-reply-to=3D --cc=3D --full-index =
---binary
-> > -     --not --all --cover-letter --no-prefix --src-prefix=3D --dst-pref=
-ix=3D
-> > -     --inline --suffix=3D --ignore-if-in-upstream --subject-prefix=3D
-> > -     --output-directory --reroll-count --to=3D --quiet --notes
-> > +     --full-index --not --all --no-prefix --src-prefix=3D
-> > +     --dst-prefix=3D --notes
-> >  "
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
-> $__git_format_patch_options is also used when completing 'git
-> send-email's options, thus removing all these options will badly
-> affect that, and in fact makes 't9902-completion.sh' fail with:
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index 552827935a..244560a35e 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -2,8 +2,9 @@ CONFIGURATION FILE
+> >  ------------------
+> >
+> >  The Git configuration file contains a number of variables that affect
+> > -the Git commands' behavior. The `.git/config` file in each repository
+> > -is used to store the configuration for that repository, and
+> > +the Git commands' behavior. The files `.git/config` and optionally
+> > +`config.worktree` (see `extensions.worktreeConfig` below) in each
+> > +repository are used to store the configuration for that repository, an=
+d
+> >  `$HOME/.gitconfig` is used to store a per-user configuration as
+> >  fallback values for the `.git/config` file. The file `/etc/gitconfig`
+> >  can be used to store a system-wide default configuration.
+> > @@ -371,6 +372,13 @@ advice.*::
+> >               editor input from the user.
+> >  --
+> >
+> > +extensions.worktreeConfig::
+> > +     If set, by default "git config" reads from both "config" and
+> > +     "config.worktree" file from GIT_DIR in that order. In
+> > +     multiple working directory mode, "config" file is shared while
+> > +     "config.worktree" is per-working directory (i.e., it's in
+> > +     GIT_COMMON_DIR/worktrees/<id>/config.worktree)
+> > +
+>
+> This obviously conflicts with your 59-patch series, but more
+> importantly
+>
+>  - I notice that this is the only description of extensions.* key in
+>    the configuration files.  Don't we have any other extension
+>    defined, and if so shouldn't we be describing them already (not
+>    as a part of this series, obviously)?
 
-Oops. I guess I was excited about the other fix and forgot to test
-this patch. Junio please kick it out of 'pu'.
+Right. We have two extensions already but it's described in
+technical/repository-format.txt. I'll move this extension there
+because it's written "This document will serve as the master list for
+extensions." in that document.
 
-I'll need to think if I could somehow make send-email work without
-hardcoding a bunch of options in it.,,
+>  - If we are going to describe other extensions.* keys, do we want
+>    extensions-config.txt file to split this (and others) out and
+>    later rename it to config/extensions.txt?  Or do we want to
+>    collect related things together by logically not by name and have
+>    this extension described in config/worktree.txt instead, perhaps
+>    separate from other extensions.* keys?
+
+I think we would go with config/extensions.txt because if grouping
+logically, I'm not sure where extensions.preciousObjects and
+extensions.partialClone would go.
 --=20
 Duy
