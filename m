@@ -7,57 +7,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BAF21F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 22:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8D7D1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 22:15:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbeJWGfa (ORCPT <rfc822;e@80x24.org>);
+        id S1727415AbeJWGfa (ORCPT <rfc822;e@80x24.org>);
         Tue, 23 Oct 2018 02:35:30 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:39820 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727135AbeJWGfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 02:35:30 -0400
-Received: by mail-pl1-f196.google.com with SMTP id e67-v6so10721286plb.6
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 15:15:06 -0700 (PDT)
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37300 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727116AbeJWGf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 02:35:28 -0400
+Received: by mail-pf1-f195.google.com with SMTP id j23-v6so20599327pfi.4
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 15:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=F8XhM/qwjm9N2ClYy8uab8ktn7FUxbwriLXVdZDdCwQ=;
-        b=MSYRWFnzMyGS9Hf1yd4wblE+vt0nAItYcdGb2rDPzhS1ADpuwVPt8rxSOlOOO3ogHw
-         SdJ+ntn3uNEnRRBguVQRFGVDsbp+2UgLFvgytMGPqhtUtV9Ycm0IGDTcM/NuYLU57BxU
-         QYH2YoPd3Mjgm/iHopbXo6aHmjaWej/DUnRxFYiGf7Tlbd/SBLWc/GURb8VpsFHWhaeL
-         5KdzHXKo5Js0xhe5BR9Iu+ibS0qUFR45f35pf6LyHmNu7OrFg0O4AXr6P/03CjDJ2taf
-         JkNlD87ckwW/vOWR+JFWEZ3XHtWYh3o3z+9QmQvCPuGpSi77N/L9IgKKBjsaefWCm4Tk
-         tN0Q==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=LgbnoWrkL0H8/Bvb4Ipy1eimRE0NR0TmP7GPA3S36dQ=;
+        b=St3vLX5oWG7oTLIiYOfE4gC9vtMsAB/pYkdgqsd+9wBQIoEjfVRhtNvxUOGp6Ggj2h
+         GJmSgWXk2XsBvqfXAJQHFJFoRb0m0R6PvHu37zPQwQZztKVucShdSEvYJ6g/5oIJnHV7
+         r3N+/aZj9rJ6opGgaqv3GEeQLdevpA3ik6K79MUKrMYg7p5nlAnTUk5E22xRVf7fs2aK
+         UHFkqGrRUsyHQAT6UDIU+jwJstOSXPPksvfwwrzfb7f10q9k8jfIbSJme8tvKRoZ96hE
+         NVa6v1K/l2NPm5jn0gncG8jnfBvtUVbKYRw/Mc5F69J7WKOcVdYHpI27VTbx0APOu537
+         dNZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=F8XhM/qwjm9N2ClYy8uab8ktn7FUxbwriLXVdZDdCwQ=;
-        b=dXyZYJGJqVoXMFjliJMlF8gporh9cKlP3w8OUfvA+RuKjDdD3hKIsAaGyShJIrpIP6
-         hJYQGyvOrPEeqEO+0PFUZXie8lLxnLK/iiDlB4KZ28SCj8CVMh/BXIEWEd0bNkBfRREH
-         Pc/rqurzeVE0yvmUDsPEVCf2B72Hz7B9K9ajd91yTQkDO7vDnKwaEKvNIuRNPfLFVVej
-         1jTcpWe4lGmOxgmt4xDBgVG/QS7FhqbNyfp1qtzgb+I3/Gh8J6yD5/xP9P7TeQUwPGAk
-         Nhp9CQ9lO5roP8uSfm97bLzg1VCYdefT44e4+5db9L84Zoyr8y4aZdLkiMU9oRQOHMhC
-         MJjA==
-X-Gm-Message-State: ABuFfoj9zE2klR+j/S/LzaNl0nk8SHBjVGMGQDSQrdD319mmfFWPC+BE
-        BhrcjSiiB2QkcdkgwpzK+AkdOelm
-X-Google-Smtp-Source: ACcGV62Tcj9NyDx5vKVkzyh5xbBQNOyIObthCFbMR2KlUzWnQpEavkmBlCbK7VsO8Jp3YROJhJWe4g==
-X-Received: by 2002:a17:902:6b0a:: with SMTP id o10-v6mr13863235plk.208.1540246506075;
-        Mon, 22 Oct 2018 15:15:06 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LgbnoWrkL0H8/Bvb4Ipy1eimRE0NR0TmP7GPA3S36dQ=;
+        b=PMQO+w68uutfzBiTiqBpeTl5hhhv5EdrPW5BptZK1hOhdlU7fwMHH1LkVH0zRWgdkn
+         9GJ2CuOaKT3GtnNooeBMAZy3fvqhFl/XHGdVR+6ri/cuF0aqi3tYraespsyb2RBa1aiT
+         qLPjJJtTKq7oGaYle44NMxyLjc/j1IzzD170s/UZQdMjJ5PVhpI/j9eusa3qMt+YbWL7
+         u5MEnqVqbqL5a5Qrp+Wnsrr0Wb7Ir0/OB+zYLX9urFBkueUEjP2E5qmK/SAfg3wzl1Ye
+         7X3NGR5OOHTXp/TiRFq+7Okzy07qwQU05LcYaKk+cCosiI1vpclbnyV0IY4jTDHLKDYN
+         UkPg==
+X-Gm-Message-State: ABuFfohX1NZzbTcY0EWtM4l1fURR7ZW254ycqzt6IxrsXHPdtk1PUORu
+        Bh7aubOiajqeOjn1oxQv5e7EWMAI
+X-Google-Smtp-Source: ACcGV61n1Uy2ugJ8bywBwKzWikaDW+dJWyD8yQmKjR/+BIZEq/Ulk+0ff3Vqispl7am14vRrHX63Dg==
+X-Received: by 2002:a63:cb51:: with SMTP id m17-v6mr43138459pgi.105.1540246504640;
+        Mon, 22 Oct 2018 15:15:04 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id y23-v6sm38858531pgk.91.2018.10.22.15.15.04
+        by smtp.gmail.com with ESMTPSA id k132-v6sm2718381pga.28.2018.10.22.15.15.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Oct 2018 15:15:05 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 15:15:05 -0700 (PDT)
-X-Google-Original-Date: Mon, 22 Oct 2018 22:14:58 GMT
-Message-Id: <07140a71dd9ed3f709970f0ce5eb6aa014417b25.1540246499.git.gitgitgadget@gmail.com>
+        Mon, 22 Oct 2018 15:15:03 -0700 (PDT)
+Date:   Mon, 22 Oct 2018 15:15:03 -0700 (PDT)
+X-Google-Original-Date: Mon, 22 Oct 2018 22:14:57 GMT
+Message-Id: <86107a6d0a044e3338e6f70313917066d200a1f4.1540246499.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.52.v2.git.gitgitgadget@gmail.com>
 References: <pull.52.git.gitgitgadget@gmail.com>
         <pull.52.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/3] rebase (autostash): use an explicit OID to apply the
- stash
+Subject: [PATCH v2 2/3] rebase (autostash): store the full OID in
+ <state-dir>/autostash
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,32 +79,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `git stash apply <argument>` sees an argument that consists only of
-digits, it tries to be smart and interpret it as `stash@{<number>}`.
+It was reported by Gábor Szeder and analyzed by Alban Gruin that the
+built-in rebase stores only abbreviated stash hashes in the `autostash`
+file.
 
-Unfortunately, an all-digit hash (which is unlikely but still possible)
-is therefore misinterpreted as `stash@{<n>}` reflog.
+This is problematic e.g. in t5520-pull.sh, where the abbreviated hash is
+so short that it sometimes consists only of digits, which are
+subsequently mistaken ("DWIMmed") for numbers by `git stash apply`.
 
-To prevent that from happening, let's append `^0` after the stash hash,
-to make sure that it is interpreted as an OID rather than as a number.
+Let's align the behavior of the built-in rebase with the scripted rebase
+and store the full stash hash instead. That makes it a lot less likely
+that it consists only of digits.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/rebase.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 418624837..30d58118c 100644
+index d21504d9f..418624837 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -253,6 +253,8 @@ static int apply_autostash(struct rebase_options *opts)
- 
- 	if (read_one(path, &autostash))
- 		return error(_("Could not read '%s'"), path);
-+	/* Ensure that the hash is not mistake for a number */
-+	strbuf_addstr(&autostash, "^0");
- 	argv_array_pushl(&stash_apply.args,
- 			 "stash", "apply", autostash.buf, NULL);
- 	stash_apply.git_cmd = 1;
+@@ -1375,7 +1375,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			if (safe_create_leading_directories_const(autostash))
+ 				die(_("Could not create directory for '%s'"),
+ 				    options.state_dir);
+-			write_file(autostash, "%s", buf.buf);
++			write_file(autostash, "%s", oid_to_hex(&oid));
+ 			printf(_("Created autostash: %s\n"), buf.buf);
+ 			if (reset_head(&head->object.oid, "reset --hard",
+ 				       NULL, 0, NULL, NULL) < 0)
 -- 
 gitgitgadget
+
