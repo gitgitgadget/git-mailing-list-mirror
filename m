@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E34DF1F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 02:44:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E148A1F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 02:44:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbeJVLAo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 07:00:44 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51770 "EHLO
+        id S1727461AbeJVLAr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 07:00:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51778 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727411AbeJVLAn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Oct 2018 07:00:43 -0400
+        by vger.kernel.org with ESMTP id S1727407AbeJVLAq (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Oct 2018 07:00:46 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:65d4:dc3c:f6f5:933b])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D1BD61B72;
-        Mon, 22 Oct 2018 02:44:09 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 36B5261B7D;
+        Mon, 22 Oct 2018 02:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540176249;
-        bh=eq6uz2zRn1FRia7VIpcK09IaJzAI1LgMumjeI1hEKmw=;
+        s=default; t=1540176251;
+        bh=F/c1ZoxK5ohKZOnnWlLwi+Ho3wYh4kdchbWu0avYb28=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=TKiK+fAC2C5fGWqvjQ6ykBaw/JqUudweass3wC8ygUosfPv+H7oDuQrpj/GNTmeH3
-         Oyqqmc5GotIq878S8D4LWSiH6+QBfwxz8wy59r8ZpRqwVe73NmX1tIkrqXNn4gg/Is
-         cX1SxFVY92U3lKX7JXIOQIsn/FVGvPeO3PXB0FOMHsIl07Rhv3NmJBq+9Z/aVWkVFU
-         juaD0cZaNJBIlOV2N3JdOPVhotw3XUMdtiu+vt90EVGaxJs0dIayFUWgsKtj11+SMH
-         FWiawTGmk5g+RA8dCZ18n4AkOdkOBaithhoL4QxuhhxOdd+Kc2a6TGDw//ydMrH89m
-         VmWIAxmQ93oVcJixhN993wrOgB9ov9ftwZuIB5tdc9Tok23BND7grxyivTbvn2VFPd
-         4uTA+tlahftUiXbMMzsBkrfq2lEoE/lLBEpi808UQZ9GnaQHn1KeHY8xm2QznDMF+c
-         a7Uq0W73VjohLp7br8Ep5hgVsSHan/H4xqTSG5VyDhodybam9WZ
+        b=p+kdxpUwfQtyQdSt34ZVGCwG+2749zq7hjAG2m1TEFzW2A8QYQyxKBgIJm99C786K
+         pLn4EK1N/fohD4q1kcfO2iE4XtJDYz2VGmpahXaxdTstCb1eshZtKlmUStClTGoIvX
+         YwN1q8Di/uwgnwVaUKdSPBGrHSchtEyf3M4VAclh8hvKY3eSE9bv8w4EzoXo3WBQeb
+         56asReVous+HLAXugio68mB+B1FYFBcIwvNqxjJ4cbDlvxFooKL9S5iVuIV+OdbvnW
+         DSq9H+joEfsQcElFdTrtWx3bWUI2WCfYvj8xH/a1BtcpNVyygizX7bJAvCscr3wt05
+         AqaIDw6XST8QrpuBkXEyqsqa/xbSWL1kdLIdJbAVA1YrINPFlqAvE1UXvN6lFBWLeh
+         vC3yzr5cDkI0nyJ26BMjLF8rep4rsry4rC6YTUy2cFwtJunbieJZ9yogaQaHleZwAf
+         bkwnRAWHCUPGW71/VXMitgZRySE7kkUoIzJ83SKFUT39/C+UwMV
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 07/12] sha1-file: add a constant for hash block size
-Date:   Mon, 22 Oct 2018 02:43:37 +0000
-Message-Id: <20181022024342.489564-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 09/12] commit-graph: convert to using the_hash_algo
+Date:   Mon, 22 Oct 2018 02:43:39 +0000
+Message-Id: <20181022024342.489564-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.568.g152ad8e336
 In-Reply-To: <20181022024342.489564-1-sandals@crustytoothpaste.net>
 References: <20181022024342.489564-1-sandals@crustytoothpaste.net>
@@ -55,67 +55,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is one place we need the hash algorithm block size: the HMAC code
-for push certs.  Expose this constant in struct git_hash_algo and expose
-values for SHA-1 and for the largest value of any hash.
+Instead of using hard-coded constants for object sizes, use
+the_hash_algo to look them up.  In addition, use a function call to look
+up the object ID version and produce the correct value.  For now, we use
+version 1, which means to use the default algorithm used in the rest of
+the repository.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h     | 4 ++++
- hash.h      | 3 +++
- sha1-file.c | 2 ++
- 3 files changed, 9 insertions(+)
+ commit-graph.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index bab8e8964f..9e5d1dd85a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -45,10 +45,14 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
- /* The length in bytes and in hex digits of an object name (SHA-1 value). */
- #define GIT_SHA1_RAWSZ 20
- #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
-+/* The block size of SHA-1. */
-+#define GIT_SHA1_BLKSZ 64
+diff --git a/commit-graph.c b/commit-graph.c
+index 40c855f185..6763d19288 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -23,16 +23,11 @@
+ #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+ #define GRAPH_CHUNKID_LARGEEDGES 0x45444745 /* "EDGE" */
  
- /* The length in byte and in hex digits of the largest possible hash value. */
- #define GIT_MAX_RAWSZ GIT_SHA1_RAWSZ
- #define GIT_MAX_HEXSZ GIT_SHA1_HEXSZ
-+/* The largest possible block size for any supported hash. */
-+#define GIT_MAX_BLKSZ GIT_SHA1_BLKSZ
+-#define GRAPH_DATA_WIDTH 36
++#define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
  
- struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
-diff --git a/hash.h b/hash.h
-index 80881eea47..1bcf7ab6fd 100644
---- a/hash.h
-+++ b/hash.h
-@@ -81,6 +81,9 @@ struct git_hash_algo {
- 	/* The length of the hash in hex characters. */
- 	size_t hexsz;
+ #define GRAPH_VERSION_1 0x1
+ #define GRAPH_VERSION GRAPH_VERSION_1
  
-+	/* The block size of the hash. */
-+	size_t blksz;
+-#define GRAPH_OID_VERSION_SHA1 1
+-#define GRAPH_OID_LEN_SHA1 GIT_SHA1_RAWSZ
+-#define GRAPH_OID_VERSION GRAPH_OID_VERSION_SHA1
+-#define GRAPH_OID_LEN GRAPH_OID_LEN_SHA1
+-
+ #define GRAPH_OCTOPUS_EDGES_NEEDED 0x80000000
+ #define GRAPH_PARENT_MISSING 0x7fffffff
+ #define GRAPH_EDGE_LAST_MASK 0x7fffffff
+@@ -44,13 +39,18 @@
+ #define GRAPH_FANOUT_SIZE (4 * 256)
+ #define GRAPH_CHUNKLOOKUP_WIDTH 12
+ #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+-			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
++			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
+ 
+ char *get_commit_graph_filename(const char *obj_dir)
+ {
+ 	return xstrfmt("%s/info/commit-graph", obj_dir);
+ }
+ 
++static uint8_t oid_version(void)
++{
++	return 1;
++}
 +
- 	/* The hash initialization function. */
- 	git_hash_init_fn init_fn;
+ static struct commit_graph *alloc_commit_graph(void)
+ {
+ 	struct commit_graph *g = xcalloc(1, sizeof(*g));
+@@ -125,15 +125,15 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	}
  
-diff --git a/sha1-file.c b/sha1-file.c
-index 7e9dedc744..9bdd04ea45 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -90,6 +90,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		0x00000000,
- 		0,
- 		0,
-+		0,
- 		git_hash_unknown_init,
- 		git_hash_unknown_update,
- 		git_hash_unknown_final,
-@@ -102,6 +103,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		0x73686131,
- 		GIT_SHA1_RAWSZ,
- 		GIT_SHA1_HEXSZ,
-+		GIT_SHA1_BLKSZ,
- 		git_hash_sha1_init,
- 		git_hash_sha1_update,
- 		git_hash_sha1_final,
+ 	hash_version = *(unsigned char*)(data + 5);
+-	if (hash_version != GRAPH_OID_VERSION) {
++	if (hash_version != oid_version()) {
+ 		error(_("hash version %X does not match version %X"),
+-		      hash_version, GRAPH_OID_VERSION);
++		      hash_version, oid_version());
+ 		goto cleanup_fail;
+ 	}
+ 
+ 	graph = alloc_commit_graph();
+ 
+-	graph->hash_len = GRAPH_OID_LEN;
++	graph->hash_len = the_hash_algo->rawsz;
+ 	graph->num_chunks = *(unsigned char*)(data + 6);
+ 	graph->graph_fd = fd;
+ 	graph->data = graph_map;
+@@ -149,7 +149,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 
+ 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
+ 
+-		if (chunk_offset > graph_size - GIT_MAX_RAWSZ) {
++		if (chunk_offset > graph_size - the_hash_algo->rawsz) {
+ 			error(_("improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
+ 			      (uint32_t)chunk_offset);
+ 			goto cleanup_fail;
+@@ -764,6 +764,7 @@ void write_commit_graph(const char *obj_dir,
+ 	int num_extra_edges;
+ 	struct commit_list *parent;
+ 	struct progress *progress = NULL;
++	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	if (!commit_graph_compatible(the_repository))
+ 		return;
+@@ -909,7 +910,7 @@ void write_commit_graph(const char *obj_dir,
+ 	hashwrite_be32(f, GRAPH_SIGNATURE);
+ 
+ 	hashwrite_u8(f, GRAPH_VERSION);
+-	hashwrite_u8(f, GRAPH_OID_VERSION);
++	hashwrite_u8(f, oid_version());
+ 	hashwrite_u8(f, num_chunks);
+ 	hashwrite_u8(f, 0); /* unused padding byte */
+ 
+@@ -924,8 +925,8 @@ void write_commit_graph(const char *obj_dir,
+ 
+ 	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+-	chunk_offsets[2] = chunk_offsets[1] + GRAPH_OID_LEN * commits.nr;
+-	chunk_offsets[3] = chunk_offsets[2] + (GRAPH_OID_LEN + 16) * commits.nr;
++	chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
++	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
+ 	chunk_offsets[4] = chunk_offsets[3] + 4 * num_extra_edges;
+ 
+ 	for (i = 0; i <= num_chunks; i++) {
+@@ -938,8 +939,8 @@ void write_commit_graph(const char *obj_dir,
+ 	}
+ 
+ 	write_graph_chunk_fanout(f, commits.list, commits.nr);
+-	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
+-	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_oids(f, hashsz, commits.list, commits.nr);
++	write_graph_chunk_data(f, hashsz, commits.list, commits.nr);
+ 	write_graph_chunk_large_edges(f, commits.list, commits.nr);
+ 
+ 	close_commit_graph(the_repository);
