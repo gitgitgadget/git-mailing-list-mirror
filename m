@@ -2,178 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D7E81F453
-	for <e@80x24.org>; Mon, 22 Oct 2018 05:36:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E0A71F453
+	for <e@80x24.org>; Mon, 22 Oct 2018 05:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727384AbeJVNx2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Oct 2018 09:53:28 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:41689 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727225AbeJVNx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Oct 2018 09:53:28 -0400
-Received: by mail-pg1-f193.google.com with SMTP id 23-v6so18469408pgc.8
-        for <git@vger.kernel.org>; Sun, 21 Oct 2018 22:36:29 -0700 (PDT)
+        id S1727512AbeJVN6X (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Oct 2018 09:58:23 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:34017 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727338AbeJVN6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Oct 2018 09:58:23 -0400
+Received: by mail-wr1-f47.google.com with SMTP id l6-v6so43014011wrt.1
+        for <git@vger.kernel.org>; Sun, 21 Oct 2018 22:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=v3U7WBELZ/j8RQiTv3P7AFraPEM5u8LTRUHcwNegCNQ=;
-        b=Dg55OM+CpV6+EZL2OvxsBh18JGnPtJaUm2V/qiaS4no0+xok8lIF6ts2jsP0+Nd8Kr
-         4SwkaUbkDdcsniz66/RUzVGDLlv/P4EBYffow5nTWp8i/lP20ozkpmbUp33sX/iQWkWW
-         veklqMmktq0q4uXbFG2Bpgexv3MAvW0JR+ydkSqedu91JYDxl4b3I0vhgpXi4hEc0j2P
-         XRLDIbnqFXkMjEDmyDJByQbIXUVd4Wg5LWndxa1WN0NIzgbjpLKD7S0TzYr5wk+4Qu/B
-         XhX5C3b+/pIDHhXSVaYmMLian1DIfVdeahWyUjpR0FpKHdDpDua+drAdTFAwykIxHBSv
-         1Mbw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=T/sF4gZwOnmCuCxTj/665a8T6deT48ONh7NVwLMIVZU=;
+        b=rotVfq8V5rrVrkUBSdFE6cIbbRu5liFNmsH7JJlEVCSkgqdS9vcN+Vx3eGgdi3Qc30
+         EAjxlQS6C1YlJuF0J1NrUHsixvVdI8fxrmooZN6iA3galP2puxjl8L0PFxJcc/gp3/1W
+         d9uFOjTcRk6m2POGT/gFnq04ZLIe557vrmewadJCxu4RVaan9WB8Kav+H5NPlcSJ1xD3
+         pcNWneJqI5wGB+nSravzjwN+tuZ+zhzzEFsILIe3a7zxb02tp1Zb2RVOYDNSZ1Bf2jaF
+         spDo0459yrOZDgKwUN8WBRbU4gNp/wQNcdnW6VEaRHTKrA8ocO1m4O9h+HswwLQYONmf
+         2EdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=v3U7WBELZ/j8RQiTv3P7AFraPEM5u8LTRUHcwNegCNQ=;
-        b=myzQNCf4hxIPoZFhimEjfz8YD4xl0L8GKJIGSm8oxnkPZmhdUhJkUuT5q7RH+rfoTe
-         rPDtnFPqJoFpEwyPTn1hft3D9guVMjMZX654oZpa+Iw+beik6y/aiTueGhsMqS04r7Z9
-         nZx4TVpD5Gl5Nd5ji0pmHSWwOvSnOmL69wk2A1SupGPLmMdT4zV9t0o1M3TJ4H+h/Stv
-         ug4EaKgBl2BzvHb+vRQC/xVIQQlapu9rxexVwNM5YExj17fkuhxds1hZJKvjZO/OcfvS
-         vp+tDsbbG+EK0pbdh2oxMQA5Uuu7nQWtr8RXf0/zhkBGkYEMtqAzzRmlBbkWeY7V1uSG
-         Hmrg==
-X-Gm-Message-State: ABuFfojg0KmpJexPcyZWAVFiIxS/RElExpbVThPABqwtyAjve6JxmMyF
-        Z39qgwfy6wUUJRwBEMFfHUkXtm4/
-X-Google-Smtp-Source: ACcGV62xQy6kBy1FlfNaLmM4llmfVsGZXP65V9uOo/IBRvaCYaOz1JSFs2JFCOCGgCn8Cxw1T5st6g==
-X-Received: by 2002:a63:f210:: with SMTP id v16-v6mr40769636pgh.371.1540186588540;
-        Sun, 21 Oct 2018 22:36:28 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id n63-v6sm38004733pfn.9.2018.10.21.22.36.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 21 Oct 2018 22:36:28 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH 3/3] xdiff: use compat's MIN instead
-Date:   Sun, 21 Oct 2018 22:36:05 -0700
-Message-Id: <20181022053605.81048-4-carenas@gmail.com>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20181022053605.81048-1-carenas@gmail.com>
-References: <20181022053605.81048-1-carenas@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=T/sF4gZwOnmCuCxTj/665a8T6deT48ONh7NVwLMIVZU=;
+        b=gi2b7Q/T9Pknu0FuHa5U8YfL6DgIULengTFWnez0yjUZ7YvcsI3PB6ZW9cDVibMtkP
+         5lXodcsEXuC1PfAUNw9eMdUiBdcMLJdSdtSQ+YgaRmWh51wdt10RmGjbEMldS0PIdZwP
+         bSoMciTIzc6LamaFpDnPIKh5EGTxeTDue+9LrcwK9cdTXcLsu/HpcGfjfk+ZiOMxzwEx
+         VVdof8vxqUfLcqetoaWCbufuNGWllEJLWa9eLV58KeiPOy1XitOGhGHovcB2W6zmllU4
+         u0oK4aeU90/CFtE8rBuLjc5hK/hQ5CV1x+T0m+oaYdkVlrtALSwFAH6iyH/oTF4e+faW
+         XShw==
+X-Gm-Message-State: AGRZ1gJXql5+1Nem+9LiuGOx22Qnam/R/u4qnGWvyqr+L6akFawQt+Nf
+        UUdYatOoOm3PY5AJL++neLU=
+X-Google-Smtp-Source: AJdET5eh155LmBONLFOYU59ew3SKYBxIkWTISksPdyDqC2IejiZ2gen97JNMXbsa0RX3He4rr3S/3Q==
+X-Received: by 2002:adf:f6c1:: with SMTP id y1-v6mr2584784wrp.261.1540186881648;
+        Sun, 21 Oct 2018 22:41:21 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 90-v6sm47071005wrg.86.2018.10.21.22.41.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 21 Oct 2018 22:41:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Mirror of git.git on gitlab.com
+References: <pull.31.git.gitgitgadget@gmail.com>
+        <8736t7dzan.fsf@evledraar.gmail.com>
+        <CACsJy8DeA0Zko4+ZM5F2L6YO5rpvL9LX3H9NB_bVCyO2mJFUzg@mail.gmail.com>
+        <CAP8UFD3cpXpyx-AtTybPirzduFR7TfhFf2woa-_CU46DN3RaXw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1810152032140.4546@tvgsbejvaqbjf.bet>
+        <xmqqd0sa1omm.fsf@gitster-ct.c.googlers.com>
+        <CACBZZX59vT1CTiUPfPZDJUSRH=NSzmWiabux=KRdTUFa1R=5bw@mail.gmail.com>
+        <xmqqo9bsvwn9.fsf@gitster-ct.c.googlers.com>
+        <87k1mecj96.fsf@evledraar.gmail.com>
+Date:   Mon, 22 Oct 2018 14:41:19 +0900
+In-Reply-To: <87k1mecj96.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 19 Oct 2018 12:40:05 +0200")
+Message-ID: <xmqq1s8iwnb4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- xdiff/xdiffi.c     | 2 +-
- xdiff/xemit.c      | 6 +++---
- xdiff/xhistogram.c | 6 +++---
- xdiff/xmacros.h    | 4 +---
- xdiff/xprepare.c   | 2 +-
- 5 files changed, 9 insertions(+), 11 deletions(-)
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 1f1f4a3c78..0754dc17ed 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -204,7 +204,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 
- 			fbest = fbest1 = -1;
- 			for (d = fmax; d >= fmin; d -= 2) {
--				i1 = XDL_MIN(kvdf[d], lim1);
-+				i1 = MIN(kvdf[d], lim1);
- 				i2 = i1 - d;
- 				if (lim2 < i2)
- 					i1 = lim2 + d, i2 = lim2;
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 7778dc2b19..43d455b404 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -217,8 +217,8 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 
-  post_context_calculation:
- 		lctx = xecfg->ctxlen;
--		lctx = XDL_MIN(lctx, xe->xdf1.nrec - (xche->i1 + xche->chg1));
--		lctx = XDL_MIN(lctx, xe->xdf2.nrec - (xche->i2 + xche->chg2));
-+		lctx = MIN(lctx, xe->xdf1.nrec - (xche->i1 + xche->chg1));
-+		lctx = MIN(lctx, xe->xdf2.nrec - (xche->i2 + xche->chg2));
- 
- 		e1 = xche->i1 + xche->chg1 + lctx;
- 		e2 = xche->i2 + xche->chg2 + lctx;
-@@ -242,7 +242,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			 * its new end.
- 			 */
- 			if (xche->next) {
--				long l = XDL_MIN(xche->next->i1,
-+				long l = MIN(xche->next->i1,
- 						 xe->xdf1.nrec - 1);
- 				if (l - xecfg->ctxlen <= e1 ||
- 				    get_func_line(xe, xecfg, NULL, l, e1) < 0) {
-diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index ec85f5992b..562cab6d14 100644
---- a/xdiff/xhistogram.c
-+++ b/xdiff/xhistogram.c
-@@ -129,7 +129,7 @@ static int scanA(struct histindex *index, int line1, int count1)
- 				NEXT_PTR(index, ptr) = rec->ptr;
- 				rec->ptr = ptr;
- 				/* cap rec->cnt at MAX_CNT */
--				rec->cnt = XDL_MIN(MAX_CNT, rec->cnt + 1);
-+				rec->cnt = MIN(MAX_CNT, rec->cnt + 1);
- 				LINE_MAP(index, ptr) = rec;
- 				goto continue_scan;
- 			}
-@@ -193,14 +193,14 @@ static int try_lcs(struct histindex *index, struct region *lcs, int b_ptr,
- 				as--;
- 				bs--;
- 				if (1 < rc)
--					rc = XDL_MIN(rc, CNT(index, as));
-+					rc = MIN(rc, CNT(index, as));
- 			}
- 			while (ae < LINE_END(1) && be < LINE_END(2)
- 				&& CMP(index, 1, ae + 1, 2, be + 1)) {
- 				ae++;
- 				be++;
- 				if (1 < rc)
--					rc = XDL_MIN(rc, CNT(index, ae));
-+					rc = MIN(rc, CNT(index, ae));
- 			}
- 
- 			if (b_next <= be)
-diff --git a/xdiff/xmacros.h b/xdiff/xmacros.h
-index 2809a28ca9..495b9dfac4 100644
---- a/xdiff/xmacros.h
-+++ b/xdiff/xmacros.h
-@@ -23,10 +23,8 @@
- #if !defined(XMACROS_H)
- #define XMACROS_H
- 
-+#include "../git-compat-util.h"
- 
--
--
--#define XDL_MIN(a, b) ((a) < (b) ? (a): (b))
- #define XDL_MAX(a, b) ((a) > (b) ? (a): (b))
- #define XDL_ABS(v) ((v) >= 0 ? (v): -(v))
- #define XDL_ISDIGIT(c) ((c) >= '0' && (c) <= '9')
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index abeb8fb84e..7436064498 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -451,7 +451,7 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
- 
- 	recs1 = xdf1->recs;
- 	recs2 = xdf2->recs;
--	for (i = 0, lim = XDL_MIN(xdf1->nrec, xdf2->nrec); i < lim;
-+	for (i = 0, lim = MIN(xdf1->nrec, xdf2->nrec); i < lim;
- 	     i++, recs1++, recs2++)
- 		if ((*recs1)->ha != (*recs2)->ha)
- 			break;
--- 
-2.19.1
+> I've set this up at https://gitlab.com/git-vcs
+>
+> The /git namespace was taken (and I asked GitLab support if it was
+> stale, they said no). Also tried /git-scm and /gitscm, ditto. So I
+> settled on /git-vcs (version control system).
+
+Squatters X-<.  Thanks.
+
+> As an aside, I noticed that
+> https://github.com/git/sha1collisiondetection/ has never worked in
+> combination with git.git, i.e. it's cloned at a version that pre-dates
+> the initial introduction of the sha1collisiondetection submodule. Our
+> other mirrors don't seem to have it at all relative to
+> ../sha1collisiondetection.git from their git.git.
+
+I do not recall who cloned it or forked it there or what our longer
+term plans for that repository would be.  I think we are using this
+thing: https://github.com/cr-marcstevens/sha1collisiondetection.git
+and there is probably no reason to have our own copy.  Perhaps we
+should just get rid of it.
+
 
