@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4946A1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 655511F453
 	for <e@80x24.org>; Mon, 22 Oct 2018 22:05:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728669AbeJWG0D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 02:26:03 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40503 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728312AbeJWG0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 02:26:02 -0400
-Received: by mail-pf1-f194.google.com with SMTP id g21-v6so13582936pfi.7
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 15:05:40 -0700 (PDT)
+        id S1728716AbeJWG0E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 02:26:04 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43444 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728312AbeJWG0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 02:26:04 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q1-v6so3265621pfh.10
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 15:05:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IrSMn/yqUAUB0iApLsivSagvG7v4aqWjyElSwqfsH8I=;
-        b=PjfneO8MTUNK4Ie5IzNIsNRxANq5EdGO/bw1Sdg5ZlP1sAQjGXSTbrGk+TzwX6eNZL
-         fQZAlzcG0EdseDqXN+MensrZoC8AZKQuK7pqeKg7OaZYQX0g2qtRfA9AA3vBhXB/wygz
-         oPNmwZX2qjrTmjF5RkOUZKgiVaU1nnIxUz3daocD1DzjJ2tTL6oalEqD+1TIPUJqIfA+
-         vKXHjqP2kHeImOjrG1nKUIrhu/tATRq3uA3R59GwkjslCQ0Mep6yogp7tF9uMB72dVGw
-         IqEH2gmz5k32whr25l2EhnkTOFSSSU/aHT2rIVUbDZmllmyIApbEGuYy5Eb5/6DAOoKs
-         clNw==
+        bh=1j2SBfqac3BSRx/8Sx7Uklc+VkQbQfl/uDN4sery/Bg=;
+        b=rQzIc+ULVJdmjII3C5MbdheSxAN7j7e3tn6wEJcwdzt/XBx7dsdyI1c5bl3OYTSg0e
+         Wdaevr3HdZ4ipk+Lu6Ul57aqordEVeqh4CJ1R/KOWd9B9Y/lHPSmj9FHHM9oNURjabSw
+         1zVcnBbFHNqpZYx+LZqQUg3O7hj5AFwdvSGGOio+vOfZs/tCJF8IbR4Pst6efX5/XQ+X
+         LkLEAgFp93Kp5e2oSZrHRN4e+x4hakcJwBfcZJ65Z2eC1VvraBghE9j1l8Y1/XliM9nZ
+         t8bVlNVVmR7EaI2pkBY+R0ako3fw/VFgXr6H4nNVVeeFHF/8zK4xb2voTgpSKn8fZoCG
+         O26g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IrSMn/yqUAUB0iApLsivSagvG7v4aqWjyElSwqfsH8I=;
-        b=lTv8evDEuxY3NxEe4LRxITsKaSicXgHwmRGLZfECE31eoZCwx6GsRWVyNH/8BI0DrR
-         IWgJ6iA4F2/pebjGMgKvuy28xzb2ZtsApQZ763rt7TAz8HF7IW+d7Gq4P3BaxDqFVujS
-         wl3EIhIIv48SNV99OcFtoSSkfy0V3K/cCPWlUQGLZ3tZ2wJxns2tovoirk2ArtQ3TwLL
-         hbUJrkkhMW/J55K2s+UXHOWZzsQTG0qYTt9HOqeob5QfOJsnYEuxOhJZrk0+aw0xy+7z
-         GTVGRWgDEIeSwv6Q0LSrDwd2BjiuFQ4KGMLNq7kL1nfbEg2BJrwNqWpb9cT3UdZLhtPk
-         DSsQ==
-X-Gm-Message-State: ABuFfohg0NJmqlgkifqHFBzmeJ7x+YYvMnNmJj7ERz7m/UYST1LWotOK
-        EkkW6kBvFHfk6qTEpv+zMcL/Mbwq
-X-Google-Smtp-Source: ACcGV63Z+H9as4iWzaZfkGQLRzVHkxwX+siQBLrUnh2TsbRQTagD6EISVl7L1OnGZApbiHgf8DuZ9Q==
-X-Received: by 2002:a62:1ccb:: with SMTP id c194-v6mr46779364pfc.203.1540245939775;
-        Mon, 22 Oct 2018 15:05:39 -0700 (PDT)
+        bh=1j2SBfqac3BSRx/8Sx7Uklc+VkQbQfl/uDN4sery/Bg=;
+        b=YxO+FoQGoBFozjGbPoDvgEEINjqkSJMMvm0J92xm0BqjPpYgQ9U7JqK9RHsIR3gIZ6
+         KcsDPA269VhBXaAPlOMFBMSn5ijglKtThM4m05VfzcuZ7uc4Z6sTphcOx7gySDkiEq1D
+         VX3EHnrbcWj0+5QrSA4vVacqYZnZmJIe0RpBh8tjpbzpJ4iApZTxZp+WC2yWGsNLJ4Ju
+         R1buxoxoghsR5nGTYRihtUwoE6ptRvnKljpNYzdzjxSmxWcX/nzMO1MU+oJ8sofW7I0g
+         LL823AcuaPydpg2mxcYVMaikn0Vvt+KOQA6MyZsbx5OsHeJ9/lZ8R8YJsOZqbdoll4Hu
+         1AAQ==
+X-Gm-Message-State: AGRZ1gLNpazyeCo0CJ5AxXudxrdOlkedMdWtGhtL7qjOYGQDPwXCLUHI
+        n6O2xhI6GfW/teGfIBlRUGLHBvVj
+X-Google-Smtp-Source: AJdET5dXrW+4tLkR/wi6CnopCnpSr3Jn9R7ZCeP6PE0P/ZTidl/MUkZ8pR8sIWUrHzgy0wfH1cS1Ag==
+X-Received: by 2002:a65:50c3:: with SMTP id s3-v6mr5534356pgp.355.1540245941231;
+        Mon, 22 Oct 2018 15:05:41 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id w66-v6sm32707067pfb.51.2018.10.22.15.05.38
+        by smtp.gmail.com with ESMTPSA id m27-v6sm62069414pff.187.2018.10.22.15.05.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Oct 2018 15:05:38 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 15:05:38 -0700 (PDT)
-X-Google-Original-Date: Mon, 22 Oct 2018 22:05:32 GMT
-Message-Id: <f085eb4f728f5cd102f56b7a90ce9b10fdb59dee.1540245934.git.gitgitgadget@gmail.com>
+        Mon, 22 Oct 2018 15:05:40 -0700 (PDT)
+Date:   Mon, 22 Oct 2018 15:05:40 -0700 (PDT)
+X-Google-Original-Date: Mon, 22 Oct 2018 22:05:33 GMT
+Message-Id: <1f9ff57d52a72e3795ac4a924e23a64b91b1f83e.1540245934.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.9.v3.git.gitgitgadget@gmail.com>
 References: <pull.9.v2.git.gitgitgadget@gmail.com>
         <pull.9.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 2/3] shallow: offer to prune only non-existing entries
+Subject: [PATCH v3 3/3] repack -ad: prune the list of shallow commits
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,110 +72,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `prune_shallow()` function wants a full reachability check to be
-completed before it goes to work, to ensure that all unreachable entries
-are removed from the shallow file.
+`git repack` can drop unreachable commits without further warning,
+making the corresponding entries in `.git/shallow` invalid, which causes
+serious problems when deepening the branches.
 
-However, in the upcoming patch we do not even want to go that far. We
-really only need to remove entries corresponding to pruned commits, i.e.
-to commits that no longer exist.
+One scenario where unreachable commits are dropped by `git repack` is
+when a `git fetch --prune` (or even a `git fetch` when a ref was
+force-pushed in the meantime) can make a commit unreachable that was
+reachable before.
 
-Let's support that use case.
+Therefore it is not safe to assume that a `git repack -adlf` will keep
+unreachable commits alone (under the assumption that they had not been
+packed in the first place, which is an assumption at least some of Git's
+code seems to make).
+
+This is particularly important to keep in mind when looking at the
+`.git/shallow` file: if any commits listed in that file become
+unreachable, it is not a problem, but if they go missing, it *is* a
+problem. One symptom of this problem is that a deepening fetch may now
+fail with
+
+	fatal: error in object: unshallow <commit-hash>
+
+To avoid this problem, let's prune the shallow list in `git repack` when
+the `-d` option is passed, unless `-A` is passed, too (which would force
+the now-unreachable objects to be turned into loose objects instead of
+being deleted). Additionally, we also need to take `--keep-reachable`
+and `--unpack-unreachable=<date>` into account.
+
+Note: an alternative solution discussed during the review of this patch
+was to teach `git fetch` to simply ignore entries in .git/shallow if the
+corresponding commits do not exist locally. A quick test, however,
+revealed that the .git/shallow file is written during a shallow *clone*,
+in which case the commits do not exist, either, but the "shallow" line
+*does* need to be sent. Therefore, this approach would be a lot more
+finicky than the approach presented by the this patch.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/prune.c |  2 +-
- commit.h        |  2 +-
- shallow.c       | 22 +++++++++++++++++-----
- 3 files changed, 19 insertions(+), 7 deletions(-)
+ builtin/repack.c         | 6 ++++++
+ t/t5537-fetch-shallow.sh | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 41230f821..6d6ab6cf1 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -161,7 +161,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 	free(s);
- 
- 	if (is_repository_shallow(the_repository))
--		prune_shallow(show_only);
-+		prune_shallow(show_only, 0);
- 
- 	return 0;
- }
-diff --git a/commit.h b/commit.h
-index 1d260d62f..ff34447ab 100644
---- a/commit.h
-+++ b/commit.h
-@@ -249,7 +249,7 @@ extern void assign_shallow_commits_to_refs(struct shallow_info *info,
- 					   uint32_t **used,
- 					   int *ref_status);
- extern int delayed_reachability_test(struct shallow_info *si, int c);
--extern void prune_shallow(int show_only);
-+extern void prune_shallow(int show_only, int quick_prune);
- extern struct trace_key trace_shallow;
- 
- extern int interactive_add(int argc, const char **argv, const char *prefix, int patch);
-diff --git a/shallow.c b/shallow.c
-index 732e18d54..0a2671bc2 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -247,6 +247,7 @@ static void check_shallow_file_for_update(struct repository *r)
- 
- #define SEEN_ONLY 1
- #define VERBOSE   2
-+#define QUICK_PRUNE 4
- 
- struct write_shallow_data {
- 	struct strbuf *out;
-@@ -261,7 +262,11 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- 	const char *hex = oid_to_hex(&graft->oid);
- 	if (graft->nr_parent != -1)
- 		return 0;
--	if (data->flags & SEEN_ONLY) {
-+	if (data->flags & QUICK_PRUNE) {
-+		struct commit *c = lookup_commit(the_repository, &graft->oid);
-+		if (!c || parse_commit(c))
-+			return 0;
-+	} else if (data->flags & SEEN_ONLY) {
- 		struct commit *c = lookup_commit(the_repository, &graft->oid);
- 		if (!c || !(c->object.flags & SEEN)) {
- 			if (data->flags & VERBOSE)
-@@ -371,16 +376,23 @@ void advertise_shallow_grafts(int fd)
- 
- /*
-  * mark_reachable_objects() should have been run prior to this and all
-- * reachable commits marked as "SEEN".
-+ * reachable commits marked as "SEEN", except when quick_prune is non-zero,
-+ * in which case lines are excised from the shallow file if they refer to
-+ * commits that do not exist (any longer).
-  */
--void prune_shallow(int show_only)
-+void prune_shallow(int show_only, int quick_prune)
- {
- 	struct lock_file shallow_lock = LOCK_INIT;
- 	struct strbuf sb = STRBUF_INIT;
-+	unsigned flags = SEEN_ONLY;
- 	int fd;
- 
-+	if (quick_prune)
-+		flags |= QUICK_PRUNE;
+diff --git a/builtin/repack.c b/builtin/repack.c
+index c6a7943d5..9217fc832 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -549,6 +549,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		if (!po_args.quiet && isatty(2))
+ 			opts |= PRUNE_PACKED_VERBOSE;
+ 		prune_packed_objects(opts);
 +
- 	if (show_only) {
--		write_shallow_commits_1(&sb, 0, NULL, SEEN_ONLY | VERBOSE);
-+		flags |= VERBOSE;
-+		write_shallow_commits_1(&sb, 0, NULL, flags);
- 		strbuf_release(&sb);
- 		return;
++		if (!keep_unreachable &&
++		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
++		     unpack_unreachable) &&
++		    is_repository_shallow(the_repository))
++			prune_shallow(0, 1);
  	}
-@@ -388,7 +400,7 @@ void prune_shallow(int show_only)
- 				       git_path_shallow(the_repository),
- 				       LOCK_DIE_ON_ERROR);
- 	check_shallow_file_for_update(the_repository);
--	if (write_shallow_commits_1(&sb, 0, NULL, SEEN_ONLY)) {
-+	if (write_shallow_commits_1(&sb, 0, NULL, flags)) {
- 		if (write_in_full(fd, sb.buf, sb.len) < 0)
- 			die_errno("failed to write to %s",
- 				  get_lock_file_path(&shallow_lock));
+ 
+ 	if (!no_update_server_info)
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index 2d0031703..777c9d1dc 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -186,7 +186,7 @@ EOF
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure '.git/shallow is edited by repack' '
++test_expect_success '.git/shallow is edited by repack' '
+ 	git init shallow-server &&
+ 	test_commit -C shallow-server A &&
+ 	test_commit -C shallow-server B &&
 -- 
 gitgitgadget
-
