@@ -6,62 +6,59 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 232971F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 04:24:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4F01F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 04:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727172AbeJWMpp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 08:45:45 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33015 "EHLO
+        id S1727444AbeJWNKN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 09:10:13 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:32813 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727014AbeJWMpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 08:45:45 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u1-v6so39603wrn.0
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 21:24:09 -0700 (PDT)
+        with ESMTP id S1727420AbeJWNKN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 09:10:13 -0400
+Received: by mail-wr1-f68.google.com with SMTP id u1-v6so77891wrn.0
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 21:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=44UjBsvq4iWhvYZbniIwjzJc6WF1hBYy5tFZwMup2nw=;
-        b=CL+yLWcErP27YG8RJBhArvHIb45oUv+SDKnFQghs8qrVrFbHqahn1DdWNzFUKoK3Gg
-         rrhEp4CGfP1/CTi2bv3YO8bAqkk2GbTsktVqoSvVGaDXoaIERQ/Z9igEJnZOJiz2Evc1
-         Bm4/W1w9WFv4oy6BBefCkVgn2GwN0P+at89nM5jFmH5zfFRnGLMkgqMcZoGXYLuEtaBD
-         K/xFlHNRXSK6lD+lFYe07l4HzaG6UGlgU4IRLOl0rvvlMk/SSmu0meF0wQTmLTvKLWD5
-         DwNVVHJKXJ/43PVINA6ylhmnqf9yM9+C1IMYdrY4uq8fxRc0EOe+8hvJppmOxzzDGn2C
-         5XzQ==
+        bh=2xQdyFgiFLNc8t7DKjzA8vtb1oG0PxM7/W5ZpBhecvQ=;
+        b=mYfbr2Z5SzhKIytOxEH8ActB9Zm1WQG4+d261Etz2nU7OR47QzXEZN0HPZ8mgCoK/G
+         /tmmlFmSnFKMi02PslKpZVGYYvCiDhL1GROn07S/L73JIFswZTq9a0fxmVDg/QZrEbXQ
+         RHbwhNrXijpfdd4TGi0aJiK9d70FKweoSlAkda5mOUy2RWUsCwfl9OC3QNyA5q0uaTXm
+         1eO6ooTkD4R/bkXuxkVMtTMhO+D3RjU7SEm3MdO1QvSd+pQEcjhzQ5Q4Fju6nCuO6R2X
+         fF9mhSpRNeBA9V8unPPmedeYQnFEjyH+IUKmXHcCsr5h9PkGJ7EjZSy1JpAtToXaP6DK
+         0ITw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=44UjBsvq4iWhvYZbniIwjzJc6WF1hBYy5tFZwMup2nw=;
-        b=XFBKbCHJLHZko9JPsrWuMycQ5gs2Jth0c0Pe3yaMsKYXrBUS/JsOZ4IKwsE5k521Ce
-         2PppJCecHfNToWWvCtrw8C1MfJQmeNjBD8qWckvmEMH9aN+kcKLAKE0Q+GfiuBalUeR9
-         kdHoQIl/oLSonsqg870fN4MqHrLBiG2KKVdonp3UK2jGTTZCu+DuMvnaW0lvVnB4rzAm
-         FwCFfRfUZEv/K+dTqs0sIEFcuXZI8XEwrtJ865RdA+Ygeb9IRpFn6dm8ZZ29VcUEIWDX
-         bZH9uD93T5jNEldMp4ga3m6zQnDJGjBJ1C3dIaKQKF3ba778u80V7g+l5ziPOxSM8jR/
-         RG+g==
-X-Gm-Message-State: ABuFfohkeffpXZxRwAWLa9dnov2Im0pE9eo959I0lBb7lVpAPo4k+awA
-        IHz5Wq6VOgOv4954/NLwyhg=
-X-Google-Smtp-Source: ACcGV61xWahOrZmrCUnVL2L3nI8OJvSaWiE0qrbxAt0/lUuhHxtS+UdURYtx87PXvwS72fZ/8FbHhA==
-X-Received: by 2002:adf:e607:: with SMTP id p7-v6mr48086991wrm.254.1540268648519;
-        Mon, 22 Oct 2018 21:24:08 -0700 (PDT)
+        bh=2xQdyFgiFLNc8t7DKjzA8vtb1oG0PxM7/W5ZpBhecvQ=;
+        b=Q8rI1VxjKPjEAdAxEBhehfvpge6S/tIIw9JHZ/JMQlh2u72rREK9PCz/+ce3RlDLZB
+         BG2VIPO21SyaXwa89Z/2u+jS3VTz8a4u33VeshqoZe4U7s6JOlaEOl66xlKWnvQpj0Hw
+         nKkdBTWD44hOLuGKy6tgop2WXSjbVNJqfJ2bBkXSyFgwg7maHeSwB++feTGYLLEMwqC9
+         bIgg+qoOYTVkZiUrZzsODeYPBVCv55mJSETXqDX6ZkztT2tYb26DxkkP1gvI8p1HKNew
+         Libg+QtJAv/zxnO/GgVq4L4Rp79DjYO2psRJK7eQT7NTqEzmyB+GQdplytjB0mSknCgc
+         zuAA==
+X-Gm-Message-State: ABuFfog6+JHLu7yPUbT5ciSRC9axZ7sEG/4v55qZ3RnP+6nAEDFqYlSW
+        0XHQ3yYvL/Q1fzJydRLfZ58=
+X-Google-Smtp-Source: ACcGV605m2+IQxGJYFoHCsdU5VVj5Wq1ZzLxzmPoXlO+na5/bn1w2geZSHBOkO1GhFYlhpL7WB7QLA==
+X-Received: by 2002:a5d:480b:: with SMTP id l11-v6mr50680013wrq.28.1540270112512;
+        Mon, 22 Oct 2018 21:48:32 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 77-v6sm411200wmv.6.2018.10.22.21.24.07
+        by smtp.gmail.com with ESMTPSA id b5-v6sm74699wrs.34.2018.10.22.21.48.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Oct 2018 21:24:07 -0700 (PDT)
+        Mon, 22 Oct 2018 21:48:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: New semantic patches vs. in-flight topics [was: Re: [PATCH 00/19] Bring more repository handles into our code base]
-References: <20181016233550.251311-1-sbeller@google.com>
-        <20181022173935.GG30222@szeder.dev>
-        <xmqqzhv5tx4m.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kaWaY+oxJfoMbsCcq6MZDPoq1OgOwK0a9mkKR7sUEOHpg@mail.gmail.com>
-Date:   Tue, 23 Oct 2018 13:24:06 +0900
-In-Reply-To: <CAGZ79kaWaY+oxJfoMbsCcq6MZDPoq1OgOwK0a9mkKR7sUEOHpg@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 22 Oct 2018 17:26:40 -0700")
-Message-ID: <xmqqva5ts32x.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, peff@peff.net,
+        jonathantanmy@google.com, jeffhost@microsoft.com,
+        matvore@comcast.net
+Subject: Re: [RFC 0/2] explicitly support or not support --exclude-promisor-objects
+References: <cover.1540256910.git.matvore@google.com>
+Date:   Tue, 23 Oct 2018 13:48:30 +0900
+In-Reply-To: <cover.1540256910.git.matvore@google.com> (Matthew DeVore's
+        message of "Mon, 22 Oct 2018 18:13:40 -0700")
+Message-ID: <xmqqmur5s1y9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,17 +67,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Matthew DeVore <matvore@google.com> writes:
 
-> Am I overestimating or misunderstanding rerere here?
-
-Yes.
-
-> Would it be realistic for next and master branch instead of pu?
+> This patch set fixes incorrect parsing of the --exclude-promisor-objects
+> option that I found while working on:
 >
-> I'd be wary for the master branch, as we may not want to rely on
-> spatch without review. (It can produce funny white space issues,
-> but seems to produce working/correct code)
+>   https://public-inbox.org/git/cover.1539298957.git.matvore@google.com/
+>
 
-Yes, that is why I think it is a bit too late to do the "fixup with
-spatch" after merging to 'next' and 'master'.
+Thanks; both patches make sense.  
+
+As the problematic feature appeared in 2.17.x track, I'll see if I
+can easily make it ready to be merged down to maint-2.17 track later
+when somebody wants to.
+
+> Matthew DeVore (2):
+>   Documentation/git-log.txt: do not show --exclude-promisor-objects
+>   exclude-promisor-objects: declare when option is allowed
+>
+>  Documentation/rev-list-options.txt | 2 +-
+>  builtin/pack-objects.c             | 1 +
+>  builtin/prune.c                    | 1 +
+>  builtin/rev-list.c                 | 1 +
+>  revision.c                         | 3 ++-
+>  revision.h                         | 1 +
+>  t/t4202-log.sh                     | 4 ++++
+>  t/t8002-blame.sh                   | 4 ++++
+>  8 files changed, 15 insertions(+), 2 deletions(-)
