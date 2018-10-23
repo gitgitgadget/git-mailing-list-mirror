@@ -2,104 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E85CB1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:13:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36C6F1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728227AbeJWSf5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 14:35:57 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56315 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728204AbeJWSf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 14:35:56 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lz4KW-1fb2hC36GG-014DJR; Tue, 23
- Oct 2018 12:13:10 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lz4KW-1fb2hC36GG-014DJR; Tue, 23
- Oct 2018 12:13:10 +0200
-Date:   Tue, 23 Oct 2018 12:13:14 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     carlo <carenas@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] compat: make sure git_mmap is not expected to write
-In-Reply-To: <20181023051216.64266-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1810231212190.4546@tvgsbejvaqbjf.bet>
-References: <20181023051216.64266-1-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727264AbeJWSiD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 14:38:03 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:39125 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727367AbeJWSiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 14:38:03 -0400
+Received: by mail-it1-f194.google.com with SMTP id m15so1335527itl.4
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:15:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uu94p7GM9BJpNkRd7RO5hUOrpqNFe6wFt7m1rBXKwHo=;
+        b=LB6o+xns3eYL+qH5C8pYnNJeJaZ66QREbJVc2fiofrLV8aICYZnaPlg9FPnxTzicB/
+         iac+vP3grftz2ktcftdLb2E8aKhwVhWRU04tD0lkPuNTGzEcbnQUGy/rx65rhktj7+4A
+         VorO+IHY2z7Iyq6IXLSk6FNaEZKHu7ZkUFUqv9zc9mTLhhee1DqmRkvvv8ESFVQH/MVs
+         Rt/7STj5Q5XyOeYi2psBxdBvJyd4x8qSiopBri+FAzpfGor0iDjkF3MAsAFhLqJDZvDS
+         juXV1A6vhWtE4M2C+j4TvufS/lP3P/RH2f2Oy9/LBJH23FWwL9jL5hnP28uE39pDZ/Iq
+         Obww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uu94p7GM9BJpNkRd7RO5hUOrpqNFe6wFt7m1rBXKwHo=;
+        b=AlMZtLpLDWd1XAIFZa/ov0j+Ey5oG7I5FY6cVdpXLirKbhDPAJ4QL5cYU9LI/vpurE
+         U2cSM4o6h7SrcPSKUOXvuTJcwnEF4FqtJtugIwU3VjQTu78ZRPkxYzasDq7wAfhwP+d/
+         0xwAMdXu1c02daLnK5lRIzK4tcevrNY37Q8ZSIcF5Uvk6irXjKI3sGBu0uETroAoNuSz
+         WFs98PgSLq6QAqluxAjup1I27ZsgWuaSz4FQeTvS6yTeIm73bRK6RHw4DgiM+OBcZ+if
+         1RwF7kaQ5HJ9moYo6g+Jr3avLU/aUH1KmIrb7eWYlhiuNb0sFDV/F0IIdj0Tw9TIG5wn
+         HQrw==
+X-Gm-Message-State: ABuFfojH2XApGyZcflekV0ijpvKzzu/sKWpiMqguaJvsg9pFNrHvU0Nr
+        SKfEJgJNerKkcsDb5gbo3sWgEdTVP5DbijdQ3fs=
+X-Google-Smtp-Source: ACcGV629SV2jJlkrpNNsJCAlTfkR6JMSkF1kb5uUJ+RPL3yoLFYUO9871Vv9ZlrmqR8Kis/PwxGE5gikoRWG6p05fUc=
+X-Received: by 2002:a02:4009:: with SMTP id n9-v6mr38873377jaa.52.1540289717765;
+ Tue, 23 Oct 2018 03:15:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1020242874-1540289594=:4546"
-X-Provags-ID: V03:K1:jVU4dsWHFOZsz/wtBZ7GFfiNaNJkTxDz+bGypB4dvHWW04+Ircv
- CriTc5UOM4eu9KzF91lsq30iMH5y3jqdEa5M2bE5Pfne2tZ/K+D26tawEntmfQuy4UDjvK6
- c2WceehRLzFHlnsnTEbvPHPpRrdQJQA266XNT+TKdJp0wdVlzFq7J1pj4/a4dlzeZ9LJuOA
- 71ODTgndElUrbLVqT8BIg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DNZ1czL/G2s=:3hWf2A2oEiJNcvRBia+c38
- bQVg29k31J06GiTm0eSfr1WwJO0OHa53znjaP0SJnj1AxaFsLkBBNthYtXYu9y00YEbGEHRc/
- lhpeiNaYcTo6/oeHUCKcYWdHibaBIJE/PvEJQpLgOGBAvBfgBolutJMVBExDCV7ktzu20Pwha
- fPpVCJxeCNVdCtM2xbwYotnB4fSzoY8kSplfXzaC/vIe41GFkA0sjuekSerBjjDMFOfWisr6Q
- 99Ue3heXKxiu4o1vJooDo7RF8NfcU+SxEEVIfp7kGgWrhbGF21D8R67UzMMXlfz/KhcFdCmK3
- howlTmJEk5YtUYlYknw1i4vcrkvGfLfaZD9oWNDfWUAGbq+Q8yKPmZRyyfVcOn+3CefZ5pAj9
- hdGluOyi4dBuvohm6zjbJkn0Ajbjv1pTGAiZNgCkauFiounzbE6LlhqwyNOQNBkCCRX792Do3
- 0ukrkI3xLcwHWPx4P0oQtXKLdN5cX1/pNPFPTlAxiyyVlGaV14fuzwC9MDrIlqvCVuesH5qFH
- dkEM52ls1+Gxu9/2XRERXrZld8LQ3R/RE2sqFK1fzq1/OSIqi3LxDx2E6+vZa4Kcgo0G4L0ZQ
- NE1WlDWRG0klN8y3y3Fic/s4uERLIhyo5MceymzTUn3dglBDZYoxiJVpyNDL1QsZm/aE78HaX
- INriUSAQcrYkt+FkVa2McVqX9o0N6rBjH/VZt3ffu4Q1izRQ/VWFrCV+YLYon/94BlWz8slLi
- GSJlnIJWOi8qGplNfUgGF4MKUgVtEpKoy4VgpACbqyaW1ICjFBEN73yiUXbvE3mKVMp+Qscie
- fwWQdZheaVxM8Xg0CgTI++zY8PN6WTNpQ9NU40BzIGs6Lrq0oI=
+References: <20181016233550.251311-1-sbeller@google.com> <20181022173935.GG30222@szeder.dev>
+ <xmqqzhv5tx4m.fsf@gitster-ct.c.googlers.com> <xmqqefchroj4.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqefchroj4.fsf@gitster-ct.c.googlers.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 23 Oct 2018 03:15:06 -0700
+Message-ID: <CAPUEsphThzjDTrJJHwvbeP4w=6M=xHWz+DZStfXS62=5tSCbVQ@mail.gmail.com>
+Subject: Re: New semantic patches vs. in-flight topics [was: Re: [PATCH 00/19]
+ Bring more repository handles into our code base]
+To:     gitster@pobox.com
+Cc:     szeder.dev@gmail.com, sbeller@google.com, peff@peff.net,
+        git@vger.kernel.org, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Oct 23, 2018 at 2:40 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> The tip of 'pu' has trouble with -Wunused on Apple around the
+> delta-islands series.
 
---8323328-1020242874-1540289594=:4546
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+FWIW the "problem" is actually with -Wunused-function and is AFAIK not
+related to the semantic changes or Apple (AKA macOS)
 
-Hi carlo,
+Indeed, I saw this issue before also in Linux (Fedora Rawhide) when
+using the latest clang and presumed it was just expected because the
+topic branch was most likely incomplete.
 
-your mail's "From:" line does not record your full name, but the
-Signed-off-by: line does. Let's use the latter?
-
-On Mon, 22 Oct 2018, carlo wrote:
-
-> in f48000fc ("Yank writing-back support from gitfakemmap.", 2005-10-08)
-> support for writting back changes was removed but the specific prot
-> flag that would be used was not checked for)
-> 
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-
-ACK!
-
-Thank you,
-Johannes
-
-> ---
->  compat/mmap.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/compat/mmap.c b/compat/mmap.c
-> index 7f662fef7b..14d31010df 100644
-> --- a/compat/mmap.c
-> +++ b/compat/mmap.c
-> @@ -4,7 +4,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
->  {
->  	size_t n = 0;
->  
-> -	if (start != NULL || !(flags & MAP_PRIVATE))
-> +	if (start != NULL || flags != MAP_PRIVATE || prot != PROT_READ)
->  		die("Invalid usage of mmap when built with NO_MMAP");
->  
->  	start = xmalloc(length);
-> -- 
-> 2.19.1
-> 
-> 
---8323328-1020242874-1540289594=:4546--
+Carlo
