@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAE1E1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 19:04:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91EFD1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 19:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728628AbeJXD3O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 23:29:14 -0400
-Received: from mail-vk1-f195.google.com ([209.85.221.195]:44764 "EHLO
-        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728406AbeJXD3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 23:29:14 -0400
-Received: by mail-vk1-f195.google.com with SMTP id x78-v6so616313vke.11
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 12:04:34 -0700 (PDT)
+        id S1728820AbeJXD3P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 23:29:15 -0400
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:38986 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728406AbeJXD3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 23:29:15 -0400
+Received: by mail-vk1-f196.google.com with SMTP id y69so621707vkd.6
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 12:04:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=etkRInz0sFsmiAtPiCEVJLVjhBEJmqiLt93PnrwFriI=;
-        b=gUemo+W20/NUZGmntUn9LbZOwbVIzYJz+Ruz49GWfsjBNRPP5A55HJHbmj2bvUViLq
-         JNkPXT6gjLPgLphHLqSjyDMHJDcnrDOJwldy2qLgTTtEP2/4wVqQw/YdLlmlD6yiKJ4O
-         SZNBvOJfL68KNKvij+b7iI17f+DxwWPpzVvhlWcETS3+PxJ21KrSu/ylp2Rq3toL2XaL
-         pa34URc2XS7nCul7ir4T+1R6S4PQ02iRVzIPtAjW5oeUNBgyfqpg/72Zfq7df54TKPXw
-         EFx/sbuurYuchFZ5UTnXzp4OBNfOKMb663VIjkN3eCLXHf/EqpVEFJZWzlR/vRWiFsE8
-         PWuw==
+        bh=MHcaqR+ft/9mL3nDuUgXmOvhGxQB759K4PLzts0umBI=;
+        b=DUWwLKd8Az7e3rARppjSFhX4dTmck6IDsfErpLMW7bpw/m0RU8l+YNwMU5CBHtLoRI
+         n5iimBCRVEOGlP+bNz+ykamJvWihM0acK8BAVjP+kG1Q00JkJBuPLMTatPpPHrdpe5D7
+         YlGDkQaWRzpViX1CmT10V1CaVaXZGnevpOSmkE0E6bz/re5pk17lyM3nZyD5TKrHPh3/
+         w/Hnqt1b3mWfVfranCtHzH3bx6urnvy6bBYt4rbynobV6hby/yoz3IvQzd+VK0iOUxB+
+         /QmX7dY0i7haP2AmOyNY/ekJaKjXooNSaqTPfYtv0ytJelmPIzT5enhAZubZip72zIAM
+         CmeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=etkRInz0sFsmiAtPiCEVJLVjhBEJmqiLt93PnrwFriI=;
-        b=bbfrIhAbADF3Xt5wcmDt8YORaQpFcldOCjfQPYSqps4BBLgv5QnVdON7DeqMMglbRV
-         NcM7rJWpvRdf8KUa5vCV4GuvgQwibjcCdsYU9Fo/YVPjnErC/NxA58mV4sTfqW2gJqsz
-         K6C6KSepc/A1E74NBwRXzjUC0IuKJwBzPvGM+LY1lmnWVoAQn2uCRJWhU0NUt7daP+EE
-         +0/2A6NUCKlNMoN/iqKZ3w67QMd48/JrEs5ojSgIo707T6GgY6H/wkThpmfQasIxa53N
-         4TDmU5rPFpzeis0ysWi2UtZ3DTyVodfA/GPamm3oRYkgq65FVNVExW6tCz2jTYSaKFWZ
-         Qjpw==
-X-Gm-Message-State: ABuFfogqKhTOn8oXpWfcRpwLlVZsFC5ogTKw/WM3tI3doWaSTvw8DCJi
-        o4GG/JLOhN1v0rw1buc0eft06X+vFm0=
-X-Google-Smtp-Source: ACcGV631yUXGpdDDY8oVTfj1mQOoAo/VmpI4/Nt3yJ0OWYg1aN4jM+kNbKNqxxlajM4FmGS6fNI91Q==
-X-Received: by 2002:a1f:b48:: with SMTP id 69-v6mr21660772vkl.54.1540321472960;
-        Tue, 23 Oct 2018 12:04:32 -0700 (PDT)
+        bh=MHcaqR+ft/9mL3nDuUgXmOvhGxQB759K4PLzts0umBI=;
+        b=MnT7YEuljWtI4NbicUuk5bqSDplIbmImr20IWcXl3X3Qd9f0dQYOOLhgqy/omZ/Dfp
+         q6ESbkqxnf/YiqSZk4sfyXxf3gaqlEkLjfCFpWOhDJfrksvAIEPjBMIa9bHbF3063WOD
+         1vwYvlQi70RbRJIQHsuqS5Mz1BHkPV0YunjtP805RoNKio3FAEpM30qGHgaMF7JN+923
+         VjC9b+YX8BSS3kBWF9zHzL+dMsJyaa0kStWG/HYuwUuuRZgqOUM9hdqRALLrhmf5eVlW
+         Htnj5Zhgky9JzRhV78VNiioTHZL+Dft/TWPkWOKUmp4TsdQu3P2WZRojhXjrQUFiA4Ff
+         QbCQ==
+X-Gm-Message-State: AGRZ1gKLX0R/Iz+iVImkjx7OwmPsv8jF2Tx9jkLqX1ZXTmwsNZtH2QeO
+        pqTGvpXQaPCJF/9BM9vJXiHCy3mLHJY=
+X-Google-Smtp-Source: AJdET5c+V6B3WjUkE/HkqM65kYw5HjOUMAvywX0Xl2yIOSCO1eVK5mL+sJZqP5pLFj4er4oopCW18g==
+X-Received: by 2002:a1f:d803:: with SMTP id p3mr1503975vkg.9.1540321474203;
+        Tue, 23 Oct 2018 12:04:34 -0700 (PDT)
 Received: from localhost.localdomain (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id e79sm473284vsd.1.2018.10.23.12.04.31
+        by smtp.gmail.com with ESMTPSA id e79sm473284vsd.1.2018.10.23.12.04.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 12:04:32 -0700 (PDT)
+        Tue, 23 Oct 2018 12:04:33 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com, peartben@gmail.com,
         peff@peff.net, sunshine@sunshineco.com
-Subject: [PATCH v4 0/3] speed up git reset
-Date:   Tue, 23 Oct 2018 15:04:20 -0400
-Message-Id: <20181023190423.5772-1-peartben@gmail.com>
+Subject: [PATCH v4 1/3] reset: don't compute unstaged changes after reset when --quiet
+Date:   Tue, 23 Oct 2018 15:04:21 -0400
+Message-Id: <20181023190423.5772-2-peartben@gmail.com>
 X-Mailer: git-send-email 2.18.0.windows.1
-In-Reply-To: <20181017164021.15204-1-peartben@gmail.com>
+In-Reply-To: <20181023190423.5772-1-peartben@gmail.com>
 References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181023190423.5772-1-peartben@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,32 +66,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Peart <benpeart@microsoft.com>
 
-Updated the wording in the documentation and commit messages to (hopefully)
-make it clearer. Added the warning about 'reset --quiet' to the advice
-system so that it can be turned off.
+When git reset is run with the --quiet flag, don't bother finding any
+additional unstaged changes as they won't be output anyway.  This speeds up
+the git reset command by avoiding having to lstat() every file looking for
+changes that aren't going to be reported anyway.
 
-Base Ref: 
-Web-Diff: https://github.com/benpeart/git/commit/8a2fef45d4
-Checkout: git fetch https://github.com/benpeart/git reset-refresh-index-v4 && git checkout 8a2fef45d4
+The savings can be significant.  In a repo on Windows with 200K files
+"git reset" drops from 7.16 seconds to 0.32 seconds for a savings of 96%.
 
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
+ builtin/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-### Patches
-
-Ben Peart (3):
-  reset: don't compute unstaged changes after reset when --quiet
-  reset: add new reset.quiet config setting
-  reset: warn when refresh_index() takes more than 2 seconds
-
- Documentation/config.txt    |  7 +++++++
- Documentation/git-reset.txt |  5 ++++-
- advice.c                    |  2 ++
- advice.h                    |  1 +
- builtin/reset.c             | 15 ++++++++++++++-
- 5 files changed, 28 insertions(+), 2 deletions(-)
-
-
-base-commit: ca63497355222acefcca02b9cbb540a4768f3286
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 11cd0dcb8c..04f0d9b4f5 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -375,7 +375,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+ 			if (read_from_tree(&pathspec, &oid, intent_to_add))
+ 				return 1;
+-			if (get_git_work_tree())
++			if (!quiet && get_git_work_tree())
+ 				refresh_index(&the_index, flags, NULL, NULL,
+ 					      _("Unstaged changes after reset:"));
+ 		} else {
 -- 
 2.18.0.windows.1
-
 
