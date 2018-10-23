@@ -2,101 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B6101F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 23:01:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A75201F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 23:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726685AbeJXH05 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 03:26:57 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46938 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbeJXH05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 03:26:57 -0400
-Received: by mail-ed1-f66.google.com with SMTP id v22-v6so3197877edq.13
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 16:01:26 -0700 (PDT)
+        id S1728982AbeJXH2I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 03:28:08 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:39826 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725787AbeJXH2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 03:28:08 -0400
+Received: by mail-it1-f195.google.com with SMTP id m15so4273999itl.4
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 16:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3xvvJ77Ylww3ndZ81ocfdMBtb+tASz2QmuLLVqBqsyc=;
-        b=lHVNd1rwLuoW+GjIBkhzMWyvOWr2WqxgDzHgDSXJ8UUjZXFWFveT/EITLRVt5+hb26
-         L0XvluS/2T3mFKuyJXSzD06Vyjr6yGYICqHDEUTCZnrAYi2HhQgRqyXnZ6FvFbcU5GvZ
-         bxR5YKuQKm6HqMPCjo5M0GF/YP9KAVIavd8P0XBADVxREcRmnYcx8WPhpmQknJdWKJ+F
-         6/ribtkRaS/h32Ux7ZxMkdETMkJfEhV/G1oZ/9lfRtZmYSnMw2yskoMtNcPaEYkwhF19
-         RlYGufrPbS/xq4VEg9nJcWdWiovjtYpZQBOYKHyBbm8R4HMmT1LEWstHZcbKiivgVrIY
-         +99w==
+         :cc:content-transfer-encoding;
+        bh=pki0cJPJ45Q3P+4n0rZrWmvMaNuFKaFbUIwLwC+ewGA=;
+        b=R7ZJuypXBw0PWwXvpXwJLkB9GeN6Y/XmeUnNNDU1S9UxycZB55Usrn/0JyD0LwT9/f
+         Z6aeXYqwaHVdoek8s/QinksJdhY00TRN2kM4a9b0wf5M3zY8Hv2JFaYyVWuPTG7Pezwm
+         XdPIBfKBA2jIRaoTN1dyo33ceSTs4Ran9CgJbuedrPGmf6I+9NxlxXfubi/XxpQFuE8l
+         4hyVeWZlKW6AYFO09fkegqA5+YRRTX8NGE76MeYfWZ23kMUHPwmTABvGbhg5cBPMlXjv
+         iT5MULzFr8G4wnPaTm506ojzibIzN9FtTea0L3rufqCBpizgvRk1Bb/8/JRpfhr9ZYh0
+         r8nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3xvvJ77Ylww3ndZ81ocfdMBtb+tASz2QmuLLVqBqsyc=;
-        b=Fnl6bqwaBgZ+Z0s27BZasezFU+V14eOGtK6/one0X1dnT5rzKSqrL9NZprVMDW9IZ6
-         Lekl8zMKj+eX3s9T/SmTDCgvXt7mpH+QyB6dDIkWBM0siBJqk3XvF7F2ll4V5ooqHu1O
-         br0hfyStChvKmkDWUFY+ExUBabd7htawEYShFxkEKQdCtNgI8neFhVafgbljSULZKaom
-         f5lDAqyg2n4gG1TWezd9gyvLJFkK7Qe2WFePa9h+wPbxNqlwgsWlQa8RG11iFvfnrWEu
-         eIaFHH6xevjvGAJ6gNHejL6H2WYumya6Cwh+p0CxTMX7QjiFdFqxaEY0W6Ol6aHU5Sab
-         7UOA==
-X-Gm-Message-State: ABuFfojfcsXZjCRb5zwhUnuuxwdAeawhCwI/CttWz/t33Ol2eJhetaKz
-        bABc+T18OSHCkmMkpbEP/VJ9Z6mvrAMAxuL3Fv+n9g==
-X-Google-Smtp-Source: ACcGV6045H8/2tE+c/XtCLuiCP5ToyQzNODKQi0caiPYtGoAv8OR80uMbBuFTdJrfVCCFglMB/B8Puid+iHC5SvF5e8=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr17702176edh.154.1540335685972;
- Tue, 23 Oct 2018 16:01:25 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pki0cJPJ45Q3P+4n0rZrWmvMaNuFKaFbUIwLwC+ewGA=;
+        b=GCKJ/DrkkNvy2XAQrXPpghZ9ASkSTC/O4qEsVT8JBOpQwtX5fWD/aiWgPBaOIGjO4c
+         xplOlYNAaiX0wp5gtOqfKiBZgrPQR0P/VEoTA4+EmvYOMIRe8GjDR4+7JnSKj8vriM4t
+         cwgAVfKSozJGwKtH7LEoL3cF5A4gJXN1z55drQiAq4brWd26pPMLEp6OVCtsOzflxB4V
+         +gC21cgb5GA3WcJk7GG6aH+y+C76cEl2YD18MNR9+Q2fhP7s7rdIk1wM6PXjvB1BKw1z
+         nh5YBAnul7PCLS1aKAaa/GDk4dOTT9jkHFzujpNISSCZRgZMWPbnSxywGhyovqron8KX
+         bRWA==
+X-Gm-Message-State: AGRZ1gL6Xv7Rt/qVINZlQxpNGVww/kCDoWOP/Wc9UId/OrnOTDYtAHTz
+        c7EBFehZTUt0PfALwGxPiHSxwZFxM6V0lbTiRGU=
+X-Google-Smtp-Source: AJdET5eD7AhcrERenumi1VQxF2IO/5Kpu35uHrUnGwJ9C/LWbKfTXRHGzaJH7QLeeDJOVrOWWNNWM3pB382HSgKYH5o=
+X-Received: by 2002:a02:9a1a:: with SMTP id b26-v6mr231686jal.4.1540335757165;
+ Tue, 23 Oct 2018 16:02:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAGZ79kbunyc02802+4sjGwthBnj_=eS=+z5B_WQSRdbUAHw1tQ@mail.gmail.com>
- <20181023225536.61508-1-jonathantanmy@google.com>
-In-Reply-To: <20181023225536.61508-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 Oct 2018 16:01:14 -0700
-Message-ID: <CAGZ79kbNXD35ZwevjLZcrGsT=2hNcUPmVUWvP1RjsKSH0Gd3ww@mail.gmail.com>
-Subject: Re: [PATCH 7/9] submodule: fetch in submodules git directory instead
- of in worktree
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+References: <CACsJy8AXjhbY9WWjYtMk128TZHLBCf4Ye4fe-ryXhoP9j2jtdw@mail.gmail.com>
+ <20181023215020.18550-1-carenas@gmail.com> <20181023215020.18550-2-carenas@gmail.com>
+ <20181023220019.GA31613@sigill.intra.peff.net>
+In-Reply-To: <20181023220019.GA31613@sigill.intra.peff.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 23 Oct 2018 16:02:22 -0700
+Message-ID: <CAPUEspiAhmJ5+qTUcA6x+eSPc9jmOLdF7QsSsSfwJSy5r=06PA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] commit-slabs: move MAYBE_UNUSED out
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, pclouds@gmail.com, chriscool@tuxfamily.org,
+        l.s.r@web.de
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 3:55 PM Jonathan Tan <jonathantanmy@google.com> wrote:
-> > When adding the comment here, we'd also want to have
-> > the comment in prepare_submodule_repo_env, which
-> > could be its own preparation commit.
+On Tue, Oct 23, 2018 at 3:00 PM Jeff King <peff@peff.net> wrote:
+> On Tue, Oct 23, 2018 at 02:50:19PM -0700, Carlo Marcelo Arenas Bel=C3=B3n=
+ wrote:
+> >  #define implement_static_commit_slab(slabname, elemtype) \
+> > -     implement_commit_slab(slabname, elemtype, static MAYBE_UNUSED)
+> > +     implement_commit_slab(slabname, elemtype, MAYBE_UNUSED static)
 >
-> I agree with the protection. As for the preparation commit, I don't
-> think it's always the code author's responsibility to tidy up the
-> surrounding code, but since you're adding an identical comment here,
-> it's probably worth it to add the comment there too.
+> Is this hunk necessary?
 
-Am I the only one who dislikes inconsistent files? ;-)
-(ie. clean in one place, not cleaned up in another)
-I can see your point. Will add a comment
+it works eitherway but the proposed syntax is IMHO better aligned
+(when used in a function definition) as it matches better the syntax
+from C++ attribute: maybe_unused (since C++17) [1]
 
-> > Thinking of that, maybe we need to announce that in get_next_submodule
->
-> The consequence of getting caught changes, though. Currently,
-> spf->result is set to 1 whenever a child process fails. But in this
-> patch, some of these repositories would be entirely skipped, meaning
-> that no child process is run, and spf->result is never modified.
+__attribute__(unused) (the GCC extension) is meant to be applied to
+function declarations, but we are not generating those.
 
-Right.
+Carlo
 
-> > If the working tree directory is empty for that submodule, it means
-> > it is likely not initialized. But why would we use that as a signal to
-> > skip the submodule?
->
-> What I meant was: if empty, skip it completely. Otherwise, do the
-> repo_submodule_init() and repo_init() thing, and if they both fail, set
-> spf->result to 1, preserving existing behavior.
-
-I did it the other way round:
-
-If repo_[submodule_]init fails, see if we have a gitlink in tree and
-an empty dir in the FS, to decide if we need to signal failure.
-
-I can switch it around again, but it seemed easier to write as
-that puts corner cases away into one else {} case.
+[1] https://en.cppreference.com/w/cpp/language/attributes/maybe_unused
