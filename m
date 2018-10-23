@@ -2,92 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B07901F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 08:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56B971F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 09:13:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728299AbeJWRQG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 13:16:06 -0400
-Received: from mout.gmx.net ([212.227.15.19]:46857 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727632AbeJWRQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 13:16:06 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2cYX-1fN3IY1Rp7-00sRai; Tue, 23
- Oct 2018 10:53:27 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2cYX-1fN3IY1Rp7-00sRai; Tue, 23
- Oct 2018 10:53:27 +0200
-Date:   Tue, 23 Oct 2018 10:53:28 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ben Peart <Ben.Peart@microsoft.com>
-cc:     Ben Peart <peartben@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "peff@peff.net" <peff@peff.net>,
-        "sunshine@sunshineco.com" <sunshine@sunshineco.com>
-Subject: RE: [PATCH v3 1/3] reset: don't compute unstaged changes after reset
- when --quiet
-In-Reply-To: <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
-Message-ID: <nycvar.QRO.7.76.6.1810231052410.4546@tvgsbejvaqbjf.bet>
-References: <20181017164021.15204-1-peartben@gmail.com> <20181022131828.21348-1-peartben@gmail.com> <20181022131828.21348-2-peartben@gmail.com> <nycvar.QRO.7.76.6.1810222244150.4546@tvgsbejvaqbjf.bet>
- <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727872AbeJWRgD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 13:36:03 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39724 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727602AbeJWRgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 13:36:02 -0400
+Received: by mail-ed1-f68.google.com with SMTP id e5-v6so884496eds.6
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 02:13:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=KgZ1j9+kQFnlMDvOgNgD5oILiq1sXePQuRec7sPMHRw=;
+        b=cDDaDNes8C/1O+V3QEI6Dy15FaY0YwPAHyDtkVpDq12UvhI1bAzVv5OWZWqAbanaR6
+         4R6i2jRMBa+kmViLcaneglMxzejgs9mStirhH6MJNEFg+Mp6od9J2sQS2OxWHflC13tF
+         RcoIG46DQ1biJfKmcR5LiTfWNPHnw3fqeEaAiJny2/YmaGPrGrnXnNYLGDCKYrnHUori
+         3NRS3W1v5HP3p98cZPbqpymjPAKTGVXVckmcxiEwmwSC3MmDiasT4NWhLm3JkMADtLCC
+         kXjpMkj9Cqn6rDUsR9DmOwYP7qugufpqmGSVFP8vI9FY/6VTVHxOHrm1Ic3x/bfol6iN
+         3kow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=KgZ1j9+kQFnlMDvOgNgD5oILiq1sXePQuRec7sPMHRw=;
+        b=B3Cvgl4pVdnsYcHTvTelwyce7Yp4/E2YYA7vIneyjK2uV6tYee5ZzvoDMir7x4fntv
+         80ipnIXBAaRpAvthbz1j2MSQCqcd0Scgn5WRhaEUagN3SRntd18uxIus6ZlbMCwWkgqK
+         /tQFRUmpl398GcoQRPU8mpIeC0WtcxozmjzeJaIcBvwdhlk0nLK41lngU9j+uEGVMKn2
+         oSMiraAGwD8fgc1IxMrDkmk4ku6Ln4GhkOm/Ok55OuqqcpSox/57DxXRLG8a8zb+mbbC
+         FYvPJ//KhcBD3JPwjyY9eWcxwQ42zOdrUqGKdwcQnaq42GRDUnpQHGcaLL7aPLlAt0qu
+         N6qw==
+X-Gm-Message-State: ABuFfoi+Kk5rdBhxPwXfSiky8dMVwqy0Vx5glLcYZCZZswpGarD6owvf
+        EVEjKmEi1F/ZheT7BSem+5Y=
+X-Google-Smtp-Source: ACcGV628JN9O5E5E6qlK/aOxioqx6gZ7GtFu+hEhedhN3M6C9VXIXBjQsxQxV2Upje+a+FZShxmNog==
+X-Received: by 2002:a50:b4eb:: with SMTP id x40-v6mr16407889edd.12.1540286010633;
+        Tue, 23 Oct 2018 02:13:30 -0700 (PDT)
+Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
+        by smtp.gmail.com with ESMTPSA id z15-v6sm223849ejq.60.2018.10.23.02.13.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 23 Oct 2018 02:13:29 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Ben Peart <peartben@gmail.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH v1 2/2] reset: add new reset.quietDefault config setting
+References: <20181017164021.15204-1-peartben@gmail.com>
+        <20181017164021.15204-3-peartben@gmail.com>
+        <CAPig+cQ3ia78pLtnHSq8tM3B-XnFgWhwowJxwacYEEzXosJ16g@mail.gmail.com>
+        <20181017182337.GD28326@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181017182337.GD28326@sigill.intra.peff.net>
+Date:   Tue, 23 Oct 2018 11:13:27 +0200
+Message-ID: <874lddc9fs.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:unrGrFhAYKEbPZVNrv/u6wZuueUqgAPte1IXMFgq+2yWfAVLaGz
- GBZgItPSepF1tyGA1tpxF4mDF5gFA8ZrWQUeCwGdIeqJuAluq7Bt4+4QYcCjcjD/rEAgkC9
- sbS7kKM8Wt0+fja9UfmXnnkotaua00xKZ0C3Vm/8/kaBjh0x1cQYe44U0ZyVeLrsiXGsm4T
- eNcIVcG9vwRKa7RK8+ZIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Qz0uC3jwmFQ=:DwQ/eXoXj/6NFsi0dxLDfK
- 4e21VZbXf1cGSKex3UIpz7ED0nby7qAL/pOUz9xZjNB1VwvtZjcHGbIEfmU4mGrN7P2xN7S96
- BZDk0ToskzBsckZgHYm46eaNYjusimIodtViVIyk4yd2Vs3EC7UM3tcOOR/qjS9SDbJGYXEj6
- CZmCdRqYZbOyx8Oi4VRT7vB2/bXZndhjek7o+JVmtVRGK025Mpnen3W1149hqiFmiJlnTmWWQ
- CuuAO9wcBAmTVNoTYFpQ4pNX26KBwClnNG66Y3q7JyJWbQx2uwkg7ObjTdaV0DDxax1qWzl/B
- ixLOdbLyEneL3MjQ9bpZaWEnqXO6rsk0RI412aw2dzUfgvENqejrXJ0NmqLvDcK9INHGNDLW1
- +3o//KfRxxualtuvBGj43fa8OvJmg5M8kGor3dPCsJ9xzLRYNuDZ2C/yCpQsN0ffoVQ6vTl3l
- D7pjvcb/mHtDUeoFPLb4Cg4yOZMyQyYTdssnlNjGV3Y/qF+8roZFBaMh7JrUEj/HldFUOhY/L
- oeynVI3mrpyUJ80/0GoTrL7OI8DTb34y1guEzlq2PfKHCgNovmDaobuX612Prg/KQziI4s1pp
- jLLqcu7A9BOAhv82z5q2u7SVHDfy2kYugWerW315uzLtUOPTLJH/83uaX0Wt3zpWFwparBzGS
- j1vaqbpgqh+cVX7ZZRSz7RN/yHIvQ8lB7/9/AsABGh9PjVi+fUol+vE9TK/dbf6XY7a8JWQbS
- VERYAOsmok/7GGGDThCijFSfyLPdV00agOpzCNDs6ruaSZgAxq9TyAJAkPXsKEzAHwAhAGSzl
- FykNJ3DjkRidEB3RlH559qszRQJmOv2sckUVEW8g7w7JEDbVJo=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
 
-On Mon, 22 Oct 2018, Ben Peart wrote:
+On Wed, Oct 17 2018, Jeff King wrote:
 
-> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > 
-> > On Mon, 22 Oct 2018, Ben Peart wrote:
-> > 
-> > > When git reset is run with the --quiet flag, don't bother finding
-> > > any additional unstaged changes as they won't be output anyway.
-> > > This speeds up the git reset command by avoiding having to lstat()
-> > > every file looking for changes that aren't going to be reported
-> > > anyway.
-> > >
-> > > The savings can be significant.  In a repo with 200K files "git
-> > > reset" drops from 7.16 seconds to 0.32 seconds for a savings of 96%.
-> > 
-> > That's very nice!
-> > 
-> > Those numbers, just out of curiosity, are they on Windows? Or on
-> > Linux?
-> > 
-> 
-> It's safe to assume all my numbers are on Windows. :-)
+> On Wed, Oct 17, 2018 at 02:19:59PM -0400, Eric Sunshine wrote:
+>
+>> On Wed, Oct 17, 2018 at 12:40 PM Ben Peart <peartben@gmail.com> wrote:
+>> > Add a reset.quietDefault config setting that sets the default value of the
+>> > --quiet flag when running the reset command.  This enables users to change
+>> > the default behavior to take advantage of the performance advantages of
+>> > avoiding the scan for unstaged changes after reset.  Defaults to false.
+>>
+>> As with the previous patch, my knee-jerk reaction is that this really
+>> feels wrong being tied to --quiet. It's particularly unintuitive.
+>>
+>> What I _could_ see, and what would feel more natural is if you add a
+>> new option (say, --optimize) which is more general, incorporating
+>> whatever optimizations become available in the future, not just this
+>> one special-case. A side-effect of --optimize is that it implies
+>> --quiet, and that is something which can and should be documented.
+>
+> Heh, I just wrote something very similar elsewhere in the thread. I'm
+> still not sure if it's a dumb idea, but at least we can be dumb
+> together.
 
-Excellent. These speed-ups will really help our users.
+Same here. I'm in general if favor of having the ability to configure
+porcelain command-line options, but in this case it seems like it would
+be more logical to head for something like:
 
-Thanks!
-Dscho
+    core.uiMessaging=[default,exhaustive,lossyButFaster,quiet]
+
+Where default would be our current "exhaustive", and this --quiet case
+would be covered by lossyButFaster, but also things like the
+"--no-ahead-behind" flag for git-status.
+
+Just on this implementation: The usual idiom for flags as config is
+command.flag=xyz, not command.flagDefault=xyz, so this should be
+reset.quiet.
