@@ -2,94 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AD511F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 00:24:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00E2D1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 00:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726574AbeJWIot (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 04:44:49 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:56052 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726438AbeJWIos (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 04:44:48 -0400
-Received: by mail-wm1-f68.google.com with SMTP id x6-v6so675990wmc.5
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 17:23:58 -0700 (PDT)
+        id S1726073AbeJWIrn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 04:47:43 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41755 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725799AbeJWIrn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 04:47:43 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x31-v6so39666498edd.8
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 17:26:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=9nR/c7KPwmJD2V3T/JxvaxZCTZHBx1TbHOMOYuE95oE=;
-        b=n4/Jdq1RSiBwRst2uakfLsqa53AOJwQ2PJxbVvMdTNn6A0PR9t6/YJTs7JZFkc0DE/
-         TMT3QN7lMHxP1bF7K7XHHCH5Hjj1zOuxBVYXGOARGKffseeM1c7h5R7z72Nr9NKQLC5N
-         iTmaf8eh6Oy+Xtxqh3hXmDNuv7QKDH2Zuy3Ye59MewSp1Usjmf2E3QgcMKRdMHBeQ7CA
-         EPAV8BdC9FKgUDHF85Ow9CaPDhft/kB7PHG0NuqCsyz16LrKB+0irz5095noRi6G0OVL
-         1gdeiyNi0zhHlJ0DwALqlqLzPBl920eqVVNQqk2HYlxaOiPf5V/UNDXI9Yjlhmo0Jz/D
-         CGVQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qi5BF2JU8lp6k4QXQ8Sc+gpF1zS7dMOD+Dw67/SCcmI=;
+        b=qsO/mAfbLtwrAs7xdN5/deGIKn5NP2/pO0vt32PDcCKpiZua4S2oiYAhuFbc5Az8yG
+         EgiSGzK066G6jAJF14sAZX8lSlj2AgZY6m0WJOeZx2sTV3FyCiga/Ct3DBv1/XMe24DU
+         sWwIpZ2dpxOiLmTndWfAFnLzTS/d2JuGwH9JR53nVepbal4ITcI9pDkU423VtrzmxbXD
+         oVjDbowgHzE2lndfDO0AMTZnoKW86vVCOVJLairQ9U8Hagj0oE/ysCQj1IdB32WrhxzR
+         XwEku+mbwSzsoDMZ3TJmccTzw3hli1wy3DbGNZjcAoVlL+5gZf9fw5/01UxiWDcRJDDE
+         k3oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=9nR/c7KPwmJD2V3T/JxvaxZCTZHBx1TbHOMOYuE95oE=;
-        b=jrxhsYZcLdKZq0cgZ2Be0xU2//eRVyki/bKbONvHBzvAx/L/5PVrpv7veUP2syG6zG
-         QpsT4+zo6UJJNm9iBhxqcmo77usyM3wbr5WmID7Kptg4RoexqZmRGSAGbAiM6+B5zSOk
-         +cETB7A3fLSM5IhBuFi1ccCoxjxKyl4TocUVnGKRUEpPxRJgOf4U9NI2mNg6OzEdZXUT
-         OII4Gp96W92SJbYWl9g/ppMYGcQy1A/ycTNYYIHrW4IaCHJE0yAiUCB3MdQHyQynDgOX
-         HD7ue09CR2slg1RYER2qTHMPq5d0tnf/rtJ/kcpRRltv9+MwRS+LpRIn0JL1Fvy4sF6b
-         YhDA==
-X-Gm-Message-State: ABuFfojcU/sEnNtkuECEDK3s9YuKIjFvvNINLFTA1nRsMXlyPsyN2GK9
-        0DOf6gr5xVvvGq1TyBmiLnVN26yLXSI=
-X-Google-Smtp-Source: ACcGV60oDB4rVmMKxwMEY3NEYdWk+7lx3o44v2+Eux//oNV/F0Jyo4iAuK8h7y2IBVcaQF4QZarxiA==
-X-Received: by 2002:a1c:e0d7:: with SMTP id x206-v6mr17292573wmg.93.1540254237735;
-        Mon, 22 Oct 2018 17:23:57 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o13sm23277610wrx.53.2018.10.22.17.23.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Oct 2018 17:23:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com, peff@peff.net,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH v3 3/3] reset: warn when refresh_index() takes more than 2 seconds
-References: <20181017164021.15204-1-peartben@gmail.com>
-        <20181022131828.21348-1-peartben@gmail.com>
-        <20181022131828.21348-4-peartben@gmail.com>
-Date:   Tue, 23 Oct 2018 09:23:55 +0900
-In-Reply-To: <20181022131828.21348-4-peartben@gmail.com> (Ben Peart's message
-        of "Mon, 22 Oct 2018 09:18:28 -0400")
-Message-ID: <xmqqh8hdtsro.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qi5BF2JU8lp6k4QXQ8Sc+gpF1zS7dMOD+Dw67/SCcmI=;
+        b=BuMNABpOVu8DygctnYkBzGIkChbg7r9pJaPIqXIawsj/teYe1r4WyT0qHK0sCxkOBq
+         n3mSq908uIstRP8S5zS6Cojjd3AwVwyHHSxh5Bbx4K7/LDC6NCHRAYmUwpGU/sbwM3fI
+         1ScrM85RadGK6z3WKV+IFjLqRu3a75AF7LpKurV1hkt4zGdeVVwadoB5vKsnfRh0M7gn
+         zTFPx5Q30pT5z7P7mfJYcXUULEc4X5x9AJjZrpclmMXnXef3VBaEycv/LFHFLm3k3W5u
+         wqto2vPUNyApbTQkaUMYh2Ra8C425QCPQlUnogE8Qv4oIMKeN4l1bLUQv8QgGuuMj5Mc
+         sSag==
+X-Gm-Message-State: ABuFfoi20ZCyxGuFwuyFLboDCNrLjgdFXQ0eyyqs5yzT/pUb/8iVSX1t
+        PE6E0kSh5VLRqcQHSKsVey4KhoHtk2mfI4ct4gMEfQ==
+X-Google-Smtp-Source: ACcGV622AeDsAPA7iVBUhRPJcvr4ZUmmsVM2SH/BnJOkrtqcyZlN1zdZK7RcwMYIJs6yLWASV37nbCcMC3YjF56kflc=
+X-Received: by 2002:a17:906:1f13:: with SMTP id w19-v6mr36172480ejj.65.1540254411491;
+ Mon, 22 Oct 2018 17:26:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20181016233550.251311-1-sbeller@google.com> <20181022173935.GG30222@szeder.dev>
+ <xmqqzhv5tx4m.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhv5tx4m.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 22 Oct 2018 17:26:40 -0700
+Message-ID: <CAGZ79kaWaY+oxJfoMbsCcq6MZDPoq1OgOwK0a9mkKR7sUEOHpg@mail.gmail.com>
+Subject: Re: New semantic patches vs. in-flight topics [was: Re: [PATCH 00/19]
+ Bring more repository handles into our code base]
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+> Stepping back a bit, I'd imagine in an ideal world where "make
+> coccicheck" can be done instantaneously _and_ the spatch machinery
+> is just as reliable as C compilers.
+> [...]
+> Now we do not live in that ideal world and [...]
+>  such a series will have zero
+> chance of landing in 'pu', unless we freeze the world.
 
-> From: Ben Peart <benpeart@microsoft.com>
+I wonder if we could approximate the ideal world with
+rerere+spatch a bit more:
+
+1) I resend the series that includes "apply cocci patches"
+    as the last patch and you queue it as usual
+
+2) The first time such a series is merged, you'd merge
+    HEAD^ (i.e. excluding the "apply the semantic patch)
+    to pu instead. I view this as a yet-to-be invented mode
+    '--theirs-is-stale-use-tree-instead=THEIRS~1^{tree}',
+    then run spatch to reproduce the last patch into the
+    dirty merge (which has pu and the last patch as parent)
+
+    This step is done to 'pre-heat' the rerere cache.
+
+3) Any further integration (e.g. rebuilding pu) would
+    benefit from the hot rerere cache and very little work
+    is actually required as the conflicts are resolved by rerere.
+
+Am I overestimating or misunderstanding rerere here?
+
+> What I _could_ do (and what I did do only for one round of pushing
+> out 'pu') is to queue a coccinelle transformation at the tip of
+> integration branches.  If "make coccicheck" ran in subsecond, I
+> could even automate it in the script that is used to rebuild 'pu'
+> every day, so that after merging each and every topic, do the "make
+> coccicheck" and apply resulting .cocci.patch files and squash that
+> into the merge commit.
 >
-> refresh_index() is done after a reset command as an optimization.  Because
-> it can be an expensive call, warn the user if it takes more than 2 seconds
-> and tell them how to avoid it using the --quiet command line option or
-> reset.quiet config setting.
+> But with the current "make coccicheck" performance, that is not
+> realistic.
 
-I am moderately negative on this step.  It will irritate users who
-know about and still choose not to use the "--quiet" option, because
-they want to gain performance in later real work and/or they want to
-know what paths are now dirty.  A working tree that needs long time
-to refresh will take long time to instead do "cached stat info says
-it may be modified so let's run 'diff' for real---we may discover
-that there wasn't any change after all" when a "git diff" is run
-after a "reset --quiet" that does not refresh; i.e. there would be
-valid reasons to run "reset" without "--quiet".
+Would it be realistic for next and master branch instead of pu?
 
-It feels a bit irresponsible to throw an ad without informing
-pros-and-cons and to pretend that we are advising on BCP.  In
-general, we do *not* advertise new features randomly like this.
+I'd be wary for the master branch, as we may not want to rely on
+spatch without review. (It can produce funny white space issues,
+but seems to produce working/correct code)
 
-Thanks.  The previous two steps looks quite sensible.
+> I am wondering if it is feasible to do it at the tip of 'pu' (which
+> is rebuilt two to three times a day), 'next' (which is updated once
+> or twice a week) and 'master'.
 
+We could even optimize that, by checking if contrib/cocci/ has
+changes for the new tip of next/master respectively.
+
+Another thing I wonder is if we care about the distinction between
+the (a) pending changes as described by SZEDER, as we introduce
+these deliberately, whereas (b) undesirable code patterns
+(e.g. free and null instead of FREE_AND_NULL macro) might be
+caught and reported in pu/next and then someone learns from it.
+Automatic rewriting the (b) cases seems not just as desirable as
+(a), where we do it purely to avoid resolving merge conflicts by
+hand.
+
+> I find that your "pending" idea may be nicer, as it distributes the
+> load.  Whoever wants to change the world order by updating the .cocci
+> rules is primarily responsible for making it happen without breaking
+> the world during the transition.  That's more scalable.
+
+... and I think SZEDER considers the current world broken as
+'make coccicheck' returns non-empty, so it sounds to me as if
+the current transition is thought less-than-optimal.
