@@ -2,115 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A8B61F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 19:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C49781F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 19:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727530AbeJXEUg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 00:20:36 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54711 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725740AbeJXEUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 00:20:36 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1gNGEb20LS-009NH7; Tue, 23
- Oct 2018 21:55:31 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1gNGEb20LS-009NH7; Tue, 23
- Oct 2018 21:55:31 +0200
-Date:   Tue, 23 Oct 2018 21:55:34 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Ben Peart <peartben@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 1/3] reset: don't compute unstaged changes after reset
- when --quiet
-In-Reply-To: <CACsJy8C+9f3hFxmrqAN2hi1AeBTa1yZdnwX6iJtsy_OrEfTWpQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1810232153120.4546@tvgsbejvaqbjf.bet>
-References: <20181017164021.15204-1-peartben@gmail.com> <20181022131828.21348-1-peartben@gmail.com> <20181022131828.21348-2-peartben@gmail.com> <nycvar.QRO.7.76.6.1810222244150.4546@tvgsbejvaqbjf.bet> <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
- <CACsJy8C+9f3hFxmrqAN2hi1AeBTa1yZdnwX6iJtsy_OrEfTWpQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727580AbeJXEWI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 00:22:08 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36748 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725740AbeJXEWI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 00:22:08 -0400
+Received: by mail-pf1-f195.google.com with SMTP id l81-v6so1214214pfg.3
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 12:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=J8hMrAyECB+foEXUXlCuxpKI5ZBh1BT3gtJCYmZSiXY=;
+        b=o6loPfMqf3rQne2IM+/dA8V8VNPiimPEa4/F79v66gYLDVm4sXgTWRzYRtFH9rlDej
+         xDd994rRwhuvVlwF8mPwWrol1ceiQYeSJmxIPIKWAEt9qApzdNhP09hoDlciV8M83xed
+         lmErS/nCyMRPdCaiIPLD4i+iIHEGvzdTNj1OD7vnKFgejQWuPE62IIFjYW/QyHrMe92y
+         wBEZ1Uffphy9EdPHZnmBwVIpeRh0md0mGwoER9/ntVtjhdXyQQFF8yETKCZO/O93Wzz7
+         /3KyJuohpRhsQhDszZ/UzMdPXqGSnu/mHhQIbZ34WpL3RN2z8XbrCDGW2DvNKcEkP2Tn
+         FmWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=J8hMrAyECB+foEXUXlCuxpKI5ZBh1BT3gtJCYmZSiXY=;
+        b=NX/OoXiZZRPp3sICkiUJTOXskh6muth1zKcvHGkXQPtG/+iQjWOdF7E56RXC7/tzz8
+         cyYdMCi5zmBHmfqkTNKlyPZ5cxgyLxMUaL9qp85mvZQzIxvq7fxOIGWodDVz5pDhE+M7
+         3NkbWKQ7KY+YeLF8a/eh/s00ZPTm/CEK/srLQ/48B1rNKwJFd7KqJQ4Xh+S59ALt1Zeg
+         3K8rMB83dc8OuMWI/ferJvVTCLrcYkPw6CQbAi9OQq1GXn6KDUviedSOoaR03z/kfXNk
+         WKyF+RVxtC8KmIvgQdQw2MRQufoxQlPMun7OklCuJ9JVpu4VN10v1cFCN1Drjjz16R5e
+         k5lg==
+X-Gm-Message-State: ABuFfojjFg9EQBx5oyYEj+jPueghB+aU2mmxLNwx9J33Lq3rvuOlrx5m
+        vikT52yKLTkmPGPddjb9UuqH1Rm4
+X-Google-Smtp-Source: ACcGV63M3I1oqg4yAjI9/VVqGP/jUUSI5Ed5iCeiuW4fRe+NpfQFfceicN7MjPPFeZdDgIz1Iu4CTg==
+X-Received: by 2002:a63:e141:: with SMTP id h1-v6mr48223361pgk.47.1540324635478;
+        Tue, 23 Oct 2018 12:57:15 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id y7-v6sm2772671pfl.57.2018.10.23.12.57.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Oct 2018 12:57:14 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 12:57:14 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 19:57:10 GMT
+Message-Id: <pull.56.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/2] Demonstrate and fix a rebase --autostash bug with dirty submodules
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:x9D1k1XQsXmxE261fM9IYTIPHS7po5jiWL+8AjM7h9AUVt62U6L
- ZpkxfVwHqJhUASxe3Aldl6DYb0z14jZUOMlt4j7h9puTHyS6UqmAYkQAbmlvxFkhUYAOgR/
- y29Zn1yIhVMd5PmGstwLCoZzlp/qx7LNWSvam6J1WDMwpNev6GSMCZhZ/8RsRU6lE3QDVhI
- P3qWhGRLQ6v/GSFpOPanQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:81cq+mj+qT4=:bZjPMLCmZtMvv27B1f84CZ
- Ojz51GGoudGGN0ZdDrxWSZhq+9y7DDGqFdeOv5P82YaOoymJzp+zCn4Tw2oWGbF5UHIbuheKu
- kQp3njncsNLsl9EUppRievrIBx71xikjFjgNQbKfguD4ZEAY1wPhU8r7wSRw7wWiJssB4eeb/
- bi8BCqn2T/03+818a7psnphKA+rVhlFVC0qSl8qBSSrKwsVRZUJkFrIAKo8Ss6N9rfHCrDOt/
- b1S69pIrMcfZPe5wvf5eqd0cMpfay1QzAdPUl4f7CkXRhO3kDj0Q3atAGVJjh6yrTyz5pWABq
- ZI4AJmWJlESFWS7SmemJt5y5Rujqtd3aq21hcAmvQfWwDNanLL8O8Slg1vdR3pvKXTnfKfSto
- TnDpr1IS8ExYryXQDm0qc08v7EI6NOUc5RkcWqpbKYhjkjEkjHKszIoI7Umqc1PE7cV12Z51Q
- G8FrAmGRx+2ZeaOzfUkgSHZgmXjU02v1CcM77hDX55oD542HLGjBPC2vNrAQLFHA0UkQtijbp
- uKoi7/sD81la52CsGT+CyPbNT1mI+spwBn1Bg9aUjy2DKqVZBUVHHISbsxLPgtfjdWPBFMrbM
- y+r/K6slqcC9oR4Iwo0qx8eM2ROFH6CrV/ykDWtGEEr7+gpF89bslCq8Ppc4z0PQnN03H8nTy
- uJADiQ9RGlGvRR4orxF7DN8o/RkIoGPYJ8EUZeXB3t9dNOYEg45SZug0wS3S3EeUo7X0CKQXU
- iy+yEtKXw3ZCQwBDC/5rfZr6P+R/V078DPoGckmED0IybglnO417teVdYeow/Fesm8QEgscU4
- dNBhxegVjEotOPwjEqPjM7ZkpLkACjEun8tlZ9Oy84bwceod4M=
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+This bug report came in via Git for Windows (already with version 2.19.0,
+but I misread the reporter's enthusiasm to take matters into his own hands).
 
-On Tue, 23 Oct 2018, Duy Nguyen wrote:
+The culprit is, in a nutshell, that the built-in rebase tries to run git
+stash only when the worktree is dirty, but it includes submodules in that.
+However, git stash cannot do anything about submodules, and if the only
+changes are in submodules, then it won't even give us back an OID, and the
+built-in rebase acts surprised.
 
-> On Tue, Oct 23, 2018 at 1:01 AM Ben Peart <Ben.Peart@microsoft.com> wrote:
-> >
-> > > -----Original Message-----
-> > > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > > Sent: Monday, October 22, 2018 4:45 PM
-> > > To: Ben Peart <peartben@gmail.com>
-> > > Cc: git@vger.kernel.org; gitster@pobox.com; Ben Peart
-> > > <Ben.Peart@microsoft.com>; peff@peff.net; sunshine@sunshineco.com
-> > > Subject: Re: [PATCH v3 1/3] reset: don't compute unstaged changes after
-> > > reset when --quiet
-> > >
-> > > Hi Ben,
-> > >
-> > > On Mon, 22 Oct 2018, Ben Peart wrote:
-> > >
-> > > > From: Ben Peart <benpeart@microsoft.com>
-> > > >
-> > > > When git reset is run with the --quiet flag, don't bother finding any
-> > > > additional unstaged changes as they won't be output anyway.  This speeds
-> > > up
-> > > > the git reset command by avoiding having to lstat() every file looking for
-> > > > changes that aren't going to be reported anyway.
-> > > >
-> > > > The savings can be significant.  In a repo with 200K files "git reset"
-> > > > drops from 7.16 seconds to 0.32 seconds for a savings of 96%.
-> > >
-> > > That's very nice!
-> > >
-> > > Those numbers, just out of curiosity, are they on Windows? Or on Linux?
-> > >
-> >
-> > It's safe to assume all my numbers are on Windows. :-)
-> 
-> It does bug me about this. Next time please mention the platform you
-> tested on in the commit message. Not all platforms behave the same way
-> especially when it comes to performance.
+The solution is easy: simply exclude the submodules from the question
+whether the worktree is dirty.
 
-And pretty much all different testing scenarios behave differently, too.
-And at some stage, we're asking for too many fries.
+What is surprisingly not simple is to get the regression test right. For
+that reason, and because I firmly believe that it is easier to verify a fix
+for a regression when the regression test is introduced separately (i.e.
+making it simple to verify that there is a regression), I really want to
+keep the first patch separate from the second one.
 
-In other words: we always accepted performance improvements when it could
-be demonstrated that they improved a certain not too uncommon scenario,
-and I do not think it would make sense to change this stance now. Not
-unless you can demonstrate a good reason why we should.
+Since this bug concerns the built-in rebase, I based the patches on top of 
+next.
 
-Ciao,
-Johannes
+Johannes Schindelin (2):
+  rebase --autostash: demonstrate a problem with dirty submodules
+  rebase --autostash: fix issue with dirty submodules
+
+ builtin/rebase.c            |  2 +-
+ t/t3420-rebase-autostash.sh | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+
+base-commit: 209f214ca4ae4e301fc32e59ab26f937082f3ea3
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-56%2Fdscho%2Ffix-built-in-rebase-autostash-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-56/dscho/fix-built-in-rebase-autostash-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/56
+-- 
+gitgitgadget
