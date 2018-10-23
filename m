@@ -2,82 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B15141F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 17:35:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEE891F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 18:04:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728462AbeJXB7Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 21:59:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51288 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728092AbeJXB7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 21:59:25 -0400
-Received: (qmail 32536 invoked by uid 109); 23 Oct 2018 17:35:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Oct 2018 17:35:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23410 invoked by uid 111); 23 Oct 2018 17:34:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Oct 2018 13:34:19 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2018 13:35:04 -0400
-Date:   Tue, 23 Oct 2018 13:35:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        gitster@pobox.com, benpeart@microsoft.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 2/3] reset: add new reset.quiet config setting
-Message-ID: <20181023173504.GA2076@sigill.intra.peff.net>
-References: <20181017164021.15204-1-peartben@gmail.com>
- <20181022131828.21348-1-peartben@gmail.com>
- <20181022131828.21348-3-peartben@gmail.com>
- <045b78ce-230e-86fe-6e5a-684bf9e93fbc@ramsayjones.plus.com>
- <20181022200601.GC9917@sigill.intra.peff.net>
- <6feb67a1-17fa-4280-9e31-963b619fa051@gmail.com>
+        id S1728099AbeJXC2s (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 22:28:48 -0400
+Received: from resqmta-ch2-03v.sys.comcast.net ([69.252.207.35]:57528 "EHLO
+        resqmta-ch2-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725997AbeJXC2r (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Oct 2018 22:28:47 -0400
+X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Oct 2018 22:28:47 EDT
+Received: from resomta-ch2-01v.sys.comcast.net ([69.252.207.97])
+        by resqmta-ch2-03v.sys.comcast.net with ESMTP
+        id EyGfgjF2nnFVDF0uag1fNE; Tue, 23 Oct 2018 17:56:12 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=q20161114; t=1540317372;
+        bh=4FNfwuq9SIuXNU8tIwex0Wp9cY/rjqXiQhl9d3PFJaU=;
+        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
+         Content-Type;
+        b=V8GEdHPT591yYQOsHsKnwUidIXw8HIVvz9el+TFBwMMDF9uJr7KgJ9NllCzEfZh0o
+         nkD8bT4VNY3EPlZCQbZgyNLeLPH3zxu3d7+CaRJ9pDceiSKj3ZNRc0P9IedJXre5Xf
+         Nj2J1lnTx7xSAV9Yc+oO4gIKOniVPZBT7nEXibeFkRgjI7IsCIXkh099jz5CBPNQE0
+         xhkqEmNM0aztuMhnYC5pV9r9lk1pgyNllAnEQPQVyAXgjfSxyGLffSYLrnV9cHaEQh
+         26CvzgtAYIDFJUVvXf0jnpjCuMMFG1YN04bechz6vwvhLnzWJoWBrWoDaEACVUxoL/
+         ifKkNH9rXrKFQ==
+Received: from [2620:0:100e:913:4957:471c:6cae:55cb] ([IPv6:2620:0:100e:913:4957:471c:6cae:55cb])
+        by resomta-ch2-01v.sys.comcast.net with ESMTPSA
+        id F0uDgf2My5r3BF0uIgPOsE; Tue, 23 Oct 2018 17:56:10 +0000
+Date:   Tue, 23 Oct 2018 10:55:49 -0700 (PDT)
+From:   Matthew DeVore <matvore@comcast.net>
+X-X-Sender: matvore@matvore-linux.svl.corp.google.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        pclouds@gmail.com, peff@peff.net, jonathantanmy@google.com,
+        jeffhost@microsoft.com
+Subject: Re: [RFC 2/2] exclude-promisor-objects: declare when option is
+ allowed
+In-Reply-To: <xmqqin1ts11h.fsf@gitster-ct.c.googlers.com>
+Message-ID: <alpine.DEB.2.21.1810231053550.56374@matvore-linux.svl.corp.google.com>
+References: <cover.1540256910.git.matvore@google.com> <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com> <xmqqin1ts11h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6feb67a1-17fa-4280-9e31-963b619fa051@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-CMAE-Envelope: MS4wfNY8ItGniR2en4P5uTJfnrIYX371r2HaJ89zfs+CJEbppyQIrR/oyCDBe126+h1j5oovBLyV+3ObfpGI66n7ClBIh6aAh2iKLxeSwpmnZhdDdceEl9nO
+ 0ACLA6RbzbVXUZZPFuMTINMZXve7Ru5HIO61LvM7xGD4yEu9gqqIbjwYBe7V1VjmJEFAwKv7HHk7Vo6OOQJDd2h9PrIuW2MwBSV+ub5bT0xcCzgPE3UuvECT
+ 5d/O8Zxd5940AzkU2hBvMd2WYAXqQy+Z632ehJ99fdlCGKl5KwB7lZ0ntfrrFPVtICyZAHNWaeYoKZdsWx0wgj8aiKdel/k8ccITZ2hON5jBWZNiuPtbdwHs
+ XXNau9khiDS+OhwwlrvI66CE8slKvT0GFGnNIHN8N6ZSSq4N8xAhm1eZk02ymPO7k2oc+eBlXmpQ1aJLjmPJAC0TIbyddg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 01:31:58PM -0400, Ben Peart wrote:
 
-> On 10/22/2018 4:06 PM, Jeff King wrote:
-> > On Mon, Oct 22, 2018 at 08:13:32PM +0100, Ramsay Jones wrote:
-> > 
-> > > >   -q::
-> > > >   --quiet::
-> > > > -	Be quiet, only report errors.
-> > > > +--no-quiet::
-> > > > +	Be quiet, only report errors. The default behavior respects the
-> > > > +	`reset.quiet` config option, or `--no-quiet` if that is not set.
-> > > 
-> > > Sorry, I can't quite parse this; -q,--quiet and --no-quiet on the
-> > > command line (should) trump whatever rest.quiet is set to in the
-> > > configuration. Is that not the case?
-> > 
-> > That is the case, and what was meant by "the default behavior" (i.e.,
-> > the behavior when none of these is used). Maybe there's a more clear way
-> > of saying that.
-> > 
-> 
-> Is this more clear?
-> 
-> -q::
-> --quiet::
-> --no-quiet::
-> 	Be quiet, only report errors. The default behavior is set by the
-> 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
-> 	overwrite the default behavior.
 
-That looks OK to me (but then so did the earlier one ;) ).
+On Tue, 23 Oct 2018, Junio C Hamano wrote:
 
-I'd probably s/overwrite/override/.
+> Not really.  We were already doing a controlled failure via die(),
+> so these two tests would not have caught the problem in the code
+> before the fix in this patch.
+>
 
--Peff
+BUG is apparently considered a "wrong" failure and not a controlled one
+by test_must_fail. I just double-checked that the tests fail without
+this patch.
+
+not ok 119 - --exclude-promisor-objects does not BUG-crash
+# 
+#		test_must_fail git blame --exclude-promisor-objects one
+# 
+# failed 1 among 119 test(s)
+1..119
