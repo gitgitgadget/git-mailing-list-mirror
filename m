@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C56C1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22A571F453
 	for <e@80x24.org>; Tue, 23 Oct 2018 21:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726737AbeJXGP4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 02:15:56 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42448 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbeJXGPz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 02:15:55 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i4-v6so1279495pgq.9
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 14:50:41 -0700 (PDT)
+        id S1727595AbeJXGP7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 02:15:59 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41388 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725787AbeJXGP7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 02:15:59 -0400
+Received: by mail-pg1-f193.google.com with SMTP id 23-v6so1282585pgc.8
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 14:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rnFTY2Xr/X5Q/rVAcBIG7tVw8WXMQ9TVFIrESBCDqiY=;
-        b=c8UJLg6UaKnS1b0GjTmGMtPteTxTmdN4lSzHNe90itHvRbIi2Vtbqu4QJ0tL0lcOJ0
-         Ci5dgHZKpmGOjoZv9GIr4C12KrRldSO8iA4oyn4Gfy4rd8uYs3YsVvGIwl9FjBdLF9Bo
-         F9hxqwCFQGYowQr+MAgh8pT8oEAAc8ILZ4k+RBtpsbm2jd8p2uaKdJGZXHZEytSHdSMC
-         M3qpJa1LU6LiMVAA/8Hvwc+wxPRI//gmMv6eP65sab3H2EwDrYMvbCvZYV/W+xJ3VDmd
-         o0QfDrK6m1k2Wnd7ngLA5Ns0/Af0wc2HTGt9NeRGheJPcgOYyxZg60k/Xtm8AXKsFdXl
-         AgGw==
+        bh=fj9sLIyAYq6QWX+SPVD8Ttd1q8ZtgtLBEtk21ZtH2Jg=;
+        b=E5f9eacdBz+mktfVBxaa1M2WYzy6v5DkYsVBczFlTa9jBgbk893vTsgMpfipsxY//8
+         Wu+r4teRBiM5ZNYlwCnyInA4/uJacU4xBlozMGB7n6xNYdGbYMcryogf2km1sXHy/GmN
+         QMlXxqwxa5T9VtPSBekZMxdJTNFIDc18Q6nZOV7t47oBzc2biy1SOQ9UQ6F3Xx/G8v2F
+         D5Cuq4HpJlev65Jj6Lg3978wQQzfijqi9qcxN0L9drYjLOMQQu0sB7o59K9zbtRnRhKG
+         blOjgh0r+EG2tKZfXA0AG/uuChkk/e8PGLw/s8/q+t2VXdjCKiNfBDLWm65XfUTJRaGm
+         n61A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rnFTY2Xr/X5Q/rVAcBIG7tVw8WXMQ9TVFIrESBCDqiY=;
-        b=a8hrzrtc5Ex03Mgxz3HfdfOFPtu0sNrgxw8Z+PZPSKeMChos/2EwP6DHWYCUw4s/YV
-         2TWfSajd8uhq6ARVhkz3p6zgnjQ2xwD4YeBYbgCu0LVAgOCHbBTDSGMrZqcAuWQ28bIM
-         VfZ1llm18JOki9bzFnRg0HSvKGcJRfoBrQ965byw1wOjpKBlDPkp0lWY6myHrovhEjfH
-         6YUl2K0jnJR9Giv8Qra/Oo1T6fEuTSf8RIq2LsoA6Rj44BC/eACmS3IyPYsSEBiteeAu
-         exDHNJBGmR4+j+VWd9Ee7QD53yVJu8iQ5CyhNePPsdX1Kqm8GOOdFwBH/w2x0npHdvIm
-         YIpQ==
-X-Gm-Message-State: AGRZ1gLdGk8g2mURap7fM0DjR71uHXgS2NKWWumsxSzsAln8It2Bps7y
-        94ZZFmCplEkkyBJ6zSCEsNA4xe9VfjI=
-X-Google-Smtp-Source: AJdET5e+uOqXJzg53GOUKPaeEDgUz39sz3mjksas0GuBRBc3TzFbW+aSH7R6i0AsMDTjRn4qXhQf+g==
-X-Received: by 2002:a62:5103:: with SMTP id f3-v6mr11805pfb.107.1540331440399;
-        Tue, 23 Oct 2018 14:50:40 -0700 (PDT)
+        bh=fj9sLIyAYq6QWX+SPVD8Ttd1q8ZtgtLBEtk21ZtH2Jg=;
+        b=XZw9qiej5ffCqpAoY8nmlRQSm2WddSK/4Ai1ttGfKxsKm1whAafYyVrgcE7aMrndes
+         5DsnbUIUkf9+Be9eWi5h2Ly/LTF8ouH9fwf/ZDxUR8FGILg1L7emx8rbLJmh+UZ0Y8y6
+         vzyDIvZizTH6VBV6cjtWWlJaw/WRC92iaF/BzRg8kvpk5CYj980KNi8FifHTlxynnhz/
+         NneB3jJBpOJgTJTskIxE4WtZcOvfz5YoAONRsL9/V46qEwEtfDq1qB1XCknkK+WUTXS5
+         HevR/ELOw8fRAD88Ionx1rLXOYOAI3gmLeN/UEwEkGRDqvKfAOxPHOHRyUzzyWG+TH3o
+         x8Jw==
+X-Gm-Message-State: AGRZ1gKfDTVSoQ+1CYjdDn0Rs9CxgJg+JPTta+i+kMed2oTSxqfPNnoh
+        Wt/2pnR9GfzHpfzJgzDbUHlfUo0LiEM=
+X-Google-Smtp-Source: AJdET5doaLjx3+KgBdx75bZdoXECjoW0v2lrmasCryitQ9MIQdy6U8hOWfoyO0jlGE8RC/0XkDc1MQ==
+X-Received: by 2002:a63:fa4e:: with SMTP id g14-v6mr42872pgk.18.1540331443423;
+        Tue, 23 Oct 2018 14:50:43 -0700 (PDT)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id w12-v6sm2766810pga.64.2018.10.23.14.50.34
+        by smtp.gmail.com with ESMTPSA id w12-v6sm2766810pga.64.2018.10.23.14.50.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 23 Oct 2018 14:50:34 -0700 (PDT)
+        Tue, 23 Oct 2018 14:50:43 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
@@ -56,12 +56,13 @@ Cc:     pclouds@gmail.com, peff@peff.net, chriscool@tuxfamily.org,
         l.s.r@web.de,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH v2 0/2] delta-islands: avoid unused function messages
-Date:   Tue, 23 Oct 2018 14:50:18 -0700
-Message-Id: <20181023215020.18550-1-carenas@gmail.com>
+Subject: [PATCH v2 1/2] commit-slabs: move MAYBE_UNUSED out
+Date:   Tue, 23 Oct 2018 14:50:19 -0700
+Message-Id: <20181023215020.18550-2-carenas@gmail.com>
 X-Mailer: git-send-email 2.19.1
-In-Reply-To: <CACsJy8AXjhbY9WWjYtMk128TZHLBCf4Ye4fe-ryXhoP9j2jtdw@mail.gmail.com>
+In-Reply-To: <20181023215020.18550-1-carenas@gmail.com>
 References: <CACsJy8AXjhbY9WWjYtMk128TZHLBCf4Ye4fe-ryXhoP9j2jtdw@mail.gmail.com>
+ <20181023215020.18550-1-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,19 +71,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-the macro generated code from delta-islands (using khash) triggers
-some unused function warnings in macOS, OpenBSD and some linux with a
-newer version of clang
+after 36da893114 ("config.mak.dev: enable -Wunused-function", 2018-10-18)
+it is expected to be used to prevent -Wunused-function warnings for code
+that was macro generated
 
-Carlo Marcelo Arenas Belón (2):
-  commit-slabs: move MAYBE_UNUSED out
-  khash: silence -Wunused-function for delta-islands
-
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
  commit-slab-impl.h | 4 ++--
  git-compat-util.h  | 2 ++
- khash.h            | 2 +-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/commit-slab-impl.h b/commit-slab-impl.h
+index ac1e6d409a..5c0eb91a5d 100644
+--- a/commit-slab-impl.h
++++ b/commit-slab-impl.h
+@@ -1,10 +1,10 @@
+ #ifndef COMMIT_SLAB_IMPL_H
+ #define COMMIT_SLAB_IMPL_H
+ 
+-#define MAYBE_UNUSED __attribute__((__unused__))
++#include "git-compat-util.h"
+ 
+ #define implement_static_commit_slab(slabname, elemtype) \
+-	implement_commit_slab(slabname, elemtype, static MAYBE_UNUSED)
++	implement_commit_slab(slabname, elemtype, MAYBE_UNUSED static)
+ 
+ #define implement_shared_commit_slab(slabname, elemtype) \
+ 	implement_commit_slab(slabname, elemtype, )
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9a64998b24..e4d3967a23 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -408,6 +408,8 @@ static inline char *git_find_last_dir_sep(const char *path)
+ #define LAST_ARG_MUST_BE_NULL
+ #endif
+ 
++#define MAYBE_UNUSED __attribute__((__unused__))
++
+ #include "compat/bswap.h"
+ 
+ #include "wildmatch.h"
 -- 
 2.19.1
 
