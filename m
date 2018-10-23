@@ -6,71 +6,133 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F26F1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 20:07:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE71D1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 20:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727674AbeJXEc0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 00:32:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51648 "HELO cloud.peff.net"
+        id S1726360AbeJXExn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 00:53:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51676 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725266AbeJXEc0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 00:32:26 -0400
-Received: (qmail 6535 invoked by uid 109); 23 Oct 2018 20:07:33 -0000
+        id S1725948AbeJXExn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 00:53:43 -0400
+Received: (qmail 7392 invoked by uid 109); 23 Oct 2018 20:28:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Oct 2018 20:07:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Oct 2018 20:28:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26208 invoked by uid 111); 23 Oct 2018 20:06:45 -0000
+Received: (qmail 26401 invoked by uid 111); 23 Oct 2018 20:27:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Oct 2018 16:06:45 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Oct 2018 16:27:58 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2018 16:07:30 -0400
-Date:   Tue, 23 Oct 2018 16:07:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2018 16:28:43 -0400
+Date:   Tue, 23 Oct 2018 16:28:43 -0400
 From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Ben Peart <benpeart@microsoft.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v1] load_cache_entries_threaded: remove unused src_offset
- parameter
-Message-ID: <20181023200730.GB15214@sigill.intra.peff.net>
-References: <20181022150513.18028-1-peartben@gmail.com>
- <20181022201721.GD9917@sigill.intra.peff.net>
- <xmqqo9bltwdy.fsf@gitster-ct.c.googlers.com>
- <7a359876-7d36-5d01-5f47-76ef316b6386@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH/RFC] thread-utils: better wrapper to avoid #ifdef
+ NO_PTHREADS
+Message-ID: <20181023202842.GA17371@sigill.intra.peff.net>
+References: <20181018170934.GA21138@sigill.intra.peff.net>
+ <20181018180522.17642-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7a359876-7d36-5d01-5f47-76ef316b6386@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181018180522.17642-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 03:13:06PM -0400, Ben Peart wrote:
+On Thu, Oct 18, 2018 at 08:05:22PM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-> At one point I also had the additional #ifndef NO_PTHREADS lines but it was
-> starting to get messy with the threaded vs non-threaded code paths so I
-> removed them.  I'm fine with which ever people find more readable.
+> On Thu, Oct 18, 2018 at 7:09 PM Jeff King <peff@peff.net> wrote:
+> > > In this particular case though I think we should be able to avoid so
+> > > much #if if we make a wrapper for pthread api that would return an
+> > > error or something when pthread is not available. But similar
+> > > situation may happen elsewhere too.
+> >
+> > Yeah, I think that is generally the preferred method anyway, just
+> > because of readability and simplicity.
 > 
-> It does make me wonder if there are still platforms taking new build of git
-> that don't support threads.  Do we still need to write/test/debug/read
-> through the single threaded code paths?
+> I've wanted to do this for a while, so let's test the water and see if
+> it's well received.
+> 
+> This patch is a proof of concept that adds just enough macros so that
+> I can build index-pack.c on a single thread mode with zero #ifdef
+> related to NO_PTHREADS.
+> 
+> Besides readability and simplicity, it reduces the chances of breaking
+> conditional builds (e.g. you rename a variable name but forgot that
+> the variable is in #if block that is not used by your
+> compiler/platform).
 
-I think the classic offenders here were old Unix systems like AIX, etc.
+Yes, I love this. We're already halfway there with things like
+read_lock() in index-pack and elsewhere, which are conditionally no-ops.
+The resulting code is much easier to read, I think.
 
-I've no idea what the current state is on those platforms. I would love
-it if we could drop NO_PTHREADS. There's a lot of gnarly code there, and
-I strongly suspect a lot of bugs lurk in the non-threaded halves (e.g.,
-especially around bits like "struct async" which is "maybe a thread, and
-maybe a fork" depending on your system, which introduces all kinds of
-subtle process-state dependencies).
+> Performance-wise I don't think there is any loss for single thread
+> mode. I rely on compilers recognizing HAVE_THREADS being a constant
+> and remove dead code or at least optimize in favor of non-dead code.
+> 
+> Memory-wise, yes we use some more memory in single thread mode. But we
+> don't have zillions of mutexes or thread id, so a bit extra memory
+> does not worry me so much.
 
-But I'm not really sure how to find out aside from adding a deprecation
-warning and seeing if anybody screams.
+Yeah, I don't think carrying around a handful of ints is going to be a
+big deal.
 
-See also this RFC from Duy, which might at least make the code itself a
-little easier to follow:
+I also think we may want to make a fundamental shift in our view of
+thread support. In the early days, it was "well, this is a thing that
+modern systems can take advantage of for certain commands". But these
+days I suspect it is more like "there are a handful of legacy systems
+that do not even support threads".
 
-	https://public-inbox.org/git/20181018180522.17642-1-pclouds@gmail.com/
+I don't think we should break the build on those legacy systems, but
+it's probably OK to stop thinking of it as "non-threaded platforms are
+the default and must pay zero cost" and more as "threaded platforms are
+the default, and non-threaded ones are OK to pay a small cost as long as
+they still work".
+
+> @@ -74,4 +79,29 @@ int init_recursive_mutex(pthread_mutex_t *m)
+>  		pthread_mutexattr_destroy(&a);
+>  	}
+>  	return ret;
+> +#else
+> +	return ENOSYS;
+> +#endif
+> +}
+
+I suspect some of these ENOSYS could just become a silent success.
+("yep, I initialized your dummy mutex"). But it probably doesn't matter
+much either way, as we would not generally even bother checking this
+return.
+
+> +#ifdef NO_PTHREADS
+> +int dummy_pthread_create(pthread_t *pthread, const void *attr,
+> +			 void *(*fn)(void *), void *data)
+> +{
+> +	return ENOSYS;
+>  }
+
+Whereas for this one, ENOSYS makes a lot of sense (we should avoid the
+threaded code-path anyway when we see that online_cpus()==1, and this
+would let us know when we mess that up).
+
+> +int dummy_pthread_init(void *data)
+> +{
+> +	/*
+> +	 * Do nothing.
+> +	 *
+> +	 * The main purpose of this function is to break compiler's
+> +	 * flow analysis or it may realize that functions like
+> +	 * pthread_mutex_init() is no-op, which means the (static)
+> +	 * variable is not used/initialized at all and trigger
+> +	 * -Wunused-variable
+> +	 */
+> +	return ENOSYS;
+> +}
+
+It might be worth marking the dummy variables as MAYBE_UNUSED, exactly
+to avoid this kind of compiler complaint.
 
 -Peff
