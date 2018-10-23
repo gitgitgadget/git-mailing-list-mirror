@@ -2,180 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC3861F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 18:26:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05AD51F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 18:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728553AbeJXCvQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 22:51:16 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46335 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728392AbeJXCvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 22:51:16 -0400
-Received: by mail-ed1-f66.google.com with SMTP id v22-v6so2562312edq.13
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 11:26:43 -0700 (PDT)
+        id S1728699AbeJXDMW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 23:12:22 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:37916 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727829AbeJXDMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 23:12:22 -0400
+Received: by mail-vs1-f67.google.com with SMTP id a202so1544332vsd.5
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 11:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AswHiEvHz3skfYqsHzVNfARVpTPoHEH3Xx8uPDX4Q9o=;
-        b=MpEZFjzzrzGonn5gJ8dzrTFEBzReq10Isd10IGNsydAyFsCVANgLuxXbJR2QAeQD3i
-         B9qGVjyV+lcrMmVvSIIa/Tvu0IDmy2CsiBPr8+QVpp+ZNdMQJMR83ziW5eB0PGES2s2g
-         8mwzCBWKWOX0O91FNoEl4U4/mN63eX86JrmmDBA5FREg1GqFQc3qioCk4ZgnPm6R1vpl
-         PaFfuCzw/5oVzl5aBwYdSUwCsqglcBaBPk0gSD0T6N2uZYZOJJ+91S6Ho5l2OxIE8Uou
-         LsTTV1uxfIRFaTxW//1d8PMfOKor0RpI9L1YNqOMu++1KwynGcl6N2pw0l2ZQSkAEDv0
-         2Vuw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+yPlaFsuCGMqsd7timWg8NprujASjfaHPDDWShPcUKI=;
+        b=EMsS3ybc33FEhWnecgcX9kwF7NcdFpRTM0mrPVu/cpayI6HXYKWaKdcOZ8N01cD3Ow
+         xOAbKtbg5MiZDehsjI7HW5E3sfc7AsTnSFlEiG/iYGhYxW7kIZuVy6CPie97VVwNxMaw
+         Gprv8mxAXCi3IpBm1RT16rLdmtjKdTp75OglW6nfn+ULGXe9ovZnyzsTuzlV22FU6PL9
+         zxgIQEGrtAKIkCC8ibSQhO93A7NnoOUsyn05hLRfNV8y6JmVvdYg483L2c9INVvZapYy
+         rHcyaZVIHggI3h1ggZgXCFovS7ryPHRkA4FbTeloZA+AU/I7h6rhiPvQ81bygFm+YUxF
+         ESoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AswHiEvHz3skfYqsHzVNfARVpTPoHEH3Xx8uPDX4Q9o=;
-        b=IhX1wfuLS0B8tmVeAvbMvwj01t8zRGkeDsbaju6yfm4BjBAUCOBqqtsCfsAeKQbMJd
-         SaWAepxPV0QFvInDJIGiQbkkMq4o6Im7frYHDyR1g7cBOGd0oEHZKnrCZPVRU33UP0KX
-         B7MQrSRbM1x/lXOBGh2AJoe1zchKwOUSDwP696UkXOf5jvNiWnsFKeevd4BU+IkMiFwS
-         vyeB4ra83eJdglzNvcZstECkgDzjgaX8ff6aCZKzsyeyUGV4Cxl2C3I3q6LE04ckugrA
-         i4TalKvTOFIh/BKGkgO6/w/GIeWC2eEgj/4MuD0wZNteTKmvc3DA7phKdrAfqpGiF0vp
-         xhMw==
-X-Gm-Message-State: ABuFfoi2MGq0Z/c63Oh7yqQHjsyCVt4NSfNo3i3zYuzdwjjQRhaj+zVr
-        gWIJBHk1JSvc8pWf/XyHu22evQLpNRbXujgAvr71kA==
-X-Google-Smtp-Source: ACcGV62bBjhRlP2wUmkR6lSsKrZK1H6Qy6EUkwPgT2OF3XMQ/jTm4B0H/7lNsqYn7KT+hZHQEjdPw/WfXcEsYkOrCSo=
-X-Received: by 2002:a50:b607:: with SMTP id b7-v6mr16052584ede.215.1540319202917;
- Tue, 23 Oct 2018 11:26:42 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+yPlaFsuCGMqsd7timWg8NprujASjfaHPDDWShPcUKI=;
+        b=UmaMm4AcFjiQhX4mS+uGvHNoVQ2WED49ql54apIYXq0Z9FQBlulyMCsrGqb1wsIBl9
+         hrEcuFEnLMv+AOps9oMh6CKFxZP6o7TClW+xKssLEHba6Sh7/w2or9mh5CdQXejgNyYb
+         B+HEbVuPT4KNNgVVqk7kFv0oy2Aaw11DQaHFR0lfqsfaRAs1z6S47mpRErV7lGhP554p
+         q7IFzxKf5/TDwlXpiag6AKJ0Szvkx2AkElLWPZhIbap9Y6f9IBTCqoABl6vK+Vgrpwmn
+         7pVpFwFwOPcChmKNt8TsEn44B7JCgR6JSuAmDa+GlQQk1DDoEV0XWw+hGX7w5LVona+A
+         8hJA==
+X-Gm-Message-State: ABuFfojU8QRdn/4c3ywDbPoEsFH0zfsxOfdcoO/tHRBJ5/oQIUDZQraA
+        L5yJ//3dGMafj32Y6BKDZa8=
+X-Google-Smtp-Source: ACcGV61v8DXcPlS4DQVXIZrY3Uy9Vwnn0CRs8e/T6KmsMsE4Oo2Zrey7jGlu16Maqt1dDbwivtjVcg==
+X-Received: by 2002:a67:1b85:: with SMTP id b127mr21471789vsb.190.1540320465523;
+        Tue, 23 Oct 2018 11:47:45 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id b134sm492789vke.17.2018.10.23.11.47.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Oct 2018 11:47:44 -0700 (PDT)
+Subject: Re: [PATCH v3 2/3] reset: add new reset.quiet config setting
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181022131828.21348-1-peartben@gmail.com>
+ <20181022131828.21348-3-peartben@gmail.com>
+ <CACsJy8Dcf8OknyMaSZxOaib54jLSSt71XXjTZD3UjgnH6J7QFA@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <e1f50b07-b3bf-0805-fcc9-692331dd170a@gmail.com>
+Date:   Tue, 23 Oct 2018 14:47:43 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20181016181327.107186-8-sbeller@google.com> <20181017225811.66554-1-jonathantanmy@google.com>
-In-Reply-To: <20181017225811.66554-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 Oct 2018 11:26:32 -0700
-Message-ID: <CAGZ79kbunyc02802+4sjGwthBnj_=eS=+z5B_WQSRdbUAHw1tQ@mail.gmail.com>
-Subject: Re: [PATCH 7/9] submodule: fetch in submodules git directory instead
- of in worktree
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CACsJy8Dcf8OknyMaSZxOaib54jLSSt71XXjTZD3UjgnH6J7QFA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 17, 2018 at 3:58 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > This patch started as a refactoring to make 'get_next_submodule' more
-> > readable, but upon doing so, I realized that "git fetch" of the submodule
-> > actually doesn't need to be run in the submodules worktree. So let's run
-> > it in its git dir instead.
->
-> The commit message needs to be updated, I think - this patch does
-> significantly more than fetching in the gitdir.
-
-From my point of view, it is not significant, but refactoring.
-I'll think how to write a better commit message.
-
-> > This patch leaks the cp->dir in get_next_submodule, as any further
-> > callback in run_processes_parallel doesn't have access to the child
-> > process any more.
->
-> The cp->dir is already leaked - probably better to write "cp->dir in
-> get_next_submodule() is still leaked, but this will be fixed in a
-> subsequent patch".
-
-... which fails to mention the reason why (as it is hard to do given
-the current design) but is more concise.
-
-> > +static void prepare_submodule_repo_env_in_gitdir(struct argv_array *out)
-> > +{
-> > +     prepare_submodule_repo_env_no_git_dir(out);
-> > +     argv_array_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
->
-> Why does GIT_DIR need to be set? Is it to avoid subcommands recursively
-> checking the parent directories in case the CWD is a malformed Git
-> repository? If yes, maybe it's worth adding a comment.
-
-It is copying the structure from prepare_submodule_repo_env,
-specifically 10f5c52656 (submodule: avoid auto-discovery in
-prepare_submodule_repo_env(), 2016-09-01), which sounds
-appealing (and brings real benefits for the working directory),
-but I have not thought about this protection for the git dir.
-
-Maybe another approach is to not set the cwd for the child process
-and instead point GIT_DIR_ENVIRONMENT only to the right
-directory.
-
-Then the use of GIT_DIR_ENVIRONMENT is obvious and
-is not just for protection of corner cases.
-
-However I think this protection is really valuable for the
-.git dir as well as the submodule may be broken and we do not
-want to end up in an infinite loop (as the discovery would find
-the superproject which then tries to recurse, again, into the
-submodule with the broken git dir)
-
-When adding the comment here, we'd also want to have
-the comment in prepare_submodule_repo_env, which
-could be its own preparation commit.
-
-> > +static struct repository *get_submodule_repo_for(struct repository *r,
-> > +                                              const struct submodule *sub)
-> > +{
-> > +     struct repository *ret = xmalloc(sizeof(*ret));
-> > +
-> > +     if (repo_submodule_init(ret, r, sub)) {
-> > +             /*
-> > +              * No entry in .gitmodules? Technically not a submodule,
-> > +              * but historically we supported repositories that happen to be
-> > +              * in-place where a gitlink is. Keep supporting them.
-> > +              */
-> > +             struct strbuf gitdir = STRBUF_INIT;
-> > +             strbuf_repo_worktree_path(&gitdir, r, "%s/.git", sub->path);
-> > +             if (repo_init(ret, gitdir.buf, NULL)) {
-> > +                     strbuf_release(&gitdir);
-> > +                     return NULL;
-> > +             }
-> > +             strbuf_release(&gitdir);
-> > +     }
-> > +
-> > +     return ret;
-> > +}
->
-> This is the significant thing that this patch does more - an unskipped
-> submodule is now something that either passes the checks in
-> repo_submodule_init() or the checks in repo_init(), which seems to be
-> stricter than the current check that ".git" points to a directory or is
-> one. This means that we skip certain broken repositories, and this
-> necessitates a change in the test.
-
-I see. However there is no change in function, the check in repo_init
-(or repo_submodule_init) is less strict than the check in the child process.
-So if there are broken submodule repositories, the difference of this
-patch is the layer at which it is caught, i.e. we would not spawn a child
-that fails, but skip the submodule.
-
-Thinking of that, maybe we need to announce that in get_next_submodule
-
->
-> I think we should be more particular about what we're allowed to skip -
-> in particular, maybe if we're planning to skip this submodule, its
-> corresponding directory in the worktree (if one exists) needs to be
-> empty.
-
-If the working tree directory is empty for that submodule, it means
-it is likely not initialized. But why would we use that as a signal to
-skip the submodule?
 
 
+On 10/22/2018 10:45 AM, Duy Nguyen wrote:
+> On Mon, Oct 22, 2018 at 3:38 PM Ben Peart <peartben@gmail.com> wrote:
+>>
+>> From: Ben Peart <benpeart@microsoft.com>
+>>
+>> Add a reset.quiet config setting that sets the default value of the --quiet
+>> flag when running the reset command.  This enables users to change the
+>> default behavior to take advantage of the performance advantages of
+>> avoiding the scan for unstaged changes after reset.  Defaults to false.
+>>
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+>> ---
+>>   Documentation/config.txt    | 3 +++
+>>   Documentation/git-reset.txt | 4 +++-
+>>   builtin/reset.c             | 1 +
+>>   3 files changed, 7 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index f6f4c21a54..a2d1b8b116 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -2728,6 +2728,9 @@ rerere.enabled::
+>>          `$GIT_DIR`, e.g. if "rerere" was previously used in the
+>>          repository.
+>>
+>> +reset.quiet::
+>> +       When set to true, 'git reset' will default to the '--quiet' option.
+>> +
+> 
+> With 'nd/config-split' topic moving pretty much all config keys out of
+> config.txt, you probably want to do the same for this series: add this
+> in a new file called Documentation/reset-config.txt then include the
+> file here like the sendemail one below.
+> 
 
-> > -                     cp->dir = strbuf_detach(&submodule_path, NULL);
-> > -                     prepare_submodule_repo_env(&cp->env_array);
-> > +                     prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-> > +                     cp->dir = xstrdup(repo->gitdir);
->
-> Here is where the functionality change (fetch in ".git") described in
-> the commit message occurs.
+Seems a bit overkill to pull a line of documentation into a separate 
+file and replace it with a line of 'import' logic.  Perhaps if/when 
+there is more documentation to pull out that would make more sense.
 
-True.
-
-Thanks for the review, I'll try to split up this commit a bit more and
-explain each part on its own.
+>>   include::sendemail-config.txt[]
+>>
+>>   sequence.editor::
