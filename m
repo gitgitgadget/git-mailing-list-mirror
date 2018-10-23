@@ -7,100 +7,118 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F27D1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:52:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 755001F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:52:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728008AbeJWTPn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 15:15:43 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43234 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbeJWTPm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 15:15:42 -0400
-Received: by mail-pg1-f196.google.com with SMTP id d8-v6so444900pgv.10
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:52:48 -0700 (PDT)
+        id S1728018AbeJWTPo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 15:15:44 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:45065 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726970AbeJWTPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 15:15:44 -0400
+Received: by mail-pf1-f196.google.com with SMTP id u12-v6so450877pfn.12
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=awcaT2Qbag7FuSAdq+P3maEDCvNlcqJRXeKq6O402vA=;
-        b=f1uvIxMWlGCYFM9tYDbCpY87POZUISBfwvAtIpNADxeZde0q1jjQ0/oWfn9/RMVtDD
-         HF28AHywYEFHxu/FgLB8+gs5JzQC7LoVF8BvRpXzHiEI6/U/b9JyzaH7fDzdDS+pfzid
-         8u4N+s9m1iw++5ChgScEYTg4tV+YlJgcxhBAlo+pTt6EvE424rS4LxUXmJSWrdGWD3Zf
-         qMPJgbHmRTCo/ARmsOuPOSM//7dDe7stSC2GgjjG+EEYR7OC+kH5DH1/DjzCYhWfIN+5
-         Iu9AfORDVsleZJDo9Rp2XUYKHsPhO00+lJrLT2Eo5jC/w5EQWRisrApFk9SOXhK7mIP3
-         p4VQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=J7BH/QTwkI9bmnE2nubon2dQyP2VBA1SynJTWbqdaoY=;
+        b=Wh5tPL1rTefxtittrqta5jAqw/IosK2F8T3id+C6y7HHTqbd+EmWD8NerrPgHJF8jl
+         VqKcbZ5OWc3rS83Imfj6RtBRdsFnZnA0NimJZH9NkASADSEtWWdY38rvU666kgk+kElc
+         +aVEk4jBkK0x5OUmZ9U487ckGF6yXZsoCueqKNBYxMmO+Pa2AYCcTuiupf3bZly10cC/
+         W8jJXkwggHktRWZ1GGSOZnryYCa8DFW3i9R9W+/OO5QvSG0PFD04pGlzYMuc2PQ6SfRN
+         PBdVl4bw3T4OdX4B2FGNl6ITCRr4ZC04V5l+PmqjEKP3ZEcpab+BvE4aPyiNl1EH9fma
+         +4AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=awcaT2Qbag7FuSAdq+P3maEDCvNlcqJRXeKq6O402vA=;
-        b=gmNvPUMNFldvDsol2Zl6MOGcL3EiwYEupv2ahmSe8UA8Qeu4mNV0B+z//qOQ3oGoHw
-         gFV/DnL7mdrtSOOd0aeSRJidi5bco60yJrfx1TbEzJrB0cJH0I37VbM37MMuUH/rMDT3
-         jtjggJ8Mu5xxYZQsq/AYGkYto64lzdUA8CLm0892oPaSEQ3s3x0gsbGDWBUeJ1iVlv4n
-         hsXyAVpIWEN3HbGOcUaLQXuNO/OtgNe7F6RVenH8gVUst9QMbwz0upWFt8Y+SrDu8rv5
-         +O5VbVdrIwlULRoKagKmvG92Zlo0v9VcBr5HNbTuQ3STK2vkziqXp8bM94nVGLB7i+x9
-         Nbzw==
-X-Gm-Message-State: ABuFfohQcJQpj+IerZZMqkjvzXCXYKMu0zXsfKCA4xmSuOV5jplnC7y3
-        xkYzc8mdC4kf8LDW7ucjkomMtSeY
-X-Google-Smtp-Source: ACcGV60jjOV09QjRqHqTUUr7dfF6pOOQctO39059uZdyGbSDSmejYFqyRVUD87WPozlbVVRpgsLQaQ==
-X-Received: by 2002:a62:42d4:: with SMTP id h81-v6mr50565767pfd.0.1540291967452;
-        Tue, 23 Oct 2018 03:52:47 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=J7BH/QTwkI9bmnE2nubon2dQyP2VBA1SynJTWbqdaoY=;
+        b=dBiG24EJskH3iJtqSt5RcUP3jdZCBLcWCJKTrIh1dymPMyBfQpx549CXAT4EqfgUhD
+         RiRpi5Sg8EwZEPZdzbSO6UzaIQFNERrvdRIxcmPbbwpuWwRqp0Xy3/A/fRZFAdO09Jy9
+         GVhYWIu5WyOpnzxtLEHwOrAwWtFqcMjsGMsN2hPfpxupLLNx3VPaolE2Pj0EArGQ95zo
+         s7iQQHyV+JDFKfzZgQkq5EL4jREnnhNfF1uFjWW8Ev9KxQEfAzKotB0YPfCP+tvjmpgq
+         lRBxSyybGaQpeQNrGUXHuVu9w8+p7Fy+Yh8C4Rrnb+lDGIrROv/F7s5tYxRyVv+BKEAz
+         rIZQ==
+X-Gm-Message-State: ABuFfohTxdRG30P2x95qhU5gK9z8IoACfWqi2/O84VOk6A53cca27Jhw
+        oOVMfFY982Aztch6N6utnyEDNBae
+X-Google-Smtp-Source: ACcGV61C9t9srdx/vgZFjU0U73ThlVvj4lI8aJKml3Xv71W5cLi5RaX9kWdxbUkaeH53tJfN8E91XQ==
+X-Received: by 2002:a63:1411:: with SMTP id u17-v6mr45384711pgl.247.1540291969134;
+        Tue, 23 Oct 2018 03:52:49 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id j3-v6sm1336797pfn.175.2018.10.23.03.52.46
+        by smtp.gmail.com with ESMTPSA id w63-v6sm1534537pgw.60.2018.10.23.03.52.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 03:52:46 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 03:52:46 -0700 (PDT)
-X-Google-Original-Date: Tue, 23 Oct 2018 10:52:43 GMT
-Message-Id: <pull.54.git.gitgitgadget@gmail.com>
+        Tue, 23 Oct 2018 03:52:48 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 03:52:48 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 10:52:44 GMT
+Message-Id: <e13ae233822c8e4a4504e3294adf3e0de38a1990.1540291965.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.54.git.gitgitgadget@gmail.com>
+References: <pull.54.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] Work around case-insensitivity issues with cwd on Windows
+Subject: [PATCH 1/2] mingw: ensure `getcwd()` reports the correct case
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Windows, file names are recorded case-sensitively, but looked up
-case-insensitively. Therefore, it is possible to switch to a directory by
-using incorrect case, e.g. cd documentation will still get you into the 
-Documentation subdirectory.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In Powershell, doing so will however report the current directory with the
-specified spelling rather than the one recorded on disk, and Git will get
-confused.
+When switching the current working directory, say, in PowerShell, it is
+quite possible to use a different capitalization than the one that is
+recorded on disk. While doing the same in `cmd.exe` adjusts the
+capitalization magically, that does not happen in PowerShell so that
+`getcwd()` returns the current directory in a different way than is
+recorded on disk.
 
-To remedy that, we fixed this in Git for Windows more than three years ago,
-and needed only a small fix a couple of months later to accommodate for the
-diverse scenarios encountered by the many Git for Windows users.
+Typically this creates no problems except when you call
 
-Not only to keep the story closer to what happened historically, but also to
-make it easier to follow, I refrained from squashing these two patches.
+	git log .
 
-Side note: the second patch is technically not battle-tested for that long:
-it uses an API function that requires Windows Vista or later, and we only
-recently started to clean up Git for Windows' code to drop fallbacks for
-Windows XP. Read: this code used to load the GetFinalPathNameByHandle() 
-function dynamically, and that is the only difference to the code that has
-been "battle-tested" for close to three years.
+in a subdirectory called, say, "GIT/" but you switched to "Git/" and
+your `getcwd()` reports the latter, then Git won't understand that you
+wanted to see the history as per the `GIT/` subdirectory but it thinks you
+wanted to see the history of some directory that may have existed in the
+past (but actually never did).
 
-Anton Serbulov (1):
-  mingw: fix getcwd when the parent directory cannot be queried
+So let's be extra careful to adjust the capitalization of the current
+directory before working with it.
 
-Johannes Schindelin (1):
-  mingw: ensure `getcwd()` reports the correct case
+Reported by a few PowerShell power users ;-)
 
- compat/mingw.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 48 insertions(+), 2 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-
-base-commit: c4df23f7927d8d00e666a3c8d1b3375f1dc8a3c1
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-54%2Fdscho%2Fmingw-getcwd-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-54/dscho/mingw-getcwd-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/54
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 18caf2196..2c3e27ce9 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -917,8 +917,15 @@ struct tm *localtime_r(const time_t *timep, struct tm *result)
+ 
+ char *mingw_getcwd(char *pointer, int len)
+ {
+-	wchar_t wpointer[MAX_PATH];
+-	if (!_wgetcwd(wpointer, ARRAY_SIZE(wpointer)))
++	wchar_t cwd[MAX_PATH], wpointer[MAX_PATH];
++	DWORD ret = GetCurrentDirectoryW(ARRAY_SIZE(cwd), cwd);
++
++	if (!ret || ret >= ARRAY_SIZE(cwd)) {
++		errno = ret ? ENAMETOOLONG : err_win_to_posix(GetLastError());
++		return NULL;
++	}
++	ret = GetLongPathNameW(cwd, wpointer, ARRAY_SIZE(wpointer));
++	if (!ret || ret >= ARRAY_SIZE(wpointer))
+ 		return NULL;
+ 	if (xwcstoutf(pointer, wpointer, len) < 0)
+ 		return NULL;
 -- 
 gitgitgadget
+
