@@ -2,91 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F4F81F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 11:09:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87E811F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 11:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728084AbeJWTb7 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 23 Oct 2018 15:31:59 -0400
-Received: from cme-mx01.cmegroup.com ([204.10.8.90]:41211 "EHLO
-        cme-mx01.cmegroup.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726953AbeJWTb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 15:31:59 -0400
-X-Greylist: delayed 375 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Oct 2018 15:31:59 EDT
-X-IronPort-AV: E=Sophos;i="5.54,415,1534809600"; 
-   d="scan'208";a="54189401"
-Received: from smx1oaindlp0005.prod.ad.merc.chicago.cme.com (HELO SMD1OACSEXC0002.prod.ad.merc.chicago.cme.com) ([10.250.195.168])
-  by AAX1OAEMESA0001.MERC.CHICAGO.CME.COM with ESMTP; 23 Oct 2018 11:02:46 +0000
-Received: from SMD1OACSEXC0003.prod.ad.merc.chicago.cme.com (10.213.105.32) by
- SMD1OACSEXC0002.prod.ad.merc.chicago.cme.com (10.213.105.31) with Microsoft
- SMTP Server (TLS) id 15.0.1395.4; Tue, 23 Oct 2018 06:02:41 -0500
-Received: from SMD1OACSEXC0003.prod.ad.merc.chicago.cme.com
- ([fe80::f977:1ad9:fb37:ddae]) by SMD1OACSEXC0003.prod.ad.merc.chicago.cme.com
- ([fe80::f977:1ad9:fb37:ddae%18]) with mapi id 15.00.1395.000; Tue, 23 Oct
- 2018 06:02:41 -0500
-From:   "Quinn, David" <David.Quinn@cmegroup.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Failed stash caused untracked changes to be lost
-Thread-Topic: Failed stash caused untracked changes to be lost
-Thread-Index: AQHUar6pSVAG+ED9H06IEwz5NHwoTg==
-Date:   Tue, 23 Oct 2018 11:02:41 +0000
-Message-ID: <1540292560837.94684@cmegroup.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.213.126.15]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1728140AbeJWUCV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 16:02:21 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40452 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727720AbeJWUCV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 16:02:21 -0400
+Received: by mail-pg1-f196.google.com with SMTP id o14-v6so502606pgv.7
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 04:39:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+qqIVQa4W8uA+0vy7jDkgBnPPDLNVNa5Cssk3E1OjUc=;
+        b=ccz/WjYvieU4Bgav9Jzed8I+2aTABUPFhT9LzldnmQu8I8Xh587yDi3jwzOAqX4iHU
+         j74Z1FwDSSoQq5LaHGXQ0c82qR1Yel9b0g9UTRQQ1gsyowJJrUKQpKeG6Mqa+AQ2vCK8
+         4ICnCndRfAg/CLDaLtU7+cvERT4N/jGC6q0hwkCN7Wa3hJlJQu15Z7JWT1fFw7kW41Sy
+         2zj1jc/ERGPr6FdFtiIPGrGFz8Mxt9N/BuGeXBN0ItAyg6ypbeqVuNVmPoNVLAqsYwV6
+         Ku+RZMRQ1pkotwtAFfDdjsbUsjL2Mz7geNby9J5taKKqK7NaweyNmlh6L2VvCOcak5my
+         YkOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+qqIVQa4W8uA+0vy7jDkgBnPPDLNVNa5Cssk3E1OjUc=;
+        b=KsioEwMzUNKS4V6IfIxxl5sS9SkUPNih0InVhe5WLsCY2LkxqBLE3NDHafpC9R4AdN
+         Rj46JZjIaNR+OZ8q2R7aM+VCGDac30uE+x5DIlCFk8r7rpMtv657jtH2spN6y5JCGdAG
+         DsKuPlUiXUy8LowVdcj9K0TnztkRTF2OXXPrb/QlTsv8ZrgO15vR0az1ADi5SJh/4YW2
+         RONG2iwweX2sDtfbSs/J6Q95Ddkr3oORJCXw/yBICXjgBFLYGLPL9Y8VzttsdUW9aJFU
+         ju1lB1kg8N8cagCZbYeybWJSu9cRmtk3/8ioWd8UffBtKLp1tgWYlQqhTKA0tJ+u4Bzi
+         V6nQ==
+X-Gm-Message-State: ABuFfohKcWhlkCzkMjHtXaVodwhOc+0msUEaAtOGcbcoft/A2knGBUYI
+        gPguhhb1KhXwYYxwmT1T24yerjIB6+k=
+X-Google-Smtp-Source: ACcGV61Xvk14TSnZQN7D3c5lP6SGoNvLBi+v30aSl7atJdBG81VOm+ttjVS0/JI3ljHisUGbFz4dfg==
+X-Received: by 2002:a62:3245:: with SMTP id y66-v6mr40308146pfy.72.1540294754256;
+        Tue, 23 Oct 2018 04:39:14 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id i4-v6sm1676068pgt.4.2018.10.23.04.39.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 23 Oct 2018 04:39:13 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH] khash: silence -Wunused-function
+Date:   Tue, 23 Oct 2018 04:34:16 -0700
+Message-Id: <20181023113416.90958-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+after 36da893114 ("config.mak.dev: enable -Wunused-function", 2018-10-18)
+macro generated code should use a similar solution than commit-slab to
+silence the compiler.
 
-Issue: While running a git stash command including the '-u' flag to include untracked files, the command failed due to arguments in the incorrect order. After this untracked files the were present had been removed and permanently lost.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ khash.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Environment: Windows 10, Powershell w/ PoshGit
+diff --git a/khash.h b/khash.h
+index d10caa0c35..39c2833877 100644
+--- a/khash.h
++++ b/khash.h
+@@ -234,7 +234,7 @@ static const double __ac_HASH_UPPER = 0.77;
+ 	__KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
+ 
+ #define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
+-	KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
++	KHASH_INIT2(name, __attribute__((__unused__)) static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
+ 
+ /* Other convenient macros... */
+ 
+-- 
+2.19.1
 
-
-State before running command: 9 Modified files, 2 (new) untracked files
-
-Note: I only wanted to commit some of the modified files (essentially all the files/changes I wanted to commit were in one directory)
-
-Actual command run:  git stash push -u -- Directory/To/Files/* -m "My Message"
-
-Returned:
-
-    Saved working directory and index state WIP on [BranchName]: [Commit hash] [Commit Message]
-    fatal: pathspec '-m' did not match any files
-    error: unrecognized input
-
-State after Command ran: 9 Modifed files, 0 untracked files
-
-
-The command I should have ran should have been
-
-    git stash push -u -m "My Message"? -- Directory/To/Files/*
-
-
-I have found the stash that was created by running this command:
-
-    gitk --all $(git fsck --no-reflog | Select-String "(dangling commit )(.*)" | %{ $_.Line.Split(' ')[2] })
-?
-and searching for the commit number that was returned from the original (paritally failed??) stash command. However there is nothing in that stash. It is empty.
-
-
-
-I think that the fact my untracked files were lost is not correct behaviour and hence why I'm filing this bug report
-
-
-
-
-________________________________
-NOTICE: This message, and any attachments, are for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at E-Communication Disclaimer<http://www.cmegroup.com/tools-information/communications/e-communication-disclaimer.html>. If you are not the intended recipient, please delete this message. CME Group and its subsidiaries reserve the right to monitor all email communications that occur on CME Group information systems.
