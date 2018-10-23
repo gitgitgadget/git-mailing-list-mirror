@@ -2,87 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 533201F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:21:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA32F1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727872AbeJWSo0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 14:44:26 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:56088 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727787AbeJWSo0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 14:44:26 -0400
-Received: by mail-wm1-f67.google.com with SMTP id x6-v6so1157308wmc.5
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:21:38 -0700 (PDT)
+        id S1728039AbeJWSqH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 14:46:07 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:37233 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727985AbeJWSqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 14:46:06 -0400
+Received: by mail-pl1-f194.google.com with SMTP id bh10-v6so411525plb.4
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2TW69FYI/Bk4BOzsY+qPPsJ+glXWo9dRBQnU9E4eLRk=;
-        b=fSq1Gg9VqzKHUlAMY6754pWuDE+rFlggyRUdFy/oatcc5s0LdyqI/HtZQNUYMKOKHP
-         Emnb15eJLR4hU/F390UXrl/IY3Sdq4DogIqdM/Eh42ueixONprmlfNewIYXtmnNTWkh6
-         UvvNLD7Ekr2xlYM+YR/CAZug0SdEvoJRqZm9rGAb/krlnJzEd6SKKAfgkCIvL57b/E+p
-         xXeiqMKFwAIzN/qCLocXyMJ7aFuH+NV6Pj2kE0SutRXVW3BTGiZJjJXXj473w5su+Rs8
-         twZpaJwDqAPGvni4QRaKUZPzGHxWSBb6fV9uGQEH11tjgsQ6EKbjPKZ+eLDZnoF6VAK4
-         ltCA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=BYRpcx1HydJNz9/R/GNovBQU1Y1i6uP4vjfcAOvYwe4=;
+        b=V8TwI9RE4faDuOfNWFY4YMBGbGvQyD7wNvb0NeyIK3r/oxndbXPWJGhKtheO5vEISp
+         c2ABxFolRQUz3cjR8WSQTLMA8dt4GTTzj3gY/L5AYuzhxXXdOioTUec8NWVE++oR/wz/
+         GmteqiP1Rx8ewL9n7o4HWZHX7Qb/wKjW+BTJARI8Eef8tKCV2WCzqtxrGnCqqH2CraXV
+         ZB0gR6KwCwLcmb6qOsQ+9LWY7YC82KQYU59UPbgQ+TMnbmn2Piidw+KGZ7NCH2++iDgf
+         aOZTEGzn5HoKKnWT0WGmIsHKmWCCK2KzkgYwMCsInN+1iBCIJO3RD2SmoNi+hbdj1p9i
+         gCew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2TW69FYI/Bk4BOzsY+qPPsJ+glXWo9dRBQnU9E4eLRk=;
-        b=X8KBIr5QPaV7jwzCuDtgo9BTO6lXce5fFep75eAKqE7yU6YLbY5Bg4BfkFi2Ht+oeO
-         D/qfej/5eYjoF2Gi1zx88mn/zNcjmR34rXCdAJ6Esex57U7f1Vuj2h64aH+GcahVWo3U
-         EkhOilXzv/x/+CNEKnVEGegNQeZCMjBwieQ3f4tyhRBk3P9pRG2Q7lBdvG75kv3o+qPI
-         oa1uD535EmOfuRwq6qgoTQE5797i3rlTUiBXFy0hQuc5Tvipk6QXLFV+zRCSscQrW62M
-         YaaZ11HHgnm8OE1KbvxaOXvW6X/tzqW7hye0S9vbiAPsMOX3XiWU/z12hny67Sr71dnn
-         w2sw==
-X-Gm-Message-State: ABuFfogvbIk35GnYYBIG2/tDaxFSatj8oC01Yof583NIU+qf7LpmRGzz
-        K5EscSs5zH6r3yFvx1vj4/k=
-X-Google-Smtp-Source: ACcGV63D1GyX3cjjtEeP0XJKEi1F0ttQe4tw8WhRD4z7kzILAbytp0FsHsT96U/pWjyCn7V+/On4gQ==
-X-Received: by 2002:a1c:92d3:: with SMTP id u202-v6mr20861694wmd.39.1540290097696;
-        Tue, 23 Oct 2018 03:21:37 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p1-v6sm1075954wrs.40.2018.10.23.03.21.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 03:21:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     szeder.dev@gmail.com, sbeller@google.com, peff@peff.net,
-        git@vger.kernel.org, jonathantanmy@google.com
-Subject: Re: New semantic patches vs. in-flight topics [was: Re: [PATCH 00/19] Bring more repository handles into our code base]
-References: <20181016233550.251311-1-sbeller@google.com>
-        <20181022173935.GG30222@szeder.dev>
-        <xmqqzhv5tx4m.fsf@gitster-ct.c.googlers.com>
-        <xmqqefchroj4.fsf@gitster-ct.c.googlers.com>
-        <CAPUEsphThzjDTrJJHwvbeP4w=6M=xHWz+DZStfXS62=5tSCbVQ@mail.gmail.com>
-Date:   Tue, 23 Oct 2018 19:21:36 +0900
-In-Reply-To: <CAPUEsphThzjDTrJJHwvbeP4w=6M=xHWz+DZStfXS62=5tSCbVQ@mail.gmail.com>
-        (Carlo Arenas's message of "Tue, 23 Oct 2018 03:15:06 -0700")
-Message-ID: <xmqqa7n5rmj3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=BYRpcx1HydJNz9/R/GNovBQU1Y1i6uP4vjfcAOvYwe4=;
+        b=MvMFxg9jli3jF+mymruw5CEwycG01ak949lGwY9VdM94cIHbL4GA6t0l/EbQtrIGY6
+         Fkfl4OI6wK6MTBNhhsTcrTSBLhvXYMazV0Q4lKR5heRW8JE8pBOce2+2JC3iJf9sfSCD
+         ypD/Vq3LmVCvMLtoHfQ0ZjE5aSTiV80o6xlfpEtk8zaIZtQfqIYCz6KxdYMsI+MYLBe7
+         kpPUSqaDtdjNxQ8i603skqynt6Ui/cKku6gi5OXZSN/bVqlOkKmn6zbSPadxBZOGI+dE
+         CTY40BplaYzdr1OU0a4RNNWd0M2asPtHCewEgdh7in1+PyfE2ZpUEMoObRIBJqawL+i4
+         RKIg==
+X-Gm-Message-State: ABuFfogtWtdYg5oN+jho9m2NmM+uwcDHVP5sEK/FPhtlODuaYmFHrWzo
+        +wIr5WNawJh7/mhw4QsWwQML7IHK
+X-Google-Smtp-Source: ACcGV62it55f7hI8pMImRyxNtcpXw8CDVTaJ9owpSc2TYc3Yg6iAQF7N338fHTGwOdww56J9cT/vAA==
+X-Received: by 2002:a17:902:8342:: with SMTP id z2-v6mr47496333pln.147.1540290199280;
+        Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id b10-v6sm5517067pgd.51.2018.10.23.03.23.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Oct 2018 03:23:18 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 03:23:18 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 10:23:13 GMT
+Message-Id: <pull.53.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/3] Use nanosecond-precision file times on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+This is yet another patch series in the slow wave of patches coming over
+from Git for Windows.
 
-> On Tue, Oct 23, 2018 at 2:40 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> The tip of 'pu' has trouble with -Wunused on Apple around the
->> delta-islands series.
->
-> FWIW the "problem" is actually with -Wunused-function and is AFAIK not
-> related to the semantic changes or Apple (AKA macOS)
+With this change, we now use preciser timestamps to determine e.g. whether
+the Git index is out of date. This change made it into Git for Windows
+already in version 2.6.0, i.e. for a little over three years.
 
-Oh, don't get me wrong.  By Apple, I meant "the versions of compiler
-used on the Apple build at TravisCI site".  I could have sent the
-above two lines in a separate topic, as the issue does not have
-anything to do with "new semantic patches" discussion, but I thought
-it would be obvious to everybody who is reading the thread---it
-seems I thought wrong ;-)
+Please note that this change originally caused a lot of trouble, as e.g.
+libgit2 was unaware of our plans and used second-precision file times. So if
+you used Git for Windows as well as a libgit2-based program to, say, update
+the Git index, there would be a back-and-forth between index updates with
+and without the fractional second parts, causing quite a bit of bad
+performance.
+
+These issues have been ironed out long ago, though, so it is high time to
+contribute these patches to core Git.
+
+Johannes Schindelin (1):
+  mingw: factor out code to set stat() data
+
+Karsten Blees (2):
+  mingw: replace MSVCRT's fstat() with a Win32-based implementation
+  mingw: implement nanosecond-precision file times
+
+ compat/mingw.c   | 76 +++++++++++++++++++++++++++++++-----------------
+ compat/mingw.h   | 36 ++++++++++++++++-------
+ config.mak.uname |  2 --
+ 3 files changed, 76 insertions(+), 38 deletions(-)
+
+
+base-commit: c4df23f7927d8d00e666a3c8d1b3375f1dc8a3c1
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-53%2Fdscho%2Fnanosecond-file-times-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-53/dscho/nanosecond-file-times-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/53
+-- 
+gitgitgadget
