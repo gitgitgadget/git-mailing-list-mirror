@@ -7,48 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCE11F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 01:13:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EDB31F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 01:13:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727830AbeJWJey (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 05:34:54 -0400
-Received: from mail-oi1-f202.google.com ([209.85.167.202]:41595 "EHLO
-        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbeJWJey (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 05:34:54 -0400
-Received: by mail-oi1-f202.google.com with SMTP id w139-v6so29682942oie.8
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 18:13:54 -0700 (PDT)
+        id S1727841AbeJWJe5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 05:34:57 -0400
+Received: from mail-ua1-f74.google.com ([209.85.222.74]:56916 "EHLO
+        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbeJWJe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 05:34:56 -0400
+Received: by mail-ua1-f74.google.com with SMTP id 32so3994142uaf.23
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 18:13:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=vBoTJohYl+/xT6iROa6k2GSNI7A9xvvcJjwylZLm6dI=;
-        b=ONWCutXo3TAXQNrSxIL/5UrQbNDPQXPcd6BlaqsdApTyh7N2tlrOv7lnF3bTmCRtQ6
-         S3YK9T9pG1otD96/D3LHrkljpNPrxK4rZsAXaMIhwGuCo+CcWR5uHQ2VEctrJpS0F9u1
-         SEw2xjz+C+cgV0ffVPf+5hDaLqFZ8mtxasSH+WFejyFhzj6Wy0WPhJ25Ij+lMviN8x2t
-         035Tsd1m6j7V4Qj43qDv7GmuSsJnuxZPOKVu08MUOJgyEFYP5IpGIK10AoSQky40+PPj
-         NTmqQY4NuqSEiHp1vGEgx4H3TZiu4UF1/0ROUCdCCX6jmVXNpAsBLtChA1c0AsnynTI4
-         eGLg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=DmknxeTaccpN+GRuOkLpwpZym8FiMCk0n3Abr87HNwM=;
+        b=p9/z4gzOEFCttUhJ/mnr3AfVx9fwTljl5R+rkLZYxKKg3AXldg2rMZ4ktbxs+a6gpj
+         XGyUDE0eRT0doxrquJzz5fpKnmFZ6FHLhOvJT2YPb2aw1dsyszxRtVwZThRRuFCZ4fGQ
+         UlLBHJcEzmAvxVJ6wRg7i4AV+jIIDoURWSy7eLUHZhgPOT0hFmFoeRdIVpOpZVq4jV5g
+         e74mH742UfqKUG+q0Oj8uSNeDXIVwvbk3p4BXRJQHazQ8dNCGxhTpp9SN3jCnKpt5Cr4
+         uBp48wW27Ig0+wEfTf+W2tXjCQOF8vvNR49TBcCjDF+vv5RhJB1/yUlSM95muUpEqTDH
+         ogsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=vBoTJohYl+/xT6iROa6k2GSNI7A9xvvcJjwylZLm6dI=;
-        b=A/gElEGOSJGSGw5EMJyI7LpWPgpZGw9AW3kPQHunQfdGcfJ9v6Ch3JfdBMNIDvRmS2
-         lpKJAV7D+DFcOX+yfmF5WMg/AhHvtLvSOs4gxxjMREDQhEsmlcYKv/UKQo+cemW2htE3
-         BKnoQtVTas0P+1WE6bGZk2DoCTWdNsNmsBItge1Ydv4lg6GCus/P/t42E/89StUYAqcd
-         03NIkUL7mU63jZIFS1QLfCogiRjBjs17cpy+dLoAD6Njw8jrLhYjNe4pUdM4CWo484NA
-         kWluPXMfX+MKJa9Bq8sesrokuiIWU+3redLovA4cCKnjgIhggH2AcBsHGtuMUSIUA9N7
-         A57A==
-X-Gm-Message-State: ABuFfoiAFpVFIKf22N6MFwJ/hDvyECc7XjZimgpR1esCmVjsYoUl66Hl
-        olVs43qFEwP0vqKrkKnZaYYq2370wSNTpUJIcCdbKEp8GmTj3RAmAMpucsJC36mdvi0yM6wUBzV
-        CwPiz20njFy2WORrfCmfnkPEZUY44dyVAa/thrCINWl3XyK3eRAo6YIu7xMI=
-X-Google-Smtp-Source: ACcGV60+K0wSMDkdu2WAmibN+uJOjuprTRQENjnHUQ3Eq9toEsb7Ha7Xrduyo8CWhXiHe09k+ozyAuyD3tnZ
-X-Received: by 2002:a9d:4338:: with SMTP id s53mr37526138ote.4.1540257233953;
- Mon, 22 Oct 2018 18:13:53 -0700 (PDT)
-Date:   Mon, 22 Oct 2018 18:13:40 -0700
-Message-Id: <cover.1540256910.git.matvore@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=DmknxeTaccpN+GRuOkLpwpZym8FiMCk0n3Abr87HNwM=;
+        b=aRDJq4CTrMYkV1RRXkizIDURWO4c5bgSnlD6Mi4jm53LlONngcjU9NPn9TSBo3flK0
+         qavcJMYgzAb4Cf+QD4PD9HB/LfBFJ3BMCU5mKqbIJrngE26op7NnaIXOt97krr/5ycjK
+         kUsll9n1TGEE1JVKzT4CA550y06fn9yW8rcQGKbcCxtBEeVoahN0akXry8zIR7dzzz4Z
+         NXR2Fz2HldunQ6+O0SyGIFOiG9m95+7fRm/4JtwN9rsPG6qKWAENQazX5lIOuoRQwMvz
+         rcXKEDgRmSHATdNlSv0pRAK80OgOGIvNgPHkBc+S5bob0lYlTpr568ftPIj+Cl+w1Q3N
+         AUTg==
+X-Gm-Message-State: AGRZ1gJovFHr3HoSNrtWfrvVbQeeM3rLi/YSxFGdFKq+m9fqz8ytrGnu
+        M3uHsAJOVVl7ZXXO0QSOEk28kwvxhSggWtKugG2e/xVHcnWx/fnoDXjQW8XgCoqu9jkC19Ly2eq
+        TssuTfM8py4SzibAwqvAKJZoEVHHqxrjTFp6TBGfhJXLCUKkWHaMyowLZx2c=
+X-Google-Smtp-Source: AJdET5clIbr5QRp7JAeLfhn5eDZPe6MfKeRnAAA4a7cR+cVlFFDMFfA9fZ17LQOcFLkT1awpEG5pgWmEL6dL
+X-Received: by 2002:a1f:8ac4:: with SMTP id m187mr8600726vkd.3.1540257236313;
+ Mon, 22 Oct 2018 18:13:56 -0700 (PDT)
+Date:   Mon, 22 Oct 2018 18:13:41 -0700
+In-Reply-To: <cover.1540256910.git.matvore@google.com>
+Message-Id: <06bb0dd35081f950cd9196f1af0949565bce2f73.1540256910.git.matvore@google.com>
 Mime-Version: 1.0
+References: <cover.1540256910.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.1.568.g152ad8e336-goog
-Subject: [RFC 0/2] explicitly support or not support --exclude-promisor-objects
+Subject: [RFC 1/2] Documentation/git-log.txt: do not show --exclude-promisor-objects
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, gitster@pobox.com,
@@ -60,27 +64,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch set fixes incorrect parsing of the --exclude-promisor-objects
-option that I found while working on:
+Do not suggest that --exclude-promisor-objects is supported by git-log,
+since it currently BUG-crashes and it's not necessary to support it.
+Options that control behavior for promisor objects should be limited to
+a small number of commands.
 
-  https://public-inbox.org/git/cover.1539298957.git.matvore@google.com/
-
-Thank you,
-
-Matthew DeVore (2):
-  Documentation/git-log.txt: do not show --exclude-promisor-objects
-  exclude-promisor-objects: declare when option is allowed
-
+Signed-off-by: Matthew DeVore <matvore@google.com>
+---
  Documentation/rev-list-options.txt | 2 +-
- builtin/pack-objects.c             | 1 +
- builtin/prune.c                    | 1 +
- builtin/rev-list.c                 | 1 +
- revision.c                         | 3 ++-
- revision.h                         | 1 +
- t/t4202-log.sh                     | 4 ++++
- t/t8002-blame.sh                   | 4 ++++
- 8 files changed, 15 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 5f1672913b..bab5f50b17 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -761,7 +761,6 @@ Unexpected missing objects will raise an error.
+ +
+ The form '--missing=print' is like 'allow-any', but will also print a
+ list of the missing objects.  Object IDs are prefixed with a ``?'' character.
+-endif::git-rev-list[]
+ 
+ --exclude-promisor-objects::
+ 	(For internal use only.)  Prefilter object traversal at
+@@ -769,6 +768,7 @@ endif::git-rev-list[]
+ 	stronger than `--missing=allow-promisor` because it limits the
+ 	traversal, rather than just silencing errors about missing
+ 	objects.
++endif::git-rev-list[]
+ 
+ --no-walk[=(sorted|unsorted)]::
+ 	Only show the given commits, but do not traverse their ancestors.
 -- 
 2.19.1.568.g152ad8e336-goog
 
