@@ -2,97 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E3C51F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 16:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E64471F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 16:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728034AbeJXAoF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 20:44:05 -0400
-Received: from mout.web.de ([212.227.15.4]:50501 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727730AbeJXAoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 20:44:05 -0400
-Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LhyU6-1fsd0z3VYI-00n7DF; Tue, 23
- Oct 2018 18:19:55 +0200
-Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LhyU6-1fsd0z3VYI-00n7DF; Tue, 23
- Oct 2018 18:19:55 +0200
-Subject: Re: [PATCH] khash: silence -Wunused-function
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     peff@peff.net
-References: <20181023113416.90958-1-carenas@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <2518b1ff-d16d-da95-fdc2-698dddb61a36@web.de>
-Date:   Tue, 23 Oct 2018 18:19:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1728454AbeJXAzX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 20:55:23 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50876 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727402AbeJXAzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 20:55:23 -0400
+Received: by mail-wm1-f66.google.com with SMTP id i8-v6so2441976wmg.0
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 09:31:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3p6q9ginm/ERGCQ4tel00uPMDr5VkhAFfmgzz9Xg2c8=;
+        b=dOHww2rAejQxWClcT92aNLW76bQRWVJ0G260BD9nz46f1w+sLdX87jOlnbZ6AottZx
+         6iuhS2Gz+Ft+LGKJ1re9gGhqdsOWHG9nL6fNsfjLa4cFLhzpnP+HtdNup8J5RVi9035h
+         yXZhLeW6EmhOhWZ8NEYG393GQsqEpxl05CQ9qCSUy46PwVU6hbuQu2kSvKRq/mjFrAOy
+         /rSZ904C8SvHxBjsGWXNPV53scPiVmQQN3v1eK6RF9vu1ektLbHx7jpYzNwjaQ4oXukc
+         ucQK4YOznvWDFeodTn/cvQgwilk3ffR/sPzn+vOCKKvXuC/uCjf9w3WK46gHHt2bPoSX
+         qlZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3p6q9ginm/ERGCQ4tel00uPMDr5VkhAFfmgzz9Xg2c8=;
+        b=j+RKLpU3kqaodldi74NWFawue6dWd3QyWbVb9rNdJ1u9o/g7cOK+q8PJ5CxhrR3v2Y
+         fIjDjc43uTZP4Z1eW4yBqSKi10+VmyQOCPTXHUI9rjD96Ny8BbDLCHQti9WT3mJkwSlS
+         1mCpkIfj2bgrWKXuMzfbix3I3DvlffFY0czYFKJb9aaPyqCspOT6nQ2Rj49283iF1mD/
+         kGdOvmbJVRh/Z181RdzF4DD/ulTRyudJhKSmvPrEyPSa+gn9d5r6p2HO7fOiyE0n2YW8
+         qwxm/0qudAZJO8iWuTKXoKDF+ynxByLhEG4P8I4VKysJnftw2ZgUiu9BzADp1G6i53Fo
+         ZC2Q==
+X-Gm-Message-State: ABuFfojQ+RhwRfbeU/dATM08pfNg9sslDMKnHlfi7Oa7AEO/3ZKsU2Gh
+        kLfSlypo3r67aMUZj6TQT4Nsjnql
+X-Google-Smtp-Source: ACcGV63LpiGIc2g0ane1PXftRMj1ZHMoRq5tBhQcaVl5leD79do33mK/uyLl28h3wkN+Z1mJxKXl+Q==
+X-Received: by 2002:a1c:5fc2:: with SMTP id t185-v6mr20842210wmb.12.1540312275455;
+        Tue, 23 Oct 2018 09:31:15 -0700 (PDT)
+Received: from localhost.localdomain ([31.223.156.250])
+        by smtp.gmail.com with ESMTPSA id h78-v6sm2508972wmd.4.2018.10.23.09.31.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Oct 2018 09:31:14 -0700 (PDT)
+From:   Slavica <slavicadj.ip2018@gmail.com>
+X-Google-Original-From: Slavica <slawica92@hotmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, Slavica <slawica92@hotmail.com>
+Subject: [PATCH 1/3] [Outreachy] t3903-stash: test without configured user name
+Date:   Tue, 23 Oct 2018 18:29:41 +0200
+Message-Id: <20181023162941.3840-1-slawica92@hotmail.com>
+X-Mailer: git-send-email 2.19.1.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20181023113416.90958-1-carenas@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:TfSUwsPfvuTTBRK6uAXRSQCtEGNF9VGrxDakd3F+2x952w524Rg
- JsnAkZWxjnYKP/AE9kVP0X4yuKcN5LpNy/GumGOSqd+j2QBfXA16M9Ip3+A2Y82i59g5Xr+
- J2Ve7IQ22yvstt6bSPeY8PqwTq2HiU0hZ/n9xBTma/S5okaYXpYtloLFiAk9ufAS92XMtP+
- 4VThihDwYZVphE2Fv9HVA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HjV9xliUOhg=:ktQaapiOW44VcUUrclppTo
- 9gidPg17tnyUtMUEfPjeizZSAnuQETBX+WAvmKqTIpfwBGvp6lNAPMHFguf1UqJc3x7R6Hu/z
- ZJ4+YXXUgIrWD+5G78lFjQIO1kspzw+3bqz/ZHR52lFBhyUaSPmKWlTFOYy8YAUcx9cKqgA28
- RtnD5XrSowGzFsW0LJn6u7HVqwb1y3IDXPasDPc2nZ14KMNTSexewBU0yjUXXJVguzsYoHnHj
- P/LK7jRYQeEFehnvErWBuhfwOCZu8W8eaX+7PRYIZmP2efYy6RicBe7nL4BsIOVMZ+yK95MqP
- q+H4be9jB75hr8DiZ3CXzIIKG2FS29MPnqqMcDotWdWamweS7mWDpcWps1zg6teXhxprJUxTY
- eKMcb2XaI/63Hm7rHhKEBhiXqz+WCZqJCXvDYiwRZlRNe8FfnuYadNuw7vyhsDKJyhdq9qV2f
- XjbvQgStOU4d79nz2FVG4bB5bZdFqJg6e1mvK3qHyyRFYhIlvcGeahnxvoAlaf99TnDNHw8zR
- comNcv5wrCNeVuNzzXXR2LRu+WDLmMf0HX9VLNCFdQyzp0J7+2g35jbhwla/DZNPxRHbn8RGn
- uAwgLB5CJJvzd5Pgn5m6NE/ENFV9OYm5mi4SfSUCMpzpfRB1OY0viHAjp6kCbQxcmIkwhTUBo
- b5yi36ouOeS2PrwIYV4fCOb0sChR3mxos6CA4rjKg6tW/s1ua+yWbXUQQRrsarBKX5Zvkoaoj
- bAi9DbtdTIoWvxYbQvBYUSMDJtTEgHS1R005jX98JviSvn8IeAe7h46gelY/ahwo3AHrIbSzY
- m/uT/iZbpGBsRSzhw631iEgvWp1SG+rCQrfooWU7s0kCPcHmE4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.10.2018 um 13:34 schrieb Carlo Marcelo Arenas Belón:
-> after 36da893114 ("config.mak.dev: enable -Wunused-function", 2018-10-18)
-> macro generated code should use a similar solution than commit-slab to
-> silence the compiler.
+This is part of enhancement request that ask for `git stash` to work even if `user.name` is not configured.
+The issue is discussed here: https://public-inbox.org/git/87o9debty4.fsf@evledraar.gmail.com/T/#u.
 
-With Clang 6 and GCC 8 on Debian I don't get any warnings on master or
-36da893114.
+Signed-off-by: Slavica <slawica92@hotmail.com>
+---
+ t/t3903-stash.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-With Clang 6 on OpenBSD I get warnings about the unused khash functions
-in delta-islands.c on master, though.
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 9e06494ba0..9ff34a65bc 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1156,4 +1156,21 @@ test_expect_success 'stash -- <subdir> works with binary files' '
+ 	test_path_is_file subdir/untracked
+ '
+ 
++test_expect_failure 'stash with HOME as non-existing directory' '
++    test_commit 1 &&
++    test_config user.useconfigonly true &&
++    test_config stash.usebuiltin true &&
++    (
++        HOME=$(pwd)/none &&
++        export HOME &&
++        unset GIT_AUTHOR_NAME &&
++        unset GIT_AUTHOR_EMAIL &&
++        unset GIT_COMMITTER_NAME &&
++        unset GIT_COMMITTER_EMAIL &&
++        test_must_fail git config user.email &&
++        echo changed >1.t &&
++		git stash
++    )
++'
++
+ test_done
+-- 
+2.19.1.windows.1
 
-What do you get, or in other words: why did you send this patch?
-
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  khash.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/khash.h b/khash.h
-> index d10caa0c35..39c2833877 100644
-> --- a/khash.h
-> +++ b/khash.h
-> @@ -234,7 +234,7 @@ static const double __ac_HASH_UPPER = 0.77;
->  	__KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
->  
->  #define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
-> -	KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
-> +	KHASH_INIT2(name, __attribute__((__unused__)) static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
->  
->  /* Other convenient macros... */
->  
-
-This fixes the warning on OpenBSD for me.  So does moving the KHASH_INIT
-line from delta-islands.c to a header file (e.g. khash.h or
-delta-islands.h).
-
-René
