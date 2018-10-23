@@ -2,90 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E8601F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 05:12:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B07901F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 08:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727355AbeJWNeT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 09:34:19 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36047 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727101AbeJWNeT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 09:34:19 -0400
-Received: by mail-pg1-f195.google.com with SMTP id l6-v6so74368pgp.3
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 22:12:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wGz7yy3jTGV3sytmpajU0JXj+ppbmGB9uk9c8kQS5to=;
-        b=XqY7/3pS3kFjLr2GLkAaM05DnL4CUArtDqEaQ5I7VrywntQOl1ATkQSYDcm07DNje3
-         Nb3pFS7BX7LcPSW+EPGNaGhOVDPQaxzqNKiDdIbpD9rKBryQ/BkZQwVX/aw4iiBQpS2N
-         byEYSYzHcqW2NW3BzuLsz3hAM5zJIO5SfsiW7c/KFN/DeJEIUwy5c7hfe3WNVH8+t4ls
-         IC5MgvU/eucTecz5CP82SARfxQGJMaFZ3t/ifJOnUY0f8KXlDz7R5ctYR6fzZGkdU+oX
-         3OU8KQCo+2z0waRbR5luQveW2Gb4hgjD9MsQysz/nkHktSqs8gcPj4oD7p/LDEVEFOb7
-         gCMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wGz7yy3jTGV3sytmpajU0JXj+ppbmGB9uk9c8kQS5to=;
-        b=lA7t3XtXm6aaftgJ5Ca0zGa4lNqAx2hViyGAAN5QGeKNVIoxJ+bOJxzIsD0ZS/lorO
-         +d1h5g5BDfQf7uZdMcn3lC+MmFlxtKa5SCfrZWYiXnDdL+TvMpUsBd3U++hnZ1mW++mc
-         hnQP6tuLMuaUorHx0Ye0xCR0aW0asVhaZSa0YAFq5bPYDXr87FCoN4MeAh8kZGYishJs
-         KopXf9oWkdyMaA+Cd5GDNQn3XRYEcS48H4SOJ2w21zj0UaSHdceTkQmIQxYw1lZzDM3d
-         VPyI7N3cMjW2jxwnpWWnpMubbtDClAXopPNoclpe8o+o87J2hUepqXDbRCKQ/zL5sYGy
-         Akbg==
-X-Gm-Message-State: ABuFfoiEm/nPZ/k8u6JDrhiD5DSqjXFtQUwYtPIk07kDhdib+9u3iVqJ
-        fWjLDO0z5BieCtmgMkWQvCV+/NRqPAA=
-X-Google-Smtp-Source: ACcGV60c+dt0StO5YogtE3fwptCU5vwagvrgqvlSNOm9yJ7BKFDToyxZ5rup+S1nYYzRLZw8wtwsUA==
-X-Received: by 2002:a63:6883:: with SMTP id d125-v6mr45614925pgc.451.1540271555259;
-        Mon, 22 Oct 2018 22:12:35 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id q25-v6sm264594pfk.154.2018.10.22.22.12.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 22 Oct 2018 22:12:34 -0700 (PDT)
-From:   carlo <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, carlo <carenas@gmail.com>
-Subject: [PATCH] compat: make sure git_mmap is not expected to write
-Date:   Mon, 22 Oct 2018 22:12:16 -0700
-Message-Id: <20181023051216.64266-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.19.1
+        id S1728299AbeJWRQG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 13:16:06 -0400
+Received: from mout.gmx.net ([212.227.15.19]:46857 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727632AbeJWRQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 13:16:06 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2cYX-1fN3IY1Rp7-00sRai; Tue, 23
+ Oct 2018 10:53:27 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2cYX-1fN3IY1Rp7-00sRai; Tue, 23
+ Oct 2018 10:53:27 +0200
+Date:   Tue, 23 Oct 2018 10:53:28 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ben Peart <Ben.Peart@microsoft.com>
+cc:     Ben Peart <peartben@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "sunshine@sunshineco.com" <sunshine@sunshineco.com>
+Subject: RE: [PATCH v3 1/3] reset: don't compute unstaged changes after reset
+ when --quiet
+In-Reply-To: <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
+Message-ID: <nycvar.QRO.7.76.6.1810231052410.4546@tvgsbejvaqbjf.bet>
+References: <20181017164021.15204-1-peartben@gmail.com> <20181022131828.21348-1-peartben@gmail.com> <20181022131828.21348-2-peartben@gmail.com> <nycvar.QRO.7.76.6.1810222244150.4546@tvgsbejvaqbjf.bet>
+ <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:unrGrFhAYKEbPZVNrv/u6wZuueUqgAPte1IXMFgq+2yWfAVLaGz
+ GBZgItPSepF1tyGA1tpxF4mDF5gFA8ZrWQUeCwGdIeqJuAluq7Bt4+4QYcCjcjD/rEAgkC9
+ sbS7kKM8Wt0+fja9UfmXnnkotaua00xKZ0C3Vm/8/kaBjh0x1cQYe44U0ZyVeLrsiXGsm4T
+ eNcIVcG9vwRKa7RK8+ZIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Qz0uC3jwmFQ=:DwQ/eXoXj/6NFsi0dxLDfK
+ 4e21VZbXf1cGSKex3UIpz7ED0nby7qAL/pOUz9xZjNB1VwvtZjcHGbIEfmU4mGrN7P2xN7S96
+ BZDk0ToskzBsckZgHYm46eaNYjusimIodtViVIyk4yd2Vs3EC7UM3tcOOR/qjS9SDbJGYXEj6
+ CZmCdRqYZbOyx8Oi4VRT7vB2/bXZndhjek7o+JVmtVRGK025Mpnen3W1149hqiFmiJlnTmWWQ
+ CuuAO9wcBAmTVNoTYFpQ4pNX26KBwClnNG66Y3q7JyJWbQx2uwkg7ObjTdaV0DDxax1qWzl/B
+ ixLOdbLyEneL3MjQ9bpZaWEnqXO6rsk0RI412aw2dzUfgvENqejrXJ0NmqLvDcK9INHGNDLW1
+ +3o//KfRxxualtuvBGj43fa8OvJmg5M8kGor3dPCsJ9xzLRYNuDZ2C/yCpQsN0ffoVQ6vTl3l
+ D7pjvcb/mHtDUeoFPLb4Cg4yOZMyQyYTdssnlNjGV3Y/qF+8roZFBaMh7JrUEj/HldFUOhY/L
+ oeynVI3mrpyUJ80/0GoTrL7OI8DTb34y1guEzlq2PfKHCgNovmDaobuX612Prg/KQziI4s1pp
+ jLLqcu7A9BOAhv82z5q2u7SVHDfy2kYugWerW315uzLtUOPTLJH/83uaX0Wt3zpWFwparBzGS
+ j1vaqbpgqh+cVX7ZZRSz7RN/yHIvQ8lB7/9/AsABGh9PjVi+fUol+vE9TK/dbf6XY7a8JWQbS
+ VERYAOsmok/7GGGDThCijFSfyLPdV00agOpzCNDs6ruaSZgAxq9TyAJAkPXsKEzAHwAhAGSzl
+ FykNJ3DjkRidEB3RlH559qszRQJmOv2sckUVEW8g7w7JEDbVJo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-in f48000fc ("Yank writing-back support from gitfakemmap.", 2005-10-08)
-support for writting back changes was removed but the specific prot
-flag that would be used was not checked for)
+Hi Ben,
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- compat/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, 22 Oct 2018, Ben Peart wrote:
 
-diff --git a/compat/mmap.c b/compat/mmap.c
-index 7f662fef7b..14d31010df 100644
---- a/compat/mmap.c
-+++ b/compat/mmap.c
-@@ -4,7 +4,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
- {
- 	size_t n = 0;
- 
--	if (start != NULL || !(flags & MAP_PRIVATE))
-+	if (start != NULL || flags != MAP_PRIVATE || prot != PROT_READ)
- 		die("Invalid usage of mmap when built with NO_MMAP");
- 
- 	start = xmalloc(length);
--- 
-2.19.1
+> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > 
+> > On Mon, 22 Oct 2018, Ben Peart wrote:
+> > 
+> > > When git reset is run with the --quiet flag, don't bother finding
+> > > any additional unstaged changes as they won't be output anyway.
+> > > This speeds up the git reset command by avoiding having to lstat()
+> > > every file looking for changes that aren't going to be reported
+> > > anyway.
+> > >
+> > > The savings can be significant.  In a repo with 200K files "git
+> > > reset" drops from 7.16 seconds to 0.32 seconds for a savings of 96%.
+> > 
+> > That's very nice!
+> > 
+> > Those numbers, just out of curiosity, are they on Windows? Or on
+> > Linux?
+> > 
+> 
+> It's safe to assume all my numbers are on Windows. :-)
 
+Excellent. These speed-ups will really help our users.
+
+Thanks!
+Dscho
