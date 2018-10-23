@@ -7,98 +7,110 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E66261F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 15:45:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 477651F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 15:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727730AbeJXAJF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 20:09:05 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:37676 "EHLO
+        id S1728034AbeJXAK6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 20:10:58 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:51089 "EHLO
         mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbeJXAJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 20:09:05 -0400
-Received: by mail-it1-f196.google.com with SMTP id e74-v6so2712959ita.2
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 08:45:10 -0700 (PDT)
+        with ESMTP id S1726277AbeJXAK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 20:10:58 -0400
+Received: by mail-it1-f196.google.com with SMTP id k206-v6so2450470ite.0
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 08:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VGOVCh7MFCQDTlXOuZiU5ABkdXM+bLmbjV1fV67aQgw=;
-        b=YytoND/iE3v6kgNqCMWHAPPTkxduiDeLg883nXHt+00WDYjbsKxaw+KcjhShvRwyA4
-         iV1cC2IHHtIcva1PNdzbdkgOoPTjGHd2HBMuyIiyn9kpXyPv52Rq/ZUte1IqciNdnH3S
-         G5wM1iJjVkxhBy7+z1aFFBN3+poWfmPZyPu+9if5NTlno26nP3QaAjUvFTxiYDbReEU2
-         z9TiRCt/VQUTIs7LRFhTxlOQ1qf1Np6HBhEF3Rp+rPsSNG9eXj5N57wHL91m6VC6cdm4
-         HuUQ9xG9RbIn+ItNnJGtAiGj7y1P2PMUPRZewPGBRZD/PsO54lDJTYKI4Rcq9V2FG2LR
-         XXOw==
+         :cc;
+        bh=ONdXJC3d5t4fQLlGKEOov9l6xZZjFGyikJDiSpmvUCE=;
+        b=P4GdqqMIybiIt/jif4PFUYvUsM3OWRjsKZaM8UPRts3tAwX6j2iLhF8+cb+gyxJrh6
+         FymQtF6hIaPw97lFTDdRSwZ+SZaVxDTgYtO7honQiUdBh/ds1hbvdsEzOz3muqwpjl/5
+         fpjm7oW0V9/mLq+0r6xX6GBncdqYCpHbaFrcGDn6cyTUGFIK+TSzHsVL2qLtAdUjpVz2
+         dpbOU16q2HwU4ocaRQbjGCkPirqE2+vNcCM+Ug2GswY95My6gKnWTTxQeku2EHseziEI
+         ZqUxBNCbw+Dq4w0O92cDQVjrQk2duogMnrWAFhgcCc7qentQ8ydbeKRx8xRypmI3nTfM
+         ZK8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VGOVCh7MFCQDTlXOuZiU5ABkdXM+bLmbjV1fV67aQgw=;
-        b=m8u2U0n4FGHy6wo6S80UyBPUgQ+tUJzaKSgKkkXbJdmUKUXl9DId7xkiNZwg5vfJ5Y
-         w1tEvnlME1wWqQ/0/k6mTUYgTu/S4itT1ZGPfJbNINIOIaZ7LuqOGMy9YcxT9r7oKvMw
-         YMqtg49ATUwsv3eSBGvm0TWkvMURNGI0TolVAMFQPm/JtbWbGaxIzuSYRg7oHB9FL/mI
-         zxru9dXKrXGltXaozbET1MLp/zzy0/czSqdkfuAc+NpCcThzwVMdQmI7FEvpBbNkY3Ri
-         QmrVVb+nr1ZQPyCRXH7lfM6iAZLzKtyhFfh3hxa0yqct/WE954O9S/pd4Xfj5rgybIJe
-         bPPQ==
-X-Gm-Message-State: ABuFfoiEt1jLaXrRx5AIsbMVh04oLHcESXgRzguND4SYSYH3PxtoLBL/
-        bpeGTkSPmUHhv9np3qgfm42PmC1wFKSG+gn4Myg=
-X-Google-Smtp-Source: ACcGV63n7aZD0yg2hYN7F0xqTKWkNU4gG7H9bbEWtiarpfN6vmr87IXjKKAyyK4oC4g7umW0xIxrRnsgrsmiODNjh+k=
-X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr13183622itg.70.1540309509551;
- Tue, 23 Oct 2018 08:45:09 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=ONdXJC3d5t4fQLlGKEOov9l6xZZjFGyikJDiSpmvUCE=;
+        b=js4QNdLSggJprQ5Dify9I81NkyCLlygs/ntLIXYyMa0bBBKrxvcK/auU1m8UWXAgDO
+         QGfxH2sx+vTWq7/ZY85SHsNv65Ijz6qwO6NHd2yWk3hfuzpe72nDt8qdh+SuVZpCzk1f
+         YoXGzfHN3bNy1pn0OupofkxuMmYL4Ipaow3JB71QoZLVCx/1zpWDwLHLWynjMuF1YdYh
+         st9VFG0JGHdoDi9tkOYrDvp5/lAcbwrpFkcQ5llNwqSHGyfCrYUThW2IUMjkfLV0tiFS
+         S+RhM5Gw1XrogXMSHaPh18YoVZseCmj3jYVdfXTEvnHd87avqzdzlKmIpHrg97KPEgBJ
+         Ni5w==
+X-Gm-Message-State: ABuFfojJno5sikRkfGJXRPi2UG3nxXu1LxqsZRo+z9C7VBS/Tu9YT/aT
+        LdlhbxM4yGEMqZ1Drzgmp1lIC9t0Y0mr7uJgw3x/XA==
+X-Google-Smtp-Source: ACcGV61NlznkJspM8TDKHFJknm+BPPr02H2teltNwBXDJwRJ252BRLTlO8q0HXX4fj7Xqa2t4qB586n67SVblyRyMmc=
+X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr12890151itc.123.1540309621929;
+ Tue, 23 Oct 2018 08:47:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181023113416.90958-1-carenas@gmail.com>
-In-Reply-To: <20181023113416.90958-1-carenas@gmail.com>
+References: <20181017164021.15204-1-peartben@gmail.com> <20181022131828.21348-1-peartben@gmail.com>
+ <20181022131828.21348-2-peartben@gmail.com> <nycvar.QRO.7.76.6.1810222244150.4546@tvgsbejvaqbjf.bet>
+ <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
+In-Reply-To: <MW2PR2101MB0970EF1065717A38CF581C64F4F40@MW2PR2101MB0970.namprd21.prod.outlook.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 23 Oct 2018 17:44:41 +0200
-Message-ID: <CACsJy8AXjhbY9WWjYtMk128TZHLBCf4Ye4fe-ryXhoP9j2jtdw@mail.gmail.com>
-Subject: Re: [PATCH] khash: silence -Wunused-function
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Date:   Tue, 23 Oct 2018 17:46:35 +0200
+Message-ID: <CACsJy8C+9f3hFxmrqAN2hi1AeBTa1yZdnwX6iJtsy_OrEfTWpQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] reset: don't compute unstaged changes after reset
+ when --quiet
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 1:42 PM Carlo Marcelo Arenas Bel=C3=B3n
-<carenas@gmail.com> wrote:
+On Tue, Oct 23, 2018 at 1:01 AM Ben Peart <Ben.Peart@microsoft.com> wrote:
 >
-> after 36da893114 ("config.mak.dev: enable -Wunused-function", 2018-10-18)
-> macro generated code should use a similar solution than commit-slab to
-> silence the compiler.
+> > -----Original Message-----
+> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > Sent: Monday, October 22, 2018 4:45 PM
+> > To: Ben Peart <peartben@gmail.com>
+> > Cc: git@vger.kernel.org; gitster@pobox.com; Ben Peart
+> > <Ben.Peart@microsoft.com>; peff@peff.net; sunshine@sunshineco.com
+> > Subject: Re: [PATCH v3 1/3] reset: don't compute unstaged changes after
+> > reset when --quiet
+> >
+> > Hi Ben,
+> >
+> > On Mon, 22 Oct 2018, Ben Peart wrote:
+> >
+> > > From: Ben Peart <benpeart@microsoft.com>
+> > >
+> > > When git reset is run with the --quiet flag, don't bother finding any
+> > > additional unstaged changes as they won't be output anyway.  This speeds
+> > up
+> > > the git reset command by avoiding having to lstat() every file looking for
+> > > changes that aren't going to be reported anyway.
+> > >
+> > > The savings can be significant.  In a repo with 200K files "git reset"
+> > > drops from 7.16 seconds to 0.32 seconds for a savings of 96%.
+> >
+> > That's very nice!
+> >
+> > Those numbers, just out of curiosity, are they on Windows? Or on Linux?
+> >
 >
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  khash.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/khash.h b/khash.h
-> index d10caa0c35..39c2833877 100644
-> --- a/khash.h
-> +++ b/khash.h
-> @@ -234,7 +234,7 @@ static const double __ac_HASH_UPPER =3D 0.77;
->         __KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_fun=
-c, __hash_equal)
->
->  #define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __has=
-h_equal) \
-> -       KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __h=
-ash_func, __hash_equal)
-> +       KHASH_INIT2(name, __attribute__((__unused__)) static inline, khke=
-y_t, khval_t, kh_is_map, __hash_func, __hash_equal)
+> It's safe to assume all my numbers are on Windows. :-)
 
-Maybe move MAYBE_UNUSED from commit-slab-impl.h to git-compat-util.h
-and use it here so we have an easier time if we have to use a
-different way to mark unused functions on some exotic platform.
+It does bug me about this. Next time please mention the platform you
+tested on in the commit message. Not all platforms behave the same way
+especially when it comes to performance.
 
 >
->  /* Other convenient macros... */
+> > Ciao,
+> > Dscho
 >
-> --
-> 2.19.1
 >
 
 
---=20
+-- 
 Duy
