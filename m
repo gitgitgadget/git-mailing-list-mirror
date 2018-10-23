@@ -7,51 +7,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 820451F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 17:09:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F08CA1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 17:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728480AbeJXBeA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 21:34:00 -0400
-Received: from resqmta-po-04v.sys.comcast.net ([96.114.154.163]:60902 "EHLO
-        resqmta-po-04v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727730AbeJXBeA (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Oct 2018 21:34:00 -0400
-Received: from resomta-po-16v.sys.comcast.net ([96.114.154.240])
-        by resqmta-po-04v.sys.comcast.net with ESMTP
-        id Eyjzg5ipHAOBJF0BdgkGxq; Tue, 23 Oct 2018 17:09:45 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1540314585;
-        bh=ic3YMwiL9Woiz7PEyeuDPMDlFEliWbTiZTzVIrh3aXw=;
-        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
-         Content-Type;
-        b=OJSxAVb9GszavoYbQLrt+4RQ7Kms7YJzNIFFxqUWdr9UxXIStMeoZH7LA2kMTx5A3
-         eT4+H38KkTi+xXG5CPYHf4J4N3jTrfB7R87UuYAMQKav86ZVG661ajKbnKzNKPSd2K
-         0YGx5rHeYue++k65r7KPLluOTal7P758JQaL5D+hDG3d4EXJJBBWeGMSmDja8KBK3Z
-         LPQm8EKPoLz8vTVRIekz0vcE6hfHhE+GD5QAlX6RuwZVCikK10nuBbpmtgiolBN9Sk
-         kY+FRwS9YoUA7xmjXSmphDTZKQpAU5jp+yrWrKjBwnbXrO2r0SynKCiRDcZuZ3uFlx
-         wql1wtJ5hfMZQ==
-Received: from [2620:0:100e:913:4957:471c:6cae:55cb] ([IPv6:2620:0:100e:913:4957:471c:6cae:55cb])
-        by resomta-po-16v.sys.comcast.net with ESMTPSA
-        id F0B4gXy8V9UcLF0BLgvx6L; Tue, 23 Oct 2018 17:09:43 +0000
-Date:   Tue, 23 Oct 2018 10:09:10 -0700 (PDT)
-From:   Matthew DeVore <matvore@comcast.net>
-X-X-Sender: matvore@matvore-linux.svl.corp.google.com
+        id S1728374AbeJXBhL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 21:37:11 -0400
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:46749 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727758AbeJXBhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 21:37:11 -0400
+Received: by mail-vk1-f195.google.com with SMTP id l11so527718vki.13
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 10:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tQ7eYYpfGvwTJcmcY0p1VrtxtJ0tunVzrYC54b7MieQ=;
+        b=t5UU5+mBD5GUJ2wSQmUeNLodg3M7uhu/ch/VvwHLNTRZmH6034AT1yyfR9URKpMIcw
+         ZEkYC0WCmtXr9t8NSppUInrY2RgsTdxV1QUm3qjU/IAQSNvZ5iWwXIeHIw4BGW7vxrCW
+         i8du2+LkBxApmebApeMYe/OfQkgcXFwh8dtB40TEgnSelmkOZkghgZqLE1QVQlDdgSkM
+         MC7yYKEWBkmGUc5p25+U8QKzCsTDlm8jtEkjH6/AFoaDrSvAp7c8JibLtR8EQKcKz0pJ
+         7J2UQhc05Rj9ETqi83sm5DR8QIDkDArvieC2/5DYdKmyT6zxO8UdtC3am9KcLTm8+5DI
+         0PQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tQ7eYYpfGvwTJcmcY0p1VrtxtJ0tunVzrYC54b7MieQ=;
+        b=uVFAcIpdHZvAX5Ck1Dy8p0TdPD4Hbl/Dz1h76oFfOXEUJrHGA1jYrPh0XkgDQYQZz+
+         1oIz1XlZwiolEUFmkl/puuQWWyOxErNtt2+pdj3CIje1C/2rXWL2t+rLE8qkyNqcd53S
+         UtGf+QC80WvbIYVEKNV+oIiZhm+4NkwiWNNnGoPnG49SBAVknuMN6XkbmdWtkOZDbZAa
+         zpT2GrFrD44EDbjgT7xRzbQyIUvnBWORFIIgmHLbeKJA4/n9sovruy2/hVHeRlfZtbKn
+         PxfxAaZ7Buh7CuQjEawVB4203/1jC3khQKKNpIHR7QSOpF09NaE9XRu84K+N/Y36t+hj
+         DzKw==
+X-Gm-Message-State: AGRZ1gKg/NnZcgeFOHFm2lVouJspA5lywdwzuC9XojjgrF/JBSnsLOUZ
+        kHtVa5X2/wKJTweZC0sTA4o=
+X-Google-Smtp-Source: AJdET5dw9y7VK1bAYT/ztfxFno3iE0xGysze6B2GWr5fFSXtjFJ1n9wHTH3WZkM6GdXfqfa967w2gA==
+X-Received: by 2002:a1f:86d1:: with SMTP id i200mr4431761vkd.19.1540314774918;
+        Tue, 23 Oct 2018 10:12:54 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id f188-v6sm384314vke.53.2018.10.23.10.12.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Oct 2018 10:12:54 -0700 (PDT)
+Subject: Re: [PATCH v3 3/3] reset: warn when refresh_index() takes more than 2
+ seconds
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        pclouds@gmail.com, peff@peff.net, jonathantanmy@google.com,
-        jeffhost@microsoft.com
-Subject: Re: [RFC 0/2] explicitly support or not support
- --exclude-promisor-objects
-In-Reply-To: <xmqqmur5s1y9.fsf@gitster-ct.c.googlers.com>
-Message-ID: <alpine.DEB.2.21.1810231008050.28795@matvore-linux.svl.corp.google.com>
-References: <cover.1540256910.git.matvore@google.com> <xmqqmur5s1y9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+Cc:     git@vger.kernel.org, benpeart@microsoft.com, peff@peff.net,
+        sunshine@sunshineco.com
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181022131828.21348-1-peartben@gmail.com>
+ <20181022131828.21348-4-peartben@gmail.com>
+ <xmqqh8hdtsro.fsf@gitster-ct.c.googlers.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <50195f7a-c452-c784-ab23-d05956d48470@gmail.com>
+Date:   Tue, 23 Oct 2018 13:12:53 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-CMAE-Envelope: MS4wfLuuAHFXjGs6vCNTCS4+rYdXWo4O3lIT+oaBWY225B5X0h0f3WEMKSNllrhREKsC04Sb0El90lTx2aWqmRyDj+h1Qjg1HD8zMEBDr566RCLrUfZ+k4jI
- 4D51Y8RGkXd2zFxbNRkaOGLalsXXeI2afhSnu19nW94mNAv+us2kDk2a47kO43mdg8dWmKWfUXQ4mggMfJ+6KTUYOfstK1DlgZdUHfXkeU15/HLEUmF9d/Ih
- Wx/1k3BTntYfYU7FwHwbPIm19+5gKtJ++L9Y7NiNZ7pzcc8IrUjo7APNIidj4FEHudj2VMzMPmdOX5k4/ivjvxia7bio7rF0ipwhGI+0k8GH+CZN+Lc8GoEo
- 1u+bbIGlSg8PIuZ5exgiEwPJ1g0y4FFII8zsDe4H0dXm7iirULsnx5HACoJlaQK/PfVc6Z89k4bNTarAk4E7TCoVYyebZg==
+In-Reply-To: <xmqqh8hdtsro.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,13 +76,39 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Tue, 23 Oct 2018, Junio C Hamano wrote:
+On 10/22/2018 8:23 PM, Junio C Hamano wrote:
+> Ben Peart <peartben@gmail.com> writes:
+> 
+>> From: Ben Peart <benpeart@microsoft.com>
+>>
+>> refresh_index() is done after a reset command as an optimization.  Because
+>> it can be an expensive call, warn the user if it takes more than 2 seconds
+>> and tell them how to avoid it using the --quiet command line option or
+>> reset.quiet config setting.
+> 
+> I am moderately negative on this step.  It will irritate users who
+> know about and still choose not to use the "--quiet" option, because
+> they want to gain performance in later real work and/or they want to
+> know what paths are now dirty.  A working tree that needs long time
+> to refresh will take long time to instead do "cached stat info says
+> it may be modified so let's run 'diff' for real---we may discover
+> that there wasn't any change after all" when a "git diff" is run
+> after a "reset --quiet" that does not refresh; i.e. there would be
+> valid reasons to run "reset" without "--quiet".
+> 
+> It feels a bit irresponsible to throw an ad without informing
+> pros-and-cons and to pretend that we are advising on BCP.  In
+> general, we do *not* advertise new features randomly like this.
+> 
+> Thanks.  The previous two steps looks quite sensible.
+> 
 
-> Thanks; both patches make sense.
->
-> As the problematic feature appeared in 2.17.x track, I'll see if I
-> can easily make it ready to be merged down to maint-2.17 track later
-> when somebody wants to.
->
+The challenge I'm trying to address is the discoverability of this 
+significant performance win.  In earlier review feedback, all mention of 
+this option speeding up reset was removed.  I added this patch to enable 
+users to find out it even exists as an option.
 
-Great. Thank you for the review.
+While I modeled this on the untracked files/--uno and ahead/behind 
+logic, I missed adding this to the 'advice' logic so that it can be 
+turned off and avoid irritating users.  I'll send an updated patch that 
+corrects that.
