@@ -7,97 +7,150 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA32F1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24E1E1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728039AbeJWSqH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 14:46:07 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:37233 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727985AbeJWSqG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 14:46:06 -0400
-Received: by mail-pl1-f194.google.com with SMTP id bh10-v6so411525plb.4
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
+        id S1728045AbeJWSqI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 14:46:08 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:46581 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727985AbeJWSqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 14:46:08 -0400
+Received: by mail-pf1-f195.google.com with SMTP id r64-v6so415334pfb.13
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=BYRpcx1HydJNz9/R/GNovBQU1Y1i6uP4vjfcAOvYwe4=;
-        b=V8TwI9RE4faDuOfNWFY4YMBGbGvQyD7wNvb0NeyIK3r/oxndbXPWJGhKtheO5vEISp
-         c2ABxFolRQUz3cjR8WSQTLMA8dt4GTTzj3gY/L5AYuzhxXXdOioTUec8NWVE++oR/wz/
-         GmteqiP1Rx8ewL9n7o4HWZHX7Qb/wKjW+BTJARI8Eef8tKCV2WCzqtxrGnCqqH2CraXV
-         ZB0gR6KwCwLcmb6qOsQ+9LWY7YC82KQYU59UPbgQ+TMnbmn2Piidw+KGZ7NCH2++iDgf
-         aOZTEGzn5HoKKnWT0WGmIsHKmWCCK2KzkgYwMCsInN+1iBCIJO3RD2SmoNi+hbdj1p9i
-         gCew==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=iq77terXrxcEpQveHm98O2N7uMN26N1Wz/b4yXQNVSk=;
+        b=KCRNjP6pWKTZ937O6d/d458DBv3dQWGNNl4P8JLXe+KKX4ht8R8oj7jGgTjk7tdlR1
+         rVugZGn/xK9X+8F4/d4pFJM8hzvvsIVeMdF21v9Qp3fF+X6xg5+cLvjgLPhFdvnqmkIq
+         vr04+WnZIbEKFL5uOUripqJyXHchbRuDwOeauawRybkBI2+vWGFp36govTnbL4bdhrOb
+         I891Dg6KS4x+AeYwrOiqtblH0YxQx9+QMeRc1+DPkoAGGFLWdkEyF2+ppowNKZWkFIPx
+         h5KetN5oSxDVfLuVpsaEjKI0wulUC4mRyKJOn5wsHUUY3huh74cZUlQYqAwedaovzayz
+         DuzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BYRpcx1HydJNz9/R/GNovBQU1Y1i6uP4vjfcAOvYwe4=;
-        b=MvMFxg9jli3jF+mymruw5CEwycG01ak949lGwY9VdM94cIHbL4GA6t0l/EbQtrIGY6
-         Fkfl4OI6wK6MTBNhhsTcrTSBLhvXYMazV0Q4lKR5heRW8JE8pBOce2+2JC3iJf9sfSCD
-         ypD/Vq3LmVCvMLtoHfQ0ZjE5aSTiV80o6xlfpEtk8zaIZtQfqIYCz6KxdYMsI+MYLBe7
-         kpPUSqaDtdjNxQ8i603skqynt6Ui/cKku6gi5OXZSN/bVqlOkKmn6zbSPadxBZOGI+dE
-         CTY40BplaYzdr1OU0a4RNNWd0M2asPtHCewEgdh7in1+PyfE2ZpUEMoObRIBJqawL+i4
-         RKIg==
-X-Gm-Message-State: ABuFfogtWtdYg5oN+jho9m2NmM+uwcDHVP5sEK/FPhtlODuaYmFHrWzo
-        +wIr5WNawJh7/mhw4QsWwQML7IHK
-X-Google-Smtp-Source: ACcGV62it55f7hI8pMImRyxNtcpXw8CDVTaJ9owpSc2TYc3Yg6iAQF7N338fHTGwOdww56J9cT/vAA==
-X-Received: by 2002:a17:902:8342:: with SMTP id z2-v6mr47496333pln.147.1540290199280;
-        Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=iq77terXrxcEpQveHm98O2N7uMN26N1Wz/b4yXQNVSk=;
+        b=OlrGkTfXi60TLOGacDKnk0D3BKd5x0bGzca0M5aHXXD2mgdlok9nWSLITLrO4J4CuG
+         YJLUdI1We3zPknSl9KCJxPtmOY/s4lmZTxzIyzkQDkTjYQaVfOhGGbtWYhS1F1Uj5PHf
+         TTxWiN+o/vEh1mEUvyf95OU2bAuh/h7UtMRv2NF7N3of8+CeFWXa4THOFzDsNevE+d6Y
+         auZPaFoE3mLIjMd3/YSYMkz4EKtq3fz25cFddxoso+GEmThPBj/ikHa1f0/OgVnJCGnB
+         BSryhvvPKlzXxRq29uXUvJqpjBY0plAur4pnSYhIWnwmzhU1eU9/nyP3NK10fzuaDSUW
+         p+dg==
+X-Gm-Message-State: AGRZ1gL7B/HNrP0CHXedhaV/p/SB7VNe8NjpPU9IXB9azPDXEtvMG3T/
+        ZNP6ExC9O/a1ocRnD9qT71bxrSAH
+X-Google-Smtp-Source: AJdET5dSRxvdE3noYLwFhjiNVEvhv3Ophh3QWkPQ5d4S/DWrFod8f5acbkW484VXYUdhiaJz17KpRw==
+X-Received: by 2002:a63:3f44:: with SMTP id m65mr7016399pga.115.1540290200735;
+        Tue, 23 Oct 2018 03:23:20 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id b10-v6sm5517067pgd.51.2018.10.23.03.23.18
+        by smtp.gmail.com with ESMTPSA id o131-v6sm1442801pgo.53.2018.10.23.03.23.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 03:23:18 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 03:23:18 -0700 (PDT)
-X-Google-Original-Date: Tue, 23 Oct 2018 10:23:13 GMT
-Message-Id: <pull.53.git.gitgitgadget@gmail.com>
+        Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 10:23:14 GMT
+Message-Id: <85485598a8c391262612929ad4b98e79517e01a4.1540290197.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.53.git.gitgitgadget@gmail.com>
+References: <pull.53.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/3] Use nanosecond-precision file times on Windows
+Subject: [PATCH 1/3] mingw: factor out code to set stat() data
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is yet another patch series in the slow wave of patches coming over
-from Git for Windows.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-With this change, we now use preciser timestamps to determine e.g. whether
-the Git index is out of date. This change made it into Git for Windows
-already in version 2.6.0, i.e. for a little over three years.
+In our fstat() emulation, we convert the file metadata from Win32 data
+structures to an emulated POSIX structure.
 
-Please note that this change originally caused a lot of trouble, as e.g.
-libgit2 was unaware of our plans and used second-precision file times. So if
-you used Git for Windows as well as a libgit2-based program to, say, update
-the Git index, there would be a back-and-forth between index updates with
-and without the fractional second parts, causing quite a bit of bad
-performance.
+To structure the code better, let's factor that part out into its own
+function.
 
-These issues have been ironed out long ago, though, so it is high time to
-contribute these patches to core Git.
+Note: it would be tempting to try to unify this code with the part of
+do_lstat() that does the same thing, but they operate on different data
+structures: BY_HANDLE_FILE_INFORMATION vs WIN32_FILE_ATTRIBUTE_DATA. So
+unfortunately, they cannot be unified.
 
-Johannes Schindelin (1):
-  mingw: factor out code to set stat() data
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.c | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-Karsten Blees (2):
-  mingw: replace MSVCRT's fstat() with a Win32-based implementation
-  mingw: implement nanosecond-precision file times
-
- compat/mingw.c   | 76 +++++++++++++++++++++++++++++++-----------------
- compat/mingw.h   | 36 ++++++++++++++++-------
- config.mak.uname |  2 --
- 3 files changed, 76 insertions(+), 38 deletions(-)
-
-
-base-commit: c4df23f7927d8d00e666a3c8d1b3375f1dc8a3c1
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-53%2Fdscho%2Fnanosecond-file-times-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-53/dscho/nanosecond-file-times-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/53
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 18caf2196..d2e7d86db 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -736,6 +736,29 @@ static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
+ 	return do_lstat(follow, alt_name, buf);
+ }
+ 
++static int get_file_info_by_handle(HANDLE hnd, struct stat *buf)
++{
++	BY_HANDLE_FILE_INFORMATION fdata;
++
++	if (!GetFileInformationByHandle(hnd, &fdata)) {
++		errno = err_win_to_posix(GetLastError());
++		return -1;
++	}
++
++	buf->st_ino = 0;
++	buf->st_gid = 0;
++	buf->st_uid = 0;
++	buf->st_nlink = 1;
++	buf->st_mode = file_attr_to_st_mode(fdata.dwFileAttributes);
++	buf->st_size = fdata.nFileSizeLow |
++		(((off_t)fdata.nFileSizeHigh)<<32);
++	buf->st_dev = buf->st_rdev = 0; /* not used by Git */
++	buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
++	buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
++	buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
++	return 0;
++}
++
+ int mingw_lstat(const char *file_name, struct stat *buf)
+ {
+ 	return do_stat_internal(0, file_name, buf);
+@@ -748,7 +771,6 @@ int mingw_stat(const char *file_name, struct stat *buf)
+ int mingw_fstat(int fd, struct stat *buf)
+ {
+ 	HANDLE fh = (HANDLE)_get_osfhandle(fd);
+-	BY_HANDLE_FILE_INFORMATION fdata;
+ 
+ 	if (fh == INVALID_HANDLE_VALUE) {
+ 		errno = EBADF;
+@@ -758,20 +780,9 @@ int mingw_fstat(int fd, struct stat *buf)
+ 	if (GetFileType(fh) != FILE_TYPE_DISK)
+ 		return _fstati64(fd, buf);
+ 
+-	if (GetFileInformationByHandle(fh, &fdata)) {
+-		buf->st_ino = 0;
+-		buf->st_gid = 0;
+-		buf->st_uid = 0;
+-		buf->st_nlink = 1;
+-		buf->st_mode = file_attr_to_st_mode(fdata.dwFileAttributes);
+-		buf->st_size = fdata.nFileSizeLow |
+-			(((off_t)fdata.nFileSizeHigh)<<32);
+-		buf->st_dev = buf->st_rdev = 0; /* not used by Git */
+-		buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
+-		buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
+-		buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
++	if (!get_file_info_by_handle(fh, buf))
+ 		return 0;
+-	}
++
+ 	errno = EBADF;
+ 	return -1;
+ }
 -- 
 gitgitgadget
+
