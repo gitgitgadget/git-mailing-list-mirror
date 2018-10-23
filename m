@@ -2,114 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB4C71F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 19:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1D051F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 20:02:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727687AbeJXEWL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 00:22:11 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36891 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725740AbeJXEWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 00:22:11 -0400
-Received: by mail-pl1-f195.google.com with SMTP id bh10-v6so1133122plb.4
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 12:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NlVaPR/gHGRi69754meAVf2ZFOt/Rpb/mVfzHHadN7Q=;
-        b=qofjrrKCYcdcfBe5lAXbtwPUybjVV9bGCbGam9HVVxg9MeuPnZP+eL+6aA3Y03s14M
-         aUAQ9paJhJFpQlJNtapyCS6Ii/SNweOI1E37DzAd8YYWc1SrrioLYuahTz2TMIPj2WHo
-         b6R/23jO5vncqZ6jEpK26ZRGhthaKchxx6HS/eiEWtYEJdy0iySHfvm1I1Wau5+QlRIb
-         eYu8KCKBlPWBP1XuLgwk6iIMGoWs4GW1t6ZO9Po4LFCNaa5fzYqWDkA1uPdIoepnYAsl
-         La4at195WbjLZPM7Ck9yNofMdUAhbloA3gBdWET5HEWkqquM08cWgR5q2S8L/9bjh6PA
-         y/LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NlVaPR/gHGRi69754meAVf2ZFOt/Rpb/mVfzHHadN7Q=;
-        b=F4TwUF4j1XvQGNt9RETgEhq3+m0IXK/LViK/zkyjToICjRxRscPG4YoJQBftjYyv5A
-         M26zWBixPnIiW8JQwMvKu519d2vpXm3lZof+3dwzY5erWTBu2OWLCk/t+R71zHbCjBf4
-         QOhqJckU0uveV5qrtkLap28sswNruxS4etHhiu0r47UqwjaTE5OSAPLv5ZaC01QC3qbe
-         7dBQT9vap02x3KpwskbUZbDnQVE3guDCLRr4PuKWopvS5LvwkDRU3bcddIyfvB2+Bh44
-         8Stw/gdfOfktRtmGebxzFKkBYV/O3HjtDG/A+G2KD9Yi/1xMlOQCVKJpfj5yHseRdgJt
-         QFug==
-X-Gm-Message-State: ABuFfoh6AXy/WwVj8GhY3GfcWn+ikncb0P3wDC91AZQd8B8tPAiCqrOL
-        RMMcr8pUT2ondHOe2bl8uySSUdA+
-X-Google-Smtp-Source: ACcGV63Xx+IL8uZdMdKQB02Va1EePUQ7xll9c0kEvWtP2/2rVvcJ7RhajienSk9vkL6wJZy06Zt7Cw==
-X-Received: by 2002:a17:902:6ac7:: with SMTP id i7-v6mr50632064plt.268.1540324638629;
-        Tue, 23 Oct 2018 12:57:18 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id k24-v6sm2582103pfi.11.2018.10.23.12.57.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 12:57:17 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 12:57:17 -0700 (PDT)
-X-Google-Original-Date: Tue, 23 Oct 2018 19:57:12 GMT
-Message-Id: <ee4b715284c95698fd1b68dc4b1a2d38056df56b.1540324633.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.56.git.gitgitgadget@gmail.com>
-References: <pull.56.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] rebase --autostash: fix issue with dirty submodules
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728594AbeJXE1l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 00:27:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51624 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725266AbeJXE1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 00:27:41 -0400
+Received: (qmail 6310 invoked by uid 109); 23 Oct 2018 20:02:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Oct 2018 20:02:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26151 invoked by uid 111); 23 Oct 2018 20:02:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Oct 2018 16:02:01 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2018 16:02:46 -0400
+Date:   Tue, 23 Oct 2018 16:02:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH v1 2/2] reset: add new reset.quietDefault config setting
+Message-ID: <20181023200245.GA15214@sigill.intra.peff.net>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181017164021.15204-3-peartben@gmail.com>
+ <CAPig+cQ3ia78pLtnHSq8tM3B-XnFgWhwowJxwacYEEzXosJ16g@mail.gmail.com>
+ <20181017182337.GD28326@sigill.intra.peff.net>
+ <874lddc9fs.fsf@evledraar.gmail.com>
+ <1ba81f12-7040-1ba5-2009-fa681caf9874@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1ba81f12-7040-1ba5-2009-fa681caf9874@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Oct 23, 2018 at 02:11:01PM -0400, Ben Peart wrote:
 
-Since we cannot stash dirty submodules, there is no use in requiring
-them to be clean (or stash them when they are not).
+> This sounds like an easy way to choose a set of default values that we think
+> make sense to get bundled together. That could be a way for users to quickly
+> choose a set of good defaults but I still think you would want find grained
+> control over the individual settings.
+> 
+> Coming up with the set of values to bundle together, figuring out the
+> hierarchy of precedence for this new global config->individual
+> config->individual command line, updating the code to make it all work is
+> outside the scope of this particular patch series.
 
-This brings the built-in rebase in line with the previous, scripted
-version, which also did not care about dirty submodules (but it was
-admittedly not very easy to figure that out).
+True, it probably does make sense to give individual defaults. Having a
+unifying option may help with the discoverability issue you were
+thinking of elsewhere, though.
 
-This fixes https://github.com/git-for-windows/git/issues/1820
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/rebase.c            | 2 +-
- t/t3420-rebase-autostash.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 09f55bfb9..1dd24301f 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1349,7 +1349,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			update_index_if_able(&the_index, &lock_file);
- 		rollback_lock_file(&lock_file);
- 
--		if (has_unstaged_changes(0) || has_uncommitted_changes(0)) {
-+		if (has_unstaged_changes(1) || has_uncommitted_changes(1)) {
- 			const char *autostash =
- 				state_dir_path("autostash", &options);
- 			struct child_process stash = CHILD_PROCESS_INIT;
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index 7eb9f9041..f355c6825 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -351,7 +351,7 @@ test_expect_success 'autostash is saved on editor failure with conflict' '
- 	test_cmp expected file0
- '
- 
--test_expect_failure 'autostash with dirty submodules' '
-+test_expect_success 'autostash with dirty submodules' '
- 	test_when_finished "git reset --hard && git checkout master" &&
- 	git checkout -b with-submodule &&
- 	git submodule add ./ sub &&
--- 
-gitgitgadget
+-Peff
