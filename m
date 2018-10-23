@@ -7,58 +7,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12FB11F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 15:01:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E66261F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 15:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728402AbeJWXZG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 19:25:06 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:38155 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726277AbeJWXZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 19:25:06 -0400
-Received: by mail-io1-f67.google.com with SMTP id q18-v6so1069822iod.5
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 08:01:19 -0700 (PDT)
+        id S1727730AbeJXAJF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 20:09:05 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:37676 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726970AbeJXAJF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 20:09:05 -0400
+Received: by mail-it1-f196.google.com with SMTP id e74-v6so2712959ita.2
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 08:45:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=lk/oGvzpvFQklGUobX2lV9A+DzK9j+aPItGA1RkftpY=;
-        b=M3JoSy4czO7113vJ0AMs0nw4/T2D+MJW62HDrOLmEboaf+DRkVQCR/5SCHnnm/8+uX
-         hWcVQgEl/fxnUvANpcWu+YRs8zqgiiQdn4Fw7381/cWKvjyJL0kzhJ3UpQ6FNqGcj9vb
-         EUVU/jm5lwVdoDD93qCQtMdNWeGeZQdEChbUDEdOveO+2e8eFU4jt7j/62zeu9ZPydDX
-         A0nNoaH/WQsIQYeOu28yP4ExYKOyXVt99fIXrJ8fIBWPfcd/lK5AUeaCZhmvB6GGuNpx
-         1zvWt671hFCXhEYkOQsZeHXCtlBjig7y5r8dMK2J4lBkzuGs+4GTNsPo+VJ/yeBpRcrB
-         li1g==
+        bh=VGOVCh7MFCQDTlXOuZiU5ABkdXM+bLmbjV1fV67aQgw=;
+        b=YytoND/iE3v6kgNqCMWHAPPTkxduiDeLg883nXHt+00WDYjbsKxaw+KcjhShvRwyA4
+         iV1cC2IHHtIcva1PNdzbdkgOoPTjGHd2HBMuyIiyn9kpXyPv52Rq/ZUte1IqciNdnH3S
+         G5wM1iJjVkxhBy7+z1aFFBN3+poWfmPZyPu+9if5NTlno26nP3QaAjUvFTxiYDbReEU2
+         z9TiRCt/VQUTIs7LRFhTxlOQ1qf1Np6HBhEF3Rp+rPsSNG9eXj5N57wHL91m6VC6cdm4
+         HuUQ9xG9RbIn+ItNnJGtAiGj7y1P2PMUPRZewPGBRZD/PsO54lDJTYKI4Rcq9V2FG2LR
+         XXOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lk/oGvzpvFQklGUobX2lV9A+DzK9j+aPItGA1RkftpY=;
-        b=tntWDHJC/+LDr5c0VzRLicPu2fBUmfZPGFDdaQztVySRV6T/qqRot7CuOfrwKhcyCr
-         Ot7jBrqF2fAkDQRYB5X7RxWbvq8+M4JzrLeOpYwTXjCPKRMtFqSYUVPGg9Ady17sq1cK
-         Gc1fhe4zKUZVgwyUkbRXSx8oUuzv9h417Qz+SzGpuvgvb0rQkdltiA1OFIZIlge1div2
-         s+xECMndNxkj1Lw7txCkhXxbv+4SMTkO/8B1ilZLQaU2s+SxFTCAbYh25791uFuglalu
-         6fJ0PQn+kOguZeHUz19WF9+zkQLG2TmMjzW4lLc8eAZiQWoPJQUuzejCD2yP8k/S/Y+7
-         Ouiw==
-X-Gm-Message-State: AGRZ1gKIsKaq9I4undXt6jcdP8m7m7tGESbtJ8b77VT08mDBqusUFAGG
-        Rxnj1VA4Mr4CVnwJtSlAsdLSrLjel1xLJoJ0ddU=
-X-Google-Smtp-Source: AJdET5fQLuNY5uHCtnSvEDIAHzOIyTvZ9zFY51sDru16pM6xQX/ocClLx+8IIcqEeJt91ALY7rLX/yGFKLwapq3+Kvo=
-X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr10570530ioc.118.1540306878901;
- Tue, 23 Oct 2018 08:01:18 -0700 (PDT)
+        bh=VGOVCh7MFCQDTlXOuZiU5ABkdXM+bLmbjV1fV67aQgw=;
+        b=m8u2U0n4FGHy6wo6S80UyBPUgQ+tUJzaKSgKkkXbJdmUKUXl9DId7xkiNZwg5vfJ5Y
+         w1tEvnlME1wWqQ/0/k6mTUYgTu/S4itT1ZGPfJbNINIOIaZ7LuqOGMy9YcxT9r7oKvMw
+         YMqtg49ATUwsv3eSBGvm0TWkvMURNGI0TolVAMFQPm/JtbWbGaxIzuSYRg7oHB9FL/mI
+         zxru9dXKrXGltXaozbET1MLp/zzy0/czSqdkfuAc+NpCcThzwVMdQmI7FEvpBbNkY3Ri
+         QmrVVb+nr1ZQPyCRXH7lfM6iAZLzKtyhFfh3hxa0yqct/WE954O9S/pd4Xfj5rgybIJe
+         bPPQ==
+X-Gm-Message-State: ABuFfoiEt1jLaXrRx5AIsbMVh04oLHcESXgRzguND4SYSYH3PxtoLBL/
+        bpeGTkSPmUHhv9np3qgfm42PmC1wFKSG+gn4Myg=
+X-Google-Smtp-Source: ACcGV63n7aZD0yg2hYN7F0xqTKWkNU4gG7H9bbEWtiarpfN6vmr87IXjKKAyyK4oC4g7umW0xIxrRnsgrsmiODNjh+k=
+X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr13183622itg.70.1540309509551;
+ Tue, 23 Oct 2018 08:45:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181022153633.31757-1-pclouds@gmail.com> <878t2pd6yu.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.1810231126470.4546@tvgsbejvaqbjf.bet> <8736sxc6gt.fsf@evledraar.gmail.com>
-In-Reply-To: <8736sxc6gt.fsf@evledraar.gmail.com>
+References: <20181023113416.90958-1-carenas@gmail.com>
+In-Reply-To: <20181023113416.90958-1-carenas@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 23 Oct 2018 17:00:52 +0200
-Message-ID: <CACsJy8CX78EbANbv8a354djJaO6dKRpXshHhHJTspJvOSewgpA@mail.gmail.com>
-Subject: Re: [PATCH] Poison gettext with the Ook language
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>
+Date:   Tue, 23 Oct 2018 17:44:41 +0200
+Message-ID: <CACsJy8AXjhbY9WWjYtMk128TZHLBCf4Ye4fe-ryXhoP9j2jtdw@mail.gmail.com>
+Subject: Re: [PATCH] khash: silence -Wunused-function
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -66,59 +61,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 12:17 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Tue, Oct 23, 2018 at 1:42 PM Carlo Marcelo Arenas Bel=C3=B3n
+<carenas@gmail.com> wrote:
 >
+> after 36da893114 ("config.mak.dev: enable -Wunused-function", 2018-10-18)
+> macro generated code should use a similar solution than commit-slab to
+> silence the compiler.
 >
-> On Tue, Oct 23 2018, Johannes Schindelin wrote:
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  khash.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> > Hi =C3=86var,
-> >
-> > On Mon, 22 Oct 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> >> So I think the only reason to keep it [GETTEXT_POISON] compile-time is
-> >> performance, but I don't think that matters. It's not like we're
-> >> printing gigabytes of _() formatted output. Everything where formattin=
-g
-> >> matters is plumbing which doesn't use this API. These messages are
-> >> always for human consumption.
-> >
-> > Well, let's make sure that your impression is correct before going too
-> > far. I, too, had the impression that gettext cannot possibly be expensi=
-ve,
-> > especifally in Git for Windows' settings, where we do not even ship
-> > translations. Yet see the commit message of cc5e1bf99247 (gettext: avoi=
-d
-> > initialization if the locale dir is not present, 2018-04-21):
-> >
-> >       The runtime of a simple `git.exe version` call on Windows is
-> >       currently dominated by the gettext setup, adding a whopping ~150m=
-s
-> >       to the ~210ms total.
-> >
-> > I would be in favor of your change to make this a runtime option, of
-> > course, as long as it does not affect performance greatly (in particula=
-r
-> > on Windows, where we fight an uphill battle to make Git faster).
+> diff --git a/khash.h b/khash.h
+> index d10caa0c35..39c2833877 100644
+> --- a/khash.h
+> +++ b/khash.h
+> @@ -234,7 +234,7 @@ static const double __ac_HASH_UPPER =3D 0.77;
+>         __KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_fun=
+c, __hash_equal)
 >
-> How expensive gettext() may or may not be isn't relevant to the
-> GETTEXT_POISON compile-time option.
+>  #define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __has=
+h_equal) \
+> -       KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __h=
+ash_func, __hash_equal)
+> +       KHASH_INIT2(name, __attribute__((__unused__)) static inline, khke=
+y_t, khval_t, kh_is_map, __hash_func, __hash_equal)
 
-If a user requests NO_GETTEXT, they should have zero (or near zero)
-cost related to gettext. Which is true until now (the inline _()
-version is expanded to pretty much no-op with the exception of NULL
-string)
+Maybe move MAYBE_UNUSED from commit-slab-impl.h to git-compat-util.h
+and use it here so we have an easier time if we have to use a
+different way to mark unused functions on some exotic platform.
 
-> The effect of what I'm suggesting here, and which my WIP patch in
-> <875zxtd59e.fsf@evledraar.gmail.com> implements is that we'd do a
-> one-time getenv() for each process that prints a _() message that we
-> aren't doing now, and for each message call a function that would check
-> a boolean "are we in poison mode" static global variable.
+>
+>  /* Other convenient macros... */
+>
+> --
+> 2.19.1
+>
 
-Just don't do the getenv() inside _() even if you just do it one time.
-getenv() may invalidate whatever value from the previous call. I would
-not want to find out my code broke because of an getenv() inside some
-innocent _()... And we should still respect NO_GETTEXT, not doing any
-extra work when it's defined.
+
 --=20
 Duy
