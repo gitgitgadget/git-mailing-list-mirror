@@ -2,116 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B06EF1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 05:09:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E8601F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 05:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbeJWN34 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 09:29:56 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33362 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727101AbeJWN34 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 09:29:56 -0400
-Received: by mail-wr1-f67.google.com with SMTP id u1-v6so111773wrn.0
-        for <git@vger.kernel.org>; Mon, 22 Oct 2018 22:08:13 -0700 (PDT)
+        id S1727355AbeJWNeT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 09:34:19 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:36047 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727101AbeJWNeT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 09:34:19 -0400
+Received: by mail-pg1-f195.google.com with SMTP id l6-v6so74368pgp.3
+        for <git@vger.kernel.org>; Mon, 22 Oct 2018 22:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MxVBVdgqxFNcs3+DLx7ltPEPHG9lI+dEQDxcEc1Beqc=;
-        b=lqBdVPOl/14zecbzcqiOTVwbMYkPZZ7A65N99xV9qfJylWnrLhPLyBQQQaLryszw6m
-         c3h3/tBxqSC6q0mqehdFdz1Ao2d/VelIhQZLWgpGNy7+dPpN43ZbPMAwuxJsCdD8IRny
-         6eKdvjpL9lMqONRWXYK7RiCCk/ac+f6dvvedi5eG0w+NuzLF327QJFH5Dg1t6OgfQuiK
-         X/sPrKMXgWTEJRP66KB37Ahj7NJ9zkrc6gcKCYe45lQ81+wc05U3j3MDGXXp7cNIFS/k
-         WXTTaI6x+IOMiLeCHhoMlm0bgIcCb3G+C9TVMlojFK6kZ+xIB6nXvBHbEXBtP8Lq39Me
-         itag==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wGz7yy3jTGV3sytmpajU0JXj+ppbmGB9uk9c8kQS5to=;
+        b=XqY7/3pS3kFjLr2GLkAaM05DnL4CUArtDqEaQ5I7VrywntQOl1ATkQSYDcm07DNje3
+         Nb3pFS7BX7LcPSW+EPGNaGhOVDPQaxzqNKiDdIbpD9rKBryQ/BkZQwVX/aw4iiBQpS2N
+         byEYSYzHcqW2NW3BzuLsz3hAM5zJIO5SfsiW7c/KFN/DeJEIUwy5c7hfe3WNVH8+t4ls
+         IC5MgvU/eucTecz5CP82SARfxQGJMaFZ3t/ifJOnUY0f8KXlDz7R5ctYR6fzZGkdU+oX
+         3OU8KQCo+2z0waRbR5luQveW2Gb4hgjD9MsQysz/nkHktSqs8gcPj4oD7p/LDEVEFOb7
+         gCMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MxVBVdgqxFNcs3+DLx7ltPEPHG9lI+dEQDxcEc1Beqc=;
-        b=mVgfN3sFo1Qe0yq2IPHSKxg0rDK4hPNLeqFJe66IMk27GJ/xrtDenbhWjvmgcWDVpg
-         2IdBXx1j93XamwI1BmdQGE6F9t1ZbFAmKpXvC84S0K9pNI2m6vXVHIAAwJfpjlQDiw7m
-         5jEmf/eo0ywiVYJLSTznaKhPzutWD25EdZuLTS0P2RmKGAN4bWXu5m6KhZNJCKPe3E0R
-         vJE+SPn+EpUw7GLtyjMbGnxCMmDa6+dAgH7mQKa8QhRjPPfqyfmjXMxmPkAqRkVHUwj+
-         6W7O0Xk8qPCfKcdrm05OlAGmfwQtHBX/nobrI+bdGliMnjvSg/o/VjlF5thseN4v1NSU
-         +mcg==
-X-Gm-Message-State: ABuFfojo5gH+ltiSHE3q2pZAJ5mCglePdV6SpPeTdlThf7ER+FHRxZxQ
-        BBHVB5LeaYlw6D4FEPj16g4=
-X-Google-Smtp-Source: ACcGV62IYOVSPFz7RwXhTyB9td3LmsD+lgLRisVao5Xnpn56kBGiJrV48383Cl2FLqC37lOB3zRHbw==
-X-Received: by 2002:adf:9f0f:: with SMTP id l15-v6mr49041295wrf.206.1540271292438;
-        Mon, 22 Oct 2018 22:08:12 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y65-v6sm338831wmg.40.2018.10.22.22.08.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Oct 2018 22:08:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, peff@peff.net,
-        jonathantanmy@google.com, jeffhost@microsoft.com,
-        matvore@comcast.net
-Subject: Re: [RFC 2/2] exclude-promisor-objects: declare when option is allowed
-References: <cover.1540256910.git.matvore@google.com>
-        <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com>
-Date:   Tue, 23 Oct 2018 14:08:10 +0900
-In-Reply-To: <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com>
-        (Matthew DeVore's message of "Mon, 22 Oct 2018 18:13:42 -0700")
-Message-ID: <xmqqin1ts11h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wGz7yy3jTGV3sytmpajU0JXj+ppbmGB9uk9c8kQS5to=;
+        b=lA7t3XtXm6aaftgJ5Ca0zGa4lNqAx2hViyGAAN5QGeKNVIoxJ+bOJxzIsD0ZS/lorO
+         +d1h5g5BDfQf7uZdMcn3lC+MmFlxtKa5SCfrZWYiXnDdL+TvMpUsBd3U++hnZ1mW++mc
+         hnQP6tuLMuaUorHx0Ye0xCR0aW0asVhaZSa0YAFq5bPYDXr87FCoN4MeAh8kZGYishJs
+         KopXf9oWkdyMaA+Cd5GDNQn3XRYEcS48H4SOJ2w21zj0UaSHdceTkQmIQxYw1lZzDM3d
+         VPyI7N3cMjW2jxwnpWWnpMubbtDClAXopPNoclpe8o+o87J2hUepqXDbRCKQ/zL5sYGy
+         Akbg==
+X-Gm-Message-State: ABuFfoiEm/nPZ/k8u6JDrhiD5DSqjXFtQUwYtPIk07kDhdib+9u3iVqJ
+        fWjLDO0z5BieCtmgMkWQvCV+/NRqPAA=
+X-Google-Smtp-Source: ACcGV60c+dt0StO5YogtE3fwptCU5vwagvrgqvlSNOm9yJ7BKFDToyxZ5rup+S1nYYzRLZw8wtwsUA==
+X-Received: by 2002:a63:6883:: with SMTP id d125-v6mr45614925pgc.451.1540271555259;
+        Mon, 22 Oct 2018 22:12:35 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id q25-v6sm264594pfk.154.2018.10.22.22.12.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 22 Oct 2018 22:12:34 -0700 (PDT)
+From:   carlo <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, carlo <carenas@gmail.com>
+Subject: [PATCH] compat: make sure git_mmap is not expected to write
+Date:   Mon, 22 Oct 2018 22:12:16 -0700
+Message-Id: <20181023051216.64266-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+in f48000fc ("Yank writing-back support from gitfakemmap.", 2005-10-08)
+support for writting back changes was removed but the specific prot
+flag that would be used was not checked for)
 
->  t/t4202-log.sh         | 4 ++++
->  t/t8002-blame.sh       | 4 ++++
->  7 files changed, 14 insertions(+), 1 deletion(-)
-> ...
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 153a506151..819c24d10e 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1703,4 +1703,8 @@ test_expect_success 'log --source paints symmetric ranges' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success '--exclude-promisor-objects does not BUG-crash' '
-> +	test_must_fail git log --exclude-promisor-objects source-a
-> +'
-> +
->  test_done
-> diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-> index 380e1c1054..eea048e52c 100755
-> --- a/t/t8002-blame.sh
-> +++ b/t/t8002-blame.sh
-> @@ -118,4 +118,8 @@ test_expect_success '--no-abbrev works like --abbrev=40' '
->  	check_abbrev 40 --no-abbrev
->  '
->  
-> +test_expect_success '--exclude-promisor-objects does not BUG-crash' '
-> +	test_must_fail git blame --exclude-promisor-objects one
-> +'
-> +
->  test_done
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ compat/mmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-OK.  We used to be hitting BUG() which is an abort() in disguise, so
-must-fail would have caught it without the fix in this patch.  Now
-we would see a more controlled failure.
+diff --git a/compat/mmap.c b/compat/mmap.c
+index 7f662fef7b..14d31010df 100644
+--- a/compat/mmap.c
++++ b/compat/mmap.c
+@@ -4,7 +4,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ {
+ 	size_t n = 0;
+ 
+-	if (start != NULL || !(flags & MAP_PRIVATE))
++	if (start != NULL || flags != MAP_PRIVATE || prot != PROT_READ)
+ 		die("Invalid usage of mmap when built with NO_MMAP");
+ 
+ 	start = xmalloc(length);
+-- 
+2.19.1
 
-    ... goes and makes sure that is the case ...
-
-Not really.  We were already doing a controlled failure via die(),
-so these two tests would not have caught the problem in the code
-before the fix in this patch.
-
-But nevertheless this is a good change; I do not think it is worth
-grepping for "unrecognized option" to differentiate the two cases.
-
-Thanks.
