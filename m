@@ -2,137 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE71D1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 20:28:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0CB01F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 20:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbeJXExn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 00:53:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51676 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725948AbeJXExn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 00:53:43 -0400
-Received: (qmail 7392 invoked by uid 109); 23 Oct 2018 20:28:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Oct 2018 20:28:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26401 invoked by uid 111); 23 Oct 2018 20:27:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Oct 2018 16:27:58 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2018 16:28:43 -0400
-Date:   Tue, 23 Oct 2018 16:28:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] thread-utils: better wrapper to avoid #ifdef
- NO_PTHREADS
-Message-ID: <20181023202842.GA17371@sigill.intra.peff.net>
-References: <20181018170934.GA21138@sigill.intra.peff.net>
- <20181018180522.17642-1-pclouds@gmail.com>
+        id S1726919AbeJXE5l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 00:57:41 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40032 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbeJXE5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 00:57:41 -0400
+Received: by mail-wr1-f66.google.com with SMTP id d2-v6so3123550wro.7
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 13:32:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=+4/qDND+drPmGMdKvcQVMaORghLdmngEiZD8XA5UrR4=;
+        b=P1//2Y0qLbb0P+pAi0pLHRTPdxFU9Uxq2GMI7dIi6gxt3HPoH/kQRYyBMUoGcJeiU3
+         riCGsjjQWq64UoW27xTm3HayJpJgQOlq9cnZIrHTz05JhlALErPSO2qHV1G1q+/cFQja
+         YIuX0PBWowbpWJa0Ds9u4kwCtZ0yEZYPPUDGoSBOs3vPYYRws9EcHNixHPUoqm4384m6
+         d11+Fv0rl3ZFY+wP8Mcv5thCpS+negIhq1FqnvR+0Ao1f0eWLPSCNiNZS28WZseG9UoG
+         IBC/2OfdoUUEI5JtYu04iLHhz89OLqjkx9BVkS9hx7nApXgik+WCfaPpUh/5W3jvpEKH
+         whRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=+4/qDND+drPmGMdKvcQVMaORghLdmngEiZD8XA5UrR4=;
+        b=T9XYpvgzVEYFgnjHoAClMrAe3wEBgtnnXEwt/hRibIjAbA0aCEhuTjN+1IgnOdIZ1L
+         UYU3XEQuJBSNHzD8KP7yZsNyVGG3AOlDA6AChEgKkq+rZRdTqbNyM03isaUZs8QWgGtQ
+         p8eCOH9w14QMgH419cu3wCybSs/mArXCI6GBF4JVBXBm6IcCv5hdGR6vRpdpHHsZORl/
+         PC4VUzlKZwfx709VSg0jKnav+09cUXh7YD24e1FixMzUkoFAtzfhnaAZdo3y0r6Nr4XF
+         iq8UT7udxmLyqiEVSH8ZmpT6STYLC6xJZ7j+JQeih6xs7PPjhyf1qSg3ccxc7HSE06Ep
+         Hc/w==
+X-Gm-Message-State: AGRZ1gL+iMKEjawX1fty1K1Ug5O9vPwUh/Y9AJKyM2LHZ88eMFlRp0LC
+        FcSsPAjewD6t2FYAYkR6Q1M=
+X-Google-Smtp-Source: AJdET5ez/BPEPg40bIldbcTk8GU47tIlUyDu/ioLPW7EX1NEYgGHLHncg2Y3qGpyIUTjMpvrqEKS0g==
+X-Received: by 2002:adf:e2c1:: with SMTP id d1-v6mr14436268wrj.26.1540326760415;
+        Tue, 23 Oct 2018 13:32:40 -0700 (PDT)
+Received: from localhost ([2.25.81.124])
+        by smtp.gmail.com with ESMTPSA id x8-v6sm4773716wrd.54.2018.10.23.13.32.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 23 Oct 2018 13:32:39 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 21:32:38 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] commit-reach: fix sorting commits by generation
+Message-ID: <20181023203237.GF4883@hank.intra.tgummerer.com>
+References: <20181022211037.22719-1-t.gummerer@gmail.com>
+ <13bdda53-b751-182b-4aa8-d9a5c03f422d@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181018180522.17642-1-pclouds@gmail.com>
+In-Reply-To: <13bdda53-b751-182b-4aa8-d9a5c03f422d@web.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 18, 2018 at 08:05:22PM +0200, Nguyá»…n ThÃ¡i Ngá»c Duy wrote:
-
-> On Thu, Oct 18, 2018 at 7:09 PM Jeff King <peff@peff.net> wrote:
-> > > In this particular case though I think we should be able to avoid so
-> > > much #if if we make a wrapper for pthread api that would return an
-> > > error or something when pthread is not available. But similar
-> > > situation may happen elsewhere too.
-> >
-> > Yeah, I think that is generally the preferred method anyway, just
-> > because of readability and simplicity.
+On 10/22, René Scharfe wrote:
+> Am 22.10.2018 um 23:10 schrieb Thomas Gummerer:
+> > compare_commit_by_gen is used to sort a list of pointers to 'struct
+> > commit'.  The comparison function for qsort is called with pointers to
+> > the objects it needs to compare, so when sorting a list of 'struct
+> > commit *', the arguments are of type 'struct commit **'.  However,
+> > currently the comparison function casts it's arguments to 'struct
+> > commit *' and uses those, leading to out of bounds memory access and
+> > potentially to wrong results.  Fix that.
+> > 
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> > 
+> > I noticed this by running the test suite through valgrind.  I'm not
+> > familiar with this code, so I'm not sure why this didn't cause any
+> > issues or how they would manifest, but this seems like the right fix
+> > for this function either way.
 > 
-> I've wanted to do this for a while, so let's test the water and see if
-> it's well received.
+> Right; I sent a similar patch a while ago, but it seems to have fallen
+> through the cracks:
 > 
-> This patch is a proof of concept that adds just enough macros so that
-> I can build index-pack.c on a single thread mode with zero #ifdef
-> related to NO_PTHREADS.
+> https://public-inbox.org/git/d1b58614-989f-5998-6c53-c19eee409a2f@web.de/
+
+Whoops I didn't notice that, I only checked whether the problem still
+exists in pu.  I'd be more than happy to go with your patch instead.
+
+> Anyway, your implied question was discussed back then.  Derrick wrote:
 > 
-> Besides readability and simplicity, it reduces the chances of breaking
-> conditional builds (e.g. you rename a variable name but forgot that
-> the variable is in #if block that is not used by your
-> compiler/platform).
+>    The reason to sort is to hopefully minimize the amount we walk by 
+>    exploring the "lower" commits first. This is a performance-only thing, 
+>    not a correctness issue (which is why the bug exists). Even then, it is 
+>    just a heuristic.
 
-Yes, I love this. We're already halfway there with things like
-read_lock() in index-pack and elsewhere, which are conditionally no-ops.
-The resulting code is much easier to read, I think.
+Thanks for pointing that out!
 
-> Performance-wise I don't think there is any loss for single thread
-> mode. I rely on compilers recognizing HAVE_THREADS being a constant
-> and remove dead code or at least optimize in favor of non-dead code.
+> Does b6723e4671 in pu (commit-reach: fix first-parent heuristic) change
+> that picture?  Did a quick test and found no performance difference with
+> and without the fix on top, i.e. proper sorting didn't seem to matter.
+
+I just gave 'test-tool reach can_all_from_reach' a try and got the
+same results, with or without the fix the times are very similar.  I
+haven't had time to follow the commit-graph series though, so I'm not
+sure I used it correctly.  I tried it on the linux repository with the
+following input:
+
+X:v4.10
+X:v4.9
+X:v4.8
+X:v4.7
+X:v4.6
+X:v4.5
+X:v4.4
+X:v4.3
+X:v4.2
+X:v4.1
+Y:v3.10
+Y:v3.9
+Y:v3.8
+Y:v3.7
+Y:v3.6
+Y:v3.5
+Y:v3.4
+Y:v3.3
+Y:v3.2
+Y:v3.1
+
+> >  commit-reach.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/commit-reach.c b/commit-reach.c
+> > index bc522d6840..9efddfd7a0 100644
+> > --- a/commit-reach.c
+> > +++ b/commit-reach.c
+> > @@ -516,8 +516,8 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
+> >  
+> >  static int compare_commits_by_gen(const void *_a, const void *_b)
+> >  {
+> > -	const struct commit *a = (const struct commit *)_a;
+> > -	const struct commit *b = (const struct commit *)_b;
+> > +	const struct commit *a = *(const struct commit **)_a;
+> > +	const struct commit *b = *(const struct commit **)_b;
+> >  
+> >  	if (a->generation < b->generation)
+> >  		return -1;
+> > 
 > 
-> Memory-wise, yes we use some more memory in single thread mode. But we
-> don't have zillions of mutexes or thread id, so a bit extra memory
-> does not worry me so much.
-
-Yeah, I don't think carrying around a handful of ints is going to be a
-big deal.
-
-I also think we may want to make a fundamental shift in our view of
-thread support. In the early days, it was "well, this is a thing that
-modern systems can take advantage of for certain commands". But these
-days I suspect it is more like "there are a handful of legacy systems
-that do not even support threads".
-
-I don't think we should break the build on those legacy systems, but
-it's probably OK to stop thinking of it as "non-threaded platforms are
-the default and must pay zero cost" and more as "threaded platforms are
-the default, and non-threaded ones are OK to pay a small cost as long as
-they still work".
-
-> @@ -74,4 +79,29 @@ int init_recursive_mutex(pthread_mutex_t *m)
->  		pthread_mutexattr_destroy(&a);
->  	}
->  	return ret;
-> +#else
-> +	return ENOSYS;
-> +#endif
-> +}
-
-I suspect some of these ENOSYS could just become a silent success.
-("yep, I initialized your dummy mutex"). But it probably doesn't matter
-much either way, as we would not generally even bother checking this
-return.
-
-> +#ifdef NO_PTHREADS
-> +int dummy_pthread_create(pthread_t *pthread, const void *attr,
-> +			 void *(*fn)(void *), void *data)
-> +{
-> +	return ENOSYS;
->  }
-
-Whereas for this one, ENOSYS makes a lot of sense (we should avoid the
-threaded code-path anyway when we see that online_cpus()==1, and this
-would let us know when we mess that up).
-
-> +int dummy_pthread_init(void *data)
-> +{
-> +	/*
-> +	 * Do nothing.
-> +	 *
-> +	 * The main purpose of this function is to break compiler's
-> +	 * flow analysis or it may realize that functions like
-> +	 * pthread_mutex_init() is no-op, which means the (static)
-> +	 * variable is not used/initialized at all and trigger
-> +	 * -Wunused-variable
-> +	 */
-> +	return ENOSYS;
-> +}
-
-It might be worth marking the dummy variables as MAYBE_UNUSED, exactly
-to avoid this kind of compiler complaint.
-
--Peff
+> Looks good to me.
+> 
+> René
