@@ -7,55 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA0071F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 14:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12FB11F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 15:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728265AbeJWXIv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 19:08:51 -0400
-Received: from mail-it1-f171.google.com ([209.85.166.171]:36594 "EHLO
-        mail-it1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726277AbeJWXIv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 19:08:51 -0400
-Received: by mail-it1-f171.google.com with SMTP id c85-v6so2428153itd.1
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 07:45:07 -0700 (PDT)
+        id S1728402AbeJWXZG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 19:25:06 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:38155 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726277AbeJWXZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 19:25:06 -0400
+Received: by mail-io1-f67.google.com with SMTP id q18-v6so1069822iod.5
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 08:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=zHqkjxGrpqXH4sU5T/RaTfxb+ApnQyoKw6340KnSnQg=;
-        b=WYaq2lGLqB1hEKqkQe80GyZYQM0lVYvuxmeJ2oFcPbN5Jhdt0Gt/gM94nYQ+59Kdkn
-         VyOa0b+gt7ancA5FN884trdl5O9ieZ2SdUrIHI7NQpVd5icrdcOjNHb2B0JzPOr/I/m7
-         NsF3PofF9gstDzPkSgwGUbzERf6e2qXa7r7lq+kZxGI5qWfcmo7QILG5ItxQBXZe9JwP
-         EVEyu9ijoNEmFNHruJmIBFq9esa5IPwxxTIvizXbJxG5IkS+vWik/LxuRxyHt47qvKtz
-         3mCZiAq/X+4h5Mos8Yu831/lm60SybFhEKMi4JGGJEKrovuV6oNKXD1SAmqeh++7nkvt
-         9b6Q==
+        bh=lk/oGvzpvFQklGUobX2lV9A+DzK9j+aPItGA1RkftpY=;
+        b=M3JoSy4czO7113vJ0AMs0nw4/T2D+MJW62HDrOLmEboaf+DRkVQCR/5SCHnnm/8+uX
+         hWcVQgEl/fxnUvANpcWu+YRs8zqgiiQdn4Fw7381/cWKvjyJL0kzhJ3UpQ6FNqGcj9vb
+         EUVU/jm5lwVdoDD93qCQtMdNWeGeZQdEChbUDEdOveO+2e8eFU4jt7j/62zeu9ZPydDX
+         A0nNoaH/WQsIQYeOu28yP4ExYKOyXVt99fIXrJ8fIBWPfcd/lK5AUeaCZhmvB6GGuNpx
+         1zvWt671hFCXhEYkOQsZeHXCtlBjig7y5r8dMK2J4lBkzuGs+4GTNsPo+VJ/yeBpRcrB
+         li1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zHqkjxGrpqXH4sU5T/RaTfxb+ApnQyoKw6340KnSnQg=;
-        b=ZjjLoscZEvFu2wTutZewRNddFUxSXAPzJj4Hfcr7mxc5qC469mirrhz8+mAdCfq6HV
-         uRpWaiXLKDT1aia2ykCDcCopsrggqGj3+QY2QwAfCTVXW0b+gKXQrpsrMqAySW6UI2zB
-         OzH2VUMOsayY/pONpIIetmuipVnSssRTt/BEH25+D8SHIWLzFYgmWgWR8h/RjZco7AMg
-         ZUfLi4DiEHUdkemy+Xs83T3w0L80pmzQBsj/Og7voFyCzCYajI6BLJmvtrXoVGbra6QV
-         cWQ+SBeyAvpek0jc/HDOX6GcGey/TYwi1pGzNtkAMJ42bTUpmiUjIBlrk7GChRir03GK
-         4Q4w==
-X-Gm-Message-State: ABuFfoiCDOxr6oiJH4+tvxAZb57mjYAx270mV9xrNAj4hdiV3iKAYIoO
-        3EZecAzG0afqkd33HjIpDTkdCGt/h9X6dVZccENI4A==
-X-Google-Smtp-Source: ACcGV62AfPuJJx9axC6QiU/znhXPxpS0OT0DjP0rHX0TSgsvcTFML5hbR+SYRmereR3qWc4vk0aGqoaxaa7nG35DcjQ=
-X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr12704523itc.123.1540305906462;
- Tue, 23 Oct 2018 07:45:06 -0700 (PDT)
+        bh=lk/oGvzpvFQklGUobX2lV9A+DzK9j+aPItGA1RkftpY=;
+        b=tntWDHJC/+LDr5c0VzRLicPu2fBUmfZPGFDdaQztVySRV6T/qqRot7CuOfrwKhcyCr
+         Ot7jBrqF2fAkDQRYB5X7RxWbvq8+M4JzrLeOpYwTXjCPKRMtFqSYUVPGg9Ady17sq1cK
+         Gc1fhe4zKUZVgwyUkbRXSx8oUuzv9h417Qz+SzGpuvgvb0rQkdltiA1OFIZIlge1div2
+         s+xECMndNxkj1Lw7txCkhXxbv+4SMTkO/8B1ilZLQaU2s+SxFTCAbYh25791uFuglalu
+         6fJ0PQn+kOguZeHUz19WF9+zkQLG2TmMjzW4lLc8eAZiQWoPJQUuzejCD2yP8k/S/Y+7
+         Ouiw==
+X-Gm-Message-State: AGRZ1gKIsKaq9I4undXt6jcdP8m7m7tGESbtJ8b77VT08mDBqusUFAGG
+        Rxnj1VA4Mr4CVnwJtSlAsdLSrLjel1xLJoJ0ddU=
+X-Google-Smtp-Source: AJdET5fQLuNY5uHCtnSvEDIAHzOIyTvZ9zFY51sDru16pM6xQX/ocClLx+8IIcqEeJt91ALY7rLX/yGFKLwapq3+Kvo=
+X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr10570530ioc.118.1540306878901;
+ Tue, 23 Oct 2018 08:01:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181022153633.31757-1-pclouds@gmail.com> <20181022202241.18629-1-szeder.dev@gmail.com>
- <20181022202241.18629-8-szeder.dev@gmail.com>
-In-Reply-To: <20181022202241.18629-8-szeder.dev@gmail.com>
+References: <20181022153633.31757-1-pclouds@gmail.com> <878t2pd6yu.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.1810231126470.4546@tvgsbejvaqbjf.bet> <8736sxc6gt.fsf@evledraar.gmail.com>
+In-Reply-To: <8736sxc6gt.fsf@evledraar.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 23 Oct 2018 16:44:38 +0200
-Message-ID: <CACsJy8DEta1f8v5XPK53bMdarWX4TYiQAx0Qz1LCRA0nvZANwg@mail.gmail.com>
-Subject: Re: [PATCH 7/8] gettext: introduce GIT_GETTEXT_POISON=scrambled
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 23 Oct 2018 17:00:52 +0200
+Message-ID: <CACsJy8CX78EbANbv8a354djJaO6dKRpXshHhHJTspJvOSewgpA@mail.gmail.com>
+Subject: Re: [PATCH] Poison gettext with the Ook language
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,39 +66,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 10:23 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
-> [TODO: Fallout?
->        A 'printf(_("foo: %s"), var);' call includes the contents of
->        'var' unscrambled in the output.  Could that hide the
->        translation of a string that should not have been translated?
->        I'm afraid yes: to check the output of that printf() a sloppy
->        test could do:
+On Tue, Oct 23, 2018 at 12:17 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
->          git plumbing-cmd >out && grep "var's content" out
 >
->        which would fail in a regular GETTEXT_POISON test run, but
->        would succeed in a scrambled test run.  Does this matter in
->        practice, do we care at all?
-
-If var is supposed to be translated, _() must have been called before
-the final string is stored in var and the content is already
-scrambled. Whatever left unscrambled is machine-generated and should
-be ok to grep, or we have found new strings that should be _() but
-not.
-
-PS. Another thing I'd like to have is to mark the beginning and end of
-a scrambled text. For example, _("foo") produces "[f.o.o]" or
-something like that. If we have it, it's easier to see "text legos"
-(instead of full sentences) that makes translator's life harder. But
-it could interfere with stuff (e.g. some strings must start with '#')
-so let's forget it for now.
-
+> On Tue, Oct 23 2018, Johannes Schindelin wrote:
 >
->        Does gettext_scramble() need a FORMAT_PRESERVING annotation?
->        Seems to work fine without it so far...]
+> > Hi =C3=86var,
+> >
+> > On Mon, 22 Oct 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >> So I think the only reason to keep it [GETTEXT_POISON] compile-time is
+> >> performance, but I don't think that matters. It's not like we're
+> >> printing gigabytes of _() formatted output. Everything where formattin=
+g
+> >> matters is plumbing which doesn't use this API. These messages are
+> >> always for human consumption.
+> >
+> > Well, let's make sure that your impression is correct before going too
+> > far. I, too, had the impression that gettext cannot possibly be expensi=
+ve,
+> > especifally in Git for Windows' settings, where we do not even ship
+> > translations. Yet see the commit message of cc5e1bf99247 (gettext: avoi=
+d
+> > initialization if the locale dir is not present, 2018-04-21):
+> >
+> >       The runtime of a simple `git.exe version` call on Windows is
+> >       currently dominated by the gettext setup, adding a whopping ~150m=
+s
+> >       to the ~210ms total.
+> >
+> > I would be in favor of your change to make this a runtime option, of
+> > course, as long as it does not affect performance greatly (in particula=
+r
+> > on Windows, where we fight an uphill battle to make Git faster).
+>
+> How expensive gettext() may or may not be isn't relevant to the
+> GETTEXT_POISON compile-time option.
 
-I don't think you can. _() can be called on plain strings that just
-happen to have '%' in them.
+If a user requests NO_GETTEXT, they should have zero (or near zero)
+cost related to gettext. Which is true until now (the inline _()
+version is expanded to pretty much no-op with the exception of NULL
+string)
+
+> The effect of what I'm suggesting here, and which my WIP patch in
+> <875zxtd59e.fsf@evledraar.gmail.com> implements is that we'd do a
+> one-time getenv() for each process that prints a _() message that we
+> aren't doing now, and for each message call a function that would check
+> a boolean "are we in poison mode" static global variable.
+
+Just don't do the getenv() inside _() even if you just do it one time.
+getenv() may invalidate whatever value from the previous call. I would
+not want to find out my code broke because of an getenv() inside some
+innocent _()... And we should still respect NO_GETTEXT, not doing any
+extra work when it's defined.
 --=20
 Duy
