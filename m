@@ -7,150 +7,131 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24E1E1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91AC31F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728045AbeJWSqI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 14:46:08 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46581 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727985AbeJWSqI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 14:46:08 -0400
-Received: by mail-pf1-f195.google.com with SMTP id r64-v6so415334pfb.13
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:21 -0700 (PDT)
+        id S1728048AbeJWSqK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 14:46:10 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:41485 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727985AbeJWSqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 14:46:09 -0400
+Received: by mail-pl1-f195.google.com with SMTP id p5-v6so402301plq.8
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=iq77terXrxcEpQveHm98O2N7uMN26N1Wz/b4yXQNVSk=;
-        b=KCRNjP6pWKTZ937O6d/d458DBv3dQWGNNl4P8JLXe+KKX4ht8R8oj7jGgTjk7tdlR1
-         rVugZGn/xK9X+8F4/d4pFJM8hzvvsIVeMdF21v9Qp3fF+X6xg5+cLvjgLPhFdvnqmkIq
-         vr04+WnZIbEKFL5uOUripqJyXHchbRuDwOeauawRybkBI2+vWGFp36govTnbL4bdhrOb
-         I891Dg6KS4x+AeYwrOiqtblH0YxQx9+QMeRc1+DPkoAGGFLWdkEyF2+ppowNKZWkFIPx
-         h5KetN5oSxDVfLuVpsaEjKI0wulUC4mRyKJOn5wsHUUY3huh74cZUlQYqAwedaovzayz
-         DuzQ==
+        bh=A2im7ztCWTjsqeQUMVRv5lfLzu6t4vsrM5HPLoPDR/A=;
+        b=qogjpqXnxYMB8ucBGUCwzWclJX4KAB1qwfOp2JM33eGMR/AfiDAV5WgV/NJLvyYO7r
+         4ZOLwXv2BTObrBNQdV1YIO++2+v/ftQTUuBXlWex1cKk/GgGeDddLohQeYHBDwecKb0q
+         rm++N6tFi9fq8e+nYdTkk3e1NFcCFT4Hzft7mfQzRCF9paGOMvujC+56SV6iux5+W5zH
+         4pZXbX7X8o4rrGMZ5+M6ACm5ra7qlFuv2U2Vr/bKESP/yXoGMkQrxjX4YqZb2VMAVP7F
+         w28jC6d9iQei7npkjTS41Zw8vdWLI0symqpVsmRgGM1RQuW2yQXEdRoF0rh1LPhDwPVZ
+         MqTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iq77terXrxcEpQveHm98O2N7uMN26N1Wz/b4yXQNVSk=;
-        b=OlrGkTfXi60TLOGacDKnk0D3BKd5x0bGzca0M5aHXXD2mgdlok9nWSLITLrO4J4CuG
-         YJLUdI1We3zPknSl9KCJxPtmOY/s4lmZTxzIyzkQDkTjYQaVfOhGGbtWYhS1F1Uj5PHf
-         TTxWiN+o/vEh1mEUvyf95OU2bAuh/h7UtMRv2NF7N3of8+CeFWXa4THOFzDsNevE+d6Y
-         auZPaFoE3mLIjMd3/YSYMkz4EKtq3fz25cFddxoso+GEmThPBj/ikHa1f0/OgVnJCGnB
-         BSryhvvPKlzXxRq29uXUvJqpjBY0plAur4pnSYhIWnwmzhU1eU9/nyP3NK10fzuaDSUW
-         p+dg==
-X-Gm-Message-State: AGRZ1gL7B/HNrP0CHXedhaV/p/SB7VNe8NjpPU9IXB9azPDXEtvMG3T/
-        ZNP6ExC9O/a1ocRnD9qT71bxrSAH
-X-Google-Smtp-Source: AJdET5dSRxvdE3noYLwFhjiNVEvhv3Ophh3QWkPQ5d4S/DWrFod8f5acbkW484VXYUdhiaJz17KpRw==
-X-Received: by 2002:a63:3f44:: with SMTP id m65mr7016399pga.115.1540290200735;
-        Tue, 23 Oct 2018 03:23:20 -0700 (PDT)
+        bh=A2im7ztCWTjsqeQUMVRv5lfLzu6t4vsrM5HPLoPDR/A=;
+        b=aUMnnIHJ/1MiFw+cPcOvWXD+fdJHGAZcFhu4zcTSsvbCAQFCuP+Xv4e5/YAfGVqYo2
+         IY20MoeZcJIGxfgWxjFXkMRfcK1DGY1sNiKiCa+sAR2jKo50A7ECGSgRr65uOL9oKurR
+         j3v83yN0KEprOgI0Se1idUONssCY4s9/QukvtUJ4WyepU9PS38yEEhnNi/mb5WqLM+v7
+         Qc0/0Y1BhZm/BY5G56TnCNEsg3dc8SwAfk+JT0vSPZQf5X6Nc1Koinf3HpzRU2c66+CD
+         Ctq2AZtdbWkEPTE67xK/YRqN0MIeB4QPgERKh5WgpAbCDonqzaTAmA29RQP1mmxM8ESN
+         Gqzg==
+X-Gm-Message-State: AGRZ1gLdCG4XeHGLe7TR2b1zzn+QM8XsXSTDWdoyRXDbQ6qFt1CNC/Eu
+        edaAwv4huZtj3WObmpJoazxaCJqK
+X-Google-Smtp-Source: AJdET5cY4TvZnVaf2FTkOXwrheqFGP/tPxA36Na3Pz2oYGUNkWMA66MQXrk2Lu5Xp8ay2qwhjif4qg==
+X-Received: by 2002:a17:902:6bc1:: with SMTP id m1-v6mr1778582plt.34.1540290202275;
+        Tue, 23 Oct 2018 03:23:22 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id o131-v6sm1442801pgo.53.2018.10.23.03.23.19
+        by smtp.gmail.com with ESMTPSA id k24-v6sm1255514pfi.11.2018.10.23.03.23.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 03:23:19 -0700 (PDT)
-X-Google-Original-Date: Tue, 23 Oct 2018 10:23:14 GMT
-Message-Id: <85485598a8c391262612929ad4b98e79517e01a4.1540290197.git.gitgitgadget@gmail.com>
+        Tue, 23 Oct 2018 03:23:21 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 03:23:21 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 10:23:15 GMT
+Message-Id: <f2ce9bdc01892b514f75c6c25c3393765593b1ca.1540290197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.53.git.gitgitgadget@gmail.com>
 References: <pull.53.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/3] mingw: factor out code to set stat() data
+From:   "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 2/3] mingw: replace MSVCRT's fstat() with a Win32-based
+ implementation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Karsten Blees <blees@dcon.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Karsten Blees <blees@dcon.de>
 
-In our fstat() emulation, we convert the file metadata from Win32 data
-structures to an emulated POSIX structure.
+fstat() is the only stat-related CRT function for which we don't have a
+full replacement yet (and thus the only reason to stick with MSVCRT's
+'struct stat' definition).
 
-To structure the code better, let's factor that part out into its own
-function.
+Fully implement fstat(), in preparation of implementing a POSIX 2013
+compatible 'struct stat' with nanosecond-precision file times.
 
-Note: it would be tempting to try to unify this code with the part of
-do_lstat() that does the same thing, but they operate on different data
-structures: BY_HANDLE_FILE_INFORMATION vs WIN32_FILE_ATTRIBUTE_DATA. So
-unfortunately, they cannot be unified.
+This allows us also to implement some clever code to handle pipes and
+character devices in our own way.
 
+Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ compat/mingw.c | 31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 18caf2196..d2e7d86db 100644
+index d2e7d86db..07fc0b79a 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -736,6 +736,29 @@ static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
- 	return do_lstat(follow, alt_name, buf);
- }
- 
-+static int get_file_info_by_handle(HANDLE hnd, struct stat *buf)
-+{
-+	BY_HANDLE_FILE_INFORMATION fdata;
-+
-+	if (!GetFileInformationByHandle(hnd, &fdata)) {
-+		errno = err_win_to_posix(GetLastError());
-+		return -1;
-+	}
-+
-+	buf->st_ino = 0;
-+	buf->st_gid = 0;
-+	buf->st_uid = 0;
-+	buf->st_nlink = 1;
-+	buf->st_mode = file_attr_to_st_mode(fdata.dwFileAttributes);
-+	buf->st_size = fdata.nFileSizeLow |
-+		(((off_t)fdata.nFileSizeHigh)<<32);
-+	buf->st_dev = buf->st_rdev = 0; /* not used by Git */
-+	buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
-+	buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
-+	buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
-+	return 0;
-+}
-+
- int mingw_lstat(const char *file_name, struct stat *buf)
- {
- 	return do_stat_internal(0, file_name, buf);
-@@ -748,7 +771,6 @@ int mingw_stat(const char *file_name, struct stat *buf)
+@@ -771,20 +771,31 @@ int mingw_stat(const char *file_name, struct stat *buf)
  int mingw_fstat(int fd, struct stat *buf)
  {
  	HANDLE fh = (HANDLE)_get_osfhandle(fd);
--	BY_HANDLE_FILE_INFORMATION fdata;
++	DWORD avail, type = GetFileType(fh) & ~FILE_TYPE_REMOTE;
  
- 	if (fh == INVALID_HANDLE_VALUE) {
- 		errno = EBADF;
-@@ -758,20 +780,9 @@ int mingw_fstat(int fd, struct stat *buf)
- 	if (GetFileType(fh) != FILE_TYPE_DISK)
- 		return _fstati64(fd, buf);
- 
--	if (GetFileInformationByHandle(fh, &fdata)) {
--		buf->st_ino = 0;
--		buf->st_gid = 0;
--		buf->st_uid = 0;
--		buf->st_nlink = 1;
--		buf->st_mode = file_attr_to_st_mode(fdata.dwFileAttributes);
--		buf->st_size = fdata.nFileSizeLow |
--			(((off_t)fdata.nFileSizeHigh)<<32);
--		buf->st_dev = buf->st_rdev = 0; /* not used by Git */
--		buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
--		buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
--		buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
-+	if (!get_file_info_by_handle(fh, buf))
- 		return 0;
+-	if (fh == INVALID_HANDLE_VALUE) {
+-		errno = EBADF;
+-		return -1;
 -	}
+-	/* direct non-file handles to MS's fstat() */
+-	if (GetFileType(fh) != FILE_TYPE_DISK)
+-		return _fstati64(fd, buf);
++	switch (type) {
++	case FILE_TYPE_DISK:
++		return get_file_info_by_handle(fh, buf);
+ 
+-	if (!get_file_info_by_handle(fh, buf))
++	case FILE_TYPE_CHAR:
++	case FILE_TYPE_PIPE:
++		/* initialize stat fields */
++		memset(buf, 0, sizeof(*buf));
++		buf->st_nlink = 1;
 +
- 	errno = EBADF;
- 	return -1;
++		if (type == FILE_TYPE_CHAR) {
++			buf->st_mode = _S_IFCHR;
++		} else {
++			buf->st_mode = _S_IFIFO;
++			if (PeekNamedPipe(fh, NULL, 0, NULL, &avail, NULL))
++				buf->st_size = avail;
++		}
+ 		return 0;
+ 
+-	errno = EBADF;
+-	return -1;
++	default:
++		errno = EBADF;
++		return -1;
++	}
  }
+ 
+ static inline void time_t_to_filetime(time_t t, FILETIME *ft)
 -- 
 gitgitgadget
 
