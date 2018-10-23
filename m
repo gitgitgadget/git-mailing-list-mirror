@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91AC31F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0ACB1F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728048AbeJWSqK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 14:46:10 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41485 "EHLO
+        id S1728050AbeJWSqN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 14:46:13 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:42369 "EHLO
         mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727985AbeJWSqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 14:46:09 -0400
-Received: by mail-pl1-f195.google.com with SMTP id p5-v6so402301plq.8
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:22 -0700 (PDT)
+        with ESMTP id S1727985AbeJWSqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 14:46:11 -0400
+Received: by mail-pl1-f195.google.com with SMTP id t6-v6so370793plo.9
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=A2im7ztCWTjsqeQUMVRv5lfLzu6t4vsrM5HPLoPDR/A=;
-        b=qogjpqXnxYMB8ucBGUCwzWclJX4KAB1qwfOp2JM33eGMR/AfiDAV5WgV/NJLvyYO7r
-         4ZOLwXv2BTObrBNQdV1YIO++2+v/ftQTUuBXlWex1cKk/GgGeDddLohQeYHBDwecKb0q
-         rm++N6tFi9fq8e+nYdTkk3e1NFcCFT4Hzft7mfQzRCF9paGOMvujC+56SV6iux5+W5zH
-         4pZXbX7X8o4rrGMZ5+M6ACm5ra7qlFuv2U2Vr/bKESP/yXoGMkQrxjX4YqZb2VMAVP7F
-         w28jC6d9iQei7npkjTS41Zw8vdWLI0symqpVsmRgGM1RQuW2yQXEdRoF0rh1LPhDwPVZ
-         MqTQ==
+        bh=wXl6MONf/mI5sF+41xCeeB5rAGu7b9Huy/dBxnNqZww=;
+        b=kAMZ3oTA/uW2KVmnZXrFZ75ZhJZOodfhR0Kgss83X1ScQKanL90r2XbxRAvRIrKsuU
+         0VCbHI1JdZyYxaSlyIqusaRFGJUsAqVH+hUGGns7kcOUUdTAndF7OggqqZWqe+gQRaYr
+         /Mox2h+p3Y5jf38V4oQ+JTIQetfWn/ALZWOgKTYNw7Z/6GAUojPoG1OOEHnB8+ugJYuS
+         6SCKHsWy+RpnSkglMiF7D7ebN7TBmaOdBrYsuzjjxTepzkFgw/sZ0NW/B1GXZ+kFgMQs
+         fLCeZoKZFlP5RWu9ZzyLvsEi47arGrEbHgp6Wv68/UUvF2jnds/UMnDXrOmU+X5uLX8w
+         VoGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=A2im7ztCWTjsqeQUMVRv5lfLzu6t4vsrM5HPLoPDR/A=;
-        b=aUMnnIHJ/1MiFw+cPcOvWXD+fdJHGAZcFhu4zcTSsvbCAQFCuP+Xv4e5/YAfGVqYo2
-         IY20MoeZcJIGxfgWxjFXkMRfcK1DGY1sNiKiCa+sAR2jKo50A7ECGSgRr65uOL9oKurR
-         j3v83yN0KEprOgI0Se1idUONssCY4s9/QukvtUJ4WyepU9PS38yEEhnNi/mb5WqLM+v7
-         Qc0/0Y1BhZm/BY5G56TnCNEsg3dc8SwAfk+JT0vSPZQf5X6Nc1Koinf3HpzRU2c66+CD
-         Ctq2AZtdbWkEPTE67xK/YRqN0MIeB4QPgERKh5WgpAbCDonqzaTAmA29RQP1mmxM8ESN
-         Gqzg==
-X-Gm-Message-State: AGRZ1gLdCG4XeHGLe7TR2b1zzn+QM8XsXSTDWdoyRXDbQ6qFt1CNC/Eu
-        edaAwv4huZtj3WObmpJoazxaCJqK
-X-Google-Smtp-Source: AJdET5cY4TvZnVaf2FTkOXwrheqFGP/tPxA36Na3Pz2oYGUNkWMA66MQXrk2Lu5Xp8ay2qwhjif4qg==
-X-Received: by 2002:a17:902:6bc1:: with SMTP id m1-v6mr1778582plt.34.1540290202275;
-        Tue, 23 Oct 2018 03:23:22 -0700 (PDT)
+        bh=wXl6MONf/mI5sF+41xCeeB5rAGu7b9Huy/dBxnNqZww=;
+        b=MjjXw6oNGRarRcQDvd7jGGNT3YnRZCqXTLX12edu1wL86Z0vS2cTEvLGeZyGESpNmF
+         cVYl/Hp9UncN0iTwNDivGYZfMi8z+br9lB6s0eYT/02JLCZsfZH+9G2kWTal62vgPMXt
+         GZGh104oDofdfkuOZdLH2CCYjLYyX25oRRtMsv5kmInAxvIbQmcYJGsao+RI1qNaNv6z
+         /SNmzZBaz/ezJ5l3hux/zbaDryhQe16JFuKAM2mBXK6p3bR1PKe0mctgJkHtub4K5SnV
+         ua942pGc9cJ+Hdga39L5WQNS2xUaDz7CDQ7s4dbOHNtspgWO7cwOFjrub7OhT8FXaQVN
+         rkfg==
+X-Gm-Message-State: ABuFfohMYRyUieuoegtOpL8uJleP1TGuc0ijgtN6g8MZ+OxFYYJdT4hB
+        LG4TOGOWeNa0iffX0t5xNsERRBoq
+X-Google-Smtp-Source: ACcGV63paiYkmijLKa2NMVpjf4Y691voMmjCCpAfkrRD8+n7OoWxvGB8gJEZwEv4GXDg4Hpkh1BERQ==
+X-Received: by 2002:a17:902:760b:: with SMTP id k11-v6mr48441695pll.103.1540290203761;
+        Tue, 23 Oct 2018 03:23:23 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id k24-v6sm1255514pfi.11.2018.10.23.03.23.21
+        by smtp.gmail.com with ESMTPSA id i2-v6sm1164248pgq.35.2018.10.23.03.23.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 03:23:21 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 03:23:21 -0700 (PDT)
-X-Google-Original-Date: Tue, 23 Oct 2018 10:23:15 GMT
-Message-Id: <f2ce9bdc01892b514f75c6c25c3393765593b1ca.1540290197.git.gitgitgadget@gmail.com>
+        Tue, 23 Oct 2018 03:23:22 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 03:23:22 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 10:23:16 GMT
+Message-Id: <1974831d2ebfd040fca574673bb7afcb9c0b15ef.1540290197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.53.git.gitgitgadget@gmail.com>
 References: <pull.53.git.gitgitgadget@gmail.com>
 From:   "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/3] mingw: replace MSVCRT's fstat() with a Win32-based
- implementation
+Subject: [PATCH 3/3] mingw: implement nanosecond-precision file times
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,68 +69,152 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Karsten Blees <blees@dcon.de>
 
-fstat() is the only stat-related CRT function for which we don't have a
-full replacement yet (and thus the only reason to stick with MSVCRT's
-'struct stat' definition).
+We no longer use any of MSVCRT's stat-functions, so there's no need to
+stick to a CRT-compatible 'struct stat' either.
 
-Fully implement fstat(), in preparation of implementing a POSIX 2013
-compatible 'struct stat' with nanosecond-precision file times.
+Define and use our own POSIX-2013-compatible 'struct stat' with nanosecond-
+precision file times.
 
-This allows us also to implement some clever code to handle pipes and
-character devices in our own way.
+Note: This can cause performance issues when using Git variants with
+different file time resolutions, as the timestamps are stored in the Git
+index: after updating the index with a Git variant that uses
+second-precision file times, a nanosecond-aware Git will think that
+pretty much every single file listed in the index is out of date.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ compat/mingw.c   | 18 ++++++++++--------
+ compat/mingw.h   | 36 ++++++++++++++++++++++++++----------
+ config.mak.uname |  2 --
+ 3 files changed, 36 insertions(+), 20 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index d2e7d86db..07fc0b79a 100644
+index 07fc0b79a..26016d02e 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -771,20 +771,31 @@ int mingw_stat(const char *file_name, struct stat *buf)
- int mingw_fstat(int fd, struct stat *buf)
- {
- 	HANDLE fh = (HANDLE)_get_osfhandle(fd);
-+	DWORD avail, type = GetFileType(fh) & ~FILE_TYPE_REMOTE;
- 
--	if (fh == INVALID_HANDLE_VALUE) {
--		errno = EBADF;
--		return -1;
--	}
--	/* direct non-file handles to MS's fstat() */
--	if (GetFileType(fh) != FILE_TYPE_DISK)
--		return _fstati64(fd, buf);
-+	switch (type) {
-+	case FILE_TYPE_DISK:
-+		return get_file_info_by_handle(fh, buf);
- 
--	if (!get_file_info_by_handle(fh, buf))
-+	case FILE_TYPE_CHAR:
-+	case FILE_TYPE_PIPE:
-+		/* initialize stat fields */
-+		memset(buf, 0, sizeof(*buf));
-+		buf->st_nlink = 1;
-+
-+		if (type == FILE_TYPE_CHAR) {
-+			buf->st_mode = _S_IFCHR;
-+		} else {
-+			buf->st_mode = _S_IFIFO;
-+			if (PeekNamedPipe(fh, NULL, 0, NULL, &avail, NULL))
-+				buf->st_size = avail;
-+		}
- 		return 0;
- 
--	errno = EBADF;
--	return -1;
-+	default:
-+		errno = EBADF;
-+		return -1;
-+	}
+@@ -592,9 +592,11 @@ static inline long long filetime_to_hnsec(const FILETIME *ft)
+ 	return winTime - 116444736000000000LL;
  }
  
- static inline void time_t_to_filetime(time_t t, FILETIME *ft)
+-static inline time_t filetime_to_time_t(const FILETIME *ft)
++static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
+ {
+-	return (time_t)(filetime_to_hnsec(ft) / 10000000);
++	long long hnsec = filetime_to_hnsec(ft);
++	ts->tv_sec = (time_t)(hnsec / 10000000);
++	ts->tv_nsec = (hnsec % 10000000) * 100;
+ }
+ 
+ /**
+@@ -653,9 +655,9 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
+ 		buf->st_size = fdata.nFileSizeLow |
+ 			(((off_t)fdata.nFileSizeHigh)<<32);
+ 		buf->st_dev = buf->st_rdev = 0; /* not used by Git */
+-		buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
+-		buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
+-		buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
++		filetime_to_timespec(&(fdata.ftLastAccessTime), &(buf->st_atim));
++		filetime_to_timespec(&(fdata.ftLastWriteTime), &(buf->st_mtim));
++		filetime_to_timespec(&(fdata.ftCreationTime), &(buf->st_ctim));
+ 		if (fdata.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT) {
+ 			WIN32_FIND_DATAW findbuf;
+ 			HANDLE handle = FindFirstFileW(wfilename, &findbuf);
+@@ -753,9 +755,9 @@ static int get_file_info_by_handle(HANDLE hnd, struct stat *buf)
+ 	buf->st_size = fdata.nFileSizeLow |
+ 		(((off_t)fdata.nFileSizeHigh)<<32);
+ 	buf->st_dev = buf->st_rdev = 0; /* not used by Git */
+-	buf->st_atime = filetime_to_time_t(&(fdata.ftLastAccessTime));
+-	buf->st_mtime = filetime_to_time_t(&(fdata.ftLastWriteTime));
+-	buf->st_ctime = filetime_to_time_t(&(fdata.ftCreationTime));
++	filetime_to_timespec(&(fdata.ftLastAccessTime), &(buf->st_atim));
++	filetime_to_timespec(&(fdata.ftLastWriteTime), &(buf->st_mtim));
++	filetime_to_timespec(&(fdata.ftCreationTime), &(buf->st_ctim));
+ 	return 0;
+ }
+ 
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 571019d0b..9419b27e1 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -327,18 +327,41 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
+ }
+ 
+ /*
+- * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
++ * Use mingw specific stat()/lstat()/fstat() implementations on Windows,
++ * including our own struct stat with 64 bit st_size and nanosecond-precision
++ * file times.
+  */
+ #ifndef __MINGW64_VERSION_MAJOR
+ #define off_t off64_t
+ #define lseek _lseeki64
++struct timespec {
++	time_t tv_sec;
++	long tv_nsec;
++};
+ #endif
+ 
+-/* use struct stat with 64 bit st_size */
++struct mingw_stat {
++    _dev_t st_dev;
++    _ino_t st_ino;
++    _mode_t st_mode;
++    short st_nlink;
++    short st_uid;
++    short st_gid;
++    _dev_t st_rdev;
++    off64_t st_size;
++    struct timespec st_atim;
++    struct timespec st_mtim;
++    struct timespec st_ctim;
++};
++
++#define st_atime st_atim.tv_sec
++#define st_mtime st_mtim.tv_sec
++#define st_ctime st_ctim.tv_sec
++
+ #ifdef stat
+ #undef stat
+ #endif
+-#define stat _stati64
++#define stat mingw_stat
+ int mingw_lstat(const char *file_name, struct stat *buf);
+ int mingw_stat(const char *file_name, struct stat *buf);
+ int mingw_fstat(int fd, struct stat *buf);
+@@ -351,13 +374,6 @@ int mingw_fstat(int fd, struct stat *buf);
+ #endif
+ #define lstat mingw_lstat
+ 
+-#ifndef _stati64
+-# define _stati64(x,y) mingw_stat(x,y)
+-#elif defined (_USE_32BIT_TIME_T)
+-# define _stat32i64(x,y) mingw_stat(x,y)
+-#else
+-# define _stat64(x,y) mingw_stat(x,y)
+-#endif
+ 
+ int mingw_utime(const char *file_name, const struct utimbuf *times);
+ #define utime mingw_utime
+diff --git a/config.mak.uname b/config.mak.uname
+index 8acdeb71f..f179d7a1d 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -370,7 +370,6 @@ ifeq ($(uname_S),Windows)
+ 	RUNTIME_PREFIX = YesPlease
+ 	HAVE_WPGMPTR = YesWeDo
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	NO_NSEC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	# USE_NED_ALLOCATOR = YesPlease
+@@ -518,7 +517,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	RUNTIME_PREFIX = YesPlease
+ 	HAVE_WPGMPTR = YesWeDo
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+-	NO_NSEC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	USE_NED_ALLOCATOR = YesPlease
 -- 
 gitgitgadget
-
