@@ -7,82 +7,114 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC70F1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 10:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FA981F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 10:51:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727538AbeJWTOn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 15:14:43 -0400
-Received: from mail-pl1-f181.google.com ([209.85.214.181]:42160 "EHLO
-        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727250AbeJWTOn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 15:14:43 -0400
-Received: by mail-pl1-f181.google.com with SMTP id t6-v6so401577plo.9
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:51:49 -0700 (PDT)
+        id S1727751AbeJWTOp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 15:14:45 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35668 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726970AbeJWTOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 15:14:44 -0400
+Received: by mail-pf1-f194.google.com with SMTP id l17-v6so474998pff.2
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 03:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=+Dn+BeVGNEulY+3roseGA4PkigzR/jWgFkAq9iVBL0U=;
-        b=aDFaPUXV6CEfU2daFf54XOoy+BtIhyjtccOMvPHrAHxbOiJIGoA6BvMXplaZsSjaf7
-         Ze+whFzBeFmccA+4qNQYf9jLGH9qlhckbyfYnF59cgq25WYbcghzIRFsBEfi8+jWflhG
-         stGd6n+Co4zWMHC8M6yc4LVtG7kOFurw34Go6BIN+I6guR5S1haKjGHx3sblQDKGIQiq
-         LBCBEHZ3XQ10jJuUDHSTgpg6/AnEZDX6BvoTliCfXmWacFBoHzSsSTlK1r8nUpHJQkMD
-         nP7ALf+cefC08HV/rv5ZCA2oQcNFWkSMhafcZtB+LPvT/VYuZZ8F6yb/tu4Cu8MTd07p
-         TQIQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3EJKw6lNrn7P+4dw4VvyXErNmjXA3KgEi+pn0HkpeyY=;
+        b=f3hU1JKnnKItJ865k8WNtruSovi2ojtr/bEnR2L1YGVBAZZXuJ4rMm65J+ciX1Wijc
+         C3pN9nkgAPPy/HyibLG6Fk0t4L+HHgCRo2elTQ6N6K3l2KJESOOeNSgPQJdNpiOqWbir
+         Zj4HlwbnXh8EGWaJsDZpdo+5H2of1ZOQEgr4NjgOqidGZEFTavCGrqVOmO086vgcPqxX
+         gAhR4pTTvxcFWZuXt3cZQvxIXU9K5O4NVMvLXIhC1coVqWdm6H2jdqgRKewg09UQFdJ5
+         4j8nwbY47eEuZAKWiLqKsmQZw7hdIooxwEkRp9C+Lh/PYhsmC55Q40U7rdp8xyFSM42S
+         9Evg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+Dn+BeVGNEulY+3roseGA4PkigzR/jWgFkAq9iVBL0U=;
-        b=mhdcJvpJKzGr6olDw1bvlT4MU0Ja226+VQ/GHydxyEUnoTmMrSxbWowQH5Jke0Hp1C
-         gp8Rk7by5Khh55nR0TLdExIw6xHj1qlJz8WNJ+M4p/eBq27Lss0RlaBbDouZyTQzms6u
-         FQMWHe6l5sfqPzpLISN/LZQ27a+IVTkzfMC6imFWTefw7P5kSk8TFNGyLrX8jNDV4Hmr
-         UaR8PAOzwBbsbp9p6UjfInILzSeVJpiRA0OwilNonjhzW/bkY+HmN1UbemDeQQ73GPku
-         2kRp+NUfEpVsycDc+JnHvFvZEczPo8ItmTXzzQDGHoZi+h9+CBh0zHIbRJTZ2Extp422
-         T0Cw==
-X-Gm-Message-State: ABuFfoixEo/sWg9Q3dMV3m+2NzxihneGb4BJnrjDm82PyOR2gPPnqtqF
-        apNbxdqL4dxnLSH5TrZsVJLpfUMq
-X-Google-Smtp-Source: ACcGV600aqgx+k1JJYBUy8IJeTPF05QfWMirYd0NXIdZ2Lh/avBZJh9dJgN8y31vzSExoTGtggVuOQ==
-X-Received: by 2002:a17:902:2907:: with SMTP id g7-v6mr48106309plb.201.1540291908502;
-        Tue, 23 Oct 2018 03:51:48 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=3EJKw6lNrn7P+4dw4VvyXErNmjXA3KgEi+pn0HkpeyY=;
+        b=jyhxjCbELrH0XSZYz9Axb5G3xe5Pw64lQ9NShKkRbm/2xzrMsGmkK0mjK/yPsYTXsW
+         RrxSiSZ48s6xni353xrzSkCIez4aOxKO6CU6dLVgCwrdKAXVaTB+hvvTN6aUXkWLi81+
+         KMNY+VW+BGfLuXoXCvLW6icQNShrEG47OKxPDbJ/zXeJ0Hw0/AKiwWYmjyir2Gc4RKT7
+         LVKOsbaUTbZeX18iMccpAHL9/lQV144NmilBclqqfBUP/6iO1tCiKgmNVs0AKjWp7oIm
+         K4Bfcb8t8Gel+qpwQQv91tcyk9tYf9bEukBaC2I+a6kgK+KP6BuWzlzjT4KPLbWO3yIS
+         xSuQ==
+X-Gm-Message-State: ABuFfoi9MOOHjZov5hiJEQdJfKRoxCiwkNiGOI81p08lvpFLKpnJ00UD
+        Ybcwb3YBtJpoezAht9C2JCrtrX1I
+X-Google-Smtp-Source: ACcGV61QB1ALsWpFz7nmESsbkwx2QWangLjSxzEZtfaf8sxSiKogmz5opvVsDyZxCrw/z/B39ahSjg==
+X-Received: by 2002:a62:5103:: with SMTP id f3-v6mr49122790pfb.107.1540291909909;
+        Tue, 23 Oct 2018 03:51:49 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id e81-v6sm5219468pfb.153.2018.10.23.03.51.47
+        by smtp.gmail.com with ESMTPSA id s80-v6sm1404710pfa.114.2018.10.23.03.51.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Oct 2018 03:51:47 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 03:51:47 -0700 (PDT)
-X-Google-Original-Date: Tue, 23 Oct 2018 10:51:45 GMT
-Message-Id: <pull.55.git.gitgitgadget@gmail.com>
+        Tue, 23 Oct 2018 03:51:49 -0700 (PDT)
+Date:   Tue, 23 Oct 2018 03:51:49 -0700 (PDT)
+X-Google-Original-Date: Tue, 23 Oct 2018 10:51:46 GMT
+Message-Id: <89887345376ccf8813603f10ac51d39527397aee.1540291906.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.55.git.gitgitgadget@gmail.com>
+References: <pull.55.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Load system libraries the recommended way on Windows
+Subject: [PATCH 1/1] mingw: load system libraries the recommended way
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The search order for DLLs on Windows is a bit funny, and for system
-libraries, it is recommended to use a strict search path.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In practice, this should not make a difference, as the library has been
-loaded into memory already, and therefore the LoadLibrary() call would just
-return the handle instead of loading the library again.
+When we access IPv6-related functions, we load the corresponding system
+library using the `LoadLibrary()` function, which is not the recommended
+way to load system libraries.
 
-Johannes Schindelin (1):
-  mingw: load system libraries the recommended way
+In practice, it does not make a difference: the `ws2_32.dll` library
+containing the IPv6 functions is already loaded into memory, so
+LoadLibrary() simply reuses the already-loaded library.
 
+Still, recommended way is recommended way, so let's use that instead.
+
+While at it, also adjust the code in contrib/ that loads system libraries.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  compat/mingw.c                                      | 3 ++-
  contrib/credential/wincred/git-credential-wincred.c | 3 ++-
  2 files changed, 4 insertions(+), 2 deletions(-)
 
-
-base-commit: c4df23f7927d8d00e666a3c8d1b3375f1dc8a3c1
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-55%2Fdscho%2Fmingw-load-sys-dll-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-55/dscho/mingw-load-sys-dll-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/55
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 18caf2196..9fd7db571 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1577,7 +1577,8 @@ static void ensure_socket_initialization(void)
+ 			WSAGetLastError());
+ 
+ 	for (name = libraries; *name; name++) {
+-		ipv6_dll = LoadLibrary(*name);
++		ipv6_dll = LoadLibraryExA(*name, NULL,
++					  LOAD_LIBRARY_SEARCH_SYSTEM32);
+ 		if (!ipv6_dll)
+ 			continue;
+ 
+diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+index 86518cd93..5bdad41de 100644
+--- a/contrib/credential/wincred/git-credential-wincred.c
++++ b/contrib/credential/wincred/git-credential-wincred.c
+@@ -75,7 +75,8 @@ static CredDeleteWT CredDeleteW;
+ static void load_cred_funcs(void)
+ {
+ 	/* load DLLs */
+-	advapi = LoadLibrary("advapi32.dll");
++	advapi = LoadLibraryExA("advapi32.dll", NULL,
++				LOAD_LIBRARY_SEARCH_SYSTEM32);
+ 	if (!advapi)
+ 		die("failed to load advapi32.dll");
+ 
 -- 
 gitgitgadget
