@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF8C1F453
-	for <e@80x24.org>; Tue, 23 Oct 2018 14:38:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA0071F453
+	for <e@80x24.org>; Tue, 23 Oct 2018 14:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728030AbeJWXBq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Oct 2018 19:01:46 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:39114 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726970AbeJWXBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Oct 2018 19:01:46 -0400
-Received: by mail-it1-f194.google.com with SMTP id m15so2384311itl.4
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 07:38:03 -0700 (PDT)
+        id S1728265AbeJWXIv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Oct 2018 19:08:51 -0400
+Received: from mail-it1-f171.google.com ([209.85.166.171]:36594 "EHLO
+        mail-it1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726277AbeJWXIv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Oct 2018 19:08:51 -0400
+Received: by mail-it1-f171.google.com with SMTP id c85-v6so2428153itd.1
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 07:45:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=eO3F/zeauo0KZ5R1pkoquI/pWTblX2TYNgWG18omQNY=;
-        b=UCzINiPBt0tH6Y9kJWY3TEFCs0cU5RJZnzck2mcK1y/BWlBFH1LWDYrhuLdY467aIi
-         96gcSOI41Zi7gOyNnqO9kvNMVzeH0lkY3zGMb8Xtel4pL9UkqDj/OSohwOdc1usa70Qw
-         D37xAqVhvGrg7OMOvZTpR1ofLKZ5qjWrZtl2gP4mZ9ePc7LC2fTz7bT/KU5lj44AvvWl
-         ndrL9YZi/ZSETkSBnz6rv0kqFTEeRag1tmjm0pRs0BuTDs8DUXhS2nyFx/JgQDJGf88D
-         lOgjF/BUAegzngnQR7XmXgkabI9AT9eLNl+MfC++ihDFL41AveMpjKh7iBRE+L3oheiz
-         yf9g==
+        bh=zHqkjxGrpqXH4sU5T/RaTfxb+ApnQyoKw6340KnSnQg=;
+        b=WYaq2lGLqB1hEKqkQe80GyZYQM0lVYvuxmeJ2oFcPbN5Jhdt0Gt/gM94nYQ+59Kdkn
+         VyOa0b+gt7ancA5FN884trdl5O9ieZ2SdUrIHI7NQpVd5icrdcOjNHb2B0JzPOr/I/m7
+         NsF3PofF9gstDzPkSgwGUbzERf6e2qXa7r7lq+kZxGI5qWfcmo7QILG5ItxQBXZe9JwP
+         EVEyu9ijoNEmFNHruJmIBFq9esa5IPwxxTIvizXbJxG5IkS+vWik/LxuRxyHt47qvKtz
+         3mCZiAq/X+4h5Mos8Yu831/lm60SybFhEKMi4JGGJEKrovuV6oNKXD1SAmqeh++7nkvt
+         9b6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eO3F/zeauo0KZ5R1pkoquI/pWTblX2TYNgWG18omQNY=;
-        b=FXAHf9hopsLnquU+787RQSYcjeeVR1PyRd87RwetUowlYKFSv49B98BD7JmVqwydiy
-         jqfbTwocMQzlNka+KDwdwOxSET4CMXud3ldul8Ya+5KNZAbifxBqzCGrq3D1lxFv9rSq
-         lTK4lrJ0vky0804t9zYSNzT0okhZ/ZH0CnD5cucYlYp0agZL+bw0YnKc25IQyxkYot0/
-         X0CzXl5x7WnOPLL7VMP+HsX1luC/WtFLz7iRWK5cAWNe5kitb/ciJ8weRucZg85zZUJz
-         47oS6c585wKTE252VGPO9UjS3PxRtple5EBL3RZWtdCZSctQ7L3N5kzujuSzo3wALJED
-         /EpQ==
-X-Gm-Message-State: ABuFfohegVDqT/PkfJdKjBQcNNGHZnXUdVNyS/6ulvxs0ppEQ4x+Voi4
-        nh3sCsTBYsj9vowFgWM+ymaUVLaiazmm749t83w=
-X-Google-Smtp-Source: ACcGV61EvHTzvGt95NsxV3DfBOohkL+hFpyJcE18+Dc3UA1EUJTlGeEtTFNeKvqz2Qg+sCirTF1j3lKvGprjmlVRWD8=
-X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr12983137itg.70.1540305483416;
- Tue, 23 Oct 2018 07:38:03 -0700 (PDT)
+        bh=zHqkjxGrpqXH4sU5T/RaTfxb+ApnQyoKw6340KnSnQg=;
+        b=ZjjLoscZEvFu2wTutZewRNddFUxSXAPzJj4Hfcr7mxc5qC469mirrhz8+mAdCfq6HV
+         uRpWaiXLKDT1aia2ykCDcCopsrggqGj3+QY2QwAfCTVXW0b+gKXQrpsrMqAySW6UI2zB
+         OzH2VUMOsayY/pONpIIetmuipVnSssRTt/BEH25+D8SHIWLzFYgmWgWR8h/RjZco7AMg
+         ZUfLi4DiEHUdkemy+Xs83T3w0L80pmzQBsj/Og7voFyCzCYajI6BLJmvtrXoVGbra6QV
+         cWQ+SBeyAvpek0jc/HDOX6GcGey/TYwi1pGzNtkAMJ42bTUpmiUjIBlrk7GChRir03GK
+         4Q4w==
+X-Gm-Message-State: ABuFfoiCDOxr6oiJH4+tvxAZb57mjYAx270mV9xrNAj4hdiV3iKAYIoO
+        3EZecAzG0afqkd33HjIpDTkdCGt/h9X6dVZccENI4A==
+X-Google-Smtp-Source: ACcGV62AfPuJJx9axC6QiU/znhXPxpS0OT0DjP0rHX0TSgsvcTFML5hbR+SYRmereR3qWc4vk0aGqoaxaa7nG35DcjQ=
+X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr12704523itc.123.1540305906462;
+ Tue, 23 Oct 2018 07:45:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20181022153633.31757-1-pclouds@gmail.com> <20181022202241.18629-1-szeder.dev@gmail.com>
-In-Reply-To: <20181022202241.18629-1-szeder.dev@gmail.com>
+ <20181022202241.18629-8-szeder.dev@gmail.com>
+In-Reply-To: <20181022202241.18629-8-szeder.dev@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 23 Oct 2018 16:37:33 +0200
-Message-ID: <CACsJy8COKa1JZFOSQBDZoJKQ7aJgEvKFmcu0sFa2BDcuJa33Pw@mail.gmail.com>
-Subject: Re: [PATCH] Poison gettext with the Ook language
+Date:   Tue, 23 Oct 2018 16:44:38 +0200
+Message-ID: <CACsJy8DEta1f8v5XPK53bMdarWX4TYiQAx0Qz1LCRA0nvZANwg@mail.gmail.com>
+Subject: Re: [PATCH 7/8] gettext: introduce GIT_GETTEXT_POISON=scrambled
 To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
@@ -64,36 +65,37 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Oct 22, 2018 at 10:23 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
 rote:
-> Once upon a time a GETTEXT_POISON build job failed on me, and the
-> error message:
+> [TODO: Fallout?
+>        A 'printf(_("foo: %s"), var);' call includes the contents of
+>        'var' unscrambled in the output.  Could that hide the
+>        translation of a string that should not have been translated?
+>        I'm afraid yes: to check the output of that printf() a sloppy
+>        test could do:
 >
->   error: # GETTEXT POISON #
+>          git plumbing-cmd >out && grep "var's content" out
 >
-> was not particularly useful.  Ook wouldn't help with that...
+>        which would fail in a regular GETTEXT_POISON test run, but
+>        would succeed in a scrambled test run.  Does this matter in
+>        practice, do we care at all?
 
-Oook?
+If var is supposed to be translated, _() must have been called before
+the final string is stored in var and the content is already
+scrambled. Whatever left unscrambled is machine-generated and should
+be ok to grep, or we have found new strings that should be _() but
+not.
 
-> So I came up with the following couple of patches that implement a
-> "scrambled" format that makes the poisoned output legible for humans
-> but still gibberish for machine consumption (i.e. grep-ing the text
-> part would still fail):
+PS. Another thing I'd like to have is to mark the beginning and end of
+a scrambled text. For example, _("foo") produces "[f.o.o]" or
+something like that. If we have it, it's easier to see "text legos"
+(instead of full sentences) that makes translator's life harder. But
+it could interfere with stuff (e.g. some strings must start with '#')
+so let's forget it for now.
+
 >
->   error:  U.n.a.b.l.e. .t.o. .c.r.e.a.t.e. .'./home/szeder/src/git/t/tras=
-h directory.t1404-update-ref-errors/.git/packed-refs...l.o.c.k.'.:. .File e=
-xists...
->
-> I have been running GETTEXT_POISON builds with this series for some
-> months now, but haven't submitted it yet, because I haven't decided
-> yet whether including strings (paths, refs, etc.) in the output as
-> they are is a feature or a flaw.
+>        Does gettext_scramble() need a FORMAT_PRESERVING annotation?
+>        Seems to work fine without it so far...]
 
-A feature to me. The only thing that got through and but should not be
-grep-able is strerror(). But that's orthogonal to this scrambling
-stuff.
-
-> And because it embarrassingly leaks every single translated string... :)
-
-Easy to fix. I hope this means you have no more excuse to not push
-this forward ;-)
+I don't think you can. _() can be called on plain strings that just
+happen to have '%' in them.
 --=20
 Duy
