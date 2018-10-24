@@ -2,112 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72F451F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 03:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 916841F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 03:41:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726501AbeJXMFT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 08:05:19 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37587 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726371AbeJXMFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 08:05:18 -0400
-Received: by mail-wm1-f68.google.com with SMTP id p2-v6so525957wmc.2
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 20:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=irNFGnLYJwmLg4sumohoLPGPSNQCIWpNKjipVlDz2t4=;
-        b=BcKlvWB3DxomUGpfAPS4FRoOw/EbpAatVT/tTNThdZKCTKeXQGslRj4fnEXVhqK6Ks
-         eiuuf4+xswLIwLuzRRuvyrJXsIdqwbmsvQhF8BsQj2c2qy+aRmNHmBUTCw3ANUjzwm3F
-         HxZW2CK77s035GsdVgZL4E5glcmp4nbN135CASxnDpTZ7P5g05RexDuErpuRPeKq0ts6
-         Ib1rgJUfAsww4ux1yvaRcwOHMsm3HL7azQf0/JUT9Lsm9elgJ+ii7vxETGB6SB+CUPgu
-         XmpnsEzmC5ImHFISH5W+1GqHjk/Is2hqfxyz80RakPe6v0wZwasuUtRG586YYJI14YZV
-         qScQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=irNFGnLYJwmLg4sumohoLPGPSNQCIWpNKjipVlDz2t4=;
-        b=OaqbD5oYtEENVZXvpPC4U5B+1Bm8pT3ArrVN8HmaiqycDvzzAAXjsnzlRBgpqxQIH1
-         1hkd+Bae/XEaIzyHXNBFYsDaUkw1rTZpFCdn9UKi/YKS5OYSqwuogWYL+beeqaA63l97
-         Sn9lMcsbounjoFZBT7CZb1EcarGStv5V2IMkPKGxheUuLiDJI2BJyILTuL3s20yjtyh2
-         PYopCQePyYrdIP5simpcFeTbQI+0GWyFmmJu45hviqqYneZTnLe8AtaiBPo1pG+6NOMZ
-         SE/QwGLGzyAu4yIt0LMA6d0VpwMW5NNXZdttX1AbBNRVZq8TOoZt0ByiSXeey/4lsXgJ
-         q9/g==
-X-Gm-Message-State: AGRZ1gIjkCuKa/wyt+ZlDWZpUmEBiQ70MvSXmmuvVUnHmK/5WwztU+wm
-        8j12BIrR0XU0cLuXlQ4ZpdBCW8VbIX8=
-X-Google-Smtp-Source: AJdET5fxZ8gbhmcnHY9pWDL8WyFUn93dJ1AJOJmxjJysWQnJNvDKFsLgxvtnun4XnlKuiCsshgmPjw==
-X-Received: by 2002:a1c:cbc7:: with SMTP id b190-v6mr669328wmg.149.1540352344880;
-        Tue, 23 Oct 2018 20:39:04 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c184-v6sm3852649wma.15.2018.10.23.20.39.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 20:39:04 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/3] repack: point out a bug handling stale shallow info
-References: <pull.9.v2.git.gitgitgadget@gmail.com>
-        <pull.9.v3.git.gitgitgadget@gmail.com>
-        <ed8559b91b7a3b51a5950d62e78fc726ed5b44c2.1540245934.git.gitgitgadget@gmail.com>
-Date:   Wed, 24 Oct 2018 12:39:03 +0900
-In-Reply-To: <ed8559b91b7a3b51a5950d62e78fc726ed5b44c2.1540245934.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 22 Oct 2018
-        15:05:37 -0700 (PDT)")
-Message-ID: <xmqqr2ggovxk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726998AbeJXMHv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 08:07:51 -0400
+Received: from mga09.intel.com ([134.134.136.24]:5824 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726082AbeJXMHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 08:07:50 -0400
+X-Amp-Result: UNSCANNABLE
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Oct 2018 19:43:10 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.54,418,1534834800"; 
+   d="scan'208";a="81100027"
+Received: from surajsin-mobl1.amr.corp.intel.com (HELO ldmartin-desk.jf.intel.com) ([10.251.137.218])
+  by fmsmga008.fm.intel.com with ESMTP; 23 Oct 2018 19:43:09 -0700
+Date:   Tue, 23 Oct 2018 19:43:09 -0700
+From:   Lucas De Marchi <lucas.demarchi@intel.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        lucas.de.marchi@gmail.com
+Subject: Re: [PATCH] range-diff: allow to diff files regardless submodule
+Message-ID: <20181024024309.GA22379@ldmartin-desk.jf.intel.com>
+References: <20181010150916.4295-1-lucas.demarchi@intel.com>
+ <87in29dj55.fsf@evledraar.gmail.com>
+ <xmqqmurkgaap.fsf@gitster-ct.c.googlers.com>
+ <20181023140710.GA7073@ldmartin-desk.jf.intel.com>
+ <xmqqh8hcqeho.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh8hcqeho.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Oct 24, 2018 at 11:12:51AM +0900, Junio C Hamano wrote:
+> Lucas De Marchi <lucas.demarchi@intel.com> writes:
+> 
+> >> Yes, I agree on both counts (i.e. it was totally unclear what
+> >> problem is being solved and what the root cause of the problem is,
+> >> and we would want a new test to protect this "fix" from getting
+> >> broken in the future.
+> >
+> > have you seen I sent a v2 with proper test?
+> 
+> No, otherwise I wouln't have said it needs tests, and no, because I
+> haven't seen the v2, I do not know if it came with proper test or
+> other issues pointed out and fixes suggested in the review round
+> were addressed in v2.  Sorry.
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> A `git fetch --prune` can turn previously-reachable objects unreachable,
-> even commits that are in the `shallow` list. A subsequent `git repack
-> -ad` will then unceremoniously drop those unreachable commits, and the
-> `shallow` list will become stale. This means that when we try to fetch
-> with a larger `--depth` the next time, we may end up with:
->
-> 	fatal: error in object: unshallow <commit-hash>
+Your reply arrived just a little after I sent the v2, so I thought it
+was just the race and you would end up seeing the unread email in the
+same thread. Sorry for not including the msg id:
+20181011081750.24240-1-lucas.demarchi@intel.com
 
-Nicely analysed and described.  One minor thing nagged me in the
-implementation but it is not a big issue.
+thanks
+Lucas De Marchi
 
-> +...
-> +	d="$(git -C shallow-server rev-parse --verify D)" &&
-> +	git -C shallow-server checkout master &&
-> +
-> +...
-> +	! grep $d shallow-client/.git/shallow &&
-
-We know D (and $d) is not a tag, but perhaps the place that assigns
-to $d (way above) can do the rev-parse of D^0, not D, to make it
-more clear what is going on, especially given that...
-
-> +	git -C shallow-server branch branch-orig D^0 &&
-
-... this does that D^0 thing here to makes us wonder if D needs
-unwrapping before using it as a commit (not commit-ish). 
-
-If we did so, we could use $d here instead of D^0.
-
-> +	git -C shallow-client fetch --prune --depth=2 \
-> +		origin "+refs/heads/*:refs/remotes/origin/*"
-> +'
-> +
->  . "$TEST_DIRECTORY"/lib-httpd.sh
->  start_httpd
-
+> 
+> When you ask such a question, please accompany it with "this is the
+> message-id" to avoid the receiver of the question locating a wrong
+> version of your patch from the archive.
+> 
+> Thanks.
