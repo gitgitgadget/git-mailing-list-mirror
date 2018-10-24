@@ -6,62 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 461DC1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 03:56:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91B5A1F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 04:35:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726268AbeJXMXA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 08:23:00 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:56220 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbeJXMW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 08:22:59 -0400
-Received: by mail-wm1-f66.google.com with SMTP id s10-v6so1710264wmc.5
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 20:56:42 -0700 (PDT)
+        id S1726267AbeJXNBy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 09:01:54 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45161 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbeJXNBy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 09:01:54 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n5-v6so173056wrw.12
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 21:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=J2hF0EoOIUgS9+WmnKxFgPtQw6FuD3ZG9FfuE4aM9so=;
-        b=jtwVNtJcyW+bbtbddEPJPQS41nBHRLLg4A65rh5eQn+tekXzXCup8jJ0rv7tJdosMR
-         zgNoABoIANsrpXZx2Lncn9TQAyRCwO09Q9iofOb/DcZjROoWXub45jBt6jtB+QKdCYH3
-         e955PDYL6rHvWBPmSwjicIebi/T0GFSN/KsqWeea/3oHrDQHtb0PuVnhqwGVxMXQDjfK
-         a/F73T/xTtVbSa7L7Ic0+l6QpraqKbtkx8rF78GeutNxy0NxbLg+7Du/bHNqb9/GeICP
-         jZxSc56sh369pW8WL3IGAyVAdi1uoVtsUUy3CTSQP3CQ4Gy402o9ctTA9b3omRmB1Qv7
-         tNIA==
+        bh=8lheZnjAPRLzF50jn+R5nUyrSIyI3dKHuWEW0SHUP2c=;
+        b=A0G7MGrA+otmx5Vsj2r9v7Ite+EsDfqHLPt/r4vYpyvhfy/amnlLIo1nwcxdML02R3
+         miuVcGnR/raPhCQ+qsSIb8hSGaVtzP0ZlU9/kDb5NEt5cUep0H2gtFK3pAB8J6gahN7b
+         FHUDeuSklh3choacvR/SuVNcqSY7NmvBJ3OcGrhDHg8MGaUUdufp1eybf5g1ovhGxVrj
+         ENyuMkm0KuUf/kHT32fl7BDIQ5GMGyztBUPt1JNyiQ7cHmtUJdmRhdOcSTduIj0mCzad
+         oWSqgt2FgpiDcNvNy+d+hS0cb2QNYCo9g+26mw6ooSwfgQBDNmpQOh2pPvYRHSJAgFP7
+         0gzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=J2hF0EoOIUgS9+WmnKxFgPtQw6FuD3ZG9FfuE4aM9so=;
-        b=IquoACVftkm5a/1cVpis1EShJTYEIJhy2HRgmNIQQonD63OG90jLVQ+ddZF38KrHx5
-         ulewsRXPw5AKaRBUmM/lqEDUjZCkYdNP8iu7rCSCppN87ehQtbNBZWHYmhNYzWbtoxhL
-         meiiAIDFfgulsw2nQ7zccT2pr2emnIOMdyAF342tS/uoeGAv+MJG/pscJyIrYurSmFOv
-         baqS1uC8bxTQLpmYbNCkBwIxVVEFVLpkFw4/mrmr9NCipCDMtmaXbAFCsANt2saMJhdH
-         e3WIkgEgPOab7ny1UnzGkzODexDc/W/uU97Q7v03GterI+drt+aR706UJZJMUB5hv28I
-         v4pg==
-X-Gm-Message-State: AGRZ1gK/Y+TWTjQ+bAHbX2yEdWwV/bWmwRlBOE9P1UT9wECyC5FD74ZR
-        ebqQ3QDhOyw3/FPBnqLlQJs=
-X-Google-Smtp-Source: AJdET5cHKgK145/MndbUmz/43b5tCABto/DsxXOBPSBqOfwxjVJ4ox3QYAYkQx+CmvymUXjlPkszGw==
-X-Received: by 2002:a1c:85d0:: with SMTP id h199-v6mr714034wmd.127.1540353401082;
-        Tue, 23 Oct 2018 20:56:41 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l5-v6sm2549714wrt.43.2018.10.23.20.56.40
+        bh=8lheZnjAPRLzF50jn+R5nUyrSIyI3dKHuWEW0SHUP2c=;
+        b=IKTg29JE/0oJMcKlWyyeCcgyPSf4SMDcBEgfOpWtCE9IZiIg+jT06u1BpxNv6GSO3k
+         ifHTeDFMa/w/ibbO8orIm0op7EZS41IxB/dEro371KxhfDcMi1vJSyFWI6yYzLdcavt8
+         ceLcNRLa2+bT9VFe5a5mM0eXiNE963MKFqpAC0CJCFF9xquOyRJvoFUJmfMSDmUl2c3L
+         E9SEdRDHy5ItpX7iv+KTAf7YJa3iRvcNUvKws6Ruva3WOdkQZjm7bzTnou0QDtngNrF3
+         PwVdfo5hlt4wHipdJHBMrEAzh1Bur5gPAw6TLWYU5bcS6wzTdSbeQRX86+N0Lq6SLCc0
+         fHew==
+X-Gm-Message-State: AGRZ1gLJlgloV4Oh30TeHkSPQNFxFHXgwVJGiROTEbD8cGs4lAeT80AR
+        SKWf/QO+zg8rO3/vaHEO5GbGmhjBg5A=
+X-Google-Smtp-Source: AJdET5eqDOQteFbcobO2o7pbnFEMx1EiUQBptzkDhXO97yf9QZu8GQ/N6xZ7eBHEz89utlCTNoIMeQ==
+X-Received: by 2002:a5d:640b:: with SMTP id z11-v6mr946381wru.64.1540355729989;
+        Tue, 23 Oct 2018 21:35:29 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e21-v6sm5031326wma.8.2018.10.23.21.35.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 20:56:40 -0700 (PDT)
+        Tue, 23 Oct 2018 21:35:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 3/3] repack -ad: prune the list of shallow commits
-References: <pull.9.v2.git.gitgitgadget@gmail.com>
-        <pull.9.v3.git.gitgitgadget@gmail.com>
-        <1f9ff57d52a72e3795ac4a924e23a64b91b1f83e.1540245934.git.gitgitgadget@gmail.com>
-Date:   Wed, 24 Oct 2018 12:56:39 +0900
-In-Reply-To: <1f9ff57d52a72e3795ac4a924e23a64b91b1f83e.1540245934.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 22 Oct 2018
-        15:05:40 -0700 (PDT)")
-Message-ID: <xmqqin1sov48.fsf@gitster-ct.c.googlers.com>
+To:     Andreas Gruenbacher <agruenba@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Clear --exclude list after 'git rev-parse --all'
+References: <20181023191758.15138-1-agruenba@redhat.com>
+Date:   Wed, 24 Oct 2018 13:35:27 +0900
+In-Reply-To: <20181023191758.15138-1-agruenba@redhat.com> (Andreas
+        Gruenbacher's message of "Tue, 23 Oct 2018 21:17:58 +0200")
+Message-ID: <xmqqefcgotbk.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,48 +65,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Andreas Gruenbacher <agruenba@redhat.com> writes:
 
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index c6a7943d5..9217fc832 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -549,6 +549,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  		if (!po_args.quiet && isatty(2))
->  			opts |= PRUNE_PACKED_VERBOSE;
->  		prune_packed_objects(opts);
-> +
-> +		if (!keep_unreachable &&
-> +		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
-> +		     unpack_unreachable) &&
-> +		    is_repository_shallow(the_repository))
-> +			prune_shallow(0, 1);
+> Commit [1] added the --exclude option to revision.c.  The --all,
+> --branches, --tags, --remotes, and --glob options clear the exclude
+> list.  Shortly therafter, commit [2] added the same to 'git rev-parse',
+> but without clearing the exclude list for the --all option.  Fix that.
+>
+> [1] e7b432c52 ("revision: introduce --exclude=<glob> to tame wildcards", 2013-08-30)
+> [2] 9dc01bf06 ("rev-parse: introduce --exclude=<glob> to tame wildcards", 2013-11-01)
+>
+> Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+> ---
+>  builtin/rev-parse.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-The logic looks correct (and the reasoning behind it, which was
-explained in the log message, was sound).  prune_shallow(0, 1)
-however is not easily understandable.
+All other glob options do show_reference with for_each_ref_in() and
+then calls clear_ref_exclusion(), and logically the patch makes
+sense.  
 
-There are only two callsites of this function after these three
-patches, and the areas of the code that have these calls are in
-relatively quiescent parts in the whole tree, so it shouldn't be too
-distracting to do an update to make the function take a flag word,
-so that we can make callsites more immediately obvious, i.e.
+What is the "problem" this patch fixes, though?  Is it easy to add a
+new test to t/6018-rev-list-glob.sh to demonstrate that "--glob" (or
+whatever that clears exclusion list without this patch) works
+correctly but "--all" misbehaves without this change?
 
-	prune_shallow(PRUNE_SHALLOW_QUICK)
+Thanks.
 
-It of course can be left as a low-hanging fruit loose-end.
-
-> diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-> index 2d0031703..777c9d1dc 100755
-> --- a/t/t5537-fetch-shallow.sh
-> +++ b/t/t5537-fetch-shallow.sh
-> @@ -186,7 +186,7 @@ EOF
->  	test_cmp expect actual
->  '
->  
-> -test_expect_failure '.git/shallow is edited by repack' '
-> +test_expect_success '.git/shallow is edited by repack' '
->  	git init shallow-server &&
->  	test_commit -C shallow-server A &&
->  	test_commit -C shallow-server B &&
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index 0f09bbbf6..c71e3b104 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -764,6 +764,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>  			}
+>  			if (!strcmp(arg, "--all")) {
+>  				for_each_ref(show_reference, NULL);
+> +				clear_ref_exclusion(&ref_excludes);
+>  				continue;
+>  			}
+>  			if (skip_prefix(arg, "--disambiguate=", &arg)) {
