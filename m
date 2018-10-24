@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FB6A1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 15:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46E351F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 15:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbeJXXrL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 19:47:11 -0400
-Received: from mout.gmx.net ([212.227.15.19]:33453 "EHLO mout.gmx.net"
+        id S1726504AbeJXXtX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 19:49:23 -0400
+Received: from mout.gmx.net ([212.227.17.20]:37805 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726407AbeJXXrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 19:47:11 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqiJO-1fcAh70Xw2-00eKRn; Wed, 24
- Oct 2018 17:18:35 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqiJO-1fcAh70Xw2-00eKRn; Wed, 24
- Oct 2018 17:18:35 +0200
-Date:   Wed, 24 Oct 2018 17:18:39 +0200 (DST)
+        id S1726407AbeJXXtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 19:49:23 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtJ5T-1faK2H2s4h-012qHE; Wed, 24
+ Oct 2018 17:20:38 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtJ5T-1faK2H2s4h-012qHE; Wed, 24
+ Oct 2018 17:20:38 +0200
+Date:   Wed, 24 Oct 2018 17:20:43 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Slavica <slavicadj.ip2018@gmail.com>, git@vger.kernel.org,
-        Slavica <slawica92@hotmail.com>
-Subject: Re: [PATCH 1/3] [Outreachy] t3903-stash: test without configured
- user name
-In-Reply-To: <xmqqmur3mzsm.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810241717240.4546@tvgsbejvaqbjf.bet>
-References: <20181023162941.3840-1-slawica92@hotmail.com> <xmqqd0s0qcuv.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1810240938310.4546@tvgsbejvaqbjf.bet> <xmqqmur3mzsm.fsf@gitster-ct.c.googlers.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stephen Smith <ischis2@cox.net>
+Subject: Re: [PATCH v2 0/2] Work around case-insensitivity issues with cwd
+ on Windows
+In-Reply-To: <xmqqin1rmynw.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810241720200.4546@tvgsbejvaqbjf.bet>
+References: <pull.54.git.gitgitgadget@gmail.com>        <pull.54.v2.git.gitgitgadget@gmail.com> <xmqqin1rmynw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hcdUIgmgB13nZqOB/FpjTOJhaxyP/qg6YZwfVLd3nCePZmbq4BX
- z+Ag0vKjvvl20irew2vIY9lLp2Q6QKkj/xx333kWg3J28R4B538ocWZe/77/sfyiKc2I2ky
- dlec/Oe3ZmJn8m/RKlog4DF33p6hLvhRkMWYIe10HPCuzfMrH5Dy2DlFLa1CKWT21THfPpb
- WMeuD3azvLYWDfiHecDGQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EqyTlclK+04=:F0sv6jzjyU/yuEHcGXB3ng
- in7YfTDIn3A+HIPfkvd4heoU9AV2X19Q41nxKaVc2cIwMJ3IcwL0q0tVgtTZGMY7k2SP8sEb2
- TBPE64yfz2fe8jNOiloH0wpexYkQtzNJ1edtd7Myt03XrLkt4C/uXdj1SivNkI0TKK2KJM0vn
- LVQ8LuULUC9hGLeFxzvnyX3wH7SOb9SetipZpfYymSUUcBZ0H9yKvSoWDFrD+5HeluoBrj5Kh
- u1gyFOgPZluKO4iVLlUFwKZCl2r/Yc+ijYweuowTYZblbmCIvWNSuwgbvJ+0c9HIp1k+2sAQC
- zq5lB/LPd0/dYQQegv1ygFQ4OIOh6bHyCYV9Hpsn/Bs6TjFu2ho19C7oB0s/sNhGn/Cei/Eu/
- bFo8ntnrGZRD62JPcC+ZHvVqPWkSERbAPFuwilBtFKSX7svfG6hjRz0gCUjcQr7VU5watFw/R
- 1PL1SGzjPM7Flj5I6PDne16v0Y5Ib7a9GlaT5TRm9TFnZqq06DOpi1p3F1JCqMPzijzniAzRm
- vWerzYWQk1J66Jt9JbRYiL9lcBdPjMSOqf9OM+qCeEc7JuwOkfEEwpuZBddTGV22OQggMwBaf
- HhAgBIjfPXMb09Cm1l9Jsqzs2cQsodvvneQlwyhY9iE8mA/Xu9/qfZTvSUThW2znCA75JGsVN
- 2Fu3d1rcxjoXLWqAqc1SgUdmUeSNryrlpEnDV2raHjMBMBpwyrkOcrLzBtQvlyBkyNTN9bWpO
- ypKMC2DxYtTX6tM4Bld5UKnA/O40I1KkT+O3sSOSih1tHtkyP0ZmIKBlkeTTqwzzNbfdhkBHn
- qowEAM+BBX2rudyli360u661ZscUixqBI96AvXwpq8xTCpaPVU=
+X-Provags-ID: V03:K1:+s813kz+7UjPrRjqkfEaiHoDN81OHmE9qA6InQwB1mJcQ83VjcM
+ XeyQy04tb0BJCdlq1N+5k+U2WL/JbC+HQ7AiH/DxbrimbEg2JTkrnnWWI+sArmr+fxj52Cl
+ SSlv57WReCAlsZ0O1F0tiT3OOkmn13m5tL7USMM7R7uPGcsXSx3ZXcEtw0dT3qrtKSzl2Cu
+ 8Y0USdRgSxzX0QS8jpcyg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5RjqHVIAbX0=:E7CbMc3lfbaFQhua5cr5Bp
+ Ez8F18mN8hOsUDRiAT9NN9WQo+P/6HpuvnFjiD/6W0oYvYS/10HgOCT1+9+UD2EanSh2VPD8R
+ W22xAJXMycFfKaJEeMnmMSYliaxHq9HDmf8kZq9/wQ8n/bN4j6bQx7eu/eMPro5WsQjx9d01m
+ ajogIM7qciUnlxF22GY/hPUH5ySEdiFTM4ke2165Znv1ZH5Hj/eTM2jQfksD9wCLEKwwqFuMM
+ z8DW/GdJpmF3PvXcq2gp/Oowsxtn+hWl+bVVP7QsbG+urnNHBb6fiwBYkwytFS7S8m6IVxWYH
+ 5bdA+MhRdzpav5LaqdIvLi3g5oPl11gI5J2jZuXr1tFmygxhPE3CZvzSzVUjv2qXWUgGtaD+R
+ H1OD9h59kvDrK0TXnsl5HUtVtd7JZn5Gp1SWaDOicTM3xAqLNHuqF43bXozP9FGtOe6DP1xui
+ xQDbolBtz0qJN90IeXzt+WoPOo81lin34CkUUuBbn/uJCzHWuWnWX1qLZTS7qKHfT2AEByqJT
+ JxowfFve+9P+jVFko41g8mtC/EM/ZfYvos4byTV1GyE0KAbOPvfLwVSBO5+vkBW+1HxTv3mVL
+ gz0mZ+PQXWENllAgbf8Ig6TChKL5Lrq66jDSsjEKFmFxFPwkmQKMqd2SriEJDGu80uzH8V7BM
+ 0aCr+fta4VTDwMgEN0limMhjIke9fbnmMkqZwEgc/HORyQ9n7owp1IGSzN4oMBqGTAbbGHbd/
+ KcIZGwpqgOTGkRI8i0MciCyZCM8Ic/uZfmC/I8VVV21/IxS74odxFAEbK90fyOzWDDQisWr1D
+ 1IfIF7I+8rTSHjCqKKPE3LbesJZSmRS5WhosFQtrddSJ5AT6pM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,46 +62,17 @@ Hi Junio,
 
 On Wed, 24 Oct 2018, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 > 
-> > On Wed, 24 Oct 2018, Junio C Hamano wrote:
+> > Changes since v1:
 > >
-> >> Slavica <slavicadj.ip2018@gmail.com> writes:
-> >> 
-> >> > +test_expect_failure 'stash with HOME as non-existing directory' '
-> >> > +    test_commit 1 &&
-> >> > +    test_config user.useconfigonly true &&
-> >> > +    test_config stash.usebuiltin true &&
-> >> > +    (
-> >> > +        HOME=$(pwd)/none &&
-> >> > +        export HOME &&
-> >> 
-> >> What is the reason why this test needs to move HOME away from
-> >> TRASH_DIRECTORY (set in t/test-lib.sh)?
-> >
-> > This is to make sure that no user.name nor user.email is configured. That
-> > was my idea, hence I answer your question.
+> >  * Fixed a grammar mistake in the second commit message.
 > 
-> HOME is set to TRASH_DIRECTORY in t/test-lib.sh already, and we do
-> so to avoid getting affected by the real $HOME/.gitconfig of the
-> user who happens to be running the test suite.
+> Thanks.  I think this matches what I earlier queued on 'pu' with
+> Stephen's typofix squashed in, so we are good already.
 
-My bad. I should have checked. I was under the impression that we set
-`HOME` to the `t/` directory and initialized it. But you are right, of
-course, and that subshell as well as the override of `HOME` are absolutely
-unnecessary.
+Perfect. Sorry that I forgot to check.
 
-Thanks,
+Ciao,
 Dscho
-
-> 
-> With that in place for ages, this test still moves HOME away from
-> TRASH_DIRECTORY, and that is totally unnecessary if it is only done
-> to avoid getting affected by the real $HOME/.gitconfig of the user.
-> After all, this single test is not unique in its need to avoid
-> reading from user's $HOME/.gitconfig---so I expected there may be
-> other reasons.
-> 
-> That is why I asked, and your response is not quite answering that
-> question.
-> 
