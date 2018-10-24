@@ -7,80 +7,77 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FCB61F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 05:30:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7E551F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 05:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726267AbeJXN44 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 09:56:56 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:37154 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbeJXN44 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 09:56:56 -0400
-Received: by mail-it1-f196.google.com with SMTP id e74-v6so5060465ita.2
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 22:30:24 -0700 (PDT)
+        id S1726285AbeJXN7l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 09:59:41 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:38914 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726080AbeJXN7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 09:59:41 -0400
+Received: by mail-ed1-f67.google.com with SMTP id e5-v6so3784647eds.6
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 22:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2z98TWu2IipyRDLvU9chSDf2/GWnkwU1SwFEKw/37Fo=;
-        b=Qzc76ApxLFm1uDhWTnU5PqaOxVE2Amd0DyK11xlZouHSVRfD26/Zm/D6SyF1td13QG
-         sySdam3dxKzT9azvz5zJSTedhjT7oYHPv2pf/3RMDdKK6tauCeKCbhEUp5tR4nBfDDxP
-         YtJp4kGxsmNqCwZ5rXhtn1xgIKObPNlsWBhUDngHCyl0TJ8572+yVKxZgIRxcqo+5gFS
-         9C77GjyRjkz45bHDSCDbz2wDGvomOls/OQstY0VSb22ezvZ+DIm8tC4AM/mIvK3aqCjc
-         6cxPZXLruYsk3Z4PUWK/d6KU04MKpqiNQvgsn3WkK2ciLfLgBldpGhlgCSAo2hncbtsr
-         8TGQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QiIMINNz4DFW6tAaPRwlU6Dj6M+hlSkgNQDDg6ktusY=;
+        b=cUTPHTWI1uC+ONUu1IZj34nQximIBa+AD0U8DblBFNiXV1hKzhehZ17BgucKOE/36l
+         6y9GAU3OL2o8C2DTDfcUnPaNJ/BIc3wwCAmf7KsObwd1SG4aX5MQt3CBSnyJcZFIgUyd
+         PAsFV3Mv6J4+pHalpy9UH2FP4jdlk94g5Cj8fuhR59BKthDOadBsRAJj69FLrV2QQ+sY
+         dayFcsRdeLoQbjT9kGfLHX89b3raiRb1HwZVKECP5l/jyn2gWcrs8LFTIM8rEPuJPxtY
+         YpWRJuD7JHTHXfGhjo2euTAo+sZF6fufABC1as8VrL/9SS5OmpqsxjjdvXtW0HUXFsvY
+         T50w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2z98TWu2IipyRDLvU9chSDf2/GWnkwU1SwFEKw/37Fo=;
-        b=MzY6pXLaaRVlAA8LmIPX/Deenu9DT1Gs26S5DlBjOefAVRYxkYrEwyOytI0b5LzdzY
-         iS+/SaIfPATwLIAmRbYAKgqHQMi78uY12ySdCOAg/ud75qyTu8tbnWdJywF8ZmPXwnCx
-         7iwk2NGPc8HZ0UQoaHWuum0TW84p9jeRbKzeM1tb+0VABrhl6C+HcvR9h77qZY4IryVX
-         cSuO/2Q/SbhtEwvEf/GPTazLlMTMBGznXkiY1dYN5RrqtVAgvPoe/6uWtMgbqNr2LiVd
-         33k/ClTNy7zLoqxuj4pbGBogyOa4GUeR5UX8p25vq1gVC5cXKG6zNvtXEmEIyP+rz3cQ
-         BroA==
-X-Gm-Message-State: AGRZ1gLoHH9s317yPjCHcR48j9TrC3uqCRCOLwHNRt63dLAbzH0hymdu
-        gyIc+wykFqtYiN/ybwfOQzQ=
-X-Google-Smtp-Source: AJdET5fEG3bg+aeAzizkwdeTSW6UxpKWrkR2GqeNCwGK3fladK7liioXGWgw+v+q1TL/MjqmtnBkUw==
-X-Received: by 2002:a24:9f42:: with SMTP id c63-v6mr610740ite.165.1540359024065;
-        Tue, 23 Oct 2018 22:30:24 -0700 (PDT)
-Received: from archbookpro.localdomain (ktnron0919w-lp140-01-76-68-143-166.dsl.bell.ca. [76.68.143.166])
-        by smtp.gmail.com with ESMTPSA id n187-v6sm1663957itb.17.2018.10.23.22.30.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 22:30:23 -0700 (PDT)
-Date:   Wed, 24 Oct 2018 01:30:21 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com, davvid@gmail.com
-Subject: Re: [PATCH 1/2] mergetool: Accept -g/--[no-]gui as arguments
-Message-ID: <20181024053021.GA14408@archbookpro.localdomain>
-References: <20181024022500.GA29011@archbookpro.localdomain>
- <xmqqy3aond55.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QiIMINNz4DFW6tAaPRwlU6Dj6M+hlSkgNQDDg6ktusY=;
+        b=SkKkB4/jOoAce4Iw02+pfaBbwMMo7Fu7y3HVx5YzGfSAZeYlywVz0whcHtP70SlMAA
+         UkShPYXN1R6dym+wr+ZZ2sh14hcEVMWf1FCTJ0nEUY65taq/vIh6zYGYXdZixPc/ioJo
+         M8AQ0TuYenumZFpQOutSW7b6V1YekfLufB6LkGmyyxpGxCf6YZ764HN8lDOip9Pv97pX
+         sWTbsNzBq+gjtHUlpTiW+16+VPX8kEIgzT/9FoO7hUrrt2pLqhkLqsiop+GTd41nhHT8
+         hqyPDzgrML32vUYaYnKJe1LtTCuXOS0T0uK9NkFje1Eajx9vV1HHh1Tztxfk/ScN4jbn
+         +FWQ==
+X-Gm-Message-State: AGRZ1gJB0/u+S9Gai2dVW8xcZcyro1t5hWaOkUYBEjLq3+XIlTeZRKLx
+        Dr2BdAxXs748OLe1zd5odXhrT36vUzivXXzhs7o=
+X-Google-Smtp-Source: AJdET5eItv4maJ21U5H1MvwJK031aSDyazlbgdE4lVzkEZ30dVLBCCmEGvNREUTdAM+bO1tzEzMeCwJ4vlyGRhwWAXk=
+X-Received: by 2002:a50:8987:: with SMTP id g7-v6mr2839235edg.257.1540359187892;
+ Tue, 23 Oct 2018 22:33:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy3aond55.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CAGshahkvn3fcyuqtD-WQE9tn+7rSad84+mtA_cfkz+t42xqPdw@mail.gmail.com>
+ <CAGZ79kZf8owJUkYF2SsCr_2q8hKxZW_Z3SbUQr6YMgNh8THfXQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kZf8owJUkYF2SsCr_2q8hKxZW_Z3SbUQr6YMgNh8THfXQ@mail.gmail.com>
+From:   Tommi Vainikainen <tvainika@gmail.com>
+Date:   Wed, 24 Oct 2018 08:32:56 +0300
+Message-ID: <CAGshahmzPyC65g6dWSqucDckoxyv=uKQLuHR8aKRFdbSp3KaJQ@mail.gmail.com>
+Subject: Re: git pull defaults for recursesubmodules
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 24, 2018 at 02:10:14PM +0900, Junio C Hamano wrote:
-> In mode_ok shell function, we seem to be prepared to deal with a
-> case where neither diff_mode nor merge_mode is true.  Should this
-> codepath also be prepared to?  
-> 
+ke 24. lokak. 2018 klo 0.57 Stefan Beller (sbeller@google.com) kirjoitti:
+> On Tue, Oct 23, 2018 at 2:04 PM Tommi Vainikainen <tvainika@gmail.com> wrote:
+> > I would expect that if git-config has fetch.recurseSubmodules set,
+> > also git pull should use this setting, or at least similar option such
+>
+> This makes sense to me and the patch looks good to me.
+> It is unclear to me if this is a regression or an oversight of
+> of a6d7eb2c7a (pull: optionally rebase submodules (remote
+> submodule changes only), 2017-06-23)
 
-According to Documentation/git-mergetool--lib.txt,
+With my testing, no it was not regression at least from that commit.
+It did not work as I expected before that commit.
 
->Before sourcing 'git-mergetool{litdd}lib', your script must set `TOOL_MODE`
->to define the operation mode for the functions listed below.
->'diff' and 'merge' are valid values.
+What was unclear to me is why this config needs to be read as
+pull calls fetch, why fetch does not use this configuration as is?
+If fetch.prune=1, should git pull command also prune or not during
+fetch? There does not seem to be test case for that behavior.
 
-so I think that we can assume that the one of diff_mode or merge_mode
-will return true. In any case, it seems like the rest of the code was
-written under this assumption so if this needs to be changed then the
-whole library needs to be fixed as well.
+-- 
+Tommi Vainikainen
