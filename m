@@ -2,91 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F5BA1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 02:47:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C88091F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 02:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726543AbeJXLNr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 07:13:47 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42950 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725266AbeJXLNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 07:13:46 -0400
-Received: by mail-io1-f67.google.com with SMTP id n18-v6so2201973ioa.9
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 19:47:46 -0700 (PDT)
+        id S1726240AbeJXLON (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 07:14:13 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37241 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725266AbeJXLOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 07:14:12 -0400
+Received: by mail-wm1-f65.google.com with SMTP id p2-v6so459368wmc.2
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 19:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=rbzjfi72SOlcqcYe+gXXD6YoDqn6ghOmoLZ60dRN0zI=;
-        b=nTsjZ/sTYRfaQjVFARSmN4fkEO2zvjis2BJhJekT3c6f8+/l88mmMuJ6r8pLI1AcAw
-         m7Qt68qZZGVXLEoIgviYNB8WlIOAQwu6g5xxKJhr2rHvASWCoMGZ+hzxA4OyIqHLeTb+
-         eZtfEALYnyZ1NbmqUJn/4yxmxQxbheFovhAvBRlzxRuJcifqH2GUOHG5HSDNgQfUwijP
-         blU9ATteB8LrV/ZC9vSW4/lr7GF2RuKciL/HUkP9Gd7aC+MLBQCdTGbpY8TZsGQ3AZWx
-         lrxsRO+HF0PJeWmGy5I3PH2z27/rMJ8o8rEI9YKzKiLBbi0SojQi6naoTJJRd73nihIf
-         dxbA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=V0l8m8xqwgIC088uqPC+OSHUp/UHERrffJeyR+3ESvs=;
+        b=cgKtYNK6qpiJPxK2czT3DCXP7InuBO1j65FuNGeYD3VcUW8zzEeFhDbfglmdUh62Iu
+         qBMaQPMTxc/41buWWrGztCoI3vwssoYT3lO786v6U9sBNL62rlG1ey3phh+lrOUpVM3F
+         x7OcnzDU0cYWbEt+7ZHtKUQE7klUeClZPk9w/sE1hLAdDT9mhMa4t9W9Gw8DC+JN676z
+         B7TutEo5JFx3CIUQJTYFp2AHyu0xeOB8JF/CYLuiFDi4pizPCGWcJ1ttM92du3qauoNM
+         lLCcl6coB9dRZYMrHDmp1GoFGd0aax0wGeBnYFRLmlCTamrxmyDHZLlLYTafllutCE3/
+         DAng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=rbzjfi72SOlcqcYe+gXXD6YoDqn6ghOmoLZ60dRN0zI=;
-        b=F41QO6s+9Vv8KAtBVpPx/I0bO+hHZ74oEvGB/fjC4lugmp+1t/2Z/P3UYuwe9GvP5d
-         mxtEmtdWgHqeu+a0HgSdIHyCPPlZGjhmuX4IHuATyGxJSEXjgF1eLbBjQRdiNlki8482
-         YsSvuo6BI/4Pum5FCkvVaFTtnQPD8OFCJTz8WahV+HMQWgh66o7ZSoXW2ykgSU8Qdv9U
-         Wtli21bnWQXlab4bsDskYj8Wdc6DiP5VXxAhjbwUqPHzaqV6j126PXjhYsGX2GEVlJHC
-         0IdZ96fEmdoTpzYEXU5HPGqR6KHhYG9Q0+5WiMa7jhYGsKA42xM88y13s57K9XgsfMAx
-         AOoA==
-X-Gm-Message-State: AGRZ1gKuOgt3nzP4XUObQc7BprlCbnzgnaBS0/8reHaHLzZKAcfH4Gpe
-        eQ/b6iD1tWM6SGak055KjS8H0zkQ
-X-Google-Smtp-Source: AJdET5dg1kNGg91oN9S6yZ00BumHgV3Ce0valMPM9cNmJX6BuVzSyCeMuZhgkuCs3ZWw6ZYE1/dvLA==
-X-Received: by 2002:a6b:b417:: with SMTP id d23-v6mr13188416iof.227.1540347914393;
-        Tue, 23 Oct 2018 19:25:14 -0700 (PDT)
-Received: from archbookpro.localdomain (ktnron0919w-lp140-01-76-68-143-166.dsl.bell.ca. [76.68.143.166])
-        by smtp.gmail.com with ESMTPSA id c26-v6sm1824082itd.18.2018.10.23.19.25.13
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=V0l8m8xqwgIC088uqPC+OSHUp/UHERrffJeyR+3ESvs=;
+        b=lFCvNlLzkfj9ESTSGX+AoHA6YFXwxRzoKfcyfg0ObE1NmakQW1jvQ5QF5TOeH0d06a
+         EzSF5RTrigI+bXMstUepzdwX+JKIQI/8ahDYKdQT6mNIJgbmwczjvM8/12s1IA3i89GZ
+         pvQ5NtvlufbBjemewM8uj3r6umwf+Eb7jGzUMb/SFKGJfy547yters0HeiwXfmWXumf+
+         NuaSWopyBeoor34knN2yUmk4t8bpwtwbyEqmXekXgzkb2tZoc4H4aqClsW9ijcbdIiN/
+         rBrdqVzDO5CiB56scMY2jkf4mehpbNwc1UVzx2K6SgWINQH6hhfue3sKV5U5up+VK84u
+         AJyg==
+X-Gm-Message-State: AGRZ1gLPQcL1LxLA/Kwd3O3o4U2DY7oawYFY+E/xiTIqLeNKoOOrNAij
+        XG4VcBtQAnNXyC3Jr+jWvIc=
+X-Google-Smtp-Source: AJdET5e+eAoNrgdv7hb8NjiA2nY38Kb50ZXz6c3TbyRAX5BIw/wmBYLkLmyez4TWupE891BWIXB+Gw==
+X-Received: by 2002:a1c:540d:: with SMTP id i13-v6mr597880wmb.149.1540349290603;
+        Tue, 23 Oct 2018 19:48:10 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v129-v6sm1953990wme.45.2018.10.23.19.48.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 19:25:13 -0700 (PDT)
-Date:   Tue, 23 Oct 2018 22:25:11 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     liu.denton@gmail.com, anmolmago@gmail.com, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com, davvid@gmail.com
-Subject: [PATCH 2/2] completion: Support `git mergetool --[no-]gui`
-Message-ID: <20181024022511.GA29050@archbookpro.localdomain>
+        Tue, 23 Oct 2018 19:48:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Slavica <slavicadj.ip2018@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        Slavica <slawica92@hotmail.com>
+Subject: Re: [PATCH 1/3] [Outreachy] t3903-stash: test without configured user name
+References: <20181023162941.3840-1-slawica92@hotmail.com>
+Date:   Wed, 24 Oct 2018 11:48:08 +0900
+In-Reply-To: <20181023162941.3840-1-slawica92@hotmail.com> (Slavica's message
+        of "Tue, 23 Oct 2018 18:29:41 +0200")
+Message-ID: <xmqqd0s0qcuv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
-Signed-off-by: Anmol Mago <anmolmago@gmail.com>
-Signed-off-by: Brian Ho <briankyho@gmail.com>
-Signed-off-by: David Lu <david.lu97@outlook.com>
-Signed-off-by: Ryan Wang <shirui.wang@hotmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Slavica <slavicadj.ip2018@gmail.com> writes:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index db7fd87b6..a45b4a050 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1833,7 +1833,7 @@ _git_mergetool ()
- 		return
- 		;;
- 	--*)
--		__gitcomp "--tool= --prompt --no-prompt"
-+		__gitcomp "--tool= --prompt --no-prompt --gui --no-gui"
- 		return
- 		;;
- 	esac
--- 
-2.19.1
+> +test_expect_failure 'stash with HOME as non-existing directory' '
+> +    test_commit 1 &&
+> +    test_config user.useconfigonly true &&
+> +    test_config stash.usebuiltin true &&
+> +    (
+> +        HOME=$(pwd)/none &&
+> +        export HOME &&
 
+What is the reason why this test needs to move HOME away from
+TRASH_DIRECTORY (set in t/test-lib.sh)?
+
+> +        unset GIT_AUTHOR_NAME &&
+> +        unset GIT_AUTHOR_EMAIL &&
+> +        unset GIT_COMMITTER_NAME &&
+> +        unset GIT_COMMITTER_EMAIL &&
+> +        test_must_fail git config user.email &&
+> +        echo changed >1.t &&
+> +		git stash
+> +    )
+> +'
+> +
+>  test_done
