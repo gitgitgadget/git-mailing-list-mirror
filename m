@@ -7,115 +7,114 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE8791F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 14:42:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 476481F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 14:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726839AbeJXXKs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 19:10:48 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:34189 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbeJXXKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 19:10:48 -0400
-Received: by mail-it1-f196.google.com with SMTP id e81-v6so4338852itc.1
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 07:42:25 -0700 (PDT)
+        id S1726773AbeJXXSG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 19:18:06 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:36238 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726457AbeJXXSG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 19:18:06 -0400
+Received: by mail-it1-f195.google.com with SMTP id h14-v6so528802itf.1
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 07:49:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MAgvMIDy1S+71b3DMwM5kYalImWzShoZvWfosguOvhE=;
-        b=pHn9Swq3KEjyVHaX8bFzUmReI+VPesV4KC654F7H8h9VCbraXywRKs6Xr/aPMGDEQz
-         ttG4X9CKubcA24N7pWCzg2xaJdcoHrkGptMSbBEQG2b2mfMsBkXpCMpyrUb/0S/gIXp6
-         1QYKBfOeDP5MkDEA824pvFB1/Xx+oO2sUGIHyuXp9SZOGIAtb1KMoG/7E/iOvYQMPQPQ
-         FVsehAIOif9zmZvpou9TbBhCL65KNYCT4zekasLV2g36LnJwVlaOJug8yJPt9R+GoOuV
-         AfZbLifA5sKxNajYc57ilWrn2EjufxWSemu96QwGv3h7JdjHhtzj2maJJlHadWm9JiZw
-         IKvQ==
+         :cc;
+        bh=QSvcTbst72c2AWmjWNDeSvXBlSvzpRc4Youiuz9rNKE=;
+        b=L2XxhD1cGjtOuZXVrBqaHh6j4jzeDIxgFx/+928vPnm4nWY3aWRkhQBnt0DEhZBUvs
+         Zil6ui7wN5A0l/RQfo5T4KybdKkfgsucQlfSl4PyZZWiL4xbL/+Gyw9cS8OQNYBKYosn
+         FWXJOBgW/yuhG/Pp2dlSv9Wtae75UdN0UitK7EInWG0PkSLM8Hiuz5Qi4vYwztykvCGL
+         g6ll6V1755JE8bipDhBzhckAd+S+h6yZkLC9ahgRkJEr3fRhcZ5nODsT2WpqlkOc9DnH
+         jxCCnkBkKRgk2HHHocbhc2kq79QI7Vq2qHaAVyWSsHXvJ44J9W+pHLlNPmfEeVgj6GmJ
+         r8hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MAgvMIDy1S+71b3DMwM5kYalImWzShoZvWfosguOvhE=;
-        b=hof6/DfamYBmeokukYfcxWVpCLLFwe6zudnlA1T1CExIFfWP2O+xotbZeprHkxHxHq
-         mopqu4L8j+/b7W9wI7+GJv2WP8XH+Z+RWOB/t5JdmbdWRXx8uK38V44Mgy0Ae9p6fl/s
-         lPHF87RcyC5gRSQFgKf4IA4IEkb2UX6rqrqwro8LrYAEnk4NEo2MyuAeKyok2bfFh7pH
-         JogfBTIyC+KI8moYpv0Jp9lwwl+UszldX0YNiu/ZZNvQs9n3r0R4UeU9+xDdbYG8+gtH
-         PNSBjiYeklNn42Npz/pxdDDCaN9DmymaWIv6qPNGSB9Wm5TOi5wNxhDfwGjP5XP1BY4+
-         ORMw==
-X-Gm-Message-State: AGRZ1gKFSGbwvOIQnMGeloBgYkVv7JuyiT5/5oZaJFikg5cW07eQypo9
-        Qm2H8n85O+5zCm0YobRgSoo4vWe3rc5fF/K8Z1M=
-X-Google-Smtp-Source: AJdET5dYWGc0x3sHx3MyT3YQ2Hds1c/IMWKP5YTRAwdGDft1LQlc9mCCFIIhwWjk5Kk9RPgM8RS9+QOJsm9UqNcqt4o=
-X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr1687125itc.123.1540392144712;
- Wed, 24 Oct 2018 07:42:24 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=QSvcTbst72c2AWmjWNDeSvXBlSvzpRc4Youiuz9rNKE=;
+        b=rFUb8QTtGhnIYIVl0MHY4Tdtfd3Nk5uwy7gqGttCzlN90jnR+oZWFODq2YNM94RgM+
+         CZ6p2lpFYak/kmJH7iHMfOEY+t42v4yx6tOkaIS3mm08hpXSUQvzYI4gXsRrls66N53x
+         mQkYF0dK+qm3v7INoS4UDS7oY8+h++BGG6JsL+57ZLi6ju+zrq0hzIgGy4mswo+CSnZL
+         PTnx2ppFv25KYUdQAh436qUTABg8EplsIWZhJdoiy3+VI4Dh7s5sjFRnxBIjZjPfR01W
+         oeYuRcrUN2MOfbbV9P9VU9HF7s4ADNi7kM//0mdhKIzzJZOtmKDHdakxa0DPLEcGGcmR
+         WX+Q==
+X-Gm-Message-State: AGRZ1gJQ0vvaXDRGG6QvuNlfADNjfJhbDgFWEC7l73/vPTHso0tXCCBQ
+        z13UI0nwGPvLMXOKbRkJuvIRi0VxoPCIgwlmbTM=
+X-Google-Smtp-Source: AJdET5erQNINZMNwgY0Io1O9+QevLVDt9YdGbP8hjk8IQHB/DXZV6wYtHHuzdBP+J2qTwZyBUoqQmKfiHSpPZFRJsJ4=
+X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr1770330itg.70.1540392582039;
+ Wed, 24 Oct 2018 07:49:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181022153633.31757-1-pclouds@gmail.com> <878t2pd6yu.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.1810231126470.4546@tvgsbejvaqbjf.bet> <8736sxc6gt.fsf@evledraar.gmail.com>
- <CACsJy8CX78EbANbv8a354djJaO6dKRpXshHhHJTspJvOSewgpA@mail.gmail.com> <871s8gd32p.fsf@evledraar.gmail.com>
-In-Reply-To: <871s8gd32p.fsf@evledraar.gmail.com>
+References: <20181017164021.15204-1-peartben@gmail.com> <20181022131828.21348-1-peartben@gmail.com>
+ <20181022131828.21348-3-peartben@gmail.com> <CACsJy8Dcf8OknyMaSZxOaib54jLSSt71XXjTZD3UjgnH6J7QFA@mail.gmail.com>
+ <e1f50b07-b3bf-0805-fcc9-692331dd170a@gmail.com>
+In-Reply-To: <e1f50b07-b3bf-0805-fcc9-692331dd170a@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 24 Oct 2018 16:41:57 +0200
-Message-ID: <CACsJy8Dex3VYEXmvRZv5_ot1-cwjJtir=kvupzKe7-Z2qPZw+Q@mail.gmail.com>
-Subject: Re: [PATCH] Poison gettext with the Ook language
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>
+Date:   Wed, 24 Oct 2018 16:49:14 +0200
+Message-ID: <CACsJy8AKWp859cGMwh0_tRwODPCAQ+Rmkaz6HQcy8UQOgMH-og@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] reset: add new reset.quiet config setting
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 6:45 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> >> The effect of what I'm suggesting here, and which my WIP patch in
-> >> <875zxtd59e.fsf@evledraar.gmail.com> implements is that we'd do a
-> >> one-time getenv() for each process that prints a _() message that we
-> >> aren't doing now, and for each message call a function that would chec=
-k
-> >> a boolean "are we in poison mode" static global variable.
+On Tue, Oct 23, 2018 at 8:47 PM Ben Peart <peartben@gmail.com> wrote:
+>
+>
+>
+> On 10/22/2018 10:45 AM, Duy Nguyen wrote:
+> > On Mon, Oct 22, 2018 at 3:38 PM Ben Peart <peartben@gmail.com> wrote:
+> >>
+> >> From: Ben Peart <benpeart@microsoft.com>
+> >>
+> >> Add a reset.quiet config setting that sets the default value of the --quiet
+> >> flag when running the reset command.  This enables users to change the
+> >> default behavior to take advantage of the performance advantages of
+> >> avoiding the scan for unstaged changes after reset.  Defaults to false.
+> >>
+> >> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> >> ---
+> >>   Documentation/config.txt    | 3 +++
+> >>   Documentation/git-reset.txt | 4 +++-
+> >>   builtin/reset.c             | 1 +
+> >>   3 files changed, 7 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> >> index f6f4c21a54..a2d1b8b116 100644
+> >> --- a/Documentation/config.txt
+> >> +++ b/Documentation/config.txt
+> >> @@ -2728,6 +2728,9 @@ rerere.enabled::
+> >>          `$GIT_DIR`, e.g. if "rerere" was previously used in the
+> >>          repository.
+> >>
+> >> +reset.quiet::
+> >> +       When set to true, 'git reset' will default to the '--quiet' option.
+> >> +
 > >
-> > Just don't do the getenv() inside _() even if you just do it one time.
-> > getenv() may invalidate whatever value from the previous call. I would
-> > not want to find out my code broke because of an getenv() inside some
-> > innocent _()...
+> > With 'nd/config-split' topic moving pretty much all config keys out of
+> > config.txt, you probably want to do the same for this series: add this
+> > in a new file called Documentation/reset-config.txt then include the
+> > file here like the sendemail one below.
+> >
 >
-> How would any code break? We have various getenv("GIT_TEST_*...")
-> already that work the same way. Unless you set that in the environment
-> the function is idempotent, and I don't see how anyone would do that
-> accidentally.
+> Seems a bit overkill to pull a line of documentation into a separate
+> file and replace it with a line of 'import' logic.  Perhaps if/when
+> there is more documentation to pull out that would make more sense.
 
-I didn't check those GIT_TEST_ but I think the difference is in
-complexity. When you write
-
- var =3D getenv("foo");
- complexFunction();
-
-you probably start to feel scary and wrap getenv() with a strdup()
-because you usually don't know exactly what complexFunction() can call
-(and even if you do, you can't be sure what it may call in the
-future).
-
-The person who writes
-
- printf(_("%s"), getenv("foo"));
-
-may not go through the same thought process as with complexFunction().
-If _() calls getenv(), because you the order of parameter evaluation
-is unspecified, you cannot be sure if getenv("foo") will be called
-before or after the one inside _(). One of them may screw up the
-other.
-
-> > And we should still respect NO_GETTEXT, not doing any extra work when
-> > it's defined.
->
-> This is not how any of our NO_* defines work. *Sometimes* defining them
-> guarantees you do no extra work, but in other cases we've decided that
-> bending over backwards with #ifdef in various places isn't worth it.
-
-I guess it boils down to "worth it". For me #ifdef NO_GETTEXT would be
-limited to gettext.h and it's not that much work. But you do the
-actual work. You decide.
---=20
+There are a couple benefits of having all config keys stored in the
+same way (i.e. in separate files). Searching will be easier, you
+_know_ reset.stuff will be in reset-config.txt. If you mix both ways,
+you may need to look in config.txt as well as searching
+reset-config.txt. This single config key also stands out when you look
+at the end result of nd/config-split. The config split also opens up
+an opportunity to include command-specific config in individual
+command man page if done consistently.
+-- 
 Duy
