@@ -2,76 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAE1C1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 07:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E83E11F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 07:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729997AbeJXQEC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 12:04:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52426 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729989AbeJXQEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 12:04:02 -0400
-Received: (qmail 7402 invoked by uid 109); 24 Oct 2018 07:37:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Oct 2018 07:37:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2203 invoked by uid 111); 24 Oct 2018 07:36:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Oct 2018 03:36:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Oct 2018 03:37:06 -0400
-Date:   Wed, 24 Oct 2018 03:37:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] t5410: use longer path for sample script
-Message-ID: <20181024073705.GA31202@sigill.intra.peff.net>
-References: <20181024073637.GA31069@sigill.intra.peff.net>
+        id S1730042AbeJXQEs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 12:04:48 -0400
+Received: from mout.gmx.net ([212.227.15.15]:39997 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730027AbeJXQEr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 12:04:47 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbxJ8-1fzLXf0Fvy-00JNk5; Wed, 24
+ Oct 2018 09:37:41 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbxJ8-1fzLXf0Fvy-00JNk5; Wed, 24
+ Oct 2018 09:37:41 +0200
+Date:   Wed, 24 Oct 2018 09:37:43 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Karsten Blees <blees@dcon.de>
+Subject: Re: [PATCH 2/3] mingw: replace MSVCRT's fstat() with a Win32-based
+ implementation
+In-Reply-To: <20181024022024.GE6119@genre.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1810240927520.4546@tvgsbejvaqbjf.bet>
+References: <pull.53.git.gitgitgadget@gmail.com> <f2ce9bdc01892b514f75c6c25c3393765593b1ca.1540290197.git.gitgitgadget@gmail.com> <20181024022024.GE6119@genre.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181024073637.GA31069@sigill.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ST9p6BaEW6k6C60RgOU+pKPetO7mzUAM0RWSqlRFGpEmtJzaks0
+ ctvgEqxvwgBkZx18QF4GtdL/uwbQ0HwwKHz7oGUkP8ehTqFzm8CLcgX2K7Ubk5fwTewV5zj
+ GuD2SGwWuhcvoiF9acW1k2q3hMRuI+crE3Vxb8Cjoj8vhc76uoZKQB17WSUys/KuJyw9YxR
+ 4VrNSU6s39WoqDKGQ8YjQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Pog9nar9XGg=:qBvRA2COtTnFxbKEEcSUlN
+ VAbXvcCaPplPJWJ/QClsQ3oYKlRkz10gHJc5jpWF0YgLPYOd/9NRhWyxeNVRNb/5EaTHyANo2
+ G+6epTeHHwiH0upHQlWj04txhARrdCRhir8unBDc6kVy3jSxvFDIh4FII1G2TwRq3T5nqLEWS
+ FYC0mZa0aD6bERET9lqSWoaN9d/hhU2M9Xxc7KAKvKkFFEZmYriT00SU/JoJp7s9gCoP6AvTu
+ aItm43GW/MeOkRqlnkxzQmtCgcSQcwXig72ZlU/d4cy6A5U0MnnF3tWYDy2OCWV7jV+m2+X6I
+ Bzp3bhJyAm8CA6qku6UFl9eJVaLi4vaCL5MtHevYE9fEjMYISDAtBjP4BC8Op72Qc8eZOeXn7
+ QYFmdkSsAvPTkmjEjgZP44FFjltyzQF2Zg/covm+XwP8KwIGXkp7O3W2YmD/ev38vQ8+XEnT1
+ W4DW66ZKIp7s58SA44yr4h9VlXcwqme4RL8PLOLKCzDbrU8jKqJQGf+4pgDbQ+B9sLzzSiZx2
+ OllKvVa1A08fvSZ8FITkrpTCU2vtQECRp3yMBP0E4vGOkf+BRLVJ3vX5Hv+9MXD048L8iJgnE
+ Ehv4a7seu9YjSt6xjwSI49L4SMhC6NNijOCvDtQkzyqEA8aB9b+z8mXTsByKcuGw6ICMImlZp
+ bPkfInB4N+vOumeEPzMM4FH2bXo+1XxPqBQQen7U12SNZkSjHHOXVAwK+wHcKgRJd5vpmptVM
+ VTta4xr5TO4yvmUL/1es/xPMn61eOxgRT99bEcov1x2ZdBCnyL4lXv9S+Po/6UuyNTryfcA9F
+ Mpn8oRhVPUG8ad0Kv+ggBnAATNUZFouEPRjrP2RSq7frcn/6kY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t5410 creates a sample script "alternate-refs", and sets
-core.alternateRefsCommand to just "alternate-refs". That
-shouldn't work, as "." is not in our $PATH, and so we should
-not find it.
+Hi brian,
 
-However, due to a bug in run-command.c, we sometimes find it
-anyway! Even more confusing, this bug is only in the
-fork-based version of run-command. So the test passes on
-Linux (etc), but fails on Windows.
+On Wed, 24 Oct 2018, brian m. carlson wrote:
 
-In preparation for fixing the run-command bug, let's use a
-more complete path here.
+> On Tue, Oct 23, 2018 at 03:23:21AM -0700, Karsten Blees via GitGitGadget wrote:
+> > -	if (!get_file_info_by_handle(fh, buf))
+> > +	case FILE_TYPE_CHAR:
+> > +	case FILE_TYPE_PIPE:
+> > +		/* initialize stat fields */
+> > +		memset(buf, 0, sizeof(*buf));
+> > +		buf->st_nlink = 1;
+> > +
+> > +		if (type == FILE_TYPE_CHAR) {
+> > +			buf->st_mode = _S_IFCHR;
+> > +		} else {
+> > +			buf->st_mode = _S_IFIFO;
+> > +			if (PeekNamedPipe(fh, NULL, 0, NULL, &avail, NULL))
+> > +				buf->st_size = avail;
+> 
+> These lines strike me as a bit odd.  As far as I'm aware, Unix systems
+> don't return anything useful in this field when calling fstat on a pipe.
+> Is there a reason we fill this in on Windows?  If so, could the commit
+> message explain what that is?
 
-Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5410-receive-pack-alternates.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+AFAICT the idea was to imitate MSVCRT's fstat() in these cases.
 
-diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-index 457c20c2a5..f00d0da860 100755
---- a/t/t5410-receive-pack-alternates.sh
-+++ b/t/t5410-receive-pack-alternates.sh
-@@ -23,7 +23,7 @@ test_expect_success 'with core.alternateRefsCommand' '
- 			--format="%(objectname)" \
- 			refs/heads/public/
- 	EOF
--	test_config -C fork core.alternateRefsCommand alternate-refs &&
-+	test_config -C fork core.alternateRefsCommand ./alternate-refs &&
- 	git rev-parse public/branch >expect &&
- 	printf "0000" | git receive-pack fork >actual &&
- 	extract_haves <actual >actual.haves &&
--- 
-2.19.1.1094.gd480080bf6
+But a quick web search suggests that you are right:
+https://bugzilla.redhat.com/show_bug.cgi?id=58768#c4 (I could not find any
+official documentation talking about fstat() and pipes, but I trust Alan
+to know their stuff).
 
+Do note, please, that according to the issue described in that link, at
+least *some* glibc/Linux combinations behave in exactly the way this patch
+implements it.
+
+At this point, I am wary of changing this, too, as the code in question
+has been in production (read: tested thoroughly) in the current form for
+*years*, and I am really loathe to introduce a bug where even
+Windows-specific code in compat/ might rely on this behavior. (And no, I
+do not trust our test suite to find all of those use cases.)
+
+Ciao,
+Dscho
