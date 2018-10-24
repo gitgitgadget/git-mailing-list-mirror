@@ -6,57 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91B5A1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 04:35:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 298251F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 04:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726267AbeJXNBy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 09:01:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45161 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbeJXNBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 09:01:54 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n5-v6so173056wrw.12
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 21:35:31 -0700 (PDT)
+        id S1726301AbeJXNUf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 09:20:35 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40745 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726224AbeJXNUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 09:20:35 -0400
+Received: by mail-wr1-f67.google.com with SMTP id d2-v6so3977909wro.7
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 21:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=8lheZnjAPRLzF50jn+R5nUyrSIyI3dKHuWEW0SHUP2c=;
-        b=A0G7MGrA+otmx5Vsj2r9v7Ite+EsDfqHLPt/r4vYpyvhfy/amnlLIo1nwcxdML02R3
-         miuVcGnR/raPhCQ+qsSIb8hSGaVtzP0ZlU9/kDb5NEt5cUep0H2gtFK3pAB8J6gahN7b
-         FHUDeuSklh3choacvR/SuVNcqSY7NmvBJ3OcGrhDHg8MGaUUdufp1eybf5g1ovhGxVrj
-         ENyuMkm0KuUf/kHT32fl7BDIQ5GMGyztBUPt1JNyiQ7cHmtUJdmRhdOcSTduIj0mCzad
-         oWSqgt2FgpiDcNvNy+d+hS0cb2QNYCo9g+26mw6ooSwfgQBDNmpQOh2pPvYRHSJAgFP7
-         0gzA==
+        bh=GownWpzZJSba0XFv8rZhOnJNy9n7HU7v+LmGQKOgypc=;
+        b=ISSEgX90BffcCQmONzxslWLf/dDKLIK4Zv4uY6E7nlx3AmICCSF/a6Ni5kGFbqsf5j
+         Ucq9uEgMUxs10gA4QW25WPg0JKReQitNmHgE4aj/Z2htUcZXBak/Wx9M6iapoGJ4ZQll
+         8yBp25ghx4N4IqBkUo0T0vLzOJIbHQVOxFksEpcfX+UuDUNQoMY0OJ+qu16QxcW9GlCG
+         1apeEt8UZHbCdZcgdiExKoh0n23bm0s5Tn3mc+pcFzcsH4XrK4zoWtId+0gkYFQTeIAh
+         iwXs7jrqISKR2ZvMUxyHyojEC63B4YJ9558jKnDJLAeX7/FDN5Qm5NincpTzv1KYS4dF
+         lnuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=8lheZnjAPRLzF50jn+R5nUyrSIyI3dKHuWEW0SHUP2c=;
-        b=IKTg29JE/0oJMcKlWyyeCcgyPSf4SMDcBEgfOpWtCE9IZiIg+jT06u1BpxNv6GSO3k
-         ifHTeDFMa/w/ibbO8orIm0op7EZS41IxB/dEro371KxhfDcMi1vJSyFWI6yYzLdcavt8
-         ceLcNRLa2+bT9VFe5a5mM0eXiNE963MKFqpAC0CJCFF9xquOyRJvoFUJmfMSDmUl2c3L
-         E9SEdRDHy5ItpX7iv+KTAf7YJa3iRvcNUvKws6Ruva3WOdkQZjm7bzTnou0QDtngNrF3
-         PwVdfo5hlt4wHipdJHBMrEAzh1Bur5gPAw6TLWYU5bcS6wzTdSbeQRX86+N0Lq6SLCc0
-         fHew==
-X-Gm-Message-State: AGRZ1gLJlgloV4Oh30TeHkSPQNFxFHXgwVJGiROTEbD8cGs4lAeT80AR
-        SKWf/QO+zg8rO3/vaHEO5GbGmhjBg5A=
-X-Google-Smtp-Source: AJdET5eqDOQteFbcobO2o7pbnFEMx1EiUQBptzkDhXO97yf9QZu8GQ/N6xZ7eBHEz89utlCTNoIMeQ==
-X-Received: by 2002:a5d:640b:: with SMTP id z11-v6mr946381wru.64.1540355729989;
-        Tue, 23 Oct 2018 21:35:29 -0700 (PDT)
+        bh=GownWpzZJSba0XFv8rZhOnJNy9n7HU7v+LmGQKOgypc=;
+        b=dQzjS5weKILmjvQsW6MufIZpaqv/FVxWRcWj45lsrvrHriKWpHDIkbRm6BAShhNfrz
+         82RmTHbvm1STtBi66Zzwla/CM8d2kNU1RhzkDdPWXRttsbVlI0Kp3kdiGkngY3GxtzN7
+         IpBZ5Z/CbUKtewpORbtnyRXt1K3PfxzdTrWdzCwXGY9SYpQ2XzTTPu8wge582fQSsSym
+         osIY95Bvm/CkDJRtNOmpMYg6KeU2x+lQ0E3ZUHHprR4EcHU0WpTXCj9MCVNWBc60X+34
+         E5Wydbqod/xDNtPEk9nYfRKCwRyHySbB0+pjwwCTZ6lXt8eW0qGFrvRCWJzm6qycz0o6
+         hysw==
+X-Gm-Message-State: AGRZ1gLixUMhm6c2YhyjJ/Ct/e07FkDuCBI0wd0NktDleUrYoItPgzYQ
+        4Kaac+C47SvMjNxBtcLDjT4=
+X-Google-Smtp-Source: AJdET5fz4n4hYKlwZ1ErWZsA8rgefvOKD+QP1EJgkhPJFO1ziCZoks+xReQjjkjnt5TnumZ1fi7Auw==
+X-Received: by 2002:adf:9592:: with SMTP id p18-v6mr1103576wrp.202.1540356847239;
+        Tue, 23 Oct 2018 21:54:07 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e21-v6sm5031326wma.8.2018.10.23.21.35.28
+        by smtp.gmail.com with ESMTPSA id l67-v6sm5280409wma.20.2018.10.23.21.54.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 21:35:28 -0700 (PDT)
+        Tue, 23 Oct 2018 21:54:06 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Gruenbacher <agruenba@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Clear --exclude list after 'git rev-parse --all'
-References: <20181023191758.15138-1-agruenba@redhat.com>
-Date:   Wed, 24 Oct 2018 13:35:27 +0900
-In-Reply-To: <20181023191758.15138-1-agruenba@redhat.com> (Andreas
-        Gruenbacher's message of "Tue, 23 Oct 2018 21:17:58 +0200")
-Message-ID: <xmqqefcgotbk.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        jeffhost@microsoft.com, ramsay@ramsayjones.plus.com
+Subject: Re: [PATCH] revision.c: drop missing objects from cmdline
+References: <20181023215745.245333-1-matvore@google.com>
+Date:   Wed, 24 Oct 2018 13:54:05 +0900
+In-Reply-To: <20181023215745.245333-1-matvore@google.com> (Matthew DeVore's
+        message of "Tue, 23 Oct 2018 14:57:45 -0700")
+Message-ID: <xmqqa7n4osgi.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,41 +66,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Gruenbacher <agruenba@redhat.com> writes:
+Matthew DeVore <matvore@google.com> writes:
 
-> Commit [1] added the --exclude option to revision.c.  The --all,
-> --branches, --tags, --remotes, and --glob options clear the exclude
-> list.  Shortly therafter, commit [2] added the same to 'git rev-parse',
-> but without clearing the exclude list for the --all option.  Fix that.
->
-> [1] e7b432c52 ("revision: introduce --exclude=<glob> to tame wildcards", 2013-08-30)
-> [2] 9dc01bf06 ("rev-parse: introduce --exclude=<glob> to tame wildcards", 2013-11-01)
->
-> Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-> ---
->  builtin/rev-parse.c | 1 +
->  1 file changed, 1 insertion(+)
+> No code which reads cmdline in struct rev_info can handle NULL objects
+> in cmdline.rev[i].item, so stop adding them to the cmdline.rev array.
 
-All other glob options do show_reference with for_each_ref_in() and
-then calls clear_ref_exclusion(), and logically the patch makes
-sense.  
+"The code is not prepared to have cmdline.rev[].item that is NULL"
+is something everybody would understand and agree with, but that
+does not automatically lead to "so ignoring or rejecting and dying
+is OK", though.  The cmdline thing is used for the commands to learn
+the end-user intent that cannot be learned by the resulting objects
+in the object array (e.g. the user may have said 'master' but the
+pending[] (and later revs.commits) would only have the object names,
+and some callers would want to know if it was a branch name, a
+refname refs/heads/master, or the hexadecimal object name), so
+unless absolutely needed, I'm hesitant to take a change that loses
+information (e.g. the user named this object that is not locally
+available, we cannot afford to add it to the pending[] and add it to
+revs.commits to traverse from there, but we still want to know what
+object was given by the user).
 
-What is the "problem" this patch fixes, though?  Is it easy to add a
-new test to t/6018-rev-list-glob.sh to demonstrate that "--glob" (or
-whatever that clears exclusion list without this patch) works
-correctly but "--all" misbehaves without this change?
+> Objects in cmdline are NULL when the given object is promisor and
+> --exclude-promisor-objects is enabled.
 
-Thanks.
+A "promisor" is a remote repository.  It promises certain objects
+that you do not have are later retrievable from it.  The way you can
+see if the promisor promised to later give you an object is to see
+if that missing object is reachable from an object in a packfile the
+promisor gave you earlier.  
 
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 0f09bbbf6..c71e3b104 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -764,6 +764,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  			}
->  			if (!strcmp(arg, "--all")) {
->  				for_each_ref(show_reference, NULL);
-> +				clear_ref_exclusion(&ref_excludes);
->  				continue;
->  			}
->  			if (skip_prefix(arg, "--disambiguate=", &arg)) {
+"The given object" is never a "promisor", so I am not sure what the
+above wants to say.  Is 
+
+    When an object is given on the command line and if it is missing
+    from the local repository, add_rev_cmdline() receives NULL in
+    its "item" parameter.
+
+what you meant?  Is that the _only_ case in which "item" could be
+NULL, or is it also true for any missing object due to repository
+corruption?
