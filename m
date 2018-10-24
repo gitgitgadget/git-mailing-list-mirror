@@ -6,58 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 298251F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 04:54:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03A8D1F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 05:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726301AbeJXNUf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 09:20:35 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40745 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726224AbeJXNUf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 09:20:35 -0400
-Received: by mail-wr1-f67.google.com with SMTP id d2-v6so3977909wro.7
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 21:54:08 -0700 (PDT)
+        id S1726360AbeJXNgr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 09:36:47 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39339 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726080AbeJXNgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 09:36:47 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r10-v6so3109827wrv.6
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 22:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=GownWpzZJSba0XFv8rZhOnJNy9n7HU7v+LmGQKOgypc=;
-        b=ISSEgX90BffcCQmONzxslWLf/dDKLIK4Zv4uY6E7nlx3AmICCSF/a6Ni5kGFbqsf5j
-         Ucq9uEgMUxs10gA4QW25WPg0JKReQitNmHgE4aj/Z2htUcZXBak/Wx9M6iapoGJ4ZQll
-         8yBp25ghx4N4IqBkUo0T0vLzOJIbHQVOxFksEpcfX+UuDUNQoMY0OJ+qu16QxcW9GlCG
-         1apeEt8UZHbCdZcgdiExKoh0n23bm0s5Tn3mc+pcFzcsH4XrK4zoWtId+0gkYFQTeIAh
-         iwXs7jrqISKR2ZvMUxyHyojEC63B4YJ9558jKnDJLAeX7/FDN5Qm5NincpTzv1KYS4dF
-         lnuA==
+        bh=7ZfD/pklqbldXvLVIeyvLsU4aDb1xGpoKnTL/PhQdLc=;
+        b=JMmjaxwUDL6whnT/+lpc+sAKkPAefJSSumhXODfyYnNIzmm+mNaKkOYiy5sgdwmzim
+         2TXb99IbAHZSbaBGi7fekNPBX1SX/U2k/u+YmdeSLLz16cFoJMdkkIK2/9eQQY+mQdch
+         RDDMARnHIE/ucm6pGHykzwhJrNxZO9sa2lBplLO5kVX4TAjFz1czhoCj4IsdHlkjHVGH
+         3W71II4OqmaKI0Zz5wRPAoixBjW8HGq0RV5OEjjR69Gq2SUsIqRS+stDDrcGMxoRrcEL
+         5MRBPkPjSbWkoNhnzvB98G8t1YBDjlspnC+l9gXmgVUoPT4hKjlN35agJWNV7Ybn8+19
+         1Nqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=GownWpzZJSba0XFv8rZhOnJNy9n7HU7v+LmGQKOgypc=;
-        b=dQzjS5weKILmjvQsW6MufIZpaqv/FVxWRcWj45lsrvrHriKWpHDIkbRm6BAShhNfrz
-         82RmTHbvm1STtBi66Zzwla/CM8d2kNU1RhzkDdPWXRttsbVlI0Kp3kdiGkngY3GxtzN7
-         IpBZ5Z/CbUKtewpORbtnyRXt1K3PfxzdTrWdzCwXGY9SYpQ2XzTTPu8wge582fQSsSym
-         osIY95Bvm/CkDJRtNOmpMYg6KeU2x+lQ0E3ZUHHprR4EcHU0WpTXCj9MCVNWBc60X+34
-         E5Wydbqod/xDNtPEk9nYfRKCwRyHySbB0+pjwwCTZ6lXt8eW0qGFrvRCWJzm6qycz0o6
-         hysw==
-X-Gm-Message-State: AGRZ1gLixUMhm6c2YhyjJ/Ct/e07FkDuCBI0wd0NktDleUrYoItPgzYQ
-        4Kaac+C47SvMjNxBtcLDjT4=
-X-Google-Smtp-Source: AJdET5fz4n4hYKlwZ1ErWZsA8rgefvOKD+QP1EJgkhPJFO1ziCZoks+xReQjjkjnt5TnumZ1fi7Auw==
-X-Received: by 2002:adf:9592:: with SMTP id p18-v6mr1103576wrp.202.1540356847239;
-        Tue, 23 Oct 2018 21:54:07 -0700 (PDT)
+        bh=7ZfD/pklqbldXvLVIeyvLsU4aDb1xGpoKnTL/PhQdLc=;
+        b=b5QwcoeeOlypvX2fvfMdMTozbqgG0LNIk5EC0NCTdKgtgFoit9LGgveqgaZ9uDuvhD
+         On6VjdjckabLjspJNCnieAv5ZhIioWDLIL2QmWPEcsd/sY0katfi7ejjX8vDGX3P4VuU
+         nSxEjkFcSHM0yZ2DHsbOr96E7CmK1iWRH4p5jbuDrfZaMldGTzLhk//F9MBN94au9jVt
+         7EYqozi2svQGSNQiSspnwUhjkJp87ji0xqjDsMHcMOlFq7fY1hRpC0qm0JeA4+bHtU2G
+         zcv0IhUeclvRXtgKLmJc0uHnRWDKkn/pYpJ+hMUG/7KlnXgAQOOCeCJ0TAXrLnLUsWcD
+         7byw==
+X-Gm-Message-State: AGRZ1gJhCc5paHodHFTd5rDXeEIAq1dJ9O1ept72j5zhnz0aNKPFtnhg
+        8Vh5ppjHhd8xWx9TsawdOII=
+X-Google-Smtp-Source: AJdET5cBkacoAuwslo+pJ5FkhqCZ53WSJHfnWsrBEzkLiVEOl5jYBj/7qztEnegFWCYiES+sCTh+Vg==
+X-Received: by 2002:a05:6000:8:: with SMTP id h8mr1057139wrx.103.1540357816546;
+        Tue, 23 Oct 2018 22:10:16 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l67-v6sm5280409wma.20.2018.10.23.21.54.06
+        by smtp.gmail.com with ESMTPSA id q190-v6sm1772518wmg.40.2018.10.23.22.10.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 21:54:06 -0700 (PDT)
+        Tue, 23 Oct 2018 22:10:15 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        jeffhost@microsoft.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH] revision.c: drop missing objects from cmdline
-References: <20181023215745.245333-1-matvore@google.com>
-Date:   Wed, 24 Oct 2018 13:54:05 +0900
-In-Reply-To: <20181023215745.245333-1-matvore@google.com> (Matthew DeVore's
-        message of "Tue, 23 Oct 2018 14:57:45 -0700")
-Message-ID: <xmqqa7n4osgi.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
+        david.lu97@outlook.com, shirui.wang@hotmail.com, davvid@gmail.com
+Subject: Re: [PATCH 1/2] mergetool: Accept -g/--[no-]gui as arguments
+References: <20181024022500.GA29011@archbookpro.localdomain>
+Date:   Wed, 24 Oct 2018 14:10:14 +0900
+In-Reply-To: <20181024022500.GA29011@archbookpro.localdomain> (Denton Liu's
+        message of "Tue, 23 Oct 2018 22:25:00 -0400")
+Message-ID: <xmqqy3aond55.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,42 +66,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> No code which reads cmdline in struct rev_info can handle NULL objects
-> in cmdline.rev[i].item, so stop adding them to the cmdline.rev array.
+> Subject: Re: [PATCH 1/2] mergetool: Accept -g/--[no-]gui as arguments
 
-"The code is not prepared to have cmdline.rev[].item that is NULL"
-is something everybody would understand and agree with, but that
-does not automatically lead to "so ignoring or rejecting and dying
-is OK", though.  The cmdline thing is used for the commands to learn
-the end-user intent that cannot be learned by the resulting objects
-in the object array (e.g. the user may have said 'master' but the
-pending[] (and later revs.commits) would only have the object names,
-and some callers would want to know if it was a branch name, a
-refname refs/heads/master, or the hexadecimal object name), so
-unless absolutely needed, I'm hesitant to take a change that loses
-information (e.g. the user named this object that is not locally
-available, we cannot afford to add it to the pending[] and add it to
-revs.commits to traverse from there, but we still want to know what
-object was given by the user).
+Other people may point it out, but s/Accept/accept/.
 
-> Objects in cmdline are NULL when the given object is promisor and
-> --exclude-promisor-objects is enabled.
+> In line with how difftool accepts a -g/--[no-]gui option, make mergetool
+> accept the same option in order to use the `merge.guitool` variable to
+> find the default mergetool instead of `merge.tool`.
+> ...
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 9a8b97a2a..e317ae003 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -350,17 +350,23 @@ guess_merge_tool () {
+>  }
+>  
+>  get_configured_merge_tool () {
+> -	# Diff mode first tries diff.tool and falls back to merge.tool.
+> -	# Merge mode only checks merge.tool
+> +	# If first argument is true, find the guitool instead
+> +	if [ "$1" = true ]
 
-A "promisor" is a remote repository.  It promises certain objects
-that you do not have are later retrievable from it.  The way you can
-see if the promisor promised to later give you an object is to see
-if that missing object is reachable from an object in a packfile the
-promisor gave you earlier.  
+Don't use [] in our shell script (see Documentation/CodingGuidelines);
+say
 
-"The given object" is never a "promisor", so I am not sure what the
-above wants to say.  Is 
+	if "$1" = true
 
-    When an object is given on the command line and if it is missing
-    from the local repository, add_rev_cmdline() receives NULL in
-    its "item" parameter.
+instead.
 
-what you meant?  Is that the _only_ case in which "item" could be
-NULL, or is it also true for any missing object due to repository
-corruption?
+> +	then
+> +		gui_prefix=gui
+> +	fi
+> +
+> +	# Diff mode first tries diff.(gui)tool and falls back to merge.(gui)tool.
+> +	# Merge mode only checks merge.(gui)tool
+>  	if diff_mode
+>  	then
+> -		merge_tool=$(git config diff.tool || git config merge.tool)
+> +		merge_tool=$(git config diff.${gui_prefix}tool || git config merge.${gui_prefix}tool)
+>  	else
+> -		merge_tool=$(git config merge.tool)
+> +		merge_tool=$(git config merge.${gui_prefix}tool)
+>  	fi
+
+In mode_ok shell function, we seem to be prepared to deal with a
+case where neither diff_mode nor merge_mode is true.  Should this
+codepath also be prepared to?  
+
+This is not a comment to point out an issue with this patch.  It is
+a genuine question on the code after (or before for that matter)
+this patch is applied.
+
+Thanks.
