@@ -2,137 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C57A81F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 07:55:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDACF1F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 08:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727639AbeJXQWh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 12:22:37 -0400
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:40409 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726808AbeJXQWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 12:22:36 -0400
-Received: by mail-pg1-f175.google.com with SMTP id o14-v6so1942866pgv.7
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 00:55:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=UIvddT36kRdJcz/vFPY8pjGGoGALJln3OIwGyzYQPRo=;
-        b=OpN2QNcHYBahT5/hCJ+OgDxbDriR8JbFAWUqSLf3qaTf8eaITXH2dAW2jh88nvVL8k
-         2yAjbs0fOr0OP4NKlLJ9jYqtOjxBiv7dnos2PLXvfx0GN7pcY4JUDADl5Ai4e0tYVsR7
-         w4ueDf5zO7lnBKVT854lnI1ABWs5JJ2dtAjCAxUlE637bWvaQQUgY0PK6LoQLaoedc8W
-         lhHcFWTf9LRjgHpDx30re3IPj2SmgyeIAdYYRNW7J0c5hwb/56rzqa3b9AJgjZVSC+p4
-         O0RUJfgRFJi8St8p4P9lValOc32Eus/gASn3ImMXjOjNZnSkqBoIYYDh/6i4b4WX8G9D
-         6dhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UIvddT36kRdJcz/vFPY8pjGGoGALJln3OIwGyzYQPRo=;
-        b=A3E3Ay2Lc/b88CnT2Z9CFAcp6XHMSgP0yGeKejpM/hwAjvPZVyDDImyO31EXywhEKG
-         ZUPD/QjACyZm1CQmz+dRfuoaiR1uXwxMagWlPeSDPmSM4UqwGbegr6DEs7ipjZvWIme+
-         coWNQ06LnuEWZx+Qi4DPCuJZ6ZWtw4IYcYFbo0CP9a9JgVwl6xUWKIsutecXCxJtJ+jT
-         wZ5j6cXbuR10GQrD0KcLtbqPjY019PxsG+Rrjg9QdRAHGvI0InoAC/2QFx2P3qWJqQR9
-         zgO1yOuhEQ8wmO5WHGTzUrC0nOhQp9ZGFjLjQ5qKdHaydvHBjI5KIkPmHoBfiZWAyd0L
-         RFrw==
-X-Gm-Message-State: AGRZ1gIybHeZ0/+uWDL6XbfxJXVL4DgUDQc9XvkIdTtsiMnDcqnrG3X8
-        KL6VVTZgLiTP/sQRd8yioUY=
-X-Google-Smtp-Source: AJdET5cYTWdY0yJk8uHkZCLGw/4QrobUsrGatqBSUkEmIJFk1hhm/pN1zI0HqoczEM0+tKNDzaDOoA==
-X-Received: by 2002:a65:45c9:: with SMTP id m9-v6mr1547004pgr.212.1540367736766;
-        Wed, 24 Oct 2018 00:55:36 -0700 (PDT)
-Received: from gmail.com ([2605:e000:90ab:1300:acd3:6fc6:a240:6a91])
-        by smtp.gmail.com with ESMTPSA id v84-v6sm7878101pfk.12.2018.10.24.00.55.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Oct 2018 00:55:35 -0700 (PDT)
-Date:   Wed, 24 Oct 2018 00:55:33 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1727220AbeJXQ20 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 12:28:26 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41079 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726964AbeJXQ20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 12:28:26 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfSeH-1fn26C1NE1-00p7ku; Wed, 24
+ Oct 2018 10:01:13 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfSeH-1fn26C1NE1-00p7ku; Wed, 24
+ Oct 2018 10:01:13 +0200
+Date:   Wed, 24 Oct 2018 10:01:16 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Tan <jonathantanmy@google.com>,
         Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, git@sfconservancy.org
-Subject: Re: Git trademark status and policy
-Message-ID: <20181024075533.GA11043@gmail.com>
-References: <20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net>
- <20180916101520.GC18517@gmail.com>
- <20180917032101.GD22024@sigill.intra.peff.net>
- <CAP8UFD2cC7VMu7Zp9NaXj4x0BMBPZ5CJ6prwEv+s24SuNG=7JA@mail.gmail.com>
- <20180918182222.GA24448@sigill.intra.peff.net>
+        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/3] shallow: offer to prune only non-existing
+ entries
+In-Reply-To: <xmqqmur4ovjt.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810240941230.4546@tvgsbejvaqbjf.bet>
+References: <pull.9.v2.git.gitgitgadget@gmail.com> <pull.9.v3.git.gitgitgadget@gmail.com> <f085eb4f728f5cd102f56b7a90ce9b10fdb59dee.1540245934.git.gitgitgadget@gmail.com> <xmqqmur4ovjt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180918182222.GA24448@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:gRXDS0HSgCsG+brXdSApQSh8EYEgfpmx679BBRxQ81DddMEe7k4
+ yD8c15rS5YPhP3Jqcy/pBv8YrFr240Crpw5CAXz3mSeFHGwQ7dmR/3oCP1BV4d2HjyWQ5cy
+ 3JI1sqJFNJX6/QQ8bnf8yIzYfmOmkmJqMNoQfFIjophl4BDzRBh0V6IC9BD0PgjETDnENaC
+ gXTMlITL45kKSVul3Ec4Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:q0sZralUWSI=:GITaKoOVAMokt8rSZHno73
+ f03A9BiDM3Wyi0aGNN1p/gYcj2teChZhoK2VrC5OsMSCfiRUf4WTk5kPHUa0czLpIwLR/DO35
+ h8OUVZz6DLfj3P9Yjldhx6VzF9GFrVieJmf/2hJRhCiZtmc+M4Y4LSwSYk3/Hbes6AygMu6+9
+ 61yY/aKq3WtJEz67MjjM+hpInYB0ijQQSCWehajTjzFtKo6xq3sr61YnsM9Xkc+5vopM8ze/J
+ eMJUzJ496198aqbvzRpZEauhiLtVawt2B4uA4I8byI+/5ZfNSJffvTFPVBIIsuzaJEGRK+qvw
+ XhF+jCObUozpUJMxyi5lhebkZYzDKmwyG9bAMGQvQw2wF5x2N6lw6wztyo5tIFRy/QPX3fnt+
+ 3aa0fjlNYsEc+BXI8EpNRK4QVf4upKcMzHtCoQ3RXh9jFUqTItizeb2lxav6ZJuHd5CU/KBKN
+ okv3OsNgkAF51PbzOZBl6vH8e67v0JqO5XIVgxsb1yfziuTOZGGhRWMePKpVpXs2OPgou2e3P
+ u1JwwVQKV7U0uvbGLjX5pA3X+y9rA1R4ZFDpBqDVbk0Fa1DqaIq+Eb0RFRicq9wiXSjapZYU7
+ 2ZFd/6jU6mNQ4CNgOAJbr/fwvTehQwm3vVad8xYF5IlgBBagi9NiX8UgVeVCVgv+ihncfWUfp
+ ZCfbmymE3EhYqQVkpaLIxxxB5EQUR7RnZ8PYoAlvYmzULRMc+Y9UTfgiP0o4H2PyXU4uf+30B
+ /Axw5biyGcaJBt0dZTURnxe86jIRRVEqF4ucs/rXBdqZHnX5g0cwO3EnRYIhfqGS8uVNLVbWc
+ JWibmUsk6pHifXsWQM2sBKIB+YIJutWhxPdPxks64vrFZNCY6A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 18, 2018 at 02:22:22PM -0400, Jeff King wrote:
-> On Mon, Sep 17, 2018 at 11:25:31AM +0200, Christian Couder wrote:
-> 
-> > > (Also, to be clear, this is all _only_ about "Git Cola". The "git-cola"
-> > > command is explicitly OK in the policy because that's how commands
-> > > work).
-> > 
-> > I agree about "git-cola" though I wonder about "git-dag" as this is
-> > another command used by the project that is more generic. For example
-> > I could imagine that, if we wanted to provide a shortcut for `git log
-> > --graph --decorate --oneline`, we might want to use `git dag`.
-> > 
-> > I guess we can still recommend to change it if possible, though we can
-> > also acknowledge that, as our recommendation comes very late (too
-> > late?), it is just a "weak" recommendation.
-> 
-> Yeah, I agree with you, though I think it is a separate issue. "git-dag"
-> is explicitly OK in the trademark policy, and they are not using "Git
-> Dag" in any recognizable way.
-> 
-> So I think there is no trademark issue, but "git-dag" is probably just
-> not a great idea in general, because the namespace is open and it is
-> likely to get stomped by some other project. Or git itself. Or it may
-> even be annoying for users who have a "git dag" alias (on-disk commands
-> always override aliases).
-> 
-> So I think we should generally recommend against such generic names
-> during the naming phase. At this point, I'm not sure the pain of
-> changing now is any less than the pain of changing later if and when
-> there's a conflict.
-> 
-> I think I'm actually violently agreeing with you, but I wanted to make
-> it clear. :) (And everything else in your email seemed sensible, too).
-> 
-> -Peff
+Hi Junio & Jonathan,
 
+On Wed, 24 Oct 2018, Junio C Hamano wrote:
 
-Thanks for the recommendation.  I'm open to changing the name in a
-future major release.  For users that already use the short "dag" name,
-we can transition over to something else if it's relatively short and
-sweet.
+> Jonathan, do you see any issues with the use of lookup_commit() in
+> this change wrt lazy clone?  I am wondering what happens when the
+> commit in question is at, an immediate parent of, or an immediate
+> child of a promisor object.  I _think_ this change won't make it
+> worse for two features in playing together, but thought that it
+> would be better to double check.
 
-Maybe a better name would be "git-kcola" (a nod to gitk), or "git-vdag"
-for "visual DAG"?  Any sugs?  I'm terrible at naming things, but I do
-refrain from using additional "git-*" names beyond these two for the
-project.  I kinda like "vdag" since it's easy to type, and nearby the
-existing "dag" name.
+Good point.
 
-There's also one more script, but it's never installed in the users's
-$PATH and is more of an internal implementation detail.  Git Cola
-includes a GIT_SEQUENCE_EDITOR-compatible "git-xbase" command that
-provides a visual interactive rebase feature.  That command should
-probably be renamed to "cola-git-seq-editor" to make that clearer, and
-also to open up the possibility of installing it in bin/ in the future
-since it is useful on its own.
+Instinctively, I would say that no promised object can be a shallow
+commit. The entire idea of a shallow commit is that it *is* present, but
+none of its parents.
 
-The rationale for two commands is that worktree diff+commit and history
-inspection are our two primary use-cases.  Everything else is provided
-as a sub-command, "git cola rebase", "git cola stash", etc. so there's
-not much pressure to add more top-level names, just these two.
+Also, I would claim that the shallow feature does not make sense with lazy
+clones, as lazy clones offer a superset of shallow clone's functionality.
 
-Thoughts?
--- 
-David
+However, I am curious whether there is a better way to check for the
+presence of a local commit? Do we have an API function for that, that I
+missed? (I do not really want to parse the commit, after all, just verify
+that it is not pruned.)
+
+Thanks,
+Dscho
+
+> 
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The `prune_shallow()` function wants a full reachability check to be
+> > completed before it goes to work, to ensure that all unreachable entries
+> > are removed from the shallow file.
+> >
+> > However, in the upcoming patch we do not even want to go that far. We
+> > really only need to remove entries corresponding to pruned commits, i.e.
+> > to commits that no longer exist.
+> >
+> > Let's support that use case.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/prune.c |  2 +-
+> >  commit.h        |  2 +-
+> >  shallow.c       | 22 +++++++++++++++++-----
+> >  3 files changed, 19 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/builtin/prune.c b/builtin/prune.c
+> > index 41230f821..6d6ab6cf1 100644
+> > --- a/builtin/prune.c
+> > +++ b/builtin/prune.c
+> > @@ -161,7 +161,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+> >  	free(s);
+> >  
+> >  	if (is_repository_shallow(the_repository))
+> > -		prune_shallow(show_only);
+> > +		prune_shallow(show_only, 0);
+> >  
+> >  	return 0;
+> >  }
+> > diff --git a/commit.h b/commit.h
+> > index 1d260d62f..ff34447ab 100644
+> > --- a/commit.h
+> > +++ b/commit.h
+> > @@ -249,7 +249,7 @@ extern void assign_shallow_commits_to_refs(struct shallow_info *info,
+> >  					   uint32_t **used,
+> >  					   int *ref_status);
+> >  extern int delayed_reachability_test(struct shallow_info *si, int c);
+> > -extern void prune_shallow(int show_only);
+> > +extern void prune_shallow(int show_only, int quick_prune);
+> >  extern struct trace_key trace_shallow;
+> >  
+> >  extern int interactive_add(int argc, const char **argv, const char *prefix, int patch);
+> > diff --git a/shallow.c b/shallow.c
+> > index 732e18d54..0a2671bc2 100644
+> > --- a/shallow.c
+> > +++ b/shallow.c
+> > @@ -247,6 +247,7 @@ static void check_shallow_file_for_update(struct repository *r)
+> >  
+> >  #define SEEN_ONLY 1
+> >  #define VERBOSE   2
+> > +#define QUICK_PRUNE 4
+> >  
+> >  struct write_shallow_data {
+> >  	struct strbuf *out;
+> > @@ -261,7 +262,11 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+> >  	const char *hex = oid_to_hex(&graft->oid);
+> >  	if (graft->nr_parent != -1)
+> >  		return 0;
+> > -	if (data->flags & SEEN_ONLY) {
+> > +	if (data->flags & QUICK_PRUNE) {
+> > +		struct commit *c = lookup_commit(the_repository, &graft->oid);
+> > +		if (!c || parse_commit(c))
+> > +			return 0;
+> > +	} else if (data->flags & SEEN_ONLY) {
+> >  		struct commit *c = lookup_commit(the_repository, &graft->oid);
+> >  		if (!c || !(c->object.flags & SEEN)) {
+> >  			if (data->flags & VERBOSE)
+> > @@ -371,16 +376,23 @@ void advertise_shallow_grafts(int fd)
+> >  
+> >  /*
+> >   * mark_reachable_objects() should have been run prior to this and all
+> > - * reachable commits marked as "SEEN".
+> > + * reachable commits marked as "SEEN", except when quick_prune is non-zero,
+> > + * in which case lines are excised from the shallow file if they refer to
+> > + * commits that do not exist (any longer).
+> >   */
+> > -void prune_shallow(int show_only)
+> > +void prune_shallow(int show_only, int quick_prune)
+> >  {
+> >  	struct lock_file shallow_lock = LOCK_INIT;
+> >  	struct strbuf sb = STRBUF_INIT;
+> > +	unsigned flags = SEEN_ONLY;
+> >  	int fd;
+> >  
+> > +	if (quick_prune)
+> > +		flags |= QUICK_PRUNE;
+> > +
+> >  	if (show_only) {
+> > -		write_shallow_commits_1(&sb, 0, NULL, SEEN_ONLY | VERBOSE);
+> > +		flags |= VERBOSE;
+> > +		write_shallow_commits_1(&sb, 0, NULL, flags);
+> >  		strbuf_release(&sb);
+> >  		return;
+> >  	}
+> > @@ -388,7 +400,7 @@ void prune_shallow(int show_only)
+> >  				       git_path_shallow(the_repository),
+> >  				       LOCK_DIE_ON_ERROR);
+> >  	check_shallow_file_for_update(the_repository);
+> > -	if (write_shallow_commits_1(&sb, 0, NULL, SEEN_ONLY)) {
+> > +	if (write_shallow_commits_1(&sb, 0, NULL, flags)) {
+> >  		if (write_in_full(fd, sb.buf, sb.len) < 0)
+> >  			die_errno("failed to write to %s",
+> >  				  get_lock_file_path(&shallow_lock));
+> 
