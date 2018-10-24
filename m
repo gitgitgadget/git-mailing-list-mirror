@@ -2,85 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77F681F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 09:19:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64F4B1F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 09:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727583AbeJXRqX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 13:46:23 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48803 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726256AbeJXRqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 13:46:23 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXZNq-1g3ikx1gec-00WXR8; Wed, 24
- Oct 2018 11:18:57 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXZNq-1g3ikx1gec-00WXR8; Wed, 24
- Oct 2018 11:18:57 +0200
-Date:   Wed, 24 Oct 2018 11:19:01 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Stephen & Linda Smith <ischis2@cox.net>
-cc:     Anton Serbulov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Anton Serbulov <aserbulov@plesk.com>
-Subject: Re: [PATCH 2/2] mingw: fix getcwd when the parent directory cannot
- be queried
-In-Reply-To: <6700297.8bfoVLpaf1@thunderbird>
-Message-ID: <nycvar.QRO.7.76.6.1810241118460.4546@tvgsbejvaqbjf.bet>
-References: <pull.54.git.gitgitgadget@gmail.com> <3e3b1c3b1ff3363b216574f09d2c9cf22d25ad30.1540291965.git.gitgitgadget@gmail.com> <6700297.8bfoVLpaf1@thunderbird>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727695AbeJXRq7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 13:46:59 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44564 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726256AbeJXRq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 13:46:59 -0400
+Received: by mail-pl1-f194.google.com with SMTP id d23-v6so1952241pls.11
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 02:19:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gJjpMUYnIzflc4m5g1x6IJ1lzkh5aTb35pGDHF+2fg4=;
+        b=Aj4YF9EYM0M+hTqwLdZI6KAofLVRdTs10+g35phvSqcE1PfX3CW7LMu97MHlVAja43
+         KPtXcoG7/ISpickB6YMmy5F29bO1L3+0zBZgbodlHsuWRUa69E/XTqSNFlEOIalSgK7D
+         1DO9G70ah06qiMXXV/WNevZ4ZsLoVudFuraO9B2Z2cp6l5CsOOqaqmGpoZlUvIO9bNyN
+         deelVNIl7v10S+B3IO/mJsGRvaqpFZyacLxW1rShMZw88BF1iLTUZVIid8qF7wyBVdOs
+         RAQKzYOguHbm9E4ABWU5z5DaChPMBxmM8LGgIIeUcwcaGLXkbEQt6H3I1kCewrxAQllC
+         1LQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gJjpMUYnIzflc4m5g1x6IJ1lzkh5aTb35pGDHF+2fg4=;
+        b=LGfLqVE90rG/5+Gyy6acJXFdUsBai6CIEQEjhF93abxH0WYGVn3WWLtW0pAInfPN0w
+         ZUe4QkyGI8eTUX355iNOcgVztdWsvzqcMHor2obilwzAgJTWQug5uTk5WkFQA9gEMPgS
+         l+Wd3+L9CuoSlbtoWAj+Xfxn0/HZAn1bMIQ7Jg3W/ulpmQMW4qffmqwoDRdb65LtgQGX
+         469y/ZAe/++qmeR6JYRC00pHCyCmO12ptQPt6+MUPU6XMNvto0Hv31tGk4CfEByJId0w
+         QmBV9v4CeqiMKbQzpV7XAGRCMM9GyjfgQ70dqr9nht2+QjVXQON8aESFOI4vpCprAWcA
+         mW9g==
+X-Gm-Message-State: AGRZ1gIqfjabYofcVupn1cB+PlgbjhjpRZTBAUhZYJElIESztuqfxQ6H
+        XAwGQ5lEAgkfDI/AL40QpLF2SN3f
+X-Google-Smtp-Source: AJdET5d0tRXhYokAdal3xrbVQusa3A3K6vlo/kk8RkiyQa9QRV3Lm1kF3v3gv/i52GHCIjPmy/tEcw==
+X-Received: by 2002:a17:902:223:: with SMTP id 32-v6mr1803703plc.112.1540372780122;
+        Wed, 24 Oct 2018 02:19:40 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.137.127])
+        by smtp.gmail.com with ESMTPSA id o12-v6sm6389445pfh.20.2018.10.24.02.19.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Oct 2018 02:19:39 -0700 (PDT)
+Date:   Wed, 24 Oct 2018 02:19:39 -0700 (PDT)
+X-Google-Original-Date: Wed, 24 Oct 2018 09:19:35 GMT
+Message-Id: <pull.54.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.54.git.gitgitgadget@gmail.com>
+References: <pull.54.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/2] Work around case-insensitivity issues with cwd on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rp9w2pqjyVtnWC5AVME0ZN7T7mKUWJdoTZc/NuejcYoWS2DZfNo
- yU5R7vOjl8QAUd6bEVPRngZFj9zuGioh4O42C72PJrBlZvDDG1chqi7EE5ruPxcCl+mbyh0
- +eAK9IPh1cN52cvI+30dHfMEWZdz3HHaWxmi0ZT70YIguxKJKSlPnQk/7z4ZLQ2OhaJCZLz
- w8QFsmUKTFlP8303qSPTA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MrZwuLAf1oE=:rG0yiqQqmDI8//urypowhD
- SRcu4Qq66xAWPvMROzd3W1p2s0Vs3YviNTdH4tyIaeWScBFkm6S6i03O0dU0Ko616dVyF6e76
- 5WcDvE0MhXUZKai4ZgqE4O4YNSP2VX0ksdv4GGQe6BNBQIFBnqLqIx7dnXuljTuWjwmuwda65
- Qv2Eg5gkb+3Os43QHaLj+ra8BL3IZzkUrx1JOdKVajvQ4GynUJ98Q4CFx6PuQdl6YVOxyAtnb
- jm1HHIbf770T7LX6X3S4S1QYPFniJZUVIQXugYzGFjRbrFXLOGMJWXptni9CLu2SuuhNkEJZP
- 3x356wKn4i6Lf4y1YGXL5FC7vRMTRJeytbamL66ZVreFDfxHXISrhUnSIPxgI/sDoWJeSK+GJ
- wz7VVVdh8+TnwUjMinYEXrw2GLJ7IpQpKkcUnC/0NB5Ihaj3w9NQxVFheoH6HrWtV7ZpY2mHI
- LctsP5/mtq59NOTyfZzn7XhYqAxijY1B2mZBIIRLlUf6+EWCfjqK7WXZfTcNGxK8DjW7XwO42
- iR1dHuh1tWC6BF3rY5zTlMUZV9Dkc0N2G37tbXzTT5QzbUCyihtM3b86mQlpyv9/mN0GHZ4Mj
- 4R2Pd6n8VLtog/8hqNzbcSIIWKArSvhASD/pPj98HFFAb2Y2ur0ZO9fomSJxUXBk5rCXtjQII
- hQ14w1VSfQTPnWqQ85hWReYYmbqxiswhVVMD3VIwc4rRuXT+WEo3QUbx8cSk9a0P4n1UGE6cV
- u4U7u09fdDIQhLhkD7AO/m101XjM5ByScEvZGCNfNM7Haq7MkZQfs7U0g5codDfDGdQN9WWjC
- v/o8FCan9Xanxm5JfnlBFHk3jGGqg4DnbnelR2i9PeYgysKXzk=
+To:     git@vger.kernel.org
+Cc:     Stephen Smith <ischis2@cox.net>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stephen,
+On Windows, file names are recorded case-sensitively, but looked up
+case-insensitively. Therefore, it is possible to switch to a directory by
+using incorrect case, e.g. cd documentation will still get you into the 
+Documentation subdirectory.
 
-On Tue, 23 Oct 2018, Stephen & Linda Smith wrote:
+In Powershell, doing so will however report the current directory with the
+specified spelling rather than the one recorded on disk, and Git will get
+confused.
 
-> On Tuesday, October 23, 2018 3:52:49 AM MST you wrote:
-> > From: Anton Serbulov <aserbulov@plesk.com>
-> > 
-> > `GetLongPathName()` function may fail when it is unable to query
-> > the parent directory of a path component to determine the long name
-> > for that component. It happens, because of it uses `FindFirstFile()`
-> s/of it/it/
+To remedy that, we fixed this in Git for Windows more than three years ago,
+and needed only a small fix a couple of months later to accommodate for the
+diverse scenarios encountered by the many Git for Windows users.
 
-Thanks, fixed in v2,
-Dscho
+Not only to keep the story closer to what happened historically, but also to
+make it easier to follow, I refrained from squashing these two patches.
 
-> 
-> > function for each next short part of path. The `FindFirstFile()`
-> > requires `List Directory` and `Synchronize` desired access for a calling
-> > process.
-> 
-> 
-> 
-> 
-> 
-> 
+Side note: the second patch is technically not battle-tested for that long:
+it uses an API function that requires Windows Vista or later, and we only
+recently started to clean up Git for Windows' code to drop fallbacks for
+Windows XP. Read: this code used to load the GetFinalPathNameByHandle() 
+function dynamically, and that is the only difference to the code that has
+been "battle-tested" for close to three years.
+
+Changes since v1:
+
+ * Fixed a grammar mistake in the second commit message.
+
+Anton Serbulov (1):
+  mingw: fix getcwd when the parent directory cannot be queried
+
+Johannes Schindelin (1):
+  mingw: ensure `getcwd()` reports the correct case
+
+ compat/mingw.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 48 insertions(+), 2 deletions(-)
+
+
+base-commit: c4df23f7927d8d00e666a3c8d1b3375f1dc8a3c1
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-54%2Fdscho%2Fmingw-getcwd-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-54/dscho/mingw-getcwd-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/54
+
+Range-diff vs v1:
+
+ 1:  e13ae2338 = 1:  e13ae2338 mingw: ensure `getcwd()` reports the correct case
+ 2:  3e3b1c3b1 ! 2:  87ef9ac63 mingw: fix getcwd when the parent directory cannot be queried
+     @@ -4,7 +4,7 @@
+      
+          `GetLongPathName()` function may fail when it is unable to query
+          the parent directory of a path component to determine the long name
+     -    for that component. It happens, because of it uses `FindFirstFile()`
+     +    for that component. It happens, because it uses `FindFirstFile()`
+          function for each next short part of path. The `FindFirstFile()`
+          requires `List Directory` and `Synchronize` desired access for a calling
+          process.
+
+-- 
+gitgitgadget
