@@ -2,107 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18F2B1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 08:53:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D27791F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 09:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbeJXRUr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 13:20:47 -0400
-Received: from mout.gmx.net ([212.227.15.19]:46357 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726720AbeJXRUr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 13:20:47 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmrUq-1ff4ku0Dl6-00h4YJ; Wed, 24
- Oct 2018 10:53:28 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmrUq-1ff4ku0Dl6-00h4YJ; Wed, 24
- Oct 2018 10:53:28 +0200
-Date:   Wed, 24 Oct 2018 10:53:31 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t5410: use longer path for sample script
-In-Reply-To: <20181024073705.GA31202@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1810241051440.4546@tvgsbejvaqbjf.bet>
-References: <20181024073637.GA31069@sigill.intra.peff.net> <20181024073705.GA31202@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728276AbeJXR3X (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 13:29:23 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:39569 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727882AbeJXR3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 13:29:22 -0400
+Received: by mail-ot1-f68.google.com with SMTP id a18so4267624otl.6
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 02:02:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oU36tkJbmKdyLXg+qk9wnxDD2dCVPR1gKpmpgXMdvNQ=;
+        b=hPKg9hBTL1IvhYna5lc1soiFWEDcDwn9sHM5u/arS8u21B/h47PKq8o/L5TwNhcjuZ
+         H71UTmTjWMAojwpOvS5lTNV8SlecCoRd+hrbUFONcE/Jwr36aP+uCeDM06mGc5SqGZwJ
+         hzayDSB3uishUsqPRlbAQxRC9y/WArkeypyP3bFJMrHKNg4j82iZWMXsB2bRpbIv4pe7
+         mUUT0nk19c3hTcBSzu+wzoKuL0pfoA0T+kO2+KwQVdw67QREdpnQzlpRMISdU360sIAz
+         n+QEEfLefeHmcH9vjWDOzGknWlrDn0tUP7wYi/oHcpq5+P/bVlOCvDc+55uQUoPouZEm
+         ydUw==
+X-Gm-Message-State: AGRZ1gIQJTPpYyAXmGKKINFzjKxzUCEnRKJYR3B2C0N597PVKaTBPhyz
+        Au7LNQoG3Vn8oM2KxPrf6TioBisXL5y/I8lBBg0gaA==
+X-Google-Smtp-Source: AJdET5dY3eSrtRK/o9vd70xjq8PAgscVGBz0gqBkAkTnrxExmyoUv5oJwumu8ucurHF0qiT/z6Vl8WrJonWDIDVeRbg=
+X-Received: by 2002:a9d:55cb:: with SMTP id z11mr1030826oti.190.1540371726698;
+ Wed, 24 Oct 2018 02:02:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ctmCQaT4QpRboAeL9GCY94txcjLVYbaAr04w+87sFu8bJZ0cpVV
- pD7qdHnJlIzlpqpCumw3QBSHhkgqGwan30y1+YIQ8n5DRFSnaIqFxQUMX3cFw3jWzWRSOEN
- k7mDhW3KKlOsZOim0bYfJFAdgeAMQHnpNNgGRvO8nnQbIjyCCDPSOMLbPxKswizLPIqJu0Z
- cYAB0p//LPFvKv/fxua+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8bXvM0tNrnI=:e6xg1p66AKZHjuA/Uq8YVv
- hqFA2j+WMVzRhzZ0Cd7jEHfxo7HS5DViFoyRB7zzO/5jtD3c+9MMW+TmDs3Kychn2YXM7BOYj
- sZnGGDb91LaA1WAb4tTYo1ugajmgm8y5C+2Ptz7OO/wueOYA4Gns+oFASJ6GzeFaW/T3BJqhl
- F26u9hPjc32cIxKF9a6Mc7iJAW/yb6H/lM7wMn+lkgO9G73z1lNI6IIf03JaP5xHrfxSIds+J
- a6U1mwQR8A3sV+Ez1ociJYB1BDgA6rKoGST5HvDtWvBsSDvHLnIfNaS0CDahBnDNtaAFn2X4F
- tlfDaa4i2WsKCpJsM7Za790msV9wYIawNEfKuNQYWnh4hFyu+fKFccVwCcH7RQIRudOPYQERF
- fNfb9S5I5tF+XRnINM4siX4BvKo12Cp720lZ/wPBcXGrglLRpkMqnEaoGjmmwRAdS5x0CIQ2P
- l/nMVJ0/SStqukJSnX6va3mMBSv+l8XR7W7CxZJ6UD2KD+K03yt/5fME/qw8NXci0GeNrxAQ2
- KIqzL9Oh5H2yMLcd6SB/YSYbZUGwFkIxrU7ArYl0LzfYrQpPqsbZy7PTfcm0Qjq/L/FOIhtIi
- 4i2xezukV10t3bbrVQpg32XnOdo1fwJL5y8hK6B3xrTO7G1J2mArn1lFSyrJ/ep9zY3fwfDtm
- yke91Ds/cyleXoW4NtKHzXLkkG6MrJNAJIZl7+GTIPAtk893H8aGstA6DtgIuT47tXOHQTxW/
- 1cmzd5oI9z7+1XiK9ziIBHhyXK1oVzzsgZXVjUa/EFutOrZ07itiyesAy/u+UJIzGm14viVZM
- b6nX86fa6MbIjdEt/zunbGOPbwSW8pAmxCfpT8bh30iwDknBvo=
+References: <20181023191758.15138-1-agruenba@redhat.com> <xmqqefcgotbk.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqefcgotbk.fsf@gitster-ct.c.googlers.com>
+From:   Andreas Gruenbacher <agruenba@redhat.com>
+Date:   Wed, 24 Oct 2018 11:01:54 +0200
+Message-ID: <CAHc6FU6YLeTBU02k-Md7+H5kJDq2RXZmAXMaq8ZkiuSmZFXbwQ@mail.gmail.com>
+Subject: Re: [PATCH] Clear --exclude list after 'git rev-parse --all'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Wed, 24 Oct 2018 at 06:35, Junio C Hamano <gitster@pobox.com> wrote:
+> Andreas Gruenbacher <agruenba@redhat.com> writes:
+>
+> > Commit [1] added the --exclude option to revision.c.  The --all,
+> > --branches, --tags, --remotes, and --glob options clear the exclude
+> > list.  Shortly therafter, commit [2] added the same to 'git rev-parse',
+> > but without clearing the exclude list for the --all option.  Fix that.
+> >
+> > [1] e7b432c52 ("revision: introduce --exclude=<glob> to tame wildcards", 2013-08-30)
+> > [2] 9dc01bf06 ("rev-parse: introduce --exclude=<glob> to tame wildcards", 2013-11-01)
+> >
+> > Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+> > ---
+> >  builtin/rev-parse.c | 1 +
+> >  1 file changed, 1 insertion(+)
+>
+> All other glob options do show_reference with for_each_ref_in() and
+> then calls clear_ref_exclusion(), and logically the patch makes
+> sense.
+>
+> What is the "problem" this patch fixes, though?  Is it easy to add a
+> new test to t/6018-rev-list-glob.sh to demonstrate that "--glob" (or
+> whatever that clears exclusion list without this patch) works
+> correctly but "--all" misbehaves without this change?
 
-On Wed, 24 Oct 2018, Jeff King wrote:
+The test suite doesn't cover clearing the exclusion list for any of
+those rev-parse options and I also didn't write such a test case. I
+ran into this inconsistency during code review.
 
-> t5410 creates a sample script "alternate-refs", and sets
-> core.alternateRefsCommand to just "alternate-refs". That
-> shouldn't work, as "." is not in our $PATH, and so we should
-> not find it.
-> 
-> However, due to a bug in run-command.c, we sometimes find it
-> anyway! Even more confusing, this bug is only in the
-> fork-based version of run-command. So the test passes on
-> Linux (etc), but fails on Windows.
-> 
-> In preparation for fixing the run-command bug, let's use a
-> more complete path here.
-> 
-> Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-
-Thank you for the fix! I can confirm that the patch works, and the commit
-message is stellar, as per usual for your contributions.
-
-BTW since this breaks every single one of our Continuous Builds on
-Windows, I would be very much in favor of fast-tracking this to `master`.
-
-Thanks,
-Dscho
-
->  t/t5410-receive-pack-alternates.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-> index 457c20c2a5..f00d0da860 100755
-> --- a/t/t5410-receive-pack-alternates.sh
-> +++ b/t/t5410-receive-pack-alternates.sh
-> @@ -23,7 +23,7 @@ test_expect_success 'with core.alternateRefsCommand' '
->  			--format="%(objectname)" \
->  			refs/heads/public/
->  	EOF
-> -	test_config -C fork core.alternateRefsCommand alternate-refs &&
-> +	test_config -C fork core.alternateRefsCommand ./alternate-refs &&
->  	git rev-parse public/branch >expect &&
->  	printf "0000" | git receive-pack fork >actual &&
->  	extract_haves <actual >actual.haves &&
-> -- 
-> 2.19.1.1094.gd480080bf6
-> 
-> 
+Andreas
