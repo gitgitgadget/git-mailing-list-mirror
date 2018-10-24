@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89C411F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 03:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72F451F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 03:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726407AbeJXL7G (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 07:59:06 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55640 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725896AbeJXL7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 07:59:06 -0400
-Received: by mail-wm1-f67.google.com with SMTP id s10-v6so1678471wmc.5
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 20:32:55 -0700 (PDT)
+        id S1726501AbeJXMFT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 08:05:19 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37587 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726371AbeJXMFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 08:05:18 -0400
+Received: by mail-wm1-f68.google.com with SMTP id p2-v6so525957wmc.2
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 20:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ehD5q+ekHMEnwNf/EgJ/7KwqpNvFIgbgUYNB2GcukFI=;
-        b=ocDGNQehACxVN0B5fNi3RIwwbRrI31AzvxFKmf0rhTDa5ax9z/25RJ7cwCNo7IHYbQ
-         KfV11CJq2OySR+0Ql/TclI5k4JJwOXCEwMXPb5NNWTtidsWuvIgAEQT6BvDwMrL87Efo
-         8HA4fHyKhj3zrzCPFMkmGegK2q8GQekfwjfVUNO7Fo9v0QLRzpPnu876G55yUiapgX2l
-         wvI74CbxBP7VJoxOpsQ6Ma7rGmSooWSJYvPYdtCR4mi/zmcdB+uZ1hefyoDTFy6OjRUg
-         gOHTjAdEGJxhRXdEoSBHiCPFYp487q8xYNjVre7vkrnGHykdtogvvXanDunzKWRfzsgx
-         2ceA==
+        bh=irNFGnLYJwmLg4sumohoLPGPSNQCIWpNKjipVlDz2t4=;
+        b=BcKlvWB3DxomUGpfAPS4FRoOw/EbpAatVT/tTNThdZKCTKeXQGslRj4fnEXVhqK6Ks
+         eiuuf4+xswLIwLuzRRuvyrJXsIdqwbmsvQhF8BsQj2c2qy+aRmNHmBUTCw3ANUjzwm3F
+         HxZW2CK77s035GsdVgZL4E5glcmp4nbN135CASxnDpTZ7P5g05RexDuErpuRPeKq0ts6
+         Ib1rgJUfAsww4ux1yvaRcwOHMsm3HL7azQf0/JUT9Lsm9elgJ+ii7vxETGB6SB+CUPgu
+         XmpnsEzmC5ImHFISH5W+1GqHjk/Is2hqfxyz80RakPe6v0wZwasuUtRG586YYJI14YZV
+         qScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ehD5q+ekHMEnwNf/EgJ/7KwqpNvFIgbgUYNB2GcukFI=;
-        b=kMeSdAYsjoUPo/IWWQhAIeM6HI/EiE7Y6zpHqRhqadOph7RoMHg0WmhzUqwC60swbD
-         /VrYYXBa1bRBDS3+v58hUaTrD02fh8kkOxaZZEl4wA7fjctnZ/QD0sAWMs2aw9SvgWDt
-         AV1G7kI2F+agvNn+D3L4ZfEEwMvb/9vXKq/9DquSYbhRtmWJJQGLKYGozwI8ab+oxr5h
-         yBLMoZUtfMqn0Kk7fqy5TTnc2hsZ17Db2ASZTbNr7W/sbdqW3b6tF6+jwDXLaeIkLi5Z
-         F09N00UZjbKPQGCkkLnocn0ELlQsygXTu0pViLudLPkNWf0cndvqgxxQpm7l6MgCr7+c
-         e68w==
-X-Gm-Message-State: AGRZ1gIs6uG2VqFfIAZowdhz050bEmsHHDJStkASw3VZzfkFifQaaL50
-        KlOKdUFD9X2v7RP97YOMTTbMF/slM08=
-X-Google-Smtp-Source: AJdET5eOQ+QBZcTirJaiR2Pqf6WVdsMG23JP/DvtGnxTN2opU4E91gxBUsVJtMEnmJK4PP8lpOyACA==
-X-Received: by 2002:a1c:3b89:: with SMTP id i131-v6mr428266wma.27.1540344702673;
-        Tue, 23 Oct 2018 18:31:42 -0700 (PDT)
+        bh=irNFGnLYJwmLg4sumohoLPGPSNQCIWpNKjipVlDz2t4=;
+        b=OaqbD5oYtEENVZXvpPC4U5B+1Bm8pT3ArrVN8HmaiqycDvzzAAXjsnzlRBgpqxQIH1
+         1hkd+Bae/XEaIzyHXNBFYsDaUkw1rTZpFCdn9UKi/YKS5OYSqwuogWYL+beeqaA63l97
+         Sn9lMcsbounjoFZBT7CZb1EcarGStv5V2IMkPKGxheUuLiDJI2BJyILTuL3s20yjtyh2
+         PYopCQePyYrdIP5simpcFeTbQI+0GWyFmmJu45hviqqYneZTnLe8AtaiBPo1pG+6NOMZ
+         SE/QwGLGzyAu4yIt0LMA6d0VpwMW5NNXZdttX1AbBNRVZq8TOoZt0ByiSXeey/4lsXgJ
+         q9/g==
+X-Gm-Message-State: AGRZ1gIjkCuKa/wyt+ZlDWZpUmEBiQ70MvSXmmuvVUnHmK/5WwztU+wm
+        8j12BIrR0XU0cLuXlQ4ZpdBCW8VbIX8=
+X-Google-Smtp-Source: AJdET5fxZ8gbhmcnHY9pWDL8WyFUn93dJ1AJOJmxjJysWQnJNvDKFsLgxvtnun4XnlKuiCsshgmPjw==
+X-Received: by 2002:a1c:cbc7:: with SMTP id b190-v6mr669328wmg.149.1540352344880;
+        Tue, 23 Oct 2018 20:39:04 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j203-v6sm4937273wmd.46.2018.10.23.18.31.41
+        by smtp.gmail.com with ESMTPSA id c184-v6sm3852649wma.15.2018.10.23.20.39.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 18:31:41 -0700 (PDT)
+        Tue, 23 Oct 2018 20:39:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@comcast.net>
-Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        pclouds@gmail.com, peff@peff.net, jonathantanmy@google.com,
-        jeffhost@microsoft.com
-Subject: Re: [RFC 2/2] exclude-promisor-objects: declare when option is allowed
-References: <cover.1540256910.git.matvore@google.com>
-        <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com>
-        <xmqqin1ts11h.fsf@gitster-ct.c.googlers.com>
-        <alpine.DEB.2.21.1810231053550.56374@matvore-linux.svl.corp.google.com>
-Date:   Wed, 24 Oct 2018 10:31:40 +0900
-In-Reply-To: <alpine.DEB.2.21.1810231053550.56374@matvore-linux.svl.corp.google.com>
-        (Matthew DeVore's message of "Tue, 23 Oct 2018 10:55:49 -0700 (PDT)")
-Message-ID: <xmqqva5sqgeb.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/3] repack: point out a bug handling stale shallow info
+References: <pull.9.v2.git.gitgitgadget@gmail.com>
+        <pull.9.v3.git.gitgitgadget@gmail.com>
+        <ed8559b91b7a3b51a5950d62e78fc726ed5b44c2.1540245934.git.gitgitgadget@gmail.com>
+Date:   Wed, 24 Oct 2018 12:39:03 +0900
+In-Reply-To: <ed8559b91b7a3b51a5950d62e78fc726ed5b44c2.1540245934.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 22 Oct 2018
+        15:05:37 -0700 (PDT)")
+Message-ID: <xmqqr2ggovxk.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,21 +70,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@comcast.net> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> On Tue, 23 Oct 2018, Junio C Hamano wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
->> Not really.  We were already doing a controlled failure via die(),
->> so these two tests would not have caught the problem in the code
->> before the fix in this patch.
->>
+> A `git fetch --prune` can turn previously-reachable objects unreachable,
+> even commits that are in the `shallow` list. A subsequent `git repack
+> -ad` will then unceremoniously drop those unreachable commits, and the
+> `shallow` list will become stale. This means that when we try to fetch
+> with a larger `--depth` the next time, we may end up with:
 >
-> BUG is apparently considered a "wrong" failure and not a controlled one
-> by test_must_fail. I just double-checked that the tests fail without
-> this patch.
+> 	fatal: error in object: unshallow <commit-hash>
 
-Ah, I was testing a wrong codepath.  Yes, it does call BUG("..."),
-which is a prettier-looking abort(), but I somehow thought it was
-doing die("BUG: ...").
+Nicely analysed and described.  One minor thing nagged me in the
+implementation but it is not a big issue.
 
-In any case, thanks for the fix.
+> +...
+> +	d="$(git -C shallow-server rev-parse --verify D)" &&
+> +	git -C shallow-server checkout master &&
+> +
+> +...
+> +	! grep $d shallow-client/.git/shallow &&
+
+We know D (and $d) is not a tag, but perhaps the place that assigns
+to $d (way above) can do the rev-parse of D^0, not D, to make it
+more clear what is going on, especially given that...
+
+> +	git -C shallow-server branch branch-orig D^0 &&
+
+... this does that D^0 thing here to makes us wonder if D needs
+unwrapping before using it as a commit (not commit-ish). 
+
+If we did so, we could use $d here instead of D^0.
+
+> +	git -C shallow-client fetch --prune --depth=2 \
+> +		origin "+refs/heads/*:refs/remotes/origin/*"
+> +'
+> +
+>  . "$TEST_DIRECTORY"/lib-httpd.sh
+>  start_httpd
+
