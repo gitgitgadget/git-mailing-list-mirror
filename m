@@ -7,136 +7,170 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3836B1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 08:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1F21F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 08:50:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727261AbeJXRGD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 13:06:03 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58029 "EHLO mout.gmx.net"
+        id S1727801AbeJXRR3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 13:17:29 -0400
+Received: from mout.gmx.net ([212.227.17.21]:39589 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726732AbeJXRGD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 13:06:03 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LpPg1-1fdA6n2aTF-00f9Zj; Wed, 24
- Oct 2018 10:38:40 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LpPg1-1fdA6n2aTF-00f9Zj; Wed, 24
- Oct 2018 10:38:40 +0200
-Date:   Wed, 24 Oct 2018 10:38:43 +0200 (DST)
+        id S1726720AbeJXRR2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 13:17:28 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhdex-1fu7F120Yd-00MrfN; Wed, 24
+ Oct 2018 10:50:04 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhdex-1fu7F120Yd-00MrfN; Wed, 24
+ Oct 2018 10:50:04 +0200
+Date:   Wed, 24 Oct 2018 10:50:08 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/3] repack: point out a bug handling stale shallow
- info
-In-Reply-To: <nycvar.QRO.7.76.6.1810241004440.4546@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1810241033420.4546@tvgsbejvaqbjf.bet>
-References: <pull.9.v2.git.gitgitgadget@gmail.com> <pull.9.v3.git.gitgitgadget@gmail.com> <ed8559b91b7a3b51a5950d62e78fc726ed5b44c2.1540245934.git.gitgitgadget@gmail.com> <xmqqr2ggovxk.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1810241004440.4546@tvgsbejvaqbjf.bet>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] upload-pack: fix broken if/else chain in config
+ callback
+In-Reply-To: <20181024072752.GA29717@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1810241049200.4546@tvgsbejvaqbjf.bet>
+References: <20181024072752.GA29717@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QNT0YnU1ScOJWJ0W6ACNUu2tmY2OMWIRYjCb2okHubCuKgFlP8p
- gI/E8F++fsYd8xa1UkSEs0RY6iSBxIiBk/nCXs186Ohx9SNz4P9m7aaQJcanE/+M6hKMLgl
- K+4iHqSKUztPBqc6rSj4RmCnbLXAuNkwpyaJ2i5DwcBqhNED58ttzhgwwD3Pdj0or5dErwW
- eLgL4MttsK8yc1IiW6wsw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eg2CZQD94uI=:5u/3Kh79BsRPyahYnsLyCA
- iRAQnoTNtp0xTITMcLwEPIKF9WZFPpx1CwIEZKgP0DIV7IBfpOelHH5WoSkgWHmDVyIf+2OL3
- webgkNhri1uvsXjuRT+8ydf2+kI3WBQCLIzADjb8Lhga29cyyxDGS0tRKMMkowUQ8cI/vr+L3
- 7JNjCG4SggeIX3+Cw0z0PAlmhLH3mpqnOKHI62ITJMASMOlS35nZlVf5cSdmnUCrHAk+cuqRL
- KZXpCIy1K0aRVt0FopbSIJgylE9+TpPNzLuHL86gfe5pWl3OkpE2cTObolBPemEwQFqvSUGNC
- QJtLcqLmbIaVuW7Uz1n85jLkPlOZ0SnSvL/plUo0+TyJkyH5WVoVBVGK1kzPsPvnjy890Smx8
- RTj+AbYGGDJYcij9Y392GpalMl8X7CS08BHCtpY3xiMugwAO0nSWOx9Ll8UvVlV7FHrS4g/eZ
- 1ih0O1m/CTXIo61KnYMf9bQ9CWnYCan5faHh57edu3HUkjrCXPNgdY9ensVxIcnVwFJdMgOVv
- ZpFKXeFk70MnNCF6jca3siKBSCMC7Wuhd8sJ7+AU6SHj/PrmpVP2CLxGDeD6gBG6yMzjAiT4x
- 1QizOfcP/LgJz5yKhDqJacCljrRexipmBDr9m5he3/cmO/8oe9m0pMFCH9dCHNp3ssLbeDiFp
- OC1YpFTE98jERHHb10nye+Z6UYl4Za0BjxXC52EmH5RHZJ3Tx3WVq2jAJrw8f5jPqp5RyLE4h
- fmxBQvuuW0kFxOAe1rRT03XdfVXUyrGb6uflfwWAX84IX8irShrz224DF6eamiL3490KnhO+D
- HZlC5CjfbJsxLW+nm+W2F3H/7D3bdLBuvwXLHJrpvVCyRM1PVA=
+X-Provags-ID: V03:K1:mOwQgs8IPet1mOKiZEqVimdjXRXoSAeLu8TIg4rhRLmgO7nOIQJ
+ AHhbynDNxZuIrmJeBICDpYa93IliaZDBp1hdDSrXPICKfUGIDVBZ+arTseoTPajtR1l6Hoy
+ +H9yevohnW45kIkzXM0kMaIZetZJR8HbuKdqB9uvTZGbLSc7r9X57iJDLj4bJO5ORs6MZ7g
+ 2g+PW2Xm//Y2nHBq1V2VA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qenL+0zU8Lo=:PDzdhelSb6NYIpqrv1Ifl/
+ 28CHk6OSJ2fxrKrBnCO2AxrH1pgdnIkmF+gRQGdS0saQzo4MaNO44d8u/nLCyWTrx7DjOh6PN
+ +Vh1BXfuJt+GP/g/6mhqLyxZMSL+ADeD3vhTYb6uyI5T9/I61eMtOT6Y7ll4BwviJe6tLAIqo
+ ceKTrO/lZo+Ku8hoeIrE+iejCzMC+DBM0rbVfC0kbo52Yxai7zHSrxTaaqE04Xop8W36qB2wN
+ tWYrOK/UAYjlyfojRxHdBgI3z4/BGULjma+e6B5CDBzUSqyLooTjDVhpd4lhIa6H8tYlyEz+x
+ SEHfaosf7M6jpls8qy+0QaqiZkVBmTJIx+LLBelYO0S7KDM34GUqXXkBFEk+QFXJamcAgNxYv
+ 5gxNeS+gjwfq6g48M48DLk+MK5Pd7rUqLnTIg8RoNqz1kOwweCmvMUFSVQRUlMGx5hZq/nJ9B
+ ISRUlN/rKLVZ9uCvp9+FGzXwSld+F3mtpydSBFHQizUs/ecPgYzrNKb1TFjTK2ecOWNEcGLsU
+ 00r9Bk/JEfs9mL+lZ6uxu+hfSFgCNfxiSIWOqI8JFUbc+PUoLkGMzMpCNSViq6TEWpJZkgdjJ
+ iuK7yxduaJIWHGCXxqE+zmJD/VGZ4OmTyqp8GKXLGKXocvBD/vdhujOB5YyXInTCobIAumFqt
+ 5NndpZVTdJew8yZxU3Kd7Vyb2JngjJsPBgnqNKoMt6jJFWws44g6Q7zRydrFEzMnLBkyDseNt
+ R7SrdVX/XGFmhPjtG9lISHsYZsnkJqy2kCQOlYqKaWNTpNTMpht8IVkNqS/7f+R7fNkMW36FX
+ esuYcUu0vLRQNwddzJqdBTKPbAhHkRA5t3z7hdxfWO5cBHphg0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-me again. I was wrong.
+On Wed, 24 Oct 2018, Jeff King wrote:
 
-On Wed, 24 Oct 2018, Johannes Schindelin wrote:
-
-> On Wed, 24 Oct 2018, Junio C Hamano wrote:
+> The upload_pack_config() callback uses an if/else chain
+> like:
 > 
-> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> > 
-> > > +...
-> > > +	d="$(git -C shallow-server rev-parse --verify D)" &&
-> > > +	git -C shallow-server checkout master &&
-> > > +
-> > > +...
-> > > +	! grep $d shallow-client/.git/shallow &&
-> > 
-> > We know D (and $d) is not a tag,
+>   if (!strcmp(var, "a"))
+>      ...
+>   else if (!strcmp(var, "b"))
+>      ...
+>   etc
 > 
-> Actually, it is... the `test_commit D` creates that tag, and that is what
-> I use here.
+> This works as long as the conditions are mutually exclusive,
+> but one of them is not. 20b20a22f8 (upload-pack: provide a
+> hook for running pack-objects, 2016-05-18) added:
 > 
-> > but perhaps the place that assigns to $d (way above) can do the
-> > rev-parse of D^0, not D, to make it more clear what is going on,
-> > especially given that...
+>   else if (current_config_scope() != CONFIG_SCOPE_REPO) {
+>      ... check some more options ...
+>   }
 > 
-> ... that the `grep` really wants to test for the absence of the *commit*,
-> not the *tag* in .git/shallow?
+> That was fine in that commit, because it came at the end of
+> the chain.  But later, 10ac85c785 (upload-pack: add object
+> filtering for partial clone, 2017-12-08) did this:
 > 
-> Yes, you are right ;-)
+>   else if (current_config_scope() != CONFIG_SCOPE_REPO) {
+>      ... check some more options ...
+>   } else if (!strcmp("uploadpack.allowfilter", var))
+>      ...
 > 
-> So why did my test do the right thing, if it looked at a tag, but did not
-> dereference it via ^0? The answer is: the `test_commit` function creates
-> light-weight tags, i.e. no tag objects. And therefore, the $d^0 you found
-> below, that's just confusing.
+> We'd always check the scope condition first, meaning we'd
+> _only_ respect allowfilter when it's in the repo config. You
+> can see this with:
+> 
+>   git -c uploadpack.allowfilter=true upload-pack . | head -1
+> 
+> which will not advertise the filter capability (but will
+> after this patch). We never noticed because:
+> 
+>   - our tests always set it in the repo config
+> 
+>   - in protocol v2, we use a different code path that
+>     actually calls repo_config_get_bool() separately, so
+>     that _does_ work. Real-world people experimenting with
+>     this may be using v2.
+> 
+> The more recent uploadpack.allowrefinwant option is in the
+> same boat.
+> 
+> There are a few possible fixes:
+> 
+>   1. Bump the scope conditional back to the bottom of the
+>      chain. But that just means somebody else is likely to
+>      make the same mistake later.
+> 
+>   2. Make the conditional more like the others. I.e.:
+> 
+>        else if (!current_config_scope() != CONFIG_SCOPE_REPO &&
+>                 !strcmp(var, "uploadpack.notallowedinrepo"))
+> 
+>      This works, but the idea of the original structure was
+>      that we may grow multiple sensitive options like this.
+> 
+>   3. Pull it out of the chain entirely. The chain mostly
+>      serves to avoid extra strcmp() calls after we've found
+>      a match. But it's not worth caring about those. In the
+>      worst case, when there isn't a match, we're already
+>      hitting every strcmp (and this happens regularly for
+>      stuff like "core.bare", etc).
+> 
+> This patch does (3).
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Phew. That was a lot of explanation for a small patch, but
+> this was sufficiently subtle I thought it worth it. And
+> also, I was really surprised the bug managed to exist for
+> this long without anybody noticing.
 
-What I was referring to was the call
+Maybe a lot of explanation, but definitely a good one. The explanation and
+the patch look good to me.
 
-	test_must_fail git -C shallow-client rev-parse --verify $d^0
-
-However, here we *have* to append ^0, otherwise `rev-parse --verify` will
-(and quite confusingly so) *succeed*. I *repeatedly* fall into that trap
-that `git rev-parse --verify 0000000000000000000000000000000000000000`
-will succeed. Why? Because that is a valid 40-digit hex string. Not
-because the object exists. Because it does not.
-
-So I managed to confuse myself again into believing that I only need to
-append ^0 to the earlier rev-parse call, but can remove it from this one,
-when in reality, I have to append it to both. In the first case, to avoid
-having to think about dereferencing a tag, in the second case, to force
-rev-parse to look for the object.
-
-Ciao,
+Thanks,
 Dscho
 
 > 
-> I will change it so that the `rev-parse` call uses ^0 (even if it is
-> technically not necessary), to avoid said confusion.
+>  upload-pack.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 > 
-> Thanks,
-> Dscho
-> 
-> > 
-> > > +	git -C shallow-server branch branch-orig D^0 &&
-> > 
-> > ... this does that D^0 thing here to makes us wonder if D needs
-> > unwrapping before using it as a commit (not commit-ish). 
-> > 
-> > If we did so, we could use $d here instead of D^0.
-> > 
-> > > +	git -C shallow-client fetch --prune --depth=2 \
-> > > +		origin "+refs/heads/*:refs/remotes/origin/*"
-> > > +'
-> > > +
-> > >  . "$TEST_DIRECTORY"/lib-httpd.sh
-> > >  start_httpd
-> > 
-> > 
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 540778d1dd..489c18e222 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -1028,14 +1028,17 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+>  		keepalive = git_config_int(var, value);
+>  		if (!keepalive)
+>  			keepalive = -1;
+> -	} else if (current_config_scope() != CONFIG_SCOPE_REPO) {
+> -		if (!strcmp("uploadpack.packobjectshook", var))
+> -			return git_config_string(&pack_objects_hook, var, value);
+>  	} else if (!strcmp("uploadpack.allowfilter", var)) {
+>  		allow_filter = git_config_bool(var, value);
+>  	} else if (!strcmp("uploadpack.allowrefinwant", var)) {
+>  		allow_ref_in_want = git_config_bool(var, value);
+>  	}
+> +
+> +	if (current_config_scope() != CONFIG_SCOPE_REPO) {
+> +		if (!strcmp("uploadpack.packobjectshook", var))
+> +			return git_config_string(&pack_objects_hook, var, value);
+> +	}
+> +
+>  	return parse_hide_refs_config(var, value, "uploadpack");
+>  }
+>  
+> -- 
+> 2.19.1.1094.gd480080bf6
 > 
