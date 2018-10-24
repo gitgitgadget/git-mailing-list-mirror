@@ -2,119 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 476481F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 14:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208161F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 14:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726773AbeJXXSG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 19:18:06 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:36238 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbeJXXSG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 19:18:06 -0400
-Received: by mail-it1-f195.google.com with SMTP id h14-v6so528802itf.1
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 07:49:42 -0700 (PDT)
+        id S1726748AbeJXXW1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 19:22:27 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:40887 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726521AbeJXXW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 19:22:27 -0400
+Received: by mail-ot1-f68.google.com with SMTP id m15so3874421otl.7
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 07:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=trux-info.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=QSvcTbst72c2AWmjWNDeSvXBlSvzpRc4Youiuz9rNKE=;
-        b=L2XxhD1cGjtOuZXVrBqaHh6j4jzeDIxgFx/+928vPnm4nWY3aWRkhQBnt0DEhZBUvs
-         Zil6ui7wN5A0l/RQfo5T4KybdKkfgsucQlfSl4PyZZWiL4xbL/+Gyw9cS8OQNYBKYosn
-         FWXJOBgW/yuhG/Pp2dlSv9Wtae75UdN0UitK7EInWG0PkSLM8Hiuz5Qi4vYwztykvCGL
-         g6ll6V1755JE8bipDhBzhckAd+S+h6yZkLC9ahgRkJEr3fRhcZ5nODsT2WpqlkOc9DnH
-         jxCCnkBkKRgk2HHHocbhc2kq79QI7Vq2qHaAVyWSsHXvJ44J9W+pHLlNPmfEeVgj6GmJ
-         r8hg==
+        bh=acGoJK1wXpjBysKXHNQszUDd71oqx6R4/MihBjxaOTo=;
+        b=Rlc4NpdMKups6gfU8n/pDHPM6Qle0nGOagIvtUOGxAn3KwWWrPD30jT0C7ryc12vPt
+         mCyAlbEJOBgCEJkyow62MR/2BLGXAR7pGgjQckVGxhem6iLsl9PDCcbhY/SROqP0ovSl
+         nVyXQ5oOzoHqsqtg7Up3qkemEf5Ixa09DjZ3lEO/vCLhj+Okk26C8v/KW6MNY2fx+vVA
+         VyEBJfZnNTOdqrG12F/VwwrGzUKKffoQmGpnQR3f5KeCabMMdvel6kNJzuy5DR/4goMW
+         K5oWPmmAJnEoSMHFJqVxTM0rwSbkfg8ZmBiokkX8PkPxscP/379/UEVICSP6duRkaw1b
+         8+Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QSvcTbst72c2AWmjWNDeSvXBlSvzpRc4Youiuz9rNKE=;
-        b=rFUb8QTtGhnIYIVl0MHY4Tdtfd3Nk5uwy7gqGttCzlN90jnR+oZWFODq2YNM94RgM+
-         CZ6p2lpFYak/kmJH7iHMfOEY+t42v4yx6tOkaIS3mm08hpXSUQvzYI4gXsRrls66N53x
-         mQkYF0dK+qm3v7INoS4UDS7oY8+h++BGG6JsL+57ZLi6ju+zrq0hzIgGy4mswo+CSnZL
-         PTnx2ppFv25KYUdQAh436qUTABg8EplsIWZhJdoiy3+VI4Dh7s5sjFRnxBIjZjPfR01W
-         oeYuRcrUN2MOfbbV9P9VU9HF7s4ADNi7kM//0mdhKIzzJZOtmKDHdakxa0DPLEcGGcmR
-         WX+Q==
-X-Gm-Message-State: AGRZ1gJQ0vvaXDRGG6QvuNlfADNjfJhbDgFWEC7l73/vPTHso0tXCCBQ
-        z13UI0nwGPvLMXOKbRkJuvIRi0VxoPCIgwlmbTM=
-X-Google-Smtp-Source: AJdET5erQNINZMNwgY0Io1O9+QevLVDt9YdGbP8hjk8IQHB/DXZV6wYtHHuzdBP+J2qTwZyBUoqQmKfiHSpPZFRJsJ4=
-X-Received: by 2002:a24:cd02:: with SMTP id l2-v6mr1770330itg.70.1540392582039;
- Wed, 24 Oct 2018 07:49:42 -0700 (PDT)
+        bh=acGoJK1wXpjBysKXHNQszUDd71oqx6R4/MihBjxaOTo=;
+        b=n9tRy3qCs+L3120IKYE0Sblh7Y7GWcCIVO+uueYBmWjerV6pxYu4VbS52wIO5qaAFC
+         cTR6M7xyEBMtDW+A6xe+w5BJuoOfmoGNouBfqh+HtPUOJU1IXmstlhwNEeNHHtT7wLf+
+         YJDWjEqVxJ7GgR1EloQMr5lpfzvv0gXbOQO3XtiYd3Wmo50Ydf9Fz+p6jfJthLsk+Y6b
+         E0cQ5sawwYZuqn4OewSgtG0arYtu26Hhwmb/1QjHrU1OGMTkHNKj+8mj+uHwbgs+VeY5
+         5qPkmlBw/e3QbpYIlK1mpnJc/0LCMyosZiIdY81APn9jsmCurxgZ3yy65B2RJ8ngVLDK
+         TAug==
+X-Gm-Message-State: AGRZ1gI9WUQiJ3Pzl6CrXZFKK6om7U9H8e0P3CaEivNYcSR5OxkDgzAI
+        aq5b02jtu20cSDHrshHcPb5s9DF4v9YBzEYspk98UOU7
+X-Google-Smtp-Source: AJdET5e4JIckH6B3z+scMbGUjbbtvVJChY6cIGs3ymMqGVlC638LoDH0idEg5evBwPr9spPd7hd9P1K/9EkLyMKAKHE=
+X-Received: by 2002:a9d:5110:: with SMTP id c16mr1946239oth.297.1540392840398;
+ Wed, 24 Oct 2018 07:54:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181017164021.15204-1-peartben@gmail.com> <20181022131828.21348-1-peartben@gmail.com>
- <20181022131828.21348-3-peartben@gmail.com> <CACsJy8Dcf8OknyMaSZxOaib54jLSSt71XXjTZD3UjgnH6J7QFA@mail.gmail.com>
- <e1f50b07-b3bf-0805-fcc9-692331dd170a@gmail.com>
-In-Reply-To: <e1f50b07-b3bf-0805-fcc9-692331dd170a@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 24 Oct 2018 16:49:14 +0200
-Message-ID: <CACsJy8AKWp859cGMwh0_tRwODPCAQ+Rmkaz6HQcy8UQOgMH-og@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] reset: add new reset.quiet config setting
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
+References: <CAGOLd-7Hi+tssj4ozKPd04squ-PuFwtt6f2nhbZp-zKwy62pVQ@mail.gmail.com>
+In-Reply-To: <CAGOLd-7Hi+tssj4ozKPd04squ-PuFwtt6f2nhbZp-zKwy62pVQ@mail.gmail.com>
+From:   Christophe Bliard <christophe.bliard@trux.info>
+Date:   Wed, 24 Oct 2018 16:53:49 +0200
+Message-ID: <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com>
+Subject: Re: bug?: git grep HEAD with exclude in pathspec not taken into account
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 8:47 PM Ben Peart <peartben@gmail.com> wrote:
->
->
->
-> On 10/22/2018 10:45 AM, Duy Nguyen wrote:
-> > On Mon, Oct 22, 2018 at 3:38 PM Ben Peart <peartben@gmail.com> wrote:
-> >>
-> >> From: Ben Peart <benpeart@microsoft.com>
-> >>
-> >> Add a reset.quiet config setting that sets the default value of the --quiet
-> >> flag when running the reset command.  This enables users to change the
-> >> default behavior to take advantage of the performance advantages of
-> >> avoiding the scan for unstaged changes after reset.  Defaults to false.
-> >>
-> >> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> >> ---
-> >>   Documentation/config.txt    | 3 +++
-> >>   Documentation/git-reset.txt | 4 +++-
-> >>   builtin/reset.c             | 1 +
-> >>   3 files changed, 7 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> >> index f6f4c21a54..a2d1b8b116 100644
-> >> --- a/Documentation/config.txt
-> >> +++ b/Documentation/config.txt
-> >> @@ -2728,6 +2728,9 @@ rerere.enabled::
-> >>          `$GIT_DIR`, e.g. if "rerere" was previously used in the
-> >>          repository.
-> >>
-> >> +reset.quiet::
-> >> +       When set to true, 'git reset' will default to the '--quiet' option.
-> >> +
-> >
-> > With 'nd/config-split' topic moving pretty much all config keys out of
-> > config.txt, you probably want to do the same for this series: add this
-> > in a new file called Documentation/reset-config.txt then include the
-> > file here like the sendemail one below.
-> >
->
-> Seems a bit overkill to pull a line of documentation into a separate
-> file and replace it with a line of 'import' logic.  Perhaps if/when
-> there is more documentation to pull out that would make more sense.
+Hi,
 
-There are a couple benefits of having all config keys stored in the
-same way (i.e. in separate files). Searching will be easier, you
-_know_ reset.stuff will be in reset-config.txt. If you mix both ways,
-you may need to look in config.txt as well as searching
-reset-config.txt. This single config key also stands out when you look
-at the end result of nd/config-split. The config split also opens up
-an opportunity to include command-specific config in individual
-command man page if done consistently.
--- 
-Duy
+I observed an unexpected behavior while using git grep with both git
+2.19.1 and 2.14.3. Here is how to reproduce it:
+
+> git init
+Initialized empty Git repository in /private/tmp/hello/.git/
+> echo foo > fileA
+> echo 'foo is false+' > fileB
+> git add fileA
+> git commit -m fileA
+[master (root-commit) f2c83e7] fileA
+ 1 file changed, 1 insertion(+)
+ create mode 100644 fileA
+> git add fileB
+> git commit -m fileB
+[master e35df26] fileB
+ 1 file changed, 1 insertion(+)
+ create mode 100644 fileB
+> git --no-pager grep foo HEAD -- ':!fileA'
+HEAD:fileB:foo is false+
+> git --no-pager grep foo HEAD -- ':!fileB'
+HEAD:fileA:foo
+HEAD:fileB:foo is false+
+
+In the last command, fileB appears in grep results but it should have
+been excluded.
+
+If the HEAD parameter is removed, it works as expected:
+
+> git --no-pager grep foo -- ':!fileB'
+fileA:foo
+
+If giving the revision, it does not work either
+
+> git --no-pager grep foo e35df26 -- ':!fileB'
+e35df26:fileA:foo
+e35df26:fileB:foo is false+
+
+The same behavior can be seen with git archive:
+
+> git archive --verbose master ':(top)'
+fileA
+fileB
+pax_global_header00006660000000000000000000000064133641017230014512gustar00rootroot0000000000000052
+comment=e35df26c65f3c0b303e78743496598b8b6a566e9
+fileA000066400000000000000000000000041336410172300120130ustar00rootroot00000000000000foo
+fileB000066400000000000000000000000161336410172300120170ustar00rootroot00000000000000foo
+is false+
+> /usr/local/bin/git archive --verbose master ':(top)' ':(exclude)fileA'
+fileB
+pax_global_header00006660000000000000000000000064133641017230014512gustar00rootroot0000000000000052
+comment=e35df26c65f3c0b303e78743496598b8b6a566e9
+fileB000066400000000000000000000000161336410172300120170ustar00rootroot00000000000000foo
+is false+
+> /usr/local/bin/git archive --verbose master ':(top)' ':(exclude)fileB'
+fileA
+fileB
+pax_global_header00006660000000000000000000000064133641017230014512gustar00rootroot0000000000000052
+comment=e35df26c65f3c0b303e78743496598b8b6a566e9
+fileA000066400000000000000000000000041336410172300120130ustar00rootroot00000000000000foo
+fileB000066400000000000000000000000161336410172300120170ustar00rootroot00000000000000foo
+is false+
+
+fileA can be excluded, but not fileB.
+
+Is it a bug?
+
+Thanks
+
+--
+Christophe Bliard
