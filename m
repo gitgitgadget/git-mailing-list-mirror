@@ -2,124 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F8191F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 15:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4A501F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 15:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726587AbeJYAIW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 20:08:22 -0400
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:40859 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbeJYAIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 20:08:22 -0400
-Received: by mail-oi1-f195.google.com with SMTP id j68-v6so4444621oib.7
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 08:39:47 -0700 (PDT)
+        id S1727021AbeJYAQ5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 20:16:57 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:39631 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726449AbeJYAQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 20:16:57 -0400
+Received: by mail-ua1-f67.google.com with SMTP id j38so2041772uae.6
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 08:48:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=trux-info.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ggIR+E5ovM1C8P+ka9NwzeG4A8U9BaoN310mkq00AKQ=;
-        b=Uo+BWd49HseIvpd3cRu1Cuip9gw1WkYDskOht83LL88VUlyYY4SFQdySJMM7Ecj/U8
-         7uhEMdfWm7UD1FmZ6vTpzS3UUscNrJPtaN1oK5xE8lKoBpZ5xJDBWSRs49XNI8OHsnQd
-         FpQjqbFL/wkU53mqKasoG74x7jJhVjdy25OvdvTan48osFI0KCYQG4rm1uEkdyvsVTiP
-         CdpK4l4cTSnW1H8haHtWfy7senoHKjTjTEESd0zrvxkv8NNxg9gH0Fc5ZM6t1tFoEToo
-         hpLvwgG5kriD7Kgi1bTCoNzBP6F6kxvCZlSx3vnW0oEQLkAEEYvveHJ1nohmN+gqwuH5
-         8syA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=xzU2r3Xa03MyuG4zxWi12yZHAgP3QIPIWUTioQ5BLF0=;
+        b=diTKW0U7rTAWQMNN4VYUk/9hdX/5PE9O6OYdXN4D2/WQ8ubdRpMrCCF4Zct4hF5hsL
+         6n39W6TzlybxEcg5NKQfKHFf0SQrsHp2MQq6RnzI6vjDPlNw2mirlgiTAyhb9uFAL+y+
+         FWp8UyKAUICeEtsSiu/Dvah/8fSa/i1idmCiprDlnlNXC34gAL71pfYDUmk+PNvlagb5
+         /ANxaByUwBf68BNmm1RFUkAc4esvjWFLIlGLXoJNR58wUPVCHT080qTB8JBManejz3LO
+         8kyJjfOx+WW7pL/1E73apGddIFrC13Wi/0WaCdAecAnjreuRFd+0z6e2837F/l5uj9Oz
+         mHYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ggIR+E5ovM1C8P+ka9NwzeG4A8U9BaoN310mkq00AKQ=;
-        b=bq845HwdHINtJ5fu7rBfgi5ME3CytBehau41YS9+CttPIaqFaBY7zm2nM+lyuvXT0s
-         Z8dimGhU4hL+9dEr82VfLCTSelq510jIuGl9HTlXMQWTBMJ+d7p6X/iKLGJKQuwTn3fh
-         RECm5A/VkVebpj1jv0qZuJ6AKlu16lo2k306nj+Lr+sI8DzDW2Fng1LXA+CTcooBGwIt
-         ++xhqwPwUztp2239hf1vmT4PFFbZzT5TQrMVp3kIocYMQVujVDqAz2kgB5lo4XYXYPZe
-         LdmJcomVqcXlzcEJ/wwhKg+1k0X/KdrV2XntmxrNAd1hj/Xi21IlxFSKI8C59qsi4/wc
-         iQKg==
-X-Gm-Message-State: AGRZ1gKi+sp0lnfeOza0ANUWFElGJ7QIip2G9fhg+jzlbIXl3TWynwvp
-        TVrrhbsG9lTCOFfC3qVHWQfhh18YHAWEA5Y/wL782g==
-X-Google-Smtp-Source: AJdET5eFkEAaQ8iHXl3d7CTJwC2bjEX1qN5eQEhIbqgJ3YiNbFu4QflvHKtDqTEucc8a6i8DjHLpWjt8NCssYnFYkq4=
-X-Received: by 2002:aca:4509:: with SMTP id s9-v6mr1771598oia.234.1540395586976;
- Wed, 24 Oct 2018 08:39:46 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=xzU2r3Xa03MyuG4zxWi12yZHAgP3QIPIWUTioQ5BLF0=;
+        b=oNup4N+oOeLiTZBmB1RiRTp3RzFcdUgaAJD38vJ6BmlJz+UHj4h3uOEnnuhC+1JYdo
+         3OkEJQ1SCY/9NXe5AuYdtplq0/JHm4bkTeScx9BtJJony6t82OltUZCniD16nD5c5M2s
+         4lGfBIYNrX7kzC73ePRfPs8mUlAvL0F5Ortn/9tlzgUwW2YJzmRl3X7oddU/4bV4BCYQ
+         z0PtThvClwC/FxvTrHXqiazJpeAvPQ8uGKgqblzFseCUOnfgPSXw76XUK02fQeVmljFw
+         TAWGh74J4H2yOGNAsDlJSYG5AwirgsOL4ALX/1OUhj/GQaBun6Bcy4t1EQ/TrEeSL8pC
+         gjqw==
+X-Gm-Message-State: AGRZ1gLDRHS2HAQJ1So1KUxFCZjtXUHdr2HbftMHhnk7Gac+tE3bBGdD
+        /Zi4p3V3rdX6QDP6qwzI5+w=
+X-Google-Smtp-Source: AJdET5duh8Fo1ZvaQC7vUXUH3cALQkux6gShxGtK9awz6ZSsu0vtjPQmma9mQR0PvCdg+QiBkKRxXQ==
+X-Received: by 2002:ab0:5e8f:: with SMTP id y15mr1362256uag.21.1540396100292;
+        Wed, 24 Oct 2018 08:48:20 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:3c92:d38f:3214:6b65? ([2001:4898:8010:0:25c8:d38f:3214:6b65])
+        by smtp.gmail.com with ESMTPSA id n134-v6sm1219605vke.47.2018.10.24.08.48.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Oct 2018 08:48:19 -0700 (PDT)
+Subject: Recommended configurations (was Re: [PATCH v1 2/2] reset: add new
+ reset.quietDefault config setting)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ben Peart <peartben@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181017164021.15204-3-peartben@gmail.com>
+ <CAPig+cQ3ia78pLtnHSq8tM3B-XnFgWhwowJxwacYEEzXosJ16g@mail.gmail.com>
+ <20181017182337.GD28326@sigill.intra.peff.net>
+ <874lddc9fs.fsf@evledraar.gmail.com>
+ <1ba81f12-7040-1ba5-2009-fa681caf9874@gmail.com>
+ <87zhv4bfck.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <29db5fed-4556-277e-7aad-7ff3233550a9@gmail.com>
+Date:   Wed, 24 Oct 2018 11:48:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:63.0) Gecko/20100101
+ Thunderbird/63.0
 MIME-Version: 1.0
-References: <CAGOLd-7Hi+tssj4ozKPd04squ-PuFwtt6f2nhbZp-zKwy62pVQ@mail.gmail.com>
- <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com> <CACsJy8C7pArdayQu9Kh5z6dczCqV_=XJP4wzR_dcm_W3MgG+Jg@mail.gmail.com>
-In-Reply-To: <CACsJy8C7pArdayQu9Kh5z6dczCqV_=XJP4wzR_dcm_W3MgG+Jg@mail.gmail.com>
-From:   Christophe Bliard <christophe.bliard@trux.info>
-Date:   Wed, 24 Oct 2018 17:39:35 +0200
-Message-ID: <CAGOLd-5J7+idqoREg0CHNcC0t6Mx3_bC_qbQaLgRLcssO+kxjQ@mail.gmail.com>
-Subject: Re: bug?: git grep HEAD with exclude in pathspec not taken into account
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87zhv4bfck.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In fact, per https://github.com/git/git/commit/859b7f1d0e742493d2a9396794cd=
-9040213ad846,
-having only a negative pattern is like having a catch-all positive
-pattern and the negative pattern (since git 2.13.0).
-
-Thus, adding the positive pattern yields the same results:
-
-> git --no-pager grep foo HEAD -- ':!fileA' .
-HEAD:fileB:foo is false+
-> git --no-pager grep foo HEAD -- ':!fileB' .
-HEAD:fileA:foo
-HEAD:fileB:foo is false+
-
-Le mer. 24 oct. 2018 =C3=A0 17:14, Duy Nguyen <pclouds@gmail.com> a =C3=A9c=
-rit :
+On 10/23/2018 4:03 PM, Ævar Arnfjörð Bjarmason wrote:
+> [snip]
+> The --ahead-behind config setting stalled on-list before:
+> https://public-inbox.org/git/36e3a9c3-f7e2-4100-1bfc-647b809a09d0@jeffhostetler.com/
 >
-> On Wed, Oct 24, 2018 at 4:55 PM Christophe Bliard
-> <christophe.bliard@trux.info> wrote:
-> >
-> > Hi,
-> >
-> > I observed an unexpected behavior while using git grep with both git
-> > 2.19.1 and 2.14.3. Here is how to reproduce it:
-> >
-> > > git init
-> > Initialized empty Git repository in /private/tmp/hello/.git/
-> > > echo foo > fileA
-> > > echo 'foo is false+' > fileB
-> > > git add fileA
-> > > git commit -m fileA
-> > [master (root-commit) f2c83e7] fileA
-> >  1 file changed, 1 insertion(+)
-> >  create mode 100644 fileA
-> > > git add fileB
-> > > git commit -m fileB
-> > [master e35df26] fileB
-> >  1 file changed, 1 insertion(+)
-> >  create mode 100644 fileB
-> > > git --no-pager grep foo HEAD -- ':!fileA'
-> > HEAD:fileB:foo is false+
-> > > git --no-pager grep foo HEAD -- ':!fileB'
-> > HEAD:fileA:foo
-> > HEAD:fileB:foo is false+
-> >
-> > In the last command, fileB appears in grep results but it should have
-> > been excluded.
-> >
-> > If the HEAD parameter is removed, it works as expected:
+> Now we have this similarly themed thing.
 >
-> It's probably a bug. We have different code paths for matching things
-> with or without HEAD, roughly speaking. I'll look into to this more on
-> the weekend, unless somebody (is welcome to) beats me first.
+> I think we need to be mindful of how changes like this can add up to
+> very confusing UI. I.e. in this case I can see a "how take make git fast
+> on large repos" post on stackoverflow in our future where the answer is
+> setting a bunch of seemingly irrelevant config options like reset.quiet
+> and status.aheadbehind=false etc.
 >
-> Another thing that might also be a problem is, negative patterns are
-> supposed to exclude stuff from "something" but you don't specify that
-> "something" (i.e. positive patterns) in your grep commands above. If
-> "grep foo HEAD -- :/ ':!fileB'" works, then you probably just run into
-> some undefined corner case.
-> --
-> Duy
+> So maybe we should take a step back and consider if the real thing we
+> want is just some way for the user to tell git "don't work so hard at
+> coming up with these values".
+>
+> That can also be smart, e.g. some "auto" setting that tweaks it based on
+> estimated repo size so even with the same config your tiny dotfiles.git
+> will get "ahead/behind" reporting, but not when you cd into windows.git.
+
+Generally, there are a lot of config settings that are likely in the "if 
+you have a big repo, then you should use this" category. However, there 
+is rarely a one-size-fits-all solution to these problems, just like 
+there are different ways a repo can be "big" (working directory? number 
+of commits? submodules?).
+
+I would typically expect that users with _really_ big repos have the 
+resources to have an expert tweak the settings that are best for that 
+data shape and share those settings with all the users. In VFS for Git, 
+we turn certain config settings on by default when mounting the repo 
+[1], but others are either signaled through warning messages (like the 
+status.aheadBehind config setting [2]).
+
+We never upstreamed the status.aheadBehind config setting [2], but we 
+_did_ upstream the command-line option as fd9b544 "status: add 
+--[no-]ahead-behind to status and commit for V2 format". We didn't want 
+to change the expected output permanently, so we didn't add the config 
+setting to our list of "required" settings, but instead created a list 
+of optional settings [3]; these settings don't override the existing 
+settings so users can opt-out. (Now that we have the commit-graph 
+enabled and kept up-to-date, it may be time to revisit the importance of 
+this setting.)
+
+All of this is to say: it is probably a good idea to have some 
+"recommended configuration" for big repos, but there will always be 
+power users who want to tweak each and every one of these settings. I'm 
+open to design ideas of how to store a list of recommended 
+configurations and how to set a group of config settings with one 
+command (say, a "git recommended-config [small|large|submodules]" 
+builtin that fills the local config with the important settings).
+
+Thanks,
+-Stolee
+
+[1] 
+https://github.com/Microsoft/VFSForGit/blob/7daa9f1133764a4e4bd87014833fc2091e6702c1/GVFS/GVFS/CommandLine/GVFSVerb.cs#L79-L104
+     Code in VFS for Git that enables "required" config settings.
+
+[2] 
+https://github.com/Microsoft/git/commit/0cbe9e6b23e4d9008d4a1676e1dd6a87bdcd6ed5
+     status: add status.aheadbehind setting
+
+[3] 
+https://github.com/Microsoft/VFSForGit/blob/7daa9f1133764a4e4bd87014833fc2091e6702c1/GVFS/GVFS/CommandLine/GVFSVerb.cs#L120-L123
+     Code in VFS for Git that enables "optional" config settings.
