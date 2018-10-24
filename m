@@ -6,59 +6,60 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A131F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 03:10:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADA21F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 03:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbeJXLgl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 07:36:41 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55007 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725826AbeJXLgk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 07:36:40 -0400
-Received: by mail-wm1-f66.google.com with SMTP id r63-v6so3733112wma.4
-        for <git@vger.kernel.org>; Tue, 23 Oct 2018 20:10:35 -0700 (PDT)
+        id S1726457AbeJXLgr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 07:36:47 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45904 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725826AbeJXLgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 07:36:47 -0400
+Received: by mail-wr1-f66.google.com with SMTP id n5-v6so45382wrw.12
+        for <git@vger.kernel.org>; Tue, 23 Oct 2018 20:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=rb3v9eeDms2Jv1Lo4InfS+2LwQNWsh7Rt4MGwhqcdaM=;
-        b=W35F/jNxtrqWV+5kW/ditpQzDjtYsFvar+/HLvZL8D5RIGi1yHoMaIRp/qoF63q91L
-         bk39Jc1UX+70UrWS+vFTebYVwbNpbN6BIHRy7sqfOzrRARndQ69QPlBGRdg3X+LpDpyp
-         Ub74An5J+4noOuHuVXY4NGBbOrKq9VofVwNYE+MX60d/p0zoWWwCCSgFYPpwKV48v7/K
-         MQk7h6Fgxpt8VkGsgz/MW30eVk3W6xGRRZiM9uDZ4zn6f9WWx+rNJq68KQAb+l3tn71k
-         MjCeICErc6Ne4xW5woRYNa9ZVi0T8Tcv1EHvxa8/uFC3dokRMv8yrhNPP6oWKJhENSji
-         Hkgg==
+        bh=Z3Tq27WfpeFHuKf5eNGKm8c+yzK8gDtFz7vvhjm3uSA=;
+        b=oOnwAR4v6h50G/8US46b6XOxnp56nLrCvhbE3ygJdI4TwzR7f0uvrQtL2ZYQol7QpW
+         HTdRcD/6xPH4W1M45O8dL0/fdEk0L9UwLF8rQH8U574180wogZ6aLvdK8BfodVhrj3B1
+         Wh0kT0JXbc0WJ33V8RNAdYzTbZmiDuf52uSrd9j7BeBLTcSDG6pngfwLmn+fzkqiNc0f
+         MyFAidkdDpjayhxJ9CtRcVUnU+9uS6nLuNF5Wz1MTQi8yldrHrfUMqmHaqLvXjDuIxrJ
+         xf7DBEYjEyJsX0ptbeAyJ03hRGCb0kL5UorE1Mx3CdwkErc2cM486apl1fwb39sM/MnH
+         CLfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=rb3v9eeDms2Jv1Lo4InfS+2LwQNWsh7Rt4MGwhqcdaM=;
-        b=kARz1imVjQ+idEIDzVXx6uHcRC2K3JjXmXPWnXIYc339nII1MqSg7X/IOPGGMzQVbb
-         v1eaciovQcqgHcsEAX1zlCc82zsrfasordOY2ltRwaeSqYkZUCprPhH7NnsikIftVt9j
-         yPiDglG1HQbFG2Y2irlsdHri00NBZnA5iTY9n8j6/oG/6HdJD42cF66m4B7FIL9Gdbch
-         RurPWTOrmUQH4RX8WbXgFtwyZPC8N4e0jFQwxiihsyyUfT0ugIyUYC/mvplHPpt5uUew
-         O0PNnkVPAq3s88GeM+rY0v393P+Y8PMdZnA2eDc/kOIOP077WwWZ9fg4HHtcZ14WRGOW
-         6MjA==
-X-Gm-Message-State: AGRZ1gKkVIijj+/z8mptt6rW80k9DIiGY60eKwPuKSTxCWQyedxT3AyX
-        6gKwv3fXjJUl6NZLRuoYbXyx51ucGz4=
-X-Google-Smtp-Source: AJdET5dSRLTxyFvXOpfRznQZpOY1mUqhkOQETOug/f0gn0VtfWxI6sQP4EDSDlAiPhp6v+hALJJTgA==
-X-Received: by 2002:a1c:adc6:: with SMTP id w189-v6mr490240wme.96.1540346871800;
-        Tue, 23 Oct 2018 19:07:51 -0700 (PDT)
+        bh=Z3Tq27WfpeFHuKf5eNGKm8c+yzK8gDtFz7vvhjm3uSA=;
+        b=hXf2tbe71ENvbK+JAGyMBp4QfyKMq7iHftFS5M53mPSosOPnonz2IanTSp6YWEoQbP
+         ZSalEV58Xsuaz2M5Rwx+NyMmbzzjaC128ZldeZ3qq2TrxDZ6jjuUEmo8iJC3/N0RoweJ
+         PK+Kv5DHZWxSw5ZkH9+bCfHsFDpJjC0ir/V90FaOsFAexXE/gniaDAyhqVDx5WZdA+XX
+         lBLEVTp8jGczRtLdlQJeaz9YzreklTdsd/Z2stjmBSr/wh6Iy71UbuzOn6D+hCBdjBIJ
+         FNgk12HFBPoa3E1n/0rgr55/bk3NyoltqrNAImFYVRDs1yYIx7WLZDcc8HxyUbvuR74F
+         UFyA==
+X-Gm-Message-State: AGRZ1gJX6h0p4OYp2wDDIRWFz1rCKDeJYCbuqQDsezGMU3zJEpxtn2/L
+        0JaHNm+P4IL0XHL56c8nQWI=
+X-Google-Smtp-Source: AJdET5f6Ixm+seKwj2jXwrozO3JhRUfObGXKfYgmVf9inmNnWleZOg+q9xvzMRbAyVoWZWT/taoBXA==
+X-Received: by 2002:a5d:45c6:: with SMTP id b6-v6mr759877wrs.296.1540350641321;
+        Tue, 23 Oct 2018 20:10:41 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o4-v6sm1779573wrj.45.2018.10.23.19.07.48
+        by smtp.gmail.com with ESMTPSA id r134-v6sm1982099wmg.9.2018.10.23.20.10.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Oct 2018 19:07:50 -0700 (PDT)
+        Tue, 23 Oct 2018 20:10:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitter.spiros@gmail.com
-Subject: Re: [PATCH] test: avoid failures when USE_NED_ALLOCATOR
-References: <20181023093856.78944-1-carenas@gmail.com>
-Date:   Wed, 24 Oct 2018 11:07:48 +0900
-In-Reply-To: <20181023093856.78944-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 23 Oct 2018 02:38:56 -0700")
-Message-ID: <xmqqlg6oqeq3.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] gpg-interface.c: use flags to determine key/signer info presence
+References: <20181022163821.23523-1-mgorny@gentoo.org>
+        <20181023225605.GB6119@genre.crustytoothpaste.net>
+Date:   Wed, 24 Oct 2018 12:10:39 +0900
+In-Reply-To: <20181023225605.GB6119@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 23 Oct 2018 22:56:05 +0000")
+Message-ID: <xmqqwoq8ox8w.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -68,47 +69,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Belón  <carenas@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> contrib/nedmalloc doesn't support MALLOC_CHECK_ or MALLOC_PERTURB_
-> so add it to the same exception that is being used with valgrind
+> On Mon, Oct 22, 2018 at 06:38:19PM +0200, Michał Górny wrote:
+>> Replace the logic used to determine whether key and signer information
+>> is present to use explicit flags in sigcheck_gpg_status[] array.  This
+>> is more future-proof, since it makes it possible to add additional
+>> statuses without having to explicitly update the conditions.
 >
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  t/test-lib.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> This series looks good to me.  I was going to ask after patch 2 whether
+> you were printing the subkey or primary key fingerprint, and then you
+> answered my question in patch 3.  Thanks for including both.
 
-Unlike the case for valgrind, where we actively do not want to set
-these two environment variables [*1*], I am assuming that nedmalloc
-simply ignores these two environment variables.  Is there a reason
-why we want to special case nedmalloc like this patch does, but
-leave these set for other implementations that do not pay attention
-to them?  
-
-Of course, I am also assuming that there are implementations of
-malloc(3), which are not nedmalloc, that can be used to build and
-test Git and that do not react to these two environment variables.
-The patch would make sense if all the other implementations of
-malloc(3) paid attention to MALLOC_{CHECK,PERTURB}_ and nedmalloc
-were the only odd-man out, but I do not think that is the case.
-
-[Footnote] 
-
-*1* see the last two paragraphs of the log message of a731fa91 ("Add
-MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the test suite for
-detecting heap corruption", 2012-09-14)
-
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 44288cbb59..2ad9e6176c 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -143,7 +143,7 @@ fi
->  # Add libc MALLOC and MALLOC_PERTURB test
->  # only if we are not executing the test with valgrind
->  if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
-> -   test -n "$TEST_NO_MALLOC_CHECK"
-> +   test -n "$TEST_NO_MALLOC_CHECK" || test -n "$USE_NED_ALLOCATOR"
->  then
->  	setup_malloc_check () {
->  		: nothing
+Yeah, this looks good to me too.  Thanks, both.
