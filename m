@@ -2,94 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BADA1F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 09:24:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E77991F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 09:26:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727690AbeJXRwK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 13:52:10 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54546 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726256AbeJXRwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 13:52:10 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r63-v6so4604078wma.4
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 02:24:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2xvqxLHVgEv7+5B47/fEGYYiAJgURfdiRZrn1NPeGR0=;
-        b=fe/zCnG1NaQ89u7mL5MFAap7S7EoTPf9pz3grYGMvX97/QioSnhFOf/hsHiHO7R4MV
-         HjY1xgO9ENXFWq6rWs8o+u3RatcqVlT4dpJelQOb2hnbHuVw0uuxvAW5VmeXNT3VEpvB
-         cTqP4kk11/mPCm6BKAkL9Ufz2+WI1lkObPSf7ALZIIJCZbZmuAF/E4FQSesA8Avr8KTn
-         BTXTTRGxdDH20NxYQ5UNQdUtjB9zeMDB5SXWQ8gHx4EOKNa9m4qi7sxNVf5SLao6IlAG
-         G0vYfkFWdOjhBolw75Jb4fK+N32oJ89c3jNWeEvki5A1rL8Dr1PdUE/FPrcVkRXfuC7z
-         3f3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2xvqxLHVgEv7+5B47/fEGYYiAJgURfdiRZrn1NPeGR0=;
-        b=n+6yyjroBBj9zzOj55zEbz2sbOZxUfMmpAmntBmD5+x+n7FHjb4muRgmkvLkj4Ig0B
-         W18f6nCb7+xzJaKADsuNIFLw5dMK1d5pMvqnWgHkyw+uCXrxBxbkBma9dYhHT4YzLUac
-         PXQTInsIBOZkroWO7gVxS3808UMh8l2Th56g25iTbR9cWY5xSeMpRK5KFBqjuTEFKEl8
-         T87jsVM12qdgmsKQOOXalJOJA9PQ9Z7mfB7MlF1fVoWQqbSYzHqecLbGF32y9IABzzTD
-         l101P1Y74MYBbIRNn1Fdh8ZEunoiMsSgwt6Ih8sH/mFcWZsrkEXXCBENs41fks8CJG3P
-         7Fsg==
-X-Gm-Message-State: AGRZ1gJrT5GWn4rdtEU5zs4UsmcATth2J3mdwwcEZm9j6A2vTGpICaEq
-        8z/rQBpkPOYeRUuiyXU08A4=
-X-Google-Smtp-Source: AJdET5dQNlxqLgaz6+lSCVtkV5VYRcEGb4cXhP3Y2+eFJNyQGG1bvrxqrJk9891a+7eiyP1swSU0Xg==
-X-Received: by 2002:a1c:3584:: with SMTP id c126-v6mr1867584wma.120.1540373087994;
-        Wed, 24 Oct 2018 02:24:47 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j189-v6sm3915993wmb.12.2018.10.24.02.24.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Oct 2018 02:24:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Gruenbacher <agruenba@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Clear --exclude list after 'git rev-parse --all'
-References: <20181023191758.15138-1-agruenba@redhat.com>
-        <xmqqefcgotbk.fsf@gitster-ct.c.googlers.com>
-        <CAHc6FU6YLeTBU02k-Md7+H5kJDq2RXZmAXMaq8ZkiuSmZFXbwQ@mail.gmail.com>
-Date:   Wed, 24 Oct 2018 18:24:45 +0900
-In-Reply-To: <CAHc6FU6YLeTBU02k-Md7+H5kJDq2RXZmAXMaq8ZkiuSmZFXbwQ@mail.gmail.com>
-        (Andreas Gruenbacher's message of "Wed, 24 Oct 2018 11:01:54 +0200")
-Message-ID: <xmqqr2gfn1cy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727570AbeJXRxT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 13:53:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50875 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726256AbeJXRxT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 13:53:19 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8IuM-1fKmvL1Ehu-00vvDH; Wed, 24
+ Oct 2018 11:25:53 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8IuM-1fKmvL1Ehu-00vvDH; Wed, 24
+ Oct 2018 11:25:53 +0200
+Date:   Wed, 24 Oct 2018 11:25:56 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] run-command: mark path lookup errors with ENOENT
+In-Reply-To: <20181024091617.GA25118@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1810241125360.4546@tvgsbejvaqbjf.bet>
+References: <20181024073637.GA31069@sigill.intra.peff.net> <20181024073800.GB31202@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1810241054110.4546@tvgsbejvaqbjf.bet> <20181024091617.GA25118@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:PRc7sGaBEQdO5+fx38CFG30/z+ZRLE9lZJKThRjYiNYRwdtZc7H
+ X8H+1sayUg+wvGfLDkzScpf0fCoaoYtTUmB2WIjHdFknrYyfaWIWPQIPOzTSl5BKLo9KrkR
+ 8UrrU2GwrGYLdntaJmqvi7henp/O8n3Q15MIT2aWw2FIZp3i28PSn/y8N+/NX9XdPwIWAAK
+ rFEcV2Z2mIySpdl0Hl7lQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:voUjrc5a51o=:mcpTyCd5zPK1a8tO6x682Y
+ 1VscaOpPcgZH/NmJLIy+O4OucFLMjsHzh87TgJOIrpVOhfJpyeFMz1mudMWJxVoF7dF1MAoDJ
+ 7WHXl/XpDZQTTwVI4ArJDjCzvilmiDFnjutiE1GTEwb1TnT2Y5Eux5ytCrOalifp1owEGhGEm
+ EBVnvEI0qGqPcWEuepn62lmbpJa1R07lm+EDTf61WuENyIm2N4B38YNbRDnZ2h3pwcKs7iHLO
+ QEwJYKt2ClYJAzNQLSsU8eSHV5GYA9elXQ8Pb6hldaEi84zXlhb8nHwTjpHaQy6lEQQbBp0z7
+ N3ONBuYKER/XCg0Ong4jbFwHOL8hTOm42CSjrWK07lE5kGZnPANoAgzyyhYYWc7JH5+bsdj1a
+ /WVZMjg5Eejh+3v2tGn2pU8CBpihe6Po8wYmHyCxSdJRFM1JnttkqPI9waqWTjiolVrbF1Cwo
+ 8ZPiTKkpzL6xVM9yiIc29nGmiBAZJmIxP5MBSAkyE8THl/kPXg/s35w0y4j7duOAQkvuGQ2l7
+ f4vp7sUolt+IJUd+ycTecDzfFfZNIw9WpAJPFIH5CWjI8S3NiuRLF/3S3yu2xOX0j8legtPqC
+ 3Ve/QXgHcONUQdPj95ZY37YmyfeULm02D6zXI8OZFVIFXHxijrQMuj85CyBI4t+WeioeKUl9w
+ +aK0l7G61ZJSj4l2A43Tbzpu/1hblLm78tWCIPp9VPeeR5foTx8Oz+4pBDWPhIIAO7IqdhdL4
+ p6Sfk22iRB0nfXPU5UWkqmwaU1ESS5koZpIvbMZjP9l4Un6WOYlHKq3pJWQQ//x4Zx96umDgB
+ 4P56QwXcZ66wWWw8pXzU/+EMFMBMOe7dUUoCzz7pthGkjtoRl4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Gruenbacher <agruenba@redhat.com> writes:
+Hi Peff,
 
->> All other glob options do show_reference with for_each_ref_in() and
->> then calls clear_ref_exclusion(), and logically the patch makes
->> sense.
->>
->> What is the "problem" this patch fixes, though?  Is it easy to add a
->> new test to t/6018-rev-list-glob.sh to demonstrate that "--glob" (or
->> whatever that clears exclusion list without this patch) works
->> correctly but "--all" misbehaves without this change?
->
-> The test suite doesn't cover clearing the exclusion list for any of
-> those rev-parse options and I also didn't write such a test case. I
-> ran into this inconsistency during code review.
+On Wed, 24 Oct 2018, Jeff King wrote:
 
-That is why I asked what "problem" this patch fixes.  Without
-answering that question, it is unclear if the patch is completing
-missing coverage for "--all", or it is cargo culting an useless
-clearing done for "--glob" and friends to code for "--all" that did
-not do the same useless clearing.  IOW, there are two ways to address
-the "inconsistency", and the proposed log message (nor your answer
-above) does not make a convincing argument why adding the same code
-to the "--all" side is the right way to achieve consistency---rather
-than removing the call to clear from the existing ones.
+> On Wed, Oct 24, 2018 at 11:01:54AM +0200, Johannes Schindelin wrote:
+> 
+> > > @@ -910,6 +921,7 @@ int start_command(struct child_process *cmd)
+> > >  }
+> > >  #endif
+> > >  
+> > > +end_of_spawn:
+> > 
+> > Sadly, this fails to build on Windows:
+> > 
+> > 	run-command.c: In function 'start_command':
+> > 	run-command.c:924:1: error: label 'end_of_spawn' defined but not used [-Werror=unused-label]
+> > 	 end_of_spawn:
+> > 	 ^~~~~~~~~~~~
+> 
+> Doh. I didn't think of that.
+> 
+> > How about squashing in this diff:
+> > 
+> > -- snip --
+> > diff --git a/run-command.c b/run-command.c
+> > index 639ea5ac3366..3f03795a5995 100644
+> > --- a/run-command.c
+> > +++ b/run-command.c
+> > @@ -918,6 +918,8 @@ int start_command(struct child_process *cmd)
+> >  		close(fhout);
+> >  	if (fherr != 2)
+> >  		close(fherr);
+> > +
+> > +	goto end_of_spawn;
+> >  }
+> >  #endif
+> >  
+> > -- snap --
+> > 
+> > I can confirm that the result compiles and passes t0061.
+> 
+> That leaves the Windows side of the #else with a funny, useless goto
+> (and without even a matching useless one on the Unix side).  Let's put
+> it instead inside the half of the #if that actually uses it. Like so
+> (actually courtesy of Jonathan Nieder):
+> 
+> diff --git a/run-command.c b/run-command.c
+> index 639ea5ac33..d679cc267c 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -868,6 +868,8 @@ int start_command(struct child_process *cmd)
+>  	argv_array_clear(&argv);
+>  	free(childenv);
+>  }
+> +end_of_spawn:
+> +
+>  #else
+>  {
+>  	int fhin = 0, fhout = 1, fherr = 2;
+> @@ -921,7 +923,6 @@ int start_command(struct child_process *cmd)
+>  }
+>  #endif
+>  
+> -end_of_spawn:
+>  	if (cmd->pid < 0) {
+>  		if (need_in)
+>  			close_pair(fdin);
 
-Thanks.
+That works for me, too.
+
+> Thanks for your review!
+
+You're welcome!
+
+Thanks,
+Dscho
+
+> 
+> -Peff
+> 
