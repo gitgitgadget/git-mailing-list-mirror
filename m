@@ -2,95 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAC11F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 07:39:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E16571F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 07:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729919AbeJXQGJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 12:06:09 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52909 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728442AbeJXQGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 12:06:09 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJBn4-1gHyuP2Imo-002nCn; Wed, 24
- Oct 2018 09:39:07 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJBn4-1gHyuP2Imo-002nCn; Wed, 24
- Oct 2018 09:39:07 +0200
-Date:   Wed, 24 Oct 2018 09:39:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1727077AbeJXQK6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 12:10:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52454 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726916AbeJXQK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 12:10:58 -0400
+Received: (qmail 7861 invoked by uid 109); 24 Oct 2018 07:44:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Oct 2018 07:44:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2273 invoked by uid 111); 24 Oct 2018 07:43:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Oct 2018 03:43:15 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Oct 2018 03:44:00 -0400
+Date:   Wed, 24 Oct 2018 03:44:00 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Slavica <slavicadj.ip2018@gmail.com>, git@vger.kernel.org,
-        Slavica <slawica92@hotmail.com>
-Subject: Re: [PATCH 1/3] [Outreachy] t3903-stash: test without configured
- user name
-In-Reply-To: <xmqqd0s0qcuv.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810240938310.4546@tvgsbejvaqbjf.bet>
-References: <20181023162941.3840-1-slawica92@hotmail.com> <xmqqd0s0qcuv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] i18n: make GETTEXT_POISON a runtime option
+Message-ID: <20181024074400.GA31239@sigill.intra.peff.net>
+References: <xmqqsh0xtwgb.fsf@gitster-ct.c.googlers.com>
+ <20181023210154.32507-1-avarab@gmail.com>
+ <xmqqefcfoq2a.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/p4xUn4hPm0C95euDW9X7Sr1J4VMNgjwYrTx17+hsqnQE1mIk4T
- iwukEBWnX49JAYm/9KFG3HMr2Fy1SIZq1fjNzReoilyRhkQccip8ED6+cI86BZhFFyA2C3w
- 5kKlTiUjl4OKG8cmaZhM6SYL/yDDElG8FvEDimhOEvF6jgW1lx5d3rMB7sZHqWEHs9cvVGh
- WSguIF8xWXwofj1EwTvVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EcvEFDak6HU=:3KW0grOIPqgiVzUGlUAFEP
- GEVN2K6B1JLKD3W2ZfwtsaqSwIi+Z6THKGX4CDz3j8Uh4hXD1qRk141PvLzVP9Jc3/G8NliDA
- JVO1LnNN/nz8kS3J+8AiLimD47I06GAjDvJRT0xZ29THycq2slcsiTZeRRb6vq861loVJK0Kw
- 8B+p4y+za0IT+wBTfxTgEOLtfO9zRZs7fOCp/7fE2HjDNbjuJsTSW7ra0HHyJ+dQhxzsCRURI
- A0CNahH6gB4h7MVpuAkG1KiEmX3SWsbJznNsM+cT2P3tD822elqxyOPDg76WdudpRtpbCuZOu
- RoiorW5pNQZIYod+jKdeIGor2sW5KkRRRRGkP8cKqoUtoPeGNZNC35cI4OEx9m2wNWj1FDdDG
- q2k15B7veQVLxZiuItCaEpmtnTWSqkAsbpbpZIwJjor3klxRsnTj0IDi3Dvalq0xCpXygBEVM
- Rj0FJ9z31HLX+IeoQz4iOIBWOO7CQwIkSEBC5FnD98Aqe17/OrR9vh8lPQVpUWBNvhyhfzkwB
- btrIXv1nXeA2f+WpuvE8Yy3a6/5xxqadPLaPMAwGYI0Luz7njB/M8q5trtH5Z67mePcGUNKpq
- CfAYgdHDax/Al+Lttn76D4t5KlXD9sndAx+0fUu0btbv1mh9LYxraA8xIwcZhUqLG2UworGrx
- hSF9+RvDV3mv/Q1xYt+gLZ/EOc4XBXBH4Tm3tUTAaWYakTInMQsrhm/RdbnR3R/Xy/Tw2FnhI
- fn1BeS6dTqGv9KRJHxpfgdGiPxt7FC7TkByLiPBpeyxXJka1iuRSQLY+kIiekz2dfkyLOcnGq
- zW8S681VWvw+62gpLhABVcjLF0BoLvrMuFEj38tIMYMwATvkdI=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqefcfoq2a.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Wed, Oct 24, 2018 at 02:45:49PM +0900, Junio C Hamano wrote:
 
-On Wed, 24 Oct 2018, Junio C Hamano wrote:
-
-> Slavica <slavicadj.ip2018@gmail.com> writes:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
-> > +test_expect_failure 'stash with HOME as non-existing directory' '
-> > +    test_commit 1 &&
-> > +    test_config user.useconfigonly true &&
-> > +    test_config stash.usebuiltin true &&
-> > +    (
-> > +        HOME=$(pwd)/none &&
-> > +        export HOME &&
+> > Notes on the implementation:
+> >
+> >  * The only reason we need a new "git-sh-i18n--helper" and the
+> >    corresponding "test-tool gettext-poison" is to expose
+> >    git_env_bool() to shellscripts, since git-sh-i18n and friends need
+> >    to inspect the $GIT_TEST_GETTEXT_POISON variable.
+> >
+> >    We only call these if $GIT_TEST_GETTEXT_POISON is set, or in the
+> >    test suite, and this code can go away for non-test code once the
+> >    last i18n-using shellscript is rewritten in C.
 > 
-> What is the reason why this test needs to move HOME away from
-> TRASH_DIRECTORY (set in t/test-lib.sh)?
-
-This is to make sure that no user.name nor user.email is configured. That
-was my idea, hence I answer your question.
-
-Ciao,
-Dscho
-
+> Makes me wonder if we want to teach "git config" a new "--env-bool"
+> option that can be used by third-party scripts.  Or would it be just
+> the matter of writing
 > 
-> > +        unset GIT_AUTHOR_NAME &&
-> > +        unset GIT_AUTHOR_EMAIL &&
-> > +        unset GIT_COMMITTER_NAME &&
-> > +        unset GIT_COMMITTER_EMAIL &&
-> > +        test_must_fail git config user.email &&
-> > +        echo changed >1.t &&
-> > +		git stash
-> > +    )
-> > +'
-> > +
-> >  test_done
+> 	git config --default=false --type=bool "$GIT_WHATEVER_ENV"
 > 
+> in these third-party scripts and we do not need to add such a thing?
+
+The config command only takes names, not values. So you'd have to write
+something like:
+
+  git -c env.bool="$GIT_WHATEVER_ENV" config --type=bool env.bool
+
+but then you lose the default handling. I think if we added a new
+option, it would either be:
+
+  # interpret a value directly; use default on empty, I guess?
+  git config --default=false --type=bool --interpret-value "$GIT_WHATEVER_ENV"
+
+or
+
+  # less flexible, but the --default semantics are more obvious
+  git config --default=false --type=bool --get-env GIT_WHATEVER_ENV
+
+-Peff
