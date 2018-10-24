@@ -2,122 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8131F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 13:56:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE8791F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 14:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726575AbeJXWYZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 18:24:25 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38285 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726285AbeJXWYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 18:24:25 -0400
-Received: by mail-wm1-f68.google.com with SMTP id b14-v6so2894556wmj.3
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 06:56:11 -0700 (PDT)
+        id S1726839AbeJXXKs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 19:10:48 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:34189 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726457AbeJXXKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 19:10:48 -0400
+Received: by mail-it1-f196.google.com with SMTP id e81-v6so4338852itc.1
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 07:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Ry3EVpQd7VVUr3w/KOeJSQvLC5pETKlDVmr/08iDd4Y=;
-        b=BZKT3MNDsKoPF3z1aV4isMEalMVmeZWM2Z244IVaDJGC56MtYMkQ8NRrCN3mbOslwm
-         232nGNq+6rumqOIuWZYPtIrh43SCQM0IgBnuTh3h//ILd8JHFpLNDm4Kagx3c6wIu14a
-         La+JY977JoFq4J/L5RX5xtEy6BBwJzUw+xMpUD1guNl0ys5j4KYCxzMXTvoixiLswoUO
-         QSEAWb9R9HAEPokLnDqoOTuf/1RoHBAnbAO/7hKAsuPDsCb9mchKe9DV6FwVuBe8esFy
-         tRIsPfV6gAIwuNVxLZw/dx3YCYbATon45EVgHFrSPveV/R8gk7EKmTZ9s8yDfwiRPPm6
-         WEaA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MAgvMIDy1S+71b3DMwM5kYalImWzShoZvWfosguOvhE=;
+        b=pHn9Swq3KEjyVHaX8bFzUmReI+VPesV4KC654F7H8h9VCbraXywRKs6Xr/aPMGDEQz
+         ttG4X9CKubcA24N7pWCzg2xaJdcoHrkGptMSbBEQG2b2mfMsBkXpCMpyrUb/0S/gIXp6
+         1QYKBfOeDP5MkDEA824pvFB1/Xx+oO2sUGIHyuXp9SZOGIAtb1KMoG/7E/iOvYQMPQPQ
+         FVsehAIOif9zmZvpou9TbBhCL65KNYCT4zekasLV2g36LnJwVlaOJug8yJPt9R+GoOuV
+         AfZbLifA5sKxNajYc57ilWrn2EjufxWSemu96QwGv3h7JdjHhtzj2maJJlHadWm9JiZw
+         IKvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Ry3EVpQd7VVUr3w/KOeJSQvLC5pETKlDVmr/08iDd4Y=;
-        b=ivO4yPGQyKFiDOeukyrSzm3tspRrsUnb8ZrQmfApho8mcC6g+vRajy2zeNBmJWl65d
-         l9C20FjMbfsSCkIPo4nIwDWerbQ7vCx5LGyrNSx/omruurhARQ8oyvKKAMWjF8mA3nGN
-         A9GlodY5aWIuvFlqAo/6RvkBD2hUmGD5ird4t6ZsBE2optGhK6apP7NSbltluKSSP481
-         yE/0dQGxJpARJArMPQ8AVX0pRxLzLS6OQE3TccPonZZ79EwDElB34wz6gH+0H+lgL1AO
-         ybHn0UvckR+Sj56kn3HcAQ+2gFgfBYd1wnW83b2gkB2LWCeBc5Bt62rGBn/mlOzCoIg1
-         cw9A==
-X-Gm-Message-State: AGRZ1gJcgxOsyJsjMcH6vdwx/i8tK0TTmp53T6qTKFh9pj1y2Rx3v745
-        bgc7UrY4096tNFNmTZY94qM=
-X-Google-Smtp-Source: AJdET5dcWoZYcCCgXEHibRbFFlScisUjoRJqqqMwBuh8yWm4HLv8mrubKtG5QrqcVl4YTdwBO9aMag==
-X-Received: by 2002:a1c:2c87:: with SMTP id s129-v6mr72567wms.127.1540389370319;
-        Wed, 24 Oct 2018 06:56:10 -0700 (PDT)
-Received: from [192.168.1.4] ([31.223.156.199])
-        by smtp.gmail.com with ESMTPSA id 130-v6sm6364126wmn.7.2018.10.24.06.56.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Oct 2018 06:56:09 -0700 (PDT)
-Subject: Re: [PATCH 1/3] [Outreachy] t3903-stash: test without configured user
- name
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        slawica92@hotmail.com
-References: <20181023162941.3840-1-slawica92@hotmail.com>
- <CAP8UFD35aOb5weDcDVFth96e+H-as_Q9bLPuCpSDReKJERnM7Q@mail.gmail.com>
-From:   Slavica <slavicadj.ip2018@gmail.com>
-Message-ID: <45cf8bf9-adfa-655e-0ded-fdb71707f7ad@gmail.com>
-Date:   Wed, 24 Oct 2018 15:56:06 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MAgvMIDy1S+71b3DMwM5kYalImWzShoZvWfosguOvhE=;
+        b=hof6/DfamYBmeokukYfcxWVpCLLFwe6zudnlA1T1CExIFfWP2O+xotbZeprHkxHxHq
+         mopqu4L8j+/b7W9wI7+GJv2WP8XH+Z+RWOB/t5JdmbdWRXx8uK38V44Mgy0Ae9p6fl/s
+         lPHF87RcyC5gRSQFgKf4IA4IEkb2UX6rqrqwro8LrYAEnk4NEo2MyuAeKyok2bfFh7pH
+         JogfBTIyC+KI8moYpv0Jp9lwwl+UszldX0YNiu/ZZNvQs9n3r0R4UeU9+xDdbYG8+gtH
+         PNSBjiYeklNn42Npz/pxdDDCaN9DmymaWIv6qPNGSB9Wm5TOi5wNxhDfwGjP5XP1BY4+
+         ORMw==
+X-Gm-Message-State: AGRZ1gKFSGbwvOIQnMGeloBgYkVv7JuyiT5/5oZaJFikg5cW07eQypo9
+        Qm2H8n85O+5zCm0YobRgSoo4vWe3rc5fF/K8Z1M=
+X-Google-Smtp-Source: AJdET5dYWGc0x3sHx3MyT3YQ2Hds1c/IMWKP5YTRAwdGDft1LQlc9mCCFIIhwWjk5Kk9RPgM8RS9+QOJsm9UqNcqt4o=
+X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr1687125itc.123.1540392144712;
+ Wed, 24 Oct 2018 07:42:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD35aOb5weDcDVFth96e+H-as_Q9bLPuCpSDReKJERnM7Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20181022153633.31757-1-pclouds@gmail.com> <878t2pd6yu.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.1810231126470.4546@tvgsbejvaqbjf.bet> <8736sxc6gt.fsf@evledraar.gmail.com>
+ <CACsJy8CX78EbANbv8a354djJaO6dKRpXshHhHJTspJvOSewgpA@mail.gmail.com> <871s8gd32p.fsf@evledraar.gmail.com>
+In-Reply-To: <871s8gd32p.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 24 Oct 2018 16:41:57 +0200
+Message-ID: <CACsJy8Dex3VYEXmvRZv5_ot1-cwjJtir=kvupzKe7-Z2qPZw+Q@mail.gmail.com>
+Subject: Re: [PATCH] Poison gettext with the Ook language
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On 23-Oct-18 8:52 PM, Christian Couder wrote:
-> On Tue, Oct 23, 2018 at 6:35 PM Slavica <slavicadj.ip2018@gmail.com> wrote:
->> This is part of enhancement request that ask for `git stash` to work even if `user.name` is not configured.
->> The issue is discussed here: https://public-inbox.org/git/87o9debty4.fsf@evledraar.gmail.com/T/#u.
-> We prefer commit messages that contain as much as possible all the
-> information necessary to understand the patch without links to other
-> places.
+On Tue, Oct 23, 2018 at 6:45 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> >> The effect of what I'm suggesting here, and which my WIP patch in
+> >> <875zxtd59e.fsf@evledraar.gmail.com> implements is that we'd do a
+> >> one-time getenv() for each process that prints a _() message that we
+> >> aren't doing now, and for each message call a function that would chec=
+k
+> >> a boolean "are we in poison mode" static global variable.
+> >
+> > Just don't do the getenv() inside _() even if you just do it one time.
+> > getenv() may invalidate whatever value from the previous call. I would
+> > not want to find out my code broke because of an getenv() inside some
+> > innocent _()...
 >
-> It seems that only this email from you reached me. Did you send other
-> emails for patches 2/3 and 3/3?
+> How would any code break? We have various getenv("GIT_TEST_*...")
+> already that work the same way. Unless you set that in the environment
+> the function is idempotent, and I don't see how anyone would do that
+> accidentally.
+
+I didn't check those GIT_TEST_ but I think the difference is in
+complexity. When you write
+
+ var =3D getenv("foo");
+ complexFunction();
+
+you probably start to feel scary and wrap getenv() with a strdup()
+because you usually don't know exactly what complexFunction() can call
+(and even if you do, you can't be sure what it may call in the
+future).
+
+The person who writes
+
+ printf(_("%s"), getenv("foo"));
+
+may not go through the same thought process as with complexFunction().
+If _() calls getenv(), because you the order of parameter evaluation
+is unspecified, you cannot be sure if getenv("foo") will be called
+before or after the one inside _(). One of them may screw up the
+other.
+
+> > And we should still respect NO_GETTEXT, not doing any extra work when
+> > it's defined.
 >
-> [...]
+> This is not how any of our NO_* defines work. *Sometimes* defining them
+> guarantees you do no extra work, but in other cases we've decided that
+> bending over backwards with #ifdef in various places isn't worth it.
 
-Okay, I will change that. This is my first patch and I am still adapting.
-
-Emails for patches 2/3 and 3/3 because aren't there because I am still 
-preparing them.
-
-(I didn't know if I had 3 patches in plan that they should be sent at 
-almost the same time.)
-
->
->> +    (
->> +        HOME=$(pwd)/none &&
->> +        export HOME &&
->> +        unset GIT_AUTHOR_NAME &&
->> +        unset GIT_AUTHOR_EMAIL &&
->> +        unset GIT_COMMITTER_NAME &&
->> +        unset GIT_COMMITTER_EMAIL &&
->> +        test_must_fail git config user.email &&
->> +        echo changed >1.t &&
->> +               git stash
-> It seems that the above line is not indented like the previous ones.
-I don't know what is the reason, in my IDE everything seems fine, but 
-I'll fix it.
->
->> +    )
->> +'
-> Thanks for contributing,
-> Christian.
-
-You are welcome,
-
-Slavica
-
->
->
+I guess it boils down to "worth it". For me #ifdef NO_GETTEXT would be
+limited to gettext.h and it's not that much work. But you do the
+actual work. You decide.
+--=20
+Duy
