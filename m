@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1F21F453
-	for <e@80x24.org>; Wed, 24 Oct 2018 08:50:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18F2B1F453
+	for <e@80x24.org>; Wed, 24 Oct 2018 08:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727801AbeJXRR3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Oct 2018 13:17:29 -0400
-Received: from mout.gmx.net ([212.227.17.21]:39589 "EHLO mout.gmx.net"
+        id S1727450AbeJXRUr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Oct 2018 13:20:47 -0400
+Received: from mout.gmx.net ([212.227.15.19]:46357 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726720AbeJXRR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Oct 2018 13:17:28 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhdex-1fu7F120Yd-00MrfN; Wed, 24
- Oct 2018 10:50:04 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhdex-1fu7F120Yd-00MrfN; Wed, 24
- Oct 2018 10:50:04 +0200
-Date:   Wed, 24 Oct 2018 10:50:08 +0200 (DST)
+        id S1726720AbeJXRUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Oct 2018 13:20:47 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmrUq-1ff4ku0Dl6-00h4YJ; Wed, 24
+ Oct 2018 10:53:28 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmrUq-1ff4ku0Dl6-00h4YJ; Wed, 24
+ Oct 2018 10:53:28 +0200
+Date:   Wed, 24 Oct 2018 10:53:31 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] upload-pack: fix broken if/else chain in config
- callback
-In-Reply-To: <20181024072752.GA29717@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1810241049200.4546@tvgsbejvaqbjf.bet>
-References: <20181024072752.GA29717@sigill.intra.peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t5410: use longer path for sample script
+In-Reply-To: <20181024073705.GA31202@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1810241051440.4546@tvgsbejvaqbjf.bet>
+References: <20181024073637.GA31069@sigill.intra.peff.net> <20181024073705.GA31202@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mOwQgs8IPet1mOKiZEqVimdjXRXoSAeLu8TIg4rhRLmgO7nOIQJ
- AHhbynDNxZuIrmJeBICDpYa93IliaZDBp1hdDSrXPICKfUGIDVBZ+arTseoTPajtR1l6Hoy
- +H9yevohnW45kIkzXM0kMaIZetZJR8HbuKdqB9uvTZGbLSc7r9X57iJDLj4bJO5ORs6MZ7g
- 2g+PW2Xm//Y2nHBq1V2VA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qenL+0zU8Lo=:PDzdhelSb6NYIpqrv1Ifl/
- 28CHk6OSJ2fxrKrBnCO2AxrH1pgdnIkmF+gRQGdS0saQzo4MaNO44d8u/nLCyWTrx7DjOh6PN
- +Vh1BXfuJt+GP/g/6mhqLyxZMSL+ADeD3vhTYb6uyI5T9/I61eMtOT6Y7ll4BwviJe6tLAIqo
- ceKTrO/lZo+Ku8hoeIrE+iejCzMC+DBM0rbVfC0kbo52Yxai7zHSrxTaaqE04Xop8W36qB2wN
- tWYrOK/UAYjlyfojRxHdBgI3z4/BGULjma+e6B5CDBzUSqyLooTjDVhpd4lhIa6H8tYlyEz+x
- SEHfaosf7M6jpls8qy+0QaqiZkVBmTJIx+LLBelYO0S7KDM34GUqXXkBFEk+QFXJamcAgNxYv
- 5gxNeS+gjwfq6g48M48DLk+MK5Pd7rUqLnTIg8RoNqz1kOwweCmvMUFSVQRUlMGx5hZq/nJ9B
- ISRUlN/rKLVZ9uCvp9+FGzXwSld+F3mtpydSBFHQizUs/ecPgYzrNKb1TFjTK2ecOWNEcGLsU
- 00r9Bk/JEfs9mL+lZ6uxu+hfSFgCNfxiSIWOqI8JFUbc+PUoLkGMzMpCNSViq6TEWpJZkgdjJ
- iuK7yxduaJIWHGCXxqE+zmJD/VGZ4OmTyqp8GKXLGKXocvBD/vdhujOB5YyXInTCobIAumFqt
- 5NndpZVTdJew8yZxU3Kd7Vyb2JngjJsPBgnqNKoMt6jJFWws44g6Q7zRydrFEzMnLBkyDseNt
- R7SrdVX/XGFmhPjtG9lISHsYZsnkJqy2kCQOlYqKaWNTpNTMpht8IVkNqS/7f+R7fNkMW36FX
- esuYcUu0vLRQNwddzJqdBTKPbAhHkRA5t3z7hdxfWO5cBHphg0=
+X-Provags-ID: V03:K1:ctmCQaT4QpRboAeL9GCY94txcjLVYbaAr04w+87sFu8bJZ0cpVV
+ pD7qdHnJlIzlpqpCumw3QBSHhkgqGwan30y1+YIQ8n5DRFSnaIqFxQUMX3cFw3jWzWRSOEN
+ k7mDhW3KKlOsZOim0bYfJFAdgeAMQHnpNNgGRvO8nnQbIjyCCDPSOMLbPxKswizLPIqJu0Z
+ cYAB0p//LPFvKv/fxua+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8bXvM0tNrnI=:e6xg1p66AKZHjuA/Uq8YVv
+ hqFA2j+WMVzRhzZ0Cd7jEHfxo7HS5DViFoyRB7zzO/5jtD3c+9MMW+TmDs3Kychn2YXM7BOYj
+ sZnGGDb91LaA1WAb4tTYo1ugajmgm8y5C+2Ptz7OO/wueOYA4Gns+oFASJ6GzeFaW/T3BJqhl
+ F26u9hPjc32cIxKF9a6Mc7iJAW/yb6H/lM7wMn+lkgO9G73z1lNI6IIf03JaP5xHrfxSIds+J
+ a6U1mwQR8A3sV+Ez1ociJYB1BDgA6rKoGST5HvDtWvBsSDvHLnIfNaS0CDahBnDNtaAFn2X4F
+ tlfDaa4i2WsKCpJsM7Za790msV9wYIawNEfKuNQYWnh4hFyu+fKFccVwCcH7RQIRudOPYQERF
+ fNfb9S5I5tF+XRnINM4siX4BvKo12Cp720lZ/wPBcXGrglLRpkMqnEaoGjmmwRAdS5x0CIQ2P
+ l/nMVJ0/SStqukJSnX6va3mMBSv+l8XR7W7CxZJ6UD2KD+K03yt/5fME/qw8NXci0GeNrxAQ2
+ KIqzL9Oh5H2yMLcd6SB/YSYbZUGwFkIxrU7ArYl0LzfYrQpPqsbZy7PTfcm0Qjq/L/FOIhtIi
+ 4i2xezukV10t3bbrVQpg32XnOdo1fwJL5y8hK6B3xrTO7G1J2mArn1lFSyrJ/ep9zY3fwfDtm
+ yke91Ds/cyleXoW4NtKHzXLkkG6MrJNAJIZl7+GTIPAtk893H8aGstA6DtgIuT47tXOHQTxW/
+ 1cmzd5oI9z7+1XiK9ziIBHhyXK1oVzzsgZXVjUa/EFutOrZ07itiyesAy/u+UJIzGm14viVZM
+ b6nX86fa6MbIjdEt/zunbGOPbwSW8pAmxCfpT8bh30iwDknBvo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,116 +60,49 @@ Hi Peff,
 
 On Wed, 24 Oct 2018, Jeff King wrote:
 
-> The upload_pack_config() callback uses an if/else chain
-> like:
+> t5410 creates a sample script "alternate-refs", and sets
+> core.alternateRefsCommand to just "alternate-refs". That
+> shouldn't work, as "." is not in our $PATH, and so we should
+> not find it.
 > 
->   if (!strcmp(var, "a"))
->      ...
->   else if (!strcmp(var, "b"))
->      ...
->   etc
+> However, due to a bug in run-command.c, we sometimes find it
+> anyway! Even more confusing, this bug is only in the
+> fork-based version of run-command. So the test passes on
+> Linux (etc), but fails on Windows.
 > 
-> This works as long as the conditions are mutually exclusive,
-> but one of them is not. 20b20a22f8 (upload-pack: provide a
-> hook for running pack-objects, 2016-05-18) added:
+> In preparation for fixing the run-command bug, let's use a
+> more complete path here.
 > 
->   else if (current_config_scope() != CONFIG_SCOPE_REPO) {
->      ... check some more options ...
->   }
-> 
-> That was fine in that commit, because it came at the end of
-> the chain.  But later, 10ac85c785 (upload-pack: add object
-> filtering for partial clone, 2017-12-08) did this:
-> 
->   else if (current_config_scope() != CONFIG_SCOPE_REPO) {
->      ... check some more options ...
->   } else if (!strcmp("uploadpack.allowfilter", var))
->      ...
-> 
-> We'd always check the scope condition first, meaning we'd
-> _only_ respect allowfilter when it's in the repo config. You
-> can see this with:
-> 
->   git -c uploadpack.allowfilter=true upload-pack . | head -1
-> 
-> which will not advertise the filter capability (but will
-> after this patch). We never noticed because:
-> 
->   - our tests always set it in the repo config
-> 
->   - in protocol v2, we use a different code path that
->     actually calls repo_config_get_bool() separately, so
->     that _does_ work. Real-world people experimenting with
->     this may be using v2.
-> 
-> The more recent uploadpack.allowrefinwant option is in the
-> same boat.
-> 
-> There are a few possible fixes:
-> 
->   1. Bump the scope conditional back to the bottom of the
->      chain. But that just means somebody else is likely to
->      make the same mistake later.
-> 
->   2. Make the conditional more like the others. I.e.:
-> 
->        else if (!current_config_scope() != CONFIG_SCOPE_REPO &&
->                 !strcmp(var, "uploadpack.notallowedinrepo"))
-> 
->      This works, but the idea of the original structure was
->      that we may grow multiple sensitive options like this.
-> 
->   3. Pull it out of the chain entirely. The chain mostly
->      serves to avoid extra strcmp() calls after we've found
->      a match. But it's not worth caring about those. In the
->      worst case, when there isn't a match, we're already
->      hitting every strcmp (and this happens regularly for
->      stuff like "core.bare", etc).
-> 
-> This patch does (3).
-> 
+> Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
-> Phew. That was a lot of explanation for a small patch, but
-> this was sufficiently subtle I thought it worth it. And
-> also, I was really surprised the bug managed to exist for
-> this long without anybody noticing.
 
-Maybe a lot of explanation, but definitely a good one. The explanation and
-the patch look good to me.
+Thank you for the fix! I can confirm that the patch works, and the commit
+message is stellar, as per usual for your contributions.
+
+BTW since this breaks every single one of our Continuous Builds on
+Windows, I would be very much in favor of fast-tracking this to `master`.
 
 Thanks,
 Dscho
 
+>  t/t5410-receive-pack-alternates.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->  upload-pack.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 540778d1dd..489c18e222 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -1028,14 +1028,17 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
->  		keepalive = git_config_int(var, value);
->  		if (!keepalive)
->  			keepalive = -1;
-> -	} else if (current_config_scope() != CONFIG_SCOPE_REPO) {
-> -		if (!strcmp("uploadpack.packobjectshook", var))
-> -			return git_config_string(&pack_objects_hook, var, value);
->  	} else if (!strcmp("uploadpack.allowfilter", var)) {
->  		allow_filter = git_config_bool(var, value);
->  	} else if (!strcmp("uploadpack.allowrefinwant", var)) {
->  		allow_ref_in_want = git_config_bool(var, value);
->  	}
-> +
-> +	if (current_config_scope() != CONFIG_SCOPE_REPO) {
-> +		if (!strcmp("uploadpack.packobjectshook", var))
-> +			return git_config_string(&pack_objects_hook, var, value);
-> +	}
-> +
->  	return parse_hide_refs_config(var, value, "uploadpack");
->  }
->  
+> diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
+> index 457c20c2a5..f00d0da860 100755
+> --- a/t/t5410-receive-pack-alternates.sh
+> +++ b/t/t5410-receive-pack-alternates.sh
+> @@ -23,7 +23,7 @@ test_expect_success 'with core.alternateRefsCommand' '
+>  			--format="%(objectname)" \
+>  			refs/heads/public/
+>  	EOF
+> -	test_config -C fork core.alternateRefsCommand alternate-refs &&
+> +	test_config -C fork core.alternateRefsCommand ./alternate-refs &&
+>  	git rev-parse public/branch >expect &&
+>  	printf "0000" | git receive-pack fork >actual &&
+>  	extract_haves <actual >actual.haves &&
 > -- 
 > 2.19.1.1094.gd480080bf6
+> 
 > 
