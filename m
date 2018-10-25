@@ -2,99 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 519751F454
-	for <e@80x24.org>; Thu, 25 Oct 2018 23:43:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5DF1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 23:53:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727570AbeJZISU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 04:18:20 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51490 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727551AbeJZISU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 04:18:20 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 143-v6so3121352wmf.1
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 16:43:40 -0700 (PDT)
+        id S1727579AbeJZI2A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 04:28:00 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:45640 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727574AbeJZI2A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 04:28:00 -0400
+Received: by mail-pf1-f202.google.com with SMTP id n9-v6so2942979pfg.12
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 16:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2kv7DDNLZvvlHMYMUfQJlVRtS/PU6HGf4lgifmEj2qU=;
-        b=VH4H9lF2lx2wXLoS3EuVY1vgo98KKacZveG415cUMGNDbgzR/mmX//oTa9GF7XUmwV
-         E0ogPRyANrBTWkJMgf8Rwsbit2DngUC0SfsYEp2vAiEeucc2pXEHRc/7E6+I8TKMIg6i
-         fNtXGHCLVZvvU91Edp10jqbkJ4iUVh8YSfLUlEdgQ/mfCF4zgaoP5d7po16B8PuHsG5f
-         xzBhmY7gUsZK0AYkFztzxZQY92On9mmU+V6p1xatCjywCu7Vb3DK4lTzaRz+UMr8Giui
-         JDihbzOXANjmuYMRnogPT9indQRYQLs3Kbu7ap02owGdpw/TKcCB4oYfj2u8ydw48qvA
-         8Cew==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=JeH/UcJKwUtCnULmbSC1yPpHdzftiQA9Mnym+PkMwSg=;
+        b=LR9ZghLR5TXKKXe4wJOpCp8JzAt38BsUc9NAwhgEKHErbFGnqiftaPh0GWN2XRtJnw
+         BobihVxvVzka1Z7Vm8R8Fw6w2RfrxeuHLUulDc0P/sV70XYehkNhK7puZBRosYbRxKVQ
+         pWU6IG5k/ve5Mq+j3BZcAY7AI5UM2heaLTHB8WBaZb8bgAfC2PCJo9E0q6iqGGHPr8yi
+         UDD4zjqCIrTyd7B+0IP0r5g/V9jpiMelTrgxHxCRZZr8AMwii/BWfH/ri60hnTQDD2C0
+         ihmdsK0WmVfS4XEY8a20roImtfEqyWy/EFvu0FrbFsZrvmu/p2CSBIHNlsRCTSAwwLqw
+         Ilbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2kv7DDNLZvvlHMYMUfQJlVRtS/PU6HGf4lgifmEj2qU=;
-        b=aQeK/wQpt6pfxG2rKeeGDD+V+g1oyM34AXdxCNeeBmzQsQcplxs78lYSn5SPCnEzFL
-         osB7mS1k74HS+BrdTa4Btb0hUb3HsxV20M1yZBIAx/um0b2tK9r2aQiqcmtGq61Boepz
-         kmeV66J4A5U4HNuMfRQEjE2sBW/uPqvj4sLekTSvlCt1gpGj0hZLtmoAfgaVC4kIUyo3
-         6KqI8+v44xPVugY59WSxV5HP4SRmfa8jujKGpHo1vMllGeCbkk7XZKN3cHwKE6yfAn4R
-         lVzVt01hbwbFIuBaW0QTo930QmH8EHGrORE6UwkCz1WTWsH1lTrFoQorNu2HJ1cEAuvk
-         vxjA==
-X-Gm-Message-State: AGRZ1gJYh7mGlihEHkcbaPhFPMIXse0u8TQcVOgbXDjpCbxvGEssB3kx
-        LFJQtWwgWtMwJVnASf66zgSkU/utIxA=
-X-Google-Smtp-Source: AJdET5etKGvxIj+RCKG9Z5EBwhD6a32NIMdWvclywlJJLG/CJnxLb7uFfR4cBfORFmgFYny1KfzgKA==
-X-Received: by 2002:a1c:e102:: with SMTP id y2-v6mr3499624wmg.141.1540511019180;
-        Thu, 25 Oct 2018 16:43:39 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v2-v6sm2618546wru.17.2018.10.25.16.43.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 16:43:38 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Andreas Gruenbacher <agruenba@redhat.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Clear --exclude list after 'git rev-parse --all'
-References: <20181023191758.15138-1-agruenba@redhat.com>
-        <xmqqefcgotbk.fsf@gitster-ct.c.googlers.com>
-        <CAHc6FU6YLeTBU02k-Md7+H5kJDq2RXZmAXMaq8ZkiuSmZFXbwQ@mail.gmail.com>
-        <xmqqr2gfn1cy.fsf@gitster-ct.c.googlers.com>
-        <CAHc6FU5CpBNpzfPs0hkNm9Hw1iYnALvUY4WL1z=sPVT10fq+zw@mail.gmail.com>
-        <20181025104542.GA14455@sigill.intra.peff.net>
-Date:   Fri, 26 Oct 2018 08:43:37 +0900
-In-Reply-To: <20181025104542.GA14455@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 25 Oct 2018 06:45:43 -0400")
-Message-ID: <xmqqtvl9fv86.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=JeH/UcJKwUtCnULmbSC1yPpHdzftiQA9Mnym+PkMwSg=;
+        b=jpZyyFxkj4q6NsPit4efsLXU/JK5F67w71ftzBzo0d9tPBny3P3Hvw7rnwgXB67WRQ
+         vvCzC+MQwkl+PJHUrNGszFqcC3f1GcMgLiPtO3Uu8hj4sYhTPmvOyVd1a3KWRtqVK/Nm
+         vmixbjXz/FWmtSd/NkFlcMr+L9C7NVSNDqiPeROX6BfVnLaRvSAdChDIIzG95rVAfKKn
+         npU9oYsVNFr0PhdmNnmIo/lUjyDv6QZmp3ctXkLHUoq9VR/nxK4hsttYS/BquHmE2SIj
+         iwRgMHQefrJKEssBE9ir2GMQFgTmC2jz123RFzMeY8Mav+kOFrpRH39L7e6wn6mZo4k5
+         iptQ==
+X-Gm-Message-State: AGRZ1gLhpabeS/Owf6mL5sUrg1kzWVVmOEVVQp2V0AvhpjBdCrVuSxYc
+        y3gLZ25mPbQXJtXlVTs5uPGYQfgaLXBexpGMhKj37vUddJsinUy9Pj5ngTk6/8wgfaLD9XIiz6w
+        MUdIX6UxMCxaGNHMnLxkGFP326WVHvEydX4mWBO5tlvjJmDzES5Qj/CU9cUA=
+X-Google-Smtp-Source: AJdET5fxbjLnrmZ84FQmhcg11FZHA3BHukN1PaUiRYeoP/UdKTvlT8yrYsm++WltCTFdIVUVndN+mSSI1RMR
+X-Received: by 2002:a63:1106:: with SMTP id g6-v6mr853497pgl.58.1540511598775;
+ Thu, 25 Oct 2018 16:53:18 -0700 (PDT)
+Date:   Thu, 25 Oct 2018 16:53:14 -0700
+In-Reply-To: <20181023215745.245333-1-matvore@google.com>
+Message-Id: <20181025235314.63495-1-matvore@google.com>
+Mime-Version: 1.0
+References: <20181023215745.245333-1-matvore@google.com>
+X-Mailer: git-send-email 2.19.1.568.g152ad8e336-goog
+Subject: [PATCH v2] list-objects.c: don't segfault for missing cmdline objects
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>, gitster@pobox.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com,
+        ramsay@ramsayjones.plus.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+When a command is invoked with both --exclude-promisor-objects,
+--objects-edge-aggressive, and a missing object on the command line,
+the rev_info.cmdline array could get a NULL pointer for the value of
+an 'item' field. Prevent dereferencing of a NULL pointer in that
+situation.
 
-> An easy test is:
->
->   $ git rev-list --no-walk --exclude='*' --all --all
->   3289ca716320457af5d2dd550b716282ad22da11
->   ...a bunch of other tip commits...
->
->   $ git rev-parse --exclude='*' --all --all
->   [no output, but it should print those same tip commits]
+There are a few other places in the code where rev_info.cmdline is read
+and the code doesn't handle NULL objects, but I couldn't prove to myself
+that any of them needed to change except this one (since it may not
+actually be possible to reach the other code paths with
+rev_info.cmdline[] set to NULL).
 
-I actually was hoping to see a test that contrasts "--all" (which
-lacks the alleged "clear exclude" bug) with another option that does
-have the "clear exclude", both used with rev-parse, i.e.
+Signed-off-by: Matthew DeVore <matvore@google.com>
+---
+ list-objects.c           | 3 ++-
+ t/t0410-partial-clone.sh | 6 +++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-    $ git rev-parse --exclude='*' --glob='*' --glob='*'
-    ... all the ref tips ...
-    $ git rev-parse --exclude='*' --all --all
-    ... ought to be equivalent, but is empty due to the bug ...
-
-would have been a good demonstration that shows what bug we are
-fixing d(and would have been a good test to accompany the patch.
-
-
-
-
-
+diff --git a/list-objects.c b/list-objects.c
+index c41cc80db5..27ed2c6cab 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -245,7 +245,8 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
+ 		for (i = 0; i < revs->cmdline.nr; i++) {
+ 			struct object *obj = revs->cmdline.rev[i].item;
+ 			struct commit *commit = (struct commit *)obj;
+-			if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
++			if (!obj || obj->type != OBJ_COMMIT ||
++			    !(obj->flags & UNINTERESTING))
+ 				continue;
+ 			mark_tree_uninteresting(revs->repo,
+ 						get_commit_tree(commit));
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index ba3887f178..e52291e674 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -366,7 +366,11 @@ test_expect_success 'rev-list accepts missing and promised objects on command li
+ 
+ 	git -C repo config core.repositoryformatversion 1 &&
+ 	git -C repo config extensions.partialclone "arbitrary string" &&
+-	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
++
++	git -C repo rev-list --objects \
++		--exclude-promisor-objects "$COMMIT" "$TREE" "$BLOB" &&
++	git -C repo rev-list --objects-edge-aggressive \
++		--exclude-promisor-objects "$COMMIT" "$TREE" "$BLOB"
+ '
+ 
+ test_expect_success 'gc repacks promisor objects separately from non-promisor objects' '
+-- 
+2.19.1.568.g152ad8e336-goog
 
