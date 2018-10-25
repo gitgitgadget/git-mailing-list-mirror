@@ -2,118 +2,279 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6E021F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 05:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B7421F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 05:51:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727284AbeJYOSZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 10:18:25 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:46906 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726633AbeJYOSZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 10:18:25 -0400
-Received: by mail-qt1-f194.google.com with SMTP id c16-v6so8469358qtj.13
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 22:47:15 -0700 (PDT)
+        id S1726909AbeJYOXD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 10:23:03 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:39721 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726652AbeJYOXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 10:23:03 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c25-v6so3637562pfe.6
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 22:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NuLhRjzjQTOesMWnHeMbD7HlKJmlxENkkR+aekomX4U=;
-        b=oU1kT9FOTdyedPxdTew3rALYINhjySSq2zkt7EHJbtdVMFylguXjdUnaRdhEXwJ+oB
-         6DfozMlQoOKgykHEay5i5We8ElvEeMqKc/2Ewdw4noHL354u/M6pQ56DHhUa65rhY4V6
-         +v1fzqVcaHzP7Wo6KZEFN6JbqSQX9yJsvNbVSMZktEm8dN9yhQMnpj6a4JPLBgtFy7/2
-         sODnqnrXaa9dTTCPqHC8eNwDfBltMS2Cw3xymhRoiQ4TTRDTstZkguKkBSw1HTcgBTJH
-         s5tJkZSKUz1+KP9ncD1lNwdA2C6tWIN6KyI7FmganIXb8ya7s4k3FzXj4QiT5BiEnBlJ
-         zGoA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=aVVsLAAOsZGLGXbvGU1nD3XDgml9dal/mLr+mJj6tUY=;
+        b=WvfsT66Mkls7kl3LaUIlAyshEe4AfuPhUGXkDgVjzaYabqMFxuqakG3irktaXQwE+K
+         uDChg3CV/uxyOVsWRXhpa8Mf9yVDmawwFZXKBRTiq+LGzboJACsNe7l1EOFuc6Xzyiab
+         akSUCQPzdHZKspgxMvd5iv7UXRQXNVwf2EtiP/FzLcZMQfNSixh5ILyUi6qJDhczpDw3
+         LW2SbL/D+NYSYziF5yaVJlC1jdwheKYcAPJRZ5lfOstNMoxbv7S9weuk/Q/pMlrZAk2L
+         HpR2/n9UfJWqCvD1j/3uOiCmYyeR6+hd9dgeKvH0GyIx47pnc/SJfWEtErOAArk25Roh
+         lbvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NuLhRjzjQTOesMWnHeMbD7HlKJmlxENkkR+aekomX4U=;
-        b=Yhg40rFOxOX+nICfWg4OEgX/BDYa5zTEBBmoMQ+D05zX+yfIlvkdj6iaLOhEeDlyv4
-         pDly8lKf++xJFuOuuOG5TB7g3GH50WTwjm3LHx8YifKyYAQeEgzjfOmK9c+gSGEio+u2
-         P6QFG6HqX2wVQkjicyhk4DMC+9QtezqunSb8tUBOIgJ52c8TIRZpJ7tHZXQvvFOYwU5/
-         +78satdUmOtH4DNHnlwY8bRaTePFU2WqVN+tLGOMBNLjAs8QvoxFvl9LQ90SNYGSksE4
-         tbMMg/AAx1sdhWkqti8dLhSy79sIOUdfZhxrIb9kcDdluqWZ6Nn5SYIowiGNF1MWhtUi
-         sl7g==
-X-Gm-Message-State: AGRZ1gJJnDlZqao4bhW7QCMCIIYZ1GM27+Dmm+endTZyNJSdgEDtZD6X
-        XlSA9LmSCfvpUw3XnsXrROyBIYpt5Vooqjhrz1o=
-X-Google-Smtp-Source: AJdET5dXMUHXRE5oO1EHvNOuuPofLfNyxDCCaQ/9ZG8FVJd/PZOIeX4orQxr5/VJs1seY203EIO+B0f5khq/spZKJQs=
-X-Received: by 2002:ac8:740a:: with SMTP id p10-v6mr171525qtq.65.1540446434962;
- Wed, 24 Oct 2018 22:47:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20181024063904.36096-1-nbelakovski@gmail.com> <CAPig+cRN_0VVe6dzhnmU73pgo-8ncPzmOx4bRrTBVvReLW6RfQ@mail.gmail.com>
-In-Reply-To: <CAPig+cRN_0VVe6dzhnmU73pgo-8ncPzmOx4bRrTBVvReLW6RfQ@mail.gmail.com>
-From:   Nickolai Belakovski <nbelakovski@gmail.com>
-Date:   Wed, 24 Oct 2018 22:46:48 -0700
-Message-ID: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
-Subject: Re: [PATCH] worktree: populate lock_reason in get_worktrees and light
- refactor/cleanup in worktree files
-To:     sunshine@sunshineco.com
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Michael Rappazzo <rappazzo@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references;
+        bh=aVVsLAAOsZGLGXbvGU1nD3XDgml9dal/mLr+mJj6tUY=;
+        b=fL0sRpjQoEQQjpqHHTt23J9EXLUYuM1KdTVxabwDtivhet2fxjY5LHa/+AOaEhZopp
+         g+l1W7X1SV0jcIP946eYr/WeRPdguOuQitb9MMGNhXzzDhAAvyhRWI3oBBmluR3js4s+
+         eIKgbphHd72cSwOC+RghUWlTzk+49XNdh/LONdnKBw7YkxyiCCX4mzyg1I9hfGuocZpl
+         S/ji3KWJQdIknW5b5Ajuf+VlLAnVjGlQihcdZbBkHroROgqqYIYrV0b71qjTh3OxLTPZ
+         h7Uk/XhzpYOTzso2tg7tPdpLxmZ8XYvVZYX7nPXTZcq2Pfv9/FUYhPMj2PhfURt7yvIU
+         LyKg==
+X-Gm-Message-State: AGRZ1gLsLh7zUo0OSBTpOYo5bA66mfUuNQrHZRxDWVW+bPZFG7c6L21q
+        29EoEq0EcGk6UbtVnLXrGWHaD0HP
+X-Google-Smtp-Source: AJdET5daXFbCGlPmO3io6su3xRxWK9EXDt7rJ6/WRclRsPy7LVWNhE+b0+iACyS+de2wIqPW+bDvvg==
+X-Received: by 2002:a63:aa48:: with SMTP id x8-v6mr184484pgo.87.1540446712777;
+        Wed, 24 Oct 2018 22:51:52 -0700 (PDT)
+Received: from localhost.localdomain (cpe-23-241-200-74.socal.res.rr.com. [23.241.200.74])
+        by smtp.gmail.com with ESMTPSA id n17-v6sm7813289pfj.84.2018.10.24.22.51.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 24 Oct 2018 22:51:52 -0700 (PDT)
+From:   nbelakovski@gmail.com
+To:     git@vger.kernel.org
+Cc:     Nickolai Belakovski <nbelakovski@gmail.com>
+Subject: [PATCH] worktree: refactor lock_reason_valid and lock_reason to be more sensible
+Date:   Wed, 24 Oct 2018 22:51:42 -0700
+Message-Id: <20181025055142.38077-1-nbelakovski@gmail.com>
+X-Mailer: git-send-email 2.14.2
+In-Reply-To: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
+References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
+In-Reply-To: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
+References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The motivation for the change is some work that I'm doing to add a
-worktree atom in ref-filter.c. I wanted that atom to be able to access
-all fields of the worktree struct and noticed that lock_reason wasn't
-getting populated so I figured I'd go and fix that.
+From: Nickolai Belakovski <nbelakovski@gmail.com>
 
-I figured that since get_worktrees is already hitting the filesystem
-for the directory it wouldn't matter much if it also went and got the
-lock reason.
+lock_reason_valid is renamed to is_locked and lock_reason is removed as
+a field of the worktree struct. Lock reason can be obtained instead by a
+standalone function.
 
-Reviewing this work in the context of your feedback and Junio's
-previous comments, I think it makes sense to only have a field in the
-struct indicating whether or not the worktree is locked, and have a
-separate function for getting the reason. Since the only cases in
-which the reason is retrieved in the current codebase are cases where
-the program immediately dies, caching seems a moot point. I'll send an
-updated patch just after this message.
+This is done in order to make the worktree struct more intuitive when it
+is used elsewhere in the codebase.
 
-Thanks for the feedback, happy to receive more.
-On Wed, Oct 24, 2018 at 1:11 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Wed, Oct 24, 2018 at 2:39 AM <nbelakovski@gmail.com> wrote:
-> > lock_reason is now populated during the execution of get_worktrees
-> >
-> > is_worktree_locked has been simplified, renamed, and changed to internal
-> > linkage. It is simplified to only return the lock reason (or NULL in case
-> > there is no lock reason) and to not have any side effects on the inputs.
-> > As such it made sense to rename it since it only returns the reason.
-> >
-> > Since this function was now being used to populate the worktree struct's
-> > lock_reason field, it made sense to move the function to internal
-> > linkage and have callers refer to the lock_reason field. The
-> > lock_reason_valid field was removed since a NULL/non-NULL value of
-> > lock_reason accomplishes the same effect.
-> >
-> > Some unused variables within worktree source code were removed.
->
-> Thanks for the submission.
->
-> One thing which isn't clear from this commit message is _why_ this
-> change is desirable at this time, aside from the obvious
-> simplification of the code and client interaction (or perhaps those
-> are the _why_?).
->
-> Although I had envisioned populating the "reason" field greedily in
-> the way this patch does, not everyone agrees that doing so is
-> desirable. In particular, Junio argued[1,2] for populating it lazily,
-> which accounts for the current implementation. That's why I ask about
-> the _why_ of this change since it will likely need to be justified in
-> a such a way to convince Junio to change his mind.
->
-> Thanks.
->
-> [1]: https://public-inbox.org/git/xmqq8tyq5czn.fsf@gitster.mtv.corp.google.com/
-> [2]: https://public-inbox.org/git/xmqq4m9d0w6v.fsf@gitster.mtv.corp.google.com/
+Some unused variables are cleaned up as well.
+
+Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
+---
+ builtin/worktree.c | 16 ++++++++--------
+ worktree.c         | 55 ++++++++++++++++++++++++++++--------------------------
+ worktree.h         |  8 +++-----
+ 3 files changed, 40 insertions(+), 39 deletions(-)
+
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 41e771439..844789a21 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -634,8 +634,8 @@ static int lock_worktree(int ac, const char **av, const char *prefix)
+ 	if (is_main_worktree(wt))
+ 		die(_("The main working tree cannot be locked or unlocked"));
+ 
+-	old_reason = is_worktree_locked(wt);
+-	if (old_reason) {
++	if (wt->is_locked) {
++		old_reason = worktree_locked_reason(wt);
+ 		if (*old_reason)
+ 			die(_("'%s' is already locked, reason: %s"),
+ 			    av[0], old_reason);
+@@ -666,7 +666,7 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+ 		die(_("'%s' is not a working tree"), av[0]);
+ 	if (is_main_worktree(wt))
+ 		die(_("The main working tree cannot be locked or unlocked"));
+-	if (!is_worktree_locked(wt))
++	if (!wt->is_locked)
+ 		die(_("'%s' is not locked"), av[0]);
+ 	ret = unlink_or_warn(git_common_path("worktrees/%s/locked", wt->id));
+ 	free_worktrees(worktrees);
+@@ -734,8 +734,8 @@ static int move_worktree(int ac, const char **av, const char *prefix)
+ 
+ 	validate_no_submodules(wt);
+ 
+-	reason = is_worktree_locked(wt);
+-	if (reason) {
++	if (wt->is_locked) {
++		reason = worktree_locked_reason(wt);
+ 		if (*reason)
+ 			die(_("cannot move a locked working tree, lock reason: %s"),
+ 			    reason);
+@@ -860,11 +860,11 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
+ 		die(_("'%s' is not a working tree"), av[0]);
+ 	if (is_main_worktree(wt))
+ 		die(_("'%s' is a main working tree"), av[0]);
+-	reason = is_worktree_locked(wt);
+-	if (reason) {
++	if (wt->is_locked) {
++		reason = worktree_locked_reason(wt);
+ 		if (*reason)
+ 			die(_("cannot remove a locked working tree, lock reason: %s"),
+-			    reason);
++				reason);
+ 		die(_("cannot remove a locked working tree"));
+ 	}
+ 	if (validate_worktree(wt, &errmsg, WT_VALIDATE_WORKTREE_MISSING_OK))
+diff --git a/worktree.c b/worktree.c
+index 97cda5f97..a3082d19d 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -14,7 +14,6 @@ void free_worktrees(struct worktree **worktrees)
+ 		free(worktrees[i]->path);
+ 		free(worktrees[i]->id);
+ 		free(worktrees[i]->head_ref);
+-		free(worktrees[i]->lock_reason);
+ 		free(worktrees[i]);
+ 	}
+ 	free (worktrees);
+@@ -41,13 +40,29 @@ static void add_head_info(struct worktree *wt)
+ 		wt->is_detached = 1;
+ }
+ 
++
++/**
++ * Return 1 if the worktree is locked, 0 otherwise
++ */
++static int is_worktree_locked(const struct worktree *wt)
++{
++	struct strbuf path = STRBUF_INIT;
++	int locked_file_exists;
++
++	assert(!is_main_worktree(wt));
++
++	strbuf_addstr(&path, worktree_git_path(wt, "locked"));
++	locked_file_exists = file_exists(path.buf);
++	strbuf_release(&path);
++	return locked_file_exists;
++}
++
+ /**
+  * get the main worktree
+  */
+ static struct worktree *get_main_worktree(void)
+ {
+ 	struct worktree *worktree = NULL;
+-	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf worktree_path = STRBUF_INIT;
+ 	int is_bare = 0;
+ 
+@@ -56,14 +71,11 @@ static struct worktree *get_main_worktree(void)
+ 	if (is_bare)
+ 		strbuf_strip_suffix(&worktree_path, "/.");
+ 
+-	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+-
+ 	worktree = xcalloc(1, sizeof(*worktree));
+ 	worktree->path = strbuf_detach(&worktree_path, NULL);
+ 	worktree->is_bare = is_bare;
+ 	add_head_info(worktree);
+ 
+-	strbuf_release(&path);
+ 	strbuf_release(&worktree_path);
+ 	return worktree;
+ }
+@@ -89,12 +101,10 @@ static struct worktree *get_linked_worktree(const char *id)
+ 		strbuf_strip_suffix(&worktree_path, "/.");
+ 	}
+ 
+-	strbuf_reset(&path);
+-	strbuf_addf(&path, "%s/worktrees/%s/HEAD", get_git_common_dir(), id);
+-
+ 	worktree = xcalloc(1, sizeof(*worktree));
+ 	worktree->path = strbuf_detach(&worktree_path, NULL);
+ 	worktree->id = xstrdup(id);
++	worktree->is_locked = is_worktree_locked(worktree);
+ 	add_head_info(worktree);
+ 
+ done:
+@@ -231,27 +241,20 @@ int is_main_worktree(const struct worktree *wt)
+ 	return !wt->id;
+ }
+ 
+-const char *is_worktree_locked(struct worktree *wt)
++const char *worktree_locked_reason(const struct worktree *wt)
+ {
+-	assert(!is_main_worktree(wt));
++	struct strbuf path = STRBUF_INIT;
++	struct strbuf lock_reason = STRBUF_INIT;
+ 
+-	if (!wt->lock_reason_valid) {
+-		struct strbuf path = STRBUF_INIT;
+-
+-		strbuf_addstr(&path, worktree_git_path(wt, "locked"));
+-		if (file_exists(path.buf)) {
+-			struct strbuf lock_reason = STRBUF_INIT;
+-			if (strbuf_read_file(&lock_reason, path.buf, 0) < 0)
+-				die_errno(_("failed to read '%s'"), path.buf);
+-			strbuf_trim(&lock_reason);
+-			wt->lock_reason = strbuf_detach(&lock_reason, NULL);
+-		} else
+-			wt->lock_reason = NULL;
+-		wt->lock_reason_valid = 1;
+-		strbuf_release(&path);
+-	}
++	assert(!is_main_worktree(wt));
++	assert(wt->is_locked);
+ 
+-	return wt->lock_reason;
++	strbuf_addstr(&path, worktree_git_path(wt, "locked"));
++	if (strbuf_read_file(&lock_reason, path.buf, 0) < 0)
++		die_errno(_("failed to read '%s'"), path.buf);
++	strbuf_trim(&lock_reason);
++	strbuf_release(&path);
++	return strbuf_detach(&lock_reason, NULL);
+ }
+ 
+ /* convenient wrapper to deal with NULL strbuf */
+diff --git a/worktree.h b/worktree.h
+index df3fc30f7..6717287e8 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -10,12 +10,11 @@ struct worktree {
+ 	char *path;
+ 	char *id;
+ 	char *head_ref;		/* NULL if HEAD is broken or detached */
+-	char *lock_reason;	/* internal use */
+ 	struct object_id head_oid;
+ 	int is_detached;
+ 	int is_bare;
+ 	int is_current;
+-	int lock_reason_valid;
++	int is_locked;
+ };
+ 
+ /* Functions for acting on the information about worktrees. */
+@@ -57,10 +56,9 @@ extern struct worktree *find_worktree(struct worktree **list,
+ extern int is_main_worktree(const struct worktree *wt);
+ 
+ /*
+- * Return the reason string if the given worktree is locked or NULL
+- * otherwise.
++ * Return the reason string if the given worktree is locked or die
+  */
+-extern const char *is_worktree_locked(struct worktree *wt);
++extern const char *worktree_locked_reason(const struct worktree *wt);
+ 
+ #define WT_VALIDATE_WORKTREE_MISSING_OK (1 << 0)
+ 
+-- 
+2.14.2
+
