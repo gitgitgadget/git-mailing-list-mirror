@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3D1C1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 02:40:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE3F61F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 02:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbeJYLLF (ORCPT <rfc822;e@80x24.org>);
+        id S1727384AbeJYLLF (ORCPT <rfc822;e@80x24.org>);
         Thu, 25 Oct 2018 07:11:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52368 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52372 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727221AbeJYLLD (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 25 Oct 2018 07:11:03 -0400
+        by vger.kernel.org with ESMTP id S1727333AbeJYLLE (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 25 Oct 2018 07:11:04 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e0bc:761d:9be1:27bc])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C752F61B7D;
-        Thu, 25 Oct 2018 02:40:20 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B423761B85;
+        Thu, 25 Oct 2018 02:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540435221;
-        bh=eq6uz2zRn1FRia7VIpcK09IaJzAI1LgMumjeI1hEKmw=;
+        s=default; t=1540435222;
+        bh=j/dn2Gxt/op+PVZAowV1ZjfLEWkrEw13ZXMQQQUwb50=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=FFgsAq9Sz2qnwWTxbmPVA+OGCXU7chys99sA99Cbnu36xngadtFM95v3Cv4vYADJ1
-         5pvBRNM8CwfMKcgxk0GhmtqB/V4OZK4QG7BiRpmAylIexWa5ZNKNUZ2BjuTFJSF6EN
-         GmCgMq899140FW8ti8q4JSnqwleiVhqVmMZ9vI6z2dEIjroZeoKaLgKPdNFOyeRgTU
-         NjOA/0o1qb8R7wxReVMI8QZEFgu8R+L9ZtHf2M/lXw5vxaCjZDZ7cgQXFZVH2OAslS
-         EBP8k0LrjhlygpVvKFs00gzRAZ2NiDV2Uluta2EKkTpd9pk0QQwL3NWrN9BJ5X3ndF
-         v80XjBUIB5C8AItpWodSFLXiltPcuqXrSGQm5TJFLFQb8+0sCkxgS822JiE1bvDqTl
-         65L/RbzJbfNdgcaZ7u9WQ2iVpGtZiuqziWvCW7C7mvTZa5V2kUKwRafTVuOQ9oCscL
-         axAiWYR3pMSHszzltcw3rpC4I5TSWl/ocng0KOSNpO8U2ruaEuM
+        b=P1Mas0atiweizI6evq8GUPnMGnk2QlywFT6Spn6sqLUyVonRPdysSZ3zJX+d45F93
+         x1EMP5z5gam9efqqX+Bj+1FaLR6xHZogyEYfkVKv8UtxC0SrKTspd4WBcyzbnWJKak
+         Y01ggn0Lw9pw0SMm5NPzuwRpm+2Ez7aNiXO4iJMWncoRoNQwdbkcDm2TswxTiXXKEi
+         /OgKCF11efOqjbQJxtpaBBkvvTzIfZz5TEesFXNawWDkqEvWM+qy7iLk/Xb2VgvXMN
+         tk0F4D5f8I/Q3iFrvuFLoC7rmbynh3q2q7JR2iPk45685E1CJzRypcJnVgo+cDOMDx
+         FQM2Eej4uRXPQx/fyw3+Ma+WL5YjQie06rq6QG+D6NZhzCzRCy3ObK5/cv+uReR3Fj
+         pC4W+00iUMogG/QTQGHJNprsHJlxdZ9Ee2HTiC+HblE2IV/YfJgwfB15XlP1DYlgug
+         RLf6Kclyis4O3j7yVOWbvUzDrcWXBKxSuEk+X3y/XcoPWrZ8xnK
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 07/12] sha1-file: add a constant for hash block size
-Date:   Thu, 25 Oct 2018 02:40:00 +0000
-Message-Id: <20181025024005.154208-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 08/12] t/helper: add a test helper to compute hash speed
+Date:   Thu, 25 Oct 2018 02:40:01 +0000
+Message-Id: <20181025024005.154208-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <20181025024005.154208-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -55,67 +55,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is one place we need the hash algorithm block size: the HMAC code
-for push certs.  Expose this constant in struct git_hash_algo and expose
-values for SHA-1 and for the largest value of any hash.
+Add a utility (which is less for the testsuite and more for developers)
+that can compute hash speeds for whatever hash algorithms are
+implemented.  This allows developers to test their personal systems to
+determine the performance characteristics of various algorithms.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h     | 4 ++++
- hash.h      | 3 +++
- sha1-file.c | 2 ++
- 3 files changed, 9 insertions(+)
+ Makefile                   |  1 +
+ t/helper/test-hash-speed.c | 61 ++++++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c       |  1 +
+ t/helper/test-tool.h       |  1 +
+ 4 files changed, 64 insertions(+)
+ create mode 100644 t/helper/test-hash-speed.c
 
-diff --git a/cache.h b/cache.h
-index bab8e8964f..9e5d1dd85a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -45,10 +45,14 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
- /* The length in bytes and in hex digits of an object name (SHA-1 value). */
- #define GIT_SHA1_RAWSZ 20
- #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
-+/* The block size of SHA-1. */
-+#define GIT_SHA1_BLKSZ 64
- 
- /* The length in byte and in hex digits of the largest possible hash value. */
- #define GIT_MAX_RAWSZ GIT_SHA1_RAWSZ
- #define GIT_MAX_HEXSZ GIT_SHA1_HEXSZ
-+/* The largest possible block size for any supported hash. */
-+#define GIT_MAX_BLKSZ GIT_SHA1_BLKSZ
- 
- struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
-diff --git a/hash.h b/hash.h
-index 80881eea47..1bcf7ab6fd 100644
---- a/hash.h
-+++ b/hash.h
-@@ -81,6 +81,9 @@ struct git_hash_algo {
- 	/* The length of the hash in hex characters. */
- 	size_t hexsz;
- 
-+	/* The block size of the hash. */
-+	size_t blksz;
+diff --git a/Makefile b/Makefile
+index 81dc9ac819..68169a7abb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -716,6 +716,7 @@ TEST_BUILTINS_OBJS += test-example-decorate.o
+ TEST_BUILTINS_OBJS += test-genrandom.o
+ TEST_BUILTINS_OBJS += test-hash.o
+ TEST_BUILTINS_OBJS += test-hashmap.o
++TEST_BUILTINS_OBJS += test-hash-speed.o
+ TEST_BUILTINS_OBJS += test-index-version.o
+ TEST_BUILTINS_OBJS += test-json-writer.o
+ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+diff --git a/t/helper/test-hash-speed.c b/t/helper/test-hash-speed.c
+new file mode 100644
+index 0000000000..432233c7f0
+--- /dev/null
++++ b/t/helper/test-hash-speed.c
+@@ -0,0 +1,61 @@
++#include "test-tool.h"
++#include "cache.h"
 +
- 	/* The hash initialization function. */
- 	git_hash_init_fn init_fn;
- 
-diff --git a/sha1-file.c b/sha1-file.c
-index 7e9dedc744..9bdd04ea45 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -90,6 +90,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		0x00000000,
- 		0,
- 		0,
-+		0,
- 		git_hash_unknown_init,
- 		git_hash_unknown_update,
- 		git_hash_unknown_final,
-@@ -102,6 +103,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		0x73686131,
- 		GIT_SHA1_RAWSZ,
- 		GIT_SHA1_HEXSZ,
-+		GIT_SHA1_BLKSZ,
- 		git_hash_sha1_init,
- 		git_hash_sha1_update,
- 		git_hash_sha1_final,
++#define NUM_SECONDS 3
++
++static inline void compute_hash(const struct git_hash_algo *algo, git_hash_ctx *ctx, uint8_t *final, const void *p, size_t len)
++{
++	algo->init_fn(ctx);
++	algo->update_fn(ctx, p, len);
++	algo->final_fn(final, ctx);
++}
++
++int cmd__hash_speed(int ac, const char **av)
++{
++	git_hash_ctx ctx;
++	unsigned char hash[GIT_MAX_RAWSZ];
++	clock_t initial, start, end;
++	unsigned bufsizes[] = { 64, 256, 1024, 8192, 16384 };
++	int i;
++	void *p;
++	const struct git_hash_algo *algo = NULL;
++
++	if (ac == 2) {
++		for (i = 1; i < GIT_HASH_NALGOS; i++) {
++			if (!strcmp(av[1], hash_algos[i].name)) {
++				algo = &hash_algos[i];
++				break;
++			}
++		}
++	}
++	if (!algo)
++		die("usage: test-tool hash-speed algo_name");
++
++	/* Use this as an offset to make overflow less likely. */
++	initial = clock();
++
++	printf("algo: %s\n", algo->name);
++
++	for (i = 0; i < ARRAY_SIZE(bufsizes); i++) {
++		unsigned long j, kb;
++		double kb_per_sec;
++		p = xcalloc(1, bufsizes[i]);
++		start = end = clock() - initial;
++		for (j = 0; ((end - start) / CLOCKS_PER_SEC) < NUM_SECONDS; j++) {
++			compute_hash(algo, &ctx, hash, p, bufsizes[i]);
++
++			/*
++			 * Only check elapsed time every 128 iterations to avoid
++			 * dominating the runtime with system calls.
++			 */
++			if (!(j & 127))
++				end = clock() - initial;
++		}
++		kb = j * bufsizes[i];
++		kb_per_sec = kb / (1024 * ((double)end - start) / CLOCKS_PER_SEC);
++		printf("size %u: %lu iters; %lu KiB; %0.2f KiB/s\n", bufsizes[i], j, kb, kb_per_sec);
++		free(p);
++	}
++
++	exit(0);
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 6b5836dc1b..e009c8186d 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -20,6 +20,7 @@ static struct test_cmd cmds[] = {
+ 	{ "example-decorate", cmd__example_decorate },
+ 	{ "genrandom", cmd__genrandom },
+ 	{ "hashmap", cmd__hashmap },
++	{ "hash-speed", cmd__hash_speed },
+ 	{ "index-version", cmd__index_version },
+ 	{ "json-writer", cmd__json_writer },
+ 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 29ac7b0b0d..19a7e8332a 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -16,6 +16,7 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
++int cmd__hash_speed(int argc, const char **argv);
+ int cmd__index_version(int argc, const char **argv);
+ int cmd__json_writer(int argc, const char **argv);
+ int cmd__lazy_init_name_hash(int argc, const char **argv);
