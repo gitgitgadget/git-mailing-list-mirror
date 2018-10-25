@@ -2,72 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C47A1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 05:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9A801F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 05:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbeJYOJJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 10:09:09 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40366 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726804AbeJYOJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 10:09:09 -0400
-Received: by mail-wm1-f65.google.com with SMTP id b203-v6so137796wme.5
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 22:38:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pyfdEKkQ7it6+vyWfTFc2J8rZfw4ok2mYGRGFY1Z0Zg=;
-        b=D+ij8jc2MJwKrRShCJLPA9CZIkRKmjBYtwsJuGyWDRqRe1dD6/s32v08zPJyd197nC
-         cvpvm4fNSCrPJutnOLWciUAnxy1q/wLi8QsbVo49R06HOHjp7mYujUOo0ziuRVzJrqZb
-         2oxxOXw8AMr0NKaHJR+yisXJsS0teiUF1i1zd4fWV3c98NjQLVG6wfJdNKGmhpLGb5UJ
-         O5w0u8rnzVe1bt0lXHCIQyRi62ahTHAwh9jxUGfG3wCjJzQx0qdHXx4EkDys2+mP6T9U
-         Wpa9+f5LDShEctsrfQJL0cmNhZtD9wgHah8FgJMpliPUOW475zIA3jyMD3l5bDLT8eUs
-         vaeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pyfdEKkQ7it6+vyWfTFc2J8rZfw4ok2mYGRGFY1Z0Zg=;
-        b=Acwz+UoKunGTSI5DB1PdpC8T3LRowH1KQj/EKFq14J70ZMRnbK7DGgjrpxpRMjYadh
-         h/YHEIqd1zR6rhkh418prDBaQFQkB/wJ/vVBbp0bSutPahkzLRkEXx/cerrmC3tNRmiM
-         Sl6XjcfGQ+U+7hzp9tRC9EuQS+3FINe+Wm2d40tipJNd3iyDNjCW4DgrcShDfUSIP/MT
-         UWEHW+CxJ83aRegRbf10L56CEisTEIs0S2UpKJfEg//FXNgbkYp/9CxWMvTvOCrWYe0N
-         kIxik+8KI6X4J8Fdh7lhbfek5JP3Kc+Bb/R5PM//5UPMm3nGtWTrKHB4cxNhRNCzBFQb
-         DjsA==
-X-Gm-Message-State: AGRZ1gI39U9rtMl/Fou9i8luf6E6qRhBrf8PcQqW8H0tuY9qtcCfM/Gz
-        oT13DtEwRsGbTb+421VOnB0jhL5QtZE=
-X-Google-Smtp-Source: AJdET5eGn09GrnM+lcNbnIhTLaack+jIcRUDXp9n2daACKVOD0G5zCU2qG1Q2eXOuhEta/YGI+M7kQ==
-X-Received: by 2002:a1c:287:: with SMTP id 129-v6mr274228wmc.52.1540445880196;
-        Wed, 24 Oct 2018 22:38:00 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z18-v6sm2087859wrh.33.2018.10.24.22.37.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Oct 2018 22:37:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "lhf635\@163.com" <lhf635@163.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: the opposite of .gitignore, whitelist
-References: <201810251039388653199@163.com>
-Date:   Thu, 25 Oct 2018 14:37:58 +0900
-In-Reply-To: <201810251039388653199@163.com> (lhf's message of "Thu, 25 Oct
-        2018 10:39:39 +0800")
-Message-ID: <xmqqh8hak2mh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727050AbeJYOLJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 10:11:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53802 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726804AbeJYOLJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 10:11:09 -0400
+Received: (qmail 23378 invoked by uid 109); 25 Oct 2018 05:40:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 25 Oct 2018 05:40:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13689 invoked by uid 111); 25 Oct 2018 05:39:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 25 Oct 2018 01:39:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2018 01:39:59 -0400
+Date:   Thu, 25 Oct 2018 01:39:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        jonathantanmy@google.com
+Subject: Re: New semantic patches vs. in-flight topics [was: Re: [PATCH
+ 00/19] Bring more repository handles into our code base]
+Message-ID: <20181025053959.GB11460@sigill.intra.peff.net>
+References: <20181016233550.251311-1-sbeller@google.com>
+ <20181022173935.GG30222@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181022173935.GG30222@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"lhf635@163.com" <lhf635@163.com> writes:
+On Mon, Oct 22, 2018 at 07:39:35PM +0200, SZEDER Gábor wrote:
 
-> I have a good idea, add a file to git that is the opposite of .gitignore...,
+> I don't really like how this or the previous RFC patch series deal
+> with semantic patches (or how some past patch series dealt with them,
+> for that matter), for various reasons:
+> [..]
 
-Do negative patterns in .gitignore file help without inventing
-anything new?
+I am a little late to this thread, but it really seems to me that the
+crux of the issue here:
+
+>   - 'make coccicheck' won't run clean (and the static analysis build
+>     job on Travis CI will fail) for all commits following adding the
+>     new semantic patches but before applying the resulting
+>     transformations.
+> 
+>   - These semantic patches interact badly with 'pu' and 'next',
+>     because those integration branches can contain topic branches
+>     adding new code that should be transformed by these semanic
+>     patches.  Consequently, 'make coccicheck' won't run clean and the
+>     static analysis build job will fail until all those topics reach
+>     'master', and the remaining transformations are applied on top.
+
+Is that we are considering it a failure for "pu" to have pending
+coccinelle patches. Are there any coccicheck transformations that aren't
+just "we prefer to do it like X instead of Y"?
+
+Changes that actually break things should be caught by the compiler
+(either by their nature, or because we take care to rename or change
+interfaces when making a semantic change to a function).
+
+I think that's getting at what you're saying here:
+
+>   - Is it really necessary to carry these semantic patches in-tree?
+>     Let me ellaborate.  There are basically two main use cases for
+>     semantic patches:
+> 
+>       - To avoid undesirable code patterns, e.g. we should not use
+> [...]
+>       - To perform one-off code transformations, e.g. to modify a
+
+I am mostly thinking of your first type here. And I think it makes sense
+for people to avoid submitting code that does not pass "make coccicheck"
+_as it was at the state of their branch_. But for cocci changes that are
+in flight at the same time as their branch, I do not see any need to
+strictly adhere to them. The code is "undesirable", not "wrong".
+
+For the second type, I agree that we do not necessarily need to carry
+them in-tree. Eventually the transformation happens, and nobody would
+use the "old" way because it doesn't work anymore. Problem solved.
+
+I do not mind carrying them for a while as a convenience to people who
+will need to fix up their topics in flight (or more likely to the
+maintainer, who will need to fixup the merge). But we should make sure
+not to forget to remove them when their usefulness has passed.
+
+Likewise, we should not forget to occasionally run "make coccicheck" on
+master to make sure people have a clean base to build on. If Junio is
+able to do that, then great. But other people can also do so and submit
+patches (to go on their respective topics, or to be a new mass-cleanup
+topic).
+
+I guess there is some lag there if Junio pushes out a master branch that
+fails coccicheck, because contributors may build on it before somebody
+gets around to fixing it.
+
+>         Having said that, it's certainly easier to double-check the
+>         resulting transformations when one can apply the semantic
+>         patches locally, and doing so is easier when the semantic
+>         patches are in tree than when they must be copy-pasted from a
+>         commit message.
+
+I've wondered if we could have a script that pulls a coccinelle snippet
+from a commit message and runs it. It may be a hassle to find the right
+commit, though (you'd start the procedure from "oops, my compile now
+seems broken; what was the change that I need to apply to adapt?").
+
+>   - A new semantic patch should be added as "pending", e.g. to the
+>     file 'the_repository.pending.cocci', together with the resulting
+>     transformations in the same commit.
+> 
+>     This way neither 'make coccicheck' nor the static analysis build
+>     job would complain in the topic branch or in the two integration
+>     branches.  And if they do complain, then we would know right away
+>     that they complain because of a well-established semantic patch.
+>     Yet, anyone interested could run 'make coccicheck-pending' to see
+>     where are we heading.
+
+OK, makes sense.
+
+>   - The author of the "pending" semanting patch should then keep an
+>     eye on already cooking topics: whether any of them contain new
+>     code that should be transformed, and how they progress to
+>     'master', and sending followup patch(es) with the remaining
+>     transformations when applicable.
+>     
+>     Futhermore, the author should also pay attention to any new topics
+>     that branch off after the "pending" semantic patch, and whether
+>     any of them introduce code to be transformed, warning their
+>     authors as necessary.
+
+This part seems tricky, though. There's a race condition between
+promoting the patch from pending to not-pending and other topics
+branching off. And remember that we do not always see other people's
+branches, which they may work on in private for a long time (though I
+suppose "when Junio applies it" is one effective cutoff).
+
+>   - Finally, after all the dust settled, the dev should follow up with
+>     a patch to:
+>     
+>       - promote the "penging" patch to '<name>.cocci', if its purpose
+>         is to avoid undesirable code patterns in the future, or
+>     
+>       - remove the semantic patch, if it was used in a one-off
+>         transformation.
+
+I'm not wild about leaving these loose ends that need to be tied up
+manually. It adds a lot of friction and effort.
+
+-Peff
