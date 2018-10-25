@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 831E71F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1D721F453
 	for <e@80x24.org>; Thu, 25 Oct 2018 02:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727330AbeJYLLA (ORCPT <rfc822;e@80x24.org>);
+        id S1727350AbeJYLLA (ORCPT <rfc822;e@80x24.org>);
         Thu, 25 Oct 2018 07:11:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52354 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52356 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727278AbeJYLLA (ORCPT
+        by vger.kernel.org with ESMTP id S1727189AbeJYLLA (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 25 Oct 2018 07:11:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e0bc:761d:9be1:27bc])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B971661B75;
-        Thu, 25 Oct 2018 02:40:16 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ACCC261B77;
+        Thu, 25 Oct 2018 02:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540435217;
-        bh=u4+Pp2zwto/n5XbIYrr2J3R2j56Bt30xMMNk33wPrgM=;
+        s=default; t=1540435218;
+        bh=JO47WrcxS6xqFOCuXQMVntBmXlG/shMi5Dj9ObgYzOU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=MP3qRga6uQtHUg5ytrmBeUGKcHlDdS1WTlSkw+48uCI1h4JL+1o3fERGicLPZJ/ph
-         38ZCLU84KohOwVtvvz5BMM9fWzil0KkFrCR60S4QYyD9dwiN4Gu3lBS1hYeC89Koxq
-         jGEkmQnV5J9CzZPbri8Frnh9P4dWz9dzJenouym9G3vo2tZWbRH4SwlZsgdOxt1hGc
-         6gARIOPlK8TbRKpOdKL0H9C36qYiSYsi/A7fA7OWu+pp2FbvL5HMz3Luz52hHDrAWa
-         JbTccQUXlONqwE+g3B8ZpJfEYqYNPbfkyk43dENvER1tgB860cAp++4qZbhISDhg82
-         BSEAM3lOjHXpQEDhzugvijlt9jyR3OOHfthQDIUZbV5qrWXsULkHYfxAQiUiPh7EO9
-         jJdh49dCD7U4sfNQuWHlfXqz7q28L+PyRmyRyn9da4qQb+uhOWF4Gtm1vhodcAyWmD
-         9xMoLZyIP6yqPKrltAwwYva81wN4y4Ypi7+74R0bwbY6EggJM2L
+        b=xuvzyvS26RsJV9N8yAtALNzsJKzXB3nMF8Vq4K59Kkzk4Cn8iORoWT23eJ7ExEBjS
+         rUG6WNLc5XWlClTzrG/HV1t4fiSjP1Ye5N5n3BILHlwgK6SjI9qwDCIDolIy6fdG3h
+         NIn+ikEm5PrfZ6Z+Cqo3eR9Ke7cws30Ltx/+cTsyaHYWMox/Mt6d+q7YRn9cq9j7+z
+         eK0jZ8bWGgUxcEkNHimASws9/VggmERpTiQAa07Rqwx1WeMJxCnAGzFrVCLAqdR6Ob
+         Esczlt1YqPYlzyPNe+rpH98XZiJ2sMwLHeyEkEUsgEXlQ2vJSBL652lS8fibuxNiju
+         ym0BeUmw0Xsb50BerGWrrx9Su3TCqEpyqZOw5l21mX5xwmuf9gpnZy/HBmGhiSANRa
+         AKk8cvHeHX2O0kUpBi0xbyWsl04slj9TR2Uos4XvytpmdMyTs5nna5yRk88WN6NwBN
+         RbJUuVEGqSNyYoCAsv04R2BFiKIdc+CH4GkXIZz03A69kVMhYEI
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 03/12] hex: introduce functions to print arbitrary hashes
-Date:   Thu, 25 Oct 2018 02:39:56 +0000
-Message-Id: <20181025024005.154208-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 04/12] cache: make hashcmp and hasheq work with larger hashes
+Date:   Thu, 25 Oct 2018 02:39:57 +0000
+Message-Id: <20181025024005.154208-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <20181025024005.154208-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -55,125 +55,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, we have functions that turn an arbitrary SHA-1 value or an
-object ID into hex format, either using a static buffer or with a
-user-provided buffer.  Add variants of these functions that can handle
-an arbitrary hash algorithm, specified by constant.  Update the
-documentation as well.
+In 183a638b7d ("hashcmp: assert constant hash size", 2018-08-23), we
+modified hashcmp to assert that the hash size was always 20 to help it
+optimize and inline calls to memcmp.  In a future series, we replaced
+many calls to hashcmp and oidcmp with calls to hasheq and oideq to
+improve inlining further.
 
-While we're at it, remove the "extern" declaration from this family of
-functions, since it's not needed and our style now recommends against
-it.
+However, we want to support hash algorithms other than SHA-1, namely
+SHA-256.  When doing so, we must handle the case where these values are
+32 bytes long as well as 20.  Adjust hashcmp to handle two cases:
+20-byte matches, and maximum-size matches.  Therefore, when we include
+SHA-256, we'll automatically handle it properly, while at the same time
+teaching the compiler that there are only two possible options to
+consider.  This will allow the compiler to write the most efficient
+possible code.
 
-We use the variant taking the algorithm structure pointer as the
-internal variant, since taking an algorithm pointer is the easiest way
-to handle all of the variants in use.
-
-Note that we maintain these functions because there are hashes which
-must change based on the hash algorithm in use but are not object IDs
-(such as pack checksums).
+Copy similar code into hasheq and perform an identical transformation.
+At least with GCC 8.2.0, making hasheq defer to hashcmp when there are
+two branches prevents the compiler from inlining the comparison, while
+the code in this patch is inlined properly.  Add a comment to avoid an
+accidental performance regression from well-intentioned refactoring.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 15 +++++++++------
- hex.c   | 32 ++++++++++++++++++++++++--------
- 2 files changed, 33 insertions(+), 14 deletions(-)
+ cache.h | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 59c8a93046..51580c4b77 100644
+index 51580c4b77..bab8e8964f 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1364,9 +1364,9 @@ extern int get_oid_hex(const char *hex, struct object_id *sha1);
- extern int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
- 
- /*
-- * Convert a binary sha1 to its hex equivalent. The `_r` variant is reentrant,
-+ * Convert a binary hash to its hex equivalent. The `_r` variant is reentrant,
-  * and writes the NUL-terminated output to the buffer `out`, which must be at
-- * least `GIT_SHA1_HEXSZ + 1` bytes, and returns a pointer to out for
-+ * least `GIT_MAX_HEXSZ + 1` bytes, and returns a pointer to out for
-  * convenience.
-  *
-  * The non-`_r` variant returns a static buffer, but uses a ring of 4
-@@ -1374,10 +1374,13 @@ extern int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
-  *
-  *   printf("%s -> %s", sha1_to_hex(one), sha1_to_hex(two));
-  */
--extern char *sha1_to_hex_r(char *out, const unsigned char *sha1);
--extern char *oid_to_hex_r(char *out, const struct object_id *oid);
--extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
--extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as sha1_to_hex */
-+char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash, const struct git_hash_algo *);
-+char *sha1_to_hex_r(char *out, const unsigned char *sha1);
-+char *oid_to_hex_r(char *out, const struct object_id *oid);
-+char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_algo *);	/* static buffer result! */
-+char *sha1_to_hex(const unsigned char *sha1);						/* same static buffer */
-+char *hash_to_hex(const unsigned char *hash);						/* same static buffer */
-+char *oid_to_hex(const struct object_id *oid);						/* same static buffer */
- 
- /*
-  * Parse a 40-character hexadecimal object ID starting from hex, updating the
-diff --git a/hex.c b/hex.c
-index 10af1a29e8..d2e8bb9540 100644
---- a/hex.c
-+++ b/hex.c
-@@ -73,14 +73,15 @@ int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
- 	return ret;
- }
- 
--char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
-+inline char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash,
-+					const struct git_hash_algo *algop)
+@@ -1027,16 +1027,12 @@ extern const struct object_id null_oid;
+ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
  {
- 	static const char hex[] = "0123456789abcdef";
- 	char *buf = buffer;
- 	int i;
- 
--	for (i = 0; i < the_hash_algo->rawsz; i++) {
--		unsigned int val = *sha1++;
-+	for (i = 0; i < algop->rawsz; i++) {
-+		unsigned int val = *hash++;
- 		*buf++ = hex[val >> 4];
- 		*buf++ = hex[val & 0xf];
- 	}
-@@ -89,20 +90,35 @@ char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
- 	return buffer;
+ 	/*
+-	 * This is a temporary optimization hack. By asserting the size here,
+-	 * we let the compiler know that it's always going to be 20, which lets
+-	 * it turn this fixed-size memcmp into a few inline instructions.
+-	 *
+-	 * This will need to be extended or ripped out when we learn about
+-	 * hashes of different sizes.
++	 * Teach the compiler that there are only two possibilities of hash size
++	 * here, so that it can optimize for this case as much as possible.
+ 	 */
+-	if (the_hash_algo->rawsz != 20)
+-		BUG("hash size not yet supported by hashcmp");
+-	return memcmp(sha1, sha2, the_hash_algo->rawsz);
++	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
++		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
++	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
  }
  
--char *oid_to_hex_r(char *buffer, const struct object_id *oid)
-+char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
+ static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
+@@ -1046,7 +1042,13 @@ static inline int oidcmp(const struct object_id *oid1, const struct object_id *o
+ 
+ static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
  {
--	return sha1_to_hex_r(buffer, oid->hash);
-+	return hash_to_hex_algop_r(buffer, sha1, &hash_algos[GIT_HASH_SHA1]);
+-	return !hashcmp(sha1, sha2);
++	/*
++	 * We write this here instead of deferring to hashcmp so that the
++	 * compiler can properly inline it and avoid calling memcmp.
++	 */
++	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
++		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
++	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
  }
  
--char *sha1_to_hex(const unsigned char *sha1)
-+char *oid_to_hex_r(char *buffer, const struct object_id *oid)
-+{
-+	return hash_to_hex_algop_r(buffer, oid->hash, the_hash_algo);
-+}
-+
-+char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_algo *algop)
- {
- 	static int bufno;
- 	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
- 	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
--	return sha1_to_hex_r(hexbuffer[bufno], sha1);
-+	return hash_to_hex_algop_r(hexbuffer[bufno], hash, algop);
-+}
-+
-+char *sha1_to_hex(const unsigned char *sha1)
-+{
-+	return hash_to_hex_algop(sha1, &hash_algos[GIT_HASH_SHA1]);
-+}
-+
-+char *hash_to_hex(const unsigned char *hash)
-+{
-+	return hash_to_hex_algop(hash, the_hash_algo);
- }
- 
- char *oid_to_hex(const struct object_id *oid)
- {
--	return sha1_to_hex(oid->hash);
-+	return hash_to_hex_algop(oid->hash, the_hash_algo);
- }
+ static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
