@@ -3,115 +3,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DAFD1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 02:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79F241F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 03:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbeJYLLM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 07:11:12 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52390 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727418AbeJYLLL (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 25 Oct 2018 07:11:11 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e0bc:761d:9be1:27bc])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 92D9E61B89;
-        Thu, 25 Oct 2018 02:40:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540435229;
-        bh=RTgQTJagmXdmVneV6JwwX5E8v6jOQZhyDfn5jS8LGMg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=vIVEOy633t9BB9OpnIhSI45s+CTk2c55gHc1tVmjlGA1h3BuPqDhNm0dyuxV/oMFu
-         2HSj3pSNxjdl6BXWySXlUG4sSv+mNCGHBlSbMHPaTeKpPBIKjgOvjw/emulrxByU5T
-         XhGG12LwG/mjtaDPM1AdZXavHGrCUZXzI1MRMDJgVzs21Osx5xvLzn+9TNaLE0jq3z
-         Y8hZCiDlkbE5UOA9+DGAuppVi3OX4p4BqDMc6SlxVPhgrvz+MKU0VOqcyhSPqlp5UG
-         NMbSTPoNvgRGEUzW9p1IL70/eIQvoY3kVq9+BBKfYYpYFAN56biEthFNXRIwGN90+m
-         D10rStagtL2OpAQhDlHFj2cbGW7wYYu+65aH/gGgfb08303LzFHt4mth+eAVhsFWHv
-         iRu/zrShp64QmgLrjMi5SGVdujyZNpPYsQXILlATE6cqFKmRfhQLd/TGN8CZPtAmhe
-         So3fUafeOptCmKs/rWgT/a1ALfAUjd0XVbyITyTIEe/VqME/8RT
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 12/12] hash: add an SHA-256 implementation using OpenSSL
-Date:   Thu, 25 Oct 2018 02:40:05 +0000
-Message-Id: <20181025024005.154208-13-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.19.1.759.g500967bb5e
-In-Reply-To: <20181025024005.154208-1-sandals@crustytoothpaste.net>
-References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
+        id S1726981AbeJYLdw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 07:33:52 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:50268 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726344AbeJYLdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 07:33:52 -0400
+Received: by mail-it1-f196.google.com with SMTP id k206-v6so8807448ite.0
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 20:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4+t1C1t3PoC8VzPqPALd+DfIVrt47NhcaFCpLK2jEXA=;
+        b=XMMNmtei+qfT1OY1+k/QqAUnsjJeJ4F/yGIhg0ol71BPuDsAgeiVZ57sdwK/Aah7uy
+         B3O0xifY++zNXMkjjEy/abAThdiTs7FBehqAzZp9UPu/D8m8+ZxhYRcBbAHxpOpLOHBl
+         G3ckDUHEkcwaNEsccU9wBpw5KQ7iNOp4JU/qAIPrCN6H39xmJXnwzp5slnjIYYju2VK+
+         2+oTPfXoxInXfwPz1HAmVFp/YiwPSPsAholyD4bbwwdZe2B+GBe4GrADad8J7cjr6acv
+         HJJ2CARsWvGuvX/e6JxvzCuOTA1Pjt+I+idypNBP9BOWT6MU2WbOTHALWYdbDGit9lk1
+         4cQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4+t1C1t3PoC8VzPqPALd+DfIVrt47NhcaFCpLK2jEXA=;
+        b=OR9JeSgB1ZumfvBUbCCJqeWqH3eWN9rPtUg9Z4JOH1MzCeBqWRMGM11saf+s5hjpMS
+         AxDPxEDAPmApLdzj/u+LFohHs3zeV8xNZ9fF2DtYMtOf1Xolqx3Bv+kvfcjyaSG4TixO
+         8jP+rvZqu5K3TSHPn6yoqU2IKVRI8XNm0vYSz3aItoC6VOl2GFv1fUBGCTFQfmoIlZmU
+         FcnX2F8Bs6AVsdfXUNuumuEWDcpk5qqq/Vzt/FynskSOrqzalz4R1WEdFKLuTbO0EaXT
+         0TvB5ZY6fLgRzHIWM3Lim373dm2ORMtnw5U4Z4BysMeENj26KNEUzQCz51pNuRrGb+CA
+         VWtg==
+X-Gm-Message-State: AGRZ1gJ4/tvyYheMmlze+DvcvXxrCMncuaLMfJR2uUEIZ/Oa7J/m1keI
+        uyiddZi3adJU2xd+7kGfz8rGrpsXY1UAzBCoFog=
+X-Google-Smtp-Source: AJdET5e8RrYKBHls/IqGfG/7TkOj9armS+TloXTgMSQ/20AUXGkO4IyN82+r/5wKg8jCSfaW9fG3ce/ePRAaRP5V38o=
+X-Received: by 2002:a24:4687:: with SMTP id j129-v6mr90484itb.6.1540436586425;
+ Wed, 24 Oct 2018 20:03:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20181025024005.154208-1-sandals@crustytoothpaste.net> <20181025024005.154208-11-sandals@crustytoothpaste.net>
+In-Reply-To: <20181025024005.154208-11-sandals@crustytoothpaste.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 24 Oct 2018 20:02:55 -0700
+Message-ID: <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
+Subject: Re: [PATCH v4 10/12] Add a base implementation of SHA-256 support
+To:     sandals@crustytoothpaste.net
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        pclouds@gmail.com, szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already have OpenSSL routines available for SHA-1, so add routines
-for SHA-256 as well.
+On Wed, Oct 24, 2018 at 7:41 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> diff --git a/sha256/block/sha256.h b/sha256/block/sha256.h
+> new file mode 100644
+> index 0000000000..38f02f7e6c
+> --- /dev/null
+> +++ b/sha256/block/sha256.h
+> @@ -0,0 +1,26 @@
+> +#ifndef SHA256_BLOCK_SHA256_H
+> +#define SHA256_BLOCK_SHA256_H
+> +
+> +#include "git-compat-util.h"
 
-On a Core i7-6600U, this SHA-256 implementation compares favorably to
-the SHA1DC SHA-1 implementation:
+this shouldn't be needed and might be discouraged as per the
+instructions in Documentation/CodingGuidelines
 
-SHA-1: 157 MiB/s (64 byte chunks); 337 MiB/s (16 KiB chunks)
-SHA-256: 165 MiB/s (64 byte chunks); 408 MiB/s (16 KiB chunks)
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Makefile | 7 +++++++
- hash.h   | 2 ++
- 2 files changed, 9 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index 5a07e03100..36fd3a149b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -183,6 +183,8 @@ all::
- #
- # Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
- #
-+# Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
-+#
- # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
- #
- # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
-@@ -1638,6 +1640,10 @@ endif
- endif
- endif
- 
-+ifdef OPENSSL_SHA256
-+	EXTLIBS += $(LIB_4_CRYPTO)
-+	BASIC_CFLAGS += -DSHA256_OPENSSL
-+else
- ifdef GCRYPT_SHA256
- 	BASIC_CFLAGS += -DSHA256_GCRYPT
- 	EXTLIBS += -lgcrypt
-@@ -1645,6 +1651,7 @@ else
- 	LIB_OBJS += sha256/block/sha256.o
- 	BASIC_CFLAGS += -DSHA256_BLK
- endif
-+endif
- 
- ifdef SHA1_MAX_BLOCK_SIZE
- 	LIB_OBJS += compat/sha1-chunked.o
-diff --git a/hash.h b/hash.h
-index 2ef098052d..adde708cf2 100644
---- a/hash.h
-+++ b/hash.h
-@@ -17,6 +17,8 @@
- 
- #if defined(SHA256_GCRYPT)
- #include "sha256/gcrypt.h"
-+#elif defined(SHA256_OPENSSL)
-+#include <openssl/sha.h>
- #else
- #include "sha256/block/sha256.h"
- #endif
+Carlo
