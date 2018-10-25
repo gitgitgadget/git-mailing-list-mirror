@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E5C11F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1C341F453
 	for <e@80x24.org>; Thu, 25 Oct 2018 16:18:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727793AbeJZAv6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 20:51:58 -0400
-Received: from mail.ao2.it ([92.243.12.208]:44349 "EHLO ao2.it"
+        id S1727815AbeJZAv7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 20:51:59 -0400
+Received: from mail.ao2.it ([92.243.12.208]:44352 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727455AbeJZAv6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 20:51:58 -0400
+        id S1727319AbeJZAv7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 20:51:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=fu5L5xMU7n2eQ6/vkhRYQDCY2FvgNNErOBtXtL5N+qc=;
-        b=liUoFTwD4QRjL5UaUnhMnzl+rHs32Po72/ZLt6VAqqGFfFAUioczI3tgwlhbIXLay8Y8sApndG8OoxtS0uv3Oq1FtSMpqFDOJa6PiE5MYfFap7Cihy3570C2DDtJdD3ueyKDzGyGWWBy4b/nHMOrVhIiD5/7VXzhSFtDmFziktH9gx/LJZ9HD1RUU/uor6wnA4GfW2n4Aac+2APSiuL9yqY30cXGKGfEq0IqYUtMaW+bRSmuhEA12GeyyS/h1W/w9LCP47g9J1LygAYTE7MxD+Mhgp1HaDjMJ/oe3wu1vCBYvXNafpWcC1fv7nrQx+v97cK3HwfWO7iGkg4WR8c8VQ==;
+        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=x0rO8b9S9lv8TZskaImH/He3CTATbzl+1t1Ser6B3nU=;
+        b=CAxo+HIskr1o7bEjLNP8RfslbCIIw4h4bqx7efxyVfvamg6xFJhmtcxDULVZhfNPfrHKmKueICO7LUcSHufFhkpLufqYSc2Zvdm+eXA4yHnlnOjbAkfekW8fIUd/osNKgrXe3ptFXFzSgeSIAx18t03T+SOitm9WdCmwW9OkrbtlRzZIqDYirFkOdTht263ykkuhO9sEX5iFRLhA3Ut+Ktx/i+CuGHzsI11kyL5lb2HeD+/xNd/Mno8Xky+GXvtuOv3l+zq37aLr66oV4k9CRdu+G/zRdb3uHwXZ4u3UeB/Yuf9viTtpfBNDNdsN00YsatvP4MXWh/xhZAsDcdKOQw==;
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1gFiKn-0003Kx-Tm; Thu, 25 Oct 2018 18:18:10 +0200
+        id 1gFiKn-0003Kt-Re; Thu, 25 Oct 2018 18:18:09 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1gFiL5-0004VB-1k; Thu, 25 Oct 2018 18:18:27 +0200
+        id 1gFiL5-0004VJ-CF; Thu, 25 Oct 2018 18:18:27 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v7 01/10] submodule: add a print_config_from_gitmodules() helper
-Date:   Thu, 25 Oct 2018 18:18:04 +0200
-Message-Id: <20181025161813.17252-2-ao2@ao2.it>
+Subject: [PATCH v7 05/10] submodule--helper: add a new 'config' subcommand
+Date:   Thu, 25 Oct 2018 18:18:08 +0200
+Message-Id: <20181025161813.17252-6-ao2@ao2.it>
 X-Mailer: git-send-email 2.19.1
 In-Reply-To: <20181025161813.17252-1-ao2@ao2.it>
 References: <20181025161813.17252-1-ao2@ao2.it>
@@ -47,66 +47,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new print_config_from_gitmodules() helper function to print values
-from .gitmodules just like "git config -f .gitmodules" would.
-
-This will be used by a new submodule--helper subcommand to be able to
-access the .gitmodules file in a more controlled way.
+Add a new 'config' subcommand to 'submodule--helper', this extra level
+of indirection makes it possible to add some flexibility to how the
+submodules configuration is handled.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- submodule-config.c | 25 +++++++++++++++++++++++++
- submodule-config.h |  1 +
- 2 files changed, 26 insertions(+)
+ builtin/submodule--helper.c | 14 ++++++++++++++
+ t/t7411-submodule-config.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index b132f7a80b..e36d4e2271 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -692,6 +692,31 @@ void submodule_free(struct repository *r)
- 		submodule_cache_clear(r->submodule_cache);
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 80474c3ff5..9af6626e32 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2126,6 +2126,19 @@ static int check_name(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
-+static int config_print_callback(const char *var, const char *value, void *cb_data)
++static int module_config(int argc, const char **argv, const char *prefix)
 +{
-+	char *wanted_key = cb_data;
++	/* Equivalent to ACTION_GET in builtin/config.c */
++	if (argc == 2)
++		return print_config_from_gitmodules(the_repository, argv[1]);
 +
-+	if (!strcmp(wanted_key, var))
-+		printf("%s\n", value);
++	/* Equivalent to ACTION_SET in builtin/config.c */
++	if (argc == 3)
++		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
 +
-+	return 0;
++	die("submodule--helper config takes 1 or 2 arguments: name [value]");
 +}
 +
-+int print_config_from_gitmodules(struct repository *repo, const char *key)
-+{
-+	int ret;
-+	char *store_key;
-+
-+	ret = git_config_parse_key(key, &store_key, NULL);
-+	if (ret < 0)
-+		return CONFIG_INVALID_KEY;
-+
-+	config_from_gitmodules(config_print_callback, repo, store_key);
-+
-+	free(store_key);
-+	return 0;
-+}
-+
- struct fetch_config {
- 	int *max_children;
- 	int *recurse_submodules;
-diff --git a/submodule-config.h b/submodule-config.h
-index dc7278eea4..031747ccf8 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -48,6 +48,7 @@ const struct submodule *submodule_from_path(struct repository *r,
- 					    const struct object_id *commit_or_tree,
- 					    const char *path);
- void submodule_free(struct repository *r);
-+int print_config_from_gitmodules(struct repository *repo, const char *key);
+ #define SUPPORT_SUPER_PREFIX (1<<0)
  
- /*
-  * Returns 0 if the name is syntactically acceptable as a submodule "name"
+ struct cmd_struct {
+@@ -2155,6 +2168,7 @@ static struct cmd_struct commands[] = {
+ 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+ 	{"is-active", is_active, 0},
+ 	{"check-name", check_name, 0},
++	{"config", module_config, 0},
+ };
+ 
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+index b1f3c6489b..791245f18d 100755
+--- a/t/t7411-submodule-config.sh
++++ b/t/t7411-submodule-config.sh
+@@ -134,4 +134,31 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 	)
+ '
+ 
++test_expect_success 'reading submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "../submodule" >expect &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'writing submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "new_url" >expect &&
++		git submodule--helper config submodule.submodule.url "new_url" &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'overwriting unstaged submodules config with "submodule--helper config"' '
++	test_when_finished "git -C super checkout .gitmodules" &&
++	(cd super &&
++		echo "newer_url" >expect &&
++		git submodule--helper config submodule.submodule.url "newer_url" &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.19.1
 
