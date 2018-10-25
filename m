@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1D721F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id B79DA1F453
 	for <e@80x24.org>; Thu, 25 Oct 2018 02:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727350AbeJYLLA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 07:11:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52356 "EHLO
+        id S1727356AbeJYLLB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 07:11:01 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52360 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727189AbeJYLLA (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 25 Oct 2018 07:11:00 -0400
+        by vger.kernel.org with ESMTP id S1727333AbeJYLLB (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 25 Oct 2018 07:11:01 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e0bc:761d:9be1:27bc])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ACCC261B77;
-        Thu, 25 Oct 2018 02:40:17 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BBAB761B78;
+        Thu, 25 Oct 2018 02:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540435218;
-        bh=JO47WrcxS6xqFOCuXQMVntBmXlG/shMi5Dj9ObgYzOU=;
+        s=default; t=1540435219;
+        bh=y4s23+nnagPVnwJ5P3KUEOqIoIY0Tfmf5ieeyCqPR+Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=xuvzyvS26RsJV9N8yAtALNzsJKzXB3nMF8Vq4K59Kkzk4Cn8iORoWT23eJ7ExEBjS
-         rUG6WNLc5XWlClTzrG/HV1t4fiSjP1Ye5N5n3BILHlwgK6SjI9qwDCIDolIy6fdG3h
-         NIn+ikEm5PrfZ6Z+Cqo3eR9Ke7cws30Ltx/+cTsyaHYWMox/Mt6d+q7YRn9cq9j7+z
-         eK0jZ8bWGgUxcEkNHimASws9/VggmERpTiQAa07Rqwx1WeMJxCnAGzFrVCLAqdR6Ob
-         Esczlt1YqPYlzyPNe+rpH98XZiJ2sMwLHeyEkEUsgEXlQ2vJSBL652lS8fibuxNiju
-         ym0BeUmw0Xsb50BerGWrrx9Su3TCqEpyqZOw5l21mX5xwmuf9gpnZy/HBmGhiSANRa
-         AKk8cvHeHX2O0kUpBi0xbyWsl04slj9TR2Uos4XvytpmdMyTs5nna5yRk88WN6NwBN
-         RbJUuVEGqSNyYoCAsv04R2BFiKIdc+CH4GkXIZz03A69kVMhYEI
+        b=yZiQY7XSdJN/0PwWnnoxcKm92MHpI+8tfUFskMFGZX7mn4hjSN6jwzEZ52cgeRPP/
+         bB1H++xB1II/np58QvhmmV8FmrSdBrp7OA9vyyhyydIFqW4F3bo660DH5Ao/Ihj83K
+         pbf+BFh30Tqwbuht3CQ1fDX67e0VuvHQXPJQUQ6ij5H17ljDPN9tCECw7/ugDJC2iz
+         7jjGpBgHs7+udU3haYYJq1Pjak9iBYjEUqB8enxvmujVfLpmbsvbXIy8EaSfxhxdjI
+         HBreQZEJG4ZPOLxKf3Oukc42WjWQh6bnhuuVa/yflnDVwqFdRa8ZvWyGfLRGA1Mh5P
+         1KlzDXCsDtI+8MvYj1h6wqV/BBzLW407CTcYRJtYNY+Vrwim45OP9MBX7ELyQEPx59
+         /DC7geniH3F8dBs30aaCoIVBcAa75MSN2mOpus2oERttjMg/zcr0DUflI09O2i3lww
+         6ic4B8ofiVDsMerhr+wCUvFz0F3tkc5SgZZzmVrNTYRN+pp90uP
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 04/12] cache: make hashcmp and hasheq work with larger hashes
-Date:   Thu, 25 Oct 2018 02:39:57 +0000
-Message-Id: <20181025024005.154208-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 05/12] t: add basic tests for our SHA-1 implementation
+Date:   Thu, 25 Oct 2018 02:39:58 +0000
+Message-Id: <20181025024005.154208-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <20181025024005.154208-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -55,70 +55,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 183a638b7d ("hashcmp: assert constant hash size", 2018-08-23), we
-modified hashcmp to assert that the hash size was always 20 to help it
-optimize and inline calls to memcmp.  In a future series, we replaced
-many calls to hashcmp and oidcmp with calls to hasheq and oideq to
-improve inlining further.
-
-However, we want to support hash algorithms other than SHA-1, namely
-SHA-256.  When doing so, we must handle the case where these values are
-32 bytes long as well as 20.  Adjust hashcmp to handle two cases:
-20-byte matches, and maximum-size matches.  Therefore, when we include
-SHA-256, we'll automatically handle it properly, while at the same time
-teaching the compiler that there are only two possible options to
-consider.  This will allow the compiler to write the most efficient
-possible code.
-
-Copy similar code into hasheq and perform an identical transformation.
-At least with GCC 8.2.0, making hasheq defer to hashcmp when there are
-two branches prevents the compiler from inlining the comparison, while
-the code in this patch is inlined properly.  Add a comment to avoid an
-accidental performance regression from well-intentioned refactoring.
+We have in the past had some unfortunate endianness issues with some
+SHA-1 implementations we ship, especially on big-endian machines.  Add
+an explicit test using the test helper to catch these issues and point
+them out prominently.  This test can also be used as a staging ground
+for people testing additional algorithms to verify that their
+implementations are working as expected.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ t/t0015-hash.sh | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+ create mode 100755 t/t0015-hash.sh
 
-diff --git a/cache.h b/cache.h
-index 51580c4b77..bab8e8964f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1027,16 +1027,12 @@ extern const struct object_id null_oid;
- static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- {
- 	/*
--	 * This is a temporary optimization hack. By asserting the size here,
--	 * we let the compiler know that it's always going to be 20, which lets
--	 * it turn this fixed-size memcmp into a few inline instructions.
--	 *
--	 * This will need to be extended or ripped out when we learn about
--	 * hashes of different sizes.
-+	 * Teach the compiler that there are only two possibilities of hash size
-+	 * here, so that it can optimize for this case as much as possible.
- 	 */
--	if (the_hash_algo->rawsz != 20)
--		BUG("hash size not yet supported by hashcmp");
--	return memcmp(sha1, sha2, the_hash_algo->rawsz);
-+	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
- }
- 
- static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-@@ -1046,7 +1042,13 @@ static inline int oidcmp(const struct object_id *oid1, const struct object_id *o
- 
- static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
- {
--	return !hashcmp(sha1, sha2);
-+	/*
-+	 * We write this here instead of deferring to hashcmp so that the
-+	 * compiler can properly inline it and avoid calling memcmp.
-+	 */
-+	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
- }
- 
- static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
+diff --git a/t/t0015-hash.sh b/t/t0015-hash.sh
+new file mode 100755
+index 0000000000..8e763c2c3d
+--- /dev/null
++++ b/t/t0015-hash.sh
+@@ -0,0 +1,29 @@
++#!/bin/sh
++
++test_description='test basic hash implementation'
++. ./test-lib.sh
++
++
++test_expect_success 'test basic SHA-1 hash values' '
++	test-tool sha1 </dev/null >actual &&
++	grep da39a3ee5e6b4b0d3255bfef95601890afd80709 actual &&
++	printf "a" | test-tool sha1 >actual &&
++	grep 86f7e437faa5a7fce15d1ddcb9eaeaea377667b8 actual &&
++	printf "abc" | test-tool sha1 >actual &&
++	grep a9993e364706816aba3e25717850c26c9cd0d89d actual &&
++	printf "message digest" | test-tool sha1 >actual &&
++	grep c12252ceda8be8994d5fa0290a47231c1d16aae3 actual &&
++	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha1 >actual &&
++	grep 32d10c7b8cf96570ca04ce37f2a19d84240d3a89 actual &&
++	perl -E "for (1..100000) { print q{aaaaaaaaaa}; }" | \
++		test-tool sha1 >actual &&
++	grep 34aa973cd4c4daa4f61eeb2bdbad27316534016f actual &&
++	printf "blob 0\0" | test-tool sha1 >actual &&
++	grep e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 actual &&
++	printf "blob 3\0abc" | test-tool sha1 >actual &&
++	grep f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f actual &&
++	printf "tree 0\0" | test-tool sha1 >actual &&
++	grep 4b825dc642cb6eb9a060e54bf8d69288fbee4904 actual
++'
++
++test_done
