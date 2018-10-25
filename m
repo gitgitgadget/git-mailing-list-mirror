@@ -2,101 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FDD41F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 16:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7FDD1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 17:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727854AbeJZAwN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 20:52:13 -0400
-Received: from mail.ao2.it ([92.243.12.208]:44398 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727433AbeJZAwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 20:52:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=TN22J56l2H4rQyDtuTA3VhO12eJtQV1h9Ex0JuZS0fg=;
-        b=PkQ9myTeyHpUsKjk0EkhKW8h6e4KK4QDxY9qvBthIy1099hph1MRe5A6lsyoVPKidFsMpiIOoN6WjZrwlFD26AiVQmdsKni7C2p0DzNNsKVkBbmPO1fwqhdcwYgHutz6krqeeB3sNgGgCxt1YlQqi3vIagywKA5Gl4RnH+U/5Qd9GueBFXASIim/uc1CIjpfLTkDB/EJcIss4ubuKGskYHcLl8hBvxDtu03ME8Ade1KZ82NX6VF4B4yEBaHRTWnoQv4ppV8/JjFt2m/Pi7rV0aWjWktb14FtH5SiANflRVH4hRdcwbWdeeKLr0ZfDjw5J59TsytpAFzLwSi0tluE0A==;
-Received: from localhost ([::1] helo=jcn)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1gFiKn-0003Ks-Ra; Thu, 25 Oct 2018 18:18:09 +0200
-Received: from ao2 by jcn with local (Exim 4.91)
-        (envelope-from <ao2@ao2.it>)
-        id 1gFiL5-0004VF-7H; Thu, 25 Oct 2018 18:18:27 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v7 03/10] t7411: merge tests 5 and 6
-Date:   Thu, 25 Oct 2018 18:18:06 +0200
-Message-Id: <20181025161813.17252-4-ao2@ao2.it>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20181025161813.17252-1-ao2@ao2.it>
-References: <20181025161813.17252-1-ao2@ao2.it>
+        id S1727996AbeJZBiF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 21:38:05 -0400
+Received: from avasout03.plus.net ([84.93.230.244]:35539 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727505AbeJZBiE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 21:38:04 -0400
+Received: from [10.0.2.15] ([80.189.70.193])
+        by smtp with ESMTPA
+        id Fj3XgFyXPO2g2Fj3YggIaK; Thu, 25 Oct 2018 18:04:24 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=DKChHRFb c=1 sm=1 tr=0
+ a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=2sTeQnkmm5jFPH-en80A:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v4 2/3] reset: add new reset.quiet config setting
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        benpeart@microsoft.com, peff@peff.net, sunshine@sunshineco.com
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181023190423.5772-1-peartben@gmail.com>
+ <20181023190423.5772-3-peartben@gmail.com>
+ <3c31d5c3-df46-69e3-c138-30a93d9b3ce4@ramsayjones.plus.com>
+ <xmqqpnvyk4jc.fsf@gitster-ct.c.googlers.com>
+ <xmqqbm7igyw6.fsf@gitster-ct.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <47378681-3d7d-97fd-cf2a-4a0fe344a9e1@ramsayjones.plus.com>
+Date:   Thu, 25 Oct 2018 18:04:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqbm7igyw6.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGw9zqRVAw5f5HdlNzRYVKETdzG9LhQnfo+W4uy++QE4aKa133gGgDnJPqJDmiTULXBhypMfIjnzv5+Fya1zwDWcKGzpVxNF7rnPziB4b/DCalLSJ9gS
+ bGoTJvRsYIsSFfCFVxd/p482m/qel/whYEYpWSE4xMvD9FB459LD6qfS0ba93/PkFiE42+msuj0WYQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests 5 and 6 check for the effects of the same commit, merge the two
-tests to make it more straightforward to clean things up after the test
-has finished.
 
-The cleanup will be added in a future commit.
 
-Signed-off-by: Antonio Ospite <ao2@ao2.it>
----
- t/t7411-submodule-config.sh | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+On 25/10/2018 10:26, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> To be honest, I find the second sentence in your rewrite even more
+>> confusing.  It reads as if `reset.quiet` configuration variable 
+>> can be used to restore the "show what is yet to be added"
+>> behaviour, due to the parenthetical mention of the default behaviour
+>> without any configuration.
+>>
+>> 	The command reports what is yet to be added to the index
+>> 	after `reset` by default.  It can be made to only report
+>> 	errors with the `--quiet` option, or setting `reset.quiet`
+>> 	configuration variable to `true` (the latter can be
+>> 	overriden with `--no-quiet`).
+>>
+>> That may not be much better, though X-<.
+> 
+> In any case, the comments are getting closer to the bikeshedding
+> territory, that can be easily addressed incrementally.  I am getting
+> the impression that everbody agrees that the change is desirable,
+> sufficiently documented and properly implemented.  
+> 
+> Shall we mark it for "Will merge to 'next'" in the what's cooking
+> report and leave further refinements to incremental updates as
+> needed?
 
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 0bde5850ac..f2cd1f4a2c 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -82,29 +82,21 @@ Submodule name: 'a' for path 'b'
- Submodule name: 'submodule' for path 'submodule'
- EOF
- 
--test_expect_success 'error in one submodule config lets continue' '
-+test_expect_success 'error in history of one submodule config lets continue, stderr message contains blob ref' '
- 	(cd super &&
- 		cp .gitmodules .gitmodules.bak &&
- 		echo "	value = \"" >>.gitmodules &&
- 		git add .gitmodules &&
- 		mv .gitmodules.bak .gitmodules &&
- 		git commit -m "add error" &&
--		test-tool submodule-config \
--			HEAD b \
--			HEAD submodule \
--				>actual &&
--		test_cmp expect_error actual
--	)
--'
--
--test_expect_success 'error message contains blob reference' '
--	(cd super &&
- 		sha1=$(git rev-parse HEAD) &&
- 		test-tool submodule-config \
- 			HEAD b \
- 			HEAD submodule \
--				2>actual_err &&
--		test_i18ngrep "submodule-blob $sha1:.gitmodules" actual_err >/dev/null
-+				>actual \
-+				2>actual_stderr &&
-+		test_cmp expect_error actual &&
-+		test_i18ngrep "submodule-blob $sha1:.gitmodules" actual_stderr >/dev/null
- 	)
- '
- 
--- 
-2.19.1
+Yeah, the first version gave me a 'huh?' moment (hence the
+comment), the last version was better and, as you can see,
+I am no great shakes at wordsmith-ing documentation! ;-)
+
+Thanks!
+
+ATB,
+Ramsay Jones
 
