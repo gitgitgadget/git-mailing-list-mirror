@@ -2,75 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E81181F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 08:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D22791F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 08:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbeJYRJg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 13:09:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53954 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726637AbeJYRJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 13:09:36 -0400
-Received: (qmail 986 invoked by uid 109); 25 Oct 2018 08:37:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 25 Oct 2018 08:37:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14658 invoked by uid 111); 25 Oct 2018 08:37:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 25 Oct 2018 04:37:05 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2018 04:37:50 -0400
-Date:   Thu, 25 Oct 2018 04:37:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Mirror of git.git on gitlab.com
-Message-ID: <20181025083750.GA16581@sigill.intra.peff.net>
-References: <pull.31.git.gitgitgadget@gmail.com>
- <8736t7dzan.fsf@evledraar.gmail.com>
- <CACsJy8DeA0Zko4+ZM5F2L6YO5rpvL9LX3H9NB_bVCyO2mJFUzg@mail.gmail.com>
- <CAP8UFD3cpXpyx-AtTybPirzduFR7TfhFf2woa-_CU46DN3RaXw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1810152032140.4546@tvgsbejvaqbjf.bet>
- <xmqqd0sa1omm.fsf@gitster-ct.c.googlers.com>
- <CACBZZX59vT1CTiUPfPZDJUSRH=NSzmWiabux=KRdTUFa1R=5bw@mail.gmail.com>
- <xmqqo9bsvwn9.fsf@gitster-ct.c.googlers.com>
- <87k1mecj96.fsf@evledraar.gmail.com>
- <xmqq1s8iwnb4.fsf@gitster-ct.c.googlers.com>
+        id S1726804AbeJYRMg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 13:12:36 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36626 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726637AbeJYRMg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 13:12:36 -0400
+Received: by mail-wm1-f68.google.com with SMTP id a8-v6so617069wmf.1
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 01:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=tPnNSmf2RLTDTcIBGMArFgASxPeJCSQN/lDJui/3mVY=;
+        b=r27XBx7CvshS5Jvl6pG6CqGG9EvchI8IMDsvFV3gaPAoeYJWNQm17ZJhMCa/wpbYDp
+         LHc8TFYWu4BC9+sid4bUwfUQA9TT2JpEQ1KyKzG+nBjnrZ6oSrMMe2XlB8sGhvef7vB9
+         YzpdzpiYMaN4UtwlsDJCyuXs2TY9P6esJRUitk1s4SjNNJs3pWA9orauvn9/DuO2KHjx
+         jxTHihho7qtDqJ8lhIih6sZQ2mTBjqkZ4URBE7brgFuyw7IGJuRyoIEGeEmhINPkB0wu
+         Gyrl1OfJxlwNKod3/rwxLAE4figbe+BzsZs8sCqSMTRFLSPgiaTedf7md1iK1z1OnxRt
+         Pnjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=tPnNSmf2RLTDTcIBGMArFgASxPeJCSQN/lDJui/3mVY=;
+        b=AVARjU/Fqu401SBhM+tgOvd77OQ2VOSgG1pMarxaWnzCkyl9DlBQA62noj264DpzF0
+         avMkW/x1xAhSvqEKft1yl+lA48MkEihwe3hK6ZeLXFO81oJKyCmzgyKbcmQJrs7ajduu
+         LobDgg63f9PrTXmayNyJRMOCbiZYwFe/UFnJ4lM5/gAkibb36ZYPmcaBKdZRW72wgvu9
+         1mHz7rLofZIP60tI1Z4Zm+BJ7jFGtAUO73BqQOeOxWKlx2G4erUGZNNPx4kcp0GdrzhC
+         y6+Nwi/MPQ7Tn1eKZ0z4tOZeTF/1C71zxeqSCcjJkTi/5cfH3e4TOJ4xdNKGEgBpg/kG
+         xlig==
+X-Gm-Message-State: AGRZ1gJu+8RFBt3WkTSq4e3JWiXUX23CP7nK7bYLfsaxcK5HQ+5png9s
+        CuXvC5szArwFcyAAe5dgXzo=
+X-Google-Smtp-Source: AJdET5eWwfqkLMn5x5ABhPWGH9t3X077+qNwd3hKFNC3wQp7HG+2xJQ1oDtPlZNtOBT1wMl5IJUjzg==
+X-Received: by 2002:a1c:3c82:: with SMTP id j124-v6mr128983wma.62.1540456849269;
+        Thu, 25 Oct 2018 01:40:49 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c2-v6sm5076233wrt.77.2018.10.25.01.40.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 25 Oct 2018 01:40:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v6 00/10] Make submodules work if .gitmodules is not checked out
+References: <20181005130601.15879-1-ao2@ao2.it>
+Date:   Thu, 25 Oct 2018 17:40:47 +0900
+In-Reply-To: <20181005130601.15879-1-ao2@ao2.it> (Antonio Ospite's message of
+        "Fri, 5 Oct 2018 15:05:51 +0200")
+Message-ID: <xmqqd0ryiflc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1s8iwnb4.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 22, 2018 at 02:41:19PM +0900, Junio C Hamano wrote:
+Antonio Ospite <ao2@ao2.it> writes:
 
-> > As an aside, I noticed that
-> > https://github.com/git/sha1collisiondetection/ has never worked in
-> > combination with git.git, i.e. it's cloned at a version that pre-dates
-> > the initial introduction of the sha1collisiondetection submodule. Our
-> > other mirrors don't seem to have it at all relative to
-> > ../sha1collisiondetection.git from their git.git.
-> 
-> I do not recall who cloned it or forked it there or what our longer
-> term plans for that repository would be.  I think we are using this
-> thing: https://github.com/cr-marcstevens/sha1collisiondetection.git
-> and there is probably no reason to have our own copy.  Perhaps we
-> should just get rid of it.
+> this series teaches git to try and read the .gitmodules file from the
+> index (:.gitmodules) or from the current branch (HEAD:.gitmodules) when
+> the file is not readily available in the working tree.
 
-I poked around. It was done by you on May 23, 2017 and then never
-touched after that. I couldn't find any discussion on the list. So yeah,
-I think it makes sense to just delete it.
+What you said in [*1*] the discussion on [09/10] sounded like you
+are preparing an update of the series, so the topic is marked as
+"Expecting a reroll" in the recent "What's cooking" report.  At
+least one topic now depends on the enhancement this topic makes, so
+I'd like to know what the current status and ETA of the reroll would
+be, in order to sort-of act as a traffic cop.
 
--Peff
+Your answer could even be "I have been too busy, and I do not think
+an update will come for some time"---in other words, I do not mean
+to tell you to drop other things and work on this instead.
+
+If you are too busy, I can even see if other stakeholders
+(e.g. Stefan, whose topic now depends on this series) can take it
+over and update it after re-reading the discussion on the latest
+round.
+
+Thanks.
+
+
+[Reference]
+
+*1* http://public-inbox.org/git/20181010205645.e1529eff9099805029b1d6ef@ao2.it/
