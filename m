@@ -8,121 +8,110 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94C4F1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 11:16:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B771F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 11:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727491AbeJYTsV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 15:48:21 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:45399 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727423AbeJYTsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 15:48:21 -0400
-Received: by mail-ed1-f53.google.com with SMTP id t10-v6so8071011eds.12
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 04:16:01 -0700 (PDT)
+        id S1727350AbeJYUDM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 16:03:12 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33630 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727208AbeJYUDM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 16:03:12 -0400
+Received: by mail-ed1-f67.google.com with SMTP id f1-v6so682180edi.0
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 04:30:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=s/28wtYtU7gagRXvdce6jpY7WQlfh50kGXNmHpoG7Gs=;
-        b=PEiP0HfHXo9IWVfgCHnuYqPlkNpyJIiaKxd2WXXKZv7d4RuTa2za02CBE58StIWIOs
-         4MPfdJi4s7uGzcFZDsJUibQbZFpzX6A8IUfhOgvP+TfzYTK9WBtRkzIDhPkXVhPMYICf
-         ul0VskqBVwH7MPgz5jpbXEHis2TplcjUX4IxBXoisV5E/H18bCBzQYPNjrYa/6yj38jf
-         rCqf4nEqDtzayATThqZ8VXvlrTpCs8KMycxVq9v32gr2uWKRVIjiPv5oKC8r8259xqNd
-         7nfmVL/J7Pz+I2wbJ0zvnITvfBrp0DFV0Vi62W9Kj0djfdTmxaxgmj5nUwsPKSpQY1kq
-         08XA==
+        bh=eTbORSFn4VN1pvtUDIPbb0kNOnkvDCCyeIFN9kcT1RM=;
+        b=RrjADZj7+FtX7+b7+Vksi4GPfmkrZgDrD7oGPP3LFQjM1gv2OX6x7cHevUTcUufaZG
+         ARhWpwEEb2W2M3nW4Ju4QCsARW2a0xu6nA2UH1LtvFaeIwsB4hEcL5k2aNrILTzubVam
+         k82QgE2vqegTi58oD0QmI1ToeG2HmPUr/flN2h1l+3pRBOJN+F8+Gt/1cV+29f+saRL9
+         H0GYNG/DSFUOc6XdKDgv4E11W7p1lXbVT82fialMIQuMBMywMBqAVVjahXOnrqgiGpWY
+         LqpW9eTMfK36ZdE5JPZXS0xxXV05b9dROTR4CvIJYRJWqaWgAGFVT550XYJ2Cz3P7tjp
+         UanA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=s/28wtYtU7gagRXvdce6jpY7WQlfh50kGXNmHpoG7Gs=;
-        b=N01D+71b8CfGlcbKk8LNq3IpAdhLOAZeypcmdf4x612623D1anQf6v1i0IMCtuhsbP
-         FBCNMO2NaEfipzC0nOrkWeismGX6fsHUzN+LOcrGtkMt8vi9PJSC+ZZf9vRluZw2nSwY
-         BgcbUdU1/osV1egvXlyXwXCWQoSEbHxi9eXVA4vP22Wl/PeDypbhyley11ApvFPQApcG
-         MREJt2CHbmbiuAIjg89vdTl/wpXf4bm+bVDBPWwoftcIqQPhcuWhLcKK/CZMGezVEYWI
-         AIH8E+U5YOsgxpYldIaO5aIMaYiEbbYQScmY0+YiR9vkM8Sf503Osxmc4hHObrd55uyD
-         woaA==
-X-Gm-Message-State: AGRZ1gIU/LZu9sTYyhLhR8T4ULhbkbO2Fyz8u0ZLQfeLY35cr/6pWB0P
-        jt5bsQSa1D07D2pOpwSXzmM=
-X-Google-Smtp-Source: AJdET5cqYL0uK/sBoP5T/CF2Ca7jJhKRFcb/orlKMVASCj4oI/kyJGiRS0vL/xmvPXCRKP8TfSILSA==
-X-Received: by 2002:a50:95b4:: with SMTP id w49-v6mr1281625eda.15.1540466161030;
-        Thu, 25 Oct 2018 04:16:01 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=eTbORSFn4VN1pvtUDIPbb0kNOnkvDCCyeIFN9kcT1RM=;
+        b=YanAKlNTjGpNYgZEcvQum86gha2Fphv3hRTCgjdI6EPny4Q4la1NLFXZo3meuUBpf3
+         diw/W7cRQN9teU0jdD7C52dFiVJXp1KNdYGvmzcihhDDzNXCtCRaec9u5wWuUx161ZzV
+         1Cx/JD2+j+qIYDi6eBHsDC6RSMQrwm54voOKcTAxnhJ1y56WWnl7v/87rEm/UlTVOx7O
+         +Kom82+QqZbL9EobLTZeqXd2wFpGP5W/ba2C7MxZvLcsjDQZjZSJPI9oOh3jQaWnuS11
+         u9Scb3Et4Gs7/dgw/UoqxkOoNqbX6eB+JpEhKAOBSJfZkvmbkgwW6TIOIBnqLM2R6tbQ
+         5zfQ==
+X-Gm-Message-State: AGRZ1gLHpgCpyU+ITShE8sANcVm5ZqxH0eEw8Gmt5a0W6pBoLmvdmKby
+        Tb6lB2wl2drKG1kmYqtoKF4=
+X-Google-Smtp-Source: AJdET5fudl2upfStGrhV8HzgWEzdxnZUncMUj0lNdWAa+vYb1NAyTAYYEm1MCYNoJOl9ZQLy+a7D/A==
+X-Received: by 2002:a50:ec9a:: with SMTP id e26-v6mr1265558edr.134.1540467048634;
+        Thu, 25 Oct 2018 04:30:48 -0700 (PDT)
 Received: from szeder.dev (x4db0730d.dyn.telefonica.de. [77.176.115.13])
-        by smtp.gmail.com with ESMTPSA id z15-v6sm1554293ejq.60.2018.10.25.04.15.59
+        by smtp.gmail.com with ESMTPSA id b2-v6sm1262667edy.52.2018.10.25.04.30.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Oct 2018 04:16:00 -0700 (PDT)
-Date:   Thu, 25 Oct 2018 13:15:57 +0200
+        Thu, 25 Oct 2018 04:30:47 -0700 (PDT)
+Date:   Thu, 25 Oct 2018 13:30:45 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: 'ds/test-multi-pack-index' vs. 'ab/commit-graph-progress'
-Message-ID: <20181025111557.GL30222@szeder.dev>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, peff@peff.net,
+        chriscool@tuxfamily.org, l.s.r@web.de, ramsay@ramsayjones.plus.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/3] khash: silence -Wunused-function in delta-islands
+ from khash
+Message-ID: <20181025113045.GM30222@szeder.dev>
+References: <20181025110427.13655-1-carenas@gmail.com>
+ <20181025110427.13655-3-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181025110427.13655-3-carenas@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Oct 25, 2018 at 04:04:26AM -0700, Carlo Marcelo Arenas Belón wrote:
+> showing the following when compiled with latest clang (OpenBSD, Fedora
+> and macOS):
 
-when branch 'ds/test-multi-pack-index' is merged with
-'ab/commit-graph-progress', IOW 'master', 'next', or 'pu',
-'GIT_TEST_MULTI_PACK_INDEX=1 ./t6500-gc.sh' fails with:
+s/^s/S/
+This applies to your other commit messages as well.
 
-  expecting success:
-          git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
-          test_must_be_empty stdout &&
-          test_line_count = 1 stderr &&
-          test_i18ngrep "Computing commit graph generation numbers" stderr
-  
-  + git -c gc.writeCommitGraph=true gc --no-quiet
-  + test_must_be_empty stdout
-  + test_path_is_file stdout
-  + test -f stdout
-  + test -s stdout
-  + test_line_count = 1 stderr
-  + test 3 != 3
-  + wc -l
-  + test 16 = 1
-  + echo test_line_count: line count for stderr != 1
-  test_line_count: line count for stderr != 1
-  + cat stderr
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
-  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
-  Computing commit graph generation numbers:  25% (1/4)   ^MComputing commit graph generation numbers:  50% (2/4)   ^MComputing commit graph generation numbers:  75% (3/4)   ^MComputing commit graph generation numbers: 100% (4/4)   ^MComputing commit graph generation numbers: 100% (4/4), done.
-  + return 1
-  error: last command exited with $?=1
-  not ok 9 - gc --no-quiet
+But more importantly, please be explicit about the compiler version
+that emits the warning, so others won't have to guess when stumbling
+upon this commit in a few months or years time.
 
-
-I suspect these "packfile index unavailable" errors are a Bad Thing,
-but I didn't follow the MIDX development closely enough to judge.
-Surprisingly (to me), 'git gc' didn't exit with error despite these
-errors.
-
-Anyway, this test seems to be too fragile, because that
-
-  test_line_count = 1 stderr
-
-line will trigger, when anything else during 'git gc' prints
-something.  And I find it quite strange that an option called
-'--no-quiet' only shows the commit-graph progress, but not the regular
-output of 'git gc'.
-
-
+> delta-islands.c:23:1: warning: unused function 'kh_destroy_str'
+>       [-Wunused-function]
+> delta-islands.c:23:1: warning: unused function 'kh_clear_str'
+>       [-Wunused-function]
+> delta-islands.c:23:1: warning: unused function 'kh_del_str' [-Wunused-function]
+> 
+> Reported-by: René Scharfe <l.s.r@web.de>
+> Suggested-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  khash.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/khash.h b/khash.h
+> index d10caa0c35..532109c87f 100644
+> --- a/khash.h
+> +++ b/khash.h
+> @@ -234,7 +234,7 @@ static const double __ac_HASH_UPPER = 0.77;
+>  	__KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
+>  
+>  #define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
+> -	KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
+> +	KHASH_INIT2(name, MAYBE_UNUSED static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
+>  
+>  /* Other convenient macros... */
+>  
+> -- 
+> 2.19.1
+> 
