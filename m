@@ -2,110 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 612DD1F454
-	for <e@80x24.org>; Thu, 25 Oct 2018 11:05:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94C4F1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 11:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727430AbeJYThc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 15:37:32 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:44570 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727333AbeJYThb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 15:37:31 -0400
-Received: by mail-pg1-f194.google.com with SMTP id w3-v6so3807743pgs.11
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 04:05:15 -0700 (PDT)
+        id S1727491AbeJYTsV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 15:48:21 -0400
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:45399 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727423AbeJYTsV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 15:48:21 -0400
+Received: by mail-ed1-f53.google.com with SMTP id t10-v6so8071011eds.12
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 04:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MqHiMKV4Y0VL94TNgYJ6g/lC/1cs4jQWpZ6F4/47otI=;
-        b=tmJ19RyWcj4eLPwfyO2PVqTWCH5vXrPazbK3Y5P181aRtIMzFVQ0rW12ZSF/M1uwNV
-         K35MY+soAGoO6+AxEhnxD30OvwGQIcQOLAizYQB4C1zGKKGPFCmxoMVTKrmAsr+FijIJ
-         q4wA9P5jsnacFwgT7xjVK1Ebl1xeYECRs7Rr4DHyYRbL2py/fwU0+79PcmISDJRGIoAj
-         TaTo0oH53xSrOlrOCTO0a4llNGxTpY9+KL7cUOONlSljWETppLT83Nvz/ext+XeTO/KH
-         qeRvUSzCr3bRlXu8L8VJy0wGSNrmtf2i+1rD52gn6+rVQlrRkfUpkKsJFuFiMZIvPyZk
-         bIaw==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=s/28wtYtU7gagRXvdce6jpY7WQlfh50kGXNmHpoG7Gs=;
+        b=PEiP0HfHXo9IWVfgCHnuYqPlkNpyJIiaKxd2WXXKZv7d4RuTa2za02CBE58StIWIOs
+         4MPfdJi4s7uGzcFZDsJUibQbZFpzX6A8IUfhOgvP+TfzYTK9WBtRkzIDhPkXVhPMYICf
+         ul0VskqBVwH7MPgz5jpbXEHis2TplcjUX4IxBXoisV5E/H18bCBzQYPNjrYa/6yj38jf
+         rCqf4nEqDtzayATThqZ8VXvlrTpCs8KMycxVq9v32gr2uWKRVIjiPv5oKC8r8259xqNd
+         7nfmVL/J7Pz+I2wbJ0zvnITvfBrp0DFV0Vi62W9Kj0djfdTmxaxgmj5nUwsPKSpQY1kq
+         08XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MqHiMKV4Y0VL94TNgYJ6g/lC/1cs4jQWpZ6F4/47otI=;
-        b=HPx3y56IzYWGOMRs/7Wv/iTbtwrGkr0nrSYanxFUu5dobaRE1WccTxnTD79wWUBfuP
-         vrxAtmnQsH2RWZtFT9FCs1Obp4Y2fIOblSKGNAnXWnCXPyrDBQZ6PLEaDEwOMRlryiO+
-         0eFolNC28xnBg26iNRjmHptux2mGZaTFqbiEl7R8ES0NOAHsenS+PMPvENh1XB+LESRv
-         dT9mWJKHBMywkcaayA3N90sd8ov8q4eiqndl+rJyND5bGfNeY02+e3zEnu8GhXIw7iOL
-         NqNqFo+F5/efxQ+zz5FRI/GXPShTq7oBQHU27Lrb6Nsnqe8Y7HzEuWoJoEyLriI0K/hm
-         qQOg==
-X-Gm-Message-State: AGRZ1gIj3TilmbnuLUsA5Ahn7otNXcSLW/Uqb0TqqsJQN6CpS1vUxYVi
-        CPrfIJOPZ8YWGxfiASYVOGPyS4zeAmg=
-X-Google-Smtp-Source: AJdET5cSuEjlL7FyCwDVENKubuJqQzo7iT6ItimUb58zCxYN2hZB0G0Sh8J7FZej9G8PJjaAZdj5nw==
-X-Received: by 2002:a63:d34f:: with SMTP id u15-v6mr1016554pgi.325.1540465514955;
-        Thu, 25 Oct 2018 04:05:14 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id 74-v6sm17545405pfx.182.2018.10.25.04.05.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Oct 2018 04:05:14 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, peff@peff.net, chriscool@tuxfamily.org,
-        l.s.r@web.de, ramsay@ramsayjones.plus.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH v3 3/3] commit-slab: missing definitions and forward declarations (hdr-check)
-Date:   Thu, 25 Oct 2018 04:04:27 -0700
-Message-Id: <20181025110427.13655-4-carenas@gmail.com>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20181025110427.13655-1-carenas@gmail.com>
-References: <20181025110427.13655-1-carenas@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=s/28wtYtU7gagRXvdce6jpY7WQlfh50kGXNmHpoG7Gs=;
+        b=N01D+71b8CfGlcbKk8LNq3IpAdhLOAZeypcmdf4x612623D1anQf6v1i0IMCtuhsbP
+         FBCNMO2NaEfipzC0nOrkWeismGX6fsHUzN+LOcrGtkMt8vi9PJSC+ZZf9vRluZw2nSwY
+         BgcbUdU1/osV1egvXlyXwXCWQoSEbHxi9eXVA4vP22Wl/PeDypbhyley11ApvFPQApcG
+         MREJt2CHbmbiuAIjg89vdTl/wpXf4bm+bVDBPWwoftcIqQPhcuWhLcKK/CZMGezVEYWI
+         AIH8E+U5YOsgxpYldIaO5aIMaYiEbbYQScmY0+YiR9vkM8Sf503Osxmc4hHObrd55uyD
+         woaA==
+X-Gm-Message-State: AGRZ1gIU/LZu9sTYyhLhR8T4ULhbkbO2Fyz8u0ZLQfeLY35cr/6pWB0P
+        jt5bsQSa1D07D2pOpwSXzmM=
+X-Google-Smtp-Source: AJdET5cqYL0uK/sBoP5T/CF2Ca7jJhKRFcb/orlKMVASCj4oI/kyJGiRS0vL/xmvPXCRKP8TfSILSA==
+X-Received: by 2002:a50:95b4:: with SMTP id w49-v6mr1281625eda.15.1540466161030;
+        Thu, 25 Oct 2018 04:16:01 -0700 (PDT)
+Received: from szeder.dev (x4db0730d.dyn.telefonica.de. [77.176.115.13])
+        by smtp.gmail.com with ESMTPSA id z15-v6sm1554293ejq.60.2018.10.25.04.15.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Oct 2018 04:16:00 -0700 (PDT)
+Date:   Thu, 25 Oct 2018 13:15:57 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: 'ds/test-multi-pack-index' vs. 'ab/commit-graph-progress'
+Message-ID: <20181025111557.GL30222@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-struct commmit needs to be defined before commit-slab can generate
-working code, object_id should be at least known through a forward
-declaration
+Hi,
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- commit-slab-impl.h | 2 ++
- commit-slab.h      | 2 ++
- 2 files changed, 4 insertions(+)
+when branch 'ds/test-multi-pack-index' is merged with
+'ab/commit-graph-progress', IOW 'master', 'next', or 'pu',
+'GIT_TEST_MULTI_PACK_INDEX=1 ./t6500-gc.sh' fails with:
 
-diff --git a/commit-slab-impl.h b/commit-slab-impl.h
-index e352c2f8c1..db7cf3f19b 100644
---- a/commit-slab-impl.h
-+++ b/commit-slab-impl.h
-@@ -1,6 +1,8 @@
- #ifndef COMMIT_SLAB_IMPL_H
- #define COMMIT_SLAB_IMPL_H
- 
-+#include "commit.h"
-+
- #define implement_static_commit_slab(slabname, elemtype) \
- 	implement_commit_slab(slabname, elemtype, MAYBE_UNUSED static)
- 
-diff --git a/commit-slab.h b/commit-slab.h
-index 69bf0c807c..722252de61 100644
---- a/commit-slab.h
-+++ b/commit-slab.h
-@@ -1,6 +1,8 @@
- #ifndef COMMIT_SLAB_H
- #define COMMIT_SLAB_H
- 
-+struct object_id;
-+
- #include "commit-slab-decl.h"
- #include "commit-slab-impl.h"
- 
--- 
-2.19.1
+  expecting success:
+          git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
+          test_must_be_empty stdout &&
+          test_line_count = 1 stderr &&
+          test_i18ngrep "Computing commit graph generation numbers" stderr
+  
+  + git -c gc.writeCommitGraph=true gc --no-quiet
+  + test_must_be_empty stdout
+  + test_path_is_file stdout
+  + test -f stdout
+  + test -s stdout
+  + test_line_count = 1 stderr
+  + test 3 != 3
+  + wc -l
+  + test 16 = 1
+  + echo test_line_count: line count for stderr != 1
+  test_line_count: line count for stderr != 1
+  + cat stderr
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+  error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+  Computing commit graph generation numbers:  25% (1/4)   ^MComputing commit graph generation numbers:  50% (2/4)   ^MComputing commit graph generation numbers:  75% (3/4)   ^MComputing commit graph generation numbers: 100% (4/4)   ^MComputing commit graph generation numbers: 100% (4/4), done.
+  + return 1
+  error: last command exited with $?=1
+  not ok 9 - gc --no-quiet
+
+
+I suspect these "packfile index unavailable" errors are a Bad Thing,
+but I didn't follow the MIDX development closely enough to judge.
+Surprisingly (to me), 'git gc' didn't exit with error despite these
+errors.
+
+Anyway, this test seems to be too fragile, because that
+
+  test_line_count = 1 stderr
+
+line will trigger, when anything else during 'git gc' prints
+something.  And I find it quite strange that an option called
+'--no-quiet' only shows the commit-graph progress, but not the regular
+output of 'git gc'.
+
 
