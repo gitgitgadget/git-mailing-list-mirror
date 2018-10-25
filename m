@@ -2,209 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8073B1F454
-	for <e@80x24.org>; Thu, 25 Oct 2018 20:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D98D71F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 20:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725867AbeJZFGb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 01:06:31 -0400
-Received: from mail-it1-f201.google.com ([209.85.166.201]:44527 "EHLO
-        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbeJZFGb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 01:06:31 -0400
-Received: by mail-it1-f201.google.com with SMTP id k69-v6so2215543ite.9
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 13:32:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=DsVphwlz36UnHbXY6sN3S4Cn26w60aLN6xboQCiPjOs=;
-        b=Mm2V7QHOobZEEHE2/U+p8AKj+LIxmXGy813ughN2NurCJ95fFx7cmJwvmNt6uCCuIy
-         oqWu0evyaHABuGETloW+3cwTuaOmCPBSH7v9BJHMbQpf3mFezcOMYxnK8axPFOxzvJGL
-         vUWIsSfC2P5jV09oKXGlRSPQoQQ3JS6/6FG4V6KBrtYXvbhVmQ+25Y/HWdJAMOno+4V0
-         YgBnj7FRkIuDo3i1b5BYwoodehNjPpawR/y9pt3GCJGOsEUhzjTqlqNvSkXhQG1i/j9N
-         1vN3Gvos2rpPvazvHrSpvH7zieTvsbFO3Qtco7k+4eh2ijkiiK/N216Yt4fq+hqYKWdC
-         6GpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=DsVphwlz36UnHbXY6sN3S4Cn26w60aLN6xboQCiPjOs=;
-        b=MAYA9zJVnI9hTLVgRVKh1u5iz6lYl7enwryOVKuH04Pm+yaIDF5Co4yOl5BVjQWAaL
-         za8Tj5uxcMrzcrlcNEVP2pkOZRcRkxTXPV4WyrWZ2YwrQT2aEWyP8S4IPlEB/NL9KYAH
-         9sKAP1bF469rWPB1FXnlGbdYj2BJyg8v7/bgKRzByJdn9++iWrQse6JEE57Rzl5Vn9+k
-         ZH3WxbyvW03MGXc2rewP/3/XMICafVNYJmFYDuhn8lvaUzczEfJbWjjYg4rUXHYo9bfL
-         Rbi4nHPXe6QYbEVbA/4UmQC4UE8HNESLPw1NrIF5eQ60nyZVYRDyG8MyePpGXStpHcXO
-         zofw==
-X-Gm-Message-State: AGRZ1gJo+6cOLVOETaZa/qV/uFYcrEplwGtW7HxHhlRn058o+YuNiU26
-        pfDeZS1aAf/YIR53diL5pBVukxwoOI8WAkXYRMnNkeXt4XKA5rZEQnI0Vq9vvEW9cxr1UnUDwtA
-        JXmLXtRnGvsAJXwyrrDV4APdhNSXiqZ62e15LH0gPHPsnUPmJ2DReDfiQJDj2KII=
-X-Google-Smtp-Source: AJdET5cldH7urgaBuQ/S8fenZa1r3apNtGSaHeLlkmjKTX1yMI9P8b3DpQPlrz29qfZ1gvoq6ymJ15aWQd2U2Q==
-X-Received: by 2002:a24:6794:: with SMTP id u142-v6mr577852itc.9.1540499537558;
- Thu, 25 Oct 2018 13:32:17 -0700 (PDT)
-Date:   Thu, 25 Oct 2018 13:32:14 -0700
-In-Reply-To: <39a4e7bf8f3ebc5803393f357d1ee7dc9806252f.1540251936.git.steadmon@google.com>
-Message-Id: <c85673cee76c1c4a7e2b2a489d6139f5c89ba88c.1540499413.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <39a4e7bf8f3ebc5803393f357d1ee7dc9806252f.1540251936.git.steadmon@google.com>
-X-Mailer: git-send-email 2.19.1.568.g152ad8e336-goog
-Subject: [PATCH v5] archive: initialize archivers earlier
-From:   steadmon@google.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        id S1726198AbeJZFWE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 01:22:04 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:38269 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725842AbeJZFWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 01:22:03 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42gzhy67pmz5tmJ;
+        Thu, 25 Oct 2018 22:47:46 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B1BBD130;
+        Thu, 25 Oct 2018 22:47:45 +0200 (CEST)
+Subject: [PATCH 3/2] rebase -i: recognize short commands without arguments
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.43.v2.git.gitgitgadget@gmail.com>
+ <pull.43.v3.git.gitgitgadget@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <fff6fec5-88c9-4125-bf51-5e96e34bf1f6@kdbg.org>
+Date:   Thu, 25 Oct 2018 22:47:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
+MIME-Version: 1.0
+In-Reply-To: <pull.43.v3.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Initialize archivers as soon as possible when running git-archive.
-Various non-obvious behavior depends on having the archivers
-initialized, such as determining the desired archival format from the
-provided filename.
+The sequencer instruction 'b', short for 'break', is rejected:
 
-Since 08716b3c11 ("archive: refactor file extension format-guessing",
-2011-06-21), archive_format_from_filename() has used the registered
-archivers to match filenames (provided via --output) to archival
-formats. However, when git-archive is executed with --remote, format
-detection happens before the archivers have been registered. This causes
-archives from remotes to always be generated as TAR files, regardless of
-the actual filename (unless an explicit --format is provided).
+  error: invalid line 2: b
 
-This patch fixes that behavior; archival format is determined properly
-from the output filename, even when --remote is used.
+The reason is that the parser expects all short commands to have
+an argument. Permit short commands without arguments.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
-Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
-Range-diff against v4:
-1:  1d7b070928 ! 1:  c85673cee7 archive: initialize archivers earlier
-    @@ -96,7 +96,7 @@
-      
-     +test_expect_success GZIP 'git archive with --output and --remote creates .tgz' '
-     +	git archive --output=d5.tgz --remote=. HEAD &&
-    -+	gzip -d -c < d5.tgz > d5.tar &&
-    ++	gzip -d -c <d5.tgz >d5.tar &&
-     +	test_cmp_bin b.tar d5.tar
-     +'
-     +
+ I'll send a another patch in a moment that tests all short
+ sequencer commands, but it is independent from this topic.
 
- archive.c                | 9 ++++++---
- archive.h                | 1 +
- builtin/archive.c        | 2 ++
- builtin/upload-archive.c | 2 ++
- t/t5000-tar-tree.sh      | 6 ++++++
- t/t5003-archive-zip.sh   | 7 ++++++-
- 6 files changed, 23 insertions(+), 4 deletions(-)
+ sequencer.c                | 3 ++-
+ t/lib-rebase.sh            | 2 +-
+ t/t3418-rebase-continue.sh | 4 +++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index c1870105eb..ce0f8a0362 100644
---- a/archive.c
-+++ b/archive.c
-@@ -29,6 +29,12 @@ void register_archiver(struct archiver *ar)
- 	archivers[nr_archivers++] = ar;
- }
+diff --git a/sequencer.c b/sequencer.c
+index ee3961ec63..3107f59ea7 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1954,7 +1954,8 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+ 			item->command = i;
+ 			break;
+-		} else if (bol[1] == ' ' && *bol == todo_command_info[i].c) {
++		} else if ((bol + 1 == eol || bol[1] == ' ') &&
++			   *bol == todo_command_info[i].c) {
+ 			bol++;
+ 			item->command = i;
+ 			break;
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 584604ee63..86572438ec 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -49,7 +49,7 @@ set_fake_editor () {
+ 		case $line in
+ 		squash|fixup|edit|reword|drop)
+ 			action="$line";;
+-		exec*|break)
++		exec*|break|b)
+ 			echo "$line" | sed 's/_/ /g' >> "$1";;
+ 		"#")
+ 			echo '# comment' >> "$1";;
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 185a491089..b282505aac 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -243,7 +243,9 @@ unset GIT_SEQUENCE_EDITOR
  
-+void init_archivers(void)
-+{
-+	init_tar_archiver();
-+	init_zip_archiver();
-+}
-+
- static void format_subst(const struct commit *commit,
-                          const char *src, size_t len,
-                          struct strbuf *buf)
-@@ -531,9 +537,6 @@ int write_archive(int argc, const char **argv, const char *prefix,
- 	git_config_get_bool("uploadarchive.allowunreachable", &remote_allow_unreachable);
- 	git_config(git_default_config, NULL);
- 
--	init_tar_archiver();
--	init_zip_archiver();
--
- 	args.repo = repo;
- 	argc = parse_archive_args(argc, argv, &ar, &args, name_hint, remote);
- 	if (!startup_info->have_repository) {
-diff --git a/archive.h b/archive.h
-index d4f97a00f5..21ac010699 100644
---- a/archive.h
-+++ b/archive.h
-@@ -43,6 +43,7 @@ extern void register_archiver(struct archiver *);
- 
- extern void init_tar_archiver(void);
- extern void init_zip_archiver(void);
-+extern void init_archivers(void);
- 
- typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
- 					const struct object_id *oid,
-diff --git a/builtin/archive.c b/builtin/archive.c
-index e74f675390..d2455237ce 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -97,6 +97,8 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
- 			     PARSE_OPT_KEEP_ALL);
- 
-+	init_archivers();
-+
- 	if (output)
- 		create_output_file(output);
- 
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 25d9116356..018879737a 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -28,6 +28,8 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- 	if (!enter_repo(argv[1], 0))
- 		die("'%s' does not appear to be a git repository", argv[1]);
- 
-+	init_archivers();
-+
- 	/* put received options in sent_argv[] */
- 	argv_array_push(&sent_argv, "git-upload-archive");
- 	for (;;) {
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 2a97b27b0a..602bfd9574 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -206,6 +206,12 @@ test_expect_success 'git archive with --output, override inferred format' '
- 	test_cmp_bin b.tar d4.zip
- '
- 
-+test_expect_success GZIP 'git archive with --output and --remote creates .tgz' '
-+	git archive --output=d5.tgz --remote=. HEAD &&
-+	gzip -d -c <d5.tgz >d5.tar &&
-+	test_cmp_bin b.tar d5.tar
-+'
-+
- test_expect_success 'git archive --list outside of a git repo' '
- 	nongit git archive --list
- '
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index 55c7870997..106eddbd85 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -158,11 +158,16 @@ test_expect_success 'git archive --format=zip with --output' \
-     'git archive --format=zip --output=d2.zip HEAD &&
-     test_cmp_bin d.zip d2.zip'
- 
--test_expect_success 'git archive with --output, inferring format' '
-+test_expect_success 'git archive with --output, inferring format (local)' '
- 	git archive --output=d3.zip HEAD &&
- 	test_cmp_bin d.zip d3.zip
- '
- 
-+test_expect_success 'git archive with --output, inferring format (remote)' '
-+	git archive --remote=. --output=d4.zip HEAD &&
-+	test_cmp_bin d.zip d4.zip
-+'
-+
- test_expect_success \
-     'git archive --format=zip with prefix' \
-     'git archive --format=zip --prefix=prefix/ HEAD >e.zip'
+ test_expect_success 'the todo command "break" works' '
+ 	rm -f execed &&
+-	FAKE_LINES="break exec_>execed" git rebase -i HEAD &&
++	FAKE_LINES="break b exec_>execed" git rebase -i HEAD &&
++	test_path_is_missing execed &&
++	git rebase --continue &&
+ 	test_path_is_missing execed &&
+ 	git rebase --continue &&
+ 	test_path_is_file execed
 -- 
-2.19.1.568.g152ad8e336-goog
-
+2.19.1.406.g1aa3f475f3
