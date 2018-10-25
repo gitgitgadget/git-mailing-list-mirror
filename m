@@ -2,84 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402D71F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 19:14:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 649C41F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 19:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbeJZDsj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 23:48:39 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:43857 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726580AbeJZDsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 23:48:39 -0400
-Received: by mail-qk1-f194.google.com with SMTP id r71so2158464qkr.10
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 12:14:37 -0700 (PDT)
+        id S1727466AbeJZDtA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 23:49:00 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:52546 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726580AbeJZDtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 23:49:00 -0400
+Received: by mail-wm1-f47.google.com with SMTP id 189-v6so2634121wmw.2
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 12:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9revWfsrKDPyuNI+VKDRgjznavhKwLuDS6r754EqQ4o=;
+        b=Ru/Q38mNTo3TBFiOS0lQ7IJmG3H4YXReWTEfW7mKJRUtUwbAKb/IDMmJq5KT8khOyx
+         3oPffvVEZfmw5aww6YY3TRXBVFUZ9/zgIBVKKLPxGzrkygLDaPbqlD3FLpC51GI71kgJ
+         aj2gzajFF0W9WsNiLYOmaYKyI1jQ4xaczEOF5IJvuqX+a//aH3L0Z3R6tfD4uWa6dJlr
+         1jzgNhGWsU/U2a0aZs5VJYe8cE81Uo6z9pvrwsdOU3DyDZ8JaR3/QSIyjLa1om/I1lXQ
+         y+NbSzBQBMnlf6d9z/ekYHQd1BSGDNlqNQRfenf/LO5vWQw5uLRQijyZLni/TgP9gbVy
+         wl2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VSq75s7f8UNNxIZaV92G0YZcEdB0Muwr3sR99Qb8sSA=;
-        b=TVqXDKuW3BGn56ERoEST+znLrhFfAZbQk9F2LBDtsNsnJ/+NEvDLjsDo9AQHiFOsgH
-         owc6lmSQVSVzWUxQyQMvuJhkfnDH8Lx+eordAJol6thNFsBAnYWgi/vymhzxasoJSjUS
-         vTfSWb9Vz49LKrMYgfZG1hQ7zHdfbNxyEcj2ekI4WmG+ki8BPg9Ckk1wlQuUj99H287c
-         CCF22Bm45PBgPBcDgsyb/W5qI3YSupmW8pLZXjjPAj0EESHVgG1629XjMTzGutCTF+HS
-         XBoNJHsm+VHifllffmbVL2VmCaYnq9UlYYeFTEB5VxRtBUixlFLCDKTl7KmqP8LZIznr
-         kVPQ==
-X-Gm-Message-State: AGRZ1gKMOJc9flUm+0yJKp+grWG+lS65UG/PAFDgPp38xRHDsZAP5WA5
-        u64cH95tT6AHBsmkBf68k5u3oNUs4x7WhQDcGITGRg9b
-X-Google-Smtp-Source: AJdET5cR2zAflF/VR3KEaD85XVd9Aan04kCamBuNHZ43BQcgSWDSw8rdc9AKz5xlAnA1JwB35AH/1vksumw8S45ShlE=
-X-Received: by 2002:a37:a315:: with SMTP id m21mr458113qke.152.1540494876974;
- Thu, 25 Oct 2018 12:14:36 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9revWfsrKDPyuNI+VKDRgjznavhKwLuDS6r754EqQ4o=;
+        b=npagV3+46zHZrOozQpEflB2/tOQ9WfzgqrVk/G8Bfixus95RI3S/w7OBelvoXkm/sg
+         31JQybIzuLBCaIG1rJ5ubuxnUHqSoOmjQGI7io7WZX6GSJrMo1YMPmyVwEt/MBCG3wDw
+         bXQDZjz9404KTV4lMigBZQIhzjInrDzApcD9z1dnTZ4HCAvtqe3d4kQQ+YCWETj6UVsr
+         J+x8N0LiknDGob3kSbW9GFW+LIVY2zDXb/MfLjRKUxKizzz+VR69PNF/v8TBUELo5erI
+         RFOmFhwc5pqRA78+IEy3BSuD9z6L8O0FXFESHh43KgL6curXwWd9xx1ThwQRKMMWHMkw
+         02Uw==
+X-Gm-Message-State: AGRZ1gKfxI93x3S1kl7A1iyI7ftRIruLOBT6YV4v6gRxJ1bwFha+vuLF
+        gNOv/N30hrZ1z7WXU9eJDI8=
+X-Google-Smtp-Source: AJdET5e7IQ0ZtosLUXlWLMzjWbDzTJqhfi0lTVEp0rbkUA8027JsayJRJMTOm9TR4G7vGtPZOKqaYg==
+X-Received: by 2002:a1c:be12:: with SMTP id o18-v6mr2642205wmf.111.1540494897199;
+        Thu, 25 Oct 2018 12:14:57 -0700 (PDT)
+Received: from localhost.localdomain ([31.223.156.124])
+        by smtp.gmail.com with ESMTPSA id l140-v6sm3836936wmb.24.2018.10.25.12.14.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Oct 2018 12:14:56 -0700 (PDT)
+From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
+X-Google-Original-From: Slavica Djukic <slawica92@hotmail.com>
+To:     slavicadj.ip2018@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        Slavica Djukic <slawica92@hotmail.com>
+Subject: [PATCH v3 1/3]   [Outreachy] t3903-stash: test without configured user name
+Date:   Thu, 25 Oct 2018 21:13:15 +0200
+Message-Id: <cover.1540494231.git.slawica92@hotmail.com>
+X-Mailer: git-send-email 2.19.1.windows.1
+In-Reply-To: <cover.1540410925.git.slawica92@hotmail.com>
+References: <cover.1540410925.git.slawica92@hotmail.com>
 MIME-Version: 1.0
-References: <20181024063904.36096-1-nbelakovski@gmail.com> <CAPig+cRN_0VVe6dzhnmU73pgo-8ncPzmOx4bRrTBVvReLW6RfQ@mail.gmail.com>
- <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
-In-Reply-To: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 25 Oct 2018 15:14:25 -0400
-Message-ID: <CAPig+cTvKd2DVu7wW_A31p_o7BaNJszu14kNRz9sqk8h45H4-g@mail.gmail.com>
-Subject: Re: [PATCH] worktree: populate lock_reason in get_worktrees and light
- refactor/cleanup in worktree files
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Mike Rappazzo <rappazzo@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 25, 2018 at 1:47 AM Nickolai Belakovski
-<nbelakovski@gmail.com> wrote:
-> The motivation for the change is some work that I'm doing to add a
-> worktree atom in ref-filter.c. I wanted that atom to be able to access
-> all fields of the worktree struct and noticed that lock_reason wasn't
-> getting populated so I figured I'd go and fix that.
->
-> Reviewing this work in the context of your feedback and Junio's
-> previous comments, I think it makes sense to only have a field in the
-> struct indicating whether or not the worktree is locked, and have a
-> separate function for getting the reason.
+Changes since v1:
 
-Is your new ref-filter atom going to be boolean-only or will it also
-have a form (or a separate atom) for retrieving the lock-reason? I
-imagine both could be desirable.
+    *changed:
+	 test_must_fail git config user.email 
+	 to:
+	 test_unconfig user.email &&      
+	 test_unconfig user.name 
 
-In any event, implementation-wise, I would think that such an atom (or
-atoms) could be easily built with the existing worktree API (with its
-lazy-loading and caching), which might be an easy way forward since
-you wouldn't need this patch or the updated one you posted[1], thus no
-need to justify such a change.
+	This is done to make sure that user.email and user.name are not set,
+	instead of asserting it with test_must_fail config user.email.
 
-> Since the only cases in
-> which the reason is retrieved in the current codebase are cases where
-> the program immediately dies, caching seems a moot point.
 
-If your new atom has a form for retrieving the lock reason, then
-caching could potentially be beneficial(?).
 
-[1]: https://public-inbox.org/git/20181025055142.38077-1-nbelakovski@gmail.com/
+Slavica (1):
+  [Outreachy] t3903-stash: test without configured user name
+
+ t/t3903-stash.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+-- 
+2.19.1.windows.1
+
