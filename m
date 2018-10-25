@@ -2,87 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 088E81F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 09:35:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86B891F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 09:40:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbeJYSHr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 14:07:47 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50952 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbeJYSHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 14:07:47 -0400
-Received: by mail-wm1-f67.google.com with SMTP id i8-v6so815306wmg.0
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 02:35:50 -0700 (PDT)
+        id S1726698AbeJYSMq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 14:12:46 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33304 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726640AbeJYSMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 14:12:46 -0400
+Received: by mail-pl1-f193.google.com with SMTP id x6-v6so3608084pln.0
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 02:40:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=z3wiXty+VYThtfTZ96Fmbp+gcfwRHsWUPBKvb+BoTsY=;
-        b=lNab7Z5XhvYMJI2DW/9EG5tqzTOJsBuDPVaFVwPJn+DkV+36KZjj1LL4o0F4kcPtaK
-         QFRd9uNDgMQlqbl7ItlbDnyv+ja3HnY9fARzdiNVjf7zrorswRG9wZyOxrcSCbrUgEiv
-         5WPukdd+uUGCduLigsi2Q9q+jBQdiOIRAN7ebbxq6+L3jekiY6YYuhFB3BNV48MdiJDx
-         hKcXrviLrKGvfx9VlopFlpElds4tUIA30iG3oNcFVt8XXphVzCeJ10ItKzEk8YpWPe4W
-         3zSIwMI6GpDzyDpY+7HcObktCAj3ob4Xzh15nA6D9NmQ8F2RUPpu4AgxwVJC2Zeup4jM
-         U5Gw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JGNcAN7yir9SF2CEh/ZnTEriqT35Bbnh/v0cm4KwA30=;
+        b=q5fLUYmJUBIbcExJlX4jNkUbLOSp4z0hbrPYaLscFtTa5VeKsxi2bRX/I63P6u36jC
+         +2Bq40URRKOtbD2R9xrVcSO/Fum2NT7oLpEmNEKUIThXny1nbdOnScAcmFd9XF2HVNdb
+         wbAZjQI1FWzIs1oM7jjKiX7fDZqMZODXTmhuueoeX39qso/LXqezVkTqKx1/kJzKXsyR
+         v578Fg3ALQuNw1wBmDfCUid4StnMG9saKV2RVi0iARntO0PPxL4FLpIoX6UZb5N3jyQU
+         geqCWlyg8QeiiGzzo1s7Fuqy1jfDyOvjVFtDcnmlz4Bz+eAj3Cu0sbHgBiqup8wXHQzV
+         8XxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=z3wiXty+VYThtfTZ96Fmbp+gcfwRHsWUPBKvb+BoTsY=;
-        b=DofX0eGs7BiEPoACsz2v4jdhVmw2OuMGFhZBLVZlXxR4qGR848TLurTTsqwPaybCjA
-         O2rf6oURT4CXAGR7+oXi66tfHxIMdzuuwIgjtmsos3sUrLdHj7oE02nlzzcRBHvJF5rv
-         cEAqviBPcnZhQJFJUh9s+9+79G7rHvB4Bag/FZI5PVPICJJzyHAWcXRVdd4ERj3JbhNz
-         zgMlRSY4aoJrHF68RM8HeiBPfUG128wxNJr6eNB0zd3ZhsUVo+3JYlaw29l2OvVtG7ac
-         GIxSumvV9gE7kE1zEe73hpR4/NRV2ULB56iMLo7PlZufkaSvWNLLODvJ1MnoWeC1q+WW
-         zMJQ==
-X-Gm-Message-State: AGRZ1gK61T0EBjNFUxK1EFoWoHpD2xQD9dTfcXFrCn9IDN9Z3giIUeOt
-        NvKKnUpVaCtY/uBxi6XbLEgNe/f2HvM=
-X-Google-Smtp-Source: AJdET5eCEX/PNiiFG8B7XZCmSp9t/vKM4Ly2T8xyKVgwzz/sSbyzN04LOl4nEZRaA99eAP9boTfwng==
-X-Received: by 2002:a1c:2746:: with SMTP id n67-v6mr1062082wmn.116.1540460149491;
-        Thu, 25 Oct 2018 02:35:49 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x17-v6sm4490949wrs.84.2018.10.25.02.35.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 02:35:48 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Karsten Blees <blees@dcon.de>
-Subject: Re: [PATCH 2/3] mingw: replace MSVCRT's fstat() with a Win32-based implementation
-References: <pull.53.git.gitgitgadget@gmail.com>
-        <f2ce9bdc01892b514f75c6c25c3393765593b1ca.1540290197.git.gitgitgadget@gmail.com>
-        <20181024022024.GE6119@genre.crustytoothpaste.net>
-        <nycvar.QRO.7.76.6.1810240927520.4546@tvgsbejvaqbjf.bet>
-        <20181024224047.GF6119@genre.crustytoothpaste.net>
-Date:   Thu, 25 Oct 2018 18:35:47 +0900
-In-Reply-To: <20181024224047.GF6119@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 24 Oct 2018 22:40:47 +0000")
-Message-ID: <xmqq7ei6gyh8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JGNcAN7yir9SF2CEh/ZnTEriqT35Bbnh/v0cm4KwA30=;
+        b=JzMPuUfUqDFZQ5RaPlErdPfRFS6QW1DDurqczIqfv3G8JfxWtG3qmZsE7bGSzZjA8p
+         auYWlUrE7igNk5GluJlk/k/UeAX+kV4ksbTRbh1GHnbm++sqsgSmfRj3ic/52v3PmNvo
+         ykDsgeEgTUK7ht8N5ui80uwGwuqf0JnaTSGo5rOcQOUbpa7PXC2SLl8/haaJ7EhCpx04
+         ozCcA/c+1lwiiKSJyiUErtfdu2dy0tBsgZcJs67mgybxd/wxfvDsyEzFpHQHZWR5ivoo
+         vBonkaQ15Ijx4rI0Od3NCY3ygEszjnzRY6b8JTWVFVvc21uc7yrvb3m1zNA3SEJGvd6t
+         0HEw==
+X-Gm-Message-State: AGRZ1gKYPfn6a6TDFDNfRMjceVZJJIoZlwJ0goPbaUMNSqoF8+BFdImM
+        0uzFQ0Dm7Mj64OzH+yrq4G1OAVkE4OQ=
+X-Google-Smtp-Source: AJdET5eDEQt8aM1cG6uqJ0MQYDJSPvdRsQe83Wm7fH1jKWs5BO1h8qjEHk+HInDfg5OWh6Jx/iyH+Q==
+X-Received: by 2002:a17:902:bc8a:: with SMTP id bb10-v6mr783634plb.99.1540460448028;
+        Thu, 25 Oct 2018 02:40:48 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id f68-v6sm23069141pfe.143.2018.10.25.02.40.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Oct 2018 02:40:47 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     alban.gruin@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v2] sequencer: cleanup for gcc warning in non developer mode
+Date:   Thu, 25 Oct 2018 02:38:54 -0700
+Message-Id: <20181025093854.12783-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.19.1
+In-Reply-To: <CAPUEsphFSs3gmo2N6Oi7rhhsgU2BC3ijZH4yxbcF1R8SKQLjhg@mail.gmail.com>
+References: <CAPUEsphFSs3gmo2N6Oi7rhhsgU2BC3ijZH4yxbcF1R8SKQLjhg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+as shown by:
 
-> Yeah, that behavior is quite old.  I'm surprised that Linux ever did
-> that.
-> ...
-> I don't feel strongly either way.  I feel confident the rest of Git
-> doesn't use that field, so I don't see any downsides to keeping it other
-> than the slight overhead of populating it.  I just thought I'd ask in
-> case there was something important I was missing.
+  sequencer.c: In function ‘write_basic_state’:
+  sequencer.c:2392:37: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+     write_file(rebase_path_verbose(), "");
 
-OK, I'd consider that this part of the review settled for taking the
-patch as-is.  Let's mark the topic for merging to 'next' soonish in
-the what's cooking report.
+where write_file will create an empty file if told to write an empty string
+as can be inferred by the previous call
 
-Thanks.
+the somehow more convoluted syntax works around the issue by providing a non
+empty format string and is already being used for the abort safety file since
+1e41229d96 ("sequencer: make sequencer abort safer", 2016-12-07)
+
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+
+Notes:
+    Changes in v2
+    
+     - Avoid change of behaviour as suggested by Junio
+
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 8dd6db5a01..10f602c4d4 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2335,7 +2335,7 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+ 		write_file(rebase_path_quiet(), "\n");
+ 
+ 	if (opts->verbose)
+-		write_file(rebase_path_verbose(), "");
++		write_file(rebase_path_verbose(), "%s", "");
+ 	if (opts->strategy)
+ 		write_file(rebase_path_strategy(), "%s\n", opts->strategy);
+ 	if (opts->xopts_nr > 0)
+-- 
+2.19.1
+
