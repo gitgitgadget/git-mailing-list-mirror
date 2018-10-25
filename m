@@ -6,62 +6,61 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F7091F454
-	for <e@80x24.org>; Thu, 25 Oct 2018 08:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 761A31F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 08:59:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726709AbeJYR1n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 13:27:43 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50715 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726546AbeJYR1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 13:27:43 -0400
-Received: by mail-wm1-f68.google.com with SMTP id i8-v6so683551wmg.0
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 01:55:54 -0700 (PDT)
+        id S1726759AbeJYRbp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 13:31:45 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39971 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726698AbeJYRbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 13:31:45 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b203-v6so670789wme.5
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 01:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=sVv6SP+nCBYrbQ6WxmhIdjFswfBD/X6BG8AJacLl1fs=;
-        b=Ke4uBBgjxCsZjH4bbL8bqniSCBc6uHjTA2auOUETA1MC2FFQEjkvzkSIpAbC0rbImK
-         F0LKjESj7zM9V/SHcTn+X/SPAmorU7XN3tj3HUDPQzdMcZcz82+FmZu/wbdPag8up3su
-         TrwbOdi+CHSO60/cD2ZreEBDWo+G4iwKTNb9yQRXpgtkBE/VD017ruv/mdJNvNdWpR74
-         TRH9ot6xA0cPjkSb9vUWYG63jF4V4FAJymxIDjOv+F8FqUVJrvg0D9E57dgqGU4JninU
-         w4Q4SA53vJ7W9p21GXcLfzsZEHVEKpqWFjdaJqnuQT2aLTAnt/guQLpeDjdVlejGvrcO
-         jRSg==
+        bh=AzllIumKy9+sa/vw+5Hh38Vj1fh+ed0vyg46h+JFZJo=;
+        b=PTU1VOWtB8ub18UnM1LAjzadRsMfbPBsgdyDO6J3Jw2FjJOd0a6Q5X4RTuCDv3wX9Y
+         XZAcNFudsO9BfkjUSoFFFREUMHO3JnugHWaCkX3e5tz6RRJ42iiGp2/r0c8U/I2N9Pka
+         omV1pbrJP1/SPzUAVqOhfkGtK8FxANTKr6Helql/kL+m/wL+KQLm53fadsjiMFZEZowb
+         pTfxBQ/m8MMYcTdI+hNMMZwtC6KGWsp8qe31084GGcl8YNQSDFxRt/AhfI38VfTn/QzZ
+         9qhcMhrY4GP01L8SuoTdttnSUeCvckBRiEcXCXwykSt6Ee0iv4P1/s/+a9gNPuS9UMVH
+         vpNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=sVv6SP+nCBYrbQ6WxmhIdjFswfBD/X6BG8AJacLl1fs=;
-        b=NcB1c21mTmmHG4/hco8Qx+NN+ngHPhI34xFIP4VrJRWM3PwWsgeqDLi8WnT4XZgBlM
-         RAf4J7s4po5b0wVt7QiGEiwPpX9X1UzLl38uQBjTX+o653+FQefsb5nUeivAMxRV2VC9
-         fG4suNGKUZmpXb6Zk2aIcSHi1Ji7eh2SIldPC8ct8qjrvjp9HIvIITpLgwL6Ln8mk4Ie
-         zS55Wc1SA2JE2RXq3XanWhFtx7//p66yzpmjt5MUkeby+6txIvOhb7u0DqOgmAx7d1qF
-         YhnaA1hXHHbXPrMZrjtknhKWX5F0Td9LX9+vj5t/ko3ZlCqUMfj30hm3ub42VlADRYeR
-         djmg==
-X-Gm-Message-State: AGRZ1gLPjMV2rtpA2LAkfcOjQvkDRUKzTtLXeYPIKWbC5n7Fh4dWOd2q
-        En4GWTy3uqUv0EXDQPgKTRs=
-X-Google-Smtp-Source: AJdET5eoXXZtQbqMSBDGyvkVonTMLCz0xoiSm6uKr1Ql92O9/UnPXLe0/BmKA4oWq+96auJ9Dwikag==
-X-Received: by 2002:a1c:2746:: with SMTP id n67-v6mr911107wmn.116.1540457752890;
-        Thu, 25 Oct 2018 01:55:52 -0700 (PDT)
+        bh=AzllIumKy9+sa/vw+5Hh38Vj1fh+ed0vyg46h+JFZJo=;
+        b=Y0DlMjqGviOTwFU1FzI8JtzmsdaymTYLK7Za5ha+cepNR6h8QLGmtaoJPNV00f8a+V
+         lOO6orn4A3CqwAdNAdWM/04GmQL3X4he95gCWjsIyGggCtavJLYM2L6YbvinicaNBX/N
+         YeXMuZcjKOL3KpdnRF2AXGBjOrHgBuHUC0QqE78QaigWMz9kVu1yLw9ihukhpzCmzswX
+         WfpCcKXWqOqeotyZUrhzDKNALatkWvfwJQSjv0qNPn92DaS6ykkJOVsQtFliNi2FtjFC
+         ML+YWudZoOWuelJooFAI7TuX7jZkI/YspU5i8ylMQCafgn/F6qQqKJROLGdp/q6fkzD7
+         K5gg==
+X-Gm-Message-State: AGRZ1gKV2GpDVLkbS5z2qaxriayI4iduP1nKvhTcaKWN1sCPegt/EcPm
+        ql4HtyyUyXbk3Z79HRyEmHg=
+X-Google-Smtp-Source: AJdET5dyBHke8i3nH4faynHuZ+ABCIIzelnIXQRTyV6B9WQudncQtnJ5OkSA2pr+eviS+hd+RRiong==
+X-Received: by 2002:a1c:9a11:: with SMTP id c17-v6mr924469wme.101.1540457994947;
+        Thu, 25 Oct 2018 01:59:54 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e21-v6sm878904wma.8.2018.10.25.01.55.52
+        by smtp.gmail.com with ESMTPSA id o13-v6sm4610164wrw.93.2018.10.25.01.59.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 01:55:52 -0700 (PDT)
+        Thu, 25 Oct 2018 01:59:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Phillip Wood <phillip.wood@talktalk.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 2/5] am: improve author-script error reporting
+Subject: Re: [PATCH v2 0/5]  am/rebase: share read_author_script()
 References: <20180912101029.28052-1-phillip.wood@talktalk.net>
         <20181018100023.7327-1-phillip.wood@talktalk.net>
-        <20181018100023.7327-3-phillip.wood@talktalk.net>
-Date:   Thu, 25 Oct 2018 17:55:51 +0900
-In-Reply-To: <20181018100023.7327-3-phillip.wood@talktalk.net> (Phillip Wood's
-        message of "Thu, 18 Oct 2018 11:00:20 +0100")
-Message-ID: <xmqqy3amh0bs.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 25 Oct 2018 17:59:53 +0900
+In-Reply-To: <20181018100023.7327-1-phillip.wood@talktalk.net> (Phillip Wood's
+        message of "Thu, 18 Oct 2018 11:00:18 +0100")
+Message-ID: <xmqqtvlah052.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,117 +73,16 @@ Phillip Wood <phillip.wood@talktalk.net> writes:
 
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> If there are errors in a user edited author-script there was no
-> indication of what was wrong. This commit adds some specific error messages
-> depending on the problem. It also relaxes the requirement that the
-> variables appear in a specific order in the file to match the behavior
-> of 'rebase --interactive'.
+> Thanks to Eric for his feedback on v1. I've rerolled based on
+> that. Patches 1 & 2 are new and try to address some of the concerns
+> Eric raised, particularly the error handling for a badly edited author
+> script. See the notes on patches 4 & 5 for the changes to those (they
+> were previously 2 & 3).
 
-That relaxing is sensible; there is no reason to insist that the
-file we are reading was written by exactly the same writer as we
-have.
+I spotted a weird corner case buglet, but it seems that this one is
+ready for 'next' even without fixing that "give it three times and
+we will happily continue" thing.
 
-> diff --git a/builtin/am.c b/builtin/am.c
-> index b68578bc3f..d42b725273 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -270,8 +270,11 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
->  		struct string_list_item *item;
->  		char *np;
->  		char *cp = strchr(buf, '=');
-> -		if (!cp)
-> -			return -1;
-> +		if (!cp) {
-> +			np = strchrnul(buf, '\n');
-> +			return error(_("unable to parse '%.*s'"),
-> +				     (int) (np - buf), buf);
-> +		}
+Do we know of any other issues?  Can we now move it forward?
 
-We are unable to parse because it is not of KEY='VALUE' form.  Is
-that something worth reporting, e.g. "no key present in '%.*s'"?
-
-> @@ -280,7 +283,8 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
->  		*np = '\0';
->  		cp = sq_dequote(cp);
->  		if (!cp)
-> -			return -1;
-> +			return error(_("unable to dequote value of '%s'"),
-> +				     item->string);
-
-At this point, item->string is what we earlier found on the left
-hand side of the '=', i.e. the key.  The message makes sense.
-
-> @@ -308,6 +312,7 @@ static int read_author_script(struct am_state *state)
->  	struct strbuf buf = STRBUF_INIT;
->  	struct string_list kv = STRING_LIST_INIT_DUP;
->  	int retval = -1; /* assume failure */
-> +	int i, name_i = -2, email_i = -2, date_i = -2, err = 0;
-
-That -2 is somewhat cute.  If we find a dup, then it will become -1
-so later check for missing field would not trigger.
-
-> @@ -326,14 +331,38 @@ static int read_author_script(struct am_state *state)
->  	if (parse_key_value_squoted(buf.buf, &kv))
->  		goto finish;
->  
-> -	if (kv.nr != 3 ||
-> -	    strcmp(kv.items[0].string, "GIT_AUTHOR_NAME") ||
-> -	    strcmp(kv.items[1].string, "GIT_AUTHOR_EMAIL") ||
-> -	    strcmp(kv.items[2].string, "GIT_AUTHOR_DATE"))
-> +	for (i = 0; i < kv.nr; i++) {
-> +		if (!strcmp(kv.items[i].string, "GIT_AUTHOR_NAME")) {
-> +			if (name_i >= 0)
-> +				name_i = error(_("'GIT_AUTHOR_NAME' already given"));
-> +			else
-> +				name_i = i;
-
-However, if you have three instances of GIT_AUTHOR_NAME, then
-
- - the first one makes name_i point at it
- - the second one triggers an error and name_i becomes -1
- - the third one makes name_i point at it again
-
-And name_i is not -2 so we won't give "missing" error, which is OK,
-but we end up having a usable name even though we said we detected
-duplicate!
-
-You can probably compare name_i with -2 when detecting the dup to
-fix it, i.e.
-
-	if (name_i != -2)
-		name_i = error("found dup");
-	else
-		name_i = i;
-
-> +		} else if (!strcmp(kv.items[i].string, "GIT_AUTHOR_EMAIL")) {
-> +			if (email_i >= 0)
-> +				email_i = error(_("'GIT_AUTHOR_EMAIL' already given"));
-> +			else
-> +				email_i = i;
-> +		} else if (!strcmp(kv.items[i].string, "GIT_AUTHOR_DATE")) {
-> +			if (date_i >= 0)
-> +				date_i = error(_("'GIT_AUTHOR_DATE' already given"));
-> +			else
-> +				date_i = i;
-> +		} else {
-> +			err = error(_("unknown variable '%s'"),
-> +				    kv.items[i].string);
-> +		}
-> +	}
-> +	if (name_i == -2)
-> +		error(_("missing 'GIT_AUTHOR_NAME'"));
-> +	if (email_i == -2)
-> +		error(_("missing 'GIT_AUTHOR_EMAIL'"));
-> +	if (date_i == -2)
-> +		error(_("missing 'GIT_AUTHOR_DATE'"));
-> +	if (date_i < 0 || email_i < 0 || date_i < 0 || err)
->  		goto finish;
-> -	state->author_name = kv.items[0].util;
-> -	state->author_email = kv.items[1].util;
-> -	state->author_date = kv.items[2].util;
-> +	state->author_name = kv.items[name_i].util;
-> +	state->author_email = kv.items[email_i].util;
-> +	state->author_date = kv.items[date_i].util;
->  	retval = 0;
->  finish:
->  	string_list_clear(&kv, !!retval);
+Thanks.
