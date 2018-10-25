@@ -2,118 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0FFB1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 21:08:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDB421F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 21:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbeJZFnC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 01:43:02 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:56505 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726056AbeJZFnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 01:43:02 -0400
-Received: from [10.0.2.15] ([80.189.70.193])
-        by smtp with ESMTPA
-        id FmrygGISqO2g2Fms0ggQSS; Thu, 25 Oct 2018 22:08:44 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=DKChHRFb c=1 sm=1 tr=0
- a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=Xa4Gbh7psVhIqun5MPkA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v3 3/3] commit-slab: missing definitions and forward
- declarations (hdr-check)
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     pclouds@gmail.com, peff@peff.net, chriscool@tuxfamily.org,
-        l.s.r@web.de
-References: <20181025110427.13655-1-carenas@gmail.com>
- <20181025110427.13655-4-carenas@gmail.com>
- <b6fe7e58-5b3f-f139-be8d-210526a26767@ramsayjones.plus.com>
-Message-ID: <d5b54ed8-689b-6f12-5888-fb598db8f083@ramsayjones.plus.com>
-Date:   Thu, 25 Oct 2018 22:08:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1726787AbeJZFqT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 01:46:19 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:39602 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726387AbeJZFqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 01:46:19 -0400
+Received: by mail-ed1-f44.google.com with SMTP id e5-v6so9793046eds.6
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 14:11:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WzLw4kgZgKvFsTKZ8Dsvw2DSVtf8Bo5N3HYLaf/57OM=;
+        b=f6LjH09zsX6flJRDqng2XSLciTYVCeMz6R8BH28wUjY43wOV3IIHXfIUT5XBow37yt
+         Fo4CDhnheSU62DSgl3lH4Ctts1ZgTioyo3uuWqCx+VxyPCJpd5G5/3mV5E1jET9gob68
+         VQLfcIjhdPJGncSQ3a+MMzMj6+dWmz5pLRpt9ioTYh1DYWyxDoFln9U+qG1PnyluQatW
+         IroDI/W0oV/hEvzQxnmX/P5W9EkhZtgeXjA0GH3ePHvq06BjOdWo2f+qVUCZcbd+xe2k
+         xL9iPPdu+qf6ssGRTGfgcLHY2L7nPNBhwyVIGcezfNN6liWRgSZt3g7Wmh00k4JO/J+W
+         4s1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WzLw4kgZgKvFsTKZ8Dsvw2DSVtf8Bo5N3HYLaf/57OM=;
+        b=K3OvDLh4RBNV+bqTC85YRYP7wNX2YdNjPIeBK3W2HkXZjeKmLMjs4x52StBHMe8Zgj
+         Sx6Mtc2ptiM3HPKZ+Q8+9zlZZIIulzC9WOi2X9YbxxPYIu5rhn8nwbTriD6CP+y/BXH+
+         zcT/R0r7+i31PdMuDJ4mAbwoheJDpRRbSm1eyvilXAktoezKJ1tmqi63dnwpr6dNnmIS
+         suhXmQc2w/MXvvg5kxkltqEnXs4MZ9cDxqRCY9DQaBjBOPXXA/fpTboJRO9NYHryZGmc
+         SrQeiNXEqwmM7zP7WAW/2a+X9VgYQX4KvZBLaoWK9hGsOrmuPSL4Xx9Tp8wV1lOFtDoR
+         A6lA==
+X-Gm-Message-State: AGRZ1gIIcBWzLxw4xu38KnHUWckFuzxxYTNjXXbdRsdhvg+8ZABi54AI
+        EPilUGo/qFnCWLK6o+uTs9E=
+X-Google-Smtp-Source: AJdET5feW6PQb9yowXIM8+fPCBS24crhXhrmX9c4V8gMsGvg9DNbpZsLf/TuRlTQuz8Fod1/wJTVfA==
+X-Received: by 2002:a50:9e2b:: with SMTP id z40-v6mr624955ede.90.1540501918018;
+        Thu, 25 Oct 2018 14:11:58 -0700 (PDT)
+Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
+        by smtp.gmail.com with ESMTPSA id x53-v6sm3489633edx.63.2018.10.25.14.11.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 25 Oct 2018 14:11:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: 'ds/test-multi-pack-index' vs. 'ab/commit-graph-progress'
+References: <20181025111557.GL30222@szeder.dev>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181025111557.GL30222@szeder.dev>
+Date:   Thu, 25 Oct 2018 23:11:55 +0200
+Message-ID: <87va5plois.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <b6fe7e58-5b3f-f139-be8d-210526a26767@ramsayjones.plus.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfIYCPNHeShaycoNyzB77+eSOCBq9SYIXyjpPMm/2NYYBKSOyIle8piV8UN2lKllneXmK4Hf0FoJo26jNSsY8HMIcPpXKywTGFJ9oX+ZQ45jVljC5JOl0
- zQTtGYQcauA12kqCybVdiUyQjB3zjVpZD1I/wDmcJ3Dy/Mvpj+LgtLg/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Thu, Oct 25 2018, SZEDER Gábor wrote:
 
-On 25/10/2018 19:54, Ramsay Jones wrote:
-> 
-> 
-> On 25/10/2018 12:04, Carlo Marcelo Arenas Belón wrote:
->> struct commmit needs to be defined before commit-slab can generate
->> working code, object_id should be at least known through a forward
->> declaration
->>
->> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
->> ---
->>  commit-slab-impl.h | 2 ++
->>  commit-slab.h      | 2 ++
->>  2 files changed, 4 insertions(+)
->>
->> diff --git a/commit-slab-impl.h b/commit-slab-impl.h
->> index e352c2f8c1..db7cf3f19b 100644
->> --- a/commit-slab-impl.h
->> +++ b/commit-slab-impl.h
->> @@ -1,6 +1,8 @@
->>  #ifndef COMMIT_SLAB_IMPL_H
->>  #define COMMIT_SLAB_IMPL_H
->>  
->> +#include "commit.h"
->> +
->>  #define implement_static_commit_slab(slabname, elemtype) \
->>  	implement_commit_slab(slabname, elemtype, MAYBE_UNUSED static)
->>  
->> diff --git a/commit-slab.h b/commit-slab.h
->> index 69bf0c807c..722252de61 100644
->> --- a/commit-slab.h
->> +++ b/commit-slab.h
->> @@ -1,6 +1,8 @@
->>  #ifndef COMMIT_SLAB_H
->>  #define COMMIT_SLAB_H
->>  
->> +struct object_id;
->> +
->>  #include "commit-slab-decl.h"
->>  #include "commit-slab-impl.h"
->>  
->>
-> 
-> Hmm, sorry, I don't see how this patch has anything to do
-> with the other two patches! ;-)
-> 
-> Also, I have a patch to fix up the 'commit-reach.h' header
-> (it was part of my original series, just had to update the
-> commit message), which adds these very #includes and forward
-> declarations when _using_ the commit-slab.
-> 
-> I haven't tried applying your patches yet, which may answer
-> my questions, so I am a little puzzled.
+> when branch 'ds/test-multi-pack-index' is merged with
+> 'ab/commit-graph-progress', IOW 'master', 'next', or 'pu',
+> 'GIT_TEST_MULTI_PACK_INDEX=1 ./t6500-gc.sh' fails with:
+>
+>   expecting success:
+>           git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
+>           test_must_be_empty stdout &&
+>           test_line_count = 1 stderr &&
+>           test_i18ngrep "Computing commit graph generation numbers" stderr
+>
+>   + git -c gc.writeCommitGraph=true gc --no-quiet
+>   + test_must_be_empty stdout
+>   + test_path_is_file stdout
+>   + test -f stdout
+>   + test -s stdout
+>   + test_line_count = 1 stderr
+>   + test 3 != 3
+>   + wc -l
+>   + test 16 = 1
+>   + echo test_line_count: line count for stderr != 1
+>   test_line_count: line count for stderr != 1
+>   + cat stderr
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-d4f2632c6a37149bb546b8b0cfbc56b8183cd0f8.pack index unavailable
+>   error: packfile .git/objects/pack/pack-c67996b982e718f8e3fa70c5ff7db3cecf688bbb.pack index unavailable
+>   Computing commit graph generation numbers:  25% (1/4)   ^MComputing commit graph generation numbers:  50% (2/4)   ^MComputing commit graph generation numbers:  75% (3/4)   ^MComputing commit graph generation numbers: 100% (4/4)   ^MComputing commit graph generation numbers: 100% (4/4), done.
+>   + return 1
+>   error: last command exited with $?=1
+>   not ok 9 - gc --no-quiet
+>
+>
+> I suspect these "packfile index unavailable" errors are a Bad Thing,
+> but I didn't follow the MIDX development closely enough to judge.
+> Surprisingly (to me), 'git gc' didn't exit with error despite these
+> errors.
+>
+> Anyway, this test seems to be too fragile, because that
+>
+>   test_line_count = 1 stderr
 
-So, having now applied your patches, I still don't see what this
-patch has to do with the others! I suppose it is dependent on the
-compiler/version? (the most up-to-date version of clang available
-to me is 5.0.1).
+Yeah maybe it's too fragile, on the other hand it caught what seems to
+be a bug under GIT_TEST_MULTI_PACK_INDEX=true, and the rest of the test
+suite passes, so there's that.
 
-Yes, this will 'fix' the 'commit-reach.h' header (not surprising),
-but I prefer my patch. ;-)
+> line will trigger, when anything else during 'git gc' prints
+> something.  And I find it quite strange that an option called
+> '--no-quiet' only shows the commit-graph progress, but not the regular
+> output of 'git gc'.
 
-Still puzzled.
-
-ATB,
-Ramsay Jones
-
+It's confusing, but the reason for this seeming discrepancy is that
+writing the commit-graph happens in-process, whereas the rest of the
+work done by git-gc (and its output) comes from subprocesses. Most of
+that output is from "git-repack" / "git-pack-objects" which doesn't pay
+the same attention to --quiet and --no-quiet, instead it checks
+isatty(). See cmd_pack_objects().
