@@ -7,113 +7,128 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A15C1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 12:54:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4284E1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 13:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727314AbeJYV0s (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 17:26:48 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:40513 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727234AbeJYV0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 17:26:48 -0400
-Received: by mail-vs1-f65.google.com with SMTP id y195so5400671vsc.7
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 05:54:10 -0700 (PDT)
+        id S1727458AbeJYVdZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 17:33:25 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:41249 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727302AbeJYVdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 17:33:25 -0400
+Received: by mail-vk1-f193.google.com with SMTP id c82so2145233vke.8
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 06:00:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aq5pbAqVW4e6QfQH866/USsMIFQQNLIYKVde3gkQ4os=;
-        b=Nx+nh92smufKfRPHgK4DD8Ai/z59I4CicO4hO+t+CvAY3bfG+e+1Ou9Zx7HmjDdvVB
-         zJEbnPTg/Mka4XmsDRcacw+5pEI9HaRlcz+7TJm6xQVDWyX+U1Lp2L9aHy/PMTXCof1W
-         Tm9kyAU7Yqn5/bvrltNqEHYF1N5Narp+S3R36oic0vifc4ERRE7Y7ajtn4AY1X9WJXB2
-         gOXEmoPhrUAKt68IO4ZILOdOJYWxIoWx55CartwO2/aFBr17pJiyT/yNLc863PPcAdG+
-         THxbtNHJ8Lz7/eVAdQTM7/ZHa6JRLuYzK3swzg8jCIXAOcdM0Hq0UUhBaq2MPRBAdqrx
-         GFQg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=zVimiNSprk2V97wndNvzsG9pmQUtPjQt5fcVcpTl+sg=;
+        b=akfZACaBrHky0RQiucQyzaKfhMmy7HmpCdTJtKRLg83JFa/rMQiXM9021aaa9FTAs0
+         sS0ctwnzfZzj/O67GnxPQ/Ic0MmcXNXIDgSICy0mKo6cIROkcDlPH1H3nYjUWSyMb91X
+         vriavK6Ebpp8A/7iGfIAgrAqb6prD2FCo/o58jYuQrt9j61zGwAjSqj1zxTAvAlMqJsN
+         eNeqxojlM+f06mw1lr3NX/6pIeM8ID0Xf3xyhq52RwDE5Pl43KyX5pTtJAHA+3bwO7ug
+         933LTNuSD2j9hhgpzFWdz66fp9OfE3kgDRQRLhYImao+cnxJYtb4j46cu9lgLW+GnWOU
+         Vt8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aq5pbAqVW4e6QfQH866/USsMIFQQNLIYKVde3gkQ4os=;
-        b=WqJxRFPkuFzCWzlDfWsJ7C5oGkCFNnZdvUbjWnqNXe9cFuOxi10x4kAqvYmnLY3UUd
-         zGS0m39TxYXp52CcueBU/Mm5DgsbD7DBl2a/QvA8KpdLpQgrz4BOpRe5S2HWzVw0XPe3
-         EdNRUp3aNp7XxcGcLb4a2gb3OqCdcRFj6jaHfUnv9iQk8eAaTExnpgTd88+Bc3Zzfsll
-         RXykCb8ch6ArjPm8++jES2aPFyXQnIpwBPzvfi9XBMNwCNH3IXYL7kdgPZPLokVfwtyo
-         rTj1nVvBE3AObDrLajO5yVEXSZ7lFCYC1CrG4OBNbnVku4o44gjO8WLc/9nG45caXXIz
-         5otw==
-X-Gm-Message-State: AGRZ1gJreasptA7IfvEKAyFxV53WRfr+dN/6he1eCn4AmCKac99EmCj1
-        iNfnI5Hapi2H1xhanE/xqG1Up1sp
-X-Google-Smtp-Source: AJdET5cWAh50bjbX/vsx/Ic6JFHyHJ0DOlI56qwDC+IUPErc2jV+VJnjAiAR9yQBX25ffD/gG43Htg==
-X-Received: by 2002:a67:f096:: with SMTP id i22mr637693vsl.174.1540472049383;
-        Thu, 25 Oct 2018 05:54:09 -0700 (PDT)
-Received: from stolee-linux.mshome.net ([167.220.148.125])
-        by smtp.gmail.com with ESMTPSA id 126sm1836361vku.32.2018.10.25.05.54.08
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=zVimiNSprk2V97wndNvzsG9pmQUtPjQt5fcVcpTl+sg=;
+        b=ZIlcrqhwWrCdvA8t9zp4qfuayhWrwkshi9Qk8NfPl721H9irxgklweEiRq5wdjJHSq
+         /j1rruEgUe8BkwjOcSv6D3AKGYMNgW2Y+jMIMjd2DlDcIccm2wiTUAzFUqSr/jqK+Bzl
+         u2ERZzgIywxatWuUbv86TC9zdHcHg5b+kN+Ms57lJEudjFsg//PsnrlN/CoyIb0ts4JE
+         V92vzncW8cBLZGXTOARdMZvhkE/v1ag7ZaPyxaahQgPriMZhhiYTEUYCGyLUUnNzGBw+
+         /jMIJcT53LCDDo4Va1Xtv8ewrb/ngSj5Da0WpFiIee2/AvAfvQHr/pLgZAA4euIuvkTQ
+         6zKg==
+X-Gm-Message-State: AGRZ1gJc7lOBSEhuPZJduAqA3czxjnwu8IjxROFpP2rdk2u2BcS7aZ0j
+        ouKV5b+o4DoMsiuTWQ6Dr3I=
+X-Google-Smtp-Source: AJdET5dwtILHAO8Vh9v4OtLDUQ34iRmnTUJ5ZCQHNKnIKqNvLE3J+Vt9MIipsd/w2c/jFmYB8IRB4w==
+X-Received: by 2002:a1f:32cd:: with SMTP id y196mr656431vky.12.1540472444580;
+        Thu, 25 Oct 2018 06:00:44 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:400:6399:f3e9:8001? ([2001:4898:8010:0:ed35:6399:f3e9:8001])
+        by smtp.gmail.com with ESMTPSA id j7sm1805545vsd.17.2018.10.25.06.00.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Oct 2018 05:54:08 -0700 (PDT)
+        Thu, 25 Oct 2018 06:00:43 -0700 (PDT)
+Subject: Re: [PATCH v3 7/7] revision.c: refactor basic topo-order logic
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.25.v2.git.gitgitgadget@gmail.com>
+ <pull.25.v3.git.gitgitgadget@gmail.com>
+ <020b2f50c5703e8291577b008fdfa567093c6eab.1537551564.git.gitgitgadget@gmail.com>
+ <20181011153510.GF27312@sigill.intra.peff.net>
+ <1c0eb7d3-7f31-9377-d42f-4ac2f36ac26a@gmail.com>
+ <20181025094345.GA18794@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     szeder.dev@gmail.com, avarab@gmail.com, dstolee@microsoft.com
-Subject: [PATCH] packfile: close multi-pack-index in close_all_packs
-Date:   Thu, 25 Oct 2018 12:54:05 +0000
-Message-Id: <20181025125405.30351-1-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.19.1.542.gc4df23f792
-In-Reply-To: <20181025111557.GL30222@szeder.dev>
-References: <20181025111557.GL30222@szeder.dev>
+Message-ID: <8dfc5be8-e3f8-51ab-cdf8-1f083c503a58@gmail.com>
+Date:   Thu, 25 Oct 2018 09:00:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:63.0) Gecko/20100101
+ Thunderbird/63.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181025094345.GA18794@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whenever we delete pack-files from the object directory, we need
-to also delete the multi-pack-index that may refer to those
-objects. Sometimes, this connection is obvious, like during a
-repack. Other times, this is less obvious, like when gc calls
-a repack command and then does other actions on the objects, like
-write a commit-graph file.
+On 10/25/2018 5:43 AM, Jeff King wrote:
+> On Thu, Oct 11, 2018 at 12:21:44PM -0400, Derrick Stolee wrote:
+>
+>>>> 2. INDEGREE: using the indegree_queue priority queue (ordered
+>>>>      by maximizing the generation number), add one to the in-
+>>>>      degree of each parent for each commit that is walked. Since
+>>>>      we walk in order of decreasing generation number, we know
+>>>>      that discovering an in-degree value of 0 means the value for
+>>>>      that commit was not initialized, so should be initialized to
+>>>>      two. (Recall that in-degree value "1" is what we use to say a
+>>>>      commit is ready for output.) As we iterate the parents of a
+>>>>      commit during this walk, ensure the EXPLORE walk has walked
+>>>>      beyond their generation numbers.
+>>> I wondered how this would work for INFINITY. We can't know the order of
+>>> a bunch of INFINITY nodes at all, so we never know when their in-degree
+>>> values are "done". But if I understand the EXPLORE walk, we'd basically
+>>> walk all of INFINITY down to something with a real generation number. Is
+>>> that right?
+>>>
+>>> But after that, I'm not totally clear on why we need this INDEGREE walk.
+>> The INDEGREE walk is an important element for Kahn's algorithm. The final
+>> output order is dictated by peeling commits of "indegree zero" to ensure all
+>> children are output before their parents. (Note: since we use literal 0 to
+>> mean "uninitialized", we peel commits when the indegree slab has value 1.)
+>>
+>> This walk replaces the indegree logic from sort_in_topological_order(). That
+>> method performs one walk that fills the indegree slab, then another walk
+>> that peels the commits with indegree 0 and inserts them into a list.
+> I guess my big question here was: if we have generation numbers, do we
+> need Kahn's algorithm? That is, in a fully populated set of generation
+> numbers (i.e., no INFINITY), we could always just pick a commit with the
+> highest generation number to show.
+>
+> So if we EXPLORE down to a real generation number in phase 1, why do we
+> need to care about INDEGREE anymore? Or am I wrong that we always have a
+> real generation number (i.e., not INFINITY) after EXPLORE? (And if so,
+> why is exploring to a real generation number a bad idea; presumably
+> it's due to a worst-case that goes deeper than we'd otherwise need to
+> here).
 
-The pattern we use to avoid out-of-date in-memory packed_git
-structs is to call close_all_packs(). This should also call
-close_midx(). Since we already pass an object store to
-close_all_packs(), this is a nicely scoped operation.
+The issue is that we our final order (used by level 3) is unrelated to 
+generation number. Yes, if we prioritized by generation number then we 
+could output the commits in _some_ order that doesn't violate 
+topological constraints. However, we are asking for a different 
+priority, which is different than the generation number priority.
 
-This fixes a test failure when running t6500-gc.sh with
-GIT_TEST_MULTI_PACK_INDEX=1.
+In the case of "--topo-order", we want to output the commits reachable 
+from the second parent of a merge before the commits reachable from the 
+first parent. However, in most cases the generation number of the first 
+parent is higher than the second parent (there are more things in the 
+merge chain than in a small topic that got merged). The INDEGREE is what 
+allows us to know when we can peel these commits while still respecting 
+the priority we want at the end.
 
-Reported-by: Szeder Gábor <szeder.dev@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-
-Thanks for the report, Szeder! I think this is the correct fix,
-and more likely to be permanent across all builtins that run
-auto-GC. I based it on ds/test-multi-pack-index so it could easily
-be added on top.
-
+Thanks,
 -Stolee
-
- packfile.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/packfile.c b/packfile.c
-index 841b36182f..37fcd8f136 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -339,6 +339,11 @@ void close_all_packs(struct raw_object_store *o)
- 			BUG("want to close pack marked 'do-not-close'");
- 		else
- 			close_pack(p);
-+
-+	if (o->multi_pack_index) {
-+		close_midx(o->multi_pack_index);
-+		o->multi_pack_index = NULL;
-+	}
- }
- 
- /*
-
-base-commit: 0465a50506023df0932fe0534fe6ac6712c0d854
--- 
-2.17.1
-
