@@ -6,60 +6,68 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F45F1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 03:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32D8D1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 03:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbeJYMAN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 08:00:13 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39539 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbeJYMAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 08:00:12 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r10-v6so6764913wrv.6
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 20:29:22 -0700 (PDT)
+        id S1726633AbeJYMXx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 08:23:53 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38347 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726465AbeJYMXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 08:23:53 -0400
+Received: by mail-wr1-f67.google.com with SMTP id d10-v6so7705291wrs.5
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 20:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=xUr8Zc1lCty2Inrh1QjEaSqMvByd47G9mktCjVeAKuM=;
-        b=u37CFf7gUsYwtCiB+fRcj3UoYnkYjygBN3nwIpMOGXfaNLNtQxta15C1p6Nzx3ag4P
-         SBiEJR4l6I4l/9+yKLZlVu+FMynndtoovW1kRGnq+derRK3FmmZbuGrkP5+AIatDD9Kj
-         zOucNJire/vOMv4pCxBCEsFI+gAf7FWEZ2xYJZDlEypwmqGH0jOIqHzHW/B6Kfy618sZ
-         jsQpF3HIqa4kmzwkTUDA5DbC9XpFApIM+OgSKGUsYdavrAz8f1E173nxmSwq9A+gy/t1
-         2Ru3ONe7loMdjHtNU1K5s/OlM+CoTMTyRt/5nT/PHCri2mcRFYU7orWLoGAoS9m8RXL9
-         8Oeg==
+        bh=IjmmwRNLq9irQjo+c3Ale0RiX/5vI5Flqp5KGQMeCM0=;
+        b=rThC56fmVUu92VnMfV6uUfph2hnGuIfm/FU2ff7cNdNhhu3hHwo8jL+qJD2eO/lRne
+         n9tRBYpdnC6mlthDIQLfq+iIkDZpPkbsuv9MxTd8sHSf2MFqH7No0u0TauPvpNJHnfYZ
+         lWZMxr9PNNQWNpbhJQsyjzML0ief/lnL/hjEgftH+tOlwf6dEv3RuIlXnirKbJyzx7iO
+         VLRTZNK68uvD1Kseska5XjuIbiMhjdnv5rLn/AwD8Mmny6CvUMW9mPsAjCzjsXlLMjds
+         4L5tnfiGMe6brHWwYik9tqVVwUjierLfqvJdjpzlQtJJ8ZR8EnRKWHil3BLyagCtJuMt
+         /1pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=xUr8Zc1lCty2Inrh1QjEaSqMvByd47G9mktCjVeAKuM=;
-        b=sVjxtDhHGD/sV01IPkiO2bRdsbXXZPoLntaG9TD9+voN/uiOVvCthfq+PY1ikJ2/eO
-         mlgPMQc8qVFJDl6qfYZk4exwet6OH20O5uHVjo0PGTeDMB3luIreJyuz7cqMK/dZSBcs
-         7qpOGblwVoEU4qTP7G1rrU61fgPBis6wd37o2E658AJS+e1JCIuSmDON/sVwfma19WN5
-         oSp4fTZDQoemRl12f8Xh+oShMkzSHOlzWnJ4SSnPRB4qYorwXmvmrfR/ZlXj7yZ2DWwb
-         jpR79kHYhqJyxZA4A9v2IxA4YFbE0n40R4OMb9ft167CRoUdOt0nYs4+ND+SBuYhTjXR
-         i1ug==
-X-Gm-Message-State: AGRZ1gINDCFi1mOhiruGmAp42znB5LwX6yL5KfnpXHyPKg5j7Q1Y1OGg
-        nPGjouCVQ/nhE3lPxuvyqrPzUmVs560=
-X-Google-Smtp-Source: AJdET5fHi0gmdTATxxNAI2IgqAMHMD9dOBFT33sbYstPToRdPI3D/fJa8xfn7Xv2ngvUc3Ow++WC+w==
-X-Received: by 2002:a5d:4b0f:: with SMTP id v15-v6mr2216374wrq.180.1540438161301;
-        Wed, 24 Oct 2018 20:29:21 -0700 (PDT)
+        bh=IjmmwRNLq9irQjo+c3Ale0RiX/5vI5Flqp5KGQMeCM0=;
+        b=AxSHSQgjGGay7RiCfZGoHKGikKx42RrWazHV40BiDYE/0ngZ7LukbHW0El31Oz7m+/
+         QuG2sKr2h/HuS7FwS1JH1H2iAoELdvY27HJRxeiw7SBHDew0lUHEGDxz/G9U+GsTpJd1
+         ccoY5AiHat/QYqnYC+2e1+TbO+SXbmBsAxiXfoMvSof7dY2Ki6wIuLl5+X5ZSLTvZoIN
+         xeuyRptF3IuLeVdiVbyBvwi0Uy7rphJEjMVwDobQvpG0Dr8J9/oNWok3O3FXGtPHaDap
+         OqmUGPmnqewj/Mxs3q/hXOhfrjznS+kdVfXEJtLRB6JIZZf+oD9/R5de7mXXO/t4pGaG
+         I5rg==
+X-Gm-Message-State: AGRZ1gIGod9k6jKTs/tYXP/Nfh4gyYXTwo0qhyt5VF85ztyVBL2yaV9n
+        H0DpDSnyTqFJDGWU8mRFCLA=
+X-Google-Smtp-Source: AJdET5fyHrP97ns/YqtHdKeFGmpBpfDWba9z3jB0ci0QDkAgbs6Wsel9eGWNBqp0T53IGcXmuS6PNQ==
+X-Received: by 2002:adf:e18e:: with SMTP id k14-v6mr2489296wri.36.1540439579040;
+        Wed, 24 Oct 2018 20:52:59 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u10-v6sm6370099wrt.59.2018.10.24.20.29.20
+        by smtp.gmail.com with ESMTPSA id x197-v6sm887650wme.15.2018.10.24.20.52.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Oct 2018 20:29:20 -0700 (PDT)
+        Wed, 24 Oct 2018 20:52:57 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, github@brendanforster.com
-Subject: [PATCH] http: give curl version warnings consistently
-References: <pull.46.git.gitgitgadget@gmail.com>
-        <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>
-        <CAPig+cQFb3S0Lm+huUZDN4aw9rWwinh0iZp12ss1zVKpJ=2MdA@mail.gmail.com>
-        <xmqqzhv2lnn6.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 25 Oct 2018 12:29:19 +0900
-In-Reply-To: <xmqqzhv2lnn6.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 25 Oct 2018 12:18:37 +0900")
-Message-ID: <xmqqsh0uln5c.fsf_-_@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] Poison gettext with the Ook language
+References: <20181022153633.31757-1-pclouds@gmail.com>
+        <878t2pd6yu.fsf@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.1810231126470.4546@tvgsbejvaqbjf.bet>
+        <8736sxc6gt.fsf@evledraar.gmail.com>
+        <CACsJy8CX78EbANbv8a354djJaO6dKRpXshHhHJTspJvOSewgpA@mail.gmail.com>
+        <871s8gd32p.fsf@evledraar.gmail.com>
+        <CACsJy8Dex3VYEXmvRZv5_ot1-cwjJtir=kvupzKe7-Z2qPZw+Q@mail.gmail.com>
+Date:   Thu, 25 Oct 2018 12:52:55 +0900
+In-Reply-To: <CACsJy8Dex3VYEXmvRZv5_ot1-cwjJtir=kvupzKe7-Z2qPZw+Q@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 24 Oct 2018 16:41:57 +0200")
+Message-ID: <xmqqh8halm20.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,52 +76,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a requested feature cannot be activated because the version of
-cURL library used to build Git with is too old, most of the codepaths
-give a warning like "$Feature is not supported with cURL < $Version",
-marked for l10n.  A few of them, however, did not follow that pattern
-and said things like "$Feature is not activated, your curl version is
-too old (>= $Version)", and without marking them for l10n.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Update these to match the style of the majority of warnings and mark
-them for l10n.
+> The person who writes
+>
+>  printf(_("%s"), getenv("foo"));
+>
+> may not go through the same thought process as with complexFunction().
+> If _() calls getenv(), because you the order of parameter evaluation
+> is unspecified, you cannot be sure if getenv("foo") will be called
+> before or after the one inside _(). One of them may screw up the
+> other.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- > I have a clean-up suggestion related to this but is orthogonal to
- > this three-patch series (after the fix-up is applied, anyway), which
- > I'll be sending out separately.
-
- So, here it is.
-
- http.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/http.c b/http.c
-index 43e75ac583..2214100e3b 100644
---- a/http.c
-+++ b/http.c
-@@ -834,8 +834,7 @@ static CURL *get_curl_handle(void)
- #if LIBCURL_VERSION_NUM >= 0x072c00
- 		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
- #else
--		warning("CURLSSLOPT_NO_REVOKE not applied to curl SSL options because\n"
--			"your curl version is too old (< 7.44.0)");
-+		warning(_("CURLSSLOPT_NO_REVOKE not suported with cURL < 7.44.0"));
- #endif
- 	}
- 
-@@ -908,8 +907,7 @@ static CURL *get_curl_handle(void)
- 	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
- 			 get_curl_allowed_protocols(-1));
- #else
--	warning("protocol restrictions not applied to curl redirects because\n"
--		"your curl version is too old (>= 7.19.4)");
-+	warning(_("Protocol restrictions not supported with cURL < 7.19.4"));
- #endif
- 	if (getenv("GIT_CURL_VERBOSE"))
- 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1L);
--- 
-2.19.1-542-gc4df23f792
-
+Yup, sometimes we've been sloppy but we should strive to mimick
+efforts like f4ef5173 ("determine_author_info(): copy getenv
+output", 2014-08-27).
