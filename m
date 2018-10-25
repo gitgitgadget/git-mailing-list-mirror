@@ -6,61 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 761A31F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 08:59:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C27661F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 09:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726759AbeJYRbp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 13:31:45 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39971 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbeJYRbp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 13:31:45 -0400
-Received: by mail-wm1-f66.google.com with SMTP id b203-v6so670789wme.5
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 01:59:56 -0700 (PDT)
+        id S1726652AbeJYRfy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 13:35:54 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41624 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726587AbeJYRfy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 13:35:54 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q7-v6so8437901wrr.8
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 02:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=AzllIumKy9+sa/vw+5Hh38Vj1fh+ed0vyg46h+JFZJo=;
-        b=PTU1VOWtB8ub18UnM1LAjzadRsMfbPBsgdyDO6J3Jw2FjJOd0a6Q5X4RTuCDv3wX9Y
-         XZAcNFudsO9BfkjUSoFFFREUMHO3JnugHWaCkX3e5tz6RRJ42iiGp2/r0c8U/I2N9Pka
-         omV1pbrJP1/SPzUAVqOhfkGtK8FxANTKr6Helql/kL+m/wL+KQLm53fadsjiMFZEZowb
-         pTfxBQ/m8MMYcTdI+hNMMZwtC6KGWsp8qe31084GGcl8YNQSDFxRt/AhfI38VfTn/QzZ
-         9qhcMhrY4GP01L8SuoTdttnSUeCvckBRiEcXCXwykSt6Ee0iv4P1/s/+a9gNPuS9UMVH
-         vpNQ==
+        bh=N/DyumksOmm7NylMhGQKim/AcksVWFTmPXT3r3bDEb0=;
+        b=rcH0ypNAJUhFm/uTj11SctwX4Pw40MqV8j0Hv5WEle4wgxVLL2CvAlgFUvt5NqpLU2
+         s3wXjNJ0lP6ey7kzdMShHRWlTxQmBsBmqQi8sRpW2kl1QZnMOGC0D7QN2Bfa68VlTgDU
+         lM39lVkPWb08rkWVKX8LOjOh0wv9Wy3UKgw7i81G75s2uLibgzNtlXfijjW7fWFkSLb9
+         iuEhqqeZP/r4SpFXuYZeOrj1w0JBBW9X5xhEOkC/TKqrOLof2THuDak3vUJH3DSsT0mu
+         0/JWJkHgd6cCbtXawbgIDLy1TQl3eLi0SafiAnTAv03tSsXLfDUW2fOn+7k0ubUgMqBO
+         L1PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=AzllIumKy9+sa/vw+5Hh38Vj1fh+ed0vyg46h+JFZJo=;
-        b=Y0DlMjqGviOTwFU1FzI8JtzmsdaymTYLK7Za5ha+cepNR6h8QLGmtaoJPNV00f8a+V
-         lOO6orn4A3CqwAdNAdWM/04GmQL3X4he95gCWjsIyGggCtavJLYM2L6YbvinicaNBX/N
-         YeXMuZcjKOL3KpdnRF2AXGBjOrHgBuHUC0QqE78QaigWMz9kVu1yLw9ihukhpzCmzswX
-         WfpCcKXWqOqeotyZUrhzDKNALatkWvfwJQSjv0qNPn92DaS6ykkJOVsQtFliNi2FtjFC
-         ML+YWudZoOWuelJooFAI7TuX7jZkI/YspU5i8ylMQCafgn/F6qQqKJROLGdp/q6fkzD7
-         K5gg==
-X-Gm-Message-State: AGRZ1gKV2GpDVLkbS5z2qaxriayI4iduP1nKvhTcaKWN1sCPegt/EcPm
-        ql4HtyyUyXbk3Z79HRyEmHg=
-X-Google-Smtp-Source: AJdET5dyBHke8i3nH4faynHuZ+ABCIIzelnIXQRTyV6B9WQudncQtnJ5OkSA2pr+eviS+hd+RRiong==
-X-Received: by 2002:a1c:9a11:: with SMTP id c17-v6mr924469wme.101.1540457994947;
-        Thu, 25 Oct 2018 01:59:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o13-v6sm4610164wrw.93.2018.10.25.01.59.54
+        bh=N/DyumksOmm7NylMhGQKim/AcksVWFTmPXT3r3bDEb0=;
+        b=iq5aWThjnEIpkvziADvmHCNWZoNIo9646ZHp8wJ3Vh1wDo0SBA8WJtIdCUeV3Vn3rm
+         TMuwy8EVPfaFieTdLHDfDpHeDV0OeWBYTs6Kp3dwY6kHtoAt/pQTjwmDwjq64Nzps4GG
+         fOSvYXktlOMBIo3F7ttV2Zq8jaau+aVPVG37zyyyBm4DcFMKolZ3NSKcEZm1YKmuvniW
+         6aut8utE4ktfpWpaz9GTqe14zJL5jOO8+NxlgE85Q3QTjFAGevmKuHbaecJgGd9+tT7G
+         ITSXjEUpPLkbfNcCeGgI604rZxn0fZIG1KTcu1T055lrniP7Jkz8BU1D8IRJCg42KvQ/
+         4f4A==
+X-Gm-Message-State: AGRZ1gJyi+K2rOBXRfHdShfCeCVyGtCaGvlLFKabXHqYfxoypIspczT8
+        Oj+V4rZStoF2yYA7xPwE0uU=
+X-Google-Smtp-Source: AJdET5fsKnIKeU1F9XhIxvgGvZ3nMu9XkR0ivHnACL5Gi3Kry4le832fRcnQ/xySrH4ig1DNaXcq8A==
+X-Received: by 2002:a5d:4086:: with SMTP id o6-v6mr990387wrp.133.1540458243280;
+        Thu, 25 Oct 2018 02:04:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q77-v6sm611713wmd.33.2018.10.25.02.04.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 01:59:54 -0700 (PDT)
+        Thu, 25 Oct 2018 02:04:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/5]  am/rebase: share read_author_script()
-References: <20180912101029.28052-1-phillip.wood@talktalk.net>
-        <20181018100023.7327-1-phillip.wood@talktalk.net>
-Date:   Thu, 25 Oct 2018 17:59:53 +0900
-In-Reply-To: <20181018100023.7327-1-phillip.wood@talktalk.net> (Phillip Wood's
-        message of "Thu, 18 Oct 2018 11:00:18 +0100")
-Message-ID: <xmqqtvlah052.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: be more precise in parsing v2 response
+References: <20181019225404.34496-1-jonathantanmy@google.com>
+        <xmqqwoqav8g6.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 25 Oct 2018 18:04:01 +0900
+In-Reply-To: <xmqqwoqav8g6.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 22 Oct 2018 14:47:37 +0900")
+Message-ID: <xmqqpnvygzy6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,20 +66,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Jonathan Tan <jonathantanmy@google.com> writes:
 >
-> Thanks to Eric for his feedback on v1. I've rerolled based on
-> that. Patches 1 & 2 are new and try to address some of the concerns
-> Eric raised, particularly the error handling for a badly edited author
-> script. See the notes on patches 4 & 5 for the changes to those (they
-> were previously 2 & 3).
+>> +	GIT_TRACE_PACKET="$(pwd)/log" test_must_fail git -C http_child \
+>> +		-c protocol.version=2 \
+>> +		fetch "$HTTPD_URL/one_time_sed/http_parent" 2> err &&
+>
+> Because test_must_fail is a shell function, the above is not a
+> correct way to say "I want GIT_TRACE_PACKET exported only while this
+> thing runs".
+>
+> I'll squash the following in.
+>
+>  t/t5702-protocol-v2.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+> index 51009ca391..d58fbfa9e5 100755
+> --- a/t/t5702-protocol-v2.sh
+> +++ b/t/t5702-protocol-v2.sh
+> @@ -555,7 +555,7 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
+>  	printf "/acknowledgments/,$ s/0000/0001/" \
+>  		>"$HTTPD_ROOT_PATH/one-time-sed" &&
+>  
+> -	GIT_TRACE_PACKET="$(pwd)/log" test_must_fail git -C http_child \
+> +	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" git -C http_child \
+>  		-c protocol.version=2 \
+>  		fetch "$HTTPD_URL/one_time_sed/http_parent" 2> err &&
+>  	grep "fetch< acknowledgments" log &&
 
-I spotted a weird corner case buglet, but it seems that this one is
-ready for 'next' even without fixing that "give it three times and
-we will happily continue" thing.
+I know it only has been a few days, but is there any other issue
+in the patch, anybody?
 
-Do we know of any other issues?  Can we now move it forward?
+Otherwise, I am wondering if we can move this forwared after
+squashing the above fix in.
 
 Thanks.
