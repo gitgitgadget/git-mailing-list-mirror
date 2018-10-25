@@ -2,124 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D4961F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 18:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 529601F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 19:00:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727472AbeJZD3B (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 23:29:01 -0400
-Received: from mail-io1-f73.google.com ([209.85.166.73]:50974 "EHLO
-        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727350AbeJZD3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 23:29:01 -0400
-Received: by mail-io1-f73.google.com with SMTP id q127-v6so7706344iod.17
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 11:55:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=FbfWO9z734LtXWHPZZujuN/lBRkgPuBBwXEANqM4+Ng=;
-        b=P2nI/FOGu4x+gm/FjnLlFdBWl3I/nwvX1c93d+IBktHB695Q5uRkm9WBm2PCbEQ6pF
-         H5iRXPyg71fea61O5HffRxN9jILbuWBR/nPO5B1CZkrITMM3vUiNo8Ibo1o6xOkwiIBp
-         mff9C2gkTbCom9MrEYiFlk79zgUy93sdwS2eMSb430fhc7tmYDkHxOYxmoykkwfP0+Nd
-         xIZZX2WjrSRHbi4wLpk6LZaok08BRZBlQXAPlrE0vPX/hdza/a/M05BaT8OLr61NGlLI
-         B2YcqboK3JMrwUV2n5eA0XRDtOAiNJQrZ+fcVzh9+yXFfFfzufA4CF17tng5In1hCYVT
-         dQ+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=FbfWO9z734LtXWHPZZujuN/lBRkgPuBBwXEANqM4+Ng=;
-        b=O6sgFxyMr4yL2O/+oJtv8khZUx+H94BvtrX2VCWtNSsFt9q8YETiKYkKt+EYjnD6Ow
-         ov7G5nIRt2xzWXnoTiz+ainU3p9SECpmJ8Z5I8UHNiq94sqBFM5TFa/T8ziO7oQDpn+/
-         qSEWXvs0lDsH4h6Qo5V3dI76z8GX2iqHe4z8lASg7FdSvUBzkqbyyLZHhhOdnGksIVpt
-         TluLKAND1ex21FL316Nn1Or/ZLGGvE0UdYdtik/3QDzIYqZt4ddg3MDnEU5qKJiiuxAP
-         Uvr7jvwsexotnjDw7AzMHsnZmwW88AVtpDN1CjEKAUpreEPagYygqcU3QZZAyjDMfNqx
-         HzvA==
-X-Gm-Message-State: AGRZ1gJSlgVgcokg/0IbX6tDXZqqbEw6GPp/4a4E+PmP94Wq8Jg4vTMs
-        uPUbDEskHkrwcKnmQa7uakd6nz49DIvsvv0N1VCk
-X-Google-Smtp-Source: AJdET5efoXirOMx+oB5yyNB/RHRaEcxd7V2od+R4ytcbIWAuqgTQziAI3vggfVjWtjKgCS9fK2TGIx6gHSqssw70y6OA
-X-Received: by 2002:a24:9085:: with SMTP id x127-v6mr315380itd.17.1540493702518;
- Thu, 25 Oct 2018 11:55:02 -0700 (PDT)
-Date:   Thu, 25 Oct 2018 11:54:59 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1810241756390.4546@tvgsbejvaqbjf.bet>
-Message-Id: <20181025185459.206127-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <nycvar.QRO.7.76.6.1810241756390.4546@tvgsbejvaqbjf.bet>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v3 2/3] shallow: offer to prune only non-existing entries
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Johannes.Schindelin@gmx.de
-Cc:     gitster@pobox.com, jonathantanmy@google.com,
-        christian.couder@gmail.com, git@vger.kernel.org, pclouds@gmail.com,
-        peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        id S1727546AbeJZDeh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 23:34:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37319 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727502AbeJZDeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 23:34:36 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9b03-1gRcqB0OeV-00D3e5; Thu, 25
+ Oct 2018 21:00:28 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9b03-1gRcqB0OeV-00D3e5; Thu, 25
+ Oct 2018 21:00:28 +0200
+Date:   Thu, 25 Oct 2018 21:00:32 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        github@brendanforster.com
+Subject: Re: [PATCH] http: give curl version warnings consistently
+In-Reply-To: <xmqqsh0uln5c.fsf_-_@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810252059510.4546@tvgsbejvaqbjf.bet>
+References: <pull.46.git.gitgitgadget@gmail.com>        <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>        <CAPig+cQFb3S0Lm+huUZDN4aw9rWwinh0iZp12ss1zVKpJ=2MdA@mail.gmail.com>        <xmqqzhv2lnn6.fsf@gitster-ct.c.googlers.com>
+ <xmqqsh0uln5c.fsf_-_@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mxhaOtGPSTgR+NqpbkKDUAyMQI36U7nTGDW9kFCG6y+94sRm2o7
+ uylj6nrLWZhWqW1iE1VlEVOkJlQvIzG30deTX/mdqrkevFcaQ5zFIk+tiEZ9t4xC5d5GyQX
+ EOItZhUOaZ75k6/Y7fZjNfJw6o7LUDIXf6iGlPBW5E+S1UYBchRIqL9yD7O3xNVnkv3LU0S
+ TfokWZBONeac0uwmjC8Vw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kw9GAoKedrE=:XotcOH6mw8xbGjgnP2Xwh9
+ wAHpywmhYiiOUcuO2x+o7BhqhR78qkpW37g6/gbozVOn3SrSsIKV8ETaSq6qRYzOy+TwlV7Qk
+ XQrJK2WwuyebnCtZBYkS1X7LgTpfqXqOfrZSpdQN459bUOuxkZQjrVQ0WPuov4g65skyw0j/O
+ itig/QjeG1Emviw5Xp/lC0EQelej0AbLcO6utC5xmy696zHYq7UTBvIWNmK7jFVLqb000Ct2q
+ s2QXOusTwfv14peaMJ53pT3xIurkfXSWScNQ4xw7riI54+4jzbIc6iGgtP+QHBIK+iEA2TSCb
+ GhbnGlEQ6W55E8ZUL/y35kCpJT+ZzfPV4VyPnfKUpNU3dJo/Fuk0o7LxfJknZ/00B2jloDjHv
+ qZED/ymcEWElUaL2QLn75g3u01OFY4JUnGDGcSp5BZBhYTGU0cmceO2PDMa4AkCySsxaxHius
+ QLy6xZRXn8DCCoy7DcX7FZIf7zb0yeGjpj9B8YrjGlM8X8sFshI6vo7uS8ee8fdUdWxRZsIkX
+ Y7ALUh6AcB9l1Vhkrb9rOFyJSAIdBm+JlGxcIx81/B/DxesMFdfDhDNGTt/b1I8RCw0vEOWL1
+ +Jit+4WXvD/h7SioR+4XqDuaEHR2gSZY54vKsZqVQsq9Ni/CUecS3qbuMQwWu2AydFhFV8gt0
+ g6JhgyTUYY2yWPuSpoIgxwUjmYOAjrnJni3sd1mmxogNjjryk11O53Y83GVycZxMaxmrzNTh5
+ vCbwOtKAAjQJa9tfX3d9IzduKXl0hbqhZEMBLhdwOEGQmyNWHXncSk1GXbQH1QpuXQiNnfTS0
+ Qvz2PsvT8ZvKsWt8/e9KECRO9w6fGzMa7KnmVym+M+0Y+IkJzI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Wed, 24 Oct 2018, Johannes Schindelin wrote:
+Hi Junio,
+
+On Thu, 25 Oct 2018, Junio C Hamano wrote:
+
+> When a requested feature cannot be activated because the version of
+> cURL library used to build Git with is too old, most of the codepaths
+> give a warning like "$Feature is not supported with cURL < $Version",
+> marked for l10n.  A few of them, however, did not follow that pattern
+> and said things like "$Feature is not activated, your curl version is
+> too old (>= $Version)", and without marking them for l10n.
 > 
-> > On Wed, 24 Oct 2018, Junio C Hamano wrote:
-> > 
-> > > Jonathan, do you see any issues with the use of lookup_commit() in
-> > > this change wrt lazy clone?  I am wondering what happens when the
-> > > commit in question is at, an immediate parent of, or an immediate
-> > > child of a promisor object.  I _think_ this change won't make it
-> > > worse for two features in playing together, but thought that it
-> > > would be better to double check.
-> > 
-> > Good point.
-> > 
-> > Instinctively, I would say that no promised object can be a shallow
-> > commit. The entire idea of a shallow commit is that it *is* present, but
-> > none of its parents.
-
-I'm envisioning a client repo with a single branch, cloned both with
---depth=1 and with --filter=<foo>, that has just fetched to the same
-branch also with --depth=1 resulting in a fast-forward from A to B.
-
-If A is B's parent, then A would be known to be promised. (Incidentally,
-the problem is greater in current Git, because for performance reasons,
-we do not check promisor status when lazily fetching - so it doesn't
-matter here whether an object is known to be promised or not.)
-
-When pruning shallow and checking the existence of A, this would trigger
-a fetch for A, which would download all commits and trees reachable from
-it.
-
-It sounds safer to me to use the fast approach in this patch when the
-repository is not partial, and stick to the slow approach when it is.
-
-> > However, I am curious whether there is a better way to check for the
-> > presence of a local commit? Do we have an API function for that, that I
-> > missed? (I do not really want to parse the commit, after all, just verify
-> > that it is not pruned.)
+> Update these to match the style of the majority of warnings and mark
+> them for l10n.
 > 
-> Okay, I looked around a bit. It seems that there is an
-> `is_promisor_object(oid)` function in `pu` to see whether an object was
-> promised. If need be (and I am still not convinced that there is a need),
-> then we can always add a call to that function to the condition.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-I don't think there is a need for is_promisor_object() either - as
-described above, it doesn't completely solve the problem.
+I like this patch better than the one I had prepared for v2, so I dropped
+it again, and "hit the Submit button".
 
-> Coming back to my question whether there is a better way to check for the
-> presence of a local commit, I figured that I can use `has_object_file()`
-> instead of looking up and parsing the commit, as this code does not really
-> need to verify that the shallow entry refers to a commit, but only that it
-> refers to a local object.
+Ciao,
+Dscho
 
-Note that has_object_file() also triggers the lazy fetch if needed, but
-I agree that it's better because you don't really need to parse the
-commit.
-
-There is the possibility of just checking for loose objects (which does
-not trigger any lazy fetches), which works for builtin/prune since it
-only prunes loose objects, but doesn't work in the general case, I
-guess.
+> 
+>  > I have a clean-up suggestion related to this but is orthogonal to
+>  > this three-patch series (after the fix-up is applied, anyway), which
+>  > I'll be sending out separately.
+> 
+>  So, here it is.
+> 
+>  http.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/http.c b/http.c
+> index 43e75ac583..2214100e3b 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -834,8 +834,7 @@ static CURL *get_curl_handle(void)
+>  #if LIBCURL_VERSION_NUM >= 0x072c00
+>  		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
+>  #else
+> -		warning("CURLSSLOPT_NO_REVOKE not applied to curl SSL options because\n"
+> -			"your curl version is too old (< 7.44.0)");
+> +		warning(_("CURLSSLOPT_NO_REVOKE not suported with cURL < 7.44.0"));
+>  #endif
+>  	}
+>  
+> @@ -908,8 +907,7 @@ static CURL *get_curl_handle(void)
+>  	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
+>  			 get_curl_allowed_protocols(-1));
+>  #else
+> -	warning("protocol restrictions not applied to curl redirects because\n"
+> -		"your curl version is too old (>= 7.19.4)");
+> +	warning(_("Protocol restrictions not supported with cURL < 7.19.4"));
+>  #endif
+>  	if (getenv("GIT_CURL_VERBOSE"))
+>  		curl_easy_setopt(result, CURLOPT_VERBOSE, 1L);
+> -- 
+> 2.19.1-542-gc4df23f792
+> 
+> 
