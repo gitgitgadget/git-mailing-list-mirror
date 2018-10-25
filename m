@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09F131F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31B991F453
 	for <e@80x24.org>; Thu, 25 Oct 2018 23:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727654AbeJZIHV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 04:07:21 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:45303 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727650AbeJZIHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 04:07:20 -0400
-Received: by mail-vk1-f201.google.com with SMTP id 80so3011324vki.12
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 16:32:42 -0700 (PDT)
+        id S1727658AbeJZIHX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 04:07:23 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:38136 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727650AbeJZIHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 04:07:22 -0400
+Received: by mail-qt1-f202.google.com with SMTP id b55-v6so11001910qtb.5
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 16:32:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=B00n941xueuBWwdXzRKPIBl5kroqyU94J3aafKflOrg=;
-        b=qnv2Glrt03GXRTysa4i17kviPQk/kpbpbWu5RrcXr3d22nX/YeqOMaFMD0dcJDHjwM
-         bsRPAZStNOapG35JZpyiH75ZLyFyiXEM2dTYnALNVyqE651pDBOd+JVDib3XrWbCJlhj
-         jCvGP6jlq9UVRHmaTwBydf/Rnv5dlQIQWcEYevB2f7A0Yti87z0WHt/jmtQO4B4nNfk4
-         34+AgO1FkYkP8LciRMqK7hpXBJkm7ZzCeyW+p8xCcIvwzc+l0NOakzhW8FjDc6qcbFgN
-         YfURKJnTcZYTbYuO+Lnb1WivqfkCoDsRpn2a1RNhdyEDjyEeI8uL4ukF+oM3Y9okXkzc
-         PnRQ==
+        bh=dKkiRNzxRqU0laEc6xb/t6nsn4iaEPm7vic1aGSiMvA=;
+        b=nApvsjj2CIcdu2pjJtV0C/oQod1qenJqzDfKuJWbDZc9+f8RY+47enLb2MzgsRNWno
+         dgLzuun4I0MtV7NlzA/CCH414MmUkWjsk7VUtdoW8RPgmy4LYIOU64yqmVGzPw5dqb/w
+         tvxZuAShqr7rfHRmImI4dhWC34/ecHHo9sAS4IBa0bK5yOgu3AzGkiaRiWzYZVCsUxOU
+         C8QxmIOInKEgrSuJ9Wz0Y+ISewN/qp5+R0xYQslRFj8mBPKaL7aofUVzDAUDdnsFMQdU
+         2p9y+yMfTOYKdojnGCVky0A0ja9UXDJLIRzDKjxrZbTL5ADYCR4GD33oT96f7151aThI
+         6jMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=B00n941xueuBWwdXzRKPIBl5kroqyU94J3aafKflOrg=;
-        b=mEMEzsALh+MPVFGC/i02VtpvY2dTTiAavGaT68pStgPVTGQRvA3RvA/uuxqHe+zn5z
-         rYNk3pgnnFMrl1SwaWBYbnKAwxu4jj96i2MqP/91yRY5Cex6Bbs2v9/oSaPh6fhUNBgy
-         vxiFdyOdTO/Q0hfGeJMzfPfF/94zdpzuChthXOFggr1tF+GTviU7O/Wwppxa60eIQR1Q
-         KnH9tKb3TheQuyqjzxOiLA2o4BtQQj9qghqUAYDHuNgMvp5kHtgpv7RIgOHxXXJVbPVe
-         wlgqPQE8JokFipd1V3jgBAYskfFDrcGMZnV/GfnwShsAH2SZNvD4oRYD1tux4C3rqZvI
-         iwUg==
-X-Gm-Message-State: AGRZ1gLUwLBYNcksKnMwSoFmo42ZKzOiu2N3jKP/HLM8v+6Gjgf9kyEo
-        4oG3z/Jr6YlPIVWU5RJo3m19DLo4/yzJ
-X-Google-Smtp-Source: AJdET5cL5ML8L6UpZ5lQary25WOQf/f3qdVf4OEPCTDSDulouNb3fncR3vTWdzIKnMk8koo5DpB7xwdrBA+p
-X-Received: by 2002:ab0:185f:: with SMTP id j31mr1269480uag.9.1540510361600;
- Thu, 25 Oct 2018 16:32:41 -0700 (PDT)
-Date:   Thu, 25 Oct 2018 16:32:23 -0700
+        bh=dKkiRNzxRqU0laEc6xb/t6nsn4iaEPm7vic1aGSiMvA=;
+        b=uHxCVmhIzLAmNiJqfqjU1N89e8PkqLGA1YTAZdZuxGERbk8ApLTWjDI9P4qTede+v0
+         ZykzTOVZRl8OH8QgGQdXzX+NjV5+vhDWE8/FvyV4ROcOpIhIa1mVc2aZiyAD8tg4E2R/
+         Eq+1l8jkLPXrpmjbKrMnVpkwbFiNWCpj/IDHZjeAR55wTbTlOHrFqgNLC0jCMF2/zhKt
+         4u2NC1MgQGYUaozK1LzXDbrluAhqrXletghVVrMsbRoQtBwqi6MshcFnJxGR6oBU6oF6
+         hGlpdQcUEOI1mTHRkd0GxaHflf1fqW7x2SBTqnO++Za1CkA2DqygXatWqCl0OQnVl0vm
+         IqBA==
+X-Gm-Message-State: AGRZ1gJr40sSbyfn6Fdxu5w5gtIwyv7i3Nc09i20KlRiEsH4pNDF+nWj
+        lXzY92TjFp6oko0yIrbc5O9SgaaQFEZk
+X-Google-Smtp-Source: AJdET5d3o5Y5bgqxISd64wz8NcW+HeH1nIhFFx+NgdAlV0cHoL35gcJVOjSdVWQAnRZKTpUoc6DRFZJbcGYF
+X-Received: by 2002:a37:6082:: with SMTP id u124-v6mr1197501qkb.14.1540510364140;
+ Thu, 25 Oct 2018 16:32:44 -0700 (PDT)
+Date:   Thu, 25 Oct 2018 16:32:24 -0700
 In-Reply-To: <20181025233231.102245-1-sbeller@google.com>
-Message-Id: <20181025233231.102245-3-sbeller@google.com>
+Message-Id: <20181025233231.102245-4-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181025233231.102245-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0
-Subject: [PATCH 02/10] submodule.c: fix indentation
+Subject: [PATCH 03/10] submodule.c: sort changed_submodule_names before
+ searching it
 From:   Stefan Beller <sbeller@google.com>
 To:     jonathantanmy@google.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
@@ -62,42 +63,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The submodule subsystem is really bad at staying within 80 characters.
-Fix it while we are here.
+We can string_list_insert() to maintain sorted-ness of the
+list as we find new items, or we can string_list_append() to
+build an unsorted list and sort it at the end just once.
+
+As we do not rely on the sortedness while building the
+list, we pick the "append and sort at the end" as it
+has better worst case execution times.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- submodule.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ submodule.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/submodule.c b/submodule.c
-index 2b7082b2db..e145ebbb16 100644
+index e145ebbb16..9fbfcfcfe1 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1258,7 +1258,8 @@ static int get_next_submodule(struct child_process *cp,
- 		if (!submodule) {
- 			const char *name = default_name_or_path(ce->name);
- 			if (name) {
--				default_submodule.path = default_submodule.name = name;
-+				default_submodule.path = name;
-+				default_submodule.name = name;
- 				submodule = &default_submodule;
- 			}
- 		}
-@@ -1268,8 +1269,10 @@ static int get_next_submodule(struct child_process *cp,
- 		default:
+@@ -1270,7 +1270,7 @@ static int get_next_submodule(struct child_process *cp,
  		case RECURSE_SUBMODULES_DEFAULT:
  		case RECURSE_SUBMODULES_ON_DEMAND:
--			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
--							 submodule->name))
-+			if (!submodule ||
-+			    !unsorted_string_list_lookup(
-+					&changed_submodule_names,
-+					submodule->name))
+ 			if (!submodule ||
+-			    !unsorted_string_list_lookup(
++			    !string_list_lookup(
+ 					&changed_submodule_names,
+ 					submodule->name))
  				continue;
- 			default_argv = "on-demand";
- 			break;
+@@ -1364,6 +1364,7 @@ int fetch_populated_submodules(struct repository *r,
+ 	/* default value, "--submodule-prefix" and its value are added later */
+ 
+ 	calculate_changed_submodule_paths();
++	string_list_sort(&changed_submodule_names);
+ 	run_processes_parallel(max_parallel_jobs,
+ 			       get_next_submodule,
+ 			       fetch_start_failure,
 -- 
 2.19.0
 
