@@ -2,134 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2E8F1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 21:42:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184B81F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 21:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbeJZGQu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 02:16:50 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41471 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726180AbeJZGQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 02:16:50 -0400
-Received: by mail-ed1-f65.google.com with SMTP id x31-v6so9854034edd.8
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 14:42:27 -0700 (PDT)
+        id S1726442AbeJZGVC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 02:21:02 -0400
+Received: from outbound2n.ore.mailhop.org ([54.186.218.12]:32521 "EHLO
+        outbound2n.ore.mailhop.org" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726275AbeJZGVB (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 26 Oct 2018 02:21:01 -0400
+X-Greylist: delayed 964 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Oct 2018 02:21:00 EDT
+ARC-Seal: i=1; a=rsa-sha256; t=1540503036; cv=none;
+        d=outbound.mailhop.org; s=arc-outbound20181012;
+        b=ZZSI3fPnCX9kb3NXnp+waSpsuOE0A4UfrHPkV6UBQYIIWKfyEEuy5dn7oZJR3FARVKzOzpITJ8qSQ
+         G4q7e/b6tBvIAzEk9paJIOsFRBEZexjHeHZkaGixKCiqHZokv5ivPOCh73cbHgLCHWkFA4ER3GTC98
+         PacclzCcpCr6yxmJ7cl+cVAjsbdra/ALeTLr4ZUkw0g6+rEvosDTzK7yH/tgXWcvuPzhWdCqGLTFRf
+         hQPqULlEc+j/Y28LDX0c6ynX5onWgr7+3rKOOqONg02ZyBo7SKFk/hLh8xX0n76p6NySoYaJ3zQVLN
+         /3BnSVct4hVBVS9JKXXKIoirCFnIO7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=outbound.mailhop.org; s=arc-outbound20181012;
+        h=content-type:mime-version:message-id:subject:to:from:date:dkim-signature:
+         dkim-signature:from;
+        bh=y/7XIIJRcsrZ5sYSTTlw0ddfNM0VIn/XAt1GBJo644Q=;
+        b=hwnFODXucdJSMdRuWoMGVByRGXwkyMcSnRY9v6h4AzDPKP9QCQKdv2w+XYFEPYciM4+ZZnCtDUlrw
+         9uPKsWkEMvkyklzgMZ/Y5o0ZeL5miI+t1Aptyso5c51s3nHZ/EjpEPBRwjjdtkGPcqoKnU/Ye5hm0Y
+         6N07IcX9MnzcBJs3pTQG3CBqiglRksoOZeP+Sv3p+N8D/Jcta1pdjiYYOGUR9EnOHzj81nEsJh7l5n
+         zNEgQxWPqNzQNxuOa3s74zsJaJw5kv9FgiOwPcZBP3iqwMETdkEe/sw61+qNO5d/SCmgC4IH4UORUg
+         G+GxD28IsDOw37Mkxa9oYH1zPT5FqcA==
+ARC-Authentication-Results: i=1; outbound2.ore.mailhop.org;
+        spf=softfail smtp.mailfrom=lakedaemon.net smtp.remote-ip=108.39.81.162;
+        dkim=permerror header.d=lakedaemon.net header.s=mail header.a=rsa-sha256 header.b=T43pHH7B;
+        dmarc=none header.from=lakedaemon.net;
+        arc=none header.oldest-pass=0;
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hz99M6/jnofD4xHrwlE/RyV6r+8tIWn6o29WxBucuy8=;
-        b=tYv78+ef63vPpEtuIEcFJZyjvAGAF5djYnz4ONnIRk1UUgbtVmVyrZQo8zx/LAHjyP
-         YZTKCCRFjkvm1tQ/tzJ9cR1/CPBvhqz8BODzZvnT0EzPQ5+MJ4t9evmf//7FghVa+dgb
-         wBJ/Q0UehSgNldMDpYAajQPX1x3TyTZtl95+HGmJkpROvjwRJDWOLHOzLbu2Y8KofkBW
-         kjemGehcq9laJ0jfx/PlwECHCDUqTgLDOKs+R/dHFFS5JdTQexUDQ7KA1vAAAFTpvFEi
-         +IMX2OVqJN8CiLvGKnEeU/OQ4rVHKpxGxOFzYr/qa9LxU25xw3beNDZh3GuQG3wAEUQ+
-         T2Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hz99M6/jnofD4xHrwlE/RyV6r+8tIWn6o29WxBucuy8=;
-        b=l5UjzbjtL01J1S6ZNMPAYEWscAQFqWXaHMiirWDkgB6sRK16E64OPM6r+EkrnM1PHt
-         tC343+/8P8R6MftLBsrc55mglxtJRMehnyATldn5u26QpoGWJ42vi4Fq5eGQlOAK0gxf
-         BbXAaqD8M2ZuiU3rSrHRxLRyuZn0fBzhfHK/IUoWEoJL02QMf1kuWKn5xIHy7wUyjVML
-         Y4J+0ZjmJOqysKPntyIXU7KjmY/W6RchdLVPm8MKNl3XFU2EGhvGlk5CO2EYO20/Ci9G
-         OKvWPd0mFm9Joy4e1IF4A8T2lDUR71XC6B7yAe1ou5NLvrQ/FEnZ245GgYmxb0kb3lYV
-         HCIw==
-X-Gm-Message-State: AGRZ1gJRVYmwtpZowY0WE92RXcbnN9W3fEuJGZyhYZn33NGFvE58acM8
-        hqJ31hA3i77vRh0JBMaYTZfTMHF3/SMh/Dt1gTAzPw==
-X-Google-Smtp-Source: AJdET5cm07iJM7j9nHpLazSBP+Ln76jHtJQ8lFBpvCD5Qsob/DZIvCO4RXmwmrnc9G57vmzUIDMwsaa7DC6dnmt9JXQ=
-X-Received: by 2002:a17:906:b7d1:: with SMTP id fy17-v6mr519771ejb.70.1540503745940;
- Thu, 25 Oct 2018 14:42:25 -0700 (PDT)
+        d=outbound.mailhop.org; s=dkim-high;
+        h=content-type:mime-version:message-id:subject:to:from:date:from;
+        bh=y/7XIIJRcsrZ5sYSTTlw0ddfNM0VIn/XAt1GBJo644Q=;
+        b=s1kcy+iCEYzcCism9IqXk89D9vceT/KYU8Y6iI9FHffCZyZOsmqUgfK3fobKi+bWtaaIsnTdkRHdN
+         JpTqgWnwdr8mWrnQJ0I+gidwSmdoyMcDQwAqvVwpNd6UoEU9OAp+Hv5kHbE4XG4Zs3Q11I3H1U/sAV
+         rZ/OH0eJl5HC54xgG/78Si3o5XenqGmYg60KgSaIBqAWhwWI0DLtrBc/BdFn3sWhuV1jsr8oWx7rvG
+         Ij5hFNcK17OH0L58yR6hgiC0L0HV4/a+qb874O6vMethmWInlRG5VR7vvWhdaQZygsFVuN94QHds8S
+         GxQJt3v8iv+LOgPZS+7gxoVDzs14ncg==
+X-MHO-RoutePath: amFjMjk5NzkyNDU4
+X-MHO-User: 34353230-d89d-11e8-a630-335f030b21f2
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Originating-IP: 108.39.81.162
+X-Mail-Handler: DuoCircle Outbound SMTP
+Received: from io (unknown [108.39.81.162])
+        by outbound2.ore.mailhop.org (Halon) with ESMTPSA
+        id 34353230-d89d-11e8-a630-335f030b21f2;
+        Thu, 25 Oct 2018 21:30:34 +0000 (UTC)
+Received: from io.lakedaemon.net (localhost [127.0.0.1])
+        by io (Postfix) with ESMTP id 5CFEC80065
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 21:30:32 +0000 (UTC)
+X-DKIM: OpenDKIM Filter v2.6.8 io 5CFEC80065
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
+        s=mail; t=1540503032;
+        bh=y/7XIIJRcsrZ5sYSTTlw0ddfNM0VIn/XAt1GBJo644Q=;
+        h=Date:From:To:Subject;
+        b=T43pHH7B5DpBO70nSITKAZR6k64cGCv3fxulASZPOkFwXqcowEFvUkY+qHMKjLId+
+         lONdMHdMYiNIvZryBQArZbChqtypKSD8IPp+37tKNJbaiz3BmaQ/vAxEXSkOg6xkMj
+         LbpWKT4DGmBEyVN3hLkX1IQV+FOir4JAH5W+oFodfnest2RfBl3phuXZtMFkK7z3FW
+         qg6lxRu4qmh1J8u/rDHLSElHFQQQxAD2qeP/38IBEsiN5Llors7LhG64KC9pnbp049
+         f6vlrWOb8avZFwBxJONqXzrAa8tDlrZ3JVAkWeY9WqmhnQmJZMi0oODqHFj/c5dcpQ
+         Ds6Aej957Q4YQ==
+Date:   Thu, 25 Oct 2018 21:30:32 +0000
+From:   Jason Cooper <git@lakedaemon.net>
+To:     git@vger.kernel.org
+Subject: git filter-branch --filter-renames ?
+Message-ID: <20181025213032.GD24185@io.lakedaemon.net>
 MIME-Version: 1.0
-References: <CAGZ79kZrK5G-EeGRzxyw0xW3ozo9_aPab4r8fn_Jc4hzKDOEwg@mail.gmail.com>
- <20181023233756.190026-1-jonathantanmy@google.com>
-In-Reply-To: <20181023233756.190026-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 25 Oct 2018 14:42:15 -0700
-Message-ID: <CAGZ79kY8bXR2OsdmKMyB+OJP67sWCF=N4KfUdUcpKy5ZQwcV9A@mail.gmail.com>
-Subject: Re: [PATCH 8/9] fetch: retry fetching submodules if needed objects
- were not fetched
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 23, 2018 at 4:38 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > > Another thing you need to clarify is what happens if the fetch-by-commit
-> > > fails. Right now, it seems that it will make the whole thing fail, which
-> > > might be a surprising change in behavior.
-> >
-> > But a positive surprise, I would assume?
->
-> Whether positive or negative, I think that this needs to be mentioned in
-> the commit message.
->
-> As for positive or negative, I tend to agree that it's positive - sure,
-> some previously successful fetches would now fail, but the results of
-> those fetches could not be recursively checked out anyway.
->
-> > > The test stores the result in a normal branch, not a remote tracking
-> > > branch. Is storing in a normal branch required?
-> >
-> > In the test we fetch from another repository, such that in the
-> > repository-under-test this will show up in a remote tracking branch?
+All,
 
-I messed up there. Yes, we need to fetch into a normal branch
-such that the logic of check_for_new_submodule_commits triggers
-no matter where it is on the remote.
+I recently needed to extract the git history of a portion of an existing
+repository.  My initial attempts using --subdirectory-filter, subtrees,
+etc weren't as successful as I'd hoped.
 
-Your experiment below shows that we cannot fetch into FETCH_HEAD:
+The primary reason for my failures were due to the fact that this
+particular source repository has seen a lot of code movement and renames
+in-place.  As a result, filters such as subdirectory filter failed to
+keep commits prior to the renames.
 
-> If that were true, I would expect that when this line:
->
-> > git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
->
-> is replaced by this line:
->
-> > git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2 &&
->
-> then things would still work. The tests pass with the first line (after
-> I fixed a type mismatch) but not with the second. (Also I don't think a
-> remote-tracking branch is generated here - the output printed doesn't
-> indicate so, and refs/changes/2 is not a branch anyway.)
+So, long story short, I've attached below a hacked together script (yes,
+it's sad when one writes a script to call a script :-/) that solves the
+problem for me.
 
-> > > Also, do you know why this is required? A naive reading of the patch
-> > > leads me to believe that this should work even if merely fetching to
-> > > FETCH_HEAD.
-> >
-> > See the next patch, check_for_new_submodule_commits() is missing
-> > for FETCH_HEAD.
->
-> I see in the next patch that there is an "if" branch in
-> store_updated_refs() without update_local_ref() in which
-> "check_for_new_submodule_commits(&rm->old_oid)" needs to be inserted. I
-> think this is a symptom that maybe check_for_new_submodule_commits()
-> needs to be extracted from update_local_ref() and put into
-> store_updated_refs() instead? In update_local_ref(), it is called on
-> ref->new_oid, which is actually the same as rm->old_oid anyway (there is
-> an oidcpy earlier).
+My hope is that some other poor sob in my position discovers this
+script, uses it and moves on.  If enough people think it's useful
+despite the cornercases [1], I'd be happy to work on integrating it into
+filter-branch.
 
-I'll look into that.
+thx,
 
-> > > What is a "default" submodule and why would you need one?
-> >
-> > s/default/artificial/. Such a submodule is a submodule that has no
-> > config in the .gitmodules file and its name == path.
-> > We need to keep those around for historic reasons AFAICT, c.f.
-> > c68f837576 (implement fetching of moved submodules, 2017-10-16)
->
-> Ah, OK. I would call it a fake submodule then, and copy over the "No
-> entry in .gitmodules?" comment.
+Jason.
 
-"fake submodule" sounds like
-http://debuggable.com/posts/git-fake-submodules:4b563ee4-f3cc-4061-967e-0e48cbdd56cb
-which is what I think of when hearing fake submodules.
+[1] Namely that if two different files held the same full-path name at
+different times in the source repo, you'll get some errant commits in
+the history.
+
+------------------->8--------------------------------------------------
+#!/bin/bash
+#
+# git-filter-renames: Similar to --subdirectory-filter but tracks renames
+#
+# Basic use:
+#  $ git clone path/to/source_repo dest_repo
+#  $ cd dest_repo
+#  $ git tags | xargs git tag -d # ours are signed, so would fail to verify
+#  $ git remote remove origin
+#  $ git gc --aggressive --prune=now --force
+#  $ git fsck
+#  $ git-filter-renames.sh "[PREFIX] " fileA subdirB/ fileC subdirD/subdirE ...
+#  $ rm -rf .git/refs/original
+#  $ git gc --aggressive --prune=now --force
+#  $ git fsck
+
+DEBUG=1
+
+if [ $# -le 1 ]; then
+	echo >&2 "Usage:"
+	echo >&2 "    ${0##*/} '[subj prefix] ' fileA fileB dir1 sub/dir2"
+	echo >&2 ""
+	exit 1
+fi
+
+if [ $DEBUG == 1 ]; then
+	rm -rf /tmp/git-filter-renames-*
+fi
+
+TMP_DIR="`mktemp -d /tmp/git-filter-renames-XXXXXX`"
+
+PREFIX="${1}"
+shift
+
+# take in the list of files to preserve
+# note: directories are recursed
+echo -n "" >$TMP_DIR/user_list.txt
+for arg in $*; do
+	if [ -d "$arg" ]; then
+		find $arg -type f >>$TMP_DIR/user_list.txt
+	elif [ -f "$arg" ]; then
+		echo "$arg" >>$TMP_DIR/user_list.txt
+	else
+		echo >&2 "What the hell is '$arg'?"
+	fi
+done
+
+echo -n "" >$TMP_DIR/trace_list.txt
+while read fn <&4; do
+	while read ofn <&5; do
+		echo "^$ofn\$"
+	done 5< <(git log --format=format: --follow --name-only -- "$fn" | \
+		  sed -e '/^$/d' | sort -u)
+done 4< <(cat $TMP_DIR/user_list.txt) | sort -u >>$TMP_DIR/trace_list.txt
+
+# stage the filter script
+cat >$TMP_DIR/filter.sh <<EOF
+git ls-files | \\
+	grep -vf $TMP_DIR/trace_list.txt | \\
+	xargs -r git rm -qrf --ignore-unmatch
+EOF
+chmod +x $TMP_DIR/filter.sh
+
+# stage the msg filter script
+cat >$TMP_DIR/msg_filter.sh <<EOF
+sed -e "1 s/^/$PREFIX/"
+EOF
+chmod +x $TMP_DIR/msg_filter.sh
+
+# do the filtering
+echo >&2 "Doing filtering"
+git filter-branch --prune-empty -f --index-filter "$TMP_DIR/filter.sh" \
+	--msg-filter "$TMP_DIR/msg_filter.sh" \
+	HEAD
+# cleanup
+if [ $DEBUG == 0 ]; then
+	rm -rf $TMP_DIR
+fi
