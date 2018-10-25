@@ -2,97 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_EXCESS_BASE64,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1044C1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 07:07:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB1281F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 07:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726792AbeJYPjC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 11:39:02 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:40102 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726538AbeJYPjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 11:39:02 -0400
-Received: by mail-io1-f68.google.com with SMTP id a23-v6so4791676iod.7
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 00:07:36 -0700 (PDT)
+        id S1726899AbeJYPm2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 11:42:28 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:50702 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726792AbeJYPm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 11:42:28 -0400
+Received: by mail-it1-f195.google.com with SMTP id k206-v6so424929ite.0
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 00:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:cc:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rq8KN8RQMEpfcftO3/RGpGjVx5NEbnHEzWo4/R8Oom0=;
-        b=GKCMwVRkzZNOgSvntN9BshSS98FhH/9dDanyKF6rqmsoPqvlt1FZhVwtRgWI5WupkC
-         LGEUXjsY3dLeecF6cpbYfah3ksUoGiazGBNQpqHY7IGnp7AePc5PbbC8CaL+QLDoJMcD
-         AtAS497ct55yahb98V1LU7hnE90NSAC6IAgoZuUucBPsvC+kMlraOe8nzPiuLgocjHYm
-         VG5BAybNJNfSrxxWxnD0WzaLSQyCHkcr+RkHGL+MUqFmSxWZ7fChICqmEjOUhhSmH1lj
-         rzPBrMTCnRmH+r4qzBmH5unwZaMfCBFIcFLUR+Iof+i79RJfTFSZCJYaHZ+dqcAXNGLD
-         /iYw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KpzFra14Fy5eDYmY7qh4hyMsYFx/S1surUqrKoj/Awo=;
+        b=MKBZp4qfPZPAHg4DemBTB7pnWv/pfXvEeK15TEF7Vh3Qh+vYgTygQ7dklN41UuA4xD
+         Gtun3U1S/abGSi5WLKXG9FaEAV+nWwNVqovlZvjce8Z8/K+b1SF44d8tScIbBupSSBQR
+         Ot2BrExQ7aM29zWJ+SURPj1exjIcYG5iiq+vDgTsqw1QjFNImW0So68CPpTujOABTiSA
+         ergjse4Tv7tDG9VGHl2OV2hkevSMKgnvuzFxkFCdKfGz0Ji09+EDpzoPKLFDwqmcz911
+         rwbVYrj1rDmRr4Rat0sKig7/BK32SiV2yyQ4Vcb/GaGtmra/rhQy1rgj1ZRp+ZrlakG8
+         1A6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:cc:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rq8KN8RQMEpfcftO3/RGpGjVx5NEbnHEzWo4/R8Oom0=;
-        b=kUxg2BnTOXMtYNe+COYi1BEeJT07T95TIldz2IkOAhTbckcTtG77KIempzJJCMmjlA
-         +bQARt1U+6rgH86C3vYiBcEqH/DS/ZywxPLj0xelzl2GYdsi2itvXhWbZ0qZuV1LoUz/
-         t6TsBNtGHWiGvXULUp/nQCGMXoMPQThzQj4bKQ7S6tYFllAZA9K3mMHY1cwOba0AUxGz
-         /lnT7aGS4bM5M3X66bRGEMLyyBbduUYdJHOvqecuhBWLr0LiI3dWCSXSARjrEdoowtID
-         yKz7Z3ejVp/B/hzC8H1yD601X0vcdwyKjc/LS1jNaxfIKMCI8/Y3+Gu0zXPnozjVWT/4
-         vf9Q==
-X-Gm-Message-State: AGRZ1gKRbu89Svsm+FJoBq6mNnj696U8OeoAOiV/amM1j8H2erAh+VAE
-        dF5U49sQchyieGIIeyzjuCP7DubL
-X-Google-Smtp-Source: AJdET5doPNMtdWeU36KwxE/JuS6s0/6wNZ1H/R1d+qglCo+8EZPthllIbBUxNLDWvbbEGGsK1UE4MQ==
-X-Received: by 2002:a6b:5a0f:: with SMTP id o15-v6mr206625iob.136.1540451256472;
-        Thu, 25 Oct 2018 00:07:36 -0700 (PDT)
-Received: from [192.168.1.2] ([14.167.148.1])
-        by smtp.googlemail.com with ESMTPSA id o75-v6sm197160ito.20.2018.10.25.00.07.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Oct 2018 00:07:35 -0700 (PDT)
-Subject: Re: [PATCH] l10n: vi.po: fix typo in pack-objects
-To:     git@vger.kernel.org
-References: <874dee7c-af9f-a609-c325-748160df89cc@1ec5.org>
-From:   =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-Cc:     Minh Nguyen <mxn@1ec5.org>
-Message-ID: <4245c166-7d5a-f173-6329-52b3e562d920@gmail.com>
-Date:   Thu, 25 Oct 2018 14:07:31 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KpzFra14Fy5eDYmY7qh4hyMsYFx/S1surUqrKoj/Awo=;
+        b=QgxVNTKrbMDjAG9g6IRcfO/Ipg/2/9+jYVP6gIhztRkZXOpG3mYIkw86qRkBuIWhKb
+         +yudgPTM2tpzopH3kxzFLfaDGC5Y0Tg+zAFfaI+dSQsfwMQz52IeC+KUwwdMhN7nVUSt
+         750qvSO/JRwa/iOc1XhZV5tHDaupogaMz6GiBv7hgI3MgQMpUdMP7b4KsQg9p0LZWtHK
+         qupooYYwfTvpzn7VmMrc8V7seBdJiN2r591UjkkaE304KRPu1Khdu9GsURJpz+8Pt+Ee
+         IMWb4f1vpx7b3dqjaT0/lvnz5NaTmFI0aA+AC9W3TTz8kZLTk0SHXB9JGtjolxbVc5T/
+         ERuw==
+X-Gm-Message-State: AGRZ1gL0xuM4l3VqGjVvG0MMGeZVXc+M0Tt92CeZ5xbtghUJEZFQd6tm
+        VEeQhsRGtmUQV/qf8Eb1AlEyBjiy1n+jJyNhrxU=
+X-Google-Smtp-Source: AJdET5ce3XGUBHkAb0GEWpZPN08FTBHYxDKDL5Ic2/AZgHO5u31z6MXgfkm9TJ1PShp6ozJjrY7nz+dFHxMlX2ed/0w=
+X-Received: by 2002:a02:5841:: with SMTP id f62-v6mr276838jab.4.1540451461284;
+ Thu, 25 Oct 2018 00:11:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <874dee7c-af9f-a609-c325-748160df89cc@1ec5.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20181025001406.6729-1-carenas@gmail.com> <xmqqlg6mk2pd.fsf@gitster-ct.c.googlers.com>
+ <xmqq8t2mk0jo.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8t2mk0jo.fsf@gitster-ct.c.googlers.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Thu, 25 Oct 2018 00:10:50 -0700
+Message-ID: <CAPUEsphHsWVzdGXBB0EOSNuUb5gNgjyJ+i7PnDJx7LBqejQrNQ@mail.gmail.com>
+Subject: Re: [PATCH] sequencer: cleanup for gcc 8.2.1 warning
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, alban.gruin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your patch. This typo probably  is my false.
+On Wed, Oct 24, 2018 at 11:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+> and they would read naturally.  But may be it is a bit too cute an
+> idea?  I dunno.
 
-On 10/25/18 2:01 AM, Minh Nguyen wrote:
-> ---
->   po/vi.po | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/po/vi.po b/po/vi.po
-> index bc79319b6..e646825ed 100644
-> --- a/po/vi.po
-> +++ b/po/vi.po
-> @@ -13663,7 +13663,7 @@ msgstr "Đánh số các đối tượng"
->   #: builtin/pack-objects.c:3382
->   #, c-format
->   msgid "Total %<PRIu32> (delta %<PRIu32>), reused %<PRIu32> (delta 
-> %<PRIu32>)"
-> -msgstr "Tỏng %<PRIu32> (delta %<PRIu32>), dùng lại %<PRIu32> (delta 
-> %<PRIu32>)"
-> +msgstr "Tổng %<PRIu32> (delta %<PRIu32>), dùng lại %<PRIu32> (delta 
-> %<PRIu32>)"
-> 
->   #: builtin/pack-refs.c:7
->   msgid "git pack-refs [<options>]"
+my first idea was to replace it with a helper called touch_file, since
+I was expecting it will be a popular operation as flag files are
+common in shell scripts and that name will be second nature to anyone
+porting them.
 
+the fact that the quiet flag was created with a single '\n' in the
+code just immediately above this make me go for the proposed
+"solution" instead (which I verified wouldn't change behaviour as you
+described in your post; I apologize for not documenting it in the
+commit and wasting your time).
 
--- 
-Trần Ngọc Quân.
+would something like this work better? (not to apply, and probably mangled)
+
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -35,6 +35,8 @@
+
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+
++#define touch_file(path) write_file(path, "%s", "")
++
+ const char sign_off_header[] = "Signed-off-by: ";
+ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
+
+@@ -2389,7 +2391,7 @@ int write_basic_state(struct replay_opts *opts,
+const char *head_name,
+                write_file(rebase_path_quiet(), "\n");
+
+        if (opts->verbose)
+-               write_file(rebase_path_verbose(), "");
++               touch_file(rebase_path_verbose());
+        if (opts->strategy)
+                write_file(rebase_path_strategy(), "%s\n", opts->strategy);
+        if (opts->xopts_nr > 0)
