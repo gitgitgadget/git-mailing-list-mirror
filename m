@@ -2,143 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC4FC1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 06:20:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53D8F1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 06:22:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727361AbeJYOv4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 10:51:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53842 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727185AbeJYOv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 10:51:56 -0400
-Received: (qmail 25670 invoked by uid 109); 25 Oct 2018 06:20:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 25 Oct 2018 06:20:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13961 invoked by uid 111); 25 Oct 2018 06:19:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 25 Oct 2018 02:19:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2018 02:20:38 -0400
-Date:   Thu, 25 Oct 2018 02:20:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] Poison gettext with the Ook language
-Message-ID: <20181025062037.GC11460@sigill.intra.peff.net>
-References: <20181022153633.31757-1-pclouds@gmail.com>
- <878t2pd6yu.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.1810231126470.4546@tvgsbejvaqbjf.bet>
- <8736sxc6gt.fsf@evledraar.gmail.com>
- <CACsJy8CX78EbANbv8a354djJaO6dKRpXshHhHJTspJvOSewgpA@mail.gmail.com>
- <871s8gd32p.fsf@evledraar.gmail.com>
- <CACsJy8Dex3VYEXmvRZv5_ot1-cwjJtir=kvupzKe7-Z2qPZw+Q@mail.gmail.com>
- <xmqqh8halm20.fsf@gitster-ct.c.googlers.com>
+        id S1727386AbeJYOyL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 10:54:11 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52016 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727185AbeJYOyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 10:54:11 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 143-v6so242683wmf.1
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 23:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=heX5SnSLAtJLLKaQTtILO9RIjDCep95y10GcLB1bSE8=;
+        b=NSGaA+z0K1EcHb7btNfPFTtxBCxuqHOrifpUdsUCiNA/4/NHFNhHVV+r8qNCJOcFMF
+         IqV+A9aG8O8/efpeRTmo5KG0zHnYjNSgdgQO6HHZuA2gqJNF7Lpa7J+/0t90tTlZ4qDV
+         JU/uLGAY6L8yqCfbOqGQgraDJZ/sQbNMwEs5JendK8qa0XsNOiRZo+e94VB23/j+W8fx
+         SS/QSRoTVQ97WMBr4RaXqbqKt8Km49LViQbgB3ikYrL6tL69J0L48J0YfbqG7U4x5MNl
+         b1rVQkuYsTRLvpIAGJr7VTxWRi/ersQ5ys0O/9JtvnpUxKc0ZHJHAlzhzfq1HI6fxZQS
+         qEFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=heX5SnSLAtJLLKaQTtILO9RIjDCep95y10GcLB1bSE8=;
+        b=iOPQ1oY4+hBaISad5tSqN6kbpGGhucVa4zpY+DnJfljzF6nh2iQ83+sUP6/ogq8ORQ
+         HTr4W1WWfF+PMy5t28GnBWMfHftB3C30fR6LRl8+Xy5lQwlLr57M61ZY2tdlIJ/Dztvd
+         olWEyU+4iHra/iKqura9ZhhB1pZ/rDSxjtsCrJ9b1b104GLo29ym7oMASe1GMvihBQQ1
+         5YuWEkD4yuquQMq2sd2qBBVRRyAwjonK9xFuuS/8qimO0ysd1lmlAe/9QCm0394Vgs2z
+         gHss38ZvwCPpE3Ovez3VKZQueLv59X5EMyyBfay/tDEN9wgGGWXgvcxgj20TNyraS8E3
+         1JNg==
+X-Gm-Message-State: AGRZ1gJ8XCvwf8mY33I26DwRCVTPYzZCf8SfhcDGxPOv5MetV7CLCKkd
+        iXk3gJ4y2SSbWuu22beOEeY=
+X-Google-Smtp-Source: AJdET5cg9c6G5a5knx6vcMa/8yRzsD5g8UEw4oNI43kYJXjV7mTz0Q8Lahn/vbXZA5XwebSfDm+OLw==
+X-Received: by 2002:a1c:ab54:: with SMTP id u81-v6mr366637wme.45.1540448572555;
+        Wed, 24 Oct 2018 23:22:52 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h64-v6sm194511wmh.27.2018.10.24.23.22.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Oct 2018 23:22:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, alban.gruin@gmail.com
+Subject: Re: [PATCH] sequencer: cleanup for gcc 8.2.1 warning
+References: <20181025001406.6729-1-carenas@gmail.com>
+        <xmqqlg6mk2pd.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 25 Oct 2018 15:22:51 +0900
+In-Reply-To: <xmqqlg6mk2pd.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 25 Oct 2018 14:36:14 +0900")
+Message-ID: <xmqq8t2mk0jo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh8halm20.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 25, 2018 at 12:52:55PM +0900, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > The person who writes
-> >
-> >  printf(_("%s"), getenv("foo"));
-> >
-> > may not go through the same thought process as with complexFunction().
-> > If _() calls getenv(), because you the order of parameter evaluation
-> > is unspecified, you cannot be sure if getenv("foo") will be called
-> > before or after the one inside _(). One of them may screw up the
-> > other.
-> 
-> Yup, sometimes we've been sloppy but we should strive to mimick
-> efforts like f4ef5173 ("determine_author_info(): copy getenv
-> output", 2014-08-27).
+> I'd have to say that the ability to create an empty file is more
+> important in the longer term.  Can't the workaround be done to
+> write_file() instead?  I actually do not mind if the solution were
+> to introduce a newhelper "write_empty_file()", but the way it is
+> written in the code before this patch, i.e.
+>
+> 	write_file(FILENAME, "")
+>
+> is so obvious a way to create an empty file, so if we do not have to
+> resort to such a hackery to special case an empty file, that would
+> be preferrable.
 
-I've wondered about this before. Even calling:
+It turns out that we have dealt with this before.
 
-  foo = xstrdup(getenv("bar"));
+The trick employed by 7d7d6802 ("silence a bunch of
+format-zero-length warnings", 2014-05-04) is still a caller side
+workaround, but to do
 
-is not necessarily correct, because xstrdup() relies on xmalloc(), which
-may check GIT_ALLOC_LIMIT (we do cache that result, but it can happen on
-the first malloc).
+	-	status_printf_ln(s, GIT_COLOR_NORMAL, "");
+	+	status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
 
-I also wouldn't be surprised if there are cases in our threaded code
-that use getenv() without taking a lock.
+to the function whose third parameter is printf format.
 
-I've definitely run into setenv()/getenv() races on Linux (inside Git,
-even, though it was while working on custom code). But I wonder how
-common it is for getenv() to be invalidated by another getenv() call.
-Certainly POSIX allows it, but every implementation I've seen (which is
-admittedly few) is passing back pointers to a chunk of environment
-memory.
+I do not know if it is a good idea to define a macro
 
-I.e., could we mostly ignore this problem as not applying to most modern
-systems? And if there is such a system, give it a fallback like:
+	#define	EMPTY_CONTENTS	"%s", ""
 
-  /*
-   * For systems that use a single buffer for getenv(), this hacks
-   * around it by giving it _four_ buffers. That's just punting on
-   * the problem, but it at least gives enough breathing room for
-   * the caller to do something sane like use non-trivial functions
-   * to copy the string. It still does nothing for threading, but
-   * hopefully such systems don't support pthreads in the first place. ;)
-   */
-  const char *xgetenv(const char *key)
-  {
-	static struct strbuf bufs[] = {
-		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
-	};
-	static unsigned int cur;
-	struct strbuf *buf;
-	const char *value;
-	size_t len;
+in git-compat-util.h and then replace all the occurrences of "%s", ""
+in the source code with it.  That way, we'd be able to create an
+empty file with
 
-	value = getenv(key);
-	if (!value)
-		return NULL;
+	write_file(FILENAME, EMPTY_CONTENTS);
 
-	buf = bufs[cur++];
-	cur %= ARRAY_SIZE(bufs);
+and write out an empty line with
 
-	/*
-	 * We have to do this length check ourselves, because allocating
-	 * the strbuf may invalidate "value"!
-	 */
-	len = strlen(value);
-	if (buf->alloc <= len) {
-		strbuf_grow(buf, len);
-		value = getenv(key);
-		if (!value)
-			return NULL; /* whoops, it went away! */
-		len = strlen(value); /* paranoia that it didn't change */
-	}
+	status_printf_ln(s, GIT_COLOR_NORMAL, EMPTY_CONTENTS);
 
-	strbuf_reset(buf);
-	strbuf_add(buf, value, len);
+and they would read naturally.  But may be it is a bit too cute an
+idea?  I dunno.
 
-	return buf->buf;
-  }
 
-I dunno. Maybe I am being overly optimistic. But I strongly suspect we
-have such bugs already in our code base, and nobody has run into them
-(OTOH, they are quite finicky due to things like the caching I
-mentioned).
-
--Peff
+	
