@@ -2,99 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDEAD1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 01:24:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E0901F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 01:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726443AbeJYJzO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 05:55:14 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:35140 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbeJYJzO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 05:55:14 -0400
-Received: from [10.0.2.15] ([80.189.70.193])
-        by smtp with ESMTPA
-        id FUOBgEjxsO2g2FUOCgfuJW; Thu, 25 Oct 2018 02:24:44 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=DKChHRFb c=1 sm=1 tr=0
- a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
- a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=C6mKuMgBzr4_TqTqwj8A:9 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] i18n: make GETTEXT_POISON a runtime option
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>
-References: <xmqqsh0xtwgb.fsf@gitster-ct.c.googlers.com>
- <20181023210154.32507-1-avarab@gmail.com>
- <xmqqefcfoq2a.fsf@gitster-ct.c.googlers.com>
- <20181024074400.GA31239@sigill.intra.peff.net>
- <xmqqefcen8ls.fsf@gitster-ct.c.googlers.com>
- <20181025010905.GA4458@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <a5535030-65c1-613c-e4ea-d4379b243b87@ramsayjones.plus.com>
-Date:   Thu, 25 Oct 2018 02:24:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1726317AbeJYK3t (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 06:29:49 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40125 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbeJYK3t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 06:29:49 -0400
+Received: by mail-ed1-f67.google.com with SMTP id r1-v6so6887344edd.7
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 18:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JbbjFC1guBwyZUBQ/a86LcaoDSg4DxCgEBXKHtUOSdg=;
+        b=ALBbAQSb8eKg2CjyAknSQHjXW9fHl79ZDpSuwfUk8PidH+NagCHuC0NNHoCm4ZC9nf
+         lqVAeouNbFdyAXeDqLQ5mZp+74jecNNhNlCD/xE/ognDiwujTrre1xyCCf0IJkBQCAtL
+         xdGQH3gZJgpPc8IPnBlVOMGbPAhkTNsqLIta5aWLmSt0wnKhdpWX7KdYmHamFDXxubCE
+         anUAaZcVfx0ImZcl5GVVDsCHgKw3udyeN9VmCmlq72DHKBjaOhEM57p1Zp+BAmWb3Wfr
+         p44PyiVuFOD0jcMLNcDbvM0Zs4SWfXziYkS1fnaRw9lJkdl18ocH8UHHdsG9ufByX3Av
+         d5Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JbbjFC1guBwyZUBQ/a86LcaoDSg4DxCgEBXKHtUOSdg=;
+        b=m5fxGlnfy1PkPczAknUx5x8LOqHm2Qw0GvEe2ofqYWJZnewSb7kHw/UJiN4krESnay
+         dh3FYVBjSc6lh8kIhzv8cZr2W+RSGYa8TwRbU5JSZr8ytn0cbSPlpiKgJxYhhO4TOfGR
+         hVmIF97/umk7yP87ack3YSloOVcDCEsHb2SO4rjL5GMfT5jq1aQsEadOBWponPrFmE20
+         MEen7vgn+ikF/DApt4I/kdHDQn8jPxLZeJeCLPI0c4r8XzPUN818KJ4lJef1AUbuKfGw
+         dqpK3NKmRJBcAvkivY+ph+OxPiK58ZDsp4meFllGFHZCyF9b416oLmaYhEelGrvoIbit
+         dB4g==
+X-Gm-Message-State: AGRZ1gI+ZXD12rsmTnWmz07jLv6JXI5I7wRcWMju4MmBUipizQtcOmW6
+        Gv5h28bz0+Sekg8RvZ/AEzA=
+X-Google-Smtp-Source: AJdET5flmsxA6GvB5cV4QjlAU0bxggW7YVMfccVDtoFwNFz8FCAeoqaKLLcOFvYLBB5KBUFh0hfRCg==
+X-Received: by 2002:a17:906:4b0f:: with SMTP id y15-v6mr15310eju.64.1540432753917;
+        Wed, 24 Oct 2018 18:59:13 -0700 (PDT)
+Received: from szeder.dev (x4db14d30.dyn.telefonica.de. [77.177.77.48])
+        by smtp.gmail.com with ESMTPSA id c50-v6sm2188404edc.4.2018.10.24.18.59.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Oct 2018 18:59:12 -0700 (PDT)
+Date:   Thu, 25 Oct 2018 03:59:10 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: New semantic patches vs. in-flight topics [was: Re: [PATCH
+ 00/19] Bring more repository handles into our code base]
+Message-ID: <20181025015910.GJ30222@szeder.dev>
+References: <20181016233550.251311-1-sbeller@google.com>
+ <20181022173935.GG30222@szeder.dev>
+ <CAGZ79kboyakR=dARH60ZJmyN=kT+-X0SSDjgz3aswpkUd+bZmg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181025010905.GA4458@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOp2T+ki5mtbJp6TCToEPb38oPLXt0GkQwKrWJ0H/dH1Q89PiaRjxfAhVvqu/jquMV3GUjozfXvneus6cdQtds4zUxbDwoamMPpDEkwbfylEfEw48sVb
- Vvkl7881IKnUSQOvw/XyS3gSDLB66/wioEOuG/dm2bsq2AqeNTBn70xV
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kboyakR=dARH60ZJmyN=kT+-X0SSDjgz3aswpkUd+bZmg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Oct 22, 2018 at 11:54:06AM -0700, Stefan Beller wrote:
 
-
-On 25/10/2018 02:09, Jeff King wrote:
-> On Thu, Oct 25, 2018 at 10:00:31AM +0900, Junio C Hamano wrote:
+> For the sake of a good history, I would think running 'make coccicheck'
+> and applying the resulting patches would be best as part of the (dirty)
+> merge of any topic that proposes new semantic patches, but that would
+> add load to Junio as it would be an extra step during the merge.
 > 
->> Jeff King <peff@peff.net> writes:
->>
->>> but then you lose the default handling. I think if we added a new
->>> option, it would either be:
->>>
->>>   # interpret a value directly; use default on empty, I guess?
->>>   git config --default=false --type=bool --interpret-value "$GIT_WHATEVER_ENV"
->>>
->>> or
->>>
->>>   # less flexible, but the --default semantics are more obvious
->>>   git config --default=false --type=bool --get-env GIT_WHATEVER_ENV
->>
->> Yeah, my thinko.  The latter would be closer to what this patch
->> wants to have, but obviously the former would be more flexible and
->> useful in wider context.  Both have the "Huh?" factor---what they
->> are doing has little to do with "config", but I did not think of a
->> better kitchen-sink (and our default kitchen-sink "rev-parse" is
->> even further than "config", I would think, for this one).
+> One could argue that the step of applying such transformations into
+> the dirty merge is cheaper than resolving merge conflicts that are
+> had when the topic includes the transformation.
+
+Please consider that merge commits' have uglier diffs than regular
+commits, and that merge commits cause additional complications when
+'git bisect' points the finger at them, both of which are exacerbated
+by additional changes squeezed into evil merges.
+
+> >     Consequently, 'make coccicheck' won't run clean and the
+> >     static analysis build job will fail until all those topics reach
+> >     'master', and the remaining transformations are applied on top.
+> >
+> >     This was (and still is!) an issue with the hasheq()/oideq() series
+> >     as well: that series was added on 2018-08-28, and the static
+> >     analysis build job is red on 'pu' ever since.  See the follow-up
+> >     patch e43d2dcce1 (more oideq/hasheq conversions, 2018-10-02), and
+> >     one more follow-up will be necessary after the builtin stash topic
+> >     is merged to 'master'.
 > 
-> Heh, I thought through the exact sequence in your paragraph when writing
-> my other message. That's probably a good sign that we should probably
-> not pursue this further unless we see the use case come up again a few
-> more times (and if we do, then consider "config" the least-bad place to
-> do it).
+> In my understanding this follow up is a feature, as it helps to avoid
+> merge conflicts with other topics in flight.
 
-I was thinking:
+I don't see how such a follow up patch helps to avoid merge conflicts.
 
-  $ git var -e GIT_WHATEVER_ENV
+There were topics that branched off before the introduction of oideq()
+into 'master', therefore they couldn't make use of this new function
+until they were merged to 'master' as well, so they added their own
+!oidcmp() calls.  That follow up patch was necessary to transform
+these new !oidcmp() calls after those topics reached 'master'.  Merge
+conflicts had nothing to do with it.
 
-[-e for environment].
+So this follow up patch is not a feature, but rather an inherent
+consequence of the project's branching model, with lots of parallel
+running topics branching off at different points and progressing at
+different speeds.
 
-... but that is really no different than git-config. ;-)
+> >     This makes it harder to review other patch series.
+> 
+> as 'make coccicheck' is an integral part of your review?
 
-ATB,
-Ramsay Jones
+Erm, right, "review" was not the right word here.  Anyway, as it is,
+'make coccicheck' is an integral part of our automated tests, not only
+on Travis CI but on the upcoming Azure thing as well.  I just try to
+pay attention to its results and the results of a bunch of my
+additional builds, and complain or even send a fix when something goes
+reproducibly wrong.  This has certainly became more cumbersome with
+the permanently failing static analysis build job in the last couple
+of weeks.
 
+> > How about introducing the concept of "pending" semantic patches,
+> > stored in 'contrib/coccinelle/<name>.pending.cocci' files, modifying
+> > 'make coccicheck' to skip them, and adding the new 'make
+> > coccicheck-pending' target to make it convenient to apply them, e.g.
+> > something like the simple patch at the end.
+> >
+> > So the process would go something like this:
+> >
+> >   - A new semantic patch should be added as "pending", e.g. to the
+> >     file 'the_repository.pending.cocci', together with the resulting
+> >     transformations in the same commit.
+> >
+> >     This way neither 'make coccicheck' nor the static analysis build
+> >     job would complain in the topic branch or in the two integration
+> >     branches.  And if they do complain, then we would know right away
+> >     that they complain because of a well-established semantic patch.
+> >     Yet, anyone interested could run 'make coccicheck-pending' to see
+> >     where are we heading.
+> >
+> >   - The author of the "pending" semanting patch should then keep an
+> >     eye on already cooking topics: whether any of them contain new
+> >     code that should be transformed, and how they progress to
+> >     'master', and sending followup patch(es) with the remaining
+> >     transformations when applicable.
+> >
+> >     Futhermore, the author should also pay attention to any new topics
+> >     that branch off after the "pending" semantic patch, and whether
+> >     any of them introduce code to be transformed, warning their
+> >     authors as necessary.
+> >
+> >   - Finally, after all the dust settled, the dev should follow up with
+> >     a patch to:
+> >
+> >       - promote the "penging" patch to '<name>.cocci', if its purpose
+> >         is to avoid undesirable code patterns in the future, or
+> >
+> >       - remove the semantic patch, if it was used in a one-off
+> >         transformation.
+> >
+> > Thoughts?
+> 
+> I like the approach of having separate classes of semantic patches:
+> (a) the regular "we need to keep checking these" as they address
+>     undesirable code patterns, which is what we currently have,
+>     and what 'make coccicheck' would complain about.
+> (b) The pending patches as you propose. However I would
+>     argue that we'd not want to include the transformation into
+>     the same patch as then the patch will have merge conflicts.
+
+Since we have a lot of parallel running topics, merge conflicts are
+basically unavoidable anyway.  If the conflicts from the
+transformation are really that severe, then perhaps the whole series
+should be postponed to a calmer, more suitable time.
+
+In the case of 'the_repository.cocci', merging its transformations
+into 'pu' resulted in only four conflicts, and I found all four on the
+easy side to resolve.  I don't think it's worth waiting with the
+transformations in this particular case.
+
+>     Ideally we'd have an automated process/bot that would apply
+>     all pending semantic patches onto master and then checks for
+>     conflicts in HEAD..pu, and only sends off the non-conflicting
+>     diffs as a topic.
+
+New semantic patches didn't pop up all that frequently in the past, so
+I'm not sure it's worth investing in such an automation.  Of course
+they can become more frequent in the future, and in that case we might
+want to reconsider it.  Unfortunately, however, Coccinelle's results
+can't be completely trusted, either because our semantic patches or
+because Coccinelle itself are buggy...
+
+>     Then after a couple integration cycles we'd have all pending
+>     changes in, with no conflicts on Junios side.
+> 
+> So I think we should add a patch like you post, but we would
+> need to discuss the exact approach how to deal with pending
+> patches. Is it the original dev who should push forward on their
+> own pending patches, or does it become a pooled effort?
+
+Well, it makes sense to me that whoever proposes a change with an
+accompanying new semantic patch should also deal with the necessary
+followups.  However, it doesn't really matter who deals with them, as
+long as somebody deals with them.  I don't think it's much different
+from e.g. sending a followup bugfix to someone else's patch series.
 
 
