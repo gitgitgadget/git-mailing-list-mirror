@@ -6,62 +6,61 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E2461F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 04:44:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA0D01F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 04:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726465AbeJYNP1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 09:15:27 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39520 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbeJYNP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 09:15:26 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r10-v6so6869891wrv.6
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 21:44:26 -0700 (PDT)
+        id S1726804AbeJYNTh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 09:19:37 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41924 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726527AbeJYNTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 09:19:36 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q7-v6so7759863wrr.8
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 21:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=JUnJ76AI59evh0xTMYRTfxBoemU43mmMADUhCPPoQYo=;
-        b=Fc9nm15z0PL27GiC77Z2ccdp4X10nMocnjJF1arlwgETBbigOIU0FJI5e6uI51o+jZ
-         5gdppIMTXAx1HoacPH1Revhh+ozwzDyfwatE0jUIK62kjxYYWTG7LWL2L1Dhlxl5QhBY
-         ireNjXpwdseig/bjuciW8ge2kQnkTyC3OLGrHKHP0/Oo4Q4Ky0di9oWyxruiQl1GVLZ9
-         lUgUy2/EJkMRnKetr4lSJJh3ULg0T9lq07NbnTD2i+q90Qc7VLcWdJkaFOQqmr8ruuBQ
-         g5OXzU3Hyf1hofXDT4YVRVMtgb7XzO7em7vG096XK6N7IT5vFNipphoepG9x8lFTieMs
-         SCDA==
+        bh=5Rgjmtxup8dR19WK13sglx/ynjuW79cDzRmxzZIhRQc=;
+        b=pzlRas8PaCQ5UCPQCpjzBpXs8k1PX9datgvagao1L0yvvejriDy6TXzsbJoPnIWU2s
+         YjPavc5PWgThzbmD+q9ZCntkTWQxewt7ZtB8eexD0jTL5/ObC+VSC9xPragxfX7s3ZzV
+         6Mciw8zIx6ELBAY8gtP2IATUma4/Yg5JOKXwNFmLMpb9sr2emVxGmEMDBEyC1RdyYpzU
+         tMXsGzfXVJq1CxGFIRg8P7E3TeKxKfGyFgxNHSNqXJAlPbQuEo1MdYXQCR3VjR5ERzeV
+         9QpLpTslEYBzCa+ZaPfKquz5P0ydjF6+04ncyKzyYSDvh9WRrr5MlXKsU2pOGng/sMcE
+         sOhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=JUnJ76AI59evh0xTMYRTfxBoemU43mmMADUhCPPoQYo=;
-        b=RoeVFBZvA/GecXRTeP7EU/lCCfcmeczxRbitWs7hQBkzEhTJUX6rUNKs7b7BRCQXr+
-         ytpX6O+Wwcb75JbA/NBUDug2YmdMfPtnLXMNq2DH2Cw8Vc9kQIF7q5+H7xbeKWUPPTtA
-         R+lci79xswz1AjWzWI9FbUwNf1Ikjd3YKovj/6Mjf+CohCGOo4t9thpmvIteKbMabfaN
-         BKD1vJrSxC/8j9xftPRVw7cmR+Xu5go1nrEGQcV+XZQimbvujpI0AKxQz4+0vvIXVtrL
-         ZXXEMKhE15muHsjSc7T6CFjrrS4pZsafo0XZxXZwxIssVNyx9t2ljyWsO2iSzF0znaKx
-         wT7A==
-X-Gm-Message-State: AGRZ1gJW+ct4xiy7e4SIZip1XceHIMQNCHAYSHlCJ931IR2Vh1+1+s0G
-        sw3i4abnWbRAOjjv/IY8+fs=
-X-Google-Smtp-Source: AJdET5cCkZ9UgGeLSeeCD7bxjDBFi6BdwfTsaZVeqr6Hs3A0mIv+ql5w5Yq9jI8M0EP2c3YbHupUCg==
-X-Received: by 2002:a5d:608e:: with SMTP id w14-v6mr29806wrt.193.1540442665780;
-        Wed, 24 Oct 2018 21:44:25 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o17-v6sm7078385wro.2.2018.10.24.21.44.23
+        bh=5Rgjmtxup8dR19WK13sglx/ynjuW79cDzRmxzZIhRQc=;
+        b=XafGOT4cPngQtDlrbSGqwk31xMKmAqf6pFWhyLjV5b0QtI+2OS7ZW13NWpV2mWxxmT
+         grnCIHGmhVbAZKooa94b6TjGWDE6GfNF06pL3jBQgPZd5Up+FgOCgWid77JWkdYSHhEy
+         W0YnJlKiQ+KV2pwbG/6DcUKOl6Eg/Q9p7+KitjmzZqRuCBBj3oRy8MpezLcg7C+sG/Lb
+         Q7X19JU4jtR8vJp9V+fuRj0VZybvWXEVpP0tM9t2qqWjsj2D6oWT7j82pmrZcfzf8MVU
+         tQrY3jYG64HwfW2L/CJ9RLZMosyE1HWOj/Jx3xbkiUt0y5eGaeMgg27P08ARxe8jjuJi
+         gNZA==
+X-Gm-Message-State: AGRZ1gLb3N7uNN6pAMIVlEt5fADrCevVj2bGUyuFhqwuS25/BC8ArKA6
+        RqC2SiFXPoegCynmPDCq9NA=
+X-Google-Smtp-Source: AJdET5fyjcQI6tMlniB3gRGOnPPRT3KLbxFSkaGAMPDa/YzAhaG5bP51830sPHMVzo09XZK4ZjyXkQ==
+X-Received: by 2002:adf:93e6:: with SMTP id 93-v6mr46390wrp.81.1540442915003;
+        Wed, 24 Oct 2018 21:48:35 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j46-v6sm11365498wre.91.2018.10.24.21.48.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Oct 2018 21:44:24 -0700 (PDT)
+        Wed, 24 Oct 2018 21:48:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Slavica <slavicadj.ip2018@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     slavicadj.ip2018@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        slawica92@hotmail.com
-Subject: Re: [PATCH 1/3] [Outreachy] t3903-stash: test without configured user name
-References: <20181023162941.3840-1-slawica92@hotmail.com>
-        <CAP8UFD35aOb5weDcDVFth96e+H-as_Q9bLPuCpSDReKJERnM7Q@mail.gmail.com>
-        <45cf8bf9-adfa-655e-0ded-fdb71707f7ad@gmail.com>
-Date:   Thu, 25 Oct 2018 13:44:23 +0900
-In-Reply-To: <45cf8bf9-adfa-655e-0ded-fdb71707f7ad@gmail.com> (Slavica's
-        message of "Wed, 24 Oct 2018 15:56:06 +0200")
-Message-ID: <xmqqy3amk53s.fsf@gitster-ct.c.googlers.com>
+        Git List <git@vger.kernel.org>, Slavica <slawica92@hotmail.com>
+Subject: Re: [PATCH v2 1/3] [Outreachy] t3903-stash: test without configured user name
+References: <cover.1540410925.git.slawica92@hotmail.com>
+        <a055296c2034a44f02c253ce3194018b21eb4e1f.1540410925.git.slawica92@hotmail.com>
+        <CAPig+cRGn0Z7F7TpSwF=8cQJpN1LJkQb2VxHMDi6j6wsaqkORg@mail.gmail.com>
+Date:   Thu, 25 Oct 2018 13:48:33 +0900
+In-Reply-To: <CAPig+cRGn0Z7F7TpSwF=8cQJpN1LJkQb2VxHMDi6j6wsaqkORg@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 24 Oct 2018 16:25:55 -0400")
+Message-ID: <xmqqtvlak4wu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,81 +69,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Slavica <slavicadj.ip2018@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On 23-Oct-18 8:52 PM, Christian Couder wrote:
->> On Tue, Oct 23, 2018 at 6:35 PM Slavica <slavicadj.ip2018@gmail.com> wrote:
->>> This is part of enhancement request that ask for `git stash` to work even if `user.name` is not configured.
->>> The issue is discussed here: https://public-inbox.org/git/87o9debty4.fsf@evledraar.gmail.com/T/#u.
->> We prefer commit messages that contain as much as possible all the
->> information necessary to understand the patch without links to other
->> places.
+>> +    test_commit 1 &&
+>> +    test_config user.useconfigonly true &&
+>> +    test_config stash.usebuiltin true &&
+>> +    sane_unset GIT_AUTHOR_NAME &&
+>> +    sane_unset GIT_AUTHOR_EMAIL &&
+>> +    sane_unset GIT_COMMITTER_NAME &&
+>> +    sane_unset GIT_COMMITTER_EMAIL &&
+>> +    test_must_fail git config user.email &&
+>
+> Instead of simply asserting that 'user.email' is not set here, you
+> could instead proactively ensure that it is not set. That is, instead
+> of the test_must_fail(), do this:
+>
+>     test_unconfig user.email &&
+>     test_unconfig user.name &&
+
+Yes, it would be more in line with what is done to the environment
+variables and to other configuration variables in the same block.
+
+Not that I think that this inconsistency is end of the world ;-)
+
+Thanks.
+
+>> +    echo changed >1.t &&
+>> +    git stash
+>> +'
+>> +
+>>  test_done
+>> --
+>> 2.19.1.windows.1
 >>
->> It seems that only this email from you reached me. Did you send other
->> emails for patches 2/3 and 3/3?
->>
->> [...]
->
-> Okay, I will change that. This is my first patch and I am still adapting.
->
-> Emails for patches 2/3 and 3/3 because aren't there because I am still
-> preparing them.
->
-> (I didn't know if I had 3 patches in plan that they should be sent at
-> almost the same time.)
-
-It is more efficient for everybody involved.
-
- - You may discover that 1/3 you just (thought) finished was not
-   sufficient while working on 2/3 and 3/3, and by the time you are
-   pretty close to finishing 2/3 and 3/3, you may want to update 1/3
-   in a big way.  Sending a premature version and having others to
-   review is wasting everbody's time.
-
- - Your 1/3 might become perfect alone with help from others'
-   reviews and your updates, but after that everybody may forget
-   about it when you are ready to send out 2/3 and 3/3; if these
-   three are truly related patches in a single topic, you would want
-   to have what 1/3 did fresh in your reviewers' minds.  You'd have
-   to find the old message of 1/3 and make 2/3 and 3/3 responses to
-   it to keep them properly threaded (which may take your time), and
-   reviewers need to refresh their memory by going back to 1/3
-   before reviewing 2/3 and 3/3
-
-One thing I learned twice while working in this project is that open
-source development is not a race to produce and show your product as
-quickly as possible.
-
-When I was an individual contributor, the project was young and
-there were many people with good and competing ideas working to
-achieve more-or-less the same goal.  It felt like a competition
-to get *MY* version of the vision, design and implementation over
-others' adopted and one way to stay in the competition was to send
-things as quickly as possible.  I didn't know better, and I think I
-ended up wasting many people's time that way.
-
-That changed when I became the maintainer, as (1) I no longer had to
-race with anybody ;-), and (2) I introduced the 'pu' (proposed
-update) system so that anything that was queued early can be
-discarded and replaced when a better thing come within a reasonable
-timeframe.
-
-And then I re-learned the same "this is not a race" lesson a couple
-of years ago, when I started working in a timezone several hours
-away from the most active participants for a few months at a time.
-I do not have to respond to a message I see on the list immediately,
-as it is too late to catch the sender who is already in bed ;-)
-
-
-So take your time and make sure what you are sending out can be
-reviewed the most efficiently.  Completing 2/3 and 3/3 before
-sending 1/3 out to avoid having to redo 1/3 and avoid having
-reviewers to spend their time piecemeal is one thing.  Making sure
-that the patch does not have style issues that distract reviewers'
-attention is another.
-
-Sitting on what you think you have completed for a few days allows
-you to review your product with fresh eyes before sending them out,
-which is another benefit of trying not to rush.
-
-
