@@ -2,116 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6B771F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 11:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20E2F1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 12:13:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727350AbeJYUDM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 16:03:12 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33630 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727208AbeJYUDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 16:03:12 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f1-v6so682180edi.0
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 04:30:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=eTbORSFn4VN1pvtUDIPbb0kNOnkvDCCyeIFN9kcT1RM=;
-        b=RrjADZj7+FtX7+b7+Vksi4GPfmkrZgDrD7oGPP3LFQjM1gv2OX6x7cHevUTcUufaZG
-         ARhWpwEEb2W2M3nW4Ju4QCsARW2a0xu6nA2UH1LtvFaeIwsB4hEcL5k2aNrILTzubVam
-         k82QgE2vqegTi58oD0QmI1ToeG2HmPUr/flN2h1l+3pRBOJN+F8+Gt/1cV+29f+saRL9
-         H0GYNG/DSFUOc6XdKDgv4E11W7p1lXbVT82fialMIQuMBMywMBqAVVjahXOnrqgiGpWY
-         LqpW9eTMfK36ZdE5JPZXS0xxXV05b9dROTR4CvIJYRJWqaWgAGFVT550XYJ2Cz3P7tjp
-         UanA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=eTbORSFn4VN1pvtUDIPbb0kNOnkvDCCyeIFN9kcT1RM=;
-        b=YanAKlNTjGpNYgZEcvQum86gha2Fphv3hRTCgjdI6EPny4Q4la1NLFXZo3meuUBpf3
-         diw/W7cRQN9teU0jdD7C52dFiVJXp1KNdYGvmzcihhDDzNXCtCRaec9u5wWuUx161ZzV
-         1Cx/JD2+j+qIYDi6eBHsDC6RSMQrwm54voOKcTAxnhJ1y56WWnl7v/87rEm/UlTVOx7O
-         +Kom82+QqZbL9EobLTZeqXd2wFpGP5W/ba2C7MxZvLcsjDQZjZSJPI9oOh3jQaWnuS11
-         u9Scb3Et4Gs7/dgw/UoqxkOoNqbX6eB+JpEhKAOBSJfZkvmbkgwW6TIOIBnqLM2R6tbQ
-         5zfQ==
-X-Gm-Message-State: AGRZ1gLHpgCpyU+ITShE8sANcVm5ZqxH0eEw8Gmt5a0W6pBoLmvdmKby
-        Tb6lB2wl2drKG1kmYqtoKF4=
-X-Google-Smtp-Source: AJdET5fudl2upfStGrhV8HzgWEzdxnZUncMUj0lNdWAa+vYb1NAyTAYYEm1MCYNoJOl9ZQLy+a7D/A==
-X-Received: by 2002:a50:ec9a:: with SMTP id e26-v6mr1265558edr.134.1540467048634;
-        Thu, 25 Oct 2018 04:30:48 -0700 (PDT)
-Received: from szeder.dev (x4db0730d.dyn.telefonica.de. [77.176.115.13])
-        by smtp.gmail.com with ESMTPSA id b2-v6sm1262667edy.52.2018.10.25.04.30.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Oct 2018 04:30:47 -0700 (PDT)
-Date:   Thu, 25 Oct 2018 13:30:45 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, peff@peff.net,
-        chriscool@tuxfamily.org, l.s.r@web.de, ramsay@ramsayjones.plus.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] khash: silence -Wunused-function in delta-islands
- from khash
-Message-ID: <20181025113045.GM30222@szeder.dev>
-References: <20181025110427.13655-1-carenas@gmail.com>
- <20181025110427.13655-3-carenas@gmail.com>
+        id S1727236AbeJYUpe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 16:45:34 -0400
+Received: from mout.gmx.net ([212.227.17.21]:40909 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727208AbeJYUpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 16:45:34 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsgvV-1fZU7g2fQ9-012ErI; Thu, 25
+ Oct 2018 14:12:53 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsgvV-1fZU7g2fQ9-012ErI; Thu, 25
+ Oct 2018 14:12:53 +0200
+Date:   Thu, 25 Oct 2018 14:12:57 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>, github@brendanforster.com
+Subject: Re: [PATCH 2/3] http: add support for disabling SSL revocation checks
+ in cURL
+In-Reply-To: <xmqqzhv2lnn6.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810251410360.4546@tvgsbejvaqbjf.bet>
+References: <pull.46.git.gitgitgadget@gmail.com>        <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>        <CAPig+cQFb3S0Lm+huUZDN4aw9rWwinh0iZp12ss1zVKpJ=2MdA@mail.gmail.com>
+ <xmqqzhv2lnn6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181025110427.13655-3-carenas@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:+M2/EbaXUr576xlaf8GiW20pd1uoOYJBHJPQZbEMd/lMQADAnI0
+ fPFUDejfXZyu82xK15I7Cmt5Z3a8NCUd1y0/GFoZxsL06wS0Ulu2NjWsLWH+4To2i8cGYlY
+ e2ESAt1X5UpyUZagM6vG5wTcO5g+Zm6X7ILDV5nsYgsWyxenp0kitovrAq/ntLuzifWsHib
+ 1JH6HUYRPlKxq+JvAiO5g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qeaYHXQVfec=:JHoGhomRpYwSaGXLSyeEmm
+ 8tRUCai+r4ofPNhpru6DWcz9N6UsGfiiKpERb1jb3FohJ0kP5+aiLZppCtG9vVHfQ22l6Y/Vg
+ C5nViIU5HGjoplyQpu24p217XO0s8N6W+ISapgSoIR8SD3485iD7JG8mqn6QaejcTUyL0auwk
+ sA0fPAy788qnbMANKRaFLTR9l117zkJVZBEtyjK0Ab4Ml5tTYspv6X2aSnt6qS/w8wXv+b5W1
+ 8QReaLP5RRzotaqsE6u5AlKMz6EhKuC2dT68lXT3ssM40C56BEV4unmLfNxOQvDgWnEUwC/HR
+ fh0Unxx4acuu1fKfxGG83iE9gw4CfWBGJdbIJZyaIZzNcSWXwfRTEOIqMLFL1DHy7ib9Fqq7J
+ RoZucdWmWZw1E2wQf3iwMKjd4hdlRizOZhl+3rVvEmeYbYMYGYWsju7KTApMYuA//AAvNfnYf
+ pqxQfNOVPMYsG2dNj1//d0lLWzq3huXEZGyF75C+fFZcDvApAUMtfE7DQiMBvS40PoKfYdbqA
+ Cg9ReyeH6iMXrYIKmN6oSJFCHhdRGE9tP0hacyz/EXmNnbvodDYroa2DPqRKqQ9rgBYFW7KR+
+ 2VcNA0qqF7eetYNrN+ifnxb56CyySOElpT1/DzNn2fxqgMqQSb4Cxzbsw06xk4X2smOzcSHL0
+ wkDvswMP5XRmJlczdXLPJm9gmgFY6qrSCqaHswn4pgS8TSEh5kFGCuKP9/cHRN5AvfQ3V0QRP
+ GW5ujsiNfF8HTZLucs+Rjjhumoa4Teh9SBiDO9VnFQBEjmogHqD7FLqbfXX4FhDTtw/DLbauU
+ kj9OxSgk51FErRFGEtSnJ9p2hDGsL+APJ3/ErcCAj8iQG/U1fA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 25, 2018 at 04:04:26AM -0700, Carlo Marcelo Arenas Belón wrote:
-> showing the following when compiled with latest clang (OpenBSD, Fedora
-> and macOS):
+Hi Junio,
 
-s/^s/S/
-This applies to your other commit messages as well.
+On Thu, 25 Oct 2018, Junio C Hamano wrote:
 
-But more importantly, please be explicit about the compiler version
-that emits the warning, so others won't have to guess when stumbling
-upon this commit in a few months or years time.
-
-> delta-islands.c:23:1: warning: unused function 'kh_destroy_str'
->       [-Wunused-function]
-> delta-islands.c:23:1: warning: unused function 'kh_clear_str'
->       [-Wunused-function]
-> delta-islands.c:23:1: warning: unused function 'kh_del_str' [-Wunused-function]
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 > 
-> Reported-by: René Scharfe <l.s.r@web.de>
-> Suggested-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  khash.h | 2 +-
+> > On Mon, Oct 15, 2018 at 6:14 AM Brendan Forster via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >> This config value is only used if http.sslBackend is set to "schannel",
+> >> which forces cURL to use the Windows Certificate Store when validating
+> >> server certificates associated with a remote server.
+> >>
+> >> This is only supported in cURL 7.44 or later.
+> >> [...]
+> >> Signed-off-by: Brendan Forster <github@brendanforster.com>
+> >> ---
+> >> diff --git a/http.c b/http.c
+> >> @@ -811,6 +818,16 @@ static CURL *get_curl_handle(void)
+> >> +       if (http_ssl_backend && !strcmp("schannel", http_ssl_backend) &&
+> >> +           !http_schannel_check_revoke) {
+> >> +#if LIBCURL_VERSION_NUM >= 0x072c00
+> >> +               curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
+> >> +#else
+> >> +               warning("CURLSSLOPT_NO_REVOKE not applied to curl SSL options because\n"
+> >> +                       "your curl version is too old (>= 7.44.0)");
+> >
+> > This message is confusing. If your curl is too old, shouldn't the ">=" be a "<"?
+> 
+> I do not think I saw any update to correct this, and worse yet I do
+> not offhand recall if there was any other issue raised on the
+> series.
+
+Sorry, my bad. I dropped the ball. As you can see here:
+
+	https://github.com/gitgitgadget/git/pull/46
+
+I have some updates that are already pushed, but I still wanted to really
+think through your response here:
+
+	https://public-inbox.org/git/xmqq1s8oxbpc.fsf@gitster-ct.c.googlers.com/
+
+and what I should do about it, before sending off v2. You can see that I
+already updated the description in preparation for sending another
+iteration.
+
+I hope to get back to this tonight, for now I must scramble off to
+non-work-related activities.
+
+Ciao,
+Dscho
+
+> So assuming that this is the only remaining one, I'll squash the
+> following to step 2/3 of this three-patch series and plan to merge
+> it down to 'next' in the coming few days.
+> 
+> I have a clean-up suggestion related to this but is orthogonal to
+> this three-patch series (after the fix-up is applied, anyway), which
+> I'll be sending out separately.
+> 
+> Thanks.
+> 
+>  http.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/khash.h b/khash.h
-> index d10caa0c35..532109c87f 100644
-> --- a/khash.h
-> +++ b/khash.h
-> @@ -234,7 +234,7 @@ static const double __ac_HASH_UPPER = 0.77;
->  	__KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
->  
->  #define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
-> -	KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
-> +	KHASH_INIT2(name, MAYBE_UNUSED static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
->  
->  /* Other convenient macros... */
+> diff --git a/http.c b/http.c
+> index 0ebf8f77a6..43e75ac583 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -835,7 +835,7 @@ static CURL *get_curl_handle(void)
+>  		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
+>  #else
+>  		warning("CURLSSLOPT_NO_REVOKE not applied to curl SSL options because\n"
+> -			"your curl version is too old (>= 7.44.0)");
+> +			"your curl version is too old (< 7.44.0)");
+>  #endif
+>  	}
 >  
 > -- 
-> 2.19.1
+> 2.19.1-542-gc4df23f792
+> 
 > 
