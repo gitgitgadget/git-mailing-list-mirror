@@ -2,93 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DADD1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 00:14:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E062A1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 01:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbeJYIoc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 04:44:32 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:38571 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725829AbeJYIoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 04:44:32 -0400
-Received: by mail-io1-f68.google.com with SMTP id q18-v6so4321093iod.5
-        for <git@vger.kernel.org>; Wed, 24 Oct 2018 17:14:18 -0700 (PDT)
+        id S1726365AbeJYJbA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 05:31:00 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42388 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726117AbeJYJbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 05:31:00 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y15-v6so3058119wru.9
+        for <git@vger.kernel.org>; Wed, 24 Oct 2018 18:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=T4KK9W20tkontEeVN1e0DYAD3BIU9c6RMaj5COEfkcQ=;
-        b=B7RI/B76/n1IOPmpTGsFMLs7G2KyF60GduiPi7sTGzc6QCECuod/baAeO6z9R1Tqkg
-         FvYwQOOcXqT4lJDt6laxR5XBTr6AO+r/5JWX8cvssXkw3vPVmyDIM0JbTjP4vytjXSOk
-         n/XT/9/lVvpjj1TxWi8rGlbPwvnKeLhsdHm1rUziUmoCcDzsbyD8mlDZS0ztRiU2QM+x
-         H85sJMBTyDreTl9AzE1eNFVer5N8MvDIS1OOXb01EQgf1dcgA/vnh2B/aPTqkyV1oLpV
-         2n79u4ek1pMcEKui4i43dW+uX5QuP0xtS4C6wIyoIfs6f2l4BJavvaSpsG/kKTbSvyD/
-         WJ3w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4HAhY/voD600WPgO3k7LV13Irn864dZLo+oyey5zpl8=;
+        b=OTXZH7QlOeA07WTRyl6PamFQ+uZ9phVQRXfrkqcCnCpFwD1smGxU4dDLCU8iTHcWgA
+         nW+YIIXfTK4Sg2gFCck89UWWJ/JvmfHfC+YE744ovOLz8RVA0ReuJ9QMqWsh4JQmPBe7
+         LSkbVBFaVkqL/t7ak/JShWELqiH+FbYsg76tmJu/271byyv0iR7hZXis590jutKRDOSG
+         DO4RPP7FpwideJjet+JHhsSOogactFjAT1chMuyua2BmfZmPROvmYB9zZFjnKt3/2DwQ
+         RbOHKBJEznYcz1P0bJ7jopGa25yKzq5HTLpRlx4zZoEKx1XmzIpD695NbedfTtqp+Hza
+         sjEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=T4KK9W20tkontEeVN1e0DYAD3BIU9c6RMaj5COEfkcQ=;
-        b=hy+o6dy3zrqMhZiKV2TpoDghhnBarEINqH0zXjH1xlq+nHvbvPeLY0aQDfI5UZXZeB
-         OeF8LONVuQK+iP0ETQnwgOK+di954fQKuedfyBIRH1sW6cKcEirJLNp2L7baqCDVRzuQ
-         uggPvPjMoSutRYPFniXrxTAmLl6HkR3qtLvjn9e9mXjnPehH1P1vcKLsmEWLBvB0/azf
-         JWHMdxhl3zXnWqfLyKAZ8bM2Mk1vHRydD7XVPzGUIlgsY64tuLKo9tBrQkJzLlemCvEQ
-         Jxh5bf/tKVhql1cntVwu4rCxqC7fyrGxGTlDtNOQ08JwtiuiwUkK4FyoboN7Yb84HLYc
-         mTdg==
-X-Gm-Message-State: AGRZ1gLIukP3rESlhJmQZaqJ+Yx9tMLf2e69sVkY2VLM9IiUjyoBew3d
-        p1xnZRcYoMtrZmwz9yyZZX21rifH
-X-Google-Smtp-Source: AJdET5cDFiVJLz4FL0MMO0k/B6x5ndqBsLZ4aoLBAI7RsqKyiVM98hwqU+NTv17nXHEXSL4Dwp82kQ==
-X-Received: by 2002:a6b:9286:: with SMTP id u128-v6mr6262473iod.264.1540426457895;
-        Wed, 24 Oct 2018 17:14:17 -0700 (PDT)
-Received: from Carlos-MBP-2.sf.stch.co (50-207-95-178-static.hfc.comcastbusiness.net. [50.207.95.178])
-        by smtp.gmail.com with ESMTPSA id u206-v6sm4353381iod.18.2018.10.24.17.14.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 24 Oct 2018 17:14:17 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     alban.gruin@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] sequencer: cleanup for gcc 8.2.1 warning
-Date:   Wed, 24 Oct 2018 17:14:06 -0700
-Message-Id: <20181025001406.6729-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.19.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4HAhY/voD600WPgO3k7LV13Irn864dZLo+oyey5zpl8=;
+        b=ECq66j8jtwp0Dl9/zPmJyQbmH/yR2j0G8SAyHomL5BIXr17mTGKDro3hciYI8nOOyE
+         yvMFZUc6lxlmgdMJ1V7yX1w9f50wu9v1ScMuDXGXi+4rwjn+DN0pB4X/3Bn09VfZZmPX
+         ZS1T7P3bu8DdBRUUWx7Kr83L6m6DOGEYfzrz7jhKHjTwEk70XnT8L7yOtUfKfbH6d6dz
+         1AhGOxRKpZdIesQbCJ3+gxFW6xLOEdH8t2JYqCAn8GiCO2hXij3cceMZTcYvVfxGNNUO
+         cTs7KHIAS9l8idtjiduy+L6Fi+jFv3W7ifUS56rH9hoAw3QdwIRQDAK94b9qXsb+NOWa
+         SP4w==
+X-Gm-Message-State: AGRZ1gK5Rauv9nCWiGiFqGrs+Xhi2pdfxS1Ik2qKEwn/VZQpweb5DZgC
+        DGbX9REUrly0G2CqnrUlOAg=
+X-Google-Smtp-Source: AJdET5eAGwF20aLfUEUtOcYjL0VeN4jYbJgIGeF/RoDmB2JOlONR9Tbla9Nn4PwHOncK98U8AEWj9g==
+X-Received: by 2002:adf:e68c:: with SMTP id r12-v6mr1814906wrm.239.1540429235100;
+        Wed, 24 Oct 2018 18:00:35 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 4-v6sm1513547wrk.52.2018.10.24.18.00.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Oct 2018 18:00:33 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] i18n: make GETTEXT_POISON a runtime option
+References: <xmqqsh0xtwgb.fsf@gitster-ct.c.googlers.com>
+        <20181023210154.32507-1-avarab@gmail.com>
+        <xmqqefcfoq2a.fsf@gitster-ct.c.googlers.com>
+        <20181024074400.GA31239@sigill.intra.peff.net>
+Date:   Thu, 25 Oct 2018 10:00:31 +0900
+In-Reply-To: <20181024074400.GA31239@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 24 Oct 2018 03:44:00 -0400")
+Message-ID: <xmqqefcen8ls.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-sequencer.c: In function ‘write_basic_state’:
-sequencer.c:2392:37: warning: zero-length gnu_printf format string [-Wformat-zero-length]
-   write_file(rebase_path_verbose(), "");
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> but then you lose the default handling. I think if we added a new
+> option, it would either be:
+>
+>   # interpret a value directly; use default on empty, I guess?
+>   git config --default=false --type=bool --interpret-value "$GIT_WHATEVER_ENV"
+>
+> or
+>
+>   # less flexible, but the --default semantics are more obvious
+>   git config --default=false --type=bool --get-env GIT_WHATEVER_ENV
 
-diff --git a/sequencer.c b/sequencer.c
-index 8dd6db5a01..358e83bf6b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2335,7 +2335,7 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		write_file(rebase_path_quiet(), "\n");
- 
- 	if (opts->verbose)
--		write_file(rebase_path_verbose(), "");
-+		write_file(rebase_path_verbose(), "\n");
- 	if (opts->strategy)
- 		write_file(rebase_path_strategy(), "%s\n", opts->strategy);
- 	if (opts->xopts_nr > 0)
--- 
-2.19.1
-
+Yeah, my thinko.  The latter would be closer to what this patch
+wants to have, but obviously the former would be more flexible and
+useful in wider context.  Both have the "Huh?" factor---what they
+are doing has little to do with "config", but I did not think of a
+better kitchen-sink (and our default kitchen-sink "rev-parse" is
+even further than "config", I would think, for this one).
