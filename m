@@ -2,93 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F89F1F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 09:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF3AE1F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 10:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbeJYSPp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 14:15:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54044 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726809AbeJYSPp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 14:15:45 -0400
-Received: (qmail 4161 invoked by uid 109); 25 Oct 2018 09:43:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 25 Oct 2018 09:43:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15434 invoked by uid 111); 25 Oct 2018 09:43:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 25 Oct 2018 05:43:01 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Oct 2018 05:43:46 -0400
-Date:   Thu, 25 Oct 2018 05:43:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 7/7] revision.c: refactor basic topo-order logic
-Message-ID: <20181025094345.GA18794@sigill.intra.peff.net>
-References: <pull.25.v2.git.gitgitgadget@gmail.com>
- <pull.25.v3.git.gitgitgadget@gmail.com>
- <020b2f50c5703e8291577b008fdfa567093c6eab.1537551564.git.gitgitgadget@gmail.com>
- <20181011153510.GF27312@sigill.intra.peff.net>
- <1c0eb7d3-7f31-9377-d42f-4ac2f36ac26a@gmail.com>
+        id S1727256AbeJYSl0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 14:41:26 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46736 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726852AbeJYSl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 14:41:26 -0400
+Received: by mail-wr1-f65.google.com with SMTP id i4-v6so8638958wrr.13
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 03:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YVeMVrB1uO3jGvFAPNOhd60dJe7jLbHWhHTQQL7LyOk=;
+        b=sJ5KdsoQTXti6NUQVtHbfrL/VaR2QicY4L9Igl1q0NhGcx8IfTUb+r/OJjw4mrtTRE
+         gn94AGvIHya9nnodE9bNptWCyKiAiOQETohr12pChDe1g3pHoiPRM5MMLEaPPSrCBYdF
+         lthBISf/pCxd4YCFFQtPaoXLJ0HGGYbyyiZs8W//TnpZ//gV8L2PjjqfJMz4uKVzqM6/
+         W0QjRkoxxP2PFWmx/39I62QXVFAngEbpQmQCQoIu5x2aka2Q7tep5QX5OZa0BcFZ8KR3
+         ik2F+ebXCXIXATLWx1TUjzUfqrvRenn3LhoK7rhvncA6PfrGbuqQpIzVt6yj/xM+zkWD
+         BaFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YVeMVrB1uO3jGvFAPNOhd60dJe7jLbHWhHTQQL7LyOk=;
+        b=iWSJizAeEeCC8Vn01DuNgD8bOX0/vuzds9n9712nZUjpw5NLN9bCjX7wWjjVj5XKg+
+         RcwHFro4cq+ZAolA4ydJGe7fyRSw1iY/urrsXnWKx5Dodd4WOAYHlNK7hcuUTnaLS/PJ
+         XZ41CBJa1iWhuJcJkJJDLJtnw4tfBqpZ4gUBcjs2cLDmmAvQRfh2IJ/85lQSJNOGgsRN
+         GIBf7vo2bLvJHN0AquaF0x8Mqd1AAaRFE7OkB8bvo1RGJz/uoSbBEUI5+mJmlPMDZCD4
+         oAHkXB9D2bN/aunwwZy9AqC0ARtgXvwWvlHZCYbC6j4+6hyu/rCiKZa6xaFBmjztiZau
+         nbBA==
+X-Gm-Message-State: AGRZ1gIA5ac+83860Pmi4q1dsMzgutS4+Vgqjbn5YIEWdPFh1NV8qVl0
+        BicdduZmdl7qUVKgstBDEPCJz/5DnWM=
+X-Google-Smtp-Source: AJdET5egBWaHJjepU1yIm92T9A0cGCgxqBWI2A2KqRZrQlrWPn77gpQXJJsoXEbjg9LD3imhXcmIww==
+X-Received: by 2002:adf:ea88:: with SMTP id s8-v6mr1243445wrm.287.1540462161293;
+        Thu, 25 Oct 2018 03:09:21 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p19-v6sm463163wmc.46.2018.10.25.03.09.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 25 Oct 2018 03:09:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tommi Vainikainen <tvainika@gmail.com>
+Cc:     sandals@crustytoothpaste.net, git@vger.kernel.org
+Subject: Re: git pull defaults for recursesubmodules
+References: <CAGshahkvn3fcyuqtD-WQE9tn+7rSad84+mtA_cfkz+t42xqPdw@mail.gmail.com>
+        <20181023230324.GC6119@genre.crustytoothpaste.net>
+        <CAGshahk7pY4rW5SQu73AdHMmxsbDCo5UP5LGF67FQYBws492TA@mail.gmail.com>
+Date:   Thu, 25 Oct 2018 19:09:19 +0900
+In-Reply-To: <CAGshahk7pY4rW5SQu73AdHMmxsbDCo5UP5LGF67FQYBws492TA@mail.gmail.com>
+        (Tommi Vainikainen's message of "Wed, 24 Oct 2018 09:57:18 +0300")
+Message-ID: <xmqqy3amficw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1c0eb7d3-7f31-9377-d42f-4ac2f36ac26a@gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 11, 2018 at 12:21:44PM -0400, Derrick Stolee wrote:
+Tommi Vainikainen <tvainika@gmail.com> writes:
 
-> > > 2. INDEGREE: using the indegree_queue priority queue (ordered
-> > >     by maximizing the generation number), add one to the in-
-> > >     degree of each parent for each commit that is walked. Since
-> > >     we walk in order of decreasing generation number, we know
-> > >     that discovering an in-degree value of 0 means the value for
-> > >     that commit was not initialized, so should be initialized to
-> > >     two. (Recall that in-degree value "1" is what we use to say a
-> > >     commit is ready for output.) As we iterate the parents of a
-> > >     commit during this walk, ensure the EXPLORE walk has walked
-> > >     beyond their generation numbers.
-> > I wondered how this would work for INFINITY. We can't know the order of
-> > a bunch of INFINITY nodes at all, so we never know when their in-degree
-> > values are "done". But if I understand the EXPLORE walk, we'd basically
-> > walk all of INFINITY down to something with a real generation number. Is
-> > that right?
-> > 
-> > But after that, I'm not totally clear on why we need this INDEGREE walk.
-> 
-> The INDEGREE walk is an important element for Kahn's algorithm. The final
-> output order is dictated by peeling commits of "indegree zero" to ensure all
-> children are output before their parents. (Note: since we use literal 0 to
-> mean "uninitialized", we peel commits when the indegree slab has value 1.)
-> 
-> This walk replaces the indegree logic from sort_in_topological_order(). That
-> method performs one walk that fills the indegree slab, then another walk
-> that peels the commits with indegree 0 and inserts them into a list.
+> After reading SubmittingPatches I didn't find if I should now send a
+> fresh patch with
+> changes squashed together or new commits appended after first commit in that
+> patch. Patch is updated accordingly as fresh patch.
 
-I guess my big question here was: if we have generation numbers, do we
-need Kahn's algorithm? That is, in a fully populated set of generation
-numbers (i.e., no INFINITY), we could always just pick a commit with the
-highest generation number to show.
+(just on mechanics, not on the contents of your actual patch)
 
-So if we EXPLORE down to a real generation number in phase 1, why do we
-need to care about INDEGREE anymore? Or am I wrong that we always have a
-real generation number (i.e., not INFINITY) after EXPLORE? (And if so,
-why is exploring to a real generation number a bad idea; presumably
-it's due to a worst-case that goes deeper than we'd otherwise need to
-here).
+You can and should treat any topic that is not yet in 'next' as if
+it did not exist.  If you refined based on a v1 patch, pretend as if
+you were a perfect developer and you came up with that refined
+version without producing any problematic things that were pointed
+ont in your v1.  Pretend mistakes in v1 never happened.  Pretend
+that you are perfect! ;-)
 
-> [...]
+If you can limit the signs that an earlier rounds ever existed to
 
-Everything else you said here made perfect sense.
+(1) The In-reply-to: header of the message you send your updated
+    version of the patch in, so that people can find the older
+    version and its discussion thread, and
 
--Peff
+(2) The cover letter that describes what you improved in the
+    updated version relative to the last round, in addition to the
+    overview of the series [note: this only exists for a larger
+    patch series, and not usually done for a single patch]
+
+you achieved your goal.
