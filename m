@@ -2,96 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C6481F453
-	for <e@80x24.org>; Thu, 25 Oct 2018 13:21:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DE61F453
+	for <e@80x24.org>; Thu, 25 Oct 2018 13:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727452AbeJYVxq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Oct 2018 17:53:46 -0400
-Received: from mail.ao2.it ([92.243.12.208]:44011 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727234AbeJYVxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Oct 2018 17:53:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
-        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=4Irp2W1Ut1ULWS95OKKeJDkQsCRni0ayMx2GBUr8624=;
-        b=P2XVW2jJgDRmAH+Wu0dWPTAN5N2XWJFL5fG8O8FHh+nSXqz0+6nxnBiM6O6wAn4kb1nnNMdezsLBw2/i9pWu1MnqwA0wTilI396PO85p4IO2ZVWqgXA28UODkp0rvq1+ZWM+VSs9jOpXZqDO1Dzm++5IQCd9RfzG5zRbp++5GKephaU7vdLzf3aJaa6DPjRS8NQTOeCy43Y3wCcRzn2UxGs8mMGpgPegpBnJ1cGpOBEXbv7nbLtjwdjj1Rn+F7XmuEOn4v28nUp1CLxmT+UC47Xh6qSt8FaMDvkBkk9Me3PtWvrRh74Ln8CQCzOcgMdfmoDyx9JsVT0mYYB/qw2iCg==;
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1gFfZ3-0005gc-T9; Thu, 25 Oct 2018 15:20:41 +0200
-Date:   Thu, 25 Oct 2018 15:20:59 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        SZEDER =?ISO-8859-1?Q?G?= =?ISO-8859-1?Q?=E1bor?= 
-        <szeder.dev@gmail.com>
-Subject: Re: [PATCH v6 00/10] Make submodules work if .gitmodules is not
- checked out
-Message-Id: <20181025152059.78c488d5b24aa2b0b6817259@ao2.it>
-In-Reply-To: <xmqqd0ryiflc.fsf@gitster-ct.c.googlers.com>
-References: <20181005130601.15879-1-ao2@ao2.it>
-        <xmqqd0ryiflc.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        id S1727450AbeJYV7D (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Oct 2018 17:59:03 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:34098 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727234AbeJYV7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Oct 2018 17:59:02 -0400
+Received: by mail-qt1-f194.google.com with SMTP id z2-v6so9810998qts.1
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 06:26:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dss9H/fxNR/B0guoBm876TzpjUy47hluB1KeKySpstI=;
+        b=nSUQOfPVnwYwn8m735Z+U/QQBl+1qs/pZuNd8LlHg3ksPunfTZvzBYySOZb1X88pkZ
+         +0/qoF7tHSYklHm5yX8hqCTCKzgTlmpJW3P7k4UKg12VYVWXXpSFtAihIAg1WQCXvvUh
+         IUIOk3mwEgZW5VndIpe9Dzt+9ObZUZ5R5Efgc1fH47P9wUO6YLVCFnbfCc6ZZn38nmfK
+         Tan67GgReQ1cMH0TfY9MNU28aRai/lKtbxCyAK/xJf9nyKg+IHoYNqufKPxX1kqcCRLL
+         tIKCfSLubaIeFDCr/s93rBbI1G2++czl97a1iRzGbFFbJ0HGhjFJ9Su1q0Fz2hcND3lH
+         +iLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dss9H/fxNR/B0guoBm876TzpjUy47hluB1KeKySpstI=;
+        b=l+zkXBfGTa7ansg1DyIYx12txdOJh7s4u57JC9Tfgu6A/8KV4axdZb32krWbJOlNZ8
+         m3j6aYNXshOhDySWFUCNzmG7meYPgLG/UUYKXH1LGnOIuPxpUgfT97fRSxI4KbGWvt/o
+         zVvuLYAVmwbfNwgqpwoJ1AKuQY4UR+af/+GoBAZzEuZ3Kt/atSkLokL9a8fNTz0wRJzE
+         EcrLfkeLSJSDzTKCb2LZnNkaO7ypmeuJsyAfKmsRG3JVnPUdxj61ndN9CzdmdaH+IhxM
+         /oLyy3r3PUgh8AX146FR/NxXBThFCfRWhVKaWpAgy+TgVjQR6Z9Cf/a6cdqJyL2bWVES
+         w72g==
+X-Gm-Message-State: AGRZ1gIzruG7pYMY99vllLJ7TpWM/PMbvHdMdM/c+lItz/GtSogeGY6z
+        FeZwue+yIerpWnvqDLPnuQ0=
+X-Google-Smtp-Source: AJdET5f2mhAkFbS8SpMaRIHzeiZLfHY7eZmD3g1miiPf3/vniVnMY1pzbignYaZAgNe1F02poKwP2g==
+X-Received: by 2002:a0c:d002:: with SMTP id u2mr1497987qvg.92.1540473976949;
+        Thu, 25 Oct 2018 06:26:16 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id 50-v6sm7685825qty.48.2018.10.25.06.26.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Oct 2018 06:26:16 -0700 (PDT)
+Subject: Re: [PATCH v4 2/3] reset: add new reset.quiet config setting
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com, peff@peff.net,
+        sunshine@sunshineco.com
+References: <20181017164021.15204-1-peartben@gmail.com>
+ <20181023190423.5772-1-peartben@gmail.com>
+ <20181023190423.5772-3-peartben@gmail.com>
+ <3c31d5c3-df46-69e3-c138-30a93d9b3ce4@ramsayjones.plus.com>
+ <xmqqpnvyk4jc.fsf@gitster-ct.c.googlers.com>
+ <xmqqbm7igyw6.fsf@gitster-ct.c.googlers.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <7daf3329-15c4-d3de-227d-5c729b9cb824@gmail.com>
+Date:   Thu, 25 Oct 2018 09:26:13 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqbm7igyw6.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 25 Oct 2018 17:40:47 +0900
-Junio C Hamano <gitster@pobox.com> wrote:
 
-> Antonio Ospite <ao2@ao2.it> writes:
+
+On 10/25/2018 5:26 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > this series teaches git to try and read the .gitmodules file from the
-> > index (:.gitmodules) or from the current branch (HEAD:.gitmodules) when
-> > the file is not readily available in the working tree.
+>> To be honest, I find the second sentence in your rewrite even more
+>> confusing.  It reads as if `reset.quiet` configuration variable
+>> can be used to restore the "show what is yet to be added"
+>> behaviour, due to the parenthetical mention of the default behaviour
+>> without any configuration.
+>>
+>> 	The command reports what is yet to be added to the index
+>> 	after `reset` by default.  It can be made to only report
+>> 	errors with the `--quiet` option, or setting `reset.quiet`
+>> 	configuration variable to `true` (the latter can be
+>> 	overriden with `--no-quiet`).
+>>
+>> That may not be much better, though X-<.
 > 
-> What you said in [*1*] the discussion on [09/10] sounded like you
-> are preparing an update of the series, so the topic is marked as
-> "Expecting a reroll" in the recent "What's cooking" report.  At
-> least one topic now depends on the enhancement this topic makes, so
-> I'd like to know what the current status and ETA of the reroll would
-> be, in order to sort-of act as a traffic cop.
+> In any case, the comments are getting closer to the bikeshedding
+> territory, that can be easily addressed incrementally.  I am getting
+> the impression that everbody agrees that the change is desirable,
+> sufficiently documented and properly implemented.
+> 
+> Shall we mark it for "Will merge to 'next'" in the what's cooking
+> report and leave further refinements to incremental updates as
+> needed?
 > 
 
-Hi Junio,
-
-I can send a v7 later today.
-
-It will only contain the improvements to
-7416-submodule-sparse-gitmodules.sh as discussed in [*1*], it won't
-contain changes to patch 8 as motivated in
-https://public-inbox.org/git/20181008143709.dfcc845ab393c9caea66035e@ao2.it/
-
-I will also leave patch 10 unchanged, improvements can be made in
-follow-up patches.
-
-BTW, what is the new topic which depends on this one?
-
-Thank you,
-   Antonio
-
-> [Reference]
-> 
-> *1* http://public-inbox.org/git/20181010205645.e1529eff9099805029b1d6ef@ao2.it/
-
-
--- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+While not great, I think it is good enough.  I don't think either of the 
+last couple of rewrite attempts were clearly better than what is in the 
+latest patch. I'd agree we should merge to 'next' and if someone comes 
+up with something great, we can update it then.
