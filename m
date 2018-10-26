@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7C561F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 23:07:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 075511F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 23:07:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728311AbeJ0Hqr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 03:46:47 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38085 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727792AbeJ0Hqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 03:46:47 -0400
-Received: by mail-wr1-f65.google.com with SMTP id d10-v6so2831978wrs.5
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 16:07:50 -0700 (PDT)
+        id S1728315AbeJ0Hqt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 03:46:49 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41443 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727792AbeJ0Hqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 03:46:49 -0400
+Received: by mail-wr1-f68.google.com with SMTP id x12-v6so2809221wrw.8
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 16:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=F92sOsA6vjMtdmgCX8WJcJR4oaDyQYZCJToAUDrYUI0=;
-        b=OSolNkagVYrFH/kUx7kFmwwygWJy6fQf0CSNlPus710M3OwGuvBopDQ1/HuB54VChX
-         bJrCJ0xsHTAP2FLul+cUqDvDbd+gy5CK0dR1pqJu6wz3ETaIj+DGW+jq59Cv/Mgy37Ah
-         49p1wxKXgorOOpGb8Z2I+mSJ7RWfhyEvpuw0a5qsaa4i2K+mK53qdlrbuC4AvxhNCohf
-         aOoCzKhVo0wQm6fhMHXCYiHMNdrKhqthlOQOF3IFuErPj+640cjX/TAQQj2KDqVw5t97
-         vPqNNqLcDbULPxD6/1Mf8SpflKx+vpfgF67yhlf5mH8LmCvGzmK6TgxbyZF8VfjZppCw
-         ls4g==
+        bh=Dhyh0a5Q4ZaOv+jNYAXOVcm28D6ttv4dilrANYN3DFU=;
+        b=nqJcBpVbjCI4nTheZ+nrAwUzJ6Njbqnk7A3EwD2WeK65DJHJkw1gaIaZ9TCMKXs1My
+         w0fhOgvzJLQL4Ye7Jr2SHb9ITPd/pB+1ZuHhF0DMnRah4yBINAbqx4fHScnK7i+Qkp38
+         8UwzEGbLIQT3bg0ekrbyX/xp5JYOqBTt9ggGHX3LNQOwD1hCamAxiHRlPJudp9gQRyV7
+         H/Pr8ney5A305W1v9iPV9rAkZZKUL4D6Xl8XJBpuDDaI5ZIDocOLylwcwAK8kE0oUEnb
+         cvqjMjzbbHiWju1h8tprAVvmaNDsQWWetvx07Pdh/OZQd4lrJENmWhg8cVPjTAwgaGmf
+         3xTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=F92sOsA6vjMtdmgCX8WJcJR4oaDyQYZCJToAUDrYUI0=;
-        b=sAgiE4Hpz9rfx0A1RzumnMBSOb+BAogfujONSvRCDz/cc3IBJsAsHUexS0/zEJaFSu
-         BDoxycmqZy+jWuCmgAdm31275U7Ge9TLxW3McYlUKfxAH6ly7Mt189NzMWrxjcQ7SI8t
-         9nMV5vY3dRatnDsJnAd+MLin5NK9R1cDAYyGjv0WLUYnlXurVvqDP2orNIUydhDaxbDl
-         S1/uCPuM5B8OKKVnAOwItKkEA+3MLZZvWaaexKelq4eSZAEr8JHwHvdHBS00Seqy01RU
-         ZMS8/reGBU9gPMYSAsbm8tDBAJVo2l5y9qJRwwHnSaK3m6Ns8TieG/Lun5D7QYAfxXHb
-         AIbQ==
-X-Gm-Message-State: AGRZ1gI5WWnZfDt1PKEOQTi+cQ+srihjxUIOaEtOqOeYau17gBkDfAKg
-        RpxguNJwE1Q6VNq+HTrSodGEEc9yP4Q=
-X-Google-Smtp-Source: AJdET5e+nqtAIK7prRUEK2brGi0P7KmTLQDlEWJFuc/3VeUp4zGWqbS54t9nufqxH4S65CezvJB5Ew==
-X-Received: by 2002:adf:8224:: with SMTP id 33-v6mr7154563wrb.160.1540595269503;
-        Fri, 26 Oct 2018 16:07:49 -0700 (PDT)
+        bh=Dhyh0a5Q4ZaOv+jNYAXOVcm28D6ttv4dilrANYN3DFU=;
+        b=FSaJ20UJs2S2VJRRyNAwvJzIh12AF0C+y1yD4d6XQm3YIUJQm8uV4iT2FHCwaG6slw
+         ITHkygp1HwRsa96Q2mjethUyxYnH8mV+IjGztXUUPkAt8HPVT0jcCMR0yP1cj/9CcooC
+         OUa2924t6M5Llg3JC3hQwlUaxVorzAbVqfwf/s7VKQjJPRCoRpnCdsJui+ER8glZ+Bw7
+         /fbfeE3XK2mGNWA/kj0HdLUb7D6ldnY4hkO6jnhfoHeReedn4q0o0UvDb6/gxK3V6bxk
+         k5viYn+JzbOqkMyDZVr0xI+xvO1LYkHN0YiT7SSLBYJVbVqUk4UZazh8n47EMLSykI3b
+         9ZDQ==
+X-Gm-Message-State: AGRZ1gKPNdO29uSUr4NTdKDKX0pAJ4XrNEEzRceg4qs/FP4cC24/Grgv
+        Vhc9k96F7Cj16Xv780ZAmizxZ7duzpA=
+X-Google-Smtp-Source: AJdET5cGxlaAluiBGNCGkPaKGxw4qMtgKCr9aHGwkmvTr6zISoc14NRHsVSfSdHCL3cdUQ90O34i0g==
+X-Received: by 2002:adf:e28d:: with SMTP id v13-v6mr6712263wri.139.1540595271217;
+        Fri, 26 Oct 2018 16:07:51 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 4-v6sm5632830wmt.16.2018.10.26.16.07.48
+        by smtp.gmail.com with ESMTPSA id 4-v6sm5632830wmt.16.2018.10.26.16.07.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 16:07:48 -0700 (PDT)
+        Fri, 26 Oct 2018 16:07:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/8] fixes for unqualified <dst> push
-Date:   Fri, 26 Oct 2018 23:07:33 +0000
-Message-Id: <20181026230741.23321-1-avarab@gmail.com>
+Subject: [PATCH v3 1/8] remote.c: add braces in anticipation of a follow-up change
+Date:   Fri, 26 Oct 2018 23:07:34 +0000
+Message-Id: <20181026230741.23321-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <20181026192734.9609-1-avarab@gmail.com>
 References: <20181026192734.9609-1-avarab@gmail.com>
@@ -70,100 +70,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After sending out v2 I noticed I didn't update the examples in a
-couple of the commit messages, and figured I'd finish this up by
-adding a patch to document how this works in the "git-push"
-manpage. This behavior has never been properly documented. range-diff
-with v2:
-    
-    1:  ca8eb6dc28 = 1:  ca8eb6dc28 remote.c: add braces in anticipation of a follow-up change
-    2:  b0e15b6ff1 = 2:  b0e15b6ff1 i18n: remote.c: mark error(...) messages for translation
-    3:  052fc5860e = 3:  052fc5860e push: improve the error shown on unqualified <dst> push
-    4:  e6aa2e360f = 4:  e6aa2e360f push: move unqualified refname error into a function
-    5:  57840952b2 ! 5:  dcf566e16e push: add an advice on unqualified <dst> push
-        @@ -13,8 +13,10 @@
-                 error: The destination you provided is not a full refname (i.e.,
-                 starting with "refs/"). We tried to guess what you meant by:
-         
-        -        - Looking for a ref that matches newbranch on the remote side.
-        -        - Looking at the refname of the local source.
-        +        - Looking for a ref that matches 'newbranch' on the remote side.
-        +        - Checking if the <src> being pushed ('v2.19.0^{commit}')
-        +          is a ref in "refs/{heads,tags}/". If so we add a corresponding
-        +          refs/{heads,tags}/ prefix on the remote side.
-         
-                 Neither worked, so we gave up. You must fully-qualify the ref.
-                 hint: The <src> part of the refspec is a commit object.
-    6:  a2d98855cc = 6:  92ff753437 push: test that <src> doesn't DWYM if <dst> is unqualified
-    7:  4e1953da82 ! 7:  58eeb0f3f3 push: add DWYM support for "git push refs/remotes/...:<dst>"
-        @@ -3,22 +3,44 @@
-             push: add DWYM support for "git push refs/remotes/...:<dst>"
-         
-             Add DWYM support for pushing a ref in refs/remotes/* when the <dst>
-        -    ref is unqualified, e.g.:
-        +    ref is unqualified. Now instead of erroring out we support e.g.:
-         
-        -        git push origin refs/remotes/origin/master:upstream-master
-        +        $ ./git-push avar refs/remotes/origin/master:upstream-master -n
-        +        To github.com:avar/git.git
-        +         * [new branch]            origin/master -> upstream-master
-         
-             Before this we wouldn't know what do do with
-             refs/remotes/origin/master, now we'll look it up and discover that
-             it's a commit (or tag) and add a refs/{heads,tags}/ prefix to <dst> as
-             appropriate.
-         
-        +    The error message emitted when we still don't know what to do has been
-        +    amended to note that this is something we tried:
-        +
-        +        $ ./git-push avar v2.19.0^{commit}:newbranch -n
-        +        error: The destination you provided is not a full refname (i.e.,
-        +        starting with "refs/"). We tried to guess what you meant by:
-        +
-        +        - Looking for a ref that matches 'newbranch' on the remote side.
-        +        - Checking if the <src> being pushed ('v2.19.0^{commit}')
-        +          is a ref in "refs/{heads,tags}/". If so we add a corresponding
-        +          refs/{heads,tags}/ prefix on the remote side.
-        +        - Checking if the <src> being pushed ('v2.19.0^{commit}')
-        +          is a commit or tag in "refs/remotes/*". Then we infer a
-        +          corresponding refs/{heads,tags} on the remote side.
-        +
-        +        None of those worked, so we gave up. You must fully-qualify the ref.
-        +        hint: The <src> part of the refspec is a commit object.
-        +        hint: Did you mean to create a new branch by pushing to
-        +        hint: 'v2.19.0^{commit}:refs/heads/newbranch'?
-        +
-             I'm bending over backwards and assuming that someone might have hacked
-             in remote tracking tags (see [1] for a discussion of how that can be
-             done), but punting on any tree or blob objects found under
-             refs/remotes/*.
-         
-             This is the first use of the %N$<fmt> style of printf format in
-        -    the *.[ch] files in our codebase, but it's supported by POSIX[2] and
-        +    the *.[ch] files in our codebase. It's supported by POSIX[2] and
-             there's existing uses for it in po/*.po files, so hopefully it won't
-             cause any trouble. It's more obvious for translators than to have a
-             3rd argument to the function identical to the 2nd, by re-using the 2nd
-    -:  ---------- > 8:  bc171b0312 push doc: document the DWYM behavior pushing to unqualified <dst>
+The CodingGuidelines say "When there are multiple arms to a
+conditional and some of them require braces, enclose even a single
+line block in braces for consistency.". Fix the code in
+match_explicit() to conform.
 
-Ævar Arnfjörð Bjarmason (8):
-  remote.c: add braces in anticipation of a follow-up change
-  i18n: remote.c: mark error(...) messages for translation
-  push: improve the error shown on unqualified <dst> push
-  push: move unqualified refname error into a function
-  push: add an advice on unqualified <dst> push
-  push: test that <src> doesn't DWYM if <dst> is unqualified
-  push: add DWYM support for "git push refs/remotes/...:<dst>"
-  push doc: document the DWYM behavior pushing to unqualified <dst>
+While I'm at it change the if/else if/else in guess_ref() to use
+braces. This is not currently needed, but a follow-up change will add
+a new multi-line condition to that logic.
 
- Documentation/config.txt   |   7 +++
- Documentation/git-push.txt |  27 ++++++++
- advice.c                   |   2 +
- advice.h                   |   1 +
- remote.c                   | 124 +++++++++++++++++++++++++++++--------
- t/t5505-remote.sh          |  57 +++++++++++++++++
- 6 files changed, 193 insertions(+), 25 deletions(-)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ remote.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
+diff --git a/remote.c b/remote.c
+index 81f4f01b00..18cae48daa 100644
+--- a/remote.c
++++ b/remote.c
+@@ -968,12 +968,13 @@ static char *guess_ref(const char *name, struct ref *peer)
+ 	if (!r)
+ 		return NULL;
+ 
+-	if (starts_with(r, "refs/heads/"))
++	if (starts_with(r, "refs/heads/")) {
+ 		strbuf_addstr(&buf, "refs/heads/");
+-	else if (starts_with(r, "refs/tags/"))
++	} else if (starts_with(r, "refs/tags/")) {
+ 		strbuf_addstr(&buf, "refs/tags/");
+-	else
++	} else {
+ 		return NULL;
++	}
+ 
+ 	strbuf_addstr(&buf, name);
+ 	return strbuf_detach(&buf, NULL);
+@@ -1038,21 +1039,22 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 	case 1:
+ 		break;
+ 	case 0:
+-		if (starts_with(dst_value, "refs/"))
++		if (starts_with(dst_value, "refs/")) {
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+-		else if (is_null_oid(&matched_src->new_oid))
++		} else if (is_null_oid(&matched_src->new_oid)) {
+ 			error("unable to delete '%s': remote ref does not exist",
+ 			      dst_value);
+-		else if ((dst_guess = guess_ref(dst_value, matched_src))) {
++		} else if ((dst_guess = guess_ref(dst_value, matched_src))) {
+ 			matched_dst = make_linked_ref(dst_guess, dst_tail);
+ 			free(dst_guess);
+-		} else
++		} else {
+ 			error("unable to push to unqualified destination: %s\n"
+ 			      "The destination refspec neither matches an "
+ 			      "existing ref on the remote nor\n"
+ 			      "begins with refs/, and we are unable to "
+ 			      "guess a prefix based on the source ref.",
+ 			      dst_value);
++		}
+ 		break;
+ 	default:
+ 		matched_dst = NULL;
 -- 
 2.19.1.759.g500967bb5e
 
