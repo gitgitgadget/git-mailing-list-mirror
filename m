@@ -6,65 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F41571F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 04:39:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF85F1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 04:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbeJZNOa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 09:14:30 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37472 "EHLO
+        id S1725876AbeJZNQ7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 09:16:59 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38161 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725849AbeJZNO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 09:14:29 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g9-v6so11424915wrq.4
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 21:39:05 -0700 (PDT)
+        with ESMTP id S1725849AbeJZNQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 09:16:59 -0400
+Received: by mail-wr1-f65.google.com with SMTP id d10-v6so11447447wrs.5
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 21:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=GrCwHfhE9Ds2JXxZa1mz3EXfZE7AisWZAxR7ULGrT1w=;
-        b=ZxDANQRxbDgcrKjfS513dfc9n5cgGzNGKlH1a3cmz6ILnFxuTklqnvJd6oH9GEtFxH
-         jiQGdBKnNxbIYWTo+ns09w8RNueemHyHIV3lF2zPc1j5XzZnttguOyEtR/WRIk/hkBDX
-         mLNV2EGbhGhRLqkY1vQ6yn24FcLzZGWT70xPiBkF1+Tzp5FENUUUnpNHbSyYFLuQKjLN
-         sYdjz6/nbWi22Nzwd+/4HGSJX1QIWTcpQehwJXm+PYozkv+nQAEoTj5PubcrHxUxgHS9
-         w0bxf77+xcPorJs1ZLnaFGhvhpM/TU5kU8rMEX1ork758n207ggnzHG87jG5fpWdvEiJ
-         4Kng==
+        bh=rTAdHzi/mSBlRUv39m3vGzcdHH87uQ/a/Hb7y/unMq0=;
+        b=Qb7+xIbJyLHIHzlkgFiBMEETC1pgiIQeHAR1NFniQy5/f0NHjieiMMgJRdb76jvtxN
+         4wlBCLp1EMnHd7l8EBOBm7AfQsrUiesQtZi+trUxkslRsdxk3HeTqcFFsJcVZVwZ8xWs
+         Nv1Js8zlsL00BkZcOKi6YzX8WESNZtUp+QIneU0VZ8dSqczfoSCkVKzTiIk9PVlTXIWe
+         x1ghvIKq8fheQYo57hkW1mrjtEC4QTZYWVvpgh0zE++JTlG6r8RKFu5Z8zPWDyR5D+5a
+         /+BfMGKsDV8DBOb/N/4Y0SHCpfqT3zlR4gCFEgbfFXVtCBhev2LuJOXapkHT86jlEjR3
+         03uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=GrCwHfhE9Ds2JXxZa1mz3EXfZE7AisWZAxR7ULGrT1w=;
-        b=tfurubEedCXfxq3wpdzqnf/8tGxDuGraXoVpfaK3Fkx9oZwBqkVTwQ4gjLblHVzpq6
-         t/iVjxJK3g1l/OBeTEwJNRr0z/B7hHwpdAs82Qyw2oP/SNXR/XoLei2Ch542kAf2TbOl
-         V4zXC55rz5DYuqMeRloBLH3jPhXCCVnu2jE5qatPHQKmpDRTE57yqUweuRQgvMkaCNVB
-         ynrKXIULM99s2oqRgB9zcOg4vBdf63LUOP2awEUqd4EHvKVqvGzOQWV/bEZlg8q7cjqH
-         i54sYNbDKgERjCHNYbPk7bWkaVCOPHupzCzdpjJhkzs6LflFI+gRo7oBZbXjqpgGUpV0
-         kiZw==
-X-Gm-Message-State: AGRZ1gKctPjL5MTKsS4LZL2EPDqaNkZFGwjrT2h8TJWBwatjSayjqqJr
-        roFoB+0kYflFe6O/82G6iSMT1/D5cOA=
-X-Google-Smtp-Source: AJdET5ebvWNYQdmYk2Gdal+rBjxUYcUaG1Z7rKR+3Hg65BMQDjA3RfxghiE5z5dBKH27F0Aokfgz7A==
-X-Received: by 2002:adf:ebcf:: with SMTP id v15-v6mr4250656wrn.76.1540528744657;
-        Thu, 25 Oct 2018 21:39:04 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y138-v6sm1960311wmd.2.2018.10.25.21.39.03
+        bh=rTAdHzi/mSBlRUv39m3vGzcdHH87uQ/a/Hb7y/unMq0=;
+        b=EnYvp/JD/tZWWxcXRn5FXX85rblEvFWNL+soSRZSYEXgo7giWD4tPlDgaj3MGV1S0g
+         SDdJ45sZZXpoaDFZFZhF7/Knvdabx6/uIkjHs3iilfauMFYTgE7judT58fzkvlNdXaJg
+         9QYOb/SP9k+uCVwh5KObp7my5CTbqLJeMtyFzYKh33xFaEfgS1wPefa9IlluiwYkU3R+
+         /bYFLwOE4DKHQ9t9N0ujDjiYI+LfcEV3JyGCu50bPHPXVKL4zcSIWXayODtJTvlqIP6o
+         eTsk41TdArWMxr5Hdz5jA06qGyTMjcUFsQWn2xOA3iweQgFzZaNxj2+5Ft6XSVipG3WY
+         d8XQ==
+X-Gm-Message-State: AGRZ1gJCJuP5OtH974b+4RjTcy8/Yfnb/gldcCpdTJasJJyiHeoOZimE
+        ZGTZFNB89WH6x5Cd0dO+6s4=
+X-Google-Smtp-Source: AJdET5cxxqfS+feWmaJibkQv3+0xpnfIKoiK94TAlZW8UGW93qMMEExpphPLVACynQkXgMZ4plqZDQ==
+X-Received: by 2002:adf:9069:: with SMTP id h96-v6mr4093188wrh.65.1540528893368;
+        Thu, 25 Oct 2018 21:41:33 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 74-v6sm3941572wmi.23.2018.10.25.21.41.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 21:39:03 -0700 (PDT)
+        Thu, 25 Oct 2018 21:41:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        github@brendanforster.com
-Subject: Re: [PATCH] http: give curl version warnings consistently
+Cc:     Brendan Forster via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Brendan Forster <github@brendanforster.com>
+Subject: Re: [PATCH 2/3] http: add support for disabling SSL revocation checks in cURL
 References: <pull.46.git.gitgitgadget@gmail.com>
         <764791d13d20478639402e7af95e901223444240.1539598481.git.gitgitgadget@gmail.com>
-        <CAPig+cQFb3S0Lm+huUZDN4aw9rWwinh0iZp12ss1zVKpJ=2MdA@mail.gmail.com>
-        <xmqqzhv2lnn6.fsf@gitster-ct.c.googlers.com>
-        <xmqqsh0uln5c.fsf_-_@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1810252059510.4546@tvgsbejvaqbjf.bet>
-Date:   Fri, 26 Oct 2018 13:39:02 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1810252059510.4546@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Thu, 25 Oct 2018 21:00:32 +0200
+        <xmqq1s8q34g2.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1810161225310.4546@tvgsbejvaqbjf.bet>
+        <xmqq1s8oxbpc.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1810252049210.4546@tvgsbejvaqbjf.bet>
+Date:   Fri, 26 Oct 2018 13:41:31 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1810252049210.4546@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Thu, 25 Oct 2018 20:52:16 +0200
         (DST)")
-Message-ID: <xmqqwoq5coex.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqsh0tcoas.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,38 +74,13 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, 25 Oct 2018, Junio C Hamano wrote:
+>> I did not and I do not think it would.  I was wondering if the
+>> ability to be able to specify these per destination is something
+>> very useful and deserves to be called out in the doc, together with
+>> ...
 >
->> When a requested feature cannot be activated because the version of
->> cURL library used to build Git with is too old, most of the codepaths
->> give a warning like "$Feature is not supported with cURL < $Version",
->> marked for l10n.  A few of them, however, did not follow that pattern
->> and said things like "$Feature is not activated, your curl version is
->> too old (>= $Version)", and without marking them for l10n.
->> 
->> Update these to match the style of the majority of warnings and mark
->> them for l10n.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->
-> I like this patch better than the one I had prepared for v2, so I dropped
-> it again, and "hit the Submit button".
+> I do not think that it needs to be called out specifically in the docs. It
+> is just yet another http.* setting that can be overridden per-URL. It
+> would be different if it had not worked.
 
-I took your v3 and queue this on top, instead of the previous one
-on which this was prepared.
-
-By the way, I wondered if we want to unify them by introducing
-
-	static void curl_version_warning(const char *feature, const char *verstring)
-	{
-		warning(_("%s is not supported with cURL < %s"),
-			feature, verstring);
-	}
-
-so that translators need to deal with a single instance of the
-message, but the "feature" part may have to get localized, in which
-case we'd end up with sentence lego, which is not a good idea, so I
-dropped it.
-
-Thanks.
+OK, thanks for sanity checking.
