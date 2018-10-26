@@ -7,81 +7,72 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 505591F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 18:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0636D1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 18:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728002AbeJ0DWT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 23:22:19 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45043 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeJ0DWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 23:22:19 -0400
-Received: by mail-ed1-f66.google.com with SMTP id z21-v6so2130632edb.11
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 11:44:10 -0700 (PDT)
+        id S1728007AbeJ0DgC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 23:36:02 -0400
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:43938 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727772AbeJ0DgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 23:36:02 -0400
+Received: by mail-qk1-f201.google.com with SMTP id n64-v6so2049118qkd.10
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 11:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+KSKkIaCtGJ05stNkyGa6QLTdLfIE+YHoPG/sMNWPsQ=;
-        b=e2aTLJhZBryKVAC99EO9wvTbn/qUuv8NG3zs34La6OLAUDeCJVhOXAM/2lrtpVl8yS
-         AmvS86wxBGffaRGS2HKm8ULS9PflQGbtGi1cN1X0JVTpm9RnHPj/HEhM9quRUaDWEpWL
-         vbu1jtiHNb0YMjlccpLagDhJ9rfYBEDoyugc4P5lHWTMIMNg6J3ayGmsR9STLOkgcgxz
-         e1XyDnx21xRuxCeTe1fO1j53IGBKHw8PrEuGO7/FSvJ6I49zR7C9woqQ5wY5CHjjqif7
-         v60Lz8qWsDdPZzCizsMRSuI1LPtgyxp6izSx5tHRBxhdnMEyybZQDv79HI7HPMi9Z8aU
-         iFyg==
+        bh=am5J/KuXZnc6YCu4ESifmjQ2DTb9L5kGnd+faYUBbw8=;
+        b=mUVLmcCdmBdSixVErlf/+5PdWNzTrg3PmeBw9WPiWEGTync/zDfpn5r3kHQNVioQJ9
+         QRmNCx2QoF+SxsfFafQvuCrOhhN4pUlgF4pFLAVqNxMSIxTccK0ZVJUAjErZIIYzhr4O
+         F6fRccygJxYaQq5y/qL4zdMWgMyhFHVlSbKEKdaAsqNTvfc0cvPYuhArlenTLhTP1ulQ
+         OytWF8M5q+ZfbmAN4YKa+wdeK8z4iXgzDyZCG1bpFNTsRjdpmGtCdfjLjJxjCdxkxkA4
+         nWTkRBmMe37u8gv0X3ht+k4zbv7l3a9rnlTRklIhCHfzSq4cI/HSsmwgLWy2n1Bb2yA2
+         JPog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+KSKkIaCtGJ05stNkyGa6QLTdLfIE+YHoPG/sMNWPsQ=;
-        b=Na2LmBHnkjSl9YxKUHCAbjJsRnfpqHg4Mg5ByU3W6i5Q7AWZ+YK10ThrEfRyHmu8KP
-         4Rnyg+ZfTbPsAWVx4nPsZQLAJtth64Zm1f//ljXYToBmcpVd8sMN7idlfieQC+GPwOvo
-         bmePdVpYkeq3DCCdo9BGy981pe2puGQSDccEcNDxra4QsU+lCXMDmMvpJN0wxfweb8ig
-         beRrThjvSfV7prIJLOEaCYRpGmVl1/73LsCAzU0keU80y7PelUg0i9k88omYpZYRQL2P
-         hgvKuc1UiIr67S6AViAu4DcIpZNAVwyP/bJyrONZ+QgyQXJks7OxDH/UtI7mfC6QBc9L
-         sJRw==
-X-Gm-Message-State: AGRZ1gLllqeqV1mUopoqIEF2gNgFJ/Kq6hADrttoQBME0pyd0Zb/bDOW
-        zB0NAaqqCq2sGBNlQhEbjiR3ZwsemsWEmZwri9zwaw==
-X-Google-Smtp-Source: AJdET5dCR2RhjpAsE0nV0SBVsJ+ds/eshG8l3ydHBfGXkS1zhSUjBp2k30qCzG85GoQA1GEaq2ogL3aAsWvlptyFxXA=
-X-Received: by 2002:a50:8ce4:: with SMTP id r33-v6mr4011053edr.231.1540579449961;
- Fri, 26 Oct 2018 11:44:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20181025161813.17252-1-ao2@ao2.it> <CAGZ79kZvzLtSgAw8epGpG+T2f2Q7z2ZkXe=4gKMQTkM8ikwcog@mail.gmail.com>
- <xmqqin1peadh.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqin1peadh.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Oct 2018 11:43:58 -0700
-Message-ID: <CAGZ79katS+PHWWD_0EqSmoEFazE0vAbMsg8G+iowNfbDmMkyMg@mail.gmail.com>
-Subject: Re: [PATCH v7 00/10] Make submodules work if .gitmodules is not
- checked out
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Antonio Ospite <ao2@ao2.it>, git <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=am5J/KuXZnc6YCu4ESifmjQ2DTb9L5kGnd+faYUBbw8=;
+        b=j4mpdfXN6mSKSZe1y6p0BBqAWJvKi3aImoRI1slwHtpwagAFvGBRxrU+KXzdt5SJ+E
+         l31sj0mQQ0NAs9ebZ6CAu7hjNw8PjtTbqyzpTnMVuJNLY3NT081TCOcaxuiMogYukQqR
+         KkTipyhG/q023OJTzV1rcignlps54OFj6PBwDsbE0JPm0HJU9jKk1Hj3Vnx3pv/2gB9d
+         RwNTgFW8AotnPy9gb8kYYPssCyJWkh+Xz0rWDPIFEmcRs/khQ/vtUfq4j2jzXXKgeeBY
+         p7kLJqYB9sDiXKJ+xiDzhlJ2q+GkXpKTp0lJHKhXr7D9heHGUls+GBboHYE4nPb/Jr1R
+         WteA==
+X-Gm-Message-State: AGRZ1gLoTJDu8qvt/9lxj94zD4TntKYR3+KJhg72+KQ8LVBIi2BvwcP3
+        TykSvG38SLSoNTw4MUDpCoucaCahqYAPKbAcaY8b
+X-Google-Smtp-Source: AJdET5cY2pXAfpHdpAhLq6oSJ/saOPOUdNgbWe7IX/X+c7EeiHy2+A/nWWaHdUleIfKKVKq274cVQwibmu7yspvwBtlc
+X-Received: by 2002:a0c:9e2e:: with SMTP id p46mr3766151qve.22.1540580270585;
+ Fri, 26 Oct 2018 11:57:50 -0700 (PDT)
+Date:   Fri, 26 Oct 2018 11:57:47 -0700
+In-Reply-To: <20181025233231.102245-6-sbeller@google.com>
+Message-Id: <20181026185747.259713-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181025233231.102245-6-sbeller@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH 05/10] submodule: store OIDs in changed_submodule_names
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sbeller@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 25, 2018 at 6:59 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stefan Beller <sbeller@google.com> writes:
->
-> >> In this series I am addressing the comments by Stefan Beller about the
-> >> tests in patch 9.
-> >>
-> >> If the new tests look OK, I'd say we try moving the series to "next" and
-> >> see what happens?
-> >
-> > Sounds good to me.
->
-> Which means (1) the plan sounds OK but I didn't look at these new
-> tests or (2) the new tests look OK and I am happy to see this go to
-> 'next'?
+> Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
 
-I looked at the tests and found it a pleasant read, so I think the plan of
-merging it to next and seeing what will happen is a good one.
+Probably better not to include such lines, especially since the review
+by me is not yet complete.
 
-Stefan
+Having said that, patches 1-5 look good to me. Patches 1-3 are identical
+to the previous version, which I have already reviewed. In patch 4,
+Stefan made the code change I suggested [1].
+
+In this patch, compared to the previous version which I have already
+reviewed [2], the code is unchanged aside from some variable renaming. I
+suggested a commit title change which Stefan has done.
+
+[1] https://public-inbox.org/git/20181017212624.196598-1-jonathantanmy@google.com/
+[2] https://public-inbox.org/git/20181017214534.199890-1-jonathantanmy@google.com/
