@@ -2,224 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CC7F1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 13:51:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EA2C1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 14:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727507AbeJZW2K (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 18:28:10 -0400
-Received: from outbound1a.ore.mailhop.org ([54.213.22.21]:31643 "EHLO
-        outbound1a.ore.mailhop.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726193AbeJZW2K (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 26 Oct 2018 18:28:10 -0400
-X-Greylist: delayed 965 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Oct 2018 18:28:09 EDT
-ARC-Seal: i=1; a=rsa-sha256; t=1540560898; cv=none;
-        d=outbound.mailhop.org; s=arc-outbound20181012;
-        b=aldeufZAury+uozn2gh2OvazTM/+Fcgw5Oj2NRm9Dui42GEgx4+7gDfoY6HZqzlXS98JzueWi1XV0
-         muDM8f1Ubu7ojPrv2Hnmmjj4aJO5deE/4FrMwORF2VCO5tuS30fKJv11oBl274wGkYjCoxdO/5zLrS
-         67KjzBygTVxIL/2EcfB8HaxCMTOONOlyRap/pT3e7ypIUga7V0cncPO7tbh8TQPfLtGH32ujLErz20
-         RGMy2iBeYi1B/2L1i4dWlm06xhhLXUbxk1r4i6tgRDbOjNPmAFki006NHqlenN6catsbSkWNV+auvl
-         sjsJ7LHC2Ir6fC+9uEMLXKfV++xpvwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=outbound.mailhop.org; s=arc-outbound20181012;
-        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
-         message-id:subject:cc:to:from:date:dkim-signature:dkim-signature:from;
-        bh=77gysncg8vVgGhQtvDHpMIgW3YwT6L343AKqGKQWACw=;
-        b=Wym8LNof9GaPAFOo1sJZVWENdP5XBH9I0BLHG6Xp6+hZMmq7v6bCccGlAWJ2aqKk4TnH/y2Ojds9O
-         QAXqngEt8ULKbN0v8QEvDKhi5yexxYsqHNYtlkCagsZgbcyXSkNqejlJLdSj4L72hst6TjPrgbwzyz
-         +w1wIOrnLE+ppISK5bMifyBoayqQISV9pJdfW9fyuGYxqn8KCf4sabqgRc/c3mGcIfjbEjvly3DFwO
-         Ya18aO+u+JKpDZMLoKnvoeu5J3SjQMUSCXVkeleMn1/OP45fWLVucKqfjt/WJ4J6Lywh6OCTVVLfGl
-         PXP1zhbx24ObePIP3VxoUFkH5sRc7BQ==
-ARC-Authentication-Results: i=1; outbound1.ore.mailhop.org;
-        spf=softfail smtp.mailfrom=lakedaemon.net smtp.remote-ip=108.39.81.162;
-        dkim=permerror header.d=lakedaemon.net header.s=mail header.a=rsa-sha256 header.b=KYeUHyP7;
-        dmarc=none header.from=lakedaemon.net;
-        arc=none header.oldest-pass=0;
+        id S1727221AbeJZWrF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 18:47:05 -0400
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:41687 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726193AbeJZWrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 18:47:05 -0400
+Received: by mail-qk1-f180.google.com with SMTP id g13-v6so711473qke.8
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 07:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=outbound.mailhop.org; s=dkim-high;
-        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
-         message-id:subject:cc:to:from:date:from;
-        bh=77gysncg8vVgGhQtvDHpMIgW3YwT6L343AKqGKQWACw=;
-        b=IBHCy7wBes6Rj9JM92v9Yc3oA/ajKcVKBNaZXg3iZSE1wxGWLVyT78576OP0sA2sFm4HqoxoNhBg7
-         FzkU2zAz15joqVNaZoqZ7O/p7va6yBxbHUVkO6JjRxvO5iXxLgdFAlmAUxmpO2JNNrT/M2aaY0IxpZ
-         UG1BU1sOsaGyDDSG36XdeGjfenYgY/0+J2F9OP/JgsYKWQGior0ZOuXRU43qKE5X+hcLDPuMO4GR4E
-         FVU7VOYgBM57y060HeviuAnrCEVtGGODHNm50W+VK3CuhpSyrWH01mqU7SiDqUrIxRZOnxhLgsIGZW
-         ThxWHpGRURA2Hv3T4lTJkulqs5/7Qsw==
-X-MHO-RoutePath: amFjMjk5NzkyNDU4
-X-MHO-User: ebdb9165-d923-11e8-a93b-310333596487
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Originating-IP: 108.39.81.162
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from io (unknown [108.39.81.162])
-        by outbound1.ore.mailhop.org (Halon) with ESMTPSA
-        id ebdb9165-d923-11e8-a93b-310333596487;
-        Fri, 26 Oct 2018 13:34:56 +0000 (UTC)
-Received: from io.lakedaemon.net (localhost [127.0.0.1])
-        by io (Postfix) with ESMTP id 2FB9380132;
-        Fri, 26 Oct 2018 13:34:53 +0000 (UTC)
-X-DKIM: OpenDKIM Filter v2.6.8 io 2FB9380132
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
-        s=mail; t=1540560893;
-        bh=77gysncg8vVgGhQtvDHpMIgW3YwT6L343AKqGKQWACw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=KYeUHyP7ko6iffRjXeCg8rkO9CC47M2dUuNLS1Iyc/CGvCEeEXuTPZnSj5OAUyEPT
-         v/KgjNk6cRqs1wpPSiri0w723Hgc7CHnqavPyhQxL4ljLg7LydlMYpczbBqF1Ztof4
-         puuPwQhhVxtY4e0bhZrMAlL31n+XPK7ATjcXleoHYmjvfky8x4hjOC4PmJHuv04/83
-         XrYKDJHFKwReBbSFTTWq6Mw55MIdUQvqLx6xo/PDlAFR4QSRd54Dv9n05EgJa9DpHS
-         kzAjyTpXtRIdiabt/rbmUNcIDTwTn0aKB4fKqMZIaUiuawL2yjZJn7/IlFEbEsI2Ef
-         DAGxpBtisYwsg==
-Date:   Fri, 26 Oct 2018 13:34:53 +0000
-From:   Jason Cooper <git@lakedaemon.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "lhf635@163.com" <lhf635@163.com>, git <git@vger.kernel.org>
-Subject: Re: the opposite of .gitignore, whitelist
-Message-ID: <20181026133453.GE24185@io.lakedaemon.net>
-References: <201810251039388653199@163.com>
- <xmqqh8hak2mh.fsf@gitster-ct.c.googlers.com>
- <c166b421-a228-8349-0815-2ebb9dcab998@lakedaemon.net>
- <20181026093644.GA20876@sigill.intra.peff.net>
- <87tvl8lw5d.fsf@evledraar.gmail.com>
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=m6FwMB64qv+Y/a1/rMhinKPrPyw5oKswd+bDh7XhTmE=;
+        b=A1/Njsr9kiJCQhsDeboIqQwNyf3zlr9V3FPQKoyDVITx5gatO7Rx6Lt+AzPEKYRwAZ
+         3Es2DwHIBJ1H5g6MC6VMiAvuMoZ9sM8jXiDXHfaTCJXmZOS2qTMv89DLVzQWSebq0N5i
+         DbOcUKScalQ0KogWlbafCpMe51VpQ4YXHzRkBjNxBcZdR8RG25ZvfyIEumG9RTd7+1N2
+         apCzxGuomzVckwijfDmufJgR7CIFShhpeenbloMRBuHqTWm3o4I7aO+13WxPKqLeINFK
+         koIXGNwUeXBI9+t+X37eCa8rwGWkOmgCQIznOcs2cc5L9+Rda9JwD0KXCPKFCZkdVKxl
+         O92Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=m6FwMB64qv+Y/a1/rMhinKPrPyw5oKswd+bDh7XhTmE=;
+        b=o55BU+kzJKlIQzvZy7cE4I/De0RQqOf9kjGguqkxkdz/Dd+Pn9167uMm+lGr9skBiB
+         Ykxi0/tocvjPzNen3TQCW9GoZw0doDKnY1HTUMdZuUfRDQrIlG9K964vDXZ6WmrvjIET
+         pOrh6JMt9jUdqptIau55ZahlJ+RjfjgiP4FIoeRYg0nd7eNDl7JJARlzpr8adLqbadnq
+         cD/0Nimghg3/7d7PB3mHrgnUoz/i8IdLpJePOV/XSgZPekQYNBJdDW6tgqATgVNnYq3g
+         pyebaEP+rBjRMlexpk2AqELy8ECpwohoaOD3siyToXFAU/8vuHRKAz4oURcjNzw7i+xn
+         cWBA==
+X-Gm-Message-State: AGRZ1gIE55WPu7DSLb/UaLp37sCk2KwbNz5OjQRPwDKVg6uErwUrLIGD
+        XCEAoCOXob+Pe+lhYHjshhLI8HfE66s=
+X-Google-Smtp-Source: AJdET5ekFxI+M31teZXYXHA9rN44UHbfAGsWrNKlulOx4iUH11SCWL6CGKqcIqyucRSwsGUECZm6iw==
+X-Received: by 2002:a37:6c01:: with SMTP id h1-v6mr3201483qkc.67.1540562990182;
+        Fri, 26 Oct 2018 07:09:50 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id b134-v6sm9374235qka.45.2018.10.26.07.09.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Oct 2018 07:09:49 -0700 (PDT)
+Subject: Re: [PATCH/RFC] thread-utils: better wrapper to avoid #ifdef
+ NO_PTHREADS
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
+        <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+References: <20181018170934.GA21138@sigill.intra.peff.net>
+ <20181018180522.17642-1-pclouds@gmail.com>
+ <20181023202842.GA17371@sigill.intra.peff.net>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <852ad281-09df-c980-790c-df25e82b3331@gmail.com>
+Date:   Fri, 26 Oct 2018 10:09:46 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20181023202842.GA17371@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tvl8lw5d.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 26, 2018 at 02:39:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> On Fri, Oct 26 2018, Jeff King wrote:
-> > On Thu, Oct 25, 2018 at 10:38:46AM -0400, Jason Cooper wrote:
-> >> On 10/25/18 1:37 AM, Junio C Hamano wrote:
-> >> > "lhf635@163.com" <lhf635@163.com> writes:
-> >> >> I have a good idea, add a file to git that is the opposite of .gitignore...,
-> >> >
-> >> > Do negative patterns in .gitignore file help without inventing
-> >> > anything new?
-> >>
-> >> I did this several years ago in an attempt to track /etc/ (minus
-> >> ownership, of course) without storing secrets in the git history. As
-> >> the system grew and was maintained (read: crap added), the negative
-> >> patterns grew untenable. I quickly realized it wasn't the correct way
-> >> to solve the problem.
-> >>
-> >> Unfortunately, shortly after realizing this, I left that project. So I
-> >> never had the chance to develop a proper solution. However, the concept
-> >> of a '.gitonly' file was exactly was I was seeking. So, for what it's
-> >> worth, I've definitely had at least one legit usecase for this feature.
-> >>
-> >> The usecases tend to center around tracking select files within the
-> >> rootfs of a full-blown operating system. Or a subset thereof.
-> >
-> > I think what Junio meant is to ignore everything by default, like:
-> >
-> >   echo '*' >.gitignore
-> >
-> > and then selectively use negative patterns (and being in .gitignore,
-> > that makes them positive "yes, include this") to add things back:
-> >
-> >   echo 'foo' >>.gitignore
-> >
-> > which ends up being roughly the same as your .gitonly concept.
-> >
-> > I don't offhand remember if you might run into problems where a
-> > subdirectory is ignored by the "*" and we do not even recurse into it. I
-> > think it would work OK as long as you put everything in the top-level
-> > gitignore, like:
-> >
-> >   echo 'subdir/file' >>.gitignore
-> >
-> > but I didn't test.
+
+
+On 10/23/2018 4:28 PM, Jeff King wrote:
+> On Thu, Oct 18, 2018 at 08:05:22PM +0200, Nguyễn Thái Ngọc Duy wrote:
 > 
-> This doesn't work, as explained to myself in this commit in a private
-> project I have where I tried this a while ago:
+>> On Thu, Oct 18, 2018 at 7:09 PM Jeff King <peff@peff.net> wrote:
+>>>> In this particular case though I think we should be able to avoid so
+>>>> much #if if we make a wrapper for pthread api that would return an
+>>>> error or something when pthread is not available. But similar
+>>>> situation may happen elsewhere too.
+>>>
+>>> Yeah, I think that is generally the preferred method anyway, just
+>>> because of readability and simplicity.
+>>
+>> I've wanted to do this for a while, so let's test the water and see if
+>> it's well received.
+>>
+>> This patch is a proof of concept that adds just enough macros so that
+>> I can build index-pack.c on a single thread mode with zero #ifdef
+>> related to NO_PTHREADS.
+>>
+>> Besides readability and simplicity, it reduces the chances of breaking
+>> conditional builds (e.g. you rename a variable name but forgot that
+>> the variable is in #if block that is not used by your
+>> compiler/platform).
 > 
->     I thought this was a bug:
+> Yes, I love this. We're already halfway there with things like
+> read_lock() in index-pack and elsewhere, which are conditionally no-ops.
+> The resulting code is much easier to read, I think.
 > 
->         (
->             rm -rf /tmp/git &&
->             git init /tmp/git &&
->             cd /tmp/git >/dev/null &&
->             echo '*' >.gitignore &&
->             echo '!*.txt' >>.gitignore &&
->             echo '!.gitignore' >>.gitignore &&
->             touch foo.png foo.txt &&
->             mkdir dir &&
->             touch dir/bar.png dir/bar.txt &&
->             git add *.txt &&
->             git add */*.txt;
->             git status --short
->         )
+
+I am also very much in favor of this.  I updated a couple of places 
+threading is being used that I've been working in (preload-index and 
+read-cache) and both are much simplified using your proof of concept patch.
+
+>> Performance-wise I don't think there is any loss for single thread
+>> mode. I rely on compilers recognizing HAVE_THREADS being a constant
+>> and remove dead code or at least optimize in favor of non-dead code.
+>>
+>> Memory-wise, yes we use some more memory in single thread mode. But we
+>> don't have zillions of mutexes or thread id, so a bit extra memory
+>> does not worry me so much.
 > 
->     But it's a limitation, gitignore(5) says:
+> Yeah, I don't think carrying around a handful of ints is going to be a
+> big deal.
 > 
->         It is not possible to re-include a file if a parent directory of
->         that file is excluded. Git doesn’t list excluded directories for
->         performance reasons, so any patterns on contained files have no
->         effect, no matter where they are defined.
 
-Bingo.  This is the exact problem I encountered.
+Just to be complete, there _is_ an additional cost.  Today, code paths 
+that are only executed when there are pthreads available are excluded 
+from the binary (via #ifdef).  With this change, those code paths would 
+now be included causing some code bloat to NO_PTHREAD threaded images.
 
->     So as a hack exclude anything that looks like a file with an
->     extension.
+One example of this is in read-cache.c where the ieot read/write 
+functions aren't included for NO_PTHREAD but now would be.
+
+> I also think we may want to make a fundamental shift in our view of
+> thread support. In the early days, it was "well, this is a thing that
+> modern systems can take advantage of for certain commands". But these
+> days I suspect it is more like "there are a handful of legacy systems
+> that do not even support threads".
 > 
->     1 file changed, 1 insertion(+), 1 deletion(-)
->     .gitignore | 2 +-
+> I don't think we should break the build on those legacy systems, but
+> it's probably OK to stop thinking of it as "non-threaded platforms are
+> the default and must pay zero cost" and more as "threaded platforms are
+> the default, and non-threaded ones are OK to pay a small cost as long as
+> they still work".
 > 
->     modified   .gitignore
->     @@ -1,3 +1,3 @@
->     -*
->     +*.*
->      !*.gpg
->      !.gitignore
+
+I agree though I'm still curious if there are still no-threaded 
+platforms taking new versions of git.  Perhaps we should do the 
+depreciation warning you suggested elsewhere and see how much push back 
+we get.  It's unlikely we'd get lucky and be able to stop supporting 
+them completely but it's worth asking!
+
+>> @@ -74,4 +79,29 @@ int init_recursive_mutex(pthread_mutex_t *m)
+>>   		pthread_mutexattr_destroy(&a);
+>>   	}
+>>   	return ret;
+>> +#else
+>> +	return ENOSYS;
+>> +#endif
+>> +}
 > 
-> I.e. here I'm trying to maintain a repository where I only want
-> .gitignore and *.gpg files committed and everything else ignored, but it
-> only works for one directory level.
+> I suspect some of these ENOSYS could just become a silent success.
+> ("yep, I initialized your dummy mutex"). But it probably doesn't matter
+> much either way, as we would not generally even bother checking this
+> return.
+> 
+>> +#ifdef NO_PTHREADS
+>> +int dummy_pthread_create(pthread_t *pthread, const void *attr,
+>> +			 void *(*fn)(void *), void *data)
+>> +{
+>> +	return ENOSYS;
+>>   }
+> 
+> Whereas for this one, ENOSYS makes a lot of sense (we should avoid the
+> threaded code-path anyway when we see that online_cpus()==1, and this
+> would let us know when we mess that up).
+> 
 
-Perhaps a workflow solution using the existing .gitignore syntax would
-be to:
+This highlights something anyone writing multi-threaded code will need 
+to pay attention to that wasn't an issue before.  If you attempt to 
+create more threads than online_cpus(), the pthread_create() call will 
+fail and needs to be handled gracefully.
 
-    - Use a separate .gitignore file per subdirectory
-    - Only list a subdirectory in a .gitignore file when you want to
-      exclude the entire tree underneath the subdirectory
+One example of this is in preload-index.c where (up to) 20 threads are 
+created irrespective of what online_cpus() returns and if 
+pthread_create() fails, it just dies.  The logic would need to be 
+updated for this to work correctly.
 
-Which would give us two things we could warn on:
+I still think this is a much simpler issue to deal with than what we 
+have today with having to write/debug multiple code paths but I did want 
+to point it out for completeness.
 
-    - If git detects a negative pattern space (file starts with '*')
-        - any directories under that .gitignore need their own
-          .gitignore
-        - any directories listed in the .gitignore shall not have a
-          .gitignore within them.
-
-The warning could then point to the document I alluded to below.
-
-> There's not a lot of room left in the gitignore syntax, but I suppose we
-> could extend it to add some "I really mean it" negative pattern which
-> would override previous patterns even if those previous patterns matched
-> directories.
-
-I'd argue against this.  This is a rare enough usecase, that it should
-be possible, but doesn't need to be easy.  Extending the syntax will,
-imo, suggest that it's supposed to be easy.  I'd rather see an official
-doc for how to do it properly (maybe I'm on the right track with the
-above?) with an explanation for why it is the way it is (efficiency,
-rare usecase, etc)
-
-> Just fixing it as a bug would make the ignore process slower, since we
-> could no longer just ignore directories and would always need to
-> recursively scan them.
-
-Right, rare usecases shouldn't impede regular use.
-
-
-thx,
-
-Jason.
+>> +int dummy_pthread_init(void *data)
+>> +{
+>> +	/*
+>> +	 * Do nothing.
+>> +	 *
+>> +	 * The main purpose of this function is to break compiler's
+>> +	 * flow analysis or it may realize that functions like
+>> +	 * pthread_mutex_init() is no-op, which means the (static)
+>> +	 * variable is not used/initialized at all and trigger
+>> +	 * -Wunused-variable
+>> +	 */
+>> +	return ENOSYS;
+>> +}
+> 
+> It might be worth marking the dummy variables as MAYBE_UNUSED, exactly
+> to avoid this kind of compiler complaint.
+> 
+> -Peff
+> 
