@@ -2,208 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EA2C1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 14:09:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E23B51F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 15:15:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbeJZWrF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 18:47:05 -0400
-Received: from mail-qk1-f180.google.com ([209.85.222.180]:41687 "EHLO
-        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbeJZWrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 18:47:05 -0400
-Received: by mail-qk1-f180.google.com with SMTP id g13-v6so711473qke.8
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 07:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=m6FwMB64qv+Y/a1/rMhinKPrPyw5oKswd+bDh7XhTmE=;
-        b=A1/Njsr9kiJCQhsDeboIqQwNyf3zlr9V3FPQKoyDVITx5gatO7Rx6Lt+AzPEKYRwAZ
-         3Es2DwHIBJ1H5g6MC6VMiAvuMoZ9sM8jXiDXHfaTCJXmZOS2qTMv89DLVzQWSebq0N5i
-         DbOcUKScalQ0KogWlbafCpMe51VpQ4YXHzRkBjNxBcZdR8RG25ZvfyIEumG9RTd7+1N2
-         apCzxGuomzVckwijfDmufJgR7CIFShhpeenbloMRBuHqTWm3o4I7aO+13WxPKqLeINFK
-         koIXGNwUeXBI9+t+X37eCa8rwGWkOmgCQIznOcs2cc5L9+Rda9JwD0KXCPKFCZkdVKxl
-         O92Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=m6FwMB64qv+Y/a1/rMhinKPrPyw5oKswd+bDh7XhTmE=;
-        b=o55BU+kzJKlIQzvZy7cE4I/De0RQqOf9kjGguqkxkdz/Dd+Pn9167uMm+lGr9skBiB
-         Ykxi0/tocvjPzNen3TQCW9GoZw0doDKnY1HTUMdZuUfRDQrIlG9K964vDXZ6WmrvjIET
-         pOrh6JMt9jUdqptIau55ZahlJ+RjfjgiP4FIoeRYg0nd7eNDl7JJARlzpr8adLqbadnq
-         cD/0Nimghg3/7d7PB3mHrgnUoz/i8IdLpJePOV/XSgZPekQYNBJdDW6tgqATgVNnYq3g
-         pyebaEP+rBjRMlexpk2AqELy8ECpwohoaOD3siyToXFAU/8vuHRKAz4oURcjNzw7i+xn
-         cWBA==
-X-Gm-Message-State: AGRZ1gIE55WPu7DSLb/UaLp37sCk2KwbNz5OjQRPwDKVg6uErwUrLIGD
-        XCEAoCOXob+Pe+lhYHjshhLI8HfE66s=
-X-Google-Smtp-Source: AJdET5ekFxI+M31teZXYXHA9rN44UHbfAGsWrNKlulOx4iUH11SCWL6CGKqcIqyucRSwsGUECZm6iw==
-X-Received: by 2002:a37:6c01:: with SMTP id h1-v6mr3201483qkc.67.1540562990182;
-        Fri, 26 Oct 2018 07:09:50 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id b134-v6sm9374235qka.45.2018.10.26.07.09.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 07:09:49 -0700 (PDT)
-Subject: Re: [PATCH/RFC] thread-utils: better wrapper to avoid #ifdef
- NO_PTHREADS
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-        <pclouds@gmail.com>
+        id S1726408AbeJZXxF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 19:53:05 -0400
+Received: from mout.web.de ([212.227.17.12]:45175 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726113AbeJZXxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 19:53:04 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmLoU-1fgRpk1Yzy-00ZzPY; Fri, 26
+ Oct 2018 17:15:34 +0200
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmLoU-1fgRpk1Yzy-00ZzPY; Fri, 26
+ Oct 2018 17:15:34 +0200
+Date:   Fri, 26 Oct 2018 17:15:33 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-References: <20181018170934.GA21138@sigill.intra.peff.net>
- <20181018180522.17642-1-pclouds@gmail.com>
- <20181023202842.GA17371@sigill.intra.peff.net>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <852ad281-09df-c980-790c-df25e82b3331@gmail.com>
-Date:   Fri, 26 Oct 2018 10:09:46 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+Subject: Re: [PATCH v1 2/2] curl_off_t xcurl_off_t is not portable
+Message-ID: <20181026151533.GA15410@tor.lan>
+References: <20181025161310.29249-1-tboegi@web.de>
+ <xmqq4ld9e83d.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20181023202842.GA17371@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq4ld9e83d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:AM4lsVLII9j8twRylLue94hd3KAsn6pE3gy12Ou6Wp3PiqovSzJ
+ tgr8Z2TOWnDKE51JjkedCKP2sdeun20CvAap5UOW/++UMmhCRhQTCflAESHfQiTIsexuZsK
+ DtsYZkEhVjtjFC6tS5hJIWXgD/5iSdmrDAIA4Q0QTuGH6xwQTtdHosM5MEtV6dPNDpGMwIj
+ Oza04naqycw0gcHnkBXHQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O38w5J+q3sI=:HJN9PKeIyEJ6PQrHVEGihd
+ SEwN/aXYaV9rX/WwAjpoZYwONj97HSGEoun0EbxEIbglJ1Ye8Ntr+XKsUXpvTBzPv2kH9VF8b
+ OSqgmZloDZyZovz1pGwnV7NHgkHLWrFRWglFkHTtgR1nK3XyDtKYjOZeHHn9LanVcMnophxgB
+ EXmC15mLBafNfLRDORfqC1dxwiix/s+Rdutbyz3VozaGu7Y/KbZb9tAddnDT2rwUQtlRA430y
+ BTUFiWrVWiU5Z3XQFvvnnie+HINM8hS/L1EJGelqGiaJ2h5b8vq0l6DPrr/9uty975J/coc82
+ GmMxKSOmpwC9J1muroq15halG4nRv2AQtUX6V3Xvj5CjXtStWTtwzoJG/mihaK6f4x0F6KID6
+ nd7hxpUlgp8DRh1XBINipgqn3pVNvBeexDwjM4Y63P0dAnv9fWAIZj1DFXbCsJikwM0/mJEML
+ RS3AUO8AZOzCwLdyBRxnVsc41nlh3kFE0CoQNhHPH5dPy5sMkf0elWg9iu++9T46c6pog0O83
+ NzuDyUzacIOHqu1wDym+SB1tMGBYrJxZBayWVtAaEF5hc4ph2jYX+Uy9elmImdycpzj0sIIdW
+ +OmIsqKGlLMq1x6uL4mz57DyXUhOHrn38ORnj1vxaN/aaeQzGMBWcYzRu/GfCMIChGLeFFg2U
+ S3AVT5mNafy6i1CJ5E0LAjo4uWyq5ltcA4xku+P43CJVqV9wbXb7xl63FX//LdaXbGON89eD7
+ iGVnWSW32wyWJHcLHiKIaqyGuuj13VyqBi0m+B/+LlIhd6byQdaDPCQnJLY3L9eNX8FtN8GA9
+ EkeNeR730gykS/7KGPI3OgQR6gHKw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 10/23/2018 4:28 PM, Jeff King wrote:
-> On Thu, Oct 18, 2018 at 08:05:22PM +0200, Nguyễn Thái Ngọc Duy wrote:
+On Fri, Oct 26, 2018 at 11:48:38AM +0900, Junio C Hamano wrote:
+> tboegi@web.de writes:
 > 
->> On Thu, Oct 18, 2018 at 7:09 PM Jeff King <peff@peff.net> wrote:
->>>> In this particular case though I think we should be able to avoid so
->>>> much #if if we make a wrapper for pthread api that would return an
->>>> error or something when pthread is not available. But similar
->>>> situation may happen elsewhere too.
->>>
->>> Yeah, I think that is generally the preferred method anyway, just
->>> because of readability and simplicity.
->>
->> I've wanted to do this for a while, so let's test the water and see if
->> it's well received.
->>
->> This patch is a proof of concept that adds just enough macros so that
->> I can build index-pack.c on a single thread mode with zero #ifdef
->> related to NO_PTHREADS.
->>
->> Besides readability and simplicity, it reduces the chances of breaking
->> conditional builds (e.g. you rename a variable name but forgot that
->> the variable is in #if block that is not used by your
->> compiler/platform).
+> > From: Torsten B�gershausen <tboegi@web.de>
 > 
-> Yes, I love this. We're already halfway there with things like
-> read_lock() in index-pack and elsewhere, which are conditionally no-ops.
-> The resulting code is much easier to read, I think.
+> > Subject: Re: [PATCH v1 2/2] curl_off_t xcurl_off_t is not portable
 > 
+> That title is misleading; it sounded as if the are these two
+> typedefs and they do not work correctly on some platforms, but that
+> is not what you are doing with the patch.
 
-I am also very much in favor of this.  I updated a couple of places 
-threading is being used that I've been working in (preload-index and 
-read-cache) and both are much simplified using your proof of concept patch.
+OK.
 
->> Performance-wise I don't think there is any loss for single thread
->> mode. I rely on compilers recognizing HAVE_THREADS being a constant
->> and remove dead code or at least optimize in favor of non-dead code.
->>
->> Memory-wise, yes we use some more memory in single thread mode. But we
->> don't have zillions of mutexes or thread id, so a bit extra memory
->> does not worry me so much.
 > 
-> Yeah, I don't think carrying around a handful of ints is going to be a
-> big deal.
+> > Comparing signed and unsigned values is not always portable.
 > 
+> Is that what the compiler is complaining about?  There is this bit
+> in git-compat-util.h:
 
-Just to be complete, there _is_ an additional cost.  Today, code paths 
-that are only executed when there are pthreads available are excluded 
-from the binary (via #ifdef).  With this change, those code paths would 
-now be included causing some code bloat to NO_PTHREAD threaded images.
+No, not that either, see below.
 
-One example of this is in read-cache.c where the ieot read/write 
-functions aren't included for NO_PTHREAD but now would be.
+> 
+> /*
+>  * Signed integer overflow is undefined in C, so here's a helper macro
+>  * to detect if the sum of two integers will overflow.
+>  *
+>  * Requires: a >= 0, typeof(a) equals typeof(b)
+>  */
+> #define signed_add_overflows(a, b) \
+>     ((b) > maximum_signed_value_of_type(a) - (a))
+> 
+> which is designed to be fed signed a and signed b.  The macro is
+> used in packfile codepaths to compare int, off_t, etc..
+> 
+> So the statement may be true but it does not seem to have much to do
+> with the problem you are seeing with maximum_signed_value_of_type().
+> 
+> > When  setting
+> > DEVELOPER = 1
+> > DEVOPTS = extra-all
+> >
+> > "gcc (Raspbian 6.3.0-18+rpi1+deb9u1) 6.3.0 20170516" errors out with
+> > "comparison is always false due to limited range of data type"
+> > "[-Werror=type-limits]"
+> 
+> Then this sounds a bit different from "comparison between signed
+> ssize_t len and unsigned maximum_signed_value_of_type() is bad".
+> Isn't it saying that "No matter how big you make len, you can never
+> go beyond maximum_signed_value_of_type(curl_off_t)"?
 
-> I also think we may want to make a fundamental shift in our view of
-> thread support. In the early days, it was "well, this is a thing that
-> modern systems can take advantage of for certain commands". But these
-> days I suspect it is more like "there are a handful of legacy systems
-> that do not even support threads".
-> 
-> I don't think we should break the build on those legacy systems, but
-> it's probably OK to stop thinking of it as "non-threaded platforms are
-> the default and must pay zero cost" and more as "threaded platforms are
-> the default, and non-threaded ones are OK to pay a small cost as long as
-> they still work".
-> 
+I digged a little bit deeper into the raspi, and this is what I find
+under
+/usr/include/arm-linux-gnueabihf/curl
 
-I agree though I'm still curious if there are still no-threaded 
-platforms taking new versions of git.  Perhaps we should do the 
-depreciation warning you suggested elsewhere and see how much push back 
-we get.  It's unlikely we'd get lucky and be able to stop supporting 
-them completely but it's worth asking!
+curlbuild.h:#define CURL_TYPEOF_CURL_OFF_T int64_t
+curlbuild.h:typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
 
->> @@ -74,4 +79,29 @@ int init_recursive_mutex(pthread_mutex_t *m)
->>   		pthread_mutexattr_destroy(&a);
->>   	}
->>   	return ret;
->> +#else
->> +	return ENOSYS;
->> +#endif
->> +}
 > 
-> I suspect some of these ENOSYS could just become a silent success.
-> ("yep, I initialized your dummy mutex"). But it probably doesn't matter
-> much either way, as we would not generally even bother checking this
-> return.
+> > diff --git a/remote-curl.c b/remote-curl.c
+> > index 762a55a75f..c89fd6d1c3 100644
+> > --- a/remote-curl.c
+> > +++ b/remote-curl.c
+> > @@ -618,9 +618,10 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+> >  }
+> >  
+> >  static curl_off_t xcurl_off_t(ssize_t len) {
+> > -	if (len > maximum_signed_value_of_type(curl_off_t))
 > 
->> +#ifdef NO_PTHREADS
->> +int dummy_pthread_create(pthread_t *pthread, const void *attr,
->> +			 void *(*fn)(void *), void *data)
->> +{
->> +	return ENOSYS;
->>   }
+> Is the issue that len is signed and maximum_signed_value_of_type()
+> gives an unsigned value, and these two are compared?  As we saw
+> earlier, signed_add_overflows() is another example that wants a
+> mixed comparison.
 > 
-> Whereas for this one, ENOSYS makes a lot of sense (we should avoid the
-> threaded code-path anyway when we see that online_cpus()==1, and this
-> would let us know when we mess that up).
-> 
+> I am just wondering if casting len to uintmax_t before comparing
+> with maximum_signed_value_of_type() is a simpler solution that can
+> safely be cargo-culted to other places without much thinking.
 
-This highlights something anyone writing multi-threaded code will need 
-to pay attention to that wasn't an issue before.  If you attempt to 
-create more threads than online_cpus(), the pthread_create() call will 
-fail and needs to be handled gracefully.
+I don't know.
+Since ssize_t is 32 bit on the raspi, and curl_off_t is 64 bit,
+the test seems not to be needed at all ;-)
+I don't know if it makes sense to stop thinking here and if
+casting to uintmax_t is the right solution here.
 
-One example of this is in preload-index.c where (up to) 20 threads are 
-created irrespective of what online_cpus() returns and if 
-pthread_create() fails, it just dies.  The logic would need to be 
-updated for this to work correctly.
+And, I like the easy-to-read xsize_t, which is safe and warm.
+Agreed that the commit message is wrong.
+I would like to keep the xsize_t aproach, are there more thoughts ?
 
-I still think this is a much simpler issue to deal with than what we 
-have today with having to write/debug multiple code paths but I did want 
-to point it out for completeness.
-
->> +int dummy_pthread_init(void *data)
->> +{
->> +	/*
->> +	 * Do nothing.
->> +	 *
->> +	 * The main purpose of this function is to break compiler's
->> +	 * flow analysis or it may realize that functions like
->> +	 * pthread_mutex_init() is no-op, which means the (static)
->> +	 * variable is not used/initialized at all and trigger
->> +	 * -Wunused-variable
->> +	 */
->> +	return ENOSYS;
->> +}
 > 
-> It might be worth marking the dummy variables as MAYBE_UNUSED, exactly
-> to avoid this kind of compiler complaint.
+> "git grep maximum_signed_value_of_type" reports a handful
+> comparisons in vcs-svn/, all of which does
 > 
-> -Peff
+> 	if (var > maximum_signed_value_of_type(off_t))
+> 
+> with var of type uintmax_t, which sounds like a sane thing to do.
+> 
+> Thanks.
+> 
+> > +	curl_off_t size = (curl_off_t) len;
+> > +	if (len != (ssize_t) size)
+> >  		die("cannot handle pushes this big");
+> > -	return (curl_off_t) len;
+> > +	return size;
+> >  }
 > 
