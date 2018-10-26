@@ -7,163 +7,99 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A29F01F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 08:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B37B1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 08:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726020AbeJZQrL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 12:47:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:48445 "EHLO mout.gmx.net"
+        id S1726406AbeJZRNY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 13:13:24 -0400
+Received: from mout.gmx.net ([212.227.17.21]:33129 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726003AbeJZQrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 12:47:11 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgqEs-1flcPE2IhK-00oCn2; Fri, 26
- Oct 2018 10:11:06 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgqEs-1flcPE2IhK-00oCn2; Fri, 26
- Oct 2018 10:11:06 +0200
-Date:   Fri, 26 Oct 2018 10:11:12 +0200 (DST)
+        id S1726014AbeJZRNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 13:13:24 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZ8fw-1g1bcw3zxc-00KxTU; Fri, 26
+ Oct 2018 10:37:11 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZ8fw-1g1bcw3zxc-00KxTU; Fri, 26
+ Oct 2018 10:37:11 +0200
+Date:   Fri, 26 Oct 2018 10:37:16 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH sg/test-rebase-editor-fix] t3404-rebase-interactive: test
- abbreviated commands
-In-Reply-To: <94c0b5b6-ac31-101b-80a0-ac78196e0f62@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1810261006510.4546@tvgsbejvaqbjf.bet>
-References: <94c0b5b6-ac31-101b-80a0-ac78196e0f62@kdbg.org>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 00/13] Offer to run CI/PR builds in Azure Pipelines
+In-Reply-To: <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1810261033440.4546@tvgsbejvaqbjf.bet>
+References: <pull.31.git.gitgitgadget@gmail.com>        <pull.31.v2.git.gitgitgadget@gmail.com> <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4iv3GH/thEctGb1kUZIwfxv9MtkPrD8JuZpRwuo1+I763NVpCmT
- hvniDdRWsoXBJIXUYBr241Ath8VUgxEW+Ql5GuE8NN8XtML0+DQwtHPdhuAIwHZWI0caIYY
- /aEK09rcuKkdLKIiDtLcalaOt4+QLb5JkkHvsVZ5bfdc0QVSYnxN5+TmC920tYCvsuXxHQ2
- QGpz816GjzOwSgIehnEzQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Sj0dFWT+Pss=:NcHy6uwrY6VMgXS/XHt+0B
- WDQw8GNyNEaLWIvaDJd1BWP762oR2UZOoDLpkXT1KpUzb/cYhp5+Ru98kc7PccvxCs6xlMomk
- XtwRVgxzepJ0Zj/eRXElwRaoS48axq9MqAns7zvGFFxnIfGDXOu1RVr9+4bIqYtn5kujQSpaI
- /IjyWWiqGzeQYc/VYdiGqu4wwi7K6b9T1TRWQBUey5OEFZsBP4040mme9h0o4hnF2y5p082va
- H0X0FFV3PJA7zX1z7sUxiR1mpZgFDo98cd+MY8uNhRIxIfUbXg3eHQ0Ls8XA69wuVdVSgyH1Z
- khBiKPu4Ya79JpErKNuZFMI5gDfDleiyxYJGHqwKfk4vHR8mJ1Zu2eq1XbU/wfC2Q72qJeX4r
- oU3Py2qqHz1uY6pGAH7wS/C615ZL8VHNHKrrPBnDPz20Q453yAZ7Dlj6VKTle3dBACmuqNv/r
- X0gjsyL3kT/j/r4RoAmE0R/sOLCAadRYO++KApDKcUpRusZ3Fh+D2s6gdhi0jnNT2LtPKsg64
- mvs2xzSIvcGi3eB2ApmHKnSj1PMv9yWKn8UWzP4HNqxPNbwjHRMekPltUc7xuoi9ObcKDbiJ1
- WbnUVp6R+o1/rXwyRltTfixW7OALNdeKysUotR+FYrKdr9HlO6XfeGlG6+V6fJOJ/NFqAzBq8
- NsuYI0YCiHSJHeFlxPZy/4yBeXL8xkpeV/31KKDVKEexQHg/T5Q0UF0BeiDAC/U2qTaREQGuS
- HI1KFMQStlEzEupImJxRXor/ElESSl8fAx0IKm3s899mGJtS3j8xkWBYQ4IhCH3ZGLJKEf7lM
- HnUDwZ6f2D4CSerESIzwa/5VcDJE8gLheq7DGMSG4vxHQ/IXy0=
+X-Provags-ID: V03:K1:idgkV8p56cieShNbASL8u39gq6896PGiOjPdKw0ayzd6kHD35l7
+ fs259aiJ7R5RWqUfVyKd7dmBNyU6NkDNyddL2DXjbFQIPCHj4P69u1d7+BF0L1pcuHRRuLi
+ Ebi6joHR3ZtbqyumDP1/R/DYWgFhvkyU60+qO1QXZTFpJvvbFG6ruXO6vJR5xmTYVvcTj23
+ z+crQk4pq+si+xjnrQtjw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MbU+hb1/BZM=:sBMQowBRZJ4o+wroppnpp8
+ n+4+ghSaINFHgQJCoYsfJcBOv9baS34QltbdItX9dZYnzWOVPPUduEZ1sDK6D9Q2vqVy63KFf
+ 9PV5zuYkvEmJ9mgDU5GnKhkuwzaSwpK7Vdm6/a235N+7Cm6/SqZ2UfhxIyk5JbczwpAQ28EiK
+ fhr9ir5oRId7PfpOrARQug15aHPRQFaP37kZ1SnLeUU26Hmob8zsgPPhJyUjzlJqamaUZ6/Z+
+ NBccpORq2OFxIgLlwbRSi1VnlOOlj+2fYRcPs5gU7f28Sdh6c8f62EBkOf9zIi+DIuwcftF13
+ bVLrbEPeFVfZPsOp3Lp3D7yvyyUDZO/QxRw4PR6MeZzhgnr3ubnbIMe+15xogUBggk9XY1clw
+ i8j5d/bAoyJ5sjMkyAu/hXnWQs5y3kWvUruf7CyFwbk2RqxKB+lYXkNF7PoplsIoOMevxrRQk
+ qpgZImiHseA9BuOmMV5nkBjSp/V+JBjYeFPsnfUgp2s1wjkoJOs4HZrMG1WXzIhcOoMI5Gnr1
+ Oun0qMC0p2v672R+k+b2PtI3BiXMl7dMdYaXZ5vBgRvozvP88trnm39lZoHDnKk5DTW+GY86d
+ SOTU1op0ydT7iovGcgaVAGnnaAiK4hIat7gWMdxHBId37eyk5MqA0gbqPXLKWypsIvdzu3nZs
+ qHvKIjMaav8Jbny9IVws8F0B7tmHlhsKNOD7pH/FwhW9uHQ67T1/o65KAIPx6J9FHKmuXBj7x
+ tNhIU4Roeo3BL79jqSzdlztxsC/bb7wC5FqXASTX8GcaLIDFR0V1lzi5WRKgcSpzD3TQxJgfQ
+ cpRODQwukdatv6Qw+9YskQ4UvSzNqvxFOIvJ7MnKvMMOqBzOxY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+Hi Junio,
 
+On Thu, 25 Oct 2018, Junio C Hamano wrote:
 
-On Thu, 25 Oct 2018, Johannes Sixt wrote:
-
-> Test each short command at least once. The commands changed here
-> are chosen such that
-
-I stumbled over this, and understood it only after looking at the patch.
-How about this instead:
-
-	Make sure that each short command is tested at least once. To do
-	so, we modify existing tests to avoid lengthening the already
-	formidable runtime of t3404 (13 minutes on Windows). These rules
-	were followed to find appropriate commands to modify:
-
-> - tests do not have a prerequisite,
-> - the 'git rebase' command is not guarded by test_must_fail.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 > 
-> The pick commands are optional noise words in the FAKE_LINES
-> variable. Test them, too.
+> > For a long time already, we have Git's source code continuously tested via
+> > Travis CI, see e.g. https://travis-ci.org/git/git/builds/421738884. It has
+> > served us well, and more and more developers actually pay attention and
+> > benefit from the testing this gives us.
 > 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> What's the current status of this topic?  Has the "p4 daemon gets
+> left behind" one resolved to everybody's satisfaction?
 
-The rest looks good to me.
+No. I was kind of waiting for Luke's answer, and in the alternative I
+hoped to find some time to work on trying to reproduce his issues on my
+system (but I failed to find said time so far).
 
-Thanks,
+> I think that one was the only large discussion on the series (aside from
+> "do we want to keep Travis?" subthread, which does not make this series
+> undesirable), modulo your "oy oy oy that is leftover debugging I need to
+> remove in a reroll".
+> 
+> The topic was marked as "On hold, monitoring discussion" and it
+> seems that discussion has quieted down, so the next step is to see
+> an updated series?
+
+I really think that I have to figure out what causes those p4d issues
+before I can give you that updated. I *am* interested, to be sure, it's
+just that other things seem to get in my way all the time.
+
+One thing that keeps getting in my way, for example, is the performance
+issue identified in the chain linter. And I do think that I have to take
+this into consideration for another update to this here patch series, too,
+by adding `--no-chain-lint` to the Windows phase. There is a similar thing
+with `--with-dashes`, too.
+
+Will keep you updated,
 Dscho
 
-> ---
->  This patch must be placed on top of sg/test-rebase-editor-fix.
->  It has a textual conflict with my sequencer 'b' fix from some
->  minutes ago, but the resolution should be obvious:
 > 
->  - 		exec*|break|b)
->   -		exec_*|x_*)
->  ++		exec_*|x_*|break|b)
+> Thanks.
 > 
->  t/lib-rebase.sh               |  4 ++--
->  t/t3404-rebase-interactive.sh | 10 +++++-----
->  2 files changed, 7 insertions(+), 7 deletions(-)
 > 
-> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-> index 2ca9fb69d6..0c93d00bdd 100644
-> --- a/t/lib-rebase.sh
-> +++ b/t/lib-rebase.sh
-> @@ -47,9 +47,9 @@ set_fake_editor () {
->  	action=pick
->  	for line in $FAKE_LINES; do
->  		case $line in
-> -		pick|squash|fixup|edit|reword|drop)
-> +		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d)
->  			action="$line";;
-> -		exec*)
-> +		exec_*|x_*)
->  			echo "$line" | sed 's/_/ /g' >> "$1";;
->  		"#")
->  			echo '# comment' >> "$1";;
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 352a52e59d..d36ee4f807 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -114,7 +114,7 @@ test_expect_success 'rebase -i with exec allows git commands in subdirs' '
->  	git checkout master &&
->  	mkdir subdir && (cd subdir &&
->  	set_fake_editor &&
-> -	FAKE_LINES="1 exec_cd_subdir_&&_git_rev-parse_--is-inside-work-tree" \
-> +	FAKE_LINES="1 x_cd_subdir_&&_git_rev-parse_--is-inside-work-tree" \
->  		git rebase -i HEAD^
->  	)
->  '
-> @@ -499,7 +499,7 @@ test_expect_success 'squash works as expected' '
->  	git checkout -b squash-works no-conflict-branch &&
->  	one=$(git rev-parse HEAD~3) &&
->  	set_fake_editor &&
-> -	FAKE_LINES="1 squash 3 2" EXPECT_HEADER_COUNT=2 \
-> +	FAKE_LINES="1 s 3 2" EXPECT_HEADER_COUNT=2 \
->  		git rebase -i HEAD~3 &&
->  	test $one = $(git rev-parse HEAD~2)
->  '
-> @@ -732,7 +732,7 @@ test_expect_success 'reword' '
->  	git show HEAD^ | grep "D changed" &&
->  	FAKE_LINES="reword 1 2 3 4" FAKE_COMMIT_MESSAGE="B changed" git rebase -i A &&
->  	git show HEAD~3 | grep "B changed" &&
-> -	FAKE_LINES="1 reword 2 3 4" FAKE_COMMIT_MESSAGE="C changed" git rebase -i A &&
-> +	FAKE_LINES="1 r 2 pick 3 p 4" FAKE_COMMIT_MESSAGE="C changed" git rebase -i A &&
->  	git show HEAD~2 | grep "C changed"
->  '
->  
-> @@ -758,7 +758,7 @@ test_expect_success 'rebase -i can copy notes over a fixup' '
->  	git reset --hard n3 &&
->  	git notes add -m"an earlier note" n2 &&
->  	set_fake_editor &&
-> -	GIT_NOTES_REWRITE_MODE=concatenate FAKE_LINES="1 fixup 2" git rebase -i n1 &&
-> +	GIT_NOTES_REWRITE_MODE=concatenate FAKE_LINES="1 f 2" git rebase -i n1 &&
->  	git notes show > output &&
->  	test_cmp expect output
->  '
-> @@ -1208,7 +1208,7 @@ rebase_setup_and_clean () {
->  test_expect_success 'drop' '
->  	rebase_setup_and_clean drop-test &&
->  	set_fake_editor &&
-> -	FAKE_LINES="1 drop 2 3 drop 4 5" git rebase -i --root &&
-> +	FAKE_LINES="1 drop 2 3 d 4 5" git rebase -i --root &&
->  	test E = $(git cat-file commit HEAD | sed -ne \$p) &&
->  	test C = $(git cat-file commit HEAD^ | sed -ne \$p) &&
->  	test A = $(git cat-file commit HEAD^^ | sed -ne \$p)
-> -- 
-> 2.19.1.406.g1aa3f475f3
 > 
