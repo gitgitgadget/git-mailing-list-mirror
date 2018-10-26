@@ -7,96 +7,127 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A13C41F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 07:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91BC71F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 08:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725993AbeJZQft (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 12:35:49 -0400
-Received: from mout.gmx.net ([212.227.15.19]:40861 "EHLO mout.gmx.net"
+        id S1726787AbeJZQka (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 12:40:30 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49253 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725907AbeJZQft (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 12:35:49 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEZG-1fvXnj21Yg-00Oqve; Fri, 26
- Oct 2018 09:59:41 +0200
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEZG-1fvXnj21Yg-00Oqve; Fri, 26
- Oct 2018 09:59:41 +0200
-Date:   Fri, 26 Oct 2018 09:59:46 +0200 (DST)
+        id S1725907AbeJZQka (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 12:40:30 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtEtL-1fZhML47nH-012mx9; Fri, 26
+ Oct 2018 10:04:23 +0200
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtEtL-1fZhML47nH-012mx9; Fri, 26
+ Oct 2018 10:04:23 +0200
+Date:   Fri, 26 Oct 2018 10:04:28 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     gitster@pobox.com, christian.couder@gmail.com, git@vger.kernel.org,
-        pclouds@gmail.com, peff@peff.net
-Subject: Re: [PATCH v3 2/3] shallow: offer to prune only non-existing
- entries
-In-Reply-To: <20181025185459.206127-1-jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1810260956230.4546@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1810241756390.4546@tvgsbejvaqbjf.bet> <20181025185459.206127-1-jonathantanmy@google.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/2] rebase -i: recognize short commands without
+ arguments
+In-Reply-To: <fff6fec5-88c9-4125-bf51-5e96e34bf1f6@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1810261004110.4546@tvgsbejvaqbjf.bet>
+References: <pull.43.v2.git.gitgitgadget@gmail.com> <pull.43.v3.git.gitgitgadget@gmail.com> <fff6fec5-88c9-4125-bf51-5e96e34bf1f6@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zWEre0TzZAlbfpJ/DmJ+im8/Qmt6gwXxdo+xQgk8OpLkgkAkRKq
- ymquZnRURtt5pNd1enDTkoTfFwZ1L2RcQ+wcaGTy54DeTNCJSze1QK+ty8jH5MxO/S4Btb4
- iDn8rA1trHFOzELh3eo/6NrWEVeNKHAAKhO1W0kFYKC7stRLRXqFGnFMuh+KibRQX0xDwqy
- Xj3hUoFDMvj22uL8NvYjQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ov7pnHAFkJ0=:ZmWf+0OD9et0hqhdLXXg3v
- CeN2ix9upaDZ0Hgy2wYUnyl57w6t61NxYcOFzWooDceVq4wut9GJHaDss/8L2xcsEnyQHqRm+
- qmYstgp43CcyA4+iBzwcI+MHK6aAJNgVdHJRqMnp+/ckY0Ae9dxeXQ6i/HSsEXuET5POYxrzD
- c4FQEi2uezZL/t3RVjqYl3SK3RjJ6iQ+DN5X+QqdgM5rWoyI2RQPmsE2lpUj0G7IHl1TFNoNh
- SDqPxZIdKPmIhKGgpMldWlwD3zgqcq7tIIqHHgaoFAR+lJcnNJG5WUaWsDeZGfXFGXbTBfR7z
- ltfSN3r2qEHt6ZkKI2SLncyL3b69C0cBPdJr5MjQRDzEFOTOO5BmSt4RQfNHh+El6Z+96QAkH
- qNpvo7+QTz+BPl1DAHiESoWbmbJh0Fy2z+9Iibh2O9Z19QJo+HohP3q6xj0J2GheyBeX/hYtC
- gWPBATMdVfxnJA23gxTXCRc+Z0F8QT6LzRu1FS/xvYob3+PxNYZBk1EWtNsBf5ukP7y0/bUaw
- /DA+LsOmv20B0JIDqs5x1Wd034hEOa0ZKG7/nVjrlH3kql+/3UmQZvicLj2rWCkCnBSh/yev+
- K9tOEapqbHYrpCTuPaViB+J8oUBklJiri0rfvi7gkt0oUT7yrw0WGJzWIOcusv+JaQk/RtHWp
- FgF5eZV1leeXFjorQjEK01nf3a5hg8RiD0Nci3TM1066+gIwtSWk6cog4LTuwBJg5xmAcTKCF
- phwnPXLn6pxSGGQ+kzLbDOd0dmC8IDmU1UVPSNUf52/fqyCcvezC9G34LSpA2kijIj29psu+X
- V9BsI1+o9cjbI0zIu3ItpmGunITU+yYMwFSvMAVEYaZw5+ZMcY=
+X-Provags-ID: V03:K1:BVtVnfU7jpGu/Vcm5EcwUqzgw/Ti7PF/8InV1PRbpiq4+VwolXd
+ S/+7UFqmByxwfWkMUx06cQFFuXK8NxAWGZKELsoY+NrKxyuX2nhMXpmESxej/P/xgXbVinP
+ emA6ViSwsC+hIFW/5XQgZJEOwnKDlgU5lWnlU9vesyjBknI1COs4mhEI5+ydyzyOxagZul+
+ FjB33lNTwmtPUx8E/neiA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0LfZlFsU4pk=:Okdt+onMLi5OYxGkFFSRnH
+ 9ZZQvnsaNLXkYtu+i8a2SPeWaeKO4Za9HPwLEmAFDxuG2v4yq4pJqb8r9/13QKKFHYd6cYfLe
+ UeTMCIE5fvdJb2uclwro4sy4IccBxuuAyRR26dXmLHo2PS8YjLsiUNxBPtMxn4lzdLegumSqF
+ zwJ6KFoWw1/WEMjzOFK9LPYCMtkZPkNbCFt9w1kJ95LSYJJ5qUGA/vyzyQS6NegoCSiHpETyA
+ g32YWN24yxClpd40mrxv2pZGqhFDm5+/6tXYSc18KbX/LIaVXykxqnD0Lctn+GAuiZTVo/G8w
+ qWWVKjbgGwiSO6UoFYLmX/+eWCaiDbZXDugfzUxs3d5PzwP872tLKVUBtXBUv9TZ/CLTN7U36
+ 1a178hXGe3mJmxmINxvgzWMP+k5llYPhRoXNyhPrzYbChJ7FWrwW21MgflwczsgHKZ7pMaD0d
+ gc1yWPtw9+KniVeLT0NQpVPKeqAqT9w7Kj+V5cR/NQcUMMDqOr58j8MEl912sML6T8uHKmj1o
+ RjAVlUbz59kTMdMSvtxjIXCJx8ww++cFpBf9yJMxPUjA7Dpubz7SP0P74qXiN0zgJgjtsHA1t
+ 6xbN8ALGQNqVdO6XXNzvSGFmkQY1LCo9KIozkH5LS1s4qwb8d7qRlYUmZFAeNWNup2jd1Ul/U
+ jm25rbbaG0RIA2m5IsohvfN4ZPWHfyk7r0wU0O1iomul/uuzurKoXamIJWaLRhXCL3I3/ch+H
+ 6zME6j/B+7ZMRacIGUwqWr7dMBCB7ep+Pr1qfJ/TRlzd0tFlHDoJezHdw52INDt6GTeB/VXky
+ UKp0mguqq4V+vCh5yzXTVHTY5k51JgAh/+PQH7l2KfckmhGhMs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Hannes,
 
-On Thu, 25 Oct 2018, Jonathan Tan wrote:
+On Thu, 25 Oct 2018, Johannes Sixt wrote:
 
-> > On Wed, 24 Oct 2018, Johannes Schindelin wrote:
-> > 
-> > Coming back to my question whether there is a better way to check for
-> > the presence of a local commit, I figured that I can use
-> > `has_object_file()` instead of looking up and parsing the commit, as
-> > this code does not really need to verify that the shallow entry refers
-> > to a commit, but only that it refers to a local object.
+> The sequencer instruction 'b', short for 'break', is rejected:
 > 
-> Note that has_object_file() also triggers the lazy fetch if needed, but
-> I agree that it's better because you don't really need to parse the
-> commit.
+>   error: invalid line 2: b
+> 
+> The reason is that the parser expects all short commands to have
+> an argument. Permit short commands without arguments.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
 
-Thanks for confirming.
+ACK.
 
-So even better would be to use `is_promisor_object(oid) ||
-has_object_file(oid)`, right?
-
-This is something that is probably not even needed: as I mentioned, the
-shallow commits are *expected* to be local. It should not ever happen that
-they are fetched.
-
-> There is the possibility of just checking for loose objects (which does
-> not trigger any lazy fetches), which works for builtin/prune since it
-> only prunes loose objects, but doesn't work in the general case, I
-> guess.
-
-In the test case I added, the commit object is actually packed. And then,
-because it became unreachable, it is dropped.
-
-If I only checked for loose objects here, the shallow line would already
-be removed when the commit gets packed, which would be the wrong thing to
-do.
-
-In short: thank you for confirming that the current version of the patch
-seems to be the best we can do for now.
-
-Ciao,
+Thanks for fixing this,
 Dscho
+
+>  I'll send a another patch in a moment that tests all short
+>  sequencer commands, but it is independent from this topic.
+> 
+>  sequencer.c                | 3 ++-
+>  t/lib-rebase.sh            | 2 +-
+>  t/t3418-rebase-continue.sh | 4 +++-
+>  3 files changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index ee3961ec63..3107f59ea7 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1954,7 +1954,8 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+>  		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+>  			item->command = i;
+>  			break;
+> -		} else if (bol[1] == ' ' && *bol == todo_command_info[i].c) {
+> +		} else if ((bol + 1 == eol || bol[1] == ' ') &&
+> +			   *bol == todo_command_info[i].c) {
+>  			bol++;
+>  			item->command = i;
+>  			break;
+> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+> index 584604ee63..86572438ec 100644
+> --- a/t/lib-rebase.sh
+> +++ b/t/lib-rebase.sh
+> @@ -49,7 +49,7 @@ set_fake_editor () {
+>  		case $line in
+>  		squash|fixup|edit|reword|drop)
+>  			action="$line";;
+> -		exec*|break)
+> +		exec*|break|b)
+>  			echo "$line" | sed 's/_/ /g' >> "$1";;
+>  		"#")
+>  			echo '# comment' >> "$1";;
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index 185a491089..b282505aac 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -243,7 +243,9 @@ unset GIT_SEQUENCE_EDITOR
+>  
+>  test_expect_success 'the todo command "break" works' '
+>  	rm -f execed &&
+> -	FAKE_LINES="break exec_>execed" git rebase -i HEAD &&
+> +	FAKE_LINES="break b exec_>execed" git rebase -i HEAD &&
+> +	test_path_is_missing execed &&
+> +	git rebase --continue &&
+>  	test_path_is_missing execed &&
+>  	git rebase --continue &&
+>  	test_path_is_file execed
+> -- 
+> 2.19.1.406.g1aa3f475f3
+> 
