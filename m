@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA7391F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 19:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B2161F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 19:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725855AbeJ0EGD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 00:06:03 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54481 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbeJ0EGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 00:06:02 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r63-v6so2507470wma.4
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 12:27:45 -0700 (PDT)
+        id S1726160AbeJ0EGE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 00:06:04 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44263 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725783AbeJ0EGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 00:06:04 -0400
+Received: by mail-wr1-f66.google.com with SMTP id d17-v6so2128120wre.11
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 12:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SQXz5bBg3+FsZ88Gvjr1CGI1ouvqxDpoUZSFbGXdpVU=;
-        b=uMjZsFT7bqYaLND/SdjE/4/zyViRNOedRy1oMn1g9MOi3f2fZZ3AWo+55THYlZzVW1
-         VZomZnED+oPEky0kEGppzIFvLhbYOvKLIBiFbk7v0XSP0DK5J84gebDS4/XR/dYtmWBy
-         F/XNPN5dNJGbfPEwfpzShRdzAmw8kGtey77d+zo9oT2FP1qflIuVNBt0X9RqJyYQPP0J
-         Z1c30RQA64+zzg6x9EM8p8Y80GExsbX+VsryaoK032RDCjgLmCwVwnCJO1dBiTRDngCw
-         RNfVyS6nS5I7RSRQtphUafpEyhn4RZN+n4hyu4hHPiq0H3NymTETOeJpDPe0blS+h9SH
-         dcrg==
+        bh=Dhyh0a5Q4ZaOv+jNYAXOVcm28D6ttv4dilrANYN3DFU=;
+        b=vTMmoG0D8SHnPNueuWFjJ3URVzlKLoryBE3Ot8ggUcMTOU6ecTJimc91FZs2q552R5
+         QRzik3CGa/j0usWbU3KjtVbTfmTqUbBo/JhPhqwHrPx1/mHGfABMfN5B/OBYOJjI7tdk
+         1U5uQNCjIjYZtPwXrYMYDvpScfqNOQNhslvK53qUUXGKj/Huh7vlWhxR4NINDSTWDJdX
+         vBwCrJXepdxq6S2S5KfTh+ZNaSj9LCXx08uTLaKqOLW7HHr294PTQJzoLooGZ+bnlfp5
+         7e1tdTwmX5oZkwis24nmszDi3kHQWhASzhcWhucwzkbmmIcuwVJAnRO/O+O2o6FnY3yo
+         H41g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SQXz5bBg3+FsZ88Gvjr1CGI1ouvqxDpoUZSFbGXdpVU=;
-        b=BwVlnSD1/p8tZWR5M9ab9pWrnecpR4hA84PtHyvXnDNm03DWdzeCvJW4Fu3hWI4lMY
-         aFegoMHY2bqWwvF1i4SWkQqOtLS1HEUFOlnymDg7hOZ0vLNFLJo7xIJUxKdDuwqhQgsB
-         VtFae4UXHCVEagVmaHxNBrf49ZkWv3Y+JZsdhl2RioW34Ezng4JqhqJYj3oPHFfQfZmX
-         tqubpT9Wu3DylFAc58jsZRK6vYe3/jTxwNGCDqMnvwvA6To6p7kwQKBKcZOvvDHBBeKB
-         b2gant9sLIb2TlaTzWsKPa810yegPq7f9WP7X/QxsK21Pc2+QJdAVPzf4zKZbRu1TKq/
-         0WqA==
-X-Gm-Message-State: AGRZ1gKrtCUv/SbJRhYNh6cHcRqbwWcJjbpdj2IGS5M3D3Vk7eZ+XBO/
-        OZSLwIR5BNY0BwnaDAOglzOLPxvz
-X-Google-Smtp-Source: AJdET5fmpymYAwQwRWJmtKueCfsTD/zcKWB5+C/DBP32wbXaKUmIS5bU+5PR+9iHowin/xwP33Sf7A==
-X-Received: by 2002:a1c:bce:: with SMTP id 197-v6mr6205635wml.15.1540582064013;
-        Fri, 26 Oct 2018 12:27:44 -0700 (PDT)
+        bh=Dhyh0a5Q4ZaOv+jNYAXOVcm28D6ttv4dilrANYN3DFU=;
+        b=SEEahIXifIQC9dI3f4bXaKRWPlNQGjaq5kYkxnFj6hbGH9B+vzBQuMdg6OFN3ZH61o
+         lLpWGvOvERJN+41Nz58jmty+TF9JZXPv9VeuoQ6F2gqsizWT6MyUg2K2IBiAwCSQZaar
+         22IX6yA5GN4SgEn9C+o323dUi5VpZQ2C7YnsXxrni9Wi6UVddViM5xBOHSEvJfuB9SQC
+         9v//WorUFdLEFPXkoTYjiuvue0+ggW9/QbNoApaQ8S9Qu/45jIiwyvSFVSTtE6p1SMdM
+         +TEpXKSdG6/4elavf4lKQyXyAFALWY4JdizvUvJkmqJ8CUpFkmI+7tzB+qo+9LVdadpU
+         9kXw==
+X-Gm-Message-State: AGRZ1gIgPTkHVhOS+vlBEuGqw07D8c2976fkjbkv5IZgxc2D9dhTJsVj
+        HlIT25466ajWPGQmYVgvX3/PNOhv
+X-Google-Smtp-Source: AJdET5fQo7wgaYQq9nPpRHEMZU76Mmw5ratUiRIXOEtcy24HaFznBxCm6W7Cjd+vwjmaH3nf4+cBtA==
+X-Received: by 2002:adf:83a4:: with SMTP id 33-v6mr6664118wre.13.1540582065755;
+        Fri, 26 Oct 2018 12:27:45 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e196-v6sm10738981wmf.43.2018.10.26.12.27.43
+        by smtp.gmail.com with ESMTPSA id e196-v6sm10738981wmf.43.2018.10.26.12.27.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 12:27:43 -0700 (PDT)
+        Fri, 26 Oct 2018 12:27:45 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/7] fixes for unqualified <dst> push
-Date:   Fri, 26 Oct 2018 19:27:27 +0000
-Message-Id: <20181026192734.9609-1-avarab@gmail.com>
+Subject: [PATCH v2 1/7] remote.c: add braces in anticipation of a follow-up change
+Date:   Fri, 26 Oct 2018 19:27:28 +0000
+Message-Id: <20181026192734.9609-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
 References: <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
@@ -69,25 +69,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This has grown to a 7-part series for v2 (from 2 patches). This
-addresse all the feedback for v1 and then some.
+The CodingGuidelines say "When there are multiple arms to a
+conditional and some of them require braces, enclose even a single
+line block in braces for consistency.". Fix the code in
+match_explicit() to conform.
 
-Ævar Arnfjörð Bjarmason (7):
-  remote.c: add braces in anticipation of a follow-up change
-  i18n: remote.c: mark error(...) messages for translation
-  push: improve the error shown on unqualified <dst> push
-  push: move unqualified refname error into a function
-  push: add an advice on unqualified <dst> push
-  push: test that <src> doesn't DWYM if <dst> is unqualified
-  push: add DWYM support for "git push refs/remotes/...:<dst>"
+While I'm at it change the if/else if/else in guess_ref() to use
+braces. This is not currently needed, but a follow-up change will add
+a new multi-line condition to that logic.
 
- Documentation/config.txt |   7 +++
- advice.c                 |   2 +
- advice.h                 |   1 +
- remote.c                 | 124 +++++++++++++++++++++++++++++++--------
- t/t5505-remote.sh        |  57 ++++++++++++++++++
- 5 files changed, 166 insertions(+), 25 deletions(-)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ remote.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
+diff --git a/remote.c b/remote.c
+index 81f4f01b00..18cae48daa 100644
+--- a/remote.c
++++ b/remote.c
+@@ -968,12 +968,13 @@ static char *guess_ref(const char *name, struct ref *peer)
+ 	if (!r)
+ 		return NULL;
+ 
+-	if (starts_with(r, "refs/heads/"))
++	if (starts_with(r, "refs/heads/")) {
+ 		strbuf_addstr(&buf, "refs/heads/");
+-	else if (starts_with(r, "refs/tags/"))
++	} else if (starts_with(r, "refs/tags/")) {
+ 		strbuf_addstr(&buf, "refs/tags/");
+-	else
++	} else {
+ 		return NULL;
++	}
+ 
+ 	strbuf_addstr(&buf, name);
+ 	return strbuf_detach(&buf, NULL);
+@@ -1038,21 +1039,22 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 	case 1:
+ 		break;
+ 	case 0:
+-		if (starts_with(dst_value, "refs/"))
++		if (starts_with(dst_value, "refs/")) {
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+-		else if (is_null_oid(&matched_src->new_oid))
++		} else if (is_null_oid(&matched_src->new_oid)) {
+ 			error("unable to delete '%s': remote ref does not exist",
+ 			      dst_value);
+-		else if ((dst_guess = guess_ref(dst_value, matched_src))) {
++		} else if ((dst_guess = guess_ref(dst_value, matched_src))) {
+ 			matched_dst = make_linked_ref(dst_guess, dst_tail);
+ 			free(dst_guess);
+-		} else
++		} else {
+ 			error("unable to push to unqualified destination: %s\n"
+ 			      "The destination refspec neither matches an "
+ 			      "existing ref on the remote nor\n"
+ 			      "begins with refs/, and we are unable to "
+ 			      "guess a prefix based on the source ref.",
+ 			      dst_value);
++		}
+ 		break;
+ 	default:
+ 		matched_dst = NULL;
 -- 
 2.19.1.759.g500967bb5e
 
