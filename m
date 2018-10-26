@@ -6,85 +6,142 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09F7C1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 01:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B3C21F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 02:48:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbeJZKe3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 06:34:29 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54207 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725834AbeJZKe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 06:34:28 -0400
-Received: by mail-wm1-f67.google.com with SMTP id l26-v6so3300744wmh.3
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 18:59:25 -0700 (PDT)
+        id S1726020AbeJZLXv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 07:23:51 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43911 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725914AbeJZLXv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 07:23:51 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t10-v6so11246741wrn.10
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 19:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dyW+9fEsLP3xp/QYf7mWp9t1NLzEWznT2dZvynqmX4g=;
-        b=Ht3hdGJKSpOom2x2OuOo+3VW9GhwcuKTW/Xn4NuBA82566T8RrummLYdV83GN+qlyp
-         w8JZJ6HOEQTnNqp/didU5Fio1BKcvGjljSJf8jwEoLYwQnmKK+X58n7ic5o/nghcm7RN
-         PtQwnOqRXSjxfowikX3EgWZGE9Q+w1sliBHx1nlcNC4viNw1pLWLjg6HY3oRWPelP0mP
-         SyX5vaGF0mJF/GZ25/A/xyRc6ZWHYKoPmqtPDaoSjFxWbg/Nvc6bqK1zNK2B8ue24Yfq
-         Rk3yV5T/NcpDjnvBsFRioYBe6yJWzmdQ0daI1IcExgJVXYQa477iM+eIS0C+EX31dU0G
-         YjeA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=FhxTMDzcOWaK+cwe31e8fDxA4otRqbHZ6avXb576Eik=;
+        b=KxmcJhnWl4G9GMVo4vDCpMRZxmn1RFak4rtoEJdHG9B7zGa50K5VG6Oazzi3MFHBvZ
+         0/GYe5gvfH3w+95pfyS0oEz29CF5X1oBFuRx0m0rwM+PD+7xMHMWXzZV/8+9RfjNEl8g
+         pdN//MZJLm/Jlop8TQSyf7RGbyhLubO1htahuBGwDDVmAiG9sYsS4wOBmF03HGIuQhuu
+         l3UinzFKfiSDmobaeMn8/M1sAfJoOnBWaaGj2uXVOLpeUfXbFcyksxVBmJLlQ42EgtVt
+         80DpfmBsMxtyou1x++qyEkNI99tfOYueK1Mf2GO57MH7BpQb9ewL5lAB2Jj7L4+Jjmy2
+         keyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dyW+9fEsLP3xp/QYf7mWp9t1NLzEWznT2dZvynqmX4g=;
-        b=tt14cJtPdsgC5sMHYqQEKO+BWJZjs4+M7FYFD4Mp/uK642ivRxqoXyMRylgPNaUigP
-         aZN8ePrMDowH2r4TcSRkMHK3c/6ii7RoX+iM4c8rt1EJkcYYzRsOyRI+Aq+QZ7zLhQr0
-         v4XQk+OKa2VvuSXg8nDxtnzhUjKy4I2AyHm2PALo1++o2BmCuBgYhvt7qpRUEhfI9FKX
-         uj0nEH89zrDFbDHUU0F8z7VwX6pC4BDoynfPl3ni8CLvIFC49qq4LO6bs3R37NukiwLK
-         vkQ1jrgSKeKTjbjjFmtfQwntE9rsCO9+Cu3efTWe0lAC2LRDFLobw9mxpUrpUegytC14
-         V3fA==
-X-Gm-Message-State: AGRZ1gLJJeQJJmpt8y+bCmIvVoMAT+HPmzH2/OWpmdI5UZxS9AAWyXRo
-        gd5iV2zOD4qvcoMW42rvUdA=
-X-Google-Smtp-Source: AJdET5cC+EWn3lAhh/50mBiRVQ1pyoUbIkLgT4vzWBSX3mqTT+/1cSaC0QkpRdXTgHlGvXZ7ru9hMQ==
-X-Received: by 2002:a1c:930c:: with SMTP id v12-v6mr3974581wmd.9.1540519164502;
-        Thu, 25 Oct 2018 18:59:24 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=FhxTMDzcOWaK+cwe31e8fDxA4otRqbHZ6avXb576Eik=;
+        b=LUGaOlw1UqVeJfbshmLkpbC+B/4u/DdlBvPucXw6iyuzRrvq2UfOCFJT1ImTfIRehA
+         6D0uAhIwC24nWUfX8ZT9+bTeCbGkt1JSZRJl5ZOb0C7JcVFHJ3UgUJlGJ0F0npMTbpb+
+         EP81ivUgbl17HQUNLqWrYXlV0XdLebgIMniQkKnV7X8qvQOOgBmpavShm3q1yH8EBWeb
+         qXBE+Jqk+letjve8aAqq+MoUVXsYWYULbrTN4gNvEfgNor+3XRlXjFkc+CawW6X03CzE
+         1UTixGg+AjYv35adJaQOeDKQER2t42WmEAmkT5+ZwsUAfKJ7PfcAEWrp42r0uQIv5Edn
+         iaSA==
+X-Gm-Message-State: AGRZ1gLjzfqJqKH9QMSvYCRWgjLWAWAE1dQV18Ta8MbOlalApv4eZZk6
+        JEp+LQ3y2wYd3H2AFdNIDYA=
+X-Google-Smtp-Source: AJdET5fFH2jItqt5VS+deTxflK58mJz17neVRxtKl0EZ8UeYJiiFM+ecQErlPXNiwfP73Yeisq1/3g==
+X-Received: by 2002:a5d:64c1:: with SMTP id y1-v6mr3842956wrv.92.1540522120167;
+        Thu, 25 Oct 2018 19:48:40 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p8-v6sm9636763wre.50.2018.10.25.18.59.23
+        by smtp.gmail.com with ESMTPSA id b128-v6sm3419754wmh.22.2018.10.25.19.48.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 18:59:23 -0700 (PDT)
+        Thu, 25 Oct 2018 19:48:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Antonio Ospite <ao2@ao2.it>, git <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v7 00/10] Make submodules work if .gitmodules is not checked out
-References: <20181025161813.17252-1-ao2@ao2.it>
-        <CAGZ79kZvzLtSgAw8epGpG+T2f2Q7z2ZkXe=4gKMQTkM8ikwcog@mail.gmail.com>
-Date:   Fri, 26 Oct 2018 10:59:22 +0900
-In-Reply-To: <CAGZ79kZvzLtSgAw8epGpG+T2f2Q7z2ZkXe=4gKMQTkM8ikwcog@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 25 Oct 2018 11:49:50 -0700")
-Message-ID: <xmqqin1peadh.fsf@gitster-ct.c.googlers.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1 2/2] curl_off_t xcurl_off_t is not portable
+References: <20181025161310.29249-1-tboegi@web.de>
+Date:   Fri, 26 Oct 2018 11:48:38 +0900
+In-Reply-To: <20181025161310.29249-1-tboegi@web.de> (tboegi's message of "Thu,
+        25 Oct 2018 18:13:10 +0200")
+Message-ID: <xmqq4ld9e83d.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+tboegi@web.de writes:
 
->> In this series I am addressing the comments by Stefan Beller about the
->> tests in patch 9.
->>
->> If the new tests look OK, I'd say we try moving the series to "next" and
->> see what happens?
+> From: Torsten Bögershausen <tboegi@web.de>
+
+> Subject: Re: [PATCH v1 2/2] curl_off_t xcurl_off_t is not portable
+
+That title is misleading; it sounded as if the are these two
+typedefs and they do not work correctly on some platforms, but that
+is not what you are doing with the patch.
+
+> Comparing signed and unsigned values is not always portable.
+
+Is that what the compiler is complaining about?  There is this bit
+in git-compat-util.h:
+
+/*
+ * Signed integer overflow is undefined in C, so here's a helper macro
+ * to detect if the sum of two integers will overflow.
+ *
+ * Requires: a >= 0, typeof(a) equals typeof(b)
+ */
+#define signed_add_overflows(a, b) \
+    ((b) > maximum_signed_value_of_type(a) - (a))
+
+which is designed to be fed signed a and signed b.  The macro is
+used in packfile codepaths to compare int, off_t, etc..
+
+So the statement may be true but it does not seem to have much to do
+with the problem you are seeing with maximum_signed_value_of_type().
+
+> When  setting
+> DEVELOPER = 1
+> DEVOPTS = extra-all
 >
-> Sounds good to me.
+> "gcc (Raspbian 6.3.0-18+rpi1+deb9u1) 6.3.0 20170516" errors out with
+> "comparison is always false due to limited range of data type"
+> "[-Werror=type-limits]"
 
-Which means (1) the plan sounds OK but I didn't look at these new
-tests or (2) the new tests look OK and I am happy to see this go to
-'next'?
+Then this sounds a bit different from "comparison between signed
+ssize_t len and unsigned maximum_signed_value_of_type() is bad".
+Isn't it saying that "No matter how big you make len, you can never
+go beyond maximum_signed_value_of_type(curl_off_t)"?
 
-tbdiff tells me that 9/10 is the only patch different from the
-previous round, and I vaguely recall that the other patches looked
-OK to me (even though I admit I only skimmed them quickly).
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 762a55a75f..c89fd6d1c3 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -618,9 +618,10 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+>  }
+>  
+>  static curl_off_t xcurl_off_t(ssize_t len) {
+> -	if (len > maximum_signed_value_of_type(curl_off_t))
+
+Is the issue that len is signed and maximum_signed_value_of_type()
+gives an unsigned value, and these two are compared?  As we saw
+earlier, signed_add_overflows() is another example that wants a
+mixed comparison.
+
+I am just wondering if casting len to uintmax_t before comparing
+with maximum_signed_value_of_type() is a simpler solution that can
+safely be cargo-culted to other places without much thinking.
+
+"git grep maximum_signed_value_of_type" reports a handful
+comparisons in vcs-svn/, all of which does
+
+	if (var > maximum_signed_value_of_type(off_t))
+
+with var of type uintmax_t, which sounds like a sane thing to do.
 
 Thanks.
+
+> +	curl_off_t size = (curl_off_t) len;
+> +	if (len != (ssize_t) size)
+>  		die("cannot handle pushes this big");
+> -	return (curl_off_t) len;
+> +	return size;
+>  }
+
