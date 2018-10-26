@@ -2,133 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 622D21F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 19:26:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA7391F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 19:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727809AbeJ0EEn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 00:04:43 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:33385 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbeJ0EEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 00:04:43 -0400
-Received: by mail-vk1-f202.google.com with SMTP id n129-v6so931046vke.0
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 12:26:26 -0700 (PDT)
+        id S1725855AbeJ0EGD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 00:06:03 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54481 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725783AbeJ0EGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 00:06:02 -0400
+Received: by mail-wm1-f65.google.com with SMTP id r63-v6so2507470wma.4
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 12:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=ZS29xSFLSaUMkdk8wie1XpLpYCSSv5dVBB3hf6TkqUM=;
-        b=ombJTBKBlpo87cSMQppFajfUMAD7MYKVReilm8bdYfGyQ9Q/+HdKZx8TJKy3/HJezY
-         YpA/yWSxoSY/SslWwqcsZYIOI46yu+fRSzxVvaKnU7nl8RlOZ3Fa4q+6qZoMA2R6TN16
-         djCUAvOuYRlivRUKBwbsx0fswVpALIprFWPIBb6IhkfowG2i9LGGFlU9sBWQ30DOkT7j
-         /0A+r2659akVkghDEcSjAMM1v1xzMBGYTxfJpuDU5tG2rgmhFrDbgaTBAx7vmYCvaQGh
-         PKGmppjwzTFW4JuoybaAIaJIEcpIczBM/W5NZZi/UN0XI/Y1C0xR/UIv1/vysYJyvdt9
-         i/VQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SQXz5bBg3+FsZ88Gvjr1CGI1ouvqxDpoUZSFbGXdpVU=;
+        b=uMjZsFT7bqYaLND/SdjE/4/zyViRNOedRy1oMn1g9MOi3f2fZZ3AWo+55THYlZzVW1
+         VZomZnED+oPEky0kEGppzIFvLhbYOvKLIBiFbk7v0XSP0DK5J84gebDS4/XR/dYtmWBy
+         F/XNPN5dNJGbfPEwfpzShRdzAmw8kGtey77d+zo9oT2FP1qflIuVNBt0X9RqJyYQPP0J
+         Z1c30RQA64+zzg6x9EM8p8Y80GExsbX+VsryaoK032RDCjgLmCwVwnCJO1dBiTRDngCw
+         RNfVyS6nS5I7RSRQtphUafpEyhn4RZN+n4hyu4hHPiq0H3NymTETOeJpDPe0blS+h9SH
+         dcrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ZS29xSFLSaUMkdk8wie1XpLpYCSSv5dVBB3hf6TkqUM=;
-        b=E3bU0qLYHKh0uYy4Zkv7xqXNV/X5EqzDq55a5KG8sfxyW8ZQCgeEc9+IYABlWlOET9
-         oG+JuqOjnRiTZ4TEKS5RBp+p3u0YSaHwzv5XGLMcp2zji1zqNFAEJjz/dy/0rCq2j7+b
-         Exq+cc/fY10g43IumYsV75cAP6Fsk77XjKiP07PfAj2xXB+ps7ewuSngm7EEuF1XRjQ8
-         iK4jtHql/9LRYO2Q7KwImuIlTqsgT96gbNIFJW1vBJO2O3ywKznCkcxYfQnG/X1VI6h5
-         QVLTAtk1yi7ACyHByVrxaLdtWtXHGLyg+dk5PQpp7uMsdQvWU3nHSd1UGrBSqeIuzNig
-         +HTg==
-X-Gm-Message-State: AGRZ1gK3BEH6PD1ruagwO7Feh/bZnYtD/Sd0mzH9O7jIKvtvGClwcyW7
-        Qn0lj6wO4F6KaLCzqTVo9CR4Q28gKRVtbImVGeqR
-X-Google-Smtp-Source: AJdET5d++hlfYPFrMKX18ueHi1dtbYsDZeM4iD+hlCtipRx9Wxl6qMdf4I0H8WDjUkkITTs4nUOcSO0Led8w0FdoTWa5
-X-Received: by 2002:ab0:138e:: with SMTP id m14mr4377028uae.1.1540581985637;
- Fri, 26 Oct 2018 12:26:25 -0700 (PDT)
-Date:   Fri, 26 Oct 2018 12:26:21 -0700
-In-Reply-To: <20181025233231.102245-8-sbeller@google.com>
-Message-Id: <20181026192621.111450-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181025233231.102245-8-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH 07/10] submodule: migrate get_next_submodule to use
- repository structs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SQXz5bBg3+FsZ88Gvjr1CGI1ouvqxDpoUZSFbGXdpVU=;
+        b=BwVlnSD1/p8tZWR5M9ab9pWrnecpR4hA84PtHyvXnDNm03DWdzeCvJW4Fu3hWI4lMY
+         aFegoMHY2bqWwvF1i4SWkQqOtLS1HEUFOlnymDg7hOZ0vLNFLJo7xIJUxKdDuwqhQgsB
+         VtFae4UXHCVEagVmaHxNBrf49ZkWv3Y+JZsdhl2RioW34Ezng4JqhqJYj3oPHFfQfZmX
+         tqubpT9Wu3DylFAc58jsZRK6vYe3/jTxwNGCDqMnvwvA6To6p7kwQKBKcZOvvDHBBeKB
+         b2gant9sLIb2TlaTzWsKPa810yegPq7f9WP7X/QxsK21Pc2+QJdAVPzf4zKZbRu1TKq/
+         0WqA==
+X-Gm-Message-State: AGRZ1gKrtCUv/SbJRhYNh6cHcRqbwWcJjbpdj2IGS5M3D3Vk7eZ+XBO/
+        OZSLwIR5BNY0BwnaDAOglzOLPxvz
+X-Google-Smtp-Source: AJdET5fmpymYAwQwRWJmtKueCfsTD/zcKWB5+C/DBP32wbXaKUmIS5bU+5PR+9iHowin/xwP33Sf7A==
+X-Received: by 2002:a1c:bce:: with SMTP id 197-v6mr6205635wml.15.1540582064013;
+        Fri, 26 Oct 2018 12:27:44 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id e196-v6sm10738981wmf.43.2018.10.26.12.27.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Oct 2018 12:27:43 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/7] fixes for unqualified <dst> push
+Date:   Fri, 26 Oct 2018 19:27:27 +0000
+Message-Id: <20181026192734.9609-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.1.759.g500967bb5e
+In-Reply-To: <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
+References: <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> We used to recurse into submodules, even if they were broken having
-> only an objects directory. The child process executed in the submodule
-> would fail though if the submodule was broken.
-> 
-> This patch tightens the check upfront, such that we do not need
-> to spawn a child process to find out if the submodule is broken.
+This has grown to a 7-part series for v2 (from 2 patches). This
+addresse all the feedback for v1 and then some.
 
-Thanks for the clear commit message. Also mention which tests currently
-exercise this.
+Ævar Arnfjörð Bjarmason (7):
+  remote.c: add braces in anticipation of a follow-up change
+  i18n: remote.c: mark error(...) messages for translation
+  push: improve the error shown on unqualified <dst> push
+  push: move unqualified refname error into a function
+  push: add an advice on unqualified <dst> push
+  push: test that <src> doesn't DWYM if <dst> is unqualified
+  push: add DWYM support for "git push refs/remotes/...:<dst>"
 
-> +static struct repository *get_submodule_repo_for(struct repository *r,
-> +						 const struct submodule *sub)
-> +{
-> +	struct repository *ret = xmalloc(sizeof(*ret));
-> +
-> +	if (repo_submodule_init(ret, r, sub)) {
-> +		/*
-> +		 * No entry in .gitmodules? Technically not a submodule,
-> +		 * but historically we supported repositories that happen to be
-> +		 * in-place where a gitlink is. Keep supporting them.
-> +		 */
-> +		struct strbuf gitdir = STRBUF_INIT;
-> +		strbuf_repo_worktree_path(&gitdir, r, "%s/.git", sub->path);
-> +		if (repo_init(ret, gitdir.buf, NULL)) {
-> +			strbuf_release(&gitdir);
+ Documentation/config.txt |   7 +++
+ advice.c                 |   2 +
+ advice.h                 |   1 +
+ remote.c                 | 124 +++++++++++++++++++++++++++++++--------
+ t/t5505-remote.sh        |  57 ++++++++++++++++++
+ 5 files changed, 166 insertions(+), 25 deletions(-)
 
-You should also free ret here.
+-- 
+2.19.1.759.g500967bb5e
 
-> +			return NULL;
-> +		}
-> +		strbuf_release(&gitdir);
-> +	}
-> +
-> +	return ret;
-> +}
-
-The above is the rest of get_submodule_repo_for(), so that we can see
-that gitdir is indeed freed.
-
-> -		if (!git_dir)
-> -			git_dir = submodule_git_dir.buf;
-> -		if (is_directory(git_dir)) {
-> +		repo = get_submodule_repo_for(spf->r, submodule);
-> +		if (repo) {
->  			child_process_init(cp);
-> -			cp->dir = strbuf_detach(&submodule_path, NULL);
->  			prepare_submodule_repo_env(&cp->env_array);
-> +			cp->dir = xstrdup(repo->worktree);
-
-Move the cp->dir one line up for a cleaner diff.
-
-[snip]
-
-> +			repo_clear(repo);
-> +			free(repo);
->  			ret = 1;
-> +		} else {
-> +			/*
-> +			 * An empty directory is normal,
-> +			 * the submodule is not initialized
-> +			 */
-> +			if (S_ISGITLINK(ce->ce_mode) &&
-> +			    !is_empty_dir(ce->name))
-> +				die(_("Could not access submodule '%s'"), ce->name);
-
-Previously, a failed fetch would just set spf->result = 1 (in
-fetch_finish()), allowing other fetches to still proceed. This sounds
-like a better idea to me instead of die-ing outright. (Also remember to
-print a warning message - since we no longer spawn a child process to
-try a fetch that will fail, we need to print a message ourselves.)
