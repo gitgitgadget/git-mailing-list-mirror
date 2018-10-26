@@ -7,75 +7,196 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBF9B1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 19:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03D821F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 19:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726373AbeJ0DnU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 23:43:20 -0400
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:34075 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbeJ0DnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 23:43:20 -0400
-Received: by mail-ed1-f52.google.com with SMTP id w19-v6so2197780eds.1
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 12:05:07 -0700 (PDT)
+        id S1726610AbeJ0DyM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 23:54:12 -0400
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:42892 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726113AbeJ0DyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 23:54:12 -0400
+Received: by mail-qk1-f201.google.com with SMTP id m63-v6so2134474qkb.9
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 12:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=jtJUYqnk6lhS0JZZ6erDFWkQO/84wOVlhHzrqpu3uM0=;
-        b=qY5Lb4E+NclOb3HbqXupBqyIS/sx7KEW8Tv1JjQHnng+2cYCZJ04C3cfsipF/CPoj9
-         VqmEFG36QyKfdgAeS9aRpk6oVcMxdlSHEF6ufRcHjbKjYkwxUGXCuEl0X6e3ApZa5yM6
-         3yeHMugPTRLYjn9WM2s0QTP7HghTLOUdoarv5D+SrXHX4kmKQl4lC8we78ZyhSHshZAI
-         9aakid1T5pfOtDvjapyfwidxyjJytx++lt4qcUyc5Yv7xBLIkvOA2iFuSkle7dT3PHtU
-         UDNSxGAEk5Yrt/k6T5CuNzrMAW/5n7D3bKrkKz9a4+/308ZTri7rqpySGkqUuFyh9cNU
-         3MhA==
+        bh=HM6GO6uq9i73kdDT++f+xu8dPgacT2cFe/ZzlwFNTSA=;
+        b=iCg5OjED0HexxPDLsWvSMYVeB4O3B3QQ0zh13oVOc5/mtVG+sEbIZU9nSHqIQNnkNT
+         NzHOxIkJGoenMa5ongUsArCE52RoxoG9cBYMLngaGh0eaCH2fXo8cwV8oKFOolfPGib9
+         2tqLGDD+6zq60ohVEnDfO9bbHas+nUUHPnwrgwq+F7uwByBIUs91acrIa2gw0nwZ1+mC
+         uWoItlE91HiprmLdy4QilBUX+9uHS/JPtGtk5oyHF6yEc9RFw1biH/7U2KLdlpFMYDNJ
+         yeU9KkCqyK7EVLFtoiCUvS1LFh7KI915Uxo9ltmLcQJEcNFrLuz8q7gwdB1P93OlN2rK
+         Z1nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jtJUYqnk6lhS0JZZ6erDFWkQO/84wOVlhHzrqpu3uM0=;
-        b=G4H9DgdxWnZngYkX/zG2WdaCRSvShH24PfazbJQPa14UmD6OKLZ75KntzW9lYtq7L7
-         BfVe7OhrWDTW7A+2Q+gMjnjeeC4I7aeG/uW1dqg+aiOxDjCWhvdY/3sUHyNm31IfWVEl
-         76AheWE2UkP4nR2yV9P1lRt66Joz+DV7F0JLok6ecaPxbHaI5GaBAxQuFGx2ffFO4x2E
-         o+dKxHrFmiIettJlw3onY4LSiuklTYtKoDlFtQHW/M9rM0oep3MXOO58eVGUjRJwxIU3
-         nL5eRDFs78fMngn5Y9y+OJIX44tPn9B6fzSJzEcv7gZm2UBg2oTvRs86+8o15u1eRqkY
-         kQnw==
-X-Gm-Message-State: AGRZ1gIempsAdsdsvg9hODu1jA6TKXrJuRKLWd9PzrD+j26DGEMEbRKW
-        MnaLBY/czkNdsKjnYKaRA7fQcFOFc9Zd8MFQG//SupD5wWBpaQ==
-X-Google-Smtp-Source: AJdET5f3NcF234fYxZEwrWgVtmtQskKC5GT1c5dwOWE6cK/w2tdnE3pUXTRRlQatdRA3cNzMCfskoq9PRDDslZrTlvY=
-X-Received: by 2002:a17:906:e287:: with SMTP id gg7-v6mr3331032ejb.128.1540580706583;
- Fri, 26 Oct 2018 12:05:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqo9bhcf89.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo9bhcf89.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Oct 2018 12:04:55 -0700
-Message-ID: <CAGZ79kbjKZSHfHbDykkob1w21RTB9tgCCYVrOD=0C8aAFGncTQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2018, #05; Fri, 26)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=HM6GO6uq9i73kdDT++f+xu8dPgacT2cFe/ZzlwFNTSA=;
+        b=YpzawYjSwBsLs8wN4xx6o/KI6XPwuHbwI1Fy6MZHkgiU2pae2gENLyF+UxBJEo5YxF
+         whjucBm4SC17YAipQC2T3OKBxTP/QZtu45XdyNl8L/GkpsBNM2E+Bx+xLpwihXXCHLV3
+         8KA1ZO/pIhR5iX5w3JRD4Xo6iP/RIBCsgChL1YbDzzWYQrPfwVxFjQ6vkIQnFmNcv4OO
+         hrLjf6TiCXWQ4WoxEOS+69JqqFsl/nkusGvJI/oCJRcR4k2nDuM3C06L43wNkE3Fwt4v
+         6pyRhk+Quwes8I7TqiLpPsvufSNoc9RQ/VavIGsHbhlZbgjiecSYYA5RcvOUHCC3jH16
+         m6Cg==
+X-Gm-Message-State: AGRZ1gJ+9+PfXxxq6gXQHA6Qom2XEgWm3SHfnsu4PGQCxwm8mMsLtwZg
+        yj+M2Xu5I6aIFpA/QeAN1RrEjTSgbQfqeS97kFbl
+X-Google-Smtp-Source: AJdET5f9f6enHAnctuA7dLbyA0ocjlQ7RHo6ZSQ87RGZR1mZApTHB6ax0gfB0WXKxSThXoRBN8t9yZn3K0EWGFLAnSPf
+X-Received: by 2002:a37:8084:: with SMTP id b126-v6mr3920243qkd.43.1540581356715;
+ Fri, 26 Oct 2018 12:15:56 -0700 (PDT)
+Date:   Fri, 26 Oct 2018 12:15:53 -0700
+In-Reply-To: <20181025233231.102245-7-sbeller@google.com>
+Message-Id: <20181026191553.108916-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181025233231.102245-7-sbeller@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH 06/10] repository: repo_submodule_init to take a submodule struct
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sbeller@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> * sb/strbuf-h-update (2018-09-29) 1 commit
->   (merged to 'next' on 2018-10-26 at e4ad935cb0)
->  + strbuf.h: format according to coding guidelines
->
->  Code clean-up to serve as a BCP example.
->
->  Will merge to 'master'.
->  Further clean-up patches may need to follow soon before this
->  change escapes to 'master'.
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 7da8fef31a..ba7634258a 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -418,7 +418,10 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
+>  			  const struct object_id *oid,
+>  			  const char *filename, const char *path)
+>  {
+> -	struct repository submodule;
+> +	struct repository subrepo;
+> +	const struct submodule *sub = submodule_from_path(superproject,
+> +							  &null_oid, path);
 
-We have a contradicting statement here, which can be either an
-issue or an oversight.
+[snip]
 
-In [1] I stated that I dislike the style that was proposed (which I
-understood as these "further cleanup patches" you speak of above),
-I do not recall other cleanups to be needed.
+> -	if (repo_submodule_init(&submodule, superproject, path)) {
+> +	if (repo_submodule_init(&subrepo, superproject, sub)) {
 
-[1] https://public-inbox.org/git/CAGZ79kZGEMWpr7aqeqXbC4bkmsCCiW+1pxbEV4T0vfsYG+_3iA@mail.gmail.com/
+The last argument to repo_submodule_init is now
+"submodule_from_path(superproject, &null_oid, path)" instead of "path",
+and looking forward into the patch, we do not need a NULL check because
+repo_submodule_init() tolerates NULL in that argument.
+
+Let's see if the rest of the code follows the pattern - a call to
+submodule_from_path() with the 3 expected arguments (repo, null OID,
+path).
+
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 7f9919a362..4d1649c1b3 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -206,17 +206,19 @@ static void show_files(struct repository *repo, struct dir_struct *dir);
+>  static void show_submodule(struct repository *superproject,
+>  			   struct dir_struct *dir, const char *path)
+>  {
+> -	struct repository submodule;
+> +	struct repository subrepo;
+> +	const struct submodule *sub = submodule_from_path(superproject,
+> +							  &null_oid, path);
+>  
+> -	if (repo_submodule_init(&submodule, superproject, path))
+> +	if (repo_submodule_init(&subrepo, superproject, sub))
+
+So far so good.
+
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 5f8a804a6e..015aa1471f 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2037,7 +2037,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
+>  	if (!sub)
+>  		BUG("We could get the submodule handle before?");
+>  
+> -	if (repo_submodule_init(&subrepo, the_repository, path))
+> +	if (repo_submodule_init(&subrepo, the_repository, sub))
+
+The definition of "sub" is not quoted here in this e-mail, but it is
+indeed "submodule_from_path(the_repository, &null_oid, path)".
+("the_repository" in the invocation to submodule_from_path() is correct
+because the 2nd argument to the invocation of repo_submodule_init() is
+"the_repository".)
+
+> -int repo_submodule_init(struct repository *submodule,
+> +int repo_submodule_init(struct repository *subrepo,
+>  			struct repository *superproject,
+> -			const char *path)
+> +			const struct submodule *sub)
+>  {
+> -	const struct submodule *sub;
+>  	struct strbuf gitdir = STRBUF_INIT;
+>  	struct strbuf worktree = STRBUF_INIT;
+>  	int ret = 0;
+>  
+> -	sub = submodule_from_path(superproject, &null_oid, path);
+
+As expected, this line is removed.
+
+>  	if (!sub) {
+>  		ret = -1;
+>  		goto out;
+>  	}
+>  
+> -	strbuf_repo_worktree_path(&gitdir, superproject, "%s/.git", path);
+> -	strbuf_repo_worktree_path(&worktree, superproject, "%s", path);
+> +	strbuf_repo_worktree_path(&gitdir, superproject, "%s/.git", sub->path);
+> +	strbuf_repo_worktree_path(&worktree, superproject, "%s", sub->path);
+
+path and sub->path are the same, so this is fine. (This can be seen from
+cache_put_path() and cache_lookup_path() in submodule-config.c.)
+
+> -	submodule->submodule_prefix = xstrfmt("%s%s/",
+> -					      superproject->submodule_prefix ?
+> -					      superproject->submodule_prefix :
+> -					      "", path);
+> +	subrepo->submodule_prefix = xstrfmt("%s%s/",
+> +					    superproject->submodule_prefix ?
+> +					    superproject->submodule_prefix :
+> +					    "", sub->path);
+
+Likewise.
+
+> +/*
+> + * Initialize the repository 'subrepo' as the submodule given by the
+> + * struct submodule 'sub' in parent repository 'superproject'.
+> + * Return 0 upon success and a non-zero value upon failure, which may happen
+> + * if the submodule is not found, or 'sub' is NULL.
+> + */
+> +struct submodule;
+> +int repo_submodule_init(struct repository *subrepo,
+>  			struct repository *superproject,
+> -			const char *path);
+> +			const struct submodule *sub);
+
+Here is where it says that the last argument can be NULL.
+
+> diff --git a/t/helper/test-submodule-nested-repo-config.c b/t/helper/test-submodule-nested-repo-config.c
+> index a31e2a9bea..bc97929bbc 100644
+> --- a/t/helper/test-submodule-nested-repo-config.c
+> +++ b/t/helper/test-submodule-nested-repo-config.c
+> @@ -10,19 +10,21 @@ static void die_usage(int argc, const char **argv, const char *msg)
+>  
+>  int cmd__submodule_nested_repo_config(int argc, const char **argv)
+>  {
+> -	struct repository submodule;
+> +	struct repository subrepo;
+> +	const struct submodule *sub;
+>  
+>  	if (argc < 3)
+>  		die_usage(argc, argv, "Wrong number of arguments.");
+>  
+>  	setup_git_directory();
+>  
+> -	if (repo_submodule_init(&submodule, the_repository, argv[1])) {
+> +	sub = submodule_from_path(the_repository, &null_oid, argv[1]);
+> +	if (repo_submodule_init(&subrepo, the_repository, sub)) {
+
+The expected pattern.
+
+This patch looks good to me.
