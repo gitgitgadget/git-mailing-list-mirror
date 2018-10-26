@@ -2,150 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 776B31F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 15:28:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 307D21F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 15:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727398AbeJ0AFb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 20:05:31 -0400
-Received: from outbound1a.ore.mailhop.org ([54.213.22.21]:22812 "EHLO
-        outbound1a.ore.mailhop.org" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726113AbeJ0AFa (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 26 Oct 2018 20:05:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1540567681; cv=none;
-        d=outbound.mailhop.org; s=arc-outbound20181012;
-        b=rMb2/lWcdPbOBlvRy53zRLzcMEczDW/KW0T+DhxiS9ad4YqVvhsrla+zgd1PMqVe0UhEuRqzQswD5
-         e9PnTzgScyQb6AYG1NazQuTb5/GmlknA4ltSRlwqSA8bBkvC5qXDO8BjPSWxPIYmrLBo1OltRaiYV7
-         X5tNyqjM27MsDHmDEo2KrHo/opOHeA6h+6Lz4Zm4oEv4U4axclYBZ5FUV0jz3zVgtfBd7qEKWJ0KtS
-         JdvfzUprq1hUacM2Xrbnph4kpKFKhVnXPhIioLjaT8o07pD85NOescN047hrBOgDCIImq7lkC+27ql
-         m5s3aQQ8ZSdkY4/DmB8OOCVDk6YDERQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=outbound.mailhop.org; s=arc-outbound20181012;
-        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
-         message-id:subject:cc:to:from:date:dkim-signature:dkim-signature:from;
-        bh=IOgkjK4F3gDROPvyspa2w81O0EWCcZjeFiB2sJQmxjA=;
-        b=PcH3ZAlFDy3nPv3SNxD6IWO5LO7o/ZjPWEWTItfjo+q15CGpBYQnv93S0OpHJKwd76DndhZNfZPr4
-         6FKf6qEyK0LE9zPtbKCEUcieChfJHwRDPYF0UfDMluN8HffX+9AomHHQXby8Zm2Xss2LJFWkYRhiMf
-         3GAfF+/6LxBmMygV3ZnYxnoHzwuJ9M+5Ekhe0wWFKCF0ag33u79JDVWIpBbMYfTwsmRHxjV0Pn8Zok
-         716CVi8NNyVYOR+L7CTCu6ONgsG6u+rzj3jUE6fs58/hGEcfC2JiKGjUhjkJGi4VunhELBDEaKEM+w
-         YAfUZ2pjqctEZEeuXlglDBpd0bfwtww==
-ARC-Authentication-Results: i=1; outbound1.ore.mailhop.org;
-        spf=softfail smtp.mailfrom=lakedaemon.net smtp.remote-ip=108.39.81.162;
-        dkim=permerror header.d=lakedaemon.net header.s=mail header.a=rsa-sha256 header.b=Y3A69CQi;
-        dmarc=none header.from=lakedaemon.net;
-        arc=none header.oldest-pass=0;
+        id S1727491AbeJ0AXF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 20:23:05 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35420 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726179AbeJ0AXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 20:23:03 -0400
+Received: by mail-ed1-f68.google.com with SMTP id e2-v6so1704549edn.2
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 08:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=outbound.mailhop.org; s=dkim-high;
-        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
-         message-id:subject:cc:to:from:date:from;
-        bh=IOgkjK4F3gDROPvyspa2w81O0EWCcZjeFiB2sJQmxjA=;
-        b=LAg5SyEzx0OQF9Q/Z5y+BCa4SIx08TXzG+NQL7MFsaC06J8QCYKP2SOtK+lT1xIDo7zuD8hSo5ete
-         sb1Hobeog82codpUSR5EAqfhyYZwty+XBNYPpkM6hGA9hD3tXcFTpr9KXVcIFTITG908H4N3f5WMOu
-         CbiiLmKHJ3e13D2qyoYEN5+RP+lsk06cCTm+k98FvXCS0Axjm5Z69Ba2drCT8PH9mSAxOOwXOELGOb
-         DtcvA0YHVh/ckYzho/w0tzqyJgvP05T7AlqqCyjAmhjVkSvn+4JDZICVyQwX8kfS3M2mCJkgW8XfPr
-         4nmdrev5anksiXdS7eg/A0ZImFwR+fg==
-X-MHO-RoutePath: amFjMjk5NzkyNDU4
-X-MHO-User: b63f3e6a-d933-11e8-a93b-310333596487
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Originating-IP: 108.39.81.162
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from io (unknown [108.39.81.162])
-        by outbound1.ore.mailhop.org (Halon) with ESMTPSA
-        id b63f3e6a-d933-11e8-a93b-310333596487;
-        Fri, 26 Oct 2018 15:27:58 +0000 (UTC)
-Received: from io.lakedaemon.net (localhost [127.0.0.1])
-        by io (Postfix) with ESMTP id 004C080049;
-        Fri, 26 Oct 2018 15:27:54 +0000 (UTC)
-X-DKIM: OpenDKIM Filter v2.6.8 io 004C080049
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
-        s=mail; t=1540567675;
-        bh=IOgkjK4F3gDROPvyspa2w81O0EWCcZjeFiB2sJQmxjA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=Y3A69CQiQhArINw8n1YmgzTm7hh31kbeHKs7Lgx/9W2OhJ1gHRbN6mV48Yf4SZKyM
-         SBxIuzvdDfpexHWD8CY+r24wFy7ImaUZhdBlGDY6KROay8nVcBNVGFfbaa0qen4PK2
-         eqqVMH4eFgP7gDBKnuXd71zGe8uJZa+VXyshh80GJCYPitA78lrPVFFfICOg9rJcdI
-         65a7iOIWkWjNpfbN+vZGnFnXwkjnKPsVVYwXIjiV8DrTZb5Vcs9P7RwaEpJeLGPj/g
-         eavM1Min615ruvKRZUBEoYufRnYmhTPkO1PXnicAueRL4NjNiCgU+WYBr64KQsviEC
-         cRSAY9iJkYYdg==
-Date:   Fri, 26 Oct 2018 15:27:54 +0000
-From:   Jason Cooper <git@lakedaemon.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "lhf635@163.com" <lhf635@163.com>, git <git@vger.kernel.org>
-Subject: Re: the opposite of .gitignore, whitelist
-Message-ID: <20181026152754.GF24185@io.lakedaemon.net>
-References: <201810251039388653199@163.com>
- <xmqqh8hak2mh.fsf@gitster-ct.c.googlers.com>
- <c166b421-a228-8349-0815-2ebb9dcab998@lakedaemon.net>
- <20181026093644.GA20876@sigill.intra.peff.net>
- <87tvl8lw5d.fsf@evledraar.gmail.com>
- <20181026133453.GE24185@io.lakedaemon.net>
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=EeUrDcZItkJsQRqEFlpfAk1ydp9Hv2bdLdzHqOb6NPY=;
+        b=sbY/Le+N+J6Xnxtr5p/h9RnOnvqNIMnp0wUuiP1/LNi0XDAJkod6RwTp64rgOFG4Yb
+         2kp1jro1o9dnJ8EuD9VEt8aKvlXcLtAumnl8GauO53oFjs0JuloqhcfdqwAk6JolIn4R
+         0E158yvF+HX6WwcnmUeCjaWUoVTqle3ueFZG7+8YHl2aO+sdLrZdMRGbyOYrUv3QTwPJ
+         GJnTF4AjZIlgjSRRt0XXdAa3agFeuXaVZsGE8gkhr7Sv4ettUTx58yipdpALa48oYLe3
+         geN7L1RpVQd9B8xABUMUtSxVndlHsYGpupRoacbFWF++w3Dh9i8uqy+HmSWzcISeAP+R
+         hhMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=EeUrDcZItkJsQRqEFlpfAk1ydp9Hv2bdLdzHqOb6NPY=;
+        b=Sas4G8r950jXD3CZwYX89yDeBpoErHU3moipBnhTE/CSKAQ3vobyoioGqtmIw8uL8y
+         jP7zZ+pqbecuxwwkCfa+wilcqbbHhNrXqaODks3mr26GhYcv3Dy4U54GDEm39lvgZ2Di
+         a3HQs16ZvIVKB6Iz7tzQIHZlIAYdMcWf9pso2kDSOkDnMFYX0LLvGS91UIpLsRHvE0eX
+         vSzK4Ky6fcn8196BaLJ9lUAu+5ZpfGhrwxUhzTJemZ0DpOvnCrxzjegWoUIQQfSKV9zW
+         80kf0KSbXbQtnlwx3BoLSQa/MNZabJUSUUA65E29GGjFLVMNTiepIlz6t7zcIL9eriXE
+         ARog==
+X-Gm-Message-State: AGRZ1gKn+1g/GuXcEFOXEf7ryiQ0AYwsBPk/Nc1R4UgU6yZ6y0ZHnYHH
+        3XZFID+mrxaxrgQGLOsHNbumkdxN
+X-Google-Smtp-Source: AJdET5d8Irj/SvRp5p24wAt9DDzSfOWQ63KSslTJ+dZhX9VSOkp/yO8PqjkDL1fV0daWztBddiRv2w==
+X-Received: by 2002:a17:906:6054:: with SMTP id p20-v6mr2884974ejj.40.1540568729774;
+        Fri, 26 Oct 2018 08:45:29 -0700 (PDT)
+Received: from evledraar ([2a02:a450:3911:1:fd59:dbfe:7c38:41f0])
+        by smtp.gmail.com with ESMTPSA id w57-v6sm2264760edw.88.2018.10.26.08.45.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 26 Oct 2018 08:45:28 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] push: add an advice on unqualified <dst> push
+References: <20181010104145.25610-1-avarab@gmail.com> <20181010104145.25610-3-avarab@gmail.com> <20181010205505.GB12949@sigill.intra.peff.net> <87r2gxebsi.fsf@evledraar.gmail.com> <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 26 Oct 2018 17:45:27 +0200
+Message-ID: <87r2gclnjc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181026133453.GE24185@io.lakedaemon.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 26, 2018 at 01:34:53PM +0000, Jason Cooper wrote:
-> On Fri, Oct 26, 2018 at 02:39:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
-...
-> >     I thought this was a bug:
-> > 
-> >         (
-> >             rm -rf /tmp/git &&
-> >             git init /tmp/git &&
-> >             cd /tmp/git >/dev/null &&
-> >             echo '*' >.gitignore &&
-> >             echo '!*.txt' >>.gitignore &&
-> >             echo '!.gitignore' >>.gitignore &&
-> >             touch foo.png foo.txt &&
-> >             mkdir dir &&
-> >             touch dir/bar.png dir/bar.txt &&
-> >             git add *.txt &&
-> >             git add */*.txt;
-> >             git status --short
-> >         )
-> > 
-> >     But it's a limitation, gitignore(5) says:
-> > 
-> >         It is not possible to re-include a file if a parent directory of
-> >         that file is excluded. Git doesn’t list excluded directories for
-> >         performance reasons, so any patterns on contained files have no
-> >         effect, no matter where they are defined.
-> 
-> Bingo.  This is the exact problem I encountered.
 
-(
-    rm -rf /tmp/git &&
-    git init /tmp/git &&
-    cd /tmp/git >/dev/null &&
-    echo '*' >.gitignore &&
-    echo '!dir/' >>.gitignore &&
-    echo '!*.txt' >>.gitignore &&
-    echo '!.gitignore' >>.gitignore &&
-    touch foo.png foo.txt &&
-    mkdir dir &&
-    echo '*' >dir/.gitignore &&
-    echo '!*.txt' >>dir/.gitignore &&
-    echo '!.gitignore' >>dir/.gitignore &&
-    touch dir/bar.png dir/bar.txt &&
-    git add *.txt &&
-    git add */*.txt;
-    git status --short
-)
+On Thu, Oct 11 2018, Junio C Hamano wrote:
 
-Well, this wfm...
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> On Wed, Oct 10 2018, Jeff King wrote:
+>>
+>>> This is much better, and I love the customized behavior based on the
+>>> object type.
+>>>
+>>> I wonder if we could reword the first paragraph to be a little less
+>>> confusing, and spell out what we tried already. E.g., something like:
+>>> ...
+>>
+>> Yeah that makes sense. I was trying to avoid touching the existing
+>> wording to make this more surgical, but you came up with it, and since
+>> you don't like it I'll just change that too.
+>
+> OK, for now I'll mark these two patches "read" in my inbox and
+> forget about them, expecting that a reroll of 2/2 with improved
+> messages would appear not in too distant future.
 
-Ugly, but doable.
+I was going to submit an update to this, as an additional improvement
+can anyone think of a reason not to always infer that we'd like a new
+branch if the LHS of the refspec starts with refs/remotes/* ?
 
-thx,
+    u git (push-advice-on-unqualified-src-2 $>) $ ./git-push avar refs/remotes/origin/master:newbranch -n
+    To github.com:avar/git.git
+     * [new branch]            origin/master -> newbranch
+    u git (push-advice-on-unqualified-src-2 $>) $ git diff
+    diff --git a/remote.c b/remote.c
+    index 5b679df02d..949a9bd079 100644
+    --- a/remote.c
+    +++ b/remote.c
+    @@ -969,7 +969,8 @@ static char *guess_ref(const char *name, struct ref *peer)
+            if (!r)
+                    return NULL;
 
-Jason.
+    -       if (starts_with(r, "refs/heads/"))
+    +       if (starts_with(r, "refs/heads/") ||
+    +           starts_with(r, "refs/remotes/"))
+                    strbuf_addstr(&buf, "refs/heads/");
+            else if (starts_with(r, "refs/tags/"))
+                    strbuf_addstr(&buf, "refs/tags/");
+
+Maybe we need to be really paranoid here and also check if it's a
+"commit", i.e. you could setup a refspec like:
+
+    fetch = +refs/tags/*:refs/remotes/origin-tags/*
