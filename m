@@ -2,68 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6806E1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 12:39:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C6F1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 12:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727644AbeJZVQ1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 17:16:27 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:33895 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727607AbeJZVQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 17:16:27 -0400
-Received: by mail-ed1-f43.google.com with SMTP id w19-v6so1161046eds.1
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 05:39:28 -0700 (PDT)
+        id S1727609AbeJZVVI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 17:21:08 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:36501 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727582AbeJZVVI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 17:21:08 -0400
+Received: by mail-ed1-f66.google.com with SMTP id x2-v6so1173062eds.3
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 05:44:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=e/JH935i0XM0TSbsIOSSRqvKpPw4MloNjazC4dDTWfQ=;
-        b=F/iW9ToJ+88mKU4dnSSVzvtCgCBymkpSCNvNGUMPfcnlDRY87jxU/hBuRcbpj2+oQF
-         cn4limO2Tx+HnMsU/s1C66mGrovqIAvrNp0m4ieHOcARr0/bT5b/Yahe4vbuZP84/Byl
-         9MQ3/hPssqU1oevdPcodZaXMmoIRz7vPoxrbL09L/W6FuZEx0X+eJmnjr7IcNhQtRWPE
-         Wk0i4IrqH4C5mHEa1BZyieWKD3rTxv4preXWmpqDTNcGnB7gQSFDUe97ckKMH2xJjhm9
-         cwD7eX6Si5jmgtkFVPVX+PfiKRYotQpGJeLCuCmL/zBmSX7mU7O8lvEueiPDzSTkXNtl
-         Dh2Q==
+        bh=LaRj/zFUaC8Ao+Mmms13zJVQ1Ns0SbfrD9WoBinGVYQ=;
+        b=g5YrMFG+3IqAwfiKhL39PVTou12ze9ikhnc8ZJdbbrPUTRPqNJhp1qaYiLHPPu9G+G
+         BR09ejKQ1wsKyQFdTMxvjC6oT4ugLZiN8rgbOd8VYdW3JPYLn+c2ZDyH4PolPQSe0oIa
+         frwqZq2B13AxFHUObu/bBRXt/hHjUB4pXKQ5vFApdj8+KTKjheoa/edIGHxoIQ8tgizJ
+         TRe4Shz01tJ2W2G7dN2hNA6GSUC9jIPNWAO1ruGmEX63N+V/NLWrjENNyY5uJtRGNL4e
+         zCTefrrK9HRmNp3LTGSb4CqUGAAnC5uFRLPwsucut3rh+tkp/SG/55jzqLK5IWnLvUFd
+         tv8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=e/JH935i0XM0TSbsIOSSRqvKpPw4MloNjazC4dDTWfQ=;
-        b=KvQK57TrN4H5kGDxUk9KbJkVOGc/CGsLmxoQwAccVU7NOjiN6we+BhUhsWOq3BIYjy
-         LopS9LULCvTSXhLFEKTbQQJumhVOvGS3xPl/CLRcGCZcG3GQONcJeNChhlR0VxlCcPsW
-         XiYv2w2Jk3UG6sR6qhvG/QDYJnDCzdXTkiBfXkis0gbY74FeDxpAVFa6Xd4XytcRGTZr
-         /I68iNbL5n/yer1KtF9NUpNd6egR+BBFxU5ytaloppPxyDufhvJgIBO1viS5Gm4vEcnT
-         EiE2E2g8uWESg3njf0C/63X4oOMoXZTKh0MPsH/1TXtGlVC6YPjV21VIDV864CiOFbeA
-         3fPA==
-X-Gm-Message-State: AGRZ1gKkZUodT9m37ic8GQyn6qYRfL7jFacw4OHNV7Ma5e1CVgZKhvf5
-        o0YkFL/VpipsiMoBBh2Sl8Q=
-X-Google-Smtp-Source: AJdET5eD67vMpQY+HbT93uyrK+nMmNuiFqUpP3hfa/lMk0N11s+HI3csD1bbUDVh3mEJZ+ZVuYN27g==
-X-Received: by 2002:a50:98a6:: with SMTP id j35-v6mr2237302edb.273.1540557567985;
-        Fri, 26 Oct 2018 05:39:27 -0700 (PDT)
+        bh=LaRj/zFUaC8Ao+Mmms13zJVQ1Ns0SbfrD9WoBinGVYQ=;
+        b=gutzf4awcu1NqA+g7xCSUWB7n61LCrjAwfvnmDJUAOsHBqshs00ytnsEYN1bRspr65
+         N6gWMGoi/3+DFwwXL2ypvWh7e+/Xq4LTHOnjp9Y6ZBEgfuTfOPiG0EZFoYvoP1bBWs+m
+         KUhTB9i3g3pWhkxYCYM6PcLAprrNrGYGlR8Ln34UO2MOU2V+vhgBOe40Fon8hCkcerAJ
+         DsF+yQoFqaBe/arQmO/54au9nogKXcV71URdcCn8sIyb7utHAok+/aJ4KeIQUuPmjpKe
+         E0Z9aKXb7WIPKYONFA3urLwUZAml7kfZH284Dob/WCPYPdJ4cESdxZ5nxdz13q5oJXmZ
+         QxvA==
+X-Gm-Message-State: AGRZ1gLc1jF6pmcSvdAwrdhI1RM09CF7oq/IpW7mPxwp7qJRvR2NU0kA
+        l9j1O7FjD/cdCvqU6Zvn+VJOIbnO
+X-Google-Smtp-Source: AJdET5cd6QrHoA51Ksk8CfoPe1XoZ/4Od/zBAEaUMO3EAWAhDvxBpFds5JTFIPumyXDLHDiNiE5tRQ==
+X-Received: by 2002:a50:8f23:: with SMTP id 32-v6mr2896537edy.158.1540557847635;
+        Fri, 26 Oct 2018 05:44:07 -0700 (PDT)
 Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
-        by smtp.gmail.com with ESMTPSA id n6-v6sm2217586ejh.2.2018.10.26.05.39.27
+        by smtp.gmail.com with ESMTPSA id r55-v6sm4814490edd.80.2018.10.26.05.44.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 26 Oct 2018 05:39:27 -0700 (PDT)
+        Fri, 26 Oct 2018 05:44:06 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Jason Cooper <jason@lakedaemon.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        "lhf635\@163.com" <lhf635@163.com>, git <git@vger.kernel.org>
-Subject: Re: the opposite of .gitignore, whitelist
-References: <201810251039388653199@163.com>
-        <xmqqh8hak2mh.fsf@gitster-ct.c.googlers.com>
-        <c166b421-a228-8349-0815-2ebb9dcab998@lakedaemon.net>
-        <20181026093644.GA20876@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Tim Schumacher <timschumi@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] alias: detect loops in mixed execution mode
+References: <87o9dar9qc.fsf@evledraar.gmail.com>
+        <20181018225739.28857-1-avarab@gmail.com>
+        <20181019220755.GA31563@sigill.intra.peff.net>
+        <87ftx0dg4r.fsf@evledraar.gmail.com>
+        <20181020185852.GA6234@sigill.intra.peff.net>
+        <20181026083905.GA1705@sigill.intra.peff.net>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181026093644.GA20876@sigill.intra.peff.net>
-Date:   Fri, 26 Oct 2018 14:39:26 +0200
-Message-ID: <87tvl8lw5d.fsf@evledraar.gmail.com>
+In-reply-to: <20181026083905.GA1705@sigill.intra.peff.net>
+Date:   Fri, 26 Oct 2018 14:44:05 +0200
+Message-ID: <87sh0slvxm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -75,97 +77,111 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, Oct 26 2018, Jeff King wrote:
 
-> On Thu, Oct 25, 2018 at 10:38:46AM -0400, Jason Cooper wrote:
+> On Sat, Oct 20, 2018 at 02:58:53PM -0400, Jeff King wrote:
 >
->> On 10/25/18 1:37 AM, Junio C Hamano wrote:
->> > "lhf635@163.com" <lhf635@163.com> writes:
+>> On Sat, Oct 20, 2018 at 01:14:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> > > I'd guess this sort of thing is pretty rare. But I wonder if we're
+>> > > crossing the line of trying to assume too much about what the user's
+>> > > arbitrary code does.
+>> > >
+>> > > A simple depth counter can limit the fork bomb, and with a high enough
+>> > > depth would be unlikely to trigger a false positive. It could also
+>> > > protect non-aliases more reasonably, too (e.g., if you have a 1000-deep
+>> > > git process hierarchy, there's a good chance you've found an infinite
+>> > > loop in git itself).
 >> >
->> >> I have a good idea, add a file to git that is the opposite of .gitignore...,
->> > Do negative patterns in .gitignore file help without inventing
->> > anything new?
->> I did this several years ago in an attempt to track /etc/ (minus
->> ownership, of course) without storing secrets in the git history. As
->> the system grew and was maintained (read: crap added), the negative
->> patterns grew untenable. I quickly realized it wasn't the correct way
->> to solve the problem.
+>> > I don't think this edge case you're describing is very plausible, and I
+>> > doubt it exists in the wild.
+>> >
+>> > But going by my personal incredulity and a git release breaking code in
+>> > the wild would suck, so agree that I need to re-roll this to anticipate
+>> > that.
 >>
->> Unfortunately, shortly after realizing this, I left that project. So I
->> never had the chance to develop a proper solution. However, the concept
->> of a '.gitonly' file was exactly was I was seeking. So, for what it's
->> worth, I've definitely had at least one legit usecase for this feature.
->>
->> The usecases tend to center around tracking select files within the
->> rootfs of a full-blown operating system. Or a subset thereof.
+>> I agree it's probably quite rare, if it exists at all. But I also wonder
+>> how important looping alias protection is. It's also rare, and the
+>> outcome is usually "gee, I wonder why this is taking so long? ^C".
 >
-> I think what Junio meant is to ignore everything by default, like:
+> Hmph. So I was speaking before purely hypothetically, but now that your
+> patch is in 'next', it is part of my daily build. And indeed, I hit a
+> false positive within 5 minutes of building it. ;)
 >
->   echo '*' >.gitignore
+> I have an alias like this:
 >
-> and then selectively use negative patterns (and being in .gitignore,
-> that makes them positive "yes, include this") to add things back:
+>   $ git help dotgit
+>   'dotgit' is aliased to '!git rev-parse 2>/dev/null || cd ~/compile/git; git'
 >
->   echo 'foo' >>.gitignore
+> The idea being that I can run "git dotgit foo" to run "git foo" in the
+> current directory, or if it is not a git repository, in my checkout of
+> git.git.
 >
-> which ends up being roughly the same as your .gitonly concept.
+> I use it in two ways:
 >
-> I don't offhand remember if you might run into problems where a
-> subdirectory is ignored by the "*" and we do not even recurse into it. I
-> think it would work OK as long as you put everything in the top-level
-> gitignore, like:
+>   - some of my aliases know about it themselves. So I have an alias "ll"
+>     that does:
 >
->   echo 'subdir/file' >>.gitignore
+>       $ git help ll
+>       'll' is aliased to '!git dotgit --no-pager log --no-walk=unsorted --format='%h (%s, %ad)' --date=short'
 >
-> but I didn't test.
+>     with the idea being to produce a nice annotation for a commit id.
+>     Using "git dotgit" there lets me just run it from any directory,
+>     since 99% of the time I am working on git.git anyway.
+>
+>   - I have a vim command defined:
+>
+>       command! -nargs=* Git :call MaybeInlineCommand("git dotgit <args>")
+>
+>     so I can do ":Git foo" inside vim and it uses either the current
+>     repo (e.g., if I'm writing a commit message) or git.git (e.g., if
+>     I'm writing an email and didn't start in the repo).
+>
+> So of course the alias expansion is something like (in older versions of
+> Git):
+>
+>   1. "git dotgit ll" runs the dotgit alias, which sees that we need to go
+>      to the git.git checkout
+>
+>   2. that runs "git ll"
+>
+>   3. that runs "git dotgit log"; this second dotgit invocation sees we're
+>      already in a repository and is a noop
+>
+>   4. git-log runs
+>
+> With your patch, step 3 complains:
+>
+>   $ git dotgit ll
+>   fatal: alias loop detected: expansion of 'dotgit' does not terminate:
+>   dotgit <==
+>   ll ==>
+>
+> So I would really prefer a depth counter that can be set sufficiently
+> high to make this case work. ;)
+>
+>
+> As an aside, I got to experience this error message as an unsuspecting
+> user would. Unfortunately the output was not super helpful for figuring
+> out the cause. I scratched my head for a while before remembering that
+> "ll" uses "dotgit" explicitly (which was quite apparent when running
+> GIT_TRACE=1, or "git help ll"). I think showing the alias definitions in
+> the loop output would have made it much more obvious (if perhaps a bit
+> uglier).  E.g., something like:
+>
+>   fatal: alias loop...
+>   ==> dotgit is aliased to '!git rev-parse ...'
+>   <== ll is aliased to '!git dotgit ...'
+>
+> -Peff
 
-This doesn't work, as explained to myself in this commit in a private
-project I have where I tried this a while ago:
+Yikes.
 
-    I thought this was a bug:
+Junio: After your previous "What's cooking" in
+<xmqq8t2u1nkh.fsf@gitster-ct.c.googlers.com> I sent
+<87ftx0dg4r.fsf@evledraar.gmail.com>, but should have just replied to
+"What's cooking".
 
-        (
-            rm -rf /tmp/git &&
-            git init /tmp/git &&
-            cd /tmp/git >/dev/null &&
-            echo '*' >.gitignore &&
-            echo '!*.txt' >>.gitignore &&
-            echo '!.gitignore' >>.gitignore &&
-            touch foo.png foo.txt &&
-            mkdir dir &&
-            touch dir/bar.png dir/bar.txt &&
-            git add *.txt &&
-            git add */*.txt;
-            git status --short
-        )
+I.e. I think this topic should just be ejected, I'll try to submit a
+re-roll, but don't know if I have time in the next few days.
 
-    But it's a limitation, gitignore(5) says:
-
-        It is not possible to re-include a file if a parent directory of
-        that file is excluded. Git doesn’t list excluded directories for
-        performance reasons, so any patterns on contained files have no
-        effect, no matter where they are defined.
-
-    So as a hack exclude anything that looks like a file with an
-    extension.
-
-    1 file changed, 1 insertion(+), 1 deletion(-)
-    .gitignore | 2 +-
-
-    modified   .gitignore
-    @@ -1,3 +1,3 @@
-    -*
-    +*.*
-     !*.gpg
-     !.gitignore
-
-I.e. here I'm trying to maintain a repository where I only want
-.gitignore and *.gpg files committed and everything else ignored, but it
-only works for one directory level.
-
-There's not a lot of room left in the gitignore syntax, but I suppose we
-could extend it to add some "I really mean it" negative pattern which
-would override previous patterns even if those previous patterns matched
-directories.
-
-Just fixing it as a bug would make the ignore process slower, since we
-could no longer just ignore directories and would always need to
-recursively scan them.
+Can you please queue a "git revert" of it (or rewind next, but not sure
+if you want to do that...).
