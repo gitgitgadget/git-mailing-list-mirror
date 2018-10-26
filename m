@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=ADVANCE_FEE_5_NEW_MONEY,AWL,
+X-Spam-Status: No, score=-0.1 required=3.0 tests=ADVANCE_FEE_5_NEW_MONEY,AWL,
 	BAYES_00,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
 	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,T_HK_NAME_MR_MRS
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80E5B1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 03:31:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14CDC1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 04:33:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725907AbeJZMHI convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 26 Oct 2018 08:07:08 -0400
-Received: from donela.accesnational.net ([104.152.189.131]:57824 "EHLO
+        id S1726065AbeJZNJA convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 26 Oct 2018 09:09:00 -0400
+Received: from donela.accesnational.net ([104.152.189.131]:57684 "EHLO
         netcmail.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1725807AbeJZMHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 08:07:08 -0400
+        with ESMTP id S1725849AbeJZNJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 09:09:00 -0400
 Reply-To: stevenwalter019@netcmail.com
 From:   "Mr Steven Walter" <stevenwalter@netcmail.com>
 To:     git@vger.kernel.org
 Subject: git@vger.kernel.org RE:For Your Urgent Perusal
-Date:   25 Oct 2018 23:31:52 -0700
-Message-ID: <20181025233152.90834B679B578FB8@netcmail.com>
+Date:   26 Oct 2018 00:33:37 -0700
+Message-ID: <20181026003336.7634C8D2B58C870F@netcmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="utf-8"
