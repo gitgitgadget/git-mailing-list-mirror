@@ -2,149 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6931F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 20:38:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11F131F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 20:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725794AbeJ0FRP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 01:17:15 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37194 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725759AbeJ0FRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 01:17:15 -0400
-Received: by mail-ed1-f65.google.com with SMTP id c15-v6so2396943eds.4
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 13:38:45 -0700 (PDT)
+        id S1725828AbeJ0FTk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 01:19:40 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:55672 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725759AbeJ0FTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 01:19:40 -0400
+Received: by mail-qt1-f201.google.com with SMTP id 4-v6so2344860qtt.22
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 13:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=JB5YOEhkdvMOieGyCp4dXJU6qUG7p1drThS4ypUbU60=;
-        b=XZEgdQe4fIrUa884dqv9NIcmQkhunCHPDNs7KYaCd1LGUC5hxjYVRp2EqdyVFr7guS
-         ehAHADIehsKAJDTkoDBjCDQ5Z/asGV5svnXlUOy3P2lSmIQ0FPIdJM78yBDWfhQ8eWZs
-         gRTazGKGXp1j4CeMynctGkpqF4vUQrjJ3ytResl9l7wc3cTKAB4Qc65AukwlA9RRqUua
-         KGCK9WIu3odATddlvmm5LwRnVduEnWSOOB4lnxEhZPmgO0JGsFBCnb/lKalItOzzeU40
-         +CsbW0eCAIVR/OkgYRv9lardtv3kzzWwspN3CkbwkoEdSictbgE0k+mLZSvVGHdvsMmL
-         UgsA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=MEcc7odj6cv86r7vZuXIhZvHMn6AbHrNyOoCkve+eTk=;
+        b=e+O/2EOzRicffdAgi3TE2DVivROZffEUvq7SAo4YKSkQEnBbl+3QGA+iJ6z57THmaM
+         RaEkxAz+cH0ED3AdJydK4Xyyw0SpPeRHwpvR2UkpTv6kWxBqZ2KmA63XIjoOsBydm69B
+         cwNGdj4BYylB/SH9y092XhRBW4nMRzfDB3UbED5ATa7fnxKxyZAfNA4HnKf6nh+Jl071
+         veWkvqwsl/BU0OzvVWlYo1kf0I/HE5zSL0bt4IqkOEAAQC5kM+9z0KdNqldlyu7MKErC
+         t0SDOEVe0xWKSW2wY1h9Brg+fqF/Z7yiP5kfEd1pp9XmVcnNN5PcnjfIu0HZPNCyW7KX
+         Qo3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=JB5YOEhkdvMOieGyCp4dXJU6qUG7p1drThS4ypUbU60=;
-        b=oadSQqeN2asKOp9AeSwt/avxb6BexIfpUR4zFmo9LGAaRltEFhvnVb1LKDqiaRTEmV
-         vXKvhDRIrGHz2g8IGxvZsufaZcGKXdk6IFvyO5tnd3ToTv8ueqVLVthZ73rE2lDQr3wW
-         986vlvy1TYdY2b1e7Vu1Os5un47YVLGv5ASzhrrsyumPRgSiSxOEtVhhF7tkUZeVtY0P
-         lr/g10WqzzIJLgo7/jI5M9MIwNQ0Dzkitt/R5BTkTMbrWdADvf0EKog9pmwqA1N+h4pH
-         3d/zwdYg+FmZgpgUmZijHLzFig7Y1Cd5chp9v558Wg0Rj0FOSwJ7lEDuk2pPcRbHfL4h
-         SDGg==
-X-Gm-Message-State: AGRZ1gJAsJut+hERVml7ujxewzN4ONtXI8rNQzb+V/Q87GCWeIZZxr2z
-        i+eeheGBJbkMhbKuFs9bwd4=
-X-Google-Smtp-Source: AJdET5deekHRMsYbDywnBeI6ZrZJCKGkf8IzQss6zgZRMjDotzxT18TMisIbFejXBLH0uLe1h0dW6Q==
-X-Received: by 2002:a17:906:1551:: with SMTP id c17-v6mr3463413ejd.32.1540586324660;
-        Fri, 26 Oct 2018 13:38:44 -0700 (PDT)
-Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
-        by smtp.gmail.com with ESMTPSA id b18-v6sm2386537eju.38.2018.10.26.13.38.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 26 Oct 2018 13:38:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Jansen\, Geert" <gerardu@amazon.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com> <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 26 Oct 2018 22:38:42 +0200
-Message-ID: <87o9bgl9yl.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=MEcc7odj6cv86r7vZuXIhZvHMn6AbHrNyOoCkve+eTk=;
+        b=imwizJVoy3kwUzJIy3gIWG5//l4eyJ5sButj9cY0ZVEuSXq0G5f3Y7rX5Abb8yRSe9
+         VHde6lQ8DIfSDw2KnOF5+Si98lyKoYNz/1IfqOgc75nppFPCIQJ9Kp4+ztf4ly62LGod
+         lnSbG6syCVfZWIWCxvNl2lNsFwPFfYkxc2hGZmyN7FMC9VH5d3CpVIzr4fZSIP18duSU
+         jrBPZSndU99/Kae21hzGJb4ufn1Mpcyc4owi2qJeq5vRSQiw3SDifkrksMvgc74OuI5h
+         7EVc1QCXLPK5HV/chGYIui/X6xN8sADlgMOC1evQTgRCdDdMpjYomuPscrqdVETbldl/
+         SKOA==
+X-Gm-Message-State: AGRZ1gJY/vtO2iJBLfZdtoU+K7H5ryX7WMBty9WR5NRmWJGX1dFpjN3f
+        dvew3adhoj3wESUMbEU5FAEK9dztoF8poHRneIlo
+X-Google-Smtp-Source: AJdET5fA+5kCbVrjKyZMu8v6GGyTSTAGovt5NYDee++Ow0Qm3O81CixBTYiwNjy1tZkIEnU7AmFM6hjzsVp6CE5sqIBf
+X-Received: by 2002:a37:9a90:: with SMTP id c138mr4274606qke.36.1540586470430;
+ Fri, 26 Oct 2018 13:41:10 -0700 (PDT)
+Date:   Fri, 26 Oct 2018 13:41:06 -0700
+In-Reply-To: <20181025233231.102245-10-sbeller@google.com>
+Message-Id: <20181026204106.132296-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181025233231.102245-10-sbeller@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH 09/10] fetch: try fetching submodules if needed objects
+ were not fetched
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sbeller@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> But this default fetch is not sufficient, as a newly fetched commit in
+> the superproject could point to a commit in the submodule that is not
+> in the default refspec. This is common in workflows like Gerrit's.
+> When fetching a Gerrit change under review (from refs/changes/??), the
+> commits in that change likely point to submodule commits that have not
+> been merged to a branch yet.
+> 
+> Try fetching a submodule by object id if the object id that the
+> superproject points to, cannot be found.
 
-On Fri, Oct 26 2018, Junio C Hamano wrote:
+I see that these suggestions of mine (from [1]) was implemented, but not
+others. If you disagree, that's fine, but I think they should be
+discussed.
 
-> "Jansen, Geert" <gerardu@amazon.com> writes:
->
->> The index-pack command determines if a sha1 collision test is needed by
->> checking the existence of a loose object with the given hash. In my tests, I
->> can improve performance of “git clone” on Amazon EFS by 8x when used with a
->> non-default mount option (lookupcache=pos) that's required for a Gitlab HA
->> setup. My assumption is that this check is unnecessary when cloning into a new
->> repository because the repository will be empty.
->
-> My knee-jerk reaction is that your insight that we can skip the "dup
-> check" when starting from emptiness is probably correct, but your
-> use of .cloning flag as an approximation of "are we starting from
-> emptiness?" is probably wrong, at least for two reasons.
->
->  - "git clone --reference=..." does not strictly start from
->    emptiness, and would still have to make sure that incoming pack
->    does not try to inject an object with different contents but with
->    the same name.
->
->  - "git init && git fetch ..." starts from emptiness and would want
->    to benefit from the same optimization as you are implementing
->    here.
->
-> As to the implementation, I think the patch adjusts the right "if()"
-> condition to skip the collision test here.
->
->> -	if (startup_info->have_repository) {
->> +	if (startup_info->have_repository && !cloning) {
->>  		read_lock();
->>  		collision_test_needed =
->>  			has_sha1_file_with_flags(oid->hash, OBJECT_INFO_QUICK);
->
-> I just do not think !cloning is quite correct.
+[1] https://public-inbox.org/git/20181018003954.139498-1-jonathantanmy@google.com/
 
-Geert: Thanks for working on this. A GitLab instance I'm involved in
-managing at work has suffered from this issue, e.g. with "fork" being a
-"clone" under the hood on GitLab, and taking ages on the NetApp NFS
-filer due to this issue, so I'm very interested in this moving forward.
+> The try does not happen when the "git fetch" done at the
+> superproject is not storing the fetched results in remote
+> tracking branches (i.e. instead just recording them to
+> FETCH_HEAD) in this step. A later patch will fix this.
 
-But as Junio notes the devil's in the details, another one I thought of
-is:
+E.g. here, I said that there was no remote tracking branch involved.
 
-    GIT_OBJECT_DIRECTORY=/some/other/repository git clone ...
+> -		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+> -		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+> +		if (recurse_submodules != RECURSE_SUBMODULES_OFF)
 
-It seems to me that it's better to stick this into
-setup_git_directory_gently() in setup.c and check various edge cases
-there. I.e. make this a new "have_object_already" member of the
-startup_info struct.
+I think the next patch should be squashed into this patch. Then you can
+say that these are now redundant and can be removed.
 
-That would be set depending on whether we find objects/packs in the
-objects dir, and would know about GIT_OBJECT_DIRECTORY (either just
-punting, or looking at those too). It would also need to know about
-read_info_alternates(), depending on when that's checked it would handle
-git clone --reference too since it just sets it up via
-add_to_alternates_file().
+> @@ -1218,8 +1218,12 @@ struct submodule_parallel_fetch {
+>  	int result;
+>  
+>  	struct string_list changed_submodule_names;
+> +	struct get_next_submodule_task **fetch_specific_oids;
+> +	int fetch_specific_oids_nr, fetch_specific_oids_alloc;
+>  };
 
-Then you'd change sha1_object() to just check
-startup_info->have_objects_already instead of
-startup_info->have_repository, and since we'd checked "did we have
-objects already?" it would work for the init && fetch case Junio
-mentioned.
+Add documentation for fetch_specific_oids. Also, it might be better to
+call these oid_fetch_tasks and the struct, "struct fetch_task".
 
-It would also be very nice to have a test for this, even if it's
-something OS-specific that only works on Linux after we probe for
-strace(1).
+Here, struct get_next_submodule_task is used for 2 different things:
+ (1) After the first round fetch, fetch_finish() uses it to determine if
+     a second round is needed.
+ (2) In submodule_parallel_fetch.fetch_specific_oids, to tell the
+     parallel runner (through get_next_submodule_task()) to do this
+     fetch.
 
-Testing (without your patch, because git-am barfs on it , seems to
-dislake the base64 encoding):
+I think that it's better to have 2 different structs for these 2
+different uses. (Note that task_cb can be NULL for the second round.
+Unless we plan to recheck the OIDs? Currently we recheck them, but we
+don't do anything either way.)
 
-    rm -rf /tmp/df; strace -f git clone --bare git@github.com:git/git.git /tmp/df 2>&1 | grep '".*ENOENT' 2>&1|perl -pe 's/^.*?"([^"]+)".*/$1/'|sort|uniq -c|sort -nr|less
+> +static const struct submodule *get_default_submodule(const char *path)
+> +{
+> +	struct submodule *ret = NULL;
+> +	const char *name = default_name_or_path(path);
+> +
+> +	if (!name)
+> +		return NULL;
+> +
+> +	ret = xmalloc(sizeof(*ret));
+> +	memset(ret, 0, sizeof(*ret));
+> +	ret->path = name;
+> +	ret->name = name;
+> +
+> +	return (const struct submodule *) ret;
+> +}
 
-I see we also check if packed-refs exists ~2800 times, and check for
-each ref we find on the remote. Those are obviously less of a
-performance issue when cloning in the common case, but perhaps another
-place where we can insert a "don't check, we don't have anything
-already" condition.
+I think that this is best described as the submodule that has no entry
+in .gitmodules? Maybe call it "get_non_gitmodules_submodule" and
+document it with a similar comment as in get_submodule_repo_for().
+
+> +
+> +static struct get_next_submodule_task *get_next_submodule_task_create(
+> +	struct repository *r, const char *path)
+> +{
+> +	struct get_next_submodule_task *task = xmalloc(sizeof(*task));
+> +	memset(task, 0, sizeof(*task));
+> +
+> +	task->sub = submodule_from_path(r, &null_oid, path);
+> +	if (!task->sub) {
+> +		task->sub = get_default_submodule(path);
+> +		task->free_sub = 1;
+> +	}
+> +
+> +	return task;
+> +}
+
+Clearer to me would be to make get_next_submodule_task_create() return
+NULL if submodule_from_path() returns NULL.
+
+> +	if (spf->fetch_specific_oids_nr) {
+> +		struct get_next_submodule_task *task = spf->fetch_specific_oids[spf->fetch_specific_oids_nr - 1];
+
+Break lines to 80.
+
+> +		argv_array_pushv(&cp->args, spf->args.argv);
+> +		argv_array_push(&cp->args, "on-demand");
+
+Same comment about "on-demand" as in my previous e-mail.
+
+> +		argv_array_push(&cp->args, "--submodule-prefix");
+> +		argv_array_push(&cp->args, submodule_prefix.buf);
+> +
+> +		/* NEEDSWORK: have get_default_remote from s--h */
+
+Same comment about "s--h" as in my previous e-mail.
+
+> +	commits = it->util;
+> +	oid_array_filter(commits,
+> +			 commit_exists_in_sub,
+> +			 task->repo);
+> +
+> +	/* Are there commits that do not exist? */
+> +	if (commits->nr) {
+> +		/* We already tried fetching them, do not try again. */
+> +		if (task->commits)
+> +			return 0;
+
+Same comment about "task->commits" as in my previous e-mail.
+
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> index 6c2f9b2ba2..5a75b57852 100755
+
+One more thing to test is the case where a submodule doesn't have a
+.gitmodules entry.
