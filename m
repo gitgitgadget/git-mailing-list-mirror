@@ -2,148 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1E9B1F453
-	for <e@80x24.org>; Fri, 26 Oct 2018 01:26:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B91F1F453
+	for <e@80x24.org>; Fri, 26 Oct 2018 01:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725993AbeJZKB0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Oct 2018 06:01:26 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35303 "EHLO
+        id S1727265AbeJZKOy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Oct 2018 06:14:54 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42563 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbeJZKB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Oct 2018 06:01:26 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w5-v6so11162286wrt.2
-        for <git@vger.kernel.org>; Thu, 25 Oct 2018 18:26:28 -0700 (PDT)
+        with ESMTP id S1725914AbeJZKOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Oct 2018 06:14:54 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y15-v6so6793437wru.9
+        for <git@vger.kernel.org>; Thu, 25 Oct 2018 18:39:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=H1+UHSodjUDN3OXi7JK86TAtQ3QFS5U2VPoxZrqxWeo=;
-        b=TH/gJLbM68GETbqLRNbYSjBnz4CRVzdpWFJWBteUalcDzbJK2RRmuEp9RPc7KJ5ALH
-         2SCjcqu1qvHgNzApEviKsvwvOV55AFDv8utW5nFXxVn97CiBXugmyV7MjkZl6hoddl9u
-         FLNghorfTdlTQONad2yoNrAVvxQY/iwrdzo7N08XMDaOkwVP4PPdqK4/MmxPFQD+ItJi
-         cpNYKdWhhwfmALa5h5/LhJKS7/GRWOyCPIGL3SKXmWzTKBM1rzbsgzXrlrQjT1l2v10P
-         Oj5zkeqJhnMwct2l/YleU14i3XOXqG/bXqcFswNIlLknCy3TtiTP4uDi+ORU3khNsIYV
-         7UVQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GUkhDLuBR01pRApiHaX+AKcRFhlmrx744zdcYu/CWIs=;
+        b=gkAO/Ih40rWI8IjCii5MsM9QZYqgzTXbGNIinFl01VUu6JBVaTwpMVFh7fMFP7sWdQ
+         8wtNvyikz7R0oxOMfUk4BypBWeMD2QsPemcLEsZtvTcjo5rLZgYnMWTrluI9XBaREJZe
+         4+eMLNkVVkT63sQ5CEruX4m9lWRkiXfOMIPOXrJDTQQaBryvCxiJKZRGLu6P4AiY5O/u
+         JjlZ1iClSaZsu51bYJ6+qxlYA7QCM+/Xdd/Yiyzwh40gndAMFV7SeTxQdJ6/Z7sjnnuJ
+         becISmZUGdumVup05FEpOKTC97BT17gs199V9Ps1o/Uwp/p9Qr53Gf9jco81obGO2WZb
+         waIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=H1+UHSodjUDN3OXi7JK86TAtQ3QFS5U2VPoxZrqxWeo=;
-        b=BKPB7Gpq4Y85ukaLddZgwwIy3ZcWsffhXFROIQfJ2a8g/YcNEpD/+KuoUjLZsVCKu3
-         gq56aG5KgTQWRETlZBFTzKTRWJXalPd4Yip1unPuhYmqCgbaVFURmAhKjFK5XGZeU3qK
-         iKolXnTQDeRUbq0LZbUX+pZ9nzK9Yb7IgEJyvwduc02RDhFfVGOnCQIp1QEAXwQ/t86B
-         xvRk8KCZEkvnQL0GCCifm2vq4cJwk40+yPiT4qqqJvsOKq/wMGWZh0DBCdrdGga/G0i9
-         ZZBUA48KpAnBksX1tnEW0q4TD7u38uVmcjgdC0yYIhvDhnRqGrv25Y0vUVG+eQ/c7TBV
-         CjYw==
-X-Gm-Message-State: AGRZ1gJc1NT700eMgr4TFQpDH5nIU+BNMNA64Wt94GLpKd/KYQg5T0GD
-        mcLUE3QhK2QQ8gW1980H7Oub/3Aa8qU=
-X-Google-Smtp-Source: AJdET5dVM8428DV4iH0Kcctt2z5tLZJYHzCdd7oNIiAI0WPFyL8ImSbnGuOLWmmdSaaNohznFpQ6oQ==
-X-Received: by 2002:adf:db0f:: with SMTP id s15-v6mr3721204wri.129.1540517187373;
-        Thu, 25 Oct 2018 18:26:27 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e12-v6sm3361535wrw.82.2018.10.25.18.26.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Oct 2018 18:26:26 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood@talktalk.net>
-Subject: Re: [PATCH 3/2] rebase -i: recognize short commands without arguments
-References: <pull.43.v2.git.gitgitgadget@gmail.com>
-        <pull.43.v3.git.gitgitgadget@gmail.com>
-        <fff6fec5-88c9-4125-bf51-5e96e34bf1f6@kdbg.org>
-Date:   Fri, 26 Oct 2018 10:26:25 +0900
-In-Reply-To: <fff6fec5-88c9-4125-bf51-5e96e34bf1f6@kdbg.org> (Johannes Sixt's
-        message of "Thu, 25 Oct 2018 22:47:45 +0200")
-Message-ID: <xmqq1s8dfqgu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GUkhDLuBR01pRApiHaX+AKcRFhlmrx744zdcYu/CWIs=;
+        b=HjmwdbxG6YFwex3LHSHjwAf4eF14k+6y8VfPGgdUQvj5tEuth7VSjx4qeD4agmI5re
+         3Z8i66PUxgf6vO+xkZF6OFRp0KtbCrXr5dZKWyPfR6UKBlIxk0Cp1vNvJaFWArU5TIxr
+         Xh3Ofz1ZMKbs+wZFD62ecbQKD7aJAvalVsxI/kwROP6wKk/+Ox88s8bUYfvgrBvloCIs
+         t8G6q3z1bIohdd8r7UhNRASmSy6oEfvxLXHyyG9h+UzjTB8wRpT3BLV7tGS4ePq4Af/8
+         T+aw0t0PIg560tu5it8kT6F1GIZ9F74DnxACd5+pslR+FwU0BMJDmOZqAvrAs6GD4GFz
+         81UQ==
+X-Gm-Message-State: AGRZ1gJUk8yMevbsY4o/Au+Jj0AhLu3Jktuhnd0mN1ZTWoWmS8P6z0rh
+        xPWYnzYAhEhnr/7IQtlqY04=
+X-Google-Smtp-Source: AJdET5dayQqRJovC+P9FsHWkGqnRJDxiMpTB5/BmXwRnKR3Jng/ZmQnROn5EM5F6B0HBGs9u6u6/TQ==
+X-Received: by 2002:adf:e307:: with SMTP id b7-v6mr4123914wrj.91.1540517992905;
+        Thu, 25 Oct 2018 18:39:52 -0700 (PDT)
+Received: from szeder.dev (x4db0730d.dyn.telefonica.de. [77.176.115.13])
+        by smtp.gmail.com with ESMTPSA id l140-v6sm5125478wmb.24.2018.10.25.18.39.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Oct 2018 18:39:51 -0700 (PDT)
+Date:   Fri, 26 Oct 2018 03:39:49 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Sebastian Staudt <koraktor@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] travis-ci: no longer use containers
+Message-ID: <20181026013949.GN30222@szeder.dev>
+References: <CA+xP2SYtBGoxyV+hfjvYeEVU6XuvoZubC+-ffdubRgee=JtWXA@mail.gmail.com>
+ <xmqqo9bhfu0j.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo9bhfu0j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Oct 26, 2018 at 09:09:48AM +0900, Junio C Hamano wrote:
+> Sebastian Staudt <koraktor@gmail.com> writes:
+> 
+> > Travis CI will soon deprecate the container-based infrastructure
+> > enabled by `sudo: false` in ce59dffb34190e780be2fa9f449f842cadee9753.
+> >
+> > More info:
+> > https://blog.travis-ci.com/2018-10-04-combining-linux-infrastructures
+> 
+> Thanks for posting a patch that would serve as a good discussion
+> starter.  This is not a criticism on your patch, but more is a RFD
+> to those who helped our use of Travis by contributing to .travis.yml
+> and ci/.
+> 
+> Don't we need to do some other things so that we can run in vm
+> environment, rather than in container environment, before doing this
+> change?  IOW, aren't we doing in .travis.yml something we can do
+> only in container but not in vm (if there is any), and if so,
+> shouldn't we be rewriting that something so that we can run in vm?
 
-> The sequencer instruction 'b', short for 'break', is rejected:
->
->   error: invalid line 2: b
->
-> The reason is that the parser expects all short commands to have
-> an argument. Permit short commands without arguments.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  I'll send a another patch in a moment that tests all short
->  sequencer commands, but it is independent from this topic.
->
->  sequencer.c                | 3 ++-
->  t/lib-rebase.sh            | 2 +-
->  t/t3418-rebase-continue.sh | 4 +++-
->  3 files changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index ee3961ec63..3107f59ea7 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1954,7 +1954,8 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
->  		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
->  			item->command = i;
->  			break;
-> -		} else if (bol[1] == ' ' && *bol == todo_command_info[i].c) {
-> +		} else if ((bol + 1 == eol || bol[1] == ' ') &&
-> +			   *bol == todo_command_info[i].c) {
->  			bol++;
->  			item->command = i;
->  			break;
-> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-> index 584604ee63..86572438ec 100644
-> --- a/t/lib-rebase.sh
-> +++ b/t/lib-rebase.sh
-> @@ -49,7 +49,7 @@ set_fake_editor () {
->  		case $line in
->  		squash|fixup|edit|reword|drop)
->  			action="$line";;
-> -		exec*|break)
-> +		exec*|break|b)
->  			echo "$line" | sed 's/_/ /g' >> "$1";;
->  		"#")
->  			echo '# comment' >> "$1";;
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index 185a491089..b282505aac 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -243,7 +243,9 @@ unset GIT_SEQUENCE_EDITOR
->  
->  test_expect_success 'the todo command "break" works' '
->  	rm -f execed &&
-> -	FAKE_LINES="break exec_>execed" git rebase -i HEAD &&
-> +	FAKE_LINES="break b exec_>execed" git rebase -i HEAD &&
-> +	test_path_is_missing execed &&
+As far as I understand, the container-based infrastructure has only
+one benefit over the VMs, the shorter startup time.
 
-When first 'break' hits, "git rebase -i" shouldn't have exited with
-non-zero, and we get to see if execed is there (it shouldn't exist
-yet).
+OTOH, in VMs we can use sudo, which is not available in the
+container-based intra.  This has the benefit that after switching to
+VMs, we'll be able to install packages by running 'sudo apt-get
+install ...'.  Currently the necessary packages are listed in
+'.travis.yml' for Travis CI, while for Azure the whole install command
+is embedded in '.azure....yml'.  After the switch we could consolidate
+installing packages by 'sudo apt-get...' in
+'ci/install-dependencies.sh' for both.
 
-> +	git rebase --continue &&
+> I know ce59dffb ("travis-ci: explicity use container-based
+> infrastructure", 2016-01-26) only added "sudo: false" without doing
+> anything else (e.g. adding things that are only available to those
+> who run in container), but if we added stuff that are not usable in
+> vm environment after that commit since then, we need to adjust them
+> so that we can migrate to the container-based environment, no?
+> 
+> To me, removing that "sudo: false" line seems like the least thing
+> we need to worry about.  After all, they say that whether we have
+> "sudo: false" or not, the CI jobs will start running in vm
+> environment and not in container.  So if the rest of .travis.yml is
+> ready to run in vm environment, we do not have to do anything ;-).
+> 
+> In short, my question to Lars and SZEDER is, are we already prepared
+> to be thrown into a vm environment?
 
-And then we continue, to hit the next 'b', which shouldn't barf,
-either, and then
+I think we are.  I've run only two builds with this patch, and they
+run smoothly and finished successfully.  After you update 'pu' I'll
+run more.
 
->  	test_path_is_missing execed &&
+> If the answer is "yes", then I think removing "sudo: false" is
+> probably still a good thing to do for documentation purposes
+> (i.e. showing that we knew we are ready to go through their
+> migration).
 
-we make sure execed is not yet there, before continuing out of that
-that 'b'roken state
+I agree.
 
->  	git rebase --continue &&
 
-and then we'll hit the exec to create that file.
-
->  	test_path_is_file execed
-
-Makes sense.  Thanks.
+> > Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
+> > ---
+> >  .travis.yml | 2 --
+> >  1 file changed, 2 deletions(-)
+> >
+> > diff --git a/.travis.yml b/.travis.yml
+> > index 4d4e26c9df..8d2499739e 100644
+> > --- a/.travis.yml
+> > +++ b/.travis.yml
+> > @@ -1,7 +1,5 @@
+> >  language: c
+> >
+> > -sudo: false
+> > -
+> >  cache:
+> >    directories:
+> >      - $HOME/travis-cache
+> > --
+> > 2.19.1
