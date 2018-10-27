@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBCFE1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE7871F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728404AbeJ0PEO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 11:04:14 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:33028 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728397AbeJ0PEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:04:14 -0400
-Received: by mail-lf1-f65.google.com with SMTP id w16-v6so2504194lfc.0
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:19 -0700 (PDT)
+        id S1728420AbeJ0PER (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:04:17 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:38743 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728339AbeJ0PER (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:04:17 -0400
+Received: by mail-lf1-f67.google.com with SMTP id p86so277128lfg.5
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6NVMum0Q0HoAmXV/kluerySETlzqCfnczC+z2UtP6qo=;
-        b=nlHyiW9JbH9CMYWNzpOu8+rXF7ZdzM85B76xwzBkOJyXLCCs6tDQJK1KKciqbIuT0m
-         rapfhnnezR8Rz2h38nW+ijfSXXstyiw1jYJPMczNSEX3DP6fYhMHQSkXbkMp/oDNnj0a
-         hwlBYJRn2tDqFErL0EyAmIrrOz6cfXFxpf2rsjeM3eAvOK+Dn2OSYzvbokvBUaVA4p7f
-         bW2kXzxq2MiqFh4lQidOwlgEbG4+e5GrW8aJCapXqOaBG9qAnP4nSSrQd8qTQorAfT2Z
-         cc2ifCss/vjmfQQj7nJfkFdq3SplPuUzhTTRtzVuiTqtG/84bmqVQuLSrDfE80AuL7GT
-         9s0Q==
+        bh=R+XFLZnp5BL25Y04XsGgpmh/Gy5JJ445VdUSXW0f5Ig=;
+        b=iwf2ofY4IYiuHx0fxkzu3M5deeh7GndgA+ppIc0RnIqYCWOknJuWv6hHobsT+xW+0e
+         2pKSWK/65TwoOVPtW65qJnGpQu5n8Cn3VanaP9vf4SUnVMtY28nPdc0WP5LEq0+f9oRc
+         ly7z7I1KaxDNVebVNA+XNMg0pj5x5Al5eHQJwkVTIScumlVW4bgtNB+e7A8+qln1WUvU
+         O/MhTwkoHbM1oZmBe595Ob+qRho6FrbLx14R/0eLBtPmXBzR/6drXknMBYIEw2vNey4B
+         E9O6I1cJTRPL1sLySR48fPWB6qkvTMxtH564+Z4hRG6nkj9P7LSxLQgserLuqlWHV92T
+         hTQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6NVMum0Q0HoAmXV/kluerySETlzqCfnczC+z2UtP6qo=;
-        b=MAwbeeKeLKlJXse35g8yp++Xe9wgmIty9Erkxv8M4th44NfwOJiMSnnORSnlW0Wwk/
-         PBsEwB/1lOeqoDEDOb+DnYfYNkGDRXH9Ft88Ng2rgQoLV7NPY5rgKCUYkJg0DwaPbGMv
-         KTWcgmuRBM/4tIQXxVnw9IwO1cgyhhWxqjqTAciqd+YhPXh/IEc59HoI3V7YZL7wInNs
-         e3EaHsnrYd5CEsY9s49LO3gmETZGeBYOfdvwrzm0I39yJjR7BuUR/QD5KB+dKz4lj6PO
-         6zKt3YNmgrAkq/EBcSbJmp5bzskjON/g0xUfuEnwoj7FEmsPJJSp2lhDLJta/9yMHLRZ
-         Tvvw==
-X-Gm-Message-State: AGRZ1gJkGILLN9lcjHDk9EVr6gR89qfeF7nYF1G4pLtitDPPTZV74mh5
-        +iQSG9s2EJq0Whz9XnS2QOWwJ33G
-X-Google-Smtp-Source: AJdET5ckHiVEKATgvs6sEJ6EnX7benB4KQAVVGtgCOobD2Chx+V2j6QcUcnPm5Mw477l1wD+CHrtSg==
-X-Received: by 2002:a19:ee08:: with SMTP id g8mr3965431lfb.72.1540621458585;
-        Fri, 26 Oct 2018 23:24:18 -0700 (PDT)
+        bh=R+XFLZnp5BL25Y04XsGgpmh/Gy5JJ445VdUSXW0f5Ig=;
+        b=hqmqRFSepKmfLd5PZ/VjmFL1SXRklAwt/AoGw0oKTF5rEdzbQxGhjFBL/BmrLa/OXj
+         AyinU0l7hjvjzSuuDW96TqlSrWJzMYlx7DaQshU9VSgJ46uVK43vivs0XHFhqjjKZUFT
+         caTYb41gGP9MfmjoeOX8KQDMSOCtC18mxGYp4pivr6wWUNMuNM4mXJgYBtz88qZaRuA/
+         5kSoKYoY6zTBvB4pad68tynhK06xIlYQgt7sfr4z/K6bBXCgLKiQQtqqIiLhxOANBara
+         H2CApQLpH4F/dm+9+hZ3VfhZjJWLfhURud/r4TXmBgugJ2yfwpEwQkpNKFP2molPXZyH
+         1V1A==
+X-Gm-Message-State: AGRZ1gIpJnsxifjowFjGPPkKrtdUxdj85+iV0vVrZh6kha1gCi+Jtl71
+        /PgFs2fqneGYiaWeQTLVPcL2vbDc
+X-Google-Smtp-Source: AJdET5cdthMusNFPhoDpr1F/bi6UW1Tj9NcBXcNIyWUKgnrjVvLQ5SKdc1eMkjR55zaX5qYVwWHvfQ==
+X-Received: by 2002:a19:750a:: with SMTP id y10mr3732146lfe.43.1540621461654;
+        Fri, 26 Oct 2018 23:24:21 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.17
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:17 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:20 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 18/78] config.txt: move diff-config.txt to config/
-Date:   Sat, 27 Oct 2018 08:22:51 +0200
-Message-Id: <20181027062351.30446-19-pclouds@gmail.com>
+Subject: [PATCH 21/78] config.txt: move fetch-config.txt to config/
+Date:   Sat, 27 Oct 2018 08:22:54 +0200
+Message-Id: <20181027062351.30446-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,40 +71,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt                           | 2 +-
- Documentation/{diff-config.txt => config/diff.txt} | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
- rename Documentation/{diff-config.txt => config/diff.txt} (99%)
+ Documentation/config.txt                             | 2 +-
+ Documentation/{fetch-config.txt => config/fetch.txt} | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename Documentation/{fetch-config.txt => config/fetch.txt} (100%)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 83f5ce9056..5693ce7654 100644
+index 92bc420245..f85014f803 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -319,7 +319,7 @@ include::config/credential.txt[]
+@@ -325,7 +325,7 @@ include::config/difftool.txt[]
  
- include::config/completion.txt[]
+ include::config/fastimport.txt[]
  
--include::diff-config.txt[]
-+include::config/diff.txt[]
+-include::fetch-config.txt[]
++include::config/fetch.txt[]
  
- difftool.<tool>.path::
- 	Override the path for the given tool.  This is useful in case
-diff --git a/Documentation/diff-config.txt b/Documentation/config/diff.txt
-similarity index 99%
-rename from Documentation/diff-config.txt
-rename to Documentation/config/diff.txt
-index 85bca83c30..e4db77bc82 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/config/diff.txt
-@@ -177,7 +177,7 @@ diff.tool::
- 	Any other value is treated as a custom diff tool and requires
- 	that a corresponding difftool.<tool>.cmd variable is defined.
+ include::format-config.txt[]
  
--include::mergetools-diff.txt[]
-+include::../mergetools-diff.txt[]
- 
- diff.indentHeuristic::
- 	Set this option to `true` to enable experimental heuristics
+diff --git a/Documentation/fetch-config.txt b/Documentation/config/fetch.txt
+similarity index 100%
+rename from Documentation/fetch-config.txt
+rename to Documentation/config/fetch.txt
 -- 
 2.19.1.647.g708186aaf9
 
