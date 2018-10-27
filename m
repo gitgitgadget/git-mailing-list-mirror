@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEBFC1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72F8E1F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728393AbeJ0PEL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 11:04:11 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:47014 "EHLO
+        id S1728400AbeJ0PEM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:04:12 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:35009 "EHLO
         mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728339AbeJ0PEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:04:09 -0400
-Received: by mail-lj1-f195.google.com with SMTP id x3-v6so3088596lji.13
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:13 -0700 (PDT)
+        with ESMTP id S1728378AbeJ0PEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:04:12 -0400
+Received: by mail-lj1-f195.google.com with SMTP id o14-v6so3123337ljj.2
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/FFeFUMdiP8WXL7lcW+MXigBHJE9dKpztv3NIMPXesE=;
-        b=kR+Zicp7nd6RkRs96XZQ+DrZsrs9UYaBZNbFEnoNmyUYOJOa7OvPFlD9VshNLav4HM
-         WpBbZLBz7uMJaJDQUQ4z+9mmUyMC58AUJWaiFS8RC86ogpzK7vi9WHCvXY79xAfAd6y3
-         UdXW9YU6yNvowc3lFQCTafLsFe1ePZoVI9/sjmoUZXZNOfKfL+hC0XMFNI+Q99zc+zUb
-         rLnyskKcPMdsveZ6EYBwxUW2B0fXxXGz+WGHVXVbM4r97eP+g+HR3Y1kPBK6gEG7Lhs5
-         NA8Dwr/TdXpcQ+Pd+i3Z2GQidK8qfDNwQSczVZdv2tCd4hEM/9mehFDXYh6P9VdXfsvJ
-         dobQ==
+        bh=H6drYUH1/GMSP/wuQcru46Wskz6GpcSWiimUIx8GhQo=;
+        b=i1K36HAqZwsJh4Qki0DOHRL5E3AKsHQ6un7PPWfI4/ZDNDRZr6d64Smw3Jw6nH9BJj
+         cc3rNGtP815lj17Oc0neSAKTsl5Cjb25VGedGpbIYn5ieSnmWhtTasJKD+7mfuDqSjtX
+         K0+nkOg9uwRGsoO1I0uP5/bYaeM8dBKnVotJiQ13np8+u4LTYF7rXperVdJ7MXarLIqs
+         2ArynBc3i2YRAjiWSRy5cppXyLq6gwCqGx1N5cM19DycCz8lA0tE9wIFtvLjf5JEgusD
+         palGITGlPonfRsxPBO61zJHFWE5hsQ9Jco5NPHLGnEoICdBmk9OMAA7InZDe2+cuVuCn
+         DLEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/FFeFUMdiP8WXL7lcW+MXigBHJE9dKpztv3NIMPXesE=;
-        b=Y5f2Cv4jfhWjTUGwEzBtveCr0x2manLYXZzP+TNYIA2dCPIO1nSZX0A51j+EAcoOeg
-         SE3n7PtWzJ/qwMlMv9ACUQ+KO0x4Nd/OyKulDhReS7xGIRlyHUvu9bM77B5cSuZGemQv
-         4qNwjS5N3rmv1aGyamu3PY0sdCV7BXYHSlTGHpFpZad74/J6xO1dJ8T0jkJIanc0E9Z9
-         1YcCQp6imYfzNBm0csPx2r82dY5asbwz7/LsXPPyJld++YipTYQLPw0jRfFFdCd0JZcS
-         A5WTvIC6FrLhkxJx8hNPeOqB2CpW8pBDltCkuKQDfIQ4ZewuNZ1u6jxEgDJHa52zI3yN
-         1qXw==
-X-Gm-Message-State: AGRZ1gKDZ9ZzUYd4zdXg1C6K5SD7qM4uXkan1/iCx6Gf3JXJ5hikp2Bj
-        Fu9EPWSuK7B/8o8Dw90VPDPtppa7
-X-Google-Smtp-Source: AJdET5fsXUamhySlVxca933pFhPFjOtepOJeY8Ei4kREGJHu0xEQ4QGlvVQI/hYrDWAQO7NbUNEOxw==
-X-Received: by 2002:a2e:8146:: with SMTP id t6-v6mr4211546ljg.32.1540621451871;
-        Fri, 26 Oct 2018 23:24:11 -0700 (PDT)
+        bh=H6drYUH1/GMSP/wuQcru46Wskz6GpcSWiimUIx8GhQo=;
+        b=jtUI/NKOCgJQsMFs8y57Wxr+o+cS8ZQBas7j5WoKV2XHs4Nv21UqssQDL3We6AMulU
+         9f7wZXHvD2hezZHbWSILQmVWviUJ9fD4bXAiirT3JMokAX73ZZJ/xYMBlI0l2BMUQC+m
+         cuRqq4S1kezVLIaGW/x8xLR9Pd+6ESkVrR+XSSYGpJfTL5oeXojLnPRtenwzBmJaJ3Ls
+         F3W8478zT/XocmZ1eQCpsWHzGBPMTU5PqeNpE0t/kAC2MYKZZk9S0q74zXY5ylrbuVVi
+         ZYz6WQbrpBV/hDGVylUvFD5KjYui3QlbUDSUYun56k0btRomQjgdN3NDqPkEEi5KTUmo
+         P8pg==
+X-Gm-Message-State: AGRZ1gJGGY/GRYlTfACoQuHDff9Xg2FF44dFdtHCqib6r7Xl3LQJPX8V
+        q31A7mTcfGvMrw1r1Kw4nH53MzIU
+X-Google-Smtp-Source: AJdET5dliVesFTcMDhbDx+iWzXQVmXnWAqS9fS41wPzGigPwhOjVTK9umitpa/8g+8tdh0x4nTpzow==
+X-Received: by 2002:a2e:529d:: with SMTP id n29-v6mr4110445lje.54.1540621456350;
+        Fri, 26 Oct 2018 23:24:16 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.09
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:10 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:15 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 13/78] config.txt: move color.* to a separate file
-Date:   Sat, 27 Oct 2018 08:22:46 +0200
-Message-Id: <20181027062351.30446-14-pclouds@gmail.com>
+Subject: [PATCH 16/78] config.txt: move credential.* to a separate file
+Date:   Sat, 27 Oct 2018 08:22:49 +0200
+Message-Id: <20181027062351.30446-17-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,431 +71,81 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt       | 202 +--------------------------------
- Documentation/config/color.txt | 201 ++++++++++++++++++++++++++++++++
- 2 files changed, 202 insertions(+), 201 deletions(-)
- create mode 100644 Documentation/config/color.txt
+ Documentation/config.txt            | 27 +--------------------------
+ Documentation/config/credential.txt | 26 ++++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 26 deletions(-)
+ create mode 100644 Documentation/config/credential.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b5efac8cc5..399c23e0c5 100644
+index bbae7e68bd..2c21a5f366 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -309,207 +309,7 @@ include::config/checkout.txt[]
+@@ -315,32 +315,7 @@ include::config/column.txt[]
  
- include::config/clean.txt[]
+ include::config/commit.txt[]
  
--color.advice::
--	A boolean to enable/disable color in hints (e.g. when a push
--	failed, see `advice.*` for a list).  May be set to `always`,
--	`false` (or `never`) or `auto` (or `true`), in which case colors
--	are used only when the error output goes to a terminal. If
--	unset, then the value of `color.ui` is used (`auto` by default).
+-credential.helper::
+-	Specify an external helper to be called when a username or
+-	password credential is needed; the helper may consult external
+-	storage to avoid prompting the user for the credentials. Note
+-	that multiple helpers may be defined. See linkgit:gitcredentials[7]
+-	for details.
 -
--color.advice.hint::
--	Use customized color for hints.
+-credential.useHttpPath::
+-	When acquiring credentials, consider the "path" component of an http
+-	or https URL to be important. Defaults to false. See
+-	linkgit:gitcredentials[7] for more information.
 -
--color.blame.highlightRecent::
--	This can be used to color the metadata of a blame line depending
--	on age of the line.
--+
--This setting should be set to a comma-separated list of color and date settings,
--starting and ending with a color, the dates should be set from oldest to newest.
--The metadata will be colored given the colors if the the line was introduced
--before the given timestamp, overwriting older timestamped colors.
--+
--Instead of an absolute timestamp relative timestamps work as well, e.g.
--2.weeks.ago is valid to address anything older than 2 weeks.
--+
--It defaults to 'blue,12 month ago,white,1 month ago,red', which colors
--everything older than one year blue, recent changes between one month and
--one year old are kept white, and lines introduced within the last month are
--colored red.
+-credential.username::
+-	If no username is set for a network authentication, use this username
+-	by default. See credential.<context>.* below, and
+-	linkgit:gitcredentials[7].
 -
--color.blame.repeatedLines::
--	Use the customized color for the part of git-blame output that
--	is repeated meta information per line (such as commit id,
--	author name, date and timezone). Defaults to cyan.
+-credential.<url>.*::
+-	Any of the credential.* options above can be applied selectively to
+-	some credentials. For example "credential.https://example.com.username"
+-	would set the default username only for https connections to
+-	example.com. See linkgit:gitcredentials[7] for details on how URLs are
+-	matched.
 -
--color.branch::
--	A boolean to enable/disable color in the output of
--	linkgit:git-branch[1]. May be set to `always`,
--	`false` (or `never`) or `auto` (or `true`), in which case colors are used
--	only when the output is to a terminal. If unset, then the
--	value of `color.ui` is used (`auto` by default).
--
--color.branch.<slot>::
--	Use customized color for branch coloration. `<slot>` is one of
--	`current` (the current branch), `local` (a local branch),
--	`remote` (a remote-tracking branch in refs/remotes/),
--	`upstream` (upstream tracking branch), `plain` (other
--	refs).
--
--color.diff::
--	Whether to use ANSI escape sequences to add color to patches.
--	If this is set to `always`, linkgit:git-diff[1],
--	linkgit:git-log[1], and linkgit:git-show[1] will use color
--	for all patches.  If it is set to `true` or `auto`, those
--	commands will only use color when output is to the terminal.
--	If unset, then the value of `color.ui` is used (`auto` by
--	default).
--+
--This does not affect linkgit:git-format-patch[1] or the
--'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
--command line with the `--color[=<when>]` option.
--
--color.diff.<slot>::
--	Use customized color for diff colorization.  `<slot>` specifies
--	which part of the patch to use the specified color, and is one
--	of `context` (context text - `plain` is a historical synonym),
--	`meta` (metainformation), `frag`
--	(hunk header), 'func' (function in hunk header), `old` (removed lines),
--	`new` (added lines), `commit` (commit headers), `whitespace`
--	(highlighting whitespace errors), `oldMoved` (deleted lines),
--	`newMoved` (added lines), `oldMovedDimmed`, `oldMovedAlternative`,
--	`oldMovedAlternativeDimmed`, `newMovedDimmed`, `newMovedAlternative`
--	`newMovedAlternativeDimmed` (See the '<mode>'
--	setting of '--color-moved' in linkgit:git-diff[1] for details),
--	`contextDimmed`, `oldDimmed`, `newDimmed`, `contextBold`,
--	`oldBold`, and `newBold` (see linkgit:git-range-diff[1] for details).
--
--color.decorate.<slot>::
--	Use customized color for 'git log --decorate' output.  `<slot>` is one
--	of `branch`, `remoteBranch`, `tag`, `stash` or `HEAD` for local
--	branches, remote-tracking branches, tags, stash and HEAD, respectively
--	and `grafted` for grafted commits.
--
--color.grep::
--	When set to `always`, always highlight matches.  When `false` (or
--	`never`), never.  When set to `true` or `auto`, use color only
--	when the output is written to the terminal.  If unset, then the
--	value of `color.ui` is used (`auto` by default).
--
--color.grep.<slot>::
--	Use customized color for grep colorization.  `<slot>` specifies which
--	part of the line to use the specified color, and is one of
--+
----
--`context`;;
--	non-matching text in context lines (when using `-A`, `-B`, or `-C`)
--`filename`;;
--	filename prefix (when not using `-h`)
--`function`;;
--	function name lines (when using `-p`)
--`lineNumber`;;
--	line number prefix (when using `-n`)
--`column`;;
--	column number prefix (when using `--column`)
--`match`;;
--	matching text (same as setting `matchContext` and `matchSelected`)
--`matchContext`;;
--	matching text in context lines
--`matchSelected`;;
--	matching text in selected lines
--`selected`;;
--	non-matching text in selected lines
--`separator`;;
--	separators between fields on a line (`:`, `-`, and `=`)
--	and between hunks (`--`)
----
--
--color.interactive::
--	When set to `always`, always use colors for interactive prompts
--	and displays (such as those used by "git-add --interactive" and
--	"git-clean --interactive"). When false (or `never`), never.
--	When set to `true` or `auto`, use colors only when the output is
--	to the terminal. If unset, then the value of `color.ui` is
--	used (`auto` by default).
--
--color.interactive.<slot>::
--	Use customized color for 'git add --interactive' and 'git clean
--	--interactive' output. `<slot>` may be `prompt`, `header`, `help`
--	or `error`, for four distinct types of normal output from
--	interactive commands.
--
--color.pager::
--	A boolean to enable/disable colored output when the pager is in
--	use (default is true).
--
--color.push::
--	A boolean to enable/disable color in push errors. May be set to
--	`always`, `false` (or `never`) or `auto` (or `true`), in which
--	case colors are used only when the error output goes to a terminal.
--	If unset, then the value of `color.ui` is used (`auto` by default).
--
--color.push.error::
--	Use customized color for push errors.
--
--color.remote::
--	If set, keywords at the start of the line are highlighted. The
--	keywords are "error", "warning", "hint" and "success", and are
--	matched case-insensitively. May be set to `always`, `false` (or
--	`never`) or `auto` (or `true`). If unset, then the value of
--	`color.ui` is used (`auto` by default).
--
--color.remote.<slot>::
--	Use customized color for each remote keyword. `<slot>` may be
--	`hint`, `warning`, `success` or `error` which match the
--	corresponding keyword.
--
--color.showBranch::
--	A boolean to enable/disable color in the output of
--	linkgit:git-show-branch[1]. May be set to `always`,
--	`false` (or `never`) or `auto` (or `true`), in which case colors are used
--	only when the output is to a terminal. If unset, then the
--	value of `color.ui` is used (`auto` by default).
--
--color.status::
--	A boolean to enable/disable color in the output of
--	linkgit:git-status[1]. May be set to `always`,
--	`false` (or `never`) or `auto` (or `true`), in which case colors are used
--	only when the output is to a terminal. If unset, then the
--	value of `color.ui` is used (`auto` by default).
--
--color.status.<slot>::
--	Use customized color for status colorization. `<slot>` is
--	one of `header` (the header text of the status message),
--	`added` or `updated` (files which are added but not committed),
--	`changed` (files which are changed but not added in the index),
--	`untracked` (files which are not tracked by Git),
--	`branch` (the current branch),
--	`nobranch` (the color the 'no branch' warning is shown in, defaulting
--	to red),
--	`localBranch` or `remoteBranch` (the local and remote branch names,
--	respectively, when branch and tracking information is displayed in the
--	status short-format), or
--	`unmerged` (files which have unmerged changes).
--
--color.transport::
--	A boolean to enable/disable color when pushes are rejected. May be
--	set to `always`, `false` (or `never`) or `auto` (or `true`), in which
--	case colors are used only when the error output goes to a terminal.
--	If unset, then the value of `color.ui` is used (`auto` by default).
--
--color.transport.rejected::
--	Use customized color when a push was rejected.
--
--color.ui::
--	This variable determines the default value for variables such
--	as `color.diff` and `color.grep` that control the use of color
--	per command family. Its scope will expand as more commands learn
--	configuration to set a default for the `--color` option.  Set it
--	to `false` or `never` if you prefer Git commands not to use
--	color unless enabled explicitly with some other configuration
--	or the `--color` option. Set it to `always` if you want all
--	output not intended for machine consumption to use color, to
--	`true` or `auto` (this is the default since Git 1.8.4) if you
--	want such output to use color when written to the terminal.
-+include::config/color.txt[]
+-credentialCache.ignoreSIGHUP::
+-	Tell git-credential-cache--daemon to ignore SIGHUP, instead of quitting.
++include::config/credential.txt[]
  
- column.ui::
- 	Specify whether supported commands should output in columns.
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
+ completion.commands::
+ 	This is only used by git-completion.bash to add or remove
+diff --git a/Documentation/config/credential.txt b/Documentation/config/credential.txt
 new file mode 100644
-index 0000000000..8375596c44
+index 0000000000..60fb3189e1
 --- /dev/null
-+++ b/Documentation/config/color.txt
-@@ -0,0 +1,201 @@
-+color.advice::
-+	A boolean to enable/disable color in hints (e.g. when a push
-+	failed, see `advice.*` for a list).  May be set to `always`,
-+	`false` (or `never`) or `auto` (or `true`), in which case colors
-+	are used only when the error output goes to a terminal. If
-+	unset, then the value of `color.ui` is used (`auto` by default).
++++ b/Documentation/config/credential.txt
+@@ -0,0 +1,26 @@
++credential.helper::
++	Specify an external helper to be called when a username or
++	password credential is needed; the helper may consult external
++	storage to avoid prompting the user for the credentials. Note
++	that multiple helpers may be defined. See linkgit:gitcredentials[7]
++	for details.
 +
-+color.advice.hint::
-+	Use customized color for hints.
++credential.useHttpPath::
++	When acquiring credentials, consider the "path" component of an http
++	or https URL to be important. Defaults to false. See
++	linkgit:gitcredentials[7] for more information.
 +
-+color.blame.highlightRecent::
-+	This can be used to color the metadata of a blame line depending
-+	on age of the line.
-++
-+This setting should be set to a comma-separated list of color and date settings,
-+starting and ending with a color, the dates should be set from oldest to newest.
-+The metadata will be colored given the colors if the the line was introduced
-+before the given timestamp, overwriting older timestamped colors.
-++
-+Instead of an absolute timestamp relative timestamps work as well, e.g.
-+2.weeks.ago is valid to address anything older than 2 weeks.
-++
-+It defaults to 'blue,12 month ago,white,1 month ago,red', which colors
-+everything older than one year blue, recent changes between one month and
-+one year old are kept white, and lines introduced within the last month are
-+colored red.
++credential.username::
++	If no username is set for a network authentication, use this username
++	by default. See credential.<context>.* below, and
++	linkgit:gitcredentials[7].
 +
-+color.blame.repeatedLines::
-+	Use the customized color for the part of git-blame output that
-+	is repeated meta information per line (such as commit id,
-+	author name, date and timezone). Defaults to cyan.
++credential.<url>.*::
++	Any of the credential.* options above can be applied selectively to
++	some credentials. For example "credential.https://example.com.username"
++	would set the default username only for https connections to
++	example.com. See linkgit:gitcredentials[7] for details on how URLs are
++	matched.
 +
-+color.branch::
-+	A boolean to enable/disable color in the output of
-+	linkgit:git-branch[1]. May be set to `always`,
-+	`false` (or `never`) or `auto` (or `true`), in which case colors are used
-+	only when the output is to a terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
-+
-+color.branch.<slot>::
-+	Use customized color for branch coloration. `<slot>` is one of
-+	`current` (the current branch), `local` (a local branch),
-+	`remote` (a remote-tracking branch in refs/remotes/),
-+	`upstream` (upstream tracking branch), `plain` (other
-+	refs).
-+
-+color.diff::
-+	Whether to use ANSI escape sequences to add color to patches.
-+	If this is set to `always`, linkgit:git-diff[1],
-+	linkgit:git-log[1], and linkgit:git-show[1] will use color
-+	for all patches.  If it is set to `true` or `auto`, those
-+	commands will only use color when output is to the terminal.
-+	If unset, then the value of `color.ui` is used (`auto` by
-+	default).
-++
-+This does not affect linkgit:git-format-patch[1] or the
-+'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
-+command line with the `--color[=<when>]` option.
-+
-+color.diff.<slot>::
-+	Use customized color for diff colorization.  `<slot>` specifies
-+	which part of the patch to use the specified color, and is one
-+	of `context` (context text - `plain` is a historical synonym),
-+	`meta` (metainformation), `frag`
-+	(hunk header), 'func' (function in hunk header), `old` (removed lines),
-+	`new` (added lines), `commit` (commit headers), `whitespace`
-+	(highlighting whitespace errors), `oldMoved` (deleted lines),
-+	`newMoved` (added lines), `oldMovedDimmed`, `oldMovedAlternative`,
-+	`oldMovedAlternativeDimmed`, `newMovedDimmed`, `newMovedAlternative`
-+	`newMovedAlternativeDimmed` (See the '<mode>'
-+	setting of '--color-moved' in linkgit:git-diff[1] for details),
-+	`contextDimmed`, `oldDimmed`, `newDimmed`, `contextBold`,
-+	`oldBold`, and `newBold` (see linkgit:git-range-diff[1] for details).
-+
-+color.decorate.<slot>::
-+	Use customized color for 'git log --decorate' output.  `<slot>` is one
-+	of `branch`, `remoteBranch`, `tag`, `stash` or `HEAD` for local
-+	branches, remote-tracking branches, tags, stash and HEAD, respectively
-+	and `grafted` for grafted commits.
-+
-+color.grep::
-+	When set to `always`, always highlight matches.  When `false` (or
-+	`never`), never.  When set to `true` or `auto`, use color only
-+	when the output is written to the terminal.  If unset, then the
-+	value of `color.ui` is used (`auto` by default).
-+
-+color.grep.<slot>::
-+	Use customized color for grep colorization.  `<slot>` specifies which
-+	part of the line to use the specified color, and is one of
-++
-+--
-+`context`;;
-+	non-matching text in context lines (when using `-A`, `-B`, or `-C`)
-+`filename`;;
-+	filename prefix (when not using `-h`)
-+`function`;;
-+	function name lines (when using `-p`)
-+`lineNumber`;;
-+	line number prefix (when using `-n`)
-+`column`;;
-+	column number prefix (when using `--column`)
-+`match`;;
-+	matching text (same as setting `matchContext` and `matchSelected`)
-+`matchContext`;;
-+	matching text in context lines
-+`matchSelected`;;
-+	matching text in selected lines
-+`selected`;;
-+	non-matching text in selected lines
-+`separator`;;
-+	separators between fields on a line (`:`, `-`, and `=`)
-+	and between hunks (`--`)
-+--
-+
-+color.interactive::
-+	When set to `always`, always use colors for interactive prompts
-+	and displays (such as those used by "git-add --interactive" and
-+	"git-clean --interactive"). When false (or `never`), never.
-+	When set to `true` or `auto`, use colors only when the output is
-+	to the terminal. If unset, then the value of `color.ui` is
-+	used (`auto` by default).
-+
-+color.interactive.<slot>::
-+	Use customized color for 'git add --interactive' and 'git clean
-+	--interactive' output. `<slot>` may be `prompt`, `header`, `help`
-+	or `error`, for four distinct types of normal output from
-+	interactive commands.
-+
-+color.pager::
-+	A boolean to enable/disable colored output when the pager is in
-+	use (default is true).
-+
-+color.push::
-+	A boolean to enable/disable color in push errors. May be set to
-+	`always`, `false` (or `never`) or `auto` (or `true`), in which
-+	case colors are used only when the error output goes to a terminal.
-+	If unset, then the value of `color.ui` is used (`auto` by default).
-+
-+color.push.error::
-+	Use customized color for push errors.
-+
-+color.remote::
-+	If set, keywords at the start of the line are highlighted. The
-+	keywords are "error", "warning", "hint" and "success", and are
-+	matched case-insensitively. May be set to `always`, `false` (or
-+	`never`) or `auto` (or `true`). If unset, then the value of
-+	`color.ui` is used (`auto` by default).
-+
-+color.remote.<slot>::
-+	Use customized color for each remote keyword. `<slot>` may be
-+	`hint`, `warning`, `success` or `error` which match the
-+	corresponding keyword.
-+
-+color.showBranch::
-+	A boolean to enable/disable color in the output of
-+	linkgit:git-show-branch[1]. May be set to `always`,
-+	`false` (or `never`) or `auto` (or `true`), in which case colors are used
-+	only when the output is to a terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
-+
-+color.status::
-+	A boolean to enable/disable color in the output of
-+	linkgit:git-status[1]. May be set to `always`,
-+	`false` (or `never`) or `auto` (or `true`), in which case colors are used
-+	only when the output is to a terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
-+
-+color.status.<slot>::
-+	Use customized color for status colorization. `<slot>` is
-+	one of `header` (the header text of the status message),
-+	`added` or `updated` (files which are added but not committed),
-+	`changed` (files which are changed but not added in the index),
-+	`untracked` (files which are not tracked by Git),
-+	`branch` (the current branch),
-+	`nobranch` (the color the 'no branch' warning is shown in, defaulting
-+	to red),
-+	`localBranch` or `remoteBranch` (the local and remote branch names,
-+	respectively, when branch and tracking information is displayed in the
-+	status short-format), or
-+	`unmerged` (files which have unmerged changes).
-+
-+color.transport::
-+	A boolean to enable/disable color when pushes are rejected. May be
-+	set to `always`, `false` (or `never`) or `auto` (or `true`), in which
-+	case colors are used only when the error output goes to a terminal.
-+	If unset, then the value of `color.ui` is used (`auto` by default).
-+
-+color.transport.rejected::
-+	Use customized color when a push was rejected.
-+
-+color.ui::
-+	This variable determines the default value for variables such
-+	as `color.diff` and `color.grep` that control the use of color
-+	per command family. Its scope will expand as more commands learn
-+	configuration to set a default for the `--color` option.  Set it
-+	to `false` or `never` if you prefer Git commands not to use
-+	color unless enabled explicitly with some other configuration
-+	or the `--color` option. Set it to `always` if you want all
-+	output not intended for machine consumption to use color, to
-+	`true` or `auto` (this is the default since Git 1.8.4) if you
-+	want such output to use color when written to the terminal.
++credentialCache.ignoreSIGHUP::
++	Tell git-credential-cache--daemon to ignore SIGHUP, instead of quitting.
 -- 
 2.19.1.647.g708186aaf9
 
