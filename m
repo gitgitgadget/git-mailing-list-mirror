@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1DD1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 963021F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728931AbeJ1CMI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 22:12:08 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:33964 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728793AbeJ1CMH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 22:12:07 -0400
-Received: by mail-lj1-f193.google.com with SMTP id g8-v6so1121812ljk.1
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:25 -0700 (PDT)
+        id S1728944AbeJ1CMK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 22:12:10 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:39938 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728793AbeJ1CMJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 22:12:09 -0400
+Received: by mail-lj1-f195.google.com with SMTP id t22-v6so4013908lji.7
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SF0N9DVdrmmyoJxDZIeToLkpdB5o/uj/ao+EU7EKPtg=;
-        b=Fm3rLLWntHQMTAfFVBULFPO8lXTZAiJm8xhQiHeYwtmgKiC3vHy2br+tyT+VztZIWc
-         EDVjij3UIVOutUvAU6eZtoqpEKvnNd1xh+M40BNnlJcLDf+wL2vE4by5gnJ+PvMwIs3j
-         N+nE90w9xldsSYiap9G22vpdltOoiO5MmU/BhbEn5xLxfXd7LPwVWtr4akBd0hbi9Juz
-         ZoqxJn38OItqcFlPmH/NyjocJjvBNyJaTGAxMcT6jgbN2JOmbl6wap7E9cZRrRKeA9wq
-         eBwVAxj0qv6gpWLYObfSlLB716sMJHPntYGZUKf4ICS7wSd2WDqH6idpta8+ujKpLKxn
-         ti9w==
+        bh=6Qk+6dxMRf1uSVCWaRLkgpXbfUTW045jwm0hjrNlab0=;
+        b=Fan2DCy+BeZ7Sw6Q5IYj/LTTjJ3a3qb4ixPFDjjIHsN9bzDPa96Frq6FkMqiKwZlWK
+         1ZjKUALeaHDIRNmmE8zZqKXNXAjd/B5zD4TDBrVcD7M2Y9rzWwTbRHqlOc9OZd2PwKIj
+         r4d3eS7PO/VUtfntt+wPvI81b/mJfE0VYcdspl3Z8im287gQTbyba27o/X5QqKXL5CxZ
+         CP70zz0/I5rydklLhb+M7nHcwfRnHQ/T40U4gJ28g6YiM389SL5iJcySct+Q8aKHjgRe
+         fe0kC7F3A7auu9zhsiF0eN4GBXAfOq5ffdJnOpsXgX95YzCuypiwzPxatj2F0HM+sD0T
+         kOaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SF0N9DVdrmmyoJxDZIeToLkpdB5o/uj/ao+EU7EKPtg=;
-        b=IOaN4gieqOH2qSI+Eo1ygMIHavBWmZDHeqQtLmNArXRyEyEcKjg3Sf6Emin7dhNbSE
-         htJw2lEDh8+SO7l3qMsHVu6EVU5Npdinu4tNA2GFGpssWcq/Lph822o/PEd83YeqNnDI
-         w35Ne2ntnOZrh2fQb8I1meR9WnwKGjC/60Ie+qLL/v6temtccjfCpV0iosttoZzOdXI2
-         CdCv1yGO5FzOtIiwNsAH/BiS65f2YEFrB28jv8bgVLArl50Mw9aTa4x4FE9+Pci6n6Et
-         5Y8/an3RcQcuV+iGOnclK4Zjw6SMZcbTIQNfa2lpw9RG/odQv+qdp5fTtPXt2PJz380t
-         UhcA==
-X-Gm-Message-State: AGRZ1gILe7Dtm0OPNXUTZ24MC2/QgNxv4hlaXu9SEX3oNtXwO7UVDiom
-        +B7OwhiSQdQCEhU1jTSZoCg=
-X-Google-Smtp-Source: AJdET5dETVAtmue6+NQw26b3FbcdIsaJGnBJiAm5AyeU9pvKw7usHJgmsN01AQS046AFvF4IR8u/mQ==
-X-Received: by 2002:a2e:20da:: with SMTP id g87-v6mr4643910lji.88.1540661424958;
-        Sat, 27 Oct 2018 10:30:24 -0700 (PDT)
+        bh=6Qk+6dxMRf1uSVCWaRLkgpXbfUTW045jwm0hjrNlab0=;
+        b=jXlK3VaURUoBnhPItvHGjO0tjP7eilyR+tBNm2GqEYE+LSBrGtWAdleUQoZ2fD2Kr1
+         o2g+2hZ2DFRHXbntFyZVUOTeouACQPCAqGbhlzXuDupwfpWq1UAlnBRZhSaCPojRDGsi
+         MDWG/dbzn7pICGdj936AoxiykuBa2Y6Avnos0I8WXdmHWsyH67BWHU6utQ9yqS3SBaf0
+         dQ886ZxO7hQF1lZonVaxX1pXJoiHtrg4dky/fbJE2DWBe09Ktx4fUowDUnW3wlSkJcDW
+         xSeUll4bJxocF/S2cr2RCatjKIN1175+1fY6qYCtCEYaSPfWMD1dNu8DBa3YpsX3/Who
+         TfNg==
+X-Gm-Message-State: AGRZ1gJVaTyX1iNiALAuvOUF0XQ7y6nY8QBYK9cIF2FxoPHevfPVHmxS
+        k1HMfhg+guAnwvO8DmmGO04=
+X-Google-Smtp-Source: AJdET5c0Whua4e4JRAMa8fXijLVZNMCFysOhoXQG/sHydxLyb3xXwqJ+Db9MH9yztseaTCd61ymNfw==
+X-Received: by 2002:a2e:8457:: with SMTP id u23-v6mr4584344ljh.154.1540661427381;
+        Sat, 27 Oct 2018 10:30:27 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.23
+        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 10:30:24 -0700 (PDT)
+        Sat, 27 Oct 2018 10:30:26 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 07/10] pack-objects: remove #ifdef NO_PTHREADS
-Date:   Sat, 27 Oct 2018 19:30:05 +0200
-Message-Id: <20181027173008.18852-8-pclouds@gmail.com>
+Subject: [PATCH v2 09/10] Clean up pthread_create() error handling
+Date:   Sat, 27 Oct 2018 19:30:07 +0200
+Message-Id: <20181027173008.18852-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
 References: <20181027071003.1347-1-pclouds@gmail.com>
@@ -69,118 +69,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Normally pthread_create() rarely fails and sometimes error handling
+can be neglected. But with new pthreads wrapper, pthread_create() will
+return ENOSYS on a system without thread support.
+
+Threaded code _is_ protected by HAVE_THREADS and pthread_create()
+should never run in the first place. But the situation could change in
+the future and bugs may sneak in. Make sure that all pthread_create()
+checks and handles the result.
+
+While at there, mark these strings for translation if they aren't.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/pack-objects.c | 26 ++------------------------
- pack-objects.h         |  6 ------
- 2 files changed, 2 insertions(+), 30 deletions(-)
+ name-hash.c     | 16 ++++++++++------
+ preload-index.c |  8 ++++++--
+ run-command.c   |  2 +-
+ 3 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b059b86aee..12edd6da16 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1953,8 +1953,6 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
- 	return 0;
- }
- 
--#ifndef NO_PTHREADS
--
- /* Protect access to object database */
- static pthread_mutex_t read_mutex;
- #define read_lock()		pthread_mutex_lock(&read_mutex)
-@@ -1979,16 +1977,6 @@ static pthread_mutex_t progress_mutex;
-  * ahead in the list because they can be stolen and would need
-  * progress_mutex for protection.
-  */
--#else
--
--#define read_lock()		(void)0
--#define read_unlock()		(void)0
--#define cache_lock()		(void)0
--#define cache_unlock()		(void)0
--#define progress_lock()		(void)0
--#define progress_unlock()	(void)0
--
--#endif
- 
- /*
-  * Return the size of the object without doing any delta
-@@ -2347,8 +2335,6 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 	free(array);
- }
- 
--#ifndef NO_PTHREADS
--
- static void try_to_free_from_threads(size_t size)
+diff --git a/name-hash.c b/name-hash.c
+index b3c9ac791d..623ca6923a 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -494,6 +494,7 @@ static inline void lazy_update_dir_ref_counts(
+ static void threaded_lazy_init_name_hash(
+ 	struct index_state *istate)
  {
- 	read_lock();
-@@ -2578,10 +2564,6 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
- 	free(p);
- }
- 
--#else
--#define ll_find_deltas(l, s, w, d, p)	find_deltas(l, &s, w, d, p)
--#endif
--
- static void add_tag_chain(const struct object_id *oid)
- {
- 	struct tag *tag;
-@@ -2734,12 +2716,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		if (delta_search_threads < 0)
- 			die(_("invalid number of threads specified (%d)"),
- 			    delta_search_threads);
--#ifdef NO_PTHREADS
--		if (delta_search_threads != 1) {
-+		if (!HAVE_THREADS && delta_search_threads != 1) {
- 			warning(_("no threads support, ignoring %s"), k);
- 			delta_search_threads = 0;
- 		}
--#endif
- 		return 0;
++	int err;
+ 	int nr_each;
+ 	int k_start;
+ 	int t;
+@@ -526,8 +527,9 @@ static void threaded_lazy_init_name_hash(
+ 		if (k_start > istate->cache_nr)
+ 			k_start = istate->cache_nr;
+ 		td_dir_t->k_end = k_start;
+-		if (pthread_create(&td_dir_t->pthread, NULL, lazy_dir_thread_proc, td_dir_t))
+-			die("unable to create lazy_dir_thread");
++		err = pthread_create(&td_dir_t->pthread, NULL, lazy_dir_thread_proc, td_dir_t);
++		if (err)
++			die(_("unable to create lazy_dir thread: %s"), strerror(err));
  	}
- 	if (!strcmp(k, "pack.indexversion")) {
-@@ -3402,10 +3382,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (!delta_search_threads)	/* --threads=0 means autodetect */
- 		delta_search_threads = online_cpus();
+ 	for (t = 0; t < lazy_nr_dir_threads; t++) {
+ 		struct lazy_dir_thread_data *td_dir_t = td_dir + t;
+@@ -547,13 +549,15 @@ static void threaded_lazy_init_name_hash(
+ 	 */
+ 	td_name->istate = istate;
+ 	td_name->lazy_entries = lazy_entries;
+-	if (pthread_create(&td_name->pthread, NULL, lazy_name_thread_proc, td_name))
+-		die("unable to create lazy_name_thread");
++	err = pthread_create(&td_name->pthread, NULL, lazy_name_thread_proc, td_name);
++	if (err)
++		die(_("unable to create lazy_name thread: %s"), strerror(err));
  
--#ifdef NO_PTHREADS
--	if (delta_search_threads != 1)
-+	if (!HAVE_THREADS && delta_search_threads != 1)
- 		warning(_("no threads support, ignoring --threads"));
--#endif
- 	if (!pack_to_stdout && !pack_size_limit)
- 		pack_size_limit = pack_size_limit_cfg;
- 	if (pack_to_stdout && pack_size_limit)
-diff --git a/pack-objects.h b/pack-objects.h
-index 2ca39cfcfe..3a42727c7d 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -145,9 +145,7 @@ struct packing_data {
- 	struct packed_git **in_pack_by_idx;
- 	struct packed_git **in_pack;
+ 	lazy_update_dir_ref_counts(istate, lazy_entries);
  
--#ifndef NO_PTHREADS
- 	pthread_mutex_t lock;
--#endif
+-	if (pthread_join(td_name->pthread, NULL))
+-		die("unable to join lazy_name_thread");
++	err = pthread_join(td_name->pthread, NULL);
++	if (err)
++		die(_("unable to join lazy_name thread: %s"), strerror(err));
  
- 	/*
- 	 * This list contains entries for bases which we know the other side
-@@ -169,15 +167,11 @@ void prepare_packing_data(struct packing_data *pdata);
+ 	cleanup_dir_mutex();
  
- static inline void packing_data_lock(struct packing_data *pdata)
- {
--#ifndef NO_PTHREADS
- 	pthread_mutex_lock(&pdata->lock);
--#endif
- }
- static inline void packing_data_unlock(struct packing_data *pdata)
- {
--#ifndef NO_PTHREADS
- 	pthread_mutex_unlock(&pdata->lock);
--#endif
- }
+diff --git a/preload-index.c b/preload-index.c
+index 0e24886aca..ddca1c216e 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -121,6 +121,8 @@ static void preload_index(struct index_state *index,
  
- struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 	for (i = 0; i < threads; i++) {
+ 		struct thread_data *p = data+i;
++		int err;
++
+ 		p->index = index;
+ 		if (pathspec)
+ 			copy_pathspec(&p->pathspec, pathspec);
+@@ -129,8 +131,10 @@ static void preload_index(struct index_state *index,
+ 		if (pd.progress)
+ 			p->progress = &pd;
+ 		offset += work;
+-		if (pthread_create(&p->pthread, NULL, preload_thread, p))
+-			die("unable to create threaded lstat");
++		err = pthread_create(&p->pthread, NULL, preload_thread, p);
++
++		if (err)
++			die(_("unable to create threaded lstat: %s"), strerror(err));
+ 	}
+ 	for (i = 0; i < threads; i++) {
+ 		struct thread_data *p = data+i;
+diff --git a/run-command.c b/run-command.c
+index 84b883c213..26154ba257 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1213,7 +1213,7 @@ int start_async(struct async *async)
+ 	{
+ 		int err = pthread_create(&async->tid, NULL, run_thread, async);
+ 		if (err) {
+-			error_errno("cannot create thread");
++			error(_("cannot create async thread: %s"), strerror(err));
+ 			goto error;
+ 		}
+ 	}
 -- 
 2.19.1.647.g708186aaf9
 
