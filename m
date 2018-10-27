@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF3C11F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 416381F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728409AbeJ0PEP (ORCPT <rfc822;e@80x24.org>);
+        id S1728412AbeJ0PEQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:04:16 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:33033 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728397AbeJ0PEP (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 27 Oct 2018 11:04:15 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:36395 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728339AbeJ0PEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:04:13 -0400
-Received: by mail-lf1-f65.google.com with SMTP id h192so2498095lfg.3
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:18 -0700 (PDT)
+Received: by mail-lf1-f68.google.com with SMTP id w16-v6so2504228lfc.0
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yWkQSUbUt1/V5113AZR5PdzUkcgExMPSBm9rDJvAX7g=;
-        b=fcu9LHU6SbeLabJ4W4nKcpGwBhmqoSN9MZtHU+aCFE5NDmHKoZ+uJsZ2/94JbVxPZp
-         kPYavWi5W4zC6Mq/WN5ArT4WEbKIPbdkuD92xiSo39wviNSM7OD0hFqDwbiuIpaU1k7N
-         C3dPxVRmW79DFW+GyWdEmAc/invt5rsetOuIdGkB4Zflyqv6JA7j7zI8STWTmJjkQ9/E
-         +Bs43osDHCgi7Wcp8ZJ1jTzFqkcxdMFjrBCmJuWa/5KxKD3kpIieBqOI9Jfl/bTebhCr
-         PtbZW/xTDQVjaUEGMzawLnvCgWP7lgFuoeWnCERMParDhrolzvn+hhrK4yrm9NWe/Qp8
-         fj7A==
+        bh=1UlYEITdDmYC4I16wbyssd7Bovli/VVbwWKqUuzNbRo=;
+        b=D791ODkKjMcFMp/pBG/ExxEHqwUDIzFnTI+th5RqIDo39sKqk7Lb6Grjdbo2T4kCz+
+         WTRJP7adn6AIgzEMf2h4fmHdQjZ0bysW+c9vCRA/BzNlAa1YT1soX0UU9+G+2u8/SppF
+         kunseAFJdiaIkjFDLWkY1Rrhgxc5FOQS8BdlR5Iu/Ttr1i8nbJKaaU6Vb3b8UGIx3e8c
+         pZW0o8Wfh4Cz85KQyFWUGHtrqKDGbv5GzM0I5SdxMZJbxg1QfEvbjfTonpJGsMxRThd8
+         jaluh9WH+GU1lWliOtW1J7KATy9QJAtFBHJScSoH7c+l599zkRzPY6c1aC7iVZADGp/j
+         Vkgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yWkQSUbUt1/V5113AZR5PdzUkcgExMPSBm9rDJvAX7g=;
-        b=QKJbpafwC92zLHHzy3FTLUS1eX7s4nfAZf9R3KvirgG+a6GGRyew5rFTUCYU7pNAZA
-         /ajG5hUhncm/IIaSstatOSkzE3aKrSh082DvKnyQjkXoyxSbJFUabGRKDrnBr6Hu+a5b
-         FJ+ZtGdULz2NC97Ng0z4WAhQLs/6oudfOhtDmkb+nTioBalMVztTFV1mI9VBxlmDjTHf
-         tSyuN1JoUyUJB6gyvH6/lXbLs1nG+lOvrMzwi9XH7a9Mv5KbhlFg6zMTfWYmmOdl/kDH
-         H7dXJlvGPkkBciqVVs5iimQNUUcxMZmgrQhu8ON07PI5Z8BLQyPm4qkPiTRz0FFNKBIo
-         +t3g==
-X-Gm-Message-State: AGRZ1gLr4VDhXPYGA9I6YfxPWqn9+CiQ47FeOo3g4b5GJa4XrI0JVh1m
-        XYTxSJtVUsftd28hKw4G1kBSx3lR
-X-Google-Smtp-Source: AJdET5fknAW2vyfOQz6rzIq9QLVOaw5TdkIieEbcd2gRLcfkty9CMn5Rmk9CNGz+Hc+oreVc5si3nA==
-X-Received: by 2002:a19:7019:: with SMTP id h25-v6mr4026504lfc.147.1540621457487;
-        Fri, 26 Oct 2018 23:24:17 -0700 (PDT)
+        bh=1UlYEITdDmYC4I16wbyssd7Bovli/VVbwWKqUuzNbRo=;
+        b=EUd04zg+Ic7U1sR+vUE5yLd7TbbBgipd2he4C7buZMNKl54OyYd69C5uvxKXW4pAuI
+         c5Mn42uQxALYCVN+BhdwEHx/5Th1aRs+RAusS11UTA3zvnq7SAgrP2dxIfwi3F0slLFs
+         KmNTF/OxwDewPx13t1Gd1UuUUXDPYUzRT9kF3RZRiHbY+ZYgZYNvD9CrObgZHweAhE/Q
+         j3ybZz+5rJRPxg6/vEf48ZBHINTWclXmWCW5qRXcgjL52pgRo8aoi7Fp8Qd98u+PU++W
+         GR6++eHqs+G+9Q2hiH2Nr7pvOGIEVoX2zjfkP8EX/Fcmy0X5lmx2xeOBz7BgSZW+fONK
+         3Q3A==
+X-Gm-Message-State: AGRZ1gK2fUt/xB4fXrIVbjgWhq2mN3zHUksmBXeCQsYY+mvbwglMNjjH
+        krtVYWt9b2jIRHZzc2TseLoQa/wn
+X-Google-Smtp-Source: AJdET5e1+180oDKXAPI5DukHVY9331ITBcsvaDLMaa2hwMbUWt2VwNy91cu7w8ZgMKm3q4d4TW1Cgw==
+X-Received: by 2002:a19:a5cc:: with SMTP id o195-v6mr3810684lfe.92.1540621460637;
+        Fri, 26 Oct 2018 23:24:20 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.16
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:16 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:19 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 17/78] config.txt: move completion.* to a separate file
-Date:   Sat, 27 Oct 2018 08:22:50 +0200
-Message-Id: <20181027062351.30446-18-pclouds@gmail.com>
+Subject: [PATCH 20/78] config.txt: move fastimport.* to a separate file
+Date:   Sat, 27 Oct 2018 08:22:53 +0200
+Message-Id: <20181027062351.30446-21-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,43 +71,45 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt            | 8 +-------
- Documentation/config/completion.txt | 7 +++++++
- 2 files changed, 8 insertions(+), 7 deletions(-)
- create mode 100644 Documentation/config/completion.txt
+ Documentation/config.txt            | 9 +--------
+ Documentation/config/fastimport.txt | 8 ++++++++
+ 2 files changed, 9 insertions(+), 8 deletions(-)
+ create mode 100644 Documentation/config/fastimport.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 2c21a5f366..83f5ce9056 100644
+index f313c7da2e..92bc420245 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -317,13 +317,7 @@ include::config/commit.txt[]
+@@ -323,14 +323,7 @@ include::config/diff.txt[]
  
- include::config/credential.txt[]
+ include::config/difftool.txt[]
  
--completion.commands::
--	This is only used by git-completion.bash to add or remove
--	commands from the list of completed commands. Normally only
--	porcelain commands and a few select others are completed. You
--	can add more commands, separated by space, in this
--	variable. Prefixing the command with '-' will remove it from
--	the existing list.
-+include::config/completion.txt[]
+-fastimport.unpackLimit::
+-	If the number of objects imported by linkgit:git-fast-import[1]
+-	is below this limit, then the objects will be unpacked into
+-	loose object files.  However if the number of imported objects
+-	equals or exceeds this limit then the pack will be stored as a
+-	pack.  Storing the pack from a fast-import can make the import
+-	operation complete faster, especially on slow filesystems.  If
+-	not set, the value of `transfer.unpackLimit` is used instead.
++include::config/fastimport.txt[]
  
- include::diff-config.txt[]
+ include::fetch-config.txt[]
  
-diff --git a/Documentation/config/completion.txt b/Documentation/config/completion.txt
+diff --git a/Documentation/config/fastimport.txt b/Documentation/config/fastimport.txt
 new file mode 100644
-index 0000000000..4d99bf33c9
+index 0000000000..c1166e330d
 --- /dev/null
-+++ b/Documentation/config/completion.txt
-@@ -0,0 +1,7 @@
-+completion.commands::
-+	This is only used by git-completion.bash to add or remove
-+	commands from the list of completed commands. Normally only
-+	porcelain commands and a few select others are completed. You
-+	can add more commands, separated by space, in this
-+	variable. Prefixing the command with '-' will remove it from
-+	the existing list.
++++ b/Documentation/config/fastimport.txt
+@@ -0,0 +1,8 @@
++fastimport.unpackLimit::
++	If the number of objects imported by linkgit:git-fast-import[1]
++	is below this limit, then the objects will be unpacked into
++	loose object files.  However if the number of imported objects
++	equals or exceeds this limit then the pack will be stored as a
++	pack.  Storing the pack from a fast-import can make the import
++	operation complete faster, especially on slow filesystems.  If
++	not set, the value of `transfer.unpackLimit` is used instead.
 -- 
 2.19.1.647.g708186aaf9
 
