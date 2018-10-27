@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB6E01F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0311F453
 	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728914AbeJ1CME (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 22:12:04 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:46031 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728610AbeJ1CME (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 22:12:04 -0400
-Received: by mail-lf1-f66.google.com with SMTP id c24-v6so3149437lfi.12
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:22 -0700 (PDT)
+        id S1728909AbeJ1CMD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 22:12:03 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:40974 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728793AbeJ1CMC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 22:12:02 -0400
+Received: by mail-lj1-f194.google.com with SMTP id u21-v6so4010024lja.8
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mAfV2Nz5oHseiWQnq7IrtXDy2ffEDSwSfXwchHyglKQ=;
-        b=CvwWDLdcZM/zewZBYd+NYSE9co/qOc0qN2731u37knRXLs4LYUdJFtTPjhEmGEV1Qc
-         IiDDWWmIBWbI0ONWE+5f0tOl/cd5Vmj+oxeAHXg9u4T2ZB9Oi6yhcI31HqUfPqH4utTJ
-         q2G0npbwmOw2sy3LmtOqpKjvYQwjA58BR0I6zMaqr2Hr4kwP3XRASq9/6yLA0XBFeveV
-         JzgBDPsbYKaWp7yAxTE/dD4bc0rRCSvkF38rDMLKYl9JEpftjQ3eoA2fGFnIhMAIvcuC
-         Y/fRZnUXAiQZMiazF0anBfi12zAp/MEP9IsbXAz+JPkZ8cIn0Pmw6AQNurZUhO78G9to
-         Qw5g==
+        bh=ElWD/L0AMYKRyntyrlVCHl2EzE6d7g0uBaIj7GWAy84=;
+        b=Oob7OwQsKw14If90cwG1VOpaZUsBQvqq1NRAo6WbqrKEbnKsLy4IJr6XNBgMdRON68
+         cmfeAnnY3ZG++JhRc8AE6iFxXq4T15xPPQ5HvQaWf/LdlcNwIZ143nbiS0hqHHedcDHH
+         9KTvGZmTvqJo98rNx/aZ9QHwDFSrOXSkEBJ5J2/Fl2zqFCCbaymUnXlhS6hDBmWRrYKJ
+         lYrZTDqQPcvEjL6Phd7xJH9T2LXYppye5b1xvq1dsPt9OQdvnbBeT0cmu6kinoBVMlff
+         MqXG2WiFlcPewOFM37yLEns5lDG+NNV1EjTWpNbOGKRI2QpPzuqB+AL/zYoby6+EwyUl
+         FH3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mAfV2Nz5oHseiWQnq7IrtXDy2ffEDSwSfXwchHyglKQ=;
-        b=OK7iI12DwXzEUr8ntI4HKe2tsce6WiACWvMsKNyizipNLPq4JAf6Wlm0ZFjYGpUaPx
-         unYx2I+WLyPRKtMEWrGHvObm+dNQK8JuHnPAoOXHHFoZBk3b9mlaTv35Xka40DnzoHFH
-         lKgClbnF+VKAKj/ZnAcTUVjY0bpAg+EAbWUCmbEOwYY3GwZAT0TP3QRAMfgqTMYggZaE
-         mEg6ddXwJm4OgWNt4P5RB4HBiNTvfr4vWOC9N/+k8oGp8udOqM6fv6xvIL9Jbk8N80eV
-         Ojq+hhcNYe2ko+iyzUzMB2nweJT4LmGBxnL9mAcl/WN4YAPsAue4yaqPw+Ggk/+GXiet
-         mr4A==
-X-Gm-Message-State: AGRZ1gIsqt42phDfrBqRX5y4hyzANjFGCa98jt04x0vjW3FViykRlXiP
-        X721huAv7X+6UW07if+B2u0=
-X-Google-Smtp-Source: AJdET5ekh4FzqZOCxB9YIdtB/Ma5/dpI6mx//eSNe52+gK2eYzX83+gp3RRDmPC+jrlzslorNXetWQ==
-X-Received: by 2002:a19:ae03:: with SMTP id f3mr5075773lfc.86.1540661421485;
-        Sat, 27 Oct 2018 10:30:21 -0700 (PDT)
+        bh=ElWD/L0AMYKRyntyrlVCHl2EzE6d7g0uBaIj7GWAy84=;
+        b=kEoWuB+juwV4boetXdDS+HHi2MmEP3zx9sItMgr09o+CJgjwRLUiA60FMu2yyW8Cor
+         lV+oV+rQtWNq7q4Vn1zDkk0064BSAdJB8To6LiFxXjzni0ta+EJbqZGDXQI6bZpVM65s
+         kaD9dcHPNBsgei3qZJJiPGfx0V/bwNXaH99xubhE+ENxpRUYz+VRdR57ZeNqfsQwLtF/
+         jEmAMaUOn+yfWETvuB7a7unzLrVNlM7hmxUFzKJ5DD3rrbx5Hzj817EQiLugMITu8Bxu
+         px06efUsZex9LM0Fi5PyqzDbqKKblUJx9heivBwelot5/vd/TffyFrSsPHrhbpzoSdJW
+         17Cg==
+X-Gm-Message-State: AGRZ1gJcGfLVWRWMvzZOG0bvJJbFzJsyh0n/Sc3QT52jjGe/e2oCiWD/
+        oA2B6E9aBxvSFRPWcv0RmRo=
+X-Google-Smtp-Source: AJdET5czt4r86YSA+E4v/UR9SnG/I5WfXnXihhj11HIkP8I4UyQ8NhEObbQtoUgdhsvuEHZ85Vh8Mw==
+X-Received: by 2002:a2e:5109:: with SMTP id f9-v6mr5270634ljb.155.1540661419955;
+        Sat, 27 Oct 2018 10:30:19 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.19
+        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 10:30:20 -0700 (PDT)
+        Sat, 27 Oct 2018 10:30:18 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 04/10] attr.c: remove #ifdef NO_PTHREADS
-Date:   Sat, 27 Oct 2018 19:30:02 +0200
-Message-Id: <20181027173008.18852-5-pclouds@gmail.com>
+Subject: [PATCH v2 03/10] name-hash.c: remove #ifdef NO_PTHREADS
+Date:   Sat, 27 Oct 2018 19:30:01 +0200
+Message-Id: <20181027173008.18852-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
 References: <20181027071003.1347-1-pclouds@gmail.com>
@@ -71,70 +71,63 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- attr.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ name-hash.c | 22 ++++------------------
+ 1 file changed, 4 insertions(+), 18 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 60d284796d..eaece6658d 100644
---- a/attr.c
-+++ b/attr.c
-@@ -41,23 +41,17 @@ const char *git_attr_name(const struct git_attr *attr)
+diff --git a/name-hash.c b/name-hash.c
+index 1fcda73cb3..b3c9ac791d 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -7,6 +7,7 @@
+  */
+ #define NO_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
++#include "thread-utils.h"
  
- struct attr_hashmap {
- 	struct hashmap map;
--#ifndef NO_PTHREADS
- 	pthread_mutex_t mutex;
--#endif
- };
+ struct dir_entry {
+ 	struct hashmap_entry ent;
+@@ -131,22 +132,6 @@ static int cache_entry_cmp(const void *unused_cmp_data,
+ static int lazy_try_threaded = 1;
+ static int lazy_nr_dir_threads;
  
- static inline void hashmap_lock(struct attr_hashmap *map)
- {
--#ifndef NO_PTHREADS
- 	pthread_mutex_lock(&map->mutex);
--#endif
- }
- 
- static inline void hashmap_unlock(struct attr_hashmap *map)
- {
--#ifndef NO_PTHREADS
- 	pthread_mutex_unlock(&map->mutex);
--#endif
- }
- 
+-#ifdef NO_PTHREADS
+-
+-static inline int lookup_lazy_params(struct index_state *istate)
+-{
+-	return 0;
+-}
+-
+-static inline void threaded_lazy_init_name_hash(
+-	struct index_state *istate)
+-{
+-}
+-
+-#else
+-
+-#include "thread-utils.h"
+-
  /*
-@@ -498,23 +492,17 @@ static struct check_vector {
- 	size_t nr;
- 	size_t alloc;
- 	struct attr_check **checks;
--#ifndef NO_PTHREADS
- 	pthread_mutex_t mutex;
--#endif
- } check_vector;
+  * Set a minimum number of cache_entries that we will handle per
+  * thread and use that to decide how many threads to run (upto
+@@ -516,6 +501,9 @@ static void threaded_lazy_init_name_hash(
+ 	struct lazy_dir_thread_data *td_dir;
+ 	struct lazy_name_thread_data *td_name;
  
- static inline void vector_lock(void)
- {
--#ifndef NO_PTHREADS
- 	pthread_mutex_lock(&check_vector.mutex);
--#endif
++	if (!HAVE_THREADS)
++		return;
++
+ 	k_start = 0;
+ 	nr_each = DIV_ROUND_UP(istate->cache_nr, lazy_nr_dir_threads);
+ 
+@@ -574,8 +562,6 @@ static void threaded_lazy_init_name_hash(
+ 	free(lazy_entries);
  }
  
- static inline void vector_unlock(void)
- {
--#ifndef NO_PTHREADS
- 	pthread_mutex_unlock(&check_vector.mutex);
 -#endif
- }
- 
- static void check_vector_add(struct attr_check *c)
-@@ -1181,8 +1169,6 @@ void git_all_attrs(const struct index_state *istate,
- 
- void attr_start(void)
+-
+ static void lazy_init_name_hash(struct index_state *istate)
  {
--#ifndef NO_PTHREADS
- 	pthread_mutex_init(&g_attr_hashmap.mutex, NULL);
- 	pthread_mutex_init(&check_vector.mutex, NULL);
--#endif
- }
+ 
 -- 
 2.19.1.647.g708186aaf9
 
