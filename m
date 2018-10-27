@@ -6,81 +6,66 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 462711F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 01:45:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 481531F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 01:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbeJ0KYt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 06:24:49 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:54789 "EHLO
+        id S1726730AbeJ0K1I (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 06:27:08 -0400
+Received: from avasout03.plus.net ([84.93.230.244]:55227 "EHLO
         avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbeJ0KYt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 06:24:49 -0400
+        with ESMTP id S1726193AbeJ0K1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 06:27:08 -0400
 Received: from [10.0.2.15] ([80.189.70.193])
         by smtp with ESMTPA
-        id GDfNgYdh6fmQQGDfOgjE3i; Sat, 27 Oct 2018 02:45:30 +0100
+        id GDhbgYe0MfmQQGDhdgjEBs; Sat, 27 Oct 2018 02:47:49 +0100
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Acuf4UfG c=1 sm=1 tr=0
  a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=cGtvwGrD9bXoUPXvagQA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=IkcTkHD0fZMA:10 a=L3TNAYgMoFAgym86DSYA:9 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v3 3/3] commit-slab: missing definitions and forward
- declarations (hdr-check)
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, peff@peff.net,
-        chriscool@tuxfamily.org, l.s.r@web.de
-References: <20181025110427.13655-1-carenas@gmail.com>
- <20181025110427.13655-4-carenas@gmail.com>
- <b6fe7e58-5b3f-f139-be8d-210526a26767@ramsayjones.plus.com>
- <d5b54ed8-689b-6f12-5888-fb598db8f083@ramsayjones.plus.com>
- <CAPUEspiFDX8280qezkQ0WvJ5-9cp2eG3p+zX4F6HZNgLBACoHw@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <de120e07-0b26-295e-3128-e8b3891577e2@ramsayjones.plus.com>
-Date:   Sat, 27 Oct 2018 02:45:28 +0100
+Subject: [PATCH 0/3] some more hdr-check clean headers
+Message-ID: <ecb3d551-314a-aeef-048f-c1bbe0b3c999@ramsayjones.plus.com>
+Date:   Sat, 27 Oct 2018 02:47:47 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.2.1
 MIME-Version: 1.0
-In-Reply-To: <CAPUEspiFDX8280qezkQ0WvJ5-9cp2eG3p+zX4F6HZNgLBACoHw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMvUiBee38Vb+CcgbOpzRJDQ1Ngk86Oyc83vbO5Hz+mqLYv5sV5ajbvj6I6TGmXq9SgjuHQTyKv1+f2iy9BAs5DT/ZY0scFHSBmNXdgJvP88IRap7ALA
- l7cDU+Lj/Yk1dA8K2pykG6Fa9AF60MCjcaCPVp1t4iPjr8XaaBCadnsE
+X-CMAE-Envelope: MS4wfF5oGDxd73C+5r8kq4Zj8GOZfFp7Gz6lb9IAXBbdhhrs+zPxgxB9IvM6M3Qkja4X8vaaGlsdb8ihzjMXlhv9xRINvPjcu1W2Po0ySO0R9V+i1hZKZZ7b
+ doRijFqEa1X3HO4fTHXrG6zYfmtU1HTa2XJy+x6QujqjKCHA2IjvVe8pvbGanAlBaLeNuD8lI/4JbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+I have some changes to the hdr-check Makefile target in the works, but
+these clean-ups don't have to be held up by those changes.
 
-On 26/10/2018 04:15, Carlo Arenas wrote:
-> On Thu, Oct 25, 2018 at 2:09 PM Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->> Yes, this will 'fix' the 'commit-reach.h' header (not surprising),
->> but I prefer my patch. ;-)
-> 
-> I apologize, I joined the list recently and so might had missed a
-> reroll; the merged series in pu doesn't seem to include it and the
-> error was around the code I changed, so wanted to make sure it would
-> be addressed sooner rather than later.
-> 
-> eitherway, I agree with you my patch (or something better) would fit
-> better in your topic branch than on mine and while I haven't seen your
-> patch I am sure is most likely better.
+The 'fetch-object.h' patch is the same one I sent separately last time,
+since it only applied on 'next' at the time. The 'ewok_rlw.h' patch is
+just something I noticed while messing around the the Makefile changes.
+The 'commit-reach.h' patch is the patch #9 from the original series, but
+now with a commit message that explains the '#include "commit.h"' issue.
 
-Hmm, I don't know about that!
+These changes are on top of current master (@c670b1f876) and merge
+without conflict to 'next' and with a 'minor' conflict on 'pu'.
 
-Since the original series has progressed, any additions will now
-result in a new set of patches, rather than a re-roll.
+Ramsay Jones (3):
+  fetch-object.h: add missing declaration (hdr-check)
+  ewok_rlw.h: add missing 'inline' to function definition
+  commit-reach.h: add missing declarations (hdr-check)
 
-The original 'commit-reach.h' patch was not applied as part of the
-last series, since the commit message was felt to be lacking (well,
-it was actually non-existent!). ;-)
+ commit-reach.h  | 5 +++--
+ ewah/ewok_rlw.h | 2 +-
+ fetch-object.h  | 2 ++
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-I have been making some additional changes to the 'hdr-check' target
-in the Makefile, but I haven't quite finished. I will send the other
-(non-Makefile) changes soon. [These patches will make the 'master'
-and 'next' branches 'hdr-check' clean for me].
-
-ATB,
-Ramsay Jones
+-- 
+2.19.0
