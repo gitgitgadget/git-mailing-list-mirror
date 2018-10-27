@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA8B81F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 792EF1F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728486AbeJ0PEp (ORCPT <rfc822;e@80x24.org>);
+        id S1728490AbeJ0PEq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:04:46 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:45241 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728309AbeJ0PEp (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 27 Oct 2018 11:04:45 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:42947 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728465AbeJ0PEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:04:44 -0400
-Received: by mail-lj1-f195.google.com with SMTP id f3-v6so3106475ljk.9
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:49 -0700 (PDT)
+Received: by mail-lf1-f66.google.com with SMTP id c24-v6so2470140lfi.12
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FnutxFTPztpuDxLWY4Pw6IBjznFL6q3e38gmIB5TEno=;
-        b=mojxbsaJ7sR6friWBvDdjZ5fQaoVHHGtHRueOc2CiuT0/JtA2GFc8wc0knjVE53lBI
-         NvyC/IXcBbo6L/ZZVCM6TLRWswV3ZZuQ/RCpfI2HNDsMIFLEifwTWm4iRo0adWEkZN2W
-         gHGSdXE6A5Ilz5wlUToOTCn2eljOInQAxczI2l5XFssf/rLXRAWdx3ixKYGQlpGaIgVg
-         DFvo9S6ellhJ5Q5EdR2YPxgP90Rn+958NoCtnsu4qt33e4QAX6DKfRFRJdmmR7MBz90q
-         O5Xgk7pDdo3g1D1xr5ZbtjUVxtptq6D6EsHDKF8k0LQTRQZt2h+uwpq09tDOVVzh5eTZ
-         JH/A==
+        bh=AvaIxiBWAf0pqdeCL7VbisBKHOTqr0sIV52W+JIJd8U=;
+        b=uiOnZs/cZmh0ppio6dJuM2qa3yuHTzJBOt5LLR6w+Lw+Z3fIFqFsOlQVNMQuhRWKZj
+         t2DwqbgUk+Ss3pLh4ieNM/L6YkV8IWhTf089Cc2k+P4KQMZEr6CfKCe13/VvLf8tdk9n
+         GicF4dngEpLgGZR9PtnLkWrCqsaxbKnA+x2QTaSODp7x84YAs3ZL8R6DjZfntGLmmZJl
+         KzkxHk1vDHvhmBIpxD7R7TKbMCVEIOLXkd7a+7OJj4sUdT/SVB0Ev6w6COYUa+ZE36Z0
+         4EWychETgpsAvJLij2CIasO1zWUBiyEp5B4VbUA6SSvCPSFHKR2DLgYsDzZ6L+fkSJJF
+         PU7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FnutxFTPztpuDxLWY4Pw6IBjznFL6q3e38gmIB5TEno=;
-        b=koSOvvy3ZkPCxH5iZzZmMtlXawah0p8DTCrfQSr30KMTwIVyCtlwb+CHrXbg37uaAP
-         CV8G3zHzQauo2StEoapdjA6gjk3NjG14Yr86RkSpOg2MbPJQCyBmg4iP3WR8Yu7siSNz
-         /EgzccVvn69tMXUSMhQfWzAwvBgZ815KDHRSCSYETymjKvPUCy76dzdL95DHbVnfQu/e
-         7tct7LLw8wsPK/aL1LfVin+/c+yuM8kVT/lyFQqPKDRKazbjSeDN/5KDGthMid/4fzRL
-         72/JvuZiTQ8IllmGbk+5bpoN7gEXrd4dAoGLeXTHDonUNIFy/8JhndImYKTDdrfaTg3n
-         7DSQ==
-X-Gm-Message-State: AGRZ1gLFEtTR6DcUGeUyfOECQoRIr6yfSnKW1aIEpgb5BK2AWTHiQxfl
-        VBgjlCtJfBsNKf1mwtLykF1axITc
-X-Google-Smtp-Source: AJdET5d7KpKd/+iFzmYGQ8CGwZ088AwsyavytbyeYRjc8yCoF4KFT1gbHNCCZYoqVnB/MSOhadU7Hw==
-X-Received: by 2002:a2e:197:: with SMTP id f23-v6mr4177557lji.144.1540621488746;
-        Fri, 26 Oct 2018 23:24:48 -0700 (PDT)
+        bh=AvaIxiBWAf0pqdeCL7VbisBKHOTqr0sIV52W+JIJd8U=;
+        b=j0Y7BvKNglNmbvvEXho/Hm/HQY14eiXYAQbY0tFi3EZl7Omf37ah92geL0fYLewpEX
+         GwdvtmyQJWPKD4tpAS3RNjh2QAihzGEYC9GoaHDXojrcNnI1MMe9wilhyxQrL/XBmDwR
+         GvOn0/VxL7v3/3kBZz5RJzEshS2IYutsVfWkPdGhxCJcPUUAOqF0TjFnfpE+lG5Xe01J
+         YlFhpEXjm5xoLEDf6346ApJSWqPdVZsbJ3Ni3esxUR1fN5ztqN1LXDPyEAtM8e4nQ6Lr
+         JcVCOsHirXWp+7xdzb6RIOFFXeHZZLr4wWLqJbKRbYnLZvaSC/joVAiKEGqFV6u9Cm56
+         LwIQ==
+X-Gm-Message-State: AGRZ1gKpr7a82z9ltkGqyAyhfMpFSsU4wjl3iGr0GIyVWiP2DnD7w7Tb
+        eQoZKmY+7yiqBQwZTbFEKa9znMah
+X-Google-Smtp-Source: AJdET5eb4kXM58G3u1rcCKFY2WaB0AJ0sRXgX+HwX/IczfiG5ZXZ9M56polv41O9My3r4YQ0CZ/0cw==
+X-Received: by 2002:a19:5a84:: with SMTP id y4mr4019447lfk.156.1540621489729;
+        Fri, 26 Oct 2018 23:24:49 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.47
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:47 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:49 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 45/78] config.txt: move man.* to a separate file
-Date:   Sat, 27 Oct 2018 08:23:18 +0200
-Message-Id: <20181027062351.30446-46-pclouds@gmail.com>
+Subject: [PATCH 46/78] config.txt: move merge-config.txt to config/
+Date:   Sat, 27 Oct 2018 08:23:19 +0200
+Message-Id: <20181027062351.30446-47-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,53 +71,63 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt     | 13 +------------
- Documentation/config/man.txt | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 12 deletions(-)
- create mode 100644 Documentation/config/man.txt
+ Documentation/config.txt                             | 2 +-
+ Documentation/{merge-config.txt => config/merge.txt} | 4 ++--
+ Documentation/git-merge.txt                          | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+ rename Documentation/{merge-config.txt => config/merge.txt} (98%)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ff9c8797a6..c3c92bc269 100644
+index c3c92bc269..441787e815 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -369,18 +369,7 @@ include::config/mailinfo.txt[]
+@@ -371,7 +371,7 @@ include::config/mailmap.txt[]
  
- include::config/mailmap.txt[]
+ include::config/man.txt[]
  
--man.viewer::
--	Specify the programs that may be used to display help in the
--	'man' format. See linkgit:git-help[1].
--
--man.<tool>.cmd::
--	Specify the command to invoke the specified man viewer. The
--	specified command is evaluated in shell with the man page
--	passed as argument. (See linkgit:git-help[1].)
--
--man.<tool>.path::
--	Override the path for the given tool that may be used to
--	display help in the 'man' format. See linkgit:git-help[1].
-+include::config/man.txt[]
+-include::merge-config.txt[]
++include::config/merge.txt[]
  
- include::merge-config.txt[]
+ mergetool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+diff --git a/Documentation/merge-config.txt b/Documentation/config/merge.txt
+similarity index 98%
+rename from Documentation/merge-config.txt
+rename to Documentation/config/merge.txt
+index 0bb703fbac..321d1c8ba9 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/config/merge.txt
+@@ -30,7 +30,7 @@ merge.verifySignatures::
+ 	If true, this is equivalent to the --verify-signatures command
+ 	line option. See linkgit:git-merge[1] for details.
  
-diff --git a/Documentation/config/man.txt b/Documentation/config/man.txt
-new file mode 100644
-index 0000000000..a727d987a8
---- /dev/null
-+++ b/Documentation/config/man.txt
-@@ -0,0 +1,12 @@
-+man.viewer::
-+	Specify the programs that may be used to display help in the
-+	'man' format. See linkgit:git-help[1].
-+
-+man.<tool>.cmd::
-+	Specify the command to invoke the specified man viewer. The
-+	specified command is evaluated in shell with the man page
-+	passed as argument. (See linkgit:git-help[1].)
-+
-+man.<tool>.path::
-+	Override the path for the given tool that may be used to
-+	display help in the 'man' format. See linkgit:git-help[1].
+-include::config/fmt-merge-msg.txt[]
++include::fmt-merge-msg.txt[]
+ 
+ merge.renameLimit::
+ 	The number of files to consider when performing rename detection
+@@ -63,7 +63,7 @@ merge.tool::
+ 	Any other value is treated as a custom merge tool and requires
+ 	that a corresponding mergetool.<tool>.cmd variable is defined.
+ 
+-include::mergetools-merge.txt[]
++include::../mergetools-merge.txt[]
+ 
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index eb36837f86..4cc86469f3 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -342,7 +342,7 @@ include::merge-strategies.txt[]
+ 
+ CONFIGURATION
+ -------------
+-include::merge-config.txt[]
++include::config/merge.txt[]
+ 
+ branch.<name>.mergeOptions::
+ 	Sets default options for merging into branch <name>. The syntax and
 -- 
 2.19.1.647.g708186aaf9
 
