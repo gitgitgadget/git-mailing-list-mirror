@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1FDD1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B22951F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728372AbeJ0PEE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 11:04:04 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:46282 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728360AbeJ0PED (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:04:03 -0400
-Received: by mail-lf1-f68.google.com with SMTP id o2-v6so2461278lfl.13
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:08 -0700 (PDT)
+        id S1728382AbeJ0PEJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:04:09 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:37853 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728378AbeJ0PEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:04:08 -0400
+Received: by mail-lf1-f67.google.com with SMTP id a82-v6so2479808lfa.4
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fGXtziuyfOdNZBP0bmkbOJUedvx9CkedTK0WuDoMVRE=;
-        b=pac6zG5azKDtZOd6mu/Cb/7B2t15VBBcrlzKIHE82qUU+ssp4+aZADHE1rmqrfUgso
-         WcsXy48gSLTywTFsHSg+baoGiwZfmVeJGVld0OvvkPNHU6q5BxXp9Ifawf9ypuJ0JJZy
-         dc7OCpATmdfI3WiRoBaUxgL3ttpvvImFdjaZtQhk9LBBpzf/y9TWb8KRGU3d2iwPjG4o
-         DWlUyDvUbNgz0VgBlXBAtjiz8Jpi/tpvIUg/VSuKTrUu7/lyzULXWtmcgOp8rc5Yg2Io
-         dTYg3COpVSLx/JLIcU5aDJEv7oZg8nPjT83dyNyED31lHDFKt0zxivsHUtytH/Rq0OuD
-         XeJQ==
+        bh=Nb9O4ECxblqOyTLJsxaP/VcrF8Q9d4BpIMbcMUJqzQU=;
+        b=p8sdPe7wiR+fj3yn4XMl9nQ1vAVdq8h4EhZEKaLpcTYnpAiPowy+dYvPlEHT3BCVmM
+         LKIx1hKo1oTwE0HTlmfsFxQXC0rnm4eTEZbK5MSWkgVG0P2lyYd61IQHBtHJw+FBuVUR
+         oqTj+aky4AInzTtIZEDD3aV7C6OhNjExFixwdI4Jf+GKw+cTNS+bOKOh9uYTlnqndGY8
+         6NVJwKhfTUnBcCaPB4SI7USkNPk9rnGZbQECTcchk1EutVZC1Dg5ehm3Ov3+YpzDi/4D
+         JY6Ld0lSg8MXxtZixDvMLLkb7HlUU6ur2aUGmAv1G0qZo3O8n8CVr2k63B1ofWerwh8G
+         LuEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fGXtziuyfOdNZBP0bmkbOJUedvx9CkedTK0WuDoMVRE=;
-        b=f11SbLJA/+yPZaS37KyBi9c8mNP2+ORN3yEm67ZGmWpa+YIfy1eyRHAB70VIB4hxii
-         CVxDdq8gJNDpDgTSeCR98uKRbsMO4CWPOpauPy/0vU1k+aEZQ8ozZlga841NcM5mNc+C
-         aL6ZMoC4BLFOrUXes6JRddQ/PBQ7mwxG/CzIpYvaca8DURkqRHRsdnaykk/kVa8zo4Ny
-         K1r7U6WfjNNVkCnlJnYo/4RYtJ79Ad58PjTShYipPab2u9p6MnU2P1Iatw5WUJpMDPbF
-         sXOCnS7tQn6dwMNfaeFGUivqc0EFz5L/Lsnjpv8Rmr9abw1yhTC7dcGcMNEehahypKYE
-         IJhw==
-X-Gm-Message-State: AGRZ1gLxjnhDDzcs/n298ZvaN7GfPYDI1mWiqMQ9w3QIxzyY6JyeS1Kh
-        676pQZkF5pfVX3gYvVKOhMWxCNPB
-X-Google-Smtp-Source: AJdET5fUVzU24nBZTRpt6LD3ttbP+xv0LmVV/yrItyPnOQ0ZTWuO6Md5nUYLcezOfx6cQcdftey/Aw==
-X-Received: by 2002:a19:660a:: with SMTP id a10-v6mr2513143lfc.100.1540621447501;
-        Fri, 26 Oct 2018 23:24:07 -0700 (PDT)
+        bh=Nb9O4ECxblqOyTLJsxaP/VcrF8Q9d4BpIMbcMUJqzQU=;
+        b=hjLD97+YzU2Qv67JEbgmHiZO6UN8P044jmm1+lQ6L32cDh80qzJHTedZnyd8Ds9M3y
+         XpHb20H+PUl3Q9C4OPGyxzWw/p5YeFimGtNU1N3xtyfV6MrUlNL7M2dPOft0UHQvXVBD
+         2GfT6uxX7GJoE5/FbM8+H35e0427AQd/dZIl0h6OBl2zbPgDKZOXaYnTsRGuIA5oov8D
+         gAxmyvWsBVFPPcp+9RY1cJi9l3iiSk4GVti/rKZWYf2cT1N/5S3L3gLARub1fDfnVf2n
+         W4HytJW0qX/JDgdiW1KA8xfIdBKs8yc0qezAI0pdWUu/V+KHz28IAPdayp7GTTZC6mLN
+         2/LA==
+X-Gm-Message-State: AGRZ1gLOAoiJp1sDnguchSaea0Ifgaoofg34HK1NUA0QzBcrtsHl0j1C
+        8LVqw9JJpeCtwW19biLhPezG3TCq
+X-Google-Smtp-Source: AJdET5da20feVrvArcqz4rUJ36COYbmRHHoZEelAzwcgbbIimSTm5xH5WlEifRLLM2h4eGrXk224NA==
+X-Received: by 2002:a19:4287:: with SMTP id p129mr2882483lfa.135.1540621453176;
+        Fri, 26 Oct 2018 23:24:13 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.06
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:06 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:12 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/78] config.txt: move browser.* to a separate file
-Date:   Sat, 27 Oct 2018 08:22:43 +0200
-Message-Id: <20181027062351.30446-11-pclouds@gmail.com>
+Subject: [PATCH 14/78] config.txt: move column.* to a separate file
+Date:   Sat, 27 Oct 2018 08:22:47 +0200
+Message-Id: <20181027062351.30446-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,47 +71,139 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt         | 10 +---------
- Documentation/config/browser.txt |  9 +++++++++
- 2 files changed, 10 insertions(+), 9 deletions(-)
- create mode 100644 Documentation/config/browser.txt
+ Documentation/config.txt        | 56 +--------------------------------
+ Documentation/config/column.txt | 55 ++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+), 55 deletions(-)
+ create mode 100644 Documentation/config/column.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3dc7dd6cdb..47eb119976 100644
+index 399c23e0c5..0618a7d974 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -303,15 +303,7 @@ include::config/blame.txt[]
+@@ -311,61 +311,7 @@ include::config/clean.txt[]
  
- include::config/branch.txt[]
+ include::config/color.txt[]
  
--browser.<tool>.cmd::
--	Specify the command to invoke the specified browser. The
--	specified command is evaluated in shell with the URLs passed
--	as arguments. (See linkgit:git-web{litdd}browse[1].)
+-column.ui::
+-	Specify whether supported commands should output in columns.
+-	This variable consists of a list of tokens separated by spaces
+-	or commas:
+-+
+-These options control when the feature should be enabled
+-(defaults to 'never'):
+-+
+---
+-`always`;;
+-	always show in columns
+-`never`;;
+-	never show in columns
+-`auto`;;
+-	show in columns if the output is to the terminal
+---
+-+
+-These options control layout (defaults to 'column').  Setting any
+-of these implies 'always' if none of 'always', 'never', or 'auto' are
+-specified.
+-+
+---
+-`column`;;
+-	fill columns before rows
+-`row`;;
+-	fill rows before columns
+-`plain`;;
+-	show in one column
+---
+-+
+-Finally, these options can be combined with a layout option (defaults
+-to 'nodense'):
+-+
+---
+-`dense`;;
+-	make unequal size columns to utilize more space
+-`nodense`;;
+-	make equal size columns
+---
 -
--browser.<tool>.path::
--	Override the path for the given tool that may be used to
--	browse HTML help (see `-w` option in linkgit:git-help[1]) or a
--	working repository in gitweb (see linkgit:git-instaweb[1]).
-+include::config/browser.txt[]
+-column.branch::
+-	Specify whether to output branch listing in `git branch` in columns.
+-	See `column.ui` for details.
+-
+-column.clean::
+-	Specify the layout when list items in `git clean -i`, which always
+-	shows files and directories in columns. See `column.ui` for details.
+-
+-column.status::
+-	Specify whether to output untracked files in `git status` in columns.
+-	See `column.ui` for details.
+-
+-column.tag::
+-	Specify whether to output tag listing in `git tag` in columns.
+-	See `column.ui` for details.
++include::config/column.txt[]
  
- checkout.defaultRemote::
- 	When you run 'git checkout <something>' and only have one
-diff --git a/Documentation/config/browser.txt b/Documentation/config/browser.txt
+ commit.cleanup::
+ 	This setting overrides the default of the `--cleanup` option in
+diff --git a/Documentation/config/column.txt b/Documentation/config/column.txt
 new file mode 100644
-index 0000000000..195df207a6
+index 0000000000..76aa2f29dc
 --- /dev/null
-+++ b/Documentation/config/browser.txt
-@@ -0,0 +1,9 @@
-+browser.<tool>.cmd::
-+	Specify the command to invoke the specified browser. The
-+	specified command is evaluated in shell with the URLs passed
-+	as arguments. (See linkgit:git-web{litdd}browse[1].)
++++ b/Documentation/config/column.txt
+@@ -0,0 +1,55 @@
++column.ui::
++	Specify whether supported commands should output in columns.
++	This variable consists of a list of tokens separated by spaces
++	or commas:
+++
++These options control when the feature should be enabled
++(defaults to 'never'):
+++
++--
++`always`;;
++	always show in columns
++`never`;;
++	never show in columns
++`auto`;;
++	show in columns if the output is to the terminal
++--
+++
++These options control layout (defaults to 'column').  Setting any
++of these implies 'always' if none of 'always', 'never', or 'auto' are
++specified.
+++
++--
++`column`;;
++	fill columns before rows
++`row`;;
++	fill rows before columns
++`plain`;;
++	show in one column
++--
+++
++Finally, these options can be combined with a layout option (defaults
++to 'nodense'):
+++
++--
++`dense`;;
++	make unequal size columns to utilize more space
++`nodense`;;
++	make equal size columns
++--
 +
-+browser.<tool>.path::
-+	Override the path for the given tool that may be used to
-+	browse HTML help (see `-w` option in linkgit:git-help[1]) or a
-+	working repository in gitweb (see linkgit:git-instaweb[1]).
++column.branch::
++	Specify whether to output branch listing in `git branch` in columns.
++	See `column.ui` for details.
++
++column.clean::
++	Specify the layout when list items in `git clean -i`, which always
++	shows files and directories in columns. See `column.ui` for details.
++
++column.status::
++	Specify whether to output untracked files in `git status` in columns.
++	See `column.ui` for details.
++
++column.tag::
++	Specify whether to output tag listing in `git tag` in columns.
++	See `column.ui` for details.
 -- 
 2.19.1.647.g708186aaf9
 
