@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46AA61F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE1DD1F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728939AbeJ1CMI (ORCPT <rfc822;e@80x24.org>);
+        id S1728931AbeJ1CMI (ORCPT <rfc822;e@80x24.org>);
         Sat, 27 Oct 2018 22:12:08 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:46451 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728610AbeJ1CMI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 22:12:08 -0400
-Received: by mail-lj1-f195.google.com with SMTP id x3-v6so4000131lji.13
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:27 -0700 (PDT)
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:33964 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728793AbeJ1CMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 22:12:07 -0400
+Received: by mail-lj1-f193.google.com with SMTP id g8-v6so1121812ljk.1
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xLCcqTzF++H24RbkSBiziTtVjx4je/Bxw9RWY3pqi9k=;
-        b=bZhRnU9eo8uVq31+urK7rSLgWmqrg3BR0lyWfVwFxEezuOUKXdgK9QYIejbMR8jFak
-         OUsjP3WrzAUn3X5MwC2TZgPguXLHFVhonIMvEw7LnLvu225bBsfKHXn85G26O1t44ogj
-         E8ok/CTXT3cdqhd9EvfpS0HPbtJ+v3OLSNkisrzxAY78IcHWMb3/FA2/7FhCSGwdU0O9
-         Pkg9lLx2WXyq6eL6LHeCnfjVxJKl+jg0oVaS6nNqR9nGogpF9k6kG/QG02Dir0NDjgLP
-         I0kgEKHmOy+rjcPftM+kzIEmRb19MNeakf/Zqs6W4scUVK9zFgkIIp3mZSYai+UpyUpP
-         MTFA==
+        bh=SF0N9DVdrmmyoJxDZIeToLkpdB5o/uj/ao+EU7EKPtg=;
+        b=Fm3rLLWntHQMTAfFVBULFPO8lXTZAiJm8xhQiHeYwtmgKiC3vHy2br+tyT+VztZIWc
+         EDVjij3UIVOutUvAU6eZtoqpEKvnNd1xh+M40BNnlJcLDf+wL2vE4by5gnJ+PvMwIs3j
+         N+nE90w9xldsSYiap9G22vpdltOoiO5MmU/BhbEn5xLxfXd7LPwVWtr4akBd0hbi9Juz
+         ZoqxJn38OItqcFlPmH/NyjocJjvBNyJaTGAxMcT6jgbN2JOmbl6wap7E9cZRrRKeA9wq
+         eBwVAxj0qv6gpWLYObfSlLB716sMJHPntYGZUKf4ICS7wSd2WDqH6idpta8+ujKpLKxn
+         ti9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xLCcqTzF++H24RbkSBiziTtVjx4je/Bxw9RWY3pqi9k=;
-        b=TSsip9vzIAw8zAZ9MSYxnib7ke3MnYdfTCBuZV+2DCVHhoyPWhUpckOCum7yt8QxaW
-         K3VZTzHwHNwhbltlSuc4em3MtuCo8LCKDYm+BoZJzEikhXBSUO63/VGkHToHHV2q6RdZ
-         KEqcwp/LxgCvFi3DoHqrFBLXQByrveo5EyazhYLgunPYWCIgaD1wAs2Uvgr47gRqLhRi
-         gNrDePrpHbRSaXKMgv9NkaT0zDkK4yyONSc1TPg5YLBTu/N7BLhYQsrlBp37jl0vXFQY
-         x7TF4yvva42Ng5G9L9eq3BTPEn20PYRRXxVre470GD3/sv37JAvM6w9dZSV5s0zGOg2M
-         Ovzg==
-X-Gm-Message-State: AGRZ1gJJbmVWCQeiNMg+SgnMnyFFPKB2XXXU1PjXkkpHTuzmktj2TzDr
-        SlGFSChMBdKyb9nkbulk5S4=
-X-Google-Smtp-Source: AJdET5eaEuEw3kQujV+NtpD9A3mVUqwULpTYH8q33wuJoqA3eIdjLRoF4C/62l1RhVqyIDLKazprKw==
-X-Received: by 2002:a2e:5054:: with SMTP id v20-v6mr5201628ljd.45.1540661426309;
-        Sat, 27 Oct 2018 10:30:26 -0700 (PDT)
+        bh=SF0N9DVdrmmyoJxDZIeToLkpdB5o/uj/ao+EU7EKPtg=;
+        b=IOaN4gieqOH2qSI+Eo1ygMIHavBWmZDHeqQtLmNArXRyEyEcKjg3Sf6Emin7dhNbSE
+         htJw2lEDh8+SO7l3qMsHVu6EVU5Npdinu4tNA2GFGpssWcq/Lph822o/PEd83YeqNnDI
+         w35Ne2ntnOZrh2fQb8I1meR9WnwKGjC/60Ie+qLL/v6temtccjfCpV0iosttoZzOdXI2
+         CdCv1yGO5FzOtIiwNsAH/BiS65f2YEFrB28jv8bgVLArl50Mw9aTa4x4FE9+Pci6n6Et
+         5Y8/an3RcQcuV+iGOnclK4Zjw6SMZcbTIQNfa2lpw9RG/odQv+qdp5fTtPXt2PJz380t
+         UhcA==
+X-Gm-Message-State: AGRZ1gILe7Dtm0OPNXUTZ24MC2/QgNxv4hlaXu9SEX3oNtXwO7UVDiom
+        +B7OwhiSQdQCEhU1jTSZoCg=
+X-Google-Smtp-Source: AJdET5dETVAtmue6+NQw26b3FbcdIsaJGnBJiAm5AyeU9pvKw7usHJgmsN01AQS046AFvF4IR8u/mQ==
+X-Received: by 2002:a2e:20da:: with SMTP id g87-v6mr4643910lji.88.1540661424958;
+        Sat, 27 Oct 2018 10:30:24 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.24
+        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 10:30:25 -0700 (PDT)
+        Sat, 27 Oct 2018 10:30:24 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 08/10] read-cache.c: remove #ifdef NO_PTHREADS
-Date:   Sat, 27 Oct 2018 19:30:06 +0200
-Message-Id: <20181027173008.18852-9-pclouds@gmail.com>
+Subject: [PATCH v2 07/10] pack-objects: remove #ifdef NO_PTHREADS
+Date:   Sat, 27 Oct 2018 19:30:05 +0200
+Message-Id: <20181027173008.18852-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
 References: <20181027071003.1347-1-pclouds@gmail.com>
@@ -71,164 +71,116 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- read-cache.c | 49 ++++++++++++++++++-------------------------------
- 1 file changed, 18 insertions(+), 31 deletions(-)
+ builtin/pack-objects.c | 26 ++------------------------
+ pack-objects.h         |  6 ------
+ 2 files changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index d57958233e..ba870bc3fd 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1920,19 +1920,15 @@ struct index_entry_offset_table
- 	struct index_entry_offset entries[FLEX_ARRAY];
- };
- 
--#ifndef NO_PTHREADS
- static struct index_entry_offset_table *read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset);
- static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_table *ieot);
--#endif
- 
- static size_t read_eoie_extension(const char *mmap, size_t mmap_size);
- static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context, size_t offset);
- 
- struct load_index_extensions
- {
--#ifndef NO_PTHREADS
- 	pthread_t pthread;
--#endif
- 	struct index_state *istate;
- 	const char *mmap;
- 	size_t mmap_size;
-@@ -2010,8 +2006,6 @@ static unsigned long load_all_cache_entries(struct index_state *istate,
- 	return consumed;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index b059b86aee..12edd6da16 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1953,8 +1953,6 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
+ 	return 0;
  }
  
 -#ifndef NO_PTHREADS
 -
- /*
-  * Mostly randomly chosen maximum thread counts: we
-  * cap the parallelism to online_cpus() threads, and we want
-@@ -2122,7 +2116,6 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
- 
- 	return consumed;
- }
--#endif
- 
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_exist)
-@@ -2135,10 +2128,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	size_t mmap_size;
- 	struct load_index_extensions p;
- 	size_t extension_offset = 0;
--#ifndef NO_PTHREADS
- 	int nr_threads, cpus;
- 	struct index_entry_offset_table *ieot = NULL;
--#endif
- 
- 	if (istate->initialized)
- 		return istate->cache_nr;
-@@ -2181,15 +2172,18 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 
- 	src_offset = sizeof(*hdr);
- 
--#ifndef NO_PTHREADS
--	nr_threads = git_config_get_index_threads();
-+	if (HAVE_THREADS) {
-+		nr_threads = git_config_get_index_threads();
- 
--	/* TODO: does creating more threads than cores help? */
--	if (!nr_threads) {
--		nr_threads = istate->cache_nr / THREAD_COST;
--		cpus = online_cpus();
--		if (nr_threads > cpus)
--			nr_threads = cpus;
-+		/* TODO: does creating more threads than cores help? */
-+		if (!nr_threads) {
-+			nr_threads = istate->cache_nr / THREAD_COST;
-+			cpus = online_cpus();
-+			if (nr_threads > cpus)
-+				nr_threads = cpus;
-+		}
-+	} else {
-+		nr_threads = 1;
- 	}
- 
- 	if (nr_threads > 1) {
-@@ -2219,21 +2213,16 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	} else {
- 		src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
- 	}
+ /* Protect access to object database */
+ static pthread_mutex_t read_mutex;
+ #define read_lock()		pthread_mutex_lock(&read_mutex)
+@@ -1979,16 +1977,6 @@ static pthread_mutex_t progress_mutex;
+  * ahead in the list because they can be stolen and would need
+  * progress_mutex for protection.
+  */
 -#else
--	src_offset += load_all_cache_entries(istate, mmap, mmap_size, src_offset);
+-
+-#define read_lock()		(void)0
+-#define read_unlock()		(void)0
+-#define cache_lock()		(void)0
+-#define cache_unlock()		(void)0
+-#define progress_lock()		(void)0
+-#define progress_unlock()	(void)0
+-
 -#endif
  
- 	istate->timestamp.sec = st.st_mtime;
- 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+ /*
+  * Return the size of the object without doing any delta
+@@ -2347,8 +2335,6 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 	free(array);
+ }
  
- 	/* if we created a thread, join it otherwise load the extensions on the primary thread */
 -#ifndef NO_PTHREADS
--	if (extension_offset) {
-+	if (HAVE_THREADS && extension_offset) {
- 		int ret = pthread_join(p.pthread, NULL);
- 		if (ret)
- 			die(_("unable to join load_index_extensions thread: %s"), strerror(ret));
- 	}
+-
+ static void try_to_free_from_threads(size_t size)
+ {
+ 	read_lock();
+@@ -2578,10 +2564,6 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 	free(p);
+ }
+ 
+-#else
+-#define ll_find_deltas(l, s, w, d, p)	find_deltas(l, &s, w, d, p)
 -#endif
- 	if (!extension_offset) {
- 		p.src_offset = src_offset;
- 		load_index_extensions(&p);
-@@ -2756,8 +2745,11 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
- 		return -1;
- 
--#ifndef NO_PTHREADS
--	nr_threads = git_config_get_index_threads();
-+	if (HAVE_THREADS)
-+		nr_threads = git_config_get_index_threads();
-+	else
-+		nr_threads = 1;
-+
- 	if (nr_threads != 1) {
- 		int ieot_blocks, cpus;
- 
-@@ -2787,7 +2779,6 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 			ieot_entries = DIV_ROUND_UP(entries, ieot_blocks);
+-
+ static void add_tag_chain(const struct object_id *oid)
+ {
+ 	struct tag *tag;
+@@ -2734,12 +2716,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ 		if (delta_search_threads < 0)
+ 			die(_("invalid number of threads specified (%d)"),
+ 			    delta_search_threads);
+-#ifdef NO_PTHREADS
+-		if (delta_search_threads != 1) {
++		if (!HAVE_THREADS && delta_search_threads != 1) {
+ 			warning(_("no threads support, ignoring %s"), k);
+ 			delta_search_threads = 0;
  		}
- 	}
 -#endif
- 
- 	offset = lseek(newfd, 0, SEEK_CUR);
- 	if (offset < 0) {
-@@ -2871,8 +2862,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	 * strip_extensions parameter as we need it when loading the shared
- 	 * index.
- 	 */
--#ifndef NO_PTHREADS
--	if (ieot) {
-+	if (HAVE_THREADS && ieot) {
- 		struct strbuf sb = STRBUF_INIT;
- 
- 		write_ieot_extension(&sb, ieot);
-@@ -2883,7 +2873,6 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 		if (err)
- 			return -1;
+ 		return 0;
  	}
--#endif
+ 	if (!strcmp(k, "pack.indexversion")) {
+@@ -3402,10 +3382,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (!delta_search_threads)	/* --threads=0 means autodetect */
+ 		delta_search_threads = online_cpus();
  
- 	if (!strip_extensions && istate->split_index) {
- 		struct strbuf sb = STRBUF_INIT;
-@@ -3469,7 +3458,6 @@ static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context,
- 	strbuf_add(sb, hash, the_hash_algo->rawsz);
- }
+-#ifdef NO_PTHREADS
+-	if (delta_search_threads != 1)
++	if (!HAVE_THREADS && delta_search_threads != 1)
+ 		warning(_("no threads support, ignoring --threads"));
+-#endif
+ 	if (!pack_to_stdout && !pack_size_limit)
+ 		pack_size_limit = pack_size_limit_cfg;
+ 	if (pack_to_stdout && pack_size_limit)
+diff --git a/pack-objects.h b/pack-objects.h
+index 2ca39cfcfe..3a42727c7d 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -145,9 +145,7 @@ struct packing_data {
+ 	struct packed_git **in_pack_by_idx;
+ 	struct packed_git **in_pack;
  
 -#ifndef NO_PTHREADS
- #define IEOT_VERSION	(1)
- 
- static struct index_entry_offset_table *read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset)
-@@ -3542,4 +3530,3 @@ static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_ta
- 	       strbuf_add(sb, &buffer, sizeof(uint32_t));
-        }
- }
+ 	pthread_mutex_t lock;
 -#endif
+ 
+ 	/*
+ 	 * This list contains entries for bases which we know the other side
+@@ -169,15 +167,11 @@ void prepare_packing_data(struct packing_data *pdata);
+ 
+ static inline void packing_data_lock(struct packing_data *pdata)
+ {
+-#ifndef NO_PTHREADS
+ 	pthread_mutex_lock(&pdata->lock);
+-#endif
+ }
+ static inline void packing_data_unlock(struct packing_data *pdata)
+ {
+-#ifndef NO_PTHREADS
+ 	pthread_mutex_unlock(&pdata->lock);
+-#endif
+ }
+ 
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
 -- 
 2.19.1.647.g708186aaf9
 
