@@ -2,85 +2,324 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3BE1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 03:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EABC91F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726679AbeJ0MYt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 08:24:49 -0400
-Received: from mail-pg1-f173.google.com ([209.85.215.173]:40649 "EHLO
-        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726540AbeJ0MYt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 08:24:49 -0400
-Received: by mail-pg1-f173.google.com with SMTP id o14-v6so1382880pgv.7
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 20:45:15 -0700 (PDT)
+        id S1728335AbeJ0PDw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:03:52 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38721 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728014AbeJ0PDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:03:52 -0400
+Received: by mail-lf1-f66.google.com with SMTP id p86so276692lfg.5
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=a1iFGBL+NI4FuwH/GYKdHHMjy8LzXiAWH2CTjGNqzt8=;
-        b=PWyAd99pRbl5E98h++3MY201LGCCf3Jkv61psBBXFw6n/Hsxe6tj1uGs9tlGbUBC4D
-         QyvjXMZDSPDT+eK+ON0mZehNyMSq/Be+cFnekyrR8O9Gadqs+bwrxVceJkqUYoc5w+8c
-         dn3OafsdoCIVXiDg6ickJNa+VcD3JdVO6C7oUWRHPCJASycWUrLTHGabF3NNy8alFwWu
-         GlKeZzjcqirb6aXRwJgErWvCBBcBxgRp+c7iaWQ0MvyIyOX97fLeH5uhVTQOqN9WLyPY
-         1Sv/AAUGbz76F3L3ILrh/vT9H4zViIZf2+O/lEp2aKH/BkVfc74lX3GM6h/Vleo+is4d
-         zSbw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xo6Yfsk1hy6S88eS7F840cpC7eMWd21q+ZPbxiOYtMk=;
+        b=RCNtwsD0SaWehq8c1Ipi/Qun1mvqAD6mnJo/LF1qgWs9ypNdpcbnvPeDcpM4+5sUXW
+         yUYCsoFq/LBa0qI9w+dXBvnJ4RsEImAvNN+u97ksdpqHIram86goA6FjF0EU/I6n0Kjh
+         /MbhtJ5FEXkroBtGr9/rSA4PifhfMyUuVWkKvRmrvT6gNKDXIJTJqQCL8lgOc57Ka1q9
+         HRDl2BjgCvDZ0aWw+PDblE9MGI7RTll4bh7Z9WMT5HmC+skCOyhqC9glxFLxRF7snCoQ
+         6ENa8wVwZRnfiYNoEBWmvdbYAxfOfrx07eelBB2sXae2j/fp1hXFCPtcGDzgwkLlRkVI
+         hk0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=a1iFGBL+NI4FuwH/GYKdHHMjy8LzXiAWH2CTjGNqzt8=;
-        b=t1/SfRX/uWdylQNjN4AG7xM3eF3A/Cq3W5BWdixhRmmc2YPyUVQYzWB/aDbiWeJKbG
-         Sxl9NeP8qNbMR4AFw87yxi9AB/KPiwFoJjZ5vloxiM2wSHnFBUUljvZ3lzDinI2gyjDI
-         54tf0hWqpnYdVku16wHgEt1OpAJMTjiUu+4mcR5CMUAybSlfqzzzj5OQmUo2FEunVJ3K
-         O4j5G4QxyTMOiZOvUoMoAdKh7N9hrptRwRJPQS/7ltD8tRxD4yN3Go55OBn9SegpDOvt
-         HCBVdSnxc86mJJvOV3mO562uZOtjBK9lpxMFyseVCdRzNnn/bEk6vSlsCNFj2Y4yApTK
-         MtgQ==
-X-Gm-Message-State: AGRZ1gIMH6ASXllYIakK6xorVxckyW5HhWm8sAjL90ExYa0fedg0i9PC
-        i7viV85YK7JhdGCWTgDkAdUjgQ==
-X-Google-Smtp-Source: AJdET5fIlDi/eXo4a6C37te2e7ueMgLejUyHQP/+1+fty8rrA7fNb1l+mAcyQoDbyYO6TXgE0uURkA==
-X-Received: by 2002:a63:1c64:: with SMTP id c36-v6mr5699796pgm.354.1540611914753;
-        Fri, 26 Oct 2018 20:45:14 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:217b:cd3f:4c97:19e8])
-        by smtp.gmail.com with ESMTPSA id w2-v6sm9088419pfw.26.2018.10.26.20.45.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Xo6Yfsk1hy6S88eS7F840cpC7eMWd21q+ZPbxiOYtMk=;
+        b=lDaqJOuSmslrSqRYeueTXtsK+DW5Z2ZmTBlIcyhMXSmn1QBzDgcjNoxNjhcoV/Vuv/
+         BoCHGwbiwm2sPREPX8gmPvLDnn/Bg9k5lwQxOe1YQ8AMb3vFge7LA0vW0opbSDs2WoEN
+         7xXYxC2LzEmAe/3FQlPupEMdOip/BVzgxtatafdvjTWZFbTWtajhc9HbHL7QFHviDWmo
+         3eyN5DNbFSx71Nf2wWHnjKqH6CtApoir3xmoTNXDVHWiXmBXBGTaFj3LNCdAmM9OAuyf
+         sDztf4z0mySNUps+qe7VUVAyjQ30iK7QZXSXNInf/O1wpbv2P7Pdk157wRv/0nBQsFDM
+         r93Q==
+X-Gm-Message-State: AGRZ1gK8EHfRr4Wg4sjZ/0AlSHttIjgbLuhO6fcFtDqEah3zhxC0VTGw
+        jtgzoVyPLDvotj+JjJtKiZl1aPIp
+X-Google-Smtp-Source: AJdET5e9TyV2KQBefmU5lL4F9b9aqgnKZcE15S5kX28xWEg+L331kqnI5AOCfX+1AMBIjBAt9d1Ymg==
+X-Received: by 2002:a19:a28e:: with SMTP id l136mr4060882lfe.87.1540621435626;
+        Fri, 26 Oct 2018 23:23:55 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.23.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 20:45:13 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Fri, 26 Oct 2018 20:45:12 -0700
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2018, #05; Fri, 26)
-Message-ID: <20181027034512.GA2875@syl.hsd1.wa.comcast.net>
-References: <xmqqo9bhcf89.fsf@gitster-ct.c.googlers.com>
+        Fri, 26 Oct 2018 23:23:54 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/78] nd/config-split reroll
+Date:   Sat, 27 Oct 2018 08:22:33 +0200
+Message-Id: <20181027062351.30446-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo9bhcf89.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 26, 2018 at 04:57:26PM +0900, Junio C Hamano wrote:
-> * tb/filter-alternate-refs (2018-10-25) 2 commits
->   (merged to 'next' on 2018-10-26 at 887a7779a3)
->  + t5410: use longer path for sample script
->  + Documentation/config.txt: fix typo in core.alternateRefsCommand
->
->  Test fix.
->
->  Will merge to 'master'.
+Compared to the version on 'pu', this one moves all the config files
+to Documentation/config/ directory. imap.* is also added back in
+config.txt (curently only documented in git-imap-send.txt)
 
-There is an additional clean-up patch in [1] that I'm not sure if you
-have seen or not. Could you please queue that as a fixup to the above?
+This one is built on top of bp/reset-quiet and js/mingw-http-ssl to
+avoid non-trivial conflicts.
 
-Thanks,
-Taylor
+I notice that there are duplicated config documentation in git-*.txt.
+But given the size of this series, I think people will agree that can
+be done separately later.
 
-[1]: 6aabe7201dc81b98e404010b441fef8d582b0232.1540258140.git.me@ttaylorr.com
+Nguyễn Thái Ngọc Duy (78):
+  Update makefile in preparation for Documentation/config/*.txt
+  config.txt: move advice.* to a separate file
+  config.txt: move core.* to a separate file
+  config.txt: move add.* to a separate file
+  config.txt: move alias.* to a separate file
+  config.txt: move am.* to a separate file
+  config.txt: move apply.* to a separate file
+  config.txt: move blame.* to a separate file
+  config.txt: move branch.* to a separate file
+  config.txt: move browser.* to a separate file
+  config.txt: move checkout.* to a separate file
+  config.txt: move clean.* to a separate file
+  config.txt: move color.* to a separate file
+  config.txt: move column.* to a separate file
+  config.txt: move commit.* to a separate file
+  config.txt: move credential.* to a separate file
+  config.txt: move completion.* to a separate file
+  config.txt: move diff-config.txt to config/
+  config.txt: move difftool.* to a separate file
+  config.txt: move fastimport.* to a separate file
+  config.txt: move fetch-config.txt to config/
+  config.txt: move filter.* to a separate file
+  config.txt: move format-config.txt to config/
+  config.txt: move fmt-merge-msg-config.txt to config/
+  config.txt: move fsck.* to a separate file
+  config.txt: move gc.* to a separate file
+  config.txt: move gitcvs-config.txt to config/
+  config.txt: move gitweb.* to a separate file
+  config.txt: move grep.* to a separate file
+  config.txt: move gpg.* to a separate file
+  config.txt: move gui-config.txt to config/
+  config.txt: move guitool.* to a separate file
+  config.txt: move help.* to a separate file
+  config.txt: move ssh.* to a separate file
+  config.txt: move http.* to a separate file
+  config.txt: move i18n.* to a separate file
+  git-imap-send.txt: move imap.* to a separate file
+  config.txt: move index.* to a separate file
+  config.txt: move init.* to a separate file
+  config.txt: move instaweb.* to a separate file
+  config.txt: move interactive.* to a separate file
+  config.txt: move log.* to a separate file
+  config.txt: move mailinfo.* to a separate file
+  config.txt: move mailmap.* to a separate file
+  config.txt: move man.* to a separate file
+  config.txt: move merge-config.txt to config/
+  config.txt: move mergetool.* to a separate file
+  config.txt: move notes.* to a separate file
+  config.txt: move pack.* to a separate file
+  config.txt: move pager.* to a separate file
+  config.txt: move pretty.* to a separate file
+  config.txt: move protocol.* to a separate file
+  config.txt: move pull-config.txt to config/
+  config.txt: move push-config.txt to config/
+  config.txt: move rebase-config.txt to config/
+  config.txt: move receive-config.txt to config/
+  config.txt: move remote.* to a separate file
+  config.txt: move remotes.* to a separate file
+  config.txt: move repack.* to a separate file
+  config.txt: move rerere.* to a separate file
+  config.txt: move reset.* to a separate file
+  config.txt: move sendemail-config.txt to config/
+  config.txt: move sequencer.* to a separate file
+  config.txt: move showBranch.* to a separate file
+  config.txt: move splitIndex.* to a separate file
+  config.txt: move status.* to a separate file
+  config.txt: move stash.* to a separate file
+  config.txt: move submodule.* to a separate file
+  config.txt: move tag.* to a separate file
+  config.txt: move transfer.* to a separate file
+  config.txt: move uploadarchive.* to a separate file
+  config.txt: move uploadpack.* to a separate file
+  config.txt: move url.* to a separate file
+  config.txt: move user.* to a separate file
+  config.txt: move versionsort.* to a separate file
+  config.txt: move web.* to a separate file
+  config.txt: move worktree.* to a separate file
+  config.txt: remove config/dummy.txt
+
+ Documentation/Makefile                        |    2 +-
+ Documentation/config.txt                      | 2957 +----------------
+ Documentation/config/add.txt                  |    7 +
+ Documentation/config/advice.txt               |   86 +
+ Documentation/config/alias.txt                |   18 +
+ Documentation/config/am.txt                   |   14 +
+ Documentation/config/apply.txt                |   11 +
+ Documentation/config/blame.txt                |   21 +
+ Documentation/config/branch.txt               |  102 +
+ Documentation/config/browser.txt              |    9 +
+ Documentation/config/checkout.txt             |   23 +
+ Documentation/config/clean.txt                |    3 +
+ Documentation/config/color.txt                |  201 ++
+ Documentation/config/column.txt               |   55 +
+ Documentation/config/commit.txt               |   29 +
+ Documentation/config/completion.txt           |    7 +
+ Documentation/config/core.txt                 |  594 ++++
+ Documentation/config/credential.txt           |   26 +
+ .../{diff-config.txt => config/diff.txt}      |    2 +-
+ Documentation/config/difftool.txt             |   14 +
+ Documentation/config/fastimport.txt           |    8 +
+ .../{fetch-config.txt => config/fetch.txt}    |    0
+ Documentation/config/filter.txt               |    9 +
+ .../fmt-merge-msg.txt}                        |    0
+ .../{format-config.txt => config/format.txt}  |    0
+ Documentation/config/fsck.txt                 |   67 +
+ Documentation/config/gc.txt                   |  108 +
+ .../{gitcvs-config.txt => config/gitcvs.txt}  |    0
+ Documentation/config/gitweb.txt               |   16 +
+ Documentation/config/gpg.txt                  |   20 +
+ Documentation/config/grep.txt                 |   24 +
+ .../{gui-config.txt => config/gui.txt}        |    0
+ Documentation/config/guitool.txt              |   50 +
+ Documentation/config/help.txt                 |   23 +
+ Documentation/config/http.txt                 |  271 ++
+ Documentation/config/i18n.txt                 |   10 +
+ Documentation/config/imap.txt                 |   44 +
+ Documentation/config/index.txt                |   10 +
+ Documentation/config/init.txt                 |    3 +
+ Documentation/config/instaweb.txt             |   20 +
+ Documentation/config/interactive.txt          |   16 +
+ Documentation/config/log.txt                  |   43 +
+ Documentation/config/mailinfo.txt             |    6 +
+ Documentation/config/mailmap.txt              |   15 +
+ Documentation/config/man.txt                  |   12 +
+ .../{merge-config.txt => config/merge.txt}    |    4 +-
+ Documentation/config/mergetool.txt            |   53 +
+ Documentation/config/notes.txt                |   59 +
+ Documentation/config/pack.txt                 |  120 +
+ Documentation/config/pager.txt                |    8 +
+ Documentation/config/pretty.txt               |    9 +
+ Documentation/config/protocol.txt             |   64 +
+ .../{pull-config.txt => config/pull.txt}      |    0
+ .../{push-config.txt => config/push.txt}      |    0
+ .../{rebase-config.txt => config/rebase.txt}  |    0
+ .../receive.txt}                              |    0
+ Documentation/config/remote.txt               |   78 +
+ Documentation/config/remotes.txt              |    3 +
+ Documentation/config/repack.txt               |   27 +
+ Documentation/config/rerere.txt               |   12 +
+ Documentation/config/reset.txt                |    2 +
+ .../sendemail.txt}                            |    0
+ Documentation/config/sequencer.txt            |    5 +
+ Documentation/config/showbranch.txt           |    3 +
+ Documentation/config/splitindex.txt           |   24 +
+ Documentation/config/ssh.txt                  |   35 +
+ Documentation/config/stash.txt                |    9 +
+ Documentation/config/status.txt               |   72 +
+ .../submodule.txt}                            |    0
+ Documentation/config/tag.txt                  |   16 +
+ Documentation/config/transfer.txt             |   71 +
+ Documentation/config/uploadarchive.txt        |    6 +
+ Documentation/config/uploadpack.txt           |   65 +
+ Documentation/config/url.txt                  |   30 +
+ Documentation/config/user.txt                 |   26 +
+ Documentation/config/versionsort.txt          |   33 +
+ Documentation/config/web.txt                  |    4 +
+ Documentation/config/worktree.txt             |    9 +
+ Documentation/git-fmt-merge-msg.txt           |    2 +-
+ Documentation/git-imap-send.txt               |   45 +-
+ Documentation/git-merge.txt                   |    2 +-
+ Documentation/git-rebase.txt                  |    2 +-
+ Makefile                                      |    2 +-
+ generate-cmdlist.sh                           |    2 +-
+ 84 files changed, 2959 insertions(+), 2899 deletions(-)
+ create mode 100644 Documentation/config/add.txt
+ create mode 100644 Documentation/config/advice.txt
+ create mode 100644 Documentation/config/alias.txt
+ create mode 100644 Documentation/config/am.txt
+ create mode 100644 Documentation/config/apply.txt
+ create mode 100644 Documentation/config/blame.txt
+ create mode 100644 Documentation/config/branch.txt
+ create mode 100644 Documentation/config/browser.txt
+ create mode 100644 Documentation/config/checkout.txt
+ create mode 100644 Documentation/config/clean.txt
+ create mode 100644 Documentation/config/color.txt
+ create mode 100644 Documentation/config/column.txt
+ create mode 100644 Documentation/config/commit.txt
+ create mode 100644 Documentation/config/completion.txt
+ create mode 100644 Documentation/config/core.txt
+ create mode 100644 Documentation/config/credential.txt
+ rename Documentation/{diff-config.txt => config/diff.txt} (99%)
+ create mode 100644 Documentation/config/difftool.txt
+ create mode 100644 Documentation/config/fastimport.txt
+ rename Documentation/{fetch-config.txt => config/fetch.txt} (100%)
+ create mode 100644 Documentation/config/filter.txt
+ rename Documentation/{fmt-merge-msg-config.txt => config/fmt-merge-msg.txt} (100%)
+ rename Documentation/{format-config.txt => config/format.txt} (100%)
+ create mode 100644 Documentation/config/fsck.txt
+ create mode 100644 Documentation/config/gc.txt
+ rename Documentation/{gitcvs-config.txt => config/gitcvs.txt} (100%)
+ create mode 100644 Documentation/config/gitweb.txt
+ create mode 100644 Documentation/config/gpg.txt
+ create mode 100644 Documentation/config/grep.txt
+ rename Documentation/{gui-config.txt => config/gui.txt} (100%)
+ create mode 100644 Documentation/config/guitool.txt
+ create mode 100644 Documentation/config/help.txt
+ create mode 100644 Documentation/config/http.txt
+ create mode 100644 Documentation/config/i18n.txt
+ create mode 100644 Documentation/config/imap.txt
+ create mode 100644 Documentation/config/index.txt
+ create mode 100644 Documentation/config/init.txt
+ create mode 100644 Documentation/config/instaweb.txt
+ create mode 100644 Documentation/config/interactive.txt
+ create mode 100644 Documentation/config/log.txt
+ create mode 100644 Documentation/config/mailinfo.txt
+ create mode 100644 Documentation/config/mailmap.txt
+ create mode 100644 Documentation/config/man.txt
+ rename Documentation/{merge-config.txt => config/merge.txt} (98%)
+ create mode 100644 Documentation/config/mergetool.txt
+ create mode 100644 Documentation/config/notes.txt
+ create mode 100644 Documentation/config/pack.txt
+ create mode 100644 Documentation/config/pager.txt
+ create mode 100644 Documentation/config/pretty.txt
+ create mode 100644 Documentation/config/protocol.txt
+ rename Documentation/{pull-config.txt => config/pull.txt} (100%)
+ rename Documentation/{push-config.txt => config/push.txt} (100%)
+ rename Documentation/{rebase-config.txt => config/rebase.txt} (100%)
+ rename Documentation/{receive-config.txt => config/receive.txt} (100%)
+ create mode 100644 Documentation/config/remote.txt
+ create mode 100644 Documentation/config/remotes.txt
+ create mode 100644 Documentation/config/repack.txt
+ create mode 100644 Documentation/config/rerere.txt
+ create mode 100644 Documentation/config/reset.txt
+ rename Documentation/{sendemail-config.txt => config/sendemail.txt} (100%)
+ create mode 100644 Documentation/config/sequencer.txt
+ create mode 100644 Documentation/config/showbranch.txt
+ create mode 100644 Documentation/config/splitindex.txt
+ create mode 100644 Documentation/config/ssh.txt
+ create mode 100644 Documentation/config/stash.txt
+ create mode 100644 Documentation/config/status.txt
+ rename Documentation/{submodule-config.txt => config/submodule.txt} (100%)
+ create mode 100644 Documentation/config/tag.txt
+ create mode 100644 Documentation/config/transfer.txt
+ create mode 100644 Documentation/config/uploadarchive.txt
+ create mode 100644 Documentation/config/uploadpack.txt
+ create mode 100644 Documentation/config/url.txt
+ create mode 100644 Documentation/config/user.txt
+ create mode 100644 Documentation/config/versionsort.txt
+ create mode 100644 Documentation/config/web.txt
+ create mode 100644 Documentation/config/worktree.txt
+
+-- 
+2.19.1.647.g708186aaf9
+
