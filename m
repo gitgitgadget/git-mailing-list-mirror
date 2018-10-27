@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CBB11F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23E691F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728453AbeJ0PE1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 11:04:27 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:37864 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728445AbeJ0PE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:04:26 -0400
-Received: by mail-lf1-f67.google.com with SMTP id a82-v6so2480089lfa.4
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:32 -0700 (PDT)
+        id S1728464AbeJ0PEf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:04:35 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:37282 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728295AbeJ0PEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:04:34 -0400
+Received: by mail-lj1-f194.google.com with SMTP id c4-v6so3111815lja.4
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=l5mRZPfwgjmfbGi4n8u3waq2MmmcAtOISyvpNXWB+yk=;
-        b=ESC5hPU7J10hq1tk3o+k8ZZMD20YOq0TdNllqNeSeTgvDF+ILbYcrpRNs/FARyH4oW
-         D19Fv0ssPLGuzLr7AAwfV/pz2DO3WkS9qtm/2w0nVnsrV1wFHC9bZ3dDu6xH2sfUGvq5
-         QQsjK6Hf3/lhSLdbWOVp8yTZuaKGh8IJwPy/tMZ5Igys/1dsRLACJcTzGV9g28ycr77v
-         qnngQhF0HDQwcnkqE6OnLwpx8bFRNc3DgQzTagdbCKacCkD6DdcsFyqLmOpfeU8D3wtP
-         B6eaSbn+CoXYqADmS84u7jFgjFOv4TNjeNPOQxtzXIVxhWibFa1s+OvRT/aVvnRj+kkX
-         O+fQ==
+        bh=E8im2AWO3PkP4LFNtmSQdnUqLhYqgZ7AiD/ofFFXNkc=;
+        b=sZG+nriA1FPf2n+FhW+h1J/ox6SNURVW/UEimHWomLzY+QAsS99f2fc/V39SxbLo/N
+         opdF7PEvFap9SDXaN2rBLdAWD0Isn994Vxgj8OkXH0SEpwslBq0m7Q/SctkyqxoUr8LN
+         c7QgxrVD3FwuZwoy6YHDNnV4dt051hMhVN8hffXnw5vGBJhQMvMz1O0n1GjQlhp0R7yC
+         HUHPC7v4MqBSFy4flhXYC4PKYclqEbjNzEc+x85QWmuJEGpDbCFh0lk+OjL+PFZk9m4b
+         9SjHlVqtJ6c7IvTM25H+5qlfuTlaHXfXnuvXjMRNaLRZ1xFWTFi+TT2t9vS7k0V1uwJe
+         /fog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=l5mRZPfwgjmfbGi4n8u3waq2MmmcAtOISyvpNXWB+yk=;
-        b=ezPPI7fDnA0iMppTseCyM7xo30Sxf1QcLKyA+9bYniK4umkxqr21T9FZOSG/kpNfvt
-         Qjq+3iwvv2sPOxYx6DXvrlVWZi/UaIrvqny7YgjUtsssuqv61mzzreMsgr9stPZQkVtO
-         RWH9P8XpDbuJjlZ0ZN6w8jPL+EnABCWBNQ4qjNVvuFoG1qK0EmtA1W2y1Qivg++Z7Cj+
-         H5/uW4rduPnx7U5B3jjwkfpBthOZhezCLvkr1UwgPMFusUeZ4DnPXiofXR0wY7nA0nkp
-         WNkAhW7xyTenCnNLpHQgT4AWUYjnD+y062rKz7kgrG2s3U48drAkQuqogzz/vZOKTwz0
-         hC/g==
-X-Gm-Message-State: AGRZ1gJm0T3aukgPmedyr8O3T7kafHywLvM/aZXoYuhFgxvMSs6t+zKP
-        YPNYTNpJBJBPUuUugK0XLlgJiSOj
-X-Google-Smtp-Source: AJdET5cwFwo0O7/sU8F8o/QFmHZzDycdjvyas3KqJZU5utjdr1Y/hM2fK0nBjgMB0Oyk9i/io7jDsQ==
-X-Received: by 2002:a19:cd8e:: with SMTP id d136mr3692457lfg.3.1540621471514;
-        Fri, 26 Oct 2018 23:24:31 -0700 (PDT)
+        bh=E8im2AWO3PkP4LFNtmSQdnUqLhYqgZ7AiD/ofFFXNkc=;
+        b=WYptB5GS0dF5djJMimWPBJA1GhATJbSWuBZ/GJ14vkE1INtzNtoOBLNAGoEEntajVn
+         /F6CU4vwGT/echI9YgG/3sSWrRA5lRPeBUfYwAWweS58gvlxgl+VSVf/hl6suDPYnAjy
+         jrCoK0mMkuS115/pl6hqTaRaEcloC6kubAJB0FwMPTOV9uzbZpaHDpkS/5z9PQ0SGytO
+         PpZNW0qbUEdUhke0g6+DTG3IfJVvZqCopdXWyvnMSlpUrhKmV8865RNm8v8h8I1LjC4+
+         iUA1Pw48Hx+7L89/P+wQK6A9vNQ8g+IKjjObntbridhsSbkqKO6tACHLsev87qn9T01S
+         WI+w==
+X-Gm-Message-State: AGRZ1gLnmn+J7s3ikghdOHeEqXZ9JxTGOOIyIjst0vQrpmVfLgNvoCxK
+        bVqiBEbV0ayCLsS6sGHSaiWDBiIR
+X-Google-Smtp-Source: AJdET5eUHTD1bNLsRaUEizdlZou3s448Xpbt6004yg46cxOF1Du6T0FivqYZ24QP/x7r9vHiVscInA==
+X-Received: by 2002:a2e:8e95:: with SMTP id z21-v6mr2966565ljk.166.1540621478927;
+        Fri, 26 Oct 2018 23:24:38 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.30
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:30 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:37 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 30/78] config.txt: move gpg.* to a separate file
-Date:   Sat, 27 Oct 2018 08:23:03 +0200
-Message-Id: <20181027062351.30446-31-pclouds@gmail.com>
+Subject: [PATCH 36/78] config.txt: move i18n.* to a separate file
+Date:   Sat, 27 Oct 2018 08:23:09 +0200
+Message-Id: <20181027062351.30446-37-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,69 +71,49 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt     | 21 +--------------------
- Documentation/config/gpg.txt | 20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 20 deletions(-)
- create mode 100644 Documentation/config/gpg.txt
+ Documentation/config.txt      | 11 +----------
+ Documentation/config/i18n.txt | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 10 deletions(-)
+ create mode 100644 Documentation/config/i18n.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 177fefc83c..f52b89883d 100644
+index 11194e1851..a44e717f30 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -341,26 +341,7 @@ include::config/gitweb.txt[]
+@@ -351,16 +351,7 @@ include::config/help.txt[]
  
- include::config/grep.txt[]
+ include::config/http.txt[]
  
--gpg.program::
--	Use this custom program instead of "`gpg`" found on `$PATH` when
--	making or verifying a PGP signature. The program must support the
--	same command-line interface as GPG, namely, to verify a detached
--	signature, "`gpg --verify $file - <$signature`" is run, and the
--	program is expected to signal a good signature by exiting with
--	code 0, and to generate an ASCII-armored detached signature, the
--	standard input of "`gpg -bsau $key`" is fed with the contents to be
--	signed, and the program is expected to send the result to its
--	standard output.
+-i18n.commitEncoding::
+-	Character encoding the commit messages are stored in; Git itself
+-	does not care per se, but this information is necessary e.g. when
+-	importing commits from emails or in the gitk graphical history
+-	browser (and possibly at other places in the future or in other
+-	porcelains). See e.g. linkgit:git-mailinfo[1]. Defaults to 'utf-8'.
 -
--gpg.format::
--	Specifies which key format to use when signing with `--gpg-sign`.
--	Default is "openpgp" and another possible value is "x509".
--
--gpg.<format>.program::
--	Use this to customize the program used for the signing format you
--	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
--	be used as a legacy synonym for	`gpg.openpgp.program`. The default
--	value for `gpg.x509.program` is "gpgsm".
-+include::config/gpg.txt[]
+-i18n.logOutputEncoding::
+-	Character encoding the commit messages are converted to when
+-	running 'git log' and friends.
++include::config/i18n.txt[]
  
- include::gui-config.txt[]
- 
-diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+ imap::
+ 	The configuration variables in the 'imap' section are described
+diff --git a/Documentation/config/i18n.txt b/Documentation/config/i18n.txt
 new file mode 100644
-index 0000000000..590fe0d4ba
+index 0000000000..cc25621731
 --- /dev/null
-+++ b/Documentation/config/gpg.txt
-@@ -0,0 +1,20 @@
-+gpg.program::
-+	Use this custom program instead of "`gpg`" found on `$PATH` when
-+	making or verifying a PGP signature. The program must support the
-+	same command-line interface as GPG, namely, to verify a detached
-+	signature, "`gpg --verify $file - <$signature`" is run, and the
-+	program is expected to signal a good signature by exiting with
-+	code 0, and to generate an ASCII-armored detached signature, the
-+	standard input of "`gpg -bsau $key`" is fed with the contents to be
-+	signed, and the program is expected to send the result to its
-+	standard output.
++++ b/Documentation/config/i18n.txt
+@@ -0,0 +1,10 @@
++i18n.commitEncoding::
++	Character encoding the commit messages are stored in; Git itself
++	does not care per se, but this information is necessary e.g. when
++	importing commits from emails or in the gitk graphical history
++	browser (and possibly at other places in the future or in other
++	porcelains). See e.g. linkgit:git-mailinfo[1]. Defaults to 'utf-8'.
 +
-+gpg.format::
-+	Specifies which key format to use when signing with `--gpg-sign`.
-+	Default is "openpgp" and another possible value is "x509".
-+
-+gpg.<format>.program::
-+	Use this to customize the program used for the signing format you
-+	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
-+	be used as a legacy synonym for	`gpg.openpgp.program`. The default
-+	value for `gpg.x509.program` is "gpgsm".
++i18n.logOutputEncoding::
++	Character encoding the commit messages are converted to when
++	running 'git log' and friends.
 -- 
 2.19.1.647.g708186aaf9
 
