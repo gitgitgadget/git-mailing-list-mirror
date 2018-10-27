@@ -7,92 +7,72 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 454121F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 14:44:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5460E1F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 14:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728737AbeJ0XZW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 19:25:22 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:33732 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728616AbeJ0XZW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 19:25:22 -0400
-Received: by mail-io1-f65.google.com with SMTP id l25-v6so2476693ioj.0
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 07:44:09 -0700 (PDT)
+        id S1728742AbeJ0Xi5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 19:38:57 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:38380 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728736AbeJ0Xi5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 19:38:57 -0400
+Received: by mail-it1-f194.google.com with SMTP id i76-v6so4964536ita.3
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 07:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pgh6vtb92Y9UxEqoYN5AbKC0AytYBYM1v0kD7hmRXmk=;
-        b=SIFdQQKZ4Mcpdz1YscdFxIw2IVZDhz+E+Dq1agjmBTLVLv2Wov1j11whlAoVXR3GI/
-         wPo2zZ7hJXpHCvakSFgvg99SrZvDuhquW/wF+Os/NtQxKngf9BXylFXQwn9HEGIPn6X5
-         DzF3tMZoOpUHxvsvCCWqy2EUO+W+8Fm3YiFTFP2JkjhrmNBlFQDp2c7MxYV7ARvlCxa/
-         yYuDO6TR6H87kmFExFW6NPIUGbr8M6lvEi2D+QpAD8EcRC2wkEoJJkDJ6N26SKQVUOPM
-         nclq0TJelCo79yZoJpAnjssEQDs0Y5i/4rhcy5HV8OyGFIYCvBlTj1N3UurdvepjsxAU
-         xShA==
+        bh=qcYFRuN3EVBVZcMredBrFuFqjAKG+ADPGorGqJKhPkw=;
+        b=eTYB68sIXT2CqHTrbuHAWdtHbR0TuLOhix07l07r02MvRL4CnRVGZAx3nHZXSNZ+EE
+         Fq00i0rzYMuecc/rgyekjmz+SELBfFQ2n4E9+4NQik/4piquCl+7sJJg2kc0tVhpJe3D
+         RwCLF2Kwf++9nTe6H1sSsBgZ4YuK0lzV7TbiFe2Qy3Y36umnKl5UiXBwmAEoOUtQenhw
+         15M/o6i1coih6y5fTZfRDbPQUmsfAf6a8yFQksd6X/6iIfhCsI50Kwvb8SYmWGP9/or7
+         ynVga+D9y8BZ3MeLxW4WAQREHFDja9Al78JLTAIsFqacOm1vf+wSvyXwqqnRDu//u5cR
+         tygQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pgh6vtb92Y9UxEqoYN5AbKC0AytYBYM1v0kD7hmRXmk=;
-        b=KPYfYP+2oEnjTkOljCS1wNXbaWwzOpyJ6md19Dsa6MYH0ymJDJEt1uF+KSf7UmQHrk
-         k2SQWxTOuy0o8h89A945w+GRdyB0EhoY1Azplkp3WTaEEhmVlHJv2O36+hCN78wuwiNV
-         P6FOxzEsbWQN0Ik8BODFO8CVwzODBOV0mweZvsDA1mPSygWFsACQSrX2JdQc18AN/B27
-         9N1z9i9AZoR46x2qpRj07DJ8h5oZXxDmmuarY6BmtTFm7XTes0f8qet344+xpXhxIpRe
-         wkFfBS+fd2Db1nS/Z92Knpitm4AO01yDZaSPnbDdPn9R86tK+WodHhzqCUKQ822hDCFa
-         l0fg==
-X-Gm-Message-State: AGRZ1gJBTqd6QTExyH6Tf7OdXsnohjHO8QfcafUu3vkDmcISisQqpaLk
-        HkIsbi9xhxvLafMTy1AjemgIQdG0ufA2r9+NqGM=
-X-Google-Smtp-Source: AJdET5f8JljldWn2rn2H20waa30hczrMfdn/U9cgKCq47uM26yyen9P0HooR5AN+iKtCYUBXtfHedbb45h4Oru5RWGU=
-X-Received: by 2002:a6b:6f06:: with SMTP id k6-v6mr3787518ioc.236.1540651448864;
- Sat, 27 Oct 2018 07:44:08 -0700 (PDT)
+        bh=qcYFRuN3EVBVZcMredBrFuFqjAKG+ADPGorGqJKhPkw=;
+        b=PbovVuJLu3DY0RQ/wINsVVNDl8Q13g2fIBb2cp5lVotRaUU1imczlOOmSK3pNrNDj+
+         4OxLHo4N+87PMifMFpCQjM95xY0X22XdTiFXzBqQuTVjkXls30/fG4TDaXI+McN12s5N
+         JIaxqusNJzHzbemL5icMbRPcRbdmopucXpdH+JrdrvcvqqaBwbBdaYjSEqI9vFs664tZ
+         ZQdl020MC5bbIo8DjTBPPAzS0jkdXCcahoR1FNk+ZUf1As6UfuJXg/NS35WZown+rep/
+         VtWReGZBCsoGqf+4PH0bZLtxUJFK/cr9zf9+XSN6U5ZKIB5SYth8riD8Gu4+tYW9XD2T
+         O3yA==
+X-Gm-Message-State: AGRZ1gLzxgEwgZ3/Q0yyiWaybYf5VWz2LV4gTS/TyrSgr14ORFfZh11x
+        A2QnRARzuUjAx9usu5/rW2ZO5JdsRHDTXUpiwE1sIA==
+X-Google-Smtp-Source: AJdET5c75APSFfIXmkbeToEWrrEOxoTWljGJwRjkC6ma+bs1XcCoJIY/lC7tj+Y3gNOgFCftVfIbwvFOSr2QETac5OY=
+X-Received: by 2002:a02:958a:: with SMTP id b10-v6mr5599389jai.130.1540652261230;
+ Sat, 27 Oct 2018 07:57:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181027071003.1347-1-pclouds@gmail.com> <20181027071003.1347-2-pclouds@gmail.com>
- <20181027073125.GB26685@sigill.intra.peff.net> <CACsJy8AA8ABmV5myBEETWP0uSNNFjvUP5mE705OV9=JtyHgTkg@mail.gmail.com>
- <20181027081538.GG26685@sigill.intra.peff.net>
-In-Reply-To: <20181027081538.GG26685@sigill.intra.peff.net>
+References: <CAGOLd-7Hi+tssj4ozKPd04squ-PuFwtt6f2nhbZp-zKwy62pVQ@mail.gmail.com>
+ <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com>
+In-Reply-To: <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 27 Oct 2018 16:43:42 +0200
-Message-ID: <CACsJy8DLW_smOJd6aCoRcJZxQ2Lzut5US=sPadj7=fhne0UHGg@mail.gmail.com>
-Subject: Re: [PATCH 01/10] thread-utils: macros to unconditionally compile
- pthreads API
-To:     Jeff King <peff@peff.net>
+Date:   Sat, 27 Oct 2018 16:57:14 +0200
+Message-ID: <CACsJy8A83_Jh4GmVYXS-zk_6Yro6eeB9i_J7xh3VMTkr8JVDvA@mail.gmail.com>
+Subject: Re: bug?: git grep HEAD with exclude in pathspec not taken into account
+To:     Christophe Bliard <christophe.bliard@trux.info>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>
+        Rafael Ascensao <rafa.almas@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 27, 2018 at 10:15 AM Jeff King <peff@peff.net> wrote:
+On Wed, Oct 24, 2018 at 4:55 PM Christophe Bliard
+<christophe.bliard@trux.info> wrote:
 >
-> On Sat, Oct 27, 2018 at 09:40:13AM +0200, Duy Nguyen wrote:
+> Hi,
 >
-> > > We expect to be able to store a void pointer here and get it back, which
-> > > should work even for a single thread. Do we need something like:
-> > >
-> > >   extern void *pthread_specific_data;
-> > >
-> > >   #define pthread_setspecific(key, data) do { \
-> > >         pthread_specific_data = data; \
-> > >   } while(0)
-> > >
-> > >   void pthread_getspecific(key) pthread_specific_data
-> >
-> > The data is per key though so a correct implementation may involve a
-> > hashmap or a list.
->
-> Ah, yeah, you're right, I was mixing up the thread id and the key in my
-> head. I think it would just be an array of void pointers, with
-> pthread_key_create() returning an static index.
+> I observed an unexpected behavior while using git grep with both git
+> 2.19.1 and 2.14.3.
 
-We could redefine pthread_key_t as "void *" though, then
-_setspecific(key, data) is key = data; But there will be more changes
-in index-pack.c to take advantage of it. I took a stab but couldn't
-figure out fast enough where _setspecific(.., &nothread_data) should
-be called in NO_PTHREADS mode (to simplify get_thread_data() to just a
-wrapper of _getspecific) and got bored. It could be a micro project
-for someone really wants to learn about index-pack.c
+Quick note. I confirm this is a bug in tree_entry_interesting()
+perhaps being over-optimistic. It'll take me more time to familiarize
+myself with this negative matching in the function before I come up
+with a fix for it. Thanks for reporting.
 -- 
 Duy
