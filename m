@@ -2,83 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CE101F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 07:39:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 657301F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 07:40:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728000AbeJ0QUA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 12:20:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57058 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726610AbeJ0QUA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 12:20:00 -0400
-Received: (qmail 26128 invoked by uid 109); 27 Oct 2018 07:39:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 27 Oct 2018 07:39:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4744 invoked by uid 111); 27 Oct 2018 07:39:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 27 Oct 2018 03:39:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Oct 2018 03:39:55 -0400
-Date:   Sat, 27 Oct 2018 03:39:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 05/10] send-pack.c: remove #ifdef NO_PTHREADS
-Message-ID: <20181027073954.GD26685@sigill.intra.peff.net>
-References: <20181027071003.1347-1-pclouds@gmail.com>
- <20181027071003.1347-6-pclouds@gmail.com>
+        id S1728156AbeJ0QUo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 12:20:44 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:36576 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726610AbeJ0QUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 12:20:44 -0400
+Received: by mail-io1-f65.google.com with SMTP id o19-v6so2118386iod.3
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 00:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/gkbzviPUANSCGhnw9S2TU1tf1qyYrTOkTN/0qfGgHE=;
+        b=MM60jSuy8Z2nzFgQBQ6CeR+iaIJwlMwu0soqW7qUVGGKLYLTeS0JypIo1uNo3RLyry
+         QJh672O8s48GlVwVgWWaBpUBoLozWIZ2qtouE69vrmMUngKHTo+74fOhmq+bUtjPsiDQ
+         85q3O9DzxHIWcXQ2A+BHAfHjbR5rYVy09inJd+gV5kjPrJa0apqw4zbGY8rHPH4bcpwW
+         BD1sx+se+mkQlKIGnjGYwRF5Sm3ke96FzO7pZJMHh2c6TGICyr92dkYTglozPgycPGhC
+         Ya/kMWMz1MajS1bx0dTquAfdXHQ2K40nqvFUWZXRDeWzeKIaLFosYhO06tpErpgGjYXc
+         8Exw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/gkbzviPUANSCGhnw9S2TU1tf1qyYrTOkTN/0qfGgHE=;
+        b=Ei/DirYWJcRo4JYQMLhwXDdNN90ieMPJKDUp5emwZTribmKpiy1tsMgR80CudkBMnl
+         zNypEWJ3ZkXXyekYdlIy2kybBQkO+YBi6D2+3+T4XgbZlInqVzD0tWtxWfdgBr6WispR
+         bRXcaXC2UzxRbiJ1rtZntcc+qvv2KiTGGHlhSa9mSL9aM52ftDK/TyF5UX57EU908bzx
+         Bcyg3VVVLt8jJDrBo3XPcX2ijAKZD48UG6OBLMlHfTxPiCm1u2Buqu/wYIVJ6Aep+3fT
+         UH4tHEciCCIR3C5ZJW+XyUnAvBkqpWJ4TcnTAxs5Q1WLLbNQUv/+tDxT8icvJr8VcOXE
+         NFuA==
+X-Gm-Message-State: AGRZ1gKKPWWxllBhONf+PNnNybaQcqSZNaJR/5fVUq+kOF1lUzxAAsum
+        5hdhzRkQBWjtkYjEAP12NR0bbRaHt0BwUXzzrWcwaVTx
+X-Google-Smtp-Source: AJdET5eavYc/uVOAIWOURmOYftwOiTyzmiOPZbsRJ6Jf5KtCyORNp2peyKyhfLZ7+UI8sIw4elIg4QNXRC2iEpxdmaI=
+X-Received: by 2002:a6b:9383:: with SMTP id v125-v6mr3387021iod.282.1540626040135;
+ Sat, 27 Oct 2018 00:40:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181027071003.1347-6-pclouds@gmail.com>
+References: <20181027071003.1347-1-pclouds@gmail.com> <20181027071003.1347-2-pclouds@gmail.com>
+ <20181027073125.GB26685@sigill.intra.peff.net>
+In-Reply-To: <20181027073125.GB26685@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 27 Oct 2018 09:40:13 +0200
+Message-ID: <CACsJy8AA8ABmV5myBEETWP0uSNNFjvUP5mE705OV9=JtyHgTkg@mail.gmail.com>
+Subject: Re: [PATCH 01/10] thread-utils: macros to unconditionally compile
+ pthreads API
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 27, 2018 at 09:09:58AM +0200, Nguyễn Thái Ngọc Duy wrote:
+On Sat, Oct 27, 2018 at 9:31 AM Jeff King <peff@peff.net> wrote:
+> > +#define pthread_setspecific(key, data)
+> > +#define pthread_getspecific(key) NULL
+>
+> We expect to be able to store a void pointer here and get it back, which
+> should work even for a single thread. Do we need something like:
+>
+>   extern void *pthread_specific_data;
+>
+>   #define pthread_setspecific(key, data) do { \
+>         pthread_specific_data = data; \
+>   } while(0)
+>
+>   void pthread_getspecific(key) pthread_specific_data
 
-> While at there correct "#include cache.h" position. It must be one of
-> the first includes.
-> [...]
-> @@ -1,4 +1,5 @@
->  #include "builtin.h"
-> +#include "cache.h"
-
-I think it's actually fine as it is. The rule is not about cache.h in
-particular, but that the first include must be one of the special ones.
-And builtin.h is such a special one. After that, there are no ordering
-rules.
-
-> @@ -203,9 +204,8 @@ static int receive_status(int in, struct ref *refs)
->  static int sideband_demux(int in, int out, void *data)
->  {
->  	int *fd = data, ret;
-> -#ifdef NO_PTHREADS
-> -	close(fd[1]);
-> -#endif
-> +	if (!HAVE_THREADS)
-> +		close(fd[1]);
->  	ret = recv_sideband("send-pack", fd[0], out);
->  	close(out);
->  	return ret;
-
-This one is a very interesting case. Your conversion here isn't wrong,
-but what we actually want to know is: is "struct async" implemented as a
-separate process or not.
-
-And "struct async" will continue to switch on NO_PTHREADS, as it can
-never use these dummy bits. I can't think of a way that HAVE_THREADS
-would ever diverge from how "struct async" works, but my gut feeling is
-that we probably ought to have a separate variable for the async code to
-tell how it works. Even if it ends up being the same as HAVE_THREADS,
-it helps untangle the two cases.
-
--Peff
+The data is per key though so a correct implementation may involve a
+hashmap or a list. It does simplify index-pack which has to fall back
+to nothread_data when pthreads is not available. But with index-pack
+being the only call site that can take advantage of this
+(run-command.c probably will use real pthreads library anyway), I'm
+not sure if it's worth really implementing these functions.
+-- 
+Duy
