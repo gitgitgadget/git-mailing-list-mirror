@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5DDE1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E8201F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 06:24:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728475AbeJ0PEk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 11:04:40 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:43538 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728465AbeJ0PEj (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728473AbeJ0PEj (ORCPT <rfc822;e@80x24.org>);
         Sat, 27 Oct 2018 11:04:39 -0400
-Received: by mail-lf1-f65.google.com with SMTP id u18so2473237lff.10
-        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:45 -0700 (PDT)
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38770 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727973AbeJ0PEi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:04:38 -0400
+Received: by mail-lj1-f196.google.com with SMTP id k11-v6so3114057lja.5
+        for <git@vger.kernel.org>; Fri, 26 Oct 2018 23:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tlDUc7cpyPQeKearWM7oy1maTrqLd/fwlxi30wIgiLk=;
-        b=NK0ISxlaAzZrHIZupUxRD9xsYrbre3B9RO0qJ0qIfs5oLOyrucZzpASo8RmEU0rqTT
-         IhRrx0BWFtXKgKh/mPqAp7kwptFnBbpgpmMaU+qUzagTxDmuX6CiHFIdv9IDuuIEswMe
-         5IJzVqjlx65pNkrkUqBT/s5i5I/1lRdetagECQrt3gi98e/cemaiyu1ZECQ+c5DmMR24
-         ZQLNBzwrosNDOmWX8s5lb+yeMNrIu5H01mD/RvlqoYib3zoIexHos/liGMTETfRpjMoh
-         kSOorrImCQ6Zl/UvTAYvMlp7kEqnohgg1rHAsTy0nIW+bzq81GVN3pD8vCeEcygpDKVD
-         cx8g==
+        bh=9lmZSY4pPIgPvqsCMeyE9zdPdGZxrvR/UMk6W3APXes=;
+        b=QwkPagMaCek8G7d8++udMDFM1SgJtgFwcSJXjxSKN0LU1bvtlFvZAKwiyi6A5bavV5
+         VzfdVyfAh1lJ3JUnTPMBwJQNs6HK1aKXfHwqV06Q9XWFcdh2jFn0BoiylKtEcW8NqC+4
+         uznkCIBsDJHOBLSQ3TipQ8GTBOgJUFsEEIgYCcIL8a46SKxkUP3hbiAdsT4lq3DeY9FO
+         bN4vKpccGnQK1Ew1ycclbiLi2FNH4TrBymla1OhUzczdlzGgBObzRZiQT4EaXoJxtH2+
+         flxtkme82rY8QH5o87R5dC2MAt0Z9abuUZUz6ckm4srSyhCinbgx0Oe0GIp7jTZW5Axy
+         bz6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tlDUc7cpyPQeKearWM7oy1maTrqLd/fwlxi30wIgiLk=;
-        b=o51ELgFva6kp0WPNK2vajihMzmXgwR6RcHID6pn6SGlBuEV9F5tvclYJj9YNAgYHNM
-         G9b2H4GmUAlJ36dXhP60wgjbn+1MU3ATWc79yTtpKEGrMqbo0cQB1a5SrrNE/haSRnJC
-         3Fp50C7KNVwZdIA41QVHJ5+IRxtoCUiWTLVEK5HXI/JDa7BkVvzy1yrNuCwdlEYnRO0v
-         ioZ/IzVeLgdwgeD+C1Dkyk0hN0aZZYL1xiC9KR+7NF8obwpjoEYOH4VF01I/D2zIHBeR
-         jSz5QUzZqXWSTTFvTWs8O1IWvFjYgQClMIm2OZz1jEI1rorb130UR2639H3sxW5oyBs+
-         F9eA==
-X-Gm-Message-State: AGRZ1gIz49OYkSUGi+mT3uz4aLJjqZDzCxA2OPzAoGMx8ytZYQ7sMcZb
-        z3PwBTk3WOlpyUBKq2ELtuGLLuAV
-X-Google-Smtp-Source: AJdET5eYidAFmKiDrClRj1wonFouhsEVgr94TMru+7J5ejIHzq995rRmX4iOaaDYjXHQSvUZ4l0tpw==
-X-Received: by 2002:a19:db82:: with SMTP id t2mr3158576lfi.130.1540621484624;
-        Fri, 26 Oct 2018 23:24:44 -0700 (PDT)
+        bh=9lmZSY4pPIgPvqsCMeyE9zdPdGZxrvR/UMk6W3APXes=;
+        b=OZnEOy11lCi18xR4gNON8ifxlICrjLl5FTkV1pc0UaQX6+yN1UmN1Ldoj7WDdAuz6x
+         twIJEnHi16UEbsLVSQXxR/AodP/7q/8icYSY10FnE4INivBOnQ0Qi3gwbdYpLkMl9g0/
+         qoJv9tNt9gtDh/x84Gg1W+fYxWD3AoQgj4RLzfOfHr1WRnjOOcik2CFnjd2X58lQm7S7
+         O2+f9qHjY9OROn1ZxW2WFXt5CLpdOY0SsW+fiLsdDc1S8FElxrPSPngML1oh4yYpAspW
+         y5sTCI200tOqsYtDL578i/gXaqoxRQLC8m8ZX5NRvFDtBNUnWIP/vOlLFJCN+kc0NYkV
+         9JZA==
+X-Gm-Message-State: AGRZ1gJZXUDLh6rYHhrNGhmWkjaJmG5OLJXBdr8DKfyweXq9+duCXKXN
+        YzIm86vDXkBDzBsdfvHYKsUPX1aE
+X-Google-Smtp-Source: AJdET5eElXs7Wz6pBzMCtdR6bEKg2cqsTDagkukbe+hYv0/KhIGuBxLpNi4B4JykeypO8nyN47S0Iw==
+X-Received: by 2002:a2e:5246:: with SMTP id g67-v6mr4159030ljb.73.1540621482640;
+        Fri, 26 Oct 2018 23:24:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.43
+        by smtp.gmail.com with ESMTPSA id c81-v6sm2097487lfe.79.2018.10.26.23.24.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Oct 2018 23:24:43 -0700 (PDT)
+        Fri, 26 Oct 2018 23:24:42 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 41/78] config.txt: move interactive.* to a separate file
-Date:   Sat, 27 Oct 2018 08:23:14 +0200
-Message-Id: <20181027062351.30446-42-pclouds@gmail.com>
+Subject: [PATCH 39/78] config.txt: move init.* to a separate file
+Date:   Sat, 27 Oct 2018 08:23:12 +0200
+Message-Id: <20181027062351.30446-40-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027062351.30446-1-pclouds@gmail.com>
 References: <20181027062351.30446-1-pclouds@gmail.com>
@@ -71,61 +71,35 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt             | 17 +----------------
- Documentation/config/interactive.txt | 16 ++++++++++++++++
- 2 files changed, 17 insertions(+), 16 deletions(-)
- create mode 100644 Documentation/config/interactive.txt
+ Documentation/config.txt      | 4 +---
+ Documentation/config/init.txt | 3 +++
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/config/init.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5b6e2971e3..763bb291e5 100644
+index 03b7ac75fc..94b14af9f3 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -361,22 +361,7 @@ include::config/init.txt[]
+@@ -357,9 +357,7 @@ include::config/imap.txt[]
  
- include::config/instaweb.txt[]
+ include::config/index.txt[]
  
--interactive.singleKey::
--	In interactive commands, allow the user to provide one-letter
--	input with a single key (i.e., without hitting enter).
--	Currently this is used by the `--patch` mode of
--	linkgit:git-add[1], linkgit:git-checkout[1], linkgit:git-commit[1],
--	linkgit:git-reset[1], and linkgit:git-stash[1]. Note that this
--	setting is silently ignored if portable keystroke input
--	is not available; requires the Perl module Term::ReadKey.
--
--interactive.diffFilter::
--	When an interactive command (such as `git add --patch`) shows
--	a colorized diff, git will pipe the diff through the shell
--	command defined by this configuration variable. The command may
--	mark up the diff further for human consumption, provided that it
--	retains a one-to-one correspondence with the lines in the
--	original diff. Defaults to disabled (no filtering).
-+include::config/interactive.txt[]
+-init.templateDir::
+-	Specify the directory from which templates will be copied.
+-	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
++include::config/init.txt[]
  
- log.abbrevCommit::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
-diff --git a/Documentation/config/interactive.txt b/Documentation/config/interactive.txt
+ instaweb.browser::
+ 	Specify the program that will be used to browse your working
+diff --git a/Documentation/config/init.txt b/Documentation/config/init.txt
 new file mode 100644
-index 0000000000..ad846dd7c9
+index 0000000000..46fa8c6a08
 --- /dev/null
-+++ b/Documentation/config/interactive.txt
-@@ -0,0 +1,16 @@
-+interactive.singleKey::
-+	In interactive commands, allow the user to provide one-letter
-+	input with a single key (i.e., without hitting enter).
-+	Currently this is used by the `--patch` mode of
-+	linkgit:git-add[1], linkgit:git-checkout[1], linkgit:git-commit[1],
-+	linkgit:git-reset[1], and linkgit:git-stash[1]. Note that this
-+	setting is silently ignored if portable keystroke input
-+	is not available; requires the Perl module Term::ReadKey.
-+
-+interactive.diffFilter::
-+	When an interactive command (such as `git add --patch`) shows
-+	a colorized diff, git will pipe the diff through the shell
-+	command defined by this configuration variable. The command may
-+	mark up the diff further for human consumption, provided that it
-+	retains a one-to-one correspondence with the lines in the
-+	original diff. Defaults to disabled (no filtering).
++++ b/Documentation/config/init.txt
+@@ -0,0 +1,3 @@
++init.templateDir::
++	Specify the directory from which templates will be copied.
++	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
 -- 
 2.19.1.647.g708186aaf9
 
