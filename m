@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17D661F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB6E01F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728904AbeJ1CMB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 22:12:01 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:40953 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728610AbeJ1CMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 22:12:01 -0400
-Received: by mail-lj1-f196.google.com with SMTP id t22-v6so4013712lji.7
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:19 -0700 (PDT)
+        id S1728914AbeJ1CME (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 22:12:04 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:46031 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728610AbeJ1CME (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 22:12:04 -0400
+Received: by mail-lf1-f66.google.com with SMTP id c24-v6so3149437lfi.12
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6xDyapWfwoqfEqSfPJe6Xohq4fxEOPqfhDua9vHp/Eg=;
-        b=c+O+a5LFd7eD8Ce4+XJS15RNNebsdzuq07twsn7R4XkwPI7gTt4KcMp1kXZvh9X5UA
-         h1PZflgOigWgAHxg+7j83E3izNQMrY3Djh+XsmNRpn3kUa+0GvEgNdJYCD5JkOtABi5S
-         GyfAXnH1z6og1uusWPTQ1Be1h7tLy+t7ZWIAAcQ7jutRP57B9+L4rqjmmkezTiaknFsi
-         YluvXzEepbWnvVg+U3ZoM+PcaFxPH8v3UdmT5pWmzUhEnIgHeOIFWcS1pBL+YNtJXiOA
-         9C6uV/rFYpDclmGDno609a2YweRbqUYo+UZQHc9PIaVABJYTt5ebFxzvOagbsXJC4zZ4
-         eJzA==
+        bh=mAfV2Nz5oHseiWQnq7IrtXDy2ffEDSwSfXwchHyglKQ=;
+        b=CvwWDLdcZM/zewZBYd+NYSE9co/qOc0qN2731u37knRXLs4LYUdJFtTPjhEmGEV1Qc
+         IiDDWWmIBWbI0ONWE+5f0tOl/cd5Vmj+oxeAHXg9u4T2ZB9Oi6yhcI31HqUfPqH4utTJ
+         q2G0npbwmOw2sy3LmtOqpKjvYQwjA58BR0I6zMaqr2Hr4kwP3XRASq9/6yLA0XBFeveV
+         JzgBDPsbYKaWp7yAxTE/dD4bc0rRCSvkF38rDMLKYl9JEpftjQ3eoA2fGFnIhMAIvcuC
+         Y/fRZnUXAiQZMiazF0anBfi12zAp/MEP9IsbXAz+JPkZ8cIn0Pmw6AQNurZUhO78G9to
+         Qw5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6xDyapWfwoqfEqSfPJe6Xohq4fxEOPqfhDua9vHp/Eg=;
-        b=sx5y1J8tg5WEBXdOlsnug+nef9hY+oWqroF0yqhiPPxNJUcUAwKNB04vN6+ItfsWdr
-         OqwnsD8+WHZ/walXCFaGHHNiyyNA9ZjPvDgcolK9AocLft+5TAb09ToU/19JMf9WFAuO
-         ae5a3Ls+f25oM+IZzN0a30WE3MCY+6wZDaZTWE/znh4R9TqdQs26UqfeG1+ewQRdgpem
-         Y3sh/Kgtgg71c48+G1OUrqFSFLhSsZtrj3ZS3Q+FgY5NN83YMce22sKz4NEIStMNUP/g
-         Z26qG+LX3WhnyUsJwvyu4ewJxR8ML65uptNMCXqikOghuWiJK2MKc3v0tKfbKopp1kET
-         SIbg==
-X-Gm-Message-State: AGRZ1gKY8u/7igAcrKpVdBoyV4OhOTReie+7Z5hQ7/SM+imhJ6sVcXKQ
-        dBY10mtmnLxJM8dtiyn5gvI=
-X-Google-Smtp-Source: AJdET5e2MvUDIanCB54kDAI9HTIqeYm88JX7a0M8Fx/y+5U4mjvdkww298XtnuuaSjoKqO/PckASdg==
-X-Received: by 2002:a2e:84c5:: with SMTP id q5-v6mr5067637ljh.65.1540661418467;
-        Sat, 27 Oct 2018 10:30:18 -0700 (PDT)
+        bh=mAfV2Nz5oHseiWQnq7IrtXDy2ffEDSwSfXwchHyglKQ=;
+        b=OK7iI12DwXzEUr8ntI4HKe2tsce6WiACWvMsKNyizipNLPq4JAf6Wlm0ZFjYGpUaPx
+         unYx2I+WLyPRKtMEWrGHvObm+dNQK8JuHnPAoOXHHFoZBk3b9mlaTv35Xka40DnzoHFH
+         lKgClbnF+VKAKj/ZnAcTUVjY0bpAg+EAbWUCmbEOwYY3GwZAT0TP3QRAMfgqTMYggZaE
+         mEg6ddXwJm4OgWNt4P5RB4HBiNTvfr4vWOC9N/+k8oGp8udOqM6fv6xvIL9Jbk8N80eV
+         Ojq+hhcNYe2ko+iyzUzMB2nweJT4LmGBxnL9mAcl/WN4YAPsAue4yaqPw+Ggk/+GXiet
+         mr4A==
+X-Gm-Message-State: AGRZ1gIsqt42phDfrBqRX5y4hyzANjFGCa98jt04x0vjW3FViykRlXiP
+        X721huAv7X+6UW07if+B2u0=
+X-Google-Smtp-Source: AJdET5ekh4FzqZOCxB9YIdtB/Ma5/dpI6mx//eSNe52+gK2eYzX83+gp3RRDmPC+jrlzslorNXetWQ==
+X-Received: by 2002:a19:ae03:: with SMTP id f3mr5075773lfc.86.1540661421485;
+        Sat, 27 Oct 2018 10:30:21 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.17
+        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 10:30:17 -0700 (PDT)
+        Sat, 27 Oct 2018 10:30:20 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 02/10] index-pack: remove #ifdef NO_PTHREADS
-Date:   Sat, 27 Oct 2018 19:30:00 +0200
-Message-Id: <20181027173008.18852-3-pclouds@gmail.com>
+Subject: [PATCH v2 04/10] attr.c: remove #ifdef NO_PTHREADS
+Date:   Sat, 27 Oct 2018 19:30:02 +0200
+Message-Id: <20181027173008.18852-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
 References: <20181027071003.1347-1-pclouds@gmail.com>
@@ -71,172 +71,70 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/index-pack.c | 68 ++++++++++++--------------------------------
- 1 file changed, 18 insertions(+), 50 deletions(-)
+ attr.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2004e25da2..bbd66ca025 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -42,9 +42,7 @@ struct base_data {
+diff --git a/attr.c b/attr.c
+index 60d284796d..eaece6658d 100644
+--- a/attr.c
++++ b/attr.c
+@@ -41,23 +41,17 @@ const char *git_attr_name(const struct git_attr *attr)
+ 
+ struct attr_hashmap {
+ 	struct hashmap map;
+-#ifndef NO_PTHREADS
+ 	pthread_mutex_t mutex;
+-#endif
  };
  
- struct thread_local {
--#ifndef NO_PTHREADS
- 	pthread_t thread;
--#endif
- 	struct base_data *base_cache;
- 	size_t base_cache_used;
- 	int pack_fd;
-@@ -98,8 +96,6 @@ static uint32_t input_crc32;
- static int input_fd, output_fd;
- static const char *curr_pack;
- 
--#ifndef NO_PTHREADS
--
- static struct thread_local *thread_data;
- static int nr_dispatched;
- static int threads_active;
-@@ -179,26 +175,6 @@ static void cleanup_thread(void)
- 	free(thread_data);
- }
- 
--#else
--
--#define read_lock()
--#define read_unlock()
--
--#define counter_lock()
--#define counter_unlock()
--
--#define work_lock()
--#define work_unlock()
--
--#define deepest_delta_lock()
--#define deepest_delta_unlock()
--
--#define type_cas_lock()
--#define type_cas_unlock()
--
--#endif
--
--
- static int mark_link(struct object *obj, int type, void *data, struct fsck_options *options)
- {
- 	if (!obj)
-@@ -364,22 +340,20 @@ static NORETURN void bad_object(off_t offset, const char *format, ...)
- 
- static inline struct thread_local *get_thread_data(void)
+ static inline void hashmap_lock(struct attr_hashmap *map)
  {
 -#ifndef NO_PTHREADS
--	if (threads_active)
--		return pthread_getspecific(key);
--	assert(!threads_active &&
--	       "This should only be reached when all threads are gone");
+ 	pthread_mutex_lock(&map->mutex);
 -#endif
-+	if (HAVE_THREADS) {
-+		if (threads_active)
-+			return pthread_getspecific(key);
-+		assert(!threads_active &&
-+		       "This should only be reached when all threads are gone");
-+	}
- 	return &nothread_data;
  }
  
+ static inline void hashmap_unlock(struct attr_hashmap *map)
+ {
 -#ifndef NO_PTHREADS
- static void set_thread_data(struct thread_local *data)
- {
- 	if (threads_active)
- 		pthread_setspecific(key, data);
- }
+ 	pthread_mutex_unlock(&map->mutex);
 -#endif
- 
- static struct base_data *alloc_base_data(void)
- {
-@@ -1092,7 +1066,6 @@ static void resolve_base(struct object_entry *obj)
- 	find_unresolved_deltas(base_obj);
  }
- 
--#ifndef NO_PTHREADS
- static void *threaded_second_pass(void *data)
- {
- 	set_thread_data(data);
-@@ -1116,7 +1089,6 @@ static void *threaded_second_pass(void *data)
- 	}
- 	return NULL;
- }
--#endif
  
  /*
-  * First pass:
-@@ -1213,7 +1185,6 @@ static void resolve_deltas(void)
- 		progress = start_progress(_("Resolving deltas"),
- 					  nr_ref_deltas + nr_ofs_deltas);
- 
+@@ -498,23 +492,17 @@ static struct check_vector {
+ 	size_t nr;
+ 	size_t alloc;
+ 	struct attr_check **checks;
 -#ifndef NO_PTHREADS
- 	nr_dispatched = 0;
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
- 		init_thread();
-@@ -1229,7 +1200,6 @@ static void resolve_deltas(void)
- 		cleanup_thread();
- 		return;
- 	}
+ 	pthread_mutex_t mutex;
 -#endif
+ } check_vector;
  
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
-@@ -1531,11 +1501,11 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
- 		if (nr_threads < 0)
- 			die(_("invalid number of threads specified (%d)"),
- 			    nr_threads);
--#ifdef NO_PTHREADS
--		if (nr_threads != 1)
--			warning(_("no threads support, ignoring %s"), k);
--		nr_threads = 1;
--#endif
-+		if (!HAVE_THREADS) {
-+			if (nr_threads != 1)
-+				warning(_("no threads support, ignoring %s"), k);
-+			nr_threads = 1;
-+		}
- 		return 0;
- 	}
- 	return git_default_config(k, v, cb);
-@@ -1723,12 +1693,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 				nr_threads = strtoul(arg+10, &end, 0);
- 				if (!arg[10] || *end || nr_threads < 0)
- 					usage(index_pack_usage);
--#ifdef NO_PTHREADS
--				if (nr_threads != 1)
--					warning(_("no threads support, "
--						  "ignoring %s"), arg);
--				nr_threads = 1;
--#endif
-+				if (!HAVE_THREADS) {
-+					if (nr_threads != 1)
-+						warning(_("no threads support, "
-+							  "ignoring %s"), arg);
-+					nr_threads = 1;
-+				}
- 			} else if (starts_with(arg, "--pack_header=")) {
- 				struct pack_header *hdr;
- 				char *c;
-@@ -1791,14 +1761,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (strict)
- 		opts.flags |= WRITE_IDX_STRICT;
- 
+ static inline void vector_lock(void)
+ {
 -#ifndef NO_PTHREADS
--	if (!nr_threads) {
-+	if (HAVE_THREADS && !nr_threads) {
- 		nr_threads = online_cpus();
- 		/* An experiment showed that more threads does not mean faster */
- 		if (nr_threads > 3)
- 			nr_threads = 3;
- 	}
+ 	pthread_mutex_lock(&check_vector.mutex);
 -#endif
+ }
  
- 	curr_pack = open_pack_file(pack_name);
- 	parse_pack_header();
+ static inline void vector_unlock(void)
+ {
+-#ifndef NO_PTHREADS
+ 	pthread_mutex_unlock(&check_vector.mutex);
+-#endif
+ }
+ 
+ static void check_vector_add(struct attr_check *c)
+@@ -1181,8 +1169,6 @@ void git_all_attrs(const struct index_state *istate,
+ 
+ void attr_start(void)
+ {
+-#ifndef NO_PTHREADS
+ 	pthread_mutex_init(&g_attr_hashmap.mutex, NULL);
+ 	pthread_mutex_init(&check_vector.mutex, NULL);
+-#endif
+ }
 -- 
 2.19.1.647.g708186aaf9
 
