@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0FA31F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17D661F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728838AbeJ1CMA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 22:12:00 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:37674 "EHLO
+        id S1728904AbeJ1CMB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 22:12:01 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:40953 "EHLO
         mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728793AbeJ1CMA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 22:12:00 -0400
-Received: by mail-lj1-f196.google.com with SMTP id c4-v6so4019113lja.4
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:18 -0700 (PDT)
+        with ESMTP id S1728610AbeJ1CMB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 22:12:01 -0400
+Received: by mail-lj1-f196.google.com with SMTP id t22-v6so4013712lji.7
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=drqTQBtS50H1vlemHJ1Blbd8zNG6Y/k1rTNoKJyfCqs=;
-        b=UbFa98pbnlvd/LDeJAN1b339brRwnyspRdg9kdZ7acYTXsMeEYLfpi2f3oWwVJUw3f
-         KZB56v0caqOU6PViz2WZf6FdUi06Fjc8A+gSG5amfyXwoodajMz5tzzcHqNSk6i9iXFA
-         o2M9Oa6O0C05SfzkO5i4/KRe5B+kCtxkcH9Wza+B0Qo6vOrz+K3sowEP+LmU/bSYT4Ha
-         EwCfALUmTOUEPHZ/Pt9lDCgHIXqeExneaq3XJdqlgtlFatTjr6bdniRypcQQ3L155Wor
-         HZ1GYHdin+KcqZ+a/dROMSS5f2j1iZ07/4xivhGwOlUt2LdTl1ranSVktn5WMqVmnDXn
-         zk3Q==
+        bh=6xDyapWfwoqfEqSfPJe6Xohq4fxEOPqfhDua9vHp/Eg=;
+        b=c+O+a5LFd7eD8Ce4+XJS15RNNebsdzuq07twsn7R4XkwPI7gTt4KcMp1kXZvh9X5UA
+         h1PZflgOigWgAHxg+7j83E3izNQMrY3Djh+XsmNRpn3kUa+0GvEgNdJYCD5JkOtABi5S
+         GyfAXnH1z6og1uusWPTQ1Be1h7tLy+t7ZWIAAcQ7jutRP57B9+L4rqjmmkezTiaknFsi
+         YluvXzEepbWnvVg+U3ZoM+PcaFxPH8v3UdmT5pWmzUhEnIgHeOIFWcS1pBL+YNtJXiOA
+         9C6uV/rFYpDclmGDno609a2YweRbqUYo+UZQHc9PIaVABJYTt5ebFxzvOagbsXJC4zZ4
+         eJzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=drqTQBtS50H1vlemHJ1Blbd8zNG6Y/k1rTNoKJyfCqs=;
-        b=EhARxAVFWbQRnfcn+DOpLIui3ImWBcIQw2XH/AwyFiJujc/RxI97ahYEdHLzd0kh9b
-         iVhJHAypIa7WLBbuXrB1+o+JJuMGlEsfzFP8pnn6HptPCNxy7aGcuu43VuMMlZ2tcS2H
-         xxPAA+56kxk6f5ddjdi/JE1nr3dSxo5zjhp58nEnsKII8TMUvDBvc9rSeIurw6xg/Y+y
-         0Gr3PyZg+6I9xiCAtQHausDaHSG0AW16mfqBTwDejP/xlaOVI5nmZ2aP17XDAE/AJWz7
-         3DGxT6wsrrpVk4SK/8nTfD7hMl0SrvnITmg9XmUOdy78FuC3Zoq/LdqeM0H1b66Sohjf
-         YmWg==
-X-Gm-Message-State: AGRZ1gJFBpzYyrVPXfiHDA6C3VEGbXxcLeZrroIvffeopFon7QYqAX2Q
-        TqKxQi+sThC8RIB+bbptc0ZE6aGE
-X-Google-Smtp-Source: AJdET5dQgAFBXkfuPnJx8QQPyk5jEm7XSF9xpubzHUCocBBZHGMsi/Ct4aiKk8e0aOC48UCFvwE8EQ==
-X-Received: by 2002:a2e:924b:: with SMTP id v11-v6mr1124536ljg.9.1540661417260;
-        Sat, 27 Oct 2018 10:30:17 -0700 (PDT)
+        bh=6xDyapWfwoqfEqSfPJe6Xohq4fxEOPqfhDua9vHp/Eg=;
+        b=sx5y1J8tg5WEBXdOlsnug+nef9hY+oWqroF0yqhiPPxNJUcUAwKNB04vN6+ItfsWdr
+         OqwnsD8+WHZ/walXCFaGHHNiyyNA9ZjPvDgcolK9AocLft+5TAb09ToU/19JMf9WFAuO
+         ae5a3Ls+f25oM+IZzN0a30WE3MCY+6wZDaZTWE/znh4R9TqdQs26UqfeG1+ewQRdgpem
+         Y3sh/Kgtgg71c48+G1OUrqFSFLhSsZtrj3ZS3Q+FgY5NN83YMce22sKz4NEIStMNUP/g
+         Z26qG+LX3WhnyUsJwvyu4ewJxR8ML65uptNMCXqikOghuWiJK2MKc3v0tKfbKopp1kET
+         SIbg==
+X-Gm-Message-State: AGRZ1gKY8u/7igAcrKpVdBoyV4OhOTReie+7Z5hQ7/SM+imhJ6sVcXKQ
+        dBY10mtmnLxJM8dtiyn5gvI=
+X-Google-Smtp-Source: AJdET5e2MvUDIanCB54kDAI9HTIqeYm88JX7a0M8Fx/y+5U4mjvdkww298XtnuuaSjoKqO/PckASdg==
+X-Received: by 2002:a2e:84c5:: with SMTP id q5-v6mr5067637ljh.65.1540661418467;
+        Sat, 27 Oct 2018 10:30:18 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.16
+        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 10:30:16 -0700 (PDT)
+        Sat, 27 Oct 2018 10:30:17 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 01/10] thread-utils: macros to unconditionally compile pthreads API
-Date:   Sat, 27 Oct 2018 19:29:59 +0200
-Message-Id: <20181027173008.18852-2-pclouds@gmail.com>
+Subject: [PATCH v2 02/10] index-pack: remove #ifdef NO_PTHREADS
+Date:   Sat, 27 Oct 2018 19:30:00 +0200
+Message-Id: <20181027173008.18852-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
 References: <20181027071003.1347-1-pclouds@gmail.com>
@@ -69,195 +69,174 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When built with NO_PTHREADS, the macros are used make the code build
-even though pthreads header and library may be missing. The code can
-still have different code paths for no threads support with
-HAVE_THREADS variable.
-
-There are of course impacts on no-pthreads builds:
-
-- data structure may get slightly bigger because all the mutexes and
-  pthread_t are present (as an int)
-
-- code execution is not impacted much. Locking (in hot path) is
-  no-op. Other wrapper function calls really should not matter much.
-
-- the binary size grows bigger because of threaded code. But at least
-  on Linux this does not matter, if some code is not executed, it's
-  not mapped in memory.
-
-This is a preparation step to remove "#ifdef NO_PTHREADS" in the code
-mostly because of maintainability. As Jeff put it
-
-> it's probably OK to stop thinking of it as "non-threaded platforms
-> are the default and must pay zero cost" and more as "threaded
-> platforms are the default, and non-threaded ones are OK to pay a
-> small cost as long as they still work".
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile       |  2 +-
- thread-utils.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- thread-utils.h | 48 +++++++++++++++++++++++++++++++++++++++++++++---
- 3 files changed, 94 insertions(+), 4 deletions(-)
+ builtin/index-pack.c | 68 ++++++++++++--------------------------------
+ 1 file changed, 18 insertions(+), 50 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index b08d5ea258..321540a736 100644
---- a/Makefile
-+++ b/Makefile
-@@ -991,6 +991,7 @@ LIB_OBJS += sub-process.o
- LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += tempfile.o
-+LIB_OBJS += thread-utils.o
- LIB_OBJS += tmp-objdir.o
- LIB_OBJS += trace.o
- LIB_OBJS += trailer.o
-@@ -1674,7 +1675,6 @@ ifdef NO_PTHREADS
- else
- 	BASIC_CFLAGS += $(PTHREAD_CFLAGS)
- 	EXTLIBS += $(PTHREAD_LIBS)
--	LIB_OBJS += thread-utils.o
- endif
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2004e25da2..bbd66ca025 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -42,9 +42,7 @@ struct base_data {
+ };
  
- ifdef HAVE_PATHS_H
-diff --git a/thread-utils.c b/thread-utils.c
-index a2135e0743..5329845691 100644
---- a/thread-utils.c
-+++ b/thread-utils.c
-@@ -20,6 +20,9 @@
+ struct thread_local {
+-#ifndef NO_PTHREADS
+ 	pthread_t thread;
+-#endif
+ 	struct base_data *base_cache;
+ 	size_t base_cache_used;
+ 	int pack_fd;
+@@ -98,8 +96,6 @@ static uint32_t input_crc32;
+ static int input_fd, output_fd;
+ static const char *curr_pack;
  
- int online_cpus(void)
- {
-+#ifdef NO_PTHREADS
-+	return 1;
-+#else
- #ifdef _SC_NPROCESSORS_ONLN
- 	long ncpus;
- #endif
-@@ -59,10 +62,12 @@ int online_cpus(void)
- #endif
- 
- 	return 1;
-+#endif
+-#ifndef NO_PTHREADS
+-
+ static struct thread_local *thread_data;
+ static int nr_dispatched;
+ static int threads_active;
+@@ -179,26 +175,6 @@ static void cleanup_thread(void)
+ 	free(thread_data);
  }
  
- int init_recursive_mutex(pthread_mutex_t *m)
+-#else
+-
+-#define read_lock()
+-#define read_unlock()
+-
+-#define counter_lock()
+-#define counter_unlock()
+-
+-#define work_lock()
+-#define work_unlock()
+-
+-#define deepest_delta_lock()
+-#define deepest_delta_unlock()
+-
+-#define type_cas_lock()
+-#define type_cas_unlock()
+-
+-#endif
+-
+-
+ static int mark_link(struct object *obj, int type, void *data, struct fsck_options *options)
  {
-+#ifndef NO_PTHREADS
- 	pthread_mutexattr_t a;
- 	int ret;
+ 	if (!obj)
+@@ -364,22 +340,20 @@ static NORETURN void bad_object(off_t offset, const char *format, ...)
  
-@@ -74,4 +79,47 @@ int init_recursive_mutex(pthread_mutex_t *m)
- 		pthread_mutexattr_destroy(&a);
+ static inline struct thread_local *get_thread_data(void)
+ {
+-#ifndef NO_PTHREADS
+-	if (threads_active)
+-		return pthread_getspecific(key);
+-	assert(!threads_active &&
+-	       "This should only be reached when all threads are gone");
+-#endif
++	if (HAVE_THREADS) {
++		if (threads_active)
++			return pthread_getspecific(key);
++		assert(!threads_active &&
++		       "This should only be reached when all threads are gone");
++	}
+ 	return &nothread_data;
+ }
+ 
+-#ifndef NO_PTHREADS
+ static void set_thread_data(struct thread_local *data)
+ {
+ 	if (threads_active)
+ 		pthread_setspecific(key, data);
+ }
+-#endif
+ 
+ static struct base_data *alloc_base_data(void)
+ {
+@@ -1092,7 +1066,6 @@ static void resolve_base(struct object_entry *obj)
+ 	find_unresolved_deltas(base_obj);
+ }
+ 
+-#ifndef NO_PTHREADS
+ static void *threaded_second_pass(void *data)
+ {
+ 	set_thread_data(data);
+@@ -1116,7 +1089,6 @@ static void *threaded_second_pass(void *data)
  	}
- 	return ret;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+#ifdef NO_PTHREADS
-+int dummy_pthread_create(pthread_t *pthread, const void *attr,
-+			 void *(*fn)(void *), void *data)
-+{
-+	/*
-+	 * Do nothing.
-+	 *
-+	 * The main purpose of this function is to break compiler's
-+	 * flow analysis and avoid -Wunused-variable false warnings.
-+	 */
-+	return ENOSYS;
-+}
-+
-+int dummy_pthread_init(void *data)
-+{
-+	/*
-+	 * Do nothing.
-+	 *
-+	 * The main purpose of this function is to break compiler's
-+	 * flow analysis or it may realize that functions like
-+	 * pthread_mutex_init() is no-op, which means the (static)
-+	 * variable is not used/initialized at all and trigger
-+	 * -Wunused-variable
-+	 */
-+	return ENOSYS;
+ 	return NULL;
  }
-+
-+int dummy_pthread_join(pthread_t pthread, void **retval)
-+{
-+	/*
-+	 * Do nothing.
-+	 *
-+	 * The main purpose of this function is to break compiler's
-+	 * flow analysis and avoid -Wunused-variable false warnings.
-+	 */
-+	return ENOSYS;
-+}
-+
-+#endif
-diff --git a/thread-utils.h b/thread-utils.h
-index d9a769d190..4961487ed9 100644
---- a/thread-utils.h
-+++ b/thread-utils.h
-@@ -4,12 +4,54 @@
- #ifndef NO_PTHREADS
- #include <pthread.h>
+-#endif
  
--extern int online_cpus(void);
--extern int init_recursive_mutex(pthread_mutex_t*);
-+#define HAVE_THREADS 1
+ /*
+  * First pass:
+@@ -1213,7 +1185,6 @@ static void resolve_deltas(void)
+ 		progress = start_progress(_("Resolving deltas"),
+ 					  nr_ref_deltas + nr_ofs_deltas);
  
- #else
+-#ifndef NO_PTHREADS
+ 	nr_dispatched = 0;
+ 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
+ 		init_thread();
+@@ -1229,7 +1200,6 @@ static void resolve_deltas(void)
+ 		cleanup_thread();
+ 		return;
+ 	}
+-#endif
  
--#define online_cpus() 1
-+#define HAVE_THREADS 0
-+
-+/*
-+ * macros instead of typedefs because pthread definitions may have
-+ * been pulled in by some system dependencies even though the user
-+ * wants to disable pthread.
-+ */
-+#define pthread_t int
-+#define pthread_mutex_t int
-+#define pthread_cond_t int
-+#define pthread_key_t int
-+
-+#define pthread_mutex_init(mutex, attr) dummy_pthread_init(mutex)
-+#define pthread_mutex_lock(mutex)
-+#define pthread_mutex_unlock(mutex)
-+#define pthread_mutex_destroy(mutex)
-+
-+#define pthread_cond_init(cond, attr) dummy_pthread_init(cond)
-+#define pthread_cond_wait(cond, mutex)
-+#define pthread_cond_signal(cond)
-+#define pthread_cond_broadcast(cond)
-+#define pthread_cond_destroy(cond)
-+
-+#define pthread_key_create(key, attr) dummy_pthread_init(key)
-+#define pthread_key_delete(key)
-+
-+#define pthread_create(thread, attr, fn, data) \
-+	dummy_pthread_create(thread, attr, fn, data)
-+#define pthread_join(thread, retval) \
-+	dummy_pthread_join(thread, retval)
-+
-+#define pthread_setspecific(key, data)
-+#define pthread_getspecific(key) NULL
-+
-+int dummy_pthread_create(pthread_t *pthread, const void *attr,
-+			 void *(*fn)(void *), void *data);
-+int dummy_pthread_join(pthread_t pthread, void **retval);
-+
-+int dummy_pthread_init(void *);
+ 	for (i = 0; i < nr_objects; i++) {
+ 		struct object_entry *obj = &objects[i];
+@@ -1531,11 +1501,11 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
+ 		if (nr_threads < 0)
+ 			die(_("invalid number of threads specified (%d)"),
+ 			    nr_threads);
+-#ifdef NO_PTHREADS
+-		if (nr_threads != 1)
+-			warning(_("no threads support, ignoring %s"), k);
+-		nr_threads = 1;
+-#endif
++		if (!HAVE_THREADS) {
++			if (nr_threads != 1)
++				warning(_("no threads support, ignoring %s"), k);
++			nr_threads = 1;
++		}
+ 		return 0;
+ 	}
+ 	return git_default_config(k, v, cb);
+@@ -1723,12 +1693,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				nr_threads = strtoul(arg+10, &end, 0);
+ 				if (!arg[10] || *end || nr_threads < 0)
+ 					usage(index_pack_usage);
+-#ifdef NO_PTHREADS
+-				if (nr_threads != 1)
+-					warning(_("no threads support, "
+-						  "ignoring %s"), arg);
+-				nr_threads = 1;
+-#endif
++				if (!HAVE_THREADS) {
++					if (nr_threads != 1)
++						warning(_("no threads support, "
++							  "ignoring %s"), arg);
++					nr_threads = 1;
++				}
+ 			} else if (starts_with(arg, "--pack_header=")) {
+ 				struct pack_header *hdr;
+ 				char *c;
+@@ -1791,14 +1761,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	if (strict)
+ 		opts.flags |= WRITE_IDX_STRICT;
  
- #endif
-+
-+int online_cpus(void);
-+int init_recursive_mutex(pthread_mutex_t*);
-+
-+
- #endif /* THREAD_COMPAT_H */
+-#ifndef NO_PTHREADS
+-	if (!nr_threads) {
++	if (HAVE_THREADS && !nr_threads) {
+ 		nr_threads = online_cpus();
+ 		/* An experiment showed that more threads does not mean faster */
+ 		if (nr_threads > 3)
+ 			nr_threads = 3;
+ 	}
+-#endif
+ 
+ 	curr_pack = open_pack_file(pack_name);
+ 	parse_pack_header();
 -- 
 2.19.1.647.g708186aaf9
 
