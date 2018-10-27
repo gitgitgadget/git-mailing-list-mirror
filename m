@@ -6,101 +6,82 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73CFF1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 07:26:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3A8E1F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 07:30:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728229AbeJ0QG4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 12:06:56 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40245 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726610AbeJ0QG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 12:06:56 -0400
-Received: by mail-wr1-f67.google.com with SMTP id i17-v6so3368783wre.7
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 00:26:53 -0700 (PDT)
+        id S1728227AbeJ0QKC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 12:10:02 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35520 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727643AbeJ0QKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 12:10:02 -0400
+Received: by mail-wm1-f66.google.com with SMTP id q12-v6so583130wmq.0
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 00:29:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=7v0cKVukJpRMIfcm0930DXFWvzthwnjxw0W2vZXwMno=;
-        b=gwLrU0iQPVZPq7UwLDLdBE8zQ6Cxw4tf6l07ttaTUUZx79/OVLKRR/p6pYepiWlrEZ
-         rQow++8lqjNPyNAxInlZL65qUUO2aerCl+6hvwI9+xkzo+pHClExAF8uHQxQNYPdNfzK
-         iIGirK4evrk1ZCDNTZVgrt1SJgX7/4KBiov2o6D4EWbs/r5V9YdV8BBBho7icz4Dqm18
-         LFn15RB3Eu2tvOyPE6aU02rVXop3xQ0K8HqZsFfE4KlNgzDiIfzVWc61MAwWYoCVNEdS
-         +PBlkFeZsRalPaw+YDQhyJk1dNS2soHKsv3lgYYy60TccPIPJrUgtLs/gb30L32RO5iI
-         0WGQ==
+         :user-agent:mime-version;
+        bh=rbRTeATlYTyeF7mKMJSm9TCJPSjYo6YU2LlSYawg22I=;
+        b=k5xfojELYFs9ilpK107wBAlnoiykXCyVlZlPjxBCP4BkOkYPv6moTV2UyU7g3WAfta
+         z4dRmvOPNOtznVWhS7QgbMGnZudEhW16We6taY/RuyUucCl0zl0oulOkag4eNw7xFsf6
+         aGekUsnhc1jOf9p8Q1o9HxUZEKeFo2EM7PR785agqguEwxC/lwT+jBUPSZGikRAFv3Rw
+         Zhx6p30P/Z/5eJ7vYBe2IZchqUuj1ngBLTDMEIna2u4MOkGm94CDaCcw+UxuXwgPlGuP
+         1Ej5WoFI2BZNUHfX+80F2A8wHmKcCqU6PC/A69HGWF7ybZKYv2SxxdzMdTzYfvZOw4uM
+         CVyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=7v0cKVukJpRMIfcm0930DXFWvzthwnjxw0W2vZXwMno=;
-        b=mExdi7ZSjcYO3QWb/6NOY/J/U6NXFv2sojguunoGFgczQpHg+L0BmBmtofq94T+G1c
-         OaaKeMO58ze5wkAmvvbqk85AKMzahZ5lg9k+39D3S/pyYnnG2ac6zRGSaW048vyt+5UO
-         DaOWk9lphAHvqNBHzcOTXigwMa+XYxRUQyk9wT1iYwXgjgFBKvnO3zaM42mI3pxq0CCQ
-         h6kBPg1sen9wc1ePj1TB938SartGFcwc/rn2JUUdjcLo7+C7LfMn9LZu0sZbK/IdMpXt
-         AQoLymodWGkUoWoylwTaUc3vvUIC2hCbI11MwmoxKH/Rm+s7QE5nRdlmY6IIMDlIsTKg
-         ZgTQ==
-X-Gm-Message-State: AGRZ1gIk4aOyvFps1Q/4CwOAzHmpcdyL5pyAXkutpim9ksuPk8uG0Qy3
-        +OlkTOZtLxAEumJMAJhITDFAQJkC13A=
-X-Google-Smtp-Source: AJdET5dOV/Z06QdO9nuN8a/bKtNix1c0NuD+NOSaL6DrPskhcdFSstF3CVYSrDtKC7jBx2wkj1DH1A==
-X-Received: by 2002:a5d:4b91:: with SMTP id b17-v6mr8441442wrt.168.1540625212602;
-        Sat, 27 Oct 2018 00:26:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 12-v6sm2314808wmu.39.2018.10.27.00.26.51
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rbRTeATlYTyeF7mKMJSm9TCJPSjYo6YU2LlSYawg22I=;
+        b=LORPNGPWKypscpOR67EmAs+NNlUa7U2TObuQ5o5RfAWhw5I3XSbRxAdAY9i4yIm7Pd
+         JlfkJ4cHMb35RBwWy1Fdae9rM2GCTbistVyAR51WaIQs9I/4ynv3gbTz1VPcix5Fb2PJ
+         ixx05tiEEjVgfCFmIRZ5tiVAjYPHrw0MaUr+XTj1LJjibUfVPJoLc/0QJKsVdsuyuWFT
+         MeCNK2lxpmQhcRvxbqwPMW0Y2urkQBRlzCBjHjCxSwsCwqhGp1XVE8lnfzMF9y6Mftut
+         SeeHPfbtp4I2g4f+A+yViKKYsSuMTiChKx4t2WnmemyPDb2QevXaHRLZOeRgOUqqD2Cm
+         MLQw==
+X-Gm-Message-State: AGRZ1gKWeOF0ZOtdkYlea4vH2yVfEsfqFXfOly+bGEHazjrnqb09EGnZ
+        VoaVHx2kTqhDH+xMIfZdMok=
+X-Google-Smtp-Source: AJdET5chISYBrGI6FQtjyQBkpxgHVVUUTh1dJRpVZlqVYgNEMDfMn6CEoIo7W8xXcSyhgYy2JLbM4g==
+X-Received: by 2002:a1c:7a0a:: with SMTP id v10-v6mr7918370wmc.41.1540625398608;
+        Sat, 27 Oct 2018 00:29:58 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s8-v6sm3820wmb.5.2018.10.27.00.29.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Oct 2018 00:26:51 -0700 (PDT)
+        Sat, 27 Oct 2018 00:29:57 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "Jansen\, Geert" <gerardu@amazon.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
-        <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
-        <87o9bgl9yl.fsf@evledraar.gmail.com>
-Date:   Sat, 27 Oct 2018 16:26:50 +0900
-In-Reply-To: <87o9bgl9yl.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 26 Oct 2018 22:38:42 +0200")
-Message-ID: <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Oct 2018, #05; Fri, 26)
+References: <xmqqo9bhcf89.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kbjKZSHfHbDykkob1w21RTB9tgCCYVrOD=0C8aAFGncTQ@mail.gmail.com>
+Date:   Sat, 27 Oct 2018 16:29:56 +0900
+In-Reply-To: <CAGZ79kbjKZSHfHbDykkob1w21RTB9tgCCYVrOD=0C8aAFGncTQ@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 26 Oct 2018 12:04:55 -0700")
+Message-ID: <xmqqwoq3alu3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> But as Junio notes the devil's in the details, another one I thought of
-> is:
+>>
+>> * sb/strbuf-h-update (2018-09-29) 1 commit
+>>   (merged to 'next' on 2018-10-26 at e4ad935cb0)
+>>  + strbuf.h: format according to coding guidelines
+>>
+>>  Code clean-up to serve as a BCP example.
+>>
+>>  Will merge to 'master'.
+>>  Further clean-up patches may need to follow soon before this
+>>  change escapes to 'master'.
 >
->     GIT_OBJECT_DIRECTORY=/some/other/repository git clone ...
->
-> It seems to me that ...
+> We have a contradicting statement here, which can be either an
+> issue or an oversight.
 
-Actually I take all of that back ;-)
-
-For the purpose of this patch, use of existing .cloning field in the
-transport is fine, as the sole existing user of the field wants the
-field to mean "Are we starting with an empty object store?", and not
-"Are we running the command whose name is 'git clone'?".
-
-Now, the logic used to set the field to true may have room to be
-improved.  We should do that as a separte and orthogonal effort so
-that the two cases I mentioned plus the new one(s) you brought up
-would also be taken into account, so that we can set the .cloning
-field more accurately to suite the two callers' needs---one caller
-is the age-old one added by beea4152 ("clone: support remote shallow
-repository", 2013-12-05), and the other one is what Geert is adding
-in this thread.
-
-We _may_ want to rename that transport.cloning field to better
-reflect what it truly means (it is not "are we cloning?" but "are
-there any objects in the repo to worry about?") as a preparatory
-step before Geert's patch, but I do not think we should make it a
-requirement to take the "let's skip collision check" patch to
-improve the logic used to set that .cloning field.
+"may need to" takes a volunteer to do so; it does not have to take
+the patch hostage to the lack of such a volunteer.
 
