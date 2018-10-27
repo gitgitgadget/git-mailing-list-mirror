@@ -2,105 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 250111F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 17:30:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 610511F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 19:10:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728946AbeJ1CML (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 22:12:11 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:39232 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728610AbeJ1CMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 22:12:10 -0400
-Received: by mail-lj1-f196.google.com with SMTP id a28-v6so989234ljd.6
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 10:30:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=t07LjXaIVGSwXKRFYZianmEQvgudAPAVe9JpwwNL98U=;
-        b=V2Q/WkjR7zExT03WuU/vjr8xmU/hjvmeb7QQM2E1sOUCjQsIdzWfEjMHY/3EgyL6eH
-         vQpsd8KZZvgRBfhs9bmAO84/HdvUP/o8EUdfoKOb1eLBPP+nAN0UmoYIItTARJC7kLJw
-         /xt2E1KO6iQKzM+43DskUgFDDh2BT5X7/2Wo1gOK4kOOh5QP245xqzG3LDEtwxCr+5JK
-         6CYu+4QgihFa3N2ft4G7UsC0Q3/fcHmKt8rLji509fwhHgljECZVHmiM0mUgVnt2vc3N
-         BZyxpCTLWThfPw84tyYwXxnDa4k40ymOwbQYbQcphY+fqCSByyDrb3h2AL/hbiuoQckV
-         Ljng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=t07LjXaIVGSwXKRFYZianmEQvgudAPAVe9JpwwNL98U=;
-        b=oORy21Tjp/a3V+cokyYqnfiVDKj+5jcD1ndjA3tGp0J4Y7XIG8V3tGyeO1sWXHp70S
-         zO05y3wQRAvGaDYbtbJ9qON1WzcKeD4g9YNtfPoFwTuu+3HUSkSpZ03VO0IHFWc0by7i
-         hodPle5biFzpgRMUrXas6bp68YpyBJghpE/gTgFC4TX1PRACqqG2FyRF5aQ+RbMGruop
-         6MgyDoWyTuXKn2tkvCML6+QJJIvpS7KiyTwFXZ/W5UqIwR+w5aYzr4zw7Fv3oSHEKEI0
-         Qllwa/LLzEuctGyTY49htUddAtF7Tt3cSZWVp+gZBBAb9BfACTh/l4KJT11BiDYDp3Xa
-         kiHg==
-X-Gm-Message-State: AGRZ1gKxmGZGNhWqjc+ruzgScole0Rde5lPIvlpQTod3keYHj2MJVuSr
-        hRKfZtyOVv548r/JUyOqxkvOiWfn
-X-Google-Smtp-Source: AJdET5ejd30732ImYKOrqT1BxWtk5XfClcVtAYgbeej58vFgfx/o1mVzMdzbC2uVMjxjKuZ3TAFOWw==
-X-Received: by 2002:a2e:458b:: with SMTP id s133-v6mr5759635lja.60.1540661428354;
-        Sat, 27 Oct 2018 10:30:28 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i185-v6sm2333517lfg.89.2018.10.27.10.30.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 10:30:27 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
-        peff@peff.net
-Subject: [PATCH v2 10/10] read-cache.c: initialize copy_len to shut up gcc 8
-Date:   Sat, 27 Oct 2018 19:30:08 +0200
-Message-Id: <20181027173008.18852-11-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.1.647.g708186aaf9
-In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
-References: <20181027071003.1347-1-pclouds@gmail.com>
- <20181027173008.18852-1-pclouds@gmail.com>
+        id S1728457AbeJ1DwI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 23:52:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52730 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728213AbeJ1DwI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 27 Oct 2018 23:52:08 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e0bc:761d:9be1:27bc])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B446B61B73;
+        Sat, 27 Oct 2018 19:10:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1540667411;
+        bh=9XofwTqie3dS3bTuqq3FoQX0zgREbdGnvd3xghbNHCs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=k2ubgvMmM6g7fzDz/+PK/nas6zcNZm2M0ytnqCNUd+mNAWuEJ44J7pM689oA4vkuP
+         Wlaa5k5n3+c+hLIPCFtS2tlX4KVdHNHj5YHtTOxb3NzLKh9SSNuEze35pqFqst1iWt
+         ny2xH4woSxmDa66mlmfE2H4UbmMFxdzBqmb2+xC52YplIWnJJ66797lL3/KB3e9OB8
+         xPDaHlFL6rzKpQs5+Q8dwL2UxzkwAw4dovqZhigl1anPrZKAIjHB+Y1lhTaVBqPCPb
+         obFQ9Ry9QwFYfkaLXk96bvnLqLYcx8RCAO2WKCkuaWaMhfl6DPfvIh/pXgWtzTSe58
+         UVe5r7zUq5LSPXCoFIuWEUp4qvr71U4rxrAB4o2PV3x+dyImh6ztGSVl6jrKvjWRFl
+         oDWY5PZMmKM5g+nRIIxgiHGJy58GmCBfIotjGl+JsYWdUCTivlUuoxQzD6tYcmL1yS
+         yfo9CTTqZkLAmw/J42gkkUMxVc5WHSLCMXqHt4mGQBOBOD19560
+Date:   Sat, 27 Oct 2018 19:10:03 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git Test Coverage Report (Saturday, Oct 27)
+Message-ID: <20181027191003.GG6119@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <5db6213b-b7d0-b995-de80-9671604416a5@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="doKZ0ri6bHmN2Q5y"
+Content-Disposition: inline
+In-Reply-To: <5db6213b-b7d0-b995-de80-9671604416a5@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was reported that when building with NO_PTHREADS=1,
--Wmaybe-uninitialized is triggered. Just initialize the variable from
-the beginning to shut the compiler up (because this warning is enabled
-in config.dev)
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- read-cache.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+--doKZ0ri6bHmN2Q5y
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/read-cache.c b/read-cache.c
-index ba870bc3fd..4307b9a7bf 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1746,7 +1746,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 	size_t len;
- 	const char *name;
- 	unsigned int flags;
--	size_t copy_len;
-+	size_t copy_len = 0;
- 	/*
- 	 * Adjacent cache entries tend to share the leading paths, so it makes
- 	 * sense to only store the differences in later entries.  In the v4
-@@ -1786,8 +1786,6 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 				die(_("malformed name field in the index, near path '%s'"),
- 					previous_ce->name);
- 			copy_len = previous_len - strip_len;
--		} else {
--			copy_len = 0;
- 		}
- 		name = (const char *)cp;
- 	}
--- 
-2.19.1.647.g708186aaf9
+On Sat, Oct 27, 2018 at 09:27:21AM -0400, Derrick Stolee wrote:
+> In an effort to ensure new code is reasonably covered by the test suite, =
+we
+> now have contrib/coverage-diff.sh to combine the gcov output from 'make
+> coverage-test ; make coverage-report' with the output from 'git diff A B'=
+ to
+> discover _new_lines of code that are not covered. This report ignores lin=
+es
+> including "BUG(".
 
+Thanks for producing this.
+
+> Commits introducing uncovered code:
+> brian m. carlson=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 2f90b9d9b: sha1-file: prov=
+ide functions to look up
+> hash algorithms
+> brian m. carlson=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b3a41547c: hex: introduce =
+functions to print arbitrary
+> hashes
+
+These two are expected.  One this series makes its way to master, I'll
+send patches that use it in a bunch more places, and these functions
+will be adequately covered by multiple code paths.
+
+> Uncovered in next not in master
+> -------------------------------
+>=20
+> apply.c
+> eccb5a5f3d 4071) return get_oid_hex(p->old_oid_prefix, oid);
+
+This one is just a name change.  However, I think it's interesting that
+this code path isn't covered in the normal case (and presumably isn't
+covered before my patch).  From the comment, this appears to be limited
+to the case where the index line in the patch contains the full object
+ID.
+
+I'll try to see if I can come up with a test to cover this case.
+
+> builtin/repack.c
+> 2f0c9e9a9b 239) die("repack: Expecting full hex object ID lines only from
+> pack-objects.");
+> 2f0c9e9a9b 411) die("repack: Expecting full hex object ID lines only from
+> pack-objects.");
+
+These are a change solely in text from what was there before.
+Considering that git pack-objects would have to be modified to produce
+invalid data in order to trigger these (as discussed in the series that
+changed them), I think it's okay that these are uncovered.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--doKZ0ri6bHmN2Q5y
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvUuAoACgkQv1NdgR9S
+9otNzg/+N1gxSTSl3xFylSA+/zCEO/f/4VceRwaLtNxtS+3oipLiH0hW/7KFy2Ka
+YYolVn/p+hYC+VJE1l03axN58StxtNugGpAExSNWQj0LEdrkvu7XEb6Yod8s6WkF
+T2RzEYO7FroNE7ojslT9cWPOSB6VNT/7WwqASj8/peZzIWdkYuKWegBK7i2YGM3O
+BrhErUzf37NNrf0FM890o98/YEePKuZGZsW6Y8cuATvn/Y7enkr5c4Uhz0LSbylG
+YdwvsbIjRgTZK8toep4/xU/4Efx8/Y0AvcLBXgOfBo9dsCBl6pGUGs+1lrRQv+I5
+JP92vaxrO5jHm2T4bt2uvXa27SMDE9qzwvaPv4VW+1MaNlYJ5+JV+KSWtk/mBOYY
+DHC7uK99T9xDKSki4u87LcYRLhK8lxLF1H2CHfrQAaI+mc0EleSxs0IYeSJ+E7L9
+QwJpbAgey7fzffse0nSDiJREozauhIJnk/qpYJObOw7+T6jTDpAgA/xv5EAQb6Q1
+J5pbuZ9TNMRtXbB7rHKqSJ8+/d8lm24EW/0bK+mMszf5H9b9uVsU8MWjA4lXHi+a
+DMz4DIznn+blewxyuf8+OeE5v7DdaRmC+kPtf9UaKQtXxkLAjs+PWh+1VFEgooQD
+zeTN0RhxXrGGFB30echnJJng7Glu5dglzxY4aOaURPS7QfBu5Pg=
+=O8ZK
+-----END PGP SIGNATURE-----
+
+--doKZ0ri6bHmN2Q5y--
