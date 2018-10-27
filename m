@@ -2,197 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B13131F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 09:33:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B966A1F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 10:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728269AbeJ0SNX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 14:13:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57164 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726296AbeJ0SNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 14:13:23 -0400
-Received: (qmail 30389 invoked by uid 109); 27 Oct 2018 09:33:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 27 Oct 2018 09:33:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5354 invoked by uid 111); 27 Oct 2018 09:32:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 27 Oct 2018 05:32:17 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Oct 2018 05:33:01 -0400
-Date:   Sat, 27 Oct 2018 05:33:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Jansen, Geert" <gerardu@amazon.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-Message-ID: <20181027093300.GA23974@sigill.intra.peff.net>
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
- <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
- <87o9bgl9yl.fsf@evledraar.gmail.com>
- <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
+        id S1728379AbeJ0Svs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 14:51:48 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54480 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728313AbeJ0Svr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 14:51:47 -0400
+Received: by mail-wm1-f65.google.com with SMTP id r63-v6so3661960wma.4
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 03:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=SNXSlQbA5slH99YeRxC0Zx/sZ6B1HtBJ/7dTo6hYCt4=;
+        b=M3SJeH0QI8WgOU8e7NSoexKLcUaTYIrtXjNHUiaZwpbB34o2uhsBgZmXERIOyZQlqI
+         VuBZVS5PJVl7zshGm40Mdcu64rQBchn2nkMmU1EbVf4Xw3wwuhLSxGlagVV9mSMO7NSM
+         NUP2Z1HY8llkIy3l4/UnZEt91IEwB8uiuGX95T/arDcWv6MIdlz1I9EAX+09+OZq2Bds
+         YT54pHOx1SVl+QjksxLCiBJ4xmm53JViXv3++Si2jSWH+NAW6Bq8IebPCexf7eo/Sn8w
+         hVhh0E6xCErPeonr4Cv5xV/x7EKGa6Fnt4q7q5/7Xk0WDo2/ZFFqxtDlgTyXwiYSgIQ6
+         +jqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=SNXSlQbA5slH99YeRxC0Zx/sZ6B1HtBJ/7dTo6hYCt4=;
+        b=TptviRYZDg3LdnEseIlKHy4k6xBJ5jED2KWd4pnnzz4goiXthDiP9ZbzO4lOmHi/KR
+         oTgaJQQNWOijYkBuErnNhL44rz0DveOuCz+d7Q4dl0jqIvfkQ2lwcyHxgKZ3YHPq4eK9
+         lGOaXhWU41m66BQXMM2cYtzTCtd4pomYAdQBvvEKoRnpGtXR+sYoZKKhS90Y8ZXGqZX6
+         nmPSkrIPAkPGQddD6oAgl0jNm5vKdlxCZDxDIrij2A+c9DLZFeQ5p1Bha19HhQMs0nkL
+         PCBjIA5lxv2ZXQYNFZZHcotP2qw/1ve3mQ+mLiYzIjLkhvvxmAUrD7tchrU2I8o6x4SV
+         JVBg==
+X-Gm-Message-State: AGRZ1gIHCQNOl5YdoB0ueHRuyapOxpeNLoR1TET+6VNdMSDRjwIIo6EO
+        duEgOgXYyPadzV8PsK6CZcM=
+X-Google-Smtp-Source: AJdET5cGtBx4AUEgZJLaKbc/neTjZfk33aL3yONgbOv6T9Zf9Ug0rjfEjw97bYVak1ZGX1jSQSfzuw==
+X-Received: by 2002:a1c:5689:: with SMTP id k131-v6mr8303338wmb.119.1540635078880;
+        Sat, 27 Oct 2018 03:11:18 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egq108.neoplus.adsl.tpnet.pl. [83.21.80.108])
+        by smtp.gmail.com with ESMTPSA id o17-v6sm18110048wro.2.2018.10.27.03.11.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 27 Oct 2018 03:11:18 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Subject: Re: [PATCH] Poison gettext with the Ook language
+References: <20181022153633.31757-1-pclouds@gmail.com>
+        <20181022202241.18629-1-szeder.dev@gmail.com>
+Date:   Sat, 27 Oct 2018 12:11:18 +0200
+In-Reply-To: <20181022202241.18629-1-szeder.dev@gmail.com> ("SZEDER
+ \=\?utf-8\?Q\?G\=C3\=A1bor\=22's\?\=
+        message of "Mon, 22 Oct 2018 22:22:33 +0200")
+Message-ID: <86va5n4s3d.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 27, 2018 at 04:26:50PM +0900, Junio C Hamano wrote:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+> On Mon, Oct 22, 2018 at 05:36:33PM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>>
+>> The current gettext() function just replaces all strings with
+>> '# GETTEXT POISON #' including format strings and hides the things
+>> that we should be allowed to grep (like branch names, or some other
+>> codes) even when gettext is poisoned.
+>>=20
+>> This patch implements the poisoned _() with a universal and totally
+>> legit language called Ook [1]. We could actually grep stuff even in
+>> with this because format strings are preserved.
+>
+> Once upon a time a GETTEXT_POISON build job failed on me, and the
+> error message:
+>
+>   error: # GETTEXT POISON #
+>
+> was not particularly useful.  Ook wouldn't help with that...
+>
+> So I came up with the following couple of patches that implement a
+> "scrambled" format that makes the poisoned output legible for humans
+> but still gibberish for machine consumption (i.e. grep-ing the text
+> part would still fail):
+>
+>   error:  U.n.a.b.l.e. .t.o. .c.r.e.a.t.e. .'./home/szeder/src/git/t/tras=
+h directory.t1404-update-ref-errors/.git/packed-refs...l.o.c.k.'.:. .File e=
+xists...
+>
+> I have been running GETTEXT_POISON builds with this series for some
+> months now, but haven't submitted it yet, because I haven't decided
+> yet whether including strings (paths, refs, etc.) in the output as
+> they are is a feature or a flaw.  And because it embarrassingly leaks
+> every single translated string... :)
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> > But as Junio notes the devil's in the details, another one I thought of
-> > is:
-> >
-> >     GIT_OBJECT_DIRECTORY=/some/other/repository git clone ...
-> >
-> > It seems to me that ...
-> 
-> Actually I take all of that back ;-)
-> 
-> For the purpose of this patch, use of existing .cloning field in the
-> transport is fine, as the sole existing user of the field wants the
-> field to mean "Are we starting with an empty object store?", and not
-> "Are we running the command whose name is 'git clone'?".
+There is similar technique called "pseudolocalization", meant for
+testing i18n aspect of software.
 
-Taking one step back, the root problem in this thread is that stat() on
-non-existing files is slow (which makes has_sha1_file slow).
+In one of most common forms, the string
 
-One solution there is to cache the results of looking in .git/objects
-(or any alternate object store) for loose files. And indeed, this whole
-scheme is just a specialized form of that: it's a flag to say "hey, we
-do not have any objects yet, so do not bother looking".
+  Edit program settings
 
-Could we implement that in a more direct and central way? And could we
-implement it in a way that catches more cases? E.g., if I have _one_
-object, that defeats this specialized optimization, but it is probably
-still beneficial to cache that knowledge (and the reasonable cutoff is
-probably not 1, but some value of N loose objects).
+woukd be translated to
 
-Of course any cache raises questions of cache invalidation, but I think
-we've already dealt with that for this case. When we use
-OBJECT_INFO_QUICK, that is a sign that we want to make this kind of
-accuracy/speed tradeoff (which does a similar caching thing with
-packfiles).
+  [!!! =CE=B5=C3=90i=C5=A3 =C3=9Er0=C4=A3=D0=AF=C3=A3m s=C9=99T=CF=84=C4=B1=
+=D0=98=C4=9F=C2=A7 !!!]
 
-So putting that all together, could we have something like:
+(possibly using mirrored locale, i.e. right-to-left order).
 
-diff --git a/object-store.h b/object-store.h
-index 63b7605a3e..28cde568a0 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -135,6 +135,18 @@ struct raw_object_store {
- 	 */
- 	struct packed_git *all_packs;
- 
-+	/*
-+	 * A set of all loose objects we have. This probably ought to be split
-+	 * into a set of 256 caches so that we can fault in one directory at a
-+	 * time.
-+	 */
-+	struct oid_array loose_cache;
-+	enum {
-+		LOOSE_CACHE_UNFILLED = 0,
-+		LOOSE_CACHE_INVALID,
-+		LOOSE_CACHE_VALID
-+	} loose_cache_status;
-+
- 	/*
- 	 * A fast, rough count of the number of objects in the repository.
- 	 * These two fields are not meant for direct access. Use
-diff --git a/packfile.c b/packfile.c
-index 86074a76e9..68ca4fff0e 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -990,6 +990,8 @@ void reprepare_packed_git(struct repository *r)
- 	r->objects->approximate_object_count_valid = 0;
- 	r->objects->packed_git_initialized = 0;
- 	prepare_packed_git(r);
-+	oid_array_clear(&r->objects->loose_cache);
-+	r->objects->loose_cache_status = LOOSE_CACHE_UNFILLED;
- }
- 
- struct packed_git *get_packed_git(struct repository *r)
-diff --git a/sha1-file.c b/sha1-file.c
-index dd0b6aa873..edbe037eaa 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1172,6 +1172,40 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 	return parse_sha1_header_extended(hdr, &oi, 0);
- }
- 
-+/* probably should be configurable? */
-+#define LOOSE_OBJECT_CACHE_MAX 65536
-+
-+static int fill_loose_cache(const struct object_id *oid,
-+			    const char *path,
-+			    void *data)
-+{
-+	struct oid_array *cache = data;
-+
-+	if (cache->nr == LOOSE_OBJECT_CACHE_MAX)
-+		return -1;
-+
-+	oid_array_append(data, oid);
-+	return 0;
-+}
-+
-+static int quick_has_loose(struct raw_object_store *r,
-+			   struct object_id *oid)
-+{
-+	struct oid_array *cache = &r->loose_cache;
-+
-+	if (r->loose_cache_status == LOOSE_CACHE_UNFILLED) {
-+		if (for_each_loose_object(fill_loose_cache, cache, 0) < 0)
-+			r->loose_cache_status = LOOSE_CACHE_INVALID;
-+		else
-+			r->loose_cache_status = LOOSE_CACHE_VALID;
-+	}
-+
-+	if (r->loose_cache_status == LOOSE_CACHE_INVALID)
-+		return -1;
-+
-+	return oid_array_lookup(cache, oid) >= 0;
-+}
-+
- static int sha1_loose_object_info(struct repository *r,
- 				  const unsigned char *sha1,
- 				  struct object_info *oi, int flags)
-@@ -1198,6 +1232,19 @@ static int sha1_loose_object_info(struct repository *r,
- 	if (!oi->typep && !oi->type_name && !oi->sizep && !oi->contentp) {
- 		const char *path;
- 		struct stat st;
-+		if (!oi->disk_sizep && (flags & OBJECT_INFO_QUICK)) {
-+			struct object_id oid;
-+			hashcpy(oid.hash, sha1);
-+			switch (quick_has_loose(r->objects, &oid)) {
-+			case 0:
-+				return -1; /* missing: error */
-+			case 1:
-+				return 0; /* have: 0 == success */
-+			default:
-+				/* unknown; fall back to stat */
-+				break;
-+			}
-+		}
- 		if (stat_sha1_file(r, sha1, &st, &path) < 0)
- 			return -1;
- 		if (oi->disk_sizep)
+The brackets [!!! ... !!!] are used as a "poison", to detect
+translatable text, and to spot issues with truncation; it also helps
+with finding "lego" translation.
 
-That's mostly untested, but it might be enough to run some timing tests
-with. I think if we want to pursue this, we'd want to address the bits I
-mentioned in the comments, and look at unifying this with the loose
-cache from cc817ca3ef (which if I had remembered we added, probably
-would have saved some time writing the above ;) ).
+It would also stress-test Unicode handling...
 
--Peff
+Regards,
+--=20
+Jakub Nar=C4=99bski
+
