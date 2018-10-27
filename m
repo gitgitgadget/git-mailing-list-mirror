@@ -2,53 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1DF1F453
-	for <e@80x24.org>; Sat, 27 Oct 2018 07:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7511F453
+	for <e@80x24.org>; Sat, 27 Oct 2018 07:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728147AbeJ0PuO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Oct 2018 11:50:14 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:43525 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726610AbeJ0PuO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Oct 2018 11:50:14 -0400
-Received: by mail-lj1-f196.google.com with SMTP id g26-v6so1902991lja.10
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 00:10:13 -0700 (PDT)
+        id S1728214AbeJ0PuT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Oct 2018 11:50:19 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:42672 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728013AbeJ0PuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Oct 2018 11:50:19 -0400
+Received: by mail-lj1-f195.google.com with SMTP id f3-v6so3165380ljk.9
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 00:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6xDyapWfwoqfEqSfPJe6Xohq4fxEOPqfhDua9vHp/Eg=;
-        b=JM1P3AUyCeK50kGFYyToOmzsgbvOzFJHbNsckPghaIOVc6lKB752n0vanBPrr4N1Lo
-         kM9XDq1YKCRuFls6pAUxCAYQLqBEB3k7WocyoJFMciitbo0czzBxzJshGGh8bLgn5VL+
-         L7bQfyoen5EJP7M7zA8cO0Dkipsj5qoIK3wKfJa5hkEAJyQwL794wSbPzmyeMKRa/3jT
-         8b3k6uOvGPCbvZHFdBbYzkjlIIkaLBiIhrYtC8eaQ+q+ShWNzjCLgg61kl/OtFND9msl
-         Ygyu3CsZuEbGda5OegbFR8z2Aq9XYsLhF17hIJtZHBOhUWz2M1lPxIyWEowwEKeLWRwL
-         KizQ==
+        bh=34AlMYInjUJvKBJ83Ba7wlLqRcceLi+ycsU6IviV8ho=;
+        b=rgfgzMCZJLmM/Cp/LqUuJ5PgDmYBXj4bD4jTIh4+2DVkFmTaNpQYahiyfI99vHf92L
+         +PIjSZHYXh1/OIOOfhSVJ4fZabipj9C9d3DpXHoAzdFm23Qdb6LYVPC0Zq5kyoShrNt+
+         pUnGuXm+r7Gm5fH3ef3WwqV8tFAi9izvRAwjFYAt1SzQcn9tSpBINHJPG2unfsEw0WxT
+         biizS3VReKTLErYHd8VxfAlFH9x3h67h41XLOKTC0eYnchZreq79/lfi+gJ9/VXjMnSM
+         XFL2k1kBHgvoS9miDVvWEPZfQm+EXNodspgc+FOrpVRoeqnlFrQPT8UCJZ8iOaKpo+Nk
+         NQUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6xDyapWfwoqfEqSfPJe6Xohq4fxEOPqfhDua9vHp/Eg=;
-        b=IPHThW+KOCs+osxv50zz/af0I/J5kD4zare7ZfyW8T9+bsN9SYCm6i3PqAIumV/zqu
-         pUc9qLHXaMDQN82AvYNs4f3H2w4UZE3+9tPngt1TfDCxDOMEynbcDbQS8K9K1q+IUpql
-         KVuq2TFAVRtrBV3Lh6RTXYMS8u16vfoUdZYlnmoDo8ruPwk9rSdj/LEz2/3GdnJ5ZoLS
-         4izVDw9CsNmbSQTpgCflhLqZJRkLeIZLvqHGQ3M2wScj32ceeviIi+GE9wuYAL0kMk7s
-         p+jIhf+CEwDueg4c4/R3qCGFuZ5TqvLm5OcTF7FBMNtTESI0YHPQhWSHoXUzr2SFt8JR
-         F92A==
-X-Gm-Message-State: AGRZ1gIE7Z9661bHN7kcz9IQA97/H7h/FnEi5yRTYFJq9sbMUog65gXK
-        I5p4WfUm9lC0EhFSR4eibK89NQ5X
-X-Google-Smtp-Source: AJdET5fNIZB5Aophabj5fGNBE4qHWrs29yTox4l5ya9GcWFSBwtgvAQBL8OtnQjxzmTCwFtzJaVAIA==
-X-Received: by 2002:a2e:719:: with SMTP id 25-v6mr4347477ljh.128.1540624211935;
-        Sat, 27 Oct 2018 00:10:11 -0700 (PDT)
+        bh=34AlMYInjUJvKBJ83Ba7wlLqRcceLi+ycsU6IviV8ho=;
+        b=N/KqHa4accu7yi/X1hQO+EZpQfjEvB9GAN1sevJyRX4G1nxcOUrQyaF9N2JkT20ejY
+         eYjkSvv43K0tnnCRLNGwdYoR06U9f+XjQ/naTKyj3ObWiEjyXKqsJKicDP3CoDd1JxSz
+         EGNQzFitdJseKZq0BEfQ+Jc4ZsEkae4zRN70OfJBCrXW7iltO8QtWLDd/JGCWF+4l0za
+         UCZ1TKOK03kfVyX14ebJjGIPHDK/B+qSvJgy8QY1pG26sWxAsdAlVXuxXOv276GZ0Q05
+         JwxjNEKJj+55Otn73IgCxkc84GvUjUwnRJy0DlvK2amUQ8rA/WCx2bPXoZTcEil8yy6m
+         Gv/w==
+X-Gm-Message-State: AGRZ1gLFOH5DwrwaD3Yo9FFI+GUtWA1pGTHExObX96r8+v4+H1oie3Fz
+        8r+9M7ri+rKwyGe0prEvbdaqIVyp
+X-Google-Smtp-Source: AJdET5dB+laE+wme4gPJcZjsOZnEB1gOn/7sk0YoH+3S+kU/G0iXWSUw10EHEQhlPuRvclIQgqqy8g==
+X-Received: by 2002:a2e:6503:: with SMTP id z3-v6mr3321555ljb.153.1540624217396;
+        Sat, 27 Oct 2018 00:10:17 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id r7-v6sm1534899ljr.21.2018.10.27.00.10.10
+        by smtp.gmail.com with ESMTPSA id r7-v6sm1534899ljr.21.2018.10.27.00.10.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 00:10:11 -0700 (PDT)
+        Sat, 27 Oct 2018 00:10:16 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Ben Peart <peartben@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/10] index-pack: remove #ifdef NO_PTHREADS
-Date:   Sat, 27 Oct 2018 09:09:55 +0200
-Message-Id: <20181027071003.1347-3-pclouds@gmail.com>
+Subject: [PATCH 07/10] preload-index.c: remove #ifdef NO_PTHREADS
+Date:   Sat, 27 Oct 2018 09:10:00 +0200
+Message-Id: <20181027071003.1347-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181027071003.1347-1-pclouds@gmail.com>
 References: <20181027071003.1347-1-pclouds@gmail.com>
@@ -72,172 +73,49 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/index-pack.c | 68 ++++++++++++--------------------------------
- 1 file changed, 18 insertions(+), 50 deletions(-)
+ preload-index.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2004e25da2..bbd66ca025 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -42,9 +42,7 @@ struct base_data {
- };
- 
- struct thread_local {
--#ifndef NO_PTHREADS
- 	pthread_t thread;
--#endif
- 	struct base_data *base_cache;
- 	size_t base_cache_used;
- 	int pack_fd;
-@@ -98,8 +96,6 @@ static uint32_t input_crc32;
- static int input_fd, output_fd;
- static const char *curr_pack;
- 
--#ifndef NO_PTHREADS
+diff --git a/preload-index.c b/preload-index.c
+index 9e7152ab14..0e24886aca 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -7,17 +7,7 @@
+ #include "fsmonitor.h"
+ #include "config.h"
+ #include "progress.h"
 -
- static struct thread_local *thread_data;
- static int nr_dispatched;
- static int threads_active;
-@@ -179,26 +175,6 @@ static void cleanup_thread(void)
- 	free(thread_data);
- }
- 
+-#ifdef NO_PTHREADS
+-static void preload_index(struct index_state *index,
+-			  const struct pathspec *pathspec,
+-			  unsigned int refresh_flags)
+-{
+-	; /* nothing */
+-}
 -#else
 -
--#define read_lock()
--#define read_unlock()
--
--#define counter_lock()
--#define counter_unlock()
--
--#define work_lock()
--#define work_unlock()
--
--#define deepest_delta_lock()
--#define deepest_delta_unlock()
--
--#define type_cas_lock()
--#define type_cas_unlock()
--
--#endif
--
--
- static int mark_link(struct object *obj, int type, void *data, struct fsck_options *options)
- {
- 	if (!obj)
-@@ -364,22 +340,20 @@ static NORETURN void bad_object(off_t offset, const char *format, ...)
- 
- static inline struct thread_local *get_thread_data(void)
- {
--#ifndef NO_PTHREADS
--	if (threads_active)
--		return pthread_getspecific(key);
--	assert(!threads_active &&
--	       "This should only be reached when all threads are gone");
--#endif
-+	if (HAVE_THREADS) {
-+		if (threads_active)
-+			return pthread_getspecific(key);
-+		assert(!threads_active &&
-+		       "This should only be reached when all threads are gone");
-+	}
- 	return &nothread_data;
- }
- 
--#ifndef NO_PTHREADS
- static void set_thread_data(struct thread_local *data)
- {
- 	if (threads_active)
- 		pthread_setspecific(key, data);
- }
--#endif
- 
- static struct base_data *alloc_base_data(void)
- {
-@@ -1092,7 +1066,6 @@ static void resolve_base(struct object_entry *obj)
- 	find_unresolved_deltas(base_obj);
- }
- 
--#ifndef NO_PTHREADS
- static void *threaded_second_pass(void *data)
- {
- 	set_thread_data(data);
-@@ -1116,7 +1089,6 @@ static void *threaded_second_pass(void *data)
- 	}
- 	return NULL;
- }
--#endif
+-#include <pthread.h>
++#include "thread-utils.h"
  
  /*
-  * First pass:
-@@ -1213,7 +1185,6 @@ static void resolve_deltas(void)
- 		progress = start_progress(_("Resolving deltas"),
- 					  nr_ref_deltas + nr_ofs_deltas);
+  * Mostly randomly chosen maximum thread counts: we
+@@ -108,7 +98,7 @@ static void preload_index(struct index_state *index,
+ 	struct thread_data data[MAX_PARALLEL];
+ 	struct progress_data pd;
  
--#ifndef NO_PTHREADS
- 	nr_dispatched = 0;
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
- 		init_thread();
-@@ -1229,7 +1200,6 @@ static void resolve_deltas(void)
- 		cleanup_thread();
+-	if (!core_preload_index)
++	if (!HAVE_THREADS || !core_preload_index)
  		return;
- 	}
+ 
+ 	threads = index->cache_nr / THREAD_COST;
+@@ -151,7 +141,6 @@ static void preload_index(struct index_state *index,
+ 
+ 	trace_performance_leave("preload index");
+ }
 -#endif
  
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
-@@ -1531,11 +1501,11 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
- 		if (nr_threads < 0)
- 			die(_("invalid number of threads specified (%d)"),
- 			    nr_threads);
--#ifdef NO_PTHREADS
--		if (nr_threads != 1)
--			warning(_("no threads support, ignoring %s"), k);
--		nr_threads = 1;
--#endif
-+		if (!HAVE_THREADS) {
-+			if (nr_threads != 1)
-+				warning(_("no threads support, ignoring %s"), k);
-+			nr_threads = 1;
-+		}
- 		return 0;
- 	}
- 	return git_default_config(k, v, cb);
-@@ -1723,12 +1693,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 				nr_threads = strtoul(arg+10, &end, 0);
- 				if (!arg[10] || *end || nr_threads < 0)
- 					usage(index_pack_usage);
--#ifdef NO_PTHREADS
--				if (nr_threads != 1)
--					warning(_("no threads support, "
--						  "ignoring %s"), arg);
--				nr_threads = 1;
--#endif
-+				if (!HAVE_THREADS) {
-+					if (nr_threads != 1)
-+						warning(_("no threads support, "
-+							  "ignoring %s"), arg);
-+					nr_threads = 1;
-+				}
- 			} else if (starts_with(arg, "--pack_header=")) {
- 				struct pack_header *hdr;
- 				char *c;
-@@ -1791,14 +1761,12 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (strict)
- 		opts.flags |= WRITE_IDX_STRICT;
- 
--#ifndef NO_PTHREADS
--	if (!nr_threads) {
-+	if (HAVE_THREADS && !nr_threads) {
- 		nr_threads = online_cpus();
- 		/* An experiment showed that more threads does not mean faster */
- 		if (nr_threads > 3)
- 			nr_threads = 3;
- 	}
--#endif
- 
- 	curr_pack = open_pack_file(pack_name);
- 	parse_pack_header();
+ int read_index_preload(struct index_state *index,
+ 		       const struct pathspec *pathspec,
 -- 
 2.19.1.647.g708186aaf9
 
