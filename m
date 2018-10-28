@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABE001F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 06:52:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 089741F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 06:52:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727848AbeJ1Pf5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 11:35:57 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:34286 "EHLO
+        id S1727876AbeJ1Pf7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 11:35:59 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:34828 "EHLO
         mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725791AbeJ1Pf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Oct 2018 11:35:56 -0400
-Received: by mail-lf1-f67.google.com with SMTP id n26-v6so3743251lfl.1
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 23:52:12 -0700 (PDT)
+        with ESMTP id S1725791AbeJ1Pf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Oct 2018 11:35:58 -0400
+Received: by mail-lf1-f67.google.com with SMTP id d7-v6so3739145lfi.2
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 23:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vQVSExHnUwhG2EPgQ/94UDJTceY0O+VNXHgtXyl0wGU=;
-        b=fSRmvHPMUzIEqB3/Uw3XnoVPMAvmQ5BZkyGfzeCH/NiCSZk4YLxkOhOaOo6qCvHHVJ
-         YGOIsrf26SV4E6A1n2e8VU12Ps4BngAlYs2e5cljU18pEm3F8qbrJ64ZgauJv6/G6+88
-         h+dRi1cR3WvVLBULlLU5j4hSdwQxNxa8rjNqsTwO5gqv//pklaJ8N/5pELzK46RWxY8y
-         JoYOWIKbz4TSCsF/6Cj6IfTXpkxC0+QcARoKA8vnrIsBhyGjF9CKMr1woG95qV2TuqSo
-         GXstMvgLl5nXw9CG3QQEOKQ12dl7fKAiGP3VH3KlvHFD8n75nJGlAx9+VedBuVicbGw/
-         aeQA==
+        bh=Hfx0wHo+aJ95DheRDp+HrVz7WyEbzRBR3cUux7hu0I4=;
+        b=lK//xKM7MoRPvNvHu80+CuCufCdzGk52QFj5klhf+n60cbsV6O2QwIl4NSO4v0dubD
+         /higWU2qWifX+BQhUwHU0RzeLsiGLyFothDSHhna5ydgwPr65KH3ImG6AnSz9Gn2toT/
+         1na+kFSkcGc/ZNm+UcxSfkgx9fF6Hdr/PpRx0ZYKeK5h7/YgOkqsX2elRDW0l8EKgrHx
+         FAVbpTJVr4I72f0nZHnlDJTsphMksW4wOoNRuLUF8nUE1C6lkhLjbG787dTdalRaddcJ
+         IR8iLhnUTBqguRXZ04qcxZgvop+1D71uzeG7WLQdROazkww5fbZZON/BjirsyXpqjH8e
+         jLzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vQVSExHnUwhG2EPgQ/94UDJTceY0O+VNXHgtXyl0wGU=;
-        b=Q+rRBvjIqQtyML8JnFrbZ+gONaa8m42252m6gkOI3Fxvz9YoSUy9UjPHYgr5ZZ8UFa
-         9eVl1IdY7pxbfch/0cm+RX7ASfaCh2ZOrrh2OJmfOb3ATXRzQGFvliW/IahsCN3WfbAv
-         vBS4yxRntPMdqKyBfH+ka5HRqplJjKimOgr2j1IflNoNjZqRejzfrL16Ai5h7kG8sVLX
-         RiyIBEp9obG1xHJWww2R1lv7y+A5jknvzFyD3WPcGynKimIIge5TdJYikeMpqxtMXs/0
-         3iPMp3xuZ/rPpWPvqGpE1R6+PpglSpP3/LF7gKUELva5Dv/uibguDwPbham/CyWJEfdx
-         BHmA==
-X-Gm-Message-State: AGRZ1gK8Nf7zwgcPRjiludI+D1SmyZRrSjTkmpXIkWMLU6/SB6IkAF+F
-        bEHT1u4Ti+/Mes8hbVxYFTgQvGSl
-X-Google-Smtp-Source: AJdET5e9y+6V9EjTHd3iVj088Xpl2i+W6JA1kOLajIYkL74B6KaSMxC+7y6SNhuUHYZJAVzaPonXMA==
-X-Received: by 2002:a19:5186:: with SMTP id g6mr5403954lfl.143.1540709531063;
-        Sat, 27 Oct 2018 23:52:11 -0700 (PDT)
+        bh=Hfx0wHo+aJ95DheRDp+HrVz7WyEbzRBR3cUux7hu0I4=;
+        b=bl2XMaKZ3KTDH22Coo/g0WRiTuNrTWRjMmK+XzlFAzKIOM12FgIJRfGYpYzkLJpBKi
+         ZAZBKhCcoidphUnpeEV5J67nVvGDQDyCkiemIbeUa+KwTk6Hzt6n3l1M1pBDWqrmvWzR
+         On+nBYS5ch24wZc9mYj4C35AbNYJfQ7kH/8juYNLKS70t1pFyFlcwXTGc4DPQahOzIFu
+         QM/NcfkPlRdqj+P/trc522Mhu1N6mLw8OIYtxe4Jotalx9V5u958DkXT1gTY2MAX0wCf
+         6ocaC7YFQBZJnp6jZ1H4jkvF2yK3OGmqfErZJr/Xz5G8YeUantIlpjTs57d2258eh53f
+         QPEQ==
+X-Gm-Message-State: AGRZ1gJEn4T+YcUw3TLd+8i78flt1wfgnl3ggyD8iF9FnKnZqxE+xGs+
+        eMRZ2RgJlsaL0Cc2d2of3krHE3iI
+X-Google-Smtp-Source: AJdET5f2FWqLTVLdTjvoxu+g5mdNTArwCoSxXqaRSa8jVuEJe6CbXqIAnMuP8bouXmpJTWmbKFbZlw==
+X-Received: by 2002:a19:59d3:: with SMTP id n202-v6mr5456397lfb.125.1540709534120;
+        Sat, 27 Oct 2018 23:52:14 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v23-v6sm148847ljd.70.2018.10.27.23.52.09
+        by smtp.gmail.com with ESMTPSA id v23-v6sm148847ljd.70.2018.10.27.23.52.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 23:52:10 -0700 (PDT)
+        Sat, 27 Oct 2018 23:52:13 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 08/12] remote.c: mark messages for translation
-Date:   Sun, 28 Oct 2018 07:51:53 +0100
-Message-Id: <20181028065157.26727-9-pclouds@gmail.com>
+Subject: [PATCH 11/12] parse-options.c: mark more strings for translation
+Date:   Sun, 28 Oct 2018 07:51:56 +0100
+Message-Id: <20181028065157.26727-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181028065157.26727-1-pclouds@gmail.com>
 References: <20181028065157.26727-1-pclouds@gmail.com>
@@ -70,186 +70,98 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- remote.c | 49 +++++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 24 deletions(-)
+ parse-options.c          | 18 +++++++++---------
+ t/t0040-parse-options.sh |  4 ++--
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 81f4f01b00..11b33d1625 100644
---- a/remote.c
-+++ b/remote.c
-@@ -359,7 +359,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+diff --git a/parse-options.c b/parse-options.c
+index 0bf817193d..949aac287f 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -197,7 +197,7 @@ static int get_value(struct parse_opt_ctx_t *p,
  		return 0;
- 	/* Handle remote.<name>.* variables */
- 	if (*name == '/') {
--		warning("Config remote shorthand cannot begin with '/': %s",
-+		warning(_("config remote shorthand cannot begin with '/': %s"),
- 			name);
- 		return 0;
- 	}
-@@ -406,7 +406,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		if (!remote->receivepack)
- 			remote->receivepack = v;
- 		else
--			error("more than one receivepack given, using the first");
-+			error(_("more than one receivepack given, using the first"));
- 	} else if (!strcmp(subkey, "uploadpack")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
-@@ -414,7 +414,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		if (!remote->uploadpack)
- 			remote->uploadpack = v;
- 		else
--			error("more than one uploadpack given, using the first");
-+			error(_("more than one uploadpack given, using the first"));
- 	} else if (!strcmp(subkey, "tagopt")) {
- 		if (!strcmp(value, "--no-tags"))
- 			remote->fetch_tags = -1;
-@@ -620,7 +620,7 @@ static void handle_duplicate(struct ref *ref1, struct ref *ref2)
- 			 * FETCH_HEAD_IGNORE entries always appear at
- 			 * the end of the list.
- 			 */
--			die(_("Internal error"));
-+			BUG("Internal error");
- 		}
- 	}
- 	free(ref2->peer_ref);
-@@ -680,7 +680,7 @@ static int match_name_with_pattern(const char *key, const char *name,
- 	size_t namelen;
- 	int ret;
- 	if (!kstar)
--		die("Key '%s' of pattern had no '*'", key);
-+		die(_("key '%s' of pattern had no '*'"), key);
- 	klen = kstar - key;
- 	ksuffixlen = strlen(kstar + 1);
- 	namelen = strlen(name);
-@@ -690,7 +690,7 @@ static int match_name_with_pattern(const char *key, const char *name,
- 		struct strbuf sb = STRBUF_INIT;
- 		const char *vstar = strchr(value, '*');
- 		if (!vstar)
--			die("Value '%s' of pattern has no '*'", value);
-+			die(_("value '%s' of pattern has no '*'"), value);
- 		strbuf_add(&sb, value, vstar - value);
- 		strbuf_add(&sb, name + klen, namelen - klen - ksuffixlen);
- 		strbuf_addstr(&sb, vstar + 1);
-@@ -707,7 +707,7 @@ static void query_refspecs_multiple(struct refspec *rs,
- 	int find_src = !query->src;
  
- 	if (find_src && !query->dst)
--		error("query_refspecs_multiple: need either src or dst");
-+		BUG("query_refspecs_multiple: need either src or dst");
- 
- 	for (i = 0; i < rs->nr; i++) {
- 		struct refspec_item *refspec = &rs->items[i];
-@@ -735,7 +735,7 @@ int query_refspecs(struct refspec *rs, struct refspec_item *query)
- 	char **result = find_src ? &query->src : &query->dst;
- 
- 	if (find_src && !query->dst)
--		return error("query_refspecs: need either src or dst");
-+		BUG("query_refspecs: need either src or dst");
- 
- 	for (i = 0; i < rs->nr; i++) {
- 		struct refspec_item *refspec = &rs->items[i];
-@@ -995,12 +995,12 @@ static int match_explicit_lhs(struct ref *src,
- 		 * way to delete 'other' ref at the remote end.
- 		 */
- 		if (try_explicit_object_name(rs->src, match) < 0)
--			return error("src refspec %s does not match any.", rs->src);
-+			return error(_("src refspec %s does not match any"), rs->src);
- 		if (allocated_match)
- 			*allocated_match = 1;
- 		return 0;
  	default:
--		return error("src refspec %s matches more than one.", rs->src);
-+		return error(_("src refspec %s matches more than one"), rs->src);
+-		die("should not happen, someone must be hit on the forehead");
++		BUG("opt->type %d should not happen, someone must be hit on the forehead", opt->type);
  	}
  }
  
-@@ -1030,7 +1030,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 		if (!dst_value ||
- 		    ((flag & REF_ISSYMREF) &&
- 		     !starts_with(dst_value, "refs/heads/")))
--			die("%s cannot be resolved to branch.",
-+			die(_("%s cannot be resolved to branch"),
- 			    matched_src->name);
+@@ -319,8 +319,8 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
  	}
  
-@@ -1041,30 +1041,30 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 		if (starts_with(dst_value, "refs/"))
- 			matched_dst = make_linked_ref(dst_value, dst_tail);
- 		else if (is_null_oid(&matched_src->new_oid))
--			error("unable to delete '%s': remote ref does not exist",
-+			error(_("unable to delete '%s': remote ref does not exist"),
- 			      dst_value);
- 		else if ((dst_guess = guess_ref(dst_value, matched_src))) {
- 			matched_dst = make_linked_ref(dst_guess, dst_tail);
- 			free(dst_guess);
- 		} else
--			error("unable to push to unqualified destination: %s\n"
--			      "The destination refspec neither matches an "
--			      "existing ref on the remote nor\n"
--			      "begins with refs/, and we are unable to "
--			      "guess a prefix based on the source ref.",
-+			error(_("unable to push to unqualified destination: %s\n"
-+				"The destination refspec neither matches an "
-+				"existing ref on the remote nor\n"
-+				"begins with refs/, and we are unable to "
-+				"guess a prefix based on the source ref."),
- 			      dst_value);
- 		break;
- 	default:
- 		matched_dst = NULL;
--		error("dst refspec %s matches more than one.",
-+		error(_("dst refspec %s matches more than one"),
- 		      dst_value);
- 		break;
+ 	if (ambiguous_option) {
+-		error("Ambiguous option: %s "
+-			"(could be --%s%s or --%s%s)",
++		error(_("ambiguous option: %s "
++			"(could be --%s%s or --%s%s)"),
+ 			arg,
+ 			(ambiguous_flags & OPT_UNSET) ?  "no-" : "",
+ 			ambiguous_option->long_name,
+@@ -353,7 +353,7 @@ static void check_typos(const char *arg, const struct option *options)
+ 		return;
+ 
+ 	if (starts_with(arg, "no-")) {
+-		error ("did you mean `--%s` (with two dashes ?)", arg);
++		error(_("did you mean `--%s` (with two dashes ?)"), arg);
+ 		exit(129);
  	}
- 	if (!matched_dst)
- 		return -1;
- 	if (matched_dst->peer_ref)
--		return error("dst ref %s receives from more than one src.",
--		      matched_dst->name);
-+		return error(_("dst ref %s receives from more than one src"),
-+			     matched_dst->name);
- 	else {
- 		matched_dst->peer_ref = allocated_src ?
- 					matched_src :
-@@ -1750,7 +1750,7 @@ int get_fetch_map(const struct ref *remote_refs,
- 			ref_map = get_remote_ref(remote_refs, name);
+ 
+@@ -361,7 +361,7 @@ static void check_typos(const char *arg, const struct option *options)
+ 		if (!options->long_name)
+ 			continue;
+ 		if (starts_with(options->long_name, arg)) {
+-			error ("did you mean `--%s` (with two dashes ?)", arg);
++			error(_("did you mean `--%s` (with two dashes ?)"), arg);
+ 			exit(129);
  		}
- 		if (!missing_ok && !ref_map)
--			die("Couldn't find remote ref %s", name);
-+			die(_("couldn't find remote ref %s"), name);
- 		if (ref_map) {
- 			ref_map->peer_ref = get_local_ref(refspec->dst);
- 			if (ref_map->peer_ref && refspec->force)
-@@ -1763,7 +1763,7 @@ int get_fetch_map(const struct ref *remote_refs,
- 			if (!starts_with((*rmp)->peer_ref->name, "refs/") ||
- 			    check_refname_format((*rmp)->peer_ref->name, 0)) {
- 				struct ref *ignore = *rmp;
--				error("* Ignoring funny ref '%s' locally",
-+				error(_("* Ignoring funny ref '%s' locally"),
- 				      (*rmp)->peer_ref->name);
- 				*rmp = (*rmp)->next;
- 				free(ignore->peer_ref);
-@@ -1858,7 +1858,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	repo_init_revisions(the_repository, &revs, NULL);
- 	setup_revisions(argv.argc, argv.argv, &revs, NULL);
- 	if (prepare_revision_walk(&revs))
--		die("revision walk setup failed");
-+		die(_("revision walk setup failed"));
- 
- 	/* ... and count the commits on each side. */
- 	while (1) {
-@@ -2131,7 +2131,8 @@ static int parse_push_cas_option(struct push_cas_option *cas, const char *arg, i
- 	else if (!colon[1])
- 		oidclr(&entry->expect);
- 	else if (get_oid(colon + 1, &entry->expect))
--		return error("cannot parse expected object name '%s'", colon + 1);
-+		return error(_("cannot parse expected object name '%s'"),
-+			     colon + 1);
- 	return 0;
+ 	}
+@@ -424,7 +424,7 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
+ 	ctx->flags = flags;
+ 	if ((flags & PARSE_OPT_KEEP_UNKNOWN) &&
+ 	    (flags & PARSE_OPT_STOP_AT_NON_OPTION))
+-		die("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
++		BUG("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
+ 	parse_options_check(options);
  }
  
+@@ -644,11 +644,11 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 		break;
+ 	default: /* PARSE_OPT_UNKNOWN */
+ 		if (ctx.argv[0][1] == '-') {
+-			error("unknown option `%s'", ctx.argv[0] + 2);
++			error(_("unknown option `%s'"), ctx.argv[0] + 2);
+ 		} else if (isascii(*ctx.opt)) {
+-			error("unknown switch `%c'", *ctx.opt);
++			error(_("unknown switch `%c'"), *ctx.opt);
+ 		} else {
+-			error("unknown non-ascii option in string: `%s'",
++			error(_("unknown non-ascii option in string: `%s'"),
+ 			      ctx.argv[0]);
+ 		}
+ 		usage_with_options(usagestr, options);
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 17d0c18feb..e46b1e02f0 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -228,7 +228,7 @@ EOF
+ test_expect_success 'detect possible typos' '
+ 	test_must_fail test-tool parse-options -boolean >output 2>output.err &&
+ 	test_must_be_empty output &&
+-	test_cmp typo.err output.err
++	test_i18ncmp typo.err output.err
+ '
+ 
+ cat >typo.err <<\EOF
+@@ -238,7 +238,7 @@ EOF
+ test_expect_success 'detect possible typos' '
+ 	test_must_fail test-tool parse-options -ambiguous >output 2>output.err &&
+ 	test_must_be_empty output &&
+-	test_cmp typo.err output.err
++	test_i18ncmp typo.err output.err
+ '
+ 
+ test_expect_success 'keep some options as arguments' '
 -- 
 2.19.1.647.g708186aaf9
 
