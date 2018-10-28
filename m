@@ -7,56 +7,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B55D1F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 15:41:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E86C81F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 15:52:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726757AbeJ2AZ4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 20:25:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52740 "EHLO
+        id S1727756AbeJ2AhO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 20:37:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52746 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726492AbeJ2AZ4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Oct 2018 20:25:56 -0400
+        by vger.kernel.org with ESMTP id S1727637AbeJ2AhO (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Oct 2018 20:37:14 -0400
 Received: from genre.crustytoothpaste.net (ip-64-134-145-243.public.wayport.net [64.134.145.243])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8EBAD61B73;
-        Sun, 28 Oct 2018 15:40:57 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9DA1961B73;
+        Sun, 28 Oct 2018 15:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540741258;
-        bh=oT1rvtp9jcsl0VUzw4VOnZG19rIFgVxr9iF0piOn5jw=;
+        s=default; t=1540741934;
+        bh=X5wvPNz/ZmcC1X08/JqqIebrao/aoR4dydzNPtsNpbo=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=JuPZvi2xwpL2iO+5ijx3DHACfZxtMmd8Kp79TU/T35q91Ep0071QxG7wvb0mjEJx6
-         Jw0XYyiPBwpsNAgNncrssjKF9MPJsITnlTeiT6zR4rPD+bhjhUMECwZtvZukmlePvN
-         KfWluEJ2Pwk9YKcn5jCkZuTz9PUzgFO5LQdhWlk3MIEvISZJ+yD8nMSMSoygxF5oLh
-         koRt6VqlFKhn7vXs8xjJDpkor8ieUuLWizqJ0bQNtcgfDhNgbDDgHsnGh67HPefzsP
-         knT7QWZOFw1ZZ8EJq08353y3NtpCEMubUSfb+cxYa6crFej4SqM72RqdRFeEnbmD18
-         QQki0DSf5K9G+xLlM1bzGnrCfRA6xTuICd9EBbPonrZYg4SzklVPp1jVRM0ehMjLa6
-         xEJZB5L2BelIFJqC0Hds00J944SBk7oZdpFWnjl8yXUTpPJOPLKPaDEkWItC+nF87c
-         aHb46t9RUVVMpc4JNLZTVMMfSsFoHQqPhdXzlZD2TmxndtodSoS
-Date:   Sun, 28 Oct 2018 15:40:52 +0000
+        b=NAly/qVjFy7Gqx4tieE49ZjkWnYxv7QJQsMbtGoAmf6Q9s+BX3cvh52iTK48ZXPHQ
+         t12a1jFules7K9ZmsDeNwmRvu7M6g5uz/kt5P2bj0zpW/nr3e8j8/xJ+aq1DpaxcD9
+         SGQRYCA+zhYuMvYS0+e3mAgABvyvkGokVkIvne3WcR6ExhJywAGX8rlePK4KfvKWHM
+         WtR38I6wmzer0gTmBiVmqeaqAYC6f6kEnGJYSVJ5bATYE+eRezC0KT8Jq6EfV9J/8v
+         P14GXroMO87yNbqz0Sp8zygGHGjzhxHVZdJnJkunDkaFq7uHV9e7q3jsylyetoNEaJ
+         OzDCFaJirszmeAKWD4n8R36FepDxH8aCoVJBAP62ox3FqeTWnhnYGIBBGnS2SfXL7C
+         6xhKWkaeLXi1kX29XPkhwgkxdQs6gZult367uTGUZsubsuBQPbMnTWsE62Kqtgvset
+         lrwJI1DqybOYVZeEg6Rhm2fZdSeGT2h6a8K2flxe38hLvd66t9J
+Date:   Sun, 28 Oct 2018 15:52:06 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] some more hdr-check clean headers
-Message-ID: <20181028154052.GH6119@genre.crustytoothpaste.net>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        pclouds@gmail.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v4 10/12] Add a base implementation of SHA-256 support
+Message-ID: <20181028155206.GI6119@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <ecb3d551-314a-aeef-048f-c1bbe0b3c999@ramsayjones.plus.com>
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        stolee@gmail.com, avarab@gmail.com, pclouds@gmail.com,
+        szeder.dev@gmail.com
+References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
+ <20181025024005.154208-11-sandals@crustytoothpaste.net>
+ <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/Gk0KcsbyUMelFU1"
+        protocol="application/pgp-signature"; boundary="J+eNKFoVC4T1DV3f"
 Content-Disposition: inline
-In-Reply-To: <ecb3d551-314a-aeef-048f-c1bbe0b3c999@ramsayjones.plus.com>
+In-Reply-To: <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.18.0-2-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -67,49 +65,56 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---/Gk0KcsbyUMelFU1
+--J+eNKFoVC4T1DV3f
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 27, 2018 at 02:47:47AM +0100, Ramsay Jones wrote:
+On Wed, Oct 24, 2018 at 08:02:55PM -0700, Carlo Arenas wrote:
+> On Wed, Oct 24, 2018 at 7:41 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > diff --git a/sha256/block/sha256.h b/sha256/block/sha256.h
+> > new file mode 100644
+> > index 0000000000..38f02f7e6c
+> > --- /dev/null
+> > +++ b/sha256/block/sha256.h
+> > @@ -0,0 +1,26 @@
+> > +#ifndef SHA256_BLOCK_SHA256_H
+> > +#define SHA256_BLOCK_SHA256_H
+> > +
+> > +#include "git-compat-util.h"
 >=20
-> I have some changes to the hdr-check Makefile target in the works, but
-> these clean-ups don't have to be held up by those changes.
->=20
-> The 'fetch-object.h' patch is the same one I sent separately last time,
-> since it only applied on 'next' at the time. The 'ewok_rlw.h' patch is
-> just something I noticed while messing around the the Makefile changes.
-> The 'commit-reach.h' patch is the patch #9 from the original series, but
-> now with a commit message that explains the '#include "commit.h"' issue.
->=20
-> These changes are on top of current master (@c670b1f876) and merge
-> without conflict to 'next' and with a 'minor' conflict on 'pu'.
+> this shouldn't be needed and might be discouraged as per the
+> instructions in Documentation/CodingGuidelines
 
-All three of these patches look sane to me.
+This may not strictly be needed, but removing it makes the header no
+longer self-contained, which blows up my (and others') in-editor
+linting.  I think it's okay to add this extra header here to keep it
+self-contained, even if we know that it's not going to be absolutely
+required.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---/Gk0KcsbyUMelFU1
+--J+eNKFoVC4T1DV3f
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.10 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvV2IQACgkQv1NdgR9S
-9ouI1g//RaUWGU8hlCpBCvZ5L5byaIcHIcb6AJ0kQi0/J3qiwn2X3KBWPKi46Ek9
-OFhYjDKJEmVrEja2TtiML9LN34HIT9iGUVtymrP2B/hdxdcEg5ZxT0JeNqqrpXJu
-v7njqqL6ciEKc4cGJitKKoXM+vNYwMD28oca11KhFDVNsBZUxnN2xFlQI7duVTTG
-D7LImIZbEcwnLZziy1fdik8B+U9ZW+i/3F3sqY55KagAMK5Wy59tZsWn2AElCh6W
-e2NPX/SrUhb2XsHp0NjYHyDYdWvJbbz7Z+oNXQfaH/memif//NhiuWyzcQytMIMF
-Qni7XOHwSVWevcFSUxDiAZ2PMt6vCQW4pafpm4cjq/IHCS9bf03U4Hzq/vFWwnMw
-PCCUvx/+oDEvICQUniwSLp4sbJOk1rmyMHmIjGV/a/RS/DHHsppTDxs53ZOW3EvQ
-Ilo31+9+MM2uVx+kM1W3D2fR9e1WSAQjrOTJC9MPAtjFsFPCp2CJVPSxycs5ynjQ
-S/K+aaasuCZmFTek9udKnZ/FDh6DPyRfN+Ww6JanmAFCQd4802GfeoU74VOoZxLo
-9/ud5nFGS9la/WEC9aZvtenr9/VQKStvSlmlN5IvWJ9llNtvAKWBiXFqQwsLMzYL
-B7J0XMjcbKWnzzDb7a4awnpUJlgM6AgvNse550eKwev2yfx0gag=
-=p/sJ
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvV2yYACgkQv1NdgR9S
+9otBVA/+Ns3T5+q+C2OSBFnkc5lxZ5ogAlFSF1h/Vli0IFXazFFacziAkkql8npX
+q9JfH7avQiS6brJMUx2rSo5RL1WSUB8nJHNUgoERnoQZwG4/r66R6hZPyF1WBQ1T
+WYRDIyrzI3125n6LU2AhFfRfNHqHeSl2gImLs2Mi9owZG1YdZ6oy5OhXfESqDyyi
+Xo8X+FN7271QiMsT69MJwzepN5OOr8LSK7lmUOjr79pi+44oMuoeGhnhI+kp3Ua3
+55xJFaodazjEc4vXUZJCMrphU7s5jBp8QLUCQRmFkBlkNqQBcVv1Cbl7OgTczS2y
+3jDSpM/6rx0SaLaJDhtBRmCAYZdPk0iNuw9sZ7FoeNiS16q5NmmDoSdOFfyAV+wa
+Zu32z+Lr+cWGGUyEC/YdYe6V9n/8T0+UzM+/B0dtgeLdpEpYbOHiVBPjVXrSckDf
+PhM+HaZ8F11u1na9+p3darJHrBOn3KNGcNXRdPJ1OPACZcFkUzYjLEA1gdCE5WhR
+rmCEErFL4Ml6tRm3U4ZAFemQtz9EC64OvPk3pBskhBmNLyO9l6SIeoLqVLb6IFnk
+szk8CmmnqTPigrw2e7r1706SFejlfnHs3xk0Wsncd5w+Zkm5KKlIlqghjsaD7yOF
+NhiZkQpCfNeKP5zSBsXeNF1ziyMd6pavDuNaSnEKYWl2lTR7M6o=
+=wqfM
 -----END PGP SIGNATURE-----
 
---/Gk0KcsbyUMelFU1--
+--J+eNKFoVC4T1DV3f--
