@@ -2,98 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFF111F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 11:29:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3293E1F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 12:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726613AbeJ1UN7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 16:13:59 -0400
-Received: from mail-it1-f177.google.com ([209.85.166.177]:38526 "EHLO
-        mail-it1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726379AbeJ1UN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Oct 2018 16:13:58 -0400
-Received: by mail-it1-f177.google.com with SMTP id i76-v6so6418816ita.3
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 04:29:36 -0700 (PDT)
+        id S1726511AbeJ1U7u (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 16:59:50 -0400
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:55420 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbeJ1U7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Oct 2018 16:59:50 -0400
+Received: by mail-wm1-f43.google.com with SMTP id s10-v6so5488640wmc.5
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 05:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vrUQCw5ssPvsGZCokkX2OTRXDBreRPggsgo0IGHFpds=;
-        b=hUIz2v57bqQ3kNiVywDE+EnGOPaZdokgdWV0MOHK4wSmSsLGIv6pjVL3MrOjirqyim
-         fVOmcPQAFULVkgNpTFChNtODR5Y4yXkhinMgYo69PUZ7LLDconGVWbvB8KYPI/g7+0Aj
-         KhVmjwzCu2X8kV1ZOApNuozpfPKd0aEAaggjcraDpype5WqyFcttfITgTSboBdHzdfN9
-         yS+3Udbgp5cWiLTb8jeh0gtVK/rE937ZB/RpS1qfJ4OXUvRdpa5uxmUXeYWabmXNWiBt
-         5mDS4DoMfoP+IOFwlpHK3Vuq5Ggw0HZ+4CThwJc1cqDEJrergxph3lc5Vso+WeFCvSeT
-         URug==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tz+18dqvF6YXwBx8dNswi2LfZSCbBv4IJk/QiZaOZeU=;
+        b=UoWu2khRpFgCZLrVLpS8vrEZCkXTW9XSGgXA0vXTX07kesShBIxM+JzbKe17nhtwZG
+         C77yIBuXcBMIZ1ZyF8gym2pmN5vNlJvb0T5eCICYIirsCeN5BSz2VMHzWyKfsTFnPQWE
+         WSPx3/trLvIITHyw5w8aXdIr1hX0lPweL9LLn8GKSpV8hvMDmwIfFksRT5434yAly0Af
+         YeWsppmsVnPyCTiaxr2LmDPpgooznaySQpyvh1itf+eymXvGCmG1t6smyUnRTEN1ytn7
+         n6+6bifKEJ6bEesr7njI+c6a6OUnIZY21Mi9kuRXH9QesnRg9FltTUMgc8S2L6b1fHCR
+         ifGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vrUQCw5ssPvsGZCokkX2OTRXDBreRPggsgo0IGHFpds=;
-        b=mvOxqu8S+Fx7nCVwLZr60DkWS6NQWA4KRFAOsBEal9UcaTUtGBHfrCJHHuMcBJyAVt
-         jUsgIzf9bYD0I/4pSvchlzgUUNeh1lMKlonip6Rzjme4D4yBRHrUU3UILc6M8BxqGYrq
-         zgaFWReuWeXSmAjHvxI+ENOvu0j1ReMJ1I1MLYnrHe80v+4Q0OM32pLmRNmVlhpKk2Fr
-         a9Zt2av1kotsuqBttBdPOz30hOkKhlgMu1AqouPnP3fOAPEWtdbpIUD+cIFm+WQSJ5U3
-         nC84SVRbJYPQ4j5VRv28SNq5hCot5+ZbFB0Q2zNe/9J9jGZT1hcw0gAuB1vZ+wr5bfhY
-         mWRA==
-X-Gm-Message-State: AGRZ1gKvtDsj0C0YX7QhE4BLgi7JMSqZViAdNRsKb8mRe04EPn7lOj01
-        Ou8PIQHq/HcnTxv360BFmPL/rMPYVS593NUkYL4=
-X-Google-Smtp-Source: AJdET5f2e87lnoYO9ELz2kMDKSKPfcgx/HFojRmY88ygdEGSih5OPT6gDQWl6Lid4b5HgXijZQbI562/1rv8LGWBgRo=
-X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr7739553itc.123.1540726175701;
- Sun, 28 Oct 2018 04:29:35 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tz+18dqvF6YXwBx8dNswi2LfZSCbBv4IJk/QiZaOZeU=;
+        b=N6eF1h8ZLjrSBOnFGGLA2N7Ayydy80u7RlJ12n9HsNClQBkOw+zDvY/+SLmXgmqWEl
+         t8ZaG56C5eF5oeWh3Vm8V+upJNNd8RW/IEo15AIGf64kPDON1NQMQBpnAh7ouNs0mXVr
+         fNKD+UqcnkclocZ+qHlgQLTEBpCgX1M+Gim2gaxde1uZlwsrgNxnHc+7/gadXo9wvd1T
+         MgmjAeSyQUVQZDehiprBit/00YxZrVDIGcVImnwTdA/ajnmM6SYSQodhV/WQUBbwOotu
+         PwZs5a9XcWF6GoVJW4MyX5aRX0On713qQ1fbhoJK+spyH+Q6KbXMOmav4kyVAGnxcGlF
+         scTA==
+X-Gm-Message-State: AGRZ1gJOKv4mzHkFQYraeVdFuYqwdUSQ+xphDWrqXw/jz2C7Eg+bLvEs
+        5TYco5V0oKxgqKmAiICQQnY=
+X-Google-Smtp-Source: AJdET5cuJkPTVavvYzuk3wTEtoxWqTKr2R6jcw9sHduUEit0U2QzOEJjM1UUPE9zmNy/cB9xYY8hSw==
+X-Received: by 2002:a1c:950a:: with SMTP id x10-v6mr4269133wmd.43.1540728920431;
+        Sun, 28 Oct 2018 05:15:20 -0700 (PDT)
+Received: from szeder.dev (x4d0c4c20.dyn.telefonica.de. [77.12.76.32])
+        by smtp.gmail.com with ESMTPSA id q77-v6sm13685919wmd.33.2018.10.28.05.15.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Oct 2018 05:15:19 -0700 (PDT)
+Date:   Sun, 28 Oct 2018 13:15:17 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: t7405.17 breakage vanishes with GETTEXT_POISON=1
+Message-ID: <20181028121517.GO30222@szeder.dev>
+References: <CACsJy8B=gxVMrZnr-BNp=VCHea8wpx+GCE4N76=vSGMnX2rSbA@mail.gmail.com>
 MIME-Version: 1.0
-References: <874dee7c-af9f-a609-c325-748160df89cc@1ec5.org>
-In-Reply-To: <874dee7c-af9f-a609-c325-748160df89cc@1ec5.org>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 28 Oct 2018 12:29:09 +0100
-Message-ID: <CACsJy8CGMs16xUaUEWvPgkjPt2PAFF2gpN_ksXSe6QDUAiPARw@mail.gmail.com>
-Subject: Re: [PATCH] l10n: vi.po: fix typo in pack-objects
-To:     mxn@1ec5.org
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8B=gxVMrZnr-BNp=VCHea8wpx+GCE4N76=vSGMnX2rSbA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm not sure if Junio still takes .po patches or only Jiang Xin does.
-I CC Jiang here just in case.
+On Sun, Oct 28, 2018 at 06:41:06AM +0100, Duy Nguyen wrote:
+> Something fishy is going on but I don't think I'll spend time hunting
+> it down so I post here in case somebody else is interested. It might
+> also indicate a problem with poison gettext, not the test case too.
 
-On Thu, Oct 25, 2018 at 3:05 AM Minh Nguyen <mxn@1ec5.org> wrote:
->
-> ---
->   po/vi.po | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/po/vi.po b/po/vi.po
-> index bc79319b6..e646825ed 100644
-> --- a/po/vi.po
-> +++ b/po/vi.po
-> @@ -13663,7 +13663,7 @@ msgstr "=C4=90=C3=A1nh s=E1=BB=91 c=C3=A1c =C4=91=
-=E1=BB=91i t=C6=B0=E1=BB=A3ng"
->   #: builtin/pack-objects.c:3382
->   #, c-format
->   msgid "Total %<PRIu32> (delta %<PRIu32>), reused %<PRIu32> (delta
-> %<PRIu32>)"
-> -msgstr "T=E1=BB=8Fng %<PRIu32> (delta %<PRIu32>), d=C3=B9ng l=E1=BA=A1i =
-%<PRIu32> (delta
-> %<PRIu32>)"
-> +msgstr "T=E1=BB=95ng %<PRIu32> (delta %<PRIu32>), d=C3=B9ng l=E1=BA=A1i =
-%<PRIu32> (delta
-> %<PRIu32>)"
->
->   #: builtin/pack-refs.c:7
->   msgid "git pack-refs [<options>]"
-> --
-> 2.18.0
+I haven't actually run the test under GETTEXT_POISON, but I stongly
+suspect it's the test, or more accurately the helper function
+'test_i18ngrep'.
 
+The test in question runs
 
+  test_i18ngrep ! "refusing to lose untracked file at" err
 
---=20
-Duy
+which fails in normal test runs, because 'grep' does find the
+undesired string; that's the known breakage.  Under GETTEXT_POISION,
+however, 'test_i18ngrep' always succeeds because of this condition:
+
+  if test -n "$GETTEXT_POISON"
+  then
+          # pretend success
+          return 0
+  fi
+
+and then in turn the whole test succeeds.
