@@ -2,217 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31D581F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 13:31:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D798F1F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 15:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727346AbeJ1WPo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 18:15:44 -0400
-Received: from 0x63.nu ([109.74.10.199]:53172 "EHLO 0x63.nu"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726379AbeJ1WPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Oct 2018 18:15:44 -0400
-X-Greylist: delayed 2207 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Oct 2018 18:15:43 EDT
-Received: from ip6-localhost ([::1] helo=changeme.sandvine.com)
-        by 0x63.nu with esmtp (Exim 4.89)
-        (envelope-from <anders@0x63.nu>)
-        id 1gGka9-0003n0-5B; Sun, 28 Oct 2018 13:54:17 +0100
-From:   Anders Waldenborg <anders@0x63.nu>
+        id S1727350AbeJ2ARK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 20:17:10 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:33536 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726592AbeJ2ARJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Oct 2018 20:17:09 -0400
+Received: by mail-lj1-f194.google.com with SMTP id z21-v6so5424204ljz.0
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 08:32:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3HliBdmhb4lQ8/7AHNyArX7dYYLgIHQwDO60/hA/x2Y=;
+        b=CLBsKy3qb12saEY62d8i3SaIZAxyNXwnfTlONBZ3YQ/vr639+7diaxlpImbKQVPg44
+         ETwHes2jzGFERNUdGGexGSjEttnsz0fBWonM+cu7aiFFv6WEwbeBu/h2Mf2FljXfJrNa
+         iRXEkN6Z0CQeRXTSnzXISS3oUgqXkL7TMqXx/Nz4ct54dzks0FPOfuKkwHiiiIsSFN2j
+         qeFINylTMFq2KX24siDh9X0AW6mnfUGqD5nlt+jz63r5X91MhKWWsWrsPiwN5IHXxDd5
+         ZPVZ1Piux6T7DKHoAvfSqw3rznokKsQH7EZndmMazc1dUs5kXuipgDF9obbX0f5OyD0C
+         1f0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3HliBdmhb4lQ8/7AHNyArX7dYYLgIHQwDO60/hA/x2Y=;
+        b=sVjHu0VfRwlBGqeBPxbgkqgWI5/UCPSzo5NeGy5OkoVR+EO3pE+MBoUGREXYcAjkkz
+         LDWPkTVuybOCf9Wvl0qn+BtTyL1BauIWWgLmfsxxT8KeqXQJul1kvu7Ax5gYiMhZVX9Y
+         sA3UA7bTtFT1MHVM12h5GSQBijlT6e4z6U4UZed5Uue29s0bicC9YNWXFf72XlfgRG+T
+         oS/4hlM4g9CBvCZuM+Dmh9cFuMzXSrUJotjKXUFvRv+Kkqdishl/jIulGJKKZPBQnYlN
+         Y7L00XXLkW/F8I5kYE4gKoovGEwoXRNQejH54XRJaKMZJCYRXStLon9SqRNDjQoLY/Rw
+         a6wg==
+X-Gm-Message-State: AGRZ1gLImYuiSz7OL4AGMdPyMuloTrdwtjoA5Qwds6sPso2Yyk/QF0Y/
+        XhqDTvn97VJ1I+/p2Al711cWIjVl
+X-Google-Smtp-Source: AJdET5c+bSz72O0RWYuqu5+7JZEbvIdu3APuTpr7k2K2PqeTDno4apHVNm+/FzVU1c0koLSWzsX2Aw==
+X-Received: by 2002:a2e:6503:: with SMTP id z3-v6mr5958798ljb.153.1540740733110;
+        Sun, 28 Oct 2018 08:32:13 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id c19sm32835lfg.86.2018.10.28.08.32.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Oct 2018 08:32:12 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Anders Waldenborg <anders@0x63.nu>
-Subject: [PATCH] pretty: Add %(trailer:X) to display single trailer
-Date:   Sun, 28 Oct 2018 13:50:25 +0100
-Message-Id: <20181028125025.30952-1-anders@0x63.nu>
-X-Mailer: git-send-email 2.17.1
-X-SA-Exim-Connect-IP: ::1
-X-SA-Exim-Mail-From: anders@0x63.nu
-X-SA-Exim-Scanned: No (on 0x63.nu); SAEximRunCond expanded to false
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] sequencer: clarify intention to break out of loop
+Date:   Sun, 28 Oct 2018 16:31:45 +0100
+Message-Id: <20181028153145.25734-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.19.1.593.gc670b1f876.dirty
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This new format placeholder allows displaying only a single
-trailer. The formatting done is similar to what is done for
---decorate/%d using parentheses and comma separation.
+When we find a space, we set `len = i`, which gives us the answer we are
+looking for, but which also breaks out of the loop through these steps:
 
-It's intended use is for things like ticket references in trailers.
+  1. `len = i`
 
-So with a commit with a message like:
+  2. `i = i + 1`
 
- > Some good commit
- >
- > Ticket: XYZ-123
+  3. Is `i < len`? No, so break out.
 
-running:
+Since `i` is signed, step 2 is undefined if `i` has the value `INT_MAX`.
+It can't actually have that value, but that doesn't stop my copy of gcc
+7.3.0 from throwing the following:
 
- $ git log --pretty="%H %s% (trailer:Ticket)"
+> sequencer.c:2853:3: error: assuming signed overflow does not occur when
+> assuming that (X + c) < X is always false [-Werror=strict-overflow]
+>    for (i = 0; i < len; i++)
+>    ^~~
 
-will give:
+That is, the compiler has realized that the code is essentially
+evaluating "(len + 1) < len" and that for `len = INT_MAX`, this is
+undefined behavior. What it hasn't figured out is that if `i` and `len`
+are both `INT_MAX` after step 1, then `len` must have had a value larger
+than `INT_MAX` before that step, which it can't have had.
 
- > 123456789a Some good commit (Ticket: XYZ-123)
+Let's be explicit about breaking out of the loop. This helps the
+compiler grok our intention. As a bonus, it might make it (even) more
+obvious to human readers that the loop stops at the first space.
 
-Signed-off-by: Anders Waldenborg <anders@0x63.nu>
+While at it, reduce the scope of `i`.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/pretty-formats.txt |  4 ++++
- pretty.c                         | 16 +++++++++++++
- t/t4205-log-pretty-formats.sh    | 40 ++++++++++++++++++++++++++++++++
- trailer.c                        | 18 ++++++++++++--
- trailer.h                        |  1 +
- 5 files changed, 77 insertions(+), 2 deletions(-)
+ sequencer.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 6109ef09aa..a46d0c0717 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -211,6 +211,10 @@ endif::git-rev-list[]
-   If the `unfold` option is given, behave as if interpret-trailer's
-   `--unfold` option was given.  E.g., `%(trailers:only,unfold)` to do
-   both.
-+- %(trailer:<t>): display the specified trailer in parentheses (like
-+  %d does for refnames). If there are multiple entries of that trailer
-+  they are shown comma separated. If there are no matching trailers
-+  nothing is displayed.
+diff --git a/sequencer.c b/sequencer.c
+index 0c164d5f98..a351638ad9 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2829,7 +2829,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+ 	struct tree_desc desc;
+ 	struct tree *tree;
+ 	struct unpack_trees_options unpack_tree_opts;
+-	int ret = 0, i;
++	int ret = 0;
  
- NOTE: Some placeholders may depend on other options given to the
- revision traversal engine. For example, the `%g*` reflog options will
-diff --git a/pretty.c b/pretty.c
-index 8ca29e9281..61ae34ced4 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1324,6 +1324,22 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+@@ -2849,10 +2849,14 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
  		}
- 	}
- 
-+	if (skip_prefix(placeholder, "(trailer:", &arg)) {
-+		struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
-+		opts.no_divider = 1;
-+		opts.only_trailers = 1;
-+		opts.unfold = 1;
-+
-+		const char *end = strchr(arg, ')');
-+		if (!end)
-+			return 0;
-+
-+		opts.filter_trailer = xstrndup(arg, end - arg);
-+		format_trailers_from_commit(sb, msg + c->subject_off, &opts);
-+		free(opts.filter_trailer);
-+		return end - placeholder + 1;
-+	}
-+
- 	return 0;	/* unknown placeholder */
- }
- 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 978a8a66ff..e929f820e7 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -598,6 +598,46 @@ test_expect_success ':only and :unfold work together' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'pretty format %(trailer:foo) shows that trailer' '
-+	git log --no-walk --pretty="%(trailer:Acked-By)" >actual &&
-+	{
-+		echo "(Acked-By: A U Thor <author@example.com>)"
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(trailer:nonexistant) becomes empty' '
-+	git log --no-walk --pretty="x%(trailer:Nacked-By)x" >actual &&
-+	{
-+		echo "xx"
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '% (trailer:nonexistant) with space becomes empty' '
-+	git log --no-walk --pretty="x% (trailer:Nacked-By)x" >actual &&
-+	{
-+		echo "xx"
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '% (trailer:foo) with space adds space before' '
-+	git log --no-walk --pretty="x% (trailer:Acked-By)x" >actual &&
-+	{
-+		echo "x (Acked-By: A U Thor <author@example.com>)x"
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(trailer:foo) with multiple lines becomes comma separated and unwrapped' '
-+	git log --no-walk --pretty="%(trailer:Signed-Off-By)" >actual &&
-+	{
-+		echo "(Signed-Off-By: A U Thor <author@example.com>, A U Thor <author@example.com>)"
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'trailer parsing not fooled by --- line' '
- 	git commit --allow-empty -F - <<-\EOF &&
- 	this is the subject
-diff --git a/trailer.c b/trailer.c
-index 0796f326b3..d337bca8dd 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1138,6 +1138,7 @@ static void format_trailer_info(struct strbuf *out,
- 		return;
- 	}
- 
-+	int printed_first = 0;
- 	for (i = 0; i < info->trailer_nr; i++) {
- 		char *trailer = info->trailers[i];
- 		ssize_t separator_pos = find_separator(trailer, separators);
-@@ -1150,7 +1151,19 @@ static void format_trailer_info(struct strbuf *out,
- 			if (opts->unfold)
- 				unfold_value(&val);
- 
--			strbuf_addf(out, "%s: %s\n", tok.buf, val.buf);
-+			if (opts->filter_trailer) {
-+				if (!strcasecmp (tok.buf, opts->filter_trailer)) {
-+					if (!printed_first) {
-+						strbuf_addf(out, "(%s: ", opts->filter_trailer);
-+						printed_first = 1;
-+					} else {
-+						strbuf_addstr(out, ", ");
-+					}
-+					strbuf_addstr(out, val.buf);
-+				}
-+			} else {
-+				strbuf_addf(out, "%s: %s\n", tok.buf, val.buf);
+ 		oidcpy(&oid, &opts->squash_onto);
+ 	} else {
++		int i;
+ 		/* Determine the length of the label */
+-		for (i = 0; i < len; i++)
+-			if (isspace(name[i]))
++		for (i = 0; i < len; i++) {
++			if (isspace(name[i])) {
+ 				len = i;
++				break;
 +			}
- 			strbuf_release(&tok);
- 			strbuf_release(&val);
++		}
  
-@@ -1158,7 +1171,8 @@ static void format_trailer_info(struct strbuf *out,
- 			strbuf_addstr(out, trailer);
- 		}
- 	}
--
-+	if (printed_first)
-+		strbuf_addstr(out, ")");
- }
- 
- void format_trailers_from_commit(struct strbuf *out, const char *msg,
-diff --git a/trailer.h b/trailer.h
-index b997739649..852c79d449 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -72,6 +72,7 @@ struct process_trailer_options {
- 	int only_input;
- 	int unfold;
- 	int no_divider;
-+	char *filter_trailer;
- };
- 
- #define PROCESS_TRAILER_OPTIONS_INIT {0}
+ 		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+ 		if (get_oid(ref_name.buf, &oid) &&
 -- 
-2.17.1
+2.19.1.593.gc670b1f876.dirty
 
