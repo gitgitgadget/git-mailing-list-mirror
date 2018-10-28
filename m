@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF0C91F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id E485B1F453
 	for <e@80x24.org>; Sun, 28 Oct 2018 06:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727826AbeJ1Pfz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 11:35:55 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:38828 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726734AbeJ1Pfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Oct 2018 11:35:55 -0400
-Received: by mail-lf1-f68.google.com with SMTP id p86so1524024lfg.5
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 23:52:11 -0700 (PDT)
+        id S1727842AbeJ1Pf4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 11:35:56 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:36492 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727809AbeJ1Pf4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Oct 2018 11:35:56 -0400
+Received: by mail-lf1-f65.google.com with SMTP id h192so3748226lfg.3
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 23:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JvvMgAJSeswtJBb3pPBlLR8926Q83KYihev9/fULTWM=;
-        b=C6qPZB36tc/a3OUrfZonQdaMSlB/UJSB0gRexNLQ2P8QflxqQMdxlo+Zs0kiZMx7pm
-         z0FQMlUDwDzA1T+P2XEP0Kj13q4bUt3q7+YUXjWt3yvOHVb9T3l+Lu/H+p0yX8hj2Mw3
-         ps+j4CD37m1zPQzdw6cmPPRY8g4ZDh+7CJE80UPZmZ0OCoU9mEq0cUAVu0itd3nYEK+s
-         7CVufh2eOh5Xr/p/4sjZnHOUg4m9vdf74hqmladsOnnfbpw59jOQmazyegbVuc0wfhST
-         g+L9B7xy+wF+BoGp0olyS/9a4ty7j3QvEe9/RNiA6sQ984/vYpgg7mam6Oqizjyy0WFW
-         nA5w==
+        bh=DiUkPgJkFW162qMzjcoH+DG1Fjj6dK6Xd3a/lHF4m1E=;
+        b=ZyjxP6WpDMZD5ZjV5VrPsbcBqd3wYP4iTo8ccRSmb4O3LyWmFNs5hEud6MPK8CldbF
+         TlOliRRNfhQbLklISu5k6qESktsGjYXflR76DCGyHKldg4LHGYV5janWs75jLaYbOM/B
+         kPpsHYQTHRumT6HPZWuXOuude5QRnaU5M6htQXgpGcfQuYXgvnuneQ31ZN87bbdOlnvF
+         5pohXwCHx1MPHr4a2hnAb3NKR3vkSKFr1FhLT7AMu3tIwunAlyHwvh0PyNRkeN6ep0DK
+         DPT9BeMl8l9Dr1qz/mgfCYcReOx1A+DDWiMcmsSOVMKg+pTRy5tBLirStuV2X/G9yx+h
+         ErxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JvvMgAJSeswtJBb3pPBlLR8926Q83KYihev9/fULTWM=;
-        b=JEDG/Xowi0fe3ryYZuR4upzEfEyXRo5ctHQPjJ9+cFoZxyu19WcD414wJtBB/aXQuX
-         M4Y2Jf+uhLzfshOjHzOLMMia8BW3WwLqPb/BvhE6hU4HJ2iG7SAuUY5Q3tci90r/9/39
-         gDWCXN30rola7yihEmXqbiOnoZSxifAldFtD8l+N51KduzhHs9YA3B8LCGUpBhbxQwaO
-         Op+jVMQf+/B8sgyXIjgNqmlD90LpLTxuY/qp9I8gakW+5+CHvzC8rUVDBoDkwtLNqRaq
-         6rjJ71PCDpuFFzyWrJ40CFcjtPDymZMAlT0CMjnKBDae1SGGnGdohyj5TCfhrVkVqOoe
-         0EXQ==
-X-Gm-Message-State: AGRZ1gJ82dEmzTn+/zjjAtDjnANEumoERm3LaxRdLZfG7WFEdsCwoU+B
-        tLcAfYnDGOzjUPl4n2yXlzpMV3Vs
-X-Google-Smtp-Source: AJdET5f8ef/HfAbpCo+DZ/dnL1/xs+jq892mCAa8grEKanp1gKn7P9dOOIPmebph7WLBpQn7FJHl9A==
-X-Received: by 2002:a19:94d5:: with SMTP id o82mr5254388lfk.155.1540709529908;
-        Sat, 27 Oct 2018 23:52:09 -0700 (PDT)
+        bh=DiUkPgJkFW162qMzjcoH+DG1Fjj6dK6Xd3a/lHF4m1E=;
+        b=Ll+u62L/CP6gV9zmCbF7Uyspmcb29P95STvqkVaJe018rF9OXMmJhg7kF5tHMuuwga
+         mSDqaY2Qvgqigay6eYd5xP3qEcRRHpzbrMyP+XV3SGWGaf62JaLh4YwhfEWKeAim3xys
+         Q2QFyMq2tX2pQujtT+thLNHn9nKZUGWiz3XDediOqLvGfeukxAoiFVAh5o+0Q+IZD6L8
+         veskN5z/wxmrXGXrzNtG9WXmseYGO0RSatahBps9Xp6KPBVZ3zhWXtJ0kSR9zJ10swBB
+         uYpP97Oje3kyCJg3Tkc43ZsB2h9dEn6FxZv+MBPJyB4zW5fk/EzxUUugm5TnYK3z1ev6
+         LEpw==
+X-Gm-Message-State: AGRZ1gKjrqqGahtL15SZ11Cckz0cA5cBa3medPS+SAdiQj+LfLozSf2q
+        z2krg8pFIursOHdqbg37/5vcvbjt
+X-Google-Smtp-Source: AJdET5eGTjS7rwXhP+exk+de5ViYWgkIJ+vZ7BbCF93NGGHoT+YnKIAilR2869MODxIOZWs8S858hQ==
+X-Received: by 2002:ac2:4257:: with SMTP id m23-v6mr5572064lfl.6.1540709531951;
+        Sat, 27 Oct 2018 23:52:11 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v23-v6sm148847ljd.70.2018.10.27.23.52.08
+        by smtp.gmail.com with ESMTPSA id v23-v6sm148847ljd.70.2018.10.27.23.52.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 23:52:09 -0700 (PDT)
+        Sat, 27 Oct 2018 23:52:11 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 07/12] reflog: mark strings for translation
-Date:   Sun, 28 Oct 2018 07:51:52 +0100
-Message-Id: <20181028065157.26727-8-pclouds@gmail.com>
+Subject: [PATCH 09/12] repack: mark more strings for translation
+Date:   Sun, 28 Oct 2018 07:51:54 +0100
+Message-Id: <20181028065157.26727-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181028065157.26727-1-pclouds@gmail.com>
 References: <20181028065157.26727-1-pclouds@gmail.com>
@@ -70,127 +70,86 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/reflog.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ builtin/repack.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index b5941c1ff3..33cb20b7d8 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -13,11 +13,15 @@
+diff --git a/builtin/repack.c b/builtin/repack.c
+index c6a7943d5c..0af20fa0fc 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -197,7 +197,7 @@ static int write_oid(const struct object_id *oid, struct packed_git *pack,
  
- /* NEEDSWORK: switch to using parse_options */
- static const char reflog_expire_usage[] =
--"git reflog expire [--expire=<time>] [--expire-unreachable=<time>] [--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] [--verbose] [--all] <refs>...";
-+	N_("git reflog expire [--expire=<time>] "
-+	   "[--expire-unreachable=<time>] "
-+	   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
-+	   "[--verbose] [--all] <refs>...");
- static const char reflog_delete_usage[] =
--"git reflog delete [--rewrite] [--updateref] [--dry-run | -n] [--verbose] <refs>...";
-+	N_("git reflog delete [--rewrite] [--updateref] "
-+	   "[--dry-run | -n] [--verbose] <refs>...");
- static const char reflog_exists_usage[] =
--"git reflog exists <ref>";
-+	N_("git reflog exists <ref>");
- 
- static timestamp_t default_reflog_expire;
- static timestamp_t default_reflog_expire_unreachable;
-@@ -556,7 +560,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 			break;
- 		}
- 		else if (arg[0] == '-')
--			usage(reflog_expire_usage);
-+			usage(_(reflog_expire_usage));
- 		else
- 			break;
- 	}
-@@ -569,7 +573,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	if (cb.cmd.stalefix) {
- 		repo_init_revisions(the_repository, &cb.cmd.revs, prefix);
- 		if (flags & EXPIRE_REFLOGS_VERBOSE)
--			printf("Marking reachable objects...");
-+			printf(_("Marking reachable objects..."));
- 		mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL);
- 		if (flags & EXPIRE_REFLOGS_VERBOSE)
- 			putchar('\n');
-@@ -598,7 +602,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		char *ref;
- 		struct object_id oid;
- 		if (!dwim_log(argv[i], strlen(argv[i]), &oid, &ref)) {
--			status |= error("%s points nowhere!", argv[i]);
-+			status |= error(_("%s points nowhere!"), argv[i]);
- 			continue;
- 		}
- 		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
-@@ -644,13 +648,13 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 			break;
- 		}
- 		else if (arg[0] == '-')
--			usage(reflog_delete_usage);
-+			usage(_(reflog_delete_usage));
- 		else
- 			break;
+ 	if (cmd->in == -1) {
+ 		if (start_command(cmd))
+-			die("Could not start pack-objects to repack promisor objects");
++			die(_("could not start pack-objects to repack promisor objects"));
  	}
  
- 	if (argc - i < 1)
--		return error("Nothing to delete?");
-+		return error(_("nothing to delete?"));
+ 	xwrite(cmd->in, oid_to_hex(oid), GIT_SHA1_HEXSZ);
+@@ -236,7 +236,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 		char *promisor_name;
+ 		int fd;
+ 		if (line.len != 40)
+-			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
++			die(_("repack: Expecting 40 character sha1 lines only from pack-objects."));
+ 		string_list_append(names, line.buf);
  
- 	for ( ; i < argc; i++) {
- 		const char *spec = strstr(argv[i], "@{");
-@@ -659,12 +663,12 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 		int recno;
- 
- 		if (!spec) {
--			status |= error("Not a reflog: %s", argv[i]);
-+			status |= error(_("not a reflog: %s"), argv[i]);
- 			continue;
- 		}
- 
- 		if (!dwim_log(argv[i], spec - argv[i], &oid, &ref)) {
--			status |= error("no reflog for '%s'", argv[i]);
-+			status |= error(_("no reflog for '%s'"), argv[i]);
- 			continue;
- 		}
- 
-@@ -699,7 +703,7 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
- 			break;
- 		}
- 		else if (arg[0] == '-')
--			usage(reflog_exists_usage);
-+			usage(_(reflog_exists_usage));
- 		else
- 			break;
+ 		/*
+@@ -247,13 +247,13 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 					  line.buf);
+ 		fd = open(promisor_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+ 		if (fd < 0)
+-			die_errno("unable to create '%s'", promisor_name);
++			die_errno(("unable to create '%s'"), promisor_name);
+ 		close(fd);
+ 		free(promisor_name);
  	}
-@@ -707,10 +711,10 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
- 	start = i;
- 
- 	if (argc - start != 1)
--		usage(reflog_exists_usage);
-+		usage(_(reflog_exists_usage));
- 
- 	if (check_refname_format(argv[start], REFNAME_ALLOW_ONELEVEL))
--		die("invalid ref format: %s", argv[start]);
-+		die(_("invalid ref format: %s"), argv[start]);
- 	return !reflog_exists(argv[start]);
+ 	fclose(out);
+ 	if (finish_command(&cmd))
+-		die("Could not finish pack-objects to repack promisor objects");
++		die(_("could not finish pack-objects to repack promisor objects"));
  }
  
-@@ -719,12 +723,12 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
-  */
+ #define ALL_INTO_ONE 1
+@@ -408,7 +408,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	out = xfdopen(cmd.out, "r");
+ 	while (strbuf_getline_lf(&line, out) != EOF) {
+ 		if (line.len != 40)
+-			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
++			die(_("repack: Expecting 40 character sha1 lines only from pack-objects"));
+ 		string_list_append(&names, line.buf);
+ 	}
+ 	fclose(out);
+@@ -417,7 +417,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		return ret;
  
- static const char reflog_usage[] =
--"git reflog [ show | expire | delete | exists ]";
-+	N_("git reflog [ show | expire | delete | exists ]");
+ 	if (!names.nr && !po_args.quiet)
+-		printf("Nothing new to pack.\n");
++		printf_ln(_("Nothing new to pack."));
  
- int cmd_reflog(int argc, const char **argv, const char *prefix)
- {
- 	if (argc > 1 && !strcmp(argv[1], "-h"))
--		usage(reflog_usage);
-+		usage(_(reflog_usage));
- 
- 	/* With no command, we default to showing it. */
- 	if (argc < 2 || *argv[1] == '-')
+ 	/*
+ 	 * Ok we have prepared all new packfiles.
+@@ -477,13 +477,13 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		if (rollback_failure.nr) {
+ 			int i;
+ 			fprintf(stderr,
+-				"WARNING: Some packs in use have been renamed by\n"
+-				"WARNING: prefixing old- to their name, in order to\n"
+-				"WARNING: replace them with the new version of the\n"
+-				"WARNING: file.  But the operation failed, and the\n"
+-				"WARNING: attempt to rename them back to their\n"
+-				"WARNING: original names also failed.\n"
+-				"WARNING: Please rename them in %s manually:\n", packdir);
++				_("WARNING: Some packs in use have been renamed by\n"
++				  "WARNING: prefixing old- to their name, in order to\n"
++				  "WARNING: replace them with the new version of the\n"
++				  "WARNING: file.  But the operation failed, and the\n"
++				  "WARNING: attempt to rename them back to their\n"
++				  "WARNING: original names also failed.\n"
++				  "WARNING: Please rename them in %s manually:\n"), packdir);
+ 			for (i = 0; i < rollback_failure.nr; i++)
+ 				fprintf(stderr, "WARNING:   old-%s -> %s\n",
+ 					rollback_failure.items[i].string,
 -- 
 2.19.1.647.g708186aaf9
 
