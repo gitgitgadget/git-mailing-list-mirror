@@ -2,133 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D798F1F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 15:32:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B55D1F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 15:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727350AbeJ2ARK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 20:17:10 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33536 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726592AbeJ2ARJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Oct 2018 20:17:09 -0400
-Received: by mail-lj1-f194.google.com with SMTP id z21-v6so5424204ljz.0
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 08:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3HliBdmhb4lQ8/7AHNyArX7dYYLgIHQwDO60/hA/x2Y=;
-        b=CLBsKy3qb12saEY62d8i3SaIZAxyNXwnfTlONBZ3YQ/vr639+7diaxlpImbKQVPg44
-         ETwHes2jzGFERNUdGGexGSjEttnsz0fBWonM+cu7aiFFv6WEwbeBu/h2Mf2FljXfJrNa
-         iRXEkN6Z0CQeRXTSnzXISS3oUgqXkL7TMqXx/Nz4ct54dzks0FPOfuKkwHiiiIsSFN2j
-         qeFINylTMFq2KX24siDh9X0AW6mnfUGqD5nlt+jz63r5X91MhKWWsWrsPiwN5IHXxDd5
-         ZPVZ1Piux6T7DKHoAvfSqw3rznokKsQH7EZndmMazc1dUs5kXuipgDF9obbX0f5OyD0C
-         1f0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3HliBdmhb4lQ8/7AHNyArX7dYYLgIHQwDO60/hA/x2Y=;
-        b=sVjHu0VfRwlBGqeBPxbgkqgWI5/UCPSzo5NeGy5OkoVR+EO3pE+MBoUGREXYcAjkkz
-         LDWPkTVuybOCf9Wvl0qn+BtTyL1BauIWWgLmfsxxT8KeqXQJul1kvu7Ax5gYiMhZVX9Y
-         sA3UA7bTtFT1MHVM12h5GSQBijlT6e4z6U4UZed5Uue29s0bicC9YNWXFf72XlfgRG+T
-         oS/4hlM4g9CBvCZuM+Dmh9cFuMzXSrUJotjKXUFvRv+Kkqdishl/jIulGJKKZPBQnYlN
-         Y7L00XXLkW/F8I5kYE4gKoovGEwoXRNQejH54XRJaKMZJCYRXStLon9SqRNDjQoLY/Rw
-         a6wg==
-X-Gm-Message-State: AGRZ1gLImYuiSz7OL4AGMdPyMuloTrdwtjoA5Qwds6sPso2Yyk/QF0Y/
-        XhqDTvn97VJ1I+/p2Al711cWIjVl
-X-Google-Smtp-Source: AJdET5c+bSz72O0RWYuqu5+7JZEbvIdu3APuTpr7k2K2PqeTDno4apHVNm+/FzVU1c0koLSWzsX2Aw==
-X-Received: by 2002:a2e:6503:: with SMTP id z3-v6mr5958798ljb.153.1540740733110;
-        Sun, 28 Oct 2018 08:32:13 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id c19sm32835lfg.86.2018.10.28.08.32.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Oct 2018 08:32:12 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] sequencer: clarify intention to break out of loop
-Date:   Sun, 28 Oct 2018 16:31:45 +0100
-Message-Id: <20181028153145.25734-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.19.1.593.gc670b1f876.dirty
+        id S1726757AbeJ2AZ4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 20:25:56 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52740 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726492AbeJ2AZ4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Oct 2018 20:25:56 -0400
+Received: from genre.crustytoothpaste.net (ip-64-134-145-243.public.wayport.net [64.134.145.243])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8EBAD61B73;
+        Sun, 28 Oct 2018 15:40:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1540741258;
+        bh=oT1rvtp9jcsl0VUzw4VOnZG19rIFgVxr9iF0piOn5jw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=JuPZvi2xwpL2iO+5ijx3DHACfZxtMmd8Kp79TU/T35q91Ep0071QxG7wvb0mjEJx6
+         Jw0XYyiPBwpsNAgNncrssjKF9MPJsITnlTeiT6zR4rPD+bhjhUMECwZtvZukmlePvN
+         KfWluEJ2Pwk9YKcn5jCkZuTz9PUzgFO5LQdhWlk3MIEvISZJ+yD8nMSMSoygxF5oLh
+         koRt6VqlFKhn7vXs8xjJDpkor8ieUuLWizqJ0bQNtcgfDhNgbDDgHsnGh67HPefzsP
+         knT7QWZOFw1ZZ8EJq08353y3NtpCEMubUSfb+cxYa6crFej4SqM72RqdRFeEnbmD18
+         QQki0DSf5K9G+xLlM1bzGnrCfRA6xTuICd9EBbPonrZYg4SzklVPp1jVRM0ehMjLa6
+         xEJZB5L2BelIFJqC0Hds00J944SBk7oZdpFWnjl8yXUTpPJOPLKPaDEkWItC+nF87c
+         aHb46t9RUVVMpc4JNLZTVMMfSsFoHQqPhdXzlZD2TmxndtodSoS
+Date:   Sun, 28 Oct 2018 15:40:52 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] some more hdr-check clean headers
+Message-ID: <20181028154052.GH6119@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <ecb3d551-314a-aeef-048f-c1bbe0b3c999@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/Gk0KcsbyUMelFU1"
+Content-Disposition: inline
+In-Reply-To: <ecb3d551-314a-aeef-048f-c1bbe0b3c999@ramsayjones.plus.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we find a space, we set `len = i`, which gives us the answer we are
-looking for, but which also breaks out of the loop through these steps:
 
-  1. `len = i`
+--/Gk0KcsbyUMelFU1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  2. `i = i + 1`
+On Sat, Oct 27, 2018 at 02:47:47AM +0100, Ramsay Jones wrote:
+>=20
+> I have some changes to the hdr-check Makefile target in the works, but
+> these clean-ups don't have to be held up by those changes.
+>=20
+> The 'fetch-object.h' patch is the same one I sent separately last time,
+> since it only applied on 'next' at the time. The 'ewok_rlw.h' patch is
+> just something I noticed while messing around the the Makefile changes.
+> The 'commit-reach.h' patch is the patch #9 from the original series, but
+> now with a commit message that explains the '#include "commit.h"' issue.
+>=20
+> These changes are on top of current master (@c670b1f876) and merge
+> without conflict to 'next' and with a 'minor' conflict on 'pu'.
 
-  3. Is `i < len`? No, so break out.
+All three of these patches look sane to me.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Since `i` is signed, step 2 is undefined if `i` has the value `INT_MAX`.
-It can't actually have that value, but that doesn't stop my copy of gcc
-7.3.0 from throwing the following:
+--/Gk0KcsbyUMelFU1
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> sequencer.c:2853:3: error: assuming signed overflow does not occur when
-> assuming that (X + c) < X is always false [-Werror=strict-overflow]
->    for (i = 0; i < len; i++)
->    ^~~
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
 
-That is, the compiler has realized that the code is essentially
-evaluating "(len + 1) < len" and that for `len = INT_MAX`, this is
-undefined behavior. What it hasn't figured out is that if `i` and `len`
-are both `INT_MAX` after step 1, then `len` must have had a value larger
-than `INT_MAX` before that step, which it can't have had.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvV2IQACgkQv1NdgR9S
+9ouI1g//RaUWGU8hlCpBCvZ5L5byaIcHIcb6AJ0kQi0/J3qiwn2X3KBWPKi46Ek9
+OFhYjDKJEmVrEja2TtiML9LN34HIT9iGUVtymrP2B/hdxdcEg5ZxT0JeNqqrpXJu
+v7njqqL6ciEKc4cGJitKKoXM+vNYwMD28oca11KhFDVNsBZUxnN2xFlQI7duVTTG
+D7LImIZbEcwnLZziy1fdik8B+U9ZW+i/3F3sqY55KagAMK5Wy59tZsWn2AElCh6W
+e2NPX/SrUhb2XsHp0NjYHyDYdWvJbbz7Z+oNXQfaH/memif//NhiuWyzcQytMIMF
+Qni7XOHwSVWevcFSUxDiAZ2PMt6vCQW4pafpm4cjq/IHCS9bf03U4Hzq/vFWwnMw
+PCCUvx/+oDEvICQUniwSLp4sbJOk1rmyMHmIjGV/a/RS/DHHsppTDxs53ZOW3EvQ
+Ilo31+9+MM2uVx+kM1W3D2fR9e1WSAQjrOTJC9MPAtjFsFPCp2CJVPSxycs5ynjQ
+S/K+aaasuCZmFTek9udKnZ/FDh6DPyRfN+Ww6JanmAFCQd4802GfeoU74VOoZxLo
+9/ud5nFGS9la/WEC9aZvtenr9/VQKStvSlmlN5IvWJ9llNtvAKWBiXFqQwsLMzYL
+B7J0XMjcbKWnzzDb7a4awnpUJlgM6AgvNse550eKwev2yfx0gag=
+=p/sJ
+-----END PGP SIGNATURE-----
 
-Let's be explicit about breaking out of the loop. This helps the
-compiler grok our intention. As a bonus, it might make it (even) more
-obvious to human readers that the loop stops at the first space.
-
-While at it, reduce the scope of `i`.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- sequencer.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 0c164d5f98..a351638ad9 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2829,7 +2829,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
- 	struct tree_desc desc;
- 	struct tree *tree;
- 	struct unpack_trees_options unpack_tree_opts;
--	int ret = 0, i;
-+	int ret = 0;
- 
- 	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
- 		return -1;
-@@ -2849,10 +2849,14 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
- 		}
- 		oidcpy(&oid, &opts->squash_onto);
- 	} else {
-+		int i;
- 		/* Determine the length of the label */
--		for (i = 0; i < len; i++)
--			if (isspace(name[i]))
-+		for (i = 0; i < len; i++) {
-+			if (isspace(name[i])) {
- 				len = i;
-+				break;
-+			}
-+		}
- 
- 		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
- 		if (get_oid(ref_name.buf, &oid) &&
--- 
-2.19.1.593.gc670b1f876.dirty
-
+--/Gk0KcsbyUMelFU1--
