@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 641FF1F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 22:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FB021F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 22:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbeJ2Hgd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 03:36:33 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44151 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725841AbeJ2Hgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 03:36:33 -0400
-Received: by mail-wr1-f66.google.com with SMTP id d17-v6so6378240wre.11
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 15:50:29 -0700 (PDT)
+        id S1726476AbeJ2Hgg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 03:36:36 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39695 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725841AbeJ2Hgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 03:36:36 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r10-v6so6677669wrv.6
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 15:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+8u2fbyvtl2xNhBjt661hpUhSeNbXSl859evIdRVFdI=;
-        b=Ed6m9YTWI9mmnt0c+y3OAze5qwWmYSfVRG2cPer1VG5gBczVZNX+tD+WskgEIS/mLx
-         8prmP8GwR3LrsEYr0FFJIH0d7HyND3sIb0fWl/vn08sHJEAIOq6lvzE3DShjEOyj45d3
-         iARqqJVp1yoZOtwqIrDwOHqo1NxVLEKKuOxvB2CnwCpEeSEj3gWSPmyJ0Hb+p9LF54hv
-         Y2SkgZelKayWcyKGw/R0haEX2MK/bucgPLXBBpFdxqGNnPO3kzSozh6iq6gsizVjwLPR
-         +nfHAtbyaZz/tDVLGLc/7IQ8RcA/+TlVGRN9ymIzKPrjR2pVtjSlDyrksz++C1pFclsi
-         X/Pw==
+        bh=GYh9HEYyZ+VVC6q3QQfV81QCN38ViA4hcfoQ/DwMSuQ=;
+        b=mDWZvJRdsLmYxiuMRV1V9KS0tKBHMN/ttguTOonJezMpf6i7VvMRpTdRN+tFcm1G+p
+         1e+BCbaamYfGAOvAbO0nj4JjFE74fMb2ZfUtN3z34jWhx1pyNT8giucH67akWaSHp7rz
+         BY86uXoLN0jqgk6C0RX+Cbi/fIpdBQJSG60IOHWEAz4+rUWtEShkLpcHy+hH6F+t3/3m
+         +rNav+m8iOy2hiNQbJZJ3QhdAbzjvaw5WW271oNfJMljw+23iHcb6vxgopU/8ZMuPLZI
+         qVpw4TFdz+venEOY2xGm39WbVHW1xsaImvLNekmuyWT5f1lPV+0c0MoHJW5iDeiIAXNc
+         G1sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+8u2fbyvtl2xNhBjt661hpUhSeNbXSl859evIdRVFdI=;
-        b=tChFQR26vl9if2IrQzOKxits7xm2ZrDHpXLwrdP4A22Cv1CkEozX1IG1RYjxuWJrlu
-         T51D7ETRRVDX8H+Y2WN9M+escyKCgJJMsCRmDPYnA8rSaIvTivIY98WVaSJKaWEOyeQ8
-         5ty7+KkDNRn1x+W5k5hY8V2KbyY7g1HzYztsrJheSPf7BeZwIULFO0RhQdBBjHEJcTjx
-         yhloDCXPR7wwRGDnF0ksTrhnrq3ndsuWOKx9FjOEcpJIZ77W0NBb6GllNuUvV7E3gBe8
-         T2VEcYfR+Bs+7fIIZo22dYP+H0meW8H4ljUQ5R7w9FidXl3jNS9x1i6pFvPVKSm5GTV7
-         nkdg==
-X-Gm-Message-State: AGRZ1gIWp1rYcTkTfsy10MMI73p6jjkpW3NuIy0DbUp5X6x+umiA/CQv
-        zanytlFXytNBdxHaHESgySigj2oZ0c8=
-X-Google-Smtp-Source: AJdET5d7dhiU6VP6AdiRytgBW4YcZItx3uc9969r0V01vBN61NLiOMPsXTsyDK4F5ktWc1bnN7ThJg==
-X-Received: by 2002:adf:a201:: with SMTP id p1-v6mr12487804wra.89.1540767028309;
-        Sun, 28 Oct 2018 15:50:28 -0700 (PDT)
+        bh=GYh9HEYyZ+VVC6q3QQfV81QCN38ViA4hcfoQ/DwMSuQ=;
+        b=cTBdaaPE2KyyY+/+F3QCCHpKIOj29tX6gXNBf8N3sexbCFaju/k0lhk5b8pGmsSaxe
+         mFyVEqRbqiC3UNhwcTZFOP48xuwuiitnShOVsk55sCq2XH7NGKjQAIw3A5+O2evkTeD7
+         uS44JE+RhCta9t8WCqe0shB5OrxaPUPDvwNZlUiibYYQu0KOtjbwArwyAotUyV/2UMqP
+         rD0p+IDLz8oabYNpeQkzSymKFACCi6bg0jBhIbJs8eQLDIkJtZVokY9TGqwgaacU/hiH
+         JL6is4gbW4FGMtUywGeM2rQBJEsFQPPqrSKtwEdl34OSuERz91BC1QwoLiTT9U6zTkgs
+         ck/g==
+X-Gm-Message-State: AGRZ1gKNX6qR6XUwTnOu79n2Z4WrabV3d2vmjE44ciFVEXyqhr/YbDKQ
+        FQlJbu5qTUNL+qivTFUURqFO9sBrVno=
+X-Google-Smtp-Source: AJdET5czWSvx4G1d+4iJIPiD9szmf2V1iFT3tbpfHdbQj7ZSph7LBJUW5fXUsXIbrhrxCmEBs7YHAw==
+X-Received: by 2002:adf:bf10:: with SMTP id p16-v6mr12004883wrh.235.1540767031366;
+        Sun, 28 Oct 2018 15:50:31 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id p3-v6sm2709681wre.47.2018.10.28.15.50.27
+        by smtp.gmail.com with ESMTPSA id p3-v6sm2709681wre.47.2018.10.28.15.50.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Oct 2018 15:50:27 -0700 (PDT)
+        Sun, 28 Oct 2018 15:50:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Petr Baudis <pasky@ucw.cz>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/4] index-pack: optionally turn off SHA-1 collision checking
-Date:   Sun, 28 Oct 2018 22:50:19 +0000
-Message-Id: <20181028225023.26427-1-avarab@gmail.com>
+Subject: [PATCH 1/4] pack-objects test: modernize style
+Date:   Sun, 28 Oct 2018 22:50:20 +0000
+Message-Id: <20181028225023.26427-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <87lg6jljmf.fsf@evledraar.gmail.com>
 References: <87lg6jljmf.fsf@evledraar.gmail.com>
@@ -74,39 +74,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series implements what I suggested in
-https://public-inbox.org/git/87lg6jljmf.fsf@evledraar.gmail.com/
+Modernize the quoting and indentation style of two tests added in
+8685da4256 ("don't ever allow SHA1 collisions to exist by fetching a
+pack", 2007-03-20), and of a subsequent one added in
+4614043c8f ("index-pack: use streaming interface for collision test on
+large blobs", 2012-05-24) which had copied the style of the first two.
 
-It's not a replacement for what Geert Jansen's RFC in
-https://public-inbox.org/git/ED25E182-C296-4D08-8170-340567D8964A@amazon.com/
-does, which was to turn this off entirely on "clone".
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t5300-pack-object.sh | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-I left the door open for that in the new config option 4/4 implements,
-but I suspect for Geert's purposes this is something he'd prefer to
-turn off in git on clone entirely, i.e. because it may be running on
-some random Amazon's customer's EFS instance, and they won't know
-about this new core.checkCollisions option.
-
-But maybe I'm wrong about that and Geert is happy to just turn on
-core.checkCollisions=false and use this series instead.
-
-Ævar Arnfjörð Bjarmason (4):
-  pack-objects test: modernize style
-  pack-objects tests: don't leave test .git corrupt at end
-  index-pack tests: don't leave test repo dirty at end
-  index-pack: add ability to disable SHA-1 collision check
-
- Documentation/config.txt     | 68 ++++++++++++++++++++++++++++++++++++
- builtin/index-pack.c         |  7 ++--
- cache.h                      |  1 +
- config.c                     | 20 +++++++++++
- config.h                     |  1 +
- environment.c                |  1 +
- t/README                     |  3 ++
- t/t1060-object-corruption.sh | 37 +++++++++++++++++++-
- t/t5300-pack-object.sh       | 51 +++++++++++++++------------
- 9 files changed, 163 insertions(+), 26 deletions(-)
-
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 6c620cd540..a0309e4bab 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -475,22 +475,22 @@ test_expect_success 'pack-objects in too-many-packs mode' '
+ # two tests at the end of this file.
+ #
+ 
+-test_expect_success \
+-    'fake a SHA1 hash collision' \
+-    'long_a=$(git hash-object a | sed -e "s!^..!&/!") &&
+-     long_b=$(git hash-object b | sed -e "s!^..!&/!") &&
+-     test -f	.git/objects/$long_b &&
+-     cp -f	.git/objects/$long_a \
+-		.git/objects/$long_b'
++test_expect_success 'fake a SHA1 hash collision' '
++	long_a=$(git hash-object a | sed -e "s!^..!&/!") &&
++	long_b=$(git hash-object b | sed -e "s!^..!&/!") &&
++	test -f	.git/objects/$long_b &&
++	cp -f	.git/objects/$long_a \
++		.git/objects/$long_b
++'
+ 
+-test_expect_success \
+-    'make sure index-pack detects the SHA1 collision' \
+-    'test_must_fail git index-pack -o bad.idx test-3.pack 2>msg &&
+-     test_i18ngrep "SHA1 COLLISION FOUND" msg'
++test_expect_success 'make sure index-pack detects the SHA1 collision' '
++	test_must_fail git index-pack -o bad.idx test-3.pack 2>msg &&
++	test_i18ngrep "SHA1 COLLISION FOUND" msg
++'
+ 
+-test_expect_success \
+-    'make sure index-pack detects the SHA1 collision (large blobs)' \
+-    'test_must_fail git -c core.bigfilethreshold=1 index-pack -o bad.idx test-3.pack 2>msg &&
+-     test_i18ngrep "SHA1 COLLISION FOUND" msg'
++test_expect_success 'make sure index-pack detects the SHA1 collision (large blobs)' '
++	test_must_fail git -c core.bigfilethreshold=1 index-pack -o bad.idx test-3.pack 2>msg &&
++	test_i18ngrep "SHA1 COLLISION FOUND" msg
++'
+ 
+ test_done
 -- 
 2.19.1.759.g500967bb5e
 
