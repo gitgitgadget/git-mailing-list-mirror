@@ -2,119 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E86C81F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 15:52:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1548B1F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 19:01:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727756AbeJ2AhO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 20:37:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52746 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727637AbeJ2AhO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Oct 2018 20:37:14 -0400
-Received: from genre.crustytoothpaste.net (ip-64-134-145-243.public.wayport.net [64.134.145.243])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9DA1961B73;
-        Sun, 28 Oct 2018 15:52:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1540741934;
-        bh=X5wvPNz/ZmcC1X08/JqqIebrao/aoR4dydzNPtsNpbo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=NAly/qVjFy7Gqx4tieE49ZjkWnYxv7QJQsMbtGoAmf6Q9s+BX3cvh52iTK48ZXPHQ
-         t12a1jFules7K9ZmsDeNwmRvu7M6g5uz/kt5P2bj0zpW/nr3e8j8/xJ+aq1DpaxcD9
-         SGQRYCA+zhYuMvYS0+e3mAgABvyvkGokVkIvne3WcR6ExhJywAGX8rlePK4KfvKWHM
-         WtR38I6wmzer0gTmBiVmqeaqAYC6f6kEnGJYSVJ5bATYE+eRezC0KT8Jq6EfV9J/8v
-         P14GXroMO87yNbqz0Sp8zygGHGjzhxHVZdJnJkunDkaFq7uHV9e7q3jsylyetoNEaJ
-         OzDCFaJirszmeAKWD4n8R36FepDxH8aCoVJBAP62ox3FqeTWnhnYGIBBGnS2SfXL7C
-         6xhKWkaeLXi1kX29XPkhwgkxdQs6gZult367uTGUZsubsuBQPbMnTWsE62Kqtgvset
-         lrwJI1DqybOYVZeEg6Rhm2fZdSeGT2h6a8K2flxe38hLvd66t9J
-Date:   Sun, 28 Oct 2018 15:52:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
-        pclouds@gmail.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 10/12] Add a base implementation of SHA-256 support
-Message-ID: <20181028155206.GI6119@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        stolee@gmail.com, avarab@gmail.com, pclouds@gmail.com,
-        szeder.dev@gmail.com
-References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
- <20181025024005.154208-11-sandals@crustytoothpaste.net>
- <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
+        id S1726451AbeJ2DrA convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 28 Oct 2018 23:47:00 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:42301 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbeJ2DrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Oct 2018 23:47:00 -0400
+Received: by mail-qt1-f196.google.com with SMTP id z20-v6so6848262qti.9
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 12:01:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fhXFuhyk+M3+k8mHgFqUBjLfy9DpXVuAQN3hLeFggno=;
+        b=O9d5WXOUjwzhJP2UaThB4oJVrfXE/lQy4fGBvXSuDvZcWU0E2Ot6GXmTQNmV+ZGdcd
+         WAWONy+ggVuc26GjZ/E2hY++XSX+EEkb3AGwq6/fVf1Tb//Rv/e/u1CF4l+zdR/UWMMr
+         5TaRH5aCFUyTC6CwZ2bz5e/ZrSVolPJWL/BluFLNGT6KwDoQbwpCvkeCER0XvM5uVpB/
+         qROpskcEL52Mo104652Gy05r9mTTW0nPDlRSLGwmNw8WDm96o+8SWsCM4DipK1riCsdZ
+         p6UGlTuvLTmaU0VFLLc49i1vcqHyKgxUEjG27FFs5GgqSnYiAfp9G7DgPCL11CANOexn
+         yrHw==
+X-Gm-Message-State: AGRZ1gKt5ijV7MJJSy6cA6e5x09pGfNrwVfh0TrIaDnHJMuiCLsUwS5m
+        9Ho95mjx79oVYI9gON7Or6no9SUfShjHOMrbsVA=
+X-Google-Smtp-Source: AJdET5d3IujmVu20ZO36zMZBxTHq+LeNx0AjPV0gWAEhKJsZmdbrr+yFylFqaq9olgxv4WX3PMmNTo518ljCJCKwUKA=
+X-Received: by 2002:ac8:592:: with SMTP id a18-v6mr10714868qth.184.1540753287964;
+ Sun, 28 Oct 2018 12:01:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="J+eNKFoVC4T1DV3f"
-Content-Disposition: inline
-In-Reply-To: <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20181028153145.25734-1-martin.agren@gmail.com>
+In-Reply-To: <20181028153145.25734-1-martin.agren@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 28 Oct 2018 15:01:16 -0400
+Message-ID: <CAPig+cR28OBA0rwy=X6XU0cjstAguvUiLU9Zxjvg2X7=UsB5qw@mail.gmail.com>
+Subject: Re: [PATCH] sequencer: clarify intention to break out of loop
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Oct 28, 2018 at 11:32 AM Martin Ågren <martin.agren@gmail.com> wrote:
+> [...]
+> Let's be explicit about breaking out of the loop. This helps the
+> compiler grok our intention. As a bonus, it might make it (even) more
+> obvious to human readers that the loop stops at the first space.
 
---J+eNKFoVC4T1DV3f
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This did come up in review[1,2]. I had a hard time understanding the
+loop because it looked idiomatic but wasn't (and we have preconceived
+notions about behavior of things which look idiomatic).
 
-On Wed, Oct 24, 2018 at 08:02:55PM -0700, Carlo Arenas wrote:
-> On Wed, Oct 24, 2018 at 7:41 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > diff --git a/sha256/block/sha256.h b/sha256/block/sha256.h
-> > new file mode 100644
-> > index 0000000000..38f02f7e6c
-> > --- /dev/null
-> > +++ b/sha256/block/sha256.h
-> > @@ -0,0 +1,26 @@
-> > +#ifndef SHA256_BLOCK_SHA256_H
-> > +#define SHA256_BLOCK_SHA256_H
-> > +
-> > +#include "git-compat-util.h"
->=20
-> this shouldn't be needed and might be discouraged as per the
-> instructions in Documentation/CodingGuidelines
+[1]: https://public-inbox.org/git/CAPig+cQbG2s-LrAo9+7C7=dXifbWFJ3SzuNa-QePHDk7egK=jg@mail.gmail.com/
+[2]: https://public-inbox.org/git/CAPig+cRjU6niXpT2FrDWZ0x1HmGf1ojVZj3uk2qXEGe-S7i_HQ@mail.gmail.com/
 
-This may not strictly be needed, but removing it makes the header no
-longer self-contained, which blows up my (and others') in-editor
-linting.  I think it's okay to add this extra header here to keep it
-self-contained, even if we know that it's not going to be absolutely
-required.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+> diff --git a/sequencer.c b/sequencer.c
+> @@ -2849,10 +2849,14 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+>                 /* Determine the length of the label */
+> +               for (i = 0; i < len; i++) {
+> +                       if (isspace(name[i])) {
+>                                 len = i;
+> +                               break;
+> +                       }
+> +               }
+>                 strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
 
---J+eNKFoVC4T1DV3f
-Content-Type: application/pgp-signature; name="signature.asc"
+At least for me, this would be more idiomatic if it was coded like this:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+    for (i = 0; i < len; i++)
+        if (isspace(name[i]))
+            break;
+    strbuf_addf(..., i, name);
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvV2yYACgkQv1NdgR9S
-9otBVA/+Ns3T5+q+C2OSBFnkc5lxZ5ogAlFSF1h/Vli0IFXazFFacziAkkql8npX
-q9JfH7avQiS6brJMUx2rSo5RL1WSUB8nJHNUgoERnoQZwG4/r66R6hZPyF1WBQ1T
-WYRDIyrzI3125n6LU2AhFfRfNHqHeSl2gImLs2Mi9owZG1YdZ6oy5OhXfESqDyyi
-Xo8X+FN7271QiMsT69MJwzepN5OOr8LSK7lmUOjr79pi+44oMuoeGhnhI+kp3Ua3
-55xJFaodazjEc4vXUZJCMrphU7s5jBp8QLUCQRmFkBlkNqQBcVv1Cbl7OgTczS2y
-3jDSpM/6rx0SaLaJDhtBRmCAYZdPk0iNuw9sZ7FoeNiS16q5NmmDoSdOFfyAV+wa
-Zu32z+Lr+cWGGUyEC/YdYe6V9n/8T0+UzM+/B0dtgeLdpEpYbOHiVBPjVXrSckDf
-PhM+HaZ8F11u1na9+p3darJHrBOn3KNGcNXRdPJ1OPACZcFkUzYjLEA1gdCE5WhR
-rmCEErFL4Ml6tRm3U4ZAFemQtz9EC64OvPk3pBskhBmNLyO9l6SIeoLqVLb6IFnk
-szk8CmmnqTPigrw2e7r1706SFejlfnHs3xk0Wsncd5w+Zkm5KKlIlqghjsaD7yOF
-NhiZkQpCfNeKP5zSBsXeNF1ziyMd6pavDuNaSnEKYWl2lTR7M6o=
-=wqfM
------END PGP SIGNATURE-----
+or, perhaps (less concise):
 
---J+eNKFoVC4T1DV3f--
+    for (i = 0; i < len; i++)
+        if (isspace(name[i]))
+            break;
+    len = i;
+    strbuf_addf(..., len, name);
