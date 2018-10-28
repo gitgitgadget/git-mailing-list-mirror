@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93B6C1F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 22:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 774371F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 22:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727508AbeJ2Hgk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 03:36:40 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46603 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725841AbeJ2Hgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 03:36:39 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i4-v6so6646442wrr.13
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 15:50:36 -0700 (PDT)
+        id S1727545AbeJ2Hgn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 03:36:43 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55539 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725841AbeJ2Hgm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 03:36:42 -0400
+Received: by mail-wm1-f67.google.com with SMTP id s10-v6so6390366wmc.5
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 15:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wSjop+8hcC+JtDzDYckrp/r9aAESQSkG2B3jsfhiVFs=;
-        b=ktF2+zDSHM0JrybeQo9sXT44g2ejeh3PszBHvDBOkxeIVELGUElUWyP999Lu2shPac
-         4N+2ZUYa2rWmaxCS4QKwtCTj6VsCwX966UCxzr0MGy1Uuk+2bLgFxmd75XgZMw8ctIAj
-         AaPpea6XsQgV9/WxkQFjZKQMI6OdUoX1fUHCDPj5V8A7j2yYoQoSVOh5fHkjqHM9ER8F
-         yy/os7HRbrR8ywBBXaoc94taWhqCIzB8l4chHgLGMGUOStOgo+zbObQ10tXJ462/QsYA
-         1k1YSD6rhliid7NBJfAbv2o2br7o/Q1TCM61HThLqUIxNwQ7yRVQB62uBeyK1ik02Xky
-         PBWQ==
+        bh=682e7Ri/I8zFgPQtHvRl1tI/8N6JkLvVLUJPxvivN3g=;
+        b=KSO3N5CNgrOt4BfB2kZE2SJcic8POWT71QAddz/gGyiZhQbPAVqeQI1DTtFmILXNvB
+         MCmL/o0CwATmHqY5JCOObqT3vnOTarh0SY/EF+OGtksTYm/E8cSlc8koXVXYJTB3hUPN
+         U7Q89VT6QZVWCVHzIaRQfsP0/wdAGe9gkrIIYeN0caW65H+pi7FaMHxcCCOY/uz0KMul
+         oktNVq5EKR3cM88tGE0vfWbgaaEVzHPDrNyHi9UQ77zzFs11mg2c9DWtjUjmES8ngmbG
+         0JfuwfdHiZDab4jCSXLREfFl3f1QmOIzRjTcXQ6IoMG4WE5CjMEWIry3kh7O5lKrVQFl
+         kXug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wSjop+8hcC+JtDzDYckrp/r9aAESQSkG2B3jsfhiVFs=;
-        b=RseS5l3MQSJ8yKI3WgCgVbnKN/HkHBZqS3yCgypmgA/JcI97YyvMeSo7x5HayvOAgo
-         ko2HVth2owcvetISMohEaZ2nrbEiaoQjdlBMRO2MLwqLNb9tDTeLb5q441+rGa3d8V+V
-         +F5yKYvebQbDYYszhrCvjhQu1Hu0k5PoCXy5lLjr0VT+golxFiDoRp7F6Vl1h+iM07mf
-         D1u90zMO/2ibeR+OgmBjFn0sZUCqCNHy8kidvL3qo0cBJKkTxf9VVKoyao6JxV8bkoKK
-         KmRfvU4acx7y6W/YHuzA6VdKC3W5lcOgWIuv904sCY/dxv2o4fEIRNPFdTXAnHH28XzQ
-         8Obw==
-X-Gm-Message-State: AGRZ1gKxLdl8tszq/lKD7q7sDGq/mCGZpsgoKFpg5u/pPdItKbR7HKGP
-        n3FrDlHohnQ29dcJmHgDpR2Rvgw/0uA=
-X-Google-Smtp-Source: AJdET5e1Ve41NJ8EtXWCChXXTuNT8ZLzCQOp/fLOLfx43NUUgTnojZQAv8ERM+n9OyFZsJfpUJERPA==
-X-Received: by 2002:a5d:64c1:: with SMTP id y1-v6mr11902612wrv.92.1540767035011;
-        Sun, 28 Oct 2018 15:50:35 -0700 (PDT)
+        bh=682e7Ri/I8zFgPQtHvRl1tI/8N6JkLvVLUJPxvivN3g=;
+        b=rAqRi5OGVfPu1fJasfQ9JmH9EGpf/YIQ7tM2OWYrZgpBO3G1hQuil72vvHVt1SPNlu
+         Agob2u0PrY8KRb/LpW/X8y7EYnFFvFoCn6s87/MxhpM4z+ikRnPSIe3dA+jlwIBmRuM+
+         +AsliI3d/6y0e2uOp8HxGfnZ7idGUPsvDqYd3OoY9YATN871WICcLHLySjkqGvUtvcml
+         FbCFqQmF9fyrWvb0fUyn4acIwi+wzGcTDF+6Zd1IWN2MiRW5XWpJshutMAjEHAqzqtaw
+         wLi6bIk8eu4rCNHRjRpdcE3aRMbYubiNDvBjb2AaVmvJp4uUXUrYphXXqxyVgoLkdDQ5
+         L4cQ==
+X-Gm-Message-State: AGRZ1gIUl436tWaNMBSlymN/x5AK1k5ZSRpEzZadjU7Swei0ntT3p8yO
+        q4mcrZZ+2eWQ+5b8P5vHlsaxZNrhc3M=
+X-Google-Smtp-Source: AJdET5f+eyGj6CNOZ0NOuCuQk0O87eL8WvDpEShvd67NPnye36GkFEEjv/h2C1a6/o6B2VrP1v6kOA==
+X-Received: by 2002:a1c:b4c1:: with SMTP id d184-v6mr12375892wmf.143.1540767036795;
+        Sun, 28 Oct 2018 15:50:36 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id p3-v6sm2709681wre.47.2018.10.28.15.50.34
+        by smtp.gmail.com with ESMTPSA id p3-v6sm2709681wre.47.2018.10.28.15.50.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Oct 2018 15:50:34 -0700 (PDT)
+        Sun, 28 Oct 2018 15:50:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Petr Baudis <pasky@ucw.cz>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/4] index-pack tests: don't leave test repo dirty at end
-Date:   Sun, 28 Oct 2018 22:50:22 +0000
-Message-Id: <20181028225023.26427-4-avarab@gmail.com>
+Subject: [PATCH 4/4] index-pack: add ability to disable SHA-1 collision check
+Date:   Sun, 28 Oct 2018 22:50:23 +0000
+Message-Id: <20181028225023.26427-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.759.g500967bb5e
 In-Reply-To: <87lg6jljmf.fsf@evledraar.gmail.com>
 References: <87lg6jljmf.fsf@evledraar.gmail.com>
@@ -74,36 +74,335 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a test added in 51054177b3 ("index-pack: detect local
-corruption in collision check", 2017-04-01) so that the repository
-isn't left dirty at the end.
+Add a new core.checkCollisions setting. On by default, it can be set
+to 'false' to disable the check for existing objects in sha1_object().
 
-Due to the caveats explained in 720dae5a19 ("config doc: elaborate on
-fetch.fsckObjects security", 2018-07-27) even a "fetch" that fails
-will write to the local object store, so let's copy the bit-error test
-directory before running this test.
+As noted in the documentation being added here this is done out of
+paranoia about future SHA-1 collisions and as a canary (redundant to
+"git fsck") for local object corruption.
+
+For the history of SHA-1 collision checking see:
+
+ - 5c2a7fbc36 ("[PATCH] SHA1 naive collision checking", 2005-04-13)
+
+ - f864ba7448 ("Fix read-cache.c collission check logic.", 2005-04-13)
+
+ - aac1794132 ("Improve sha1 object file writing.", 2005-05-03)
+
+ - 8685da4256 ("don't ever allow SHA1 collisions to exist by fetching
+   a pack", 2007-03-20)
+
+ - 1421c5f274 ("write_loose_object: don't bother trying to read an old
+   object", 2008-06-16)
+
+ - 51054177b3 ("index-pack: detect local corruption in collision
+   check", 2017-04-01)
+
+As seen when going through that history there used to be a way to turn
+this off at compile-time by using -DCOLLISION_CHECK=0 option (see
+f864ba7448), but this check later went away in favor of general "don't
+write if exists" logic for loose objects, and was then brought back
+for remotely fetched packs in 8685da4256.
+
+I plan to turn this off by default in my own settings since I'll
+appreciate the performance improvement, and because I think worrying
+about SHA-1 collisions is insane paranoia. But others might disagree,
+so the check is still on by default.
+
+Also add a "GIT_TEST_CHECK_COLLISIONS" setting so the entire test
+suite can be exercised with the collision check turned off.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1060-object-corruption.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/config.txt     | 68 ++++++++++++++++++++++++++++++++++++
+ builtin/index-pack.c         |  7 ++--
+ cache.h                      |  1 +
+ config.c                     | 20 +++++++++++
+ config.h                     |  1 +
+ environment.c                |  1 +
+ t/README                     |  3 ++
+ t/t1060-object-corruption.sh | 33 +++++++++++++++++
+ t/t5300-pack-object.sh       | 10 ++++--
+ 9 files changed, 138 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 552827935a..0192fc84a9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -461,6 +461,74 @@ core.untrackedCache::
+ 	properly on your system.
+ 	See linkgit:git-update-index[1]. `keep` by default.
+ 
++core.checkCollisions::
++	When missing or set to `default` Git will assert when writing
++	a given object that it doesn't exist already anywhere else in
++	the object store (also accounting for
++	`GIT_ALTERNATE_OBJECT_DIRECTORIES` et al, see
++	linkgit:git[1]).
+++
++The reasons for why this is on by default are:
+++
++--
++. If there's ever a new SHA-1 collision attack similar to the
++  SHAttered attack (see https://shattered.io) Git can't be fooled into
++  replacing an existing known-good object with a new one with the same
++  SHA-1.
+++
++Note that Git by default is built with a hardened version of SHA-1
++function with collision detection for attacks like the SHAttered
++attack (see link:technical/hash-function-transition.html[the hash
++function transition documentation]), but new future attacks might not
++be detected by the hardened SHA-1 code.
++
++. It serves as a canary for detecting some instances of repository
++  corruption. The type and size of the existing and new objects are
++  compared, if they differ Git will panic and abort. This can happen
++  e.g. if a loose object's content has been truncated or otherwise
++  mangled by filesystem corruption.
++--
+++
++The reasons to disable this are, respectively:
+++
++--
++. Doing the "does this object exist already?" check can be expensive,
++  and it's always cheaper to do nothing.
+++
++Even on a very fast local disk (e.g. SSD) cloning a repository like
++git.git spends around 5% of its time just in `lstat()`. This
++percentage can get much higher (up to even hundreds of percents!) on
++network filesystems like NFS where metadata operations can be much
++slower.
+++
++This is because with the collision check every object in an incoming
++packfile must be checked against any existing packfiles, as well as
++the loose object store (most of the `lstat()` time is spent on the
++latter). Git doesn't guarantee that some concurrent process isn't
++writing to the same repository during a `clone`. The same sort of
++slowdowns can be seen when doing a big fetch (lots of objects to write
++out).
++
++. If you have a corrupt local repository this check can prevent
++  repairing it by fetching a known-good version of the same object
++  from a remote repository. See the "repair a corrupted repo with
++  index-pack" test in the `t1060-object-corruption.sh` test in the git
++  source code.
++--
+++
++Consider turning this off if you're more concerned about performance
++than you are about hypothetical future SHA-1 collisions or object
++corruption (linkgit:git-fsck[1] will also catch object
++corruption). This setting can also be disabled during specific
++phases/commands that can be bottlenecks, e.g. with `git -c
++core.checkCollisions=false clone [...]` for an initial clone on NFS.
+++
++Setting this to `false` will disable object collision
++checking. I.e. the value can either be "default" or a boolean. Other
++values might be added in the future (e.g. for selectively disabling
++this just for "clone"), but now any non-boolean non-"default" values
++error out.
++
+ core.checkStat::
+ 	When missing or is set to `default`, many fields in the stat
+ 	structure are checked to detect if a file has been modified
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2004e25da2..4a3508aa9f 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -791,23 +791,24 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ {
+ 	void *new_data = NULL;
+ 	int collision_test_needed = 0;
++	int do_coll_check = git_config_get_collision_check();
+ 
+ 	assert(data || obj_entry);
+ 
+-	if (startup_info->have_repository) {
++	if (do_coll_check && startup_info->have_repository) {
+ 		read_lock();
+ 		collision_test_needed =
+ 			has_sha1_file_with_flags(oid->hash, OBJECT_INFO_QUICK);
+ 		read_unlock();
+ 	}
+ 
+-	if (collision_test_needed && !data) {
++	if (do_coll_check && collision_test_needed && !data) {
+ 		read_lock();
+ 		if (!check_collison(obj_entry))
+ 			collision_test_needed = 0;
+ 		read_unlock();
+ 	}
+-	if (collision_test_needed) {
++	if (do_coll_check && collision_test_needed) {
+ 		void *has_data;
+ 		enum object_type has_type;
+ 		unsigned long has_size;
+diff --git a/cache.h b/cache.h
+index f7fabdde8f..cf0b69133e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -858,6 +858,7 @@ extern size_t packed_git_limit;
+ extern size_t delta_base_cache_limit;
+ extern unsigned long big_file_threshold;
+ extern unsigned long pack_size_limit_cfg;
++extern int check_collisions;
+ 
+ /*
+  * Accessors for the core.sharedrepository config which lazy-load the value
+diff --git a/config.c b/config.c
+index 4051e38823..a93e74f399 100644
+--- a/config.c
++++ b/config.c
+@@ -1362,6 +1362,14 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.checkcollisions")) {
++		if (!strcasecmp(value, "default"))
++			check_collisions = 1;
++		else
++			check_collisions = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+@@ -2307,6 +2315,18 @@ int git_config_get_index_threads(void)
+ 	return 0; /* auto */
+ }
+ 
++int git_config_get_collision_check(void)
++{
++	static int checked_env = 0;
++	if (!checked_env) {
++		checked_env = 1;
++		int v = git_env_bool("GIT_TEST_CHECK_COLLISIONS", -1);
++		if (v != -1)
++			check_collisions = v;
++	}
++	return check_collisions;
++}
++
+ NORETURN
+ void git_die_config_linenr(const char *key, const char *filename, int linenr)
+ {
+diff --git a/config.h b/config.h
+index a06027e69b..4c6f6d9ae4 100644
+--- a/config.h
++++ b/config.h
+@@ -251,6 +251,7 @@ extern int git_config_get_split_index(void);
+ extern int git_config_get_max_percent_split_change(void);
+ extern int git_config_get_fsmonitor(void);
+ extern int git_config_get_index_threads(void);
++extern int git_config_get_collision_check(void);
+ 
+ /* This dies if the configured or default date is in the future */
+ extern int git_config_get_expiry(const char *key, const char **output);
+diff --git a/environment.c b/environment.c
+index 3f3c8746c2..0a1512bee6 100644
+--- a/environment.c
++++ b/environment.c
+@@ -21,6 +21,7 @@
+ int trust_executable_bit = 1;
+ int trust_ctime = 1;
+ int check_stat = 1;
++int check_collisions = 1;
+ int has_symlinks = 1;
+ int minimum_abbrev = 4, default_abbrev = -1;
+ int ignore_case;
+diff --git a/t/README b/t/README
+index 8847489640..050abe85ad 100644
+--- a/t/README
++++ b/t/README
+@@ -343,6 +343,9 @@ of the index for the whole test suite by bypassing the default number of
+ cache entries and thread minimums. Setting this to 1 will make the
+ index loading single threaded.
+ 
++GIT_TEST_CHECK_COLLISIONS=<boolean> excercises the
++core.checkCollisions=false codepath.
++
+ Naming Tests
+ ------------
+ 
 diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index ac1f189fd2..4feb65157d 100755
+index 4feb65157d..87e395d2ba 100755
 --- a/t/t1060-object-corruption.sh
 +++ b/t/t1060-object-corruption.sh
-@@ -117,8 +117,10 @@ test_expect_failure 'clone --local detects misnamed objects' '
+@@ -117,6 +117,7 @@ test_expect_failure 'clone --local detects misnamed objects' '
  '
  
  test_expect_success 'fetch into corrupted repo with index-pack' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
+ 	cp -R bit-error bit-error-cp &&
+ 	test_when_finished "rm -rf bit-error-cp" &&
+ 	(
+@@ -127,4 +128,36 @@ test_expect_success 'fetch into corrupted repo with index-pack' '
+ 	)
+ '
+ 
++test_expect_success 'repair a corrupted repo with index-pack' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
 +	cp -R bit-error bit-error-cp &&
 +	test_when_finished "rm -rf bit-error-cp" &&
- 	(
--		cd bit-error &&
++	(
 +		cd bit-error-cp &&
- 		test_must_fail git -c transfer.unpackLimit=1 \
- 			fetch ../no-bit-error 2>stderr &&
- 		test_i18ngrep ! -i collision stderr
++
++		# Have the corrupt object still and fsck complains
++		test_must_fail git cat-file blob HEAD:content.t &&
++		test_must_fail git fsck 2>stderr &&
++		test_i18ngrep "corrupt or missing" stderr &&
++
++		# Fetch the new object (as a pack). The transfer.unpackLimit=1
++		# setting here is important, we must end up with a pack, not a
++		# loose object. The latter would fail due to "exists? Do not
++		# bother" semantics unrelated to the collision check.
++		git -c transfer.unpackLimit=1 \
++			-c core.checkCollisions=false \
++			fetch ../no-bit-error 2>stderr &&
++
++		# fsck still complains, but we have the non-corrupt object
++		# (we lookup in packs first)
++		test_must_fail git fsck 2>stderr &&
++		test_i18ngrep "corrupt or missing" stderr &&
++		git cat-file blob HEAD:content.t &&
++
++		# A "gc" will remove the now-redundant and corrupt object
++		git gc &&
++		git fsck
++	)
++'
++
+ test_done
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 410a09b0dd..ca109fff84 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -481,18 +481,22 @@ test_expect_success 'setup: fake a SHA1 hash collision' '
+ '
+ 
+ test_expect_success 'make sure index-pack detects the SHA1 collision' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
+ 	(
+ 		cd corrupt &&
+-		test_must_fail git index-pack -o ../bad.idx ../test-3.pack 2>msg &&
+-		test_i18ngrep "SHA1 COLLISION FOUND" msg
++		test_must_fail git index-pack -o good.idx ../test-3.pack 2>msg &&
++		test_i18ngrep "SHA1 COLLISION FOUND" msg &&
++		git -c core.checkCollisions=false index-pack -o good.idx ../test-3.pack
+ 	)
+ '
+ 
+ test_expect_success 'make sure index-pack detects the SHA1 collision (large blobs)' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
+ 	(
+ 		cd corrupt &&
+ 		test_must_fail git -c core.bigfilethreshold=1 index-pack -o ../bad.idx ../test-3.pack 2>msg &&
+-		test_i18ngrep "SHA1 COLLISION FOUND" msg
++		test_i18ngrep "SHA1 COLLISION FOUND" msg &&
++		git -c core.checkCollisions=false -c core.bigfilethreshold=1 index-pack -o good.idx ../test-3.pack
+ 	)
+ '
+ 
 -- 
 2.19.1.759.g500967bb5e
 
