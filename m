@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44B141F453
-	for <e@80x24.org>; Sun, 28 Oct 2018 06:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 874CA1F453
+	for <e@80x24.org>; Sun, 28 Oct 2018 06:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727745AbeJ1Pfu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Oct 2018 11:35:50 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:37013 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726734AbeJ1Pft (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Oct 2018 11:35:49 -0400
-Received: by mail-lj1-f196.google.com with SMTP id c4-v6so4795436lja.4
-        for <git@vger.kernel.org>; Sat, 27 Oct 2018 23:52:06 -0700 (PDT)
+        id S1727764AbeJ1Pfv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Oct 2018 11:35:51 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:45107 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725791AbeJ1Pfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Oct 2018 11:35:51 -0400
+Received: by mail-lj1-f195.google.com with SMTP id j4-v6so4780387ljc.12
+        for <git@vger.kernel.org>; Sat, 27 Oct 2018 23:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6URvdzBWtkgiHAB1x19g94d7Z2NG2Xhe7Gk5siCXaes=;
-        b=o/4ZHkw/nCwF1aW1+08m5Jse35LBAQF6sAy1dVXA7Y7TlSqSYRP8Pk4Ko5IEnkXGQX
-         uN3rJo/dRIwg6RTsftLHNVxewE+fsEUA1+g/kuS6jA6OsYYah4f8ZeBUqnAi+KV511od
-         63BkUAE7lvO+Pmn+oOPDwOnibL1tfqoMHqPQ2dkF9bgNMTdbK/6XOu2KAeh9eFR71Adu
-         O6PGPfdEUjE91d1oKuAAMaF5tglSWZwAWqdNAVE0PrxBu4AmjrJH6f6TgksBxRmUgv/R
-         shJBFXG9oDrbecaEl5eMnS6e3iNMJSTOD6hGJOWOu9cTXNMOe25+Xw5f3M9b8nVQiUaa
-         rLdQ==
+        bh=djLcnc/ogJNL4Z13pc77uU3n+GglYQ7EVoZPsqvs5Q4=;
+        b=DZDgyfAd6h+PwSiBo4JpcLSvE4VjM9IUn1qOt715nPrgPMGa0UHozW453N5er6nxML
+         TBKAEAdRHqqoozM3k45Xd9FoTNZa5yAgF2NVre8vGJ1fnYvYXrFHypUs7WLjnNZVug4L
+         u6ztxU0x7xONNDwHlrJgvu6ygTOIQUTfBEhUsa64ePkbnADzibcmhEChSJEGca9SBO6H
+         w0dX8ju/4cW0vdOu8JJxdwlg1HNWU79VCi5XhEmKwfdBI7Ps5jGNdhrqefQq4OlVkJQ3
+         H9aoyG4BZq4O/Q3FpQj2U2+2vEZAYoyXMAEu9oRzPJvXjC+VwkHKqJCHRe+B05vEeHLx
+         m92g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6URvdzBWtkgiHAB1x19g94d7Z2NG2Xhe7Gk5siCXaes=;
-        b=D4aewOQhMo/XKCMT+K0TIJHi3JcoDdgYQvI/UGqPfkefRl+HRYOeinwISAqtV4KuBH
-         HJZwYcdKQ67vX6EFTiFyowoHabcIx8/pTbIhr/6vRj5neWqGaCFEM04FRo1Id3j1Haqr
-         ed7/gcsw32TLXD2gMCJHbcWspYMXgkOsXhn06IyzX+OvpA6/a8VuAiWecrUV2cS7bqW8
-         OZZRqPE52LnPCfIjZhJZKTowotO0OpQ0lJdApJLTdSA25l163957tdSF8fa5kpxbwtul
-         pqbR5KAxcTFmfTgiW/4HLX+HvvTxncJuhN88xqTykituXbpbAW2rz/DSG1VUOx3mv0E3
-         nbHg==
-X-Gm-Message-State: AGRZ1gL+sK7liM6n9QXmEuxmGnMBzAC03IfF1RXktG9Uz639ki0V4Zrq
-        fP50abp+YW02AeNqvtJQcVEaRpHu
-X-Google-Smtp-Source: AJdET5cVAIfA9kjoAqvn0BPE1If/ScplxzvrGDFVdn9dW0emx3T5SMskYusvm1SuTcufwoo8lTPilg==
-X-Received: by 2002:a2e:6d0a:: with SMTP id i10-v6mr6847629ljc.14.1540709525462;
-        Sat, 27 Oct 2018 23:52:05 -0700 (PDT)
+        bh=djLcnc/ogJNL4Z13pc77uU3n+GglYQ7EVoZPsqvs5Q4=;
+        b=WKRDupROVEfESxzRvRL1jYwE6eirI3virAlpstwpDudRhEDDBrs4PeTkwGmGGlTETo
+         +BBjjJgeMQ0qvW2BEVJ/VHabYKXB3z+iRB/1b3L2ssjPhU53x2S14pRXk7CxWUDWHwN8
+         O53CSbMBaSaZF+crSIDBXVQsglJhP73DTTzLqFZRo5ZTIXwY4mrVOTnZknatTK6eDtW8
+         tbvgDlWd8NQjWgBd/GwK5H6mEuH2lzuwmPOydcSEYYohqJrtvtCV+jdfoK/3sAxG+H16
+         JzAVq+1JZTtu+cAryoJMPMNTKX9Fhq8conuLx2s9fkYPZNtdY2f1tSRR3qfAtZAgudPL
+         vUHA==
+X-Gm-Message-State: AGRZ1gIEnAR1cLYER7HuntQQSGpcpUfkqBQ9eMExPmBYse8LbqT+D9BB
+        TDI+tsruLo1dOCzZJk2FPwwKKpC+
+X-Google-Smtp-Source: AJdET5cp2X1dZ5ltLvCs/hP4AOhqYmhKMSp9OehBX7gTRpiH97ikT+Sf8trziPipQjPw4GslNXrbwQ==
+X-Received: by 2002:a2e:21d2:: with SMTP id h79-v6mr6265078lji.46.1540709526589;
+        Sat, 27 Oct 2018 23:52:06 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id v23-v6sm148847ljd.70.2018.10.27.23.52.04
+        by smtp.gmail.com with ESMTPSA id v23-v6sm148847ljd.70.2018.10.27.23.52.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Oct 2018 23:52:04 -0700 (PDT)
+        Sat, 27 Oct 2018 23:52:05 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/12] archive.c: mark more strings for translation
-Date:   Sun, 28 Oct 2018 07:51:48 +0100
-Message-Id: <20181028065157.26727-4-pclouds@gmail.com>
+Subject: [PATCH 04/12] attr.c: mark more string for translation
+Date:   Sun, 28 Oct 2018 07:51:49 +0100
+Message-Id: <20181028065157.26727-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.647.g708186aaf9
 In-Reply-To: <20181028065157.26727-1-pclouds@gmail.com>
 References: <20181028065157.26727-1-pclouds@gmail.com>
@@ -70,46 +70,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ attr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/archive.c b/archive.c
-index 9d16b7fadf..757519a9d6 100644
---- a/archive.c
-+++ b/archive.c
-@@ -385,12 +385,12 @@ static void parse_treeish_arg(const char **argv,
- 		int refnamelen = colon - name;
- 
- 		if (!dwim_ref(name, refnamelen, &oid, &ref))
--			die("no such ref: %.*s", refnamelen, name);
-+			die(_("no such ref: %.*s"), refnamelen, name);
- 		free(ref);
- 	}
- 
- 	if (get_oid(name, &oid))
--		die("Not a valid object name");
-+		die(_("'%s' is not a valid object name"), name);
- 
- 	commit = lookup_commit_reference_gently(ar_args->repo, &oid, 1);
- 	if (commit) {
-@@ -403,7 +403,7 @@ static void parse_treeish_arg(const char **argv,
- 
- 	tree = parse_tree_indirect(&oid);
- 	if (tree == NULL)
--		die("not a tree object");
-+		die(_("%s is not a tree object"), oid_to_hex(&oid));
- 
- 	if (prefix) {
- 		struct object_id tree_oid;
-@@ -413,7 +413,7 @@ static void parse_treeish_arg(const char **argv,
- 		err = get_tree_entry(&tree->object.oid, prefix, &tree_oid,
- 				     &mode);
- 		if (err || !S_ISDIR(mode))
--			die("current working directory is untracked");
-+			die(_("current working directory is untracked"));
- 
- 		tree = parse_tree_indirect(&tree_oid);
- 	}
+diff --git a/attr.c b/attr.c
+index 60d284796d..4ebc169abe 100644
+--- a/attr.c
++++ b/attr.c
+@@ -372,7 +372,7 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 	if (strlen(ATTRIBUTE_MACRO_PREFIX) < namelen &&
+ 	    starts_with(name, ATTRIBUTE_MACRO_PREFIX)) {
+ 		if (!macro_ok) {
+-			fprintf(stderr, "%s not allowed: %s:%d\n",
++			fprintf(stderr, _("%s not allowed: %s:%d\n"),
+ 				name, src, lineno);
+ 			goto fail_return;
+ 		}
 -- 
 2.19.1.647.g708186aaf9
 
