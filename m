@@ -2,151 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E47F1F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 03:55:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97A801F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 04:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729345AbeJ2MjM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 08:39:12 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37900 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729308AbeJ2MjM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 08:39:12 -0400
-Received: by mail-wr1-f65.google.com with SMTP id d10-v6so7066620wrs.5
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 20:52:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=C3fjZ6Tx4S/RXFJOho2laAK1J+BgXSIgBPuxUbyedbI=;
-        b=ChngvBZmVg0VvzJLi6iV1aShNsYr79J//XJhULCk2r9126SUl+iRYm5mXw5cnbn43D
-         bio0o/wrLmstmfKZ+Q5eluPV2In3ICjJRTRRhqUAw3ef3ycnYfQbvqsxIloyhRh7Nkjh
-         ap28R4uzadI4RxhAkiYuZUxAS6UI4bOOuH/tsgoFFukEr2K84l2/WfPAQgHjsmOjXyP9
-         f9gCpAY2meZdmwvSL1FKc+GtiixTxJ+IliljjBcSYwO16qo+UR86tkyqwUBFXF5aFdMn
-         vWK3GWV3EHgVT31uQr22tq/mQgQlNo1RJ8coVn8Sr6WSfiYNflRTZvzC7JsxYMXSdOWB
-         YfvA==
+        id S1729348AbeJ2MsS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 08:48:18 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:45626 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729265AbeJ2MsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 08:48:18 -0400
+Received: by mail-qt1-f193.google.com with SMTP id l9-v6so7707775qtj.12
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 21:01:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=C3fjZ6Tx4S/RXFJOho2laAK1J+BgXSIgBPuxUbyedbI=;
-        b=H7NUpZPrvu/7nXZ+fm+CpvxIDhO8IdD0y0+AQD1Lw01cm8DKCPFfrr4TXqc7zgN+hu
-         2KqXSJn21a0uok2nE863AeEYH6kTngIlDXKYBsCYsyCNXsXqaTd8pCOtLjc5Ekd4+vLc
-         0W/wm6pZnZR6yhPDa/NdANPVYdmLmz820mk8L2QgMwcxjxfB3S8nqGSSXoQ4ZeAipiUy
-         XKYux72D9WOC4Oqiqtao99ZCnHY12uhM7xtOfU2exFQq1Arb+7Gi92LGuFtu5/GYaMkt
-         AQynGeC9aeeJoJud5CBq8MhTI3FCDBGFDWlesLdBU+iUZXrn1LyzqGzVYhwoM7hWnynX
-         ezsA==
-X-Gm-Message-State: AGRZ1gLr3Y8knRW9rwsuxCd+jPq4SzL/Z5v87uNm9dpmAHSBFTZKo6rr
-        VT4nza+O3viJ+fIl8rxR8iQ=
-X-Google-Smtp-Source: AJdET5e8kGJB3aXW7uxb3+ZWoyWZ08ZVvvqy68CAIgbo6JHM+a6PN4ZJ+BzeewINgm+5qf8EHeXKww==
-X-Received: by 2002:adf:e391:: with SMTP id e17-v6mr13009133wrm.321.1540785137897;
-        Sun, 28 Oct 2018 20:52:17 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i7-v6sm19897748wmd.41.2018.10.28.20.52.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 28 Oct 2018 20:52:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     sunshine@sunshineco.com, git@vger.kernel.org
-Subject: Re: [PATCH] worktree: refactor lock_reason_valid and lock_reason to be more sensible
-References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
-        <20181025055142.38077-1-nbelakovski@gmail.com>
-        <xmqq4ldajz05.fsf@gitster-ct.c.googlers.com>
-        <CAC05385y3fCdG4fd2ADahoE0iT+a5KvEr846UCUCQZMOtzzYGg@mail.gmail.com>
-Date:   Mon, 29 Oct 2018 12:52:15 +0900
-Message-ID: <xmqq36sp76kw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YHAvh/sfHNTGzeIdaDaHLScFOQpF2lxJtxOhxqWOVjo=;
+        b=UatoDEICZAoXWPA3hz23AmclWBt/78AyqTG4BrG2/15dpDkcGD6CEEGe07BlhFKvz+
+         hYH2j6J0LwSyAZSQHHzPWzHi1R3urP1AFMSRjaEzPIRsgMwEmfRb4mB+Z2U3UG7beSHA
+         x1QjW0og7Z/hxgK/JCf3xWPfZmg254IEkEWEl4T3uMc3t2oqYAZiWL3V7fkWiCN0y0E/
+         PKOk0u79XKpLIJFUwn3MaEGwBAZlJk4+9JoXH5tsAIBmNqe7atg2HSD4Cl3Kba+/Mz5w
+         Ibt7pugNmJS+8+3FZY7G7+Jvc8dzN6oDQxUDFWKC14v31+Keh/Z1lj64+0+gemFGBqOd
+         j6Qw==
+X-Gm-Message-State: AGRZ1gKUjMRQdtO1xXVuHtNXR2HJTYs2Cc2ge75hE2S7uuO9B/hkBjcB
+        65YX6ZW4Inythy072v/pGkUUzJsZPwQZBPpV6Sc=
+X-Google-Smtp-Source: AJdET5dVbGiUYSisB89F1RkhoxijaEH2qcmNkkq97B2VtnPB4FOMUurMK8zzasucsrLkBQVqcxlmqVvA34nIuSyCWak=
+X-Received: by 2002:ac8:3693:: with SMTP id a19-v6mr11234805qtc.236.1540785683976;
+ Sun, 28 Oct 2018 21:01:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
+ <20181025055142.38077-1-nbelakovski@gmail.com> <xmqq4ldajz05.fsf@gitster-ct.c.googlers.com>
+ <CAC05386cSUhBm4TLD5NUeb5Ut9GT5=h-1MvqDnFpuc+UdZFmwg@mail.gmail.com>
+ <CAPig+cT1XYt60PsRGJ0FUa_qCn1vPjdXHygsWzYZYg2Ey=yqkg@mail.gmail.com> <CAC05387mfDhJ5_=LyzxZZX09MoY1hsmSB1gseNeLCmMOUx2O4A@mail.gmail.com>
+In-Reply-To: <CAC05387mfDhJ5_=LyzxZZX09MoY1hsmSB1gseNeLCmMOUx2O4A@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 29 Oct 2018 00:01:11 -0400
+Message-ID: <CAPig+cTTsbz1pygq6G281V+fR2VVMuchvy1Q1H-KEvJpjJ9ejg@mail.gmail.com>
+Subject: Re: [PATCH] worktree: refactor lock_reason_valid and lock_reason to
+ be more sensible
+To:     Nickolai Belakovski <nbelakovski@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nickolai Belakovski <nbelakovski@gmail.com> writes:
+On Sun, Oct 28, 2018 at 9:11 PM Nickolai Belakovski
+<nbelakovski@gmail.com> wrote:
+> On Sun, Oct 28, 2018 at 4:03 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > Aside from that, it doesn't seem like worktree needs any changes for
+> > the ref-filter atom you have in mind. (Don't interpret this
+> > observation as me being averse to changes to the API; I'm open to
+> > improvements, but haven't seen anything yet indicating a bug or
+> > showing that the API is more difficult than it ought to be.)
+>
+> You're right that these changes are not necessary in order to make a
+> worktree atom.
+> If there's no interest in this patch I'll withdraw it.
 
-> This is an improvement because it fixes an issue in which the fields
-> lock_reason and lock_reason_valid of the worktree struct were not
-> being populated.
+Withdrawing this patch seems reasonable.
 
-If the field "reason" should always be populated, there is *no*
-reason why we need the "valid" boolean.  They work as a pair to
-realize lazy population of rarely used field.  The lazy evaluation
-technique is used as an optimization for common case, where majority
-of operations do not care if worktrees are locked and if so why they
-are locked, so that only rare operations that do want to find out
-can ask "is this locked and why?" via is_worktree_locked() interface,
-and at that point we lazily find it out by reading "locked" file.
+> I had found it really surprising that lock_reason was not populated
+> when I was accessing it while working on the worktree atom. When
+> digging into it, the "internal use" comment told me nothing, both
+> because there's no convention (that I'm aware of) within C to mark
+> fields as such and because it fails to direct the reader to
+> is_worktree_locked.
+>
+> How about this, I can make a patch that changes the comment next to
+> lock_reason to say "/* private - use is_worktree_locked */" (choosing
+> the word "private" since it's a reserved keyword in C++ and other
+> languages for implementation details that are meant to be
+> inaccessible) and a comment next to lock_reason_valid that just says
+> "/* private */"?
 
-So it is by design that these fields are not always populated, but
-are populated on demand as book-keeping info internal to the API's
-implementation.  It is not "an issue", and changing it is not a
-"fix".
+A patch clarifying the "private" state of 'lock_reason' and
+'lock_reason_valid' and pointing the reader at is_worktree_locked()
+would be welcome.
 
-In addition, if we have already checked, then we do not even do the
-same check again.  If in an earlier call we found out that a worktree
-is not locked, we flip the _valid bit to true while setting _reason
-to NULL, so that the next call can say "oh, that's not locked and we
-can tell that without looking at the filesystem again" [*1*].
+One extra point: It might be a good idea to mention in the
+documentation of is_worktree_locked() that, in addition to returning
+NULL or non-NULL indicating not-locked or locked, the returned
+lock-reason might very well be empty ("") when no reason was given by
+the locker.
 
-You are forcing the callers of get_worktrees() to pay the cost to
-check, open and read the "why is this worktree locked?" file for all
-worktrees, whether they care if these worktrees are locked or why
-they are locked.  Such a change can be an improvement *ONLY* if you
-can demonstrate that in the current code most codepaths that call
-get_worktrees() end up calling is_worktree_locked() on all worktrees
-anyways.  If that were the case, not having to lazily evaluate the
-"locked"-ness, but always check upfront, would have a simplification
-value, as either approach would be spending the same cost to open
-and read these "locked" files.
+> I would also suggest renaming is_worktree_locked to
+> worktree_lock_reason, the former makes me think the function is
+> returning a boolean, whereas the latter more clearly conveys that a
+> more detailed piece of information is being returned.
 
-But I do not think it is the case.  Outside builtin/worktree.c (and
-you need to admit "git worktree" is a rather rare command in the
-first place, so you shouldn't be optimizing for that if it hurts
-other codepaths), builtin/branch.c wants to go to all worktrees and
-update their HEAD when a branch is renamed (if the old HEAD is
-pointing at the original name, of course), but that code won't care
-if the worktree is locked at all.  I do not think of any caller of
-get_worktrees() that want to know if it is locked and why for each
-and every one of them, and I'd be surprised if that *is* the
-majority, but as a proposer to burden get_worktrees() with this
-extra cost, you certainly would have audited the callers and made
-sure it is worth making them pay the extra cost?
+I think the "boolean"-sounding name was intentional since most
+(current) callers only care about that; so, the following reads very
+naturally for such callers:
 
-If we are going to change anything around this area, I'd not be
-surprised that the right move is to go in the opposite direction.
-Right now, you cannot just get "is it locked?" boolean answer (which
-can be obtained by a simple stat(2) call) without getting "why is it
-locked?" (which takes open(2) & read(2) & close(2)), and if you are
-planning a new application that wants to ask "is it locked?" a lot
-without having to know the reason, you may want to make the lazy
-evaluation even lazier by splitting _valid field into two (i.e. a
-"do we know if this is locked?" valid bit covers "is_locked" bit,
-and another "do we know why this is locked?" valid bit accompanies
-"locked_reason" string).  And the callers would ask two separate
-questions: is_worktree_locked() that says true or false, and then
-why_worktree_locked() that yields NULL or string (i.e. essentially
-that is what we have as is_worktree_locked() today).  Of course,
-such a change must also be justified with a code audit to
-demonstrate that only minority case of the callers of is-locked?
-wants to know why
+    if (is_worktree_locked(wt))
+        die(_("worktree locked; aborting"));
 
-
-[Footnote]
-
-*1* The codepaths that want to know if a worktree is locked or not
-(and wants to learn the reason) are so rare and concentrated in
-builtin/worktree.c, and more importantly, they do not need to ask
-the same question twice, so we can stop caching and make
-is_worktree_locked() always go to the filesystem, I think, and that
-may be a valid change _if_ we allow worktrees to be randomly locked
-and unlocked while we are looking at them, but if we want to worry
-about such concurrent and competing uses, we need a big
-repository-wide lock anyway, and it is the least of our problems
-that the current caching may go stale without getting invalidated.
-The code will be racing against such concurrent processes even if
-you made it to go to the filesystem all the time.
-
+That said, I wouldn't necessarily oppose renaming the function, but I
+also don't think it's particularly important to do so.
