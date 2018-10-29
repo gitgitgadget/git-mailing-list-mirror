@@ -2,104 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 086D11F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 20:45:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5AA21F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 21:35:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbeJ3Fff (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 01:35:35 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54565 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726040AbeJ3Fff (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 01:35:35 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqRKT-1fdTjk3JxJ-00e3Ju; Mon, 29
- Oct 2018 21:45:05 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqRKT-1fdTjk3JxJ-00e3Ju; Mon, 29
- Oct 2018 21:45:05 +0100
-Date:   Mon, 29 Oct 2018 21:45:15 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     gitster@pobox.com, christian.couder@gmail.com, git@vger.kernel.org,
-        pclouds@gmail.com, peff@peff.net
-Subject: Re: [PATCH v3 2/3] shallow: offer to prune only non-existing
- entries
-In-Reply-To: <20181026204914.134946-1-jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1810292047130.4546@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1810260956230.4546@tvgsbejvaqbjf.bet> <20181026204914.134946-1-jonathantanmy@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727312AbeJ3GZa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 02:25:30 -0400
+Received: from smtp-fw-33001.amazon.com ([207.171.190.10]:17993 "EHLO
+        smtp-fw-33001.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726568AbeJ3GZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 02:25:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1540848899; x=1572384899;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gIZ+3WMMQ0VMczALgh2pDwrGMDXCX0iwA85JCpvgayA=;
+  b=M50ADw/G8QBFX6ZgRkr0A4/qStJhsjcD52qZ2c3f89CNAKQm65HzsIKp
+   K/LdJm/u/Wd/5ae4ygevUhtrewTLf70zGL4bPRXpMdq1GCMzf6d7i3Fj5
+   xzhf+Fgz03eCshWaLtf5XyftzAoXB/Q/5cKiHCD3z21nFGvZXrfNGEH7k
+   U=;
+X-IronPort-AV: E=Sophos;i="5.54,441,1534809600"; 
+   d="scan'208";a="761971450"
+Received: from sea3-co-svc-lb6-vlan2.sea.amazon.com (HELO email-inbound-relay-1d-474bcd9f.us-east-1.amazon.com) ([10.47.22.34])
+  by smtp-border-fw-out-33001.sea14.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Oct 2018 21:34:56 +0000
+Received: from EX13MTAUEA001.ant.amazon.com (iad55-ws-svc-p15-lb9-vlan3.iad.amazon.com [10.40.159.166])
+        by email-inbound-relay-1d-474bcd9f.us-east-1.amazon.com (8.14.7/8.14.7) with ESMTP id w9TLYqgn039611
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+        Mon, 29 Oct 2018 21:34:55 GMT
+Received: from EX13D15UEE003.ant.amazon.com (10.43.62.19) by
+ EX13MTAUEA001.ant.amazon.com (10.43.61.243) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Mon, 29 Oct 2018 21:34:54 +0000
+Received: from EX13MTAUEE001.ant.amazon.com (10.43.62.200) by
+ EX13D15UEE003.ant.amazon.com (10.43.62.19) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Mon, 29 Oct 2018 21:34:53 +0000
+Received: from amazon.com (10.200.179.64) by mail-relay.amazon.com
+ (10.43.62.226) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
+ Transport; Mon, 29 Oct 2018 21:34:53 +0000
+Date:   Mon, 29 Oct 2018 21:34:53 +0000
+From:   Geert Jansen <gerardu@amazon.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Christian Couder" <christian.couder@gmail.com>
+Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
+Message-ID: <20181029213453.GA8325@amazon.com>
+References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
+ <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
+ <87o9bgl9yl.fsf@evledraar.gmail.com>
+ <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
+ <20181027093300.GA23974@sigill.intra.peff.net>
+ <xmqqbm7da88t.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:2FJd6rKouz4XeAj5suNuHZIkXFvABxQLJ8EPyy5jVgRympn3x9L
- SEDhA4pz0P0+fccrDts9oxMk3ezqQEagaPY6Dva0ELU/0HNoB+hntxG9g+Y9kLGUJmNPosD
- pRL7e5ZdMU0h3gZh80yxE2sMnxKFqmlKn3n8mmJH6I8Kv0c1izW1yi7LS09Nukse4lYL4b8
- kDVSQkFYq0ohENyLehJyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nBOEUGHTWKg=:oEPw8Ty/TriXxRKPjR3EBQ
- JoW/loaK+y8D6fx0X/X5FZfv0o4xDNDSae2UGTI3cLYCVGvTddH1dbWyNDhTOJKDTnMpxyJS2
- tajoSY2n+OPiqLxl3BVUXcujfgnqw5zSJt87D0QTBp6oyK+NiEnyQZW1BFnwVUn6VzkwVe+Xu
- y99lUoGolXEeu1ySs0fk1Af7WdaeMJnVx9oetl5RFPIr08waXu73uIfg0zZbTzWP8AlD3STxz
- iGPWjJH+3qZ53IMJY7YE1pd1LzyYrjvippgIlpJyk3MblJKK7WkYVvlqpPgCbmlArPkw8YJ8r
- 9PS7LHDQezHVLap09tXIhZ9MOjYfUVkm8w7aT99iFa6V9sz2gVmKgVbZ2LmoVuLnJcl4qrl8M
- 3NiEixpPGKbJxuYcmrssLqW6RnMSZ1h36KDwk+HF4UmMo4KerNsGrP5+jgM00/wX/uhML8Tz0
- qm8i1sL0JSBhH2d8xkfAcHuCotPqe/FIZGuX3Qgpx46iT3ip5IIzhxeOvaOfXDDYjdUg9wc9h
- g9uKaNVa84mRXlv5zXpmZbDslUF25vP5bTw1Vgihelf2HLqSAJHR8zEX3oDQcZKc4iZRLS7vw
- XBSqLpJ1rV1XwAHlQAA1XAhNkERbImhmS6KJJqp3Ssmjrr6w8rr+j6yFMUh+fmvLwGJ6l1kDp
- xNMoH5sw1HtztMqiMUBJnnKRoMCXpZJC4R+7spLWV+cvLKNtq542atFI9prT+ClRQvsB8LTl2
- E2ohCiwfx6PsWAIsfF+dTTH3t+yM6/Grk/kq5dZGlP2lyeGPhMJeQNB2Ry9msssxmAnpXcET3
- cUjAQASX9helCL6AVnd2BV0zjyYNES2KYPksF8MLlSEWkDGOgo=
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <xmqqbm7da88t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Mon, Oct 29, 2018 at 09:48:02AM +0900, Junio C Hamano wrote:
 
-On Fri, 26 Oct 2018, Jonathan Tan wrote:
+> A real question is how much performance gain, relative to ".cloning"
+> thing, this approach gives us.  If it gives us 80% or more of the
+> gain compared to doing no checking, I'd say we have a clear winner.
 
-> > So even better would be to use `is_promisor_object(oid) ||
-> > has_object_file(oid)`, right?
-> > 
-> > This is something that is probably not even needed: as I mentioned,
-> > the shallow commits are *expected* to be local. It should not ever
-> > happen that they are fetched.
-> 
-> That would help, but I don't think it would help in the "fast-forward
-> from A to B where A is B's parent" case I describe in [1].
+I've tested Jeff's loose-object-cache patch and the performance is within error
+bounds of my .cloning patch. A git clone of the same repo as in my initial
+tests:
 
-I don't think that that analysis is correct. It assumes that there could
-be a promised commit that is also listed as shallow. I do not think that
-is a possible scenario.
+  .cloning -> 10m04
+  loose-object-cache -> 9m59
 
-And even if it were, why would asking for a promised commit object
-download not only that object but also all of its trees and all of its
-ancestors? That's not how I understood the idea of the lazy clone: I
-understood promised objects to be downloaded on demand, individually.
+Jeff's patch does a little more work (256 readdir() calls, which in case of an
+empty repo translate into 256 LOOKUP calls that return NFS4ERR_NOENT) but that
+appears to be insignificant.
 
-> My suggestion was:
-> 
-> > It sounds safer to me to use the fast approach in this patch when the
-> > repository is not partial, and stick to the slow approach when it is.
-> 
-> which can be done by replacing "prune_shallow(0, 1)" in patch 3 with
-> "prune_shallow(0, !repository_format_partial_clone)", possibly with a comment
-> that the fast method checks object existence for each shallow line directly,
-> which is undesirable when the repository is a partial clone.
+I agree that the loose-object-cache approach is preferred as it applies to more
+git commands and also benefits performance when there are loose objects
+already in the repository.
 
-I am afraid that that would re-introduce the bug pointed out by Peff: you
-*really* would need to traverse all reachable commits to use the non-fast
-pruning method. And we simply don't.
+As pointed out in the thread, maybe the default cache size should be some
+integer times gc.auto.
 
-Ciao,
-Dscho
+I believe the loose-object-cache approach would have a performance regression
+when you're receiving a small pack file and there's many loose objects in the
+repo. Basically you're trading off
 
-> (repository_format_partial_clone is non-NULL with the name of the promisor
-> remote if the repository is a partial clone, and NULL otherwise).
-> 
-> [1] https://public-inbox.org/git/20181025185459.206127-1-jonathantanmy@google.com/
-> 
+    MIN(256, num_objects_in_pack / dentries_per_readdir) * readdir_latency
+    
+against
+
+    num_loose_objects * stat_latency
+
+On Amazon EFS (and I expect on other NFS server implementations too) it is more
+efficient to do readdir() on a large directory than to stat() each of the
+individual files in the same directory. I don't have exact numbers but based on
+a very rough calculation the difference is roughly 10x for large directories
+under normal circumstances.
+
+As an example, this means that when you're recieving a pack file with 1K
+objects in a repository with 10K loose objects that the loose-object-cache
+patch has roughly the same performance as the current git. I'm not sure if this
+is something to worry about as I'm not sure people run repos with this many
+loose files. If it is a concern, there could be a flag to turn the loose object
+cache on/off.
