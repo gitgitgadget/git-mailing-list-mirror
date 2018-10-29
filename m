@@ -6,62 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F5781F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 00:42:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 013C91F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 00:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725988AbeJ2JZz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 05:25:55 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39681 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbeJ2JZy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 05:25:54 -0400
-Received: by mail-wm1-f65.google.com with SMTP id y144-v6so6294455wmd.4
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 17:39:37 -0700 (PDT)
+        id S1725967AbeJ2JeZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 05:34:25 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41485 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725879AbeJ2JeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 05:34:25 -0400
+Received: by mail-wr1-f68.google.com with SMTP id x12-v6so6813048wrw.8
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 17:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=RJmoRZGhAPZMFb46NhF/xAtb6ipqgW6/fL4dVmdrvew=;
-        b=eeyWaXYMyWoP/LqUjPX2qB3IGEoYkj4NCoCfNNJOOREMMAXECgZ60xT1SHAqs1YaU+
-         1b1v2Vls+wKjctlyZoZEVOLpnbpoi3C7kDMzUr+FvNdeCDPyBpHf7ZzRz6E9hLfCjU6Z
-         6SOlRYCi9L+1k+9OcXmhIr4UEJKFDKdVI5K2FzXtJr9ROfo6oZ1tR7MY4Kgv1S2bBfPT
-         TtKh/jTPoeFUbIJ59JfuQ5NVyazpj4TH0oglHHIiiOfr0t5ma6vmKCUULMqTRGy3nmfW
-         aJxxPPbTtqZKFWE5xkqAZttZL05n2SD2KGvzMrIOgVXNlutiEEBfWMRYVVV+RAJXPzRE
-         CBrw==
+        bh=OQG50LGTCQwP8whhr3M7KLnJCDNm1nl4yoEes0U3tjc=;
+        b=Cm26zk+/LtziUxZ5Nu/fGKCCOvK+NqZbwSgXb0yfftV6PtK1PmxeCqU0aZ6FAeCzlY
+         75IyJK01YN6rZjwKtgbcPmajMty9zMPQ9EuSCmXPSfIgmFIuA+lnWHyHfaahYSHM1wQG
+         2iLborKMJGg7IaHdRV/sTgPjAvIJsOea4CMYjMIgEN3rjgBX6JtWQfTvBhbprQRLvKrf
+         18NmjCScNnh/R+RG2bLxbL0Y5apNRow6uvt404gSx8WbjkjJCmW5c6917q2MhLeKOJOp
+         oeV6ttlVUC1tlJHwYPpM4auP4tmo7h9Gc4hfkfQqUICrQ9zXykNQAYNMqT2rP7z0J1aT
+         k5xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=RJmoRZGhAPZMFb46NhF/xAtb6ipqgW6/fL4dVmdrvew=;
-        b=Sf4hbz5nMwXURS/7VlfUfgmbT/I8aotslcw2nZFF55OnrEi/SUvxx7UhSAh0vNoKug
-         xgiNL4xhBUfHRDQ0mx+5MpTpK/rtNN0kgAgta0DEFXHqmhnkT0W4jz7NhjJGsJ3l1xe0
-         HAJYPQOx5oKg0T8nAWMxT+jSRjH4+lmaFgTvngO8A62bHK/VLAAIAHImIqMTjByxGZV4
-         6DcOBdbBK6bPfFcs2RrhJiKWo8O88YNo/Y4q/cAEhBJx1nBnQ5QO9YxXlumbpPhqRBN3
-         SAj3ykc3fBADS6PLa8a40umM4sov190Fn9ZzKhRmYGkfDCivf/dgRrb3dSpEtTjVs3Uk
-         HFMQ==
-X-Gm-Message-State: AGRZ1gIePpoys59TpH2ajbtXHZtQjisagFKVdhrQ04HWFWd0hJTx0Wtc
-        wzjsoarz6mjqPClYtu8U42Ozjh02/0o=
-X-Google-Smtp-Source: AJdET5dOLEFIqqHrj70ZlmBLf1b3yUD3ZiRC6EQN0U2FNVsaboI+l0iqDnjjAB6JEIBEOcksn6OfoA==
-X-Received: by 2002:a1c:aacd:: with SMTP id t196-v6mr11629869wme.121.1540773576557;
-        Sun, 28 Oct 2018 17:39:36 -0700 (PDT)
+        bh=OQG50LGTCQwP8whhr3M7KLnJCDNm1nl4yoEes0U3tjc=;
+        b=bwnI08hEVL81cbMal1g3Km5H6NeNo7hQrcb7Dcu5iN9nF4+zdWbrfX5ku3DicpJ2sn
+         ThMDV1HWLhWz4enDgy4XKjr6nFwU5zoVgyp74gR4WhpAQ4JN/9mOXntE+MjMWZi8Y19E
+         7rs9l3hIQb1mObf8MDwqrsIxduBhKg1OHn1qZl0auJG2nS749VEXThqqfUyJfBUDUtNZ
+         Ne9TSUt43MyW4Tn2m1wDAYumPmwCKmkDp/hwN9jMVBpkvCwk+Eo+DZaow69nlnVblszg
+         1tSs18KgREoZE81/LxyWs7caWP4pqZlGLgZpNVWqonwTx9JahPrAMAaGUX4LHCT4BiNJ
+         vWIQ==
+X-Gm-Message-State: AGRZ1gKnBZHfT0bnfM7byZDJmq6XteGb9tY/S2/JUDH/YcFyI+WEw5Z2
+        qMRnKeCN2rzrUCgwLBDq7uo=
+X-Google-Smtp-Source: AJdET5dmdtQrGZadZosuqZCjfXssaYBkhyTbAXDijf/gKmXRVwJKp94qKP1ze6ujLZhm/Po3TjbRtQ==
+X-Received: by 2002:adf:80a3:: with SMTP id 32-v6mr13428066wrl.231.1540774085229;
+        Sun, 28 Oct 2018 17:48:05 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z15-v6sm925991wrp.8.2018.10.28.17.39.34
+        by smtp.gmail.com with ESMTPSA id k18-v6sm10325119wrp.65.2018.10.28.17.48.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 28 Oct 2018 17:39:34 -0700 (PDT)
+        Sun, 28 Oct 2018 17:48:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        stolee@gmail.com, avarab@gmail.com, pclouds@gmail.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH v4 10/12] Add a base implementation of SHA-256 support
-References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
-        <20181025024005.154208-11-sandals@crustytoothpaste.net>
-        <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
-        <20181028155206.GI6119@genre.crustytoothpaste.net>
-Date:   Mon, 29 Oct 2018 09:39:33 +0900
-In-Reply-To: <20181028155206.GI6119@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 28 Oct 2018 15:52:06 +0000")
-Message-ID: <xmqqftwpa8my.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "Jansen\, Geert" <gerardu@amazon.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
+References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
+        <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
+        <87o9bgl9yl.fsf@evledraar.gmail.com>
+        <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
+        <20181027093300.GA23974@sigill.intra.peff.net>
+Date:   Mon, 29 Oct 2018 09:48:02 +0900
+In-Reply-To: <20181027093300.GA23974@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 27 Oct 2018 05:33:01 -0400")
+Message-ID: <xmqqbm7da88t.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,18 +72,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Jeff King <peff@peff.net> writes:
 
->> > +
->> > +#include "git-compat-util.h"
->> 
->> this shouldn't be needed and might be discouraged as per the
->> instructions in Documentation/CodingGuidelines
+> Of course any cache raises questions of cache invalidation, but I think
+> we've already dealt with that for this case. When we use
+> OBJECT_INFO_QUICK, that is a sign that we want to make this kind of
+> accuracy/speed tradeoff (which does a similar caching thing with
+> packfiles).
 >
-> This may not strictly be needed, but removing it makes the header no
-> longer self-contained, which blows up my (and others') in-editor
-> linting.
+> So putting that all together, could we have something like:
 
-That sounds like bending backwards to please tools, though.  Can't
-these in-editor linting learn the local rules of the codebase they
-are asked to operate on?
+I think this conceptually is a vast improvement relative to
+".cloning" optimization.  Obviously this does not have the huge
+downside of the other approach that turns the collision detection
+completely off.
+
+A real question is how much performance gain, relative to ".cloning"
+thing, this approach gives us.  If it gives us 80% or more of the
+gain compared to doing no checking, I'd say we have a clear winner.
+
+> That's mostly untested, but it might be enough to run some timing tests
+> with. I think if we want to pursue this, we'd want to address the bits I
+> mentioned in the comments, and look at unifying this with the loose
+> cache from cc817ca3ef (which if I had remembered we added, probably
+> would have saved some time writing the above ;) ).
+
+Yup.
