@@ -2,105 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311C51F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 05:45:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8D1F1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 05:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729172AbeJ2Ocr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 10:32:47 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:32906 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729153AbeJ2Ocr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 10:32:47 -0400
-Received: by mail-qt1-f195.google.com with SMTP id i15-v6so7930950qtr.0
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 22:45:38 -0700 (PDT)
+        id S1729188AbeJ2Oon (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 10:44:43 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33709 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729058AbeJ2Oom (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 10:44:42 -0400
+Received: by mail-wr1-f67.google.com with SMTP id u1-v6so7277871wrn.0
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 22:57:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9mXFx4k4uIt4GtfJwBQw2iw5vUwe7xNtaNkQx8BzdEA=;
-        b=DzGcmABULzkkZs29m3gPc97JCDZW/AJ9i5zqvzSNd/BisJb3Bj+Oai6OYueb0Ob5d3
-         AUoV9y3DztXmNhis2WMIZsgCDuC+Kbd2ni9R658NF+7WsAUEr17HZQf4v1gWYKuwbEDJ
-         WmBdUnSGKWpICgpnTOZ4U1Eup5ilDyDLAWW/vs/y8hvd13/tm22d7Ah943zbJqDlKD5m
-         DhpYyIqGXbzc2CXUKF/0tN3XP61Wr9thP602fqFh8lJ1Ks1H006k7HmSZQIToW6HJIGH
-         36rBZ9Er5AYkDePsuFGenhnWIQHb/0hkK3nB3XEwNqFEmZBqJ76gP4c4HSXLGWDG/TuA
-         DASg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=abiDNfL5Hl0OUVaWHVcdefi1ArfqZeJgsanyF1Afan8=;
+        b=sgC39S4uBDihHkgRaTiWvZHQBZmneBrMg0pEnvTZolSn52Y4/a8Is0c3vu2pSNBYs8
+         CDy2zWnCgmcjNzjbeNqF7mm6d+VFbSwrwqW4i6zg1OT97FhzS0NDfZ4UP2rSFezU1DKR
+         iAw1w5Zex8NMxLv9qK0SFLGqSU6DS7Egl8egduZvISo7R5Ha7ydHJjUigkdr5kejbIZa
+         ivGn9UkD8aMBMKtjrnLiqn2JuwO22b5Ps1UFgDPDiGwOdLVGgHCGWK5c1BntD5x8mOO8
+         NUN1Ex7vFjmtoubXBn/mZpwlYC96jXTm9QcQ2lhKRe2DlopbG2M6Nuiwft1ZNdWqLwWe
+         q7ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9mXFx4k4uIt4GtfJwBQw2iw5vUwe7xNtaNkQx8BzdEA=;
-        b=hL9yS5TqXsjw0DhPS7J+4/K7VafMQEn3CO8UWaZ5v/rIzOxIO82JhE4lEMkskk5WV4
-         dPLhQtARQSmdQU0c0MOkqcXl55QSIYaeC52J84nfHupqDUhcCMvpL2PXJYW6D/xtZpWD
-         Mp+HDNEPf92hIkYBZ2d4qs0psObu+fcZkvOXRf7aVNH+IUD4u+j+G9nTC55uq/TzJ1Pk
-         Xj0YrtigK0PPy2rVQaxWzAMHIWoRnGuPqW1wlNR0DCxe740qJ47Rqzd6ELPitJWFwE0D
-         NYaas8zD3rnuWK94dmRw3Njae0x0AMcLgDpKjRqiuLQESFAlL3f+0Ipc9fMcPPdidAQ+
-         NM4Q==
-X-Gm-Message-State: AGRZ1gLwYKmBji5NU95NsHWVcca05OdHbXu9B7gQMH6w4W/YrfXeKloo
-        WBCY/xGha7JNEfSNin3v8aDpOvan5uA3epKAsp8=
-X-Google-Smtp-Source: AJdET5fahjAZjRV8Xpw5Fz9PPvhogtlqmKmzlUyJslWJwAisuN7JplWVksFpBzIuwDuAXP/9u5bbavt8bjSmWTquk1w=
-X-Received: by 2002:a0c:ef03:: with SMTP id t3mr2343189qvr.148.1540791938401;
- Sun, 28 Oct 2018 22:45:38 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=abiDNfL5Hl0OUVaWHVcdefi1ArfqZeJgsanyF1Afan8=;
+        b=BC4Uq5K5VtY2DIHiA2A8H80+58IBhfy9FZmPFbV65exo2gAfxA0dijahE0DvrB7ODO
+         bHZ+pJ5DFK6/YCsqQHv5fLGUudCaIZ64iQHNVdviRSQGyFVSs2oSmsk0od9odYI27FuV
+         QOELMpUDNmZWKMmLATz7WDwA8j55f5Wad4NpKwaiz/GExr1JHk9ZvM4V9yDXMvx09ufU
+         wMdDQPDPZ/ySYb5/mlzsaGZ2mIoI0UxM9do2ihJMhp84dZbFTrpgPBgVG9ECDqtlY/P8
+         VSzBh1c7BXU4F6F1ju0Tq2Q9SG50Y+e36IMmrA1vA9aypVcagOI+IKB3GsxdZGpDvo02
+         PYpg==
+X-Gm-Message-State: AGRZ1gIW6zsnYS9j93/Kx4BEUaf3hw7XRaolbrbEGYSXQtcOPaqtlO2Z
+        2iR88fPuxv0sNqsWfQqremE=
+X-Google-Smtp-Source: AJdET5fvuzIsNttfNwRH2WmnzFgTpVhYLQ5ioQBFd3h0aPMjxTr5FePZm7hNLTECmuoxhj0smrYuCg==
+X-Received: by 2002:adf:9ecf:: with SMTP id b15-v6mr4244725wrf.164.1540792650889;
+        Sun, 28 Oct 2018 22:57:30 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id g8-v6sm23140980wri.58.2018.10.28.22.57.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 28 Oct 2018 22:57:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
+        david.lu97@outlook.com, shirui.wang@hotmail.com,
+        f.francet@hotmail.com
+Subject: Re: [RFC PATCH] remote: add --fetch option to git remote set-url
+References: <1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com>
+Date:   Mon, 29 Oct 2018 14:57:28 +0900
+In-Reply-To: <1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Sat, 27 Oct 2018 04:09:07 -0400")
+Message-ID: <xmqqftwp47nb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
- <20181025055142.38077-1-nbelakovski@gmail.com> <xmqq4ldajz05.fsf@gitster-ct.c.googlers.com>
- <CAC05386cSUhBm4TLD5NUeb5Ut9GT5=h-1MvqDnFpuc+UdZFmwg@mail.gmail.com>
- <CAPig+cT1XYt60PsRGJ0FUa_qCn1vPjdXHygsWzYZYg2Ey=yqkg@mail.gmail.com>
- <CAC05387mfDhJ5_=LyzxZZX09MoY1hsmSB1gseNeLCmMOUx2O4A@mail.gmail.com> <CAPig+cTTsbz1pygq6G281V+fR2VVMuchvy1Q1H-KEvJpjJ9ejg@mail.gmail.com>
-In-Reply-To: <CAPig+cTTsbz1pygq6G281V+fR2VVMuchvy1Q1H-KEvJpjJ9ejg@mail.gmail.com>
-From:   Nickolai Belakovski <nbelakovski@gmail.com>
-Date:   Sun, 28 Oct 2018 22:45:12 -0700
-Message-ID: <CAC05387rFq0yJ3nUVkb0jUyQy=EmZiCnBW9L53A6GS5=U0qUDg@mail.gmail.com>
-Subject: Re: [PATCH] worktree: refactor lock_reason_valid and lock_reason to
- be more sensible
-To:     sunshine@sunshineco.com
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 28, 2018 at 9:01 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+Denton Liu <liu.denton@gmail.com> writes:
+
+> This adds the --fetch option to `git remote set-url` such that when
+> executed we move the remote.*.url to remote.*.pushurl and set
+> remote.*.url to the given url argument.
 >
-> On Sun, Oct 28, 2018 at 9:11 PM Nickolai Belakovski
-> <nbelakovski@gmail.com> wrote:
-> > I would also suggest renaming is_worktree_locked to
-> > worktree_lock_reason, the former makes me think the function is
-> > returning a boolean, whereas the latter more clearly conveys that a
-> > more detailed piece of information is being returned.
->
-> I think the "boolean"-sounding name was intentional since most
-> (current) callers only care about that; so, the following reads very
-> naturally for such callers:
->
->     if (is_worktree_locked(wt))
->         die(_("worktree locked; aborting"));
->
-> That said, I wouldn't necessarily oppose renaming the function, but I
-> also don't think it's particularly important to do so.
 
-Actually it's 3:2 in the current code for callers getting the reason
-out of the function vs callers checking the value of the pointer for
-null/not null. This leads to some rather unnatural looking code in the
-current repo like
+I suspect this is a horrible idea from end-user's point of view.
+"set-url --push" is used to SET pushURL instead of setting URL and
+does not MOVE anything.  Why should the end user expect and remember
+"set-url --fetch" works very differently?  
 
-reason = is_worktree_locked(wt);
+If there is a need for a "--move-URL-to-pushURL-and-set-pushURL"
+short-hand to avoid having to use two commands
 
-I think it would look a lot more natural if it were "reason =
-worktree_lock_reason(wt)". The resulting if-statement wouldn't be too
-bad, IMO
+	git remote set-url --push $(git remote --get-url origin) origin
+	git remote set-url $there origin
 
-if (worktree_lock_reason(wt))
-    die(_("worktree locked; aborting"));
+it should not be called "--fetch", which has a strong connotation of
+being an opposite of existing "--push", but something else.  And
+then we need to ask ourselves if we also need such a short-hand to
+"--move-pushURL-to-URL-and-set-URL" operation.  The answer to the
+last question would help us decide if (1) this combined operation is
+a good idea to begin with and (2) what is the good name for such an
+operation.
 
-To me, I would just go lookup the signature of worktree_lock_reason
-and see that it returns a pointer and I'd be satisfied with that. I
-could also infer that from looking at the code if I'm just skimming
-through. But if I see code like "reason = is_worktree_locked(wt)" I'm
-like hold on, what's going on here?! :P
+Assuming that the short-hand operation is a good idea in the first
+place, without deciding what the externally visible good name for it
+is, let's read on.
+
+> +	/*
+> +	 * If add_mode, we will be appending to remote.*.url so we shouldn't move the urls over.
+> +	 * If pushurls exist, we don't need to move the urls over to pushurl.
+> +	 */
+> +	move_fetch_to_push = fetch_mode && !add_mode && !remote->pushurl_nr;
+
+Should this kind of "the user asked for --fetch, but sometimes it is
+not appropriate to honor that request" be done silently like this?
+
+Earlier you had a check like this:
+
+> +	if (push_mode && fetch_mode)
+> +		die(_("--push --fetch doesn't make sense"));
+
+If a request to "--fetch" is ignored when "--add" is given, for
+example, shouldn't the combination also be diagnosed as "not making
+sense, we'd ignore your wish to use the --fetch option"?  Similarly
+for the case where there already is pushurl defined for the remote.
+
+This is a different tangent on the same line, but it could be that
+the user wants to have two (or more) pushURLs because the user wants
+to push to two remotes at the same time with "git push this-remote",
+so silently ignoring "--force" may not be the right thing in the
+first place.  We may instead need to make the value of URL to an
+extra pushURL entry (if we had one, we now have two).
+
