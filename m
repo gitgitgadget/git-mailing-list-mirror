@@ -2,127 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3FF01F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 08:14:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A0951F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 08:49:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729210AbeJ2RBu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 13:01:50 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35619 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725969AbeJ2RBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 13:01:50 -0400
-Received: by mail-ed1-f65.google.com with SMTP id e2-v6so6457417edn.2
-        for <git@vger.kernel.org>; Mon, 29 Oct 2018 01:14:15 -0700 (PDT)
+        id S1729411AbeJ2RhD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 13:37:03 -0400
+Received: from mail-lf1-f53.google.com ([209.85.167.53]:33684 "EHLO
+        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729343AbeJ2RhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 13:37:02 -0400
+Received: by mail-lf1-f53.google.com with SMTP id i26so1041145lfc.0
+        for <git@vger.kernel.org>; Mon, 29 Oct 2018 01:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4wBmsi9iQNqjBsQdz9oxTwuV7Dgljc+RcbxG48oU4Q0=;
-        b=WdkXUUiFqPVMIvoRhqCO5M17tGHqfMi8V064VDFoCRckVpfsW3DT5koTyFNdqwaHZ+
-         FNUnTE+dv0FIEjgGIMRAJInWsYVcJ0NM7LB37bTqPhjU4irpWQwShZN1S+UReIYA3kbo
-         GjW70gOvkev5V8sxdcaIf99sG8gq8Ca6SZ+8v9HSkgwgXSrufdqR32/yVEMEjkGcWMkA
-         z46PWvbIbHsGYTZf1ul9Z8ojLvqe0/Gyffd/vsMQxP9ziIM/gBv5xxXPB5WZUDly0MYY
-         jYGz9trGy+tvUYJRD9tz+7dxy4A6oN+R5whx/BEvuV+xJBXUtgD5wCQq4KeFj3EGnFqm
-         52GA==
+        h=from:mime-version:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=BqhTb0/KQ0OplMuRbX25gS5liJMvgqXOFCPqrCJzyVg=;
+        b=KEVpBn7veuwoQ2QL9JKG1qisOIZsotuv+jd3Yystg4kCXPDGUSvEyf9duiH9cYwmIC
+         c9LexRFstAeT0N8/8tfTXSSCfI8x43sMKYhhC3QouiCXugYHHbuXAgahwU5KjJPk21QN
+         jwG3mW8S0Ru7UzcZ7Hlm45dIS/HlE9g7iIYsWbn2A8slfk2C6DMKD+XJvTF/vP7kPbNK
+         /K6/ObRNnnUdeOQIMjiYDgO5ZtXv5ZvtWAg/i/6HIml7meO4WPDigXhK0bn+QyAjNipc
+         08i8bDpwDRtvm1Gi9CZtQ7a8hbWaHLKS0ntQJgpaMkk85AgoHHJVjjjB0kPgPABsS0T6
+         hxcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=4wBmsi9iQNqjBsQdz9oxTwuV7Dgljc+RcbxG48oU4Q0=;
-        b=cxdYb/NUomGAC5rxWfYW3X3mFr6OpAmg67lZ0xhHLM3fGfQD0F1fxw+457EQQ8DXVn
-         LyKAJZYp+jWyO6i4jV9Pty5TPElyUsxmcc8xtc7SH8aCgK0sOxa9TQssQepVH2TEe0YT
-         Akn5sDdYaOoH+FYIymdOAs/C9gMq1WhDBrePzLxHv1jA7FP9eWBHXz6+PhBgzpOUVDu/
-         Kkg04cHFoQq2UfUsDXQrRRr8WHR37vl9vAORb0xKX9XYe6HM+Q+DHfsiXdDfwYFA5X5N
-         J66RTDF/6dYAtLPSBpiYDIfaYc3Qx7cLORXQdG7k6gFwEtx77jJwIpqS4mctPFiwWQ+D
-         A6JA==
-X-Gm-Message-State: AGRZ1gJh3WnePafSuYcOhlKHFBVlaPFpe4s3Csz7SMBlLPPIlXJjDo1R
-        n8yfUEfbaES8vONWWfnx/sLObboSlaA=
-X-Google-Smtp-Source: AJdET5f33srk+yJkWNBkbm6GJU40Y34UG8kOKn5m7DFbefQyJwsNBzNeDIGpxQ6zgrl7gV4i1yRRbQ==
-X-Received: by 2002:aa7:d7ce:: with SMTP id e14-v6mr12260647eds.69.1540800854626;
-        Mon, 29 Oct 2018 01:14:14 -0700 (PDT)
-Received: from evledraar ([2a02:a450:3911:1:fd59:dbfe:7c38:41f0])
-        by smtp.gmail.com with ESMTPSA id d18-v6sm2772250edq.53.2018.10.29.01.14.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Oct 2018 01:14:14 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 7/8] push: add DWYM support for "git push refs/remotes/...:<dst>"
-References: <20181026192734.9609-1-avarab@gmail.com> <20181026230741.23321-8-avarab@gmail.com> <xmqqlg6h4964.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqlg6h4964.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 29 Oct 2018 09:13:59 +0100
-Message-ID: <87in1lkw54.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:mime-version:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=BqhTb0/KQ0OplMuRbX25gS5liJMvgqXOFCPqrCJzyVg=;
+        b=ftYUZSlGfrs/63PcG9HmSoXu2zHuzHFOcs4Z56oOqoHeG9GV5PuaF2jqtKKskF+IWG
+         NbrG6MnA4w1Zt3pZjrCxLepcCPB99bMVpVIRpbG7zOVA/V5ULCziIKSbgOKn0iAy4xgk
+         Ci1Y5DYbaBG6II8UzRqjxTY1sqAzh7I5Hum0Sld+CPKZOfCk5zGbYogPK3OCdXHYo254
+         qDSnKJBD+xgzGVz7YQjrnoXXm1BSkWWi+1eQN0oprANXoXEACo2n331w1dL/GLBRJ2x8
+         iDEgvBH5VliGLNjhuBl/BZmv/6Ngtn1868pCODrILWzKxZT5enUv4+GZX62pgSGB4hfb
+         j/8A==
+X-Gm-Message-State: AGRZ1gKT/T9wLJDXzdc7aQQIqhJpscaone4MCub7hn0PIWH9ObYRl8hw
+        hLRWOXchUyIEE4KEvQnXRt6QUi9TfOMKJo/reEFUYA==
+X-Google-Smtp-Source: AJdET5ej06OoS2XvqLWiHRzVxWvMbgbnoIhyvjA5HCNex833dURDFRYUCXjdVt/uPsrk4otQ6RHz44pwuAw+woL0j1A=
+X-Received: by 2002:a19:5402:: with SMTP id i2mr7353457lfb.128.1540802960763;
+ Mon, 29 Oct 2018 01:49:20 -0700 (PDT)
+Received: from 1058052472880 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 29 Oct 2018 09:49:20 +0100
+From:   Gray King <grayking.w@gmail.com>
+X-Mailer: Airmail (528)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Date:   Mon, 29 Oct 2018 09:49:20 +0100
+Message-ID: <CAP1N1j7P83XVPx6dDGMSeRbwjdixAdBNZab=TP94=9LSfmsrRQ@mail.gmail.com>
+Subject: Lost changes after merge
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
-On Mon, Oct 29 2018, Junio C Hamano wrote:
+=C2=A0 I have a very strange issue described below:
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Add DWYM support for pushing a ref in refs/remotes/* when the <dst>
->
-> I think most people call it do-what-*I*-mean, not do-what-you-mean.
+* Here is the tree before I merge via `git log --format=3D"%h %p %d" -n
+20 --all --graph`:
 
-FWIW I picked this up from the perl list where both are used depending
-on context. I.e. DW[IY]M depending on if the sentence is one where you'd
-describe things from a first or second-person perspective "I implemented
-this to DWIM, and it'll DWYM if you invoke it as...". Also
-"dwimerry"[1].
+https://upaste.de/9Pe
 
->> ref is unqualified. Now instead of erroring out we support e.g.:
->>
->>     $ ./git-push avar refs/remotes/origin/master:upstream-master -n
->>     To github.com:avar/git.git
->>      * [new branch]            origin/master -> upstream-master
->>
->> Before this we wouldn't know what do do with
->> refs/remotes/origin/master, now we'll look it up and discover that
->> it's a commit (or tag) and add a refs/{heads,tags}/ prefix to <dst> as
->> appropriate.
->
-> I am not sure if this is a good change, as I already hinted earlier.
-> If I were doing "git push" to any of my publishing places, I would
-> be irritated if "refs/remotes/ko/master:something" created a local
-> "something" branch at the desitnation, instead of erroring out.
->
-> On the other hand, I do not think I mind all that much if a src that
-> is a tag object to automatically go to refs/tags/ (having a tag
-> object in refs/remotes/** is rare enough to matter in the first
-> place).
+* Here is the output of `git log --format=3D"%h %p %d" -2 path/to/file`:
 
-Yeah maybe this is going too far. I don't think so, but happy to me
-challenged on that point :)
+a008c4d580 c61f96eb5d
+a274b6e7ca 67c1000ca3
 
-I don't think so because the only reason I've ever needed this is
-because I deleted some branch accidentally and am using a push from
-"remotes/*" to bring it back. I.e. I'll always want branch-for-branch,
-not to push that as a tag.
+* Here is the merge commands:
 
-Of course it isn't actually a "branch", but just a commit object
-(depending on the refspec configuration), so we can't quite make that
-hard assumption.
+git merge f087081868
+# fix conflicts
 
-But I figured screwing with how refs/remotes/* works by manually adding
-new refspecs is such an advanced feature that the people doing it are
-probably all here on-list, and would be the sort of users advanced
-enough to either know the semantics or try this with -n.
+* Here is the tree after I merged via `git log --format=3D"%h %p %d" -n
+20 --all --graph`:
 
-Whereas the vast majority of users won't ever screw with it, and if they
-ever push from remotes/* to another remote almost definitely want a new
-branch under the new name.
+https://upaste.de/8Bx
 
-1. https://www.urbandictionary.com/define.php?term=DWYM
+
+* Here is the output of `git log --format=3D"%h %p %d" -2 path/to/file`:
+
+a274b6e7ca 67c1000ca3
+67c1000ca3 00bd5c8c89
