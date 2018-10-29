@@ -2,124 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8D1F1F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 05:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A6A31F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 06:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729188AbeJ2Oon (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 10:44:43 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33709 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729058AbeJ2Oom (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 10:44:42 -0400
-Received: by mail-wr1-f67.google.com with SMTP id u1-v6so7277871wrn.0
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 22:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=abiDNfL5Hl0OUVaWHVcdefi1ArfqZeJgsanyF1Afan8=;
-        b=sgC39S4uBDihHkgRaTiWvZHQBZmneBrMg0pEnvTZolSn52Y4/a8Is0c3vu2pSNBYs8
-         CDy2zWnCgmcjNzjbeNqF7mm6d+VFbSwrwqW4i6zg1OT97FhzS0NDfZ4UP2rSFezU1DKR
-         iAw1w5Zex8NMxLv9qK0SFLGqSU6DS7Egl8egduZvISo7R5Ha7ydHJjUigkdr5kejbIZa
-         ivGn9UkD8aMBMKtjrnLiqn2JuwO22b5Ps1UFgDPDiGwOdLVGgHCGWK5c1BntD5x8mOO8
-         NUN1Ex7vFjmtoubXBn/mZpwlYC96jXTm9QcQ2lhKRe2DlopbG2M6Nuiwft1ZNdWqLwWe
-         q7ew==
+        id S1729199AbeJ2PJU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 11:09:20 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:35300 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729058AbeJ2PJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 11:09:20 -0400
+Received: by mail-qk1-f194.google.com with SMTP id v68-v6so4248112qka.2
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 23:22:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=abiDNfL5Hl0OUVaWHVcdefi1ArfqZeJgsanyF1Afan8=;
-        b=BC4Uq5K5VtY2DIHiA2A8H80+58IBhfy9FZmPFbV65exo2gAfxA0dijahE0DvrB7ODO
-         bHZ+pJ5DFK6/YCsqQHv5fLGUudCaIZ64iQHNVdviRSQGyFVSs2oSmsk0od9odYI27FuV
-         QOELMpUDNmZWKMmLATz7WDwA8j55f5Wad4NpKwaiz/GExr1JHk9ZvM4V9yDXMvx09ufU
-         wMdDQPDPZ/ySYb5/mlzsaGZ2mIoI0UxM9do2ihJMhp84dZbFTrpgPBgVG9ECDqtlY/P8
-         VSzBh1c7BXU4F6F1ju0Tq2Q9SG50Y+e36IMmrA1vA9aypVcagOI+IKB3GsxdZGpDvo02
-         PYpg==
-X-Gm-Message-State: AGRZ1gIW6zsnYS9j93/Kx4BEUaf3hw7XRaolbrbEGYSXQtcOPaqtlO2Z
-        2iR88fPuxv0sNqsWfQqremE=
-X-Google-Smtp-Source: AJdET5fvuzIsNttfNwRH2WmnzFgTpVhYLQ5ioQBFd3h0aPMjxTr5FePZm7hNLTECmuoxhj0smrYuCg==
-X-Received: by 2002:adf:9ecf:: with SMTP id b15-v6mr4244725wrf.164.1540792650889;
-        Sun, 28 Oct 2018 22:57:30 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g8-v6sm23140980wri.58.2018.10.28.22.57.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 28 Oct 2018 22:57:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com,
-        f.francet@hotmail.com
-Subject: Re: [RFC PATCH] remote: add --fetch option to git remote set-url
-References: <1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com>
-Date:   Mon, 29 Oct 2018 14:57:28 +0900
-In-Reply-To: <1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Sat, 27 Oct 2018 04:09:07 -0400")
-Message-ID: <xmqqftwp47nb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kY0I8rrEMLlUwMB573bECYM3jcvSGiFeUvr2NInNmtg=;
+        b=BuOQxRG1Wg1P0wUir1YrjWrkBgmAXtUh7vXYoHFhKGtMUIVxJSq3f2dkk8ZoG/rB0h
+         lIdyMfv4p5LwHUqIb5vKx9tACCHJ4kY0Y/pzz3mY8u+G4p5hs4zJpXzSM9z94q36aItU
+         yBoT3RVrXRaO++p8KjAteCWKgVBRq+i70R4dvKKwFczJO5xP7VyzY35+9nPGeadLGbr6
+         kaOjQdpWR0wEJM8uGOyHOqX+F1tEj5OtEg80cTVLQPos75unzHNav3F0ZAxkZ62FGotX
+         wr5/4qsg+Dc5+lRXijKQ1sYqb8QylW49CvQ05mvGIZKV8hlFNg1rd085mK/ocUG1x53F
+         aNgA==
+X-Gm-Message-State: AGRZ1gKD1gMKtF0kXguB9XFYLUJ5X+tdREGHXMOXiWZejv4X9VXn48Y5
+        HILT/loShsa7XQOPCiBLUl7gdmsGdB2JdF3FPzw=
+X-Google-Smtp-Source: AJdET5d6g4IAmePdmz0Ms0Xn51OyULB6EZMGF4WmVjjyilKJpL2K9IdVdmKMToP3I39NOjMOvy3ZJ8FWEEuLBCBK954=
+X-Received: by 2002:a37:8fc7:: with SMTP id r190-v6mr11156803qkd.36.1540794124688;
+ Sun, 28 Oct 2018 23:22:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
+ <20181025055142.38077-1-nbelakovski@gmail.com> <xmqq4ldajz05.fsf@gitster-ct.c.googlers.com>
+ <CAC05386cSUhBm4TLD5NUeb5Ut9GT5=h-1MvqDnFpuc+UdZFmwg@mail.gmail.com>
+ <CAPig+cT1XYt60PsRGJ0FUa_qCn1vPjdXHygsWzYZYg2Ey=yqkg@mail.gmail.com>
+ <CAC05387mfDhJ5_=LyzxZZX09MoY1hsmSB1gseNeLCmMOUx2O4A@mail.gmail.com>
+ <CAPig+cTTsbz1pygq6G281V+fR2VVMuchvy1Q1H-KEvJpjJ9ejg@mail.gmail.com> <CAC05387rFq0yJ3nUVkb0jUyQy=EmZiCnBW9L53A6GS5=U0qUDg@mail.gmail.com>
+In-Reply-To: <CAC05387rFq0yJ3nUVkb0jUyQy=EmZiCnBW9L53A6GS5=U0qUDg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 29 Oct 2018 02:21:52 -0400
+Message-ID: <CAPig+cS+djfZjoEbBNrVGpd4g6ZhsioSqK=ZyKprTwA0Hy4iiw@mail.gmail.com>
+Subject: Re: [PATCH] worktree: refactor lock_reason_valid and lock_reason to
+ be more sensible
+To:     Nickolai Belakovski <nbelakovski@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
-
-> This adds the --fetch option to `git remote set-url` such that when
-> executed we move the remote.*.url to remote.*.pushurl and set
-> remote.*.url to the given url argument.
+On Mon, Oct 29, 2018 at 1:45 AM Nickolai Belakovski
+<nbelakovski@gmail.com> wrote:
+> On Sun, Oct 28, 2018 at 9:01 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > That said, I wouldn't necessarily oppose renaming the function, but I
+> > also don't think it's particularly important to do so.
 >
+> To me, I would just go lookup the signature of worktree_lock_reason
+> and see that it returns a pointer and I'd be satisfied with that. I
+> could also infer that from looking at the code if I'm just skimming
+> through. But if I see code like "reason = is_worktree_locked(wt)" I'm
+> like hold on, what's going on here?! :P
 
-I suspect this is a horrible idea from end-user's point of view.
-"set-url --push" is used to SET pushURL instead of setting URL and
-does not MOVE anything.  Why should the end user expect and remember
-"set-url --fetch" works very differently?  
-
-If there is a need for a "--move-URL-to-pushURL-and-set-pushURL"
-short-hand to avoid having to use two commands
-
-	git remote set-url --push $(git remote --get-url origin) origin
-	git remote set-url $there origin
-
-it should not be called "--fetch", which has a strong connotation of
-being an opposite of existing "--push", but something else.  And
-then we need to ask ourselves if we also need such a short-hand to
-"--move-pushURL-to-URL-and-set-URL" operation.  The answer to the
-last question would help us decide if (1) this combined operation is
-a good idea to begin with and (2) what is the good name for such an
-operation.
-
-Assuming that the short-hand operation is a good idea in the first
-place, without deciding what the externally visible good name for it
-is, let's read on.
-
-> +	/*
-> +	 * If add_mode, we will be appending to remote.*.url so we shouldn't move the urls over.
-> +	 * If pushurls exist, we don't need to move the urls over to pushurl.
-> +	 */
-> +	move_fetch_to_push = fetch_mode && !add_mode && !remote->pushurl_nr;
-
-Should this kind of "the user asked for --fetch, but sometimes it is
-not appropriate to honor that request" be done silently like this?
-
-Earlier you had a check like this:
-
-> +	if (push_mode && fetch_mode)
-> +		die(_("--push --fetch doesn't make sense"));
-
-If a request to "--fetch" is ignored when "--add" is given, for
-example, shouldn't the combination also be diagnosed as "not making
-sense, we'd ignore your wish to use the --fetch option"?  Similarly
-for the case where there already is pushurl defined for the remote.
-
-This is a different tangent on the same line, but it could be that
-the user wants to have two (or more) pushURLs because the user wants
-to push to two remotes at the same time with "git push this-remote",
-so silently ignoring "--force" may not be the right thing in the
-first place.  We may instead need to make the value of URL to an
-extra pushURL entry (if we had one, we now have two).
-
+I don't feel strongly about it, and, as indicated, wouldn't
+necessarily be opposed to it. If you do want to make that change,
+perhaps send it as the second patch of a 2-patch series in which patch
+1 just updates the API documentation. That way, if anyone does oppose
+the rename in patch 2, then that patch can be dropped without having
+to re-send.
