@@ -7,71 +7,87 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0491F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 16:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6104F1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 16:15:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727608AbeJ3AvY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 20:51:24 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:35944 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727085AbeJ3AvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 20:51:24 -0400
-Received: by mail-io1-f65.google.com with SMTP id o19-v6so5294615iod.3
-        for <git@vger.kernel.org>; Mon, 29 Oct 2018 09:02:11 -0700 (PDT)
+        id S1727715AbeJ3BEX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 21:04:23 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:38508 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727597AbeJ3BEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 21:04:23 -0400
+Received: by mail-it1-f193.google.com with SMTP id i76-v6so10074746ita.3
+        for <git@vger.kernel.org>; Mon, 29 Oct 2018 09:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WMtyYrs1e8/qfxknMFIZLtClD6A7WGT+NcMJDtiH+Zc=;
-        b=WQxNhGgnPq4PCmagup+K8qy/qrpDtO0S9xjj3C03AfN1sfWJ7uvfTgxGNAGqjr+Ikr
-         BYHdbOAhYfhrk5aYe5N/ej40n/usc0FdlYtS11HGQsNt5PmUtd7ztlukfCGzo9FQtwCU
-         e72Yr3Oh/PTIb2bI0X2tbkFck4Uqanma/3PGRcdptKttOeTCktr1bfiEZDlUbNKq9Ycz
-         yzfM5VXInoJbPlTxcgeet1o8TUm1s/0p+5SLJrciF/7IkofPe1P6ZlOzQG69Vrcvh7ZA
-         GZ4bjTGlzOmZrVz9oDDmakBAce5C2hvBJF5ZfjYKNjZGxwu17m4QNRhpPxBniGahb3qK
-         HZBg==
+         :cc:content-transfer-encoding;
+        bh=Ks/XkH8ijcuQnT4cXgIUF5Y4U5gmgcbwJkyPckcC8bI=;
+        b=O1J9nvgMEP9Hkzz36rVVmNGV2dczj1X1mlZb6E+vJieIeSMdipNoZCVowRdW2tc7cX
+         GzhX/kmZAuHofc6oPu4M0LZkocl5wQmbFdnxt+/NwE1UaZNQaIiApvOddylN+YehJNb2
+         1uk3+YPYKVl/xPtzeyC9KiW/s2IWtG7MmQBRrrtKNND+TfOYBA+v3eQdlwz1Eyn0ah3a
+         4XbkCG7MAGV0MUMshcsgzNlXnLK1V5QJKhTaCDNo16Dr5Z9cu5utO0R8yJCbGTVQgPHW
+         cxOEPGluxLsHy0tULIA6Vn3rODWwnTOsgMUXcMF8xwRVZ5kqpOUZdNzKyCU+J2A8bYkk
+         +uSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WMtyYrs1e8/qfxknMFIZLtClD6A7WGT+NcMJDtiH+Zc=;
-        b=CwrXdS/OddscRnl/RJTzsCga0+HLyRjKLTXm4k9fxZhnShKlL7YFP5hazUr2CIkVTl
-         pF4yN316oLZA592HOPygStakxBcL6qOoDOTIe0fadvWU+cWLUKXL1pfCFq5Cmj0QxS1b
-         m0c2O+vjWWJnW5p6Sauso6L0xu1k5B7OthbqiuK8C2EpQGk+LDQWgI5Fny0eSNJJwbZi
-         gOERNFl6zqWqnoNV0S1h0aF9LJdz9DTGb9zNOYDjSSANEE/fGuUR+kzNOEpBCYvHlTWt
-         +AiPU4Xhj8u2F/wVUNz3kF9HXIVpjbq5aD15+oc7aa3tm+/tFYuWA71h7YJzRDN7ppL9
-         DYVQ==
-X-Gm-Message-State: AGRZ1gInbX21+Q1MJym6o7LGh7zzsCYlI9y3Xz0Td1//ZzCG14JgDyOn
-        n2oI9pWjBug96Jfev/PLn4/Lur9unA2mlsU2aQA=
-X-Google-Smtp-Source: AJdET5cp0ztibh0kLF9Irue5JtblGURSwds8JpOhBGxGlX8BNcgi65gWFkaSeQhqWcdZis/XY9SLpmN5kLDPcwWZoUg=
-X-Received: by 2002:a6b:9383:: with SMTP id v125-v6mr7444203iod.282.1540828930620;
- Mon, 29 Oct 2018 09:02:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ks/XkH8ijcuQnT4cXgIUF5Y4U5gmgcbwJkyPckcC8bI=;
+        b=LEKi/WKz3oVoeecTRGGf6h4L7AgsihadCFO08hM/AQkS1SPg6EgmTaInFSOZk5dmLW
+         NjsuJi4p9qDSGTpC8m3I3cOdkFBIKgEd8BPkpaWR/CHq1CkbiPXJO/WVFZuDvk6OK70w
+         1aSpYKXTfOwKZXGDVklO40EUarborBokN3OKwC+C3EuKzFNjIi6GMNVaHGvZC5Nq4bkw
+         n6OyYdluu7OZbjneykNS1q0S9suZD5B3bQBvwfpl/04jUZesIiqExUbb/dHFX7dYKZ7I
+         JJPNRE1I1d4TfC2FqB7O8UWA+UTQHi7h7vG8a+BMBD4FbTlbzWnwLjWlXnZDl8Az5zHj
+         tU5A==
+X-Gm-Message-State: AGRZ1gKj7Wqa2ezKi9yeIuK/LYU0ddsQMgClRIP5rivUtn0iQ0f1YKKw
+        zh/IpBYVBZIJrwFoKvM/fFeek7l/Z2wpu/2cqfc=
+X-Google-Smtp-Source: AJdET5eWnoK8tfLEuPvrS6KoXwF/rTIVYZe0GELp/o2SN8ortoz17gucfMX2U/cK/KhZyJbs9EONsB5MINCArp1X9BI=
+X-Received: by 2002:a24:b64b:: with SMTP id d11-v6mr1681506itj.10.1540829706451;
+ Mon, 29 Oct 2018 09:15:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181027071003.1347-1-pclouds@gmail.com> <20181027071003.1347-7-pclouds@gmail.com>
- <20181027074443.GE26685@sigill.intra.peff.net> <xmqqo9bd8pko.fsf@gitster-ct.c.googlers.com>
- <20181029142536.GE17668@sigill.intra.peff.net>
-In-Reply-To: <20181029142536.GE17668@sigill.intra.peff.net>
+References: <20181028065157.26727-1-pclouds@gmail.com> <20181028065157.26727-13-pclouds@gmail.com>
+ <20181029105304.GP30222@szeder.dev> <xmqqsh0o3kuw.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsh0o3kuw.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 29 Oct 2018 17:01:41 +0100
-Message-ID: <CACsJy8Bp_9qmGeNZuywtda1_TdQTZM1essUjBD9Q8e31175V=g@mail.gmail.com>
-Subject: Re: [PATCH 06/10] grep: remove #ifdef NO_PTHREADS
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <peartben@gmail.com>
+Date:   Mon, 29 Oct 2018 17:14:37 +0100
+Message-ID: <CACsJy8CE2mi69kXcs2sFYm34txfDb24Qqm4bgv_w3WAcYEEFLg@mail.gmail.com>
+Subject: Re: [PATCH 12/12] fsck: mark strings for translation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 3:25 PM Jeff King <peff@peff.net> wrote:
-> But if the problem is simply that we are not quite there yet in the grep
-> code, I am OK with taking this as the first pass, and knowing that there
-> is more cleanup to be done later (though that sort of thing is IMHO very
-> useful in a commit message).
+On Mon, Oct 29, 2018 at 3:09 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+> >> -    fprintf(stderr, "%s in %s %s: %s\n",
+> >> -            msg_type, printable_type(obj), describe_object(obj), err)=
+;
+> >> +    fprintf_ln(stderr, _("%s in %s %s: %s"),
+> >
+> > Are the (f)printf() -> (f)printf_ln() changes all over
+> > 'builtin/fsck.c' really necessary to mark strings for translation?
+>
+> It is beyond absolute minimum but I saw it argued here that this
+> makes it easier to manage the .po and .pot files if your message
+> strings do not end with LF, a you are much less likely to _add_
+> unneeded LF to the translated string than _lose_ LF at the end of
+> translated string.
 
-Since the problem pops up now, I'm ok with updating/cleaning up all
-this in this series, unless there's benefits in keeping this series
-simple and merging it early (probably not?)
--- 
+Especially when \n plays an important role and we don't trust
+translators to keep it [1] [2]. It's probably a too defensive stance
+and often does not apply, so nowadays I do it just to keep a
+consistent pattern in the code.
+
+[1] https://public-inbox.org/git/20120308220131.GA10122@burratino/#t
+[2] but then translators can crash programs anyway (e.g. changing %d
+to %s...) we just trust gettext tools to catch problems early.
+--=20
 Duy
