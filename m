@@ -6,95 +6,98 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 013C91F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 00:48:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82BDE1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 01:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725967AbeJ2JeZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 05:34:25 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41485 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725879AbeJ2JeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 05:34:25 -0400
-Received: by mail-wr1-f68.google.com with SMTP id x12-v6so6813048wrw.8
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 17:48:06 -0700 (PDT)
+        id S1725930AbeJ2JrR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 05:47:17 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52402 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725888AbeJ2JrR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 05:47:17 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 189-v6so6534472wmw.2
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 18:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=OQG50LGTCQwP8whhr3M7KLnJCDNm1nl4yoEes0U3tjc=;
-        b=Cm26zk+/LtziUxZ5Nu/fGKCCOvK+NqZbwSgXb0yfftV6PtK1PmxeCqU0aZ6FAeCzlY
-         75IyJK01YN6rZjwKtgbcPmajMty9zMPQ9EuSCmXPSfIgmFIuA+lnWHyHfaahYSHM1wQG
-         2iLborKMJGg7IaHdRV/sTgPjAvIJsOea4CMYjMIgEN3rjgBX6JtWQfTvBhbprQRLvKrf
-         18NmjCScNnh/R+RG2bLxbL0Y5apNRow6uvt404gSx8WbjkjJCmW5c6917q2MhLeKOJOp
-         oeV6ttlVUC1tlJHwYPpM4auP4tmo7h9Gc4hfkfQqUICrQ9zXykNQAYNMqT2rP7z0J1aT
-         k5xQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=QRFakYEzkDUuaJUct/eDYPaAGSmis2acajS9xib/tAc=;
+        b=W2sYf4/MNilMwwZ0OeVi8hI9BjEcYd+VncxAp+tYZiEnhjt0iu1UMtIhkhXjaK2lH3
+         gf/04I+3KCGkpx1+/+2e88eVCAlxUX9nVJ+JKBtpdsyasvPzq7KO4pK84dddNCRnfxwn
+         x2wlyfMqpDQXRzA7b1Qknyjhiwrsmg8u36YMu2Q/GQlNBp7gzSSEswIaR8860QGh+Ji3
+         reOrcmcX9NOslUwpWA7wNGHZo84w6TAbaMyszs0KxYhHYFXo3hy3BXdXr8Jgqdlc01uN
+         lF045vc//hvhawl2Xk2WFiDrRWmMHpuCmEATmpNCGXvxkcUuJHNh/aUO1lyLi0BZK0Zs
+         mW7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=OQG50LGTCQwP8whhr3M7KLnJCDNm1nl4yoEes0U3tjc=;
-        b=bwnI08hEVL81cbMal1g3Km5H6NeNo7hQrcb7Dcu5iN9nF4+zdWbrfX5ku3DicpJ2sn
-         ThMDV1HWLhWz4enDgy4XKjr6nFwU5zoVgyp74gR4WhpAQ4JN/9mOXntE+MjMWZi8Y19E
-         7rs9l3hIQb1mObf8MDwqrsIxduBhKg1OHn1qZl0auJG2nS749VEXThqqfUyJfBUDUtNZ
-         Ne9TSUt43MyW4Tn2m1wDAYumPmwCKmkDp/hwN9jMVBpkvCwk+Eo+DZaow69nlnVblszg
-         1tSs18KgREoZE81/LxyWs7caWP4pqZlGLgZpNVWqonwTx9JahPrAMAaGUX4LHCT4BiNJ
-         vWIQ==
-X-Gm-Message-State: AGRZ1gKnBZHfT0bnfM7byZDJmq6XteGb9tY/S2/JUDH/YcFyI+WEw5Z2
-        qMRnKeCN2rzrUCgwLBDq7uo=
-X-Google-Smtp-Source: AJdET5dmdtQrGZadZosuqZCjfXssaYBkhyTbAXDijf/gKmXRVwJKp94qKP1ze6ujLZhm/Po3TjbRtQ==
-X-Received: by 2002:adf:80a3:: with SMTP id 32-v6mr13428066wrl.231.1540774085229;
-        Sun, 28 Oct 2018 17:48:05 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k18-v6sm10325119wrp.65.2018.10.28.17.48.03
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=QRFakYEzkDUuaJUct/eDYPaAGSmis2acajS9xib/tAc=;
+        b=TP/uEM9QwfISVxtCmQ5TDkouN63Ki5VoES55W1PXlkDoNmbxM4HpP8/Lwcv9M19SjZ
+         Zl8zijrxbEQu5U8BUgZ5yrZiGPvZrWd/fpwR4zvqbzsjpzksnWORvIsiTFNt1/3rRj3+
+         augVFrkpU8rAmvL1xFmy8q83Z9zb/D2wA7nz6TJ9nKlLtD41bFtdugrWeE/cYD4PqjL2
+         r4tSLwybI483gphUexRqWh00hLmkBb/8l36xDGIMx1EVHjnogzYtn6Fq3wjF6IUT6h9C
+         7IvU/RI+3GQWbVzVDeOtEs4tke4p6gy+jBAuAnD52uWPSoJxLBIA8zo+45NKCVXZ+92X
+         +7vw==
+X-Gm-Message-State: AGRZ1gIBfdz8GECSP8quKXRz6xfGRzH/33vmPSm0ePI0YcdHGl3O/FpR
+        ti1tH0IbLeCy9tB9AJcz3n8=
+X-Google-Smtp-Source: AJdET5cIf9jrLoYw8we1A4dBbjhSZ3p0Y2Jk5I0TdB+yoxbnAJFi8prT5iHHtfJq7T7b5EOK5KV4Jg==
+X-Received: by 2002:a1c:bc82:: with SMTP id m124-v6mr12682910wmf.47.1540774855886;
+        Sun, 28 Oct 2018 18:00:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a1-v6sm15181800wrt.79.2018.10.28.18.00.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 28 Oct 2018 17:48:03 -0700 (PDT)
+        Sun, 28 Oct 2018 18:00:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Jansen\, Geert" <gerardu@amazon.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
-        <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
-        <87o9bgl9yl.fsf@evledraar.gmail.com>
-        <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
-        <20181027093300.GA23974@sigill.intra.peff.net>
-Date:   Mon, 29 Oct 2018 09:48:02 +0900
-In-Reply-To: <20181027093300.GA23974@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 27 Oct 2018 05:33:01 -0400")
-Message-ID: <xmqqbm7da88t.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] push: add an advice on unqualified <dst> push
+References: <20181010104145.25610-1-avarab@gmail.com>
+        <20181010104145.25610-3-avarab@gmail.com>
+        <20181010205505.GB12949@sigill.intra.peff.net>
+        <87r2gxebsi.fsf@evledraar.gmail.com>
+        <xmqq5zy8f6gr.fsf@gitster-ct.c.googlers.com>
+        <87r2gclnjc.fsf@evledraar.gmail.com>
+Date:   Mon, 29 Oct 2018 10:00:54 +0900
+In-Reply-To: <87r2gclnjc.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 26 Oct 2018 17:45:27 +0200")
+Message-ID: <xmqq5zxla7nd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Of course any cache raises questions of cache invalidation, but I think
-> we've already dealt with that for this case. When we use
-> OBJECT_INFO_QUICK, that is a sign that we want to make this kind of
-> accuracy/speed tradeoff (which does a similar caching thing with
-> packfiles).
->
-> So putting that all together, could we have something like:
+> I was going to submit an update to this, as an additional improvement
+> can anyone think of a reason not to always infer that we'd like a new
+> branch if the LHS of the refspec starts with refs/remotes/* ?
 
-I think this conceptually is a vast improvement relative to
-".cloning" optimization.  Obviously this does not have the huge
-downside of the other approach that turns the collision detection
-completely off.
+Depends on what purpose the remote you are pushing into serves.  My
+instinct tells me that it may be more likely to be emulating the
+case where the remote, which is hosted on a box on which for some
+reason it is cumbersome for you to get an interactive shell prompt,
+did the same fetch as your local repository and stored the same
+value in its remote-tracking branch than creating a local branch.  I
+do not say it is entirely unlikely that the push wants to create a
+local branch there, though.  It can be a way to "reprint" what
+somebody else published as their local branch, which you copied to
+your remote-tracking branches, to the destination of your push.  I
+just felt that it is less likely.
 
-A real question is how much performance gain, relative to ".cloning"
-thing, this approach gives us.  If it gives us 80% or more of the
-gain compared to doing no checking, I'd say we have a clear winner.
+To put it another way, I would think both of these two have at most
+the same probability that the push wants to go to a local branch:
 
-> That's mostly untested, but it might be enough to run some timing tests
-> with. I think if we want to pursue this, we'd want to address the bits I
-> mentioned in the comments, and look at unifying this with the loose
-> cache from cc817ca3ef (which if I had remembered we added, probably
-> would have saved some time writing the above ;) ).
+	git push refs/remotes/foo:foo
+	git push <any random sha1 expression>:foo
 
-Yup.
+and I would further say that the former is less likely than the
+latter that it wants to create a local branch, because it is more
+plausible that it wants to create a similar remote-tracking branch
+there.
