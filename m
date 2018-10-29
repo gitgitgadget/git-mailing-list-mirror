@@ -2,84 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACD221F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 17:26:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 022B11F454
+	for <e@80x24.org>; Mon, 29 Oct 2018 17:38:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727581AbeJ3CQC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 22:16:02 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:35587 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726300AbeJ3CQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 22:16:02 -0400
-Received: by mail-io1-f66.google.com with SMTP id 79-v6so5487370iou.2
-        for <git@vger.kernel.org>; Mon, 29 Oct 2018 10:26:29 -0700 (PDT)
+        id S1726743AbeJ3C14 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 22:27:56 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44315 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbeJ3C1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 22:27:55 -0400
+Received: by mail-wr1-f68.google.com with SMTP id d17-v6so9349619wre.11
+        for <git@vger.kernel.org>; Mon, 29 Oct 2018 10:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MZJw8E6UomJ7D0PEbSOCEKhEMjSzWVdPBCzbxxqqrjw=;
-        b=jk1+f3pWbgDTSpBjfEQCvqRBQhFAU4hqnmYFeBkF0xKLOHt2eu1WSdPo5ol0KQnNe4
-         PusxTSjQtvtnQaCUSjev6gh1wOlaJjYiX4Fh1/o810ArIqRI7HIVIfHx24x91bSMR53d
-         gq0DpubgWL1Lu1aIWc/cKKD5Rp976qhWW5/rJitwH59dxNM8UtPo3Quago34Gi2AZotf
-         WN1V83+VBnJPRr/FYOCAPy5zKQdGx5EWOTsXBEuoOBrb1gGH2LpuPyhaWgEcyQOrOeq3
-         ZbLYUXxDg7MfN/rC9qNRkb5S5OwxqISvGnKR2aqJaUfXWMA2MxfXS18BT3ODXpXKGui3
-         6G6g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3c++BQy6QGTvJm8DWw84KXrwpesBwMwiOwgmWB9z3uE=;
+        b=fwSLoXpvE0MjxojZOAn9D6O2h/PfbVbNYu84HFgn6eTa50+8G9D+GcXLB6yAwADylV
+         57HAqZdHrMGjjHbDA2PXC0yXOwg2b4ey+ozCWihDYpKkl3BALu2DqQLvcE0mAfd7iIgn
+         0u+1ZTmNSRvD9uTYW6Ar5FUmPKfyEFpwYhwRcfWV50jqw3gBh4LYMjCyzdk5qLgi1o4o
+         dpWfQi0KVyW0lf4dcHs9vNNNxO+n1UtNZvs8BEufoQpLjaAeOZDMHJ5lItoFqHuNWVPJ
+         svMg+0OnwlJYxSy+H5jthZhlJ0rIsfzSF+kV/SXGUYF1CVI6BsKEHU1DNsfQudOsQgwb
+         o6aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MZJw8E6UomJ7D0PEbSOCEKhEMjSzWVdPBCzbxxqqrjw=;
-        b=iwOT96P7oHZBA6W5mE7zOF+VDEVjvVXA5gu+tMMPD+fxqBHq1JNndwYnjKcIJxEIfW
-         GEOlKCRJcJtdXFzQxv6pDUsRg6uVXhbQvir+4tMcqXK60eyn+fvst6uAfoSZagOlPi9d
-         o/1AMfCrEpT0whXKvL4zGJ1qXb+9iIpcxfx1ArAUgleyB5r9lLkagoVoOEAdReEF5xjb
-         72OCBW2YOY/u1x45aAjEL11QhZ1s/cF/6xRb0K+SVc7xbwnF+dHb98RUvcX+qC/kpdNo
-         gh8hLZ7u7ZdIH2ayAYIBWYy9YJ+brKIadc02efY/g7cofFr3uqcEAPjYZH9nqbQxjlzu
-         vAOw==
-X-Gm-Message-State: AGRZ1gI/kw0e1MQC8DH6dESL2U72J8ww9bXT3xCabvdqfHGKq4yH11e9
-        6U5ETPdWqaTXmxCT0fkVOLSHRycHFmASNb3cA8E=
-X-Google-Smtp-Source: AJdET5dtrFDWxsHFCyL8qqxZnFbPo0cIkBv2lr073aa9I76VFpK88syxTh7DZYiI5cKkK0VcwQWaPeMSOwFBk7TMhKY=
-X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr9197751ioc.118.1540833989468;
- Mon, 29 Oct 2018 10:26:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=3c++BQy6QGTvJm8DWw84KXrwpesBwMwiOwgmWB9z3uE=;
+        b=SpyX1q0ul0eNo7vd7GwI7ACdydPMgQ3DCHX/xriOP537etyMFwN6Jy0S/SU+vz1UMt
+         pskQpJlZTZ7WcqcAHYplhPDKCdjsyPfFx36QSOLlGmi7kPsSpgHouyOTCvhtsvHai5oC
+         jriotYOWl8/gMLQhFkxc8mWJA9amn7JD2Yy22PRalLsCIO2QEvkVU5Nhm6Ptif4y07hF
+         Z2HE29SrzGnSxQnWoOVff9kc8h4Wt9bUVqbwNJZVhQoR0jWuJd8t/NVBuRsQrxUUnW3W
+         enrcF9KKIBnFLZ8+vvBqi/MyYxE6+ZJcxxTp/F9IqiJxR/6aeEgAvKXsvwJoQr5LobBg
+         wgKw==
+X-Gm-Message-State: AGRZ1gLd/rF1PwAA0+elcTkvIek+a9cYezsT2obqssKj/JgVNDXHgrS0
+        wtasgO0Sx+TNSlrwA4OzhdE=
+X-Google-Smtp-Source: AJdET5dyf+gg3vPyjDspJjxVbEIfXSCFxygWE51ZzXGyht3xHNEFTgk6dD4P+kbrz9LE2zinkrOfyA==
+X-Received: by 2002:a5d:5086:: with SMTP id a6-v6mr3192766wrt.31.1540834698549;
+        Mon, 29 Oct 2018 10:38:18 -0700 (PDT)
+Received: from evledraar ([2a02:a450:3911:1:fd59:dbfe:7c38:41f0])
+        by smtp.gmail.com with ESMTPSA id i204-v6sm23240407wmd.28.2018.10.29.10.38.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 29 Oct 2018 10:38:17 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 12/12] fsck: mark strings for translation
+References: <20181028065157.26727-1-pclouds@gmail.com> <20181028065157.26727-13-pclouds@gmail.com> <20181029105304.GP30222@szeder.dev> <xmqqsh0o3kuw.fsf@gitster-ct.c.googlers.com> <CACsJy8CE2mi69kXcs2sFYm34txfDb24Qqm4bgv_w3WAcYEEFLg@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CACsJy8CE2mi69kXcs2sFYm34txfDb24Qqm4bgv_w3WAcYEEFLg@mail.gmail.com>
+Date:   Mon, 29 Oct 2018 18:38:15 +0100
+Message-ID: <87ftwolkl4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20181027071003.1347-1-pclouds@gmail.com> <20181027173008.18852-1-pclouds@gmail.com>
- <20181027173008.18852-7-pclouds@gmail.com> <0ee246db-d781-9a42-8b8c-3e98c132b0ae@gmail.com>
-In-Reply-To: <0ee246db-d781-9a42-8b8c-3e98c132b0ae@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 29 Oct 2018 18:26:03 +0100
-Message-ID: <CACsJy8CYnngeA8JcFy83qYxKj3saB21Y32VV3R5o1PY_tkAq5Q@mail.gmail.com>
-Subject: Re: [PATCH v2 06/10] preload-index.c: remove #ifdef NO_PTHREADS
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 6:21 PM Ben Peart <peartben@gmail.com> wrote:
-> @@ -114,6 +104,9 @@ static void preload_index(struct index_state *index,
->          threads = index->cache_nr / THREAD_COST;
->          if ((index->cache_nr > 1) && (threads < 2) &&
-> git_env_bool("GIT_TEST_PRELOAD_INDEX", 0))
->                  threads = 2;
-> +       cpus = online_cpus();
-> +       if (threads > cpus)
-> +               threads = cpus;
->          if (threads < 2)
->                  return;
->          trace_performance_enter();
 
-Capping the number of threads to online_cpus() does not always make
-sense. In this case (or at least the original use case where we stat()
-over nfs) we want to issue as many requests to nfs server as possible
-to reduce latency and it has nothing to do with how many cores we
-have. Using more threads than cores might make sense since threads are
-blocked by nfs client, but we still want to send more to the server.
--- 
-Duy
+On Mon, Oct 29 2018, Duy Nguyen wrote:
+
+> On Mon, Oct 29, 2018 at 3:09 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>>
+>> >> -    fprintf(stderr, "%s in %s %s: %s\n",
+>> >> -            msg_type, printable_type(obj), describe_object(obj), err);
+>> >> +    fprintf_ln(stderr, _("%s in %s %s: %s"),
+>> >
+>> > Are the (f)printf() -> (f)printf_ln() changes all over
+>> > 'builtin/fsck.c' really necessary to mark strings for translation?
+>>
+>> It is beyond absolute minimum but I saw it argued here that this
+>> makes it easier to manage the .po and .pot files if your message
+>> strings do not end with LF, a you are much less likely to _add_
+>> unneeded LF to the translated string than _lose_ LF at the end of
+>> translated string.
+>
+> Especially when \n plays an important role and we don't trust
+> translators to keep it [1] [2]. It's probably a too defensive stance
+> and often does not apply, so nowadays I do it just to keep a
+> consistent pattern in the code.
+>
+> [1] https://public-inbox.org/git/20120308220131.GA10122@burratino/#t
+> [2] but then translators can crash programs anyway (e.g. changing %d
+> to %s...) we just trust gettext tools to catch problems early.
+
+As Jonathan pointed out in the follow-up message[1] this sort of thing
+is checked for in msgfmt, so sure, let's strip the \n, but it's really
+not something we need to worry about. Likewise with translators turning
+"%s" into "%d" (or "% s") or whatever.
+
+    $ git diff -U0
+    diff --git a/po/de.po b/po/de.po
+    index 47986814c9..62de46c63d 100644
+    --- a/po/de.po
+    +++ b/po/de.po
+    @@ -23 +23 @@ msgid "%shint: %.*s%s\n"
+    -msgstr "%sHinweis: %.*s%s\n"
+    +msgstr "%sHinweis: %.*s%s"
+    $ make [...]
+    [...]
+    po/de.po:23: 'msgid' and 'msgstr' entries do not both end with '\n'
+    msgfmt: found 1 fatal error
+    3470 translated messages.
+    make: *** [Makefile:2488: po/build/locale/de/LC_MESSAGES/git.mo] Error 1
+
+1. https://public-inbox.org/git/CACsJy8AcUy9FZiiehGc7mEL4i+XP6u0pmH1rGoR-WZnhYT1UMQ@mail.gmail.com/
