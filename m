@@ -2,56 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1E61F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 22:21:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8116A1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 22:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727760AbeJ3HME (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 03:12:04 -0400
-Received: from smtp-fw-2101.amazon.com ([72.21.196.25]:55736 "EHLO
-        smtp-fw-2101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727314AbeJ3HMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 03:12:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1540851683; x=1572387683;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=GRjJ/NuKkXui/2BqCJ0A+/9W/c+xXV+nSbwY9GAecko=;
-  b=o9yvRwMDS/W5OuBcCeMpdH9P9mxr3HbIqTEQN1Hs/WarSxCpn4Z7oOEF
-   BrtU7bIge1clUq4xw2VwXch86+9UMXB3Zi8eepmCXE85FTJylZHY5GBVI
-   ETEnxkHDJIvjDxttjuWCiOk4x0byZ4rI+jYXgrr8MLEps5EmSHh4SarKx
-   k=;
-X-IronPort-AV: E=Sophos;i="5.54,441,1534809600"; 
-   d="scan'208";a="701990629"
-Received: from iad6-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-2c-168cbb73.us-west-2.amazon.com) ([10.124.125.2])
-  by smtp-border-fw-out-2101.iad2.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Oct 2018 22:21:21 +0000
-Received: from EX13MTAUEB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
-        by email-inbound-relay-2c-168cbb73.us-west-2.amazon.com (8.14.7/8.14.7) with ESMTP id w9TMLFl7027956
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
-        Mon, 29 Oct 2018 22:21:20 GMT
-Received: from EX13D16UEB002.ant.amazon.com (10.43.60.131) by
- EX13MTAUEB001.ant.amazon.com (10.43.60.129) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Mon, 29 Oct 2018 22:21:20 +0000
-Received: from EX13MTAUEB001.ant.amazon.com (10.43.60.96) by
- EX13D16UEB002.ant.amazon.com (10.43.60.131) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Mon, 29 Oct 2018 22:21:19 +0000
-Received: from amazon.com (10.200.179.64) by mail-relay.amazon.com
- (10.43.60.129) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
- Transport; Mon, 29 Oct 2018 22:21:19 +0000
-Date:   Mon, 29 Oct 2018 22:21:19 +0000
-From:   Geert Jansen <gerardu@amazon.com>
-To:     Jeff King <peff@peff.net>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        "=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>,
+        id S1727837AbeJ3HSZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 03:18:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60024 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727696AbeJ3HSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 03:18:25 -0400
+Received: (qmail 6240 invoked by uid 109); 29 Oct 2018 22:27:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Oct 2018 22:27:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24375 invoked by uid 111); 29 Oct 2018 22:26:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 29 Oct 2018 18:26:59 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2018 18:27:42 -0400
+Date:   Mon, 29 Oct 2018 18:27:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Geert Jansen <gerardu@amazon.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>
 Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-Message-ID: <20181029222119.GB8325@amazon.com>
+Message-ID: <20181029222742.GB24557@sigill.intra.peff.net>
 References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
  <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
  <87o9bgl9yl.fsf@evledraar.gmail.com>
@@ -59,56 +40,47 @@ References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
  <20181027093300.GA23974@sigill.intra.peff.net>
  <xmqqbm7da88t.fsf@gitster-ct.c.googlers.com>
  <20181029213453.GA8325@amazon.com>
- <20181029215049.GA24557@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181029215049.GA24557@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20181029213453.GA8325@amazon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 05:50:50PM -0400, Jeff King wrote:
+On Mon, Oct 29, 2018 at 09:34:53PM +0000, Geert Jansen wrote:
 
-> > I believe the loose-object-cache approach would have a performance regression
-> > when you're receiving a small pack file and there's many loose objects in the
-> > repo. Basically you're trading off
-> > 
-> >     MIN(256, num_objects_in_pack / dentries_per_readdir) * readdir_latency
-> >     
-> > against
-> > 
-> >     num_loose_objects * stat_latency
-> 
-> Should num_loose_objects and num_objects_in_pack be swapped here? Just
-> making sure I understand what you're saying.
+> As an example, this means that when you're recieving a pack file with 1K
+> objects in a repository with 10K loose objects that the loose-object-cache
+> patch has roughly the same performance as the current git. I'm not sure if this
+> is something to worry about as I'm not sure people run repos with this many
+> loose files. If it is a concern, there could be a flag to turn the loose object
+> cache on/off.
 
-Whoops, yes, thanks for spotting that!
+So yeah, that's the other thing I'm thinking about regarding having a
+maximum loose cache size.
 
-> So the 256 in your MIN() is potentially much smaller. We still have to
-> deal with the fact that if you have a large number of loose objects,
-> they may be split cross multiple readdir (or getdents) calls. The "cache
-> maximum" we discussed does bound that, but in some ways that's worse:
-> you waste time doing the bounded amount of readdir and then don't even
-> get the benefit of the cache. ;)
+10k objects is only 200KB in memory. That's basically nothing. At some
+point you run into pathological cases, like having a million objects
+(but that's still only 20MB, much less than we devote to other caches,
+though of course they do add up).
 
-Yup. To get the performance benefit you'd like the cache to hold all loose
-objects except in clearly degenerate cases with far too many loose objects.
+If you have a million loose objects, I strongly suspect you're going to
+run into other problems (like space, since you're not getting any
+deltas).
 
-> > On Amazon EFS (and I expect on other NFS server implementations too) it is more
-> > efficient to do readdir() on a large directory than to stat() each of the
-> > individual files in the same directory. I don't have exact numbers but based on
-> > a very rough calculation the difference is roughly 10x for large directories
-> > under normal circumstances.
-> 
-> I'd expect readdir() to be much faster than stat() in general (e.g., "ls
-> -f" versus "ls -l" is faster even on a warm cache; there's more
-> formatting going on in the latter, but I think a lot of it is the effort
-> to stat).
+The one thing that gives me pause is that if you have a bunch of unused
+and unreachable loose objects on disk, most operations won't actually
+look at them at all. The majority of operations are only looking for
+objects we expect to be present (e.g., resolving a ref, walking a tree)
+and are fulfilled by checking the pack indices first.
 
-In the case of NFS, the client usually requests that the READDIR response also
-contains some of the stat flags (like st_mode). But even in this case it's
-still more efficient to return multiple entries in one batch through READDIR
-rather than as individual responses to GETATTR (which is what stat() maps to).
+So it's possible that Git is _tolerable_ for most operations with a
+million loose objects, and we could make it slightly worse by loading
+the cache. But I find it hard to get too worked up about spending an
+extra 20MB (and the time to readdir() it in) in that case. It seems like
+about 400ms on my machine, and the correct next step is almost always
+going to be "pack" or "prune" anyway.
+
+-Peff
