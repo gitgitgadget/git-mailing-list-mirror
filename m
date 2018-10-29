@@ -2,84 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD7B71F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 15:54:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 785AC1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 15:54:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727552AbeJ3And (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 20:43:33 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:35651 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727516AbeJ3And (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 20:43:33 -0400
-Received: by mail-io1-f65.google.com with SMTP id 79-v6so5276507iou.2
-        for <git@vger.kernel.org>; Mon, 29 Oct 2018 08:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=yLJxC2Pao247n/jbMRC32LHgtR3fDA5o5jt18WX3qM0=;
-        b=eu9of2RjCT7xzDhOUblLySoRcgAPWUTYwmNHv9AEtjGylhgjGjw3sSZNaXrdH2T/RI
-         f0TB+/gmC7yjof/v41FxRwCxtNcZakeBPoRF0TM9pveWD1h3O9u+2xyIepcC8ucbnX8r
-         ScEPu9zdOFA2W8KdvXQSvoC3XJ0Efz4AD3b9JnC5Uf6H/Acf9/fWTuoBIxNLOwli/oJE
-         H9PGpckEenmyS1gmUMsCCJuqlhPHX+1VxqZMbBQsI0xHbT2byEH+yXUgtG9mvP3fNnLq
-         OkXnSdmKVMg10pja0QD1FeZiInD9+zIpbVuDexTQVfeoJIKuXpqV+ZsaWO71hSqyl7i7
-         hcug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yLJxC2Pao247n/jbMRC32LHgtR3fDA5o5jt18WX3qM0=;
-        b=pPyoIIL/5O+XQ9ZV7nj+VBa3DQPwW26/QeYlKNqYOBQY/y4wnt+aNu+yj8D3Jr7uVi
-         fGvsG3e/c4nwfmbg3ABssnnVdOHnxiRTB5co7Iu4oLOt00E0CveR/+C+We+UtS5APb5f
-         Le+/z2morXDoWvIJP18shq3PdVB34hprRVTlHtki6zsJEYwulqrP7n/CZvBkkqiFELD4
-         KubKZNHLv6o6xe/OYlKNRRVG2KaDquJc5zRqbLBL/cqZHKTL25kduK1jmG10xG7hKubk
-         s+Pv/cGpVpYE3RvYA6JSptY7JIhipyKzqVToJsnA5CvTHk+e002bd6/9UMxlZCoAqGJs
-         1iyA==
-X-Gm-Message-State: AGRZ1gK64vRMR+wj8wqNDj9IWKjKuUO1AnrFyHaboWLmnYWqcqKboF3W
-        UZ7u7glulJPf7brRyt2K2qoHqJbqMcjQAm1smKLbhw==
-X-Google-Smtp-Source: AJdET5cv1EAUSvczWE36WEkFT3NHQt3+2T68RdT0bNb8GU4aW5t/OYD/92iuyx7D8eDj9ezJcEDxARW1CoNF9kqeMQg=
-X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr8934008ioc.118.1540828461391;
- Mon, 29 Oct 2018 08:54:21 -0700 (PDT)
+        id S1727699AbeJ3AoI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 20:44:08 -0400
+Received: from mout.web.de ([212.227.17.12]:35763 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727085AbeJ3AoH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 20:44:07 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXpdL-1g25BB0pqJ-00WlW7; Mon, 29
+ Oct 2018 16:54:54 +0100
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXpdL-1g25BB0pqJ-00WlW7; Mon, 29
+ Oct 2018 16:54:54 +0100
+Date:   Mon, 29 Oct 2018 16:54:53 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Pete <pietro.cagnoni@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Prevent warning
+Message-ID: <20181029155453.GA9819@tor.lan>
+References: <01020166c07adf27-0c2cb5ac-2292-4ce3-808e-b627202fd45f-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-References: <C16A9F17-0375-42F9-90A9-A92C9F3D8BBA@dana.is> <20181027084823.23382-1-pclouds@gmail.com>
- <87h8h4lwcv.fsf@evledraar.gmail.com>
-In-Reply-To: <87h8h4lwcv.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 29 Oct 2018 16:53:52 +0100
-Message-ID: <CACsJy8CLHQ0mKhKXvTDAqy9TLwEFBSvHEu5UbPxHX4is2mK+Cg@mail.gmail.com>
-Subject: Re: [PATCH] wildmatch: change behavior of "foo**bar" in WM_PATHNAME mode
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, dana geier <dana@dana.is>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <01020166c07adf27-0c2cb5ac-2292-4ce3-808e-b627202fd45f-000000@eu-west-1.amazonses.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:Wl7u2zhgvdee+8aO7gErshbszBRnGATSJV9XpvrwAMKbAJmW7K/
+ EZpjya/mEn0OZ3cndiSCQlg7uaPaTq5VxHYm2BlwiKm00ckPW3NmdDX8MPVIP8XzKaiwnNG
+ J4vN2ns6+gKm+HyFHfxP+l0taU/mIcxnOdPQMCiyZ6znAAMJhsdhCwPW0RapeF8aY20CW7l
+ XXcU7Ku0AoyjXl0Fz3+BQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AXIcHaVjiqk=:p7lsGCSNPe2Io8Hv9YATbD
+ XtoWD7CZwBLHnW3gBLJ8wGPNMjGGykIteu/CU3jCHcIIxPKGR6CZAWBtJn6NKGTvIaiX2rMDq
+ 31KU8YN3lcYWV1HClCK3Uz6DTdPZtOjU/VeRN/nvOOrSs7LaBIw1imR+Anbc0r50W7kueYZKx
+ sdaWQUCNvR7am7PzzbkFqu+/OMdbCC6WtHIseNUTQF2LviVcpUbTlgMgRttr1Bu5JzM4EvrVk
+ ulOWTmpRv2HVUzZK1maLCdCTKHgLZcIW9R8S0OCZYikucwjJz9AAVtvPW7cAari+Oi106Er2T
+ D+PgJOccFeD7DRZKhRZpihnML/DBj6UC0iTZuke8Ct74W8lpkrtkbKHVBmIdEYKXH45wv8FJQ
+ VbHYUHho/3N6muFGpqHY2qMrd1kMlmHGu3VEq1U74q5ADh068Ezhh9b3KFYCFK1OWDpNcuE+I
+ fH5efqfQtU2MxS1EkWZMkc5ZHS8+QEBa0SSugD8wrznJZKQxYxlW4CvOToDCmfFvEagWF3Tng
+ oVVukT7NIT/th2PK0U8r5zb9YwwM5FQ9L5Q8KmDTBLBQ5ntN7Gz0BaelhUl9hOzdNajoZ3dI4
+ 39/r38pqioFNqrrpxEuBCow2AdpRW4P7Gdo+kg+0j49zdvnFgA8x4ur4gE5lDHejb4qb+AmXd
+ Lo4C7wIFVRJww5VXr9C57thSKjSghPEYsdMFsQsc3y4zL5bbl1+fNhxNhxxFQILLl0ThbtmZZ
+ rmmX8US64P9/s2v7lGUSMz9wIdo6MI4gsLpEl2/GS5h+AuouQ75n4xVXqIno2S+f2SwpWIy2W
+ bvlE2U/50KT6b13C/I/cHjYqICjrw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 2:24 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> This patch looks good to me, but I think it's a bad state of affairs to
-> keep changing these semantics and not having something like a
-> "gitwildmatch" doc were we document this matching syntax.
+Thanks for the patch.
+Could you please sign it off ?
+The other remark would be if the header line could be written longer than
+just
+"Prevent warning".
+to give people digging into the Git history an initial information,
+where the warning occured and from which module it was caused.
+May be something like this as a head line ?
 
-While we don't have a separate document for it, the behavior _is_
-documented even if perhaps it wasn't as clear. There were even tests
-for this corner case.
+gitweb.perl: Fix Odd number of elements warning
 
-> Do you have any thoughts on how to proceed with getting this documented
-> / into some stable state where we can specify it?
 
-wildmatch has been used in git for a few years if I remember correctly
-so to me it is stable. Granted there are corner cases like this, but I
-can't prevent all bugs (especially this one which is more like design
-mistake than bug per se). You are welcome to refactor gitignore.txt
-and add gitwildmatch.txt.
---=20
-Duy
+
+On Mon, Oct 29, 2018 at 03:39:30PM +0000, Pete wrote:
+> Prevent the following warning in the web server error log:
+> gitweb.cgi: Odd number of elements in anonymous hash at /usr/share/gitweb/gitweb.cgi line 3305
+> ---
+>  gitweb/gitweb.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 2594a4badb3d7..200647b683225 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3302,7 +3302,7 @@ sub git_get_remotes_list {
+>  		next if $wanted and not $remote eq $wanted;
+>  		my ($url, $key) = ($1, $2);
+>  
+> -		$remotes{$remote} ||= { 'heads' => () };
+> +		$remotes{$remote} ||= { 'heads' => [] };
+>  		$remotes{$remote}{$key} = $url;
+>  	}
+>  	close $fd or return;
+> 
+> --
+> https://github.com/git/git/pull/548
