@@ -6,83 +6,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CBF71F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 14:14:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92D071F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 14:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726222AbeJ2XCy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 19:02:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58926 "HELO cloud.peff.net"
+        id S1726532AbeJ2XF6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 19:05:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58940 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725977AbeJ2XCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 19:02:54 -0400
-Received: (qmail 19976 invoked by uid 109); 29 Oct 2018 14:14:04 -0000
+        id S1725920AbeJ2XF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 19:05:58 -0400
+Received: (qmail 20093 invoked by uid 109); 29 Oct 2018 14:17:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Oct 2018 14:14:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Oct 2018 14:17:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17747 invoked by uid 111); 29 Oct 2018 14:13:20 -0000
+Received: (qmail 17812 invoked by uid 111); 29 Oct 2018 14:16:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 29 Oct 2018 10:13:20 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 29 Oct 2018 10:16:23 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2018 10:14:03 -0400
-Date:   Mon, 29 Oct 2018 10:14:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Oct 2018 10:17:06 -0400
+Date:   Mon, 29 Oct 2018 10:17:06 -0400
 From:   Jeff King <peff@peff.net>
-To:     Anders Waldenborg <anders@0x63.nu>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pretty: Add %(trailer:X) to display single trailer
-Message-ID: <20181029141402.GA17668@sigill.intra.peff.net>
-References: <20181028125025.30952-1-anders@0x63.nu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Tim Schumacher <timschumi@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] alias: detect loops in mixed execution mode
+Message-ID: <20181029141706.GB17668@sigill.intra.peff.net>
+References: <87o9dar9qc.fsf@evledraar.gmail.com>
+ <20181018225739.28857-1-avarab@gmail.com>
+ <20181019220755.GA31563@sigill.intra.peff.net>
+ <87ftx0dg4r.fsf@evledraar.gmail.com>
+ <20181020185852.GA6234@sigill.intra.peff.net>
+ <20181026083905.GA1705@sigill.intra.peff.net>
+ <xmqqefc976x1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181028125025.30952-1-anders@0x63.nu>
+In-Reply-To: <xmqqefc976x1.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 28, 2018 at 01:50:25PM +0100, Anders Waldenborg wrote:
+On Mon, Oct 29, 2018 at 12:44:58PM +0900, Junio C Hamano wrote:
 
-> This new format placeholder allows displaying only a single
-> trailer. The formatting done is similar to what is done for
-> --decorate/%d using parentheses and comma separation.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Hmph. So I was speaking before purely hypothetically, but now that your
+> > patch is in 'next', it is part of my daily build. And indeed, I hit a
+> > false positive within 5 minutes of building it. ;)
+> 
+> Sounds like somebody is having not-so-fun-a-time having "I told you
+> so" moment.  The 'dotgit' thing already feels bit convoluted but I
+> would say that it is still within the realm of reasonable workflow
+> elements.
 
-Displaying a single trailer makes sense as a goal. It was one of the
-things I considered when working on %(trailers), actually, but I ended
-up needing something a bit more flexible (hence the ability to dump the
-trailers in a parse-able format, where I feed them to another script).
-But your ticket example makes sense for just ordinary log displays.
+To be clear, the "dotgit" thing _is_ weird and convoluted. And I imagine
+that I push Git more than 99% of our users would. But I also won't be
+surprised if somebody else has something similarly disgusting in the
+wild. :)
 
-Junio's review already covered my biggest question, which is why not
-something like "%(trailers:key=ticket)". And likewise making things like
-comma-separation options.
-
-But my second question is whether we want to provide something more
-flexible than the always-parentheses that "%d" provides. That has been a
-problem in the past when people want to format the decoration in some
-other way.
-
-We have formatting magic for "if this thing is non-empty, then show this
-prefix" in the for-each-ref formatter, but I'm not sure that we do in
-the commit pretty-printer beyond "% ". I wonder if we could/should add a
-a placeholder for "if this thing is non-empty, put in a space and
-enclose it in parentheses".
-
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index 6109ef09aa..a46d0c0717 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -211,6 +211,10 @@ endif::git-rev-list[]
->    If the `unfold` option is given, behave as if interpret-trailer's
->    `--unfold` option was given.  E.g., `%(trailers:only,unfold)` to do
->    both.
-> +- %(trailer:<t>): display the specified trailer in parentheses (like
-> +  %d does for refnames). If there are multiple entries of that trailer
-> +  they are shown comma separated. If there are no matching trailers
-> +  nothing is displayed.
-
-It might be worth specifying how this match is done. I'm thinking
-specifically of whether it's case-sensitive, but I wonder if there
-should be any allowance for other normalization (e.g., allowing a regex
-to match "coauthored-by" and "co-authored-by" or something).
+TBH, I'm still not really sold on the idea of doing loop detection at
+all in this case. But I can live with it if others feel strongly. What
+makes the current patch so bad is that there's no escape hatch (i.e.,
+even a depth counter with a default of "1" would have given me something
+I could bump).
 
 -Peff
