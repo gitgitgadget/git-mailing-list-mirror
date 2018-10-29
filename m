@@ -6,59 +6,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A3E1F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 00:17:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F5781F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 00:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725923AbeJ2Iwq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 04:52:46 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41143 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbeJ2Iwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 04:52:45 -0400
-Received: by mail-wr1-f67.google.com with SMTP id x12-v6so6761702wrw.8
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 17:06:32 -0700 (PDT)
+        id S1725988AbeJ2JZz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 05:25:55 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39681 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbeJ2JZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 05:25:54 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y144-v6so6294455wmd.4
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 17:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=qeuk2o1ADsYbe4EF/HJyCe8AQ5+DkUDfV2mrtsZrR1A=;
-        b=ddOs++TlAvzCEQcG8LtgGAZg9oOZl16VFtqBbN3aW9VG8exgllGuNghRZicmzN2Pxn
-         q+q4r4GROM5iRiHULoZoox42NZTv+kTp8tK2THF3epJLJzyF5PkNSMZxRKj1i2PznFJu
-         v03NPPnr12+WGNqWqbAY5LXxg030+2bpRMFFJgSmKbfLiqknWMBeZQXqS/PO+IkeU2SH
-         H8M6sTP+dZgzgcSoePO22eNNLBuFfD6aqQZZiNVW53aUoOaJyo3xmShGfKvLBTeo11dP
-         iL6/JHBrNczlPIrvV9jbU2rchfBI7xNglo9aYEJyXgNkIenp2EE6vpr9N3vv27VJvSuE
-         pUrg==
+        bh=RJmoRZGhAPZMFb46NhF/xAtb6ipqgW6/fL4dVmdrvew=;
+        b=eeyWaXYMyWoP/LqUjPX2qB3IGEoYkj4NCoCfNNJOOREMMAXECgZ60xT1SHAqs1YaU+
+         1b1v2Vls+wKjctlyZoZEVOLpnbpoi3C7kDMzUr+FvNdeCDPyBpHf7ZzRz6E9hLfCjU6Z
+         6SOlRYCi9L+1k+9OcXmhIr4UEJKFDKdVI5K2FzXtJr9ROfo6oZ1tR7MY4Kgv1S2bBfPT
+         TtKh/jTPoeFUbIJ59JfuQ5NVyazpj4TH0oglHHIiiOfr0t5ma6vmKCUULMqTRGy3nmfW
+         aJxxPPbTtqZKFWE5xkqAZttZL05n2SD2KGvzMrIOgVXNlutiEEBfWMRYVVV+RAJXPzRE
+         CBrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=qeuk2o1ADsYbe4EF/HJyCe8AQ5+DkUDfV2mrtsZrR1A=;
-        b=tGd1AkTcRdlfjPegpWtzCsrSzD8QbfvTpdnqGdsYj6l/EDob3LEr4xnBnYrgK1NOAO
-         E1RM3YmG5G9wa9MVbuLXvsWAtvHBUiMfYXfohgGo0TATLSWldhv5WhQbuGcsKewYCa12
-         yDnVAz/MGij76BTdxQYqemgInTgvxzMe7645M6MBhDV4GKqflATlGh3s12PHwjQVdJkA
-         Ej4it4O/8elCITBkxSgUoORZN4TM6gRJcBcd/vWbj3bz20df0GfLX3y1f9HHPk81Mf4z
-         X3fGTm1KDwpXOYCbkt2s4UXVpr4dNVKPoWjGVlBbr7bkEkREhj6HWwOzMgyCbbB5c6gc
-         KPlw==
-X-Gm-Message-State: AGRZ1gIOUrnMQD3aEnQUPxX3GPTeLbYA4u+Z3QY0HXVReaR1o4Vad+J2
-        qyj4KhB//+b9WiyISF+r7dI=
-X-Google-Smtp-Source: AJdET5cd9rHZxMkK9FIUtKfkmqoORwy1APFu59t8rKSt9Ft2Nf8HJMCE4BH8na+oP+ZiwCSl8EkV0w==
-X-Received: by 2002:a5d:48cc:: with SMTP id p12-v6mr13021900wrs.122.1540771591711;
-        Sun, 28 Oct 2018 17:06:31 -0700 (PDT)
+        bh=RJmoRZGhAPZMFb46NhF/xAtb6ipqgW6/fL4dVmdrvew=;
+        b=Sf4hbz5nMwXURS/7VlfUfgmbT/I8aotslcw2nZFF55OnrEi/SUvxx7UhSAh0vNoKug
+         xgiNL4xhBUfHRDQ0mx+5MpTpK/rtNN0kgAgta0DEFXHqmhnkT0W4jz7NhjJGsJ3l1xe0
+         HAJYPQOx5oKg0T8nAWMxT+jSRjH4+lmaFgTvngO8A62bHK/VLAAIAHImIqMTjByxGZV4
+         6DcOBdbBK6bPfFcs2RrhJiKWo8O88YNo/Y4q/cAEhBJx1nBnQ5QO9YxXlumbpPhqRBN3
+         SAj3ykc3fBADS6PLa8a40umM4sov190Fn9ZzKhRmYGkfDCivf/dgRrb3dSpEtTjVs3Uk
+         HFMQ==
+X-Gm-Message-State: AGRZ1gIePpoys59TpH2ajbtXHZtQjisagFKVdhrQ04HWFWd0hJTx0Wtc
+        wzjsoarz6mjqPClYtu8U42Ozjh02/0o=
+X-Google-Smtp-Source: AJdET5dOLEFIqqHrj70ZlmBLf1b3yUD3ZiRC6EQN0U2FNVsaboI+l0iqDnjjAB6JEIBEOcksn6OfoA==
+X-Received: by 2002:a1c:aacd:: with SMTP id t196-v6mr11629869wme.121.1540773576557;
+        Sun, 28 Oct 2018 17:39:36 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t13-v6sm11285480wrn.22.2018.10.28.17.06.28
+        by smtp.gmail.com with ESMTPSA id z15-v6sm925991wrp.8.2018.10.28.17.39.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 28 Oct 2018 17:06:29 -0700 (PDT)
+        Sun, 28 Oct 2018 17:39:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        jeffhost@microsoft.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v2] list-objects.c: don't segfault for missing cmdline objects
-References: <20181023215745.245333-1-matvore@google.com>
-        <20181025235314.63495-1-matvore@google.com>
-Date:   Mon, 29 Oct 2018 09:06:28 +0900
-In-Reply-To: <20181025235314.63495-1-matvore@google.com> (Matthew DeVore's
-        message of "Thu, 25 Oct 2018 16:53:14 -0700")
-Message-ID: <xmqqo9bdaa63.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        stolee@gmail.com, avarab@gmail.com, pclouds@gmail.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v4 10/12] Add a base implementation of SHA-256 support
+References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
+        <20181025024005.154208-11-sandals@crustytoothpaste.net>
+        <CAPUEspjCjFiwCO8TCM23f2jqFSpy2z05+Ea_zGATy0jh1L83iQ@mail.gmail.com>
+        <20181028155206.GI6119@genre.crustytoothpaste.net>
+Date:   Mon, 29 Oct 2018 09:39:33 +0900
+In-Reply-To: <20181028155206.GI6119@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 28 Oct 2018 15:52:06 +0000")
+Message-ID: <xmqqftwpa8my.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,56 +70,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> When a command is invoked with both --exclude-promisor-objects,
-> --objects-edge-aggressive, and a missing object on the command line,
-> the rev_info.cmdline array could get a NULL pointer for the value of
-> an 'item' field. Prevent dereferencing of a NULL pointer in that
-> situation.
-
-Thanks.
-
-> There are a few other places in the code where rev_info.cmdline is read
-> and the code doesn't handle NULL objects, but I couldn't prove to myself
-> that any of them needed to change except this one (since it may not
-> actually be possible to reach the other code paths with
-> rev_info.cmdline[] set to NULL).
+>> > +
+>> > +#include "git-compat-util.h"
+>> 
+>> this shouldn't be needed and might be discouraged as per the
+>> instructions in Documentation/CodingGuidelines
 >
-> Signed-off-by: Matthew DeVore <matvore@google.com>
-> ---
->  list-objects.c           | 3 ++-
->  t/t0410-partial-clone.sh | 6 +++++-
->  2 files changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/list-objects.c b/list-objects.c
-> index c41cc80db5..27ed2c6cab 100644
-> --- a/list-objects.c
-> +++ b/list-objects.c
-> @@ -245,7 +245,8 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
->  		for (i = 0; i < revs->cmdline.nr; i++) {
->  			struct object *obj = revs->cmdline.rev[i].item;
->  			struct commit *commit = (struct commit *)obj;
-> -			if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
-> +			if (!obj || obj->type != OBJ_COMMIT ||
-> +			    !(obj->flags & UNINTERESTING))
->  				continue;
->  			mark_tree_uninteresting(revs->repo,
->  						get_commit_tree(commit));
-> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-> index ba3887f178..e52291e674 100755
-> --- a/t/t0410-partial-clone.sh
-> +++ b/t/t0410-partial-clone.sh
-> @@ -366,7 +366,11 @@ test_expect_success 'rev-list accepts missing and promised objects on command li
->  
->  	git -C repo config core.repositoryformatversion 1 &&
->  	git -C repo config extensions.partialclone "arbitrary string" &&
-> -	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
-> +
-> +	git -C repo rev-list --objects \
-> +		--exclude-promisor-objects "$COMMIT" "$TREE" "$BLOB" &&
-> +	git -C repo rev-list --objects-edge-aggressive \
-> +		--exclude-promisor-objects "$COMMIT" "$TREE" "$BLOB"
->  '
->  
->  test_expect_success 'gc repacks promisor objects separately from non-promisor objects' '
+> This may not strictly be needed, but removing it makes the header no
+> longer self-contained, which blows up my (and others') in-editor
+> linting.
+
+That sounds like bending backwards to please tools, though.  Can't
+these in-editor linting learn the local rules of the codebase they
+are asked to operate on?
