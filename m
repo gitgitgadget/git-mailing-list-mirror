@@ -2,77 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A301F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 22:36:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9492A1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 23:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729691AbeJ3H0z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 03:26:55 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36616 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729686AbeJ3H0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 03:26:54 -0400
-Received: by mail-ed1-f67.google.com with SMTP id x2-v6so8791825eds.3
-        for <git@vger.kernel.org>; Mon, 29 Oct 2018 15:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ut5/E+E4OloirnNbfRHsfDlQJnsVO0USoRx5WC8NIEs=;
-        b=YXNkiO5DjPVJMKfgAGbLqxMrdCa9RvDYztGCp636Urabp6JhPDNqXli09JEc0FV1OM
-         1JAcdXURnKfQJR/JRHXdxCUjKte92zzpyEb2k2bzRwQhvqhexjAVT2DmsaekVjTXYb0q
-         92q2MKmWMtTNvAjtp61FyvpkFU5a5WnvIicWqMbah2EO2oCH97UUyhLqoSQCusD/A+2N
-         TS80MQOZKWBOysYL3zVmhJF3p9VPqO+DhPpwW0oZln4qL4V9cQ/M233LsH4y5OWR3nvs
-         Aik/ecITTOKOLARnoMSKdvdqhbfab6NJoAp69zqOnHyb2GK3+xq5bXHBiZRBKB5oHvk/
-         qeFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ut5/E+E4OloirnNbfRHsfDlQJnsVO0USoRx5WC8NIEs=;
-        b=YxWwqKfouCsoFKMtu4TcAu0yoCQ9IvTaMhYGskGGeOzeWm+YWZ4TNrRH+IONbMUJYK
-         rF780VRrpTN6sShWzPecvKm31v6yyQX1KR1oJP65gpgovEOn7bXDEWz1RQPVxO/w1hFS
-         OZditD3WH+ky5eFWFQiOLQIJ5E468gNF8SkZjuDfpHjsQzYVnlBfS/hNhz8OQJobAovB
-         AKA864CAPMK2Dmm1EQX7OUtg1aofHtlftkuD6fFzZEwEWFDxFAfaje1URk/JByDSH/mX
-         T5PWOxNbuobguSfk0F3St+s0b3/h76Y63CWPr/1CpAnVUWNsUSBG+HGjEMkDUwAxTNiF
-         rVSg==
-X-Gm-Message-State: AGRZ1gJseQc+F1VM8qZq/sGfEfoObc9illRGIMgG6ZO/LqNZVavKvvtL
-        rOU+2LqmTSmNFOwET5nr4jd6g3BGvjNZWEMrg3IK7w==
-X-Google-Smtp-Source: AJdET5f0rAL+To0a5H2SVgyG1sBzzzsix7pstOK659TnvohQt3FPGP0hqbvvCofTUjLyIT97ohDMBxGdHMeOHU+iRgI=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr15024203edh.154.1540852570224;
- Mon, 29 Oct 2018 15:36:10 -0700 (PDT)
+        id S1730972AbeJ3Hw7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 03:52:59 -0400
+Received: from 0x63.nu ([109.74.10.199]:33020 "EHLO 0x63.nu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730301AbeJ3Hw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 03:52:59 -0400
+Received: from localhost ([127.0.0.1] helo=moveme2)
+        by 0x63.nu with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <anders@0x63.nu>)
+        id 1gHGXs-0002YL-89; Tue, 30 Oct 2018 00:02:04 +0100
+From:   Anders Waldenborg <anders@0x63.nu>
+To:     peff@peff.net
+Cc:     Anders Waldenborg <anders@0x63.nu>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH] pretty: Add %(trailer:X) to display single trailer
+In-Reply-To: <20181029141402.GA17668@sigill.intra.peff.net>
+Date:   Mon, 29 Oct 2018 18:05:34 +0100
+Message-ID: <CADsOX3Cbn7jjqFERptxMm59mn0qYnkf9bmFvJS20VBPedZHwqQ@mail.gmail.com>
+References: <20181028125025.30952-1-anders@0x63.nu> <20181029141402.GA17668@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
- <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com> <87o9bgl9yl.fsf@evledraar.gmail.com>
- <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com> <20181027093300.GA23974@sigill.intra.peff.net>
- <xmqqbm7da88t.fsf@gitster-ct.c.googlers.com> <20181029213453.GA8325@amazon.com>
- <20181029222742.GB24557@sigill.intra.peff.net>
-In-Reply-To: <20181029222742.GB24557@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 29 Oct 2018 15:35:58 -0700
-Message-ID: <CAGZ79kY=G5E-eyqH3j24KzeUqpgE8Pw-hJQcD5=OqTCMwscabA@mail.gmail.com>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-To:     Jeff King <peff@peff.net>
-Cc:     gerardu@amazon.com, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: anders@0x63.nu
+X-SA-Exim-Scanned: No (on 0x63.nu); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 3:27 PM Jeff King <peff@peff.net> wrote:
 
-> So yeah, that's the other thing I'm thinking about regarding having a
-> maximum loose cache size.
+On Mon, Oct 29, 2018 at 3:14 PM Jeff King <peff@peff.net> wrote:
+> Junio's review already covered my biggest question, which is why not
+> something like "%(trailers:key=ticket)". And likewise making things like
+> comma-separation options.
 
-tangent:
-This preloading/caching could be used for a more precise approach
-to decide when to gc instead of using some statistical sampling
-of objects/17, eventually.
+Jeff, Junio,
+
+thanks!
+
+Your questions pretty much matches what I (and a colleague I discussed
+this with before posting) was concerned about.
+
+My first try actually had it as an option to "trailers". But it got a
+bit messy with the argument parsing, and the fact that there was a
+fast path making it work when only specified. I did not want to spend
+lot of time reworking fixing that before I had some feedback, so I
+went for a smallest possible patch to float the idea with (a patch is
+worth a 1000 words).
+
+I'll start by reworking my patch to handle %(trailers:key=X)  (I'll
+assume keys never contain ')' or ','), and ignore any formatting until
+the way forward there is decided (see below).
+
+> But my second question is whether we want to provide something more
+> flexible than the always-parentheses that "%d" provides. That has been a
+> problem in the past when people want to format the decoration in some
+> other way.
+
+Maybe just like +/-/space can be used directly after %, a () pair can
+be allowed..   E.g "%d" would just be an alias for "%()D",  and for
+trailers it would be something like "%()(trailers:key=foo)"
+
+There is another special cased placeholder %f (sanitized subject line,
+suitable for a filename). Which also could be changed to be a format
+specifiier, allowing sanitize any thing, e.g "%!an" for sanitized
+author name.
+
+Is even the linebreak to commaseparation a generic thing?
+"% ,()(trailers:key=Ticket)"   it starts go look a bit silly.
+
+Then there are the padding modifiers. %<() %<|(). They operate on next
+placeholder. "%<(10)%s" Is that a better syntax?
+"%()%(trailers:key=Ticket,comma)"
+
+I can also imagine moving all these modifiers into a generic modifier
+syntax in brackets (and keeping old for backwards compat)
+%[lpad=10,ltrunc=10]s ==  %<(10,trunc)%s
+%[nonempty-prefix="%n"]GS ==  %+GS
+%[nonempty-prefix=" (",nonempty-suffix=")"]D ==  %d
+Which would mean something like this for tickets thing:
+%[nonempty-prefix=" (Tickets:",nonempty-suffix=")",commaseparatelines](trailers:key=Ticket,nokey)
+which is kinda verbose.
+
+> We have formatting magic for "if this thing is non-empty, then show this
+> prefix" in the for-each-ref formatter, but I'm not sure that we do in
+> the commit pretty-printer beyond "% ". I wonder if we could/should add a
+> a placeholder for "if this thing is non-empty, put in a space and
+> enclose it in parentheses".
+
+Would there be any interest in consolidating those formatters? Even
+though they are totally separate beasts today. I think having all
+attributes available on long form (e.g "%(authorname)") in addition to
+existing short forms in pretty-formatter would make sense.
+
+ anders
