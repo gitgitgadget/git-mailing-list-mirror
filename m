@@ -2,75 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A6A31F453
-	for <e@80x24.org>; Mon, 29 Oct 2018 06:22:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9391C1F453
+	for <e@80x24.org>; Mon, 29 Oct 2018 06:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729199AbeJ2PJU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Oct 2018 11:09:20 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:35300 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729058AbeJ2PJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Oct 2018 11:09:20 -0400
-Received: by mail-qk1-f194.google.com with SMTP id v68-v6so4248112qka.2
-        for <git@vger.kernel.org>; Sun, 28 Oct 2018 23:22:05 -0700 (PDT)
+        id S1729308AbeJ2P3y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Oct 2018 11:29:54 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35537 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729186AbeJ2P3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Oct 2018 11:29:54 -0400
+Received: by mail-wr1-f68.google.com with SMTP id w5-v6so7351267wrt.2
+        for <git@vger.kernel.org>; Sun, 28 Oct 2018 23:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bCQ2vXEHObnna/QNynHuKszwzIlsiWRZ6asHiCj/0TI=;
+        b=vcQAt+E23Q4nemAeN4qRq0KspQ5C6q/o2gGgO6PGrciZa1fVl+1fQv2tJk6SpfhBSg
+         62zQBLVM1kNejUBDYmHvVf66+LZWLw7MYLDR/iTMpBcPS5Gp15qR+7+x/oOZmNJow+vU
+         zhHbzjP6jXK+vB96SZLrQvxtD8nBlkJCB3+VKc9ng/Whv8avKxMFEF3VNvCWp3YCyhRn
+         hRuA6es2bKlS/FyjI6pUqahSd1swN1OcSPc2r5ZLYnZpmeBHvtMcNNJp7S4xnM4GmwAj
+         CQPsueNuYoH6Fn/ZZSJHLkZMz01sYKhGmPQnNwuKeybE+pvcKtFybW3RkCkUJHRpTDzo
+         Ahdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kY0I8rrEMLlUwMB573bECYM3jcvSGiFeUvr2NInNmtg=;
-        b=BuOQxRG1Wg1P0wUir1YrjWrkBgmAXtUh7vXYoHFhKGtMUIVxJSq3f2dkk8ZoG/rB0h
-         lIdyMfv4p5LwHUqIb5vKx9tACCHJ4kY0Y/pzz3mY8u+G4p5hs4zJpXzSM9z94q36aItU
-         yBoT3RVrXRaO++p8KjAteCWKgVBRq+i70R4dvKKwFczJO5xP7VyzY35+9nPGeadLGbr6
-         kaOjQdpWR0wEJM8uGOyHOqX+F1tEj5OtEg80cTVLQPos75unzHNav3F0ZAxkZ62FGotX
-         wr5/4qsg+Dc5+lRXijKQ1sYqb8QylW49CvQ05mvGIZKV8hlFNg1rd085mK/ocUG1x53F
-         aNgA==
-X-Gm-Message-State: AGRZ1gKD1gMKtF0kXguB9XFYLUJ5X+tdREGHXMOXiWZejv4X9VXn48Y5
-        HILT/loShsa7XQOPCiBLUl7gdmsGdB2JdF3FPzw=
-X-Google-Smtp-Source: AJdET5d6g4IAmePdmz0Ms0Xn51OyULB6EZMGF4WmVjjyilKJpL2K9IdVdmKMToP3I39NOjMOvy3ZJ8FWEEuLBCBK954=
-X-Received: by 2002:a37:8fc7:: with SMTP id r190-v6mr11156803qkd.36.1540794124688;
- Sun, 28 Oct 2018 23:22:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
- <20181025055142.38077-1-nbelakovski@gmail.com> <xmqq4ldajz05.fsf@gitster-ct.c.googlers.com>
- <CAC05386cSUhBm4TLD5NUeb5Ut9GT5=h-1MvqDnFpuc+UdZFmwg@mail.gmail.com>
- <CAPig+cT1XYt60PsRGJ0FUa_qCn1vPjdXHygsWzYZYg2Ey=yqkg@mail.gmail.com>
- <CAC05387mfDhJ5_=LyzxZZX09MoY1hsmSB1gseNeLCmMOUx2O4A@mail.gmail.com>
- <CAPig+cTTsbz1pygq6G281V+fR2VVMuchvy1Q1H-KEvJpjJ9ejg@mail.gmail.com> <CAC05387rFq0yJ3nUVkb0jUyQy=EmZiCnBW9L53A6GS5=U0qUDg@mail.gmail.com>
-In-Reply-To: <CAC05387rFq0yJ3nUVkb0jUyQy=EmZiCnBW9L53A6GS5=U0qUDg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 29 Oct 2018 02:21:52 -0400
-Message-ID: <CAPig+cS+djfZjoEbBNrVGpd4g6ZhsioSqK=ZyKprTwA0Hy4iiw@mail.gmail.com>
-Subject: Re: [PATCH] worktree: refactor lock_reason_valid and lock_reason to
- be more sensible
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bCQ2vXEHObnna/QNynHuKszwzIlsiWRZ6asHiCj/0TI=;
+        b=JNj5LFM6b8JTEJOOp0Jk6ky7IOeJcjcQoZc+DkmSRmt+qviGcqHeCiMeDL/2c4uz9J
+         YwUtQEQoH/0yvGZyDsralakiUa0TiQx+juY7i5ACqJ8as8shgqwEPrAqwv2OI4A0NqIo
+         B7cBjuunyIF6bfDwNACGABK+mgoPa4icUOQJrqppzae2CA70cfx9txKkcyqumPYIkauP
+         t6MH2vDJh741n/oJHkzLLeF0C7Ozf9uFlPfU1ITXBawrKJQf8OHjtz9eyko/bUhU7FLG
+         ONEipG3kZ5+bKefyb1mrCMWkKScZUYhMwRbPoh5p9L5MpKacjGuVIQ2vPHUbzcCGOj2J
+         KpKg==
+X-Gm-Message-State: AGRZ1gKsXTqfRm97f4lOisaKwVaoIOHtjjn/zonWo0knK3r0m5OfqBc2
+        UpCWhj8e0jnwMkYTMBIhh3o=
+X-Google-Smtp-Source: AJdET5esV4/KezXSMyZAnGvfGThqqzyrv1ek0USfSm5Th4qHmVyhDVw3VhsLslydzu+cytMO9AfeGA==
+X-Received: by 2002:a5d:618a:: with SMTP id j10-v6mr14358002wru.300.1540795355120;
+        Sun, 28 Oct 2018 23:42:35 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t82-v6sm10601181wme.30.2018.10.28.23.42.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 28 Oct 2018 23:42:33 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     sunshine@sunshineco.com, git@vger.kernel.org
+Subject: Re: [PATCH] worktree: refactor lock_reason_valid and lock_reason to be more sensible
+References: <CAC05386F1X7TsPr6kgkuLWEwsmdiQ4VKTF5RxaHvzpkwbmXPBw@mail.gmail.com>
+        <20181025055142.38077-1-nbelakovski@gmail.com>
+        <xmqq4ldajz05.fsf@gitster-ct.c.googlers.com>
+        <CAC05385y3fCdG4fd2ADahoE0iT+a5KvEr846UCUCQZMOtzzYGg@mail.gmail.com>
+        <xmqq36sp76kw.fsf@gitster-ct.c.googlers.com>
+        <CAC05386YPtB5LmHFq3WrAaZ1vmZaBUdGr9hEbyR8KABzj+CzZQ@mail.gmail.com>
+Date:   Mon, 29 Oct 2018 15:42:31 +0900
+In-Reply-To: <CAC05386YPtB5LmHFq3WrAaZ1vmZaBUdGr9hEbyR8KABzj+CzZQ@mail.gmail.com>
+        (Nickolai Belakovski's message of "Sun, 28 Oct 2018 22:43:35 -0700")
+Message-ID: <xmqqbm7d45k8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 1:45 AM Nickolai Belakovski
-<nbelakovski@gmail.com> wrote:
-> On Sun, Oct 28, 2018 at 9:01 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > That said, I wouldn't necessarily oppose renaming the function, but I
-> > also don't think it's particularly important to do so.
->
-> To me, I would just go lookup the signature of worktree_lock_reason
-> and see that it returns a pointer and I'd be satisfied with that. I
-> could also infer that from looking at the code if I'm just skimming
-> through. But if I see code like "reason = is_worktree_locked(wt)" I'm
-> like hold on, what's going on here?! :P
+Nickolai Belakovski <nbelakovski@gmail.com> writes:
 
-I don't feel strongly about it, and, as indicated, wouldn't
-necessarily be opposed to it. If you do want to make that change,
-perhaps send it as the second patch of a 2-patch series in which patch
-1 just updates the API documentation. That way, if anyone does oppose
-the rename in patch 2, then that patch can be dropped without having
-to re-send.
+> Either way, I do see an issue with the current code that anybody who
+> wants to know the lock status and/or lock reason of a worktree gets
+> faced with a confusing, misleading, and opaque piece of code.
+
+Sorry, I don't.  I do not mind a better documentation for
+is_worktree_locked() without doing anything else.
+
+I do not see any reason to remove fields, split the helper funciton
+into two, drop the caching, etc., especially when the only
+justification is "I am new to the codebase and find it confusing".
+
