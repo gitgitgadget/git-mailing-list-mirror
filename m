@@ -7,102 +7,110 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D963F1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 18:26:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 930371F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 18:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727412AbeJaDVM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 23:21:12 -0400
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:43374 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726886AbeJaDVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 23:21:12 -0400
-Received: by mail-pf1-f182.google.com with SMTP id h4-v6so6258645pfi.10
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 11:26:37 -0700 (PDT)
+        id S1727591AbeJaDel (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 23:34:41 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41770 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726376AbeJaDel (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 23:34:41 -0400
+Received: by mail-pf1-f194.google.com with SMTP id e22-v6so3259618pfn.8
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 11:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0rBYpuEpEubdxkHb7vk+lnmBMML/WcWuyoR/LGNYfME=;
-        b=m9M3BRcwOvrhV581sHymPBOi5+fOw8wgvCUYlkK5kuaMDJyAH/8sfo0kK+FbC43Qtq
-         qM+3iWpmEfnspJgfYVach7GAB0xfuljbnC3IdkqojGe9HfUvUaOqjSe8xbEz2D6z6QhI
-         4W58jBJgDpn3N00XOoGqV8Cw+ZAsNCNe4LFONB4YngDrj9TkVCaaYSvQZwZWPdL+yuby
-         fmHi8Gk5UxfNU8iOxVobjW+jh3BQplzNidLrDdrJBD7w+YMBk3Iz1wK26i4r8AA4Pupm
-         q7CzH7YXJuBvl3ugeKGMo5D1A8nB9gJDfE+L9QJYiemLINHN85Zy+dHiC3cyomkydQDm
-         mtEA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=E91ZmptrsqYkwGUGeh/SPaqrGysUpDEl3i1rHvSrVrY=;
+        b=OzhlXd0faTfu5Fpw590DHpHx7DKXC2S4UJk/sujtfHTSxk1z5Hp660/0XTxzmFO8mP
+         SPwksiuKsITkUhsegrP93htvVawpQsm+9plA3iNBHuWPQ7mWuZvtfJ3HXonxIRDUf9SK
+         Ik0Kn5V0YmDgUdc++6gGyIvLFQlVP0N0/v7irnihs8orebgNjccVnhBfhV423oWO5kgp
+         n7YPIEaWlL4pj3vc3oyIP+S19CDB8ZV7i8vJKTL98v+JZfHmt26tedO3w6FtlWjlCJi3
+         +vOfMiGJnKZqse7at/OoMR0LRnSrtvb5Rn/lqpdkSgucGmMuk7lZ8KKwbSpRH6YZe6Xv
+         Hntg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0rBYpuEpEubdxkHb7vk+lnmBMML/WcWuyoR/LGNYfME=;
-        b=fEz0gejE9wYnKEuPHf3Z0pA1Lf9m8h9FiZjRfQv2OLinf/KWklzefsuX23ckPwnh1a
-         rqRpsTL6c1K5BsUQJxTc93orxyHmsaEKTbrAvOQpzXMhteAw4qLDfkppt5g5DQynglwQ
-         WwK6XajLAiJMP5sn1N4FEloS+GJqdZMHPdHR6YTgBHKMA8WNxhHEplVJahOdQuF3iMLk
-         JoEJ7R+Jc+C4zh/eX48XdjtZl8GQ1u51vqdZaaXtNQ3iVejM8Dwfy/Jd9ETph33PJtM5
-         7kIemMcMNxH48mlx/fE8KCVvd17KYIoHL4aADlu/oMjeZTcGv8JusxVHgcPW3qZtOiDP
-         80ug==
-X-Gm-Message-State: AGRZ1gLXkjigVn/b370NhLtCJk0EnO0x0u2jgQYpP+Dh5EMLjn8AGed1
-        mEEl+n46nAVfTLyVcQqL3zrnlNvq
-X-Google-Smtp-Source: AJdET5dths7BHYMbp8Ye3RwbrrYeG4fgFa+8p7BwP7+bNrISD8aGVcDZr34vI3q3Sa3d4n59jR1kSw==
-X-Received: by 2002:a63:1765:: with SMTP id 37-v6mr19387527pgx.131.1540923997260;
-        Tue, 30 Oct 2018 11:26:37 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=E91ZmptrsqYkwGUGeh/SPaqrGysUpDEl3i1rHvSrVrY=;
+        b=Cl0WOAx+c3sUXPqh2mKPrds+vnDU0H+CTxP9He+WFTfruwAxijngV6Ajt7Ok1wGlWE
+         NF5Q0N8rSk/Nw5/M/ey54AEDJJNJhlIcQH6zADoFthTgaeU5Ol9E2FJObu1FSEgYunxr
+         RK4qeGkgVYg435p5FfXp/geY4y6kbqm3ECsvznZUQjILc7Fjsj898gXMKTLs4RWtGDrT
+         o+u8jUL2BIUQJr4Vc2L3ASr64opNPVCjqLIhW+PHfCC3hynOgPUeoP6bynsI3aAqWWN6
+         rfcwnN3mPehGE6B1uUiygbCeWLOEprv1EAHi0KQaLMin7lGY1HxiR4MqYY6fQ18kJAaK
+         eAjw==
+X-Gm-Message-State: AGRZ1gIiZhUg8sKmQQEIOnytAW23L2V36Hk+rKsEkvXngxHy81O4Mboz
+        AqWS6NaAxKMFbhpfZfjBxA8OPfXJ
+X-Google-Smtp-Source: AJdET5ejbJD1Ond/220FIQyN6N9tsGgsx5IV/EL/wFDQX45M2dKhhF4IjhSfe0gwsocvQaUt27sXgw==
+X-Received: by 2002:a63:9304:: with SMTP id b4-v6mr45577pge.36.1540924802878;
+        Tue, 30 Oct 2018 11:40:02 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id e8-v6sm1112537pgh.67.2018.10.30.11.26.36
+        by smtp.gmail.com with ESMTPSA id y144-v6sm34455063pfb.81.2018.10.30.11.40.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Oct 2018 11:26:36 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 11:26:36 -0700 (PDT)
-X-Google-Original-Date: Tue, 30 Oct 2018 18:26:33 GMT
-Message-Id: <8159cbd1b8025f33fb9d0e254db1a3c2a066f853.1540923993.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.59.git.gitgitgadget@gmail.com>
-References: <pull.59.git.gitgitgadget@gmail.com>
-From:   "chris via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] Use correct /dev/null for UNIX and Windows
+        Tue, 30 Oct 2018 11:40:02 -0700 (PDT)
+Date:   Tue, 30 Oct 2018 11:40:02 -0700 (PDT)
+X-Google-Original-Date: Tue, 30 Oct 2018 18:39:55 GMT
+Message-Id: <pull.62.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/4] mingw: prevent external PERL5LIB from interfering
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, chris <chris@webstech.net>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: chris <chris@webstech.net>
+In Git for Windows, we do not support running the Perl scripts with any
+random Perl interpreter. Instead, we insist on using the shipped one (except
+for MinGit, where we do not even ship the Perl scripts, to save on space).
 
-Use File::Spec->devnull() for output redirection to avoid messages
-when Windows version of Perl is first in path.  The message 'The
-system cannot find the path specified.' is displayed each time git is
-run to get colors.
+However, if Git is called from, say, a Perl script running in a different
+Perl interpreter with appropriately configured PERL5LIB, it messes with
+Git's ability to run its Perl scripts.
 
-Signed-off-by: Chris. Webster <chris@webstech.net>
----
- contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+For that reason, we devised the presented method of defining a list of
+environment variables (via core.unsetEnvVars) that would then be unset
+before spawning any process, defaulting to PERL5LIB.
 
-diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-index 536754583..7440aa1c4 100644
---- a/contrib/diff-highlight/DiffHighlight.pm
-+++ b/contrib/diff-highlight/DiffHighlight.pm
-@@ -4,6 +4,11 @@ use 5.008;
- use warnings FATAL => 'all';
- use strict;
- 
-+# Use the correct value for both UNIX and Windows (/dev/null vs nul)
-+use File::Spec;
-+
-+my $NULL = File::Spec->devnull();
-+
- # Highlight by reversing foreground and background. You could do
- # other things like bold or underline if you prefer.
- my @OLD_HIGHLIGHT = (
-@@ -134,7 +139,7 @@ sub highlight_stdin {
- # fallback, which means we will work even if git can't be run.
- sub color_config {
- 	my ($key, $default) = @_;
--	my $s = `git config --get-color $key 2>/dev/null`;
-+	my $s = `git config --get-color $key 2>$NULL`;
- 	return length($s) ? $s : $default;
- }
- 
+An alternative approach which was rejected at the time (because it
+interfered with the then-ongoing work to compile Git for Windows using MS
+Visual C++) would patch the make_environment_block() function to skip the
+specified environment variables before handing down the environment block to
+the spawned process. Currently it would interfere with the mingw-utf-8-env
+patch series I sent earlier today
+[https://public-inbox.org/git/pull.57.git.gitgitgadget@gmail.com].
+
+While at it, this patch series also cleans up house and moves the
+Windows-specific core.* variable handling to compat/mingw.c rather than
+cluttering environment.c and config.c with things that e.g. developers on
+Linux do not want to care about.
+
+Johannes Schindelin (4):
+  config: rename `dummy` parameter to `cb` in git_default_config()
+  Allow for platform-specific core.* config settings
+  Move Windows-specific config settings into compat/mingw.c
+  mingw: unset PERL5LIB by default
+
+ Documentation/config.txt     |  6 ++++
+ cache.h                      |  8 -----
+ compat/mingw.c               | 58 +++++++++++++++++++++++++++++++++++-
+ compat/mingw.h               |  3 ++
+ config.c                     | 18 ++++-------
+ environment.c                |  1 -
+ git-compat-util.h            |  8 +++++
+ t/t0029-core-unsetenvvars.sh | 30 +++++++++++++++++++
+ 8 files changed, 109 insertions(+), 23 deletions(-)
+ create mode 100755 t/t0029-core-unsetenvvars.sh
+
+
+base-commit: 4ede3d42dfb57f9a41ac96a1f216c62eb7566cc2
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-62%2Fdscho%2Fperl5lib-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-62/dscho/perl5lib-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/62
 -- 
 gitgitgadget
