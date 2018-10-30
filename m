@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBEF41F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 22:09:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFD9D1F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 22:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728540AbeJaHEh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 03:04:37 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:47812 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728534AbeJaHEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 03:04:36 -0400
-Received: by mail-qk1-f202.google.com with SMTP id f81-v6so14905835qkb.14
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:09:21 -0700 (PDT)
+        id S1728544AbeJaHEk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 03:04:40 -0400
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:48884 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728534AbeJaHEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 03:04:39 -0400
+Received: by mail-yw1-f74.google.com with SMTP id v132-v6so9938807ywb.15
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=vuV8ZxSueg+saTYiqp0ei1lG+d06gAWfJrnhI+UF3o8=;
-        b=v51WHpWAd+xfUoT1HYULuHd3U4z0QdzkMU/S2nlk6BIw3b1/YUTIJHmFs9G7+oLy8O
-         lzZ6WZXZ2Lh5/jwCBYEUj/+jiEA6qAZ3BFXhuf1XiOYsXHgWXs3AfhRdrgrPictReqqe
-         8ch8m9GQ7W4mKhNmADuqmINerhvjKgpLF+KE+Bwuom1wViOW2L1jsNI5Mt8GSjbIrR73
-         gF3LH5HJ3ieRD0vX7XYYBXXMpKh1UIBaHeO6tDWXVGoSqxlyXpU4nFdT/0buZTK3jQUT
-         cfqH8I+91LoOo/a0eubsGdAR4dZQOj72I91+Hb3WY/X4jBrTOdgQXEKsWXx1Zm3Tm+cC
-         lylQ==
+        bh=ihuv0b8kbZ6CR3EhoQEBR9jxAwJ1ukt/7uhzNErL5jI=;
+        b=Gv+XjylKedilxHmYwzXrxB2JXYxpATBkoVVcR2ri6+acDSeoe1CaJIKZk80tvWikNg
+         hC+rvROpJeIvPbd9Llt+nCTrEsBwRr1LWiguqHI/pYrU5GR7XWjjmJa4H6OA6GwPU7r0
+         zvSAOAMdAv15RsDb/FbiL04WUUPVT2HKXOpJlJ5B4CxVoZS+W51L//nC6eIGl/xh7Yl7
+         38JUnNOuFSeuvkLlNN3KtkH8hDd0hM86x6tfO6UTorE9qOhdL6HfR/frTwcXUP56K9mu
+         oQ2mgxz7Imdq+vdZUovDmrguq41duwIcS+Akh5CV/AhrcM7gPyryK1eC4DQ8JCkCb/Ut
+         6qQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=vuV8ZxSueg+saTYiqp0ei1lG+d06gAWfJrnhI+UF3o8=;
-        b=lUIirt4icNeZ6ytKVHC+6J8OTSgzRZpvfAvBByqep1hdyUEn0yL90DpX5Sec/IBzlD
-         SdUc1qVfjGf27d8PWtJYBVT+7ETcm55MAwownE3x4OcDAE2A08sAPplymFPVZv+40kB7
-         l67Iizwe4xgr+sZqg1tcMrRmEq3eHvjkWorQ9OGf3lfoGxnst4KgNaWbuFkuB/vOkPVL
-         MdsF5F/XiRKRQbmGZMMgnWd6clNZ0jrUnnMlYf1GX2r27n/8nwbM2w8jTsbYgf3+gSXd
-         Gp9nUqVAPK6MxVPe7OqHIKYZDkYWXfmP1xMJVKOi4y6LPt0aldzkp0Ua/VMKLNUkwbi+
-         4v6g==
-X-Gm-Message-State: AGRZ1gLe7nd/QgWAW9pn58tBBGeZ6kqlhiTtTnN1tyMmhWMfjFQMulhB
-        SnWemuU3DoJ7EJRYZFjEZJUzs6AusE+VtzNYAjuZs71Z+8D9OwOcWOnBeEa+hAyEGLJt/5cWX7x
-        jg3178gwGGYGLiCBiAw1+rmvO78mtsUf43rAqu7bi3ivg55q/PdaXKleOcI93
-X-Google-Smtp-Source: AJdET5fP+YWT6agB2TDEAu0laJhNL+7bVnU1VS/0MQUFhLeA3AwgybjOd/Nbh9Ltor5IXHMIHNzVdYMLU9C4
-X-Received: by 2002:ac8:5488:: with SMTP id h8-v6mr427277qtq.51.1540937361488;
- Tue, 30 Oct 2018 15:09:21 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 15:08:13 -0700
+        bh=ihuv0b8kbZ6CR3EhoQEBR9jxAwJ1ukt/7uhzNErL5jI=;
+        b=BSaARr9oC7UY3zgYX+X9Uhq1WDkBvxeNMPNT19zdD6Fks5eeudMOLDJBjzcBCQBhH9
+         U5++3ftZ+c0pk0JbvXG/0JYZg1psTPxu6KpHpVWqZKQIKthWypwCd2MHrliYWfXlPX5E
+         FyiaMBnB79bIh22rxEnIZXUlIpThJR2ydBudN6eVUcUcgbGoN/RFnttAmwVizvDegIXZ
+         UbYUTO4bmu1l1dUpDBMKe5NoW9lsynCxGpZDAuJ9j0Wu5vMT4/SaC1pfCRxvGQnDFaDL
+         1pPtDaMQo+2CwImpKLsD1nf8RPjnYe7DZC3mo8Tz3W8aHin/zJP1S1KQkVPzdTTC/zzf
+         9aMw==
+X-Gm-Message-State: AGRZ1gK98l+oLbup03fVD78i/8QDU90IKjPMnoT7T6O9YgmsVP4CAXM6
+        WjkUzHOX9M67A5zFvMxmv3Y0ZNVPF+m3J1bsJtCo8OQnZaDK6n3Wj3XyTqY7M6ez/XlGIgS8cUX
+        KN7fVSpE78YtmTXpjOcPNYyHT8CwJnSRXIveqqenovkF35tPZP7AOMQaBUEuV
+X-Google-Smtp-Source: AJdET5dTy8lTe6DPhf1olTGL3kJZaVmYip6Dx1+J0K8tW0cMEaGx7pV/ighj8OywSQFHkREYIXuPqwGeVTWx
+X-Received: by 2002:a25:2708:: with SMTP id n8-v6mr383794ybn.96.1540937364181;
+ Tue, 30 Oct 2018 15:09:24 -0700 (PDT)
+Date:   Tue, 30 Oct 2018 15:08:14 -0700
 In-Reply-To: <20181030220817.61691-1-sbeller@google.com>
-Message-Id: <20181030220817.61691-21-sbeller@google.com>
+Message-Id: <20181030220817.61691-22-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181030220817.61691-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
-Subject: [PATCH 20/24] submodule: don't add submodule as odb for push
+Subject: [PATCH 21/24] commit-graph: convert remaining function to handle
+ arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     szeder.dev@gmail.com, jonathantanmy@google.com,
@@ -63,34 +64,164 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In push_submodule(), because we do not actually need access to objects
-in the submodule, do not invoke add_submodule_odb().
-(for_each_remote_ref_submodule() does not require access to those
-objects, and the actual push is done by spawning another process,
-which handles object access by itself.)
+Convert all functions to handle arbitrary repositories in commit-graph.c
+that are used by functions taking a repository argument already.
 
-This code of push_submodule() is exercised in t5531 and continues
-to work, showing that the submodule odbc is not needed.
+Notable exclusion is write_commit_graph and its local functions as that
+only works on the_repository.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 3 ---
- 1 file changed, 3 deletions(-)
+ commit-graph.c | 40 ++++++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 0fdda45252..da1ac1e6f8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1024,9 +1024,6 @@ static int push_submodule(const char *path,
- 			  const struct string_list *push_options,
- 			  int dry_run)
+diff --git a/commit-graph.c b/commit-graph.c
+index 40c855f185..f78a8e96b5 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -292,7 +292,8 @@ static int bsearch_graph(struct commit_graph *g, struct object_id *oid, uint32_t
+ 			    g->chunk_oid_lookup, g->hash_len, pos);
+ }
+ 
+-static struct commit_list **insert_parent_or_die(struct commit_graph *g,
++static struct commit_list **insert_parent_or_die(struct repository *r,
++						 struct commit_graph *g,
+ 						 uint64_t pos,
+ 						 struct commit_list **pptr)
  {
--	if (add_submodule_odb(path))
--		return 1;
--
- 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		argv_array_push(&cp.args, "push");
+@@ -303,7 +304,7 @@ static struct commit_list **insert_parent_or_die(struct commit_graph *g,
+ 		die("invalid parent position %"PRIu64, pos);
+ 
+ 	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
+-	c = lookup_commit(the_repository, &oid);
++	c = lookup_commit(r, &oid);
+ 	if (!c)
+ 		die(_("could not find commit %s"), oid_to_hex(&oid));
+ 	c->graph_pos = pos;
+@@ -317,7 +318,9 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+ 	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+ }
+ 
+-static int fill_commit_in_graph(struct commit *item, struct commit_graph *g, uint32_t pos)
++static int fill_commit_in_graph(struct repository *r,
++				struct commit *item,
++				struct commit_graph *g, uint32_t pos)
+ {
+ 	uint32_t edge_value;
+ 	uint32_t *parent_data_ptr;
+@@ -341,13 +344,13 @@ static int fill_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+ 	edge_value = get_be32(commit_data + g->hash_len);
+ 	if (edge_value == GRAPH_PARENT_NONE)
+ 		return 1;
+-	pptr = insert_parent_or_die(g, edge_value, pptr);
++	pptr = insert_parent_or_die(r, g, edge_value, pptr);
+ 
+ 	edge_value = get_be32(commit_data + g->hash_len + 4);
+ 	if (edge_value == GRAPH_PARENT_NONE)
+ 		return 1;
+ 	if (!(edge_value & GRAPH_OCTOPUS_EDGES_NEEDED)) {
+-		pptr = insert_parent_or_die(g, edge_value, pptr);
++		pptr = insert_parent_or_die(r, g, edge_value, pptr);
+ 		return 1;
+ 	}
+ 
+@@ -355,7 +358,7 @@ static int fill_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+ 			  4 * (uint64_t)(edge_value & GRAPH_EDGE_LAST_MASK));
+ 	do {
+ 		edge_value = get_be32(parent_data_ptr);
+-		pptr = insert_parent_or_die(g,
++		pptr = insert_parent_or_die(r, g,
+ 					    edge_value & GRAPH_EDGE_LAST_MASK,
+ 					    pptr);
+ 		parent_data_ptr++;
+@@ -374,7 +377,9 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+ 	}
+ }
+ 
+-static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
++static int parse_commit_in_graph_one(struct repository *r,
++				     struct commit_graph *g,
++				     struct commit *item)
+ {
+ 	uint32_t pos;
+ 
+@@ -382,7 +387,7 @@ static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item
+ 		return 1;
+ 
+ 	if (find_commit_in_graph(item, g, &pos))
+-		return fill_commit_in_graph(item, g, pos);
++		return fill_commit_in_graph(r, item, g, pos);
+ 
+ 	return 0;
+ }
+@@ -391,7 +396,7 @@ int parse_commit_in_graph(struct repository *r, struct commit *item)
+ {
+ 	if (!prepare_commit_graph(r))
+ 		return 0;
+-	return parse_commit_in_graph_one(r->objects->commit_graph, item);
++	return parse_commit_in_graph_one(r, r->objects->commit_graph, item);
+ }
+ 
+ void load_commit_graph_info(struct repository *r, struct commit *item)
+@@ -403,19 +408,22 @@ void load_commit_graph_info(struct repository *r, struct commit *item)
+ 		fill_commit_graph_info(item, r->objects->commit_graph, pos);
+ }
+ 
+-static struct tree *load_tree_for_commit(struct commit_graph *g, struct commit *c)
++static struct tree *load_tree_for_commit(struct repository *r,
++					 struct commit_graph *g,
++					 struct commit *c)
+ {
+ 	struct object_id oid;
+ 	const unsigned char *commit_data = g->chunk_commit_data +
+ 					   GRAPH_DATA_WIDTH * (c->graph_pos);
+ 
+ 	hashcpy(oid.hash, commit_data);
+-	c->maybe_tree = lookup_tree(the_repository, &oid);
++	c->maybe_tree = lookup_tree(r, &oid);
+ 
+ 	return c->maybe_tree;
+ }
+ 
+-static struct tree *get_commit_tree_in_graph_one(struct commit_graph *g,
++static struct tree *get_commit_tree_in_graph_one(struct repository *r,
++						 struct commit_graph *g,
+ 						 const struct commit *c)
+ {
+ 	if (c->maybe_tree)
+@@ -423,12 +431,12 @@ static struct tree *get_commit_tree_in_graph_one(struct commit_graph *g,
+ 	if (c->graph_pos == COMMIT_NOT_FROM_GRAPH)
+ 		BUG("get_commit_tree_in_graph_one called from non-commit-graph commit");
+ 
+-	return load_tree_for_commit(g, (struct commit *)c);
++	return load_tree_for_commit(r, g, (struct commit *)c);
+ }
+ 
+ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit *c)
+ {
+-	return get_commit_tree_in_graph_one(r->objects->commit_graph, c);
++	return get_commit_tree_in_graph_one(r, r->objects->commit_graph, c);
+ }
+ 
+ static void write_graph_chunk_fanout(struct hashfile *f,
+@@ -1025,7 +1033,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 		}
+ 
+ 		graph_commit = lookup_commit(r, &cur_oid);
+-		if (!parse_commit_in_graph_one(g, graph_commit))
++		if (!parse_commit_in_graph_one(r, g, graph_commit))
+ 			graph_report("failed to parse %s from commit-graph",
+ 				     oid_to_hex(&cur_oid));
+ 	}
+@@ -1061,7 +1069,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 			continue;
+ 		}
+ 
+-		if (!oideq(&get_commit_tree_in_graph_one(g, graph_commit)->object.oid,
++		if (!oideq(&get_commit_tree_in_graph_one(r, g, graph_commit)->object.oid,
+ 			   get_commit_tree_oid(odb_commit)))
+ 			graph_report("root tree OID for commit %s in commit-graph is %s != %s",
+ 				     oid_to_hex(&cur_oid),
 -- 
 2.19.1.930.g4563a0d9d0-goog
 
