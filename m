@@ -2,225 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 396CB1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 09:57:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BC631F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 10:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbeJ3St7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 14:49:59 -0400
-Received: from mout.gmx.net ([212.227.17.22]:41335 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726247AbeJ3St6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 14:49:58 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1gQk9o27bW-009NKi; Tue, 30
- Oct 2018 10:56:58 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1gQk9o27bW-009NKi; Tue, 30
- Oct 2018 10:56:58 +0100
-Date:   Tue, 30 Oct 2018 10:57:09 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Antonio Ospite <ao2@ao2.it>
-cc:     gitster@pobox.com, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v7 09/10] submodule: support reading .gitmodules when
- it's not in the working tree
-In-Reply-To: <20181025161813.17252-10-ao2@ao2.it>
-Message-ID: <nycvar.QRO.7.76.6.1810301053540.4546@tvgsbejvaqbjf.bet>
-References: <20181025161813.17252-1-ao2@ao2.it> <20181025161813.17252-10-ao2@ao2.it>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726761AbeJ3TEA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 15:04:00 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50540 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726523AbeJ3TD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 15:03:59 -0400
+Received: by mail-wm1-f66.google.com with SMTP id h2-v6so7292134wmb.0
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 03:11:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=gEPVC1pdP7TZCYL+Au+9Rd84o2o59A4p7w6XM/58fjA=;
+        b=j6o8Su660QXOVJ4JjX9Oaezu49RDDAX0UDZEFPWVWQqEDwyTB77bb4tLuiyhdA6Wm+
+         3x5vbNBJJY2xAKgZz5ol97jTgDaiYjt/dL+jsh5CKOwsU9uzrWAxHg+rxnSVPVbMxXsQ
+         ohEO4KokGfoouVuZJJQ0+rqGJXSM+EkXlkQ2Dmh74pxeXGyvbc45BzA6XyftI6jWW/TA
+         yR9yXE180qMOllGcJlAYfJYsQ/+wRvtwmB6VwXJBW/JmKU73A6hvP3ya60k0A9xM+9W1
+         dtiLeO9f/iCanwtipIFNMIV/a5ImVOKh+qjHuBed6VxT2aQF5q9VNRJcvOJU6QKyUOL4
+         Gs1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gEPVC1pdP7TZCYL+Au+9Rd84o2o59A4p7w6XM/58fjA=;
+        b=p8sEhcG3ugy2vRCXGiwtDMEMzOEJKD3CQlAEnfh3CHWZNh08Up5ZSjmu40+x2f/I/F
+         ERsdc05xCiXLH4qSlzdJEBKGeJiZ5ZkHg/oQCIqeldpj9nM+hAWFUYzhySY2TG+p3nw7
+         ALmckKildAS44HFWqiF0/Zrst4oxGN9dzRflFN179Nfx1YQhkZbpivvHhyvJkh13jM+i
+         o/a5nRxTWX0/XouEZkUadZUo6dCjZOTGKJpJLW0AILiDSEAgnfHma0vj0MOHUYMUvCau
+         yVQVv5IoTFtUG3jPr2Pu5BfJUZtIkE8sUa6yr4eIhlvDor2yED5nnehgzY0ivaaJaIGt
+         x6ow==
+X-Gm-Message-State: AGRZ1gLCEu9Jz4Drloen6DQJITQcnhx6ZlA0dh3HK9seqcFwIYPqLNFD
+        LuOHbTnRwNr3curfOk9gRRY=
+X-Google-Smtp-Source: AJdET5emqcodM1pkg3UIIe7pycA2lapQJQ0bMpQT/cpbNeplKNxH0D7enT00VPTb8ncM3mRLz43YkQ==
+X-Received: by 2002:a1c:c40a:: with SMTP id u10-v6mr1191891wmf.30.1540894268749;
+        Tue, 30 Oct 2018 03:11:08 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n1-v6sm5736542wra.59.2018.10.30.03.11.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Oct 2018 03:11:07 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
+        david.lu97@outlook.com, shirui.wang@hotmail.com,
+        f.francet@hotmail.com
+Subject: Re: [RFC PATCH] remote: add --fetch option to git remote set-url
+References: <1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com>
+        <xmqqftwp47nb.fsf@gitster-ct.c.googlers.com>
+        <20181030075653.GA4114@archbookpro.localdomain>
+Date:   Tue, 30 Oct 2018 19:11:06 +0900
+In-Reply-To: <20181030075653.GA4114@archbookpro.localdomain> (Denton Liu's
+        message of "Tue, 30 Oct 2018 03:56:53 -0400")
+Message-ID: <xmqq8t2f218l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ugPLgvCAYXm6gs9Qr6JdzW7vu4g2cnv97ZhZ9uxweWpZdHIDgsq
- H6BjxT8Nxg9ztwJmZKSzDytnRmYlYfj5BhyX0gcRrDh2fHrx1BgY8RntLSX0zITzK+bOGto
- hBj+rIJlkbLZfNj1Lws3gg8YCopA7vjkMmChrG2nN3mFVE6RjhfTDus633e9YwRuS5j6uk0
- WB4UDOvxythVOh/zR1tFw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mE9QbLCgbRM=:cZBhB2eYaULbSMqlhhtOoP
- T3t6LLjRpTOAcRGsjr+3PJIgg6XjUPQz9YV/KLFrFmOLvy2460Xtj6peMtBBcUvF3HPXbaeyR
- fBKtRZ7hGBZ0Ny+SP/7qc04mvOQSVACsv72yDyMjbvGXPY7Z/hhjcub3n0DjE8F+IkLCHON9L
- qk0l8Ig8a7wPxJxAGc4ktzTDuddW+RsYAsUIYk+xxjdOlvL2N7ASSNR3cPBi5StYbhiadk95P
- iKT1IIVny44W+gwPf+o+usD/nTpIaeDm8ZQReMC4FQBzIflcLVQoua7l/651Sguj455+sVArL
- r2EG3BtpiAus9SZHbWpnYZv+iwkFoWHTfQV/HB7ZWakPhXDMploQWTDMDkjUEyojLRq2596a4
- 5fjeO3WsBkj5okLeIkfE0cxvfhOwflrNYWZJLFAoxsNWdN3t28v9gQc/8DrQr4k8QOG+rBDse
- fszj11BRgc2JH4slgn3tcJ5v7nYi4t9Fxv5Oo95GY6DWHS83fiE2QG8jDnJ82RHKQwrqMEqVc
- Bcp5pzdevFMP2Pr/HS511SHTkkTXh4jFUGZtqz8rY4LmsEOd6vwEJ6yMRltu2MZoQOfRpWImR
- 4Cec2JL3JuMjUgLBKNOsxQnXQlDft4iBIF5Ta86MnHkievHCgSt9JBxCfZAqkfbRTBO9WogRu
- 43sP7pe1hm/uoaMc0JBmPeVRgPi0fwTsAbTMRvYHFxlzK0ar24jq1o7Yh+em6RNYOy+cYg96r
- vtjbOWdN1OM/nEPfE9cg40jzF2pYJS3wuYtjf/7YTH5bHQNe/x1A9MzgcY/+PU+rKTqtPLpPk
- yhzYF0WtLcyw8bzBX1UjZDrdg0fguNAMKO9vAoPZ6rU6y45Alk=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Antonio,
+Denton Liu <liu.denton@gmail.com> writes:
 
-On Thu, 25 Oct 2018, Antonio Ospite wrote:
+> On Mon, Oct 29, 2018 at 02:57:28PM +0900, Junio C Hamano wrote:
+> ...
+>> Earlier you had a check like this:
+>> 
+>> > +	if (push_mode && fetch_mode)
+>> > +		die(_("--push --fetch doesn't make sense"));
+>> 
+>> If a request to "--fetch" is ignored when "--add" is given, for
+>> example, shouldn't the combination also be diagnosed as "not making
+>> sense, we'd ignore your wish to use the --fetch option"?  Similarly
+>> for the case where there already is pushurl defined for the remote.
 
-> diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
-> new file mode 100755
-> index 0000000000..21a86b89c6
-> --- /dev/null
-> +++ b/t/t7418-submodule-sparse-gitmodules.sh
-> @@ -0,0 +1,122 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (C) 2018  Antonio Ospite <ao2@ao2.it>
-> +#
-> +
-> +test_description='Test reading/writing .gitmodules when not in the working tree
-> +
-> +This test verifies that, when .gitmodules is in the current branch but is not
-> +in the working tree reading from it still works but writing to it does not.
-> +
-> +The test setup uses a sparse checkout, however the same scenario can be set up
-> +also by committing .gitmodules and then just removing it from the filesystem.
-> +'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'sparse checkout setup which hides .gitmodules' '
-> +	git init upstream &&
-> +	git init submodule &&
-> +	(cd submodule &&
-> +		echo file >file &&
-> +		git add file &&
-> +		test_tick &&
-> +		git commit -m "Add file"
-> +	) &&
-> +	(cd upstream &&
-> +		git submodule add ../submodule &&
-> +		test_tick &&
-> +		git commit -m "Add submodule"
-> +	) &&
-> +	git clone upstream super &&
-> +	(cd super &&
-> +		cat >.git/info/sparse-checkout <<-\EOF &&
-> +		/*
-> +		!/.gitmodules
-> +		EOF
-> +		git config core.sparsecheckout true &&
-> +		git read-tree -m -u HEAD &&
-> +		test_path_is_missing .gitmodules
-> +	)
-> +'
-> +
-> +test_expect_success 'reading gitmodules config file when it is not checked out' '
-> +	echo "../submodule" >expect &&
-> +	git -C super submodule--helper config submodule.submodule.url >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'not writing gitmodules config file when it is not checked out' '
-> +	test_must_fail git -C super submodule--helper config submodule.submodule.url newurl &&
-> +	test_path_is_missing super/.gitmodules
-> +'
-> +
-> +test_expect_success 'initialising submodule when the gitmodules config is not checked out' '
-> +	test_must_fail git -C super config submodule.submodule.url &&
-> +	git -C super submodule init &&
-> +	git -C super config submodule.submodule.url >actual &&
-> +	echo "$PWD/submodule" >expect &&
+Clarification.  Here I am suggesting that a part of the logic in the
+earlier assignment to move_fetch_to_push should become a similar
+call to die(), detecting a competing and unsatisfiable wish, rather
+than getting silently ignored.
 
-Would you mind squashing this fixup in?
+>> This is a different tangent on the same line, but it could be that
+>> the user wants to have two (or more) pushURLs because the user wants
+>> to push to two remotes at the same time with "git push this-remote",
+>> so silently ignoring "--force" may not be the right thing in the
 
--- snip --
-diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
-index 21a86b89c6cb..3f7f27188313 100755
---- a/t/t7418-submodule-sparse-gitmodules.sh
-+++ b/t/t7418-submodule-sparse-gitmodules.sh
-@@ -55,7 +55,7 @@ test_expect_success 'initialising submodule when the gitmodules config is not ch
- 	test_must_fail git -C super config submodule.submodule.url &&
- 	git -C super submodule init &&
- 	git -C super config submodule.submodule.url >actual &&
--	echo "$PWD/submodule" >expect &&
-+	echo "$(pwd)/submodule" >expect &&
- 	test_cmp expect actual
- '
- 
--- snap --
+Correction.  s/--force/--fetch/ was what I meant here.
 
-On Windows, `$PWD` and `$(pwd)` are *not* synonymous. The former
-reflects the "Unix path" which is understood by the Bash script (and
-only by the Bash script, *not* by `git.exe`!) while the latter refers to
-the actual Windows path.
+>> first place.  We may instead need to make the value of URL to an
+>> extra pushURL entry (if we had one, we now have two).
 
-Without this fix, your new test case will fail on Windows all the time,
-see e.g.
-https://git-for-windows.visualstudio.com/git/_build/results?buildId=22913&view=logs
+Also, additionally, since there is no use to have two or more URL,
+because unlike "git push $there" that can push to two places,
+fetching from two places into the same set of remote-tracking
+branches would not make sense, --move-pushURL-to-URL-and-set-pushURL
+operation that is the symmetry of what the patch under discussion
+proposes should fail instead of creating an extra URL entry, breaking
+an apparent symmetry.
 
-Thanks,
-Johannes
+> Perhaps I should motivate the use-case for this option. There have been
+> times when I've had the URL set to something but no pushURL. I've
+> wanted to only change the fetching URL and keep the pushing URL the same
 
+URL (plus optionally pushURL) split was done because most everybody
+were fetching from and pushing to the same place; it would not have
+made any sense to have fetchURL and pushURL that are separate, as
+that would have forced everybody to have both, when majority of the
+users would have to set them to the same value.
 
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'updating submodule when the gitmodules config is not checked out' '
-> +	test_path_is_missing super/submodule/file &&
-> +	git -C super submodule update &&
-> +	test_cmp submodule/file super/submodule/file
-> +'
-> +
-> +ORIG_SUBMODULE=$(git -C submodule rev-parse HEAD)
-> +ORIG_UPSTREAM=$(git -C upstream rev-parse HEAD)
-> +ORIG_SUPER=$(git -C super rev-parse HEAD)
-> +
-> +test_expect_success 're-updating submodule when the gitmodules config is not checked out' '
-> +	test_when_finished "git -C submodule reset --hard $ORIG_SUBMODULE;
-> +			    git -C upstream reset --hard $ORIG_UPSTREAM;
-> +			    git -C super reset --hard $ORIG_SUPER;
-> +			    git -C upstream submodule update --remote;
-> +			    git -C super pull;
-> +			    git -C super submodule update --remote" &&
-> +	(cd submodule &&
-> +		echo file2 >file2 &&
-> +		git add file2 &&
-> +		test_tick &&
-> +		git commit -m "Add file2 to submodule"
-> +	) &&
-> +	(cd upstream &&
-> +		git submodule update --remote &&
-> +		git add submodule &&
-> +		test_tick &&
-> +		git commit -m "Update submodule"
-> +	) &&
-> +	git -C super pull &&
-> +	# The --for-status options reads the gitmodules config
-> +	git -C super submodule summary --for-status >actual &&
-> +	rev1=$(git -C submodule rev-parse --short HEAD) &&
-> +	rev2=$(git -C submodule rev-parse --short HEAD^) &&
-> +	cat >expect <<-EOF &&
-> +	* submodule ${rev1}...${rev2} (1):
-> +	  < Add file2 to submodule
-> +
-> +	EOF
-> +	test_cmp expect actual &&
-> +	# Test that the update actually succeeds
-> +	test_path_is_missing super/submodule/file2 &&
-> +	git -C super submodule update &&
-> +	test_cmp submodule/file2 super/submodule/file2 &&
-> +	git -C super status --short >output &&
-> +	test_must_be_empty output
-> +'
-> +
-> +test_expect_success 'not adding submodules when the gitmodules config is not checked out' '
-> +	git clone submodule new_submodule &&
-> +	test_must_fail git -C super submodule add ../new_submodule &&
-> +	test_path_is_missing .gitmodules
-> +'
-> +
-> +# This test checks that the previous "git submodule add" did not leave the
-> +# repository in a spurious state when it failed.
-> +test_expect_success 'init submodule still works even after the previous add failed' '
-> +	git -C super submodule init
-> +'
-> +
-> +test_done
+Quite honestly, tweaking URL and/or pushURL is not something you'd
+do every three months or more frequently, so I do not particularly
+feel sympathetic to the cause of this patch, which would allow
+setting one to the value that happens to be set to the other one
+while setting an arbitrary new value to the other one.  Once the
+user's need deviates from that single niche pattern, the user needs
+to update both, and setting these two independently is quite simple
+and straight-forward in the first place.  And that same simple pattern
+to set two independently can be used without learning this new option.
+
+> My implementation of --fetch is supposed to emulate what would happen if
+> git were implemented with fetchurl/pushurl instead. Does the patch make
+> more sense in this context?
+
+Hmph.  As a system that has fetchURL and pushURL independently and
+forces everybody to set both does not make much sense in the first
+place, the patch making sense in that context is not a very strong
+reason to support it.
+
+> Please let me know if you think that the concept behind this patch is a
+> good idea. Thanks!
+
+If I don't then I do not have to let you know, then ;-) 
+
+I do not particularly think it is a horrible idea, but I do not see
+that it would be a feature that helps particuarly wide audience.
