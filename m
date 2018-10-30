@@ -2,102 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 480641F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 14:22:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D89CC1F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 15:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728115AbeJ3XQU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 19:16:20 -0400
-Received: from mail-qt1-f181.google.com ([209.85.160.181]:36527 "EHLO
-        mail-qt1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726563AbeJ3XQT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 19:16:19 -0400
-Received: by mail-qt1-f181.google.com with SMTP id u34-v6so13627650qth.3
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 07:22:38 -0700 (PDT)
+        id S1727638AbeJaAXa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 20:23:30 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:51099 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727339AbeJaAX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 20:23:29 -0400
+Received: by mail-it1-f196.google.com with SMTP id k206-v6so14204477ite.0
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 08:29:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ye9Jxf5T/0slpUix81jxiILHvrWH1N7K2P4DnIq6xNk=;
-        b=qwe49LUoL2oStTcH/gyEv7XWIdl2tW8y7E1OtL0trMRSlVPTZKD+F8jkGeHT7CErol
-         L0LmhFMBKSju86pODJEQFOgVlH91T4fKq2frcJ5qjnEauWmvualRaAhLcUl9UTQIJX3b
-         nhbYMZe2iyEi3hgz1sIBSD6MQI+kiWFFTwcnRQ9jg/L2YkNsbJKAd8gfXsFjmQ2irMLC
-         j7NrjQp6XQMchWzU4YUAyBHulfoV50fta1DsoZvpcbEoIaRR7KEiF/MbQPepOk8QN1Fx
-         MaI6tpCljUX17HB5r4zacNJw52wT1ImJnrvXImV5XAEHWNWmREznWPu1cI9FdRy+c5h5
-         q9sQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CMsUpqiXAJV0x6sqKoACggex0pG8Di/55nDJDya34Tw=;
+        b=q3l9eeKGxGaPvXJmz7T7xGYba8qve8daAx9FSiGYUjnZeCCcLfM5iyK83tQO8Q+YEZ
+         2ue3Bf2rTMpXobviK57RVQJkWSoBcXfYZpSxGdexfPWNOhuMixRIJFwGTkVZmTtR+0Vn
+         Hm31Lg0YFgn5sbsmIQTN7TFJGb0J/XG0dw/cU/Qxkbn6lJ2NlZav1R0kPbK/cfzoBvv6
+         IJwWByzEYPNTqVUhSnuw+WsxKiZVfWxfWsPD4frgGO2POlq+KKb3cRxRpRW8m/5YbmLO
+         g9xHjwPIHJq5rY+f5m+oH1cS2HhMnw0IptKdunsxItF0W6L+RbSzU9hn8b2uiDJm6WWA
+         huPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ye9Jxf5T/0slpUix81jxiILHvrWH1N7K2P4DnIq6xNk=;
-        b=Xo9uwk6rAqSJ8tBOUAQEs/4Z7JXUxTHP9xP/veOlxUZm5kNhNkbXTmabQG7FcF8in1
-         tEs3Ctz88YhW7gd8+2h39TrpcVeW8M534whsIsJVduCAoMpadzZodevnwkiPzQrpJs37
-         2ynTBTu50vt1qFOt0YzRjVQ0OopFCksUGHoTLQrbjYO0KXmAsZdEgbC9co4u+s6ptyxA
-         PSySLGETaL+tRtefYvI9yZUXqXFHeMH7FX5zJ3JB/vZra1BjwjYrSMp6/VejQ/QHZPOk
-         PlgYInQpuA7keblLD4hWdtyIVYjs6Gka4ySsIOuB/CSPAoDykEXcJEqz+DFCZLy9TLUg
-         eerw==
-X-Gm-Message-State: AGRZ1gJIsNo+DhNzh3pTFZlMQHLVo8kUHSVjYVN+k5pbaBfDX9i2DYzz
-        vLvaGk8aHt6j5rKjkbshU99T5gLM
-X-Google-Smtp-Source: AJdET5dmejnFnZf5Y72XEe37OfkMamukIg+SU6uAGtaMvc5hmX+c9YOIrlsJus91vxnahRpHatgDPA==
-X-Received: by 2002:ac8:6947:: with SMTP id n7-v6mr2345941qtr.326.1540909357845;
-        Tue, 30 Oct 2018 07:22:37 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:51aa:e8f0:335f:de7c? ([2001:4898:8010:0:3ae0:e8f0:335f:de7c])
-        by smtp.gmail.com with ESMTPSA id 14-v6sm20591443qtp.12.2018.10.30.07.22.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Oct 2018 07:22:37 -0700 (PDT)
-Subject: Re: commit-graph is cool (overcoming add_missing_tags() perf issues)
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <CABPp-BECpSOxudovjbDG_3W9wus102RW+E+qPmd4g3Qyd-QDKQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <302a9351-6133-f562-8c5a-d688d5cc3c88@gmail.com>
-Date:   Tue, 30 Oct 2018 10:22:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CMsUpqiXAJV0x6sqKoACggex0pG8Di/55nDJDya34Tw=;
+        b=K/kY4gWZIJecfH8ja4csoCnvlUb/2KjFTAPjv9+0OWfE3wCxzgKUO+j5w31S9fRs43
+         /xsZrPSdaGKgnYC0eTCptpT6FouAI+FcO5HXv+y5qyhdmViUIOmPEH/K02zCanBDTarc
+         Lx0WqiHmB1K7+T0qycpTr61cJsgtgujYDiVpSpF8lNP11nqbWt/Y+H0oR5SChGrQdSMk
+         5IUCEQilVG+Cm9ZNnuMUjsE63nDCLTiY0wRl019AqFfVOoGyZ9V9BZWM9lNOsCG2lCUR
+         8ZYPr4IA7bXHBYyS1CB4sGqXjIAw3vH2W5h3ZzljHFfun1Z6YhhCZN/Y0gdq7KDGUr+7
+         aF+Q==
+X-Gm-Message-State: AGRZ1gKMbmVA1LuKjl6cRLYww07CDXLrdyVdz0iEc28GetHrZEEEoi/4
+        HZQW1ueNYZN9nrIYU9rlRkH5O9SfO2h0EZ3tp4g=
+X-Google-Smtp-Source: AJdET5fbcGOGaVUYyXsxYnrup7//5VQmh17rSUk2PbQFanKO7Zrw1uh6VRRaEmzrXgyS+E0xLKYChmfgN/DjVUbBfpw=
+X-Received: by 2002:a02:958a:: with SMTP id b10-v6mr14064018jai.130.1540913373851;
+ Tue, 30 Oct 2018 08:29:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BECpSOxudovjbDG_3W9wus102RW+E+qPmd4g3Qyd-QDKQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <xmqqbm7c2n0i.fsf@gitster-ct.c.googlers.com> <72331ce9275ce995009fe8dd3d586bb9d71f2cbf.1540881141.git.liu.denton@gmail.com>
+In-Reply-To: <72331ce9275ce995009fe8dd3d586bb9d71f2cbf.1540881141.git.liu.denton@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 30 Oct 2018 16:29:07 +0100
+Message-ID: <CACsJy8Ajc0qWw3RLak1PRPXvQzMHjaFuWJ6BPkhiVg=7fQvCnA@mail.gmail.com>
+Subject: Re: [PATCH v2] completion: use builtin completion for format-patch
+To:     liu.denton@gmail.com,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>, anmolmago@gmail.com,
+        briankyho@gmail.com, david.lu97@outlook.com,
+        shirui.wang@hotmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/17/2018 2:00 PM, Elijah Newren wrote:
-> Hi,
+On Tue, Oct 30, 2018 at 7:39 AM Denton Liu <liu.denton@gmail.com> wrote:
 >
-> Just wanted to give a shout-out for the commit-graph work and how
-> impressive it is.  I had an internal report from a user that git
-> pushes containing only one new tiny commit were taking over a minute
-> (in a moderate size repo with good network connectivity). After
-> digging for a while, I noticed three unusual things about the repo[1]:
->    * he had push.followTags set to true
->    * upstream repo had about 20k tags (despite only 55k commits)
->    * his repo had an additional 2.5k tags, but none of these were in
->      the history of the branches he was pushing and thus would not be
->      included in any pushes.
+> This patch offloads completion functionality for format-patch to
+> __gitcomp_builtin. In addition to this, send-email was borrowing some
+> completion options from format-patch so those options are moved into
+> send-email's completions.
 >
-> Digging in, almost all the time was CPU-bound and spent in
-> add_missing_tags()[2].  If I'm reading the code correctly, it appears
-> that function loops over each tag, calling in_merge_bases_many() once
-> per tag.  Thus, for his case, we were potentially walking all of
-> history of the main branch 2.5k times.  That seemed rather suboptimal.
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>
+> I ran t9902-completion.sh on this patch and it seems to pass. Thus, this
+> should address the concerns about losing some completion options in
+> send-email.
+>
+> ---
+>  contrib/completion/git-completion.bash | 34 +++++++++++---------------
+>  1 file changed, 14 insertions(+), 20 deletions(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d63d2dffd..cb4ef6723 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1531,15 +1531,6 @@ _git_fetch ()
+>         __git_complete_remote_or_refspec
+>  }
+>
+> -__git_format_patch_options="
+> -       --stdout --attach --no-attach --thread --thread= --no-thread
+> -       --numbered --start-number --numbered-files --keep-subject --signoff
+> -       --signature --no-signature --in-reply-to= --cc= --full-index --binary
+> -       --not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+> -       --inline --suffix= --ignore-if-in-upstream --subject-prefix=
+> -       --output-directory --reroll-count --to= --quiet --notes
+> -"
+> -
+>  _git_format_patch ()
+>  {
+>         case "$cur" in
+> @@ -1550,7 +1541,7 @@ _git_format_patch ()
+>                 return
+>                 ;;
+>         --*)
+> -               __gitcomp "$__git_format_patch_options"
+> +               __gitcomp_builtin format-patch
 
-Elijah,
+We do want to keep some extra options back because __gitcomp_builtin
+cannot show all supported options of format-patch. The reason is a
+subset of options is handled by setup_revisions() which does not have
+--git-completion-helper support.
 
-Do you still have this repo around? Could you by chance test the 
-performance with the new algorithm for add_missing_tags() in [1]? 
-Specifically, please test it without a commit-graph file, since your 
-data shape already makes use of generation numbers pretty well.
+> @@ -2080,16 +2071,19 @@ _git_send_email ()
+>                 return
+>                 ;;
+>         --*)
+> -               __gitcomp "--annotate --bcc --cc --cc-cmd --chain-reply-to
+> -                       --compose --confirm= --dry-run --envelope-sender
+> -                       --from --identity
+> -                       --in-reply-to --no-chain-reply-to --no-signed-off-by-cc
+> -                       --no-suppress-from --no-thread --quiet --reply-to
+> -                       --signed-off-by-cc --smtp-pass --smtp-server
+> -                       --smtp-server-port --smtp-encryption= --smtp-user
+> -                       --subject --suppress-cc= --suppress-from --thread --to
+> -                       --validate --no-validate
+> -                       $__git_format_patch_options"
+> +               __gitcomp "--all --annotate --attach --bcc --binary --cc --cc= --cc-cmd
+> +                       --chain-reply-to --compose --confirm= --cover-letter --dry-run
+> +                       --dst-prefix= --envelope-sender --from --full-index --identity
+> +                       --ignore-if-in-upstream --inline --in-reply-to --in-reply-to=
+> +                       --keep-subject --no-attach --no-chain-reply-to --no-prefix
+> +                       --no-signature --no-signed-off-by-cc --no-suppress-from --not --notes
+> +                       --no-thread --no-validate --numbered --numbered-files
+> +                       --output-directory --quiet --reply-to --reroll-count --signature
+> +                       --signed-off-by-cc --signoff --smtp-encryption= --smtp-pass
+> +                       --smtp-server --smtp-server-port --smtp-user --src-prefix=
+> +                       --start-number --stdout --subject --subject-prefix= --suffix=
+> +                       --suppress-cc= --suppress-from --thread --thread= --to --to=
+> +                       --validate"
 
-Thanks,
--Stolee
-
-[1] https://public-inbox.org/git/pull.60.git.gitgitgadget@gmail.com/T/#t
+I have no comment about this. In an ideal world, sendemail.perl could
+be taught to support --git-completion-helper but I don't think my
+little remaining Perl knowledge (or time) is enough to do it. Perhaps
+this will do. I don't know.
+-- 
+Duy
