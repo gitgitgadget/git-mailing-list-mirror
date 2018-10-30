@@ -2,91 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9BAD1F454
-	for <e@80x24.org>; Tue, 30 Oct 2018 10:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91C691F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 11:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727525AbeJ3Tc0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 15:32:26 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:51848 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727484AbeJ3TcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 15:32:22 -0400
-Received: from lindisfarne.localdomain ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id HRQbg5GIzdJAeHRQjgS6Mv; Tue, 30 Oct 2018 10:39:25 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1540895965;
-        bh=V98OIZ9/wcZEy6Q93qylF+8qhLCcXXMbKsMwFt8Ajes=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=NLX898JTllOUaRuQglkPE/3a2uw//jVNUZqvZeTMhvLW4ki0Nc8l6chbcp0fQ9Goo
-         RtX8M6qySIHXEo6boU7KsKzRs6QKxEQS5npJ4NA4+Dg69ys81mfBJyy4NrsgRQt1XV
-         Uiqsgii6YRz15Y4U8yhrKXHiTGZw7PI7TNwMFTBU=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=jAbL0x3HlbHIGo4u6YsA:9
- a=2pq0VG0WY9_6zSxb:21 a=q43gRipxSBSK2way:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 3/5] am: rename read_author_script()
-Date:   Tue, 30 Oct 2018 10:39:14 +0000
-Message-Id: <20181030103916.6241-4-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20181030103916.6241-1-phillip.wood@talktalk.net>
-References: <20180912101029.28052-1-phillip.wood@talktalk.net>
- <20181030103916.6241-1-phillip.wood@talktalk.net>
-MIME-Version: 1.0
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfCWbeC7Y5QWISaNlSVo2M+qNSfkTjm9kRP7V/5SvTaiqgu/vY9LXDWBcS59uv2NYw0PoZnA1RNPghBj1yg4u/jJcnDQffHLXJsb7jy57NZ/UFDHIZFl3
- S+RIjQOuxCE130CeDrJPilfV4LbNVsJKdbSckn5s1UtYlPwmOjKya3gL166cKN+lzk3xe8awZIvCnWKeMhLSAXgUbhOASnlV9Fn+mcqeb/mLKKE9QWMsY3k4
- vAkamf87lrnP8DabyCJbkI9gO7RDVOzNF7XNhDxZy6lN+ASHJ6ySblrBarxDTHM6ciN4/gzXxXxDDSVL2N4G8tLeoFNmUFb46R02Gezq+Ek=
+        id S1727610AbeJ3UKb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 16:10:31 -0400
+Received: from mail.ao2.it ([92.243.12.208]:50135 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727603AbeJ3UKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 16:10:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ao2.it; s=20180927;
+        h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:In-Reply-To:Message-Id:Subject:Cc:To:From:Date; bh=eQQIfVhNesCom2y9MVPY1MxYxSMXvbySFk/i/CSdjIg=;
+        b=pII9L+pzCJwjBfmBEl3zqienGdxpdaWmOXPctms4o2GBbpxDbitMdNko0ibOFOpWlnjyUPcmhQyBILQZMpKRgcIgWd6bznzOBj91ZgOv706ipWKrIIkY7FYDC653lXsBWvJU/GURudaUEhzhum8k9ZnHQnCTL0YkKzo8FduqeKy8fmNTvU5v8tpICdj3s2YuTzcrHCkQ1dNcvzPdlY7UdoRIIW29ICf48IthVr6xBC0+xds3QS16p1pDJOnx9os7w75/rmA+kB8Hm9mUY4JXiLjos5BgMA1BEeeP+PgossXw0pAc6gZw16dPSA+WQifXkXvhjRP8Wt3Lz2fJrWoUnQ==;
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1gHS19-0002IU-30; Tue, 30 Oct 2018 12:17:03 +0100
+Date:   Tue, 30 Oct 2018 12:16:30 +0100
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     gitster@pobox.com, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v7 09/10] submodule: support reading .gitmodules when
+ it's not in the working tree
+Message-Id: <20181030121630.0aec137f670bd5d3486cccc5@ao2.it>
+In-Reply-To: <nycvar.QRO.7.76.6.1810301053540.4546@tvgsbejvaqbjf.bet>
+References: <20181025161813.17252-1-ao2@ao2.it>
+        <20181025161813.17252-10-ao2@ao2.it>
+        <nycvar.QRO.7.76.6.1810301053540.4546@tvgsbejvaqbjf.bet>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-unknown-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, 30 Oct 2018 10:57:09 +0100 (STD)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-Rename read_author_script() in preparation for adding a shared
-read_author_script() function to libgit.
+> Hi Antonio,
+>
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/am.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Johannes,
 
-diff --git a/builtin/am.c b/builtin/am.c
-index d42b725273..991d13f9a2 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -306,7 +306,7 @@ static int parse_key_value_squoted(char *buf, struct string_list *list)
-  * script, and thus if the file differs from what this function expects, it is
-  * better to bail out than to do something that the user does not expect.
-  */
--static int read_author_script(struct am_state *state)
-+static int read_am_author_script(struct am_state *state)
- {
- 	const char *filename = am_path(state, "author-script");
- 	struct strbuf buf = STRBUF_INIT;
-@@ -441,7 +441,7 @@ static void am_load(struct am_state *state)
- 		BUG("state file 'last' does not exist");
- 	state->last = strtol(sb.buf, NULL, 10);
- 
--	if (read_author_script(state) < 0)
-+	if (read_am_author_script(state) < 0)
- 		die(_("could not parse author script"));
- 
- 	read_commit_msg(state);
+> On Thu, 25 Oct 2018, Antonio Ospite wrote:
+> 
+> > diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
+> > new file mode 100755
+[...]
+> > +	echo "$PWD/submodule" >expect &&
+> 
+> Would you mind squashing this fixup in?
+> 
+> -- snip --
+> diff --git a/t/t7418-submodule-sparse-gitmodules.sh b/t/t7418-submodule-sparse-gitmodules.sh
+> index 21a86b89c6cb..3f7f27188313 100755
+> --- a/t/t7418-submodule-sparse-gitmodules.sh
+> +++ b/t/t7418-submodule-sparse-gitmodules.sh
+> @@ -55,7 +55,7 @@ test_expect_success 'initialising submodule when the gitmodules config is not ch
+>  	test_must_fail git -C super config submodule.submodule.url &&
+>  	git -C super submodule init &&
+>  	git -C super config submodule.submodule.url >actual &&
+> -	echo "$PWD/submodule" >expect &&
+> +	echo "$(pwd)/submodule" >expect &&
+>  	test_cmp expect actual
+>  '
+>  
+> -- snap --
+> 
+> On Windows, `$PWD` and `$(pwd)` are *not* synonymous. The former
+> reflects the "Unix path" which is understood by the Bash script (and
+> only by the Bash script, *not* by `git.exe`!) while the latter refers to
+> the actual Windows path.
+>
+
+I see, this is also mentioned in t/README, I had overlooked that part.
+Thank you for reporting.
+
+> Without this fix, your new test case will fail on Windows all the time,
+> see e.g.
+> https://git-for-windows.visualstudio.com/git/_build/results?buildId=22913&view=logs
+> 
+
+Junio, what is the plan for 'ao/submodule-wo-gitmodules-checked-out'?
+I see it's not in next yet; do you want me to resend the whole series
+with this fixup in or would it be less overhead for you to apply it
+directly to patch 9/10 from v7 of the series?
+
+Thank you,
+   Antonio
+
+P.S. I was wondering if it is worth having patchset versions mentioned
+somewhere in pu/, maybe in merge commits if not in branch names?
+Or at least in whats-cooking.txt next to the date.
+
 -- 
-2.19.1
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
