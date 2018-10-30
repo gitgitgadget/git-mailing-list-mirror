@@ -6,93 +6,149 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E35D1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 23:18:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45DD91F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 23:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728680AbeJaIOZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 04:14:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33516 "HELO cloud.peff.net"
+        id S1728225AbeJaIpe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 04:45:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33568 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726376AbeJaIOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 04:14:24 -0400
-Received: (qmail 28949 invoked by uid 109); 30 Oct 2018 23:18:53 -0000
+        id S1726366AbeJaIpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 04:45:33 -0400
+Received: (qmail 29112 invoked by uid 109); 30 Oct 2018 23:23:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Oct 2018 23:18:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Oct 2018 23:23:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5328 invoked by uid 111); 30 Oct 2018 23:18:08 -0000
+Received: (qmail 5429 invoked by uid 111); 30 Oct 2018 23:22:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 30 Oct 2018 19:18:08 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 30 Oct 2018 19:22:30 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2018 19:18:51 -0400
-Date:   Tue, 30 Oct 2018 19:18:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2018 19:23:12 -0400
+Date:   Tue, 30 Oct 2018 19:23:12 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         John Szakmeister <john@szakmeister.net>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH 1/3] t1450: check large blob in trailing-garbage test
-Message-ID: <20181030231850.GA32038@sigill.intra.peff.net>
+Subject: [PATCH 2/3] check_stream_sha1(): handle input underflow
+Message-ID: <20181030232312.GB32038@sigill.intra.peff.net>
 References: <20181030231232.GA6141@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <20181030231232.GA6141@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit cce044df7f (fsck: detect trailing garbage in all
-object types, 2017-01-13) added two tests of trailing
-garbage in a loose object file: one with a commit and one
-with a blob. The point of having two is that blobs would
-follow a different code path that streamed the contents,
-instead of loading it into a buffer as usual.
+This commit fixes an infinite loop when fscking large
+truncated loose objects.
 
-At the time, merely being a blob was enough to trigger the
-streaming code path. But since 7ac4f3a007 (fsck: actually
-fsck blob data, 2018-05-02), we now only stream blobs that
-are actually large. So since then, the streaming code path
-is not tested at all for this case.
+The check_stream_sha1() function takes an mmap'd loose
+object buffer and streams 4k of output at a time, checking
+its sha1. The loop quits when we've output enough bytes (we
+know the size from the object header), or when zlib tells us
+anything except Z_OK or Z_BUF_ERROR.
 
-We can restore the original intent of the test by tweaking
-core.bigFileThreshold to make our small blob seem large.
-There's no easy way to externally verify that we followed
-the streaming code path, but I did check before/after using
-a temporary debug statement.
+The latter is expected because zlib may run out of room in
+our 4k buffer, and that is how it tells us to process the
+output and loop again.
 
+But Z_BUF_ERROR also covers another case: one in which zlib
+cannot make forward progress because it needs more _input_.
+This should never happen in this loop, because though we're
+streaming the output, we have the entire deflated input
+available in the mmap'd buffer. But since we don't check
+this case, we'll just loop infinitely if we do see a
+truncated object, thinking that zlib is asking for more
+output space.
+
+It's tempting to fix this by checking stream->avail_in as
+part of the loop condition (and quitting if all of our bytes
+have been consumed). But that assumes that once zlib has
+consumed the input, there is nothing left to do.  That's not
+necessarily the case: it may have read our input into its
+internal state, but still have bytes to output.
+
+Instead, let's continue on Z_BUF_ERROR only when we see the
+case we're expecting: the previous round filled our output
+buffer completely. If it didn't (and we still saw
+Z_BUF_ERROR), we know something is wrong and should break
+out of the loop.
+
+The bug comes from commit f6371f9210 (sha1_file: add
+read_loose_object() function, 2017-01-13), which
+reimplemented some of the existing loose object functions.
+So it's worth checking if this bug was inherited from any of
+those. The answers seems to be no. The two obvious
+candidates are both OK:
+
+  1. unpack_sha1_rest(); this doesn't need to loop on
+     Z_BUF_ERROR at all, since it allocates the expected
+     output buffer in advance (which we can't do since we're
+     explicitly streaming here)
+
+  2. check_object_signature(); the streaming path relies on
+     the istream interface, which uses read_istream_loose()
+     for this case. That function uses a similar "is our
+     output buffer full" check with Z_BUF_ERROR (which is
+     where I stole it from for this patch!)
+
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I prepared this series on master, but it occurs to me you may want to
-apply patch 2 on top of f6371f9210 or thereabouts, which introduced the
-bug it fixes. If so, then obviously this one doesn't make sense back
-then, and should go on top of 7ac4f3a007. It should be semantically
-independent, though there may be a minor text conflict.
+ sha1-file.c     |  3 ++-
+ t/t1450-fsck.sh | 19 +++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
- t/t1450-fsck.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
+diff --git a/sha1-file.c b/sha1-file.c
+index dd0b6aa873..2daf7d9935 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -2199,7 +2199,8 @@ static int check_stream_sha1(git_zstream *stream,
+ 	 * see the comment in unpack_sha1_rest for details.
+ 	 */
+ 	while (total_read <= size &&
+-	       (status == Z_OK || status == Z_BUF_ERROR)) {
++	       (status == Z_OK ||
++		(status == Z_BUF_ERROR && !stream->avail_out))) {
+ 		stream->next_out = buf;
+ 		stream->avail_out = sizeof(buf);
+ 		if (size - total_read < stream->avail_out)
 diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 0f2dd26f74..3421f12e8a 100755
+index 3421f12e8a..b5677d26a4 100755
 --- a/t/t1450-fsck.sh
 +++ b/t/t1450-fsck.sh
-@@ -673,13 +673,13 @@ test_expect_success 'fsck detects trailing loose garbage (commit)' '
- 	test_i18ngrep "garbage.*$commit" out
- '
- 
--test_expect_success 'fsck detects trailing loose garbage (blob)' '
-+test_expect_success 'fsck detects trailing loose garbage (large blob)' '
- 	blob=$(echo trailing | git hash-object -w --stdin) &&
- 	file=$(sha1_file $blob) &&
- 	test_when_finished "remove_object $blob" &&
- 	chmod +w "$file" &&
- 	echo garbage >>"$file" &&
--	test_must_fail git fsck 2>out &&
-+	test_must_fail git -c core.bigfilethreshold=5 fsck 2>out &&
+@@ -683,6 +683,25 @@ test_expect_success 'fsck detects trailing loose garbage (large blob)' '
  	test_i18ngrep "garbage.*$blob" out
  '
  
++test_expect_success 'fsck detects truncated loose object' '
++	# make it big enough that we know we will truncate in the data
++	# portion, not the header
++	test-tool genrandom truncate 4096 >file &&
++	blob=$(git hash-object -w file) &&
++	file=$(sha1_file $blob) &&
++	test_when_finished "remove_object $blob" &&
++	test_copy_bytes 1024 <"$file" >tmp &&
++	rm "$file" &&
++	mv -f tmp "$file" &&
++
++	# check both regular and streaming code paths
++	test_must_fail git fsck 2>out &&
++	test_i18ngrep corrupt.*$blob out &&
++
++	test_must_fail git -c core.bigfilethreshold=128 fsck 2>out &&
++	test_i18ngrep corrupt.*$blob out
++'
++
+ # for each of type, we have one version which is referenced by another object
+ # (and so while unreachable, not dangling), and another variant which really is
+ # dangling.
 -- 
 2.19.1.1235.g6b27db57c2
 
