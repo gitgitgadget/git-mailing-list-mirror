@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8703F1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 22:08:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6A261F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 22:08:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728481AbeJaHEJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 03:04:09 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:46092 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728393AbeJaHEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 03:04:09 -0400
-Received: by mail-yw1-f74.google.com with SMTP id i82-v6so4683485ywb.13
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:08:54 -0700 (PDT)
+        id S1728485AbeJaHEN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 03:04:13 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:37851 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728482AbeJaHEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 03:04:12 -0400
+Received: by mail-pf1-f202.google.com with SMTP id c28-v6so12099550pfe.4
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:08:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Ex0Go0raPxBYi3w2kEg8nl/ESMviQ+YVucF1o3Zjrng=;
-        b=kL+Xmi1jOlIGDhUqO6OL7EnALioYa/SoidfmAXZKnnVk7PGRHdAL8Ca5RFZR41qfyI
-         Lv6WJ6xHZvLurjTDR8aUTKTajHJOAwRMoUL+ZURrV0HiiPHTF9EwMAi7DiAFHRQKM3eh
-         gV/HXrFtvg/c5kfR+QHZXdVPtB614lUE35D6C45+rHgVoJqR9vV+VWghVGzgqS4wJrzU
-         9d60A5Epci2JYduR75K/8jM7KGa/zkcIXe6cDugB2D8ttlet8MzUmwkEq49hzLP3Giry
-         858ZhcCTagSZeU//G+rOHJjQ315pQ1AnsXRvQPu6+vF0N9Pj9Ujt0Rl4NUyoQY7Jhoqy
-         PFkw==
+        bh=Si5tqxeGXLH4OHDQBmBGaj2ATNe3+UKeenVXQDU6znI=;
+        b=U2NXHf+rKfu8jJU9sp6etsspFhX43Z5kkLyhNjO9IW9sE06lH0fjSTf4MnKXrMFKgh
+         JPdvWHLjrRZKYQrjxKiz5BZljiT5laNQeCDyFxXBLS/WbtROk8Y3g4jaEZ/FqR9qgffw
+         g/pX2c2xhDmS3aQCs87uV7n+0AJDHm4Hsobn2lpH6x9hFWWpsHHrP2U9Ch6jgvR4Lhbp
+         kqzfRNwLxvn4qOS8xAYIzLY0cMGbgGLgO3L06+VLUSbx17M0BoeHyir8M9PVbBqhlZXp
+         1u5uAsUCR63xrAnfyb+DTHoOeqx3N6zm2tXqRX/WciY6YfFdM3QEl38CiPxSN5Ryel+e
+         iH0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Ex0Go0raPxBYi3w2kEg8nl/ESMviQ+YVucF1o3Zjrng=;
-        b=LVfYlFOjgXuKOwTOnhDu9nM+O4Ysa6SmyCkRyMXtHfIFVqdYCams3JMlmd55duhTSL
-         BT/FhMcDJnZ/bB8UZ02PjBz2kNFmxzYniXPtAjAQN3ZH+m/DsvzDMLQe9rv7okXNTqQs
-         A8hgtZBk6B3ZBlC4z/TbB7RPr88HnTlExlePN3O/zOqLyKA+OK5x0RQ4jzMSKTUteeCf
-         y+1stlGRZOxmtBQ1PNCIzCIe8iMRgr9OwWh2mGoTO3cHcnChlUamSaPSpK7BlvnjUcvH
-         322iQKb4IhWhQ8RySehFRhZuko8uSP7ek5IlRiakcG/yDxLrvtkU06LIKxCC7MFVpunw
-         IPNA==
-X-Gm-Message-State: AGRZ1gL7USDHhqZiYi/4rrlhBNVRIs3KcV8+yiJiyt2JAzq9J0lJsMgC
-        Ke7bCV/vwJAhsn0273kdMDGse/hr1efm4ufYgZLpB1PcbFXOvAHpkFdA3u57melfsrINeliOsLg
-        IDohnLXAg88KXlC40BK5injgy92Uxv8o8rHJmoGr9fSWq3x1hbmIU4n17NG5y
-X-Google-Smtp-Source: AJdET5dl46RvyJb4RT+3KJNkfVzDz9I7PuhEuoZj7U86+Alwj0KSAlecF9zBDsNq1lkqQsZZUpon6SKTxmlV
-X-Received: by 2002:a5b:3c8:: with SMTP id t8-v6mr367606ybp.55.1540937334471;
- Tue, 30 Oct 2018 15:08:54 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 15:08:02 -0700
+        bh=Si5tqxeGXLH4OHDQBmBGaj2ATNe3+UKeenVXQDU6znI=;
+        b=IO0eh+WAZ657dMnL8Xiw03VVqUJmrV//c/MoRiwIC/JDqz5iLFXxvOtRWaHsTQZoPC
+         LWm3B52ycahu+sxPaRKj47HJUISoPlZmIzo4xvSiu03CsfXZQjFmQZh8Q4z0Dl0h0Dlf
+         0+g76aWjGqWVL5KBXWRJu2jTHTxhkvjSHKbNxOD3Kan4o4m0N5QDvUKso3PRfqWxWnXC
+         rXOJkieb19NOdTKjgSZzEli20czuwA12v95NVi20YSvUs5FXRif1adr2f9oR7SBXOs9e
+         5e/wv2nIOYe2DbLH4Pqv3S5XggC8Pnsuk53c5LT2RFzqolsM5llgjQubvhwm/7z1lLeo
+         3Pig==
+X-Gm-Message-State: AGRZ1gK07RCUKiDNGSdQAy0ungWOS6Mie4pq+cjBZC/g06kYisqTP4vH
+        +VjUVdwwzhrlLEjALG/Dub+a1n0bvcgkyNYiXTjUVHKn/VoPXq8xHBEE0bO/jvksd7HZ5dt6iiV
+        cjvdM6cgRk+wkK1gr85lxOK7L+ONCGh9SuAIvFfQD3kvcXJDMAoUogBzWFB38
+X-Google-Smtp-Source: AJdET5c6D0/bCL12643kXPlhkJJ8O9JnXUHc3VjT2AGbu70m65sxmQfHj3P1x3L3tnOfNQaBVIlmMJQHALZr
+X-Received: by 2002:a63:575c:: with SMTP id h28-v6mr249161pgm.71.1540937337059;
+ Tue, 30 Oct 2018 15:08:57 -0700 (PDT)
+Date:   Tue, 30 Oct 2018 15:08:03 -0700
 In-Reply-To: <20181030220817.61691-1-sbeller@google.com>
-Message-Id: <20181030220817.61691-10-sbeller@google.com>
+Message-Id: <20181030220817.61691-11-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181030220817.61691-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
-Subject: [PATCH 09/24] commit-reach.c: allow paint_down_to_common to handle
+Subject: [PATCH 10/24] commit-reach.c: allow merge_bases_many to handle
  arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
@@ -64,67 +64,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the function is file local and not widely used, migrate it all at once.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit-reach.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ commit-reach.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index a9da65c462..080ae0a758 100644
+index 080ae0a758..4cf471bfaf 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -30,7 +30,8 @@ static int queue_has_nonstale(struct prio_queue *queue)
+@@ -95,7 +95,9 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 	return result;
  }
  
- /* all input commits in one and twos[] must have been parsed! */
--static struct commit_list *paint_down_to_common(struct commit *one, int n,
-+static struct commit_list *paint_down_to_common(struct repository *r,
-+						struct commit *one, int n,
- 						struct commit **twos,
- 						int min_generation)
+-static struct commit_list *merge_bases_many(struct commit *one, int n, struct commit **twos)
++static struct commit_list *merge_bases_many(struct repository *r,
++					    struct commit *one, int n,
++					    struct commit **twos)
  {
-@@ -83,7 +84,7 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n,
- 			parents = parents->next;
- 			if ((p->object.flags & flags) == flags)
- 				continue;
--			if (parse_commit(p))
-+			if (repo_parse_commit(r, p))
- 				return NULL;
- 			p->object.flags |= flags;
- 			prio_queue_put(&queue, p);
-@@ -116,7 +117,7 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
+ 	struct commit_list *list = NULL;
+ 	struct commit_list *result = NULL;
+@@ -110,14 +112,14 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
+ 			return commit_list_insert(one, &result);
+ 	}
+ 
+-	if (parse_commit(one))
++	if (repo_parse_commit(r, one))
+ 		return NULL;
+ 	for (i = 0; i < n; i++) {
+-		if (parse_commit(twos[i]))
++		if (repo_parse_commit(r, twos[i]))
  			return NULL;
  	}
  
--	list = paint_down_to_common(one, n, twos, 0);
-+	list = paint_down_to_common(the_repository, one, n, twos, 0);
+-	list = paint_down_to_common(the_repository, one, n, twos, 0);
++	list = paint_down_to_common(r, one, n, twos, 0);
  
  	while (list) {
  		struct commit *commit = pop_commit(&list);
-@@ -187,8 +188,8 @@ static int remove_redundant(struct commit **array, int cnt)
- 			if (array[j]->generation < min_generation)
- 				min_generation = array[j]->generation;
- 		}
--		common = paint_down_to_common(array[i], filled, work,
--					      min_generation);
-+		common = paint_down_to_common(the_repository, array[i], filled,
-+					      work, min_generation);
- 		if (array[i]->object.flags & PARENT2)
- 			redundant[i] = 1;
- 		for (j = 0; j < filled; j++)
-@@ -322,7 +323,9 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit *
- 	if (commit->generation > min_generation)
- 		return ret;
+@@ -224,7 +226,7 @@ static struct commit_list *get_merge_bases_many_0(struct commit *one,
+ 	struct commit_list *result;
+ 	int cnt, i;
  
--	bases = paint_down_to_common(commit, nr_reference, reference, commit->generation);
-+	bases = paint_down_to_common(the_repository, commit,
-+				     nr_reference, reference,
-+				     commit->generation);
- 	if (commit->object.flags & PARENT2)
- 		ret = 1;
- 	clear_commit_marks(commit, all_flags);
+-	result = merge_bases_many(one, n, twos);
++	result = merge_bases_many(the_repository, one, n, twos);
+ 	for (i = 0; i < n; i++) {
+ 		if (one == twos[i])
+ 			return result;
 -- 
 2.19.1.930.g4563a0d9d0-goog
 
