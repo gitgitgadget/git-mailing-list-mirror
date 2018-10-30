@@ -2,140 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4142D1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 21:35:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B96F51F454
+	for <e@80x24.org>; Tue, 30 Oct 2018 21:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727552AbeJaGaQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 02:30:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33286 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725743AbeJaGaP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 02:30:15 -0400
-Received: (qmail 25063 invoked by uid 109); 30 Oct 2018 21:35:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Oct 2018 21:35:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3682 invoked by uid 111); 30 Oct 2018 21:34:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 30 Oct 2018 17:34:22 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2018 17:35:05 -0400
-Date:   Tue, 30 Oct 2018 17:35:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S1728098AbeJaGvj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 02:51:39 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:45933 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725743AbeJaGvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 02:51:39 -0400
+Received: by mail-ed1-f49.google.com with SMTP id t10-v6so11884586eds.12
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 14:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Iut2MXHlp/K7c2jUOrjvZoVNansXTn0eXcw43KGvhy0=;
+        b=Pcu9qbqcjfA02csak4AWJWBlsDjbGiDYTGNa72VqAdNXU5WeyFnUAsKIaUwMA1FANF
+         /gzLcz5/kwcbYMSeI4YG5iN7uQptWeaD/jv800ERp7vsP+PRJNOJtnS55WykU1Q6dGnN
+         Fel2FfInIZBu4/PXeuweiVGWzm5cBTRrnQLorp3vC03T5N3Ca1f+qCs4B2VLYRL2Acfp
+         +XzYQOOUeGA3Zh/r4LRGy01PGCbuqS/ZErcWNW52+vJ4gzNDi5/sWB+HY/8oDCva1hEd
+         emxajiZ8JFXcHO7yG2BSRF5MAqYCT8jTPi6kGwV3qJFEB2UVZnL75z4PrjE5dxaDtnVY
+         qmcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Iut2MXHlp/K7c2jUOrjvZoVNansXTn0eXcw43KGvhy0=;
+        b=FkJhEJveqMtOJ1eh+eiZ6cwzNR4DcaZAgeqehwzc2AQXSjzN+AMURH1+sUGTh9SXnH
+         2I5rPIAxsE0+nsolwONepheqtkDKmfbay7XkdC523p7j7JsEjOJQLmYpFtNw9z3/pRAs
+         0nnV+xLVPWaej9IzekqE7zRW/OqECErSzG6BkYISCzZTLPYlWCmkT3k3+Cli0rPR3IrP
+         6vMhqRGQ/wLY0bcb+lXf4StMVEF7AlFJonKbQ+B1elNHQmHTKdJF3nnHyOOl5uuQAGBo
+         Eg5Y389njOKB3z6P846PcGNA4SO5jx9nPDNeHLMkoZ6wJIqkzen0SvYal5hjkLVSffrv
+         kFFQ==
+X-Gm-Message-State: AGRZ1gLBO1qcDgjmio5p5J3Cm9NTYfuknWCctOLOYE5RD0LdAopGuXNI
+        dw1xX8XXWD8gocBmV2VgQ90=
+X-Google-Smtp-Source: AJdET5fAlGF9+jLpj98zfHjrsDH1s3xfBDBXHgJl6ptJpYEz9HK9PJfNXGCJujzHq2sDezBfy+6cug==
+X-Received: by 2002:a50:896c:: with SMTP id f41-v6mr230993edf.130.1540936585590;
+        Tue, 30 Oct 2018 14:56:25 -0700 (PDT)
+Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
+        by smtp.gmail.com with ESMTPSA id g92-v6sm740747ede.71.2018.10.30.14.56.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Oct 2018 14:56:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         John Szakmeister <john@szakmeister.net>,
         Dennis Kaarsemaker <dennis@kaarsemaker.net>
 Subject: Re: Infinite loop regression in git-fsck in v2.12.0
-Message-ID: <20181030213505.GA11319@sigill.intra.peff.net>
-References: <20170113175944.tdbfqx3e4xhris7m@sigill.intra.peff.net>
- <878t2fkxrn.fsf@evledraar.gmail.com>
+References: <20170113175944.tdbfqx3e4xhris7m@sigill.intra.peff.net> <878t2fkxrn.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <878t2fkxrn.fsf@evledraar.gmail.com>
+Date:   Tue, 30 Oct 2018 22:56:22 +0100
+Message-ID: <877ehzksjd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <878t2fkxrn.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 30, 2018 at 09:03:24PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> While playing around with having a GIT_TEST_FSCK=true as I suggested in
-> https://public-inbox.org/git/20181030184331.27264-3-avarab@gmail.com/ I
-> found that we've had an infinite loop in git-fsck since c68b489e56
-> ("fsck: parse loose object paths directly", 2017-01-13)
-> 
-> In particular in the while() loop added by f6371f9210 ("sha1_file: add
-> read_loose_object() function", 2017-01-13) in the check_stream_sha1()
-> function.
-> 
-> To reproduce just:
-> 
->     (
->         cd t &&
->         ./t5000-tar-tree.sh -d &&
->         git -C trash\ directory.t5000-tar-tree/ fsck
->     )
+On Tue, Oct 30 2018, Ævar Arnfjörð Bjarmason wrote:
 
-Thanks, I was easily able to reproduce.
+> The test is easy, just add a 'git fsck' at the end of t5000-tar-tree.sh,
+> but more generally it seems having something like GIT_TEST_FSCK=true is
+> a good idea. We do a bunch of stress testing of the object store in the
+> test suite that we're unlikely to encounter in the wild.
+>
+> Of course my idea of how to do that in my
+> <20181030184331.27264-3-avarab@gmail.com> would be counterproductive,
+> i.e. it seems we want to catch all the cases where there's a bad fsck,
+> just that it returns in a certain way.
+>
+> So maybe a good approach would be that we'd annotate all those test
+> whose fsck fails with "this is how it should fail", and run those tests
+> under GIT_TEST_FSCK=true, and GIT_TEST_FSCK=true would also be asserting
+> that no tests other than those marked as failing the fsck check at the
+> end fail it.
 
-> Before we'd print:
-> 
->     error: sha1 mismatch 19f9c8273ec45a8938e6999cb59b3ff66739902a
->     error: 19f9c8273ec45a8938e6999cb59b3ff66739902a: object corrupt or missing
->     Checking object directories: 100% (256/256), done.
->     missing blob 19f9c8273ec45a8938e6999cb59b3ff66739902a
+WIP patch for doing that:
 
-The problem isn't actually a sha1 mismatch, though that's what
-parse_object() will report. The issue is actually that the file is
-truncated. So zlib does not say "this is corrupt", but rather "I need
-more bytes to keep going". And unfortunately it returns Z_BUF_ERROR both
-for "I need more bytes" (in which we know we are truncated, because we
-fed the whole mmap'd file in the first place) as well as "I need more
-output buffer space" (which just means we should keep looping!).
+    diff --git a/Makefile b/Makefile
+    index b08d5ea258..ca624c381f 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -723,6 +723,7 @@ TEST_BUILTINS_OBJS += test-dump-fsmonitor.o
+     TEST_BUILTINS_OBJS += test-dump-split-index.o
+     TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+     TEST_BUILTINS_OBJS += test-example-decorate.o
+    +TEST_BUILTINS_OBJS += test-env-bool.o
+     TEST_BUILTINS_OBJS += test-genrandom.o
+     TEST_BUILTINS_OBJS += test-hashmap.o
+     TEST_BUILTINS_OBJS += test-index-version.o
+    diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+    index 5df8b682aa..c4481085c4 100644
+    --- a/t/helper/test-tool.c
+    +++ b/t/helper/test-tool.c
+    @@ -17,6 +17,7 @@ static struct test_cmd cmds[] = {
+     	{ "dump-fsmonitor", cmd__dump_fsmonitor },
+     	{ "dump-split-index", cmd__dump_split_index },
+     	{ "dump-untracked-cache", cmd__dump_untracked_cache },
+    +	{ "env-bool", cmd__env_bool },
+     	{ "example-decorate", cmd__example_decorate },
+     	{ "genrandom", cmd__genrandom },
+     	{ "hashmap", cmd__hashmap },
+    diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+    index 71f470b871..f7845fbc56 100644
+    --- a/t/helper/test-tool.h
+    +++ b/t/helper/test-tool.h
+    @@ -13,6 +13,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
+     int cmd__dump_fsmonitor(int argc, const char **argv);
+     int cmd__dump_split_index(int argc, const char **argv);
+     int cmd__dump_untracked_cache(int argc, const char **argv);
+    +int cmd__env_bool(int argc, const char **argv);
+     int cmd__example_decorate(int argc, const char **argv);
+     int cmd__genrandom(int argc, const char **argv);
+     int cmd__hashmap(int argc, const char **argv);
+    diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+    index 635918505d..92fbce2920 100755
+    --- a/t/t1305-config-include.sh
+    +++ b/t/t1305-config-include.sh
+    @@ -313,4 +313,8 @@ test_expect_success 'include cycles are detected' '
+     	test_i18ngrep "exceeded maximum include depth" stderr
+     '
 
-So we need to distinguish those cases. I think this is the simplest fix:
+    +GIT_FSCK_FAILS=true
+    +GIT_FSCK_FAILS_TEST='
+    +	test_i18ngrep "exceeded maximum include depth" fsck.err
+    +'
+     test_done
+    diff --git a/t/t3103-ls-tree-misc.sh b/t/t3103-ls-tree-misc.sh
+    index 14520913af..06abf84ef4 100755
+    --- a/t/t3103-ls-tree-misc.sh
+    +++ b/t/t3103-ls-tree-misc.sh
+    @@ -22,4 +22,10 @@ test_expect_success 'ls-tree fails with non-zero exit code on broken tree' '
+     	test_must_fail git ls-tree -r HEAD
+     '
 
-diff --git a/sha1-file.c b/sha1-file.c
-index dd0b6aa873..a7ff5fe25d 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -2199,6 +2199,7 @@ static int check_stream_sha1(git_zstream *stream,
- 	 * see the comment in unpack_sha1_rest for details.
- 	 */
- 	while (total_read <= size &&
-+	       stream->avail_in > 0 &&
- 	       (status == Z_OK || status == Z_BUF_ERROR)) {
- 		stream->next_out = buf;
- 		stream->avail_out = sizeof(buf);
+    +GIT_FSCK_FAILS=true
+    +GIT_FSCK_FAILS_TEST='
+    +	test_i18ngrep "invalid sha1 pointer in cache-tree" fsck.err &&
+    +	test_i18ngrep "broken link from" fsck.out &&
+    +	test_i18ngrep "missing tree" fsck.out
+    +'
+     test_done
+    diff --git a/t/test-lib.sh b/t/test-lib.sh
+    index 897e6fcc94..d4ebb94998 100644
+    --- a/t/test-lib.sh
+    +++ b/t/test-lib.sh
+    @@ -454,6 +454,8 @@ GIT_EXIT_OK=
+     trap 'die' EXIT
+     trap 'exit $?' INT
 
-> I have no idea if this makes sense, but this fixes it and we pass all
-> the fsck tests with it:
-> 
->     diff --git a/sha1-file.c b/sha1-file.c
->     index dd0b6aa873..fffc31458e 100644
->     --- a/sha1-file.c
->     +++ b/sha1-file.c
->     @@ -2182,7 +2182,7 @@ static int check_stream_sha1(git_zstream *stream,
->      	git_hash_ctx c;
->      	unsigned char real_sha1[GIT_MAX_RAWSZ];
->      	unsigned char buf[4096];
->     -	unsigned long total_read;
->     +	unsigned long total_read, last_total_read;
->      	int status = Z_OK;
-> 
->      	the_hash_algo->init_fn(&c);
->     @@ -2193,6 +2193,7 @@ static int check_stream_sha1(git_zstream *stream,
->      	 * do not count against the object's content size.
->      	 */
->      	total_read = stream->total_out - strlen(hdr) - 1;
->     +	last_total_read = total_read;
+    +GIT_FSCK_FAILS=
+    +
+     # The user-facing functions are loaded from a separate file so that
+     # test_perf subshells can have them too
+     . "$TEST_DIRECTORY/test-lib-functions.sh"
+    @@ -790,6 +792,25 @@ test_at_end_hook_ () {
+     }
 
-This works just by checking that we are making forward progress in the
-output buffer. I think that would _probably_ be OK for this case, since
-we know we have all of the input available. But in a case where we're
-feeding the input in a stream, it would not be. It's possible there that
-we would not create any output in one round, but would do so after
-feeding more input bytes.
+     test_done () {
+    +	if test_have_prereq TEST_FSCK
+    +	then
+    +		desc='git fsck at end (due to GIT_TEST_FSCK)'
+    +		if test -n "$GIT_FSCK_FAILS"
+    +		then
+    +			test_expect_success "$desc (expected to fail)" '
+    +				test_must_fail git fsck 2>fsck.err >fsck.out
+    +			'
+    +			test_expect_success "$descriptor (expected to fail) -- assert failure mode" "
+    +				test_path_exists fsck.err &&
+    +				test_path_exists fsck.out &&
+    +				$GIT_FSCK_FAILS_TEST
+    +			"
+    +		else
+    +			test_expect_success "$desc" '
+    +				git fsck
+    +			'
+    +		fi
+    +	fi
+     	GIT_EXIT_OK=t
 
-I think the patch I showed above addresses the root cause more directly.
-I'll wrap that up in a real commit, but I think there may be some
-related work:
+     	if test -z "$HARNESS_ACTIVE"
+    @@ -1268,3 +1289,5 @@ test_lazy_prereq CURL '
+     test_lazy_prereq SHA1 '
+     	test $(git hash-object /dev/null) = e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+     '
+    +
+    +test_lazy_prereq TEST_FSCK 'test-tool env-bool GIT_TEST_FSCK'
 
-  - "git show 19f9c827" does complain with "sha1 mismatch" (which isn't
-    strictly correct, but is probably good enough). However, "git
-    cat-file blob 19f9c827" exits non-zero without printing anything. It
-    probably should complain more loudly.
+Could be made prettier by turning that work in test_done() into a
+utility function, but is (I think) worth the effort to do.
 
-  - the offending loop comes from f6371f9210. But that commit was mostly
-    cargo-culting other parts of sha1-file.c. I'm worried that this bug
-    exists elsewhere, too. I'll dig around to see if I can find other
-    instances.
-
--Peff
+Jeff: Gotta turn in for the night, but maybe Something you're maybe
+interested in carrying forward for this fix? It's not that much work to
+mark up the failing tests, there's 10-20 of them from some quick
+eyeballing.
