@@ -2,146 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A232C1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 07:56:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B76C1F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 08:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726214AbeJ3QtU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 12:49:20 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:33479 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726203AbeJ3QtU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 12:49:20 -0400
-Received: by mail-it1-f194.google.com with SMTP id p11-v6so2365349itf.0
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 00:56:56 -0700 (PDT)
+        id S1726683AbeJ3RC2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 13:02:28 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:33030 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726196AbeJ3RC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 13:02:27 -0400
+Received: by mail-lf1-f65.google.com with SMTP id i26so3801565lfc.0
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 01:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Khpe4x0O7LEqz0T/O3xP4JgOiC4VTot2iiXsB5D0pqc=;
-        b=exRztOZMZZIZ6vpKLf/9f49LoaZ6YP6hS6bO0GENYUorhHL33QBfSQcE+3Hx8n6wMo
-         U0l8Qee6A0hRMoHzGGYKCI64SArvK9qhQNZrflSYarlk42udStIjm3ko+ifewMC/U+Uj
-         gOPNcJkYHADS2WXr/6cLJ+ijNC4p+ea/ewvZbU07GvS175SEScw7z/exwYB9BQxzjuhP
-         XvygH2sOOT0XtiFGHsksQhN8ovr9vVgXDzewMfE8zZAjrbfofX8YoU0WJ5U2V3734WMs
-         0srDIMnqDIgTmzH/ETIfMbXmafcsCiNi5lJRp1wZ8+GFt+iwqPrYnyevOgTWZH8iN45S
-         4pug==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kcdLYXqThVpch5g7xI3JGlhPaCJzwSXad+YJJcT+/PE=;
+        b=TaSTMipiq5CL+zvzmU8eAFYUOYOiNATlJru9qjTJE2XTHdQY2NR+tcuvNFIpykb9rj
+         kAfZ+I1sjxPQ+/M6yLlBkHKulvd2lnY9WH25NWslSZNguczwAYIJ4KOismdJTUQHhUUz
+         j3o+AdXmkEkLa0Eaf8Zv/+EpdixaNUNCmbutjeTJTVNRtC9YGnl84xcxrQG8LwS8XEBj
+         jt7pxL0aec+k6Znk0qHAEBmHjv7F7tA0T9sluHHUcwZrX6j9/QhHHTk0Zn0Nj8yQb8pE
+         nVs+MLB9Ddybz5jyGoPjcihBAyTc2DNnpEHOxFaPvKafeJjn9MKty2wfzEAKloQgY6Sh
+         Biqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Khpe4x0O7LEqz0T/O3xP4JgOiC4VTot2iiXsB5D0pqc=;
-        b=iwdLKqc01t7+/Y5jPnb8vI8VThXNy3w2IHK6TPHu2RBjp/b4AI/cnQJlD8nguY7emQ
-         XIK6RenRz2Nmjx2j5anpXeAzMSwtAlbOTuJRiq1of/LgmCk105ukYDbLTqGzRI8K5tqb
-         ZJNlY68y8jIpqtaOnwKzxnTFBnJmMXyrFNGtXCiAP5DmGgXGW5imvGni6Be6n8oEfCaN
-         1qlNJ/pZFFICp4RWy5eHAHfjQ18iKLejTXirijEDBS01KeI3YTdyM7MRE1d6BeKe7kkX
-         IM4wrWDlJogQd0aw0qCN+py4b6y8ZV62PwpogOuIrzkp/P0Vo6BwwkYJuj2QbjuI9Ko6
-         FXAA==
-X-Gm-Message-State: AGRZ1gKgvKcEXlW6qZvLVncLbmWp3cprz7MetTMu9iXx+fYJaDmAVcXd
-        8b1WcmWTswwz5ujv9CtaGkU=
-X-Google-Smtp-Source: AJdET5fMTlVB2i94j3rkSoUZ9Q5kSAl8ica5goDRmsnfhge1OLnJIgHiFwwQvpqBlXG7CIalqa62kQ==
-X-Received: by 2002:a24:4207:: with SMTP id i7-v6mr675358itb.4.1540886216076;
-        Tue, 30 Oct 2018 00:56:56 -0700 (PDT)
-Received: from archbookpro.localdomain ([216.1.133.205])
-        by smtp.gmail.com with ESMTPSA id b2-v6sm8774435ioc.51.2018.10.30.00.56.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Oct 2018 00:56:55 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 03:56:53 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com,
-        f.francet@hotmail.com
-Subject: Re: [RFC PATCH] remote: add --fetch option to git remote set-url
-Message-ID: <20181030075653.GA4114@archbookpro.localdomain>
-References: <1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com>
- <xmqqftwp47nb.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kcdLYXqThVpch5g7xI3JGlhPaCJzwSXad+YJJcT+/PE=;
+        b=Lldca0+Sb3pjCnxfAtrlJ0V7PlN0LBrKbMiC3tV5G7j8VR/8wAE45H7J/CCzOgngBX
+         MFORaLtZ1zIAXAUA610oVkYyEbTY30xUbPtr46eyc8qLNpCMsVAaSQuX948yX0Fs1vAj
+         GSVHazN3d666SxY19qZ2P8FSxhlx1HbaemXLeZvqG8+v39HR5iXZWg6uJ92L9BT1XMdp
+         mDWPAof44VyIvwPjx7bfJ3PkgfjCgdJ3pLCSQDRlfQRBJMd3PLFLesV+wnvIliC+6dX9
+         THo29PJhla6mmDj8m42TpWoNp5/rs4T1BxJjYjrsl8pV9oUzpYOYCzFxgHXMzmb3WnVI
+         3JPw==
+X-Gm-Message-State: AGRZ1gICFoPWn5soPJumIHtEyEaTvatIeo4KP7eCjDSTL/GVrPxCvKRq
+        +tLBpicSwlCdhkySAgOuDxr3s/rL
+X-Google-Smtp-Source: AJdET5eVl/uLeEWsO54F5CMfKfG2FSxvWhGHScCH+74vjsR4MKcCV9IFISnLVNdwkxQkO0hiK5wQ/A==
+X-Received: by 2002:a19:c396:: with SMTP id t144mr1152909lff.110.1540887000681;
+        Tue, 30 Oct 2018 01:10:00 -0700 (PDT)
+Received: from localhost.localdomain ([77.110.7.129])
+        by smtp.gmail.com with ESMTPSA id d199-v6sm3822769lfd.20.2018.10.30.01.09.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Oct 2018 01:09:59 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2] sequencer: break out of loop explicitly
+Date:   Tue, 30 Oct 2018 09:09:37 +0100
+Message-Id: <20181030080937.11118-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.19.1.593.gc670b1f876.dirty
+In-Reply-To: <xmqqva5l76zs.fsf@gitster-ct.c.googlers.com>
+References: <xmqqva5l76zs.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqftwp47nb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 02:57:28PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > This adds the --fetch option to `git remote set-url` such that when
-> > executed we move the remote.*.url to remote.*.pushurl and set
-> > remote.*.url to the given url argument.
-> >
-> 
-> I suspect this is a horrible idea from end-user's point of view.
-> "set-url --push" is used to SET pushURL instead of setting URL and
-> does not MOVE anything.  Why should the end user expect and remember
-> "set-url --fetch" works very differently?  
->
+It came up in review [1, 2] that this non-idiomatic loop is a bit tricky.
+When we find a space, we set `len = i`, which gives us the answer we are
+looking for, but which also breaks out of the loop.
 
-I agree, `--fetch` is a terrible name for this. Perhaps a better name
-would be something like `--fetch-behavior` or `--keep-push` so that the
-behaviour is more transparent for the end-user. Either way, I think we
-can decide on the name later.
+It turns out that this loop can confuse compilers as well. My copy of
+gcc 7.3.0 realizes that we are essentially evaluating `(len + 1) < len`
+and warns that the behavior is undefined if `len` is `INT_MAX`. (Because
+the assignment `len = i` is guaranteed to decrease `len`, such undefined
+behavior is not actually possible.)
 
-> If there is a need for a "--move-URL-to-pushURL-and-set-pushURL"
-> short-hand to avoid having to use two commands
-> 
-> 	git remote set-url --push $(git remote --get-url origin) origin
-> 	git remote set-url $there origin
-> 
-> it should not be called "--fetch", which has a strong connotation of
-> being an opposite of existing "--push", but something else.  And
-> then we need to ask ourselves if we also need such a short-hand to
-> "--move-pushURL-to-URL-and-set-URL" operation.  The answer to the
-> last question would help us decide if (1) this combined operation is
-> a good idea to begin with and (2) what is the good name for such an
-> operation.
-> 
-> Assuming that the short-hand operation is a good idea in the first
-> place, without deciding what the externally visible good name for it
-> is, let's read on.
-> 
-> > +	/*
-> > +	 * If add_mode, we will be appending to remote.*.url so we shouldn't move the urls over.
-> > +	 * If pushurls exist, we don't need to move the urls over to pushurl.
-> > +	 */
-> > +	move_fetch_to_push = fetch_mode && !add_mode && !remote->pushurl_nr;
-> 
-> Should this kind of "the user asked for --fetch, but sometimes it is
-> not appropriate to honor that request" be done silently like this?
-> 
-> Earlier you had a check like this:
-> 
-> > +	if (push_mode && fetch_mode)
-> > +		die(_("--push --fetch doesn't make sense"));
-> 
-> If a request to "--fetch" is ignored when "--add" is given, for
-> example, shouldn't the combination also be diagnosed as "not making
-> sense, we'd ignore your wish to use the --fetch option"?  Similarly
-> for the case where there already is pushurl defined for the remote.
-> 
-> This is a different tangent on the same line, but it could be that
-> the user wants to have two (or more) pushURLs because the user wants
-> to push to two remotes at the same time with "git push this-remote",
-> so silently ignoring "--force" may not be the right thing in the
-> first place.  We may instead need to make the value of URL to an
-> extra pushURL entry (if we had one, we now have two).
->
+Rewrite the loop to a more idiomatic variant which doesn't muck with
+`len` in the loop body. That should help compilers and human readers
+figure out what is going on here. But do note that we need to update
+`len` since it is not only used just after this loop (where we could
+have used `i` directly), but also later in this function.
 
-Perhaps I should motivate the use-case for this option. There have been
-times when I've had the URL set to something but no pushURL. I've
-wanted to only change the fetching URL and keep the pushing URL the same
-but unfortunately, there's no way to do that because of the url/pushurl
-split is set up.
+While at it, reduce the scope of `i`.
 
-My implementation of --fetch is supposed to emulate what would happen if
-git were implemented with fetchurl/pushurl instead. Does the patch make
-more sense in this context?
+[1] https://public-inbox.org/git/CAPig+cQbG2s-LrAo9+7C7=dXifbWFJ3SzuNa-QePHDk7egK=jg@mail.gmail.com/
 
-Please let me know if you think that the concept behind this patch is a
-good idea. Thanks!
+[2] https://public-inbox.org/git/CAPig+cRjU6niXpT2FrDWZ0x1HmGf1ojVZj3uk2qXEGe-S7i_HQ@mail.gmail.com/
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Thanks for the comments on v1. Based on them, I decided to go for
+ Eric's option 2, and to make the log message less technical in favor of
+ "compilers and humans alike can get this wrong".
+
+ sequencer.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 0c164d5f98..e7aa4d5020 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2829,7 +2829,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+ 	struct tree_desc desc;
+ 	struct tree *tree;
+ 	struct unpack_trees_options unpack_tree_opts;
+-	int ret = 0, i;
++	int ret = 0;
+ 
+ 	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+@@ -2849,10 +2849,13 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+ 		}
+ 		oidcpy(&oid, &opts->squash_onto);
+ 	} else {
++		int i;
++
+ 		/* Determine the length of the label */
+ 		for (i = 0; i < len; i++)
+ 			if (isspace(name[i]))
+-				len = i;
++				break;
++		len = i;
+ 
+ 		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+ 		if (get_oid(ref_name.buf, &oid) &&
+-- 
+2.19.1.593.gc670b1f876.dirty
+
