@@ -2,127 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A4161F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 22:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DDD1F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 22:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728553AbeJaHEr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 03:04:47 -0400
-Received: from mail-it1-f201.google.com ([209.85.166.201]:42203 "EHLO
-        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728355AbeJaHEr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 03:04:47 -0400
-Received: by mail-it1-f201.google.com with SMTP id v125-v6so15004305ita.7
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:09:32 -0700 (PDT)
+        id S1727454AbeJaHXY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 03:23:24 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33985 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726376AbeJaHXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 03:23:24 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j26-v6so190527wre.1
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=oCFpG/Wk+VMsIjbN9prN7LaRV6lmcmh4LeWkH2+hnFA=;
-        b=KLdtE5pMDZg/2Xp52JudCrZ8qx2Ok7uqvWsBtUcr9OZc69IHzrEC+NudF3mKw11TxO
-         fFPaHJV2SODMSZiG6V5vaY9ESMpLC+cMSNdFGkuZUudIabPd6tA7+opNolkSrCpN993S
-         +4X3md7O1nNgyX/wYaqLsPgyXG1XyhUcm6YZnSY320HUkKk3DL0cQYz7hSggdH4NwvOv
-         dELkiM2ABS6CXRpN6An/b93ABQF+Wm+MQQrFT+y6+8mhWuXSsmngqvkloBefXCeEDq3q
-         szqoidmsMQA8MLcs/ZRg7HtquZDjBn52pgf1SvljrkpByq+FaKKzlXItl204fTaMcTxW
-         /w1A==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4aGOazX129mttP4l+3WP0O36eFYM/15HcYF+XW/v7dY=;
+        b=irZvxd52MJ6xhRatwVST1/LU//j8BGxTOcSam4kKB278GjiyqB8fs3aj0bU4Pz/3U7
+         V3QzLwi5Jdp0FnuUed1HGAlCQtSUCr08tcMVjSVHdbNIXBp+vgDB+6Lrslc8T2/WeNj8
+         E04W7Gs6ekosFd7IRJ/OeJaz0OZG4kNdiw5j99wITWL0Ka1sB9xNHNdoYqHwfCEwxSvr
+         7UB91Egjjk9QD6PEC4kbS4L6hyY8MfGsoNPy0XXpoiPxO0grlfUWwTHRhbD2nt4hu++Z
+         E1y8+/F2XWYIYQfPfdrkKp8rB72xQVjMfwmr5efK17n/4KTvhUfNB6ZhgFOYChjdJRyq
+         lwcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=oCFpG/Wk+VMsIjbN9prN7LaRV6lmcmh4LeWkH2+hnFA=;
-        b=fPx242nrMHSTKvgpXDtlZcSg34JC6LiG1+VRdHjv6RgAl+2xrrLOd0QWryUokUyr5/
-         k0Abgsxku862VYdSILq/74Xmvc9NTJDS09Uy/YK/oYl1Api+UiIS29IA6O7Q895gpSMe
-         bZbr+jxITB2X8tJrccFEa64+sZPkut0MLK8fZryRZzVEw18dmJgzrJUBCPkKr/pInF17
-         WVtgrTKttNkehttjGzEPgiSMYlGT2vfeZC9vVAltR7GoTFvHtFWrHScRTWCT8H+pule3
-         MGk5HcFJU3u8D/4UByNH1cvB1Ylo5dmIud4cXZd/wg74jW/Umr/iMF6NfhGoz67s0wbF
-         dYcQ==
-X-Gm-Message-State: AGRZ1gK/sBVUMCqADMgyKEkJ5941gZMf47jo2tkXwaSe4N04HboyVUHS
-        /qR3Z5XWKHL6teyEMC+URFxAFHaF0B4fyZYRGWbdN2dIn3sNOFOFB9vBRsKoI42mN2LI+VyXmiW
-        d87f8XlGCffYMWksngV+M32taoBGDApyMf+l7fv23MjTCVo4GyuB1r51TRjvl
-X-Google-Smtp-Source: AJdET5eMNwamD/gyKDgHK6zIEYjuukyzhkh3XHzIno2CdjDTElStZm1yFezzc6LKvttYaUH+jtY8QbbxK/Vq
-X-Received: by 2002:a24:1d0b:: with SMTP id 11-v6mr315075itj.11.1540937371924;
- Tue, 30 Oct 2018 15:09:31 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 15:08:17 -0700
-In-Reply-To: <20181030220817.61691-1-sbeller@google.com>
-Message-Id: <20181030220817.61691-25-sbeller@google.com>
-Mime-Version: 1.0
-References: <20181030220817.61691-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
-Subject: [PATCH 24/24] t/helper/test-repository: celebrate independence from the_repository
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     szeder.dev@gmail.com, jonathantanmy@google.com,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4aGOazX129mttP4l+3WP0O36eFYM/15HcYF+XW/v7dY=;
+        b=kyTtQ5/26AaiwAjj8lQp5/C3ZcrBNT/NaxC5TPj7m5znpZO/HMD8u6vqaRRy+iQ7rV
+         4OvZP02qJzTSP8cfrjGsaiadun+KgqEVwmS1RULGnOfPbhWkUHowGDfVrHIhpi/rBsx7
+         TkpvHJxuhuZ+k0H/JBfuJMaJXPPjitdNAJmMNYhc15UsuIh+8nd+iGGw0Y0YxGnP1xs0
+         UxsBs5xuIo6AyaVb8+klywIviTHT7xwL3c6NVVLRcr2mLU7AEWi+lEbD3onaqbS2XQVK
+         QmuOFOFOAQO1MbV2oYgzHA+p3t7nL6XrctfXUUEfMFxlXY0q5NsMgU4ortMnghXw2thQ
+         VAfg==
+X-Gm-Message-State: AGRZ1gIqNSGQHcTsGGEzUe1mKnGSQ6R0k3QNi62+2R2VpMg5gT5Z/RJN
+        E3GB/Dtc+8ikEJBtcHslLpg=
+X-Google-Smtp-Source: AJdET5e+nP82vedT0RoAX4p7QnOwFdnbvSQYL2ZmQpAN+/GYcx1kj69H24E1zVCZqr7fIBs40zukDQ==
+X-Received: by 2002:adf:ab50:: with SMTP id r16-v6mr451887wrc.62.1540938482905;
+        Tue, 30 Oct 2018 15:28:02 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h96-v6sm6580348wrh.91.2018.10.30.15.28.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Oct 2018 15:28:01 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        John Szakmeister <john@szakmeister.net>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: Infinite loop regression in git-fsck in v2.12.0
+References: <20170113175944.tdbfqx3e4xhris7m@sigill.intra.peff.net>
+        <878t2fkxrn.fsf@evledraar.gmail.com>
+        <20181030213505.GA11319@sigill.intra.peff.net>
+Date:   Wed, 31 Oct 2018 07:28:00 +0900
+In-Reply-To: <20181030213505.GA11319@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 30 Oct 2018 17:35:05 -0400")
+Message-ID: <xmqq4ld3134f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-dade47c06c (commit-graph: add repo arg to graph readers, 2018-07-11)
-brought more independence from the_repository to the commit graph, however
-it was not completely independent of the_repository, as the previous
-patches show.
+Jeff King <peff@peff.net> writes:
 
-To ensure we're not accessing the_repository by accident, we'd ideally
-assign NULL to the_repository to trigger a segfault on access.
+> The problem isn't actually a sha1 mismatch, though that's what
+> parse_object() will report. The issue is actually that the file is
+> truncated. So zlib does not say "this is corrupt", but rather "I need
+> more bytes to keep going". And unfortunately it returns Z_BUF_ERROR both
+> for "I need more bytes" (in which we know we are truncated, because we
+> fed the whole mmap'd file in the first place) as well as "I need more
+> output buffer space" (which just means we should keep looping!).
+>
+> So we need to distinguish those cases. I think this is the simplest fix:
+>
+> diff --git a/sha1-file.c b/sha1-file.c
+> index dd0b6aa873..a7ff5fe25d 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -2199,6 +2199,7 @@ static int check_stream_sha1(git_zstream *stream,
+>  	 * see the comment in unpack_sha1_rest for details.
+>  	 */
+>  	while (total_read <= size &&
+> +	       stream->avail_in > 0 &&
+>  	       (status == Z_OK || status == Z_BUF_ERROR)) {
+>  		stream->next_out = buf;
+>  		stream->avail_out = sizeof(buf);
 
-We currently have a temporary hack in cache.h, which relies on
-the_hash_algo (which is a short form of the_repository->hash_algo) to
-be set, so we cannot do that. The next best thing is to set all fields of
-the_repository to 0, so any accidental access is more likely to be found.
+Hmph.  If the last round consumed the final input byte and needed
+output space of N bytes, but only M (< N) bytes of the output space
+was available, then it would have reduced both avail_in and
+avail_out down to zero and yielded Z_BUF_ERROR, no?  Or would zlib
+refrain from consuming that final byte (leaving avail_in to at least
+one) and give us Z_BUF_ERROR in such a case?
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- cache.h                    |  2 ++
- t/helper/test-repository.c | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+> This works just by checking that we are making forward progress in the
+> output buffer. I think that would _probably_ be OK for this case, since
+> we know we have all of the input available. But in a case where we're
+> feeding the input in a stream, it would not be. It's possible there that
+> we would not create any output in one round, but would do so after
+> feeding more input bytes.
 
-diff --git a/cache.h b/cache.h
-index f7fabdde8f..9f535040af 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1035,6 +1035,8 @@ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- 	 *
- 	 * This will need to be extended or ripped out when we learn about
- 	 * hashes of different sizes.
-+	 *
-+	 * When ripping this out, see TODO in test-repository.c.
- 	 */
- 	if (the_hash_algo->rawsz != 20)
- 		BUG("hash size not yet supported by hashcmp");
-diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
-index 6a84a53efb..f7f8618445 100644
---- a/t/helper/test-repository.c
-+++ b/t/helper/test-repository.c
-@@ -17,6 +17,11 @@ static void test_parse_commit_in_graph(const char *gitdir, const char *worktree,
- 
- 	setup_git_env(gitdir);
- 
-+	memset(the_repository, 0, sizeof(*the_repository));
-+
-+	/* TODO: Needed for temporary hack in hashcmp, see 183a638b7da. */
-+	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (repo_init(&r, gitdir, worktree))
- 		die("Couldn't init repo");
- 
-@@ -43,6 +48,11 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
- 
- 	setup_git_env(gitdir);
- 
-+	memset(the_repository, 0, sizeof(*the_repository));
-+
-+	/* TODO: Needed for temporary hack in hashcmp, see 183a638b7da. */
-+	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (repo_init(&r, gitdir, worktree))
- 		die("Couldn't init repo");
- 
--- 
-2.19.1.930.g4563a0d9d0-goog
+Yes, exactly.
 
+> I think the patch I showed above addresses the root cause more directly.
+> I'll wrap that up in a real commit, but I think there may be some
+> related work:
+>
+>   - "git show 19f9c827" does complain with "sha1 mismatch" (which isn't
+>     strictly correct, but is probably good enough). However, "git
+>     cat-file blob 19f9c827" exits non-zero without printing anything. It
+>     probably should complain more loudly.
+>
+>   - the offending loop comes from f6371f9210. But that commit was mostly
+>     cargo-culting other parts of sha1-file.c. I'm worried that this bug
+>     exists elsewhere, too. I'll dig around to see if I can find other
+>     instances.
+
+Thanks.
