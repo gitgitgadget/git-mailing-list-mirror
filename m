@@ -2,208 +2,561 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B96F51F454
-	for <e@80x24.org>; Tue, 30 Oct 2018 21:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 143931F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 22:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728098AbeJaGvj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 02:51:39 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:45933 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725743AbeJaGvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 02:51:39 -0400
-Received: by mail-ed1-f49.google.com with SMTP id t10-v6so11884586eds.12
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 14:56:26 -0700 (PDT)
+        id S1728445AbeJaHDr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 03:03:47 -0400
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:33399 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728352AbeJaHDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 03:03:47 -0400
+Received: by mail-vs1-f74.google.com with SMTP id t25so3060778vsk.0
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Iut2MXHlp/K7c2jUOrjvZoVNansXTn0eXcw43KGvhy0=;
-        b=Pcu9qbqcjfA02csak4AWJWBlsDjbGiDYTGNa72VqAdNXU5WeyFnUAsKIaUwMA1FANF
-         /gzLcz5/kwcbYMSeI4YG5iN7uQptWeaD/jv800ERp7vsP+PRJNOJtnS55WykU1Q6dGnN
-         Fel2FfInIZBu4/PXeuweiVGWzm5cBTRrnQLorp3vC03T5N3Ca1f+qCs4B2VLYRL2Acfp
-         +XzYQOOUeGA3Zh/r4LRGy01PGCbuqS/ZErcWNW52+vJ4gzNDi5/sWB+HY/8oDCva1hEd
-         emxajiZ8JFXcHO7yG2BSRF5MAqYCT8jTPi6kGwV3qJFEB2UVZnL75z4PrjE5dxaDtnVY
-         qmcQ==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=tL0fLw0DG14tIsi5L5BndcgvlrWVFPQLDz43CO2QiCg=;
+        b=b1yMPsO5KaOBgY1XjbBvmyo0yK570S1QUTpP/VF9oVsg+Zrm0OlTfib0V5CjrWq0XW
+         jEsV1/teAqMnsRtgY3MHw0hl3yfl9FNCXlROUlPn71ZqqQGMieoEVW2Icf5bGwv6jOH9
+         Yt/i5+50psrhuGtVn/0LBX0/SPldkg+yz9vru0QApKzr5fEoFjfhR/TFsugf1J1i9hUM
+         3w3pAK1uygpeX3274zDMWIA82b0KmCHwz65j+Mx/nrVfRwaCv+MMhbgp09AxpghkwHM3
+         5SCTBLz0zO5Zyk0Z5cUWGBuNnSDNj/C+Qn2JovMoJ4ZMhcpXw56I6Rb+dlfoJn1upnIw
+         GsUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Iut2MXHlp/K7c2jUOrjvZoVNansXTn0eXcw43KGvhy0=;
-        b=FkJhEJveqMtOJ1eh+eiZ6cwzNR4DcaZAgeqehwzc2AQXSjzN+AMURH1+sUGTh9SXnH
-         2I5rPIAxsE0+nsolwONepheqtkDKmfbay7XkdC523p7j7JsEjOJQLmYpFtNw9z3/pRAs
-         0nnV+xLVPWaej9IzekqE7zRW/OqECErSzG6BkYISCzZTLPYlWCmkT3k3+Cli0rPR3IrP
-         6vMhqRGQ/wLY0bcb+lXf4StMVEF7AlFJonKbQ+B1elNHQmHTKdJF3nnHyOOl5uuQAGBo
-         Eg5Y389njOKB3z6P846PcGNA4SO5jx9nPDNeHLMkoZ6wJIqkzen0SvYal5hjkLVSffrv
-         kFFQ==
-X-Gm-Message-State: AGRZ1gLBO1qcDgjmio5p5J3Cm9NTYfuknWCctOLOYE5RD0LdAopGuXNI
-        dw1xX8XXWD8gocBmV2VgQ90=
-X-Google-Smtp-Source: AJdET5fAlGF9+jLpj98zfHjrsDH1s3xfBDBXHgJl6ptJpYEz9HK9PJfNXGCJujzHq2sDezBfy+6cug==
-X-Received: by 2002:a50:896c:: with SMTP id f41-v6mr230993edf.130.1540936585590;
-        Tue, 30 Oct 2018 14:56:25 -0700 (PDT)
-Received: from evledraar (223-81-146-85.ftth.glasoperator.nl. [85.146.81.223])
-        by smtp.gmail.com with ESMTPSA id g92-v6sm740747ede.71.2018.10.30.14.56.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Oct 2018 14:56:24 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        John Szakmeister <john@szakmeister.net>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: Infinite loop regression in git-fsck in v2.12.0
-References: <20170113175944.tdbfqx3e4xhris7m@sigill.intra.peff.net> <878t2fkxrn.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <878t2fkxrn.fsf@evledraar.gmail.com>
-Date:   Tue, 30 Oct 2018 22:56:22 +0100
-Message-ID: <877ehzksjd.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=tL0fLw0DG14tIsi5L5BndcgvlrWVFPQLDz43CO2QiCg=;
+        b=QGwKJc6zXXxvQP+IDg10Ze7GKwabnRPzA2tXCc+6mY8LTD1ImCjshCBChtMKmVQrxO
+         vXSupcWT4b27KnXDrGRpOqDRUZ9+8+Fe9SYOUa5N2KS0vqQzmlRcuaCwRfr+vVqvTnFP
+         E/p3PFYMbDBUbgTSfXqnG99gWFvoQhGX9FnTQs6/LW2a7KQzeyNFLOAxVsaCa0ic7ipu
+         Ssy9eE8dLXxzNlHc/Gl18RXxru/YXvQevxuwB2ubfsUshvijjczRI+4TWjCPAXAyf3NX
+         wgjpUMqpVojBfxMJkfo3Q8EbqBi8LWDpzo284CpXewOwnFyE0noWPJ9n55xcTJz+ZUDk
+         P2Jg==
+X-Gm-Message-State: AGRZ1gK+kIteCiY3eAK8GzdhlSzgr44dB8/GvXH5t2Nqy3bXdDr03G2a
+        B1KKZi9UXOtj50C397mzwPH2Cpq+pMQcK6zNV0dPWivKSQuIl26gXkqk7bWcMwLX5Ul8PXMKwmO
+        8WA05njj3FVomgnUfhSLsimlEKtHFhs25k5DkZS4ZBJtlyep2ooWVfgxhSmxX
+X-Google-Smtp-Source: AJdET5e05yuqewFN5h+Zylic6MOJ8YfCqfC1PXtaz3iTKkIJtxW1wIFp69WkacVaJU9J7LOmRsbm2Xn+K3Ud
+X-Received: by 2002:a67:878a:: with SMTP id j132-v6mr472350vsd.43.1540937310368;
+ Tue, 30 Oct 2018 15:08:30 -0700 (PDT)
+Date:   Tue, 30 Oct 2018 15:07:53 -0700
+Message-Id: <20181030220817.61691-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
+Subject: [PATCHv2 00/24] Bring more repository handles into our code base]
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     szeder.dev@gmail.com, jonathantanmy@google.com,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This resends sb/more-repo-in-api
 
-On Tue, Oct 30 2018, Ævar Arnfjörð Bjarmason wrote:
-
-> The test is easy, just add a 'git fsck' at the end of t5000-tar-tree.sh,
-> but more generally it seems having something like GIT_TEST_FSCK=true is
-> a good idea. We do a bunch of stress testing of the object store in the
-> test suite that we're unlikely to encounter in the wild.
+On Thu, Oct 25, 2018 at 2:14 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+> On Tue, Oct 16, 2018 at 04:35:49PM -0700, Stefan Beller wrote:
+> > This converts the 'show_submodule_header' function to use
+> > the repository API properly, such that the submodule objects
+> > are not added to the main object store.
 >
-> Of course my idea of how to do that in my
-> <20181030184331.27264-3-avarab@gmail.com> would be counterproductive,
-> i.e. it seems we want to catch all the cases where there's a bad fsck,
-> just that it returns in a certain way.
->
-> So maybe a good approach would be that we'd annotate all those test
-> whose fsck fails with "this is how it should fail", and run those tests
-> under GIT_TEST_FSCK=true, and GIT_TEST_FSCK=true would also be asserting
-> that no tests other than those marked as failing the fsck check at the
-> end fail it.
+> This patch breaks the test suite with 'GIT_TEST_COMMIT_GRAPH=3D1', in
+> particular 't4041-diff-submodule-option.sh' fails with:
+> [...]
 
-WIP patch for doing that:
+I debugged into this and the last four patches will fix it.
 
-    diff --git a/Makefile b/Makefile
-    index b08d5ea258..ca624c381f 100644
-    --- a/Makefile
-    +++ b/Makefile
-    @@ -723,6 +723,7 @@ TEST_BUILTINS_OBJS += test-dump-fsmonitor.o
-     TEST_BUILTINS_OBJS += test-dump-split-index.o
-     TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
-     TEST_BUILTINS_OBJS += test-example-decorate.o
-    +TEST_BUILTINS_OBJS += test-env-bool.o
-     TEST_BUILTINS_OBJS += test-genrandom.o
-     TEST_BUILTINS_OBJS += test-hashmap.o
-     TEST_BUILTINS_OBJS += test-index-version.o
-    diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-    index 5df8b682aa..c4481085c4 100644
-    --- a/t/helper/test-tool.c
-    +++ b/t/helper/test-tool.c
-    @@ -17,6 +17,7 @@ static struct test_cmd cmds[] = {
-     	{ "dump-fsmonitor", cmd__dump_fsmonitor },
-     	{ "dump-split-index", cmd__dump_split_index },
-     	{ "dump-untracked-cache", cmd__dump_untracked_cache },
-    +	{ "env-bool", cmd__env_bool },
-     	{ "example-decorate", cmd__example_decorate },
-     	{ "genrandom", cmd__genrandom },
-     	{ "hashmap", cmd__hashmap },
-    diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-    index 71f470b871..f7845fbc56 100644
-    --- a/t/helper/test-tool.h
-    +++ b/t/helper/test-tool.h
-    @@ -13,6 +13,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
-     int cmd__dump_fsmonitor(int argc, const char **argv);
-     int cmd__dump_split_index(int argc, const char **argv);
-     int cmd__dump_untracked_cache(int argc, const char **argv);
-    +int cmd__env_bool(int argc, const char **argv);
-     int cmd__example_decorate(int argc, const char **argv);
-     int cmd__genrandom(int argc, const char **argv);
-     int cmd__hashmap(int argc, const char **argv);
-    diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-    index 635918505d..92fbce2920 100755
-    --- a/t/t1305-config-include.sh
-    +++ b/t/t1305-config-include.sh
-    @@ -313,4 +313,8 @@ test_expect_success 'include cycles are detected' '
-     	test_i18ngrep "exceeded maximum include depth" stderr
-     '
+I also picked up the patch for pending semantic patches, as the
+first patch, can I have your sign off, please?
 
-    +GIT_FSCK_FAILS=true
-    +GIT_FSCK_FAILS_TEST='
-    +	test_i18ngrep "exceeded maximum include depth" fsck.err
-    +'
-     test_done
-    diff --git a/t/t3103-ls-tree-misc.sh b/t/t3103-ls-tree-misc.sh
-    index 14520913af..06abf84ef4 100755
-    --- a/t/t3103-ls-tree-misc.sh
-    +++ b/t/t3103-ls-tree-misc.sh
-    @@ -22,4 +22,10 @@ test_expect_success 'ls-tree fails with non-zero exit code on broken tree' '
-     	test_must_fail git ls-tree -r HEAD
-     '
+This also addresses Jonathans feedback in
+https://public-inbox.org/git/20181019203750.110741-1-jonathantanmy@google.c=
+om/
 
-    +GIT_FSCK_FAILS=true
-    +GIT_FSCK_FAILS_TEST='
-    +	test_i18ngrep "invalid sha1 pointer in cache-tree" fsck.err &&
-    +	test_i18ngrep "broken link from" fsck.out &&
-    +	test_i18ngrep "missing tree" fsck.out
-    +'
-     test_done
-    diff --git a/t/test-lib.sh b/t/test-lib.sh
-    index 897e6fcc94..d4ebb94998 100644
-    --- a/t/test-lib.sh
-    +++ b/t/test-lib.sh
-    @@ -454,6 +454,8 @@ GIT_EXIT_OK=
-     trap 'die' EXIT
-     trap 'exit $?' INT
+A range-diff is below.
 
-    +GIT_FSCK_FAILS=
+Thanks,
+Stefan
+
+SZEDER G=C3=A1bor (1):
+  Makefile: add pending semantic patches
+
+Stefan Beller (23):
+  sha1_file: allow read_object to read objects in arbitrary repositories
+  packfile: allow has_packed_and_bad to handle arbitrary repositories
+  object-store: allow read_object_file_extended to read from arbitrary
+    repositories
+  object-store: prepare read_object_file to deal with arbitrary
+    repositories
+  object-store: prepare has_{sha1, object}_file[_with_flags] to handle
+    arbitrary repositories
+  object: parse_object to honor its repository argument
+  commit: allow parse_commit* to handle arbitrary repositories
+  commit-reach.c: allow paint_down_to_common to handle arbitrary
+    repositories
+  commit-reach.c: allow merge_bases_many to handle arbitrary
+    repositories
+  commit-reach.c: allow remove_redundant to handle arbitrary
+    repositories
+  commit-reach.c: allow get_merge_bases_many_0 to handle arbitrary
+    repositories
+  commit-reach: prepare get_merge_bases to handle arbitrary repositories
+  commit-reach: prepare in_merge_bases[_many] to handle arbitrary
+    repositories
+  commit: prepare get_commit_buffer to handle arbitrary repositories
+  commit: prepare repo_unuse_commit_buffer to handle arbitrary
+    repositories
+  commit: prepare logmsg_reencode to handle arbitrary repositories
+  pretty: prepare format_commit_message to handle arbitrary repositories
+  submodule: use submodule repos for object lookup
+  submodule: don't add submodule as odb for push
+  commit-graph: convert remaining function to handle arbitrary
+    repositories
+  commit: make free_commit_buffer and release_commit_memory repository
+    agnostic
+  path.h: make REPO_GIT_PATH_FUNC repository agnostic
+  t/helper/test-repository: celebrate independence from the_repository
+
+ Makefile                                      |   6 +-
+ builtin/fsck.c                                |   3 +-
+ builtin/log.c                                 |   6 +-
+ builtin/rev-list.c                            |   3 +-
+ cache.h                                       |   2 +
+ commit-graph.c                                |  40 +++--
+ commit-reach.c                                |  73 +++++----
+ commit-reach.h                                |  38 +++--
+ commit.c                                      |  41 ++---
+ commit.h                                      |  43 +++++-
+ .../coccinelle/the_repository.pending.cocci   | 144 ++++++++++++++++++
+ object-store.h                                |  35 ++++-
+ object.c                                      |   8 +-
+ packfile.c                                    |   5 +-
+ packfile.h                                    |   2 +-
+ path.h                                        |   2 +-
+ pretty.c                                      |  28 ++--
+ pretty.h                                      |   7 +-
+ sha1-file.c                                   |  34 +++--
+ streaming.c                                   |   2 +-
+ submodule.c                                   |  79 +++++++---
+ t/helper/test-repository.c                    |  10 ++
+ 22 files changed, 459 insertions(+), 152 deletions(-)
+ create mode 100644 contrib/coccinelle/the_repository.pending.cocci
+
+git range-diff origin/sb/more-repo-in-api...
+[...] # rebased to origin/master
+  -:  ---------- > 116:  4ede3d42df Seventh batch for 2.20
+  -:  ---------- > 117:  b1de196491 Makefile: add pending semantic patches
+  1:  1b9b5c695e =3D 118:  f1be5eb487 sha1_file: allow read_object to read =
+objects in arbitrary repositories
+  2:  33b94066f2 =3D 119:  9100a5705d packfile: allow has_packed_and_bad to=
+ handle arbitrary repositories
+  3:  5217b6b1e1 =3D 120:  a4ad7791da object-store: allow read_object_file_=
+extended to read from arbitrary repositories
+  4:  2b7239b55b ! 121:  5d7b3a6dd9 object-store: prepare read_object_file =
+to deal with arbitrary repositories
+    @@ -19,10 +19,10 @@
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+      new file mode 100644
+      --- /dev/null
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+     +// This file is used for the ongoing refactoring of
+     +// bringing the index or repository struct in all of
+    @@ -36,6 +36,7 @@
+     +- read_object_file(
+     ++ repo_read_object_file(the_repository,
+     +  E, F, G)
+    ++
+    =20
+      diff --git a/object-store.h b/object-store.h
+      --- a/object-store.h
+  5:  24291f4d84 ! 122:  77d406fc51 object-store: prepare has_{sha1, object=
+}_file[_with_flags] to handle arbitrary repositories
+    @@ -3,16 +3,14 @@
+         object-store: prepare has_{sha1, object}_file[_with_flags] to hand=
+le arbitrary repositories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+    - - read_object_file(
+      + repo_read_object_file(the_repository,
+        E, F, G)
+    -+
+    +=20
+     +@@
+     +expression E;
+     +@@
+  6:  6aa209978e =3D 123:  7224b378d8 object: parse_object to honor its rep=
+ository argument
+  7:  9b2d6aa7c3 ! 124:  e4d4ae08ca commit: allow parse_commit* to handle a=
+rbitrary repositories
+    @@ -93,9 +93,9 @@
+     =20
+      struct buffer_slab;
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+      - has_object_file_with_flags(
+      + repo_has_object_file_with_flags(the_repository,
+  8:  0e7e681118 ! 125:  f739ef6078 commit-reach.c: allow paint_down_to_com=
+mon to handle arbitrary repositories
+    @@ -5,7 +5,6 @@
+         As the function is file local and not widely used, migrate it all =
+at once.
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit-reach.c b/commit-reach.c
+      --- a/commit-reach.c
+  9:  e83b26f5b3 ! 126:  c054a80564 commit-reach.c: allow merge_bases_many =
+to handle arbitrary repositories
+    @@ -3,7 +3,6 @@
+         commit-reach.c: allow merge_bases_many to handle arbitrary reposit=
+ories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit-reach.c b/commit-reach.c
+      --- a/commit-reach.c
+ 10:  d80b9de832 ! 127:  3434a5a262 commit-reach.c: allow remove_redundant =
+to handle arbitrary repositories
+    @@ -3,7 +3,6 @@
+         commit-reach.c: allow remove_redundant to handle arbitrary reposit=
+ories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit-reach.c b/commit-reach.c
+      --- a/commit-reach.c
+ 11:  3ec21ad503 ! 128:  82f6e797bf commit-reach.c: allow get_merge_bases_m=
+any_0 to handle arbitrary repositories
+    @@ -3,7 +3,6 @@
+         commit-reach.c: allow get_merge_bases_many_0 to handle arbitrary r=
+epositories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit-reach.c b/commit-reach.c
+      --- a/commit-reach.c
+ 12:  3f21279f50 ! 129:  b66b636a97 commit-reach: prepare get_merge_bases t=
+o handle arbitrary repositories
+    @@ -9,7 +9,6 @@
+         functions behind a wrapper macro.
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit-reach.c b/commit-reach.c
+      --- a/commit-reach.c
+    @@ -91,9 +90,9 @@
+      int is_descendant_of(struct commit *commit, struct commit_list *with_=
+commit);
+      int in_merge_bases_many(struct commit *commit, int nr_reference, stru=
+ct commit **reference);
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+      - parse_commit(
+      + repo_parse_commit(the_repository,
+    @@ -124,3 +123,4 @@
+     +- get_merge_bases_many_dirty(
+     ++ repo_get_merge_bases_many_dirty(the_repository,
+     +  E, F, G);
+    ++
+ 13:  4decc3acc1 ! 130:  e68e48ca91 commit-reach: prepare in_merge_bases[_m=
+any] to handle arbitrary repositories
+    @@ -3,7 +3,6 @@
+         commit-reach: prepare in_merge_bases[_many] to handle arbitrary re=
+positories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit-reach.c b/commit-reach.c
+      --- a/commit-reach.c
+    @@ -76,14 +75,13 @@
+      /*
+       * Takes a list of commits and returns a new list where those
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+    - - get_merge_bases_many_dirty(
+      + repo_get_merge_bases_many_dirty(the_repository,
+        E, F, G);
+    -+
+    +=20
+     +@@
+     +expression E;
+     +expression F;
+ 14:  141b86ea89 ! 131:  aac401ca98 commit: prepare get_commit_buffer to ha=
+ndle arbitrary repositories
+    @@ -3,7 +3,6 @@
+         commit: prepare get_commit_buffer to handle arbitrary repositories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit.c b/commit.c
+      --- a/commit.c
+    @@ -46,9 +45,9 @@
+      /*
+       * Tell the commit subsytem that we are done with a particular commit=
+ buffer.
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+      - in_merge_bases_many(
+      + repo_in_merge_bases_many(the_repository,
+ 15:  2cc415c1db ! 132:  c45e6d2c0c commit: prepare repo_unuse_commit_buffe=
+r to handle arbitrary repositories
+    @@ -3,7 +3,6 @@
+         commit: prepare repo_unuse_commit_buffer to handle arbitrary repos=
+itories
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/commit.c b/commit.c
+      --- a/commit.c
+    @@ -42,9 +41,9 @@
+      /*
+       * Free any cached object buffer associated with the commit.
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+      - get_commit_buffer(
+      + repo_get_commit_buffer(the_repository,
+ 16:  554daa8cfc ! 133:  25e8f5dec4 commit: prepare logmsg_reencode to hand=
+le arbitrary repositories
+    @@ -24,9 +24,9 @@
+     =20
+      /** Removes the first commit from a list sorted by date, and adds all
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+      - unuse_commit_buffer(
+      + repo_unuse_commit_buffer(the_repository,
+ 17:  bd8737176b ! 134:  2cab6c18b6 pretty: prepare format_commit_message t=
+o handle arbitrary repositories
+    @@ -5,9 +5,9 @@
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+    - diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccin=
+elle/the_repository.cocci
+    - --- a/contrib/coccinelle/the_repository.cocci
+    - +++ b/contrib/coccinelle/the_repository.cocci
+    + diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contri=
+b/coccinelle/the_repository.pending.cocci
+    + --- a/contrib/coccinelle/the_repository.pending.cocci
+    + +++ b/contrib/coccinelle/the_repository.pending.cocci
+     @@
+      - logmsg_reencode(
+      + repo_logmsg_reencode(the_repository,
+ 18:  b303ef65e7 ! 135:  794592c573 submodule: use submodule repos for obje=
+ct lookup
+    @@ -7,7 +7,6 @@
+         are not added to the main object store.
+    =20
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/submodule.c b/submodule.c
+      --- a/submodule.c
+    @@ -46,24 +45,26 @@
+     + * in .gitmodules. This function exists only to preserve historical b=
+ehavior,
+     + *
+     + * Returns 0 on success, -1 when the submodule is not present.
+    -+ */
+    -+static int open_submodule(struct repository *out, const char *path)
+    +  */
+    +-static void show_submodule_header(struct diff_options *o, const char =
+*path,
+    ++static struct repository *open_submodule(const char *path)
+     +{
+     +	struct strbuf sb =3D STRBUF_INIT;
+    ++	struct repository *out =3D xmalloc(sizeof(*out));
+     +
+     +	if (submodule_to_gitdir(&sb, path) || repo_init(out, sb.buf, NULL)) =
+{
+     +		strbuf_release(&sb);
+    -+		return -1;
+    ++		free(out);
+    ++		return NULL;
+     +	}
+     +
+    -+	out->submodule_prefix =3D xstrdup(path);
+     +	out->submodule_prefix =3D xstrfmt("%s%s/",
+     +					the_repository->submodule_prefix ?
+     +					the_repository->submodule_prefix :
+     +					"", path);
+     +
+     +	strbuf_release(&sb);
+    -+	return 0;
+    ++	return out;
+     +}
+     +
+     +/*
+    @@ -73,8 +74,7 @@
+     + * If it can locate the submodule git directory it will create a repo=
+sitory
+     + * handle for the submodule and lookup both the left and right commit=
+s and
+     + * put them into the left and right pointers.
+    -  */
+    --static void show_submodule_header(struct diff_options *o, const char =
+*path,
+    ++ */
+     +static void show_submodule_header(struct diff_options *o,
+     +		const char *path,
+      		struct object_id *one, struct object_id *two,
+    @@ -116,11 +116,9 @@
+      	struct rev_info rev;
+      	struct commit *left =3D NULL, *right =3D NULL;
+      	struct commit_list *merge_bases =3D NULL;
+    -+	struct repository subrepo, *sub =3D &subrepo;
+    -+
+    -+	if (open_submodule(&subrepo, path) < 0)
+    -+		sub =3D NULL;
+    ++	struct repository *sub;
+     =20
+    ++	sub =3D open_submodule(path);
+      	show_submodule_header(o, path, one, two, dirty_submodule,
+     -			      &left, &right, &merge_bases);
+     +			      sub, &left, &right, &merge_bases);
+    @@ -147,8 +145,10 @@
+      		free_commit_list(merge_bases);
+      	clear_commit_marks(left, ~0);
+      	clear_commit_marks(right, ~0);
+    -+	if (sub)
+    ++	if (sub) {
+     +		repo_clear(sub);
+    ++		free(sub);
+    ++	}
+      }
+     =20
+      void show_submodule_inline_diff(struct diff_options *o, const char *p=
+ath,
+    @@ -156,11 +156,9 @@
+      	struct commit_list *merge_bases =3D NULL;
+      	struct child_process cp =3D CHILD_PROCESS_INIT;
+      	struct strbuf sb =3D STRBUF_INIT;
+    -+	struct repository subrepo, *sub =3D &subrepo;
+    -+
+    -+	if (open_submodule(&subrepo, path) < 0)
+    -+		sub =3D NULL;
+    ++	struct repository *sub;
+     =20
+    ++	sub =3D open_submodule(path);
+      	show_submodule_header(o, path, one, two, dirty_submodule,
+     -			      &left, &right, &merge_bases);
+     +			      sub, &left, &right, &merge_bases);
+    @@ -171,8 +169,10 @@
+      		clear_commit_marks(left, ~0);
+      	if (right)
+      		clear_commit_marks(right, ~0);
+    -+	if (sub)
+    ++	if (sub) {
+     +		repo_clear(sub);
+    ++		free(sub);
+    ++	}
+      }
+     =20
+      int should_update_submodules(void)
+ 19:  dbb0dd9322 ! 136:  df748a859f submodule: don't add submodule as odb f=
+or push
+    @@ -8,8 +8,10 @@
+         objects, and the actual push is done by spawning another process,
+         which handles object access by itself.)
+    =20
+    +    This code of push_submodule() is exercised in t5531 and continues
+    +    to work, showing that the submodule odbc is not needed.
     +
-     # The user-facing functions are loaded from a separate file so that
-     # test_perf subshells can have them too
-     . "$TEST_DIRECTORY/test-lib-functions.sh"
-    @@ -790,6 +792,25 @@ test_at_end_hook_ () {
-     }
-
-     test_done () {
-    +	if test_have_prereq TEST_FSCK
-    +	then
-    +		desc='git fsck at end (due to GIT_TEST_FSCK)'
-    +		if test -n "$GIT_FSCK_FAILS"
-    +		then
-    +			test_expect_success "$desc (expected to fail)" '
-    +				test_must_fail git fsck 2>fsck.err >fsck.out
-    +			'
-    +			test_expect_success "$descriptor (expected to fail) -- assert failure mode" "
-    +				test_path_exists fsck.err &&
-    +				test_path_exists fsck.out &&
-    +				$GIT_FSCK_FAILS_TEST
-    +			"
-    +		else
-    +			test_expect_success "$desc" '
-    +				git fsck
-    +			'
-    +		fi
-    +	fi
-     	GIT_EXIT_OK=t
-
-     	if test -z "$HARNESS_ACTIVE"
-    @@ -1268,3 +1289,5 @@ test_lazy_prereq CURL '
-     test_lazy_prereq SHA1 '
-     	test $(git hash-object /dev/null) = e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-     '
-    +
-    +test_lazy_prereq TEST_FSCK 'test-tool env-bool GIT_TEST_FSCK'
-
-Could be made prettier by turning that work in test_done() into a
-utility function, but is (I think) worth the effort to do.
-
-Jeff: Gotta turn in for the night, but maybe Something you're maybe
-interested in carrying forward for this fix? It's not that much work to
-mark up the failing tests, there's 10-20 of them from some quick
-eyeballing.
+         Signed-off-by: Stefan Beller <sbeller@google.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    =20
+      diff --git a/submodule.c b/submodule.c
+      --- a/submodule.c
+  -:  ---------- > 137:  c9e990afac commit-graph: convert remaining functio=
+n to handle arbitrary repositories
+  -:  ---------- > 138:  a086f3dd11 commit: make free_commit_buffer and rel=
+ease_commit_memory repository agnostic
+  -:  ---------- > 139:  878bd34799 path.h: make REPO_GIT_PATH_FUNC reposit=
+ory agnostic
+  -:  ---------- > 140:  641824bbeb t/helper/test-repository: celebrate ind=
+ependence from the_repository
