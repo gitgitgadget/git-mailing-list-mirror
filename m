@@ -7,53 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77F311F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 09:22:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F32C11F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 09:22:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726903AbeJ3SPH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 14:15:07 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38425 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726225AbeJ3SPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 14:15:07 -0400
-Received: by mail-pl1-f194.google.com with SMTP id p7-v6so5236875plk.5
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 02:22:29 -0700 (PDT)
+        id S1726991AbeJ3SPJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 14:15:09 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:43352 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726225AbeJ3SPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 14:15:09 -0400
+Received: by mail-pf1-f195.google.com with SMTP id h4-v6so5498206pfi.10
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 02:22:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=cXXGlx7Vcd7OmN2bexawLB9axWvgH+M1r3Hr1VCe5nA=;
-        b=oOyodlHRd3BpyoUiYY3nw5xt1/+3fUXedn2EJth46CiI0jB0e9wnWsCKFDJtSvVWdu
-         UvRf5Q65LO7WEEHMZXa71qc8QDP1u1U0tkr0PIMP6NiAtgcl3BeUUwgbBBLj8jYyjAhI
-         Iwi5gltlgwh2ALagQ8rPLmlLCQYHTG7v50t2G9VHrg/e0s4Bdsd/KJ3dgGkN1KVy5TaS
-         DV0MPO/5hXJri+gjzdVW8Gsfj7PWYrPouX8RIioYFgxfwqmCtt3kkxoA4S+moRok4EsP
-         +uicYZXQfgiknH27i+/AB9W5Y5jMZUfGmuBXsMUp6ZkXokml/EXD1r8wG6xE5Tk1+9R1
-         pufg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=e7YAnNppjldxX/NhyLZR2PT3RbSwcuUzcKC+FMvCmrA=;
+        b=pJn8GIXdwqZy09uc6TbfrT9xJvnlcHrefWH163Jdnza+bGO/kGZc2AGHuw/8epPDrs
+         PbqzEEgw5FN3rDKLF4BKqD0XIyHdO9T0kJFAAQ5CB8WDTWlHqCmK5djrc/tUD4FheElA
+         UnPYvRGP4DI4n69Do37Kq8sS4t/5mNb3bhoxHQruJjz1eaFIcX10L8Rf/Qf0AMdg+F6i
+         nU6FHUv+zTJtQYzTCTFAsC+nNCqL1Ny6as1jZ9uDZkhpYYZyzSXB7+8IvAsX1FBWrc1H
+         Zyhx2bImLBqEHaP5JiDDGdWJHV3CHGX0KcNAGWJkmLB92WVTxq0w4GmKQkZceothZ0C3
+         z55A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cXXGlx7Vcd7OmN2bexawLB9axWvgH+M1r3Hr1VCe5nA=;
-        b=YoYa6RA2buNKSuzHnjLy0moDwUxm6V7FliPhPywfhT9judKY+80oOZhwQGN3hAMw0l
-         8GuYzzjGMK0wzz3YstGGqQvCFgs9ZX3IXsDMNQgA0dGFTSOculhnorXJJQyErgk80x9X
-         KvwRmipJqiudmzU4C8JGpq6bEkMBGgWiUey6hZXPFCuhQaEXyKdg7nFWjh/bAd+VjImX
-         EaHNxuuoIO3rSQFOlr8GVVA6GLowpIMi+GTlnrcRfwrggc4MykthGC1/p4byUnl+YIsq
-         YiP8PbxJFNxTzOUy58F45W/GnW4fs8yorbi8r2mqS0XWfm8ujCsYJ5m9K4iMeQc1oR+D
-         pHww==
-X-Gm-Message-State: AGRZ1gLlazb+KXTn8INVhafqTyCwVl6T8bo3O0rLpD+dbxmmT+PJgjyQ
-        vO2DbSG6qGNjz4SlRj4ZvTJBF7db
-X-Google-Smtp-Source: AJdET5dlgqOpHyyZmWRETWeaTCYux41pdbikGwbzwwN6jX4qTqUufRTqYzCO3BMdk/pGqMWu729uhA==
-X-Received: by 2002:a17:902:aa0a:: with SMTP id be10-v6mr18069089plb.294.1540891348640;
-        Tue, 30 Oct 2018 02:22:28 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=e7YAnNppjldxX/NhyLZR2PT3RbSwcuUzcKC+FMvCmrA=;
+        b=ildpwCY4TFt8l6bZX3g4WYApRaY5t0zpAXdO/GCc1Ue+c5PnRE4n+rKNVQ2YBLq9pE
+         s1/fA0bIGjBEJsKy3vgnK1NQeGxDiENfpDjjP4/0KtAy+ooEuDZXeucuq+CCo4HlWWM6
+         s1N76PmysnKieHVDjgpKhsy+ty4j462uQ0hFvGuP2dXJRLbl9HoqzX+leDU9cflSevAt
+         uzJ9vo80uWIGKs9s4Zspl6ork7XhLkyBxr+xiRYKbSz5a2RvTVohg8oY9aMw5h6P0Q0N
+         UUooyW/raQwRaABk6OROVxHXOBcj62gdnRYIYUIhV/IntCGQiLUidPBOoH6FC0vElwT2
+         4gbQ==
+X-Gm-Message-State: AGRZ1gKjM6iqzvBkLoB7NZQPNAAZyznW1di6qL2lDK08ejoNJgTG+Ti3
+        RK27u2N1V8C7V0DBthAcnogLZr/m
+X-Google-Smtp-Source: AJdET5cTZJAFECeH80rAJBmYB9ZHCb+OL0VoyXSWOM0vxeX3TNXd8QH+zR9Ovwh8E1BaDnR1dVCzTQ==
+X-Received: by 2002:a62:ac18:: with SMTP id v24-v6mr2156569pfe.126.1540891350033;
+        Tue, 30 Oct 2018 02:22:30 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id n79-v6sm35858424pfk.19.2018.10.30.02.22.27
+        by smtp.gmail.com with ESMTPSA id i19-v6sm6599209pfi.87.2018.10.30.02.22.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Oct 2018 02:22:27 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 02:22:27 -0700 (PDT)
-X-Google-Original-Date: Tue, 30 Oct 2018 09:22:23 GMT
-Message-Id: <pull.57.git.gitgitgadget@gmail.com>
+        Tue, 30 Oct 2018 02:22:29 -0700 (PDT)
+Date:   Tue, 30 Oct 2018 02:22:29 -0700 (PDT)
+X-Google-Original-Date: Tue, 30 Oct 2018 09:22:24 GMT
+Message-Id: <77b2cfb2188b9a5b65c4564faea2a292963371bf.1540891346.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.57.git.gitgitgadget@gmail.com>
+References: <pull.57.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] mingw: rework the environment handling
+Subject: [PATCH 1/2] t7800: fix quoting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,59 +63,41 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Karsten Blees <karsten.blees@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once upon a time, the Git for Windows project had to decide what to do about
-Unicode support, including how to deal with the environment. Karsten Blees
-spent a ton of work on this, culminating in the final version
-[https://groups.google.com/d/msg/msysgit/wNZAyScbJG4/viWz2KXU0VYJ] which
-made it into Git for Windows and at least partially into core Git, too.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The environment handling in particular is a bit tricky: Windows actually has 
-two copies of the environment, one encoded in UTF-16, and the other one in
-the local encoding. Since we want UTF-8 encoded values (which is not an
-option for the local encoding), we had to convert from/to the UTF-16
-environment.
+When passing a command-line to call an external diff command to the
+difftool, we must be prepared for paths containing special characters,
+e.g. backslashes in the temporary directory's path on Windows.
 
-At the time those patches were developed, there were so many getenv()/
-putenv() calls in Git's code base that it seemed the best solution to
-convert the entire environment into UTF-8 in one go, at startup.
+This patch is needed in preparation for the next commit, which will
+make the MinGW version of Git *not* rewrite TMP to use forward slashes
+instead of backslashes.
 
-There are good reasons for us to change that paradigm now (and this patch
-series does that):
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t7800-difftool.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- * The method we use does not work with modern MSVC runtimes (__environ can
-   no longer be overridden).
- * Our method of having a malloc()ed environment wreaks havoc if a library
-   we use calls MSVC's version of setenv() (I am looking at you, libcurl).
- * In the meantime, core Git's usage of getenv()/putenv() was reduced
-   dramatically (for unrelated reasons), so that it is actually advantageous
-   nowadays to convert on the fly, i.e. with each getenv()/putenv() call,
-   rather than doing one wholesale conversion at process startup. See also
-   the commit message of the second patch.
-
-Note: in contrast to other patches flowing from Git for Windows to Git these
-days this patch has not been in Git for Windows for ages. Its approach has
-been tested in some MS Visual C++ builds (thanks, Jeff Hostetler!), though,
-so I am quite confident that it is correct, and the test suite agrees.
-
-Johannes Schindelin (2):
-  t7800: fix quoting
-  mingw: reencode environment variables on the fly (UTF-16 <-> UTF-8)
-
- compat/mingw.c      | 280 ++++++++++++++++++++++++++------------------
- compat/mingw.h      |  32 ++++-
- t/t7800-difftool.sh |   2 +-
- 3 files changed, 197 insertions(+), 117 deletions(-)
-
-
-base-commit: c670b1f876521c9f7cd40184bf7ed05aad843433
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-57%2Fdscho%2Fmingw-utf-8-env-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-57/dscho/mingw-utf-8-env-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/57
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 562bd215a..22b9199d5 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -332,7 +332,7 @@ test_expect_success 'difftool --extcmd cat arg1' '
+ test_expect_success 'difftool --extcmd cat arg2' '
+ 	echo branch >expect &&
+ 	git difftool --no-prompt \
+-		--extcmd sh\ -c\ \"cat\ \$2\" branch >actual &&
++		--extcmd sh\ -c\ \"cat\ \\\"\$2\\\"\" branch >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 gitgitgadget
+
