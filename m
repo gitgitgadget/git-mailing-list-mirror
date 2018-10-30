@@ -7,150 +7,240 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF9491F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 22:09:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6051F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 22:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728533AbeJaHEc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 03:04:32 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:47231 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728491AbeJaHEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 03:04:32 -0400
-Received: by mail-qt1-f201.google.com with SMTP id u2-v6so15088077qtg.14
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:09:16 -0700 (PDT)
+        id S1728537AbeJaHEf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 03:04:35 -0400
+Received: from mail-io1-f74.google.com ([209.85.166.74]:57179 "EHLO
+        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728491AbeJaHEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 03:04:34 -0400
+Received: by mail-io1-f74.google.com with SMTP id x12-v6so12071119iob.23
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 15:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=MnFi4vDa1i8EwOn6Hm6HfdZKWR7jua7aVdTf7uKmqO0=;
-        b=GH2WxTlDO4ub17Yve1H4wj/HINJcALBvs717NwmSiUGMJtGIwqEfVrnfJd0cWDwbwc
-         9dhZxnmbdt1OPseII1kSPTEeCqGetPrpJexTPoGkMmBdt1dGGD38VK7a2zK8HcP0CtMw
-         brxGK0TpcVrJMGCVKLivMBCWBEUDLqwlLEb4lDjPYqwk2nKPtk8iyKSss0eBehnS7ERH
-         oMGbqudKM30cFBpiKStkWH1D86EGfp8YZaLRzVJUe3Efcz9HlImY1mjmQSSY5FOqQiJ0
-         q3SowfOUO3L0QhNRFJUIVXtvsp5KQgCx1VlI3frJiXiLZvCk2XwqhLP0mml4MhYPMYdM
-         K5+Q==
+        bh=tBH/nMpD/A+qFk1i7otVxC5dn/xz25wAO2NOMDggQmg=;
+        b=mvGUIZB1QmxO/qUj0Op/y7L4b9ZFSHLVbxm9k06CHgLMiIRXmutsYxWo196QNKf4/Q
+         5ClvaThM3XYl5/hQzMpGxibMzQrmwYSXP6vEfZ8wxnDdnTqhFcGJmV4r0k/zXZFga1bh
+         tnxJE9E1wKfLtmmb7rZqwuJT+pGh252PgNL7F+p39GV+rgQXOe1+9DI6tAuiuiluuLWC
+         EDgSYTTWx9eYUDCYKedCk/+Og00wXyyNzBS/CT4vnXZ7gwcGZHr1GL8hrl05dbk0cq1V
+         c2UBd0NDE4mcoaV5QwA4Aq9DCL9zBuYAWqzRlgomkCaA9hV4Cc7DzVTBx/zQUJTm4vYx
+         Avpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=MnFi4vDa1i8EwOn6Hm6HfdZKWR7jua7aVdTf7uKmqO0=;
-        b=iTaWvOvKI6ceSlXVDBphOKS/IafQRvbQ212Qe9Djt5xGjkIo1Q9xWtMa6zngR260Dc
-         Rx+VJnZ528NVGuH3a+pH8RkVYCjUqOQ+SeBRY2pg/AJ2GRsafhumY08nCoCmqSI3NTXS
-         rXSsGi2CvlJ5OM2WuNcCfgINaYq297FveuNpmw/XYen+yk6QhXyV3jt8Vo8K0Y11anbM
-         A91U226pVjE/CljoqoXJJ7it7wNzzCqgeWK8YUxCUL05HLysQLx0w1IXP/u6PLelDQjy
-         j6rnQONUlUAk1C7pEIZeZ/QA16F4pR2k4Yq2C0+WcxNgBTLk3lQRL8Ow3I0gaXiavXR/
-         TwAA==
-X-Gm-Message-State: AGRZ1gI8p6W9S+8yl1E+kInnhZmQ0xTkRNdMFnP7tYwhjmO9Bt+hAoIM
-        SmqoRKesgfn+511Ff0YWup74GOsHzq32+5sT2UNFnsWAh1+56XeHozQh40dKeIGlK0NGMgqeZrd
-        S53ZbqBGRG/2ePhdN5sxXrM2oUsaif3QJt3DD0bviwOEIpToOYwxYoLqreG3d
-X-Google-Smtp-Source: AJdET5dZfXmxjO8YpRvOmiIgxJgJSn/yHkaGkviSCMA0O9o2cV5Sf6TpX5dc6mX0L+esgcYLvP6cX3qSREfx
-X-Received: by 2002:a37:3508:: with SMTP id c8-v6mr431504qka.62.1540937356493;
- Tue, 30 Oct 2018 15:09:16 -0700 (PDT)
-Date:   Tue, 30 Oct 2018 15:08:11 -0700
+        bh=tBH/nMpD/A+qFk1i7otVxC5dn/xz25wAO2NOMDggQmg=;
+        b=TocrK87V9yhwguOJLTnYvLfNkslbercDhpE5gCmhYINc+C2SxmX8xd3BFIeacDLup7
+         aGVQYS6FbUo1fe4V3WS6Tq8Dn03CTkPuNeIizEX5PZylE6kgVR3+CCZ1ibpX8fhB2f3s
+         bHCxada4DNbqHpdF4vvlXdfA2x9YW7Ufo1I+nVnXvXjOa4GoABCBNHCf43V5lz8j1lXP
+         uMaap9X0RwPqBJ6NrFdNa9a9dWubZevUugK1uIKZArxrpCBCtosDBOzC1r7GEdgE2Tr7
+         BR2Tl3Uy9dclxtCAOZSvigqbL4usuuglvtfV4TKQRtyCG8IcFWyT3n6hEwD7MltZzKZv
+         IwHg==
+X-Gm-Message-State: AGRZ1gLkWdyKUnan1ln1Zrdc8tJ5F7/5b7ttuIzvVHGudUrTlLKHpKQn
+        pxTi9IlRl3l5/AB3AQr+kIEgwLlfM0lUMDm4cP7H8PLOienJXsPyksWnvIF8IjkOJwdWMSWses4
+        1KpHhxs66TbzGH7E1LbdZJixuZ82bYIuzdRMQP8bCfBQbVmzepVomD81ONPUE
+X-Google-Smtp-Source: AJdET5ePnvTPKUBRGlHx4WZWMCmZabcxvlOX/lJcXmDGjL+ZfBpfza67T0PGjDO+sMRy/IukCEvRSAHfevCJ
+X-Received: by 2002:a24:2bd3:: with SMTP id h202-v6mr301216ita.21.1540937358896;
+ Tue, 30 Oct 2018 15:09:18 -0700 (PDT)
+Date:   Tue, 30 Oct 2018 15:08:12 -0700
 In-Reply-To: <20181030220817.61691-1-sbeller@google.com>
-Message-Id: <20181030220817.61691-19-sbeller@google.com>
+Message-Id: <20181030220817.61691-20-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181030220817.61691-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
-Subject: [PATCH 18/24] pretty: prepare format_commit_message to handle
- arbitrary repositories
+Subject: [PATCH 19/24] submodule: use submodule repos for object lookup
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     szeder.dev@gmail.com, jonathantanmy@google.com,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/coccinelle/the_repository.pending.cocci | 10 ++++++++++
- pretty.c                                        | 15 ++++++++-------
- pretty.h                                        |  7 ++++++-
- 3 files changed, 24 insertions(+), 8 deletions(-)
+This converts the 'show_submodule_header' function to use
+the repository API properly, such that the submodule objects
+are not added to the main object store.
 
-diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coccinelle/the_repository.pending.cocci
-index f5b42cfc62..2ee702ecf7 100644
---- a/contrib/coccinelle/the_repository.pending.cocci
-+++ b/contrib/coccinelle/the_repository.pending.cocci
-@@ -132,3 +132,13 @@ expression G;
- - logmsg_reencode(
- + repo_logmsg_reencode(the_repository,
-   E, F, G);
-+
-+@@
-+expression E;
-+expression F;
-+expression G;
-+expression H;
-+@@
-+- format_commit_message(
-++ repo_format_commit_message(the_repository,
-+  E, F, G, H);
-diff --git a/pretty.c b/pretty.c
-index b359b68750..3240495308 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1508,9 +1508,10 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
- 	strbuf_release(&dummy);
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 76 ++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 61 insertions(+), 15 deletions(-)
+
+diff --git a/submodule.c b/submodule.c
+index d9d3046689..0fdda45252 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -443,7 +443,7 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+ 	return prepare_revision_walk(rev);
  }
  
--void format_commit_message(const struct commit *commit,
--			   const char *format, struct strbuf *sb,
--			   const struct pretty_print_context *pretty_ctx)
-+void repo_format_commit_message(struct repository *r,
-+				const struct commit *commit,
-+				const char *format, struct strbuf *sb,
-+				const struct pretty_print_context *pretty_ctx)
+-static void print_submodule_summary(struct rev_info *rev, struct diff_options *o)
++static void print_submodule_summary(struct repository *r, struct rev_info *rev, struct diff_options *o)
  {
- 	struct format_commit_context context;
- 	const char *output_enc = pretty_ctx->output_encoding;
-@@ -1524,9 +1525,9 @@ void format_commit_message(const struct commit *commit,
- 	 * convert a commit message to UTF-8 first
- 	 * as far as 'format_commit_item' assumes it in UTF-8
- 	 */
--	context.message = logmsg_reencode(commit,
--					  &context.commit_encoding,
--					  utf8);
-+	context.message = repo_logmsg_reencode(r, commit,
-+					       &context.commit_encoding,
-+					       utf8);
+ 	static const char format[] = "  %m %s";
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -454,7 +454,8 @@ static void print_submodule_summary(struct rev_info *rev, struct diff_options *o
+ 		ctx.date_mode = rev->date_mode;
+ 		ctx.output_encoding = get_log_output_encoding();
+ 		strbuf_setlen(&sb, 0);
+-		format_commit_message(commit, format, &sb, &ctx);
++		repo_format_commit_message(r, commit, format, &sb,
++				      &ctx);
+ 		strbuf_addch(&sb, '\n');
+ 		if (commit->object.flags & SYMMETRIC_LEFT)
+ 			diff_emit_submodule_del(o, sb.buf);
+@@ -481,14 +482,47 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 			 DEFAULT_GIT_DIR_ENVIRONMENT);
+ }
  
- 	strbuf_expand(sb, format, format_commit_item, &context);
- 	rewrap_message_tail(sb, &context, 0, 0, 0);
-@@ -1550,7 +1551,7 @@ void format_commit_message(const struct commit *commit,
+-/* Helper function to display the submodule header line prior to the full
+- * summary output. If it can locate the submodule objects directory it will
+- * attempt to lookup both the left and right commits and put them into the
+- * left and right pointers.
++/*
++ * Initialize 'out' based on the provided submodule path.
++ *
++ * Unlike repo_submodule_init, this tolerates submodules not present
++ * in .gitmodules. This function exists only to preserve historical behavior,
++ *
++ * Returns 0 on success, -1 when the submodule is not present.
+  */
+-static void show_submodule_header(struct diff_options *o, const char *path,
++static struct repository *open_submodule(const char *path)
++{
++	struct strbuf sb = STRBUF_INIT;
++	struct repository *out = xmalloc(sizeof(*out));
++
++	if (submodule_to_gitdir(&sb, path) || repo_init(out, sb.buf, NULL)) {
++		strbuf_release(&sb);
++		free(out);
++		return NULL;
++	}
++
++	out->submodule_prefix = xstrfmt("%s%s/",
++					the_repository->submodule_prefix ?
++					the_repository->submodule_prefix :
++					"", path);
++
++	strbuf_release(&sb);
++	return out;
++}
++
++/*
++ * Helper function to display the submodule header line prior to the full
++ * summary output.
++ *
++ * If it can locate the submodule git directory it will create a repository
++ * handle for the submodule and lookup both the left and right commits and
++ * put them into the left and right pointers.
++ */
++static void show_submodule_header(struct diff_options *o,
++		const char *path,
+ 		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule,
++		struct repository *sub,
+ 		struct commit **left, struct commit **right,
+ 		struct commit_list **merge_bases)
+ {
+@@ -507,7 +541,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
+ 	else if (is_null_oid(two))
+ 		message = "(submodule deleted)";
+ 
+-	if (add_submodule_odb(path)) {
++	if (!sub) {
+ 		if (!message)
+ 			message = "(commits not present)";
+ 		goto output_header;
+@@ -517,8 +551,8 @@ static void show_submodule_header(struct diff_options *o, const char *path,
+ 	 * Attempt to lookup the commit references, and determine if this is
+ 	 * a fast forward or fast backwards update.
+ 	 */
+-	*left = lookup_commit_reference(the_repository, one);
+-	*right = lookup_commit_reference(the_repository, two);
++	*left = lookup_commit_reference(sub, one);
++	*right = lookup_commit_reference(sub, two);
+ 
+ 	/*
+ 	 * Warn about missing commits in the submodule project, but only if
+@@ -528,7 +562,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
+ 	     (!is_null_oid(two) && !*right))
+ 		message = "(commits not present)";
+ 
+-	*merge_bases = get_merge_bases(*left, *right);
++	*merge_bases = repo_get_merge_bases(sub, *left, *right);
+ 	if (*merge_bases) {
+ 		if ((*merge_bases)->item == *left)
+ 			fast_forward = 1;
+@@ -562,16 +596,18 @@ void show_submodule_summary(struct diff_options *o, const char *path,
+ 	struct rev_info rev;
+ 	struct commit *left = NULL, *right = NULL;
+ 	struct commit_list *merge_bases = NULL;
++	struct repository *sub;
+ 
++	sub = open_submodule(path);
+ 	show_submodule_header(o, path, one, two, dirty_submodule,
+-			      &left, &right, &merge_bases);
++			      sub, &left, &right, &merge_bases);
+ 
+ 	/*
+ 	 * If we don't have both a left and a right pointer, there is no
+ 	 * reason to try and display a summary. The header line should contain
+ 	 * all the information the user needs.
+ 	 */
+-	if (!left || !right)
++	if (!left || !right || !sub)
+ 		goto out;
+ 
+ 	/* Treat revision walker failure the same as missing commits */
+@@ -580,13 +616,17 @@ void show_submodule_summary(struct diff_options *o, const char *path,
+ 		goto out;
  	}
  
- 	free(context.commit_encoding);
--	unuse_commit_buffer(commit, context.message);
-+	repo_unuse_commit_buffer(r, commit, context.message);
+-	print_submodule_summary(&rev, o);
++	print_submodule_summary(sub, &rev, o);
+ 
+ out:
+ 	if (merge_bases)
+ 		free_commit_list(merge_bases);
+ 	clear_commit_marks(left, ~0);
+ 	clear_commit_marks(right, ~0);
++	if (sub) {
++		repo_clear(sub);
++		free(sub);
++	}
  }
  
- static void pp_header(struct pretty_print_context *pp,
-diff --git a/pretty.h b/pretty.h
-index 7359d318a9..e6625269cf 100644
---- a/pretty.h
-+++ b/pretty.h
-@@ -103,9 +103,14 @@ void pp_remainder(struct pretty_print_context *pp, const char **msg_p,
-  * Put the result to "sb".
-  * Please use this function for custom formats.
-  */
--void format_commit_message(const struct commit *commit,
-+void repo_format_commit_message(struct repository *r,
-+			const struct commit *commit,
- 			const char *format, struct strbuf *sb,
- 			const struct pretty_print_context *context);
-+#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
-+#define format_commit_message(c, f, s, con) \
-+	repo_format_commit_message(the_repository, c, f, s, con)
-+#endif
+ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+@@ -598,9 +638,11 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 	struct commit_list *merge_bases = NULL;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct repository *sub;
  
- /*
-  * Parse given arguments from "arg", check it for correctness and
++	sub = open_submodule(path);
+ 	show_submodule_header(o, path, one, two, dirty_submodule,
+-			      &left, &right, &merge_bases);
++			      sub, &left, &right, &merge_bases);
+ 
+ 	/* We need a valid left and right commit to display a difference */
+ 	if (!(left || is_null_oid(one)) ||
+@@ -661,6 +703,10 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 		clear_commit_marks(left, ~0);
+ 	if (right)
+ 		clear_commit_marks(right, ~0);
++	if (sub) {
++		repo_clear(sub);
++		free(sub);
++	}
+ }
+ 
+ int should_update_submodules(void)
 -- 
 2.19.1.930.g4563a0d9d0-goog
 
