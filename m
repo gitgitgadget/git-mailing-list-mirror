@@ -2,148 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 070FD1F453
-	for <e@80x24.org>; Tue, 30 Oct 2018 02:28:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 890031F453
+	for <e@80x24.org>; Tue, 30 Oct 2018 02:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbeJ3LUB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Oct 2018 07:20:01 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33866 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbeJ3LUB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Oct 2018 07:20:01 -0400
-Received: by mail-wr1-f68.google.com with SMTP id l6-v6so10837561wrt.1
-        for <git@vger.kernel.org>; Mon, 29 Oct 2018 19:28:30 -0700 (PDT)
+        id S1726205AbeJ3LiE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Oct 2018 07:38:04 -0400
+Received: from mail-lf1-f44.google.com ([209.85.167.44]:42603 "EHLO
+        mail-lf1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbeJ3LiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Oct 2018 07:38:03 -0400
+Received: by mail-lf1-f44.google.com with SMTP id q6-v6so7667171lfh.9
+        for <git@vger.kernel.org>; Mon, 29 Oct 2018 19:46:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0wEU3c+ipejkUmuHd1lX7eU4ESd/tGh6DCg/GcpQwgA=;
-        b=QQkJpfs8LufUukfh4QVgJv+DxQ+Na2J1uLnDfQbOt59H2IktQk+QcRUZ6GtsKWhvCS
-         M0+ZGpFzBOYZz9w8gf+aK98jHwdhAqGWrxsSItYl6gaDZQSFAfSaBupTK/J5l7FgRs1Q
-         S+TUXs4hh0mw/O8yzx7YXAML2ma9zA5lROjrAL/h3yI5wfjZx6fBqiB94KPi85LHeS1f
-         Kn46C6q2ceivgbZ4eeE3X+v/bX72L66nJfXffmlrmFJKr6wERKomiYq/SWlV0tQntArv
-         SnFb5r08d2Kk2Z37d3FKQzzvtkiKMBcyumbnFCFQmXCfDdMNMO9lvMBexlAcHihtpJJo
-         DJkQ==
+        h=from:in-reply-to:references:mime-version:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rIJXSgKBM6KIwuLZd3fufz5z5lYd0uYlOUV4CAXSQz4=;
+        b=NL7VrvnZb6SMR1Zbf22pyv0/BTnnErGsuShq52aETlsj3wmI4qTuL3c0w4vS6Gy/D0
+         dkhcEo+dAFnxgKnrnbnTko1hvPJ9xlkXysT4MFdXeHLjEjZmo+KF/IcvW18LGEqIu5/B
+         lVHjrYs+sAcq4vQrngT7AKsE349TyN28v+jEnajX/mssC8x7uLumKm4kF1NC4BdVN8D5
+         Jxor/lpSs9mPKZxtE8+eqDyFeU7Way53YqW1jF2VaiQGzbgyTKuoRL9EQ6pEs5NtvVKF
+         wYnAhoN9n3NzX3eNRZMkKhoAizpGRBGypAj+iE8WP2s3oXRjumekaOa6O1uD8TKPR1xS
+         swug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0wEU3c+ipejkUmuHd1lX7eU4ESd/tGh6DCg/GcpQwgA=;
-        b=NLryuQ44RfYAp9KENfoakzwDnic0IL7jCmqC72HowJ0mgrPCF+3CB0OSwAdUAZxdlE
-         oJfaHMLnalw1ZawbLgMzKVjHWSNZnrk9jQI75+DmVQsV4KOWY1R29yOwfi712+OOIJFC
-         ZzNwSktbjITzexgdZtoJ0QjXxjp+kXn6XUaFY/m5sRU7/ZVI4M1kGSWI3HtLn/+8vaVj
-         oIuVEhXbox7HOFy+5RJIIJ2DOEVPrXoxW2T0ZAE+ane54M0O0DcLiknrEVqRCfR0L2pz
-         gr1GkhNk62hwSsMsebtk6z+crgvxhIO+kf5YAsCJvo5M6kb1TBUPsx0ut8JKRR8Uj6Sg
-         ZHFw==
-X-Gm-Message-State: AGRZ1gJB/Y1WVRKgtE53txZ2bpmmSkg+AVPmjFYOpq6/5ZA89LLyvqrX
-        qOmPrxcXdP5yrOiocVfQ8dA=
-X-Google-Smtp-Source: AJdET5ecqN4pFuMQArLrvJCpQg47e+DuynjMLZctQxhs2WrEiVLzVnWLhIk8PEBULw1EuTx/w0Gzqg==
-X-Received: by 2002:adf:916a:: with SMTP id j97-v6mr17442258wrj.179.1540866509458;
-        Mon, 29 Oct 2018 19:28:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d6-v6sm21255707wro.72.2018.10.29.19.28.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Oct 2018 19:28:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH v1] speed up refresh_index() by utilizing preload_index()
-References: <20181029204159.18208-1-peartben@gmail.com>
-Date:   Tue, 30 Oct 2018 11:28:28 +0900
-In-Reply-To: <20181029204159.18208-1-peartben@gmail.com> (Ben Peart's message
-        of "Mon, 29 Oct 2018 16:41:59 -0400")
-Message-ID: <xmqq7ei02mnn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:in-reply-to:references:mime-version:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rIJXSgKBM6KIwuLZd3fufz5z5lYd0uYlOUV4CAXSQz4=;
+        b=UTbgBscyNhnxKNZ5ydZGGfQRP6rFtIiGWucli5FPsF9mku9EGWCcCiqVnwpu4TwOxZ
+         i9a4anMCNhEat2E79zDB4H10UiQ86CXHHD7cG8qd3P8/3NpLNc4hOhv5yJjbbB5VdtSm
+         v5bWfrZVnxcJ7aT5U3IvbaPGXC4bnmQ1q6m+5lU6Sedy2iEV5kPM+06VDlYdXdYGjJB/
+         HR7FDRblOcVEet8hZAC9tv7EnsWolvb1BqtzmU1vHgncxLzDTw/ajYRunR9sg9YQLpK/
+         QBC5nZddKN3XKDwyzKbjOWRsqkJthhnpv2z4ccPsulXSIDoftWEROWwcwbLOIn02pP1q
+         wKsA==
+X-Gm-Message-State: AGRZ1gJZquj+O8OrwEndWYdSLJUqSVsFNBNk8o+pOQbB96fULbWP/p5l
+        wXAJBNxQESskO6rpGGv4mz/PcqhsGaajlHYKh9ETXw==
+X-Google-Smtp-Source: AJdET5c7SCBLnPLYF4EXLc16oPBnYsZzcVwUMh0U2mXmJTrg03sL5xUcszQYlDP6zNb9TEo6wG6lLWEWrRfQOhigpl4=
+X-Received: by 2002:a19:1cb:: with SMTP id 194mr628243lfb.61.1540867588809;
+ Mon, 29 Oct 2018 19:46:28 -0700 (PDT)
+Received: from 1058052472880 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 30 Oct 2018 03:46:28 +0100
+From:   Gray King <grayking.w@gmail.com>
+In-Reply-To: <20181029141804.GC17668@sigill.intra.peff.net>
+References: <CAP1N1j7P83XVPx6dDGMSeRbwjdixAdBNZab=TP94=9LSfmsrRQ@mail.gmail.com>
+ <20181029141804.GC17668@sigill.intra.peff.net>
+X-Mailer: Airmail (528)
 MIME-Version: 1.0
-Content-Type: text/plain
+Date:   Tue, 30 Oct 2018 03:46:28 +0100
+Message-ID: <CAP1N1j7AbiYLfe4EiFn-4zdBd-nD2paXx1hZhqiUCOq4iLh9zw@mail.gmail.com>
+Subject: Re: Lost changes after merge
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Sorry, seems the link has been expired, here is the new one:
 
-> From: Ben Peart <benpeart@microsoft.com>
+
+* Before merge run `git log --format=3D"%h %p %d" -n 20 --all --graph`:
+
+https://cfp.vim-cn.com/cbfq6
+
+* After merged run `git log --format=3D"%h %p %d" -n 20 --all --graph`:
+
+https://cfp.vim-cn.com/cbfq7
+
+=E5=9C=A8 2018=E5=B9=B410=E6=9C=8829=E6=97=A5 =E4=B8=8B=E5=8D=8810:18:07, J=
+eff King (peff@peff.net(mailto:peff@peff.net)) =E5=86=99=E5=88=B0:
+
+> On Mon, Oct 29, 2018 at 09:49:20AM +0100, Gray King wrote:
 >
-> Speed up refresh_index() by utilizing preload_index() to do most of the work
-> spread across multiple threads.  This works because most cache entries will
-> get marked CE_UPTODATE so that refresh_cache_ent() can bail out early when
-> called from within refresh_index().
+> > Hello,
+> >
+> > I have a very strange issue described below:
+> >
+> > * Here is the tree before I merge via `git log --format=3D"%h %p %d" -n
+> > 20 --all --graph`:
+> >
+> > https://upaste.de/9Pe
 >
-> On a Windows repo with ~200K files, this drops refresh times from 6.64
-> seconds to 2.87 seconds for a savings of 57%.
+> FWIW, neither this nor the other paste link in your email seem to work
+> for me (which makes it hard to comment on the rest of the email).
 >
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
-
-OK.  We used to only expose the whole "read the index file into an
-istate, and then do the lstat() part in parallel", but now we also
-make the "do the lstat() part" available separately.
-
-Which makes sense.
-
-
-> diff --git a/cache.h b/cache.h
-> index f7fabdde8f..883099db08 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -659,6 +659,9 @@ extern int daemonize(void);
->  /* Initialize and use the cache information */
->  struct lock_file;
->  extern int read_index(struct index_state *);
-> +extern void preload_index(struct index_state *index,
-> +			  const struct pathspec *pathspec,
-> +			  unsigned int refresh_flags);
->  extern int read_index_preload(struct index_state *,
->  			      const struct pathspec *pathspec,
->  			      unsigned int refresh_flags);
-> diff --git a/preload-index.c b/preload-index.c
-> index 9e7152ab14..222792ccbc 100644
-> --- a/preload-index.c
-> +++ b/preload-index.c
-> @@ -9,7 +9,7 @@
->  #include "progress.h"
->  
->  #ifdef NO_PTHREADS
-> -static void preload_index(struct index_state *index,
-> +void preload_index(struct index_state *index,
->  			  const struct pathspec *pathspec,
->  			  unsigned int refresh_flags)
->  {
-> @@ -100,9 +100,9 @@ static void *preload_thread(void *_data)
->  	return NULL;
->  }
->  
-> -static void preload_index(struct index_state *index,
-> -			  const struct pathspec *pathspec,
-> -			  unsigned int refresh_flags)
-> +void preload_index(struct index_state *index,
-> +		   const struct pathspec *pathspec,
-> +		   unsigned int refresh_flags)
->  {
->  	int threads, i, work, offset;
->  	struct thread_data data[MAX_PARALLEL];
-> diff --git a/read-cache.c b/read-cache.c
-> index d57958233e..53733d651d 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1496,6 +1496,12 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->  	typechange_fmt = (in_porcelain ? "T\t%s\n" : "%s needs update\n");
->  	added_fmt = (in_porcelain ? "A\t%s\n" : "%s needs update\n");
->  	unmerged_fmt = (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
-> +	/*
-> +	 * Use the multi-threaded preload_index() to refresh most of the
-> +	 * cache entries quickly then in the single threaded loop below,
-> +	 * we only have to do the special cases that are left.
-> +	 */
-> +	preload_index(istate, pathspec, 0);
->  	for (i = 0; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce, *new_entry;
->  		int cache_errno = 0;
->
-> base-commit: c670b1f876521c9f7cd40184bf7ed05aad843433
+> -Peff
