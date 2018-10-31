@@ -2,132 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7017C1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 11:14:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9594C1F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 11:54:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727602AbeJaUMU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 16:12:20 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58313 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726223AbeJaUMU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 16:12:20 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmNHK-1fj1bQ0OH4-00ZwlT; Wed, 31
- Oct 2018 12:14:38 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmNHK-1fj1bQ0OH4-00ZwlT; Wed, 31
- Oct 2018 12:14:38 +0100
-Date:   Wed, 31 Oct 2018 12:14:50 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     chris via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, chris <chris@webstech.net>
-Subject: Re: [PATCH 1/1] Use correct /dev/null for UNIX and Windows
-In-Reply-To: <xmqqo9bawvpf.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810311210410.4546@tvgsbejvaqbjf.bet>
-References: <pull.59.git.gitgitgadget@gmail.com> <8159cbd1b8025f33fb9d0e254db1a3c2a066f853.1540923993.git.gitgitgadget@gmail.com> <xmqqo9bawvpf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728783AbeJaUw1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 16:52:27 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:42903 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726025AbeJaUw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 16:52:26 -0400
+Received: by mail-qt1-f196.google.com with SMTP id z20-v6so17244681qti.9
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 04:54:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=A0FPyVZuygc0nS3GV6mJ1Uhin9PRYN4ExaaVkMocOCM=;
+        b=LbQ2cQq93qdQj49HqjtqBnANfDMiAgK5mc66aIq0JZAthMITUA4yh/88NSHjHMQKLS
+         Z6SAvgN+ZJs0cndHHljrC8iQ1YMMSiyeNffImsxEOAnnb5Dkw1rAR7QvVN6hyRbo3I8j
+         HE+ruMHiFYw0FoqMh1QyBeDOJf+44r4vBOJMYAWUagABYbTmQWaqJpyzRiUeYGE2Pnze
+         B9h1bmY0HI7WLnZthSdaPoLHsjSFtczNqYmZVrdasT9lFMf4280/UUiQRm1fliANxvtJ
+         slaZ7uV0HHKArjKNX5kRSE6rp52L0rehZLHzbTwZzUWeoosBNjCkkQLwuD/M2gui9ttN
+         JLKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=A0FPyVZuygc0nS3GV6mJ1Uhin9PRYN4ExaaVkMocOCM=;
+        b=YB9y1+5vxw7L43Q+8738pl5ewvj9KoShqn6VQBnmUdPr9J3YoQ9sayU4Gp+kqL1bFG
+         bx+Rlwe3BcL4nRRjsRGIDciEzTijosrso4+LoQbNDKltF/NnOO+iOqvLmssqFoRHPMSt
+         7F70ICoG8SrG6DiqyE+Kbw2m+qboifqOmVI0XdCVd5EwSOhSS/ycxyyI+L0lZ323viS4
+         XwSbCcMFHHEWqdAAqbNRaXWqwyq9WVixYE/krc+2MQuQEJJe4b/BJhHoaMxbbsp5VyKz
+         9Hm8OzkYwUNvFKcOTdvZ18uLumws5+P8PV+Meb5PWTh/4p7Cy+xYO6WqdyHHBcr+6BwN
+         VJ6w==
+X-Gm-Message-State: AGRZ1gLLx4Y6v7eK0ZjXBdGem/7HCR460q1BQU8Eyddr3V2KgqD2KSH8
+        9yWSvGEZelLrvnC1RAx+rCY=
+X-Google-Smtp-Source: AJdET5dRyAAeEoZveS0ehwfKouR7MUAXqK88rtceEJzhRf4v08O8WbFrDPU/aGDGUllkMpxDeVSkHA==
+X-Received: by 2002:a0c:ef03:: with SMTP id t3mr2247418qvr.148.1540986882823;
+        Wed, 31 Oct 2018 04:54:42 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:51aa:e8f0:335f:de7c? ([2001:4898:8010:0:3ae0:e8f0:335f:de7c])
+        by smtp.gmail.com with ESMTPSA id d20-v6sm3014217qtm.49.2018.10.31.04.54.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Oct 2018 04:54:42 -0700 (PDT)
+Subject: Re: [PATCH 1/3] commit-reach: implement get_reachable_subset
+To:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.60.git.gitgitgadget@gmail.com>
+ <4c0c5c9143a757ee5187ae6fca9a76f29b6c6ae2.1540908961.git.gitgitgadget@gmail.com>
+ <CABPp-BHbOWXsnUSdcptyQ_Cn_PnqH4On+Q3zWNZQV4QHgYhqpg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d42eceda-0178-ce48-1ccd-7a1842e897ed@gmail.com>
+Date:   Wed, 31 Oct 2018 07:54:43 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7hRr2XuOS2ZK7uXaF1kECTPg97TyhOmZ9v6xgd+W9FdahjXTCi1
- 2rALu3WgHu+YUI5GOFFz1dyEBCNhGYNWBGy+cAhd0lA3qbk7h3/eWEpiTe7OGbgtq4HsmR+
- Mrgmej6rxUgcor07uNsogfbJcHd/xEQ4YqT89KNDPKVRK2EkKvDjzKIGSe/rbQz2c/tO+iX
- pvQ6gEXUJLrefxSvwbvtA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HoT9jBdVe3I=:Su7KQOAsCMsSymFVpIAyVK
- VXvdWgt8RMSr9ezlkCAONXJF/5/L9mfu5EDsAu0gtUM0R3SaFDexaA4KqVuXTQcGyhvE/HdBF
- mMZhDhkfyGPGmF5kPd+fr8EDJeBSD5rBmND53cxMGnQpWyChQV/SCAoGIKOF447sqtfj4sJne
- JR5qxviRJNMDCi4SrET2PVhY80vznSU4DKKVeCrVpwjzXvc1F0VZ9sHvQ551y+npY7GkzyFgH
- hrcO2OEYJrCtmW2+3eOjLpluiUhakmRBgRUBSBLsp096tYznYGp1knKfck4wgx1oj4YBwzGpj
- AsnUgitcODH1IsU2n9DEkRZXb0GEmjXHrmJKgFsXmizZG49kmk0gVNvJbfC9qx7BYm8lSs1w8
- k05MKj4mivYUvQYOF3Ln0hciDktHdDsUtRUXnTLBiV1fSM1n0GEM9mt9B8WFdQYrFG4IgI/qe
- BfV5QfbuzBzg/iNbkqtyd10hmvVc5a9JWvN0VatV0Z0Cjs5UIpL8bqaQi141q+aOLfj1Mzal+
- Js3/XBTwdW7+Dzy6ANdEnYypbsSePxu9IgtmDxeMmg/RC/la7VnU/HKFj5tL8YkQJAsBrC3q5
- NzWs9yrtYsByi4A/bMj4vA2LgMQpwwKYvyNZ6nyg0UBz08MYNVHm1X9BWcZQTNKPKDyZjsBzQ
- ThX0tkhD7ankeesFqWjRDUMpco8iLkGitp2Be+3k9RNSiVi9ZdD39GweXUfY36O2xapxnvooA
- fOTAeWlKw08rO00bTbifjptHP3ru4mZfGZ6kMpI++lPev77ormJbYOsae4Qls7nhDrJTl+Gjs
- OTewpIuUeeuJc6NKMWmeqaL1H92Qui10TBF7ejZwAust24p0GI=
+In-Reply-To: <CABPp-BHbOWXsnUSdcptyQ_Cn_PnqH4On+Q3zWNZQV4QHgYhqpg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 10/31/2018 2:07 AM, Elijah Newren wrote:
+> On Tue, Oct 30, 2018 at 7:16 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> --- a/commit-reach.c
+>> +++ b/commit-reach.c
+>> @@ -688,3 +688,73 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+>>          object_array_clear(&from_objs);
+>>          return result;
+>>   }
+>> +
+>> +struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+>> +                                        struct commit **to, int nr_to,
+>> +                                        int reachable_flag)
+>> +{
+>> +       struct commit **item;
+>> +       struct commit *current;
+>> +       struct commit_list *found_commits = NULL;
+>> +       struct commit **to_last = to + nr_to;
+>> +       struct commit **from_last = from + nr_from;
+>> +       uint32_t min_generation = GENERATION_NUMBER_INFINITY;
+>> +       int num_to_find = 0;
+>> +
+>> +       struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+>> +
+>> +       for (item = to; item < to_last; item++) {
+>> +               struct commit *c = *item;
+>> +
+>> +               parse_commit(c);
+>> +               if (c->generation < min_generation)
+>> +                       min_generation = c->generation;
+> So, when we don't have a commit-graph, is c->generation just going to
+> be 0, making min_generation also be 0? (meaning we get no possible
+> speed benefit from the commit-graph, since we just don't have that
+> information available)?
 
-On Wed, 31 Oct 2018, Junio C Hamano wrote:
+If we don't have a commit-graph, then we can only terminate the loop early
+if we discover all of the commits (num_to_find == 0).Otherwise, we need to
+walk the entire graph in order to determine non-reachability. This relates
+to Junio's point about in_merge_bases_many(), which I'll respond to his
+message in more detail about that.
 
-> > From: chris <chris@webstech.net>
-> 
-> Please make this line read like
-> 
-> 	From: Chris Webster <chris@webstech.net>
-> 
-> i.e. the author should be the person who is signing off that patch.
-
-This is most likely recorded as the commit's author in the commit
-object... Chris, to fix it, make sure that your `user.name` is configured
-correctly, and then call `git commit --amend --reset-author`.
-
-> > Use File::Spec->devnull() for output redirection to avoid messages
-> > when Windows version of Perl is first in path.  The message 'The
-> > system cannot find the path specified.' is displayed each time git is
-> > run to get colors.
-> >
-> > Signed-off-by: Chris. Webster <chris@webstech.net>
-> > ---
-> >  contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> There are a handful more instances of /dev/null found if you do
-> 
-> 	$ git grep /dev/null -- \*.pl \*.pm
-> 
-> The one in perl/Git.pm must be shared by scripts written in Perl, so
-> it may be worth giving the same tweak to it, like this patch does to
-> the highlight script.
-
-I do not think that perl/Git.pm is intended to run with any random Perl
-interpreter. It has to be one that has been verified to work correctly
-with the Perl code in perl/, and that code is notoriously reliant on POSIX
-behavior, hence our choice to go with MSYS2 Perl (there *is* a MINGW Perl
-package in Git for Windows' SDK, but it will most likely not work, in
-particular because of the missing Subversion bindings).
-
-So I would restrict the search to contrib/\*.pl, contrib/\*.perl and
-contrib/\*.pm. The stuff in contrib/ is supposed to be semi-independent
-from the particular Git one is using (and from whatever Perl is shipped
-with it, if any).
-
-Ciao,
-Johannes
-
-> > diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-> > index 536754583..7440aa1c4 100644
-> > --- a/contrib/diff-highlight/DiffHighlight.pm
-> > +++ b/contrib/diff-highlight/DiffHighlight.pm
-> > @@ -4,6 +4,11 @@ use 5.008;
-> >  use warnings FATAL => 'all';
-> >  use strict;
-> >  
-> > +# Use the correct value for both UNIX and Windows (/dev/null vs nul)
-> > +use File::Spec;
-> > +
-> > +my $NULL = File::Spec->devnull();
-> > +
-> >  # Highlight by reversing foreground and background. You could do
-> >  # other things like bold or underline if you prefer.
-> >  my @OLD_HIGHLIGHT = (
-> > @@ -134,7 +139,7 @@ sub highlight_stdin {
-> >  # fallback, which means we will work even if git can't be run.
-> >  sub color_config {
-> >  	my ($key, $default) = @_;
-> > -	my $s = `git config --get-color $key 2>/dev/null`;
-> > +	my $s = `git config --get-color $key 2>$NULL`;
-> >  	return length($s) ? $s : $default;
-> >  }
-> 
+Thanks,
+-Stolee
