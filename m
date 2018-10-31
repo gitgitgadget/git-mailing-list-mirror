@@ -2,138 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FDFA1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 15:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17B121F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 16:03:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728966AbeKAA3S (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 20:29:18 -0400
-Received: from mail-qk1-f181.google.com ([209.85.222.181]:40180 "EHLO
-        mail-qk1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727707AbeKAA3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 20:29:17 -0400
-Received: by mail-qk1-f181.google.com with SMTP id f18-v6so10144490qkm.7
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 08:30:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MsrseBM42eOUn+UqjJ/z0m9z5SlL75itDOh63DM0C2Y=;
-        b=X8UF7ZLphpugUu+aIUqboBnG8vozFcMTMzJ56fjQOFzhFUkuwx0S6L4UvDDbXG6hOI
-         iEkm+cqitWR4/7Zm2BBKuhn7XpyGF+Ic8dU3PIhNedRH2YSlKuLYxZGrLjwkb5+l0r0R
-         1CWVJizQMP/lss+/vAoAd9a2zuZbzIDMNUI1EXyK9LXBzgNQwAsAUOVNbA7oTmPlvC4P
-         5w+0xG1dFonKZUuDcOI5Q4YK6ZqJtLp0gqt/U+8EDQhNbefvM+F/F5LlJX3KmYSq+V0e
-         Og6IKNHciyYnuGzUaQrMK+m+3xR6PF2Lwaqv80+b2hV+7i1w8vkB3Ih3RuwsiNTVPTcY
-         EFng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=MsrseBM42eOUn+UqjJ/z0m9z5SlL75itDOh63DM0C2Y=;
-        b=IudenhDvENcdjtdbBVEmdOFmrVVzXUq/H+rxHCvbY6txNe+uTaOfyiwku3fppBssVV
-         6KLAfTSVWugAOgjkDr2k1Z6Xke7ugTLVqb0KxcQzOn+xlmbxICDqrKG52jYKUeo4xlWP
-         E40Vzy8/6v9m3RN1WVyCuEqwNPyRcJxc4GucxAx38WZJMjJFSXd5BSDk34V91GPBLRKa
-         ANHDBq5wiEI9uWsEdO6iKGpHgCTNZNS/HHTn0C+x+V1CmsEuEjwGwfkAthJ9g9XH4EHI
-         WIhuMshIfvcO2JScrofMkxo57s9kvGn7JyItHCMtGc4gTXKRz6Jts4Xd+TdnHFFFHeF4
-         CzDg==
-X-Gm-Message-State: AGRZ1gLt1HGp5vxqiGvlMr+sduaZxAWeq5fC+VORiVCaDHbbHprwhHig
-        pU2fCCm+1fEcRJITR/9uEas=
-X-Google-Smtp-Source: AJdET5cTsMWPB/pQHJLMaJOJTgpb5ABupi0bD+Pag8+osazrlT/gP0i+MYXGMpaEfBwpFjKkD01N5w==
-X-Received: by 2002:ac8:4302:: with SMTP id z2-v6mr3010399qtm.295.1540999847585;
-        Wed, 31 Oct 2018 08:30:47 -0700 (PDT)
-Received: from localhost ([165.227.200.42])
-        by smtp.gmail.com with ESMTPSA id d7-v6sm18783172qta.61.2018.10.31.08.30.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Oct 2018 08:30:46 -0700 (PDT)
-Date:   Wed, 31 Oct 2018 11:30:45 -0400
-From:   Brandon McCaig <bamccaig@gmail.com>
-To:     Gray King <grayking.w@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: Lost changes after merge
-Message-ID: <20181031153045.iirgzwwncogxgwlu@test-chamber-21.localdomain>
-Mail-Followup-To: Gray King <grayking.w@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <CAP1N1j7P83XVPx6dDGMSeRbwjdixAdBNZab=TP94=9LSfmsrRQ@mail.gmail.com>
- <20181029141804.GC17668@sigill.intra.peff.net>
- <CAP1N1j7AbiYLfe4EiFn-4zdBd-nD2paXx1hZhqiUCOq4iLh9zw@mail.gmail.com>
+        id S1729761AbeKABCc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 21:02:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34478 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729642AbeKABCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 21:02:32 -0400
+Received: (qmail 6360 invoked by uid 109); 31 Oct 2018 16:03:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Oct 2018 16:03:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11349 invoked by uid 111); 31 Oct 2018 16:03:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 31 Oct 2018 12:03:11 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2018 12:03:53 -0400
+Date:   Wed, 31 Oct 2018 12:03:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jon Simons <jon@jonsimons.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [BUG?] protocol.version=2 sends HTTP "Expect" headers
+Message-ID: <20181031160353.GA17267@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="abmy3e3cfvexg47v"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP1N1j7AbiYLfe4EiFn-4zdBd-nD2paXx1hZhqiUCOq4iLh9zw@mail.gmail.com>
-X-PGP-Key: https://castopulence.org/bamccaig/castopulence.asc
-User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since 959dfcf42f (smart-http: Really never use Expect: 100-continue,
+2011-03-14), we try to avoid sending "Expect" headers, since some
+proxies apparently don't handle them well. There we have to explicitly
+tell curl not to use them.
 
---abmy3e3cfvexg47v
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The exception is large requests with GSSAPI, as explained in c80d96ca0c
+(remote-curl: fix large pushes with GSSAPI, 2013-10-31).
 
-Gray:
+However, Jon Simons noticed that when using protocol.version=2, we've
+started sending Expect headers again. That's because rather than going
+through post_rpc(), we push the stateless data through a proxy_state
+struct. And in proxy_state_init(), when we set up the headers, we do not
+disable curl's Expect handling.
 
-On Tue, Oct 30, 2018 at 03:46:28AM +0100, Gray King wrote:
-> * Before merge run `git log --format=3D"%h %p %d" -n 20 --all --graph`:
->=20
-> https://cfp.vim-cn.com/cbfq6
->=20
-> * After merged run `git log --format=3D"%h %p %d" -n 20 --all --graph`:
->=20
-> https://cfp.vim-cn.com/cbfq7
+So a few questions:
 
-I also cannot see anything wrong here. The two commits you
-mentioned earlier are not in either paste, as was already stated.
-It might help us understand if you are more explicit about what
-you think is wrong. Maybe verify that your pastes have captured
-all of the necessary information to understand the problem.
+  - is this a bug or not? I.e., do we still need to care about proxies
+    that can't handle Expect? The original commit was from 2011. Maybe
+    things are better now. Or maybe that's blind optimism.
 
-The only other thing that I note is that 6d6ed669d1 and
-3c792ffaf0 appear to be merging the same two parents, so
-logically they should be identical (unless merge conflicts were
-resolved in different ways). Is that related to the issue? Was
-one of the merges done incorrectly, and you're trying to fix it?
-Or are you just confused about how you got into this state in the
-first place?
+    Nobody has complained yet, but that's probably just because v2 isn't
+    widely deployed yet.
 
-Regards,
+  - if it is a bug, how can we handle it like the v0 code? There we
+    enable it only for GSSAPI on large requests. But I'm not sure we can
+    know here whether the request is large, since we're inherently just
+    streaming through chunked data. It looks like post_rpc tries to read
+    a single packet first, and considers anything over 64k to be large.
 
+  - alternatively, should we just leave it on for v2, and provide a
+    config switch to disable it if you have a crappy proxy? I don't know
+    how widespread the problem is, but I can imagine that the issue is
+    subtle enough that most users wouldn't even know.
 
---=20
-Brandon McCaig <bamccaig@gmail.com> <bambams@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bambams.ca/>
-perl -E '$_=3Dq{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+I think I've convinced myself that we probably do need to do the "peek
+at the first packet" thing like post_rpc() does, but I think it might be
+tricky with the way the proxy_state code is structured.
 
+Thoughts from people with more HTTP knowledge/experience?
 
---abmy3e3cfvexg47v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE6A+1JeuAGnMhPkN33afWAiLlk/IFAlvZyqIACgkQ3afWAiLl
-k/KJIhAA2Ht3qusZVdiDP4+4kJ/kMJ8aHIogGz5FNtMwhcgbOe2T45+nWD+NhFQB
-yOz3G0gqCcWRkUPqW3RauX0iZE+orBmuuBCxefIt6/xsPGmxt9mvYuwuQDTrwySW
-KV9vmeJmcgem9hMnnRXpfwDASpXoPljkqEdY16VeCDsTctH4CXsFVrxELHP76AiK
-9p3ksjHaShHQ80wX4+nJowFBAdU2EsmPDWJYhHe+XFSVvvhUGJ3EkcpIYqziEzK0
-tdGaE1Dn7an0BzDv0lE8jr8w8u4K57UdXSVlkozCuymdiy+8zJ/P7IZ9Uzhp+395
-vrzIOuG18zzuyDtgj7YiOqdPhbsQ69HIXDr3/QWYVNH7RvCxhpV2PszW3eN4LXKB
-fCngROTGdzSBjxlPx42fCvLEJC7XCcEOR32qzeBsxBtSq/lEsITpFVpVlYT0UR9s
-6273gydXB6koy/mXD6a2qdtmku2dAN914kW0d4gKdw8sjcYayyqg17yoXwpBoOIA
-ApS+NIbKvsHCpkY3jcaHkH5spXKlnSt/WnDrfAxGh0JgCUSwqLy/+l8Iv9LOZyEh
-6ZhiIk0S47fQnoThcuGsyznZ1kxIml6Y/RRJBdNZSzRU3xcUbluDoxF2KFeFxEhg
-R1Uul4CZTgbYSlIrW7QihmI2upZPZGFH3h2TOgd/kXrIQw+k/l4=
-=2jO3
------END PGP SIGNATURE-----
-
---abmy3e3cfvexg47v--
+-Peff
