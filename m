@@ -7,186 +7,219 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4000E1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 12:05:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6ADC1F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 12:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728270AbeJaVC7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 17:02:59 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:44873 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726568AbeJaVC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 17:02:59 -0400
-Received: by mail-qt1-f196.google.com with SMTP id b22-v6so17267890qtr.11
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 05:05:14 -0700 (PDT)
+        id S1728993AbeJaV2U (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 17:28:20 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:33487 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728656AbeJaV2T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 17:28:19 -0400
+Received: by mail-qk1-f195.google.com with SMTP id o89so9351918qko.0
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 05:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1/wQ9Vjx4mcXPq9UvHU4UiVD0ucfKs+UoZxAe83iDGU=;
-        b=pVTXGumZnjSfFF9LP2TwO9Z5GABCXImn+TRsNXR6tAAzseoJ0eSMaGTyVkBqRq4lye
-         t7Ab89wbRLPsfAo5SNMdLhCIKBT7ouQzhNN0MY3XziDiOAULvFy2f/MhihaebKFCpfeR
-         Vyugy+upKxRD/Vb9MTZYxQb9x3X1w8/n29aEkpEYgzGt9ylKbzMoj0N3HPwC3FTuBJB5
-         pYp/TazRFBwtrkjlAsHN5nqA1cKoTYFvrpS3Eao76Wwcv7ulAuAHbmzYrhlR11VPWU6A
-         c83/oVtZN3GvXdEq64D31M6GXycDu0zcGSPLRZXpWRVt3/goQwBggt2w+a1eaVHviGyC
-         SLVA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=f5s8/IDalnyEbdBYFtre1dX8Wlv3lw8C0zwI6elW0NU=;
+        b=Mfp8cJ51t4i4QBwig70IWqhkmf7xVQK++QofEXVpvCe6q5vJ5TOejuQnj6LkEQ4Ihe
+         DoSvQfnh7DMlA0nS1Xi2OMEeUnyc+o3IKf9dSYxAceJ6tO6+xOhr+gMnmz1ZeOqauzRF
+         cOK1iJ9137llRYCo8QH6g+9xtqh+SbYHARdCDodRPJ61T9CXUo3sMRl5a/1ZNEclCHPW
+         gVwXtkrWjB+RI3A6P5P+rqC1sODDq9Q0WSqW3QOs7YnXZFIOSZFBJ/GHq2pfcMfANYOu
+         dnzE43OqFOc/l4ml+il76lKkCalmSybPJmBLHcNHweEAcgU+2Ps0sEGNKFmdD9neLGB4
+         tchQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1/wQ9Vjx4mcXPq9UvHU4UiVD0ucfKs+UoZxAe83iDGU=;
-        b=dnhGe1dym8nBK17uFrqWJ/UMRuGFG/toOSaDMY5nGIpZSL13D6buUZGSj4UjIJ3WSt
-         PPhtPvt+WgJdWrPH0wb/pl2BUlLjihg9Xu85u6rmYMjkESuCtXoPNb6ohE6cKUFOgQm9
-         9r6ipTdcbok/H5spp1EZ9isJVja/tyEUNF/8DgpjwAXgsSD65afkRHXqGrQ+c6nEYQIG
-         IRieE+QE6rmKcI6O1vCB/oThjeIBIigxNfU7UxSMFJks7sSfSsrxFyZcMAoKUFJsh0q9
-         Pye0K03KHNPsXjB4cT17n+VqnxP/TWmbEoGCzKuxW+s+SyNGCNMqP5gfl/8fUKRPKapN
-         rQng==
-X-Gm-Message-State: AGRZ1gJXaEf2KCAvLkad6K0f4PGSvraUMYEjUXKcOD4sK6wJm5i/743+
-        D18KcAdkkP362sHkwYXUeGmQYCWn
-X-Google-Smtp-Source: AJdET5cFIO3Qs00R23Th0TjzONtN/SReCpgpo5SgILmUvYuR2ime4d6aQ8KpM9PO0HcuXpu4daF1CA==
-X-Received: by 2002:a0c:ae30:: with SMTP id y45mr2241021qvc.145.1540987511786;
-        Wed, 31 Oct 2018 05:05:11 -0700 (PDT)
-Received: from stolee-linux.mshome.net ([167.220.148.125])
-        by smtp.gmail.com with ESMTPSA id y144-v6sm13211843qka.7.2018.10.31.05.05.11
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=f5s8/IDalnyEbdBYFtre1dX8Wlv3lw8C0zwI6elW0NU=;
+        b=IgAUccEzYWm33z4/KId23WSOtEvQeMAQp4BwHwfR2I7ReJzAjNIrWeoEs5O/3YKImF
+         s8nB/vlwHe1350kMM8DeI4QauDWuyX+hwdPasRRgUc9EJNiA0n1kRPXnyL98qaUkj5Jo
+         P8KQ6JIXWi8MwOD1GU6QHaSWO1o+sj/WuJuSSvE6fkN1h8FeoeliJkztLL8Upyh1uGSG
+         mJU33V5MEwyBG56CyWDj+sO4NEIrjmmTfcMMYCCLEXLc1rHnPUhMG5/+ALfev1HH6nGM
+         VCkZr1cc2JrPAXsae1XzcyhSEYO80jt9YNYWIlA9nV3A677B6ZuSVRP3bLjA8PR3pCvU
+         JX+Q==
+X-Gm-Message-State: AGRZ1gL86OtPLg2/iswUm5leYti1JtZb+6eX9s0k5HP9LtmXP8fLC3eV
+        ZNlbGPkkikNyWexl5pL+vkE=
+X-Google-Smtp-Source: AJdET5d05S7QmH0nXzqGnSv4bhm4bnlB4Jbl+MMI10T+9r/YUnnQHifxskG+3oA80lIej7iv8ajTzQ==
+X-Received: by 2002:a37:6c01:: with SMTP id h1-v6mr2334820qkc.67.1540989029417;
+        Wed, 31 Oct 2018 05:30:29 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:1547:f48:38e6:a522? ([2001:4898:8010:0:fe7c:f48:38e6:a522])
+        by smtp.gmail.com with ESMTPSA id b11-v6sm19721482qta.88.2018.10.31.05.30.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Oct 2018 05:05:11 -0700 (PDT)
+        Wed, 31 Oct 2018 05:30:28 -0700 (PDT)
+Subject: Re: [RFC] Generation Number v2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
+ <xmqqy3ag13us.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
-Date:   Wed, 31 Oct 2018 12:05:05 +0000
-Message-Id: <20181031120505.237235-1-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.19.1.542.gc4df23f792
-In-Reply-To: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
-References: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
+Message-ID: <61a829ce-0d29-81c9-880e-7aef1bec916e@gmail.com>
+Date:   Wed, 31 Oct 2018 08:30:29 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqy3ag13us.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/29/2018 11:59 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+>
+>> **V3: Corrected Commit Date.**
+>> For a commit C, let its _corrected commit date_ (denoted by cdate(C))
+>> be the maximum of the commit date of C and the commit dates of its
+>> parents.
+> "maximum of the commit date of C and the corrected commit dates of
+> its parents"?
 
-On 10/31/2018 2:04 AM, Elijah Newren wrote:
-> On Tue, Oct 30, 2018 at 7:16 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
+That's what I mean. Thanks.
+
+>
+> We've talked about exactly this one in the past (long before any of
+> Microsoft folks other than Dscho came to the scene) but without an
+> implementation, or detailed design and analysis.  I am very happy to
+> see the idea among other possibilities to be considered again.  This
+> time around, we may finally come up with something better than the
+> "commit dates with SLOP" thing ;-).
+>
+>> Essentially, the felineY order is selected with the goal of swapping
+>> positions of topologically-independent commits relative to the felinX
+>> ordering. The resulting reachability index is as follows:
 >>
->> As reported earlier [1], the add_missing_tags() method in remote.c has
->> quadratic performance. Some of that performance is curbed due to the
->> generation-number cutoff in in_merge_bases_many(). However, that fix doesn't
->> help users without a commit-graph, and it can still be painful if that
->> cutoff is sufficiently low compared to the tags we are using for
->> reachability testing.
+>>     If felineX(A) < felineY(B), then A cannot reach B.
+>>     If felineY(A) < felineY(B), then A cannot reach B.
+> I presume that the first line is a typo and you compare the same X index?
+
+Yes, sorry for the typos. I fixed them in the report on GitHub.
+
+>
+>> * **Compatible?** In our test implementation, we use a previously unused
+>>    byte of data in the commit-graph format to indicate which reachability
+>>    index version we are using. Existing clients ignore this value, so we
+>>    will want to consider if these new indexes are _backwards compatible_.
+>>    That is, will they still report correct values if they ignore this byte
+>>    and use the generation number column from the commit-graph file assuming
+>>    the values are minimum generation numbers?
+> I personally consider that the current commit-graph with generation
+> numbers experimental, so I am not sure how much we care about this.
+>
+> Having said that.
+>
+> By the above definition, any new index that is wider than the
+> current generation number cannot be compatible (can we even tell the
+> existing clients how wide each elements in the ix array is?)
+>
+> In any case, perhaps the first thing to do is to update the clients
+> so that they stop ignoring the version number field, and instead
+> work without generation number when there is no version of reach.ix
+> available in the file?  That way, a better reachablility index can
+> be chosen freely without having to worry about the compatibility.
+
+I can work on that. It should be as simple as setting commit->generation to
+GENERATION_NUMBER_ZERO in fill_commit_in_graph when the graph
+has a different version.
+
+>
+>> * **Immutable?** Git objects are _immutable_. If you change an object you
+>>    actually create a new object with a new object ID. Are the values we
+>> store
+>>    for these reachability indexes also immutable?
+> Even if we do not embed the reachability ix in commit objects,
+> having an immutable value is probably a must if we want to make them
+> incrementally computable, so this is a very good property to have.
+> Unless there is a clever idea to incrementally compute a mutable
+> reach.ix, my gut instinct says that this property is a must.
+>
+> Another thing, perhaps related to "local" below, is if exactly the
+> same reach.ix is computed by anybody, given an identical commit
+> history graph (perhaps "reproducibility"?).  I think most of the
+> candidates you listed are reproducible without a fixed tie-breaker,
+> but I am not sure about felineY() thing.
+>
+>> * **Local?** Are these values **locally computable**? That is, do we only
+>>    need to look at the parents of a commit (assuming those parents have
+>>    computed values) in order to determine the value at that commit?
+> A subset of non-local reachability ix, for example, the ones that
+> need to know what each commit's children are, cannot be immutable,
+> as adding new objects to the graph (either with locally committing,
+> or transferring objects from other repositories) would affect the
+> ix; is this true for all non-local reachability ix, I wonder?
+
+As a thought experiment, we could define a function size(C) to be the
+numberof commits reachable from C. This is not locally-computable
+from the size values at C's parents due to the inclusion-exclusion
+principle. We would need to compute it by walking the reachable set
+and counting (resulting in quadratic performance overall) but is
+immutable. Since the performance cost is so expensive (unlike the
+linear costs in the other non-local versions) I didn't include it
+in my comparison.
+
+>
+>> We focused on three types of performance tests that test the indexes
+>> in different ways. Each test lists the `git` command that is used,
+>> and the table lists which repository is used and which inputs.
 >>
->> Add a new method in commit-reach.c called get_reachable_subset() which does
->> a many-to-many reachability test. Starting at the 'from' commits, walk until
->> the generation is below the smallest generation in the 'to' commits, or all
->> 'to' commits have been discovered. This performs only one commit walk for
->> the entire add_missing_tags() method, giving linear performance in the worst
->> case.
+>> ### Test 1: `git log --topo-order -N`
 >>
->> Tests are added in t6600-test-reach.sh to ensure get_reachable_subset()
->> works independently of its application in add_missing_tags().
->
-> On the original repo where the topic was brought up, with commit-graph
-> NOT turned on and using origin/master, I see:
->
-> $ time git push --dry-run --follow-tags /home/newren/repo-mirror
-> To /home/newren/repo-mirror
->  * [new branch]       test5 -> test5
->
-> real 1m20.081s
-> user 1m19.688s
-> sys 0m0.292s
->
-> Merging this series in, I now get:
->
-> $ time git push --dry-run --follow-tags /home/newren/repo-mirror
-> To /home/newren/repo-mirror
->  * [new branch]       test5 -> test5
->
-> real 0m2.857s
-> user 0m2.580s
-> sys 0m0.328s
->
-> which provides a very nice speedup.
->
-> Oddly enough, if I _also_ do the following:
-> $ git config core.commitgraph true
-> $ git config gc.writecommitgraph true
-> $ git gc
->
-> then my timing actually slows down just slightly:
-> $ time git push --follow-tags --dry-run /home/newren/repo-mirror
-> To /home/newren/repo-mirror
->  * [new branch]          test5 -> test5
->
-> real 0m3.027s
-> user 0m2.696s
-> sys 0m0.400s
+>> This test focuses on the number of commits that are parsed during
+>> a `git log --topo-order` before writing `N` commits to output.
+> A devil's advocate comment.  Your patches seem to be very focused on
+> this "unlimited" case for the past few weeks, but I am not so sure
+> if that is a case worth optimizing for.  If "git log --topo-order -N
+> HEAD~M.." (for some number M) gives us a similar result as unlimited
+> case but with much less effort, wouldn't it be good enough that lets
+> us concentrate on other use cases instead?
 
-So you say that the commit-graph is off in the 2.8s case, but not here
-in the 3.1s case? I would expect _at minimum_ that the cost of parsing
-commits would have a speedup in the commit-graph case.  There may be
-something else going on here, since you are timing a `push` event that
-is doing more than the current walk.
+I mostly included these statistics to make sure we didn't add a 
+regression in
+this case. Note that I didn't report the OLD values in this table, 
+because that
+would be an unfair comparison.
 
-> (run-to-run variation seems pretty consistent, < .1s variation, so
-> this difference is just enough to notice.)  I wouldn't be that
-> surprised if that means there's some really old tags with very small
-> generation numbers, meaning it's not gaining anything in this special
-> case from the commit-graph, but it does pay the cost of loading the
-> commit-graph.
+>> Based on the performance results alone, we should remove minimum
+>> generation numbers, (epoch, date) pairs, and FELINE index from
+>> consideration. There are enough examples of these indexes performing
+>> poorly.
+> OK.
+>
+>> In contrast, maximum generation numbers and corrected commit
+>> dates both performed quite well. They are frequently the top
+>> two performing indexes, and rarely significantly different.
+>>
+>> The trade-off here now seems to be: which _property_ is more important,
+>> locally-computable or backwards-compatible?
+> Nice summary.
+>
+> As I already said, I personally do not think being compatible with
+> currently deployed clients is important at all (primarily because I
+> still consider the whole thing experimental), and there is a clear
+> way forward once we correct the mistake of not having a version
+> number in the file format that tells the updated clients to ignore
+> the generation numbers.  For longer term viability, we should pick
+> something that is immutable, reproducible, computable with minimum
+> input---all of which would lead to being incrementally computable, I
+> would think.
 
-While you have this test environment, do you mind applying the diff
-below and re-running the tests? It will output a count for how many
-commits are walked by the algorithm. This should help us determine if
-this is another case where generation numbers are worse than commit-date,
-or if there is something else going on. Thanks!
+This is good reasoning. The "reproducible" property is also important for
+support reasons, too! Sounds like the corrected commit date is the best
+way forward.
 
--->8--
+Aside: I spent some time thinking about making the corrected commit dates
+backward compatible by ensuring the offsets are monotonic in the commit
+history (so we could store the offset as commit->generation and the existing
+generation comparisons would still work). However, it performs poorly on the
+Linux repository 'git merge-base v4.8 v4.9' example.
 
-From 2115e7dcafb2770455b7b4793f90edc2254bad97 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Wed, 31 Oct 2018 11:40:50 +0000
-Subject: [PATCH] DO-NOT-MERGE: count commits in get_reachable_subset
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-reach.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/commit-reach.c b/commit-reach.c
-index a98532ecc8..b512461cf7 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -700,6 +700,7 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 	struct commit **from_last = from + nr_from;
- 	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
- 	int num_to_find = 0;
-+	int count = 0;
- 
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 
-@@ -729,6 +730,8 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 	while (num_to_find && (current = prio_queue_get(&queue)) != NULL) {
- 		struct commit_list *parents;
- 
-+		count++;
-+
- 		if (current->object.flags & PARENT1) {
- 			current->object.flags &= ~PARENT1;
- 			current->object.flags |= reachable_flag;
-@@ -755,6 +758,8 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 	clear_commit_marks_many(nr_to, to, PARENT1);
- 	clear_commit_marks_many(nr_from, from, PARENT2);
- 
-+	fprintf(stderr, "count: %d\n", count);
-+
- 	return found_commits;
- }
- 
--- 
-2.19.1.542.gc4df23f792
-
+Thanks,
+-Stolee
