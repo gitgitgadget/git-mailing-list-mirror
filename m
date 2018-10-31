@@ -2,115 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5645B1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 03:44:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0D3F1F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 03:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728840AbeJaMk6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 08:40:58 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33278 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728474AbeJaMk6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 08:40:58 -0400
-Received: by mail-wm1-f68.google.com with SMTP id y140-v6so265096wmd.0
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 20:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=lJO7sabGYFtkt80QjzMP0sx38c2NIlkxzYIOUBJ+Fh4=;
-        b=ELw/AlGerIaHUvbbITsLvlAsNhUZunMhtas8aTFAb2xJ+cUD/tquSONPGPtSp3G/Hh
-         6XA7nAFUO4N0ME6YRjKSoCmvpNYNfNueQ3chhofmMru+Uoy1YzXVUrj7acmkZV/9JNEm
-         T0G4yAji4swUma40pxgSfOzbx1gacPBy7MlzeEu9gn8arXeMsViv5xHINyA/+FKBrrZs
-         /NrrHm8QEdOhndgS6dYxHUWz78E1PKZK9Nq3FjkxKqf3JZw7TYjufQX21ntrWhOnFxM8
-         Ig1IXr1yKeoubCQQxEAv6pCMG3bnN3sbsJsRZJO/T5wl+XZGL/q/nVlFvGtXwMDZXhaE
-         DPCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=lJO7sabGYFtkt80QjzMP0sx38c2NIlkxzYIOUBJ+Fh4=;
-        b=SxHCmW/0MzkFKCrfqfLIqBbwupElBNMABO3OzUahMrNTcfMxQ4TaLA1Dj1h9LOgHO6
-         a9YTY1xVCPFzmHCg3Jzr/RTb+WfPAh6eLYZ2i3LD3uwNfIeyZjJtS8vNo7AEwCt/madH
-         9677dXwwM8lGaIJjX9BlNxRHQSAiFGiPt2ltwqE0nmWM/FOiWKDoCetegXf107YOYFDc
-         nWh6QNhCvFWpOvR8LasNf3//rREbQ73BeqIBT7j7kYpRQ7aw4eX4pRGHAZtS2LSjcY3n
-         48Hc+SjGYOMCdaqm0SknV2oVeNpg5qpHRmQwTRL6k4Wl3bTZdoE+g+Uo6rKrPC/HzAEY
-         G7uQ==
-X-Gm-Message-State: AGRZ1gJbtdpae3ZeU3bZuruezWlq87AbANupGbAF1mb2gu98m0o6YsSa
-        KAKD+ktRfKEsJookqcWN25c=
-X-Google-Smtp-Source: AJdET5frmuMZf6FMbLD6LDlr9gZMVG3goi4eVOhTJ7edMe1Tp0U30oBqw+rKpPzQ3P2QAuTWhs6uRw==
-X-Received: by 2002:a1c:9e93:: with SMTP id h141-v6mr999044wme.56.1540957482639;
-        Tue, 30 Oct 2018 20:44:42 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 191-v6sm17619603wmk.30.2018.10.30.20.44.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Oct 2018 20:44:41 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/4] mingw: prevent external PERL5LIB from interfering
-References: <pull.62.git.gitgitgadget@gmail.com>
-Date:   Wed, 31 Oct 2018 12:44:40 +0900
-In-Reply-To: <pull.62.git.gitgitgadget@gmail.com> (Johannes Schindelin via
-        GitGitGadget's message of "Tue, 30 Oct 2018 11:40:02 -0700 (PDT)")
-Message-ID: <xmqqtvl2ye3b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728804AbeJaMwg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 08:52:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33718 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728467AbeJaMwg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 08:52:36 -0400
+Received: (qmail 6454 invoked by uid 109); 31 Oct 2018 03:56:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 31 Oct 2018 03:56:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6824 invoked by uid 111); 31 Oct 2018 03:55:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 30 Oct 2018 23:55:36 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2018 23:56:18 -0400
+Date:   Tue, 30 Oct 2018 23:56:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     chris via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        chris <chris@webstech.net>
+Subject: Re: [PATCH 1/1] Use correct /dev/null for UNIX and Windows
+Message-ID: <20181031035618.GA31247@sigill.intra.peff.net>
+References: <pull.59.git.gitgitgadget@gmail.com>
+ <8159cbd1b8025f33fb9d0e254db1a3c2a066f853.1540923993.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8159cbd1b8025f33fb9d0e254db1a3c2a066f853.1540923993.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Tue, Oct 30, 2018 at 11:26:36AM -0700, chris via GitGitGadget wrote:
 
-> An alternative approach which was rejected at the time (because it
-> interfered with the then-ongoing work to compile Git for Windows using MS
-> Visual C++) would patch the make_environment_block() function to skip the
-> specified environment variables before handing down the environment block to
-> the spawned process. Currently it would interfere with the mingw-utf-8-env
-> patch series I sent earlier today
-> [https://public-inbox.org/git/pull.57.git.gitgitgadget@gmail.com].
+> From: chris <chris@webstech.net>
 
-So the rejected approach that was not used in this series would
-interfere with the other one, but I do not have to worry about it
-because this series does not use that approach?  I had to read the
-six lines above twice to figure out that it essentially is saying "I
-shouldn't care", but please let me know if I misread the paragraph
-and I need to care ;-)
+You might want to adjust your user.name. :)
 
-> While at it, this patch series also cleans up house and moves the
-> Windows-specific core.* variable handling to compat/mingw.c rather than
-> cluttering environment.c and config.c with things that e.g. developers on
-> Linux do not want to care about.
+> Use File::Spec->devnull() for output redirection to avoid messages
+> when Windows version of Perl is first in path.  The message 'The
+> system cannot find the path specified.' is displayed each time git is
+> run to get colors.
 
-Or Macs.  When I skimmed this series earlier, I found that patches 2
-& 3 sensibly implemented to achieve this goal.
+Thanks, makes sense, and the patch looks good to me.
 
->
-> Johannes Schindelin (4):
->   config: rename `dummy` parameter to `cb` in git_default_config()
->   Allow for platform-specific core.* config settings
->   Move Windows-specific config settings into compat/mingw.c
->   mingw: unset PERL5LIB by default
->
->  Documentation/config.txt     |  6 ++++
->  cache.h                      |  8 -----
->  compat/mingw.c               | 58 +++++++++++++++++++++++++++++++++++-
->  compat/mingw.h               |  3 ++
->  config.c                     | 18 ++++-------
->  environment.c                |  1 -
->  git-compat-util.h            |  8 +++++
->  t/t0029-core-unsetenvvars.sh | 30 +++++++++++++++++++
->  8 files changed, 109 insertions(+), 23 deletions(-)
->  create mode 100755 t/t0029-core-unsetenvvars.sh
->
->
-> base-commit: 4ede3d42dfb57f9a41ac96a1f216c62eb7566cc2
-> Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-62%2Fdscho%2Fperl5lib-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-62/dscho/perl5lib-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/62
+-Peff
