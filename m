@@ -2,74 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5CA71F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 06:42:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D4861F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 07:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729169AbeJaPja (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 11:39:30 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54706 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbeJaPj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 11:39:29 -0400
-Received: by mail-wm1-f65.google.com with SMTP id r63-v6so13969849wma.4
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 23:42:41 -0700 (PDT)
+        id S1726139AbeJaQEs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 12:04:48 -0400
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:44705 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725992AbeJaQEr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 12:04:47 -0400
+Received: by mail-oi1-f170.google.com with SMTP id k19-v6so12722448oic.11
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 00:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/gENSvuMCxcoW+auNzpHA/o5KQDXqms8M+icT1svh5E=;
-        b=AFwtfwJoGVH6Y9XHSYx3n1yo48eLIFwh2L5mAki6h8EAwVZW6aXwsWG9VH/RGUV7+k
-         JbrruUA57MKolhbO8kuiUsZ5G2PnmiCImYsHVAYcrAPOqehmR2t7Jbu9gV3S/DHM8JBR
-         QWt6MmlrKe1CN9mUZYD9tNO+WSORFq/ZQFecKX51cPjcEhU30wTf6uTAh5fqTKyq1JS6
-         7D/yv7EVCDYgjbenzuJF2pBDWLfY+A1LmlAuIeunac/m4Q0TzWOZkiKvDCiZVxU+z5I6
-         4QktrczQdUE/+FmTn2DU3CHd8PdnM6YqhXfNjpsdp+co52gPeS3bh3YqeDGdw8x9TIle
-         JRkA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9/hcD6dO+3WMoy4vc3bLz1+QdfRs371zaAIZWHCAJnk=;
+        b=Yza8ravEL66GkHldMjOz8oWTtTLrx0iHNtz84sy/qyAZMFIS6DfQIPhc2cm+PTDnWn
+         hyttf++xStfLtOeWfgOInWCuEgcAaHvJq+BuLu8DiDJxz9MSh95JPnL96nUJDroNaPwX
+         gRnPkEDwP1QU7OZnomDgqLJijNnr4rH/hoSbGqHGVX1XVpXhTevUv+Yz1yOj/Oh7s155
+         AqC00XN183qA+18t+OATe0XXJhYMe+H4Tw7ey8ztJ9Ku0V06rItD1D8dwIDsWc2ZpxoR
+         FEhAjqdfEj76deiH04vZfQko8zDAaY+3bFlBNLrIqKRz6HYRcTm7q00y+GRBzC7JnK9f
+         iaYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/gENSvuMCxcoW+auNzpHA/o5KQDXqms8M+icT1svh5E=;
-        b=HTMUezqnitiqthRkl2rC9nhEBZhc7ODGDnTXNQLJPak3t2uV/hGkXzOthkXa9/bC8i
-         Y1+HseKRdr9Os9AgVRDovpQd9j+EjDOerIYfBKghvgJQYJT3DHvdiJt+aoh4N33/739V
-         4vw4BnXUysYXsMXiEyyWI6g0jy2D0q+oxMOTMl9erXXanwyW9c1pHEhwlpUpzK2vcbaq
-         eVWwIXXAhJm18nZy3zJly1fCGY/0SrGwzi7n5eERD47zrOAU5ZosV18mtu+/Cy4VdFjz
-         LA1LJ3hDcw9l4uxnrJkjnYIIV84emy8mVl2EZ8GrTxlMutgOF1veyXl3oB18pVQD/pTb
-         hhxw==
-X-Gm-Message-State: AGRZ1gI47uJnWppBG3lCLuF9l/nWwerbPbZ4ruhZIPlGs0/IimXAQHiA
-        vqdACp+a+av3NNjH1BcWTA9Ox+8vqy4=
-X-Google-Smtp-Source: AJdET5fVMx5RdJNsomzgrEuUF0Uoc0xlEq9pMzvxourxKicF6Lfyq4daxTO0oaZKh9wGfpQ51IXvFA==
-X-Received: by 2002:a1c:9f01:: with SMTP id i1-v6mr1218197wme.8.1540968160633;
-        Tue, 30 Oct 2018 23:42:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x13-v6sm2320363wrq.56.2018.10.30.23.42.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Oct 2018 23:42:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH 01/24] Makefile: add pending semantic patches
-References: <20181030220817.61691-1-sbeller@google.com>
-        <20181030220817.61691-2-sbeller@google.com>
-Date:   Wed, 31 Oct 2018 15:42:38 +0900
-In-Reply-To: <20181030220817.61691-2-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 30 Oct 2018 15:07:54 -0700")
-Message-ID: <xmqqzhuuvcpt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9/hcD6dO+3WMoy4vc3bLz1+QdfRs371zaAIZWHCAJnk=;
+        b=tWrQn+f7b1IagROxXBVsX8jayIJtC1pCOJ/tI2/lGjBLl2GzD+ex9xcekpLa++cRPd
+         7cXjqqF0W8iZEIACdRR7S7ddtN8aNxr5STJUx59rv4TS4/O3SMhZV+b8Xhjqgrl4BkdH
+         NfqSZKx0DIqs0HZuV+eE7RJX08ENbnO4QOQmpTqA0MhilrkqarREEu42XypizNZW4OHE
+         YZFxLYFwYqmXsThGpxXczy2sGg25aGiIeXzkSHew7Cb7PYZztWCKEiMowpmXNmi+ba7O
+         NNtJwaOfPxi141VYO7ymBDqjmEsYonwRaK8f9HT37UZMd3AffKFXt7Gd5UiI48PmXrov
+         V2fA==
+X-Gm-Message-State: AGRZ1gIXyG4b8mh1I4gmxVGW9e8+TmDvkZ2yikotxEK8IkzjIz2Rj/iv
+        60RBNPPo5vyOn3Ga2LXsKfY8Xl1l6hUC8LEHlug=
+X-Google-Smtp-Source: AJdET5d2cQU5ILAGA7938OAKU9NfW1SsPyzSyTJvDr/WLtCQwhlFhl5zOKM8zicT8apy3TXdO/jdmbuVk0AdwxgGMmg=
+X-Received: by 2002:aca:b2c5:: with SMTP id b188-v6mr1044859oif.160.1540969674740;
+ Wed, 31 Oct 2018 00:07:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+X5Wn76N34oBhRZvXKOwP0L_pF=LYbT6ugTgtPYSvnHg=MZVw@mail.gmail.com>
+ <xmqqlg6eyc3u.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg6eyc3u.fsf@gitster-ct.c.googlers.com>
+From:   james harvey <jamespharvey20@gmail.com>
+Date:   Wed, 31 Oct 2018 03:07:43 -0400
+Message-ID: <CA+X5Wn6vGLiQr8O8UVkJnFpVq+OVzOjtxhtqwtZEsyh0RrSz9w@mail.gmail.com>
+Subject: Re: Using --word-diff breaks --color-moved
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, sbeller@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Oct 31, 2018 at 12:27 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> james harvey <jamespharvey20@gmail.com> writes:
+>
+> > If you use both "--word-diff" and "--color-moved", regardless of the
+> > order of arguments, "--word-diff" takes precedence and "--color-moved"
+> > isn't allowed to do anything.
+> >
+> > I think "--color-moved" should have precedence over "--word-diff".  I
+> > cannot think of a scenario where a user would supply both options, and
+> > actually want "--word-diff" to take precedence.
+>
+> I am not sure if I follow.  If these two cannot work well together,
+> then we should just reject the request as asking for incompatible
+> combination of options while we are parsing the command line
+> arguments, rather than arguing which one should trump the other
+> one---that would simply lead to "in my opinion, word-diff is more
+> important" vs "in mine, color-moved is more important", no?
 
-> [Missing: SZEDERs sign off, so I also do not sign off]
+I should have been more clear in my original message.  I don't mean
+that if "--color-moved" is given, that the argument "--word-diff"
+should be completely ignored as if it weren't given as an option.
 
-At least to me, based on my reading of DCO in
-Documentation/SubmittingPatches, this reasoning does not make much
-sense.
+I'm not too concerned about my reduced test case scenario.  I'm
+concerned about a larger diff, where there's some areas that got
+moved, some lines that got deleted, some added, and some lines with
+just a word or two changed.
+
+In those larger scenarios, WITHOUT using BOTH "--color-moved" and
+"--word-diff", and INSTEAD just using "git diff --color-moved", a
+typical full line(s) diff occurs for changed areas that weren't moved,
+as if it were given as a hidden/default option.  It's analyzing each
+differing area to see if it's going to show each of those differing
+areas as a move or a full line(s) diff.  Here, "--color-moved" takes
+precedence (in the way I'm trying to use the word) over the typical
+full line(s) diff.
+
+I could be wrong, but I don't see why "--color-moved" can't operate
+the same way, with "--word-diff" taking the place of the typical full
+line(s) diff.  So, if it would be technically accurate to show
+something that was moved using either method, that it would show moved
+areas as a move rather than as word-diffs.  This would leave areas not
+moved to be word-diffed.
+
+I think these options can co-exist.  I could be wrong, but I'm betting
+the code for "--color-moved" was only written with the typical full
+line(s) diff in mind, and wasn't written with "--word-diff" in mind.
