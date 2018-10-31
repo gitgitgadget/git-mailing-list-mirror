@@ -7,207 +7,133 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B51E1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 14:50:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE3031F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 14:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729628AbeJaXse (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 19:48:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:44749 "EHLO mout.gmx.net"
+        id S1729442AbeJaXwa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 19:52:30 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40411 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729570AbeJaXse (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 19:48:34 -0400
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeQ43-1fv0RJ11tH-00QCvc; Wed, 31
- Oct 2018 15:50:02 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MeQ43-1fv0RJ11tH-00QCvc; Wed, 31
- Oct 2018 15:50:02 +0100
-Date:   Wed, 31 Oct 2018 15:50:00 +0100 (STD)
+        id S1729271AbeJaXwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 19:52:30 -0400
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxPAo-1fTfqo2pHW-016vQx; Wed, 31
+ Oct 2018 15:54:04 +0100
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxPAo-1fTfqo2pHW-016vQx; Wed, 31
+ Oct 2018 15:54:04 +0100
+Date:   Wed, 31 Oct 2018 15:54:03 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Re*: [PATCH v3] fetch: replace string-list used as a look-up
- table with a hashmap
-In-Reply-To: <xmqqk1m3c2dz.fsf_-_@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1810311542560.4546@tvgsbejvaqbjf.bet>
-References: <xmqqin2sj6df.fsf@gitster-ct.c.googlers.com> <20180927053418.GB14178@sigill.intra.peff.net> <xmqq5zyn91ku.fsf@gitster-ct.c.googlers.com> <xmqqy3au1tr1.fsf_-_@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1810221140510.4546@tvgsbejvaqbjf.bet>
- <xmqqk1m3c2dz.fsf_-_@gitster-ct.c.googlers.com>
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] sequencer: break out of loop explicitly
+In-Reply-To: <20181030080937.11118-1-martin.agren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1810311553480.4546@tvgsbejvaqbjf.bet>
+References: <xmqqva5l76zs.fsf@gitster-ct.c.googlers.com> <20181030080937.11118-1-martin.agren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BBJqOENHjjnQ/6sGNAQqC9FLmAFxPLRVCUoLH/t9WFXOkWiMhPT
- c+pVVDVFWgNum9JG/rOtcgp0hVuuLObswszASG8TTUkrbzDRzG4QyRfQPMaaZuGx5NVqA5Z
- 6e6PaV0anRMArLfRW8pOX96M5z8hI5Gfjk5WqZYA+iulIOQJbzZa3v1FNsXOWXsFzOcKZPZ
- 0Efpa9IIXLxptz+il8dlw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oXYWHQ0XE+I=:pz7QoL3gUVw53+JmXb9do1
- zB3qP4/qDunzZJbf8uH1471BepDdAUiUDTDkMC95DQqaU7XMYg3eYCAzQkLAn27BGBu+gSVa+
- vQCEm6caAq7Utw4Up1ki+V68oDu4sWw7qiHR8z3Wa9wNFRXchk27Z8IgcMZ4sEtY87W1m4gbL
- h02OvulGEyccZCGUQmAnp7Ynhsg+WCE9fbheVvIyFJPMaj9I9HvQx0kl0hcoh7rI//q3RyvOb
- 7YqDwd8QrdZYEr69rgkvlb9WM3dm4NI/6Z8eN01aDuoIYxOs3SQtGOqvjFjQSAh0WqnwyrAxH
- JxOVEIcvwRnbD2t32rFYZHiqbeKpG+FarfvEyR/xg5atw/d62qCXAULDdO158IilWVedf1i+p
- 3YmsXndpk2MIL4pRTCvcm+ZSEPoLtDKW1p7pwdURg+/+vxYCcnJjf0MiSZIbKvC4FxOqr4Qgd
- tXlGpRtrWGp0UyWe8GCzbA+psmasZGhyoC/qloSe/H+kSJKqz4fmpv11bNpxgcw/1wHnyFUuU
- nqEojS5MIWiidrjXuxTVTbttH50SXt4VtTeFyP79S917hPAh7UtFsIh+xHIhF4bWtoPrJTgru
- cMYMtciYEnywfMKZ0aJ+wBjuBm3dKw/4XGstVB/kkhZjQBnBdxZhi3M+hIt+r7xz/FFSr75xN
- ln4c30oGcIYyIJGl2LCzKba0fKogJID/vRePr+f+x3J7/cWPJB1xrTDDGiUbBPXOeJgn12mbk
- M3lH/yew2OKKpbm1DOW3CByGu55tzluASBOZEpuEvUe6k3u/BhBiw5TwVhW/EK3Ubwd3f7T9E
- CQa4lVSm6T9LkFv4XaUqWwbssxHhbOXWeXrWvjwVM+V9ATyknI=
+Content-Type: multipart/mixed; boundary="8323328-141794484-1540997644=:4546"
+X-Provags-ID: V03:K1:TV4Dai6h4gO/U9btFntOsnr3oOczE1VAXim+QkkjEVVO1Fb+H08
+ rkbiTxvoafuQJIIYLSr9gJxsM8UoB+ExtXgq/JSL95Y4mEGRBIJ6utcR21pvN/oST8Epi6r
+ TrQBm2nco8SKCZ/3HyO3yIA1Il/4cVkQW8r4twWOniGqmkn4os1lOZBqEHvJjZ4TIHazMOi
+ 4vDh137Zxk+F3Uy+2dgCw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yqO5eYI4lx4=:Zf87ho5HbyJx/RKsrt0PIN
+ T1yy3b3fDWbZK95qkWnUVcMhi4DSyVAIwhf5LwJXq6Konp8MPStnUNPaVjJetCgWXNCOoXmOc
+ hOehf5DPiCHLiuAQbe/adHG1xzHxq+Q5wmOi2oDAl1rB4tgYgJTAj5dsSItINZ+cdtK0ESbNI
+ rclvTMByy1F0vyd1HTeik5CqdQK7CjXinsPz54XL4QEMmHlo9rY6WlWwNWTglb2Re9Ng9yQzZ
+ 9vIhCJBmBUwTX3nNldQ6eQajRndaN7o8hZaJjie8FnRMtTnM/AVxBqQoOC0QuO9k8/mGmbidN
+ 4Pmco4tNtp9+lfE0gb9fLvMC/KWxnmaQ9/kChulvHopcxUoVVdr2aFO0bX3Euq24Nbu9X7wgU
+ shMgLGotvQl4xVHYpzifV45rl0J0ckTU7Gg7nBLYmrY25LxKFnHojxd4iDG7H7mKRezuU/ePV
+ xZA7Q7wfXt5ioSSIkyZ7mTIDwAS5zRVq4jD9xG8WRJcg6UWSg4jipYENszASdaPTTVFvreFH6
+ 7HaOjnJ2rWfqqhCMOEVorL8lhlqlab/KLapmgOlv+lDuuS1XoT2j2NioxHyN80TdEo9xR1pHc
+ YFVoYbfswj+ysCJE5eLI9u/GvkKsX6dnXWCv66LnDK2aXX9kPvoQWsB38aISNTGeDD/A9Fsev
+ 2J6YG+gLgo2ZOOGDmAhdDmV/Y+B96Mxf6oA6jjHWzWjTT4cLCEv1QYjXqtVWppM4Ofm10A4ih
+ VZHU636PXr8PN9/9XYI/VvUf0kmbZSBLsS6hnfK0WhCDISosxnGa7XugkM6gSTD6nZxt5g4VP
+ Og+oxavZMYYAWOLAxgBCpR1ms+RxXxEQQRwufmit+tTuaTcgzk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sat, 27 Oct 2018, Junio C Hamano wrote:
+--8323328-141794484-1540997644=:4546
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Martin,
+
+On Tue, 30 Oct 2018, Martin Ågren wrote:
+
+> It came up in review [1, 2] that this non-idiomatic loop is a bit tricky.
+> When we find a space, we set `len = i`, which gives us the answer we are
+> looking for, but which also breaks out of the loop.
 > 
-> > Just one thing^W^Wa couple of things:
-> >
-> > It would probably make more sense to `hashmap_get_from_hash()` and
-> > `strhash()` here (and `strhash()` should probably be used everywhere
-> > instead of `memhash(str, strlen(str))`).
+> It turns out that this loop can confuse compilers as well. My copy of
+> gcc 7.3.0 realizes that we are essentially evaluating `(len + 1) < len`
+> and warns that the behavior is undefined if `len` is `INT_MAX`. (Because
+> the assignment `len = i` is guaranteed to decrease `len`, such undefined
+> behavior is not actually possible.)
 > 
-> hashmap_get_from_hash() certainly is much better suited for simpler
-> usage pattern like these callsites, and the ones in sequencer.c.  It
-> is a shame that a more complex variant takes the shorter-and-sweeter
-> name hashmap_get().
-
-I agree, at least in part.
-
-From what I understand, hashmap_get_from_hash() needs a little assistance
-from the comparison function with which the hashmap is configured, see
-e.g. this function in the sequencer:
-
-	static int labels_cmp(const void *fndata, const struct labels_entry *a,
-			      const struct labels_entry *b, const void *key)
-	{
-		return key ? strcmp(a->label, key) : strcmp(a->label, b->label);
-	}
-
-See how that first tests whether `key` is non-`NULL`, and then takes a
-shortcut, not even looking at `b`? This is important, because `b` does not
-refer to a complete `labels_entry` when we call `hashmap_get_from_hash()`.
-It only refers to a `hashmap_entry`. Looking at `b->label` would access
-some random memory, and do most certainly the wrong thing.
-
-> I wish we named the latter hashmap_get_fullblown_feature_rich() and
-> called the _from_hash() thing a simple hashmap_get() from day one,
-> but it is way too late.
+> Rewrite the loop to a more idiomatic variant which doesn't muck with
+> `len` in the loop body. That should help compilers and human readers
+> figure out what is going on here. But do note that we need to update
+> `len` since it is not only used just after this loop (where we could
+> have used `i` directly), but also later in this function.
 > 
-> I looked briefly the users of the _get() variant, and some of their
-> uses are legitimately not-simple and cannot be reduced to use the
-> simpler _get_from_hash variant, it seems.  But others like those in
-> builtin/difftool.c should be straight-forward to convert to use the
-> simpler get_from_hash variant.  It could be a low-hanging fruit left
-> for later clean-up, perhaps.
-
-Right. #leftoverbits
-
-> >> @@ -271,10 +319,10 @@ static void find_non_local_tags(const struct ref *refs,
-> >>  			    !has_object_file_with_flags(&ref->old_oid,
-> >>  							OBJECT_INFO_QUICK) &&
-> >>  			    !will_fetch(head, ref->old_oid.hash) &&
-> >> -			    !has_sha1_file_with_flags(item->util,
-> >> +			    !has_sha1_file_with_flags(item->oid.hash,
-> >
-> > I am not sure that we need to test for null OIDs here, given that...
-> > ...
-> > Of course, `has_sha1_file_with_flags()` is supposed to return `false` for
-> > null OIDs, I guess.
+> While at it, reduce the scope of `i`.
 > 
-> Yup.  An alternative is to make item->oid a pointer to oid, not an
-> oid object itself, so that we can express "no OID for this ref" in a
-> more explicit way, but is_null_oid() is already used as "no OID" in
-> many other codepaths, so...
-
-Right, and it would complicate the code. So I am fine with your version of
-it.
-
-> >> +	for_each_string_list_item(remote_ref_item, &remote_refs_list) {
-> >> +		const char *refname = remote_ref_item->string;
-> >> +		struct hashmap_entry key;
-> >> +
-> >> +		hashmap_entry_init(&key, memhash(refname, strlen(refname)));
-> >> +		item = hashmap_get(&remote_refs, &key, refname);
-> >> +		if (!item)
-> >> +			continue; /* can this happen??? */
-> >
-> > This would indicate a BUG, no?
+> [1] https://public-inbox.org/git/CAPig+cQbG2s-LrAo9+7C7=dXifbWFJ3SzuNa-QePHDk7egK=jg@mail.gmail.com/
 > 
-> Possibly.  Alternatively, we can just use item without checking and
-> let the runtime segfault.
+> [2] https://public-inbox.org/git/CAPig+cRjU6niXpT2FrDWZ0x1HmGf1ojVZj3uk2qXEGe-S7i_HQ@mail.gmail.com/
+> 
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
 
-Hahaha! Yep. We could also cause a crash. I do prefer the BUG() call.
-
-> Here is an incremental on top that can be squashed in to turn v3
-> into v4.
-
-Nice.
-
-Thanks!
+ACK. Thanks for cleaning up after me,
 Dscho
 
+>  Thanks for the comments on v1. Based on them, I decided to go for
+>  Eric's option 2, and to make the log message less technical in favor of
+>  "compilers and humans alike can get this wrong".
 > 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 0f8e333022..aee1d9bf21 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -259,7 +259,7 @@ static struct refname_hash_entry *refname_hash_add(struct hashmap *map,
->  	size_t len = strlen(refname);
->  
->  	FLEX_ALLOC_MEM(ent, refname, refname, len);
-> -	hashmap_entry_init(ent, memhash(refname, len));
-> +	hashmap_entry_init(ent, strhash(refname));
->  	oidcpy(&ent->oid, oid);
->  	hashmap_add(map, ent);
->  	return ent;
-> @@ -282,11 +282,7 @@ static void refname_hash_init(struct hashmap *map)
->  
->  static int refname_hash_exists(struct hashmap *map, const char *refname)
->  {
-> -	struct hashmap_entry key;
-> -	size_t len = strlen(refname);
-> -	hashmap_entry_init(&key, memhash(refname, len));
-> -
-> -	return !!hashmap_get(map, &key, refname);
-> +	return !!hashmap_get_from_hash(map, strhash(refname), refname);
->  }
->  
->  static void find_non_local_tags(const struct ref *refs,
-> @@ -365,12 +361,10 @@ static void find_non_local_tags(const struct ref *refs,
->  	 */
->  	for_each_string_list_item(remote_ref_item, &remote_refs_list) {
->  		const char *refname = remote_ref_item->string;
-> -		struct hashmap_entry key;
->  
-> -		hashmap_entry_init(&key, memhash(refname, strlen(refname)));
-> -		item = hashmap_get(&remote_refs, &key, refname);
-> +		item = hashmap_get_from_hash(&remote_refs, strhash(refname), refname);
->  		if (!item)
-> -			continue; /* can this happen??? */
-> +			BUG("unseen remote ref?");
->  
->  		/* Unless we have already decided to ignore this item... */
->  		if (!is_null_oid(&item->oid)) {
-> @@ -497,12 +491,12 @@ static struct ref *get_ref_map(struct remote *remote,
->  
->  	for (rm = ref_map; rm; rm = rm->next) {
->  		if (rm->peer_ref) {
-> -			struct hashmap_entry key;
->  			const char *refname = rm->peer_ref->name;
->  			struct refname_hash_entry *peer_item;
->  
-> -			hashmap_entry_init(&key, memhash(refname, strlen(refname)));
-> -			peer_item = hashmap_get(&existing_refs, &key, refname);
-> +			peer_item = hashmap_get_from_hash(&existing_refs,
-> +							  strhash(refname),
-> +							  refname);
->  			if (peer_item) {
->  				struct object_id *old_oid = &peer_item->oid;
->  				oidcpy(&rm->peer_ref->old_oid, old_oid);
+>  sequencer.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
+> diff --git a/sequencer.c b/sequencer.c
+> index 0c164d5f98..e7aa4d5020 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2829,7 +2829,7 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+>  	struct tree_desc desc;
+>  	struct tree *tree;
+>  	struct unpack_trees_options unpack_tree_opts;
+> -	int ret = 0, i;
+> +	int ret = 0;
+>  
+>  	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+>  		return -1;
+> @@ -2849,10 +2849,13 @@ static int do_reset(const char *name, int len, struct replay_opts *opts)
+>  		}
+>  		oidcpy(&oid, &opts->squash_onto);
+>  	} else {
+> +		int i;
+> +
+>  		/* Determine the length of the label */
+>  		for (i = 0; i < len; i++)
+>  			if (isspace(name[i]))
+> -				len = i;
+> +				break;
+> +		len = i;
+>  
+>  		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+>  		if (get_oid(ref_name.buf, &oid) &&
+> -- 
+> 2.19.1.593.gc670b1f876.dirty
+> 
+> 
+--8323328-141794484-1540997644=:4546--
