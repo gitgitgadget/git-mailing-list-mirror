@@ -7,61 +7,63 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12D561F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 13:38:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DE831F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 13:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729198AbeJaWgH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 18:36:07 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:43583 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728948AbeJaWgH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 18:36:07 -0400
-Received: by mail-qk1-f193.google.com with SMTP id r71so9476456qkr.10
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 06:38:02 -0700 (PDT)
+        id S1729412AbeJaWvt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 18:51:49 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:46182 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729321AbeJaWvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 18:51:49 -0400
+Received: by mail-qt1-f196.google.com with SMTP id c16-v6so17666980qtj.13
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 06:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Lodwrr+0iqIoAlZH6FZWG/W5PD5VjUqhKrrTISlMru0=;
-        b=n1EKlxptlnwbiBdhyzPjb4LbPMJQ2Xd/ZDMLhqo2K+E6uz+XcDJikg+iGbiVY8XU0/
-         k3LRd4r4ZGSehmKrgXHWG4c86iBU98p46jUVNjWL0XhYMIQZe0SmuLLp6VNvgJlwxXiQ
-         Y1UW017QQGu3iFUBoR7Sc6Ql1/NS1wLB94ZrfFntJ6OVn8pKDw45YXmUEXqPwGJsB5/l
-         ctgh5TaKdA3Dac/8lJ6t4Spl02Z9tcDy93x23vAy+yb0qRLHoStdfV8I9d8H48Aa+ouv
-         H0TB2703vQLFp6z5hMskmbgIokhYwre6YXxzBa3D/JpMvBtGfSJllnomqszRD9MsYZGo
-         0LlA==
+        bh=MmCZW2f49ikJFoTNeYTq472W/rUy3PxtEc9cJu0dQ7w=;
+        b=EY24MyVPZKaac86MbNh6tZ/rqzALo41Kg8pBU4hZfyWA2GW7MEimuwdnPzklQOQWEz
+         ntib7/9YRLG+l2bt5FMcDojKwHBUPZz+KjJRcewsO8yKCXbPktXOfTOFmsU2CLsCAmIv
+         1GdR0OQyIZPK2Gm0wqxLgqyu9BDr9HMvzZckHQcK4NXZHZyN8OSJTafLrYxzEvE3RGOo
+         ZexNZqChKDV2KZSdfPoHUv+ukzqWzgiP3DUXI8X5yLQ6Obl9UjWicvb9szYyW4kZRHBG
+         FrAmyezwMpk2JGOP3nH9UpmrJQYBOymHV/M9yFS8QIjTnKzIKLGFoCj3ZgmwR04LCJa5
+         thOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=Lodwrr+0iqIoAlZH6FZWG/W5PD5VjUqhKrrTISlMru0=;
-        b=ua74G71sxgzK6bArrS1/PP5EFySAM6zQTLp6XaXunSy/ybjwLZa5jP286qVVjwE0si
-         G5PCxsvH9q4eJABcD8u/C8mXxMv2SP8IcnE+mgyM0aG1YbG+guoz7v+6CSrc1nCKZRIW
-         Id4Ol8a9IE819CmdZv6Zjs4bUTnUp4GatvlfDFNBq2LU+lGvBV9/hF6TjAIwORHe2DY4
-         8vNHx26EC/RifvRh7HzoQ5A1n1AerhQPnQQDeXb0rUAUWePbIK2qHkYGpKd8cdqZdKIJ
-         XFBH+W7WZk+M3uxFb3vAkUybyLezZFWTzDbEI0JPxBOUvfFP5wNXvy5qLZLq4R5AWs+R
-         qd+Q==
-X-Gm-Message-State: AGRZ1gLRMAHHBbIfWgjysmT8XxiZayQRUbwM2QXO3G/LBkISJpvzzFTh
-        l2Ky68cVqxudG9MkDxtvyJQ=
-X-Google-Smtp-Source: AJdET5f/MwKwSDvo87i0JljH6XhDAXtrCd6uxQwqXq+QHazRYdVREz425zd3dUi2jaSvX4aRVnY2oQ==
-X-Received: by 2002:a37:ba44:: with SMTP id k65-v6mr2367087qkf.239.1540993082161;
-        Wed, 31 Oct 2018 06:38:02 -0700 (PDT)
+        bh=MmCZW2f49ikJFoTNeYTq472W/rUy3PxtEc9cJu0dQ7w=;
+        b=bwtWfjw80+eWpLkUl0jJzHKOuwB1cQI6kCYByx+yyf5V+uudo0hlMqrhPv/bo4Xh+c
+         cux/XlPKywn8HOi9QaJaodcBUGAC7avvNuZQoN/OAlf5n0D4ha4sGjy2HK+mgph3g5pN
+         Dg+zSyyLwM07LMT8BE8QdvbT9wGZW+504CRRZEsB7C10LweSOHsF+dXtUUeTReyXrysO
+         VeyAWc2SlzzyNL9+BaSy2PfOGyPuD3B0e65qYZehTB8cXyuyr8vbmo91smcdWyvInIla
+         Nhoz4Ev3ujdcOZAI1+pti+IgXfB7KQ6h19IX+6HdIIrK8sWRzQs4qpmmaLhULte26x53
+         SDqA==
+X-Gm-Message-State: AGRZ1gJ9HwPrAzlTpzS9vIIzxwwSVWr2wo7y4P4weuM+wKC9I1hRGRz/
+        Ozm40RCXXTPNxauXlEcnaMg=
+X-Google-Smtp-Source: AJdET5fxDfvuxSRiuPVkmDNGbkKCFINof94jABZAb2CuD8AQZvj7TZhUDMQ6O+ZlS0Q9OCGouGNxdg==
+X-Received: by 2002:a0c:98a6:: with SMTP id f35mr2644066qvd.224.1540994020586;
+        Wed, 31 Oct 2018 06:53:40 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:1547:f48:38e6:a522? ([2001:4898:8010:0:fe7c:f48:38e6:a522])
-        by smtp.gmail.com with ESMTPSA id q62-v6sm7037090qkf.74.2018.10.31.06.38.01
+        by smtp.gmail.com with ESMTPSA id 18-v6sm21413966qtm.13.2018.10.31.06.53.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Oct 2018 06:38:01 -0700 (PDT)
-Subject: Re: [PATCH 18/19] submodule: use submodule repos for object lookup
-To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Cc:     jonathantanmy@google.com
-References: <20181016233550.251311-1-sbeller@google.com>
- <20181016233550.251311-19-sbeller@google.com>
+        Wed, 31 Oct 2018 06:53:40 -0700 (PDT)
+Subject: Re: [PATCH v3 4/8] merge-recursive: new function for better colliding
+ conflict resolutions
+To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com
+References: <20181014020537.17991-1-newren@gmail.com>
+ <20181019193111.12051-1-newren@gmail.com>
+ <20181019193111.12051-5-newren@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ab0f5b37-b4f1-3efc-b30f-f3b34f2a11cb@gmail.com>
-Date:   Wed, 31 Oct 2018 09:38:02 -0400
+Message-ID: <0b84c95b-38bc-e39e-a033-81eb3e7b8202@gmail.com>
+Date:   Wed, 31 Oct 2018 09:53:40 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
  Thunderbird/64.0
 MIME-Version: 1.0
-In-Reply-To: <20181016233550.251311-19-sbeller@google.com>
+In-Reply-To: <20181019193111.12051-5-newren@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -70,45 +72,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/16/2018 7:35 PM, Stefan Beller wrote:
-> @@ -482,14 +483,46 @@ void prepare_submodule_repo_env(struct argv_array *out)
->   			 DEFAULT_GIT_DIR_ENVIRONMENT);
->   }
->   
-> -/* Helper function to display the submodule header line prior to the full
-> - * summary output. If it can locate the submodule objects directory it will
-> - * attempt to lookup both the left and right commits and put them into the
-> - * left and right pointers.
-> +/*
-> + * Initialize 'out' based on the provided submodule path.
-> + *
-> + * Unlike repo_submodule_init, this tolerates submodules not present
-> + * in .gitmodules. This function exists only to preserve historical behavior,
-> + *
-> + * Returns 0 on success, -1 when the submodule is not present.
-> + */
-> +static int open_submodule(struct repository *out, const char *path)
+On 10/19/2018 3:31 PM, Elijah Newren wrote:
+> +#if 0 // #if-0-ing avoids unused function warning; will make live in next commit
+> +static int handle_file_collision(struct merge_options *o,
+> +				 const char *collide_path,
+> +				 const char *prev_path1,
+> +				 const char *prev_path2,
+> +				 const char *branch1, const char *branch2,
+> +				 const struct object_id *a_oid,
+> +				 unsigned int a_mode,
+> +				 const struct object_id *b_oid,
+> +				 unsigned int b_mode)
 > +{
-> +	struct strbuf sb = STRBUF_INIT;
+> +	struct merge_file_info mfi;
+> +	struct diff_filespec null, a, b;
+> +	char *alt_path = NULL;
+> +	const char *update_path = collide_path;
 > +
-> +	if (submodule_to_gitdir(&sb, path) || repo_init(out, sb.buf, NULL)) {
-> +		strbuf_release(&sb);
-> +		return -1;
-> +	}
-> +
-> +	out->submodule_prefix = xstrdup(path);
-> +	out->submodule_prefix = xstrfmt("%s%s/",
-> +					the_repository->submodule_prefix ?
-> +					the_repository->submodule_prefix :
-> +					"", path);
-> +
-> +	strbuf_release(&sb);
-> +	return 0;
-> +}
+> +	/*
+> +	 * In the recursive case, we just opt to undo renames
+> +	 */
+> +	if (o->call_depth && (prev_path1 || prev_path2)) {
+> +		/* Put first file (a_oid, a_mode) in its original spot */
+> +		if (prev_path1) {
+> +			if (update_file(o, 1, a_oid, a_mode, prev_path1))
+> +				return -1;
+> +		} else {
+> +			if (update_file(o, 1, a_oid, a_mode, collide_path))
 
-Based on the recent test coverage report [1], this xstrfmt() call is never
-run witha non-null the_repository->submodule_prefix. Is there a way we can
-exercise that branch?
+The latest test coverage report [1] shows this if statement is never run, so
+it appears that every call to this method in the test suite has either
+o->call_depth positive, prev_path1 non-NULL, or both prev_path1 and 
+prev_path2
+NULL.
+
+Is there a way we can add a test case that calls this method with 
+o->call_depth
+positive, prev_path1 NULL, and prev_path2 non-NULL?
+
+> +				return -1;
+> +		}
+> +
+> +		/* Put second file (b_oid, b_mode) in its original spot */
+> +		if (prev_path2) {
+> +			if (update_file(o, 1, b_oid, b_mode, prev_path2))
+
+Since this line is covered, we _do_ call the method with prev_path2 
+non-NULL, but
+prev_path1 must be non-NULL in all cases.
+
+I may have found a reason why this doesn't happen in one of the callers 
+you introduced.
+I'm going to comment on PATCH 8/8 to see if that is the case.
 
 Thanks,
 -Stolee
