@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B365E1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 06:04:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA8521F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 06:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726925AbeJaPBc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 11:01:32 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:36569 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725989AbeJaPBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 11:01:31 -0400
-Received: by mail-vs1-f65.google.com with SMTP id v205so6679810vsc.3
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 23:04:51 -0700 (PDT)
+        id S1729099AbeJaPEa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 11:04:30 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:40192 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729078AbeJaPEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 11:04:30 -0400
+Received: by mail-vs1-f67.google.com with SMTP id s9so8927460vsk.7
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 23:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=39FRC7n2rQW5WqfflzltNIOHDxSw/P7O2dg/gicOAzI=;
-        b=Sog8Q+gpH//uPipTyh7rxUNUwINYMBKi0DiBak13OwaOH2Mo0F1FPRzjWh5itxEfp7
-         4wNMhjrl708ZtRlUwZRtbai8kCcDibEzBJzpC2WdGAEN55YdAiPnAZtrG3JNl1FPdtrT
-         hrEABNsscCzL/xIKaZUHrFC1K+x3NGUyTI/EEZw9ijfNaK7RSdNF7FjAOnErOOvAROpG
-         3HEp1RKgb5kuCCG1J5YsKHK+P3O8ly1s/xJ6p/jUm66YYfvoGdGeesImkdkXJ75gj1mA
-         dDzw7SOIOWrQkkbdWBknMWT0KbBU9ziaQap40JOuUErtjKE18nmoHzfoiJMaBf8XqgC6
-         rlFw==
+        bh=N00UmogXuxMrgVFeDJlS+Fe9WLzKfbAMlpQ6W7jkFTo=;
+        b=YU6VnVSst0mLKUkZWPB2J14lF+Re2OfU4GblI0ej0947MGlOKUEWpy/RIH1ckarm4J
+         dsvPejhbAgbmRgtq4N8Pfe4KpU44NW7z8+GVM9/DQkaPexkK2c/dw9IRvnOSuEfhwXVi
+         JKB0gD+owj4VmHE179tAz8ga/QAgmKx/x+mfCwfpqUNCS1ZxC9TH0INwFU1bGxZ/fZ8A
+         dNHhXG2xdkwXi9HIltY4zRvIXD9pM/jJJKoYgqpJVp1gLtDdFZQGsroiOukp6ltG0Wdw
+         wUSZC8VT9C6L33Oblx5KeiZh2MkrGbEjFCIPln09a3W6EWpAqmFnWY3LCsEnhZKletkb
+         uYxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=39FRC7n2rQW5WqfflzltNIOHDxSw/P7O2dg/gicOAzI=;
-        b=d/LlNgbFSFAUeZxCYuCPRO5ntK8BfTqOmMJT1hreJmWxQwwP+u2HnW2mTVq5E7R5YR
-         fFCEDgQVOo2UlGdtKfPYl9RCxSxDeeHqWrRutpXVBwg4UDLUGtbTVlohmf2akeIV818q
-         Ftyu/BfYVVgQ0JuOR0lbLe9fVWfdYWDeI2SSPiKnXRFhZjDYz1s2oz28mEYZiyJtXBQm
-         1KrBh3qwaa5OKuxrOFo1x60a083Lw2Pujm13n6/Uquqn9UQsOlMX3jfZTLvY4o+Sqhlx
-         6YvNSThPODL8Vx3VyI5Eni1TisJPvQqd5PpGuvleYNogFrX0lIvkI3ilo95D7Zs7+6Fv
-         llQQ==
-X-Gm-Message-State: AGRZ1gIhgBSWGnFtY2UvTSZ05PVWOgJ2YSFpteqN1n1IeUrNFqBrW0iA
-        NepkpTGpJVbncRtOhTobUEPdxDo3/36O8V5xMz8=
-X-Google-Smtp-Source: AJdET5c31m9ju+oQ2K7Z/zhX0YTABVHzUU9JFzRBUxmFUH79P7uaP7oasJAKFNmv4x+/QSL/auEvhESEpQckJa/Xyhs=
-X-Received: by 2002:a67:e44f:: with SMTP id n15mr755744vsm.116.1540965890646;
- Tue, 30 Oct 2018 23:04:50 -0700 (PDT)
+        bh=N00UmogXuxMrgVFeDJlS+Fe9WLzKfbAMlpQ6W7jkFTo=;
+        b=NuTC3XDgTYv69PX2aT0vfnYY68u994gB3K3bqxiOCukn4lF+G35NHyr1J/5/NijmQm
+         ipQpPhl6TjAmmfn+dAdY3PvYYCu3JpxJQdsQDqgI7+BUwcL1wDdFY2GeWzySYA6FGnrm
+         SshBe8id+vvwHMTjHao4L3iZuuYJ3yZkjT71Y2JP1YFah1NXlQ62v6TxwJdD2y37oAcw
+         HKl1bBpyEClPP6BDAJyFDcVuZRF2QhmSZTwnCzRGFzGP7ahHmPVhqJXAWXQ+VgyqHQgJ
+         W2d337IUhKiSIY9qVQHwg9adz0g/90eUM9+52vwU0sy3UxsiirCx0moS44N+WIIJ6iWR
+         WqQg==
+X-Gm-Message-State: AGRZ1gIzzjBh8jfDq4w4OZwMFxrmhOITDshLWpVj2d+npxHQPiMtQIYi
+        JM0QgMcbnvn/fG0jnY130QkmZN7IzFiLFyzdgv8=
+X-Google-Smtp-Source: AJdET5daBkQAdQTOytWWUtwAtt02e/JOcCVkz/IgeqEETOe4GneDwVoXCvZyiTrY4YQrrsVP3AY4EXKM3+Ba2dX1A8Y=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr758901vsm.116.1540966068609;
+ Tue, 30 Oct 2018 23:07:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.60.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.60.git.gitgitgadget@gmail.com>
+References: <pull.60.git.gitgitgadget@gmail.com> <4c0c5c9143a757ee5187ae6fca9a76f29b6c6ae2.1540908961.git.gitgitgadget@gmail.com>
+In-Reply-To: <4c0c5c9143a757ee5187ae6fca9a76f29b6c6ae2.1540908961.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 30 Oct 2018 23:04:39 -0700
-Message-ID: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
+Date:   Tue, 30 Oct 2018 23:07:37 -0700
+Message-ID: <CABPp-BHbOWXsnUSdcptyQ_Cn_PnqH4On+Q3zWNZQV4QHgYhqpg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] commit-reach: implement get_reachable_subset
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -63,67 +64,107 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Oct 30, 2018 at 7:16 AM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -688,3 +688,73 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+>         object_array_clear(&from_objs);
+>         return result;
+>  }
+> +
+> +struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+> +                                        struct commit **to, int nr_to,
+> +                                        int reachable_flag)
+> +{
+> +       struct commit **item;
+> +       struct commit *current;
+> +       struct commit_list *found_commits = NULL;
+> +       struct commit **to_last = to + nr_to;
+> +       struct commit **from_last = from + nr_from;
+> +       uint32_t min_generation = GENERATION_NUMBER_INFINITY;
+> +       int num_to_find = 0;
+> +
+> +       struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+> +
+> +       for (item = to; item < to_last; item++) {
+> +               struct commit *c = *item;
+> +
+> +               parse_commit(c);
+> +               if (c->generation < min_generation)
+> +                       min_generation = c->generation;
+
+So, when we don't have a commit-graph, is c->generation just going to
+be 0, making min_generation also be 0? (meaning we get no possible
+speed benefit from the commit-graph, since we just don't have that
+information available)?
+
+> +
+> +               if (!(c->object.flags & PARENT1)) {
+> +                       c->object.flags |= PARENT1;
+> +                       num_to_find++;
+> +               }
+> +       }
+> +
+> +       for (item = from; item < from_last; item++) {
+> +               struct commit *c = *item;
+> +               if (!(c->object.flags & PARENT2)) {
+> +                       c->object.flags |= PARENT2;
+> +                       parse_commit(c);
+> +
+> +                       prio_queue_put(&queue, *item);
+> +               }
+> +       }
+> +
+> +       while (num_to_find && (current = prio_queue_get(&queue)) != NULL) {
+> +               struct commit_list *parents;
+> +
+> +               if (current->object.flags & PARENT1) {
+> +                       current->object.flags &= ~PARENT1;
+> +                       current->object.flags |= reachable_flag;
+> +                       commit_list_insert(current, &found_commits);
+> +                       num_to_find--;
+> +               }
+> +
+> +               for (parents = current->parents; parents; parents = parents->next) {
+> +                       struct commit *p = parents->item;
+> +
+> +                       parse_commit(p);
+> +
+> +                       if (p->generation < min_generation)
+> +                               continue;
+> +
+> +                       if (p->object.flags & PARENT2)
+> +                               continue;
+> +
+> +                       p->object.flags |= PARENT2;
+> +                       prio_queue_put(&queue, p);
+> +               }
+> +       }
+> +
+> +       clear_commit_marks_many(nr_to, to, PARENT1);
+> +       clear_commit_marks_many(nr_from, from, PARENT2);
+> +
+> +       return found_commits;
+> +}
+> +
+> diff --git a/commit-reach.h b/commit-reach.h
+> index 7d313e297..43bd50a70 100644
+> --- a/commit-reach.h
+> +++ b/commit-reach.h
+> @@ -74,4 +74,14 @@ int can_all_from_reach_with_flag(struct object_array *from,
+>  int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+>                        int commit_date_cutoff);
 >
-> As reported earlier [1], the add_missing_tags() method in remote.c has
-> quadratic performance. Some of that performance is curbed due to the
-> generation-number cutoff in in_merge_bases_many(). However, that fix doesn't
-> help users without a commit-graph, and it can still be painful if that
-> cutoff is sufficiently low compared to the tags we are using for
-> reachability testing.
+> +
+> +/*
+> + * Return a list of commits containing the commits in the 'to' array
+> + * that are reachable from at least one commit in the 'from' array.
+> + * Also add the given 'flag' to each of the commits in the returned list.
+> + */
+> +struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+> +                                        struct commit **to, int nr_to,
+> +                                        int reachable_flag);
+> +
+>  #endif
+> --
+> gitgitgadget
 >
-> Add a new method in commit-reach.c called get_reachable_subset() which does
-> a many-to-many reachability test. Starting at the 'from' commits, walk until
-> the generation is below the smallest generation in the 'to' commits, or all
-> 'to' commits have been discovered. This performs only one commit walk for
-> the entire add_missing_tags() method, giving linear performance in the worst
-> case.
->
-> Tests are added in t6600-test-reach.sh to ensure get_reachable_subset()
-> works independently of its application in add_missing_tags().
-
-On the original repo where the topic was brought up, with commit-graph
-NOT turned on and using origin/master, I see:
-
-$ time git push --dry-run --follow-tags /home/newren/repo-mirror
-To /home/newren/repo-mirror
- * [new branch]              test5 -> test5
-
-real 1m20.081s
-user 1m19.688s
-sys 0m0.292s
-
-Merging this series in, I now get:
-
-$ time git push --dry-run --follow-tags /home/newren/repo-mirror
-To /home/newren/repo-mirror
- * [new branch]              test5 -> test5
-
-real 0m2.857s
-user 0m2.580s
-sys 0m0.328s
-
-which provides a very nice speedup.
-
-Oddly enough, if I _also_ do the following:
-$ git config core.commitgraph true
-$ git config gc.writecommitgraph true
-$ git gc
-
-then my timing actually slows down just slightly:
-$ time git push --follow-tags --dry-run /home/newren/repo-mirror
-To /home/newren/repo-mirror
- * [new branch]              test5 -> test5
-
-real 0m3.027s
-user 0m2.696s
-sys 0m0.400s
-
-(run-to-run variation seems pretty consistent, < .1s variation, so
-this difference is just enough to notice.)  I wouldn't be that
-surprised if that means there's some really old tags with very small
-generation numbers, meaning it's not gaining anything in this special
-case from the commit-graph, but it does pay the cost of loading the
-commit-graph.
-
-
-Anyway, looks good in my testing.  Thanks much for working on this!
