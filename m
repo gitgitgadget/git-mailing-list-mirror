@@ -2,101 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27D5A1F453
-	for <e@80x24.org>; Wed, 31 Oct 2018 05:31:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46BC61F453
+	for <e@80x24.org>; Wed, 31 Oct 2018 05:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728238AbeJaO1o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Oct 2018 10:27:44 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46672 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725989AbeJaO1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Oct 2018 10:27:44 -0400
-Received: by mail-wr1-f67.google.com with SMTP id 74-v6so6794310wrb.13
-        for <git@vger.kernel.org>; Tue, 30 Oct 2018 22:31:10 -0700 (PDT)
+        id S1728021AbeJaOhg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Oct 2018 10:37:36 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:37505 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbeJaOhf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Oct 2018 10:37:35 -0400
+Received: by mail-lj1-f194.google.com with SMTP id c4-v6so13653626lja.4
+        for <git@vger.kernel.org>; Tue, 30 Oct 2018 22:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JqficJhWhagUKq1l87GwIvdu7TbcuIAC4SBDUYrKHFY=;
-        b=S9bmcc8O1ASFH3b7g8iKoZJpfHfTFtuZP332qoQlqJWE6iezK4R5X0zbJNA9BJOT0F
-         12cf9MNYbA6BgdpiX8Iof7XtUESGHtGFaUCHaz+8zbvK7SWbmmd+XMsn+q4bW00eCMym
-         Us0cQaI56dfxi9nrvLt2OiDbbDnfImp8YcpzN6uwB5Aic88f6HwqOYxtu6pND+lKbS7N
-         6QgmpQGrum2EXt6jGVdxpuhqUxHyqINhEEbehe8c5aCMXovg/VXhein0yIxObstf034Q
-         3MXLQfv6mn41xM/dATr2XryQd0c7QFrTV3l5qHx6aPlz/5FUWsnYjyFVHzYxYV/ldi0g
-         oHTw==
+        d=webstech-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7suMFUetCbACJ//ng3VsryhGZc1RZNdq0RmJYR2/2Ds=;
+        b=aR00A3tL5xS6u0V0cvZ0wRqcbk4zvNMSltawQmYCf1KiNIexQWnc79bPftYs0ZN8Ln
+         r5SREb4PxKgldR+3dPmE/2D0TORbU0fCvLrIFyt6QLZBvehynZVHxFqAJw5znqykdGmY
+         GqfEB+VOfBGcH/PmDEFjePenqtTsz+ZPrvlRfDN6mahSucMgKZeJmLnBLb9v9vLxpLMv
+         LEYXYTJra1jl64EA8/IVDq87tU00Ui8woeNvf3B2TV0WXG/NbhJirzEU5xnh1ji7Sc8I
+         jM1QiOWrvTcUQ2WSjO9YiByyhbtbzKgC7eYgn/jGCmrlIFYhaT/eGL0XUMOTYGDjoAaR
+         V9kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JqficJhWhagUKq1l87GwIvdu7TbcuIAC4SBDUYrKHFY=;
-        b=ap0N0MnYT0Ta0GkQ55MKyLJDSFPmQP+0uToOCSUIWVKhyipA4ptB0uterDXAnXFZFl
-         nFpOy8y8pTjH1o3bHTKHuz011Z5y/2BkyziKLqgW00ZODbEhYJ0o8FAsXN0trAH2R4ia
-         4F/ElDyGHIjzob7Wacude+UJuiiX/hpuAPpdTjQoipyzvmuKHGbSvUEEifhSk6TknqVJ
-         1ITFNOv6x0steW/uHM5AjQsNKuVH3VvhYSGqr7Ico8tAzXVal/82fhIGxsXVfUqIFre8
-         3PitcYKkwotaXxH4rTfR6ZR6gSjHkFi+yuBL9glDdy+VJRGm0/W3oQeYfnIh2/0gAmc5
-         n1+w==
-X-Gm-Message-State: AGRZ1gJQk1dH4VG+BMk3fACvz+DpvnxvImjRbKXJDFSSLoyRJO37NKxs
-        vP6ofpfjXcHvrDQ2eseMDGs4n0RKFuA=
-X-Google-Smtp-Source: AJdET5d+QSRsLV4GXhUCLu0FpUrUvyf2xD5ianCT0OlxeC0870vQjp7moUb1pUCOPxSKZIVpvrMonA==
-X-Received: by 2002:adf:e4c9:: with SMTP id v9-v6mr1151707wrm.227.1540963869564;
-        Tue, 30 Oct 2018 22:31:09 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j6-v6sm20915606wmd.29.2018.10.30.22.31.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Oct 2018 22:31:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        John Szakmeister <john@szakmeister.net>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH 2/3] check_stream_sha1(): handle input underflow
-References: <20181030231232.GA6141@sigill.intra.peff.net>
-        <20181030232312.GB32038@sigill.intra.peff.net>
-        <xmqqpnvqyc9x.fsf@gitster-ct.c.googlers.com>
-        <20181031043051.GA5601@sigill.intra.peff.net>
-        <xmqq36smybbq.fsf@gitster-ct.c.googlers.com>
-        <20181031050338.GB5601@sigill.intra.peff.net>
-        <20181031051316.GC5601@sigill.intra.peff.net>
-Date:   Wed, 31 Oct 2018 14:31:07 +0900
-In-Reply-To: <20181031051316.GC5601@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 31 Oct 2018 01:13:16 -0400")
-Message-ID: <xmqqk1lywulg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7suMFUetCbACJ//ng3VsryhGZc1RZNdq0RmJYR2/2Ds=;
+        b=RvpT+s/VUFxj7ZP++sidm7gUOMvfl65AbjcwyFIqFKJ0u5PFv+1EI5Ti++6xQ2Wb/a
+         KAWLa4xoDZLWt9evXrKAMYoLdUJ+2pMXGLbZkQsh1RmQEYsJSOHYwCZWRpagWR15rG2N
+         jWhE515Q+/jcezjCyjubY/OXr+C4kPWR7gWfUytG9BAsyIzZeWJNRUyKIBDdSPOOGNbR
+         CAvF+V/DIlPB/O7PancG857boxyi9ZjOTH2NfUFFlpmOqU2JOHvbtQXunuCWJu9vj7ir
+         sz7YY8/Jpp9uwHl36mB84vuXSL34ISLRRhjypHQNaSgvU8iIPZRox1s3RJiwMWAMaKZs
+         DuVw==
+X-Gm-Message-State: AGRZ1gIeq3g/5Gv/At5XdG3FvRpMGPu20tC84zmjWdnsMj/otje/pXqX
+        g6RmHMIIr/Vfn8jVgm8U3kXKB+Iy07tFQSvkvxnC0ijmI94=
+X-Google-Smtp-Source: AJdET5e8TCSIhiQR9WBlaTW2aAyJmSAnF2OwkXFQQNQjgDOOm4KQhF0hb7kbCJyZT4OTFzw9B2Zwp/R/lcHNd2JnTtQ=
+X-Received: by 2002:a2e:8156:: with SMTP id t22-v6mr993950ljg.32.1540964459035;
+ Tue, 30 Oct 2018 22:40:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.59.git.gitgitgadget@gmail.com> <8159cbd1b8025f33fb9d0e254db1a3c2a066f853.1540923993.git.gitgitgadget@gmail.com>
+ <xmqqsh0mwwah.fsf@gitster-ct.c.googlers.com> <CAGT1KpWoGD0xgTrC-+X1WqY_M=2arYbs4ZX6Nnj-zHK6mgu+nw@mail.gmail.com>
+In-Reply-To: <CAGT1KpWoGD0xgTrC-+X1WqY_M=2arYbs4ZX6Nnj-zHK6mgu+nw@mail.gmail.com>
+From:   Chris Webster <chris@webstech.net>
+Date:   Tue, 30 Oct 2018 22:41:15 -0700
+Message-ID: <CAGT1KpWC_+=u7fCzQJsU8d_gSQzE5rsx46cTXogvaRPHZ1iiHw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Use correct /dev/null for UNIX and Windows
+To:     gitster@pobox.com
+Cc:     johannes.schindelin@gmx.de, gitgitgadget@gmail.com,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Resending in text mode.
 
-> On Wed, Oct 31, 2018 at 01:03:39AM -0400, Jeff King wrote:
+On Tue, Oct 30, 2018 at 10:20 PM Chris Webster <chris@webstech.net> wrote:
 >
->> Phew. I almost just deleted all of the above, because now I think I'm
->> ready to write that comment you asked for. ;) But I left it since maybe
->> it makes sense to follow my thought process.
+> On Tue, Oct 30, 2018 at 9:54 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> "chris via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>> > From: chris <chris@webstech.net>
+>> >
+>> > Use File::Spec->devnull() for output redirection to avoid messages
+>> > when Windows version of Perl is first in path.  The message 'The
+>>
+>> Dscho, "Windows version of Perl is first in path" somehow feels
+>> contradicting with what one of the topics I saw from you were trying
+>> to enforce (or, at least, "set as the supported configuration").
+>>
+>> I am guessing that the Perl you are building and shipping with Git
+>> for Windows would yield what the shell that ends up running the
+>> scriptlet `git config --get-color $key` prefers when asked for
+>> File::Spec->devnull(), and nothing will break with this patch even
+>> if that is "/dev/null", but I thought I'd double check.
+>>
+>> Thanks.
+>>
+This problem originally showed up in the
+https://github.com/so-fancy/diff-so-fancy project, which has a copy of
+DiffHighlight.pm.   That project allows diffsofancy (perl) to be run
+from the command line without requiring the bash environment ((well ,
+sort of) including the associated perl).
 >
-> So here it is in a more succinct form.
-
-Thanks.
-
-> +
-> +		/*
-> +		 * Unlike the loose object case, we do not have to worry here
-> +		 * about running out of input bytes and spinning infinitely. If
-> +		 * we get Z_BUF_ERROR due to too few input bytes, then we'll
-> +		 * replenish them in the next use_pack() call when we loop. If
-> +		 * we truly hit the end of the pack (i.e., because it's corrupt
-> +		 * or truncated), then use_pack() catches that and will die().
-> +		 */
->  		if (status != Z_OK && status != Z_BUF_ERROR) {
->  			git_inflate_end(&st->z);
->  			st->z_state = z_error;
-
-Reads well.  Will apply.
+>> > system cannot find the path specified.' is displayed each time git is
+>> > run to get colors.
+>> >
+>> > Signed-off-by: Chris. Webster <chris@webstech.net>
+>> > ---
+>> >  contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
+>> >  1 file changed, 6 insertions(+), 1 deletion(-)
+>> >
+>> > diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
+>> > index 536754583..7440aa1c4 100644
+>> > --- a/contrib/diff-highlight/DiffHighlight.pm
+>> > +++ b/contrib/diff-highlight/DiffHighlight.pm
+>> > @@ -4,6 +4,11 @@ use 5.008;
+>> >  use warnings FATAL => 'all';
+>> >  use strict;
+>> >
+>> > +# Use the correct value for both UNIX and Windows (/dev/null vs nul)
+>> > +use File::Spec;
+>> > +
+>> > +my $NULL = File::Spec->devnull();
+>> > +
+>> >  # Highlight by reversing foreground and background. You could do
+>> >  # other things like bold or underline if you prefer.
+>> >  my @OLD_HIGHLIGHT = (
+>> > @@ -134,7 +139,7 @@ sub highlight_stdin {
+>> >  # fallback, which means we will work even if git can't be run.
+>> >  sub color_config {
+>> >       my ($key, $default) = @_;
+>> > -     my $s = `git config --get-color $key 2>/dev/null`;
+>> > +     my $s = `git config --get-color $key 2>$NULL`;
+>> >       return length($s) ? $s : $default;
+>> >  }
