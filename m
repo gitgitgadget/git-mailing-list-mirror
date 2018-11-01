@@ -2,84 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 035071F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 15:49:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA5411F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 16:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728646AbeKBAwd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 20:52:33 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38534 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbeKBAwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 20:52:33 -0400
-Received: by mail-wr1-f68.google.com with SMTP id d10-v6so20551235wrs.5
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 08:49:01 -0700 (PDT)
+        id S1728655AbeKBBKl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 21:10:41 -0400
+Received: from mail-qt1-f180.google.com ([209.85.160.180]:40723 "EHLO
+        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728078AbeKBBKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 21:10:41 -0400
+Received: by mail-qt1-f180.google.com with SMTP id k12so15798618qtf.7
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 09:07:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2wUol18NPlIVyWZtTp7SQUEemAJ6Da7kDTjPZHVnhs8=;
-        b=Aa+94iNWJnlG8oyMWBJCnu28guDFJWtyUGiT9NEOuavVEtk6gNdjwgf9Pitf8oawRU
-         /h9v8JnnsRtpJBf2PQtHH6w5bHbzhLxHOtRYDVqqDje4Zbf7qo1dx4BbskkCQW7uik+v
-         OfuT2DiGUq+X3c/fWMIj0BmiuLpfDLHgg2EmwLsPztMqRlC6vZ1znjj02TkfectHWEhe
-         3iqIMQtmrxRG/OnppPZPxRSM+LsMjxYWrLMvZEhkFoqV6k1Bwv8fYtrWAqNHPr8dJTJP
-         VOve6/LcU4iy8mVQ6xtPZqBgq/u5KW6HFK9Ub8jl809o/0wjOr0wP/Ena6FkPXDnLgx/
-         60lA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=cuxPO81gV6yaWcCj/2z9XPSg3+QwqhM16O3qFsMdjOA=;
+        b=TvwRs7h679CkbTTctK5CNJwe6Uq63L+1jvlAJ13rBOKxIF57N1H/hFyZg2RRRIFCZW
+         bMkHTh6m2XWprpDwkhEm33iArf2Fz/XvA6+TZKibMhm7MO5rK9BlgedZ6g0C1IO9k9wC
+         PJtNqteo3n77gnmvPLHcmTkHLdKxQvkg+1EZ5FYPUkj1zLbRd+ECHQEwEs+cfN+QvobV
+         B2/vAcY4dE0grgn8exvfpd7y8oLUV/2MPVAxkZBXtjlV3LkJkN2B15MvHn95Gf6Z6iC3
+         +ZxQj8jSk8nAw9OvP/UYyWncFqW7NXltGKOkUhUM02jwL/dRrSV4JMTooJSV/MD9I6Mf
+         Y0nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2wUol18NPlIVyWZtTp7SQUEemAJ6Da7kDTjPZHVnhs8=;
-        b=AJALrLBJoXHiVJ74uceif4q8l8ByexClxdA0LetO1m2NhGUjRnLgin5mEqXoeeY32x
-         89Gdj6NVitYk2d+2HEU5urvohSpYOTR3L3xfzOAJtiKw49ICaWWH5Ld/g8oXRb6XIAao
-         yxMG6bCt4caVtiyjpABlFQd4893z5/Bvdf2eEMm9GMkj1vJ6Ot1viJvwFd6kQyus+UL1
-         q1/wPbq+9c+4cpczhJWMucTOytg3F5/NlfR3VXiI4nrd8podhnhXdek6vqk56NpBiQzu
-         wr9//BE0uqZ5MkOm1s4F8/m6SuUScfVxSAwq61SZvz6hoygrU4ihs6QPNAJ9kNO9YCUo
-         JHsQ==
-X-Gm-Message-State: AGRZ1gIgprkNEhS+vEBeTLEG0fxnsI6C6eiao8N7qwSjR+VvyruEE2Ob
-        xDaXmakby5iWvReAyf3bBMk=
-X-Google-Smtp-Source: AJdET5fYYK6x/TW8hi366XUZuI2pP6G0U3mQAvTNjkuCYyBPscy99Es+bxhZUqsV+fvs8vXTP37XrQ==
-X-Received: by 2002:adf:9245:: with SMTP id 63-v6mr6814606wrj.130.1541087340599;
-        Thu, 01 Nov 2018 08:49:00 -0700 (PDT)
-Received: from szeder.dev (x4db12d59.dyn.telefonica.de. [77.177.45.89])
-        by smtp.gmail.com with ESMTPSA id 21-v6sm14058544wmv.5.2018.11.01.08.48.59
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=cuxPO81gV6yaWcCj/2z9XPSg3+QwqhM16O3qFsMdjOA=;
+        b=djVW6hbZIsvO8hm+VQ/chUBjaVh3+0Ij/mvwM1yzIOLWmGrwXc0iG8jrPoBOMOHTew
+         GIcHTfSIrL9QY8Z0DEzqraeBGMr6h7vymKlm95Asa4mdtINZHXl3MEQ3xuq9pFx2Eh8S
+         uNYPx7R85csSrZ8coNPYzaa4VB90N1xj3ESqwecJ3q0lVvC8AYw281L5bQ9qDuIMEsYo
+         dLr/qsLDZW1Wnw7neZOE9NLtEr1Sf9uP3WpwHz/CIv2Em1zKqJHhHMF7z5qdu37R3zdp
+         UhuIUxNqc+WWL6H+1cSYoVKXwB4fITaksD2VH5C30QjI8DL+xBSjfcs2KYd22EfRFwZ3
+         YzHQ==
+X-Gm-Message-State: AGRZ1gJuV/CC+AO+1HJshdybKkZGUtCKv6EMaMc+2GOC/5quhC4hdE//
+        qGJhHvSW7L44TF0ho9ZD8hZPJbwZ
+X-Google-Smtp-Source: AJdET5c+53yZtfohPpEgRK1PXKCIDUslVcLpNboIIgaXvS3U3Z0Tm2WKpgdxhrpGdAJs5OaNVeIv/w==
+X-Received: by 2002:aed:3823:: with SMTP id j32-v6mr7279968qte.248.1541088425144;
+        Thu, 01 Nov 2018 09:07:05 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:eddc:3ff3:d342:de1b? ([2001:4898:8010:0:d712:3ff3:d342:de1b])
+        by smtp.gmail.com with ESMTPSA id b5-v6sm18994463qkf.4.2018.11.01.09.07.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Nov 2018 08:48:59 -0700 (PDT)
-Date:   Thu, 1 Nov 2018 16:48:57 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        peff@peff.net, jnareb@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v5 6/7] revision.c: generation-based topo-order algorithm
-Message-ID: <20181101154857.GW30222@szeder.dev>
-References: <pull.25.v4.git.gitgitgadget@gmail.com>
- <20181101134623.84055-1-dstolee@microsoft.com>
- <20181101134623.84055-7-dstolee@microsoft.com>
+        Thu, 01 Nov 2018 09:07:04 -0700 (PDT)
+Subject: master updated? (was Re: What's cooking in git.git (Nov 2018, #01;
+ Thu, 1))
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <00d01524-a37f-4958-cb3d-7facaec82906@gmail.com>
+Date:   Thu, 1 Nov 2018 12:07:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181101134623.84055-7-dstolee@microsoft.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 01, 2018 at 01:46:22PM +0000, Derrick Stolee wrote:
-> 1. EXPLORE: using the explore_queue priority queue (ordered by
->    maximizing the generation number)
+On 11/1/2018 5:59 AM, Junio C Hamano wrote:
+> --------------------------------------------------
+> [Graduated to "master"]
 
-> 2. INDEGREE: using the indegree_queue priority queue (ordered
->    by maximizing the generation number)
+I see that several topics graduated, but it appears the master branch 
+was not updated at https://github.com/gister/git. Was this intentional?
 
-Nit: I've been pondering for a while what exactly does "order by
-maximizing ..." mean.  Highest to lowest or lowest to highest?  If I
-understand the rest of the descriptions (that I snipped) correctly,
-then it's the former, but I find that phrase in itself too ambiguous.
+I noticed because the test-coverage build [1] using the previous master 
+as master@{1} reported no uncovered code into master (because no new 
+commits exist on master).
 
+Thanks,
+-Stolee
+
+[1] https://git.visualstudio.com/git/_build/results?buildId=237&view=log
