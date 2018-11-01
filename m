@@ -6,125 +6,75 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 687CA1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 04:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7EF1F454
+	for <e@80x24.org>; Thu,  1 Nov 2018 05:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbeKANTy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 09:19:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40774 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726419AbeKANTy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 09:19:54 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i17-v6so18672221wre.7
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 21:18:39 -0700 (PDT)
+        id S1727639AbeKAOWv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 10:22:51 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40692 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726396AbeKAOWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 10:22:51 -0400
+Received: by mail-wr1-f66.google.com with SMTP id i17-v6so18769270wre.7
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 22:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=xL6/wIZ6uQ95xIhin29YksZSZraihxDRLhtG2sadGbk=;
-        b=pUlDNmbqS+M/RaRZcOo4JNVdPS1afMCwKwhg8zFvjUTN0wReRsJFWVAYXW5yZn0+Vt
-         arTLLZ8TunahQH9Cw6A+pjmHfxHKivL7l9kC0m+X2w1coinWe+MjXkBaHiuagTwe0dk7
-         n39G6Khk5h+Up1E8Y7Sy/w6X8i1rt8grjndKLL6t1T62MNZCwqn5y7EdTGLrGK+3neyf
-         brVnQcQRcvfQ9yKuMh9I6OzOOU3DnGLlo56C8KsmR5Q8R8gyLn39X6GVWrDBVLKjuH1Y
-         a/epBfT890qxBcry6HatJqKtI9c5c0Nss9u3yRbExk5OdjR0KaiXh38SYx2G8YvPQZm0
-         HyDw==
+         :user-agent:mime-version;
+        bh=4Vi3tEW0RNX6dgZiamfvP7RTgaXUP2QqNqBSvDYl98s=;
+        b=QmN8pnDguQG0ClJFwC5rc8WQw7f9g35rgDbS55FWnrRrpax9uN7TfOZlKoOfrmOs36
+         ZqhvmfKeZrL89AsjvKLPlv9r5SG0dcCuuRoOJS99zOcfGyde3j58N2nsw2RIdRQKrd32
+         7UsSeI8cU8ZGNHyQUK+8BLpC9Eg7xD0qlmZ9IoRSo3bxSZCNLT2kuDUjyIc2GX5uzKJ5
+         /GWqkKkxTTHXOLY5R5N0VmP7L0P4wbVk2SjMvgtP39L9v9h+f1a+fqXBb24NhBKAw/34
+         8X5a3w+j1aT/1TcYpxr7Uu2ZTPRCTTStI935DEOW9m6OA7JooSiyuV22CeTYeGYQ9/Vq
+         hkKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=xL6/wIZ6uQ95xIhin29YksZSZraihxDRLhtG2sadGbk=;
-        b=HyNhFAgY4fJLiifI2G91Dgs9JpK5ZbLd2KFqejC8nqkaegJwPK2HPh16htIDM3Lf6Z
-         Dh5n5Q1ZRiMxHRL2yb0MHwoGDsVN0XrRl7qndKEdyZmuEMfrpkxI2uIiutzZVESthqgS
-         EMLYEKqLizf47l66zKIT6wOSiLQYXVMic3enA/ey8noxMTpr+p+mFQPIIbA79bd87hOd
-         IP72D9GvxjVFFgGUzgoPNIvYkk69CLyEMOoHzzaRYlSUwRPyTUiHxgkYyCl6flGAiZ7m
-         T1Q3B6gchG5tNBUBSldLSJBd0Ebvwod88Ub9IsRH0Izxoa5mcdDxaMmBq7UhkwAyO6NG
-         X4Bw==
-X-Gm-Message-State: AGRZ1gJCl/jnfFVvECGH17d0ZNeFbzkhrTOml9ZN6aRkrH0FcLD5/fE0
-        z9YnSjN8NdmFd3Ni2EmzGauNyGpp6CI=
-X-Google-Smtp-Source: AJdET5eS07tYmRJdfmTEbUzMDDp2Rl+rl4T+088mBLkSmlBpaoWeNgnndwGFAZ7VgFkmWZKRL3CKvA==
-X-Received: by 2002:adf:8281:: with SMTP id 1-v6mr5263793wrc.252.1541045918698;
-        Wed, 31 Oct 2018 21:18:38 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4Vi3tEW0RNX6dgZiamfvP7RTgaXUP2QqNqBSvDYl98s=;
+        b=iMnP3ssEwVIuyewi2+SD9JhBIavsiwV83akZGpfz/Y+QKK2DvpmuPXxvro25LFfpNU
+         KL1VgeASY5zUt2LTycl0qSF7W996OZjn5DPfKJIjLYI/4lO4oSd4moMKToDHjSa+Wm4C
+         is75rXsW7XIaPyOrEKNVxf2h3+yJ/6gqJsVkNw00ITGR4tYyp/UgPDLzDkV260pU8Smf
+         IT0Rsmg1sY3U2h6MQoutaE4cxvf03rmY2Rz4h+mXQYNtSz07C1Kp9IW007MxX7PpCoLF
+         2pOr5BwbUx4TO1LgaYx/e7LYvgxvv7h78jQ6Tw9CNSdEWJ5+DNQOR8SbXQFzq756fkcr
+         6fxg==
+X-Gm-Message-State: AGRZ1gLHhVgyVK31FJdOojSnXk96MUfeZUJjgJAgKb+kcNp/V/Wt0aU6
+        z6F+w35v7Ck2nWsaxm94shY=
+X-Google-Smtp-Source: AJdET5fT7agK+JRLXSXgLFLR9mHmaoVfIsNUyUTldbbww24WMEUAFcJDBH3v15l0LcmGS2fWrqjrPg==
+X-Received: by 2002:a5d:65cf:: with SMTP id e15-v6mr5082730wrw.149.1541049684935;
+        Wed, 31 Oct 2018 22:21:24 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l140-v6sm40244203wmb.24.2018.10.31.21.18.36
+        by smtp.gmail.com with ESMTPSA id l5-v6sm5977474wrv.84.2018.10.31.22.21.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Oct 2018 21:18:36 -0700 (PDT)
+        Wed, 31 Oct 2018 22:21:22 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 7/8] push: add DWYM support for "git push refs/remotes/...:<dst>"
-References: <20181026192734.9609-1-avarab@gmail.com>
-        <20181026230741.23321-8-avarab@gmail.com>
-        <xmqqlg6h4964.fsf@gitster-ct.c.googlers.com>
-        <87in1lkw54.fsf@evledraar.gmail.com>
-Date:   Thu, 01 Nov 2018 13:18:35 +0900
-In-Reply-To: <87in1lkw54.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 29 Oct 2018 09:13:59 +0100")
-Message-ID: <xmqqy3adtopw.fsf@gitster-ct.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4 0/7] Use generation numbers for --topo-order
+References: <pull.25.v3.git.gitgitgadget@gmail.com>
+        <pull.25.v4.git.gitgitgadget@gmail.com>
+Date:   Thu, 01 Nov 2018 14:21:21 +0900
+In-Reply-To: <pull.25.v4.git.gitgitgadget@gmail.com> (Derrick Stolee via
+        GitGitGadget's message of "Tue, 16 Oct 2018 15:36:35 -0700 (PDT)")
+Message-ID: <xmqqpnvptlta.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> On the other hand, I do not think I mind all that much if a src that
->> is a tag object to automatically go to refs/tags/ (having a tag
->> object in refs/remotes/** is rare enough to matter in the first
->> place).
->
-> Yeah maybe this is going too far. I don't think so, but happy to me
-> challenged on that point :)
->
-> I don't think so because the only reason I've ever needed this is
-> because I deleted some branch accidentally and am using a push from
-> "remotes/*" to bring it back. I.e. I'll always want branch-for-branch,
-> not to push that as a tag.
+> This patch series performs a decently-sized refactoring of the revision-walk
+> machinery. Well, "refactoring" is probably the wrong word, as I don't
+> actually remove the old code. Instead, when we see certain options in the
+> 'rev_info' struct, we redirect the commit-walk logic to a new set of methods
+> that distribute the workload differently. By using generation numbers in the
+> commit-graph, we can significantly improve 'git log --graph' commands (and
+> the underlying 'git rev-list --topo-order').
 
-Oh, I didn't consider pushing it out as a tag, but now you bring it
-up, I think that it also would make sense in a workflow to tell your
-colleages to look at (sort of like how people use pastebin---"look
-here, this commit has the kind of change I have in mind in this
-discussion") some random commit and the commit happens to be sitting
-at a tip of a remote-trackig branch.  Instead of pushing it out as a
-branch or a remote-tracking branch, which has strong connotations of
-inviting others to build on top, pushing it out as a tag would make
-more sense in that context.
-
-And as I mentioned already, I think it would equally likely, if not
-more likely, for people like me to push remotes/** out as a
-remote-tracking branch (rather than a local branch) of the
-repository I'm pushing into.
-
-So I tend to agree that this is going too far.  If the original
-motivating example was not an ingredient of everyday workflow, but
-was an one-off "recovery", I'd rather see people forced to be more
-careful by requiring "push origin/frotz:refs/heads/frotz" rather
-than incorrectly DWIDNM "push origin/frotz:frotz" and ending up with
-creating refs/tags/frotz or refs/remotes/origin/frotz, which also
-are plausible choices depending on what the user is trying to
-recover from, which the sending end would not know (the side on
-which the accidental loss of a ref happened earlier is on the remote
-repository that would be receiving this push, and it _might_ know).
-
-As to the entirety of the series,
-
- - I do not think this step 7, and its documentation in step 8, are
-   particularly a good idea, in their current shape.  Pushing tag
-   objects to refs/tags/ is probably a good idea, but pushing a
-   commit as local branch heads are necessarily not.
-
- - Step 6 is probably a good documentation on the cases in which we
-   make and do not make guess on the unqualified push destination.
-
- - Step 5 and earlier looked like good changes.
-
-If we were to salvage some parts of step 7 (and step 8), we'd
-probably need fb7c2268 ("SQUASH???", 2018-10-29) to number all the
-placeholders in the printf format string.
+Review discussions seem to have petered out.  Would we merge this to
+'next' and start cooking, perhaps for the remainder of this cycle?
