@@ -2,89 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77B9D1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 06:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C52BD1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 06:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727596AbeKAPN7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 11:13:59 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39970 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726852AbeKAPN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 11:13:58 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i17-v6so18856479wre.7
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 23:12:25 -0700 (PDT)
+        id S1727747AbeKAPxy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 11:53:54 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:39650 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727573AbeKAPxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 11:53:54 -0400
+Received: by mail-vs1-f68.google.com with SMTP id h78so10543255vsi.6
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 23:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=IXL5GtN8NW3WRXpuAh5soeC76KEbghYqliecF62sbc0=;
-        b=Xo4+csfe7sitsU29SsK0PpQ4GaIOIZ6YnYtz7DYZHNdOTldIoScVWC+umU+hncYYMv
-         ztE/nqfaqnL9WcHKuXu1yio/w2QIg5y/oy/a58hIAI6sJlzy8pys/WWSkMipTEL1cmDp
-         5i5l2J//7Jxjmxx5xa97JU+3OXaaDd2dHQEOzQkHirrfoCHYRIaMksKZEipYkgCZhGyv
-         mYxp7G65oAkwm8GJlAuSqgiUf6JSyeeb9N91lrVVqUR8+zO43liUw2GNN+cUlgYonlNA
-         fX6F6ERdBXCJgzluoQZYhVbaTALO+SVG4A+KBsRvRU7+PcWk+2chRp90Ls8s8Ytjykbc
-         RTMg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fKcGFG9ZKz6MvvRrNiHeTFywxIKnBSBy/gT71egGG74=;
+        b=L4/mYjAVGb3Gyhjf5/IzQBMYzkzIU/crHJAu2mhOnEASCdIv03RkJlmPRylAc1ulGC
+         uPXSRi7/esFO086iuTpEb0Xg1RCRuhGM4tlJXGevnsEMSstyZNyqROFFb2lbdw5sIfoV
+         RMeiL/5ddoA1D0iH0W6liX0b9t3evWQVXduYv5W4HmcAzKNuxF3hT0XUO+3IxeOol0Qb
+         vck403PJSzkLQUhbWhEeOsXtC2LSPd6CCYvu8noCfkYzRHUWvR9tg4gIuOlDrHGXDVEz
+         kxgBsAagPq7E0aXnTKN2M8Wi+dGgH/BZYpgsLFfXDAvbzl2tysrw/ldQmADxgXVFcVkI
+         1PGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=IXL5GtN8NW3WRXpuAh5soeC76KEbghYqliecF62sbc0=;
-        b=o3Nn1LAVTT8TQfHD3e7EIPFFlPbtnH4eMsnzZBxA7M2YSQkgCZUXerBDnEuWloDRuf
-         lEyxUYR2sp063W3QlxLDgLgRApxwJUxh3mRPkgwPYFMA5Jn61SF4OtLGYqWIDJ7rZ27S
-         8MuM0Z95jByu8VtWDPdp63Ru2g4n/U4f9oaVV+ykpMZWmQUXv60D89N5pipLV+t9cymv
-         J4CHtxXOaD28xJnYQzROBhXDb6+0/nMP2Ljv5SnoPVsAhX39tjoG+ly4ZgS1E5GFUEGa
-         Zwmz+FJamO06Oimq2F8kKDswTVifGI4yiwzUY2wQnoNLGYaBkdartRejB37VQl7QqWZP
-         Jazg==
-X-Gm-Message-State: AGRZ1gLyDv7DBrhsylfWQJOvgoP5xXpf+yOLeGRVXw5Q95+aT5S2EF9g
-        POrahfFkwopueXT0dE9mS/5CpYcRyGk=
-X-Google-Smtp-Source: AJdET5dmSrrmzg/d/hAyHYI8A+qAeItQfr8g3CGhbMMEI2lqUUowkCorLWWtiHUStENXIzhaDk+qxA==
-X-Received: by 2002:adf:eec1:: with SMTP id a1-v6mr5584491wrp.242.1541052744047;
-        Wed, 31 Oct 2018 23:12:24 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c24-v6sm51759344wre.44.2018.10.31.23.12.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Oct 2018 23:12:22 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] tests: optionally skip `git rebase -p` tests
-References: <pull.63.git.gitgitgadget@gmail.com>
-        <39734e4805cbd695cd69e7c1a3016de629ac9b3c.1541016115.git.gitgitgadget@gmail.com>
-Date:   Thu, 01 Nov 2018 15:12:22 +0900
-In-Reply-To: <39734e4805cbd695cd69e7c1a3016de629ac9b3c.1541016115.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 31 Oct 2018
-        13:02:02 -0700 (PDT)")
-Message-ID: <xmqqh8h1tjg9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fKcGFG9ZKz6MvvRrNiHeTFywxIKnBSBy/gT71egGG74=;
+        b=EydHTz01ddbyLawCqSiZWjAK/H6HedDFLFFkzCqXmyrTQjN4HIK9vDOesHOz00Lulh
+         2dCgMwXpb/5H+Rgd1vVGPuKWq8qXrcPitRk8oOn3QwWBcqhd2einYUsMKyQpq2zQYTK7
+         ehN15iCo1JCmr6NYcuDA+A71b7ELhuX9uDS4jl0ye0nS08SwkcC+yNjfrXPkhgPJTI2v
+         GGXVuNlSUwpAO6W33qaAPrcLMaH20/S7/TRQivr3EyBxT+aXhKWRIY5FvYlRcZi0sB8S
+         UVVbBvLzyrCaCgLuJI13EtLGrTeRNEao/nLUqnDRScLFq+udvwZ3HnCqCHd2VEwRABUz
+         V/hg==
+X-Gm-Message-State: AGRZ1gIkxtmaPJBc5xMQqFh5UHp2vOf0jkeuJPehDgJ/pfdFjL0RGdBJ
+        KUU/K6DIPLbjSptZGkjAajnzR9boWsVypohleKHZvw==
+X-Google-Smtp-Source: AJdET5da7L7xiGcIEsfst4/ffI+HR3j64wWZ0mqgHC36Mk1mQc/XJK7KWYxjNbAnse3SXHbUJUePlbMeTaquRI4KsaM=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr2831025vsm.116.1541055132933;
+ Wed, 31 Oct 2018 23:52:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
+ <20181031120505.237235-1-dstolee@microsoft.com>
+In-Reply-To: <20181031120505.237235-1-dstolee@microsoft.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 31 Oct 2018 23:52:01 -0700
+Message-ID: <CABPp-BHHG9K0869=4CYkqjN6rwLCzRBiF_Z94KFevSo3_FvYAw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Oct 31, 2018 at 5:05 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 10/31/2018 2:04 AM, Elijah Newren wrote:
+> > On Tue, Oct 30, 2018 at 7:16 AM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+> >> As reported earlier [1], the add_missing_tags() method in remote.c has
+> >> quadratic performance. Some of that performance is curbed due to the
+> >> generation-number cutoff in in_merge_bases_many(). However, that fix doesn't
+> >> help users without a commit-graph, and it can still be painful if that
+> >> cutoff is sufficiently low compared to the tags we are using for
+> >> reachability testing.
+> >>
+> >> Add a new method in commit-reach.c called get_reachable_subset() which does
+> >> a many-to-many reachability test. Starting at the 'from' commits, walk until
+> >> the generation is below the smallest generation in the 'to' commits, or all
+> >> 'to' commits have been discovered. This performs only one commit walk for
+> >> the entire add_missing_tags() method, giving linear performance in the worst
+> >> case.
+> >>
+> >> Tests are added in t6600-test-reach.sh to ensure get_reachable_subset()
+> >> works independently of its application in add_missing_tags().
+> >
+> > On the original repo where the topic was brought up, with commit-graph
+> > NOT turned on and using origin/master, I see:
+> >
+> > $ time git push --dry-run --follow-tags /home/newren/repo-mirror
+> > To /home/newren/repo-mirror
+> >  * [new branch]       test5 -> test5
+> >
+> > real 1m20.081s
+> > user 1m19.688s
+> > sys 0m0.292s
+> >
+> > Merging this series in, I now get:
+> >
+> > $ time git push --dry-run --follow-tags /home/newren/repo-mirror
+> > To /home/newren/repo-mirror
+> >  * [new branch]       test5 -> test5
+> >
+> > real 0m2.857s
+> > user 0m2.580s
+> > sys 0m0.328s
+> >
+> > which provides a very nice speedup.
+> >
+> > Oddly enough, if I _also_ do the following:
+> > $ git config core.commitgraph true
+> > $ git config gc.writecommitgraph true
+> > $ git gc
+> >
+> > then my timing actually slows down just slightly:
+> > $ time git push --follow-tags --dry-run /home/newren/repo-mirror
+> > To /home/newren/repo-mirror
+> >  * [new branch]          test5 -> test5
+> >
+> > real 0m3.027s
+> > user 0m2.696s
+> > sys 0m0.400s
+>
+> So you say that the commit-graph is off in the 2.8s case, but not here
+> in the 3.1s case? I would expect _at minimum_ that the cost of parsing
+> commits would have a speedup in the commit-graph case.  There may be
+> something else going on here, since you are timing a `push` event that
+> is doing more than the current walk.
+>
+> > (run-to-run variation seems pretty consistent, < .1s variation, so
+> > this difference is just enough to notice.)  I wouldn't be that
+> > surprised if that means there's some really old tags with very small
+> > generation numbers, meaning it's not gaining anything in this special
+> > case from the commit-graph, but it does pay the cost of loading the
+> > commit-graph.
+>
+> While you have this test environment, do you mind applying the diff
+> below and re-running the tests? It will output a count for how many
+> commits are walked by the algorithm. This should help us determine if
+> this is another case where generation numbers are worse than commit-date,
+> or if there is something else going on. Thanks!
 
-> The `--preserve-merges` mode of the `rebase` command is slated to be
-> deprecated soon, ...
-
-Is everybody on board on this statement?  I vaguely recall that some
-people wanted to have something different from what rebase-merges
-does (e.g. wrt first-parent history), and extending perserve-merges
-might be one way to do so.
-
-I do not mind at all if the way forward were to extend rebase-merges
-for any future features.  To me, it is preferrable having to deal
-with just one codepath than two written in different languages.
-
-I just want to make sure we know everybody is on board the plan that
-we will eventually remove preserve-merges, tell those who want to
-use it to switch to rebase-merges, and we will extend rebase-merges
-when they raise issues with it saying that they cannot do something
-preserve-merges would have served them well with rebase-merges.
+I can do that, but wouldn't you want a similar patch for the old
+get_merge_bases_many() in order to compare?  Does an absolute number
+help by itself?
+It's going to have to be tomorrow, though; not enough time tonight.
