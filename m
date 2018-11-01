@@ -2,63 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 256BA1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 13:15:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8511F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 13:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728607AbeKAWR7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 18:17:59 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:46736 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728351AbeKAWR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 18:17:59 -0400
-Received: by mail-wr1-f43.google.com with SMTP id 74-v6so11832408wrb.13
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 06:15:03 -0700 (PDT)
+        id S1728351AbeKAWbs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 18:31:48 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:45146 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727644AbeKAWbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 18:31:48 -0400
+Received: by mail-wr1-f52.google.com with SMTP id n5-v6so20050929wrw.12
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 06:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+DtPCfjkiNZwmJJrBrXoPnbZnIZU0M3UQG8+OrXXXPk=;
-        b=BfMVfnZb4qaXIpPe10fZ1s1gFKn+ds/lTjeA5WDiCIB3cRo4yXB8vU4oeK8iUd4N0L
-         CyOZrKw8iNgVfSykDoG0lIsgImJrFd1+5RuvnJxW0mDsubj16xkjWatToIcXM/ZmggPd
-         yuhk43kTA4Idl7M+TTbJ1HuVuRaVjqSnf5IzoSfjbZm4tnqlfQXuwUIVqf5koZakX0Vm
-         mM/79UgSDwII4WIOKqSFB92rT1sJipVomRh24Gdck2WiDwQaMoXCsJ4q7ihKkgS5SDc2
-         +YEdItiGFFnDc7PiLSaG4AlSv+o6xRci1cU+TRKDIfn8RL/GFofP9EuJhhDWY8sICT8K
-         4Oww==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=NzGoJQzNL9WWQPz3ECEQ7H6zJeRCu7qXkA0buz6N4Tc=;
+        b=U1141RNFymg/hYOR5KKmSPgKJj90wwFKOwA27snu+ob3ariVLf6ms+6mI9wnDvuxZC
+         bwLplMkMn/3Z1ec+3DPBhRy4cpqXIETvp+My0q8GHdQlqqswCoP2c/dRr1UlYYb2b/1k
+         uRRHTKoe5JpthgFzTxVOIF0HT2ogC3mzxBCxTuAiAy6/kK5QWPML/EVgODUePqJ6NZdk
+         el4CjYbfR8SHXF4Bic6A5T7XnZv0fnXaRYHltC19mQd70eLLUCwmFHi8pQzGUWjAvZL9
+         Auv3Ue647q4C6LkPWPfFCHc4AyU5oBxVahhMyX2HFIVRm0rgbejMUVHTMXWYPJ9fwqcz
+         Y35g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=+DtPCfjkiNZwmJJrBrXoPnbZnIZU0M3UQG8+OrXXXPk=;
-        b=ulY0IWGf+HO9PzkMhBP14dleoXPIm9BLukDiKFbH8FrVeiDqvnUUCfYvprn/gepDiD
-         UKIamveFO488d3tieqMFo5jUoutHnfON61UaXB+XVjsyoC4GSLLaR1ieFzZoekFu88aO
-         +daRwmdFvNbjAZ8n8G8sMzIH6K7YFS/9y4eXc1IaZPIeeJH3bKL0oxER5f2FiieSxMNa
-         xsG5S11HcNirhj8UrmjG6y9A8uNgOcvoQ6btEvzQqIjqt8gFnU420lH1epENnqfwfjQV
-         mUNOKsyHDbjJwq3q5HqDt97bWtlZy/obOrcJb+OyXFpp2clRBmJ0YD6m9S0+Qr06eMIl
-         elsg==
-X-Gm-Message-State: AGRZ1gIvN4UDx0uEbyGpySdVDzLHrua8ryOachExSFAuRRj+zWfpWtVp
-        abyYZh+myE/K7oHQg4PLmDg=
-X-Google-Smtp-Source: AJdET5cZfCMovI9b00BJmA9alQ8XKONjtGSQOdYjwfzvT4s8hhQlDKMrV/vlvtIGa9J2/qr6B0M9MA==
-X-Received: by 2002:adf:bb0f:: with SMTP id r15-v6mr6656779wrg.24.1541078102528;
-        Thu, 01 Nov 2018 06:15:02 -0700 (PDT)
-Received: from evledraar ([2001:981:2f6f:1:6765:91b4:348a:a673])
-        by smtp.gmail.com with ESMTPSA id y4-v6sm10834420wrd.61.2018.11.01.06.15.01
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=NzGoJQzNL9WWQPz3ECEQ7H6zJeRCu7qXkA0buz6N4Tc=;
+        b=bNN3YYKvyFUJrhxdpE41WhXZvyDxWGNRoNg3NZogLlfbbE8v2EBnXI/p2nJVdzeTbs
+         tCTrKET6ZkXjLaHbB+alYVg7zZrPbeHf1DnpFI5H/oFb4YIBUllt3YiqgniTtCLGA0c2
+         sKTqtfPeJW0rpGiQAnN+PbeSMUw6tE/LXZNwMS/CC9Z3EPvLMrYfM1IrJhtWv5HzD/0w
+         uwzLBaWJBxLWpscUhqQz9OfjSGzC6pIvBXZeJIVlcvf1mC8N+i2V7IFe1kjuFvhXKG8D
+         gg0XB6MBx5TvWjxrPmKU8Fnue2fglk7ZkUsvep7a1bUdSci5q+Nt1IW5bT3JmN+02ZFw
+         yn6Q==
+X-Gm-Message-State: AGRZ1gJHeDwUOKSEd2wBi/nTH5OGxtNIsA3rJldvj3ZfAuMGaxVAD4Ts
+        nV+GOByYc0pUW/wQRZEYwXY=
+X-Google-Smtp-Source: AJdET5fEjSNejoPrDqy5r6b1m8yaxzVuJExFqmA8cchfSeEErYswjIorssvuOiyNROQ40P0sj5LEfA==
+X-Received: by 2002:adf:fbc6:: with SMTP id d6-v6mr1943879wrs.241.1541078928600;
+        Thu, 01 Nov 2018 06:28:48 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a12-v6sm18662429wrr.71.2018.11.01.06.28.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Nov 2018 06:15:01 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Nicolas Mailhot <nicolas.mailhot@gmail.com>
+        Thu, 01 Nov 2018 06:28:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFE] Please add name and email to git credentials
-References: <6d8ef01ad9eb08d90cb9848eeaeabe6784b7b3e3.camel@laposte.net> <87zhutjb3t.fsf@evledraar.gmail.com> <6f3d8c49e1d44ab20d4169e5254364cba707f1af.camel@laposte.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <6f3d8c49e1d44ab20d4169e5254364cba707f1af.camel@laposte.net>
-Date:   Thu, 01 Nov 2018 14:15:00 +0100
-Message-ID: <87wopxj5wr.fsf@evledraar.gmail.com>
+Subject: Re: ab/* topics
+References: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
+        <8736slkqmu.fsf@evledraar.gmail.com>
+Date:   Thu, 01 Nov 2018 22:28:46 +0900
+In-Reply-To: <8736slkqmu.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 01 Nov 2018 12:02:01 +0100")
+Message-ID: <xmqq8t2dsz8x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -67,70 +69,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Thu, Nov 01 2018, Nicolas Mailhot wrote:
+> Could you please pick up
+> https://public-inbox.org/git/20181024114725.3927-1-avarab@gmail.com/ ?
+> It seems to have fallen between the cracks and addressed the feedback on
+> v1, and looks good to me (and nobody's objected so far...).
 
-> Le jeudi 01 novembre 2018 à 12:22 +0100, Ævar Arnfjörð Bjarmason a
-> écrit :
->>
->> Where would we get an E-Mail to lookup to pass to the helper? Are you
->> just asking that the helper git the result of $(git config user.name
->> &&
->> git config user.email)? If so why can't it just look this up itself?
->
->
-> So, just in case it was not clear enough, allow things in .gitconfig
-> like
->
-> [credential "https://pkgs.fedoraproject.org/"]
-> username = doe4ever
-> name = John Doe
-> email = doe4ever@fedoraproject.org
-> [credential "https://gitlab.corp.com/"]
-> username = jdoe56874
-> name = John Doe, Snr Engineer
-> email = john.doe@corp.com
->
-> Instead of just
->
-> [user]
-> name = John Doe
-> email =  john.doe@corp.com
-> [credential "https://pkgs.fedoraproject.org/"]
-> username = doe4ever
-> [credential "https://gitlab.corp.com/"]
-> username = jdoe56874
->
-> and drat, I've commited to XXX with the wrong name/email again
+If this is the runtime-gettext-poison thing, this did not fall thru
+the cracks---I didn't get the impression that "no objection was a
+sign of being excellent"; rather I recall feeling that you were the
+only person who were excited about it, while everybody else was
+"Meh".
 
-Aaaah! So really you just want to set user.{name,email} if you match a
-given URL in the project, and this per-se has nothing to do with
-credentials..
+Thanks for pinging.  It is very possible that I didn't read (or
+rememer) the thread correctly.  Let me go back to the archive in the
+morning to double check.
 
-Yeah that's a fair request. Although I think tying that up with
-credential.* doesn't make sense because we'd:
 
- 1) Need yet another place (config, env vars, now this...) to search for
-    what we're putting in the commit object.
-
- 2) Users want to configure this for e.g. different URLs even though
-    they don't need different credentials for the two.
-
-I'm too lazy to dig up the thread, but there's been a discussion before
-of extending the IncludeIf syntax to support more things that "gitdir",
-e.g. matching on the remote URL.
-
-So then you'd do:
-
-    [credential "https://pkgs.fedoraproject.org/"]
-    username = doe4ever
-    [IncludeIf "remote:https://pkgs.fedoraproject.org/*"]
-    path ~/.gitconfig.d/fedoraproject.config
-
-But now what you need to do is clone all the projects in
-e.g. ~/git/fedoraproject/* and do:
-
-    [credential "https://pkgs.fedoraproject.org/"]
-    username = doe4ever
-    [IncludeIf "gitdir:~/g/fedoraproject/*"]
-    path ~/.gitconfig.d/fedoraproject.config
