@@ -2,144 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_SBL,
+	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7518C1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 12:32:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE9521F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 12:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728502AbeKAVfH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 17:35:07 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:39292 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728326AbeKAVfG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 17:35:06 -0400
-Received: by mail-qk1-f193.google.com with SMTP id e4so12112252qkh.6
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 05:32:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=AMy/ApTqkFtnBc4P5ZLDtLeaKVHBDrx6EqP6VsqzJII=;
-        b=FTftSjIQ2pcrRPKpqf5EyxirsHKi0dtOuAbtI879uP4kg0LfFx8jUbk8wpn6ROu+P1
-         w+EdW7oFWK0dUJW+fa7j0Iv4yzucGTULbk03iF6ezzqLr+z9dgJHRJ7OO5sxricz6rW2
-         GK+S6+tzL3PqEBvjv63rLJEY8XqCGeGO3ExEzB9ll/rK4qdVFTwdHEYAMHf66PojPvOC
-         O+5dmYA5fQ5VNJPMHtaFoum/29rFH6xkcZzKuWFBYl27kmczC1ygL1/rgA4z2kQ6YdfK
-         s6wC/iB+C0iTw/jQFZSUH6Nz7ONK7192GvMIQAaX5N60MbFLbmFY3YI+22s58526p0Id
-         oAxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=AMy/ApTqkFtnBc4P5ZLDtLeaKVHBDrx6EqP6VsqzJII=;
-        b=G+dq5lzq+DX4WxNFJHA9oNLOpVB6MbOAjv5HnHpDUUdMbaalNoWbeSyGxtbXu8u3iX
-         mrff+MgwFcsfU8/UVOKIDOkmXRmL9v/D1cuqEPlUR5t/2wh3tK34VIxe+1HAdF52eX5F
-         UsfKvuH4fBuP5qehJ8AdFm3+ocDlhpi8NVQRP+6flrOPKI+Tp0jbcG7P8FQysNYQm3Dd
-         BsxzIDhGDfg5GySP4VZnsUfDxFZ+Wgo0UExWmM+Al/pFXQn1zojsh4aTnxvJp7QKKYxj
-         QiAbhx9dFjUEk+ZNgIiv9SfCg04QCL29+xO0N14BDgGEpMijiCton+rgYdRmG+R40jR0
-         aByg==
-X-Gm-Message-State: AGRZ1gK+p1blYWU5MIVbzmoMC2Ruc5HepaFNKXH2J6bEjAVRMU3DhlNl
-        DvxMdbRpc2vvfzOxwFn+ziQ=
-X-Google-Smtp-Source: AJdET5cSE/cEaU2x7E6YkBP29yk6dqLtgeanjm9XlJuY+EsldcLLp/fxzDLAvWDlutCxsreiUd0/7A==
-X-Received: by 2002:ae9:c21a:: with SMTP id j26-v6mr6080697qkg.52.1541075539201;
-        Thu, 01 Nov 2018 05:32:19 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:eddc:3ff3:d342:de1b? ([2001:4898:8010:0:d712:3ff3:d342:de1b])
-        by smtp.gmail.com with ESMTPSA id k38sm9201624qkh.72.2018.11.01.05.32.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Nov 2018 05:32:18 -0700 (PDT)
-Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
- <20181031120505.237235-1-dstolee@microsoft.com>
- <CABPp-BHHG9K0869=4CYkqjN6rwLCzRBiF_Z94KFevSo3_FvYAw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ad4ab388-6244-1811-ec1b-6f8143df620e@gmail.com>
-Date:   Thu, 1 Nov 2018 08:32:14 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
-MIME-Version: 1.0
-In-Reply-To: <CABPp-BHHG9K0869=4CYkqjN6rwLCzRBiF_Z94KFevSo3_FvYAw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        id S1728546AbeKAVhO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 17:37:14 -0400
+Received: from smtpoutz24.laposte.net ([194.117.213.99]:52543 "EHLO
+        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728326AbeKAVhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 17:37:14 -0400
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout012 (Postfix) with ESMTP id 6FB6716342F
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:34:24 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
+        t=1541075664; bh=vNkhzzHX2RQy5Us5g/jtVG7YKbhnkPJvOzp9W+CRtrA=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=NBnf7WSfiAsuEovd6R5dNForGd4sxDmFDskcETpmuwFq3kY+10ulvvLV7qfLq1TAt
+         dotJgmYoKJ4D22LmGyWH89idU7kJODLgMJkQ4/eaw57V1UexrMjvxsMTIEBKnlP9Vp
+         CiVgHPZsSZawtotOjOL+i03/cUMQehakmWqEIJB0VgnZ9HE7TZDKG0GloQV7BMLhMp
+         TyT2ewDFVfygkVyHlYEzIbBh1WwFYMsQeO32GDkJcHF5Kqsfr9AbjiI0U3SIJaH40z
+         /5sLH8bnQVo0QZEL+/qJAB+3yT15F4fOVOIeauDsNMi8j4jkUR/1PU4z6Znd7z+gEj
+         vDgWeF1Au4FAA==
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout012 (Postfix) with ESMTP id 6209F163457
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:34:24 +0100 (CET)
+Received: from lpn-prd-vrin002 (lpn-prd-vrin002.prosodie [10.128.63.3])
+        by lpn-prd-vrout012 (Postfix) with ESMTP id 5D3C616342F
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:34:24 +0100 (CET)
+Received: from lpn-prd-vrin002 (localhost [127.0.0.1])
+        by lpn-prd-vrin002 (Postfix) with ESMTP id 4D8255E82E0
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:34:24 +0100 (CET)
+Received: from arekh.ddns.net (unknown [82.64.49.105])
+        by lpn-prd-vrin002 (Postfix) with ESMTPA id 3979B5E82D6
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:34:24 +0100 (CET)
+Received: from cerebro.okg (box.okg [192.168.0.1])
+        by arekh.ddns.net (Postfix) with ESMTPSA id 1D2A022008E;
+        Thu,  1 Nov 2018 13:34:24 +0100 (CET)
+Message-ID: <6f3d8c49e1d44ab20d4169e5254364cba707f1af.camel@laposte.net>
+Subject: Re: [RFE] Please add name and email to git credentials
+From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason 
+        <nicolas.mailhot@laposte.net>
+Cc:     git@vger.kernel.org
+Date:   Thu, 01 Nov 2018 13:34:23 +0100
+In-Reply-To: <87zhutjb3t.fsf@evledraar.gmail.com>
+References: <6d8ef01ad9eb08d90cb9848eeaeabe6784b7b3e3.camel@laposte.net>
+         <87zhutjb3t.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-VR-FullState: 0
+X-VR-Score: 15
+X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieehgdegudcutefuodetggdotefrodftvfcurfhrohhf
+X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecuogetfedtuddqtdduucdludeh
+X-VR-Cause-3: mdenucfjughrpefkuffhvfffjghftggfggfgsehtkeertddtreejnecuhfhrohhmpefpihgtohhlrghs
+X-VR-Cause-4: ucforghilhhhohhtuceonhhitgholhgrshdrmhgrihhlhhhotheslhgrphhoshhtvgdrnhgvtheqnecu
+X-VR-Cause-5: ffhomhgrihhnpegtohhrphdrtghomhdpfhgvughorhgrphhrohhjvggtthdrohhrghenucfkphepkedv
+X-VR-Cause-6: rdeigedrgeelrddutdehnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhinhgvthepkedvrdei
+X-VR-Cause-7: gedrgeelrddutdehpdhhvghloheprghrvghkhhdruggunhhsrdhnvghtpdhmrghilhhfrhhomhepnhhi
+X-VR-Cause-8: tgholhgrshdrmhgrihhlhhhotheslhgrphhoshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
+X-VR-Cause-9: rhdrkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+X-VR-AvState: No
+X-VR-State: 0
+X-VR-State: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/1/2018 2:52 AM, Elijah Newren wrote:
-> On Wed, Oct 31, 2018 at 5:05 AM Derrick Stolee <stolee@gmail.com> wrote:
->> On 10/31/2018 2:04 AM, Elijah Newren wrote:
->>>
->>> On the original repo where the topic was brought up, with commit-graph
->>> NOT turned on and using origin/master, I see:
->>>
->>> $ time git push --dry-run --follow-tags /home/newren/repo-mirror
->>> To /home/newren/repo-mirror
->>>   * [new branch]       test5 -> test5
->>>
->>> real 1m20.081s
->>> user 1m19.688s
->>> sys 0m0.292s
->>>
->>> Merging this series in, I now get:
->>>
->>> $ time git push --dry-run --follow-tags /home/newren/repo-mirror
->>> To /home/newren/repo-mirror
->>>   * [new branch]       test5 -> test5
->>>
->>> real 0m2.857s
->>> user 0m2.580s
->>> sys 0m0.328s
->>>
->>> which provides a very nice speedup.
->>>
->>> Oddly enough, if I _also_ do the following:
->>> $ git config core.commitgraph true
->>> $ git config gc.writecommitgraph true
->>> $ git gc
->>>
->>> then my timing actually slows down just slightly:
->>> $ time git push --follow-tags --dry-run /home/newren/repo-mirror
->>> To /home/newren/repo-mirror
->>>   * [new branch]          test5 -> test5
->>>
->>> real 0m3.027s
->>> user 0m2.696s
->>> sys 0m0.400s
->> So you say that the commit-graph is off in the 2.8s case, but not here
->> in the 3.1s case? I would expect _at minimum_ that the cost of parsing
->> commits would have a speedup in the commit-graph case.  There may be
->> something else going on here, since you are timing a `push` event that
->> is doing more than the current walk.
->>
->>> (run-to-run variation seems pretty consistent, < .1s variation, so
->>> this difference is just enough to notice.)  I wouldn't be that
->>> surprised if that means there's some really old tags with very small
->>> generation numbers, meaning it's not gaining anything in this special
->>> case from the commit-graph, but it does pay the cost of loading the
->>> commit-graph.
->> While you have this test environment, do you mind applying the diff
->> below and re-running the tests? It will output a count for how many
->> commits are walked by the algorithm. This should help us determine if
->> this is another case where generation numbers are worse than commit-date,
->> or if there is something else going on. Thanks!
-> I can do that, but wouldn't you want a similar patch for the old
-> get_merge_bases_many() in order to compare?  Does an absolute number
-> help by itself?
-> It's going to have to be tomorrow, though; not enough time tonight.
+Le jeudi 01 novembre 2018 à 12:22 +0100, Ævar Arnfjörð Bjarmason a
+écrit :
+> 
+> Where would we get an E-Mail to lookup to pass to the helper? Are you
+> just asking that the helper git the result of $(git config user.name
+> &&
+> git config user.email)? If so why can't it just look this up itself?
 
-No rush. I'd just like to understand how removing the commit-graph file
-can make the new algorithm faster. Putting a similar count in the old
-algorithm would involve giving a count for every call to
-in_merge_bases_many(), which would be very noisy.
 
-Thanks!
--Stolee
+So, just in case it was not clear enough, allow things in .gitconfig
+like
+
+[credential "https://pkgs.fedoraproject.org/"]
+username = doe4ever
+name = John Doe
+email = doe4ever@fedoraproject.org
+[credential "https://gitlab.corp.com/"]
+username = jdoe56874
+name = John Doe, Snr Engineer
+email = john.doe@corp.com
+
+Instead of just
+
+[user]
+name = John Doe
+email =  john.doe@corp.com
+[credential "https://pkgs.fedoraproject.org/"]
+username = doe4ever
+[credential "https://gitlab.corp.com/"]
+username = jdoe56874
+
+and drat, I've commited to XXX with the wrong name/email again
+
+
+-- 
+Nicolas Mailhot
+
