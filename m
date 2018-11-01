@@ -7,104 +7,137 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E138B1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 07:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1408F1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 07:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727843AbeKAQDi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 12:03:38 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:45864 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727675AbeKAQDi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 12:03:38 -0400
-Received: by mail-ua1-f65.google.com with SMTP id x3so6863870ual.12
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 00:01:55 -0700 (PDT)
+        id S1727744AbeKAQOp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 12:14:45 -0400
+Received: from mail-ua1-f51.google.com ([209.85.222.51]:46954 "EHLO
+        mail-ua1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727573AbeKAQOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 12:14:44 -0400
+Received: by mail-ua1-f51.google.com with SMTP id z8so6889425uap.13
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 00:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hVGqjCoBxVtPr1XecoXDb3u0cRaHCd9dy6pE9y0gPI4=;
-        b=Nlf7mW28o1fGXhq7YJnXUg0vk0sOJXEd10/3bd7kEYA2gimOJNbIqY29jRMjR+pPso
-         DhxdavUNQzlAGauzngVF1DUa6HLmld8Jt92vmsf/GgVvOiYgZtC8PH6FINeXvnz3zEOq
-         L/ATCPIvMnDC8PCrJ8ChZhuICdS5JfKGDr/bVkntCpTDwJjUqHdA+t1mteiwee5072Kg
-         E5ES0sRI4jU7aQuHIXke9PBUVhfOvqpZ9g7DcT60bDDniOWqghJEnKx/nCWcHnUPtKkS
-         lRYmc+UjJzI+CfiPr6+OFpcT+23qVzc0DBzVYtpjDtOTQ9LlHGCDRJrOqIm2vPUY7m3F
-         ln0w==
+        bh=9iTrtyMTe2Dmd45YfPaQmlF+xWsLa3RvxILfxKnt5/g=;
+        b=n/Jb6uLT+WnPhGjH4Z1JvJWw73Uq62tGt9NvvMDYnXE4/zNXe7wVZp0TrPaEvQ+gl/
+         f+kMBX7qDeFxLvVNpQvW8d4WkW8FEANtwa4ajybKXbeduluUtVPUa+eQpVPYOQqOYDzx
+         62ooMQKwLIz1+bIa7POskHkCTyf0mly5dCl7Ysd94tsy4W7ADfZlaEZp8jtD+rNjJd81
+         sdXDm5zjzw50Gt0uIV6OFxamQ9AoVy2uLbcLG+syckWNFUNZYyDj9pIC8n0Vzwr478bB
+         uD/ZpqMa+LXXrlD2KHtJV4EnkIcYFg/XV6LMAjSnSTpCEHL/VeqA/CTidyIVgqjp9FF+
+         2llA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hVGqjCoBxVtPr1XecoXDb3u0cRaHCd9dy6pE9y0gPI4=;
-        b=H/i9d5VpdsSMI9R6C5NPuNcM/smMiveU+vQ9K6fT4b4VtweXtDa+kDAP9KwWpYEpiu
-         7Sjvx1tFuAXNtPt/rpjNEaYyl9fZr/K84aBIefFCFQM4GXw+65VQF5aZrluo9ZlttOMc
-         lWn+p8x3hLxIXzOWQHMN7l1VBniAUhh8fPHpV9Jqggf4jeTgkTFhS5AwvW9Wy3yY5993
-         iFEI//N9UH85XlMHaGF+htkCFi7VUxRRzKP/G3oD8SrZ5bnStRbTYEO/TfAFby4ymDCL
-         Jeewk6O2GRC7fATNx2his1F7WuD2qKyJpKMjPlzfDt/+z1vHDtE7cF8P5eJuQ38aHyYk
-         Sz/A==
-X-Gm-Message-State: AGRZ1gIP9kpM9Ji1zRpYmi3XA0PlUHYrNSn9zBDXu+4prbnIgwmgebwT
-        VFz82ExuO6dvs0uEIsfBtg5iB8wxJmnFT6Br0q4=
-X-Google-Smtp-Source: AJdET5eicR+cODuTFoWcT/LeKq6iTyQfjrjN4UObCCnE/plDfz0TqojE2Pw9wNLPS+1AYfFgHQS+FsilVgFhnR17NPo=
-X-Received: by 2002:ab0:2311:: with SMTP id a17mr2857654uao.130.1541055715095;
- Thu, 01 Nov 2018 00:01:55 -0700 (PDT)
+        bh=9iTrtyMTe2Dmd45YfPaQmlF+xWsLa3RvxILfxKnt5/g=;
+        b=phzp81BsLAv5NLj2KvC+KV6rgsITjVGnkDqf7lcz14P/Qll6IpBPGKkfUWI/fYjcDo
+         KlRacTdCNsDz71b3ILrm67McHBWtWyRW1QcJXqxrf4OnjlpAUUkzuhViR+VouaQ3mca+
+         qAvlGRPh1JN/L0EYDLAFo89RJaH1+VaeX4G1igcBmgX+TFztW7BGBFrZ+v/OR27dY1ky
+         2wg7pxi+YTCuzbpu3jPnpiQIa8jA0TM8Pc2wfNtmlc2BmUg0xjmObdZr5fAHk5A2X0gf
+         3526u3G/DP6pnRD7XTnPrrlmfykka+Ic29K/hUy7yqKwmW4y18C+xOHcDRg76D9sp97J
+         T+gw==
+X-Gm-Message-State: AGRZ1gJffl6rZPjr1f2opsCK89bqSkK2mUuk/Uk+kSdT54rN42s6TcQf
+        VOshOw3yqyoXBMm9/p/raC9tfSpRsQDu0Ly1suvcnQ==
+X-Google-Smtp-Source: AJdET5emi3kY8xgY+sSIiz48zq2HkW2pGrFheb+ehSS4Ib7YHp2wwi5gV0nUmAPdqbq6Lef2v7Tzd7/yJzKl8nerHRA=
+X-Received: by 2002:ab0:465:: with SMTP id 92mr33987uav.28.1541056379071; Thu,
+ 01 Nov 2018 00:12:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20181014020537.17991-1-newren@gmail.com> <20181019193111.12051-1-newren@gmail.com>
- <20181019193111.12051-9-newren@gmail.com> <d23b4e26-4df4-273d-a75c-a0af915a6e5e@gmail.com>
-In-Reply-To: <d23b4e26-4df4-273d-a75c-a0af915a6e5e@gmail.com>
+References: <F65AF000-7AE0-44C8-81C8-E58D6769FAA3@gmail.com>
+ <CABPp-BGL-3_nhZSpt0Bz0EVY-6-mcbgZMmx4YcXEfA_ZrTqFUw@mail.gmail.com> <91771D9B-166D-403F-BB20-7E574444BB3B@gmail.com>
+In-Reply-To: <91771D9B-166D-403F-BB20-7E574444BB3B@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 1 Nov 2018 00:01:44 -0700
-Message-ID: <CABPp-BFZugCFDS_A7FrWdRhp7WO0m8jhsqbSnNCSUWnAVz7mtg@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] merge-recursive: improve rename/rename(1to2)/add[/add]
- handling
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 1 Nov 2018 00:12:48 -0700
+Message-ID: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
+Subject: Re: Import/Export as a fast way to purge files from Git?
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 31, 2018 at 8:08 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 10/19/2018 3:31 PM, Elijah Newren wrote:
-> > [snip]
+On Wed, Oct 31, 2018 at 12:16 PM Lars Schneider
+<larsxschneider@gmail.com> wrote:
+> > On Sep 24, 2018, at 7:24 PM, Elijah Newren <newren@gmail.com> wrote:
+> > On Sun, Sep 23, 2018 at 6:08 AM Lars Schneider <larsxschneider@gmail.com> wrote:
+> >>
+> >> Hi,
+> >>
+> >> I recently had to purge files from large Git repos (many files, many commits).
+> >> The usual recommendation is to use `git filter-branch --index-filter` to purge
+> >> files. However, this is *very* slow for large repos (e.g. it takes 45min to
+> >> remove the `builtin` directory from git core). I realized that I can remove
+> >> files *way* faster by exporting the repo, removing the file references,
+> >> and then importing the repo (see Perl script below, it takes ~30sec to remove
+> >> the `builtin` directory from git core). Do you see any problem with this
+> >> approach?
 > >
-> > +                     char *new_path = NULL;
-> > +                     if (dir_in_way(b->path, !o->call_depth, 0)) {
-> > +                             new_path = unique_path(o, b->path, ci->branch2);
-> > +                             output(o, 1, _("%s is a directory in %s adding "
-> > +                                            "as %s instead"),
-> > +                                    b->path, ci->branch1, new_path);
+> > It looks like others have pointed you at other tools, and you're
+> > already shifting to that route.  But I think it's a useful question to
+> > answer more generally, so for those that are really curious...
+> >
+> >
+> > The basic approach is fine, though if you try to extend it much you
+> > can run into a few possible edge/corner cases (more on that below).
+> > I've been using this basic approach for years and even created a
+> > mini-python library[1] designed specifically to allow people to create
+> > "fast-filters", used as
+> >   git fast-export <options> | your-fast-filter | git fast-import <options>
+> >
+> > But that library didn't really take off; even I have rarely used it,
+> > often opting for filter-branch despite its horrible performance or a
+> > simple fast-export | long-sed-command | fast-import (with some extra
+> > pre-checking to make sure the sed wouldn't unintentionally munge other
+> > data).  BFG is great, as long as you're only interested in removing a
+> > few big items, but otherwise doesn't seem very useful (to be fair,
+> > it's very upfront about only wanting to solve that problem).
+> > Recently, due to continuing questions on filter-branch and folks still
+> > getting confused with it, I looked at existing tools, decided I didn't
+> > think any quite fit, and started looking into converting
+> > git_fast_filter into a filter-branch-like tool instead of just a
+> > libary.  Found some bugs and missing features in fast-export along the
+> > way (and have some patches I still need to send in).  But I kind of
+> > got stuck -- if the tool is in python, will that limit adoption too
+> > much?  It'd be kind of nice to have this tool in core git.  But I kind
+> > of like leaving open the possibility of using it as a tool _or_ as a
+> > library, the latter for the special cases where case-specific
+> > programmatic filtering is needed.  But a developer-convenience library
+> > makes almost no sense unless in a higher level language, such as
+> > python.  I'm still trying to make up my mind about what I want (and
+> > what others might want), and have been kind of blocking on that.  (If
+> > others have opinions, I'm all ears.)
 >
-> I tried really hard, but failed to get a test to cover the block below.
-> I was able to
-> find that the "check handling of differently renamed file with D/F
-> conflicts" test
-> in t6022-merge-rename.sh covers the block above. Trying to tweak the
-> example using
-> untracked files seems to hit an error message from unpack-trees.c instead.
->
-> > +                     } else if (would_lose_untracked(b->path)) {
-> > +                             new_path = unique_path(o, b->path, ci->branch2);
-> > +                             output(o, 1, _("Refusing to lose untracked file"
-> > +                                            " at %s; adding as %s instead"),
-> > +                                    b->path, new_path);
->
-> It could also be that I failed because I'm less familiar with this part
-> of the
-> codebase. Elijah, do you think it is possible to hit this block?
+> That library sounds like a very interesting idea. Unfortunately, the
+> referenced repo seems not to be available anymore:
+>     git://gitorious.org/git_fast_filter/mainline.git
 
-Yeah, this one's going to be a little harder; the upper block would be
-done with a D/F, but I think for this block you'd need a directory
-rename so that unpack-trees.c can't tell that the untracked file in
-the way is actually in the way of anything.  But since this is in the
-rename/rename(1to2) area, I think I had rules around avoiding doing
-directory renames if the other side renamed the file to avoid getting
-into rename/rename(1to3) situations and other weirdness.  So, it might
-require a transitive rename (i.e. file renamed on both sides, and on
-one side it's renamed into a directory that the other side renamed
-away).
+Yeah, gitorious went down at a time when I was busy with enough other
+things that I never bothered moving my repos to a new hosting site.
+Sorry about that.
 
-I'll try to take a look at it tomorrow, with everything else.  We'll
-see how much I can get done.
+I've got a copy locally, but I've been editing it heavily, without the
+testing I should have in place, so I hesitate to point you at it right
+now.  (Also, the old version failed to handle things like --no-data
+output, which is important.)  I'll post an updated copy soon; feel
+free to ping me in a week if you haven't heard anything yet.
 
-Thanks for digging in to all these and bringing them up.
+> I very much like Python. However, more recently I started to
+> write Git tools in Perl as they work out of the box on every
+> machine with Git installed ... and I think Perl can be quite
+> readable if no shortcuts are used :-).
+
+Yeah, when portability matters, perl makes sense.  I thought about
+switching it over, but I'm not sure I want to rewrite 1-2k lines of
+code.  Especially since repo-filtering tools are kind of one-shot by
+nature, and only need to be done by one person of a team, on one
+specific machine, and won't affect daily development thereafter.
+(Also, since I don't depend on any libraries and use only stuff from
+the default python library, it ought to be relatively portable
+anyway.)
