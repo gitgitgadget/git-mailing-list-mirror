@@ -2,113 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_BLACK,
-	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80B331F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 12:03:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0329A1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 12:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728302AbeKAVFn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 17:05:43 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51692 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728085AbeKAVFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 17:05:43 -0400
-Received: by mail-wm1-f66.google.com with SMTP id w7-v6so1164127wmc.1
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 05:03:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=l/2Dlumwjj1Xe6rzOcO06HupXx209aDWI2zE44n3fDc=;
-        b=iO9AH207bZa9Fi2YneOagU2MnCscyEtdsCp0cF8u+iQrL7+ObUcf4w8mWqYlJKZiGq
-         X/EWQQ0ywK07il6u5LYNK935urPzq2mCfkZz8lRsm6INyfwUj8LK6gqaFWu4C24Qan17
-         XlS9Pzj7uCPXxpN9ZbKOEUeEt+XC8Ip3J5hRi8t/T3d88nU83Xt8BBIeuOpLun4YbsxU
-         26WNDFIyrE81aHcIVNdu+6d46JAUKvRYsctGO2fqKNXrWdI0t0MpY9e95x69mzsKtTCT
-         jYalxzEestRVVQhX6kEAaBcUSBIZexvSm8tQ2u6cUT9qqNzBi3Vkez/wc1q2xupjha3G
-         tojQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=l/2Dlumwjj1Xe6rzOcO06HupXx209aDWI2zE44n3fDc=;
-        b=X0S/iSQoRn5xaCfdP987tdZzxcD3juzMLUfP7PbozOPxNuzW0/AT0HEbykqR+v4kKK
-         hdi2fuZNrodeCgpSO29NMk03xtljFNaaMU6/VBS6EI2dP/TF21Q1gwd86XnlefOBCFVr
-         8Sp6/kLgkEyhXqX6y/E3Qj+t8lhyGF4PHQcCbQgvMzjPn7wZ+PjBvuUXSAuY8icAxzpM
-         1V+01R73XuqDHJ/MsjkF7M/ypUDcTSMCP7cqBZPoS0bRFdvsnDThYAwa7buLa/cyotdZ
-         Lkn+/WF+UJC2SHWNROl3ZNwr7o1PMI8DYoIR0yotAv4fpBohoeCRUD64ARpuzfP+RVkD
-         XQ/Q==
-X-Gm-Message-State: AGRZ1gIBF0kYjwWWoim2RIeK3xB8GKJTrvH30UqSt4XU60wFT3j00dvu
-        JzgY4KbYRq7BOurt0UwjvPc=
-X-Google-Smtp-Source: AJdET5cp5wiSICwQTmFDweSXqNFfDboVasKzquDZVe7uJIPn9Gy9eM3rLklMnanflMw74qIsOxfshQ==
-X-Received: by 2002:a1c:950f:: with SMTP id x15-v6mr5227885wmd.3.1541073781697;
-        Thu, 01 Nov 2018 05:03:01 -0700 (PDT)
-Received: from localhost.localdomain ([31.223.156.57])
-        by smtp.gmail.com with ESMTPSA id o188-v6sm2666544wmg.9.2018.11.01.05.03.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Nov 2018 05:03:01 -0700 (PDT)
-From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
-X-Google-Original-From: Slavica Djukic <slawica92@hotmail.com>
-To:     slavicadj.ip2018@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        slawica92@hotmail.com
-Subject: [PATCH 3/3] [Outreachy] stash: use set_fallback_ident() function
-Date:   Thu,  1 Nov 2018 13:02:39 +0100
-Message-Id: <20181101120239.15636-1-slawica92@hotmail.com>
-X-Mailer: git-send-email 2.19.1.windows.1
-In-Reply-To: <20181101115546.13516-1-slawica92@hotmail.com>
-References: <20181101115546.13516-1-slawica92@hotmail.com>
-MIME-Version: 1.0
+        id S1728579AbeKAV3R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 17:29:17 -0400
+Received: from smtpoutz27.laposte.net ([194.117.213.102]:56222 "EHLO
+        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728452AbeKAV3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 17:29:17 -0400
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout015 (Postfix) with ESMTP id D4EA3277D63
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:26:28 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
+        t=1541075188; bh=Wgb29wMDz643yJoQzxyijw1GjrVtSGa1eOmeRncXsaM=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=apLDjaVFHZPvg+MAksMMw2QSOJQaMQQNFDfRH8Z28JYL7lBctJdj4CorYlRPx53Hb
+         S9SHB+BKh6H9kVE6sI50/SUVWKvWP+/1AqMMLOWfw7uyIIPAH6LJcmlVEC7SLhUIy9
+         CY1hEEmMF+NGDE2hqna0z03LSUrPdjNHWLwhEc0wVBCQtg2SyJYI0ixotJg17O9Pqb
+         aqvmYI+CTRMzmKmVQjle4x5qqBvF3ZZMjJpaLl2FAm8ABJL0ruERGgpmxAy/ufnmbg
+         FanXtNXZxkA/Djas3nvWpI1D+8sNhkPBCEP5is6p3l05zsg0XiaUMqZAXBlamihkPb
+         esxlCdF++7YzQ==
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout015 (Postfix) with ESMTP id C33A7277E99
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:26:28 +0100 (CET)
+Received: from lpn-prd-vrin003 (lpn-prd-vrin003.laposte [10.128.63.4])
+        by lpn-prd-vrout015 (Postfix) with ESMTP id BD9D4277DB5
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:26:28 +0100 (CET)
+Received: from lpn-prd-vrin003 (localhost [127.0.0.1])
+        by lpn-prd-vrin003 (Postfix) with ESMTP id AED134A6943
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:26:28 +0100 (CET)
+Received: from arekh.ddns.net (unknown [82.64.49.105])
+        by lpn-prd-vrin003 (Postfix) with ESMTPA id 99A1B4A6910
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 13:26:28 +0100 (CET)
+Received: from cerebro.okg (box.okg [192.168.0.1])
+        by arekh.ddns.net (Postfix) with ESMTPSA id 5B9B822008E;
+        Thu,  1 Nov 2018 13:26:28 +0100 (CET)
+Message-ID: <c414f7ae84c763cacd55d14ba68fbf2572b65132.camel@laposte.net>
+Subject: Re: [RFE] Please add a standard ref object to releases
+From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason 
+        <nicolas.mailhot@laposte.net>
+Cc:     git@vger.kernel.org
+Date:   Thu, 01 Nov 2018 13:26:28 +0100
+In-Reply-To: <871s85kq16.fsf@evledraar.gmail.com>
+References: <b639c19a881476be2d4dbdd731cd305384b287a9.camel@laposte.net>
+         <871s85kq16.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-VR-FullState: 0
+X-VR-Score: 15
+X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieehgdegudcutefuodetggdotefrodftvfcurfhrohhf
+X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecuogetfedtuddqtdduucdludeh
+X-VR-Cause-3: mdenucfjughrpefkuffhvfffjghftggfggfgsehtkeertddtreejnecuhfhrohhmpefpihgtohhlrghs
+X-VR-Cause-4: ucforghilhhhohhtuceonhhitgholhgrshdrmhgrihhlhhhotheslhgrphhoshhtvgdrnhgvtheqnecu
+X-VR-Cause-5: kfhppeekvddrieegrdegledruddtheenucfrrghrrghmpehmohguvgepshhmthhpohhuthdpihhnvght
+X-VR-Cause-6: peekvddrieegrdegledruddthedphhgvlhhopegrrhgvkhhhrdguughnshdrnhgvthdpmhgrihhlfhhr
+X-VR-Cause-7: ohhmpehnihgtohhlrghsrdhmrghilhhhohhtsehlrghpohhsthgvrdhnvghtpdhrtghpthhtohepghhi
+X-VR-Cause-8: thesvhhgvghrrdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedt
+X-VR-AvState: No
+X-VR-State: 0
+X-VR-State: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call set_fallback_ident() in cmd_stash() and update test
-from the first commit to expect success.
+Le jeudi 01 novembre 2018 à 12:15 +0100, Ævar Arnfjörð Bjarmason a
+écrit :
+> 
+> For both this and your other report, it would be helpful if you
+> describe
+> in concrete terms (with examples of git commands, or UI etc.) what git
+> commands do now, what's wrong with it, and some sketch of what you
+> expect an alternate interface to look like.
+> 
+> As for this report: I know this area of git quite well, but I still
+> have no idea quite what you're asking for.
 
-Executing stash without user.name and user.email configured
-can be useful when bots or similar users use stash, without anyone
-specifing valid ident. Use case would be automated testing.
-There are also users who  find this convinient.
-For example, in this thread:
-https://public-inbox.org/git/87o9debty4.fsf@evledraar.gmail.com/T/#ma4fb50903a54cbcdecd4ef05856bf8094bc3c323
-user points out that he would find it useful if stash had --author option.
+It says a lot that you claim to know this area of git quite well, but
+have no understanding how it is (mis)used on github/gitlab/bitbucket/etc
+by people who actually try to use git.
 
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
----
- builtin/stash.c  | 1 +
- t/t3903-stash.sh | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+I’m just asking that when a project releases “x.y.z”
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 965e938ebd..add30aae64 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1523,6 +1523,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 	trace_repo_setup(prefix);
- 	setup_work_tree();
- 
-+	set_fallback_ident("git stash", "stash@git.commands");
- 	git_config(git_default_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index aaff36978e..06a2ffb398 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1156,7 +1156,7 @@ test_expect_success 'stash -- <subdir> works with binary files' '
- 	test_path_is_file subdir/untracked
- '
- 
--test_expect_failure 'stash works when user.name and user.email are not set' '
-+test_expect_success 'stash works when user.name and user.email are not set' '
- 	git reset &&
- 	>1 &&
- 	git add 1 &&
+1. there was a standard git command available to it to create "the
+release “x.y.z”" ref
+
+2. there was a git syntax to say "the release “x.y.z”" ref in all git
+commands that manipulate refs
+
+3. that this "release “x.y.z”" ref could be used in all the "download
+release “x.y.z”" on GitLab/GitHub, etc
+
+4. that there was no fuziness or human interpretation involved into
+converting "x.y.z" into the syntax used to select "release “x.y.z”" in
+git commands
+
+5. there was no ambiguïty in this syntax that led to the selection of
+things that are not "release" refs and just look like them
+
+And **not** the current situation where there are no official "release
+ref" objects and "just map release names to tags, mapping recipe is left
+to the reader". Because everyone invents its own recipe and the result
+does not work.
+
+And no, vfoo is not a form of release ref, because v1 can be a branch,
+not a tag, version3 tag is not the release ersion3, etc (real-world
+examples I can provide links if you don't believe me). You can’t let
+things undefined as they are now because git users as a whole are making
+a mess of things without tooling help.
+
+> If we assume this is a good idea, how do you imagine this would work
+> once you don't just have two levels (random labels v.s. "real"
+> releases)
+> but three or more (random labels v.s. "real" releases v.s. "LTS"
+> releases, ....)?
+
+IMHO you’re over-engineering things there. There is a need for separate
+release refs, as evidenced by the fact every major git web frontend had
+to separate them from normal tags in its UI. I'm not aware of the same
+thing for LTS or whatever.
+
+Of course implementing generic namespacing, would be a way to get a
+separate release namespace. As long as this release namespace is
+unambiguously defined at the git level without replaying the 'just
+invent your own tag recipe' mess at another level.
+
+Regards,
+
 -- 
-2.19.1.windows.1
+Nicolas Mailhot
 
