@@ -6,65 +6,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC93E1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 23:52:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1E21F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 23:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728445AbeKBI5l (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 04:57:41 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37318 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728058AbeKBI5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 04:57:40 -0400
-Received: by mail-wr1-f66.google.com with SMTP id z3-v6so206245wru.4
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:52:33 -0700 (PDT)
+        id S1728345AbeKBI74 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 04:59:56 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38192 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728169AbeKBI7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 04:59:55 -0400
+Received: by mail-wr1-f65.google.com with SMTP id d10-v6so205110wrs.5
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=8c4d3Uz6hZMkPPLLc89jqJZ8ZpuBhJrWzCrhGQX9Jx8=;
-        b=vaMHtSlEk+hrIqZ0BomNFsM1RbtJczlIVbJrm2WdRIzVxc0VX1UaoTp+A2gSA3Ro7F
-         v7Du6eswnVdq2xi/v4nuj/ODBle151+5ZRfyYGnxaVt9p5gzBuPghv4Td+pq+ZV1o51g
-         s6Hm3V3w9q9Xm7/CHd6z+clY7zckGV5FyuseiUv1MtPPBdS2aMYJm5yU9tl2e8ZovMrP
-         118vlF6X4TQCszqD+X71AvS0cIWNDJ07S6RSz7etBCkeW56FXuKmVXXbTtN7Z/xV9lrx
-         5ts2nl5F13BLu4sutxeWnk2sSgulk1FNm3g0ArMeU1DOTxJRm9kKEZ91PTMNaYAR/eqI
-         p2GA==
+        bh=/4prLZUQcLWbvZHf4Pz08GT53wirxh4L31gT83JPlTk=;
+        b=Fa7LrCi7KFD0aGNda2WdsLgU1Z2u/PmHs2AuI902ksmWE/6aX44KNYGonjjw/NTka5
+         QGtgIYsPpUBdXxSpbvKD6wt7Soy5f1+ir784nnN4oq8aYsBbuDZRTecx66dJnWEAvNfv
+         TlEOHKrwQzFit9QY7n/xXiSm+yo2JIc6KrUFnNu195nSygqZWPwGzpRhuSueuIPHRpp+
+         L1bW48J8dY0FbyxCxTeoWz749WL1niSDzhHACXflipM5hm4UtjNpO0rk5MxucaCm3ew/
+         oJ9xXzF798OkZNMOq+LikOvTpqzLP0r50JpAmwKV0a+e75o5i14ItLDudx6l5uGC0dq1
+         aWcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=8c4d3Uz6hZMkPPLLc89jqJZ8ZpuBhJrWzCrhGQX9Jx8=;
-        b=Muy8gB6pJUEQ9zfU0Zcmf/yHsgy61pN/r0r4a6aAKsN/5RYoiv+nadIQfjkqFeecI1
-         HFy1yCiYY03Z+BkT8VAf05f57H5SptMBrt99H31uLl1yajau3jCcyx++GJJP/Z0G/e8N
-         mcrqDKEQYMd4nQ8/runG9MmWeoyZ/i6C8SOrXpzWGjnPQVe+MKoq1P5Mt4CSZ1tN5Awb
-         axH6j3DVvcfaSszPwOPDs4UWs3gyizIdFs4pi4M6wYH+ljZcuD/AY5YaGuILD7I/S/SC
-         o5NtyKBAaWimZnjG2VDj878hQ/5eGhJFY9IhS/C4jYqrRAaKCambciQdN8mQVIy3lFKd
-         N4fg==
-X-Gm-Message-State: AGRZ1gLNVwfJMe9BxFSxkKKqPD/+lDZrPtaDGp1zvS2VAxe/VVYIwT8i
-        luEa/9yFWRljZTFLrCOL21s=
-X-Google-Smtp-Source: AJdET5cVuhMy+bezytVqLBDd2nalRHVzrXqs2c3lE5xTEUJndjTtiMjZuq9n4Mgp7+1fK3W9+PKS1Q==
-X-Received: by 2002:adf:ab50:: with SMTP id r16-v6mr7803317wrc.62.1541116351969;
-        Thu, 01 Nov 2018 16:52:31 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y4-v6sm13320575wrd.61.2018.11.01.16.52.31
+        bh=/4prLZUQcLWbvZHf4Pz08GT53wirxh4L31gT83JPlTk=;
+        b=HHcg9LkiR0mAiqM6wX02NoDp8IW6aTWZPIZ1yP7bekFqS5ZPrNc59U+WyvqYS1knJF
+         QXHOtjkp8raoxVUQHX7RtBmEk4+Uy7tPYUA9KqoE9l9hY25GOeEzcHH/OCcnrnSGugBV
+         GZUxmC/yuqIf7/aKk1MD0Pwn6EJyjVC2I0Sq75o1ua0NPraaw3TnDqL1C/MSHFRBgR64
+         mHnSeG1T2oKPEp+FjpIEuXXJhgHx1lqxUNDgNyWvh/p4UZ1U1HGcIXlZiJqBaIhub3u0
+         FRqWQ6qUSL0UO5z0UFmN3cz0klSQdYHyF3G0zgfWR37MVN/3WDILRQzXu7Tm4pL8jEuY
+         /z3g==
+X-Gm-Message-State: AGRZ1gJd0zeCoeIKPDjFHXsm09F8OWri1FlODic5Xve0Xh8jYkBQDmyC
+        5IL3/uD+ARcYz4/xhmzVUDE=
+X-Google-Smtp-Source: AJdET5erdoKCCqPs7yZpeDe4toQVbBPYDkmNstnv6+E9ssYUbcMiuxrW0PEcbcc1vVK1Nq1YzM1j7g==
+X-Received: by 2002:adf:f68e:: with SMTP id v14-v6mr7556960wrp.261.1541116486253;
+        Thu, 01 Nov 2018 16:54:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f9-v6sm4401458wmb.8.2018.11.01.16.54.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Nov 2018 16:52:31 -0700 (PDT)
+        Thu, 01 Nov 2018 16:54:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Anmol Mago <anmolmago@gmail.com>, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com
-Subject: Re: [PATCH v2] completion: use builtin completion for format-patch
-References: <xmqqbm7c2n0i.fsf@gitster-ct.c.googlers.com>
-        <72331ce9275ce995009fe8dd3d586bb9d71f2cbf.1540881141.git.liu.denton@gmail.com>
-        <CACsJy8Ajc0qWw3RLak1PRPXvQzMHjaFuWJ6BPkhiVg=7fQvCnA@mail.gmail.com>
-        <xmqqk1lxvaj6.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8AowaAW91wGMYbC8aTOB1NoqQN-5NGx=qUCHp0i6zQRDA@mail.gmail.com>
-Date:   Fri, 02 Nov 2018 08:52:30 +0900
-In-Reply-To: <CACsJy8AowaAW91wGMYbC8aTOB1NoqQN-5NGx=qUCHp0i6zQRDA@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 1 Nov 2018 16:40:54 +0100")
-Message-ID: <xmqqzhuss6dd.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v4 0/7] Use generation numbers for --topo-order
+References: <pull.25.v3.git.gitgitgadget@gmail.com>
+        <pull.25.v4.git.gitgitgadget@gmail.com>
+        <xmqqpnvptlta.fsf@gitster-ct.c.googlers.com>
+        <9ffd8ecd-5595-ad19-cfe1-a268e3fa1bd3@gmail.com>
+Date:   Fri, 02 Nov 2018 08:54:44 +0900
+In-Reply-To: <9ffd8ecd-5595-ad19-cfe1-a268e3fa1bd3@gmail.com> (Derrick
+        Stolee's message of "Thu, 1 Nov 2018 09:49:22 -0400")
+Message-ID: <xmqqva5gs69n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,40 +70,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
->> > I have no comment about this. In an ideal world, sendemail.perl could
->> > be taught to support --git-completion-helper but I don't think my
->> > little remaining Perl knowledge (or time) is enough to do it. Perhaps
->> > this will do. I don't know.
->>
->> So "all", "attach", etc. are added to this list while these similar
->> options are lost from the other variable?  Is this a good trade-off?
+>> Review discussions seem to have petered out.  Would we merge this to
+>> 'next' and start cooking, perhaps for the remainder of this cycle?
 >
-> Not sure if I understand you correctly, but it looks to me that the
-> options in git-send-email.perl are well organized, so we could...
-
-Yes, but I wasn't commenting on your "sendemail should also be able
-to help completion by supporting --completion-helper option" (I think
-that is a sensible approach).  My comment was about Denton's patch,
-which reduced the hard-coded list of format-patch options (i.e. the
-first hunk) but had to add back many of them to send-email's
-completion (i.e. the last hunk)---overall, it did not help reducing
-the number of options hardcoded in the script.
-
-If it makes sense to complete all options to format-patch to
-send-email, then as you outlined, grabbing them out of format-patch
-with the --completion-helper option at runtime, and using them to
-complete both format-patch and send-email would be a good idea.  And
-that should be doable even before send-email learns how to list its
-supported options to help the completion.
-
-> --git-completon-helper in that script to print all send-email specific
-> options, then call "git format-patch --git-completion-helper" to add a
-> bunch more. The options that are handled by setup_revisions() will
-> have to be maintained manually here like $__git_format_patch_options
-> and added on top in both _git_send_email () and _git_format_patch ().
+> Thanks, but I've just sent a v5 responding to Jakub's feedback on v4. [1]
 >
-> So, nothing option is lost and by the time setup_revisions() supports
-> -git-completion-helper, we can get rid of the manual shell variable
-> too. The downside is, lots of work, probably.
+> I'd be happy to let it sit in next until you feel it has cooked long
+> enough. I'm available to respond to feedback in the form of new
+> topics.
+
+OK.  I'm quite happy to see this round of review helped greatly by
+Jakub, by the way.
+
+THanks, both.
