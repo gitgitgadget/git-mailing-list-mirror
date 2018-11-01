@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2A7B1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 11:02:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E509C1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 11:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727822AbeKAUEd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 16:04:33 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:40178 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbeKAUEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 16:04:33 -0400
-Received: by mail-wm1-f47.google.com with SMTP id b203-v6so979137wme.5
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 04:02:04 -0700 (PDT)
+        id S1727872AbeKAURf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 16:17:35 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37784 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727736AbeKAURf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 16:17:35 -0400
+Received: by mail-wr1-f67.google.com with SMTP id z3-v6so839304wru.4
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 04:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=ry6uvvdUybdWv/goC8ZLgHxO+u4WUydrzh3QiV3jnGo=;
-        b=H1EEOyPrzMNa+KTm2F0bx+1qNVKzJRnaGzHlfYp12NGilrvB3n3gCd0SJWi/4Keww/
-         I75MZ2D37hnOr5Fxdj9liIeLjUZGfk1DYWzqMf+QLuBQ8bLqe9nAU3q8lDeaMOupsyor
-         dnPddhCF+uws3Wq9Pl97SQYXoeEU1Adyc/qr7Ozd1/DwJauABPVeuu5JN/68mcZFhkoD
-         FpH992yHX/kCcwARk5coMw3KM8a3AJEUFFcFYTHhxf5PXeSXqCPImswBlJTVp09cjvKt
-         3WDDq666KRYXXjd2WAK+l5x8OZZES4TPt0y+22LRgdF33I9rl2aoDYsAJ/qNYJOMPJLt
-         fQ6w==
+        bh=phn17lmzqWvrM0CGA5fx2hvEJ4ofQjohEAbMoBP8OAY=;
+        b=rV2ng5QgieGpUWogqnqjrZNTJ4PZM7E8PCQrXst/Mpt87kK5Kak1Ez5kmj6tDEuOV0
+         1fuNb1iUUmbDULzXTSw9Do0LZZJTfuqwgmAZMLQyHu45Boi3dneTgSV2Y2aV4LFAIhpR
+         8ZmsIWkVsn+lTg2I7Lqw29rZwToyFJO1KVlpOv1SydJsUbNQ+4f2Z+Dzj3bJ+yr502hX
+         GC6uXU4TxEM3WWmSMDYY2fThLFkpLfxUEHc3An8wcGK/GXZVC2VJdegGRcmd8WKZxe/A
+         haiSrYcytp/LfjwMaD7BLCMTVIxhsm1jxSwdhJMqdwf5BG4T+1TtiB7Yp9oiOhwbXFDr
+         dhhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=ry6uvvdUybdWv/goC8ZLgHxO+u4WUydrzh3QiV3jnGo=;
-        b=mHzVXI+8PDLP+wVfXIfWUjHES5xV0qq7monZMZE65Q+5lZVgFt9xLY2TR3sKbsh1MC
-         xIGZj0vXnqcQZA142ssag04gqUleZ+FF9OWp/p0dsWAdAi3s0gpFD0bktv1LtUpo8vi6
-         7tBeyCgdLAlTJ6aVeblR4UVpGvzgeELpcxkGarD3ktuQ+ydkJf9RSXF85F6Xu6hT0eRu
-         5sV1fGVoNxZjrOaczpFX5UDnaRGthX9Id0QDJ7RIbGOFYj/mUmmY1XkKqsI8esN9LTnL
-         q97Mil3edTvmC5E5DmXy/UBKIgr93aaemvawnu41EmB3a1osV5WO5qTFqG4hq+pBBrEq
-         K4ag==
-X-Gm-Message-State: AGRZ1gIXZndRj+ca+a/XNr6OXLHaWhnHPxcxdEFPB/HbgpiHK8pqamzi
-        psTbbemSdayKJjIjrzk+fvc=
-X-Google-Smtp-Source: AJdET5eN66B0lrl2DkSzi4y29hJevxcyj/h69d7jUHH59sLDsCuYCuXN6Nr+10/hckslTUAXT2wTug==
-X-Received: by 2002:a1c:104:: with SMTP id 4-v6mr5024561wmb.69.1541070123469;
-        Thu, 01 Nov 2018 04:02:03 -0700 (PDT)
+        bh=phn17lmzqWvrM0CGA5fx2hvEJ4ofQjohEAbMoBP8OAY=;
+        b=WeeP1fmc4Te4MPDfQL/1cIfP3uHDNEwfARlBdeXAulgLFf5LBzdTQadPoHOAV37bJB
+         X1s+DiM+lLSOWxB9AB+KxccHvHvP43xwohZlLWShLDfIP6O9SbpXEfZuv6XwCN4aWAi6
+         Ve3vBRdUirLpLNO66tbFPvbC6OZZGp5UeaFTibsxsrsoFvRSGlksoVDI6SN2DHHg2Nzb
+         10rvKGK7s2XvGKH5gcC9ClxiCbEcXqtDGtkxkepvFvadA7tc3ec9vv6e646UKV55a94i
+         wgKe9nE01XMaURNMB2mwbl6onB0kaMqGdj+woOK/YjrRgDG086ABVgzgrKSYaDzszo1G
+         J1Mg==
+X-Gm-Message-State: AGRZ1gKZaQuExmxFoQU8fCJW8wD6LZC4eWwL04xHCOhwoIe7oQcZm+bi
+        wRb2/SVZY+qb3l6zub7SYno=
+X-Google-Smtp-Source: AJdET5fBdb9cXk4Zi2RdgTvJ3X2ROLakPB5wNXpe1E5FclyuZYste2f7UtF6TfQEGaWKzk1ZLs1t3w==
+X-Received: by 2002:a5d:5012:: with SMTP id e18-v6mr5598024wrt.99.1541070903577;
+        Thu, 01 Nov 2018 04:15:03 -0700 (PDT)
 Received: from evledraar ([2001:981:2f6f:1:6765:91b4:348a:a673])
-        by smtp.gmail.com with ESMTPSA id m141-v6sm3593843wmd.14.2018.11.01.04.02.02
+        by smtp.gmail.com with ESMTPSA id b71-v6sm24781391wma.13.2018.11.01.04.15.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Nov 2018 04:02:02 -0700 (PDT)
+        Thu, 01 Nov 2018 04:15:02 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Nicolas Mailhot <nicolas.mailhot@laposte.net>
 Cc:     git@vger.kernel.org
-Subject: ab/* topics (was: Re: What's cooking in git.git (Nov 2018, #01; Thu, 1))
-References: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [RFE] Please add a standard ref object to releases
+References: <b639c19a881476be2d4dbdd731cd305384b287a9.camel@laposte.net>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 01 Nov 2018 12:02:01 +0100
-Message-ID: <8736slkqmu.fsf@evledraar.gmail.com>
+In-reply-to: <b639c19a881476be2d4dbdd731cd305384b287a9.camel@laposte.net>
+Date:   Thu, 01 Nov 2018 12:15:01 +0100
+Message-ID: <871s85kq16.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -67,58 +67,63 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Nov 01 2018, Junio C Hamano wrote:
+On Thu, Nov 01 2018, Nicolas Mailhot wrote:
 
-> * ab/push-dwim-dst (2018-10-29) 9 commits
->  - SQUASH???
->  - push doc: document the DWYM behavior pushing to unqualified <dst>
->  - push: add DWYM support for "git push refs/remotes/...:<dst>"
->  - push: test that <src> doesn't DWYM if <dst> is unqualified
->  - push: add an advice on unqualified <dst> push
->  - push: move unqualified refname error into a function
->  - push: improve the error shown on unqualified <dst> push
->  - i18n: remote.c: mark error(...) messages for translation
->  - remote.c: add braces in anticipation of a follow-up change
+> git makes no provision for versioned release references.
 >
->  "git push $there $src:$dst" rejects when $dst is not a fully
->  qualified refname and not clear what the end user meant.  The
->  codepath has been taught to give a clearer error message, and also
->  guess where the push should go by taking the type of the pushed
->  object into account (e.g. a tag object would want to go under
->  refs/tags/).
+> However, software projects need versioned releases. Software project
+> integrators need versionned releases. Security auditors need versioned
+> release. Software project users need versioned releases.
 >
->  The last few steps are questionable.
->  cf. <87in1lkw54.fsf@evledraar.gmail.com>
-
-Will send an update to this soon.
-
-> * ab/pack-tests-cleanup (2018-10-31) 3 commits
->  - index-pack tests: don't leave test repo dirty at end
->  - pack-objects tests: don't leave test .git corrupt at end
->  - pack-objects test: modernize style
+> Versioned releases are not the same thing as free-form tags. They have
+> semantics to allow deducing upgrade paths (usually, a form of semver).
+> They imply some form of API stability promise. They imply release
+> documentation completion. They're not just a random point in the project
+> history like tags are.
 >
->  A couple of tests used to leave the repository in a state that is
->  deliberately corrupt, which have been corrected.
+> This is why most git hosting sites provide a way to select versioned
+> releases, even if it's not a native git concept. And this way is clearly
+> separate and distinct from git tag selection.
 >
->  Will merge to 'next'.
-
-Thanks!
-
-> * ab/reject-alias-loop (2018-10-19) 1 commit
->   (merged to 'next' on 2018-10-26 at bc213f1bef)
->  + alias: detect loops in mixed execution mode
+> Unfortunately, since git makes no provision for versioned release
+> references, git hosting sites have to shove release refs into tag refs.
+> And it's a huge mess.
 >
->  Two (or more) aliases that mutually refer to each other can form an
->  infinite loop; we now attempt to notice and stop.
+> Some put release ids in tags as-is, others add a v prefix, others a
+> version_ prefix, it's all hoster-specific, it's all inconsistent. It
+> ends up being inconsistent within projects, as they migrate from a
+> hoster to another, are mirrored from one hoster to another. It depends
+> on the habits of the person cutting a release, and the release manager
+> of a project can change over time. It ends up being inconsistent in
+> release archives, as the version munging can percolate in the archive
+> name and structure, or not, for mysterious heuristic reasons that change
+> over time.
 >
->  Discarded.
->  Reverted out of 'next'.
->  cf. <87sh0slvxm.fsf@evledraar.gmail.com>
+> As a result, when assembling a project that uses other git repositories,
+> you spend more time checking repository by repository and version by
+> version how the version ref was mangled in a tag ref for this specific
+> (repo,version,date) tuple, than doing actual software dev and QA work.
+>
+> Please add a specific release reference to git, so software projects
+> that do versioned releases can use this ref object directly, without
+> needing to invent custom version rewriting rules to shove them in tags
+> while marking they are not just tags but release references.
 
-*nod* will try to find time to work on this soon, but treating it as
-non-urgent.
+For both this and your other report, it would be helpful if you describe
+in concrete terms (with examples of git commands, or UI etc.) what git
+commands do now, what's wrong with it, and some sketch of what you
+expect an alternate interface to look like.
 
-Could you please pick up
-https://public-inbox.org/git/20181024114725.3927-1-avarab@gmail.com/ ?
-It seems to have fallen between the cracks and addressed the feedback on
-v1, and looks good to me (and nobody's objected so far...).
+As for this report: I know this area of git quite well, but I still have
+no idea quite what you're asking for.
+
+Do you just mean that we should have some other second-level namespace
+for tags, i.e. in addition to refs/tags/* we'd have
+refs/this-time-I-really-meant-it-tags/*., and e.g. linux.git and git.git
+v* tags would go into that, and have some "git tag --i-really-mean-it"
+interface?
+
+If we assume this is a good idea, how do you imagine this would work
+once you don't just have two levels (random labels v.s. "real" releases)
+but three or more (random labels v.s. "real" releases v.s. "LTS"
+releases, ....)?
