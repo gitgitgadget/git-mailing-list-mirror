@@ -2,137 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E37491F45F
-	for <e@80x24.org>; Thu,  1 Nov 2018 00:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 945D41F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 01:20:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726395AbeKAJ66 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 05:58:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52906 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725823AbeKAJ66 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 1 Nov 2018 05:58:58 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:293f:cdba:df65:a13e])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 273AD61B73;
-        Thu,  1 Nov 2018 00:58:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541033896;
-        bh=n39iL7NYKZ0gZLFCYO1yl8RxLU+gtHn0gnoW+sbNu1c=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=jpbHxxziKQoNvVZTzqXcXAHVcT1KakUnCYSH2cJPHpHWLP1WIhnJR7tWvdVNK/ees
-         dS2fgVXWc1noENbit9KprZuiZs7MZqeuQSmhurVTOEf2WQZz8MCW6hHqOQglT0GOZZ
-         M2E3k5wQvCBn3dC5tiaKnzGmDAY6XIi2qG1AThwnDrZZOpgbt42nnD1PPJ+e/ZlQME
-         kAk3Hr+n6LhcaIVEDzsikM8gKQVJ02KGswcAkE1zeIYKZ2khw2+Uj1ELZt8/v7WQIx
-         1ptVsxIdaM/5XbGTIon3DA6JlqWQkemH5cAv1o50jZfLMphijVSY+UGDrl3AbnSfQJ
-         v6C4JpqUo31UihJH1kDYB7spCBa1k54A1ez+Tu8pnIPC/V3F03+eIRtf3Eq2iPO5mo
-         58i8jo0d2FKp0djN/hxd9yYrPulJeqWPCPApWMSq8Ztfa03JNjW6HUMXC2tbJllrTM
-         IA6RjdUb/7TSwAbKQn5n00XV/kSk9yRhyWlDDp0LGSQeJuzDgvh
-Date:   Thu, 1 Nov 2018 00:58:11 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1726174AbeKAKUo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 06:20:44 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33953 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725823AbeKAKUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 06:20:44 -0400
+Received: by mail-wm1-f66.google.com with SMTP id f1-v6so759600wmg.1
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 18:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=hH7sr939c2BIHJM8Up7S05LoKA/qNo5hek9qm101++Q=;
+        b=TpF+6ZR2UayD3if0drRjADS7Z8kBA+B14UlX0056GXHVuiOSTU0gVShBFiZp/1IM6p
+         b2cxCHVlNCdmMyo2dLcwYdELizrOtivD+3s1FuIPmFv7qN11m21MdUhWDUhP1tPLUSc+
+         AG5tDocFb4nQ6UZLl93n6qs6R/Clge/ohdTUN/t8rHiXPC8hvynVOuFzXD59e7NNkJ7y
+         4YLq3dLelS4gLGQ9VUSoFDOBTGC1NZdrVRmqE0ks50bw64al8KGsCbou669D6oP2XVGL
+         8Dd4zJn9E1Ub9AFxQq8jMp9BPZ/IYou8z5UO++ufCmp9C63Hi50W+/By6Fn2H13iSaV2
+         IaQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=hH7sr939c2BIHJM8Up7S05LoKA/qNo5hek9qm101++Q=;
+        b=YLB8jYeYo/lXzhUxsokX7byEJl7A8rHanzOZiv6udjV4eFHaLfKJOwYiRM5vRPJdWo
+         0a7tezRW8JDO4HfBSJgxEem9hPUlq0y5Hlx+7zov30i8hegofsNYd9afJjjKQaP/huY5
+         6wFQwIysejSR7AWl+l31NXHNW8QsL5c+zk2TE1A+wfd5P9iDVfY78t/RS61kQ87UCcgu
+         zQZUbSoPKzkN4ub/j7Iw1rMiwd4bI/7hHUmrte03Sf6720B1mpiqc5Dk1OkNsichqth1
+         yjJQNjymnw+u9YBBl5q21g+oVBYGu1Fst/5X2Z4k90pGJS5LQ3EVPyhyRiYbAO6A1TiO
+         JnOA==
+X-Gm-Message-State: AGRZ1gLB+pR4YurtDCqGy9SPTj0oqHRAk0k80bE3a/MWnfqq3IvCMA3n
+        EaSC27l7Hry9OwiyPZTQyE0=
+X-Google-Smtp-Source: AJdET5exaDlWxcji7znZGq+LBXskGpoGJ5i87gOSGRZYvEywqkRYr2Jiz6yGaiyJSToFz/ozQ1P7+g==
+X-Received: by 2002:a1c:7e57:: with SMTP id z84-v6mr4313083wmc.43.1541035198850;
+        Wed, 31 Oct 2018 18:19:58 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x18-v6sm480389wrs.50.2018.10.31.18.19.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 31 Oct 2018 18:19:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Alexander Mills <alexander.d.mills@gmail.com>
 Cc:     git@vger.kernel.org
 Subject: Re: using --force-with-lease after git rebase
-Message-ID: <20181101005811.GB731755@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alexander Mills <alexander.d.mills@gmail.com>, git@vger.kernel.org
 References: <CA+KyZp5Zv77idtpu9jtxDUyE9zPP8UN3LsQBG=M5yM2cnMFgVQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="O5XBE6gyVG5Rl6Rj"
-Content-Disposition: inline
+Date:   Thu, 01 Nov 2018 10:19:55 +0900
 In-Reply-To: <CA+KyZp5Zv77idtpu9jtxDUyE9zPP8UN3LsQBG=M5yM2cnMFgVQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        (Alexander Mills's message of "Wed, 31 Oct 2018 12:13:06 -0700")
+Message-ID: <xmqqr2g5vbk4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Alexander Mills <alexander.d.mills@gmail.com> writes:
 
---O5XBE6gyVG5Rl6Rj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Oct 31, 2018 at 12:13:06PM -0700, Alexander Mills wrote:
 > I have been confused about the need for --force-with-lease after rebasing
->=20
+>
 > Imagine I have a feature branch:
->=20
+>
 > git checkout --no-track -b 'feature' 'origin/dev'
 > git push -u origin feature
->=20
+>
 > I do some work, and then I rebase against origin/dev to keep up to
 > date with the integration branch.
->=20
+>
 > git fetch origin/dev
 > git rebase origin/dev
->=20
+>
 > then I try to push to the remote
->=20
+>
 > git push origin feature
->=20
+>
 > but that is rejected, I have to do:
->=20
-> git push --force-with-lease origin feature
->=20
-> why is that? Why do I need to force push my feature branch to the
-> remote tracking branch after rebasing against the integration branch?
 
-When you perform a push to an existing branch, Git checks to make sure
-that the push is a fast-forward; that is, that your changes are a strict
-superset of the commits that are in that branch.  When you rebase a
-branch, you rewrite the commits and their object IDs (their hashes).
-Since you've rewritten some of the commits that were on the version of
-your branch that you pushed to the server, the commits you want to push
-are no longer a strict superset, and Git requires a force push.
+This all depends on how the "dev" branch at the "origin" remote
+relate to the branch at "origin" you are updating with the commit at
+the tip of the "feature" branch.  Are you pushing to "feature" branch?
 
-This provision is in place to prevent data loss.  For example, if you
-and a colleague are both collaborating on a branch that isn't rebased,
-you would want to avoid pushing changes that overwrote those that your
-colleague had made.  Git making your push fail is its way of helping
-you realize that there are changes you have not included and making you
-decide how you want to handle them.
+If so, then the rejection is very much expected.  At this point, the
+histories of the "feature" branch at the "origin" remote is seeing
+would look like this:
 
-You strictly do not need to use --force-with-lease; you could just use
---force instead.  But using --force-with-lease over --force when
-possible ensures that you are overwriting what you think you're
-overwriting, and not additional working changes that someone else has
-made, so it's a good practice.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+    ---X---o---o---o---o---A
+        \
+         x---x---x---x---B
 
---O5XBE6gyVG5Rl6Rj
-Content-Type: application/pgp-signature; name="signature.asc"
+where (X) is where you started the old iteration of the "feature"
+branch forking off of the "dev" branch, (A) is the tip of that old
+iteration of the "feature" branch, and (B) is the tip of the new
+itertion of the "feature" branch you are trying to update with.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+The "origin" repository does not know WHY B is not a fast-forward of
+A.  The only thing it knows is that you are discarding the work done
+in commits (o) while attempting to publish commits (x).  If it is
+intentional, then that's fine, but it does not know (x) are
+replacements for (o) due to rebasing, so it errs on the side of the
+caution.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvaT6MACgkQv1NdgR9S
-9osycg/+IoRshqwWwFC0Zul+aUMbZqY0mzYYh7cmOieztGKctkUuEqKDhPnRVs6E
-CM10qajgUFhD7FFJLhiH2+DI8YXw0pXKZeDY/NmygqgGQrQjAQ39Uc/QxozC8nPi
-cIY9b+U34ZLJhSRw4iHEwWLHhWxpkVC2Ty8nf1ywuOekor8UdLi5sGZGlMLYS9HD
-9PFYvEOA6CK4iS1Zr/Uvgoi2qQ8qKD5JnE9iHPUtqf+eK8TvfcPWHKaQHhan4VMA
-ovJvpKJTt1to2tzV3vp6DpHcBmMkrwkvntCN1LdeRi5dZl+b5EFz+Nzc3umF+1eQ
-JdTG03j6g/ZB2cWCykiV49S0HdETMCWohBMSoqvNbkz/RrCZ4fYBh4Cp/tqnNNAY
-GMI+YPbd7eLmCYk25q1iZnIDrwZp0ixWy7yJzX2JM4piX8AbHy2ImgYw0GFY3RnO
-6EQCt0QlBVB0Da+b2fCTaEyVwbs5AEgD8BftedjkS9i1lS9yNQQbGN+7Kn0BWk2D
-U1/M1USLRcteXxWLrf6O8DpJltoUJTPm2zkRBXVBPOHnu9zQ5E5NNnKOBSiFedwR
-MJ5jjhi+LQD0lRRgx4J1vxi0Y4Qj2TXSftOz41q+Em3CGs6TEvRTAs0EnjIo7NQI
-wZEov2oWJDpfLYRGStpPH0vmPiktRKRqyaCfoW5UHHAsPsGZoN4=
-=IqWa
------END PGP SIGNATURE-----
+With the "--force-with-lease=feature:A" option, you can tell the
+other side: "it is OK if this push does not fast-forward, as long as
+I am updating from A" [*1*].
 
---O5XBE6gyVG5Rl6Rj--
+"--fore-with-lease" without saying what the commit you are expecting
+to discard makes Git on the sending side _guess_.  Depending on what
+you do locally, it can make a wrong guess, so I would not recommend
+such a use, but if you saw it succeed and if you did not lose
+commits at the "origin", then it may have guessed correctly ;-)
+
+
+[Footnote]
+
+*1* Telling what the value of 'A' is to the other side is important,
+ as you are essentially saying that 'B' has everything you want to
+ resurrect from 'A'.  Imagine that somebody else pushed to update
+ "feature" at the "origin" remote from 'A' to 'C' (or if you did so
+ and forgot about it) and then you tried to push 'B' after rebasing.
+
+                             C
+                            /
+    ---X---o---o---o---o---A
+        \
+         x---x---x---x---B
+
+ As far as you (who rebased) were concerned, 'B' is equivalent to
+ (or "an improved version of") 'A' and you want the push that does
+ not fast-forward to go through to replace 'A' with 'B'.  By telling
+ "I am replacing A with B" (instead of saying "I am replacing
+ whatever with B", which is what "--force" is), the receiving side
+ at the "origin" repository can notice that there was another update
+ by somebody else's push to the branch while you are preparing 'B'
+ and the tip of "feature" is no longer at 'A', and reject the push
+ in order to prevent you from losing the work between 'A' and 'C'.
