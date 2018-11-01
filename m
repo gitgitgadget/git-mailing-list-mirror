@@ -2,120 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD5B1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 22:13:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 957021F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 23:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbeKBHSl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 03:18:41 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43471 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbeKBHSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 03:18:41 -0400
-Received: by mail-wr1-f65.google.com with SMTP id t10-v6so5165wrn.10
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 15:13:47 -0700 (PDT)
+        id S1728086AbeKBIgu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 04:36:50 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43740 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727749AbeKBIgu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 04:36:50 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t10-v6so145009wrn.10
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1ZFVta9dzrdR6IqPKT4cO6sz7twCJmouFfMgysHP24s=;
-        b=ljkBb2UhQwcU1gUtTGhjl8LDtFhbL6ssno3KUM7zbze6SI5UUguHS0LXtt7dWW6r3g
-         zHfDvGpbWodhO5S3hMWQveZbO8rrrUKe3dgKl8DAE49Vz96Ell2kNkvHvxhCEyS098th
-         A190/KtyK7w0f2JXgTgooHeEKrQ7XTCf4e7/kX1HPaFFL2GnExPiX/H9EBhABuUYN3Vq
-         OnzsBFxkEkKENsMXX8N30vlBpzgChS+41QvHJNRdPPCLQT8CbSAg3E2N57wZbGW7h2ga
-         vMPDPDeobGrRFz/c+6Nh25plvVwt8F0aLRd+7uhT1EPRWToa8gcS5FrYVbRvWgOvtoj3
-         lTbQ==
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pcthve+9ZrDy1SnfvsXRGrdqlXBznqhGUZy3+LNXmeo=;
+        b=Z0k8iELzTPMwfyM9V01DnXWQj+uMxq+MBd7cWKmao7wVzTWVOUuR0FdkHb4upSaY/M
+         fKjGI1E5qVXZy7SVXeg182m/b5KziaDzQe+7/1TiI1fY+FqwMLioMZzRHEakrd4fozN6
+         EK/ow4h+63OzH8ZMctxyK+MUQW9u9KXvaNLYvZcEFyFbGGgOb71UsnwSoQtuhhIY0FDN
+         6P/ZVHONmriN8fal3uvUr309D+lInd7q3pAJ5NV6umqYGo/k0eomb/cwhWVJFascIxcy
+         gbY7vdJlsKTJLQhy+HvpfidF+VjpLWY5bCRCZms6L39RZtx+sSao/+l6/NdB0ZPO9C9k
+         VU4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=1ZFVta9dzrdR6IqPKT4cO6sz7twCJmouFfMgysHP24s=;
-        b=UD0xMUuznGHhuI+yJ/kvZIcZR/vObOxd8Lp8DAu2QEgOcrb9rVKZYx2GKjXPEE6aLb
-         RYnovVaDiDoP0XJO+nfr9FkZl7yKY5wuDdcKRFFcbDtB2fCwECVmx7uO7zrhn2tE4B0B
-         ZhJjPt/zAHBtKZfcR2nU5biWlZQv8Apbg4O99um+HI5bZa/rZLmd8NVR1SYFMnv4Il7d
-         9wnXsLocObalYJtr++Mq8Tfei7rFbBBMfq/WetpYCzw9HGsWdjt6ORdCuIxdgWJpUuIB
-         VvWG4AVNPCcXRHFi89JWKVz26I3GX6N+CUlRKP1jsd7h268I+QbSO3bxiOxcazQa5EC3
-         X7QA==
-X-Gm-Message-State: AGRZ1gITEQ0Gv0kVQqqwIlMYVBpJ4FRsmX+Hn6wDlYlQsl5svEv3tbQh
-        Bv8+5MHGusdkVp/DgNC4ioiTLvbK
-X-Google-Smtp-Source: AJdET5cQwNgdHXHgnICS5cuA/PPLCY/guTZq3VodDF5QJibsKDk95K/GutPZgi8AYirrI0lY0DjtiQ==
-X-Received: by 2002:adf:9d4a:: with SMTP id o10-v6mr5275119wre.94.1541110426687;
-        Thu, 01 Nov 2018 15:13:46 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (ekn166.neoplus.adsl.tpnet.pl. [83.21.181.166])
-        by smtp.gmail.com with ESMTPSA id l9-v6sm13921161wrf.4.2018.11.01.15.13.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Nov 2018 15:13:45 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [RFC] Generation Number v2
-References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
-        <3576719c-3cfb-547a-3548-3aaebfe6e8a2@gmail.com>
-Date:   Thu, 01 Nov 2018 23:13:42 +0100
-In-Reply-To: <3576719c-3cfb-547a-3548-3aaebfe6e8a2@gmail.com> (Derrick
-        Stolee's message of "Mon, 29 Oct 2018 16:25:40 -0400")
-Message-ID: <86o9b8zbs9.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=pcthve+9ZrDy1SnfvsXRGrdqlXBznqhGUZy3+LNXmeo=;
+        b=au9rUDLd6LNQffFnonFVvDwByshGruilGURi3sOdmOVvRQ8CYpauYDou4Mtfr5aFVe
+         S78E6BMhqjCXz4I+wB+H9QPfrWxFYy3nhe3DVpAOIdSb3ZSELYH3wbIThgbvqfxYqEFh
+         MxKyYBEfV/C2GNAG2KSLWTC7LKZ3szqd3veamtQxpk4QV1BvZU6EMS48efAh2dX4m/EW
+         iPCMKm8QkQ+WNCQwtkqv4omc3Cv2dLX+vwar3z9cX1rUd4n7uo6JuqMxZpZjKYV+Umlq
+         51UKLlS5/FrE5rU1xE+JudRJrfTGD+pSlCTH4rkx88837vbLvYCv+0ou+XfLhyZOKT/w
+         6S2w==
+X-Gm-Message-State: AGRZ1gIx1Lk9JWktxXmQd5c/cKnLc6kDygDvi7LSqsd6ttxFQxCpO3ny
+        cNDSFmR82I/MLq4k03XoQ3I=
+X-Google-Smtp-Source: AJdET5fCJ1YPRxty0yPoAfYFVZ6FcdJgd2vjWH6qwOCaTnqbkhfbmDdVyh0GQt8n/pA0yGbY4hE9Wg==
+X-Received: by 2002:a5d:6943:: with SMTP id r3-v6mr8033929wrw.323.1541115104366;
+        Thu, 01 Nov 2018 16:31:44 -0700 (PDT)
+Received: from [192.168.0.104] (atoulouse-658-1-25-2.w86-222.abo.wanadoo.fr. [86.222.24.2])
+        by smtp.gmail.com with ESMTPSA id k4sm1215732wrx.91.2018.11.01.16.31.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Nov 2018 16:31:43 -0700 (PDT)
+Subject: Re: [PATCH v2 04/16] sequencer: introduce todo_list_write_to_file()
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20181007195418.25752-1-alban.gruin@gmail.com>
+ <20181027212930.9303-1-alban.gruin@gmail.com>
+ <20181027212930.9303-5-alban.gruin@gmail.com>
+ <03475c29-5317-b105-6102-5cae3a5ae926@talktalk.net>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <8b235228-fa53-cf5d-6ece-b28d030e1751@gmail.com>
+Date:   Fri, 2 Nov 2018 00:31:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <03475c29-5317-b105-6102-5cae3a5ae926@talktalk.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Hi Phillip,
 
-> Here is a re-formatted version of the tables I introduced earlier.
-> The tables were too wide for public-inbox to render correctly (when
-> paired with my email client). Hopefully this bulleted-list format
-> works better. Thanks, Stefan, for pointing out the rendering
-> problems!
+Le 30/10/2018 à 17:28, Phillip Wood a écrit :
+> Hi Alban
+> 
+> I like the direction this is going, it is an improvement on re-scanning
+> the list at the end of each function.
+> 
+> On 27/10/2018 22:29, Alban Gruin wrote:
+>> This introduce a new function to recreate the text of a todo list from
+>> its commands, and then to write it to the disk.  This will be useful in
+>> the future, the buffer of a todo list won’t be treated as a strict
+>> mirror of the todo file by some of its functions once they will be
+>> refactored.
+> 
+> I'd suggest rewording this slightly, maybe something like
+> 
+> This introduces a new function to recreate the text of a todo list from
+> its commands and write it to a file. This will be useful as the next few
+> commits will change the use of the buffer in struct todo_list so it will
+> no-longer be a mirror of the file on disk.
+> 
+>> This functionnality can already be found in todo_list_transform(), but
+> 
+> s/functionnality/functionality/
+> 
+>> it is specifically made to replace the buffer of a todo list, which is
+>> not the desired behaviour.  Thus, the part of todo_list_transform() that
+>> actually creates the buffer is moved to a new function,
+>> todo_list_to_strbuf().  The rest is unused, and so is dropped.
+>>
+>> todo_list_write_to_file() can also take care to append the help text to
+> 
+> s/care to append/care of appending/
+> 
+>> the buffer before writing it to the disk, or to write only the first n
+>> items of the list.
+> 
+> Why/when do we only want to write a subset of the items?
 >
-> ### Test 1: `git log --topo-order -N`
->
-> This test focuses on the number of commits that are parsed during
-> a `git log --topo-order` before writing `N` commits to output.
->
-> You can reproduce this test using `topo-order-tests.sh` and
-> see all the data in `topo-order-summary.txt`. The values reported
-> here are a sampling of the data, ignoring tests where all values
-> were the same or extremely close in value.
->
-> android-base, N =3D 100
-> =C2=A0=C2=A0=C2=A0 V0: 5487
-> =C2=A0=C2=A0=C2=A0 V1: 8534
-> =C2=A0=C2=A0=C2=A0 V2: 6937
-> =C2=A0=C2=A0=C2=A0 V3: 6419
-> =C2=A0=C2=A0=C2=A0 V4: 6453
-[...]
 
-> ### Test 2: `git log --topo-order -10 A..B`
-[...]
-> android-base 53c1972bc8f 92f18ac3e39
-> =C2=A0 OLD: 39403
-> =C2=A0=C2=A0 V0:=C2=A0 1544
-> =C2=A0=C2=A0 V1:=C2=A0 6957
-> =C2=A0=C2=A0 V2:=C2=A0=C2=A0=C2=A0 26
-> =C2=A0=C2=A0 V3:=C2=A0 1015
-> =C2=A0=C2=A0 V4:=C2=A0 1098
+In skip_unnecessary_picks(), in patch [10/16].  It needs to write the
+elements of the todo list that were already done in the `done' file.
 
-Two minor issues.  First, now that the data is not in the table format,
-where every bit of horizontal space matters, why not spell the names of
-new proposed "generation numbers" (or rather reachability orderings) in
-full, instead of using V0...V4 shortcuts?  It is not as if we were short
-of space.
+> […]
+>> +int todo_list_write_to_file(struct todo_list *todo_list, const char
+>> *file,
+>> +                const char *shortrevisions, const char *shortonto,
+>> +                int command_count, int append_help, int num, unsigned
+>> flags)
+> 
+> This is a really long argument list which makes it easy for callers to
+> get the parameters in the wrong order. I think append_help could
+> probably be folded into the flags, I'm not sure what the command_count
+> is used for but I've only read the first few patches. Maybe it would be
+> better to pass a struct so we have named fields.
+> 
 
-Second, why OLD data is present in tests 2 and 3, but not in test 1?
+You’re right, command_count is not really needed since we pass the
+complete todo list.
 
-Best,
---=20
-Jakub Nar=C4=99bski
+The only bit that irks me is that, if I stop passing command_count, I
+would have to call count_commands() twice in complete_action(): once to
+check if there are any commands in the todo list, and again inside of
+todo_list_write_to_file() (see [09/16].)
+
+Perhaps I could move this check before calling todo_list_rearrange_squash()?
+
+As a sidenote, this is not why I added command_count to the parameters
+of todo_list_write_to_file().  It was a confusion of my part.
+
+> Best Wishes
+> 
+> Phillip
+> 
+
+Cheers,
+Alban
+
