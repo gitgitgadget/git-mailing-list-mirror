@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_BLACK,
+	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55F2D1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 12:00:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80B331F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 12:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728312AbeKAVDc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 17:03:32 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36122 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728199AbeKAVDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 17:03:32 -0400
-Received: by mail-wm1-f67.google.com with SMTP id a8-v6so1121477wmf.1
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 05:00:51 -0700 (PDT)
+        id S1728302AbeKAVFn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 17:05:43 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51692 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728085AbeKAVFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 17:05:43 -0400
+Received: by mail-wm1-f66.google.com with SMTP id w7-v6so1164127wmc.1
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 05:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gla8R/83fguG2iyJlz3txGL01tOW8s7yMXIdDFa7f+E=;
-        b=jhHVhzyHqVP0Hl83hTFU20bd5kEKGqLy7Etz+2gZOk1zXUOXqcMKUSDpzahB000+yP
-         9LBQQKyU/IQRD2s7Xl7OSkqTNnpSWr+IOTRVrI9/quWbUlJ3RogLgD4oioq1NtdrOZGK
-         q75mg+w57YhXz+v+a+5LHizHCJgY2JzEGjkoUW0C+o9w1xpgUKM6Ir+HGBUeexbmipoJ
-         D+jammTrA8hB2REBfrBKsBzI0u6Aj6WoNHEJKAMwqdKmbxiXLvHXluBnUEcDYu0gz5/X
-         ikQSWxBj/2DzallELZTaCptq6wxGvzmAb6lnSBMNVnWtqKMXpFMJ9kaA0pNW+oFWfbRG
-         GBtw==
+        bh=l/2Dlumwjj1Xe6rzOcO06HupXx209aDWI2zE44n3fDc=;
+        b=iO9AH207bZa9Fi2YneOagU2MnCscyEtdsCp0cF8u+iQrL7+ObUcf4w8mWqYlJKZiGq
+         X/EWQQ0ywK07il6u5LYNK935urPzq2mCfkZz8lRsm6INyfwUj8LK6gqaFWu4C24Qan17
+         XlS9Pzj7uCPXxpN9ZbKOEUeEt+XC8Ip3J5hRi8t/T3d88nU83Xt8BBIeuOpLun4YbsxU
+         26WNDFIyrE81aHcIVNdu+6d46JAUKvRYsctGO2fqKNXrWdI0t0MpY9e95x69mzsKtTCT
+         jYalxzEestRVVQhX6kEAaBcUSBIZexvSm8tQ2u6cUT9qqNzBi3Vkez/wc1q2xupjha3G
+         tojQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gla8R/83fguG2iyJlz3txGL01tOW8s7yMXIdDFa7f+E=;
-        b=m/6tDBBXp0HDKLRCCrlCYAVNuzU92pfEdlTER8sz42n8s7MUNuzcafK/R8UaIeHKiD
-         ltX4YA2Fu1KyEtOV9d9fMjRRuZwpDtpDcAObqSIWRgOxLS08EQTXSLLXwsELnt2yko25
-         8LOhr42ubTiUs0SeiwDaeX3ZXxOtu/DlmgET8GysTndGfTb2G2IEDlu4wvieCuH8iIrG
-         NbmhOF7feLEiN/83QY8PVT63sWw+EIU9/T+PML+BRLmqolSd7rzLWY3UpCo0B3ukjCAN
-         qEOjNgCfOxO20KFrRQhCldTrnnaaszANqZSwSlLrElZuZS2i/XvA3wLO1n9jsjpIQpHS
-         k5ug==
-X-Gm-Message-State: AGRZ1gLP5mklWfApCozxo+WNeL5JDdcVpfdepmiTwvgGEdSR6fOu8Ll2
-        fNLLY0NivV+9yL9XOG8Bg3x+HrVM
-X-Google-Smtp-Source: AJdET5e3zIGgSycp7L0+o+KjT/rPrE5YdOWIWrMli60m8nX7yXAyvD7I14jL6cC9zLqurMGCUfp2Tg==
-X-Received: by 2002:a1c:650b:: with SMTP id z11-v6mr5417850wmb.28.1541073651227;
-        Thu, 01 Nov 2018 05:00:51 -0700 (PDT)
+        bh=l/2Dlumwjj1Xe6rzOcO06HupXx209aDWI2zE44n3fDc=;
+        b=X0S/iSQoRn5xaCfdP987tdZzxcD3juzMLUfP7PbozOPxNuzW0/AT0HEbykqR+v4kKK
+         hdi2fuZNrodeCgpSO29NMk03xtljFNaaMU6/VBS6EI2dP/TF21Q1gwd86XnlefOBCFVr
+         8Sp6/kLgkEyhXqX6y/E3Qj+t8lhyGF4PHQcCbQgvMzjPn7wZ+PjBvuUXSAuY8icAxzpM
+         1V+01R73XuqDHJ/MsjkF7M/ypUDcTSMCP7cqBZPoS0bRFdvsnDThYAwa7buLa/cyotdZ
+         Lkn+/WF+UJC2SHWNROl3ZNwr7o1PMI8DYoIR0yotAv4fpBohoeCRUD64ARpuzfP+RVkD
+         XQ/Q==
+X-Gm-Message-State: AGRZ1gIBF0kYjwWWoim2RIeK3xB8GKJTrvH30UqSt4XU60wFT3j00dvu
+        JzgY4KbYRq7BOurt0UwjvPc=
+X-Google-Smtp-Source: AJdET5cp5wiSICwQTmFDweSXqNFfDboVasKzquDZVe7uJIPn9Gy9eM3rLklMnanflMw74qIsOxfshQ==
+X-Received: by 2002:a1c:950f:: with SMTP id x15-v6mr5227885wmd.3.1541073781697;
+        Thu, 01 Nov 2018 05:03:01 -0700 (PDT)
 Received: from localhost.localdomain ([31.223.156.57])
-        by smtp.gmail.com with ESMTPSA id z12-v6sm14368239wrn.43.2018.11.01.05.00.50
+        by smtp.gmail.com with ESMTPSA id o188-v6sm2666544wmg.9.2018.11.01.05.03.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Nov 2018 05:00:50 -0700 (PDT)
+        Thu, 01 Nov 2018 05:03:01 -0700 (PDT)
 From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
 X-Google-Original-From: Slavica Djukic <slawica92@hotmail.com>
 To:     slavicadj.ip2018@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
         slawica92@hotmail.com
-Subject: [PATCH 2/3] [Outreachy] ident: introduce set_fallback_ident() function
-Date:   Thu,  1 Nov 2018 13:00:29 +0100
-Message-Id: <20181101120029.13992-1-slawica92@hotmail.com>
+Subject: [PATCH 3/3] [Outreachy] stash: use set_fallback_ident() function
+Date:   Thu,  1 Nov 2018 13:02:39 +0100
+Message-Id: <20181101120239.15636-1-slawica92@hotmail.com>
 X-Mailer: git-send-email 2.19.1.windows.1
 In-Reply-To: <20181101115546.13516-1-slawica92@hotmail.com>
 References: <20181101115546.13516-1-slawica92@hotmail.com>
@@ -67,61 +67,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Usually, when creating a commit, ident is needed to record the author
-and commiter.
-But, when there is commit not intended to published, e.g. when stashing
-changes,  valid ident is not necessary.
-To allow creating commits in such scenario, let's introduce helper
-function "set_fallback_ident(), which will pre-load the ident.
+Call set_fallback_ident() in cmd_stash() and update test
+from the first commit to expect success.
 
-In following commit, set_fallback_ident() function will be called in stash.
+Executing stash without user.name and user.email configured
+can be useful when bots or similar users use stash, without anyone
+specifing valid ident. Use case would be automated testing.
+There are also users who  find this convinient.
+For example, in this thread:
+https://public-inbox.org/git/87o9debty4.fsf@evledraar.gmail.com/T/#ma4fb50903a54cbcdecd4ef05856bf8094bc3c323
+user points out that he would find it useful if stash had --author option.
 
 Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 ---
- cache.h |  1 +
- ident.c | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
+ builtin/stash.c  | 1 +
+ t/t3903-stash.sh | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 681307f716..6b5b559a05 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1470,6 +1470,7 @@ extern const char *git_sequence_editor(void);
- extern const char *git_pager(int stdout_is_tty);
- extern int is_terminal_dumb(void);
- extern int git_ident_config(const char *, const char *, void *);
-+void set_fallback_ident(const char *name, const char *email);
- extern void reset_ident_date(void);
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 965e938ebd..add30aae64 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1523,6 +1523,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 	trace_repo_setup(prefix);
+ 	setup_work_tree();
  
- struct ident_split {
-diff --git a/ident.c b/ident.c
-index 33bcf40644..410bd495e9 100644
---- a/ident.c
-+++ b/ident.c
-@@ -505,6 +505,23 @@ int git_ident_config(const char *var, const char *value, void *data)
- 	return 0;
- }
++	set_fallback_ident("git stash", "stash@git.commands");
+ 	git_config(git_default_config, NULL);
  
-+void set_fallback_ident(const char *name, const char *email)
-+{
-+	if (!git_default_name.len) {
-+		strbuf_addstr(&git_default_name, name);
-+		committer_ident_explicitly_given |= IDENT_NAME_GIVEN;
-+		author_ident_explicitly_given |= IDENT_NAME_GIVEN;
-+		ident_config_given |= IDENT_NAME_GIVEN;
-+	}
-+
-+	if (!git_default_email.len) {
-+		strbuf_addstr(&git_default_email, email);
-+		committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-+		author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-+		ident_config_given |= IDENT_MAIL_GIVEN;
-+	}
-+}
-+
- static int buf_cmp(const char *a_begin, const char *a_end,
- 		   const char *b_begin, const char *b_end)
- {
+ 	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index aaff36978e..06a2ffb398 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1156,7 +1156,7 @@ test_expect_success 'stash -- <subdir> works with binary files' '
+ 	test_path_is_file subdir/untracked
+ '
+ 
+-test_expect_failure 'stash works when user.name and user.email are not set' '
++test_expect_success 'stash works when user.name and user.email are not set' '
+ 	git reset &&
+ 	>1 &&
+ 	git add 1 &&
 -- 
 2.19.1.windows.1
 
