@@ -6,63 +6,63 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69E801F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 03:37:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 687CA1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 04:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbeKAMin (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 08:38:43 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53532 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726419AbeKAMin (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 08:38:43 -0400
-Received: by mail-wm1-f67.google.com with SMTP id v24-v6so192999wmh.3
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 20:37:36 -0700 (PDT)
+        id S1727561AbeKANTy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 09:19:54 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40774 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726419AbeKANTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 09:19:54 -0400
+Received: by mail-wr1-f68.google.com with SMTP id i17-v6so18672221wre.7
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 21:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=+ug7/5YoEZypMsTbBU3o/jfTYIWSA/ftXDGVYzTASVQ=;
-        b=WoXbRWehUgKOip1j65zk4C1cYcy82AV6igMwlbbi2mxIU2gaxJ1OX/YlIJpYH6WY/y
-         N0RJPE9JGpHfs6VhVpOt+FP7dfgYn5yfel7unzkupwyY47/HA93LszVw48gLDkr1R/jG
-         AXZ0J1Ali28oCiHHjUrsqPjB0sM6bowc9CyekVQDGjChYNdizyL2fuAgm6DqRhaDCyBK
-         uL4U5nGsr9k0sTR4XTMT0cLG5+4H6DhEd/9A3PUdbk3kiwOiF1JhECw0lZNzaJ5Ws404
-         iSu++9Y6MpTJVFQEtiljNmzxJpVBKDuOpZeWYrHqVTRw7EEhfz1uepaO3W6tVAaOcGgA
-         lkmg==
+        bh=xL6/wIZ6uQ95xIhin29YksZSZraihxDRLhtG2sadGbk=;
+        b=pUlDNmbqS+M/RaRZcOo4JNVdPS1afMCwKwhg8zFvjUTN0wReRsJFWVAYXW5yZn0+Vt
+         arTLLZ8TunahQH9Cw6A+pjmHfxHKivL7l9kC0m+X2w1coinWe+MjXkBaHiuagTwe0dk7
+         n39G6Khk5h+Up1E8Y7Sy/w6X8i1rt8grjndKLL6t1T62MNZCwqn5y7EdTGLrGK+3neyf
+         brVnQcQRcvfQ9yKuMh9I6OzOOU3DnGLlo56C8KsmR5Q8R8gyLn39X6GVWrDBVLKjuH1Y
+         a/epBfT890qxBcry6HatJqKtI9c5c0Nss9u3yRbExk5OdjR0KaiXh38SYx2G8YvPQZm0
+         HyDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=+ug7/5YoEZypMsTbBU3o/jfTYIWSA/ftXDGVYzTASVQ=;
-        b=WFVtIx0UaaJxFJaB6W1NfQf5P0hpUtf5tHJzsBK6ESxh6FLnbclSwIia6EY6dmLM8p
-         NgvJKtqBz2eu5OMoQmHoXz4wQ0HpppmmLxrJA+gsx6laU6C3mlPtKkSic2cF4SlEFalM
-         ELWozd4A4WVnV77HgmUKo1RzCXzBELnJn2kS0EaG0hJoAHw7qcow+JEbCc5KhyJOXrZq
-         Q/365O86+xX5RZGwLO6km1ZLeVqa+OvvhOSdZBv0VBiUolnW8oK8oje+plFKAf8+DUDr
-         FrEuL/hRi76bHgq3SsNuovqsfKtIF/txZoH3kpR3fBLtS7oC+i8r8bJYkDYUxOAHsL3y
-         RUaQ==
-X-Gm-Message-State: AGRZ1gIhsj6gT7ZG7iIgtLMcTTy8qYDrCJsFNlja1CMp6B/kCMAHMRCc
-        9S/ZfV9vrPHrCiX4tinJnSQ=
-X-Google-Smtp-Source: AJdET5cRa7SbeVh4BFBSI3unWveRUaURctGjifvO/qB7jkc8qkrArb37tWwGi9VIVzI2/BEhq+uJlA==
-X-Received: by 2002:a1c:2543:: with SMTP id l64-v6mr4379093wml.74.1541043455043;
-        Wed, 31 Oct 2018 20:37:35 -0700 (PDT)
+        bh=xL6/wIZ6uQ95xIhin29YksZSZraihxDRLhtG2sadGbk=;
+        b=HyNhFAgY4fJLiifI2G91Dgs9JpK5ZbLd2KFqejC8nqkaegJwPK2HPh16htIDM3Lf6Z
+         Dh5n5Q1ZRiMxHRL2yb0MHwoGDsVN0XrRl7qndKEdyZmuEMfrpkxI2uIiutzZVESthqgS
+         EMLYEKqLizf47l66zKIT6wOSiLQYXVMic3enA/ey8noxMTpr+p+mFQPIIbA79bd87hOd
+         IP72D9GvxjVFFgGUzgoPNIvYkk69CLyEMOoHzzaRYlSUwRPyTUiHxgkYyCl6flGAiZ7m
+         T1Q3B6gchG5tNBUBSldLSJBd0Ebvwod88Ub9IsRH0Izxoa5mcdDxaMmBq7UhkwAyO6NG
+         X4Bw==
+X-Gm-Message-State: AGRZ1gJCl/jnfFVvECGH17d0ZNeFbzkhrTOml9ZN6aRkrH0FcLD5/fE0
+        z9YnSjN8NdmFd3Ni2EmzGauNyGpp6CI=
+X-Google-Smtp-Source: AJdET5eS07tYmRJdfmTEbUzMDDp2Rl+rl4T+088mBLkSmlBpaoWeNgnndwGFAZ7VgFkmWZKRL3CKvA==
+X-Received: by 2002:adf:8281:: with SMTP id 1-v6mr5263793wrc.252.1541045918698;
+        Wed, 31 Oct 2018 21:18:38 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t143-v6sm18179333wmt.2.2018.10.31.20.37.32
+        by smtp.gmail.com with ESMTPSA id l140-v6sm40244203wmb.24.2018.10.31.21.18.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Oct 2018 20:37:33 -0700 (PDT)
+        Wed, 31 Oct 2018 21:18:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        John Szakmeister <john@szakmeister.net>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 2/3] tests: mark those tests where "git fsck" fails at the end
-References: <20181030232337.GC32038@sigill.intra.peff.net>
-        <20181031124208.29451-3-avarab@gmail.com>
-Date:   Thu, 01 Nov 2018 12:37:32 +0900
-In-Reply-To: <20181031124208.29451-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 31 Oct 2018 12:42:07 +0000")
-Message-ID: <xmqq36slv56r.fsf@gitster-ct.c.googlers.com>
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 7/8] push: add DWYM support for "git push refs/remotes/...:<dst>"
+References: <20181026192734.9609-1-avarab@gmail.com>
+        <20181026230741.23321-8-avarab@gmail.com>
+        <xmqqlg6h4964.fsf@gitster-ct.c.googlers.com>
+        <87in1lkw54.fsf@evledraar.gmail.com>
+Date:   Thu, 01 Nov 2018 13:18:35 +0900
+In-Reply-To: <87in1lkw54.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 29 Oct 2018 09:13:59 +0100")
+Message-ID: <xmqqy3adtopw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,19 +72,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Mark the tests where "git fsck" fails at the end with extra test code
-> to check the fsck output. There fsck.{err,out} has been created for
-> us.
+>> On the other hand, I do not think I mind all that much if a src that
+>> is a tag object to automatically go to refs/tags/ (having a tag
+>> object in refs/remotes/** is rare enough to matter in the first
+>> place).
 >
-> A later change will add the support for GIT_TEST_FSCK_TESTS. They're
-> being added first to ensure the test suite will never fail with
-> GIT_TEST_FSCK=true during bisect.
+> Yeah maybe this is going too far. I don't think so, but happy to me
+> challenged on that point :)
+>
+> I don't think so because the only reason I've ever needed this is
+> because I deleted some branch accidentally and am using a push from
+> "remotes/*" to bring it back. I.e. I'll always want branch-for-branch,
+> not to push that as a tag.
 
-I am sympathetic to what step 3/3 (eh, rather, an earlier "let's not
-leave the repository in corrupt state, as that would make it
-inconvenient for us to later append new tests") wants to do, but not
-this one---these markings at the end makes it inconvenient for us to
-later add new tests to these script before them.
+Oh, I didn't consider pushing it out as a tag, but now you bring it
+up, I think that it also would make sense in a workflow to tell your
+colleages to look at (sort of like how people use pastebin---"look
+here, this commit has the kind of change I have in mind in this
+discussion") some random commit and the commit happens to be sitting
+at a tip of a remote-trackig branch.  Instead of pushing it out as a
+branch or a remote-tracking branch, which has strong connotations of
+inviting others to build on top, pushing it out as a tag would make
+more sense in that context.
 
+And as I mentioned already, I think it would equally likely, if not
+more likely, for people like me to push remotes/** out as a
+remote-tracking branch (rather than a local branch) of the
+repository I'm pushing into.
+
+So I tend to agree that this is going too far.  If the original
+motivating example was not an ingredient of everyday workflow, but
+was an one-off "recovery", I'd rather see people forced to be more
+careful by requiring "push origin/frotz:refs/heads/frotz" rather
+than incorrectly DWIDNM "push origin/frotz:frotz" and ending up with
+creating refs/tags/frotz or refs/remotes/origin/frotz, which also
+are plausible choices depending on what the user is trying to
+recover from, which the sending end would not know (the side on
+which the accidental loss of a ref happened earlier is on the remote
+repository that would be receiving this push, and it _might_ know).
+
+As to the entirety of the series,
+
+ - I do not think this step 7, and its documentation in step 8, are
+   particularly a good idea, in their current shape.  Pushing tag
+   objects to refs/tags/ is probably a good idea, but pushing a
+   commit as local branch heads are necessarily not.
+
+ - Step 6 is probably a good documentation on the cases in which we
+   make and do not make guess on the unqualified push destination.
+
+ - Step 5 and earlier looked like good changes.
+
+If we were to salvage some parts of step 7 (and step 8), we'd
+probably need fb7c2268 ("SQUASH???", 2018-10-29) to number all the
+placeholders in the printf format string.
