@@ -2,119 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFA7E1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 10:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2A7B1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 11:02:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727959AbeKATbp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 15:31:45 -0400
-Received: from smtpoutz25.laposte.net ([194.117.213.100]:45595 "EHLO
-        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727453AbeKATbp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 15:31:45 -0400
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout013 (Postfix) with ESMTP id 444BD106B32
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:21 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
-        t=1541068161; bh=0Xe5YmgkjU9qtAPpovPz3W9zhDxrUIy1tcguD53ZHXs=;
-        h=Subject:From:To:Date;
-        b=H5eQavz5bOO5nMz13NqPq/13JQCuiEhi4p2AZZWpLxBAz6AhYj+yX4YhO/sN2Zl/H
-         fHRuVYCpjMxDhu3Nklzvkn+yXxwakbRkw7ntzkchM3OJGUIdudHeWqZYhBJoG3zYDh
-         ayW32+xRNWdiGnWjj1opwl4Ayo3isDd8Ex6JlLh7r8SqdZQuLGkhQFlOIVL4TfF2h3
-         iHwcmhfsHaKKCQNz08C9sEqI5RK7J5jOwPdhNRp9Fj2WBna4ywP4JsQF+MGD6dbg6n
-         5mj6vu2qZB22o/XelSH6VYrKuYidvzgSWFh9UmoKiVjvtPnJ1NGkqXveyJ23tgfg1k
-         0arLqKRYMn5mg==
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout013 (Postfix) with ESMTP id 39821106B2A
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:21 +0100 (CET)
-Received: from lpn-prd-vrin002 (lpn-prd-vrin002.laposte [10.128.63.3])
-        by lpn-prd-vrout013 (Postfix) with ESMTP id D0A95106B1B
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
-Received: from lpn-prd-vrin002 (localhost [127.0.0.1])
-        by lpn-prd-vrin002 (Postfix) with ESMTP id C0FC85E82E5
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
-Received: from arekh.ddns.net (unknown [82.64.49.105])
-        by lpn-prd-vrin002 (Postfix) with ESMTPA id AC3FA5E82AF
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
-Received: from cerebro.okg (box.okg [192.168.0.1])
-        by arekh.ddns.net (Postfix) with ESMTPSA id 8FB0B2200EF
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
-Message-ID: <b639c19a881476be2d4dbdd731cd305384b287a9.camel@laposte.net>
-Subject: [RFE] Please add a standard ref object to releases
-From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
-To:     git@vger.kernel.org
-Date:   Thu, 01 Nov 2018 11:29:20 +0100
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-VR-FullState: 0
-X-VR-Score: 0
-X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieehgdduhecutefuodetggdotefrodftvfcurfhrohhf
-X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkffuhffvffgt
-X-VR-Cause-3: fggggfesthejredttderjeenucfhrhhomheppfhitgholhgrshcuofgrihhlhhhothcuoehnihgtohhl
-X-VR-Cause-4: rghsrdhmrghilhhhohhtsehlrghpohhsthgvrdhnvghtqeenucfkphepkedvrdeigedrgeelrddutdeh
-X-VR-Cause-5: necurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhinhgvthepkedvrdeigedrgeelrddutdehpdhh
-X-VR-Cause-6: vghloheprghrvghkhhdruggunhhsrdhnvghtpdhmrghilhhfrhhomhepnhhitgholhgrshdrmhgrihhl
-X-VR-Cause-7: hhhotheslhgrphhoshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-X-VR-Cause-8: rhhgnecuvehluhhsthgvrhfuihiivgeptd
-X-VR-AvState: No
-X-VR-State: 0
-X-VR-State: 0
+        id S1727822AbeKAUEd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 16:04:33 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:40178 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726520AbeKAUEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 16:04:33 -0400
+Received: by mail-wm1-f47.google.com with SMTP id b203-v6so979137wme.5
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 04:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=ry6uvvdUybdWv/goC8ZLgHxO+u4WUydrzh3QiV3jnGo=;
+        b=H1EEOyPrzMNa+KTm2F0bx+1qNVKzJRnaGzHlfYp12NGilrvB3n3gCd0SJWi/4Keww/
+         I75MZ2D37hnOr5Fxdj9liIeLjUZGfk1DYWzqMf+QLuBQ8bLqe9nAU3q8lDeaMOupsyor
+         dnPddhCF+uws3Wq9Pl97SQYXoeEU1Adyc/qr7Ozd1/DwJauABPVeuu5JN/68mcZFhkoD
+         FpH992yHX/kCcwARk5coMw3KM8a3AJEUFFcFYTHhxf5PXeSXqCPImswBlJTVp09cjvKt
+         3WDDq666KRYXXjd2WAK+l5x8OZZES4TPt0y+22LRgdF33I9rl2aoDYsAJ/qNYJOMPJLt
+         fQ6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=ry6uvvdUybdWv/goC8ZLgHxO+u4WUydrzh3QiV3jnGo=;
+        b=mHzVXI+8PDLP+wVfXIfWUjHES5xV0qq7monZMZE65Q+5lZVgFt9xLY2TR3sKbsh1MC
+         xIGZj0vXnqcQZA142ssag04gqUleZ+FF9OWp/p0dsWAdAi3s0gpFD0bktv1LtUpo8vi6
+         7tBeyCgdLAlTJ6aVeblR4UVpGvzgeELpcxkGarD3ktuQ+ydkJf9RSXF85F6Xu6hT0eRu
+         5sV1fGVoNxZjrOaczpFX5UDnaRGthX9Id0QDJ7RIbGOFYj/mUmmY1XkKqsI8esN9LTnL
+         q97Mil3edTvmC5E5DmXy/UBKIgr93aaemvawnu41EmB3a1osV5WO5qTFqG4hq+pBBrEq
+         K4ag==
+X-Gm-Message-State: AGRZ1gIXZndRj+ca+a/XNr6OXLHaWhnHPxcxdEFPB/HbgpiHK8pqamzi
+        psTbbemSdayKJjIjrzk+fvc=
+X-Google-Smtp-Source: AJdET5eN66B0lrl2DkSzi4y29hJevxcyj/h69d7jUHH59sLDsCuYCuXN6Nr+10/hckslTUAXT2wTug==
+X-Received: by 2002:a1c:104:: with SMTP id 4-v6mr5024561wmb.69.1541070123469;
+        Thu, 01 Nov 2018 04:02:03 -0700 (PDT)
+Received: from evledraar ([2001:981:2f6f:1:6765:91b4:348a:a673])
+        by smtp.gmail.com with ESMTPSA id m141-v6sm3593843wmd.14.2018.11.01.04.02.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Nov 2018 04:02:02 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: ab/* topics (was: Re: What's cooking in git.git (Nov 2018, #01; Thu, 1))
+References: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqd0rpt8wy.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 01 Nov 2018 12:02:01 +0100
+Message-ID: <8736slkqmu.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-git makes no provision for versioned release references.
+On Thu, Nov 01 2018, Junio C Hamano wrote:
 
-However, software projects need versioned releases. Software project
-integrators need versionned releases. Security auditors need versioned
-release. Software project users need versioned releases.
+> * ab/push-dwim-dst (2018-10-29) 9 commits
+>  - SQUASH???
+>  - push doc: document the DWYM behavior pushing to unqualified <dst>
+>  - push: add DWYM support for "git push refs/remotes/...:<dst>"
+>  - push: test that <src> doesn't DWYM if <dst> is unqualified
+>  - push: add an advice on unqualified <dst> push
+>  - push: move unqualified refname error into a function
+>  - push: improve the error shown on unqualified <dst> push
+>  - i18n: remote.c: mark error(...) messages for translation
+>  - remote.c: add braces in anticipation of a follow-up change
+>
+>  "git push $there $src:$dst" rejects when $dst is not a fully
+>  qualified refname and not clear what the end user meant.  The
+>  codepath has been taught to give a clearer error message, and also
+>  guess where the push should go by taking the type of the pushed
+>  object into account (e.g. a tag object would want to go under
+>  refs/tags/).
+>
+>  The last few steps are questionable.
+>  cf. <87in1lkw54.fsf@evledraar.gmail.com>
 
-Versioned releases are not the same thing as free-form tags. They have
-semantics to allow deducing upgrade paths (usually, a form of semver).
-They imply some form of API stability promise. They imply release
-documentation completion. They're not just a random point in the project
-history like tags are.
+Will send an update to this soon.
 
-This is why most git hosting sites provide a way to select versioned
-releases, even if it's not a native git concept. And this way is clearly
-separate and distinct from git tag selection.
+> * ab/pack-tests-cleanup (2018-10-31) 3 commits
+>  - index-pack tests: don't leave test repo dirty at end
+>  - pack-objects tests: don't leave test .git corrupt at end
+>  - pack-objects test: modernize style
+>
+>  A couple of tests used to leave the repository in a state that is
+>  deliberately corrupt, which have been corrected.
+>
+>  Will merge to 'next'.
 
-Unfortunately, since git makes no provision for versioned release
-references, git hosting sites have to shove release refs into tag refs.
-And it's a huge mess.
+Thanks!
 
-Some put release ids in tags as-is, others add a v prefix, others a
-version_ prefix, it's all hoster-specific, it's all inconsistent. It
-ends up being inconsistent within projects, as they migrate from a
-hoster to another, are mirrored from one hoster to another. It depends
-on the habits of the person cutting a release, and the release manager
-of a project can change over time. It ends up being inconsistent in
-release archives, as the version munging can percolate in the archive
-name and structure, or not, for mysterious heuristic reasons that change
-over time.
+> * ab/reject-alias-loop (2018-10-19) 1 commit
+>   (merged to 'next' on 2018-10-26 at bc213f1bef)
+>  + alias: detect loops in mixed execution mode
+>
+>  Two (or more) aliases that mutually refer to each other can form an
+>  infinite loop; we now attempt to notice and stop.
+>
+>  Discarded.
+>  Reverted out of 'next'.
+>  cf. <87sh0slvxm.fsf@evledraar.gmail.com>
 
-As a result, when assembling a project that uses other git repositories,
-you spend more time checking repository by repository and version by
-version how the version ref was mangled in a tag ref for this specific
-(repo,version,date) tuple, than doing actual software dev and QA work.
+*nod* will try to find time to work on this soon, but treating it as
+non-urgent.
 
-Please add a specific release reference to git, so software projects
-that do versioned releases can use this ref object directly, without
-needing to invent custom version rewriting rules to shove them in tags
-while marking they are not just tags but release references.
-
-Regards,
-
-
--- 
-Nicolas Mailhot
-
+Could you please pick up
+https://public-inbox.org/git/20181024114725.3927-1-avarab@gmail.com/ ?
+It seems to have fallen between the cracks and addressed the feedback on
+v1, and looks good to me (and nobody's objected so far...).
