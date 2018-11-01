@@ -2,110 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_SBL,
-	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C5101F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 11:32:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4993C1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 11:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728293AbeKAUew (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 16:34:52 -0400
-Received: from smtpoutz22.laposte.net ([194.117.213.97]:35461 "EHLO
-        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727507AbeKAUev (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 16:34:51 -0400
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout010 (Postfix) with ESMTP id BC3B84AF311
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 12:32:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
-        t=1541071936; bh=0FuXG9mqkfX5JBfbKhYYTLj4MfzwaQe88nEKv0FtiN8=;
-        h=Subject:From:To:Date:In-Reply-To:References;
-        b=hSgVURzbD0bYNR7PwfEYA5CVNonsCXPC/+086EgkS3H8h1hqBPB1AVB/PzeFCc6Dy
-         DLE10MU2Q0VSbA9X3otoKE7GSJFAnqVYGQzTQc6/KnsDVb6HM1twfEgkV2xVW0maKc
-         ibmiwR7gsn/Vhx4tFW3m4FqZe1s/OTLsRNPAZrYHxY2IZvSfSaH6xgKr3Ely8PzgiU
-         fvt8fIEWsmZ2ZyJPozgRzDYCYMeYtKNmHCCdP3orsJMkPCUnkMMviwBHZ6VrpYVjlE
-         SV898+Sx4IOyi4boxiCjZA14TtY3zCyCrjmffRz83eg5ndAgxR6Ew1M1VlnIyXntfN
-         6n5k8ayKRKyEA==
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout010 (Postfix) with ESMTP id AD9474AF749
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 12:32:16 +0100 (CET)
-Received: from lpn-prd-vrin004 (lpn-prd-vrin004.laposte [10.128.63.5])
-        by lpn-prd-vrout010 (Postfix) with ESMTP id AC8F64AF311
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 12:32:16 +0100 (CET)
-Received: from lpn-prd-vrin004 (localhost [127.0.0.1])
-        by lpn-prd-vrin004 (Postfix) with ESMTP id 9B9997289C6
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 12:32:16 +0100 (CET)
-Received: from arekh.ddns.net (unknown [82.64.49.105])
-        by lpn-prd-vrin004 (Postfix) with ESMTPA id 878677289C5
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 12:32:16 +0100 (CET)
-Received: from cerebro.okg (box.okg [192.168.0.1])
-        by arekh.ddns.net (Postfix) with ESMTPSA id 69ABD220057
-        for <git@vger.kernel.org>; Thu,  1 Nov 2018 12:32:16 +0100 (CET)
-Message-ID: <b2895479becfa9213935804aceaf4881c49073e8.camel@laposte.net>
-Subject: Re: [RFE] Please add name and email to git credentials
-From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
-To:     git@vger.kernel.org
-Date:   Thu, 01 Nov 2018 12:32:16 +0100
-In-Reply-To: <6d8ef01ad9eb08d90cb9848eeaeabe6784b7b3e3.camel@laposte.net>
-References: <6d8ef01ad9eb08d90cb9848eeaeabe6784b7b3e3.camel@laposte.net>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
-Mime-Version: 1.0
+        id S1728432AbeKAUuE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 16:50:04 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33862 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728085AbeKAUuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 16:50:04 -0400
+Received: by mail-wm1-f65.google.com with SMTP id f1-v6so1619878wmg.1
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 04:47:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vCtvSUr/KB0UkIv/OisfoaHXWG3lSGzEzYwdJ5HW5ww=;
+        b=SwijXFEGhEwwIbND71g5ke81nagat2bKRE+sleZzJ8C2NJSe30OjqpbSCPfrOwYIC6
+         dPdduPf+Ms9716/W5hu0fIBX0IHAvH3ewkIos1y9G7UHUUTXzrS6UwVffcyCY6A/urNs
+         mxCjs7oHO7ziNBKoXWW756oVUDOkTFTHHlo5YSEMFfV/N19yaPctGtvDM/rbPVuS/Co8
+         45Nek95aUjYXKz1mUUxyqLSvkTDRThV5Hml+OVt9dCy1pjixnOQqZwYloylK0RNU+LEY
+         q6ZGRsVlgPDr53GO1C1tepfGLrAe6S805DBt4iOmed0Mh1/hvW2x617p5ePrIsoNSq1O
+         HyPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vCtvSUr/KB0UkIv/OisfoaHXWG3lSGzEzYwdJ5HW5ww=;
+        b=kZHv5Nv6n+5/q/XhaP2Cpe7tzbMXianq4b6Q28pSJrjqUbykyvEidQgcyYJleY2qEc
+         ldv7/pvONqjNvJKl0rVEjI8Jhup81GLI7Rt2zMyOzq6yzlNTttT3L4VIzlL7krTRWrXv
+         FC2QhCR8Cy9e1n5YQsfOfxDOyxkN0nJOAlBjcm2q30DfBTXgCcU7p4TK446cG4VLYzeE
+         R5AshME397vKeRwqr6FXoxGcS5urdXBZBb6cE8tkBxWt7Ixah+ZW8XmA/MqHL3vcUCXD
+         PjPFAlkDlh8eBmyEWuWTXiXFCrP8Rf64edrXz4+MGAJtgEGBKQwFNSQWH5x29lk+7kHS
+         nrmQ==
+X-Gm-Message-State: AGRZ1gJ+/lgxd+LFN3IpDym0UYzLhA3LJqRHneiFVFz7k/b+ebBoxD07
+        plSpQOLWjxjoost1tFcQ5g0N52VcosI=
+X-Google-Smtp-Source: AJdET5eJ6i/zTWJqNToodON4GDwAgbs3FYjxsbH4NTxUiuUhfF2E3bV+PPQ/H/UAPXIMl4aKYWr9YA==
+X-Received: by 2002:a1c:8cd2:: with SMTP id o201-v6mr5025985wmd.65.1541072845231;
+        Thu, 01 Nov 2018 04:47:25 -0700 (PDT)
+Received: from localhost.localdomain (x4db12d59.dyn.telefonica.de. [77.177.45.89])
+        by smtp.gmail.com with ESMTPSA id y21-v6sm9964872wma.36.2018.11.01.04.47.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 01 Nov 2018 04:47:24 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Sebastian Staudt <koraktor@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] travis-ci: install packages in 'ci/install-dependencies.sh'
+Date:   Thu,  1 Nov 2018 12:47:14 +0100
+Message-Id: <20181101114714.14710-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.1.838.g101e68a972
+In-Reply-To: <20181026013949.GN30222@szeder.dev>
+References: <20181026013949.GN30222@szeder.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-VR-FullState: 0
-X-VR-Score: 0
-X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieehgdeftdcutefuodetggdotefrodftvfcurfhrohhf
-X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkffuhffvffgj
-X-VR-Cause-3: fhgtfggggfesthekredttderjeenucfhrhhomheppfhitgholhgrshcuofgrihhlhhhothcuoehnihgt
-X-VR-Cause-4: ohhlrghsrdhmrghilhhhohhtsehlrghpohhsthgvrdhnvghtqeenucffohhmrghinheptghorhhprdgt
-X-VR-Cause-5: ohhmpdhfvgguohhrrghprhhojhgvtghtrdhorhhgnecukfhppeekvddrieegrdegledruddtheenucfr
-X-VR-Cause-6: rghrrghmpehmohguvgepshhmthhpohhuthdpihhnvghtpeekvddrieegrdegledruddthedphhgvlhho
-X-VR-Cause-7: pegrrhgvkhhhrdguughnshdrnhgvthdpmhgrihhlfhhrohhmpehnihgtohhlrghsrdhmrghilhhhohht
-X-VR-Cause-8: sehlrghpohhsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghen
-X-VR-Cause-9: ucevlhhushhtvghrufhiiigvpedt
-X-VR-AvState: No
-X-VR-State: 0
-X-VR-State: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le jeudi 01 novembre 2018 à 10:59 +0100, Nicolas Mailhot a écrit :
-> Hi,
-> 
-> A dev persona is not just a username, please add email (and probably
-> also name) support to git credentials so the correct set for a repo
-> url
-> is automatically picked up by git
+Ever since we started using Travis CI, we specified the list of
+packages to install in '.travis.yml' via the APT addon.  While running
+our builds on Travis CI's container-based infrastructure we didn't
+have another choice, because that environment didn't support 'sudo',
+and thus we didn't have permission to install packages ourselves.  With
+the switch to the VM-based infrastructure in the previous patch we do
+get a working 'sudo', so we can install packages by running 'sudo
+apt-get -y install ...' as well.
 
-So, just in case it was not clear enough, allow things in .gitconfig
-like
+Let's make use of this and install necessary packages in
+'ci/install-dependencies.sh', so all the dependencies (i.e. both
+packages and "non-packages" (P4 and Git-LFS)) are handled in the same
+file.  Install gcc-8 only in the 'linux-gcc' build job; so far it has
+been unnecessarily installed in the 'linux-clang' build job as well.
+Print the versions of P4 and Git-LFS conditionally, i.e. only when
+they have been installed; with this change even the static analysis
+and documentation build jobs start using 'ci/install-dependencies.sh'
+to install packages, and neither of these two build jobs depend on and
+thus install those.
 
-[credential "https://pkgs.fedoraproject.org/"]
-username = doe4ever
-name = John Doe
-email = foo4ever@fedoraproject.org
-[credential "https://gitlab.corp.com/"]
-username = jdoe56874
-name = John Doe, Snr Engineer
-email = john.doe@corp.com
+This change will presumably be beneficial for the upcoming Azure
+Pipelines integration [1]: preliminary versions of that patch series
+run a couple of 'apt-get' commands to install the necessary packages
+before running 'ci/install-dependencies.sh', but with this patch it
+will be sufficient to run only 'ci/install-dependencies.sh'.
 
-Instead of just
+[1] https://public-inbox.org/git/1a22efe849d6da79f2c639c62a1483361a130238.1539598316.git.gitgitgadget@gmail.com/
 
-[user]
-name = John Doe
-email =  john.doe@corp.com
-[credential "https://pkgs.fedoraproject.org/"]
-username = doe4ever
-email = foo@fedoraproject.org
-[credential "https://gitlab.corp.com/"]
-username = jdoe56874
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
 
-and drat, I've commited to XXX with the wrong name/email again
+This patch should go on top of 'ss/travis-ci-force-vm-mode'.
 
+I'm not sure about the last paragraph, because:
+
+  - It talks about presumed benefits for a currently still
+    work-in-progress patch series of an other contributor, and I'm not
+    really sure that that's a good thing.  Perhaps I should have
+    rather put it below the '---'.
+
+  - I'm confused about the name of this Azure thing.  The cover letter
+    mentions "Azure Pipelines", the file is called
+    'azure-pipelines.yml', but the relevant patch I link to talks
+    about "Azure DevOps" in the commit message.
+
+Anyway, keep that last paragraph or drop it as you see fit.
+
+
+ .travis.yml                | 21 ---------------------
+ ci/install-dependencies.sh | 35 +++++++++++++++++++++++++++++------
+ 2 files changed, 29 insertions(+), 27 deletions(-)
+
+diff --git a/.travis.yml b/.travis.yml
+index 8d2499739e..a5a82d6832 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -12,16 +12,6 @@ compiler:
+   - clang
+   - gcc
+ 
+-addons:
+-  apt:
+-    sources:
+-    - ubuntu-toolchain-r-test
+-    packages:
+-    - language-pack-is
+-    - git-svn
+-    - apache2
+-    - gcc-8
+-
+ matrix:
+   include:
+     - env: jobname=GETTEXT_POISON
+@@ -50,22 +40,11 @@ matrix:
+     - env: jobname=StaticAnalysis
+       os: linux
+       compiler:
+-      addons:
+-        apt:
+-          packages:
+-          - coccinelle
+-      before_install:
+       script: ci/run-static-analysis.sh
+       after_failure:
+     - env: jobname=Documentation
+       os: linux
+       compiler:
+-      addons:
+-        apt:
+-          packages:
+-          - asciidoc
+-          - xmlto
+-      before_install:
+       script: ci/test-documentation.sh
+       after_failure:
+ 
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 75a9fd2475..06c3546e1e 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -10,6 +10,15 @@ LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VE
+ 
+ case "$jobname" in
+ linux-clang|linux-gcc)
++	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
++	sudo apt-get -q update
++	sudo apt-get -q -y install language-pack-is git-svn apache2
++	case "$jobname" in
++	linux-gcc)
++		sudo apt-get -q -y install gcc-8
++		;;
++	esac
++
+ 	mkdir --parents "$P4_PATH"
+ 	pushd "$P4_PATH"
+ 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+@@ -32,11 +41,25 @@ osx-clang|osx-gcc)
+ 	brew link --force gettext
+ 	brew install caskroom/cask/perforce
+ 	;;
++StaticAnalysis)
++	sudo apt-get -q update
++	sudo apt-get -q -y install coccinelle
++	;;
++Documentation)
++	sudo apt-get -q update
++	sudo apt-get -q -y install asciidoc xmlto
++	;;
+ esac
+ 
+-echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
+-p4d -V | grep Rev.
+-echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
+-p4 -V | grep Rev.
+-echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
+-git-lfs version
++if type p4d >/dev/null && type p4 >/dev/null
++then
++	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
++	p4d -V | grep Rev.
++	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
++	p4 -V | grep Rev.
++fi
++if type git-lfs >/dev/null
++then
++	echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
++	git-lfs version
++fi
 -- 
-Nicolas Mailhot
+2.19.1.838.g101e68a972
 
