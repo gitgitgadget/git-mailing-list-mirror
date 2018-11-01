@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 957021F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 23:31:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 718001F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 23:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbeKBIgu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 04:36:50 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43740 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727749AbeKBIgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 04:36:50 -0400
-Received: by mail-wr1-f68.google.com with SMTP id t10-v6so145009wrn.10
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:31:45 -0700 (PDT)
+        id S1728236AbeKBIg5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 04:36:57 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41082 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728100AbeKBIg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 04:36:57 -0400
+Received: by mail-wr1-f65.google.com with SMTP id x12-v6so154484wrw.8
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=pcthve+9ZrDy1SnfvsXRGrdqlXBznqhGUZy3+LNXmeo=;
-        b=Z0k8iELzTPMwfyM9V01DnXWQj+uMxq+MBd7cWKmao7wVzTWVOUuR0FdkHb4upSaY/M
-         fKjGI1E5qVXZy7SVXeg182m/b5KziaDzQe+7/1TiI1fY+FqwMLioMZzRHEakrd4fozN6
-         EK/ow4h+63OzH8ZMctxyK+MUQW9u9KXvaNLYvZcEFyFbGGgOb71UsnwSoQtuhhIY0FDN
-         6P/ZVHONmriN8fal3uvUr309D+lInd7q3pAJ5NV6umqYGo/k0eomb/cwhWVJFascIxcy
-         gbY7vdJlsKTJLQhy+HvpfidF+VjpLWY5bCRCZms6L39RZtx+sSao/+l6/NdB0ZPO9C9k
-         VU4Q==
+        bh=g8uzFduzvViaHPUA6jdsRpLBLlGqQdSbE4uL1nsXMEI=;
+        b=RHn274A5AOgQRnbczLssxmzMqu3N8+4g2KgB4QMpqyMqTY2KEEPjVl7/xW5BXFp3fl
+         HTk3Q+kuiGzR7qrkKIdKwgXzo02+e081f33ACiGXhjfgoKvov2GXCuZzITeNWlGqX9j1
+         Gl0Nk8OtUoX32QAy2GySdSnP/3U31g/9QeIAzqfMrny/lKiv7nuOv00Ow4sAN6im0F5m
+         BBvTHIgDJOJzPHB6juWBQP/uH2ZT4aPi6j3D8Di+aoInz6MzEwWDbdqcPqSYEeTIhcvh
+         SFddNDXnvpKZeJxRKWujaJjUc41i0HTMmlv7dzt2ATrMfjoOmRrvlbhdIaDzdHGPehpT
+         ZTug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=pcthve+9ZrDy1SnfvsXRGrdqlXBznqhGUZy3+LNXmeo=;
-        b=au9rUDLd6LNQffFnonFVvDwByshGruilGURi3sOdmOVvRQ8CYpauYDou4Mtfr5aFVe
-         S78E6BMhqjCXz4I+wB+H9QPfrWxFYy3nhe3DVpAOIdSb3ZSELYH3wbIThgbvqfxYqEFh
-         MxKyYBEfV/C2GNAG2KSLWTC7LKZ3szqd3veamtQxpk4QV1BvZU6EMS48efAh2dX4m/EW
-         iPCMKm8QkQ+WNCQwtkqv4omc3Cv2dLX+vwar3z9cX1rUd4n7uo6JuqMxZpZjKYV+Umlq
-         51UKLlS5/FrE5rU1xE+JudRJrfTGD+pSlCTH4rkx88837vbLvYCv+0ou+XfLhyZOKT/w
-         6S2w==
-X-Gm-Message-State: AGRZ1gIx1Lk9JWktxXmQd5c/cKnLc6kDygDvi7LSqsd6ttxFQxCpO3ny
-        cNDSFmR82I/MLq4k03XoQ3I=
-X-Google-Smtp-Source: AJdET5fCJ1YPRxty0yPoAfYFVZ6FcdJgd2vjWH6qwOCaTnqbkhfbmDdVyh0GQt8n/pA0yGbY4hE9Wg==
-X-Received: by 2002:a5d:6943:: with SMTP id r3-v6mr8033929wrw.323.1541115104366;
-        Thu, 01 Nov 2018 16:31:44 -0700 (PDT)
+        bh=g8uzFduzvViaHPUA6jdsRpLBLlGqQdSbE4uL1nsXMEI=;
+        b=F6TVmKEpj00i9EM48jb+xovOvakVjVlKBD6HkOArLR27hwWdOQcVvLH0LO0KKiJ9rB
+         /zpyQrM2I30A0JJqV8POTaJ/SqPnTZXbQIUba3Oq1MdBC/4fOmN+3rN41XayhSOqOfv7
+         lkNYKnZSPPAt5fh+lQ0ZwHDprReOl7T8Hr9erhAqWpJXsF9guruigZ1a+OJRLogcXtJn
+         p50o9luG8e8Wsddma0/qwTmgCv4blL03MfihbiCdNPGmw+RKSWYsJFFF3lN4K3iy9TEQ
+         gyR2HoLVz+QsUjBo7tVNQ4//gKBFHVAtBNJUveHtKrftSAlH3Mp8QAqdDumr/qJdDIaq
+         6jCw==
+X-Gm-Message-State: AGRZ1gLDbh3lIaB91dTzdscvwR/QY1gtcm+dTyrQCrP1WjOtCaIew92S
+        yxJCC1IOcQ/33DBiEHwaND0=
+X-Google-Smtp-Source: AJdET5epDlvpLWQtSltC/rbg6PK13OiKGZCAgxQpscbBvWWDb6ajI2ljmg0Wto8NEcPwZkDnUYSG6g==
+X-Received: by 2002:adf:e888:: with SMTP id d8-v6mr8045472wrm.104.1541115110718;
+        Thu, 01 Nov 2018 16:31:50 -0700 (PDT)
 Received: from [192.168.0.104] (atoulouse-658-1-25-2.w86-222.abo.wanadoo.fr. [86.222.24.2])
-        by smtp.gmail.com with ESMTPSA id k4sm1215732wrx.91.2018.11.01.16.31.43
+        by smtp.gmail.com with ESMTPSA id l9-v6sm14048363wrf.4.2018.11.01.16.31.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Nov 2018 16:31:43 -0700 (PDT)
-Subject: Re: [PATCH v2 04/16] sequencer: introduce todo_list_write_to_file()
+        Thu, 01 Nov 2018 16:31:50 -0700 (PDT)
+Subject: Re: [PATCH v2 06/16] sequencer: refactor
+ sequencer_add_exec_commands() to work on a todo_list
 To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
 References: <20181007195418.25752-1-alban.gruin@gmail.com>
  <20181027212930.9303-1-alban.gruin@gmail.com>
- <20181027212930.9303-5-alban.gruin@gmail.com>
- <03475c29-5317-b105-6102-5cae3a5ae926@talktalk.net>
+ <20181027212930.9303-7-alban.gruin@gmail.com>
+ <12e849d3-351b-7673-1f14-742d0fbb1ac1@talktalk.net>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
@@ -100,12 +101,12 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  Up74CgX7geoMmEYmsYH+P0DR/+yBqgiWgpPtLAdD9ALwVgvdQs/zZCvBLrXMLd5kEIbtFoTG
  +n3xU7zare4Jcz45Tt4/ECsGGIt6rul+J9HBjuCG8STEbmTtlauZmZ4uGf2uxpj0H3cPzwgE
  9NQcuwgB9Z4DVNTZYA6LMAi57ITqC84t2RfaYbOk+7iSI1kLBtZzdwU=
-Message-ID: <8b235228-fa53-cf5d-6ece-b28d030e1751@gmail.com>
-Date:   Fri, 2 Nov 2018 00:31:34 +0100
+Message-ID: <c57384de-0996-2294-db8f-0204f9c16226@gmail.com>
+Date:   Fri, 2 Nov 2018 00:31:49 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <03475c29-5317-b105-6102-5cae3a5ae926@talktalk.net>
+In-Reply-To: <12e849d3-351b-7673-1f14-742d0fbb1ac1@talktalk.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -114,76 +115,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-Le 30/10/2018 à 17:28, Phillip Wood a écrit :
-> Hi Alban
-> 
-> I like the direction this is going, it is an improvement on re-scanning
-> the list at the end of each function.
-> 
+Le 30/10/2018 à 17:47, Phillip Wood a écrit :
 > On 27/10/2018 22:29, Alban Gruin wrote:
->> This introduce a new function to recreate the text of a todo list from
->> its commands, and then to write it to the disk.  This will be useful in
->> the future, the buffer of a todo list won’t be treated as a strict
->> mirror of the todo file by some of its functions once they will be
->> refactored.
-> 
-> I'd suggest rewording this slightly, maybe something like
-> 
-> This introduces a new function to recreate the text of a todo list from
-> its commands and write it to a file. This will be useful as the next few
-> commits will change the use of the buffer in struct todo_list so it will
-> no-longer be a mirror of the file on disk.
-> 
->> This functionnality can already be found in todo_list_transform(), but
-> 
-> s/functionnality/functionality/
-> 
->> it is specifically made to replace the buffer of a todo list, which is
->> not the desired behaviour.  Thus, the part of todo_list_transform() that
->> actually creates the buffer is moved to a new function,
->> todo_list_to_strbuf().  The rest is unused, and so is dropped.
+>> This refactors sequencer_add_exec_commands() to work on a todo_list to
+>> avoid redundant reads and writes to the disk.
 >>
->> todo_list_write_to_file() can also take care to append the help text to
+>> An obvious way to do this would be to insert the `exec' command between
+>> the other commands, and reparse it once this is done.  This is not what
+>> is done here.  Instead, the command is appended to the buffer once, and
+>> a new list of items is created.  Items from the old list are copied to
+>> it, and new `exec' items are appended when necessary.  This eliminates
+>> the need to reparse the todo list, but this also means its buffer cannot
+>> be directly written to the disk, hence todo_list_write_to_disk().
 > 
-> s/care to append/care of appending/
+> I'd reword this slightly, maybe
 > 
->> the buffer before writing it to the disk, or to write only the first n
->> items of the list.
+> Instead of just inserting the `exec' command between the other commands,
+> and re-parsing the buffer at the end the exec command is appended to the
+> buffer once, and a new list of items is created.  Items from the old
+> list are copied across and new `exec' items are appended when necessary.
+>  This eliminates the need to reparse the buffer, but this also means we
+> have to use todo_list_write_to_disk() to write the file.
 > 
-> Why/when do we only want to write a subset of the items?
->
-
-In skip_unnecessary_picks(), in patch [10/16].  It needs to write the
-elements of the todo list that were already done in the `done' file.
-
-> […]
->> +int todo_list_write_to_file(struct todo_list *todo_list, const char
->> *file,
->> +                const char *shortrevisions, const char *shortonto,
->> +                int command_count, int append_help, int num, unsigned
->> flags)
+>> sequencer_add_exec_commands() still reads the todo list from the disk,
+>> as it is needed by rebase -p.  todo_list_add_exec_commands() works on a
+>> todo_list structure, and reparses it at the end.
 > 
-> This is a really long argument list which makes it easy for callers to
-> get the parameters in the wrong order. I think append_help could
-> probably be folded into the flags, I'm not sure what the command_count
-> is used for but I've only read the first few patches. Maybe it would be
-> better to pass a struct so we have named fields.
+> I think the saying 'reparses' is confusing as that is what we're trying
+> to avoid.
+> 
+>> complete_action() still uses sequencer_add_exec_commands() for now.
+>> This will be changed in a future commit.
+>>
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>> ---
+>>   sequencer.c | 69 +++++++++++++++++++++++++++++++++++++----------------
+>>   1 file changed, 49 insertions(+), 20 deletions(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index e12860c047..12a3efeca8 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -4216,6 +4216,50 @@ int sequencer_make_script(FILE *out, int argc,
+>> const char **argv,
+>>       return 0;
+>>   }
+>>   +static void todo_list_add_exec_commands(struct todo_list *todo_list,
+>> +                    const char *commands)
+>> +{
+>> +    struct strbuf *buf = &todo_list->buf;
+>> +    const char *old_buf = buf->buf;
+>> +    size_t commands_len = strlen(commands + strlen("exec ")) - 1;
+>> +    int i, first = 1, nr = 0, alloc = 0;
+> 
+> Minor nit pick, I think it is clearer if first is initialized just
+> before the loop as it is in the deleted code below.
+> 
+>> +    struct todo_item *items = NULL,
+>> +        base_item = {TODO_EXEC, NULL, 0, 0, commands_len, 0};
+>> +
+>> +    strbuf_addstr(buf, commands);
+>> +    base_item.offset_in_buf = buf->len - commands_len - 1;
+>> +    base_item.arg = buf->buf + base_item.offset_in_buf;
+> 
+> I think if the user gives --exec more than once on the command line then
+> commands will contain more than one exec command so this needs to parse
+> commands and create one todo_item for each command.
 > 
 
-You’re right, command_count is not really needed since we pass the
-complete todo list.
+Ouch, you’re right.  Thanks for the heads up.
 
-The only bit that irks me is that, if I stop passing command_count, I
-would have to call count_commands() twice in complete_action(): once to
-check if there are any commands in the todo list, and again inside of
-todo_list_write_to_file() (see [09/16].)
+>> +
+>> +    /*
+>> +     * Insert <commands> after every pick. Here, fixup/squash chains
+>> +     * are considered part of the pick, so we insert the commands
+>> *after*
+>> +     * those chains if there are any.
+>> +     */
+>> +    for (i = 0; i < todo_list->nr; i++) {
+>> +        enum todo_command command = todo_list->items[i].command;
+>> +        if (todo_list->items[i].arg)
+>> +            todo_list->items[i].arg = todo_list->items[i].arg -
+>> old_buf + buf->buf;
+>> +
+>> +        if (command == TODO_PICK && !first) {
+>> +            ALLOC_GROW(items, nr + 1, alloc);
+>> +            memcpy(items + nr++, &base_item, sizeof(struct todo_item));
+> 
+> I think it would be clearer to say
+>     items[nr++] = base_item;
+> rather than using memcpy. This applies below and to some of the other
+> patches as well. Also this needs to loop over all the base_items if the
+> user gave --exec more than once on the command line.
+> 
 
-Perhaps I could move this check before calling todo_list_rearrange_squash()?
-
-As a sidenote, this is not why I added command_count to the parameters
-of todo_list_write_to_file().  It was a confusion of my part.
+I agree with you, it’s way more readable, IMO.  But for some reason, I
+thought it was not possible to assign a struct to another in C.
 
 > Best Wishes
 > 
