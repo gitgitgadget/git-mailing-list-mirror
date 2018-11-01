@@ -2,81 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97D661F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 22:01:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD5B1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 22:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727724AbeKBHGL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 03:06:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37146 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726273AbeKBHGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 03:06:11 -0400
-Received: (qmail 7193 invoked by uid 109); 1 Nov 2018 22:01:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 01 Nov 2018 22:01:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29922 invoked by uid 111); 1 Nov 2018 22:00:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 01 Nov 2018 18:00:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Nov 2018 18:01:20 -0400
-Date:   Thu, 1 Nov 2018 18:01:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Daniels Umanovskis <daniels@umanovskis.se>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v5] branch: introduce --show-current display option
-Message-ID: <20181101220119.GA26383@sigill.intra.peff.net>
-References: <20181025190421.15022-1-daniels@umanovskis.se>
- <CAPig+cRVdogY8VLXcftbY=n9tQ9wDo4YrnrdU6+pZ3ch6uhZGA@mail.gmail.com>
- <xmqqefcdfs1j.fsf@gitster-ct.c.googlers.com>
+        id S1726686AbeKBHSl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 03:18:41 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43471 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726115AbeKBHSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 03:18:41 -0400
+Received: by mail-wr1-f65.google.com with SMTP id t10-v6so5165wrn.10
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 15:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1ZFVta9dzrdR6IqPKT4cO6sz7twCJmouFfMgysHP24s=;
+        b=ljkBb2UhQwcU1gUtTGhjl8LDtFhbL6ssno3KUM7zbze6SI5UUguHS0LXtt7dWW6r3g
+         zHfDvGpbWodhO5S3hMWQveZbO8rrrUKe3dgKl8DAE49Vz96Ell2kNkvHvxhCEyS098th
+         A190/KtyK7w0f2JXgTgooHeEKrQ7XTCf4e7/kX1HPaFFL2GnExPiX/H9EBhABuUYN3Vq
+         OnzsBFxkEkKENsMXX8N30vlBpzgChS+41QvHJNRdPPCLQT8CbSAg3E2N57wZbGW7h2ga
+         vMPDPDeobGrRFz/c+6Nh25plvVwt8F0aLRd+7uhT1EPRWToa8gcS5FrYVbRvWgOvtoj3
+         lTbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=1ZFVta9dzrdR6IqPKT4cO6sz7twCJmouFfMgysHP24s=;
+        b=UD0xMUuznGHhuI+yJ/kvZIcZR/vObOxd8Lp8DAu2QEgOcrb9rVKZYx2GKjXPEE6aLb
+         RYnovVaDiDoP0XJO+nfr9FkZl7yKY5wuDdcKRFFcbDtB2fCwECVmx7uO7zrhn2tE4B0B
+         ZhJjPt/zAHBtKZfcR2nU5biWlZQv8Apbg4O99um+HI5bZa/rZLmd8NVR1SYFMnv4Il7d
+         9wnXsLocObalYJtr++Mq8Tfei7rFbBBMfq/WetpYCzw9HGsWdjt6ORdCuIxdgWJpUuIB
+         VvWG4AVNPCcXRHFi89JWKVz26I3GX6N+CUlRKP1jsd7h268I+QbSO3bxiOxcazQa5EC3
+         X7QA==
+X-Gm-Message-State: AGRZ1gITEQ0Gv0kVQqqwIlMYVBpJ4FRsmX+Hn6wDlYlQsl5svEv3tbQh
+        Bv8+5MHGusdkVp/DgNC4ioiTLvbK
+X-Google-Smtp-Source: AJdET5cQwNgdHXHgnICS5cuA/PPLCY/guTZq3VodDF5QJibsKDk95K/GutPZgi8AYirrI0lY0DjtiQ==
+X-Received: by 2002:adf:9d4a:: with SMTP id o10-v6mr5275119wre.94.1541110426687;
+        Thu, 01 Nov 2018 15:13:46 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (ekn166.neoplus.adsl.tpnet.pl. [83.21.181.166])
+        by smtp.gmail.com with ESMTPSA id l9-v6sm13921161wrf.4.2018.11.01.15.13.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Nov 2018 15:13:45 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Generation Number v2
+References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
+        <3576719c-3cfb-547a-3548-3aaebfe6e8a2@gmail.com>
+Date:   Thu, 01 Nov 2018 23:13:42 +0100
+In-Reply-To: <3576719c-3cfb-547a-3548-3aaebfe6e8a2@gmail.com> (Derrick
+        Stolee's message of "Mon, 29 Oct 2018 16:25:40 -0400")
+Message-ID: <86o9b8zbs9.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqefcdfs1j.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 26, 2018 at 09:52:24AM +0900, Junio C Hamano wrote:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> 
-> >> +       test_when_finished "git tag -d branch-and-tag-name" &&
-> >> +       git tag branch-and-tag-name &&
-> >
-> > If git-tag crashes before actually creating the new tag, then "git tag
-> > -d", passed to test_when_finished(), will error out too, which is
-> > probably undesirable since "cleanup code" isn't expected to error out.
-> 
-> Ah, I somehow thought that clean-up actions set up via when_finished
-> are allowed to fail without affecting the outcome, but apparently I
-> was mistaken.
+> Here is a re-formatted version of the tables I introduced earlier.
+> The tables were too wide for public-inbox to render correctly (when
+> paired with my email client). Hopefully this bulleted-list format
+> works better. Thanks, Stefan, for pointing out the rendering
+> problems!
+>
+> ### Test 1: `git log --topo-order -N`
+>
+> This test focuses on the number of commits that are parsed during
+> a `git log --topo-order` before writing `N` commits to output.
+>
+> You can reproduce this test using `topo-order-tests.sh` and
+> see all the data in `topo-order-summary.txt`. The values reported
+> here are a sampling of the data, ignoring tests where all values
+> were the same or extremely close in value.
+>
+> android-base, N =3D 100
+> =C2=A0=C2=A0=C2=A0 V0: 5487
+> =C2=A0=C2=A0=C2=A0 V1: 8534
+> =C2=A0=C2=A0=C2=A0 V2: 6937
+> =C2=A0=C2=A0=C2=A0 V3: 6419
+> =C2=A0=C2=A0=C2=A0 V4: 6453
+[...]
 
-If a when_finished block fails, we consider that a test failure. But if
-we failed to create the tag, the test is failing anyway. Do we actually
-care at that point?
+> ### Test 2: `git log --topo-order -10 A..B`
+[...]
+> android-base 53c1972bc8f 92f18ac3e39
+> =C2=A0 OLD: 39403
+> =C2=A0=C2=A0 V0:=C2=A0 1544
+> =C2=A0=C2=A0 V1:=C2=A0 6957
+> =C2=A0=C2=A0 V2:=C2=A0=C2=A0=C2=A0 26
+> =C2=A0=C2=A0 V3:=C2=A0 1015
+> =C2=A0=C2=A0 V4:=C2=A0 1098
 
-We would still want to make sure we run the rest of the cleanup, but
-looking at the definition of test_when_finished(), I think we do.
+Two minor issues.  First, now that the data is not in the table format,
+where every bit of horizontal space matters, why not spell the names of
+new proposed "generation numbers" (or rather reachability orderings) in
+full, instead of using V0...V4 shortcuts?  It is not as if we were short
+of space.
 
-> I haven't gone through the list of when_finished clean-up actions
-> that do not end with "|| :"; I suspect some of them are simply being
-> sloppy and would want to have "|| :", but what I want to find out
-> out of such an audit is if there is a legitimate case where it helps
-> to catch failures in the clean-up actions.  If there is none, then
-> ...
+Second, why OLD data is present in tests 2 and 3, but not in test 1?
 
-I think in the success case it is legitimately helpful. If that "tag -d"
-failed above (after the tag creation and the rest of the test
-succeeded), it would certainly be unexpected and we would want to know
-that it happened. So I think "|| :" in this case is not just
-unnecessary, but actively bad.
-
--Peff
+Best,
+--=20
+Jakub Nar=C4=99bski
