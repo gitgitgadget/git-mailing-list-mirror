@@ -6,65 +6,61 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F413F1F457
-	for <e@80x24.org>; Thu,  1 Nov 2018 01:57:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DBF31F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 03:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726375AbeKAK63 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 06:58:29 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34181 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725978AbeKAK62 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 06:58:28 -0400
-Received: by mail-wm1-f65.google.com with SMTP id f1-v6so799850wmg.1
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 18:57:37 -0700 (PDT)
+        id S1726369AbeKAMC2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 08:02:28 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37893 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbeKAMC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 08:02:27 -0400
+Received: by mail-wm1-f68.google.com with SMTP id l2-v6so147589wmh.3
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 20:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=qdtdcv9IZ2olcAUoeUY0pqY+cQQNbKy+62gljzwAPVM=;
-        b=UXDyKoNuN6/8zgekHf5iBpUnFcIs8m/nwB8bHeYrXLBUysvMF5Mjpozx6wjPE8gK9m
-         Ek0Jm8kMlhGa+FrpuNpQ1e0uSqMcRd7Q/jeD3XBPKu+N5D6daJrtOOxS2gkb3zmKNT2F
-         V9+fA1QPGpdHE51BZ3BFrlMUuyWQF6Z6pqkeivC225AsxpKHG2ByiW3zb5v7mww3U2U/
-         EpB5Fcla5ml5ozwOViArmv57e/tjnJxlMr5R9JCFuHHx/1D2jCIuUF6JF6CiWdh3qDfr
-         3igA1tYs0CaEwBBLY3bDe5+N5wlxU/0UyXl3srdXtZW42TizPJWQakagVgZPiYruU/7q
-         Y4IA==
+        bh=2eKdBgB3x3/6IciBHhqjS+e/Z7nmGaDKvZJglT2y4NE=;
+        b=OEnd2NEEckhBqM0DPMEJfajogZrof/l628XlsLYqBKvxjdja6NVR5iyptff1Cy73RT
+         h9GRqe7EWQvFbxD3rg5Nsur8nQYER+VcnkZeISnCOaPh6nLR75i5SVYWVDobonJ5pulW
+         L9D9eha6EnjzTmyESp230uLG6R1CViBXYQVB6iFXJ4hByWZn6CLu6ryOwW6AdF2624bw
+         dmLoRaG3LogZRBo5M41cdIO466bpVAF/WnehNGkTA5p84e3iASvmchfcbvCu9CZxDXV/
+         D90D5pHf34zPprXsy6FvVi4LC4vxV2cAlaWiM6TGuVoMF6tysiJ1Wb69N4p09RKiOKay
+         d0Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=qdtdcv9IZ2olcAUoeUY0pqY+cQQNbKy+62gljzwAPVM=;
-        b=aV2ZOJgb/E64CkyP2OSj1eHO9dE+KQ6XPnVINtm1l8sVG989uUGtQH89a36vqOcNqj
-         d7ojKuXAvc0glphLuVwIsy13dCAkBDph/HZNQrH87ng78Hnz4voUlJx0Get1J1LbaUc3
-         jl4jGYU0UEzohdT5CLa8OGQaHAi/yxID/d/PyT9d0mc4auxNKgHMyZXdEbyWGgOag/jt
-         d5LkDBGoJfnOMsUDKB1XHTQaS4tYeB42ofHAlZU21QyG5pSsAYaVxf/3dlnmha1HrqGt
-         ZXfLGs/Jtlz0UHQag03nj/uh3tk0b3G8j5WFVuWvG9HoZ4g8gH0/S9oySXzW5BKA1zRW
-         tf8w==
-X-Gm-Message-State: AGRZ1gLpyi5+wYx+sOg4KaGQx6YlzMMpP2/81HZAI076EFAvfvRoSHpo
-        +93wHb/WsgugkaCpMxKHUmw=
-X-Google-Smtp-Source: AJdET5f72VIAB3ZuCer19+UCrrXs8TxBJRAzcIOoYzPE6IdGn66D4aPz37PY1rbRpPlnvICSUEKHpA==
-X-Received: by 2002:a1c:1a48:: with SMTP id a69-v6mr4283312wma.9.1541037456818;
-        Wed, 31 Oct 2018 18:57:36 -0700 (PDT)
+        bh=2eKdBgB3x3/6IciBHhqjS+e/Z7nmGaDKvZJglT2y4NE=;
+        b=eCA31g2MsqhJ4riT/oj3AhgNrRT3VpdLpvbRTdiThtr88fbEwUva58p2EYE03IgzxM
+         jnqrfTOKCMEc0GAdLm2WJKjg+ys+ed6xhRz+kVonHRVzgarBRbWgbycxRraPnETZEEFz
+         urCwfcRhbxPcvC1pwAmaS/OBIBbeccR+Uh0Lyx49+aKCIsUFVftGD1nHvgBmrii7oYyH
+         lEddHHJoeQpFjWRp8wpbBkyMnJvPqW47+BBhZe86BXXxNbQvTre0TGSmOV+TlMspP05/
+         jmTv5bluLOlZyN99q8h4o8CCdJEJwFS2mQOOb9WDpQyH7m7dXR00MX6D2nkDuFgnQYEu
+         Gbiw==
+X-Gm-Message-State: AGRZ1gJu5gB9f2OfwT/BFMsEHqCrK5eFQwlGsEmdsw+DVXpyjJE7HCHz
+        XmTKZ4KNrinte8GaVCrLRgs=
+X-Google-Smtp-Source: AJdET5cyWG13m4/e86CuN9XMK5XesyfoyoYlWdsH0Xt8PwabjhxfEstwrI15bTpA4Gr7g6jH0ZWM5Q==
+X-Received: by 2002:a1c:b4c1:: with SMTP id d184-v6mr4314747wmf.143.1541041285357;
+        Wed, 31 Oct 2018 20:01:25 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v184-v6sm13628972wme.3.2018.10.31.18.57.35
+        by smtp.gmail.com with ESMTPSA id e5-v6sm19397434wru.88.2018.10.31.20.01.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Oct 2018 18:57:35 -0700 (PDT)
+        Wed, 31 Oct 2018 20:01:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Chris Webster <chris@webstech.net>, gitgitgadget@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Use correct /dev/null for UNIX and Windows
-References: <pull.59.git.gitgitgadget@gmail.com>
-        <8159cbd1b8025f33fb9d0e254db1a3c2a066f853.1540923993.git.gitgitgadget@gmail.com>
-        <xmqqsh0mwwah.fsf@gitster-ct.c.googlers.com>
-        <CAGT1KpWoGD0xgTrC-+X1WqY_M=2arYbs4ZX6Nnj-zHK6mgu+nw@mail.gmail.com>
-        <CAGT1KpWC_+=u7fCzQJsU8d_gSQzE5rsx46cTXogvaRPHZ1iiHw@mail.gmail.com>
-        <xmqqbm7awsvr.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1810311206230.4546@tvgsbejvaqbjf.bet>
-Date:   Thu, 01 Nov 2018 10:57:34 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1810311206230.4546@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 31 Oct 2018 12:10:17 +0100
-        (STD)")
-Message-ID: <xmqqftwlv9td.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 0/5] am/rebase: share read_author_script()
+References: <20180912101029.28052-1-phillip.wood@talktalk.net>
+        <20181031101556.27169-1-phillip.wood@talktalk.net>
+Date:   Thu, 01 Nov 2018 12:01:23 +0900
+In-Reply-To: <20181031101556.27169-1-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Wed, 31 Oct 2018 10:15:51 +0000")
+Message-ID: <xmqq7ehxv6v0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,15 +69,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-> Indeed, the patch in question regards something I consider outside Git for
-> Windows' realm. As Chris said, you can run this script from a PowerShell
-> prompt, without any Git Bash (and without Git's Perl) involved.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> I am fine with this patch, as long as the author name is fixed to match
-> the name in the Signed-off-by: footer ;-) [*1*]
+> Sorry for the confusion with v3, here are the updated patches.
+>
+> Thanks to Junio for the feedback on v2. I've updated patch 4 based on
+> those comments, the rest are unchanged.
 
-Thanks, I'll find a corrected patch on the list (or manufacture it
-out of the original) and queue, then.
+The mistake of overwriting -1 (i.e. earlier we detected dup) with
+the third instance of the same originates at [2/5], so updating
+[4/5] without fixing it at its source would mean [4/5] is not a pure
+code movement to make it available to libgit users---it instead hides
+a (not so important) bugfix in it.
 
+>
+> v1 cover letter:
+>
+> This is a follow up to pw/rebase-i-author-script-fix, it reduces code
+> duplication and improves rebase's parsing of the author script. After
+> this I'll do another series to share the code to write the author
+> script.
+>
+>
+> Phillip Wood (5):
+>   am: don't die in read_author_script()
+>   am: improve author-script error reporting
+>   am: rename read_author_script()
+>   add read_author_script() to libgit
+>   sequencer: use read_author_script()
+>
+>  builtin/am.c |  60 ++--------------
+>  sequencer.c  | 192 ++++++++++++++++++++++++++++++++-------------------
+>  sequencer.h  |   3 +
+>  3 files changed, 128 insertions(+), 127 deletions(-)
