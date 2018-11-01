@@ -6,62 +6,65 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E95B1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 23:46:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC93E1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 23:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728079AbeKBIvF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 04:51:05 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55135 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728058AbeKBIvF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 04:51:05 -0400
-Received: by mail-wm1-f67.google.com with SMTP id r63-v6so485789wma.4
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:45:58 -0700 (PDT)
+        id S1728445AbeKBI5l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 04:57:41 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37318 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728058AbeKBI5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 04:57:40 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z3-v6so206245wru.4
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 16:52:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=zaZhaWLM+990iAYVQgZIGzDeOiIyArryL3660qV+CjU=;
-        b=dHkwR3b4VOYd9sAPgVvEQSHESR9Uci+a5qCy7flu8a10AMVVKK/N3ASgcd9eiKlYZ3
-         Gw+Erjy2Y14VzXskg7IgJfhE+FkZ9tz+gBzDGjkSa3bhUJMudLDwIlZW880T4/nveWSG
-         DeD7eLPiDF73TX9e2uJiVDNl9OOviaJeHhLfAOqaSvPh7tccbvMt1LOtGnyukHPPwsMI
-         ElblffqDY4i95FVKe2bNnx+NypJcnDH1lU2PuF6sCeTKJLvSi3DB55ToRdTY02hLVwNp
-         Beum9SgAKLehka2mUne1NMNjZDI1w8+lLoYhFpWkcJGvqXtoEnQAGC1TM4S9tvAxoGUB
-         hw8w==
+        bh=8c4d3Uz6hZMkPPLLc89jqJZ8ZpuBhJrWzCrhGQX9Jx8=;
+        b=vaMHtSlEk+hrIqZ0BomNFsM1RbtJczlIVbJrm2WdRIzVxc0VX1UaoTp+A2gSA3Ro7F
+         v7Du6eswnVdq2xi/v4nuj/ODBle151+5ZRfyYGnxaVt9p5gzBuPghv4Td+pq+ZV1o51g
+         s6Hm3V3w9q9Xm7/CHd6z+clY7zckGV5FyuseiUv1MtPPBdS2aMYJm5yU9tl2e8ZovMrP
+         118vlF6X4TQCszqD+X71AvS0cIWNDJ07S6RSz7etBCkeW56FXuKmVXXbTtN7Z/xV9lrx
+         5ts2nl5F13BLu4sutxeWnk2sSgulk1FNm3g0ArMeU1DOTxJRm9kKEZ91PTMNaYAR/eqI
+         p2GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=zaZhaWLM+990iAYVQgZIGzDeOiIyArryL3660qV+CjU=;
-        b=o6dwcM+X1g6STfkmBa1iu8hpVbZwLRApN9h86D1jT0aUvGMb3fvvnM4r6gHVRGGD4k
-         tdgIucuZzCYQOGAy+6YOyGngCV4FAQDO0OKii9mOZWWva8zmgRt2e8BnnsfGUGLj4IuV
-         jpxbiKImInZ49Cn6Mq7N6grIlKWUilAkqD0W0Qng4LYX+h2f6r1ykNTv6WKfad+sX4U5
-         YfkTLF6fZTkAVIFStz0eBzQ/WRxfQtt69cRanbJVW4xUeqCfJFR9fQSb9979pMomOWoM
-         rHQvAraWuiI6z/ZnebNRrbjSb5WpgW22hyE8KBn6inbyyqLnkYDug+PIMEh9fLv3caIY
-         aJOg==
-X-Gm-Message-State: AGRZ1gItph1ZUdwiSW0qOfF4DZa3NtHsgegA8waBThkw8puAg4wGGu9n
-        meIcYpiMZCY+eWbT83jyPkk=
-X-Google-Smtp-Source: AJdET5f5WgdC2W7F5qacEfZadbmNEJtDOzIY2of+Hn/6u73HUM6yiWxK2l1wP6BvpDg43VlPdaepdA==
-X-Received: by 2002:a1c:dc86:: with SMTP id t128-v6mr6931983wmg.111.1541115957234;
-        Thu, 01 Nov 2018 16:45:57 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o9-v6sm15624780wrq.55.2018.11.01.16.45.55
+        bh=8c4d3Uz6hZMkPPLLc89jqJZ8ZpuBhJrWzCrhGQX9Jx8=;
+        b=Muy8gB6pJUEQ9zfU0Zcmf/yHsgy61pN/r0r4a6aAKsN/5RYoiv+nadIQfjkqFeecI1
+         HFy1yCiYY03Z+BkT8VAf05f57H5SptMBrt99H31uLl1yajau3jCcyx++GJJP/Z0G/e8N
+         mcrqDKEQYMd4nQ8/runG9MmWeoyZ/i6C8SOrXpzWGjnPQVe+MKoq1P5Mt4CSZ1tN5Awb
+         axH6j3DVvcfaSszPwOPDs4UWs3gyizIdFs4pi4M6wYH+ljZcuD/AY5YaGuILD7I/S/SC
+         o5NtyKBAaWimZnjG2VDj878hQ/5eGhJFY9IhS/C4jYqrRAaKCambciQdN8mQVIy3lFKd
+         N4fg==
+X-Gm-Message-State: AGRZ1gLNVwfJMe9BxFSxkKKqPD/+lDZrPtaDGp1zvS2VAxe/VVYIwT8i
+        luEa/9yFWRljZTFLrCOL21s=
+X-Google-Smtp-Source: AJdET5cVuhMy+bezytVqLBDd2nalRHVzrXqs2c3lE5xTEUJndjTtiMjZuq9n4Mgp7+1fK3W9+PKS1Q==
+X-Received: by 2002:adf:ab50:: with SMTP id r16-v6mr7803317wrc.62.1541116351969;
+        Thu, 01 Nov 2018 16:52:31 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id y4-v6sm13320575wrd.61.2018.11.01.16.52.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Nov 2018 16:45:56 -0700 (PDT)
+        Thu, 01 Nov 2018 16:52:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] tests: optionally skip `git rebase -p` tests
-References: <pull.63.git.gitgitgadget@gmail.com>
-        <39734e4805cbd695cd69e7c1a3016de629ac9b3c.1541016115.git.gitgitgadget@gmail.com>
-        <xmqqh8h1tjg9.fsf@gitster-ct.c.googlers.com>
-        <da1d00b5-8516-6185-60cf-cc7738daa1a3@kdbg.org>
-Date:   Fri, 02 Nov 2018 08:45:55 +0900
-In-Reply-To: <da1d00b5-8516-6185-60cf-cc7738daa1a3@kdbg.org> (Johannes Sixt's
-        message of "Thu, 1 Nov 2018 18:18:00 +0100")
-Message-ID: <xmqq4ld0tl8s.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Anmol Mago <anmolmago@gmail.com>, briankyho@gmail.com,
+        david.lu97@outlook.com, shirui.wang@hotmail.com
+Subject: Re: [PATCH v2] completion: use builtin completion for format-patch
+References: <xmqqbm7c2n0i.fsf@gitster-ct.c.googlers.com>
+        <72331ce9275ce995009fe8dd3d586bb9d71f2cbf.1540881141.git.liu.denton@gmail.com>
+        <CACsJy8Ajc0qWw3RLak1PRPXvQzMHjaFuWJ6BPkhiVg=7fQvCnA@mail.gmail.com>
+        <xmqqk1lxvaj6.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AowaAW91wGMYbC8aTOB1NoqQN-5NGx=qUCHp0i6zQRDA@mail.gmail.com>
+Date:   Fri, 02 Nov 2018 08:52:30 +0900
+In-Reply-To: <CACsJy8AowaAW91wGMYbC8aTOB1NoqQN-5NGx=qUCHp0i6zQRDA@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 1 Nov 2018 16:40:54 +0100")
+Message-ID: <xmqqzhuss6dd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,38 +73,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Am 01.11.18 um 07:12 schrieb Junio C Hamano:
->> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
->> writes:
+>> > I have no comment about this. In an ideal world, sendemail.perl could
+>> > be taught to support --git-completion-helper but I don't think my
+>> > little remaining Perl knowledge (or time) is enough to do it. Perhaps
+>> > this will do. I don't know.
 >>
->>> The `--preserve-merges` mode of the `rebase` command is slated to be
->>> deprecated soon, ...
->>
->> Is everybody on board on this statement?  I vaguely recall that some
->> people wanted to have something different from what rebase-merges
->> does (e.g. wrt first-parent history), and extending perserve-merges
->> might be one way to do so.
+>> So "all", "attach", etc. are added to this list while these similar
+>> options are lost from the other variable?  Is this a good trade-off?
 >
-> Maybe you are referring to my proposals from a long time ago. My
-> first-parent hack did not work very well, and I have changed my
-> workflow. --preserve-merges is certainly not a feature that *I* would
-> like to keep.
+> Not sure if I understand you correctly, but it looks to me that the
+> options in git-send-email.perl are well organized, so we could...
 
-Thanks, that reduces my worries.
+Yes, but I wasn't commenting on your "sendemail should also be able
+to help completion by supporting --completion-helper option" (I think
+that is a sensible approach).  My comment was about Denton's patch,
+which reduced the hard-coded list of format-patch options (i.e. the
+first hunk) but had to add back many of them to send-email's
+completion (i.e. the last hunk)---overall, it did not help reducing
+the number of options hardcoded in the script.
 
-> The important question is whether there are too many users of
-> preserve-merges who would be hurt when it is removed.
+If it makes sense to complete all options to format-patch to
+send-email, then as you outlined, grabbing them out of format-patch
+with the --completion-helper option at runtime, and using them to
+complete both format-patch and send-email would be a good idea.  And
+that should be doable even before send-email learns how to list its
+supported options to help the completion.
 
-Yes, and the claim this series makes is that there is none and all
-existing users should be able to happily use the rebase-merges,
-which also means that we need to commit to improve rebase-merges to
-support them, if there were some corner cases, which we failed to
-consider so far, that are not yet served well.
-
-As I said, as long as everybody agrees with the plan (e.g. we'll
-know when we hear no objections to the planned deprecation in a few
-weeks), I am perfectly OK with it.
-
-Thanks.
+> --git-completon-helper in that script to print all send-email specific
+> options, then call "git format-patch --git-completion-helper" to add a
+> bunch more. The options that are handled by setup_revisions() will
+> have to be maintained manually here like $__git_format_patch_options
+> and added on top in both _git_send_email () and _git_format_patch ().
+>
+> So, nothing option is lost and by the time setup_revisions() supports
+> -git-completion-helper, we can get rid of the manual shell variable
+> too. The downside is, lots of work, probably.
