@@ -7,143 +7,138 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C52BD1F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 06:52:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 489941F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 06:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727747AbeKAPxy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 11:53:54 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:39650 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727573AbeKAPxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 11:53:54 -0400
-Received: by mail-vs1-f68.google.com with SMTP id h78so10543255vsi.6
-        for <git@vger.kernel.org>; Wed, 31 Oct 2018 23:52:13 -0700 (PDT)
+        id S1727828AbeKAP6R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 11:58:17 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:45646 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727675AbeKAP6R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 11:58:17 -0400
+Received: by mail-vs1-f67.google.com with SMTP id 124so11603180vsp.12
+        for <git@vger.kernel.org>; Wed, 31 Oct 2018 23:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=fKcGFG9ZKz6MvvRrNiHeTFywxIKnBSBy/gT71egGG74=;
-        b=L4/mYjAVGb3Gyhjf5/IzQBMYzkzIU/crHJAu2mhOnEASCdIv03RkJlmPRylAc1ulGC
-         uPXSRi7/esFO086iuTpEb0Xg1RCRuhGM4tlJXGevnsEMSstyZNyqROFFb2lbdw5sIfoV
-         RMeiL/5ddoA1D0iH0W6liX0b9t3evWQVXduYv5W4HmcAzKNuxF3hT0XUO+3IxeOol0Qb
-         vck403PJSzkLQUhbWhEeOsXtC2LSPd6CCYvu8noCfkYzRHUWvR9tg4gIuOlDrHGXDVEz
-         kxgBsAagPq7E0aXnTKN2M8Wi+dGgH/BZYpgsLFfXDAvbzl2tysrw/ldQmADxgXVFcVkI
-         1PGg==
+        bh=ek6/LA6UEe4xFSh8coyOqCv5B0oUZ7ZwCPtxmo2tj5g=;
+        b=byDs/8rA3W3ug16jZMKvzo02vKFzBv+vcX21XaHM7ZnoMv7GRAkS9Rw139HhRy6JP3
+         j9rOZdVi7iBaT4R2CkfhMrDsndzFSRH70Y8DYRa6VHN1aBJyOCqDMjhdTc0a2lE4lmTn
+         hg8r0k/cqMxfND1q+g1/BSR2OAWDgUauuQsYEGSt7qcHd53p7jtR3a9d+4Tqdy++M6tO
+         l+kMx2eu0uVt+/kNJEbrc8L1B4cAYKLHxAmsg91TOubL7gVWmNx2U5qLI4P8r22ZTpqk
+         EAY54veyRDitYx4VGftkhCXyIZrAgqV0OLIHvzfI+RYQ3AE4KwMeyNwDtLy+ntYF+Ofg
+         DPNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=fKcGFG9ZKz6MvvRrNiHeTFywxIKnBSBy/gT71egGG74=;
-        b=EydHTz01ddbyLawCqSiZWjAK/H6HedDFLFFkzCqXmyrTQjN4HIK9vDOesHOz00Lulh
-         2dCgMwXpb/5H+Rgd1vVGPuKWq8qXrcPitRk8oOn3QwWBcqhd2einYUsMKyQpq2zQYTK7
-         ehN15iCo1JCmr6NYcuDA+A71b7ELhuX9uDS4jl0ye0nS08SwkcC+yNjfrXPkhgPJTI2v
-         GGXVuNlSUwpAO6W33qaAPrcLMaH20/S7/TRQivr3EyBxT+aXhKWRIY5FvYlRcZi0sB8S
-         UVVbBvLzyrCaCgLuJI13EtLGrTeRNEao/nLUqnDRScLFq+udvwZ3HnCqCHd2VEwRABUz
-         V/hg==
-X-Gm-Message-State: AGRZ1gIkxtmaPJBc5xMQqFh5UHp2vOf0jkeuJPehDgJ/pfdFjL0RGdBJ
-        KUU/K6DIPLbjSptZGkjAajnzR9boWsVypohleKHZvw==
-X-Google-Smtp-Source: AJdET5da7L7xiGcIEsfst4/ffI+HR3j64wWZ0mqgHC36Mk1mQc/XJK7KWYxjNbAnse3SXHbUJUePlbMeTaquRI4KsaM=
-X-Received: by 2002:a67:e44f:: with SMTP id n15mr2831025vsm.116.1541055132933;
- Wed, 31 Oct 2018 23:52:12 -0700 (PDT)
+        bh=ek6/LA6UEe4xFSh8coyOqCv5B0oUZ7ZwCPtxmo2tj5g=;
+        b=jVaSH3LrGVcY/DbQ4pSt6X3G2LaEtUCamAg6x1CdgGO4jaJ54vitEkypIArAgpaBLo
+         8zLUalouytChSOHqHcBjT8lBF/2oVB0b0PmCPiN8KvbjVlsdPApUEGrRZpB1xAbNNgmg
+         Hx2plJ/tg6Te8yNvVgZaoRSIk6ckg0LcsVBb9DfXStX5E96asg7dy7MTwfei2mAUBoUM
+         op0lTLBUyAedCGpI05reLGhrFjNODmSQkdCimJ+8GSVEawCPsn2CGdsz7M6GS5InLBoz
+         xxw3DxeU+TkgFvLCOv9IpKSSYWVPEDG5Yct8l9USR20v8a6hON71og2dbSJy7i8lDC+0
+         7W8g==
+X-Gm-Message-State: AGRZ1gIUsg8t3CrfVOD3E2lDPnC5Qpa7GYLA/T+0gtA0clkixlEJNlU5
+        DiYzcD3TZ57rrl+hxyGrohIjHcUWzg4nYQeH+jCjhw==
+X-Google-Smtp-Source: AJdET5f8STewzSF97f4O54B9gt8NsBX7qOxjTYa38tl0jgXS/DnSf7sqtgGBznZhCbH6q/f/pLGDJ1vqHA7WJqePBLE=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr2835099vsm.116.1541055395624;
+ Wed, 31 Oct 2018 23:56:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
- <20181031120505.237235-1-dstolee@microsoft.com>
-In-Reply-To: <20181031120505.237235-1-dstolee@microsoft.com>
+References: <20181014020537.17991-1-newren@gmail.com> <20181019193111.12051-1-newren@gmail.com>
+ <20181019193111.12051-5-newren@gmail.com> <0b84c95b-38bc-e39e-a033-81eb3e7b8202@gmail.com>
+ <95a236fd-a757-81ad-34aa-b26b3c3b6e85@gmail.com>
+In-Reply-To: <95a236fd-a757-81ad-34aa-b26b3c3b6e85@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 31 Oct 2018 23:52:01 -0700
-Message-ID: <CABPp-BHHG9K0869=4CYkqjN6rwLCzRBiF_Z94KFevSo3_FvYAw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
+Date:   Wed, 31 Oct 2018 23:56:24 -0700
+Message-ID: <CABPp-BGC11LRrSXveKg5+rvNY-29uTB5_Qdiev1-s7abJTNygA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/8] merge-recursive: new function for better colliding
+ conflict resolutions
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 31, 2018 at 5:05 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, Oct 31, 2018 at 6:57 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> On 10/31/2018 2:04 AM, Elijah Newren wrote:
-> > On Tue, Oct 30, 2018 at 7:16 AM Derrick Stolee via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> As reported earlier [1], the add_missing_tags() method in remote.c has
-> >> quadratic performance. Some of that performance is curbed due to the
-> >> generation-number cutoff in in_merge_bases_many(). However, that fix doesn't
-> >> help users without a commit-graph, and it can still be painful if that
-> >> cutoff is sufficiently low compared to the tags we are using for
-> >> reachability testing.
-> >>
-> >> Add a new method in commit-reach.c called get_reachable_subset() which does
-> >> a many-to-many reachability test. Starting at the 'from' commits, walk until
-> >> the generation is below the smallest generation in the 'to' commits, or all
-> >> 'to' commits have been discovered. This performs only one commit walk for
-> >> the entire add_missing_tags() method, giving linear performance in the worst
-> >> case.
-> >>
-> >> Tests are added in t6600-test-reach.sh to ensure get_reachable_subset()
-> >> works independently of its application in add_missing_tags().
+> On 10/31/2018 9:53 AM, Derrick Stolee wrote:
+> > On 10/19/2018 3:31 PM, Elijah Newren wrote:
+> >> +#if 0 // #if-0-ing avoids unused function warning; will make live in
+> >> next commit
+> >> +static int handle_file_collision(struct merge_options *o,
+> >> +                 const char *collide_path,
+> >> +                 const char *prev_path1,
+> >> +                 const char *prev_path2,
+> >> +                 const char *branch1, const char *branch2,
+> >> +                 const struct object_id *a_oid,
+> >> +                 unsigned int a_mode,
+> >> +                 const struct object_id *b_oid,
+> >> +                 unsigned int b_mode)
+> >> +{
+> >> +    struct merge_file_info mfi;
+> >> +    struct diff_filespec null, a, b;
+> >> +    char *alt_path = NULL;
+> >> +    const char *update_path = collide_path;
+> >> +
+> >> +    /*
+> >> +     * In the recursive case, we just opt to undo renames
+> >> +     */
+> >> +    if (o->call_depth && (prev_path1 || prev_path2)) {
+> >> +        /* Put first file (a_oid, a_mode) in its original spot */
+> >> +        if (prev_path1) {
+> >> +            if (update_file(o, 1, a_oid, a_mode, prev_path1))
+> >> +                return -1;
+> >> +        } else {
+> >> +            if (update_file(o, 1, a_oid, a_mode, collide_path))
 > >
-> > On the original repo where the topic was brought up, with commit-graph
-> > NOT turned on and using origin/master, I see:
+> > The latest test coverage report [1] shows this if statement is never
+> > run, so
+> > it appears that every call to this method in the test suite has either
+> > o->call_depth positive, prev_path1 non-NULL, or both prev_path1 and
+> > prev_path2
+> > NULL.
 > >
-> > $ time git push --dry-run --follow-tags /home/newren/repo-mirror
-> > To /home/newren/repo-mirror
-> >  * [new branch]       test5 -> test5
+> > Is there a way we can add a test case that calls this method with
+> > o->call_depth
+> > positive, prev_path1 NULL, and prev_path2 non-NULL?
 > >
-> > real 1m20.081s
-> > user 1m19.688s
-> > sys 0m0.292s
+> >> +                return -1;
+> >> +        }
+> >> +
+> >> +        /* Put second file (b_oid, b_mode) in its original spot */
+> >> +        if (prev_path2) {
+> >> +            if (update_file(o, 1, b_oid, b_mode, prev_path2))
 > >
-> > Merging this series in, I now get:
+> > Since this line is covered, we _do_ call the method with prev_path2
+> > non-NULL, but
+> > prev_path1 must be non-NULL in all cases.
 > >
-> > $ time git push --dry-run --follow-tags /home/newren/repo-mirror
-> > To /home/newren/repo-mirror
-> >  * [new branch]       test5 -> test5
-> >
-> > real 0m2.857s
-> > user 0m2.580s
-> > sys 0m0.328s
-> >
-> > which provides a very nice speedup.
-> >
-> > Oddly enough, if I _also_ do the following:
-> > $ git config core.commitgraph true
-> > $ git config gc.writecommitgraph true
-> > $ git gc
-> >
-> > then my timing actually slows down just slightly:
-> > $ time git push --follow-tags --dry-run /home/newren/repo-mirror
-> > To /home/newren/repo-mirror
-> >  * [new branch]          test5 -> test5
-> >
-> > real 0m3.027s
-> > user 0m2.696s
-> > sys 0m0.400s
+> > I may have found a reason why this doesn't happen in one of the
+> > callers you introduced.
+> > I'm going to comment on PATCH 8/8 to see if that is the case.
 >
-> So you say that the commit-graph is off in the 2.8s case, but not here
-> in the 3.1s case? I would expect _at minimum_ that the cost of parsing
-> commits would have a speedup in the commit-graph case.  There may be
-> something else going on here, since you are timing a `push` event that
-> is doing more than the current walk.
+> Nevermind on the PATCH 8/8 situation. I thought I saw you pass (a->path,
+> NULL) and
+> (b->path, NULL) into the (prev_path1, prev_path2) pairs, but in each
+> case the non-NULL
+> parameter is actually for 'collide_path'.
 >
-> > (run-to-run variation seems pretty consistent, < .1s variation, so
-> > this difference is just enough to notice.)  I wouldn't be that
-> > surprised if that means there's some really old tags with very small
-> > generation numbers, meaning it's not gaining anything in this special
-> > case from the commit-graph, but it does pay the cost of loading the
-> > commit-graph.
->
-> While you have this test environment, do you mind applying the diff
-> below and re-running the tests? It will output a count for how many
-> commits are walked by the algorithm. This should help us determine if
-> this is another case where generation numbers are worse than commit-date,
-> or if there is something else going on. Thanks!
+> It is still interesting if we can hit this case. Perhaps we need a
+> different kind of
+> conflict, like (rename, delete) [but I struggle to make sense of how to
+> do that].
 
-I can do that, but wouldn't you want a similar patch for the old
-get_merge_bases_many() in order to compare?  Does an absolute number
-help by itself?
-It's going to have to be tomorrow, though; not enough time tonight.
+rename/delete conflicts are sent through handle_rename_delete() which
+do not call into handle_file_collision().  What you'd instead need is
+a rename/add conflict, in the virtual merge base, on the appropriate
+side.  The fact that the prev_path2 non-NULL case is covered means
+there's already a regression test that's probably nearly good enough,
+you'd just need to edit the committer timestamps of the two merge
+bases so that a different one was older.  I'm pretty sure we can come
+up with one without too much effort.  I'll take a look tomorrow; too
+late tonight.
