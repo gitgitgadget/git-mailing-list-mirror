@@ -2,125 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95511F453
-	for <e@80x24.org>; Thu,  1 Nov 2018 10:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFA7E1F453
+	for <e@80x24.org>; Thu,  1 Nov 2018 10:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727784AbeKATYX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Nov 2018 15:24:23 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:26735 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726320AbeKATYX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Nov 2018 15:24:23 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42m1Th5h7Cz5tmJ;
-        Thu,  1 Nov 2018 11:22:00 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 222BD2E3D;
-        Thu,  1 Nov 2018 11:22:00 +0100 (CET)
-Subject: Re: [PATCH 1/1] poll: use GetTickCount64() to avoid wrap-around
- issues
-To:     Steve Hoelzer via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Steve Hoelzer <shoelzer@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.64.git.gitgitgadget@gmail.com>
- <69bc5924f94b56f92d9653b3a64f721bd03f1956.1541020294.git.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <c9e001de-3598-182d-416e-1e94f234c249@kdbg.org>
-Date:   Thu, 1 Nov 2018 11:21:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <69bc5924f94b56f92d9653b3a64f721bd03f1956.1541020294.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        id S1727959AbeKATbp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Nov 2018 15:31:45 -0400
+Received: from smtpoutz25.laposte.net ([194.117.213.100]:45595 "EHLO
+        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1727453AbeKATbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Nov 2018 15:31:45 -0400
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout013 (Postfix) with ESMTP id 444BD106B32
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
+        t=1541068161; bh=0Xe5YmgkjU9qtAPpovPz3W9zhDxrUIy1tcguD53ZHXs=;
+        h=Subject:From:To:Date;
+        b=H5eQavz5bOO5nMz13NqPq/13JQCuiEhi4p2AZZWpLxBAz6AhYj+yX4YhO/sN2Zl/H
+         fHRuVYCpjMxDhu3Nklzvkn+yXxwakbRkw7ntzkchM3OJGUIdudHeWqZYhBJoG3zYDh
+         ayW32+xRNWdiGnWjj1opwl4Ayo3isDd8Ex6JlLh7r8SqdZQuLGkhQFlOIVL4TfF2h3
+         iHwcmhfsHaKKCQNz08C9sEqI5RK7J5jOwPdhNRp9Fj2WBna4ywP4JsQF+MGD6dbg6n
+         5mj6vu2qZB22o/XelSH6VYrKuYidvzgSWFh9UmoKiVjvtPnJ1NGkqXveyJ23tgfg1k
+         0arLqKRYMn5mg==
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout013 (Postfix) with ESMTP id 39821106B2A
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:21 +0100 (CET)
+Received: from lpn-prd-vrin002 (lpn-prd-vrin002.laposte [10.128.63.3])
+        by lpn-prd-vrout013 (Postfix) with ESMTP id D0A95106B1B
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
+Received: from lpn-prd-vrin002 (localhost [127.0.0.1])
+        by lpn-prd-vrin002 (Postfix) with ESMTP id C0FC85E82E5
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
+Received: from arekh.ddns.net (unknown [82.64.49.105])
+        by lpn-prd-vrin002 (Postfix) with ESMTPA id AC3FA5E82AF
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
+Received: from cerebro.okg (box.okg [192.168.0.1])
+        by arekh.ddns.net (Postfix) with ESMTPSA id 8FB0B2200EF
+        for <git@vger.kernel.org>; Thu,  1 Nov 2018 11:29:20 +0100 (CET)
+Message-ID: <b639c19a881476be2d4dbdd731cd305384b287a9.camel@laposte.net>
+Subject: [RFE] Please add a standard ref object to releases
+From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
+To:     git@vger.kernel.org
+Date:   Thu, 01 Nov 2018 11:29:20 +0100
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
+X-VR-FullState: 0
+X-VR-Score: 0
+X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieehgdduhecutefuodetggdotefrodftvfcurfhrohhf
+X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkffuhffvffgt
+X-VR-Cause-3: fggggfesthejredttderjeenucfhrhhomheppfhitgholhgrshcuofgrihhlhhhothcuoehnihgtohhl
+X-VR-Cause-4: rghsrdhmrghilhhhohhtsehlrghpohhsthgvrdhnvghtqeenucfkphepkedvrdeigedrgeelrddutdeh
+X-VR-Cause-5: necurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhinhgvthepkedvrdeigedrgeelrddutdehpdhh
+X-VR-Cause-6: vghloheprghrvghkhhdruggunhhsrdhnvghtpdhmrghilhhfrhhomhepnhhitgholhgrshdrmhgrihhl
+X-VR-Cause-7: hhhotheslhgrphhoshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+X-VR-Cause-8: rhhgnecuvehluhhsthgvrhfuihiivgeptd
+X-VR-AvState: No
+X-VR-State: 0
+X-VR-State: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.10.18 um 22:11 schrieb Steve Hoelzer via GitGitGadget:
-> From: Steve Hoelzer <shoelzer@gmail.com>
-> 
->  From Visual Studio 2015 Code Analysis: Warning C28159 Consider using
-> 'GetTickCount64' instead of 'GetTickCount'.
-> 
-> Reason: GetTickCount() overflows roughly every 49 days. Code that does
-> not take that into account can loop indefinitely. GetTickCount64()
-> operates on 64 bit values and does not have that problem.
-> 
-> Note: this patch has been carried in Git for Windows for almost two
-> years, but with a fallback for Windows XP, as the GetTickCount64()
-> function is only available on Windows Vista and later. However, in the
-> meantime we require Vista or later, hence we can drop that fallback.
-> 
-> Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   compat/poll/poll.c | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/compat/poll/poll.c b/compat/poll/poll.c
-> index ad5dcde439..4abbfcb6a4 100644
-> --- a/compat/poll/poll.c
-> +++ b/compat/poll/poll.c
-> @@ -18,6 +18,9 @@
->      You should have received a copy of the GNU General Public License along
->      with this program; if not, see <http://www.gnu.org/licenses/>.  */
->   
-> +/* To bump the minimum Windows version to Windows Vista */
-> +#include "git-compat-util.h"
-> +
->   /* Tell gcc not to warn about the (nfd < 0) tests, below.  */
->   #if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
->   # pragma GCC diagnostic ignored "-Wtype-limits"
-> @@ -449,7 +452,8 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
->     static HANDLE hEvent;
->     WSANETWORKEVENTS ev;
->     HANDLE h, handle_array[FD_SETSIZE + 2];
-> -  DWORD ret, wait_timeout, nhandles, start = 0, elapsed, orig_timeout = 0;
-> +  DWORD ret, wait_timeout, nhandles, elapsed, orig_timeout = 0;
-> +  ULONGLONG start = 0;
->     fd_set rfds, wfds, xfds;
->     BOOL poll_again;
->     MSG msg;
-> @@ -465,7 +469,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
->     if (timeout != INFTIM)
->       {
->         orig_timeout = timeout;
-> -      start = GetTickCount();
-> +      start = GetTickCount64();
->       }
->   
->     if (!hEvent)
-> @@ -614,7 +618,7 @@ restart:
->   
->     if (!rc && orig_timeout && timeout != INFTIM)
->       {
-> -      elapsed = GetTickCount() - start;
-> +      elapsed = (DWORD)(GetTickCount64() - start);
+Hi,
 
-AFAICS, this subtraction in the old code is the correct way to take 
-account of wrap-arounds in the tick count. The new code truncates the 64 
-bit difference to 32 bits; the result is exactly identical to a 
-difference computed from truncated 32 bit values, which is what we had 
-in the old code.
+git makes no provision for versioned release references.
 
-IOW, there is no change in behavior. The statement "avoid wrap-around 
-issues" in the subject line is not correct. The patch's only effect is 
-that it removes Warning C28159.
+However, software projects need versioned releases. Software project
+integrators need versionned releases. Security auditors need versioned
+release. Software project users need versioned releases.
 
-What is really needed is that all quantities in the calculations are 
-promoted to ULONGLONG. Unless, of course, we agree that a timeout of 
-more than 49 days cannot happen ;)
+Versioned releases are not the same thing as free-form tags. They have
+semantics to allow deducing upgrade paths (usually, a form of semver).
+They imply some form of API stability promise. They imply release
+documentation completion. They're not just a random point in the project
+history like tags are.
 
->         timeout = elapsed >= orig_timeout ? 0 : orig_timeout - elapsed;
->       }
->   
+This is why most git hosting sites provide a way to select versioned
+releases, even if it's not a native git concept. And this way is clearly
+separate and distinct from git tag selection.
 
--- Hannes
+Unfortunately, since git makes no provision for versioned release
+references, git hosting sites have to shove release refs into tag refs.
+And it's a huge mess.
+
+Some put release ids in tags as-is, others add a v prefix, others a
+version_ prefix, it's all hoster-specific, it's all inconsistent. It
+ends up being inconsistent within projects, as they migrate from a
+hoster to another, are mirrored from one hoster to another. It depends
+on the habits of the person cutting a release, and the release manager
+of a project can change over time. It ends up being inconsistent in
+release archives, as the version munging can percolate in the archive
+name and structure, or not, for mysterious heuristic reasons that change
+over time.
+
+As a result, when assembling a project that uses other git repositories,
+you spend more time checking repository by repository and version by
+version how the version ref was mangled in a tag ref for this specific
+(repo,version,date) tuple, than doing actual software dev and QA work.
+
+Please add a specific release reference to git, so software projects
+that do versioned releases can use this ref object directly, without
+needing to invent custom version rewriting rules to shove them in tags
+while marking they are not just tags but release references.
+
+Regards,
+
+
+-- 
+Nicolas Mailhot
+
