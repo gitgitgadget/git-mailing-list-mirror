@@ -2,122 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D39841F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 15:23:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2A3A1F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 15:39:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726631AbeKCAbC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 20:31:02 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:32907 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726260AbeKCAbC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 20:31:02 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u1-v6so2398978wrn.0
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 08:23:35 -0700 (PDT)
+        id S1727514AbeKCAq2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 20:46:28 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:35792 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726707AbeKCAq1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 20:46:27 -0400
+Received: by mail-yw1-f65.google.com with SMTP id w135-v6so933954ywd.2
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 08:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EBrX6i+kDcD1n3eCbUaUDlIBBT8+N+ACMCbscqFUcug=;
-        b=vXt3JPV5N91ZWvOItjRu9jgzHWfobaWhgWnH1bG59PM/7Qyh1n+H62iu7tsmDD+yKB
-         5y61+4Tc9oUqbq0lyiLIG8LXw34z5+VlfJjqjJiTlOrPhrACaAKQPw2ZQhclc+OjQC8m
-         IYLJCi1xVYP/LRucYQHn9/r3oiMYJQByaq1FKuW80/Cje2OzX1j5Ituw0GtabEsXcQR1
-         6vX5tcSHH4jiPqpOJbu5J7Z1wY7G5ZIoaHazjZbA8vJ84Ru8ZGssi6IXOqWLkxzAQASD
-         v86wVZS0TrBI9xT0VihWlvdCK45kcP70lGlpOaAaPPR99gud2wDqXBMtxlwUsJsENcS+
-         p1lQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=Jv+0kLlcH6+hSdB6/u4cfPoQtnvEwTK5ezHEW/I4P4o=;
+        b=aWAogtf6DiibsMwEgkAd2eQBzYGvaByhkJuL6yNI1zKKZPOpXbz8MBS8XErHuhLNww
+         3o1iXQACjgJUEkrlxF3DEbrjORCKuzTe/xhZPffcQe8yndimZomrFsL/YNTihvGuzFG0
+         w2SqPXo3AxNYgwWf6hx52a3bCLtc1vugE8JqqkfN+IC/vklJM9pJWWuXqwso36XpLbp6
+         z1YoKGXcl7x52UNiY//aD4Fvnj4UgP2H6+rkMKpUGXzg4S4pJUOMNWAlOPN/sH2vjqfN
+         +rtZMNGCK/s+bNw5NmQcEkzl70e2vD6J2xtCTQtLpYIQuPZEHlA/Q8GUe5G+HSpQVWtV
+         zxpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=EBrX6i+kDcD1n3eCbUaUDlIBBT8+N+ACMCbscqFUcug=;
-        b=h+MbWS75aRMMwwwv4dT3Hi5LWfVUuKB3wD6lQI4Wjrwa4dD+4pjK+nRpbsM/FLXwqX
-         f2pxnCMOf7eKEdoIUUbGlfkwcLD5aTmaEkxBRcLpxX55sfHa+ZI1/w07WGQW5T7ZNj1F
-         wdxedBJq58QjPqteEmHSSSrm59ep7buhvutiFfFRUTcNxqglXMYctYe6ivp74XJThwfT
-         HfTLv3vb1F46R4VbAqRnBx1FS5/cWuGZR2kouIjXMJKfqbUfESPjWjWIN4zxMW+mSR09
-         Nqlg6CrdrxGR3E7MJrAsfvF1nEEnXtRr9Plcq0a735m/vUM8pqHmlpwrGcUdJyzp9KiA
-         ZsiA==
-X-Gm-Message-State: AGRZ1gJTHJsPiunoCv2c6YqrcofFujoyjcuOyvZMNGWd+Cs25ndyNtNG
-        lYyTEbIOl+taynY/hI2UJkCxZpM843k=
-X-Google-Smtp-Source: AJdET5fFiCysdaxY6EXsuOOFxGWDPsZZbnvcWA8+2WGE/k1AlC0OHhVAgWopq8XEHIwXD1byD6N5fg==
-X-Received: by 2002:a5d:4d46:: with SMTP id a6-v6mr10586324wru.316.1541172214282;
-        Fri, 02 Nov 2018 08:23:34 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j203-v6sm27400713wmd.46.2018.11.02.08.23.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Nov 2018 08:23:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     benpeart@microsoft.com, git@vger.kernel.org
-Subject: Re: [PATCH v1] add: speed up cmd_add() by utilizing read_cache_preload()
-References: <20181102133050.10756-1-peartben@gmail.com>
-Date:   Sat, 03 Nov 2018 00:23:32 +0900
-In-Reply-To: <20181102133050.10756-1-peartben@gmail.com> (Ben Peart's message
-        of "Fri, 2 Nov 2018 09:30:50 -0400")
-Message-ID: <xmqqy3abo64r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=Jv+0kLlcH6+hSdB6/u4cfPoQtnvEwTK5ezHEW/I4P4o=;
+        b=Pg8cCJZ0QE/8F2kV/oHV10l5LsMTGTbioBRYRZ7u+//gUElXj27/IIJ62F9DZixFOM
+         UCoDJBunrTxKtWGe4e+JBwBch0MPXOMzjuEfNBhgKYLiQ3tPalGnffQyLK0rxCN3OZJy
+         ax73sBDF5tG23aNn3ZWW2yVga1v8Gh0wCOnw6CLTEg9CcvbZNqCZ/00bU6Pab6cQ43IZ
+         CuKMt4l7osc5STEdQQOaHc8Qs+JgNL25sGmzfSankpR9WfAuuNCBf0pbnDvh8cD+gdHN
+         XttVpXxRRJdYZpK8HC74XUmQdTvuNZ35oTkApsgi/LT9OZ85hC05FOiTCeFt89dGJEfJ
+         MUSg==
+X-Gm-Message-State: AGRZ1gKLqm59VxFE19YzSoG9ctYCVZPjRbK506fVX++mn9ehmygs5ttu
+        ad5ajq1JZv1Pf5x179OEUfE=
+X-Google-Smtp-Source: AJdET5fPORFrFysuBGZsc5DKPgCrmWRHEkr6VmS52LIKPCPNxS8/0S7q6BNeeQA0LZVglyIMUAQ6ZQ==
+X-Received: by 2002:a81:2509:: with SMTP id l9-v6mr5263636ywl.180.1541173137743;
+        Fri, 02 Nov 2018 08:38:57 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id q2-v6sm17410522ywa.24.2018.11.02.08.38.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Nov 2018 08:38:56 -0700 (PDT)
+Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
+ <20181031120505.237235-1-dstolee@microsoft.com>
+ <CABPp-BHHG9K0869=4CYkqjN6rwLCzRBiF_Z94KFevSo3_FvYAw@mail.gmail.com>
+ <ad4ab388-6244-1811-ec1b-6f8143df620e@gmail.com>
+ <CABPp-BG6+3F+FY0JP2mj0OCLjp17xQXTe54mBCN+RifQd4Aj2A@mail.gmail.com>
+ <3aadf261-9ed7-6ded-4482-ab01d74802aa@gmail.com>
+ <CABPp-BEa3U6m8jWrHJXjFo77T32LqEKkdDs7H89m0y_gjHgOWw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ba7ee399-029d-8cff-c582-c3e54ab61796@gmail.com>
+Date:   Fri, 2 Nov 2018 11:38:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CABPp-BEa3U6m8jWrHJXjFo77T32LqEKkdDs7H89m0y_gjHgOWw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
-
-> From: Ben Peart <benpeart@microsoft.com>
+On 11/2/2018 10:58 AM, Elijah Newren wrote:
+> On Thu, Nov 1, 2018 at 12:02 PM Derrick Stolee <stolee@gmail.com> wrote:
+>> On 11/1/2018 2:57 PM, Elijah Newren wrote:
+>>> On Thu, Nov 1, 2018 at 5:32 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>>> No rush. I'd just like to understand how removing the commit-graph file
+>>>> can make the new algorithm faster. Putting a similar count in the old
+>>>> algorithm would involve giving a count for every call to
+>>>> in_merge_bases_many(), which would be very noisy.
+>>> $ time git push --dry-run --follow-tags /home/newren/repo-mirror
+>>> count: 92912
+>>> To /home/newren/repo-mirror
+>>>    * [new branch]              test5 -> test5
+>>>
+>>> real    0m3.024s
+>>> user    0m2.752s
+>>> sys    0m0.320s
+>> Is the above test with or without the commit-graph file? Can you run it
+>> in the other mode, too? I'd like to see if the "count" value changes
+>> when the only difference is the presence of a commit-graph file.
+> I apologize for providing misleading information earlier; this was an
+> apples to oranges comparison.  Here's what I did:
 >
-> During an "add", a call is made to run_diff_files() which calls
-> check_remove() for each index-entry.  The preload_index() code
-> distributes some of the costs across multiple threads.
-
-Nice.  I peeked around and noticed that we already do this in
-builtin_diff_index() before running run_diff_index() when !cached,
-and builtin_diff_files(), of course.
-
-> Because the files checked are restricted to pathspec, adding individual
-> files makes no measurable impact but on a Windows repo with ~200K files,
-> 'git add .' drops from 6.3 seconds to 3.3 seconds for a 47% savings.
-
-;-)
-
-> diff --git a/builtin/add.c b/builtin/add.c
-> index ad49806ebf..f65c172299 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -445,11 +445,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  		return 0;
->  	}
->  
-> -	if (read_cache() < 0)
-> -		die(_("index file corrupt"));
-> -
-> -	die_in_unpopulated_submodule(&the_index, prefix);
-> -
->  	/*
->  	 * Check the "pathspec '%s' did not match any files" block
->  	 * below before enabling new magic.
-
-It is not explained why this is not a mere s/read_cache/&_preload/
-in the log message.  I can see it is because you wanted to make the
-pathspec available to preload to further cut down the preloaded
-paths, and I do not think it has any unintended (negatie) side
-effect to parse the pathspec before populating the in-core index,
-but that would have been a good thing to mention in the proposed log
-message.
-
-> @@ -459,6 +454,10 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  		       PATHSPEC_SYMLINK_LEADING_PATH,
->  		       prefix, argv);
->  
-> +	if (read_cache_preload(&pathspec) < 0)
-> +		die(_("index file corrupt"));
-> +
-> +	die_in_unpopulated_submodule(&the_index, prefix);
->  	die_path_inside_submodule(&the_index, &pathspec);
->  
->  	if (add_new_files) {
+> <build a version of git with your fixes>
+> git clone coworker.bundle coworker-repo
+> cd coworker-repo
+> time git push --dry-run --follow-tags /home/newren/repo-mirror
+> git config core.commitgraph true
+> git config gc.writecommitgraph true
+> git gc
+> time git push --dry-run --follow-tags /home/newren/nucleus-mirror
 >
-> base-commit: 4ede3d42dfb57f9a41ac96a1f216c62eb7566cc2
+>
+> I figured I had just done a fresh clone, so surely the gc wouldn't do
+> anything other than write the .git/objects/info/commit-graph file.
+> However, the original bundle contained many references outside of
+> refs/heads/ and refs/tags/:
+>
+> $ git bundle list-heads ../coworker.bundle | grep -v -e refs/heads/ -e
+> refs/tags/ -e HEAD | wc -l
+> 2396
+>
+> These other refs apparently referred to objects not otherwise
+> referenced in refs/heads/ and refs/tags/, and caused the gc to explode
+> lots of loose objects:
+> $ git count-objects -v
+> count: 147604
+> size: 856416
+> in-pack: 1180692
+> packs: 1
+> size-pack: 796143
+> prune-packable: 0
+> garbage: 0
+> size-garbage: 0
+>
+>
+> The slowdown with commit-graph was entirely due to there being lots of
+> loose objects (147K of them).  If I add a git-prune before doing the
+> timing with commit-graph, then the timing with commit-graph is faster
+> than the run without a commit-graph.
+>
+> Sorry for the wild goose chase.
+>
+> And thanks for the fixes; get_reachable_subset() makes things much
+> faster even without a commit-graph, and the commit-graph just improves
+> it more.  :-)
+
+
+Thanks for double-checking! It's good to have confidence that this is a good
+
+algorithm to use.
+
+
+Thanks,
+
+-Stolee
+
