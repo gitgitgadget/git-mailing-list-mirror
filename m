@@ -2,25 +2,25 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A7B31F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 18:58:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E577D1F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 18:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728954AbeKCEHC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 00:07:02 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:35692 "EHLO
+        id S1729731AbeKCEHF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 00:07:05 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:35698 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731092AbeKCEBp (ORCPT
+        by vger.kernel.org with ESMTP id S1731094AbeKCEBp (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 3 Nov 2018 00:01:45 -0400
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id wA2InIeg009923;
-        Fri, 2 Nov 2018 11:53:28 -0700
+        by mx0a-00153501.pphosted.com (8.16.0.23/8.16.0.23) with SMTP id wA2InIef009923;
+        Fri, 2 Nov 2018 11:53:27 -0700
 Received: from mail.palantir.com ([198.97.14.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2ncnvk80vr-2
+        by mx0a-00153501.pphosted.com with ESMTP id 2ncnvk80vr-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
         Fri, 02 Nov 2018 11:53:27 -0700
 Received: from dc-prod-exch-01.YOJOE.local (10.193.18.14) by
@@ -31,15 +31,15 @@ Received: from smtp-transport.yojoe.local (10.129.56.124) by
  dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server id
  15.1.1531.3 via Frontend Transport; Fri, 2 Nov 2018 14:53:24 -0400
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 9DCD82101963;
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 7C94A2101962;
         Fri,  2 Nov 2018 11:53:24 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     <git@vger.kernel.org>
 CC:     <gitster@pobox.com>, <stolee@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 03/10] merge-recursive: increase marker length with depth of recursion
-Date:   Fri, 2 Nov 2018 11:53:11 -0700
-Message-ID: <20181102185317.31015-4-newren@gmail.com>
+Subject: [PATCH v4 01/10] Add testcases for consistency in file collision conflict handling
+Date:   Fri, 2 Nov 2018 11:53:09 -0700
+Message-ID: <20181102185317.31015-2-newren@gmail.com>
 X-Mailer: git-send-email 2.19.0.232.gd14c2061fc
 In-Reply-To: <20181102185317.31015-1-newren@gmail.com>
 References: <20181019193111.12051-1-newren@gmail.com>
@@ -50,7 +50,7 @@ Content-Type:   text/plain; charset=US-ASCII
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-11-02_10:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1807170000 definitions=main-1811020166
@@ -59,317 +59,195 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Later patches in this series will modify file collision conflict
-handling (e.g. from rename/add and rename/rename(2to1) conflicts) so
-that multiply nested conflict markers can arise even before considering
-conflicts in the virtual merge base.  Including the virtual merge base
-will provide a way to get triply (or higher) nested conflict markers.
-This new way to get nested conflict markers will force the need for a
-more general mechanism to extend the length of conflict markers in order
-to differentiate between different nestings.
+Add testcases dealing with file collisions for the following types of
+conflicts:
+  * add/add
+  * rename/add
+  * rename/rename(2to1)
 
-Along with this change to conflict marker length handling, we want to
-make sure that we don't regress handling for other types of conflicts
-with nested conflict markers.  Add a more involved testcase using
-merge.conflictstyle=diff3, where not only does the virtual merge base
-contain conflicts, but its virtual merge base does as well (i.e. a case
-with triply nested conflict markers).  While there are multiple
-reasonable ways to handle nested conflict markers in the virtual merge
-base for this type of situation, the easiest approach that dovetails
-well with the new needs for the file collision conflict handling is to
-require that the length of the conflict markers increase with each
-subsequent nesting.
-
-Subsequent patches which change the rename/add and rename/rename(2to1)
-conflict handling will modify the extra_marker_size flag appropriately
-for their new needs.
+All these conflict types simplify down to two files "colliding"
+and should thus be handled similarly.  This means that rename/add and
+rename/rename(2to1) conflicts need to be modified to behave the same as
+add/add conflicts currently do: the colliding files should be two-way
+merged (instead of the current behavior of writing the two colliding
+files out to separate temporary unique pathnames).  Add testcases which
+check this; subsequent commits will fix the conflict handling to make
+these tests pass.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- ll-merge.c                        |   4 +-
- ll-merge.h                        |   1 +
- merge-recursive.c                 |  25 +++--
- t/t6036-recursive-corner-cases.sh | 151 ++++++++++++++++++++++++++++++
- 4 files changed, 172 insertions(+), 9 deletions(-)
+ t/t6042-merge-rename-corner-cases.sh | 162 +++++++++++++++++++++++++++
+ 1 file changed, 162 insertions(+)
 
-diff --git a/ll-merge.c b/ll-merge.c
-index 0e2800f7bb..aabc1b5c2e 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -384,7 +384,9 @@ int ll_merge(mmbuffer_t *result_buf,
- 	if (opts->virtual_ancestor) {
- 		if (driver->recursive)
- 			driver = find_ll_merge_driver(driver->recursive);
--		marker_size += 2;
-+	}
-+	if (opts->extra_marker_size) {
-+		marker_size += opts->extra_marker_size;
- 	}
- 	return driver->fn(driver, result_buf, path, ancestor, ancestor_label,
- 			  ours, our_label, theirs, their_label,
-diff --git a/ll-merge.h b/ll-merge.h
-index b72b19921e..5b4e158502 100644
---- a/ll-merge.h
-+++ b/ll-merge.h
-@@ -11,6 +11,7 @@ struct ll_merge_options {
- 	unsigned virtual_ancestor : 1;
- 	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
- 	unsigned renormalize : 1;
-+	unsigned extra_marker_size;
- 	long xdl_opts;
- };
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 73b5710386..f795c92a69 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1058,7 +1058,8 @@ static int merge_3way(struct merge_options *o,
- 		      const struct diff_filespec *a,
- 		      const struct diff_filespec *b,
- 		      const char *branch1,
--		      const char *branch2)
-+		      const char *branch2,
-+		      const int extra_marker_size)
- {
- 	mmfile_t orig, src1, src2;
- 	struct ll_merge_options ll_opts = {0};
-@@ -1066,6 +1067,7 @@ static int merge_3way(struct merge_options *o,
- 	int merge_status;
- 
- 	ll_opts.renormalize = o->renormalize;
-+	ll_opts.extra_marker_size = extra_marker_size;
- 	ll_opts.xdl_opts = o->xdl_opts;
- 
- 	if (o->call_depth) {
-@@ -1300,6 +1302,7 @@ static int merge_mode_and_contents(struct merge_options *o,
- 				   const char *filename,
- 				   const char *branch1,
- 				   const char *branch2,
-+				   const int extra_marker_size,
- 				   struct merge_file_info *result)
- {
- 	if (o->branch1 != branch1) {
-@@ -1310,7 +1313,8 @@ static int merge_mode_and_contents(struct merge_options *o,
- 		 */
- 		return merge_mode_and_contents(o, one, b, a,
- 					       filename,
--					       branch2, branch1, result);
-+					       branch2, branch1,
-+					       extra_marker_size, result);
- 	}
- 
- 	result->merge = 0;
-@@ -1351,7 +1355,8 @@ static int merge_mode_and_contents(struct merge_options *o,
- 			int ret = 0, merge_status;
- 
- 			merge_status = merge_3way(o, &result_buf, one, a, b,
--						  branch1, branch2);
-+						  branch1, branch2,
-+						  extra_marker_size);
- 
- 			if ((merge_status < 0) || !result_buf.ptr)
- 				ret = err(o, _("Failed to execute internal merge"));
-@@ -1640,7 +1645,8 @@ static int handle_rename_rename_1to2(struct merge_options *o,
- 		struct diff_filespec other;
- 		struct diff_filespec *add;
- 		if (merge_mode_and_contents(o, one, a, b, one->path,
--					    ci->branch1, ci->branch2, &mfi))
-+					    ci->branch1, ci->branch2,
-+					    o->call_depth * 2, &mfi))
- 			return -1;
- 
- 		/*
-@@ -1707,9 +1713,11 @@ static int handle_rename_rename_2to1(struct merge_options *o,
- 	path_side_1_desc = xstrfmt("version of %s from %s", path, a->path);
- 	path_side_2_desc = xstrfmt("version of %s from %s", path, b->path);
- 	if (merge_mode_and_contents(o, a, c1, &ci->ren1_other, path_side_1_desc,
--				    o->branch1, o->branch2, &mfi_c1) ||
-+				    o->branch1, o->branch2,
-+				    o->call_depth * 2, &mfi_c1) ||
- 	    merge_mode_and_contents(o, b, &ci->ren2_other, c2, path_side_2_desc,
--				    o->branch1, o->branch2, &mfi_c2))
-+				    o->branch1, o->branch2,
-+				    o->call_depth * 2, &mfi_c2))
- 		return -1;
- 	free(path_side_1_desc);
- 	free(path_side_2_desc);
-@@ -2755,7 +2763,7 @@ static int process_renames(struct merge_options *o,
- 
- 					if (merge_mode_and_contents(o, &one, &a, &b, ren1_dst,
- 								    branch1, branch2,
--								    &mfi)) {
-+								    o->call_depth * 2, &mfi)) {
- 						clean_merge = -1;
- 						goto cleanup_and_return;
- 					}
-@@ -3052,7 +3060,8 @@ static int handle_content_merge(struct merge_options *o,
- 			df_conflict_remains = 1;
- 	}
- 	if (merge_mode_and_contents(o, &one, &a, &b, path,
--				    o->branch1, o->branch2, &mfi))
-+				    o->branch1, o->branch2,
-+				    o->call_depth * 2, &mfi))
- 		return -1;
- 
- 	/*
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index f229d7e47b..3091cbc06a 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -1596,4 +1596,155 @@ test_expect_failure 'check nested conflicts' '
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index b97aca7fa2..b6fed2cb9a 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -937,4 +937,166 @@ test_expect_failure 'mod6-check: chains of rename/rename(1to2) and rename/rename
  	)
  '
  
-+# Setup:
-+#          L1---L2---L3
-+#         /  \ /  \ /  \
-+#   master    X1   X2   ?
-+#         \  / \  / \  /
-+#          R1---R2---R3
-+#
-+# Where:
-+#   master has one file named 'content'
-+#   branches L1 and R1 both modify each of the two files in conflicting ways
-+#
-+#   L<n> (n>1) is a merge of R<n-1> into L<n-1>
-+#   R<n> (n>1) is a merge of L<n-1> into R<n-1>
-+#   L<n> and R<n> resolve the conflicts differently.
-+#
-+#   X<n> is an auto-generated merge-base used when merging L<n+1> and R<n+1>.
-+#   By construction, X1 has conflict markers due to conflicting versions.
-+#   X2, due to using merge.conflictstyle=3, has nested conflict markers.
-+#
-+#   So, merging R3 into L3 using merge.conflictstyle=3 should show the
-+#   nested conflict markers from X2 in the base version -- that means we
-+#   have three levels of conflict markers.  Can we distinguish all three?
++test_conflicts_with_adds_and_renames() {
++	sideL=$1
++	sideR=$2
++	expect=$3
 +
-+test_expect_success 'setup virtual merge base with nested conflicts' '
-+	test_create_repo virtual_merge_base_has_nested_conflicts &&
-+	(
-+		cd virtual_merge_base_has_nested_conflicts &&
++	# Setup:
++	#          L
++	#         / \
++	#   master   ?
++	#         \ /
++	#          R
++	#
++	# Where:
++	#   Both L and R have files named 'three' which collide.  Each of
++	#   the colliding files could have been involved in a rename, in
++	#   which case there was a file named 'one' or 'two' that was
++	#   modified on the opposite side of history and renamed into the
++	#   collision on this side of history.
++	#
++	# Questions:
++	#   1) The index should contain both a stage 2 and stage 3 entry
++	#      for the colliding file.  Does it?
++	#   2) When renames are involved, the content merges are clean, so
++	#      the index should reflect the content merges, not merely the
++	#      version of the colliding file from the prior commit.  Does
++	#      it?
++	#   3) There should be a file in the worktree named 'three'
++	#      containing the two-way merged contents of the content-merged
++	#      versions of 'three' from each of the two colliding
++	#      files.  Is it present?
++	#   4) There should not be any three~* files in the working
++	#      tree
++	test_expect_success "setup simple $sideL/$sideR conflict" '
++		test_create_repo simple_${sideL}_${sideR} &&
++		(
++			cd simple_${sideL}_${sideR} &&
 +
-+		# Create some related files now
-+		for i in $(test_seq 1 10)
-+		do
-+			echo Random base content line $i
-+		done >content &&
++			# Create some related files now
++			for i in $(test_seq 1 10)
++			do
++				echo Random base content line $i
++			done >file_v1 &&
++			cp file_v1 file_v2 &&
++			echo modification >>file_v2 &&
 +
-+		# Setup original commit
-+		git add content &&
-+		test_tick && git commit -m initial &&
++			cp file_v1 file_v3 &&
++			echo more stuff >>file_v3 &&
++			cp file_v3 file_v4 &&
++			echo yet more stuff >>file_v4 &&
 +
-+		git branch L &&
-+		git branch R &&
++			# Use a tag to record both these files for simple
++			# access, and clean out these untracked files
++			git tag file_v1 $(git hash-object -w file_v1) &&
++			git tag file_v2 $(git hash-object -w file_v2) &&
++			git tag file_v3 $(git hash-object -w file_v3) &&
++			git tag file_v4 $(git hash-object -w file_v4) &&
++			git clean -f &&
 +
-+		# Create L1
-+		git checkout L &&
-+		echo left >>content &&
-+		git add content &&
-+		test_tick && git commit -m "version L1 of content" &&
-+		git tag L1 &&
++			# Setup original commit (or merge-base), consisting of
++			# files named "one" and "two" if renames were involved.
++			touch irrelevant_file &&
++			git add irrelevant_file &&
++			if [ $sideL = "rename" ]
++			then
++				git show file_v1 >one &&
++				git add one
++			fi &&
++			if [ $sideR = "rename" ]
++			then
++				git show file_v3 >two &&
++				git add two
++			fi &&
++			test_tick && git commit -m initial &&
 +
-+		# Create R1
-+		git checkout R &&
-+		echo right >>content &&
-+		git add content &&
-+		test_tick && git commit -m "verson R1 of content" &&
-+		git tag R1 &&
++			git branch L &&
++			git branch R &&
 +
-+		# Create L2
-+		git checkout L &&
-+		test_must_fail git -c merge.conflictstyle=diff3 merge R1 &&
-+		git checkout L1 content &&
-+		test_tick && git commit -m "version L2 of content" &&
-+		git tag L2 &&
++			# Handle the left side
++			git checkout L &&
++			if [ $sideL = "rename" ]
++			then
++				git mv one three
++			else
++				git show file_v2 >three &&
++				git add three
++			fi &&
++			if [ $sideR = "rename" ]
++			then
++				git show file_v4 >two &&
++				git add two
++			fi &&
++			test_tick && git commit -m L &&
 +
-+		# Create R2
-+		git checkout R &&
-+		test_must_fail git -c merge.conflictstyle=diff3 merge L1 &&
-+		git checkout R1 content &&
-+		test_tick && git commit -m "version R2 of content" &&
-+		git tag R2 &&
++			# Handle the right side
++			git checkout R &&
++			if [ $sideL = "rename" ]
++			then
++				git show file_v2 >one &&
++				git add one
++			fi &&
++			if [ $sideR = "rename" ]
++			then
++				git mv two three
++			else
++				git show file_v4 >three &&
++				git add three
++			fi &&
++			test_tick && git commit -m R
++		)
++	'
 +
-+		# Create L3
-+		git checkout L &&
-+		test_must_fail git -c merge.conflictstyle=diff3 merge R2 &&
-+		git checkout L1 content &&
-+		test_tick && git commit -m "version L3 of content" &&
-+		git tag L3 &&
++	test_expect_$expect "check simple $sideL/$sideR conflict" '
++		(
++			cd simple_${sideL}_${sideR} &&
 +
-+		# Create R3
-+		git checkout R &&
-+		test_must_fail git -c merge.conflictstyle=diff3 merge L2 &&
-+		git checkout R1 content &&
-+		test_tick && git commit -m "version R3 of content" &&
-+		git tag R3
-+	)
-+'
++			git checkout L^0 &&
 +
-+test_expect_success 'check virtual merge base with nested conflicts' '
-+	(
-+		cd virtual_merge_base_has_nested_conflicts &&
++			# Merge must fail; there is a conflict
++			test_must_fail git merge -s recursive R^0 &&
 +
-+		git checkout L3^0 &&
++			# Make sure the index has the right number of entries
++			git ls-files -s >out &&
++			test_line_count = 3 out &&
++			git ls-files -u >out &&
++			test_line_count = 2 out &&
++			# Ensure we have the correct number of untracked files
++			git ls-files -o >out &&
++			test_line_count = 1 out &&
 +
-+		# Merge must fail; there is a conflict
-+		test_must_fail git -c merge.conflictstyle=diff3 merge -s recursive R3^0 &&
++			# Nothing should have touched irrelevant_file
++			git rev-parse >actual      \
++				:0:irrelevant_file \
++				:2:three           \
++				:3:three           &&
++			git rev-parse >expected        \
++				master:irrelevant_file \
++				file_v2                \
++				file_v4                &&
++			test_cmp expected actual &&
 +
-+		# Make sure the index has the right number of entries
-+		git ls-files -s >out &&
-+		test_line_count = 3 out &&
-+		git ls-files -u >out &&
-+		test_line_count = 3 out &&
-+		# Ensure we have the correct number of untracked files
-+		git ls-files -o >out &&
-+		test_line_count = 1 out &&
++			# Make sure we have the correct merged contents for
++			# three
++			git show file_v1 >expected &&
++			cat <<-\EOF >>expected &&
++			<<<<<<< HEAD
++			modification
++			=======
++			more stuff
++			yet more stuff
++			>>>>>>> R^0
++			EOF
 +
-+		# Compare :[23]:content to expected values
-+		git rev-parse L1:content R1:content >expect &&
-+		git rev-parse :2:content :3:content >actual &&
-+		test_cmp expect actual &&
++			test_cmp expected three
++		)
++	'
++}
 +
-+		# Imitate X1 merge base, except without long enough conflict
-+		# markers because a subsequent sed will modify them.  Put
-+		# result into vmb.
-+		git cat-file -p master:content >base &&
-+		git cat-file -p L:content >left &&
-+		git cat-file -p R:content >right &&
-+		cp left merged-once &&
-+		test_must_fail git merge-file --diff3 \
-+			-L "Temporary merge branch 1" \
-+			-L "merged common ancestors"  \
-+			-L "Temporary merge branch 2" \
-+			merged-once \
-+			base        \
-+			right       &&
-+		sed -e "s/^\([<|=>]\)/\1\1\1/" merged-once >vmb &&
-+
-+		# Imitate X2 merge base, overwriting vmb.  Note that we
-+		# extend both sets of conflict markers to make them longer
-+		# with the sed command.
-+		cp left merged-twice &&
-+		test_must_fail git merge-file --diff3 \
-+			-L "Temporary merge branch 1" \
-+			-L "merged common ancestors"  \
-+			-L "Temporary merge branch 2" \
-+			merged-twice \
-+			vmb          \
-+			right        &&
-+		sed -e "s/^\([<|=>]\)/\1\1\1/" merged-twice >vmb &&
-+
-+		# Compare :1:content to expected value
-+		git cat-file -p :1:content >actual &&
-+		test_cmp vmb actual &&
-+
-+		# Determine expected content in final outer merge, compare to
-+		# what the merge generated.
-+		cp -f left expect &&
-+		test_must_fail git merge-file --diff3                      \
-+			-L "HEAD"  -L "merged common ancestors"  -L "R3^0" \
-+			expect     vmb                           right     &&
-+		test_cmp expect content
-+	)
-+'
++test_conflicts_with_adds_and_renames rename rename failure
++test_conflicts_with_adds_and_renames rename add    failure
++test_conflicts_with_adds_and_renames add    rename failure
++test_conflicts_with_adds_and_renames add    add    success
 +
  test_done
 -- 
