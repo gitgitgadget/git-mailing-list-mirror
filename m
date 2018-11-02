@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C58F1F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 22:38:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14B91F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 22:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbeKCHq6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 03:46:58 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37501 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728359AbeKCHq6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 03:46:58 -0400
-Received: by mail-wr1-f68.google.com with SMTP id z3-v6so3459045wru.4
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 15:37:57 -0700 (PDT)
+        id S1728384AbeKCHq7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 03:46:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45567 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728359AbeKCHq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 03:46:59 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k15-v6so469621wre.12
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 15:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0mG5HYtasFXHR/13Bu2eg6gFNOYVTofoWcqgaq3pv9Y=;
-        b=hG6Rh6SK6LyuxZHx3gdxNI2x397L2TP1gUuqgB3OBLxLe1CoxtEC+dSDWTbGoRYs6n
-         CXIx6AuxF5atDRz/5vh+DMfaqSa+BkCI2IUueiBCBD1vVpGeUsv67UPXMsZKzFX7+bQI
-         rb+Q7yy9g1Z19O6QrBpKR4RWOa5o1ushE1HPFOMsRlLnyhCRNOepYq4uYLTAWjglLfDR
-         wBudYaI5efE6+477nc6ru11UvsuU+6iq/zzpgGtgNbHQbF1MXATx0m+M6ZcvEmzflB5R
-         mLbEom5hsBdiu1+IIvuXh8dr3SjIGrnpyz/uQDUhrO3TB6u7lTaXcRFgTiX9XANBU4dn
-         Ku5A==
+        bh=m7ImqB4p4fpZ4QP/K9tBOzZnMKkxYzIoBIlJ7Qr34dk=;
+        b=oSiYc9QUtzdEKw9NrF7bRuTscyukxQlPNqRB2iSjv/5rvJne5l3n9F0OlpOeQ3XhB9
+         Iazr3vHtqNU1gLVHSHjSeLxuskPQqvvabMfIs5ZOMJj9GenTK12tM4H5baq4l+KzY5LV
+         GpeWILEs8mshiNFL9/bf7IwqI+SoHN/sZ3IYKSF6jZ4nyOFFxIYvZNurPri85bZi6if8
+         UhtxB3N8muj7uWrfJrA9XOEAdQ/M9VgxlGKF5aYhdoqdGKa//pDQBJ4D/vmGMfDpH5b0
+         z5bQyfxL5jCZNkP/BgpxqpQa9flVYHJUt33Dz0MjqiddQd+chmrabKhsS7lqLtVurXOF
+         RaoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0mG5HYtasFXHR/13Bu2eg6gFNOYVTofoWcqgaq3pv9Y=;
-        b=Hgcrj+pgZfFj0h7h9poOanrFDmxxDq25a5qQkOhqpmkW95pzD0XwA9CAzQtZv9ZLkC
-         uXTApyzjU4xiJ1QE2T3dm/tBF4zJbF5JE0pFuDNNYGQXoo2Kb/ADz+BZmk8rFfrRg89U
-         C06+JxxbwWZglCuCBfaSnL374N52VkyFqWKyT8VLSZZb5WDpSFE9OBLZdN4BtQ8bo2nF
-         6446rNzyAdaHlvPY8fhC2b7bGLLORGoGLQcdvlYu6R1b1hg7YXrQ16qpmVPoMiwyj+FQ
-         h+FL8yEeEUipjTVvtbt2t5jweejp6JuYG5R2ZnXF7NVEcKQIJet6iXYy3OjUCoaOYLqT
-         RmiQ==
-X-Gm-Message-State: AGRZ1gJPVit6E1k3QgQ/ZOHjN9WXlZRa4/d32qwUAdhF6UEGhWBXpplz
-        8sRFhscjxa7RlWvrNtlnEhfDtz3v
-X-Google-Smtp-Source: AJdET5fsGDlYh3kUtp3hfzfPz5XdF5evBjrMHYw3P/5xIjx4Ovref67MTAa8XwMstGkyn8hBO3H0qw==
-X-Received: by 2002:adf:f082:: with SMTP id n2-v6mr7379578wro.88.1541198276533;
-        Fri, 02 Nov 2018 15:37:56 -0700 (PDT)
+        bh=m7ImqB4p4fpZ4QP/K9tBOzZnMKkxYzIoBIlJ7Qr34dk=;
+        b=aRhXECTbg41jGtkouTBLoVLInQgXUzsdfHztL69tp3P4mI/Wa9vQLdGcWcTolQzH2K
+         xF97OgFBa1xCUs8+zEpvU7lPIMpRWfja//1u0TzXT/VMxRbbpwEHD8StF9sYQgYp332b
+         KcIf36K+ClBmREHcGGogqPnsXXPPuypVYQqWBrqAgcFsrAYCszwCTj3NBZnrqpu/JG4E
+         WFfqywKHQXlHuGAei/QrbBjldwfcEeb/4SULsakuoRePgdCyUpGaCuxUhzeZMwIMPp99
+         q0Kth24gLjq6uAUmzaMWIsN1nvW71cYzXIZ4gm0qZBjdCiGIpJkweldXVBgWpNhkfhJG
+         SeJw==
+X-Gm-Message-State: AGRZ1gIliG9M3vm2eTpkSiDfonxING2KXGksLNvLX1gF0J/tF+d7g9dK
+        tGkFZSrGtmyqZlllYqsl223ad52O
+X-Google-Smtp-Source: AJdET5dp6N5wUBIZ+xB9B78QACYoRzpEBNyt133MvqxYFazo2ZiddiDAaqE7bu/DFyrvJadKfxVTlw==
+X-Received: by 2002:adf:fbc6:: with SMTP id d6-v6mr7367832wrs.241.1541198278076;
+        Fri, 02 Nov 2018 15:37:58 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a12-v6sm21461469wrr.71.2018.11.02.15.37.55
+        by smtp.gmail.com with ESMTPSA id a12-v6sm21461469wrr.71.2018.11.02.15.37.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Nov 2018 15:37:55 -0700 (PDT)
+        Fri, 02 Nov 2018 15:37:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC/PATCH 2/5] Makefile: conform some of the code to our coding standards
-Date:   Fri,  2 Nov 2018 22:37:40 +0000
-Message-Id: <20181102223743.4331-3-avarab@gmail.com>
+Subject: [RFC/PATCH 3/5] Makefile: stop hiding failures during "install"
+Date:   Fri,  2 Nov 2018 22:37:41 +0000
+Message-Id: <20181102223743.4331-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
 In-Reply-To: <87efkkdwcv.fsf@evledraar.gmail.com>
 References: <87efkkdwcv.fsf@evledraar.gmail.com>
@@ -75,68 +75,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This code is still very much unlike our usual style since it was
-lifted from the Makefile, but we can at least make some of it use the
-usual style and line spacing.
+Change the fallback mechanism where we try to create hardlinks and
+ultimately fall back on a plain copy to emit the errors it encounters
+instead of hiding them away and silently falling back to copying.
+
+Hiding these errors dates back to 3e073dc561 ("Makefile: always
+provide a fallback when hardlinks fail", 2008-08-25) when the existing
+"hardlink or copy" logic was amended to hide the errors.
+
+At that time "make install" hadn't yet been taught any of the
+NO_*_HARDLINK options, that happened later in 3426e34fed ("Add
+NO_CROSS_DIRECTORY_HARDLINKS support to the Makefile", 2009-05-11) and
+was finally finished to roughly the current form in
+70de5e65e8 ("Makefile: NO_INSTALL_HARDLINKS", 2012-05-02).
+
+If someone is building a git in an environment where hard linking
+fails, they can now specify some combination of
+NO_INSTALL_HARDLINKS=YesPlease and NO_INSTALL_HARDLINKS=YesPlease, it
+doesn't make sense anymore to not only implicitly fall back to
+copying, but to do so silently.
+
+This change leaves no way to not get errors spewed if we're trying and
+failing to e.g. make symlinks and having to fall back on "cp". I think
+that's OK.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- install_programs | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ install_programs | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/install_programs b/install_programs
-index e287108112..d3333cd25f 100755
+index d3333cd25f..367e9a6cdf 100755
 --- a/install_programs
 +++ b/install_programs
-@@ -50,17 +50,21 @@ do
- 	esac
- 	shift
- done &&
--{ test "$bindir/" = "$execdir/" ||
--  for p in $list_bindir_standalone; do
--	$RM "$execdir/$p" &&
--	test -n "$INSTALL_SYMLINKS" &&
--	ln -s "$destdir_from_execdir/$bindir_relative/$p" "$execdir/$p" ||
--	{ test -z "$NO_INSTALL_HARDLINKS$NO_CROSS_DIRECTORY_HARDLINKS" &&
--	  ln "$bindir/$p" "$execdir/$p" 2>/dev/null ||
--	  cp "$bindir/$p" "$execdir/$p" || exit; }
--  done;
--} &&
--for p in $list_bindir_git_dashed; do
-+
-+if test "$bindir/" != "$execdir/"
-+then
-+	for p in $list_bindir_standalone; do
-+		$RM "$execdir/$p" &&
-+		test -n "$INSTALL_SYMLINKS" &&
-+		ln -s "$destdir_from_execdir/$bindir_relative/$p" "$execdir/$p" ||
-+		{ test -z "$NO_INSTALL_HARDLINKS$NO_CROSS_DIRECTORY_HARDLINKS" &&
-+		  ln "$bindir/$p" "$execdir/$p" 2>/dev/null ||
-+		  cp "$bindir/$p" "$execdir/$p" || exit; }
-+	done
-+fi &&
-+
-+for p in $list_bindir_git_dashed
-+do
- 	$RM "$bindir/$p" &&
+@@ -58,7 +58,7 @@ then
+ 		test -n "$INSTALL_SYMLINKS" &&
+ 		ln -s "$destdir_from_execdir/$bindir_relative/$p" "$execdir/$p" ||
+ 		{ test -z "$NO_INSTALL_HARDLINKS$NO_CROSS_DIRECTORY_HARDLINKS" &&
+-		  ln "$bindir/$p" "$execdir/$p" 2>/dev/null ||
++		  ln "$bindir/$p" "$execdir/$p" ||
+ 		  cp "$bindir/$p" "$execdir/$p" || exit; }
+ 	done
+ fi &&
+@@ -69,8 +69,8 @@ do
  	test -n "$INSTALL_SYMLINKS" &&
  	ln -s "git$X" "$bindir/$p" ||
-@@ -69,6 +73,7 @@ for p in $list_bindir_git_dashed; do
- 	  ln -s "git$X" "$bindir/$p" 2>/dev/null ||
+ 	{ test -z "$NO_INSTALL_HARDLINKS" &&
+-	  ln "$bindir/git$X" "$bindir/$p" 2>/dev/null ||
+-	  ln -s "git$X" "$bindir/$p" 2>/dev/null ||
++	  ln "$bindir/git$X" "$bindir/$p" ||
++	  ln -s "git$X" "$bindir/$p" ||
  	  cp "$bindir/git$X" "$bindir/$p" || exit; }
  done &&
-+
- for p in $list_execdir_git_dashed; do
- 	$RM "$execdir/$p" &&
+ 
+@@ -79,8 +79,8 @@ for p in $list_execdir_git_dashed; do
  	test -n "$INSTALL_SYMLINKS" &&
-@@ -78,6 +83,7 @@ for p in $list_execdir_git_dashed; do
- 	  ln -s "git$X" "$execdir/$p" 2>/dev/null ||
+ 	ln -s "$destdir_from_execdir/$bindir_relative/git$X" "$execdir/$p" ||
+ 	{ test -z "$NO_INSTALL_HARDLINKS" &&
+-	  ln "$execdir/git$X" "$execdir/$p" 2>/dev/null ||
+-	  ln -s "git$X" "$execdir/$p" 2>/dev/null ||
++	  ln "$execdir/git$X" "$execdir/$p" ||
++	  ln -s "git$X" "$execdir/$p" ||
  	  cp "$execdir/git$X" "$execdir/$p" || exit; }
  done &&
-+
- for p in $list_execdir_curl_aliases; do
- 	$RM "$execdir/$p" &&
+ 
+@@ -89,7 +89,7 @@ for p in $list_execdir_curl_aliases; do
  	test -n "$INSTALL_SYMLINKS" &&
+ 	ln -s "git-remote-http$X" "$execdir/$p" ||
+ 	{ test -z "$NO_INSTALL_HARDLINKS" &&
+-	  ln "$execdir/git-remote-http$X" "$execdir/$p" 2>/dev/null ||
+-	  ln -s "git-remote-http$X" "$execdir/$p" 2>/dev/null ||
++	  ln "$execdir/git-remote-http$X" "$execdir/$p" ||
++	  ln -s "git-remote-http$X" "$execdir/$p" ||
+ 	  cp "$execdir/git-remote-http$X" "$execdir/$p" || exit; }
+ done
 -- 
 2.19.1.930.g4563a0d9d0
 
