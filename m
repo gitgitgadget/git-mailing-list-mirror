@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 814C71F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 13:14:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C031A1F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 13:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727552AbeKBWVz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 18:21:55 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:34418 "EHLO
+        id S1727591AbeKBWV5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 18:21:57 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39736 "EHLO
         mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726094AbeKBWVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 18:21:55 -0400
-Received: by mail-pg1-f193.google.com with SMTP id k1-v6so996016pgq.1
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 06:14:47 -0700 (PDT)
+        with ESMTP id S1726094AbeKBWV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 18:21:56 -0400
+Received: by mail-pg1-f193.google.com with SMTP id r9-v6so984195pgv.6
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 06:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ITjmFg+PlIsAwHo1QEhE9E61cL2wnOaGWDvxGULWtNQ=;
-        b=p268/RqrBL+qILfa0QfCtE6X85feFXOsJ4Jq+wOT+wVRUffH/REJN/koiCMn6vodQJ
-         u0cHtg/DjlEutTa2u1/soYncSph//UmzpQK3GQPCkhFY++3fPmDz92UuUAlFEQyis2G1
-         eeBVyG7ebV7Sp/bzpB1QMcmcwcB8jEyezbQJoD874t/cMRDMrNKmWwjxP765KS+KLwaY
-         CO0Zvz1P/wSpmviLG07UHeZgLrF3QgiQ+sqI6AlMEFkv9Cz2aB9lwiwp8orbdu5zDRyN
-         FQOzBdScM/McP8HnhYPAC/1jHoqD/v4MnaYYTtca/nwlPKvL2YiBnhYIihR5fRnWi1D5
-         lM1Q==
+        bh=GPhYaq+heCDb7TbygE+8+SqfEFWI0gLbUbkBgEqQOpY=;
+        b=HvM9OKlqZFX5kk3sKi3EhAecCnY/Tali4YW/jw7p9GWloV41hHdE8L1sonLvA+HvM0
+         sd6KlkZtpChkmhD4RNR7+febi2n1//Osw4j4kbsAaczf1Qcw8XcahJzbg/qLJS8ryqbb
+         sUYACxTMoIT+uL2Kf7RsBpGDVYZyNoscjoL4bf++LdCv0sKxNDWFtudnr4AiOgzi3bo9
+         k8fOVBpBWbeSmhKYrZqmX/MxINPrRPHSWpktujNYWzn36GPky5Z1kB66I0aQ77Vi4etp
+         Olwk53zEBxX39DYJMsHpubPeqdKoPaxyvOXXAKX71e3ouL04Ut1iGD6isarqDK0MgiBi
+         F5IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ITjmFg+PlIsAwHo1QEhE9E61cL2wnOaGWDvxGULWtNQ=;
-        b=FJOXKBQorApo8Db77huq0oPLTYIC6ny1UDBdRd1K8IzhWQP6BAQ/jSLDwX7xI69iXK
-         YbAYmnCNPyOsNlL+fxjNo7vFxclK2vt2bcRBsf+tRuE1XggSdXWl7b/NCdO51qEGpGZs
-         uDmjz2MUdaQf6usQ8Swy1txUb8OiKjojxmlZ5AVEy17s5zFwNckS4jd+DJO6K8zxOKqq
-         svGkaQJd5wS17CTIbpsEb47HUzPh3qQLzApajblepAloPVr0CfXgUEW33Q16u0v5V6BX
-         qBGNimZz4Q3OXIv9XQ2TZQL/XzD+rDy4SXIk1SuETkfiyhGdCzfQud86Q9TXROmChxDf
-         OLdA==
-X-Gm-Message-State: AGRZ1gIED3NW3LLCPBF0Ef6HhFuWvAhu6OMFX2O/cd1SB1K8G/6xb4yp
-        1W2k2ztkpIqxvjOqHHZYrjSTnt1j
-X-Google-Smtp-Source: AJdET5dGYq3lq2ShGjMjAzWzJpcej8mnlEJvhfEsMm2Vu+0k4bvvvTXYK8F4HcFPRTYgQtacPngqDw==
-X-Received: by 2002:a63:181:: with SMTP id 123-v6mr11045984pgb.149.1541164486571;
-        Fri, 02 Nov 2018 06:14:46 -0700 (PDT)
+        bh=GPhYaq+heCDb7TbygE+8+SqfEFWI0gLbUbkBgEqQOpY=;
+        b=gRof8BOrg4T+BoDPm7Pv5N+aRwSs1yDZUgDydbaeLmMZaG/f7VglRyFFWOBt7chZC5
+         LfGmWVJGW8y1td1keJdnhPPTnkytToylNsYGKwoHRIbIeBn0iESoBt3YKGk0HiAbKDz1
+         p6/yVlhvlAnqkHOokwkSmMk0/jNECkZGXdSVM23xNo/GMylmWpgPjHDQPkDi3bhnDFpi
+         AD7pI9ePNxcq7bZhmGW/M3T/UCWPVYfa2UZrzuJuQVC2OiPRs9W4gSFX0kEmzONsi6Zm
+         cGIQmCmo/2fy46H/6Ihwf3OlyhL+KQ49KwAEt6VlMLQyLmmaFcF/Z0lGcnmWIa07BLb9
+         29yQ==
+X-Gm-Message-State: AGRZ1gIX1RUfKJJt2joc3Ojmjy/j66XzByzngp7hsKlyxl5UiNBmG8lt
+        p03LiMnvq7BTSVpHv92byvJn1jQ5
+X-Google-Smtp-Source: AJdET5fT6zxkj22OwzYP2hpS86r2DdmaHXUzgjFJi2BWzsavRWyLh5kpTfpVI5mqfaRJhSufa4x8qw==
+X-Received: by 2002:a62:9c8c:: with SMTP id u12-v6mr11692642pfk.162.1541164488030;
+        Fri, 02 Nov 2018 06:14:48 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id p15-v6sm28963625pfj.72.2018.11.02.06.14.45
+        by smtp.gmail.com with ESMTPSA id s13-v6sm85674606pgs.76.2018.11.02.06.14.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Nov 2018 06:14:45 -0700 (PDT)
-Date:   Fri, 02 Nov 2018 06:14:45 -0700 (PDT)
-X-Google-Original-Date: Fri, 02 Nov 2018 13:14:40 GMT
-Message-Id: <9e570603bda528986f425cae8a9c32ba700bc29b.1541164482.git.gitgitgadget@gmail.com>
+        Fri, 02 Nov 2018 06:14:47 -0700 (PDT)
+Date:   Fri, 02 Nov 2018 06:14:47 -0700 (PDT)
+X-Google-Original-Date: Fri, 02 Nov 2018 13:14:41 GMT
+Message-Id: <52e847b9288439f25a7e06abfe0c68bc1e6dc915.1541164482.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.60.v2.git.gitgitgadget@gmail.com>
 References: <pull.60.git.gitgitgadget@gmail.com>
         <pull.60.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/3] commit-reach: implement get_reachable_subset
+Subject: [PATCH v2 2/3] test-reach: test get_reachable_subset
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,147 +72,154 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The existing reachability algorithms in commit-reach.c focus on
-finding merge-bases or determining if all commits in a set X can
-reach at least one commit in a set Y. However, for two commits sets
-X and Y, we may also care about which commits in Y are reachable
-from at least one commit in X.
+The get_reachable_subset() method returns the list of commits in
+the 'to' array that are reachable from at least one commit in the
+'from' array. Add tests that check this method works in a few
+cases:
 
-Implement get_reachable_subset() which answers this question. Given
-two arrays of commits, 'from' and 'to', return a commit_list with
-every commit from the 'to' array that is reachable from at least
-one commit in the 'from' array.
+1. All commits in the 'to' list are reachable. This exercises the
+   early-termination condition.
 
-The algorithm is a simple walk starting at the 'from' commits, using
-the PARENT2 flag to indicate "this commit has already been added to
-the walk queue". By marking the 'to' commits with the PARENT1 flag,
-we can determine when we see a commit from the 'to' array. We remove
-the PARENT1 flag as we add that commit to the result list to avoid
-duplicates.
+2. Some commits in the 'to' list are reachable. This exercises the
+   loop-termination condition.
 
-The order of the resulting list is a reverse of the order that the
-commits are discovered in the walk.
-
-There are a couple shortcuts to avoid walking more than we need:
-
-1. We determine the minimum generation number of commits in the
-   'to' array. We do not walk commits with generation number
-   below this minimum.
-
-2. We count how many distinct commits are in the 'to' array, and
-   decrement this count when we discover a 'to' commit during the
-   walk. If this number reaches zero, then we can terminate the
-   walk.
-
-Tests will be added using the 'test-tool reach' helper in a
-subsequent commit.
+3. No commits in the 'to' list are reachable. This exercises the
+   NULL return condition.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-reach.c | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++
- commit-reach.h | 13 ++++++++++
- 2 files changed, 83 insertions(+)
+ t/helper/test-reach.c | 34 ++++++++++++++++++++++++----
+ t/t6600-test-reach.sh | 52 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 82 insertions(+), 4 deletions(-)
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 9f79ce0a22..8ad5352752 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -688,3 +688,73 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 	object_array_clear(&from_objs);
- 	return result;
- }
-+
-+struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
-+					 struct commit **to, int nr_to,
-+					 unsigned int reachable_flag)
-+{
-+	struct commit **item;
-+	struct commit *current;
-+	struct commit_list *found_commits = NULL;
-+	struct commit **to_last = to + nr_to;
-+	struct commit **from_last = from + nr_from;
-+	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
-+	int num_to_find = 0;
-+
-+	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
-+
-+	for (item = to; item < to_last; item++) {
-+		struct commit *c = *item;
-+		
-+		parse_commit(c);
-+		if (c->generation < min_generation)
-+			min_generation = c->generation;
-+
-+		if (!(c->object.flags & PARENT1)) {
-+			c->object.flags |= PARENT1;
-+			num_to_find++;
-+		}
-+	}
-+
-+	for (item = from; item < from_last; item++) {
-+		struct commit *c = *item;
-+		if (!(c->object.flags & PARENT2)) {
-+			c->object.flags |= PARENT2;
-+			parse_commit(c);
-+
-+			prio_queue_put(&queue, *item);
-+		}
-+	}
-+
-+	while (num_to_find && (current = prio_queue_get(&queue)) != NULL) {
-+		struct commit_list *parents;
-+
-+		if (current->object.flags & PARENT1) {
-+			current->object.flags &= ~PARENT1;
-+			current->object.flags |= reachable_flag;
-+			commit_list_insert(current, &found_commits);
-+			num_to_find--;
-+		}
-+
-+		for (parents = current->parents; parents; parents = parents->next) {
-+			struct commit *p = parents->item;
-+
-+			parse_commit(p);
-+
-+			if (p->generation < min_generation)
-+				continue;
-+
-+			if (p->object.flags & PARENT2)
-+				continue;
-+
-+			p->object.flags |= PARENT2;
-+			prio_queue_put(&queue, p);
-+		}
-+	}
-+
-+	clear_commit_marks_many(nr_to, to, PARENT1);
-+	clear_commit_marks_many(nr_from, from, PARENT2);
-+
-+	return found_commits;
-+}
-+
-diff --git a/commit-reach.h b/commit-reach.h
-index 7d313e2975..bb34af0269 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -74,4 +74,17 @@ int can_all_from_reach_with_flag(struct object_array *from,
- int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 		       int commit_date_cutoff);
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index 08d2ea68e8..a0272178b7 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -32,8 +32,8 @@ int cmd__reach(int ac, const char **av)
+ 	struct commit *A, *B;
+ 	struct commit_list *X, *Y;
+ 	struct object_array X_obj = OBJECT_ARRAY_INIT;
+-	struct commit **X_array;
+-	int X_nr, X_alloc;
++	struct commit **X_array, **Y_array;
++	int X_nr, X_alloc, Y_nr, Y_alloc;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct repository *r = the_repository;
  
+@@ -44,9 +44,10 @@ int cmd__reach(int ac, const char **av)
+ 
+ 	A = B = NULL;
+ 	X = Y = NULL;
+-	X_nr = 0;
+-	X_alloc = 16;
++	X_nr = Y_nr = 0;
++	X_alloc = Y_alloc = 16;
+ 	ALLOC_ARRAY(X_array, X_alloc);
++	ALLOC_ARRAY(Y_array, Y_alloc);
+ 
+ 	while (strbuf_getline(&buf, stdin) != EOF) {
+ 		struct object_id oid;
+@@ -92,6 +93,8 @@ int cmd__reach(int ac, const char **av)
+ 
+ 			case 'Y':
+ 				commit_list_insert(c, &Y);
++				ALLOC_GROW(Y_array, Y_nr + 1, Y_alloc);
++				Y_array[Y_nr++] = c;
+ 				break;
+ 
+ 			default:
+@@ -136,6 +139,29 @@ int cmd__reach(int ac, const char **av)
+ 			filter.with_commit_tag_algo = 0;
+ 
+ 		printf("%s(_,A,X,_):%d\n", av[1], commit_contains(&filter, A, X, &cache));
++	} else if (!strcmp(av[1], "get_reachable_subset")) {
++		const int reachable_flag = 1;
++		int i, count = 0;
++		struct commit_list *current;
++		struct commit_list *list = get_reachable_subset(X_array, X_nr,
++								Y_array, Y_nr,
++								reachable_flag);
++		printf("get_reachable_subset(X,Y)\n");
++		for (current = list; current; current = current->next) {
++			if (!(list->item->object.flags & reachable_flag))
++				die(_("commit %s is not marked reachable"),
++				    oid_to_hex(&list->item->object.oid));
++			count++;
++		}
++		for (i = 0; i < Y_nr; i++) {
++			if (Y_array[i]->object.flags & reachable_flag)
++				count--;
++		}
 +
-+/*
-+ * Return a list of commits containing the commits in the 'to' array
-+ * that are reachable from at least one commit in the 'from' array.
-+ * Also add the given 'flag' to each of the commits in the returned list.
-+ *
-+ * This method uses the PARENT1 and PARENT2 flags during its operation,
-+ * so be sure these flags are not set before calling the method.
-+ */
-+struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
-+					 struct commit **to, int nr_to,
-+					 unsigned int reachable_flag);
++		if (count < 0)
++			die(_("too many commits marked reachable"));
 +
- #endif
++		print_sorted_commit_ids(list);
+ 	}
+ 
+ 	exit(0);
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index ae94b27f70..a0c64e617a 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -265,4 +265,56 @@ test_expect_success 'commit_contains:miss' '
+ 	test_three_modes commit_contains --tag
+ '
+ 
++test_expect_success 'get_reachable_subset:all' '
++	cat >input <<-\EOF &&
++	X:commit-9-1
++	X:commit-8-3
++	X:commit-7-5
++	X:commit-6-6
++	X:commit-1-7
++	Y:commit-3-3
++	Y:commit-1-7
++	Y:commit-5-6
++	EOF
++	(
++		echo "get_reachable_subset(X,Y)" &&
++		git rev-parse commit-3-3 \
++			      commit-1-7 \
++			      commit-5-6 | sort
++	) >expect &&
++	test_three_modes get_reachable_subset
++'
++
++test_expect_success 'get_reachable_subset:some' '
++	cat >input <<-\EOF &&
++	X:commit-9-1
++	X:commit-8-3
++	X:commit-7-5
++	X:commit-1-7
++	Y:commit-3-3
++	Y:commit-1-7
++	Y:commit-5-6
++	EOF
++	(
++		echo "get_reachable_subset(X,Y)" &&
++		git rev-parse commit-3-3 \
++			      commit-1-7 | sort
++	) >expect &&
++	test_three_modes get_reachable_subset
++'
++
++test_expect_success 'get_reachable_subset:none' '
++	cat >input <<-\EOF &&
++	X:commit-9-1
++	X:commit-8-3
++	X:commit-7-5
++	X:commit-1-7
++	Y:commit-9-3
++	Y:commit-7-6
++	Y:commit-2-8
++	EOF
++	echo "get_reachable_subset(X,Y)" >expect &&
++	test_three_modes get_reachable_subset
++'
++
+ test_done
 -- 
 gitgitgadget
 
