@@ -2,128 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD181F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 17:30:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDA101F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 17:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbeKCCi2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 22:38:28 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:41636 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbeKCCi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 22:38:28 -0400
-Received: by mail-yb1-f196.google.com with SMTP id t13-v6so1087488ybb.8
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 10:30:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Io+Hw39Vss24O1Rhj39TqvQ1v+lSL+nGQOFbbxE7e6k=;
-        b=lD5WdNpXeYXBixzUX+gPWZHRVXc2cLJKMRw44bRSiB+mrC1IMKI62ZaWU5Lw9SQhy/
-         +I3FpwzfkarKvNn/qWjR6Xkk1OWMSJPkzaJK8lNaF5SqQR991fhY7v25MZb61u/1X29P
-         2I0N+cv8PciOS/DwrXsq5pcOKOXIXgg2e7Pva4TcikbIxQ33ywEthd1UlKbzRLXThZOU
-         K9sR4fa4nYtQvZ65LuyP3oMYqcpSrmmc952VObcCF3Armric2fRDpesf6I2NGPxjEA4C
-         b8q3dGurssla4/n2VsffEQK80opp2YglP21epyUnKya6Lr3eisVtWolcwnX61CjGGtib
-         rxOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Io+Hw39Vss24O1Rhj39TqvQ1v+lSL+nGQOFbbxE7e6k=;
-        b=m/HBR5nneaJGy8Kl4NUrgQXq69UA7OXhf/pTeol0FT3IiIPPlavkNKqg3eCCR/Sr9o
-         sW/40311GXzvid9zxZJ9aTBf+D6s9CYNiyKaSVnYhY6qAqzyKjdaJT9i0p/0Z8OL+0Lo
-         HH1Htm1bhfwcJ4YgYbD4ZQgopj4jnp9FVUlpA+E9oQUNqO28+EWuP/in0kbp7qhDktfo
-         6jBk3arxx7kmOIENvG8nGyZbiV4HVEIFVfjKvXayMJ30wmt5Un373sNcHFl16d+kYgN5
-         9Y656ViCimZRpMX14Ja2P0/FJDaVpLxQMXsnYTtg3qxz3b2yahzkvUucMJ9i/phQIjds
-         aZPA==
-X-Gm-Message-State: AGRZ1gLAyiKn9KCtAz9fDxzCBJcl4+DONOiNKKpD3d8pBOC8r8YrBdNW
-        Ja3FjDxxqZyyEtKbqDIeG/U=
-X-Google-Smtp-Source: AJdET5fQkY6HZfh9mCdgrHEIBmrZk9wuMrjAtNfrf3QLcDPC53IzkdApQS7dXAEq81uS5StSME6M2w==
-X-Received: by 2002:a25:1585:: with SMTP id 127-v6mr12682138ybv.208.1541179832630;
-        Fri, 02 Nov 2018 10:30:32 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id b186-v6sm1546064ywe.27.2018.11.02.10.30.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Nov 2018 10:30:32 -0700 (PDT)
-Subject: Re: [PATCH v3 8/8] merge-recursive: improve
- rename/rename(1to2)/add[/add] handling
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20181014020537.17991-1-newren@gmail.com>
- <20181019193111.12051-1-newren@gmail.com>
- <20181019193111.12051-9-newren@gmail.com>
- <d23b4e26-4df4-273d-a75c-a0af915a6e5e@gmail.com>
- <CABPp-BFZugCFDS_A7FrWdRhp7WO0m8jhsqbSnNCSUWnAVz7mtg@mail.gmail.com>
- <CABPp-BFwimcDhwMeFcTJLy-omXiBNzZApkyCnSSRfwXvKi2OUQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c3b4d1d5-2a7e-b83c-d8cc-bdac6a8835e2@gmail.com>
-Date:   Fri, 2 Nov 2018 13:30:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
-MIME-Version: 1.0
-In-Reply-To: <CABPp-BFwimcDhwMeFcTJLy-omXiBNzZApkyCnSSRfwXvKi2OUQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        id S1728030AbeKCCkh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 22:40:37 -0400
+Received: from smtpoutz24.laposte.net ([194.117.213.99]:40887 "EHLO
+        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726085AbeKCCkg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 22:40:36 -0400
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout012 (Postfix) with ESMTP id 09D1216501C
+        for <git@vger.kernel.org>; Fri,  2 Nov 2018 18:32:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
+        t=1541179958; bh=+EzVsSrfO4v8hqljy0L4qTen/jRuIjb7jseOeseUIl0=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=i/wM+2tu0bpVXqiBf0+9+4XK4+XawTTBvhRHVHN/5b5MHNKUJ70PFMvNpVH4Eof38
+         mrbJu4Zza1DG0lNBMgACZoZtq98VHIl9HvaWEF2rzTKus+ihYPbi6xCN0AGsbsncat
+         qKxmJ9T9C0EJWAfBgNWnpLPkdgQAxL5FSi8lSFpLhziZ17AgNXU4xv1+WzJmpbVfl0
+         cXSXHfwVq71FvUGcC13ynrZHHRNhNTghZumPtPuekkMlvfEivrcTBoEXnpMRP3Ytej
+         P5mvaNmOmQX+HCQ4Dq3vgOM/KRoSotlh+hzDDPeJ0gVnBDdDaF5sk1rgpQQIoCj6Pi
+         woeiVg4HQKPfQ==
+Received: from smtp.laposte.net (localhost [127.0.0.1])
+        by lpn-prd-vrout012 (Postfix) with ESMTP id EE2C016500B
+        for <git@vger.kernel.org>; Fri,  2 Nov 2018 18:32:37 +0100 (CET)
+Received: from lpn-prd-vrin004 (lpn-prd-vrin004.prosodie [10.128.63.5])
+        by lpn-prd-vrout012 (Postfix) with ESMTP id EB00A16500E
+        for <git@vger.kernel.org>; Fri,  2 Nov 2018 18:32:37 +0100 (CET)
+Received: from lpn-prd-vrin004 (localhost [127.0.0.1])
+        by lpn-prd-vrin004 (Postfix) with ESMTP id D9EF37289B6
+        for <git@vger.kernel.org>; Fri,  2 Nov 2018 18:32:37 +0100 (CET)
+Received: from arekh.ddns.net (unknown [82.64.49.105])
+        by lpn-prd-vrin004 (Postfix) with ESMTPA id C0A63726DA1;
+        Fri,  2 Nov 2018 18:32:37 +0100 (CET)
+Received: from cerebro.okg (box.okg [192.168.0.1])
+        by arekh.ddns.net (Postfix) with ESMTPSA id 6446C2201EC;
+        Fri,  2 Nov 2018 18:32:37 +0100 (CET)
+Message-ID: <841569ad61dd5f4f5424e8c2860a4c01f146c8a1.camel@laposte.net>
+Subject: Re: [RFE] Please add name and email to git credentials
+From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Date:   Fri, 02 Nov 2018 18:32:36 +0100
+In-Reply-To: <20181102165110.GA11212@sigill.intra.peff.net>
+References: <6d8ef01ad9eb08d90cb9848eeaeabe6784b7b3e3.camel@laposte.net>
+         <87zhutjb3t.fsf@evledraar.gmail.com>
+         <6f3d8c49e1d44ab20d4169e5254364cba707f1af.camel@laposte.net>
+         <CAP8UFD1rTJNOZzFMryY9BNKHUZKE8FUEgw+4jFfnZ7G8KGNrkw@mail.gmail.com>
+         <62bf61555a6c2789e959e4f085bfedf28b60f268.camel@laposte.net>
+         <CAP8UFD0DHGShwo=DnwbSHz3nvRMF9P4GegEzC27uwHLXQ=A4Zw@mail.gmail.com>
+         <1e3901b9a75a043d9c31d66d98410f3288a7c5be.camel@laposte.net>
+         <20181102165110.GA11212@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-VR-FullState: 0
+X-VR-Score: 0
+X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieelgdekjecutefuodetggdotefrodftvfcurfhrohhf
+X-VR-Cause-2: ihhlvgemucfntefrqffuvffgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkffuhffvffgj
+X-VR-Cause-3: fhgtfggggfesthekredttderjeenucfhrhhomheppfhitgholhgrshcuofgrihhlhhhothcuoehnihgt
+X-VR-Cause-4: ohhlrghsrdhmrghilhhhohhtsehlrghpohhsthgvrdhnvghtqeenucfkphepkedvrdeigedrgeelrddu
+X-VR-Cause-5: tdehnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhinhgvthepkedvrdeigedrgeelrddutdeh
+X-VR-Cause-6: pdhhvghloheprghrvghkhhdruggunhhsrdhnvghtpdhmrghilhhfrhhomhepnhhitgholhgrshdrmhgr
+X-VR-Cause-7: ihhlhhhotheslhgrphhoshhtvgdrnhgvthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
+X-VR-Cause-8: tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedt
+X-VR-AvState: No
+X-VR-State: 0
+X-VR-State: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/2/2018 1:27 PM, Elijah Newren wrote:
-> On Thu, Nov 1, 2018 at 12:01 AM Elijah Newren <newren@gmail.com> wrote:
->> On Wed, Oct 31, 2018 at 8:08 AM Derrick Stolee <stolee@gmail.com> wrote:
->>> On 10/19/2018 3:31 PM, Elijah Newren wrote:
->>>> [snip]
->>>>
->>>> +                     char *new_path = NULL;
->>>> +                     if (dir_in_way(b->path, !o->call_depth, 0)) {
->>>> +                             new_path = unique_path(o, b->path, ci->branch2);
->>>> +                             output(o, 1, _("%s is a directory in %s adding "
->>>> +                                            "as %s instead"),
->>>> +                                    b->path, ci->branch1, new_path);
->>> I tried really hard, but failed to get a test to cover the block below.
->>> I was able to
->>> find that the "check handling of differently renamed file with D/F
->>> conflicts" test
->>> in t6022-merge-rename.sh covers the block above. Trying to tweak the
->>> example using
->>> untracked files seems to hit an error message from unpack-trees.c instead.
->>>
->>>> +                     } else if (would_lose_untracked(b->path)) {
->>>> +                             new_path = unique_path(o, b->path, ci->branch2);
->>>> +                             output(o, 1, _("Refusing to lose untracked file"
->>>> +                                            " at %s; adding as %s instead"),
->>>> +                                    b->path, new_path);
-> So now I'm confused.  This block was not listed in your coverage
-> report[1].  And, in fact, I think this block IS covered by testcase
-> 10c of t6043.  However, there is a very similar looking block about 30
-> lines up that is uncovered (and which was mentioned in your report):
->
->              } else if (would_lose_untracked(a->path)) {
->                  new_path = unique_path(o, a->path, ci->branch1);
->                  output(o, 1, _("Refusing to lose untracked file"
->                             " at %s; adding as %s instead"),
->                         a->path, new_path);
->
-> covering it, I think, is just a matter of repeating the 10c test with
-> the merge repeated in the other direction (checkout B and merge A
-> instead of checking out A and merging B) -- and touching up the checks
-> accordingly.
->
-> However, now I'm wondering if I'm crazy.  Was it really the block you
-> had highlighted that you were seeing uncovered?
+Le vendredi 02 novembre 2018 à 12:51 -0400, Jeff King a écrit :
 
-Trust the report (generated by computer) over me (generated by squinting 
-at an email, trying to match line numbers).
+Hi,
 
-Thanks,
+Thank you for reading the RFE.
 
--Stolee
+> I did create the way git credential matches repo urls. And I do not
+> think your proposal is a good idea. The credential system is about
+> interacting with a remote URL, and creating a commit object is a local
+> operation. That mismatch leaks through when you work with multiple
+> remotes, since it is not clear which URL we would match against when
+> the operation does not involve a remote at all.
+
+I don't think it's quite that simple. The id part of creating a commit
+object is not a local operation at all. You choose the id written in a
+commit for a specific remote target, it has no use locally, most of us
+do not need it to reach themselves.
+
+So yes there is a leak but it’s built in the git commit logic itself.
+Ideally, git would defer resolving <me> in commits to when I push to a
+remote target. I'm sure you’re aware of all the workarounds git users do
+at push time, when they realize the commit <me> is not the good one.
+
+And since the leak is built in the commit logic itself, there are no
+perfect solutions that do not involve revisiting how commit works.
+
+So, unless someone wants to revisit git commit, we’re left with
+imperfect solutions, and git credentials is no worse than another. It
+certainly fixes my use case fine. You did good work in git credentials.
+
+Regards,
+
+-- 
+Nicolas Mailhot
 
