@@ -7,169 +7,131 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF1041F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 20:01:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 672F11F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 20:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726144AbeKCFKD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 01:10:03 -0400
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:43184 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725957AbeKCFKD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 01:10:03 -0400
-Received: by mail-yw1-f65.google.com with SMTP id j75-v6so1229426ywj.10
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 13:01:31 -0700 (PDT)
+        id S1726165AbeKCFPT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 01:15:19 -0400
+Received: from mail-vs1-f46.google.com ([209.85.217.46]:45995 "EHLO
+        mail-vs1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726051AbeKCFPS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 01:15:18 -0400
+Received: by mail-vs1-f46.google.com with SMTP id 124so1736844vsp.12
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 13:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=POc1KCqF+BV6zVxoDFfayulOUh2nTBGdTX76WiO7OKk=;
-        b=RqD/0NSOC3AHt1WhYCTaHwccfDoxCJ7BHksCDiggMEfsR8unv1pTRRRKAu4V8YB+ff
-         URCBYx1SCefTLxIMrkc9n7bne8JIjtB8Rft5tuy+e4kt22XQkaSoR/BchKsHI9aktJ6D
-         OR06BkmFVvWR3JIRyap+jZmoCybaKPEgX0TLqfbnZ4V4dE/g3A+em42s+H3xQUfSbqqF
-         rHl+/GuT0mGSMKjTvU1S7ZY9tDo8WkP8QDgZJJ56Mss0wsNPfoUB8F3Lt5VIJg3gsvEC
-         JhOsT1uyvEmf+wqsjSr4OAWR3DjVzBgB6whoX0Ri9h54BkVMAxSZHV4gqWiJ2q2dy95H
-         XSXw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VUj27pAU5ZLzRGVvroYj9Vr6u8+R+MaU7Ofzx6DF4Dg=;
+        b=mYK0j/Fsic3MQOcCfs1X+tYDWetKFg+c6quYnfPI9Wlo2rtnWqXoUTQYPsK2jmTVDa
+         /AeRFvZFPowoYcOqWFZtDUfxvycL+s5+kfBSApVMQAcmccbDF+QKgtUaXgVYRB/fhUqM
+         LsbbJCRltg5DFgtKuvGPard1cVTremXmjv7MRE3+5cmNc5uw6zqsti9aMoP9+u8jn71a
+         1BmOnBb49q+2nSv/zZ1Q7hw38PWG6gMVFdq5ni4bSJsg+InSUiOtu8w9nSh1SLqQPmen
+         EYC2Q+GhdkGB6HYkD4o9QD/cNE4+R9UwHmugGKn4H7kfGdduw8j3v65krdZ0B2lN7/RV
+         n1ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=POc1KCqF+BV6zVxoDFfayulOUh2nTBGdTX76WiO7OKk=;
-        b=UjFAFgRw1Nzr+5br86bjwQPzEBVogU3nYyeq8t6sxwmKiwVXjEBud42GfgFuOOpeMY
-         uemipSgrZxw5EtcEvQXDeRmlNUPIuhRKWew9hLIuwj6mbxpgDQ8CC5fG9KVXBfk9SJAZ
-         1DZ8A0zTuTQN3Tkp0Sam1O6HDL9Zr5LKDWbgXyRIjtiN6TQoPafr3lcxiNgSHgHG78zG
-         1LVCtgUEyI5kTYO/LDuUDPhQ2NWdKYLo7mVpia0lQljkUgmQ8191pPS9CHOk9IsZd+WV
-         8YWFqx5DVTA2r4DEVmOarwdNSxcHoGCrGEBQxEek5G9bYzT/cip13WecvmT5/r2M5MQ1
-         DgCQ==
-X-Gm-Message-State: AGRZ1gKuuE1Zk36QBucGO0MV/Nh6sflmy+rDjV7h9Vt8Z7XscqJXX4aa
-        suV68q6XAz3saqmb4dtuGk146Bb/
-X-Google-Smtp-Source: AJdET5f/OfL6PpZCgXhv1MP92C6ThIeB/ZxNF7hD082rVqsOGRZfE7WSxNPPxFijpDjJSx2Mddnwwg==
-X-Received: by 2002:a81:8044:: with SMTP id q65-v6mr12489397ywf.196.1541188891115;
-        Fri, 02 Nov 2018 13:01:31 -0700 (PDT)
-Received: from linux.mshome.net ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id b63-v6sm6667869ywd.64.2018.11.02.13.01.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Nov 2018 13:01:30 -0700 (PDT)
-From:   Derrick Stolee <stolee@gmail.com>
-X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH] merge-recursive: combine error handling
-Date:   Fri,  2 Nov 2018 20:01:27 +0000
-Message-Id: <20181102200127.127356-1-dstolee@microsoft.com>
-X-Mailer: git-send-email 2.19.1.1235.gbda564b1a2
-In-Reply-To: <20181102185317.31015-9-newren@gmail.com>
-References: <20181102185317.31015-9-newren@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VUj27pAU5ZLzRGVvroYj9Vr6u8+R+MaU7Ofzx6DF4Dg=;
+        b=MvaowYDZ2/c44B0MkcBzZNS/QiFiBPI1FLUY7INTMqYJ5ewNz0IySAPs5PiqRlJrQD
+         yjkE2wlF323FrCcTgWfAM70UOgjMirhZbpn7FxljLcAKU4PgABzm7VTYqcZ+GN+n4SXW
+         91sCOkZH5L5RcYIqyR5RS9/OklAw1qRW9O9rmuIiEqbrLi7svV3xWz0Xrw163zLm21Fn
+         /PywfWLXDgLTVcmy6RwmhfrAns6YifnLoA27qCN1Y4QrrD/yXjdgI4rodQVhJOKmzSb/
+         tKAPnRbVxm3SafgdtjLLdTUoxjhI0nzjcnpe3A2q2PQ7iiLw5sUi1L9+EhgOKC4v18Wf
+         t+RQ==
+X-Gm-Message-State: AGRZ1gKSjodmsar+fs/f/lmrpLFWlQ2i6uANNjp0aoAV/Rr08q4/jfkn
+        DWYuPIKBOdJmd1tdM6R4aw7s1JTrg7sCnalT2SfEG0N/
+X-Google-Smtp-Source: AJdET5fme7qatWRmjIH6DttKaOH/zFPAoXdgsONZcLCp/pjQOBKrTsGvluvIPzh7gikv+pDnhsggHho/34+jLD1QlBs=
+X-Received: by 2002:a67:7648:: with SMTP id r69mr5775331vsc.175.1541189205278;
+ Fri, 02 Nov 2018 13:06:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20181019193111.12051-1-newren@gmail.com> <20181102185317.31015-1-newren@gmail.com>
+ <232094ce-6872-4039-06a6-af40c709cac0@gmail.com>
+In-Reply-To: <232094ce-6872-4039-06a6-af40c709cac0@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 2 Nov 2018 13:06:32 -0700
+Message-ID: <CABPp-BG2rFEeKVe8ok+a-jLFvPBfnZs1b3Mp2Jfi2JgNZcO8gA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] Improve path collision conflict resolutions
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In handle_rename_rename_1to2(), we have duplicated error handling
-around colliding paths. Specifically, when we want to write out
-the file and there is a directory or untracked file in the way,
-we need to create a temporary file to hold the contents. This has
-some special output to alert the user, and this output is
-duplicated for each side of the conflict.
+On Fri, Nov 2, 2018 at 12:09 PM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 11/2/2018 2:53 PM, Elijah Newren wrote:
+> > Major question:
+> >    * You'll note that I edited the last two patches to mark them as RFC.
+> >      To be honest, I'm not sure what to do with these.  They improve code
+> >      coverage of new code, but the same gaps existed in the old code;
+> >      they only show up in the coverage-diff because I essentially moved
+> >      code around to a new improved function.  Since the new code doesn't
+> >      really add new abilities but rather just shifts the handling of
+> >      these conflicts to a common function, they shouldn't need any more
+> >      testcases than previously and modifying the existing patches thus
+> >      feels slightly misleading.  That line of thought leads me to believe
+> >      that perhaps putting them in a separate combined patch of their own
+> >      with a decent commit message is the right way to go.  On the other
+> >      hand, squashing them to the commits they're marked as fixups for
+> >      shows which logical part of the code the tests are related to, which
+> >      seems like a good thing.  So what's the right way to handle these?
+>
+> I appreciate the effort you made to improve test coverage! It's
+> unfortunate that this portion wasn't covered earlier, because we could
+> have broken it and not noticed until a release.
 
-Simplify the call by generating this new path in a helper
-function.
+Yes, I agree...except that I think we might not have noticed until a
+couple releases down the road; these things tend to not come up a lot
+in practice.  (Which may make it even more important to pay attention
+to code coverage.)
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
+> I think making them separate commits is fine, and the comment on the
+> test case is helpful. The fact that you only had to change the commit
+> timestamps in order to get the coverage makes me reexamine the code and
+> realize that maybe the "right" thing to do is to reduce our code clones.
+> (This is also how I was looking at the wrong block of the patch when
+> talking about it not being covered.) I'll look at the patch and see if I
+> can contribute a concrete code suggestion there.
 
-Elijah,
+Yeah, I had the same feeling, _again_, while re-looking at the tests
+and code as well.  I think the history of how we got here goes
+something like this:
 
-Here is a patch that combines the logic to avoid code clones, and also
-more easily covers code blocks. Of course, your additional test helps
-the branch coverage.
+  * there is some fairly simple code to handle these rename/rename
+(1to2 and 2to1) cases, with logic for handling each side being a
+neary-copy of each other.
+  * someone does some analysis about trying to remove duplication and
+notes that there are 3-4 pieces that change; adding logic to change
+out those pieces and rewrite it as a loop adds some complexity, which
+isn't worth it given the simple code
+  * additional issues are discovered, such as D/F conflicts or
+inappropriate handling of untracked or dirty files, and due to
+merge-recursive's bad design[1], the fixes have to be sprinkled
+*everywhere* throughout the whole code base.  Lather, rinse, repeat a
+few times.
+  * Now, although the original analysis of removing the duplication
+was correct given the amount of code that exited at the time, the
+weights have changed as new code was added to both codepaths.  But the
+original analysis is long since forgotten, the code is more complex,
+and we have to think about whether fixing it now is worth it if we're
+going to rewrite it all anyway to fix that fundamental design flaw[2].
 
-Thanks,
--Stolee
+[1] https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com/
+[2] https://public-inbox.org/git/xmqqk1ydkbx0.fsf@gitster.mtv.corp.google.com/
 
- merge-recursive.c | 53 ++++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 26 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 59811116b6..5e36bef162 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1709,6 +1709,27 @@ static int handle_rename_add(struct merge_options *o,
- 				     ci->dst_entry1->stages[other_stage].mode);
- }
- 
-+static char *find_path_for_conflict(struct merge_options *o,
-+				    const char *path,
-+				    const char *branch1,
-+				    const char *branch2)
-+{
-+	char *new_path = NULL;
-+	if (dir_in_way(path, !o->call_depth, 0)) {
-+		new_path = unique_path(o, path, branch1);
-+		output(o, 1, _("%s is a directory in %s adding "
-+			       "as %s instead"),
-+		       path, branch2, new_path);
-+	} else if (would_lose_untracked(path)) {
-+		new_path = unique_path(o, path, branch1);
-+		output(o, 1, _("Refusing to lose untracked file"
-+			       " at %s; adding as %s instead"),
-+		       path, new_path);
-+	}
-+
-+	return new_path;
-+}
-+
- static int handle_rename_rename_1to2(struct merge_options *o,
- 				     struct rename_conflict_info *ci)
- {
-@@ -1783,19 +1804,9 @@ static int handle_rename_rename_1to2(struct merge_options *o,
- 						  &add->oid, add->mode) < 0)
- 				return -1;
- 		} else {
--			char *new_path = NULL;
--			if (dir_in_way(a->path, !o->call_depth, 0)) {
--				new_path = unique_path(o, a->path, ci->branch1);
--				output(o, 1, _("%s is a directory in %s adding "
--					       "as %s instead"),
--				       a->path, ci->branch2, new_path);
--			} else if (would_lose_untracked(a->path)) {
--				new_path = unique_path(o, a->path, ci->branch1);
--				output(o, 1, _("Refusing to lose untracked file"
--					       " at %s; adding as %s instead"),
--				       a->path, new_path);
--			}
--
-+			char *new_path = find_path_for_conflict(o, a->path,
-+								ci->branch1,
-+								ci->branch2);
- 			if (update_file(o, 0, &mfi.oid, mfi.mode, new_path ? new_path : a->path))
- 				return -1;
- 			free(new_path);
-@@ -1812,19 +1823,9 @@ static int handle_rename_rename_1to2(struct merge_options *o,
- 						  &mfi.oid, mfi.mode) < 0)
- 				return -1;
- 		} else {
--			char *new_path = NULL;
--			if (dir_in_way(b->path, !o->call_depth, 0)) {
--				new_path = unique_path(o, b->path, ci->branch2);
--				output(o, 1, _("%s is a directory in %s adding "
--					       "as %s instead"),
--				       b->path, ci->branch1, new_path);
--			} else if (would_lose_untracked(b->path)) {
--				new_path = unique_path(o, b->path, ci->branch2);
--				output(o, 1, _("Refusing to lose untracked file"
--					       " at %s; adding as %s instead"),
--				       b->path, new_path);
--			}
--
-+			char *new_path = find_path_for_conflict(o, b->path,
-+								ci->branch2,
-+								ci->branch1);
- 			if (update_file(o, 0, &mfi.oid, mfi.mode, new_path ? new_path : b->path))
- 				return -1;
- 			free(new_path);
--- 
-2.19.1.1235.gbda564b1a2
+> Aside: I hope that I am not being annoying by poking around with the
+> test coverage reports. It does give me a way to target my review
+> efforts, especially into changes that touch areas outside my expertise
+> (like this one).
 
+Not annoying at all; I think it's a very valuable thing you're doing.
+And I think these tests make things better (there have definitely been
+cases in the past where a merge one way would work and a merge the
+other way would have funny bugs).  I was just unsure about what the
+best way to present it amongst the other changes was.
