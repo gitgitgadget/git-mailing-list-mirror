@@ -2,90 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEAFC1F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 05:23:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01A0F1F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 05:23:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728039AbeKBO3R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 10:29:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37658 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727350AbeKBO3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 10:29:17 -0400
-Received: (qmail 26600 invoked by uid 109); 2 Nov 2018 05:23:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Nov 2018 05:23:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 696 invoked by uid 111); 2 Nov 2018 05:22:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Nov 2018 01:22:41 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2018 01:23:22 -0400
-Date:   Fri, 2 Nov 2018 01:23:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 3/3] pathspec: handle non-terminated strings with :(attr)
-Message-ID: <20181102052322.GC19234@sigill.intra.peff.net>
-References: <20181102052239.GA19162@sigill.intra.peff.net>
+        id S1728058AbeKBO3V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 10:29:21 -0400
+Received: from mail-io1-f49.google.com ([209.85.166.49]:39238 "EHLO
+        mail-io1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727350AbeKBO3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 10:29:20 -0400
+Received: by mail-io1-f49.google.com with SMTP id n11-v6so554916iob.6
+        for <git@vger.kernel.org>; Thu, 01 Nov 2018 22:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=qIVGsgQS2Cn7IUkTfsBOnhw1G7tps8Mfb8spCjQux84=;
+        b=U8mGd/44l9h0h4XwfRhTgr1g6r7OVGbxO8Clhlkrx5zWmKZ6IJ2U/k8g+KdZnq88kq
+         0WKH5C1DclBvIjs41uF71ZBKZcxg/wXZJlIwgaaD1ncsxvOCspRzkQ47esEulDDl7BU8
+         migYfpdGk0dc3mb8G6eC0ERFcjV4xLPK0+YvqXn4/7OdFqaHVRIT+2R5SbuVuAXK0eqU
+         dXP7ejlhbd6zNV7iwS3QUOQzc7QWEkAj57EK0Z5vR8vhtyTd/zGDrKO9QHNvkYoN1NY7
+         MdQ0gAUr0Ro847EkUkWTDiUJ/BV3YjzsCurmFbXjfbrEoXLwHu8azeLv2Ee81ZjwjzkD
+         llSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=qIVGsgQS2Cn7IUkTfsBOnhw1G7tps8Mfb8spCjQux84=;
+        b=H8f+0Yy6wzh6GYMxWjOY9wXswJhEzds1jPJcsYmN34Pbc/CCpdzotePgvO93rhC+1h
+         2ROw0wXXmBTLcLixPaHbOqp8UytYh/NeCTOE06dUXKeK+fAieG/r7V9iF9OGdwskEIZI
+         UeMmphqXbn4UQkPA1tCgBH5g/MjWMfYpd1af/5fB+/VxGCOjFm5W5qzMpF26QHOUKqYz
+         pfXSN5xjezOmOLmWAw3rqeexM8X8ivk/w2I2fHKl3EETPn3HYvm8nBPoRsGnw52jwCeU
+         MKe2idL51OwiDC3Ji0OsxMwKk3RxjEZ9W5cV2pNyH19jGq6gF6UTPf9U/XeOsIDupMWd
+         ElHQ==
+X-Gm-Message-State: AGRZ1gJuMpS5bjLEAkBPE//QqUzDb9w3EknmLbmuyByuMKIEZm3qZs+7
+        j2VgME+sK3zt8iHmTbC/7mnu66vEoYf/MTIAixZWBRt9
+X-Google-Smtp-Source: AJdET5eA9/jpDRvvjL8AAV8bfwTHWp+nUJc/0s6IETHZl4/hm6+9jl+EMCTzOSeTdgsr1Qvj5bHL6j6ATQYEYtAzry4=
+X-Received: by 2002:a6b:3fc5:: with SMTP id m188-v6mr8031711ioa.188.1541136206306;
+ Thu, 01 Nov 2018 22:23:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181102052239.GA19162@sigill.intra.peff.net>
+From:   Farhan Khan <khanzf@gmail.com>
+Date:   Fri, 2 Nov 2018 01:23:15 -0400
+Message-ID: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
+Subject: Understanding pack format
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The pathspec code always takes names to be matched as a
-name/namelen pair, but match_attrs() never looks at namelen,
-and just treats "name" like a NUL-terminated string, passing
-it to git_check_attr().
+Hi all,
 
-This usually works anyway. Every caller passes a
-NUL-terminated string, and in all but one the passed-in
-length is the same as the length of the string (the
-exception is dir_path_match(), which may pass a smaller
-length to drop a trailing slash). So we won't currently ever
-read random memory, and the one case I found actually
-happens to work correctly because the attr code can handle
-the trailing slash itself.
+I am trying to understand the pack file format and have been reading
+the documentation, specifically https://git-scm.com/docs/pack-format
+(which is in git's own git repository as
+"Documentation/technical/pack-format.txt"). I see that the file starts
+with the "PACK" signature, followed by the 4 byte version and 4 byte
+number of objects. After this, the documentation speaks about
+Undeltified and Deltified representations. I understand conceptually
+what each is, but do not know specifically how git parses it out.
 
-But it's still worth addressing, as the function interface
-implies that the name does not have to be NUL-terminated,
-making this an accident waiting to happen.
+Can someone please explain this to me? Is there any sample code of how
+to interpret each entry? Where is this in the git code? That might
+serve as a good guide.
 
-Since teaching git_check_attr() to take a ptr/len pair would
-be a big refactor, we'll just allocate a new string. We can
-do this only when necessary, which avoids paying the cost
-for most callers.
+I see a few references to "PACK_SIGNATURE", but not certain which
+actually reads the data.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- dir.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/dir.c b/dir.c
-index 47c2fca8dc..ab6477d777 100644
---- a/dir.c
-+++ b/dir.c
-@@ -281,8 +281,15 @@ static int match_attrs(const struct index_state *istate,
- 		       const struct pathspec_item *item)
- {
- 	int i;
-+	char *to_free = NULL;
-+
-+	if (name[namelen])
-+		name = to_free = xmemdupz(name, namelen);
- 
- 	git_check_attr(istate, name, item->attr_check);
-+
-+	free(to_free);
-+
- 	for (i = 0; i < item->attr_match_nr; i++) {
- 		const char *value;
- 		int matched;
--- 
-2.19.1.1336.g081079ac04
+Thanks!
+--
+Farhan Khan
+PGP Fingerprint: B28D 2726 E2BC A97E 3854 5ABE 9A9F 00BC D525 16EE
