@@ -2,236 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 561E11F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 13:33:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2F241F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 14:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727702AbeKBWkR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 18:40:17 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46698 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726026AbeKBWkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 18:40:17 -0400
-Received: by mail-wr1-f68.google.com with SMTP id 74-v6so1981567wrb.13
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 06:33:06 -0700 (PDT)
+        id S1727801AbeKBXzJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 19:55:09 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:43459 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727454AbeKBXzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 19:55:09 -0400
+Received: by mail-qk1-f196.google.com with SMTP id r71so3374473qkr.10
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 07:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5xiJfEFzjW+snB60js6pnnSUrjtBvFYmQ5RPl6Fn4pk=;
-        b=PXwZNbG4pxGhcNCDRSj3Or2gBurE3HiaBN1eUYG2AVgy1RfTs5Ornvj5hto5yufLtP
-         kXlWolnWBULa8flLCQksO7M9oYlRZmvsqehPl1Z/V/TcKM/XibofBeHfCI5smHe68IFX
-         5a38Z3P0E4xeP9aK9jjuL45kqHB+58zNJjAMvjeJfhG+C3SX82JqvFaPWgjkyiB4itmp
-         LNOCWphAfA3Q2S6W1rgmg4p8j9SMennZSC/tLBbGsveaOjJT6Asl9If/yE8TgTZdXivS
-         93JEE+z/Jwz0zJP7POP0SZi8s0NGsidi4/byjdmv4+21xR6YOVmbHn4aRIYB7LlBJugz
-         UA5Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8T9XTGmpcN/64L7qz7bZ8BitPIhAjYv7rUrP/fdoR1I=;
+        b=Flsc9A/2smjmHKX1b7ENjx5I7h2DOJIsEYURYtPLYfqpBqkTfIhvGWc8JkaXamDUQj
+         6oNYpSKdeb1k8MMGFWaW5DleXl4INdZ8I6YZlM89NTyB5aQGa/DO/gH/Ic9wNJj34BZd
+         0duLL3ud5Rxbn9xMLYdl7IkzwxqEio1Xi/T5HvHW5W7N5RLritQGcCxEFQnjGta3fEaO
+         T6GOIZFr6PAT1b2VXSz0uV6mHjydb8JFWYPE2Yntzn2FoVymIsXn1KKZRs+hxK8kAlCB
+         2SJlghPYIPIQ6486JDalwTY1XiFpYlgvO09QqmuZB0clcLGrYyjffXndhhzyDO+R/ycB
+         FRMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=5xiJfEFzjW+snB60js6pnnSUrjtBvFYmQ5RPl6Fn4pk=;
-        b=t4RdYMLQxhb1qcL/naGm5+orItzOCIy1+vh9Ql7Lxb/Dqhoz2Gx2RMcgBc4fq241He
-         KiXxovkAeb5PtHvAAq74qGUuQnW3p2n2itN8lfrz8vGF1xrkoDbs3ykWSBvWdRQ6CGdm
-         TKrQUqBf3UmcEGW68uBtot8oJk5VVIxoTZjhKaNPa/XGgiFkd5Pta0MDRVBYHhPmqiSl
-         5tIXChnuPa0W8/5J25ZKHZgr090eC39X7knFKO3bj76aLB7EFkN7tJDAinofs9OCXd0x
-         60bbgNwxyB/hERw3jo/ulXvRa0vfOznqKjq5MeijNRdtRBQNMrbV0uwlaL0LaTBQF1SS
-         bUgg==
-X-Gm-Message-State: AGRZ1gKlfJc0yC4lq1Ahd+PT311pPpxIPMyC/z7puNYbhH8emjCcdaAE
-        DYhQ0wuD1P4uuGKx0MsEmrk=
-X-Google-Smtp-Source: AJdET5fnNbxo3P4yCq5Y3a8uAyQeED1Kvr2nINcpMKJODtNZz/ZH4E3/d7Z13ZCv9WlG2v59+vcmZg==
-X-Received: by 2002:adf:b453:: with SMTP id v19-v6mr9320208wrd.47.1541165585842;
-        Fri, 02 Nov 2018 06:33:05 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (ekn166.neoplus.adsl.tpnet.pl. [83.21.181.166])
-        by smtp.gmail.com with ESMTPSA id j72-v6sm23617088wrj.7.2018.11.02.06.33.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Nov 2018 06:33:05 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC] Generation Number v2
-References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
-        <xmqqy3ag13us.fsf@gitster-ct.c.googlers.com>
-        <61a829ce-0d29-81c9-880e-7aef1bec916e@gmail.com>
-Date:   Fri, 02 Nov 2018 14:33:03 +0100
-In-Reply-To: <61a829ce-0d29-81c9-880e-7aef1bec916e@gmail.com> (Derrick
-        Stolee's message of "Wed, 31 Oct 2018 08:30:29 -0400")
-Message-ID: <86tvkzy580.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8T9XTGmpcN/64L7qz7bZ8BitPIhAjYv7rUrP/fdoR1I=;
+        b=dcXRmQX8w3s+j5vgqn7WGzj5nrn7uarmOF0YSpeGBE/0WGgT/OER+ikBUFzjfduycR
+         uq03HiVEsM6ra6x8azGn//z2UafVdskwy2MHmFwZKHMpPWPyzB6gJacrdZsSRBmNcwMi
+         k41ea+XIim9s5s5OaQtNJouNLVgpAnLHU4+4EmpJELmF2vLE1GkfRLWeaqCIOXt/HIES
+         Ymh4UKshYHd81Naic5cSjcmYesqC1ND/8fam1qd1b9zhw/yOAEaqOp6G6NpoMeRt5Y0C
+         /gWgF/xW+/wfhoI+bkZyvp8yWzTR2X52nqzo9hpVpzT3qTSn6duHBADgTjdeRYFQzI8P
+         X8AA==
+X-Gm-Message-State: AGRZ1gKYEbQu6Z4jL4a7hiKTIYYRxnGdDrFenyorx4rI07nruFUGjk9M
+        GO0re+evmVZF864vZmTNCgeZHdFW//OX247bJTQ=
+X-Google-Smtp-Source: AJdET5dKodA9tSNdwhTnt9b5mYLqP1WlzazyutRxzLqDHFP/6tV11O8ArYoG3aXbqePE3JlZ1mEKU6TXVQtgCRBrxws=
+X-Received: by 2002:ac8:17f0:: with SMTP id r45mr8383925qtk.206.1541170067573;
+ Fri, 02 Nov 2018 07:47:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.64.git.gitgitgadget@gmail.com> <69bc5924f94b56f92d9653b3a64f721bd03f1956.1541020294.git.gitgitgadget@gmail.com>
+ <c9e001de-3598-182d-416e-1e94f234c249@kdbg.org>
+In-Reply-To: <c9e001de-3598-182d-416e-1e94f234c249@kdbg.org>
+From:   Steve Hoelzer <shoelzer@gmail.com>
+Date:   Fri, 2 Nov 2018 09:47:15 -0500
+Message-ID: <CACbrTHctZejfDTjqWqVfPYdb=ssD253Cd2isr3BxWsL1AqsH2w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] poll: use GetTickCount64() to avoid wrap-around issues
+To:     j6t@kdbg.org
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-> On 10/29/2018 11:59 PM, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
-[...]
->>> * **Compatible?** In our test implementation, we use a previously unused
->>>    byte of data in the commit-graph format to indicate which reachabili=
-ty
->>>    index version we are using. Existing clients ignore this value, so we
->>>    will want to consider if these new indexes are _backwards compatible=
-_.
->>>    That is, will they still report correct values if they ignore this b=
-yte
->>>    and use the generation number column from the commit-graph file assu=
-ming
->>>    the values are minimum generation numbers?
->>
->> I personally consider that the current commit-graph with generation
->> numbers experimental, so I am not sure how much we care about this.
->>
->> Having said that.
->>
->> By the above definition, any new index that is wider than the
->> current generation number cannot be compatible (can we even tell the
->> existing clients how wide each elements in the ix array is?)
->>
->> In any case, perhaps the first thing to do is to update the clients
->> so that they stop ignoring the version number field, and instead
->> work without generation number when there is no version of reach.ix
->> available in the file?  That way, a better reachablility index can
->> be chosen freely without having to worry about the compatibility.
+On Thu, Nov 1, 2018 at 5:22 AM Johannes Sixt <j6t@kdbg.org> wrote:
 >
-> I can work on that. It should be as simple as setting commit->generation =
-to
-> GENERATION_NUMBER_ZERO in fill_commit_in_graph when the graph
-> has a different version.
-
-That is a very good idea, but we have here a chicken-and-egg problem.
-The only way to denote that the generation numbers / reachability index
-have changed (for reading/using: that it changed in backwards
-incompatibile way; for update: that it changed at all) is to change the
-format version:
-
-  1-byte version number:
-      Currently, the only valid version is 1.
-
-But if we assume that different commit-graph format version simply means
-that commit->generation is to be set to GENERATION_NUMBER_ZERO, then we
-block possible changes to the structure of the commit-graph file.
-
-[Reads further in thread]
-
-Ah, I see that's why you want to introduce [1]:
-
-DS>
-DS> 3. Reachability Index versioning
-
-[1]: https://public-inbox.org/git/6902dbff-d9f6-e897-2c20-d0cb47a50795@gmai=
-l.com/
-
->>> * **Immutable?** Git objects are _immutable_. If you change an object y=
-ou
->>>    actually create a new object with a new object ID. Are the values we=
- store
->>>    for these reachability indexes also immutable?
->>
->> Even if we do not embed the reachability ix in commit objects,
->> having an immutable value is probably a must if we want to make them
->> incrementally computable, so this is a very good property to have.
->> Unless there is a clever idea to incrementally compute a mutable
->> reach.ix, my gut instinct says that this property is a must.
-
-I think that the reachability index can be mutable and non-local, but
-still being able to be incrementally updated, though perhaps it would
-require not only calculations for new commits, but recalculations for
-some limited subset of commits existing in the commit-graph file.
-
-I'm trying to modify exact definition of maximal generation numbers to
-check if I can find out a version that exhibits nearly-incremental
-updates property.
-
->> Another thing, perhaps related to "local" below, is if exactly the
->> same reach.ix is computed by anybody, given an identical commit
->> history graph (perhaps "reproducibility"?).  I think most of the
->> candidates you listed are reproducible without a fixed tie-breaker,
->> but I am not sure about felineY() thing.
-
-felineY() is deterministic (or can be made deterministic) for given
-felineX() (i.e. given [reverse] topological order).
-
->>> * **Local?** Are these values **locally computable**? That is, do we on=
-ly
->>>    need to look at the parents of a commit (assuming those parents have
->>>    computed values) in order to determine the value at that commit?
->>
->> A subset of non-local reachability ix, for example, the ones that
->> need to know what each commit's children are, cannot be immutable,
->> as adding new objects to the graph (either with locally committing,
->> or transferring objects from other repositories) would affect the
->> ix; is this true for all non-local reachability ix, I wonder?
+> Am 31.10.18 um 22:11 schrieb Steve Hoelzer via GitGitGadget:
+> > From: Steve Hoelzer <shoelzer@gmail.com>
+> >
+> >  From Visual Studio 2015 Code Analysis: Warning C28159 Consider using
+> > 'GetTickCount64' instead of 'GetTickCount'.
+> >
+> > Reason: GetTickCount() overflows roughly every 49 days. Code that does
+> > not take that into account can loop indefinitely. GetTickCount64()
+> > operates on 64 bit values and does not have that problem.
+> >
+> > Note: this patch has been carried in Git for Windows for almost two
+> > years, but with a fallback for Windows XP, as the GetTickCount64()
+> > function is only available on Windows Vista and later. However, in the
+> > meantime we require Vista or later, hence we can drop that fallback.
+> >
+> > Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   compat/poll/poll.c | 10 +++++++---
+> >   1 file changed, 7 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+> > index ad5dcde439..4abbfcb6a4 100644
+> > --- a/compat/poll/poll.c
+> > +++ b/compat/poll/poll.c
+> > @@ -18,6 +18,9 @@
+> >      You should have received a copy of the GNU General Public License along
+> >      with this program; if not, see <http://www.gnu.org/licenses/>.  */
+> >
+> > +/* To bump the minimum Windows version to Windows Vista */
+> > +#include "git-compat-util.h"
+> > +
+> >   /* Tell gcc not to warn about the (nfd < 0) tests, below.  */
+> >   #if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+> >   # pragma GCC diagnostic ignored "-Wtype-limits"
+> > @@ -449,7 +452,8 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+> >     static HANDLE hEvent;
+> >     WSANETWORKEVENTS ev;
+> >     HANDLE h, handle_array[FD_SETSIZE + 2];
+> > -  DWORD ret, wait_timeout, nhandles, start = 0, elapsed, orig_timeout = 0;
+> > +  DWORD ret, wait_timeout, nhandles, elapsed, orig_timeout = 0;
+> > +  ULONGLONG start = 0;
+> >     fd_set rfds, wfds, xfds;
+> >     BOOL poll_again;
+> >     MSG msg;
+> > @@ -465,7 +469,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+> >     if (timeout != INFTIM)
+> >       {
+> >         orig_timeout = timeout;
+> > -      start = GetTickCount();
+> > +      start = GetTickCount64();
+> >       }
+> >
+> >     if (!hEvent)
+> > @@ -614,7 +618,7 @@ restart:
+> >
+> >     if (!rc && orig_timeout && timeout != INFTIM)
+> >       {
+> > -      elapsed = GetTickCount() - start;
+> > +      elapsed = (DWORD)(GetTickCount64() - start);
 >
-> As a thought experiment, we could define a function size(C) to be the
-> number of commits reachable from C.
+> AFAICS, this subtraction in the old code is the correct way to take
+> account of wrap-arounds in the tick count. The new code truncates the 64
+> bit difference to 32 bits; the result is exactly identical to a
+> difference computed from truncated 32 bit values, which is what we had
+> in the old code.
+>
+> IOW, there is no change in behavior. The statement "avoid wrap-around
+> issues" in the subject line is not correct. The patch's only effect is
+> that it removes Warning C28159.
+>
+> What is really needed is that all quantities in the calculations are
+> promoted to ULONGLONG. Unless, of course, we agree that a timeout of
+> more than 49 days cannot happen ;)
 
-Let's call it reach(C), instead ;-)
+Yep, correct on all counts. I'm in favor of changing the commit message to
+only say that this patch removes Warning C28159.
 
->                                    This is not locally-computable
-> from the size values at C's parents due to the inclusion-exclusion
-> principle. We would need to compute it by walking the reachable set
-> and counting (resulting in quadratic performance overall) but is
-> immutable. Since the performance cost is so expensive (unlike the
-> linear costs in the other non-local versions) I didn't include it
-> in my comparison.
-
-Let's define Reach(C) as set of all commits reachable from commit C.
-Then reach(C) =3D ||Reach(C)||, where ||S|| is number of elements in the
-set S.
-
-If commit A can reach commit B, then B =E2=88=88 Reach(A), but also Reach(B=
-) =E2=8A=82
-Reach(A), thus reach(B) < reach(A).  Therefore if reach(A) <=3D reach(B)
-then A cannot reach commit B -- reach(C) can be used as reachability
-index.
-
-However the performance cost of calculating reach(C), i.e. full
-traversal of the commit graph without ability for incremental update
-(well, you can do incremental update starting from the commits that have
-reachability bitmap [2]) is prohibitive.  Never mind the fact that this
-index would have, I think, the same performance problems as (minimum)
-generaton numbers.
-
-[2]: https://githubengineering.com/counting-objects/
-
-
-SIDENOTE 1: as gen(C) can be thought of as the lower boundary on
-reach(C), similarly sumgen(C) defined as being 1 for parent-less
-commits, and being (sum_{P =E2=88=88 parents(C)} sumgen(P)) + 1 otherwise b=
-eing
-the upper boundary on reach(C).  This sumgen(C) can also be used as
-generation number / reachability index.
-
-   gen(C) <=3D reach(C) <=3D sumgen(C)
-
-
-SIDENOTE 2: The idea of using a proxy for Reach(B) =E2=8A=86 Reach(A) as a
-negative-cut filter (negative-cut reachability index) is used in two
-types of reachability indices: one is Independent Permutation Labelling
-(IP+) [3] approach, the other is Bloom Filter Labelling (BFL) [4].  Both
-algorithms are local, and with given permutation (which can be replaced
-by object ID, I think) for IP+ and given set of hash functions etc. for
-BFL they are both immutable.
-
-[3] Hao Wei, Jeffrey Xu Yu, Can Lu, Ruoming Jin "Reachability Querying:
-    An Independent Permutation Labeling Approach", Proceedings of the
-    VLDB Endowment, Vol. 7, No. 12 (2014)
-
-[4] Jiao Su, Qing Zhu, Hao Wei, Jeffrey Xu Yu "Reachability Querying:
-    Can It Be Even Faster?", IEEE Transactions on Knowledge and Data
-    Engineering (2016)
-
-
-Best,
---=20
-Jakub Nar=C4=99bski
+Steve
