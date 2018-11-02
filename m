@@ -2,91 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 629F91F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 06:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A99541F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 06:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728410AbeKBPVf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 11:21:35 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35772 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728024AbeKBPVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 11:21:35 -0400
-Received: by mail-wr1-f66.google.com with SMTP id z16-v6so801822wrv.2
-        for <git@vger.kernel.org>; Thu, 01 Nov 2018 23:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=gVbzulx0ozAvvXjmj/rLzQQaDcDUbrjstXhevROT5Yw=;
-        b=LJR0kDVRe9A4KiKwCmZ985mIdSXXACIJm1fl2/cScEp09yJAc8dg1ALfUPpc1cP0CZ
-         iz+mx5lQ4IwhGBoCtWJXUBoDH/WZG3sgRSfW4BmfQNomzs2NdioH8vrRekyyegYGhUEb
-         +LmFbiU8lLdf4jmzw+Dz6k5G7Sdnn8/Vp9XyVBSDh6ykzYkGs1nli8RA97qmudGJnrWJ
-         IiYh6cAMx29epFfJANMd/Z2p74mjKwrYA+vSs74pJdoZCh+UmQ9OLnRNLnKDvp4h8/Nq
-         vjQTBYFpNDyMk5/Jc+8YZ/Cd8hDzlcxOr1ZzP52hYhQZJloSlcLJGAADclV2NwjaUqLa
-         revQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=gVbzulx0ozAvvXjmj/rLzQQaDcDUbrjstXhevROT5Yw=;
-        b=dUjsjAHhReO8jWk7/mw7BBhH+LIfYeIHgn19aNOXnPvw/GNcNg5Q6omITPhYu02/Ac
-         aM1ERZ6zAVHysmYfvy7Lu11/iJMdrP0doSi7+N+zF6sFqW+HCuO3GaLYC8WYYlClEJJj
-         AOsGXvJ6harrIqvCiVE0pMclQHv4z0NYIuUgZni+mYmMpnTL47EEe/bqCVJ6f6cyrhX0
-         0rXaRyIWEkXdy5iXBtuDzqeMZzo3H26O/iI8kv6/QAM5F1ZrSFYcop96IjqppQ71m1t6
-         k6U/mZjE2v5zwnmrFWW6W+gKVGi9l80NEG/BHeu0bQTGSVnJHwjXibrZOQnD9Kzli3o+
-         LpXg==
-X-Gm-Message-State: AGRZ1gKYMCWLj/7QnRJJMhCESh/EO4u1RLRLvDe6tTJKZCOUCVw8B+ib
-        8nM0kbgpbZzhf8bJUy/XSmU=
-X-Google-Smtp-Source: AJdET5dFXnWEVdDBK5xSyGiZ5Obfku8Du4B/ZSbw1OnAr5epjyD3bhjH/4R4PqaHgAuXHuMVO52Mew==
-X-Received: by 2002:adf:e1ca:: with SMTP id l10-v6mr9379706wri.36.1541139331621;
-        Thu, 01 Nov 2018 23:15:31 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x139-v6sm398158wme.3.2018.11.01.23.15.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Nov 2018 23:15:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Farhan Khan <khanzf@gmail.com>
+        id S1728423AbeKBPae (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 11:30:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37686 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728216AbeKBPae (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 11:30:34 -0400
+Received: (qmail 28846 invoked by uid 109); 2 Nov 2018 06:24:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Nov 2018 06:24:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 821 invoked by uid 111); 2 Nov 2018 06:23:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Nov 2018 02:23:48 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2018 02:24:29 -0400
+Date:   Fri, 2 Nov 2018 02:24:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Understanding pack format
-References: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
-Date:   Fri, 02 Nov 2018 15:15:29 +0900
-In-Reply-To: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
-        (Farhan Khan's message of "Fri, 2 Nov 2018 01:23:15 -0400")
-Message-ID: <xmqqlg6covi6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Subject: Re: [PATCH] it's called read_object_file() these days
+Message-ID: <20181102062429.GA29939@sigill.intra.peff.net>
+References: <xmqqpnvoovzk.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpnvoovzk.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Farhan Khan <khanzf@gmail.com> writes:
+On Fri, Nov 02, 2018 at 03:05:03PM +0900, Junio C Hamano wrote:
 
-> ...Where is this in the git code? That might
-> serve as a good guide.
+> Remnant of the old name of the function still remains in comments.
+> Update them all.
 
-There are two major codepaths.  One is used at runtime, giving us
-random access into the packfile with the help with .idx file.  The
-other is used when receiving a new packstream to create an .idx
-file.
+Yay. What's here looks obviously correct.
 
-Personally I find the latter a bit too dense for those who are new
-to the codebase, and the former would probably be easier to grok.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  apply.c       | 2 +-
+>  builtin/gc.c  | 2 +-
+>  fast-import.c | 4 ++--
+>  notes.c       | 2 +-
+>  object.h      | 2 +-
+>  sha1-file.c   | 2 +-
+>  6 files changed, 7 insertions(+), 7 deletions(-)
 
-Start from sha1-file.c::read_object(), which will eventually lead
-you to oid_object_info_extended() that essentially boils down to
+There's another mention in Documentation/technical/api-object-access.txt.
 
- - a call to find_pack_entry() with the object name, and then
+But since the entire API is undocumented, I'm not sure it matters much.
+That file has been a placeholder since 2007. Maybe we should just delete
+it; its existence does not seem to be guilting anyone into documenting,
+and these days we'd prefer to do it in-header anyway.
 
- - a call to packed_object_info() with the pack entry found earlier.
-
-Following packfile.c::packed_object_info() will lead you to
-cache_or_unpack_entry(); the unpack_entry() function is where all
-the action to read from the packstream for one object's worth of
-data and to reconstruct the object out of its deltified representation
-takes place.
+-Peff
