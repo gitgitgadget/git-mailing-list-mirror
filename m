@@ -2,134 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FFA51F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 14:58:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34A781F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 15:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727869AbeKCAF4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 20:05:56 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:38443 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbeKCAF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 20:05:56 -0400
-Received: by mail-vs1-f66.google.com with SMTP id x64so1227509vsa.5
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 07:58:33 -0700 (PDT)
+        id S1726683AbeKCASM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 20:18:12 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35299 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726318AbeKCASL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 20:18:11 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z16-v6so2355037wrv.2
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 08:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sIDJlNurNf+XF1Y1y5VU9Q+1NDGGbX5xLUWltGcQmxE=;
-        b=W2b2ynXzH71Jde2C5eyae6LeQJBLVtRUtNGMP9utfcMEmekAUcifgLgZXJvP3obYwx
-         Phh1SSojbRD4F7o4G4Va9S204pAKBxjgd5LsBDU0BTvp/3WK2AITmd2GxfXtTA9vaB/x
-         6A9vQDQA2bjGTRZPaM4AXPMqjJ9AWQA0H6dGM26tcfa+MnkdykDYtA6VkcmwOhH+JKi9
-         lxjejATmhj5WD4gbbjFecMPTq0SOneMhUuj7ze57pnvtypdbbreZkFoUSGo3tynsLD9a
-         +4TZpHamapS+mAVaAztOdGrJDxgNYpT9PI7T9xrpno1qhA3QdLcjvzoXoKF5sVi6ed6+
-         EBkg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=f2TtmPR+BAUT7N5yHAFu9CvvMyNhM+chfdsvqwWDgCc=;
+        b=fcWRlp2xpurdiDrkr7f8evjNxIOKe+683WV2gIkMwQdBd3CXQ46hCxiK/FVZP2fwFo
+         YB/oFKIvIsyIvWc/CIjenrdEIDetB+GsCQ3vNtjbcROgd6VUEQksLfvE4VOG8mjCENXX
+         0gUYVae1m2oXlZpkpcl51wcJDTExD6g5jhebKtUZrQ9uTM6IomZeID5KYCo45SK+Isx5
+         4QWQlt31xLg0/WBgRriHkNeKLI63SW2oDgMRDDH39thpv0BOpBSdP2IWhojBcRffJAdm
+         R6iXxXVsYHDMbZiir6KN9AQMGSM1K2WO1KSvBLmARKKDllod76I+Ti1mBh0NsLZnpY7u
+         e9qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sIDJlNurNf+XF1Y1y5VU9Q+1NDGGbX5xLUWltGcQmxE=;
-        b=BGSLl/VZeiuLKRNm9l4FAkSa7nWS1gSfNc8Q/QLS0ZJ+y0E9Bs99PiDnzihbyc17lA
-         WRuKfyw282zIJTtiTQC62Rx0YfRTeXmI4iNEnYv62Ra+dSND7iTObMJSH7g99HBBc+F2
-         Hi9jJY5y4q/zApdYSn3+j9zSf0R21BV2ep2SfxqaP/fiI/OUham46hkXkMuPq2flS2Vy
-         sMoOtPQe7B8EC0xnnVFkB058b8HtTUR9rN6cqT525G8XaivXJq4iBShaZsdqfWMFX9e0
-         i1SXKgXF5RYnDARMIeINz+TYhZLLUV5SxClqca312RcXM57stoWIpn8/iBgK676YcrqT
-         dkTw==
-X-Gm-Message-State: AGRZ1gIkDhEI5hS5YBWdKjwizvKe474Rb1l4/Dp6olaLBpnBLrncgmfT
-        MxsqoEf316fQGhANUWaDI/k7NCOOUIv6jHBqTT0=
-X-Google-Smtp-Source: AJdET5dkjOK304ckBffb8eE2iswGUkJnkHdwuRVgOuizUUoPQJtAGnKfjfScvLaRJ8wChYu7Uuys85IHjig1NzURROw=
-X-Received: by 2002:a67:7648:: with SMTP id r69mr5299488vsc.175.1541170713262;
- Fri, 02 Nov 2018 07:58:33 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=f2TtmPR+BAUT7N5yHAFu9CvvMyNhM+chfdsvqwWDgCc=;
+        b=m2ZTpZJmUDv2U6qNFi3qxnz3kwxCXjokYaTv9pAVxeolH83Lq7bnaLbH5b53CX5R3n
+         np42RDHkUqyoJLplq87LchWMnFOWPvE1Nx6CB5cr05uO1jBTLFW3PHRbtpE0kek8ZIfi
+         9diCAoxKzPP/h0srf+dOS3K/fuC3x4zNTcBGIazXi+UvKnwL/7jxsZ0N+pVRrwivNeg2
+         zN71Mr+2M90v45+5hCdTGTK953D6oDai2cRiNZchoViZ7hASHfqMeoxaxPmeyTN1HBXx
+         DeEfXuKb570D99BVj/Zww1mGp8AjIQCMis87SS07Dc1APWQT6px8Iui0KDU7hSRpzwC2
+         r+Iw==
+X-Gm-Message-State: AGRZ1gIhROVYFc/CT0vjF1ewBy80VEuUXxMuxjSNi3kT9PaMR913wUt3
+        abdf89BORSWHE1F2sxJsc8E=
+X-Google-Smtp-Source: AJdET5ebu/koCCJGEhXjEUG6QQHfZXNFt/K94MQ2bda/aa5GH/NvhRbJ/xb2xi3XO/h2I8gvcgkXmg==
+X-Received: by 2002:a5d:4a91:: with SMTP id o17-v6mr1796510wrq.132.1541171446278;
+        Fri, 02 Nov 2018 08:10:46 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i7-v6sm41440017wmd.41.2018.11.02.08.10.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 02 Nov 2018 08:10:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     James Knight <james.d.knight@live.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] build: link with curl-defined linker flags
+References: <SN4PR0701MB3679BA798ABD874D34A595DDA0CF0@SN4PR0701MB3679.namprd07.prod.outlook.com>
+Date:   Sat, 03 Nov 2018 00:10:43 +0900
+In-Reply-To: <SN4PR0701MB3679BA798ABD874D34A595DDA0CF0@SN4PR0701MB3679.namprd07.prod.outlook.com>
+        (James Knight's message of "Fri, 2 Nov 2018 07:21:51 +0000")
+Message-ID: <xmqq7ehvplak.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CABPp-BFzwphzaMjCWrNxU2V+YeYvRiBOzSV--b13wa7r16dvMQ@mail.gmail.com>
- <20181031120505.237235-1-dstolee@microsoft.com> <CABPp-BHHG9K0869=4CYkqjN6rwLCzRBiF_Z94KFevSo3_FvYAw@mail.gmail.com>
- <ad4ab388-6244-1811-ec1b-6f8143df620e@gmail.com> <CABPp-BG6+3F+FY0JP2mj0OCLjp17xQXTe54mBCN+RifQd4Aj2A@mail.gmail.com>
- <3aadf261-9ed7-6ded-4482-ab01d74802aa@gmail.com>
-In-Reply-To: <3aadf261-9ed7-6ded-4482-ab01d74802aa@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 2 Nov 2018 07:58:21 -0700
-Message-ID: <CABPp-BEa3U6m8jWrHJXjFo77T32LqEKkdDs7H89m0y_gjHgOWw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Make add_missing_tags() linear
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 1, 2018 at 12:02 PM Derrick Stolee <stolee@gmail.com> wrote:
+James Knight <james.d.knight@live.com> writes:
+
+>  Makefile         | 21 +++++++--------------
+>  config.mak.uname |  5 ++---
+>  configure.ac     | 17 +++++++----------
+>  3 files changed, 16 insertions(+), 27 deletions(-)
 >
-> On 11/1/2018 2:57 PM, Elijah Newren wrote:
-> > On Thu, Nov 1, 2018 at 5:32 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >> No rush. I'd just like to understand how removing the commit-graph file
-> >> can make the new algorithm faster. Putting a similar count in the old
-> >> algorithm would involve giving a count for every call to
-> >> in_merge_bases_many(), which would be very noisy.
-> > $ time git push --dry-run --follow-tags /home/newren/repo-mirror
-> > count: 92912
-> > To /home/newren/repo-mirror
-> >   * [new branch]              test5 -> test5
-> >
-> > real    0m3.024s
-> > user    0m2.752s
-> > sys    0m0.320s
->
-> Is the above test with or without the commit-graph file? Can you run it
-> in the other mode, too? I'd like to see if the "count" value changes
-> when the only difference is the presence of a commit-graph file.
+> diff --git a/Makefile b/Makefile
+> index b08d5ea25..c3be87b0e 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -183,10 +183,6 @@ all::
+>  #
+>  # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
+>  #
+> -# Define NEEDS_SSL_WITH_CURL if you need -lssl with -lcurl (Minix).
+> -#
+> -# Define NEEDS_IDN_WITH_CURL if you need -lidn when using -lcurl (Minix).
+> -#
 
-I apologize for providing misleading information earlier; this was an
-apples to oranges comparison.  Here's what I did:
+Hmm, because the use of autoconf -> ./configure in our build
+procedure is optional, wouldn't this change give regression to those
+of us who use these Makefile variables to configure their build,
+instead of relying on autoconf?
 
-<build a version of git with your fixes>
-git clone coworker.bundle coworker-repo
-cd coworker-repo
-time git push --dry-run --follow-tags /home/newren/repo-mirror
-git config core.commitgraph true
-git config gc.writecommitgraph true
-git gc
-time git push --dry-run --follow-tags /home/newren/nucleus-mirror
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 8acdeb71f..923b8fa09 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -431,8 +431,7 @@ ifeq ($(uname_S),Minix)
+>  	NO_NSEC = YesPlease
+>  	NEEDS_LIBGEN =
+>  	NEEDS_CRYPTO_WITH_SSL = YesPlease
+> -	NEEDS_IDN_WITH_CURL = YesPlease
+> -	NEEDS_SSL_WITH_CURL = YesPlease
+> +	CURL_LDFLAGS = -lssl -lcrypto -lidn
 
+OK, as long as we describe how to update their config.mak to adjust
+to the new world order, the "regression" I noticed earlier is not
+too bad, and the way the new CURL_LDFLAGS variable drives the build
+is much more direct and transparent than via the old way to specify
+NEEDS_*_WITH_CURL to affect the build indirectly.
 
-I figured I had just done a fresh clone, so surely the gc wouldn't do
-anything other than write the .git/objects/info/commit-graph file.
-However, the original bundle contained many references outside of
-refs/heads/ and refs/tags/:
+I think such "describe how to configure in the new world order"
+should go to where NEEDS_*_WITH_CURL used to be, e.g. "Define
+CURL_LDFLAGS to specify flags that you need to link using -lcurl;
+see config.mak.uname and look for the variable for examples"
+or something like that, perhaps.
 
-$ git bundle list-heads ../coworker.bundle | grep -v -e refs/heads/ -e
-refs/tags/ -e HEAD | wc -l
-2396
-
-These other refs apparently referred to objects not otherwise
-referenced in refs/heads/ and refs/tags/, and caused the gc to explode
-lots of loose objects:
-$ git count-objects -v
-count: 147604
-size: 856416
-in-pack: 1180692
-packs: 1
-size-pack: 796143
-prune-packable: 0
-garbage: 0
-size-garbage: 0
-
-
-The slowdown with commit-graph was entirely due to there being lots of
-loose objects (147K of them).  If I add a git-prune before doing the
-timing with commit-graph, then the timing with commit-graph is faster
-than the run without a commit-graph.
-
-Sorry for the wild goose chase.
-
-And thanks for the fixes; get_reachable_subset() makes things much
-faster even without a commit-graph, and the commit-graph just improves
-it more.  :-)
+Thanks.
