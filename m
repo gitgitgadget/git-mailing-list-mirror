@@ -2,151 +2,272 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AC6C1F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 16:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C667C1F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 16:37:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727615AbeKCBey (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 21:34:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38555 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726318AbeKCBey (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 21:34:54 -0400
-Received: by mail-wr1-f68.google.com with SMTP id d10-v6so2578072wrs.5
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 09:27:13 -0700 (PDT)
+        id S1728071AbeKCBpO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 21:45:14 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50773 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726799AbeKCBpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 21:45:14 -0400
+Received: by mail-wm1-f65.google.com with SMTP id h2-v6so2532748wmb.0
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 09:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1ZDjEyvchlcC5PcQocJ1/TkeQn/LYvyk6//GAwu/COY=;
-        b=aCrRbwgskRj6vLkFhpMkZbUxX8zKgM6/hciF54qwhunImuhhAq6/2zRuGnohGCtrUf
-         eUGuDk26j4Jg0kuj8zL5fA9rX+aYKQz14nY4R7erRq8uVO+SEPGjsr8rW0iMKcwpOkRE
-         8+KAxps2PXqEP6mFntmiEUdp3MtRMJAOI3NBmEE4qYyoe7GFDgVk4VambJ2nA9Tk+88B
-         PExSxlUssQ19nghKyg5VImiunaHjD51TzLCfB+bYCfjsXN1pbSiXTR+hRFz/5YwprZgX
-         mjFSx54JvCJHi9FSUgrUDzGyEFzuxcO8HNO+zYkTuBu50wTsHJYiqyib0dmxYnARFa58
-         Fd8w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MRqNVu/ZfrY1zCuY7DfPdPFrQAEkU8y20qaC/cHAUbE=;
+        b=lXzb72FOMB6/WTx5Aje23G+VFxXKX0/a5gj/RUsFY7rFHAzWoCMG/Vue3hsUM4z6lA
+         1RRHoD3NF0ztfLSaLhr15ufqlacBvWT9+mRZTSctYfJrfL6eFTwxRsgk3tEv8OsfXscZ
+         jSBsrmfH8kR5dxgxChm4o+qn66FSNF8dnij1kpHUTKJAHnnxz7d186pbpLk2aNPuguzR
+         4iiWu4eexSDy5ljcxOrGuI6u2i/TMyAesfINca1q/YpB09LVy3/odLSYdiT545G7YTnD
+         8p4K9DA37DQf+0B2qgt6r/hQP3aUGmekgrkC3KOwmRS//IoK+Mgz0TBcG3mKxodoAbac
+         2AJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=1ZDjEyvchlcC5PcQocJ1/TkeQn/LYvyk6//GAwu/COY=;
-        b=RBMtv6MlTvwtdAZc0R2ZG91QC8pdShKTQRLXEHt52F4RvhSiJWorYmZUYrn80XgsH0
-         CGPAa17P/S4xSDz7jD3LpdvbKW3tptNNSoRZzW10VJOWy0nTFBFdyFb41AsCiBPYb6dO
-         Flbmzl230q+i/X9fSND9XSzKJ18qXOD0DceSLw2wQNERamkIsfmsYi9Q7KRiDHtcjP9Q
-         Uz8wm9NfcRUJ6emeIni8syUfYsejepeLWDQpTNDRCvSJ9fYGHWok8X3nShm4l6I40ECG
-         9m6EEpcPB5tT/nOiHLtTIqt/OyVSLIiEx4bAbSaEjjl1Y3E5ar2stq6hfrA6UiTGMnou
-         KxQA==
-X-Gm-Message-State: AGRZ1gKn2+MyE7Q8MJqvh1/i7FsjO3W+epIHLmNH4KClKpTJv3X4/OuR
-        vGr1Pa9fA7Xzpg6tKDhYtSao+ub6
-X-Google-Smtp-Source: AJdET5fhacf1v+B9b6vRYvNtZPPPIAffXBy7J0QIwFc/zWhbrzhVNI+5rMCbv3rvHoOQsLxSfEqR9w==
-X-Received: by 2002:adf:e68d:: with SMTP id r13-v6mr10237495wrm.239.1541176032298;
-        Fri, 02 Nov 2018 09:27:12 -0700 (PDT)
-Received: from [192.168.0.104] (atoulouse-658-1-25-2.w86-222.abo.wanadoo.fr. [86.222.24.2])
-        by smtp.gmail.com with ESMTPSA id o81-v6sm18279602wmo.38.2018.11.02.09.27.11
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=MRqNVu/ZfrY1zCuY7DfPdPFrQAEkU8y20qaC/cHAUbE=;
+        b=VUKhQZgTSQP+o9Jw0oOMEt041vFU5a3UvG7kh3GrL8kSBXwIni05dGTY5Q2MmqUhgi
+         N/XS6LUulSNVouXFy+uUxcN/NkZfOsPGRs48e5so0JwVRblbC3y+qkOu0rdbcfFbL8BW
+         bNkwVi9WV22HDyewtf4LskixHf5EdOrGwqOBABYP13RSD3DhFRvfwhqDmHMeAjrvvDiQ
+         5ivmBLE02Aq0ZDYUbfd7smj93SNodBXHEhHz+3B1QagRdgeGPwh8w1ni+re3CUte2aN5
+         8rgiw5iMqx8z13DUuwmJQ+1NufmGUjSjuRcdpKfBnxzA+R+1oV6h6hp7bXO0riyxYR2v
+         koqw==
+X-Gm-Message-State: AGRZ1gKezA04kSRDkFJz8ItLjREfcAc5YNpigjk+BYWSy9m8WKO/akhJ
+        XHQMI+Mc9pah5ZH2goZvWRA=
+X-Google-Smtp-Source: AJdET5ftUTcM8Ej+GvFtjvyLS3PQwMcDZCaFtmFT5Oc+XtP0W9LtCVFQ0mCQXhUVTSPVcY9xb8Ed4A==
+X-Received: by 2002:a1c:7dd7:: with SMTP id y206-v6mr8250wmc.78.1541176648837;
+        Fri, 02 Nov 2018 09:37:28 -0700 (PDT)
+Received: from szeder.dev (x4db1ea80.dyn.telefonica.de. [77.177.234.128])
+        by smtp.gmail.com with ESMTPSA id y16-v6sm2837977wrn.18.2018.11.02.09.37.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Nov 2018 09:27:11 -0700 (PDT)
-Subject: Re: [PATCH v2 06/16] sequencer: refactor
- sequencer_add_exec_commands() to work on a todo_list
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20181007195418.25752-1-alban.gruin@gmail.com>
- <20181027212930.9303-1-alban.gruin@gmail.com>
- <20181027212930.9303-7-alban.gruin@gmail.com>
- <12e849d3-351b-7673-1f14-742d0fbb1ac1@talktalk.net>
- <c57384de-0996-2294-db8f-0204f9c16226@gmail.com>
- <351e3398-8239-5348-2880-d253d8a125d7@talktalk.net>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <878848f4-f8f6-25cb-061e-5f7aef9ca1a9@gmail.com>
-Date:   Fri, 2 Nov 2018 17:26:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        Fri, 02 Nov 2018 09:37:27 -0700 (PDT)
+Date:   Fri, 2 Nov 2018 17:37:25 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v3] i18n: make GETTEXT_POISON a runtime option
+Message-ID: <20181102163725.GY30222@szeder.dev>
+References: <20181024114725.3927-1-avarab@gmail.com>
+ <20181101193115.32681-1-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <351e3398-8239-5348-2880-d253d8a125d7@talktalk.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181101193115.32681-1-avarab@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-Le 02/11/2018 à 11:09, Phillip Wood a écrit :
->>>> +    struct todo_item *items = NULL,
->>>> +        base_item = {TODO_EXEC, NULL, 0, 0, commands_len, 0};
->>>> +
->>>> +    strbuf_addstr(buf, commands);
->>>> +    base_item.offset_in_buf = buf->len - commands_len - 1;
->>>> +    base_item.arg = buf->buf + base_item.offset_in_buf;
->>>
->>> I think if the user gives --exec more than once on the command line then
->>> commands will contain more than one exec command so this needs to parse
->>> commands and create one todo_item for each command.
->>>
->>
->> Ouch, you’re right.  Thanks for the heads up.
+On Thu, Nov 01, 2018 at 07:31:15PM +0000, Ævar Arnfjörð Bjarmason wrote:
+> Change the GETTEXT_POISON compile-time + runtime GIT_GETTEXT_POISON
+> test parameter to only be a GIT_TEST_GETTEXT_POISON=<non-empty?>
+> runtime parameter, to be consistent with other parameters documented
+> in "Running tests with special setups" in t/README.
 > 
-> I haven't looked how difficult it would be but it might be best to
-> change the option parsing to pass an array of strings containing the
-> exec commands rather than one long string so we can just loop over the
-> array here.
+> When I added GETTEXT_POISON in bb946bba76 ("i18n: add GETTEXT_POISON
+> to simulate unfriendly translator", 2011-02-22) I was concerned with
+> ensuring that the _() function would get constant folded if NO_GETTEXT
+> was defined, and likewise that GETTEXT_POISON would be compiled out
+> unless it was defined.
 > 
+> But as the benchmark in my [1] shows doing a one-off runtime
+> getenv("GIT_TEST_[...]") is trivial, and since GETTEXT_POISON was
+> originally added the GIT_TEST_* env variables have become the common
+> idiom for turning on special test setups.
+> 
+> So change GETTEXT_POISON to work the same way. Now the
+> GETTEXT_POISON=YesPlease compile-time option is gone, and running the
+> tests with GIT_TEST_GETTEXT_POISON=[YesPlease|] can be toggled on/off
+> without recompiling.
+> 
+> This allows for conditionally amending tests to test with/without
+> poison, similar to what 859fdc0c3c ("commit-graph: define
+> GIT_TEST_COMMIT_GRAPH", 2018-08-29) did for GIT_TEST_COMMIT_GRAPH. Do
+> some of that, now we e.g. always run the t0205-gettext-poison.sh test.
+> 
+> I did enough there to remove the GETTEXT_POISON prerequisite, but its
+> inverse C_LOCALE_OUTPUT is still around, and surely some tests using
+> it can be converted to e.g. always set GIT_TEST_GETTEXT_POISON=.
+> 
+> Notes on the implementation:
+> 
+>  * We still compile a dedicated GETTEXT_POISON build in Travis CI.
+>    This is probably the wrong thing to do and should be followed-up
+>    with something similar to ae59a4e44f ("travis: run tests with
+>    GIT_TEST_SPLIT_INDEX", 2018-01-07) to re-use an existing test setup
+>    for running in the GIT_TEST_GETTEXT_POISON mode.
 
-It would be the best way to do so.  This string comes from git-rebase.sh
-(or builtin/rebase.c) -- they format it this way before invoking
-git-rebase--interactive.  So either I modify both of them (for this, I
-would need to rebase my branch on master), or I can split this string in
-builtin/rebase--interactive.c.  I prefer the first option, but maybe
-changing the base of this series will not please Junio.
+I'm of two minds about this.  Sure, now it's not a compile time
+option, so we can spare a dedicated compilation, and sparing resources
+is good, of course.
 
-Cheers,
-Alban
+However, checking test failures in the 'linux-gcc' build job is always
+a bit of a hassle, because it's not enough to look at the output of
+the failed test, but I also have to check which one of the two test
+runs failed (i.e. the "regular" or one with all the GIT_TEST_* knobs
+turned on).  Adding a second test run with GIT_TEST_GETTEXT_POISON
+enabled to an other build job (e.g. 'linux-clang') would then bring
+this hassle to that build job as well.
+
+Furthermore, occasionally a build job is slower than usual (whatever
+the reason might be), which can be an issue when running the test
+suite twice, as it can exceed the time limit.
+
+Anyway, we can think about this later.
+
+In any case, GIT_TEST_GETTEXT_POISON definitely should not be enabled
+in the same "catch-all" test run with all other GIT_TEST_* variables,
+because it would mess up any translated error messages that might pop
+up in a test failure, and then we wouldn't have any idea about what
+went wrong.
+
+>  * We now skip a test in t0000-basic.sh under
+>    GIT_TEST_GETTEXT_POISON=YesPlease that wasn't skipped before. This
+>    test relies on C locale output, but due to an edge case in how the
+>    previous implementation of GETTEXT_POISON worked (reading it from
+>    GIT-BUILD-OPTIONS) wasn't enabling poison correctly. Now it does,
+>    and needs to be skipped.
+> 
+>  * The getenv() function is not reentrant, so out of paranoia about
+>    code of the form:
+> 
+>        printf(_("%s"), getenv("some-env"));
+> 
+>    call use_gettext_poison() in our early setup in git_setup_gettext()
+>    so we populate the "poison_requested" variable in a codepath that's
+>    won't suffer from that race condition.
+> 
+> See also [3] for more on the motivation behind this patch, and the
+> history of the GETTEXT_POISON facility.
+> 
+> 1. https://public-inbox.org/git/871s8gd32p.fsf@evledraar.gmail.com/
+> 2. https://public-inbox.org/git/87woq7b58k.fsf@evledraar.gmail.com/
+> 3. https://public-inbox.org/git/878t2pd6yu.fsf@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> 
+> Now:
+> 
+>  * The new i18n helper is gone. We just use "test -n" semantics for
+>    $GIT_TEST_GETTEXT_POISON
+> 
+>  * We error out in the Makefile if you're still saying
+>    GETTEXT_POISON=YesPlease.
+> 
+>    This makes more sense than just making it a synonym since now this
+>    also needs to be defined at runtime.
+
+OK, I think erroring out is better than silently ignoring
+GETTEXT_POISON=YesPlease.  However, the commit message only mentions
+that GETTEXT_POISON is gone, but perhaps this should be mentioned
+there as well.
+
+>  * The caveat with avoiding test_lazy_prereq is gone (although there's
+>    still some unrelated bug there worth looking into).
+> 
+>  * We call use_gettext_poison() really early to avoid any reentrancy
+>    issue with getenv().
+
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 175f83d704..3c6b185b60 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -1697,7 +1697,8 @@ test_expect_success 'sourcing the completion script clears cached commands' '
+>  	verbose test -z "$__git_all_commands"
+>  '
+>  
+> -test_expect_success !GETTEXT_POISON 'sourcing the completion script clears cached merge strategies' '
+> +test_expect_success 'sourcing the completion script clears cached merge strategies' '
+> +	GIT_TEST_GETTEXT_POISON= &&
+>  	__git_compute_merge_strategies &&
+
+OK, makes sense.
+
+>  	verbose test -n "$__git_merge_strategies" &&
+>  	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
+
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 78d8c3783b..2f42b3653c 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -755,16 +755,16 @@ test_cmp_bin() {
+>  
+>  # Use this instead of test_cmp to compare files that contain expected and
+>  # actual output from git commands that can be translated.  When running
+> -# under GETTEXT_POISON this pretends that the command produced expected
+> +# under GIT_TEST_GETTEXT_POISON this pretends that the command produced expected
+>  # results.
+>  test_i18ncmp () {
+> -	test -n "$GETTEXT_POISON" || test_cmp "$@"
+> +	! test_have_prereq C_LOCALE_OUTPUT || test_cmp "$@"
+>  }
+
+>  test_i18ngrep () {
+>  	eval "last_arg=\${$#}"
+> @@ -779,7 +779,7 @@ test_i18ngrep () {
+>  		error "bug in the test script: too few parameters to test_i18ngrep"
+>  	fi
+>  
+> -	if test -n "$GETTEXT_POISON"
+> +	if test_have_prereq !C_LOCALE_OUTPUT
+
+Why do these two helper functions call test_have_prereq (a function
+that doesn't even fit on my screen) instead of a simple
+
+  test -n "$GIT_TEST_GETTEXT_POISON"
+
+>  	then
+>  		# pretend success
+>  		return 0
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 897e6fcc94..370a4821e1 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1105,12 +1105,8 @@ test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
+>  test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
+>  
+>  # Can we rely on git's output in the C locale?
+> -if test -n "$GETTEXT_POISON"
+> +if test -z "$GIT_TEST_GETTEXT_POISON"
+>  then
+> -	GIT_GETTEXT_POISON=YesPlease
+> -	export GIT_GETTEXT_POISON
+> -	test_set_prereq GETTEXT_POISON
+> -else
+>  	test_set_prereq C_LOCALE_OUTPUT
+>  fi
+
+GIT_TEST_GETTEXT_POISON=1 will influence even those git commands that
+are executed during initialization of test-lib and the test repo:
+
+  $ GIT_TEST_GETTEXT_POISON=1 ./t0000-basic.sh -v
+  # GETTEXT POISON #expecting success: 
+  <....>
+
+It should say:
+
+  Initialized empty Git repository in <... path ...>
+  expecting success:
+
+See https://public-inbox.org/git/20181022202241.18629-2-szeder.dev@gmail.com/
+for a bit of code that you might find worthy to steal.
 
