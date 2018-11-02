@@ -6,57 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34A781F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 15:10:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D39841F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 15:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbeKCASM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 20:18:12 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35299 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726318AbeKCASL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 20:18:11 -0400
-Received: by mail-wr1-f66.google.com with SMTP id z16-v6so2355037wrv.2
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 08:10:47 -0700 (PDT)
+        id S1726631AbeKCAbC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 20:31:02 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:32907 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726260AbeKCAbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 20:31:02 -0400
+Received: by mail-wr1-f68.google.com with SMTP id u1-v6so2398978wrn.0
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 08:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=f2TtmPR+BAUT7N5yHAFu9CvvMyNhM+chfdsvqwWDgCc=;
-        b=fcWRlp2xpurdiDrkr7f8evjNxIOKe+683WV2gIkMwQdBd3CXQ46hCxiK/FVZP2fwFo
-         YB/oFKIvIsyIvWc/CIjenrdEIDetB+GsCQ3vNtjbcROgd6VUEQksLfvE4VOG8mjCENXX
-         0gUYVae1m2oXlZpkpcl51wcJDTExD6g5jhebKtUZrQ9uTM6IomZeID5KYCo45SK+Isx5
-         4QWQlt31xLg0/WBgRriHkNeKLI63SW2oDgMRDDH39thpv0BOpBSdP2IWhojBcRffJAdm
-         R6iXxXVsYHDMbZiir6KN9AQMGSM1K2WO1KSvBLmARKKDllod76I+Ti1mBh0NsLZnpY7u
-         e9qQ==
+        bh=EBrX6i+kDcD1n3eCbUaUDlIBBT8+N+ACMCbscqFUcug=;
+        b=vXt3JPV5N91ZWvOItjRu9jgzHWfobaWhgWnH1bG59PM/7Qyh1n+H62iu7tsmDD+yKB
+         5y61+4Tc9oUqbq0lyiLIG8LXw34z5+VlfJjqjJiTlOrPhrACaAKQPw2ZQhclc+OjQC8m
+         IYLJCi1xVYP/LRucYQHn9/r3oiMYJQByaq1FKuW80/Cje2OzX1j5Ituw0GtabEsXcQR1
+         6vX5tcSHH4jiPqpOJbu5J7Z1wY7G5ZIoaHazjZbA8vJ84Ru8ZGssi6IXOqWLkxzAQASD
+         v86wVZS0TrBI9xT0VihWlvdCK45kcP70lGlpOaAaPPR99gud2wDqXBMtxlwUsJsENcS+
+         p1lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=f2TtmPR+BAUT7N5yHAFu9CvvMyNhM+chfdsvqwWDgCc=;
-        b=m2ZTpZJmUDv2U6qNFi3qxnz3kwxCXjokYaTv9pAVxeolH83Lq7bnaLbH5b53CX5R3n
-         np42RDHkUqyoJLplq87LchWMnFOWPvE1Nx6CB5cr05uO1jBTLFW3PHRbtpE0kek8ZIfi
-         9diCAoxKzPP/h0srf+dOS3K/fuC3x4zNTcBGIazXi+UvKnwL/7jxsZ0N+pVRrwivNeg2
-         zN71Mr+2M90v45+5hCdTGTK953D6oDai2cRiNZchoViZ7hASHfqMeoxaxPmeyTN1HBXx
-         DeEfXuKb570D99BVj/Zww1mGp8AjIQCMis87SS07Dc1APWQT6px8Iui0KDU7hSRpzwC2
-         r+Iw==
-X-Gm-Message-State: AGRZ1gIhROVYFc/CT0vjF1ewBy80VEuUXxMuxjSNi3kT9PaMR913wUt3
-        abdf89BORSWHE1F2sxJsc8E=
-X-Google-Smtp-Source: AJdET5ebu/koCCJGEhXjEUG6QQHfZXNFt/K94MQ2bda/aa5GH/NvhRbJ/xb2xi3XO/h2I8gvcgkXmg==
-X-Received: by 2002:a5d:4a91:: with SMTP id o17-v6mr1796510wrq.132.1541171446278;
-        Fri, 02 Nov 2018 08:10:46 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i7-v6sm41440017wmd.41.2018.11.02.08.10.44
+        bh=EBrX6i+kDcD1n3eCbUaUDlIBBT8+N+ACMCbscqFUcug=;
+        b=h+MbWS75aRMMwwwv4dT3Hi5LWfVUuKB3wD6lQI4Wjrwa4dD+4pjK+nRpbsM/FLXwqX
+         f2pxnCMOf7eKEdoIUUbGlfkwcLD5aTmaEkxBRcLpxX55sfHa+ZI1/w07WGQW5T7ZNj1F
+         wdxedBJq58QjPqteEmHSSSrm59ep7buhvutiFfFRUTcNxqglXMYctYe6ivp74XJThwfT
+         HfTLv3vb1F46R4VbAqRnBx1FS5/cWuGZR2kouIjXMJKfqbUfESPjWjWIN4zxMW+mSR09
+         Nqlg6CrdrxGR3E7MJrAsfvF1nEEnXtRr9Plcq0a735m/vUM8pqHmlpwrGcUdJyzp9KiA
+         ZsiA==
+X-Gm-Message-State: AGRZ1gJTHJsPiunoCv2c6YqrcofFujoyjcuOyvZMNGWd+Cs25ndyNtNG
+        lYyTEbIOl+taynY/hI2UJkCxZpM843k=
+X-Google-Smtp-Source: AJdET5fFiCysdaxY6EXsuOOFxGWDPsZZbnvcWA8+2WGE/k1AlC0OHhVAgWopq8XEHIwXD1byD6N5fg==
+X-Received: by 2002:a5d:4d46:: with SMTP id a6-v6mr10586324wru.316.1541172214282;
+        Fri, 02 Nov 2018 08:23:34 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j203-v6sm27400713wmd.46.2018.11.02.08.23.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Nov 2018 08:10:44 -0700 (PDT)
+        Fri, 02 Nov 2018 08:23:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     James Knight <james.d.knight@live.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] build: link with curl-defined linker flags
-References: <SN4PR0701MB3679BA798ABD874D34A595DDA0CF0@SN4PR0701MB3679.namprd07.prod.outlook.com>
-Date:   Sat, 03 Nov 2018 00:10:43 +0900
-In-Reply-To: <SN4PR0701MB3679BA798ABD874D34A595DDA0CF0@SN4PR0701MB3679.namprd07.prod.outlook.com>
-        (James Knight's message of "Fri, 2 Nov 2018 07:21:51 +0000")
-Message-ID: <xmqq7ehvplak.fsf@gitster-ct.c.googlers.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     benpeart@microsoft.com, git@vger.kernel.org
+Subject: Re: [PATCH v1] add: speed up cmd_add() by utilizing read_cache_preload()
+References: <20181102133050.10756-1-peartben@gmail.com>
+Date:   Sat, 03 Nov 2018 00:23:32 +0900
+In-Reply-To: <20181102133050.10756-1-peartben@gmail.com> (Ben Peart's message
+        of "Fri, 2 Nov 2018 09:30:50 -0400")
+Message-ID: <xmqqy3abo64r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,53 +65,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-James Knight <james.d.knight@live.com> writes:
+Ben Peart <peartben@gmail.com> writes:
 
->  Makefile         | 21 +++++++--------------
->  config.mak.uname |  5 ++---
->  configure.ac     | 17 +++++++----------
->  3 files changed, 16 insertions(+), 27 deletions(-)
+> From: Ben Peart <benpeart@microsoft.com>
 >
-> diff --git a/Makefile b/Makefile
-> index b08d5ea25..c3be87b0e 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -183,10 +183,6 @@ all::
->  #
->  # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
->  #
-> -# Define NEEDS_SSL_WITH_CURL if you need -lssl with -lcurl (Minix).
-> -#
-> -# Define NEEDS_IDN_WITH_CURL if you need -lidn when using -lcurl (Minix).
-> -#
+> During an "add", a call is made to run_diff_files() which calls
+> check_remove() for each index-entry.  The preload_index() code
+> distributes some of the costs across multiple threads.
 
-Hmm, because the use of autoconf -> ./configure in our build
-procedure is optional, wouldn't this change give regression to those
-of us who use these Makefile variables to configure their build,
-instead of relying on autoconf?
+Nice.  I peeked around and noticed that we already do this in
+builtin_diff_index() before running run_diff_index() when !cached,
+and builtin_diff_files(), of course.
 
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 8acdeb71f..923b8fa09 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -431,8 +431,7 @@ ifeq ($(uname_S),Minix)
->  	NO_NSEC = YesPlease
->  	NEEDS_LIBGEN =
->  	NEEDS_CRYPTO_WITH_SSL = YesPlease
-> -	NEEDS_IDN_WITH_CURL = YesPlease
-> -	NEEDS_SSL_WITH_CURL = YesPlease
-> +	CURL_LDFLAGS = -lssl -lcrypto -lidn
+> Because the files checked are restricted to pathspec, adding individual
+> files makes no measurable impact but on a Windows repo with ~200K files,
+> 'git add .' drops from 6.3 seconds to 3.3 seconds for a 47% savings.
 
-OK, as long as we describe how to update their config.mak to adjust
-to the new world order, the "regression" I noticed earlier is not
-too bad, and the way the new CURL_LDFLAGS variable drives the build
-is much more direct and transparent than via the old way to specify
-NEEDS_*_WITH_CURL to affect the build indirectly.
+;-)
 
-I think such "describe how to configure in the new world order"
-should go to where NEEDS_*_WITH_CURL used to be, e.g. "Define
-CURL_LDFLAGS to specify flags that you need to link using -lcurl;
-see config.mak.uname and look for the variable for examples"
-or something like that, perhaps.
+> diff --git a/builtin/add.c b/builtin/add.c
+> index ad49806ebf..f65c172299 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -445,11 +445,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  		return 0;
+>  	}
+>  
+> -	if (read_cache() < 0)
+> -		die(_("index file corrupt"));
+> -
+> -	die_in_unpopulated_submodule(&the_index, prefix);
+> -
+>  	/*
+>  	 * Check the "pathspec '%s' did not match any files" block
+>  	 * below before enabling new magic.
 
-Thanks.
+It is not explained why this is not a mere s/read_cache/&_preload/
+in the log message.  I can see it is because you wanted to make the
+pathspec available to preload to further cut down the preloaded
+paths, and I do not think it has any unintended (negatie) side
+effect to parse the pathspec before populating the in-core index,
+but that would have been a good thing to mention in the proposed log
+message.
+
+> @@ -459,6 +454,10 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>  		       PATHSPEC_SYMLINK_LEADING_PATH,
+>  		       prefix, argv);
+>  
+> +	if (read_cache_preload(&pathspec) < 0)
+> +		die(_("index file corrupt"));
+> +
+> +	die_in_unpopulated_submodule(&the_index, prefix);
+>  	die_path_inside_submodule(&the_index, &pathspec);
+>  
+>  	if (add_new_files) {
+>
+> base-commit: 4ede3d42dfb57f9a41ac96a1f216c62eb7566cc2
