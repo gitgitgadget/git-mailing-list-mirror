@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 630EB1F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 05:23:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 668791F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 05:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727991AbeKBO2y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 10:28:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37638 "HELO cloud.peff.net"
+        id S1727998AbeKBO3E (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 10:29:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37642 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727350AbeKBO2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 10:28:53 -0400
-Received: (qmail 26574 invoked by uid 109); 2 Nov 2018 05:23:01 -0000
+        id S1727350AbeKBO3E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 10:29:04 -0400
+Received: (qmail 26583 invoked by uid 109); 2 Nov 2018 05:23:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Nov 2018 05:23:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Nov 2018 05:23:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 638 invoked by uid 111); 2 Nov 2018 05:22:17 -0000
+Received: (qmail 641 invoked by uid 111); 2 Nov 2018 05:22:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Nov 2018 01:22:17 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Nov 2018 01:22:27 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2018 01:22:59 -0400
-Date:   Fri, 2 Nov 2018 01:22:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2018 01:23:09 -0400
+Date:   Fri, 2 Nov 2018 01:23:09 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/3] rev-list: handle flags for --indexed-objects
-Message-ID: <20181102052258.GA19234@sigill.intra.peff.net>
+Subject: [PATCH 2/3] approxidate: handle pending number for "specials"
+Message-ID: <20181102052309.GB19234@sigill.intra.peff.net>
 References: <20181102052239.GA19162@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,133 +39,163 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a traversal sees the --indexed-objects option, it adds
-all blobs and valid cache-trees from the index to the
-traversal using add_index_objects_to_pending(). But that
-function totally ignores its flags parameter!
+The approxidate parser has a table of special keywords like
+"yesterday", "noon", "pm", etc. Some of these, like "pm", do
+the right thing if we've recently seen a number: "3pm" is
+what you'd think.
 
-That means that doing:
+However, most of them do not look at or modify the
+pending-number flag at all, which means a number may "jump"
+across a significant keyword and be used unexpectedly. For
+example, when parsing:
 
-  git rev-list --objects --indexed-objects
+  January 5th noon pm
 
-and
+we'd connect the "5" to "pm", and ignore it as a
+day-of-month. This is obviously a bit silly, as "noon"
+already implies "pm". And other mis-parsed things are
+generally as silly ("January 5th noon, years ago" would
+connect the 5 to "years", but probably nobody would type
+that).
 
-  git rev-list --objects --not --indexed-objects
+However, the fix is simple: when we see a keyword like
+"noon", we should flush the pending number (as we would if
+we hit another number, or the end of the string). In a few
+of the specials that actually modify the day, we can simply
+throw away the number (saying "Jan 5 yesterday" should not
+respect the number at all).
 
-produce the same output, because we ignore the UNINTERESTING
-flag when walking the index in the second example.
-
-Nobody noticed because this feature was added as a way for
-tools like repack to increase their coverage of reachable
-objects, meaning it would only be used like the first
-example above.
-
-But since it's user facing (and because the documentation
-describes it "as if the objects are listed on the command
-line"), we should make sure the negative case behaves
-sensibly.
+Note that we have to either move or forward-declare the
+static pending_number() to make it accessible to these
+functions; this patch moves it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- revision.c               | 15 +++++++++------
- t/t6000-rev-list-misc.sh |  7 +++++++
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ date.c          | 60 +++++++++++++++++++++++++++----------------------
+ t/t0006-date.sh |  1 +
+ 2 files changed, 34 insertions(+), 27 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index a1ddb9e11c..8e56c9641f 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1321,13 +1321,14 @@ void add_reflogs_to_pending(struct rev_info *revs, unsigned flags)
+diff --git a/date.c b/date.c
+index 49f943e25b..7adce327a3 100644
+--- a/date.c
++++ b/date.c
+@@ -887,13 +887,42 @@ static time_t update_tm(struct tm *tm, struct tm *now, time_t sec)
+ 	return n;
  }
  
- static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
--			   struct strbuf *path)
-+			   struct strbuf *path, unsigned int flags)
- {
- 	size_t baselen = path->len;
- 	int i;
- 
- 	if (it->entry_count >= 0) {
- 		struct tree *tree = lookup_tree(revs->repo, &it->oid);
-+		tree->object.flags |= flags;
- 		add_pending_object_with_path(revs, &tree->object, "",
- 					     040000, path->buf);
- 	}
-@@ -1335,14 +1336,15 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		struct cache_tree_sub *sub = it->down[i];
- 		strbuf_addf(path, "%s%s", baselen ? "/" : "", sub->name);
--		add_cache_tree(sub->cache_tree, revs, path);
-+		add_cache_tree(sub->cache_tree, revs, path, flags);
- 		strbuf_setlen(path, baselen);
- 	}
- 
- }
- 
- static void do_add_index_objects_to_pending(struct rev_info *revs,
--					    struct index_state *istate)
-+					    struct index_state *istate,
-+					    unsigned int flags)
- {
- 	int i;
- 
-@@ -1356,13 +1358,14 @@ static void do_add_index_objects_to_pending(struct rev_info *revs,
- 		blob = lookup_blob(revs->repo, &ce->oid);
- 		if (!blob)
- 			die("unable to add index blob to traversal");
-+		blob->object.flags |= flags;
- 		add_pending_object_with_path(revs, &blob->object, "",
- 					     ce->ce_mode, ce->name);
- 	}
- 
- 	if (istate->cache_tree) {
- 		struct strbuf path = STRBUF_INIT;
--		add_cache_tree(istate->cache_tree, revs, &path);
-+		add_cache_tree(istate->cache_tree, revs, &path, flags);
- 		strbuf_release(&path);
- 	}
- }
-@@ -1372,7 +1375,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
- 	struct worktree **worktrees, **p;
- 
- 	read_index(revs->repo->index);
--	do_add_index_objects_to_pending(revs, revs->repo->index);
-+	do_add_index_objects_to_pending(revs, revs->repo->index, flags);
- 
- 	if (revs->single_worktree)
- 		return;
-@@ -1388,7 +1391,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
- 		if (read_index_from(&istate,
- 				    worktree_git_path(wt, "index"),
- 				    get_worktree_git_dir(wt)) > 0)
--			do_add_index_objects_to_pending(revs, &istate);
-+			do_add_index_objects_to_pending(revs, &istate, flags);
- 		discard_index(&istate);
- 	}
- 	free_worktrees(worktrees);
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index fb4d295aa0..0507999729 100755
---- a/t/t6000-rev-list-misc.sh
-+++ b/t/t6000-rev-list-misc.sh
-@@ -90,11 +90,18 @@ test_expect_success 'rev-list can show index objects' '
- 	9200b628cf9dc883a85a7abc8d6e6730baee589c two
- 	EOF
- 	echo only-in-index >only-in-index &&
-+	test_when_finished "git reset --hard" &&
- 	git add only-in-index &&
- 	git rev-list --objects --indexed-objects >actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'rev-list can negate index objects' '
-+	git rev-parse HEAD >expect &&
-+	git rev-list -1 --objects HEAD --not --indexed-objects >actual &&
-+	test_cmp expect actual
-+'
++/*
++ * Do we have a pending number at the end, or when
++ * we see a new one? Let's assume it's a month day,
++ * as in "Dec 6, 1992"
++ */
++static void pending_number(struct tm *tm, int *num)
++{
++	int number = *num;
 +
- test_expect_success '--bisect and --first-parent can not be combined' '
- 	test_must_fail git rev-list --bisect --first-parent HEAD
- '
++	if (number) {
++		*num = 0;
++		if (tm->tm_mday < 0 && number < 32)
++			tm->tm_mday = number;
++		else if (tm->tm_mon < 0 && number < 13)
++			tm->tm_mon = number-1;
++		else if (tm->tm_year < 0) {
++			if (number > 1969 && number < 2100)
++				tm->tm_year = number - 1900;
++			else if (number > 69 && number < 100)
++				tm->tm_year = number;
++			else if (number < 38)
++				tm->tm_year = 100 + number;
++			/* We screw up for number = 00 ? */
++		}
++	}
++}
++
+ static void date_now(struct tm *tm, struct tm *now, int *num)
+ {
++	*num = 0;
+ 	update_tm(tm, now, 0);
+ }
+ 
+ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
+ {
++	*num = 0;
+ 	update_tm(tm, now, 24*60*60);
+ }
+ 
+@@ -908,16 +937,19 @@ static void date_time(struct tm *tm, struct tm *now, int hour)
+ 
+ static void date_midnight(struct tm *tm, struct tm *now, int *num)
+ {
++	pending_number(tm, num);
+ 	date_time(tm, now, 0);
+ }
+ 
+ static void date_noon(struct tm *tm, struct tm *now, int *num)
+ {
++	pending_number(tm, num);
+ 	date_time(tm, now, 12);
+ }
+ 
+ static void date_tea(struct tm *tm, struct tm *now, int *num)
+ {
++	pending_number(tm, num);
+ 	date_time(tm, now, 17);
+ }
+ 
+@@ -953,6 +985,7 @@ static void date_never(struct tm *tm, struct tm *now, int *num)
+ {
+ 	time_t n = 0;
+ 	localtime_r(&n, tm);
++	*num = 0;
+ }
+ 
+ static const struct special {
+@@ -1110,33 +1143,6 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num,
+ 	return end;
+ }
+ 
+-/*
+- * Do we have a pending number at the end, or when
+- * we see a new one? Let's assume it's a month day,
+- * as in "Dec 6, 1992"
+- */
+-static void pending_number(struct tm *tm, int *num)
+-{
+-	int number = *num;
+-
+-	if (number) {
+-		*num = 0;
+-		if (tm->tm_mday < 0 && number < 32)
+-			tm->tm_mday = number;
+-		else if (tm->tm_mon < 0 && number < 13)
+-			tm->tm_mon = number-1;
+-		else if (tm->tm_year < 0) {
+-			if (number > 1969 && number < 2100)
+-				tm->tm_year = number - 1900;
+-			else if (number > 69 && number < 100)
+-				tm->tm_year = number;
+-			else if (number < 38)
+-				tm->tm_year = 100 + number;
+-			/* We screw up for number = 00 ? */
+-		}
+-	}
+-}
+-
+ static timestamp_t approxidate_str(const char *date,
+ 				   const struct timeval *tv,
+ 				   int *error_ret)
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 64ff86df8e..b7ea5fbc36 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -113,6 +113,7 @@ check_approxidate '3:00' '2009-08-30 03:00:00'
+ check_approxidate '15:00' '2009-08-30 15:00:00'
+ check_approxidate 'noon today' '2009-08-30 12:00:00'
+ check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
++check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
+ 
+ check_approxidate 'last tuesday' '2009-08-25 19:20:00'
+ check_approxidate 'July 5th' '2009-07-05 19:20:00'
 -- 
 2.19.1.1336.g081079ac04
 
