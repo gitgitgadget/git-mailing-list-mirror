@@ -2,125 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_BLACK,
-	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6753E1F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 08:57:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 268411F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 09:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726225AbeKBSEC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 14:04:02 -0400
-Received: from smtpoutz23.laposte.net ([194.117.213.98]:43439 "EHLO
-        smtp.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1725843AbeKBSEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 14:04:02 -0400
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout011 (Postfix) with ESMTP id 6CFB352BFB3
-        for <git@vger.kernel.org>; Fri,  2 Nov 2018 09:57:32 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=laposte.net; s=mail0;
-        t=1541149052; bh=HqAmwTDtkGdbUUlxVZWX56dfavRa+UxjNp6+WFe9QhE=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=B1Xos2/AitdAFg4yMtF1gii7Hnbxu7cqu54CCREjC/q2isD1E5JnzmstwFL9LBVAf
-         51r+gUL2zvWjBYr0bdYj4fdN1egC+cGOJR6RGwecftKkPmqO5G2Iolv6jgvShWW1R5
-         LmwSUKtyzbZpOYPX4gjdcSROO5Lqrno6NQEfa/rI6/N1GsgmqgEocBLzVZLC01OTtd
-         rvkrIw4voJTioCdqshVZzGCErS7thXFb53RO+hdGMQANBnOcdWf+WcDN6E3QF/Nt2K
-         ucxMcYQUQpS+Ct45nay2vBAdeEYg8XtPzR3XP5h0j9wZNb0bkhhdYOe3saf7tBMJP+
-         85NqdnZPVGEGg==
-Received: from smtp.laposte.net (localhost [127.0.0.1])
-        by lpn-prd-vrout011 (Postfix) with ESMTP id 534EC5302EB
-        for <git@vger.kernel.org>; Fri,  2 Nov 2018 09:57:32 +0100 (CET)
-Received: from lpn-prd-vrin001 (lpn-prd-vrin001.prosodie [10.128.63.2])
-        by lpn-prd-vrout011 (Postfix) with ESMTP id 4E02C52BFB3
-        for <git@vger.kernel.org>; Fri,  2 Nov 2018 09:57:32 +0100 (CET)
-Received: from lpn-prd-vrin001 (localhost [127.0.0.1])
-        by lpn-prd-vrin001 (Postfix) with ESMTP id 3D63F373100
-        for <git@vger.kernel.org>; Fri,  2 Nov 2018 09:57:32 +0100 (CET)
-Received: from arekh.ddns.net (unknown [82.64.49.105])
-        by lpn-prd-vrin001 (Postfix) with ESMTPA id 26CAC373089
-        for <git@vger.kernel.org>; Fri,  2 Nov 2018 09:57:32 +0100 (CET)
-Received: from cerebro.okg (box.okg [192.168.0.1])
-        by arekh.ddns.net (Postfix) with ESMTPSA id 34AC122001A;
-        Fri,  2 Nov 2018 09:57:31 +0100 (CET)
-Message-ID: <1e3901b9a75a043d9c31d66d98410f3288a7c5be.camel@laposte.net>
-Subject: Re: [RFE] Please add name and email to git credentials
-From:   Nicolas Mailhot <nicolas.mailhot@laposte.net>
-To:     Christian Couder <nicolas.mailhot@laposte.net>,
-        nicolas.mailhot@laposte.net
-Cc:     git <git@vger.kernel.org>
-Date:   Fri, 02 Nov 2018 09:57:30 +0100
-In-Reply-To: <CAP8UFD0DHGShwo=DnwbSHz3nvRMF9P4GegEzC27uwHLXQ=A4Zw@mail.gmail.com>
-References: <6d8ef01ad9eb08d90cb9848eeaeabe6784b7b3e3.camel@laposte.net>
-         <87zhutjb3t.fsf@evledraar.gmail.com>
-         <6f3d8c49e1d44ab20d4169e5254364cba707f1af.camel@laposte.net>
-         <CAP8UFD1rTJNOZzFMryY9BNKHUZKE8FUEgw+4jFfnZ7G8KGNrkw@mail.gmail.com>
-         <62bf61555a6c2789e959e4f085bfedf28b60f268.camel@laposte.net>
-         <CAP8UFD0DHGShwo=DnwbSHz3nvRMF9P4GegEzC27uwHLXQ=A4Zw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.31.1 (3.31.1-2.fc30) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-VR-FullState: 0
-X-VR-Score: 0
-X-VR-Cause-1: gggruggvucftvghtrhhoucdtuddrgedtkedrieeigddufeefucetufdoteggodetrfdotffvucfrrhho
-X-VR-Cause-2: fhhilhgvmecunfetrffquffvgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpefkuffhvfff
-X-VR-Cause-3: jghftggfggfgsehtkeertddtreejnecuhfhrohhmpefpihgtohhlrghsucforghilhhhohhtuceonhhi
-X-VR-Cause-4: tgholhgrshdrmhgrihhlhhhotheslhgrphhoshhtvgdrnhgvtheqnecuffhomhgrihhnpehurhhlrdho
-X-VR-Cause-5: nhgvnecukfhppeekvddrieegrdegledruddtheenucfrrghrrghmpehmohguvgepshhmthhpohhuthdp
-X-VR-Cause-6: ihhnvghtpeekvddrieegrdegledruddthedphhgvlhhopegrrhgvkhhhrdguughnshdrnhgvthdpmhgr
-X-VR-Cause-7: ihhlfhhrohhmpehnihgtohhlrghsrdhmrghilhhhohhtsehlrghpohhsthgvrdhnvghtpdhrtghpthht
-X-VR-Cause-8: ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedt
-X-VR-AvState: No
-X-VR-State: 0
-X-VR-State: 0
+        id S1726008AbeKBSgm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 14:36:42 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:43284 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbeKBSgm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 14:36:42 -0400
+Received: by mail-wr1-f49.google.com with SMTP id y3-v6so956485wrh.10
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 02:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=pDgeV0XC8X5o5Hvt+bsf81s4jJpHhYAbvQ/HuLzTS4s=;
+        b=f4kxokAz2N5o394xctiVUbY8hoOP73KYHbmZXpR4V7pDdsZp/L4DbP/YX0Em+LRGt4
+         WqUi10zuJiXdpW/Y6YpEq/2IM1rvDJNsCre7YN9lI6K1knaY9wlV5+7STHEZKPcoizlF
+         28dIWd/KyZF53qOU29HUNf6uKqycJeQiL3CMzDsojKsqxM1mQiu2+NMiU4I/8JWNUS3O
+         HIlIMDrx3fgel5mg1KRF59uSBaWYki6IQ8M6C7b5pgUEVR07n+C5l6kvtD8iIpEVk45z
+         uE09grbKf1gP7yVM0msjBt9wS7NlAUx1C8OQ7lC0ReTLMy10/7ktd0jOFOxhKeG+A+0q
+         WaZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=pDgeV0XC8X5o5Hvt+bsf81s4jJpHhYAbvQ/HuLzTS4s=;
+        b=BaymGWS2sno5ydACWtw2U8VHvvUnbSQTkS59fP7WLO5cb3Y+QhtOeJVpCvTzm76G/e
+         DpLzJuvNMYykZl2K/87ZEWPgW5tV1PRjHqbMYlGsj/Sz1AdfcNJ4GqQhc9KwSc/9OzsO
+         ggaHqiqFSDX3Euk1fgVJXOhosdYeF/ohhn8GXbj6CW67NAyWM7nLFLTkvtQShe1ygQN2
+         326K0ZKFOpOJcIbDV53pVF5OGq/uBaIB6Twlj72oXeMjneWPCwc+vPW/yXR6pdJblZAd
+         9Gt4ahXzBJu0KKum8+vx/AzfPmz/NIGjuz7IXYJC5M803dQwcGlf3Ei19RfWHmBwxs+2
+         HDBQ==
+X-Gm-Message-State: AGRZ1gITwXxZdO067khjjxpE+uNWrqAVcaA7DFBFp5vEtWCt9jzT2q1Q
+        IQUxmTj/2nZ9B5N9L0YIt5Shh4hs
+X-Google-Smtp-Source: AJdET5fravkEW/0wo6FVFbjMP6+Y8HSK47191o5UZjcjGoGhVXgnkKcDvvlhHJaOCsZ44x6Ap0ncwQ==
+X-Received: by 2002:adf:edcf:: with SMTP id v15-v6mr8978706wro.182.1541151007208;
+        Fri, 02 Nov 2018 02:30:07 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (ekn166.neoplus.adsl.tpnet.pl. [83.21.181.166])
+        by smtp.gmail.com with ESMTPSA id r129-v6sm1704806wmg.25.2018.11.02.02.30.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 02 Nov 2018 02:30:06 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC] Generation Number v2
+References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
+        <CAGZ79ka-FTqaXdrMixjUp2THJ3L0YvEnkKxs3XFgB3WEEy2-Tg@mail.gmail.com>
+        <86tvl0zhos.fsf@gmail.com>
+Date:   Fri, 02 Nov 2018 10:30:02 +0100
+In-Reply-To: <86tvl0zhos.fsf@gmail.com> (Jakub Narebski's message of "Thu, 01
+        Nov 2018 21:06:11 +0100")
+Message-ID: <86ftwjzv1h.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le vendredi 02 novembre 2018 à 09:27 +0100, Christian Couder a écrit :
-> On Thu, Nov 1, 2018 at 3:42 PM Nicolas Mailhot
-> <nicolas.mailhot@gmail.com> wrote:
-> > Le jeudi 01 novembre 2018 à 15:13 +0100, Christian Couder a écrit :
-> > > How can Git know when you commit where you will want to push the
-> > > commit afterwards?
-> > 
-> > You have an url in the repo config. of course you can change it
-> > between
-> > the commit and the push, but that's not the general case.
-> 
-> If I did a `git init`, then I have no url in the repo config. Also if
-> I cloned from a repo that has a different URL than the sites I have
-> credentials for, then how should git use the URL in the repo config?
+Jakub Narebski <jnareb@gmail.com> writes:
+> Stefan Beller <sbeller@google.com> writes:
+[...]
+>> How would this impact creation of a commit?
+>>
+>> The current generation numbers can be lazily updated or not
+>> updated at all. In my understanding of the maximum generation
+>> numbers, a new commit would make these maximum generation
+>> numbers invalid (i.e. they have to be recomputed).
+[...]
+>> For the V2 maximum generation numbers, would we need to
+>> rewrite the numbers for all commits once we recompute them?
+>> Assuming that is true, it sounds like the benchmark doesn't
+>> cover the whole costs associated with V2, which is why the
+>> exceptional performance can be explained.
+>
+> Let's check it using a simple example
+>
+> First, (minimum) parent-based generation numbers before and after
+> extending the commit graph:
+>
+>   1   2     3   4     5   6   7    new
+>   1   2     3   4     5   -   -    old
+>   .---.-----.---.-----.---*---*
+>        \
+>         \   3   4     5   6        new
+>          \  3   4     5   6        old
+>           \-.---.-----.---.
+>                  \
+>                   \   5            new
+>                    \  -            old
+>                     \-*
 
-Then you have no need or use for git credentials. Where’s the problem? 
+Let me check yet another idea, using (minimum) parent-based V0 generation
+numbers (counting distance from the sink / root) as a starting number
+for source / heads commits.
 
-Will the fact that git credential users, that already have per-repo-url
-settings in their .gitconfig, will also be able to use this existing
-per-url section to control the mail and name associated with their
-repos, wake you at night, or something?
+    1   2     3   4     5   6   7    new
+    1   2     3   4     5   -   -    old
+    .---.-----.---.-----.---*---*
+         \
+          \   3   4     5   6        new
+           \  3   4     5   6        old
+            \-.---.-----.---.
+                   \
+                    \   5            new
+                     \  -            old
+                      \-*
 
-> You could have no user.name and user.email configured in your global
-> config, and a script that configures those in the local config
-> depending on remote.origin.url. 
 
-One could use the same arguments to say git credentials is not
-necessary, it's a maintenance burden, everyone should just script their
-auth needs manually, etc.
+Well, on this example it looks like this variant of maximum generation
+numbers can be done incrementally, but let's check another example
 
-Are you arguing for git credentails removal here?
+   1   2     3   4   5   6     7   8   9       new
+   1   2     3   4   5   6     7   8   -       old
+   .---.-----.---.---.---.-----.---.---*
+        \                     /
+         \   3   4           / 5   6   7   8   new
+          \  5   6          /  -   -   -   -   old
+           \-.---.---------/---*---*---*---*
 
-Or are you arguing that having two separate mecanisms in git, to match
-config directives to repo urls, is some kind of improvement?
+It looks like it doesn; give as good results as I thought.  Less values
+are changed, but you would still need to recalculate them, unless it can
+be proven that they do not need it.
 
-I didn't create or write or specify the way git credential matches repo
-urls. It already exists within git. If you have a problem with the
-matching logic git credential uses, why are you arguing with me instead
-of taking it up with the maintainers of this logic?
+>
+> Next, maximum generation numbers.  We start with 9 commits, and we end
+> up with 12 commits after the change
+>
+>   6   7     8   9     10  11  12   new
+>   4   5     7   8     9   -   -    old
+>   .---.-----.---.-----.---*---*
+>        \
+>         \   9   10    11  12       new
+>          \  6   7     8   9        old
+>           \-.---.-----.---.
+>                  \
+>                   \   12           new
+>                    \  -            old
+>                     \-*
+>
+>
+> As you can see all maximum generation numbers got rewritten.
+>
+> Though if instead using the number of commits, we use the maximum
+> generation number, or in other words the length of the longest path, we
+> get the following:
+>
+>   1   2     3   4     5   6   7    new
+>   1   2     4   5     6   -   -    old
+>   .---.-----.---.-----.---*---*
+>        \
+>         \   4   5     6   7        new
+>          \  3   4     5   6        old
+>           \-.---.-----.---.
+>                  \
+>                   \   7            new
+>                    \  -            old
+>                     \-*
+>
+> A bit better, but still much change in numbers.
 
-Regards,
-
--- 
-Nicolas Mailhot
-
+--=20
+Jakub Nar=C4=99bski
