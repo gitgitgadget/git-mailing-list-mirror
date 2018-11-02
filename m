@@ -6,62 +6,262 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A99541F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 06:24:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C4621F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 06:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728423AbeKBPae (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 11:30:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37686 "HELO cloud.peff.net"
+        id S1728275AbeKBPiD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 11:38:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37696 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728216AbeKBPae (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 11:30:34 -0400
-Received: (qmail 28846 invoked by uid 109); 2 Nov 2018 06:24:32 -0000
+        id S1728201AbeKBPiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 11:38:03 -0400
+Received: (qmail 29289 invoked by uid 109); 2 Nov 2018 06:31:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Nov 2018 06:24:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 02 Nov 2018 06:31:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 821 invoked by uid 111); 2 Nov 2018 06:23:48 -0000
+Received: (qmail 889 invoked by uid 111); 2 Nov 2018 06:31:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Nov 2018 02:23:48 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 02 Nov 2018 02:31:15 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2018 02:24:29 -0400
-Date:   Fri, 2 Nov 2018 02:24:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Nov 2018 02:31:56 -0400
+Date:   Fri, 2 Nov 2018 02:31:56 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] it's called read_object_file() these days
-Message-ID: <20181102062429.GA29939@sigill.intra.peff.net>
-References: <xmqqpnvoovzk.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/9] saner xdiff hunk callbacks
+Message-ID: <20181102063156.GA30252@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqpnvoovzk.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 02, 2018 at 03:05:03PM +0900, Junio C Hamano wrote:
+As part of my -Wunused-parameter hunt, I noticed that parse_hunk_header()
+can read out-of-bounds in the array it is given. But it turns out not to
+be a big problem because we only ever use it to parse lines that xdiff
+has just generated.
 
-> Remnant of the old name of the function still remains in comments.
-> Update them all.
+This is fixable, and I'll show my patch to do so at the end of this
+email. But it seems rather silly that we have xdiff generate a string
+just so that we can parse it from within the same process. So instead I
+improved the xdiff interface to pass the actual integers out, made use
+of it as appropriate, and then in the final patch we can just drop the
+buggy function entirely.
 
-Yay. What's here looks obviously correct.
+So that's this series, which I think is the better fix:
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  apply.c       | 2 +-
->  builtin/gc.c  | 2 +-
->  fast-import.c | 4 ++--
->  notes.c       | 2 +-
->  object.h      | 2 +-
->  sha1-file.c   | 2 +-
->  6 files changed, 7 insertions(+), 7 deletions(-)
+  [1/9]: xdiff: provide a separate emit callback for hunks
+  [2/9]: xdiff-interface: provide a separate consume callback for hunks
+  [3/9]: diff: avoid generating unused hunk header lines
+  [4/9]: diff: discard hunk headers for patch-ids earlier
+  [5/9]: diff: use hunk callback for word-diff
+  [6/9]: combine-diff: use an xdiff hunk callback
+  [7/9]: diff: convert --check to use a hunk callback
+  [8/9]: range-diff: use a hunk callback
+  [9/9]: xdiff-interface: drop parse_hunk_header()
 
-There's another mention in Documentation/technical/api-object-access.txt.
+ builtin/merge-tree.c |  3 +-
+ builtin/rerere.c     |  3 +-
+ combine-diff.c       | 67 ++++++++++++++++++++------------------
+ diff.c               | 48 ++++++++++++++--------------
+ diffcore-pickaxe.c   |  3 +-
+ range-diff.c         | 10 +++++-
+ xdiff-interface.c    | 76 ++++++++++++++++++--------------------------
+ xdiff-interface.h    | 19 ++++++++---
+ xdiff/xdiff.h        |  6 +++-
+ xdiff/xutils.c       | 21 +++++++++---
+ 10 files changed, 141 insertions(+), 115 deletions(-)
 
-But since the entire API is undocumented, I'm not sure it matters much.
-That file has been a placeholder since 2007. Maybe we should just delete
-it; its existence does not seem to be guilting anyone into documenting,
-and these days we'd prefer to do it in-header anyway.
+For reference/comparison, here's the minimal fix patch.
 
--Peff
+-- >8 --
+Subject: [PATCH DO NOT APPLY] xdiff-interface: refactor parse_hunk_header
+
+The parse_hunk_header() function takes its input as a ptr/len pair, but
+does not respect the "len" half, and instead treats it like a
+NUL-terminated string. This works out in practice because we only ever
+parse strings generated by xdiff. These do omit the trailing NUL, but
+since they're always valid, we never parse past the newline.
+
+Still, it would be easy to misuse it, so let's fix it.
+
+While we're doing so, we can improve a few other things:
+
+  - by using helpers like skip_prefix_mem(), we can do the whole parse
+    within a conditional, avoiding the need to jump around (backwards,
+    even!) to the error block with a goto. The result is hopefully much
+    more readable.
+
+  - the check for the final "@@" would trigger an error return code if
+    it failed, but wouldn't actually emit an error message (like the
+    rest of the parse errors do)
+
+  - we used to blindly assume the caller checked that the string starts
+    with "@@ -"; we now check it ourselves and let the caller know what
+    we found
+
+  - the input line does not need to be modified, and can be marked
+    "const"
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The diff is pretty horrid, but hopefully the post-image is pleasant to
+read.
+
+ combine-diff.c    | 13 +++++----
+ diff.c            |  5 ++--
+ xdiff-interface.c | 68 +++++++++++++++++++++++++----------------------
+ xdiff-interface.h |  6 ++---
+ 4 files changed, 50 insertions(+), 42 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 10155e0ec8..0318f39103 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -348,11 +348,14 @@ struct combine_diff_state {
+ static void consume_line(void *state_, char *line, unsigned long len)
+ {
+ 	struct combine_diff_state *state = state_;
+-	if (5 < len && !memcmp("@@ -", line, 4)) {
+-		if (parse_hunk_header(line, len,
+-				      &state->ob, &state->on,
+-				      &state->nb, &state->nn))
+-			return;
++	switch (maybe_parse_hunk_header(line, len,
++					&state->ob, &state->on,
++					&state->nb, &state->nn)) {
++	case 0:
++		break; /* not a hunk header */
++	case -1:
++		return; /* parse error */
++	default:
+ 		state->lno = state->nb;
+ 		if (state->nn == 0) {
+ 			/* @@ -X,Y +N,0 @@ removed Y lines
+diff --git a/diff.c b/diff.c
+index 8647db3d30..af6c01c4d0 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1921,8 +1921,9 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+ 	struct diff_options *opt = diff_words->opt;
+ 	const char *line_prefix;
+ 
+-	if (line[0] != '@' || parse_hunk_header(line, len,
+-			&minus_first, &minus_len, &plus_first, &plus_len))
++	if (maybe_parse_hunk_header(line, len,
++				    &minus_first, &minus_len,
++				    &plus_first, &plus_len) <= 0)
+ 		return;
+ 
+ 	assert(opt);
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index e7af95db86..f574ee49cd 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -14,49 +14,53 @@ struct xdiff_emit_state {
+ 	struct strbuf remainder;
+ };
+ 
+-static int parse_num(char **cp_p, int *num_p)
++static int parse_num(const char **cp_p, size_t *len, int *num_p)
+ {
+-	char *cp = *cp_p;
++	const char *cp = *cp_p;
++	const char *end = cp + *len;
+ 	int num = 0;
+ 
+-	while ('0' <= *cp && *cp <= '9')
++	while (cp < end && '0' <= *cp && *cp <= '9')
+ 		num = num * 10 + *cp++ - '0';
+ 	if (!(cp - *cp_p))
+-		return -1;
++		return 0;
++	*len -= cp - *cp_p;
+ 	*cp_p = cp;
+ 	*num_p = num;
+-	return 0;
++	return 1;
+ }
+ 
+-int parse_hunk_header(char *line, int len,
+-		      int *ob, int *on,
+-		      int *nb, int *nn)
++static int parse_hunk_len(const char **cp_p, size_t *len, int *out)
+ {
+-	char *cp;
+-	cp = line + 4;
+-	if (parse_num(&cp, ob)) {
+-	bad_line:
+-		return error("malformed diff output: %s", line);
++	/* hunk lengths are optional; if omitted, default to 1 */
++	if (skip_prefix_mem(*cp_p, *len, ",", cp_p, len)) {
++		if (!parse_num(cp_p, len, out))
++			return 0;
++	} else {
++		*out = 1;
+ 	}
+-	if (*cp == ',') {
+-		cp++;
+-		if (parse_num(&cp, on))
+-			goto bad_line;
+-	}
+-	else
+-		*on = 1;
+-	if (*cp++ != ' ' || *cp++ != '+')
+-		goto bad_line;
+-	if (parse_num(&cp, nb))
+-		goto bad_line;
+-	if (*cp == ',') {
+-		cp++;
+-		if (parse_num(&cp, nn))
+-			goto bad_line;
+-	}
+-	else
+-		*nn = 1;
+-	return -!!memcmp(cp, " @@", 3);
++
++	return 1;
++}
++
++int maybe_parse_hunk_header(const char *line, size_t len,
++			    int *ob, int *on,
++			    int *nb, int *nn)
++{
++	const char *cp;
++
++	if (!skip_prefix_mem(line, len, "@@ -", &cp, &len))
++		return 0;
++
++	if (!parse_num(&cp, &len, ob) ||
++	    !parse_hunk_len(&cp, &len, on) ||
++	    !skip_prefix_mem(cp, len, " +", &cp, &len) ||
++	    !parse_num(&cp, &len, nb) ||
++	    !parse_hunk_len(&cp, &len, nn) ||
++	    !skip_prefix_mem(cp, len, " @@", &cp, &len))
++		return error("malformed diff output: %s", line);
++
++	return 1;
+ }
+ 
+ static void consume_one(void *priv_, char *s, unsigned long size)
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index 135fc05d72..cddd56bae6 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -17,9 +17,9 @@ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t co
+ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
+ 		  xdiff_emit_consume_fn fn, void *consume_callback_data,
+ 		  xpparam_t const *xpp, xdemitconf_t const *xecfg);
+-int parse_hunk_header(char *line, int len,
+-		      int *ob, int *on,
+-		      int *nb, int *nn);
++int maybe_parse_hunk_header(const char *line, size_t len,
++			    int *ob, int *on,
++			    int *nb, int *nn);
+ int read_mmfile(mmfile_t *ptr, const char *filename);
+ void read_mmblob(mmfile_t *ptr, const struct object_id *oid);
+ int buffer_is_binary(const char *ptr, unsigned long size);
+-- 
+2.19.1.1336.g081079ac04
+
