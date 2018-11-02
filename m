@@ -2,114 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1F31F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 17:09:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C24E1F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 17:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727339AbeKCCQ4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 22:16:56 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:45885 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726318AbeKCCQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 22:16:56 -0400
-Received: by mail-ed1-f51.google.com with SMTP id t10-v6so2361282eds.12
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 10:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=E0kP7vT7PjUk40+ufk9FjP/EnQuHpBlsb3Ob0WhOivg=;
-        b=hmZOdcqIJ0UOu7i5CGzZRUjEWQ9AZSBk0Hj04n2f7D3tQXTokh3qu0Z4Xht3y9/8qH
-         hZP7i59XZ2nW4sm/2ho15IQxJdadG8HaDHZ2mXl4rNngeIfljd1pBjbkTpuwTpk3VGo/
-         cmo5u9K8QZIiBhp1ZQ83eS+HDooFR6Zmzsfvq8g9KEUtQGayoLPNydFjCEuppnfrq/dV
-         vUJox6azxm7iWZcOUi6qpdnajWuUZrcMuWB5EKVuLlS4cbyfht1zIM9ueLY303HB+QXG
-         eb0O4uWOToECFcno2Pm10rPg09MsLOp0E6rNX/mFHSOBfXGEZtMaCGthpTyiR9q5CYGq
-         Tfpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=E0kP7vT7PjUk40+ufk9FjP/EnQuHpBlsb3Ob0WhOivg=;
-        b=Kr0jh89o2wla+hd6jUvggEzI7Uw2mYvd1VLnt/CGRdYNjv5PGry47YqejutgoEEnnr
-         KsN+X5qg7OCd+3ChQ9efnukjfuHmEZ/05ukQFIHiEJ7llqggT6L4tXezXJNJRhoILBM6
-         0DxZwrl69M+kV6zeINFqdUrtwjNvnJV8jE6QZAzgx6MxWrcI1gQzbsivdJ+wm6gfcfhQ
-         4rsJF4IaGDrYTof6FRNS/0uTxKOUHc7E8D6/mRL0xRTdGGAJNX4EwPujpFjdMLkqVsDF
-         +vLyR9rrMQcIFwg2QQtFgMGqAQnroZApaYSiWMgUEVisv94nDVb+nKKOf9YV90JZy03T
-         3MhA==
-X-Gm-Message-State: AGRZ1gJfG5UyKcM6R4asHreNrtYQxtOXitVAPBSYRYKrQBftPeOFnNjl
-        pU/uPliMiWPlRUqjjhbY0ei6sLhoDt+3cFIVV+5AXA==
-X-Google-Smtp-Source: AJdET5d5UWfNI+em+NNOXrPQdLdoWXKEbZ/GYI4ImBCZXHnF8eLAh1aOr1nPY/a26f4wSb3GC7NOWpoBDo1+5NKsbJU=
-X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr2463418eji.106.1541178544725;
- Fri, 02 Nov 2018 10:09:04 -0700 (PDT)
+        id S1727551AbeKCCRK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 22:17:10 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:61061 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726318AbeKCCRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 22:17:10 -0400
+Received: from [192.168.2.240] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id IcwggcnN3pXFjIcwggEHrW; Fri, 02 Nov 2018 17:09:19 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1541178559;
+        bh=pLY4Di0i002MOLnRiM8oRkvKxDpAcNqX/HrNZOCPOe4=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=SR/QXcjjP3/O3GNkL1KW9KqoRQEL1S3NwJwXHbjiClgW5En3f5lI0Ztgwyf/fpY+F
+         2Wv+F2Mn92VnAl3nVpPbSx1PjG86Piqoa0v0Yg3b0kowVBTM5am+AtcR+/VjOsV0Ng
+         aC2kLwwLS4KRyrviuqd8FF2H+OAMl1MxOI5pz+tM=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=nF0OYWXJvAXkQDamSGMA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 06/16] sequencer: refactor
+ sequencer_add_exec_commands() to work on a todo_list
+To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20181007195418.25752-1-alban.gruin@gmail.com>
+ <20181027212930.9303-1-alban.gruin@gmail.com>
+ <20181027212930.9303-7-alban.gruin@gmail.com>
+ <12e849d3-351b-7673-1f14-742d0fbb1ac1@talktalk.net>
+ <c57384de-0996-2294-db8f-0204f9c16226@gmail.com>
+ <351e3398-8239-5348-2880-d253d8a125d7@talktalk.net>
+ <878848f4-f8f6-25cb-061e-5f7aef9ca1a9@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <1f16fa71-2ff0-d0b3-0d90-f330788351d8@talktalk.net>
+Date:   Fri, 2 Nov 2018 17:09:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-References: <CACsJy8AVfkWsAP_-CNd5RSbQ=tyCzdw-ix1k5zwmAKaj+z1qXw@mail.gmail.com>
-In-Reply-To: <CACsJy8AVfkWsAP_-CNd5RSbQ=tyCzdw-ix1k5zwmAKaj+z1qXw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 2 Nov 2018 10:08:51 -0700
-Message-ID: <CAGZ79kbk0QdxTNWusieU=3DzTvxykmh-yTgNArTcM9USc5WWRw@mail.gmail.com>
-Subject: Re: submodule support in git-bundle
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <878848f4-f8f6-25cb-061e-5f7aef9ca1a9@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfG+8i+80FsOJKeELkIFXOTgFK7f0Oju55zHFU+bkOp0Q1jy1gaI9jOLPrqC0mvNRwFFAikHaIeDmSBuJNppBRvgds2wmVp75OblW6fqL5lcQ6USZCj4o
+ vHJZ8MG4k7jb4gyWZKpAA06qfmdKJGyzx/EfRv+9nyBEtxD3uQU2v/PumvGveDV5sVFwknMbbn8Fjh0a8YbcCGsbCdvy5KFqIHYEhcAnDT5biOuuvsGk6cqF
+ gZXfmLoXx1ZEGgOBfNi5jW73SeFo1iPAZu6blK+haSWsmOoGL1ORYiIAvheZIquL/eirstjhuA/dv64qEVU3Cg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 2, 2018 at 9:10 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> I use git-bundle today and it occurs to me that if I want to use it to
-> transfer part of a history that involves submodule changes, things
-> aren't pretty. Has anybody given thought on how to do binary history
-> transfer that contains changes from submodules?
->
-> Since .bundle files are basically .pack files, i'm not sure if it's
-> easy to bundle multiple pack files (one per repo)...
+Hi Alban
 
-That is a really good discussion starter!
+On 02/11/2018 16:26, Alban Gruin wrote:
+> Hi Phillip,
+> 
+> Le 02/11/2018 à 11:09, Phillip Wood a écrit :
+>>>>> +    struct todo_item *items = NULL,
+>>>>> +        base_item = {TODO_EXEC, NULL, 0, 0, commands_len, 0};
+>>>>> +
+>>>>> +    strbuf_addstr(buf, commands);
+>>>>> +    base_item.offset_in_buf = buf->len - commands_len - 1;
+>>>>> +    base_item.arg = buf->buf + base_item.offset_in_buf;
+>>>>
+>>>> I think if the user gives --exec more than once on the command line then
+>>>> commands will contain more than one exec command so this needs to parse
+>>>> commands and create one todo_item for each command.
+>>>>
+>>>
+>>> Ouch, you’re right.  Thanks for the heads up.
+>>
+>> I haven't looked how difficult it would be but it might be best to
+>> change the option parsing to pass an array of strings containing the
+>> exec commands rather than one long string so we can just loop over the
+>> array here.
+>>
+> 
+> It would be the best way to do so.  This string comes from git-rebase.sh
+> (or builtin/rebase.c) -- they format it this way before invoking
+> git-rebase--interactive.  So either I modify both of them (for this, I
+> would need to rebase my branch on master), or I can split this string in
+> builtin/rebase--interactive.c.  I prefer the first option, but maybe
+> changing the base of this series will not please Junio.
 
-As bundles are modeled after the fetch protocol, I would
-redirect the discussion there.
+I think in the last 'what's cooking' email Junio said he was going to 
+merge all the builtin/rebase.c stuff to master so there may not be a 
+problem if you wait a couple of days.
 
-The new fetch protocol could support sending more than
-one pack, which could be for both the superproject as
-well as the relevant submodule updates (i.e. what is recorded
-in the superproject) based on a new capability.
+Best Wishes
 
-We at Google have given this idea some thought, but from a
-different angle: As you may know currently Android uses the
-repo tool, which we want to replace with Gits native submodules
-eventually. The repo tool tests for each repository to clone if
-there is a bundle file for that repository, such that instead of
-cloning the repo, the bundle can be downloaded and then
-a catch-up fetch can be performed. (This helps the Git servers
-as well as the client, the bundle can be hosted on a CDN,
-which is faster and cheaper than a git server for us).
+Phillip
 
-So we've given some thought on extending the packfiles in the
-fetch protocol to have some redirection to a CDN possible,
-i.e. instead of sending bytes as is, you get more or less a "todo"
-list, which might be
-    (a) take the following bytes as is (current pack format)
-    (b) download these other bytes from $THERE
-        (possibly with a checksum)
-once the stream of bytes is assembled, it will look like a regular
-packfile with deltas etc.
+> Cheers,
+> Alban
+> 
 
-This offloading-to-CDN (or "mostly resumable clone" in the
-sense that the communication with the server is minimal, and
-you get most of your data via resumable http range-requests)
-sounds like complete offtopic, but is one of the requirements
-for the repo to submodule migration, hence I came to speak of it.
-
-Did you have other things in mind, on a higher level?
-e.g. querying the bundle and creating submodule bundles
-based off the superproject bundle? 'git bundle create' could
-learn the --recurse-submodules option, which then produces
-multiple bundle files without changing the file formats.
-
-Stefan
