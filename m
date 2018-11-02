@@ -7,75 +7,77 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 334101F453
-	for <e@80x24.org>; Fri,  2 Nov 2018 15:55:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E991F453
+	for <e@80x24.org>; Fri,  2 Nov 2018 16:00:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727696AbeKCBCr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Nov 2018 21:02:47 -0400
-Received: from mail-io1-f44.google.com ([209.85.166.44]:45678 "EHLO
-        mail-io1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727277AbeKCBCr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Nov 2018 21:02:47 -0400
-Received: by mail-io1-f44.google.com with SMTP id p83-v6so1679061iod.12
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 08:55:14 -0700 (PDT)
+        id S1727162AbeKCBIX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Nov 2018 21:08:23 -0400
+Received: from mail-it1-f179.google.com ([209.85.166.179]:39347 "EHLO
+        mail-it1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbeKCBIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Nov 2018 21:08:23 -0400
+Received: by mail-it1-f179.google.com with SMTP id m15so3813406itl.4
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 09:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=jKbFLOgVvIb3vFtBAnQXjkR0qnR1Ka3BMT1zY6SaUUA=;
-        b=AbWA6dcqJ367Ys3j+eexl7ZG/M4LHe4ZZwxerB79fYSIOEbXhGP1NAGVpWt/AfKhlj
-         F8VLRseO9G1D7x5YNBtFRXdh4tiKRDiU+0CnFvcoamYnDiNO8QPx8ErSLayAAPv+hPVs
-         1qOhi++K1dDR1F/1S9OsVC/95iyP5OxfTl6h7RJSg4+UXAKWdquQOQfv26L0R1bTEOMN
-         vaHQ638iag589+KkZ4hQMoasIjZ8yXcB1b283yQ5LO5k+ywO0CXXEIClEzDY+PuxOVgy
-         KSoV5dHL/upcA+EAKMAA3wOmJtVZpfW7qiD2cae/UHlZJfr09KlMqu85AS9E5sgsccyw
-         5Ndw==
+        bh=8IfXfv77iXiIu8iXpca9xREgrH+4T28RgkwzpjRiYZ4=;
+        b=AlFOWk/r3B4S0Pd+emegB8jFD0KW0sGDMfvMDzWz/8TkggoulUEl4VsS9rIlFRUZJO
+         L+SdpK2rk6+vP8nuxi4DixX5koxOn07yZFB3gejJb+QBFtkXb/iCXiS1tX1Dc0LMUE1U
+         MnezDtfB6zdrI2t27MjojgUMPoCk4Cm76iJSt4+2/Hr/41yqs7XZsuvpSFfsZd7SS/lh
+         AGYz9vUiufwVqFE4OHPpf73MUmvzcclv1HBMco3LM5QjUMLQF44cFrpYFjUcoJ8xBrcu
+         oRecME42srmc/b/AXCi6PiHnyZXugJDC5nZ1c1SRZrELRk4Zn6EkaSkjIGf2FZdzCPN4
+         pXcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jKbFLOgVvIb3vFtBAnQXjkR0qnR1Ka3BMT1zY6SaUUA=;
-        b=EbpkeX3MHjk5b5tOaLTtIMTKpmT2HUjBA4SPRMoP+6amA1pDQMouFCOd/YUKRv24/L
-         NcByFUBBCjpfz4zXeOP4GsF0rDzvqJBDaugb9NGrW7X4ob4n434r2vnE/sxZX88gYzbv
-         kHJ5+9gqL6LUlSOvoMDNfN2+6srkterPrZADLc8wbRbBB3ehcmv0NRLruo/s2J1Ie+kX
-         aerGby5kCMPc/fUR1g6eyB9tpWoq9s/HobPJgoEOhSf83pfCUhJNPeH4sXve31sMG9Bk
-         LNsZxpafEudGXmRjra66cGf0eaUDf4J+hj4NiqySEcKxhPj497/g432kB+oYJtFBrpYF
-         vveA==
-X-Gm-Message-State: AGRZ1gJ/tNaBwUKXrrKQEXF36oB/EGIk7RbWoh/KeXEC7sHGRhukm6TW
-        aEcovJi/jjV/q60PofXDk0OFRM+OJ1jooXyusbW1ag==
-X-Google-Smtp-Source: AJdET5dI38Su62961wceGD79NDSm6UpKl0o3shCQ+H/mZqmwl1PrQ7ITf2meGelpc9f8VgrmmW59+NbAsMDzI2lspyc=
-X-Received: by 2002:a6b:6f06:: with SMTP id k6-v6mr7986635ioc.236.1541174113597;
- Fri, 02 Nov 2018 08:55:13 -0700 (PDT)
+        bh=8IfXfv77iXiIu8iXpca9xREgrH+4T28RgkwzpjRiYZ4=;
+        b=FzeEm9sKyJ6EGxpSX3o7Z9UtbmU7t5xQ6jEkkZtT6Qxb19oGK4JsXUIKugdZUrrSFK
+         S8FGkRbHxBGMxqO4ZB6y+50LIXGF4AFcPVFRAJMdVZTXapDggxfrcaYhUErKAQxUGJWD
+         do/QbxnqKo2ZhuGrdQH2vrHkLlYkR3ZJEM9hpXc0eKbH5a1Vfpb7Y0Zl4OaQeI2wB0PF
+         g1Ve1iSWiMMb5MCJiUtceKtMRulkGhL+Y2wZ7BIN3Hg7mw/ltwvO2hSP/5Z4AAWvWAC8
+         HWt2k16KM2qe/T/Kp932Wb/AY95zQQkwGF7lWpM5uXnqICSe5OEGCFoBCPax5usWNzSa
+         Hy3w==
+X-Gm-Message-State: AGRZ1gKt4kYh8oebYYniwNfmyxwm9N6kY6i2LpEaJUAbFAwpUaU7MR6u
+        QAPwLfhR/qEKde2eGRTVwTECw0LrZ93b/4/0yyE=
+X-Google-Smtp-Source: AJdET5czR7EvrQxkbYWWsIXDpJKoQPML8RbC2v+T6mrhTBB9JpEjybEFK8R7YF4iBAHan14l+f+/zvYomAtvpMbmXBQ=
+X-Received: by 2002:a02:3446:: with SMTP id z6-v6mr2787641jaz.130.1541174448508;
+ Fri, 02 Nov 2018 09:00:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
-In-Reply-To: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
+ <xmqqlg6covi6.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg6covi6.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 2 Nov 2018 16:54:46 +0100
-Message-ID: <CACsJy8CPUBEmgu+jZPadAwbs8GbjEOVPcuDeoQV7m8DE3iCk5A@mail.gmail.com>
+Date:   Fri, 2 Nov 2018 17:00:21 +0100
+Message-ID: <CACsJy8DFUeEddSa2z4VTSqhaUBJ4+SUf8xvjh6iWY2Phhh96iQ@mail.gmail.com>
 Subject: Re: Understanding pack format
-To:     khanzf@gmail.com
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     khanzf@gmail.com, Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 2, 2018 at 6:26 AM Farhan Khan <khanzf@gmail.com> wrote:
+On Fri, Nov 2, 2018 at 7:19 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Hi all,
+> Farhan Khan <khanzf@gmail.com> writes:
 >
-> I am trying to understand the pack file format and have been reading
-> the documentation, specifically https://git-scm.com/docs/pack-format
-> (which is in git's own git repository as
-> "Documentation/technical/pack-format.txt"). I see that the file starts
-> with the "PACK" signature, followed by the 4 byte version and 4 byte
-> number of objects. After this, the documentation speaks about
-> Undeltified and Deltified representations. I understand conceptually
-> what each is, but do not know specifically how git parses it out.
+> > ...Where is this in the git code? That might
+> > serve as a good guide.
+>
+> There are two major codepaths.  One is used at runtime, giving us
+> random access into the packfile with the help with .idx file.  The
+> other is used when receiving a new packstream to create an .idx
+> file.
 
-If by "it" you mean the deltified representations, I think it's
-actually documented in pack-format.txt. If you prefer C over English,
-look at patch-delta.c
-
+The third path is copying/reusing objects in
+builtin/pack-objects.c::write_reuse_object(). Since it's mostly
+encoding the header of new objects in pack, it could also be a good
+starting point. Then you can move to write_no_reuse_object() and get
+how the data is encoded, deltified or not (yeah not parsed, but I
+think it's more or less the same thing conceptually).
 -- 
 Duy
