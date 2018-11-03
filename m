@@ -6,59 +6,63 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 567AD1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 00:38:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E3F81F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 00:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728454AbeKCJr5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 05:47:57 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40194 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728271AbeKCJr5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 05:47:57 -0400
-Received: by mail-wr1-f66.google.com with SMTP id i17-v6so3612548wre.7
-        for <git@vger.kernel.org>; Fri, 02 Nov 2018 17:38:33 -0700 (PDT)
+        id S1727966AbeKCJtG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 05:49:06 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34704 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727719AbeKCJtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 05:49:05 -0400
+Received: by mail-wm1-f68.google.com with SMTP id f1-v6so2217457wmg.1
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 17:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=W6DuLrLxGro8TjeM1cHjt3Nc5MZ5RTr+QBVMQCPviL8=;
-        b=THS/jA9mQwPWlQqF31847KtHEpAv/EqqTgCFywTVL5s5SfSRKxoaanCOewM3yz+Wwu
-         0fyQEI6m3RqMyvEH5gCBpal25xoGVPawBtkLzP//LTQO+ZjbUGf/3K3uNTvQ3sATEvmL
-         LVs02z3eB6XPDVl2vdaBfc49eut5N3wn8ZtfN3RzYRckPj54mmv1Tp9jgsK7YhTbt2Kg
-         KucLnvEb4lmgJRZWQb9vochAXX6xFNRDjKUamydzBeNrTUGwEqI8t6ORhK38smncB0Bq
-         K+eqIK5sm/spotcMLoO3j3hBQoUmCIAw6HJ//ueb7smflwuQTY/5csVRlbO4EyKxKXAi
-         zK1g==
+        bh=5h25pqTUx+q7YITpxojGxzgYB++pBjYFjzHJWpzb7Ww=;
+        b=urGuao+hmt3pCuBlQAgnevSqEBNqQAIQYXCNy41hUcEIZYLfF9CP4OZ9ZDwRtkg6I+
+         sioS0VFkO62vKt6m0E8eifirpYPAY0VmaQgFK4+I1aI7imx9hckI111rW5o/2XSncxcX
+         4liuz9mK182t0fQ1EhKCi2jOdIgsidK+HHZZ6JQtPsA8UlXELhfyE3WNnAMIJAiF3EPU
+         aGqcWx5FRaDYmh0hZ544sxVn19LFTZkyN4ur02Mq0ypa88O/gM9QWTReBRyQs9iEwij2
+         RFOkaFfmZVrSYmazX6GjVPzqAIMGp60BFXs96hDZQrNuUAP/BeVBN6WTlFHKjtFdYEem
+         RYfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=W6DuLrLxGro8TjeM1cHjt3Nc5MZ5RTr+QBVMQCPviL8=;
-        b=kbYD1kgEBXEZKF6xoRT9WezS5i3KQ+b+X6RP5FvIDh4gwJP48+5AdVXT/WkBU36vlK
-         U9fAO5LMiM6bAFdziq9Vm+Zbwt4xqE9MID8c7QKBayIQyXfPGmZ8fNy1INkuz8exQuYv
-         987iX+8qNVhNh6fEC8qD3rqDoA96GWudXCIZQHYTdtP1ogSB4tn7jYruEfHO+Ovo56Ub
-         stt/vsCwFNHoGYJqUJkhewHaEv+aN/BMGdo/8cZw9NWVAgKc50iubqy7EuVlEvbjz3MV
-         WTp8ZCCqSvU25uXHHHeuSbhGnjWP3FPA5HyXrUWlLIUKL33MJuc1YZD0YYZswHMfa4T1
-         X2tg==
-X-Gm-Message-State: AGRZ1gJvr0oIROzvpcxtXLzKPvGs7+WbtAkLSw7NjyStQybWVOuQWMEB
-        drPDJFKnarguzT1n+7qDCN8=
-X-Google-Smtp-Source: AJdET5flF7FHAlx4E0TRXcz+uVZqKgFsqjAQeaodFbvcKC9aB01Itb4MD18pTRCZiliVvFM4k8BQgQ==
-X-Received: by 2002:adf:a78a:: with SMTP id j10-v6mr4616558wrc.286.1541205512040;
-        Fri, 02 Nov 2018 17:38:32 -0700 (PDT)
+        bh=5h25pqTUx+q7YITpxojGxzgYB++pBjYFjzHJWpzb7Ww=;
+        b=fCXJ6p71SLjlr1dmnCr/fZ1BvIul17gs7x+aMkxQjGfSbdadnv/oHd1jOoAQx23API
+         ary/QmrnOyy/g1AmO8gkGJPXiS1y1JKMsAgFSPWA7MsTcJeZEcEPXpFnbEKpOeNNAh7o
+         sRPPd6pZ6MbFuTlwKS3COawB2W9GEYJTq+f9zzd5vWPKcknLSExEm3u44vMmrqcYP3bG
+         OWsIUvpxq1A8AIL0SjP69CXR0ikKzLlEmVUE3Cw3nyVf44saBy2TW6yMjB4Lou5M4Y/x
+         S/sOETNMMUJZtURHofshpScg4xKvRCJCSSOmIpurJB9G92FfRoXBimMVKlPHYUG4Y5ze
+         QYUw==
+X-Gm-Message-State: AGRZ1gJibMBbWHH83LjWwCePHttMzDhDxM81CsRurlkJKY4pZD36/0bT
+        rQ7gMDzH26W2DDYxwsenfP8=
+X-Google-Smtp-Source: AJdET5dlCcsGi8V+rp4P4D8n0rJ3SrhCZm5OJ2qRI9XjaKuxxWhDDOg0HFpgQG+jKReFyWLO1H36FQ==
+X-Received: by 2002:a1c:27c5:: with SMTP id n188-v6mr108799wmn.88.1541205580044;
+        Fri, 02 Nov 2018 17:39:40 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g16-v6sm7396433wrr.38.2018.11.02.17.38.30
+        by smtp.gmail.com with ESMTPSA id x8-v6sm85875091wrd.54.2018.11.02.17.39.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Nov 2018 17:38:30 -0700 (PDT)
+        Fri, 02 Nov 2018 17:39:38 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>, Ben Peart <benpeart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1] add: speed up cmd_add() by utilizing read_cache_preload()
-References: <20181102133050.10756-1-peartben@gmail.com>
-        <CACsJy8CVPSe8TWYMrK9MiRCaG36qyWfd42cEPo5844XWuTmqew@mail.gmail.com>
-Date:   Sat, 03 Nov 2018 09:38:29 +0900
-In-Reply-To: <CACsJy8CVPSe8TWYMrK9MiRCaG36qyWfd42cEPo5844XWuTmqew@mail.gmail.com>
-        (Duy Nguyen's message of "Fri, 2 Nov 2018 16:49:59 +0100")
-Message-ID: <xmqqmuqrngfu.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Steve Hoelzer <shoelzer@gmail.com>, gitgitgadget@gmail.com,
+        git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] poll: use GetTickCount64() to avoid wrap-around issues
+References: <pull.64.git.gitgitgadget@gmail.com>
+        <69bc5924f94b56f92d9653b3a64f721bd03f1956.1541020294.git.gitgitgadget@gmail.com>
+        <c9e001de-3598-182d-416e-1e94f234c249@kdbg.org>
+        <CACbrTHctZejfDTjqWqVfPYdb=ssD253Cd2isr3BxWsL1AqsH2w@mail.gmail.com>
+        <e8b7b173-eaa1-0fad-7e6a-771389872886@kdbg.org>
+Date:   Sat, 03 Nov 2018 09:39:38 +0900
+In-Reply-To: <e8b7b173-eaa1-0fad-7e6a-771389872886@kdbg.org> (Johannes Sixt's
+        message of "Fri, 2 Nov 2018 17:43:43 +0100")
+Message-ID: <xmqqin1fngdx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,23 +71,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> On Fri, Nov 2, 2018 at 2:32 PM Ben Peart <peartben@gmail.com> wrote:
->>
->> From: Ben Peart <benpeart@microsoft.com>
->>
->> During an "add", a call is made to run_diff_files() which calls
->> check_remove() for each index-entry.  The preload_index() code distributes
->> some of the costs across multiple threads.
+>> Yep, correct on all counts. I'm in favor of changing the commit message to
+>> only say that this patch removes Warning C28159.
 >
-> Instead of doing this site by site. How about we make read_cache()
-> always do multithread preload?
+> How about this fixup instead?
 
-I suspect that it would be a huge performance killer. 
-
-Many codepaths do not even want to know if the working tree files
-have been modified, even though they need to know what's in the
-index.  Think "git commit-tree", "git diff --cached", etc.
-
+Isn't that already in 'next'?  I didn't check, though.
 
