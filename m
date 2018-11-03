@@ -2,151 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 390351F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 17:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C24881F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 17:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727713AbeKDCjV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 22:39:21 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:43601 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726849AbeKDCjU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 22:39:20 -0400
-Received: by mail-wr1-f48.google.com with SMTP id y3-v6so4753253wrh.10
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 10:27:27 -0700 (PDT)
+        id S1728545AbeKDDKI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 23:10:08 -0400
+Received: from mail-yw1-f44.google.com ([209.85.161.44]:40380 "EHLO
+        mail-yw1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727497AbeKDDKI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 23:10:08 -0400
+Received: by mail-yw1-f44.google.com with SMTP id l66-v6so1674981ywl.7
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 10:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=BwYdYOLKDhXVL+CAz5IAJZrFCuIwL/67zpjn/5Phm3c=;
-        b=DnkXAmROJhgiXRoiK4nRse3b030ChvG+bCIdQJix8UgcFHiI0QJWuNS1ABFAWY2l5P
-         K5u9LRUwQBs+lrzFHVY1sl/F9V4gY9nG8Fu9CY1aoC/SbtiXhMTvp7MoKy3YFnGepyHH
-         2IPS2cWOT9fDLKZY+zUpfZFPpEjybytBjf4JqmWqPQwjji+lUdvVeO22sTMPMYnXZegb
-         kS0je3PxmUIF25ZLGQymaK6wq8iox1ZiVvo+45XwO6TZUABRC2LJmOpCIs7TD3QjDlZZ
-         tmbjbogGi5DF5alk4QjLbgb4ZHHtjV+kn+3QGG+4l11S4leK/2Ukji+tqJWd6B69J4WL
-         jvEQ==
+        h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+         :references;
+        bh=HwmGyNf7fjPLin+4QjQCoN0i/fs5P/5Z8p0ARCi9CV8=;
+        b=fXJq8cmrjQXMxsXj4xCqqnVsBVl1xt2q9tOjhZbx5LJhgjLMxXEpRCPr+amrQ0/QMU
+         rXDh8s9fR1tF8a52nMj3LD/jX8+pLxQLgCKl5qsxzLtDUFRH4WKP95D5n50rE7Lo6aX5
+         DpXMEFTz67HPxmcwbvilnYsy1tBXdqI9b86a53fqMgw9yvzRTxTDDHDobzDyCQ5TZNyF
+         uf/iUfsPVqiNnjtFLPYRjHeG9T0yScQQTS0p7a+ITLyiLluJVsAeLwIZVfVX34wP1QnM
+         yeCVr29axipMEh52FCtb1RTbla23RhMcpI/iFEI5A5ESoP5esXG5Op27A3Q1GtHNY34M
+         xrMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=BwYdYOLKDhXVL+CAz5IAJZrFCuIwL/67zpjn/5Phm3c=;
-        b=LnVngdWrrcAI9n1e1i0LN8AEvZGFu6pK8X+cHsgfmYOwM65nuRWO/3dKmS4TRD4uyW
-         2qBu1Aj0Eckk7jXahIWVUVzAOEI6TVI0A5dP5uIkCXumuDX7Mrf2V9cQtBVJAyCTHqct
-         KQS6FN/76Ws5fkpa6vJodWYUZ4sLZkuSVKVYR7tIaq53gcFP6dmKHv8aCqt6F9TLDY1O
-         I5uLr/YACrQP3z8AECc2iMQTOTJZ4MSS2pOs82NEhjWZTQfsh6LrgBOwSy3I17n0KSwY
-         +ujBGNE80LLl4RvTq7QD8KvkkU+JEnrrtBhqSR10a2FK6hUGc8qX7/XGgpbgqGntwT3O
-         Iz6A==
-X-Gm-Message-State: AGRZ1gLpb2lKaITohJr4OwQ2RmOcHQ6UYzhIEiY9vCItbQV/kyCm7rnD
-        dZBkc876BEo3CEefVePFkxU=
-X-Google-Smtp-Source: AJdET5e+43mONmF3cuRvmYYyfEVUsH2i2usZwbhF0KGu3lLiOsgpbB9Ry5dNpCcYsL4/iQd9WQh4HQ==
-X-Received: by 2002:adf:a31c:: with SMTP id c28-v6mr14190575wrb.195.1541266046252;
-        Sat, 03 Nov 2018 10:27:26 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egr209.neoplus.adsl.tpnet.pl. [83.21.81.209])
-        by smtp.gmail.com with ESMTPSA id y13-v6sm55483wrq.13.2018.11.03.10.27.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 03 Nov 2018 10:27:25 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC] Generation Number v2
-References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
-        <CAGZ79ka-FTqaXdrMixjUp2THJ3L0YvEnkKxs3XFgB3WEEy2-Tg@mail.gmail.com>
-        <86tvl0zhos.fsf@gmail.com> <86ftwjzv1h.fsf@gmail.com>
-Date:   Sat, 03 Nov 2018 18:27:22 +0100
-Message-ID: <86r2g2ul51.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:message-id:mime-version:subject:date
+         :in-reply-to:cc:to:references;
+        bh=HwmGyNf7fjPLin+4QjQCoN0i/fs5P/5Z8p0ARCi9CV8=;
+        b=OHQp193NFxOcdSIjSlGJbAf0TMibjsp6IcYBouQvn5RKVE/SGB66yLOkfiuQUFtTlI
+         9byswdTclIjhk3Z1SMwNqnYMi05RLvcDoSgMPUyUGptpDoAiarbU4kN+BJCe/oderpPp
+         tsgVAAMfSU08i4EMAJT1Oi4bZhH4THrJOBkJXaCIrNHlX4fFU5brR5h3Xi9Wz5YDwkIP
+         EoWWDFnkp8zib2qwOPCQ5cavnKhRRyyz7VyZHAxdJlX2LiLauakkEBhOTktTKzuEdwZS
+         aedPdPFHM7wGV90OPZOfpQ/tGJwDAXpmfkl04uMjIe4/9w5ncjM33Zm4K1Es3xTbgyLY
+         Svew==
+X-Gm-Message-State: AGRZ1gKmlwu4HAwzkNT+iPS/+Hvxe7pnQP0GzTokLC1jQSTDLYKNTfSn
+        pl89CTW9qzaw0nuM1P2mMco=
+X-Google-Smtp-Source: AJdET5cGB1jNpjgk+Pq/e7l9vIjJTSDZIKNY5BOosstBHKpvhLnnsj89iVhYEhEVLfYoorXK7DJ0fA==
+X-Received: by 2002:a81:af5a:: with SMTP id x26-v6mr15948949ywj.281.1541267890304;
+        Sat, 03 Nov 2018 10:58:10 -0700 (PDT)
+Received: from [172.29.1.127] ([108.191.26.71])
+        by smtp.gmail.com with ESMTPSA id 207-v6sm9688704ywi.0.2018.11.03.10.58.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Nov 2018 10:58:09 -0700 (PDT)
+From:   Sirio Balmelli <sirio.bm@gmail.com>
+Message-Id: <E62F9E2A-70F1-47A4-B30C-2C767102CDCC@gmail.com>
+Content-Type: multipart/signed;
+ boundary="Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: Re: git appears to ignore GIT_CONFIG environment variable
+Date:   Sat, 3 Nov 2018 18:58:05 +0100
+In-Reply-To: <xmqqpnvoqirp.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
+To:     Junio C Hamano <gitster@pobox.com>
+References: <3389BCF7-6170-4242-82D3-0FE7FB2EA5F2@gmail.com>
+ <xmqqpnvoqirp.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> Stefan Beller <sbeller@google.com> writes:
-> [...]
->>> How would this impact creation of a commit?
->>>
->>> The current generation numbers can be lazily updated or not
->>> updated at all. In my understanding of the maximum generation
->>> numbers, a new commit would make these maximum generation
->>> numbers invalid (i.e. they have to be recomputed).
-> [...]
->>> For the V2 maximum generation numbers, would we need to
->>> rewrite the numbers for all commits once we recompute them?
->>> Assuming that is true, it sounds like the benchmark doesn't
->>> cover the whole costs associated with V2, which is why the
->>> exceptional performance can be explained.
->>
->> Let's check it using a simple example
->>
->> First, (minimum) parent-based generation numbers before and after
->> extending the commit graph:
->>
->>   1   2     3   4     5   6   7    new
->>   1   2     3   4     5   -   -    old
->>   .---.-----.---.-----.---*---*
->>        \
->>         \   3   4     5   6        new
->>          \  3   4     5   6        old
->>           \-.---.-----.---.
->>                  \
->>                   \   5            new
->>                    \  -            old
->>                     \-*
->
-> Let me check yet another idea, using (minimum) parent-based V0 generation
-> numbers (counting distance from the sink / root) as a starting number
-> for source / heads commits.
-[...]
 
-> [...] but let's check another example
->
->    1   2     3   4   5   6     7   8   9       new
->    1   2     3   4   5   6     7   8   -       old
->    .---.-----.---.---.---.-----.---.---*
->         \                     /
->          \   3   4           / 5   6   7   8   new
->           \  5   6          /  -   -   -   -   old
->            \-.---.---------/---*---*---*---*
+--Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
 
-But let's do this correctly.
+Thank you very much, I appreciate the answer :)
+
+best,
+
+Sirio
+
+> On Nov 2, 2018, at 04:07, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Sirio Balmelli <sirio.bm@gmail.com> writes:
+> 
+>> It appears that git ignores the GIT_CONFIG environment variable,
+>> while git-config *does* consider it.
+> 
+> Yup, that is exactly how it is designed and documented.  These
+> dasys, with "git config" taking "--file" to work on any arbitrary
+> filename, you do not necessarily need GIT_CONFIG enviornment.
+> 
 
 
-   1   2     3   4      5   6     7   8   9      new
-   1   2     3   4      5   6     7   8   -      old
-   .---.-----.---.------.---.-----.---.---*
-        \                        /
-         \   3   4              /                new
-          \  5   6             /                 old
-           \-.---.------------/
-                  \
-                   \    5   6     7   8          new
-                    \   -   -     -   -          old
-                     \--*---*-----*---*
+--Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
 
-Well, it looks as if I draw it incorrectly, but performed calculations
-right.  You may need to modify / change some data, but it looks as if it
-is not that much of a problem.
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
-The new version of the maximum generation numbers looks like it gives
-the same results as generation numbers for the "longest" path, and
-update may affect only the side-branches that were added to.  All
-branches merged into the trunk, and not added to should be safe with
-respect to updating.
+iQIzBAEBCgAdFiEEg12XAEksYqKi4XIsxM76bLJSdLMFAlvd4a0ACgkQxM76bLJS
+dLPAyRAAxBvfWXhMKJSah/DevqwVI+n/cBxctz5XtOjNBrqxT6V0XutSQMp5JOSB
+pAA+YWs1cRq9gN1XjLnQ3B+ayNxIHgn7fdiS6R4h5Qf5YcA9MuErp5DPIxI9Tgh8
+ARpsRcf98zDCvVj2uNdWwl0MXsbdERm3Q+tT7aLAfIOP9QsAW3BdcMteoZE5/CDE
+02zzD3cpDY2qPfQFyuwCt5vxuBKu5p9/v9LoluqIKkqbZzCpdu6mgiEjYbKMLXCU
+ZnH5Y8XinjOJaM4evSg3VBvGbz05rN4puTaZNe5enLHUS8LUN5FCGMzDtqffUSET
+vgzphgu018OZmvssCeHp5hSb0CywG1X+E6uc2dLjCq05WnKZLt99eH+Wj6rKyI5+
+LoQvhTMRrs7YfOJi0afJaDUuvKI5eP1NYV9pVtj8EjFMq+42wkDo2wxWBZEZnymH
+PWXrodjHaJ80Fx9zesUNcLVXcO9JjXOcPsbaihPfP6qgrHspHBnc2bCDlv7RYbly
+lfs13XG2r3Y/8ER6KiVIblrurRyHnZbud3Jpt5aeDfLgFGZUgQckFB0NgTSKMcj3
+BfnbMLYFh4433P5jGdCFq07TPhzfY1YS8m/xH8geRhS9TbAWBGZV7/Q26P0rE0J4
+g9uaDCCPhuacqf8562fp6BC4feQ5/2ZQ5gZkbGAD66wKtn0Ouck=
+=HXTK
+-----END PGP SIGNATURE-----
 
-Can anyone here prove a thing about update of those modified maximum
-generation numbers?  Thanks in advance.
-
-Best,
---=20
-Jakub Nar=C4=99bski
+--Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D--
