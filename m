@@ -2,148 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDD3D1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 19:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C00A1F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 19:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbeKDET4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 00:19:56 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:41842 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726430AbeKDET4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 00:19:56 -0400
-Received: by mail-ed1-f67.google.com with SMTP id c25-v6so4332850edt.8
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 12:07:46 -0700 (PDT)
+        id S1726482AbeKDEaj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 00:30:39 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41452 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbeKDEaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 00:30:39 -0400
+Received: by mail-ed1-f68.google.com with SMTP id c25-v6so4343912edt.8
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 12:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=f9QZPOLoFRENGzspfsXJQkvcbQurycoeZrN5LVCHnjU=;
-        b=vRpxR2hzgVfltBdmwRL+PhVa4y4tk2SRRc0LFJol+zBkWJT7Kk5pqjJE9UNmZG9IyU
-         1xA8lJQaER0jW7IewbBLwhgAwwODHwIOI9FVlk3oVhuM1CdVUOHRMnt7nRlrVKuC6E1V
-         Nj5sRh+vbWIiHurM/JaRHzjy5z+EuAbWGGdWDomo7DGpKaYclx2fytnOLZYO8yEcKNX3
-         jLJgPmsMewx53pYw2JfHusRVSHaJFDD4ZlHe+k2lpO7+k8cBVQ4jOEQnIwsJaEc1RhsN
-         SfjBM7k+caAME8MHjgAqVIifTKBim36irS0A08ugvqn+S6E9DH4aPFFmOiblRLL62iaY
-         Hy1g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GSI9P1eTSSlnHBg3zb5IpdK2SboQc6J5/xrfVC93zh4=;
+        b=WpKOGSim2E7UIzq0U2gIF1nmwwNQmubZXvjC60BqZgHOy9WddtPIkhlKhggoPUHFzI
+         mz2cr87vwZ01L3cZj8C93MpUp1Ov2TO48buERIjxxU8cWYQRqKrUC6E0hcKTfLzMwKYb
+         thpBelUsqxh/nSF5q5CnCuSNNhdaNxtVl5S07Y2liTMnEnX8qXkbgMc0jGsPJPB18HU2
+         dYADztRXxkMlJqy+vLvSWgkBmdD9CJdUUW0/W4oqsxCv/VO/7SMWSox58dQjYt1YVtB9
+         UcCL4VzjtrEsz9X+DMhSHJIPkdl/wsWygPxu2hDtVvRYC4qbp1whbYPh0E84dgN8eplQ
+         YuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=f9QZPOLoFRENGzspfsXJQkvcbQurycoeZrN5LVCHnjU=;
-        b=IniFdhKY/QLAT8i5xpjIjHjEjR3xUh/LfxJ54vtlP6cPGjD7+K/9a0zY7xH588LcP9
-         U32+jYpD9GTYZhkfQg+aZX6an3CVxyYVsoQIonShdDDN0LEwMDsABvLbxGUJBIqX7cIg
-         4j4ti7E397klEdnE23Yd790dgEI4bcoD2p802G+24e2p3LHfyCBR9lcCKZu8uf3exBdQ
-         oVDMqvMDQoL6POxYfi7tSWyXqOGPtnxuCQFLuVZmzHLmySDjtA5i5oK8spNzaHBm0gEh
-         qvBPXE33XLKltFgRScoC9qQemcHccnXZ4OHn9yFbBQgsZkVXGqeiaBMBB4W9ZU+x1gni
-         8wvQ==
-X-Gm-Message-State: AGRZ1gIBucCBocssd2Cd66+mzZynA4JJNCozkCS5ALNKHRB4ySImvtaM
-        Naz6j/e1V8h5VIoGjOtvgBM=
-X-Google-Smtp-Source: AJdET5fKzYoUWgNkrVq/xlolq5O+6MTzCYJ9f0aTSJLUy2QDcARnHmHDgTvvn58Va8QuYYK2l2PqSQ==
-X-Received: by 2002:a17:906:5842:: with SMTP id h2-v6mr10070923ejs.33.1541272065793;
-        Sat, 03 Nov 2018 12:07:45 -0700 (PDT)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id i33-v6sm5740820edc.81.2018.11.03.12.07.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 03 Nov 2018 12:07:44 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     tanushree27 <tanushreetumane@gmail.com>
-Cc:     pclouds@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH v3] commit: add a commit.allowEmpty config variable
-References: <CACsJy8DttJ2EBcN8Kq-yECY0Pvp3vd0Vx45=szWD0cBW0Mcixw@mail.gmail.com> <20181103151205.29122-1-tanushreetumane@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181103151205.29122-1-tanushreetumane@gmail.com>
-Date:   Sat, 03 Nov 2018 20:07:43 +0100
-Message-ID: <87d0rm7zeo.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GSI9P1eTSSlnHBg3zb5IpdK2SboQc6J5/xrfVC93zh4=;
+        b=GnSCTgraAZV+KMhfG89SCtNhXXTtisgBqeElua4AO65Zd/eq2NgJ/Fe8xsqYV1ScIh
+         NTuO34iAQcDl6JS0YC3nIDpWWljFQe+0iHnaC3sYsguYS0KOyEqBocf/8Cem/WBjaDN6
+         HtmJ+jxQ/0cQrBl66EAJoPfyyJhd5TUi5Ge7ue0hBaTT7j0NFGTtzxhTu6ELXSLd47hQ
+         JOrSHTgOmP+TT1BT/jahPbPmkL91eFDmtlv3tNU1Lt7+2qIv47M0GszElLA3PWFyBUXp
+         3I7P4tAtfuXl0x4Yh7AdbWjRnb7qagM48xkUdTaFcpCStuR0buq66PNmbHDGxnswDRfG
+         4aUw==
+X-Gm-Message-State: AGRZ1gKcPVQhwhwQotsGztv81ES0Q71zGSdmI7PP4HzN1YmNYg/DNE5+
+        j4cKNP/u/BL8Txx2KjU8U5fBK+C2Cww=
+X-Google-Smtp-Source: AJdET5eDANwMky43nNGf9brAvwIxSgkKfYn3ABw2tBf26fvNhEBx5zY5D5dO4+OrvFe10xyaH+gLgg==
+X-Received: by 2002:a05:6402:13c8:: with SMTP id a8mr12072172edx.39.1541272707376;
+        Sat, 03 Nov 2018 12:18:27 -0700 (PDT)
+Received: from localhost.localdomain (d40a6ba6.rev.stofanet.dk. [212.10.107.166])
+        by smtp.gmail.com with ESMTPSA id d21-v6sm1305825edq.93.2018.11.03.12.18.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Nov 2018 12:18:26 -0700 (PDT)
+From:   Mikkel Kjeldsen <commonquail@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Mikkel Kjeldsen <commonquail@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, "Simon A. Eugster" <simon.eugster@eps.ch>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [RFC PATCH] checkout: add synonym of -b
+Date:   Sat,  3 Nov 2018 20:18:24 +0100
+Message-Id: <20181103191825.15674-1-commonquail@gmail.com>
+X-Mailer: git-send-email 2.19.1.802.g3cec6c1c3f
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add --new-branch as a long-form synonym of -b. I occasionally encounter
+some confusion in new users having interpreted "checkout -b" to mean
+"checkout branch", or internalized it as "the way to create a new
+branch" rather than merely a convenience for "branch && checkout". I
+think an explicit long-form can help alleviate that.
 
-On Sat, Nov 03 2018, tanushree27 wrote:
+Signed-off-by: Mikkel Kjeldsen <commonquail@gmail.com>
+---
 
-> +commit.allowEmpty::
-> +	A boolean to specify whether empty commits are allowed with `git
-> +	commit`. See linkgit:git-commit[1].
-> +	Defaults to false.
-> +
+Notes:
+    This makes the synopsis and description lines look a little clumsy (and
+    I think incorrect...?) so if this proposal is accepted perhaps those
+    parts are better left out. It is meant more for training and
+    documentation than regular usage, anyway.
+    
+    I thought I had seen something like "--create-branch" in use by another
+    command and had intended to use that but I can no longer find that and
+    so went with "--new-branch" named after the option's argument.
+    
+    There does not seem to be a practice for testing short- versus long-form
+    arguments so I did not include one, but I'd be happy to.
 
-Good.
+ Documentation/git-checkout.txt | 5 +++--
+ builtin/checkout.c             | 2 +-
+ t/t9902-completion.sh          | 1 +
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-> +	if (config_commit_allow_empty >= 0)  /* if allowEmpty is allowed in config*/
-> +		allow_empty = config_commit_allow_empty;
-> +
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 801de2f764..7651d8b83d 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git checkout' [-q] [-f] [-m] [<branch>]
+ 'git checkout' [-q] [-f] [-m] --detach [<branch>]
+ 'git checkout' [-q] [-f] [-m] [--detach] <commit>
+-'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
++'git checkout' [-q] [-f] [-m] [[(-b|--new-branch)|-B|--orphan] <new_branch>] [<start_point>]
+ 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
+ 'git checkout' [<tree-ish>] [--] <pathspec>...
+ 'git checkout' (-p|--patch) [<tree-ish>] [--] [<paths>...]
+@@ -52,7 +52,7 @@ You could omit <branch>, in which case the command degenerates to
+ rather expensive side-effects to show only the tracking information,
+ if exists, for the current branch.
+ 
+-'git checkout' -b|-B <new_branch> [<start point>]::
++'git checkout' (-b|--new-branch)|-B <new_branch> [<start point>]::
+ 
+ 	Specifying `-b` causes a new branch to be created as if
+ 	linkgit:git-branch[1] were called and then checked out.  In
+@@ -154,6 +154,7 @@ on your side branch as `theirs` (i.e. "one contributor's work on top
+ of it").
+ 
+ -b <new_branch>::
++--new-branch=<new_branch>::
+ 	Create a new branch named <new_branch> and start it at
+ 	<start_point>; see linkgit:git-branch[1] for details.
+ 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index acdafc6e4c..4a27d94a86 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1232,7 +1232,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	int dwim_remotes_matched = 0;
+ 	struct option options[] = {
+ 		OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+-		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
++		OPT_STRING('b', "new-branch", &opts.new_branch, N_("branch"),
+ 			   N_("create and checkout a new branch")),
+ 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
+ 			   N_("create/reset and checkout a branch")),
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 175f83d704..00614fdcc5 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1428,6 +1428,7 @@ test_expect_success 'double dash "git checkout"' '
+ 	--ours Z
+ 	--theirs Z
+ 	--merge Z
++	--new-branch=Z
+ 	--conflict=Z
+ 	--patch Z
+ 	--ignore-skip-worktree-bits Z
 
-This works, but != -1 is our usual idiom for this as you initialize it
-to -1. I think that comment can also go then, since it's clear what's
-going on.
+base-commit: d582ea202b626dcc6c3b01e1e11a296d9badd730
+-- 
+2.19.1
 
-> +# Tests for commit.allowEmpty config
-> +
-> +test_expect_success "no commit.allowEmpty and no --allow-empty" "
-> +	test_must_fail git commit -m 'test'
-> +"
-> +
-> +test_expect_success "no commit.allowEmpty and --allow-empty" "
-> +	git commit --allow-empty -m 'test'
-> +"
-> +
-> +for i in true 1
-> +do
-> +	test_expect_success "commit.allowEmpty=$i and no --allow-empty" "
-> +		git -c commit.allowEmpty=$i commit -m 'test'
-> +	"
-> +
-> +	test_expect_success "commit.allowEmpty=$i and --allow-empty" "
-> +		git -c commit.allowEmpty=$i commit --allow-empty -m 'test'
-> +	"
-> +done
-> +
-> +for i in false 0
-> +do
-> +	test_expect_success "commit.allowEmpty=$i and no --allow-empty" "
-> +		test_must_fail git -C commit.allowEmpty=$i commit -m 'test'
-> +	"
-> +
-> +	test_expect_success "commit.allowEmpty=$i and --allow-empty" "
-> +		test_must_fail git -c commit.allowEmpty=$i commit --allow-empty -m 'test'
-> +	"
-> +done
-
-Testing both 1 and "true" can be dropped here. Things that use
-git_config_bool() can just assume it works, we test it more exhaustively
-elsewhere.
-
-Your patch has whitespace errors. Try with "git show --check" or apply
-it with git-am, it also doesn't apply cleanly on the latest master.
-
-But on this patch in general: I don't mind making this configurable, but
-neither your commit message nor these tests make it clear what the
-actual motivation is, which can be seen on the upstream GitHub bug
-report.
-
-I.e. you seemingly have no interest in using "git commit" to produce
-empty commits, but are just trying to cherry-pick something and it's
-failing because it (presumably, or am I missing something) cherry picks
-an existing commit content ends up not changing anything.
-
-I.e. you'd like to make the logic 37f7a85793 ("Teach commit about
-CHERRY_PICK_HEAD", 2011-02-19) added a message for the default.
-
-So let's talk about that use case, and for those of us less familiar
-with this explain why it is that this needs to still be optional at
-all. I.e. aren't we just exposing an implementation detail here where
-cherry-pick uses the commit machinery? Should we maybe just always pass
---allow-empty on cherry-pick, if not why not?
-
-I can think of some reasons, but the above is a hint that both this
-patch + the current documentation which talks about "foreign SCM
-scripts" have drifted very far from what this is actually being used
-for, so let's update that.
