@@ -2,121 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C24881F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 17:58:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDD3D1F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 19:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728545AbeKDDKI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 23:10:08 -0400
-Received: from mail-yw1-f44.google.com ([209.85.161.44]:40380 "EHLO
-        mail-yw1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727497AbeKDDKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 23:10:08 -0400
-Received: by mail-yw1-f44.google.com with SMTP id l66-v6so1674981ywl.7
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 10:58:10 -0700 (PDT)
+        id S1726691AbeKDET4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 00:19:56 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41842 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726430AbeKDET4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 00:19:56 -0400
+Received: by mail-ed1-f67.google.com with SMTP id c25-v6so4332850edt.8
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 12:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
-         :references;
-        bh=HwmGyNf7fjPLin+4QjQCoN0i/fs5P/5Z8p0ARCi9CV8=;
-        b=fXJq8cmrjQXMxsXj4xCqqnVsBVl1xt2q9tOjhZbx5LJhgjLMxXEpRCPr+amrQ0/QMU
-         rXDh8s9fR1tF8a52nMj3LD/jX8+pLxQLgCKl5qsxzLtDUFRH4WKP95D5n50rE7Lo6aX5
-         DpXMEFTz67HPxmcwbvilnYsy1tBXdqI9b86a53fqMgw9yvzRTxTDDHDobzDyCQ5TZNyF
-         uf/iUfsPVqiNnjtFLPYRjHeG9T0yScQQTS0p7a+ITLyiLluJVsAeLwIZVfVX34wP1QnM
-         yeCVr29axipMEh52FCtb1RTbla23RhMcpI/iFEI5A5ESoP5esXG5Op27A3Q1GtHNY34M
-         xrMQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=f9QZPOLoFRENGzspfsXJQkvcbQurycoeZrN5LVCHnjU=;
+        b=vRpxR2hzgVfltBdmwRL+PhVa4y4tk2SRRc0LFJol+zBkWJT7Kk5pqjJE9UNmZG9IyU
+         1xA8lJQaER0jW7IewbBLwhgAwwODHwIOI9FVlk3oVhuM1CdVUOHRMnt7nRlrVKuC6E1V
+         Nj5sRh+vbWIiHurM/JaRHzjy5z+EuAbWGGdWDomo7DGpKaYclx2fytnOLZYO8yEcKNX3
+         jLJgPmsMewx53pYw2JfHusRVSHaJFDD4ZlHe+k2lpO7+k8cBVQ4jOEQnIwsJaEc1RhsN
+         SfjBM7k+caAME8MHjgAqVIifTKBim36irS0A08ugvqn+S6E9DH4aPFFmOiblRLL62iaY
+         Hy1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:message-id:mime-version:subject:date
-         :in-reply-to:cc:to:references;
-        bh=HwmGyNf7fjPLin+4QjQCoN0i/fs5P/5Z8p0ARCi9CV8=;
-        b=OHQp193NFxOcdSIjSlGJbAf0TMibjsp6IcYBouQvn5RKVE/SGB66yLOkfiuQUFtTlI
-         9byswdTclIjhk3Z1SMwNqnYMi05RLvcDoSgMPUyUGptpDoAiarbU4kN+BJCe/oderpPp
-         tsgVAAMfSU08i4EMAJT1Oi4bZhH4THrJOBkJXaCIrNHlX4fFU5brR5h3Xi9Wz5YDwkIP
-         EoWWDFnkp8zib2qwOPCQ5cavnKhRRyyz7VyZHAxdJlX2LiLauakkEBhOTktTKzuEdwZS
-         aedPdPFHM7wGV90OPZOfpQ/tGJwDAXpmfkl04uMjIe4/9w5ncjM33Zm4K1Es3xTbgyLY
-         Svew==
-X-Gm-Message-State: AGRZ1gKmlwu4HAwzkNT+iPS/+Hvxe7pnQP0GzTokLC1jQSTDLYKNTfSn
-        pl89CTW9qzaw0nuM1P2mMco=
-X-Google-Smtp-Source: AJdET5cGB1jNpjgk+Pq/e7l9vIjJTSDZIKNY5BOosstBHKpvhLnnsj89iVhYEhEVLfYoorXK7DJ0fA==
-X-Received: by 2002:a81:af5a:: with SMTP id x26-v6mr15948949ywj.281.1541267890304;
-        Sat, 03 Nov 2018 10:58:10 -0700 (PDT)
-Received: from [172.29.1.127] ([108.191.26.71])
-        by smtp.gmail.com with ESMTPSA id 207-v6sm9688704ywi.0.2018.11.03.10.58.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Nov 2018 10:58:09 -0700 (PDT)
-From:   Sirio Balmelli <sirio.bm@gmail.com>
-Message-Id: <E62F9E2A-70F1-47A4-B30C-2C767102CDCC@gmail.com>
-Content-Type: multipart/signed;
- boundary="Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: git appears to ignore GIT_CONFIG environment variable
-Date:   Sat, 3 Nov 2018 18:58:05 +0100
-In-Reply-To: <xmqqpnvoqirp.fsf@gitster-ct.c.googlers.com>
-Cc:     git@vger.kernel.org
-To:     Junio C Hamano <gitster@pobox.com>
-References: <3389BCF7-6170-4242-82D3-0FE7FB2EA5F2@gmail.com>
- <xmqqpnvoqirp.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Apple Mail (2.3273)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=f9QZPOLoFRENGzspfsXJQkvcbQurycoeZrN5LVCHnjU=;
+        b=IniFdhKY/QLAT8i5xpjIjHjEjR3xUh/LfxJ54vtlP6cPGjD7+K/9a0zY7xH588LcP9
+         U32+jYpD9GTYZhkfQg+aZX6an3CVxyYVsoQIonShdDDN0LEwMDsABvLbxGUJBIqX7cIg
+         4j4ti7E397klEdnE23Yd790dgEI4bcoD2p802G+24e2p3LHfyCBR9lcCKZu8uf3exBdQ
+         oVDMqvMDQoL6POxYfi7tSWyXqOGPtnxuCQFLuVZmzHLmySDjtA5i5oK8spNzaHBm0gEh
+         qvBPXE33XLKltFgRScoC9qQemcHccnXZ4OHn9yFbBQgsZkVXGqeiaBMBB4W9ZU+x1gni
+         8wvQ==
+X-Gm-Message-State: AGRZ1gIBucCBocssd2Cd66+mzZynA4JJNCozkCS5ALNKHRB4ySImvtaM
+        Naz6j/e1V8h5VIoGjOtvgBM=
+X-Google-Smtp-Source: AJdET5fKzYoUWgNkrVq/xlolq5O+6MTzCYJ9f0aTSJLUy2QDcARnHmHDgTvvn58Va8QuYYK2l2PqSQ==
+X-Received: by 2002:a17:906:5842:: with SMTP id h2-v6mr10070923ejs.33.1541272065793;
+        Sat, 03 Nov 2018 12:07:45 -0700 (PDT)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id i33-v6sm5740820edc.81.2018.11.03.12.07.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 03 Nov 2018 12:07:44 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     tanushree27 <tanushreetumane@gmail.com>
+Cc:     pclouds@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH v3] commit: add a commit.allowEmpty config variable
+References: <CACsJy8DttJ2EBcN8Kq-yECY0Pvp3vd0Vx45=szWD0cBW0Mcixw@mail.gmail.com> <20181103151205.29122-1-tanushreetumane@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181103151205.29122-1-tanushreetumane@gmail.com>
+Date:   Sat, 03 Nov 2018 20:07:43 +0100
+Message-ID: <87d0rm7zeo.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
+On Sat, Nov 03 2018, tanushree27 wrote:
 
-Thank you very much, I appreciate the answer :)
+> +commit.allowEmpty::
+> +	A boolean to specify whether empty commits are allowed with `git
+> +	commit`. See linkgit:git-commit[1].
+> +	Defaults to false.
+> +
 
-best,
+Good.
 
-Sirio
+> +	if (config_commit_allow_empty >= 0)  /* if allowEmpty is allowed in config*/
+> +		allow_empty = config_commit_allow_empty;
+> +
 
-> On Nov 2, 2018, at 04:07, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Sirio Balmelli <sirio.bm@gmail.com> writes:
-> 
->> It appears that git ignores the GIT_CONFIG environment variable,
->> while git-config *does* consider it.
-> 
-> Yup, that is exactly how it is designed and documented.  These
-> dasys, with "git config" taking "--file" to work on any arbitrary
-> filename, you do not necessarily need GIT_CONFIG enviornment.
-> 
+This works, but != -1 is our usual idiom for this as you initialize it
+to -1. I think that comment can also go then, since it's clear what's
+going on.
 
+> +# Tests for commit.allowEmpty config
+> +
+> +test_expect_success "no commit.allowEmpty and no --allow-empty" "
+> +	test_must_fail git commit -m 'test'
+> +"
+> +
+> +test_expect_success "no commit.allowEmpty and --allow-empty" "
+> +	git commit --allow-empty -m 'test'
+> +"
+> +
+> +for i in true 1
+> +do
+> +	test_expect_success "commit.allowEmpty=$i and no --allow-empty" "
+> +		git -c commit.allowEmpty=$i commit -m 'test'
+> +	"
+> +
+> +	test_expect_success "commit.allowEmpty=$i and --allow-empty" "
+> +		git -c commit.allowEmpty=$i commit --allow-empty -m 'test'
+> +	"
+> +done
+> +
+> +for i in false 0
+> +do
+> +	test_expect_success "commit.allowEmpty=$i and no --allow-empty" "
+> +		test_must_fail git -C commit.allowEmpty=$i commit -m 'test'
+> +	"
+> +
+> +	test_expect_success "commit.allowEmpty=$i and --allow-empty" "
+> +		test_must_fail git -c commit.allowEmpty=$i commit --allow-empty -m 'test'
+> +	"
+> +done
 
---Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
+Testing both 1 and "true" can be dropped here. Things that use
+git_config_bool() can just assume it works, we test it more exhaustively
+elsewhere.
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+Your patch has whitespace errors. Try with "git show --check" or apply
+it with git-am, it also doesn't apply cleanly on the latest master.
 
-iQIzBAEBCgAdFiEEg12XAEksYqKi4XIsxM76bLJSdLMFAlvd4a0ACgkQxM76bLJS
-dLPAyRAAxBvfWXhMKJSah/DevqwVI+n/cBxctz5XtOjNBrqxT6V0XutSQMp5JOSB
-pAA+YWs1cRq9gN1XjLnQ3B+ayNxIHgn7fdiS6R4h5Qf5YcA9MuErp5DPIxI9Tgh8
-ARpsRcf98zDCvVj2uNdWwl0MXsbdERm3Q+tT7aLAfIOP9QsAW3BdcMteoZE5/CDE
-02zzD3cpDY2qPfQFyuwCt5vxuBKu5p9/v9LoluqIKkqbZzCpdu6mgiEjYbKMLXCU
-ZnH5Y8XinjOJaM4evSg3VBvGbz05rN4puTaZNe5enLHUS8LUN5FCGMzDtqffUSET
-vgzphgu018OZmvssCeHp5hSb0CywG1X+E6uc2dLjCq05WnKZLt99eH+Wj6rKyI5+
-LoQvhTMRrs7YfOJi0afJaDUuvKI5eP1NYV9pVtj8EjFMq+42wkDo2wxWBZEZnymH
-PWXrodjHaJ80Fx9zesUNcLVXcO9JjXOcPsbaihPfP6qgrHspHBnc2bCDlv7RYbly
-lfs13XG2r3Y/8ER6KiVIblrurRyHnZbud3Jpt5aeDfLgFGZUgQckFB0NgTSKMcj3
-BfnbMLYFh4433P5jGdCFq07TPhzfY1YS8m/xH8geRhS9TbAWBGZV7/Q26P0rE0J4
-g9uaDCCPhuacqf8562fp6BC4feQ5/2ZQ5gZkbGAD66wKtn0Ouck=
-=HXTK
------END PGP SIGNATURE-----
+But on this patch in general: I don't mind making this configurable, but
+neither your commit message nor these tests make it clear what the
+actual motivation is, which can be seen on the upstream GitHub bug
+report.
 
---Apple-Mail=_3910EBE9-535A-4AE2-A61F-2CE8E7C49C4D--
+I.e. you seemingly have no interest in using "git commit" to produce
+empty commits, but are just trying to cherry-pick something and it's
+failing because it (presumably, or am I missing something) cherry picks
+an existing commit content ends up not changing anything.
+
+I.e. you'd like to make the logic 37f7a85793 ("Teach commit about
+CHERRY_PICK_HEAD", 2011-02-19) added a message for the default.
+
+So let's talk about that use case, and for those of us less familiar
+with this explain why it is that this needs to still be optional at
+all. I.e. aren't we just exposing an implementation detail here where
+cherry-pick uses the commit machinery? Should we maybe just always pass
+--allow-empty on cherry-pick, if not why not?
+
+I can think of some reasons, but the above is a hint that both this
+patch + the current documentation which talks about "foreign SCM
+scripts" have drifted very far from what this is actually being used
+for, so let's update that.
