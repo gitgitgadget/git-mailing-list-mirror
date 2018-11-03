@@ -2,118 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6D4D1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 16:50:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 390351F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 17:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbeKDB4S (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 21:56:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53098 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727615AbeKDB4R (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 3 Nov 2018 21:56:17 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:293f:cdba:df65:a13e])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4B9F160758;
-        Sat,  3 Nov 2018 16:44:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541263468;
-        bh=cI3opYg3WmkL3ZgHWQOVGUR1Tb2teWM7AXuzvYB2Iss=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=uQLJaFdpUc01qe8sOl2j2GECXMw3f0SWsEsOm48zoAdSdNoIJf55opSfuxBr1l4k2
-         z52zargNB0N+zjDyhExk4o1Rpy8vSEPYrQxY+9DfqXIc1k8ChcP0tlqR5W5Guira4w
-         og2D1uLYI7cfGMdNAWghxM+7CZAeVNgqaHh/eX2TRLDrKALxYBp2sjJYWNhctXgwId
-         TkEnyGCGQhD/QahbGZyomuaNQc4Yt/Dp7Fp8n9T/t3YlBt0J8j1nYFZMBwqR+P7B6V
-         quiTUY9J0mUTft9hS+pB5opBvY9s2sVVSoeb1VBZurau3KZHu6DQmEmpbpNv8sXw3F
-         rmKSInQYX3DhLm3U7XkG44sEffIZ5PCJRb5RPJbMl1JFGJ7TFj1t3VvwfYdrXJwHyZ
-         cQLHjU1yf5XJA/IuhXwFawUWsNBT55FCEUyHtMpzgyYD8F2ca+unWcGhmVSqVIZgtq
-         JRwQPmbiyC53dYAU73adw/3NYQKw3YlfesZ4Voqj9xkqs1FNdp3
-Date:   Sat, 3 Nov 2018 16:44:24 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Peter Kostyukov <peter.kostyukov@kohls.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git Slowness on Windows w/o Internet
-Message-ID: <20181103164423.GE731755@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Peter Kostyukov <peter.kostyukov@kohls.com>, git@vger.kernel.org
-References: <CAEL6bLrY5OgsjrZSSHDfYgrjefninR4wuZhGCsop_f-HCH7Jmg@mail.gmail.com>
+        id S1727713AbeKDCjV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 22:39:21 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:43601 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726849AbeKDCjU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 22:39:20 -0400
+Received: by mail-wr1-f48.google.com with SMTP id y3-v6so4753253wrh.10
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 10:27:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=BwYdYOLKDhXVL+CAz5IAJZrFCuIwL/67zpjn/5Phm3c=;
+        b=DnkXAmROJhgiXRoiK4nRse3b030ChvG+bCIdQJix8UgcFHiI0QJWuNS1ABFAWY2l5P
+         K5u9LRUwQBs+lrzFHVY1sl/F9V4gY9nG8Fu9CY1aoC/SbtiXhMTvp7MoKy3YFnGepyHH
+         2IPS2cWOT9fDLKZY+zUpfZFPpEjybytBjf4JqmWqPQwjji+lUdvVeO22sTMPMYnXZegb
+         kS0je3PxmUIF25ZLGQymaK6wq8iox1ZiVvo+45XwO6TZUABRC2LJmOpCIs7TD3QjDlZZ
+         tmbjbogGi5DF5alk4QjLbgb4ZHHtjV+kn+3QGG+4l11S4leK/2Ukji+tqJWd6B69J4WL
+         jvEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=BwYdYOLKDhXVL+CAz5IAJZrFCuIwL/67zpjn/5Phm3c=;
+        b=LnVngdWrrcAI9n1e1i0LN8AEvZGFu6pK8X+cHsgfmYOwM65nuRWO/3dKmS4TRD4uyW
+         2qBu1Aj0Eckk7jXahIWVUVzAOEI6TVI0A5dP5uIkCXumuDX7Mrf2V9cQtBVJAyCTHqct
+         KQS6FN/76Ws5fkpa6vJodWYUZ4sLZkuSVKVYR7tIaq53gcFP6dmKHv8aCqt6F9TLDY1O
+         I5uLr/YACrQP3z8AECc2iMQTOTJZ4MSS2pOs82NEhjWZTQfsh6LrgBOwSy3I17n0KSwY
+         +ujBGNE80LLl4RvTq7QD8KvkkU+JEnrrtBhqSR10a2FK6hUGc8qX7/XGgpbgqGntwT3O
+         Iz6A==
+X-Gm-Message-State: AGRZ1gLpb2lKaITohJr4OwQ2RmOcHQ6UYzhIEiY9vCItbQV/kyCm7rnD
+        dZBkc876BEo3CEefVePFkxU=
+X-Google-Smtp-Source: AJdET5e+43mONmF3cuRvmYYyfEVUsH2i2usZwbhF0KGu3lLiOsgpbB9Ry5dNpCcYsL4/iQd9WQh4HQ==
+X-Received: by 2002:adf:a31c:: with SMTP id c28-v6mr14190575wrb.195.1541266046252;
+        Sat, 03 Nov 2018 10:27:26 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egr209.neoplus.adsl.tpnet.pl. [83.21.81.209])
+        by smtp.gmail.com with ESMTPSA id y13-v6sm55483wrq.13.2018.11.03.10.27.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 03 Nov 2018 10:27:25 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC] Generation Number v2
+References: <6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com>
+        <CAGZ79ka-FTqaXdrMixjUp2THJ3L0YvEnkKxs3XFgB3WEEy2-Tg@mail.gmail.com>
+        <86tvl0zhos.fsf@gmail.com> <86ftwjzv1h.fsf@gmail.com>
+Date:   Sat, 03 Nov 2018 18:27:22 +0100
+Message-ID: <86r2g2ul51.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0H629O+sVkh21xTi"
-Content-Disposition: inline
-In-Reply-To: <CAEL6bLrY5OgsjrZSSHDfYgrjefninR4wuZhGCsop_f-HCH7Jmg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jakub Narebski <jnareb@gmail.com> writes:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Stefan Beller <sbeller@google.com> writes:
+> [...]
+>>> How would this impact creation of a commit?
+>>>
+>>> The current generation numbers can be lazily updated or not
+>>> updated at all. In my understanding of the maximum generation
+>>> numbers, a new commit would make these maximum generation
+>>> numbers invalid (i.e. they have to be recomputed).
+> [...]
+>>> For the V2 maximum generation numbers, would we need to
+>>> rewrite the numbers for all commits once we recompute them?
+>>> Assuming that is true, it sounds like the benchmark doesn't
+>>> cover the whole costs associated with V2, which is why the
+>>> exceptional performance can be explained.
+>>
+>> Let's check it using a simple example
+>>
+>> First, (minimum) parent-based generation numbers before and after
+>> extending the commit graph:
+>>
+>>   1   2     3   4     5   6   7    new
+>>   1   2     3   4     5   -   -    old
+>>   .---.-----.---.-----.---*---*
+>>        \
+>>         \   3   4     5   6        new
+>>          \  3   4     5   6        old
+>>           \-.---.-----.---.
+>>                  \
+>>                   \   5            new
+>>                    \  -            old
+>>                     \-*
+>
+> Let me check yet another idea, using (minimum) parent-based V0 generation
+> numbers (counting distance from the sink / root) as a starting number
+> for source / heads commits.
+[...]
 
---0H629O+sVkh21xTi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> [...] but let's check another example
+>
+>    1   2     3   4   5   6     7   8   9       new
+>    1   2     3   4   5   6     7   8   -       old
+>    .---.-----.---.---.---.-----.---.---*
+>         \                     /
+>          \   3   4           / 5   6   7   8   new
+>           \  5   6          /  -   -   -   -   old
+>            \-.---.---------/---*---*---*---*
 
-On Fri, Nov 02, 2018 at 11:10:51AM -0500, Peter Kostyukov wrote:
-> Wanted to bring to your attention an issue that we discovered on our
-> Windows Jenkins nodes with git scm installed (git.exe). Our Jenkins
-> servers don't have Internet access. It appears that git.exe is trying
-> to connect to various Cloudflare and Akamai CDN instances over the
-> Internet when it first runs and it keeps trying to connect to these
-> CDNs every git.exe execution until it makes a successful attempt. See
-> the screenshot attached with the details.
->=20
-> Enabling Internet access via proxy fixes the issue and git.exe
-> continues to work fast on the next attempts to run git.exe
->=20
-> Is there any configuration setting that can disable this git's
-> behavior or is there any other workaround without allowing Internet
-> access? Otherwise, every git command run on a server without the
-> Internet takes about 30 seconds to complete.
+But let's do this correctly.
 
-Git itself doesn't make any attempt to access those systems unless it's
-configured to do so (e.g. a remote is set up to talk to those systems
-and fetch or pull is used).
 
-It's possible that you're using a distribution package that performs
-this behavior, say, to check for updates.  I'd recommend that you
-contact the distributor, which in this case might be Git for Windows,
-and see if they can tell you more about what's going on.  The URL for
-that project is at https://github.com/git-for-windows/git.
+   1   2     3   4      5   6     7   8   9      new
+   1   2     3   4      5   6     7   8   -      old
+   .---.-----.---.------.---.-----.---.---*
+        \                        /
+         \   3   4              /                new
+          \  5   6             /                 old
+           \-.---.------------/
+                  \
+                   \    5   6     7   8          new
+                    \   -   -     -   -          old
+                     \--*---*-----*---*
+
+Well, it looks as if I draw it incorrectly, but performed calculations
+right.  You may need to modify / change some data, but it looks as if it
+is not that much of a problem.
+
+The new version of the maximum generation numbers looks like it gives
+the same results as generation numbers for the "longest" path, and
+update may affect only the side-branches that were added to.  All
+branches merged into the trunk, and not added to should be safe with
+respect to updating.
+
+Can anyone here prove a thing about update of those modified maximum
+generation numbers?  Thanks in advance.
+
+Best,
 --=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---0H629O+sVkh21xTi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvd0GcACgkQv1NdgR9S
-9ovJIw//XPQ7OAPpnMJbC7NSjlSf1EbY83LkeQ8CYKPmBB6hpS8xxxEBken1djui
-+QSKaLzA46tql7azp8IvwKxjVB9zQG/g0DMcYeiMsWyZoAG6JhgASwvpl1AbfO+r
-adbkzKoZLJilGlZwXvfaTmyWaQ8RoyYf9z7iwXFYP13kp+W/LuDlmB63U5TbVHj+
-AFCBLicqgk5ClZjVah0OqiFKaJPExvFwXTAbunuB/E8anrM5g1Ec6kvB5LZvR3s5
-dLYLHB87I+d+3dDPN1DH7cr9veE/DRnyrW6lxOZoZRNoMlINgpT3W160kKWSqiwT
-HJYbrUiCdSv4gV12TIx+8N79l2aUSJe4EU/yJIgHTNIp9SJs8ZYyjngQfC9Or8ps
-s6WBgePlvK2J3Q1rT3uXuIg6oVMF/varrRW+/e2bXg4z7FOTKN88XznkZiEZxnLE
-YhDt4QqaX1Gn03/ZTDYvhSicLfzAa7m9mpqClZHp7qgL3RRzjT7+woFWeN+cY7CS
-8HMQPP1E+PK8SgFk86o9xtMqik8FN3sOBW2DDZiPMgl7HbxI+MY5lt0Woks/5L9B
-aV2E3BYBgzwhI4CS72XQdO8t7qACNMgt62sfqgYEI5vEK6iWudS8ZiuISCEi09N2
-w81btfZUiXjqfy78BB+LSBN7ztaiDxVwsxKXZdmVJDrKrAZ8W/Q=
-=SVlE
------END PGP SIGNATURE-----
-
---0H629O+sVkh21xTi--
+Jakub Nar=C4=99bski
