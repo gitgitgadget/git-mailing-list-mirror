@@ -2,118 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37B4C1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 15:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BEDD1F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 15:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbeKDA3K (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 20:29:10 -0400
-Received: from mail-it1-f174.google.com ([209.85.166.174]:38144 "EHLO
-        mail-it1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbeKDA3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 20:29:10 -0400
-Received: by mail-it1-f174.google.com with SMTP id k141-v6so5230504itk.3
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 08:17:34 -0700 (PDT)
+        id S1727615AbeKDAmk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 20:42:40 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38330 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726387AbeKDAmk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 20:42:40 -0400
+Received: by mail-lj1-f196.google.com with SMTP id q186-v6so4278720ljb.5
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 08:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2el+E03N5NjDXpOpPi0X23TNDm/yrZctZR5VD6lQPhw=;
-        b=B3Hf81wTd4k8QaNOUJvTHS/I4KCgx7/wNDuKb8YmdGrqRfV6o1YOTYeSG9Komlf1A2
-         Wglzr2c/oBSLVAILAzV8qS24vDuKj3TRv4FDM8cNhwLtk28GIk2UqNf0eTN5Dt1m71jD
-         FIZbUGCW492jNmYG/GLzuWj963LWKIHub2O/YUp4XSEH102ijcdFm+heX0VuCym0dTUV
-         La5RPfRqTnDY1q3eH+fmftofNqNEameQnDGaDeL9B3+P2t0qNLKm01O5gGE2fHitmW2S
-         PjpvY5IcI5/WK/46Mo8RIe7f/FYOcLmns2jIT2Ex0CV1ZoTsSgrgW9b64Zo82xDgixAj
-         8j7w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fi8sXRJwxu4f5vI+RW1APEhf0Z0ggiarYfUbtJ524/4=;
+        b=nV2TSNBRjdT6cyA20n6ws9OQXmqVzXjGlxA1f+dTJVwdpOT++2kLOSWCl45YlEAtoG
+         dDYW9LlIFRyyXaBdgt0kGckMmzk5NhEPYrxZtrgDo2/UTfGTdeZt9k/XiurS1yoQfT8d
+         BPlNthoKjM3z6ifltLJqNZQ1q4/0sKN7e4OBz7VzO8Mm8OrhI/QzZ/QAtKaaDCtd52a+
+         bTn0WaadMMzQamLQl0cC295K6UmmgXcYnsHt0Zs94sVI7HPGzaOnjPYev2Btsz1AG9BF
+         IgI4tN5HEagREAchu/1hhOmVfXaz06p6NBppn1YOxBZIbC6lUb4z1lHuu1nVU3VYOHmi
+         dICQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2el+E03N5NjDXpOpPi0X23TNDm/yrZctZR5VD6lQPhw=;
-        b=Tly5hfjT6m4UDyNgPk1O4fqyVGWq151w+qKnA9ViwcjNKkgEC02aIgczt3OlMOCLR3
-         NW0HwLQPShUoY6xpky4O4g41VZOpHPa9RyXt/8wPPNk33Zd6YNtNcgWj8JPc5JriDYSr
-         oGo01kTLFUcUFdRyUKQ/3uCo+PVlKCcOvNk2PopkIRM8Nab8IGbGITm58QsHYaQBU/hb
-         xcNIglmPh37zhSzijI/XWsuhhL9fDcg+dYJtr5vF2CAxwjCKv5xk6Yef/QUarDvqWQmS
-         JbRmfM/pyf3jSmKcGYdP7yKB+9AeCOjyC847GCIIXCXx0nwbPkoPDBDxlnQEsMLauGyf
-         +vkg==
-X-Gm-Message-State: AGRZ1gK0bef34boVHJw53vds1ANY5GJtEU+4XhPbQQGxc0G6Fh0xn8q8
-        kKbnDUyMqcmIRogYV9bL3Qp2dNdTlHvdiHYqwXk=
-X-Google-Smtp-Source: AJdET5cjAYW90KvapO0R/qE2tWEUP1wKWuN2ddHuwxSYLYDs/pOBRFVD2+awq1usKRdjAMPVZ8esNCbXlM6XjvEk0w0=
-X-Received: by 2002:a24:fec3:: with SMTP id w186-v6mr799244ith.10.1541258253582;
- Sat, 03 Nov 2018 08:17:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fi8sXRJwxu4f5vI+RW1APEhf0Z0ggiarYfUbtJ524/4=;
+        b=s+mWkfOQf3UbnG8n3EySYVxJDx5J8GkRf7vwEpC4FQDn+kbig1xNlXfHK90sKJgnqh
+         u+uPtXjiFKvzIltF5vb18aIgbfPIHZiTlqoR8YqhNpJTVGpgF8wXZD/hZwbP0wZeamSh
+         wxv5qggo90v0Z/eJjR/X4SXtFMm1Nlkt4bsujI6SKZ0eaKXg0eRJYJhNk+0M9DvFWiyt
+         TGhTkD2qLOPXqlsI5dSMoqbQpz9pDm6bKw35EjrRxKkZcOrOxPEARuWkQ51h+dtcb67/
+         YP880c/+J9UjDnxlotS/e4xLE3V353zDfZAcoL0fpRUkFjea/lkFBKAvbFOUTyc4/756
+         xAEQ==
+X-Gm-Message-State: AGRZ1gJEFRpbLnMJoHrqsbIPYjHxE/roPrGH+aCJeAbJ1rxGWyAPa5xp
+        w/v+MhKsfGBwK8sBSk8hAp8=
+X-Google-Smtp-Source: AJdET5c54bvfQuNstGW5QSEz3mhxBNmCGC0q2YLbt5HpTQ4M8l8gyw4H0Ifm0z9InVFRnBGPJ5UCxQ==
+X-Received: by 2002:a2e:b1ca:: with SMTP id e10-v6mr2130864lja.16.1541259059827;
+        Sat, 03 Nov 2018 08:30:59 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id x1-v6sm1856678ljc.57.2018.11.03.08.30.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Nov 2018 08:30:59 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     christophe.bliard@trux.info
+Cc:     git@vger.kernel.org, rafa.almas@gmail.com,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] tree-walk.c: fix overoptimistic inclusion in :(exclude) matching
+Date:   Sat,  3 Nov 2018 16:30:49 +0100
+Message-Id: <20181103153049.22850-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.1.1005.gac84295441
+In-Reply-To: <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com>
+References: <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <20181020193020.28517-1-mgorny@gentoo.org>
-In-Reply-To: <20181020193020.28517-1-mgorny@gentoo.org>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 3 Nov 2018 16:17:07 +0100
-Message-ID: <CACsJy8DKD3F3o74gTHW-WEL_hpB8x+oaWX8_SwN01Nmz3W9Z_w@mail.gmail.com>
-Subject: Re: [PATCH v4] gpg-interface.c: detect and reject multiple signatures
- on commits
-To:     =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 20, 2018 at 9:31 PM Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org> =
-wrote:
-> +test_expect_success GPG 'detect fudged commit with double signature' '
-> +       sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
-> +       sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
-> +               sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig1.=
-sig &&
-> +       gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
-> +       cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combi=
-ned.asc &&
-> +       sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s/^=
-/ /" \
-> +               double-combined.asc > double-gpgsig &&
-> +       sed -e "/committer/r double-gpgsig" double-base >double-commit &&
-> +       git hash-object -w -t commit double-commit >double-commit.commit =
-&&
-> +       test_must_fail git verify-commit $(cat double-commit.commit) &&
-> +       git show --pretty=3Dshort --show-signature $(cat double-commit.co=
-mmit) >double-actual &&
-> +       grep "BAD signature from" double-actual &&
-> +       grep "Good signature from" double-actual
-> +'
+tree_entry_interesting() is used for matching pathspec on a tree. The
+interesting thing about this function is that, because the tree
+entries are known to be sorted, this function can return more than
+just "yes, matched" and "no, not matched". It can also say "yes, this
+entry is matched and so is the remaining entries in the tree".
 
-This test fails on 'master' today for me
+This is where I made a mistake when matching exclude pathspec. For
+exclude pathspec, we do matching twice, one with positive patterns and
+one with negative ones, then a rule table is applied to determine the
+final "include or exclude" result. Note that "matched" does not
+necessarily mean include. For negative patterns, "matched" means
+exclude.
 
-gpg: WARNING: multiple signatures detected.  Only the first will be checked=
-.
-gpg: Signature made Sat Nov  3 15:13:28 2018 UTC
-gpg:                using DSA key 13B6F51ECDDE430D
-gpg:                issuer "committer@example.com"
-gpg: BAD signature from "C O Mitter <committer@example.com>" [ultimate]
-gpg: BAD signature from "C O Mitter <committer@example.com>" [ultimate]
-not ok 16 - detect fudged commit with double signature
+This particular rule is too eager to include everything. Rule 8 says
+that "if all entries are positively matched" and the current entry is
+not negatively matched (i.e. not excluded), then all entries are
+positively matched and therefore included. But this is not true. If
+the _current_ entry is not negatively matched, it does not mean the
+next one will not be and we cannot conclude right away that all
+remaining entries are positively matched and can be included.
 
-Perhaps my gpg is too old?
+Rules 8 and 18 are now updated to be less eager. We conclude that the
+current entry is positively matched and included. But we say nothing
+about remaining entries. tree_entry_interesting() will be called again
+for those entries where we will determine entries individually.
 
-$ gpg --version
-gpg (GnuPG) 2.1.15
-libgcrypt 1.7.3
-Copyright (C) 2016 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.ht=
-ml>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+Reported-by: Christophe Bliard <christophe.bliard@trux.info>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ t/t6132-pathspec-exclude.sh | 17 +++++++++++++++++
+ tree-walk.c                 | 11 ++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-Home: /home/pclouds/.gnupg
-Supported algorithms:
-Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
-Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
-        CAMELLIA128, CAMELLIA192, CAMELLIA256
-Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
-Compression: Uncompressed, ZIP, ZLIB, BZIP2
---=20
-Duy
+diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
+index eb829fce97..393b29f205 100755
+--- a/t/t6132-pathspec-exclude.sh
++++ b/t/t6132-pathspec-exclude.sh
+@@ -194,4 +194,21 @@ test_expect_success 'multiple exclusions' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 't_e_i() exclude case #8' '
++	git init case8 &&
++	(
++		cd case8 &&
++		echo file >file1 &&
++		echo file >file2 &&
++		git add . &&
++		git commit -m twofiles &&
++		git grep -l file HEAD :^file2 >actual &&
++		echo HEAD:file1 >expected &&
++		test_cmp expected actual &&
++		git grep -l file HEAD :^file1 >actual &&
++		echo HEAD:file2 >expected &&
++		test_cmp expected actual
++	)
++'
++
+ test_done
+diff --git a/tree-walk.c b/tree-walk.c
+index 77b37f36fa..79bafbd1a2 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -1107,7 +1107,7 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
+ 	 *   5  |  file |    1     |    1     |   0
+ 	 *   6  |  file |    1     |    2     |   0
+ 	 *   7  |  file |    2     |   -1     |   2
+-	 *   8  |  file |    2     |    0     |   2
++	 *   8  |  file |    2     |    0     |   1
+ 	 *   9  |  file |    2     |    1     |   0
+ 	 *  10  |  file |    2     |    2     |  -1
+ 	 * -----+-------+----------+----------+-------
+@@ -1118,7 +1118,7 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
+ 	 *  15  |  dir  |    1     |    1     |   1 (*)
+ 	 *  16  |  dir  |    1     |    2     |   0
+ 	 *  17  |  dir  |    2     |   -1     |   2
+-	 *  18  |  dir  |    2     |    0     |   2
++	 *  18  |  dir  |    2     |    0     |   1
+ 	 *  19  |  dir  |    2     |    1     |   1 (*)
+ 	 *  20  |  dir  |    2     |    2     |  -1
+ 	 *
+@@ -1134,7 +1134,12 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
+ 
+ 	negative = do_match(entry, base, base_offset, ps, 1);
+ 
+-	/* #3, #4, #7, #8, #13, #14, #17, #18 */
++	/* #8, #18 */
++	if (positive == all_entries_interesting &&
++	    negative == entry_not_interesting)
++		return entry_interesting;
++
++	/* #3, #4, #7, #13, #14, #17 */
+ 	if (negative <= entry_not_interesting)
+ 		return positive;
+ 
+-- 
+2.19.1.1005.gac84295441
+
