@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D376A1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 08:49:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BD7E1F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 08:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726632AbeKCR7k (ORCPT <rfc822;e@80x24.org>);
+        id S1726711AbeKCR7l (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 13:59:41 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:37262 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726316AbeKCR7k (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 3 Nov 2018 13:59:40 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:44204 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726290AbeKCR7j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 13:59:39 -0400
-Received: by mail-lf1-f65.google.com with SMTP id m18-v6so2841381lfl.11
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 01:49:02 -0700 (PDT)
+Received: by mail-lj1-f195.google.com with SMTP id c4-v6so3738288lja.4
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 01:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=b23l1Od1UoAgQbGbitmUi3qfEmvDGX+lB2/o0OsqBis=;
-        b=bfTCi+S667pBo+ZHaJmdcIK3RERgIrzNnX41GueMUP9w2NIZ00YQbTTxZga8nG7b9C
-         yaEgpDre6skIpz2sdKJ3IIt3c24GyjJOvWcqPJQhGAR0wEmn3zAD6hWtZ6YqrSrzX/Gt
-         GP7sQxYI4+hmJTX3YunG01C4Vm+KYJOZhp4gHXgNgca9hdLHdkhNx3iIBJNlvifKpZJ+
-         jtumM3jg1cwwrwp8y1hc8dpVF9zpkuDlvyWEoPJ79aPeiYMcceVi7aTLATzuw1KCIjah
-         rFaYxHHWnk5XK3Mtn8b+nazjwjnRLPiKKDBF7Q73gc3F2sFYPeLe6HKPBZaxE/1UWjB7
-         1m3A==
+        bh=LOrJk/bklnW/yeksfRirv+6A+Y2dqd3zhyRXgtJR194=;
+        b=spuWBae+0LY+syBXMEDfYu4aFt63jRCHCovA3HPsvkY4kspG9WwkLJEs5oU8nUFHEH
+         YNgl60xJU134xNTYq4yaagV4o0OZ4lbsn6ea9aqoXPRUHKHZjUFYvnFllyMPb6jbIdm+
+         fzPkB7pvX6i+IWtWneRj/FnIi6pU0fM7o6gUOP5tNv9E7Ps//9G59VcyC1wnsFLvXvuB
+         lM5fjIV0YkqrKGUb7v6lWP5STp2bSgOXhzwTTUwC05N4dDLtEhFYYUOL9PXjAnBBe7px
+         Ax4oi89l6T0ZOppNPGKECfYlujfTNFfNMyk91Ne4e6VnMQTQKKencdgZTTUBPsKXiMV8
+         4IRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=b23l1Od1UoAgQbGbitmUi3qfEmvDGX+lB2/o0OsqBis=;
-        b=jbOrTpObSmYYThyoPiCC1CgG4H8AZ6u9zSH4N9Qu6oJMUVg0Rmee/AfGbJTFmjgqg+
-         BdBqDCHNbNY2/0x88yJjsr+W+MJEMjYXL+EvK1prU4GQuPR637BaqBlARuaRktWmm5tP
-         jLNhhNBdh59TudQpa7pfA0sunR9z0LotFKfFDanV3Q7zxs9wUdh/cNmeqOYSgcYGCsT8
-         9ECkKrCtXmljIHXdGLjo73iVXS0tVQgzxtIC8YkjpyC1qccs3cX8FO1hNmWet0DRvJTI
-         w2yi3UbbaDfjg7WLPog5k3XKYFCSEazkYxSNOb2rWHxCEzhWfAPyCo8ho2O5cW/POmfv
-         K86Q==
-X-Gm-Message-State: AGRZ1gIhBXb/3mHNDRQCtqFlW39sQ8GrURSh77fJObcwFKwLiuoTuNLW
-        OUchOW2zXWeHFhYDttQ8BGU=
-X-Google-Smtp-Source: AJdET5eXWv0Z6EUytBLCEvYNj16RzfLd4iYLwnld+3mCfJehnwxk/1JRzhdRcu3Lll6CYtCFFRSEQA==
-X-Received: by 2002:a19:2a4b:: with SMTP id f72mr8071819lfl.139.1541234941126;
-        Sat, 03 Nov 2018 01:49:01 -0700 (PDT)
+        bh=LOrJk/bklnW/yeksfRirv+6A+Y2dqd3zhyRXgtJR194=;
+        b=apYKFI2+zG4SnLM45E01ll8AGOlPJcp4YAr2lJX1Uke+szomI3cNpGbeHPRxnHRdsK
+         Thx0CbIItgyLwlHWmohYDF3Ff4ZS6gmm1AxBPepdZpEJSJUkQIFbLsZqaQj50rQ1PbZL
+         0022RaRAUufExuQ8ygLtBZdw4GVJlKwk8WTAba0fYF3oqU3xanNvkEBgUbGkbLmhI7LL
+         slB++TZXPVqJLE43oh/U0r7zlPCEaAneFBRaGv/fXtOKjuA12itNIi8tQg5MHQglha0P
+         D3hzavmXvvbtEzQUfJkWFkkiZ/FsI3byY8/kAm14XS2MkMU7G1mpG3Vfhnoyoa8OTgIx
+         wo/w==
+X-Gm-Message-State: AGRZ1gLTR8IzwZCGS3NBVr5HE+fcKzShOGCg/fBpnWNJwqOxktleYYnr
+        TdPbgEaz3Tsu5wyawsBlXZo=
+X-Google-Smtp-Source: AJdET5cnSZ180wPWNcBUJMhetGpFDH+8CFG9l1NRihRGQxMJjB70oTAKC7ryEiC65gIwMWqKhiBsgQ==
+X-Received: by 2002:a2e:145a:: with SMTP id 26-v6mr2090455lju.116.1541234942513;
+        Sat, 03 Nov 2018 01:49:02 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s191-v6sm657373lfe.17.2018.11.03.01.48.59
+        by smtp.gmail.com with ESMTPSA id s191-v6sm657373lfe.17.2018.11.03.01.49.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Nov 2018 01:49:00 -0700 (PDT)
+        Sat, 03 Nov 2018 01:49:01 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v3 00/14] Reduce #ifdef NO_PTHREADS
-Date:   Sat,  3 Nov 2018 09:48:36 +0100
-Message-Id: <20181103084850.9584-1-pclouds@gmail.com>
+Subject: [PATCH v3 01/14] thread-utils: macros to unconditionally compile pthreads API
+Date:   Sat,  3 Nov 2018 09:48:37 +0100
+Message-Id: <20181103084850.9584-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1005.gac84295441
-In-Reply-To: <20181027173008.18852-1-pclouds@gmail.com>
+In-Reply-To: <20181103084850.9584-1-pclouds@gmail.com>
 References: <20181027173008.18852-1-pclouds@gmail.com>
+ <20181103084850.9584-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,330 +69,195 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v2
+When built with NO_PTHREADS, the macros are used make the code build
+even though pthreads header and library may be missing. The code can
+still have different code paths for no threads support with
+HAVE_THREADS variable.
 
-- more cleanups in grep.c, read-cache.c and index-pack.c
-- the send-pack.c changes are back, but this time I just add
-  async_with_fork() to move NO_PTHREADS back in run-command.c
+There are of course impacts on no-pthreads builds:
 
-For grep.c and read-cache.c, changes are split in two patches. The
-first one is a dumb, mechanical conversion from #ifdef to if and is
-straightforward. The second one makes "no thread" use "one thread"
-code path and needs more careful review.
+- data structure may get slightly bigger because all the mutexes and
+  pthread_t are present (as an int)
 
-Diff against nd/pthreads
+- code execution is not impacted much. Locking (in hot path) is
+  no-op. Other wrapper function calls really should not matter much.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 6dd15dbaa2..de3f568cee 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -69,13 +69,11 @@ static pthread_mutex_t grep_mutex;
+- the binary size grows bigger because of threaded code. But at least
+  on Linux this does not matter, if some code is not executed, it's
+  not mapped in memory.
+
+This is a preparation step to remove "#ifdef NO_PTHREADS" in the code
+mostly because of maintainability. As Jeff put it
+
+> it's probably OK to stop thinking of it as "non-threaded platforms
+> are the default and must pay zero cost" and more as "threaded
+> platforms are the default, and non-threaded ones are OK to pay a
+> small cost as long as they still work".
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Makefile       |  2 +-
+ thread-utils.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ thread-utils.h | 48 +++++++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 94 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b08d5ea258..321540a736 100644
+--- a/Makefile
++++ b/Makefile
+@@ -991,6 +991,7 @@ LIB_OBJS += sub-process.o
+ LIB_OBJS += symlinks.o
+ LIB_OBJS += tag.o
+ LIB_OBJS += tempfile.o
++LIB_OBJS += thread-utils.o
+ LIB_OBJS += tmp-objdir.o
+ LIB_OBJS += trace.o
+ LIB_OBJS += trailer.o
+@@ -1674,7 +1675,6 @@ ifdef NO_PTHREADS
+ else
+ 	BASIC_CFLAGS += $(PTHREAD_CFLAGS)
+ 	EXTLIBS += $(PTHREAD_LIBS)
+-	LIB_OBJS += thread-utils.o
+ endif
  
- static inline void grep_lock(void)
+ ifdef HAVE_PATHS_H
+diff --git a/thread-utils.c b/thread-utils.c
+index a2135e0743..5329845691 100644
+--- a/thread-utils.c
++++ b/thread-utils.c
+@@ -20,6 +20,9 @@
+ 
+ int online_cpus(void)
  {
--	assert(num_threads);
- 	pthread_mutex_lock(&grep_mutex);
- }
- 
- static inline void grep_unlock(void)
- {
--	assert(num_threads);
- 	pthread_mutex_unlock(&grep_mutex);
- }
- 
-@@ -234,7 +232,7 @@ static int wait_all(void)
- 	int i;
- 
- 	if (!HAVE_THREADS)
--		return 0;
-+		BUG("Never call this function unless you have started threads");
- 
- 	grep_lock();
- 	all_work_added = 1;
-@@ -279,14 +277,14 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
- 		if (num_threads < 0)
- 			die(_("invalid number of threads specified (%d) for %s"),
- 			    num_threads, var);
--		else if (!HAVE_THREADS && num_threads && num_threads != 1) {
-+		else if (!HAVE_THREADS && num_threads > 1) {
- 			/*
- 			 * TRANSLATORS: %s is the configuration
- 			 * variable for tweaking threads, currently
- 			 * grep.threads
- 			 */
- 			warning(_("no threads support, ignoring %s"), var);
--			num_threads = 0;
-+			num_threads = 1;
- 		}
- 	}
- 
-@@ -323,7 +321,7 @@ static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
- 	grep_source_init(&gs, GREP_SOURCE_OID, pathbuf.buf, path, oid);
- 	strbuf_release(&pathbuf);
- 
--	if (HAVE_THREADS && num_threads) {
-+	if (num_threads > 1) {
- 		/*
- 		 * add_work() copies gs and thus assumes ownership of
- 		 * its fields, so do not call grep_source_clear()
-@@ -353,7 +351,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	grep_source_init(&gs, GREP_SOURCE_FILE, buf.buf, filename, filename);
- 	strbuf_release(&buf);
- 
--	if (HAVE_THREADS && num_threads) {
-+	if (num_threads > 1) {
- 		/*
- 		 * add_work() copies gs and thus assumes ownership of
- 		 * its fields, so do not call grep_source_clear()
-@@ -1025,36 +1023,34 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	pathspec.recursive = 1;
- 	pathspec.recurse_submodules = !!recurse_submodules;
- 
--	if (HAVE_THREADS) {
--		if (list.nr || cached || show_in_pager)
--			num_threads = 0;
--		else if (num_threads == 0)
--			num_threads = GREP_NUM_THREADS_DEFAULT;
--		else if (num_threads < 0)
--			die(_("invalid number of threads specified (%d)"), num_threads);
--		if (num_threads == 1)
--			num_threads = 0;
-+	if (list.nr || cached || show_in_pager) {
-+		if (num_threads > 1)
-+			warning(_("invalid option combination, ignoring --threads"));
-+		num_threads = 1;
-+	} else if (!HAVE_THREADS && num_threads > 1) {
-+		warning(_("no threads support, ignoring --threads"));
-+		num_threads = 1;
-+	} else if (num_threads < 0)
-+		die(_("invalid number of threads specified (%d)"), num_threads);
-+	else if (num_threads == 0)
-+		num_threads = HAVE_THREADS ? GREP_NUM_THREADS_DEFAULT : 1;
-+
-+	if (num_threads > 1) {
-+		if (!HAVE_THREADS)
-+			BUG("Somebody got num_threads calculation wrong!");
-+		if (!(opt.name_only || opt.unmatch_name_only || opt.count)
-+		    && (opt.pre_context || opt.post_context ||
-+			opt.file_break || opt.funcbody))
-+			skip_first_line = 1;
-+		start_threads(&opt);
- 	} else {
--		if (num_threads)
--			warning(_("no threads support, ignoring --threads"));
--		num_threads = 0;
--	}
--
--	if (!num_threads)
- 		/*
- 		 * The compiled patterns on the main path are only
- 		 * used when not using threading. Otherwise
--		 * start_threads() below calls compile_grep_patterns()
-+		 * start_threads() above calls compile_grep_patterns()
- 		 * for each thread.
- 		 */
- 		compile_grep_patterns(&opt);
--
--	if (HAVE_THREADS && num_threads) {
--		if (!(opt.name_only || opt.unmatch_name_only || opt.count)
--		    && (opt.pre_context || opt.post_context ||
--			opt.file_break || opt.funcbody))
--			skip_first_line = 1;
--		start_threads(&opt);
- 	}
- 
- 	if (show_in_pager && (cached || list.nr))
-@@ -1106,7 +1102,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		hit = grep_objects(&opt, &pathspec, &list);
- 	}
- 
--	if (num_threads)
-+	if (num_threads > 1)
- 		hit |= wait_all();
- 	if (hit && show_in_pager)
- 		run_pager(&opt, prefix);
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index bbd66ca025..682042579b 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1501,9 +1501,8 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
- 		if (nr_threads < 0)
- 			die(_("invalid number of threads specified (%d)"),
- 			    nr_threads);
--		if (!HAVE_THREADS) {
--			if (nr_threads != 1)
--				warning(_("no threads support, ignoring %s"), k);
-+		if (!HAVE_THREADS && nr_threads != 1) {
-+			warning(_("no threads support, ignoring %s"), k);
- 			nr_threads = 1;
- 		}
- 		return 0;
-@@ -1693,10 +1692,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 				nr_threads = strtoul(arg+10, &end, 0);
- 				if (!arg[10] || *end || nr_threads < 0)
- 					usage(index_pack_usage);
--				if (!HAVE_THREADS) {
--					if (nr_threads != 1)
--						warning(_("no threads support, "
--							  "ignoring %s"), arg);
-+				if (!HAVE_THREADS && nr_threads != 1) {
-+					warning(_("no threads support, ignoring %s"), arg);
- 					nr_threads = 1;
- 				}
- 			} else if (starts_with(arg, "--pack_header=")) {
-diff --git a/read-cache.c b/read-cache.c
-index 4307b9a7bf..c510f598b1 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2170,20 +2170,19 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 
- 	src_offset = sizeof(*hdr);
- 
--	if (HAVE_THREADS) {
--		nr_threads = git_config_get_index_threads();
-+	nr_threads = git_config_get_index_threads();
- 
--		/* TODO: does creating more threads than cores help? */
--		if (!nr_threads) {
--			nr_threads = istate->cache_nr / THREAD_COST;
--			cpus = online_cpus();
--			if (nr_threads > cpus)
--				nr_threads = cpus;
--		}
--	} else {
--		nr_threads = 1;
-+	/* TODO: does creating more threads than cores help? */
-+	if (!nr_threads) {
-+		nr_threads = istate->cache_nr / THREAD_COST;
-+		cpus = online_cpus();
-+		if (nr_threads > cpus)
-+			nr_threads = cpus;
- 	}
- 
-+	if (!HAVE_THREADS)
-+		nr_threads = 1;
-+
- 	if (nr_threads > 1) {
- 		extension_offset = read_eoie_extension(mmap, mmap_size);
- 		if (extension_offset) {
-@@ -2216,12 +2215,11 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
- 
- 	/* if we created a thread, join it otherwise load the extensions on the primary thread */
--	if (HAVE_THREADS && extension_offset) {
-+	if (extension_offset) {
- 		int ret = pthread_join(p.pthread, NULL);
- 		if (ret)
- 			die(_("unable to join load_index_extensions thread: %s"), strerror(ret));
--	}
--	if (!extension_offset) {
-+	} else {
- 		p.src_offset = src_offset;
- 		load_index_extensions(&p);
- 	}
-@@ -2860,7 +2858,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	 * strip_extensions parameter as we need it when loading the shared
- 	 * index.
- 	 */
--	if (HAVE_THREADS && ieot) {
-+	if (ieot) {
- 		struct strbuf sb = STRBUF_INIT;
- 
- 		write_ieot_extension(&sb, ieot);
-diff --git a/run-command.c b/run-command.c
-index 26154ba257..decf3239bd 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1246,6 +1246,15 @@ int finish_async(struct async *async)
- #endif
- }
- 
-+int async_with_fork(void)
-+{
 +#ifdef NO_PTHREADS
 +	return 1;
++#else
+ #ifdef _SC_NPROCESSORS_ONLN
+ 	long ncpus;
+ #endif
+@@ -59,10 +62,12 @@ int online_cpus(void)
+ #endif
+ 
+ 	return 1;
++#endif
+ }
+ 
+ int init_recursive_mutex(pthread_mutex_t *m)
+ {
++#ifndef NO_PTHREADS
+ 	pthread_mutexattr_t a;
+ 	int ret;
+ 
+@@ -74,4 +79,47 @@ int init_recursive_mutex(pthread_mutex_t *m)
+ 		pthread_mutexattr_destroy(&a);
+ 	}
+ 	return ret;
 +#else
 +	return 0;
 +#endif
 +}
 +
- const char *find_hook(const char *name)
- {
- 	static struct strbuf path = STRBUF_INIT;
-diff --git a/run-command.h b/run-command.h
-index 3932420ec8..68f5369fc2 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -1,9 +1,7 @@
- #ifndef RUN_COMMAND_H
- #define RUN_COMMAND_H
++#ifdef NO_PTHREADS
++int dummy_pthread_create(pthread_t *pthread, const void *attr,
++			 void *(*fn)(void *), void *data)
++{
++	/*
++	 * Do nothing.
++	 *
++	 * The main purpose of this function is to break compiler's
++	 * flow analysis and avoid -Wunused-variable false warnings.
++	 */
++	return ENOSYS;
++}
++
++int dummy_pthread_init(void *data)
++{
++	/*
++	 * Do nothing.
++	 *
++	 * The main purpose of this function is to break compiler's
++	 * flow analysis or it may realize that functions like
++	 * pthread_mutex_init() is no-op, which means the (static)
++	 * variable is not used/initialized at all and trigger
++	 * -Wunused-variable
++	 */
++	return ENOSYS;
+ }
++
++int dummy_pthread_join(pthread_t pthread, void **retval)
++{
++	/*
++	 * Do nothing.
++	 *
++	 * The main purpose of this function is to break compiler's
++	 * flow analysis and avoid -Wunused-variable false warnings.
++	 */
++	return ENOSYS;
++}
++
++#endif
+diff --git a/thread-utils.h b/thread-utils.h
+index d9a769d190..4961487ed9 100644
+--- a/thread-utils.h
++++ b/thread-utils.h
+@@ -4,12 +4,54 @@
+ #ifndef NO_PTHREADS
+ #include <pthread.h>
  
--#ifndef NO_PTHREADS
--#include <pthread.h>
--#endif
-+#include "thread-utils.h"
+-extern int online_cpus(void);
+-extern int init_recursive_mutex(pthread_mutex_t*);
++#define HAVE_THREADS 1
  
- #include "argv-array.h"
+ #else
  
-@@ -143,6 +141,7 @@ struct async {
- int start_async(struct async *async);
- int finish_async(struct async *async);
- int in_async(void);
-+int async_with_fork(void);
- void check_pipe(int err);
+-#define online_cpus() 1
++#define HAVE_THREADS 0
++
++/*
++ * macros instead of typedefs because pthread definitions may have
++ * been pulled in by some system dependencies even though the user
++ * wants to disable pthread.
++ */
++#define pthread_t int
++#define pthread_mutex_t int
++#define pthread_cond_t int
++#define pthread_key_t int
++
++#define pthread_mutex_init(mutex, attr) dummy_pthread_init(mutex)
++#define pthread_mutex_lock(mutex)
++#define pthread_mutex_unlock(mutex)
++#define pthread_mutex_destroy(mutex)
++
++#define pthread_cond_init(cond, attr) dummy_pthread_init(cond)
++#define pthread_cond_wait(cond, mutex)
++#define pthread_cond_signal(cond)
++#define pthread_cond_broadcast(cond)
++#define pthread_cond_destroy(cond)
++
++#define pthread_key_create(key, attr) dummy_pthread_init(key)
++#define pthread_key_delete(key)
++
++#define pthread_create(thread, attr, fn, data) \
++	dummy_pthread_create(thread, attr, fn, data)
++#define pthread_join(thread, retval) \
++	dummy_pthread_join(thread, retval)
++
++#define pthread_setspecific(key, data)
++#define pthread_getspecific(key) NULL
++
++int dummy_pthread_create(pthread_t *pthread, const void *attr,
++			 void *(*fn)(void *), void *data);
++int dummy_pthread_join(pthread_t pthread, void **retval);
++
++int dummy_pthread_init(void *);
  
- /**
-diff --git a/send-pack.c b/send-pack.c
-index e920ca57df..f692686770 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -203,9 +203,8 @@ static int receive_status(int in, struct ref *refs)
- static int sideband_demux(int in, int out, void *data)
- {
- 	int *fd = data, ret;
--#ifdef NO_PTHREADS
--	close(fd[1]);
--#endif
-+	if (async_with_fork())
-+		close(fd[1]);
- 	ret = recv_sideband("send-pack", fd[0], out);
- 	close(out);
- 	return ret;
-
-Nguyễn Thái Ngọc Duy (14):
-  thread-utils: macros to unconditionally compile pthreads API
-  run-command.h: include thread-utils.h instead of pthread.h
-  send-pack.c: move async's #ifdef NO_PTHREADS back to run-command.c
-  index-pack: remove #ifdef NO_PTHREADS
-  name-hash.c: remove #ifdef NO_PTHREADS
-  attr.c: remove #ifdef NO_PTHREADS
-  grep: remove #ifdef NO_PTHREADS
-  grep: clean up num_threads handling
-  preload-index.c: remove #ifdef NO_PTHREADS
-  pack-objects: remove #ifdef NO_PTHREADS
-  read-cache.c: remove #ifdef NO_PTHREADS
-  read-cache.c: reduce branching based on HAVE_THREADS
-  read-cache.c: initialize copy_len to shut up gcc 8
-  Clean up pthread_create() error handling
-
- Makefile               |  2 +-
- attr.c                 | 14 --------
- builtin/grep.c         | 79 ++++++++++++++++--------------------------
- builtin/index-pack.c   | 63 ++++++++-------------------------
- builtin/pack-objects.c | 26 ++------------
- grep.c                 |  6 ----
- grep.h                 |  6 ----
- name-hash.c            | 38 ++++++++------------
- pack-objects.h         |  6 ----
- preload-index.c        | 23 +++++-------
- read-cache.c           | 37 ++++++--------------
- run-command.c          | 11 +++++-
- run-command.h          |  5 ++-
- send-pack.c            |  5 ++-
- thread-utils.c         | 48 +++++++++++++++++++++++++
- thread-utils.h         | 48 +++++++++++++++++++++++--
- 16 files changed, 186 insertions(+), 231 deletions(-)
-
+ #endif
++
++int online_cpus(void);
++int init_recursive_mutex(pthread_mutex_t*);
++
++
+ #endif /* THREAD_COMPAT_H */
 -- 
 2.19.1.1005.gac84295441
 
