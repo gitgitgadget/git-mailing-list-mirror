@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3F6F1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 08:49:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17CFA1F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 08:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbeKCR7m (ORCPT <rfc822;e@80x24.org>);
+        id S1726985AbeKCR7m (ORCPT <rfc822;e@80x24.org>);
         Sat, 3 Nov 2018 13:59:42 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:37264 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbeKCR7l (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 13:59:41 -0400
-Received: by mail-lj1-f194.google.com with SMTP id c4-v6so3738330lja.4
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 01:49:04 -0700 (PDT)
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:39843 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726290AbeKCR7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 13:59:42 -0400
+Received: by mail-lj1-f193.google.com with SMTP id t9-v6so532222ljh.6
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 01:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mEvviRJvKR2A2kQsNmxIWhLTy4AD0vSBWn5dZRTicao=;
-        b=uUh1IqD0+iYKMs28e3GSnFtNrFME+p62ifrw2rfmLzjC62FOVGwQIjcW5aceAWpTIr
-         F5WwnhdZvbXXctZBm6bXmkDkRzDmnXda3id3KNWXRc1TPZ9OHcnvyxs1Cql7xAMOjvZH
-         JBWENmPLjwJEz5nrqJG1ibhkEwroXud+RbnKka3CovhT5vxWd1Kry51FD/0x3EmuL+wJ
-         GgWxOrP1Hx/fcKRyLk2q+pVdyYmeNakU/IEd6tLiRjuWfHaB+dvYbiCug9FbFSfnIzX7
-         5tljrx7wrbBLCDt8wKvFUfViFyCADrt+68vd1SatAlvfYQTgdVrYcQ2u9ZZsaBAcJDZn
-         +I9g==
+        bh=7ewvVqGtNQTgW7o15Xejp+IrBT4QbCBPgLeCwuYv68M=;
+        b=PuWMrjzzUaK/2aeeTFKyQZN/iQ5c2X3grP4+Zm+d80rexXJ5tsPrhap03CvyuYnWgC
+         Q6s13EJfgYDTFIRvr7kG6l2+JQO2Xaz8bVqBp9hf2EFnOpyW0CIUnrPPN89M3/W28mA4
+         c346BwnfUhOFmfkgDn1YSuwDzMxWHu2GZsywoFodI6Uin16X0b+1mBBszBO4ODosvcs7
+         fPrFi6fzDxgvTrvGLbpeDEoddQY4CVIp+dtECo6kKV1Y/rfiH3Nqsu0oQZOWwj+kn2GW
+         RBXaREdln391OOjGC/I23Lxg4PPCJgG7TzdsPUnpGz2lFJ8hHKgnv04aCxdCHmI3dv4L
+         gZKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mEvviRJvKR2A2kQsNmxIWhLTy4AD0vSBWn5dZRTicao=;
-        b=OKhVY0J3rGcX7t8LE3kmRscNxcn2HmSXctB8RVE7ACKpCsC3PwMW0iyp/ZuVbHR5d4
-         Ay7xPawrRH56CktwHNJgL68BeMnHV3vpsF5NrPfMU8XEGj8AoCCkoOtbPfGXX0RpEvuT
-         U6yT7YTJHxLn4ONZaq9cziU+j1TMqSErsLK/2xg4aF5VJnxMlgAVzFKG+xg0mPUX+Lop
-         hzDRz2p/8P5TA74pCuDXiwpsWmUq4su/yD8ws6mrAPVCvxH8e0tNKx6a4xGf8cyBP4FQ
-         tV6P0+gBXHeOejX2CIZbwLElN/tdsTvxzOav20tCw/0UXYniZroxUB6oslDFjfV6uG4b
-         KgGA==
-X-Gm-Message-State: AGRZ1gIDeKDts7oIhtwpAPfJ6MbWApuMY3Us4z5PrUuba2CJGZ+LPmYU
-        yJqPMszbCV7zfmrTCzjJfgA=
-X-Google-Smtp-Source: AJdET5e1vpLKaeXWbgKF5Ir/5zgd8VcUC8BNmmT6tjAT0xOpYjhGQEHPc9kmRERSncYL3k5PCil92w==
-X-Received: by 2002:a2e:7217:: with SMTP id n23-v6mr8316220ljc.71.1541234943694;
-        Sat, 03 Nov 2018 01:49:03 -0700 (PDT)
+        bh=7ewvVqGtNQTgW7o15Xejp+IrBT4QbCBPgLeCwuYv68M=;
+        b=s5JV9jtHRQx3c5/pQfMG47RZpIpR3nMiHULLTh0KlvWGFw9WxHxa/RjUG5FSnMlYNO
+         ozaWDsNebCcLwZeo25f+g4MWjZI6lguNUViKzf0v4eCNbudI1PB6PtqXW5coFpwIlNFF
+         iKzF1M8aauKwcrbI7vPM7K6Ozsg6EKMTRLd8qXOEPJHU0vZVBZ/YMMyJ7WeYjpo7GbEp
+         RLYrICCok37ap5Y59D5xc4uW7fJX5+vBLXhZ9uvnPMBGOJxwcTKBY9+7J/CLE0EVSBl8
+         Xa30IQWMPXonVu/NSKCx1b5fXgMZLG0OQRu3aAYru4krcr511KarvX8pF4NfPlQXKRm4
+         FF2Q==
+X-Gm-Message-State: AGRZ1gLNPUluCW+5cfSRmRM3F3WSA13kF92qNIaBSQfDCpetApSxy3BI
+        MqBF80dyV9bwdZpmVP4KSqA=
+X-Google-Smtp-Source: AJdET5c+3FYxyO2BCXUug/oWEojg+xuBtBG+QN7ZG5U/IFy0lN/IAanCScsYebh7eHkamD4RwVy59g==
+X-Received: by 2002:a2e:2a46:: with SMTP id q67-v6mr2988840ljq.38.1541234944695;
+        Sat, 03 Nov 2018 01:49:04 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id s191-v6sm657373lfe.17.2018.11.03.01.49.02
+        by smtp.gmail.com with ESMTPSA id s191-v6sm657373lfe.17.2018.11.03.01.49.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Nov 2018 01:49:02 -0700 (PDT)
+        Sat, 03 Nov 2018 01:49:04 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, peartben@gmail.com,
         peff@peff.net
-Subject: [PATCH v3 02/14] run-command.h: include thread-utils.h instead of pthread.h
-Date:   Sat,  3 Nov 2018 09:48:38 +0100
-Message-Id: <20181103084850.9584-3-pclouds@gmail.com>
+Subject: [PATCH v3 03/14] send-pack.c: move async's #ifdef NO_PTHREADS back to run-command.c
+Date:   Sat,  3 Nov 2018 09:48:39 +0100
+Message-Id: <20181103084850.9584-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1005.gac84295441
 In-Reply-To: <20181103084850.9584-1-pclouds@gmail.com>
 References: <20181027173008.18852-1-pclouds@gmail.com>
@@ -69,34 +69,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-run-command.c may use threads for its async support. But instead of
-including pthread.h directly, let's include thread-utils.h.
+On systems that do not support multithread, start_async() is
+implemented with fork(). This implementation details unfortunately
+leak out at least in send-pack.c [1].
 
-run-command.c probably never needs the dummy bits in thread-utils.h
-when NO_PTHREADS is defined. But this makes sure we have consistent
-HAVE_THREADS behavior everywhere. From now on outside compat/,
-thread-utils.h is the only place that includes pthread.h
+To keep the code base clean of NO_PTHREADS, move the this #ifdef back
+to run-command.c. The new wrapper function async_with_fork() at least
+helps suggest that this special "close()" is related to async in fork
+mode.
+
+[1] 09c9957cf7 (send-pack: avoid deadlock when pack-object dies early
+    - 2011-04-25)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- run-command.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ run-command.c | 9 +++++++++
+ run-command.h | 1 +
+ send-pack.c   | 5 ++---
+ 3 files changed, 12 insertions(+), 3 deletions(-)
 
+diff --git a/run-command.c b/run-command.c
+index 84b883c213..3c3b8814df 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1246,6 +1246,15 @@ int finish_async(struct async *async)
+ #endif
+ }
+ 
++int async_with_fork(void)
++{
++#ifdef NO_PTHREADS
++	return 1;
++#else
++	return 0;
++#endif
++}
++
+ const char *find_hook(const char *name)
+ {
+ 	static struct strbuf path = STRBUF_INIT;
 diff --git a/run-command.h b/run-command.h
-index 3932420ec8..9b7f38202c 100644
+index 9b7f38202c..68f5369fc2 100644
 --- a/run-command.h
 +++ b/run-command.h
-@@ -1,9 +1,7 @@
- #ifndef RUN_COMMAND_H
- #define RUN_COMMAND_H
+@@ -141,6 +141,7 @@ struct async {
+ int start_async(struct async *async);
+ int finish_async(struct async *async);
+ int in_async(void);
++int async_with_fork(void);
+ void check_pipe(int err);
  
--#ifndef NO_PTHREADS
--#include <pthread.h>
+ /**
+diff --git a/send-pack.c b/send-pack.c
+index e920ca57df..f692686770 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -203,9 +203,8 @@ static int receive_status(int in, struct ref *refs)
+ static int sideband_demux(int in, int out, void *data)
+ {
+ 	int *fd = data, ret;
+-#ifdef NO_PTHREADS
+-	close(fd[1]);
 -#endif
-+#include "thread-utils.h"
- 
- #include "argv-array.h"
- 
++	if (async_with_fork())
++		close(fd[1]);
+ 	ret = recv_sideband("send-pack", fd[0], out);
+ 	close(out);
+ 	return ret;
 -- 
 2.19.1.1005.gac84295441
 
