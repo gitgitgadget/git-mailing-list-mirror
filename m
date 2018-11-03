@@ -2,133 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C00451F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 10:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8277D1F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 11:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727644AbeKCTbb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 15:31:31 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53393 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726711AbeKCTbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 15:31:31 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v24-v6so3958205wmh.3
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 03:20:41 -0700 (PDT)
+        id S1727658AbeKCUgt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 16:36:49 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36592 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727007AbeKCUgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 16:36:49 -0400
+Received: by mail-pl1-f194.google.com with SMTP id w24-v6so2200393plq.3
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 04:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ssnZCNKJ4/jMQ7PmpX/rMzbYfvxTMHvTVDGT+9U7qxo=;
-        b=r53TCqWZRibDex6bsM1MNYIfVwKtvAmww4C0xU2he3R2PLkLEOxn+1C53nhNg42r1+
-         9e2K4HZZcCiDdcjiE5p/9oKyVHsJOuEf9uwsEMXskBbNK6ZKC0J2tboJ8ANSJT8tyybe
-         GDtIIEtq2I2yLnJLvOJL7avWS7T8SEqP0YldzjmkYhSrIljpP6UtYj17P/fajD5M7FCp
-         +Air+aFV4pu/MLX2ip0VIld+EKmc4PJAMBGCPv50J+jT2OjuASz/kRn4vk8hz1NFEayz
-         I4RyrDoicmmSYjQuZDVDdCL/0XKKDMhub5KJvzWmjzb1ZZNzchcMhW8Bg93+6byDftgn
-         zSfQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=q+ijcLxGnevkA6UFqgyMH2WdYRbWFGKZRzML9jOWNew=;
+        b=ZtVKRpqcBCT48g14MPUw7OgoiITNmHfPnYkqs9NHEe0bfr7omIAfvqQ0LQgxaqIIwp
+         rKGZ6laMK2GYrTiUJpFoxBxDR8byFav/ytGtA3jjFCDuQrAPHyCNMNttbfWp1IsThnJi
+         BY04nDGADdG0N8370icqfFNs9k/3QKxAvPmfP2fC/itzMv10RTUkQbdhx6z2B36poSd7
+         ht1e6rAAOX+hfsz48z+PmUifXIhfIoUBfzfaUl0I7CKema57H529982tcZcwDQXlTU2x
+         Amggff3KWobbZzRGaMsuJKiBou7gQdWUh9qQGuhEJQJRcBJXhhxPaFHQKhDdkB/UyMQT
+         vSCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ssnZCNKJ4/jMQ7PmpX/rMzbYfvxTMHvTVDGT+9U7qxo=;
-        b=q677A1fNpmAdKYCX9c9nzGS+BRh8wjeUvk8rxXGsiF6tQSYCC9lakUSS/2CZXkNekI
-         tw89KiLy2VAV9Nb10CHOEAe75eMke8eoMAD8Y44kB/3tVW+wRItiQRDo8nuKRDUt0+Cx
-         n9oB29gdvj68J7WlUZ13XfYUOTLtBK6mrCCu94s+6kVcHOSK/xEvzmnwfmbIyC3ORng6
-         mhQrxVisFKeax2JS/EPec2T8WzdRzp+UDgNKCOj2ck6i4yXqsrbJHWtaREd6gCVx7NPa
-         /47Olj409fw4bEwPcg0azJr+CrBN9Dhf+s90zSHpZmAyQvVeDw/q9bgAd0/BLxyh/TGr
-         3Umw==
-X-Gm-Message-State: AGRZ1gI1NoRiPErqiiLaqzaYO6ZJOoiAdSX1qTCDv9rq7xS4MQ2NjsbM
-        bMKGo7/ZfpGBDpRQcPQyouM=
-X-Google-Smtp-Source: AJdET5ep2Ktg+uu448J0tY1K8MjOcr3vkvq/M3QcuICoi3hn7e9HF+rxXhFVMJogOrERpVYTKpCCxg==
-X-Received: by 2002:a1c:ab54:: with SMTP id u81-v6mr506908wme.45.1541240440053;
-        Sat, 03 Nov 2018 03:20:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u9-v6sm24864503wrr.66.2018.11.03.03.20.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 03 Nov 2018 03:20:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Anmol Mago <anmolmago@gmail.com>, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com
-Subject: Re: [PATCH v2] completion: use builtin completion for format-patch
-References: <xmqqbm7c2n0i.fsf@gitster-ct.c.googlers.com>
-        <72331ce9275ce995009fe8dd3d586bb9d71f2cbf.1540881141.git.liu.denton@gmail.com>
-        <CACsJy8Ajc0qWw3RLak1PRPXvQzMHjaFuWJ6BPkhiVg=7fQvCnA@mail.gmail.com>
-        <xmqqk1lxvaj6.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8AowaAW91wGMYbC8aTOB1NoqQN-5NGx=qUCHp0i6zQRDA@mail.gmail.com>
-        <xmqqzhuss6dd.fsf@gitster-ct.c.googlers.com>
-        <20181103060317.GA5432@duynguyen.home>
-        <20181103075918.GA905@archbookpro.localdomain>
-        <CACsJy8B4vrtsBu79J2kYNmcNQfRkgetdbi8XOPjm7j1kNDJ6Yg@mail.gmail.com>
-Date:   Sat, 03 Nov 2018 19:20:38 +0900
-In-Reply-To: <CACsJy8B4vrtsBu79J2kYNmcNQfRkgetdbi8XOPjm7j1kNDJ6Yg@mail.gmail.com>
-        (Duy Nguyen's message of "Sat, 3 Nov 2018 09:29:31 +0100")
-Message-ID: <xmqqmuqqmphl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=q+ijcLxGnevkA6UFqgyMH2WdYRbWFGKZRzML9jOWNew=;
+        b=iaZ+ent2F1EAlKIYat18zyER1rIn/wPkhyLvDaQwy9JtPdu4diKanPWqz6qSgQTqNH
+         pF7m+Zsj+hh9RHWelhs7SEsK1I4Cw9MDWecKZ9+nemazwQfI82bgk5iB5+3fvHjOosBr
+         GM854RQV3tyMaMpLSaRN027sSw0NhfAyhpIiKDtY+I1UFfxWCZwKR8Fv94wU5NErv4jd
+         haFyNYgqbJqxDpcC4ovtl2FmLt7e2AdI3t6KpK8vRKaTUshB58AmFHcmcc6Dd9Kb6Ymh
+         kj9CPYHEkEcl7cuAs/00+GmiUZEerPUclRBH+mIXPlwY4kZIGXgQQUXGBV4PmlKHruBg
+         CoMQ==
+X-Gm-Message-State: AGRZ1gLXWKkV8n4SFeFm0xS7l2vk5wheDf9hxLl/9H4HWl5Pl/lwE59A
+        T9MSXyLZUT1SCaKF3MqgF/dXv+yq
+X-Google-Smtp-Source: AJdET5fLfgB9QXJ3GPVHTnVsX7wAJafkQMwRNbVXUWM9QLJeReDYdhJXQJjD9uHGD9XNhYBv05lPwg==
+X-Received: by 2002:a17:902:2006:: with SMTP id n6-v6mr15285987pla.131.1541244348543;
+        Sat, 03 Nov 2018 04:25:48 -0700 (PDT)
+Received: from localhost.localdomain ([183.82.20.190])
+        by smtp.gmail.com with ESMTPSA id f18-v6sm66606999pfh.0.2018.11.03.04.25.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Nov 2018 04:25:47 -0700 (PDT)
+From:   tanushree27 <tanushreetumane@gmail.com>
+To:     git@vger.kernel.org
+Cc:     tanushree27 <tanushreetumane@gmail.com>
+Subject: [PATCH] commit: add a commit.allowEmpty config variable
+Date:   Sat,  3 Nov 2018 16:55:35 +0530
+Message-Id: <20181103112535.5730-1-tanushreetumane@gmail.com>
+X-Mailer: git-send-email 2.19.1.windows.1.495.g7e9d1c442b.dirty
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Add commit.allowEmpty configuration variable as a convenience for those
+who always prefer --allow-empty.
 
->> Would it make sense to make send-email's completion helper print these
->> out directly? That way, if someone were to modify send-email in the
->> future, they'd only have to look through one file instead of both
->> send-email and the completions script.
->
-> I did think about that and decided not to do it (in fact the first
-> revision of this patch did exactly that).
->
-> If we have to maintain this list manually, we might as well leave to
-> the place that matters: the completion script. I don't think the
-> person who updates send-email.perl would be always interested in
-> completion support. And the one that is interested usually only looks
-> at the completion script. Putting this list in send-email.perl just
-> makes it harder to find.
+Add tests to check the behavior introduced by this commit.
 
-I do not necessarily disagree with the conclusion, but I am not sure
-if I agree with the last paragraph.  If the definition used to list
-completable options was in the send-email command, it is more likely
-that a patch to send-email.perl that would add/modify an option
-without making a matching change to the definition in the same file
-gets noticed, whether the developer who is doing the feature is or
-is not interested in maintaining the completion script working, no?
-Similarly, if one notices that an option the command supports that
-ought to get completed does not get completed, and gets motivated
-enough to try finding where in the completion script other existing
-options that do get completed are handled, wouldn't that lead one to
-the right solution, i.e. discovery of the definition in the
-send-email script?  
+This closes https://github.com/git-for-windows/git/issues/1854
 
-Quite honestly, I would expect that our developers and user base are
-much more competent than one who
+Signed-off-by: tanushree27 <tanushreetumane@gmail.com>
+---
+ Documentation/config.txt     |  5 +++++
+ Documentation/git-commit.txt |  3 ++-
+ builtin/commit.c             |  8 ++++++++
+ t/t7500-commit.sh            | 32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 47 insertions(+), 1 deletion(-)
 
- - wants to add completion of the option Y to the command A, which
-   has known-to-be-working completion of the option X, and yet
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c0727b7866..ac63b12ab3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1467,6 +1467,11 @@ commit.verbose::
+ 	A boolean or int to specify the level of verbose with `git commit`.
+ 	See linkgit:git-commit[1].
+ 
++commit.allowempty::
++	A boolean to specify whether empty commits are allowed with `git
++	commit`. See linkgit:git-commit[1]. 
++	Defaults to false.
++
+ credential.helper::
+ 	Specify an external helper to be called when a username or
+ 	password credential is needed; the helper may consult external
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f970a43422..07a5b60ab9 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -176,7 +176,8 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ 	Usually recording a commit that has the exact same tree as its
+ 	sole parent commit is a mistake, and the command prevents you
+ 	from making such a commit.  This option bypasses the safety, and
+-	is primarily for use by foreign SCM interface scripts.
++	is primarily for use by foreign SCM interface scripts. See
++	`commit.allowempty` in linkgit:git-config[1].
+ 
+ --allow-empty-message::
+        Like --allow-empty this command is primarily for use by foreign
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 67fa949204..4516309ac2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -101,6 +101,7 @@ static int all, also, interactive, patch_interactive, only, amend, signoff;
+ static int edit_flag = -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
+ static int config_commit_verbose = -1; /* unspecified */
++static int config_commit_allow_empty = -1; /* unspecified */
+ static int no_post_rewrite, allow_empty_message;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
+ static char *sign_commit;
+@@ -1435,6 +1436,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.allowempty")) {
++		config_commit_allow_empty = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+@@ -1556,6 +1561,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (verbose == -1)
+ 		verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
+ 
++	if (config_commit_allow_empty >= 0)  /* if allowEmpty is allowed in config*/
++		allow_empty = config_commit_allow_empty;
++	
+ 	if (dry_run)
+ 		return dry_run_commit(argc, argv, prefix, current_head, &s);
+ 	index_file = prepare_index(argc, argv, prefix, current_head, 0);
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 170b4810e0..fb9bfbfb03 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -359,4 +359,36 @@ test_expect_success 'new line found before status message in commit template' '
+ 	test_i18ncmp expected-template editor-input
+ '
+ 
++# Tests for commit.allowempty config
++
++test_expect_success "no commit.allowempty and no --allow-empty" "
++	test_must_fail git commit -m 'test'
++"
++
++test_expect_success "no commit.allowempty and --allow-empty" "
++	git commit --allow-empty -m 'test'
++"
++
++for i in true 1
++do
++	test_expect_success "commit.allowempty=$i and no --allow-empty" "
++		git -c commit.allowempty=$i commit -m 'test'
++	"
++
++	test_expect_success "commit.allowempty=$i and --allow-empty" "
++		git -c commit.allowempty=$i commit --allow-empty -m 'test'
++	"
++done
++
++for i in false 0
++do
++	test_expect_success "commit.allowempty=$i and no --allow-empty" "
++		test_must_fail git -c commit.allowempty=$i commit -m 'test'
++	"
++
++	test_expect_success "commit.allowempty=$i and --allow-empty" "
++		test_must_fail git -c commit.allowempty=$i commit --allow-empty -m 'test'
++	"
++done
++
+ test_done
+-- 
+2.19.1.windows.1.495.gd17cbd8b09
 
- - fails to imagine that it could be a possible good first step to
-   figure out how the option X is completed, so that a new support
-   for the option Y might be able to emulate it.
-
-Now, once we start going in the direction of having both the
-implementation of options *and* the definition of the list of
-completable options in send-email.perl script, I would agree with
-your initial assessment in a message much earlier in the thread.  It
-would be very tempting to use the data we feed Getopt::Long as the
-source of the list of completable options to reduce the longer-term
-maintenance load, which would mean it will involve more work.  And
-in order to avoid having to invest more work upfront (which I do not
-think is necessarily a bad thing), having the definition in the
-completion script might be easier to manage---it is closer to the
-status quo, especially the state before you taught parse-options API
-to give the list of completable options.
-
-Thanks.
