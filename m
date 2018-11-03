@@ -2,137 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5C811F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 15:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 038691F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 15:35:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727644AbeKDAoC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 20:44:02 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:59442 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726387AbeKDAoC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 20:44:02 -0400
-Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgorny)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id 23E6D335C6F;
-        Sat,  3 Nov 2018 15:32:21 +0000 (UTC)
-Message-ID: <1541259137.1028.12.camel@gentoo.org>
-Subject: Re: [PATCH v4] gpg-interface.c: detect and reject multiple
- signatures on commits
-From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Date:   Sat, 03 Nov 2018 16:32:17 +0100
-In-Reply-To: <CACsJy8DKD3F3o74gTHW-WEL_hpB8x+oaWX8_SwN01Nmz3W9Z_w@mail.gmail.com>
-References: <20181020193020.28517-1-mgorny@gentoo.org>
-         <CACsJy8DKD3F3o74gTHW-WEL_hpB8x+oaWX8_SwN01Nmz3W9Z_w@mail.gmail.com>
-Organization: Gentoo
-Content-Type: multipart/signed; micalg="pgp-sha512";
-        protocol="application/pgp-signature"; boundary="=-2X3ZOUeWYRl5P4aRkvip"
-X-Mailer: Evolution 3.26.6 
-Mime-Version: 1.0
+        id S1727713AbeKDAql (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 20:46:41 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:53861 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726387AbeKDAql (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 20:46:41 -0400
+Received: by mail-wm1-f44.google.com with SMTP id v24-v6so4381984wmh.3
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 08:35:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1XmjaqFFj23aVEuHo6p85RsTRDFb7khkr6CkkLo1YGw=;
+        b=pubBugIrlRflQ30CMhCoA0vcRdbx2anNsPTydBHhD3ATeBgPD4C6JHnWkd+gbF2pRv
+         mZZstEMNg/AmrNmAYkconBWjHmW7DE5Y5zufn1K0bUZLyq225A951EtI2MHAebi59Rt5
+         uV2GJY2UL6+26pWBnBibteYpbKmqydeu7OFYIYmJOkzwV22opeMmoyN0WuNsBHcB8p7E
+         KpoZ0GgAtTXVJsmg0vFgohvsVBfodiSKPif6SpXMirhKcuLaFm7DQluvfdNwmbFFuBnH
+         ZIDUjDqxmAroySjKqwecH2Nt7tHhT0evtWRciwFgm19ebROJPflm43v7rQZo5EsaifcW
+         BvyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1XmjaqFFj23aVEuHo6p85RsTRDFb7khkr6CkkLo1YGw=;
+        b=SZHfxamToa0SV6OwmammLk1TFMairPcCiKrMIJL3FUD+JY5oBSHjNvso/ylb7/noLx
+         2l1Lhyrj7jxeTskdq05E0PrsAbXll2QbLHMcywsllifrOvr6cgR27x7lgimCzwwuD7IQ
+         ELg05b0MDynp+4aHz1nLnRlj2ujds92lIH1FV0HMsW0+yA/3clvc+1TXE26BiziNNHNv
+         yO+W9cmrKsh6CwaKJRScFpKlUkLMIpfV4z2Y1KulhPq40oVxHcNRx3zb2MvzAiIW76Lq
+         dVrZJO/YhtlZP+H81gqMJujTcF0yVzeWtATwjItfY4F+is6aQLbmyIR/xGECeybHgap0
+         qmCQ==
+X-Gm-Message-State: AGRZ1gKOS82E2LKR2ORXSwhqbKgBQv+AsrJpZM4KK8GytFgNmOcxGFLR
+        ql9nqzP1SVpXnEqyYxUlrjBRccOK
+X-Google-Smtp-Source: AJdET5fFeSH8f5306WwzM3medHaToUrlf260qv3YDv0cc2+EA1oIiJyC0PN2nzdi9sqT81MHC6+IWA==
+X-Received: by 2002:a1c:5689:: with SMTP id k131-v6mr1175826wmb.119.1541259300851;
+        Sat, 03 Nov 2018 08:35:00 -0700 (PDT)
+Received: from localhost ([2.25.81.124])
+        by smtp.gmail.com with ESMTPSA id x197-v6sm37691977wme.15.2018.11.03.08.34.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 03 Nov 2018 08:34:59 -0700 (PDT)
+Date:   Sat, 3 Nov 2018 15:34:58 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     "Quinn, David" <David.Quinn@cmegroup.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Failed stash caused untracked changes to be lost
+Message-ID: <20181103153458.GG4883@hank.intra.tgummerer.com>
+References: <1540292560837.94684@cmegroup.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1540292560837.94684@cmegroup.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/23, Quinn, David wrote:
+> 
+> Issue: While running a git stash command including the '-u' flag to include untracked files, the command failed due to arguments in the incorrect order. After this untracked files the were present had been removed and permanently lost.
 
---=-2X3ZOUeWYRl5P4aRkvip
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks for your report (and sorry for the late reply)!
 
-On Sat, 2018-11-03 at 16:17 +0100, Duy Nguyen wrote:
-> On Sat, Oct 20, 2018 at 9:31 PM Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org=
-> wrote:
-> > +test_expect_success GPG 'detect fudged commit with double signature' '
-> > +       sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
-> > +       sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
-> > +               sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig=
-1.sig &&
-> > +       gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
-> > +       cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-com=
-bined.asc &&
-> > +       sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s=
-/^/ /" \
-> > +               double-combined.asc > double-gpgsig &&
-> > +       sed -e "/committer/r double-gpgsig" double-base >double-commit =
-&&
-> > +       git hash-object -w -t commit double-commit >double-commit.commi=
-t &&
-> > +       test_must_fail git verify-commit $(cat double-commit.commit) &&
-> > +       git show --pretty=3Dshort --show-signature $(cat double-commit.=
-commit) >double-actual &&
-> > +       grep "BAD signature from" double-actual &&
-> > +       grep "Good signature from" double-actual
-> > +'
->=20
-> This test fails on 'master' today for me
->=20
-> gpg: WARNING: multiple signatures detected.  Only the first will be check=
-ed.
-> gpg: Signature made Sat Nov  3 15:13:28 2018 UTC
-> gpg:                using DSA key 13B6F51ECDDE430D
-> gpg:                issuer "committer@example.com"
-> gpg: BAD signature from "C O Mitter <committer@example.com>" [ultimate]
-> gpg: BAD signature from "C O Mitter <committer@example.com>" [ultimate]
-> not ok 16 - detect fudged commit with double signature
->=20
-> Perhaps my gpg is too old?
->=20
-> $ gpg --version
-> gpg (GnuPG) 2.1.15
-> libgcrypt 1.7.3
-> Copyright (C) 2016 Free Software Foundation, Inc.
-> License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.=
-html>
-> This is free software: you are free to change and redistribute it.
-> There is NO WARRANTY, to the extent permitted by law.
->=20
-> Home: /home/pclouds/.gnupg
-> Supported algorithms:
-> Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
-> Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
->         CAMELLIA128, CAMELLIA192, CAMELLIA256
-> Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
-> Compression: Uncompressed, ZIP, ZLIB, BZIP2
+I believe this (somewhat) fixed in 833622a945 ("stash push: avoid
+printing errors", 2018-03-19), which was first included in Git 2.18.
+Your message doesn't state which version of Git you encountered the
+bug, but I'm going to assume with something below 2.18 (For future
+reference, please include the version of Git in bug reports, or even
+better test with the latest version of Git, as the bug may have been
+fixed in the meantime).
 
-Perhaps this is indeed specific to this version of GnuPG.  The tests
-pass for me with both 1.4.21 and 2.2.10.  We don't have 2.1* in Gentoo
-anymore.
+Now I'm saying somewhat fixed above, because we still create an stash
+if a pathspec that doesn't match any files is passed to the command,
+but then don't remove anything from the working tree, which is a bit
+confusing.
 
---=20
-Best regards,
-Micha=C5=82 G=C3=B3rny
+I think the right solution here would be to error out early if we were
+given a pathspec that doesn't match anything.  I'll look into that,
+unless you're interested in giving it a try? :)
 
---=-2X3ZOUeWYRl5P4aRkvip
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlvdv4JfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
-QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
-EQqchg//QaAZwfVX7h/dLvkZx2Rv5SBofDEsMYlQkMLuNeIslyyf6f1EN3sfF+ph
-JWIZTAtRydHn5joWZMCak6tY+ZibzAkDckKMC3gjcZQ+iU9KLxhhbxAopQiX+V4J
-I712H4jMlZLbX5GVdSjdfIOcu9vMnNLHMqFEWJLEEKFhvz+R6wYNAByanZbQ5vZf
-GumRMEjBBrg84c1NPi3mPD+/UNyaGRc/KrVgDg2CJCSw+APz1K4BT3M1P6Nc2dBY
-r1SdP77B3bLsw2BsFnUxzRjvCnDwsba24VjgB342E1ZDW1lfxH1MsAcaPbhwXlSO
-vRUXVTRqr5+Ld1d3taEwze7YPkWITaPUUATjKX8RWVueCqwSZWtwjCcg8ci507Il
-vtWjtqO/IQ8+Bj7zGIdcES1ssTBOJV5XbHLg81LT4xQZvMaFQfl8hK6Ajr9CWR5D
-DNh+DS6PxWFzOFv6f5CdGzg4VzzfBnwTU8A+jv59ykxNT5zeTuXra3DXQLrk4zGe
-ygKukednxB5FjosOshW8UIsJmhip/IGQ/3upfWLFZMlH4ohgynjQXHtWkpA7G9Ya
-LMpkgJorvaSJuqAkciYVdrmBi7HY68YrAQb+0XHq1UlAsejIUYJyNGcQ7ollpURV
-SDgtW+YjQvb21ZdpSHt2JtD9fi70U/cposu+uy03Esn9XLZnwa4=
-=6kkG
------END PGP SIGNATURE-----
-
---=-2X3ZOUeWYRl5P4aRkvip--
-
+> Environment: Windows 10, Powershell w/ PoshGit
+> 
+> 
+> State before running command: 9 Modified files, 2 (new) untracked files
+> 
+> Note: I only wanted to commit some of the modified files (essentially all the files/changes I wanted to commit were in one directory)
+> 
+> Actual command run:  git stash push -u -- Directory/To/Files/* -m "My Message"
+> 
+> Returned:
+> 
+>     Saved working directory and index state WIP on [BranchName]: [Commit hash] [Commit Message]
+>     fatal: pathspec '-m' did not match any files
+>     error: unrecognized input
+> 
+> State after Command ran: 9 Modifed files, 0 untracked files
+> 
+> 
+> The command I should have ran should have been
+> 
+>     git stash push -u -m "My Message"? -- Directory/To/Files/*
+> 
+> 
+> I have found the stash that was created by running this command:
+> 
+>     gitk --all $(git fsck --no-reflog | Select-String "(dangling commit )(.*)" | %{ $_.Line.Split(' ')[2] })
+> ?
+> and searching for the commit number that was returned from the original (paritally failed??) stash command. However there is nothing in that stash. It is empty.
+> 
+> 
+> 
+> I think that the fact my untracked files were lost is not correct behaviour and hence why I'm filing this bug report
+> 
+> 
+> 
+> 
+> ________________________________
+> NOTICE: This message, and any attachments, are for the intended recipient(s) only, may contain information that is privileged, confidential and/or proprietary and subject to important terms and conditions available at E-Communication Disclaimer<http://www.cmegroup.com/tools-information/communications/e-communication-disclaimer.html>. If you are not the intended recipient, please delete this message. CME Group and its subsidiaries reserve the right to monitor all email communications that occur on CME Group information systems.
