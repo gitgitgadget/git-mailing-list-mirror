@@ -2,239 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D843F1F453
-	for <e@80x24.org>; Sat,  3 Nov 2018 05:15:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 457C41F453
+	for <e@80x24.org>; Sat,  3 Nov 2018 06:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726539AbeKCOZT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Nov 2018 10:25:19 -0400
-Received: from mail-oln040092003051.outbound.protection.outlook.com ([40.92.3.51]:47712
-        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726129AbeKCOZS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Nov 2018 10:25:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OqfqFNGl2kueUtfGGtvBuuyQnUxrSQZKJ3OlxcmGsvM=;
- b=hnROKwdgDys2CPXjfgMzcBrmvdah9LlFAh+1xuk47KcxKDpQaxjE98T2JakDeh/L0bwc/ohqNuj7lpXmdOP+Qh9SomwsvK3sOY/PyzKcbjhSfP4S2BAqSKp2mXJG0t9SFR0pI2zVh/BFMPkwUvKGc4HIozx4PmAjMLJsIHBsM6aoIashhOka02LEQpXpwI1wYmkdbasOm8lERYZA6y1Quvw8x2RJmEVOY6WuZpop92TJEPJsLU+LJA/WEfx+l8NNZOtCLfi3tFHiIQXzKJ48jUqPZkmVx7SZURWhCXCiPaJ6Wyq9o5URZwOGUO0Q1VnIxhFjb0UswZb18S7sJIZPOw==
-Received: from BL2NAM02FT028.eop-nam02.prod.protection.outlook.com
- (10.152.76.56) by BL2NAM02HT180.eop-nam02.prod.protection.outlook.com
- (10.152.77.138) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1294.14; Sat, 3 Nov
- 2018 05:12:11 +0000
-Received: from SN4PR0701MB3679.namprd07.prod.outlook.com (10.152.76.58) by
- BL2NAM02FT028.mail.protection.outlook.com (10.152.77.165) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.1294.14 via Frontend Transport; Sat, 3 Nov 2018 05:12:11 +0000
-Received: from SN4PR0701MB3679.namprd07.prod.outlook.com
- ([fe80::8dfb:896:ad73:e7c5]) by SN4PR0701MB3679.namprd07.prod.outlook.com
- ([fe80::8dfb:896:ad73:e7c5%3]) with mapi id 15.20.1273.030; Sat, 3 Nov 2018
- 05:12:11 +0000
-From:   James Knight <james.d.knight@live.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     James Knight <james.d.knight@live.com>
-Subject: [PATCH v2] build: link with curl-defined linker flags
-Thread-Topic: [PATCH v2] build: link with curl-defined linker flags
-Thread-Index: AQHUczPGjPTFGywXZk2wjIn3pqjeEg==
-Date:   Sat, 3 Nov 2018 05:12:11 +0000
-Message-ID: <SN4PR0701MB3679953BCD417500EC2A267BA0C80@SN4PR0701MB3679.namprd07.prod.outlook.com>
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: YTOPR0101CA0069.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b00:14::46) To SN4PR0701MB3679.namprd07.prod.outlook.com
- (2603:10b6:803:4d::21)
-x-incomingtopheadermarker: OriginalChecksum:F696792184CAFF2383DD36785BD2AEF3E270A2F8AEF9CA84152503AAFC895AC2;UpperCasedChecksum:B1586A256A6E9FB5319B0AFB7ECB860C11F351EC7A40FFE908C0F6DD3DA46BAB;SizeAsReceived:7366;Count:48
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn:  [cWjLvxtAW3E8s5xK/FmswHsiNQamiP+1]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL2NAM02HT180;6:5pMzCjO3mOnl3qpmrNG5RILIaEwd+0STcjV3tLxOBIC/QHOrQl8efbt3rj/t4mAnCS5eOpIk5KnrNJpnqtbB9+SkG/Sx5poWaE2gUxTSe445DbmMGkc2Z5s3M4ibmKJivR3qNjCFBZmj+3S+BXArLoFoOUk6MMj+XX+ABuwmnI+w3yUue85rkwYhT9UE28O0939K3hyKM3Hk5+JKxvV4tKHIvMhqM1wGqv5ZSgcCqLWM8TdnZbWRrxUS3w4ICOmc4wrPGf/cVbHdHfCbPv39xYTdt4O/sq7V3rqqzijQhM/RgMGRQ4HlWfDpWgO8nJ5/LZmBB89fOQLhct0YzMMvMWIGXGnds5sG3ZeTZRxzkZ9pEzXoIdZKW4xz4GbbfpNj7TIhgDjeOA7fz3yLpRnb5Mazgc3f3haQiI8UVI1hARPAFiBbFDlL8zu/VE8ptQ5JKeoIbY+HsvbKNEy3mtC1nw==;5:xvLaJxTewgZCB6QEYk7MlFJRqZPmzHrLeaYt9+OQySX78KFA/P3bHOyIAIYGC4DtcEQxUhXKnkdsTN5AKQdPVyD5C6TbAyXLLmL8GkIAAhQIGm8tfXFQIvZC5M+U+/Dj+ILSuTiCX6nmT8xu30m2ob9T2WF2niD+9pLwZDfO4g4=;7:U5vQZ7nnD2kYatND/iDrwPVuZm9z6AWdK6GU7gCN5j6xDulVGyG0WVvcwSGBTg8zwB5ne30kyQbPhjtZ8Fou5TPoIf1Fs40iXGzegGNHmaYa/xWgKyFPWLYSTVcw2PaTK79LyTZGZhCe/NZgqgmgWQ==
-x-incomingheadercount: 48
-x-eopattributedmessage: 0
-x-ms-exchange-slblob-mailprops: gjx25WM8ZNUPHJiP61NwvuWW7nOZ7i2AWIyOVVBxf7c1oH+YHn/N2ekzKAPba34JdP1Fjl+5I8KlkZLWZnwlp1fzC+W3E3Sa16Cn7ey8oIUMb7ktFa6scMfnmqpF81alAQYvh6t2uW4UaA8BHzYSkq6jIrTDDjAM29Eky6HyOl1ZsdjVIPpNEK98YBSE/DxBjF9q0Q4qAsAQDE+yFvwGr5ltF20DRjoqixyPQcBKex0Qdx/ctskQ68JtPknwYrFmqV1g3e6w+vpp56LcOPQJD7sKqi33U6Kd0n/oNOcNU9QYJ3uiwe6G4l8P2cVLyEjY0rvJXxRF6cW62EMpqIEY2bxiSMvHuuh1AoVhFisvIgvhKWPvKX0kMl6cQ+cQFNG9XCsTgRRt0Fx89Wdwtf+5nvLt2O7mSPSmETKKfCY0amdyUOauuEy2HpXcFgtGHmGWYn5q4DX3067alC330wroT941WO5CE+Uk2+bbpqZDuoMkrNRBtl1xNvM9VfeyvrSVtPsFcTbM56Dqc8YTZFzT7AmSDiHrSwWNtLBtC/ZFQBZhKKmsQN+sP6HGtN9njl1u89DBAurnKNzBrOhq6o9v+OMzAGq/8Fb+4fhuQudkWtAsd2bnUwyel9BmVRNsEeLIIDhPggZvNwc+Ogf3qdAodK+CygD9wQDuQmk2QZolXu8Zb8fox6h04rbQrd+yCCms5Ho49/h/sT0PoXiuuObdE+ICZ+mYYlVORsuG0WkWcmk=
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(201702181274)(2017031322404)(1601125500)(1603101475)(1701031045);SRVR:BL2NAM02HT180;
-x-ms-traffictypediagnostic: BL2NAM02HT180:
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(4566010)(82015058);SRVR:BL2NAM02HT180;BCL:0;PCL:0;RULEID:;SRVR:BL2NAM02HT180;
-x-microsoft-antispam-message-info: f6Th/WStWFp1crLZbXWFPuw7pdSpbTTofpe+2txMDgtSnLy//wstNrF7ko9oS6+D
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1726788AbeKCPNf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Nov 2018 11:13:35 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:37132 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726165AbeKCPNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Nov 2018 11:13:35 -0400
+Received: by mail-lj1-f195.google.com with SMTP id c4-v6so3543087lja.4
+        for <git@vger.kernel.org>; Fri, 02 Nov 2018 23:03:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=K5YraAYULiXJGJKGVPBa9aiYDS83WK6hDY+WvGMT184=;
+        b=lU9NgjBnZI971z9osdk8h/c4PDcKB45hSMcXJHCpZX6fJEZCVQkshvKIq7VO13KR2n
+         i+6W50fppIjc2zPIeaPz77zWKvmxkHbnypTVN6jcxDu7tYCqJCek1P7DtF3wPWQsb+Hr
+         KT5osdSY/9lOE+rkgCPcLwUiwsIHALRBS47hKKNl8vp4cjVL0MsLXhn9GAiXOhkBpSXV
+         j5Ndb228YsUFV31v58VS4b0ZnUnjsh95nfN0HBD7s4QwmPISntm6So6jorNBkmfIeyCy
+         m17afXUF4q5dti7stLY5lySX2bMLpWWEOsELc0G+L4PxHU/GWfkglNcMITCf3yGbB1UD
+         HFUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=K5YraAYULiXJGJKGVPBa9aiYDS83WK6hDY+WvGMT184=;
+        b=pXrDiGjUlE1rfC1Olm46qkmfwz6Ybzx1PWqQQ90q3N3VlFPURG+huaep6bi4fCD/Wb
+         lew1w4N1E69LQbDAJbBc9b9cSZK0P+onTXqAIbf4aTSLVlcUfq7SpGssWWO4paXz9JhS
+         UBqAdqb+3Ec5xy4x5yr8zYDbNDkD78H1NDs40O7gomFxBTZt06lHEV78C5lem/i8MVBH
+         4F86EmWPYxIxfrCCE4+FcvCIC03qNw+xvKidx7AjK6LKkq6jEEhJNjQW2C1ura2b02B4
+         OvkEgFgXu6XjSPPB35k+3nNLPyxnQiUxI3Xfv+DPOaYL8Tt2KqfUSs5zi3axYqAniWT7
+         IeVQ==
+X-Gm-Message-State: AGRZ1gLv/6F49t7cVwGU5OtO7Zezd+k5yXE7yv+BW01yUviwTj+Uo+Fd
+        FM9jWYMWQv/AO9VvFedAMK4=
+X-Google-Smtp-Source: AJdET5cIDoPZ3bdvXK93uC9CdmkqLjNMonaqyIieVhWQ3vMJqSK8NKN9bRQ/ojcoJ6UxyzkULFTwnw==
+X-Received: by 2002:a2e:730a:: with SMTP id o10-v6mr8223788ljc.67.1541225001942;
+        Fri, 02 Nov 2018 23:03:21 -0700 (PDT)
+Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id e83-v6sm3507590ljf.32.2018.11.02.23.03.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Nov 2018 23:03:20 -0700 (PDT)
+Date:   Sat, 3 Nov 2018 07:03:18 +0100
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Anmol Mago <anmolmago@gmail.com>, briankyho@gmail.com,
+        david.lu97@outlook.com, shirui.wang@hotmail.com
+Subject: Re: [PATCH v2] completion: use builtin completion for format-patch
+Message-ID: <20181103060317.GA5432@duynguyen.home>
+References: <xmqqbm7c2n0i.fsf@gitster-ct.c.googlers.com>
+ <72331ce9275ce995009fe8dd3d586bb9d71f2cbf.1540881141.git.liu.denton@gmail.com>
+ <CACsJy8Ajc0qWw3RLak1PRPXvQzMHjaFuWJ6BPkhiVg=7fQvCnA@mail.gmail.com>
+ <xmqqk1lxvaj6.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AowaAW91wGMYbC8aTOB1NoqQN-5NGx=qUCHp0i6zQRDA@mail.gmail.com>
+ <xmqqzhuss6dd.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-X-OriginatorOrg: live.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 54485d23-c432-40fe-8436-6091d627118c
-X-MS-Exchange-CrossTenant-Network-Message-Id: 758750ff-45a2-4bfc-2ed6-08d6414ae89c
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 54485d23-c432-40fe-8436-6091d627118c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Nov 2018 05:12:11.1845
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2NAM02HT180
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhuss6dd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjusting the build process to rely more on curl-config to populate
-linker flags instead of manually populating flags based off detected
-features.
+On Fri, Nov 02, 2018 at 08:52:30AM +0900, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> >> > I have no comment about this. In an ideal world, sendemail.perl could
+> >> > be taught to support --git-completion-helper but I don't think my
+> >> > little remaining Perl knowledge (or time) is enough to do it. Perhaps
+> >> > this will do. I don't know.
+> >>
+> >> So "all", "attach", etc. are added to this list while these similar
+> >> options are lost from the other variable?  Is this a good trade-off?
+> >
+> > Not sure if I understand you correctly, but it looks to me that the
+> > options in git-send-email.perl are well organized, so we could...
+> 
+> Yes, but I wasn't commenting on your "sendemail should also be able
+> to help completion by supporting --completion-helper option" (I think
+> that is a sensible approach).  My comment was about Denton's patch,
+> which reduced the hard-coded list of format-patch options (i.e. the
+> first hunk) but had to add back many of them to send-email's
+> completion (i.e. the last hunk)---overall, it did not help reducing
+> the number of options hardcoded in the script.
+> 
+> If it makes sense to complete all options to format-patch to
+> send-email, then as you outlined, grabbing them out of format-patch
+> with the --completion-helper option at runtime, and using them to
+> complete both format-patch and send-email would be a good idea.  And
+> that should be doable even before send-email learns how to list its
+> supported options to help the completion.
 
-Originally, a configure-invoked build would check for SSL-support in the
-target curl library. If enabled, NEEDS_SSL_WITH_CURL would be set and
-used in the Makefile to append additional libraries to link against. As
-for systems building solely with make, the defines NEEDS_IDN_WITH_CURL
-and NEEDS_SSL_WITH_CURL could be set to indirectly enable respective
-linker flags. Since both configure.ac and Makefile already rely on
-curl-config utility to provide curl-related build information, adjusting
-the respective assets to populate required linker flags using the
-utility (unless explicitly configured).
+OK how about this?
 
-Signed-off-by: James Knight <james.d.knight@live.com>
+Minimal changes in send-email.perl and no duplication in
+_git_send_email(). I could do $(git format-patch
+--git-completion-helper) directly from _git_send_email() too but we
+lose caching.
+
+-- 8< --
+Subject: [PATCH] completion: use __gitcomp_builtin for format-patch
+
+This helps format-patch gain completion for a couple new options,
+notably --range-diff.
+
+Since send-email completion relies on $__git_format_patch_options
+which is now reduced, we need to do something not to regress
+send-email completion.
+
+The workaround here is implement --git-completion-helper in
+send-email.perl just as a bridge to "format-patch --git-completion-helper".
+This is enough to use __gitcomp_builtin on send-email (to take
+advantage of caching).
+
+In the end, send-email.perl can probably reuse the same info it passes
+to GetOptions() to generate full --git-completion-helper output so
+that we don't need to keep track of its options in git-completion.bash
+anymore. But that's something for another boring day.
+
+Helped-by: Denton Liu <liu.denton@gmail.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
-Changes v1 -> v2:
- - Improved support for detecting curl linker flags when not using a
-    configure-based build (mentioned by Junio C Hamano).
- - Adding a description on how to explicitly use the CURL_LDFLAGS
-    define when not using configure (suggested by Junio C Hamano).
+ contrib/completion/git-completion.bash | 16 ++++++----------
+ git-send-email.perl                    |  8 ++++++++
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
-The original patch made a (bad) assumption that builds would always
-invoke ./configure before attempting to build Git. To support a
-make-invoked build, CURL_LDFLAGS can also be populated using the defined
-curl-config utility. This change also comes with the assumption that
-since both ./configure and Makefile are using curl-config to determine
-aspects of the build, it should be also fine to use the same utility to
-provide the linker flags to compile against (please indicate so if this
-is another bad assumption). With this change, the explicit configuration
-of CURL_LDFLAGS inside config.mak.uname for Minix and NONSTOP_KERNEL
-have been dropped.
----
- Makefile         | 30 +++++++++++++++---------------
- config.mak.uname |  3 ---
- configure.ac     | 17 +++++++----------
- 3 files changed, 22 insertions(+), 28 deletions(-)
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index db7fd87b6b..8409978793 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1532,13 +1532,9 @@ _git_fetch ()
+ 	__git_complete_remote_or_refspec
+ }
+ 
+-__git_format_patch_options="
+-	--stdout --attach --no-attach --thread --thread= --no-thread
+-	--numbered --start-number --numbered-files --keep-subject --signoff
+-	--signature --no-signature --in-reply-to= --cc= --full-index --binary
+-	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+-	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+-	--output-directory --reroll-count --to= --quiet --notes
++__git_format_patch_extra_options="
++	--full-index --not --all --no-prefix --src-prefix=
++	--dst-prefix= --notes
+ "
+ 
+ _git_format_patch ()
+@@ -1551,7 +1547,7 @@ _git_format_patch ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "$__git_format_patch_options"
++		__gitcomp_builtin format-patch "$__git_format_patch_extra_options"
+ 		return
+ 		;;
+ 	esac
+@@ -2081,7 +2077,7 @@ _git_send_email ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--annotate --bcc --cc --cc-cmd --chain-reply-to
++		__gitcomp_builtin send-email "--annotate --bcc --cc --cc-cmd --chain-reply-to
+ 			--compose --confirm= --dry-run --envelope-sender
+ 			--from --identity
+ 			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
+@@ -2090,7 +2086,7 @@ _git_send_email ()
+ 			--smtp-server-port --smtp-encryption= --smtp-user
+ 			--subject --suppress-cc= --suppress-from --thread --to
+ 			--validate --no-validate
+-			$__git_format_patch_options"
++			$__git_format_patch_extra_options"
+ 		return
+ 		;;
+ 	esac
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2be5dac337..ed0714eaaa 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -119,6 +119,11 @@ sub usage {
+ 	exit(1);
+ }
+ 
++sub completion_helper {
++    print Git::command('format-patch', '--git-completion-helper');
++    exit(0);
++}
++
+ # most mail servers generate the Date: header, but not all...
+ sub format_2822_time {
+ 	my ($time) = @_;
+@@ -311,6 +316,7 @@ sub signal_handler {
+ # needing, first, from the command line:
+ 
+ my $help;
++my $git_completion_helper;
+ my $rc = GetOptions("h" => \$help,
+                     "dump-aliases" => \$dump_aliases);
+ usage() unless $rc;
+@@ -373,9 +379,11 @@ sub signal_handler {
+ 		    "no-xmailer" => sub {$use_xmailer = 0},
+ 		    "batch-size=i" => \$batch_size,
+ 		    "relogin-delay=i" => \$relogin_delay,
++		    "git-completion-helper" => \$git_completion_helper,
+ 	 );
+ 
+ usage() if $help;
++completion_helper() if $git_completion_helper;
+ unless ($rc) {
+     usage();
+ }
+-- 
+2.19.1.1005.gac84295441
 
-diff --git a/Makefile b/Makefile
-index b08d5ea258c69a78745dfa73fe698c11d021858a..36da17dc1f9b1a70c9142604afe=
-989f1eb8ee87f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -59,6 +59,13 @@ all::
- # Define CURL_CONFIG to curl's configuration program that prints informati=
-on
- # about the library (e.g., its version number).  The default is 'curl-conf=
-ig'.
- #
-+# Define CURL_LDFLAGS to specify flags that you need to link when using li=
-bcurl,
-+# if you do not want to rely on the libraries provided by CURL_CONFIG.  Th=
-e
-+# default value is a result of `curl-config --libs`.  An example value for
-+# CURL_LDFLAGS is as follows:
-+#
-+#     CURL_LDFLAGS=3D-lcurl
-+#
- # Define NO_EXPAT if you do not have expat installed.  git-http-push is
- # not built, and you cannot push using http:// and https:// transports (du=
-mb).
- #
-@@ -183,10 +190,6 @@ all::
- #
- # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darw=
-in).
- #
--# Define NEEDS_SSL_WITH_CURL if you need -lssl with -lcurl (Minix).
--#
--# Define NEEDS_IDN_WITH_CURL if you need -lidn when using -lcurl (Minix).
--#
- # Define NEEDS_LIBICONV if linking with libc is not enough (Darwin).
- #
- # Define NEEDS_LIBINTL_BEFORE_LIBICONV if you need libintl before libiconv=
-.
-@@ -1305,20 +1308,17 @@ else
- 	ifdef CURLDIR
- 		# Try "-Wl,-rpath=3D$(CURLDIR)/$(lib)" in such a case.
- 		BASIC_CFLAGS +=3D -I$(CURLDIR)/include
--		CURL_LIBCURL =3D -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib) -=
-lcurl
-+		CURL_LIBCURL =3D -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib)
- 	else
--		CURL_LIBCURL =3D -lcurl
--	endif
--	ifdef NEEDS_SSL_WITH_CURL
--		CURL_LIBCURL +=3D -lssl
--		ifdef NEEDS_CRYPTO_WITH_SSL
--			CURL_LIBCURL +=3D -lcrypto
--		endif
--	endif
--	ifdef NEEDS_IDN_WITH_CURL
--		CURL_LIBCURL +=3D -lidn
-+		CURL_LIBCURL =3D
- 	endif
-=20
-+ifdef CURL_LDFLAGS
-+	CURL_LIBCURL +=3D $(CURL_LDFLAGS)
-+else
-+	CURL_LIBCURL +=3D $(shell $(CURL_CONFIG) --libs)
-+endif
-+
- 	REMOTE_CURL_PRIMARY =3D git-remote-http$X
- 	REMOTE_CURL_ALIASES =3D git-remote-https$X git-remote-ftp$X git-remote-ft=
-ps$X
- 	REMOTE_CURL_NAMES =3D $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
-diff --git a/config.mak.uname b/config.mak.uname
-index 8acdeb71fdab3b3e8e3c536110eb6de13f14e8ff..19e6633040b1db4a148d7b33c4e=
-9d374fe7f87ba 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -431,8 +431,6 @@ ifeq ($(uname_S),Minix)
- 	NO_NSEC =3D YesPlease
- 	NEEDS_LIBGEN =3D
- 	NEEDS_CRYPTO_WITH_SSL =3D YesPlease
--	NEEDS_IDN_WITH_CURL =3D YesPlease
--	NEEDS_SSL_WITH_CURL =3D YesPlease
- 	NEEDS_RESOLV =3D
- 	NO_HSTRERROR =3D YesPlease
- 	NO_MMAP =3D YesPlease
-@@ -458,7 +456,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	# Missdetected, hence commented out, see below.
- 	#NO_CURL =3D YesPlease
- 	# Added manually, see above.
--	NEEDS_SSL_WITH_CURL =3D YesPlease
- 	HAVE_LIBCHARSET_H =3D YesPlease
- 	HAVE_STRINGS_H =3D YesPlease
- 	NEEDS_LIBICONV =3D YesPlease
-diff --git a/configure.ac b/configure.ac
-index e11b7976ab1c93d8ccec2e499d0093db42551059..44e8c036b6ec417e95ca4e5c286=
-1785900d8634c 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -600,17 +600,14 @@ AC_CHECK_PROG([CURL_CONFIG], [curl-config],
-=20
- if test $CURL_CONFIG !=3D no; then
-     GIT_CONF_SUBST([CURL_CONFIG])
--    if test -z "${NO_OPENSSL}"; then
--      AC_MSG_CHECKING([if Curl supports SSL])
--      if test $(curl-config --features|grep SSL) =3D SSL; then
--         NEEDS_SSL_WITH_CURL=3DYesPlease
--         AC_MSG_RESULT([yes])
--      else
--         NEEDS_SSL_WITH_CURL=3D
--         AC_MSG_RESULT([no])
--      fi
--      GIT_CONF_SUBST([NEEDS_SSL_WITH_CURL])
-+
-+    if test -z "$CURL_CONFIG_OPTS"; then
-+        CURL_CONFIG_OPTS=3D"--libs"
-     fi
-+
-+    CURL_LDFLAGS=3D$($CURL_CONFIG $CURL_CONFIG_OPTS)
-+    AC_MSG_NOTICE([Setting CURL_LDFLAGS to '$CURL_LDFLAGS'])
-+    GIT_CONF_SUBST([CURL_LDFLAGS], [$CURL_LDFLAGS])
- fi
-=20
- fi
---=20
-2.19.1
+-- 8< --
+--
+Duy
