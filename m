@@ -2,134 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E66D1F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 21:30:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C44B31F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 23:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729522AbeKEGqh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 01:46:37 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53192 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729162AbeKEGqh (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 01:46:37 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5930:2634:17a1:2ef9])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 58ECE6077B;
-        Sun,  4 Nov 2018 21:30:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541367012;
-        bh=rMWFN+9ahzKCwV7Y0hpLH7jpL7Qo1G8u+qgY9D7E9+w=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=iOG7EhHaaiuGZkm8lR8dJHS3IqIQKqtboeVSKxlO1H4IfJ+x5Vxa04pFBBRasf+Kr
-         uWREuVjloBnjrTzNxV737CWEmwGBoklaNPGMoP2bW/ofvaKwghRQcmvu8isB87RARW
-         oqwp2d4hsUJF4re+ZRe2Z+KnJ/W/OzLxJasM7z2XBc4vBKopTM8rv6pyQ6ZuICISJB
-         aMIHCZnObpGLtwYZ4poBlM9Kb0REb3QpqIS5mwH8sXk/eIQoHGHwC9DtVvhTwZBOmC
-         lUvCbZ3I+DdYlY1v6YuAr6252FTyFol4zc169cXZ7LY84Gvm6E8Ftkr0VNKZnsZG5+
-         d0U2o4B2wdPumwj9MLLkmGjP8hyj4ielNXkik7u+wyTy+Xc/TK6EOqQmf3ehlz/iSX
-         DI9XbqnvFl+bgSsC8QdezvKfYZOm2PJp4kzRvvLT59xrqQPd+bnEPCyRNoMWgM/8tr
-         GGI0oCf/C1TPO4leH6JFrvEuihPglwj3bLWFp0glkxta8xf2HEY
-Date:   Sun, 4 Nov 2018 21:30:07 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH/RFC v2] sequencer.c: record revert/cherry-pick commit
- with trailer lines
-Message-ID: <20181104213007.GL731755@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, phillip.wood@dunelm.org.uk
-References: <20181104072253.12357-1-pclouds@gmail.com>
- <20181104181026.8451-1-pclouds@gmail.com>
+        id S1730688AbeKEImt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 03:42:49 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37503 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729741AbeKEImt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 03:42:49 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p2-v6so6302198wmc.2
+        for <git@vger.kernel.org>; Sun, 04 Nov 2018 15:26:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=kWETomqLjzXDlt1Y+fc8UMwPM1UBTK716+3f9MJ/RJ8=;
+        b=Kdylf7R063zo5FnO4riz4k8ynOg5N9NeggThxgKsl9Azw1k7P5qvuhIEeIH+Tdy7hV
+         sUtTjH585rJ19ttcv8wEYzEhcIohHKw4ua5UxU7410O0F9cObVO/EOQhw56jBjEVIfX9
+         Mu6erAYpvQrh0sjnAC0u+vrhq1TC6MJGzfsFk8luzN1nm4pVk/Wyamw+ZlaeGiLOVis6
+         wyJcZEMd77HcJJukKWc1ndJLWX7pCM2ipHr5RAlqqOJFerPifKvXWS8e8zbcNzhBbj2V
+         rPCKlf8NyVDpdqsrbHo28u5NVqnaGjq0v1i/NKkPO6y1RflKVa+HdQC8IH3ZyZ1Q5htl
+         XkuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=kWETomqLjzXDlt1Y+fc8UMwPM1UBTK716+3f9MJ/RJ8=;
+        b=R/KMRYlAlrBxfCHljSTiDubR+apF8sCyreu/rjUessMzxu8XtHtwpgVNrk7bSNQFe9
+         zll+xBvnPBOXEa+kWAI7TN3SfsIggXcRdAeAPXnhW1xoynF32G/s1sOk2yWTKXBK0sqT
+         XZb15Ho0v6NFvdR5hE1LuD/X4NOgChj+Z+PLGmUIRpDWaMfiqNtF494hii4Nx/e4OmVL
+         03JkMJ68nK5ffCVZKjy35ZaLxqcs9jhYRXAFblgXNOi56RLOyjBqa2Xx3EDnTFo8phTE
+         /we+Cqy6cCQgkNxAK3thgc4l6xtMOB/gNnPtU45+IEQo//sJWjFauRy9k5VETDKMhBJ0
+         Kq3g==
+X-Gm-Message-State: AGRZ1gJOg0FHyiFjjO7zUXwxOIHatWjSs4zXwBbbLgk7lfUzt5wba1PC
+        7cqGW/fxqpnpP88lm10FwP0=
+X-Google-Smtp-Source: AJdET5cFy+qUq1O8ehFEzx0HkusJ0g0ZuQoSUaPzeHmp6bVIM9AvgYtf/ZvRUhmIShG8EtTHfUhkeg==
+X-Received: by 2002:a1c:a905:: with SMTP id s5-v6mr4282384wme.75.1541373966427;
+        Sun, 04 Nov 2018 15:26:06 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v2-v6sm11669748wru.20.2018.11.04.15.26.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 04 Nov 2018 15:26:04 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Carlo Arenas <carenas@gmail.com>, shoelzer@gmail.com,
+        gitgitgadget@gmail.com, git@vger.kernel.org,
+        johannes.schindelin@gmx.de
+Subject: Re: [PATCH 1/1] poll: use GetTickCount64() to avoid wrap-around issues
+References: <pull.64.git.gitgitgadget@gmail.com>
+        <69bc5924f94b56f92d9653b3a64f721bd03f1956.1541020294.git.gitgitgadget@gmail.com>
+        <c9e001de-3598-182d-416e-1e94f234c249@kdbg.org>
+        <CACbrTHctZejfDTjqWqVfPYdb=ssD253Cd2isr3BxWsL1AqsH2w@mail.gmail.com>
+        <e8b7b173-eaa1-0fad-7e6a-771389872886@kdbg.org>
+        <CAPUEspgF0GjJPtMqmZjUmsEeaJpQQBBwOV9YOg8A6YBdwbdaFA@mail.gmail.com>
+        <46aa1893-095b-9f0c-4989-e63ebaa88705@kdbg.org>
+Date:   Mon, 05 Nov 2018 08:26:02 +0900
+In-Reply-To: <46aa1893-095b-9f0c-4989-e63ebaa88705@kdbg.org> (Johannes Sixt's
+        message of "Sat, 3 Nov 2018 15:05:54 +0100")
+Message-ID: <xmqqefc0mnlh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bPg9NdpM9EETxvqt"
-Content-Disposition: inline
-In-Reply-To: <20181104181026.8451-1-pclouds@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Sixt <j6t@kdbg.org> writes:
 
---bPg9NdpM9EETxvqt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Am 03.11.18 um 09:14 schrieb Carlo Arenas:
+>> On Fri, Nov 2, 2018 at 9:44 AM Johannes Sixt <j6t@kdbg.org> wrote:
+>>>
+>>> +      timeout = elapsed >= orig_timeout ? 0 : (int)(orig_timeout - elapsed);
+>>
+>> nitpick: cast to DWORD instead of int
+>
+> No; timeout is of type int; after an explicit type cast we don't want
+> to have another implicit conversion.
+>
+> -- Hannes
 
-On Sun, Nov 04, 2018 at 07:10:26PM +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
-=8Dc Duy wrote:
-> When a commit is reverted (or cherry-picked with -x) we add an English
-> sentence recording that commit id in the new commit message. Make
-> these real trailer lines instead so that they are more friendly to
-> parsers (especially "git interpret-trailers").
->=20
-> A reverted commit will have a new trailer
->=20
->     Revert: <commit-id>
->=20
-> Similarly a cherry-picked commit with -x will have
->=20
->     Cherry-picked-from: <commit-id>
->=20
-> When reverting or cherry picking a merge, the reverted/cherry-picked
-> branch will be shown using extended SHA-1 syntax, e.g.
->=20
->     Revert: <commit-id>~2
->=20
-> Since we're not producing the old lines "This reverts commit ..." and
-> "(cherry picked from commit .." anymore, scripts that look for these
-> lines will need to be updated to handle both. Fresh new history could
-> just rely on git-interpret-trailers instead.
+OK, thanks.  It seems that the relative silence after this message
+is a sign that the resulting patch after squashing is what everybody
+is happey with?
 
-Overall, I like the idea of this series.  This is a much cleaner way to
-handle things and much better for machine-readability.  I foresee git
-cherry potentially learning how to parse this, for example, for cases
-where the patch-id doesn't match due to context changes.
+-- >8 --
+From: Steve Hoelzer <shoelzer@gmail.com>
+Date: Wed, 31 Oct 2018 14:11:36 -0700
+Subject: [PATCH] poll: use GetTickCount64() to avoid wrap-around issues
 
-However, I do have concerns about breaking compatibility with existing
-scripts.  I wonder if we could add a long alias for git cherry-pick -x,
-say "--notate" and have "--notate=3Dtext" mean "-x" and "--notate=3Dtrailer"
-mean this new format.  Similarly, git revert could learn such an option
-as well.
+The value of timeout starts as an int value, and for this reason it
+cannot overflow unsigned long long aka ULONGLONG. The unsigned version
+of this initial value is available in orig_timeout. The difference
+(orig_timeout - elapsed) cannot wrap around because it is protected by
+a conditional (as can be seen in the patch text). Hence, the ULONGLONG
+difference can only have values that are smaller than the initial
+timeout value and truncation to int cannot overflow.
 
-One final thought: since our trailers seem to act as if we wrote "this
-commit" (has been), I wonder if we should say "Reverts" instead of
-"Revert" for consistency.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Acked-by: Steve Hoelzer <shoelzer@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ compat/poll/poll.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---bPg9NdpM9EETxvqt
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index ad5dcde439..4459408c7d 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -18,6 +18,9 @@
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, see <http://www.gnu.org/licenses/>.  */
+ 
++/* To bump the minimum Windows version to Windows Vista */
++#include "git-compat-util.h"
++
+ /* Tell gcc not to warn about the (nfd < 0) tests, below.  */
+ #if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+ # pragma GCC diagnostic ignored "-Wtype-limits"
+@@ -449,7 +452,8 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+   static HANDLE hEvent;
+   WSANETWORKEVENTS ev;
+   HANDLE h, handle_array[FD_SETSIZE + 2];
+-  DWORD ret, wait_timeout, nhandles, start = 0, elapsed, orig_timeout = 0;
++  DWORD ret, wait_timeout, nhandles, orig_timeout = 0;
++  ULONGLONG start = 0;
+   fd_set rfds, wfds, xfds;
+   BOOL poll_again;
+   MSG msg;
+@@ -465,7 +469,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+   if (timeout != INFTIM)
+     {
+       orig_timeout = timeout;
+-      start = GetTickCount();
++      start = GetTickCount64();
+     }
+ 
+   if (!hEvent)
+@@ -614,8 +618,8 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
+ 
+   if (!rc && orig_timeout && timeout != INFTIM)
+     {
+-      elapsed = GetTickCount() - start;
+-      timeout = elapsed >= orig_timeout ? 0 : orig_timeout - elapsed;
++      ULONGLONG elapsed = GetTickCount64() - start;
++      timeout = elapsed >= orig_timeout ? 0 : (int)(orig_timeout - elapsed);
+     }
+ 
+   if (!rc && timeout)
+-- 
+2.19.1-816-gcd69ec8cde
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvfZN8ACgkQv1NdgR9S
-9otD8BAAxBFG5uIbPyTL5UFWQB203ik6r1moqloimEzXHi/zU9eVtr7M1brnb8/R
-YruTtxN65nLWgiio+13yJNyRZunYdQVBPCECfmUEbPigxz4cpkSnLdejsd2nEjlz
-k3OiZw7wNoz3wlgvgIOuNI8ZYxfkG7s3VYDFSfQx01XQXrSlFosqGghzpkz0DTP6
-7Omq3fZ2GN6zhb6CTgOYII+rbN9VsiehT/uRwYJTrJWg+4pYyz1GlwiU3PpmSwc4
-rsDf1CR9bQ8uqYqwQxp5jr2Bd82zBfl0BulGRM9Gvu6rlJ6QW458IM7z9NTbXyXF
-L+LPWvchlMCIOKrWlbooVi03kygfO3pooWqUZ1if8yn1ykKlZr84msPkreRgB2EK
-0Fyg5KOlqqscHC71Y43495hIAWx+OvxafAlLBDiJZ2+VFEn3ZQuW3qZxr7g2+mmA
-GJewktJHzzj2dnDphP7YNpqphJej8s96aMPV9+B8Dp42pvQn+YTnWvi7TXoMu7Aq
-ryHAgVv0MI5ZJJTJS7UGjsGHo3LB6s+VDUy1PLmHB1FdeAX23lY7VudFnnGCkRs9
-sKdCcvl9wniuKzmyMz6uyAUPpCJJhJVGNn9YpAUTAg8aFhRwSo7CNOJ9dN4MmoBM
-yh4n50YhNqlCz9B8g/cPOEe8JXLIeLx6mJdysOWcr87FPaMxkME=
-=IhS9
------END PGP SIGNATURE-----
-
---bPg9NdpM9EETxvqt--
