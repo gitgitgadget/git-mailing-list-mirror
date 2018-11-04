@@ -2,119 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA491F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 15:47:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFE8B1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 16:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730608AbeKEBDP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 20:03:15 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53172 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729446AbeKEBDP (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 4 Nov 2018 20:03:15 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5930:2634:17a1:2ef9])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1730641AbeKEBXJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 20:23:09 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:54448 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730522AbeKEBXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 20:23:09 -0500
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 96B606077B;
-        Sun,  4 Nov 2018 15:47:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541346468;
-        bh=TFs2iiyuQP9o6UOsiegcroLpOIpuS7C2fvbjPrq6ir4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=CqOzS57POzIpLrLUWc+DDezXRWT8NX3BNg6eKeqHPwg3r+3ZXjWRzOT9E35QyFHY1
-         Z05/Z3eGuSijcHtzJXqa3wG8F4cUGyuPjYH59JKToTXg2p5zd4cSae94b650/dNNKL
-         uHpBExpYhXVy2iTiVrbvqRCoada41gJcd0eJdnyVOaQF7f1SZOAJ6qT3YbSYfBrh80
-         XgervCRp/l5fIZ3xcZKnVu85RxpUYttyIRjVFCeteu0JQAxsHuBNknooXc+0oPXAlP
-         mPy+9e0FHFmLHIEepCwP/LHya9ndN1fSAQwD+rTPyi4K7AAcuPlDkghL95/XXpcYB0
-         EhPhNHEw4Sp1NyBqfssGWnbeizZE0OpRL2yN/07DAfYqD1DqUvA0FTAATI1O5F/nQI
-         pOQ7CFI9xKYL5enZbFQEEd3HFoI4mkntTVAJ2rk2CudknyOM5dI9FgKwEZdyjRkvDA
-         MwlQ5PmLWv24bGPxbJWmb5oAFvVzVMPWefcI2ozhfn7Zl/ntgAj
-Date:   Sun, 4 Nov 2018 15:47:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?Q?Adri=C3=A1n?= Gimeno Balaguer <adrigibal@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-rebase is ignoring working-tree-encoding
-Message-ID: <20181104154744.GI731755@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?Q?Adri=C3=A1n?= Gimeno Balaguer <adrigibal@gmail.com>,
-        git@vger.kernel.org
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="k9xkV0rc9XGsukaG"
-Content-Disposition: inline
-In-Reply-To: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id C5B1F335C58;
+        Sun,  4 Nov 2018 16:07:39 +0000 (UTC)
+Message-ID: <1541347654.22217.4.camel@gentoo.org>
+Subject: Re: [PATCH 2/2] t/t7510-signed-commit.sh: add signing subkey to
+ Eris Discordia key
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>
+Date:   Sun, 04 Nov 2018 17:07:34 +0100
+In-Reply-To: <20181104151013.GH731755@genre.crustytoothpaste.net>
+References: <20181104094710.27859-1-mgorny@gentoo.org>
+         <20181104094710.27859-2-mgorny@gentoo.org>
+         <20181104151013.GH731755@genre.crustytoothpaste.net>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-NtsoQ8/aqWueCycfAAFR"
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---k9xkV0rc9XGsukaG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--=-NtsoQ8/aqWueCycfAAFR
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 02, 2018 at 03:30:17AM +0100, Adri=C3=A1n Gimeno Balaguer wrote:
-> I=E2=80=99m attempting to perform fixups via git-rebase of UTF-16 LE files
-> (the project I=E2=80=99m working on requires that exact encoding on certa=
-in
-> files). When the rebase is complete, Git changes that file=E2=80=99s enco=
-ding
-> to UTF-16 BE. I have been using the newer working-tree-encoding
-> attribute in .gitattributes. I=E2=80=99m using Git for Windows.
+On Sun, 2018-11-04 at 15:10 +0000, brian m. carlson wrote:
+> On Sun, Nov 04, 2018 at 10:47:10AM +0100, Micha=C5=82 G=C3=B3rny wrote:
+> > diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> > index e8377286d..86d3f93fa 100755
+> > --- a/t/t7510-signed-commit.sh
+> > +++ b/t/t7510-signed-commit.sh
+> > @@ -197,9 +197,9 @@ test_expect_success GPG 'show bad signature with cu=
+stom format' '
+> >  test_expect_success GPG 'show untrusted signature with custom format' =
+'
+> >  	cat >expect <<-\EOF &&
+> >  	U
+> > -	61092E85B7227189
+> > +	65A0EEA02E30CAD7
+> >  	Eris Discordia <discord@example.net>
+> > -	D4BE22311AD3131E5EDA29A461092E85B7227189
+> > +	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
+> >  	D4BE22311AD3131E5EDA29A461092E85B7227189
+> >  	EOF
+> >  	git log -1 --format=3D"%G?%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >ac=
+tual &&
+> > @@ -209,7 +209,7 @@ test_expect_success GPG 'show untrusted signature w=
+ith custom format' '
+> >  test_expect_success GPG 'show unknown signature with custom format' '
+> >  	cat >expect <<-\EOF &&
+> >  	E
+> > -	61092E85B7227189
+> > +	65A0EEA02E30CAD7
 >=20
-> $ git version
-> git version 2.19.1.windows.1
->=20
-> Here is a sample UTF-16 LE file (with BOM and LF endings) with
-> following atributes in .gitattributes:
->=20
-> test.txt eol=3Dlf -text working-tree-encoding=3DUTF-16
+> It's my understanding that GnuPG will use the most recent subkey
+> suitable for a particular purpose, and I think the test relies on that
+> behavior.  However, I'm not sure that's documented.  Do we want to rely
+> on that behavior or be more explicit?  (This is a question, not an
+> opinion.)
 
-Do things work for you if you write this as "UTF-16LE"?  When you use
-working-tree-encoding, the file is stored internally as UTF-8, but it's
-serialized to the specified encoding when written out.
+To be honest, I don't recall which suitable subkey is used.  However, it
+definitely will prefer a subkey with signing capabilities over
+the primary key if one is present, and this is well-known and expected
+behavior.
 
-Asking for "UTF-16" is ambiguous: there are two endiannesses, and so as
-long as you get a BOM in the output, either one is an acceptable option.
-Which one you get is dependent on what the underlying code thinks is the
-default, and traditionally for Unix systems and Unix tools that's been
-big-endian.  If you want a particular endianness, you should specify it.
+In fact, if you have a key with two signing subkeys A and B and it
+considers A better, then even if you explicitly pass keyid of B, it will
+use A.  To force another subkey you have to append '!' to keyid.
+
+Therefore, I think this is a behavior we can rely on.
+
 --=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Best regards,
+Micha=C5=82 G=C3=B3rny
 
---k9xkV0rc9XGsukaG
+--=-NtsoQ8/aqWueCycfAAFR
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvfFJ8ACgkQv1NdgR9S
-9ouZaxAAgWwJg31pJoUJg1SAueaIhLAmABgH5b5SU5ce/oCgt8FZvfFvA8hz1Idb
-fnf+tU9+9Vu3HHjPdT8iYxnBX9QJ7VtG7G7KCxa3bz3rX//ejtrS444iW7RnC5JP
-CiQpuT2g/jko9r+aZ2sHy+ST6c0oW4cPdaM+UIacu5giUdqTseH47+eZVQYvXdq6
-0SCS3lqgfkyOqTlSr/9EuJaW86Jqy33cnX3fRifjI+XthIFnSps3AkIqmp4GID/g
-6nf4ZYD8hG+7bdFQmmA4Zc1rBqWuZzbhlXo7vs6b2RT/IAZwrk/hbiD/NUmngDRu
-bsAbJb9h935hawAqVk271jvcdWcTmd0ToWwV9dyCs0rBpTFbAbDwPZgcw8hJptxZ
-HzrPQqUZrVsEroZo3ZQ5+j0YetEQzmGxfJH7ZrGyaJ4RwrFGiP40N16cmy4WOmI0
-QDpYaQELz9wMUkAkjX1A+z2pvJXTmrJbx2JCYTvPr9pHOb14YAjkm5/RRkpOmBdU
-/HxWaWOBC69fmkR5L9Fs58i6o3+m+d307Hs9/wu+4e+ENUT4dOqgfp4zbFMQiyx8
-aVBNDfRhPC+5NV+kYuM1fu/lZS1qsHPsY1Kg42Mw5f6RT5oqb7RkflhLA01+3XTp
-bBNAChXtz+mtoNcFg2RYFzbgCcoY9frncI2OrXxUc/OC9eSRqJ4=
-=bIBA
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlvfGUdfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQrahhAA7bUBjqITiupq6MUpSY/nM+rHhLZp8Dh1z8ReXbZa5hDNEbfTlC/uowbX
+5Rjp9VpbR6PRwBl2YdYdhW+sWYYQg4T6SCltWmYvtWao5I/xxiDFWLmtnAGefmpP
+utvSDeXdAnJaOxyE33Rwi5IuCIi8hv8Iv/pkhjDm6AW5ozYD4tTHHx1mUGAsPmve
+qJTy8IpF2AepVtcNzy1DGM4eQMUqqX7f5f7zPVXpELAS4tb/HIarpRpuUWm4g1oP
+fhSRP5xTQ5LUpQ6UF4G0et44eFWxZYmZJGngrUdhrx9e6s4iwN0Gu0EqDMcv5d87
+D+VQ3mzCmn9Ipc2gRN4ztmjhd0V6vzkgm+x5PobTev2rb8NAaXu2J/Ll/C+vqfrX
+9Q4IFDkw/+cEYmAd3vnncg33ZOpHaewMsWA7Fw9r7v5nn8BHoCeg3rwBoz+4UZO9
+i88O4O5X12CcBmIODrNx9SCwcp1fGt2HZMt9DWItdlGRmPPZMrT5Nsc1+I4G0iRj
+fXUW/t98GETk7gtmt/Ek51kMdQaJuGp4Jf8VXK9RIAnvBByt4p74oqZaYrGAg8la
+IxEXifrC6V7qrt54CYecGuRHYX49gSdkmnHX60c+6vZ6QAes/U99+aqTi8up3deE
+w+tQ33jTIgOfUv0++qw5NofRBxcVZOEs7RaHGQjOIWgU7+EdTYw=
+=Tpmt
 -----END PGP SIGNATURE-----
 
---k9xkV0rc9XGsukaG--
+--=-NtsoQ8/aqWueCycfAAFR--
+
