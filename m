@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2FB1F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14E2A1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730305AbeKEJB5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 04:01:57 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53218 "EHLO
+        id S1730694AbeKEJCC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 04:02:02 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53236 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729686AbeKEJB4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:01:56 -0500
+        by vger.kernel.org with ESMTP id S1729686AbeKEJCC (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:02:02 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 894B161B7D;
-        Sun,  4 Nov 2018 23:45:10 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D154061B76;
+        Sun,  4 Nov 2018 23:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541375111;
-        bh=JO47WrcxS6xqFOCuXQMVntBmXlG/shMi5Dj9ObgYzOU=;
+        s=default; t=1541375116;
+        bh=F/c1ZoxK5ohKZOnnWlLwi+Ho3wYh4kdchbWu0avYb28=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=yu00PxPYKocxqErMW7K2tHXNC5wHf16pSyFQ2jfWWpIqFWXstyqDGFUkXqam44yeB
-         hF9rdBzLMVL0b9c5/VG8CVu1ecdW+cKbh8iNvaEb9Hb1I/uOfwhI+mbeoiHr0O+0o2
-         P+uBiBT0v6er5nS6ExOxEDDuMeWNs8/PON+ZZNw4EhI2eBl6INn7NX6dIo0DKozqfg
-         IVPtIhy6t85dK1CFzbZeBesSxHeZbjutKNv1FSSPKhtjT3aUxeopS1EWNTyjJm8wuu
-         fzYzW3WZl0/mf2haOWKJJN4cbA46/xb+McWi2whHscGAYo07YyPWYxwA+Y1he/ve2C
-         ce/HOMRXiO6F6MEULBzwmO5f+QNuLxeV4MHzDxrPKEj9cc673MGj/AMw71vt+dywhL
-         5vfzws0d7yFmI+ZIac8McKQDFBPcJWFaAwLgR5lHF9WuWt3aYlv5yW6McBgvOODMGm
-         R7uWsljKJR+cZsDllmo7T4d8Od/sBCEZjmh6LfV4zLVInMjJ2Xu
+        b=nrR7OemcrgJb4MLnneyU0oSbGAlf/h6LplCLpu+Axok31bqsu67mo5U2rxqpX0Mga
+         k++M4LeXWWhKL4Q966jfY+tt+ZVjtZwAekqELR7v6KJBeLVbr5rZNvCEcCe4K80zk2
+         fL1UwIevQ/NIStP0A70GP81OFa4BHLtpGatfRM239+FFvraKc0MNTlj3xlEpMn7vrh
+         YsLVnfGrJAg3cphTpMMOS9sSI83AUuioCgUxFnu3v+94W5oXKaFr0Qepht4lEoc5X5
+         63Th9bvZsM9Je2YljhwuV0DRkaZZyVVtAL+V9Btn9Lo/8KqkXeCOXVaQerX+jvHbrC
+         DxPsYDMqZJWjMsBMcDhiCN1u7lpBB+UTNFCul2Ok5/QtZWfyJ4Tl0bMfveCL7YVxyn
+         o+0FyQAyqYOICOuz6PF0+vhxO+BE02qD5RKP32+f2Cp4IsxhLBKSxQtFCTTtSIqEGm
+         8GuAoru6V/+Qp9kJFDTwXamv5v6xrvlT4YgYvpySWD7DxWmdBWp
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
@@ -43,9 +43,9 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 04/12] cache: make hashcmp and hasheq work with larger hashes
-Date:   Sun,  4 Nov 2018 23:44:50 +0000
-Message-Id: <20181104234458.139223-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 09/12] commit-graph: convert to using the_hash_algo
+Date:   Sun,  4 Nov 2018 23:44:55 +0000
+Message-Id: <20181104234458.139223-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
 In-Reply-To: <20181104234458.139223-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -58,70 +58,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 183a638b7d ("hashcmp: assert constant hash size", 2018-08-23), we
-modified hashcmp to assert that the hash size was always 20 to help it
-optimize and inline calls to memcmp.  In a future series, we replaced
-many calls to hashcmp and oidcmp with calls to hasheq and oideq to
-improve inlining further.
-
-However, we want to support hash algorithms other than SHA-1, namely
-SHA-256.  When doing so, we must handle the case where these values are
-32 bytes long as well as 20.  Adjust hashcmp to handle two cases:
-20-byte matches, and maximum-size matches.  Therefore, when we include
-SHA-256, we'll automatically handle it properly, while at the same time
-teaching the compiler that there are only two possible options to
-consider.  This will allow the compiler to write the most efficient
-possible code.
-
-Copy similar code into hasheq and perform an identical transformation.
-At least with GCC 8.2.0, making hasheq defer to hashcmp when there are
-two branches prevents the compiler from inlining the comparison, while
-the code in this patch is inlined properly.  Add a comment to avoid an
-accidental performance regression from well-intentioned refactoring.
+Instead of using hard-coded constants for object sizes, use
+the_hash_algo to look them up.  In addition, use a function call to look
+up the object ID version and produce the correct value.  For now, we use
+version 1, which means to use the default algorithm used in the rest of
+the repository.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ commit-graph.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 51580c4b77..bab8e8964f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1027,16 +1027,12 @@ extern const struct object_id null_oid;
- static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+diff --git a/commit-graph.c b/commit-graph.c
+index 40c855f185..6763d19288 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -23,16 +23,11 @@
+ #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+ #define GRAPH_CHUNKID_LARGEEDGES 0x45444745 /* "EDGE" */
+ 
+-#define GRAPH_DATA_WIDTH 36
++#define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+ 
+ #define GRAPH_VERSION_1 0x1
+ #define GRAPH_VERSION GRAPH_VERSION_1
+ 
+-#define GRAPH_OID_VERSION_SHA1 1
+-#define GRAPH_OID_LEN_SHA1 GIT_SHA1_RAWSZ
+-#define GRAPH_OID_VERSION GRAPH_OID_VERSION_SHA1
+-#define GRAPH_OID_LEN GRAPH_OID_LEN_SHA1
+-
+ #define GRAPH_OCTOPUS_EDGES_NEEDED 0x80000000
+ #define GRAPH_PARENT_MISSING 0x7fffffff
+ #define GRAPH_EDGE_LAST_MASK 0x7fffffff
+@@ -44,13 +39,18 @@
+ #define GRAPH_FANOUT_SIZE (4 * 256)
+ #define GRAPH_CHUNKLOOKUP_WIDTH 12
+ #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+-			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
++			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
+ 
+ char *get_commit_graph_filename(const char *obj_dir)
  {
- 	/*
--	 * This is a temporary optimization hack. By asserting the size here,
--	 * we let the compiler know that it's always going to be 20, which lets
--	 * it turn this fixed-size memcmp into a few inline instructions.
--	 *
--	 * This will need to be extended or ripped out when we learn about
--	 * hashes of different sizes.
-+	 * Teach the compiler that there are only two possibilities of hash size
-+	 * here, so that it can optimize for this case as much as possible.
- 	 */
--	if (the_hash_algo->rawsz != 20)
--		BUG("hash size not yet supported by hashcmp");
--	return memcmp(sha1, sha2, the_hash_algo->rawsz);
-+	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
+ 	return xstrfmt("%s/info/commit-graph", obj_dir);
  }
  
- static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-@@ -1046,7 +1042,13 @@ static inline int oidcmp(const struct object_id *oid1, const struct object_id *o
- 
- static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
++static uint8_t oid_version(void)
++{
++	return 1;
++}
++
+ static struct commit_graph *alloc_commit_graph(void)
  {
--	return !hashcmp(sha1, sha2);
-+	/*
-+	 * We write this here instead of deferring to hashcmp so that the
-+	 * compiler can properly inline it and avoid calling memcmp.
-+	 */
-+	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
- }
+ 	struct commit_graph *g = xcalloc(1, sizeof(*g));
+@@ -125,15 +125,15 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	}
  
- static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
+ 	hash_version = *(unsigned char*)(data + 5);
+-	if (hash_version != GRAPH_OID_VERSION) {
++	if (hash_version != oid_version()) {
+ 		error(_("hash version %X does not match version %X"),
+-		      hash_version, GRAPH_OID_VERSION);
++		      hash_version, oid_version());
+ 		goto cleanup_fail;
+ 	}
+ 
+ 	graph = alloc_commit_graph();
+ 
+-	graph->hash_len = GRAPH_OID_LEN;
++	graph->hash_len = the_hash_algo->rawsz;
+ 	graph->num_chunks = *(unsigned char*)(data + 6);
+ 	graph->graph_fd = fd;
+ 	graph->data = graph_map;
+@@ -149,7 +149,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 
+ 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
+ 
+-		if (chunk_offset > graph_size - GIT_MAX_RAWSZ) {
++		if (chunk_offset > graph_size - the_hash_algo->rawsz) {
+ 			error(_("improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
+ 			      (uint32_t)chunk_offset);
+ 			goto cleanup_fail;
+@@ -764,6 +764,7 @@ void write_commit_graph(const char *obj_dir,
+ 	int num_extra_edges;
+ 	struct commit_list *parent;
+ 	struct progress *progress = NULL;
++	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	if (!commit_graph_compatible(the_repository))
+ 		return;
+@@ -909,7 +910,7 @@ void write_commit_graph(const char *obj_dir,
+ 	hashwrite_be32(f, GRAPH_SIGNATURE);
+ 
+ 	hashwrite_u8(f, GRAPH_VERSION);
+-	hashwrite_u8(f, GRAPH_OID_VERSION);
++	hashwrite_u8(f, oid_version());
+ 	hashwrite_u8(f, num_chunks);
+ 	hashwrite_u8(f, 0); /* unused padding byte */
+ 
+@@ -924,8 +925,8 @@ void write_commit_graph(const char *obj_dir,
+ 
+ 	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+-	chunk_offsets[2] = chunk_offsets[1] + GRAPH_OID_LEN * commits.nr;
+-	chunk_offsets[3] = chunk_offsets[2] + (GRAPH_OID_LEN + 16) * commits.nr;
++	chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
++	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
+ 	chunk_offsets[4] = chunk_offsets[3] + 4 * num_extra_edges;
+ 
+ 	for (i = 0; i <= num_chunks; i++) {
+@@ -938,8 +939,8 @@ void write_commit_graph(const char *obj_dir,
+ 	}
+ 
+ 	write_graph_chunk_fanout(f, commits.list, commits.nr);
+-	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
+-	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_oids(f, hashsz, commits.list, commits.nr);
++	write_graph_chunk_data(f, hashsz, commits.list, commits.nr);
+ 	write_graph_chunk_large_edges(f, commits.list, commits.nr);
+ 
+ 	close_commit_graph(the_repository);
