@@ -2,61 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42D6D1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 555C21F454
 	for <e@80x24.org>; Sun,  4 Nov 2018 17:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731312AbeKEC4J (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 21:56:09 -0500
-Received: from mail-qk1-f173.google.com ([209.85.222.173]:45221 "EHLO
-        mail-qk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729529AbeKEC4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 21:56:08 -0500
-Received: by mail-qk1-f173.google.com with SMTP id d135so11041552qkc.12
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 09:40:24 -0800 (PST)
+        id S1731409AbeKEC5v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 21:57:51 -0500
+Received: from mail-io1-f45.google.com ([209.85.166.45]:42632 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731320AbeKEC5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 21:57:50 -0500
+Received: by mail-io1-f45.google.com with SMTP id h19-v6so4843360iog.9
+        for <git@vger.kernel.org>; Sun, 04 Nov 2018 09:42:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=AoOt0vepqzm+gahNkLUKo3WjDC8OEY5KXbpDKGR6A4Y=;
+        b=c2WdvwFmPameSfCwi7lY3Jxc3DL728F4ke9fuMRaFqVSpXifa0MXwnwLrk3TvJdgaD
+         EOqvu161Qm1Bge3j6KWDCfzMC5LNaaG67lpoTQ6LWNmbDPy1M0m0Rb++p765f81m6EFb
+         IcH7pvvYukkjd9hi8hYDwsLpc6al6i0tRE/tU5lCp9nf9SvSOukYJdAdEGViSacmR1GQ
+         IzmN1jjkWr8hzHG4U7qM6ztNlATSHqYVNDDYvIlw7Hr0/muJlFb2nQkErB666gllOMFU
+         d2NXCWs7CdVwQoi26yLVkCCBeRrUV/pdDo5sXSgp4nDMxD1lXhdBQSXZVX07aTqNqyDZ
+         4VlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TpQBX+3H+qQGfKXLNCdbdEJTDr5Q5STDvrKBVunEA/g=;
-        b=GCKzY2wwLIPKfHCiaZIH3rgbUidyGQzWJEiHog+kz6fOhuhyfX6QAgVLEjcq/KR1rV
-         ne6RlLv47c8EUjCz2MgMof9x/T051ASdbTT+u3xDwwQHx+3/I/J+fcVYvSEDNMt9rE26
-         EbPqutxaFM4kjAzkbo4bwfAeaY8W7UC0RUGqCGZPHACyURWiLGJi27kOO6Y89Kp8mlFI
-         F5q0CKwSWY9snyJCUYPptNDr1vo2LKMpIZu76whjT5pXjOqiQI1mRGi2f4FkwURoGXjm
-         BkqTtuXF0ksLrB5WX1jhV2CpLB6UXttO0n90JUcNX22sHgULrviBMVp3FjHBlB3HH+7z
-         R0Tw==
-X-Gm-Message-State: AGRZ1gISy31KrL5k5mj0bA2MGB0n0d1H5I5Z7LUxYesbdQxihWGGEnkh
-        bQ+GGJ6xTTtgbNXSqjMnp62+/JMUzRZRlITkJt4=
-X-Google-Smtp-Source: AJdET5eDOPmZ89fE0gHv7ks8+9ZO0rMM2sdYvndFwIPQzH4eha7pracUhrhXSQ1Y9zIeusEuqAL52UTvDHCRtPBAbA8=
-X-Received: by 2002:ac8:592:: with SMTP id a18-v6mr18676145qth.184.1541353223778;
- Sun, 04 Nov 2018 09:40:23 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AoOt0vepqzm+gahNkLUKo3WjDC8OEY5KXbpDKGR6A4Y=;
+        b=YUT3s4z2lxvcrKITQobI8krxhtymBmHqtC9Q5Ny3y3lxHS2PazlXVV1DTFUUVdDFns
+         tVrqQW2XP65c++dma+Bci/BUpLCzkVUleC2QCImwl9Dx/MbSdZsiQCdBOtl3qiVPsLfA
+         B+rfCo69fp/gXdEVyru3zCDY9RjbyTeTxUwukCH9hvsfOmzESGBa5kH5MQ6uz0ksTH9L
+         ylJeesErBQtcPnGVUTIbsxYfda49wOzMwckyY1MYSys7xPDj3cYblSwne5Z4kF+VIKl9
+         0X183WP5lR6UA5ZCBU1ZHPs9cuz/Ze9PxFu7/0Yd1BynHo2PIRfNe56jM4EkW6nDY7pX
+         TXfg==
+X-Gm-Message-State: AGRZ1gIUOCbbjPDEfTGEDK9zshomeGiKM0S4Cq4aMVHJ0c9n/WsC6boA
+        p5wH79gTMrdf5qflnEbc8fnngluhxwA4PBZP72INHZWn
+X-Google-Smtp-Source: AJdET5cS68ENIl3ZduNUgcb6H6+HpbrbNo3o8S6m2MF1TxmD6Y9fgzjhADTCpa1oVPvuY9p1fjQbU6ZUrYW/1Lk5iVg=
+X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr15776123ioc.118.1541353325246;
+ Sun, 04 Nov 2018 09:42:05 -0800 (PST)
 MIME-Version: 1.0
-References: <20181028125025.30952-1-anders@0x63.nu> <20181104152232.20671-1-anders@0x63.nu>
-In-Reply-To: <20181104152232.20671-1-anders@0x63.nu>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 4 Nov 2018 12:40:12 -0500
-Message-ID: <CAPig+cSfwUJ8thYW+dq1qjT8X_f78DzAzfb_Xd3CMxO=9juz=w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] %(trailers) improvements in pretty format
-To:     anders@0x63.nu
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>
+References: <20181104072253.12357-1-pclouds@gmail.com> <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net>
+In-Reply-To: <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 4 Nov 2018 18:41:38 +0100
+Message-ID: <CACsJy8CAw6yR5vbsFJbSd+UTR_1UpS=8PP3hEtbSNSi3SkMNag@mail.gmail.com>
+Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with
+ trailer lines
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 4, 2018 at 10:23 AM Anders Waldenborg <anders@0x63.nu> wrote:
-> This adds support for three new options to %(trailers):
->  * key -- show only trailers with specified key
->  * nokey -- don't show key part of trailers
->  * separator -- allow specifying custom separator between trailers
+On Sun, Nov 4, 2018 at 5:45 PM Phillip Wood <phillip.wood@talktalk.net> wro=
+te:
+>
+> On 04/11/2018 07:22, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> > When a commit is reverted (or cherry-picked with -x) we add an English
+> > sentence recording that commit id in the new commit message. Make
+> > these real trailer lines instead so that they are more friendly to
+> > parsers (especially "git interpret-trailers").
+> >
+> > A reverted commit will have a new trailer
+> >
+> >      Revert: <commit-id>
+> >
+> > Similarly a cherry-picked commit with -x will have
+> >
+> >      Cherry-Pick: <commit-id>
+>
+> I think this is a good idea though I wonder if it will break someones
+> script that is looking for the messages generated by -x at the moment.
 
-If "key" is for including particular trailers, intuition might lead
-people to think that "nokey" is for excluding certain trailers.
-Perhaps a different name for "nokey", such as "valueonly" or
-"stripkey", would be better.
+It will [1] but I still think it's worth the trouble. The script will
+be less likely to break after, and you can use git-interpret-trailers
+instead of plain grep.
+
+[1] https://public-inbox.org/git/20181017143921.GR270328@devbig004.ftw2.fac=
+ebook.com/
+
+> > @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command com=
+mand, struct commit *commit,
+> >               base_label =3D msg.label;
+> >               next =3D parent;
+> >               next_label =3D msg.parent_label;
+> > -             strbuf_addstr(&msgbuf, "Revert \"");
+> > -             strbuf_addstr(&msgbuf, msg.subject);
+> > -             strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
+> > -             strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> > -
+> > -             if (commit->parents && commit->parents->next) {
+> > -                     strbuf_addstr(&msgbuf, ", reversing\nchanges made=
+ to ");
+> > -                     strbuf_addstr(&msgbuf, oid_to_hex(&parent->object=
+.oid));
+> > -             }
+>
+> As revert currently records the parent given on the command line when
+> reverting a merge commit it would probably be a good idea to add that
+> either as a separate trailer or to the Revert: trailer and possibly also
+> generate it for cherry picks.
+
+My mistake. I didn't read carefully and thought it was logging
+commit->parents, which is pointless.
+
+So what should be the trailer for this (I don't think putting it in
+Revert: is a good idea, too much to parse)? Revert-parent: ?
+Revert-merge: ?
+
+> > -             strbuf_addstr(&msgbuf, ".\n");
+> > +             strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
+>
+> If the message already contains trailers then should we just append the
+> Revert trailer those rather than inserting "\n\n"?
+
+Umm.. but this \n\n is for separating the subject and the body. I
+think we need it anyway, trailer or not.
+
+> > @@ -1784,9 +1777,8 @@ static int do_pick_commit(enum todo_command comma=
+nd, struct commit *commit,
+> >                       strbuf_complete_line(&msgbuf);
+> >                       if (!has_conforming_footer(&msgbuf, NULL, 0))
+> >                               strbuf_addch(&msgbuf, '\n');
+> > -                     strbuf_addstr(&msgbuf, cherry_picked_prefix);
+> > -                     strbuf_addstr(&msgbuf, oid_to_hex(&commit->object=
+.oid));
+> > -                     strbuf_addstr(&msgbuf, ")\n");
+> > +                     strbuf_addf(&msgbuf, "Cherry-Pick: %s\n",
+> > +                                 oid_to_hex(&commit->object.oid));
+
+I will probably make this "Cherry-picked-from:" to match our S-o-b style.
+--=20
+Duy
