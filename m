@@ -2,106 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 833E51F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 00:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 684A31F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 01:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727755AbeKDKDd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 05:03:33 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:35573 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727047AbeKDKDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 05:03:33 -0500
-Received: by mail-pg1-f195.google.com with SMTP id 32-v6so2599723pgu.2
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 17:50:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6pDFEIO5zGxrkrqAjMqFkMD9TdcofPxijl3fGW4m584=;
-        b=Qo+hdPUzD1zA5C2/ozMHanzkk94066TTJzUCjRwNb3XmE/LIWPIaEGP742wpDDzkqc
-         Ug1DRjnsE2kOxg/271wO3wuoK95ZKeAfXdQRQqmEbh7cUB2JrKpxnwMc6xIXSjK8zddT
-         x85PEkm2ljmUzqihznP0TYjfVT+dxvnMX3OXmAQYVLXwjjR0Hw+Z/VbaFqkWns+hXw9s
-         TcBBfsPhvch26TNi4Q71C7/1AECoQ2M9WA8LemiukL4aLhwspWe0KV6bNild/WuvjPPC
-         wB7CfxAZKWM+wFPHbeqTzTSw40PBosqVPae7mFvSo8HnvZNXquqeG5VlFtA/LEBN4eRD
-         mkOw==
+        id S1728719AbeKDKO2 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 4 Nov 2018 05:14:28 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:44113 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbeKDKO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 05:14:28 -0500
+Received: by mail-qk1-f196.google.com with SMTP id n12so9173436qkh.11
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 18:01:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6pDFEIO5zGxrkrqAjMqFkMD9TdcofPxijl3fGW4m584=;
-        b=FH9Scw2rLJx7hpfcxTXcPczavVsE/J+jQT9JYPuwTe67GKHp8I7Ul3My3WTF3mclDF
-         OsFbWbCKT0Dd2piM0nd7eP9CZyjkMUjWjzBwSCe3G2I2irkjrB1tHLbXHFziL1eouylM
-         CNnRQXcM3XHtWdLGhxJQt7kBZbhcdq8psIZa4K1XZjTeYo/QIEJkQTw9fUWIk1IX72dt
-         /VCui8MkcA3KxQUpCVKtLOowGggoZqy7OfW6ug1z4fkWKxQVRMx2b/J09ayyM+v0SnaK
-         sIG8EhqTyWJ+Ev3xCwVFKZhurCGS7jzPSOQGoAg8BgYLFtitQry6qXQPzr4DqvoStTS3
-         hQpQ==
-X-Gm-Message-State: AGRZ1gIRUTwprIvRHPQMfK6oGVHQ5gSw6DXCGSDebRPCquSxHhYhuhhf
-        BtkeT0VjDb4Q7KWVL2POyFAO7zlK
-X-Google-Smtp-Source: AJdET5d/NVMZOCQTg6MbvY5ix3yjG81lqByYCdyipx2L0GbUUMHzaFHW35CbLey2BARZOS/062Ogpw==
-X-Received: by 2002:a62:1416:: with SMTP id 22-v6mr17200376pfu.114.1541292633818;
-        Sat, 03 Nov 2018 17:50:33 -0700 (PDT)
-Received: from localhost.localdomain ([144.178.0.40])
-        by smtp.gmail.com with ESMTPSA id 22-v6sm2088851pfs.108.2018.11.03.17.50.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 03 Nov 2018 17:50:33 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] multi-pack-index: make code -Wunused-parameter clean
-Date:   Sat,  3 Nov 2018 17:49:57 -0700
-Message-Id: <20181104004957.52913-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.19.1.816.gcd69ec8cd
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=y5Xdf7bH2K2LZsguy4aj2vfOvqN/j/l9g7XJC0AIF5A=;
+        b=ezB7h2lGA7KH91I22OBurxOZqSsMgLxPc/9Eyo608p49giY2wGjMOxbIoBm/kDcEFA
+         dXDkUyKpuhQjNIY3s2tdSfoVEu0Ed15fsyq7W5rBDV6Q7pb0vRgIkT+m9v+of7j3BGaC
+         tWKpmwWrdIEgH1DJFin3frSsMOgNy2AT5YYKqbOEL0ZpydznAjTqxHKscls59EJeMWuL
+         1V40X1xpiZ1amjUk1+2vz2h5CpO+5f/CpP3oj1eOp5v3Zn1Ih3VdRitBy1lrX2kR+JNb
+         5RGl8YOyeRM+8kuulzoDqZAwkX2saR1mBjrlK4eMbvW1f5gVu0gPNsyiPL+rUebDr4Wa
+         ot2A==
+X-Gm-Message-State: AGRZ1gKpRk7L72oHGz4u16d0kmFb+pd/0bODYYl0PBpJ0yhxYHMO3s02
+        AnrUNH7Mf9YlQnmwApcg+XPLcJvhmO4sn85f4eg=
+X-Google-Smtp-Source: AJdET5d83AKGRS7JhQDy7ou9TrgrHoMW9X+e3YOkBEFEY5jr5g/Obb/k/FWFBom7xXe/XPj3lF457+LUch5H2687bJU=
+X-Received: by 2002:ac8:5190:: with SMTP id c16-v6mr15889189qtn.352.1541293286447;
+ Sat, 03 Nov 2018 18:01:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-5-avarab@gmail.com>
+In-Reply-To: <20181102223743.4331-5-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 3 Nov 2018 21:01:15 -0400
+Message-ID: <CAPig+cQXmxZM6mHn9EwuPes=bB6zHN5rqAkGs5AwpLHGib4WPQ@mail.gmail.com>
+Subject: Re: [RFC/PATCH 4/5] Makefile: add NO_INSTALL_SYMLINKS_FALLBACK switch
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Dan Jacques <dnj@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Steffen Prohaska <prohaska@zib.de>,
+        John Keeping <john@keeping.me.uk>, stanhu@gmail.com,
+        richardc@unixbeard.net, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-introduced in 662148c435 ("midx: write object offsets", 2018-07-12)
-but included on all previous versions as well.
+On Fri, Nov 2, 2018 at 6:38 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> Add a switch for use in conjunction with the INSTALL_SYMLINKS flag
+> added in ad874608d8 ("Makefile: optionally symlink libexec/git-core
+> binaries to bin/git", 2018-03-13).
+> [...]
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/Makefile b/Makefile
+> @@ -342,6 +342,10 @@ all::
+> +# Define NO_INSTALL_SYMLINKS_FALLBACK if in conjunction with
 
-midx.c:713:54: warning: unused parameter 'nr_objects' [-Wunused-parameter]
+s/if in/in/
 
-likely an oversight as the information needed to iterate over is
-embedded in nr_large_offset
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- midx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/midx.c b/midx.c
-index 4fac0cd08a..a2c17e3108 100644
---- a/midx.c
-+++ b/midx.c
-@@ -710,7 +710,7 @@ static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_nee
- }
- 
- static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_offset,
--				       struct pack_midx_entry *objects, uint32_t nr_objects)
-+				       struct pack_midx_entry *objects)
- {
- 	struct pack_midx_entry *list = objects;
- 	size_t written = 0;
-@@ -880,7 +880,7 @@ int write_midx_file(const char *object_dir)
- 				break;
- 
- 			case MIDX_CHUNKID_LARGEOFFSETS:
--				written += write_midx_large_offsets(f, num_large_offsets, entries, nr_entries);
-+				written += write_midx_large_offsets(f, num_large_offsets, entries);
- 				break;
- 
- 			default:
--- 
-2.19.1.816.gcd69ec8cd
-
+> +# INSTALL_SYMLINKS if you'd prefer not to have the install procedure
+> +# fallack on hardlinking or copying if "ln -s" fails.
+> +#
