@@ -6,40 +6,41 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 684A31F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 01:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0253D1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 01:05:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728719AbeKDKO2 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 4 Nov 2018 05:14:28 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:44113 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727047AbeKDKO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 05:14:28 -0500
-Received: by mail-qk1-f196.google.com with SMTP id n12so9173436qkh.11
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 18:01:26 -0700 (PDT)
+        id S1727537AbeKDKRl convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 4 Nov 2018 05:17:41 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:37907 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbeKDKRk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 05:17:40 -0500
+Received: by mail-qk1-f194.google.com with SMTP id d19so9232319qkg.5
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 18:04:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=y5Xdf7bH2K2LZsguy4aj2vfOvqN/j/l9g7XJC0AIF5A=;
-        b=ezB7h2lGA7KH91I22OBurxOZqSsMgLxPc/9Eyo608p49giY2wGjMOxbIoBm/kDcEFA
-         dXDkUyKpuhQjNIY3s2tdSfoVEu0Ed15fsyq7W5rBDV6Q7pb0vRgIkT+m9v+of7j3BGaC
-         tWKpmwWrdIEgH1DJFin3frSsMOgNy2AT5YYKqbOEL0ZpydznAjTqxHKscls59EJeMWuL
-         1V40X1xpiZ1amjUk1+2vz2h5CpO+5f/CpP3oj1eOp5v3Zn1Ih3VdRitBy1lrX2kR+JNb
-         5RGl8YOyeRM+8kuulzoDqZAwkX2saR1mBjrlK4eMbvW1f5gVu0gPNsyiPL+rUebDr4Wa
-         ot2A==
-X-Gm-Message-State: AGRZ1gKpRk7L72oHGz4u16d0kmFb+pd/0bODYYl0PBpJ0yhxYHMO3s02
-        AnrUNH7Mf9YlQnmwApcg+XPLcJvhmO4sn85f4eg=
-X-Google-Smtp-Source: AJdET5d83AKGRS7JhQDy7ou9TrgrHoMW9X+e3YOkBEFEY5jr5g/Obb/k/FWFBom7xXe/XPj3lF457+LUch5H2687bJU=
-X-Received: by 2002:ac8:5190:: with SMTP id c16-v6mr15889189qtn.352.1541293286447;
- Sat, 03 Nov 2018 18:01:26 -0700 (PDT)
+        bh=X36QkLRqY8jiY+pesYpbr2mmy1+ANB91q/DTzOkywQY=;
+        b=UB74RJTlBYF06wzbPzsZdrx9+/4j9zh0gnpPwZyPcjJVmqk3hTSRuDXGVAVbzamwtn
+         sfG+jaweY6XzGM35N/vrwx0lKSDw4Tc0Q6qnUGofHD4aPtoyAFMtYUVtOnUQc6pHKjRr
+         rrZZQJ/GFwYt+vXSXICBKr+U6LnWfGFjx/6umiw5WpzN1bIFCurzn93Sw4dyA8AkM+Hm
+         0IAQCWk/xXII5JzdSfEvadgQGgt89875YjgfD/6Dant0FEd78ozkAH+78RQF0wCyomL4
+         FG7bxCO6lQEYyIGCWmgM1N0TIfQV2HstWy1xq/PsoTaDXlJKK0Sr+Mfa5ay3MglKH/8G
+         IeSQ==
+X-Gm-Message-State: AGRZ1gInSYLdMurS8GoXWf0vNq0Hs4cVFajDwlMsDRLN4XjT6ke2cjtz
+        jfiLm2xGed8DDdm8rqYOVRbwgU9GjPwcwmFSmf0=
+X-Google-Smtp-Source: AJdET5ftXkBQeiCf5/SbiHzj6kX47GSARb2a9XgG5fTgz2nwpjAjWIvMYy7/VoHe6h9q7i+xVytxFWOz09NTYspQW5c=
+X-Received: by 2002:ac8:592:: with SMTP id a18-v6mr16469068qth.184.1541293479631;
+ Sat, 03 Nov 2018 18:04:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-5-avarab@gmail.com>
-In-Reply-To: <20181102223743.4331-5-avarab@gmail.com>
+References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-6-avarab@gmail.com>
+In-Reply-To: <20181102223743.4331-6-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 3 Nov 2018 21:01:15 -0400
-Message-ID: <CAPig+cQXmxZM6mHn9EwuPes=bB6zHN5rqAkGs5AwpLHGib4WPQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH 4/5] Makefile: add NO_INSTALL_SYMLINKS_FALLBACK switch
+Date:   Sat, 3 Nov 2018 21:04:28 -0400
+Message-ID: <CAPig+cSyyEsoP532DnUy=XO2OXNiGmKJqkqQsau4n13J1fQZ7w@mail.gmail.com>
+Subject: Re: [RFC/PATCH 5/5] Makefile: Add a NO_INSTALL_BUILTIN_EXECDIR_ALIASES
+ flag
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Dan Jacques <dnj@google.com>,
@@ -55,18 +56,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Nov 2, 2018 at 6:38 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Add a switch for use in conjunction with the INSTALL_SYMLINKS flag
-> added in ad874608d8 ("Makefile: optionally symlink libexec/git-core
-> binaries to bin/git", 2018-03-13).
-> [...]
+> Let's add an option to break this backwards compatibility. Now with
+> NO_INSTALL_BUILTIN_EXECDIR_ALIASES=YesPlease there's only 3 programs
+> in the bindir that are hardlinked to "git" (receive-pack,
+> upload-archive & upload-pack), and 3 in the
+> gitexecdir (git-remote-{ftp,ftps,https} linked to git-remote-http).
+>
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
 > diff --git a/Makefile b/Makefile
-> @@ -342,6 +342,10 @@ all::
-> +# Define NO_INSTALL_SYMLINKS_FALLBACK if in conjunction with
+> @@ -346,6 +346,13 @@ all::
+> +# Define NO_INSTALL_BUILTIN_EXECDIR_ALIASES if you'd like to skip
+> +# installing legacy such as "git-init" and "git-add" in the
+> +# gitexecdir. Unless you're on a system where "which git-init" is
+> +# expected to returns something set this. Users have been expected to
 
-s/if in/in/
+s/returns/return/
+s/something/&,/
 
-> +# INSTALL_SYMLINKS if you'd prefer not to have the install procedure
-> +# fallack on hardlinking or copying if "ln -s" fails.
+Although, it's not clear what "return something" means. Perhaps rephrase it as:
+
+   ...git-init is expected to exist, set this.
+
+> +# use the likes of "git init" for ages now, these programs were only
+> +# provided for legacy compatibility.
 > +#
