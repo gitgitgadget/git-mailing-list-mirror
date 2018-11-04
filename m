@@ -6,41 +6,41 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0253D1F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 01:05:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 077451F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 01:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727537AbeKDKRl convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 4 Nov 2018 05:17:41 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:37907 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727047AbeKDKRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 05:17:40 -0500
-Received: by mail-qk1-f194.google.com with SMTP id d19so9232319qkg.5
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 18:04:40 -0700 (PDT)
+        id S1728441AbeKDKWt convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 4 Nov 2018 05:22:49 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:46630 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbeKDKWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 05:22:49 -0500
+Received: by mail-qk1-f195.google.com with SMTP id q1so9167452qkf.13
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 18:09:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=X36QkLRqY8jiY+pesYpbr2mmy1+ANB91q/DTzOkywQY=;
-        b=UB74RJTlBYF06wzbPzsZdrx9+/4j9zh0gnpPwZyPcjJVmqk3hTSRuDXGVAVbzamwtn
-         sfG+jaweY6XzGM35N/vrwx0lKSDw4Tc0Q6qnUGofHD4aPtoyAFMtYUVtOnUQc6pHKjRr
-         rrZZQJ/GFwYt+vXSXICBKr+U6LnWfGFjx/6umiw5WpzN1bIFCurzn93Sw4dyA8AkM+Hm
-         0IAQCWk/xXII5JzdSfEvadgQGgt89875YjgfD/6Dant0FEd78ozkAH+78RQF0wCyomL4
-         FG7bxCO6lQEYyIGCWmgM1N0TIfQV2HstWy1xq/PsoTaDXlJKK0Sr+Mfa5ay3MglKH/8G
-         IeSQ==
-X-Gm-Message-State: AGRZ1gInSYLdMurS8GoXWf0vNq0Hs4cVFajDwlMsDRLN4XjT6ke2cjtz
-        jfiLm2xGed8DDdm8rqYOVRbwgU9GjPwcwmFSmf0=
-X-Google-Smtp-Source: AJdET5ftXkBQeiCf5/SbiHzj6kX47GSARb2a9XgG5fTgz2nwpjAjWIvMYy7/VoHe6h9q7i+xVytxFWOz09NTYspQW5c=
-X-Received: by 2002:ac8:592:: with SMTP id a18-v6mr16469068qth.184.1541293479631;
- Sat, 03 Nov 2018 18:04:39 -0700 (PDT)
+        bh=HIO23ZysLDrI5rw7pXTgs02IGbJSYfLOTfAbKri4PMw=;
+        b=NW7JDq4zQZhadFlTsoLa2IiTOZJ56Ks+CSZ8LmpL8ilW8eflWTPEI7SnFH6rlkcuSe
+         vfwkyh5ZLT3RFfIGUVM2XmtTUpqeLLJHss0OAiHmnV/3LxWPPxn386QVT4Lcca1FtbYJ
+         ntILgiLGK/k9XnDH/vLFzUuhfkJ0oqp59VmAOSckSErVcEOEaQ4pU3husFsQqpcfI51q
+         d5EQs1Jf3MwM0LanpWaqOS6Q5wMtsESeVoss5ql25QyEPADkwHO5uGQRArbV3qP//bOF
+         HAFajE6H0tfBseQJXMxHrVl/0ElbDP6FF928JX5tbCdI74R7LXLO0mnqe7JNYw823/g/
+         s5hg==
+X-Gm-Message-State: AGRZ1gK+pJ0cALdAGgxje9eUrd88A2OJQjq70F3un6KeNgG9srtCRBBg
+        xwWZXpO7U7S6dwZey7G6a2LhLUdXWkqnVm+7P8k=
+X-Google-Smtp-Source: AJdET5ePZWtOKSLvnVMaEBgFKDXyisFkYqP2AQIZ6cK3chsJPZQk/Ztd1ytI9KWvz8WcksfpnOjxnEuPEkusMV91+zU=
+X-Received: by 2002:ac8:2a97:: with SMTP id b23-v6mr16512218qta.110.1541293787670;
+ Sat, 03 Nov 2018 18:09:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-6-avarab@gmail.com>
-In-Reply-To: <20181102223743.4331-6-avarab@gmail.com>
+References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-2-avarab@gmail.com>
+In-Reply-To: <20181102223743.4331-2-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 3 Nov 2018 21:04:28 -0400
-Message-ID: <CAPig+cSyyEsoP532DnUy=XO2OXNiGmKJqkqQsau4n13J1fQZ7w@mail.gmail.com>
-Subject: Re: [RFC/PATCH 5/5] Makefile: Add a NO_INSTALL_BUILTIN_EXECDIR_ALIASES
- flag
+Date:   Sat, 3 Nov 2018 21:09:36 -0400
+Message-ID: <CAPig+cRpCu6y+_GXNSHX=h+VxTEq+7rxLiw-jcjXzOf9X4Dqkw@mail.gmail.com>
+Subject: Re: [RFC/PATCH 1/5] Makefile: move long inline shell loops in
+ "install" into helper
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Dan Jacques <dnj@google.com>,
@@ -55,29 +55,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 2, 2018 at 6:38 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Let's add an option to break this backwards compatibility. Now with
-> NO_INSTALL_BUILTIN_EXECDIR_ALIASES=YesPlease there's only 3 programs
-> in the bindir that are hardlinked to "git" (receive-pack,
-> upload-archive & upload-pack), and 3 in the
-> gitexecdir (git-remote-{ftp,ftps,https} linked to git-remote-http).
+'sb/filenames-with-dashes'On Fri, Nov 2, 2018 at 6:38 PM Ævar Arnfjörð
+Bjarmason <avarab@gmail.com> wrote:
+> Move a 37 line for-loop mess out of "install" and into a helper
+> script. This started out fairly innocent but over the years has grown
+> into a hard-to-maintain monster, and my recent ad874608d8 ("Makefile:
+> optionally symlink libexec/git-core binaries to bin/git", 2018-03-13)
+> certainly didn't help.
+>
+> The shell code is ported pretty much as-is (with getopts added), it'll
+> be fixed & prettified in subsequent commits.
 >
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
-> diff --git a/Makefile b/Makefile
-> @@ -346,6 +346,13 @@ all::
-> +# Define NO_INSTALL_BUILTIN_EXECDIR_ALIASES if you'd like to skip
-> +# installing legacy such as "git-init" and "git-add" in the
-> +# gitexecdir. Unless you're on a system where "which git-init" is
-> +# expected to returns something set this. Users have been expected to
+>  install_programs | 89 ++++++++++++++++++++++++++++++++++++++++++++++++
 
-s/returns/return/
-s/something/&,/
+Pure nitpick: Earlier this year, Stefan made an effort[1] to eradicate
+filenames with underscores and replace them with hyphenated filenames.
+Perhaps name this "install-programs", instead.
 
-Although, it's not clear what "return something" means. Perhaps rephrase it as:
+[1]: sb/filenames-with-dashes
 
-   ...git-init is expected to exist, set this.
+> diff --git a/install_programs b/install_programs
+> @@ -0,0 +1,89 @@
+> +while test $# != 0
+> +do
+> +       case "$1" in
+> +       --X=*)
+> +               X="${1#--X=}"
+> +               ;;
+> +       --RM=*)
+> +               RM="${1#--RM=}"
+> +               ;;
+> +       --bindir=*)
+> +               bindir="${1#--bindir=}"
+> +               ;;
 
-> +# use the likes of "git init" for ages now, these programs were only
-> +# provided for legacy compatibility.
-> +#
+Is the intention that the user might have X, RM, 'bindir', etc.
+already in the environment, and the switches in this script merely
+override those values? Or is the intention that X, RM, 'bindir, etc.
+should all start out unset? If the latter, perhaps start the script
+with an initialization block which clears all these variables first:
+
+    X=
+    RM=
+    bindir=
+    ...
