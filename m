@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 075E01F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 591B71F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730689AbeKEJCB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 04:02:01 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53232 "EHLO
+        id S1730492AbeKEJB7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 04:01:59 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53226 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729686AbeKEJCA (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:02:00 -0500
+        by vger.kernel.org with ESMTP id S1729686AbeKEJB6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:01:58 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B27A861B7F;
-        Sun,  4 Nov 2018 23:45:14 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A7F2061B77;
+        Sun,  4 Nov 2018 23:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541375115;
-        bh=j/dn2Gxt/op+PVZAowV1ZjfLEWkrEw13ZXMQQQUwb50=;
+        s=default; t=1541375113;
+        bh=yRvgtxvGTSzl/+jKMYcv4Wpdaj1EDryNpqg57rkcLq8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=W0jwKaAYTD3IMfIZtxgksbncHnXf5CNrNTXVs/OELbwjWG12OCYUIrPE/D1fMRxht
-         0lFPgAjuE9Dyn+YSrmZwOYEN40EuqHVQwMhKIbFBqAZ1iRTKdaeWcTPw71DamOiJJ8
-         iBk1IDWDVt33GqQL0mUC330T+8GXGcNQqr6HvD3jopvg2AyTsXOz4wFUJEK8DEq2dL
-         evslTw4wz7ta7OjB/jtHGQYtxDmlP/loZwzOXBZiBwSoN7Rkza4GL0pjR0xd5s4J7k
-         QG+OCilhIe4MuhBmjj67hemsCCd3DHi2kD1Et/63GDxmijP5SsgFTFUbw1Ja0sKW0R
-         pEHZPO6jwnYGpWNSimbWoCg+Jgs/HfGWfzxi99ztQjPBIVRIB8X7kpF7rZEbQRrTKI
-         8EZEjEiZV+BNhzwpd3LMFpiWQzhg9hRbTI6YDNXysHnhIFkAtfPz5ldLChZpqmzTTq
-         b7HK3tyuadLPNE1RmvqDQ/LeOPlDUIe79lanV4RQmFEaK5BK0Dl
+        b=yKUc0VR+LIZh0BofNde+7Pr2Dne8TAfQN4j2aqUuWLl7U96XmYSxukHeim/bcqi46
+         G7eCZ2mTQeuhQ296CLzL1C2Ipf5EiYA9s48lvyRhkT+oJLQOcgiDPyQJyzFdOGlTHI
+         qN1FU2cZH8GbvtQQyAkRdMo2C9jPWMCi8tLiBQgxF1kwpIGdn4rldpR8+UB9zz2NQ9
+         BNexodrSpYo/JEPGm3tv78CfuzEAP4XoLy+bxcaNke5KjPSb+mn0576iRpG/i641Ye
+         UCRA4KgeKo+mt0nD+CRw2Lm/uyabf5HHx630eDDcpRah5swJFECpY5Wao0YyGR+iL6
+         Lb8+KWaI57fjAKNvesIijW9AIKKJU+UNhQW0uFXh7G+/dnThX0V8jyZl98sq7n5TvZ
+         kgE1fcgtBm3EfKlH9aMPsE6FwuysbPO97zEdM+iVTIHfk8gnE8QPGDqM0Kvy5JXdxn
+         W6sPXluOpshxYfmBugEIhUOd+mi0wULjsbeiSYkpfmh5OallbqE
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
@@ -43,9 +43,9 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 08/12] t/helper: add a test helper to compute hash speed
-Date:   Sun,  4 Nov 2018 23:44:54 +0000
-Message-Id: <20181104234458.139223-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 06/12] t: make the sha1 test-tool helper generic
+Date:   Sun,  4 Nov 2018 23:44:52 +0000
+Message-Id: <20181104234458.139223-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
 In-Reply-To: <20181104234458.139223-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -58,120 +58,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a utility (which is less for the testsuite and more for developers)
-that can compute hash speeds for whatever hash algorithms are
-implemented.  This allows developers to test their personal systems to
-determine the performance characteristics of various algorithms.
+Since we're going to have multiple hash algorithms to test, it makes
+sense to share as much of the test code as possible.  Convert the sha1
+helper for the test-tool to be generic and move it out into its own
+module.  This will allow us to share most of this code with our NewHash
+implementation.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Makefile                   |  1 +
- t/helper/test-hash-speed.c | 61 ++++++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c       |  1 +
- t/helper/test-tool.h       |  1 +
- 4 files changed, 64 insertions(+)
- create mode 100644 t/helper/test-hash-speed.c
+ Makefile                              |  1 +
+ t/helper/{test-sha1.c => test-hash.c} | 19 +++++-----
+ t/helper/test-sha1.c                  | 52 +--------------------------
+ t/helper/test-tool.h                  |  2 ++
+ 4 files changed, 14 insertions(+), 60 deletions(-)
+ copy t/helper/{test-sha1.c => test-hash.c} (65%)
 
 diff --git a/Makefile b/Makefile
-index 81dc9ac819..68169a7abb 100644
+index d18ab0fe78..81dc9ac819 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -716,6 +716,7 @@ TEST_BUILTINS_OBJS += test-example-decorate.o
+@@ -714,6 +714,7 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
+ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+ TEST_BUILTINS_OBJS += test-example-decorate.o
  TEST_BUILTINS_OBJS += test-genrandom.o
- TEST_BUILTINS_OBJS += test-hash.o
++TEST_BUILTINS_OBJS += test-hash.o
  TEST_BUILTINS_OBJS += test-hashmap.o
-+TEST_BUILTINS_OBJS += test-hash-speed.o
  TEST_BUILTINS_OBJS += test-index-version.o
  TEST_BUILTINS_OBJS += test-json-writer.o
- TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
-diff --git a/t/helper/test-hash-speed.c b/t/helper/test-hash-speed.c
-new file mode 100644
-index 0000000000..432233c7f0
---- /dev/null
-+++ b/t/helper/test-hash-speed.c
-@@ -0,0 +1,61 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+
-+#define NUM_SECONDS 3
-+
-+static inline void compute_hash(const struct git_hash_algo *algo, git_hash_ctx *ctx, uint8_t *final, const void *p, size_t len)
-+{
-+	algo->init_fn(ctx);
-+	algo->update_fn(ctx, p, len);
-+	algo->final_fn(final, ctx);
-+}
-+
-+int cmd__hash_speed(int ac, const char **av)
-+{
+diff --git a/t/helper/test-sha1.c b/t/helper/test-hash.c
+similarity index 65%
+copy from t/helper/test-sha1.c
+copy to t/helper/test-hash.c
+index 1ba0675c75..0a31de66f3 100644
+--- a/t/helper/test-sha1.c
++++ b/t/helper/test-hash.c
+@@ -1,13 +1,14 @@
+ #include "test-tool.h"
+ #include "cache.h"
+ 
+-int cmd__sha1(int ac, const char **av)
++int cmd_hash_impl(int ac, const char **av, int algo)
+ {
+-	git_SHA_CTX ctx;
+-	unsigned char sha1[20];
 +	git_hash_ctx ctx;
-+	unsigned char hash[GIT_MAX_RAWSZ];
-+	clock_t initial, start, end;
-+	unsigned bufsizes[] = { 64, 256, 1024, 8192, 16384 };
-+	int i;
-+	void *p;
-+	const struct git_hash_algo *algo = NULL;
-+
-+	if (ac == 2) {
-+		for (i = 1; i < GIT_HASH_NALGOS; i++) {
-+			if (!strcmp(av[1], hash_algos[i].name)) {
-+				algo = &hash_algos[i];
-+				break;
-+			}
-+		}
-+	}
-+	if (!algo)
-+		die("usage: test-tool hash-speed algo_name");
-+
-+	/* Use this as an offset to make overflow less likely. */
-+	initial = clock();
-+
-+	printf("algo: %s\n", algo->name);
-+
-+	for (i = 0; i < ARRAY_SIZE(bufsizes); i++) {
-+		unsigned long j, kb;
-+		double kb_per_sec;
-+		p = xcalloc(1, bufsizes[i]);
-+		start = end = clock() - initial;
-+		for (j = 0; ((end - start) / CLOCKS_PER_SEC) < NUM_SECONDS; j++) {
-+			compute_hash(algo, &ctx, hash, p, bufsizes[i]);
-+
-+			/*
-+			 * Only check elapsed time every 128 iterations to avoid
-+			 * dominating the runtime with system calls.
-+			 */
-+			if (!(j & 127))
-+				end = clock() - initial;
-+		}
-+		kb = j * bufsizes[i];
-+		kb_per_sec = kb / (1024 * ((double)end - start) / CLOCKS_PER_SEC);
-+		printf("size %u: %lu iters; %lu KiB; %0.2f KiB/s\n", bufsizes[i], j, kb, kb_per_sec);
-+		free(p);
-+	}
-+
-+	exit(0);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 6b5836dc1b..e009c8186d 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -20,6 +20,7 @@ static struct test_cmd cmds[] = {
- 	{ "example-decorate", cmd__example_decorate },
- 	{ "genrandom", cmd__genrandom },
- 	{ "hashmap", cmd__hashmap },
-+	{ "hash-speed", cmd__hash_speed },
- 	{ "index-version", cmd__index_version },
- 	{ "json-writer", cmd__json_writer },
- 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
++	unsigned char hash[GIT_MAX_HEXSZ];
+ 	unsigned bufsz = 8192;
+ 	int binary = 0;
+ 	char *buffer;
++	const struct git_hash_algo *algop = &hash_algos[algo];
+ 
+ 	if (ac == 2) {
+ 		if (!strcmp(av[1], "-b"))
+@@ -26,7 +27,7 @@ int cmd__sha1(int ac, const char **av)
+ 			die("OOPS");
+ 	}
+ 
+-	git_SHA1_Init(&ctx);
++	algop->init_fn(&ctx);
+ 
+ 	while (1) {
+ 		ssize_t sz, this_sz;
+@@ -38,20 +39,20 @@ int cmd__sha1(int ac, const char **av)
+ 			if (sz == 0)
+ 				break;
+ 			if (sz < 0)
+-				die_errno("test-sha1");
++				die_errno("test-hash");
+ 			this_sz += sz;
+ 			cp += sz;
+ 			room -= sz;
+ 		}
+ 		if (this_sz == 0)
+ 			break;
+-		git_SHA1_Update(&ctx, buffer, this_sz);
++		algop->update_fn(&ctx, buffer, this_sz);
+ 	}
+-	git_SHA1_Final(sha1, &ctx);
++	algop->final_fn(hash, &ctx);
+ 
+ 	if (binary)
+-		fwrite(sha1, 1, 20, stdout);
++		fwrite(hash, 1, algop->rawsz, stdout);
+ 	else
+-		puts(sha1_to_hex(sha1));
++		puts(hash_to_hex_algop(hash, algop));
+ 	exit(0);
+ }
+diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
+index 1ba0675c75..d860c387c3 100644
+--- a/t/helper/test-sha1.c
++++ b/t/helper/test-sha1.c
+@@ -3,55 +3,5 @@
+ 
+ int cmd__sha1(int ac, const char **av)
+ {
+-	git_SHA_CTX ctx;
+-	unsigned char sha1[20];
+-	unsigned bufsz = 8192;
+-	int binary = 0;
+-	char *buffer;
+-
+-	if (ac == 2) {
+-		if (!strcmp(av[1], "-b"))
+-			binary = 1;
+-		else
+-			bufsz = strtoul(av[1], NULL, 10) * 1024 * 1024;
+-	}
+-
+-	if (!bufsz)
+-		bufsz = 8192;
+-
+-	while ((buffer = malloc(bufsz)) == NULL) {
+-		fprintf(stderr, "bufsz %u is too big, halving...\n", bufsz);
+-		bufsz /= 2;
+-		if (bufsz < 1024)
+-			die("OOPS");
+-	}
+-
+-	git_SHA1_Init(&ctx);
+-
+-	while (1) {
+-		ssize_t sz, this_sz;
+-		char *cp = buffer;
+-		unsigned room = bufsz;
+-		this_sz = 0;
+-		while (room) {
+-			sz = xread(0, cp, room);
+-			if (sz == 0)
+-				break;
+-			if (sz < 0)
+-				die_errno("test-sha1");
+-			this_sz += sz;
+-			cp += sz;
+-			room -= sz;
+-		}
+-		if (this_sz == 0)
+-			break;
+-		git_SHA1_Update(&ctx, buffer, this_sz);
+-	}
+-	git_SHA1_Final(sha1, &ctx);
+-
+-	if (binary)
+-		fwrite(sha1, 1, 20, stdout);
+-	else
+-		puts(sha1_to_hex(sha1));
+-	exit(0);
++	return cmd_hash_impl(ac, av, GIT_HASH_SHA1);
+ }
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 29ac7b0b0d..19a7e8332a 100644
+index e4890566da..29ac7b0b0d 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -16,6 +16,7 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
- int cmd__hashmap(int argc, const char **argv);
-+int cmd__hash_speed(int argc, const char **argv);
- int cmd__index_version(int argc, const char **argv);
- int cmd__json_writer(int argc, const char **argv);
- int cmd__lazy_init_name_hash(int argc, const char **argv);
+@@ -50,4 +50,6 @@ int cmd__windows_named_pipe(int argc, const char **argv);
+ #endif
+ int cmd__write_cache(int argc, const char **argv);
+ 
++int cmd_hash_impl(int ac, const char **av, int algo);
++
+ #endif
