@@ -2,101 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1621F454
-	for <e@80x24.org>; Sun,  4 Nov 2018 06:29:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 950FD1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 06:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728817AbeKDPne (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 10:43:34 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:51141 "EHLO
+        id S1728996AbeKDPsT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 10:48:19 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:37525 "EHLO
         mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728781AbeKDPne (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 10:43:34 -0500
-Received: by mail-it1-f195.google.com with SMTP id k206-v6so8550704ite.0
-        for <git@vger.kernel.org>; Sat, 03 Nov 2018 23:29:43 -0700 (PDT)
+        with ESMTP id S1728858AbeKDPsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 10:48:19 -0500
+Received: by mail-it1-f195.google.com with SMTP id e74-v6so8423683ita.2
+        for <git@vger.kernel.org>; Sat, 03 Nov 2018 23:34:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VYlBXKGzKnvPkcAH3Ezv5ZCUyoaLGj4r/Al+QpFGzys=;
-        b=o/fJyHa5aBocU4Kzy0z2Gubgb8RO4gx6tLOJaMylo7cZyUfqq2832PNr4BZ/eJqNQQ
-         z/dcxbwn9++ihldglV34WWW+AVVhxhFFPaNDiCqaBRNt59QRbrAAVHqx77oo7EzMPqjc
-         eK4QJkaa113Aj28mKCZleEyaCQU0kRBRLmzGzQmSWLTpymPO/3qd6oXQi0kq+9YD6j3I
-         O1qHnQUHpGdswvPh5SdLpAAPXJwiURTGYGacgawdxU1DlGoVjVo8lIcJdwabSiSfGkgR
-         M3HBC03VPYjy5Z48NgQW50mtw2KyWlG/KcL+Aks000lyxHW/hlQP6LL5ugG5OoVbKyxs
-         +0ag==
+         :cc;
+        bh=Zy5eLg30tQXuy2HwBbjSgiD8+gNKv6T+zo7WF783FlA=;
+        b=e7pSuN2fAvmJUZOXoyvGxP30gptVe1BhksIFxCKxBOwtm4JAXyBhQCzXAh2FLPAFSG
+         Yblu8c0aiIzNnOOTj3c8Ail2X59r4OJS9Qi8HTkriZu0PJ+CYBpG6vY9LnbvUvLO5CKe
+         swy/MIdjJnt0utVZ78C1ZZ0OFQ60JQzImbqb1zFkC2W8JXNQEQdbJwvYnyCc5GjO7uOh
+         hYP3lU+G0miyw4wlJNO/nG0RTSVWttxH2Ox1t1QNzHiGtWXKvWGLEoClhKX4Kq86Tymu
+         t+l+mwZTRmUmw8f71oMjwyPa1toWTN1oSIB8BGxp27Xj+QSj2bZ9Hl6q66TfjKKRN4Wg
+         +6XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VYlBXKGzKnvPkcAH3Ezv5ZCUyoaLGj4r/Al+QpFGzys=;
-        b=SAZdMf4Qywuy6ZAYK5JGYlCvhzEWIZN8mSQBOfJ+NTQKq9PH1uGeEfRqaaD16x4MZG
-         ncomT/LGp4AhVKJQ6dTGqSC3FiYi3iqMrbYu5XvdFYRkkSS/6nKFYvMigEAAYWhFocIw
-         49xl2npC6/2LYdfakSzcSqGT4oYo9nGjidJ2ta7PCV53NeUlJXIvOvFoNXbmuxCiuMII
-         jaaBlX17ww4wzPBUC3V7Vam711H3jePQAWlsoDf1jaFad2m7jPxjcIi79Te4K5yCqWtb
-         el1kWGaYRy5xGPeSluvEluO3SrWBOO0KhR/5Ad1fk/91NTlEMBdjl667GRaNp7YbzU1K
-         /nWg==
-X-Gm-Message-State: AGRZ1gITofKlWeBEbkO2TrRcCSDTAOzXZWx5nM6PoBUEax2xchOvAd2x
-        u0255Z1WdxOTkCLFSlGl5+wou4oqtoM/BqSQcTQ=
-X-Google-Smtp-Source: AJdET5cPLLmyBdGz2SCu1RKr0XH9Je2+yKgANM2uuJYQNs/PLaUn4lv+J9o6UF7rxx0v+mFk/5swxIsomIFRomQhQVM=
-X-Received: by 2002:a24:7804:: with SMTP id p4-v6mr2838662itc.123.1541312982577;
- Sat, 03 Nov 2018 23:29:42 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Zy5eLg30tQXuy2HwBbjSgiD8+gNKv6T+zo7WF783FlA=;
+        b=gaAMdZJxJnGUc3Zd7+AnFbuqGe0WG2WEGy1XCkEfwTTIbRmo7JatWKEShn5xnyxSk3
+         tknW1nqtZAxF9jw8Qo/9H5zm/SpkN7vYswvDRmdq/vbtY/hEp3AnMgjI+MhKeu8Hoq9G
+         bfDlHkB61N2hSyetghCabt4bmbScTue4XsV3TLVj8Od47ueEj35z/9/9MF1rMXTkzldm
+         aLmwgY4gGzow3CjNDE0sJ3l1JOOQFcZ4Xs5XOQdPMnoT73Dk9Mv5FDkK63cSUCxiq4LW
+         6OgnYjoyV1sr9c9POCxYKGpmBsED9EGilyrxdDYugWeyGoED/eZ69NT1KDB9HErKAq1X
+         eHFw==
+X-Gm-Message-State: AGRZ1gLPT/kXpcVrxwlBzHC3PnHhIOUTng0+b20tR/DnFoQY/PJULKKX
+        +xYalMOgOqcI0in3qqzGHf4zqlAwJ73/y1IE08IlMQ==
+X-Google-Smtp-Source: AJdET5fx+re8ksi+sSXqlgCQdyH0aEE5B1CNKVENJYOQW4MqQUfg9UEZFJFwktXQAfppOZYFyuud8gFqcVnKqwR8sd0=
+X-Received: by 2002:a24:fec3:: with SMTP id w186-v6mr2283715ith.10.1541313267350;
+ Sat, 03 Nov 2018 23:34:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAGOLd-5Gbt6fQTvm+7018uX+8WF7NUWpa1sFWAg3-5bxtmOt-Q@mail.gmail.com>
- <20181103153049.22850-1-pclouds@gmail.com> <CAPig+cS7b0nenb0+0jyXE=-bDkhapmYE8Yr6VfyAWRq3ydjPOg@mail.gmail.com>
- <CAPig+cQTaG=pTQ_fQp8gv-4+bzJrSGCy8zK_iDeJsFNeX+4Cpg@mail.gmail.com>
-In-Reply-To: <CAPig+cQTaG=pTQ_fQp8gv-4+bzJrSGCy8zK_iDeJsFNeX+4Cpg@mail.gmail.com>
+References: <20181030191608.18716-1-peartben@gmail.com> <CACsJy8DbiVZYmY11Nt4c_+egSi5tz0iVq7rNv2BiVdyJ4htgvw@mail.gmail.com>
+ <1f7efd07-4881-daa7-cd1d-145bbf3ffcc8@gmail.com>
+In-Reply-To: <1f7efd07-4881-daa7-cd1d-145bbf3ffcc8@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 4 Nov 2018 07:29:16 +0100
-Message-ID: <CACsJy8DPF8XFCkppnh6iyY3noQG-OMbqq3+LNm1iaotCSr-znw@mail.gmail.com>
-Subject: Re: [PATCH] tree-walk.c: fix overoptimistic inclusion in :(exclude) matching
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Christophe Bliard <christophe.bliard@trux.info>,
-        Git Mailing List <git@vger.kernel.org>,
-        Rafael Ascensao <rafa.almas@gmail.com>
+Date:   Sun, 4 Nov 2018 07:34:01 +0100
+Message-ID: <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
+Subject: Re: [RFC v1] Add virtual file system settings and hook proc
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 4, 2018 at 7:27 AM Eric Sunshine <sunshine@sunshineco.com> wrot=
-e:
->
-> On Sat, Nov 3, 2018 at 8:25 PM Eric Sunshine <sunshine@sunshineco.com> wr=
-ote:
-> > On Sat, Nov 3, 2018 at 11:31 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> > > +test_expect_success 't_e_i() exclude case #8' '
-> > > +       git init case8 &&
-> > > +       (
-> > > +               cd case8 &&
-> > > +               echo file >file1 &&
-> > > +               echo file >file2 &&
-> > > +               git add . &&
+On Wed, Oct 31, 2018 at 9:53 PM Ben Peart <peartben@gmail.com> wrote:
+> >> +core.virtualFilesystem::
+> >> +       If set, the value of this variable is used as a command which
+> >> +       will identify all files and directories that are present in
+> >> +       the working directory.  Git will only track and update files
+> >> +       listed in the virtual file system.  Using the virtual file system
+> >> +       will supersede the sparse-checkout settings which will be ignored.
+> >> +       See the "virtual file system" section of linkgit:githooks[6].
 > >
-> > Won't this loose git-add invocation end up adding all the junk files
-> > from earlier tests? One might have expected to see the more restricted
-> > invocation:
-> >     git add file1 file2 &&
-> > to make it easier to reason about the test and not worry about someone
-> > later inserting tests above this one which might interfere with it.
+> > It sounds like "virtual file system" is just one of the use cases for
+> > this feature, which is more about a dynamic source of sparse-checkout
+> > bits. Perhaps name the config key with something along sparse checkout
+> > instead of naming it after a use case.
 >
-> Upon reflection, there shouldn't be any junk files since this test is
-> creating a new repository and "file1" and "file2" are the only files
-> present. Apparently, I wasn't paying close enough attention when I
-> made the earlier observation.
+> It's more than a dynamic sparse-checkout because the same list is also
+> used to exclude any file/folder not listed.  That means any file not
+> listed won't ever be updated by git (like in 'checkout' for example) so
+> 'stale' files could be left in the working directory.  It also means git
+> won't find new/untracked files unless they are specifically added to the
+> list.
 
-Yup.
-
-> Anyhow, the more restricted git-add invocation you used in the re-roll
-> is still preferable since it makes the intention obvious. Thanks.
-
-Which is why I did it anyway :)
---=20
+OK. I'm not at all interested in carrying maintenance burden for some
+software behind closed doors. I could see values in having a more
+flexible sparse checkout but this now seems like very tightly designed
+for GVFS. So unless there's another use case (preferably open source)
+for this, I don't think this should be added in git.git.
+-- 
 Duy
