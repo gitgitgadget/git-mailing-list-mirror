@@ -2,170 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC8151F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 19:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B5F21F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 21:01:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729508AbeKEEqT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 23:46:19 -0500
-Received: from mail.smurf.noris.de ([213.95.149.21]:39346 "EHLO
-        netz.smurf.noris.de" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1728970AbeKEEqT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 23:46:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de;
-         s=20160512; h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:
-        Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=1fcpKJ5KOJzkg/FTak9LOVVehXbGnySeS9adphVBnhU=; b=oaKlev+vqen6y6rJD3peTrzvFD
-        3d4kz7Bi8ew+XX3yT3x7pXHBPObCISeBNxh15bEgx3orMjr/2x/ugsJrvJSIzUXxTuN3j5W3w6GxZ
-        6qMSru1YTHP1xQm7WHRU3iuoYfscmKdsl2HAp4pG/wB8HUaLaWq65s0YGZsaY7KmbhODOT9rlBziG
-        PHgC4dpUYzYD1VswY4EE1QYLWjj3WmRa6UPVfwP7SBsIiTJqjbCT/XjqFITkyJHOAsN3f5kDis3I6
-        Qx9Dv/Te65XyJUW9kme7kS3RzBT+hH5abgo2NfaKqpCIUD+eVoqPMCMN6azSuVSKJzD2wyzFCTDAh
-        uKrNnbeo8qUJr0ps1LfJ0zva3mpfunTmh2Zwynq9OZpE6vMlB0/HAjjN2HV4Nhn+eBFeesadFjuDB
-        iDcniwLzf8MievlB++/WFuEufQX1C/H52qGDNQ2VJIUphaD/elS2FA3ZUsRUM2vA/tm/YPjYZwwoP
-        SwwNA8BPLWMALKvWhdrZOUKzUcQz/8J5tf6JEg9FQRVIASwryZY7wh4RTESj9uZC/ZYcbuBpnAxD5
-        6rVe8qqz6YjRG+hG9QIWqOybK5kiOx+5eesKrIYhHxU3FDYEurFDJcAJnqPcCF+GjFARMRe5uz6I+
-        C0dBQcPfbV8WoEK9jfRP5IG5BL+yoNZewpApenLH8=;
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
-        by mail.vm.smurf.noris.de with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.89)
-        (envelope-from <matthias@urlichs.de>)
-        id 1gJO5e-000P2Z-KR
-        for git@vger.kernel.org; Sun, 04 Nov 2018 20:29:42 +0100
-To:     git@vger.kernel.org
-From:   Matthias Urlichs <matthias@urlichs.de>
-Subject: "git checkout" obliterates not-yet-ignored files
-Openpgp: id=AFD79782F3BAEC020B28A19F72CF8E5E25B4C293
-Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <949b99d6-c681-49ed-4a4e-d33e0f6487d3@urlichs.de>
-Date:   Sun, 4 Nov 2018 20:29:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1727271AbeKEGRb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 01:17:31 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53184 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725798AbeKEGRb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 01:17:31 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5930:2634:17a1:2ef9])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 18F8B6077B;
+        Sun,  4 Nov 2018 21:01:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1541365270;
+        bh=B7xNjQ2ZMAJoxrFB5/uyxLdHYuxdo9sgI/9ilAfRyxI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=i4ev6PfRtsgirhGyY5+9rJy3bLJ1lG9R3LBmtCLSLsCUg5TQcOHcMGejE1467Poo3
+         jmuQCxEKQQZdZBsTWTeIaRVEEHbJ7TJYyg8LNyHrazxkAQk6FKSPeiuTTkBMHLs3Yp
+         ySQRgWUW0Z6+pwI70hyDZFF2SscQDonxs58EAjiDR20af5EMM4e5jfnsy6J2ivbztn
+         PowISwQTOPI6ES2aF7BWp1m00uCrz3Orq0TTXQ9P+KEBKrZypOlhCelu3eMmuw4c9D
+         f3xO6PcCyr1vBz7aC89WzQHGWRd8eZsedQLGKcqDA6MVS0Y2wX2BARW3Ug2xpVFu/P
+         WPmmOboYr3vm6OSoIfa0EHHF7gkeJGjf8csqhL5ZSeFUIoxmzzFTnVDlu8HqMmGNRk
+         4b1uOu5T27U6zMo70ERHUWDTLlSl1TVF+hpM4PDBSEjvnjlYaWPGbDXWsRncgF54Gp
+         syzdUaCbPfboKCUbXC9Ef4nv2TXBlde8Gzjo9gMY7DqBT6Myfn9
+Date:   Sun, 4 Nov 2018 21:01:05 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [RFC v1] Add virtual file system settings and hook proc
+Message-ID: <20181104210105.GK731755@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>, Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+References: <20181030191608.18716-1-peartben@gmail.com>
+ <CACsJy8DbiVZYmY11Nt4c_+egSi5tz0iVq7rNv2BiVdyJ4htgvw@mail.gmail.com>
+ <1f7efd07-4881-daa7-cd1d-145bbf3ffcc8@gmail.com>
+ <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags"
-X-Smurf-Spam-Score: 0.0 (/)
-X-Smurf-Whitelist: +relay_from_hosts
+        protocol="application/pgp-signature"; boundary="uuKVzAmB+c+zQlhu"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags
-Content-Type: multipart/mixed; boundary="yxAPSyOQ1YljarI87dh7qgfsODhCQJHXf";
- protected-headers="v1"
-From: Matthias Urlichs <matthias@urlichs.de>
-To: git@vger.kernel.org
-Message-ID: <949b99d6-c681-49ed-4a4e-d33e0f6487d3@urlichs.de>
-Subject: "git checkout" obliterates not-yet-ignored files
 
---yxAPSyOQ1YljarI87dh7qgfsODhCQJHXf
+--uuKVzAmB+c+zQlhu
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Language: de-DE
 
-Hi,
+On Sun, Nov 04, 2018 at 07:34:01AM +0100, Duy Nguyen wrote:
+> On Wed, Oct 31, 2018 at 9:53 PM Ben Peart <peartben@gmail.com> wrote:
+> > It's more than a dynamic sparse-checkout because the same list is also
+> > used to exclude any file/folder not listed.  That means any file not
+> > listed won't ever be updated by git (like in 'checkout' for example) so
+> > 'stale' files could be left in the working directory.  It also means git
+> > won't find new/untracked files unless they are specifically added to the
+> > list.
+>=20
+> OK. I'm not at all interested in carrying maintenance burden for some
+> software behind closed doors. I could see values in having a more
+> flexible sparse checkout but this now seems like very tightly designed
+> for GVFS. So unless there's another use case (preferably open source)
+> for this, I don't think this should be added in git.git.
 
-the problem: suppose I decide that a local file should no longer be
-controlled by git. Thus I add it to .gitignore and then "git rm
---cached" it. So far so good.
+I should point out that VFS for Git is an open-source project and will
+likely have larger use than just at Microsoft.  There are both Windows
+and Mac clients and there are plans for a Linux client as well.
+Ideally, it would work with an unmodified upstream Git, which is (I
+assume) why Ben is sending this series.
 
-However, if I subsequently modify that file and then go back to a commit
-that still contains it, my local changes will be obliterated.
-
-IMHO that's a bug =E2=80=93 .gitignore should only be used for (not) addi=
-ng
-non-version-controlled files. It does not tell git to ignore changes (in
-files that *are* under version control), and thus it should not allow
-any git command to simply overwrite a file.
-
+Personally, I don't love the current name used in this series.  I don't
+see this patch as introducing a virtual file system in the Unix sense of
+that word, and I think calling it that in Git core will be confusing to
+Unix users.  I would prefer to see it as a hook (maybe called
+"sparse-checkout" or "sparse-exclude"; better names are okay), and
+simply turn it on based on whether or not there's an appropriate hook
+file there and whether core.sparseCheckout is on (or possibly with
+hook.sparseExclude or something).  With a design more like that, I don't
+see a problem with it in principle.
 --=20
--- Matthias Urlichs
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-
-
---yxAPSyOQ1YljarI87dh7qgfsODhCQJHXf--
-
---ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags
+--uuKVzAmB+c+zQlhu
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
 
-iQIzBAEBCgAdFiEEr9eXgvO67AILKKGfcs+OXiW0wpMFAlvfSJ8ACgkQcs+OXiW0
-wpOquQ//T6gv71ZwlH8TGKKwbBMX+eNpxVnhPAtzEakaCTW9X5s4WiPyrhAEGPsB
-SktxET37WlEOyUUoKhDdRm5A0ooh25XksF9+u1WDjDYy6812+vcetKy1Xw5MFK4p
-PMdTJ6L5z+TWkFsL4SjHohwvK/mFTCuDVOqJrKd8NxkNmfL+HjQln9Kk4Jxk98tn
-YQ3Etowu/TGYgCQfj31HRhwAzb2jdofiyRxaUzng3M5I5bTqJFHYvklgbrCV8Izp
-VdO3PYJDxM/lf2/uQIMOkeOQ/w+wvjkTAEFN8OI1rtgUQau2j+V7WfN2Bz7ReUPA
-UN1BQqOeqXHBVW3SQnJNVhZzX+zrL9KJP2AUIV2sDN+XlZDbW4dqifbeq8E9YXl2
-SShOfeytZqf7vWJuAM9MZS2SayU06HL4YPi9GIAYfv6eDjavhfUpdggLkPWJCsiS
-yLdAVPoUUQXzULDcbjQJ/+H7cm14lIxWheKv/XWWV7DdRvrDbtYZAoltFHX+Xl9a
-TsngFuG+bjxxQ3uwwGWUW2IBQBk3a5Y/iwc4FL1VKrFIpyjx6IN2xVVjmDVWinfT
-vCKya9DSWl77x4gicd6SGv5LkibFnEp9/+dRQ0p1ohKgJyl8D0DpDTRFzKZe33dc
-csFDq2fYCLL6ZvNlR6eFTmfISrfKaShwCJ5n0XkdCnOj2rRe+7c=
-=ZvgW
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvfXhAACgkQv1NdgR9S
+9ou97A/+J6+941Gj3za+s/+igtjUbvr4Z5bMELqFKBNH9Ow5dugFwpBsIN2+/4ci
+j1K5hPGVxh3S4w2ZoRcR/iw6WshH7SooDglbhhnGxgzI+14bIPtS4l/173fGGGNI
+PgigLAjsm6dIo6JsA5QShVVva6p24CTDNrvkUYum+nzmJLfZDpG68cUIpkLBZ6Mu
+rlB8Dbc8it0SNUXBM+NVGfnpSNiD0MdfFaCES8k7BqV4CJkFmKuGvoUlOOLo5DP3
+7uuOcqokQSbD9+LmPvmGy4y08ieChk0o24NC9Odx6R8FJbXgEwC/YkyrkB9xn5DB
+MYrVHMjVYYZcp/NXOvaKvrgt9Y+2hZvQv1PeRwhWjE30YRWgbQ2fFxEpGj+9JvNx
+tNVVMerzOlsFvkVEHAZAKKO57xnF8yIavsFuRdqxFHxwjQQJM1tBpCM+Mt7RTDSR
+91R7QedCf/TigyRcpIPDbyDzCq2naUtUpr1SDUjPcrpfK2iFm/4zaEyWEG3i+5Td
+gftRtYD6e2j1m0HYNVdcwk45JNWrfW82wsvUyKP7CSb0DvRKQ2MjVek/+vqsEjwg
+yukuYUPh6RDjLZWVOtperf3u9xJBnVW6kIeIeDvIZFZwmlAB3QYJBMKBeIQT1ruP
+Egxf6HN003WNLaIiV0wMqnCiPAMXI+qdJDkx27ec2PLy42K9+Rg=
+=8k2Q
 -----END PGP SIGNATURE-----
 
---ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags--
+--uuKVzAmB+c+zQlhu--
