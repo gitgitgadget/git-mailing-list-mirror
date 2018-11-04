@@ -6,41 +6,40 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB561F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 19:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC8151F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 19:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729471AbeKEEpU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 23:45:20 -0500
-Received: from mail.smurf.noris.de ([213.95.149.21]:39266 "EHLO
+        id S1729508AbeKEEqT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 23:46:19 -0500
+Received: from mail.smurf.noris.de ([213.95.149.21]:39346 "EHLO
         netz.smurf.noris.de" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1728970AbeKEEpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 23:45:20 -0500
-X-Greylist: delayed 960 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Nov 2018 23:45:17 EST
+        with ESMTP id S1728970AbeKEEqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 23:46:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de;
          s=20160512; h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To:
         Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
         Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
         In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
         List-Post:List-Owner:List-Archive;
-        bh=zdlnJogdRLwJOKwmc2wZxzpogoyaEB09j5Jp5VA0Ol0=; b=gLQYT72rQjNOymn0zFTJxeQg+8
-        qAH9jQHbJ2XvYyQ4eDtq/S/+ypJaf9teV116Y5uEsWFFR/+UQWztEB1wQAdqtmYPeiHpAPa/u2gyK
-        pddOFXG1F8WgXzqOJzLY+zcDCVYQOyY1KQg307GdY7Q+pXsRwVqLY8Z0a4pXhCWzxf/LOoKwCuNIE
-        b8JQgF8fsvhnq3qGcYjkXao192FudZhi3PiemL4uATm4avQb+BxzNTko8fV4K2BqLSTSe0jtW/O2F
-        kJf1NnmeTyVrw/KhsVn3t1J/0NMOqolisp8bZOz9MFBEe35vgR34NwQXH8BgwpdnVOWmAW1eSr1Bl
-        fYMqQzr7pLARzC1NxgBVLy0+Fv2rF512adozYb34lUUvYk1aiCXFLU9RAtah7hrCbjR2hGDpaiul+
-        gAbrFXlOF1iRGhaSLbJXkwZAabSpiasHQRgKbGaRfV/MjEpw1wMknkXjilvcIKa7TD0xYyiAL7ESS
-        RyzVlsqolOWc47NyANF34xKeof+HhQL6ngxQrlFs9n5c0v7+c4ldtr0t3YWFJZ1j2KtbEk8b1rgHd
-        b6/N64EY6pJfL4uqecKCc/mTU4SiPoW0FbV+dgmkObFOGR7SewsH2LQemwFtIck0/bKrKd9crTsa6
-        zRt668FVgs+bxvp6d7uM4CsPVDlPZ9qgkgYXi57Nk=;
+        bh=1fcpKJ5KOJzkg/FTak9LOVVehXbGnySeS9adphVBnhU=; b=oaKlev+vqen6y6rJD3peTrzvFD
+        3d4kz7Bi8ew+XX3yT3x7pXHBPObCISeBNxh15bEgx3orMjr/2x/ugsJrvJSIzUXxTuN3j5W3w6GxZ
+        6qMSru1YTHP1xQm7WHRU3iuoYfscmKdsl2HAp4pG/wB8HUaLaWq65s0YGZsaY7KmbhODOT9rlBziG
+        PHgC4dpUYzYD1VswY4EE1QYLWjj3WmRa6UPVfwP7SBsIiTJqjbCT/XjqFITkyJHOAsN3f5kDis3I6
+        Qx9Dv/Te65XyJUW9kme7kS3RzBT+hH5abgo2NfaKqpCIUD+eVoqPMCMN6azSuVSKJzD2wyzFCTDAh
+        uKrNnbeo8qUJr0ps1LfJ0zva3mpfunTmh2Zwynq9OZpE6vMlB0/HAjjN2HV4Nhn+eBFeesadFjuDB
+        iDcniwLzf8MievlB++/WFuEufQX1C/H52qGDNQ2VJIUphaD/elS2FA3ZUsRUM2vA/tm/YPjYZwwoP
+        SwwNA8BPLWMALKvWhdrZOUKzUcQz/8J5tf6JEg9FQRVIASwryZY7wh4RTESj9uZC/ZYcbuBpnAxD5
+        6rVe8qqz6YjRG+hG9QIWqOybK5kiOx+5eesKrIYhHxU3FDYEurFDJcAJnqPcCF+GjFARMRe5uz6I+
+        C0dBQcPfbV8WoEK9jfRP5IG5BL+yoNZewpApenLH8=;
 Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
         by mail.vm.smurf.noris.de with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.89)
         (envelope-from <matthias@urlichs.de>)
-        id 1gJNpZ-000OKU-Ia
-        for git@vger.kernel.org; Sun, 04 Nov 2018 20:13:06 +0100
+        id 1gJO5e-000P2Z-KR
+        for git@vger.kernel.org; Sun, 04 Nov 2018 20:29:42 +0100
 To:     git@vger.kernel.org
 From:   Matthias Urlichs <matthias@urlichs.de>
-Subject: "git checkout" safety feature
+Subject: "git checkout" obliterates not-yet-ignored files
 Openpgp: id=AFD79782F3BAEC020B28A19F72CF8E5E25B4C293
 Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
  xsFNBE7uOWcBEADgsF3N8L9mUekI0XLfLNQpMLq9VMwi8nyZtmJECHOajfOX8tMWua1Bh4qh
@@ -96,14 +95,14 @@ Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
  4upFr7oOSP2kBTfxYALrEWgvodhYdpLwhUWlULHkaxcwYsqLEw98yfalhK7x/q4lE7I1HoSR
  Q6otwXKaot2VBBZPA+Tw/UuvK6/UBlqWo5nGcPNJU6A6hnWBqOdAkBOQYETEw7xDSYf9hkzp
  lMEUIEd3MXTS5bB+uhUV4tfLAz+qvFOQqyJgpoO3VUG1QA==
-Message-ID: <6afef19d-08f6-9cce-a491-3a49808c57ec@urlichs.de>
-Date:   Sun, 4 Nov 2018 20:12:54 +0100
+Message-ID: <949b99d6-c681-49ed-4a4e-d33e0f6487d3@urlichs.de>
+Date:   Sun, 4 Nov 2018 20:29:35 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.2.1
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
  protocol="application/pgp-signature";
- boundary="9b9m7eZCkTh2oj9Etu6DveS9k7kgS3J4u"
+ boundary="ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags"
 X-Smurf-Spam-Score: 0.0 (/)
 X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
@@ -112,56 +111,61 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---9b9m7eZCkTh2oj9Etu6DveS9k7kgS3J4u
-Content-Type: multipart/mixed; boundary="p6BQkFE0fA5UTNKiD1zKUbnL6iXPegHT8";
+--ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags
+Content-Type: multipart/mixed; boundary="yxAPSyOQ1YljarI87dh7qgfsODhCQJHXf";
  protected-headers="v1"
 From: Matthias Urlichs <matthias@urlichs.de>
 To: git@vger.kernel.org
-Message-ID: <6afef19d-08f6-9cce-a491-3a49808c57ec@urlichs.de>
-Subject: "git checkout" safety feature
+Message-ID: <949b99d6-c681-49ed-4a4e-d33e0f6487d3@urlichs.de>
+Subject: "git checkout" obliterates not-yet-ignored files
 
---p6BQkFE0fA5UTNKiD1zKUbnL6iXPegHT8
+--yxAPSyOQ1YljarI87dh7qgfsODhCQJHXf
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Content-Language: de-DE
 
 Hi,
 
-A recent discussion on LWN https://lwn.net/Articles/770642/ noted that
-"git checkout <release> <file=E2=80=A6>" does not warn if one if the file=
-s has
-been modified locally, nor is there an option to do so.
+the problem: suppose I decide that a local file should no longer be
+controlled by git. Thus I add it to .gitignore and then "git rm
+--cached" it. So far so good.
 
-IMHO that should be fixed, preferably by somebody who knows git's
-internals well enough to do so in half an hour ;-)
+However, if I subsequently modify that file and then go back to a commit
+that still contains it, my local changes will be obliterated.
+
+IMHO that's a bug =E2=80=93 .gitignore should only be used for (not) addi=
+ng
+non-version-controlled files. It does not tell git to ignore changes (in
+files that *are* under version control), and thus it should not allow
+any git command to simply overwrite a file.
 
 --=20
 -- Matthias Urlichs
 
 
 
---p6BQkFE0fA5UTNKiD1zKUbnL6iXPegHT8--
+--yxAPSyOQ1YljarI87dh7qgfsODhCQJHXf--
 
---9b9m7eZCkTh2oj9Etu6DveS9k7kgS3J4u
+--ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEr9eXgvO67AILKKGfcs+OXiW0wpMFAlvfRLYACgkQcs+OXiW0
-wpP+2w//V1rav7P5GTRf+hROuJ3e5hO3Crh+xUoCA6eVt4WZlB4WX4MVXKMY58O3
-KAUrbzWNtPyPVE0If/NljynMhA/WbkJ1Q1rZBSYFsLsH4mLxhzfeG5utAbCB3UQP
-w1TNHXkjFrExTnt7UYG4xfAnlAEDkCO9VKmmBM8bOolYB2hfX1Zpbw52mr2UWvPR
-RwOYNPs1R3UOwxly5qljFzbNvAdykv77REXozFsfkcfyB5LG0gOrwCufu3ZuOsy4
-xAmkm8vYTT/PTqXdPXAOu5Iahv5ChPhdN1ekyeyi645lZpx9JzAA8sMmtPceXe5c
-B6Son2ZownI2UJ5dqItsKxmHWSZzdRnUJ1f7YkXMyXG1bH4XI02vEwFM+UwG4+s/
-zKwAu7kUtk/ABUeR0dztNOHAo8Ir35fSTZok03OwE/nGoKBjaDGvtdXv8s8bTIW4
-nQcy9/CKIcIICGrbzTtRdkBKg0HMcUxL7iRmhIMwpAp4aWTGfM8GuiwDaxUsaHgX
-uSPXc7My6RRsgjc6FeciORtYTDOLbzYRscF1MoEUbzHfQL+2Pge5eU/fFf4uA4pi
-sOyqVGVum6R3l6afJhuzZ8oXKUBm9p9jhZ3bNOmhmo/e3ak5YFcNJjuFCFPkA4Gc
-J1bFaydHEMjT9IYD3UduHlPmEhp3KAXU6z/YZ0bMuI4TdgEhQTs=
-=eUWg
+iQIzBAEBCgAdFiEEr9eXgvO67AILKKGfcs+OXiW0wpMFAlvfSJ8ACgkQcs+OXiW0
+wpOquQ//T6gv71ZwlH8TGKKwbBMX+eNpxVnhPAtzEakaCTW9X5s4WiPyrhAEGPsB
+SktxET37WlEOyUUoKhDdRm5A0ooh25XksF9+u1WDjDYy6812+vcetKy1Xw5MFK4p
+PMdTJ6L5z+TWkFsL4SjHohwvK/mFTCuDVOqJrKd8NxkNmfL+HjQln9Kk4Jxk98tn
+YQ3Etowu/TGYgCQfj31HRhwAzb2jdofiyRxaUzng3M5I5bTqJFHYvklgbrCV8Izp
+VdO3PYJDxM/lf2/uQIMOkeOQ/w+wvjkTAEFN8OI1rtgUQau2j+V7WfN2Bz7ReUPA
+UN1BQqOeqXHBVW3SQnJNVhZzX+zrL9KJP2AUIV2sDN+XlZDbW4dqifbeq8E9YXl2
+SShOfeytZqf7vWJuAM9MZS2SayU06HL4YPi9GIAYfv6eDjavhfUpdggLkPWJCsiS
+yLdAVPoUUQXzULDcbjQJ/+H7cm14lIxWheKv/XWWV7DdRvrDbtYZAoltFHX+Xl9a
+TsngFuG+bjxxQ3uwwGWUW2IBQBk3a5Y/iwc4FL1VKrFIpyjx6IN2xVVjmDVWinfT
+vCKya9DSWl77x4gicd6SGv5LkibFnEp9/+dRQ0p1ohKgJyl8D0DpDTRFzKZe33dc
+csFDq2fYCLL6ZvNlR6eFTmfISrfKaShwCJ5n0XkdCnOj2rRe+7c=
+=ZvgW
 -----END PGP SIGNATURE-----
 
---9b9m7eZCkTh2oj9Etu6DveS9k7kgS3J4u--
+--ZMzKnCNJzSUaJN7NJVmVqnBptneMsPags--
