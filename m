@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3DA61F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E41CF1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730411AbeKEJB5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 04:01:57 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53216 "EHLO
+        id S1730649AbeKEJCA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 04:02:00 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53230 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729402AbeKEJB5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:01:57 -0500
+        by vger.kernel.org with ESMTP id S1729402AbeKEJCA (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:02:00 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A1E5E61B7C;
-        Sun,  4 Nov 2018 23:45:11 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A843D61B7E;
+        Sun,  4 Nov 2018 23:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541375112;
-        bh=y4s23+nnagPVnwJ5P3KUEOqIoIY0Tfmf5ieeyCqPR+Q=;
+        s=default; t=1541375114;
+        bh=eq6uz2zRn1FRia7VIpcK09IaJzAI1LgMumjeI1hEKmw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=OIs/kyRG2Fp8kzzcY3Hoy6M7RPB+zE6dbw1WQ9eGtVBlrJK5yKufMrInL3Rx9zRII
-         02W8F4bAUeY4RhsUv7qH68EnfcDbniPw9/jui++zWNUD5sA4SfQPc0XKcQIK03RFud
-         KI+prH3JVbRVvOEXxW4S4nk5wCb6rXX8V0x96LGQmWoNDBgC44W1YfqfdOjR2JEThv
-         sf2hh/fYZt0eu9ff6PAVNIaZnp42fwhMk3iTyt1vCQXJNVcwB3xR3vZNEnEwrpUit6
-         a6hSBC1x5qVqCWJCR2sbRn8w+Ub0Eq0OYKwz1BmJTGa0jNWIDkjJ5rr3ixgQLRa8lT
-         qGIxwDzo7g6yQxvnnBl4+jdEj2KrsqpgRlFtwtj0D6N+rX4I2lN48gfxXykL7qcclA
-         jhCtCC9v7SRa6URrux7YpmZU6haYg0eKdz+2wa/hn4cvvKKn/9+8CE76tl1gpxspCC
-         TSI5meDdIsnvrhsaD2Ik7DuFC5ZhpV9F43/bs4183OrRvPguNFC
+        b=zW+tJ6vgfXUy70WRuzVUrXRIcXPOZ2KOXoP/k6ncOXgRwssQnSQbSH1aZZqfQCf7z
+         Bik9keuVHjXmieV+NXEYrlYefDCh7YkgcAaVca8BdKMHcNeYcEUOruZlpOLI/3a86I
+         K7ooFmOtHUJ5DMBn4O0/I6EROVGlT/Oiq19qo1OCWlR+HdwXcxh39VTJm5rTADycze
+         tzfok2LGnhF5JpNgfCNdYCLBaVpkeHLm7nRMpbh5Fevj6XABZvK/RRIM/7h8hBZnT2
+         U9zGQX+l7KGr0q7DahtbzO2wJUCPG8x/lyklck4/ax6KuKDSJp6Y5N6HVp8toNO3jG
+         +54lqrKgTKWHR+2kZct81bmZ52ZNtclXRJ3G/fLL2WSRXcDpwnV2vAI/1EK+HLbTrE
+         Kf6mdWa6GMUcbEbDnzpzMk4tJH+TW+Z0WOnR9jMcRsw/lz69xCrX/jL7+RtOYej/5Y
+         No7X8Q/kqHc/f3+jz7U9IoGoNASzq0wEmjX9TdEOFhbTj+wmMWq
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
@@ -43,9 +43,9 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 05/12] t: add basic tests for our SHA-1 implementation
-Date:   Sun,  4 Nov 2018 23:44:51 +0000
-Message-Id: <20181104234458.139223-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 07/12] sha1-file: add a constant for hash block size
+Date:   Sun,  4 Nov 2018 23:44:53 +0000
+Message-Id: <20181104234458.139223-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
 In-Reply-To: <20181104234458.139223-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -58,51 +58,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have in the past had some unfortunate endianness issues with some
-SHA-1 implementations we ship, especially on big-endian machines.  Add
-an explicit test using the test helper to catch these issues and point
-them out prominently.  This test can also be used as a staging ground
-for people testing additional algorithms to verify that their
-implementations are working as expected.
+There is one place we need the hash algorithm block size: the HMAC code
+for push certs.  Expose this constant in struct git_hash_algo and expose
+values for SHA-1 and for the largest value of any hash.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t0015-hash.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
- create mode 100755 t/t0015-hash.sh
+ cache.h     | 4 ++++
+ hash.h      | 3 +++
+ sha1-file.c | 2 ++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/t/t0015-hash.sh b/t/t0015-hash.sh
-new file mode 100755
-index 0000000000..8e763c2c3d
---- /dev/null
-+++ b/t/t0015-hash.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
+diff --git a/cache.h b/cache.h
+index bab8e8964f..9e5d1dd85a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -45,10 +45,14 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
+ /* The length in bytes and in hex digits of an object name (SHA-1 value). */
+ #define GIT_SHA1_RAWSZ 20
+ #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
++/* The block size of SHA-1. */
++#define GIT_SHA1_BLKSZ 64
+ 
+ /* The length in byte and in hex digits of the largest possible hash value. */
+ #define GIT_MAX_RAWSZ GIT_SHA1_RAWSZ
+ #define GIT_MAX_HEXSZ GIT_SHA1_HEXSZ
++/* The largest possible block size for any supported hash. */
++#define GIT_MAX_BLKSZ GIT_SHA1_BLKSZ
+ 
+ struct object_id {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+diff --git a/hash.h b/hash.h
+index 80881eea47..1bcf7ab6fd 100644
+--- a/hash.h
++++ b/hash.h
+@@ -81,6 +81,9 @@ struct git_hash_algo {
+ 	/* The length of the hash in hex characters. */
+ 	size_t hexsz;
+ 
++	/* The block size of the hash. */
++	size_t blksz;
 +
-+test_description='test basic hash implementation'
-+. ./test-lib.sh
-+
-+
-+test_expect_success 'test basic SHA-1 hash values' '
-+	test-tool sha1 </dev/null >actual &&
-+	grep da39a3ee5e6b4b0d3255bfef95601890afd80709 actual &&
-+	printf "a" | test-tool sha1 >actual &&
-+	grep 86f7e437faa5a7fce15d1ddcb9eaeaea377667b8 actual &&
-+	printf "abc" | test-tool sha1 >actual &&
-+	grep a9993e364706816aba3e25717850c26c9cd0d89d actual &&
-+	printf "message digest" | test-tool sha1 >actual &&
-+	grep c12252ceda8be8994d5fa0290a47231c1d16aae3 actual &&
-+	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha1 >actual &&
-+	grep 32d10c7b8cf96570ca04ce37f2a19d84240d3a89 actual &&
-+	perl -E "for (1..100000) { print q{aaaaaaaaaa}; }" | \
-+		test-tool sha1 >actual &&
-+	grep 34aa973cd4c4daa4f61eeb2bdbad27316534016f actual &&
-+	printf "blob 0\0" | test-tool sha1 >actual &&
-+	grep e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 actual &&
-+	printf "blob 3\0abc" | test-tool sha1 >actual &&
-+	grep f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f actual &&
-+	printf "tree 0\0" | test-tool sha1 >actual &&
-+	grep 4b825dc642cb6eb9a060e54bf8d69288fbee4904 actual
-+'
-+
-+test_done
+ 	/* The hash initialization function. */
+ 	git_hash_init_fn init_fn;
+ 
+diff --git a/sha1-file.c b/sha1-file.c
+index 7e9dedc744..9bdd04ea45 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -90,6 +90,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		0x00000000,
+ 		0,
+ 		0,
++		0,
+ 		git_hash_unknown_init,
+ 		git_hash_unknown_update,
+ 		git_hash_unknown_final,
+@@ -102,6 +103,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		0x73686131,
+ 		GIT_SHA1_RAWSZ,
+ 		GIT_SHA1_HEXSZ,
++		GIT_SHA1_BLKSZ,
+ 		git_hash_sha1_init,
+ 		git_hash_sha1_update,
+ 		git_hash_sha1_final,
