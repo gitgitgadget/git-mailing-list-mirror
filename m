@@ -2,143 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 555C21F454
-	for <e@80x24.org>; Sun,  4 Nov 2018 17:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DFF01F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 17:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731409AbeKEC5v (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 21:57:51 -0500
-Received: from mail-io1-f45.google.com ([209.85.166.45]:42632 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731320AbeKEC5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 21:57:50 -0500
-Received: by mail-io1-f45.google.com with SMTP id h19-v6so4843360iog.9
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 09:42:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AoOt0vepqzm+gahNkLUKo3WjDC8OEY5KXbpDKGR6A4Y=;
-        b=c2WdvwFmPameSfCwi7lY3Jxc3DL728F4ke9fuMRaFqVSpXifa0MXwnwLrk3TvJdgaD
-         EOqvu161Qm1Bge3j6KWDCfzMC5LNaaG67lpoTQ6LWNmbDPy1M0m0Rb++p765f81m6EFb
-         IcH7pvvYukkjd9hi8hYDwsLpc6al6i0tRE/tU5lCp9nf9SvSOukYJdAdEGViSacmR1GQ
-         IzmN1jjkWr8hzHG4U7qM6ztNlATSHqYVNDDYvIlw7Hr0/muJlFb2nQkErB666gllOMFU
-         d2NXCWs7CdVwQoi26yLVkCCBeRrUV/pdDo5sXSgp4nDMxD1lXhdBQSXZVX07aTqNqyDZ
-         4VlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AoOt0vepqzm+gahNkLUKo3WjDC8OEY5KXbpDKGR6A4Y=;
-        b=YUT3s4z2lxvcrKITQobI8krxhtymBmHqtC9Q5Ny3y3lxHS2PazlXVV1DTFUUVdDFns
-         tVrqQW2XP65c++dma+Bci/BUpLCzkVUleC2QCImwl9Dx/MbSdZsiQCdBOtl3qiVPsLfA
-         B+rfCo69fp/gXdEVyru3zCDY9RjbyTeTxUwukCH9hvsfOmzESGBa5kH5MQ6uz0ksTH9L
-         ylJeesErBQtcPnGVUTIbsxYfda49wOzMwckyY1MYSys7xPDj3cYblSwne5Z4kF+VIKl9
-         0X183WP5lR6UA5ZCBU1ZHPs9cuz/Ze9PxFu7/0Yd1BynHo2PIRfNe56jM4EkW6nDY7pX
-         TXfg==
-X-Gm-Message-State: AGRZ1gIUOCbbjPDEfTGEDK9zshomeGiKM0S4Cq4aMVHJ0c9n/WsC6boA
-        p5wH79gTMrdf5qflnEbc8fnngluhxwA4PBZP72INHZWn
-X-Google-Smtp-Source: AJdET5cS68ENIl3ZduNUgcb6H6+HpbrbNo3o8S6m2MF1TxmD6Y9fgzjhADTCpa1oVPvuY9p1fjQbU6ZUrYW/1Lk5iVg=
-X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr15776123ioc.118.1541353325246;
- Sun, 04 Nov 2018 09:42:05 -0800 (PST)
+        id S1731454AbeKEDEP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 22:04:15 -0500
+Received: from mout.perfora.net ([74.208.4.197]:59329 "EHLO mout.perfora.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731425AbeKEDEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 22:04:14 -0500
+Received: from ROGG752VY ([173.239.230.80]) by mrelay.perfora.net (mreueus003
+ [74.208.5.2]) with ESMTPSA (Nemesis) id 0MIOML-1gFFm03In1-004EF5 for
+ <git@vger.kernel.org>; Sun, 04 Nov 2018 18:48:28 +0100
+Received: from ROGG752VY ([173.239.230.80]) by mrelay.perfora.net (mreueus003
+ [74.208.5.2]) with ESMTPSA (Nemesis) id 0MIOML-1gFFm03In1-004EF5 for
+ <git@vger.kernel.org>; Sun, 04 Nov 2018 18:48:28 +0100
+From:   "_g e r r y _ _l o w r y _" 
+        <gerry.lowry@abilitybusinesscomputerservices.com>
+To:     <git@vger.kernel.org>
+Subject: if YOU use a Windows GUI for Git, i would appreciate knowing which one and why
+Date:   Sun, 4 Nov 2018 12:48:25 -0500
+Message-ID: <1b8a01d47466$9775c130$c6614390$@abilitybusinesscomputerservices.com>
 MIME-Version: 1.0
-References: <20181104072253.12357-1-pclouds@gmail.com> <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net>
-In-Reply-To: <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 4 Nov 2018 18:41:38 +0100
-Message-ID: <CACsJy8CAw6yR5vbsFJbSd+UTR_1UpS=8PP3hEtbSNSi3SkMNag@mail.gmail.com>
-Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with
- trailer lines
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdR0Xhy+BuqyTqHKRp2wbnwLq1azNA==
+Content-Language: en-ca
+X-Provags-ID: V03:K1:QG9kG/5ZpnvSdTKix0ZKSjXm5uTbH3YqOhQzAELOQJFTvCXki5r
+ 9YXuIhmiEADWgcQMfHX5ExZxFrb+8D2jctcwSjCuGFxRM08zud4q20TNq3TC2YIyXlYPWnP
+ qe2UAVtWq1k7WzWAruEA7ODP9NSRk0h3TTjbQwqtXljgfbqg5KdbFND/pXS+Ag61AAVKZTd
+ /QoDfCEDdvI6kWFvEerMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ktJ8qCRKJcw=:a1SRGLfk6coUmikdL+U00J
+ Ti4C0R9Ukn5Zxznpopdf/dV9rnKLPaB+g51UO8m2JkdpavI2aOLhKWqh83p5jaoKlFNbsYZ26
+ 7U5HfI6Hdosklidhf36isPOOpGdwp8S2rHOTApzWMguB/jnm7EvRU9LeNXmhsgo/PHvz4eYf6
+ Jc4n/5/HdK7XOMEZY8Zm6yIpnd3G9fESpHFHZzTHR/H1J8zJNfG12qLpyM/3PNaKAyqr2h6zT
+ zIpInsafclBX3VROoJLCEA3Jl1IxQdF88h1sXJdc7jI7gXn1LlAChY4eNcQi49c4RnTW/g2Wj
+ 1XssdLO4UgQgyqvQa4zaAmFAsRX2+3FWygCvyOLg0di51EXsRjrheQAitYsdhEMJdJs0SLqzr
+ dI0B931bu8/Aj1Min3k7K+mOafjToXmMzqtN02ikNkobFr4HxoRV5siBRK3+ClIZJpvHdf5PD
+ /RsrVu4qn36KQL/rlfW1zM9HIosgHAoxjzphmCv+B0PDgp+oCreBwcPtBHSQo+FkxSSqSKO0H
+ oGGC72zesW7o0ugj7gOYfMBVB0ikIpGspg7NTmP7NIq0tNMZmEnnmxz3Ng6kXuL1a3YSn/yxs
+ Va0qMMkHfa/7Swt4kHEpI8JbFqbtOS7OWj9XptVQ0Yn1wc1jrx3B4eppdlkTvxPAhErXAIseF
+ F2MWg5UXzrZTUGUvW+1PW0Od6HcfwuuTRGxeT5ezPjPtHai/jjRfLeOOTYLSStfv8qYlJwHDa
+ 1KCCbCobPbcM88Rx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 4, 2018 at 5:45 PM Phillip Wood <phillip.wood@talktalk.net> wro=
-te:
->
-> On 04/11/2018 07:22, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> > When a commit is reverted (or cherry-picked with -x) we add an English
-> > sentence recording that commit id in the new commit message. Make
-> > these real trailer lines instead so that they are more friendly to
-> > parsers (especially "git interpret-trailers").
-> >
-> > A reverted commit will have a new trailer
-> >
-> >      Revert: <commit-id>
-> >
-> > Similarly a cherry-picked commit with -x will have
-> >
-> >      Cherry-Pick: <commit-id>
->
-> I think this is a good idea though I wonder if it will break someones
-> script that is looking for the messages generated by -x at the moment.
+PREAMBLE [START] - please feel free to skip this first section
 
-It will [1] but I still think it's worth the trouble. The script will
-be less likely to break after, and you can use git-interpret-trailers
-instead of plain grep.
+Forgive me for asking this question on a mailing list.
 
-[1] https://public-inbox.org/git/20181017143921.GR270328@devbig004.ftw2.fac=
-ebook.com/
+stackoverflow would probably kill such a question before the bits were fully saved to a server drive.
 
-> > @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command com=
-mand, struct commit *commit,
-> >               base_label =3D msg.label;
-> >               next =3D parent;
-> >               next_label =3D msg.parent_label;
-> > -             strbuf_addstr(&msgbuf, "Revert \"");
-> > -             strbuf_addstr(&msgbuf, msg.subject);
-> > -             strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
-> > -             strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
-> > -
-> > -             if (commit->parents && commit->parents->next) {
-> > -                     strbuf_addstr(&msgbuf, ", reversing\nchanges made=
- to ");
-> > -                     strbuf_addstr(&msgbuf, oid_to_hex(&parent->object=
-.oid));
-> > -             }
->
-> As revert currently records the parent given on the command line when
-> reverting a merge commit it would probably be a good idea to add that
-> either as a separate trailer or to the Revert: trailer and possibly also
-> generate it for cherry picks.
+Let me explain why i am asking and why i am not being a troll.
 
-My mistake. I didn't read carefully and thought it was logging
-commit->parents, which is pointless.
+[a] i'm "old school", i.e., > 50% on my way to being age 72 [born 1947]
 
-So what should be the trailer for this (I don't think putting it in
-Revert: is a good idea, too much to parse)? Revert-parent: ?
-Revert-merge: ?
+[b] when i started programming in 1967, most of my work input was via punched cards
 
-> > -             strbuf_addstr(&msgbuf, ".\n");
-> > +             strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
->
-> If the message already contains trailers then should we just append the
-> Revert trailer those rather than inserting "\n\n"?
+[c] punching my own cards was cool
 
-Umm.. but this \n\n is for separating the subject and the body. I
-think we need it anyway, trailer or not.
+[d] IBM System/360 mainframe assembler was cool and patching previously punched card encoded machine code output was a fun risky but
+at times necessary challenge.
 
-> > @@ -1784,9 +1777,8 @@ static int do_pick_commit(enum todo_command comma=
-nd, struct commit *commit,
-> >                       strbuf_complete_line(&msgbuf);
-> >                       if (!has_conforming_footer(&msgbuf, NULL, 0))
-> >                               strbuf_addch(&msgbuf, '\n');
-> > -                     strbuf_addstr(&msgbuf, cherry_picked_prefix);
-> > -                     strbuf_addstr(&msgbuf, oid_to_hex(&commit->object=
-.oid));
-> > -                     strbuf_addstr(&msgbuf, ")\n");
-> > +                     strbuf_addf(&msgbuf, "Cherry-Pick: %s\n",
-> > +                                 oid_to_hex(&commit->object.oid));
+[e] using command windows and coding batch files for Gary Kildall's CP/M and the evil empire's PC/MS-DOS was how i accomplished many
+tasks for early non-GUI environments (i still continue this practice even in Windows 10 (a.k.a. please don't update my PC O/S behind
+my back again versions of MS Windows)).
 
-I will probably make this "Cherry-picked-from:" to match our S-o-b style.
---=20
-Duy
+[f] my introduction to Git was via a command line based awesome video that has disappeared (i asked this community about that in a
+previous thread).
+
+BOTTOM LINE:  virtually 100% of my Git use has been via Git Bash command line [probably downloaded from https://git-scm.com/]
+
+For me, and i suspect even for most people who live with GUI platforms, [a well kept secret fact] using the keyboard is faster than
+using the mouse [especially when one's fingers are already over one's keyboard-example, closing one or more "windows" via Alt+F4.
+
+Also for me, i am happy to change some code and/or write some new code, Alt+Tab to Git Bash frequently, ADD/COMMIT, then Alt+Tab
+back to whatever IDE i'm using [mostly LINQPad and vs2017]; i know that's quite a bit schizophrenic of me-command line Git but GUI
+IDE.
+
+PREAMBLE [END]
+----------------------------------------
+
+QUESTION:  if YOU use a Windows GUI for Git, i would appreciate knowing which one and why
+
+i have been asked to look at GUI versions of Git for Windows.
+
+https://git-scm.com/download/gui/windows currently lists 22 options.
+
+if i had more time left in my life and the option, because of my own nature, i'd likely download and evaluate all 22 - Mr.T would
+pity the fool that i often can be.
+
+CAUTION:  i am not looking for anyone to disparage other Git Windows GUIs.
+
+Let me break down the question into 4 parts:
+
+[1a] Which do you prefer:  Git GUI, Git command line?
+[1b] What is your reason for your [1a] preference?
+
+[2a] if applicable, which Git GUI do you prefer?
+[2b] What is your reason for your [2a] preference?
+
+
+if you are uncomfortable replying to git@vger.kernel.org please feel free to reply directly to my e-mail address.
+
+i look forward to hearing from members of this Git community.
+
+Thank you for reading and thank you for your valuable time.
+
+gerry (lowry)-wasaga beach-ontario-canada
+gerry.lowry@abilitybusinesscomputerservices.com
+
