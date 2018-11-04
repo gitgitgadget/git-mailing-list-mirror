@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 591B71F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2FB1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730492AbeKEJB7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 04:01:59 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53226 "EHLO
+        id S1730305AbeKEJB5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 04:01:57 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53218 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729686AbeKEJB6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:01:58 -0500
+        by vger.kernel.org with ESMTP id S1729686AbeKEJB4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:01:56 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A7F2061B77;
-        Sun,  4 Nov 2018 23:45:12 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 894B161B7D;
+        Sun,  4 Nov 2018 23:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541375113;
-        bh=yRvgtxvGTSzl/+jKMYcv4Wpdaj1EDryNpqg57rkcLq8=;
+        s=default; t=1541375111;
+        bh=JO47WrcxS6xqFOCuXQMVntBmXlG/shMi5Dj9ObgYzOU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=yKUc0VR+LIZh0BofNde+7Pr2Dne8TAfQN4j2aqUuWLl7U96XmYSxukHeim/bcqi46
-         G7eCZ2mTQeuhQ296CLzL1C2Ipf5EiYA9s48lvyRhkT+oJLQOcgiDPyQJyzFdOGlTHI
-         qN1FU2cZH8GbvtQQyAkRdMo2C9jPWMCi8tLiBQgxF1kwpIGdn4rldpR8+UB9zz2NQ9
-         BNexodrSpYo/JEPGm3tv78CfuzEAP4XoLy+bxcaNke5KjPSb+mn0576iRpG/i641Ye
-         UCRA4KgeKo+mt0nD+CRw2Lm/uyabf5HHx630eDDcpRah5swJFECpY5Wao0YyGR+iL6
-         Lb8+KWaI57fjAKNvesIijW9AIKKJU+UNhQW0uFXh7G+/dnThX0V8jyZl98sq7n5TvZ
-         kgE1fcgtBm3EfKlH9aMPsE6FwuysbPO97zEdM+iVTIHfk8gnE8QPGDqM0Kvy5JXdxn
-         W6sPXluOpshxYfmBugEIhUOd+mi0wULjsbeiSYkpfmh5OallbqE
+        b=yu00PxPYKocxqErMW7K2tHXNC5wHf16pSyFQ2jfWWpIqFWXstyqDGFUkXqam44yeB
+         hF9rdBzLMVL0b9c5/VG8CVu1ecdW+cKbh8iNvaEb9Hb1I/uOfwhI+mbeoiHr0O+0o2
+         P+uBiBT0v6er5nS6ExOxEDDuMeWNs8/PON+ZZNw4EhI2eBl6INn7NX6dIo0DKozqfg
+         IVPtIhy6t85dK1CFzbZeBesSxHeZbjutKNv1FSSPKhtjT3aUxeopS1EWNTyjJm8wuu
+         fzYzW3WZl0/mf2haOWKJJN4cbA46/xb+McWi2whHscGAYo07YyPWYxwA+Y1he/ve2C
+         ce/HOMRXiO6F6MEULBzwmO5f+QNuLxeV4MHzDxrPKEj9cc673MGj/AMw71vt+dywhL
+         5vfzws0d7yFmI+ZIac8McKQDFBPcJWFaAwLgR5lHF9WuWt3aYlv5yW6McBgvOODMGm
+         R7uWsljKJR+cZsDllmo7T4d8Od/sBCEZjmh6LfV4zLVInMjJ2Xu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
@@ -43,9 +43,9 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 06/12] t: make the sha1 test-tool helper generic
-Date:   Sun,  4 Nov 2018 23:44:52 +0000
-Message-Id: <20181104234458.139223-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 04/12] cache: make hashcmp and hasheq work with larger hashes
+Date:   Sun,  4 Nov 2018 23:44:50 +0000
+Message-Id: <20181104234458.139223-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
 In-Reply-To: <20181104234458.139223-1-sandals@crustytoothpaste.net>
 References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
@@ -58,162 +58,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since we're going to have multiple hash algorithms to test, it makes
-sense to share as much of the test code as possible.  Convert the sha1
-helper for the test-tool to be generic and move it out into its own
-module.  This will allow us to share most of this code with our NewHash
-implementation.
+In 183a638b7d ("hashcmp: assert constant hash size", 2018-08-23), we
+modified hashcmp to assert that the hash size was always 20 to help it
+optimize and inline calls to memcmp.  In a future series, we replaced
+many calls to hashcmp and oidcmp with calls to hasheq and oideq to
+improve inlining further.
+
+However, we want to support hash algorithms other than SHA-1, namely
+SHA-256.  When doing so, we must handle the case where these values are
+32 bytes long as well as 20.  Adjust hashcmp to handle two cases:
+20-byte matches, and maximum-size matches.  Therefore, when we include
+SHA-256, we'll automatically handle it properly, while at the same time
+teaching the compiler that there are only two possible options to
+consider.  This will allow the compiler to write the most efficient
+possible code.
+
+Copy similar code into hasheq and perform an identical transformation.
+At least with GCC 8.2.0, making hasheq defer to hashcmp when there are
+two branches prevents the compiler from inlining the comparison, while
+the code in this patch is inlined properly.  Add a comment to avoid an
+accidental performance regression from well-intentioned refactoring.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Makefile                              |  1 +
- t/helper/{test-sha1.c => test-hash.c} | 19 +++++-----
- t/helper/test-sha1.c                  | 52 +--------------------------
- t/helper/test-tool.h                  |  2 ++
- 4 files changed, 14 insertions(+), 60 deletions(-)
- copy t/helper/{test-sha1.c => test-hash.c} (65%)
+ cache.h | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d18ab0fe78..81dc9ac819 100644
---- a/Makefile
-+++ b/Makefile
-@@ -714,6 +714,7 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
- TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-genrandom.o
-+TEST_BUILTINS_OBJS += test-hash.o
- TEST_BUILTINS_OBJS += test-hashmap.o
- TEST_BUILTINS_OBJS += test-index-version.o
- TEST_BUILTINS_OBJS += test-json-writer.o
-diff --git a/t/helper/test-sha1.c b/t/helper/test-hash.c
-similarity index 65%
-copy from t/helper/test-sha1.c
-copy to t/helper/test-hash.c
-index 1ba0675c75..0a31de66f3 100644
---- a/t/helper/test-sha1.c
-+++ b/t/helper/test-hash.c
-@@ -1,13 +1,14 @@
- #include "test-tool.h"
- #include "cache.h"
- 
--int cmd__sha1(int ac, const char **av)
-+int cmd_hash_impl(int ac, const char **av, int algo)
+diff --git a/cache.h b/cache.h
+index 51580c4b77..bab8e8964f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1027,16 +1027,12 @@ extern const struct object_id null_oid;
+ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
  {
--	git_SHA_CTX ctx;
--	unsigned char sha1[20];
-+	git_hash_ctx ctx;
-+	unsigned char hash[GIT_MAX_HEXSZ];
- 	unsigned bufsz = 8192;
- 	int binary = 0;
- 	char *buffer;
-+	const struct git_hash_algo *algop = &hash_algos[algo];
- 
- 	if (ac == 2) {
- 		if (!strcmp(av[1], "-b"))
-@@ -26,7 +27,7 @@ int cmd__sha1(int ac, const char **av)
- 			die("OOPS");
- 	}
- 
--	git_SHA1_Init(&ctx);
-+	algop->init_fn(&ctx);
- 
- 	while (1) {
- 		ssize_t sz, this_sz;
-@@ -38,20 +39,20 @@ int cmd__sha1(int ac, const char **av)
- 			if (sz == 0)
- 				break;
- 			if (sz < 0)
--				die_errno("test-sha1");
-+				die_errno("test-hash");
- 			this_sz += sz;
- 			cp += sz;
- 			room -= sz;
- 		}
- 		if (this_sz == 0)
- 			break;
--		git_SHA1_Update(&ctx, buffer, this_sz);
-+		algop->update_fn(&ctx, buffer, this_sz);
- 	}
--	git_SHA1_Final(sha1, &ctx);
-+	algop->final_fn(hash, &ctx);
- 
- 	if (binary)
--		fwrite(sha1, 1, 20, stdout);
-+		fwrite(hash, 1, algop->rawsz, stdout);
- 	else
--		puts(sha1_to_hex(sha1));
-+		puts(hash_to_hex_algop(hash, algop));
- 	exit(0);
+ 	/*
+-	 * This is a temporary optimization hack. By asserting the size here,
+-	 * we let the compiler know that it's always going to be 20, which lets
+-	 * it turn this fixed-size memcmp into a few inline instructions.
+-	 *
+-	 * This will need to be extended or ripped out when we learn about
+-	 * hashes of different sizes.
++	 * Teach the compiler that there are only two possibilities of hash size
++	 * here, so that it can optimize for this case as much as possible.
+ 	 */
+-	if (the_hash_algo->rawsz != 20)
+-		BUG("hash size not yet supported by hashcmp");
+-	return memcmp(sha1, sha2, the_hash_algo->rawsz);
++	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
++		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
++	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
  }
-diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
-index 1ba0675c75..d860c387c3 100644
---- a/t/helper/test-sha1.c
-+++ b/t/helper/test-sha1.c
-@@ -3,55 +3,5 @@
  
- int cmd__sha1(int ac, const char **av)
+ static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
+@@ -1046,7 +1042,13 @@ static inline int oidcmp(const struct object_id *oid1, const struct object_id *o
+ 
+ static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
  {
--	git_SHA_CTX ctx;
--	unsigned char sha1[20];
--	unsigned bufsz = 8192;
--	int binary = 0;
--	char *buffer;
--
--	if (ac == 2) {
--		if (!strcmp(av[1], "-b"))
--			binary = 1;
--		else
--			bufsz = strtoul(av[1], NULL, 10) * 1024 * 1024;
--	}
--
--	if (!bufsz)
--		bufsz = 8192;
--
--	while ((buffer = malloc(bufsz)) == NULL) {
--		fprintf(stderr, "bufsz %u is too big, halving...\n", bufsz);
--		bufsz /= 2;
--		if (bufsz < 1024)
--			die("OOPS");
--	}
--
--	git_SHA1_Init(&ctx);
--
--	while (1) {
--		ssize_t sz, this_sz;
--		char *cp = buffer;
--		unsigned room = bufsz;
--		this_sz = 0;
--		while (room) {
--			sz = xread(0, cp, room);
--			if (sz == 0)
--				break;
--			if (sz < 0)
--				die_errno("test-sha1");
--			this_sz += sz;
--			cp += sz;
--			room -= sz;
--		}
--		if (this_sz == 0)
--			break;
--		git_SHA1_Update(&ctx, buffer, this_sz);
--	}
--	git_SHA1_Final(sha1, &ctx);
--
--	if (binary)
--		fwrite(sha1, 1, 20, stdout);
--	else
--		puts(sha1_to_hex(sha1));
--	exit(0);
-+	return cmd_hash_impl(ac, av, GIT_HASH_SHA1);
+-	return !hashcmp(sha1, sha2);
++	/*
++	 * We write this here instead of deferring to hashcmp so that the
++	 * compiler can properly inline it and avoid calling memcmp.
++	 */
++	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
++		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
++	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
  }
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index e4890566da..29ac7b0b0d 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -50,4 +50,6 @@ int cmd__windows_named_pipe(int argc, const char **argv);
- #endif
- int cmd__write_cache(int argc, const char **argv);
  
-+int cmd_hash_impl(int ac, const char **av, int algo);
-+
- #endif
+ static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
