@@ -2,112 +2,318 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18A181F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 16:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 857671F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 16:45:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730806AbeKEBwy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Nov 2018 20:52:54 -0500
-Received: from mail-it1-f169.google.com ([209.85.166.169]:33995 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729593AbeKEBwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Nov 2018 20:52:54 -0500
-Received: by mail-it1-f169.google.com with SMTP id t189-v6so5674861itf.1
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 08:37:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=nPfvV/Df15qj0buglRhLeGYZvptdXpZ6JbzJ4VuO920=;
-        b=eaNsBnLd7DVYJFZjsRk80cZP38FQNOKuhx9oKFVwFwKwm2WvOgkChStPvRodDN1v06
-         hK0MTRJTcOa6IELwZSwU1r2hw6UjmsSkINg1VZh/U5dxfTxzyrUKT/fEt40tgyJ1WMDt
-         9OSRpoWcmrpXjHO2l6Fu8RLWxmxHhpguPLMuXSS+1oUqWXR+ay4bwGJ7v8p1fy2PwrdK
-         +SE2C82tZDw/Pidp93w/nEPhgiXXryuyaP01WXep0zsr0PXujmxdxG3oprG+vqPjpjjd
-         LO4oWI3OrCWQzKE10tMBonOfJiauDIdCYGTrJ1MbDxsJYtUQ/m0NI3/rAgCE25EEjrsZ
-         MyNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=nPfvV/Df15qj0buglRhLeGYZvptdXpZ6JbzJ4VuO920=;
-        b=egI2n0lxDJpskvyv4SIMj0xAm7ymi8H1oqJZGaFdyfPs5O8R5o5BaVt9MSfZgH05K7
-         H0Vel3Ox+ZaGrp3RJVjjgvSbhUcjdTewTF1SRiDQV2WSx6Z8NPhjvUtTx676b5Bk+IkX
-         ItLES0w/t+E6MiB4CZn9BNbIY07tZ8Vb5A6e713PWEBSDg6xhoIHv/5PS+q9N3ysqZb3
-         6BATNgVE1X9vLsDHX+uJY8aVIjqeWMBDEtqy9BXr3VIY8N0lGAlfrMA384bmvmjTPfIP
-         72Nbic1m80zfee0qrL0nUE5iJf1zxdWnEXxOgCKv5HUBDNd+8fxjdO3nAzFUkzU/mXmp
-         vZrQ==
-X-Gm-Message-State: AGRZ1gIlJroFYvFooY+RdWxscfEPHbET3mt4dtUVpS+EsOQ+swB7Rct+
-        LLqhWhbPoe4o42+IGfkxOQ0ZS5QhYwaz6kcAXq13UK0L
-X-Google-Smtp-Source: AJdET5fcb3IAYi7l7RgxXYvNeuX68wv/bs1Ai55xND7rhXyexkGNnqQyRQMroWmoEKLWUhHgwuhG1J/x67uIKFxeoI4=
-X-Received: by 2002:a24:bcc1:: with SMTP id n184-v6mr4133408ite.174.1541349441726;
- Sun, 04 Nov 2018 08:37:21 -0800 (PST)
+        id S1728688AbeKECAk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Nov 2018 21:00:40 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:7411 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbeKECAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Nov 2018 21:00:39 -0500
+Received: from [192.168.2.240] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id JLWGgg3oSpXFjJLWHgFLtU; Sun, 04 Nov 2018 16:45:01 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1541349901;
+        bh=O4JipDIKnh4DLb+Koul1ULaJsMP+0C7DhbffcifIAkg=;
+        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
+        b=GeI9oc3HbHsXDH6zWu2zI8TzlP8Z1qOr5n5xS9iNJcLo5DZ5mQAQJfTWH4cLXjFSq
+         eiu/5NOnQ6II9q04VR/dArx8Wf5nyeUo2TXdpqDBqXkFT3US+j0/xLFsL/IKf9Juin
+         IcaZFaJttfcAXfepVXh8IOaLqatIedhlTGjJkaU4=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=A1X0JdhQAAAA:8 a=tmpFfD9Py7h9sLHGLmkA:9 a=QEXdDO2ut3YA:10
+ a=Df3jFdWbhGDLdZNm0fyq:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with
+ trailer lines
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20181104072253.12357-1-pclouds@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net>
+Date:   Sun, 4 Nov 2018 16:45:00 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
- <20181104154744.GI731755@genre.crustytoothpaste.net>
-In-Reply-To: <20181104154744.GI731755@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Adri=C3=A1n_Gimeno_Balaguer?= <adrigibal@gmail.com>
-Date:   Sun, 4 Nov 2018 17:37:09 +0100
-Message-ID: <CADN+U_Nw5wCyK1SPRgsxzFbJ-KKnOV2Ub8YA3_a80SZYwKC5FQ@mail.gmail.com>
-Subject: Re: git-rebase is ignoring working-tree-encoding
-To:     sandals@crustytoothpaste.net, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20181104072253.12357-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfEu36BhjFTZQxWcj8UNQbhqIRkLN2d8veST/cQ3jmHjMSDakpk8jnJMmew1YzaDEYhw4Jw81aXZ027m7pDwJnZwLs+jNKLvUXXZIqY3L4QTG5OpjNwXl
+ v6XWpU/MugoaKNfU9NOXm2IdLcd4yAdNj7sjvezNHkSa0+SdJzApXB5b+wMGWElW1ZA0WL8MMNJfKEnARqTKZW79as+YErC77F4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El dom., 4 nov. 2018 a las 16:48, brian m. carlson
-(<sandals@crustytoothpaste.net>) escribi=C3=B3:
-> Do things work for you if you write this as "UTF-16LE"?  When you use
-> working-tree-encoding, the file is stored internally as UTF-8, but it's
-> serialized to the specified encoding when written out.
+On 04/11/2018 07:22, Nguyễn Thái Ngọc Duy wrote:
+> When a commit is reverted (or cherry-picked with -x) we add an English
+> sentence recording that commit id in the new commit message. Make
+> these real trailer lines instead so that they are more friendly to
+> parsers (especially "git interpret-trailers").
+> 
+> A reverted commit will have a new trailer
+> 
+>      Revert: <commit-id>
+> 
+> Similarly a cherry-picked commit with -x will have
+> 
+>      Cherry-Pick: <commit-id>
 
-When I use UTF-16LE or UTF-16BE, then I can't commit or view diffs of
-specified files, as Git prohibites BOM existance in these cases,
-showing an error when attempting to commit. But BOM must also exist
-for the project. I even experimented for fixing this issue within
-Git's source. It turns out that Git is following an Unicode rule that
-says that BOM is not permitted when declaring exact UTF-16BE/UTF-16LE
-MIME (and UTF-32 variants) encoding types:
+I think this is a good idea though I wonder if it will break someones 
+script that is looking for the messages generated by -x at the moment. 
+I've got a couple of comments below.
 
-https://github.com/git/git/blob/master/utf8.h#L87
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>   I think standardizing how we record commit ids in the commit message
+>   is a good idea. Though to be honest this started because of my irk of
+>   an English string "cherry picked from..." that cannot be translated.
+>   It might as well be a computer language that happens to look like
+>   English.
+> 
+>   Documentation/git-cherry-pick.txt |  5 ++---
+>   sequencer.c                       | 20 ++++++--------------
+>   t/t3510-cherry-pick-sequence.sh   | 12 ++++++------
+>   t/t3511-cherry-pick-x.sh          | 26 +++++++++++++-------------
+>   4 files changed, 27 insertions(+), 36 deletions(-)
+> 
+> diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> index d35d771fc8..8ffbaed1a0 100644
+> --- a/Documentation/git-cherry-pick.txt
+> +++ b/Documentation/git-cherry-pick.txt
+> @@ -58,9 +58,8 @@ OPTIONS
+>   	message prior to committing.
+>   
+>   -x::
+> -	When recording the commit, append a line that says
+> -	"(cherry picked from commit ...)" to the original commit
+> -	message in order to indicate which commit this change was
+> +	When recording the commit, append "Cherry-Pick:" trailer line
+> +	recording the commit name which commit this change was
+>   	cherry-picked from.  This is done only for cherry
+>   	picks without conflicts.  Do not use this option if
+>   	you are cherry-picking from your private branch because
+> diff --git a/sequencer.c b/sequencer.c
+> index 9e1ab3a2a7..f7318f2862 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -36,7 +36,6 @@
+>   #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>   
+>   const char sign_off_header[] = "Signed-off-by: ";
+> -static const char cherry_picked_prefix[] = "(cherry picked from commit ";
+>   
+>   GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
+>   
+> @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+>   		base_label = msg.label;
+>   		next = parent;
+>   		next_label = msg.parent_label;
+> -		strbuf_addstr(&msgbuf, "Revert \"");
+> -		strbuf_addstr(&msgbuf, msg.subject);
+> -		strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
+> -		strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> -
+> -		if (commit->parents && commit->parents->next) {
+> -			strbuf_addstr(&msgbuf, ", reversing\nchanges made to ");
+> -			strbuf_addstr(&msgbuf, oid_to_hex(&parent->object.oid));
+> -		}
 
-> Asking for "UTF-16" is ambiguous: there are two endiannesses, and so as
-> long as you get a BOM in the output, either one is an acceptable option.
-> Which one you get is dependent on what the underlying code thinks is the
-> default, and traditionally for Unix systems and Unix tools that's been
-> big-endian.  If you want a particular endianness, you should specify it.
+As revert currently records the parent given on the command line when 
+reverting a merge commit it would probably be a good idea to add that 
+either as a separate trailer or to the Revert: trailer and possibly also 
+generate it for cherry picks.
 
-I wrote a "counterpart" easy fix which instead only prohibites BOM for
-the opposite endianness (for example if
-working-tree-encoding=3DUTF-16LE, then finding an UTF-16BE BOM in the
-file would cause Git to signal the error right before committing,
-diffing, etc.). That way user would be encouraged to modify the file's
-encoding to match the one specified in working-tree-encoding before
-allowing these actions, therefore preventing Git from encoding to the
-wrong endianness after file is written out. With few repository tests,
-this new behaviour worked as expected. But then I realized this
-solution would perhaps be unacceptable for Git's source code as it
-would violate that Unicode standard. Anyways, here is a PR in my Git
-fork with the changes I did, for reference:
+> -		strbuf_addstr(&msgbuf, ".\n");
+> +		strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
 
-https://github.com/AdRiAnIlloO/git/pull/1
+If the message already contains trailers then should we just append the 
+Revert trailer those rather than inserting "\n\n"?
 
-Ah this point, the solution I came with recently for my project was
-writing some code in Shell to fix the endianness of the re-encoded
-files to UTF-16BE after the Git's write out process (or a "working
-tree refresh" in my own words), within the same script that I use to
-pack assets including the localization files.
+Best Wishes
 
-> brian m. carlson: Houston, Texas, US
-> OpenPGP: https://keybase.io/bk2204
+Phillip
 
+> +
+> +		strbuf_addf(&msgbuf, "Revert: %s\n",
+> +			    oid_to_hex(&commit->object.oid));
 
+>   	} else {
+>   		const char *p;
+>   
+> @@ -1784,9 +1777,8 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+>   			strbuf_complete_line(&msgbuf);
+>   			if (!has_conforming_footer(&msgbuf, NULL, 0))
+>   				strbuf_addch(&msgbuf, '\n');
+> -			strbuf_addstr(&msgbuf, cherry_picked_prefix);
+> -			strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> -			strbuf_addstr(&msgbuf, ")\n");
+> +			strbuf_addf(&msgbuf, "Cherry-Pick: %s\n",
+> +				    oid_to_hex(&commit->object.oid));
+>   		}
+>   		if (!is_fixup(command))
+>   			author = get_author(msg.message);
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index c84eeefdc9..89b6e7fc1e 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -390,10 +390,10 @@ test_expect_success '--continue respects opts' '
+>   	git cat-file commit HEAD~1 >picked_msg &&
+>   	git cat-file commit HEAD~2 >unrelatedpick_msg &&
+>   	git cat-file commit HEAD~3 >initial_msg &&
+> -	! grep "cherry picked from" initial_msg &&
+> -	grep "cherry picked from" unrelatedpick_msg &&
+> -	grep "cherry picked from" picked_msg &&
+> -	grep "cherry picked from" anotherpick_msg
+> +	! grep "Cherry-Pick:" initial_msg &&
+> +	grep "Cherry-Pick: " unrelatedpick_msg &&
+> +	grep "Cherry-Pick: " picked_msg &&
+> +	grep "Cherry-Pick: " anotherpick_msg
+>   '
+>   
+>   test_expect_success '--continue of single-pick respects -x' '
+> @@ -404,7 +404,7 @@ test_expect_success '--continue of single-pick respects -x' '
+>   	git cherry-pick --continue &&
+>   	test_path_is_missing .git/sequencer &&
+>   	git cat-file commit HEAD >msg &&
+> -	grep "cherry picked from" msg
+> +	grep "Cherry-Pick:" msg
+>   '
+>   
+>   test_expect_success '--continue respects -x in first commit in multi-pick' '
+> @@ -416,7 +416,7 @@ test_expect_success '--continue respects -x in first commit in multi-pick' '
+>   	test_path_is_missing .git/sequencer &&
+>   	git cat-file commit HEAD^ >msg &&
+>   	picked=$(git rev-parse --verify picked) &&
+> -	grep "cherry picked from.*$picked" msg
+> +	grep "Cherry-Pick: $picked" msg
+>   '
+>   
+>   test_expect_failure '--signoff is automatically propagated to resolved conflict' '
+> diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+> index 9888bf34b9..db11dd2430 100755
+> --- a/t/t3511-cherry-pick-x.sh
+> +++ b/t/t3511-cherry-pick-x.sh
+> @@ -32,7 +32,7 @@ mesg_with_footer_sob="$mesg_with_footer
+>   Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+>   
+>   mesg_with_cherry_footer="$mesg_with_footer_sob
+> -(cherry picked from commit da39a3ee5e6b4b0d3255bfef95601890afd80709)
+> +Cherry-Pick: da39a3ee5e6b4b0d3255bfef95601890afd80709
+>   Tested-by: C.U. Thor <cuthor@example.com>"
+>   
+>   mesg_unclean="$mesg_one_line
+> @@ -81,7 +81,7 @@ test_expect_success 'cherry-pick -x inserts blank line after one line subject' '
+>   	cat <<-EOF >expect &&
+>   		$mesg_one_line
+>   
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+>   	test_cmp expect actual
+> @@ -129,7 +129,7 @@ test_expect_success 'cherry-pick -x inserts blank line when conforming footer no
+>   	cat <<-EOF >expect &&
+>   		$mesg_no_footer
+>   
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+>   	test_cmp expect actual
+> @@ -154,7 +154,7 @@ test_expect_success 'cherry-pick -x -s inserts blank line when conforming footer
+>   	cat <<-EOF >expect &&
+>   		$mesg_no_footer
+>   
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+> @@ -178,7 +178,7 @@ test_expect_success 'cherry-pick -x -s adds sob when last sob doesnt match commi
+>   	git cherry-pick -x -s mesg-with-footer &&
+>   	cat <<-EOF >expect &&
+>   		$mesg_with_footer
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+> @@ -201,7 +201,7 @@ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists fo
+>   	git cherry-pick -x -s mesg-with-footer-sob &&
+>   	cat <<-EOF >expect &&
+>   		$mesg_with_footer_sob
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+> @@ -215,7 +215,7 @@ test_expect_success 'cherry-pick -x handles commits with no NL at end of message
+>   	git cherry-pick -x $sha1 &&
+>   	git log -1 --pretty=format:%B >actual &&
+>   
+> -	printf "\n(cherry picked from commit %s)\n" $sha1 >>msg &&
+> +	printf "\nCherry-Pick: %s\n" $sha1 >>msg &&
+>   	test_cmp msg actual
+>   '
+>   
+> @@ -226,7 +226,7 @@ test_expect_success 'cherry-pick -x handles commits with no footer and no NL at
+>   	git cherry-pick -x $sha1 &&
+>   	git log -1 --pretty=format:%B >actual &&
+>   
+> -	printf "\n\n(cherry picked from commit %s)\n" $sha1 >>msg &&
+> +	printf "\n\nCherry-Pick: %s\n" $sha1 >>msg &&
+>   	test_cmp msg actual
+>   '
+>   
+> @@ -252,19 +252,19 @@ test_expect_success 'cherry-pick -s handles commits with no footer and no NL at
+>   	test_cmp msg actual
+>   '
+>   
+> -test_expect_success 'cherry-pick -x treats "(cherry picked from..." line as part of footer' '
+> +test_expect_success 'cherry-pick -x treats "Cherry-Pick:" line as part of footer' '
+>   	pristine_detach initial &&
+>   	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
+>   	git cherry-pick -x mesg-with-cherry-footer &&
+>   	cat <<-EOF >expect &&
+>   		$mesg_with_cherry_footer
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+>   	test_cmp expect actual
+>   '
+>   
+> -test_expect_success 'cherry-pick -s treats "(cherry picked from..." line as part of footer' '
+> +test_expect_success 'cherry-pick -s treats "Cherry-Pick:" line as part of footer' '
+>   	pristine_detach initial &&
+>   	git cherry-pick -s mesg-with-cherry-footer &&
+>   	cat <<-EOF >expect &&
+> @@ -275,13 +275,13 @@ test_expect_success 'cherry-pick -s treats "(cherry picked from..." line as part
+>   	test_cmp expect actual
+>   '
+>   
+> -test_expect_success 'cherry-pick -x -s treats "(cherry picked from..." line as part of footer' '
+> +test_expect_success 'cherry-pick -x -s treats "Cherry-Pick:..." line as part of footer' '
+>   	pristine_detach initial &&
+>   	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
+>   	git cherry-pick -x -s mesg-with-cherry-footer &&
+>   	cat <<-EOF >expect &&
+>   		$mesg_with_cherry_footer
+> -		(cherry picked from commit $sha1)
+> +		Cherry-Pick: $sha1
+>   		Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+>   	EOF
+>   	git log -1 --pretty=format:%B >actual &&
+> 
 
---=20
-Adri=C3=A1n
