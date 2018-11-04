@@ -2,147 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47B581F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 21:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E66D1F453
+	for <e@80x24.org>; Sun,  4 Nov 2018 21:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729147AbeKEG3R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 01:29:17 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:52444 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728634AbeKEG3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 01:29:17 -0500
-Received: from [192.168.2.240] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id JPhVgDQn0dJAeJPhWgU5jk; Sun, 04 Nov 2018 21:12:54 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1541365974;
-        bh=nVY7tsasjYKlgl5HItvzg3q+hevC/XA2ZIvUdnnAXpU=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=NfoPgy7FH9KnldfsbmN50hxz4TaOw7DZoIxHiVyPifDhZ4kTbXkXJNYMFojYsS5qL
-         BQ50URZQ73ML6M6YtZtHMpzrUUdeXoorZ+gX7w9WXn+HYdw5DDg3ALxOLxLgldzQ50
-         n1q2jnE5gjA7aB1p9g/0YYkOwSEFSKY5UWQD5WWI=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=5rxgeBVgAAAA:8 a=3j4BkbkPAAAA:8 a=g-MFkQ3IFOGqQ53_wAEA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with
- trailer lines
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
+        id S1729522AbeKEGqh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 01:46:37 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53192 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729162AbeKEGqh (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 01:46:37 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5930:2634:17a1:2ef9])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 58ECE6077B;
+        Sun,  4 Nov 2018 21:30:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1541367012;
+        bh=rMWFN+9ahzKCwV7Y0hpLH7jpL7Qo1G8u+qgY9D7E9+w=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=iOG7EhHaaiuGZkm8lR8dJHS3IqIQKqtboeVSKxlO1H4IfJ+x5Vxa04pFBBRasf+Kr
+         uWREuVjloBnjrTzNxV737CWEmwGBoklaNPGMoP2bW/ofvaKwghRQcmvu8isB87RARW
+         oqwp2d4hsUJF4re+ZRe2Z+KnJ/W/OzLxJasM7z2XBc4vBKopTM8rv6pyQ6ZuICISJB
+         aMIHCZnObpGLtwYZ4poBlM9Kb0REb3QpqIS5mwH8sXk/eIQoHGHwC9DtVvhTwZBOmC
+         lUvCbZ3I+DdYlY1v6YuAr6252FTyFol4zc169cXZ7LY84Gvm6E8Ftkr0VNKZnsZG5+
+         d0U2o4B2wdPumwj9MLLkmGjP8hyj4ielNXkik7u+wyTy+Xc/TK6EOqQmf3ehlz/iSX
+         DI9XbqnvFl+bgSsC8QdezvKfYZOm2PJp4kzRvvLT59xrqQPd+bnEPCyRNoMWgM/8tr
+         GGI0oCf/C1TPO4leH6JFrvEuihPglwj3bLWFp0glkxta8xf2HEY
+Date:   Sun, 4 Nov 2018 21:30:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH/RFC v2] sequencer.c: record revert/cherry-pick commit
+ with trailer lines
+Message-ID: <20181104213007.GL731755@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, phillip.wood@dunelm.org.uk
 References: <20181104072253.12357-1-pclouds@gmail.com>
- <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net>
- <CACsJy8CAw6yR5vbsFJbSd+UTR_1UpS=8PP3hEtbSNSi3SkMNag@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1a667e9c-3944-4bc3-fb60-68e79dff0c34@talktalk.net>
-Date:   Sun, 4 Nov 2018 21:12:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ <20181104181026.8451-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CAw6yR5vbsFJbSd+UTR_1UpS=8PP3hEtbSNSi3SkMNag@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfN9dvU6KbikgqsDVQXhikhkjwx3wsxt5/5/FT9NdaJ3MbOz3nr/Q8gKdlfKyFL5neLKS9CrtZmCyD4/g//RskDcdsdalnFseQPXdoUzDNayk3EmG2jUt
- RiiqE3w0yjc/T4q4jU0t70NiflXc7fJoKPGy36qm80nGCGPBSyflZBcJ1KQQpxL1PNvcEbuuCxgM74h0ceny2D07B6qIgZmTGAa6Wm6WdveapWiF93Ki6rwV
- PDpgE+H+F7rALvijsj4NOw==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bPg9NdpM9EETxvqt"
+Content-Disposition: inline
+In-Reply-To: <20181104181026.8451-1-pclouds@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy
 
-On 04/11/2018 17:41, Duy Nguyen wrote:
-> On Sun, Nov 4, 2018 at 5:45 PM Phillip Wood <phillip.wood@talktalk.net> wrote:
->>
->> On 04/11/2018 07:22, Nguyễn Thái Ngọc Duy wrote:
->>> When a commit is reverted (or cherry-picked with -x) we add an English
->>> sentence recording that commit id in the new commit message. Make
->>> these real trailer lines instead so that they are more friendly to
->>> parsers (especially "git interpret-trailers").
->>>
->>> A reverted commit will have a new trailer
->>>
->>>       Revert: <commit-id>
->>>
->>> Similarly a cherry-picked commit with -x will have
->>>
->>>       Cherry-Pick: <commit-id>
->>
->> I think this is a good idea though I wonder if it will break someones
->> script that is looking for the messages generated by -x at the moment.
-> 
-> It will [1] but I still think it's worth the trouble. The script will
-> be less likely to break after, and you can use git-interpret-trailers
-> instead of plain grep.
-> 
-> [1] https://public-inbox.org/git/20181017143921.GR270328@devbig004.ftw2.facebook.com/
-> 
->>> @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->>>                base_label = msg.label;
->>>                next = parent;
->>>                next_label = msg.parent_label;
->>> -             strbuf_addstr(&msgbuf, "Revert \"");
->>> -             strbuf_addstr(&msgbuf, msg.subject);
->>> -             strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
->>> -             strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
->>> -
->>> -             if (commit->parents && commit->parents->next) {
->>> -                     strbuf_addstr(&msgbuf, ", reversing\nchanges made to ");
->>> -                     strbuf_addstr(&msgbuf, oid_to_hex(&parent->object.oid));
->>> -             }
->>
->> As revert currently records the parent given on the command line when
->> reverting a merge commit it would probably be a good idea to add that
->> either as a separate trailer or to the Revert: trailer and possibly also
->> generate it for cherry picks.
-> 
-> My mistake. I didn't read carefully and thought it was logging
-> commit->parents, which is pointless.
-> 
-> So what should be the trailer for this (I don't think putting it in
-> Revert: is a good idea, too much to parse)? Revert-parent: ?
-> Revert-merge: ?
+--bPg9NdpM9EETxvqt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think Revert-parent: is good, though you seem to have gone for 
-including it the Revert: trailer in v2.
->>> -             strbuf_addstr(&msgbuf, ".\n");
->>> +             strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
->>
->> If the message already contains trailers then should we just append the
->> Revert trailer those rather than inserting "\n\n"?
-> 
-> Umm.. but this \n\n is for separating the subject and the body. I
-> think we need it anyway, trailer or not.
+On Sun, Nov 04, 2018 at 07:10:26PM +0100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
+=8Dc Duy wrote:
+> When a commit is reverted (or cherry-picked with -x) we add an English
+> sentence recording that commit id in the new commit message. Make
+> these real trailer lines instead so that they are more friendly to
+> parsers (especially "git interpret-trailers").
+>=20
+> A reverted commit will have a new trailer
+>=20
+>     Revert: <commit-id>
+>=20
+> Similarly a cherry-picked commit with -x will have
+>=20
+>     Cherry-picked-from: <commit-id>
+>=20
+> When reverting or cherry picking a merge, the reverted/cherry-picked
+> branch will be shown using extended SHA-1 syntax, e.g.
+>=20
+>     Revert: <commit-id>~2
+>=20
+> Since we're not producing the old lines "This reverts commit ..." and
+> "(cherry picked from commit .." anymore, scripts that look for these
+> lines will need to be updated to handle both. Fresh new history could
+> just rely on git-interpret-trailers instead.
 
-Ah you're right, I had forgotten that the revert message body is empty, 
-unlike cherry-pick where the message is copied (and that does the right 
-thing already when there are existing trailers).
+Overall, I like the idea of this series.  This is a much cleaner way to
+handle things and much better for machine-readability.  I foresee git
+cherry potentially learning how to parse this, for example, for cases
+where the patch-id doesn't match due to context changes.
 
-Best wishes
+However, I do have concerns about breaking compatibility with existing
+scripts.  I wonder if we could add a long alias for git cherry-pick -x,
+say "--notate" and have "--notate=3Dtext" mean "-x" and "--notate=3Dtrailer"
+mean this new format.  Similarly, git revert could learn such an option
+as well.
 
-Phillip
+One final thought: since our trailers seem to act as if we wrote "this
+commit" (has been), I wonder if we should say "Reverts" instead of
+"Revert" for consistency.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
+--bPg9NdpM9EETxvqt
+Content-Type: application/pgp-signature; name="signature.asc"
 
->>> @@ -1784,9 +1777,8 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->>>                        strbuf_complete_line(&msgbuf);
->>>                        if (!has_conforming_footer(&msgbuf, NULL, 0))
->>>                                strbuf_addch(&msgbuf, '\n');
->>> -                     strbuf_addstr(&msgbuf, cherry_picked_prefix);
->>> -                     strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
->>> -                     strbuf_addstr(&msgbuf, ")\n");
->>> +                     strbuf_addf(&msgbuf, "Cherry-Pick: %s\n",
->>> +                                 oid_to_hex(&commit->object.oid));
-> 
-> I will probably make this "Cherry-picked-from:" to match our S-o-b style.
-> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
 
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvfZN8ACgkQv1NdgR9S
+9otD8BAAxBFG5uIbPyTL5UFWQB203ik6r1moqloimEzXHi/zU9eVtr7M1brnb8/R
+YruTtxN65nLWgiio+13yJNyRZunYdQVBPCECfmUEbPigxz4cpkSnLdejsd2nEjlz
+k3OiZw7wNoz3wlgvgIOuNI8ZYxfkG7s3VYDFSfQx01XQXrSlFosqGghzpkz0DTP6
+7Omq3fZ2GN6zhb6CTgOYII+rbN9VsiehT/uRwYJTrJWg+4pYyz1GlwiU3PpmSwc4
+rsDf1CR9bQ8uqYqwQxp5jr2Bd82zBfl0BulGRM9Gvu6rlJ6QW458IM7z9NTbXyXF
+L+LPWvchlMCIOKrWlbooVi03kygfO3pooWqUZ1if8yn1ykKlZr84msPkreRgB2EK
+0Fyg5KOlqqscHC71Y43495hIAWx+OvxafAlLBDiJZ2+VFEn3ZQuW3qZxr7g2+mmA
+GJewktJHzzj2dnDphP7YNpqphJej8s96aMPV9+B8Dp42pvQn+YTnWvi7TXoMu7Aq
+ryHAgVv0MI5ZJJTJS7UGjsGHo3LB6s+VDUy1PLmHB1FdeAX23lY7VudFnnGCkRs9
+sKdCcvl9wniuKzmyMz6uyAUPpCJJhJVGNn9YpAUTAg8aFhRwSo7CNOJ9dN4MmoBM
+yh4n50YhNqlCz9B8g/cPOEe8JXLIeLx6mJdysOWcr87FPaMxkME=
+=IhS9
+-----END PGP SIGNATURE-----
+
+--bPg9NdpM9EETxvqt--
