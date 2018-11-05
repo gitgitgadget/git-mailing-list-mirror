@@ -6,167 +6,120 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 315BF1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 01:50:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D5D11F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 01:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726822AbeKELHR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 06:07:17 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:32819 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726474AbeKELHR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 06:07:17 -0500
-Received: by mail-wm1-f65.google.com with SMTP id f19-v6so5274460wmb.0
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 17:50:04 -0800 (PST)
+        id S1727274AbeKELKm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 06:10:42 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37061 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726474AbeKELKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 06:10:42 -0500
+Received: by mail-wr1-f66.google.com with SMTP id o15-v6so4035299wrv.4
+        for <git@vger.kernel.org>; Sun, 04 Nov 2018 17:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=4IpMsF4pEH/q28MPKfCzR9HcYSjJ5hh981jVDCZjJqg=;
-        b=IMeGBMCKteiLOwOOV9gsfSeuLRIwKZLNJoITZNRTgfy5D8CCSUzfSP290/dHKGFoVS
-         ZAdufDYfyR8OsbE7JEDOHVmvaUo3O5AAekBqcLXi1mjmtjtbWH48Pnq7DqxWd5hmtHD+
-         ew8Nkx2it7b23BsZvCkjJlluoAUU9F39HevNOmg7AtLvNsT3hOFTsCgFFPPK9UjyCrfu
-         0NOjCfxxkyBhW/LZt5D2zQ5HLV/3zfDd8J211SEn8PZhkoCU5OkS5H440EcfECRcHEBJ
-         WAfnQpM6oTdKaBjtuQpm+nc4JzLOyFN4yrqxkIME4TOM7S2sDfC030Fzzll05OQ5QsLo
-         L6KQ==
+         :user-agent:mime-version;
+        bh=uJW6BJRxDWB1NFqfXTtMiXU9Y6qLKI8SkZ+v6ARtCtU=;
+        b=rKVq0KufiCvu3u/lVDAZkEIfUgER3XPgDoLsnLEsEJzno6NyK1DTlH4zWyEgQcAOJp
+         h14UqU4iK9C+FYGRKyn+zPUYRTZrEp3umU5kT5ohnyfM8FaREbVerJCGlbMmer7JdMHx
+         6LqseK4d0mBHksA8hC0nr7i4XO8r+H1xnEsJvvDC9PIiGgLECWXW6zIKbgfjR+BbQ8Td
+         iKw7lyIJ68VUeVdw6nNndsEujFDkKzKN7wJ9Huy7EVhwAkkdacB39TSBt6+H1Kn9JBVC
+         NbV72LJv8ikfTOyHutHnJqPnJGxgkdSTaNAIe7ZEmzf30KJclNoyQXLWHFVnledTQT2N
+         iHEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=4IpMsF4pEH/q28MPKfCzR9HcYSjJ5hh981jVDCZjJqg=;
-        b=QUDG1nqMtwslxUy/vtp9Wqe98gSl4/z9s+K7Yt50TkqQ+WhUhfWWJ2nrcdMiLHc74o
-         5Hp/Q6kPUgfrtadF6Aju2hKDJ8t6LUijUmFa/VN6nxKxSVsV4/N5oJvxvRO8jUaepffx
-         fy+8O7K4+C3NxiJWXELAgPR+CURk4g5//5VXgtLM88teyFje6eG5S93QEW17LMLsKqlO
-         bAlZTV93YTEN9sBY0e41TzR1dzX9NdbtAyQgim7k07PSs4ZHOc7EJCvVmuGYwt+iOzMG
-         oYdfl1JtBfG0lGy6E/v5T2aM8tNzQtCrB5esx3SmAdOTohVr7W3ORO32HIeU1OcOc0tF
-         SZcQ==
-X-Gm-Message-State: AGRZ1gJAhDGn6kyOxtY/CVrSVil9rivc1mRSv/AVchBQicBOptSWzy/e
-        1qnMYmkcsmao5UVAP2VGZ1LvP+KDbOk=
-X-Google-Smtp-Source: AJdET5cXBLYP2WHE4INGZoeYlirxK134NRiQlJdKR7qNF6pNkR5ZFeSVpx5DVx9ErOP7FKuT9i47sA==
-X-Received: by 2002:a1c:b8d:: with SMTP id 135-v6mr4411583wml.128.1541382603504;
-        Sun, 04 Nov 2018 17:50:03 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uJW6BJRxDWB1NFqfXTtMiXU9Y6qLKI8SkZ+v6ARtCtU=;
+        b=oAiDRaIiGii+5ypdj4rdwkoryIsp6zN1HldJKmkkL//HSjdVGyMLdTDJNx2bAEMg+K
+         CEPLjmZpzMEdIAr3slp1Nz44aR3CI+Xa/XWQ4kyyiCC3B5AsmNqSaYmqXFz3RNk6RLe/
+         CFtMQ6U4ubJR1Rm4pn4mIEM8hjdoKdNUPhr3WunGdyKFt20u3Mi7eLH4A+tGAgzvYL5f
+         +HLA1oyNNwHA7nGqypjzBHYABfDOOyDNpFMwOIpJfpEEOjCv94tuEvAu9vmjiBiBllac
+         ojVGmbX3h87YM+CRXJU5nYN/sDFgN/JGY/Cq9rd65Rd5va7++wJewQfGLYA+CABVsIuz
+         0Pxg==
+X-Gm-Message-State: AGRZ1gLx5RWseNBDWdTY3mNvcCTU5vLOmO2mLz4exPMRXUNKfzgPgh+J
+        gzlo2KWHqemd+L4k+jwosEg=
+X-Google-Smtp-Source: AJdET5f1F/uRtMcfSeeWJ41o2y3QWRPJH6tK7eED5YbEanWhkXUYGWkAWqEFs2xU1ORO6nk0eEtEpQ==
+X-Received: by 2002:a5d:66d0:: with SMTP id k16-v6mr5836029wrw.154.1541382809039;
+        Sun, 04 Nov 2018 17:53:29 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 66-v6sm3437716wmp.28.2018.11.04.17.50.02
+        by smtp.gmail.com with ESMTPSA id v62-v6sm6208911wme.3.2018.11.04.17.53.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 04 Nov 2018 17:50:02 -0800 (PST)
+        Sun, 04 Nov 2018 17:53:28 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     christophe.bliard@trux.info, git@vger.kernel.org,
-        rafa.almas@gmail.com, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] tree-walk.c: fix overoptimistic inclusion in :(exclude) matching
-References: <20181103153049.22850-1-pclouds@gmail.com>
-        <20181104052851.12584-1-pclouds@gmail.com>
-Date:   Mon, 05 Nov 2018 10:50:01 +0900
-In-Reply-To: <20181104052851.12584-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sun, 4 Nov 2018 06:28:51 +0100")
-Message-ID: <xmqq36sgl2d2.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 2/5] am: improve author-script error reporting
+References: <20180912101029.28052-1-phillip.wood@talktalk.net>
+        <20181031101556.27169-1-phillip.wood@talktalk.net>
+        <20181031101556.27169-3-phillip.wood@talktalk.net>
+        <CAPig+cRBwkKGtzY6CwZiKb1mef0a-9F+O24d0R8ZfsRb5ssUbA@mail.gmail.com>
+Date:   Mon, 05 Nov 2018 10:53:27 +0900
+In-Reply-To: <CAPig+cRBwkKGtzY6CwZiKb1mef0a-9F+O24d0R8ZfsRb5ssUbA@mail.gmail.com>
+        (Eric Sunshine's message of "Sun, 4 Nov 2018 00:12:13 -0400")
+Message-ID: <xmqqy3a8jnmw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> tree_entry_interesting() is used for matching pathspec on a tree. The
-> interesting thing about this function is that, because the tree
-> entries are known to be sorted, this function can return more than
-> just "yes, matched" and "no, not matched". It can also say "yes, this
-> entry is matched and so is the remaining entries in the tree".
->
-> This is where I made a mistake when matching exclude pathspec. For
-> exclude pathspec, we do matching twice, one with positive patterns and
-> one with negative ones, then a rule table is applied to determine the
-> final "include or exclude" result. Note that "matched" does not
-> necessarily mean include. For negative patterns, "matched" means
-> exclude.
->
-> This particular rule is too eager to include everything. Rule 8 says
-> that "if all entries are positively matched" and the current entry is
-> not negatively matched (i.e. not excluded), then all entries are
-> positively matched and therefore included. But this is not true. If
-> the _current_ entry is not negatively matched, it does not mean the
-> next one will not be and we cannot conclude right away that all
-> remaining entries are positively matched and can be included.
->
-> Rules 8 and 18 are now updated to be less eager. We conclude that the
-> current entry is positively matched and included. But we say nothing
-> about remaining entries. tree_entry_interesting() will be called again
-> for those entries where we will determine entries individually.
+> Junio labeled the "-2" trick "cute", and while it is optimal in that
+> it only traverses the key/value list once, it also increases cognitive
+> load since the reader has to spend a good deal more brain cycles
+> understanding what is going on than would be the case with simpler
+> (and less noisily repetitive) code.
 
-Thanks.  Will queue.
+... and update three copies of very similar looking code that have
+to stay similar.  If this were parsing unbounded and customizable
+set of variables, I think the approach you suggest to use a helper
+that iterates over the whole array for each key makes sense, but for
+now I think what was queued would be OK.
 
-> Reported-by: Christophe Bliard <christophe.bliard@trux.info>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  v2 fixes the too broad "git add ." in the test
+> An alternative would be to make the code trivially easy to understand,
+> though a bit more costly, but that expense should be negligible since
+> this file should always be tiny, containing very few key/value pairs,
+> and it's not timing critical code anyhow. For instance:
 >
->  t/t6132-pathspec-exclude.sh | 17 +++++++++++++++++
->  tree-walk.c                 | 11 ++++++++---
->  2 files changed, 25 insertions(+), 3 deletions(-)
+> static char *find(struct string_list *kv, const char *key)
+> {
+>     const char *val = NULL;
+>     int i;
+>     for (i = 0; i < kv.nr; i++) {
+>         if (!strcmp(kv.items[i].string, key)) {
+>             if (val) {
+>                 error(_("duplicate %s"), key);
+>                 return NULL;
+>             }
+>             val = kv.items[i].util;
+>         }
+>     }
+>     if (!val)
+>         error(_("missing %s"), key);
+>     return val;
+> }
 >
-> diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
-> index eb829fce97..2462b19ddd 100755
-> --- a/t/t6132-pathspec-exclude.sh
-> +++ b/t/t6132-pathspec-exclude.sh
-> @@ -194,4 +194,21 @@ test_expect_success 'multiple exclusions' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 't_e_i() exclude case #8' '
-> +	git init case8 &&
-> +	(
-> +		cd case8 &&
-> +		echo file >file1 &&
-> +		echo file >file2 &&
-> +		git add file1 file2 &&
-> +		git commit -m twofiles &&
-> +		git grep -l file HEAD :^file2 >actual &&
-> +		echo HEAD:file1 >expected &&
-> +		test_cmp expected actual &&
-> +		git grep -l file HEAD :^file1 >actual &&
-> +		echo HEAD:file2 >expected &&
-> +		test_cmp expected actual
-> +	)
-> +'
-> +
->  test_done
-> diff --git a/tree-walk.c b/tree-walk.c
-> index 77b37f36fa..79bafbd1a2 100644
-> --- a/tree-walk.c
-> +++ b/tree-walk.c
-> @@ -1107,7 +1107,7 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
->  	 *   5  |  file |    1     |    1     |   0
->  	 *   6  |  file |    1     |    2     |   0
->  	 *   7  |  file |    2     |   -1     |   2
-> -	 *   8  |  file |    2     |    0     |   2
-> +	 *   8  |  file |    2     |    0     |   1
->  	 *   9  |  file |    2     |    1     |   0
->  	 *  10  |  file |    2     |    2     |  -1
->  	 * -----+-------+----------+----------+-------
-> @@ -1118,7 +1118,7 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
->  	 *  15  |  dir  |    1     |    1     |   1 (*)
->  	 *  16  |  dir  |    1     |    2     |   0
->  	 *  17  |  dir  |    2     |   -1     |   2
-> -	 *  18  |  dir  |    2     |    0     |   2
-> +	 *  18  |  dir  |    2     |    0     |   1
->  	 *  19  |  dir  |    2     |    1     |   1 (*)
->  	 *  20  |  dir  |    2     |    2     |  -1
->  	 *
-> @@ -1134,7 +1134,12 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
->  
->  	negative = do_match(entry, base, base_offset, ps, 1);
->  
-> -	/* #3, #4, #7, #8, #13, #14, #17, #18 */
-> +	/* #8, #18 */
-> +	if (positive == all_entries_interesting &&
-> +	    negative == entry_not_interesting)
-> +		return entry_interesting;
-> +
-> +	/* #3, #4, #7, #13, #14, #17 */
->  	if (negative <= entry_not_interesting)
->  		return positive;
+> static int read_author_script(struct am_state *state)
+> {
+>     ...
+>     char *name, *email, *date;
+>     ...
+>     name = find(&kv, "GIT_AUTHOR_NAME");
+>     email = find(&kv, "GIT_AUTHOR_EMAIL");
+>     date = find(&kv, "GIT_AUTHOR_DATE");
+>     if (name && email && date) {
+>         state->author_name = name;
+>         state->author_email = email;
+>         state->author_date = date;
+>         retval = 0;
+>     }
+>     string_list_clear&kv, !!retval);
+>     ...
