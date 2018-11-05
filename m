@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 803BE1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 19:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8A461F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 19:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388015AbeKFEm1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 23:42:27 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38220 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387556AbeKFEm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 23:42:26 -0500
-Received: by mail-lf1-f67.google.com with SMTP id p86so7023195lfg.5
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 11:21:16 -0800 (PST)
+        id S2388024AbeKFEm2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 23:42:28 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:40080 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387990AbeKFEm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 23:42:28 -0500
+Received: by mail-lj1-f193.google.com with SMTP id t22-v6so9118091lji.7
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 11:21:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RoAfIjfV6rZiew1hUmarcExoqd/S8h47l+w/BWFL8D4=;
-        b=TstDATQpYSVCxm7eYggyiy3Jm4LwgXXoBNv2LYhrH5UheAqRs4oxCbUWQPjpqVEB8m
-         rVd9hte3Gr95omHOXC/uz0WsQpyDPvbkHIh/WZ+zcucztS6mnST5z9oKyB1a+Lm9Y+L8
-         g/CwagzoV+vdeFabnuRqsh1Nf0ShrIHaKLdtnngzRWVkZ6Xp1N6Kowe6iabvzy/9qppW
-         2yR6Pg/Lw4rnM2ZYLZEVoyKRSthNkWV7xjtjvY6DOUzC6TKupNHX+C74cRvA2eUSSgWx
-         3iv3tSskr8GKECWEFTVcp/h6i5SiFG5YqXlODvbY2jvGebBplWynAWaNNRdQYMWuFjYq
-         oNEg==
+        bh=qatiNl8QKaG3lkfKpQoM3l0J9ZHS5LyX7vBRzqHhuSw=;
+        b=I/SV8cqkFD5XGz8MoKAw91pDLnBwMaz29du0kdRbxGS/1PAYM7cJb+uAZncD+XcrKg
+         LNRJfGdgv6RKrXN8jHqKnIBFDPhvOm4mbA3r1TBLE3fWP2xTrw6AeFK7h1MzJHRskP1v
+         pEfhTfaA6MCTuHMc1oWv56qw5frK7CLM5IvXIoDyIM3ZXhntosvp7Hb49W28PUQNwJrJ
+         RY2KNlQKKkJTgZz6KDLQr/0dqrwonfVZjdVWMne0H0wT33ptyB5vryM6kWzr4eD+vQGZ
+         6J51nG+ZCJWuO+f1zHkqZ1WDL4m5cBf5lPX3p0wppKcpi32dBQIpDXH9nlzcOSF5toUf
+         5mSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RoAfIjfV6rZiew1hUmarcExoqd/S8h47l+w/BWFL8D4=;
-        b=GgB/Nt+JWZHmFwDlaaTOaKRC8TmDt4RyxxVM6Mfe9GBonS29odEiINWp6BWEaBDmfM
-         5Vjqx52AnCp5Cck+rfObBns5BIXQQjtJ3qSiW+Gjo0QpBeYYZJNG11ttxHuRi6Bdyspl
-         xKSYILm7WDpUZ0KOjpf9oC1YBwzkJ9R7Y6XkNfrPVrNWGyGqmHWRsXrz7L91dd8FEQM7
-         rfYTBmvdlD8GWcJM1lWbkwuaJVqbzlW6Mu6zNsdt8j6CgFFSIol7PKNC+M8fG7KRNevR
-         6UKnwe2Ean2SkqZqaJcCqGVNQmEOXOw3rH6WTe6aWP4zCTqcNSdTwhqBSc/YYcl2IHsw
-         E23A==
-X-Gm-Message-State: AGRZ1gIj4nK8W8fERC+L/uj6tuOUBnW9TBwN4hf+7VWITUBEJLc1xZJQ
-        XB6104voBVmzqA3nmgb8GvBepwcQ
-X-Google-Smtp-Source: AJdET5dsFijBjQpIhnjhvHDbkmr4FBWagU/wKDkD7fYZHjdEf/2PHYQcZtRf+fzOEAfk1cgDEaCfhA==
-X-Received: by 2002:a19:c7c2:: with SMTP id x185mr14005043lff.123.1541445676113;
-        Mon, 05 Nov 2018 11:21:16 -0800 (PST)
+        bh=qatiNl8QKaG3lkfKpQoM3l0J9ZHS5LyX7vBRzqHhuSw=;
+        b=LitUycdkYJIdSduqQIB+Gi21wUOHJ47f+J70rChVedAdgtgN14/XTjGtFIlQTlzZuf
+         xDT/OAS2mJzFl1RUcFuG4bb3/d8d4pWMFmQmjR3sfaq1YXGTycM7ADadhHQqcLdk6jdV
+         AwF9gIoxgzvMrbWD6EEairieufKZO0pxFE10ASNCg3o0c9Nb8PEI9p6lIftvSoioh9uG
+         +uBCbqF4xeVTqoX7DGu7ZALcWno/738rGwlZy0dTs76mctfw4aKI1WZQqqZWUVimPQw+
+         DXyowractZtNKphZlvsFihZ4TWZyZ19Wbk6spwqDIZWWitNzzqW12zKiz80gAmk4aDVA
+         uJJA==
+X-Gm-Message-State: AGRZ1gJODxuSHfhHVftP36Woo/eWOoJvdSIhdhBJlC6iNZV8o7xKee3y
+        RGnhaPlAyXDkK3ULZWSrw9vjm8fY
+X-Google-Smtp-Source: AJdET5c68hi6rT7y+R5tYDqt4TTgA9R2WWaHMsEQm9xH3XTYB3vX6d++Gc+q2FJ/GipFCsmqWtjs+w==
+X-Received: by 2002:a2e:99d7:: with SMTP id l23-v6mr14896348ljj.165.1541445678245;
+        Mon, 05 Nov 2018 11:21:18 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x5-v6sm3591056lfe.58.2018.11.05.11.21.14
+        by smtp.gmail.com with ESMTPSA id x5-v6sm3591056lfe.58.2018.11.05.11.21.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Nov 2018 11:21:15 -0800 (PST)
+        Mon, 05 Nov 2018 11:21:17 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 07/16] read-cache.c: add missing colon separators
-Date:   Mon,  5 Nov 2018 20:20:50 +0100
-Message-Id: <20181105192059.20303-8-pclouds@gmail.com>
+Subject: [PATCH v2 09/16] remote.c: turn some error() or die() to BUG()
+Date:   Mon,  5 Nov 2018 20:20:52 +0100
+Message-Id: <20181105192059.20303-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1005.gac84295441
 In-Reply-To: <20181105192059.20303-1-pclouds@gmail.com>
 References: <20181028065157.26727-1-pclouds@gmail.com>
@@ -69,36 +69,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-typechange_fmt and added_fmt should have a colon before "needs
-update". Align the statements to make it easier to read and see. Also
-drop the unnecessary ().
+The first error, "internal error", is clearly a BUG(). The second two
+are meant to catch calls with invalid parameters and should never
+happen outside the test suite.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- read-cache.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ remote.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 858befe738..8d99ae376c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1492,11 +1492,11 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 						  istate->cache_nr);
+diff --git a/remote.c b/remote.c
+index 81f4f01b00..257630ff21 100644
+--- a/remote.c
++++ b/remote.c
+@@ -620,7 +620,7 @@ static void handle_duplicate(struct ref *ref1, struct ref *ref2)
+ 			 * FETCH_HEAD_IGNORE entries always appear at
+ 			 * the end of the list.
+ 			 */
+-			die(_("Internal error"));
++			BUG("Internal error");
+ 		}
+ 	}
+ 	free(ref2->peer_ref);
+@@ -707,7 +707,7 @@ static void query_refspecs_multiple(struct refspec *rs,
+ 	int find_src = !query->src;
  
- 	trace_performance_enter();
--	modified_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
--	deleted_fmt = (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
--	typechange_fmt = (in_porcelain ? "T\t%s\n" : "%s needs update\n");
--	added_fmt = (in_porcelain ? "A\t%s\n" : "%s needs update\n");
--	unmerged_fmt = (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
-+	modified_fmt   = in_porcelain ? "M\t%s\n" : "%s: needs update\n";
-+	deleted_fmt    = in_porcelain ? "D\t%s\n" : "%s: needs update\n";
-+	typechange_fmt = in_porcelain ? "T\t%s\n" : "%s: needs update\n";
-+	added_fmt      = in_porcelain ? "A\t%s\n" : "%s: needs update\n";
-+	unmerged_fmt   = in_porcelain ? "U\t%s\n" : "%s: needs merge\n";
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce, *new_entry;
- 		int cache_errno = 0;
+ 	if (find_src && !query->dst)
+-		error("query_refspecs_multiple: need either src or dst");
++		BUG("query_refspecs_multiple: need either src or dst");
+ 
+ 	for (i = 0; i < rs->nr; i++) {
+ 		struct refspec_item *refspec = &rs->items[i];
+@@ -735,7 +735,7 @@ int query_refspecs(struct refspec *rs, struct refspec_item *query)
+ 	char **result = find_src ? &query->src : &query->dst;
+ 
+ 	if (find_src && !query->dst)
+-		return error("query_refspecs: need either src or dst");
++		BUG("query_refspecs: need either src or dst");
+ 
+ 	for (i = 0; i < rs->nr; i++) {
+ 		struct refspec_item *refspec = &rs->items[i];
 -- 
 2.19.1.1005.gac84295441
 
