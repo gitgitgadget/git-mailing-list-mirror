@@ -7,55 +7,52 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B66B1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 21:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04AB31F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 21:57:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387813AbeKFHPH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 02:15:07 -0500
-Received: from mout.gmx.net ([212.227.15.15]:45319 "EHLO mout.gmx.net"
+        id S2388112AbeKFHTH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 02:19:07 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60165 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387672AbeKFHPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 02:15:07 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaXEN-1ffjZG3hPD-00mK5N; Mon, 05
- Nov 2018 22:53:14 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaXEN-1ffjZG3hPD-00mK5N; Mon, 05
- Nov 2018 22:53:14 +0100
-Date:   Mon, 5 Nov 2018 22:53:12 +0100 (STD)
+        id S2387580AbeKFHTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 02:19:07 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkwpt-1flp6631u9-00akzr; Mon, 05
+ Nov 2018 22:57:15 +0100
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkwpt-1flp6631u9-00akzr; Mon, 05
+ Nov 2018 22:57:15 +0100
+Date:   Mon, 5 Nov 2018 22:57:14 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Duy Nguyen <pclouds@gmail.com>, Ben Peart <peartben@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [RFC v1] Add virtual file system settings and hook proc
-In-Reply-To: <87ftwf7nwa.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811052251520.86@tvgsbejvaqbjf.bet>
-References: <20181030191608.18716-1-peartben@gmail.com> <CACsJy8DbiVZYmY11Nt4c_+egSi5tz0iVq7rNv2BiVdyJ4htgvw@mail.gmail.com> <1f7efd07-4881-daa7-cd1d-145bbf3ffcc8@gmail.com> <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
- <87ftwf7nwa.fsf@evledraar.gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with
+ trailer lines
+In-Reply-To: <CACsJy8CAw6yR5vbsFJbSd+UTR_1UpS=8PP3hEtbSNSi3SkMNag@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811052255080.86@tvgsbejvaqbjf.bet>
+References: <20181104072253.12357-1-pclouds@gmail.com> <27bcf7a6-8590-fa21-8381-697e1b030182@talktalk.net> <CACsJy8CAw6yR5vbsFJbSd+UTR_1UpS=8PP3hEtbSNSi3SkMNag@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1433069517-1541454793=:86"
-X-Provags-ID: V03:K1:l78oLsNs6jMxpfan9uCc4N3optLi5QrzoyxlX4Xx1F1Tl5KnuLa
- 8HgBBjpKHM51ugQ2yrEy4Kpz7MjLocEAWTTXwRhaF8xAvaiDfkfzi/BbBQ5A4U/+XHpMRZH
- DHthtItdwUOCJlzVi7A1DAahPQKUJJaPw3wX2VZopMq+Reln1NLqLtp7rTvMN6YiSkeicHY
- tEtPwlqAlfYmXF2b8cXPg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Wf6W2TwGG7I=:TufRe/eNwudKdCs2nWIbjo
- jczJfWhbCTvsE2zVVqzLqQHAlSVPWcUs161o4dFPzn8HKE85IS/ZttUB3IrP3/6LIzAv9aVu2
- OS1MKR1iQ4FJ0gdZklTVtcpJEsI7+cuJczmSHj9G+gG+3Gw+W6Rv2wof24WhDKS+1h9IcmGXP
- gluGqlbqJXFoKp1l1dANbwYvLnVZtfq8F0TIiiW8VxrQ3sr9EhHyxLnd2chRs/YeVNxfQ4fpJ
- g85MGuJ1VVUC3+A8Pz9q7qgfF2D0qLrc0duQKn4/FQWhzBj6naYnqYXsl9nreQMl4/Bzx4gUw
- UCCLXSRGqWLya8fjNfh+r96pNlgR4dKHK9qkD4s/VHdRNwkimhfeO0NctH7cBygwCLxP+MR0e
- rqrKeF4dWCss79rPQG0gt0krtByzD83Pdbp+GIO50auST7Fse8APUJZPt/ebNn4HTd8O8tmI8
- rXv526QAubIP/bhz3wDcYBoPU9Za3Q7XuhmRJMTPDAvc97sboq09eXhY/64pIg2pbfYW+d6G5
- Npf0xyOzQEwTeFxmowX0JHn61JVfPd+UtenzhwoiRvj6/0R26ny2geeYAn+kUOITzRBvMcQeS
- 68PmzBVQDH0OBc/3r/GM5wHJfNLjpXcv1jya+Pvc+ARq2pCPcXxmSUdqt5TEFIxtNBzvqKhEW
- NpEz4aN6TzSyQIY5hijDsO+E3Volu6bXxYouTCs0hUw+DB3DyQ34w3pRPx2yQdo+UHo13ZdwV
- t98zR1+OMLYpE6Uc5qPxS95I+7VqkTP6xpoNlgs4wJWs72P23P62OI+DSaVKg+5yj9hE3emIf
- 7JqIGeZN5/MfZog08xuCmIwo7mXuM64/zmPGdgaVjaKOD4VoBY=
+Content-Type: multipart/mixed; boundary="8323328-1042678719-1541455035=:86"
+X-Provags-ID: V03:K1:ejRqPvIJvsSW96Fonp0VmpKGKwqHpKxe4/0LNChcW4gUjqcdmtB
+ leIRh9pYvoN+1L/jU1VAMLU9RpNZOoIpRCG72Ixv/5A8yh73fb5OBNQJUb0JS8iEbELrlxG
+ jYhnZPYHwnZgy8HVp7jAR0HTV1mzfbT+HlonKlWz7TO48Bo3/zE8N4FfdVypjvbytkh+lWA
+ pIuiawfehXjRUKavaxJJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:n0HvmeZgrO4=:YKU62ROhItQkKfbdZNzfR0
+ dUrF4r7oInzzY2nuVA/fH28ZGrjqLVcR3EwrU8OzdqevQ5SipEoC/e8Tib1bc/jSkNbRDcYrM
+ 8tn6TPGM6TupYrj1YOEZLuXP8X544xwxXc+y+7/GfmGyvKAf1BtwH96ktCy+7KIuDGhMckJvy
+ E/LhciByIOvKh0pu7pDrFnhrpUL2ugyFmlaKjVVEKuhUToT2kHgIS5BcMs5hxJ45K06KxvCRa
+ O/D4HNzHvbuCUHb1j6kWzBy93VIzHTRrxzetd0XmrX7Klb9iB2dioqZSYRJOS98Y2RzBipLfP
+ RBrMsHjFgFRC/ZGHlPGHc/cOp7Grb6U3fcGpOnS1+qUjNmZUeq7DTfBvFund2dnIzMkm1iCsA
+ M3EVHD3fQDm31YBdgNbkG4p0/dNPgwfvRpWHKqETJ1CeKfaDzuEeYy2D8hqf5b28u3OiVOTfO
+ MJwJTVIUZbWSsxVR7rYT1LxfA7msiHQFv90vhUfLFlY089SfhxSEAmzHAQmu/iT12mJBnDDw4
+ 7a53GUhwGpLNyxEnoGaXY2F1YN1FjlAKB3FRL2glmF6fISQ3iW/vk0YFesqFB/1ZbCyY8OM8a
+ XJhVFLnGFLctTOtbVqa23dARGuqSEkwpNKDzcUVKLaWVmWkeKa0Npr4MbU3Wg/nhvHSekW9zF
+ /ryDhz6ijKkw5g5VtwrVtNq8bLReDbzxj66t4VwKXHeHfW9Jj3BFxuVIjw6yVtPHlt8asfTgr
+ FDyYbMQFPKqihDDYjQd5MOdwfrBzcGzY1EjtCOM54sG8pf0+R4pfZTp3dr34E6VBHMsnLgnic
+ kD+YnCCbBX7qwZwKUHasJ+wT3Vt0jkzXBN7Trncjirw8tLVgMY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,26 +61,99 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1433069517-1541454793=:86
+--8323328-1042678719-1541455035=:86
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 
-Hi Ævar,
+Hi,
 
-On Mon, 5 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+On Sun, 4 Nov 2018, Duy Nguyen wrote:
 
-> The only potential downside I see is that there's currently exactly one
-> implementation of this sort of thing in the wild, so we risk any such
-> API becoming too tied up with just what GVFS wants, and not what we'd
-> like to support with such a thing in general. This is what e.g. the w3c
-> tries to avoid with having multiple browser implementations before
-> something is standardized.
+> On Sun, Nov 4, 2018 at 5:45 PM Phillip Wood <phillip.wood@talktalk.net> wrote:
+> >
+> > On 04/11/2018 07:22, Nguyễn Thái Ngọc Duy wrote:
+> > > When a commit is reverted (or cherry-picked with -x) we add an English
+> > > sentence recording that commit id in the new commit message. Make
+> > > these real trailer lines instead so that they are more friendly to
+> > > parsers (especially "git interpret-trailers").
+> > >
+> > > A reverted commit will have a new trailer
+> > >
+> > >      Revert: <commit-id>
+> > >
+> > > Similarly a cherry-picked commit with -x will have
+> > >
+> > >      Cherry-Pick: <commit-id>
+> >
+> > I think this is a good idea though I wonder if it will break someones
+> > script that is looking for the messages generated by -x at the moment.
+> 
+> It will [1] but I still think it's worth the trouble. The script will
+> be less likely to break after, and you can use git-interpret-trailers
+> instead of plain grep.
 
-It is my understanding that Ben is quite interested in ideas how to make
-this *not* tied up with VFSforGit.
+Since this is a wilfull backwards-incompatible patch, it needs to be done
+carefully.
 
-I'd think that he would welcome any good ideas you have in that direction.
+I am not enthused by the idea of breaking power users' setups, and I could
+imagine that a much better way to do it would be to introduce a config
+setting that guards the new behavior, then add a deprecation notice when
+-x is used without that config setting, and then let that simmer for a
+couple of versions.
 
 Ciao,
-Dscho
---8323328-1433069517-1541454793=:86--
+Johannes
+
+> 
+> [1] https://public-inbox.org/git/20181017143921.GR270328@devbig004.ftw2.facebook.com/
+> 
+> > > @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+> > >               base_label = msg.label;
+> > >               next = parent;
+> > >               next_label = msg.parent_label;
+> > > -             strbuf_addstr(&msgbuf, "Revert \"");
+> > > -             strbuf_addstr(&msgbuf, msg.subject);
+> > > -             strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
+> > > -             strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> > > -
+> > > -             if (commit->parents && commit->parents->next) {
+> > > -                     strbuf_addstr(&msgbuf, ", reversing\nchanges made to ");
+> > > -                     strbuf_addstr(&msgbuf, oid_to_hex(&parent->object.oid));
+> > > -             }
+> >
+> > As revert currently records the parent given on the command line when
+> > reverting a merge commit it would probably be a good idea to add that
+> > either as a separate trailer or to the Revert: trailer and possibly also
+> > generate it for cherry picks.
+> 
+> My mistake. I didn't read carefully and thought it was logging
+> commit->parents, which is pointless.
+> 
+> So what should be the trailer for this (I don't think putting it in
+> Revert: is a good idea, too much to parse)? Revert-parent: ?
+> Revert-merge: ?
+> 
+> > > -             strbuf_addstr(&msgbuf, ".\n");
+> > > +             strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
+> >
+> > If the message already contains trailers then should we just append the
+> > Revert trailer those rather than inserting "\n\n"?
+> 
+> Umm.. but this \n\n is for separating the subject and the body. I
+> think we need it anyway, trailer or not.
+> 
+> > > @@ -1784,9 +1777,8 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+> > >                       strbuf_complete_line(&msgbuf);
+> > >                       if (!has_conforming_footer(&msgbuf, NULL, 0))
+> > >                               strbuf_addch(&msgbuf, '\n');
+> > > -                     strbuf_addstr(&msgbuf, cherry_picked_prefix);
+> > > -                     strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> > > -                     strbuf_addstr(&msgbuf, ")\n");
+> > > +                     strbuf_addf(&msgbuf, "Cherry-Pick: %s\n",
+> > > +                                 oid_to_hex(&commit->object.oid));
+> 
+> I will probably make this "Cherry-picked-from:" to match our S-o-b style.
+> -- 
+> Duy
+> 
+--8323328-1042678719-1541455035=:86--
