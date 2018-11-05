@@ -6,60 +6,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F3511F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 02:10:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 577991F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 02:36:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbeKEL2L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 06:28:11 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45914 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726474AbeKEL2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 06:28:11 -0500
-Received: by mail-wr1-f65.google.com with SMTP id k15-v6so4730957wre.12
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 18:10:55 -0800 (PST)
+        id S1727820AbeKELx0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 06:53:26 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:40748 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbeKELx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 06:53:26 -0500
+Received: by mail-wm1-f42.google.com with SMTP id b203-v6so6511977wme.5
+        for <git@vger.kernel.org>; Sun, 04 Nov 2018 18:36:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=lVOD9/wnT1AQygyKH+hvGwtqd8lwHjJ0oxu1exDd0NU=;
-        b=hyf5AR7/LIMhNkC5GubUsV/oF1CxuMKJq7DDNOZ2QoT/3c3ZUHD9j5MLsHQw9TmCe/
-         HiULdLJUyh72WoiviI/HSwLpV5ObMFa63CJVtbj7mYV/aJztzGxs65I3IOMnTomt/uZZ
-         AEWxeQ32cuVIJ2XptkDVlYTvQ2YfQolfJ0Ba2+1YJfxco+68odsk3Qd4tDjAFPrzOC+P
-         EXUnzSMPIQWu1WdbsafxEIehuKAbn5OBFYh6Sv3+e8P+SKREj7Ne4WFsjfswcFrcxHWo
-         S265X5g9bR4+WRdR4pwhRItWaIW/DV9i2agi+3fcvm+x7eOMmTfWFuo5WNjguTME4TYZ
-         qEBA==
+        bh=wZpatgGJaRQ3YGkwy2gmHYs8bfpxNN/wfSI6Hv7yIVo=;
+        b=sWzjfoytGlXCuChWjHLFJfhXNmI7JhRBY+IUxDc2rmwks57jp5DDduhJk3yCjef+dW
+         gkNgShQNsvha6yMiXxNc1BT4T/npU2LGZnyh77JDqhO7LVnwG8zQp90YRMetwKbAOJF2
+         UCanofjpwpeTYmN5KtY3bQ/RyTfHjEhsevthRPp5OzxWTDH+0qQhXgOX0DPgoe/xDdLw
+         jLXUMRIRY1YlfY0xkDVLuPu2KvCzH8f3tJ1W22JIqkIbdhbrrgRpEhDjcw+rwv1hv8ct
+         ho2ToRIDDakV/2vEFAKu7OifgAkRLcIIWh6J/9LMwWYlYc3w6x7s/HZVpliuj//SQiOn
+         00Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=lVOD9/wnT1AQygyKH+hvGwtqd8lwHjJ0oxu1exDd0NU=;
-        b=sAmlXBylikFoxF6myiHwGyFAFEDjo3r/20PRaEoJ2aaQDuLQcSyXbj/jyBggbu0P6f
-         2TvFNLN5OuCqaFQteRteNrCOJZo2XrsFCMmtZJINgLYeEPXNOHCddwXKmwcZJyve6S0i
-         0BHCe96D1RucYZp6+0cmj0U1xXkl24B4noBni3d4I1xm3ZTpTLICL/PavF+nGV0TnhyJ
-         SwnMBUKK/2UKCwbifaLoItwwrNdBcm9YxZoNwkFX1wUbQauLKnjCSMuYwH2qPpFn6ro5
-         MmodZ9o4mswKJT1WGWL8vqrKVnztiBCu8jX8pvBb8cwu2kgkYti+LjSdj3vOAHYPt2Eb
-         jJAQ==
-X-Gm-Message-State: AGRZ1gJC6X9EGOZYbxM/yKbuITF/RQYPSBtoLlZdFjOLtlhv2Ob/f3P8
-        GNFEgxRcZtkM94clAQ6Gezk=
-X-Google-Smtp-Source: AJdET5c5+p+RpeUqXydAQhZTJNEuGDvrQn7uGRJQ0AZD54qXWu/do+tpBrbtew80ygj+KzVey7pr9A==
-X-Received: by 2002:a5d:4306:: with SMTP id h6-v6mr18740535wrq.189.1541383854733;
-        Sun, 04 Nov 2018 18:10:54 -0800 (PST)
+        bh=wZpatgGJaRQ3YGkwy2gmHYs8bfpxNN/wfSI6Hv7yIVo=;
+        b=GL3Md2+VlwXajiXFtycn7RkkIRQppwISpkHFUus5TMMyw/h76B15TkJgFWbag9vbYQ
+         CJEsHS1ucTqPjdyBUklw0SL6084E267Uu9A99ZcAi2I5NkRt5QVEiEreMd7H8JtqV+XY
+         f1NFlEl9V5GRybwfnUyT9WEGutsF/XaZn4/yS8I4XxraWP3aycqHAV/H6TOfjcsDeKav
+         3RZGOxe56N3VJQZjg0vMZDMIK2qRWShOpR/aXZwG1aM3EQsVgfvJeMG/BX8yzreCO690
+         gxsjEwB6vAh3eaEA2PJM02Hu7dzfJw1JREX8jC8Jfh6LuNf+UQaePkzbk0/NtMsijHo8
+         gj6Q==
+X-Gm-Message-State: AGRZ1gIkp6W6GgCKBq+jQmm9ClXDxTCN3VZ3cVQIHIMRCE9CYD1TKgdL
+        i5fgR/Sg4GL4pmXeqiLOkprZSi/JfhU=
+X-Google-Smtp-Source: AJdET5e1FWQyO+/DdlvL0lkVZRLEi0/zHPcOxXFdO4hx2FA3cPV2+Grk25Cggg58LRX7oi5lTp/KPA==
+X-Received: by 2002:a1c:9947:: with SMTP id b68-v6mr4450465wme.22.1541385363992;
+        Sun, 04 Nov 2018 18:36:03 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f18-v6sm25810597wre.86.2018.11.04.18.10.54
+        by smtp.gmail.com with ESMTPSA id b8-v6sm18346243wrt.49.2018.11.04.18.36.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 04 Nov 2018 18:10:54 -0800 (PST)
+        Sun, 04 Nov 2018 18:36:03 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Anders Waldenborg <anders@0x63.nu>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Subject: Re: [PATCH v2 5/5] pretty: add support for separator option in %(trailers)
-References: <20181028125025.30952-1-anders@0x63.nu>
-        <20181104152232.20671-1-anders@0x63.nu>
-        <20181104152232.20671-6-anders@0x63.nu>
-Date:   Mon, 05 Nov 2018 11:10:53 +0900
-In-Reply-To: <20181104152232.20671-6-anders@0x63.nu> (Anders Waldenborg's
-        message of "Sun, 4 Nov 2018 16:22:32 +0100")
-Message-ID: <xmqqpnvkjmtu.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Design of multiple hash support
+References: <20181105010032.GN731755@genre.crustytoothpaste.net>
+Date:   Mon, 05 Nov 2018 11:36:01 +0900
+In-Reply-To: <20181105010032.GN731755@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 5 Nov 2018 01:00:33 +0000")
+Message-ID: <xmqqlg68jlny.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,28 +65,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Anders Waldenborg <anders@0x63.nu> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> @@ -1352,6 +1353,17 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
->  						arg++;
->  
->  					opts.only_trailers = 1;
-> +				} else if (skip_prefix(arg, "separator=", &arg)) {
-> +					size_t seplen = strcspn(arg, ",)");
-> +					strbuf_reset(&sepbuf);
-> +					char *fmt = xstrndup(arg, seplen);
-> +					strbuf_expand(&sepbuf, fmt, format_fundamental, NULL);
+> I'm currently working on getting Git to support multiple hash algorithms
+> in the same binary (SHA-1 and SHA-256).  In order to have a fully
+> functional binary, we'll need to have some way of indicating to certain
+> commands (such as init and show-index) that they should assume a certain
+> hash algorithm.
+>
+> There are basically two approaches I can take.  The first is to provide
+> each command that needs to learn about this with its own --hash
+> argument.  So we'd have:
+>
+>   git init --hash=sha256
+>   git show-index --hash=sha256 <some-file
+>
+> The other alternative is that we provide a global option to git, which
+> is parsed by all programs, like so:
+>
+>   git --hash=sha256 init
+>   git --hash=sha256 show-index <some-file
 
-This somehow feels akin to using end-user supplied param to printf(3)
-as its format argument e.g.
+I am assuming that "show-index" above is a typo for something like
+"hash-object"?
 
-	int main(int ac, char *av) {
-		printf(av[1]);
-		return 0;
-	}
+It is hard to answer the question without knowing what exactly does
+"(to) support multiple hash algorithms" mean.  For example, inside
+today's repository, what should this command do?
 
-which is not a good idea.  Is there a mechanism with which we can
-ensure that the separator=<what> specification will never come from
-potentially malicious sources (e.g. not used to show things on webpage
-allowing random folks who access he site to supply custom format)?
+	git --hash=sha256 cat-file commit HEAD
 
+It can work this way:
+
+ - read HEAD, discover that I am on 'master' branch, read refs/heads/master
+   to learn the object name in 40-hex, realize that it cannot be
+   sha256 and report "corrupt ref".
+
+Or it can work this way:
+
+ - read repository format, realize it is a good old sha1 repository.
+
+ - do the usual thing to get to read_object() to read the commit
+   object data for the commit at HEAD, doing all of it in sha1.
+
+ - in the commit object data, locate references to other objects
+   that use sha1 name.
+
+ - replace these sha1 references with their sha256 counterparts and
+   show the result.
+
+I am guessing that you are doing the former as a good first step, in
+which case, as an option that changes/affects the behaviour of git
+globally, I think "git --hash=sha256" would make sense, like other
+global options like --literal-pathspecs and --no-replace-objects.
+
+Thanks.
