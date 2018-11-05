@@ -2,200 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6831F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 12:26:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5B231F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 12:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728136AbeKEVpl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 16:45:41 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:32132 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726368AbeKEVpl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 16:45:41 -0500
-Received: from [192.168.1.12] ([92.29.15.216])
-        by smtp.talktalk.net with SMTP
-        id JdxIgftVBoI6LJdxIgow0K; Mon, 05 Nov 2018 12:26:08 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1541420768;
-        bh=aCN3hY3zlDWa02b7KQ3UtfwUxlc+1Wo3wg0RYiYeRgg=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=lWoy0fqyOyqcHKDppQT16pPtwo0w9/oiJiOQWOZNCqfYJcC5FZrYirNSfoAmymwd9
-         eDhQlTZGavo2GAzOAt1VBctyfN71dvtSVDeT2zq03QVxjCTrc4VYejjA8Lt8KHn9Ca
-         g8wXcAZoB9ULc8IzG37yKn2c3d4a3ZDXHZELyLzs=
-X-Originating-IP: [92.29.15.216]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=nW19o/PZ5qZJ0p49dqPFUw==:117
- a=nW19o/PZ5qZJ0p49dqPFUw==:17 a=IkcTkHD0fZMA:10 a=anyJmfQTAAAA:8
- a=txqFxXwaAAAA:8 a=5rxgeBVgAAAA:8 a=AVbMHacnAAAA:8 a=VwQbUJbxAAAA:8
- a=h9GtzQcEuS5QHyIiwGUA:9 a=QEXdDO2ut3YA:10 a=PWrjKhWBdF8A:10
- a=H5RkCRLHyEoA:10 a=YJ_ntbLOlx1v6PCnmBeL:22 a=2U7u32ZBAyMuB9OKO3Vn:22
- a=PwKx63F5tFurRwaNxrlG:22 a=AjGcO6oz07-iQ99wixmX:22
-Subject: Re: if YOU use a Windows GUI for Git, i would appreciate knowing
- which one and why
-To:     _g e r r y _ _l o w r y _ 
-        <gerry.lowry@abilitybusinesscomputerservices.com>,
-        git@vger.kernel.org
-References: <1b8a01d47466$9775c130$c6614390$@abilitybusinesscomputerservices.com>
-From:   Philip Oakley <philipoakley@talktalk.net>
-Message-ID: <2f1855a2-58c4-d7d6-cd62-41ce877f11b6@talktalk.net>
-Date:   Mon, 5 Nov 2018 12:26:08 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1729105AbeKEVtP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 16:49:15 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52298 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727337AbeKEVtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 16:49:15 -0500
+Received: by mail-wm1-f65.google.com with SMTP id l66-v6so2000006wml.2
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 04:29:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=wnLpTm/mjZD5nkpPiu5NRtXfnT6m4W4ENC2rOTxKRA4=;
+        b=HFBztQY24m/rJwalNOgNTfv16dnlsHIjjgHXteMQGQeExYB1oTqEjxVJDUQbxuyRCO
+         BhhbUsiYsq3OHyyLfFzvViyWfniV5K9sFooGjcxbQJiC0sIT2hrQzNlXD+YSjTYZSE8A
+         4IwTst+jEh7WLz+SYEhqWgJ2nXv+TPBVVLaBGe68HJN/0ieIoxGdIvFEb+xVKL2J5VMk
+         FcjSfCm8T/7kC587v6sVLhmTlhqZeO8kBSJj11TAUwg8K6FWKzJE3R4Bxn1d9npg+GFw
+         GHs/PuF1vjak3+/oY7NVv3youzz6Q049sMPjeDkpiJdtktEZY7KSc9crP0GNsqvIQSdz
+         hONA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=wnLpTm/mjZD5nkpPiu5NRtXfnT6m4W4ENC2rOTxKRA4=;
+        b=EwRJqC1D1RTTcn7k5VFxjnsO+ZfbEwyIBDwR1byzPXVVW+iCNOZXQhZ9L7Kg2VgX5R
+         IRWGfDlvhPHPunEc7pc8F83+l58+mnB5hnkQ3XPiqTUib/VOHh9WLsCOmIvXpV4F6Nyo
+         s+a/ornnF7iX8qTwKYQkGjulllCKxm9QILE/jdFv8XidfqYTzTv6D6KGn2jzQ+Lyz2lW
+         XZGz30BVFf9Pkb/ro75LIYUHp07ZYOVV0/fhr1jWDN5OkdC2bemYOKCMMcR03gH8e2as
+         JsZ5EaAD2cgNe7+k+vv505tbMLril0D+j6qSI3B9jkpQ0VI3rpuhCyBkkla2YClsxOxq
+         NMdA==
+X-Gm-Message-State: AGRZ1gJuRxXImlR2trQzTvRr/sMb2E292EScD4Qk0K79cdGcmTcXC0fs
+        4DqNYyRhQwmA4x66YypdUus=
+X-Google-Smtp-Source: AJdET5f+jqgyubGRQdR4gQCXgxquYoPVwIuJCed7dVpv5aikqx41r4q+Ygw8tU7Ge7i9abmVh7aJ5Q==
+X-Received: by 2002:a1c:b5ce:: with SMTP id e197-v6mr5890370wmf.30.1541420980952;
+        Mon, 05 Nov 2018 04:29:40 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x197-v6sm44199940wme.15.2018.11.05.04.29.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Nov 2018 04:29:39 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 7/8] push: add DWYM support for "git push refs/remotes/...:<dst>"
+References: <20181026192734.9609-1-avarab@gmail.com>
+        <20181026230741.23321-8-avarab@gmail.com>
+        <xmqqlg6h4964.fsf@gitster-ct.c.googlers.com>
+        <87in1lkw54.fsf@evledraar.gmail.com>
+        <xmqqy3adtopw.fsf@gitster-ct.c.googlers.com>
+        <87k1lr7obd.fsf@evledraar.gmail.com>
+Date:   Mon, 05 Nov 2018 21:29:38 +0900
+In-Reply-To: <87k1lr7obd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 05 Nov 2018 12:31:50 +0100")
+Message-ID: <xmqq4lcviu6l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1b8a01d47466$9775c130$c6614390$@abilitybusinesscomputerservices.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJW6ZEfHTdMbVTgwpe78vPBlA7IJ6zTABn2BovkYyGt0sneCt+qRDPST4yHR9cVIvrKIO9T+DCogdQr6SvfIX5TcbrJ/Tl5vtSTYZCGHLEiVuiFCEOUN
- trkgvZzlvi7+KCHTx9ublKcA3/M3Iten3S4ZVO5j4ggSZDNsyXGezmFNxxeUDCo60JGoLDJbl56lLRnLnhrVv9yU0eEWVYJ4zh0rlPZHeiQh2AXnsATNfKj1
- IQpVZUHTyohtAwXGOsTxJg==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Gerry,
-I'll give my view, as someone approaching retirement, but who worked as 
-an Engineer in a mainly Windows environment.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On 04/11/2018 17:48, _g e r r y _ _l o w r y _ wrote:
-> PREAMBLE [START] - please feel free to skip this first section
-> 
-> Forgive me for asking this question on a mailing list.
-> 
-> stackoverflow would probably kill such a question before the bits were fully saved to a server drive.
-> 
-> Let me explain why i am asking and why i am not being a troll.
-> 
-> [a] i'm "old school", i.e., > 50% on my way to being age 72 [born 1947]
+> After all sometimes "other" is just the repo on my laptop or server. I
+> shouldn't need to jump through hoops to re-push stuff from my "other"
+> repo anymore than from the local repo.
+>
+> Yes refs/remotes/* isn't guaranteed to be "other repo's branches" in the
+> same way our local refs/heads/* is, and this series bends over backwards
+> to check if someone's (ab)used it for that, but I think for the purposes
+> of the default UI we should treat it as "branches from other remotes" if
+> we find commit objects there.
 
-8 years behind..
-> 
-> [b] when i started programming in 1967, most of my work input was via punched cards
-'69, at school, post/compile/run/wait for post; 1 week
-  (Maths club)
+I do not think there is *any* disagreement between us that
+refs/remotes/* is where somebody else's branches are stored.
 
-> 
-> [c] punching my own cards was cool
-Pin punching individual chads ;-)
+The fundamental difference between us is what this "push" is doing.
 
-> 
-> [d] IBM System/360 mainframe assembler was cool and patching previously punched card encoded machine code output was a fun risky but
-> at times necessary challenge.
-Eventually the 370 at university.
+You are limiting yourself to a single use case where you push to
+publish to the remote repository, as if the work on somebody else's
+commit were exactly like your own, hence you believe the push should
+go to refs/heads/* of the receiving repository.
 
-> 
-> [e] using command windows and coding batch files for Gary Kildall's CP/M and the evil empire's PC/MS-DOS was how i accomplished many
-> tasks for early non-GUI environments (i still continue this practice even in Windows 10 (a.k.a. please don't update my PC O/S behind
-> my back again versions of MS Windows)).
-Engineer in electronics; software was an interlinked part of electronics 
-back then....
-> 
-> [f] my introduction to Git was via a command line based awesome video that has disappeared (i asked this community about that in a
-> previous thread).
-Discovered in 2011 via 'Code News' article - Spotted immediately that it 
-solved the engineers version control issue because it 'distributed' the 
-control. I've tried a few of the Gui's.
+I am also allowing an additional use case I often have to use, where
+I emulate a fetch done at the receiving repository by pushing into it.
+I have refs/remotes/* by fetching somebody else's branches locally,
+and instead of doing the same fetch over there by logging into it
+and doing "git fetch" interactively, I push refs/remotes/* I happen
+to have locally into refs/remotes/* there.
 
-> 
-> BOTTOM LINE:  virtually 100% of my Git use has been via Git Bash command line [probably downloaded from https://git-scm.com/]
-> 
-> For me, and i suspect even for most people who live with GUI platforms, [a well kept secret fact] using the keyboard is faster than
-> using the mouse [especially when one's fingers are already over one's keyboard-example, closing one or more "windows" via Alt+F4.
-> 
-> Also for me, i am happy to change some code and/or write some new code, Alt+Tab to Git Bash frequently, ADD/COMMIT, then Alt+Tab
-> back to whatever IDE i'm using [mostly LINQPad and vs2017]; i know that's quite a bit schizophrenic of me-command line Git but GUI
-> IDE.
-> 
-> PREAMBLE [END]
-> ----------------------------------------
-> 
-> QUESTION:  if YOU use a Windows GUI for Git, i would appreciate knowing which one and why
-> 
-> i have been asked to look at GUI versions of Git for Windows.
-I presume that this is for a client who isn't sure what they want 
-http://www.abilitybusinesscomputerservices.com/home.html
+And I happen to think both are equally valid workflows, and there is
+no strong reason to think everybody would intuitively expect a push
+of my local refs/remotes/* will go to refs/heads/* of the receiving
+repository like you do.  I'd rather want to make sure we do not make
+wrong guesses and force the user to "recover".
 
-> 
-> https://git-scm.com/download/gui/windows currently lists 22 options.
-That's nearly as bad as choosing a Linux distro ;-)
+> So I think the *only* thing we should be checking for the purposes of
+> this DWYM feature is what local type of object (branch or tag) we find
+> on the LHS of the refspec. And if we're sure of its type push to
+> refs/{heads,tags}/* as appropriate.
 
-> 
-> if i had more time left in my life and the option, because of my own nature, i'd likely download and evaluate all 22 - Mr.T would
-> pity the fool that i often can be.
-> 
-> CAUTION:  i am not looking for anyone to disparage other Git Windows GUIs.
-> 
-> Let me break down the question into 4 parts:
-> 
-> [1a] Which do you prefer:  Git GUI, Git command line?
-I use the three parts provided as part of regular Git and Git for 
-Windows, that is git-gui, gitk and git cli in a terminal (mintty)
+That is insufficient as long as you do not consider refs/remotes/*
+as one of the equally valid possibilities that sits next to refs/heads
+and res/tags/.
 
-> [1b] What is your reason for your [1a] preference?
-I have been in a general Windows environment for decades. The Gui format 
-with single buttons/drop downs that do one thing well, without finger 
-trouble side effects, is good in such environments. One cannot be master 
-of everything.
-
-The cli is good for specialists and special actions, especially 
-precision surgery. The key is to avoid the "the surgery was a success 
-but the patient died" results.
-> 
-> [2a] if applicable, which Git GUI do you prefer?
-git-gui and gitk are now the only two I use.
-
-> [2b] What is your reason for your [2a] preference?
-Many of the other Gui's hide the power of Git and its new abstraction of 
-no longer actually being about "Control" (by 'management'). Now it is 
-about veracity. If you have the right object ID (sha1/sha256) you have 
-an identical original [there are no 'copies', all Mona Lisas with the 
-hash are the same]. Management can choose which hash to accept upstream.
-
-Most other Gui's try to hide behind the old school Master-copy view 
-point that was developed in the 19th century for drawing office control. 
-If you damaged the master drawing the ability to make things and do 
-business was lost. Protecting the master drawing was everything. They 
-were traced before they went to the blue print machine. Changes were 
-batched up before the master could be touched (that risk again).
-
-Too may Gui's (and their Managements!) still try to work the old way, 
-loosing all the potential benefits. They are still hammer wielders 
-looking for nails, and only finding screws to smash.
-
-I've heard reasonable things about SmartGit but that costs money so I 
-haven't tried it. I tried TortoiseGit and GitExtensions, but gave up on 
-them as they would (to me) hide the real operations behind old concepts.
-
-The one are that could be improved is having manuals for the two guis, 
-and a better explanation, with practical examples, for the gitk viewer, 
-which has far more power than I have fully delved into.
-
-Ultimately it is a management problem. As a systems engineer, what needs 
-to be researched is the mind set - weltanschauung of the client, their 
-management style and its operations.
-
-See the recent discussion with Nicolas Mailhot 
-https://public-inbox.org/git/1290947539.4254.1508496039812.JavaMail.zimbra@laposte.net/ 
-on the release management issue
-> 
-> 
-> if you are uncomfortable replying to git@vger.kernel.org please feel free to reply directly to my e-mail address.
-> 
-> i look forward to hearing from members of this Git community.
-> 
-> Thank you for reading and thank you for your valuable time.
-> 
-> gerry (lowry)-wasaga beach-ontario-canada
-> gerry.lowry@abilitybusinesscomputerservices.com
-> 
-
-Education is the answer, especially for the lower quartile.
-Kruger & Dunning. "Unskilled and unaware of it" 1999.
-
--- 
-Philip
