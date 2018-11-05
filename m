@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C086A1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 19:21:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 627FE1F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 19:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387851AbeKFEmS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 23:42:18 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:46529 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387556AbeKFEmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 23:42:18 -0500
-Received: by mail-lj1-f196.google.com with SMTP id v15-v6so485141ljh.13
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 11:21:08 -0800 (PST)
+        id S2387928AbeKFEmU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 23:42:20 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:40067 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387409AbeKFEmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 23:42:19 -0500
+Received: by mail-lj1-f193.google.com with SMTP id t22-v6so9117689lji.7
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 11:21:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gXrum+GJ3eIOgPD9srO44Fn45fwUBNViXcYzKNm0QN4=;
-        b=CZ55GCc3t1JBCXNuFVTIpE7Q1FyYa7LV1LruDPuvAoiK/++v6Gx97aSiwfwCF374kN
-         /d8doHadG+cNahstTqeDeU9cEv6RzZNh6JwlzCGaSzMgXYQAFq+oyuvy0XMUo3IPnID6
-         lNkmQNS994wdo697rOXJfXgBTb0O2fkZuTCHSScTKEyeapw3TD2QKqdnBBIalAqAwWnG
-         CrPof+3PgNRP7OAhmX2QESCowk2k4D5+E7yKAzIqzxp//yEBQ7Oe4eKaYVm/Vlt32C4P
-         ssGsSaDF1qKx/3AGfmPoUB4Wgcb19VOR9J/RwZrrmh6NUC0aRrDfH8Vp+pr2yP7Con05
-         i+Wg==
+        bh=PnYWc5zwuti8CEyNhFPtqk7nCTJ7E2m/CvY6Hlsk03k=;
+        b=C61vnUgtF8dh4qG16B5/SjKW4CbrBY7/ZmBwAEbBCRIWn5u8uXNEbuTFHMs1s53u4k
+         5YeBDjAQf5Xh4ftDEq98gGCY0onMNBH0hllCD6Z0+pPhq+bv45WSAWdHQ6tjihjRVNue
+         W84LRG8cZBL64KbOq5QCkegmmtsBygtZIMH/mUi3tpf8WyFUCWNR1YPpKBKbZ29M92mh
+         xL5mje6mpXWXHWLfkcDXGreDwEhA3kLkLUlrtPjwhL3XM5JsRHdpdJrwW8qI3BIDNYvY
+         eTSXwqmu2S7/kIrPHaczpJ5wtrLknjqIyj6mh3UACbKAap3W1mD+WcvhpksYnvjwU42m
+         JZ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gXrum+GJ3eIOgPD9srO44Fn45fwUBNViXcYzKNm0QN4=;
-        b=CV7d8UTW3lBJ7iIK3JIPWiJMjB4pXejFHsSZSJDu6eRcbMD3u1WRKHUH39o6qnsYss
-         gGI+satjMVVqjipAyNRTag2UhcoWAiQCRSwNZQEcpUIsCnBFvvmIIjrLoRFLHhgNk/EB
-         LVlzuqDDDTBFOiHBoXkFdEBLWqo3dip+VFxBZ1RECiRw31hGIok0Nx3aVVxXQO0EUg70
-         N6WdKjfKR1zMUjXqSD6QK6URXdE3oRoq1r+XjFQ2lfFcrrf/sMFcxuuiyllfjhcq9yf3
-         ypCZC3vGlaGKDABK4oTc5V5H8CxPGh4YXEwZgaqLl+RMaWSuYqfNBhqH5G4PoEq+GQj2
-         6lyQ==
-X-Gm-Message-State: AGRZ1gIv4sFA4e9GqvOr8tjdVjwP3vpuGgXHLSi8WynXiqjIrje7+ciO
-        G7LvpTa4ttpDHhi5tTy8ukQ=
-X-Google-Smtp-Source: AJdET5cQDf4MxeevXVXxdxveUZe24RtaQRM/zd8B6y7N8rj2MHxxImycHdFYotC5tMfDu/+wV58bbA==
-X-Received: by 2002:a2e:2b99:: with SMTP id r25-v6mr14812037ljr.91.1541445667947;
-        Mon, 05 Nov 2018 11:21:07 -0800 (PST)
+        bh=PnYWc5zwuti8CEyNhFPtqk7nCTJ7E2m/CvY6Hlsk03k=;
+        b=mhcvjJ17CY97/ff5E/yUqct9GZl1uAL/87ag7E5xDiW+nP7dhbEvwXsI+ntC9GTgpa
+         ShPRLx2eCrY0unK7NyBPj8E6Ob0KKt2Y9YHFvBJzFRxU10/3BqRY2YZWN8IDHhexzfIT
+         y9CRBiyEvywNLGOBaMZQe6Fm+yIw0NO3rSfiD5HxwE6ziV3bVvhOPKSM7zq58bP3yjp9
+         xRGCsLRSfFIGAwqUDkRZVOPoTBxiNDJ6JpnO4SPfbA5z5r6iW/ghA53hRQ2OroyInpBl
+         QHlPpgckH2xVJaxT464QtYI33w0LjoLL+fFd9TeZQ5V0TrE9ypqY/hKVc22PuetRy0eh
+         AybQ==
+X-Gm-Message-State: AGRZ1gL0ToVnPXcUrrIgO3RW4Q+6YcGKEtOZdkU8r+M1ooI9bpUdMzvd
+        LDIysvFjfIy2P1uDFrgqngobgYW8
+X-Google-Smtp-Source: AJdET5ex0HRp09NMX8ShWtfzwzBdfGBlkIxuyo/mxC9gNEarECQuk2+lP5IEhE2gZSkYOP2oVtlOFQ==
+X-Received: by 2002:a2e:5b93:: with SMTP id m19-v6mr12893705lje.115.1541445669228;
+        Mon, 05 Nov 2018 11:21:09 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x5-v6sm3591056lfe.58.2018.11.05.11.21.06
+        by smtp.gmail.com with ESMTPSA id x5-v6sm3591056lfe.58.2018.11.05.11.21.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Nov 2018 11:21:07 -0800 (PST)
+        Mon, 05 Nov 2018 11:21:08 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 02/16] alias.c: mark split_cmdline_strerror() strings for translation
-Date:   Mon,  5 Nov 2018 20:20:45 +0100
-Message-Id: <20181105192059.20303-3-pclouds@gmail.com>
+Subject: [PATCH v2 03/16] archive.c: mark more strings for translation
+Date:   Mon,  5 Nov 2018 20:20:46 +0100
+Message-Id: <20181105192059.20303-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1005.gac84295441
 In-Reply-To: <20181105192059.20303-1-pclouds@gmail.com>
 References: <20181028065157.26727-1-pclouds@gmail.com>
@@ -69,59 +69,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function can be part of translated messages. To make sure we
-don't have a sentence with mixed languages, mark the strings for
-translation, but only use translated strings in places we know we will
-output translated strings.
+Two messages also print extra information to be more useful
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- alias.c         | 4 ++--
- builtin/merge.c | 2 +-
- git.c           | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ archive.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/alias.c b/alias.c
-index a7e4e57130..c471538020 100644
---- a/alias.c
-+++ b/alias.c
-@@ -47,8 +47,8 @@ void list_aliases(struct string_list *list)
- #define SPLIT_CMDLINE_BAD_ENDING 1
- #define SPLIT_CMDLINE_UNCLOSED_QUOTE 2
- static const char *split_cmdline_errors[] = {
--	"cmdline ends with \\",
--	"unclosed quote"
-+	N_("cmdline ends with \\"),
-+	N_("unclosed quote")
- };
+diff --git a/archive.c b/archive.c
+index 9d16b7fadf..d8f6e1ce30 100644
+--- a/archive.c
++++ b/archive.c
+@@ -385,12 +385,12 @@ static void parse_treeish_arg(const char **argv,
+ 		int refnamelen = colon - name;
  
- int split_cmdline(char *cmdline, const char ***argv)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 4aa6071598..92ba7e1c6d 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -577,7 +577,7 @@ static void parse_branch_merge_options(char *bmo)
- 	argc = split_cmdline(bmo, &argv);
- 	if (argc < 0)
- 		die(_("Bad branch.%s.mergeoptions string: %s"), branch,
--		    split_cmdline_strerror(argc));
-+		    _(split_cmdline_strerror(argc)));
- 	REALLOC_ARRAY(argv, argc + 2);
- 	MOVE_ARRAY(argv + 1, argv, argc + 1);
- 	argc++;
-diff --git a/git.c b/git.c
-index 5fd30da093..c7e122cfc1 100644
---- a/git.c
-+++ b/git.c
-@@ -344,7 +344,7 @@ static int handle_alias(int *argcp, const char ***argv)
- 		count = split_cmdline(alias_string, &new_argv);
- 		if (count < 0)
- 			die(_("bad alias.%s string: %s"), alias_command,
--			    split_cmdline_strerror(count));
-+			    _(split_cmdline_strerror(count)));
- 		option_count = handle_options(&new_argv, &count, &envchanged);
- 		if (envchanged)
- 			die(_("alias '%s' changes environment variables.\n"
+ 		if (!dwim_ref(name, refnamelen, &oid, &ref))
+-			die("no such ref: %.*s", refnamelen, name);
++			die(_("no such ref: %.*s"), refnamelen, name);
+ 		free(ref);
+ 	}
+ 
+ 	if (get_oid(name, &oid))
+-		die("Not a valid object name");
++		die(_("not a valid object name: %s"), name);
+ 
+ 	commit = lookup_commit_reference_gently(ar_args->repo, &oid, 1);
+ 	if (commit) {
+@@ -403,7 +403,7 @@ static void parse_treeish_arg(const char **argv,
+ 
+ 	tree = parse_tree_indirect(&oid);
+ 	if (tree == NULL)
+-		die("not a tree object");
++		die(_("not a tree object: %s"), oid_to_hex(&oid));
+ 
+ 	if (prefix) {
+ 		struct object_id tree_oid;
+@@ -413,7 +413,7 @@ static void parse_treeish_arg(const char **argv,
+ 		err = get_tree_entry(&tree->object.oid, prefix, &tree_oid,
+ 				     &mode);
+ 		if (err || !S_ISDIR(mode))
+-			die("current working directory is untracked");
++			die(_("current working directory is untracked"));
+ 
+ 		tree = parse_tree_indirect(&tree_oid);
+ 	}
 -- 
 2.19.1.1005.gac84295441
 
