@@ -2,97 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C20F1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 04:04:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1703A1F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 04:09:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727254AbeKENUB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 08:20:01 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:47094 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727066AbeKENUA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 08:20:00 -0500
-Received: by mail-wr1-f66.google.com with SMTP id 74-v6so7833705wrb.13
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 20:02:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4sD1LwrNYMD/cBY26QZQ6Z7eqjNQxpmu1KwGo2Z3h9w=;
-        b=ga3Jx9DDUh8xz805SXS03nnGYrAfy4PQl08XXrqpFU3DQJ6ZqcudrLdYi6G1UTYbFf
-         M8B2Cq0yGWjVyT9YBOqhp4jNxeS4PTeN6Cy7GZCe8fqFUGOmHIdQfT51c2aDS2V46R4H
-         d54VVw9kUzsbgaUkW5VzIaztWi256HH4z9RK7fGE+EQKkF/6iIzTvx4HFt5m/ziXty1t
-         542px8xEzrqmJ1fQhPP7yi6b6OVTy9zx4ruhXnuSGbhK27PpcnnuuV+xthGqvV2oZB9l
-         Gdu/1ofQUX1l7ZL+7S5CH2rVs3nAi8S4jO7ZFcvCxBcPulYbqUUdD0eW1TlLfT3O0/NP
-         hBcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4sD1LwrNYMD/cBY26QZQ6Z7eqjNQxpmu1KwGo2Z3h9w=;
-        b=QT3ntnHa/kLrVfyFHA4yKO70BQXGlmZYQ7RK7w6hdxzfXc11+Xi3Rldw1cPv0Cg2/u
-         xr1VhSU8i89PDFmlb/M3s8ruazBTS0ro3uyMMawEbuv87sMBCQ0Dc/zLQy1MgD/g9dhq
-         qO810FUyXLM79rD+v8OjWAXa47kpMgdxmWyIkrvuyltMiL3ufxKViKNmEwUG5dbFgaAe
-         SRaHQIqOTidshClTFW84fZEOy7KHTwWy/upcbuG7/b+QuC4IKSh+704vWpVicO/Nxvqo
-         gjAesA3MHBCzR9QqEu6mVPfE7tmwKaZ3tY+cVMXziIWcNI19DzdPxkxJ8VHWNGQmwiol
-         pjLw==
-X-Gm-Message-State: AGRZ1gJUkRrvj9n2PPpDbBjl1VSfIEmQipUO6e+atR/6osASZc79ZHrJ
-        3MU3fOgSbVCDBNPX4p8Y8qs=
-X-Google-Smtp-Source: AJdET5d8RWwa0J14mufe1DQ8mkBaUWTylOV0P47bHm3LriCWXurRsCNfKwpUIl6h8b8Zvrd450juDQ==
-X-Received: by 2002:a5d:4012:: with SMTP id n18-v6mr17472407wrp.185.1541390543302;
-        Sun, 04 Nov 2018 20:02:23 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 78-v6sm24205688wma.38.2018.11.04.20.02.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 04 Nov 2018 20:02:22 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, carenas@gmail.com,
-        shoelzer@gmail.com, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] poll: use GetTickCount64() to avoid wrap-around issues
-References: <pull.64.git.gitgitgadget@gmail.com>
-        <69bc5924f94b56f92d9653b3a64f721bd03f1956.1541020294.git.gitgitgadget@gmail.com>
-        <c9e001de-3598-182d-416e-1e94f234c249@kdbg.org>
-        <CACbrTHctZejfDTjqWqVfPYdb=ssD253Cd2isr3BxWsL1AqsH2w@mail.gmail.com>
-        <e8b7b173-eaa1-0fad-7e6a-771389872886@kdbg.org>
-        <CAPUEspgF0GjJPtMqmZjUmsEeaJpQQBBwOV9YOg8A6YBdwbdaFA@mail.gmail.com>
-        <46aa1893-095b-9f0c-4989-e63ebaa88705@kdbg.org>
-        <xmqqefc0mnlh.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cRdaXdZPpmMKBwZziMZarr2+wrdpnyHPkSYAkoBDuvLnw@mail.gmail.com>
-Date:   Mon, 05 Nov 2018 13:02:21 +0900
-In-Reply-To: <CAPig+cRdaXdZPpmMKBwZziMZarr2+wrdpnyHPkSYAkoBDuvLnw@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 4 Nov 2018 22:33:13 -0500")
-Message-ID: <xmqq5zxcjho2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1728283AbeKEN1I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 08:27:08 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:57690 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728037AbeKEN1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 08:27:08 -0500
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id 08B9A335C67;
+        Mon,  5 Nov 2018 04:09:28 +0000 (UTC)
+Message-ID: <1541390965.763.2.camel@gentoo.org>
+Subject: Re: [PATCH 2/2] t/t7510-signed-commit.sh: add signing subkey to
+ Eris Discordia key
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Date:   Mon, 05 Nov 2018 05:09:25 +0100
+In-Reply-To: <xmqqo9b4l4a6.fsf@gitster-ct.c.googlers.com>
+References: <20181104094710.27859-1-mgorny@gentoo.org>
+         <20181104094710.27859-2-mgorny@gentoo.org>
+         <20181104151013.GH731755@genre.crustytoothpaste.net>
+         <1541347654.22217.4.camel@gentoo.org>
+         <xmqqo9b4l4a6.fsf@gitster-ct.c.googlers.com>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-OHcarDjidmU3O4iENH1J"
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Sun, Nov 4, 2018 at 6:26 PM Junio C Hamano <gitster@pobox.com> wrote:
->> OK, thanks.  It seems that the relative silence after this message
->> is a sign that the resulting patch after squashing is what everybody
->> is happey with?
->>
->> -- >8 --
->> From: Steve Hoelzer <shoelzer@gmail.com>
->>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> Acked-by: Steve Hoelzer <shoelzer@gmail.com>
->
-> It's not clear from this who the author is.
+--=-OHcarDjidmU3O4iENH1J
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Right.  The latter should be s-o-b and the order swapped, and
-probably say "Steve wrote the original version, Johannes extended
-it" in the text to match.
+On Mon, 2018-11-05 at 10:08 +0900, Junio C Hamano wrote:
+> Micha=C5=82 G=C3=B3rny <mgorny@gentoo.org> writes:
+>=20
+> > > It's my understanding that GnuPG will use the most recent subkey
+> > > suitable for a particular purpose, and I think the test relies on tha=
+t
+> > > behavior.  However, I'm not sure that's documented.  Do we want to re=
+ly
+> > > on that behavior or be more explicit?  (This is a question, not an
+> > > opinion.)
+> >=20
+> > To be honest, I don't recall which suitable subkey is used.  However, i=
+t
+> > definitely will prefer a subkey with signing capabilities over
+> > the primary key if one is present, and this is well-known and expected
+> > behavior.
+> >=20
+> > In fact, if you have a key with two signing subkeys A and B and it
+> > considers A better, then even if you explicitly pass keyid of B, it wil=
+l
+> > use A.  To force another subkey you have to append '!' to keyid.
+> >=20
+> > Therefore, I think this is a behavior we can rely on.
+>=20
+> I didn't check how the signing key configuration is done in the test
+> sript (which is outside the patch context), but do you mean that we
+> create these signed objects by specifying which key to use with a
+> keyid with "!"  appended?  If so I agree that would make sense,
+> because we would then know which subkey should be used for signing
+> and checking with %GF/%GP would be a good way to do so.
+>=20
 
-THanks.
+No, we don't have duplicate subkeys to be required to use that.  Some of
+the tests use explicit '-S<keyid>' to force using the other key; other
+seem to use a default key (I can't find a place where the default would
+be set, so I suppose it's GnuPG default).
+
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--=-OHcarDjidmU3O4iENH1J
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlvfwnVfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQoODRAA1WYrydz4bZshAXRLDKVv3LULbnS/L1rL13zQBGTxQi+FVPG0chtSkfkQ
+FvJdLEOmqbgTWAHa3mp2hAwcpYd0OwrbL+y6IA09ljf0JhC1fiyaAaPCT6yL93W5
+yOaP9X+25pAC4qGZVuKqSgHjxKlP1R3vYfZyyVN6JiXpD1PMSrtpeECsQCGXxKHQ
+EJLu+R0d7ewUXOQ5+6/Y4j9mP/orqMwbzgNkiEoYEmaLEpXL4kBppjJigvpx5hUg
+lLusyvKaUdllcAzzBhlX9OzYcHKXvZRVaYuCELmIdP/ei8b2sHP4ocgqGbGhy18V
+xG7ZS2zkGSIypDmo2d1GCSObT6ugOAiJtXJAcObqW/xgwj18Xgq8RqRmd9oKKc5q
+/q9vCfRgK6pho4T9LchXbPHmu3KDVoEorak9lMm9g4dRDFGABMo3dZfGuxsCBo0p
+aqa+yQEesGmPvWqC7RUBgjrqyrda7DplNOyfILJIU/lxt8G0txb+xsK+dd5E8+bk
+OGemFddsBYjDU8i4n+QAC5nVF7mLMdDtlYhGjQPWIw7wBhpMeZBRBfI48yhuX1HX
+famkgSYQ2YS0UuvO8QsBA02JLVZ8tN6sxtlS2F3QB+XtoS8bFdDuEQHFsEEmwijq
+H0YYFaOI02ucTzxRJEpF0g0iTvefg98zNdZUv0/zJ48DNN0fR+Q=
+=jN73
+-----END PGP SIGNATURE-----
+
+--=-OHcarDjidmU3O4iENH1J--
+
