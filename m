@@ -2,119 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9971F453
-	for <e@80x24.org>; Sun,  4 Nov 2018 23:45:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 368931F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 00:02:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730734AbeKEJCG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 04:02:06 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53248 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730722AbeKEJCG (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Nov 2018 04:02:06 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2C72B61B79;
-        Sun,  4 Nov 2018 23:45:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541375120;
-        bh=RTgQTJagmXdmVneV6JwwX5E8v6jOQZhyDfn5jS8LGMg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=aZNEsx4fi2X2VviNfSoSykn0P1jxrc40AZVmJR5+8dWH1SpbRLGDRwvlCMLm/gbTT
-         FE1qqCpLt76BJ9GTBSbUzwk2nMWXK4v2vM2WD1AQ2aM8P40+pnkKAP55FMjLaTTuAb
-         6UhNTCYODS7BuvW0AclmvKCFx2IHmh3kU0pLXolAIXCWAsjm+OTCYav1kSjknNQKB8
-         Lc26X/W11lbSWR4eVLV1fOcSPOnSy9ib5g/rwae5n9JgPkWYH5nCgn34Rxzqyx+PQO
-         koFfcXKtiLhfqzNqwot1+YjOmN+OCnn1FHvmz8dWRXDF76nG31NtvSxaF694EGvAaA
-         BljYwu+HNktglYkRaOcgRbZlhWu6IDPwE/WAtwFG8pZZBRCGRS6NPUpLQi75GQYl1O
-         BpeO2Taq4HOdF0HJwRP1vpZN5Tf5MTal0oR8WuR0FTAe3TDKyfsp5A89aj9WsM/I3G
-         kyI/2hcSoAa5zw7NFq6Rpo1UDsXRwB+IJhB0DSYUlnriZYNwOBO
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v5 12/12] hash: add an SHA-256 implementation using OpenSSL
-Date:   Sun,  4 Nov 2018 23:44:58 +0000
-Message-Id: <20181104234458.139223-13-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
-In-Reply-To: <20181104234458.139223-1-sandals@crustytoothpaste.net>
-References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
- <20181104234458.139223-1-sandals@crustytoothpaste.net>
+        id S1729897AbeKEJTG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 04:19:06 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55185 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729871AbeKEJTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 04:19:06 -0500
+Received: by mail-wm1-f66.google.com with SMTP id r63-v6so6568919wma.4
+        for <git@vger.kernel.org>; Sun, 04 Nov 2018 16:02:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aLe1cY5lXq0Ztnajl0T+JitqiSekGkpFsqlrfIgbhWE=;
+        b=NDt4p9rT4jTOhRw9e53ueSPU8CvPLFQu4IYH+DAWrqdLryMMeit6ByOFtiFjBtwJkv
+         Efvp5vzR24YfnWKaSLUn0HF392ugZYyqFoGkXlEnkkzhWrac42o1qfQM1Hlvm/u9+Ms/
+         d8qZKPWUZBJ+ZxICZSv/CJm0MytQ7buxO7DpCRnbitAvo1oS9VSAb0/sdWtRIcVgsQCw
+         dUTKInbNHE96FiVo9z25FuerkEGnJmifg/XbYXKNOgIYyE+poL9W+SPo40O8b9CIyS3r
+         0XXQmvEwIO28V1AmLMxSNm885Br8w0eoYIIJXDJvk4W3Mno+WOAr6iYdmFAtdqd3iCSo
+         BS7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aLe1cY5lXq0Ztnajl0T+JitqiSekGkpFsqlrfIgbhWE=;
+        b=BTSG2a2U+24/DSK/b5Kgu8eAEcfhvPGy8iP9QVl/uHeCKD1LZAOp62jGVz+zZBUOWK
+         aaW9VtKXseqe+2nQRP+MjV2r43WMGQyDkE2TQjEpYxa21QiOICAXlquS4oTigLV2cECZ
+         sEFT1YfUzxRxm98z9cI/UOLxzWRwOW/8xHt/rQh/mnmw8hKxDGfwZ2gYFYsC++Q5Aq5V
+         xkGUrv3vAiUdud8S3S/H7p38r0I43jtoy6uFdnf8Np8oAJTlaL7fE1IfvVJB5tBPMlUr
+         7ejN7a6GqEr4wVVp3/9wrxFrk3F+hbvPEhgOU3aFo19EENn96485t+XHm2mZDmgJhpS2
+         Oc6A==
+X-Gm-Message-State: AGRZ1gJHdCIxkBfYGXFu9/Taub9UqD4eBfYqOUNNUW2KrbTt8G3EdF8r
+        KeERGIx3NEY5GlRw1Q9Fc+M=
+X-Google-Smtp-Source: AJdET5fCR1gRl1kUDua6/MtmOWtKfqO/5XSi9X695x1xNYWU0QZI9WWrMdsp+/iEgJ26zHiAC3w7hQ==
+X-Received: by 2002:a1c:91cd:: with SMTP id t196-v6mr4197724wmd.63.1541376135363;
+        Sun, 04 Nov 2018 16:02:15 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p17-v6sm7200373wmc.16.2018.11.04.16.02.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 04 Nov 2018 16:02:14 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>
+Subject: Re: [RFC v1] Add virtual file system settings and hook proc
+References: <20181030191608.18716-1-peartben@gmail.com>
+        <xmqqsh0nyqx9.fsf@gitster-ct.c.googlers.com>
+        <dbc2eb4f-842e-f49a-256f-3a140d801bb0@gmail.com>
+Date:   Mon, 05 Nov 2018 09:02:13 +0900
+In-Reply-To: <dbc2eb4f-842e-f49a-256f-3a140d801bb0@gmail.com> (Ben Peart's
+        message of "Wed, 31 Oct 2018 16:12:53 -0400")
+Message-ID: <xmqqa7momlx6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already have OpenSSL routines available for SHA-1, so add routines
-for SHA-256 as well.
+Ben Peart <peartben@gmail.com> writes:
 
-On a Core i7-6600U, this SHA-256 implementation compares favorably to
-the SHA1DC SHA-1 implementation:
+>>> +	if (*dtype == DT_UNKNOWN)
+>>> +		*dtype = get_dtype(NULL, istate, pathname, pathlen);
+>>
+>> We try to defer paying cost to determine unknown *dtype as late as
+>> possible by having this call in last_exclude_matching_from_list(),
+>> and not here.  If we are doing this, we probably should update the
+>> callpaths that call last_exclude_matching_from_list() to make the
+>> caller responsible for doing get_dtype() and drop the lazy finding
+>> of dtype from the callee.  Alternatively, the new "is excluded from
+>> vfs" helper can learn to do the lazy get_dtype() just like the
+>> existing last_exclude_matching_from_list() does.  I suspect the
+>> latter may be simpler.
+>
+> In is_excluded_from_virtualfilesystem() dtype can't be lazy because it
+> is always needed (which is why I test and die if it isn't known).  
 
-SHA-1: 157 MiB/s (64 byte chunks); 337 MiB/s (16 KiB chunks)
-SHA-256: 165 MiB/s (64 byte chunks); 408 MiB/s (16 KiB chunks)
+You make a call to that function even when virtual-file-system hook
+is not in use, i.e. instead of the caller saying
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Makefile | 7 +++++++
- hash.h   | 2 ++
- 2 files changed, 9 insertions(+)
+	if (is_vfs_in_use()) {
+		*dtype = get_dtype(...);
+                if (is_excluded_from_vfs(...) > 0)
+			return 1;
+	}
 
-diff --git a/Makefile b/Makefile
-index 5a07e03100..36fd3a149b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -183,6 +183,8 @@ all::
- #
- # Define GCRYPT_SHA256 to use the SHA-256 routines in libgcrypt.
- #
-+# Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
-+#
- # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
- #
- # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
-@@ -1638,6 +1640,10 @@ endif
- endif
- endif
- 
-+ifdef OPENSSL_SHA256
-+	EXTLIBS += $(LIB_4_CRYPTO)
-+	BASIC_CFLAGS += -DSHA256_OPENSSL
-+else
- ifdef GCRYPT_SHA256
- 	BASIC_CFLAGS += -DSHA256_GCRYPT
- 	EXTLIBS += -lgcrypt
-@@ -1645,6 +1651,7 @@ else
- 	LIB_OBJS += sha256/block/sha256.o
- 	BASIC_CFLAGS += -DSHA256_BLK
- endif
-+endif
- 
- ifdef SHA1_MAX_BLOCK_SIZE
- 	LIB_OBJS += compat/sha1-chunked.o
-diff --git a/hash.h b/hash.h
-index 2ef098052d..adde708cf2 100644
---- a/hash.h
-+++ b/hash.h
-@@ -17,6 +17,8 @@
- 
- #if defined(SHA256_GCRYPT)
- #include "sha256/gcrypt.h"
-+#elif defined(SHA256_OPENSSL)
-+#include <openssl/sha.h>
- #else
- #include "sha256/block/sha256.h"
- #endif
+your caller makes an unconditional call to is_excluded_from_vfs().
+Isn't that the only reason why you break the laziness of determining
+dtype?
+
+You can keep the caller simple by making an unconditional call, but
+maintain the laziness by updating the callig convention to pass
+dtype (not *dtype) to the function, e.g..
+
+	if (is_excluded_from_vfs(pathname, pathlen, dtype) > 0)
+		return 1;
+
+and then at the beginning of the helper
+
+	if (is_vfs_in_use())
+		return -1; /* undetermined */
+	*dtype = get_dtype(...);
+	... whatever logic it has now ...
+
+no?
+
+> Your comments are all feedback on the code - how it was implemented,
+> style, etc.  Any thoughts on whether this is something we could/should
+> merge into master (after any necessary cleanup)?  Would anyone else
+> find this interesting/helpful?
+
+I am pretty much neutral.  Not strongly opposed to it, but not all
+that interested until seeing its integration with the "userland" to
+see how the whole thing works ;-)
