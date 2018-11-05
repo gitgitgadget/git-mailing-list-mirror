@@ -2,114 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6262A1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 20:57:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08EA51F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 21:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387453AbeKFGSc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 01:18:32 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53308 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726902AbeKFGSc (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 6 Nov 2018 01:18:32 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E0C926077B;
-        Mon,  5 Nov 2018 20:56:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1541451417;
-        bh=brH/XkGBm8F5bMe6ZPjgQYL/04FL1TZEmeE3YjpvmZ8=;
-        h=Date:From:To:Cc:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=eD8Pl8MJGVuBjkQOeC6XILxFV6M5RNIroXdrzncTuBqfg52zW8Ua3Qn0cS+HrDIcS
-         VQ7nGM4FVngz4ELQpWQjazNmsy+8dmODW7ar3qP+OcP1scu/dnJnhzfaTvWpB+fCxM
-         KqMbZNRlSnRDIeTTHOlWB+0Morg4yBPT/5vPWWCNyeId9lKVWeduKahyBQCezJx7dT
-         qt7A65yidjDfPpWDfc53GacqwVYPX3Dy2HS/n/0l4CgvrW+PUpHNzwKW+Hxu/+WIPi
-         eKDddDJj68YBFCKgkNpW4yVBH80+oc55idLnL7Ti8b1cgTgRNI2/XmO1IA6WSVsGaz
-         RCRYhnkaVXM7BvM47Sd1HPgkzvzXPMnnM8G2trzsRRSXwSYldl6emdyPf19m18AvmH
-         mqVfCdknTDT+9G04EGxzoUVQtYIWsqkYhi7T1t/05arhYKelxITu2H4+/4Lbr1Doeb
-         /MIbwqRkDqMnCX611xOlVl9tuzkOEM+e88+XbKBf7uJWxyqvCIE
-Date:   Mon, 5 Nov 2018 20:56:52 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Patrick Steinhardt <patrick.steinhardt@elego.de>
-Subject: Wildcard URL config matching
-Message-ID: <20181105205652.GA890086@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        Patrick Steinhardt <patrick.steinhardt@elego.de>
+        id S2387762AbeKFGWh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 01:22:37 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45141 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387441AbeKFGWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 01:22:37 -0500
+Received: by mail-ed1-f65.google.com with SMTP id w39-v6so4317779edw.12
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 13:01:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=z/hMLYj51u0AFdQSV33UNjByTuQZmQ0kGKC8ABiNpiY=;
+        b=EgqqxKgp8AyOXsnLZuznxSyOlCqnNCQLxOHwdu60hXcCQnsO3gRz+B18Vapwij2abF
+         Ua8GD538wflS/+m/bLd2xC2n0RA6qX80njjfXCOyrViFoMTLHP6Sg+2Gq25YCHqB78mL
+         V+tMxJCvLxnHrHVAzlLl94Oes254dy3gz7zmvr227ohxjwtLVRMqgmhoQ+idw5hy3uxj
+         qkUTOVzhxFsQBsJzDV4YpB9yUM/SV4lvHugYeTaQKq7/wVUxZT4JL0KxB8USSCq7K3KD
+         WDWtDY14uoyarioWlL5gpaTNuzIXxtiCFhf9TS5eUo7XsiIaSw9G/XdwUlRRIoch9LoL
+         iyNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=z/hMLYj51u0AFdQSV33UNjByTuQZmQ0kGKC8ABiNpiY=;
+        b=M2fpjM0DCKdKlRqWFeZCGbICGRzaJkJG6aT6YtAlAlIgmCJA2DgHZul+JQS7hQHiQe
+         Vs1C18UcV2opMMu8HMLLO+w2y11GKfclDSf/mAv/bNa1/BIqtMcpBuuOTEPbQvn8Ce8R
+         +KWx+zDwO5AFNVDeT0CnlkytaQFTp51FVQGZQKpj1shKFcLj6VmoewYt641i8mA2SOFC
+         N+/7aU4M77wojGQNqNP49LLdkVD0l6gLGcVtpSbuONfKHYw9Qr8RHfKGjg+VzXwDZuTa
+         GtyyMU4hT9sqXoLKpPdFf/3ABeU+P6k67Vp0gYN7B0NHBZJsF2H1vRW961DAJtFqujqA
+         4Cug==
+X-Gm-Message-State: AGRZ1gKNid00oUrTQpl+KynnsJDy4b4WYO4RtRbcompD8y6G5BsbpPS5
+        kiXSO40TkwIV0DPTpP1Zxbo=
+X-Google-Smtp-Source: AJdET5cu2oZnr441WR1pg16Epj6LcLpgzkZXCClsPCKF+FP8JnjxR2qxilpN/8YWA+UpvXK59uInog==
+X-Received: by 2002:aa7:d48e:: with SMTP id b14-v6mr14434005edr.256.1541451662482;
+        Mon, 05 Nov 2018 13:01:02 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id n25-v6sm1078382edd.31.2018.11.05.13.01.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Nov 2018 13:01:01 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        lucas.demarchi@intel.com, Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] range-diff: add a --no-patch option to show a summary
+References: <20181105200650.31177-1-avarab@gmail.com> <CAPig+cThS8959jW9+X7bJHy5RG9Uoj4=V8ahjf2zGetTNw03SA@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAPig+cThS8959jW9+X7bJHy5RG9Uoj4=V8ahjf2zGetTNw03SA@mail.gmail.com>
+Date:   Mon, 05 Nov 2018 22:00:59 +0100
+Message-ID: <87efbz6xys.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7JfCtLOvnd9MIVvH"
-Content-Disposition: inline
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---7JfCtLOvnd9MIVvH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 05 2018, Eric Sunshine wrote:
 
-In a272b9e70a ("urlmatch: allow globbing for the URL host part",
-2017-01-31), we added support for wildcard matching for URLs when
-reading from .git/config.  Now it's possible to specify an option like
-http.http://*.example.com/.cookieFile and have it match for the URL
-http://foo.example.com.  However, since this option also allows
-wildcards at any level, the following also matches:
-http.http://*.*.*/.cookieFile.
+> On Mon, Nov 5, 2018 at 3:07 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>> Add a --no-patch option which shows which changes got removed, added
+>> or moved etc., without showing the diff associated with them.
+>
+> This option existed in the very first version[1] of range-diff (then
+> called branch-diff) implemented by Dscho, although it was called
+> --no-patches (with an "es"), which it inherited from tbdiff. I think
+> someone (possibly me) pointed out that --no-patch (sans "es") would be
+> more consistent with existing Git options. I don't recall why Dscho
+> removed the option during the re-rolls, but the explanation may be in
+> that thread.
 
-I'm wondering if it was intentional to allow this behavior or if we
-intended to allow only the leftmost label (or labels) to be a wildcard.
-The tests seem to test only the leftmost label, and that is the behavior
-that one has for TLS certificates, for example.  I don't really see a
-situation where one would want to match hostname labels in an arbitrary
-position, but perhaps I'm simply not being imaginative enough in
-thinking through the use cases.
+Thanks for digging. Big thread, not going to re-read it now. I'd just
+like to have this.
 
-Regardless of what we decide, I'll be sending a patch, either to add
-additional tests, or correct the code (or both).
+> I was also wondering if --summarize or --summary-only might be a
+> better name, describing the behavior at a higher level, but since
+> there is precedent for --no-patch (or --no-patches in tbdiff), perhaps
+> the name is fine as is.
 
-I ask because we're implementing this behavior for Git LFS, where we
-don't iterate over all configuration keys, instead looking up certain
-values in a hash.  We'll need to make some changes in order to have
-things work correctly if we want to implement the current Git behavior
-to prevent combinatorial explosion.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I think we should aim to keep a 1=1 mapping between range-diff and
+log/show options when possible, even though the output might have a
+slightly different flavor as my 4th paragraph discussing a potential
+--stat talks about.
 
---7JfCtLOvnd9MIVvH
-Content-Type: application/pgp-signature; name="signature.asc"
+E.g. I can imagine that range-diff --no-patch --stat --summary would not
+show the patch, but a stat as described there, plus e.g. a "create
+mode..." if applicable.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+This change implements only a tiny fraction of that, but it would be
+very neat if we supported more stuff, and showed it in range-diff-y way,
+e.g. some compact format showing:
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvgrpMACgkQv1NdgR9S
-9ouScw/9HahUpy3OmVNwCOkyBafyH1LJcaHyzD4XgZfl69yoy4W+hgnN+DB489yF
-8jwsrZPQ2UpRLrtiL6eOhTfAH/4RGvPQSaSKLllucyHVRBc0TMs+DDkOUo1imoCb
-7Y7yrL0P/lSNFCO6HxUH3jYSthB+RGlYHwjaYQjlI5Sspk+dzQkz72kEnNVzapJ7
-YmNNFZUkesrtLgz/83zqpQ4Lpw8JaAs24nynttetYCxkhgzS3xNMJVKj0fLnePEB
-sAUhuIqraxWKX5uazAheoJLW/AA+w+mbdcbb1ORmlnhyHcpGyxcqhSQzfjkI/CkU
-chnonvSIwiILs9tt9Z5W11eV1TSCIpY86mg+/3t0DVctvP1rOZPgyZMG259TN8+3
-+pSvPhqNkW7lMKTPZLxQSX1/lx+39YiEHXaBK7TmMuYZJqAKzylyi/XcfFaGTKBY
-RfkfAsfyWzuXEnn3+xrLMwiaah6xecLlwQws3Yu+hgqx5zHEpHJVJHNwjRdw5IlY
-eF3Xj1Bf6mkKZ8W4FRBtTT4tUufCbHXd2FO9fsQATiiFXjxCiYfntbfljGvHnQ1K
-cfqFIzSHOL5HUiHfM+SpZtm/OHjJb9YPpKokzX6ljm+Al92ZUjvcvwoGbSYgmVAY
-73xIG2NH+M8P4/7gkeQMqlTpxZoVjlO4/7D94dszJHuk+ssfolI=
-=mHKC
------END PGP SIGNATURE-----
+    1 file changed, 3->2 insertions(+), 10->9 deletions(-)
+    create mode 100(6 -> 7)44 new-executable
 
---7JfCtLOvnd9MIVvH--
+> The patch itself looks okay.
+>
+> [1]: https://public-inbox.org/git/8bc517e35d4842f8d9d98f3b99adb9475d6db2d2.1525361419.git.johannes.schindelin@gmx.de/
