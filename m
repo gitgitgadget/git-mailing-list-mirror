@@ -2,149 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7E3F1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 11:40:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6831F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 12:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727186AbeKEVAP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 16:00:15 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:36443 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726358AbeKEVAP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 16:00:15 -0500
-Received: by mail-ed1-f42.google.com with SMTP id x2-v6so7211403eds.3
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 03:40:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=6DsaTdrKYv5F0wEUFHjXXMg2aN0rVoZTtiIMjvzxrZk=;
-        b=RGBoxzcfAGQQUxBG9f5PJ+z7yPFhxs82fmG0ed6Yeqz7YMAuOGVF9w3dR02gHOiTMY
-         UV1eO+xctlJJiHlBbMfJpsyQpwIYVOYWwHz5sbQL06f2v0q2Fy0JAc1BVa29G6VpXolF
-         4Zy3DltEzPFTrYTokvFH7jagYghygrRfbjLsajYrrzJYj6ichq0RB+zeNZv34z57Zua9
-         Pak37nOQbK4rEct/AHX/bRXgWDUEwWOeqO7XUXAFf+j/hig/LJeG1OLp3YBJH1DDiPph
-         u0ZBhwf5XSQ8fWZFULTUG4A0s7dUTPdegmPLc4AHumfOKA6TMZBk8uwyVbJNkupDF/E8
-         mEHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=6DsaTdrKYv5F0wEUFHjXXMg2aN0rVoZTtiIMjvzxrZk=;
-        b=b/Oy5PcdQWePFAYxOqWqoRE3VrOcEMY1CBaSYsh5wf/enhiVgE/+BzVtly65Q5ny2+
-         fRUrBTopj73Xo/Syj5o9MevZBirUdjyGHJPZF3IFBWdOnGCp68RZdc6+wCBUuvcoRvUc
-         pIjqi8DqfqYakEf1gNfLCnpzC8nqXY5LtmT15UYfsVrA5of5GJAj6yJU5uglSmcNGLCh
-         fjmcP48yYIlCW60/yYiTniyA1RjJZC59IDuKcxViD3KdnTbMf0GnZLWDK8IEtJwg4LXA
-         Ti+QQ+bUk2D6r8UvFXgZFm5oeGOOx5JJVy7sj7JBCvfGcipceZK3KvW7Z1Wci2byup7v
-         b5SA==
-X-Gm-Message-State: AGRZ1gIq+tMlpwdJk155RcuBmTds4i0a8/UCHN8Tqz5z9LnsSdzLiOZz
-        NddJCvT88IcUWw0TSqWQgVDPju3k
-X-Google-Smtp-Source: AJdET5cC0zp2fRcpBQtu89kPYpKn4BNGj+ShQhwpAuXqcfLCpfqT3M0X0JEQ5ZdU6ph92l6DAaV4CQ==
-X-Received: by 2002:a17:906:4f09:: with SMTP id t9-v6mr13916983eju.153.1541418054592;
-        Mon, 05 Nov 2018 03:40:54 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id p26-v6sm1669608ejd.15.2018.11.05.03.40.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Nov 2018 03:40:53 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [RFC v1] Add virtual file system settings and hook proc
-References: <20181030191608.18716-1-peartben@gmail.com> <CACsJy8DbiVZYmY11Nt4c_+egSi5tz0iVq7rNv2BiVdyJ4htgvw@mail.gmail.com> <1f7efd07-4881-daa7-cd1d-145bbf3ffcc8@gmail.com> <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
-Date:   Mon, 05 Nov 2018 12:40:53 +0100
-Message-ID: <87ftwf7nwa.fsf@evledraar.gmail.com>
+        id S1728136AbeKEVpl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 16:45:41 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:32132 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbeKEVpl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 16:45:41 -0500
+Received: from [192.168.1.12] ([92.29.15.216])
+        by smtp.talktalk.net with SMTP
+        id JdxIgftVBoI6LJdxIgow0K; Mon, 05 Nov 2018 12:26:08 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1541420768;
+        bh=aCN3hY3zlDWa02b7KQ3UtfwUxlc+1Wo3wg0RYiYeRgg=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=lWoy0fqyOyqcHKDppQT16pPtwo0w9/oiJiOQWOZNCqfYJcC5FZrYirNSfoAmymwd9
+         eDhQlTZGavo2GAzOAt1VBctyfN71dvtSVDeT2zq03QVxjCTrc4VYejjA8Lt8KHn9Ca
+         g8wXcAZoB9ULc8IzG37yKn2c3d4a3ZDXHZELyLzs=
+X-Originating-IP: [92.29.15.216]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=nW19o/PZ5qZJ0p49dqPFUw==:117
+ a=nW19o/PZ5qZJ0p49dqPFUw==:17 a=IkcTkHD0fZMA:10 a=anyJmfQTAAAA:8
+ a=txqFxXwaAAAA:8 a=5rxgeBVgAAAA:8 a=AVbMHacnAAAA:8 a=VwQbUJbxAAAA:8
+ a=h9GtzQcEuS5QHyIiwGUA:9 a=QEXdDO2ut3YA:10 a=PWrjKhWBdF8A:10
+ a=H5RkCRLHyEoA:10 a=YJ_ntbLOlx1v6PCnmBeL:22 a=2U7u32ZBAyMuB9OKO3Vn:22
+ a=PwKx63F5tFurRwaNxrlG:22 a=AjGcO6oz07-iQ99wixmX:22
+Subject: Re: if YOU use a Windows GUI for Git, i would appreciate knowing
+ which one and why
+To:     _g e r r y _ _l o w r y _ 
+        <gerry.lowry@abilitybusinesscomputerservices.com>,
+        git@vger.kernel.org
+References: <1b8a01d47466$9775c130$c6614390$@abilitybusinesscomputerservices.com>
+From:   Philip Oakley <philipoakley@talktalk.net>
+Message-ID: <2f1855a2-58c4-d7d6-cd62-41ce877f11b6@talktalk.net>
+Date:   Mon, 5 Nov 2018 12:26:08 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <1b8a01d47466$9775c130$c6614390$@abilitybusinesscomputerservices.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJW6ZEfHTdMbVTgwpe78vPBlA7IJ6zTABn2BovkYyGt0sneCt+qRDPST4yHR9cVIvrKIO9T+DCogdQr6SvfIX5TcbrJ/Tl5vtSTYZCGHLEiVuiFCEOUN
+ trkgvZzlvi7+KCHTx9ublKcA3/M3Iten3S4ZVO5j4ggSZDNsyXGezmFNxxeUDCo60JGoLDJbl56lLRnLnhrVv9yU0eEWVYJ4zh0rlPZHeiQh2AXnsATNfKj1
+ IQpVZUHTyohtAwXGOsTxJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Gerry,
+I'll give my view, as someone approaching retirement, but who worked as 
+an Engineer in a mainly Windows environment.
 
-On Sun, Nov 04 2018, Duy Nguyen wrote:
+On 04/11/2018 17:48, _g e r r y _ _l o w r y _ wrote:
+> PREAMBLE [START] - please feel free to skip this first section
+> 
+> Forgive me for asking this question on a mailing list.
+> 
+> stackoverflow would probably kill such a question before the bits were fully saved to a server drive.
+> 
+> Let me explain why i am asking and why i am not being a troll.
+> 
+> [a] i'm "old school", i.e., > 50% on my way to being age 72 [born 1947]
 
-> On Wed, Oct 31, 2018 at 9:53 PM Ben Peart <peartben@gmail.com> wrote:
->> >> +core.virtualFilesystem::
->> >> +       If set, the value of this variable is used as a command which
->> >> +       will identify all files and directories that are present in
->> >> +       the working directory.  Git will only track and update files
->> >> +       listed in the virtual file system.  Using the virtual file system
->> >> +       will supersede the sparse-checkout settings which will be ignored.
->> >> +       See the "virtual file system" section of linkgit:githooks[6].
->> >
->> > It sounds like "virtual file system" is just one of the use cases for
->> > this feature, which is more about a dynamic source of sparse-checkout
->> > bits. Perhaps name the config key with something along sparse checkout
->> > instead of naming it after a use case.
->>
->> It's more than a dynamic sparse-checkout because the same list is also
->> used to exclude any file/folder not listed.  That means any file not
->> listed won't ever be updated by git (like in 'checkout' for example) so
->> 'stale' files could be left in the working directory.  It also means git
->> won't find new/untracked files unless they are specifically added to the
->> list.
->
-> OK. I'm not at all interested in carrying maintenance burden for some
-> software behind closed doors. I could see values in having a more
-> flexible sparse checkout but this now seems like very tightly designed
-> for GVFS. So unless there's another use case (preferably open source)
->  for this, I don't think this should be added in git.git.
+8 years behind..
+> 
+> [b] when i started programming in 1967, most of my work input was via punched cards
+'69, at school, post/compile/run/wait for post; 1 week
+  (Maths club)
 
-I haven't looked at the patch in any detail beyond skimming it, and
-you're more familiar with this area...
+> 
+> [c] punching my own cards was cool
+Pin punching individual chads ;-)
 
-But in principle I'm very interested in getting something like this in
-git.git, even if we were to assume GVFS was a 100% proprietary
-implementation (which it's not, it's open source[1] and there's work on
-a non-Windows port[2]).
+> 
+> [d] IBM System/360 mainframe assembler was cool and patching previously punched card encoded machine code output was a fun risky but
+> at times necessary challenge.
+Eventually the 370 at university.
 
-By some definition we already support at least one "virtual filesystem",
-or two. I.e. we check files into a *.git repository where everything's
-trees & blobs, and then we need to ferry it back & forth between that
-and a POSIX-like fs using readdir(), stat(), open() and the like. Of
-course this isn't "virtual" in the fs sense, but it's a foreign virtual
-FS as far as git is concerned.
+> 
+> [e] using command windows and coding batch files for Gary Kildall's CP/M and the evil empire's PC/MS-DOS was how i accomplished many
+> tasks for early non-GUI environments (i still continue this practice even in Windows 10 (a.k.a. please don't update my PC O/S behind
+> my back again versions of MS Windows)).
+Engineer in electronics; software was an interlinked part of electronics 
+back then....
+> 
+> [f] my introduction to Git was via a command line based awesome video that has disappeared (i asked this community about that in a
+> previous thread).
+Discovered in 2011 via 'Code News' article - Spotted immediately that it 
+solved the engineers version control issue because it 'distributed' the 
+control. I've tried a few of the Gui's.
 
-Our other "virtual filesystem" (although this is a stretch) is what we
-expose via the plumbing commands.
+> 
+> BOTTOM LINE:  virtually 100% of my Git use has been via Git Bash command line [probably downloaded from https://git-scm.com/]
+> 
+> For me, and i suspect even for most people who live with GUI platforms, [a well kept secret fact] using the keyboard is faster than
+> using the mouse [especially when one's fingers are already over one's keyboard-example, closing one or more "windows" via Alt+F4.
+> 
+> Also for me, i am happy to change some code and/or write some new code, Alt+Tab to Git Bash frequently, ADD/COMMIT, then Alt+Tab
+> back to whatever IDE i'm using [mostly LINQPad and vs2017]; i know that's quite a bit schizophrenic of me-command line Git but GUI
+> IDE.
+> 
+> PREAMBLE [END]
+> ----------------------------------------
+> 
+> QUESTION:  if YOU use a Windows GUI for Git, i would appreciate knowing which one and why
+> 
+> i have been asked to look at GUI versions of Git for Windows.
+I presume that this is for a client who isn't sure what they want 
+http://www.abilitybusinesscomputerservices.com/home.html
 
-Both of these, as covered at length in various GVFS design docs /
-background info, aren't a good fit for some implementation where you'd
-like a file-like view that works with the index/status etc. but doesn't
-involve checking out everything. There's a huge gap to bridge between
-our plumbing & the features we expose that require a POSIX-like fs.
+> 
+> https://git-scm.com/download/gui/windows currently lists 22 options.
+That's nearly as bad as choosing a Linux distro ;-)
 
-I can see such an ability being very useful for things that aren't the
-massive repo Microsoft is interested in supporting. E.g. even for a
-~500MB repo it's a stretch to clone that, edit it, and submit a PR on
-something like an iOS/Android device.
+> 
+> if i had more time left in my life and the option, because of my own nature, i'd likely download and evaluate all 22 - Mr.T would
+> pity the fool that i often can be.
+> 
+> CAUTION:  i am not looking for anyone to disparage other Git Windows GUIs.
+> 
+> Let me break down the question into 4 parts:
+> 
+> [1a] Which do you prefer:  Git GUI, Git command line?
+I use the three parts provided as part of regular Git and Git for 
+Windows, that is git-gui, gitk and git cli in a terminal (mintty)
 
-Once we have something in git to support the likes of GVFS supporting
-use-cases like that also becomes easier. Between shallow cloning, the
-various object filters & this it would be great to be able to get a 1MB
-clone of git.git on my phone and submit a patch to it.
+> [1b] What is your reason for your [1a] preference?
+I have been in a general Windows environment for decades. The Gui format 
+with single buttons/drop downs that do one thing well, without finger 
+trouble side effects, is good in such environments. One cannot be master 
+of everything.
 
-The only potential downside I see is that there's currently exactly one
-implementation of this sort of thing in the wild, so we risk any such
-API becoming too tied up with just what GVFS wants, and not what we'd
-like to support with such a thing in general. This is what e.g. the w3c
-tries to avoid with having multiple browser implementations before
-something is standardized.
+The cli is good for specialists and special actions, especially 
+precision surgery. The key is to avoid the "the surgery was a success 
+but the patient died" results.
+> 
+> [2a] if applicable, which Git GUI do you prefer?
+git-gui and gitk are now the only two I use.
 
-But I think that's easy to work around. E.g. we can document any such
-API saying that it's an experimental v1 and is on probation until we get
-more users of the feature and figure out the warts & limitations. If it
-does end up being too GVFS-specific we could make a breaking change at
-some point and eventually drop the v1 version.
+> [2b] What is your reason for your [2a] preference?
+Many of the other Gui's hide the power of Git and its new abstraction of 
+no longer actually being about "Control" (by 'management'). Now it is 
+about veracity. If you have the right object ID (sha1/sha256) you have 
+an identical original [there are no 'copies', all Mona Lisas with the 
+hash are the same]. Management can choose which hash to accept upstream.
 
-1. https://gvfs.io/
-2. https://arstechnica.com/gadgets/2017/11/microsoft-and-github-team-up-to-take-git-virtual-file-system-to-macos-linux/
+Most other Gui's try to hide behind the old school Master-copy view 
+point that was developed in the 19th century for drawing office control. 
+If you damaged the master drawing the ability to make things and do 
+business was lost. Protecting the master drawing was everything. They 
+were traced before they went to the blue print machine. Changes were 
+batched up before the master could be touched (that risk again).
+
+Too may Gui's (and their Managements!) still try to work the old way, 
+loosing all the potential benefits. They are still hammer wielders 
+looking for nails, and only finding screws to smash.
+
+I've heard reasonable things about SmartGit but that costs money so I 
+haven't tried it. I tried TortoiseGit and GitExtensions, but gave up on 
+them as they would (to me) hide the real operations behind old concepts.
+
+The one are that could be improved is having manuals for the two guis, 
+and a better explanation, with practical examples, for the gitk viewer, 
+which has far more power than I have fully delved into.
+
+Ultimately it is a management problem. As a systems engineer, what needs 
+to be researched is the mind set - weltanschauung of the client, their 
+management style and its operations.
+
+See the recent discussion with Nicolas Mailhot 
+https://public-inbox.org/git/1290947539.4254.1508496039812.JavaMail.zimbra@laposte.net/ 
+on the release management issue
+> 
+> 
+> if you are uncomfortable replying to git@vger.kernel.org please feel free to reply directly to my e-mail address.
+> 
+> i look forward to hearing from members of this Git community.
+> 
+> Thank you for reading and thank you for your valuable time.
+> 
+> gerry (lowry)-wasaga beach-ontario-canada
+> gerry.lowry@abilitybusinesscomputerservices.com
+> 
+
+Education is the answer, especially for the lower quartile.
+Kruger & Dunning. "Unskilled and unaware of it" 1999.
+
+-- 
+Philip
