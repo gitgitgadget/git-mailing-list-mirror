@@ -8,156 +8,119 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5DE1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 11:36:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 903A61F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 11:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728850AbeKEUzX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 15:55:23 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34486 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728643AbeKEUzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 15:55:23 -0500
-Received: by mail-ed1-f65.google.com with SMTP id w19-v6so7203708eds.1
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 03:36:04 -0800 (PST)
+        id S1727128AbeKEU6f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 15:58:35 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:37532 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbeKEU6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 15:58:35 -0500
+Received: by mail-ed1-f66.google.com with SMTP id y10-v6so695761edr.4
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 03:39:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=d1R7l3YJ0qjfyqlI4WV7xffLVZrLB+q8nyFKWycy7xE=;
-        b=EvLLR7G4PmScFOKBiQ4NveeRbGKAgYqWvNymseaOCwGX25nSRFt14XDhSq8XsDcx+G
-         1hDLzTQWPcsQkMttAcbWkR/89lE7h7P44+78d87PNVMJ9xvprWPiWk4QWotkaQJiWurS
-         d+YS7Ek8hLKMnMc+un+AHUTh3DjMNyP53oPFOCtitqXJ+Ls6d8QrCDIlzcCegC5a7RuJ
-         scHr/vvc95GgdZl87xIvDoOiaDRopoFmEMG4qPZWUlhs0IHLjr63WNMH7cKqQMbZuUI1
-         f7nTB2x0VwmZ+blAvqgl1Y4B/GeDpJj9ocrlHzn671zPYpiqPebxdbZMlouLTY95crdD
-         MvXA==
+         :message-id:mime-version;
+        bh=O7M0gWx2k2fusqxHTQVa1tfl3sYjQFIuwIsS0XEizR4=;
+        b=LJ8kdU6nEhQLINJNsK+m9kFoDee13muz3bazxki574fQk5Zg1jvcB7x5eUxO9g5dOE
+         K5vOAqpevkTge7m0YxRaAzkg5T7duLB+7FsGkHzPRzCexz+i2ZxFKl+ElhLWzWgOw90y
+         XLHO5s7XD1oW/ED4lLgrPjPYq2aNiS/XoZc1LarCpCqXSfxyvw9++2qascwqPS5SZHlt
+         1NaBDKBFdDdCWYlTwKxEjLGDU4CIuK9LV7YPlRCfNXjS8tp7d9DjTVi5cA52VORdbeSB
+         AkEqJuTsIFlzKmzkLiFzVCrjAq2Xp3KJ5gysG+GgLH0KOUV/dulr9WKhW4uS83TVe0ny
+         nDBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=d1R7l3YJ0qjfyqlI4WV7xffLVZrLB+q8nyFKWycy7xE=;
-        b=r0RBuqjBc/NinKvNgjx7BljwlXS+hocE/hgSpm2LgJyQFg4SvM2Fdwj3hKUsDoLUlX
-         Uhqu5Xuoy3owvIciLxcrHuQKy6/RnDSzwmVFBfzdFfajLIkRsgvLTzQl8GuG8zY4rgP1
-         T9j3532pCb/5N3HLVLvtMFemKoYgtFyRo2P0EgSMAWByxGWdVEdD0mV5ETQt03xTElHi
-         CcQng1cvWa5lINWa2U63R5g6BOrvU7h6vEicgnoNUDUpLuK1eY+C3EBVy1CupkKELEbz
-         Dvjoo95ZhcUvwEZnXIYXhEVYrVfzGH+aLNN6pOg4EZvzbeRZHsiexEz56WTe32mWL9bE
-         ahfA==
-X-Gm-Message-State: AGRZ1gLDGlrGqhby1uTbo9A0hREJq5qS0W20QDbIo3q/UuLzeJsbRA77
-        tT7yalkX+UuIZ4PUpy2G7Zs=
-X-Google-Smtp-Source: AJdET5fxHaet9nqKkEhbTdutw2blIYkzpKXhrFm5AHeZl3znxAI9Hp1NMDymHuppXidPg9pLnPk8AA==
-X-Received: by 2002:a17:906:eca:: with SMTP id u10-v6mr13926929eji.54.1541417763653;
-        Mon, 05 Nov 2018 03:36:03 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version;
+        bh=O7M0gWx2k2fusqxHTQVa1tfl3sYjQFIuwIsS0XEizR4=;
+        b=RSUIeGWk8HNO5+7k2YDudJbjifXxqiu+33Mtxwna3IWT4Lj/WdTO50DS93iXx/Ry9i
+         eGTXdH8SaeKONrhr/m2lvglYSYV4yxMMKnd41vBP91PQ2rb9K1Y4opgGpw2CwsIy9GPN
+         RCXYa4LJe4Xi095UR7wGeFz8ZWaEDxxoAzjse9K2osDP4+huInia0KnBLFz+spkAlBYC
+         xNVgav9FALxVORg57ZJSfZO+F1JFCNTO+ZMsRdUT24INoMca4M11hCzERqUCYSDMISVo
+         b3JTnYJsP3zah5kid++ogssZXP44oTemYqE5v5qJQyUikkrSBMC/B2XRzOqZho3f4R09
+         006g==
+X-Gm-Message-State: AGRZ1gLIBkFMK03EjZ1lic8zspY7Ck9WMgyJRUoSKzIyBOUBkg5B97Ac
+        W73Rsg8k3wqvHIo/5MDpesMmROwK
+X-Google-Smtp-Source: AJdET5cLOvr+pY58DQDJemxou+b1AteHMyyZDtyF7DX82mE4pXLWx9efqs17J3GDzEGr5WbyckNy3Q==
+X-Received: by 2002:a50:f5f9:: with SMTP id x54-v6mr17324294edm.166.1541417956042;
+        Mon, 05 Nov 2018 03:39:16 -0800 (PST)
 Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id b18-v6sm7077001eju.38.2018.11.05.03.36.02
+        by smtp.gmail.com with ESMTPSA id n12-v6sm671637ejl.13.2018.11.05.03.39.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Nov 2018 03:36:02 -0800 (PST)
+        Mon, 05 Nov 2018 03:39:15 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Daniel Jacques <dnj@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Steffen Prohaska <prohaska@zib.de>,
-        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
-        Richard Clamp <richardc@unixbeard.net>,
-        Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/5] stop installing old libexec aliases like "git-init"
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-1-avarab@gmail.com> <xmqq4lcznemi.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v5 10/12] Add a base implementation of SHA-256 support
+References: <20181025024005.154208-1-sandals@crustytoothpaste.net> <20181104234458.139223-1-sandals@crustytoothpaste.net> <20181104234458.139223-11-sandals@crustytoothpaste.net>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqq4lcznemi.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 05 Nov 2018 12:36:01 +0100
-Message-ID: <87in1b7o4e.fsf@evledraar.gmail.com>
+In-reply-to: <20181104234458.139223-11-sandals@crustytoothpaste.net>
+Date:   Mon, 05 Nov 2018 12:39:14 +0100
+Message-ID: <87h8gv7nz1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Nov 03 2018, Junio C Hamano wrote:
+On Sun, Nov 04 2018, brian m. carlson wrote:
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Although I'm on the fence with the approach in 1/5. Should this be a
->> giant getopt switch statement like that in a helper script?
->>
->> An alternative would be to write out a shell file similar to
->> GIT-BUILD-OPTIONS and source that from this thing. I don't know,
->> what do you all think?
->
-> Not really.  Why do we iterate over these in a shell loop, rather
-> than having make to figure them out, just like we do when we "loop
-> over the source files and turn them into object files" without using
-> a shell loop?  What's so special about enumerating the installation
-> targets and iterating over the enumeration to perform an action on
-> each of them?  I think that is the first question we should be
-> asking before patch 1/5, which already assumes that it has been
-> decided that it must be done with a shell loop.
->
-> 	I think "first install 'git' itself, and then make these
-> 	other things derived from it" should let $(MAKE) install
-> 	things in parallel just like it can naturally do many things
-> 	in parallel, and the dependency rule to do so should not be
-> 	so bad, I suspect.
->
-> This is a tangent, but I have long been wishing that somebody would
-> notice that output during install and (dist)clean without V=1 is so
-> different from the normal targets and do something about it, and
-> hoped that that somebody finally turned out to be you doing so in
-> this series X-<.
+> SHA-1 is weak and we need to transition to a new hash function.  For
+> some time, we have referred to this new function as NewHash.  Recently,
+> we decided to pick SHA-256 as NewHash.  The reasons behind the choice of
+> SHA-256 are outlined in the thread starting at [1] and in the commit
+> history for the hash function transition document.
 
-I'm all for this, but don't have enough Make skills to make it
-happen. Can you or someone else post a WIP patch showing how to do this?
+Nit: In some contradiction now to what's said in
+hash-function-transition.txt, see 5988eb631a ("doc
+hash-function-transition: clarify what SHAttered means", 2018-03-26).
 
-What would the targets look like? Something that's a build target for
-the target file in the installation directory, so e.g. if you ran "all
-install" and had modified just one file (and no recursive rebuilds)
-you'd install just that one file?
+> +	{
+> +		"sha256",
+> +		/* "s256", big-endian */
 
-Early on in the "install" target we install many of these programs, and
-then some of these for-loops re-install on top of them. Actually now
-that I think of this this is one of the reasons for the 2>/dev/null
-probably, i.e. run "install" twice and you don't want to get errors.
+The existing entry/comment for sha1 is:
 
-Anyway, regardless of how the for-loop looks like (shell or
-make-powered) I split this up because it was getting really hard to
-maintain the *inner* part of those loops. I.e. needing to specially
-quote everything, end lines with \ etc.
+		"sha1",
+		/* "sha1", big-endian */
 
-But reading on...
+So why the sha256/s256 difference in the code/comment? Wondering if I'm
+missing something and we're using "s256" for something.
 
->> I'd like to say it's ready, but I've spotted some fallout:
->
-> I still have not recovered from the trauma I suffered post 1.6.0
-> era, so I would rather *not* engage in a long discussion like this
-> one (it is a long thread; reserve a solid hour to read it through if
-> you are interested),
->
-> https://public-inbox.org/git/alpine.LFD.1.10.0808261435470.3363@nehalem.linux-foundation.org/
->
-> which would be needed to defend the choice, if we decide to omit
-> installing the git-foo on disk in a released version.
+>  const char *empty_tree_oid_hex(void)
+> diff --git a/sha256/block/sha256.c b/sha256/block/sha256.c
+> [...]
 
-Thanks. I'll read that later.
+I had a question before about whether we see ourselves perma-forking
+this implementation based off libtomcrypt, as I recall you said yes.
 
-> I personally have no objection to offer a knob that can e used to
-> force installation of symlinks without falling back to other
-> methods.  I think it would be ideal to do so without special casing
-> symbolic links---rather, it would be ideal if it were a single knob
-> INSTALL_GIT_FOO_METHOD=(symlinks|hardlinks|copies) that says "I want
-> them to be installed as (symlinks|hardlinks|copies), no fallbacks".
+Still, I think it would be better to introduce this in at least two-four
+commits where the upstream code is added as-is, then trimmed down to
+size, then adapted to our coding style, and finally we add our own
+utility functions.
 
-... If you're happy to accept a patch that rips out this whole
-conditional fallback logic and just makes it an if/elsif/elsif for
-symlink/hardlink/copy this makes things a lot easier.
+It'll make it easier to forward-port any future upstream changes.
 
->> Ævar Arnfjörð Bjarmason (5):
->>   Makefile: move long inline shell loops in "install" into helper
->>   Makefile: conform some of the code to our coding standards
->>   Makefile: stop hiding failures during "install"
->>   Makefile: add NO_INSTALL_SYMLINKS_FALLBACK switch
->>   Makefile: Add a NO_INSTALL_BUILTIN_EXECDIR_ALIASES flag
->>
->>  Makefile         |  65 +++++++++++--------------
->>  install_programs | 124 +++++++++++++++++++++++++++++++++++++++++++++++
->>  2 files changed, 151 insertions(+), 38 deletions(-)
->>  create mode 100755 install_programs
+> +	perl -E "for (1..100000) { print q{aaaaaaaaaa}; }" | \
+> +		test-tool sha256 >actual &&
+> +	grep cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0 actual &&
+> +	perl -E "for (1..100000) { print q{abcdefghijklmnopqrstuvwxyz}; }" | \
+> +		test-tool sha256 >actual &&
+
+I've been wanting to make use depend on perl >= 5.10 (previous noises
+about that on-list), but for now we claim to support >=5.8, which
+doesn't have the -E switch.
+
+But most importantly you aren't even using -E features here, and this
+isn't very idoimatic Perl. Instead do, respectively:
+
+    perl -e 'print q{aaaaaaaaaa} x 100000'
+    perl -e "print q{abcdefghijklmnopqrstuvwxyz} x 100000"
