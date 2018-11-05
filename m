@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D57511F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 19:21:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BF411F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 19:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387610AbeKFEmQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 23:42:16 -0500
-Received: from mail-lj1-f180.google.com ([209.85.208.180]:32929 "EHLO
-        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387556AbeKFEmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 23:42:16 -0500
-Received: by mail-lj1-f180.google.com with SMTP id v1-v6so2910617ljd.0
+        id S2387760AbeKFEmR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 23:42:17 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:44172 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387409AbeKFEmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 23:42:17 -0500
+Received: by mail-lj1-f193.google.com with SMTP id k19-v6so9108695lji.11
         for <git@vger.kernel.org>; Mon, 05 Nov 2018 11:21:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yI4L92EXBNhfN2qTw+PLhRGHagoiJy8ek6FRjJqsD2o=;
-        b=Rn7yokKM5bh5wNF/QUYGrY5EUwOg3bFvEYo11oqMJnrNtzCjG6m5Pd6YrttnD5lTdd
-         51Pm/q9OrEnwhG6dzNfGqF1tX9MNNvVlkAYQFBgkY1PNgsvBndhxt51W1ztzmMZdvGXO
-         wtrqt/3zwfsJPiLEZVb1Ew4L0OVQ7KHdpqWIezy8I6lpxRFHZFgvhm1B+E+jj6QJAnWJ
-         WZwgg3PC9oGDyiSZH5B3L/DDvF1kRHA8NxO/pmJvUCBC4NnvVHLMGeLAMYzi5tOQGMSm
-         aGnvdKO3R7KYgptj2J8zFgM9HM/ELz03hCIC6ybmxlfhreuzaR/Wj+BaSJ0w49gR7Soj
-         BNlw==
+        bh=yDVPCNBg8si75m/HCwWEHvx+0vw+vX26vcFCs33Cqzo=;
+        b=KUz6zovgFizJ7yPAEJt2HCrP7XF9yUf5SR7gQLGi9QVIdX37qD75Zlr4teKW6lBLGz
+         IIGGRLsRw3nMZ63++f0Y59ouG0lDJAcX4S8dZkU9yms4EkGA7+ZoSy7EOqkOFK25UbkK
+         efc9uWq2LelL9eajKEJ5AfKfzt3CzSUOAH4GoiVmKqceSkVynbe0fQNdLJR/DZhfAPq1
+         Iof0GvVHIDXfHblwiB5EW+hAKG+Yl542838F3WM/fHL857mT9RHWKxHOvyBrh8OZ6ZQC
+         Edz2IxuUNTvoHXcAFiLflRUFGdrYSzbHICerGKBy4HwOhqYbHcEpfVo8ejeHRFJaefpz
+         hT4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yI4L92EXBNhfN2qTw+PLhRGHagoiJy8ek6FRjJqsD2o=;
-        b=Gcl2nc1uReLgV50zDeWf6Wj2V8pdI+PMRKpEoIcyxOdx1YxQ1RtilJeuv1Zv5WT3kr
-         hRvY6ky5jwpU+ZKC0Dmf0c17yh054qdfHBR4JZZ5xKXCwT7ZtESAAb2oYt0u4NXW62kj
-         iSikmPuuwhiXvCvghr483mE3k2qSoVQhJAwupBPIlAesicVucdVlHHMJecNU6+2tR9WN
-         YOFL2HV+lyKdEUUn6OdMPs5APBsQ8/gVozSP1Uh4owQBfrpjwmYOnoYqiBqfljoIYFat
-         Yw7lvHSO7CTzqM+FOxInT7C/PuFWE19eIHmGxdqEZ7q+kpTQmHQ71Jst2jLl8ZaGfoJ9
-         FaYw==
-X-Gm-Message-State: AGRZ1gLIluWn/Lc++6PmmNOc2Rw2zYH8Z5r9a5c/lgRPiIZgku3CtdRq
-        ht0csxcQHjcfuXoBmYHKuQ8=
-X-Google-Smtp-Source: AJdET5ev7KsBP36sGihal1thlkejd83eIA8cYhXodAIUsOX9idU2TTPrgra0KE/1ZDpLjsKuQ4EPaA==
-X-Received: by 2002:a2e:9bc3:: with SMTP id w3-v6mr2546243ljj.70.1541445665919;
-        Mon, 05 Nov 2018 11:21:05 -0800 (PST)
+        bh=yDVPCNBg8si75m/HCwWEHvx+0vw+vX26vcFCs33Cqzo=;
+        b=ICj8xrifDyWzavmNv6l2ePiNnvtGv22eMG07NRC2VFKG+zp5OwZdl0H7THA0uPEm9P
+         Z5mSctvNndMThxCDYkWvg8TUO4pJAGk5GKbveN9XfWG7sHITvf/tiHgs9r3afZwmMWpO
+         FekURAalmAgE9phxeh+P5jGkiiwBj1uB6fJCV0iiM2QQUCzozeAelqjrVahOiqqnYqfI
+         hPWzMAKMoFExacUpOtOCRtLCCyPOXimWNTnChk8fajXV2uFRnbIhnEkbyMHMNPoOJ+lN
+         XxMxc81JFkScXVzTEtAiHEr97XupePvX4i6zjbm/r1cAaSZ+RN8PUL4AAdyFdZNhJI3T
+         zQoQ==
+X-Gm-Message-State: AGRZ1gKN0KC1bFsNB8jwUCyi9JwMfu9+taNv2djjJ0RlNozKDeSDfEza
+        27FM1qTFW1zuF+VsY9xC9Kk=
+X-Google-Smtp-Source: AJdET5eGF4A6wRZAiI7wvgP7NVSqNNvBNbanLomlWVzT7vs08UBOh8++zFiyuQJ7t+5kNiWZmxKzwQ==
+X-Received: by 2002:a2e:851a:: with SMTP id j26-v6mr5019716lji.163.1541445666878;
+        Mon, 05 Nov 2018 11:21:06 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x5-v6sm3591056lfe.58.2018.11.05.11.21.04
+        by smtp.gmail.com with ESMTPSA id x5-v6sm3591056lfe.58.2018.11.05.11.21.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Nov 2018 11:21:05 -0800 (PST)
+        Mon, 05 Nov 2018 11:21:06 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 00/16] Mark more strings for translation
-Date:   Mon,  5 Nov 2018 20:20:43 +0100
-Message-Id: <20181105192059.20303-1-pclouds@gmail.com>
+Subject: [PATCH v2 01/16] git.c: mark more strings for translation
+Date:   Mon,  5 Nov 2018 20:20:44 +0100
+Message-Id: <20181105192059.20303-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1005.gac84295441
-In-Reply-To: <20181028065157.26727-1-pclouds@gmail.com>
+In-Reply-To: <20181105192059.20303-1-pclouds@gmail.com>
 References: <20181028065157.26727-1-pclouds@gmail.com>
+ <20181105192059.20303-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,51 +69,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2 splits non-trivial changes out to keep i18n patches simpler. A few
-more word legos in fsck are removed. v2 also fixes a bug in fsck that
-makes it print object id incorrectly.
+One string is slightly updated to keep consistency with the rest:
+die() should with lowercase.
 
-Nguyễn Thái Ngọc Duy (16):
-  git.c: mark more strings for translation
-  alias.c: mark split_cmdline_strerror() strings for translation
-  archive.c: mark more strings for translation
-  attr.c: mark more string for translation
-  read-cache.c: turn die("internal error") to BUG()
-  read-cache.c: mark more strings for translation
-  read-cache.c: add missing colon separators
-  reflog: mark strings for translation
-  remote.c: turn some error() or die() to BUG()
-  remote.c: mark messages for translation
-  repack: mark more strings for translation
-  parse-options: replace opterror() with optname()
-  parse-options.c: turn some die() to BUG()
-  parse-options.c: mark more strings for translation
-  fsck: reduce word legos to help i18n
-  fsck: mark strings for translation
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ git.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
- alias.c                    |   4 +-
- archive.c                  |   8 +-
- attr.c                     |   4 +-
- builtin/fsck.c             | 156 +++++++++++++++++++++----------------
- builtin/merge.c            |   4 +-
- builtin/reflog.c           |  34 ++++----
- builtin/repack.c           |  26 +++----
- builtin/revert.c           |   3 +-
- git.c                      |  32 ++++----
- parse-options-cb.c         |   7 +-
- parse-options.c            |  64 ++++++++-------
- parse-options.h            |   5 +-
- read-cache.c               |  73 ++++++++---------
- ref-filter.c               |   8 +-
- remote.c                   |  49 ++++++------
- t/t0040-parse-options.sh   |   4 +-
- t/t1410-reflog.sh          |   6 +-
- t/t1450-fsck.sh            |  52 ++++++-------
- t/t4211-line-log.sh        |   2 +-
- t/t6050-replace.sh         |   4 +-
- t/t7415-submodule-names.sh |   6 +-
- 21 files changed, 292 insertions(+), 259 deletions(-)
-
+diff --git a/git.c b/git.c
+index adac132956..5fd30da093 100644
+--- a/git.c
++++ b/git.c
+@@ -338,27 +338,27 @@ static int handle_alias(int *argcp, const char ***argv)
+ 			if (ret >= 0)   /* normal exit */
+ 				exit(ret);
+ 
+-			die_errno("while expanding alias '%s': '%s'",
+-			    alias_command, alias_string + 1);
++			die_errno(_("while expanding alias '%s': '%s'"),
++				  alias_command, alias_string + 1);
+ 		}
+ 		count = split_cmdline(alias_string, &new_argv);
+ 		if (count < 0)
+-			die("Bad alias.%s string: %s", alias_command,
++			die(_("bad alias.%s string: %s"), alias_command,
+ 			    split_cmdline_strerror(count));
+ 		option_count = handle_options(&new_argv, &count, &envchanged);
+ 		if (envchanged)
+-			die("alias '%s' changes environment variables.\n"
+-				 "You can use '!git' in the alias to do this",
+-				 alias_command);
++			die(_("alias '%s' changes environment variables.\n"
++			      "You can use '!git' in the alias to do this"),
++			    alias_command);
+ 		memmove(new_argv - option_count, new_argv,
+ 				count * sizeof(char *));
+ 		new_argv -= option_count;
+ 
+ 		if (count < 1)
+-			die("empty alias for %s", alias_command);
++			die(_("empty alias for %s"), alias_command);
+ 
+ 		if (!strcmp(alias_command, new_argv[0]))
+-			die("recursive alias: %s", alias_command);
++			die(_("recursive alias: %s"), alias_command);
+ 
+ 		trace_argv_printf(new_argv,
+ 				  "trace: alias expansion: %s =>",
+@@ -409,7 +409,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 
+ 	if (!help && get_super_prefix()) {
+ 		if (!(p->option & SUPPORT_SUPER_PREFIX))
+-			die("%s doesn't support --super-prefix", p->cmd);
++			die(_("%s doesn't support --super-prefix"), p->cmd);
+ 	}
+ 
+ 	if (!help && p->option & NEED_WORK_TREE)
+@@ -433,11 +433,11 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 
+ 	/* Check for ENOSPC and EIO errors.. */
+ 	if (fflush(stdout))
+-		die_errno("write failure on standard output");
++		die_errno(_("write failure on standard output"));
+ 	if (ferror(stdout))
+-		die("unknown write failure on standard output");
++		die(_("unknown write failure on standard output"));
+ 	if (fclose(stdout))
+-		die_errno("close failed on standard output");
++		die_errno(_("close failed on standard output"));
+ 	return 0;
+ }
+ 
+@@ -648,7 +648,7 @@ static void execv_dashed_external(const char **argv)
+ 	int status;
+ 
+ 	if (get_super_prefix())
+-		die("%s doesn't support --super-prefix", argv[0]);
++		die(_("%s doesn't support --super-prefix"), argv[0]);
+ 
+ 	if (use_pager == -1 && !is_builtin(argv[0]))
+ 		use_pager = check_pager_config(argv[0]);
+@@ -760,7 +760,7 @@ int cmd_main(int argc, const char **argv)
+ 	if (skip_prefix(cmd, "git-", &cmd)) {
+ 		argv[0] = cmd;
+ 		handle_builtin(argc, argv);
+-		die("cannot handle %s as a builtin", cmd);
++		die(_("cannot handle %s as a builtin"), cmd);
+ 	}
+ 
+ 	/* Look for flags.. */
+@@ -773,7 +773,7 @@ int cmd_main(int argc, const char **argv)
+ 	} else {
+ 		/* The user didn't specify a command; give them help */
+ 		commit_pager_choice();
+-		printf("usage: %s\n\n", git_usage_string);
++		printf(_("usage: %s\n\n"), git_usage_string);
+ 		list_common_cmds_help();
+ 		printf("\n%s\n", _(git_more_info_string));
+ 		exit(1);
 -- 
 2.19.1.1005.gac84295441
 
