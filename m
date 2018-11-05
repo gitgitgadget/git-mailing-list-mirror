@@ -2,133 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FAA71F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 22:21:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5C71F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 23:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388065AbeKFHni (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 02:43:38 -0500
-Received: from esa7.kohls.iphmx.com ([68.232.141.60]:47095 "EHLO
-        esa7.kohls.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387768AbeKFHni (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 02:43:38 -0500
-X-Greylist: delayed 577 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Nov 2018 02:43:37 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=kohls.com; i=@kohls.com; q=dns/txt;
-  s=KohlsProdCloudOut; t=1541456504; x=1572992504;
-  h=mime-version:references:in-reply-to:from:date:message-id:
-   subject:to:cc:content-transfer-encoding;
-  bh=kDhuzyRDHiNuhVAhSAaAlZnBk3TIB10WgOxEVgJj/qw=;
-  b=XH4BPsBDF5MzdJRATZ4qcuj8hM4UZVRY6iLo18jzCuE2AWS1dyXRYMZl
-   mVEHI4P3rYunYGpXAGhIsjAp+PvckvIX+DXt67ojOZ0GOmGZGpCMK0ybQ
-   38EAGP8gzvv2ufKytCnHNYWTnNfcfm079OPHdsAVtGpPhPit8STpbmMvl
-   Un3CRxNJESBModYHHgxK0XLtLURG/CUoJidWMcOjmSNVCxcj5hm7j01JI
-   uJN/4Coi0KN47/fLbGnt/xLhpbjjxZqBuNCfOp3wRg3W9v/Cpyzb+KVS2
-   U3SG4keI43vdq0y+8Za9Kmb8XFIvzoTHbdEBqc/NDNyaozXueoq3PsE2A
-   A==;
-X-Passed-Outbound: yes
-X-IronPort-AV: E=Sophos;i="5.54,469,1534827600"; 
-   d="scan'208";a="168444724"
-Received: from mail-qk1-f198.google.com ([209.85.222.198])
-  by esa7.kohls.iphmx.com with ESMTP/TLS/AES128-GCM-SHA256; 05 Nov 2018 16:12:08 -0600
-Received: by mail-qk1-f198.google.com with SMTP id k203so24677707qke.2
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 14:12:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kohls.com; s=kohls-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZxxeRn3R742Z/yXsrOx0p3hvtQoQIdbOxmZMnlebdIo=;
-        b=Rc6OthLL0isHFtrq0dWeYW2FtXZ45wM1pEqnC91ySiEYU6h1ziTKGZrtdGfQ77tUP5
-         wAllwZNf/uvkypoYAy1xPnmYCLv1L0WNC6Vs7h4Zwltb2hSBLRQZYjlHFqQdR+QR2P0j
-         wy52UgMk+HS4FLyFQ3sXOwFQwg3YqDTlHQ5S1PDi/OIRbUYwYs4dhGuRhdtI1kGybWlc
-         CL4bovWpqV+HQXoaA438d0sqmpFYefb/+0j5ILpqk8wfuvTGPqpvCZzLk1TyeaNKIPxx
-         KX8318rMjtm4t3E5SWrgWTmYycU8EvHoOQ6t76KjvGN2PepDEd9Efvxbfb/E58yrvFA3
-         Aj0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZxxeRn3R742Z/yXsrOx0p3hvtQoQIdbOxmZMnlebdIo=;
-        b=kaJcOgb0j1te0QrXhtvoJBLt5XqknZSJQTKdgWH9JYh9Vwt39U7Z+Ydl1mg1Kcl8MD
-         9+i1ApCj5uRmhoTm29uhzFMveU0x+uGlY+migAdK+Jvs2zT/WQ/rc+whu0d6yorGf6mU
-         rVzS7aNdBirtRedwQuz2ghHIhR4M1QgHu4U1vK4oLCSfMzDMWRGGtfhW4PE+RX+hC6AJ
-         awQFM9kuqfcJc/EitXGOMFmX1NetGLpEi9V9AkfojouJYhXBtD0UdzYrcKuuX6z2TyL1
-         lpERScmm9bNKUO4j8gL4IuEP1Ld5WqKbgS9OVWAJLwe83PApGpkABxvi85tjlLzPE8YS
-         AH/w==
-X-Gm-Message-State: AGRZ1gLzxC6uSdNwatYp5GoXWpkmdgtXI7ujo7o/2HB42K841fzAMD+r
-        3ldiP4huyR+GZ1jQS7k7TsC31Vib5dVg3IvHBx8Uo+ihjHag4E4NgC4A61RJs8+ZFZCtvriT9NQ
-        zkPi0mI4lE2xpMiDhILwUcg74P5vHtmCxUSFZgps=
-X-Received: by 2002:ac8:66c9:: with SMTP id m9-v6mr23371517qtp.349.1541455927867;
-        Mon, 05 Nov 2018 14:12:07 -0800 (PST)
-X-Google-Smtp-Source: AJdET5c9jR9sgXgR2p4esqe24yXAKNTU7fGIkghb4sYqr7EAgF86xPc2XgYU/a0Jx8+zYkzrtmRt7r4ufFNI36p+yec=
-X-Received: by 2002:ac8:66c9:: with SMTP id m9-v6mr23371498qtp.349.1541455927547;
- Mon, 05 Nov 2018 14:12:07 -0800 (PST)
+        id S1725906AbeKFJQt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 04:16:49 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53326 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725760AbeKFJQs (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Nov 2018 04:16:48 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4409B6077B;
+        Mon,  5 Nov 2018 23:54:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1541462069;
+        bh=efa/eoHIof+XBfsE3LqfPPw6JJPF7/bkCtqUw1L128c=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Ujmg+dpI1I6vzgZBLYAAyhjAWLi60SlCCLlFZOjSJNNN2AF4wTO5/As3Uabhi9YVI
+         dkNshB3B519c9A1PDGR8Ux/bj6gWEbBD+64azFBMJZsRGVEDMYAUNLUGos8oy0Tmwl
+         +63+0h4LiKTJeruiKxNg1AxAGTce/Z45IKEyCtNikMRM0QPc1I98jPHKLCUsBfmMXR
+         uZ/riujvsAD4tAbgtZfJY2lDUU/7AvYExN/khnulIY7Fav48BBxa0NapJ56haXOwGI
+         8AiVUqt/Qr0uaPoZpc6oRVD5o7fIPvbku9vZ1zkDQ7meIhGNOkIPcElvSriocjdAi7
+         Nb6fvYtTs9XIIlNe5eFY314mFVTSg8qPYHaCoMXlA3s+HTrZni0DBFMy4qnn4Mu3N3
+         fZS7PYckEkQQuLhgZGVNDerrW/8q20ZnFdkfP5O6kR9oI0HFmWHhB9Xf9lklvhoCK1
+         BJLct8SYoIzi9N68r6rrgbfg9yElRGDDuvu72PPzeesRiTzx97M
+Date:   Mon, 5 Nov 2018 23:54:24 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: Design of multiple hash support
+Message-ID: <20181105235424.GB890086@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+References: <20181105010032.GN731755@genre.crustytoothpaste.net>
+ <xmqqlg68jlny.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kZQQ2BqaANTQU_eHgOS0nBp9YzyTx1WAfpgADOyeLs4XQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAEL6bLrY5OgsjrZSSHDfYgrjefninR4wuZhGCsop_f-HCH7Jmg@mail.gmail.com>
- <20181103164423.GE731755@genre.crustytoothpaste.net> <4b32622b-e600-44b4-e1f7-0713d4839a86@talktalk.net>
-In-Reply-To: <4b32622b-e600-44b4-e1f7-0713d4839a86@talktalk.net>
-From:   Peter Kostyukov <peter.kostyukov@kohls.com>
-Date:   Mon, 5 Nov 2018 16:11:56 -0600
-Message-ID: <CAEL6bLq9nsjNmcs-q02ACSB=qwTNTuDe1WtkO92MGr0nONojyQ@mail.gmail.com>
-Subject: Re: Git Slowness on Windows w/o Internet
-To:     Philip Oakley <philipoakley@talktalk.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="QKdGvSO+nmPlgiQ/"
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZQQ2BqaANTQU_eHgOS0nBp9YzyTx1WAfpgADOyeLs4XQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-R29vZCBwb2ludC4gSSdsbCBjaGVjayBpdCBvdXQuIFRoYW5rcyBmb3IgdGhlIHRpcC4KClRoYW5r
-cywKUGV0ZXIKVGhhbmtzLAoKUGV0ZXIgS29zdHl1a292ClNlbmlvciBTeXN0ZW1zIEVuZ2luZWVy
-CktvaGwncyBEZXBhcnRtZW50IFN0b3JlcyAtIEtJQwpPZmZpY2U6IDI2Mi03MDMtNjUzMwoKCk9u
-IFNhdCwgTm92IDMsIDIwMTggYXQgNjo0OCBQTSBQaGlsaXAgT2FrbGV5IDxwaGlsaXBvYWtsZXlA
-dGFsa3RhbGsubmV0PiB3cm90ZToKPgo+Cj4gT24gMDMvMTEvMjAxOCAxNjo0NCwgYnJpYW4gbS4g
-Y2FybHNvbiB3cm90ZToKPiA+IE9uIEZyaSwgTm92IDAyLCAyMDE4IGF0IDExOjEwOjUxQU0gLTA1
-MDAsIFBldGVyIEtvc3R5dWtvdiB3cm90ZToKPiA+PiBXYW50ZWQgdG8gYnJpbmcgdG8geW91ciBh
-dHRlbnRpb24gYW4gaXNzdWUgdGhhdCB3ZSBkaXNjb3ZlcmVkIG9uIG91cgo+ID4+IFdpbmRvd3Mg
-SmVua2lucyBub2RlcyB3aXRoIGdpdCBzY20gaW5zdGFsbGVkIChnaXQuZXhlKS4gT3VyIEplbmtp
-bnMKPiA+PiBzZXJ2ZXJzIGRvbid0IGhhdmUgSW50ZXJuZXQgYWNjZXNzLiBJdCBhcHBlYXJzIHRo
-YXQgZ2l0LmV4ZSBpcyB0cnlpbmcKPiA+PiB0byBjb25uZWN0IHRvIHZhcmlvdXMgQ2xvdWRmbGFy
-ZSBhbmQgQWthbWFpIENETiBpbnN0YW5jZXMgb3ZlciB0aGUKPiA+PiBJbnRlcm5ldCB3aGVuIGl0
-IGZpcnN0IHJ1bnMgYW5kIGl0IGtlZXBzIHRyeWluZyB0byBjb25uZWN0IHRvIHRoZXNlCj4gPj4g
-Q0ROcyBldmVyeSBnaXQuZXhlIGV4ZWN1dGlvbiB1bnRpbCBpdCBtYWtlcyBhIHN1Y2Nlc3NmdWwg
-YXR0ZW1wdC4gU2VlCj4gPj4gdGhlIHNjcmVlbnNob3QgYXR0YWNoZWQgd2l0aCB0aGUgZGV0YWls
-cy4KPiA+Pgo+ID4+IEVuYWJsaW5nIEludGVybmV0IGFjY2VzcyB2aWEgcHJveHkgZml4ZXMgdGhl
-IGlzc3VlIGFuZCBnaXQuZXhlCj4gPj4gY29udGludWVzIHRvIHdvcmsgZmFzdCBvbiB0aGUgbmV4
-dCBhdHRlbXB0cyB0byBydW4gZ2l0LmV4ZQo+ID4+Cj4gPj4gSXMgdGhlcmUgYW55IGNvbmZpZ3Vy
-YXRpb24gc2V0dGluZyB0aGF0IGNhbiBkaXNhYmxlIHRoaXMgZ2l0J3MKPiA+PiBiZWhhdmlvciBv
-ciBpcyB0aGVyZSBhbnkgb3RoZXIgd29ya2Fyb3VuZCB3aXRob3V0IGFsbG93aW5nIEludGVybmV0
-Cj4gPj4gYWNjZXNzPyBPdGhlcndpc2UsIGV2ZXJ5IGdpdCBjb21tYW5kIHJ1biBvbiBhIHNlcnZl
-ciB3aXRob3V0IHRoZQo+ID4+IEludGVybmV0IHRha2VzIGFib3V0IDMwIHNlY29uZHMgdG8gY29t
-cGxldGUuCj4gPgo+ID4gR2l0IGl0c2VsZiBkb2Vzbid0IG1ha2UgYW55IGF0dGVtcHQgdG8gYWNj
-ZXNzIHRob3NlIHN5c3RlbXMgdW5sZXNzIGl0J3MKPiA+IGNvbmZpZ3VyZWQgdG8gZG8gc28gKGUu
-Zy4gYSByZW1vdGUgaXMgc2V0IHVwIHRvIHRhbGsgdG8gdGhvc2Ugc3lzdGVtcwo+ID4gYW5kIGZl
-dGNoIG9yIHB1bGwgaXMgdXNlZCkuCj4gPgo+ID4gSXQncyBwb3NzaWJsZSB0aGF0IHlvdSdyZSB1
-c2luZyBhIGRpc3RyaWJ1dGlvbiBwYWNrYWdlIHRoYXQgcGVyZm9ybXMKPiA+IHRoaXMgYmVoYXZp
-b3IsIHNheSwgdG8gY2hlY2sgZm9yIHVwZGF0ZXMuICBJJ2QgcmVjb21tZW5kIHRoYXQgeW91Cj4g
-PiBjb250YWN0IHRoZSBkaXN0cmlidXRvciwgd2hpY2ggaW4gdGhpcyBjYXNlIG1pZ2h0IGJlIEdp
-dCBmb3IgV2luZG93cywKPiA+IGFuZCBzZWUgaWYgdGhleSBjYW4gdGVsbCB5b3UgbW9yZSBhYm91
-dCB3aGF0J3MgZ29pbmcgb24uICBUaGUgVVJMIGZvcgo+ID4gdGhhdCBwcm9qZWN0IGlzIGF0IGh0
-dHBzOi8vZ2l0aHViLmNvbS9naXQtZm9yLXdpbmRvd3MvZ2l0Lgo+ID4KPgo+IFRoZSBub3JtYWwg
-R2l0IGZvciBXaW5kb3dzIGluc3RhbGwgaW5jbHVkZXMgYW4gb3B0aW9uIHRvIGNoZWNrIGZvcgo+
-IHVwZGF0ZXMgYXQgYSBzdWl0YWJsZSByYXRlLiBNYXliZSB5b3UgYXJlIGhpdHRpbmcgdGhhdC4g
-SXQgY2FuIGJlCj4gc3dpdGNoZWQgb2ZmLgo+Cj4gLS0KPiBQaGlsaXAKQ09ORklERU5USUFMSVRZ
-IE5PVElDRToKVGhpcyBpcyBhIHRyYW5zbWlzc2lvbiBmcm9tIEtvaGwncyBEZXBhcnRtZW50IFN0
-b3JlcywgSW5jLgphbmQgbWF5IGNvbnRhaW4gaW5mb3JtYXRpb24gd2hpY2ggaXMgY29uZmlkZW50
-aWFsIGFuZCBwcm9wcmlldGFyeS4KSWYgeW91IGFyZSBub3QgdGhlIGFkZHJlc3NlZSwgYW55IGRp
-c2Nsb3N1cmUsIGNvcHlpbmcgb3IgZGlzdHJpYnV0aW9uIG9yIHVzZSBvZiB0aGUgY29udGVudHMg
-b2YgdGhpcyBtZXNzYWdlIGlzIGV4cHJlc3NseSBwcm9oaWJpdGVkLgpJZiB5b3UgaGF2ZSByZWNl
-aXZlZCB0aGlzIHRyYW5zbWlzc2lvbiBpbiBlcnJvciwgcGxlYXNlIGRlc3Ryb3kgaXQgYW5kIG5v
-dGlmeSB1cyBpbW1lZGlhdGVseSBhdCAyNjItNzAzLTcwMDAuCgpDQVVUSU9OOgpJbnRlcm5ldCBh
-bmQgZS1tYWlsIGNvbW11bmljYXRpb25zIGFyZSBLb2hsJ3MgcHJvcGVydHkgYW5kIEtvaGwncyBy
-ZXNlcnZlcyB0aGUgcmlnaHQgdG8gcmV0cmlldmUgYW5kIHJlYWQgYW55IG1lc3NhZ2UgY3JlYXRl
-ZCwgc2VudCBhbmQgcmVjZWl2ZWQuIEtvaGwncyByZXNlcnZlcyB0aGUgcmlnaHQgdG8gbW9uaXRv
-ciBtZXNzYWdlcyBieSBhdXRob3JpemVkIEtvaGwncyBBc3NvY2lhdGVzIGF0IGFueSB0aW1lCndp
-dGhvdXQgYW55IGZ1cnRoZXIgY29uc2VudC4K
 
+--QKdGvSO+nmPlgiQ/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Nov 05, 2018 at 10:03:21AM -0800, Stefan Beller wrote:
+> On Sun, Nov 4, 2018 at 6:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> >
+> > > I'm currently working on getting Git to support multiple hash algorit=
+hms
+> > > in the same binary (SHA-1 and SHA-256).  In order to have a fully
+> > > functional binary, we'll need to have some way of indicating to certa=
+in
+> > > commands (such as init and show-index) that they should assume a cert=
+ain
+> > > hash algorithm.
+> > >
+> > > There are basically two approaches I can take.  The first is to provi=
+de
+> > > each command that needs to learn about this with its own --hash
+> > > argument.  So we'd have:
+> > >
+> > >   git init --hash=3Dsha256
+> > >   git show-index --hash=3Dsha256 <some-file
+> > >
+> > > The other alternative is that we provide a global option to git, which
+> > > is parsed by all programs, like so:
+> > >
+> > >   git --hash=3Dsha256 init
+> > >   git --hash=3Dsha256 show-index <some-file
+> >
+> > I am assuming that "show-index" above is a typo for something like
+> > "hash-object"?
+
+> Actually both seem plausible, as both do not require
+> RUN_SETUP, which means they cannot rely on the
+> extensions.objectFormat setting.
+
+Correct.  In general, I assume that options that want a repository will
+use the repository for that information.  There are a small number of
+programs, such as init, that need to either set up a repository (without
+reference to another repository) or need to inspect files without
+necessarily being in a repository.
+
+For example, we will want to have a way of indicating which hash we
+would like to use in a fresh repository.  I am for the moment assuming
+that we're in a stage 4 configuration: that is, that we're all SHA-1 or
+all SHA-256.  A clone will provide this for us, but a git init will not.
+
+Also, our pack index v3 format knows about which hash algorithm is in
+use, but packs are not labeled with the algorithm they use.  This isn't
+really a problem in normal use, since we always know from context which
+algorithm is in use, but we'll need to indicate to index-pack (which
+technically need not run in a repository) which algorithm it should use.
+
+show-index will eventually learn to parse the index itself to learn
+which algorithms are in use, so it is technically not required here.
+
+> When having a global setting, would that override the configured
+> object format extension in a repository, or do we error out?
+>=20
+> So maybe
+>=20
+>   git -c extensions.objectFormat=3Dsha256 init
+>=20
+> is the way to go, for now? (Are repository format extensions parsed
+> just like normal config, such that non-RUN_SETUP commands
+> can rely on the (non-)existence to determine whether to use
+> the default or the given hash function?)
+
+The extensions callbacks are only handled in check_repo_format, so they
+necessarily require a repository.  This is not new with my code.
+
+Furthermore, one would have to specify "-c
+core.repositoryformatversion=3D1" as well, as extensions require that
+version in order to have any effect.
+
+My current approach for the testsuite is to have git init honor a new
+GIT_DEFAULT_HASH environment variable so we need not modify every place
+in the testsuite that calls git init (of which there are many).  That
+may or may not be greeted with joy by reviewers, but it seemed to be the
+minimum viable approach.
+
+> There is a section "Object names on the command line"
+> in Documentation/technical/hash-function-transition.txt
+> and I assume that this before the "dark launch"
+> phase, so I would expect the latter to work (no error
+> but conversion/translation on the fly) eventually as a goal.
+> But the former might be in scope of one series.
+
+Currently, I'm not implementing the stage 1-3 implementations.  I'm
+merely going from the point where we have a binary that does only
+SHA-256 and cannot perform SHA-1 operations at all to a stage 4
+implementation, where the binary can do either, but a repository is
+wholly one or the other.
+
+> > It can work this way:
+> >
+> >  - read HEAD, discover that I am on 'master' branch, read refs/heads/ma=
+ster
+> >    to learn the object name in 40-hex, realize that it cannot be
+> >    sha256 and report "corrupt ref".
+> >
+> > Or it can work this way:
+> >
+> >  - read repository format, realize it is a good old sha1 repository.
+> >
+> >  - do the usual thing to get to read_object() to read the commit
+> >    object data for the commit at HEAD, doing all of it in sha1.
+> >
+> >  - in the commit object data, locate references to other objects
+> >    that use sha1 name.
+> >
+> >  - replace these sha1 references with their sha256 counterparts and
+> >    show the result.
+> >
+> > I am guessing that you are doing the former as a good first step, in
+> > which case, as an option that changes/affects the behaviour of git
+> > globally, I think "git --hash=3Dsha256" would make sense, like other
+> > global options like --literal-pathspecs and --no-replace-objects.
+
+Right now, we always read the repository configuration when possible,
+and honor that.  I'm not planning, even when we have a full
+implementation, to let the configuration of input and output format be
+modified by command-line options.  That's a configuration of the
+repository in the current transition plan, and I have no intention of
+changing that (apart from possibly honoring "git -c").
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--QKdGvSO+nmPlgiQ/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvg2DAACgkQv1NdgR9S
+9otyzQ/6AlW8HTi9vsYg+bl5x10wdynubBKqSd/jR68am8pV2YCq6y1ubmnE8cWs
+DP98SmH7EmRyqeYSzw2Zw/nLZ/rEG3aryk3SkJaDK+skKAKJYq+4dJpReXtSiUR7
+rP8HRkWPG0Mtbf9meqGlbXATtipMZ3MP9P1P3kdJBx3DWjkX/x5v60XsRnJOq2pr
+2vxG+5QX1FW93nY5Gjl3T6uUDcvPDZvwbP7CNU70M6iJAuhthgphv01Mp4HPQ8NV
+tH2PlVA6Xda+7MFcpNuuPHy8t1cusw43m95YRcXhqvrXuCuCqnnJkAuRB7A2WN0S
+uvx6wSEDWXQcDfqZzJHFyWLt0VvI45S7gHx+jlM1sJNAexZeDH7DaoRGuhzRFibd
+pMGEKDvkoauZfw03XGf9bEjm2AIAB8rPtiBu4LC7kk1asOVjqFxEDb7hHVcnxEVU
+ywWGKNlrTxfK4yhfaZ5nX8cjsLo3kXGjA1cHGQChK9f4zv6Zcwm68JTxDCC6SUji
+Do2Kgh3rF0njCkKtF9I52tfnNwQBQxfOEQng9ODk4VYwWc2X8hX3LY3LlWDJtS2Q
+lDpzrPPHQeeCMDh00uy6MHwX/AL8zt9UHgFll4bDvoI1QYkItsLLoON70kIZrzAi
+fINxkMdJ3ftTTfC5FFHibTmxOVwfmmEzP1VIoLbEVLNXzk1MtKc=
+=/lUq
+-----END PGP SIGNATURE-----
+
+--QKdGvSO+nmPlgiQ/--
