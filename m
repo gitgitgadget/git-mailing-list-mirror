@@ -6,119 +6,100 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368931F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 00:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF651F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 00:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729897AbeKEJTG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Nov 2018 04:19:06 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55185 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729871AbeKEJTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Nov 2018 04:19:06 -0500
-Received: by mail-wm1-f66.google.com with SMTP id r63-v6so6568919wma.4
-        for <git@vger.kernel.org>; Sun, 04 Nov 2018 16:02:16 -0800 (PST)
+        id S1729852AbeKEJrV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Nov 2018 04:47:21 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35812 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726727AbeKEJrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Nov 2018 04:47:21 -0500
+Received: by mail-wr1-f68.google.com with SMTP id z16-v6so7599687wrv.2
+        for <git@vger.kernel.org>; Sun, 04 Nov 2018 16:30:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aLe1cY5lXq0Ztnajl0T+JitqiSekGkpFsqlrfIgbhWE=;
-        b=NDt4p9rT4jTOhRw9e53ueSPU8CvPLFQu4IYH+DAWrqdLryMMeit6ByOFtiFjBtwJkv
-         Efvp5vzR24YfnWKaSLUn0HF392ugZYyqFoGkXlEnkkzhWrac42o1qfQM1Hlvm/u9+Ms/
-         d8qZKPWUZBJ+ZxICZSv/CJm0MytQ7buxO7DpCRnbitAvo1oS9VSAb0/sdWtRIcVgsQCw
-         dUTKInbNHE96FiVo9z25FuerkEGnJmifg/XbYXKNOgIYyE+poL9W+SPo40O8b9CIyS3r
-         0XXQmvEwIO28V1AmLMxSNm885Br8w0eoYIIJXDJvk4W3Mno+WOAr6iYdmFAtdqd3iCSo
-         BS7Q==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=LylEk+o0iZiL2dc1Qh+saNgyHX+U+x96xXykl1+RENE=;
+        b=DHe7wXRcZQVnjO4RbkkE7fLD075qKQzcorvXAvFPSw47o2zXd3h28+/RVX7DNKX+YL
+         +kkm1tt8eSaokbI+OaSBn2c5UlYeXRvWpnaeTpaQHIf7qVQj+Od2KBUpIh4daXmDL/b7
+         jLF6pbAjQQoZlRn35eijpEDa3Rr7OIsKrN7H7jSygB7bKkyBanQN43DWBRmumBCUsL3C
+         sUzTOAmdwGs+U6vfuYUcqLtkirusy9d1mYvQ62qcfUEjmoYB+OW83QIlmYdEXqKnShRG
+         HYQvZRxAVQnBpB0WQdOuBmUqlUgO7GZrjr+lO2Buyr/+FHC6p4GZVQtx1zpkVoBkkmjB
+         PQvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aLe1cY5lXq0Ztnajl0T+JitqiSekGkpFsqlrfIgbhWE=;
-        b=BTSG2a2U+24/DSK/b5Kgu8eAEcfhvPGy8iP9QVl/uHeCKD1LZAOp62jGVz+zZBUOWK
-         aaW9VtKXseqe+2nQRP+MjV2r43WMGQyDkE2TQjEpYxa21QiOICAXlquS4oTigLV2cECZ
-         sEFT1YfUzxRxm98z9cI/UOLxzWRwOW/8xHt/rQh/mnmw8hKxDGfwZ2gYFYsC++Q5Aq5V
-         xkGUrv3vAiUdud8S3S/H7p38r0I43jtoy6uFdnf8Np8oAJTlaL7fE1IfvVJB5tBPMlUr
-         7ejN7a6GqEr4wVVp3/9wrxFrk3F+hbvPEhgOU3aFo19EENn96485t+XHm2mZDmgJhpS2
-         Oc6A==
-X-Gm-Message-State: AGRZ1gJHdCIxkBfYGXFu9/Taub9UqD4eBfYqOUNNUW2KrbTt8G3EdF8r
-        KeERGIx3NEY5GlRw1Q9Fc+M=
-X-Google-Smtp-Source: AJdET5fCR1gRl1kUDua6/MtmOWtKfqO/5XSi9X695x1xNYWU0QZI9WWrMdsp+/iEgJ26zHiAC3w7hQ==
-X-Received: by 2002:a1c:91cd:: with SMTP id t196-v6mr4197724wmd.63.1541376135363;
-        Sun, 04 Nov 2018 16:02:15 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=LylEk+o0iZiL2dc1Qh+saNgyHX+U+x96xXykl1+RENE=;
+        b=LKJ+5mB6RPqZ+UGVbP7+BwpZivTrTw6luX/nxd/tvf+0LSVL0zKS/SkoVfp8XIQ83D
+         ghu1Xe0YrzWw0ZQGYjo77GufPs5L0DvVfUOHVqNsKvRk7AEkBgjVn0WYCoStviS+YyJf
+         B8Nwm+bUK7qBz2vTiqzXFVSD39o9zTz2RSkRWym2hrHoNspmfWXN3ob2YwYOUOr3GbvB
+         d/ax2Lq4zYjmoMgJNVwuCjL6DggGAWgH7O/U2el8CDCvp1R2LadkPxjxtWvfIsTE9t0J
+         M+7jmgplID2Vhv5e65J5ap3Nm+q9Q5cHoXXMEJ3simvsdrxRSr6e8v6E4L0KazNJypbN
+         gJXA==
+X-Gm-Message-State: AGRZ1gJ2qS80gviPIheRBnSReUlRk+k+ElG0zxzFaonxPz6nM/tHkLgJ
+        gsnPP5C7Gwc8v6E5zd15x4jtNI+6mNU=
+X-Google-Smtp-Source: AJdET5dAJ+seTkU51uu1jsEkzJk6Ms68+pCV66MY8XMTwvhQUOrZ4Aa+A93cfrtVFrfzT0BswIGIEw==
+X-Received: by 2002:adf:ef04:: with SMTP id e4-v6mr17839646wro.292.1541377827042;
+        Sun, 04 Nov 2018 16:30:27 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p17-v6sm7200373wmc.16.2018.11.04.16.02.14
+        by smtp.gmail.com with ESMTPSA id y13-v6sm10501285wrp.46.2018.11.04.16.30.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 04 Nov 2018 16:02:14 -0800 (PST)
+        Sun, 04 Nov 2018 16:30:25 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>
-Subject: Re: [RFC v1] Add virtual file system settings and hook proc
-References: <20181030191608.18716-1-peartben@gmail.com>
-        <xmqqsh0nyqx9.fsf@gitster-ct.c.googlers.com>
-        <dbc2eb4f-842e-f49a-256f-3a140d801bb0@gmail.com>
-Date:   Mon, 05 Nov 2018 09:02:13 +0900
-In-Reply-To: <dbc2eb4f-842e-f49a-256f-3a140d801bb0@gmail.com> (Ben Peart's
-        message of "Wed, 31 Oct 2018 16:12:53 -0400")
-Message-ID: <xmqqa7momlx6.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     tanushree27 <tanushreetumane@gmail.com>, pclouds@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3] commit: add a commit.allowEmpty config variable
+References: <CACsJy8DttJ2EBcN8Kq-yECY0Pvp3vd0Vx45=szWD0cBW0Mcixw@mail.gmail.com>
+        <20181103151205.29122-1-tanushreetumane@gmail.com>
+        <87d0rm7zeo.fsf@evledraar.gmail.com>
+Date:   Mon, 05 Nov 2018 09:30:23 +0900
+In-Reply-To: <87d0rm7zeo.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sat, 03 Nov 2018 20:07:43 +0100")
+Message-ID: <xmqq5zxcmkm8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->>> +	if (*dtype == DT_UNKNOWN)
->>> +		*dtype = get_dtype(NULL, istate, pathname, pathlen);
->>
->> We try to defer paying cost to determine unknown *dtype as late as
->> possible by having this call in last_exclude_matching_from_list(),
->> and not here.  If we are doing this, we probably should update the
->> callpaths that call last_exclude_matching_from_list() to make the
->> caller responsible for doing get_dtype() and drop the lazy finding
->> of dtype from the callee.  Alternatively, the new "is excluded from
->> vfs" helper can learn to do the lazy get_dtype() just like the
->> existing last_exclude_matching_from_list() does.  I suspect the
->> latter may be simpler.
+> I.e. you seemingly have no interest in using "git commit" to produce
+> empty commits, but are just trying to cherry-pick something and it's
+> failing because it (presumably, or am I missing something) cherry picks
+> an existing commit content ends up not changing anything.
 >
-> In is_excluded_from_virtualfilesystem() dtype can't be lazy because it
-> is always needed (which is why I test and die if it isn't known).  
+> I.e. you'd like to make the logic 37f7a85793 ("Teach commit about
+> CHERRY_PICK_HEAD", 2011-02-19) added a message for the default.
+>
+> So let's talk about that use case, and for those of us less familiar
+> with this explain why it is that this needs to still be optional at
+> all. I.e. aren't we just exposing an implementation detail here where
+> cherry-pick uses the commit machinery? Should we maybe just always pass
+> --allow-empty on cherry-pick, if not why not?
+>
+> I can think of some reasons, but the above is a hint that both this
+> patch + the current documentation which talks about "foreign SCM
+> scripts" have drifted very far from what this is actually being used
+> for, so let's update that.
 
-You make a call to that function even when virtual-file-system hook
-is not in use, i.e. instead of the caller saying
+The command line "--allowAnything" in general is meant to be an
+escape hatch for unusual situations, and if a workflow requires
+constant use of that escape hatch, there is something wrong either
+in the workflow or in the tool used in the workflow, and it is what
+we should first see if we can fix, I would think, before making it
+easy to constantly use the escape hatch.
 
-	if (is_vfs_in_use()) {
-		*dtype = get_dtype(...);
-                if (is_excluded_from_vfs(...) > 0)
-			return 1;
-	}
+I didn't look at the external reference you looked at but it sounds
+like your review comment is taking the topic in the right direction.
 
-your caller makes an unconditional call to is_excluded_from_vfs().
-Isn't that the only reason why you break the laziness of determining
-dtype?
-
-You can keep the caller simple by making an unconditional call, but
-maintain the laziness by updating the callig convention to pass
-dtype (not *dtype) to the function, e.g..
-
-	if (is_excluded_from_vfs(pathname, pathlen, dtype) > 0)
-		return 1;
-
-and then at the beginning of the helper
-
-	if (is_vfs_in_use())
-		return -1; /* undetermined */
-	*dtype = get_dtype(...);
-	... whatever logic it has now ...
-
-no?
-
-> Your comments are all feedback on the code - how it was implemented,
-> style, etc.  Any thoughts on whether this is something we could/should
-> merge into master (after any necessary cleanup)?  Would anyone else
-> find this interesting/helpful?
-
-I am pretty much neutral.  Not strongly opposed to it, but not all
-that interested until seeing its integration with the "userland" to
-see how the whole thing works ;-)
+Thanks for digging for the backstory.  
