@@ -2,307 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBDAD1F453
-	for <e@80x24.org>; Mon,  5 Nov 2018 20:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92A1E1F453
+	for <e@80x24.org>; Mon,  5 Nov 2018 20:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbeKFF2W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 00:28:22 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34582 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725774AbeKFF2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 00:28:22 -0500
-Received: by mail-wm1-f65.google.com with SMTP id f1-v6so7177367wmg.1
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 12:07:01 -0800 (PST)
+        id S1725910AbeKFF3M (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 00:29:12 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:34888 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725751AbeKFF3L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 00:29:11 -0500
+Received: by mail-qt1-f194.google.com with SMTP id v11so61520qtc.2
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 12:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rllfApYB48Rp0Am7DB9kET0PPxBWDZzO+nSg24F8M7E=;
-        b=LkKlCGDW/X8tSKJ/m9T4d6umJVHOkH5BN6MRKLuiTCGD9olx5ZuHJqV4SkE/VRIn47
-         z0bF9gw7Wcyx8Rrynp4YlrrjWfL8+eAEckOJjIIHG6Tb0I30dZ6I1p8LeX0B7zgp2W3g
-         rhj29jluVy2qU0dA0ziCqna9XdGaOleah37vwKCGTLCoZT09BtObkxOJOdPZ5Cv6VcLr
-         zEqfXT2RvJ6MEmAuv64GsjmNeLmk25Xx1jMpn9+FxN+0Q8Hb79qh6T0NAHPdn56RrP6I
-         SXfOAaYTtwkDjQ2ZNthXAeD+cZ4hG4Jnd3cBXcZw+XLUsvjrfMAE0RkLQcMaGo0u3ljf
-         XptA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zLVz1OjL3HkaXn21zA9qa1slD2kcMzEhwzDNAHkt4zU=;
+        b=U+u+IF1pI9J2FXZtHaT9EeLTxw3w9ot0FxNmI3z/MK48bVcADgZft+zhy0Zj42igOz
+         a5Tc+yyxQ3NM+goIm4SOAzhgRLajQocLWKbvXR5Kr2Hn3erK96GXrrI8sMGcuw+YtDWe
+         8TrCfDPQfw2OfgEDLIPnyVkt6SSN7SRwP3jMIRaSs9gzR1bdxafkC8KEbiDwvWuas0CA
+         fdDlX74N70roDOeTo1TnIaHLt4i9luBAGtYj7bESmEwycyJN2Vw8H7M/BkLKWI4A9nlX
+         1JuEGJz2VFB1nEHjNs67n4kgBRkfZgv7IbGkE8KSM2Hx+lOOk7M9rncUjNyEatZnpWV4
+         L0+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=rllfApYB48Rp0Am7DB9kET0PPxBWDZzO+nSg24F8M7E=;
-        b=hn/BxeWL4IRGGf76bHs2HgVlZJo/pUF3uxJbHZHoxyY87nGwZ/3L1X+Pnl49kavRcJ
-         URCNkOKKhcTXOKuYj2AS8JSydT+9+mLGAQ4W4PPjc2lHNV+uRU9mHQ1UBqtMEFr92xjp
-         UgNrDH706tZYOO17/eEQ4CDl8FuBM0Y4XvPvzxcuYfTbkCfmN8UGrUZnn9b1+0ErARmW
-         CpNIuVmeisFn2fWG+k2LW/qv4Rljj7An9oWKqQhQInLVeOWVtrP/TvZS7iKwdmHZjZG2
-         PzSD7pTMHF00SAS7ug/TyUTRf3R6HmhxW9JiDIIdc3LQiPmS0NGyQiLBojhsGdsgUuwK
-         IGcw==
-X-Gm-Message-State: AGRZ1gKolU1CFLuvkt850BpwvbXYGjh97NmO3viy2TZqTBXbaJCE5u4g
-        EvFM7RoOgDi8bylZksCYoCpMD6PV
-X-Google-Smtp-Source: AJdET5fP//5doCcl/Um9LXZJIQk6wYxgob0tGfTQ7y7K0h3K3UnFDEvkVSynyVucsJAA/KPIkTWYWA==
-X-Received: by 2002:a1c:98ce:: with SMTP id a197-v6mr3075663wme.135.1541448419996;
-        Mon, 05 Nov 2018 12:06:59 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o4-v6sm32449761wrj.45.2018.11.05.12.06.58
+        bh=zLVz1OjL3HkaXn21zA9qa1slD2kcMzEhwzDNAHkt4zU=;
+        b=laQKK3XV+M3jcZZmZnm4XwHWPGpcb8bnI+h6wDWi1ubjtnPInQViTyX8MahoTK4D5T
+         YE7FIqctt8OUhtVQLqHkADAsdBqiIC82jtS1rNp/AKew0AfkoE2IPgmpbDeXHUJuGsHr
+         2ihMDLMAR5lAWYGztSNOgApHsTcRAV4SbFACRItNNrSkeTUUKRm6BTX6nUl/lANSV4Ic
+         uwslG4ymhEuKVMYjoJv5h7APAtdQcdnIDNq82Xg3tXFa2CHCMmPccHvjqaN6aYIB3q5b
+         AMEEnuNbWflhEh2VBigf4vn0L6e30CPBimEpxA4W9jpfqwWtg6DwbG6fNijXjt8tQz2Z
+         sdSw==
+X-Gm-Message-State: AGRZ1gLb7TFzDauhCAS8KtpjGy3FQCFJIKLZU4t461UG5Ja1VmM5720I
+        O1Ct5f+9zS1mC2miOUfe0pM=
+X-Google-Smtp-Source: AJdET5f1Ugzgg7iTsDujujOsc2wt2Q5+IezZQJLtVBpQ2Zv466Y1tfP7MPc3QmWAJARncAoR07toXQ==
+X-Received: by 2002:aed:3c7d:: with SMTP id u58mr20922990qte.198.1541448470779;
+        Mon, 05 Nov 2018 12:07:50 -0800 (PST)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id y7-v6sm22131599qkf.38.2018.11.05.12.07.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Nov 2018 12:06:59 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        Mon, 05 Nov 2018 12:07:50 -0800 (PST)
+Subject: Re: [RFC v1] Add virtual file system settings and hook proc
+To:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Lucas De Marchi <lucas.demarchi@intel.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] range-diff: add a --no-patch option to show a summary
-Date:   Mon,  5 Nov 2018 20:06:50 +0000
-Message-Id: <20181105200650.31177-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+References: <20181030191608.18716-1-peartben@gmail.com>
+ <CACsJy8DbiVZYmY11Nt4c_+egSi5tz0iVq7rNv2BiVdyJ4htgvw@mail.gmail.com>
+ <1f7efd07-4881-daa7-cd1d-145bbf3ffcc8@gmail.com>
+ <CACsJy8BqWu0YG_Q8EFNeDgrRhYCCKBU+zPJjrhAWFU_gTDCoXg@mail.gmail.com>
+ <87ftwf7nwa.fsf@evledraar.gmail.com>
+ <CACsJy8Coyw-yiumAfTeASSPdzWXeRgtrS8Ta-VtYph4QnPunVQ@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <b0518222-f0ba-a613-6a54-ad7f66d56140@gmail.com>
+Date:   Mon, 5 Nov 2018 15:07:48 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CACsJy8Coyw-yiumAfTeASSPdzWXeRgtrS8Ta-VtYph4QnPunVQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --no-patch option which shows which changes got removed, added
-or moved etc., without showing the diff associated with them.
 
-This allows for using range-diff as a poor man's "shortlog" for
-force-pushed branches to see what changed without getting into the
-details of what specifically. E.g. diffing the latest forced-push to
-"pu" gives us:
 
-    $ ./git-range-diff --no-patch b58974365b...711aaa392f | head -n 10
-     -:  ---------- >  1:  b613de67c4 diff: differentiate error handling in parse_color_moved_ws
-    28:  c731affab0 !  2:  23c4bbe28e build: link with curl-defined linker flags
-     -:  ---------- >  3:  14f74d5907 git-worktree.txt: correct linkgit command name
-     -:  ---------- >  4:  29d51e214c sequencer.c: remove a stray semicolon
-     -:  ---------- >  5:  b7845cebc0 tree-walk.c: fix overoptimistic inclusion in :(exclude) matching
-     -:  ---------- >  6:  1a550529b1 t/t7510-signed-commit.sh: Add %GP to custom format checks
-     -:  ---------- >  7:  1e690847d1 t/t7510-signed-commit.sh: add signing subkey to Eris Discordia key
-     9:  d13ecb7d81 !  8:  d8ad847421 Add a base implementation of SHA-256 support
-    10:  3f0382eef8 =  9:  cdae1d391c sha256: add an SHA-256 implementation using libgcrypt
-    11:  2422fd4227 = 10:  7d81aa0857 hash: add an SHA-256 implementation using OpenSSL
+On 11/5/2018 10:26 AM, Duy Nguyen wrote:
+> On Mon, Nov 5, 2018 at 12:40 PM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>>
+>> On Sun, Nov 04 2018, Duy Nguyen wrote:
+>>
+>>> On Wed, Oct 31, 2018 at 9:53 PM Ben Peart <peartben@gmail.com> wrote:
+>>>>>> +core.virtualFilesystem::
+>>>>>> +       If set, the value of this variable is used as a command which
+>>>>>> +       will identify all files and directories that are present in
+>>>>>> +       the working directory.  Git will only track and update files
+>>>>>> +       listed in the virtual file system.  Using the virtual file system
+>>>>>> +       will supersede the sparse-checkout settings which will be ignored.
+>>>>>> +       See the "virtual file system" section of linkgit:githooks[6].
+>>>>>
+>>>>> It sounds like "virtual file system" is just one of the use cases for
+>>>>> this feature, which is more about a dynamic source of sparse-checkout
+>>>>> bits. Perhaps name the config key with something along sparse checkout
+>>>>> instead of naming it after a use case.
+>>>>
+>>>> It's more than a dynamic sparse-checkout because the same list is also
+>>>> used to exclude any file/folder not listed.  That means any file not
+>>>> listed won't ever be updated by git (like in 'checkout' for example) so
+>>>> 'stale' files could be left in the working directory.  It also means git
+>>>> won't find new/untracked files unless they are specifically added to the
+>>>> list.
+>>>
+>>> OK. I'm not at all interested in carrying maintenance burden for some
+>>> software behind closed doors. I could see values in having a more
+>>> flexible sparse checkout but this now seems like very tightly designed
+>>> for GVFS. So unless there's another use case (preferably open source)
+>>>   for this, I don't think this should be added in git.git.
+>>
+>> I haven't looked at the patch in any detail beyond skimming it, and
+>> you're more familiar with this area...
+>>
+>> But in principle I'm very interested in getting something like this in
+>> git.git, even if we were to assume GVFS was a 100% proprietary
+>> implementation.
+> 
+> I have nothing against building a GVFS-like solution. If what's
+> submitted can be the building blocks for that, great! But if it was
+> just for GVFS (and it was not available to everybody) then no thank
+> you.
+> 
 
-That would print a total of 44 lines of output, but the full
-range-diff output with --patch is 460 lines.
+Not only is VFS for Git open source and is/will be supported on Windows, 
+Mac and Linux, the interface being proposed is quite generic so should 
+be usable for other implementations.
 
-I thought of implementing --stat too. It would be neat if passing
-DIFF_FORMAT_DIFFSTAT just worked, but using that shows the underlying
-implementation details of how range-diff works, instead of a useful
-diffstat. So I'll leave that to a future change. Such a feature should
-be something like a textual summary of the --patch output itself,
-e.g.:
+To use it, you just need to provide a hook that will return a list of 
+files git should pay attention to (using a subset of the existing 
+sparse-checkout format).
 
-    N hunks, X insertions(+), Y deletions(-)
-
-This change doesn't update git-format-patch with a --no-patch
-option. That can be added later similar to how format-patch first
-learned --range-diff, and then --creation-factor in
-8631bf1cdd ("format-patch: add --creation-factor tweak for
---range-diff", 2018-07-22). I don't see why anyone would want this for
-format-patch, it pretty much defeats the point of range-diff.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/git-range-diff.txt |  4 +++
- builtin/log.c                    |  2 +-
- builtin/range-diff.c             |  5 +++-
- log-tree.c                       |  2 +-
- range-diff.c                     |  6 ++++-
- range-diff.h                     |  1 +
- t/t3206-range-diff.sh            | 45 ++++++++++++++++++++++++++++++++
- 7 files changed, 61 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
-index f693930fdb..d0473cbcb1 100644
---- a/Documentation/git-range-diff.txt
-+++ b/Documentation/git-range-diff.txt
-@@ -57,6 +57,10 @@ to revert to color all lines according to the outer diff markers
- 	See the ``Algorithm`` section below for an explanation why this is
- 	needed.
- 
-+--no-patch::
-+	Don't show the range-diff itself, only which patches are the
-+	same or were added or removed etc.
-+
- <range1> <range2>::
- 	Compare the commits specified by the two ranges, where
- 	`<range1>` is considered an older version of `<range2>`.
-diff --git a/builtin/log.c b/builtin/log.c
-index 061d4fd864..e063bcf2dd 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1096,7 +1096,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	if (rev->rdiff1) {
- 		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
- 		show_range_diff(rev->rdiff1, rev->rdiff2,
--				rev->creation_factor, 1, &rev->diffopt);
-+				rev->creation_factor, 1, 1, &rev->diffopt);
- 	}
- }
- 
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index f01a0be851..70c2761751 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -16,11 +16,14 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 	int creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
- 	struct diff_options diffopt = { NULL };
- 	int simple_color = -1;
-+	int patch = 1;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "creation-factor", &creation_factor,
- 			    N_("Percentage by which creation is weighted")),
- 		OPT_BOOL(0, "no-dual-color", &simple_color,
- 			    N_("use simple diff colors")),
-+		OPT_BOOL('p', "patch", &patch,
-+			 N_("show patch output")),
- 		OPT_END()
- 	};
- 	int i, j, res = 0;
-@@ -92,7 +95,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	res = show_range_diff(range1.buf, range2.buf, creation_factor,
--			      simple_color < 1, &diffopt);
-+			      simple_color < 1, patch, &diffopt);
- 
- 	strbuf_release(&range1);
- 	strbuf_release(&range2);
-diff --git a/log-tree.c b/log-tree.c
-index 7a83e99250..843e3ef83b 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -762,7 +762,7 @@ void show_log(struct rev_info *opt)
- 		next_commentary_block(opt, NULL);
- 		fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
- 		show_range_diff(opt->rdiff1, opt->rdiff2,
--				opt->creation_factor, 1, &opt->diffopt);
-+				opt->creation_factor, 1, 1, &opt->diffopt);
- 
- 		memcpy(&diff_queued_diff, &dq, sizeof(diff_queued_diff));
- 	}
-diff --git a/range-diff.c b/range-diff.c
-index bd8083f2d1..c1bfa593ce 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -436,6 +436,7 @@ static struct strbuf *output_prefix_cb(struct diff_options *opt, void *data)
- 
- int show_range_diff(const char *range1, const char *range2,
- 		    int creation_factor, int dual_color,
-+		    int patch,
- 		    struct diff_options *diffopt)
- {
- 	int res = 0;
-@@ -453,7 +454,10 @@ int show_range_diff(const char *range1, const char *range2,
- 		struct strbuf indent = STRBUF_INIT;
- 
- 		memcpy(&opts, diffopt, sizeof(opts));
--		opts.output_format = DIFF_FORMAT_PATCH;
-+		if (patch)
-+			opts.output_format = DIFF_FORMAT_PATCH;
-+		else
-+			opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 		opts.flags.suppress_diff_headers = 1;
- 		opts.flags.dual_color_diffed_diffs = dual_color;
- 		opts.output_prefix = output_prefix_cb;
-diff --git a/range-diff.h b/range-diff.h
-index 190593f0c7..99bbc1cd9f 100644
---- a/range-diff.h
-+++ b/range-diff.h
-@@ -7,6 +7,7 @@
- 
- int show_range_diff(const char *range1, const char *range2,
- 		    int creation_factor, int dual_color,
-+		    int patch,
- 		    struct diff_options *diffopt);
- 
- #endif
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 6aae364171..8f8be0c57f 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -122,6 +122,17 @@ test_expect_success 'changed commit' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'changed commit --no-patch' '
-+	git range-diff --no-color --no-patch topic...changed >actual &&
-+	cat >expected <<-EOF &&
-+	1:  4de457d = 1:  a4b3333 s/5/A/
-+	2:  fccce22 = 2:  f51d370 s/4/A/
-+	3:  147e64e ! 3:  0559556 s/11/B/
-+	4:  a63e992 ! 4:  d966c5c s/12/B/
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'changed commit with sm config' '
- 	git range-diff --no-color --submodule=log topic...changed >actual &&
- 	cat >expected <<-EOF &&
-@@ -151,6 +162,17 @@ test_expect_success 'changed commit with sm config' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'changed commit with sm config --no-patch' '
-+	git range-diff --no-color --no-patch --submodule=log topic...changed >actual &&
-+	cat >expected <<-EOF &&
-+	1:  4de457d = 1:  a4b3333 s/5/A/
-+	2:  fccce22 = 2:  f51d370 s/4/A/
-+	3:  147e64e ! 3:  0559556 s/11/B/
-+	4:  a63e992 ! 4:  d966c5c s/12/B/
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'no commits on one side' '
- 	git commit --amend -m "new message" &&
- 	git range-diff master HEAD@{1} HEAD
-@@ -176,6 +198,17 @@ test_expect_success 'changed message' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'changed message --no-patch' '
-+	git range-diff --no-color --no-patch topic...changed-message >actual &&
-+	sed s/Z/\ /g >expected <<-EOF &&
-+	1:  4de457d = 1:  f686024 s/5/A/
-+	2:  fccce22 ! 2:  4ab067d s/4/A/
-+	3:  147e64e = 3:  b9cb956 s/11/B/
-+	4:  a63e992 = 4:  8add5f1 s/12/B/
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'dual-coloring' '
- 	sed -e "s|^:||" >expect <<-\EOF &&
- 	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
-@@ -215,6 +248,18 @@ test_expect_success 'dual-coloring' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'dual-coloring --no-patch' '
-+	sed -e "s|^:||" >expect <<-\EOF &&
-+	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
-+	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
-+	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
-+	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
-+	EOF
-+	git range-diff changed...changed-message --color --dual-color --no-patch >actual.raw &&
-+	test_decode_color >actual <actual.raw &&
-+	test_cmp expect actual
-+'
-+
- for prev in topic master..topic
- do
- 	test_expect_success "format-patch --range-diff=$prev" '
--- 
-2.19.1.930.g4563a0d9d0
-
+If you see anything that would make using it difficult for other 
+solutions to use, let's fix it now!
