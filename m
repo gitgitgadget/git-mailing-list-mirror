@@ -2,102 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73A111F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 13:59:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FD861F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 14:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388358AbeKFXZJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 18:25:09 -0500
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:38746 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388048AbeKFXZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 18:25:09 -0500
-Received: by mail-wr1-f49.google.com with SMTP id d10-v6so13621428wrs.5
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 05:59:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=zuNKKEbtJY7gCFWbUbLu2KGxe1L4D4J9OJci+MLmN6Q=;
-        b=ZA43dM++KPezyBRog3ThN2oiIkD4URxXZ7MOU/T8hPAHZQQtlj10ofCbKv4T/oF0vT
-         VwMgpnYZeALzqPku0DbDa7liaMHXRynVPhTbVgxbzGoFMoRjLjiBpIoZ4RYbZe+8KCrq
-         jIty8tv9VLpGXC7uLFUSeD1KK4+gsThByGH0Fu1JLFgW+CRXk/3X+8Y2tLE7iYYcRQdM
-         ekZA6b5dubF18PMzfWehtFmeQIVxSU7xNXnRPWsdRXU++xuHZ5wxPOd9sopI21Dx/nfz
-         K+r+S5q5rtytGPFM2Gu1RxS4gF/LFeJDH6o4XmREL7j/buy4E0N9tmEDr2VF6amDZhbM
-         QA2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=zuNKKEbtJY7gCFWbUbLu2KGxe1L4D4J9OJci+MLmN6Q=;
-        b=oKsj0QV5sHpAx7yHwAlFGQobzobI2Z2/+foYuuBXcdMORA3el9i2XjnjMH1mVEM8M6
-         /2MjkYYGJ6m9d93xoFcLfwgA3UW4pUwWZGUh/fcr+ElT+3fchJz9HrbuBMXWEkQZnYQb
-         ZbEag/Rom0WFHUM5a9ZIJFjq3mPLCNwKlsl8B9FZ7osgsr0I3lVlxHPFFmNwZ4dFnJ0r
-         fM66OamcSAdSqge3crkwxYtSS2Xwf4pdBkcdhsNQRFQsX2fAdQo+QsAgmbh6dfKBF025
-         6BmgxhvRKSeyB+92GzI/wNY5jeIyDyiuMV9eJ8zOL7ArvGrKPyN4nMrMJLau1qpi+wpJ
-         BF2g==
-X-Gm-Message-State: AGRZ1gKmATsDbf3qikCqA9QsXl8R8/OfxtjNghpiMp6snM++s5V7xqAR
-        YrkZT/H0s9aSXQel0IAXenwmwPej3tQ=
-X-Google-Smtp-Source: AJdET5fCGMkaWiU9/iE/jo87FzY8ZFioXkoDGgQ4CJTkskciYML94ZBmA/Rye6XcQW4NfdLCvNnshw==
-X-Received: by 2002:adf:9d1f:: with SMTP id k31-v6mr25122914wre.18.1541512785656;
-        Tue, 06 Nov 2018 05:59:45 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id f67-v6sm1856505wme.22.2018.11.06.05.59.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 05:59:44 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: Regression in rebase-in-C with rebase.autoStash=true
-References: <pull.56.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <pull.56.git.gitgitgadget@gmail.com>
-Date:   Tue, 06 Nov 2018 14:59:43 +0100
-Message-ID: <878t2671dc.fsf@evledraar.gmail.com>
+        id S1730606AbeKFX11 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 18:27:27 -0500
+Received: from mout.gmx.net ([212.227.15.15]:41539 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730421AbeKFX11 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 18:27:27 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MF4iR-1gI73T1Bs3-00GH2g; Tue, 06
+ Nov 2018 15:02:00 +0100
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MF4iR-1gI73T1Bs3-00GH2g; Tue, 06
+ Nov 2018 15:02:00 +0100
+Date:   Tue, 6 Nov 2018 15:01:59 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "Chris. Webster" <chris@webstech.net>
+Subject: Re: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX
+ and Windows
+In-Reply-To: <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811061501210.86@tvgsbejvaqbjf.bet>
+References: <pull.59.git.gitgitgadget@gmail.com> <pull.59.v2.git.gitgitgadget@gmail.com> <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:syUGHABV7fLjRxH/Wv9+RMu6wq6ROkos2jv36BvmMPJPIEHm8Is
+ 6gqyfcC5Z6hdWtbbYtIMTgiOof5f0RLXG01tBNNpZ64eE2X8ZXDh1nXy8T9TFGBP6TB7Eoi
+ Surb8iGNonZLJppjaZBbEusZ/5BNOiQe0m8AQOI/WxAT3cguxN5N7OR3TlX+XrO2y9yj+Sg
+ qXh0I9pzaoxcvr9EFpG1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kbbP6TI6h0g=:rVSsIk8kM3OxV86kSRt5xK
+ 8h0QKqbPRaKfgTLlSo43aEf7IOybIYTelCDrxF6PmDRt4jMqFt5YJob4Zyy+d7YiC4WJeo0jv
+ szuq5EvPyUEjuIDtXBfZuZGa0HmSgsyfc2w7WSjaz7A4Yv59K5wUeZKbjW7EBMSyY7Y8OsCzN
+ +wA6I0nGnN0YjDt6dm0pDXQ77sCVuQjEakvLErIHTYLRay+M22FuEgVSaQxXIXwfXLKIT22ho
+ iqTm/Scjjl8K/SzdMOon26A2MGtEcHyXFxUpPtl/Cg+kOI2CZFFkKaUejFJWFIB6LybBOxc/n
+ HrPc7jQ/NAVEUyXgkY3wXvQCTC0goGAZmNahXeTY5NRvdDmyEqxuW7iNSY5C/dz8PEFJE5mnz
+ LgGkCdYGYhvvp6IZkWecHwzK7hpgA4B4fwCimqMToGSVI/FP5rSiNMAayfpOKmGQ/pmukHJOj
+ yDMHyjTIL8qvul+g0k+HSmFv3NmylJ+FvwIGynF6nXfWpmE/v4LcqNP4Qw0YCwwqDxd6B7FXK
+ x5fWOT5HM7ZlW9/zWJCgvnYKUgQl+vuIno7r5Ml4kf5kiqLk9gOcXawIqbGBMC1eFPCMcShyq
+ IJxK1P2svO7uIqrf98hX+jpq0RNsSJHEdiyjsf3XZIeuFM0k17Uyq9JbsRJSInqNB715KaZVa
+ oFrcW+IYnb240Z4Yaxzhk4MPJm8ITplRpBop8y4kFZEe8CiupTmX87y0deumMeFGnup8JcfQv
+ P9yhS6LeWf0ARYG75OvG46Ud52Ke1tUpOqakOsTQiFM7OihPwuWYZ3xdxoy4ty0d0p8VQBe2k
+ KADd/ykLslD8FxrwNZDUrIAQUj1iS+ngqIhp5abQuhtuRqqPks=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+List,
 
-On Tue, Oct 23 2018, Johannes Schindelin via GitGitGadget wrote:
+I have no idea why this mail made it to GitGitGadget's email account but
+not to the Git mailing list... Sorry about that.
 
-> Johannes Schindelin (2):
->   rebase --autostash: demonstrate a problem with dirty submodules
->   rebase --autostash: fix issue with dirty submodules
->
->  builtin/rebase.c            |  2 +-
->  t/t3420-rebase-autostash.sh | 10 ++++++++++
->  2 files changed, 11 insertions(+), 1 deletion(-)
+Ciao,
+Johannes
 
-There's another bug with rebase.autoStash in master (and next/pu) but
-not v2.19.0. I tried to bisect bit it just comes down to 5541bd5b8f
-("rebase: default to using the builtin rebase", 2018-08-08).
+On Wed, 31 Oct 2018, Chris. Webster via GitGitGadget wrote:
 
-Credit to a co-worker of mine who wishes to remain anonymous for
-discovering this. I narrowed down his test-case to (any repo will do):
-    
-    (
-        rm -rf /tmp/todo &&
-        git clone --single-branch --no-tags --branch=todo https://github.com/git/git.git /tmp/todo &&
-        cd /tmp/todo &&
-        rm Make &&
-        git rev-parse --abbrev-ref HEAD &&
-        git -c rebase.autoStash=true -c pull.rebase=true pull &&
-        if test $(git rev-parse --abbrev-ref HEAD) != 'todo'
-        then
-            echo 'On detached head!' &&
-            git status &&
-            exit 1
-        else
-            echo 'We are still on our todo branch!'
-        fi
-    )
+> From: "Chris. Webster" <chris@webstech.net>
+> 
+> Use File::Spec->devnull() for output redirection to avoid messages
+> when Windows version of Perl is first in path.  The message 'The
+> system cannot find the path specified.' is displayed each time git is
+> run to get colors.
+> 
+> Signed-off-by: Chris. Webster <chris@webstech.net>
+> ---
+>  contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
+> index 536754583b..7440aa1c46 100644
+> --- a/contrib/diff-highlight/DiffHighlight.pm
+> +++ b/contrib/diff-highlight/DiffHighlight.pm
+> @@ -4,6 +4,11 @@ use 5.008;
+>  use warnings FATAL => 'all';
+>  use strict;
+>  
+> +# Use the correct value for both UNIX and Windows (/dev/null vs nul)
+> +use File::Spec;
+> +
+> +my $NULL = File::Spec->devnull();
+> +
+>  # Highlight by reversing foreground and background. You could do
+>  # other things like bold or underline if you prefer.
+>  my @OLD_HIGHLIGHT = (
+> @@ -134,7 +139,7 @@ sub highlight_stdin {
+>  # fallback, which means we will work even if git can't be run.
+>  sub color_config {
+>  	my ($key, $default) = @_;
+> -	my $s = `git config --get-color $key 2>/dev/null`;
+> +	my $s = `git config --get-color $key 2>$NULL`;
+>  	return length($s) ? $s : $default;
+>  }
+>  
+> -- 
+> gitgitgadget
+> 
