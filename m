@@ -2,137 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C33B81F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 20:16:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F18151F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 20:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726960AbeKGFnR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 00:43:17 -0500
-Received: from mout.web.de ([217.72.192.78]:38021 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725936AbeKGFnR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 00:43:17 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRCrb-1fxCXt3Wnf-00UXp4; Tue, 06
- Nov 2018 21:16:18 +0100
-Date:   Tue, 6 Nov 2018 21:16:18 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     =?iso-8859-1?Q?Adri=E1n?= Gimeno Balaguer <adrigibal@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-rebase is ignoring working-tree-encoding
-Message-ID: <20181106201618.GA30158@tor.lan>
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
- <20181104170729.GA21372@tor.lan>
- <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com>
- <20181105181014.GA30777@tor.lan>
+        id S1727300AbeKGFnc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 00:43:32 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:32942 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727076AbeKGFnc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 00:43:32 -0500
+Received: by mail-qt1-f195.google.com with SMTP id l11so4170966qtp.0
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 12:16:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=BKTzK8dAfr0tebNzFhIev8PtXgMVI7d4ANKRtbgJ8xM=;
+        b=YuRsCuLlx+7gwyrlpoeJ5nNXePT2OQ5Q4z+xE4idpGBEtLb8LzSS5vdpjiDIupvtUE
+         F5NObb1qmy5yTLRy0LkbhFwjs1YcSF9Wobz3jrPytrJojOVhzZIMvxtprkdRawroRdHv
+         tzYceiQuCKSEK8Bb2Li/6MnpT/zMZWxSV/sI6m8D7Ihx0Q3iz+hbM16EedyxcTbyWVmT
+         KPqGnNVxbjPJ1xhRVUP93zn0Mfi9z4Cfy4MwzkiSil83/wq5VC0PXmP0X4nmN9/4VqE7
+         z0ad9hS/GIW8zry+4+ECAJuek486F4nPKKmylggPzBTrqRGnO9RnQmSgIt6nR424Bpym
+         oqxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=BKTzK8dAfr0tebNzFhIev8PtXgMVI7d4ANKRtbgJ8xM=;
+        b=thUV1GBnQJEqb3CXM8J+uv47+PaPlXcEiXedoEH6p8C1R2dpt4507EoNyFkjNt6WI0
+         y4guvZKXGNv/N4DCNxfM0wS63SULgIRP8yPcGijomEM/X029eZViGylHHFTocx7Ki1hq
+         lcn5Ughzbaz0L5oz4yxAruC5wKy2WQP6zEU5ihsAPDCoPfUiLJ4fBIKLN/LvxHdtB3mk
+         b6F/1eVu8/me0MR/jQVAI9Xb5dOZ2Cw5wbf/Nd4mDWm9rdeeN14Qgcwn7vkGMLQr5ora
+         JUGPrJfG3oagtcqu99cdZBw/PHMwu/pfmreOgtXK13hVR1ab8mqRvTooTEppf/nqC3fe
+         1OMw==
+X-Gm-Message-State: AGRZ1gKHI5354Z1JOzAP0vhLj/QuMMgzZzMcGRPbj5iHKNdGUPpjwNMZ
+        Hc6BYVhLzcWAs6yfVwYxyh4=
+X-Google-Smtp-Source: AJdET5dqCFEYVhL1kjN/jd/IKo6QOatVEuArxJaRPXVTQJaLerpzv9RZeXVbN2YrM4uAxsq5hxj9zA==
+X-Received: by 2002:ac8:30ac:: with SMTP id v41mr26488480qta.51.1541535395351;
+        Tue, 06 Nov 2018 12:16:35 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:9183:6eb:3bc0:1bbd? ([2001:4898:8010:0:7ab9:6eb:3bc0:1bbd])
+        by smtp.gmail.com with ESMTPSA id g46-v6sm28598965qta.79.2018.11.06.12.16.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Nov 2018 12:16:34 -0800 (PST)
+Subject: Re: [PATCH 0/1] send-pack: set core.warnAmbiguousRefs=false
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.68.git.gitgitgadget@gmail.com>
+ <20181106194442.GB8902@sigill.intra.peff.net>
+ <20181106195131.GA5289@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f2ff23be-9f26-6296-f7a4-b95f9f2ec1f6@gmail.com>
+Date:   Tue, 6 Nov 2018 15:16:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181105181014.GA30777@tor.lan>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:JPIkLPf7zMoSErP2W2JeubtXcSuEIg+NiXegrdvGLQmVV62p2nk
- HCwfGAc2NCYUC9jUWi9AQiC25MJjBOdYdbYHlVziZ9rQViKPgo3o69sCrdRVwQ+HSj98ozO
- QJ71Z6imQlDuvNouCHD6ZF3F2E2R33mdYvDQ+MNuuAnJgT1iMDk/7SNi0fN8RC/Ts90Og2O
- V1BuHs6FAZeshOeEX9uuA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JiGm1okMamI=:czyDZ5GidIBcEYa4SIoldQ
- Q3/DqHUYZtab6+8nnLKJLwL214IrIr+DuwXAwC/JnC5Y5tBIY/TSL/xWnfZpNZe37xOrXXlAr
- vDAXNcoTxPV+Uby01ffdFUGoj+yDMOhtuHSsMhAXUCrTDDHz/d6Jl36PMW2rMPHL6JdEbrmGI
- qhMou+siofRzDZb1zHSy7qG94z+9hjmDcwiXsoqZ3cYp4pgnTm1J45GJsTE0aP2F6Mh9vjylE
- UgvMaQjBZhNkdmj73DQUKp1vMzSYY2edQJj8SrixpkoR+FhgYYp8gAZzlX7wE+qXL5UxbiBmi
- IsVJaz4HihWCfcIX5JsPxGTtzgxuMFn/V4MNtoPM69q6JOLbRUX+6+pzo9+PYNWgupLIrf5Qc
- FS8vPU6NGHV76HTxHgaIGRIxQXuuRAe7oB2Pc6T7axWzWJkQpPeGqMCsR1bPfWKWVXVVVPEIN
- 63C5UOG9t7yRtc13wK/ozxCILQQNjDciKHmq1O5igUG5F1Lip6wr1makpryOEz4OqJ88acafD
- fxgMO+tIeoC1/Wwh4mEnCjZGXqjd0o4v+feeNVkDE0SnjmzNDs5QnMBrEhqRjNJKw0TDbQUJx
- 1C8ZkDAMYnUaWrtf2RmV6DG3W3X+nFK0FCbHxLa5YXl1DM6XBfeJxugtJEHKewmkJ1TzAOMrd
- phE9r7d3fFMxzFpUhzuIfAxZBAWIg8uymnEJYx1jh9oUlL0AN1KS0tX38MyiRNH72+1l63xVS
- YK8mseGYIbnk3P1ihm8JqqG5C++l7rWZHpIRUr3VmZpJjKpVZNq8VC3DSqYaxOt2j07Wv6rzq
- VAzxFA+52oJhrCi6rwhHoKdAoPwKw==
+In-Reply-To: <20181106195131.GA5289@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 05, 2018 at 07:10:14PM +0100, Torsten Bögershausen wrote:
-> On Mon, Nov 05, 2018 at 05:24:39AM +0100, Adrián Gimeno Balaguer wrote:
-> 
-> []
-> 
-> > https://github.com/git/git/pull/550
->  
-> []
->  
-> > This is covered in the mentioned PR above. Thanks for feedback.
-> 
-> Thanks for the code,
-> I will have a look (the next days)
-> 
-> > 
-> > -- 
-> > Adrián
+On 11/6/2018 2:51 PM, Jeff King wrote:
+> On Tue, Nov 06, 2018 at 02:44:42PM -0500, Jeff King wrote:
+>
+>>> The fix for this is simple: set core.warnAmbiguousRefs to false for this
+>>> specific call of git pack-objects coming from git send-pack. We don't want
+>>> to default it to false for all calls to git pack-objects, as it is valid to
+>>> pass ref names instead of object ids. This helps regain these seconds during
+>>> a push.
+>> I don't think you actually care about the ambiguity check between refs
+>> here; you just care about avoiding the ref check when we've seen (and
+>> are mostly expecting) a 40-hex sha1. We have a more specific flag for
+>> that: warn_on_object_refname_ambiguity.
+>>
+>> And I think it would be OK to enable that all the time for pack-objects,
+>> which is plumbing that does typically expect object names. See prior art
+>> in 25fba78d36 (cat-file: disable object/refname ambiguity check for
+>> batch mode, 2013-07-12) and 4c30d50402 (rev-list: disable object/refname
+>> ambiguity check with --stdin, 2014-03-12).
+> I'd probably do it here:
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index e50c6cd1ff..d370638a5d 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -3104,6 +3104,7 @@ static void get_object_list(int ac, const char **av)
 
-Hej Adrián,
+Scoping the change into get_object_list does make sense. I was doing it 
+a level higher, which is not worth it. I'll reproduce your change here.
 
-I still didn't manage to fully understand your problem.
-I tried to convert your test into my understanding,
-It can be fetched here (or copied from this message, see below)
+>   	struct rev_info revs;
+>   	char line[1000];
+>   	int flags = 0;
+> +	int save_warning;
+>   
+>   	repo_init_revisions(the_repository, &revs, NULL);
+>   	save_commit_buffer = 0;
+> @@ -3112,6 +3113,9 @@ static void get_object_list(int ac, const char **av)
+>   	/* make sure shallows are read */
+>   	is_repository_shallow(the_repository);
+>   
+> +	save_warning = warn_on_object_refname_ambiguity;
+> +	warn_on_object_refname_ambiguity = 0;
+> +
+>   	while (fgets(line, sizeof(line), stdin) != NULL) {
+>   		int len = strlen(line);
+>   		if (len && line[len - 1] == '\n')
+> @@ -3138,6 +3142,8 @@ static void get_object_list(int ac, const char **av)
+>   			die(_("bad revision '%s'"), line);
+>   	}
+>   
+> +	warn_on_object_refname_ambiguity = save_warning;
+> +
+>   	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
+>   		return;
+>   
+>
+> But I'll leave it to you to wrap that up in a patch, since you probably
+> should re-check your timings (which it would be interesting to include
+> in the commit message, if you have reproducible timings).
 
-https://github.com/tboegi/git/tree/tb.181106_UTF16LE_commit
+The timings change a lot depending on the disk cache and the remote 
+refs, which is unfortunate, but I have measured a three-second improvement.
 
-The commit of an empty file seems to work for me, in the initial
-report a "rebase" was mentioned, which is not in the TC ?
-
-Is the following what you intended to test ?
-
-#!/bin/sh
-test_description='UTF-16 LE/BE file encoding using working-tree-encoding'
-
-
-. ./test-lib.sh
-
-# We specify the UTF-16LE BOM manually, to not depend on programs such as iconv.
-utf16leBOM=$(printf '\377\376')
-
-test_expect_success 'Stage empty UTF-16LE file as binary' '
-	>empty_0.txt &&
-	echo "empty_0.txt binary" >>.gitattributes &&
-	git add empty_0.txt
-'
-
-
-test_expect_success 'Stage empty file with enc=UTF.16BL' '
-	>utf16le_0.txt &&
-	echo "utf16le_0.txt text working-tree-encoding=UTF-16BE" >>.gitattributes &&
-	git add utf16le_0.txt
-'
-
-
-test_expect_success 'Create and stage UTF-16LE file with only BOM' '
-	printf "$utf16leBOM" >utf16le_1.txt &&
-	echo "utf16le_1.txt text working-tree-encoding=UTF-16" >>.gitattributes &&
-	git add utf16le_1.txt
-'
-
-test_expect_success 'Dont stage UTF-16LE file with only BOM with enc=UTF.16BE' '
-	printf "$utf16leBOM" >utf16le_2.txt &&
-	echo "utf16le_2.txt text working-tree-encoding=UTF-16BE" >>.gitattributes &&
-	test_must_fail git add utf16le_2.txt
-'
-
-test_expect_success 'commit all files' '
-	test_tick &&
-	git commit -m "Commit all 3 files"
-'
-
-test_expect_success 'All commited files have the same sha' '
-	git ls-files -s --eol >tmp1 &&
-	sed -e "s!	i/none.*!!" <tmp1 | uniq -u >actual &&
-	>expect &&
-	test_cmp expect actual
-'
-
-test_done
+Thanks,
+-Stolee
