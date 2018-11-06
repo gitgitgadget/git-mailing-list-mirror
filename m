@@ -2,88 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FB501F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 12:38:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A15D1F454
+	for <e@80x24.org>; Tue,  6 Nov 2018 12:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387971AbeKFWD7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 17:03:59 -0500
-Received: from mail-oi1-f177.google.com ([209.85.167.177]:41579 "EHLO
-        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387905AbeKFWD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 17:03:59 -0500
-Received: by mail-oi1-f177.google.com with SMTP id g188-v6so4577691oif.8
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 04:38:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=X+/weClBLoGsbxUTLnvFZu5YdrcyiDIng+BFceHPaQ4=;
-        b=n6WiGHZUo+fjnd3dlCnqGj0at3rFnsILU825FyP5DTj/2jX5oA8QhffCSIRu5z6Et1
-         UESHzlvFy/jLzXPLwqsnZ37NLeTRDGqqXqk0+QFMEPAROFqv6VEWXeAfYkp9S4GhQEaX
-         W2n5YoAXrp46iGy9NYLjDGIQS/CYq4SnMUtG8Kcgqln9Qa++QIJ7af0EcDnomf29GXRa
-         5SL/6iEdVxlLLkXEu3SALBDyKR/DUkvgJdyg6+BW+eJJmRQWh3Qn1/yexxXC9iQRTRgE
-         yFKd4FgCTH9PwzYuaScFhHTjaeGgn+sZsSoqUWyBgxkuLU4KVBXfbnA5iPpdQN1kRTsu
-         FHzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=X+/weClBLoGsbxUTLnvFZu5YdrcyiDIng+BFceHPaQ4=;
-        b=J+MiBMTnOahL5FEzo6IOXNJA2JaftdFHnKql8zP2IXl9GX/Ug4DLLXVPu5fHoRjF4j
-         IPe9xz/1s1W8WpOBFMltKe5Smuh6GSmqGeUVFWyoH+DG+sXbgYBqBMA9+poVGY4B4qnu
-         Mk3hA3jy2ISKeRfjoVqF3zVcQkKkebVahstXulWw2bm5v7BY5UWvy/DaoFilK3QM0qTi
-         k51JUfzw7i73GeYNBbnK8Zfo+GFOs26p7LnjuRjt7YZxAajUM8x9EV8uAS4prKv4/xj2
-         DYhx999O8+0J+l5coS0rwAtrzG+hnxhLu9mfv+J8S4U6FVWZVgfGO0wawegGP372U70a
-         wvsg==
-X-Gm-Message-State: AGRZ1gLn9daPMWbFdf2i5MoaH13Kl65h4L9PORo6vL0aMkoCtULNd1/8
-        JETHem6Os/nnkz0LEJ1g6I6/LQI9IW42cfE1/gZzM0wo
-X-Google-Smtp-Source: AJdET5cfeuh0BSpIkxks7ImCibGFSsjK2c7lLbqgsQQ0P8wkYD5VmkJ0ipi+w1oHe9use2D8vGzzgZ9Kq8xFKcIiZUs=
-X-Received: by 2002:aca:d586:: with SMTP id m128-v6mr15716029oig.229.1541507936646;
- Tue, 06 Nov 2018 04:38:56 -0800 (PST)
+        id S2387745AbeKFWQs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 17:16:48 -0500
+Received: from smtpout11.ifi.lmu.de ([141.84.214.246]:41789 "EHLO
+        smtpout11.ifi.lmu.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729272AbeKFWQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 17:16:48 -0500
+X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Nov 2018 17:16:47 EST
+Received: from empusa.suse (unknown [IPv6:2001:4ca0:0:f235:8219:34ff:feb1:d00f])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jost.steffen.tcs)
+        by smtpin1.ifi.lmu.de (Postfix) with ESMTPSA id 44DA0171288
+        for <git@vger.kernel.org>; Tue,  6 Nov 2018 13:41:54 +0100 (CET)
+From:   Steffen Jost <jost@tcs.ifi.lmu.de>
+Subject: Checkout deleted semi-untracked file
+To:     git@vger.kernel.org
+Organization: LMU Munich
+X-Tagtoolbar-Keys: D20181106134153510
+Message-ID: <d4624773-739c-f698-514d-458ce2ef5503@tcs.ifi.lmu.de>
+Date:   Tue, 6 Nov 2018 13:41:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-From:   Christian Halstrick <christian.halstrick@gmail.com>
-Date:   Tue, 6 Nov 2018 13:38:45 +0100
-Message-ID: <CAENte7hoHxQCiQwSaAGPyaeFK8rb2Q23DcbePd01fcvgxtodZg@mail.gmail.com>
-Subject: What exactly is a "initial checkout"
-To:     Git <git@vger.kernel.org>
-Cc:     rene.scheibe@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am trying to teach JGit [1] to behave like native git regarding some
-corner cases during "git checkout". I am reading the "git read-tree"
-documentation and I am not sure about the case [2]. Git should behave
-differently during a normal checkout than when you are doing a
-"initial checkout". I can imagine that the first checkout you do after
-you have cloned a repo is a initial checkout but: What exactly defines
-a "initial checkout"? It can't be an empty or non-existing index
-because native git behaves like in a non-initial-checkout even if the
-index is empty (see example below).
+Hello!
 
-Here are some commands explaining my case. Git is facing an empty
-index, HEAD and MERGE (the commit you checkout) have the some content
-for path 'p'  and still git is neither updating index nor workingtree
-file during checkout.
+A brief discussion on the git user mailing list on Google Groups recommended me to file the following as a bug report.
 
-git init
-mkdir p
-echo initial >p/a
-git add p/a
-git commit -m initial
-touch p2
-git add p2
-git commit -m followup
-git rm -r p p2
-echo "important data" >p
-git checkout HEAD~ # successful checkout leaving p dirty
-cat p # prints "important data", so 'p' is not updated during the checkout
-git ls-files -sv  # empty -> index is empty
+The problem led to an actual file loss, but I suspect that this might be intended:
 
-[1] https://www.eclipse.org/jgit/
-[2] https://github.com/git/git/blob/master/Documentation/git-read-tree.txt#L187
+1) .gitignore is added to the repository (which then causes problems)
+2) A file is added, repeatedly edited and comitted to a remote repository.
+3) Later on, the file is added to .gitignore and "git rm --cached file" is executed (since the file now contains information private to each developer).
+4) Several commits happen.
+5) I checkout an old branch which has not yet seen the change in .gitignore in the master branch. The file is reverted to the state of the branch.
+6) I checkout master, and the file with all later changes is irrevocably lost.
+
+I usually advise my students to check-in their .gitignore file into the repository. Apparently this is a bad advice, since it now led to a somewhat painful file loss for me.
+
+So what is the actual advice on this? Google turned up mixed advice there, and the git user mailing list on Google Groups recommended me submitting this as a bug here. However, I think this works as intended. However, I don't know either how to avert this problem, apart from not checking in the .gitignore file (or checking it in under a different name and copying it manually).
+
+
+Thanks for any advice,
+  Steffen Jost.
+
+-- 
++49-89-2180-9139
+http://www.tcs.ifi.lmu.de/~jost/
+
+Lehr- und Forschungseinheit für Theoretische Informatik
+Ludwig-Maximilians-Universität München
+Oettingenstr. 67 (E111)
+80538 München
+BAVARIA
