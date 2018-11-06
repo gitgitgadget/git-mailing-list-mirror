@@ -7,86 +7,97 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA8C1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66AB41F453
 	for <e@80x24.org>; Tue,  6 Nov 2018 14:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389114AbeKGAVZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 19:21:25 -0500
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:46413 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388887AbeKGAVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 19:21:25 -0500
-Received: by mail-pg1-f175.google.com with SMTP id w7so5905214pgp.13
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 06:55:50 -0800 (PST)
+        id S2389116AbeKGAV1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 19:21:27 -0500
+Received: from mail-pf1-f179.google.com ([209.85.210.179]:37009 "EHLO
+        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388887AbeKGAV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 19:21:26 -0500
+Received: by mail-pf1-f179.google.com with SMTP id u13-v6so6221513pfm.4
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 06:55:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=q5J+Z+xbkQMK4cEwF/RfcF7dbxRUJLN/Z5wupZbvix4=;
-        b=Uir7t98cQS4AQBeZ/AC93EI0FjjJfXSfqbdu/rLIfOdc7ZwxF21t62Em+l5YXcNrah
-         zgW0wzgLXgCWAkAElewsAhSYPzJ0ZcKLM7I2vAZFabxNv+mF8zOxxiCf/21MAtOFbPO+
-         kCcoe8rPAKNswCCzVxODNr3eMJJq8wkPO8W8gGREv1qDA5S65gAJ8avhaQmaLUgeejwc
-         IlPfTq9HJlr5a0XIpqVSwdQfjiQRwu+y36y9zSVR3MH7fvB1C6ahZ54xb3uTndNL5Vtu
-         ocbLbqVpQmI22KfRODRrlr4i0K4gKqKfQzNQX5W67wjtaRx64yXH7wFy7vqQ2A9ghTh0
-         8cBQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qj4EEt47Qwle/7t/mAtoxotz2y56psQ4Sa69kqEENf4=;
+        b=BuTjqvMwsIj2BFR4BlTvNJtgm/1Ev9kvKYjsdS5TalpM3ajL9Rbr29eCFtBA+r+9Jh
+         LB7w/xLA4Cm1Yw+YYsaPxIG9GE3vcmkymj+Nju6kcvaOBLFli4P62nlPiNGy9gV8WbPT
+         s3pJ6/WvubaV2nz0GFjhz/WNSHDBa3SjsMW1XJEHKZIVXfYQfv8NtMVOntknSKTRUfDT
+         +8ASH3HUH86DWOjuCU2esnI33RdYNVB2qpsTVuFLuLcoWha4eJjGCl5Ui0vv/iud1top
+         pMVv06FE/qltjcCQZgqPUAtBWklSubuMp15BurX88GI1KAMo370mXiCIb4lhWN5obN/T
+         mbBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=q5J+Z+xbkQMK4cEwF/RfcF7dbxRUJLN/Z5wupZbvix4=;
-        b=gGNqOerGv9AATV9hne5Yj9DbvTMN8RwC+eyfFKjhqhc58RSUGH5Wz4W4n6mvSHoNg9
-         mrMIkdVuCJ0CEPwOmGn9JBTrVEvgEGwlMFvpexd6MFMQ7Yhl1NaGXQps+bcOlTH+uUOd
-         ZNhcJK/yH6/k4vj/k0gv1yfJO+k7EIZvxhIb61biIvA5JP+2+/zizy6IQiWytzEPQMGb
-         JzR82TyRBywto/OQ4FKiW/H3oJh0zoH7h3fQnxRLWABpnHls8vY9LRDWQDDy7EK0niLV
-         IUzRClNv3ElWmTvAZoUn3sFiv/TT16hmMZw3qFB6Rc5xcpdQ5TGNfRCbgWSdEUxpFB3K
-         tGHg==
-X-Gm-Message-State: AGRZ1gJlYMO67nRd9O1JS4CLyYthaDNKU6c/Mfsu4du0BflaDSLWEuTL
-        SfDqUQ3d1vfWqubkmVZf/9Q/0alxiP4=
-X-Google-Smtp-Source: AJdET5fCEKwkIoCYvYgfoUtTAw8OZnlFQC/8ECRL3vMWNuFOn95IOOTIeLEbSGtRlyVV+AUmDacYOA==
-X-Received: by 2002:a63:a441:: with SMTP id c1-v6mr1093168pgp.49.1541516149869;
-        Tue, 06 Nov 2018 06:55:49 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=qj4EEt47Qwle/7t/mAtoxotz2y56psQ4Sa69kqEENf4=;
+        b=PjLRPMYPQkAWieAodm0vtHCU5ALpRFVyfIRVAiTS5d3bXYgbyo7uhz8wCmKHHJzoN5
+         wc7MyZrCSFymPXPu+hB6LseNu7dAV1jeFwNKOk4uudZ7rXGUABEHP6KxN6anwajdu2oV
+         UWWBepc5F/SC9e6KvBoUjo/ZRXPYdUU522wqVm/67LLqKS4lPPywFW+FRGHB0IQF3m49
+         7CCgA8WupyynLYf5C0q0MMeYp3UycSndszg0afHQ/lZFGvw18T4ylxu4HyipF74ob846
+         C/fMromCIZE81zWx2cU7k4e+6UahdzqLjJARozCJqW/a3nIVZJMUjZbo0WDGUircJBt2
+         NW/A==
+X-Gm-Message-State: AGRZ1gKVTsooIWCl5y5Cfb+DvaukmZGaX6Cn/g1GhZr6Mj8tfQWc+onA
+        tbjOL7UQpw3TEiCh4BEvG8xWJuZGtY0=
+X-Google-Smtp-Source: AJdET5fAjDaphCIew+V4OKmBSzyyFeleuijqZnn48aNpZrVg63+izZsvPkL5ABPyfNTh7P+t+gKeqw==
+X-Received: by 2002:a63:ff62:: with SMTP id s34mr14465728pgk.325.1541516151133;
+        Tue, 06 Nov 2018 06:55:51 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id z22-v6sm45788877pgv.24.2018.11.06.06.55.49
+        by smtp.gmail.com with ESMTPSA id 18sm11511506pgl.50.2018.11.06.06.55.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Nov 2018 06:55:49 -0800 (PST)
-Date:   Tue, 06 Nov 2018 06:55:49 -0800 (PST)
-X-Google-Original-Date: Tue, 06 Nov 2018 14:55:46 GMT
-Message-Id: <pull.67.git.gitgitgadget@gmail.com>
+        Tue, 06 Nov 2018 06:55:50 -0800 (PST)
+Date:   Tue, 06 Nov 2018 06:55:50 -0800 (PST)
+X-Google-Original-Date: Tue, 06 Nov 2018 14:55:47 GMT
+Message-Id: <87794514ef3a83f95d81f89287b81aeed5c92296.1541516148.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.67.git.gitgitgadget@gmail.com>
+References: <pull.67.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Windows: force-recompile git.res for differing architectures
+Subject: [PATCH 1/1] Windows: force-recompile git.res for differing
+ architectures
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a patch designed to help maintaining Git for Windows better: when
-the same source code is "cross-compiled" for i686 as well as x86_64, we want
-to rebuild the whole thing, including the resource file git.res.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Note: regular C files are re-compiled appropriately, as the default prefix
-in Git for Windows is /mingw32 or /mingw64 depending on the architecture,
-and this difference is manifested in the CFLAGS (which, upon change, trigger
-a complete rebuild).
+When git.rc is compiled into git.res, the result is actually dependent
+on the architecture. That is, you cannot simply link a 32-bit git.res
+into a 64-bit git.exe.
 
-As non-Windows platforms do not even compile these .res files, this patch
-should have exactly no effect on non-Windows builds.
+Therefore, to allow 32-bit and 64-bit builds in the same directory, we
+let git.res depend on GIT-PREFIX so that it gets recompiled when
+compiling for a different architecture (this works because the exec path
+changes based on the architecture: /mingw32/libexec/git-core for 32-bit
+and /mingw64/libexec/git-core for 64-bit).
 
-Johannes Schindelin (1):
-  Windows: force-recompile git.res for differing architectures
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: cd69ec8cde54af1817630331fc441f493866f0d4
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-67%2Fdscho%2Fmingw-git.res-bitness-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-67/dscho/mingw-git.res-bitness-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/67
+diff --git a/Makefile b/Makefile
+index bbfbb4292d..8375736c32 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2110,7 +2110,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+ 	$(QUIET_GEN)$(cmd_munge_script) && \
+ 	mv $@+ $@
+ 
+-git.res: git.rc GIT-VERSION-FILE
++git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
+ 	$(QUIET_RC)$(RC) \
+ 	  $(join -DMAJOR= -DMINOR= -DMICRO= -DPATCHLEVEL=, $(wordlist 1, 4, \
+ 	    $(shell echo $(GIT_VERSION) 0 0 0 0 | tr '.a-zA-Z-' ' '))) \
 -- 
 gitgitgadget
