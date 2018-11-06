@@ -2,82 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FROM_EXCESS_BASE64,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0897C1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 21:44:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 499891F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 22:03:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730634AbeKGHLZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 02:11:25 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:14950 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726069AbeKGHLZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 02:11:25 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42qNNR66mQz5tmh;
-        Tue,  6 Nov 2018 22:44:07 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 9C4091B09;
-        Tue,  6 Nov 2018 22:44:07 +0100 (CET)
-Subject: Re: [PATCH 1/1] Windows: force-recompile git.res for differing
- architectures
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.67.git.gitgitgadget@gmail.com>
- <87794514ef3a83f95d81f89287b81aeed5c92296.1541516148.git.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <c4e3790e-4c41-0d15-38d9-79fa288fb9b3@kdbg.org>
-Date:   Tue, 6 Nov 2018 22:44:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1730421AbeKGHbS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 02:31:18 -0500
+Received: from forward106p.mail.yandex.net ([77.88.28.109]:35448 "EHLO
+        forward106p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725951AbeKGHbS (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Nov 2018 02:31:18 -0500
+X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Nov 2018 02:31:16 EST
+Received: from mxback14g.mail.yandex.net (mxback14g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:93])
+        by forward106p.mail.yandex.net (Yandex) with ESMTP id 123002D866E5;
+        Wed,  7 Nov 2018 00:56:40 +0300 (MSK)
+Received: from smtp1j.mail.yandex.net (smtp1j.mail.yandex.net [2a02:6b8:0:801::ab])
+        by mxback14g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id YrDHIxkyB3-udK0UcdG;
+        Wed, 07 Nov 2018 00:56:40 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+        t=1541541400; bh=lBNNFB4cBGJsGOQiKWmcneA6xoqoOd6xgyUT7kSK6wY=;
+        h=Subject:To:Cc:References:From:Message-ID:Date:In-Reply-To;
+        b=q8r5x5dvG6h5BM/axxa7CIscX+nCCwCJwuNH+SytauWdMuQlYkPsfoVf3Oetg/UGR
+         GhYCpVqt41Hntz65d9wrrwTTEtxGWUzvdSoWrN95HMSVvG+gaUWnfKL3roQTzDxIym
+         fwDwwpMOEhvEIo6Ns6zs7zgilrTXL8D0+gt0Yw0c=
+Received: by smtp1j.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id KQZ0gZYEOZ-udE0Oh7X;
+        Wed, 07 Nov 2018 00:56:39 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+        t=1541541399; bh=lBNNFB4cBGJsGOQiKWmcneA6xoqoOd6xgyUT7kSK6wY=;
+        h=Subject:To:Cc:References:From:Message-ID:Date:In-Reply-To;
+        b=tKGdPDmd+l3+JQDky0CdkPujYLE1iZzIOuqOI/qrpYtmJLvRNrOAFyAXheZQgk5IX
+         5eOdrBaJ1D7dHHA/epc8OvLzcoeRYux4+7C2TsBSn6PIMS4sxavLwVXTKWG9izn+73
+         gRN38RqOMWUHsmZUZtj0+9g+y1wUFkCfWD3Qt8x8=
+Authentication-Results: smtp1j.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
+Subject: Re: [PATCH] gitk: don't highlight submodule diff lines outside
+ submodule diffs
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Paul Mackerras <paulus@ozlabs.org>
+References: <20181106195417.5456-1-dpb@corrigendum.ru>
+ <CAGZ79kZKN8U5+F+BAhQMkLuJVupgAvUgCaMt5-e_FDmY1RUY5g@mail.gmail.com>
+From:   =?UTF-8?B?0KDQvtC80LDQvSDQlNC+0L3Rh9C10L3QutC+?= 
+        <dpb@corrigendum.ru>
+Message-ID: <fc89fa11-4809-9cb7-93d9-5e9d29c7b82b@corrigendum.ru>
+Date:   Wed, 7 Nov 2018 00:56:40 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <87794514ef3a83f95d81f89287b81aeed5c92296.1541516148.git.gitgitgadget@gmail.com>
+In-Reply-To: <CAGZ79kZKN8U5+F+BAhQMkLuJVupgAvUgCaMt5-e_FDmY1RUY5g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 06.11.18 um 15:55 schrieb Johannes Schindelin via GitGitGadget:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+06.11.2018 23:06, Stefan Beller пишет:
+> On Tue, Nov 6, 2018 at 12:03 PM Роман Донченко <dpb@corrigendum.ru> wrote:
+>>
+>> A line that starts with "  <" or "  >" is not necessarily a submodule
+>> diff line. It might just be a context line in a normal diff, representing
+>> a line starting with " <" or " >" respectively.
+>>
+>> Use the currdiffsubmod variable to track whether we are currently
+>> inside a submodule diff and only highlight these lines if we are.
 > 
-> When git.rc is compiled into git.res, the result is actually dependent
-> on the architecture. That is, you cannot simply link a 32-bit git.res
-> into a 64-bit git.exe.
-> 
-> Therefore, to allow 32-bit and 64-bit builds in the same directory, we
-> let git.res depend on GIT-PREFIX so that it gets recompiled when
-> compiling for a different architecture (this works because the exec path
-> changes based on the architecture: /mingw32/libexec/git-core for 32-bit
-> and /mingw64/libexec/git-core for 64-bit).
+> This explanation makes sense, some prior art is at
+> https://public-inbox.org/git/20181021163401.4458-1-dummy@example.com/
+> which was not taken AFAICT.
 
-On Linux, when I recompile for a different architecture, CFLAGS would 
-change, so I would have thought that GIT-CFLAGS were the natural choice 
-for a dependency. Don't they change in this case on Windows, too?
+Didn't see that patch. That said, I think it's incorrect, since it never 
+resets currdiffsubmod back to the empty string, so if a normal diff 
+follows a submodule diff, the same issue will occur.
+
+(The `set $currdiffsubmod ""` lines that are already there are 
+effectively useless because they set the variable whose name is the 
+contents of currdiffsubmod, rather than currdiffsubmod itself. I assume
+it was a typo.)
+
+-Roman
 
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   Makefile | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Thanks,
+> Stefan
 > 
-> diff --git a/Makefile b/Makefile
-> index bbfbb4292d..8375736c32 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2110,7 +2110,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
->   	$(QUIET_GEN)$(cmd_munge_script) && \
->   	mv $@+ $@
->   
-> -git.res: git.rc GIT-VERSION-FILE
-> +git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
->   	$(QUIET_RC)$(RC) \
->   	  $(join -DMAJOR= -DMINOR= -DMICRO= -DPATCHLEVEL=, $(wordlist 1, 4, \
->   	    $(shell echo $(GIT_VERSION) 0 0 0 0 | tr '.a-zA-Z-' ' '))) \
-> 
-
+>>
+>> Signed-off-by: Роман Донченко <dpb@corrigendum.ru>
+>> ---
+>>   gitk | 8 ++++----
+>>   1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/gitk b/gitk
+>> index a14d7a1..6bb6dc6 100755
+>> --- a/gitk
+>> +++ b/gitk
+>> @@ -8109,6 +8109,8 @@ proc parseblobdiffline {ids line} {
+>>          }
+>>          # start of a new file
+>>          set diffinhdr 1
+>> +       set currdiffsubmod ""
+>> +
+>>          $ctext insert end "\n"
+>>          set curdiffstart [$ctext index "end - 1c"]
+>>          lappend ctext_file_names ""
+>> @@ -8191,12 +8193,10 @@ proc parseblobdiffline {ids line} {
+>>          } else {
+>>              $ctext insert end "$line\n" filesep
+>>          }
+>> -    } elseif {![string compare -length 3 "  >" $line]} {
+>> -       set $currdiffsubmod ""
+>> +    } elseif {$currdiffsubmod ne "" && ![string compare -length 3 "  >" $line]} {
+>>          set line [encoding convertfrom $diffencoding $line]
+>>          $ctext insert end "$line\n" dresult
+>> -    } elseif {![string compare -length 3 "  <" $line]} {
+>> -       set $currdiffsubmod ""
+>> +    } elseif {$currdiffsubmod ne "" && ![string compare -length 3 "  <" $line]} {
+>>          set line [encoding convertfrom $diffencoding $line]
+>>          $ctext insert end "$line\n" d0
+>>       } elseif {$diffinhdr} {
+>> --
+>> 2.19.1.windows.1
+>>
