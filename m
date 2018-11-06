@@ -2,118 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85D5D1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 20:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C39AB1F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 20:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbeKGF1v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 00:27:51 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:36919 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725936AbeKGF1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 00:27:51 -0500
-Received: by mail-qt1-f193.google.com with SMTP id p35so4114687qtc.4
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 12:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=VUNyWZqkknSekFAIs0GBmsz+oHkrn3VAPu3rpS86fHg=;
-        b=CL+sH25dS9GeZoOnZ8zfZe0iazdLkTCdWaUs77w8/Dp0mpqwcSI7W30BPXFIfENsk7
-         sJ/vnmnVDyBjLFwI2NnsETtjqMC23aIDi4mH3uDsGSfwM9fokY5JOYELmJnwGLfsR/jN
-         SUhMYsrIUuahr6vL5lRGrUUCIZmVw3RGgED77CX5DmdrodI7DvzJGCNBgl5u6o8LCh9L
-         wvuRfFB/JrJSrhLP+tKwPQDoqC34r8dmp0OD+3npWmVQVQDLcpgT4DCZYMIlq85rhv9C
-         p2Ts1Pgm820H1+6rSbujED5TCeIZTU5bVtD0JMyyLLc+UpkfBETbLCJCO0cZKg55Pewr
-         CikQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=VUNyWZqkknSekFAIs0GBmsz+oHkrn3VAPu3rpS86fHg=;
-        b=TgLN0i5Am2M8OE14rWg8NcT9csgR7UvdLkacnKMQDkN97tjgcyWImUCRauUhd+zC7b
-         /j3F9uqTQjbMvBqODk6D5URn3jeX/iUT22iobd9eulFWQTdaBot2/FVmBPT8IbB3ae3K
-         ZXUv5wZA2Cnum7jpMDy4MocJ3b9nzIWnsxSy9Tve13ghWlr4rVCSr5MT3Y5KcQanfIF7
-         YbLyqrupiwFUnjSUJtwSwBeuL/FzEP6Q9fnfJrKexS3udDRVNoKQNnd3amj4xA5gar3C
-         TfKlbLVTnPvQnxIeQIZcHUplkX+3pechQ/0H8wPqEqxeKOvW230MjN3iF0GdYAaOhfQ8
-         NS4g==
-X-Gm-Message-State: AGRZ1gIknUcBjKgt+bV13DrLzipZ/7C/DQp8/mw79LOSdwswaIVr5rxS
-        QsWGN44x1w742ZR4r1KLH60=
-X-Google-Smtp-Source: AJdET5fufzVGD3JMepb+blMP9ug5PfiJi4nD1UvvTHHf8Cfd4vAOHNo87EzJH6L0Q6oxrPl2GNUVbA==
-X-Received: by 2002:a0c:aa56:: with SMTP id e22mr10952977qvb.158.1541534458142;
-        Tue, 06 Nov 2018 12:00:58 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:9183:6eb:3bc0:1bbd? ([2001:4898:8010:0:7ab9:6eb:3bc0:1bbd])
-        by smtp.gmail.com with ESMTPSA id p3-v6sm28768914qtc.81.2018.11.06.12.00.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Nov 2018 12:00:57 -0800 (PST)
-Subject: Re: [PATCH 0/1] send-pack: set core.warnAmbiguousRefs=false
-To:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.68.git.gitgitgadget@gmail.com>
- <20181106194442.GB8902@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1e92f560-a5c0-2d58-5a4c-8530598d1025@gmail.com>
-Date:   Tue, 6 Nov 2018 15:00:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        id S1726176AbeKGFaF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 00:30:05 -0500
+Received: from forward105o.mail.yandex.net ([37.140.190.183]:38004 "EHLO
+        forward105o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725936AbeKGFaF (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Nov 2018 00:30:05 -0500
+X-Greylist: delayed 484 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Nov 2018 00:30:03 EST
+Received: from mxback11j.mail.yandex.net (mxback11j.mail.yandex.net [IPv6:2a02:6b8:0:1619::84])
+        by forward105o.mail.yandex.net (Yandex) with ESMTP id 2BB874447DC5;
+        Tue,  6 Nov 2018 22:55:06 +0300 (MSK)
+Received: from smtp4j.mail.yandex.net (smtp4j.mail.yandex.net [2a02:6b8:0:1619::15:6])
+        by mxback11j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id fe2TosY9WM-t5hCjEOQ;
+        Tue, 06 Nov 2018 22:55:06 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+        t=1541534106; bh=cl0Si/0vX8t8P0rOchaUiLDrp3VBhNrx1OQBM0fki7w=;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        b=RByQUnnAY4XVCplK7g673C4neGLJW3fFhTY5TMKQVBMq3usnwqfEo+V597kjoK3+9
+         yT7abAMSVwnXQ8sKqujm4NpC57jJkNWD3qnKmgfA0iJLCrQg3UekTQna1a8UdTAdFI
+         FmcdnouMCf3nLQc2tfEPQtrnFxLKZ5zj2/smZvvU=
+Received: by smtp4j.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id RpBnGmS4CZ-t4Ie20pR;
+        Tue, 06 Nov 2018 22:55:04 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=corrigendum.ru; s=mail;
+        t=1541534104; bh=cl0Si/0vX8t8P0rOchaUiLDrp3VBhNrx1OQBM0fki7w=;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        b=Cn8n8jWBZOQbUtMrSybh9zBONXYO1wShc/xR22Z/SB9ko9YTNhvFSOK4Xb9EON/EQ
+         M2pk7cvWk0Iuo+5MeN5bg3IOMOlcHxudH2FtBTA7YvOw3TzVKhqZYOobojAZro7o9B
+         Mn2czY2l3pmFak8/sL36krwHHqLgeGpIxrpNeQQY=
+Authentication-Results: smtp4j.mail.yandex.net; dkim=pass header.i=@corrigendum.ru
+From:   =?UTF-8?q?=D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=20=D0=94=D0=BE=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE?= 
+        <dpb@corrigendum.ru>
+To:     git@vger.kernel.org
+Cc:     paulus@ozlabs.org,
+        =?UTF-8?q?=D0=A0=D0=BE=D0=BC=D0=B0=D0=BD=20=D0=94=D0=BE=D0=BD=D1=87?=
+         =?UTF-8?q?=D0=B5=D0=BD=D0=BA=D0=BE?= <dpb@corrigendum.ru>
+Subject: [PATCH] gitk: don't highlight submodule diff lines outside submodule diffs
+Date:   Tue,  6 Nov 2018 22:54:17 +0300
+Message-Id: <20181106195417.5456-1-dpb@corrigendum.ru>
+X-Mailer: git-send-email 2.19.1.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20181106194442.GB8902@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/6/2018 2:44 PM, Jeff King wrote:
-> On Tue, Nov 06, 2018 at 11:13:47AM -0800, Derrick Stolee via GitGitGadget wrote:
->
->> I've been looking into the performance of git push for very large repos. Our
->> users are reporting that 60-80% of git push time is spent during the
->> "Enumerating objects" phase of git pack-objects.
->>
->> A git push process runs several processes during its run, but one includes
->> git send-pack which calls git pack-objects and passes the known have/wants
->> into stdin using object ids. However, the default setting for
->> core.warnAmbiguousRefs requires git pack-objects to check for ref names
->> matching the ref_rev_parse_rules array in refs.c. This means that every
->> object is triggering at least six "file exists?" queries.
->>
->> When there are a lot of refs, this can add up significantly! My PerfView
->> trace for a simple push measured 3 seconds spent checking these paths.
-> Some of this might be useful in the commit message. :)
->
->> The fix for this is simple: set core.warnAmbiguousRefs to false for this
->> specific call of git pack-objects coming from git send-pack. We don't want
->> to default it to false for all calls to git pack-objects, as it is valid to
->> pass ref names instead of object ids. This helps regain these seconds during
->> a push.
-> I don't think you actually care about the ambiguity check between refs
-> here; you just care about avoiding the ref check when we've seen (and
-> are mostly expecting) a 40-hex sha1. We have a more specific flag for
-> that: warn_on_object_refname_ambiguity.
->
-> And I think it would be OK to enable that all the time for pack-objects,
-> which is plumbing that does typically expect object names. See prior art
-> in 25fba78d36 (cat-file: disable object/refname ambiguity check for
-> batch mode, 2013-07-12) and 4c30d50402 (rev-list: disable object/refname
-> ambiguity check with --stdin, 2014-03-12).
-Thanks for these pointers. Helps to know there is precedent for shutting 
-down the
-behavior without relying on "-c" flags.
+A line that starts with "  <" or "  >" is not necessarily a submodule
+diff line. It might just be a context line in a normal diff, representing
+a line starting with " <" or " >" respectively.
 
-> Whenever I see a change like this to the pack-objects invocation for
-> send-pack, it makes me wonder if upload-pack would want the same thing.
->
-> It's a moot point if we just set the flag directly in inside
-> pack-objects, though.
-I'll send a v2 that does just that.
+Use the currdiffsubmod variable to track whether we are currently
+inside a submodule diff and only highlight these lines if we are.
 
-Thanks,
--Stolee
+Signed-off-by: Роман Донченко <dpb@corrigendum.ru>
+---
+ gitk | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gitk b/gitk
+index a14d7a1..6bb6dc6 100755
+--- a/gitk
++++ b/gitk
+@@ -8109,6 +8109,8 @@ proc parseblobdiffline {ids line} {
+ 	}
+ 	# start of a new file
+ 	set diffinhdr 1
++	set currdiffsubmod ""
++
+ 	$ctext insert end "\n"
+ 	set curdiffstart [$ctext index "end - 1c"]
+ 	lappend ctext_file_names ""
+@@ -8191,12 +8193,10 @@ proc parseblobdiffline {ids line} {
+ 	} else {
+ 	    $ctext insert end "$line\n" filesep
+ 	}
+-    } elseif {![string compare -length 3 "  >" $line]} {
+-	set $currdiffsubmod ""
++    } elseif {$currdiffsubmod ne "" && ![string compare -length 3 "  >" $line]} {
+ 	set line [encoding convertfrom $diffencoding $line]
+ 	$ctext insert end "$line\n" dresult
+-    } elseif {![string compare -length 3 "  <" $line]} {
+-	set $currdiffsubmod ""
++    } elseif {$currdiffsubmod ne "" && ![string compare -length 3 "  <" $line]} {
+ 	set line [encoding convertfrom $diffencoding $line]
+ 	$ctext insert end "$line\n" d0
+     } elseif {$diffinhdr} {
+-- 
+2.19.1.windows.1
+
