@@ -2,125 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8335F1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 02:21:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BC851F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 02:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727481AbeKFLog (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 06:44:36 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46523 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbeKFLog (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 06:44:36 -0500
-Received: by mail-wr1-f67.google.com with SMTP id 74-v6so11677005wrb.13
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 18:21:47 -0800 (PST)
+        id S1727526AbeKFLqr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 06:46:47 -0500
+Received: from mail-io1-f47.google.com ([209.85.166.47]:34298 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726389AbeKFLqr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 06:46:47 -0500
+Received: by mail-io1-f47.google.com with SMTP id d80-v6so8163127iof.1
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 18:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0q3X795lcAfkGjmlhlL4CzIrF9EgZ+SH2zmqo8eqqjA=;
-        b=kUzBFpO6NH2spoiOay0dvcxPfpHooIejNSf0D1GPM5cIvHRdXIvZyzN6O4a9q3yju/
-         MTCt6b2T0rzodgkgTQjbcNMQMoTK/B2B5j0f6MssaZvfjc9SW3xU0ib11aU73stLZWky
-         7J+PGUHtAJugW8oF8z29LsEM0SHg5dyowwL5nEOHDYz0bAUOo6jJjs98gBeO1q+g81zl
-         DR53psa+Su5qxCmBe0hI59/af6EVwiW+gj4wZRdtuqwXpSrzOWrNCF1akYkqJHfZFfOS
-         Iu3K/HPKDsZNTvt6jq3D5yDJ72bWcC0hmU8waE8/sGV/Uo5b90zj4aEsuxFbHxBHA0V3
-         qsAg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=97VPbps/IQu0mcU63NfpRQV7fgiUiZmJNVT8A5v7YcA=;
+        b=hGbGSLDF03Qz6d84zmb3wYneuxpOAyWK9tpBmLuTTv074po6qbtIL4RnHm7gaem9ui
+         h5wh4N0bIS2NOmOHK0+l7/BBlCG2VlNbaRhJ1FgZC4YvHHe5P4JXMAF1Nl7KpVZNYT8p
+         ykA898/vtTGbjP4VojNAJQaJziVwJt4GLgy1f3MMzCV2dG8LQBoCtkEMv7o2qdKvFURI
+         z6udD9ysTiVgpG5MZxH5DCLbLM79w9JvZoYtyORqYZRVnWn7v9rS7zFPdlO4k/CuMBNs
+         fCOkypyRpGJeyBvTRNF2UJlAbk60HmPLjwLA980z71WAkL5p7og/NAQtsUL0hzfSx8H/
+         uknQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0q3X795lcAfkGjmlhlL4CzIrF9EgZ+SH2zmqo8eqqjA=;
-        b=NddC0Bkr8mixk1EFILPSJMEcT1ZPxcy/VvEozZxk1rPnGRjRqvf/xq63mP0Z2NPttt
-         QrTV/QKolmUjQ9UxBh3LOHgqu3J11nBNERKdAhmgXcTe8v0LDoyOyS6VJxxrrcjBp8yh
-         nf5lB9aWBxB29UCPMQXdBvrkWUa58M4V4Po3wT6ifqZn8JCWQVh4fXYeFGi/5MIptuoe
-         oLqaACNb1tFUCssUnjUJRwliR+Utg3Fgf1vCjokIHqYxKNdiSSQeqoeXdW/uEVSE3TZ/
-         GbCzSU6uAF2WjOP1WuScIt+9QtjUEUPVjwPJU5tOVjpVRgerXF1l23rGNSrU3CCsOPD6
-         VtdA==
-X-Gm-Message-State: AGRZ1gIjovKeGXQasm/sxPnWeC2KexqWMmEF/fNcVHl9IFNPpm07Asu+
-        f5+wVWJBUlqvbI0ekMkxw5U=
-X-Google-Smtp-Source: AJdET5canXMc5sKyqTwaXdlCbV9zDrevBBWCUT0wp8sGIq1UmriMSCLw5njrPRM+OJvaRR0C8Ws/XA==
-X-Received: by 2002:a5d:4d4e:: with SMTP id a14-v6mr2068348wru.316.1541470906014;
-        Mon, 05 Nov 2018 18:21:46 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y2-v6sm11307229wrh.53.2018.11.05.18.21.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Nov 2018 18:21:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 09/16] remote.c: turn some error() or die() to BUG()
-References: <20181028065157.26727-1-pclouds@gmail.com>
-        <20181105192059.20303-1-pclouds@gmail.com>
-        <20181105192059.20303-10-pclouds@gmail.com>
-Date:   Tue, 06 Nov 2018 11:21:44 +0900
-In-Reply-To: <20181105192059.20303-10-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 5 Nov 2018 20:20:52 +0100")
-Message-ID: <xmqqtvkveyiv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=97VPbps/IQu0mcU63NfpRQV7fgiUiZmJNVT8A5v7YcA=;
+        b=OfzSr7NiIp++eqtDkDL01UrmigDZiejreT6xLSrf+RRxzoS8KdgUZjufsgClBUkP8u
+         EAXw0IaEnitVpYJZc5/OdwE/j2QTQLraVpp2XebukonUKJAr02dGb23+31KRwMseavkT
+         ZMZtIjQi6h1ch26pByKOLt7nSTrSVdXpAKvXQ5G5HeDBbtwawT0qZkybRvW18zywLZy6
+         /p6KQGWaSu42kITL92wTnT5n57ouU1KgSK0eAdvW5XiuHqa/JOtmB0yKEKU6aWQS4o5l
+         +TZ2gJULMNFsMJMLqOAZ6Rgh6RgLXfsNdwlt8MgCCakpzddEgQp0DYl5h4eQEv91RJz+
+         eyCw==
+X-Gm-Message-State: AGRZ1gI26dRuR6g2s7gCr6MPehxQfoJL1Z4D3YL/OXR3QxeakrFuvATK
+        EHM/Od9huHB0bKgpph5wa6vePniQVOHEkCl052c=
+X-Google-Smtp-Source: AJdET5e5LAAYjNvTJCgr+GHaT9CwsuSr9VYDQAA/ydoXOD4I3+wrFnuxVJ1Vp5lsukqidx7hCgrvSXN87CIy0dLwflM=
+X-Received: by 2002:a5e:9501:: with SMTP id r1-v6mr18828639ioj.224.1541471037792;
+ Mon, 05 Nov 2018 18:23:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
+ <xmqqlg6covi6.fsf@gitster-ct.c.googlers.com> <CACsJy8DFUeEddSa2z4VTSqhaUBJ4+SUf8xvjh6iWY2Phhh96iQ@mail.gmail.com>
+In-Reply-To: <CACsJy8DFUeEddSa2z4VTSqhaUBJ4+SUf8xvjh6iWY2Phhh96iQ@mail.gmail.com>
+From:   Farhan Khan <khanzf@gmail.com>
+Date:   Mon, 5 Nov 2018 21:23:45 -0500
+Message-ID: <CAFd4kYDcX2BOYvMg1X9zO68EfYYE6Zke_-9CGY-Yi01jCc3EPA@mail.gmail.com>
+Subject: Re: Understanding pack format
+To:     pclouds@gmail.com
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-
-> The first error, "internal error", is clearly a BUG(). The second two
-> are meant to catch calls with invalid parameters and should never
-> happen outside the test suite.
-
-Sounds as if it would happen inside test suites.
-
-I guess by "inside the test suite" you mean a test that links broken
-callers to this code as if it is a piece of library function, but
-"should never happen, even with invalid or malformed end-user
-request" would convey the point better, as the normal part of
-testing that is done by driing "git we just built from the command
-line should not hit these.
-
-The changes all look sensible.  Thanks.
-
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  remote.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+On Fri, Nov 2, 2018 at 12:00 PM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> diff --git a/remote.c b/remote.c
-> index 81f4f01b00..257630ff21 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -620,7 +620,7 @@ static void handle_duplicate(struct ref *ref1, struct ref *ref2)
->  			 * FETCH_HEAD_IGNORE entries always appear at
->  			 * the end of the list.
->  			 */
-> -			die(_("Internal error"));
-> +			BUG("Internal error");
->  		}
->  	}
->  	free(ref2->peer_ref);
-> @@ -707,7 +707,7 @@ static void query_refspecs_multiple(struct refspec *rs,
->  	int find_src = !query->src;
->  
->  	if (find_src && !query->dst)
-> -		error("query_refspecs_multiple: need either src or dst");
-> +		BUG("query_refspecs_multiple: need either src or dst");
->  
->  	for (i = 0; i < rs->nr; i++) {
->  		struct refspec_item *refspec = &rs->items[i];
-> @@ -735,7 +735,7 @@ int query_refspecs(struct refspec *rs, struct refspec_item *query)
->  	char **result = find_src ? &query->src : &query->dst;
->  
->  	if (find_src && !query->dst)
-> -		return error("query_refspecs: need either src or dst");
-> +		BUG("query_refspecs: need either src or dst");
->  
->  	for (i = 0; i < rs->nr; i++) {
->  		struct refspec_item *refspec = &rs->items[i];
+> On Fri, Nov 2, 2018 at 7:19 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Farhan Khan <khanzf@gmail.com> writes:
+> >
+> > > ...Where is this in the git code? That might
+> > > serve as a good guide.
+> >
+> > There are two major codepaths.  One is used at runtime, giving us
+> > random access into the packfile with the help with .idx file.  The
+> > other is used when receiving a new packstream to create an .idx
+> > file.
+>
+> The third path is copying/reusing objects in
+> builtin/pack-objects.c::write_reuse_object(). Since it's mostly
+> encoding the header of new objects in pack, it could also be a good
+> starting point. Then you can move to write_no_reuse_object() and get
+> how the data is encoded, deltified or not (yeah not parsed, but I
+> think it's more or less the same thing conceptually).
+> --
+> Duy
+
+Hi all,
+
+To follow-up from the other day, I have been reading the code that
+retrieves the pack entry for the past 3 days now without much success.
+But there are quite a few abstractions and I get lost half-way down
+the line.
+
+I am trying to identify where the content from a pack comes from. I
+traced it back to sha1-file.c:read_object(), which will return the
+'content'. I want to know where the 'content' comes from, which seems
+to come from sha1-file.c:oid_object_info_extended. This goes into
+packfile.c:find_pack_entry(), but from here I get lost. I do not
+understand what is happening.
+
+How does it retrieve the pack content? I am lost here. Please assist.
+This is in the technical git documentation, but it was not clear.
+
+Thank you,
+
+--
+Farhan Khan
+PGP Fingerprint: B28D 2726 E2BC A97E 3854 5ABE 9A9F 00BC D525 16EE
