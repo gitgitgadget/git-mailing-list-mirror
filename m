@@ -2,103 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F20A81F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 14:02:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D3921F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 14:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388550AbeKFX2J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 18:28:09 -0500
-Received: from avasout03.plus.net ([84.93.230.244]:35895 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388521AbeKFX2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 18:28:08 -0500
-Received: from [10.0.2.15] ([80.189.70.193])
-        by smtp with ESMTPA
-        id K1wJgxNYSd3rWK1wKg03BV; Tue, 06 Nov 2018 14:02:45 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Uv9Nyd4B c=1 sm=1 tr=0
- a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=PxuYgiTRUxYzQQWbh14A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 12/16] parse-options: replace opterror() with optname()
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20181028065157.26727-1-pclouds@gmail.com>
- <20181105192059.20303-1-pclouds@gmail.com>
- <20181105192059.20303-13-pclouds@gmail.com>
- <xmqqpnvjexzf.fsf@gitster-ct.c.googlers.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d29c4fcc-0591-fc45-5a5d-65d2874d98a7@ramsayjones.plus.com>
-Date:   Tue, 6 Nov 2018 14:02:42 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqpnvjexzf.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+        id S2388851AbeKGASw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 19:18:52 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46683 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388428AbeKGASw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 19:18:52 -0500
+Received: by mail-pf1-f194.google.com with SMTP id r64-v6so6199849pfb.13
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 06:53:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=BzUqSNVOJFaThAa1U3cTJhss3l1r8vRkGHQcLHaB8Os=;
+        b=ehn8kxfVnCKWCX0mo9ISC84FA8/+5FIUsITWTdJlC79Ud/tV6etdRHGXvzsQ6a00Pf
+         I/5ZAXqgXQH0qoecY5EIuHC+DHw6udRO16VpGsn9N+EISgW/St7lrcPIfHvENjaI1DnJ
+         KzZCIWcYiGgadcIxsSul8fWkKkwhK2srw7B7Pxooqu6aW8o6t3s/xEFg3Qgfc7vzdhwV
+         Sw7sbj3wr17hFo3xOwlVJpWsPPqdMtQqvSYLYTvc/cT/4eSNEPr+mLCuXTHJrUVRkLBQ
+         6t/mOErlQ4GlLUGRe3a19S8ypeq9JG0qgir1EO1jbbeowM+toahKX/s7zxH6LwTPUaCZ
+         e39A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=BzUqSNVOJFaThAa1U3cTJhss3l1r8vRkGHQcLHaB8Os=;
+        b=lH0m2ZNRRGS6czXhyWVURV3ol9SrlBpR+Ny3TklPk/PocyIMptc3A25FufcvvIqXp8
+         PVxU5bsx8AEOGei8YBBe8myx9hrM8I6UZq5PJzP+OkNxFhhrTGOLzN1gjrjl4GZ4Y/p+
+         oojN93Jc0S/ItqSZ0lRVO8Chz1zfQEAMriQN++ZX7m3VIUepaSCebr++p4oyH2Trp0l6
+         h+kYHabHntpobk3U5glcF/C7Kh+QY+VmsHDnE/HgUiCUU7nmhhx+Z03FUXoT6OVn/yOH
+         e2r0PVKESeds/pmsXeEMKct0fUoQGIO8EsOFtTv/t/pKSQIf35NsN8RAutiZ54jhjIyS
+         nZXg==
+X-Gm-Message-State: AGRZ1gJilHL0i3H14m/rGkUJq+yKUu2f4dW1rBS/SGFXVrssBQoUHn+e
+        AR4+LfrhXPF/oSVY1LidGTh/WO7E
+X-Google-Smtp-Source: AJdET5evHodOREYwIQ4L1SyO5peo96SRp2vGSfwG3LsAA4zjv1LsmCorrMWeh8J2dXul9rK/xVzIew==
+X-Received: by 2002:a62:30c7:: with SMTP id w190-v6mr25980610pfw.188.1541515997014;
+        Tue, 06 Nov 2018 06:53:17 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id u9-v6sm23242215pfm.175.2018.11.06.06.53.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Nov 2018 06:53:16 -0800 (PST)
+Date:   Tue, 06 Nov 2018 06:53:16 -0800 (PST)
+X-Google-Original-Date: Tue, 06 Nov 2018 14:53:13 GMT
+Message-Id: <pull.66.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] mingw: handle absolute paths in expand_user_path()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfCoSV3+4AuKwgyXzU9vhdGsH1NlNRKmd3+JDe85yqwBN/RsIPOmI05r+KrVHI/Sy+NPxToI+agHpC+OFiVHMBKIvkFRVk/qjGHf/yInxXqHh2GYnTEIW
- tkyVI40ZH6a72kWUCTCx6HO3CAvHpROfgs1R9mBmiGSVuAss0LmabGCrHH+0Ieu5sxY9GwrdyRMJOQ==
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While this patch has been "in production" in Git for Windows for a good
+while, this patch series is half meant as a request for comments.
+
+The reason is this: something like this (make paths specified e.g. via 
+http.sslCAInfo relative to the runtime prefix) is potentially useful also in
+the non-Windows context, as long as Git was built with the runtime prefix
+feature.
+
+The main problem with non-Windows platforms is that paths starting with a
+single slash are unambiguously absolute, whereas we can say with certainty
+that they are not absolute Windows paths.
+
+So maybe someone on this list has a clever idea how we could specify paths
+(unambiguously, even on non-Windows platforms) that Git should interpret as
+relative to the runtime prefix?
+
+Johannes Schindelin (1):
+  mingw: handle absolute paths in expand_user_path()
+
+ path.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 
-On 06/11/2018 02:33, Junio C Hamano wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-> 
->> There are a few issues with opterror()
->>
->> - it tries to assemble an English sentence from pieces. This is not
->>   great for translators because we give them pieces instead of a full
->>   sentence.
->>
->> - It's a wrapper around error() and needs some hack to let the
->>   compiler know it always returns -1.
->>
->> - Since it takes a string instead of printf format, one call site has
->>   to assemble the string manually before passing to it.
->>
->> Kill it and produce the option name with optname(). The user will use
->> error() directly. This solves the second and third problems.
-> 
-> The proposed log message is not very friendly to reviewers, as there
-> is no hint what optname() does nor where it came from; it turns out
-> that this patch introduces it.
-> 
->     Introduce optname() that does the early half of original
->     opterror() to come up with the name of the option reported back
->     to the user, and use it to kill opterror().  The callers of
->     opterror() now directly call error() using the string returned
->     by opterror() instead.
-> 
-> or something like that perhaps.
-> 
-> Theoretically not very friendly to topics in flight, but I do not
-> expect there would be any right now that wants to add new callers of
-> opterror().
-> 
-> I do agree with the reasoning behind this change.  Thanks for
-> working on it.
-> 
-
-Also, this patch does not replace opterror() calls outside of
-the 'parse-options.c' file with optname(). This tickles my
-static-check.pl script, since optname() is an external function
-which is only called from 'parse-options.c'.
-
-So, at present, optname() could be marked as a local 'static'
-symbol. However, I could also imagine it being used by new callers
-outside of 'parse-options.c' in the future. (maybe) Your call. ;-)
-
-ATB,
-Ramsay Jones
-
+base-commit: cd69ec8cde54af1817630331fc441f493866f0d4
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-66%2Fdscho%2Fmingw-expand-absolute-user-path-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-66/dscho/mingw-expand-absolute-user-path-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/66
+-- 
+gitgitgadget
