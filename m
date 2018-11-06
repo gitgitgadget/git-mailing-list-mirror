@@ -2,138 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB1551F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 08:57:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9448D1F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 09:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729887AbeKFSVu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 13:21:50 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:38759 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729867AbeKFSVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 13:21:50 -0500
-Received: by mail-ed1-f52.google.com with SMTP id a2-v6so5230409edi.5
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 00:57:38 -0800 (PST)
+        id S1729851AbeKFScJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 13:32:09 -0500
+Received: from mail-oi1-f173.google.com ([209.85.167.173]:37639 "EHLO
+        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729160AbeKFScJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 13:32:09 -0500
+Received: by mail-oi1-f173.google.com with SMTP id w66-v6so10085248oiw.4
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 01:07:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=xLBV38WzFbddvx6vPjjbuS+XfRs8wyE1KfG3NtM844E=;
-        b=EB3zkUQ/MQXolSBzbt2dE70p+I91NrFi0bqINa3rnf1bgmFm3Pk/Rrv1ppFK73cbwU
-         s8c5O2UvExoj9F0P3HKiXIMh3lFaMh90ekWL1cXmRs3NcqaUpUmzQd2lS8NhYyW3NSXa
-         m/LRUSDV6Y+c2HwehM8xu/dJX2zbUL7pFZAKgnMO+ZjcxoEt9KRJvD9gXCIZjBWgtxwc
-         NSLbnyrjzYi29XUSMSAD2ZyRN79k/xfNkD6g2vY7NUUxRgEiH5i3Xky/MXTqHZU1Vibh
-         GKx7Hv7TMT4WvJLoGNA/R4JA6Ue95pZlw5t+giw3jCcWqWEiGsdR2NxKawACJ4bwhQWL
-         OHaA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Txdyd2FwjcZYv+NfaewXN4uSND++sec5txmkz1p2VBw=;
+        b=EkUPVcPxGYvf0iEQfqgxxJxMogpsY/I+/PBjU6A0ZTz7L0L0V6uAswVAOnesZE0U5J
+         YIg6EwRKudXvVUJd0c2IYxkcDaA4K/TeILSzgLIvosuhRYj+6xrQ2oTX2fCOS//hg6MZ
+         r2bK07m3YBIyV0Y+JMbh+WGM82YKNjDU5k1qO5hFxCxRr9s64GY0rx2Z9Z0CQTm7E8+g
+         VVBsYFv84nYJMN6TPH7myqO6ROf+IF1AlI+nyEjc8GfLmrvIl46DX750Oo6cVny7zVd3
+         fQEyM7RM2hnTxcpvu/hXSb7RXYU+LQ9R47ing62stxIkOCfpDiJ75t9aA3Ih5o4jp3i8
+         93Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=xLBV38WzFbddvx6vPjjbuS+XfRs8wyE1KfG3NtM844E=;
-        b=Y5OnVUIKb4ia0Ddg8RnhCmiSEqCKQKKKdQJmbFuqwlW2eNlW5BpYyeBK1vRgRQg7OE
-         B2qznQoNjAmnke9RPMN9xx0Hw+VLvViaHzF8vderMcJbwMgofNpzApfoviW8L9cHteii
-         1C6vTzr63hCFQ+ZAE1lMrXjH1LzvBo3yB2ecriYfh3jDZw1jc3E2LYb/a4arrZynxE5v
-         pRFO67VQBYTRL9jPcZ3GjgyGUe1T2lD5sBVJNlXnDTpmOa7wqNY58BQPjU3t4v+voYo7
-         lhkQNmMIKX4krZy4e9YSSMqxvslbOSI2SdCsXTGpDWZpsDjN3kNW/11pfI08qgvocUEt
-         AfyQ==
-X-Gm-Message-State: AGRZ1gKzI83gvXMo9rkszqfsSDh4Bks+CymR+hNeR6D8qN3QlNThxuzU
-        BisNR78wHDjQeJirxeCLKaM=
-X-Google-Smtp-Source: AJdET5euN6A4pTrLY1Z/UqXOIIZXfokk3zyQTpo+rh6wskovIEeyl3DUO5Yaai2cmGbPvkq/ZLj2+Q==
-X-Received: by 2002:a50:b68a:: with SMTP id d10-v6mr8429054ede.101.1541494657059;
-        Tue, 06 Nov 2018 00:57:37 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id r8-v6sm10331667edo.19.2018.11.06.00.57.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 00:57:36 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with trailer lines
-References: <20181104072253.12357-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181104072253.12357-1-pclouds@gmail.com>
-Date:   Tue, 06 Nov 2018 09:57:35 +0100
-Message-ID: <87bm727fcw.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Txdyd2FwjcZYv+NfaewXN4uSND++sec5txmkz1p2VBw=;
+        b=EmADqMbfKN1V+M3ZN/B7+EB+AASffkIcdZWIEcXEFHtI7iLFF/AxZnMXQrUAGzZhlb
+         EEYfJtbPOirxwPBA9Hl+LiWZ5JjRPc6M7ePGZHqZg+ifZbvQpCRf+mG5P3F0TUarlXfg
+         ktWsBeAMps/IBzk6cQK9Yld0J0u6bHi08yBGPI85PxL+ZXLBN6EZQtFqiQk222okdIJo
+         SHsuRVzeY9vWbUWt6quUEcvdCv1tNSaeUzDctlpNZXem05HFRwkjb++GPYh/SJJEhW70
+         2pDPWvznuXzTnrK7jSuFuvvjNnB7PUOclaWSpdeTIy29RSu5geLq0XXG6HuVxmeQiLPR
+         bfaA==
+X-Gm-Message-State: AGRZ1gJ6DLuYdWqEnctnKYQcvviTCwNzHcVmyY7ELsNuIDEom/qJ4gbU
+        gkJCZ91PnGl1Ukv69nL0SBmbqTVXlzSPIf6F2WQ6ALyC
+X-Google-Smtp-Source: AJdET5eru1OVjeBdUROnc5221qZqwdYQ3NExjALXZRnSur/koUzG2IHOJQVkgugWrk+FJbgPhtKCQVARkrcaRyCqnPM=
+X-Received: by 2002:aca:c5c6:: with SMTP id v189-v6mr37305oif.113.1541495275122;
+ Tue, 06 Nov 2018 01:07:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   yan ke <yanke131415@gmail.com>
+Date:   Tue, 6 Nov 2018 17:07:42 +0800
+Message-ID: <CAJosSJ4eKJfa4s+3LcP3Q5qatcg3aFjh9H=Q9bETnkROu06+KQ@mail.gmail.com>
+Subject: build error on mac os 10.14.1
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello
 
-On Sun, Nov 04 2018, Nguyễn Thái Ngọc Duy wrote:
+    when build on mac os 10.14.1 with the master branch, I got the
+error as blew, so what is wrong?
 
-> When a commit is reverted (or cherry-picked with -x) we add an English
-> sentence recording that commit id in the new commit message. Make
-> these real trailer lines instead so that they are more friendly to
-> parsers (especially "git interpret-trailers").
->
-> A reverted commit will have a new trailer
->
->     Revert: <commit-id>
->
-> Similarly a cherry-picked commit with -x will have
->
->     Cherry-Pick: <commit-id>
-> [...]
->  I think standardizing how we record commit ids in the commit message
->  is a good idea. Though to be honest this started because of my irk of
->  an English string "cherry picked from..." that cannot be translated.
->  It might as well be a computer language that happens to look like
->  English.
-> [...]
-> @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->  		base_label = msg.label;
->  		next = parent;
->  		next_label = msg.parent_label;
-> -		strbuf_addstr(&msgbuf, "Revert \"");
-> -		strbuf_addstr(&msgbuf, msg.subject);
-> -		strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
-> -		strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
-> -
-> -		if (commit->parents && commit->parents->next) {
-> -			strbuf_addstr(&msgbuf, ", reversing\nchanges made to ");
-> -			strbuf_addstr(&msgbuf, oid_to_hex(&parent->object.oid));
-> -		}
-> -		strbuf_addstr(&msgbuf, ".\n");
-> +		strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
-> +
-> +		strbuf_addf(&msgbuf, "Revert: %s\n",
-> +			    oid_to_hex(&commit->object.oid));
->  	} else {
->  		const char *p;
-
-Others have already commented on the backwards-compatibility /
-switchover concerns, so I won't spend much time on that. Except to say
-that I don't think changing this would be a big deal.
-
-Anyone trying to parse out /This reverts commit/ or other pre-set
-English texts we put into the commit object is already needing to deal
-with users changing the message. E.g. I have a habit of doing partial
-reverts and changing it to "This partially reverts..." etc.
-
-Leaving aside the question of whether the pain of switching is worth it,
-I think it's a worthwihle to consider if we could stop hardcoding one
-specific human language in commit messages, and instead leave something
-machine-readable behind.
-
-We do that with reverts, and also with merge commits, which could be
-given a similar treatment where we change e.g. "Merge branches
-'jc/convert', 'jc/bigfile' and 'jc/replacing' into jc/streaming" (to use
-git.git's 02071b27f1 as an example) to:
-
-    Merge-branch-1: jc/convert
-    Merge-branch-2: jc/bigfile
-    Merge-branch-3: jc/replacing
-    Merge-branch-into: jc/streaming
-
-Then, when rendering the commit in the UI we could parse that out, and
-put a "Merge branches[...]" message at the top, except this time in the
-user's own language.
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+clangclang: error: linker command failed with exit code 1 (use -v to
+see invocation)
+: error: linker command failed with exit code 1 (use -v to see invocation)
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+clangmake: *** [Makefile:2369: git-shell] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Makefile:2369: git-sh-i18n--envsubst] Error 1
+: error: linker command failed with exit code 1 (use -v to see invocation)
+clang: make: *** [Makefile:2369: git-credential-cache--daemon] Error 1
+error: linker command failed with exit code 1 (use -v to see invocation)
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2369: git-credential-cache] Error 1
+make: *** [Makefile:2369: git-credential-store] Error 1
+make: *** [Makefile:2383: git-remote-testsvn] Error 1
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2393: git-remote-http] Error 1
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2369: git-http-backend] Error 1
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2372: git-imap-send] Error 1
+make: *** [Makefile:2379: git-http-push] Error 1
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2376: git-http-fetch] Error 1
+make: *** [Makefile:2369: git-daemon] Error 1
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2369: git-fast-import] Error 1
+ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [Makefile:2046: git] Error 1
