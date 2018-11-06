@@ -2,121 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-10.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIMWL_WL_MED,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BECE41F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 20:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C33B81F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 20:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726604AbeKGFd5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 00:33:57 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44136 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725958AbeKGFd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 00:33:56 -0500
-Received: by mail-ed1-f66.google.com with SMTP id n19-v6so11544244edq.11
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 12:07:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LfPlgZ4aqq9oB09Bw7Vyfirdv+wabUDbHkkWVBH6w0E=;
-        b=Ey57TpX4uLmk/QsbW6La2gzfhx50AacPznlKqbRP9YcUGTCRirUCHteg5mOuijjC7e
-         nmqiP4kUK/DQQOYfBy14xvRS8o2AU1Z+z7vrxz036UV87h0cUsUoMkLSjvBD4dOr/1nV
-         BTacxoy4wEan7Dt/CNU3G9S/rCZQQOquS3BFtfjoYEPvPZvS2nvbbUzKYho/ISQg56bI
-         Wyg0cYSGgXvKkSp5ykIKwjkVXaIhIqkErHH1npmo8eCwHswHheb1yR7f8H6eoup7lCU+
-         d+G1RlmT1rb+gXiiddPXcCAgPWvxuqKMqXGB5pNQ5xAhuH70mZu5x2x0AwJgOE0+7YCc
-         Dc4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LfPlgZ4aqq9oB09Bw7Vyfirdv+wabUDbHkkWVBH6w0E=;
-        b=TeU8S6CynciPqKIlwdk2uSWTIpqYax6en8a7Gyaw8Y2FcruafpE826bw6TCYxVRhPb
-         R/6NG3eAHjeaWVylsrVxxJA8OqqoZw98fdxPgK7o/6sHclIk6GTELnqqhmxUx5nGKoc3
-         pZala10butM4PC3xoSJBHmPQ9xWhjdJY1EPRrPmUnSOeBmK+l3z6GIyWOqgL6XjdB80V
-         MD2NAek/hnZm0cFLo7esywWGCZCFWpdrLmXw/qK2cuz/q/GPfngliUAwsazVk7mT7n8Y
-         d97WFflxI+TQTHJjbJi0MLglrcN+JcRNyxXfZuIxxmQ1bddUMh9oVAl+grcLxyud+Qt5
-         nhQg==
-X-Gm-Message-State: AGRZ1gIYtIu0qgpFdK0pdjUCtRJ/IlzvEUnZENEMVW9lo1QzzuS4VUfe
-        S3DPAaCZeQ7z+ESuGaNu+F4Lhw44nIp1GpQSyG8wzJTuE6ymDw==
-X-Google-Smtp-Source: AJdET5elcNlp2Mh6KXK5OV51MfaAaEZaacqcXFt9aiVbzi/Cs3gn2i6OlwZwgxgI/Fcwnot/lZ7rN9iOSo+HyKvkr8Y=
-X-Received: by 2002:a17:906:b7d1:: with SMTP id fy17-v6mr17944835ejb.70.1541534821084;
- Tue, 06 Nov 2018 12:07:01 -0800 (PST)
+        id S1726960AbeKGFnR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 00:43:17 -0500
+Received: from mout.web.de ([217.72.192.78]:38021 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725936AbeKGFnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 00:43:17 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRCrb-1fxCXt3Wnf-00UXp4; Tue, 06
+ Nov 2018 21:16:18 +0100
+Date:   Tue, 6 Nov 2018 21:16:18 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     =?iso-8859-1?Q?Adri=E1n?= Gimeno Balaguer <adrigibal@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git-rebase is ignoring working-tree-encoding
+Message-ID: <20181106201618.GA30158@tor.lan>
+References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
+ <20181104170729.GA21372@tor.lan>
+ <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com>
+ <20181105181014.GA30777@tor.lan>
 MIME-Version: 1.0
-References: <20181106195417.5456-1-dpb@corrigendum.ru>
-In-Reply-To: <20181106195417.5456-1-dpb@corrigendum.ru>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Nov 2018 12:06:49 -0800
-Message-ID: <CAGZ79kZKN8U5+F+BAhQMkLuJVupgAvUgCaMt5-e_FDmY1RUY5g@mail.gmail.com>
-Subject: Re: [PATCH] gitk: don't highlight submodule diff lines outside
- submodule diffs
-To:     dpb@corrigendum.ru
-Cc:     git <git@vger.kernel.org>, Paul Mackerras <paulus@ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181105181014.GA30777@tor.lan>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:JPIkLPf7zMoSErP2W2JeubtXcSuEIg+NiXegrdvGLQmVV62p2nk
+ HCwfGAc2NCYUC9jUWi9AQiC25MJjBOdYdbYHlVziZ9rQViKPgo3o69sCrdRVwQ+HSj98ozO
+ QJ71Z6imQlDuvNouCHD6ZF3F2E2R33mdYvDQ+MNuuAnJgT1iMDk/7SNi0fN8RC/Ts90Og2O
+ V1BuHs6FAZeshOeEX9uuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JiGm1okMamI=:czyDZ5GidIBcEYa4SIoldQ
+ Q3/DqHUYZtab6+8nnLKJLwL214IrIr+DuwXAwC/JnC5Y5tBIY/TSL/xWnfZpNZe37xOrXXlAr
+ vDAXNcoTxPV+Uby01ffdFUGoj+yDMOhtuHSsMhAXUCrTDDHz/d6Jl36PMW2rMPHL6JdEbrmGI
+ qhMou+siofRzDZb1zHSy7qG94z+9hjmDcwiXsoqZ3cYp4pgnTm1J45GJsTE0aP2F6Mh9vjylE
+ UgvMaQjBZhNkdmj73DQUKp1vMzSYY2edQJj8SrixpkoR+FhgYYp8gAZzlX7wE+qXL5UxbiBmi
+ IsVJaz4HihWCfcIX5JsPxGTtzgxuMFn/V4MNtoPM69q6JOLbRUX+6+pzo9+PYNWgupLIrf5Qc
+ FS8vPU6NGHV76HTxHgaIGRIxQXuuRAe7oB2Pc6T7axWzWJkQpPeGqMCsR1bPfWKWVXVVVPEIN
+ 63C5UOG9t7yRtc13wK/ozxCILQQNjDciKHmq1O5igUG5F1Lip6wr1makpryOEz4OqJ88acafD
+ fxgMO+tIeoC1/Wwh4mEnCjZGXqjd0o4v+feeNVkDE0SnjmzNDs5QnMBrEhqRjNJKw0TDbQUJx
+ 1C8ZkDAMYnUaWrtf2RmV6DG3W3X+nFK0FCbHxLa5YXl1DM6XBfeJxugtJEHKewmkJ1TzAOMrd
+ phE9r7d3fFMxzFpUhzuIfAxZBAWIg8uymnEJYx1jh9oUlL0AN1KS0tX38MyiRNH72+1l63xVS
+ YK8mseGYIbnk3P1ihm8JqqG5C++l7rWZHpIRUr3VmZpJjKpVZNq8VC3DSqYaxOt2j07Wv6rzq
+ VAzxFA+52oJhrCi6rwhHoKdAoPwKw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 6, 2018 at 12:03 PM =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD =D0=94=D0=BE=
-=D0=BD=D1=87=D0=B5=D0=BD=D0=BA=D0=BE <dpb@corrigendum.ru> wrote:
->
-> A line that starts with "  <" or "  >" is not necessarily a submodule
-> diff line. It might just be a context line in a normal diff, representing
-> a line starting with " <" or " >" respectively.
->
-> Use the currdiffsubmod variable to track whether we are currently
-> inside a submodule diff and only highlight these lines if we are.
+On Mon, Nov 05, 2018 at 07:10:14PM +0100, Torsten Bögershausen wrote:
+> On Mon, Nov 05, 2018 at 05:24:39AM +0100, Adrián Gimeno Balaguer wrote:
+> 
+> []
+> 
+> > https://github.com/git/git/pull/550
+>  
+> []
+>  
+> > This is covered in the mentioned PR above. Thanks for feedback.
+> 
+> Thanks for the code,
+> I will have a look (the next days)
+> 
+> > 
+> > -- 
+> > Adrián
 
-This explanation makes sense, some prior art is at
-https://public-inbox.org/git/20181021163401.4458-1-dummy@example.com/
-which was not taken AFAICT.
+Hej Adrián,
 
-Thanks,
-Stefan
+I still didn't manage to fully understand your problem.
+I tried to convert your test into my understanding,
+It can be fetched here (or copied from this message, see below)
 
->
-> Signed-off-by: =D0=A0=D0=BE=D0=BC=D0=B0=D0=BD =D0=94=D0=BE=D0=BD=D1=87=D0=
-=B5=D0=BD=D0=BA=D0=BE <dpb@corrigendum.ru>
-> ---
->  gitk | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/gitk b/gitk
-> index a14d7a1..6bb6dc6 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -8109,6 +8109,8 @@ proc parseblobdiffline {ids line} {
->         }
->         # start of a new file
->         set diffinhdr 1
-> +       set currdiffsubmod ""
-> +
->         $ctext insert end "\n"
->         set curdiffstart [$ctext index "end - 1c"]
->         lappend ctext_file_names ""
-> @@ -8191,12 +8193,10 @@ proc parseblobdiffline {ids line} {
->         } else {
->             $ctext insert end "$line\n" filesep
->         }
-> -    } elseif {![string compare -length 3 "  >" $line]} {
-> -       set $currdiffsubmod ""
-> +    } elseif {$currdiffsubmod ne "" && ![string compare -length 3 "  >" =
-$line]} {
->         set line [encoding convertfrom $diffencoding $line]
->         $ctext insert end "$line\n" dresult
-> -    } elseif {![string compare -length 3 "  <" $line]} {
-> -       set $currdiffsubmod ""
-> +    } elseif {$currdiffsubmod ne "" && ![string compare -length 3 "  <" =
-$line]} {
->         set line [encoding convertfrom $diffencoding $line]
->         $ctext insert end "$line\n" d0
->      } elseif {$diffinhdr} {
-> --
-> 2.19.1.windows.1
->
+https://github.com/tboegi/git/tree/tb.181106_UTF16LE_commit
+
+The commit of an empty file seems to work for me, in the initial
+report a "rebase" was mentioned, which is not in the TC ?
+
+Is the following what you intended to test ?
+
+#!/bin/sh
+test_description='UTF-16 LE/BE file encoding using working-tree-encoding'
+
+
+. ./test-lib.sh
+
+# We specify the UTF-16LE BOM manually, to not depend on programs such as iconv.
+utf16leBOM=$(printf '\377\376')
+
+test_expect_success 'Stage empty UTF-16LE file as binary' '
+	>empty_0.txt &&
+	echo "empty_0.txt binary" >>.gitattributes &&
+	git add empty_0.txt
+'
+
+
+test_expect_success 'Stage empty file with enc=UTF.16BL' '
+	>utf16le_0.txt &&
+	echo "utf16le_0.txt text working-tree-encoding=UTF-16BE" >>.gitattributes &&
+	git add utf16le_0.txt
+'
+
+
+test_expect_success 'Create and stage UTF-16LE file with only BOM' '
+	printf "$utf16leBOM" >utf16le_1.txt &&
+	echo "utf16le_1.txt text working-tree-encoding=UTF-16" >>.gitattributes &&
+	git add utf16le_1.txt
+'
+
+test_expect_success 'Dont stage UTF-16LE file with only BOM with enc=UTF.16BE' '
+	printf "$utf16leBOM" >utf16le_2.txt &&
+	echo "utf16le_2.txt text working-tree-encoding=UTF-16BE" >>.gitattributes &&
+	test_must_fail git add utf16le_2.txt
+'
+
+test_expect_success 'commit all files' '
+	test_tick &&
+	git commit -m "Commit all 3 files"
+'
+
+test_expect_success 'All commited files have the same sha' '
+	git ls-files -s --eol >tmp1 &&
+	sed -e "s!	i/none.*!!" <tmp1 | uniq -u >actual &&
+	>expect &&
+	test_cmp expect actual
+'
+
+test_done
