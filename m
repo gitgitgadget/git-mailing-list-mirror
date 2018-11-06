@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF3A31F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 02:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD2841F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 02:13:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbeKFLeu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 06:34:50 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39171 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbeKFLeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 06:34:50 -0500
-Received: by mail-wr1-f67.google.com with SMTP id r10-v6so11679106wrv.6
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 18:12:03 -0800 (PST)
+        id S1728122AbeKFLg2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 06:36:28 -0500
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:34428 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726680AbeKFLg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 06:36:28 -0500
+Received: by mail-wr1-f42.google.com with SMTP id j26-v6so11703941wre.1
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 18:13:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=rbQDOOkrkkLDm40Jmo6lmzvQHnStvn2qx9dY/sZ6zsk=;
-        b=AUYlUjctc11xoUzw730zbImXlRWY8V/d3w85e1Pqtvj4PRvdC98U4H4Yd7hWeT2t+d
-         TsDwPkRJuRvtsGX7ggwjNb7ZkDTaIkNAxtcpqgUryoSE7ZmPHKxU9ZPGYAZDm8Twr0Cy
-         srU595Jtyrtt04STc9xQnRy9OUTccmgA914ycbfW49MEwodBnaEKiT9ccxO3ma3aJxSz
-         a9pC6KHCmLmdBIOzKy9nqrzPEckn70BJMuJptKWEaKehUg5XPaKZN7C4J1pBi+aJM7q/
-         3SgCSNNF+AQ69YPNDEInka1Jaxa65WdBm3XtZav9q2jbnSxO4N7cpckDydhkHxIlZCop
-         vJPA==
+        bh=YMD+YIV8KqFkmnvGlT7SwmskRuLKgNwl4NNVn1bYrQE=;
+        b=rtxA7az8fq0la9aVDlZmYXYfTQZvu3s7OZ8LnDg6zI0x8mxrmcFbuMN1G2shSyfgDo
+         O10pPSjDi58gQwEdoxLfWH0QZyKI9ioBbeBl8ILy+BIhXsrt+hMgC/xgLG6k98IIsGoL
+         qCG+jxovSrktKr5fCLaJR602kJCAiS1IUxHH3FM8FIgw2ddeFpNDFWrnJOY5eloO2mk5
+         WjRiZ3rFvgAfRY/KdDhIdIrVfoJR1SeH9iurOiAc3/f4ZgPyIjbkJDqfUrJckSqGZEOz
+         M6sKw60iklyLmVWwxBzxQgY7l9zzuYRm1y0+oPKPj+sv/Og5JErSO95eHuN1uuUUj8dt
+         qqAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=rbQDOOkrkkLDm40Jmo6lmzvQHnStvn2qx9dY/sZ6zsk=;
-        b=nZqrCESpbI46DCl6vkQxhfHCNHvaJ8D1qlaJk3nacm9OqLzfVPXv8zGU5p5NScPC2d
-         NuOg7aoNXDK3dnF6wdihlkaOz4sWTyELsgfPu3o36A6sYQC3J07xgK4nKPkvBvN8bpnv
-         cz5rsoYPfHnLXOLxZqxvNcq56a1Tr94WQBEdpebpeyknJKKHwhaS51j83evzgPHseudH
-         PqXSh9erobseDngqM3+jg3Sorljvpopp8AteS0OtspcOjnFM72ALHMcoZDKsNl/c0+7/
-         xzQ8qwN/ypyu5kqZ4o7J1VfzPJm5eIB+5kZwNDZhFTFhIy7KCiCOkAwv7XMNNqc/cZ6/
-         KyFA==
-X-Gm-Message-State: AGRZ1gJN83BEMnJalMGZ+8brVGfcTs2I0nWG5eTAHMXVVwp2F+AI3sUQ
-        UTRh431vufGpM0Msy3MCABv+/mRHE+U=
-X-Google-Smtp-Source: AJdET5cnusgQ6BgRMbRGfVges+lcCpS5SzHOy3dm/TQEGtmBWWZOhu+48qbSmEzPYyBLgzVXIOmzxw==
-X-Received: by 2002:a5d:6050:: with SMTP id j16-v6mr21338639wrt.301.1541470322326;
-        Mon, 05 Nov 2018 18:12:02 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n67-v6sm411071wmd.41.2018.11.05.18.12.01
+        bh=YMD+YIV8KqFkmnvGlT7SwmskRuLKgNwl4NNVn1bYrQE=;
+        b=K2Y5lxCO8N0uRSxqvkhx0P2Za4huJsQ4ywusVsFSBcM0fH80ueVdW6ai1cZ6UPg9co
+         GIMFzfV5V1x+JpxinwRkIDkDk1zRLrNDLScuuKLblVEDrOa9DqPTGOwlL0auz0+VmHr4
+         fb4P35WqT9pJ4YuogwM+Gk2Na/uJnEIMeMqjlTshEacrYIC2Iu8wB0Hzb+wVb3hT4u88
+         PZeMJdSmLceBjxq+DTKJoupe8P7lofUbU+RxJ9LzewgvxcUzV5e/HA9InDiMVWbL9ggO
+         qrWlaOZZlwsD5+38u5PaP35oX3a2ePbqG4CytNqhCjKAGMlhUTb0aMdwTX8hSeHMpyEG
+         dm3w==
+X-Gm-Message-State: AGRZ1gKNyU/8uEnJTtxkjrDfoifdfywYwKDmctNgmI2o+zc1riiJbeTp
+        nobHcxTqvHyrMAn61iLQTcQ=
+X-Google-Smtp-Source: AJdET5cJ5bBKLVf3Q2iTB7Tk1G9cLo4Rs1rEi4vGe9JO0gA+RA0WUG2FbfWdhNs+PgSSeJNIQA0e7Q==
+X-Received: by 2002:a5d:4c4d:: with SMTP id n13-v6mr6264744wrt.298.1541470419652;
+        Mon, 05 Nov 2018 18:13:39 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id b5-v6sm29384544wrs.34.2018.11.05.18.13.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Nov 2018 18:12:01 -0800 (PST)
+        Mon, 05 Nov 2018 18:13:39 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     git@vger.kernel.org,
         SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 07/16] read-cache.c: add missing colon separators
+Subject: Re: [PATCH v2 08/16] reflog: mark strings for translation
 References: <20181028065157.26727-1-pclouds@gmail.com>
         <20181105192059.20303-1-pclouds@gmail.com>
-        <20181105192059.20303-8-pclouds@gmail.com>
-Date:   Tue, 06 Nov 2018 11:12:00 +0900
-In-Reply-To: <20181105192059.20303-8-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+        <20181105192059.20303-9-pclouds@gmail.com>
+Date:   Tue, 06 Nov 2018 11:13:38 +0900
+In-Reply-To: <20181105192059.20303-9-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
  =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 5 Nov 2018 20:20:50 +0100")
-Message-ID: <xmqq36sfgdjj.fsf@gitster-ct.c.googlers.com>
+        Duy"'s message of "Mon, 5 Nov 2018 20:20:51 +0100")
+Message-ID: <xmqqy3a7eywd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,35 +73,9 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> typechange_fmt and added_fmt should have a colon before "needs
-> update". Align the statements to make it easier to read and see. Also
-> drop the unnecessary ().
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  read-cache.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  	if (argc - i < 1)
+> -		return error("Nothing to delete?");
+> +		return error(_("no reflog specified to delete"));
 
-Sensible.  Thanks.
+Better.  Thanks.
 
-> diff --git a/read-cache.c b/read-cache.c
-> index 858befe738..8d99ae376c 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1492,11 +1492,11 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->  						  istate->cache_nr);
->  
->  	trace_performance_enter();
-> -	modified_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
-> -	deleted_fmt = (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
-> -	typechange_fmt = (in_porcelain ? "T\t%s\n" : "%s needs update\n");
-> -	added_fmt = (in_porcelain ? "A\t%s\n" : "%s needs update\n");
-> -	unmerged_fmt = (in_porcelain ? "U\t%s\n" : "%s: needs merge\n");
-> +	modified_fmt   = in_porcelain ? "M\t%s\n" : "%s: needs update\n";
-> +	deleted_fmt    = in_porcelain ? "D\t%s\n" : "%s: needs update\n";
-> +	typechange_fmt = in_porcelain ? "T\t%s\n" : "%s: needs update\n";
-> +	added_fmt      = in_porcelain ? "A\t%s\n" : "%s: needs update\n";
-> +	unmerged_fmt   = in_porcelain ? "U\t%s\n" : "%s: needs merge\n";
->  	for (i = 0; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce, *new_entry;
->  		int cache_errno = 0;
