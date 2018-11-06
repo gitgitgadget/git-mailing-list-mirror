@@ -2,105 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9448D1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 09:07:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF9011F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 10:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729851AbeKFScJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 13:32:09 -0500
-Received: from mail-oi1-f173.google.com ([209.85.167.173]:37639 "EHLO
-        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729160AbeKFScJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 13:32:09 -0500
-Received: by mail-oi1-f173.google.com with SMTP id w66-v6so10085248oiw.4
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 01:07:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Txdyd2FwjcZYv+NfaewXN4uSND++sec5txmkz1p2VBw=;
-        b=EkUPVcPxGYvf0iEQfqgxxJxMogpsY/I+/PBjU6A0ZTz7L0L0V6uAswVAOnesZE0U5J
-         YIg6EwRKudXvVUJd0c2IYxkcDaA4K/TeILSzgLIvosuhRYj+6xrQ2oTX2fCOS//hg6MZ
-         r2bK07m3YBIyV0Y+JMbh+WGM82YKNjDU5k1qO5hFxCxRr9s64GY0rx2Z9Z0CQTm7E8+g
-         VVBsYFv84nYJMN6TPH7myqO6ROf+IF1AlI+nyEjc8GfLmrvIl46DX750Oo6cVny7zVd3
-         fQEyM7RM2hnTxcpvu/hXSb7RXYU+LQ9R47ing62stxIkOCfpDiJ75t9aA3Ih5o4jp3i8
-         93Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Txdyd2FwjcZYv+NfaewXN4uSND++sec5txmkz1p2VBw=;
-        b=EmADqMbfKN1V+M3ZN/B7+EB+AASffkIcdZWIEcXEFHtI7iLFF/AxZnMXQrUAGzZhlb
-         EEYfJtbPOirxwPBA9Hl+LiWZ5JjRPc6M7ePGZHqZg+ifZbvQpCRf+mG5P3F0TUarlXfg
-         ktWsBeAMps/IBzk6cQK9Yld0J0u6bHi08yBGPI85PxL+ZXLBN6EZQtFqiQk222okdIJo
-         SHsuRVzeY9vWbUWt6quUEcvdCv1tNSaeUzDctlpNZXem05HFRwkjb++GPYh/SJJEhW70
-         2pDPWvznuXzTnrK7jSuFuvvjNnB7PUOclaWSpdeTIy29RSu5geLq0XXG6HuVxmeQiLPR
-         bfaA==
-X-Gm-Message-State: AGRZ1gJ6DLuYdWqEnctnKYQcvviTCwNzHcVmyY7ELsNuIDEom/qJ4gbU
-        gkJCZ91PnGl1Ukv69nL0SBmbqTVXlzSPIf6F2WQ6ALyC
-X-Google-Smtp-Source: AJdET5eru1OVjeBdUROnc5221qZqwdYQ3NExjALXZRnSur/koUzG2IHOJQVkgugWrk+FJbgPhtKCQVARkrcaRyCqnPM=
-X-Received: by 2002:aca:c5c6:: with SMTP id v189-v6mr37305oif.113.1541495275122;
- Tue, 06 Nov 2018 01:07:55 -0800 (PST)
-MIME-Version: 1.0
-From:   yan ke <yanke131415@gmail.com>
-Date:   Tue, 6 Nov 2018 17:07:42 +0800
-Message-ID: <CAJosSJ4eKJfa4s+3LcP3Q5qatcg3aFjh9H=Q9bETnkROu06+KQ@mail.gmail.com>
-Subject: build error on mac os 10.14.1
+        id S2387580AbeKFT5T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 14:57:19 -0500
+Received: from mx.gfi-bremen.de ([62.159.158.133]:18734 "EHLO mx.gfi-bremen.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387472AbeKFT5T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 14:57:19 -0500
+X-Greylist: delayed 537 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Nov 2018 14:57:18 EST
+X-Virus-Scanned: amavisd-new at gfi-bremen.de
+Received: from mx.gfi-bremen.de ([127.0.0.1])
+        by localhost (mail.gfi-bremen.de [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id jdEWTw7KRNOa for <git@vger.kernel.org>;
+        Tue,  6 Nov 2018 11:23:40 +0100 (CET)
+Received: from mail.gfi-bremen.de (mail.gfi-bremen.de [192.168.11.81])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx.gfi-bremen.de (Postfix) with ESMTP
+        for <git@vger.kernel.org>; Tue,  6 Nov 2018 11:23:40 +0100 (CET)
+Received: from [192.168.6.236] (unknown [192.168.6.236])
+        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (Client did not present a certificate)
+        by mail.gfi-bremen.de (Postfix) with ESMTP id 376B413F675
+        for <git@vger.kernel.org>; Tue,  6 Nov 2018 11:23:40 +0100 (CET)
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From:   Georg Tsakumagos <g.tsakumagos@narz-avn.de>
+Subject: Bug: git-svn clone --preserve-empty-dirs fail - couldn't truncate
+ file at /usr/share/perl5/Git.pm line 1337.
+Message-ID: <80d343b0-7cac-eafa-f393-a5408ce51807@narz-avn.de>
+Date:   Tue, 6 Nov 2018 11:23:42 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: de-DE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello
+Hi, i am in the middle of a migration project. Almost over 60 projects 
+(aprox 1/3) suffer from this behaviour. I was able to create a svn 
+repository dump (8MB) of a small project thats provoke that failure. The 
+failure do not occur if the option "--preserve-empty-dirs" is omitted. 
+Also no problem if the svn dump is filtered with "svndumpfilter 
+--drop-empty-revs" before load into a fresh repo.
 
-    when build on mac os 10.14.1 with the master branch, I got the
-error as blew, so what is wrong?
+I'll be able to provide the dump for further investigations. I would 
+send it on demand. I'm able to reproduce the failure with the dump. It 
+seemed many others had suffered from this bug.
 
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-clangclang: error: linker command failed with exit code 1 (use -v to
-see invocation)
-: error: linker command failed with exit code 1 (use -v to see invocation)
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-clangmake: *** [Makefile:2369: git-shell] Error 1
-make: *** Waiting for unfinished jobs....
-make: *** [Makefile:2369: git-sh-i18n--envsubst] Error 1
-: error: linker command failed with exit code 1 (use -v to see invocation)
-clang: make: *** [Makefile:2369: git-credential-cache--daemon] Error 1
-error: linker command failed with exit code 1 (use -v to see invocation)
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2369: git-credential-cache] Error 1
-make: *** [Makefile:2369: git-credential-store] Error 1
-make: *** [Makefile:2383: git-remote-testsvn] Error 1
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2393: git-remote-http] Error 1
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2369: git-http-backend] Error 1
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2372: git-imap-send] Error 1
-make: *** [Makefile:2379: git-http-push] Error 1
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2376: git-http-fetch] Error 1
-make: *** [Makefile:2369: git-daemon] Error 1
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2369: git-fast-import] Error 1
-ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [Makefile:2046: git] Error 1
+Used Version:   1:2.17.1-1ubuntu0.3
+OS:                       Ubuntu 16.04.5 LTS
+Commandline: /usr/bin/git svn clone --prefix= --preserve-empty-dirs 
+--authors-file=/mnt/migration/authors.txt --stdlayout https://host/repo 
+/mnt/migration/repos/TEST/plausiweb
+
+r37895 = bf620e85ad1ac0d42298cb01cb0dab594958d1e1 (refs/remotes/trunk)
+         A       release-pom.xml
+         A       plausiweb-report/release-pom.xml
+         M       plausiweb-report/pom.xml
+         A       plausiweb-web/release-pom.xml
+         M       plausiweb-web/pom.xml
+         M       pom.xml
+r37896 = 9420d7081b44797825aa7a19bb508ef2533a3356 (refs/remotes/trunk)
+Found possible branch point: https://scm/svn/git/java/plausiweb/trunk => 
+https://scm/svn/git/java/plausiweb/tags/plausiweb-18.06.1, 37896
+Found branch parent: (refs/remotes/tags/plausiweb-18.06.1) 
+9420d7081b44797825aa7a19bb508ef2533a3356
+Following parent with do_switch
+couldn't truncate file at /usr/share/perl5/Git.pm line 1337.
+
+
+-- 
+
+Best regards from Bremen
+
+Georg Tsakumagos
+
