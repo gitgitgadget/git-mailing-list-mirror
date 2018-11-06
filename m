@@ -6,96 +6,96 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9600A1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 04:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6CF1F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 04:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729016AbeKFNkH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 08:40:07 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35241 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728122AbeKFNkH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 08:40:07 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z16-v6so11890177wrv.2
-        for <git@vger.kernel.org>; Mon, 05 Nov 2018 20:16:52 -0800 (PST)
+        id S1729540AbeKFNmS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 08:42:18 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44430 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728122AbeKFNmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 08:42:17 -0500
+Received: by mail-wr1-f65.google.com with SMTP id j17-v6so6729830wrq.11
+        for <git@vger.kernel.org>; Mon, 05 Nov 2018 20:19:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=kqQQk67XgwqHCnAtrY6v9KziDUw5p91UE1vXt9RMNSU=;
-        b=veV1J1QlHZjsuu5hdpsVR3pD6dk1tPzHDt0cGQkDDIdsIgYra4jNTU5NA5Gwj6fr9e
-         qvz0hFme4pyL5Epy3+wPaG5FjZI7EFjVa4kWAGnINj2yy+MAmp05lAvU1pTWsqFJTG7C
-         j7UPlgT3HQ3SxEq7s+pmG7vH/RK6SVSGf11EjxDLRxslDz++kYoMotAx5Ihuxutykakl
-         NEra6KWNYJc0gfvG35DxQw5qZDLN6HycbInMMWngbBGJiI84WdrcghhcVFm6Zc3Lng6E
-         879cw+PCwzNEt7wNf9ON5HBjCoSXJAavxyf5mcCTd5oEFHj2YlVWSfsNL7GvlrSdyQpT
-         xwtg==
+         :user-agent:mime-version;
+        bh=LDAZ62mNJ2muiiBHephrIHqkDNm0K3kzK3sWkpadz9g=;
+        b=PNs0Uw16dop21J4vu8syUOvAyYs+0pb3a074TzG+p5XSCgxTgafnQTPXHiJWmp/OMu
+         RDyR6vomzhPq3uRovVEKLhyQ/7zSwHgnTZhEnJS326+sC/EGbW6VlUvkUWv+FJMhj/nk
+         T/Bedse0EVpXZFwEiSPrmVzj+qNO6deug1U3I3sDh7PrnNAfsnXPbDVLfetHT78RXzfx
+         7EJE76W6wqc1G/2IitFmtyXvjkI2pci2A7+/feT04cf+i4H8MKh0tKhemEwnjc4Td9D4
+         y7lOoLoGvvNcNwU9Eq+QIzy8YwTtjnmi/AdZ+QtrGSH0cGGbEx9U8dW4z0YPdbBdFvio
+         djiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=kqQQk67XgwqHCnAtrY6v9KziDUw5p91UE1vXt9RMNSU=;
-        b=S56lZbpdBr6DJzb+Rz+qdCjZpowczWE6MkybcXa1VAQYKNm0Ap5EW4widA7cP4Yp6u
-         Q16Ys/9zCUwVHWNyv5j3yQlQOKR3w2hbhOc1ZAg1VzNTb8HOKcgzphTSKaWokCX6P4sy
-         B3T3bFdJ+2WMzR2yv0jOhU9SU2b1wnJJyCO2INckAnWkwphyDLuTq4uZ1iicwhLM2Q5f
-         mChMIllgfn1TLQ4AIe6ZXU+9ceYN6rqyWr8VUEnk5G/39/EAkuuqVchouDGMF5T/7ogY
-         qEGyzHSnC/tbbm2TFfA8x8Kb0YRHDFoHh2OeIH5Q+pRSO6lH2F3Q4ogi7YNfAFrBRION
-         y4AQ==
-X-Gm-Message-State: AGRZ1gI/mVBAw5r0xyvOPl46KWyYY7smstZ7pq0ahIVYfRhwboQWj5jh
-        CYkTt/oCRCG5Qe8kUFNB6PU=
-X-Google-Smtp-Source: AJdET5fWvx5tLzEJkONhuNETdL05n2MXQLJwSx7B/aC3K+aHI27d+mNtGEjpHZtvU7C71Y40TrTn9A==
-X-Received: by 2002:adf:e808:: with SMTP id o8-v6mr22051653wrm.112.1541477811549;
-        Mon, 05 Nov 2018 20:16:51 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v10-v6sm11537936wrq.4.2018.11.05.20.16.49
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=LDAZ62mNJ2muiiBHephrIHqkDNm0K3kzK3sWkpadz9g=;
+        b=qwRZTaXHF2X4yW3CQK2QsorPEQBBbXg/14vQsOC8oGUI9QNmVooNf+q6jn5MZ0F6a8
+         RQk4QfaOLuj9ngw43D5Aot3vwUbnFRqvfGapjwHiVCBsZLB3cI1SHwxvUUGnnVfs4ZeW
+         cdYxFJoQBB57Vc+xBOAKOACK4+1a6TiQ7CrmgszOll+aHTT5g4QG6Bm/V2g36lpDkWYJ
+         +y0sXh525Bl96EcrWBaXK+COMK4mpJGZoFJcG7VjHPcCMhSx76+CW6HQuIhtNw53cjhr
+         zof/xQIEnxck7x2uN+31LiiQmJmMFYFmETVJiQcp9/MBG03DCBDjrk6wIeNJLrcs3ryC
+         ae7w==
+X-Gm-Message-State: AGRZ1gLNw3F0biolZ4+uZwUqTgSiqFjr3zo6cu3yK1jCEVKtQaHLxkrJ
+        PdIrg1779J2nwO2SnN6D434=
+X-Google-Smtp-Source: AJdET5d/20Ijif24qZ2ZU/cJiPZoxE12MdSv4v/DLdezbZw54KMNoyb5Xv4dr/C7uXX8DL+a2OHFbQ==
+X-Received: by 2002:adf:83a4:: with SMTP id 33-v6mr21273191wre.13.1541477942296;
+        Mon, 05 Nov 2018 20:19:02 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x11-v6sm500317wmg.14.2018.11.05.20.19.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Nov 2018 20:16:50 -0800 (PST)
+        Mon, 05 Nov 2018 20:19:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lucas De Marchi <lucas.demarchi@intel.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] range-diff: add a --no-patch option to show a summary
-References: <20181105200650.31177-1-avarab@gmail.com>
-Date:   Tue, 06 Nov 2018 13:16:49 +0900
-In-Reply-To: <20181105200650.31177-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 5 Nov 2018 20:06:50 +0000")
-Message-ID: <xmqqva5aet72.fsf@gitster-ct.c.googlers.com>
+To:     orgads@gmail.com
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: fix typos in release notes
+References: <20181105194713.25383-1-orgads@gmail.com>
+Date:   Tue, 06 Nov 2018 13:19:00 +0900
+In-Reply-To: <20181105194713.25383-1-orgads@gmail.com> (orgads's message of
+        "Mon, 5 Nov 2018 21:47:13 +0200")
+Message-ID: <xmqqr2fyet3f.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+orgads@gmail.com writes:
 
-> This change doesn't update git-format-patch with a --no-patch
-> option. That can be added later similar to how format-patch first
-> learned --range-diff, and then --creation-factor in
-> 8631bf1cdd ("format-patch: add --creation-factor tweak for
-> --range-diff", 2018-07-22). I don't see why anyone would want this for
-> format-patch, it pretty much defeats the point of range-diff.
+> From: Orgad Shaneh <orgads@gmail.com>
+>
+> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+> ---
+>  Documentation/RelNotes/2.20.0.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-I am OK not to have this option integrated to format-patch from day
-one, but I do not think it is a good idea to hint that it should not
-be done later.
+Thanks.
 
-Does it defeats the point of range-diff to omit the patch part in
-the context of the cover letter?  How?
-
-I think the output with this option is a good addition to the cover
-letter as an abbreviated form (as opposed to the full range-diff,
-whose support was added earlier) that gives an overview.
-
-Calling this --[no-]patch might make it harder to integrate it to
-format-patch later, though.  I suspect that people would expect
-"format-patch --no-patch ..." to omit both the patch part of the
-range-diff output *AND* the patch that should be applied to the
-codebase (it of course would defeat the point of format-patch, so
-today's format-patch would not pay attention to --no-patch, of
-course).  We need to be careful not to break that when it happens.
-
+>
+> diff --git a/Documentation/RelNotes/2.20.0.txt b/Documentation/RelNotes/2.20.0.txt
+> index 4b546d025f..bc0f4e8237 100644
+> --- a/Documentation/RelNotes/2.20.0.txt
+> +++ b/Documentation/RelNotes/2.20.0.txt
+> @@ -56,7 +56,7 @@ UI, Workflows & Features
+>  
+>   * "git format-patch" learned new "--interdiff" and "--range-diff"
+>     options to explain the difference between this version and the
+> -   previous attempt in the cover letter (or after the tree-dashes as
+> +   previous attempt in the cover letter (or after the three-dashes as
+>     a comment).
+>  
+>   * "git mailinfo" used in "git am" learned to make a best-effort
+> @@ -78,7 +78,7 @@ UI, Workflows & Features
+>     meaningfully large repository.  The users will now see progress
+>     output.
+>  
+> - * The minimum version of Windows supported by Windows port fo Git is
+> + * The minimum version of Windows supported by Windows port of Git is
+>     now set to Vista.
+>  
+>   * The completion script (in contrib/) learned to complete a handful of
