@@ -2,88 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 851E91F454
-	for <e@80x24.org>; Tue,  6 Nov 2018 16:07:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 102B41F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 16:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389163AbeKGBdM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 20:33:12 -0500
-Received: from mail-it1-f174.google.com ([209.85.166.174]:55678 "EHLO
-        mail-it1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388346AbeKGBdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 20:33:12 -0500
-Received: by mail-it1-f174.google.com with SMTP id b7-v6so18545634itd.5
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 08:07:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dEcrNU+EnZn+MZSKIJpke2+NC3drpYc496nDVCsUpqY=;
-        b=qajknP6KVFRiYtuxdJuJSMRSMuMPN4M/vZYcouaR2HIpwmzFbiONELnI3aRrghj+nt
-         UYFtdqd7Z/8Ql6kOmX/dQeuclvx69pjPUllkX2xPgA5PP2tTObvxkDdxQcqrQw4dsoF9
-         b2wgziopL1iONa9Hubu9EohqY+IDKZ/ExllkXJcOZtFkLKOVg4Z0D2kX6ZM7I/pBC/Kh
-         km5FOXrKEwv/qjIk9itBnWyMyBxIlrDd0CKZdullhY1OeyEj8bx3bEv9JOEHpxi9dcpg
-         3kOn5x5gbm36Vw2DtLr4ITxZCTsjixq/F/lY09KWQ0FAIVwS9TpEXXFbGB1+n0IpSkX4
-         Omcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dEcrNU+EnZn+MZSKIJpke2+NC3drpYc496nDVCsUpqY=;
-        b=YhLopF56ZX+gBma3Cd0ZoKlhRA6gG33aM0en8hDNYOMLxiY8dywqtWO2Lz0+KBXnDC
-         nSFKorQAa8tWBUztlmO9kEaZ4+Kfzg87pD39dAXpiLc2coNv7RbM7K4wFDSruWgXT8ap
-         R5g1Ws2poIAFlMmE2gVWUKjCLjfhpOs41uAmAtMixWqkPC6dNWKNCpfgms4n+95vJSTB
-         ggWn9ihbg/uBmzm9YxECnuDQLroLQCc46aHAdc9AGdrtpYJC9EClwXggjLgTxI4aoJPJ
-         pgql/Hf2nGoz+/q7ilgnMroY+6RAOeW5ZFCWg//1C9qACfIXorpRl1oJvDdZlXfHsABH
-         1EPA==
-X-Gm-Message-State: AGRZ1gL+thRYDTzH69ISWgNz1FHknqz7C6ut2e6CJAszkwMnITQm4b/P
-        hyp72iz3NNvY/tCOUnBs6L1uUcuqyKtf/9o9ulw=
-X-Google-Smtp-Source: AJdET5eujkLEfV/SFHuHyL1bltW81TUmiBt9bbFlI+Ahkv/N5t+LpAq0St4d3vS7KsPJ7Jr0lLmkH3gRbSzn2RE+Pp8=
-X-Received: by 2002:a02:5748:: with SMTP id u69-v6mr24062167jaa.30.1541520437472;
- Tue, 06 Nov 2018 08:07:17 -0800 (PST)
-MIME-Version: 1.0
-References: <CAFd4kYBDWMvVgDmNTzwOK9Q7n_Fb0NrvNAFgHtKvkLkRFWqUKw@mail.gmail.com>
- <xmqqlg6covi6.fsf@gitster-ct.c.googlers.com> <CACsJy8DFUeEddSa2z4VTSqhaUBJ4+SUf8xvjh6iWY2Phhh96iQ@mail.gmail.com>
- <CAFd4kYDcX2BOYvMg1X9zO68EfYYE6Zke_-9CGY-Yi01jCc3EPA@mail.gmail.com>
-In-Reply-To: <CAFd4kYDcX2BOYvMg1X9zO68EfYYE6Zke_-9CGY-Yi01jCc3EPA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 6 Nov 2018 17:06:50 +0100
-Message-ID: <CACsJy8AYtz2tjo5ZB_6Mj9MWaUnYGs4GUO2+6E6nDKiNzrJoAg@mail.gmail.com>
-Subject: Re: Understanding pack format
-To:     Farhan Khan <khanzf@gmail.com>
+        id S2389126AbeKGBgf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 20:36:35 -0500
+Received: from avasout03.plus.net ([84.93.230.244]:53453 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389007AbeKGBgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 20:36:35 -0500
+Received: from [10.0.2.15] ([80.189.70.193])
+        by smtp with ESMTPA
+        id K3w6gxcF9d3rWK3w7g0AjK; Tue, 06 Nov 2018 16:10:39 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Uv9Nyd4B c=1 sm=1 tr=0
+ a=wSR+GDtF+fsrIzE5OYgxVg==:117 a=wSR+GDtF+fsrIzE5OYgxVg==:17
+ a=IkcTkHD0fZMA:10 a=itjS_1GcIhoQzlkUiKgA:9 a=QEXdDO2ut3YA:10 a=fAsHhm-Fa0MA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.66.git.gitgitgadget@gmail.com>
+ <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
+ <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com>
+Message-ID: <48e90389-399e-a727-a1f3-965bf0f32f18@ramsayjones.plus.com>
+Date:   Tue, 6 Nov 2018 16:10:38 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
+MIME-Version: 1.0
+In-Reply-To: <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfABC5uHotnO4qwfzL/7S0sr1zB5UNJZ+N62YX3zWFFchcqiKzTdxSP1v3W3lv5OYk/McyOhEgmRRj7CY2mH2/NKE3UiZpDX0fUlnzs1DYvL2ob1jSk1W
+ xh6zSX9TS2M8KJHgTNMbGtGPjh4b3J7Ahp/CzDW3Sat7dZdQH1swgnMzXJohjFsKAHbAf22h27mbMA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 6, 2018 at 3:23 AM Farhan Khan <khanzf@gmail.com> wrote:
-> To follow-up from the other day, I have been reading the code that
-> retrieves the pack entry for the past 3 days now without much success.
-> But there are quite a few abstractions and I get lost half-way down
-> the line.
 
-Jeff already gave you some pointers. This is just a side note.
 
-I think it's easier to run the code under a debugger and see what it
-does than just reading it. You can create a repo with just one blob to
-have better control over it (small packs also make it possible to
-examine with a hex editor in parallel), e.g.
+On 06/11/2018 15:54, Ramsay Jones wrote:
+> 
+> 
+> On 06/11/2018 14:53, Johannes Schindelin via GitGitGadget wrote:
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> On Windows, an absolute POSIX path needs to be turned into a Windows
+>> one.
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>  path.c | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/path.c b/path.c
+>> index 34f0f98349..a72abf0e1f 100644
+>> --- a/path.c
+>> +++ b/path.c
+>> @@ -11,6 +11,7 @@
+>>  #include "path.h"
+>>  #include "packfile.h"
+>>  #include "object-store.h"
+>> +#include "exec-cmd.h"
+>>  
+>>  static int get_st_mode_bits(const char *path, int *mode)
+>>  {
+>> @@ -709,6 +710,10 @@ char *expand_user_path(const char *path, int real_home)
+>>  
+>>  	if (path == NULL)
+>>  		goto return_null;
+>> +#ifdef __MINGW32__
+>> +	if (path[0] == '/')
+>> +		return system_path(path + 1);
+>> +#endif
+> 
+> Hmm, this doesn't quite fit with the intended use of this
+> function! ;-) (even on windows!)
+> 
+> I haven't looked very deeply, but doesn't this affect all
+> absolute paths in the config read by git_config_pathname(),
+> along with all 'included config' files?
+> 
+> I am pretty sure that I would not want the absolute paths
+> in my config file(s) magically 'moved' depending on whether
+> git has been compiled with 'runtime prefix' support or not!
 
-git init foo
-cd foo
-echo hello >file
-git add file
-git repack -ad
-gdb --args git show :./file
+So, I hit 'send' before finishing my thought ...
 
-then put a breakpoint in some interesting functions (perhaps one of
-those Jeff pointed out)
--- 
-Duy
+I can't think of a non-backwards compatible way of doing
+what you want. If backward compatibility wasn't an issue,
+then we could (maybe) have used some kind of pathname prefix
+like 'system:/path/relative/to/git/executable', or somesuch.
+
+ATB,
+Ramsay Jones
+
