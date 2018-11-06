@@ -8,59 +8,57 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E0EF1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 08:36:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB1551F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 08:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729291AbeKFSAt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 13:00:49 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:43922 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729021AbeKFSAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 13:00:49 -0500
-Received: by mail-ed1-f66.google.com with SMTP id e4so685924edv.10
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 00:36:42 -0800 (PST)
+        id S1729887AbeKFSVu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 13:21:50 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:38759 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729867AbeKFSVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 13:21:50 -0500
+Received: by mail-ed1-f52.google.com with SMTP id a2-v6so5230409edi.5
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 00:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=VqgmtQb8yMaug8rNgVLe8tUFtw+O9e3ypT8kWjLXOSA=;
-        b=fskxHEYXHU+KDjjlj/dKweBJQEGdnyt3LrqTpLZTxDg1SOLR5mG8p4XljomuclaKNR
-         Tm0dAgnGNC7np87WnEXG3WT5oyICQT47GJoXwAv37Z7ynue+YJLS25ez7aztuPCXYOho
-         nDTydWF9T/AwU82oy6uXY/XLuHtaNxUsDj0/EPUmdB27KehTQk2crIdm4zoLdn+JtYsV
-         9H0Ki5/mSG0PF55Bo1BHQGBmkYzEzfhce4Gm47UjlwV+pvpsn1QIe10Vhz7vRA5g5h9l
-         otKggquWZXew8P3cdU8km1p0a7egdcDGjmuWVxgktakYSnBtvxihVHGAciCIb/Smi9Ey
-         p/jg==
+        bh=xLBV38WzFbddvx6vPjjbuS+XfRs8wyE1KfG3NtM844E=;
+        b=EB3zkUQ/MQXolSBzbt2dE70p+I91NrFi0bqINa3rnf1bgmFm3Pk/Rrv1ppFK73cbwU
+         s8c5O2UvExoj9F0P3HKiXIMh3lFaMh90ekWL1cXmRs3NcqaUpUmzQd2lS8NhYyW3NSXa
+         m/LRUSDV6Y+c2HwehM8xu/dJX2zbUL7pFZAKgnMO+ZjcxoEt9KRJvD9gXCIZjBWgtxwc
+         NSLbnyrjzYi29XUSMSAD2ZyRN79k/xfNkD6g2vY7NUUxRgEiH5i3Xky/MXTqHZU1Vibh
+         GKx7Hv7TMT4WvJLoGNA/R4JA6Ue95pZlw5t+giw3jCcWqWEiGsdR2NxKawACJ4bwhQWL
+         OHaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=VqgmtQb8yMaug8rNgVLe8tUFtw+O9e3ypT8kWjLXOSA=;
-        b=TUjB5L6JljBXISmjXa7rhVGBdTlToUHg/BkycsHeBuJrUQ6Bt365c0q8X7YocqA1Dn
-         CymSpwCVWzpFncuEhiWqLOOx+hVrQmUcZPxF9oMVN3qDWIaJL+8QXWxB+t4RlfJ76BQF
-         pfb3HAMPj1E2yWIhsfGj9j//zcrXsQ6t7l+fQCL4QJ+LW6BFMolzDJIZAHVqwgogI4Sv
-         Py4G1jlfqdi5Cmrs10VrH40vt89m7YIMCt3i6fMKqsjbSzQ3QD1AEMA3FmsiCeFawWJ4
-         9Qp5M1oIvtzoZEJsUnS1PrQFsm9ErgpQMqoedEGgpIvPoDtbtGgFtcm3xo2NOjOLPqXn
-         FGFA==
-X-Gm-Message-State: AGRZ1gI4oTVVfGB1ow7K0H+06HLjANIwx14mxLKlcgXRSD35kfFue584
-        yrhVKRIgvzcRFmgpFYhFJdE=
-X-Google-Smtp-Source: AJdET5cGqPFawkDKdvd1HpRmW0aarYAetPfV9vliUFaaqAQvCNo5rMG+nPZbO3MN9QZDLos70roaVA==
-X-Received: by 2002:a50:fe12:: with SMTP id f18-v6mr19779326edt.116.1541493401786;
-        Tue, 06 Nov 2018 00:36:41 -0800 (PST)
+        bh=xLBV38WzFbddvx6vPjjbuS+XfRs8wyE1KfG3NtM844E=;
+        b=Y5OnVUIKb4ia0Ddg8RnhCmiSEqCKQKKKdQJmbFuqwlW2eNlW5BpYyeBK1vRgRQg7OE
+         B2qznQoNjAmnke9RPMN9xx0Hw+VLvViaHzF8vderMcJbwMgofNpzApfoviW8L9cHteii
+         1C6vTzr63hCFQ+ZAE1lMrXjH1LzvBo3yB2ecriYfh3jDZw1jc3E2LYb/a4arrZynxE5v
+         pRFO67VQBYTRL9jPcZ3GjgyGUe1T2lD5sBVJNlXnDTpmOa7wqNY58BQPjU3t4v+voYo7
+         lhkQNmMIKX4krZy4e9YSSMqxvslbOSI2SdCsXTGpDWZpsDjN3kNW/11pfI08qgvocUEt
+         AfyQ==
+X-Gm-Message-State: AGRZ1gKzI83gvXMo9rkszqfsSDh4Bks+CymR+hNeR6D8qN3QlNThxuzU
+        BisNR78wHDjQeJirxeCLKaM=
+X-Google-Smtp-Source: AJdET5euN6A4pTrLY1Z/UqXOIIZXfokk3zyQTpo+rh6wskovIEeyl3DUO5Yaai2cmGbPvkq/ZLj2+Q==
+X-Received: by 2002:a50:b68a:: with SMTP id d10-v6mr8429054ede.101.1541494657059;
+        Tue, 06 Nov 2018 00:57:37 -0800 (PST)
 Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id o31-v6sm4476733eda.72.2018.11.06.00.36.40
+        by smtp.gmail.com with ESMTPSA id r8-v6sm10331667edo.19.2018.11.06.00.57.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 00:36:40 -0800 (PST)
+        Tue, 06 Nov 2018 00:57:36 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        lucas.demarchi@intel.com, Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] range-diff: add a --no-patch option to show a summary
-References: <20181105200650.31177-1-avarab@gmail.com> <xmqqva5aet72.fsf@gitster-ct.c.googlers.com> <CAPig+cR85-7wMYCGGFoRT3jSQzQmda_84Ox1kF6roa5j-1XZ0Q@mail.gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH/RFC] sequencer.c: record revert/cherry-pick commit with trailer lines
+References: <20181104072253.12357-1-pclouds@gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAPig+cR85-7wMYCGGFoRT3jSQzQmda_84Ox1kF6roa5j-1XZ0Q@mail.gmail.com>
-Date:   Tue, 06 Nov 2018 09:36:39 +0100
-Message-ID: <87d0ri7gbs.fsf@evledraar.gmail.com>
+In-reply-to: <20181104072253.12357-1-pclouds@gmail.com>
+Date:   Tue, 06 Nov 2018 09:57:35 +0100
+Message-ID: <87bm727fcw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -70,59 +68,72 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Nov 06 2018, Eric Sunshine wrote:
+On Sun, Nov 04 2018, Nguyễn Thái Ngọc Duy wrote:
 
-> On Mon, Nov 5, 2018 at 11:17 PM Junio C Hamano <gitster@pobox.com> wrote:
->> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->> > This change doesn't update git-format-patch with a --no-patch
->> > option. That can be added later similar to how format-patch first
->> > learned --range-diff, and then --creation-factor in
->> > 8631bf1cdd ("format-patch: add --creation-factor tweak for
->> > --range-diff", 2018-07-22). I don't see why anyone would want this for
->> > format-patch, it pretty much defeats the point of range-diff.
->>
->> Does it defeats the point of range-diff to omit the patch part in
->> the context of the cover letter?  How?
->>
->> I think the output with this option is a good addition to the cover
->> letter as an abbreviated form (as opposed to the full range-diff,
->> whose support was added earlier) that gives an overview.
+> When a commit is reverted (or cherry-picked with -x) we add an English
+> sentence recording that commit id in the new commit message. Make
+> these real trailer lines instead so that they are more friendly to
+> parsers (especially "git interpret-trailers").
 >
-> I had the same response when reading the commit message but didn't
-> vocalize it. I could see people wanting to suppress the 'patch' part
-> of the embedded range-diff in a cover letter (though probably not as
-> commentary in a single-patch).
+> A reverted commit will have a new trailer
 >
->> Calling this --[no-]patch might make it harder to integrate it to
->> format-patch later, though.  I suspect that people would expect
->> "format-patch --no-patch ..." to omit both the patch part of the
->> range-diff output *AND* the patch that should be applied to the
->> codebase (it of course would defeat the point of format-patch, so
->> today's format-patch would not pay attention to --no-patch, of
->> course).  We need to be careful not to break that when it happens.
+>     Revert: <commit-id>
 >
-> Same concern on my side, which is why I was thinking of other, less
-> confusing, names, such as --summarize or such, though even that is too
-> general against the full set of git-format-patch options. It could,
-> perhaps be a separate option, say, "git format-patch
-> --range-changes=<prev>" or something, which would embed the equivalent
-> of "git range-diff --no-patch <prev>...<current>" in the cover letter.
+> Similarly a cherry-picked commit with -x will have
+>
+>     Cherry-Pick: <commit-id>
+> [...]
+>  I think standardizing how we record commit ids in the commit message
+>  is a good idea. Though to be honest this started because of my irk of
+>  an English string "cherry picked from..." that cannot be translated.
+>  It might as well be a computer language that happens to look like
+>  English.
+> [...]
+> @@ -1758,16 +1757,10 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+>  		base_label = msg.label;
+>  		next = parent;
+>  		next_label = msg.parent_label;
+> -		strbuf_addstr(&msgbuf, "Revert \"");
+> -		strbuf_addstr(&msgbuf, msg.subject);
+> -		strbuf_addstr(&msgbuf, "\"\n\nThis reverts commit ");
+> -		strbuf_addstr(&msgbuf, oid_to_hex(&commit->object.oid));
+> -
+> -		if (commit->parents && commit->parents->next) {
+> -			strbuf_addstr(&msgbuf, ", reversing\nchanges made to ");
+> -			strbuf_addstr(&msgbuf, oid_to_hex(&parent->object.oid));
+> -		}
+> -		strbuf_addstr(&msgbuf, ".\n");
+> +		strbuf_addf(&msgbuf, "Revert \"%s\"\n\n", msg.subject);
+> +
+> +		strbuf_addf(&msgbuf, "Revert: %s\n",
+> +			    oid_to_hex(&commit->object.oid));
+>  	} else {
+>  		const char *p;
 
-Maybe this was discussed more when this range-diff format-patch
-integration was submitted, I wasn't following that closely:
+Others have already commented on the backwards-compatibility /
+switchover concerns, so I won't spend much time on that. Except to say
+that I don't think changing this would be a big deal.
 
-Looking at this more carefully it seems like quite a design limitation
-that we're conflating the options for format-patch itself and for the
-range-diff invocation it makes.
+Anyone trying to parse out /This reverts commit/ or other pre-set
+English texts we put into the commit object is already needing to deal
+with users changing the message. E.g. I have a habit of doing partial
+reverts and changing it to "This partially reverts..." etc.
 
-Wouldn't it be better to make all these options
-e.g. --range-diff-creation-factor=*, --range-diff-no-patch,
---range-diff-U1 etc. Now there's no way to say supply a different
--U<ctx> for the range-diff & the patches themselves which seems like a
-semi-common use-case.
+Leaving aside the question of whether the pain of switching is worth it,
+I think it's a worthwihle to consider if we could stop hardcoding one
+specific human language in commit messages, and instead leave something
+machine-readable behind.
 
-Doing that seems to be a matter of teaching setup_revisions() to
-accumulate unknown options, then parsing those into their own diffopts
-with the "range-diff-" prefix stripped and handing that data off to the
-range-diff machinery, not the parsed options for range-diff itself as
-happens now.
+We do that with reverts, and also with merge commits, which could be
+given a similar treatment where we change e.g. "Merge branches
+'jc/convert', 'jc/bigfile' and 'jc/replacing' into jc/streaming" (to use
+git.git's 02071b27f1 as an example) to:
+
+    Merge-branch-1: jc/convert
+    Merge-branch-2: jc/bigfile
+    Merge-branch-3: jc/replacing
+    Merge-branch-into: jc/streaming
+
+Then, when rendering the commit in the UI we could parse that out, and
+put a "Merge branches[...]" message at the top, except this time in the
+user's own language.
