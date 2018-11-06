@@ -7,99 +7,86 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E775F1F453
-	for <e@80x24.org>; Tue,  6 Nov 2018 14:53:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA8C1F453
+	for <e@80x24.org>; Tue,  6 Nov 2018 14:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388906AbeKGASx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Nov 2018 19:18:53 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:35133 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388428AbeKGASx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Nov 2018 19:18:53 -0500
-Received: by mail-pl1-f194.google.com with SMTP id n4-v6so6325419plp.2
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 06:53:18 -0800 (PST)
+        id S2389114AbeKGAVZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Nov 2018 19:21:25 -0500
+Received: from mail-pg1-f175.google.com ([209.85.215.175]:46413 "EHLO
+        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388887AbeKGAVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Nov 2018 19:21:25 -0500
+Received: by mail-pg1-f175.google.com with SMTP id w7so5905214pgp.13
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 06:55:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=mIotpF8vqodFOT9JRWHZ38oxjoGqa7FJkWrtAlpfEwg=;
-        b=jWPMVlAI/g0wCIbxsQlYBzSpQ1tv9gadx/0CIqoSxP4dFazW87KdXRN5Kc/X2XUImT
-         m3mJBoMni0K9+fISSJTEM9DOboI2+EpBH7/zm5u3IwzWsjAHykB7zDbx2G+QI6Y+dlAn
-         mxB4P0LI4gvpnUDs9lXPzJszRnjWtR+4qAMClcjwfZER75WXPbsNAJ8AC5Jf/Armqoxf
-         PiMpJE7ou4eldNgJJIx1pTi4NjbjuU9kXyfsaofaIGjGq6ZuQTNzWKNII1vpuIIKqlQG
-         7763y9ErUWOjlauhE+tCth8Gw+2BvKZKI1LsQ8bimt84QM4ECJWpOEBlFYh1Ejaj9eIq
-         eT5g==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=q5J+Z+xbkQMK4cEwF/RfcF7dbxRUJLN/Z5wupZbvix4=;
+        b=Uir7t98cQS4AQBeZ/AC93EI0FjjJfXSfqbdu/rLIfOdc7ZwxF21t62Em+l5YXcNrah
+         zgW0wzgLXgCWAkAElewsAhSYPzJ0ZcKLM7I2vAZFabxNv+mF8zOxxiCf/21MAtOFbPO+
+         kCcoe8rPAKNswCCzVxODNr3eMJJq8wkPO8W8gGREv1qDA5S65gAJ8avhaQmaLUgeejwc
+         IlPfTq9HJlr5a0XIpqVSwdQfjiQRwu+y36y9zSVR3MH7fvB1C6ahZ54xb3uTndNL5Vtu
+         ocbLbqVpQmI22KfRODRrlr4i0K4gKqKfQzNQX5W67wjtaRx64yXH7wFy7vqQ2A9ghTh0
+         8cBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mIotpF8vqodFOT9JRWHZ38oxjoGqa7FJkWrtAlpfEwg=;
-        b=QuAosQv3ozoDDMk+yyoM1tnmv4e6OXxJKTX+rO24H/tKdX9HTNhLvCsBxrRlZUfPaI
-         QyLOdV39arQTkUQu0wnqMnLO+c3bVPPBD6E1M7zXtSS9vhrPCjrbpayIyFfBGgX/qZ+J
-         c5abGZMg5sz+hFAoSl+8YGPj93Z/spYaB+1/OTIwPQ8/09yNdyLoTUh5gP1vyCZWClS8
-         s6vXr0aVvx6DTL/VvcbsS75wKng+P8XvKzrIyURUWq35nKYSW1WGlpum8OME5GqtGIEC
-         glIOyUOPyMOLpD1yijZfRs6hcBNw6mZ3XQ8uqy084bzY5hjm+X0eRl/gHcvQRCBvbnGC
-         VxLA==
-X-Gm-Message-State: AGRZ1gIyhg2j3SyfDPnUCzSm6w44+RhtW2Eouxhs+cNabtj500C9CIRN
-        Gv6k3xksLlUHs0it+Joa/Yx+CScn
-X-Google-Smtp-Source: AJdET5cTzi871SchsIehBDTy1TXGdwpNlDtJcFFyppbA7+/X2wej/FH0iOhwhW69rSj//cnGJFGlsg==
-X-Received: by 2002:a17:902:22cc:: with SMTP id o12-v6mr26758551plg.108.1541515998271;
-        Tue, 06 Nov 2018 06:53:18 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=q5J+Z+xbkQMK4cEwF/RfcF7dbxRUJLN/Z5wupZbvix4=;
+        b=gGNqOerGv9AATV9hne5Yj9DbvTMN8RwC+eyfFKjhqhc58RSUGH5Wz4W4n6mvSHoNg9
+         mrMIkdVuCJ0CEPwOmGn9JBTrVEvgEGwlMFvpexd6MFMQ7Yhl1NaGXQps+bcOlTH+uUOd
+         ZNhcJK/yH6/k4vj/k0gv1yfJO+k7EIZvxhIb61biIvA5JP+2+/zizy6IQiWytzEPQMGb
+         JzR82TyRBywto/OQ4FKiW/H3oJh0zoH7h3fQnxRLWABpnHls8vY9LRDWQDDy7EK0niLV
+         IUzRClNv3ElWmTvAZoUn3sFiv/TT16hmMZw3qFB6Rc5xcpdQ5TGNfRCbgWSdEUxpFB3K
+         tGHg==
+X-Gm-Message-State: AGRZ1gJlYMO67nRd9O1JS4CLyYthaDNKU6c/Mfsu4du0BflaDSLWEuTL
+        SfDqUQ3d1vfWqubkmVZf/9Q/0alxiP4=
+X-Google-Smtp-Source: AJdET5fCEKwkIoCYvYgfoUtTAw8OZnlFQC/8ECRL3vMWNuFOn95IOOTIeLEbSGtRlyVV+AUmDacYOA==
+X-Received: by 2002:a63:a441:: with SMTP id c1-v6mr1093168pgp.49.1541516149869;
+        Tue, 06 Nov 2018 06:55:49 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id i12-v6sm63625065pfe.7.2018.11.06.06.53.17
+        by smtp.gmail.com with ESMTPSA id z22-v6sm45788877pgv.24.2018.11.06.06.55.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Nov 2018 06:53:17 -0800 (PST)
-Date:   Tue, 06 Nov 2018 06:53:17 -0800 (PST)
-X-Google-Original-Date: Tue, 06 Nov 2018 14:53:14 GMT
-Message-Id: <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.66.git.gitgitgadget@gmail.com>
-References: <pull.66.git.gitgitgadget@gmail.com>
+        Tue, 06 Nov 2018 06:55:49 -0800 (PST)
+Date:   Tue, 06 Nov 2018 06:55:49 -0800 (PST)
+X-Google-Original-Date: Tue, 06 Nov 2018 14:55:46 GMT
+Message-Id: <pull.67.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+Subject: [PATCH 0/1] Windows: force-recompile git.res for differing architectures
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This is a patch designed to help maintaining Git for Windows better: when
+the same source code is "cross-compiled" for i686 as well as x86_64, we want
+to rebuild the whole thing, including the resource file git.res.
 
-On Windows, an absolute POSIX path needs to be turned into a Windows
-one.
+Note: regular C files are re-compiled appropriately, as the default prefix
+in Git for Windows is /mingw32 or /mingw64 depending on the architecture,
+and this difference is manifested in the CFLAGS (which, upon change, trigger
+a complete rebuild).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- path.c | 5 +++++
- 1 file changed, 5 insertions(+)
+As non-Windows platforms do not even compile these .res files, this patch
+should have exactly no effect on non-Windows builds.
 
-diff --git a/path.c b/path.c
-index 34f0f98349..a72abf0e1f 100644
---- a/path.c
-+++ b/path.c
-@@ -11,6 +11,7 @@
- #include "path.h"
- #include "packfile.h"
- #include "object-store.h"
-+#include "exec-cmd.h"
- 
- static int get_st_mode_bits(const char *path, int *mode)
- {
-@@ -709,6 +710,10 @@ char *expand_user_path(const char *path, int real_home)
- 
- 	if (path == NULL)
- 		goto return_null;
-+#ifdef __MINGW32__
-+	if (path[0] == '/')
-+		return system_path(path + 1);
-+#endif
- 	if (path[0] == '~') {
- 		const char *first_slash = strchrnul(path, '/');
- 		const char *username = path + 1;
+Johannes Schindelin (1):
+  Windows: force-recompile git.res for differing architectures
+
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+
+base-commit: cd69ec8cde54af1817630331fc441f493866f0d4
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-67%2Fdscho%2Fmingw-git.res-bitness-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-67/dscho/mingw-git.res-bitness-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/67
 -- 
 gitgitgadget
