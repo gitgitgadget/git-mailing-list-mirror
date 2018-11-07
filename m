@@ -7,49 +7,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 768191F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 11:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16E071F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 11:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbeKGUt0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 15:49:26 -0500
-Received: from mout.gmx.net ([212.227.15.15]:36969 "EHLO mout.gmx.net"
+        id S1726725AbeKGUt6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 15:49:58 -0500
+Received: from mout.gmx.net ([212.227.17.22]:59915 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726225AbeKGUt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 15:49:26 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lb5nF-1feie22Qsz-00kj29; Wed, 07
- Nov 2018 12:19:23 +0100
-Date:   Wed, 7 Nov 2018 12:19:22 +0100 (STD)
+        id S1726225AbeKGUt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 15:49:57 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbaS9-1g442l2H8X-00J52k; Wed, 07
+ Nov 2018 12:19:58 +0100
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbaS9-1g442l2H8X-00J52k; Wed, 07
+ Nov 2018 12:19:58 +0100
+Date:   Wed, 7 Nov 2018 12:19:57 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     gitgitgadget@gmail.com, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-In-Reply-To: <xmqqo9b1d6na.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811071217280.39@tvgsbejvaqbjf.bet>
-References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com> <xmqqo9b1d6na.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CACsJy8D47sDgdpmPSqVbBu7Omc1=4yAn895-PE91-PLs9+83bw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811071219350.39@tvgsbejvaqbjf.bet>
+References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <CACsJy8D47sDgdpmPSqVbBu7Omc1=4yAn895-PE91-PLs9+83bw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:d1yx7u+OWspDAbkipGs4LTpq0Kfwhp9CM+6I65sECfX0Tr6sUr7
- 8FU1lsrnukxgbmeykXzpUfcnR+tr+lUSMd5X2cKwn/s4nZvT723nc2ytJBKRIQ5bbIfM61n
- 8pYvyZAbJZzONuAURgskfPYf7Ez4o1GuwQ+UiGHoOUbUlaAH57VxcYZEd0SZMXhnMznMCBh
- l9LBzphG+JXCs5TdWyDEA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vT1RE0sB+8c=:ZVtwXWuJ0ef4Xs1s1DUrQC
- Y7WDQ6i6rC8lPrRJNMGzrxo2Rn9zpTOKzNfX5z/jauMdA76UdOj7/YOWWN4B8phJJL7m3hinE
- BBi5RcpuJcAViCAlV7EXoCbTrIDj7nSFfRvRNZUfIhrtJ6M4nh2C74g9dQWtqOgWoy+IFDEqx
- 7j8dWTRsruBuBjpKhpUjXcjuDQw7LuUJmpMKW7Cs4GK3kems3W78r/AMOUkWxZULFQqWdzA4B
- F4elLCqeE9O4KNz5iLkeTpKI9p5/y8D6D9UAHCr0jUIpzQXyVp7hVf2IgN4yVYm7klFfJQm5A
- 4xtWZydW4vtYHy+L76S7CqXSZhxuVnq0M7Q+7rfVBrcpnuKYFht8Y4KfkakNGPpf1KXuGr/u1
- tVgL3AMKuNgCa8DsXNYb6nkNPmpiwGid69rfDK5lJBsrNX2OT/iB2DjSCo4CZAGP7BVQyN4vk
- 749R6gwU4RZEpV/OEeT6N8xeGuBOd+nrlZHrr3oukJ6wg0fYZ/00Wkb/Qq9mlk/Cg/S4volMy
- FKGWnpPM6fcl2uX8OTjwCP69SayShA80lORLPVhXoAl7Ohr/2g2GLGHITsMq7TTFKlCCVDxUT
- AvoHz3xPzatYIMCmRnwPP9e0kJ7sIib8fSnGt8Q3tcBgBZy0lbxYddqclFbEa5vwK3eXT3cOo
- V7unLlUpZYceoDJKMLR8p2B0x33jPuef3dLbIvVm7RyKNVzz2Pad077nXdbColoW8ZvwInfU3
- hntzNDJB8RBntQAmWxPUkJFGQh0q3avURIAZQrAmwBVK9N06MEaee+T9goYL7dx4+GQITVfkf
- TkB3rjDECyatg8mG7zTSY/PGA/qVgWJC9+Zc91u8emWx+N3dCM=
+X-Provags-ID: V03:K1:XKNLGNOHXCCT4cepBoT4KAp44LlMgz5C9UqqtDzhNNbPbjJosXB
+ rDfgWdzgKOoucHhHlaVmkOursvhW2qVq6jxIvZhKT5dm4WK26rQhC6h6Pp+JClat2O7ygXW
+ 0Zr0rz0FDoz8FtxYHaV8zm+QQkgmzPg8FaGiXpADxedbQHXo1Et/8dT22oUg3WGDMnq3WJj
+ mdCBrajV/1NqMVHnEfxyg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:I4wCDVqtSb8=:ictkF2th0cW6CpSYaJYo3P
+ +LCiN5Ft4AXfGRkZcDVAW8rWiz8jlgYsBX7/5w+XeHPSqtned+ja2PmMAB35tOlIYQKAwD6c3
+ 8j08uCDW6kR4ios5sHHNBkolNPv3hX+J5FMChaxgoNOrmVgJ57qnG25+Ffo+FlBKPFWgCeVFr
+ shCYWdEfZpamUMQh72mnmjGgnCwZdpFAMBk6njJF9KhxeyiiMXVQSroUz5sMMyPvrvb+L9nlg
+ CtyG2TQHwfVyGilw1jTC/FhhWRsJGOUDR+MC65LeNTIwi+MEHJcZRY8JBMicGjTrQeXYK2Zsz
+ Vt5ZI4DYRDg+oj12xpXDHm7eYyMhw/M5uwMCOHO1M1RYbUcW1wGTRIDNcri253n0R3vYw3Mj4
+ /Upelpfe5ER1thqNlm2UY+oz92oa9uar4a3W9ad8ppF+BmAUDnTW2EV3FRegaoXvD3xBVZ1ok
+ 8TAwjXYXE7CxZ913Ab5MaV293cccaWQQ02PqI/ffQbip/deGzVETFzxixX3Fs9vsL45/8DTRv
+ weAYbmlSX8woTGazq4a6U/pfikF2PbUCmSiYwUcOtcLQNc8pMjelaqAW44zRBd9byY7KP23Qb
+ T6xWXkwTUChmcDhBsjBk6vFDCs4/s63k3iigenCEcv0MOYT9LQcG5rRLayjx1TKulhkkeCssS
+ eA1+vUcVct6G/PuJxnsBr8Dy6fmNDMSiAZQfOHQdd8kKxMroCgggivGhTOjpClmfwqwHG3ssZ
+ K1U6YVfMhzCib3Cxi4IrR4vuHsUmEPwwotbaSO9PyVEXsFMxCb3lZm/Iuc+LrGarTWtOYlvE9
+ s30j8QZ9crQTgCiCLUFi6lpiuIYr4cjtGT7Fd0xUu3C4TNJqWE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,69 +59,55 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-On Wed, 7 Nov 2018, Junio C Hamano wrote:
+On Tue, 6 Nov 2018, Duy Nguyen wrote:
 
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
-> > On 06/11/2018 14:53, Johannes Schindelin via GitGitGadget wrote:
-> >> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> 
-> >> On Windows, an absolute POSIX path needs to be turned into a Windows
-> >> one.
-> >> 
-> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> ---
-> >>  path.c | 5 +++++
-> >>  1 file changed, 5 insertions(+)
-> >> 
-> >> diff --git a/path.c b/path.c
-> >> index 34f0f98349..a72abf0e1f 100644
-> >> --- a/path.c
-> >> +++ b/path.c
-> >> @@ -11,6 +11,7 @@
-> >>  #include "path.h"
-> >>  #include "packfile.h"
-> >>  #include "object-store.h"
-> >> +#include "exec-cmd.h"
-> >>  
-> >>  static int get_st_mode_bits(const char *path, int *mode)
-> >>  {
-> >> @@ -709,6 +710,10 @@ char *expand_user_path(const char *path, int real_home)
-> >>  
-> >>  	if (path == NULL)
-> >>  		goto return_null;
-> >> +#ifdef __MINGW32__
-> >> +	if (path[0] == '/')
-> >> +		return system_path(path + 1);
-> >> +#endif
+> On Tue, Nov 6, 2018 at 3:55 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 > >
-> > Hmm, this doesn't quite fit with the intended use of this
-> > function! ;-) (even on windows!)
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > I haven't looked very deeply, but doesn't this affect all
-> > absolute paths in the config read by git_config_pathname(),
-> > along with all 'included config' files?
+> > On Windows, an absolute POSIX path needs to be turned into a Windows
+> > one.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  path.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> >
+> > diff --git a/path.c b/path.c
+> > index 34f0f98349..a72abf0e1f 100644
+> > --- a/path.c
+> > +++ b/path.c
+> > @@ -11,6 +11,7 @@
+> >  #include "path.h"
+> >  #include "packfile.h"
+> >  #include "object-store.h"
+> > +#include "exec-cmd.h"
+> >
+> >  static int get_st_mode_bits(const char *path, int *mode)
+> >  {
+> > @@ -709,6 +710,10 @@ char *expand_user_path(const char *path, int real_home)
+> >
+> >         if (path == NULL)
+> >                 goto return_null;
+> > +#ifdef __MINGW32__
+> > +       if (path[0] == '/')
+> > +               return system_path(path + 1);
+> > +#endif
 > 
-> I think so.  I have not thought things through to say if replacing a
-> "full path in the current drive" with system_path() is a sensible
-> thing to do in the first place, but I am getting the impression from
-> review comments that it probably is not.
-> 
-> > I am pretty sure that I would not want the absolute paths
-> > in my config file(s) magically 'moved' depending on whether
-> > git has been compiled with 'runtime prefix' support or not!
+> Should this behavior be documented somewhere, maybe in config.txt?
 
-The cute thing is: your absolute paths would not be moved because we are
-talking about Windows. Therefore your absolute paths would not start with
-a forward slash.
-
-> In any case, the helper is about expanding ~/foo and ~who/foo to
-> absolute paths, without touching other paths, so it is a wrong
-> function to implement it in, even if the motivation were sensible.
-
-It could be renamed. In any case, for this feature we would need to expand
-a path that is not the final path, and this here location is the most
-logical place to do so.
+First we need to find a consensus how this should work.
 
 Ciao,
 Dscho
+
+> 
+> >         if (path[0] == '~') {
+> >                 const char *first_slash = strchrnul(path, '/');
+> >                 const char *username = path + 1;
+> > --
+> > gitgitgadget
+> -- 
+> Duy
+> 
