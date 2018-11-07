@@ -6,61 +6,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79DF21F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 01:54:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22B8D1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 02:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389129AbeKGLWb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 06:22:31 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:40608 "EHLO
+        id S2389005AbeKGLg5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 06:36:57 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37843 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388857AbeKGLWb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 06:22:31 -0500
-Received: by mail-wm1-f67.google.com with SMTP id b203-v6so14252750wme.5
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 17:54:17 -0800 (PST)
+        with ESMTP id S2388888AbeKGLg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 06:36:57 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p2-v6so14177456wmc.2
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 18:08:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HHj2oslHD+aQnT1v9BOPiaVAjct2mMrGtg8i79LiK0w=;
-        b=kf2EsetINXJ2siH9MwxsN1fA794p5YfPeBq64/hQ3IO8qxXRlZX+jN4PW6fgTHQSgM
-         Yykk3VqUP4xe/ncZeMkkN2+JHUBO0PL4dKHymUSnnixFRCZ3SKzyFcqNXBBrc/s0zhaZ
-         wmX1QvZGiOwMuAviuNVIzzKANKQJtC7fMsGnxOaZEKV2P3QpNZ+Xs0B0GKagCOVlUNPq
-         4RKv5XjBUEfss0tW2KQ2I0AbpTxgrZ1mJCLOBti5Byc36nrSzLpMGpcP4zGTD0jcRw8p
-         CjvwKsXk5YHGmK10LShhHQBy6ZdPxjVHtzTGDuiTjHAfRN9kINDWiPjoD9PBFroskv2p
-         B4WA==
+        bh=h7ySAIOTP2iSlOjLdMbMFO7KuLw0QZQ2udHvf8RlVMo=;
+        b=DbhWgPYXfIhUfof6jzb2CcvEDh2nPHtk71OEMIHSPqfdeHHkGgZ2QIMCBv7FK5zHf+
+         ay6MkZsJ7aDbsbYaRkF0g/9PV1ZnTyg1sHiH+Z2IX2awQqohR9D0Op5aiHXrvk12XuE2
+         Hlb7MBTskgQi0AdlWXec94mbNuuj9sS3Sqgfak/QjLkoUp6Oa3ch4PptaqUdH1v6W9+X
+         8x9vpeuHquha70+/nLxL2i63ABEjf9a7es7Pepl5P+/1Y9OcsAcQxUJ44fUwIfvAKOsV
+         pv+ZwQJ/D45NiuEPom6FxE7RRQcldcGSBdHwB05iuQBNGgI+2VRg43rCR4qyT8I3MxkA
+         cfWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HHj2oslHD+aQnT1v9BOPiaVAjct2mMrGtg8i79LiK0w=;
-        b=flnzvsboMw+yaKh8XlTqhzQ3kgnQeAOotF2cytn9y87yy9r22aBP43Y/YoGcBRT7y7
-         T5zYfIegO7t7guwSEabHvICHbbDapDyr3jP4E/OioX0fBu1zZ8JvVvvk4y52v8k1zscS
-         aZv56TAsqIGgaQ3dSVLiDZw8sdbzUxQfhy17miJhdb3GCXVsZlXFqsO3MN5sv6szyl5o
-         /Si3gkGFGARx3f/ivok4z2UPJVr4ykRYvZFi57IyMFRzaPz/Q1rtcaL6u1cnajnLK/+q
-         M0unksFKDP1eglxt1vuKY+1ow+k7MJD5DS3UyPBVWW1npL7geUdUsA68MH1F1seZwG7+
-         hfIA==
-X-Gm-Message-State: AGRZ1gKxF/bODomLP8i0RaMegTrHVTDDJmR2+R1VK/myQZrfBUbQDpIy
-        Zv1pI1R8jJ47DD/Hg3pI6CE=
-X-Google-Smtp-Source: AJdET5cjS7w1oAnoSkgG8RYqrwRqjPeUxVAHBnJNHa6F3AaWETsFSkB76HjNaxVouafIE9kr8g+fjA==
-X-Received: by 2002:a1c:9f01:: with SMTP id i1-v6mr246732wme.8.1541555656754;
-        Tue, 06 Nov 2018 17:54:16 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j203-v6sm5527092wmd.46.2018.11.06.17.54.15
+        bh=h7ySAIOTP2iSlOjLdMbMFO7KuLw0QZQ2udHvf8RlVMo=;
+        b=UqE7AAmqfzKWS+NSoX8dgYlUt2obMc4IwxSXv2o/zxDBCQBEJKxUxobg4pqJ8C6JSV
+         ZQ7mKEeyt2pF1vdIdDGRYjcaMUULbYkkcY4fMt9qEEimUtOzMAlD89yPm4Xg2ZgsR5vQ
+         gvzEy0J5s5Xu0WnI2egPmXP1JcnCL0qfnWeoT+KtLSuR7UnUl+HEVHw0OQilru3Arx0N
+         2fAc8mICb8bs0kfJ9CN3s+J6zNrSZ7zsin3pxK+wD2qX39QFsuORKbm2Ic8nSItOoIRy
+         m4dmonQ03XgFtjLqSG0Htt0y+KIwcFZUVI98UYU4e6/Kcrq3PMUxym9AWK7vlCx+rdoQ
+         Iy7Q==
+X-Gm-Message-State: AGRZ1gKWlwHyjlGLovvQBYI8u/oLFtWgLzqeTbW8KrbRDksufFec3DdK
+        577b5m8L1RWg2k1XV8FZzzA=
+X-Google-Smtp-Source: AJdET5fvkgApJbvgICqFp3osYkQ91meFZ0p8olNriliurwmPd4TCZjIvkiCWzDUQuKi1GYrgQStCMg==
+X-Received: by 2002:a1c:6754:: with SMTP id b81-v6mr278236wmc.104.1541556520430;
+        Tue, 06 Nov 2018 18:08:40 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z7-v6sm14640601wrv.21.2018.11.06.18.08.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 17:54:15 -0800 (PST)
+        Tue, 06 Nov 2018 18:08:39 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/1] pack-objects: ignore ambiguous object warnings
-References: <pull.68.git.gitgitgadget@gmail.com>
-        <pull.68.v2.git.gitgitgadget@gmail.com>
-        <002868ee6bec3dac38749d0f05bf2db8da0969a5.1541536484.git.gitgitgadget@gmail.com>
-        <20181106211234.GA8383@sigill.intra.peff.net>
-Date:   Wed, 07 Nov 2018 10:54:14 +0900
-In-Reply-To: <20181106211234.GA8383@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 6 Nov 2018 16:12:35 -0500")
-Message-ID: <xmqqftwdd54p.fsf@gitster-ct.c.googlers.com>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] approxidate: handle pending number for "specials"
+References: <20181102052239.GA19162@sigill.intra.peff.net>
+        <20181102052309.GB19234@sigill.intra.peff.net>
+        <CAPUEspi12TtKxKGr=tutfLPNPWhaZmGCh7q4D1LRJ9LFTWwKNA@mail.gmail.com>
+        <20181107011253.GA18276@sigill.intra.peff.net>
+Date:   Wed, 07 Nov 2018 11:08:38 +0900
+In-Reply-To: <20181107011253.GA18276@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 6 Nov 2018 20:12:53 -0500")
+Message-ID: <xmqqbm71d4gp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,71 +70,67 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> So we'd never expect to see anything except "1" in our save_warning
-> variable. Doing a save/restore is just about code hygiene and
-> maintainability.
+> On Tue, Nov 06, 2018 at 04:48:28PM -0800, Carlo Arenas wrote:
+>
+> I think date_yesterday() is the only one of those special functions that
+> gets called like this. Here's what I think we should do to fix it (this
+> can go right on top of jk/misc-unused-fixes, which is already in next).
 
-Here is what I plan to queue.  Thanks, both.
+Thanks, both.  I think the patch makes sense.
 
--- >8 --
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Tue, 6 Nov 2018 12:34:47 -0800
-Subject: [PATCH] pack-objects: ignore ambiguous object warnings
-
-A git push process runs several processes during its run, but one
-includes git send-pack which calls git pack-objects and passes
-the known have/wants into stdin using object ids. However, the
-default setting for core.warnAmbiguousRefs requires git pack-objects
-to check for ref names matching the ref_rev_parse_rules array in
-refs.c. This means that every object is triggering at least six
-"file exists?" queries.  When there are a lot of refs, this can
-add up significantly! I observed a simple push spending three
-seconds checking these paths.
-
-The fix here is similar to 4c30d50 "rev-list: disable object/refname
-ambiguity check with --stdin".  While the get_object_list() method
-reads the objects from stdin, turn warn_on_object_refname_ambiguity
-flag (which is usually true) to false.  Just for code hygiene, save
-away the original at the beginning and restore it once we are done.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pack-objects.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d1144a8f7e..f703e6df9b 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2988,6 +2988,7 @@ static void get_object_list(int ac, const char **av)
- 	struct rev_info revs;
- 	char line[1000];
- 	int flags = 0;
-+	int save_warning;
- 
- 	init_revisions(&revs, NULL);
- 	save_commit_buffer = 0;
-@@ -2996,6 +2997,9 @@ static void get_object_list(int ac, const char **av)
- 	/* make sure shallows are read */
- 	is_repository_shallow(the_repository);
- 
-+	save_warning = warn_on_object_refname_ambiguity;
-+	warn_on_object_refname_ambiguity = 0;
-+
- 	while (fgets(line, sizeof(line), stdin) != NULL) {
- 		int len = strlen(line);
- 		if (len && line[len - 1] == '\n')
-@@ -3022,6 +3026,8 @@ static void get_object_list(int ac, const char **av)
- 			die(_("bad revision '%s'"), line);
- 	}
- 
-+	warn_on_object_refname_ambiguity = save_warning;
-+
- 	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
- 		return;
- 
--- 
-2.19.1-856-g8858448bb4
-
+> -- >8 --
+> Subject: [PATCH] approxidate: fix NULL dereference in date_time()
+>
+> When we see a time like "noon", we pass "12" to our date_time() helper,
+> which sets the hour to 12pm. If the current time is before noon, then we
+> wrap around to yesterday using date_yesterday(). But unlike the normal
+> calls to date_yesterday() from approxidate_alpha(), we pass a NULL "num"
+> parameter. Since c27cc94fad (approxidate: handle pending number for
+> "specials", 2018-11-02), that causes a segfault.
+>
+> One way to fix this is by checking for NULL. But arguably date_time() is
+> abusing our helper by passing NULL in the first place (and this is the
+> only case where one of these "special" parsers is used this way). So
+> instead, let's have it just do the 1-day subtraction itself. It's still
+> just a one-liner due to our update_tm() helper.
+>
+> Note that the test added here is a little funny, as we say "10am noon",
+> which makes the "10am" seem pointless.  But this bug can only be
+> triggered when it the currently-parsed hour is before the special time.
+> The latest special time is "tea" at 1700, but t0006 uses a hard-coded
+> TEST_DATE_NOW of 1900. We could reset TEST_DATE_NOW, but that may lead
+> to confusion in other tests. Just saying "10am noon" makes this test
+> self-contained.
+>
+> Reported-by: Carlo Arenas <carenas@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  date.c          | 2 +-
+>  t/t0006-date.sh | 1 +
+>  2 files changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/date.c b/date.c
+> index 7adce327a3..9bc15df6f9 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -929,7 +929,7 @@ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
+>  static void date_time(struct tm *tm, struct tm *now, int hour)
+>  {
+>  	if (tm->tm_hour < hour)
+> -		date_yesterday(tm, now, NULL);
+> +		update_tm(tm, now, 24*60*60);
+>  	tm->tm_hour = hour;
+>  	tm->tm_min = 0;
+>  	tm->tm_sec = 0;
+> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+> index b7ea5fbc36..ffb2975e48 100755
+> --- a/t/t0006-date.sh
+> +++ b/t/t0006-date.sh
+> @@ -114,6 +114,7 @@ check_approxidate '15:00' '2009-08-30 15:00:00'
+>  check_approxidate 'noon today' '2009-08-30 12:00:00'
+>  check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
+>  check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
+> +check_approxidate '10am noon' '2009-08-29 12:00:00'
+>  
+>  check_approxidate 'last tuesday' '2009-08-25 19:20:00'
+>  check_approxidate 'July 5th' '2009-07-05 19:20:00'
