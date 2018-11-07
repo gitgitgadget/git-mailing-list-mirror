@@ -2,115 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 858F01F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 13:33:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F40FD1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 13:50:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727735AbeKGXEW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 18:04:22 -0500
-Received: from mail-pf1-f170.google.com ([209.85.210.170]:38125 "EHLO
-        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726411AbeKGXEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 18:04:21 -0500
-Received: by mail-pf1-f170.google.com with SMTP id b11-v6so7714980pfi.5
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 05:33:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=pwaq1k7tbXYZJbON+5QUf3xRvroHi6fk057jEUhtDRQ=;
-        b=Vv+zQ8BVYRXZi3nDrErc/X+UFLhSJsJ5Nps77ORk/SGZT7mXEzDD8WSg5jfwMdDjdO
-         u2JXbmjOBumATZSrL/0GIjSyKOIyLJEVlplZhZXr5TyQ401TjiK7RavR+NpuncI9YpU2
-         bvqWttpZiJz3ORSPSYPRpnWQ5Tm92zTFJb4cJR1lPaWJCS9VZYH5nZBwHu0bTHXth1Pu
-         +fMSD5ycZx3EMOTTaEXo6BDjXAEmwJB8AShEN5dN4hpyid54tQt6UnwMDXmyjvcPZe6s
-         La1KmlzT4g7Dvjkw7eGZUkfJUSzzXQHbz+xfGdN0lf0x0bR3lpuLKn27L/KQxMJhrqfr
-         zJdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pwaq1k7tbXYZJbON+5QUf3xRvroHi6fk057jEUhtDRQ=;
-        b=onCXrwNZ1o+vnCz0UmWnKnUYNCt8MWlPpuVX5MLi0iYaZG8lNVBLorfROVOm8e0mxY
-         OjvlkSluMLhqQdwwIiSdtlQsqhI1n+H9o+/rpRSLXIZ54nKrEAhDzG5x9J7jOhTB3ZdB
-         iQ3BSVwKuEDiFWJ/nzwGaXqtFH8xCiCgo+uik5SgKf+M/nEPfMgSfDAxlS42ChEHq5Xp
-         /7SJYLWbvuIYgvv52bi1I4WkajVbZpoUIRc4M++vomMvGWCb2GPcOB3E1VyYgKm2Hfqs
-         quMWP606FNDCjnlX31kGBwr6drcK0/eAYxjCjRghdY06tnuHbbAZ6RtZUbT4AjQjaJ81
-         sTXg==
-X-Gm-Message-State: AGRZ1gKSnn+4L4ak+uqzD5CYXhded4qwduZHA/P26LJQWKTTfWevLDx2
-        Qz6aS9xCXtZd6wGhOkSmTlxzj17b1r8=
-X-Google-Smtp-Source: AJdET5e6XK67TT1jMBBufL7jhGD7Jb9C5QY+b7ojl6h/3R6F6IbgP4Z4G8iI5R0d3sJGTRhn1wqwBA==
-X-Received: by 2002:a62:2643:: with SMTP id m64-v6mr254060pfm.74.1541597636837;
-        Wed, 07 Nov 2018 05:33:56 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id l129-v6sm758000pfc.155.2018.11.07.05.33.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Nov 2018 05:33:56 -0800 (PST)
-Date:   Wed, 07 Nov 2018 05:33:56 -0800 (PST)
-X-Google-Original-Date: Wed, 07 Nov 2018 13:33:52 GMT
-Message-Id: <4f5a935c4355794effb23c979dcbaf77ed33da26.1541597633.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.69.git.gitgitgadget@gmail.com>
-References: <pull.69.git.gitgitgadget@gmail.com>
-From:   "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] http: add support selecting http version
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1730753AbeKGXUe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 18:20:34 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59311 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727752AbeKGXUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 18:20:34 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOBOi-1gPu051alg-005cMq; Wed, 07
+ Nov 2018 14:50:01 +0100
+Date:   Wed, 7 Nov 2018 14:50:00 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Pratik Karki <predatoramigo@gmail.com>
+Subject: Re: Regression in rebase-in-C with rebase.autoStash=true
+In-Reply-To: <878t2671dc.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811071436290.39@tvgsbejvaqbjf.bet>
+References: <pull.56.git.gitgitgadget@gmail.com> <878t2671dc.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Force Charlie <charlieio@outlook.com>
+Content-Type: multipart/mixed; boundary="8323328-953644727-1541598601=:39"
+X-Provags-ID: V03:K1:sVv4AkXhOxALWi0TB6chhr9TWyQOEfdVkig9UjjojZitmlKj13W
+ vLFzuvW2z+iCLThLUttTwN8G0RJEpndv/ylo7XsWSs93ToU8DGwxEEOT6jwHU2DEcl3HuzG
+ DNW+4/STZiwsdpLtcA2Dv1FnAqNeU5G0LFO52VGAjfe/KvgDc4atrKDyThnfZLgLKLvTjHW
+ 841OyJg3O+7r2GJbiTfQA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:577LD6UGJs4=:5lQPhHVMSP9TYW/TPkiTQu
+ RsZ+GMRNrO9WpcL5/gq1df1s1Kzq3Jg30HF1xhZC9Gno0kUkXdBLvgiHOgWUmaedrhXpWWCAM
+ x8oCKTVHRAU5x2OaDFMSo//NS0RXOAv659ubAOrocdTIGGTyASnnwK9hoZ9KfptDXnrRpKaCZ
+ PeKkmQDOITI20Fr/ivMubr3NeYc3k5GvWdtThwtNwqlhgTxu9rz8ve6LzjcwNusWR/i6HHAHH
+ zU7GlQAnyFLy33PVwsDbE0lZyq7qQu4aT0dTc5aFHgcQpccaec9jqQYLVx/x41P3izJ3sIDZv
+ Fh5NSyBaE2fMbCaMi/I6BANexEllVpSEvXyxaC0Wej7aN3aJOoPXoX6p+3U5ocafMPC2J6X+c
+ 8wTJ9TyTwjDawqWNGaDVgEeZsGjLWKl2DogLpGY/as7X6iK0qBguvqAq8HrSAA8f54Odbh/Um
+ 0aICrGCCqIjv8Ism4Yi2IcJK+PIa29K+RhaJ1rxa+Ko6bmRn4jnV/Gr8OoQxUfNq7DLiH4r4j
+ gfaQioJbOoTWwzqpH/xGiDlr0LhsMZzXPb52x9VT0O/OruzkrCiTAStuOVGslj2MBJtGJ1/2S
+ vEHlVeDXqBz24B0wCyuPQcSZC3pKW/qxh+XHERDY4rUqnGWXwhCcj+dQv4uS1Pifo4uq+tGDU
+ JtYTtJkr2Znw2Csp5vd2cO1Ydn3SXvejomJnmM7zGJNpEMec7fBo0q/3GbgFlPqmVLInxg4QH
+ L6Yhji5XqNKT1vQcKOe7GC4P0EhDbAZB+t9/6NhS5MBcgIVSewISjx3iuXGkcWd90EagdwGxh
+ 2sZ21XJumJzIQLUvn/9iQ6rvoJaCnb5cQeyGaG8dI2upSlPy80KogwuJKYc2qT7Y/8m8yTrFO
+ f0aLtrdTGiftbUvZqDBMo6/W7uq8kE9McFzXKAalwQU2dhW6XlDAMJhG65JHDwBm2i4sKuEny
+ Z8fPigL50YQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Force Charlie <charlieio@outlook.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Force Charlie <charlieio@outlook.com>
----
- http.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+--8323328-953644727-1541598601=:39
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/http.c b/http.c
-index 3dc8c560d6..99cb04faba 100644
---- a/http.c
-+++ b/http.c
-@@ -48,6 +48,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
- 
- static int curl_ssl_verify = -1;
- static int curl_ssl_try;
-+static int curl_http_version = 11;
- static const char *ssl_cert;
- static const char *ssl_cipherlist;
- static const char *ssl_version;
-@@ -284,6 +285,10 @@ static void process_curl_messages(void)
- 
- static int http_options(const char *var, const char *value, void *cb)
- {
-+	if (!strcmp("http.version",var)) {
-+		curl_http_version=git_config_int(var,value);
-+		return 0;
-+	}
- 	if (!strcmp("http.sslverify", var)) {
- 		curl_ssl_verify = git_config_bool(var, value);
- 		return 0;
-@@ -806,6 +811,13 @@ static CURL *get_curl_handle(void)
- 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
- 	}
- 
-+#if LIBCURL_VERSION_NUM >= 0x073100
-+	if(curl_http_version == 20){
-+		/* CURL Enable HTTP2*/
-+		curl_easy_setopt(result, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_2);
-+     }
-+#endif
-+
- #if LIBCURL_VERSION_NUM >= 0x070907
- 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
- #endif
--- 
-gitgitgadget
+Hi Ævar,
+
+On Tue, 6 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+
+> 
+> On Tue, Oct 23 2018, Johannes Schindelin via GitGitGadget wrote:
+> 
+> > Johannes Schindelin (2):
+> >   rebase --autostash: demonstrate a problem with dirty submodules
+> >   rebase --autostash: fix issue with dirty submodules
+> >
+> >  builtin/rebase.c            |  2 +-
+> >  t/t3420-rebase-autostash.sh | 10 ++++++++++
+> >  2 files changed, 11 insertions(+), 1 deletion(-)
+> 
+> There's another bug with rebase.autoStash in master (and next/pu) but
+> not v2.19.0. I tried to bisect bit it just comes down to 5541bd5b8f
+> ("rebase: default to using the builtin rebase", 2018-08-08).
+> 
+> Credit to a co-worker of mine who wishes to remain anonymous for
+> discovering this. I narrowed down his test-case to (any repo will do):
+>     
+>     (
+>         rm -rf /tmp/todo &&
+>         git clone --single-branch --no-tags --branch=todo https://github.com/git/git.git /tmp/todo &&
+>         cd /tmp/todo &&
+>         rm Make &&
+>         git rev-parse --abbrev-ref HEAD &&
+>         git -c rebase.autoStash=true -c pull.rebase=true pull &&
+>         if test $(git rev-parse --abbrev-ref HEAD) != 'todo'
+>         then
+>             echo 'On detached head!' &&
+>             git status &&
+>             exit 1
+>         else
+>             echo 'We are still on our todo branch!'
+>         fi
+>     )
+
+I found the culprit. Patch forthcoming,
+Dscho
+--8323328-953644727-1541598601=:39--
