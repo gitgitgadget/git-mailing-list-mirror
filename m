@@ -2,156 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 912BF1F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 12:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86F1E1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 12:29:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726725AbeKGVw0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 16:52:26 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42728 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726084AbeKGVw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 16:52:26 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y15-v6so17175128wru.9
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 04:22:16 -0800 (PST)
+        id S1726825AbeKGWAI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 17:00:08 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:38117 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726248AbeKGWAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 17:00:07 -0500
+Received: by mail-ed1-f42.google.com with SMTP id a2-v6so8676896edi.5
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 04:29:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NxZCofZKcUxR5x+45ZTa76e3y9VQBs8iz0mddweAEl4=;
-        b=XLhEWXHTJDuGxA0KcWHIOY5fUkgZe5u6RCd4JuNorXudSMpzi2En88C26gT0rToJzb
-         t+mOjmR1kTtWUlJsOQfujShDkBr1jMjvpk/ir1htlG4CfA9vuDB45DNCrDMcs3tPtuB8
-         zZ2OldS1ErWQfv7qD0zeAZk3XpkJH9QlgPCFs4OEhZQZIHRNqwKB1NkdqOGqcRjFQ0An
-         genmsDqJOfI8m9/rgmYFtgUQmq9jEoKrJ6xjJ6/AJx703VXcljIVUOr1ANzI1aWaR42W
-         Trf383EfmE929MZXrGp5MpCAdZZIwtlSFF1T6xObPV/H2FbkzsoXIAwzFKShOVTu+8ri
-         lg8Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=1OHfbfHvI9Cso93k5j+8eiCgYLybU51eR38WCtjy6VM=;
+        b=Odj0UXhGCv/9T3jjr2wIsLb4IbjWpM8g9RCR8afJp04NO3q/ik597j3nSrs2ejX+dq
+         aa87QZvCXCodBOocdLA1tScTEWIfff3dlnhR1+h5MAh4gvqG5rVyMGOpYq6+w6wipFYm
+         cZXkTs7hpEFpHwHap/mbvWX1V9n+kEp1Xb4u/V5u4+zIrfdBram9Lq54SVVOg3zjUVdf
+         J7QfK//5j2qj+z5ocH10MLNq4k/ikO2AgRb2LK5tJmWD+VVY9R0wXAlKSmTygLzFwjoR
+         e2c0MvoJzhiaHpOblrJIM1QtJH+3+aT+m8/0IGKhxe8iEnRUockI+t+Ct2QG2udNilFt
+         yCag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NxZCofZKcUxR5x+45ZTa76e3y9VQBs8iz0mddweAEl4=;
-        b=TgCfpUyBkD7ldYqXkNQlI9rVuG1HyfLB9XFNXb5G5lujUbi3juSZ5w/7BQiLizOokX
-         h9vlPiW71hA7uEPl38bh3P2GDjaddoZQ0ZVqimVPvQwkQ6bKkFNqBTdj8Db/Qd53oqRC
-         Kw2egijrrpmit2irVn1o/H2weTrKyiX/xgqZTKAbAmX1xmhejBrTAZu7Vc/A+UP7gsJd
-         kxkT4CD8ysDK20ZBHQfHr/UHIj5kgJ+oFLhvAoOZ3EGPD/QEvKqCOMcv7VbUImDo5V7d
-         +uC2ygQvli+aNcZ6YtFemtNWkfBGFPHhA67PVAQCROZu+zIF105PDiCwCz8v/kctVmyq
-         JPNw==
-X-Gm-Message-State: AGRZ1gLuYGC4wbJ9LinKtf0IeeLsFmEgZfuTJkS871hAs7qBJmTgGRY6
-        W8mnhN2mIPKnuMHN8zoX2bt4ZzPguZE=
-X-Google-Smtp-Source: AJdET5eD2UWzQfgxmbm8SCnszG9wADtAX7P56DXWthXQCNCjGXMfcfIVPwNKzjPtLhRL5D4DA+ogpw==
-X-Received: by 2002:a5d:4fc7:: with SMTP id h7-v6mr16086wrw.48.1541593335113;
-        Wed, 07 Nov 2018 04:22:15 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id y21-v6sm550936wma.36.2018.11.07.04.22.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Nov 2018 04:22:14 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Lucas De Marchi <lucas.demarchi@intel.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 2/2] range-diff: fix regression in passing along diff options
-Date:   Wed,  7 Nov 2018 12:22:02 +0000
-Message-Id: <20181107122202.1813-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0
-In-Reply-To: <nycvar.QRO.7.76.6.1811071202480.39@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1811071202480.39@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=1OHfbfHvI9Cso93k5j+8eiCgYLybU51eR38WCtjy6VM=;
+        b=n3ETVDqxBGMOsb55ImcAgJauCbB9VtmCfAeSkDyU0FnlT2dE47FRq4RqY1IDALySe4
+         uFdSbhisNDthK8qePwUdBXHfWxYC+3cvEuGKG+UBJMggEAAF21Pc/5CoZMlor3S/jn8s
+         NF7dfUjDqVJ4CJaC/0XrcC9ik7EcpqYyQTZHGoW9vw1ZswMMqplTan7Ag2OCxe44gZrn
+         Jvk/HkVYGdGbuerS/tOf9Za2LCS5X+K0mFwhNHIM7kKI32XRmRcG63WSmNf0uShx1obS
+         CSTqVMSg5ntX9BEX2oCKFsEk4MEX/rS09gY7Z9M/mN7926NVJaTL2iPim6vX8Sqfmq+u
+         ji0w==
+X-Gm-Message-State: AGRZ1gJIOll9CPPILOWhhOLdsWfOkDOQRK2BxxhjYkt35YHb1JIsWTN7
+        vkZwKhUqUaVbVRmCCA6fe1g=
+X-Google-Smtp-Source: AJdET5eMWC1PJ3A8Xw4mOL+jNDf+HZ026MVsLgkrGEXguBp5lsgX0SGKju+jgWOnL+RsnZjutTYVrA==
+X-Received: by 2002:a50:a7a2:: with SMTP id i31-v6mr22154edc.236.1541593794683;
+        Wed, 07 Nov 2018 04:29:54 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id n16-v6sm122234eja.6.2018.11.07.04.29.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Nov 2018 04:29:53 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Nov 2018, #03; Wed, 7)
+References: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 07 Nov 2018 13:29:52 +0100
+Message-ID: <87sh0d5av3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 73a834e9e2 ("range-diff: relieve callers of low-level configuration
-burden", 2018-07-22) we broke passing down options like --no-patch,
---stat etc. Fix that regression, and add a test for some of these
-options being passed down.
 
-As noted in a change leading up to this ("range-diff doc: add a
-section about output stability", 2018-11-07) the output is not meant
-to be stable. So this regression test will likely need to be tweaked
-once we get a "proper" --stat option.
+On Wed, Nov 07 2018, Junio C Hamano wrote:
 
-See
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1811071202480.39@tvgsbejvaqbjf.bet/
-for a further explanation of the regression.
+> * ab/range-diff-no-patch (2018-11-07) 1 commit
+>  - range-diff: add a --no-patch option to show a summary
+>
+>  "range-diff" learns the "--no-patch" option, which can be used to
+>  get a high-level overview without the actual line-by-line patch
+>  difference shown.
+>
+>  Will merge to 'next'.
 
-The quoting of "EOF" here mirrors that of an earlier test. Perhaps
-that should be fixed, but let's leave that up to a later cleanup
-change.
+Per <20181107122202.1813-1-avarab@gmail.com> it turns out this whole
+thing should have been a bugfix instead, sent a v2.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- range-diff.c          |  3 ++-
- t/t3206-range-diff.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+> * ab/dynamic-gettext-poison (2018-11-02) 1 commit
+>  - i18n: make GETTEXT_POISON a runtime option
+>
+>  On hold.
+>  cf. <20181102163725.GY30222@szeder.dev>
 
-diff --git a/range-diff.c b/range-diff.c
-index bd8083f2d1..488844c0af 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -453,7 +453,8 @@ int show_range_diff(const char *range1, const char *range2,
- 		struct strbuf indent = STRBUF_INIT;
- 
- 		memcpy(&opts, diffopt, sizeof(opts));
--		opts.output_format = DIFF_FORMAT_PATCH;
-+		if (!opts.output_format)
-+			opts.output_format = DIFF_FORMAT_PATCH;
- 		opts.flags.suppress_diff_headers = 1;
- 		opts.flags.dual_color_diffed_diffs = dual_color;
- 		opts.output_prefix = output_prefix_cb;
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 6aae364171..e497c1358f 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -122,6 +122,36 @@ test_expect_success 'changed commit' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'changed commit with --no-patch diff option' '
-+	git range-diff --no-color --no-patch topic...changed >actual &&
-+	cat >expected <<-EOF &&
-+	1:  4de457d = 1:  a4b3333 s/5/A/
-+	2:  fccce22 = 2:  f51d370 s/4/A/
-+	3:  147e64e ! 3:  0559556 s/11/B/
-+	4:  a63e992 ! 4:  d966c5c s/12/B/
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'changed commit with --stat diff option' '
-+	git range-diff --no-color --stat topic...changed >actual &&
-+	cat >expected <<-EOF &&
-+	1:  4de457d = 1:  a4b3333 s/5/A/
-+	     a => b | 0
-+	     1 file changed, 0 insertions(+), 0 deletions(-)
-+	2:  fccce22 = 2:  f51d370 s/4/A/
-+	     a => b | 0
-+	     1 file changed, 0 insertions(+), 0 deletions(-)
-+	3:  147e64e ! 3:  0559556 s/11/B/
-+	     a => b | 0
-+	     1 file changed, 0 insertions(+), 0 deletions(-)
-+	4:  a63e992 ! 4:  d966c5c s/12/B/
-+	     a => b | 0
-+	     1 file changed, 0 insertions(+), 0 deletions(-)
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'changed commit with sm config' '
- 	git range-diff --no-color --submodule=log topic...changed >actual &&
- 	cat >expected <<-EOF &&
--- 
-2.19.1.930.g4563a0d9d0
+Hope to sent update soon...
+
+> * ab/push-dwim-dst (2018-10-29) 9 commits
+>  - SQUASH???
+>  - push doc: document the DWYM behavior pushing to unqualified <dst>
+>  - push: add DWYM support for "git push refs/remotes/...:<dst>"
+>  - push: test that <src> doesn't DWYM if <dst> is unqualified
+>  - push: add an advice on unqualified <dst> push
+>  - push: move unqualified refname error into a function
+>  - push: improve the error shown on unqualified <dst> push
+>  - i18n: remote.c: mark error(...) messages for translation
+>  - remote.c: add braces in anticipation of a follow-up change
+>
+>  "git push $there $src:$dst" rejects when $dst is not a fully
+>  qualified refname and not clear what the end user meant.  The
+>  codepath has been taught to give a clearer error message, and also
+>  guess where the push should go by taking the type of the pushed
+>  object into account (e.g. a tag object would want to go under
+>  refs/tags/).
+>
+>  The last few steps are questionable.
+>  cf. <87in1lkw54.fsf@evledraar.gmail.com>
+
+...ditto...
+
+> * ab/pack-tests-cleanup (2018-10-31) 3 commits
+>   (merged to 'next' on 2018-11-03 at b4a39595bb)
+>  + index-pack tests: don't leave test repo dirty at end
+>  + pack-objects tests: don't leave test .git corrupt at end
+>  + pack-objects test: modernize style
+>
+>  A couple of tests used to leave the repository in a state that is
+>  deliberately corrupt, which have been corrected.
+>
+>  Will merge to 'master'.
+
+Thanks!
+
+> * nd/config-split (2018-10-29) 79 commits
+>   (merged to 'next' on 2018-11-03 at a336559101)
+>  + config.txt: remove config/dummy.txt
+>  + config.txt: move worktree.* to a separate file
+>  + config.txt: move web.* to a separate file
+>  + config.txt: move versionsort.* to a separate file
+>  + config.txt: move user.* to a separate file
+>  + config.txt: move url.* to a separate file
+>  + config.txt: move uploadpack.* to a separate file
+>  + config.txt: move uploadarchive.* to a separate file
+>  + config.txt: move transfer.* to a separate file
+>  + config.txt: move tag.* to a separate file
+>  + config.txt: move submodule.* to a separate file
+>  + config.txt: move stash.* to a separate file
+>  + config.txt: move status.* to a separate file
+>  + config.txt: move splitIndex.* to a separate file
+>  + config.txt: move showBranch.* to a separate file
+>  + config.txt: move sequencer.* to a separate file
+>  + config.txt: move sendemail-config.txt to config/
+>  + config.txt: move reset.* to a separate file
+>  + config.txt: move rerere.* to a separate file
+>  + config.txt: move repack.* to a separate file
+>  + config.txt: move remotes.* to a separate file
+>  + config.txt: move remote.* to a separate file
+>  + config.txt: move receive-config.txt to config/
+>  + config.txt: move rebase-config.txt to config/
+>  + config.txt: move push-config.txt to config/
+>  + config.txt: move pull-config.txt to config/
+>  + config.txt: move protocol.* to a separate file
+>  + config.txt: move pretty.* to a separate file
+>  + config.txt: move pager.* to a separate file
+>  + config.txt: move pack.* to a separate file
+>  + config.txt: move notes.* to a separate file
+>  + config.txt: move mergetool.* to a separate file
+>  + config.txt: move merge-config.txt to config/
+>  + config.txt: move man.* to a separate file
+>  + config.txt: move mailmap.* to a separate file
+>  + config.txt: move mailinfo.* to a separate file
+>  + config.txt: move log.* to a separate file
+>  + config.txt: move interactive.* to a separate file
+>  + config.txt: move instaweb.* to a separate file
+>  + config.txt: move init.* to a separate file
+>  + config.txt: move index.* to a separate file
+>  + git-imap-send.txt: move imap.* to a separate file
+>  + config.txt: move i18n.* to a separate file
+>  + config.txt: move http.* to a separate file
+>  + config.txt: move ssh.* to a separate file
+>  + config.txt: move help.* to a separate file
+>  + config.txt: move guitool.* to a separate file
+>  + config.txt: move gui-config.txt to config/
+>  + config.txt: move gpg.* to a separate file
+>  + config.txt: move grep.* to a separate file
+>  + config.txt: move gitweb.* to a separate file
+>  + config.txt: move gitcvs-config.txt to config/
+>  + config.txt: move gc.* to a separate file
+>  + config.txt: move fsck.* to a separate file
+>  + config.txt: move fmt-merge-msg-config.txt to config/
+>  + config.txt: move format-config.txt to config/
+>  + config.txt: move filter.* to a separate file
+>  + config.txt: move fetch-config.txt to config/
+>  + config.txt: move fastimport.* to a separate file
+>  + config.txt: move difftool.* to a separate file
+>  + config.txt: move diff-config.txt to config/
+>  + config.txt: move completion.* to a separate file
+>  + config.txt: move credential.* to a separate file
+>  + config.txt: move commit.* to a separate file
+>  + config.txt: move column.* to a separate file
+>  + config.txt: move color.* to a separate file
+>  + config.txt: move clean.* to a separate file
+>  + config.txt: move checkout.* to a separate file
+>  + config.txt: move browser.* to a separate file
+>  + config.txt: move branch.* to a separate file
+>  + config.txt: move blame.* to a separate file
+>  + config.txt: move apply.* to a separate file
+>  + config.txt: move am.* to a separate file
+>  + config.txt: move alias.* to a separate file
+>  + config.txt: move add.* to a separate file
+>  + config.txt: move core.* to a separate file
+>  + config.txt: move advice.* to a separate file
+>  + Update makefile in preparation for Documentation/config/*.txt
+>  + Merge branches 'bp/reset-quiet' and 'js/mingw-http-ssl' into nd/config-split
+>  (this branch uses bp/reset-quiet.)
+>
+>  Split the overly large Documentation/config.txt file into million
+>  little pieces.  This potentially allows each individual piece
+>  included into the manual page of the command it affects more easily.
+>
+>  Will merge to 'master'.
+>
+>  This is a painful conversions while many other topics in flight
+>  wants to add to or edit the documentation of configuration
+>  variables.
+
+Yeah the sooner this lands in master the better. I stopped deploying
+internal versions of git while this is in flight. Having topics I want
+to apply (based off master) + deploying next + resolving conflicts was
+too painful to bother with.
 
