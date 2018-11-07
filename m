@@ -2,147 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 309941F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 00:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02AF11F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 01:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388411AbeKGKZ6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 05:25:58 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39953 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388174AbeKGKZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 05:25:58 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b203-v6so14179216wme.5
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 16:57:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=E+1fZuQCACuQ+apD87OVT3BJK1v6cMDA5/bmpkXVXfo=;
-        b=WEgX+AHS68KzXBGbG0M6IZiyMhQ8zTkIcl1fL8RCiIldG7JW2a5SYsHOg+n3t/i9+9
-         bw7HqesUMWNVmwji/QCAE2f5OTkYL/V7cJLTx9XErEqBZb7oUQ9ujKpv9nAXJo77CKHW
-         3YO5pzrZ6qVaorMKzsC3wr0VA536a3C1iWTR5XdF7kbYuJcaU3ctiUma2UQszxK5LPBJ
-         sFTCjGcCWP32LL+Am2nm+yrADnTYSM05MDEIc10F6FL0xh9knrTUFBsLsy0L1Nb6myyE
-         wKkzauuNPWH0nBewRx2grQUp3ZnLtrqZOKCXkRmrQxnxrUfPtItg2+cBzXnIifyozqfS
-         qRkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=E+1fZuQCACuQ+apD87OVT3BJK1v6cMDA5/bmpkXVXfo=;
-        b=fayOEfF3jJdXGfd2Xo43AbEE82M5yYbyCu1iRJ8dNDvO05C/WI2PQWmuGg6Ja6DiwA
-         eSWeNnRAxyBga7lrmShgVBshwP5I5Rjc8HuKAngABqgyzjFRltAa2eVorvaYscRGJRcA
-         LzD0mYZ/Jc1c6/NYiH18QPJwWpyXlS6tnGIxvifjhf6od6TKBIa0FkcehLbmwOcnGIE+
-         qqtK1hFeDECa5ksOQ0YCrsEFPon/tSvIS7rdw5K8DBsoEE0QrcEcwePw/XxMBTtTMo2Y
-         bbvuM0ByQvA8874exi7Tl1URCCdAPNmWaBr93zMAFXSPz/YWmba63U9ky8EVwQ1euzKv
-         uGGA==
-X-Gm-Message-State: AGRZ1gL6qsmCmoyz+wM9ezL9A8LWPAOGmc25AkbQewqBjk6GIldfA5lk
-        3OVv2vBb0vBxL8T9TgI6WMA=
-X-Google-Smtp-Source: AJdET5cHwIBT5fc0oTPsrZQ6Wo1i3Whs6eL4ufCzCuUOHQlL8S/r6vmbkbPEvV2PPBfty+P5XjHeeQ==
-X-Received: by 2002:a1c:4b12:: with SMTP id y18-v6mr137202wma.122.1541552276173;
-        Tue, 06 Nov 2018 16:57:56 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w11-v6sm21337459wrr.96.2018.11.06.16.57.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 16:57:55 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lucas De Marchi <lucas.demarchi@intel.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] range-diff: add a --no-patch option to show a summary
-References: <20181105200650.31177-1-avarab@gmail.com>
-        <20181106162413.9785-1-avarab@gmail.com>
-Date:   Wed, 07 Nov 2018 09:57:54 +0900
-In-Reply-To: <20181106162413.9785-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 6 Nov 2018 16:24:13 +0000")
-Message-ID: <xmqqsh0dd7ql.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S2388611AbeKGKk6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 05:40:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43118 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2387697AbeKGKk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 05:40:58 -0500
+Received: (qmail 25295 invoked by uid 109); 7 Nov 2018 01:12:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Nov 2018 01:12:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7157 invoked by uid 111); 7 Nov 2018 01:12:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 06 Nov 2018 20:12:13 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Nov 2018 20:12:53 -0500
+Date:   Tue, 6 Nov 2018 20:12:53 -0500
+From:   Jeff King <peff@peff.net>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] approxidate: handle pending number for "specials"
+Message-ID: <20181107011253.GA18276@sigill.intra.peff.net>
+References: <20181102052239.GA19162@sigill.intra.peff.net>
+ <20181102052309.GB19234@sigill.intra.peff.net>
+ <CAPUEspi12TtKxKGr=tutfLPNPWhaZmGCh7q4D1LRJ9LFTWwKNA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CAPUEspi12TtKxKGr=tutfLPNPWhaZmGCh7q4D1LRJ9LFTWwKNA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Tue, Nov 06, 2018 at 04:48:28PM -0800, Carlo Arenas wrote:
 
-> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-> index f01a0be851..05d1f6b6b6 100644
-> --- a/builtin/range-diff.c
-> +++ b/builtin/range-diff.c
-> @@ -16,11 +16,14 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
->  	int creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
->  	struct diff_options diffopt = { NULL };
->  	int simple_color = -1;
-> +	int no_patch = 0;
->  	struct option options[] = {
->  		OPT_INTEGER(0, "creation-factor", &creation_factor,
->  			    N_("Percentage by which creation is weighted")),
->  		OPT_BOOL(0, "no-dual-color", &simple_color,
->  			    N_("use simple diff colors")),
-> +		OPT_BOOL_F('s', "no-patch", &no_patch,
-> +			 N_("show patch output"), PARSE_OPT_NONEG),
+> On Thu, Nov 1, 2018 at 10:24 PM Jeff King <peff@peff.net> wrote:
+> >
+> >  static void date_yesterday(struct tm *tm, struct tm *now, int *num)
+> >  {
+> > +       *num = 0;
+> 
+> the only caller (date_time) for this sends num = NULL, so this
+> triggers a segfault.
 
-As OPT_BOOL("patch") natively takes "--no-patch" to flip the bool
-off, an int variable "patch" that is initialized to 1 would make it
-more readable by avoiding double negation !no_patch like the one we
-see below.  I guess the reason behind the contortion you wanted to
-give the synonym --silent to it?
+Oof. Thanks for catching.
 
-> @@ -92,7 +95,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	res = show_range_diff(range1.buf, range2.buf, creation_factor,
-> -			      simple_color < 1, &diffopt);
-> +			      simple_color < 1, !no_patch, &diffopt);
+That's not the only caller. Usually this is called via a function
+pointer from the "struct special" array. date_time() is just reusing the
+other helper as a quick way to do a one-day subtraction.
 
->  	strbuf_release(&range1);
->  	strbuf_release(&range2);
+> the only reference I could find to that apparently unused parameter comes from:
+> 93cfa7c7a8 ("approxidate_careful() reports errorneous date string", 2010-01-26)
+> and seems to indicate it is optional and therefore a check for NULL
+> might make sense for all other cases
 
-> @@ -7,6 +7,7 @@
->  
->  int show_range_diff(const char *range1, const char *range2,
->  		    int creation_factor, int dual_color,
-> +		    int patch,
->  		    struct diff_options *diffopt);
+I think date_yesterday() is the only one of those special functions that
+gets called like this. Here's what I think we should do to fix it (this
+can go right on top of jk/misc-unused-fixes, which is already in next).
 
-Other than that small "Huh?", the code looks good to me.
+-- >8 --
+Subject: [PATCH] approxidate: fix NULL dereference in date_time()
 
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> index 6aae364171..27e071650b 100755
-> --- a/t/t3206-range-diff.sh
-> +++ b/t/t3206-range-diff.sh
-> @@ -122,6 +122,26 @@ test_expect_success 'changed commit' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'changed commit -p & --patch' '
-> +	git range-diff --no-color -p topic...changed >actual &&
-> +	test_cmp expected actual &&
-> +	git range-diff --no-color --patch topic...changed >actual &&
-> +	test_cmp expected actual
+When we see a time like "noon", we pass "12" to our date_time() helper,
+which sets the hour to 12pm. If the current time is before noon, then we
+wrap around to yesterday using date_yesterday(). But unlike the normal
+calls to date_yesterday() from approxidate_alpha(), we pass a NULL "num"
+parameter. Since c27cc94fad (approxidate: handle pending number for
+"specials", 2018-11-02), that causes a segfault.
 
-This makes sure that -p and --patch produces the same output as the
-default case?  I am not sure who in the parseopt API groks the
-single letter "-p" in this case offhand.  Care to explain how?
+One way to fix this is by checking for NULL. But arguably date_time() is
+abusing our helper by passing NULL in the first place (and this is the
+only case where one of these "special" parsers is used this way). So
+instead, let's have it just do the 1-day subtraction itself. It's still
+just a one-liner due to our update_tm() helper.
 
-The other side of the test to see -s/--no-patch we see below also
-makes sense.
+Note that the test added here is a little funny, as we say "10am noon",
+which makes the "10am" seem pointless.  But this bug can only be
+triggered when it the currently-parsed hour is before the special time.
+The latest special time is "tea" at 1700, but t0006 uses a hard-coded
+TEST_DATE_NOW of 1900. We could reset TEST_DATE_NOW, but that may lead
+to confusion in other tests. Just saying "10am noon" makes this test
+self-contained.
 
-> +test_expect_success 'changed commit -s & --no-patch' '
-> +...
-> +	cat >expected <<-EOF &&
+Reported-by: Carlo Arenas <carenas@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ date.c          | 2 +-
+ t/t0006-date.sh | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Quote EOF to allow readers skim the contents without looking for and
-worrying about $substitutions in there, unless there are tons of
-offending code in the same script already in which case we should
-leave the clean-up outside this primary change.
+diff --git a/date.c b/date.c
+index 7adce327a3..9bc15df6f9 100644
+--- a/date.c
++++ b/date.c
+@@ -929,7 +929,7 @@ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
+ static void date_time(struct tm *tm, struct tm *now, int hour)
+ {
+ 	if (tm->tm_hour < hour)
+-		date_yesterday(tm, now, NULL);
++		update_tm(tm, now, 24*60*60);
+ 	tm->tm_hour = hour;
+ 	tm->tm_min = 0;
+ 	tm->tm_sec = 0;
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index b7ea5fbc36..ffb2975e48 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -114,6 +114,7 @@ check_approxidate '15:00' '2009-08-30 15:00:00'
+ check_approxidate 'noon today' '2009-08-30 12:00:00'
+ check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
+ check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
++check_approxidate '10am noon' '2009-08-29 12:00:00'
+ 
+ check_approxidate 'last tuesday' '2009-08-25 19:20:00'
+ check_approxidate 'July 5th' '2009-07-05 19:20:00'
+-- 
+2.19.1.1534.g3beb3b7d96
 
