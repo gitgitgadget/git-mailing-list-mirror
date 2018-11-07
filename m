@@ -2,78 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190B31F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 18:52:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618831F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 19:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbeKHEYJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 23:24:09 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:25336 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726938AbeKHEYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 23:24:09 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42qwWw5MMGz5tmh;
-        Wed,  7 Nov 2018 19:52:28 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 73D71130;
-        Wed,  7 Nov 2018 19:52:28 +0100 (CET)
-Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.66.git.gitgitgadget@gmail.com>
- <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
- <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
- <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
-Date:   Wed, 7 Nov 2018 19:52:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1728390AbeKHEih (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 23:38:37 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36577 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726440AbeKHEih (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 23:38:37 -0500
+Received: by mail-pg1-f193.google.com with SMTP id z17-v6so7717264pgv.3
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 11:06:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YUFzdZQX5QZvq1SCpVh22qUCw1wjExH4/1LKbTT/ILY=;
+        b=sKeO0uP2/b2tGDGwsQAO+lC0cNuZaFwjk0EUjinJa+pWTzGSZ3ZWPlji598GqdWbdz
+         Ifp+U65+HXwAXZownkXAepEYL3F70sP5ptME/JuOTJQPvUeEYSPSX8dPb0CUlTbIjCqz
+         yK/MLRi1ugvyBF565bQzJCccU+848pQv3YmrYEmU+ET3WL32kKvmC2/h/PfnTrdTHGPR
+         OAm4yxxw7RJ2hHE2kbqOJMBIIk5NNxelhVMMUyKEQH3xvzUhxB0n/tT1dygD8+J1zwF9
+         vC39GXQS+cJgXdg0W3/SvhmCtrpv6ZCaVoKJ2tXbae/mlU2MlcQALdWjvEppU6yvIRqx
+         uUBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YUFzdZQX5QZvq1SCpVh22qUCw1wjExH4/1LKbTT/ILY=;
+        b=VCzW7eoN1jJLinFo1JHQ7wUiaN5F6kS7z0nUZUBPxaAQgQRNNDvXCdSRn5TMguWeu6
+         Dj8xJNjd/dUxw5XuggkVOo1MM/0dW6xfa/8T+5oXbRlxGXhDDfiTkwtSewlSAgbxqIFL
+         e1jbLeuHIRkRDOnWM4ypvAkClBJv0eU4niGxSOtAwNg0lnkMxrYLHA5HpVSDFvNeSOSE
+         UilW8MHYQobcrM2/0O2baB0EEJvHjN9rAofs9qSDLrKzi4/hartiMPjmUgfNhGieEITp
+         diPWia05jakyxzMhB8Zq7g4D+qzkfPktUiBhA+xkWpPuPNW4ok9LMI75PCOtWe8KnB7I
+         Oz/w==
+X-Gm-Message-State: AGRZ1gL6Vt7bgU6F0ljcEIort0zKfSm4v2+xLzPHKgyVcIM+DoK7/xaW
+        cWi3NLWvr7InrpAOAQ3eAWXitk3iN524QchvJos=
+X-Google-Smtp-Source: AJdET5exYr3pHI9WfTwxYMVZgxx++o/WdtrkhkGb7e3pu8b5kmS94AAxq/uDCEc/UJ3lq+5EWNaTtOP0uBZx3YaoeKc=
+X-Received: by 2002:a63:b90a:: with SMTP id z10-v6mr1196697pge.221.1541617616524;
+ Wed, 07 Nov 2018 11:06:56 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <nycvar.QRO.7.76.6.1811071202480.39@tvgsbejvaqbjf.bet> <20181107122202.1813-2-avarab@gmail.com>
+In-Reply-To: <20181107122202.1813-2-avarab@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 7 Nov 2018 20:06:42 +0100
+Message-ID: <CAN0heSqPGQOYYQOc=J4NRJbRC1yCd4NTUi3nh5Dt54eCHTib8g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] range-diff doc: add a section about output stability
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, lucas.demarchi@intel.com,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.11.18 um 12:23 schrieb Johannes Schindelin:
-> On Tue, 6 Nov 2018, Johannes Sixt wrote:
-> 
->> Am 06.11.18 um 15:53 schrieb Johannes Schindelin via GitGitGadget:
->> Even if a path looks like a POSIX paths, i.e. it starts with a directory
->> separator, but not with drive-letter-colon, it still has a particular meaning,
->> namely (as far as I know) that the path is anchored at the root of the drive
->> of the current working directory.
->>
->> If a user specifies such a path on Windows, and it must undergo
->> expand_user_path(), then that is a user error, or the user knows what they are
->> doing.
->>
->> I think it is wrong to interpret such a path as relative to some random other
->> directory, like this patch seems to do.
-> 
-> Okay, now we know everything you find wrong with the current patch. Do you
-> have any suggestion how to make it right? I.e. what would you suggest as a
-> way to specify in a gitconfig in a portable Git where the certificate
-> bundle is?
+On Wed, 7 Nov 2018 at 13:22, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab=
+@gmail.com> wrote:
+> +
+> +This is particularly true when passing in diff options. Currently some
+> +options like `--stat` can as an emergent effect produce output that's
+> +quite useless in the context of `range-diff`. Future versions of
+> +`range-diff` may learn to interpret such options in a manner specifc
 
-Ah, so your actual problem is quite a different one!
+s/specifc/specific/
 
-Do I understand correctly, that you use a leading slash as an indicator 
-to construct a path relative to system_path(). How about a "reserved" 
-user name? For example,
-
-   [http] sslcert = ~system_path/what/ever
-
-although a more unique name, perhaps with some punctuation, may be 
-desirable.
-
--- Hannes
+> +to `range-diff` (e.g. for `--stat` summarizing how the diffstat
+> +changed).
