@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E31511F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 01:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79DF21F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 01:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388837AbeKGLAV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 06:00:21 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36140 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727248AbeKGLAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 06:00:21 -0500
-Received: by mail-wm1-f66.google.com with SMTP id a8-v6so14151598wmf.1
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 17:32:13 -0800 (PST)
+        id S2389129AbeKGLWb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 06:22:31 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40608 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388857AbeKGLWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 06:22:31 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b203-v6so14252750wme.5
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 17:54:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=WhTOOdgD03hfm+l3uomSNMyH5sJxvtfLqr4TjqCVjus=;
-        b=XgDursajpoc6AMkd4ypzfByMZOR8QUeYbnwGxTkt7JK+DUlz53Sr/RRF5/achzzFit
-         /gZ5P/DGgyEcidES68gpcjKNasf7N/qfWb14ZWquY8mtyDD+5cyrG7yAPUqRsqLJwuP6
-         YrzRjeSCIUufOap0bxhUqBkwEgmNJteRiDH2KlRJ5p1vhsAiVRZYWrouHmQJdgQb2rKt
-         HgQhGb7EkDobFOTGHmp+jfRsysIYAR+8rj0PQi9euP5rEc7h3F+Jnh9vvelEYh/5VSQC
-         rnmS4kRrG3QoqfSVhC1VRYdtDK70RNygZHERYRiOhlNRWtQLqTDuVRap1edHlnTuIOPt
-         XJpA==
+        bh=HHj2oslHD+aQnT1v9BOPiaVAjct2mMrGtg8i79LiK0w=;
+        b=kf2EsetINXJ2siH9MwxsN1fA794p5YfPeBq64/hQ3IO8qxXRlZX+jN4PW6fgTHQSgM
+         Yykk3VqUP4xe/ncZeMkkN2+JHUBO0PL4dKHymUSnnixFRCZ3SKzyFcqNXBBrc/s0zhaZ
+         wmX1QvZGiOwMuAviuNVIzzKANKQJtC7fMsGnxOaZEKV2P3QpNZ+Xs0B0GKagCOVlUNPq
+         4RKv5XjBUEfss0tW2KQ2I0AbpTxgrZ1mJCLOBti5Byc36nrSzLpMGpcP4zGTD0jcRw8p
+         CjvwKsXk5YHGmK10LShhHQBy6ZdPxjVHtzTGDuiTjHAfRN9kINDWiPjoD9PBFroskv2p
+         B4WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=WhTOOdgD03hfm+l3uomSNMyH5sJxvtfLqr4TjqCVjus=;
-        b=VWWx9nN+Or7/3C/xlFCDiJXxE0W2jFC4EUJMwriibFJaJu/A6JhHmnB4o0x6SH9SmI
-         DyH2h4KgdkMN/Lk0p61hgq7XuLkqlLMwR9xQLbtsRdPcHkS8+qR4B8FY2fTAYf89UPir
-         YjfcKgTmTdnnKDK+KXol/J29j8CXJ2JMdNJK7RcEWF8w9h04RC807ukxcci9vHZa3FeR
-         iG5NGVgvbXbUmUyS0GAV4Lv4FsPYi0mwFEs15x7++V+hNqnSLCcG8ZT0SBal+G9rheUA
-         PqFwE3xFScxwxTgEnSV7VRqblTIIBTgcEy5rSnsPOGVCtdZQqmhFbKPoV0GVrfpCSGFO
-         rgUA==
-X-Gm-Message-State: AGRZ1gId8Ywfv6+toofk5e0eMS6p3aEKgVXJxKu2LOtJ9v9fm91g4PU5
-        9M+vGk4s2EDzXwTfF8sLviE=
-X-Google-Smtp-Source: AJdET5diA1GO0/eqZtNRLs6xXDYVHEsVINQZ5PYWz8IUhfJ8nGf75/tp4sV4eLnOWEKE7SdyujeWYA==
-X-Received: by 2002:a1c:3e84:: with SMTP id l126-v6mr188636wma.91.1541554332403;
-        Tue, 06 Nov 2018 17:32:12 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l186-v6sm3816601wma.13.2018.11.06.17.32.11
+        bh=HHj2oslHD+aQnT1v9BOPiaVAjct2mMrGtg8i79LiK0w=;
+        b=flnzvsboMw+yaKh8XlTqhzQ3kgnQeAOotF2cytn9y87yy9r22aBP43Y/YoGcBRT7y7
+         T5zYfIegO7t7guwSEabHvICHbbDapDyr3jP4E/OioX0fBu1zZ8JvVvvk4y52v8k1zscS
+         aZv56TAsqIGgaQ3dSVLiDZw8sdbzUxQfhy17miJhdb3GCXVsZlXFqsO3MN5sv6szyl5o
+         /Si3gkGFGARx3f/ivok4z2UPJVr4ykRYvZFi57IyMFRzaPz/Q1rtcaL6u1cnajnLK/+q
+         M0unksFKDP1eglxt1vuKY+1ow+k7MJD5DS3UyPBVWW1npL7geUdUsA68MH1F1seZwG7+
+         hfIA==
+X-Gm-Message-State: AGRZ1gKxF/bODomLP8i0RaMegTrHVTDDJmR2+R1VK/myQZrfBUbQDpIy
+        Zv1pI1R8jJ47DD/Hg3pI6CE=
+X-Google-Smtp-Source: AJdET5cjS7w1oAnoSkgG8RYqrwRqjPeUxVAHBnJNHa6F3AaWETsFSkB76HjNaxVouafIE9kr8g+fjA==
+X-Received: by 2002:a1c:9f01:: with SMTP id i1-v6mr246732wme.8.1541555656754;
+        Tue, 06 Nov 2018 17:54:16 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j203-v6sm5527092wmd.46.2018.11.06.17.54.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 17:32:11 -0800 (PST)
+        Tue, 06 Nov 2018 17:54:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Windows: force-recompile git.res for differing architectures
-References: <pull.67.git.gitgitgadget@gmail.com>
-        <87794514ef3a83f95d81f89287b81aeed5c92296.1541516148.git.gitgitgadget@gmail.com>
-        <c4e3790e-4c41-0d15-38d9-79fa288fb9b3@kdbg.org>
-Date:   Wed, 07 Nov 2018 10:32:10 +0900
-In-Reply-To: <c4e3790e-4c41-0d15-38d9-79fa288fb9b3@kdbg.org> (Johannes Sixt's
-        message of "Tue, 6 Nov 2018 22:44:07 +0100")
-Message-ID: <xmqqk1lpd65h.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/1] pack-objects: ignore ambiguous object warnings
+References: <pull.68.git.gitgitgadget@gmail.com>
+        <pull.68.v2.git.gitgitgadget@gmail.com>
+        <002868ee6bec3dac38749d0f05bf2db8da0969a5.1541536484.git.gitgitgadget@gmail.com>
+        <20181106211234.GA8383@sigill.intra.peff.net>
+Date:   Wed, 07 Nov 2018 10:54:14 +0900
+In-Reply-To: <20181106211234.GA8383@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 6 Nov 2018 16:12:35 -0500")
+Message-ID: <xmqqftwdd54p.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,29 +69,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 06.11.18 um 15:55 schrieb Johannes Schindelin via GitGitGadget:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> When git.rc is compiled into git.res, the result is actually dependent
->> on the architecture. That is, you cannot simply link a 32-bit git.res
->> into a 64-bit git.exe.
->>
->> Therefore, to allow 32-bit and 64-bit builds in the same directory, we
->> let git.res depend on GIT-PREFIX so that it gets recompiled when
->> compiling for a different architecture (this works because the exec path
->> changes based on the architecture: /mingw32/libexec/git-core for 32-bit
->> and /mingw64/libexec/git-core for 64-bit).
->
-> On Linux, when I recompile for a different architecture, CFLAGS would
-> change, so I would have thought that GIT-CFLAGS were the natural
-> choice for a dependency. Don't they change in this case on Windows,
-> too?
+> So we'd never expect to see anything except "1" in our save_warning
+> variable. Doing a save/restore is just about code hygiene and
+> maintainability.
 
-Depending on GIT-CFLAGS would have a better chance of being safe, I
-guess, even though it can at times be overly safe, than GIT-PREFIX,
-I suspect.  As a single user target in Makefile, which is only used
-by Dscho, who intends to stick to /mingw(32|64)/ convention til the
-end of time, I think the posted patch is OK, though.
+Here is what I plan to queue.  Thanks, both.
+
+-- >8 --
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Tue, 6 Nov 2018 12:34:47 -0800
+Subject: [PATCH] pack-objects: ignore ambiguous object warnings
+
+A git push process runs several processes during its run, but one
+includes git send-pack which calls git pack-objects and passes
+the known have/wants into stdin using object ids. However, the
+default setting for core.warnAmbiguousRefs requires git pack-objects
+to check for ref names matching the ref_rev_parse_rules array in
+refs.c. This means that every object is triggering at least six
+"file exists?" queries.  When there are a lot of refs, this can
+add up significantly! I observed a simple push spending three
+seconds checking these paths.
+
+The fix here is similar to 4c30d50 "rev-list: disable object/refname
+ambiguity check with --stdin".  While the get_object_list() method
+reads the objects from stdin, turn warn_on_object_refname_ambiguity
+flag (which is usually true) to false.  Just for code hygiene, save
+away the original at the beginning and restore it once we are done.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/pack-objects.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d1144a8f7e..f703e6df9b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2988,6 +2988,7 @@ static void get_object_list(int ac, const char **av)
+ 	struct rev_info revs;
+ 	char line[1000];
+ 	int flags = 0;
++	int save_warning;
+ 
+ 	init_revisions(&revs, NULL);
+ 	save_commit_buffer = 0;
+@@ -2996,6 +2997,9 @@ static void get_object_list(int ac, const char **av)
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
+ 
++	save_warning = warn_on_object_refname_ambiguity;
++	warn_on_object_refname_ambiguity = 0;
++
+ 	while (fgets(line, sizeof(line), stdin) != NULL) {
+ 		int len = strlen(line);
+ 		if (len && line[len - 1] == '\n')
+@@ -3022,6 +3026,8 @@ static void get_object_list(int ac, const char **av)
+ 			die(_("bad revision '%s'"), line);
+ 	}
+ 
++	warn_on_object_refname_ambiguity = save_warning;
++
+ 	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
+ 		return;
+ 
+-- 
+2.19.1-856-g8858448bb4
 
