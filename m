@@ -2,114 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B1181F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 13:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C641F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 13:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726641AbeKGWd0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 17:33:26 -0500
-Received: from mx0.elegosoft.com ([78.47.87.163]:51241 "EHLO mx0.elegosoft.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726515AbeKGWd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 17:33:26 -0500
-X-Greylist: delayed 454 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Nov 2018 17:33:24 EST
-Received: from NSJAIL.pks.im (x5ce2d35f.dyn.telefonica.de [92.226.211.95])
-        by mx0.elegosoft.com (Postfix) with ESMTPSA id C47F3DE215;
-        Wed,  7 Nov 2018 15:22:36 +0100 (CET)
-Received: from localhost (10.192.0.11 [10.192.0.11])
-        by NSJAIL.pks.im (OpenSMTPD) with ESMTPSA id 1a10f2c9 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
-        Wed, 7 Nov 2018 12:55:20 +0000 (UTC)
-Date:   Wed, 7 Nov 2018 13:56:01 +0100
-From:   Patrick Steinhardt <patrick.steinhardt@elego.de>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: Wildcard URL config matching
-Message-ID: <20181107125601.GA20965@ncase.pks.im>
-References: <20181105205652.GA890086@genre.crustytoothpaste.net>
+        id S1727534AbeKGWkO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 17:40:14 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:36839 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726602AbeKGWkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 17:40:14 -0500
+Received: by mail-wm1-f42.google.com with SMTP id a8-v6so15659372wmf.1
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 05:09:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cl/uZEUDKxbBTpehCcU3dz9i+eugTigGEfkRI32l2Pw=;
+        b=u86+6Z2DrbGJ/dDTb8N7G9ykZmGs1EgWP+Hass3CLNJCpkQm0Nk4wBLnc0Yu6ks7vx
+         jhBBBAv905kO1xiHiE2SZ9U708WGSMK58/vXQMVwnZczzYuRqn11tu+l5CO2MwcdFIx7
+         DlCWQzSKwqbXtdTMzmYFroPfku7AKL0Q1dlDmFiPNW3XmiRfwggcKebSUOLfrz9j9jZr
+         2NwsdzcCx3DkH8a/RMfH02lI8vsQC/gIvpX2Nw7qHdlkn92/mwlA5rt7WehL6CSBqc7I
+         tNYDNIbIWfQkwQ7L+uyqhmEwYi4nZ2z19Pg9siTvSfx3nj73BcAxCsb7cqAE9fqgmGb/
+         PjNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cl/uZEUDKxbBTpehCcU3dz9i+eugTigGEfkRI32l2Pw=;
+        b=UjHbSqPtWt3dm/wbs+qBXsOnA7etWlUzqT1tgG8He2NAOuJJV64l7p1vJvdRpU0T8n
+         gwmfBJih0PmIGdLcK2okFvP3iy9PkaR+pVLuCSNIXOtnOFvHkm4G1xTlvElA61lBcAEV
+         UhQLcWXAAC2JSAuGBoSURdsj9TQYsbmqy5OOxJZGoLfLtb0QEX+C3UgcxSn7zkvCJlbt
+         PXDZWwwEfDWrstPD6z4NL1Waf7K66hvpdbgVIm/BBB4LvvMkYh3qHX8jmsw+Kws7Puhu
+         mqEExv9owHW+wf9ZX078GBy1CMJr+VETfTVtfpCdg1FYvT95E6deP7IrBDgMjEGSKclA
+         IKbg==
+X-Gm-Message-State: AGRZ1gJj3YU2vYnPEAjGcZmpmOD+X+vMmArFYdnYolUhjVud46rynnrz
+        kAmDISSgkh+09fhVqJf0lDMYoNU7Ars=
+X-Google-Smtp-Source: AJdET5c4km/b3XKJ0QURWH+Z9lEShXxicFK7M/ZkZXAz8Tux0f8GldyCA41AHyHbIyOmxc5ckgxfnQ==
+X-Received: by 2002:a1c:930d:: with SMTP id v13-v6mr163611wmd.26.1541596193737;
+        Wed, 07 Nov 2018 05:09:53 -0800 (PST)
+Received: from szeder.dev (x4db280ce.dyn.telefonica.de. [77.178.128.206])
+        by smtp.gmail.com with ESMTPSA id g1-v6sm1427283wmg.2.2018.11.07.05.09.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Nov 2018 05:09:52 -0800 (PST)
+Date:   Wed, 7 Nov 2018 14:09:50 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2018, #03; Wed, 7)
+Message-ID: <20181107130950.GA30222@szeder.dev>
+References: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181105205652.GA890086@genre.crustytoothpaste.net>
+In-Reply-To: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Nov 07, 2018 at 06:41:45PM +0900, Junio C Hamano wrote:
+> * nd/i18n (2018-11-06) 16 commits
+>  - fsck: mark strings for translation
+>  - fsck: reduce word legos to help i18n
+>  - parse-options.c: mark more strings for translation
+>  - parse-options.c: turn some die() to BUG()
+>  - parse-options: replace opterror() with optname()
+>  - repack: mark more strings for translation
+>  - remote.c: mark messages for translation
+>  - remote.c: turn some error() or die() to BUG()
+>  - reflog: mark strings for translation
+>  - read-cache.c: add missing colon separators
+>  - read-cache.c: mark more strings for translation
+>  - read-cache.c: turn die("internal error") to BUG()
+>  - attr.c: mark more string for translation
+>  - archive.c: mark more strings for translation
+>  - alias.c: mark split_cmdline_strerror() strings for translation
+>  - git.c: mark more strings for translation
+> 
+>  More _("i18n") markings.
 
---RnlQjJ0d97Da+TV1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When this patch is merged into 'pu' all four tests added to
+'t1450-fsck.sh' in b29759d89a (fsck: check HEAD and reflog from other
+worktrees, 2018-10-21) as part of 'nd/per-worktree-ref-iteration'
+below fail when run with GETTEXT_POISON=y.  The test suite passes in
+both of these topics on their own, even with GETTEXT_POISON, it's
+their merge that is somehow problematic.
 
-Hi Brian,
-
-On Mon, Nov 05, 2018 at 08:56:52PM +0000, brian m. carlson wrote:
-> In a272b9e70a ("urlmatch: allow globbing for the URL host part",
-> 2017-01-31), we added support for wildcard matching for URLs when
-> reading from .git/config.  Now it's possible to specify an option like
-> http.http://*.example.com/.cookieFile and have it match for the URL
-> http://foo.example.com.  However, since this option also allows
-> wildcards at any level, the following also matches:
-> http.http://*.*.*/.cookieFile.
->=20
-> I'm wondering if it was intentional to allow this behavior or if we
-> intended to allow only the leftmost label (or labels) to be a wildcard.
-> The tests seem to test only the leftmost label, and that is the behavior
-> that one has for TLS certificates, for example.  I don't really see a
-> situation where one would want to match hostname labels in an arbitrary
-> position, but perhaps I'm simply not being imaginative enough in
-> thinking through the use cases.
-
-The behavior is intentional. The above example of "http://*.*.*/"
-obviously doesn't make a lot of sense, but e.g. the pattern
-"http://*.*.example.com" should match all sub-sub domains of
-"example.com" like for example "http://foo.bar.example.com". The
-ability to use multiple globs is necessary as they aren't "true"
-globs, but will only match the current component of the subdomain
-separated by dots. So they behave similar to globs in the shell,
-where they only match up to the next directory separator.
-
-If we were to remove the ability to use globs for multiple
-components, then one would have to again explicitly list patterns
-for all possible combinations.
-
-> Regardless of what we decide, I'll be sending a patch, either to add
-> additional tests, or correct the code (or both).
-
-I agree that there should've been additional tests to also verify
-that multiple globs work as expected. So thanks for doing that!
-
-> I ask because we're implementing this behavior for Git LFS, where we
-> don't iterate over all configuration keys, instead looking up certain
-> values in a hash.  We'll need to make some changes in order to have
-> things work correctly if we want to implement the current Git behavior
-> to prevent combinatorial explosion.
-
-Regards
-Patrick
-
---RnlQjJ0d97Da+TV1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEtmscHsieVjl9VyNUEXxntp6r8SwFAlvi4N8ACgkQEXxntp6r
-8SwHXhAAliS5L2vTjiFFutNG5G5nf6Njz3IAn4hFL5AFa33lEoplBLMZcSXUFnmq
-Afsm0NzrDuQZulRuHIzeZjiozMBcK087OmLPIrKxGtR1TfVM3wEZxxuf+bzv+i0V
-+WjwFqTY8PuKO82Uf6hKXWbQfArMKY+o/dyz434YXyE2RTonl0wzlz2jvwZRlDqB
-9mS1tBFtVkXN8e7m059yCep+WnvSC78JOaOzNcZtl0YS7KxI4ht8qwAuh8vWVlab
-gKWbLotxAzBnn5eA3/cUfxO2K8BzMMw6tybJUHsa/i/jyAPcdWWG6eTMCPgCN8DQ
-zjP9le6IdvQbQ+thhVuu6Ds/eiVJBdhErDfi+2crdG2IxeUvnKe94NsR+8kbZsmf
-Vv/TdocBhBQEPvm/WfBZRldjBp5S5iM3kceSKWlH1Gr+HMNvLpGElHSRsGb58UZg
-Mv2qHiM5vSA5tGnblEq+ce3vmh/pWS05l9N4sqYTgIIey/zU8D3Wc7VrX21NF9UY
-1ZOS8G/r79WH1ZsnF9WhZ4L/qMErkLUZxwBG9et5tsBAhE8L3WsNDRjdS1vZODN/
-UtZjgStVg9iARd14YZB7m5oqFi3hRP/H/FOY61RofJrbS4fzmhAOUnjIOO39Tz8W
-O5E9B7QhMUK4jTDG2Gh+KOaZuvu83BcxoZbbn4ZX9DrDtwWszAY=
-=fqBw
------END PGP SIGNATURE-----
-
---RnlQjJ0d97Da+TV1--
+> * nd/per-worktree-ref-iteration (2018-11-05) 9 commits
+>   (merged to 'next' on 2018-11-06 at 53803cedf3)
+>  + git-worktree.txt: correct linkgit command name
+>   (merged to 'next' on 2018-11-03 at 4cbe49a704)
+>  + reflog expire: cover reflog from all worktrees
+>  + fsck: check HEAD and reflog from other worktrees
+>  + fsck: move fsck_head_link() to get_default_heads() to avoid some globals
+>  + revision.c: better error reporting on ref from different worktrees
+>  + revision.c: correct a parameter name
+>  + refs: new ref types to make per-worktree refs visible to all worktrees
+>  + Add a place for (not) sharing stuff between worktrees
+>  + refs.c: indent with tabs, not spaces
+> 
+>  The code to traverse objects for reachability, used to decide what
+>  objects are unreferenced and expendable, have been taught to also
+>  consider per-worktree refs of other worktrees as starting points to
+>  prevent data loss.
+> 
+>  Will merge to 'master'.
