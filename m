@@ -7,120 +7,92 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D2311F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 11:23:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC8291F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 11:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726388AbeKGUxS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 15:53:18 -0500
-Received: from mout.gmx.net ([212.227.15.19]:49983 "EHLO mout.gmx.net"
+        id S1726392AbeKGUzw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 15:55:52 -0500
+Received: from mout.gmx.net ([212.227.17.21]:55913 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726361AbeKGUxS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 15:53:18 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgL1q-1g7edP2daI-00Nihw; Wed, 07
- Nov 2018 12:23:17 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgL1q-1g7edP2daI-00Nihw; Wed, 07
- Nov 2018 12:23:17 +0100
-Date:   Wed, 7 Nov 2018 12:23:16 +0100 (STD)
+        id S1726248AbeKGUzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 15:55:52 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXIGf-1fziR82RL3-00WH1b; Wed, 07
+ Nov 2018 12:25:51 +0100
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXIGf-1fziR82RL3-00WH1b; Wed, 07
+ Nov 2018 12:25:51 +0100
+Date:   Wed, 7 Nov 2018 12:25:50 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-In-Reply-To: <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
-References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Windows: force-recompile git.res for differing
+ architectures
+In-Reply-To: <xmqq36sdcl9t.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811071225230.39@tvgsbejvaqbjf.bet>
+References: <pull.67.git.gitgitgadget@gmail.com> <87794514ef3a83f95d81f89287b81aeed5c92296.1541516148.git.gitgitgadget@gmail.com> <c4e3790e-4c41-0d15-38d9-79fa288fb9b3@kdbg.org> <xmqqk1lpd65h.fsf@gitster-ct.c.googlers.com> <ad98ab16-c6bf-7294-f498-d0e7295105fc@kdbg.org>
+ <xmqq36sdcl9t.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:de97xc1H0pbvK0ZoyvxgsDhEdhuHmQ0O6m17gtZEVLeayP4t0to
- xAaJnsZ2gaotytfCgi3+vHlMpScTtG/l0gxkL4LtLk0ckPboU6xVN0FxpIUbitaTXCOsei5
- ogkWjgDu7+huEE/0AtXmspapolAB7SiSd2khQexR4tnW0byhRx5QJuqPbErRL4LJ0ORuFLa
- 60iPb6HbhUX2rvrCKqTmQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Uai0CrxwLqI=:bE73j2c62oER423lEB7LvY
- 1Prt6H9QJWvrDc8LN6IgkdjtFBdzJLO9t2dvc37IY9vcL5DYGdGC/eti7ahocnVbH7OmcbhQ+
- WW6ga37uDBytW7W2sd3LKP6KdVoASUOYKKmZ+C7hoe+dvcryPC1nwfwjS+L5VqdqVqnJPKQJg
- 3mwD5OEz4Xp4wNeHXOFHUvbMsMiUCV2nUBcypptOGc25NvklWfbh09u9SOP7GwWR1czme8Zuy
- lP/pwfOmXDcrWkdaE6llUBx/ORtX8vfXdILc0xCJvGVGUN1i7tpE0lnjEBqA9kXjn2yjI9x64
- //Nzak2oUx/9NC0waxxexFagWuU8d6k9DH++qSqeGoChCfN9cu7zqwnHfNguHmTiQ6lIwIOzK
- FqvwlqYengVuGaHFn8eVIRgCh+cBEMDz3cQRfXqJjJoZs3QAS3DJXOrZOZpnaEL2uLlUXTyeP
- AbALYA9BQWd3nPgqyq75R9QIbX0vh3Rn0tQz+Dg8/YduJuXgETUcCsbstVxTgSnKV60girUVT
- WoUt4zRhZkdpHBZpwvGH5iGWkb02j8UXIe9s9fdSd1ygpZ6g0iorMI4mGrXkacfCJA2SsL8Qn
- w7dQak3f2mcl58nGxjdycTNZOIml8Wfw0mdR/Wa/2TMMHcKcTpbcypK8VTV6dF4OTAZgLJKxq
- Gw5U/JlhD/HSJiLyxPdCYTzpkZ7vExv9UF2QB0IZ/0dbs1mH1d+wEHJin7nNKULl6cJzWKrqS
- yhhYHXLKf27UvyS/sYb6/P3YvMgIsj4s5qm1NWDnw+L+r5g8fYMBIIQ3y7waKF+W+BfwEnacP
- vxOFrb0oJDH+BgDO4mowVRBxIFDQhS7xqiMykN21NikNPiGpG4=
+X-Provags-ID: V03:K1:VpkoxolDUC1Bxtz2umHBVWfOQnfFqqV5DQxoM1VTP1h7MCDDZPX
+ A3CrRM10IT4zi2x7nkglD593OSIr4RnwH5i/p2zIau5iCpqwcA1bb+DbLHPu5UUmWvoKsxG
+ j0nijmI0Hjfb6J4UXNIbN/tXVgqgQL5SuYIagZSjLz7uWFhg2URFOhEUsZbQUXr4EfFF6sZ
+ EKMjij28StfYfqnfle8/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:T8XpkBymLhw=:izR9wUyLCakXyZ1qRAIzeP
+ WberfdFNzQC3sJ/BY4owB6Mb7NrNHKMUV8pXUh0xc/VzohaQkQpTuIHFhhepjt6EnYbl/+wNp
+ hF41dSNVORPoj7MmFR2zweOgM3QwTHiPQcLgrkVcHD5rvGz7pEx8ecVxMgp3n+fGr8e7B48Tl
+ sko55AwyUUlZaWMAcblp7Q29f3ASimig2I9jz34x0pDKUpoUVh07rnF3SszaXhWFqT/E+hhZ2
+ LAp4ss6HIJ9hD1iNyUQ+vaqreLXfy5DUhTfBqupWX+Cfy9ZC/nkKbaMJPLsQAZkN8582d0osT
+ vYuZ1QdyuPQyvoW28eYwzVliiX3WMpo4KW+GSld9NCc8baky6uADJvfmLQBHVtx/1bZ1LYwj4
+ vf6ioiDam0eRdCS/zcyG/SH+57gY7dCbRmaHStXtUZiMzjiiA2lmtiavgdQNU8Ln3PB8KuJSF
+ UYklg5M22fIdz1oKgJnzB4kXmjf0+xjY3Io1qBy4/euWDhoUIXTRN3m9UpOoFOFkfsYf2j6m9
+ dP6EUOAO+eDRDSLXkCpuzDzg61DCVvlLAcBl+r+brZ4sponRkwQvyDpWmOp2fwxcqMXllYZq+
+ sX1pbAUzT80Lq9JdQrH63crFvbZxLNYFzPt+siX+xNKEYgNcL7SDPFWgXTJOsGWuwRqo9Z+zH
+ xZ3aCglRSQwQ62fHfWKQE3tpgI93/VKgCxU7X9I6PipnVh7CXrAiEwXP1meG9rdiWJpbkyn+J
+ OG8TgqvDbUmpxOxWHelC1nth8JWlve6tc/3z6/Zf8OKHgLDffZcK/sJj7FjX/iC9gs79tMpKq
+ 51UXIUFut1VLRzcEWDOyDksAfahdklFvTnQRFvAI0otuYiwM+Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+Hi,
 
-On Tue, 6 Nov 2018, Johannes Sixt wrote:
+On Wed, 7 Nov 2018, Junio C Hamano wrote:
 
-> Am 06.11.18 um 15:53 schrieb Johannes Schindelin via GitGitGadget:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > 
-> > On Windows, an absolute POSIX path needs to be turned into a Windows
-> > one.
+> Johannes Sixt <j6t@kdbg.org> writes:
 > 
-> If I were picky, I would say that in a pure Windows application there cannot
-> be POSIX paths to begin with.
+> > Am 07.11.18 um 02:32 schrieb Junio C Hamano:
+> >> Johannes Sixt <j6t@kdbg.org> writes:
+> >>> On Linux, when I recompile for a different architecture, CFLAGS would
+> >>> change, so I would have thought that GIT-CFLAGS were the natural
+> >>> choice for a dependency. Don't they change in this case on Windows,
+> >>> too?
+> >>
+> >> Depending on GIT-CFLAGS would have a better chance of being safe, I
+> >> guess, even though it can at times be overly safe, than GIT-PREFIX,
+> >> I suspect.  As a single user target in Makefile, which is only used
+> >> by Dscho, who intends to stick to /mingw(32|64)/ convention til the
+> >> end of time, I think the posted patch is OK, though.
+> >
+> > I think that it's not only Dscho who uses the target (my build
+> > environment, for example, is different from Dscho's and compiles
+> > git.res, too). But since the patch helps him most and doesn't hurt
+> > others, it is good to go. No objection from my side.
 > 
-> Even if a path looks like a POSIX paths, i.e. it starts with a directory
-> separator, but not with drive-letter-colon, it still has a particular meaning,
-> namely (as far as I know) that the path is anchored at the root of the drive
-> of the current working directory.
+> Yeah, that was phrased poorly.  What I meant was by "only by Dscho"
+> was "only by those who share the convention that GIT-PREFIX is
+> changed if and only if targetting a different arch".
 > 
-> If a user specifies such a path on Windows, and it must undergo
-> expand_user_path(), then that is a user error, or the user knows what they are
-> doing.
-> 
-> I think it is wrong to interpret such a path as relative to some random other
-> directory, like this patch seems to do.
+> Anyway, I just wanted to say that GIT-PREFIX may not be precise
+> enough but would give sufficient signal; GIT-CFLAGS may be a more
+> cautious choice, but it may change a bit too often ;-).
 
-Okay, now we know everything you find wrong with the current patch. Do you
-have any suggestion how to make it right? I.e. what would you suggest as a
-way to specify in a gitconfig in a portable Git where the certificate
-bundle is?
+I am fine with GIT-CFLAGS, too. Do you want me to "rick-roll" a v2?
 
-Thanks,
+Ciao,
 Dscho
-
-> 
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >   path.c | 5 +++++
-> >   1 file changed, 5 insertions(+)
-> > 
-> > diff --git a/path.c b/path.c
-> > index 34f0f98349..a72abf0e1f 100644
-> > --- a/path.c
-> > +++ b/path.c
-> > @@ -11,6 +11,7 @@
-> >   #include "path.h"
-> >   #include "packfile.h"
-> >   #include "object-store.h"
-> > +#include "exec-cmd.h"
-> >   
-> >   static int get_st_mode_bits(const char *path, int *mode)
-> >   {
-> > @@ -709,6 +710,10 @@ char *expand_user_path(const char *path, int real_home)
-> >   
-> >    if (path == NULL)
-> >   		goto return_null;
-> > +#ifdef __MINGW32__
-> > +	if (path[0] == '/')
-> > +		return system_path(path + 1);
-> > +#endif
-> >    if (path[0] == '~') {
-> >     const char *first_slash = strchrnul(path, '/');
-> >     const char *username = path + 1;
-> > 
-> 
-> 
-> 
