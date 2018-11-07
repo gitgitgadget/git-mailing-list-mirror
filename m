@@ -2,225 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86F1E1F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 12:29:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3C51F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 12:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbeKGWAI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 17:00:08 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:38117 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbeKGWAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 17:00:07 -0500
-Received: by mail-ed1-f42.google.com with SMTP id a2-v6so8676896edi.5
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 04:29:55 -0800 (PST)
+        id S1731101AbeKGWIs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 17:08:48 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39461 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726602AbeKGWIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 17:08:47 -0500
+Received: by mail-wr1-f67.google.com with SMTP id r10-v6so17220420wrv.6
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 04:38:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=1OHfbfHvI9Cso93k5j+8eiCgYLybU51eR38WCtjy6VM=;
-        b=Odj0UXhGCv/9T3jjr2wIsLb4IbjWpM8g9RCR8afJp04NO3q/ik597j3nSrs2ejX+dq
-         aa87QZvCXCodBOocdLA1tScTEWIfff3dlnhR1+h5MAh4gvqG5rVyMGOpYq6+w6wipFYm
-         cZXkTs7hpEFpHwHap/mbvWX1V9n+kEp1Xb4u/V5u4+zIrfdBram9Lq54SVVOg3zjUVdf
-         J7QfK//5j2qj+z5ocH10MLNq4k/ikO2AgRb2LK5tJmWD+VVY9R0wXAlKSmTygLzFwjoR
-         e2c0MvoJzhiaHpOblrJIM1QtJH+3+aT+m8/0IGKhxe8iEnRUockI+t+Ct2QG2udNilFt
-         yCag==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5KkgFg66VB6ox8Tr+yi5UYhpO1TQwgOrCDwiSnlQ7h4=;
+        b=Q4FNALyZSDkl9ezkXRcCMu/Rv37bOJ4maqX3QTI5oRLaTr2NwjniTDPBvkyexztZ1I
+         O/hf1yoj9yzH+ihFV7qc3nis8op9AP3fhy6gwYQOYG/CLm3xsErUF0NSCBbwEjpKGwqc
+         6xRkKMa32HRB9aJeUI4RRTBmtnK15nIGTnsvxUGdpyj7GQRPhzLiqO9/8RbE0l0bZY1j
+         642qzRnZWM+QLMqq1M/01Z7UdQ1Gtcp5O1vyBYc+77F4VxzQEStwi+1+4tLodriKcrxK
+         N0bMpzVVyhR4xHBKWDcQh47ZED9qD10O4T1W5FK/t+PC4m9gYDY8W6lMEiQFBg9OZU7J
+         8T5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=1OHfbfHvI9Cso93k5j+8eiCgYLybU51eR38WCtjy6VM=;
-        b=n3ETVDqxBGMOsb55ImcAgJauCbB9VtmCfAeSkDyU0FnlT2dE47FRq4RqY1IDALySe4
-         uFdSbhisNDthK8qePwUdBXHfWxYC+3cvEuGKG+UBJMggEAAF21Pc/5CoZMlor3S/jn8s
-         NF7dfUjDqVJ4CJaC/0XrcC9ik7EcpqYyQTZHGoW9vw1ZswMMqplTan7Ag2OCxe44gZrn
-         Jvk/HkVYGdGbuerS/tOf9Za2LCS5X+K0mFwhNHIM7kKI32XRmRcG63WSmNf0uShx1obS
-         CSTqVMSg5ntX9BEX2oCKFsEk4MEX/rS09gY7Z9M/mN7926NVJaTL2iPim6vX8Sqfmq+u
-         ji0w==
-X-Gm-Message-State: AGRZ1gJIOll9CPPILOWhhOLdsWfOkDOQRK2BxxhjYkt35YHb1JIsWTN7
-        vkZwKhUqUaVbVRmCCA6fe1g=
-X-Google-Smtp-Source: AJdET5eMWC1PJ3A8Xw4mOL+jNDf+HZ026MVsLgkrGEXguBp5lsgX0SGKju+jgWOnL+RsnZjutTYVrA==
-X-Received: by 2002:a50:a7a2:: with SMTP id i31-v6mr22154edc.236.1541593794683;
-        Wed, 07 Nov 2018 04:29:54 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id n16-v6sm122234eja.6.2018.11.07.04.29.53
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5KkgFg66VB6ox8Tr+yi5UYhpO1TQwgOrCDwiSnlQ7h4=;
+        b=QLDzA1d7w3WB+oWYBtkGhG2yjDGVtbmae5zOeoCVUWELj1l6s9WEp6vOCgS63GX3Jd
+         B6HS3Qp/T1eiuo257nrL002HAEt3JZWxu/jFHQGXZMAARwnQSWNcopQA6MDjVyvIHXwq
+         y8LAWYzR7HpooKQcTvEuJ4keAvv6WsWYxAe7hZDESu878UnjUE9OmMPcvTvr73RtYHTT
+         uW6G9MHpulOV8EJgxipDgOwR73eRAzhVUTEKWeoFXyGpBfwqhPHR9iMiGi4Q3Po3oAsl
+         ge0l0upexMg/yCmk5Ob2KRQHruuRvPtAg5P6yflbkIhoABMlvCHbeBfkCBMXfiP6vs+R
+         heOg==
+X-Gm-Message-State: AGRZ1gKI3rqJzC4vXNln29u/tHGAIJ8oJrT7sA36cG2csifxHujYic/Z
+        f89UMNDa1F8whomBttSruXM=
+X-Google-Smtp-Source: AJdET5eCgR67xbuMjq/J7eDNP86Em/Nuwh08X6KJUaA21v7BPiw2V7sYx2/gy0u0qtEkf3SEuFxmlw==
+X-Received: by 2002:a5d:570d:: with SMTP id a13-v6mr10742wrv.289.1541594312617;
+        Wed, 07 Nov 2018 04:38:32 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l186-v6sm2040728wma.13.2018.11.07.04.38.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 04:29:53 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        Wed, 07 Nov 2018 04:38:31 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: What's cooking in git.git (Nov 2018, #03; Wed, 7)
 References: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 07 Nov 2018 13:29:52 +0100
-Message-ID: <87sh0d5av3.fsf@evledraar.gmail.com>
+        <87sh0d5av3.fsf@evledraar.gmail.com>
+Date:   Wed, 07 Nov 2018 21:38:30 +0900
+In-Reply-To: <87sh0d5av3.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 07 Nov 2018 13:29:52 +0100")
+Message-ID: <xmqqtvktawqh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Wed, Nov 07 2018, Junio C Hamano wrote:
-
-> * ab/range-diff-no-patch (2018-11-07) 1 commit
->  - range-diff: add a --no-patch option to show a summary
+> On Wed, Nov 07 2018, Junio C Hamano wrote:
 >
->  "range-diff" learns the "--no-patch" option, which can be used to
->  get a high-level overview without the actual line-by-line patch
->  difference shown.
+>> * ab/range-diff-no-patch (2018-11-07) 1 commit
+>>  - range-diff: add a --no-patch option to show a summary
+>>
+>>  "range-diff" learns the "--no-patch" option, which can be used to
+>>  get a high-level overview without the actual line-by-line patch
+>>  difference shown.
+>>
+>>  Will merge to 'next'.
 >
->  Will merge to 'next'.
+> Per <20181107122202.1813-1-avarab@gmail.com> it turns out this whole
+> thing should have been a bugfix instead, sent a v2.
 
-Per <20181107122202.1813-1-avarab@gmail.com> it turns out this whole
-thing should have been a bugfix instead, sent a v2.
-
-> * ab/dynamic-gettext-poison (2018-11-02) 1 commit
->  - i18n: make GETTEXT_POISON a runtime option
->
->  On hold.
->  cf. <20181102163725.GY30222@szeder.dev>
-
-Hope to sent update soon...
-
-> * ab/push-dwim-dst (2018-10-29) 9 commits
->  - SQUASH???
->  - push doc: document the DWYM behavior pushing to unqualified <dst>
->  - push: add DWYM support for "git push refs/remotes/...:<dst>"
->  - push: test that <src> doesn't DWYM if <dst> is unqualified
->  - push: add an advice on unqualified <dst> push
->  - push: move unqualified refname error into a function
->  - push: improve the error shown on unqualified <dst> push
->  - i18n: remote.c: mark error(...) messages for translation
->  - remote.c: add braces in anticipation of a follow-up change
->
->  "git push $there $src:$dst" rejects when $dst is not a fully
->  qualified refname and not clear what the end user meant.  The
->  codepath has been taught to give a clearer error message, and also
->  guess where the push should go by taking the type of the pushed
->  object into account (e.g. a tag object would want to go under
->  refs/tags/).
->
->  The last few steps are questionable.
->  cf. <87in1lkw54.fsf@evledraar.gmail.com>
-
-...ditto...
-
-> * ab/pack-tests-cleanup (2018-10-31) 3 commits
->   (merged to 'next' on 2018-11-03 at b4a39595bb)
->  + index-pack tests: don't leave test repo dirty at end
->  + pack-objects tests: don't leave test .git corrupt at end
->  + pack-objects test: modernize style
->
->  A couple of tests used to leave the repository in a state that is
->  deliberately corrupt, which have been corrected.
->
->  Will merge to 'master'.
-
-Thanks!
-
-> * nd/config-split (2018-10-29) 79 commits
->   (merged to 'next' on 2018-11-03 at a336559101)
->  + config.txt: remove config/dummy.txt
->  + config.txt: move worktree.* to a separate file
->  + config.txt: move web.* to a separate file
->  + config.txt: move versionsort.* to a separate file
->  + config.txt: move user.* to a separate file
->  + config.txt: move url.* to a separate file
->  + config.txt: move uploadpack.* to a separate file
->  + config.txt: move uploadarchive.* to a separate file
->  + config.txt: move transfer.* to a separate file
->  + config.txt: move tag.* to a separate file
->  + config.txt: move submodule.* to a separate file
->  + config.txt: move stash.* to a separate file
->  + config.txt: move status.* to a separate file
->  + config.txt: move splitIndex.* to a separate file
->  + config.txt: move showBranch.* to a separate file
->  + config.txt: move sequencer.* to a separate file
->  + config.txt: move sendemail-config.txt to config/
->  + config.txt: move reset.* to a separate file
->  + config.txt: move rerere.* to a separate file
->  + config.txt: move repack.* to a separate file
->  + config.txt: move remotes.* to a separate file
->  + config.txt: move remote.* to a separate file
->  + config.txt: move receive-config.txt to config/
->  + config.txt: move rebase-config.txt to config/
->  + config.txt: move push-config.txt to config/
->  + config.txt: move pull-config.txt to config/
->  + config.txt: move protocol.* to a separate file
->  + config.txt: move pretty.* to a separate file
->  + config.txt: move pager.* to a separate file
->  + config.txt: move pack.* to a separate file
->  + config.txt: move notes.* to a separate file
->  + config.txt: move mergetool.* to a separate file
->  + config.txt: move merge-config.txt to config/
->  + config.txt: move man.* to a separate file
->  + config.txt: move mailmap.* to a separate file
->  + config.txt: move mailinfo.* to a separate file
->  + config.txt: move log.* to a separate file
->  + config.txt: move interactive.* to a separate file
->  + config.txt: move instaweb.* to a separate file
->  + config.txt: move init.* to a separate file
->  + config.txt: move index.* to a separate file
->  + git-imap-send.txt: move imap.* to a separate file
->  + config.txt: move i18n.* to a separate file
->  + config.txt: move http.* to a separate file
->  + config.txt: move ssh.* to a separate file
->  + config.txt: move help.* to a separate file
->  + config.txt: move guitool.* to a separate file
->  + config.txt: move gui-config.txt to config/
->  + config.txt: move gpg.* to a separate file
->  + config.txt: move grep.* to a separate file
->  + config.txt: move gitweb.* to a separate file
->  + config.txt: move gitcvs-config.txt to config/
->  + config.txt: move gc.* to a separate file
->  + config.txt: move fsck.* to a separate file
->  + config.txt: move fmt-merge-msg-config.txt to config/
->  + config.txt: move format-config.txt to config/
->  + config.txt: move filter.* to a separate file
->  + config.txt: move fetch-config.txt to config/
->  + config.txt: move fastimport.* to a separate file
->  + config.txt: move difftool.* to a separate file
->  + config.txt: move diff-config.txt to config/
->  + config.txt: move completion.* to a separate file
->  + config.txt: move credential.* to a separate file
->  + config.txt: move commit.* to a separate file
->  + config.txt: move column.* to a separate file
->  + config.txt: move color.* to a separate file
->  + config.txt: move clean.* to a separate file
->  + config.txt: move checkout.* to a separate file
->  + config.txt: move browser.* to a separate file
->  + config.txt: move branch.* to a separate file
->  + config.txt: move blame.* to a separate file
->  + config.txt: move apply.* to a separate file
->  + config.txt: move am.* to a separate file
->  + config.txt: move alias.* to a separate file
->  + config.txt: move add.* to a separate file
->  + config.txt: move core.* to a separate file
->  + config.txt: move advice.* to a separate file
->  + Update makefile in preparation for Documentation/config/*.txt
->  + Merge branches 'bp/reset-quiet' and 'js/mingw-http-ssl' into nd/config-split
->  (this branch uses bp/reset-quiet.)
->
->  Split the overly large Documentation/config.txt file into million
->  little pieces.  This potentially allows each individual piece
->  included into the manual page of the command it affects more easily.
->
->  Will merge to 'master'.
->
->  This is a painful conversions while many other topics in flight
->  wants to add to or edit the documentation of configuration
->  variables.
-
-Yeah the sooner this lands in master the better. I stopped deploying
-internal versions of git while this is in flight. Having topics I want
-to apply (based off master) + deploying next + resolving conflicts was
-too painful to bother with.
-
+Thanks.
