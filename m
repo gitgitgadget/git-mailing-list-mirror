@@ -2,95 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67D3E1F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 22:55:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FCAC1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 22:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727665AbeKHI2A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 03:28:00 -0500
-Received: from smtp-fw-4101.amazon.com ([72.21.198.25]:30481 "EHLO
-        smtp-fw-4101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727031AbeKHI2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 03:28:00 -0500
+        id S1727289AbeKHIaU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 03:30:20 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40324 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726896AbeKHIaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 03:30:20 -0500
+Received: by mail-wr1-f65.google.com with SMTP id i17-v6so19163357wre.7
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 14:57:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1541631327; x=1573167327;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=03vNOeY1E5ZbJR+b0ArcdTaaF7Q+YW2GcTJmNa3A4IQ=;
-  b=ODr4VNZEIAQNgRNsE8EuUfGK9MgB+HsX5VM/DV5rCjkAR23gOSyZsJ9A
-   ovZbKY10rjhR5n7du3sa6QZyyFF/DhjmVoVN6mbRKoh1nVgbb6XDR++SJ
-   YGxV0sXH9xcnjIGnzLHCSna+vRBb2eX/zTNVV4+ocW6RuNzpmoLbhor0c
-   4=;
-X-IronPort-AV: E=Sophos;i="5.54,477,1534809600"; 
-   d="scan'208";a="744683345"
-Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-1e-62350142.us-east-1.amazon.com) ([10.124.125.6])
-  by smtp-border-fw-out-4101.iad4.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 07 Nov 2018 22:55:26 +0000
-Received: from EX13MTAUEA001.ant.amazon.com (iad55-ws-svc-p15-lb9-vlan2.iad.amazon.com [10.40.159.162])
-        by email-inbound-relay-1e-62350142.us-east-1.amazon.com (8.14.7/8.14.7) with ESMTP id wA7MtPN8003309
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
-        Wed, 7 Nov 2018 22:55:25 GMT
-Received: from EX13D12UEE001.ant.amazon.com (10.43.62.147) by
- EX13MTAUEA001.ant.amazon.com (10.43.61.243) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Wed, 7 Nov 2018 22:55:25 +0000
-Received: from EX13MTAUEE001.ant.amazon.com (10.43.62.200) by
- EX13D12UEE001.ant.amazon.com (10.43.62.147) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Wed, 7 Nov 2018 22:55:25 +0000
-Received: from amazon.com (10.200.179.64) by mail-relay.amazon.com
- (10.43.62.226) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
- Transport; Wed, 7 Nov 2018 22:55:24 +0000
-Date:   Wed, 7 Nov 2018 22:55:24 +0000
-From:   Geert Jansen <gerardu@amazon.com>
-To:     Jeff King <peff@peff.net>
-CC:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-Message-ID: <20181107225524.GA119693@amazon.com>
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
- <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
- <87o9bgl9yl.fsf@evledraar.gmail.com>
- <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
- <20181027093300.GA23974@sigill.intra.peff.net>
- <87lg6jljmf.fsf@evledraar.gmail.com>
- <20181029150453.GH17668@sigill.intra.peff.net>
- <87bm7clf4o.fsf@evledraar.gmail.com>
- <20181029232738.GC24557@sigill.intra.peff.net>
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=F7PLdlXZBlCsLokckW9VL/34w9HFmJJD+xIqFfQqkcc=;
+        b=jU2C8UY6j6IaAji1LulLxICl5ep0SZWMwYBMPzKUUvItHA5f+eeD47wsq6jC2f8Ija
+         4M2D/u74SacAdRl+qtKP6YMnXk1nNOLXpMVEUrVBRtFtd8ekcCGAncallW5x6SXJfxYM
+         Re2KaqlfQkxkY2DRGFf5qDr+7JDw96trkMmVqSgTdUCYzcaGXNPxz0yQ9y06RUsH4MZG
+         1TwKzNqQg9mqe8OTOGM40/dMZqAwUgZZobUvclUOxHDCLnxOYYLkiOuzcynamcmOjlYY
+         wUieeJAxabzA8T1sR/DnOfe0/aLOPBEKZn8PITH9aw5XQApK57Z3l4UppNPhD7abOEaL
+         vTZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=F7PLdlXZBlCsLokckW9VL/34w9HFmJJD+xIqFfQqkcc=;
+        b=RCpkS9DTH8DOSS6RKSNHoRUzH/VaTrG+37ihMY1fQ2X7OJ8tDoOdL12QAgnENxu/wV
+         hn+8FY2oJOn4sdqVM2HbowYGfJgTzd0xuoCBW+q6roNybl8OxN31gUlAFXwybYJq0FKR
+         mnj3u7lepLpZ/JYfOFvrZp79f4fMiHxws/Bf0w5H0tSEfdQ1VDQV4eIF9fRiRKFAWR57
+         0+ys0uFo28N9L6qCpUzLpLHSXA1vV7wi/JUaDI+DGT8vw+cYWk6t4U79Gzr/MPDtaBDi
+         O6ojnk8NxMo8UTaSJv7beDZfViYjpfiUy4mrlzB5Q7O7xRAUKJIwpwyH1b9fxzYZXoKx
+         vbxA==
+X-Gm-Message-State: AGRZ1gJTtYhbCf5fZLD02DPaKtE/9C2n6zS2pY9cUNI82FSs/X2UN8eG
+        /DREXm3h5CwMBm6zy6mm8tA=
+X-Google-Smtp-Source: AJdET5f742yglCMgqRmKCNkfj69+r0rdB6LJ7VsxmehbZ/38ACh6f2ZGmw14eB1T9xE6CF61y7WOfw==
+X-Received: by 2002:adf:fdc8:: with SMTP id i8-v6mr2039393wrs.276.1541631466052;
+        Wed, 07 Nov 2018 14:57:46 -0800 (PST)
+Received: from localhost.localdomain (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id z7-v6sm2374619wrv.21.2018.11.07.14.57.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Nov 2018 14:57:45 -0800 (PST)
+From:   =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>
+To:     daniels@umanovskis.se
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Subject: [PATCH] branch: make --show-current use already resolved HEAD
+Date:   Wed,  7 Nov 2018 22:56:18 +0000
+Message-Id: <20181107225619.6683-1-rafa.almas@gmail.com>
+X-Mailer: git-send-email 2.19.1
+In-Reply-To: <20181025190421.15022-1-daniels@umanovskis.se>
+References: <20181025190421.15022-1-daniels@umanovskis.se>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181029232738.GC24557@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 29, 2018 at 07:27:39PM -0400, Jeff King wrote:
+print_current_branch_name() tries to resolve HEAD and die() when it
+doesn't resolve it successfully. But the conditions being tested are
+always unreachable because early in branch:cmd_branch() the same logic
+is performed.
 
-> On Mon, Oct 29, 2018 at 08:36:07PM +0100, ∆var Arnfjˆr Bjarmason wrote:
-> >  * Re-roll my 4 patch series to include the patch you have in
-> >    <20181027093300.GA23974@sigill.intra.peff.net>
-> 
-> I don't think it's quite ready for inclusion as-is. I hope to brush it
-> up a bit, but I have quite a backlog of stuff to review, as well.
+Eliminate the duplicate and unreachable code, and update the current
+logic to the more reliable check for the detached head.
 
-We're still quite keen to get this patch included. Is there anything I can do
-to help?
+Signed-off-by: Rafael Ascens√£o <rafa.almas@gmail.com>
+---
 
-Also I just re-read your comments on maximum cache size. I think you were
-arguing both sides of the equation and I wasn't sure where you'd ended up. :)
-A larger cache size potentially takes more time to fill up especially on NFS
-while a smaller cache size obviously would less effective. That said a small
-cache is still effective for the "clone" case where the repo is empty.
+This patch is meant to be either applied or squashed on top of the
+current series.
 
-It also occurred to me that as a performance optimization your patch could read
-the the loose object directories in parallel using a thread pool. At least on
-Amazon EFS this should result in al almost linear performance increase. I'm not
-sure how much this would help for local file systems. In any case this may be
-best done as a follow-up patch (that I'd be happy to volunteer for).
+I am basing the claims of it being more reliable of what Junio suggested
+on a previous iteration of this series:
+https://public-inbox.org/git/xmqq4ldtgehs.fsf@gitster-ct.c.googlers.com/
+
+But the main goal of this patch is to just bring some attention to this,
+as I mentioned it in a previous thread but it got lost. After asking on
+#git-devel, the suggestion was to send it as an incremental patch. So
+here it is. :)
+
+I still think the mention about scripting should be removed from the
+original commit message, leaving it open to being taught other tricks
+like --verbose that aren't necessarily script-friendly.
+
+Cheers
+
+ builtin/branch.c | 23 +++++------------------
+ 1 file changed, 5 insertions(+), 18 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 46f91dc06d..1c51d0a8ca 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -38,6 +38,7 @@ static const char * const builtin_branch_usage[] = {
+ 
+ static const char *head;
+ static struct object_id head_oid;
++static int head_flags = 0;
+ 
+ static int branch_use_color = -1;
+ static char branch_colors[][COLOR_MAXLEN] = {
+@@ -443,21 +444,6 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	free(to_free);
+ }
+ 
+-static void print_current_branch_name(void)
+-{
+-	int flags;
+-	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
+-	const char *shortname;
+-	if (!refname)
+-		die(_("could not resolve HEAD"));
+-	else if (!(flags & REF_ISSYMREF))
+-		return;
+-	else if (skip_prefix(refname, "refs/heads/", &shortname))
+-		puts(shortname);
+-	else
+-		die(_("HEAD (%s) points outside of refs/heads/"), refname);
+-}
+-
+ static void reject_rebase_or_bisect_branch(const char *target)
+ {
+ 	struct worktree **worktrees = get_worktrees(0);
+@@ -668,10 +654,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 	track = git_branch_track;
+ 
+-	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
++	head = resolve_refdup("HEAD", 0, &head_oid, &head_flags);
+ 	if (!head)
+ 		die(_("Failed to resolve HEAD as a valid ref."));
+-	if (!strcmp(head, "HEAD"))
++	if (!(head_flags & REF_ISSYMREF))
+ 		filter.detached = 1;
+ 	else if (!skip_prefix(head, "refs/heads/", &head))
+ 		die(_("HEAD not found below refs/heads!"));
+@@ -716,7 +702,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			die(_("branch name required"));
+ 		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+ 	} else if (show_current) {
+-		print_current_branch_name();
++		if (!filter.detached)
++			puts(head);
+ 		return 0;
+ 	} else if (list) {
+ 		/*  git branch --local also shows HEAD when it is detached */
+-- 
+2.19.1
+
