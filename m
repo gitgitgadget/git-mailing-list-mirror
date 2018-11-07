@@ -2,129 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-0.6 required=3.0 tests=AWL,BAYES_40,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F7031F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 10:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6FAD1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 10:51:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726386AbeKGUNd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 15:13:33 -0500
-Received: from mout.gmx.net ([212.227.17.22]:38127 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726218AbeKGUNd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 15:13:33 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPZuP-1gP28N48XJ-004jF4; Wed, 07
- Nov 2018 11:43:35 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPZuP-1gP28N48XJ-004jF4; Wed, 07
- Nov 2018 11:43:35 +0100
-Date:   Wed, 7 Nov 2018 11:43:32 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, lucas.demarchi@intel.com,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] range-diff: add a --no-patch option to show a summary
-In-Reply-To: <nycvar.QRO.7.76.6.1811071130570.39@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1811071142100.39@tvgsbejvaqbjf.bet>
-References: <20181105200650.31177-1-avarab@gmail.com> <CAPig+cThS8959jW9+X7bJHy5RG9Uoj4=V8ahjf2zGetTNw03SA@mail.gmail.com> <87efbz6xys.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811061140560.45@tvgsbejvaqbjf.bet> <874lcu6vr4.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.1811071130570.39@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726688AbeKGUVM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 15:21:12 -0500
+Received: from bmmpi0402.jpx1.mp.cheetahdigital.com ([106.185.85.24]:56780
+        "EHLO bmmpi0402.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726218AbeKGUVM (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Nov 2018 15:21:12 -0500
+X-Greylist: delayed 1206 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Nov 2018 15:21:12 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1541587883;
+        s=mpse.201103; d=rxjp006.dkim.mpse.jp;
+        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=swoWqlskCYqzMzZS6PqKHg/N2ocdetkbSO4EQ4us1NI=;
+        b=DZPxq5IpjTcUKCXr/A5CyaC0YdAISgtFw9t/rY/ejWgQJvxGT/bGAKM8PazXoeBt
+        BHPrlfVkPL/pisn5La7QKzxr7oSH5832UMYjbabOq3CL+IKT9FZKKT5Oe3anOzE5ocM
+        zp4ZOhrIfEWzAYlsxtFdeBwsDCvnN1dCPl/hwwl8=
+Date:   Wed, 7 Nov 2018 19:30:32 +0900 (JST)
+From:   Eiichi Hasegawa LIFESTYLE EXPO TOKYO Show Management 
+        <lifestyle-eng@lifestyle-expo.jp>
+Reply-To: lifestyle-eng@reedexpo.co.jp
+To:     git@vger.kernel.org
+Message-Id: <1541586632296.2018100641.rxjp006.0.16638.00000000@ad145se.mpse.jp>
+Subject: [Market Info] Now is your chance to exhibit in Japan!
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1318860992-1541587415=:39"
-X-Provags-ID: V03:K1:exuDpDHcjgwqRlvaXtTefashmcW5a3shIc1aMfDyUVWVP1jwUcu
- HB/kYwJ5xC89e6NOnBm1uCN6arYyng4UjslP/vtmL2H4bjdIJhaTAOv+/7HSoAicJx8UFS3
- h80DmfBEBjR0Qvq8JxicwUJ9zhCcnA9Jfn9l23/uzoFzSdMwOhUVD+h5DRJr7brMhoR/Zoj
- MFS7xANJAKS6I/Ox7IvbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5LzwtMpoqyc=:PslO6xr1Ndap5YDuSkPfEF
- vxOJdWXmM2D4gUW1u4T864qv61iZWGG40fgc5OpyQ3lWwUTc8Se26/6Xf0lZpJpkWGY5qfW35
- +SBJ0mdGXRnspaSqVDZnVaJpLc0XHyJeQ0ow36o3IvTxzXoXRc3fq3IyIxcoYS14coIuH6osf
- tBiGtgo4iR6KpZButzEBAqpaBb4NqlLsd+hlUO6z7RdX+1dkgDonjMXoYs+PE3aVRWbz54jHT
- U6xoVvAjbarx8/a69G+TcQCDcz8+FXj8DlJtxWvhryFusl+vGH+BP7EpVWk/NNs83gH/c6zEZ
- qHvfDFbLM7f46esgnVEMrCz7cL0lxGiliG/jtQS0fYluU1q64Dh7/9jTERhDxutqAJybe/gJi
- 1ZL64YB6dR7gAK0b7J116GCrcyJMgqzMM3ovw94w1ImI2KOAFgxXli+W0YkPw4gNKqgmlTx+z
- rJ571rqMHC+lVrZEB2qzCzH6rjFS/7ySFCypGQy+TuvRkDg5U+OpaRHAwzm2kqiLdBdjMVQ4M
- jBIumu15vKfpjvNU1wOC02B33xFWuNN0fXRy5c8sp6TT2Fgt7EvY7yn4WcERb6sOKpd9fyFkA
- zjz3YvL/YY8Wivpy3x1VteoWhc0lvit0ZADDKJZ3s4HgmvsZHQa0QbyohUzAY1SWIU9Ztn40h
- yjufibHPhVt4bccZKtSFTLG0iQP78FiNit172njHJyshryFuMgcUrYbSLMf3to0JeqEDCau43
- s8A11ZKwBSW8tWhDthH65UDyeNJhnewhMJSLb99C8NZC7DNgAH/5sWIWnjjWHZIqnL8WSVRKD
- UKgr54IBBSyC9r765KBzaykL4s5hQMpvD9StceKK8N36Lnpbfw=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Dear International Sales & Marketing Director
+Zhejiang Wuchuan Industrial Co., Ltd,
 
---8323328-1318860992-1541587415=:39
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Hello, this is Eiichi Hasegawa from LIFESTYLE EXPO TOKYO 2019 Show Management.
 
-Hi Ævar,
+Today, I would like to share the information of the growing Japanese gift market, and the buyers that you can meet at our show.
+Please take a look at the market information below, and consider exhibiting at LIFESTYLE EXPO TOKYO 2019 [January]!
 
-On Wed, 7 Nov 2018, Johannes Schindelin wrote:
+-------------------------------------------------
+< NOW is your time to tackle Japan >
+-------------------------------------------------
+1) Strong growth in the Japanese Gift Market.
 
-> On Tue, 6 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > On Tue, Nov 06 2018, Johannes Schindelin wrote:
-> > 
-> > > On Mon, 5 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> > >
-> > >> On Mon, Nov 05 2018, Eric Sunshine wrote:
-> > >>
-> > >> > On Mon, Nov 5, 2018 at 3:07 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> > >> >> Add a --no-patch option which shows which changes got removed, added
-> > >> >> or moved etc., without showing the diff associated with them.
-> > >> >
-> > >> > This option existed in the very first version[1] of range-diff (then
-> > >> > called branch-diff) implemented by Dscho, although it was called
-> > >> > --no-patches (with an "es"), which it inherited from tbdiff. I think
-> > >> > someone (possibly me) pointed out that --no-patch (sans "es") would be
-> > >> > more consistent with existing Git options. I don't recall why Dscho
-> > >> > removed the option during the re-rolls, but the explanation may be in
-> > >> > that thread.
-> > >>
-> > >> Thanks for digging. Big thread, not going to re-read it now. I'd just
-> > >> like to have this.
-> > >
-> > > In my hands, the well-documented `-s` option works (see e.g.
-> > > https://git-scm.com/docs/git-diff#git-diff--s), although I have to admit
-> > > that the `git-range-diff` manual does not talk about the diff-options.
-> > >
-> > > And for the record, for me, `git range-diff A...B --no-patch` *already*
-> > > works.
-> > 
-> > Neither of those works for me without my patch. E.g.
-> > 
-> >     ./git-range-diff -s 711aaa392f...a5ba8f2101
-> >     ./git-range-diff --no-patch 711aaa392f...a5ba8f2101
-> >
-> > This is on current next, 2.19.1.1182.g4ecb1133ce. What version are you
-> > on?
-> 
-> I tried it with git version 2.19.0.windows.1.
-> 
-> To verify, I repeated this with `next` (git version
-> 2.19.1.1215.g8438c0b2453a):
-> 
-> ./git range-diff -s 711aaa392f...a5ba8f2101
-> fatal: unrecognized argument: --output-indicator-new=>
-> error: could not parse log for 'a5ba8f2101..711aaa392f'
-> 
-> Which means that something broke rather dramatically between
-> v2.19.0.windows.1 and 8438c0b2453a.
+    <Japanese Gift Market growth from 2014 to 2017>
+      US$ 87 billion　→　US$ 93 billion
+      That is over 6.8% growth rate! (*1)
+ 
+2) Strong demand for Imported Gift Products in Japan.
 
-Nevermind, this was solved by passing `--exec-path=$PWD`. And *now* I can
-reproduce your finding.
+    <Growth of Imported Gifts from 2016 to 2017>
+　    US$ 20 billion　→　US$ 21 billion
+　    That is a 3.4% growth rate, which is approximately more than 2 billion US dollars! (*1)
 
-Ciao,
-Dscho
---8323328-1318860992-1541587415=:39--
+-------------------------------------------------
+< Meet the visitors! >
+-------------------------------------------------
+
+At LIFESTYLE EXPO TOKYO, you can meet:
+1) Importers/Distributors
+   -- ANA TRADING, ITOCHU, MARUBENI INTEX, MITSUBISHI CORP. FASHION, etc.
+
+2) Buyers
+   -- Gift/Stationery Shops: ITO-YA, LOFT, MUJI, PLAZA, TOKYU HANDS, etc.
+   -- Interior Shops/Design Stores: MOMA DESIGN STORE, FRANCFRANC, ACTUS, KEYUCA, etc.
+   -- Concept Shops/Apparel Shops: BEAMS, FREAK’S STORE, SHIPS, URBAN RESEARCH, etc.
+   -- Department Stores: DAIMARU MATSUZAKAYA, ISETAN MITSUKOSHI, TAKASHIMAYA, etc.
+
+3) Key contacts for OEM or Contract Manufacturing 
+   -- Major Japanese brands, Mass retailers, GMS, etc.
+
+and more! 
+
+* visitors are excerpts from the 2018 July show
+---------------------------------------------------------
+
+For more information, please kindly fill in the REPLY FORM below.
+We will be happy to get back to you for details.
+
+We look forward to your reply.
+
+====== Reply Form ================================
+mailto:lifestyle-eng@reedexpo.co.jp
+Company Name:
+Contact Person:
+Email:
+TEL:
+Main Products:
+
+Your Request
+(  ) Exhibiting Cost (     sqm)
+(  ) Available Booth Locations
+(  ) Other (                             )
+===================================================
+
+Please forward this message to the person responsible for marketing/export if needed.
+
+
+Best regards,
+
+
+
+Eiichi Hasegawa (Mr.), Chisato Miyawaki (Ms.), Mikako Shimada (Ms.)
+Qu Jun (Mr.), Choi Ilyong (Mr.)
+LIFESTYLE EXPO TOKYO Show Management
+Reed Exhibitions Japan Ltd.
+TEL: +81-3-3349-8505
+mailto:lifestyle-eng@reedexpo.co.jp
+
+-----------------------------------
+LIFESTYLE EXPO TOKYO 2019 [January] 
+Jan. 30 (Wed.) - Feb. 1 (Fri.), 2019, Makuhari Messe, Japan
+https://www.lifestyle-expo-spring.jp/en/
+-----------------------------------
+
+(*1: Figures from Yano Research Institute Ltd.)
+
+ID:E36-G1402-0075
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd.
+If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
+
+<Update contact information> 
+Please click the URL below and follow the directions on the website to update your e-mail and other information.
+https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
+
+<Remove from list>
+Please reply to this mail changing the subject to "REMOVE FROM LIST".
+You will not receive any further information on this exhibition/conference.
