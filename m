@@ -7,85 +7,110 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 379BF1F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 13:33:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 858F01F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 13:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727693AbeKGXEU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 18:04:20 -0500
-Received: from mail-pf1-f177.google.com ([209.85.210.177]:37357 "EHLO
-        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726411AbeKGXEU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 18:04:20 -0500
-Received: by mail-pf1-f177.google.com with SMTP id u13-v6so7715820pfm.4
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 05:33:56 -0800 (PST)
+        id S1727735AbeKGXEW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 18:04:22 -0500
+Received: from mail-pf1-f170.google.com ([209.85.210.170]:38125 "EHLO
+        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726411AbeKGXEV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 18:04:21 -0500
+Received: by mail-pf1-f170.google.com with SMTP id b11-v6so7714980pfi.5
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 05:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=TkPB109YkFj6PynYfbl8tppBm2Kxf0sD6tu2jC7q9u0=;
-        b=iB/3WPzWTEjz/mJZlcIcO/RNVrF6PjJx7GvYv7OHcwpI7zPv6h07lSPtEhp5ZnCAan
-         q9ZOcj3lK3tHKiHgX42z1CKc34kxnblWXceEYh7zgDRHiAkWU1rm6uywSgN+93Zp4CgP
-         IijAqtWp6CsvnDM75XMliU5ql5AdWKYY3JII6VwxWdROYsbKwiVehW5iNKse/mN3ytft
-         kDBE2fmFW6a0CJO61YHih9lOD4Fj3ImW+2aS8D+aGca6XtPCtam8wxbFtOcZ19hhBv9Q
-         IOlHRV4DvTpAIJtNNYsPrOa7dwp/NMa75nOp0FdIpnt9I4d+orL4x69ac8a9HO6THuEu
-         ++Lw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pwaq1k7tbXYZJbON+5QUf3xRvroHi6fk057jEUhtDRQ=;
+        b=Vv+zQ8BVYRXZi3nDrErc/X+UFLhSJsJ5Nps77ORk/SGZT7mXEzDD8WSg5jfwMdDjdO
+         u2JXbmjOBumATZSrL/0GIjSyKOIyLJEVlplZhZXr5TyQ401TjiK7RavR+NpuncI9YpU2
+         bvqWttpZiJz3ORSPSYPRpnWQ5Tm92zTFJb4cJR1lPaWJCS9VZYH5nZBwHu0bTHXth1Pu
+         +fMSD5ycZx3EMOTTaEXo6BDjXAEmwJB8AShEN5dN4hpyid54tQt6UnwMDXmyjvcPZe6s
+         La1KmlzT4g7Dvjkw7eGZUkfJUSzzXQHbz+xfGdN0lf0x0bR3lpuLKn27L/KQxMJhrqfr
+         zJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TkPB109YkFj6PynYfbl8tppBm2Kxf0sD6tu2jC7q9u0=;
-        b=DK0z5YzFmfGDcr1/rg/TmBWYbYGSdAY269wBbEJ8ck8ev04q4uHcgpiXGycWJ8dmhe
-         c0lpV9ZVXf3IG/uQExRYnuhVlweXA6xVSuRZ7Xmlm90KAYLcSPf9ZyyUXKwuC6DoN9+p
-         yym/AU+aNBgOHHjA9xXlrgIc9qJ+wv0HFMnqU7xWkXr8PvHusTg+KFwFvsjfsU4jLkw5
-         1NPXoW07n7WrxKiEKBL6sAqSggj/eOiBR05rGyBJw583TQafnXWUuCcoCLJmUmP3lWl/
-         /MXO+68sSnwU72WeL805hfU9YKz26GnMiXkYqTFYzpu9Gg+E5gmNGzgq5KzqIS0WTY3K
-         GFCA==
-X-Gm-Message-State: AGRZ1gJKhq/FPWErhMKGHu+zUQ3IiQODiwy9DylrCmDnvkRNifriTW7J
-        4/aGWyvlqkV55Av/S/T8iRNmRCMQlzU=
-X-Google-Smtp-Source: AJdET5eU1r7OLtcCYdvRJvMUJewr/PoPgifz8FwV2uGCZBfRbuJJUEuH0+uLk8MrXbLXJlfqZUoLbg==
-X-Received: by 2002:a62:380e:: with SMTP id f14-v6mr214719pfa.203.1541597635528;
-        Wed, 07 Nov 2018 05:33:55 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id u12-v6sm765005pfi.83.2018.11.07.05.33.54
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=pwaq1k7tbXYZJbON+5QUf3xRvroHi6fk057jEUhtDRQ=;
+        b=onCXrwNZ1o+vnCz0UmWnKnUYNCt8MWlPpuVX5MLi0iYaZG8lNVBLorfROVOm8e0mxY
+         OjvlkSluMLhqQdwwIiSdtlQsqhI1n+H9o+/rpRSLXIZ54nKrEAhDzG5x9J7jOhTB3ZdB
+         iQ3BSVwKuEDiFWJ/nzwGaXqtFH8xCiCgo+uik5SgKf+M/nEPfMgSfDAxlS42ChEHq5Xp
+         /7SJYLWbvuIYgvv52bi1I4WkajVbZpoUIRc4M++vomMvGWCb2GPcOB3E1VyYgKm2Hfqs
+         quMWP606FNDCjnlX31kGBwr6drcK0/eAYxjCjRghdY06tnuHbbAZ6RtZUbT4AjQjaJ81
+         sTXg==
+X-Gm-Message-State: AGRZ1gKSnn+4L4ak+uqzD5CYXhded4qwduZHA/P26LJQWKTTfWevLDx2
+        Qz6aS9xCXtZd6wGhOkSmTlxzj17b1r8=
+X-Google-Smtp-Source: AJdET5e6XK67TT1jMBBufL7jhGD7Jb9C5QY+b7ojl6h/3R6F6IbgP4Z4G8iI5R0d3sJGTRhn1wqwBA==
+X-Received: by 2002:a62:2643:: with SMTP id m64-v6mr254060pfm.74.1541597636837;
+        Wed, 07 Nov 2018 05:33:56 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id l129-v6sm758000pfc.155.2018.11.07.05.33.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Nov 2018 05:33:54 -0800 (PST)
-Date:   Wed, 07 Nov 2018 05:33:54 -0800 (PST)
-X-Google-Original-Date: Wed, 07 Nov 2018 13:33:51 GMT
-Message-Id: <pull.69.git.gitgitgadget@gmail.com>
-From:   "Force.Charlie-I via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] http: add support selecting http version
+        Wed, 07 Nov 2018 05:33:56 -0800 (PST)
+Date:   Wed, 07 Nov 2018 05:33:56 -0800 (PST)
+X-Google-Original-Date: Wed, 07 Nov 2018 13:33:52 GMT
+Message-Id: <4f5a935c4355794effb23c979dcbaf77ed33da26.1541597633.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.69.git.gitgitgadget@gmail.com>
+References: <pull.69.git.gitgitgadget@gmail.com>
+From:   "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] http: add support selecting http version
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Force Charlie <charlieio@outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Normally, git doesn't need to set curl to select the HTTP version, it works
-fine without HTTP2. Adding HTTP2 support is a icing on the cake.
+From: Force Charlie <charlieio@outlook.com>
 
-When http.version=20 is set, git will attempt to request the server using
-HTTP2. If the remote server does not support HTTP2, it is no different.
-Currently bitbucket supports HTTP2 and is available for testing.
-
-example: 
-
-GIT_CURL_VERBOSE=1 git2 -c http.version=20 ls-remote https://bitbucket.org/aquariusjay/deeplab-public-ver2.git
-
-Force Charlie (1):
-  http: add support selecting http version
-
+Signed-off-by: Force Charlie <charlieio@outlook.com>
+---
  http.c | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
-
-base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-69%2Ffcharlie%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-69/fcharlie/master-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/69
+diff --git a/http.c b/http.c
+index 3dc8c560d6..99cb04faba 100644
+--- a/http.c
++++ b/http.c
+@@ -48,6 +48,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+ static int curl_ssl_verify = -1;
+ static int curl_ssl_try;
++static int curl_http_version = 11;
+ static const char *ssl_cert;
+ static const char *ssl_cipherlist;
+ static const char *ssl_version;
+@@ -284,6 +285,10 @@ static void process_curl_messages(void)
+ 
+ static int http_options(const char *var, const char *value, void *cb)
+ {
++	if (!strcmp("http.version",var)) {
++		curl_http_version=git_config_int(var,value);
++		return 0;
++	}
+ 	if (!strcmp("http.sslverify", var)) {
+ 		curl_ssl_verify = git_config_bool(var, value);
+ 		return 0;
+@@ -806,6 +811,13 @@ static CURL *get_curl_handle(void)
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
+ 	}
+ 
++#if LIBCURL_VERSION_NUM >= 0x073100
++	if(curl_http_version == 20){
++		/* CURL Enable HTTP2*/
++		curl_easy_setopt(result, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_2);
++     }
++#endif
++
+ #if LIBCURL_VERSION_NUM >= 0x070907
+ 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+ #endif
 -- 
 gitgitgadget
