@@ -2,102 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE2341F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 22:09:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 941AF1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 22:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727536AbeKHHlw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 02:41:52 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37254 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727127AbeKHHlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 02:41:51 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p2-v6so17062080wmc.2
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 14:09:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=L87tEH24m6cMCP9FxQQ23/+iLmH9hOUfwGXg2wS7jJo=;
-        b=ufuDzFgS/C4ZsPY6C/R4bdfStjVcPGD2Z50O+WfYoBnXLfMU008JblG9n/DOgKMYHa
-         0Nj2VlfOENvDK7BignldZevsOpTA7BK8nnBphI2+ENVPkg4fN3qf2rt5Buwd5dVrpvCD
-         GoHBrPPo9PxYZxVvzSRg4lYZuTywheNzcffL6t7Byb7uDAoPYx2Fz+JXLy9IMJiKl5RA
-         oQaqT88NE4nfY0AOLxRG2AtJk2EmkdtmXwL3hOurbzz40NDTdYrF8+1rotrFsHL7+zu5
-         2Whux0YnpsNvJUOGrS3nbDNGNRNFtk97EolNQEMMhFsbJDFZL03QMcc19rvnSvQdzWGV
-         oyIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=L87tEH24m6cMCP9FxQQ23/+iLmH9hOUfwGXg2wS7jJo=;
-        b=kiSVI+fqH78G5wDaZz3iAjdgMeZzFzu9zuLbzXSo1LLelxRI7qg8qd1sfnjrPo3V5h
-         OY30G+OLGXLkI/rVXWItIhfllOCiwnSJ13OXPKnOKlrv6LwOO9U6uYW4m2cVzVrBPk9Y
-         E6Wc3ZwnCZl8ych/6OCkH4T5a9jAq9mPSA9PFtLmEfyqNJx8zP6L5BdUEhCCF70Uiby+
-         eqGs0iNbTelI3UcrtRktyLs7VhKZZ1/V35g9QDB/2hFP2jB3Y39ih6L25GMEoz6U5XYP
-         hLVHamF92N+jQUqFou4wbXYhlPsf1RfwyOLmu2X+ccajwEl+91TlX/aceDRIbrIebCzw
-         aOnw==
-X-Gm-Message-State: AGRZ1gJ/08DjKj/VzhXDLZ1Rxk0/aocWZJTf5xyPVZQ/pohBx+9xa/Ci
-        L65NfHPFNOo7g6G2k8c2zDM=
-X-Google-Smtp-Source: AJdET5eCVt4BdfV4kpAZhtflDtraeO2ppuuxEnC1dixKNAQOZ7IrByaqtc0ivIe61iB2EAYpvjDIOA==
-X-Received: by 2002:a1c:5706:: with SMTP id l6-v6mr1688258wmb.51.1541628568157;
-        Wed, 07 Nov 2018 14:09:28 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e8-v6sm1770505wrw.75.2018.11.07.14.09.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 14:09:27 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Nov 2018, #03; Wed, 7)
-References: <xmqqy3a5b4x2.fsf@gitster-ct.c.googlers.com>
-        <20181107130950.GA30222@szeder.dev>
-        <CACsJy8CuYgX9yFisJerf9C_6-hyyZD8DjzTsQ7v-uKpbm5LvQQ@mail.gmail.com>
-Date:   Thu, 08 Nov 2018 07:09:26 +0900
-In-Reply-To: <CACsJy8CuYgX9yFisJerf9C_6-hyyZD8DjzTsQ7v-uKpbm5LvQQ@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 7 Nov 2018 16:09:36 +0100")
-Message-ID: <xmqqpnvgbkvd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727762AbeKHHyF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 02:54:05 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:47362 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726751AbeKHHyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 02:54:05 -0500
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id C15E73082B70;
+        Wed,  7 Nov 2018 22:21:40 +0000 (UTC)
+Received: from lacos-laptop-7.usersys.redhat.com (ovpn-120-90.rdu2.redhat.com [10.10.120.90])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id B59574242;
+        Wed,  7 Nov 2018 22:21:39 +0000 (UTC)
+Subject: Re: [PATCH v2] format-patch: respect --stat in cover letter's
+ diffstat
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, leif.lindholm@linaro.org
+Cc:     git@vger.kernel.org, gitster@pobox.com
+References: <20181106104811.14625-1-leif.lindholm@linaro.org>
+ <20181107164953.24965-1-pclouds@gmail.com>
+From:   Laszlo Ersek <lersek@redhat.com>
+Message-ID: <f0f95dd0-1a9e-01d0-70f4-3c6d5450df70@redhat.com>
+Date:   Wed, 7 Nov 2018 23:21:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <20181107164953.24965-1-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.45]); Wed, 07 Nov 2018 22:21:41 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On 11/07/18 17:49, Nguyễn Thái Ngọc Duy wrote:
+> Commit 43662b23ab (format-patch: keep cover-letter diffstat wrapped in
+> 72 columns - 2018-01-24) uncondtionally sets stat width to 72 when
+> generating diffstat for the cover letter, ignoring --stat from command
+> line. But it should only do so when stat width is still default
+> (i.e. stat_width == 0).
+> 
+> In order to fix this, we should only set stat_width if stat_width is
+> zero. But it will never be. Commit 071dd0ba43 (format-patch: reduce
+> patch diffstat width to 72 - 2018-02-01) makes sure that default stat
+> width will be 72 (ignoring $COLUMNS, but could still be overriden by
+> --stat). So all we need to do here is drop the assignment.
+> 
+> Reported-by: Laszlo Ersek <lersek@redhat.com>
+> Helped-by: Leif Lindholm <leif.lindholm@linaro.org>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  builtin/log.c          |  2 --
+>  t/t4052-stat-output.sh | 48 +++++++++++++++++++++++++++++-------------
+>  2 files changed, 33 insertions(+), 17 deletions(-)
+> 
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 061d4fd864..1a39c6e52a 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1009,8 +1009,6 @@ static void show_diffstat(struct rev_info *rev,
+>  
+>  	memcpy(&opts, &rev->diffopt, sizeof(opts));
+>  	opts.output_format = DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+> -	opts.stat_width = MAIL_DEFAULT_WRAP;
+> -
+>  	diff_setup_done(&opts);
+>  
+>  	diff_tree_oid(get_commit_tree_oid(origin),
 
-> On Wed, Nov 7, 2018 at 2:09 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
->>
->> On Wed, Nov 07, 2018 at 06:41:45PM +0900, Junio C Hamano wrote:
->> > * nd/i18n (2018-11-06) 16 commits
->> >  - fsck: mark strings for translation
->> >  - fsck: reduce word legos to help i18n
->> > ...
->> >  More _("i18n") markings.
->>
->> When this patch is merged into 'pu' all four tests added to
->> 't1450-fsck.sh' in b29759d89a (fsck: check HEAD and reflog from other
->> worktrees, 2018-10-21) as part of 'nd/per-worktree-ref-iteration'
->> below fail when run with GETTEXT_POISON=y.  The test suite passes in
->> both of these topics on their own, even with GETTEXT_POISON, it's
->> their merge that is somehow problematic.
->
-> Not surprising. The i18n series makes fsck output localized strings
-> and without updating grep to test_i18ngrep, new tests will fail. If
-> 'pu' was passing before, I'm ok with just ejecting this series for
-> now. Then I wait for the other to land, rebase, fixup and resubmit.
+Because I plan to use the patch on top of v2.19.1 (until the next major
+release, v2.20, is made), that's also where I applied and tested the patch.
 
-Let me first see if I can come up with a merge-fix that can be
-carried around during the time this topic cooks, before talking
-about dropping and reattempting the series.
+With master @ a4b8ab5363a3, this patch targets show_diffstat(). At
+v2.19.1, commit fa5b7ea670f4 ("format-patch: allow additional generated
+content in make_cover_letter()", 2018-07-23) had not occurred yet, so
+there the subject code still lived in make_cover_letter(). On my end,
+git-am has applied the hunk to make_cover_letter() seamlessly.
 
-For a change like this, a time-window in which the codebase is
-quiescent enough may never come, and because the changes go all over
-the place, mostly but not entirely repetitive, it costs a lot, not
-just to write but also to review them.
+I tested the patch with "--stat=1000 --stat-graph-width=20", formatting
+an edk2 series that contained commit 1ed6498c4a02
+("UefiCpuPkg/CommonFeature: Skip locking when the feature is disabled",
+2018-11-07). The long pathname
+"UefiCpuPkg/Library/CpuCommonFeaturesLib/FeatureControl.c" is no longer
+truncated in the cumulative diffstat, in the cover letter.
+
+Tested-by: Laszlo Ersek <lersek@redhat.com>
+
+> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+> [...]
+
+I didn't try to run the test suite (I wasn't conscious of it anyway); I
+built & installed git with
+
+  nice make -j4 prefix=... all doc info
+  nice make prefix=... install install-doc install-html install-info
+
+I also wasn't watching the make log. So if those make targets don't
+include the test suite, then I didn't exercise the new test case.
+
+Thank you!
+Laszlo
