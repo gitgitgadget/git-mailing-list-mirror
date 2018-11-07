@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 526451F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 11:08:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A04D1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 11:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726766AbeKGUia (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 15:38:30 -0500
-Received: from mout.gmx.net ([212.227.15.15]:51515 "EHLO mout.gmx.net"
+        id S1726887AbeKGUls (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 15:41:48 -0500
+Received: from mout.gmx.net ([212.227.17.20]:32779 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726248AbeKGUia (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 15:38:30 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7HGA-1fYJ3M303q-00x3US; Wed, 07
- Nov 2018 12:08:26 +0100
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7HGA-1fYJ3M303q-00x3US; Wed, 07
- Nov 2018 12:08:26 +0100
-Date:   Wed, 7 Nov 2018 12:08:24 +0100 (STD)
+        id S1726241AbeKGUls (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 15:41:48 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUDXS-1ftMvq3Lbm-00QyoQ; Wed, 07
+ Nov 2018 12:11:44 +0100
+Date:   Wed, 7 Nov 2018 12:11:42 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, lucas.demarchi@intel.com,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] range-diff: add a --no-patch option to show a summary
-In-Reply-To: <nycvar.QRO.7.76.6.1811071144140.39@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1811071202480.39@tvgsbejvaqbjf.bet>
-References: <20181105200650.31177-1-avarab@gmail.com> <CAPig+cThS8959jW9+X7bJHy5RG9Uoj4=V8ahjf2zGetTNw03SA@mail.gmail.com> <87efbz6xys.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811061140560.45@tvgsbejvaqbjf.bet> <874lcu6vr4.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.1811071130570.39@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1811071142100.39@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1811071144140.39@tvgsbejvaqbjf.bet>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] range-diff: add a --no-patch option to show a
+ summary
+In-Reply-To: <xmqqsh0dd7ql.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811071210250.39@tvgsbejvaqbjf.bet>
+References: <20181105200650.31177-1-avarab@gmail.com> <20181106162413.9785-1-avarab@gmail.com> <xmqqsh0dd7ql.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1035248804-1541588906=:39"
-X-Provags-ID: V03:K1:uFs+6/9omUeGwESmFja45jJB57EreBR1/Kaza4ih20RFT6OFn9H
- wWbP4OXRUECGMYZGkQeSRSMflbI82GU0AHcLYbLibjpHGL9t0laQONE0+NuH9CJPN9EABLT
- Jof/dx1r8fcIwCVBT5VNpYhD9KyuVKP49uoyytQXM7gDS7dh0639MdTkkey7dwNWwWoDbof
- JjQc7WqT6r34MwCxw4yLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xlF9nC3YMws=:jE1d4X568vTgienv/uDits
- nDU2+dWhJ1qVVRD0Qo3Kv8vFIU4m2pjWcYtnjPeGLEgBQPHmcwHMJXpNlQ48kACo+Wtw3zmio
- yNaUiGp95a8wLY+25EmmQJnvbYS1yARlVPxobNnEWpsJQRZOKpOCfhVejX21BvfJAxLkQUnQj
- WohTvU2roMsO85z4mpt7ZiJHYX7nKZTUveevQJO0YCmu6vF5sqVRDUUt7g42YzILLXFkSPrAl
- DZtZiad/PVDmSxV9snwq8UTaZFoDz5/DdtsxhDiryts1vfJiMECultP96zQPbsz1hVtZFTla1
- c659ENI0LoQQS/QmYgWH5eAXhuN78OMIc+XDwWicH3NM5PQh+tcQso3VmHGD7AYVxdDG0sF1V
- SgJFFHOHr6KBB++tUYgFeiJgGfbwv8SADshdvYSLQbi+WARowXjTihcvn2DC15eFDAMub/SOT
- npkQHf854rDwtg5YYxNXGDoenHqqt8i6mFc9cubuYRp4GeHZI+ndAtgJLYY36aRx05ixLXqSo
- UFwINI7+hd/KMabqacGR/JUY5h3DqaHQIlsOWddTXvt/sAcoO0U/vsYMQz3kIgTQ7t0wOh7gp
- U8DDqdSDnWPtT6/Mfs4p9D505YI74EiwI3qMcvPeP8Csmcbw3kuV9UEyi8rk+q8AH1YjnbF86
- oX5HMyClIwF2wYYbt6Q08wWRi1afuDyyTgxKkXhG5e4+9eM7rkbZhOJB/2OezhJ5wDhs00wRG
- 543Tc+CdeBJD3wqBrAXtdUHBUJ7uOUqqJk4T+LbfdCSj3tq99GC8lfg8fvrDx95cac1AdgYwf
- HgMRJOVWvClS/alQhMeq01CfQurlqj6WVBIIPmLNwYyFrCFzC8=
+Content-Type: multipart/mixed; boundary="8323328-1435426602-1541589104=:39"
+X-Provags-ID: V03:K1:vTUowOFSLks0jEoyS7YsYZeMawcyG9u42DytPxvSp65iiLyNFLH
+ IgRt0hboSTiC6v2QSXNgs6iNiC2jns0a5ZLdt9hN1hywWA3SBqeR+ZkY0JCV/F/VDCq+yF/
+ imsgFSuswqC4TShB1HA2tro4OAc3SfPQ/oae9iXHMj+Z+7UDRkpEXl/ffoTk0nKrvB4XC73
+ 0f4FbT16SUx711m3LoUKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B6i+wxxgLJw=:Fo2fAt8TppACN1t6xYDBr6
+ GVXN5cgMDggYj5hMveAAE2kBk+V8vsHeF+nhM9jgtu28y3Jt8Y8Vnr/YP3ZyNnlJArQv+w/7e
+ /7tclveIRFCz5vkkiU8UTfmgcShZ42y8zzoHECVfT3ILW/XRVEUhxSyPMKdqMwfMtVP+kZ7uz
+ FpdUHy2saDen4ZXeDQKqxj0ibHJIInHauLrYu5yib8NZh/PQIphvofDcJpZiFQlsmkND/B9xH
+ oF3jowhjxXgZhPoB3/CIQf9wvZlKhTMtzFzkTg35ZdAEArT1BOtQ2eq/cSqEuipBtxeTOmcPh
+ C3jucKFoTKNvi7E+tL15XaaKooh49LMj3WDwtw6KokwC6lii6PIDBznGicifURvMZHA6bP+ex
+ mdwQYPR04uM7g74bWG1c6pgYf9axm8if92pu90BtS6AUJgp9nWxJC7BMLXmdOlbMoAnpE7zhF
+ VTuYBukGpzGRQewy0fSGPCflF0RsioWpcNvZwKUxfY6UB9BS4MPbwYT9VglDO+a8oZMpS7/xv
+ GgqM76ZejPsjGACvGUTh/osaaP4PYnahpln8CHooziMrQqiReTbP1jtNlYp28pSOAJdcAe7vk
+ fwu2SR81/jTlUDFaB0rGsWrA9Qu2UAkgtXGEGdUc7MkyV9L2zunJzclDRynAll8WWBPG0illJ
+ nlaYli++11wQRKrJqSRvErM7vL/3SDS6aDdG5+7dgt+56VE73Krl/smX6ituqBjdtzJjHkTpK
+ AaPWUgoaKMbWGhW+Wy/NbFRPLrb+fivn8QW+lotrvdXUOhXHoglySw22LIP/brJwhIuwR6bOr
+ ZinQjuTxojE6tKU6FCa6RYABueHl9gGTIXFsERJioq4aXhDb/g779ZqiSMg3ax0JB9RdwD0uA
+ 17kAOv27hEB/zyQT7QRaBXeHOaEKJDl1DGJ3N2I+8HEBNidWfyLb4i9U7OjNp6XdejZCjldJL
+ Hh9kzx1rCrQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,116 +63,98 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1035248804-1541588906=:39
+--8323328-1435426602-1541589104=:39
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 
-Me again,
+Hi,
 
-On Wed, 7 Nov 2018, Johannes Schindelin wrote:
+On Wed, 7 Nov 2018, Junio C Hamano wrote:
 
-> On Wed, 7 Nov 2018, Johannes Schindelin wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
-> > On Wed, 7 Nov 2018, Johannes Schindelin wrote:
-> > 
-> > > On Tue, 6 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> > > 
-> > > > On Tue, Nov 06 2018, Johannes Schindelin wrote:
-> > > > 
-> > > > > On Mon, 5 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> > > > >
-> > > > >> On Mon, Nov 05 2018, Eric Sunshine wrote:
-> > > > >>
-> > > > >> > On Mon, Nov 5, 2018 at 3:07 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> > > > >> >> Add a --no-patch option which shows which changes got removed, added
-> > > > >> >> or moved etc., without showing the diff associated with them.
-> > > > >> >
-> > > > >> > This option existed in the very first version[1] of range-diff (then
-> > > > >> > called branch-diff) implemented by Dscho, although it was called
-> > > > >> > --no-patches (with an "es"), which it inherited from tbdiff. I think
-> > > > >> > someone (possibly me) pointed out that --no-patch (sans "es") would be
-> > > > >> > more consistent with existing Git options. I don't recall why Dscho
-> > > > >> > removed the option during the re-rolls, but the explanation may be in
-> > > > >> > that thread.
-> > > > >>
-> > > > >> Thanks for digging. Big thread, not going to re-read it now. I'd just
-> > > > >> like to have this.
-> > > > >
-> > > > > In my hands, the well-documented `-s` option works (see e.g.
-> > > > > https://git-scm.com/docs/git-diff#git-diff--s), although I have to admit
-> > > > > that the `git-range-diff` manual does not talk about the diff-options.
-> > > > >
-> > > > > And for the record, for me, `git range-diff A...B --no-patch` *already*
-> > > > > works.
-> > > > 
-> > > > Neither of those works for me without my patch. E.g.
-> > > > 
-> > > >     ./git-range-diff -s 711aaa392f...a5ba8f2101
-> > > >     ./git-range-diff --no-patch 711aaa392f...a5ba8f2101
-> > > >
-> > > > This is on current next, 2.19.1.1182.g4ecb1133ce. What version are you
-> > > > on?
-> > > 
-> > > I tried it with git version 2.19.0.windows.1.
-> > > 
-> > > To verify, I repeated this with `next` (git version
-> > > 2.19.1.1215.g8438c0b2453a):
-> > > 
-> > > ./git range-diff -s 711aaa392f...a5ba8f2101
-> > > fatal: unrecognized argument: --output-indicator-new=>
-> > > error: could not parse log for 'a5ba8f2101..711aaa392f'
-> > > 
-> > > Which means that something broke rather dramatically between
-> > > v2.19.0.windows.1 and 8438c0b2453a.
-> > 
-> > Nevermind, this was solved by passing `--exec-path=$PWD`. And *now* I can
-> > reproduce your finding.
+> > diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+> > index f01a0be851..05d1f6b6b6 100644
+> > --- a/builtin/range-diff.c
+> > +++ b/builtin/range-diff.c
+> > @@ -16,11 +16,14 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+> >  	int creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
+> >  	struct diff_options diffopt = { NULL };
+> >  	int simple_color = -1;
+> > +	int no_patch = 0;
+> >  	struct option options[] = {
+> >  		OPT_INTEGER(0, "creation-factor", &creation_factor,
+> >  			    N_("Percentage by which creation is weighted")),
+> >  		OPT_BOOL(0, "no-dual-color", &simple_color,
+> >  			    N_("use simple diff colors")),
+> > +		OPT_BOOL_F('s', "no-patch", &no_patch,
+> > +			 N_("show patch output"), PARSE_OPT_NONEG),
 > 
-> I've bisected this breakage down to 73a834e9e279 (range-diff: relieve
-> callers of low-level configuration burden, 2018-07-22). Eric, that's one
-> of your commits.
+> As OPT_BOOL("patch") natively takes "--no-patch" to flip the bool
+> off, an int variable "patch" that is initialized to 1 would make it
+> more readable by avoiding double negation !no_patch like the one we
+> see below.  I guess the reason behind the contortion you wanted to
+> give the synonym --silent to it?
 
-Okay, so I would really like to point you to this particular paragraph in
-the manual page of `git range-diff` (just below
-https://git-scm.com/docs/git-range-diff#git-range-diff-ltbasegtltrev1gtltrev2gt):
+In light of my investigation that revealed that the original behavior
+(which is still documented in the manual page of range-diff) was broken,
+and I would much rather see that fixed than adding a workaround.
 
-	`git range-diff` also accepts the regular diff options (see
-	linkgit:git-diff[1]), most notably the `--color=[<when>]` and
-	`--no-color` options. These options are used when generating the "diff
-	between patches", i.e. to compare the author, commit message and diff of
-	corresponding old/new commits. There is currently no means to tweak the
-	diff options passed to `git log` when generating those patches.
-
-So this was quite intentional, in particular with an eye on `--no-patch`.
-Note also the commit message of c8c5e43ac3f9 (range-diff: also show the
-diff between patches, 2018-08-13):
-
-    Note also: while tbdiff accepts the `--no-patches` option to suppress
-    these diffs between patches, we prefer the `-s` (or `--no-patch`)
-    option that is automatically supported via our use of diff_opt_parse().
-
-This was very, very intentional, as you can see, and it was pretty broken
-by 73a834e. This here patch papers over that breakage, sadly I have too
-much on my plate as it is, so I cannot wrap it up in a nice commit (nor
-add a regression test, but you did that, nor investigate what else is
-broken) and therefore I would be indebted if you could take this in your
-custody:
-
-diff --git a/range-diff.c b/range-diff.c
-index 3dd2edda0176..014112ee401f 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -433,7 +433,8 @@ int show_range_diff(const char *range1, const char *range2,
- 		struct strbuf indent = STRBUF_INIT;
- 
- 		memcpy(&opts, diffopt, sizeof(opts));
--		opts.output_format = DIFF_FORMAT_PATCH;
-+		if (!opts.output_format)
-+			opts.output_format = DIFF_FORMAT_PATCH;
- 		opts.flags.suppress_diff_headers = 1;
- 		opts.flags.dual_color_diffed_diffs = dual_color;
- 		opts.output_prefix = output_prefix_cb;
+I would be fine with my patch being combined with the update to the manual
+page and the regression test, as a v3.
 
 Ciao,
 Dscho
---8323328-1035248804-1541588906=:39--
+
+> 
+> > @@ -92,7 +95,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+> >  	}
+> >  
+> >  	res = show_range_diff(range1.buf, range2.buf, creation_factor,
+> > -			      simple_color < 1, &diffopt);
+> > +			      simple_color < 1, !no_patch, &diffopt);
+> 
+> >  	strbuf_release(&range1);
+> >  	strbuf_release(&range2);
+> 
+> > @@ -7,6 +7,7 @@
+> >  
+> >  int show_range_diff(const char *range1, const char *range2,
+> >  		    int creation_factor, int dual_color,
+> > +		    int patch,
+> >  		    struct diff_options *diffopt);
+> 
+> Other than that small "Huh?", the code looks good to me.
+> 
+> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> > index 6aae364171..27e071650b 100755
+> > --- a/t/t3206-range-diff.sh
+> > +++ b/t/t3206-range-diff.sh
+> > @@ -122,6 +122,26 @@ test_expect_success 'changed commit' '
+> >  	test_cmp expected actual
+> >  '
+> >  
+> > +test_expect_success 'changed commit -p & --patch' '
+> > +	git range-diff --no-color -p topic...changed >actual &&
+> > +	test_cmp expected actual &&
+> > +	git range-diff --no-color --patch topic...changed >actual &&
+> > +	test_cmp expected actual
+> 
+> This makes sure that -p and --patch produces the same output as the
+> default case?  I am not sure who in the parseopt API groks the
+> single letter "-p" in this case offhand.  Care to explain how?
+> 
+> The other side of the test to see -s/--no-patch we see below also
+> makes sense.
+> 
+> > +test_expect_success 'changed commit -s & --no-patch' '
+> > +...
+> > +	cat >expected <<-EOF &&
+> 
+> Quote EOF to allow readers skim the contents without looking for and
+> worrying about $substitutions in there, unless there are tons of
+> offending code in the same script already in which case we should
+> leave the clean-up outside this primary change.
+> 
+> 
+--8323328-1435426602-1541589104=:39--
