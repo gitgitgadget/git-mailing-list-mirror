@@ -2,135 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22B8D1F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 02:08:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC6E91F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 04:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389005AbeKGLg5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 06:36:57 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37843 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388888AbeKGLg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 06:36:57 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p2-v6so14177456wmc.2
-        for <git@vger.kernel.org>; Tue, 06 Nov 2018 18:08:41 -0800 (PST)
+        id S2388394AbeKGOHK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 09:07:10 -0500
+Received: from mail-it1-f172.google.com ([209.85.166.172]:34617 "EHLO
+        mail-it1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387839AbeKGOHK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 09:07:10 -0500
+Received: by mail-it1-f172.google.com with SMTP id t189-v6so12140557itf.1
+        for <git@vger.kernel.org>; Tue, 06 Nov 2018 20:38:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=h7ySAIOTP2iSlOjLdMbMFO7KuLw0QZQ2udHvf8RlVMo=;
-        b=DbhWgPYXfIhUfof6jzb2CcvEDh2nPHtk71OEMIHSPqfdeHHkGgZ2QIMCBv7FK5zHf+
-         ay6MkZsJ7aDbsbYaRkF0g/9PV1ZnTyg1sHiH+Z2IX2awQqohR9D0Op5aiHXrvk12XuE2
-         Hlb7MBTskgQi0AdlWXec94mbNuuj9sS3Sqgfak/QjLkoUp6Oa3ch4PptaqUdH1v6W9+X
-         8x9vpeuHquha70+/nLxL2i63ABEjf9a7es7Pepl5P+/1Y9OcsAcQxUJ44fUwIfvAKOsV
-         pv+ZwQJ/D45NiuEPom6FxE7RRQcldcGSBdHwB05iuQBNGgI+2VRg43rCR4qyT8I3MxkA
-         cfWQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LTtvcwZRySpoyQikJcGQ4y0u4xAyWs0mmTP8g4n/1DQ=;
+        b=uP9DSj8L884AOIEg0VF5E9kbwEq24yXsp/53l+oo/XKV6RWhaPXQRQW+zjzX8uww8h
+         LU+7ZxaApbmEqhKd9BkbQthEWrLA1pcJaHZ1doRFBHaiD/Jbq1GawZVWaYnAumdpQIkl
+         C5VV3Hfola6mEJlcryeWfRyjIdo7SMGp5xlrui5Ez0uQpqQCzmr6XbgpkpoStgJeUyh4
+         v8FJF2FvoCupiK5Zug2N57/dhLmG8aft4VJt4ykbvelqcU2GIAEh//OaEJ2cmkGX3Dv0
+         eRYe1rtMpupnX8UYjMz9RXYS5h1x9lr5A2XTYzlZlUX0AGFAhc5PRQFSqox2bZpQB5Ro
+         h4fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=h7ySAIOTP2iSlOjLdMbMFO7KuLw0QZQ2udHvf8RlVMo=;
-        b=UqE7AAmqfzKWS+NSoX8dgYlUt2obMc4IwxSXv2o/zxDBCQBEJKxUxobg4pqJ8C6JSV
-         ZQ7mKEeyt2pF1vdIdDGRYjcaMUULbYkkcY4fMt9qEEimUtOzMAlD89yPm4Xg2ZgsR5vQ
-         gvzEy0J5s5Xu0WnI2egPmXP1JcnCL0qfnWeoT+KtLSuR7UnUl+HEVHw0OQilru3Arx0N
-         2fAc8mICb8bs0kfJ9CN3s+J6zNrSZ7zsin3pxK+wD2qX39QFsuORKbm2Ic8nSItOoIRy
-         m4dmonQ03XgFtjLqSG0Htt0y+KIwcFZUVI98UYU4e6/Kcrq3PMUxym9AWK7vlCx+rdoQ
-         Iy7Q==
-X-Gm-Message-State: AGRZ1gKWlwHyjlGLovvQBYI8u/oLFtWgLzqeTbW8KrbRDksufFec3DdK
-        577b5m8L1RWg2k1XV8FZzzA=
-X-Google-Smtp-Source: AJdET5fvkgApJbvgICqFp3osYkQ91meFZ0p8olNriliurwmPd4TCZjIvkiCWzDUQuKi1GYrgQStCMg==
-X-Received: by 2002:a1c:6754:: with SMTP id b81-v6mr278236wmc.104.1541556520430;
-        Tue, 06 Nov 2018 18:08:40 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z7-v6sm14640601wrv.21.2018.11.06.18.08.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Nov 2018 18:08:39 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] approxidate: handle pending number for "specials"
-References: <20181102052239.GA19162@sigill.intra.peff.net>
-        <20181102052309.GB19234@sigill.intra.peff.net>
-        <CAPUEspi12TtKxKGr=tutfLPNPWhaZmGCh7q4D1LRJ9LFTWwKNA@mail.gmail.com>
-        <20181107011253.GA18276@sigill.intra.peff.net>
-Date:   Wed, 07 Nov 2018 11:08:38 +0900
-In-Reply-To: <20181107011253.GA18276@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 6 Nov 2018 20:12:53 -0500")
-Message-ID: <xmqqbm71d4gp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LTtvcwZRySpoyQikJcGQ4y0u4xAyWs0mmTP8g4n/1DQ=;
+        b=KVwwu/0o/ieUSi2KF4IyaWl6AG410TRxTqGh+z+KzwncFYqpOaG6FX/h94S/gUO0xu
+         eQKqYrBLkJIAD2KcVe9goiX9OeIUGZA0ZnhsF/LQNu27Sgt532Gr1zim2Jk8Sw92G4Dd
+         A1PN1b/wuduPtHdRSNhw1h9tMxuJDXXnCkIkqYv15ixwsa2vhzgvVYqakM1kCS3i9D43
+         B+TTH/YEK7/QmT6BZ/amyVQJynOtdiz0BrLc8Q/Pmpxc3YT10Yc4Vz9vYncAGeBF0xbb
+         syLTepQp/R9rtnUG+VMXftMZjng9CekDlXCtBf+8K0HjwKWq0+2fNyczGsDPEFMk+Vvz
+         yKjg==
+X-Gm-Message-State: AGRZ1gK9sBzD2DjStirAcTcqT+oLa4cTLvvHzRDcNfJNi2sl9r1ZyFxN
+        1E24E2SU19lNc28hILOxYL2JWt6KxfvZ4kPkflYvJBaG
+X-Google-Smtp-Source: AJdET5dNMGnL5/wAgWJY6LuqUywG6l+7UUr1X8To+O80CPT5ZuxueIxciJ/SuxvaAdwpIgJCUZD9VHvYpBfWq2TvZtA=
+X-Received: by 2002:a24:cec6:: with SMTP id v189-v6mr656260itg.125.1541565509395;
+ Tue, 06 Nov 2018 20:38:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
+ <20181104170729.GA21372@tor.lan> <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com>
+ <20181105181014.GA30777@tor.lan> <20181106201618.GA30158@tor.lan>
+In-Reply-To: <20181106201618.GA30158@tor.lan>
+From:   =?UTF-8?Q?Adri=C3=A1n_Gimeno_Balaguer?= <adrigibal@gmail.com>
+Date:   Wed, 7 Nov 2018 05:38:18 +0100
+Message-ID: <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com>
+Subject: Re: git-rebase is ignoring working-tree-encoding
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hello Torsten,
 
-> On Tue, Nov 06, 2018 at 04:48:28PM -0800, Carlo Arenas wrote:
->
-> I think date_yesterday() is the only one of those special functions that
-> gets called like this. Here's what I think we should do to fix it (this
-> can go right on top of jk/misc-unused-fixes, which is already in next).
+Thanks for answering.
 
-Thanks, both.  I think the patch makes sense.
+Answering to your question, I removed the comments with "rebase" since
+my reported encoding issue happens on more simpler operations
+(described in the PR), and the problem is not directly related to
+rebasing, so I considered it better in order to avoid unrelated
+confusions.
 
-> -- >8 --
-> Subject: [PATCH] approxidate: fix NULL dereference in date_time()
+Let's get back to the problem. Each system has a default endianness.
+Also, in .gitattributes's working-tree-encoding, Git behaves
+differently depending on the attribute's value and the contents of the
+referenced entry file. When I put the value "UTF-16", then the file
+must have a BOM, or Git complains. Otherwise, if I put the value
+"UTF-16BE" or "UTF-16LE", then Git prohibites operations if file has a
+BOM for that main encoding (UTF-16 here), which can be relate to any
+endianness.
+
+My very initial goal was, given a UTF-16LE file, to be able to view
+human-readable diffs whenever I make a change on it (and yes, it must
+be Little Endian). Plus, this file had a BOM. Now, what are the
+options with Git currently (consider only working-tree-encoding)? If I
+put working-tree-encoding=3DUTF-16, then I could view readable diffs and
+commit the file, but here is the main problem: Git looses information
+about what initial endianness the file had, therefore, after
+staging/committing it re-encodes the file from UTF-8 (as stored
+internally) to UTF-16 and the default system endianness. In my case it
+did to Big Endian, thus affecting the project's requirement. That is
+why I ended up writing a fixup script to change the encoding back to
+UTF-16LE.
+
+On the other hand, once I set working-tree-encoding=3DUTF-16LE, then Git
+prohibited me from committing the file and even viewing human-readable
+diffs (the output simply tells it's a binary file). In this sense, the
+internal location of these  errors is within the function of utf8.c I
+made changes to in the PR. I hope I was clearer!
+
+Finally, Git behaviour around this is based on Unicode standards,
+which is why I acknowledged that my changes violated them after
+refering to a link which is present in the ut8.h file.
+El mar., 6 nov. 2018 a las 21:16, Torsten B=C3=B6gershausen
+(<tboegi@web.de>) escribi=C3=B3:
 >
-> When we see a time like "noon", we pass "12" to our date_time() helper,
-> which sets the hour to 12pm. If the current time is before noon, then we
-> wrap around to yesterday using date_yesterday(). But unlike the normal
-> calls to date_yesterday() from approxidate_alpha(), we pass a NULL "num"
-> parameter. Since c27cc94fad (approxidate: handle pending number for
-> "specials", 2018-11-02), that causes a segfault.
+> On Mon, Nov 05, 2018 at 07:10:14PM +0100, Torsten B=C3=B6gershausen wrote=
+:
+> > On Mon, Nov 05, 2018 at 05:24:39AM +0100, Adri=C3=A1n Gimeno Balaguer w=
+rote:
+> >
+> > []
+> >
+> > > https://github.com/git/git/pull/550
+> >
+> > []
+> >
+> > > This is covered in the mentioned PR above. Thanks for feedback.
+> >
+> > Thanks for the code,
+> > I will have a look (the next days)
+> >
+> > >
+> > > --
+> > > Adri=C3=A1n
 >
-> One way to fix this is by checking for NULL. But arguably date_time() is
-> abusing our helper by passing NULL in the first place (and this is the
-> only case where one of these "special" parsers is used this way). So
-> instead, let's have it just do the 1-day subtraction itself. It's still
-> just a one-liner due to our update_tm() helper.
+> Hej Adri=C3=A1n,
 >
-> Note that the test added here is a little funny, as we say "10am noon",
-> which makes the "10am" seem pointless.  But this bug can only be
-> triggered when it the currently-parsed hour is before the special time.
-> The latest special time is "tea" at 1700, but t0006 uses a hard-coded
-> TEST_DATE_NOW of 1900. We could reset TEST_DATE_NOW, but that may lead
-> to confusion in other tests. Just saying "10am noon" makes this test
-> self-contained.
+> I still didn't manage to fully understand your problem.
+> I tried to convert your test into my understanding,
+> It can be fetched here (or copied from this message, see below)
 >
-> Reported-by: Carlo Arenas <carenas@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  date.c          | 2 +-
->  t/t0006-date.sh | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
+> https://github.com/tboegi/git/tree/tb.181106_UTF16LE_commit
 >
-> diff --git a/date.c b/date.c
-> index 7adce327a3..9bc15df6f9 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -929,7 +929,7 @@ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
->  static void date_time(struct tm *tm, struct tm *now, int hour)
->  {
->  	if (tm->tm_hour < hour)
-> -		date_yesterday(tm, now, NULL);
-> +		update_tm(tm, now, 24*60*60);
->  	tm->tm_hour = hour;
->  	tm->tm_min = 0;
->  	tm->tm_sec = 0;
-> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index b7ea5fbc36..ffb2975e48 100755
-> --- a/t/t0006-date.sh
-> +++ b/t/t0006-date.sh
-> @@ -114,6 +114,7 @@ check_approxidate '15:00' '2009-08-30 15:00:00'
->  check_approxidate 'noon today' '2009-08-30 12:00:00'
->  check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
->  check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
-> +check_approxidate '10am noon' '2009-08-29 12:00:00'
->  
->  check_approxidate 'last tuesday' '2009-08-25 19:20:00'
->  check_approxidate 'July 5th' '2009-07-05 19:20:00'
+> The commit of an empty file seems to work for me, in the initial
+> report a "rebase" was mentioned, which is not in the TC ?
+>
+> Is the following what you intended to test ?
+>
+> #!/bin/sh
+> test_description=3D'UTF-16 LE/BE file encoding using working-tree-encodin=
+g'
+>
+>
+> . ./test-lib.sh
+>
+> # We specify the UTF-16LE BOM manually, to not depend on programs such as=
+ iconv.
+> utf16leBOM=3D$(printf '\377\376')
+>
+> test_expect_success 'Stage empty UTF-16LE file as binary' '
+>         >empty_0.txt &&
+>         echo "empty_0.txt binary" >>.gitattributes &&
+>         git add empty_0.txt
+> '
+>
+>
+> test_expect_success 'Stage empty file with enc=3DUTF.16BL' '
+>         >utf16le_0.txt &&
+>         echo "utf16le_0.txt text working-tree-encoding=3DUTF-16BE" >>.git=
+attributes &&
+>         git add utf16le_0.txt
+> '
+>
+>
+> test_expect_success 'Create and stage UTF-16LE file with only BOM' '
+>         printf "$utf16leBOM" >utf16le_1.txt &&
+>         echo "utf16le_1.txt text working-tree-encoding=3DUTF-16" >>.gitat=
+tributes &&
+>         git add utf16le_1.txt
+> '
+>
+> test_expect_success 'Dont stage UTF-16LE file with only BOM with enc=3DUT=
+F.16BE' '
+>         printf "$utf16leBOM" >utf16le_2.txt &&
+>         echo "utf16le_2.txt text working-tree-encoding=3DUTF-16BE" >>.git=
+attributes &&
+>         test_must_fail git add utf16le_2.txt
+> '
+>
+> test_expect_success 'commit all files' '
+>         test_tick &&
+>         git commit -m "Commit all 3 files"
+> '
+>
+> test_expect_success 'All commited files have the same sha' '
+>         git ls-files -s --eol >tmp1 &&
+>         sed -e "s!      i/none.*!!" <tmp1 | uniq -u >actual &&
+>         >expect &&
+>         test_cmp expect actual
+> '
+>
+> test_done
+
+
+
+--=20
+Adri=C3=A1n
