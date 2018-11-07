@@ -2,99 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDCDA1F453
-	for <e@80x24.org>; Wed,  7 Nov 2018 09:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 042EA1F453
+	for <e@80x24.org>; Wed,  7 Nov 2018 09:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730519AbeKGSck (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Nov 2018 13:32:40 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40932 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726357AbeKGScj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Nov 2018 13:32:39 -0500
-Received: by mail-wr1-f65.google.com with SMTP id i17-v6so16501244wre.7
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 01:03:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=am06lZXdjoXPxcsc8a4Iy0CpAi+u0bTR+OMObvVD4sU=;
-        b=PljQMpnn4KUbid0ZRvGf3AVkNe3s55doiUVbunfzvBb9MqaeIhhcEBWPwkvN+zMBfw
-         r+N88Y8CpJsIbNWaPgQLIyCeJzLSmAmuFXAloEdkg64aJgifdEk7lO7xkVQBxDI7zChH
-         6Yil4L8XToxwDf9568KgIg0o7rwBxCFKJn0xcJyjmjqrkaJlX1j+siDuAatfoiTk9p2/
-         ijWhV4VVePiG0CZQ7bIwnRnGfP+ev1Ah6jSYww+Qo5TKzAbLGn8qhPUerB3EL8lnTyNG
-         GvHKraRm28C217ck7tB/XVUYwxwJ+ZBQVsu1NEJ9MDXenweMawTvytXXgUYnp/gwPR7S
-         AvZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=am06lZXdjoXPxcsc8a4Iy0CpAi+u0bTR+OMObvVD4sU=;
-        b=pIMLS8/x1qgaVQiEUiqXkaf4+oNjZJ9Gfmcsu1aE4JbyMoziqPgqnj+F9CE7U+QXsM
-         4CbhRg73RB7JKGh1jRA53NOWznhLGyXEBSBvlINCvfNG08lzd1nHt3+NypBYnaG77Whi
-         LQ1imcl98nP1K3jWGs5MGkTQrtrnUMQvcp2ioQOyFRKMziJJgLVZWB8Ce6wRz1UxeDty
-         JVE+hY86Kv6my0fO8FoFj6B1Yxx87yk8jEq77xs4qrHo6QCv2yVmMJDjRTiq3vPyUnzj
-         XSt2QtZHjVmP0Qf0ePv3/Ny2mrE8KeApRqH8zajQFru4GObgv+RlTarIJu6t2LD6VZ9/
-         3pVg==
-X-Gm-Message-State: AGRZ1gIF43R72ArXG3FBbRaKNDAdhHpPhFqVKAqkSr4j2uQqMq7iJp3e
-        2xej7Yi1u1bWKOg8MEEx5TR8HmcIibc=
-X-Google-Smtp-Source: AJdET5dhNkvaSBnrGOWVM6JjRypbrfJAppunJpaaou+EiymC2lAdpd+qNKvYD7O/YhmImVVW94yzUw==
-X-Received: by 2002:adf:8521:: with SMTP id 30-v6mr1000727wrh.284.1541581392279;
-        Wed, 07 Nov 2018 01:03:12 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 82-v6sm672768wms.17.2018.11.07.01.03.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 01:03:11 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Windows: force-recompile git.res for differing architectures
-References: <pull.67.git.gitgitgadget@gmail.com>
-        <87794514ef3a83f95d81f89287b81aeed5c92296.1541516148.git.gitgitgadget@gmail.com>
-        <c4e3790e-4c41-0d15-38d9-79fa288fb9b3@kdbg.org>
-        <xmqqk1lpd65h.fsf@gitster-ct.c.googlers.com>
-        <ad98ab16-c6bf-7294-f498-d0e7295105fc@kdbg.org>
-Date:   Wed, 07 Nov 2018 18:03:10 +0900
-In-Reply-To: <ad98ab16-c6bf-7294-f498-d0e7295105fc@kdbg.org> (Johannes Sixt's
-        message of "Wed, 7 Nov 2018 07:55:38 +0100")
-Message-ID: <xmqq36sdcl9t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726370AbeKGSvB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Nov 2018 13:51:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43306 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726161AbeKGSvB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Nov 2018 13:51:01 -0500
+Received: (qmail 13427 invoked by uid 109); 7 Nov 2018 09:21:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Nov 2018 09:21:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11433 invoked by uid 111); 7 Nov 2018 09:20:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Nov 2018 04:20:49 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Nov 2018 04:21:29 -0500
+Date:   Wed, 7 Nov 2018 04:21:29 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/1] pack-objects: ignore ambiguous object warnings
+Message-ID: <20181107092129.GA8671@sigill.intra.peff.net>
+References: <pull.68.git.gitgitgadget@gmail.com>
+ <pull.68.v2.git.gitgitgadget@gmail.com>
+ <002868ee6bec3dac38749d0f05bf2db8da0969a5.1541536484.git.gitgitgadget@gmail.com>
+ <20181106211234.GA8383@sigill.intra.peff.net>
+ <xmqqftwdd54p.fsf@gitster-ct.c.googlers.com>
+ <xmqq7ehpclsa.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7ehpclsa.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Wed, Nov 07, 2018 at 05:52:05PM +0900, Junio C Hamano wrote:
 
-> Am 07.11.18 um 02:32 schrieb Junio C Hamano:
->> Johannes Sixt <j6t@kdbg.org> writes:
->>> On Linux, when I recompile for a different architecture, CFLAGS would
->>> change, so I would have thought that GIT-CFLAGS were the natural
->>> choice for a dependency. Don't they change in this case on Windows,
->>> too?
->>
->> Depending on GIT-CFLAGS would have a better chance of being safe, I
->> guess, even though it can at times be overly safe, than GIT-PREFIX,
->> I suspect.  As a single user target in Makefile, which is only used
->> by Dscho, who intends to stick to /mingw(32|64)/ convention til the
->> end of time, I think the posted patch is OK, though.
->
-> I think that it's not only Dscho who uses the target (my build
-> environment, for example, is different from Dscho's and compiles
-> git.res, too). But since the patch helps him most and doesn't hurt
-> others, it is good to go. No objection from my side.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > The fix here is similar to 4c30d50 "rev-list: disable object/refname
+> > ambiguity check with --stdin".  While the get_object_list() method
+> > reads the objects from stdin, turn warn_on_object_refname_ambiguity
+> > flag (which is usually true) to false.  Just for code hygiene, save
+> > away the original at the beginning and restore it once we are done.
+> 
+> I actually think this is a bit too broad.  The calling process of
+> this program does know that it is feeding list of raw object names
+> (prefixed with ^ for negative ones), but the codepath this patch
+> touches does not know who is calling it with what.  It would be
+> safer to introduce a mechanism for the caller to tell this codepath
+> not to bother checking refnames, as it knows it is feeding the raw
+> object names and not refnames.
+> 
+> After all, you can feed things like "refs/heads/master" from the
+> standard input of "git pack-objects --revs", no?
 
-Yeah, that was phrased poorly.  What I meant was by "only by Dscho"
-was "only by those who share the convention that GIT-PREFIX is
-changed if and only if targetting a different arch".
+Keep in mind that this is not disallowing "refs/heads/master", nor even
+disabling the ambiguity checking if we feed a "foo" that exists as both
+a tag and a branch.
 
-Anyway, I just wanted to say that GIT-PREFIX may not be precise
-enough but would give sufficient signal; GIT-CFLAGS may be a more
-cautious choice, but it may change a bit too often ;-).
+It is only disabling the check that when the caller feeds a 40-hex sha1,
+we do not double-check to make sure that there is not a ref of the same
+name (which is not even really an ambiguity, but just an informational
+message for the user; the object id has always and must always take
+precedence).
+
+So yes, the caller does know better "I am only going to feed object
+ids". But you can likewise look from the callee's perspective: "I am
+going to take a lot of inputs, and spending time for an informational
+message for each one is not worth doing".
+
+So I think it's justifiable from that point of view. And from a
+practical point of view, it's much simpler: we do not have teach every
+caller to specify its input, or risk being slowed down by a low-value
+informational check.
+
+-Peff
