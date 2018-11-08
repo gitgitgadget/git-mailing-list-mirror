@@ -6,67 +6,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2A1F1F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 14:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35FD21F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 14:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726897AbeKIATj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 19:19:39 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52529 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726541AbeKIATj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 19:19:39 -0500
-Received: by mail-wm1-f68.google.com with SMTP id r11-v6so1520684wmb.2
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 06:43:50 -0800 (PST)
+        id S1727693AbeKIAXb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 19:23:31 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42322 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726860AbeKIAXa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 19:23:30 -0500
+Received: by mail-wr1-f65.google.com with SMTP id y15-v6so21526716wru.9
+        for <git@vger.kernel.org>; Thu, 08 Nov 2018 06:47:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version;
-        bh=FeOUSfzSh/qYLXznVMPRk1H9ab9r4bZwN8Dclhmrkx0=;
-        b=hNQqD5FHgwrnOzKHckdJxYHTJ9pSRID6WjyyTDSAuBP+FzR1BeADEKjFpNBrIZz1mi
-         PPZYuTfHdaNnaWxElz2isMPuSJ0TKxODr1H/uHSMrJ8i8SBL03SbaDRUtFlbmFYWjTol
-         uQLR5vIhyVWGI7ShBaMGN5gcKAHMPelhweRptKgRnJVTYcT7cT5rmZy3zdVWyOld0cbh
-         lXoOSYlu07uJ6vxmCAT0hRLoj0cGPwe9SvlP2Ow5o6XfuagE1Z36IOJ0Aq398K6b9d4f
-         WWpnDDUX9OpmQqZ/9wRjqHYnsC7JAToHIzIOS6gWOWOrJVgFtN6RvKSjfQ1f250ozmtF
-         1V3A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PiJH4hOkHzlWnfqYp69kxsPhvm5X+Bnm4gA5nP8tvs0=;
+        b=nrOXvWKmXn0gzAE9FYkGfOZuX/td75+y1q6BlesfYFzQLNeoi8MVWhcwIQ4aitFTfp
+         Bz/ldC8bDyfHkBBtM2DlkKLP0ICqMP6yJxUgSRbVdM/ZzlerMaNoYFAhaq0GR0GG5OvO
+         PXzzdRgeSEnzg1ck4+pmjNNuZQcYBvFjKseTQGO9hUGEcyJXAMaaVHdpSdgiJ2GrZxC5
+         xaAexAWRyYQX6DuBqwPH8zIv3woG4x0ApmX9GRRasXuDJC63Kde1g0JWWfBQ7nvpWgAO
+         3TWVhPmOsaTVKLVeAJ5YBjtbS/7nUNx3l37DGdOg6Lgjpvx18VY8Hlhf4aGQdii/YQKD
+         AcXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version;
-        bh=FeOUSfzSh/qYLXznVMPRk1H9ab9r4bZwN8Dclhmrkx0=;
-        b=DKuWW/6TZsfYYCeFXrv9Bz75aBvUtVb+dkB3f5s95bSSh2ArONcewOR7l2E3CSMVgU
-         CNUjBeH4IDoTtmFA6ooXdDtzgu5dKLfQfiL8CypIqE5Fh31HrB9ZP4PJxMMCdt2nrdOT
-         D5/0OUGL8A6t6lIMniVGMrLDkhJvEDW/3W9eM8GoWbuw/9jIoA5kptIXy7ahAtji/RxD
-         rjk5DUvmcWIrAatRDGlCdkZ+sol8KFrESqxZBbfoXipVmmq7GKaDkWJm8VivZ3jnEra2
-         TNUCHckk2dTgjCiUR201SAGbUjr6+neF6KYRr00Vo0WD9v8b465JtRN00jFZ1AuJbV/F
-         nviw==
-X-Gm-Message-State: AGRZ1gKbCWRB+EG3FWYxsll+h35vOhtIs5jdLlQ8tJGTGzxh30/Wyf4Q
-        Gp7YCosE54RvlL5LixkJVGADvnkTEO4=
-X-Google-Smtp-Source: AJdET5dOYkAcYDxiZKDZMZdiEWqbJH/fuIs+Otc+OOFTly7KbihlSF07EcRkSOZpo69QOce4gHjcZA==
-X-Received: by 2002:a1c:e355:: with SMTP id a82-v6mr1502341wmh.74.1541688229347;
-        Thu, 08 Nov 2018 06:43:49 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PiJH4hOkHzlWnfqYp69kxsPhvm5X+Bnm4gA5nP8tvs0=;
+        b=CJF0WyHwGehFEBhB3kjzzdN2K4sIPmQr0s9B6FBK/X7PbsETmebLL0khVYLb3ts3yO
+         5ZXn8AVx499zU9x7tdXSxXQPiWZ4+tx8PM1RV4HZH7yFR6W8NfoWZUIp2hvpldQEdPeK
+         y99sVim4vI8k+xuu57MX9Q0ROEFRDBA4jkWDw53m6BfW+p8Q9UlvKPZhbFunSz8+k8Pf
+         bKSVwOgmi5tEq/C0moZqnZbgTUe9rIxVqQY3qHZ8Couo6Jt7McCTIf+sXnqPvKY0AAxz
+         c4Cd7LqdkKzLh1bdt6UMvvngpUKYRJhldWKLX+ymWtYlbifCxk2e4iWRkxm+lAJGeKGB
+         LFUQ==
+X-Gm-Message-State: AGRZ1gLUz62FSd6Z3EGNOnWJ1Ge0M/Fk35XxgfPlSIMQ+vWuMNsDnLXd
+        rrpg4uZyqfof98wvKpte74w=
+X-Google-Smtp-Source: AJdET5fKMx0kU2GUZEKTyNNx35NTQMpv0Rak/PTOj4qASzVAyK5SsTgTtpflvgIyanc2sWwaDZMd3g==
+X-Received: by 2002:adf:e983:: with SMTP id h3-v6mr4367928wrm.58.1541688459242;
+        Thu, 08 Nov 2018 06:47:39 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m13-v6sm5139379wrw.14.2018.11.08.06.43.48
+        by smtp.gmail.com with ESMTPSA id r1sm5275139wrx.15.2018.11.08.06.47.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Nov 2018 06:43:48 -0800 (PST)
+        Thu, 08 Nov 2018 06:47:37 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-In-Reply-To: <nycvar.QRO.7.76.6.1811081356350.39@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 8 Nov 2018 14:04:17 +0100 (STD)")
 References: <pull.66.git.gitgitgadget@gmail.com>
         <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
-        <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com>
-        <xmqqo9b1d6na.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1811071217280.39@tvgsbejvaqbjf.bet>
-        <d7a70226-3441-76c4-df6a-e8fb32249f27@ramsayjones.plus.com>
-        <xmqqr2fwa0ew.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1811081356350.39@tvgsbejvaqbjf.bet>
+        <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
+        <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
+        <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
+        <20181107204142.GA30078@sigill.intra.peff.net>
+        <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org>
+        <20181107220320.GA8970@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet>
+Date:   Thu, 08 Nov 2018 23:47:36 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 8 Nov 2018 14:11:53 +0100 (STD)")
+Message-ID: <xmqqmuqj7hiv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Date:   Thu, 08 Nov 2018 23:43:47 +0900
-Message-ID: <xmqqr2fv7hp8.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -76,43 +77,14 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi,
->
-> On Thu, 8 Nov 2018, Junio C Hamano wrote:
->
->> I am tempted to say "//<token>/<the remainder>" might also be such a
->> way, even in the POSIX world, but am not brave enough to do so, as I
->> suspect that may have a fallout in the Windows world X-<.
->
-> It does. //server/share is the way we refer to UNC paths (AKA network
-> drives).
+> But now I have a really crazy idea: how about ~~/ssl/certs/ca-bundle.crt?
+> The `~` prefix is *already* a reserved character,...
 
-Shucks.  That would mean the patch that started this thread would
-not be a good idea, as an end-user could already be writing
-"//server/share/some/path" and the code with the patch would see '/'
-that begins it, and start treating it differently than the code
-before the patch X-<.
+We would need to prepare for a future where we need yet another
+special thing to be expanded, and it will quickly become cryptic if
+you said "~/ is HOME, ~USER/ is USER's HOME, ~~/ is runtime prefix,
+and ~~~/ is this new thing...".  ~runtime_prefix~/ (i.e. carve out
+the namespace for USERNAME by reserving any names that ends with a
+tilde) may be a viable way to do this, though.   It is just as good
+as your other idea, <runtime_prefix>, in an earlier message.
 
-> Granted, this is a highly unlikely scenario, but I would feel a bit more
-> comfortable with something like
->
-> 	<RUNTIME_PREFIX>/ssl/certs/ca-bundle.crt
->
-> Of course, `<RUNTIME_PREFIX>` is *also* a perfectly valid directory name,
-> but I would argue that it is even less likely to exist than
-> `$RUNTIME_PREFIX` because the user would have to escape *two* characters
-> rather than one.
-
-Yes, and it is naturally extensible by allowing <OTHER_THINGS>
-inside the special bra-ket pair (just like $OTHER_THINGS can be a
-way to extend the system if we used a special variable syntax).
-
->> Are there security implications if we started allowing references to
->> environment varibables in strings we pass expand_user_path()?
->
-> Probably. But then, the runtime prefix is not even available as
-> environment variable...
-
-Ah, sorry. I thought it was clear that I would next be suggesting to
-add an environmet variable for it, _if_ the approach to allow env
-references turns out to be viable.
