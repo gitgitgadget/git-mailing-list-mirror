@@ -6,68 +6,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E73081F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 03:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4AE1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 03:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728614AbeKHNII (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 08:08:08 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38870 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728499AbeKHNII (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 08:08:08 -0500
-Received: by mail-wm1-f66.google.com with SMTP id f2-v6so3905962wme.3
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:34:44 -0800 (PST)
+        id S1728653AbeKHNJF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 08:09:05 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37778 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728499AbeKHNJF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 08:09:05 -0500
+Received: by mail-wr1-f68.google.com with SMTP id o15-v6so15986779wrv.4
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=7gGuasS67nTu3OYUXfr15fqcvxYiQRs8qhf4ogZ2LYk=;
-        b=XAKidEf9Q8rZK2WhnwLg15Yx+ybLLYUDyV3JDzdDk/AEBpjAyUiBn1MHlQ3/nQLxFK
-         YuOT1wVW2GMYyWssJutiu13T/4SPSetqBV5tERdSRrKgTYm7ywPTbtQGjrJ7DV0ghEjA
-         gNnRxTUUJhgkvtEnkO/wzyXcKljv2X30A/3TFNwYpwY0t3vVfWe1vKuMAUyaU2+dTm5Y
-         34POJIVPHbpTDSHdokHWh2/ZBsgNI/m9teI1zFv42Zb+CScv21ZVThzVyBA5XJHNqA/x
-         8lKRMa430pEjP3ATS80fUJerPiKVGIXvfylBj24KHmTABHyxZ1GY/b6avybSWaupu23R
-         cIcw==
+        bh=pyhJtQSHZBxlbMypt7WpOGcD/JstPgS3mgp83BONQkc=;
+        b=YOjHHi70NnbTqCoPOyiboZBbINQS3ZcXfDikHnrlcJPTzu6wcoPOG2HcmVs0JqGGEj
+         vwgceYlqoiCz5qFtK/i/hFBb/sCNjsXC5gMw0B2vuVd+QhQu8TGDvsZbchF1U4yOcGy2
+         N2RmKK6Leyk56187fRIYCryE+i7axCQMq7FAPcHh3AgDuqeaX5jilG9nbqC3GVU/mzM2
+         +eIpCzJWiLZiMmKP4XAgyyGPb4BOaANL0s7eYT+bXJrQwoP3bDmY4WfGIfoJSYgLxTQX
+         gLmUoTBWeyYIrmCcFMods5F0g0SQM9hgT3BCw+HLc9lzHvEjtP8wHPuOW9eR1/DCbIBs
+         5+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=7gGuasS67nTu3OYUXfr15fqcvxYiQRs8qhf4ogZ2LYk=;
-        b=nBErqNnBCFPPAGdUtAzBVEmp7De1h0DkrK1tnWepLBT1zfPGsFH3exzYUmpzjf0x8j
-         ObTqyfVTGqFzqYkDZTVPIrG67St9Kq9TuvtyzWBJIWTYr/78rfGNH4iPTjwmyQP5kPVS
-         kzOrHzJOuq+1jwxBqKPANpx/l2BWYrAqmh2Qy2FMSL9joN5JBxvtDQ9d/iwh2yBL6ZOt
-         Rz0GXDn+4/Qr4jxztngFoEeYE6Ur/ak3jn2/8K6TfgPg+n9IAmFF1qr0aVt4Coo/v621
-         r+pCyKX9qtfTHWFoI773/1kaaYffrcf6iBYmrA3+R42X65x5Ec9pBS874NQWaJPOCllk
-         w5XA==
-X-Gm-Message-State: AGRZ1gJ6z6LWWIkgiGWeFmNLFhOsA36dD7jZ8NZ5+nblmktoKblcncza
-        SeG4xkrGqXFv2lLfgESIEBc=
-X-Google-Smtp-Source: AJdET5dReY0FAOlkuRrDmfznnWeOmbb9pvdeWL7TJCYif+3uFPhND8XBpmnMDws9y0C+468AnBhgzg==
-X-Received: by 2002:a1c:954b:: with SMTP id x72-v6mr2119717wmd.14.1541648083059;
-        Wed, 07 Nov 2018 19:34:43 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y4-v6sm3310558wrd.61.2018.11.07.19.34.41
+        bh=pyhJtQSHZBxlbMypt7WpOGcD/JstPgS3mgp83BONQkc=;
+        b=D/KhJaQPm3mTVlMr7dWO+H0IvX/gFC6kOVAPJnkGs9X4/aMv6sIbj2wGP93Wx3q3tJ
+         VDHEKLoCoxUKFs9eq8cuPN4VBlY66RzaFSmwnIVG+0BggNifhBKdD0BxInYdoJfr0V+1
+         6r+yfGnkJuiVCu2WDREnFHPTUBBn4oYuwM4jylhDlaOBRaS3Zb0l0ssjwiB4zCueHZ7u
+         vqpA3ivKWhEO/J8/D1/2dzHF1YW9kaok9DDtcdXSdZHEByZ1rNMWtcJ8zLAH9N2NzKgY
+         /oxwmup2QTzgxbBNR4tM+XQhOEbvxFaCUjXIx6TGiOSEJdE/bmfVx3kul33hSCNHWMGz
+         lbVQ==
+X-Gm-Message-State: AGRZ1gLFnbwXilGi8gWAMjsMIBJi2GhX0quivRih4wxS3wk7h4JcS+Ia
+        80Qri71U8jJv0zRxv9QzRts=
+X-Google-Smtp-Source: AJdET5d68B55ZDYSirbQS17Gq5rbzfn6eDcGFKfvgWByzdPBI8YDvUEvHPm56AensD4c/fQ8I3sfwA==
+X-Received: by 2002:adf:f4c5:: with SMTP id h5-v6mr2424082wrp.21.1541648139156;
+        Wed, 07 Nov 2018 19:35:39 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t66-v6sm3404629wmt.5.2018.11.07.19.35.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 19:34:41 -0800 (PST)
+        Wed, 07 Nov 2018 19:35:38 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        andals@crustytoothpaste.net,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] Support --append-trailer in cherry-pick and revert
-References: <20181104181026.8451-1-pclouds@gmail.com>
-        <20181106171637.15562-1-pclouds@gmail.com>
-        <871s7y6qs9.fsf@evledraar.gmail.com>
-        <20181106221118.GA9975@sigill.intra.peff.net>
-        <CACsJy8DTdW-P9zG3DBPArjhZU1VwwBmd7qNibyHxYkyjRrdWmw@mail.gmail.com>
-        <xmqqh8gs9zh3.fsf@gitster-ct.c.googlers.com>
-        <20181108012901.GB10148@sigill.intra.peff.net>
-Date:   Thu, 08 Nov 2018 12:34:41 +0900
-In-Reply-To: <20181108012901.GB10148@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 7 Nov 2018 20:29:01 -0500")
-Message-ID: <xmqqh8gs8coe.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Daniel Stenberg <daniel@haxx.se>,
+        "Force.Charlie-I via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] http: add support selecting http version
+References: <pull.69.git.gitgitgadget@gmail.com>
+        <alpine.DEB.2.20.1811071443130.3368@tvnag.unkk.fr>
+        <20181108011813.GE890086@genre.crustytoothpaste.net>
+Date:   Thu, 08 Nov 2018 12:35:37 +0900
+In-Reply-To: <20181108011813.GE890086@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Thu, 8 Nov 2018 01:18:13 +0000")
+Message-ID: <xmqqd0rg8cmu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,38 +69,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> So if we are comfortable with saying that this is a new feature to have
-> the machine-readable trailer version, and there isn't a robust way to
-> get historical revert information (because there really isn't[1]), then
-> I think we can just punt on any kind of trailer-normalization magic.
+> On Wed, Nov 07, 2018 at 02:44:51PM +0100, Daniel Stenberg wrote:
+>> On Wed, 7 Nov 2018, Force.Charlie-I via GitGitGadget wrote:
+>> 
+>> > Normally, git doesn't need to set curl to select the HTTP version, it
+>> > works fine without HTTP2. Adding HTTP2 support is a icing on the cake.
+>> 
+>> Just a FYI:
+>> 
+>> Starting with libcurl 7.62.0 (released a week ago), it now defaults to the
+>> "2TLS" setting unless you tell it otherwise. With 2TLS, libcurl will attempt
+>> to use HTTP/2 for HTTPS URLs.
+>
+> With this information, I think I would rather we rely on libcurl to do
+> this rather than putting it in Git.  Users will automatically get the
+> best supported protocol instead of having to configure it manually.
 
-Yes, I do consider that the original suggestion was two-part
-
- - cherry-pick did have machine readable info, but by historical
-   accident, it is shaped differently from "trailers", so we'd
-   transition into the new format.
-
- - revert did not have machine readble info at all, so we are adding
-   one, even though it is not that interesting as cherry-pick (for
-   the reasons you stated in an earlier message in this thread).
-
-So my "honest answer" is your #1, "sorry, there was no
-machine-readable version back then", for reverts.  We do not have
-such a problem with cherry-pick luckily ;-)
-
-> [1] Thinking back on reverts I have done, they are often _not_
->     straight-up reverts. For example, I may end up dropping half of a
->     commit, but leaving some traces of it in place in order to build up
->     the correct solution on top (i.e., fixing whatever problem caused me
->     to revert in the first place). I list those as "this is morally a
->     revert of 1234abcd...", which is definitely not machine readable. ;)
-
-Yup, and it is debatable if it even makes sense to add the machine
-readable trailer for such a commit.  A human-made claim that it is a
-"moral equivalent of reverting X" may not look any different from a
-"textual revert of X" to a machine, but the actual patch text would
-be quite different---unless the machine reading it understands
-"moral equivalence", letting it blindly take on faith whatever
-humans say may not be a good idea.
+Yup.  I suspect that the mechanism _might_ turn out to be useful to
+force downgrading, though.
