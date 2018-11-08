@@ -2,90 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4AE1F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 03:35:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B43EB1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 04:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728653AbeKHNJF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 08:09:05 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37778 "EHLO
+        id S1728794AbeKHOKT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 09:10:19 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40737 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728499AbeKHNJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 08:09:05 -0500
-Received: by mail-wr1-f68.google.com with SMTP id o15-v6so15986779wrv.4
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:35:40 -0800 (PST)
+        with ESMTP id S1728539AbeKHOKT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 09:10:19 -0500
+Received: by mail-wr1-f68.google.com with SMTP id i17-v6so19701259wre.7
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 20:36:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pyhJtQSHZBxlbMypt7WpOGcD/JstPgS3mgp83BONQkc=;
-        b=YOjHHi70NnbTqCoPOyiboZBbINQS3ZcXfDikHnrlcJPTzu6wcoPOG2HcmVs0JqGGEj
-         vwgceYlqoiCz5qFtK/i/hFBb/sCNjsXC5gMw0B2vuVd+QhQu8TGDvsZbchF1U4yOcGy2
-         N2RmKK6Leyk56187fRIYCryE+i7axCQMq7FAPcHh3AgDuqeaX5jilG9nbqC3GVU/mzM2
-         +eIpCzJWiLZiMmKP4XAgyyGPb4BOaANL0s7eYT+bXJrQwoP3bDmY4WfGIfoJSYgLxTQX
-         gLmUoTBWeyYIrmCcFMods5F0g0SQM9hgT3BCw+HLc9lzHvEjtP8wHPuOW9eR1/DCbIBs
-         5+Gg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=YgXBIo7HtO9HrTpjtQ0u5cV6Uxyh1FVcLAhuooPK37M=;
+        b=PwcIwMqlsMnxM8Fq6oOMRnuYSbjpHMj8DaVzx49L2nmQQ7JrlbdxJt/VqtHsXbCO80
+         HXMnbX8ioLhSfDwKUVRJHGy/YK0oV1BzL5gV3WObmMILR4vb1UZDtSjaKcfwqtW2wzWI
+         wVKxK/TlZ+fkebharqI0wzEDuaImxWYyDCU0BPn+8L6494BzEb7aZUa4gAPJLtNhf/A0
+         xCxsvZP0EYhU/OTLNbzqmLv2V3X14pjpS7aZeBS2qklmw+cIQIHivdHA5NpQhEchUYap
+         YOaNwql7FZKQBzL1g35teZMiYbEmx/99WIgKNKBL0y/SvnLXgL/ANLv2xohfEUhVqyz1
+         gH4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pyhJtQSHZBxlbMypt7WpOGcD/JstPgS3mgp83BONQkc=;
-        b=D/KhJaQPm3mTVlMr7dWO+H0IvX/gFC6kOVAPJnkGs9X4/aMv6sIbj2wGP93Wx3q3tJ
-         VDHEKLoCoxUKFs9eq8cuPN4VBlY66RzaFSmwnIVG+0BggNifhBKdD0BxInYdoJfr0V+1
-         6r+yfGnkJuiVCu2WDREnFHPTUBBn4oYuwM4jylhDlaOBRaS3Zb0l0ssjwiB4zCueHZ7u
-         vqpA3ivKWhEO/J8/D1/2dzHF1YW9kaok9DDtcdXSdZHEByZ1rNMWtcJ8zLAH9N2NzKgY
-         /oxwmup2QTzgxbBNR4tM+XQhOEbvxFaCUjXIx6TGiOSEJdE/bmfVx3kul33hSCNHWMGz
-         lbVQ==
-X-Gm-Message-State: AGRZ1gLFnbwXilGi8gWAMjsMIBJi2GhX0quivRih4wxS3wk7h4JcS+Ia
-        80Qri71U8jJv0zRxv9QzRts=
-X-Google-Smtp-Source: AJdET5d68B55ZDYSirbQS17Gq5rbzfn6eDcGFKfvgWByzdPBI8YDvUEvHPm56AensD4c/fQ8I3sfwA==
-X-Received: by 2002:adf:f4c5:: with SMTP id h5-v6mr2424082wrp.21.1541648139156;
-        Wed, 07 Nov 2018 19:35:39 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t66-v6sm3404629wmt.5.2018.11.07.19.35.38
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=YgXBIo7HtO9HrTpjtQ0u5cV6Uxyh1FVcLAhuooPK37M=;
+        b=hKQGjDZFANZ74k28+FONq1xYpkQYcmqFTVyk2x2TBY4saGX+VKUuSRvXcY2a252796
+         XrtKH3vCoczzxEVGSgH/PlkLuW/Dz5GLxHoxa0UzAWEIPkS7SuShX6b7zExge/Ky5Lbd
+         DRm39xHHfbgXTc5XyQaP6uiA/gxrQ2KQSLBG9g8zweUaZaRw8hDHC5qEjpe8YFKMZZ26
+         ytHTQj8S7h9giktCR2VYqL1rb5+krlQvjKeCO7cNIC28CfuRXIVMaq2V/tFBBhWSAg1O
+         7dOZ+e3uf7zDrIpLKdNcN7e/sh64T93+t3wiALguULj4CeJorBcfvcd2vAFUquBotaYx
+         s4tw==
+X-Gm-Message-State: AGRZ1gLvCYClyWMAgNF9Dt04seqEe9f7LZOXcA/Lxrca4ZJOUBj5R7Mq
+        jd6ExndS7YRiT+ZdV4LZms9aJD4N
+X-Google-Smtp-Source: AJdET5fO6z2rSY9g9wHXpeTOPdHceYMMsoSSD2l5RsqDkxDApXRCpGsJf0rFV5302Kjr2Hk0955/QA==
+X-Received: by 2002:a5d:4e01:: with SMTP id p1-v6mr2675193wrt.320.1541651802566;
+        Wed, 07 Nov 2018 20:36:42 -0800 (PST)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id 67-v6sm2617419wrm.32.2018.11.07.20.36.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 19:35:38 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Daniel Stenberg <daniel@haxx.se>,
-        "Force.Charlie-I via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] http: add support selecting http version
-References: <pull.69.git.gitgitgadget@gmail.com>
-        <alpine.DEB.2.20.1811071443130.3368@tvnag.unkk.fr>
-        <20181108011813.GE890086@genre.crustytoothpaste.net>
-Date:   Thu, 08 Nov 2018 12:35:37 +0900
-In-Reply-To: <20181108011813.GE890086@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 8 Nov 2018 01:18:13 +0000")
-Message-ID: <xmqqd0rg8cmu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 07 Nov 2018 20:36:41 -0800 (PST)
+Date:   Thu, 8 Nov 2018 04:36:21 +0000
+From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     daniels@umanovskis.se, git@vger.kernel.org
+Subject: Re: [PATCH] branch: make --show-current use already resolved HEAD
+Message-ID: <20181108043621.izmneiyjvgzd22uc@rigel>
+References: <20181025190421.15022-1-daniels@umanovskis.se>
+ <20181107225619.6683-1-rafa.almas@gmail.com>
+ <xmqqa7mk9xw9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqa7mk9xw9.fsf@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+I did something that resulted in the mailing list not being cc'd.
+Apologies to Junio and Daniels for the double send. :(
 
-> On Wed, Nov 07, 2018 at 02:44:51PM +0100, Daniel Stenberg wrote:
->> On Wed, 7 Nov 2018, Force.Charlie-I via GitGitGadget wrote:
->> 
->> > Normally, git doesn't need to set curl to select the HTTP version, it
->> > works fine without HTTP2. Adding HTTP2 support is a icing on the cake.
->> 
->> Just a FYI:
->> 
->> Starting with libcurl 7.62.0 (released a week ago), it now defaults to the
->> "2TLS" setting unless you tell it otherwise. With 2TLS, libcurl will attempt
->> to use HTTP/2 for HTTPS URLs.
->
-> With this information, I think I would rather we rely on libcurl to do
-> this rather than putting it in Git.  Users will automatically get the
-> best supported protocol instead of having to configure it manually.
+On Thu, Nov 08, 2018 at 10:11:02AM +0900, Junio C Hamano wrote:
+> I'd prefer to see scriptors avoid using "git branch", too.
+> 
+> Unlike end-user facing documentation where we promise "we do X and
+> will continue to do so because of Y" to the readers, the log message
+> is primarily for recording the original motivation of the change, so
+> that we can later learn "we did X back then because we thought Y".
+> When we want to revise X, we revisit if the reason Y is still valid.
+> 
+> So in that sense, the door to "break" the scriptability is still
+> open.
+> 
 
-Yup.  I suspect that the mechanism _might_ turn out to be useful to
-force downgrading, though.
+Over at #git, commit messages are sometimes consulted to disambiguate or
+clarify certain details. Often the documentation is correct but people
+dispute over interpretations.
+
+If someone came asking if `git branch` is parsable, I would advise
+against and direct them to the plumbing or format alternative. But if
+someone came over with a link to this commit asking the same question,
+I suspect the answer would be: it's probably safe to parse the output of
+this specific option because the commit says so. Thanks for clarifying
+this is wrong.
+
+> >  
+> >  static const char *head;
+> >  static struct object_id head_oid;
+> > +static int head_flags = 0;
+> 
+> You've eliminated the "now unnecessary" helper and do everything
+> inside cmd_branch(), so perhaps this can be made function local, no?
+> 
+
+I was not sure if these 3 lines were global intentionally or if it was
+just an artifact from the past. Since it looks like the latter, I'll
+make them local.
+
+--
+Rafael Ascensão
