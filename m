@@ -6,171 +6,128 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4F651F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 01:48:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFD271F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 03:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728420AbeKHLVH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 06:21:07 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36737 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728376AbeKHLVH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 06:21:07 -0500
-Received: by mail-wr1-f65.google.com with SMTP id z13-v6so17078846wrs.3
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 17:48:03 -0800 (PST)
+        id S1728676AbeKHM5h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 07:57:37 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53976 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728614AbeKHM5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 07:57:36 -0500
+Received: by mail-wm1-f68.google.com with SMTP id f10-v6so3853641wme.3
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:24:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=x436CBIh3fXw4JbfvlmETh6T5cSnGt4Mw3rjtDa+BZU=;
-        b=ZIKqDAMxVsJq4Yk7ytB5Zk9dbuTvZRphM9flY8WfmuY2Fo89zM8+GRJ4XBycytSMG4
-         judhOrsviFoWVzfRgumyFVsRg6TChq6qAWmCw2ozks6B4a1BQ4QDY4AUoRFA/ASVq7Us
-         UUxNxPlO7gvm3R9n7b99P3zG/R0zJg6NsVit/xymVilelBEGejHJrSokR1XalqkLhGRk
-         g8PXf8wlYrNMLH8bgO+J4qw8NXwhWuD72DHa5B9TCQev2GeOIueJ13hnMJj/EK0tRkak
-         D1mn2bKIvAPy+1NUw97OqFMH9Urt2lLjBzBY+kxrrxLbooWFyl59l1SJZSTTgi1+ROXi
-         v5ZA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lklwV4UOZRRVzJIEVm9GGpuvkoUB30GMn+7xgnN6qnM=;
+        b=DlFTDvF5Ym5gzLutfObtcL+lC/zKvbZoHVUo/2iMSxPAsPJ6j6B4PuDFcut0QrXRrT
+         Psz8EPbzobxxG+48CqKXVwPadoWTOfX7jakq5XqQrbUz8pMzhfw4cus2xLhlO3m7XJI1
+         nG4+9gOX8BXltTCmX0HfLQpQ/5gz5a8lg5jatH5Eo4pgXfa46yoQURym7ZwFiTFZNRgG
+         K4amgob0jT5htHP1zyWjWU7AjoINcTFp07BPSGCCezxNaQRxNN1RgX+VBUNZugDeyjfl
+         JNF/uypbR1u8wbRhKE8FHNrYf73NrgBUf9J9cR76pzuP2Zd+a6N6OKF5aFVcJK7AUW93
+         O6WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=x436CBIh3fXw4JbfvlmETh6T5cSnGt4Mw3rjtDa+BZU=;
-        b=c03zSn9ubg/+f4yEjaasvzeHrtzzdURx+B1q9RYTIyW/UgxEBHM1FUu9Sfnfe1eLUH
-         RswxRfYcdY585HbafXwZ6ouZT1NBKdIh3TqR8nk2sxZrhg3c9SdU02LUX1rsI35Qz/Ek
-         DV0QW87sgdKLysMI3C6x/AXBK7FqeOCdxcsfP9QV0vdY3D1MYeI6rx2TdrVZMFiZ49uD
-         U31eUv2HswU+qbCvsrJKMawqIrkhBReIOm+gNbglvzkpLwPzYJFTrWIACC7ainfngzhT
-         T+h0Mfg917B5K8dhj2f2YKUMFLyrS8TViXknV7RSQSFXrSedaiJYUDVOxioBY38TdjQe
-         N3hw==
-X-Gm-Message-State: AGRZ1gKHZMKFswQtflPUaWFpelqbxR5mNviId8xemCBXZA0YxKVzatB8
-        ogn2kVI5nWuXgoF8xEnjb3w=
-X-Google-Smtp-Source: AJdET5fp2yQmwXKgcq0tgdLpo7cGHlxR90igoTqY7o2kIKpkAHNWYF/LP0NtalQc+WAKKGANrxtqMQ==
-X-Received: by 2002:a5d:488a:: with SMTP id g10-v6mr2293580wrq.0.1541641682462;
-        Wed, 07 Nov 2018 17:48:02 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j4-v6sm2515591wrp.68.2018.11.07.17.48.01
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lklwV4UOZRRVzJIEVm9GGpuvkoUB30GMn+7xgnN6qnM=;
+        b=QmRYA2KpiKtBUI8aqtl66E72o6/8JocaKfprkRhUtRz6lelQyvEHcpt+xVLyp2U3k1
+         7biFl+joZWEtpj0IUveszumvQ267UvGVqL6lQezO/JP5z9hRfoEGVimLBfpf699QFUdg
+         XfcZsLOTm/z5wZm329IWcHXMPk7nxWXVeVEgVqw3PY+4v4CKfclk/WXthNTGk/eWChj9
+         C46ke+I+k2fRzbV99Zros2Y0Qa6dgVxteIZ+GcdfB32L/IhmpNKNtmN6WlzWHvLPHmVD
+         bGzx6dX6/h6lexMlA1x9xvhw6Qc80Wy5KS4bAQSu67Cz/4q6HpHfn77MJYu2xfxH4hU2
+         IkLg==
+X-Gm-Message-State: AGRZ1gJW9vBUZgSeHdTgNkCyKaagpf7Kv027UYqlw9yJSb2Yv2/UvYqK
+        1dEwbQsgkMCguMWZ2psES+w7vigkxPQ=
+X-Google-Smtp-Source: AJdET5ctum8UFmPEw0c8pew41t9xOKTAlK207KDZN8zRiJLTzhJkDbQF/t32uoD1+qtoa0Kb3Z5yDQ==
+X-Received: by 2002:a1c:c502:: with SMTP id v2-v6mr2038818wmf.17.1541647452785;
+        Wed, 07 Nov 2018 19:24:12 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j18-v6sm5791342wmf.39.2018.11.07.19.24.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 17:48:01 -0800 (PST)
+        Wed, 07 Nov 2018 19:24:10 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Force Charlie <charlieio@outlook.com>
-Subject: Re: [PATCH 1/1] http: add support selecting http version
-References: <pull.69.git.gitgitgadget@gmail.com>
-        <4f5a935c4355794effb23c979dcbaf77ed33da26.1541597633.git.gitgitgadget@gmail.com>
-Date:   Thu, 08 Nov 2018 10:48:00 +0900
-In-Reply-To: <4f5a935c4355794effb23c979dcbaf77ed33da26.1541597633.git.gitgitgadget@gmail.com>
-        (Force Charlie via GitGitGadget's message of "Wed, 07 Nov 2018
-        05:33:56 -0800 (PST)")
-Message-ID: <xmqqwopo8hm7.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH v3] i18n: make GETTEXT_POISON a runtime option
+References: <20181024114725.3927-1-avarab@gmail.com>
+        <20181101193115.32681-1-avarab@gmail.com>
+Date:   Thu, 08 Nov 2018 12:24:08 +0900
+In-Reply-To: <20181101193115.32681-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 1 Nov 2018 19:31:15 +0000")
+Message-ID: <xmqqpnvg8d5z.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Force Charlie via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> From: Force Charlie <charlieio@outlook.com>
->
-> Signed-off-by: Force Charlie <charlieio@outlook.com>
-> ---
->  http.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/http.c b/http.c
-> index 3dc8c560d6..99cb04faba 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -48,6 +48,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
->  
->  static int curl_ssl_verify = -1;
->  static int curl_ssl_try;
-> +static int curl_http_version = 11;
+>  * We error out in the Makefile if you're still saying
+>    GETTEXT_POISON=YesPlease.
 
-Is there any reason that we need to have this variable's value to be
-"int"?  I _think_ in this patch, the variable is used to choose
-between the default and "HTTP/2", and I do not think the updated
-code can choose any other new value that may be supported by an even
-newer cURL library without further update, i.e. we'd need a variant of
-"if the configuration asks HTTP/2 then use CURLOPT_HTTP_VERSION with
-CURL_HTTP_VERSION_2" for the new choice.
+I expected this would be irritating, but it turns out it is worse
+than mere irritation but is a severe hinderance to affect my
+performance, as I (and my bots) keep building and testing different
+versions of Git under different configurations.
 
-So I'd think it would not add much value to force end users use a
-rather cryptic "20" (vs "11") to choose between "2" and "1.1".  Why
-not use spell it out, e.g. using the official name of the protocol
-"HTTP/2" (vs "HTTP/1.1"), with a "const char *" instead?
+I know it was done to help those who only ever build a single track
+at a time and mostly moving forward, but I'm very much tempted to
+remove this part, perhaps demote it to a warning of some sort.
 
-The new configuration variable and the possible values it can take
-must be documented, of course.  I think it would make the description
-far less embarrassing if we say "HTTP/2" etc. rather than "20",
-"11", etc.
 
-> @@ -284,6 +285,10 @@ static void process_curl_messages(void)
->  
->  static int http_options(const char *var, const char *value, void *cb)
->  {
-> +	if (!strcmp("http.version",var)) {
-> +		curl_http_version=git_config_int(var,value);
+>  ifdef GETTEXT_POISON
+> -	BASIC_CFLAGS += -DGETTEXT_POISON
+> +$(error The GETTEXT_POISON option has been removed in favor of runtime GIT_TEST_GETTEXT_POISON. See t/README!)
+>  endif
 
-STYLE.  Missing SP after comma, and around assignment.
+-- >8 --
+Makefile: ease dynamic-gettext-poison transition
 
-> +		return 0;
-> +	}
->  	if (!strcmp("http.sslverify", var)) {
->  		curl_ssl_verify = git_config_bool(var, value);
->  		return 0;
-> @@ -806,6 +811,13 @@ static CURL *get_curl_handle(void)
->  		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
->  	}
->  
-> +#if LIBCURL_VERSION_NUM >= 0x073100
-> +	if(curl_http_version == 20){
+Earlier we made the entire build to fail when GETTEXT_POISON=Yes is
+given to make, to notify those who did not notice that text poisoning
+is now a runtime behaviour.
 
-STYLE. Missing SP before opening paren and after closing paren.
+It turns out that this too irritating for those who need to build
+and test different versions of Git that cross the boundary between
+history with and without this topic to switch between two
+environment variables.  Demote the error to a warning, so that you
+can say something like
 
-> +		/* CURL Enable HTTP2*/
+	make GETTEXT_POISON=Yes GIT_TEST_GETTEXT_POISON test
 
-STYLE. Missing SP before closing asterisk-slash.
+during the transition period, without having to worry about whether
+exact version you are testing has or does not have this topic.
 
-> +		curl_easy_setopt(result, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_2);
-> +     }
-> +#endif
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Shouldn't this block also handle the other values, e.g. "11"?
-
-I _think_ the curl_http_version variable (be it an deci-int, or a
-const char *) should be initialized to a value that you can use to
-notice that the configuration did not specify any, and then this
-part should become more like
-
-	if (curl_http_version &&
-	    !get_curl_http_version_opt(curl_http_version, &opt))
-		curl_easy_setopt(result, CURL_HTTP_VERSION, opt);
-
-with a helper function like this:
-
-static int get_curl_http_version_opt(const char *version_string, long *opt)
-{		
-	int i;
-	static struct {
-		const char *name;
-		lnog opt_token;
-	} choice[] = {
-		{ "HTTP/1.1", CURL_HTTP_VERSION_1_1 },
-		{ "HTTP/2", CURL_HTTP_VERSION_2 },
-	};
-
-	for (i = 0; i < ARRAY_SIZE(choice); i++) {
-		if (!strcmp(version_string, choice[i].name)) {
-			*opt = choice[i].opt_token;
-			return 0;
-		}
-	}
-
-	return -1; /* not found */
-}
-
-which would make it trivial to support new values later.
-
->  #if LIBCURL_VERSION_NUM >= 0x070907
->  	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
->  #endif
+diff --git a/Makefile b/Makefile
+index f3a9995e50..6b492f44a6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1447,7 +1447,7 @@ ifdef NO_SYMLINK_HEAD
+ 	BASIC_CFLAGS += -DNO_SYMLINK_HEAD
+ endif
+ ifdef GETTEXT_POISON
+-$(error The GETTEXT_POISON option has been removed in favor of runtime GIT_TEST_GETTEXT_POISON. See t/README!)
++$(warning The GETTEXT_POISON option has been removed in favor of runtime GIT_TEST_GETTEXT_POISON. See t/README!)
+ endif
+ ifdef NO_GETTEXT
+ 	BASIC_CFLAGS += -DNO_GETTEXT
