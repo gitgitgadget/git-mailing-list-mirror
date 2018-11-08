@@ -8,59 +8,60 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BF161F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 22:20:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81B4B1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 22:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731266AbeKIH60 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 02:58:26 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44185 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727124AbeKIH60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 02:58:26 -0500
-Received: by mail-ed1-f68.google.com with SMTP id n19-v6so193373edq.11
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 14:20:50 -0800 (PST)
+        id S1729383AbeKIILu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 03:11:50 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42056 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727776AbeKIILt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 03:11:49 -0500
+Received: by mail-ed1-f65.google.com with SMTP id h21-v6so224160edq.9
+        for <git@vger.kernel.org>; Thu, 08 Nov 2018 14:34:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=+wmZ3xJifEe2pcpFpoaOe9XWKWmbel0qej3nkKppBRQ=;
-        b=HeWFnW2275AnN+xsH624ndGNIdmcqzp/QoUZyUBoAD9m63kdDUTZwYZuHIbSQByqAC
-         VN+YnrsJJIYhEs2cOaVbtnn2ICyqf/pzBVCQ3vtGDHB48B7UQ/ckki16pPyQfcneHXYy
-         Nqn4Q9OzCMIHfpvfdcen5dgZ+7NqZef9WnnBbOCPDvoLjF+M0uG/L0dV6ug3XMmvkUaf
-         b2mlERmX3GDbxD7+kKrlt3NKIxypdEb9jx2uEneGo/HgJbAaG35xhiys8ivHe/FUW0Es
-         5kFRBDcFd7UcK0eBihveJFX6Tm44tZoSQRAfyA5OeNOsdyKQVLZSDowEM5SwkWJB37Vg
-         QKkA==
+        bh=cNqdB+ylS5EeB5Ha4bNqIP1QPUDs3d9wU4WElWsolF8=;
+        b=cX3NV7fLhjpKTrnGRhUwkyyBvgM3lJE2FNvXe6a3daTqFC42NAR8oZebpB6Di/L6eN
+         Gw47LfinKHcI4Ojz3QUdmHPp5r2yA/s296FKSWkTJRFA3zfmCyz0JBVkRaVJNqGaaZqF
+         glJ8GWMedJNB3wFG+3mR3+Aj2liC2erVhaZqfTWrDo6NMrQQ8aK3iFxePNmPtDG+qN1M
+         088LAjtyfHx0iSx1KuA6+QCEO5uoxMgsG/nJlEHFtNdJL3/Xs+7KlH8VsJFxpUhXtz9G
+         HcfFHMNdTWEje8mW4eb8oU5vWmFmJZBk4/K/EGLij0Z9lPYgCByKRP9d6MUMFmvMGfbw
+         X5XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=+wmZ3xJifEe2pcpFpoaOe9XWKWmbel0qej3nkKppBRQ=;
-        b=TxXBVC9arINB6Ha4CBUZ1ck79cWL94SQus35FJxBIx8yngsW4EzoI2Gh9I5gwTbXe8
-         Vzq84nGl/WE7epajE7J6cInLN3npn+8Uw+yQckujFgPPEoJIRpJC+YUQx4Pnmi+7rmp/
-         bDeGjRtP46SqcfFrI+0K4oKJ9oYyU6rwHJUqbPNlZPZ6FV1DTsUgPJQvOZzaPB9Kl2Td
-         vp8Xl4O3EvsuCjscS7HkOk9Vq9SB+rQqHpYhbyBqpwnjoqWTQWEp8+lvHMduztpnPffB
-         VnU86Dam0KGY6nqdcfmLtsfUaRACcfyITPZsRFOND898PslmNtJnYzAP07AdAFUmwzI3
-         jcXw==
-X-Gm-Message-State: AGRZ1gLJAUWPufjvPGLPZlxanV11Q44l6Y/GqLVQzDaeJGbs68PGjxxN
-        FU1STjTijjSGMLcznpOOTrA=
-X-Google-Smtp-Source: AJdET5dUeY7LEMzXsPMWuG79X140YP7+WX3XYX/TwT97Z1ApazYT8F8smHH4Ug7gYh3cBzcmRlki0g==
-X-Received: by 2002:a17:906:9410:: with SMTP id q16-v6mr136224ejx.208.1541715649260;
-        Thu, 08 Nov 2018 14:20:49 -0800 (PST)
+        bh=cNqdB+ylS5EeB5Ha4bNqIP1QPUDs3d9wU4WElWsolF8=;
+        b=Mn9a+FKNY7ZrL493s2CBP7tn5Uh+xbNImKLzozOFjA4kqpvnPg7h0AsDP34KNw1jVo
+         GlSKniD19467546YILzS9ujTyxylxCuoEKdTRii0leXC1MpfUyrDYmuLjJofqn7fcRQQ
+         U2Wg1Y/aQGxXLhr9kvo92A5SwAo/OZhFNctsj6JrZgGKmm/x/j3cHchje3VcO3lpwmAO
+         kqgu5rfwAjDvw/Xy5pLGwmAji93S34ZZg8n3LbUxBiINCqAY6cmKo67GJu2F79dB51kC
+         OsACGRCzMvfFnf62N9sKsZ7dv9k9jdvaWCvElrNcfaY70a76JD4QXOsOPB7cyJ/K7y6d
+         +eJg==
+X-Gm-Message-State: AGRZ1gKMRpxoJXIaA69xe2phlR5VPz+nVTKIptNUurNjUB2b3Bkn3Wru
+        HCuSPjslPvVFMVKvYcdxzu0=
+X-Google-Smtp-Source: AJdET5e3Hh765laJKV+aZNRRh7f4BviKz7f36MfcIuRtVuDy18uSIsOIr2yPWp/0vXUX+C7GxmaqVQ==
+X-Received: by 2002:a50:e442:: with SMTP id e2-v6mr207151edm.80.1541716448680;
+        Thu, 08 Nov 2018 14:34:08 -0800 (PST)
 Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id o3-v6sm869629edc.95.2018.11.08.14.20.48
+        by smtp.gmail.com with ESMTPSA id x17-v6sm760071eje.64.2018.11.08.14.34.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Nov 2018 14:20:48 -0800 (PST)
+        Thu, 08 Nov 2018 14:34:07 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Geert Jansen <gerardu@amazon.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com> <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com> <87o9bgl9yl.fsf@evledraar.gmail.com> <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com> <20181027093300.GA23974@sigill.intra.peff.net> <87lg6jljmf.fsf@evledraar.gmail.com> <20181029150453.GH17668@sigill.intra.peff.net> <87bm7clf4o.fsf@evledraar.gmail.com> <20181029232738.GC24557@sigill.intra.peff.net> <20181107225524.GA119693@amazon.com> <20181108120256.GA29432@sigill.intra.peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/2] range-diff: fix regression in passing along diff options
+References: <nycvar.QRO.7.76.6.1811071202480.39@tvgsbejvaqbjf.bet> <20181107122202.1813-3-avarab@gmail.com> <CAPig+cTeNcn_raJWfEK_C_du1v1KYQFTVmWA9B4DNHAXoFHw-w@mail.gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181108120256.GA29432@sigill.intra.peff.net>
-Date:   Thu, 08 Nov 2018 23:20:47 +0100
-Message-ID: <87lg635hz4.fsf@evledraar.gmail.com>
+In-reply-to: <CAPig+cTeNcn_raJWfEK_C_du1v1KYQFTVmWA9B4DNHAXoFHw-w@mail.gmail.com>
+Date:   Thu, 08 Nov 2018 23:34:06 +0100
+Message-ID: <87k1ln5hcx.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -70,57 +71,59 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Nov 08 2018, Jeff King wrote:
+On Thu, Nov 08 2018, Eric Sunshine wrote:
 
-> On Wed, Nov 07, 2018 at 10:55:24PM +0000, Geert Jansen wrote:
+> On Wed, Nov 7, 2018 at 7:22 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>> In 73a834e9e2 ("range-diff: relieve callers of low-level configuration
+>> burden", 2018-07-22) we broke passing down options like --no-patch,
+>> --stat etc. Fix that regression, and add a test for some of these
+>> options being passed down.
 >
->> On Mon, Oct 29, 2018 at 07:27:39PM -0400, Jeff King wrote:
->>
->> > On Mon, Oct 29, 2018 at 08:36:07PM +0100, Ævar Arnfjörð Bjarmason wrote:
->> > >  * Re-roll my 4 patch series to include the patch you have in
->> > >    <20181027093300.GA23974@sigill.intra.peff.net>
->> >
->> > I don't think it's quite ready for inclusion as-is. I hope to brush it
->> > up a bit, but I have quite a backlog of stuff to review, as well.
->>
->> We're still quite keen to get this patch included. Is there anything I can do
->> to help?
+> Thanks both (Ævar and Dscho) for cleaning up my mess, and sorry for
+> not responding sooner; I only just found time to read the discussion
+> thread. One comment below...
 >
-> Yes, testing and review. :)
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>> diff --git a/range-diff.c b/range-diff.c
+>> @@ -453,7 +453,8 @@ int show_range_diff(const char *range1, const char *range2,
+>>                 memcpy(&opts, diffopt, sizeof(opts));
+>> -               opts.output_format = DIFF_FORMAT_PATCH;
+>> +               if (!opts.output_format)
+>> +                       opts.output_format = DIFF_FORMAT_PATCH;
 >
-> I won't send the series out just yet, as I suspect it could use another
-> read-through on my part. But if you want to peek at it or try some
-> timings, it's available at:
+> Looking at diff.c:parse_diff_opt() and enable_patch_output(), rather
+> than introducing this new conditional, I'm thinking that a more
+> correct fix would be:
 >
->   https://github.com/peff/git jk/loose-cache
+>     opts.output_format |= DIFF_FORMAT_PATCH;
+>
+> (note the '|=' operator). This would result in 'opts.output_format'
+> containing (DIFF_FORMAT_PATCH | DIFF_FORMAT_NO_OUTPUT), just as it did
+> prior to 73a834e9e2 when --no-patch was specified.
 
-Just a comment on this from the series:
+Maybe I'm misunderstanding, but if you mean this on top:
 
-    Note that it is possible for this to actually be _slower_. We'll do a
-    full readdir() to fill the cache, so if you have a very large number of
-    loose objects and a very small number of lookups, that readdir() may end
-    up more expensive.
+    diff --git a/range-diff.c b/range-diff.c
+    index 488844c0af..ea317f92f9 100644
+    --- a/range-diff.c
+    +++ b/range-diff.c
+    @@ -453,8 +453,7 @@ int show_range_diff(const char *range1, const char *range2,
+                    struct strbuf indent = STRBUF_INIT;
 
-    In practice, though, having a large number of loose objects is already a
-    performance problem, which should be fixed by repacking or pruning via
-    git-gc. So on balance, this should be a good tradeoff.
+                    memcpy(&opts, diffopt, sizeof(opts));
+    -               if (!opts.output_format)
+    -                       opts.output_format = DIFF_FORMAT_PATCH;
+    +               opts.output_format |= DIFF_FORMAT_PATCH;
+                    opts.flags.suppress_diff_headers = 1;
+                    opts.flags.dual_color_diffed_diffs = dual_color;
+                    opts.output_prefix = output_prefix_cb;
 
-Our biggest repo has a very large number of loose objects at any given
-time, but the vast majority of these are because gc *is* happening very
-frequently and the default expiry policy of 2wks is in effect.
+Then the --stat test I've added here fails, because unlike "diff" the
+"--stat" (and others) will implicitly "--patch" and you need
+"--no-patch" as well (again, unlike with "diff").
 
-Having a large number of loose objects is not per-se a performance
-problem.
-
-It's a problem if you end up "faulting" to from packs to the loose
-object directory a lot because those objects are still reachable, but if
-they're not reachable that number can grow very large if your ref churn
-is large (so lots of expired loose object production).
-
-Anyway, the series per-se looks good to me. It's particularly nice to
-have some of the ODB cleanup + cleanup in fetch-pack.c
-
-Just wanted to note that in our default (reasonable) config we do
-produce scenarios where this change can still be somewhat pathological,
-so I'm still interested in disabling it entirely given the
-implausibility of what it's guarding against.
+Right now --stat is pretty useless, but it could be made to make sense,
+and at that point (and earlier) I think it would be confusing if
+"range-diff" had different semantics with no options v.s. one option
+like "--stat" v.s. "--stat -p" compared to "diff".
