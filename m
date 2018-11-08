@@ -2,128 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DA321F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 12:03:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7D601F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 13:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726584AbeKHViJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 16:38:09 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44776 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726252AbeKHViJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 16:38:09 -0500
-Received: (qmail 24060 invoked by uid 109); 8 Nov 2018 12:02:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Nov 2018 12:02:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30183 invoked by uid 111); 8 Nov 2018 12:02:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 08 Nov 2018 07:02:17 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2018 07:02:57 -0500
-Date:   Thu, 8 Nov 2018 07:02:57 -0500
-From:   Jeff King <peff@peff.net>
-To:     Geert Jansen <gerardu@amazon.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-Message-ID: <20181108120256.GA29432@sigill.intra.peff.net>
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
- <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
- <87o9bgl9yl.fsf@evledraar.gmail.com>
- <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
- <20181027093300.GA23974@sigill.intra.peff.net>
- <87lg6jljmf.fsf@evledraar.gmail.com>
- <20181029150453.GH17668@sigill.intra.peff.net>
- <87bm7clf4o.fsf@evledraar.gmail.com>
- <20181029232738.GC24557@sigill.intra.peff.net>
- <20181107225524.GA119693@amazon.com>
+        id S1726751AbeKHWjv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 17:39:51 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56045 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726359AbeKHWjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 17:39:51 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lgql4-1fgg4b08RC-00oBe3; Thu, 08
+ Nov 2018 14:04:19 +0100
+Date:   Thu, 8 Nov 2018 14:04:17 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+In-Reply-To: <xmqqr2fwa0ew.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811081356350.39@tvgsbejvaqbjf.bet>
+References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com> <xmqqo9b1d6na.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1811071217280.39@tvgsbejvaqbjf.bet> <d7a70226-3441-76c4-df6a-e8fb32249f27@ramsayjones.plus.com> <xmqqr2fwa0ew.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181107225524.GA119693@amazon.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ffGHcUOcvITBSTy0ltTJJEhiYbVeuWLHXT3Cg+nymZVRX30uBUY
+ SjxnaUx4ZDtr4W3UWcTuzb64r01HYvLrMYORjsE+pYb7pkZuQYR+l6ib+JmeP5BXw7jnXDz
+ E78vb8Y4eSvIO4OaeoLBR/WUeSKtIH3IABmoW76lm954rs/BKgc90vbR6IY5qLFKBuwGdCS
+ bnD/a6BXrCakBe0zVzqjA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a2RKn2Y8Zlk=:IxJl0mHzkGRxxti94zO9dx
+ QZoxlGHJD0+StCOYETyVtb7+HZUhc5fQZIAD0YZzoFsb5yU/THVvgRsrET/htfW8dBIePGs9V
+ 4RkeROfDXTbKAQzyGRdCp2IphaN/sX4i55HMOgR8MbLWGErU44kEZEopywku02X9pNnNfBaIX
+ ccvbiil6V52mnVhflgZ8WkWFShH1lDuOhFqqLyM8XpUrL3bbrKedsN6CLr5FHo15F986qPM9c
+ doWn+DxQfG6BNpGU41eS2FhVFWE6m3wKxE3IRktplhXmSfEOUMNZSyDRWtR6tN9Nfo8lsmJ7S
+ pWlUMVTAG8W9HPG5augT+ERlGB97bhRudnHQz1z1cDk5qG74A7qaVLFyNkziLnfDcE9gNrEfm
+ XMMUjDBqCaFlW92b1qiEaGFY0GJRPqhR77B52YZDH7AP4Un6h649c84mkvqGaymtmEpTlMGPQ
+ 36EQWcylN2B0n8K59pmpdgZ/y1tnR8NXL5LTvpgMFweDcVTXi6htBoUC3yZFFcUEAK69Q9PAq
+ Jqg1rHm15Mug+YlGvBQyEJIlIFiKxDIwzAr+lHF6OxPFqBOpb+HeFH+JHuoacxvIubFVGAkQA
+ xhdHLok25EePe9r/u517HxRCtaUYwRYo/K4fZ81IUVUchpftPFCXQ5QQ2J8CHxu4mLSyOQEiJ
+ RujQHCw0GdnYnjGkkQoWpXMD4Q59oYH7KII7pEfGrh93iyg60IU1NNmVsAjfWVV6e3S4lCv4Y
+ GEcib6rz9sUzYS7dCWQgAoFE4z15axwnAGC/tAAYxnkAe87ccF6tcwsQJMhM1/laGvHPKDwEW
+ KAp7+wvcZbCKEC2PfZu0hzPKzBGktmyyLYlfJXExr4qg4+EFJXt3YXaIiNP/WRvjduDmWiKkW
+ 1LU1BZ1i/B6me9dJpYwCXJYjrBijODhH1Y0vUGbwhsgkOFs0yiDvogx3S3SFFyqW+TI4gTnGd
+ qgXr2xkCEEw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 07, 2018 at 10:55:24PM +0000, Geert Jansen wrote:
+Hi,
 
-> On Mon, Oct 29, 2018 at 07:27:39PM -0400, Jeff King wrote:
+On Thu, 8 Nov 2018, Junio C Hamano wrote:
+
+> I am tempted to say "//<token>/<the remainder>" might also be such a
+> way, even in the POSIX world, but am not brave enough to do so, as I
+> suspect that may have a fallout in the Windows world X-<.
+
+It does. //server/share is the way we refer to UNC paths (AKA network
+drives).
+
+> An earlier suggestion by Duy in [*1*] to pretend as if we take
+> $VARIABLE and define special variables might be a better direction.
+
+My only qualm with this is that `$VARIABLE` is a perfectly allowed part of
+a path. That is, you *could* create a directory called `$VARIABLE` and
+reference that, and then the expand_user_path() function (or whatever name
+we will give it) would always expand this, with no way to switch it off.
+
+Granted, this is a highly unlikely scenario, but I would feel a bit more
+comfortable with something like
+
+	<RUNTIME_PREFIX>/ssl/certs/ca-bundle.crt
+
+Of course, `<RUNTIME_PREFIX>` is *also* a perfectly valid directory name,
+but I would argue that it is even less likely to exist than
+`$RUNTIME_PREFIX` because the user would have to escape *two* characters
+rather than one.
+
+> Are there security implications if we started allowing references to
+> environment varibables in strings we pass expand_user_path()?
+
+Probably. But then, the runtime prefix is not even available as
+environment variable...
+
+Ciao,
+Dscho
+
+> If we cannot convince ourselves that it is safe to allow access to any
+> and all environment variables, then we probably can start by specific
+> "pseudo variables" under our control, like GIT_EXEC_PATH and
+> GIT_INSTALL_ROOT, that do not even have to be tied to environment
+> variables, perhaps with further restriction to allow it only at the
+> beginning of the string, or something like that, if necessary.
 > 
-> > On Mon, Oct 29, 2018 at 08:36:07PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > >  * Re-roll my 4 patch series to include the patch you have in
-> > >    <20181027093300.GA23974@sigill.intra.peff.net>
-> > 
-> > I don't think it's quite ready for inclusion as-is. I hope to brush it
-> > up a bit, but I have quite a backlog of stuff to review, as well.
+> [References]
 > 
-> We're still quite keen to get this patch included. Is there anything I can do
-> to help?
-
-Yes, testing and review. :)
-
-I won't send the series out just yet, as I suspect it could use another
-read-through on my part. But if you want to peek at it or try some
-timings, it's available at:
-
-  https://github.com/peff/git jk/loose-cache
-
-It's quite a bit bigger than the original patch, as some refactoring was
-necessary to reuse the existing cache in alternate_object_directories.
-I'm rather pleased with how it turned out; it unifies the handling of
-alternates and the main object directory, which is a cleanup I've been
-wanting to do for some time.
-
-> Also I just re-read your comments on maximum cache size. I think you were
-> arguing both sides of the equation and I wasn't sure where you'd ended up. :)
-> A larger cache size potentially takes more time to fill up especially on NFS
-> while a smaller cache size obviously would less effective. That said a small
-> cache is still effective for the "clone" case where the repo is empty.
-
-I ended up thinking that a large cache is going to be fine. So I didn't
-even bother implementing a limit in my series, which makes things a bit
-simpler (it's one less state to deal with).
-
-Since it reuses the existing cache code, it's better in a few ways than
-my earlier patch:
-
-  1. If a program uses OBJECT_INFO_QUICK and prints abbreviated sha1s,
-     we only have to load the cache once (I think fetch does this, but I
-     didn't test it).
-
-  2. The cache is filled one directory at a time, which avoids
-     unnecessary work when there are only a few lookups.
-
-  3. The cache is per-object-directory. So if a request can be filled
-     without looking at an alternate, we avoid looking at the alternate.
-     I doubt this matters much in practice (the case we care about is
-     when we _don't_ have the object, and there you have to look
-     everywhere).
-
-The one thing I didn't implement is a config option to disable this.
-That would be pretty easy to add. I don't think it's necessary, but it
-would make testing before/after behavior easier if somebody thinks it's
-slowing down their particular case.
-
-> It also occurred to me that as a performance optimization your patch could read
-> the the loose object directories in parallel using a thread pool. At least on
-> Amazon EFS this should result in al almost linear performance increase. I'm not
-> sure how much this would help for local file systems. In any case this may be
-> best done as a follow-up patch (that I'd be happy to volunteer for).
-
-Yeah, I suspect it could make things faster in some cases. But it also
-implies filling all of the cache directories at once up front. The code
-I have now tries to avoid unnecessary cache fills. But it would be
-pretty easy to kick off a full fill.
-
-I agree it would make more sense as a follow-up patch (and probably
-controlled by a config option, since it likely only makes sense when you
-have a really high-latency readdir).
-
--Peff
+> *1* <CACsJy8DmyU_Kn4yytu_PQdpppXO8wLcuuzQ-fjwnyjA0ntB2Dw@mail.gmail.com>
+> 
