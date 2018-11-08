@@ -2,250 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 184B61F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 00:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4C111F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 01:11:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728189AbeKHKU4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 05:20:56 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:40918 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727786AbeKHKUz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 05:20:55 -0500
-Received: by mail-oi1-f196.google.com with SMTP id u130-v6so15525446oie.7
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 16:48:01 -0800 (PST)
+        id S1728363AbeKHKoE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 05:44:04 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34184 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727724AbeKHKoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 05:44:03 -0500
+Received: by mail-wm1-f68.google.com with SMTP id f1-v6so408560wmg.1
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 17:11:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tFzXCH52HV7OmYhf81EGdABKar5vZtRch+kmzYDyToM=;
-        b=uRaGmO9pYFksHs3bBep1sOItq+nYW9vNuFZ0fc/ICgHRqR4eKfFhrAgoZfIincbP00
-         /y2wE7bB8VcgkaYOurheRkJrsxXyKaMFZ5WY1ziDz5aqMWmSfrH9DNuZDMs8Bi54hlB3
-         NlodEhk2chbnVBCycWLeJz4sTN9CREQdWu0DyC7bQ50mFOyxs28Hb32qBCbmgqqzEfvk
-         LptYFehaT1byuRRAJulD0DFkbHrPkEJ3C0idep7KKacqyXerl9Yl5bUemnrson9LIHQJ
-         togVeAXAAKMY2VGMd4OKXj0lP801Ns9qYvEWZqCoE1NSsNYk8fMInmxrXyhXow/j0w+0
-         DSAw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=vfmZx8nt8TnW+mhACL3JX6d+fW/fRjj17YFW1OC4bJA=;
+        b=pK4njKh6XyXADQdszAEcAvqiaMzee0g5Z0wDYDn4r7cgZyvHxVSCox6wkhF6cpa1Pf
+         KTdWdpdN0TcgX24tb14qFc9m492aUTxdss9H/nIEzZ3tPwaj3UsrwVjT88ElSyVu4uQp
+         9zdAl2u0a4fvCor6CVk5MglQvVWthCcdZUTtRRSfIs7ipjlWjoDLWmqsroqn+KtNeB9d
+         Cma4hy4Nu2XR4KTmTzhSdB1y9oFsVAWTGAb/7IUv851El4yNLWqLLPkKuIYiKRw4ZCEq
+         DJ5YSoGka1tKB4ACtvT1P9T3E66JAztRNgb4j3egZdPZnE5M0u0DU82tJmLIZWP4ch+q
+         VxaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tFzXCH52HV7OmYhf81EGdABKar5vZtRch+kmzYDyToM=;
-        b=Ds+/w1WcJLKBkVFrcRFSdZAX6W6s7UEz0I1jSS40GVVEl5uWVmFhObXBFe9xIGksHK
-         FITnRlA52tZKuFtQtaLwgWQmCtCAl7xdl4TIGZHafufuQB4Vpz2vVqVUtc05CIfaJVHt
-         tbL4HEySaUVPp0tZ2eIGfojFQ2Be+H044JbAS0Jhb/TQ2X3tU77ye8gIZ46rTm1IAczp
-         n0NX/1UJhQ318ycXLnPgnyKAC2F6QhhhEMUaymm6+WDvjCd16Hu1HvjfM1L6AT69MqAb
-         i4IcrQzPO2PQNtixXtdBAn5QY1cub30XpFlCvZhxtK6Yw8Uumv0GkqbfUVH00daWPFtO
-         tj8Q==
-X-Gm-Message-State: AGRZ1gLh1G71kyUla4bE0rcUCcd/cLozOnQF5XiPq/v+354+zYERC9Nb
-        fBa6rm59YRac5yKmKIuTJTlc9A7r5/SldxI9coCz
-X-Google-Smtp-Source: AJdET5eZ8MCQAVomqBPaqja5l0++bOuPDKygqe7i4YlZyBLjAgu4Uk9csAdN6S3xN4lOylL58ZYgfwlNaJyUNdZ4SVQ=
-X-Received: by 2002:aca:6a4e:: with SMTP id f75-v6mr1535086oic.260.1541638080232;
- Wed, 07 Nov 2018 16:48:00 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=vfmZx8nt8TnW+mhACL3JX6d+fW/fRjj17YFW1OC4bJA=;
+        b=cU5FoKRy2TaAv4Fonf4PKLLoRUMTy4FOuNKZhA3uiXlNfxirKFXB/dn1NxhOYXpkYI
+         xMIKChq+gPvZkEHwtDrGLq9USupnUoh2HPD4RDF3mkqEEqhZDqZYDdqYgNs27+Pl0a22
+         N9RR9bpX1D/K0WWuNuhoq4BTUjyI8NddgkJp2jAcbyc08WXMmRdJ4CjW4EuhymASK9lT
+         VYBLecatwXXi7fssHcAGAxLteIRAMSg8gMdIyhqvd0ErxxopXBmIgc/ptVCjHgAuACrz
+         0olmUsB5OLOqIgyimyx3Rqm5x0kDVV0jvp9s4w7m0EIWpisTdUFHdNT0I542z/1XWJBu
+         X73A==
+X-Gm-Message-State: AGRZ1gLG5O5/uAOZ+8J+Ln+Rb0uQvoKZIAI9GQMMpoa5ByhjB+npmFti
+        X/3nXZRXrETY7IKBnJQKPB7AhkV/oMk=
+X-Google-Smtp-Source: AJdET5edSACRnPlgrFsHdQeBte2B7Cab2/UDzVFWEG5w3oHXis++GaGncUpfQLXS3tVk6oRVmA3ZTQ==
+X-Received: by 2002:a1c:e714:: with SMTP id e20-v6mr1830342wmh.83.1541639465034;
+        Wed, 07 Nov 2018 17:11:05 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k3-v6sm4336628wro.9.2018.11.07.17.11.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Nov 2018 17:11:04 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     daniels@umanovskis.se, git@vger.kernel.org
+Subject: Re: [PATCH] branch: make --show-current use already resolved HEAD
+References: <20181025190421.15022-1-daniels@umanovskis.se>
+        <20181107225619.6683-1-rafa.almas@gmail.com>
+Date:   Thu, 08 Nov 2018 10:11:02 +0900
+In-Reply-To: <20181107225619.6683-1-rafa.almas@gmail.com> ("Rafael
+ =?utf-8?Q?Ascens=C3=A3o=22's?=
+        message of "Wed, 7 Nov 2018 22:56:18 +0000")
+Message-ID: <xmqqa7mk9xw9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1539298957.git.matvore@google.com> <e340f743e6749e65525e1342dc47faaa6540f04b.1539298957.git.matvore@google.com>
- <xmqqlg706iv1.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlg706iv1.fsf@gitster-ct.c.googlers.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Wed, 7 Nov 2018 16:47:47 -0800
-Message-ID: <CAMfpvhK7FX717Cpnce4puytLFbd4G56qnhwgy5WG7vm3C31DiA@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/3] list-objects-filter: teach tree:# how to handle >0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        git@jeffhostetler.com, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A quick update: I've read Junio's comments on this patchset and
-basically agree with them, but I haven't had a chance to apply them
-yet. I plan to pick this patchset up again (as well as the patch
-"md/list-lazy-objects-fix") once things settle down in my day job.
-On Sun, Oct 14, 2018 at 7:31 PM Junio C Hamano <gitster@pobox.com> wrote:
+Rafael Ascensão <rafa.almas@gmail.com> writes:
+
+> print_current_branch_name() tries to resolve HEAD and die() when it
+> doesn't resolve it successfully. But the conditions being tested are
+> always unreachable because early in branch:cmd_branch() the same logic
+> is performed.
 >
-> Matthew DeVore <matvore@google.com> writes:
->
-> > The long-term goal at the end of this is to allow a partial clone to
-> > eagerly fetch an entire directory of files by fetching a tree and
-> > specifying <depth>=1. This, for instance, would make a build operation
-> > fast and convenient
->
-> This would reduce round-trip, as you do not have to fetch the tree
-> to see what its contents are before issuing another set of fetches
-> for them.  Those who are building virtual filesystem that let you
-> mount a specific tree object, perhaps via fuse, may find it useful,
-> too, even though I suspect that may not be your primary focus.
->
-> > diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> > index c2c1c40e6..c78985c41 100644
-> > --- a/Documentation/rev-list-options.txt
-> > +++ b/Documentation/rev-list-options.txt
-> > @@ -734,8 +734,12 @@ specification contained in <path>.
-> >  +
-> >  The form '--filter=tree:<depth>' omits all blobs and trees whose depth
-> >  from the root tree is >= <depth> (minimum depth if an object is located
-> > -at multiple depths in the commits traversed). Currently, only <depth>=0
-> > -is supported, which omits all blobs and trees.
-> > +at multiple depths in the commits traversed). <depth>=0 will not include
-> > +any trees or blobs unless included explicitly in <object>. <depth>=1
->
-> Here, <object> refers to the objects directly requested on the
-> command line (or --stdin)?  Triggering this question from me is a
-> sign that this description may want to say a bit more to avoid the
-> same question from the real readers.  Perhaps replace "included
-> explicitly in <object>" with "explicitly requested by listing them
-> on the command line or feeding them with `--stdin`", or something
-> like that?
->
-> > diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-> > index e8da2e858..9dc61d6e6 100644
-> > --- a/list-objects-filter-options.c
-> > +++ b/list-objects-filter-options.c
-> > @@ -50,12 +50,12 @@ static int gently_parse_list_objects_filter(
-> >               }
-> >
-> >       } else if (skip_prefix(arg, "tree:", &v0)) {
-> > -             unsigned long depth;
-> > -             if (!git_parse_ulong(v0, &depth) || depth != 0) {
-> > +             if (!git_parse_ulong(v0,
-> > +                                  &filter_options->tree_depth_limit_value)) {
-> >                       if (errbuf) {
-> >                               strbuf_addstr(
-> >                                       errbuf,
-> > -                                     _("only 'tree:0' is supported"));
-> > +                                     _("expected 'tree:<int>'"));
->
-> We do not accept "tree:-1", even though "-1" is an int.  Is it too
-> obvious to worry about?  I do not think we want to say tree:<uint>
-> even if we do want to make it clear we reject "tree:-1"
->
-> I am wondering if "expected 'tree:<depth>'" would work better.
->
-> > diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-> > index af64e5c66..c1ae70cd8 100644
-> > --- a/list-objects-filter-options.h
-> > +++ b/list-objects-filter-options.h
-> > @@ -44,6 +44,7 @@ struct list_objects_filter_options {
-> >       struct object_id *sparse_oid_value;
-> >       char *sparse_path_value;
-> >       unsigned long blob_limit_value;
-> > +     unsigned long tree_depth_limit_value;
-> >  };
->
-> This change gets it right by adding "depth" in the field name and it
-> is not a comment on this patch, but someday not in too distant
-> future we should rename the "blob_limit_value" to make it clear that
-> it is filtering by number of bytes, as other filtering criteria on
-> blobs that can be expressed in ulong are quite possible.
->
-> > -static enum list_objects_filter_result filter_trees_none(
-> > +static enum list_objects_filter_result filter_trees_depth(
-> >       enum list_objects_filter_situation filter_situation,
-> >       struct object *obj,
-> >       const char *pathname,
-> >       const char *filename,
-> >       void *filter_data_)
-> >  {
-> > -     struct filter_trees_none_data *filter_data = filter_data_;
-> > +     struct filter_trees_depth_data *filter_data = filter_data_;
-> > +
-> > +     int too_deep = filter_data->current_depth >= filter_data->max_depth;
->
-> Does max mean "maximum allowed", or "this and anything larger are
-> rejected".  The latter sound wrong, but I offhand do not know if
-> your current_depth counts from 0 or 1, so there may not be
-> off-by-one.
->
->  - dir.c::within_depth() that is used by pathspec matching that in turn
->    is used by "grep --max-depth=1" does "if (depth > max_depth)", which
->    sounds more in line with the usual convention, I would think.
->
->  - pack-objects has max_delta_cache_size, which also is used as
->    "maximum allowed", not "this is already too big".  So is its
->    max_depth.
->
-> There may be other examples.  One existing violator I noticed was
-> the "reject blobs that is this size or larger" in this file; it is
-> called "max_bytes", but it is apparently not "maximum allowed",
-> which we probably would want to fix.
->
-> > +     /*
-> > +      * Note that we do not use _MARK_SEEN in order to allow re-traversal in
-> > +      * case we encounter a tree or blob again at a shallower depth.
-> > +      */
->
-> Hmph.  Earlier tree:0 support never even read the actual tree, so
-> this was not a problem.  We wouldn't have found a tree in deeper
-> places first and then at a shallower depth, as we wouldn't have seen
-> any tree in any depth deeper than the surface anyway.
->
-> Now we need to worry about a tree that originally gets seen in a
-> deeper depth (that is still below the allowed maximum) to reappear
-> at a shallower place, so a subtree within it that used to be too
-> deep may now be within the allowed maximum depth.
->
-> Step 1 of these three patches made sure trees are not even opened
-> under "tree:0", so it was not just optimizing/shrinking the output
-> of rev-list but also optimizing the traversal.  When we are
-> collecting omits, however, this one now returns _ZERO which means we
-> still traverse into the tree, even under "tree:0"?  I must be
-> reading the code incorrectly (in general, when we are seeing a tree
-> object that itself is at the maximum allowed depth, trees found by
-> reading its contents will never become eligible for output, even if
-> they are found at a shallower depth than their other copies were
-> previously found, I would think).
->
-> >       switch (filter_situation) {
-> >       default:
-> >               BUG("unknown filter_situation: %d", filter_situation);
-> >
-> > -     case LOFS_BEGIN_TREE:
-> >       case LOFS_BLOB:
-> > +             if (!too_deep) goto include_it;
->
-> Style: on two lines, like you did below for the next if() statement.
->
-> > +
-> > +             if (filter_data->omits)
-> > +                     oidset_insert(filter_data->omits, &obj->oid);
-> > +
-> > +             return LOFR_ZERO;
-> > +
-> > +     case LOFS_BEGIN_TREE:
-> > +             filter_data->current_depth++;
-> > +
-> > +             if (!too_deep) goto include_it;
-> > +
-> >               if (filter_data->omits) {
-> >                       oidset_insert(filter_data->omits, &obj->oid);
-> > -                     /* _MARK_SEEN but not _DO_SHOW (hard omit) */
-> > -                     return LOFR_MARK_SEEN;
-> > +                     return LOFR_ZERO;
-> >               }
-> >               else
-> >                       /*
-> >                        * Not collecting omits so no need to to traverse tree.
-> >                        */
-> > -                     return LOFR_SKIP_TREE | LOFR_MARK_SEEN;
-> > +                     return LOFR_SKIP_TREE;
-> >
-> >       case LOFS_END_TREE:
-> >               assert(obj->type == OBJ_TREE);
-> > +             filter_data->current_depth--;
-> >               return LOFR_ZERO;
-> >
-> >       }
-> > +
-> > +include_it:
-> > +     if (filter_data->omits)
-> > +             oidset_remove(filter_data->omits, &obj->oid);
-> > +     return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-> >  }
+> Eliminate the duplicate and unreachable code, and update the current
+> logic to the more reliable check for the detached head.
+
+Nice.
+
+> I still think the mention about scripting should be removed from the
+> original commit message, leaving it open to being taught other tricks
+> like --verbose that aren't necessarily script-friendly.
+
+I'd prefer to see scriptors avoid using "git branch", too.
+
+Unlike end-user facing documentation where we promise "we do X and
+will continue to do so because of Y" to the readers, the log message
+is primarily for recording the original motivation of the change, so
+that we can later learn "we did X back then because we thought Y".
+When we want to revise X, we revisit if the reason Y is still valid.
+
+So in that sense, the door to "break" the scriptability is still
+open.
+
+> But the main goal of this patch is to just bring some attention to this,
+> as I mentioned it in a previous thread but it got lost.
+
+This idea of yours seems to lead to a better implementation, and
+indeed "got lost" is a good way to describe what happened---I do not
+recall seeing it, for example.  Thanks for bringing it back.
+
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 46f91dc06d..1c51d0a8ca 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -38,6 +38,7 @@ static const char * const builtin_branch_usage[] = {
+>  
+>  static const char *head;
+>  static struct object_id head_oid;
+> +static int head_flags = 0;
+
+You've eliminated the "now unnecessary" helper and do everything
+inside cmd_branch(), so perhaps this can be made function local, no?
+
+> @@ -668,10 +654,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  
+>  	track = git_branch_track;
+>  
+> -	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+> +	head = resolve_refdup("HEAD", 0, &head_oid, &head_flags);
+>  	if (!head)
+>  		die(_("Failed to resolve HEAD as a valid ref."));
+> -	if (!strcmp(head, "HEAD"))
+> +	if (!(head_flags & REF_ISSYMREF))
+>  		filter.detached = 1;
+
+Nice to see we can reuse the resolve_refdup() we already have.
+
+>  	else if (!skip_prefix(head, "refs/heads/", &head))
+>  		die(_("HEAD not found below refs/heads!"));
+> @@ -716,7 +702,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  			die(_("branch name required"));
+>  		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+>  	} else if (show_current) {
+> -		print_current_branch_name();
+> +		if (!filter.detached)
+> +			puts(head);
+
+Ah, I wondered why we do not have to skip-prefix, but it is already
+done for us when we validated that an attached HEAD points at a
+local branch.  Good.
+
+>  		return 0;
+>  	} else if (list) {
+>  		/*  git branch --local also shows HEAD when it is detached */
