@@ -2,89 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35FD21F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 14:47:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84CED1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 15:39:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727693AbeKIAXb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 19:23:31 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42322 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726860AbeKIAXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 19:23:30 -0500
-Received: by mail-wr1-f65.google.com with SMTP id y15-v6so21526716wru.9
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 06:47:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PiJH4hOkHzlWnfqYp69kxsPhvm5X+Bnm4gA5nP8tvs0=;
-        b=nrOXvWKmXn0gzAE9FYkGfOZuX/td75+y1q6BlesfYFzQLNeoi8MVWhcwIQ4aitFTfp
-         Bz/ldC8bDyfHkBBtM2DlkKLP0ICqMP6yJxUgSRbVdM/ZzlerMaNoYFAhaq0GR0GG5OvO
-         PXzzdRgeSEnzg1ck4+pmjNNuZQcYBvFjKseTQGO9hUGEcyJXAMaaVHdpSdgiJ2GrZxC5
-         xaAexAWRyYQX6DuBqwPH8zIv3woG4x0ApmX9GRRasXuDJC63Kde1g0JWWfBQ7nvpWgAO
-         3TWVhPmOsaTVKLVeAJ5YBjtbS/7nUNx3l37DGdOg6Lgjpvx18VY8Hlhf4aGQdii/YQKD
-         AcXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PiJH4hOkHzlWnfqYp69kxsPhvm5X+Bnm4gA5nP8tvs0=;
-        b=CJF0WyHwGehFEBhB3kjzzdN2K4sIPmQr0s9B6FBK/X7PbsETmebLL0khVYLb3ts3yO
-         5ZXn8AVx499zU9x7tdXSxXQPiWZ4+tx8PM1RV4HZH7yFR6W8NfoWZUIp2hvpldQEdPeK
-         y99sVim4vI8k+xuu57MX9Q0ROEFRDBA4jkWDw53m6BfW+p8Q9UlvKPZhbFunSz8+k8Pf
-         bKSVwOgmi5tEq/C0moZqnZbgTUe9rIxVqQY3qHZ8Couo6Jt7McCTIf+sXnqPvKY0AAxz
-         c4Cd7LqdkKzLh1bdt6UMvvngpUKYRJhldWKLX+ymWtYlbifCxk2e4iWRkxm+lAJGeKGB
-         LFUQ==
-X-Gm-Message-State: AGRZ1gLUz62FSd6Z3EGNOnWJ1Ge0M/Fk35XxgfPlSIMQ+vWuMNsDnLXd
-        rrpg4uZyqfof98wvKpte74w=
-X-Google-Smtp-Source: AJdET5fKMx0kU2GUZEKTyNNx35NTQMpv0Rak/PTOj4qASzVAyK5SsTgTtpflvgIyanc2sWwaDZMd3g==
-X-Received: by 2002:adf:e983:: with SMTP id h3-v6mr4367928wrm.58.1541688459242;
-        Thu, 08 Nov 2018 06:47:39 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r1sm5275139wrx.15.2018.11.08.06.47.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Nov 2018 06:47:37 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        id S1727001AbeKIBP0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 20:15:26 -0500
+Received: from mout.gmx.net ([212.227.15.18]:47477 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726417AbeKIBPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 20:15:25 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1fp0QJ36VI-00es5E; Thu, 08
+ Nov 2018 16:39:15 +0100
+Date:   Thu, 8 Nov 2018 16:39:15 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-References: <pull.66.git.gitgitgadget@gmail.com>
-        <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
-        <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
-        <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
-        <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
-        <20181107204142.GA30078@sigill.intra.peff.net>
-        <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org>
-        <20181107220320.GA8970@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet>
-Date:   Thu, 08 Nov 2018 23:47:36 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 8 Nov 2018 14:11:53 +0100 (STD)")
-Message-ID: <xmqqmuqj7hiv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+In-Reply-To: <xmqqr2fv7hp8.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811081637240.39@tvgsbejvaqbjf.bet>
+References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com> <xmqqo9b1d6na.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1811071217280.39@tvgsbejvaqbjf.bet> <d7a70226-3441-76c4-df6a-e8fb32249f27@ramsayjones.plus.com> <xmqqr2fwa0ew.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811081356350.39@tvgsbejvaqbjf.bet>
+ <xmqqr2fv7hp8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:uOencIGJe9HasWtImKbUIojxGUgExfZq6X/Unv2/H8rdcp5SyCT
+ 4MBr/v1JBQJXrVV326a1b9a4pV72NSZNo9Yu8LkwXl8E5IMFNpY88KSOi+VMZHWsex9D5ml
+ 4sUPkxGJs7Hi+xODK440ZGKnw2OFarzu9kq0XK8T7FuDUiKp8zhDNVQ/ZmJg8UKKXhuFx+B
+ 6ksi4w0NaUVFwO4SFyiAw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:I/cQi44cZPA=:puUehOkVZ/6Hlh2fniXS7G
+ hsCmI1RqOsTMaGtc8jQojQmPlAatkF9G/JzSye23mOgELyG6hr+4embRCgT0XDgv2Tf1lWM0e
+ w8nhHPNaorNuJaqfNCRV16COw51J/Yyki5PAgv42YWvmX83YWRoY7tctmxQ+ULFTia8Z1xCZ1
+ sZxWWnOwPdTEm8ZTtoja2OIxN3axGmpSlCpV9vRHZPY1qh+xvNG7VsJcHq7KANerHfiOxeHJq
+ PS5iCKb1j9KXV3ENPx2NzfRa16BCTefi9cenpcJWqcGyMTfFu2NKpt+GebFyJJV4yp3YYc5ts
+ 3JJYRQy+j1oB6CtzDogzO2niR6J3g4tDz8xZpNtzaxJeyz0v+2I1qtxMXQboWMPokefsD68gT
+ KElNiWL9WWpdKi+4/Wd+plhd3q2Wzlu1jlfLwVLGfhQO24SFWd7ztjZ96kGs/U5AQkXhLWpUg
+ N05JptQEnI6VVRQoapQBe6LslBCPDs2N8ewr0UU96p1ShX2FnZoW7NTlYuHIYYH0ndnwsY5It
+ OzYOmlqelKRALkom0WV9AHI7rc3MAPFS/tErUx9MLzk1Y2+56n9L9KMRs6/umS2sfsOKrv78a
+ uLv8VafOz5zw6RQy36Yy58ekv7FA8rfeXVNKUOtBC5lNn+REotirYad0SHlrNFbBEqzgRQngp
+ Iysz58vHgyOMQ28FPpgF54pock+IRsDYV3eeLukOJmLqYIJARtDTq39Lnr642cp5kKyMLFoce
+ K8/B80np7gDiuRKAaGr9fCEMMo09iNIaL62Euvh8gRgLgDS6fAKn3XLrLITOpv2TYzstkOKHu
+ nc3TUoq7Kj7tzfPdG/LFDd4i7sorurXzuKRidTieG9GOWhGDXzKp5qNnI+69GrOhiTSYY+9Dd
+ e/18ZH5O7mGoPUbhyrQW0fQGT8vX5Q1VD9bnK20FZVVimEE7bIj3gq0FgjiFeVJE+kdJtuOf/
+ fhACrzcO22w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Junio,
 
-> But now I have a really crazy idea: how about ~~/ssl/certs/ca-bundle.crt?
-> The `~` prefix is *already* a reserved character,...
+On Thu, 8 Nov 2018, Junio C Hamano wrote:
 
-We would need to prepare for a future where we need yet another
-special thing to be expanded, and it will quickly become cryptic if
-you said "~/ is HOME, ~USER/ is USER's HOME, ~~/ is runtime prefix,
-and ~~~/ is this new thing...".  ~runtime_prefix~/ (i.e. carve out
-the namespace for USERNAME by reserving any names that ends with a
-tilde) may be a viable way to do this, though.   It is just as good
-as your other idea, <runtime_prefix>, in an earlier message.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Thu, 8 Nov 2018, Junio C Hamano wrote:
+> >
+> >> I am tempted to say "//<token>/<the remainder>" might also be such a
+> >> way, even in the POSIX world, but am not brave enough to do so, as I
+> >> suspect that may have a fallout in the Windows world X-<.
+> >
+> > It does. //server/share is the way we refer to UNC paths (AKA network
+> > drives).
+> 
+> Shucks.  That would mean the patch that started this thread would
+> not be a good idea, as an end-user could already be writing
+> "//server/share/some/path" and the code with the patch would see '/'
+> that begins it, and start treating it differently than the code
+> before the patch X-<.
 
+Ouch. You're right!
+
+> > Granted, this is a highly unlikely scenario, but I would feel a bit more
+> > comfortable with something like
+> >
+> > 	<RUNTIME_PREFIX>/ssl/certs/ca-bundle.crt
+> >
+> > Of course, `<RUNTIME_PREFIX>` is *also* a perfectly valid directory name,
+> > but I would argue that it is even less likely to exist than
+> > `$RUNTIME_PREFIX` because the user would have to escape *two* characters
+> > rather than one.
+> 
+> Yes, and it is naturally extensible by allowing <OTHER_THINGS>
+> inside the special bra-ket pair (just like $OTHER_THINGS can be a
+> way to extend the system if we used a special variable syntax).
+
+True.
+
+> >> Are there security implications if we started allowing references to
+> >> environment varibables in strings we pass expand_user_path()?
+> >
+> > Probably. But then, the runtime prefix is not even available as
+> > environment variable...
+> 
+> Ah, sorry. I thought it was clear that I would next be suggesting to
+> add an environmet variable for it, _if_ the approach to allow env
+> references turns out to be viable.
+
+Of course, I should have assumed that. Sorry!
+
+Ciao,
+Dscho
