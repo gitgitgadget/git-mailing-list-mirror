@@ -2,148 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C111F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 01:11:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8D1F1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 01:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728363AbeKHKoE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 05:44:04 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34184 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727724AbeKHKoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 05:44:03 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f1-v6so408560wmg.1
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 17:11:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=vfmZx8nt8TnW+mhACL3JX6d+fW/fRjj17YFW1OC4bJA=;
-        b=pK4njKh6XyXADQdszAEcAvqiaMzee0g5Z0wDYDn4r7cgZyvHxVSCox6wkhF6cpa1Pf
-         KTdWdpdN0TcgX24tb14qFc9m492aUTxdss9H/nIEzZ3tPwaj3UsrwVjT88ElSyVu4uQp
-         9zdAl2u0a4fvCor6CVk5MglQvVWthCcdZUTtRRSfIs7ipjlWjoDLWmqsroqn+KtNeB9d
-         Cma4hy4Nu2XR4KTmTzhSdB1y9oFsVAWTGAb/7IUv851El4yNLWqLLPkKuIYiKRw4ZCEq
-         DJ5YSoGka1tKB4ACtvT1P9T3E66JAztRNgb4j3egZdPZnE5M0u0DU82tJmLIZWP4ch+q
-         VxaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=vfmZx8nt8TnW+mhACL3JX6d+fW/fRjj17YFW1OC4bJA=;
-        b=cU5FoKRy2TaAv4Fonf4PKLLoRUMTy4FOuNKZhA3uiXlNfxirKFXB/dn1NxhOYXpkYI
-         xMIKChq+gPvZkEHwtDrGLq9USupnUoh2HPD4RDF3mkqEEqhZDqZYDdqYgNs27+Pl0a22
-         N9RR9bpX1D/K0WWuNuhoq4BTUjyI8NddgkJp2jAcbyc08WXMmRdJ4CjW4EuhymASK9lT
-         VYBLecatwXXi7fssHcAGAxLteIRAMSg8gMdIyhqvd0ErxxopXBmIgc/ptVCjHgAuACrz
-         0olmUsB5OLOqIgyimyx3Rqm5x0kDVV0jvp9s4w7m0EIWpisTdUFHdNT0I542z/1XWJBu
-         X73A==
-X-Gm-Message-State: AGRZ1gLG5O5/uAOZ+8J+Ln+Rb0uQvoKZIAI9GQMMpoa5ByhjB+npmFti
-        X/3nXZRXrETY7IKBnJQKPB7AhkV/oMk=
-X-Google-Smtp-Source: AJdET5edSACRnPlgrFsHdQeBte2B7Cab2/UDzVFWEG5w3oHXis++GaGncUpfQLXS3tVk6oRVmA3ZTQ==
-X-Received: by 2002:a1c:e714:: with SMTP id e20-v6mr1830342wmh.83.1541639465034;
-        Wed, 07 Nov 2018 17:11:05 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k3-v6sm4336628wro.9.2018.11.07.17.11.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 17:11:04 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Cc:     daniels@umanovskis.se, git@vger.kernel.org
-Subject: Re: [PATCH] branch: make --show-current use already resolved HEAD
-References: <20181025190421.15022-1-daniels@umanovskis.se>
-        <20181107225619.6683-1-rafa.almas@gmail.com>
-Date:   Thu, 08 Nov 2018 10:11:02 +0900
-In-Reply-To: <20181107225619.6683-1-rafa.almas@gmail.com> ("Rafael
- =?utf-8?Q?Ascens=C3=A3o=22's?=
-        message of "Wed, 7 Nov 2018 22:56:18 +0000")
-Message-ID: <xmqqa7mk9xw9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728248AbeKHKvN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 05:51:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44310 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728164AbeKHKvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 05:51:13 -0500
+Received: (qmail 19270 invoked by uid 109); 8 Nov 2018 01:18:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 08 Nov 2018 01:18:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20857 invoked by uid 111); 8 Nov 2018 01:17:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Nov 2018 20:17:34 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Nov 2018 20:18:14 -0500
+Date:   Wed, 7 Nov 2018 20:18:14 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+Message-ID: <20181108011813.GA10148@sigill.intra.peff.net>
+References: <pull.66.git.gitgitgadget@gmail.com>
+ <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
+ <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
+ <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
+ <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
+ <20181107204142.GA30078@sigill.intra.peff.net>
+ <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org>
+ <20181107220320.GA8970@sigill.intra.peff.net>
+ <xmqqlg649zs8.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqlg649zs8.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rafael Ascensão <rafa.almas@gmail.com> writes:
+On Thu, Nov 08, 2018 at 09:30:15AM +0900, Junio C Hamano wrote:
 
-> print_current_branch_name() tries to resolve HEAD and die() when it
-> doesn't resolve it successfully. But the conditions being tested are
-> always unreachable because early in branch:cmd_branch() the same logic
-> is performed.
->
-> Eliminate the duplicate and unreachable code, and update the current
-> logic to the more reliable check for the detached head.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Wed, Nov 07, 2018 at 10:36:52PM +0100, Johannes Sixt wrote:
+> >
+> > All that said, if we're just interested in allowing this for config,
+> > then we already have such a wrapper function: git_config_pathname().
+> >
+> > So I don't think it's a big deal to implement it in any of these ways.
+> > It's much more important to get the syntax right, because that's
+> > user-facing and will be with us forever.
+> 
+> All of us are on the same page after seeing the clarification by
+> Dscho, it seems.  I came to pretty much the same conclusion this
+> morning before reading this subthread.  Outside config values, the
+> callers of expand_user_path() only feed "~/.git$constant", and they
+> are all about "personal customization" that do not want to be shared
+> with other users of the same installation, so "relative to runtime
+> prefix" feature would not be wanted.  But we do not know about new
+> caller's needs.  For now I am OK to have it in expand_user_path(),
+> possibly renaming the function if people feel it is needed (I don't).
 
-Nice.
+I think we would want to carefully think about the call in enter_repo().
+We do not want git-daemon to accidentally expose repositories in
+$RUNTIME_PREFIX.
 
-> I still think the mention about scripting should be removed from the
-> original commit message, leaving it open to being taught other tricks
-> like --verbose that aren't necessarily script-friendly.
+Looking over the code, I think this is OK. The expansion happens in
+enter_repo(), and then we take the path that was found and do our
+ok_paths checks on it (which makes sense -- even now you'd ask to export
+"/home/" and it would need to look at "~peff/repo.git" and expand that
+to "/home/peff/repo.git" before doing a simple string check.
 
-I'd prefer to see scriptors avoid using "git branch", too.
+> Between ~<reserved name> and $VARIABLE_LOOKING_THINGS, I do not have
+> a strong preference either way, but I am getting an impression that
+> the latter is more generally favoured in the discussion?
 
-Unlike end-user facing documentation where we promise "we do X and
-will continue to do so because of Y" to the readers, the log message
-is primarily for recording the original motivation of the change, so
-that we can later learn "we did X back then because we thought Y".
-When we want to revise X, we revisit if the reason Y is still valid.
+I certainly prefer the latter, but I thought I was the only one to have
+expressed support so far. ;)
 
-So in that sense, the door to "break" the scriptability is still
-open.
-
-> But the main goal of this patch is to just bring some attention to this,
-> as I mentioned it in a previous thread but it got lost.
-
-This idea of yours seems to lead to a better implementation, and
-indeed "got lost" is a good way to describe what happened---I do not
-recall seeing it, for example.  Thanks for bringing it back.
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 46f91dc06d..1c51d0a8ca 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -38,6 +38,7 @@ static const char * const builtin_branch_usage[] = {
->  
->  static const char *head;
->  static struct object_id head_oid;
-> +static int head_flags = 0;
-
-You've eliminated the "now unnecessary" helper and do everything
-inside cmd_branch(), so perhaps this can be made function local, no?
-
-> @@ -668,10 +654,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  
->  	track = git_branch_track;
->  
-> -	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
-> +	head = resolve_refdup("HEAD", 0, &head_oid, &head_flags);
->  	if (!head)
->  		die(_("Failed to resolve HEAD as a valid ref."));
-> -	if (!strcmp(head, "HEAD"))
-> +	if (!(head_flags & REF_ISSYMREF))
->  		filter.detached = 1;
-
-Nice to see we can reuse the resolve_refdup() we already have.
-
->  	else if (!skip_prefix(head, "refs/heads/", &head))
->  		die(_("HEAD not found below refs/heads!"));
-> @@ -716,7 +702,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  			die(_("branch name required"));
->  		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
->  	} else if (show_current) {
-> -		print_current_branch_name();
-> +		if (!filter.detached)
-> +			puts(head);
-
-Ah, I wondered why we do not have to skip-prefix, but it is already
-done for us when we validated that an attached HEAD points at a
-local branch.  Good.
-
->  		return 0;
->  	} else if (list) {
->  		/*  git branch --local also shows HEAD when it is detached */
+-Peff
