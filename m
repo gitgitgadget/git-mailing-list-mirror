@@ -7,103 +7,77 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7D601F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 13:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AEBF1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 13:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726751AbeKHWjv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 17:39:51 -0500
-Received: from mout.gmx.net ([212.227.15.18]:56045 "EHLO mout.gmx.net"
+        id S1726444AbeKHWra (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 17:47:30 -0500
+Received: from mout.gmx.net ([212.227.17.20]:53749 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726359AbeKHWjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 17:39:51 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lgql4-1fgg4b08RC-00oBe3; Thu, 08
- Nov 2018 14:04:19 +0100
-Date:   Thu, 8 Nov 2018 14:04:17 +0100 (STD)
+        id S1726375AbeKHWra (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 17:47:30 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLj5z-1gLZBB3cpf-000xJG; Thu, 08
+ Nov 2018 14:11:54 +0100
+Date:   Thu, 8 Nov 2018 14:11:53 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+To:     Jeff King <peff@peff.net>
+cc:     Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-In-Reply-To: <xmqqr2fwa0ew.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811081356350.39@tvgsbejvaqbjf.bet>
-References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <9174a750-3498-c2fc-d7fa-29c1926c95fc@ramsayjones.plus.com> <xmqqo9b1d6na.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1811071217280.39@tvgsbejvaqbjf.bet> <d7a70226-3441-76c4-df6a-e8fb32249f27@ramsayjones.plus.com> <xmqqr2fwa0ew.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20181107220320.GA8970@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet>
+References: <pull.66.git.gitgitgadget@gmail.com> <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com> <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org> <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
+ <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org> <20181107204142.GA30078@sigill.intra.peff.net> <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org> <20181107220320.GA8970@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ffGHcUOcvITBSTy0ltTJJEhiYbVeuWLHXT3Cg+nymZVRX30uBUY
- SjxnaUx4ZDtr4W3UWcTuzb64r01HYvLrMYORjsE+pYb7pkZuQYR+l6ib+JmeP5BXw7jnXDz
- E78vb8Y4eSvIO4OaeoLBR/WUeSKtIH3IABmoW76lm954rs/BKgc90vbR6IY5qLFKBuwGdCS
- bnD/a6BXrCakBe0zVzqjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:a2RKn2Y8Zlk=:IxJl0mHzkGRxxti94zO9dx
- QZoxlGHJD0+StCOYETyVtb7+HZUhc5fQZIAD0YZzoFsb5yU/THVvgRsrET/htfW8dBIePGs9V
- 4RkeROfDXTbKAQzyGRdCp2IphaN/sX4i55HMOgR8MbLWGErU44kEZEopywku02X9pNnNfBaIX
- ccvbiil6V52mnVhflgZ8WkWFShH1lDuOhFqqLyM8XpUrL3bbrKedsN6CLr5FHo15F986qPM9c
- doWn+DxQfG6BNpGU41eS2FhVFWE6m3wKxE3IRktplhXmSfEOUMNZSyDRWtR6tN9Nfo8lsmJ7S
- pWlUMVTAG8W9HPG5augT+ERlGB97bhRudnHQz1z1cDk5qG74A7qaVLFyNkziLnfDcE9gNrEfm
- XMMUjDBqCaFlW92b1qiEaGFY0GJRPqhR77B52YZDH7AP4Un6h649c84mkvqGaymtmEpTlMGPQ
- 36EQWcylN2B0n8K59pmpdgZ/y1tnR8NXL5LTvpgMFweDcVTXi6htBoUC3yZFFcUEAK69Q9PAq
- Jqg1rHm15Mug+YlGvBQyEJIlIFiKxDIwzAr+lHF6OxPFqBOpb+HeFH+JHuoacxvIubFVGAkQA
- xhdHLok25EePe9r/u517HxRCtaUYwRYo/K4fZ81IUVUchpftPFCXQ5QQ2J8CHxu4mLSyOQEiJ
- RujQHCw0GdnYnjGkkQoWpXMD4Q59oYH7KII7pEfGrh93iyg60IU1NNmVsAjfWVV6e3S4lCv4Y
- GEcib6rz9sUzYS7dCWQgAoFE4z15axwnAGC/tAAYxnkAe87ccF6tcwsQJMhM1/laGvHPKDwEW
- KAp7+wvcZbCKEC2PfZu0hzPKzBGktmyyLYlfJXExr4qg4+EFJXt3YXaIiNP/WRvjduDmWiKkW
- 1LU1BZ1i/B6me9dJpYwCXJYjrBijODhH1Y0vUGbwhsgkOFs0yiDvogx3S3SFFyqW+TI4gTnGd
- qgXr2xkCEEw==
+X-Provags-ID: V03:K1:Q3NRZYcByMpz5shkR0zF3S0DauIhKWdixzeVmltWkrilbx74lmt
+ u9daQjyJBp8R0FJ6lO1QACrtUIETxxpfkNkqqMMpqHhMDLsjlNOoHxOadXBqXjUsVOjRYAp
+ 4gYS74PqHhGDUVs87jIatg36bJh5TuvVaU7Ka5NAfLUZV8TbNUMfj+rcq8/TdNM5zKq1jLc
+ pmTFUmkipmkdHOA5vJvvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KmXijpgAHq8=:GEK6qhD3cT1V9EfGq15EzR
+ E0H1O4v/hxO2tvd/HtqQZCFEzrmpanw6cUOsAmi8+K/SVs4ep1dGi4cZJuOLlEPnMEoEC3cPy
+ U9P+px1ygVVa+Jd6IpZU18ZZx5HEb/sTvfuLzRvdwpcMLKDb5pjmKkzzwo98OOBqCGcd7RRLe
+ FcLGh7Ug92yU1D76WjhCQRfoH9zSw2w45OMBOECbqQL7u5Oscw9Dgpz7/NNhv35NhfrBdbl3Q
+ nTR3y9SQlcZVMNN4vd1MnSUngQhBvu//7WDFhVD+CtmRfslzU9vTEtpBZx+D+FiCAhzQ67ZR6
+ wTarEy8Jt1/VP7DMfRFwk6wEiYraALTXqni2ykZ/Kn34Rw6YUbQax9k7jKTt6UmCu9Zg3Hzgp
+ g9sR9l3oNvpW/YyVFDs2S0PR+PPOwX70lxCgxOJiK/qGVX0nr5ptduiBCYdAuRRX2P8VLpWyR
+ Oypv3edumOoeA8d9F+AK8iARwO0U/njBOX7visJMoUowNZASchp1uN/RwcIxh1/zCHsb+L2Nw
+ 4D1IPseqmIoSA5zX7yKv6rIOH/UdlykGgddH37WFl4x+oLYAqLybQW1ZUC5HFYasCM2QVTSwq
+ YyWXMVN+dVEXnO7BsnFqMkxDu4E4c8LA8AUvMYA8m7kHN5Ol4sUcT972JZEYzKRDz2LQvLCGe
+ zVu8Wyj7HUoWSYRm0TfqEXToZPvA2OH+eOVcD64I8AmwhdF9rmwrQSAkbIMmY3gPH0xDIs4IV
+ mQSnzW1EDl8fOTAagtKVYJ5Z/xnGjta219IWcz9Bg5IUGsUyHvo10fQUFeBJCvYy5AiP3ySPx
+ uMvWll4Rh4OHIjloKfHziqhDmg208MsFrHsqpKXhr0ujhPBmdbcwdC2StlwI5UQmjh8edZP/E
+ exKhDkGL7YC0lQnuVtsXjyA2ykKd3hwEEBmOJ0jYroDlIuSwpEXWKGAOtHGKpAV5NQwGJCCxt
+ Jotrz+eTG6Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Peff,
 
-On Thu, 8 Nov 2018, Junio C Hamano wrote:
+On Wed, 7 Nov 2018, Jeff King wrote:
 
-> I am tempted to say "//<token>/<the remainder>" might also be such a
-> way, even in the POSIX world, but am not brave enough to do so, as I
-> suspect that may have a fallout in the Windows world X-<.
+> All that said, if we're just interested in allowing this for config,
+> then we already have such a wrapper function: git_config_pathname().
 
-It does. //server/share is the way we refer to UNC paths (AKA network
-drives).
+Good point. I agree that `git_config_pathname()` is a better home for this
+feature than `expand_user_path()`.
 
-> An earlier suggestion by Duy in [*1*] to pretend as if we take
-> $VARIABLE and define special variables might be a better direction.
+But now I have a really crazy idea: how about ~~/ssl/certs/ca-bundle.crt?
+The `~` prefix is *already* a reserved character, and while it would
+probably not be super intuitive to have `~~` be expanded to the runtime
+prefix, at least it would be less ambiguous than `$RUNTIME_PREFIX` (which
+*is* a valid directory name).
 
-My only qualm with this is that `$VARIABLE` is a perfectly allowed part of
-a path. That is, you *could* create a directory called `$VARIABLE` and
-reference that, and then the expand_user_path() function (or whatever name
-we will give it) would always expand this, with no way to switch it off.
-
-Granted, this is a highly unlikely scenario, but I would feel a bit more
-comfortable with something like
-
-	<RUNTIME_PREFIX>/ssl/certs/ca-bundle.crt
-
-Of course, `<RUNTIME_PREFIX>` is *also* a perfectly valid directory name,
-but I would argue that it is even less likely to exist than
-`$RUNTIME_PREFIX` because the user would have to escape *two* characters
-rather than one.
-
-> Are there security implications if we started allowing references to
-> environment varibables in strings we pass expand_user_path()?
-
-Probably. But then, the runtime prefix is not even available as
-environment variable...
+Of course, `~~` is also a valid directory name, but then, so is `~` and we
+do not have any way to specify *that* because `expand_user_path()` will
+always expand it to the home directory. Or am I wrong? Do we have a way to
+disable the expansion?
 
 Ciao,
 Dscho
-
-> If we cannot convince ourselves that it is safe to allow access to any
-> and all environment variables, then we probably can start by specific
-> "pseudo variables" under our control, like GIT_EXEC_PATH and
-> GIT_INSTALL_ROOT, that do not even have to be tied to environment
-> variables, perhaps with further restriction to allow it only at the
-> beginning of the string, or something like that, if necessary.
-> 
-> [References]
-> 
-> *1* <CACsJy8DmyU_Kn4yytu_PQdpppXO8wLcuuzQ-fjwnyjA0ntB2Dw@mail.gmail.com>
-> 
