@@ -7,82 +7,136 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36C4D1F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 06:33:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91FAB1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 07:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbeKHQHl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 11:07:41 -0500
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:32894 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbeKHQHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 11:07:40 -0500
-Received: by mail-vk1-f196.google.com with SMTP id d201so1718925vka.0
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 22:33:44 -0800 (PST)
+        id S1726690AbeKHQeK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 11:34:10 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36695 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726663AbeKHQeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 11:34:10 -0500
+Received: by mail-pl1-f194.google.com with SMTP id w24-v6so9095908plq.3
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 23:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IJIh0X2+u//co9iph0GjXQHF+KToQSdKCcp7hiZn7aU=;
-        b=HtI2EdkL7plFm0QtTrIFWzD6t1jHtCYihItHAm3UaRjE3gIB7BQgrtV+97BDgdhfXy
-         S2C0Y2XoZddNr33spjFhIRCQ7htVv/7gjoWxXPstFcct7M9JgvX77NfOcw3poN9X/Syz
-         Vu7aX+V0x9jUoEBahAWqXYyRra5s1VgTuzEZQW/0POKscEL1R7jIY1kHDSBXe0cH0xNs
-         QqqIGX07ZOaaqEF3ipNJlyKLVcADOAhRwiiQNPOK2kTSDoUK3OX8IuobbADgcrujsZa1
-         q2JDfAu8YgpPzUCe5FHDQZIPsY/W167VoN6lRPJQ4bUud2uHBfSnv7YuKzQcbjtfXKHN
-         RC/g==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LIY49nEF0iFSXg5In0YoSbSeqUxaojG2mPWCoh74iU4=;
+        b=hl3LfJ9AG6Hv9ZgrKWiFdOnTz56+mVEUfLKLvBreF5bi0NnmUINAXGM6Ul56AdyFX/
+         S3ZRN+JAowWXMmQB+vQSd7xcUAUvulbbwiiVVLzIHbjWJSDEXj6rvTPnzwRhjf0mwaYg
+         Kv3rBuBdS+NM1mCuMy6Cg8QQUD4UtelHpP1Vlkt8LTb9fPLlskwSaoEl4SkO5ESWrmMO
+         ATvNewNqwSK2xPkl4qz0NkZT7NdBYss79BVfyJHhEFuw0VrdCzWq0fnhMvtwTY/rek3i
+         QMLQpXpg3lQ1tjtgZr/sBeP3PH2NmTI3JWfvXduB0PxVxjQKmQTlC5It+y31meLndg0i
+         yPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IJIh0X2+u//co9iph0GjXQHF+KToQSdKCcp7hiZn7aU=;
-        b=Mdy9cQcziOq7MYnMTG4JCu5GC629Vv7XhfsaLPD1O7nZpJGy051J0iSgBJT7ULfOCv
-         YKOyxLk4lVZs4YjLpJTiz02n3GD5F5dtlnnKHX91d94lJfcGoZsO06xx5iWP0pT97Lgd
-         tRl2WzyvOGYioYln65XxTrJ9fdJUHHtEo5k40LHyPI55bt5LQ6icNBTQFXKCPN/366IL
-         Lyw7vP3pe/5enBNLrcFGlbrnJx5yUoTM7b3e4Vm75cxNmXArl0aCRWB1H8hhXcQAMT2e
-         rp9mBd99Gc3QUB/2tQP+hFrasNPsIFGFZO2sZhwqmJRvymKG2IP4IQwlL1eLVushRjkL
-         JITg==
-X-Gm-Message-State: AGRZ1gJQ3wfja3A66yFdWxqzyM37BQyziVwYmimYIBILHY94h+CAm1Qe
-        SCJzWk7TireCl3zjvJyxJba9VgqT1273l3b8lp3klDzh
-X-Google-Smtp-Source: AJdET5foPmQazEzf4ehUDPjXOe6JH71K0yF3Y7iVkxuFIHvxzRBmKgL6kCuXdJVvrlEg5GZnnO4i/riwpirldYVhpyg=
-X-Received: by 2002:a1f:97d1:: with SMTP id z200mr1445506vkd.15.1541658823749;
- Wed, 07 Nov 2018 22:33:43 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=LIY49nEF0iFSXg5In0YoSbSeqUxaojG2mPWCoh74iU4=;
+        b=r6t9k9V3UsahCxiM7okgd9/4m+XsyQDIrRezi+tMQp6nIEShcOVRrZ5/DZlEJ3pVzh
+         st9R3rswa4Pc2NSmevskEGturhM0lmBanLP73pHvG/gcPnVtChB1tedk22CAba+oNIHi
+         NScm2b9oLzmH1oEtlu8rkJuwE4BoTwRWtMYLHD9xS5C60rxXQwQLHyIf5ceekaviRAUA
+         Va53IfhXl09imRRId758K9iAhVPubyCAI4Nukq00vx7VWmcEn0iwWj+Re8HmitcqcNJ5
+         7J2OJaxahYvxY2uUkq0Ich0g9555NLV3+s13vCgunHsHB3bmc6gXSONw8/Asam53khpr
+         5VKw==
+X-Gm-Message-State: AGRZ1gJ4eYlneZ4LbbzSfSx6ywVoQTBBUIYxa27eQLlc8xjmAODw4ZwW
+        Lhu7OoM6QCQGIN8ricIJSLBcuIHW
+X-Google-Smtp-Source: AJdET5eVP77DZQjOHYN+6jBFBTgaMoTaEST4eKyFb/CJpCIE2qlo3ABB/JhpqYPQr2XwoMpHVmkGbA==
+X-Received: by 2002:a17:902:b598:: with SMTP id a24-v6mr3403714pls.231.1541660407436;
+        Wed, 07 Nov 2018 23:00:07 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id i12-v6sm3631249pfe.7.2018.11.07.23.00.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Nov 2018 23:00:06 -0800 (PST)
+Date:   Wed, 07 Nov 2018 23:00:06 -0800 (PST)
+X-Google-Original-Date: Thu, 08 Nov 2018 07:00:03 GMT
+Message-Id: <pull.69.v6.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.69.v5.git.gitgitgadget@gmail.com>
+References: <pull.69.v5.git.gitgitgadget@gmail.com>
+From:   "Force.Charlie-I via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v6 0/1] http: add support selecting http version
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20181108060158.27145-1-newren@gmail.com>
-In-Reply-To: <20181108060158.27145-1-newren@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 7 Nov 2018 22:33:32 -0800
-Message-ID: <CABPp-BHY8kB-hFd-MZ2-aC1CNQggXz9a+CcfkKiOiD=q9NLHwg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Reimplement rebase --merge via interactive machinery
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 7, 2018 at 10:02 PM Elijah Newren <newren@gmail.com> wrote:
->
-> Now that the rewrite-interactive-rebases-in-C series have finally
-> merged to master, this series deletes git-rebase--merge.sh and
-> reimplements the --merge behavior on top of the interactive machinery.
->
-> Differences since v1:
->   - Updated code to hook into builtin/rebase.C instead of git-rebase.sh
->
-> (No range-diff provided, because it has been months since v1, and v1
-> was only RFC and was only discussed at a high level.)
+Usually we don't need to set libcurl to choose which version of the HTTP
+protocol to use to communicate with a server. But different versions of
+libcurl, the default value is not the same.
 
-Actually, that's not correct; it's been so long that I forgot.  Dscho
-and Phillip both reviewed it and I updated my series at the time with
-their suggestions, but didn't re-submit because it depended on so many
-other series and conflicted with the rebase-in-C work.  So other
-differences include the changes I made to address their feedback,
-but...even if I dug up the old v1 and created a range-diff against it
-I'm not so sure it'd be helpful.  If anyone thinks it would be, holler
-and I'll generate it.
+CURL >= 7.62.0: CURL_HTTP_VERSION_2TLS CURL < 7.62: CURL_HTTP_VERSION_1_1
 
-Original series here:
-https://public-inbox.org/git/20180607171344.23331-1-newren@gmail.com/
+In order to give users the freedom to control the HTTP version, we need to
+add a setting to choose which HTTP version to use.
+
+This patch support force enable HTTP/2 or HTTP/1.1. 
+
+example: 
+
+GIT_CURL_VERBOSE=1 git2 -c http.version=HTTP/2 ls-remote https://bitbucket.org/aquariusjay/deeplab-public-ver2.git
+
+Force Charlie (1):
+  http: add support selecting http version
+
+ Documentation/config.txt |  9 +++++++++
+ http.c                   | 38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
+
+
+base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-69%2Ffcharlie%2Fmaster-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-69/fcharlie/master-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/69
+
+Range-diff vs v5:
+
+ 1:  cdd93048ba ! 1:  93fda67198 http: add support selecting http version
+     @@ -2,8 +2,38 @@
+      
+          http: add support selecting http version
+      
+     +    Usually we don't need to set libcurl to choose which version of the
+     +    HTTP protocol to use to communicate with a server.
+     +    But different versions of libcurl, the default value is not the same.
+     +
+     +    CURL >= 7.62.0: CURL_HTTP_VERSION_2TLS
+     +    CURL < 7.62: CURL_HTTP_VERSION_1_1
+     +
+     +    In order to give users the freedom to control the HTTP version,
+     +    we need to add a setting to choose which HTTP version to use.
+     +
+          Signed-off-by: Force Charlie <charlieio@outlook.com>
+      
+     +diff --git a/Documentation/config.txt b/Documentation/config.txt
+     +--- a/Documentation/config.txt
+     ++++ b/Documentation/config.txt
+     +@@
+     + 	If set, store cookies received during requests to the file specified by
+     + 	http.cookieFile. Has no effect if http.cookieFile is unset.
+     + 
+     ++http.version::
+     ++	Use the specified HTTP protocol version when communicating with a server.
+     ++	If you want to force the default. The available and default version depend
+     ++	on libcurl. Actually the possible values of
+     ++	this option are:
+     ++
+     ++	- HTTP/2
+     ++	- HTTP/1.1
+     ++
+     + http.sslVersion::
+     + 	The SSL version to use when negotiating an SSL connection, if you
+     + 	want to force the default.  The available and default version
+     +
+      diff --git a/http.c b/http.c
+      --- a/http.c
+      +++ b/http.c
+
+-- 
+gitgitgadget
