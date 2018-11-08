@@ -7,22 +7,22 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D83D1F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 04:40:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B89061F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 04:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728843AbeKHOOO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 09:14:14 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47292 "EHLO
+        id S1728858AbeKHOOP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 09:14:15 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47298 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728801AbeKHOOO (ORCPT
+        by vger.kernel.org with ESMTP id S1726145AbeKHOOO (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 8 Nov 2018 09:14:14 -0500
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wA84bwu6026337;
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wA84bwu7026337;
         Wed, 7 Nov 2018 20:40:37 -0800
 Received: from mail.palantir.com ([198.97.14.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2nm9610eb8-1
+        by mx0a-00153501.pphosted.com with ESMTP id 2nm9610eb8-2
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Wed, 07 Nov 2018 20:40:36 -0800
+        Wed, 07 Nov 2018 20:40:37 -0800
 Received: from dc-prod-exch-01.YOJOE.local (10.193.18.14) by
  dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
@@ -31,15 +31,15 @@ Received: from smtp-transport.yojoe.local (10.129.56.124) by
  dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server id
  15.1.1531.3 via Frontend Transport; Wed, 7 Nov 2018 23:40:34 -0500
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id D36A32101E7F;
-        Wed,  7 Nov 2018 20:40:33 -0800 (PST)
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 0A2DF2101E96;
+        Wed,  7 Nov 2018 20:40:34 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     <gitster@pobox.com>
 CC:     <git@vger.kernel.org>, <stolee@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 04/10] merge-recursive: new function for better colliding conflict resolutions
-Date:   Wed, 7 Nov 2018 20:40:25 -0800
-Message-ID: <20181108044031.25885-5-newren@gmail.com>
+Subject: [PATCH v5 07/10] merge-recursive: use handle_file_collision for add/add conflicts
+Date:   Wed, 7 Nov 2018 20:40:28 -0800
+Message-ID: <20181108044031.25885-8-newren@gmail.com>
 X-Mailer: git-send-email 2.19.1.858.g526e8fe740.dirty
 In-Reply-To: <20181108044031.25885-1-newren@gmail.com>
 References: <CABPp-BG2rFEeKVe8ok+a-jLFvPBfnZs1b3Mp2Jfi2JgNZcO8gA@mail.gmail.com>
@@ -50,245 +50,64 @@ Content-Type:   text/plain; charset=US-ASCII
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-11-08_02:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=13 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=820 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1807170000 definitions=main-1811080038
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are three conflict types that represent two (possibly entirely
-unrelated) files colliding at the same location:
-  * add/add
-  * rename/add
-  * rename/rename(2to1)
-
-These three conflict types already share more similarity than might be
-immediately apparent from their description: (1) the handling of the
-rename variants already involves removing any entries from the index
-corresponding to the original file names[*], thus only leaving entries
-in the index for the colliding path; (2) likewise, any trace of the
-original file name in the working tree is also removed.  So, in all
-three cases we're left with how to represent two colliding files in both
-the index and the working copy.
-
-[*] Technically, this isn't quite true because rename/rename(2to1)
-conflicts in the recursive (o->call_depth > 0) case do an "unrename"
-since about seven years ago.  But even in that case, Junio felt
-compelled to explain that my decision to "unrename" wasn't necessarily
-the only or right answer -- search for "Comment from Junio" in t6036 for
-details.
-
-My initial motivation for looking at these three conflict types was that
-if the handling of these three conflict types is the same, at least in
-the limited set of cases where a renamed file is unmodified on the side
-of history where the file is not renamed, then a significant performance
-improvement for rename detection during merges is possible.  However,
-while that served as motivation to look at these three types of
-conflicts, the actual goal of this new function is to try to improve the
-handling for all three cases, not to merely make them the same as each
-other in that special circumstance.
-
-=== Handling the working tree ===
-
-The previous behavior for these conflict types in regards to the
-working tree (assuming the file collision occurs at 'foo') was:
-  * add/add does a two-way merge of the two files and records it as 'foo'.
-  * rename/rename(2to1) records the two different files into two new
-    uniquely named files (foo~HEAD and foo~$MERGE), while removing 'foo'
-    from the working tree.
-  * rename/add records the two different files into two different
-    locations, recording the add at foo~$SIDE and, oddly, recording
-    the rename at foo (why is the rename more important than the add?)
-
-So, the question for what to write to the working tree boils down to
-whether the two colliding files should be two-way merged and recorded in
-place, or recorded into separate files.  As per discussion on the git
-mailing lit, two-way merging was deemed to always be preferred, as that
-makes these cases all more like content conflicts that users can handle
-from within their favorite editor, IDE, or merge tool.  Note that since
-renames already involve a content merge, rename/add and
-rename/rename(2to1) conflicts could result in nested conflict markers.
-
-=== Handling of the index ===
-
-For a typical rename, unpack_trees() would set up the index in the
-following fashion:
-           old_path  new_path
-   stage1: 5ca1ab1e  00000000
-   stage2: f005ba11  00000000
-   stage3: 00000000  b0a710ad
-And merge-recursive would rewrite this to
-           new_path
-   stage1: 5ca1ab1e
-   stage2: f005ba11
-   stage3: b0a710ad
-Removing old_path from the index means the user won't have to `git rm
-old_path` manually every time a renamed path has a content conflict.
-It also means they can use `git checkout [--ours|--theirs|--conflict|-m]
-new_path`, `git diff [--ours|--theirs]` and various other commands that
-would be difficult otherwise.
-
-This strategy becomes a problem when we have a rename/add or
-rename/rename(2to1) conflict, however, because then we have only three
-slots to store blob sha1s and we need either four or six.  Previously,
-this was handled by continuing to delete old_path from the index, and
-just outright ignoring any blob shas from old_path.  That had the
-downside of deleting any trace of changes made to old_path on the other
-side of history.  This function instead does a three-way content merge of
-the renamed file, and stores the blob sha1 for that at either stage2 or
-stage3 for new_path (depending on which side the rename came from).  That
-has the advantage of bringing information about changes on both sides and
-still allows for easy resolution (no need to git rm old_path, etc.), but
-does have the downside that if the content merge had conflict markers,
-then what we store in the index is the sha1 of a blob with conflict
-markers.  While that is a downside, it seems less problematic than the
-downsides of any obvious alternatives, and certainly makes more sense
-than the previous handling.  Further, it has a precedent in that when we
-do recursive merges, we may accept a file with conflict markers as the
-resolution for the merge of the merge-bases, which will then show up in
-the index of the outer merge at stage 1 if a conflict exists at the outer
-level.
+This results in no-net change of behavior, it simply ensures that all
+file-collision conflict handling types are being handled the same by
+calling the same function.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+ merge-recursive.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index f35e3b5f95..16ba425c2d 100644
+index 62eab9e4cc..88e9e1166a 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1560,6 +1560,127 @@ static struct diff_filespec *filespec_from_entry(struct diff_filespec *target,
- 	return target;
- }
- 
-+#if 0 // #if-0-ing avoids unused function warning; will make live in next commit
-+static int handle_file_collision(struct merge_options *o,
-+				 const char *collide_path,
-+				 const char *prev_path1,
-+				 const char *prev_path2,
-+				 const char *branch1, const char *branch2,
-+				 const struct object_id *a_oid,
-+				 unsigned int a_mode,
-+				 const struct object_id *b_oid,
-+				 unsigned int b_mode)
-+{
-+	struct merge_file_info mfi;
-+	struct diff_filespec null, a, b;
-+	char *alt_path = NULL;
-+	const char *update_path = collide_path;
-+
-+	/*
-+	 * In the recursive case, we just opt to undo renames
-+	 */
-+	if (o->call_depth && (prev_path1 || prev_path2)) {
-+		/* Put first file (a_oid, a_mode) in its original spot */
-+		if (prev_path1) {
-+			if (update_file(o, 1, a_oid, a_mode, prev_path1))
-+				return -1;
+@@ -3356,14 +3356,27 @@ static int process_entry(struct merge_options *o,
+ 				clean_merge = -1;
+ 		}
+ 	} else if (a_oid && b_oid) {
+-		/* Case C: Added in both (check for same permissions) and */
+-		/* case D: Modified in both, but differently. */
+-		int is_dirty = 0; /* unpack_trees would have bailed if dirty */
+-		clean_merge = handle_content_merge(o, path, is_dirty,
+-						   o_oid, o_mode,
+-						   a_oid, a_mode,
+-						   b_oid, b_mode,
+-						   NULL);
++		if (!o_oid) {
++			/* Case C: Added in both (check for same permissions) */
++			output(o, 1,
++			       _("CONFLICT (add/add): Merge conflict in %s"),
++			       path);
++			clean_merge = handle_file_collision(o,
++							    path, NULL, NULL,
++							    o->branch1,
++							    o->branch2,
++							    a_oid, a_mode,
++							    b_oid, b_mode);
 +		} else {
-+			if (update_file(o, 1, a_oid, a_mode, collide_path))
-+				return -1;
++			/* case D: Modified in both, but differently. */
++			int is_dirty = 0; /* unpack_trees would have bailed if dirty */
++			clean_merge = handle_content_merge(o, path,
++							   is_dirty,
++							   o_oid, o_mode,
++							   a_oid, a_mode,
++							   b_oid, b_mode,
++							   NULL);
 +		}
-+
-+		/* Put second file (b_oid, b_mode) in its original spot */
-+		if (prev_path2) {
-+			if (update_file(o, 1, b_oid, b_mode, prev_path2))
-+				return -1;
-+		} else {
-+			if (update_file(o, 1, b_oid, b_mode, collide_path))
-+				return -1;
-+		}
-+
-+		/* Don't leave something at collision path if unrenaming both */
-+		if (prev_path1 && prev_path2)
-+			remove_file(o, 1, collide_path, 0);
-+
-+		return 0;
-+	}
-+
-+	/* Remove rename sources if rename/add or rename/rename(2to1) */
-+	if (prev_path1)
-+		remove_file(o, 1, prev_path1,
-+			    o->call_depth || would_lose_untracked(prev_path1));
-+	if (prev_path2)
-+		remove_file(o, 1, prev_path2,
-+			    o->call_depth || would_lose_untracked(prev_path2));
-+
-+	/*
-+	 * Remove the collision path, if it wouldn't cause dirty contents
-+	 * or an untracked file to get lost.  We'll either overwrite with
-+	 * merged contents, or just write out to differently named files.
-+	 */
-+	if (was_dirty(o, collide_path)) {
-+		output(o, 1, _("Refusing to lose dirty file at %s"),
-+		       collide_path);
-+		update_path = alt_path = unique_path(o, collide_path, "merged");
-+	} else if (would_lose_untracked(collide_path)) {
-+		/*
-+		 * Only way we get here is if both renames were from
-+		 * a directory rename AND user had an untracked file
-+		 * at the location where both files end up after the
-+		 * two directory renames.  See testcase 10d of t6043.
-+		 */
-+		output(o, 1, _("Refusing to lose untracked file at "
-+			       "%s, even though it's in the way."),
-+		       collide_path);
-+		update_path = alt_path = unique_path(o, collide_path, "merged");
-+	} else {
-+		/*
-+		 * FIXME: It's possible that the two files are identical
-+		 * and that the current working copy happens to match, in
-+		 * which case we are unnecessarily touching the working
-+		 * tree file.  It's not a likely enough scenario that I
-+		 * want to code up the checks for it and a better fix is
-+		 * available if we restructure how unpack_trees() and
-+		 * merge-recursive interoperate anyway, so punting for
-+		 * now...
-+		 */
-+		remove_file(o, 0, collide_path, 0);
-+	}
-+
-+	/* Store things in diff_filespecs for functions that need it */
-+	memset(&a, 0, sizeof(struct diff_filespec));
-+	memset(&b, 0, sizeof(struct diff_filespec));
-+	null.path = a.path = b.path = (char *)collide_path;
-+	oidcpy(&null.oid, &null_oid);
-+	null.mode = 0;
-+	oidcpy(&a.oid, a_oid);
-+	a.mode = a_mode;
-+	a.oid_valid = 1;
-+	oidcpy(&b.oid, b_oid);
-+	b.mode = b_mode;
-+	b.oid_valid = 1;
-+
-+	if (merge_mode_and_contents(o, &null, &a, &b, collide_path,
-+				    branch1, branch2, o->call_depth * 2, &mfi))
-+		return -1;
-+	mfi.clean &= !alt_path;
-+	if (update_file(o, mfi.clean, &mfi.oid, mfi.mode, update_path))
-+		return -1;
-+	if (!mfi.clean && !o->call_depth &&
-+	    update_stages(o, collide_path, NULL, &a, &b))
-+		return -1;
-+	free(alt_path);
-+	/*
-+	 * FIXME: If both a & b both started with conflicts (only possible
-+	 * if they came from a rename/rename(2to1)), but had IDENTICAL
-+	 * contents including those conflicts, then in the next line we claim
-+	 * it was clean.  If someone cares about this case, we should have the
-+	 * caller notify us if we started with conflicts.
-+	 */
-+	return mfi.clean;
-+}
-+#endif
-+
- static int handle_file(struct merge_options *o,
- 			struct diff_filespec *rename,
- 			int stage,
+ 	} else if (!o_oid && !a_oid && !b_oid) {
+ 		/*
+ 		 * this entry was deleted altogether. a_mode == 0 means
 -- 
 2.19.1.858.g526e8fe740.dirty
 
