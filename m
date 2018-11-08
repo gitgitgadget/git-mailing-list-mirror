@@ -2,114 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB621F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 17:07:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3154A1F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 17:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbeKICoB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 21:44:01 -0500
-Received: from mout.web.de ([217.72.192.78]:58001 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726421AbeKICoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 21:44:01 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmcjH-1fmZLI0z2J-00aHFJ; Thu, 08
- Nov 2018 18:02:31 +0100
-Date:   Thu, 8 Nov 2018 18:02:30 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     =?iso-8859-1?Q?Adri=E1n?= Gimeno Balaguer <adrigibal@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-rebase is ignoring working-tree-encoding
-Message-ID: <20181108170230.GA6652@tor.lan>
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
- <20181104170729.GA21372@tor.lan>
- <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com>
- <20181105181014.GA30777@tor.lan>
- <20181106201618.GA30158@tor.lan>
- <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        id S1727029AbeKICog (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 21:44:36 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42044 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbeKICog (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 21:44:36 -0500
+Received: by mail-pg1-f196.google.com with SMTP id i4-v6so9112039pgq.9
+        for <git@vger.kernel.org>; Thu, 08 Nov 2018 09:08:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=9gbWDnTTrA24KNK6J0LNuc4KD3EA27LpgGRVTsdyiwY=;
+        b=KkCx6O8yPCD7CH20hRKHWc6x9KwRiWGtRfF4eqmjC8d5YnQLXsZ8ZTB2RSkT+L7onr
+         toUasxuIVGvKrxDL9fi6nHCUF5ironINbhQe2jVrjlSCehjE9rKCJ38WKOXxF/pXANV7
+         THbII/c4wsiJHYeV9M7I1RXmTA9UTmg5oz6yLg7LZBzhmIvsFzKgDpeKzleeS1MYWh6H
+         fJtG94W3QNORpjZBYx5Rf44jbfjM6yO5lej6DOSotQjkiR7ql+wBNXZLpAnvASkORP+r
+         Kd08IKz56B2VteifB39TGgPleYflkDi/C+x7Xa3ev8zqWDH9fIprRmyd0uzbC+hp/MXS
+         m03g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=9gbWDnTTrA24KNK6J0LNuc4KD3EA27LpgGRVTsdyiwY=;
+        b=s3unOEZnFG7rjh7hlOiPWgOHucgxL8UNYsfFOHfkWDjOtYf02ZdcDUCDWAiJYpz5MT
+         owbNQXZIw11sxf6/sYLNxgkS0qnvsW34IOav38mM0yUxUkRtNYtBg5Uw5WjclsenjvLV
+         R+T4cAXa5T15ckARLMcty+kFWE5poY9DzvcxNDU0EurokobhO9qOM93dJEtpMyX3FDEB
+         VANKn9rg10oYOCeDvof+SDOtYGwPE2s6luChxDzILNP6OVXursa7bQie8sC77N7wHyU3
+         AvwTZUwMeojq028buRjReoK/eHPQzRNl0VL4bHqQMFahKMLrYmoPkuZXJi0UFHWRAMB8
+         9OJA==
+X-Gm-Message-State: AGRZ1gIeWs2lj7SoSUDdVpeZAS8jc/7Mam0nI4xOxW9g0rwfkjVaWhvS
+        oXz0AznXHsVYwsvMASO3mc3lSBTg
+X-Google-Smtp-Source: AJdET5c0luGFjjUXDdkXVsCkvW1xTCxNilc5XRNKKpO+EvVi1lnWI8ORA8nk1aMCA3vsAY8gffWWqg==
+X-Received: by 2002:a62:25c2:: with SMTP id l185-v6mr5522529pfl.64.1541696890528;
+        Thu, 08 Nov 2018 09:08:10 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id a73-v6sm4661711pfj.38.2018.11.08.09.08.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Nov 2018 09:08:09 -0800 (PST)
+Date:   Thu, 08 Nov 2018 09:08:09 -0800 (PST)
+X-Google-Original-Date: Thu, 08 Nov 2018 17:08:06 GMT
+Message-Id: <b590a9bebf8ac10b6f1d85287bb8d7a8ac7082a6.1541696887.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.71.git.gitgitgadget@gmail.com>
+References: <pull.71.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] Update .mailmap
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:MqBFytzwMFdSfDd8uQEfNE0aoBZVEVSodrny8YbZSWCKCVNGS+h
- SIcgSh2FKzQagXzL60Ciw3ePqKhP2vjF/WFTuUWNP66pgTav3vbc8zyC5dSB2xTQnd9CGVr
- 6JSY2GN2BUU7eCAts1BKuEb4mUD5cyW4VKgqq2yklCV/ej/TX5o2grpGDzt/XfpdA66lheC
- tvFTPZWUTD92Hg7T4YqAQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WfvnXF/Zawg=:YTfQ3Iww48XfAizzXBVrDu
- /DVb6PDlkcCVTohoo8NATJsoiNCRXsU8LSeWTzqcn09/3jVQabbcOHm3zM9D56eYJEBOsLr/U
- S6L/3ygS3UiPecTgKoMV/R6HfsXFGlJ3+IrwaxtuA9JUhPrMCguMvMj5FTn76E3VXrwtoyXYi
- 9RzXetVsM033r5b5KoeomFw6UakpMX5A+DylxCn4RpQSa0Q7BwUTCPyQqhM3bevM3+aM18ri+
- uMtwPlOQwftTBcy1/IV/hz9bIwbS/fV5JBViSs95zzM+fCxu5djuSzQEoCqLwZPDBEPGXUb3o
- wsGRvf8bQEoJt96p+WTVDOvnRHCZXrjRXsXcm96/BbXeG+q+jkeKCUi26cuFr7pRByEm3h8H2
- X9lR9aJ0MjVT6q12QfRLFHDIRtw0NNzKbPkYg338FmRhDQEmprl1xjegEM4B1lhlMjeMpRZFS
- gENh9RyXSDyWujTAlBspwZ6G6i6xyfphyXrf+R9dlA53iQ409G2PKukmTx2lzRfZ90oZ40vY6
- jLHhOg/ZKzmuUhJP3WYLvwt4YeVqq1sTTN/p4U0ettE6BaiwgNd/wjbdE+HNd9lRY3aa9Yofo
- bUu+XkqqC83qqyaBEtsC7wIZO3YP99Y/wd5ZpaGhhwlwZ+HV9qGCG+tqTHD/Yi2UN78+UN+vI
- DhiQxfDnzuGdRnHtO2WYJkyXoSUm+bcxthqeCLI4S5HdJN5h/AhInjsqFE7mjiXTcEFYnqxRz
- LVK/4Smok4t8LlKYbN3fQEiIGeiBT674w1vmtTogC2HDHaNCRKq78ZCHlnyLB/syaU/1/gUcm
- MjeS6mxHPVwNMM0IoklI4cv87rcksP+AY/UP6ahcGKCGCxSK0L6b3XbsN9r08+iqhZt7vzmxe
- kqYdF/DVGcpY223C5taGVVdivaK/7/oU3z5WrVXPI=
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 07, 2018 at 05:38:18AM +0100, Adri�n Gimeno Balaguer wrote:
-> Hello Torsten,
-> 
-> Thanks for answering.
-> 
-> Answering to your question, I removed the comments with "rebase" since
-> my reported encoding issue happens on more simpler operations
-> (described in the PR), and the problem is not directly related to
-> rebasing, so I considered it better in order to avoid unrelated
-> confusions.
-> 
-> Let's get back to the problem. Each system has a default endianness.
-> Also, in .gitattributes's working-tree-encoding, Git behaves
-> differently depending on the attribute's value and the contents of the
-> referenced entry file. When I put the value "UTF-16", then the file
-> must have a BOM, or Git complains. Otherwise, if I put the value
-> "UTF-16BE" or "UTF-16LE", then Git prohibites operations if file has a
-> BOM for that main encoding (UTF-16 here), which can be relate to any
-> endianness.
-> 
-> My very initial goal was, given a UTF-16LE file, to be able to view
-> human-readable diffs whenever I make a change on it (and yes, it must
-> be Little Endian). Plus, this file had a BOM. Now, what are the
-> options with Git currently (consider only working-tree-encoding)? If I
-> put working-tree-encoding=UTF-16, then I could view readable diffs and
-> commit the file, but here is the main problem: Git looses information
-> about what initial endianness the file had, therefore, after
-> staging/committing it re-encodes the file from UTF-8 (as stored
-> internally) to UTF-16 and the default system endianness. In my case it
-> did to Big Endian, thus affecting the project's requirement. That is
-> why I ended up writing a fixup script to change the encoding back to
-> UTF-16LE.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-OK, I think I understand your problem now.
-The file format which you ask for could be named "UTF-16-BOM-LE",
-but that does not exist in reality.
-If you use UTF-16, then there must be a BOM, and if there is a BOM,
-then a Unicode-aware application -should- be able to handle it.
+This patch makes the output of `git shortlog -nse v2.10.0`
+duplicate-free.
 
-Why does your project require such a format ?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ .mailmap | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-> 
-> On the other hand, once I set working-tree-encoding=UTF-16LE, then Git
-> prohibited me from committing the file and even viewing human-readable
-> diffs (the output simply tells it's a binary file). In this sense, the
-> internal location of these  errors is within the function of utf8.c I
-> made changes to in the PR. I hope I was clearer!
-> 
-> Finally, Git behaviour around this is based on Unicode standards,
-> which is why I acknowledged that my changes violated them after
-> refering to a link which is present in the ut8.h file.
-
-[]
+diff --git a/.mailmap b/.mailmap
+index bef3352b0d..1d8310073a 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -21,6 +21,8 @@ Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
+ Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+ Amos Waterland <apw@debian.org> <apw@rossby.metr.ou.edu>
+ Amos Waterland <apw@debian.org> <apw@us.ibm.com>
++Ben Peart <benpeart@microsoft.com> <Ben.Peart@microsoft.com>
++Ben Peart <benpeart@microsoft.com> <peartben@gmail.com>
+ Ben Walton <bdwalton@gmail.com> <bwalton@artsci.utoronto.ca>
+ Benoit Sigoure <tsunanet@gmail.com> <tsuna@lrde.epita.fr>
+ Bernt Hansen <bernt@norang.ca> <bernt@alumni.uwaterloo.ca>
+@@ -32,6 +34,7 @@ Bryan Larsen <bryan@larsen.st> <bryanlarsen@yahoo.com>
+ Cheng Renquan <crquan@gmail.com>
+ Chris Shoemaker <c.shoemaker@cox.net>
+ Chris Wright <chrisw@sous-sol.org> <chrisw@osdl.org>
++Christian Ludwig <chrissicool@gmail.com> <chrissicool@googlemail.com>
+ Cord Seele <cowose@gmail.com> <cowose@googlemail.com>
+ Christian Couder <chriscool@tuxfamily.org> <christian.couder@gmail.com>
+ Christian Stimming <stimming@tuhh.de> <chs@ckiste.goetheallee>
+@@ -51,6 +54,7 @@ David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
+ David S. Miller <davem@davemloft.net>
+ David Turner <novalis@novalis.org> <dturner@twopensource.com>
+ David Turner <novalis@novalis.org> <dturner@twosigma.com>
++Derrick Stolee <dstolee@microsoft.com> <stolee@gmail.com>
+ Deskin Miller <deskinm@umich.edu>
+ Dirk Süsserott <newsletter@dirk.my1.cc>
+ Eric Blake <eblake@redhat.com> <ebb9@byu.net>
+@@ -98,6 +102,7 @@ Jens Axboe <axboe@kernel.dk> <jens.axboe@oracle.com>
+ Jens Lindström <jl@opera.com> Jens Lindstrom <jl@opera.com>
+ Jim Meyering <jim@meyering.net> <meyering@redhat.com>
+ Joachim Berdal Haga <cjhaga@fys.uio.no>
++Joachim Jablon <joachim.jablon@people-doc.com> <ewjoachim@gmail.com>
+ Johannes Schindelin <Johannes.Schindelin@gmx.de> <johannes.schindelin@gmx.de>
+ Johannes Sixt <j6t@kdbg.org> <J.Sixt@eudaptics.com>
+ Johannes Sixt <j6t@kdbg.org> <j.sixt@viscovery.net>
+@@ -150,6 +155,7 @@ Mark Levedahl <mdl123@verizon.net> <mlevedahl@gmail.com>
+ Mark Rada <marada@uwaterloo.ca>
+ Martin Langhoff <martin@laptop.org> <martin@catalyst.net.nz>
+ Martin von Zweigbergk <martinvonz@gmail.com> <martin.von.zweigbergk@gmail.com>
++Masaya Suzuki <masayasuzuki@google.com><draftcode@gmail.com>
+ Matt Draisey <matt@draisey.ca> <mattdraisey@sympatico.ca>
+ Matt Kraai <kraai@ftbfs.org> <matt.kraai@amo.abbott.com>
+ Matt McCutchen <matt@mattmccutchen.net> <hashproduct@gmail.com>
+@@ -157,6 +163,7 @@ Matthias Kestenholz <matthias@spinlock.ch> <mk@spinlock.ch>
+ Matthias Rüster <matthias.ruester@gmail.com> Matthias Ruester
+ Matthias Urlichs <matthias@urlichs.de> <smurf@kiste.(none)>
+ Matthias Urlichs <matthias@urlichs.de> <smurf@smurf.noris.de>
++Matthieu Moy <git@matthieu-moy.fr> <Matthieu.Moy@imag.fr>
+ Michael Coleman <tutufan@gmail.com>
+ Michael J Gruber <git@grubix.eu> <michaeljgruber+gmane@fastmail.fm>
+ Michael J Gruber <git@grubix.eu> <git@drmicha.warpmail.net>
+@@ -180,7 +187,11 @@ Nick Stokoe <nick@noodlefactory.co.uk> Nick Woolley <nick@noodlefactory.co.uk>
+ Nick Stokoe <nick@noodlefactory.co.uk> Nick Woolley <nickwoolley@yahoo.co.uk>
+ Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> <nicolas.morey@free.fr>
+ Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> <nmorey@kalray.eu>
++Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> <nicolas@morey-chaisemartin.com>
++Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> <NMoreyChaisemartin@suse.com>
++Nicolas Morey-Chaisemartin <devel-git@morey-chaisemartin.com> <nmoreychaisemartin@suse.com>
+ Nicolas Sebrecht <nicolas.s.dev@gmx.fr> <ni.s@laposte.net>
++Orgad Shaneh <orgads@gmail.com> <orgad.shaneh@audiocodes.com>
+ Paolo Bonzini <bonzini@gnu.org> <paolo.bonzini@lu.unisi.ch>
+ Pascal Obry <pascal@obry.net> <pascal.obry@gmail.com>
+ Pascal Obry <pascal@obry.net> <pascal.obry@wanadoo.fr>
+@@ -200,6 +211,7 @@ Philipp A. Hartmann <pah@qo.cx> <ph@sorgh.de>
+ Philippe Bruhat <book@cpan.org>
+ Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
+ Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
++Randall S. Becker <randall.becker@nexbridge.ca> <rsbecker@nexbridge.com>
+ René Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
+ René Scharfe <l.s.r@web.de> Rene Scharfe
+ Richard Hansen <rhansen@rhansen.org> <hansenr@google.com>
+@@ -238,6 +250,7 @@ Steven Walter <stevenrwalter@gmail.com> <swalter@lpdev.prtdev.lexmark.com>
+ Sven Verdoolaege <skimo@kotnet.org> <Sven.Verdoolaege@cs.kuleuven.ac.be>
+ Sven Verdoolaege <skimo@kotnet.org> <skimo@liacs.nl>
+ SZEDER Gábor <szeder.dev@gmail.com> <szeder@ira.uka.de>
++Tao Qingyun <taoqy@ls-a.me> <845767657@qq.com>
+ Tay Ray Chuan <rctay89@gmail.com>
+ Ted Percival <ted@midg3t.net> <ted.percival@quest.com>
+ Theodore Ts'o <tytso@mit.edu>
+-- 
+gitgitgadget
