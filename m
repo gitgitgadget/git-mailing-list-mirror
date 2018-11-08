@@ -6,128 +6,100 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFD271F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 03:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1B21F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 03:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728676AbeKHM5h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 07:57:37 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53976 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728614AbeKHM5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 07:57:36 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f10-v6so3853641wme.3
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:24:14 -0800 (PST)
+        id S1728700AbeKHNAD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 08:00:03 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41461 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728611AbeKHNAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 08:00:03 -0500
+Received: by mail-wr1-f65.google.com with SMTP id v18-v6so293439wrt.8
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:26:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=lklwV4UOZRRVzJIEVm9GGpuvkoUB30GMn+7xgnN6qnM=;
-        b=DlFTDvF5Ym5gzLutfObtcL+lC/zKvbZoHVUo/2iMSxPAsPJ6j6B4PuDFcut0QrXRrT
-         Psz8EPbzobxxG+48CqKXVwPadoWTOfX7jakq5XqQrbUz8pMzhfw4cus2xLhlO3m7XJI1
-         nG4+9gOX8BXltTCmX0HfLQpQ/5gz5a8lg5jatH5Eo4pgXfa46yoQURym7ZwFiTFZNRgG
-         K4amgob0jT5htHP1zyWjWU7AjoINcTFp07BPSGCCezxNaQRxNN1RgX+VBUNZugDeyjfl
-         JNF/uypbR1u8wbRhKE8FHNrYf73NrgBUf9J9cR76pzuP2Zd+a6N6OKF5aFVcJK7AUW93
-         O6WA==
+         :user-agent:mime-version;
+        bh=UjzvwWgxYuE9ib4VRCkpSYJSCEYOLZFRV5NI5S/MKCo=;
+        b=PFMdJr65pBGf8IuXKymgMzV8AgTIgXISPM5MFd8gxL0h5cLLncd57nsOmY7ABUpt5Y
+         VAZ+ZqAD5E8vCOHhXRJql0nMs6lI92zfzQ5hefALlcQY/l+X/a3KoCrPWPLmAYYpWRNa
+         Q/51PWdPdMFYhnqorgTmaAl1gB1P5SjF4VwC4TM5Q2YrxYsbh6GCIiykULPa1vOxqtFq
+         C4CVwwJeRV5UcpsSMQOvyQJ45FUueFNBUtzeMcklJcUXofl3l+hEw0urN/g0VUIm0HT1
+         /gwTYNgzkt+CdCqK4gAmSrjeha9mj4K9YuWyLuVXQJVVjNXRxUA+ohU9pfeEyf7CM5V3
+         RBQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=lklwV4UOZRRVzJIEVm9GGpuvkoUB30GMn+7xgnN6qnM=;
-        b=QmRYA2KpiKtBUI8aqtl66E72o6/8JocaKfprkRhUtRz6lelQyvEHcpt+xVLyp2U3k1
-         7biFl+joZWEtpj0IUveszumvQ267UvGVqL6lQezO/JP5z9hRfoEGVimLBfpf699QFUdg
-         XfcZsLOTm/z5wZm329IWcHXMPk7nxWXVeVEgVqw3PY+4v4CKfclk/WXthNTGk/eWChj9
-         C46ke+I+k2fRzbV99Zros2Y0Qa6dgVxteIZ+GcdfB32L/IhmpNKNtmN6WlzWHvLPHmVD
-         bGzx6dX6/h6lexMlA1x9xvhw6Qc80Wy5KS4bAQSu67Cz/4q6HpHfn77MJYu2xfxH4hU2
-         IkLg==
-X-Gm-Message-State: AGRZ1gJW9vBUZgSeHdTgNkCyKaagpf7Kv027UYqlw9yJSb2Yv2/UvYqK
-        1dEwbQsgkMCguMWZ2psES+w7vigkxPQ=
-X-Google-Smtp-Source: AJdET5ctum8UFmPEw0c8pew41t9xOKTAlK207KDZN8zRiJLTzhJkDbQF/t32uoD1+qtoa0Kb3Z5yDQ==
-X-Received: by 2002:a1c:c502:: with SMTP id v2-v6mr2038818wmf.17.1541647452785;
-        Wed, 07 Nov 2018 19:24:12 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j18-v6sm5791342wmf.39.2018.11.07.19.24.09
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UjzvwWgxYuE9ib4VRCkpSYJSCEYOLZFRV5NI5S/MKCo=;
+        b=XXLnVAsoyVGzsIr6Bm9C3b7NFcnCr3bURM8/XPFuFGNgOUXSZydA31gY7dj5rDHlV1
+         dGuv8reoW5c4TQMpiJxtV9TnUdn/V4WgxfP8LR4CeaqbNIpoYw2a4N534njTEgcoiBI6
+         1niM91vDM2bc92e5/ak5UwM8IuC31AUlSKqupm52T/UbDhU802Fww2571DqbyYYwljJW
+         EHXLhNtWoBMv3iEuSBikwzryuhBCuajSrYtsRWA+j3UqghTNRnBpBjCpx3X5jkKwNlfO
+         pUgitcC8KMh1LvHY3vobHPlt0WUHfjmmUaz1gmW/1wH6LDZiXEm1pTGtbydOzj53PgoN
+         fAHA==
+X-Gm-Message-State: AGRZ1gKuc+xdK2XjYmoA+/Pcdj2yzDp/JkL94fS1J5jVJ9JJzpq2AQTa
+        xG2ueTPMGk+5wdI7ucJjoWyh/8wbvbs=
+X-Google-Smtp-Source: AJdET5dGpTqm+3Zn4cc6C8g5gtuVnv3SMAF3qa4uazIycaluPAyLpBMsMleKSFhGK58UgBsURlfclg==
+X-Received: by 2002:a5d:5745:: with SMTP id q5-v6mr2372737wrw.161.1541647599265;
+        Wed, 07 Nov 2018 19:26:39 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z3-v6sm2348487wma.6.2018.11.07.19.26.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 19:24:10 -0800 (PST)
+        Wed, 07 Nov 2018 19:26:38 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>,
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-        <pclouds@gmail.com>
-Subject: Re: [PATCH v3] i18n: make GETTEXT_POISON a runtime option
-References: <20181024114725.3927-1-avarab@gmail.com>
-        <20181101193115.32681-1-avarab@gmail.com>
-Date:   Thu, 08 Nov 2018 12:24:08 +0900
-In-Reply-To: <20181101193115.32681-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 1 Nov 2018 19:31:15 +0000")
-Message-ID: <xmqqpnvg8d5z.fsf@gitster-ct.c.googlers.com>
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+References: <pull.66.git.gitgitgadget@gmail.com>
+        <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
+        <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
+        <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
+        <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
+        <20181107204142.GA30078@sigill.intra.peff.net>
+        <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org>
+        <20181107220320.GA8970@sigill.intra.peff.net>
+        <xmqqlg649zs8.fsf@gitster-ct.c.googlers.com>
+        <20181108011813.GA10148@sigill.intra.peff.net>
+Date:   Thu, 08 Nov 2018 12:26:37 +0900
+In-Reply-To: <20181108011813.GA10148@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 7 Nov 2018 20:18:14 -0500")
+Message-ID: <xmqqlg648d1u.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->  * We error out in the Makefile if you're still saying
->    GETTEXT_POISON=YesPlease.
+> I think we would want to carefully think about the call in enter_repo().
+> We do not want git-daemon to accidentally expose repositories in
+> $RUNTIME_PREFIX.
+>
+> Looking over the code, I think this is OK. The expansion happens in
+> enter_repo(), and then we take the path that was found and do our
+> ok_paths checks on it (which makes sense -- even now you'd ask to export
+> "/home/" and it would need to look at "~peff/repo.git" and expand that
+> to "/home/peff/repo.git" before doing a simple string check.
 
-I expected this would be irritating, but it turns out it is worse
-than mere irritation but is a severe hinderance to affect my
-performance, as I (and my bots) keep building and testing different
-versions of Git under different configurations.
+Yup, that is another reason why I think this new "expansion feature"
+belongs to the function, not to a wrapper that is aware of this new
+feature in addition to ~tilde expansion.
 
-I know it was done to help those who only ever build a single track
-at a time and mostly moving forward, but I'm very much tempted to
-remove this part, perhaps demote it to a warning of some sort.
+>> Between ~<reserved name> and $VARIABLE_LOOKING_THINGS, I do not have
+>> a strong preference either way, but I am getting an impression that
+>> the latter is more generally favoured in the discussion?
+>
+> I certainly prefer the latter, but I thought I was the only one to have
+> expressed support so far. ;)
 
-
->  ifdef GETTEXT_POISON
-> -	BASIC_CFLAGS += -DGETTEXT_POISON
-> +$(error The GETTEXT_POISON option has been removed in favor of runtime GIT_TEST_GETTEXT_POISON. See t/README!)
->  endif
-
--- >8 --
-Makefile: ease dynamic-gettext-poison transition
-
-Earlier we made the entire build to fail when GETTEXT_POISON=Yes is
-given to make, to notify those who did not notice that text poisoning
-is now a runtime behaviour.
-
-It turns out that this too irritating for those who need to build
-and test different versions of Git that cross the boundary between
-history with and without this topic to switch between two
-environment variables.  Demote the error to a warning, so that you
-can say something like
-
-	make GETTEXT_POISON=Yes GIT_TEST_GETTEXT_POISON test
-
-during the transition period, without having to worry about whether
-exact version you are testing has or does not have this topic.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index f3a9995e50..6b492f44a6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1447,7 +1447,7 @@ ifdef NO_SYMLINK_HEAD
- 	BASIC_CFLAGS += -DNO_SYMLINK_HEAD
- endif
- ifdef GETTEXT_POISON
--$(error The GETTEXT_POISON option has been removed in favor of runtime GIT_TEST_GETTEXT_POISON. See t/README!)
-+$(warning The GETTEXT_POISON option has been removed in favor of runtime GIT_TEST_GETTEXT_POISON. See t/README!)
- endif
- ifdef NO_GETTEXT
- 	BASIC_CFLAGS += -DNO_GETTEXT
+The first mention of pseudo-variable I saw was in Duy's message,
+wondering if $ROOT is more appropriate than "/", and I counted it as
+supporting the $VARIABLE syntax.
