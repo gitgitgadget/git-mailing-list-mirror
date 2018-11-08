@@ -6,69 +6,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1B21F453
-	for <e@80x24.org>; Thu,  8 Nov 2018 03:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E73081F453
+	for <e@80x24.org>; Thu,  8 Nov 2018 03:34:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728700AbeKHNAD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Nov 2018 08:00:03 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41461 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728611AbeKHNAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Nov 2018 08:00:03 -0500
-Received: by mail-wr1-f65.google.com with SMTP id v18-v6so293439wrt.8
-        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:26:40 -0800 (PST)
+        id S1728614AbeKHNII (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Nov 2018 08:08:08 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38870 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728499AbeKHNII (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Nov 2018 08:08:08 -0500
+Received: by mail-wm1-f66.google.com with SMTP id f2-v6so3905962wme.3
+        for <git@vger.kernel.org>; Wed, 07 Nov 2018 19:34:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=UjzvwWgxYuE9ib4VRCkpSYJSCEYOLZFRV5NI5S/MKCo=;
-        b=PFMdJr65pBGf8IuXKymgMzV8AgTIgXISPM5MFd8gxL0h5cLLncd57nsOmY7ABUpt5Y
-         VAZ+ZqAD5E8vCOHhXRJql0nMs6lI92zfzQ5hefALlcQY/l+X/a3KoCrPWPLmAYYpWRNa
-         Q/51PWdPdMFYhnqorgTmaAl1gB1P5SjF4VwC4TM5Q2YrxYsbh6GCIiykULPa1vOxqtFq
-         C4CVwwJeRV5UcpsSMQOvyQJ45FUueFNBUtzeMcklJcUXofl3l+hEw0urN/g0VUIm0HT1
-         /gwTYNgzkt+CdCqK4gAmSrjeha9mj4K9YuWyLuVXQJVVjNXRxUA+ohU9pfeEyf7CM5V3
-         RBQQ==
+        bh=7gGuasS67nTu3OYUXfr15fqcvxYiQRs8qhf4ogZ2LYk=;
+        b=XAKidEf9Q8rZK2WhnwLg15Yx+ybLLYUDyV3JDzdDk/AEBpjAyUiBn1MHlQ3/nQLxFK
+         YuOT1wVW2GMYyWssJutiu13T/4SPSetqBV5tERdSRrKgTYm7ywPTbtQGjrJ7DV0ghEjA
+         gNnRxTUUJhgkvtEnkO/wzyXcKljv2X30A/3TFNwYpwY0t3vVfWe1vKuMAUyaU2+dTm5Y
+         34POJIVPHbpTDSHdokHWh2/ZBsgNI/m9teI1zFv42Zb+CScv21ZVThzVyBA5XJHNqA/x
+         8lKRMa430pEjP3ATS80fUJerPiKVGIXvfylBj24KHmTABHyxZ1GY/b6avybSWaupu23R
+         cIcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=UjzvwWgxYuE9ib4VRCkpSYJSCEYOLZFRV5NI5S/MKCo=;
-        b=XXLnVAsoyVGzsIr6Bm9C3b7NFcnCr3bURM8/XPFuFGNgOUXSZydA31gY7dj5rDHlV1
-         dGuv8reoW5c4TQMpiJxtV9TnUdn/V4WgxfP8LR4CeaqbNIpoYw2a4N534njTEgcoiBI6
-         1niM91vDM2bc92e5/ak5UwM8IuC31AUlSKqupm52T/UbDhU802Fww2571DqbyYYwljJW
-         EHXLhNtWoBMv3iEuSBikwzryuhBCuajSrYtsRWA+j3UqghTNRnBpBjCpx3X5jkKwNlfO
-         pUgitcC8KMh1LvHY3vobHPlt0WUHfjmmUaz1gmW/1wH6LDZiXEm1pTGtbydOzj53PgoN
-         fAHA==
-X-Gm-Message-State: AGRZ1gKuc+xdK2XjYmoA+/Pcdj2yzDp/JkL94fS1J5jVJ9JJzpq2AQTa
-        xG2ueTPMGk+5wdI7ucJjoWyh/8wbvbs=
-X-Google-Smtp-Source: AJdET5dGpTqm+3Zn4cc6C8g5gtuVnv3SMAF3qa4uazIycaluPAyLpBMsMleKSFhGK58UgBsURlfclg==
-X-Received: by 2002:a5d:5745:: with SMTP id q5-v6mr2372737wrw.161.1541647599265;
-        Wed, 07 Nov 2018 19:26:39 -0800 (PST)
+        bh=7gGuasS67nTu3OYUXfr15fqcvxYiQRs8qhf4ogZ2LYk=;
+        b=nBErqNnBCFPPAGdUtAzBVEmp7De1h0DkrK1tnWepLBT1zfPGsFH3exzYUmpzjf0x8j
+         ObTqyfVTGqFzqYkDZTVPIrG67St9Kq9TuvtyzWBJIWTYr/78rfGNH4iPTjwmyQP5kPVS
+         kzOrHzJOuq+1jwxBqKPANpx/l2BWYrAqmh2Qy2FMSL9joN5JBxvtDQ9d/iwh2yBL6ZOt
+         Rz0GXDn+4/Qr4jxztngFoEeYE6Ur/ak3jn2/8K6TfgPg+n9IAmFF1qr0aVt4Coo/v621
+         r+pCyKX9qtfTHWFoI773/1kaaYffrcf6iBYmrA3+R42X65x5Ec9pBS874NQWaJPOCllk
+         w5XA==
+X-Gm-Message-State: AGRZ1gJ6z6LWWIkgiGWeFmNLFhOsA36dD7jZ8NZ5+nblmktoKblcncza
+        SeG4xkrGqXFv2lLfgESIEBc=
+X-Google-Smtp-Source: AJdET5dReY0FAOlkuRrDmfznnWeOmbb9pvdeWL7TJCYif+3uFPhND8XBpmnMDws9y0C+468AnBhgzg==
+X-Received: by 2002:a1c:954b:: with SMTP id x72-v6mr2119717wmd.14.1541648083059;
+        Wed, 07 Nov 2018 19:34:43 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z3-v6sm2348487wma.6.2018.11.07.19.26.38
+        by smtp.gmail.com with ESMTPSA id y4-v6sm3310558wrd.61.2018.11.07.19.34.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Nov 2018 19:26:38 -0800 (PST)
+        Wed, 07 Nov 2018 19:34:41 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
-References: <pull.66.git.gitgitgadget@gmail.com>
-        <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
-        <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
-        <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
-        <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
-        <20181107204142.GA30078@sigill.intra.peff.net>
-        <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org>
-        <20181107220320.GA8970@sigill.intra.peff.net>
-        <xmqqlg649zs8.fsf@gitster-ct.c.googlers.com>
-        <20181108011813.GA10148@sigill.intra.peff.net>
-Date:   Thu, 08 Nov 2018 12:26:37 +0900
-In-Reply-To: <20181108011813.GA10148@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 7 Nov 2018 20:18:14 -0500")
-Message-ID: <xmqqlg648d1u.fsf@gitster-ct.c.googlers.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        andals@crustytoothpaste.net,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] Support --append-trailer in cherry-pick and revert
+References: <20181104181026.8451-1-pclouds@gmail.com>
+        <20181106171637.15562-1-pclouds@gmail.com>
+        <871s7y6qs9.fsf@evledraar.gmail.com>
+        <20181106221118.GA9975@sigill.intra.peff.net>
+        <CACsJy8DTdW-P9zG3DBPArjhZU1VwwBmd7qNibyHxYkyjRrdWmw@mail.gmail.com>
+        <xmqqh8gs9zh3.fsf@gitster-ct.c.googlers.com>
+        <20181108012901.GB10148@sigill.intra.peff.net>
+Date:   Thu, 08 Nov 2018 12:34:41 +0900
+In-Reply-To: <20181108012901.GB10148@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 7 Nov 2018 20:29:01 -0500")
+Message-ID: <xmqqh8gs8coe.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -79,27 +78,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I think we would want to carefully think about the call in enter_repo().
-> We do not want git-daemon to accidentally expose repositories in
-> $RUNTIME_PREFIX.
->
-> Looking over the code, I think this is OK. The expansion happens in
-> enter_repo(), and then we take the path that was found and do our
-> ok_paths checks on it (which makes sense -- even now you'd ask to export
-> "/home/" and it would need to look at "~peff/repo.git" and expand that
-> to "/home/peff/repo.git" before doing a simple string check.
+> So if we are comfortable with saying that this is a new feature to have
+> the machine-readable trailer version, and there isn't a robust way to
+> get historical revert information (because there really isn't[1]), then
+> I think we can just punt on any kind of trailer-normalization magic.
 
-Yup, that is another reason why I think this new "expansion feature"
-belongs to the function, not to a wrapper that is aware of this new
-feature in addition to ~tilde expansion.
+Yes, I do consider that the original suggestion was two-part
 
->> Between ~<reserved name> and $VARIABLE_LOOKING_THINGS, I do not have
->> a strong preference either way, but I am getting an impression that
->> the latter is more generally favoured in the discussion?
->
-> I certainly prefer the latter, but I thought I was the only one to have
-> expressed support so far. ;)
+ - cherry-pick did have machine readable info, but by historical
+   accident, it is shaped differently from "trailers", so we'd
+   transition into the new format.
 
-The first mention of pseudo-variable I saw was in Duy's message,
-wondering if $ROOT is more appropriate than "/", and I counted it as
-supporting the $VARIABLE syntax.
+ - revert did not have machine readble info at all, so we are adding
+   one, even though it is not that interesting as cherry-pick (for
+   the reasons you stated in an earlier message in this thread).
+
+So my "honest answer" is your #1, "sorry, there was no
+machine-readable version back then", for reverts.  We do not have
+such a problem with cherry-pick luckily ;-)
+
+> [1] Thinking back on reverts I have done, they are often _not_
+>     straight-up reverts. For example, I may end up dropping half of a
+>     commit, but leaving some traces of it in place in order to build up
+>     the correct solution on top (i.e., fixing whatever problem caused me
+>     to revert in the first place). I list those as "this is morally a
+>     revert of 1234abcd...", which is definitely not machine readable. ;)
+
+Yup, and it is debatable if it even makes sense to add the machine
+readable trailer for such a commit.  A human-made claim that it is a
+"moral equivalent of reverting X" may not look any different from a
+"textual revert of X" to a machine, but the actual patch text would
+be quite different---unless the machine reading it understands
+"moral equivalence", letting it blindly take on faith whatever
+humans say may not be a good idea.
