@@ -6,90 +6,94 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1FC1F454
-	for <e@80x24.org>; Fri,  9 Nov 2018 02:57:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A53BB1F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 02:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727468AbeKIMfw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 07:35:52 -0500
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:37178 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727238AbeKIMfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 07:35:51 -0500
-Received: by mail-wm1-f53.google.com with SMTP id p2-v6so616341wmc.2
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 18:57:17 -0800 (PST)
+        id S1727510AbeKIMiW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 07:38:22 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:32837 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727238AbeKIMiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 07:38:21 -0500
+Received: by mail-wr1-f65.google.com with SMTP id u9-v6so351641wrr.0
+        for <git@vger.kernel.org>; Thu, 08 Nov 2018 18:59:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YCPjZ1wZv1EXvr7wtUHuVQWxei9fj/K7SZtogsfIt0M=;
-        b=HC+KmduiLZ4HOc8MlY/g4p062/OHXnxSKC4ZMHn4ZO1yVTI5cFchOAbxtkzZupTjZw
-         h0mqprbJwFAKheipcoAN/CsGUF82g9UFwuZ2Z0j85ARXFCSjAWEKWDJasPsUGIKK+zHi
-         d8fat96PVeobz2Y4grHwIcVpmklaOzBPvOCu4fBCasQxHxykHqDHVaRX9XFx49Hrbgwi
-         WSt03sFsldZFRh7K7coWl1nOO8XHrZUsrJ6/pjZyQjwIQ73JBHvJ4f8kg/cin6m1d/KS
-         DrLGSKXuwtjPEGRlUI19LYznYGR7UwqKiqdjeblBOwS2/ZYluvivmT+asqAY74QGParR
-         8tDw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=xhMlVam9QVhhunpGPp7Y4Uvd4IeEKACeTpnwyBwzBso=;
+        b=LNEOVNsyKXq392LmFKBvy+RdGgCnSktJIHBRoTQQz+9aNVbx6Bu4GIHPW5kB10Ih7F
+         7GV59xTPlGHMvVh9f51HrSDA1EskHouUy3chBXdbFxomoHWAdg20n6zsdIqgNKT0l8bg
+         smoOHYMY9VqHA6JwoOe51kFhue0cjxV2cHmbNSdBIe5astw6ErEkSpBL+cARISWJWBz8
+         kk9O2+6iBTtj9nK+Rg407D1hjnO094dgMWLOkb3d9bPvUGYgMmE/pBJZQNg4q8JedwTG
+         sneafezf7vH/yS38DvMXLtjDOWoiqUfZPUgxCqPDCMCfmHGB1bybbQ3l8LDfolBjniGz
+         kKLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YCPjZ1wZv1EXvr7wtUHuVQWxei9fj/K7SZtogsfIt0M=;
-        b=gz2YkDOKEeJpCnq30TwisDUnFTro5AwiiahmmLf1opnUxtsng8vmNM59+v7/u3rQZx
-         uP2Cj4ATP8NrXg3GXWy/NrWRoDj9alQAPnmrm+wpKwhQUFmgNgCAGh8JNgGuUb30n7tJ
-         094DGx2vYQ1k0hAAKWlTuuQn1WmbjgwWLDyHGk6vR4ywLZ8EnP4i5MnTu4IY2ESChgXV
-         RYBbzpsG7lelSyKhpY7vR1ADQ1oJLhe9LrfNlp8zHEgFA71wVkX1hyMjovKzHkI1pwmI
-         cbUjWR5YhFsGdc0g8R0D/ydYiY20LTisktN0/WAnYmYppsJ7nobf8YUFLqRok5OLIxI6
-         IEVg==
-X-Gm-Message-State: AGRZ1gIV8+ebPjbB49y8P+580DRtwvriCp2JQEFDnzH23UDkGv2jQoz+
-        tpU2RWJ1wDH75WWD6JibWqI=
-X-Google-Smtp-Source: AJdET5fXLEjYNu8AG92Rf9FTZazagnhtUBkhcBGzT3cF0t5tGOrrqcbUOsi5o9ISgIm0qYng95j3Xw==
-X-Received: by 2002:a1c:87cb:: with SMTP id j194-v6mr2882107wmd.2.1541732236118;
-        Thu, 08 Nov 2018 18:57:16 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=xhMlVam9QVhhunpGPp7Y4Uvd4IeEKACeTpnwyBwzBso=;
+        b=rhMqjXiKZCN03SuVtSbrV9lCsKITZY5BNAGRp+1qJHSga77trBEua8JZF2yQIfoHg9
+         f9M0y8v4nomS4728vhQfg9+9ORfZlEidTi75tOMsyvsIn7DrSsEw3p53SnjcyvZdG5tv
+         goVJiQapg1K6bvjji9KnnIkvZ7Q0L2ag7TkiUAWmCmpD8cskUN1iIhwoDEkPmiw2VZC0
+         1GLUvnTYYDIKdHpQSn55dVQ0rflLnLLYPB652R2sT0I7viwgvGTmOIxh21niCsXKGTlW
+         J7K3JlRKb18PYEHFg2luEiuHt1aIP8PO7n6DBdXpSsaJu/gYBHrTKLcNl95OOPEdQO4S
+         y8YA==
+X-Gm-Message-State: AGRZ1gLgHh88Wjw6NWdj9WmemdNkeAWjsqr7/6DLMfSFeOt095BsHeVB
+        gMjmRAlZvAwI9ne5QdfDLTs=
+X-Google-Smtp-Source: AJdET5fgAdkjmplNg3EWMRaJ8Co9+10uuxAJTRXnACjNpYbkP5SXi32IjYr3v1gSGjD5W8L3QHnncQ==
+X-Received: by 2002:adf:b453:: with SMTP id v19-v6mr6206517wrd.47.1541732386002;
+        Thu, 08 Nov 2018 18:59:46 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t4-v6sm6085033wrq.80.2018.11.08.18.57.15
+        by smtp.gmail.com with ESMTPSA id 78-v6sm143019wma.38.2018.11.08.18.59.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Nov 2018 18:57:15 -0800 (PST)
+        Thu, 08 Nov 2018 18:59:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        charlieio@outlook.com
-Subject: Re: [PATCH v6 1/1] http: add support selecting http version
-References: <pull.69.v5.git.gitgitgadget@gmail.com>
-        <pull.69.v6.git.gitgitgadget@gmail.com>
-        <93fda67198441c159bfcf1dfa467ad76f3ecba76.1541660405.git.gitgitgadget@gmail.com>
-        <CAPig+cRpH0k-qams+_1LK9p8hYzBhD-bG3waNLeCSzYWNY41rg@mail.gmail.com>
-Date:   Fri, 09 Nov 2018 11:57:14 +0900
-In-Reply-To: <CAPig+cRpH0k-qams+_1LK9p8hYzBhD-bG3waNLeCSzYWNY41rg@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 8 Nov 2018 13:02:04 -0500")
-Message-ID: <xmqqva57556d.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Sebastian Staudt <koraktor@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] travis-ci: install packages in 'ci/install-dependencies.sh'
+References: <20181026013949.GN30222@szeder.dev>
+        <20181101114714.14710-1-szeder.dev@gmail.com>
+        <xmqqa7msrzaq.fsf@gitster-ct.c.googlers.com>
+        <20181108215133.GC30222@szeder.dev>
+Date:   Fri, 09 Nov 2018 11:59:43 +0900
+In-Reply-To: <20181108215133.GC30222@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Thu, 8 Nov 2018 22:51:33 +0100")
+Message-ID: <xmqqr2fv5528.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
->> @@ -284,6 +285,9 @@ static void process_curl_messages(void)
->>  static int http_options(const char *var, const char *value, void *cb)
->>  {
->> +       if (!strcmp("http.version",var)) {
+>> > I'm not sure about the last paragraph, because:
+>> >
+>> >   - It talks about presumed benefits for a currently still
+>> >     work-in-progress patch series of an other contributor, and I'm not
+>> >     really sure that that's a good thing.  Perhaps I should have
+>> >     rather put it below the '---'.
+>> >
+>> >   - I'm confused about the name of this Azure thing.  The cover letter
+>> >     mentions "Azure Pipelines", the file is called
+>> >     'azure-pipelines.yml', but the relevant patch I link to talks
+>> >     about "Azure DevOps" in the commit message.
+>> >
+>> > Anyway, keep that last paragraph or drop it as you see fit.
+>> 
+>> I hope we'll hear from Dscho in one or two revolutions of the Earth
+>> ;-)
 >
-> Style: space after comma
->
->> +               return git_config_string(&curl_http_version, var, value);
->> +       }
->> @@ -806,6 +834,16 @@ static CURL *get_curl_handle(void)
->> +    if (curl_http_version) {
->> +               long opt;
->> +               if (!get_curl_http_version_opt(curl_http_version, &opt)) {
->> +                       /* Set request use http version */
->> +                       curl_easy_setopt(result, CURLOPT_HTTP_VERSION,opt);
->
-> Style: space after comma
->
->> +               }
->> +    }
+> ... revolutions around what? :)
 
-Thanks, both.  This is almost done, I think.
+Originally I meant its own axis, but perhaps the moon.
+
+
