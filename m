@@ -7,86 +7,81 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 990731F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 12:27:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0308A1F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 12:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727735AbeKIWIU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 17:08:20 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58691 "EHLO mout.gmx.net"
+        id S1727731AbeKIWLe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 17:11:34 -0500
+Received: from mout.gmx.net ([212.227.15.18]:39801 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727662AbeKIWIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 17:08:20 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2Glc-1fTGJi27BE-00s5ts; Fri, 09
- Nov 2018 13:27:54 +0100
-Date:   Fri, 9 Nov 2018 13:27:53 +0100 (STD)
+        id S1727560AbeKIWLe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 17:11:34 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfTVx-1fjV901qSf-00p93n; Fri, 09
+ Nov 2018 13:31:07 +0100
+Date:   Fri, 9 Nov 2018 13:31:06 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 14/20] stash: convert create to builtin
-In-Reply-To: <5ba50c37-2840-e1f9-4d35-877979018f1c@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811091326500.39@tvgsbejvaqbjf.bet>
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <a4faed3c8aa5ea8f0d4c578b693f3b5de3e3a709.1535665109.git.ungureanupaulsebastian@gmail.com> <nycvar.QRO.7.76.6.1809031718230.71@tvgsbejvaqbjf.bet>
- <5ba50c37-2840-e1f9-4d35-877979018f1c@gmail.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+cc:     Git List <git@vger.kernel.org>
+Subject: Re: GPG signing is bent on WIndows
+In-Reply-To: <CAH8yC8ngjy_NGhgepRu+331L_=QQ4bpvMe5T4OtjLXJR3OZ-NQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811091328350.39@tvgsbejvaqbjf.bet>
+References: <CAH8yC8ngjy_NGhgepRu+331L_=QQ4bpvMe5T4OtjLXJR3OZ-NQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DxHk6ul3HF0EE7UE2G+qLmcYRgUojldxHRfUqEwuWXOltwibgq1
- ByfR7WXIWVJL5yDtt/pUlRrn7AnWsZN/ZTup+7zG9t/cgB9VPNr6PElUgNWKC+WoIUSlJxW
- hWVRqKFbqpfzcJJsv1Gkgzw6DkyTp/lDPm0xIcJWflM/QKRoNPyQYxTDZjRx9GIAnkVQaLu
- MRvloYTp9IlaC8h+v1Peg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:B++FmDXvKxQ=:7794Tl6Vjv77NJOh8qy5uj
- 1T05TouYP42EV8JCb0JK+OkSsUt7mt0w4B3r0zVI8f97EU9LjDUlgbgXVmLqPgTFC58st+us+
- KEdt4PlBQK7ZBdd+C/WPtCff9f2e4IBoMVwcCZf01qaUrCWzOTWiFcwmi5qMD3mVcZSGt9dUq
- VDdIUM/yAUCdkf/MIKZqCIIYDnnAmktpoWmSKiVv67IF3nSgrhWP9cqMIbVOUpOo1B5+QXcvZ
- 2UPrA5Tsx7QCPZ/NooXk7Sqt5hFN8QsHh93YgW2aBhlHyacjsz/EkmVJQIVl7PSYcfGGnhekJ
- +D+TV8ObmHWOfyDiibTnCNDyC97fdVSvmr78daLFc+5CRjT6ZryJgT2uTSXHyjSRRTyi9pLjh
- KSjgl+bhc0+SqwfZ6ROC8iOaLXee8yq/Lls3vmRL81iWayucFgO1NhPBor9uLVot36PcsrWC0
- OGNUxUZyxKJ4J6x/+c5V397mlc20ch8E/9E5jp7S7AAPF9Echdsu51LBcVngs30iJkuQ9/21T
- An+T1fW5RprVM+whptvUEB2XK0SmHlzkCKpv66xjYZX6S0BCAz5AMm8xO+lWvLnFGBmqAFgBB
- 896d+rpIyPbTRTQtSnjGjnYt+oGp8GMoRqTgq4QMcBU/5ZI90u+CrUtSpF0DdTKCpY0iDLu2h
- lxXpTMIYYAR7c1t7SOC+opbRxq4vo+I3TvJJgP+YPtg46jPNDWsrQ0zhpjsLEIy+GK1+4Z27V
- QMzybUtWlieDjjbcbTcciDysXReVgEscISwbGXU+Ybeh0IXH1x3TgrhJkUE4E8k5FxUrv+hCh
- B2kwe/5/cgCpM1V9e1w7uPMxeNNBeiwJv8ZMgWTO6oer0xx2coJKMaM2WS5wDlev2nUHTEUkp
- IaVT1103ZbCklvH5CjPIyxfNxohjXDPk7P9MgxuqI7HtnE7NE+fVe1m0GAmf3C3HJmt832N2X
- lOzDyGlgJmQ==
+X-Provags-ID: V03:K1:GFD9szRT1TQnWv9QwCeAFfhrD5GkyyrHFJcse6XZeiR8KUUoeHd
+ HGKZmFwDllgfkvB7lYocvd8TcCNr29s34PDMDeIU4xEpe18EEcdik3tnEErgcFnWlSZQx70
+ GqR5rRjYmjVL0YLln7p4g+K16BpW80XYb+9ZEHnLSfyqNZGB6cpKNdwWId7q9QNWH5GY2uO
+ dgSmXGmBFIw31BBolDexw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zx/9/iuz58Q=:kN4dC8VqdIGrmo7xAF+AWa
+ w7tEUVbMUc9Mcp9wuCddVbG4JkWJE/a6jCQR36c534uhfwd5+adlDUY6eSlHF7HpiJcPW0grn
+ Gkw2QQaknmfgLTZN32t/tSRFvzPh291jLB3El+agnXkM0NYvIvAcyVoHvvdA/korL59ZSSVyq
+ lHNGXCvDrSRnZS+ZzXq6pOGg+gQf7M5UystHD7fn9UHw1kcLj7Tbf8TH5WntuJ1hcaTA8OfJ4
+ V4WhnV8ZsNnzh0Py4jcXCvyx09UJCQPrrvyP3pok5OQp3WAo7FCEadznt2b8gjG8GIJ1wefdQ
+ lSJYAXVkN1Nr+VrRwhOiXEhLiMpDPk4FvuVrMUro9Pw8xxNP8xP/HbJwINfXR5CfGjlODw70i
+ PrQ4FUZ1e2vpUA5ULErr7belhkt21LaATMCHT5EOsjCCv34TwN9jpuAodUY8c5n9xgS839clP
+ iLfFZMBbdzbkatWD5BHq0hWFtuSTnvwYduJRPLf2040kfm1mIL1Zl/EQW9omONF/WP/M0n/fh
+ n5A95CndxBPrFtiRrHDppYMXTe+73DmFKcZH8PRHEdv574YSIqRkPM6j/blshZFpayegtbE+T
+ 7uV1nIduZdRHw0sjxvaOi1A2QxVszQQSZZOTK+Mw+l2meaIh2Mb6s7AnIImKk+E88AYwEVYHF
+ NncaAefoc61V9a+kXPUsu0vDDNlLvyHzfTNQvDUkqjVVDDmCAof2x0foVomt+WEBnZjCih8eo
+ 3zVLcv6ZPrl8sBz7Cy2OkkkDieqbSGUFB+HDK+SEVnVHq3hXt0zpazuJd+UHW1Oo7QSup+Ip+
+ wu6ZhKVNOkRXVyZ0byOyYyOBfT0/i1J68zoX++MV9RsIB7LEyvs6t4PBZZRX3iiq2qojbmG+R
+ 6wy0iRNsUZG8Gx73DraOZXnyKem9UUwgo+fupGFsNBnyPvLkC7ASRWSKoI4uCcdJZYhiyAreI
+ WTQ96oKIOEw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+Hi Jeff,
 
-On Wed, 26 Sep 2018, Paul-Sebastian Ungureanu wrote:
+On Wed, 26 Sep 2018, Jeffrey Walton wrote:
 
-> Sorry for the late reply. I had a lot on my plate for the last couple of
-> weeks.
-
-I understand. University can be busy times.
-
-> > > +
-> > > +	git_config(git_diff_basic_config, NULL);
-> > 
-> > Is this not called in as part of `git_config(git_default_config, NULL);`
-> > in cmd_stash() already?
-> > 
-> > *clicketyclick*
-> > 
-> > I guess not. But then, maybe it would make sense to run with
-> > `git_diff_basic_config` from the get go, to avoid having to run
-> > `git_config()` twice.
+> Several weeks ago I updated to the latest Git for Windows (when
+> prompted by the version check). At the time I noticed:
 > 
-> I am not sure I got it right, but if I did:
+> $ git commit -S -am "Fix unset MAKE variable in test scripts"
+> gpg: signing failed: No pinentry
+> gpg: signing failed: No pinentry
+> error: gpg failed to sign the data
+> fatal: failed to write commit object
 > 
-> Running `git_config` with `git_diff_basic_config` from the
-> beginning wouldn't be pointless when we would use any other
-> command than `create`, `push` and `save`? Although it might
-> confuse the reader a little bit, the stash should run without
-> problems.
+> I got to look at it today. On Windows:
+> 
+> $ cat ~/.gnupg/gpg-agent.conf
+> pinentry-program
+> /usr/local/MacGPG2/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac
 
-In my mind, this would simplify the code. Which is always easier on the
-reader... ;-)
+Git for Windows is partially based off of MSYS2, which upgraded GPG from
+v1 to v2, and one of the consequences is that v2 handles interaction with
+the user differently.
+
+My guess is that you copied your config from a Mac, and the path is simply
+incorrect. I would wager a bet that it starts working when you remove that
+line with the incorrect path, as the default should work plenty fine for
+you.
 
 Ciao,
-Dscho
+Johannes
