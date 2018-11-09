@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0756F1F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 02:56:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B1FC1F454
+	for <e@80x24.org>; Fri,  9 Nov 2018 02:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727427AbeKIMfZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 07:35:25 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44016 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727238AbeKIMfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 07:35:25 -0500
-Received: by mail-wr1-f66.google.com with SMTP id y3-v6so312973wrh.10
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 18:56:50 -0800 (PST)
+        id S1727468AbeKIMfw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 07:35:52 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:37178 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727238AbeKIMfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 07:35:51 -0500
+Received: by mail-wm1-f53.google.com with SMTP id p2-v6so616341wmc.2
+        for <git@vger.kernel.org>; Thu, 08 Nov 2018 18:57:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=2bMsl3EiLZB62vvWceCo0INzT/+eZSO9Fn4FLj/l/RA=;
-        b=fssjg9IRTrG1VkEnDxoquZMsiVWksDNwXbcDs6Vpf3SYDL68xjMnKNNrGuRh07gZMg
-         +w3jjpSJMhipVv7iB/lLE6eybtZstB1xkEicX7DFj8svvyDGo6Q10xsISV7NLXcnvxuj
-         8r4IurkbHp5ss64FHtbuAVywPO+3CX2EgHTTSkt2+Z3V1J1C5Sp7mKucRaZN/GtLqJEK
-         0UnM2WDeULcBbXlumBhhpPXLY/cAdkK1UoBq15nO3gWOy7YI/WmGZj70q/bmlCt0lMqe
-         IuGrEPV8FguJC8kEv4x4SkAKQApCUSeZHFc/UWOBAl/j0372x7bv5hGoLe/2aTubKQQV
-         G2yw==
+        bh=YCPjZ1wZv1EXvr7wtUHuVQWxei9fj/K7SZtogsfIt0M=;
+        b=HC+KmduiLZ4HOc8MlY/g4p062/OHXnxSKC4ZMHn4ZO1yVTI5cFchOAbxtkzZupTjZw
+         h0mqprbJwFAKheipcoAN/CsGUF82g9UFwuZ2Z0j85ARXFCSjAWEKWDJasPsUGIKK+zHi
+         d8fat96PVeobz2Y4grHwIcVpmklaOzBPvOCu4fBCasQxHxykHqDHVaRX9XFx49Hrbgwi
+         WSt03sFsldZFRh7K7coWl1nOO8XHrZUsrJ6/pjZyQjwIQ73JBHvJ4f8kg/cin6m1d/KS
+         DrLGSKXuwtjPEGRlUI19LYznYGR7UwqKiqdjeblBOwS2/ZYluvivmT+asqAY74QGParR
+         8tDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=2bMsl3EiLZB62vvWceCo0INzT/+eZSO9Fn4FLj/l/RA=;
-        b=V31MsH2jnGItN6Q4QItyU241FsX0uXX+0JRTR3Qq454S7mVY+OaYtWbhYMo7XZOQAo
-         yUmmzqoEou/wD0LOXJAWNAGSj1iZ3noDx+LDnGU8h7mG4ZpBktopYJkQoB64fMn5n3cS
-         CdQHTlrD51yr8XBmx+CGIMnmCxB07Nz0ukOxz0OeaXVxhW97UrC4qhth896NXdOyLcSQ
-         1qSgwZrMuh0Rwm9pUL5CY31aX3S++gaDWChxZxVii/fjTzQkKEH2o0+QEqUV2rlA0Sga
-         9F30NCqvp9e1BoLC763RLVuU+iPLBCIXVSKDoQ0VcKZJmAhi93yCUJMoZz8NrT8s4DCP
-         +kUQ==
-X-Gm-Message-State: AGRZ1gLyRQxWoISAf6SSK9RdbQ6REmqBJAWdP7L+n2XMJq5BHy9DYHkB
-        4UoQo0p3tz8tbSJ7TIb3rbc=
-X-Google-Smtp-Source: AJdET5f4rZT7wS05+Y87CAMU7LvrNQde72EgR0qwNhdidc3sVza1fipQt2Z+j2rP7BqEV7rfHXdLXg==
-X-Received: by 2002:adf:d101:: with SMTP id a1-v6mr6638226wri.17.1541732209646;
-        Thu, 08 Nov 2018 18:56:49 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 65-v6sm733657wmj.1.2018.11.08.18.56.48
+        bh=YCPjZ1wZv1EXvr7wtUHuVQWxei9fj/K7SZtogsfIt0M=;
+        b=gz2YkDOKEeJpCnq30TwisDUnFTro5AwiiahmmLf1opnUxtsng8vmNM59+v7/u3rQZx
+         uP2Cj4ATP8NrXg3GXWy/NrWRoDj9alQAPnmrm+wpKwhQUFmgNgCAGh8JNgGuUb30n7tJ
+         094DGx2vYQ1k0hAAKWlTuuQn1WmbjgwWLDyHGk6vR4ywLZ8EnP4i5MnTu4IY2ESChgXV
+         RYBbzpsG7lelSyKhpY7vR1ADQ1oJLhe9LrfNlp8zHEgFA71wVkX1hyMjovKzHkI1pwmI
+         cbUjWR5YhFsGdc0g8R0D/ydYiY20LTisktN0/WAnYmYppsJ7nobf8YUFLqRok5OLIxI6
+         IEVg==
+X-Gm-Message-State: AGRZ1gIV8+ebPjbB49y8P+580DRtwvriCp2JQEFDnzH23UDkGv2jQoz+
+        tpU2RWJ1wDH75WWD6JibWqI=
+X-Google-Smtp-Source: AJdET5fXLEjYNu8AG92Rf9FTZazagnhtUBkhcBGzT3cF0t5tGOrrqcbUOsi5o9ISgIm0qYng95j3Xw==
+X-Received: by 2002:a1c:87cb:: with SMTP id j194-v6mr2882107wmd.2.1541732236118;
+        Thu, 08 Nov 2018 18:57:16 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t4-v6sm6085033wrq.80.2018.11.08.18.57.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Nov 2018 18:56:48 -0800 (PST)
+        Thu, 08 Nov 2018 18:57:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Force Charlie <charlieio@outlook.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        charlieio@outlook.com
 Subject: Re: [PATCH v6 1/1] http: add support selecting http version
 References: <pull.69.v5.git.gitgitgadget@gmail.com>
         <pull.69.v6.git.gitgitgadget@gmail.com>
         <93fda67198441c159bfcf1dfa467ad76f3ecba76.1541660405.git.gitgitgadget@gmail.com>
-Date:   Fri, 09 Nov 2018 11:56:47 +0900
-In-Reply-To: <93fda67198441c159bfcf1dfa467ad76f3ecba76.1541660405.git.gitgitgadget@gmail.com>
-        (Force Charlie via GitGitGadget's message of "Wed, 07 Nov 2018
-        23:00:08 -0800 (PST)")
-Message-ID: <xmqqzhuj5574.fsf@gitster-ct.c.googlers.com>
+        <CAPig+cRpH0k-qams+_1LK9p8hYzBhD-bG3waNLeCSzYWNY41rg@mail.gmail.com>
+Date:   Fri, 09 Nov 2018 11:57:14 +0900
+In-Reply-To: <CAPig+cRpH0k-qams+_1LK9p8hYzBhD-bG3waNLeCSzYWNY41rg@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 8 Nov 2018 13:02:04 -0500")
+Message-ID: <xmqqva57556d.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,38 +69,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Force Charlie via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> +#if LIBCURL_VERSION_NUM >=0x072f00
-> +static int get_curl_http_version_opt(const char *version_string, long *opt)
-> +{
-> +	int i;
-> +	static struct {
-> +		const char *name;
-> +		long opt_token;
-> +	} choice[] = {
-> +		{ "HTTP/1.1", CURL_HTTP_VERSION_1_1 },
-> +		{ "HTTP/2", CURL_HTTP_VERSION_2 }
-> +	};
-> +
-> +	for (i = 0; i < ARRAY_SIZE(choice); i++) {
-> +		if (!strcmp(version_string, choice[i].name)) {
-> +			*opt = choice[i].opt_token;
-> +			return 0;
-> +		}
-> +	}
-> +
+>> @@ -284,6 +285,9 @@ static void process_curl_messages(void)
+>>  static int http_options(const char *var, const char *value, void *cb)
+>>  {
+>> +       if (!strcmp("http.version",var)) {
+>
+> Style: space after comma
+>
+>> +               return git_config_string(&curl_http_version, var, value);
+>> +       }
+>> @@ -806,6 +834,16 @@ static CURL *get_curl_handle(void)
+>> +    if (curl_http_version) {
+>> +               long opt;
+>> +               if (!get_curl_http_version_opt(curl_http_version, &opt)) {
+>> +                       /* Set request use http version */
+>> +                       curl_easy_setopt(result, CURLOPT_HTTP_VERSION,opt);
+>
+> Style: space after comma
+>
+>> +               }
+>> +    }
 
-I wonder if we need to give a warning here about an unknown and
-ignored value, by calling something like
-
-	warning("unknown value given to http.version: '%s'", version_string);
-
-here.  We should not trigger noisy warning while reading the
-configuration file looking for other variables unrelated to
-http.version but this codepath is followed only when we know
-we need to find out what value the variable is set to, so it
-probably is a good thing to do.  
-
-Thoughts?
-
+Thanks, both.  This is almost done, I think.
