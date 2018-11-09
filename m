@@ -2,148 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 349791F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 03:15:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86BFA1F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 03:44:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727534AbeKIMyC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 07:54:02 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38034 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727238AbeKIMyC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 07:54:02 -0500
-Received: by mail-wr1-f67.google.com with SMTP id e3-v6so357954wrs.5
-        for <git@vger.kernel.org>; Thu, 08 Nov 2018 19:15:25 -0800 (PST)
+        id S1727485AbeKINWz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 08:22:55 -0500
+Received: from mail-pg1-f176.google.com ([209.85.215.176]:37182 "EHLO
+        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727378AbeKINWz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 08:22:55 -0500
+Received: by mail-pg1-f176.google.com with SMTP id 80so269049pge.4
+        for <git@vger.kernel.org>; Thu, 08 Nov 2018 19:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version;
-        bh=Q+IFAPVHYQf/rgei1UG17u4PA1Cm13+zUAEHGBNicec=;
-        b=mAV5nTMZo2Lti0xF8RswF5hcRV6Z1t0HfGpPmpGD1xNIpM0OHQPCf1wdipt+FDNvKU
-         ylim+EEw0HV30QdtfIcngcgS9zHz0Pgy4soL4s0icRmZZ+LNfJRwgfpp6dLQ+p9rCCOr
-         ZI01lFAzXfkYOQMkdOadyqZzUwh/cCSHGeblSO8EhBAvCGKK0ki//gMghNAdJ1XFs4kF
-         Njym3Gk4ozVK2z3gFFwwMXM+QblwGGNFXBKOU8L4Vv8uVSUzjGx/tVDdjI0+8zcu5dH5
-         Ll9EFmNsV7thOKl4Av26xheGygoqwNpjHLQSmSfdIG2zEGDnxmfw67NB1TMtVa3estln
-         o9Zg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/9y73x7j/DgHHxI5m6PmcBdQL9PmUdb/nTS4bcYISh4=;
+        b=HgyXdLA8vp1J3UIkw8l8N2ju58wHaC/+sAl1lHRgspe5TRFVXkdHNWfy+oXTnoSFHM
+         tqtU1qm7FpYv1WmXvz8WNMsyfO6Js4+guW2q7ISUCYc/JxYwNAk3VtxHLu0VReTr8zZ0
+         FFA+ejZvV1H/j5vEUxbotfiCuO0k5xHcDeWP5a1Y36rbXxveuwsZZNTTNHUpJq0yIMpe
+         6atTznwbYGnG/R2Mw2SkBLG3GNRzrR1aQq93JU1J59830lPuF35OSB4t/7M5nFPMBy9L
+         JFLb1IFHWljjtqUn4aT12kVsTuS+/RCg7TyTJ/R8cK3ovr8Gj+1x8mVegrjXWDonqn7T
+         tufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version;
-        bh=Q+IFAPVHYQf/rgei1UG17u4PA1Cm13+zUAEHGBNicec=;
-        b=ah2Jel7Nhsf7oNNV6VpMltM8T7vgODp1m1HFuH+vcx8TBoU0dkPv9GRZYsYUDX7y+7
-         ciOTk14VMSqhpQR4UhCuNCdjp+sKLOlRkOPzFSyQ63awUjN9KKLWMuvxjqa6ZUooJ229
-         rGR3DEPxSONfsPHIWNXtj0bq4QUhxwXBl7YithQ5Jc6W5LCcLt+IAUD7ba2Fh/tg3Dm8
-         cF/XnUgQxpAgeHWvYkmNEi+8w4gcesPHzF9efkFI2ks25cVjZ4DPav4xNcjMP5k0+yAP
-         q3LBmVt2YHOz6tv2VSEG21/WTKf1CT1irkYcCELHZbF0rAahZ9g0tPtUWKM68gVI1wLg
-         4hKA==
-X-Gm-Message-State: AGRZ1gI16FgCKbRiK75y3JYvLUXEkesX0nyq/2fwTGp3QUrf/Yo8NQ6A
-        1dhupaTCrH/Shoqi8kiYVIw=
-X-Google-Smtp-Source: AJdET5dsiWdX1HjgV4QpgqpyoVQ+8ItlGCCrz2RYtDafQb6w6l/ccZ44rb99X/5DQ5AWxSkJ8u8ztg==
-X-Received: by 2002:adf:b315:: with SMTP id j21-v6mr6261114wrd.46.1541733324388;
-        Thu, 08 Nov 2018 19:15:24 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r1-v6sm4968465wrt.59.2018.11.08.19.15.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Nov 2018 19:15:23 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com
-Subject: Re: [RFC PATCH v2] remote: add --save-push option to git remote set-url
-In-Reply-To: <b910987d3aa778b39b6e27a75fe685a4797b8422.1541730538.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Thu, 8 Nov 2018 21:37:45 -0500")
-References: <xmqq8t2f218l.fsf@gitster-ct.c.googlers.com>
-        <b910987d3aa778b39b6e27a75fe685a4797b8422.1541730538.git.liu.denton@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Date:   Fri, 09 Nov 2018 12:15:22 +0900
-Message-ID: <xmqqin1754c5.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/9y73x7j/DgHHxI5m6PmcBdQL9PmUdb/nTS4bcYISh4=;
+        b=YUoI5MVs9486C5bOC0hdSrtUe4Uz4BF5ZX/OdSST74A5bEPvIoCpwYSQuAInSxJfah
+         T4eGZAe+OiWVhz/TuoEMKpi2s3E8Y3t47guQDghRZEdV8UtJbzXB6VRDXt0OaLnIG/oW
+         90Wd9QY+g03kQhNr9JlEtzDzWhJpu76mYfxDFrpxVI2tHNAMCW0BXQcEgE20cVmSZpAr
+         qMjdRnm0AHX/TXt+p9Wq/kKrIDTNEAXGVQd2+US5krvVo4AGlH9UtvFnHpZPjTqs9S2T
+         MqR6HQ2jEYi2Dqple4ReLclMoHQbTFZr3HHrSL8hC/a0rdDZ3JJJBN8fLF5KC1HekkXT
+         AYGw==
+X-Gm-Message-State: AGRZ1gIo7QZl9Zixnmj+sk+GMlX1SvZp/h4JaXgMvzGsN2hfhyZbKqfE
+        5jCRHqK8017oSqH4kPJBAg9qpK4X
+X-Google-Smtp-Source: AJdET5dAjxNmQ1V0nZ9M7RQBnvDhkEHoDxQ/KsA243sodcfukyx/bfb0jNhXCUwvGRqZWF9vNHB3og==
+X-Received: by 2002:a63:fa46:: with SMTP id g6mr6155532pgk.18.1541735053966;
+        Thu, 08 Nov 2018 19:44:13 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id y9-v6sm5378617pfe.152.2018.11.08.19.44.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Nov 2018 19:44:13 -0800 (PST)
+Date:   Thu, 08 Nov 2018 19:44:13 -0800 (PST)
+X-Google-Original-Date: Fri, 09 Nov 2018 03:44:10 GMT
+Message-Id: <pull.69.v8.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.69.v7.git.gitgitgadget@gmail.com>
+References: <pull.69.v7.git.gitgitgadget@gmail.com>
+From:   "Force.Charlie-I via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v8 0/1] http: add support selecting http version
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Usually we don't need to set libcurl to choose which version of the HTTP
+protocol to use to communicate with a server. But different versions of
+libcurl, the default value is not the same.
 
-> This adds the --save-push option to `git remote set-url` such that when
-> executed, we move the remote.*.url to remote.*.pushurl and set
-> remote.*.url to the given url argument.
->
-> For example, if we have the following config:
->
-> 	[remote "origin"]
-> 		url = git@github.com:git/git.git
->
-> `git remote set-url --save-push origin https://github.com/git/git.git`
-> would change the config to the following:
->
-> 	[remote "origin"]
-> 		url = https://github.com/git/git.git
-> 		pushurl = git@github.com:git/git.git
+CURL >= 7.62.0: CURL_HTTP_VERSION_2TLS CURL < 7.62: CURL_HTTP_VERSION_1_1
 
-This sounds more like "saving to push" (i.e. what you are saving is
-the existing "url" and the "push" is a shorthand for "pushURL",
-which is the location the old value of "url" is aved to), not "save
-(the) push(URL)".  So if adding this option makes sense, I would say
-"--save-to-push" (or even "--save-to-pushURL") may be a more
-appropriate name for it.
+In order to give users the freedom to control the HTTP version, we need to
+add a setting to choose which HTTP version to use.
 
-> +With `--save-push`, the current URL is saved into the push URL before setting
-> +the URL to <url>. Note that this command will not work if more than one URL is
-> +defined or if any push URLs are defined because behavior would be ambiguous.
+This patch support force enable HTTP/2 or HTTP/1.1. 
 
-Ambigous in what way?  You asked the current URL to be saved as a
-pushURL, so existing pushURL destinations should not come into play,
-I would think.  If there are more than one URL (not pushURL), on the
-other hand, I think you have a bigger problem (where would "git fetch"
-fetch from, and how would these multiple URLs are prevented from
-trashing refs/remotes/$remote/* with each other's refs?), so
-stopping the operation before "set-url" makes the problem worse is
-probably a good idea, but I think that is true with or without this
-new option.
+example: 
 
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index f7edf7f2cb..0eaec7ef38 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -24,8 +24,9 @@ static const char * const builtin_remote_usage[] = {
->  	N_("git remote set-branches [--add] <name> <branch>..."),
->  	N_("git remote get-url [--push] [--all] <name>"),
->  	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
-> -	N_("git remote set-url --add <name> <newurl>"),
-> -	N_("git remote set-url --delete <name> <url>"),
-> +	N_("git remote set-url --add [--push] <name> <newurl>"),
-> +	N_("git remote set-url --delete [--push] <name> <url>"),
-> +	N_("git remote set-url --save-push <name> <url>"),
->  	NULL
->  };
+GIT_CURL_VERBOSE=1 git2 -c http.version=HTTP/2 ls-remote https://bitbucket.org/aquariusjay/deeplab-public-ver2.git
 
-Needs update?
+Force Charlie (1):
+  http: add support selecting http version
 
-> @@ -77,8 +78,9 @@ static const char * const builtin_remote_geturl_usage[] = {
->  
->  static const char * const builtin_remote_seturl_usage[] = {
->  	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
-> -	N_("git remote set-url --add <name> <newurl>"),
-> -	N_("git remote set-url --delete <name> <url>"),
-> +	N_("git remote set-url --add [--push] <name> <newurl>"),
-> +	N_("git remote set-url --delete [--push] <name> <url>"),
-> +	N_("git remote set-url --save-push <name> <url>"),
->  	NULL
->  };
+ Documentation/config.txt |  9 +++++++++
+ http.c                   | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
-Needs update?
 
-> +		if (save_push) {
-> +			if (remote->url_nr != 1 || remote->pushurl_nr != 0)
-> +				die(_("--save-push can only be used when one url and no pushurl is defined"), remotename);
+base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-69%2Ffcharlie%2Fmaster-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-69/fcharlie/master-v8
+Pull-Request: https://github.com/gitgitgadget/git/pull/69
 
-I _think_ in the future (if this option turns out to be widely used)
-people may ask for this condition to be loosened somewhat, but it is
-relatively easy to start restrictive and then to loosen later, so I
-think this is OK for now.
+Range-diff vs v7:
 
+ 1:  e26fc0d8c7 ! 1:  71f8b71b34 http: add support selecting http version
+     @@ -78,6 +78,7 @@
+      +		}
+      +	}
+      +
+     ++	warning("unknown value given to http.version: '%s'", version_string);
+      +	return -1; /* not found */
+      +}
+      +
+
+-- 
+gitgitgadget
