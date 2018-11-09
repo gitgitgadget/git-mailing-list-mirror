@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37BC51F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 09:34:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92A531F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 09:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727702AbeKITOD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 14:14:03 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:32900 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727518AbeKITOD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 14:14:03 -0500
-Received: by mail-pg1-f196.google.com with SMTP id q5-v6so640101pgv.0
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 01:34:19 -0800 (PST)
+        id S1727725AbeKITOE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 14:14:04 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:44706 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727714AbeKITOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 14:14:04 -0500
+Received: by mail-pf1-f196.google.com with SMTP id b81-v6so188499pfe.11
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 01:34:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pbW3Bs6lS91QK+iX9E92EpBHbc+GfvB9V3GDNSazrts=;
-        b=LgM4se+1xnjF5sjk/ZUnvHzX/pzQZpq9RxOFnX8NLPuTNsC/a9kB0+0rT3EBUNM33E
-         6+kxgG0yCP73xwOWXvgyuOIeyTWk3u4gfmOpVEpIhJIOpYGfnXbfD9AkW4CyZpVLO+lv
-         ciXYOpi47f9zvXmJiO8eh+YcikWOoc/2sCYTMX5K4KFYAKf3rhGeLTivQLSVCeOeCLI9
-         a++R0KaPzjFizo4mXCe80WkTyEOvao7YcVPtwL1V1WpLISQ1vkohNFAP+yndYlWFRAn9
-         DMJdlF2f2SwkeEHDODH5CjXhVATOwmJNdgnCVwAn3dJmo9WkDdwopwuMlWZeqwKSvDPE
-         K0pg==
+        bh=gGX0Cx+jPEUdP0n/ygFRRwrKikf2e9EOE6amDb1Emxc=;
+        b=B8NerpFvJjUCQMyjsPBIMHREQnnTZHUSA6cSEAckGlMVSiQBbtxxX9qtCKQYADyiuv
+         cHqWjCSFdMAD+cHqTt2tQi3dWjfYyMJHG1Xmerqfb1oVZMnQ15065aKmORNpL5/rY6YD
+         LBkRjJOSwWfiNTtmJAWmfmOx/jeXKLsDMAixjCnB4/9YspryhNzIYxUnoa3qSAqtLTDn
+         EbpPbhP0WL/XB144eqJzWpVPOT6ThobogBNc6/Ji2ooMvRHAyOyvL3f6Ijm3q2dWXpa0
+         /sW8FpAFkCfOqcSi49fc07Quc+V8lAx5M9w9WR4QfqF6OfWCefC5ahU809vecIu+kopW
+         XU2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pbW3Bs6lS91QK+iX9E92EpBHbc+GfvB9V3GDNSazrts=;
-        b=sDTPJfLd9rV/A1sYQyIS2OJPWfSFeFkNCr4vR9DKeFfHvlGNkrKYf1fjzH5pIUlpTE
-         khQjTawaQuNUnD853h9dlKs4RcmJFCQQfiX3lk+05PkN9AnLUXU4yvxqaEDtjmWhOepj
-         XazBWp+pjoas1U5GFl7lh7Sjed5Iiytn7Wc/x994+M03kVGnS+js1gl10z/8lNFMUVdB
-         MR5niSHT+877CiinPK2WD+nosWehVDKFyjyRPGAwyAdYLaMtJXZs3HnXZjKopFk0R1A9
-         ydXqT3xkKOVSgbyaNaY4agjpK2w9LZV7f3ljOibWruuHjbdPmwqkMLtsQqlmBstByNhs
-         AOYA==
-X-Gm-Message-State: AGRZ1gJV8j5QavY/k+suaWTMOAvbg/QuliBvfj51Zjl1GTeLeGWH9KDa
-        W4b049GOKc7tS9UOOUiwUzTB9R2D
-X-Google-Smtp-Source: AJdET5cU/9Hk2FVJsli1OzyMYcERdEfh7zFAIK2AYcf8Ap8CBn6qxORmwECZT6vqL2x1SH9OHeGkzA==
-X-Received: by 2002:a63:5664:: with SMTP id g36mr6738108pgm.313.1541756058554;
-        Fri, 09 Nov 2018 01:34:18 -0800 (PST)
+        bh=gGX0Cx+jPEUdP0n/ygFRRwrKikf2e9EOE6amDb1Emxc=;
+        b=G1p5lLtY7DmbXR20aXyWDfJ20st9myZDnVEAqe0BYV1SLoCbGvSq0Mh5qcdKD1B2ST
+         nne+zNvkHvF3Wu2n7A1uzW3bycluKNFtgey/6lovLmg3AUIcrnMSjhUIFMDBFRbLLEf/
+         vyfjH3RQQM4QCkqieQBby7ecct5i/EZvteAidk+O8GfGY/dYYBaZP/VCIB8wDfSP6Dn9
+         os1+cze8rUKyNtYmKpOR6ME+6XvyPTMbMIWwgaYNaFchXLnobdDwLsjSU4elWJFgQ5AN
+         asYvQcnHU6O5gQPJrNzn+IO90jWrqXrot9hsnVKl58YSJJR8sLSsOQeDjHqc8QGkbaq2
+         bV1Q==
+X-Gm-Message-State: AGRZ1gK56uH5HRnFn21cU4AD1xsFlPXKJbhAqapI36EPAYedKwcMzXCc
+        KyIO+z6S7oVs3mnXzqL2DofdYhNb
+X-Google-Smtp-Source: AJdET5ftVQoUSPND1BgvDjscqwwsdbwNYYmsf4RCdq56pMPR5xs1+AaGZo77mu49x4I7TRQDUDpyMg==
+X-Received: by 2002:a63:89c2:: with SMTP id v185mr6349669pgd.97.1541756059768;
+        Fri, 09 Nov 2018 01:34:19 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id w63-v6sm6086936pgw.60.2018.11.09.01.34.17
+        by smtp.gmail.com with ESMTPSA id f62sm6063796pgc.67.2018.11.09.01.34.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 01:34:17 -0800 (PST)
-Date:   Fri, 09 Nov 2018 01:34:17 -0800 (PST)
-X-Google-Original-Date: Fri, 09 Nov 2018 09:34:13 GMT
-Message-Id: <64597fe827021383ab68cfb247de61fcf104a961.1541756054.git.gitgitgadget@gmail.com>
+        Fri, 09 Nov 2018 01:34:19 -0800 (PST)
+Date:   Fri, 09 Nov 2018 01:34:19 -0800 (PST)
+X-Google-Original-Date: Fri, 09 Nov 2018 09:34:14 GMT
+Message-Id: <070092b4309e5e74e3a1b3be54613cccf26e97da.1541756054.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.72.git.gitgitgadget@gmail.com>
 References: <pull.72.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] rebase: consolidate clean-up code before leaving
- reset_head()
+Subject: [PATCH 2/2] built-in rebase: reinstate `checkout -q` behavior where
+ appropriate
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,62 +71,160 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The same clean-up code is repeated quite a few times; Let's DRY up the
-code some.
+When we converted a `git checkout -q $onto^0` call to use
+`reset_head()`, we inadvertently incurred a change from a twoway_merge
+to a oneway_merge, as if we wanted a `git reset --hard` instead.
+
+This has performance ramifications under certain, though, as the
+oneway_merge needs to lstat() every single index entry whereas
+twoway_merge does not.
+
+So let's go back to the old behavior.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ builtin/rebase.c | 45 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0ee06aa363..6f6d7de156 100644
+index 6f6d7de156..c1cc50f3f8 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -569,16 +569,13 @@ static int reset_head(struct object_id *oid, const char *action,
+@@ -523,11 +523,12 @@ finished_rebase:
+ #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
+ 
+ static int reset_head(struct object_id *oid, const char *action,
+-		      const char *switch_to_branch, int detach_head,
++		      const char *switch_to_branch,
++		      int detach_head, int reset_hard,
+ 		      const char *reflog_orig_head, const char *reflog_head)
+ {
+ 	struct object_id head_oid;
+-	struct tree_desc desc;
++	struct tree_desc desc[2];
+ 	struct lock_file lock = LOCK_INIT;
+ 	struct unpack_trees_options unpack_tree_opts;
+ 	struct tree *tree;
+@@ -536,7 +537,7 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	size_t prefix_len;
+ 	struct object_id *orig = NULL, oid_orig,
+ 		*old_orig = NULL, oid_old_orig;
+-	int ret = 0;
++	int ret = 0, nr = 0;
+ 
+ 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
+ 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
+@@ -544,20 +545,20 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+ 
+-	if (!oid) {
+-		if (get_oid("HEAD", &head_oid)) {
+-			rollback_lock_file(&lock);
+-			return error(_("could not determine HEAD revision"));
+-		}
+-		oid = &head_oid;
++	if (get_oid("HEAD", &head_oid)) {
++		rollback_lock_file(&lock);
++		return error(_("could not determine HEAD revision"));
  	}
  
- 	if (!fill_tree_descriptor(&desc, oid)) {
--		error(_("failed to find tree of %s"), oid_to_hex(oid));
--		rollback_lock_file(&lock);
--		free((void *)desc.buffer);
--		return -1;
++	if (!oid)
++		oid = &head_oid;
++
+ 	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
+ 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
+ 	unpack_tree_opts.head_idx = 1;
+ 	unpack_tree_opts.src_index = the_repository->index;
+ 	unpack_tree_opts.dst_index = the_repository->index;
+-	unpack_tree_opts.fn = oneway_merge;
++	unpack_tree_opts.fn = reset_hard ? oneway_merge : twoway_merge;
+ 	unpack_tree_opts.update = 1;
+ 	unpack_tree_opts.merge = 1;
+ 	if (!detach_head)
+@@ -568,12 +569,17 @@ static int reset_head(struct object_id *oid, const char *action,
+ 		return error(_("could not read index"));
+ 	}
+ 
+-	if (!fill_tree_descriptor(&desc, oid)) {
++	if (!reset_hard && !fill_tree_descriptor(&desc[nr++], &head_oid)) {
 +		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
 +		goto leave_reset_head;
++	}
++
++	if (!fill_tree_descriptor(&desc[nr++], oid)) {
+ 		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
+ 		goto leave_reset_head;
  	}
  
- 	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
--		rollback_lock_file(&lock);
--		free((void *)desc.buffer);
--		return -1;
-+		ret = -1;
-+		goto leave_reset_head;
+-	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
++	if (unpack_trees(nr, desc, &unpack_tree_opts)) {
+ 		ret = -1;
+ 		goto leave_reset_head;
  	}
- 
- 	tree = parse_tree_indirect(oid);
-@@ -586,10 +583,9 @@ static int reset_head(struct object_id *oid, const char *action,
- 
- 	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
- 		ret = error(_("could not write index"));
--	free((void *)desc.buffer);
- 
- 	if (ret)
--		return ret;
-+		goto leave_reset_head;
- 
- 	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
- 	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
-@@ -622,7 +618,10 @@ static int reset_head(struct object_id *oid, const char *action,
- 					 UPDATE_REFS_MSG_ON_ERR);
- 	}
- 
-+leave_reset_head:
+@@ -621,7 +627,8 @@ static int reset_head(struct object_id *oid, const char *action,
+ leave_reset_head:
  	strbuf_release(&msg);
-+	rollback_lock_file(&lock);
-+	free((void *)desc.buffer);
+ 	rollback_lock_file(&lock);
+-	free((void *)desc.buffer);
++	while (nr)
++		free((void *)desc[--nr].buffer);
  	return ret;
  }
  
+@@ -999,7 +1006,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		rerere_clear(&merge_rr);
+ 		string_list_clear(&merge_rr, 1);
+ 
+-		if (reset_head(NULL, "reset", NULL, 0, NULL, NULL) < 0)
++		if (reset_head(NULL, "reset", NULL, 0, 1, NULL, NULL) < 0)
+ 			die(_("could not discard worktree changes"));
+ 		if (read_basic_state(&options))
+ 			exit(1);
+@@ -1015,7 +1022,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (read_basic_state(&options))
+ 			exit(1);
+ 		if (reset_head(&options.orig_head, "reset",
+-			       options.head_name, 0, NULL, NULL) < 0)
++			       options.head_name, 0, 1, NULL, NULL) < 0)
+ 			die(_("could not move back to %s"),
+ 			    oid_to_hex(&options.orig_head));
+ 		ret = finish_rebase(&options);
+@@ -1379,7 +1386,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			write_file(autostash, "%s", oid_to_hex(&oid));
+ 			printf(_("Created autostash: %s\n"), buf.buf);
+ 			if (reset_head(&head->object.oid, "reset --hard",
+-				       NULL, 0, NULL, NULL) < 0)
++				       NULL, 0, 1, NULL, NULL) < 0)
+ 				die(_("could not reset --hard"));
+ 			printf(_("HEAD is now at %s"),
+ 			       find_unique_abbrev(&head->object.oid,
+@@ -1433,7 +1440,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				strbuf_addf(&buf, "rebase: checkout %s",
+ 					    options.switch_to);
+ 				if (reset_head(&oid, "checkout",
+-					       options.head_name, 0,
++					       options.head_name, 0, 0,
+ 					       NULL, NULL) < 0) {
+ 					ret = !!error(_("could not switch to "
+ 							"%s"),
+@@ -1499,7 +1506,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			 "it...\n"));
+ 
+ 	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
+-	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1,
++	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1, 0,
+ 	    NULL, msg.buf))
+ 		die(_("Could not detach HEAD"));
+ 	strbuf_release(&msg);
+@@ -1515,7 +1522,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&msg, "rebase finished: %s onto %s",
+ 			options.head_name ? options.head_name : "detached HEAD",
+ 			oid_to_hex(&options.onto->object.oid));
+-		reset_head(NULL, "Fast-forwarded", options.head_name, 0,
++		reset_head(NULL, "Fast-forwarded", options.head_name, 0, 0,
+ 			   "HEAD", msg.buf);
+ 		strbuf_release(&msg);
+ 		ret = !!finish_rebase(&options);
 -- 
 gitgitgadget
-
