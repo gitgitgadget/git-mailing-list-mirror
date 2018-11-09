@@ -7,79 +7,96 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A9171F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 16:08:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9761F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 16:17:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728443AbeKJBuJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 20:50:09 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:41125 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728008AbeKJBuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 20:50:09 -0500
-Received: by mail-io1-f68.google.com with SMTP id a5-v6so1611438ioq.8
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 08:08:56 -0800 (PST)
+        id S1727988AbeKJB6W (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 20:58:22 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:36851 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727828AbeKJB6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 20:58:22 -0500
+Received: by mail-io1-f66.google.com with SMTP id o19-v6so1645624iod.3
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 08:17:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TTQSW0fHboqD/SQjXRmqSlH1notXdmYt8QjL4Tb3+zc=;
-        b=qz7ApiQz4JnWXn6sDQ/vhgiDB/aVVpUy+awnUQHtiaCKoNoZQrKgz7UTel9ESSK6Q+
-         mT8fICNxOkOH/VT1F0mrLmf+fkuBTbs3J+7EN6NRbusYN0kT4XitfN7jodrdNifLyvHH
-         FpuPxZ5JEVWjCIcTRPuZRHWkhuAbQikYrCe3fAlv3JJNQ0smjrFigF1uySEseLvzIzd7
-         URpM4onsN0iyUHhqOr8CIAAVCWyO/FB1FSExCkwAURNMp5BVsAXp+grKfZmvzvwZ7zkK
-         VsYwln/sukR8aSil8S4vbPn1nupB5WtQES2hiCBCvUjAJCQmnXlz1usYh9MAdqPtzUTC
-         ewmw==
+         :cc;
+        bh=4oVzIBmqc+jpZKoZvkr6VLhzA/Nh4JFpdzzld9FL9ug=;
+        b=jvs1KRAO1QpEhjMpY4Ymc+J/rRrCbm/EtA3hw09iXdqEnGODCCWvhJjEilsvnZHfKU
+         6fjhuXPFU429aOMRNY5ju1L4X5bhRvaPhSwbhXXXR6ThbbrSwCjQua4ceJrtL7IIaPLK
+         hlIdsINa3hFmXziAxqfPp3y0u0sm9+Na9HP5Bn+tac39fc51qGU5PjjnoBD4dNY/JC/D
+         6U0UryniZ8MNg/dEcckWVtEf7DTxDcwyA5rWvmYv0Xtkgx3WdbQg0A0VlYdA3jCVJK9l
+         itICpxOfeOKt0U8CtIYLNiFgXWOU/I3HrGdmNxQjGzZzWPgSobJPNdY4/WXyxzVFJ2xq
+         TOLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TTQSW0fHboqD/SQjXRmqSlH1notXdmYt8QjL4Tb3+zc=;
-        b=kE+hPhxe82vOk+0QwZ9BIpjhGvxX72duBlgULyM2vdTGBLj5INnqUc7NDmkF9hXQTt
-         mHgQr+MggNbniQKfTUV13+NMYmXdGTKXnMGqLHlRLfFwqD4U3HETRMW1iGkQ2RTe4HQA
-         rMiARsNaF2uWscKmzs/5DmU9UX7Igr6zLUwc6cN8s97r5w2Pln+df94em8QInzjl4uaj
-         8o/5Nf7wZqI6YjB/L1zcia/prmcASM44xtMBdk+jnWU44drmOzZWDWxH07HcBqxwivr+
-         g2aCB4P8A93eaI4FpwKfX+a7Nb0kwMlAgFdY4aakOgjsInxvIxOW9eJ/XWYz7q+rFfRa
-         R9gA==
-X-Gm-Message-State: AGRZ1gJbRZIbGaFoJ9JB39Ui1IPyWGsEoTrWYOB52gJlH5IVYzIBWW8p
-        gAg2L3le8OFxS3osen24qWtSjLHlsD7jEz7pK+vfIw==
-X-Google-Smtp-Source: AJdET5eVq1uXiwi11ulLjCClqiytz6EStHpBmzFdjQDW5/BhOWlWu4ZiX9RGNG5Y/TwZfauVUz1LeO8yYht5JnlqrI4=
-X-Received: by 2002:a6b:6f0e:: with SMTP id k14-v6mr3514087ioc.236.1541779736420;
- Fri, 09 Nov 2018 08:08:56 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=4oVzIBmqc+jpZKoZvkr6VLhzA/Nh4JFpdzzld9FL9ug=;
+        b=XcKwkDFl6UzOC1ijb2REvcMv8/Jan7Gs6x4O8Ef77309+03+5UCdMQS+bRjHZSvZF+
+         0asTFFbBEU/w14/JXe4CQHN78DEUUsNuiGD5ySsyGDrVqfnIrF2Qq8F25sdmIkb3MFhH
+         6CFyrrEewygSBFLBo8OVMMfPrvELX/oVg1dMZ5CIgS7653oWeiZGIqgdxOfkIgmUrlhH
+         1CC704grRZ8ETs3YcTtcnkV72JkESRdJxGqISmXWSkxczPI8nfrz/xMN5983oUPREkKR
+         nE5ZZWGy+4m18ylnQ2hWgex8CD9ZuqO96qrKtwvCtCQ7BJtip8dowJLrvmnX2TEDV8uS
+         +nyA==
+X-Gm-Message-State: AGRZ1gLqh5WVuFaFbEdEomOAuMjDVXAa+vuP/at7+f3BHHF9vYtkifad
+        u+OBeYNHV/DVhk2L9NYpcYK7zMNPA4Ii9OXYxgTz6Q==
+X-Google-Smtp-Source: AJdET5fR4ec6X9RgTyyaPVCR5GNYWp4m2JdbaSAiuytRaB/+zSA4CoC+PnRo0NxB8A20INPtvAzuiug3SXOWDX+izgc=
+X-Received: by 2002:a6b:216:: with SMTP id 22-v6mr7613673ioc.118.1541780227619;
+ Fri, 09 Nov 2018 08:17:07 -0800 (PST)
 MIME-Version: 1.0
-References: <ED25E182-C296-4D08-8170-340567D8964A@amazon.com>
- <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com> <87o9bgl9yl.fsf@evledraar.gmail.com>
- <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com> <20181027093300.GA23974@sigill.intra.peff.net>
- <87lg6jljmf.fsf@evledraar.gmail.com> <20181029150453.GH17668@sigill.intra.peff.net>
- <87bm7clf4o.fsf@evledraar.gmail.com> <20181029232738.GC24557@sigill.intra.peff.net>
- <20181107225524.GA119693@amazon.com> <87d0re5pt3.fsf@evledraar.booking.com>
-In-Reply-To: <87d0re5pt3.fsf@evledraar.booking.com>
+References: <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
+ <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org> <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
+ <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org> <20181107204142.GA30078@sigill.intra.peff.net>
+ <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org> <20181107220320.GA8970@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet> <CACsJy8AdRqKKFFO80p8jdMGaH6+Pj833nUEd7Xe6SWLQB=80UQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1811081639210.39@tvgsbejvaqbjf.bet> <20181109101918.GC7410@sigill.intra.peff.net>
+In-Reply-To: <20181109101918.GC7410@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 9 Nov 2018 17:08:27 +0100
-Message-ID: <CACsJy8BvD6eSaxu1KyXawMcBCQGMQ5DywQpsycTTjKusioZZuQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     gerardu@amazon.com, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 9 Nov 2018 17:16:41 +0100
+Message-ID: <CACsJy8BzbEnXMRw6kB1rg+WMfu2wwJZWkAtVate98CZRSY_dLA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>, gitgitgadget@gmail.com,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 9, 2018 at 2:46 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-> I'm planning to re-submit mine with some minor changes after the great
-> Documentation/config* move lands.
+On Fri, Nov 9, 2018 at 11:19 AM Jeff King <peff@peff.net> wrote:
+> > The form `<RUNTIME_PREFIX>/abc/def` would not be confused with anything
+> > that it is not, I would think. The only thing against this form (at least
+> > that I can think of) is that some people use this way to talk about paths
+> > that vary between different setups, with the implicit assumption that the
+> > reader will "interpolate" this *before* applying. So for example, when I
+> > tell a user to please edit their <GIT_DIR>/config, I implicitly assume
+> > that they know to not type out, literally, <GIT_DIR> but instead fill in
+> > the correct path.
 >
-> As noted in
-> https://public-inbox.org/git/87bm7clf4o.fsf@evledraar.gmail.com/ and
-> https://public-inbox.org/git/87h8gq5zmc.fsf@evledraar.gmail.com/ I think
-> it's regardless of Jeff's optimization is. O(nothing) is always faster
-> than O(something), particularly (as explained in that E-Mail) on NFS.
+> So yeah, some alternative syntax that is verbose but distinct makes
+> sense to me. We use %-substitution elsewhere. Could we do something with
+> that? "%RUNTIME_PREFIX%" gives me too many flashbacks, but something
+> like "%(RUNTIME_PREFIX)" matches our formatting language.
 
-Is it really worth adding more code to maintain just to shave a couple
-seconds (or a few percent clone time)?
---=20
+FWIW I don't have any preference, as long as the variable can still
+have a name (that is not a symbol).
+
+A side question regardless of syntax. What do we do with
+%(unrecognized name)/foo? I see three options
+
+ - expand to empty, so "/foo"
+ - keep it and try the literal path "%(unrecognized name)/foo"
+ - somehow tell the caller that the path is invalid and treat it like
+non-existing path, even if there is some real thing at "%(unrecognized
+name)/foo"
+
+The last option is more predictable. But we need to be more careful
+about the syntax because if "%(some path like this)" actually exists
+somewhere, then it will be broken. And I think it's also more work.
+-- 
 Duy
