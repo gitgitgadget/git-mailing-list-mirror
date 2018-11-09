@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B94A01F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 12:26:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 990731F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 12:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727978AbeKIWGl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 17:06:41 -0500
-Received: from mout.gmx.net ([212.227.17.22]:44479 "EHLO mout.gmx.net"
+        id S1727735AbeKIWIU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 17:08:20 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58691 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727676AbeKIWGl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 17:06:41 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LoVja-1ft9uG3Pkg-00gcMw; Fri, 09
- Nov 2018 13:26:14 +0100
-Date:   Fri, 9 Nov 2018 13:26:14 +0100 (STD)
+        id S1727662AbeKIWIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 17:08:20 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2Glc-1fTGJi27BE-00s5ts; Fri, 09
+ Nov 2018 13:27:54 +0100
+Date:   Fri, 9 Nov 2018 13:27:53 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 18/20] stash: convert `stash--helper.c` into
- `stash.c`
-In-Reply-To: <4de1b725-8687-590a-f93f-e80843e5bf8f@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811091324210.39@tvgsbejvaqbjf.bet>
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <82f5af08c6475765fac27e30f716a48039d56404.1535665109.git.ungureanupaulsebastian@gmail.com> <nycvar.QRO.7.76.6.1809031640490.71@tvgsbejvaqbjf.bet>
- <4de1b725-8687-590a-f93f-e80843e5bf8f@gmail.com>
+Subject: Re: [GSoC][PATCH v8 14/20] stash: convert create to builtin
+In-Reply-To: <5ba50c37-2840-e1f9-4d35-877979018f1c@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811091326500.39@tvgsbejvaqbjf.bet>
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <a4faed3c8aa5ea8f0d4c578b693f3b5de3e3a709.1535665109.git.ungureanupaulsebastian@gmail.com> <nycvar.QRO.7.76.6.1809031718230.71@tvgsbejvaqbjf.bet>
+ <5ba50c37-2840-e1f9-4d35-877979018f1c@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tssuBHeS5JX9HpbUUPrIyu1ZxqAhkdNL7XlQRDccebu6zeWgiL2
- Sx9V6AxfugvOvl9+JRs++Zb9UfWezgHb6Mfft/XVEECZ5xDlttX9+A0gK7Hc/+GEjbsniZq
- 8+HcDgueTniR/GYwZ5IKnOsjGXgoxj9dRTu1GWRhB2UPPfRt04Rz/+my0VaXpda5a1me6uE
- kEW89HY6c60g7S+vGbTng==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6G48ByXmC3A=:fceSCTu9vLwOgheIvIjSOb
- 2pQf89r5MfrrcMJi/QysZKUGPwTXhTkiqV/ORr6jY6gYgszgRWW5o+uihFTK8+8YpRCRnrV7F
- rFfzM0TWXQv925bbyEoSbrdPsfHpjF56vTUdsshq+1DKbM8/XHCkRML6f6ldRpOPmicXEn5ia
- wgWI/lAuTB04sfPObAc2DJd2RC8IWGHSuItTu77hnC1+N3r0n9AR5csijjIdWMJu0yc8bf6GE
- nhbzD4142Ut3Y7b9vBGalV856A6LAb0KlGl2ZYWIUF6A4AlZUQ+15bq+0Lria5FYZRgqW8/T4
- mGBJfWgLNN7Ye+hoKUeczMH1VLxQ+LHILQRVNLSAEO7QsmRlGJqNeMlgjF26Iu6WMdU1FMufY
- BcQC4xo9GZfFOIp0HehvQQXOZXjny2BNaPx8UMI4zeGvP/Sjb5GY5/K1rF3kRH6VYmZJF13Jl
- KJgMVZe6EnaeoK9WbRUJKCcFuVdrHSZ+UKFmDTiHa0naEWRAZlSKP5RqJ0q4MlY+8PRPAYQ6w
- oQyFzJAQPtzWeatu7218cBzx0RwDBavrikriceVb0HzgZsuRQ1opuZ1TTHjSbLhsMWsEVCniY
- vd2ubhOxSvGqflGfnU0gu5AOkfDEM9ZUaZhrIBaZOCmjh16DfSUUjVpp87BI8aZyX2Kz/gGHT
- FVS6lhWp1McPo3YcjqnAjNu4ZdUvy2iFkE7kFbabTyJdl2zcpKYHNV6InYyKzqLtjlixAUxcv
- nAiRTDCOKKuJj6RIKAaZLbkVMtKNHdFsMTv2YGn9vTV/dBW/cbfXDbYO3f2WbaMHsY8K0dBa2
- 65+G4zwc26Dw2TX05HmuAmJD//Nf1M+KSRyrjWbjsZcZWrb6Q0G10ThZvpfdiYJxdK671TYJa
- c9D7jvqGVaqziTMsCKo93gT2MuxUsaiVr5UBhmD/Jq/7seGMjOnS0F2229Q7S/irr5hHB6JX8
- 8Zdd7S39N0w==
+X-Provags-ID: V03:K1:DxHk6ul3HF0EE7UE2G+qLmcYRgUojldxHRfUqEwuWXOltwibgq1
+ ByfR7WXIWVJL5yDtt/pUlRrn7AnWsZN/ZTup+7zG9t/cgB9VPNr6PElUgNWKC+WoIUSlJxW
+ hWVRqKFbqpfzcJJsv1Gkgzw6DkyTp/lDPm0xIcJWflM/QKRoNPyQYxTDZjRx9GIAnkVQaLu
+ MRvloYTp9IlaC8h+v1Peg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B++FmDXvKxQ=:7794Tl6Vjv77NJOh8qy5uj
+ 1T05TouYP42EV8JCb0JK+OkSsUt7mt0w4B3r0zVI8f97EU9LjDUlgbgXVmLqPgTFC58st+us+
+ KEdt4PlBQK7ZBdd+C/WPtCff9f2e4IBoMVwcCZf01qaUrCWzOTWiFcwmi5qMD3mVcZSGt9dUq
+ VDdIUM/yAUCdkf/MIKZqCIIYDnnAmktpoWmSKiVv67IF3nSgrhWP9cqMIbVOUpOo1B5+QXcvZ
+ 2UPrA5Tsx7QCPZ/NooXk7Sqt5hFN8QsHh93YgW2aBhlHyacjsz/EkmVJQIVl7PSYcfGGnhekJ
+ +D+TV8ObmHWOfyDiibTnCNDyC97fdVSvmr78daLFc+5CRjT6ZryJgT2uTSXHyjSRRTyi9pLjh
+ KSjgl+bhc0+SqwfZ6ROC8iOaLXee8yq/Lls3vmRL81iWayucFgO1NhPBor9uLVot36PcsrWC0
+ OGNUxUZyxKJ4J6x/+c5V397mlc20ch8E/9E5jp7S7AAPF9Echdsu51LBcVngs30iJkuQ9/21T
+ An+T1fW5RprVM+whptvUEB2XK0SmHlzkCKpv66xjYZX6S0BCAz5AMm8xO+lWvLnFGBmqAFgBB
+ 896d+rpIyPbTRTQtSnjGjnYt+oGp8GMoRqTgq4QMcBU/5ZI90u+CrUtSpF0DdTKCpY0iDLu2h
+ lxXpTMIYYAR7c1t7SOC+opbRxq4vo+I3TvJJgP+YPtg46jPNDWsrQ0zhpjsLEIy+GK1+4Z27V
+ QMzybUtWlieDjjbcbTcciDysXReVgEscISwbGXU+Ybeh0IXH1x3TgrhJkUE4E8k5FxUrv+hCh
+ B2kwe/5/cgCpM1V9e1w7uPMxeNNBeiwJv8ZMgWTO6oer0xx2coJKMaM2WS5wDlev2nUHTEUkp
+ IaVT1103ZbCklvH5CjPIyxfNxohjXDPk7P9MgxuqI7HtnE7NE+fVe1m0GAmf3C3HJmt832N2X
+ lOzDyGlgJmQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,79 +60,33 @@ Hi Paul,
 
 On Wed, 26 Sep 2018, Paul-Sebastian Ungureanu wrote:
 
-> Hi,
-> 
-> > >   @@ -1443,9 +1448,10 @@ static int push_stash(int argc, const char
-> > > **argv, const char *prefix)
-> > >    	OPT_END()
-> > >    };
-> > >   -	argc = parse_options(argc, argv, prefix, options,
-> > > -			     git_stash_helper_push_usage,
-> > > -			     0);
-> > > +	if (argc)
-> > > +		argc = parse_options(argc, argv, prefix, options,
-> > > +				     git_stash_push_usage,
-> > > +				     0);
-> > 
-> > Is this `if (argc)` guard necessary?
-> 
-> Yes because without it, there would be a seg fault when
-> calling `git stash`. Why?
-> 
-> After spawning `git stash`, in `push_stash()`: `argc` would be
-> 0 (and `argv` would be `NULL`).
+> Sorry for the late reply. I had a lot on my plate for the last couple of
+> weeks.
 
-I *think* what you want to do, then, is to pass PARSE_OPT_KEEP_ARGV0 in
-the first parse_options() call. In general, this needs to be done any time
-you might want to call `parse_options()` on the remaining options.
+I understand. University can be busy times.
 
-Looking forward to v10,
-Dscho
-
-> `parse_options()` calls `parse_options_start()` which does the following:
-> 
-> 	ctx->argc = ctx->total = argc - 1;
-> 	ctx->argv = argv + 1;
-> 
-> So, `ctx->argc` would be `-1`. After we are back to `parse_options()`,
-> `parse_options_step()` would be called. In `parse_options_step()`:
-> 
-> 	for (; ctx->argc; ctx->argc--, ctx->argv++)
-> 
-> Which is an infinite loop, because `ctx->argc` is already -1.
-> 
-> This check is also done for `git notes list` (function `list()`
-> inside `builtin/notes.c`). Now, that I relook at it, it seems to me
-> that this is a bug. Probably a better solution would be to check at the
-> beginning of `parse_options()` and return early if `argc` is less then one.
-> 
-> > > @@ -1536,7 +1544,44 @@ int cmd_stash__helper(int argc, const char **argv,
-> > > const char *prefix)
-> > >    	return !!push_stash(argc, argv, prefix);
-> > >    else if (!strcmp(argv[0], "save"))
-> > >   		return !!save_stash(argc, argv, prefix);
-> > > +	else if (*argv[0] != '-')
-> > > +		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
-> > > +			      git_stash_usage, options);
 > > > +
-> > > +	if (strcmp(argv[0], "-p")) {
-> > > +		while (++i < argc && strcmp(argv[i], "--")) {
-> > > +			/*
-> > > +			 * `akpqu` is a string which contains all short
-> > > options,
-> > > +			 * except `-m` which is verified separately.
-> > > +			 */
-> > > +			if ((strlen(argv[i]) == 2) && *argv[i] == '-' &&
-> > > +			    strchr("akpqu", argv[i][1]))
+> > > +	git_config(git_diff_basic_config, NULL);
 > > 
-> > I *think* this is missing the `n`.
+> > Is this not called in as part of `git_config(git_default_config, NULL);`
+> > in cmd_stash() already?
+> > 
+> > *clicketyclick*
+> > 
+> > I guess not. But then, maybe it would make sense to run with
+> > `git_diff_basic_config` from the get go, to avoid having to run
+> > `git_config()` twice.
 > 
-> I guess that by `n` you are referring to the short option of
-> `--no-keep-index`, which is missing because it was also omitted
-> in `stash.sh`. I am not sure whether it is worth adding it. In
-> case `stash` will learn any other option starting with `n`, this
-> might create confusion amongst users.
+> I am not sure I got it right, but if I did:
 > 
-> Best regards,
-> Paul
-> 
+> Running `git_config` with `git_diff_basic_config` from the
+> beginning wouldn't be pointless when we would use any other
+> command than `create`, `push` and `save`? Although it might
+> confuse the reader a little bit, the stash should run without
+> problems.
+
+In my mind, this would simplify the code. Which is always easier on the
+reader... ;-)
+
+Ciao,
+Dscho
