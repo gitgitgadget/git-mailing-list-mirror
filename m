@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09AE01F453
-	for <e@80x24.org>; Fri,  9 Nov 2018 17:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B0BC1F453
+	for <e@80x24.org>; Fri,  9 Nov 2018 17:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728495AbeKJCyq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Nov 2018 21:54:46 -0500
-Received: from mout.gmx.net ([212.227.15.18]:52657 "EHLO mout.gmx.net"
+        id S1728572AbeKJDDU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Nov 2018 22:03:20 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59107 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727961AbeKJCyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Nov 2018 21:54:46 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmKag-1fmNp13vRi-00ZxeU; Fri, 09
- Nov 2018 18:13:10 +0100
-Date:   Fri, 9 Nov 2018 18:13:08 +0100 (STD)
+        id S1727995AbeKJDDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Nov 2018 22:03:19 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJXEd-1gNeNp30fr-0039Be; Fri, 09
+ Nov 2018 18:21:42 +0100
+Date:   Fri, 9 Nov 2018 18:21:41 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] rebase: consolidate clean-up code before leaving
- reset_head()
-In-Reply-To: <20181109100357.GA7410@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1811091750330.39@tvgsbejvaqbjf.bet>
-References: <pull.72.git.gitgitgadget@gmail.com> <64597fe827021383ab68cfb247de61fcf104a961.1541756054.git.gitgitgadget@gmail.com> <20181109100357.GA7410@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/2] built-in rebase: reinstate `checkout -q` behavior
+ where appropriate
+In-Reply-To: <20181109101148.GB7410@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1811091813140.39@tvgsbejvaqbjf.bet>
+References: <pull.72.git.gitgitgadget@gmail.com> <070092b4309e5e74e3a1b3be54613cccf26e97da.1541756054.git.gitgitgadget@gmail.com> <20181109101148.GB7410@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:p5Bh/aE9/0j2qzbdpeNFS+yTrXJ/AlIopATb5LhV0BCBtcFJ/1u
- t+t0lqPveZdKPyIuRM6L4/Ev4G4x44D4dXMfa1UH/DJpEENn872vjnKhl8ZkVMyAx1WmW2t
- eGVMZ69ez9y0uMqYTA4dg6PqsFaRNjJIKeKMvzJMgBl9dniI/c3fl58BqGdY/sgZKFyp/+i
- 2AN9zITvCamgOepP1BmrQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NO3xelL8Hyk=:uOCN/eVTBCZa3DXMGfrNg+
- vHj4zyeWLLSQWcXZE3jf5ImzqWTaDK3aSexOFcsMcIAMJxKz56MfFtn6rFxj6l6D43CgYgP/w
- VlP+qD9NMeTRdf7PVq63wnCmg4FvV3jpw6E3oU3VjF2dU/+/pVizKC5q58MDbXMT9dzm5ZWQP
- vVrG5xu+1TK70NSZoQbyXKOT0iZID5rZ4tkD9MuWMrbQeJq5cIF5MMX0xYGXgiFaPB+zSsEmS
- UmEYOVlYiNN91B2Yk2/QHNbvRHu3KgVUFf2k64mvd/VGpWZeQSvNiSCXd040rsPwajKAB9Gey
- hLiphZsR0Q2F75FEoPZB1bSCMqtMLDbZlHOMKksd3CS1nnzdsbXcJk4geaZwH56B4xe/9yoX3
- 5nbKKtLBE6lQ53KizqIYUtjIk526UcFppf5aLN7BVpKgmFWxWN+Ih3GQqdQXrhjFjNDdMT0Gb
- mWSa/jo2I0K/t7JRRN5Btk9ShiGJ3I2l8yl0HX5sRbfR4uVXQl8YaOkCyRP4QyIgffwP46AO3
- dSk7SVnJ3/pdDdNJK5Mk3UiC8cWw8fPp0j7dDxihWyva5erQuVnvJXIxPuagQ6LCeldtffiia
- EV1Er2JjozeFJ5C2LeBgogPRGp02En2wTTiy63nvlcJrDa9hpzKdl/5Fjol91Cu2ZpvCBVOKP
- xMe79UCmQAV5JjMaNXOqhbezz9EUGvykKWOTEMmm5wcqq+oGl6Ika128Lt+4OGKcWJCqQEqwe
- StN9m/6ZcSM3So6NMnOEY7PrVWS1JPqasVjFu/DXNDM97ojQ6JTeuWSkQcPVDyjTsuTvx/OP0
- QZjMtrTxW8Kmf7J0C4cANV2o9X8/peaziNHkuEuH8yrl7XCKRIpGD40iQjqc6DFDblGt2A9W5
- IkAaiEEae5Fe6ok9F2VpKllLUTqV6rMwjOoVTpKYW2Upkf3psFMi1hV9Ov3Icj1eu9fW0NZsh
- QIdqS18NR9Q==
+X-Provags-ID: V03:K1:86czkWgSOk9PiXozRBmTGjiRLsyhgq2TzzDjn32YwYYJib0sXRG
+ 8ins/CXEdTs2EMpFmXbJmvUrjHXL8ymGrkL4zU5IErwVlGO4KU5j8y+jWqJ3EpjZ9tv5ZVY
+ u4ekV96qonsp1uvkLIuECv02hD2ZzVXp8Pj208p67l/+m/cLhSNxR53oL4mN3S8FRlYlhGn
+ zJ/ugay0bmF7hPddTcRlw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:exJWx+py4oY=:/iGU3aoOORIeNEyBpvb6J7
+ o0PD1yJFHngk/Gg6QDtsEusKtPjfUaJxi69XmTdMjyMPtkpSEs3PBcMn7Y9gVHvH3X6qsR+5S
+ 15Hl0d4ErVbjgr+VfCy39SSvyNjtycnOJ1R2PPkFnfK2UVizgc9wW5jDpErIjLK6no7DwwKoJ
+ vcy+0Z5ptfUBDVovBB5W/PzFmNsoEevspZIUzQa5jcCnj45zvREHWXpCfy9/4kNDO9O9Wzu26
+ 0uHto/EYCkSirOerCEaj1qTPkenlOnQ31K6cI02bcl+6CRRZ8fjKpG2PfYYnfIMJiQRl9rrwQ
+ trFwKashyIPodPrDlXtZaFrnOUPNYFo0I/kvlAk26Hr3I2cd3ytjtSZ4A5RBazBk+Y6J7hM53
+ DfWbD0a9G2oo764yUlG82oSKYDm5mcWksZdwwvl5QQ2CEZP3ry2TdtHDF2RKRRGJD6V5LLpBI
+ ErKZJO2eZSUZYXmTWPg4gVu1oUjKJ6fU0aY09C1eA1QuylemXDEvZK1zUEFiJRL3lSUoDa7Dm
+ Ov4ul3qyvS+YVcEkkYb04vNqpstyv/+2OP4+DmyqPZrxNKXnROCVAj420DTubuv3fYJNiYHYY
+ JNQZukxqQ6xSoWwMjkVeascO5hE0ga1FjzZERuw9XwAX4lANYtJ8JGGHhCM55Qrtmm58BuJgV
+ AHJI5FRGY/qoJuodtYw8sBu8+6MzojYUzBss/FpasXP5gcKC2lXKJvI6rFhmcIWGliZyrxZIB
+ P/XF/mgHBp3kkxi72L4xUTcAcBVFNjT+rGrWpV5cEHnT+O43ISGCP53c//LqQ4U5ksiWFGbzP
+ 8fKOG96IAoxEd4nZFHwWfz0wYt2lN9QUcmyTPhmpU5lGfa+C0rI+w4ejv6uNl8aCamZEzs5Iq
+ anYURGsxQYh5G2RPA6n60InF/KTx7yeemPHdFOKbIzz/DZH0A6GWqbSZwG/W5xN53d1SC0Qh7
+ 5YkWYfM2uZg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,72 +61,88 @@ Hi Peff,
 
 On Fri, 9 Nov 2018, Jeff King wrote:
 
-> On Fri, Nov 09, 2018 at 01:34:17AM -0800, Johannes Schindelin via GitGitGadget wrote:
+> On Fri, Nov 09, 2018 at 01:34:19AM -0800, Johannes Schindelin via GitGitGadget wrote:
 > 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > When we converted a `git checkout -q $onto^0` call to use
+> > `reset_head()`, we inadvertently incurred a change from a twoway_merge
+> > to a oneway_merge, as if we wanted a `git reset --hard` instead.
+> > 
+> > This has performance ramifications under certain, though, as the
+> > oneway_merge needs to lstat() every single index entry whereas
+> > twoway_merge does not.
+> > 
+> > So let's go back to the old behavior.
+> 
+> Makes sense. I didn't think too hard about any possible gotchas with the
+> twoway/oneway switch, but if that's what git-checkout was doing before,
+> it seems obviously safe.
+
+Right.
+
 > > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > index 0ee06aa363..6f6d7de156 100644
+> > index 6f6d7de156..c1cc50f3f8 100644
 > > --- a/builtin/rebase.c
 > > +++ b/builtin/rebase.c
-> > @@ -569,16 +569,13 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  	}
+> > @@ -523,11 +523,12 @@ finished_rebase:
+> >  #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
 > >  
-> >  	if (!fill_tree_descriptor(&desc, oid)) {
-> > -		error(_("failed to find tree of %s"), oid_to_hex(oid));
-> > -		rollback_lock_file(&lock);
-> > -		free((void *)desc.buffer);
-> > -		return -1;
-> > +		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
-> > +		goto leave_reset_head;
+> >  static int reset_head(struct object_id *oid, const char *action,
+> > -		      const char *switch_to_branch, int detach_head,
+> > +		      const char *switch_to_branch,
+> > +		      int detach_head, int reset_hard,
+> 
+> It might be worth switching to a single flag variable here. It would
+> make calls like this:
+> 
+> > -	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1,
+> > +	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1, 0,
+> >  	    NULL, msg.buf))
+> 
+> a little more self-documenting (if a little more verbose).
+
+I thought about that, but for just two flags? Well, let me try it and see
+whether I like the result ;-)
+
+> > -	if (!oid) {
+> > -		if (get_oid("HEAD", &head_oid)) {
+> > -			rollback_lock_file(&lock);
+> > -			return error(_("could not determine HEAD revision"));
+> > -		}
+> > -		oid = &head_oid;
+> > +	if (get_oid("HEAD", &head_oid)) {
+> > +		rollback_lock_file(&lock);
+> > +		return error(_("could not determine HEAD revision"));
 > >  	}
 > 
-> If fill_tree_descriptor() fails, what is left in desc.buffer? Looking at
-> the implementation, I think it's always NULL or a valid buffer. But I
-> think all code paths actually die() unless we pass a NULL oid (and in
-> that case desc.buffer would be NULL, too).
+> This one could actually turn into:
 > 
-> So I think the original here that calls free() doesn't ever do anything
-> but it did not hurt. After your patch, the leave_reset_head code would
-> continue to call free(), and that's OK.
-
-Right, that was my thinking, too.
-
-> There are a few earlier conditionals in reset_head() that do only
-> rollback_lock_file() that could similarly be converted to use the goto.
-> But they would need desc.buffer to be initialized to NULL. I could go
-> either way on converting them or not.
-
-Whoops. I should have checked more carefully?
-
-> > @@ -586,10 +583,9 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  
-> >  	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
-> >  		ret = error(_("could not write index"));
-> > -	free((void *)desc.buffer);
-> >  
-> >  	if (ret)
-> > -		return ret;
-> > +		goto leave_reset_head;
-> >  
-> >  	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
-> >  	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
-> > @@ -622,7 +618,10 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  					 UPDATE_REFS_MSG_ON_ERR);
-> >  	}
-> >  
-> > +leave_reset_head:
-> >  	strbuf_release(&msg);
-> > +	rollback_lock_file(&lock);
-> > +	free((void *)desc.buffer);
-> >  	return ret;
+>   ret = error(...);
+>   goto leave_reset_head;
 > 
-> We get here on success, too. So we may call rollback_lock_file() on an
-> already-committed lock. This is explicitly documented as a no-op by the
-> lock code, so that's OK.
+> now. We don't have to worry about an uninitialized desc.buffer anymore
+> (as I mentioned in the previous email), because "nr" would be 0.
+> 
+> It doesn't save any lines, though (but maybe having a single
+> cleanup/exit point would make things easier to read; I dunno).
 
-Indeed. I did not check the documentation, but the code, and came to the
-same conclusion.
+But you're right, of course. Consistency makes for easier-to-read code.
 
-> So overall looks good to me.
+> Take all my comments as observations, not objections. This looks OK to
+> me either way.
 
-Thanks!
+Actually, you got me thinking about the desc.buffer. And I think there is
+one corner case where it could cause a problem: `struct tree_desc desc[2]`
+does not initialize the buffers to NULL. And what if
+fill_tree_descriptor() function returns NULL? Then the buffer is still
+uninitialized.
+
+In practice, our *current* version of fill_tree_descriptor() never returns
+NULL if the oid parameter is non-NULL. It would die() in the error case
+instead (bad!). So to prepare for a less bad version, I'd rather
+initialize the `desc` array and be on the safe (and easier to reason
+about) side.
+
+Thank you for your helpful review,
 Dscho
