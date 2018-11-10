@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16A0E1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id D53141F453
 	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729011AbeKJPdX (ORCPT <rfc822;e@80x24.org>);
+        id S1729017AbeKJPdY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:33:24 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:45853 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728992AbeKJPdX (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 10 Nov 2018 10:33:23 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:34973 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728859AbeKJPdX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:33:23 -0500
-Received: by mail-lj1-f196.google.com with SMTP id x85-v6so3388384ljb.2
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:35 -0800 (PST)
+Received: by mail-lf1-f66.google.com with SMTP id b20so2811614lfa.12
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LQ5Nw7bsTCRM8YIiL57S16qk+pC8efXpC9u8QUtnnAg=;
-        b=gayA9JA13MmOg3Jjzcx7tKFprXT5jhIdno3yocS5QP0LAncvahNHfhYnGG3bCahCOr
-         kwvJN+MLvsmYfABbUBpNEXgXMoMhCYuIKhOn2gMdO8xKWp2tsg61cad0bhs4VATKHADw
-         N5izAkZ2GmwAUqsRBMMcGLybhMVMnFpSNk9AwkJJCqK77cEMdkx+/ioFWb9IvgbpZ1Cl
-         qkZItDWLG+9RA7DR/Bch+lCs/cd5eOVQDbrbS9vsVxLud6uzLL3juoEo35pEHZeh5aCL
-         67MgVb0XMaWerxHN3rrj6w6K0VSMRAZm9kPiYc9K8Du0x9d4hVXwQZQOezFsos7S218k
-         PzOg==
+        bh=/ZIg0cK1Nls90unQaMMBzrnQ3IUriSYgy1zCqIsRwHA=;
+        b=HbKsVN3d82YRGFAp6Y/UjqQti4J4OLhAjgbgA+RTkxGETbmetEwRq1rtSp+DZOxepD
+         qKkDQCDG+pUR6pNHgMf5Hv78rtvL925dKokEL3LMkFlXtR3kNCcmTUY5O5yke3cxi+t9
+         SqXjbU5ESjCmhyB6gP7q6DteyzYqZpB9P4fd+KBk48/NiBA//QW741/3Y2f90ZeyJswh
+         MlVvEaUbp4AGEG3wYfRuX5iG4+kTE247miDbwMeH0wyEdkdOmOucdPmJmTZjGQhHgyOS
+         h4Vvi8IhKwuq8SYZLQYWc7hKRdkGNxJymtpYnLwjhKvwedIrj0ocqjgahFdl1qUIM28L
+         8Krg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LQ5Nw7bsTCRM8YIiL57S16qk+pC8efXpC9u8QUtnnAg=;
-        b=N+2HeKODlHCx3Pahhu++r9Uuld0PmZtz551y8p27Hqln+jKPF7suALHbZrEnmum2N4
-         vX3R48sjN2LNT4AVpaAgeTeQdSUIinjenqWxOj18TQeCyJaxZ61iN/C5H0R8oV4TosMP
-         HTR0pexWdiL0mjnHPVSf3p439XSnLomfP4Eo2rDRD2FXgmUgjL4A9d1F7Zf/XFfGK//N
-         Yk6rbeu89mWaX+gGo05SN+l6tB51K7ZY0GIZwraFx7crmUdGQuQCQEfcd41HiYrGP+2L
-         qmli4bmV4+lkEeCxpsJVO2zTAgpL7lyWeI18vz1DnyF/uqwFXtFSSiGLx4wujioR4miS
-         UrTg==
-X-Gm-Message-State: AGRZ1gJfwPn2ZI1IWAQ7dA0xr96asmeMEBUZUYgQjGrhgV+OwMcEG35J
-        fgt6NrTLJBVuEI0A8eJjqEksiVA3
-X-Google-Smtp-Source: AJdET5eFbC/tOCKVw7cw/R6mvGfZ2cO1I5EtsAe7HVWHgCkY8IXYS8iF7/8d24/498msxz4xdGxY4Q==
-X-Received: by 2002:a2e:6c04:: with SMTP id h4-v6mr4232808ljc.92.1541828974275;
-        Fri, 09 Nov 2018 21:49:34 -0800 (PST)
+        bh=/ZIg0cK1Nls90unQaMMBzrnQ3IUriSYgy1zCqIsRwHA=;
+        b=fzcQuG6L49f4gTakb9OZGHpyavKrRVamaJ/QysBMV3jk7RItVDabhYzWBUwxykCha4
+         nj+i5+y/lQEgzML6G+bEe7KUMc9LCJ5pM7RF2Cju8pXejjKpGUs5dwox+t0Gm2BM6gdy
+         EiNvTnTD1qiHueTtX0Lv+/v9TFqJgTK0WMoLI3fP6+SyttFJ9U4jLKa0VbIZc7pI2H4+
+         wzLhiMq/76EKIGib+zcGuiY1xVBONNjB52T/8aw+fiyku4/n6uxxPRGI/7OmH8cbnsDt
+         9ruzw4Q9+ziIAAdlqs406fWDCh4x2oQYl2SUyr7UuBbW2Z0nbJelsQ4/+8kXfSfOiPGm
+         RLJA==
+X-Gm-Message-State: AGRZ1gJ4PODHSIwvg3V314IxmRnbe9WlZysSfew3bjlSprewydhKuyxu
+        GJriqq/lit8shV9pgh8F93e7TmNQ
+X-Google-Smtp-Source: AJdET5dkdI/pPW6eT4lX6Kx+FhSaH7NYLFXWEuM8fp3HNrR//J+PqLmr7LSMBax1vqZG48ePH3+A+g==
+X-Received: by 2002:a19:9508:: with SMTP id x8mr7243072lfd.112.1541828975373;
+        Fri, 09 Nov 2018 21:49:35 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.33
+        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:49:33 -0800 (PST)
+        Fri, 09 Nov 2018 21:49:34 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 14/22] cache-tree.c: remove the_repository references
-Date:   Sat, 10 Nov 2018 06:49:02 +0100
-Message-Id: <20181110054910.10568-15-pclouds@gmail.com>
+Subject: [PATCH v2 15/22] delta-islands.c: remove the_repository references
+Date:   Sat, 10 Nov 2018 06:49:03 +0100
+Message-Id: <20181110054910.10568-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
 In-Reply-To: <20181110054910.10568-1-pclouds@gmail.com>
 References: <20181110054910.10568-1-pclouds@gmail.com>
@@ -68,213 +68,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This case is more interesting than other boring "remove the_repo"
-commits because while we need access to the object database, we cannot
-simply use r->index because unpack-trees.c can operate on a temporary
-index, not $GIT_DIR/index. Ideally we should be able to pass an object
-database to lookup_tree() but that ship has sailed.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/read-tree.c |  4 +++-
- builtin/rebase.c    |  2 +-
- builtin/reset.c     |  2 +-
- cache-tree.c        | 26 +++++++++++++++-----------
- cache-tree.h        |  4 ++--
- read-cache.c        |  2 +-
- sequencer.c         |  2 +-
- unpack-trees.c      |  2 +-
- 8 files changed, 25 insertions(+), 19 deletions(-)
+ builtin/pack-objects.c |  4 ++--
+ delta-islands.c        | 24 ++++++++++++++----------
+ delta-islands.h        |  9 ++++++---
+ 3 files changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index fbbc98e516..c05c12d034 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -255,7 +255,9 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 	 * what came from the tree.
- 	 */
- 	if (nr_trees == 1 && !opts.prefix)
--		prime_cache_tree(&the_index, trees[0]);
-+		prime_cache_tree(the_repository,
-+				 the_repository->index,
-+				 trees[0]);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index c99ee79c31..7812c2b1f3 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2628,7 +2628,7 @@ static void prepare_pack(int window, int depth)
+ 	unsigned n;
  
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die("unable to write new index file");
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b9eb958454..d9bedecf86 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -582,7 +582,7 @@ static int reset_head(struct object_id *oid, const char *action,
- 	}
+ 	if (use_delta_islands)
+-		resolve_tree_islands(progress, &to_pack);
++		resolve_tree_islands(the_repository, progress, &to_pack);
  
- 	tree = parse_tree_indirect(oid);
--	prime_cache_tree(the_repository->index, tree);
-+	prime_cache_tree(the_repository, the_repository->index, tree);
+ 	get_object_details();
  
- 	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
- 		ret = error(_("could not write index"));
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 5b4bbb0fb5..161b5e0cae 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -93,7 +93,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
- 
- 	if (reset_type == MIXED || reset_type == HARD) {
- 		tree = parse_tree_indirect(oid);
--		prime_cache_tree(&the_index, tree);
-+		prime_cache_tree(the_repository, the_repository->index, tree);
- 	}
- 
- 	ret = 0;
-diff --git a/cache-tree.c b/cache-tree.c
-index 9d454d24bc..190c6e5aa6 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -659,7 +659,9 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
- 	return ret;
- }
- 
--static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
-+static void prime_cache_tree_rec(struct repository *r,
-+				 struct cache_tree *it,
-+				 struct tree *tree)
- {
- 	struct tree_desc desc;
- 	struct name_entry entry;
-@@ -673,24 +675,25 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
- 			cnt++;
- 		else {
- 			struct cache_tree_sub *sub;
--			struct tree *subtree = lookup_tree(the_repository,
--							   entry.oid);
-+			struct tree *subtree = lookup_tree(r, entry.oid);
- 			if (!subtree->object.parsed)
- 				parse_tree(subtree);
- 			sub = cache_tree_sub(it, entry.path);
- 			sub->cache_tree = cache_tree();
--			prime_cache_tree_rec(sub->cache_tree, subtree);
-+			prime_cache_tree_rec(r, sub->cache_tree, subtree);
- 			cnt += sub->cache_tree->entry_count;
- 		}
- 	}
- 	it->entry_count = cnt;
- }
- 
--void prime_cache_tree(struct index_state *istate, struct tree *tree)
-+void prime_cache_tree(struct repository *r,
-+		      struct index_state *istate,
-+		      struct tree *tree)
- {
- 	cache_tree_free(&istate->cache_tree);
- 	istate->cache_tree = cache_tree();
--	prime_cache_tree_rec(istate->cache_tree, tree);
-+	prime_cache_tree_rec(r, istate->cache_tree, tree);
- 	istate->cache_changed |= CACHE_TREE_CHANGED;
- }
- 
-@@ -726,7 +729,8 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 	return 0;
- }
- 
--static void verify_one(struct index_state *istate,
-+static void verify_one(struct repository *r,
-+		       struct index_state *istate,
- 		       struct cache_tree *it,
- 		       struct strbuf *path)
- {
-@@ -736,13 +740,13 @@ static void verify_one(struct index_state *istate,
- 
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		strbuf_addf(path, "%s/", it->down[i]->name);
--		verify_one(istate, it->down[i]->cache_tree, path);
-+		verify_one(r, istate, it->down[i]->cache_tree, path);
- 		strbuf_setlen(path, len);
- 	}
- 
- 	if (it->entry_count < 0 ||
- 	    /* no verification on tests (t7003) that replace trees */
--	    lookup_replace_object(the_repository, &it->oid) != &it->oid)
-+	    lookup_replace_object(r, &it->oid) != &it->oid)
+@@ -3143,7 +3143,7 @@ static void get_object_list(int ac, const char **av)
  		return;
  
- 	if (path->len) {
-@@ -793,12 +797,12 @@ static void verify_one(struct index_state *istate,
- 	strbuf_release(&tree_buf);
+ 	if (use_delta_islands)
+-		load_delta_islands();
++		load_delta_islands(the_repository);
+ 
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
+diff --git a/delta-islands.c b/delta-islands.c
+index 8e5018e406..191a930705 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -190,13 +190,15 @@ static void set_island_marks(struct object *obj, struct island_bitmap *marks)
+ 	island_bitmap_or(b, marks);
  }
  
--void cache_tree_verify(struct index_state *istate)
-+void cache_tree_verify(struct repository *r, struct index_state *istate)
+-static void mark_remote_island_1(struct remote_island *rl, int is_core_island)
++static void mark_remote_island_1(struct repository *r,
++				 struct remote_island *rl,
++				 int is_core_island)
  {
- 	struct strbuf path = STRBUF_INIT;
+ 	uint32_t i;
  
- 	if (!istate->cache_tree)
- 		return;
--	verify_one(istate, istate->cache_tree, &path);
-+	verify_one(r, istate, istate->cache_tree, &path);
- 	strbuf_release(&path);
+ 	for (i = 0; i < rl->oids.nr; ++i) {
+ 		struct island_bitmap *marks;
+-		struct object *obj = parse_object(the_repository, &rl->oids.oid[i]);
++		struct object *obj = parse_object(r, &rl->oids.oid[i]);
+ 
+ 		if (!obj)
+ 			continue;
+@@ -211,7 +213,7 @@ static void mark_remote_island_1(struct remote_island *rl, int is_core_island)
+ 		while (obj && obj->type == OBJ_TAG) {
+ 			obj = ((struct tag *)obj)->tagged;
+ 			if (obj) {
+-				parse_object(the_repository, &obj->oid);
++				parse_object(r, &obj->oid);
+ 				marks = create_or_get_island_marks(obj);
+ 				island_bitmap_set(marks, island_counter);
+ 			}
+@@ -237,7 +239,9 @@ static int tree_depth_compare(const void *a, const void *b)
+ 	return todo_a->depth - todo_b->depth;
  }
-diff --git a/cache-tree.h b/cache-tree.h
-index 0ab6784ffe..326209198b 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -32,7 +32,7 @@ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
  
- int cache_tree_fully_valid(struct cache_tree *);
- int cache_tree_update(struct index_state *, int);
--void cache_tree_verify(struct index_state *);
-+void cache_tree_verify(struct repository *, struct index_state *);
+-void resolve_tree_islands(int progress, struct packing_data *to_pack)
++void resolve_tree_islands(struct repository *r,
++			  int progress,
++			  struct packing_data *to_pack)
+ {
+ 	struct progress *progress_state = NULL;
+ 	struct tree_islands_todo *todo;
+@@ -281,7 +285,7 @@ void resolve_tree_islands(int progress, struct packing_data *to_pack)
  
- /* bitmasks to write_cache_as_tree flags */
- #define WRITE_TREE_MISSING_OK 1
-@@ -47,7 +47,7 @@ void cache_tree_verify(struct index_state *);
- #define WRITE_TREE_PREFIX_ERROR (-3)
+ 		root_marks = kh_value(island_marks, pos);
  
- int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
--void prime_cache_tree(struct index_state *, struct tree *);
-+void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
+-		tree = lookup_tree(the_repository, &ent->idx.oid);
++		tree = lookup_tree(r, &ent->idx.oid);
+ 		if (!tree || parse_tree(tree) < 0)
+ 			die(_("bad tree object %s"), oid_to_hex(&ent->idx.oid));
  
- int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
+@@ -292,7 +296,7 @@ void resolve_tree_islands(int progress, struct packing_data *to_pack)
+ 			if (S_ISGITLINK(entry.mode))
+ 				continue;
  
-diff --git a/read-cache.c b/read-cache.c
-index f3a848d61c..69944fc933 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3126,7 +3126,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 	struct split_index *si = istate->split_index;
+-			obj = lookup_object(the_repository, entry.oid->hash);
++			obj = lookup_object(r, entry.oid->hash);
+ 			if (!obj)
+ 				continue;
  
- 	if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
--		cache_tree_verify(istate);
-+		cache_tree_verify(the_repository, istate);
+@@ -415,7 +419,7 @@ static struct remote_island *get_core_island(void)
+ 	return NULL;
+ }
  
- 	if ((flags & SKIP_IF_UNCHANGED) && !istate->cache_changed) {
- 		if (flags & COMMIT_LOCK)
-diff --git a/sequencer.c b/sequencer.c
-index 111cb747d6..726f727644 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2991,7 +2991,7 @@ static int do_reset(struct repository *r,
+-static void deduplicate_islands(void)
++static void deduplicate_islands(struct repository *r)
+ {
+ 	struct remote_island *island, *core = NULL, **list;
+ 	unsigned int island_count, dst, src, ref, i = 0;
+@@ -444,20 +448,20 @@ static void deduplicate_islands(void)
+ 	core = get_core_island();
+ 
+ 	for (i = 0; i < island_count; ++i) {
+-		mark_remote_island_1(list[i], core && list[i]->hash == core->hash);
++		mark_remote_island_1(r, list[i], core && list[i]->hash == core->hash);
  	}
  
- 	tree = parse_tree_indirect(&oid);
--	prime_cache_tree(r->index, tree);
-+	prime_cache_tree(r, r->index, tree);
+ 	free(list);
+ }
  
- 	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0)
- 		ret = error(_("could not write index"));
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7570df481b..6d53cbfc86 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1630,7 +1630,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		move_index_extensions(&o->result, o->src_index);
- 		if (!ret) {
- 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
--				cache_tree_verify(&o->result);
-+				cache_tree_verify(the_repository, &o->result);
- 			if (!o->result.cache_tree)
- 				o->result.cache_tree = cache_tree();
- 			if (!cache_tree_fully_valid(o->result.cache_tree))
+-void load_delta_islands(void)
++void load_delta_islands(struct repository *r)
+ {
+ 	island_marks = kh_init_sha1();
+ 	remote_islands = kh_init_str();
+ 
+ 	git_config(island_config_callback, NULL);
+ 	for_each_ref(find_island_for_ref, NULL);
+-	deduplicate_islands();
++	deduplicate_islands(r);
+ 
+ 	fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
+ }
+diff --git a/delta-islands.h b/delta-islands.h
+index b635cd07d8..3ac8045d8c 100644
+--- a/delta-islands.h
++++ b/delta-islands.h
+@@ -1,14 +1,17 @@
+ #ifndef DELTA_ISLANDS_H
+ #define DELTA_ISLANDS_H
+ 
++struct commit;
+ struct object_id;
+ struct packing_data;
+-struct commit;
++struct repository;
+ 
+ int island_delta_cmp(const struct object_id *a, const struct object_id *b);
+ int in_same_island(const struct object_id *, const struct object_id *);
+-void resolve_tree_islands(int progress, struct packing_data *to_pack);
+-void load_delta_islands(void);
++void resolve_tree_islands(struct repository *r,
++			  int progress,
++			  struct packing_data *to_pack);
++void load_delta_islands(struct repository *r);
+ void propagate_island_marks(struct commit *commit);
+ int compute_pack_layers(struct packing_data *to_pack);
+ 
 -- 
 2.19.1.1231.g84aef82467
 
