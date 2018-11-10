@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B52D71F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 098431F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729039AbeKJPdb (ORCPT <rfc822;e@80x24.org>);
+        id S1729037AbeKJPdb (ORCPT <rfc822;e@80x24.org>);
         Sat, 10 Nov 2018 10:33:31 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:40175 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729026AbeKJPd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:33:29 -0500
-Received: by mail-lf1-f68.google.com with SMTP id v5so2831412lfe.7
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:43 -0800 (PST)
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:44598 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729006AbeKJPda (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:33:30 -0500
+Received: by mail-lf1-f67.google.com with SMTP id z13so2815236lfe.11
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Uv5iZSGv0Hvdh5Dmc7r+znF1VXqOaKwH08pwampdoQI=;
-        b=MJKqpqtWnwZVsSzXsq6Lh+QKTt1EMotgwH3Lpzza7ZYKnrFey//ySQm63OnYV1tQPy
-         xxRDWZC/ZypeoRPas3Fzv4h1zayeRYvLZcObd8Ih5BJxyDW+Hara65ovLySJGLvtE+Ze
-         QwN3tiMWJc6SXIdx+EAxmHbY0K+MquxF7t0kyR44YhKtvzomDZPnwHm4jxC8LqlzeyiG
-         ZyxIXrAu8NM2pWttH2AdZOHE4PnXTRBKNNT3W4iufFRpatF093kT2dgCjiSWbdQ6NoSz
-         AsiFNd5tBqS59tthKFsMhqrZIXpVsIG0ITeKYKNnNcbnseKzCJidi7e6ZiwpZpTpiBPg
-         Slsg==
+        bh=YyEo3d97wQuMdDhBA+d61nOsv0ybVhKBjv6wkamxKpE=;
+        b=DAiLp60zolsmp7cHyfGm6WZ5nKpTcGdQ9vJmNrE1GyXiFUk0vbwnr9LycUDfvitHXp
+         HhmkEuvKc/gqM+0y1CRo46hv8MJrCU/x8aQI5aRddDnHmgQqn99Hhj7EXWAyM7frB3L3
+         EBlUshy+j/jsZRe74kmAFhDvnCmUr11n1XN52uSoG4pGhXYUKMOgjmZAzXw7S804x8fr
+         p5Uem5197oJlEBMNoghm5WITEK0Z70RzejnroQpvDO6yIggLBDmtZ+gcA2HNOx4w4uFp
+         TDk28HT8g6AaxCxvQh7ylFSEolct5pzVLe6m7H84gLFeFXeDF6WfCR5qmsx7EQNOWveg
+         OlKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Uv5iZSGv0Hvdh5Dmc7r+znF1VXqOaKwH08pwampdoQI=;
-        b=suXiQtxGjkviHIBqAj+q5XxPOv/aTe++hUYA1Lbn05O5ur7pqhPqmPMzsAX9OpeEGJ
-         ISz/uPY1qh+GGe0JUX/mkvJGsFv2nStOtcBs3SF0EOmeDf7Sd79uLfeELQmXGvHj+zLu
-         dSdwT7NCyhyceWtuDbCpMZaRW/THKWytAxJ9vzj/6AX7uAn1AVBdyodUdH++19QeE9Cm
-         pGaZayImmSZbt1bQc4VHnEbni005S1e2Z90zGRGB4peLxfMGGUYjophnGSDTcXMiZeik
-         bwfSHbxMQvZSrZasfNxG/bN74UaFXk3aJ8IiTWdzpaKP94PyLgyx6N1QauThvXARl6DV
-         DYzQ==
-X-Gm-Message-State: AGRZ1gI3HTT1/Jeh//f6OWqQMIOWhQTxkD0SgY1KHPuA19UzJW2xrOv7
-        dB9u9Z7PS4cpzCCBVzKRHXM7gUMZ
-X-Google-Smtp-Source: AJdET5d3np4KpHxLzwjZndzSiTiMYWFPL2ATLffQHdm6gbl7dgOIFLeo1rKJjcmDqfmLtXrIElYxLA==
-X-Received: by 2002:a19:c396:: with SMTP id t144mr6752774lff.110.1541828982234;
-        Fri, 09 Nov 2018 21:49:42 -0800 (PST)
+        bh=YyEo3d97wQuMdDhBA+d61nOsv0ybVhKBjv6wkamxKpE=;
+        b=C4uWK9aOrzeU7G4XTEPEyo7gLLWGOFRH4UyZHu3+5YUPubnQME2w8aN9MHUwuz3+Y3
+         klc1CfG36BeExmdnJ7mEUrg0A2x1VYj3RHCfAx6bQCMDWGLXSLaDU6g/YIqBwCBQ3YRE
+         WL42VWkwXE0WjAJgg/09vNqvVy0fYfyk2SnplWAJ1RWz3/1S/eMyZXOsOT2UTjBJ29dK
+         dePbJamX81INciA+semwwoc4GUOTqYvxQgTZIeeHjNOnBaxwn35Z7nmB+uRbdaIL8S0r
+         ggE6nz50FianYU89pUyRvDUbMC8mImJr5XxtqXxVNfNRFBjT3O3EPuGvSQ8zPBppLRte
+         DpaQ==
+X-Gm-Message-State: AGRZ1gIdv0ejZFvqwitdfTqJdqRO0oUWGjXEqbn3HgZv1H5WHE3F1Mxe
+        CX/IBdtiRiYGoVgpi/1gM6tAtlmp
+X-Google-Smtp-Source: AJdET5fTanSraDF6LAG4nvLuXjALt/gaw6CcctCHq4nfItJ6BV6mXwxSr9xSMXIE9h9OtUYSvaGhfg==
+X-Received: by 2002:a19:a9d2:: with SMTP id s201mr6659433lfe.154.1541828983366;
+        Fri, 09 Nov 2018 21:49:43 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.41
+        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:49:41 -0800 (PST)
+        Fri, 09 Nov 2018 21:49:42 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 21/22] rerere.c: remove the_repository references
-Date:   Sat, 10 Nov 2018 06:49:09 +0100
-Message-Id: <20181110054910.10568-22-pclouds@gmail.com>
+Subject: [PATCH v2 22/22] rebase-interactive.c: remove the_repository references
+Date:   Sat, 10 Nov 2018 06:49:10 +0100
+Message-Id: <20181110054910.10568-23-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
 In-Reply-To: <20181110054910.10568-1-pclouds@gmail.com>
 References: <20181110054910.10568-1-pclouds@gmail.com>
@@ -68,223 +68,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While at there add a forward declaration for struct strbuf.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/am.c                  |  2 +-
- builtin/rebase--interactive.c |  2 +-
- builtin/rebase.c              |  4 ++--
- builtin/rerere.c              | 10 ++++++----
- rerere.c                      | 26 +++++++++++++-------------
- rerere.h                      |  6 +++---
- 6 files changed, 26 insertions(+), 24 deletions(-)
+ builtin/rebase--interactive.c | 2 +-
+ rebase-interactive.c          | 6 +++---
+ rebase-interactive.h          | 5 ++++-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 232f3962d7..f0eeec82a9 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2033,7 +2033,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
- static void am_rerere_clear(void)
- {
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
--	rerere_clear(&merge_rr);
-+	rerere_clear(the_repository, &merge_rr);
- 	string_list_clear(&merge_rr, 1);
- }
- 
 diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index d867050fd2..bd7d39e2af 100644
+index bd7d39e2af..dd2a55ab1d 100644
 --- a/builtin/rebase--interactive.c
 +++ b/builtin/rebase--interactive.c
-@@ -233,7 +233,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 	case SKIP: {
- 		struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 
--		rerere_clear(&merge_rr);
-+		rerere_clear(the_repository, &merge_rr);
- 		/* fallthrough */
- 	case CONTINUE:
- 		ret = sequencer_continue(the_repository, &opts);
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index d9bedecf86..bc07d932a5 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -997,7 +997,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 		options.action = "skip";
- 
--		rerere_clear(&merge_rr);
-+		rerere_clear(the_repository, &merge_rr);
- 		string_list_clear(&merge_rr, 1);
- 
- 		if (reset_head(NULL, "reset", NULL, 0, NULL, NULL) < 0)
-@@ -1010,7 +1010,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 		options.action = "abort";
- 
--		rerere_clear(&merge_rr);
-+		rerere_clear(the_repository, &merge_rr);
- 		string_list_clear(&merge_rr, 1);
- 
- 		if (read_basic_state(&options))
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index e89ccbc524..6f28c19b20 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -82,11 +82,12 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
+@@ -240,7 +240,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 		break;
  	}
+ 	case EDIT_TODO:
+-		ret = edit_todo_list(flags);
++		ret = edit_todo_list(the_repository, flags);
+ 		break;
+ 	case SHOW_CURRENT_PATCH: {
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index 3cc19283ff..68aff1dac2 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -53,7 +53,7 @@ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
+ 	}
+ }
  
- 	if (!strcmp(argv[0], "clear")) {
--		rerere_clear(&merge_rr);
-+		rerere_clear(the_repository, &merge_rr);
- 	} else if (!strcmp(argv[0], "gc"))
--		rerere_gc(&merge_rr);
-+		rerere_gc(the_repository, &merge_rr);
- 	else if (!strcmp(argv[0], "status")) {
--		if (setup_rerere(&merge_rr, flags | RERERE_READONLY) < 0)
-+		if (setup_rerere(the_repository, &merge_rr,
-+				 flags | RERERE_READONLY) < 0)
- 			return 0;
- 		for (i = 0; i < merge_rr.nr; i++)
- 			printf("%s\n", merge_rr.items[i].string);
-@@ -101,7 +102,8 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
- 				merge_rr.items[i].util = NULL;
- 		}
- 	} else if (!strcmp(argv[0], "diff")) {
--		if (setup_rerere(&merge_rr, flags | RERERE_READONLY) < 0)
-+		if (setup_rerere(the_repository, &merge_rr,
-+				 flags | RERERE_READONLY) < 0)
- 			return 0;
- 		for (i = 0; i < merge_rr.nr; i++) {
- 			const char *path = merge_rr.items[i].string;
-diff --git a/rerere.c b/rerere.c
-index b5b2357411..13624038e6 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -198,10 +198,10 @@ static struct rerere_id *new_rerere_id(unsigned char *sha1)
-  * work on (i.e. what is left by the previous invocation of "git
-  * rerere" during the current conflict resolution session).
-  */
--static void read_rr(struct string_list *rr)
-+static void read_rr(struct repository *r, struct string_list *rr)
+-int edit_todo_list(unsigned flags)
++int edit_todo_list(struct repository *r, unsigned flags)
  {
  	struct strbuf buf = STRBUF_INIT;
--	FILE *in = fopen_or_warn(git_path_merge_rr(the_repository), "r");
-+	FILE *in = fopen_or_warn(git_path_merge_rr(r), "r");
+ 	const char *todo_file = rebase_path_todo();
+@@ -69,7 +69,7 @@ int edit_todo_list(unsigned flags)
  
- 	if (!in)
- 		return;
-@@ -593,7 +593,7 @@ int rerere_remaining(struct repository *r, struct string_list *merge_rr)
- {
- 	int i;
+ 	strbuf_release(&buf);
  
--	if (setup_rerere(merge_rr, RERERE_READONLY))
-+	if (setup_rerere(r, merge_rr, RERERE_READONLY))
- 		return 0;
- 	if (read_index(r->index) < 0)
- 		return error(_("index file corrupt"));
-@@ -882,7 +882,7 @@ static int is_rerere_enabled(void)
- 	return 1;
+-	transform_todos(the_repository, flags | TODO_LIST_SHORTEN_IDS);
++	transform_todos(r, flags | TODO_LIST_SHORTEN_IDS);
+ 
+ 	if (strbuf_read_file(&buf, todo_file, 0) < 0)
+ 		return error_errno(_("could not read '%s'."), todo_file);
+@@ -85,7 +85,7 @@ int edit_todo_list(unsigned flags)
+ 	if (launch_sequence_editor(todo_file, NULL, NULL))
+ 		return -1;
+ 
+-	transform_todos(the_repository, flags & ~(TODO_LIST_SHORTEN_IDS));
++	transform_todos(r, flags & ~(TODO_LIST_SHORTEN_IDS));
+ 
+ 	return 0;
  }
+diff --git a/rebase-interactive.h b/rebase-interactive.h
+index 971da03776..17b6c9f6d0 100644
+--- a/rebase-interactive.h
++++ b/rebase-interactive.h
+@@ -1,8 +1,11 @@
+ #ifndef REBASE_INTERACTIVE_H
+ #define REBASE_INTERACTIVE_H
  
--int setup_rerere(struct string_list *merge_rr, int flags)
-+int setup_rerere(struct repository *r, struct string_list *merge_rr, int flags)
- {
- 	int fd;
++struct strbuf;
++struct repository;
++
+ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
+ 		      struct strbuf *buf);
+-int edit_todo_list(unsigned flags);
++int edit_todo_list(struct repository *r, unsigned flags);
  
-@@ -896,9 +896,9 @@ int setup_rerere(struct string_list *merge_rr, int flags)
- 		fd = 0;
- 	else
- 		fd = hold_lock_file_for_update(&write_lock,
--					       git_path_merge_rr(the_repository),
-+					       git_path_merge_rr(r),
- 					       LOCK_DIE_ON_ERROR);
--	read_rr(merge_rr);
-+	read_rr(r, merge_rr);
- 	return fd;
- }
- 
-@@ -912,7 +912,7 @@ int repo_rerere(struct repository *r, int flags)
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 	int fd, status;
- 
--	fd = setup_rerere(&merge_rr, flags);
-+	fd = setup_rerere(r, &merge_rr, flags);
- 	if (fd < 0)
- 		return 0;
- 	status = do_plain_rerere(r, &merge_rr, fd);
-@@ -1110,7 +1110,7 @@ int rerere_forget(struct repository *r, struct pathspec *pathspec)
- 	if (read_index(r->index) < 0)
- 		return error(_("index file corrupt"));
- 
--	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
-+	fd = setup_rerere(r, &merge_rr, RERERE_NOAUTOUPDATE);
- 	if (fd < 0)
- 		return 0;
- 
-@@ -1178,7 +1178,7 @@ static void prune_one(struct rerere_id *id,
- 		unlink_rr_item(id);
- }
- 
--void rerere_gc(struct string_list *rr)
-+void rerere_gc(struct repository *r, struct string_list *rr)
- {
- 	struct string_list to_remove = STRING_LIST_INIT_DUP;
- 	DIR *dir;
-@@ -1188,7 +1188,7 @@ void rerere_gc(struct string_list *rr)
- 	timestamp_t cutoff_noresolve = now - 15 * 86400;
- 	timestamp_t cutoff_resolve = now - 60 * 86400;
- 
--	if (setup_rerere(rr, 0) < 0)
-+	if (setup_rerere(r, rr, 0) < 0)
- 		return;
- 
- 	git_config_get_expiry_in_days("gc.rerereresolved", &cutoff_resolve, now);
-@@ -1236,11 +1236,11 @@ void rerere_gc(struct string_list *rr)
-  *
-  * NEEDSWORK: shouldn't we be calling this from "reset --hard"?
-  */
--void rerere_clear(struct string_list *merge_rr)
-+void rerere_clear(struct repository *r, struct string_list *merge_rr)
- {
- 	int i;
- 
--	if (setup_rerere(merge_rr, 0) < 0)
-+	if (setup_rerere(r, merge_rr, 0) < 0)
- 		return;
- 
- 	for (i = 0; i < merge_rr->nr; i++) {
-@@ -1250,6 +1250,6 @@ void rerere_clear(struct string_list *merge_rr)
- 			rmdir(rerere_path(id, NULL));
- 		}
- 	}
--	unlink_or_warn(git_path_merge_rr(the_repository));
-+	unlink_or_warn(git_path_merge_rr(r));
- 	rollback_lock_file(&write_lock);
- }
-diff --git a/rerere.h b/rerere.h
-index 5ad8864b3c..c32d79c3bd 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -23,7 +23,7 @@ struct rerere_id {
- 	int variant;
- };
- 
--int setup_rerere(struct string_list *, int);
-+int setup_rerere(struct repository *,struct string_list *, int);
- #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
- #define rerere(flags) repo_rerere(the_repository, flags)
  #endif
-@@ -37,8 +37,8 @@ int repo_rerere(struct repository *, int);
- const char *rerere_path(const struct rerere_id *, const char *file);
- int rerere_forget(struct repository *, struct pathspec *);
- int rerere_remaining(struct repository *, struct string_list *);
--void rerere_clear(struct string_list *);
--void rerere_gc(struct string_list *);
-+void rerere_clear(struct repository *, struct string_list *);
-+void rerere_gc(struct repository *, struct string_list *);
- 
- #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
- 	N_("update the index with reused conflict resolution if possible"))
 -- 
 2.19.1.1231.g84aef82467
 
