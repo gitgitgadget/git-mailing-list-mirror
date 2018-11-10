@@ -2,157 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 494D41F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 223101F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728925AbeKJPbL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:31:11 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:43203 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728580AbeKJPbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:31:11 -0500
-Received: by mail-lj1-f195.google.com with SMTP id g26-v6so3358080lja.10
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:47:25 -0800 (PST)
+        id S1728893AbeKJPbv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:31:51 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:55243 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728596AbeKJPbv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:31:51 -0500
+Received: by mail-it1-f196.google.com with SMTP id a205-v6so450000itd.4
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:48:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hYW3y1PO9bwBHwuS+k14a0KhW20aEjE784WpvdNXVFQ=;
-        b=TqyQMnyrQVubvR+CnZzlrWJeSTjQyLQW2BpLytsa7ai9AFaxCbows21hd63n2kU9HQ
-         i4B3sen5OLLrDJbUZoxehkWov4GYswd6Lerg+pB+DppMMYLn8SY2mMlfkeAHT8KHKFaf
-         a0jaWTUDo9CzbTGyj2xe2ydSifYvMkC/siJyXgJ59lM6ENPTeVovV72O8cikQA4avlnj
-         6QCkzsvxnJ8LLL9SQkcJq/X2uJJ/7sXUeSWHtVVpxV/bwqc7CstYKCFJ9OgpUqYbqaep
-         ihlaabocRMSV/Qbnsx8xzhfAPQC3dt2uyAoz+qFx9XtnlZE6AewlLmfLw3hDeCQ9RcsZ
-         0OjQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mPvJGusnZT82T/P2LtSJjV5b47tBh8PlxZTTiHuJcsM=;
+        b=BcaMQ15Dbdm2shV8Cd2Ri7jODc+v8Km9vKdHxP3d8bxHVsyh4nKucS7fYKL3Y9hWv0
+         Oed1LYRYap5fKYa+uGKfisJvJifZmQmK3M36cHEVbweq7Y4oByU9+UqR2zF1oOxCY+9V
+         9CbvhaqSaC+L2XOC0f2lVLnnrqjicG3c08sAYnz2NIMqE48sBYjlTGWBjNDHEAXnl5uQ
+         GMJWsOlqHoOtrDS1CRqP1n28YT1AYwK3LolbGOspiV927SktJoqgi1UVKHM+59UgUa1n
+         fs4lpeD3/yjy1OdQeVaOw/gcj5k42T9F+oSQi3T6rsJOLGjILtmvoexoiVi+IVHeOS/A
+         OjnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hYW3y1PO9bwBHwuS+k14a0KhW20aEjE784WpvdNXVFQ=;
-        b=i7iKWMEZuxsOhoh9B2dCQmUQKbQEY7dvF6lWob3gWKAoxF0/0hBNoujjYA6oakglO/
-         v8nur64qoRr2gq2nvqiYDHdJym3hD3zV3wea1PZTpkCblWIzl5EDp6lY3VvGnZL8m+V5
-         0FSV2UN/Ew8jxPsWSaDC6GKZqLo/JEypav8S2DAVpFDQ61p9NvkdltzH+S8wWj18oYlM
-         ePdWs7+nz8hZ/mjTVShFd3Q/P5Q3NrCViNZAaHSprnB0RyQlV4aBYA1n5IqGXazftOWs
-         XpeiC7pPl1YHi98R6tJKRTmyQYZn5AbH6iSIOG/MLuaIbFDOllwy3jBAfp13OmtsuVHm
-         3a+A==
-X-Gm-Message-State: AGRZ1gIhUnhJ9NUkPJcUJjoPOq+3rOmREHmmZ0V/4hRBdd4JBgJvVClc
-        ICklq+K7xvpo8GSMY5gHCN4=
-X-Google-Smtp-Source: AJdET5cY4KMQ018hM2lop8MsL3OkADb2goXW9XfaxDA9pJe0Nhb9UKarTwBvEvnbzcgvMIao7TDF6g==
-X-Received: by 2002:a2e:9e53:: with SMTP id g19-v6mr8009979ljk.39.1541826994512;
-        Fri, 09 Nov 2018 21:16:34 -0800 (PST)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g66sm1769663lfe.42.2018.11.09.21.16.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:16:33 -0800 (PST)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, szeder.dev@gmail.com
-Subject: [PATCH v3 11/16] repack: mark more strings for translation
-Date:   Sat, 10 Nov 2018 06:16:10 +0100
-Message-Id: <20181110051615.8641-12-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.1.1231.g84aef82467
-In-Reply-To: <20181110051615.8641-1-pclouds@gmail.com>
-References: <20181105192059.20303-1-pclouds@gmail.com>
- <20181110051615.8641-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mPvJGusnZT82T/P2LtSJjV5b47tBh8PlxZTTiHuJcsM=;
+        b=IQETA7k7TqxVWAzOmzh+GmtAWbgJii2G/aUXxvxpEDWYO+O6QbYyxqLk57MSRroJ3s
+         zB7n4i7fYP4vJx8rmnS552QlW0vecVjGHmR1/mgsKem56LHAyKxZMX8oF2jyzLqA0my1
+         m4nOVoM9ZAf1+IOxBjpMNzu5NA2uy1h852wa32pw7bPt4KDanAKioyxOBwejeIPv58Oc
+         VslEXsQ+3rfxcRL1zXSzGOaGobtw83kxSWQUARlAAfCiJTTvf1xsAz1z2d6DnyQcPcM0
+         tl1tmWo1IgcL/NKz1/toFZeyBciCEhgIbXh90ZJDRxBK/xF80mSptF6vR64+NXZp9ftZ
+         mGlg==
+X-Gm-Message-State: AGRZ1gJ+FeFoX1GBUz6hE66PlxBnYQZ0iWIdnvA1nt8bWsPzhjZ9zRv0
+        lLDz0DDlXMmwheJrGizUidEGzvkyQXX2nCvvotc=
+X-Google-Smtp-Source: AJdET5eupB/07I5hHJzZYuAV/jap6QxMaMah8N5jba0rYpm23i2eLQex2a/OcNlnqkUuiKNnMsZM7+pp35ngyDxL9sM=
+X-Received: by 2002:a24:61c2:: with SMTP id s185-v6mr3178876itc.70.1541825761902;
+ Fri, 09 Nov 2018 20:56:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20181028065157.26727-1-pclouds@gmail.com> <20181105192059.20303-1-pclouds@gmail.com>
+ <20181105192059.20303-13-pclouds@gmail.com> <xmqqpnvjexzf.fsf@gitster-ct.c.googlers.com>
+ <d29c4fcc-0591-fc45-5a5d-65d2874d98a7@ramsayjones.plus.com>
+In-Reply-To: <d29c4fcc-0591-fc45-5a5d-65d2874d98a7@ramsayjones.plus.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 10 Nov 2018 05:55:34 +0100
+Message-ID: <CACsJy8CM=0Cw1WCamJJe8aapA4-mdr+rMmbjVpYYQCj2++NQbA@mail.gmail.com>
+Subject: Re: [PATCH v2 12/16] parse-options: replace opterror() with optname()
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two strings are slightly updated to be consistent with the rest: die()
-starts with lowercase.
+On Tue, Nov 6, 2018 at 3:07 PM Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
+> Also, this patch does not replace opterror() calls outside of
+> the 'parse-options.c' file with optname(). This tickles my
+> static-check.pl script, since optname() is an external function
+> which is only called from 'parse-options.c'.
+>
+> So, at present, optname() could be marked as a local 'static'
+> symbol. However, I could also imagine it being used by new callers
+> outside of 'parse-options.c' in the future. (maybe) Your call. ;-)
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/repack.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+I was making it static, but the compiler complained about undefined
+function and I would need to either move optname() up in
+parse-options.c or add a forward declaration (but I was going to
+_remove_ the declaration!)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index c6a7943d5c..721f947218 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -197,7 +197,7 @@ static int write_oid(const struct object_id *oid, struct packed_git *pack,
- 
- 	if (cmd->in == -1) {
- 		if (start_command(cmd))
--			die("Could not start pack-objects to repack promisor objects");
-+			die(_("could not start pack-objects to repack promisor objects"));
- 	}
- 
- 	xwrite(cmd->in, oid_to_hex(oid), GIT_SHA1_HEXSZ);
-@@ -236,7 +236,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 		char *promisor_name;
- 		int fd;
- 		if (line.len != 40)
--			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
-+			die(_("repack: Expecting 40 character sha1 lines only from pack-objects."));
- 		string_list_append(names, line.buf);
- 
- 		/*
-@@ -247,13 +247,13 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 					  line.buf);
- 		fd = open(promisor_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
- 		if (fd < 0)
--			die_errno("unable to create '%s'", promisor_name);
-+			die_errno(_("unable to create '%s'"), promisor_name);
- 		close(fd);
- 		free(promisor_name);
- 	}
- 	fclose(out);
- 	if (finish_command(&cmd))
--		die("Could not finish pack-objects to repack promisor objects");
-+		die(_("could not finish pack-objects to repack promisor objects"));
- }
- 
- #define ALL_INTO_ONE 1
-@@ -408,7 +408,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	out = xfdopen(cmd.out, "r");
- 	while (strbuf_getline_lf(&line, out) != EOF) {
- 		if (line.len != 40)
--			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
-+			die(_("repack: Expecting 40 character sha1 lines only from pack-objects"));
- 		string_list_append(&names, line.buf);
- 	}
- 	fclose(out);
-@@ -417,7 +417,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		return ret;
- 
- 	if (!names.nr && !po_args.quiet)
--		printf("Nothing new to pack.\n");
-+		printf_ln(_("Nothing new to pack."));
- 
- 	/*
- 	 * Ok we have prepared all new packfiles.
-@@ -477,13 +477,13 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		if (rollback_failure.nr) {
- 			int i;
- 			fprintf(stderr,
--				"WARNING: Some packs in use have been renamed by\n"
--				"WARNING: prefixing old- to their name, in order to\n"
--				"WARNING: replace them with the new version of the\n"
--				"WARNING: file.  But the operation failed, and the\n"
--				"WARNING: attempt to rename them back to their\n"
--				"WARNING: original names also failed.\n"
--				"WARNING: Please rename them in %s manually:\n", packdir);
-+				_("WARNING: Some packs in use have been renamed by\n"
-+				  "WARNING: prefixing old- to their name, in order to\n"
-+				  "WARNING: replace them with the new version of the\n"
-+				  "WARNING: file.  But the operation failed, and the\n"
-+				  "WARNING: attempt to rename them back to their\n"
-+				  "WARNING: original names also failed.\n"
-+				  "WARNING: Please rename them in %s manually:\n"), packdir);
- 			for (i = 0; i < rollback_failure.nr; i++)
- 				fprintf(stderr, "WARNING:   old-%s -> %s\n",
- 					rollback_failure.items[i].string,
+Since it could be potentially used by Jeff's series (and I think it
+does have potential in parse-options-cb.c), I'll just leave it
+exported and caress your static-check.pl script (how did it not catch
+optbug() not being used outside parse-options.c either)?
 -- 
-2.19.1.1231.g84aef82467
-
+Duy
