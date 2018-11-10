@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 144771F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1C8C1F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729024AbeKJPd1 (ORCPT <rfc822;e@80x24.org>);
+        id S1729031AbeKJPd2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:33:28 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:35621 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729006AbeKJPd1 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 10 Nov 2018 10:33:27 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:34798 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728859AbeKJPd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:33:26 -0500
-Received: by mail-lf1-f65.google.com with SMTP id p6so2837330lfc.1
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:39 -0800 (PST)
+Received: by mail-lf1-f67.google.com with SMTP id e26so1048064lfc.2
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=khoL39CpPqcK8x61+FKKJNTZkXWHAIxTuhLVjgclfWI=;
-        b=FHB2g96IrgZHE1fgM9jwW86ba4p74lOdUS2EvfYUzlApA7Tx984VoYAGAi/hqpW9YC
-         dazL8SuZPyZTdzCZVgSNoEuUGnQyjKTNoZt92Mj8f5+Y0PGbyxEa+iMGXA4x/wpX3kC1
-         +Fd2zNY8SWHWN1QIGVH9F5tIbD/Wh8nP90yDb8ASiczZsyeJSB+HBJW26oredG5pYM6r
-         tSesaxFiXt6IBnHGDy9E1P4+ZYedjA7/oOBQW8WCjYyWCAbftmjsWO5MjSIvvfUqBbjk
-         GtR7JQmIZoEy45iDYcLwxaNPLuXqgLu61t+t7lEzD4Yat+6K9MwIdtSsQnqG/5kRf7Tm
-         jhEg==
+        bh=EeLaNBGaj6wiCdP7HzdaXjOoJAHE1Rj9J8FIQM1/7nQ=;
+        b=CbXoHpXiweC5uLwEemlh8cirZnVMRB6m54EW5HYnronEbqputd6jFw6op6Xahj8LRJ
+         9dgmnLwMZrWfN0ALDrsTDSwX58kFTXCFwsZ10MOWNDZFtla+a92+jzNfMw6q81zjWA4e
+         o0nnrXl4Wwpw5PPoedb5D7U88fpCg9aXFLapNB6FnFQNUxye3T3DfvtHqg3zISrU2VI2
+         h/DJRk6p38TYVADjF9cv43HP2XacmG7tTiWkNWOFI1lK8xKmWNViS70TSjZquB6YLECz
+         j9RYijmsavN8mAsP0gvMwQMdCwVrtTKkCQV0ZuW9s5fTqBJmZjcuZOAzwFI+s9QAHPmX
+         xLKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=khoL39CpPqcK8x61+FKKJNTZkXWHAIxTuhLVjgclfWI=;
-        b=WdQEgnygo1VD1t6/fIeIbh+C6reGUCC0wlfceeCUjI5XiwDSttqhtRC9u8W5Jbt/vx
-         eYCXjUF4GQCfnsGIG7ndBStGOKEPMClQGNuxsCfNZsfOwDCKV1QDLyX3PRMEWQqbWR2n
-         mcDuXOpfG57yzOB1RC9UufcgCdXloXTVvNiNG6OsocxHPfrIvEcnsoIbi7dn1tZ3dxwK
-         gg4DZ6oDxz08xxepTab79ZttFtTyUoMSsWz2RRKNtkp16Z2nhZLrQAzbhUCgz87RH/Sl
-         CxahsSwMI9cePEnws5j/mCyVFJE7pOg+eCwP4MFUC4BcItds8yJ3pUA844tHH7aj0S1W
-         gLGg==
-X-Gm-Message-State: AGRZ1gIHUPnZFxZuPlNpWhMlwZbDr+Z+i1S9N++iZgtSSg+tcBixsPvu
-        WyLBnuGTzX9aFJwujjV/VKr1wvE6
-X-Google-Smtp-Source: AJdET5dySwnvLccTkoeKCKZ1B7gQo8fYv0SakruthBYmuFFFLcRTAUvPGrzuYSHGuJL2dCjDZHjxZA==
-X-Received: by 2002:a19:a84e:: with SMTP id r75mr7189163lfe.45.1541828978331;
-        Fri, 09 Nov 2018 21:49:38 -0800 (PST)
+        bh=EeLaNBGaj6wiCdP7HzdaXjOoJAHE1Rj9J8FIQM1/7nQ=;
+        b=jPYZWxhyL+6EHs1BxkQZlqMUY5GvBG3q4VDrtUBiS20n95XqGOfEHlVJIraTJoIgAd
+         v615XYJH0xuVItbbpyWW3xSiRe71XO4DVKacYZcSWPXEmmaJ4pflvW0eCUAgKfN7giUW
+         oZzvt5c0+icrJ8F/qjN3GHE1I7n82CTDfK83j3zSiAIUSqHq7WoCU+DFPcJnoM9wZcL5
+         lAgvTP0jNYE+CTj3ma9L5Uqwtcxda0xajeetG4VJGsgNaPZ1Sx/6OEC2x3XJWOoYR1/U
+         CmvRlpVO3nzAvyR6eBbGxkO7VlvFKtQplAqpO1WXR4x49FDHmjd/qXXubdx1PduFW55k
+         61SQ==
+X-Gm-Message-State: AGRZ1gKjaXplUvnlGH1P3+x0weH6nqtzAmSHOQluKz4xnfb199bGxcA6
+        QU7xg8j3wjCzL+LpBMoMyidRrKKP
+X-Google-Smtp-Source: AJdET5cs0Alqm+QofqBxGslKHIrX1+86pTvwEnolbrEEK2+l6SVOBTHCTZ8lOKlaRmTU53hK/p754w==
+X-Received: by 2002:a19:be16:: with SMTP id o22mr6759360lff.22.1541828979912;
+        Fri, 09 Nov 2018 21:49:39 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.37
+        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:49:37 -0800 (PST)
+        Fri, 09 Nov 2018 21:49:38 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 18/22] notes-cache.c: remove the_repository references
-Date:   Sat, 10 Nov 2018 06:49:06 +0100
-Message-Id: <20181110054910.10568-19-pclouds@gmail.com>
+Subject: [PATCH v2 19/22] pack-check.c: remove the_repository references
+Date:   Sat, 10 Nov 2018 06:49:07 +0100
+Message-Id: <20181110054910.10568-20-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
 In-Reply-To: <20181110054910.10568-1-pclouds@gmail.com>
 References: <20181110054910.10568-1-pclouds@gmail.com>
@@ -70,223 +70,88 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- combine-diff.c     |  2 +-
- diff.c             | 12 ++++++------
- diff.h             |  2 +-
- diffcore-pickaxe.c |  4 ++--
- grep.c             |  2 +-
- notes-cache.c      | 12 +++++++-----
- notes-cache.h      |  6 ++++--
- userdiff.c         |  5 +++--
- userdiff.h         |  4 +++-
- 9 files changed, 28 insertions(+), 21 deletions(-)
+ builtin/fsck.c | 3 ++-
+ pack-check.c   | 9 +++++----
+ pack.h         | 4 +++-
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 10155e0ec8..3d796af3ca 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -991,7 +991,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	if (!userdiff)
- 		userdiff = userdiff_find_by_name("default");
- 	if (opt->flags.allow_textconv)
--		textconv = userdiff_get_textconv(userdiff);
-+		textconv = userdiff_get_textconv(opt->repo, userdiff);
- 
- 	/* Read the result of merge first */
- 	if (!working_tree_file)
-diff --git a/diff.c b/diff.c
-index 8647db3d30..1135377a7f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3312,14 +3312,14 @@ void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const
- 		options->b_prefix = b;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 06eb421720..8ea2823864 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -752,7 +752,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 			for (p = get_all_packs(the_repository); p;
+ 			     p = p->next) {
+ 				/* verify gives error messages itself */
+-				if (verify_pack(p, fsck_obj_buffer,
++				if (verify_pack(the_repository,
++						p, fsck_obj_buffer,
+ 						progress, count))
+ 					errors_found |= ERROR_PACK;
+ 				count += p->num_objects;
+diff --git a/pack-check.c b/pack-check.c
+index fa5f0ff8fa..2cc3603189 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -48,7 +48,8 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
+ 	return data_crc != ntohl(*index_crc);
  }
  
--struct userdiff_driver *get_textconv(struct index_state *istate,
-+struct userdiff_driver *get_textconv(struct repository *r,
- 				     struct diff_filespec *one)
- {
- 	if (!DIFF_FILE_VALID(one))
- 		return NULL;
+-static int verify_packfile(struct packed_git *p,
++static int verify_packfile(struct repository *r,
++			   struct packed_git *p,
+ 			   struct pack_window **w_curs,
+ 			   verify_fn fn,
+ 			   struct progress *progress, uint32_t base_count)
+@@ -135,7 +136,7 @@ static int verify_packfile(struct packed_git *p,
+ 			data = NULL;
+ 			data_valid = 0;
+ 		} else {
+-			data = unpack_entry(the_repository, p, entries[i].offset, &type, &size);
++			data = unpack_entry(r, p, entries[i].offset, &type, &size);
+ 			data_valid = 1;
+ 		}
  
--	diff_filespec_load_driver(one, istate);
--	return userdiff_get_textconv(one->driver);
-+	diff_filespec_load_driver(one, r->index);
-+	return userdiff_get_textconv(r, one->driver);
+@@ -186,7 +187,7 @@ int verify_pack_index(struct packed_git *p)
+ 	return err;
  }
  
- static void builtin_diff(const char *name_a,
-@@ -3368,8 +3368,8 @@ static void builtin_diff(const char *name_a,
- 	}
- 
- 	if (o->flags.allow_textconv) {
--		textconv_one = get_textconv(o->repo->index, one);
--		textconv_two = get_textconv(o->repo->index, two);
-+		textconv_one = get_textconv(o->repo, one);
-+		textconv_two = get_textconv(o->repo, two);
- 	}
- 
- 	/* Never use a non-valid filename anywhere if at all possible */
-@@ -6436,7 +6436,7 @@ int textconv_object(struct repository *r,
- 
- 	df = alloc_filespec(path);
- 	fill_filespec(df, oid, oid_valid, mode);
--	textconv = get_textconv(r->index, df);
-+	textconv = get_textconv(r, df);
- 	if (!textconv) {
- 		free_filespec(df);
- 		return 0;
-diff --git a/diff.h b/diff.h
-index 3197a976a4..412138ba08 100644
---- a/diff.h
-+++ b/diff.h
-@@ -461,7 +461,7 @@ size_t fill_textconv(struct repository *r,
-  * and only if it has textconv enabled (otherwise return NULL). The result
-  * can be passed to fill_textconv().
-  */
--struct userdiff_driver *get_textconv(struct index_state *istate,
-+struct userdiff_driver *get_textconv(struct repository *r,
- 				     struct diff_filespec *one);
- 
- /*
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index d2361e06a1..b815f1c449 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -139,8 +139,8 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- 		return 0;
- 
- 	if (o->flags.allow_textconv) {
--		textconv_one = get_textconv(o->repo->index, p->one);
--		textconv_two = get_textconv(o->repo->index, p->two);
-+		textconv_one = get_textconv(o->repo, p->one);
-+		textconv_two = get_textconv(o->repo, p->two);
- 	}
- 
- 	/*
-diff --git a/grep.c b/grep.c
-index f6bd89e40b..b05b2e61bb 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1811,7 +1811,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 		 * is not thread-safe.
- 		 */
- 		grep_attr_lock();
--		textconv = userdiff_get_textconv(gs->driver);
-+		textconv = userdiff_get_textconv(opt->repo, gs->driver);
- 		grep_attr_unlock();
- 	}
- 
-diff --git a/notes-cache.c b/notes-cache.c
-index d87e7ca91c..2473314d68 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -5,7 +5,9 @@
- #include "commit.h"
- #include "refs.h"
- 
--static int notes_cache_match_validity(const char *ref, const char *validity)
-+static int notes_cache_match_validity(struct repository *r,
-+				      const char *ref,
-+				      const char *validity)
+-int verify_pack(struct packed_git *p, verify_fn fn,
++int verify_pack(struct repository *r, struct packed_git *p, verify_fn fn,
+ 		struct progress *progress, uint32_t base_count)
  {
- 	struct object_id oid;
- 	struct commit *commit;
-@@ -16,7 +18,7 @@ static int notes_cache_match_validity(const char *ref, const char *validity)
- 	if (read_ref(ref, &oid) < 0)
- 		return 0;
+ 	int err = 0;
+@@ -196,7 +197,7 @@ int verify_pack(struct packed_git *p, verify_fn fn,
+ 	if (!p->index_data)
+ 		return -1;
  
--	commit = lookup_commit_reference_gently(the_repository, &oid, 1);
-+	commit = lookup_commit_reference_gently(r, &oid, 1);
- 	if (!commit)
- 		return 0;
+-	err |= verify_packfile(p, &w_curs, fn, progress, base_count);
++	err |= verify_packfile(r, p, &w_curs, fn, progress, base_count);
+ 	unuse_pack(&w_curs);
  
-@@ -30,8 +32,8 @@ static int notes_cache_match_validity(const char *ref, const char *validity)
- 	return ret;
- }
- 
--void notes_cache_init(struct notes_cache *c, const char *name,
--		     const char *validity)
-+void notes_cache_init(struct repository *r, struct notes_cache *c,
-+		      const char *name, const char *validity)
- {
- 	struct strbuf ref = STRBUF_INIT;
- 	int flags = NOTES_INIT_WRITABLE;
-@@ -40,7 +42,7 @@ void notes_cache_init(struct notes_cache *c, const char *name,
- 	c->validity = xstrdup(validity);
- 
- 	strbuf_addf(&ref, "refs/notes/%s", name);
--	if (!notes_cache_match_validity(ref.buf, validity))
-+	if (!notes_cache_match_validity(r, ref.buf, validity))
- 		flags |= NOTES_INIT_EMPTY;
- 	init_notes(&c->tree, ref.buf, combine_notes_overwrite, flags);
- 	strbuf_release(&ref);
-diff --git a/notes-cache.h b/notes-cache.h
-index aeeee8409d..56f8c98e24 100644
---- a/notes-cache.h
-+++ b/notes-cache.h
-@@ -3,13 +3,15 @@
- 
- #include "notes.h"
+ 	return err;
+diff --git a/pack.h b/pack.h
+index 34a9d458b4..da99fdd1d2 100644
+--- a/pack.h
++++ b/pack.h
+@@ -4,6 +4,8 @@
+ #include "object.h"
+ #include "csum-file.h"
  
 +struct repository;
 +
- struct notes_cache {
- 	struct notes_tree tree;
- 	char *validity;
- };
- 
--void notes_cache_init(struct notes_cache *c, const char *name,
--		     const char *validity);
-+void notes_cache_init(struct repository *r, struct notes_cache *c,
-+		      const char *name, const char *validity);
- int notes_cache_write(struct notes_cache *c);
- 
- char *notes_cache_get(struct notes_cache *c, struct object_id *oid, size_t
-diff --git a/userdiff.c b/userdiff.c
-index 46d34cc2a4..97007abe5b 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -290,7 +290,8 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
- 	return userdiff_find_by_name(check->items[0].value);
- }
- 
--struct userdiff_driver *userdiff_get_textconv(struct userdiff_driver *driver)
-+struct userdiff_driver *userdiff_get_textconv(struct repository *r,
-+					      struct userdiff_driver *driver)
- {
- 	if (!driver->textconv)
- 		return NULL;
-@@ -300,7 +301,7 @@ struct userdiff_driver *userdiff_get_textconv(struct userdiff_driver *driver)
- 		struct strbuf name = STRBUF_INIT;
- 
- 		strbuf_addf(&name, "textconv/%s", driver->name);
--		notes_cache_init(c, name.buf, driver->textconv);
-+		notes_cache_init(r, c, name.buf, driver->textconv);
- 		driver->textconv_cache = c;
- 		strbuf_release(&name);
- 	}
-diff --git a/userdiff.h b/userdiff.h
-index b072bfe89a..203057e13e 100644
---- a/userdiff.h
-+++ b/userdiff.h
-@@ -4,6 +4,7 @@
- #include "notes-cache.h"
- 
- struct index_state;
-+struct repository;
- 
- struct userdiff_funcname {
- 	const char *pattern;
-@@ -30,6 +31,7 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
-  * Initialize any textconv-related fields in the driver and return it, or NULL
-  * if it does not have textconv enabled at all.
+ /*
+  * Packed object header
   */
--struct userdiff_driver *userdiff_get_textconv(struct userdiff_driver *driver);
-+struct userdiff_driver *userdiff_get_textconv(struct repository *r,
-+					      struct userdiff_driver *driver);
- 
- #endif /* USERDIFF */
+@@ -80,7 +82,7 @@ typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned lo
+ extern const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects, int nr_objects, const struct pack_idx_option *, const unsigned char *sha1);
+ extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
+ extern int verify_pack_index(struct packed_git *);
+-extern int verify_pack(struct packed_git *, verify_fn fn, struct progress *, uint32_t);
++extern int verify_pack(struct repository *, struct packed_git *, verify_fn fn, struct progress *, uint32_t);
+ extern off_t write_pack_header(struct hashfile *f, uint32_t);
+ extern void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
+ extern char *index_pack_lockfile(int fd);
 -- 
 2.19.1.1231.g84aef82467
 
