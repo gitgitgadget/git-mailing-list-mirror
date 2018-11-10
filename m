@@ -2,86 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 223101F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:48:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D01E1F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728893AbeKJPbv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:31:51 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:55243 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728596AbeKJPbv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:31:51 -0500
-Received: by mail-it1-f196.google.com with SMTP id a205-v6so450000itd.4
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:48:06 -0800 (PST)
+        id S1728722AbeKJPcf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:32:35 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:34158 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728659AbeKJPcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:32:35 -0500
+Received: by mail-lj1-f194.google.com with SMTP id u6-v6so3386806ljd.1
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:48:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mPvJGusnZT82T/P2LtSJjV5b47tBh8PlxZTTiHuJcsM=;
-        b=BcaMQ15Dbdm2shV8Cd2Ri7jODc+v8Km9vKdHxP3d8bxHVsyh4nKucS7fYKL3Y9hWv0
-         Oed1LYRYap5fKYa+uGKfisJvJifZmQmK3M36cHEVbweq7Y4oByU9+UqR2zF1oOxCY+9V
-         9CbvhaqSaC+L2XOC0f2lVLnnrqjicG3c08sAYnz2NIMqE48sBYjlTGWBjNDHEAXnl5uQ
-         GMJWsOlqHoOtrDS1CRqP1n28YT1AYwK3LolbGOspiV927SktJoqgi1UVKHM+59UgUa1n
-         fs4lpeD3/yjy1OdQeVaOw/gcj5k42T9F+oSQi3T6rsJOLGjILtmvoexoiVi+IVHeOS/A
-         OjnA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=PhbCYGASniDW1U0xw1uPf5kqCdgNyEcxbXAcgyq59hE=;
+        b=m/B8WzOJ5oO9qivSREboMv0Wys+KVC3O45EltHHIJn8/bjKyMyuzlCxkwX3tYZS3sF
+         mPUJovSngDucZRXgpTQ+lFGVW6Z1gb3YSdBimQlLH4seBUeqfNi6gWmT8Mw8niNZElPO
+         xnRvshKfYkSsu03ombq37/pHZyWiFEhx3823ZxN3Zb9V5QiSDXi/QuIQn7cWxCfbwtUr
+         XukY3WKfMKCYQCEhka/yYsKO++NptxkiRaI8q4zqbN+E1SlUWCysJ7rkyaMShEyxZNNJ
+         5UUOqnW8mHhw1MOpJdCTwiYaq5DDm1o2pexl2siLY6ngv3Wp9PJf3zVB0Ou6GeVMzRpS
+         MPwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mPvJGusnZT82T/P2LtSJjV5b47tBh8PlxZTTiHuJcsM=;
-        b=IQETA7k7TqxVWAzOmzh+GmtAWbgJii2G/aUXxvxpEDWYO+O6QbYyxqLk57MSRroJ3s
-         zB7n4i7fYP4vJx8rmnS552QlW0vecVjGHmR1/mgsKem56LHAyKxZMX8oF2jyzLqA0my1
-         m4nOVoM9ZAf1+IOxBjpMNzu5NA2uy1h852wa32pw7bPt4KDanAKioyxOBwejeIPv58Oc
-         VslEXsQ+3rfxcRL1zXSzGOaGobtw83kxSWQUARlAAfCiJTTvf1xsAz1z2d6DnyQcPcM0
-         tl1tmWo1IgcL/NKz1/toFZeyBciCEhgIbXh90ZJDRxBK/xF80mSptF6vR64+NXZp9ftZ
-         mGlg==
-X-Gm-Message-State: AGRZ1gJ+FeFoX1GBUz6hE66PlxBnYQZ0iWIdnvA1nt8bWsPzhjZ9zRv0
-        lLDz0DDlXMmwheJrGizUidEGzvkyQXX2nCvvotc=
-X-Google-Smtp-Source: AJdET5eupB/07I5hHJzZYuAV/jap6QxMaMah8N5jba0rYpm23i2eLQex2a/OcNlnqkUuiKNnMsZM7+pp35ngyDxL9sM=
-X-Received: by 2002:a24:61c2:: with SMTP id s185-v6mr3178876itc.70.1541825761902;
- Fri, 09 Nov 2018 20:56:01 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PhbCYGASniDW1U0xw1uPf5kqCdgNyEcxbXAcgyq59hE=;
+        b=PCoDF/O7MbjHypX7W5w3Oq6I8UCcIJww5b9VKbr0MJQEzKoP50zqerYBF7fNOj8RBL
+         uqP7DN5REr9WI3A689d0oxZnz8HP1KsMz5L1GpdcsBGPQRFcJ4uDIt5Ln28vuqWdV0bH
+         HQfnXx7Y9rpfdMmCm4e25xtv9ifGZZT3Dr2Vm0MeDZnb89JmyOFQYCxRvDTGbL1U/QM6
+         T7BkrS46SvHokW8It3NyFbdZLOry9qsUcKo2FC7nI87fCUuZZO27XvjucHoLfhyDM7vk
+         mWQPMlpO8N70KRK0ItQpHVhjgLrAcUvFQfZGnBZdrnS6kmS1ixuspz9xtlfY4ttvQgO5
+         caYQ==
+X-Gm-Message-State: AGRZ1gLc+tULUc0IuWN7tJfAcrqDP5eCtZDJhQjiNcbXz3cIjfFn4Fdn
+        j55M1SXmH18LQ71QxO2N7YJ1yQr7
+X-Google-Smtp-Source: AJdET5dULLCskaeXPFs8WXriu7DtR8UzvgG4zfNVQKZwG6sPfbbP864/5dPxvc+sP3FrKW72tiXdKA==
+X-Received: by 2002:a2e:e02:: with SMTP id 2-v6mr6266125ljo.10.1541826991234;
+        Fri, 09 Nov 2018 21:16:31 -0800 (PST)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id g66sm1769663lfe.42.2018.11.09.21.16.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 Nov 2018 21:16:30 -0800 (PST)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, szeder.dev@gmail.com
+Subject: [PATCH v3 08/16] reflog: mark strings for translation
+Date:   Sat, 10 Nov 2018 06:16:07 +0100
+Message-Id: <20181110051615.8641-9-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.1.1231.g84aef82467
+In-Reply-To: <20181110051615.8641-1-pclouds@gmail.com>
+References: <20181105192059.20303-1-pclouds@gmail.com>
+ <20181110051615.8641-1-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <20181028065157.26727-1-pclouds@gmail.com> <20181105192059.20303-1-pclouds@gmail.com>
- <20181105192059.20303-13-pclouds@gmail.com> <xmqqpnvjexzf.fsf@gitster-ct.c.googlers.com>
- <d29c4fcc-0591-fc45-5a5d-65d2874d98a7@ramsayjones.plus.com>
-In-Reply-To: <d29c4fcc-0591-fc45-5a5d-65d2874d98a7@ramsayjones.plus.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Nov 2018 05:55:34 +0100
-Message-ID: <CACsJy8CM=0Cw1WCamJJe8aapA4-mdr+rMmbjVpYYQCj2++NQbA@mail.gmail.com>
-Subject: Re: [PATCH v2 12/16] parse-options: replace opterror() with optname()
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 6, 2018 at 3:07 PM Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
-> Also, this patch does not replace opterror() calls outside of
-> the 'parse-options.c' file with optname(). This tickles my
-> static-check.pl script, since optname() is an external function
-> which is only called from 'parse-options.c'.
->
-> So, at present, optname() could be marked as a local 'static'
-> symbol. However, I could also imagine it being used by new callers
-> outside of 'parse-options.c' in the future. (maybe) Your call. ;-)
+One string "nothing to delete?" is rephrased to be more helpful.
 
-I was making it static, but the compiler complained about undefined
-function and I would need to either move optname() up in
-parse-options.c or add a forward declaration (but I was going to
-_remove_ the declaration!)
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/reflog.c | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-Since it could be potentially used by Jeff's series (and I think it
-does have potential in parse-options-cb.c), I'll just leave it
-exported and caress your static-check.pl script (how did it not catch
-optbug() not being used outside parse-options.c either)?
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index b5941c1ff3..5a74ccf7ab 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -13,11 +13,15 @@
+ 
+ /* NEEDSWORK: switch to using parse_options */
+ static const char reflog_expire_usage[] =
+-"git reflog expire [--expire=<time>] [--expire-unreachable=<time>] [--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] [--verbose] [--all] <refs>...";
++N_("git reflog expire [--expire=<time>] "
++   "[--expire-unreachable=<time>] "
++   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
++   "[--verbose] [--all] <refs>...");
+ static const char reflog_delete_usage[] =
+-"git reflog delete [--rewrite] [--updateref] [--dry-run | -n] [--verbose] <refs>...";
++N_("git reflog delete [--rewrite] [--updateref] "
++   "[--dry-run | -n] [--verbose] <refs>...");
+ static const char reflog_exists_usage[] =
+-"git reflog exists <ref>";
++N_("git reflog exists <ref>");
+ 
+ static timestamp_t default_reflog_expire;
+ static timestamp_t default_reflog_expire_unreachable;
+@@ -556,7 +560,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		}
+ 		else if (arg[0] == '-')
+-			usage(reflog_expire_usage);
++			usage(_(reflog_expire_usage));
+ 		else
+ 			break;
+ 	}
+@@ -569,7 +573,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	if (cb.cmd.stalefix) {
+ 		repo_init_revisions(the_repository, &cb.cmd.revs, prefix);
+ 		if (flags & EXPIRE_REFLOGS_VERBOSE)
+-			printf("Marking reachable objects...");
++			printf(_("Marking reachable objects..."));
+ 		mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL);
+ 		if (flags & EXPIRE_REFLOGS_VERBOSE)
+ 			putchar('\n');
+@@ -598,7 +602,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		char *ref;
+ 		struct object_id oid;
+ 		if (!dwim_log(argv[i], strlen(argv[i]), &oid, &ref)) {
+-			status |= error("%s points nowhere!", argv[i]);
++			status |= error(_("%s points nowhere!"), argv[i]);
+ 			continue;
+ 		}
+ 		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
+@@ -644,13 +648,13 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		}
+ 		else if (arg[0] == '-')
+-			usage(reflog_delete_usage);
++			usage(_(reflog_delete_usage));
+ 		else
+ 			break;
+ 	}
+ 
+ 	if (argc - i < 1)
+-		return error("Nothing to delete?");
++		return error(_("no reflog specified to delete"));
+ 
+ 	for ( ; i < argc; i++) {
+ 		const char *spec = strstr(argv[i], "@{");
+@@ -659,12 +663,12 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 		int recno;
+ 
+ 		if (!spec) {
+-			status |= error("Not a reflog: %s", argv[i]);
++			status |= error(_("not a reflog: %s"), argv[i]);
+ 			continue;
+ 		}
+ 
+ 		if (!dwim_log(argv[i], spec - argv[i], &oid, &ref)) {
+-			status |= error("no reflog for '%s'", argv[i]);
++			status |= error(_("no reflog for '%s'"), argv[i]);
+ 			continue;
+ 		}
+ 
+@@ -699,7 +703,7 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		}
+ 		else if (arg[0] == '-')
+-			usage(reflog_exists_usage);
++			usage(_(reflog_exists_usage));
+ 		else
+ 			break;
+ 	}
+@@ -707,10 +711,10 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
+ 	start = i;
+ 
+ 	if (argc - start != 1)
+-		usage(reflog_exists_usage);
++		usage(_(reflog_exists_usage));
+ 
+ 	if (check_refname_format(argv[start], REFNAME_ALLOW_ONELEVEL))
+-		die("invalid ref format: %s", argv[start]);
++		die(_("invalid ref format: %s"), argv[start]);
+ 	return !reflog_exists(argv[start]);
+ }
+ 
+@@ -719,12 +723,12 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
+  */
+ 
+ static const char reflog_usage[] =
+-"git reflog [ show | expire | delete | exists ]";
++N_("git reflog [ show | expire | delete | exists ]");
+ 
+ int cmd_reflog(int argc, const char **argv, const char *prefix)
+ {
+ 	if (argc > 1 && !strcmp(argv[1], "-h"))
+-		usage(reflog_usage);
++		usage(_(reflog_usage));
+ 
+ 	/* With no command, we default to showing it. */
+ 	if (argc < 2 || *argv[1] == '-')
 -- 
-Duy
+2.19.1.1231.g84aef82467
+
