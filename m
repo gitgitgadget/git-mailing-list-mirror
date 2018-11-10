@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 993011F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:46:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EBF61F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728766AbeKJPaA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:30:00 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:37919 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728580AbeKJPaA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:30:00 -0500
-Received: by mail-lf1-f66.google.com with SMTP id p86so2830993lfg.5
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:46:14 -0800 (PST)
+        id S1728895AbeKJPaj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:30:39 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:35500 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728580AbeKJPaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:30:39 -0500
+Received: by mail-lf1-f65.google.com with SMTP id e26so1046035lfc.2
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:46:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BljdnMmPMUHe3lzkqluX++UkUGp0c3YQLgHM/DHuBt0=;
-        b=E8AfB+nk4e1ldRBakEXntGYTCQYOJGioubZvlqPPMObGlzN8/Kso4ePrqYpWJ7JkSY
-         1P5RdKK1NT1Vf/Vje/4DVgGjiyd70cKj7BzY+bPFFCkafgzMLvfXKWKAc7V7a6MccQi8
-         itKeI3YI/jlrTIN2yi7TOZ/hArE3cSH8oVckB0mK7yxhWkH9KcrWtqjV8kFMCUOGeF+d
-         cGsRpp0O35aRMOZWl9PcRCe6efjiVcPWv9nqPK0klkoCFeBbmiQ8n7bzs7Mg91cNMyI3
-         yHPZ6CmYKp1jtzl3G3Sk9DZR0Boxy1+I8j93yYTV7OUiDe9NxyQE+rUnnuWKjbOFMSm6
-         FgPg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PRAk8EByl87gQ3pIkj8Qaq2NEOT2THURhj3uc2Y+9dk=;
+        b=DaamNcrUhXUlDXyo8YvW3Bvs828n3JoW9+QFEKMFenQ+scgPBIKNQlwHf550jk9gd5
+         +LdDQRgLcHCl+YZYQUPCu0nx7pzDKt3y3fZfNiZXXWajKB3t/Y3j1KJiwdbxS5y2RlLZ
+         +5+LEvF1cGpMJUc7rfsypFE1QusYGf2+lydsuYxo8jB5QGBtbLDAJi4CyJJ4KvWGhWqE
+         Q/fqysCMoKSVFRuO9pLiwunXz7xxcc0Dsvk/RriqXGzMUMxBVm99nid/iiIaMsC1ZSVB
+         hNSNMRvj1Nibv3qS8Nh7yc2P6Lb03D0S94izppHq5TpY6mwNiRgwKN7uazE+ew2614cl
+         lpeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BljdnMmPMUHe3lzkqluX++UkUGp0c3YQLgHM/DHuBt0=;
-        b=rLhh93wb9xtNbLiIw/mRE2ki5FIIZtYQC3Mo7q9ozA2fNiKkCF99mXwMu+dS6MbKWI
-         cdJjGue6AUdrkxVFsverWj1wJXZ+AdGi3MwIraP9cs+t7DtNGnOiyMFQUMwJnrjppDn9
-         ntx4Ds35uHh5bdolc7Ga+2GH/zBHBsEeN7KXZyd4e0/4WW0L9UbmTo5akM0FaVJJelVs
-         cTf5Id2Qtw4H4z+0kMZvOgHMhjV23qVKnyvyaBMCf2K9MSx7liewx5QgKbV+FtLNSPtV
-         U5XKZp/dGbDDxPdNaZqeGOxMqXawYQOGOqrroRUqwAHohmkZKLhBcLC/kUI2ctAzmvAR
-         pEjQ==
-X-Gm-Message-State: AGRZ1gJSpJTklpWJWF6B+bFSZdtKgMBhtQciqlfOTgFjGnHaGuVDMwop
-        EpyjJm26SfO5iFyT4+ucZhw=
-X-Google-Smtp-Source: AJdET5et812WCGVPXUTdL7Xs3ue0taUrV7J+DO8r7BABqacfT5VjIo7od7uk4sQKasYiZ45kXctdbg==
-X-Received: by 2002:a19:3809:: with SMTP id f9mr6516122lfa.148.1541826999124;
-        Fri, 09 Nov 2018 21:16:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PRAk8EByl87gQ3pIkj8Qaq2NEOT2THURhj3uc2Y+9dk=;
+        b=BpcZCt3XvRxjq9MB1rj6TnMiLCSv8JL2ZlBztlA1s7ywprSZVSS6C9fZ6/6VFRh74+
+         Oa/wEeT1wHoLzCJujNNJyJr154GWAD7hKCECYrw/Zwfjp4X3eLpjjSCcdM5yTn8lcRKg
+         9UcUTo/CjLkE4Zq0GekZgZSsxt1qBLtNnFmUeLcsIolOvcuNrxUvFmA/3zGSkbzIlB6M
+         r8cvxJ0y5Ef2UCPbsJJTwb7L3lID7skoo6GfiF9AeTxS8iI3kUatsSRXajynupVnGSC6
+         35X3Kt/yOtyP7KYmJ3fOA38CkUHcZ4zb6juqtssK3YLoLKovTOrbncLNY2J9JZOFHltl
+         smCw==
+X-Gm-Message-State: AGRZ1gKHSwOolJb2H/A00v+ggfREKGQ7jRG0B0lBUJmW441OW9H7uheJ
+        FLpnShtJusnn3JFjLPF6VunAMffy
+X-Google-Smtp-Source: AJdET5fgatzw9bFHHL17styzI1Yb00BjQv9qvr/Khrl7L9XNUEnpVBg1Jhq3Uw+F16kiZFZ6ExjtKA==
+X-Received: by 2002:a19:641d:: with SMTP id y29mr6844121lfb.14.1541828812256;
+        Fri, 09 Nov 2018 21:46:52 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g66sm1769663lfe.42.2018.11.09.21.16.38
+        by smtp.gmail.com with ESMTPSA id g2-v6sm2441597ljg.9.2018.11.09.21.46.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:16:38 -0800 (PST)
+        Fri, 09 Nov 2018 21:46:51 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, szeder.dev@gmail.com
-Subject: [PATCH v3 15/16] fsck: reduce word legos to help i18n
-Date:   Sat, 10 Nov 2018 06:16:14 +0100
-Message-Id: <20181110051615.8641-16-pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/22] Kill the_index part 5
+Date:   Sat, 10 Nov 2018 06:46:23 +0100
+Message-Id: <20181110054646.10149-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
-In-Reply-To: <20181110051615.8641-1-pclouds@gmail.com>
-References: <20181105192059.20303-1-pclouds@gmail.com>
- <20181110051615.8641-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,127 +66,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These messages will be marked for translation later. Reduce word legos
-and give translators almost full phrases. describe_object() is updated
-so that it can be called from printf() twice.
+I lied about part 5 being final. This series contains most of my WIP
+series [2] except sha1-name.c, read-cache.c and merge-recursive.c
+because there will be conflicts on 'pu' so they will be in part 6. At
+least this only results in two small conflicts in sequencer.c.
 
-While at there, remove \n from the strings to reduce a bit of work
-from translators.
+I did start pushing the_repository out of library code [1] in the bottom
+half of this series. There aren't big surprises except that cache-tree
+API now take _both_ struct repository and struct index_state. The
+reason is cache-tree can work on temporary indexes and repo->index is
+about $GIT_DIR/index.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/fsck.c | 65 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 40 insertions(+), 25 deletions(-)
+[1] Stefan and I make a good team. He keeps adding the_repository. I
+keep removing. We both hold hands leading commit counts (with Brian
+just a bit behind frantically replacing sha1 with oid to keep up).
+Meanwhile Junio is crying in the corner because of too many conflicts.
+:-D
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 06eb421720..1feb6142f4 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -52,16 +52,24 @@ static int name_objects;
- 
- static const char *describe_object(struct object *obj)
- {
--	static struct strbuf buf = STRBUF_INIT;
--	char *name = name_objects ?
--		lookup_decoration(fsck_walk_options.object_names, obj) : NULL;
-+	static struct strbuf bufs[] = {
-+		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
-+	};
-+	static int b = 0;
-+	struct strbuf *buf;
-+	char *name = NULL;
- 
--	strbuf_reset(&buf);
--	strbuf_addstr(&buf, oid_to_hex(&obj->oid));
-+	if (name_objects)
-+		name = lookup_decoration(fsck_walk_options.object_names, obj);
-+
-+	buf = bufs + b;
-+	b = (b + 1) % ARRAY_SIZE(bufs);
-+	strbuf_reset(buf);
-+	strbuf_addstr(buf, oid_to_hex(&obj->oid));
- 	if (name)
--		strbuf_addf(&buf, " (%s)", name);
-+		strbuf_addf(buf, " (%s)", name);
- 
--	return buf.buf;
-+	return buf->buf;
- }
- 
- static const char *printable_type(struct object *obj)
-@@ -105,25 +113,29 @@ static int fsck_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
--static void objreport(struct object *obj, const char *msg_type,
--			const char *err)
--{
--	fprintf(stderr, "%s in %s %s: %s\n",
--		msg_type, printable_type(obj), describe_object(obj), err);
--}
--
- static int objerror(struct object *obj, const char *err)
- {
- 	errors_found |= ERROR_OBJECT;
--	objreport(obj, "error", err);
-+	fprintf_ln(stderr, "error in %s %s: %s",
-+		   printable_type(obj), describe_object(obj), err);
- 	return -1;
- }
- 
- static int fsck_error_func(struct fsck_options *o,
- 	struct object *obj, int type, const char *message)
- {
--	objreport(obj, (type == FSCK_WARN) ? "warning" : "error", message);
--	return (type == FSCK_WARN) ? 0 : 1;
-+	switch (type) {
-+	case FSCK_WARN:
-+		fprintf_ln(stderr, "warning in %s %s: %s",
-+			   printable_type(obj), describe_object(obj), message);
-+		return 0;
-+	case FSCK_ERROR:
-+		fprintf_ln(stderr, "error in %s %s: %s",
-+			   printable_type(obj), describe_object(obj), message);
-+		return 1;
-+	default:
-+		BUG("%d (FSCK_IGNORE?) should never trigger this callback", type);
-+	}
- }
- 
- static struct object_array pending;
-@@ -165,10 +177,12 @@ static int mark_object(struct object *obj, int type, void *data, struct fsck_opt
- 
- 	if (!(obj->flags & HAS_OBJ)) {
- 		if (parent && !has_object_file(&obj->oid)) {
--			printf("broken link from %7s %s\n",
--				 printable_type(parent), describe_object(parent));
--			printf("              to %7s %s\n",
--				 printable_type(obj), describe_object(obj));
-+			printf_ln("broken link from %7s %s\n"
-+				  "              to %7s %s",
-+				  printable_type(parent),
-+				  describe_object(parent),
-+				  printable_type(obj),
-+				  describe_object(obj));
- 			errors_found |= ERROR_REACHABLE;
- 		}
- 		return 1;
-@@ -371,10 +385,11 @@ static int fsck_obj(struct object *obj, void *buffer, unsigned long size)
- 		struct tag *tag = (struct tag *) obj;
- 
- 		if (show_tags && tag->tagged) {
--			printf("tagged %s %s", printable_type(tag->tagged),
--				describe_object(tag->tagged));
--			printf(" (%s) in %s\n", tag->tag,
--				describe_object(&tag->object));
-+			printf_ln("tagged %s %s (%s) in %s",
-+				  printable_type(tag->tagged),
-+				  describe_object(tag->tagged),
-+				  tag->tag,
-+				  describe_object(&tag->object));
- 		}
- 	}
- 
+[2] https://public-inbox.org/git/20181019145237.16079-1-pclouds@gmail.com/
+
+Nguyễn Thái Ngọc Duy (22):
+  wt-status.c: remove implicit dependency on the_index
+  wt-status.c: remove implicit dependency the_repository
+  list-objects-filter.c: remove implicit dependency on the_index
+  list-objects.c: reduce the_repository references
+  notes-merge.c: remove implicit dependency on the_index
+  notes-merge.c: remove implicit dependency the_repository
+  transport.c: remove implicit dependency on the_index
+  sequencer.c: remove implicit dependency on the_index
+  sequencer.c: remove implicit dependency on the_repository
+  blame.c: remove implicit dependency the_repository
+  bisect.c: remove the_repository reference
+  branch.c: remove the_repository reference
+  bundle.c: remove the_repository references
+  cache-tree.c: remove the_repository references
+  delta-islands.c: remove the_repository references
+  diff-lib.c: remove the_repository references
+  line-log.c: remove the_repository reference
+  notes-cache.c: remove the_repository references
+  pack-check.c: remove the_repository references
+  pack-*.c: remove the_repository references
+  rerere.c: remove the_repository references
+  rebase-interactive.c: remove the_repository references
+
+ bisect.c                      |  48 ++--
+ bisect.h                      |   5 +-
+ blame.c                       |  39 +--
+ branch.c                      |  21 +-
+ branch.h                      |   8 +-
+ builtin/am.c                  |   4 +-
+ builtin/bisect--helper.c      |   2 +-
+ builtin/branch.c              |   6 +-
+ builtin/bundle.c              |   7 +-
+ builtin/checkout.c            |   5 +-
+ builtin/commit.c              |   8 +-
+ builtin/fsck.c                |   3 +-
+ builtin/merge-ours.c          |   2 +-
+ builtin/merge.c               |   2 +-
+ builtin/notes.c               |   2 +-
+ builtin/pack-objects.c        |   6 +-
+ builtin/pull.c                |   3 +-
+ builtin/push.c                |   3 +-
+ builtin/read-tree.c           |   4 +-
+ builtin/rebase--interactive.c |  19 +-
+ builtin/rebase.c              |  13 +-
+ builtin/rerere.c              |  10 +-
+ builtin/reset.c               |   4 +-
+ builtin/revert.c              |   8 +-
+ bundle.c                      |  26 +-
+ bundle.h                      |   9 +-
+ cache-tree.c                  |  26 +-
+ cache-tree.h                  |   4 +-
+ combine-diff.c                |   2 +-
+ delta-islands.c               |  24 +-
+ delta-islands.h               |   9 +-
+ diff-lib.c                    |   7 +-
+ diff.c                        |  12 +-
+ diff.h                        |   5 +-
+ diffcore-pickaxe.c            |   4 +-
+ grep.c                        |   2 +-
+ line-log.c                    |   2 +-
+ list-objects-filter.c         |  10 +-
+ list-objects-filter.h         |   2 +
+ list-objects.c                |  13 +-
+ notes-cache.c                 |  12 +-
+ notes-cache.h                 |   6 +-
+ notes-merge.c                 |  16 +-
+ notes-merge.h                 |   5 +-
+ pack-bitmap-write.c           |   6 +-
+ pack-bitmap.c                 |  13 +-
+ pack-bitmap.h                 |   3 +-
+ pack-check.c                  |   9 +-
+ pack-objects.c                |   6 +-
+ pack-objects.h                |   5 +-
+ pack.h                        |   4 +-
+ read-cache.c                  |   2 +-
+ rebase-interactive.c          |   6 +-
+ rebase-interactive.h          |   5 +-
+ ref-filter.c                  |   2 +-
+ rerere.c                      |  26 +-
+ rerere.h                      |   6 +-
+ sequencer.c                   | 453 +++++++++++++++++++---------------
+ sequencer.h                   |  27 +-
+ transport.c                   |   9 +-
+ transport.h                   |   3 +-
+ unpack-trees.c                |   2 +-
+ userdiff.c                    |   5 +-
+ userdiff.h                    |   4 +-
+ wt-status.c                   |  94 ++++---
+ wt-status.h                   |  21 +-
+ 66 files changed, 650 insertions(+), 489 deletions(-)
+
 -- 
 2.19.1.1231.g84aef82467
 
