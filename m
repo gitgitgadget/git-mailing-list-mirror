@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64C051F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16A0E1F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729005AbeKJPdW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:33:22 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:42777 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728812AbeKJPdT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:33:19 -0500
-Received: by mail-lf1-f67.google.com with SMTP id q6-v6so2821069lfh.9
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:33 -0800 (PST)
+        id S1729011AbeKJPdX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:33:23 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:34973 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728859AbeKJPdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:33:23 -0500
+Received: by mail-lj1-f196.google.com with SMTP id x85-v6so3388384ljb.2
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=u9htDdsWDZDiEaeKbe45iy/qBCmpsA+DFW8jAifv3hc=;
-        b=oE6YNRjlt1e+2KcaG278AoPW5zBgWB5t466Ol1tjOtHu/8ySKDpOYCCEQAdb2hKlIE
-         FE6TQ/La1TtoS2/+iUpXIRRxdhANHA8KJ0PoLdN+kjeQNFsVEuYjCgQTZsxxlMqAlmym
-         yn+IXaBFj9D0ou97Mch6x1h77xMS3Foiec+HMxefhmyCWDlyE7yRrlyX63lREByQddNg
-         TL2f+VKL8GuNxDjkJmv3x+yHm9jPSN+OGjKSvo9o4DufRXMJYyuGOn52hWffH+f9SQee
-         vVyVZRQZYRHNmUnn6sVaCBmn6VL03BrkRK4ZpotBLNFpne+et4viUJWFr4bwD/5Nzj0E
-         Qtyw==
+        bh=LQ5Nw7bsTCRM8YIiL57S16qk+pC8efXpC9u8QUtnnAg=;
+        b=gayA9JA13MmOg3Jjzcx7tKFprXT5jhIdno3yocS5QP0LAncvahNHfhYnGG3bCahCOr
+         kwvJN+MLvsmYfABbUBpNEXgXMoMhCYuIKhOn2gMdO8xKWp2tsg61cad0bhs4VATKHADw
+         N5izAkZ2GmwAUqsRBMMcGLybhMVMnFpSNk9AwkJJCqK77cEMdkx+/ioFWb9IvgbpZ1Cl
+         qkZItDWLG+9RA7DR/Bch+lCs/cd5eOVQDbrbS9vsVxLud6uzLL3juoEo35pEHZeh5aCL
+         67MgVb0XMaWerxHN3rrj6w6K0VSMRAZm9kPiYc9K8Du0x9d4hVXwQZQOezFsos7S218k
+         PzOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=u9htDdsWDZDiEaeKbe45iy/qBCmpsA+DFW8jAifv3hc=;
-        b=q3Z3jCXh/hfcy51QaxzjS2KXa+NPdhQgObT/MGnTv1zsf+tgFEeAkOZC0F4a5u7BXS
-         3HHoqoXtEnaNpZfRLtqrNVU7qpHklYUbumTZLWwrw3VySuEv6uLSKUdQKeUg9qSy7fzn
-         nG8QR05GhfHjmQtdMx5NHq8tIyNzUmETxIGtXuybwMk3ZaAs0usJ55YDmZaI0E/fpsnr
-         fdeYRo8wjKsC2EP9horaduUpmr02rQlF+kvPqdBu/wJXLRTDTzYcKySPZXRi6q+Uz3Pt
-         WCPL0d7iJtV+MzNzCpDUA2Q7LoYt/c9QxJ0M11TfkHNQs8tpTjtpGWdNE5/ugduOhtAw
-         CP9Q==
-X-Gm-Message-State: AGRZ1gJ1z45K7XUgO1eaOA+6z7g9J7gBqFAHi3xnBDEjehstwMNpCaDQ
-        D7TVsU0jn632CGUVkWsDQSIv5oU6
-X-Google-Smtp-Source: AJdET5fFVxDzO0gfzpBndYaxUPdEGfdW5XqMjPX1mfXaekdOJWpgPw3WaT/+50qLqda7uxUZ6gUezg==
-X-Received: by 2002:a19:660a:: with SMTP id a10-v6mr6958888lfc.100.1541828972128;
-        Fri, 09 Nov 2018 21:49:32 -0800 (PST)
+        bh=LQ5Nw7bsTCRM8YIiL57S16qk+pC8efXpC9u8QUtnnAg=;
+        b=N+2HeKODlHCx3Pahhu++r9Uuld0PmZtz551y8p27Hqln+jKPF7suALHbZrEnmum2N4
+         vX3R48sjN2LNT4AVpaAgeTeQdSUIinjenqWxOj18TQeCyJaxZ61iN/C5H0R8oV4TosMP
+         HTR0pexWdiL0mjnHPVSf3p439XSnLomfP4Eo2rDRD2FXgmUgjL4A9d1F7Zf/XFfGK//N
+         Yk6rbeu89mWaX+gGo05SN+l6tB51K7ZY0GIZwraFx7crmUdGQuQCQEfcd41HiYrGP+2L
+         qmli4bmV4+lkEeCxpsJVO2zTAgpL7lyWeI18vz1DnyF/uqwFXtFSSiGLx4wujioR4miS
+         UrTg==
+X-Gm-Message-State: AGRZ1gJfwPn2ZI1IWAQ7dA0xr96asmeMEBUZUYgQjGrhgV+OwMcEG35J
+        fgt6NrTLJBVuEI0A8eJjqEksiVA3
+X-Google-Smtp-Source: AJdET5eFbC/tOCKVw7cw/R6mvGfZ2cO1I5EtsAe7HVWHgCkY8IXYS8iF7/8d24/498msxz4xdGxY4Q==
+X-Received: by 2002:a2e:6c04:: with SMTP id h4-v6mr4232808ljc.92.1541828974275;
+        Fri, 09 Nov 2018 21:49:34 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.30
+        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:49:31 -0800 (PST)
+        Fri, 09 Nov 2018 21:49:33 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 12/22] branch.c: remove the_repository reference
-Date:   Sat, 10 Nov 2018 06:49:00 +0100
-Message-Id: <20181110054910.10568-13-pclouds@gmail.com>
+Subject: [PATCH v2 14/22] cache-tree.c: remove the_repository references
+Date:   Sat, 10 Nov 2018 06:49:02 +0100
+Message-Id: <20181110054910.10568-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
 In-Reply-To: <20181110054910.10568-1-pclouds@gmail.com>
 References: <20181110054910.10568-1-pclouds@gmail.com>
@@ -68,190 +68,213 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This case is more interesting than other boring "remove the_repo"
+commits because while we need access to the object database, we cannot
+simply use r->index because unpack-trees.c can operate on a temporary
+index, not $GIT_DIR/index. Ideally we should be able to pass an object
+database to lookup_tree() but that ship has sailed.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- branch.c           | 21 +++++++++++----------
- branch.h           |  8 ++++++--
- builtin/am.c       |  2 +-
- builtin/branch.c   |  6 ++++--
- builtin/checkout.c |  5 +++--
- builtin/reset.c    |  2 +-
- builtin/revert.c   |  2 +-
- 7 files changed, 27 insertions(+), 19 deletions(-)
+ builtin/read-tree.c |  4 +++-
+ builtin/rebase.c    |  2 +-
+ builtin/reset.c     |  2 +-
+ cache-tree.c        | 26 +++++++++++++++-----------
+ cache-tree.h        |  4 ++--
+ read-cache.c        |  2 +-
+ sequencer.c         |  2 +-
+ unpack-trees.c      |  2 +-
+ 8 files changed, 25 insertions(+), 19 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 776f55fc66..28b81a7e02 100644
---- a/branch.c
-+++ b/branch.c
-@@ -242,7 +242,8 @@ N_("\n"
- "will track its remote counterpart, you may want to use\n"
- "\"git push -u\" to set the upstream config as you push.");
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index fbbc98e516..c05c12d034 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -255,7 +255,9 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 	 * what came from the tree.
+ 	 */
+ 	if (nr_trees == 1 && !opts.prefix)
+-		prime_cache_tree(&the_index, trees[0]);
++		prime_cache_tree(the_repository,
++				 the_repository->index,
++				 trees[0]);
  
--void create_branch(const char *name, const char *start_name,
-+void create_branch(struct repository *r,
-+		   const char *name, const char *start_name,
- 		   int force, int clobber_head_ok, int reflog,
- 		   int quiet, enum branch_track track)
- {
-@@ -300,7 +301,7 @@ void create_branch(const char *name, const char *start_name,
- 		break;
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die("unable to write new index file");
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index b9eb958454..d9bedecf86 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -582,7 +582,7 @@ static int reset_head(struct object_id *oid, const char *action,
  	}
  
--	if ((commit = lookup_commit_reference(the_repository, &oid)) == NULL)
-+	if ((commit = lookup_commit_reference(r, &oid)) == NULL)
- 		die(_("Not a valid branch point: '%s'."), start_name);
- 	oidcpy(&oid, &commit->object.oid);
+ 	tree = parse_tree_indirect(oid);
+-	prime_cache_tree(the_repository->index, tree);
++	prime_cache_tree(the_repository, the_repository->index, tree);
  
-@@ -336,15 +337,15 @@ void create_branch(const char *name, const char *start_name,
- 	free(real_ref);
- }
- 
--void remove_branch_state(void)
-+void remove_branch_state(struct repository *r)
- {
--	unlink(git_path_cherry_pick_head(the_repository));
--	unlink(git_path_revert_head(the_repository));
--	unlink(git_path_merge_head(the_repository));
--	unlink(git_path_merge_rr(the_repository));
--	unlink(git_path_merge_msg(the_repository));
--	unlink(git_path_merge_mode(the_repository));
--	unlink(git_path_squash_msg(the_repository));
-+	unlink(git_path_cherry_pick_head(r));
-+	unlink(git_path_revert_head(r));
-+	unlink(git_path_merge_head(r));
-+	unlink(git_path_merge_rr(r));
-+	unlink(git_path_merge_msg(r));
-+	unlink(git_path_merge_mode(r));
-+	unlink(git_path_squash_msg(r));
- }
- 
- void die_if_checked_out(const char *branch, int ignore_current_worktree)
-diff --git a/branch.h b/branch.h
-index 5cace4581f..29c1afa4d0 100644
---- a/branch.h
-+++ b/branch.h
-@@ -1,6 +1,7 @@
- #ifndef BRANCH_H
- #define BRANCH_H
- 
-+struct repository;
- struct strbuf;
- 
- enum branch_track {
-@@ -19,6 +20,8 @@ extern enum branch_track git_branch_track;
- /*
-  * Creates a new branch, where:
-  *
-+ *   - r is the repository to add a branch to
-+ *
-  *   - name is the new branch name
-  *
-  *   - start_name is the name of the existing branch that the new branch should
-@@ -37,7 +40,8 @@ extern enum branch_track git_branch_track;
-  *     that start_name is a tracking branch for (if any).
-  *
-  */
--void create_branch(const char *name, const char *start_name,
-+void create_branch(struct repository *r,
-+		   const char *name, const char *start_name,
- 		   int force, int clobber_head_ok,
- 		   int reflog, int quiet, enum branch_track track);
- 
-@@ -60,7 +64,7 @@ extern int validate_new_branchname(const char *name, struct strbuf *ref, int for
-  * Remove information about the state of working on the current
-  * branch. (E.g., MERGE_HEAD)
-  */
--void remove_branch_state(void);
-+void remove_branch_state(struct repository *r);
- 
- /*
-  * Configure local branch "local" as downstream to branch "remote"
-diff --git a/builtin/am.c b/builtin/am.c
-index 3ee9a9d2a9..232f3962d7 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2022,7 +2022,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
- 	if (merge_tree(remote_tree))
- 		return -1;
- 
--	remove_branch_state();
-+	remove_branch_state(the_repository);
- 
- 	return 0;
- }
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0c55f7f065..1be727209b 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -783,7 +783,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		 * create_branch takes care of setting up the tracking
- 		 * info and making sure new_upstream is correct
- 		 */
--		create_branch(branch->name, new_upstream, 0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
-+		create_branch(the_repository, branch->name, new_upstream,
-+			      0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
- 	} else if (unset_upstream) {
- 		struct branch *branch = branch_get(argv[0]);
- 		struct strbuf buf = STRBUF_INIT;
-@@ -814,7 +815,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (track == BRANCH_TRACK_OVERRIDE)
- 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
- 
--		create_branch(argv[0], (argc == 2) ? argv[1] : head,
-+		create_branch(the_repository,
-+			      argv[0], (argc == 2) ? argv[1] : head,
- 			      force, 0, reflog, quiet, track);
- 
- 	} else
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index acdafc6e4c..169e797675 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -753,7 +753,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 			free(refname);
- 		}
- 		else
--			create_branch(opts->new_branch, new_branch_info->name,
-+			create_branch(the_repository,
-+				      opts->new_branch, new_branch_info->name,
- 				      opts->new_branch_force ? 1 : 0,
- 				      opts->new_branch_force ? 1 : 0,
- 				      opts->new_branch_log,
-@@ -811,7 +812,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 				delete_reflog(old_branch_info->path);
- 		}
- 	}
--	remove_branch_state();
-+	remove_branch_state(the_repository);
- 	strbuf_release(&msg);
- 	if (!opts->quiet &&
- 	    (new_branch_info->path || (!opts->force_detach && !strcmp(new_branch_info->name, "HEAD"))))
+ 	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
+ 		ret = error(_("could not write index"));
 diff --git a/builtin/reset.c b/builtin/reset.c
-index 6d37a35e2e..5b4bbb0fb5 100644
+index 5b4bbb0fb5..161b5e0cae 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -400,7 +400,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 			print_new_head_line(lookup_commit_reference(the_repository, &oid));
- 	}
- 	if (!pathspec.nr)
--		remove_branch_state();
-+		remove_branch_state(the_repository);
+@@ -93,7 +93,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
  
- 	return update_ref_status;
- }
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 1fa75b2773..df662d4324 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -195,7 +195,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 	if (cmd == 'q') {
- 		int ret = sequencer_remove_state(opts);
- 		if (!ret)
--			remove_branch_state();
-+			remove_branch_state(the_repository);
- 		return ret;
+ 	if (reset_type == MIXED || reset_type == HARD) {
+ 		tree = parse_tree_indirect(oid);
+-		prime_cache_tree(&the_index, tree);
++		prime_cache_tree(the_repository, the_repository->index, tree);
  	}
- 	if (cmd == 'c')
+ 
+ 	ret = 0;
+diff --git a/cache-tree.c b/cache-tree.c
+index 9d454d24bc..190c6e5aa6 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -659,7 +659,9 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
+ 	return ret;
+ }
+ 
+-static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
++static void prime_cache_tree_rec(struct repository *r,
++				 struct cache_tree *it,
++				 struct tree *tree)
+ {
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+@@ -673,24 +675,25 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
+ 			cnt++;
+ 		else {
+ 			struct cache_tree_sub *sub;
+-			struct tree *subtree = lookup_tree(the_repository,
+-							   entry.oid);
++			struct tree *subtree = lookup_tree(r, entry.oid);
+ 			if (!subtree->object.parsed)
+ 				parse_tree(subtree);
+ 			sub = cache_tree_sub(it, entry.path);
+ 			sub->cache_tree = cache_tree();
+-			prime_cache_tree_rec(sub->cache_tree, subtree);
++			prime_cache_tree_rec(r, sub->cache_tree, subtree);
+ 			cnt += sub->cache_tree->entry_count;
+ 		}
+ 	}
+ 	it->entry_count = cnt;
+ }
+ 
+-void prime_cache_tree(struct index_state *istate, struct tree *tree)
++void prime_cache_tree(struct repository *r,
++		      struct index_state *istate,
++		      struct tree *tree)
+ {
+ 	cache_tree_free(&istate->cache_tree);
+ 	istate->cache_tree = cache_tree();
+-	prime_cache_tree_rec(istate->cache_tree, tree);
++	prime_cache_tree_rec(r, istate->cache_tree, tree);
+ 	istate->cache_changed |= CACHE_TREE_CHANGED;
+ }
+ 
+@@ -726,7 +729,8 @@ int cache_tree_matches_traversal(struct cache_tree *root,
+ 	return 0;
+ }
+ 
+-static void verify_one(struct index_state *istate,
++static void verify_one(struct repository *r,
++		       struct index_state *istate,
+ 		       struct cache_tree *it,
+ 		       struct strbuf *path)
+ {
+@@ -736,13 +740,13 @@ static void verify_one(struct index_state *istate,
+ 
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		strbuf_addf(path, "%s/", it->down[i]->name);
+-		verify_one(istate, it->down[i]->cache_tree, path);
++		verify_one(r, istate, it->down[i]->cache_tree, path);
+ 		strbuf_setlen(path, len);
+ 	}
+ 
+ 	if (it->entry_count < 0 ||
+ 	    /* no verification on tests (t7003) that replace trees */
+-	    lookup_replace_object(the_repository, &it->oid) != &it->oid)
++	    lookup_replace_object(r, &it->oid) != &it->oid)
+ 		return;
+ 
+ 	if (path->len) {
+@@ -793,12 +797,12 @@ static void verify_one(struct index_state *istate,
+ 	strbuf_release(&tree_buf);
+ }
+ 
+-void cache_tree_verify(struct index_state *istate)
++void cache_tree_verify(struct repository *r, struct index_state *istate)
+ {
+ 	struct strbuf path = STRBUF_INIT;
+ 
+ 	if (!istate->cache_tree)
+ 		return;
+-	verify_one(istate, istate->cache_tree, &path);
++	verify_one(r, istate, istate->cache_tree, &path);
+ 	strbuf_release(&path);
+ }
+diff --git a/cache-tree.h b/cache-tree.h
+index 0ab6784ffe..326209198b 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -32,7 +32,7 @@ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
+ 
+ int cache_tree_fully_valid(struct cache_tree *);
+ int cache_tree_update(struct index_state *, int);
+-void cache_tree_verify(struct index_state *);
++void cache_tree_verify(struct repository *, struct index_state *);
+ 
+ /* bitmasks to write_cache_as_tree flags */
+ #define WRITE_TREE_MISSING_OK 1
+@@ -47,7 +47,7 @@ void cache_tree_verify(struct index_state *);
+ #define WRITE_TREE_PREFIX_ERROR (-3)
+ 
+ int write_index_as_tree(struct object_id *oid, struct index_state *index_state, const char *index_path, int flags, const char *prefix);
+-void prime_cache_tree(struct index_state *, struct tree *);
++void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
+ 
+ int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
+ 
+diff --git a/read-cache.c b/read-cache.c
+index f3a848d61c..69944fc933 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3126,7 +3126,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	struct split_index *si = istate->split_index;
+ 
+ 	if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
+-		cache_tree_verify(istate);
++		cache_tree_verify(the_repository, istate);
+ 
+ 	if ((flags & SKIP_IF_UNCHANGED) && !istate->cache_changed) {
+ 		if (flags & COMMIT_LOCK)
+diff --git a/sequencer.c b/sequencer.c
+index 111cb747d6..726f727644 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2991,7 +2991,7 @@ static int do_reset(struct repository *r,
+ 	}
+ 
+ 	tree = parse_tree_indirect(&oid);
+-	prime_cache_tree(r->index, tree);
++	prime_cache_tree(r, r->index, tree);
+ 
+ 	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0)
+ 		ret = error(_("could not write index"));
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 7570df481b..6d53cbfc86 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1630,7 +1630,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		move_index_extensions(&o->result, o->src_index);
+ 		if (!ret) {
+ 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
+-				cache_tree_verify(&o->result);
++				cache_tree_verify(the_repository, &o->result);
+ 			if (!o->result.cache_tree)
+ 				o->result.cache_tree = cache_tree();
+ 			if (!cache_tree_fully_valid(o->result.cache_tree))
 -- 
 2.19.1.1231.g84aef82467
 
