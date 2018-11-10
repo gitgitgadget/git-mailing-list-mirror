@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 098431F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2E4E1F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729037AbeKJPdb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:33:31 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:44598 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729006AbeKJPda (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:33:30 -0500
-Received: by mail-lf1-f67.google.com with SMTP id z13so2815236lfe.11
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:44 -0800 (PST)
+        id S1729044AbeKJPdf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:33:35 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:40258 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728812AbeKJPdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:33:23 -0500
+Received: by mail-lj1-f195.google.com with SMTP id t22-v6so3370053lji.7
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YyEo3d97wQuMdDhBA+d61nOsv0ybVhKBjv6wkamxKpE=;
-        b=DAiLp60zolsmp7cHyfGm6WZ5nKpTcGdQ9vJmNrE1GyXiFUk0vbwnr9LycUDfvitHXp
-         HhmkEuvKc/gqM+0y1CRo46hv8MJrCU/x8aQI5aRddDnHmgQqn99Hhj7EXWAyM7frB3L3
-         EBlUshy+j/jsZRe74kmAFhDvnCmUr11n1XN52uSoG4pGhXYUKMOgjmZAzXw7S804x8fr
-         p5Uem5197oJlEBMNoghm5WITEK0Z70RzejnroQpvDO6yIggLBDmtZ+gcA2HNOx4w4uFp
-         TDk28HT8g6AaxCxvQh7ylFSEolct5pzVLe6m7H84gLFeFXeDF6WfCR5qmsx7EQNOWveg
-         OlKQ==
+        bh=q8LTa/+mjiJVkni4vN/LIYtTn6rbH63G9WixP3ExJ84=;
+        b=Va07PKfLkipelSJLq5V+ozk5c0/QShqd8txhsfWBv8GKWIyGDYRaNYvqsfEXlj3FDi
+         1jX3YoMnALU7pur/2d0xX/GAzihyVlq/zUPwSsy7Al2QIJvObUpv+4mYDBjrBp92BHUY
+         SIBQnLea75hpeVivi1DyvvaDMyU85Pep04S7S96IEvnXl47lLrbkDOiHAr3WPjMtccZt
+         deRiwG1izRuI+xTnQAjlGIhq5VNZwo80I77oUvrFsbXw80eAtQdBtJIuZXrB8HWVP6Qu
+         qXd94qLzWALH0GyxhVy26cBhziF6xtJ//1la33zVqb3CTIFT3nogCm8Lu1azeV4FR0Vm
+         fU+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YyEo3d97wQuMdDhBA+d61nOsv0ybVhKBjv6wkamxKpE=;
-        b=C4uWK9aOrzeU7G4XTEPEyo7gLLWGOFRH4UyZHu3+5YUPubnQME2w8aN9MHUwuz3+Y3
-         klc1CfG36BeExmdnJ7mEUrg0A2x1VYj3RHCfAx6bQCMDWGLXSLaDU6g/YIqBwCBQ3YRE
-         WL42VWkwXE0WjAJgg/09vNqvVy0fYfyk2SnplWAJ1RWz3/1S/eMyZXOsOT2UTjBJ29dK
-         dePbJamX81INciA+semwwoc4GUOTqYvxQgTZIeeHjNOnBaxwn35Z7nmB+uRbdaIL8S0r
-         ggE6nz50FianYU89pUyRvDUbMC8mImJr5XxtqXxVNfNRFBjT3O3EPuGvSQ8zPBppLRte
-         DpaQ==
-X-Gm-Message-State: AGRZ1gIdv0ejZFvqwitdfTqJdqRO0oUWGjXEqbn3HgZv1H5WHE3F1Mxe
-        CX/IBdtiRiYGoVgpi/1gM6tAtlmp
-X-Google-Smtp-Source: AJdET5fTanSraDF6LAG4nvLuXjALt/gaw6CcctCHq4nfItJ6BV6mXwxSr9xSMXIE9h9OtUYSvaGhfg==
-X-Received: by 2002:a19:a9d2:: with SMTP id s201mr6659433lfe.154.1541828983366;
-        Fri, 09 Nov 2018 21:49:43 -0800 (PST)
+        bh=q8LTa/+mjiJVkni4vN/LIYtTn6rbH63G9WixP3ExJ84=;
+        b=Z1l99lF6nBRaEA4BtegDBvZp9lptArHpHtK50O9ffYMdE6ZY+3BUHqxHxGVA2T4icz
+         7yNqToiHWGnMX0XzjbYeM6bjnQC2vF5RyC2sEmHy8Mgbhd0VTrScV5D0jH/L+RvBShW/
+         9wyQSfNNM3Gf34M0wuxqmCRH+wjvFO60GM9nAcTKcTH6jfdZQtCF8zN2926gMDDoVF2p
+         Rc7tNX2h/HMNx3voz7PwpG72nttRxtwfY0zUTJ/PC2BEq5r0xnOGNJwLBqBtRSTFAgwQ
+         ALxrob/0/R4/PWY2lUi2AquDMyoCnaYq3YE9hQEB5j6W/LpEFCWultVVe/b4FIdaIfED
+         kEjQ==
+X-Gm-Message-State: AGRZ1gIlr1ykhcI2oHkEz/ORoYsgd+Hmws+w3jVdV3nD9ZtpgQK8/IOA
+        jOo3ab1lAb/D6OwBxKlt1zAupoN8
+X-Google-Smtp-Source: AJdET5eSwpOak+opTk8jhuqsNjOFqvril0VDCzUmVu6dCY6wYJQkmigxSv4d/WT5mPDd43U9rgDmBw==
+X-Received: by 2002:a2e:478f:: with SMTP id u137-v6mr7282382lja.142.1541828976444;
+        Fri, 09 Nov 2018 21:49:36 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.42
+        by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:49:42 -0800 (PST)
+        Fri, 09 Nov 2018 21:49:35 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 22/22] rebase-interactive.c: remove the_repository references
-Date:   Sat, 10 Nov 2018 06:49:10 +0100
-Message-Id: <20181110054910.10568-23-pclouds@gmail.com>
+Subject: [PATCH v2 16/22] diff-lib.c: remove the_repository references
+Date:   Sat, 10 Nov 2018 06:49:04 +0100
+Message-Id: <20181110054910.10568-17-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
 In-Reply-To: <20181110054910.10568-1-pclouds@gmail.com>
 References: <20181110054910.10568-1-pclouds@gmail.com>
@@ -68,76 +68,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at there add a forward declaration for struct strbuf.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/rebase--interactive.c | 2 +-
- rebase-interactive.c          | 6 +++---
- rebase-interactive.h          | 5 ++++-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ builtin/commit.c     | 3 ++-
+ builtin/merge-ours.c | 2 +-
+ diff-lib.c           | 7 ++++---
+ diff.h               | 3 ++-
+ sequencer.c          | 4 ++--
+ 5 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index bd7d39e2af..dd2a55ab1d 100644
---- a/builtin/rebase--interactive.c
-+++ b/builtin/rebase--interactive.c
-@@ -240,7 +240,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 		break;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e89bf35634..91b1920255 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -908,7 +908,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			if (ignore_submodule_arg &&
+ 			    !strcmp(ignore_submodule_arg, "all"))
+ 				flags.ignore_submodules = 1;
+-			committable = index_differs_from(parent, &flags, 1);
++			committable = index_differs_from(the_repository,
++							 parent, &flags, 1);
+ 		}
  	}
- 	case EDIT_TODO:
--		ret = edit_todo_list(flags);
-+		ret = edit_todo_list(the_repository, flags);
- 		break;
- 	case SHOW_CURRENT_PATCH: {
- 		struct child_process cmd = CHILD_PROCESS_INIT;
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index 3cc19283ff..68aff1dac2 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -53,7 +53,7 @@ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
- 	}
+ 	strbuf_release(&committer_ident);
+diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+index c84c6e05e9..0b07263415 100644
+--- a/builtin/merge-ours.c
++++ b/builtin/merge-ours.c
+@@ -26,7 +26,7 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	if (read_cache() < 0)
+ 		die_errno("read_cache failed");
+-	if (index_differs_from("HEAD", NULL, 0))
++	if (index_differs_from(the_repository, "HEAD", NULL, 0))
+ 		exit(2);
+ 	exit(0);
  }
- 
--int edit_todo_list(unsigned flags)
-+int edit_todo_list(struct repository *r, unsigned flags)
+diff --git a/diff-lib.c b/diff-lib.c
+index 83fce51518..23c8d351b3 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -542,7 +542,7 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
  {
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *todo_file = rebase_path_todo();
-@@ -69,7 +69,7 @@ int edit_todo_list(unsigned flags)
+ 	struct rev_info revs;
  
- 	strbuf_release(&buf);
+-	repo_init_revisions(the_repository, &revs, NULL);
++	repo_init_revisions(opt->repo, &revs, NULL);
+ 	copy_pathspec(&revs.prune_data, &opt->pathspec);
+ 	revs.diffopt = *opt;
  
--	transform_todos(the_repository, flags | TODO_LIST_SHORTEN_IDS);
-+	transform_todos(r, flags | TODO_LIST_SHORTEN_IDS);
- 
- 	if (strbuf_read_file(&buf, todo_file, 0) < 0)
- 		return error_errno(_("could not read '%s'."), todo_file);
-@@ -85,7 +85,7 @@ int edit_todo_list(unsigned flags)
- 	if (launch_sequence_editor(todo_file, NULL, NULL))
- 		return -1;
- 
--	transform_todos(the_repository, flags & ~(TODO_LIST_SHORTEN_IDS));
-+	transform_todos(r, flags & ~(TODO_LIST_SHORTEN_IDS));
- 
+@@ -551,13 +551,14 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
  	return 0;
  }
-diff --git a/rebase-interactive.h b/rebase-interactive.h
-index 971da03776..17b6c9f6d0 100644
---- a/rebase-interactive.h
-+++ b/rebase-interactive.h
-@@ -1,8 +1,11 @@
- #ifndef REBASE_INTERACTIVE_H
- #define REBASE_INTERACTIVE_H
  
-+struct strbuf;
-+struct repository;
-+
- void append_todo_help(unsigned edit_todo, unsigned keep_empty,
- 		      struct strbuf *buf);
--int edit_todo_list(unsigned flags);
-+int edit_todo_list(struct repository *r, unsigned flags);
+-int index_differs_from(const char *def, const struct diff_flags *flags,
++int index_differs_from(struct repository *r,
++		       const char *def, const struct diff_flags *flags,
+ 		       int ita_invisible_in_index)
+ {
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
  
- #endif
+-	repo_init_revisions(the_repository, &rev, NULL);
++	repo_init_revisions(r, &rev, NULL);
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = def;
+ 	setup_revisions(0, NULL, &rev, &opt);
+diff --git a/diff.h b/diff.h
+index ce5e8a8183..3197a976a4 100644
+--- a/diff.h
++++ b/diff.h
+@@ -436,7 +436,8 @@ int diff_result_code(struct diff_options *, int);
+ 
+ void diff_no_index(struct repository *, struct rev_info *, int, const char **);
+ 
+-int index_differs_from(const char *def, const struct diff_flags *flags,
++int index_differs_from(struct repository *r, const char *def,
++		       const struct diff_flags *flags,
+ 		       int ita_invisible_in_index);
+ 
+ /*
+diff --git a/sequencer.c b/sequencer.c
+index 726f727644..d726f77e11 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1713,7 +1713,7 @@ static int do_pick_commit(struct repository *r,
+ 			unborn = 1;
+ 		} else if (unborn)
+ 			oidcpy(&head, the_hash_algo->empty_tree);
+-		if (index_differs_from(unborn ? empty_tree_oid_hex() : "HEAD",
++		if (index_differs_from(r, unborn ? empty_tree_oid_hex() : "HEAD",
+ 				       NULL, 0))
+ 			return error_dirty_index(r->index, opts);
+ 	}
+@@ -3915,7 +3915,7 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ 			if (res)
+ 				goto release_todo_list;
+ 		}
+-		if (index_differs_from("HEAD", NULL, 0)) {
++		if (index_differs_from(r, "HEAD", NULL, 0)) {
+ 			res = error_dirty_index(r->index, opts);
+ 			goto release_todo_list;
+ 		}
 -- 
 2.19.1.1231.g84aef82467
 
