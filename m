@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204F31F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:43:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 653DE1F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728898AbeKJP1C (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:27:02 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:38834 "EHLO
+        id S1728910AbeKJP1H (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:27:07 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:46773 "EHLO
         mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728567AbeKJP1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:27:02 -0500
-Received: by mail-lf1-f68.google.com with SMTP id p86so2828700lfg.5
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:43:16 -0800 (PST)
+        with ESMTP id S1728903AbeKJP1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:27:07 -0500
+Received: by mail-lf1-f68.google.com with SMTP id f23so2806839lfc.13
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:43:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6VMT4Zx+iGF0TVR8H0FOJbIxJM8YVe+Xy5VTUjD4Ezs=;
-        b=IcF6QaGWxi7FjkYy5X6k+oFnwJ0eH5SjlD4H+yE+8IxwI7E4jzScrYddQ8ZaZo/x5C
-         nsbypc4sUWwS3FUOaqdY2rGp98PgEayhbA+7LzvaGZdIGQeqeMGOhiOygbjd8TxpobAK
-         QXlfy65TtWVwMjEz82jjnb7dypGp65Nqmws7d1WJ8q6xDDK1TJHaMt4IfsLtkm94OE7s
-         XgY8Bz0MfPzIQ8jQrMAQc9E8eQdt7pdqg/FzSkoygNvijQQiwGl9MiueDHlp5tqz3ySe
-         lkVpKk5ylXh203/Q481sp/QeYOCWgJLU2mIIFhgVfodFWw64QHGlOtWqUvbVgiWrgJ/h
-         JLiA==
+        bh=aPfYpgWuqsllTsgO4pqsrtMX4jmXCTuYZuwiZBIGK18=;
+        b=Mr3u3uUsT/1p8kxRTwSRu6UkosuKewFMJGlrP5lPZ4bCXrO+uHt/x0vJBEPUgYGyKk
+         2lZsGYxqImhylgsQFIfjRpaVuWCbv8fUIjPACuSfSAiZJBth/NM9uu9jgN+6eAc5y2V5
+         JEVTJiYGoGeEjTKAYX179Ru+HON5Q2XIH0l9fxi20NlF5BLImdFbCYvGKCC2z0RwqZjm
+         UdRlLg1GWXmR9G4RVLb6mEnXdXrluNNSfvpLEStxOk/47QC5GNHU+s1KfpD3q5ZcTkFB
+         Q5LGtEV9uWicctv4JV65ycbd4EGmo39oHhfF9VNxWYyq9CleSYjt9kr6YZIr91513LNF
+         OMEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6VMT4Zx+iGF0TVR8H0FOJbIxJM8YVe+Xy5VTUjD4Ezs=;
-        b=QlX7rpZrvlrxuqDh6BOVOTg2zru+zM5jmYgMlPvTH9efqfy2GqJFRemnnXQN7XgWlB
-         +V1bxR6/AQUIuzNhbjZUgTzPdMeW2cKsVjxZHQpRT+BmLt3Rj37tkgvq8/YwsjOqmeh6
-         vZwH6larZNkmu7+zwezhRRUI6rvoyaIu2l587BwSq4BYr8MP0fRdfEFHGLMouomwR9VE
-         Wl2Vq8Ld4eJosEF+YWuLCYoAEHY0gP1bEUoJQfDYR3piUXOn68bDpVLW0j+DQz82VCAf
-         wOxr2f4hoRMnoo4PVFDYVtOqGNomNJFtPxzsGv7m63OWdIAYwJHCgAdM+vk7b9wB6i0y
-         CEEw==
-X-Gm-Message-State: AGRZ1gLw4zEcAO7kdMaXOE32cYu0y8z03a3U/jSa276qbP1M8r5JkS88
-        /SWtqaW+BFf0XrFvDCyaGDE=
-X-Google-Smtp-Source: AJdET5cAtLDtkDRjiswCbNlkLlmkqhTC9LZXAA2FvqtP+B/AyTtFWrl9DIxqeV4C1u+Dl/G5udbUFw==
-X-Received: by 2002:a19:f813:: with SMTP id a19mr6673565lff.67.1541826992340;
-        Fri, 09 Nov 2018 21:16:32 -0800 (PST)
+        bh=aPfYpgWuqsllTsgO4pqsrtMX4jmXCTuYZuwiZBIGK18=;
+        b=sz/s6LX5KkSBUOvuJOTo5KJirooFO6fNpibxVitiGVVFU5ojTlKY+Oi+1wkJRNK1oN
+         Br83RZIczYvHCOHsbBMscr9jyfNCoETmTZsVD6aH6CUsRpufiHQkgxZS0VFaTwGETVlP
+         HvFc9hMhWJ3XJB+4WcBAbF94GMOAnfYo6anpDZDRcb4B+C8K6laftLK1Vb9CoKfOSXEM
+         Q8M/2ydTrlZi3Da0pnJTB2N3uq883+8uDlsXfNgzr/29xOHDMF1Up1HK+F97geDX7jpN
+         EwRpRe+bV8Qol+emb2p9zm1M1UY0Dl76SCJkhaxXMlipMocaN5R9Zuo1k25MgLnJjTJu
+         i/yQ==
+X-Gm-Message-State: AGRZ1gLcQ39sblDNc1Y5zw6SRiS787OEyxUftVZ1iw9HlDkKHIFeLNWp
+        cieUD4HBu1lTFqL4fRB+Zxo=
+X-Google-Smtp-Source: AJdET5cKAKKDaind/EU/qQ1nGmWRs51fZg6wgn7iJ9V76Xff03qzzQJAlwEGVA/A8o03BrSVXxmERw==
+X-Received: by 2002:a19:945b:: with SMTP id w88mr6581361lfd.15.1541826988106;
+        Fri, 09 Nov 2018 21:16:28 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g66sm1769663lfe.42.2018.11.09.21.16.31
+        by smtp.gmail.com with ESMTPSA id g66sm1769663lfe.42.2018.11.09.21.16.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:16:31 -0800 (PST)
+        Fri, 09 Nov 2018 21:16:27 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, szeder.dev@gmail.com
-Subject: [PATCH v3 09/16] remote.c: turn some error() or die() to BUG()
-Date:   Sat, 10 Nov 2018 06:16:08 +0100
-Message-Id: <20181110051615.8641-10-pclouds@gmail.com>
+Subject: [PATCH v3 05/16] read-cache.c: turn die("internal error") to BUG()
+Date:   Sat, 10 Nov 2018 06:16:04 +0100
+Message-Id: <20181110051615.8641-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
 In-Reply-To: <20181110051615.8641-1-pclouds@gmail.com>
 References: <20181105192059.20303-1-pclouds@gmail.com>
@@ -68,46 +68,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first error, "internal error", is clearly a BUG(). The second two
-are meant to catch calls with invalid parameters and should never
-happen outside the test suite.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- remote.c | 6 +++---
+ read-cache.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 81f4f01b00..257630ff21 100644
---- a/remote.c
-+++ b/remote.c
-@@ -620,7 +620,7 @@ static void handle_duplicate(struct ref *ref1, struct ref *ref2)
- 			 * FETCH_HEAD_IGNORE entries always appear at
- 			 * the end of the list.
- 			 */
--			die(_("Internal error"));
-+			BUG("Internal error");
+diff --git a/read-cache.c b/read-cache.c
+index d57958233e..0c37f4885e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -316,7 +316,7 @@ static int ce_match_stat_basic(const struct cache_entry *ce, struct stat *st)
+ 			changed |= DATA_CHANGED;
+ 		return changed;
+ 	default:
+-		die("internal error: ce_mode is %o", ce->ce_mode);
++		BUG("unsupported ce_mode: %o", ce->ce_mode);
+ 	}
+ 
+ 	changed |= match_stat_data(&ce->ce_stat_data, st);
+@@ -2356,14 +2356,14 @@ void validate_cache_entries(const struct index_state *istate)
+ 
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		if (!istate) {
+-			die("internal error: cache entry is not allocated from expected memory pool");
++			BUG("cache entry is not allocated from expected memory pool");
+ 		} else if (!istate->ce_mem_pool ||
+ 			!mem_pool_contains(istate->ce_mem_pool, istate->cache[i])) {
+ 			if (!istate->split_index ||
+ 				!istate->split_index->base ||
+ 				!istate->split_index->base->ce_mem_pool ||
+ 				!mem_pool_contains(istate->split_index->base->ce_mem_pool, istate->cache[i])) {
+-				die("internal error: cache entry is not allocated from expected memory pool");
++				BUG("cache entry is not allocated from expected memory pool");
+ 			}
  		}
  	}
- 	free(ref2->peer_ref);
-@@ -707,7 +707,7 @@ static void query_refspecs_multiple(struct refspec *rs,
- 	int find_src = !query->src;
- 
- 	if (find_src && !query->dst)
--		error("query_refspecs_multiple: need either src or dst");
-+		BUG("query_refspecs_multiple: need either src or dst");
- 
- 	for (i = 0; i < rs->nr; i++) {
- 		struct refspec_item *refspec = &rs->items[i];
-@@ -735,7 +735,7 @@ int query_refspecs(struct refspec *rs, struct refspec_item *query)
- 	char **result = find_src ? &query->src : &query->dst;
- 
- 	if (find_src && !query->dst)
--		return error("query_refspecs: need either src or dst");
-+		BUG("query_refspecs: need either src or dst");
- 
- 	for (i = 0; i < rs->nr; i++) {
- 		struct refspec_item *refspec = &rs->items[i];
 -- 
 2.19.1.1231.g84aef82467
 
