@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96E3D1F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39F751F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728791AbeKJPdI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:33:08 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42246 "EHLO
+        id S1728833AbeKJPdJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:33:09 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:37426 "EHLO
         mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728659AbeKJPdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:33:08 -0500
-Received: by mail-lj1-f193.google.com with SMTP id f3-v6so3366774ljk.9
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:21 -0800 (PST)
+        with ESMTP id S1728670AbeKJPdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:33:09 -0500
+Received: by mail-lj1-f193.google.com with SMTP id e5-v6so3383120lja.4
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4/7AG38zNWiVEX5tKBkszRR9439H7VqFEUDgHsdMQ2c=;
-        b=bfZjz5BIsQcEm+gT/l1qUJVD8Ye31c7YxOxv4w9bH4JJNCslOfVj8ELJOGa2WzTxEU
-         v3LItSD1f/KsoSoC2sbjVfAokEQJVmHInnj+G1l1iqAae+EgJ1y/boUYCPR4L5+dkWDc
-         bl2CeZ2IqRKQ1Dwt7YSnAZbyfDoVKey8FHRtgV7Xh8190PwMfBQ9QQ30QDRf1p5JSScv
-         ovTIuLjwnNU35h5M/1guguP3DbNeiY5okKwj4oqnUE41zur5jTCVHnQe0pR6+ktnmbOB
-         k9ZWaqh+ljoTk8ZPwt/vo9sbknugHDJB3MRBi/IAGAX02E7xFBdemRQ6yAs0r4MkR05e
-         Jpug==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uMS9j06YdD85fbjplFFHEePeqtWkhVO8ReNL27iZ+qo=;
+        b=HCqHyY4LlM290uuBbYa8r2fmylEiZb9W7PEW/RZvAJHUN+di7rYHTt1eLUnLcb9klo
+         Uadw5nD6Jdhvk+X/nVdjQEqm1dcnCrb1EN+UO+p7Ip3brkcmgoB93yElDP+ryLf24XSI
+         VdW70fYWpgBTr/CvE73Jz+DrNcU/wG/KOwI2dRqCmFQGGqTnimBP8weUsWmMT0nbh9KL
+         mHC27WR7AOTNUurAiZxYAERHm8CT+CLbjk+IT+0F+zLGW4bNHUyg8GzIJmpZ4cw15Btt
+         pR2tN0bZY0QXUDUnjOLUan+jpPJ+KNSqkW4xvDduZ9YjEJ5NiHSJSLWm2oKR0jCcYylv
+         HR8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=4/7AG38zNWiVEX5tKBkszRR9439H7VqFEUDgHsdMQ2c=;
-        b=lDU0r/6QUQqNbxzROeqxZVk+X0Y8lb6J1FvOV5YiPxcLVKoZh9FBF6v1nixuyRlijI
-         3ZQi1cETmDLlmc4r6/4lfLsREnTD1nJNl+taAYa+0+YHDxN0DAss2gRebgzj8NSjEyPn
-         OBwJNkkfOQzxHc/LEYI6fC/OkrBxky46rgzlw9N8yrDGI5nJ4tWbK5EWKFu2d+QuO6Lk
-         8kkULzwOvVCWsVf2IqEGdu7fygfupoU6JdHnGCo1NvQVQX2SE4Uq0REsH5pY8lmbkfN9
-         +EiuRpnl8vTwbpqcaszuxCz3rkePsp+lpWFAgBwimxGamqkvNWLYMkXFbg9oUBFiMK2h
-         hN/A==
-X-Gm-Message-State: AGRZ1gK7sTbbAekhyoT7+0/a6CyqYENckBKan3/CAdQOFtPod8XNe+1o
-        18IchV3UBVSwJ86xolR80gZQ9LHH
-X-Google-Smtp-Source: AJdET5cpnwbO/g/WGDVC4vfPrIwD2ey/hnbB1w+ax2XvZAkVSppl9FS9YkS3xe+skfQiRrwhsU3jHQ==
-X-Received: by 2002:a2e:85d3:: with SMTP id h19-v6mr6978945ljj.82.1541828959953;
-        Fri, 09 Nov 2018 21:49:19 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=uMS9j06YdD85fbjplFFHEePeqtWkhVO8ReNL27iZ+qo=;
+        b=bZfSQvl0x78bElQbGAKwZt5ly96oP7NHJDwZl9LZcPqaKgTW98WC8nx0hPE04S+Hjp
+         d5LvOBlmIUKzLLaR+/PjZNHAAlBt7Wfpp+dTwpHzqmJ0O97rCeUDRTuA4syD3ub6gALZ
+         0fLHfxoUfmdhA4yu4LaXQD6XZb6Rnx7mWGYGN0cNHNPlweOo10tI0VbPpRC08p1SQM28
+         AxPu2OyWugHYMp2D7/MO4yF0DsLjKLt1DTBe1iQvJAVc6VxGqfwc2aKWQhU+QUlNYpgT
+         jKHVTJ39WWXVP69NilaRQb9dcT30YM3LB8Np8Apz5DL53xMtjTjH2si3xUMWEt+CF0/O
+         dHCQ==
+X-Gm-Message-State: AGRZ1gLNKnZZPvNBXfFf7EB6NIRne50As9+539jWDhPj9lY9yN7DcPrI
+        efCYb7BPoI6onxabpbc2zZYih9kd
+X-Google-Smtp-Source: AJdET5dk5aRjk9yXsiLXG1MfEhIJSo8/Rfvfp7GsTWqIUg1mWN9ckBU+MMOIIkO9y6In2Xe2l9Y37A==
+X-Received: by 2002:a2e:12c1:: with SMTP id 62-v6mr8057595ljs.74.1541828960971;
+        Fri, 09 Nov 2018 21:49:20 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
         by smtp.gmail.com with ESMTPSA id h3sm144445lfj.25.2018.11.09.21.49.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:49:19 -0800 (PST)
+        Fri, 09 Nov 2018 21:49:20 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 00/22] Kill the_index part 5
-Date:   Sat, 10 Nov 2018 06:48:48 +0100
-Message-Id: <20181110054910.10568-1-pclouds@gmail.com>
+Subject: [PATCH v2 01/22] wt-status.c: remove implicit dependency on the_index
+Date:   Sat, 10 Nov 2018 06:48:49 +0100
+Message-Id: <20181110054910.10568-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
+In-Reply-To: <20181110054910.10568-1-pclouds@gmail.com>
+References: <20181110054910.10568-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,119 +68,404 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Please ignore v1 which contains unrelated patches)
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/commit.c |  2 +-
+ builtin/pull.c   |  3 +-
+ builtin/rebase.c |  7 +++--
+ sequencer.c      |  8 ++---
+ wt-status.c      | 76 +++++++++++++++++++++++++++---------------------
+ wt-status.h      | 17 +++++++----
+ 6 files changed, 66 insertions(+), 47 deletions(-)
 
-I lied about part 5 being final. This series contains most of my WIP
-series [2] except sha1-name.c, read-cache.c and merge-recursive.c
-because there will be conflicts on 'pu' so they will be in part 6. At
-least this only results in two small conflicts in sequencer.c.
-
-I did start pushing the_repository out of library code [1] in the bottom
-half of this series. There aren't big surprises except that cache-tree
-API now take _both_ struct repository and struct index_state. The
-reason is cache-tree can work on temporary indexes and repo->index is
-about $GIT_DIR/index.
-
-[1] Stefan and I make a good team. He keeps adding the_repository. I
-keep removing. We both hold hands leading commit counts (with Brian
-just a bit behind frantically replacing sha1 with oid to keep up).
-Meanwhile Junio is crying in the corner because of too many conflicts.
-:-D
-
-[2] https://public-inbox.org/git/20181019145237.16079-1-pclouds@gmail.com/
-
-Nguyễn Thái Ngọc Duy (22):
-  wt-status.c: remove implicit dependency on the_index
-  wt-status.c: remove implicit dependency the_repository
-  list-objects-filter.c: remove implicit dependency on the_index
-  list-objects.c: reduce the_repository references
-  notes-merge.c: remove implicit dependency on the_index
-  notes-merge.c: remove implicit dependency the_repository
-  transport.c: remove implicit dependency on the_index
-  sequencer.c: remove implicit dependency on the_index
-  sequencer.c: remove implicit dependency on the_repository
-  blame.c: remove implicit dependency the_repository
-  bisect.c: remove the_repository reference
-  branch.c: remove the_repository reference
-  bundle.c: remove the_repository references
-  cache-tree.c: remove the_repository references
-  delta-islands.c: remove the_repository references
-  diff-lib.c: remove the_repository references
-  line-log.c: remove the_repository reference
-  notes-cache.c: remove the_repository references
-  pack-check.c: remove the_repository references
-  pack-*.c: remove the_repository references
-  rerere.c: remove the_repository references
-  rebase-interactive.c: remove the_repository references
-
- bisect.c                      |  48 ++--
- bisect.h                      |   5 +-
- blame.c                       |  39 +--
- branch.c                      |  21 +-
- branch.h                      |   8 +-
- builtin/am.c                  |   4 +-
- builtin/bisect--helper.c      |   2 +-
- builtin/branch.c              |   6 +-
- builtin/bundle.c              |   7 +-
- builtin/checkout.c            |   5 +-
- builtin/commit.c              |   8 +-
- builtin/fsck.c                |   3 +-
- builtin/merge-ours.c          |   2 +-
- builtin/merge.c               |   2 +-
- builtin/notes.c               |   2 +-
- builtin/pack-objects.c        |   6 +-
- builtin/pull.c                |   3 +-
- builtin/push.c                |   3 +-
- builtin/read-tree.c           |   4 +-
- builtin/rebase--interactive.c |  19 +-
- builtin/rebase.c              |  13 +-
- builtin/rerere.c              |  10 +-
- builtin/reset.c               |   4 +-
- builtin/revert.c              |   8 +-
- bundle.c                      |  26 +-
- bundle.h                      |   9 +-
- cache-tree.c                  |  26 +-
- cache-tree.h                  |   4 +-
- combine-diff.c                |   2 +-
- delta-islands.c               |  24 +-
- delta-islands.h               |   9 +-
- diff-lib.c                    |   7 +-
- diff.c                        |  12 +-
- diff.h                        |   5 +-
- diffcore-pickaxe.c            |   4 +-
- grep.c                        |   2 +-
- line-log.c                    |   2 +-
- list-objects-filter.c         |  10 +-
- list-objects-filter.h         |   2 +
- list-objects.c                |  13 +-
- notes-cache.c                 |  12 +-
- notes-cache.h                 |   6 +-
- notes-merge.c                 |  16 +-
- notes-merge.h                 |   5 +-
- pack-bitmap-write.c           |   6 +-
- pack-bitmap.c                 |  13 +-
- pack-bitmap.h                 |   3 +-
- pack-check.c                  |   9 +-
- pack-objects.c                |   6 +-
- pack-objects.h                |   5 +-
- pack.h                        |   4 +-
- read-cache.c                  |   2 +-
- rebase-interactive.c          |   6 +-
- rebase-interactive.h          |   5 +-
- ref-filter.c                  |   2 +-
- rerere.c                      |  26 +-
- rerere.h                      |   6 +-
- sequencer.c                   | 453 +++++++++++++++++++---------------
- sequencer.h                   |  27 +-
- transport.c                   |   9 +-
- transport.h                   |   3 +-
- unpack-trees.c                |   2 +-
- userdiff.c                    |   5 +-
- userdiff.h                    |   4 +-
- wt-status.c                   |  94 ++++---
- wt-status.h                   |  21 +-
- 66 files changed, 650 insertions(+), 489 deletions(-)
-
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 074bd9a551..6637a928a7 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -185,7 +185,7 @@ static void determine_whence(struct wt_status *s)
+ 
+ static void status_init_config(struct wt_status *s, config_fn_t fn)
+ {
+-	wt_status_prepare(s);
++	wt_status_prepare(the_repository, s);
+ 	init_diff_ui_defaults();
+ 	git_config(fn, s);
+ 	determine_whence(s);
+diff --git a/builtin/pull.c b/builtin/pull.c
+index c21aa276f1..6026ce1a69 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -888,7 +888,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			die(_("Updating an unborn branch with changes added to the index."));
+ 
+ 		if (!autostash)
+-			require_clean_work_tree(N_("pull with rebase"),
++			require_clean_work_tree(the_repository,
++				N_("pull with rebase"),
+ 				_("please commit or stash them."), 1, 0);
+ 
+ 		if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 0ee06aa363..b9eb958454 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -983,7 +983,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 					     &lock_file);
+ 		rollback_lock_file(&lock_file);
+ 
+-		if (has_unstaged_changes(1)) {
++		if (has_unstaged_changes(the_repository, 1)) {
+ 			puts(_("You must edit all merge conflicts and then\n"
+ 			       "mark them as resolved using git add"));
+ 			exit(1);
+@@ -1351,7 +1351,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			update_index_if_able(&the_index, &lock_file);
+ 		rollback_lock_file(&lock_file);
+ 
+-		if (has_unstaged_changes(1) || has_uncommitted_changes(1)) {
++		if (has_unstaged_changes(the_repository, 1) ||
++		    has_uncommitted_changes(the_repository, 1)) {
+ 			const char *autostash =
+ 				state_dir_path("autostash", &options);
+ 			struct child_process stash = CHILD_PROCESS_INIT;
+@@ -1397,7 +1398,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	if (require_clean_work_tree("rebase",
++	if (require_clean_work_tree(the_repository, "rebase",
+ 				    _("Please commit or stash them."), 1, 1)) {
+ 		ret = 1;
+ 		goto cleanup;
+diff --git a/sequencer.c b/sequencer.c
+index 9e1ab3a2a7..0b8f18fd36 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2773,7 +2773,7 @@ static int do_exec(const char *command_line)
+ 	if (discard_cache() < 0 || read_cache() < 0)
+ 		return error(_("could not read index"));
+ 
+-	dirty = require_clean_work_tree("rebase", NULL, 1, 1);
++	dirty = require_clean_work_tree(the_repository, "rebase", NULL, 1, 1);
+ 
+ 	if (status) {
+ 		warning(_("execution failed: %s\n%s"
+@@ -3714,10 +3714,10 @@ static int commit_staged_changes(struct replay_opts *opts,
+ 	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
+ 	unsigned int final_fixup = 0, is_clean;
+ 
+-	if (has_unstaged_changes(1))
++	if (has_unstaged_changes(the_repository, 1))
+ 		return error(_("cannot rebase: You have unstaged changes."));
+ 
+-	is_clean = !has_uncommitted_changes(0);
++	is_clean = !has_uncommitted_changes(the_repository, 0);
+ 
+ 	if (file_exists(rebase_path_amend())) {
+ 		struct strbuf rev = STRBUF_INIT;
+@@ -4847,7 +4847,7 @@ int complete_action(struct replay_opts *opts, unsigned flags,
+ 	if (checkout_onto(opts, onto_name, oid_to_hex(&oid), orig_head))
+ 		return -1;
+ ;
+-	if (require_clean_work_tree("rebase", "", 1, 1))
++	if (require_clean_work_tree(the_repository, "rebase", "", 1, 1))
+ 		return -1;
+ 
+ 	return sequencer_continue(opts);
+diff --git a/wt-status.c b/wt-status.c
+index 187568a112..6d401b2c24 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -119,9 +119,10 @@ static void status_printf_more(struct wt_status *s, const char *color,
+ 	va_end(ap);
+ }
+ 
+-void wt_status_prepare(struct wt_status *s)
++void wt_status_prepare(struct repository *r, struct wt_status *s)
+ {
+ 	memset(s, 0, sizeof(*s));
++	s->repo = r;
+ 	memcpy(s->color_palette, default_wt_status_colors,
+ 	       sizeof(default_wt_status_colors));
+ 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+@@ -494,19 +495,19 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 	}
+ }
+ 
+-static int unmerged_mask(const char *path)
++static int unmerged_mask(struct index_state *istate, const char *path)
+ {
+ 	int pos, mask;
+ 	const struct cache_entry *ce;
+ 
+-	pos = cache_name_pos(path, strlen(path));
++	pos = index_name_pos(istate, path, strlen(path));
+ 	if (0 <= pos)
+ 		return 0;
+ 
+ 	mask = 0;
+ 	pos = -pos-1;
+-	while (pos < active_nr) {
+-		ce = active_cache[pos++];
++	while (pos < istate->cache_nr) {
++		ce = istate->cache[pos++];
+ 		if (strcmp(ce->name, path) || !ce_stage(ce))
+ 			break;
+ 		mask |= (1 << (ce_stage(ce) - 1));
+@@ -566,7 +567,8 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+ 			s->committable = 1;
+ 			break;
+ 		case DIFF_STATUS_UNMERGED:
+-			d->stagemask = unmerged_mask(p->two->path);
++			d->stagemask = unmerged_mask(s->repo->index,
++						     p->two->path);
+ 			/*
+ 			 * Don't bother setting {mode,oid}_{head,index} since the print
+ 			 * code will output the stage values directly and not use the
+@@ -585,7 +587,7 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+ 
+-	repo_init_revisions(the_repository, &rev, NULL);
++	repo_init_revisions(s->repo, &rev, NULL);
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.flags.dirty_submodules = 1;
+@@ -610,7 +612,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
+ 
+-	repo_init_revisions(the_repository, &rev, NULL);
++	repo_init_revisions(s->repo, &rev, NULL);
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = s->is_initial ? empty_tree_oid_hex() : s->reference;
+ 	setup_revisions(0, NULL, &rev, &opt);
+@@ -643,14 +645,15 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 
+ static void wt_status_collect_changes_initial(struct wt_status *s)
+ {
++	struct index_state *istate = s->repo->index;
+ 	int i;
+ 
+-	for (i = 0; i < active_nr; i++) {
++	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct string_list_item *it;
+ 		struct wt_status_change_data *d;
+-		const struct cache_entry *ce = active_cache[i];
++		const struct cache_entry *ce = istate->cache[i];
+ 
+-		if (!ce_path_match(&the_index, ce, &s->pathspec, NULL))
++		if (!ce_path_match(istate, ce, &s->pathspec, NULL))
+ 			continue;
+ 		if (ce_intent_to_add(ce))
+ 			continue;
+@@ -684,6 +687,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 	int i;
+ 	struct dir_struct dir;
+ 	uint64_t t_begin = getnanotime();
++	struct index_state *istate = s->repo->index;
+ 
+ 	if (!s->show_untracked_files)
+ 		return;
+@@ -698,25 +702,25 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 		if (s->show_ignored_mode == SHOW_MATCHING_IGNORED)
+ 			dir.flags |= DIR_SHOW_IGNORED_TOO_MODE_MATCHING;
+ 	} else {
+-		dir.untracked = the_index.untracked;
++		dir.untracked = istate->untracked;
+ 	}
+ 
+ 	setup_standard_excludes(&dir);
+ 
+-	fill_directory(&dir, &the_index, &s->pathspec);
++	fill_directory(&dir, istate, &s->pathspec);
+ 
+ 	for (i = 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent = dir.entries[i];
+-		if (cache_name_is_other(ent->name, ent->len) &&
+-		    dir_path_match(&the_index, ent, &s->pathspec, 0, NULL))
++		if (index_name_is_other(istate, ent->name, ent->len) &&
++		    dir_path_match(istate, ent, &s->pathspec, 0, NULL))
+ 			string_list_insert(&s->untracked, ent->name);
+ 		free(ent);
+ 	}
+ 
+ 	for (i = 0; i < dir.ignored_nr; i++) {
+ 		struct dir_entry *ent = dir.ignored[i];
+-		if (cache_name_is_other(ent->name, ent->len) &&
+-		    dir_path_match(&the_index, ent, &s->pathspec, 0, NULL))
++		if (index_name_is_other(istate, ent->name, ent->len) &&
++		    dir_path_match(istate, ent, &s->pathspec, 0, NULL))
+ 			string_list_insert(&s->ignored, ent->name);
+ 		free(ent);
+ 	}
+@@ -1009,7 +1013,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+ 	int dirty_submodules;
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 
+-	repo_init_revisions(the_repository, &rev, NULL);
++	repo_init_revisions(s->repo, &rev, NULL);
+ 	rev.diffopt.flags.allow_textconv = 1;
+ 	rev.diffopt.ita_invisible_in_index = 1;
+ 
+@@ -1326,7 +1330,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 				_("  (use \"git rebase --abort\" to check out the original branch)"));
+ 		}
+ 	} else if (s->state.rebase_in_progress ||
+-		   !stat(git_path_merge_msg(the_repository), &st)) {
++		   !stat(git_path_merge_msg(s->repo), &st)) {
+ 		print_rebase_state(s, color);
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+@@ -2135,6 +2139,7 @@ static void wt_porcelain_v2_print_unmerged_entry(
+ 	struct wt_status *s)
+ {
+ 	struct wt_status_change_data *d = it->util;
++	struct index_state *istate = s->repo->index;
+ 	const struct cache_entry *ce;
+ 	struct strbuf buf_index = STRBUF_INIT;
+ 	const char *path_index = NULL;
+@@ -2173,11 +2178,11 @@ static void wt_porcelain_v2_print_unmerged_entry(
+ 	 */
+ 	memset(stages, 0, sizeof(stages));
+ 	sum = 0;
+-	pos = cache_name_pos(it->string, strlen(it->string));
++	pos = index_name_pos(istate, it->string, strlen(it->string));
+ 	assert(pos < 0);
+ 	pos = -pos-1;
+-	while (pos < active_nr) {
+-		ce = active_cache[pos++];
++	while (pos < istate->cache_nr) {
++		ce = istate->cache[pos++];
+ 		stage = ce_stage(ce);
+ 		if (strcmp(ce->name, it->string) || !stage)
+ 			break;
+@@ -2302,12 +2307,12 @@ void wt_status_print(struct wt_status *s)
+ /**
+  * Returns 1 if there are unstaged changes, 0 otherwise.
+  */
+-int has_unstaged_changes(int ignore_submodules)
++int has_unstaged_changes(struct repository *r, int ignore_submodules)
+ {
+ 	struct rev_info rev_info;
+ 	int result;
+ 
+-	repo_init_revisions(the_repository, &rev_info, NULL);
++	repo_init_revisions(r, &rev_info, NULL);
+ 	if (ignore_submodules) {
+ 		rev_info.diffopt.flags.ignore_submodules = 1;
+ 		rev_info.diffopt.flags.override_submodule_config = 1;
+@@ -2321,15 +2326,16 @@ int has_unstaged_changes(int ignore_submodules)
+ /**
+  * Returns 1 if there are uncommitted changes, 0 otherwise.
+  */
+-int has_uncommitted_changes(int ignore_submodules)
++int has_uncommitted_changes(struct repository *r,
++			    int ignore_submodules)
+ {
+ 	struct rev_info rev_info;
+ 	int result;
+ 
+-	if (is_cache_unborn())
++	if (is_index_unborn(r->index))
+ 		return 0;
+ 
+-	repo_init_revisions(the_repository, &rev_info, NULL);
++	repo_init_revisions(r, &rev_info, NULL);
+ 	if (ignore_submodules)
+ 		rev_info.diffopt.flags.ignore_submodules = 1;
+ 	rev_info.diffopt.flags.quick = 1;
+@@ -2340,7 +2346,7 @@ int has_uncommitted_changes(int ignore_submodules)
+ 		 * We have no head (or it's corrupt); use the empty tree,
+ 		 * which will complain if the index is non-empty.
+ 		 */
+-		struct tree *tree = lookup_tree(the_repository, the_hash_algo->empty_tree);
++		struct tree *tree = lookup_tree(r, the_hash_algo->empty_tree);
+ 		add_pending_object(&rev_info, &tree->object, "");
+ 	}
+ 
+@@ -2353,24 +2359,28 @@ int has_uncommitted_changes(int ignore_submodules)
+  * If the work tree has unstaged or uncommitted changes, dies with the
+  * appropriate message.
+  */
+-int require_clean_work_tree(const char *action, const char *hint, int ignore_submodules, int gently)
++int require_clean_work_tree(struct repository *r,
++			    const char *action,
++			    const char *hint,
++			    int ignore_submodules,
++			    int gently)
+ {
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int err = 0, fd;
+ 
+ 	fd = hold_locked_index(&lock_file, 0);
+-	refresh_cache(REFRESH_QUIET);
++	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+ 	if (0 <= fd)
+-		update_index_if_able(&the_index, &lock_file);
++		update_index_if_able(r->index, &lock_file);
+ 	rollback_lock_file(&lock_file);
+ 
+-	if (has_unstaged_changes(ignore_submodules)) {
++	if (has_unstaged_changes(r, ignore_submodules)) {
+ 		/* TRANSLATORS: the action is e.g. "pull with rebase" */
+ 		error(_("cannot %s: You have unstaged changes."), _(action));
+ 		err = 1;
+ 	}
+ 
+-	if (has_uncommitted_changes(ignore_submodules)) {
++	if (has_uncommitted_changes(r, ignore_submodules)) {
+ 		if (err)
+ 			error(_("additionally, your index contains uncommitted changes."));
+ 		else
+diff --git a/wt-status.h b/wt-status.h
+index 1fcf93afbf..8375e816fb 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -7,6 +7,7 @@
+ #include "pathspec.h"
+ #include "remote.h"
+ 
++struct repository;
+ struct worktree;
+ 
+ enum color_wt_status {
+@@ -83,6 +84,7 @@ struct wt_status_state {
+ };
+ 
+ struct wt_status {
++	struct repository *repo;
+ 	int is_initial;
+ 	char *branch;
+ 	const char *reference;
+@@ -128,7 +130,7 @@ struct wt_status {
+ 
+ size_t wt_status_locate_end(const char *s, size_t len);
+ void wt_status_add_cut_line(FILE *fp);
+-void wt_status_prepare(struct wt_status *s);
++void wt_status_prepare(struct repository *r, struct wt_status *s);
+ void wt_status_print(struct wt_status *s);
+ void wt_status_collect(struct wt_status *s);
+ void wt_status_collect_free_buffers(struct wt_status *s);
+@@ -144,9 +146,14 @@ __attribute__((format (printf, 3, 4)))
+ void status_printf(struct wt_status *s, const char *color, const char *fmt, ...);
+ 
+ /* The following functions expect that the caller took care of reading the index. */
+-int has_unstaged_changes(int ignore_submodules);
+-int has_uncommitted_changes(int ignore_submodules);
+-int require_clean_work_tree(const char *action, const char *hint,
+-	int ignore_submodules, int gently);
++int has_unstaged_changes(struct repository *repo,
++			 int ignore_submodules);
++int has_uncommitted_changes(struct repository *repo,
++			    int ignore_submodules);
++int require_clean_work_tree(struct repository *repo,
++			    const char *action,
++			    const char *hint,
++			    int ignore_submodules,
++			    int gently);
+ 
+ #endif /* STATUS_H */
 -- 
 2.19.1.1231.g84aef82467
 
