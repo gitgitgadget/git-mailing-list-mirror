@@ -7,57 +7,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EBF61F453
-	for <e@80x24.org>; Sat, 10 Nov 2018 05:46:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D9E91F453
+	for <e@80x24.org>; Sat, 10 Nov 2018 05:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728895AbeKJPaj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Nov 2018 10:30:39 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:35500 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728580AbeKJPaj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Nov 2018 10:30:39 -0500
-Received: by mail-lf1-f65.google.com with SMTP id e26so1046035lfc.2
-        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:46:53 -0800 (PST)
+        id S1728905AbeKJPal (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Nov 2018 10:30:41 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:40045 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728875AbeKJPak (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Nov 2018 10:30:40 -0500
+Received: by mail-lf1-f68.google.com with SMTP id v5so2829211lfe.7
+        for <git@vger.kernel.org>; Fri, 09 Nov 2018 21:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PRAk8EByl87gQ3pIkj8Qaq2NEOT2THURhj3uc2Y+9dk=;
-        b=DaamNcrUhXUlDXyo8YvW3Bvs828n3JoW9+QFEKMFenQ+scgPBIKNQlwHf550jk9gd5
-         +LdDQRgLcHCl+YZYQUPCu0nx7pzDKt3y3fZfNiZXXWajKB3t/Y3j1KJiwdbxS5y2RlLZ
-         +5+LEvF1cGpMJUc7rfsypFE1QusYGf2+lydsuYxo8jB5QGBtbLDAJi4CyJJ4KvWGhWqE
-         Q/fqysCMoKSVFRuO9pLiwunXz7xxcc0Dsvk/RriqXGzMUMxBVm99nid/iiIaMsC1ZSVB
-         hNSNMRvj1Nibv3qS8Nh7yc2P6Lb03D0S94izppHq5TpY6mwNiRgwKN7uazE+ew2614cl
-         lpeQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4qltdDkEvB6bUWJNdeMhKeANsnQkkMsjtlj3DafGDBo=;
+        b=V1AvvmLC69Z6ENplLgrp8wnxekiQwzJVpLN5R9rGqgYgXjnMox+TYZjAQ1YFWroLal
+         tjWDJ8ThwAKEOB/IqZDRvJzvPLQ+fgQfcVNzBxqffIi9pkZaWRY9/ummtpkhQRSiALFy
+         dk060E84UVTGyyTcorhyX4VSZj+6OCqdUA1rr/tCV1wqXHknrBT8MDU4LzkZb9lwB3gy
+         NjFYnYy/72NjzugFDTD32hRA8E/cog/7uG07rMvd2USSuLbDuOrG6VQT4m331JfZ5XzI
+         SOagcZXHu6PI+A/7EUARGTvWF/zfotS4f25tXuwmxiLXpQGF3N0E0tz01DSwmhvVrgeP
+         hzNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PRAk8EByl87gQ3pIkj8Qaq2NEOT2THURhj3uc2Y+9dk=;
-        b=BpcZCt3XvRxjq9MB1rj6TnMiLCSv8JL2ZlBztlA1s7ywprSZVSS6C9fZ6/6VFRh74+
-         Oa/wEeT1wHoLzCJujNNJyJr154GWAD7hKCECYrw/Zwfjp4X3eLpjjSCcdM5yTn8lcRKg
-         9UcUTo/CjLkE4Zq0GekZgZSsxt1qBLtNnFmUeLcsIolOvcuNrxUvFmA/3zGSkbzIlB6M
-         r8cvxJ0y5Ef2UCPbsJJTwb7L3lID7skoo6GfiF9AeTxS8iI3kUatsSRXajynupVnGSC6
-         35X3Kt/yOtyP7KYmJ3fOA38CkUHcZ4zb6juqtssK3YLoLKovTOrbncLNY2J9JZOFHltl
-         smCw==
-X-Gm-Message-State: AGRZ1gKHSwOolJb2H/A00v+ggfREKGQ7jRG0B0lBUJmW441OW9H7uheJ
-        FLpnShtJusnn3JFjLPF6VunAMffy
-X-Google-Smtp-Source: AJdET5fgatzw9bFHHL17styzI1Yb00BjQv9qvr/Khrl7L9XNUEnpVBg1Jhq3Uw+F16kiZFZ6ExjtKA==
-X-Received: by 2002:a19:641d:: with SMTP id y29mr6844121lfb.14.1541828812256;
-        Fri, 09 Nov 2018 21:46:52 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4qltdDkEvB6bUWJNdeMhKeANsnQkkMsjtlj3DafGDBo=;
+        b=ZnqJj0tGzxE1Jjp1HcL6d1wd2TlUG29Q/IoJo8Jfie98EeI+bXpTyUhGfHfiIpeM29
+         ggE7tjHT9XYSzKAX8VDUc9nwjQoq9GaZYdrEHWxsqli6QmhkJom0/Sxru2bDS2KzUlBB
+         MY6JZxK/L7ATqCLpDZz4qnOJVonsp7kCSKo5SNi6ZD3Ftv3ZueoBHKN5/3vwdINk6Xvc
+         i3h5UilHU4uDKyeC89qnp38TnHNUzc3eO5wNhjNNHb6Kvnoo6hfP1xXxAUJ5l+OyiEMo
+         eOstvUxUirpMSyu7x190J7n4sxwRNxic18/PeCm4DeIEtwUcWPbFd+5MTkrJUv8VvQ9Y
+         G9uA==
+X-Gm-Message-State: AGRZ1gI3MTHyOepp3+Bam3buo0Ur29Dep2VjNkckqJrUlpml6G16tl0O
+        b4oumYfoemdk8sJ7/N8IOgHkUPzh
+X-Google-Smtp-Source: AJdET5fFxoQ/j0SYp7OMUoI1swV6FqAsh0GHZgS5lyUqkBhLh8ur0Nv2dC6+6skGydkG9HhsLXZrTg==
+X-Received: by 2002:a19:5402:: with SMTP id i2mr6728700lfb.128.1541828813339;
+        Fri, 09 Nov 2018 21:46:53 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g2-v6sm2441597ljg.9.2018.11.09.21.46.51
+        by smtp.gmail.com with ESMTPSA id g2-v6sm2441597ljg.9.2018.11.09.21.46.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Nov 2018 21:46:51 -0800 (PST)
+        Fri, 09 Nov 2018 21:46:52 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 00/22] Kill the_index part 5
-Date:   Sat, 10 Nov 2018 06:46:23 +0100
-Message-Id: <20181110054646.10149-1-pclouds@gmail.com>
+        <pclouds@gmail.com>, Laszlo Ersek <lersek@redhat.com>,
+        Leif Lindholm <leif.lindholm@linaro.org>
+Subject: [PATCH v2] format-patch: respect --stat in cover letter's diffstat
+Date:   Sat, 10 Nov 2018 06:46:24 +0100
+Message-Id: <20181110054646.10149-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1231.g84aef82467
+In-Reply-To: <20181110054646.10149-1-pclouds@gmail.com>
+References: <20181110054646.10149-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,117 +69,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I lied about part 5 being final. This series contains most of my WIP
-series [2] except sha1-name.c, read-cache.c and merge-recursive.c
-because there will be conflicts on 'pu' so they will be in part 6. At
-least this only results in two small conflicts in sequencer.c.
+Commit 43662b23ab (format-patch: keep cover-letter diffstat wrapped in
+72 columns - 2018-01-24) uncondtionally sets stat width to 72 when
+generating diffstat for the cover letter, ignoring --stat from command
+line. But it should only do so when stat width is still default
+(i.e. stat_width == 0).
 
-I did start pushing the_repository out of library code [1] in the bottom
-half of this series. There aren't big surprises except that cache-tree
-API now take _both_ struct repository and struct index_state. The
-reason is cache-tree can work on temporary indexes and repo->index is
-about $GIT_DIR/index.
+In order to fix this, we should only set stat_width if stat_width is
+zero. But it will never be. Commit 071dd0ba43 (format-patch: reduce
+patch diffstat width to 72 - 2018-02-01) makes sure that default stat
+width will be 72 (ignoring $COLUMNS, but could still be overriden by
+--stat). So all we need to do here is drop the assignment.
 
-[1] Stefan and I make a good team. He keeps adding the_repository. I
-keep removing. We both hold hands leading commit counts (with Brian
-just a bit behind frantically replacing sha1 with oid to keep up).
-Meanwhile Junio is crying in the corner because of too many conflicts.
-:-D
+Reported-by: Laszlo Ersek <lersek@redhat.com>
+Helped-by: Leif Lindholm <leif.lindholm@linaro.org>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/log.c          |  2 --
+ t/t4052-stat-output.sh | 48 +++++++++++++++++++++++++++++-------------
+ 2 files changed, 33 insertions(+), 17 deletions(-)
 
-[2] https://public-inbox.org/git/20181019145237.16079-1-pclouds@gmail.com/
-
-Nguyễn Thái Ngọc Duy (22):
-  wt-status.c: remove implicit dependency on the_index
-  wt-status.c: remove implicit dependency the_repository
-  list-objects-filter.c: remove implicit dependency on the_index
-  list-objects.c: reduce the_repository references
-  notes-merge.c: remove implicit dependency on the_index
-  notes-merge.c: remove implicit dependency the_repository
-  transport.c: remove implicit dependency on the_index
-  sequencer.c: remove implicit dependency on the_index
-  sequencer.c: remove implicit dependency on the_repository
-  blame.c: remove implicit dependency the_repository
-  bisect.c: remove the_repository reference
-  branch.c: remove the_repository reference
-  bundle.c: remove the_repository references
-  cache-tree.c: remove the_repository references
-  delta-islands.c: remove the_repository references
-  diff-lib.c: remove the_repository references
-  line-log.c: remove the_repository reference
-  notes-cache.c: remove the_repository references
-  pack-check.c: remove the_repository references
-  pack-*.c: remove the_repository references
-  rerere.c: remove the_repository references
-  rebase-interactive.c: remove the_repository references
-
- bisect.c                      |  48 ++--
- bisect.h                      |   5 +-
- blame.c                       |  39 +--
- branch.c                      |  21 +-
- branch.h                      |   8 +-
- builtin/am.c                  |   4 +-
- builtin/bisect--helper.c      |   2 +-
- builtin/branch.c              |   6 +-
- builtin/bundle.c              |   7 +-
- builtin/checkout.c            |   5 +-
- builtin/commit.c              |   8 +-
- builtin/fsck.c                |   3 +-
- builtin/merge-ours.c          |   2 +-
- builtin/merge.c               |   2 +-
- builtin/notes.c               |   2 +-
- builtin/pack-objects.c        |   6 +-
- builtin/pull.c                |   3 +-
- builtin/push.c                |   3 +-
- builtin/read-tree.c           |   4 +-
- builtin/rebase--interactive.c |  19 +-
- builtin/rebase.c              |  13 +-
- builtin/rerere.c              |  10 +-
- builtin/reset.c               |   4 +-
- builtin/revert.c              |   8 +-
- bundle.c                      |  26 +-
- bundle.h                      |   9 +-
- cache-tree.c                  |  26 +-
- cache-tree.h                  |   4 +-
- combine-diff.c                |   2 +-
- delta-islands.c               |  24 +-
- delta-islands.h               |   9 +-
- diff-lib.c                    |   7 +-
- diff.c                        |  12 +-
- diff.h                        |   5 +-
- diffcore-pickaxe.c            |   4 +-
- grep.c                        |   2 +-
- line-log.c                    |   2 +-
- list-objects-filter.c         |  10 +-
- list-objects-filter.h         |   2 +
- list-objects.c                |  13 +-
- notes-cache.c                 |  12 +-
- notes-cache.h                 |   6 +-
- notes-merge.c                 |  16 +-
- notes-merge.h                 |   5 +-
- pack-bitmap-write.c           |   6 +-
- pack-bitmap.c                 |  13 +-
- pack-bitmap.h                 |   3 +-
- pack-check.c                  |   9 +-
- pack-objects.c                |   6 +-
- pack-objects.h                |   5 +-
- pack.h                        |   4 +-
- read-cache.c                  |   2 +-
- rebase-interactive.c          |   6 +-
- rebase-interactive.h          |   5 +-
- ref-filter.c                  |   2 +-
- rerere.c                      |  26 +-
- rerere.h                      |   6 +-
- sequencer.c                   | 453 +++++++++++++++++++---------------
- sequencer.h                   |  27 +-
- transport.c                   |   9 +-
- transport.h                   |   3 +-
- unpack-trees.c                |   2 +-
- userdiff.c                    |   5 +-
- userdiff.h                    |   4 +-
- wt-status.c                   |  94 ++++---
- wt-status.h                   |  21 +-
- 66 files changed, 650 insertions(+), 489 deletions(-)
-
+diff --git a/builtin/log.c b/builtin/log.c
+index 061d4fd864..1a39c6e52a 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1009,8 +1009,6 @@ static void show_diffstat(struct rev_info *rev,
+ 
+ 	memcpy(&opts, &rev->diffopt, sizeof(opts));
+ 	opts.output_format = DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+-	opts.stat_width = MAIL_DEFAULT_WRAP;
+-
+ 	diff_setup_done(&opts);
+ 
+ 	diff_tree_oid(get_commit_tree_oid(origin),
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index 6e2cf933f7..28c053849a 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -44,42 +44,50 @@ show --stat
+ log -1 --stat
+ EOF
+ 
+-while read cmd args
++cat >expect.60 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++EOF
++cat >expect.6030 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++EOF
++cat >expect2.60 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++EOF
++cat >expect2.6030 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++EOF
++while read expect cmd args
+ do
+-	cat >expect <<-'EOF'
+-	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+-	EOF
+ 	test_expect_success "$cmd --stat=width: a long name is given more room when the bar is short" '
+ 		git $cmd $args --stat=40 >output &&
+ 		grep " | " output >actual &&
+-		test_cmp expect actual
++		test_cmp $expect.60 actual
+ 	'
+ 
+ 	test_expect_success "$cmd --stat-width=width with long name" '
+ 		git $cmd $args --stat-width=40 >output &&
+ 		grep " | " output >actual &&
+-		test_cmp expect actual
++		test_cmp $expect.60 actual
+ 	'
+ 
+-	cat >expect <<-'EOF'
+-	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+-	EOF
+ 	test_expect_success "$cmd --stat=...,name-width with long name" '
+ 		git $cmd $args --stat=60,30 >output &&
+ 		grep " | " output >actual &&
+-		test_cmp expect actual
++		test_cmp $expect.6030 actual
+ 	'
+ 
+ 	test_expect_success "$cmd --stat-name-width with long name" '
+ 		git $cmd $args --stat-name-width=30 >output &&
+ 		grep " | " output >actual &&
+-		test_cmp expect actual
++		test_cmp $expect.6030 actual
+ 	'
+ done <<\EOF
+-format-patch -1 --stdout
+-diff HEAD^ HEAD --stat
+-show --stat
+-log -1 --stat
++expect2 format-patch --cover-letter -1 --stdout
++expect diff HEAD^ HEAD --stat
++expect show --stat
++expect log -1 --stat
+ EOF
+ 
+ 
+@@ -95,6 +103,16 @@ test_expect_success 'preparation for big change tests' '
+ 	git commit -m message abcd
+ '
+ 
++cat >expect72 <<'EOF'
++ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++EOF
++test_expect_success "format-patch --cover-letter ignores COLUMNS (big change)" '
++	COLUMNS=200 git format-patch -1 --stdout --cover-letter >output &&
++	grep " | " output >actual &&
++	test_cmp expect72 actual
++'
++
+ cat >expect72 <<'EOF'
+  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ EOF
 -- 
-2.19.1.1231.g84aef82467
+2.19.1.1005.gac84295441
 
