@@ -2,91 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6F141F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 18:01:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A1951F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 20:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729281AbeKLDuM convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 11 Nov 2018 22:50:12 -0500
-Received: from mail118c25.carrierzone.com ([64.29.147.188]:39965 "EHLO
-        mail83c25.carrierzone.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729274AbeKLDuM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Nov 2018 22:50:12 -0500
-X-Authenticated-User: federico@speakeasy.net
-Received: from [10.201.178.19] (mobile-107-107-59-118.mycingular.net [107.107.59.118])
-        (authenticated bits=0)
-        by mail83c25.carrierzone.com (8.14.9/8.13.1) with ESMTP id wABI0vK3016533;
-        Sun, 11 Nov 2018 18:00:58 +0000
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: BUG REPORT: git clone of non-existent repository results in request for credentials
-From:   Federico Lucifredi <flucifredi@acm.org>
-X-Mailer: iPhone Mail (16B92)
-In-Reply-To: <87y39z3ea8.fsf@evledraar.gmail.com>
-Date:   Sun, 11 Nov 2018 13:00:56 -0500
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <C44E4FCB-D968-43E6-82CC-7D2F73D461C7@acm.org>
-References: <708E1759-B2E3-436C-9D54-214159655B1B@acm.org> <87y39z3ea8.fsf@evledraar.gmail.com>
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-X-CSC:  0
-X-CHA:  v=2.3 cv=HLbt6Llv c=1 sm=1 tr=0 a=LNSZ+IFO4fyWyOuoxMsISQ==:117
-        a=LNSZ+IFO4fyWyOuoxMsISQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
-        a=FYT53FELAAAA:20 a=TXhh1AoAAAAA:20 a=9R0tsZj6x_0fnnFuSdYA:9
-        a=QEXdDO2ut3YA:10
-X-CTCH-RefID: str=0001.0A090206.5BE86E5B.003E,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CTCH-VOD: Unknown
-X-CTCH-Spam: Unknown
-X-CTCH-Score: 0.000
-X-CTCH-Rules: 
-X-CTCH-Flags: 0
-X-CTCH-ScoreCust: 0.000
+        id S1730023AbeKLF7t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 00:59:49 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42265 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727357AbeKLF7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 00:59:49 -0500
+Received: by mail-ed1-f65.google.com with SMTP id j6so726725edp.9
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 12:10:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=wOdSj1BfBvvDmCbLLLc36zn5yMtxsoNKyb1IJ9Yhxuk=;
+        b=o1NBF0zy/LZxArHgJXrWPQp3pedUxZF45GqwaK+/AmTUMPsxR+vVCfbCdRmnu15tyX
+         Ks1gdd5Fp3v+3JKXINmY/okT6/9eQHP4rEeXMouAJ4Agvh04nONWjIbBKv///vG40rkp
+         xgyx0yh7GgBd2Eg8qHqzyuOKy1PvjsxZuAwI9H+bi/lcDWDI4cOg6ilumj5wA8egIxfD
+         Fh/EAvSIPcs/BBhoVD0VjCn3HbUqdFkhYe7Wi8DcSRwKn5Y1WApeUy87HelPbZrbUz4P
+         GeOTFl8PuP3qKst4+qMjWXkH/cuDS309BqrrDOsOKu9uVkI3/tACqDgZJ1bdqxPMNtC0
+         JxfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=wOdSj1BfBvvDmCbLLLc36zn5yMtxsoNKyb1IJ9Yhxuk=;
+        b=F/augrCCKTJFV1t9siDKkTnUWhDvMz3TljiwGKi55zth/Z+9p+CBVaOmeo2+52n9kD
+         0iHliGk4edbCS/kZi950OPicBHUwYvgvpy5fYXKrp76p78XQPJ5ZjBtwPXhwlufg43YS
+         hwDAqzfdxPpVubQbNkw0DvPx08UnUJWHrJOKU05d4XwXqL1k3fbDr/aF/0b5FDx7y9L6
+         ASvmeMMOyCUDi5qkWKoTX7RU/mCpHQivMIlgy6z/Fiei+UkAXwGQGS4AiPwR4sNLn8H9
+         9IrO8h9IFV2+CqfT2+T7OMCTHyjjPg4CKCgZyS8XaJmBL9ISA5WiJmqlO8m6yHXuYMi7
+         7G9Q==
+X-Gm-Message-State: AGRZ1gLWP42wLNHmlReSu9zVwPNST1CyVP1AM96ToyxYQBl7mLUTKJHP
+        Ft0lU7oXLnGYJKsKPrftTqM=
+X-Google-Smtp-Source: AJdET5fZQPa86gFb4Sr+pBr8fSbmCEpLtum3dmx6AWOmXhX98s4TtLKy6B+TYRwJpvfWjGgFDpIXkw==
+X-Received: by 2002:a17:906:f108:: with SMTP id gv8-v6mr7551183ejb.173.1541967019610;
+        Sun, 11 Nov 2018 12:10:19 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id b37-v6sm3744498eda.92.2018.11.11.12.10.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 11 Nov 2018 12:10:18 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+        larsxschneider@gmail.com, sandals@crustytoothpaste.net,
+        me@ttaylorr.com, jrnieder@gmail.com
+Subject: Re: [PATCH 03/10] fast-export: use value from correct enum
+References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com> <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-4-newren@gmail.com> <20181111063636.GC30850@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181111063636.GC30850@sigill.intra.peff.net>
+Date:   Sun, 11 Nov 2018 21:10:17 +0100
+Message-ID: <87va532x5i.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was afraid that was the reason. Oh well, at least we know why :-)
 
-Thanks Ævar!
+On Sun, Nov 11 2018, Jeff King wrote:
 
-Best-F
+> On Sat, Nov 10, 2018 at 10:23:05PM -0800, Elijah Newren wrote:
+>
+>> ABORT and ERROR happen to have the same value, but come from differnt
+>> enums.  Use the one from the correct enum.
+>
+> Yikes. :)
+>
+> This is a good argument for naming these SIGNED_TAG_ABORT, etc. But this
+> is obviously an improvement in the meantime.
 
-> On Nov 11, 2018, at 9:00 AM, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> 
-> 
->> On Sun, Nov 11 2018, Federico Lucifredi wrote:
->> 
->> git clone of non-existent repository results in request for credentials
->> 
->> REPRODUCING:
->> sudo apt install git
->> git clone https://github.com/xorbit/LiFePo4owered-Pi.git    #this repo does not exist
->> 
->> Git will then prompt for username and password on Github.
->> 
->> I can see a valid data-leak concern (one could probe for private repository names in a brute-force fashion), but then again the UX impact is appalling. Chances of someone typing an invalid repo name are pretty high, and this error message has nothing to do with the actual error.
->> 
->> RESOLUTION:
->> The error message should indicate that the repository name does not exist.
-> 
-> This is a legitimate thing to complain about, but it has nothing to do
-> with git itself maintained on this mailing list, but the response codes
-> of specific git hosting websites. E.g. here's two issues for fixing this
-> on GitLab:
-> 
-> https://gitlab.com/gitlab-org/gitlab-ce/issues/50201
-> https://gitlab.com/gitlab-org/gitlab-ce/issues/50660
-> 
-> These hosting platforms are intentionally producing bad error messages
-> to not leak information, as you note.
-> 
-> So I doubt it's something they'll ever change, the bug I have open with
-> this on GitLab is to make this configurable for privately run instances.
-> 
+In C enum values aren't the types of the enum, but I'd thought someone
+would have added a warning for this:
 
+    #include <stdio.h>
+
+    enum { A, B } foo = A;
+    enum { C, D } bar = C;
+
+    int main(void)
+    {
+        switch (foo) {
+          case C:
+            puts("A");
+            break;
+          case B:
+            puts("B");
+            break;
+        }
+    }
+
+But none of the 4 C compilers (gcc, clang, suncc & xlc) I have warn
+about it. Good to know.
