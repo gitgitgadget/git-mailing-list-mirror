@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24E761F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 23:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4A91F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 23:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732520AbeKLJtC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 04:49:02 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33409 "EHLO
+        id S1732610AbeKLJtG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 04:49:06 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:37827 "EHLO
         mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732516AbeKLJtB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 04:49:01 -0500
-Received: by mail-pl1-f196.google.com with SMTP id w22-v6so3415643plk.0
-        for <git@vger.kernel.org>; Sun, 11 Nov 2018 15:58:38 -0800 (PST)
+        with ESMTP id S1732407AbeKLJtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 04:49:05 -0500
+Received: by mail-pl1-f196.google.com with SMTP id p6-v6so3413642pll.4
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 15:58:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=02Ivu7gWaJnDG+4RdU9UGAMX7s4SRkukUTk8rNl2HDM=;
-        b=EO8bdj5agYSA5G5q+tuoIn2HdM4gaJba/ojsYmaUCRTw17/b9y8mYpf6Ju9HmiIzvO
-         CKTHO2WnpZTOQQGZaDn5mzijYGOHGjpIjRp2TUZxXB7PxfBIJUj1p+6yV2Gl6UD0aIex
-         tE1wqnkrZSP8lnCStujxeuucjQhFzpkfSlYBp7rLToLhBVNpevlclv7ldi5wTbDy9yOG
-         6Dmu6e9VyHCg9v02LACg1fwtCrOm4Yytn8w3YavH+eSY+RLt2rfaTeHmaF0SByPoru4P
-         jE4SdYz8pwmVes9/MwpX69ckI3T/76hS8CtHVNhGMXCoNXGkbrSU39jRAQQ5uQQfECqE
-         xZEQ==
+        bh=IbrtGcWZtjag4rWqBqY9hqD0XTtHQ/l+JOdGkN5ePzY=;
+        b=qPfgsTUUs//Q+sQptOzlPe6PqgRIqlNgwRMJ/hKgVmhZc9lNYnQ4wU4GGvhKlIWA4S
+         HHVxMGn7Niz83UKzxrOf16zivBcOizYJhLiHdKk3wmkbytAheUCkT8iGWhfj/lLbm6jO
+         iQPb7bnnwQTyQnFSxDohETZZe9oBv7WmCmxWwdLtyY33adew2vy6aRjH+GXzuBlX/dYz
+         x8rWoR2XceYHnaBqcUgq9EP4FJe/TDmEoB0ucl0Do4/wb8uvhkR4I7Hl/8wy4w+KJgw1
+         LnVsDiJqfbB/6wHVwsdWG3UtAq/Szua74aixLWz+UWUbfakqwqdZ2aC3edaqv1fmLSWI
+         BbMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=02Ivu7gWaJnDG+4RdU9UGAMX7s4SRkukUTk8rNl2HDM=;
-        b=dJy2IsW5I/kNxofli0VT22qw1e1AiLIrCXKieMm9R/2n256a7RHOEn8g1bGzeWGSsL
-         OKR8IhugfE3VVIAHpm0sCz2Q2+6my0AxrfHlYrK5b2jCc6RfoXu1csOlAgodRGTxmw6T
-         gf++0VRfYda8k9iSGadf3Sm3rMpT7NSv5lqhsLwYAvDocwhDC650K+ISm6VdQ4pYqB7J
-         KMYyks/d9wpz4HOV6ogvxR5N1JQxzwyze9Z/dY1enN02HuG4lNChT+An5pdXb8XrIc+Z
-         67FqTrsoQdpT+/erh9JUKaAnNcP/z+Nsktyh5mx/ygtu3iCBVMlCeFqxVrVdO9P+E4OF
-         nq4Q==
-X-Gm-Message-State: AGRZ1gIRdA1D+bElpHuu4mdQsKcoEKSierNa+5TtM00oSgxrpr3hOvHH
-        XytPjUnCN9bbxBFMbe41moM=
-X-Google-Smtp-Source: AJdET5dghkdMT0VH39JO/MtoN1prd3n0LjqsFdIHm4pbt/n8Rzbhm2Eif39/CfRRNhlJDAUbAjtwCw==
-X-Received: by 2002:a17:902:4165:: with SMTP id e92-v6mr18099745pld.209.1541980717976;
-        Sun, 11 Nov 2018 15:58:37 -0800 (PST)
+        bh=IbrtGcWZtjag4rWqBqY9hqD0XTtHQ/l+JOdGkN5ePzY=;
+        b=ojCpaVz5IN9k8XK+7ODmxlcWGqrvuScYA2jMxunfw0w/nN8gzKAHm3KXSUZErDpefv
+         OLOBzJOwFTo7zV/cNaRLtXvSl8yFApKnDn29TZhiRNVLEVhi4ti07F0E3anYWp5wsYE6
+         eLVoIZQ7QDPaGHUjDFW9EaLj6LIMTNyVCekywjiXki80ZcKIh+iu4B/9NSj8GwmLxN4h
+         5CBP86DfruVAksZ/1JVX/AnrbLIrmZHOVwIlQyu3I34aiUNyg83RImsJsjsTJP+dFprB
+         PSS6ugpKeCNss22R0ArUFXliWoDDZJo9ajFWezOeNMt7rUwPdF4QqwztF64kiPpXW0hR
+         5huw==
+X-Gm-Message-State: AGRZ1gIgZXDo49ntaVz1LL/EG1Q9+yU5tgqijMJraotP6gAeZOMWLAM/
+        uh3f1ReWB7zU3TqVbo8dAEo=
+X-Google-Smtp-Source: AJdET5dsZO3LQqop6H7FvY/vaHhO4Clg/uHhOcKRt94vuF8/YBQ0wcqBDX21UAfVyEDlG80w4efWow==
+X-Received: by 2002:a17:902:7a2:: with SMTP id 31-v6mr17507318plj.277.1541980721806;
+        Sun, 11 Nov 2018 15:58:41 -0800 (PST)
 Received: from localhost.localdomain (143.sub-174-211-23.myvzw.com. [174.211.23.143])
-        by smtp.gmail.com with ESMTPSA id v5sm16954798pgn.5.2018.11.11.15.58.36
+        by smtp.gmail.com with ESMTPSA id v5sm16954798pgn.5.2018.11.11.15.58.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 11 Nov 2018 15:58:37 -0800 (PST)
+        Sun, 11 Nov 2018 15:58:41 -0800 (PST)
 From:   nbelakovski@gmail.com
 To:     rafa.almas@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, nbelakovski@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 0/2] refactoring branch colorization to ref-filter
-Date:   Sun, 11 Nov 2018 15:58:29 -0800
-Message-Id: <20181111235831.44824-1-nbelakovski@gmail.com>
+Subject: [PATCH v2 1/2] ref-filter: add worktree atom
+Date:   Sun, 11 Nov 2018 15:58:30 -0800
+Message-Id: <20181111235831.44824-2-nbelakovski@gmail.com>
 X-Mailer: git-send-email 2.14.2
-In-Reply-To: <20180927204049.GA2628@rigel>
+In-Reply-To: <20181111235831.44824-1-nbelakovski@gmail.com>
 References: <20180927204049.GA2628@rigel>
+ <20181111235831.44824-1-nbelakovski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,36 +66,109 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nickolai Belakovski <nbelakovski@gmail.com>
 
-Finally found some time to follow up on this :)
+Add an atom expressing whether the particular ref is checked out in a
+linked worktree.
 
-I decided to take the approach suggested by Peff for simplicity. I have
-another version which uses a hash map to store *all* of the information
-returned by get_worktrees, information which can then be accessed in
-the fashion %(workree:path) or %(worktree:is_detached), but it seemed
-like a lot of code to add and there was no use case to justify the
-addition of a hash map at this time. If there's interest though, I can
-make a separate patch after this one to introduce those changes. They
-build directly off of the changes introduced here.
-
-I've split this work into two commits since the items are logically
-separate.
-
-CI results: https://travis-ci.org/nbelakovski/git/builds/453723727
-
-Nickolai Belakovski (2):
-  ref-filter: add worktree atom
-  branch: Mark and colorize a branch differently if it is checked out in
-    a linked worktree
-
- builtin/branch.c               | 22 +++++++++++++---------
- color.h                        | 18 ++++++++++++++++++
+Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
+---
  ref-filter.c                   | 31 +++++++++++++++++++++++++++++++
- t/t3200-branch.sh              |  8 ++++----
- t/t3203-branch-output.sh       | 21 +++++++++++++++++++++
  t/t6302-for-each-ref-filter.sh | 15 +++++++++++++++
- t/test-lib-functions.sh        |  6 ++++++
- 7 files changed, 108 insertions(+), 13 deletions(-)
+ 2 files changed, 46 insertions(+)
 
+diff --git a/ref-filter.c b/ref-filter.c
+index 0c45ed9d94..53e2504f5d 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -20,6 +20,7 @@
+ #include "commit-slab.h"
+ #include "commit-graph.h"
+ #include "commit-reach.h"
++#include "worktree.h"
+ 
+ static struct ref_msg {
+ 	const char *gone;
+@@ -114,6 +115,7 @@ static struct used_atom {
+ 		} objectname;
+ 		struct refname_atom refname;
+ 		char *head;
++		struct string_list worktree_heads;
+ 	} u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+@@ -420,6 +422,28 @@ static int head_atom_parser(const struct ref_format *format, struct used_atom *a
+ 	return 0;
+ }
+ 
++static int worktree_head_atom_parser(const struct ref_format *format,
++									 struct used_atom *atom,
++									 const char *arg,
++									 struct strbuf *unused_err)
++{
++	struct worktree **worktrees = get_worktrees(0);
++	int i;
++
++	string_list_init(&atom->u.worktree_heads, 1);
++
++	for (i = 0; worktrees[i]; i++) {
++		if (worktrees[i]->head_ref)
++			string_list_append(&atom->u.worktree_heads,
++							   worktrees[i]->head_ref);
++	}
++
++	string_list_sort(&atom->u.worktree_heads);
++
++	free_worktrees(worktrees);
++	return 0;
++}
++
+ static struct {
+ 	const char *name;
+ 	info_source source;
+@@ -461,6 +485,7 @@ static struct {
+ 	{ "flag", SOURCE_NONE },
+ 	{ "HEAD", SOURCE_NONE, FIELD_STR, head_atom_parser },
+ 	{ "color", SOURCE_NONE, FIELD_STR, color_atom_parser },
++	{ "worktree", SOURCE_NONE, FIELD_STR, worktree_head_atom_parser },
+ 	{ "align", SOURCE_NONE, FIELD_STR, align_atom_parser },
+ 	{ "end", SOURCE_NONE },
+ 	{ "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
+@@ -1594,6 +1619,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 			else
+ 				v->s = xstrdup(" ");
+ 			continue;
++		} else if (!strcmp(name, "worktree")) {
++			if (string_list_has_string(&atom->u.worktree_heads, ref->refname))
++				v->s = xstrdup("+");
++			else
++				v->s = xstrdup(" ");
++			continue;
+ 		} else if (starts_with(name, "align")) {
+ 			v->handler = align_atom_handler;
+ 			v->s = xstrdup("");
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index fc067ed672..5e6d249d4c 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -441,4 +441,19 @@ test_expect_success '--merged is incompatible with --no-merged' '
+ 	test_must_fail git for-each-ref --merged HEAD --no-merged HEAD
+ '
+ 
++test_expect_success '"add" a worktree' '
++	mkdir worktree_dir &&
++	git worktree add -b master_worktree worktree_dir master
++'
++
++test_expect_success 'validate worktree atom' '
++	cat >expect <<-\EOF &&
++	master: checked out in a worktree
++	master_worktree: checked out in a worktree
++	side: not checked out in a worktree
++EOF
++    git for-each-ref --format="%(refname:short): %(if)%(worktree)%(then)checked out in a worktree%(else)not checked out in a worktree%(end)" refs/heads/ >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.14.2
 
