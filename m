@@ -1,69 +1,73 @@
 Return-Path: <git-owner@vger.kernel.org>
-X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 694AF1F453
-	for <e@80x24.org>; Sun, 11 Nov 2018 00:21:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 218DC1F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 01:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727155AbeKKKHx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 05:07:53 -0500
-Received: from mail-lf1-f44.google.com ([209.85.167.44]:42027 "EHLO
-        mail-lf1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726933AbeKKKHx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 05:07:53 -0500
-Received: by mail-lf1-f44.google.com with SMTP id l10so196726lfh.9
-        for <git@vger.kernel.org>; Sat, 10 Nov 2018 16:21:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=qcDyww+fopNwa268fkCsLJMByyOmZxnRyaTgyX9y7YI=;
-        b=k3o/Ha/xyfpknizyuPvQdzPyEPftLG9g1NhIRkYFs/IpOu/F5UUQ/PhfKR4yu1ORaJ
-         06zNwDvPo3jS/9Y2EcydU56uomzBFOITRLgCj2zb1mWid+IVvOctoOjmPu0IL+I3WeQY
-         kdpKPMpaYjrY+JED7uadlUOvrrY6BHmYrx6vIlj/8wbx6eUqlmzT5YCEHFKYnTE20wa9
-         e8pHeg/Zj9zdzV7P0XcR86OgBnMc6ZcKLJJ9e58BxqsZ5TOZpW2zNeddWkI9scgfonOy
-         W7WzaSN+z7t1q30miYwvCOFllYIXxrkr2J/YbzpiEjJ4oX8Z1JIY6HZyQT/W/ePZaavI
-         FS9w==
+        id S1727037AbeKKLMY convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 11 Nov 2018 06:12:24 -0500
+Received: from mail-qk1-f179.google.com ([209.85.222.179]:39821 "EHLO
+        mail-qk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726648AbeKKLMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 06:12:24 -0500
+Received: by mail-qk1-f179.google.com with SMTP id e4so8027866qkh.6
+        for <git@vger.kernel.org>; Sat, 10 Nov 2018 17:25:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=qcDyww+fopNwa268fkCsLJMByyOmZxnRyaTgyX9y7YI=;
-        b=XBW9cNfii0WDvBCqd1/t1NhiIAHqgxcBlrqkTxqlXv2z0TGvV0Gax5/lDER7FqAQ0U
-         VcgBRkHtpV1P253/ChsHgP0gFWdMCNEmk+MHEl0MVzm3A4rLHeqwxdktc1LCrlLnwrCN
-         I1cpmtTvf8/bcodjfPHhBC4Ie719ct+uDyavK1MVgni/uZnR2p8cYxLasLfxy1ndFsbM
-         qgfuOVGYDR1kAfZWdWtcUgNdrkRVP2FA1Rt6d6+ss6V89W1oMi2XnLIWdENn2hxFBLUO
-         KIY6ugAe5bLWQZqlR7lH7EK3UB3bKZGT431SnWPsIv08ZOy9cWGQB+EBovTbuQYlOU7s
-         vNfg==
-X-Gm-Message-State: AGRZ1gJ40TFzihN329J+yoV+XwGtj6qST+QpKBdq/BhFK3KdDwK4tgAD
-        e/JJ1QnasndixOyvo6pmZfcCE1TOdQzKtGkvMTvdFM31
-X-Google-Smtp-Source: AJdET5dtj9miOUPLv6vkVGZWTfENbXg7GPAJYJtedb/N4Xm/Sm8JSVMDXvtMtyqC3F9W17wKxUJWZGRy40K7v04NVo0=
-X-Received: by 2002:a19:d9d6:: with SMTP id s83mr8489846lfi.57.1541895663724;
- Sat, 10 Nov 2018 16:21:03 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=svOslq9k/ZTbC/aIfSyOSDZHCqZXYJSI/u17MYgy5kM=;
+        b=CMfCG91Pzq11mohLLZhbnYWw+GIdFnqBrjdqoQkDlsr1OA/HBdBwixWbJ4Z1m924KF
+         J1k72bO8RauXCfEwgqp4InrDaCqzUJLCn5iyQflTjo/WIwoZi0tgNPc26pwe3X4ywtNS
+         K9Dp6F/8f2ULwZldwtgR4TWVTvfN+BXGW8hjEz2w0QO64iQCeXTuzngw+S0d7nsDIrCz
+         LkMf0UHpDM9/gt8BFAPBgNZPjnZKyBVJfhHSBeoS1Eg4law6aPw/yUdO9XDqh30andFc
+         QeHrjZNCk+njyP1QKEyIMNKswZGGp2qDoXFTutZKcOfSgJNH1g2z+gJZe374ERrqot87
+         /m9A==
+X-Gm-Message-State: AGRZ1gITjihlQgtm3x/SFj9mt+tcEdeJwwi86/jba/w7JCD0QcbxwGNl
+        ECZN5l032aP7p6haBigbiDOTk6NOTmgdqxwD0XQ=
+X-Google-Smtp-Source: AJdET5fjJEOg4rDxedtqIuvktMKwE9fq+ylkYzuy9uZF8kWbTkinjwwi7Bv/0GPU3YmdkIca7ldqHkxSuJFh9pMQrxY=
+X-Received: by 2002:a37:5e42:: with SMTP id s63mr13152382qkb.220.1541899526815;
+ Sat, 10 Nov 2018 17:25:26 -0800 (PST)
 MIME-Version: 1.0
-From:   Fredi Fowler <inredikawb@gmail.com>
-Date:   Sun, 11 Nov 2018 03:20:53 +0300
-Message-ID: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
-Subject: Git Reference Manual enhance
-To:     git@vger.kernel.org
+References: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
+In-Reply-To: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 10 Nov 2018 20:25:16 -0500
+Message-ID: <CAPig+cTi424HcvV29NmeS3t+VV1mEmQx=pdgSpkXs5QX4HAd5w@mail.gmail.com>
+Subject: Re: Git Reference Manual enhance
+To:     inredikawb@gmail.com
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Is there any way to create pull request to git man (https://git-scm.com/doc=
-s)?
+On Sat, Nov 10, 2018 at 7:21 PM Fredi Fowler <inredikawb@gmail.com> wrote:
+> Is there any way to create pull request to git man (https://git-scm.com/docs)?
 
-I found there some inconsistencies. For example, almost in all pages
-are using [no-], but at https://git-scm.com/docs/git-merge each
-command (with [no-] or without) write separately.
+That website is maintained as a project separate from Git, so you can
+report issues specific to the website, or create pull requests, at its
+project page (https://github.com/git/git-scm.com), however...
 
-There are some same inconsistencies that a easy to fix. So, if I can
-sent a pull-request for such fix =E2=80=93 inform me.
+> I found there some inconsistencies. For example, almost in all pages
+> are using [no-], but at https://git-scm.com/docs/git-merge each
+> command (with [no-] or without) write separately.
+>
+> There are some same inconsistencies that a easy to fix. So, if I can
+> sent a pull-request for such fix – inform me.
+
+Those manual pages are generated from documentation sources in the Git
+project, thus those fixes should be submitted to Git itself, not to
+the website project. Changes to Git are sent to this mailing list as
+patches (see Documentation/SubmittingPatches), although see
+gitgitgadget[1], which acts as a Github
+pull-request-to-Git-mailing-list gateway, as a possible alternative.
+
+[1]: https://github.com/gitgitgadget/gitgitgadget/blob/master/README.md
