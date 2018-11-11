@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCF611F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 08:32:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF0331F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 08:43:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbeKKSUa (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 13:20:30 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:40539 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727334AbeKKSU3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 13:20:29 -0500
-Received: by mail-vs1-f66.google.com with SMTP id p193so3096824vsd.7
-        for <git@vger.kernel.org>; Sun, 11 Nov 2018 00:32:34 -0800 (PST)
+        id S1727427AbeKKSbH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Nov 2018 13:31:07 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:35334 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727393AbeKKSbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 13:31:07 -0500
+Received: by mail-vs1-f67.google.com with SMTP id e7so3455523vsc.2
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 00:43:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/JXLJpPes94lREJ99zuVyigIGUbaxeCpTDtboc6b/ug=;
-        b=ZWKXPxi+fVxmx2Wuv1uw+sEn7RKMLHFs+odiuEtVLAazlTUmEtdU5k8D/sWIqoVDAO
-         4dFrbjQ7sQS6bZq88CqN2GXFIc0Nf+z1wxq9R20yvH7L+Nup+y/UbL/jdWoW1zcYDxmF
-         +qlBfglMhfU21nSSUdxSA96Rjtq4599CXhg/PX7u2sCJoMhgvmj6Mt9rScyG58Iy95eF
-         EIT1U53XbSxPzBgS1qFBgUV1dzXBgolCxQBIucrDI0eYXQuDmKoY4RY5fOVIYdqajQzn
-         4oTjNg4ogED9Vetg800I+QyF1Qn5Fn0ShwfEQpJ89jCbO10QYLUmYVkm7iL6+tIh4u3u
-         9f1Q==
+        bh=6DFUQhbWnU62rU7i91X31h6vt/jy2evzL8M5lSN6cMs=;
+        b=Lrw5hB6hrQ+FeXgZHKra/bW8DlPK5ZIdl0u453E4O4SP59Xix8BsatT+DFuDfgRlCR
+         pGQlo4BPfbjG9khkvuu6FpdK0MvhCvRgCx/4v5/SkNfXoyt3FHaaHeS/nk1v9jPkPkvT
+         T78E1IUcBk6opiHtos65zvoNZknNf9v9zl9yLLYpKUMrYYL1euI2NVWWmA/Z0CEKINtg
+         cwLx8AYYaIv6l6hhOTy0jRIgGVj/s616aYAGoG3VAIxEkxIKzTVzIVkwIwA4D0PTrZDj
+         Hhb9TIjd3ZnYk6n9hSmQT74zDB0hm6MtPW865C727uj9kk4ynriEtCwmH5EYVyVCNSdY
+         ul1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/JXLJpPes94lREJ99zuVyigIGUbaxeCpTDtboc6b/ug=;
-        b=PHI5MR31t3A0vIrSbmVaaaQKW5cs/ukmK90bp/kMoc3gJxezxZS1NpTrJ8fhH2SYVQ
-         i87JygQKbqVaXcyCKAq5k49zW7MwnkPPRSlWXzklY8nycUpMwK0QHRup4+NtHkPhMMz0
-         NHPqWGNpWU9H7OeoFAYc1fYunncGlaTv+4LTLeLliwdKIYFK8pmk1K/UvvqGcSAx3ny8
-         yLQozNnveY5F7Gad6OGgobuY8KknEjfkfx/i5DpVfCbddzQDcXpLqjVrL2dsO8cLD74t
-         x+AzFLZ0oJO1gBEKewL5gVtyyPpjEDZb0TJTb8qKqjfqDHIkz18r/pVaj4unqlpwqm+m
-         O1ww==
-X-Gm-Message-State: AGRZ1gI7+oG81sUSQ8iLqdu59CYbgOHWtD8aBcxLCTFJAjYsjWUoaOpv
-        Gs25G61kRDWqZBvos00O7bYh8+wazSNYlvVM7CM=
-X-Google-Smtp-Source: AJdET5dEKLsztE0NFz9T8x8fyrcd/9O7Et0yLEAHI8WY7YwfCfJS41O7T/GDIAtJYd1SUkh1irJ/UP+9KjXU12EfJNA=
-X-Received: by 2002:a67:3c5c:: with SMTP id j89mr6457703vsa.117.1541925153372;
- Sun, 11 Nov 2018 00:32:33 -0800 (PST)
+        bh=6DFUQhbWnU62rU7i91X31h6vt/jy2evzL8M5lSN6cMs=;
+        b=YLa7i4R+38ng6p7KcgWcFunQ7SRcvis3hkenXvRwIIfV2VjFUzJZQ4rhPhQ83IMsRQ
+         WQB0OzQXIJj0Av9Mu5UJYYh6PxNiJekk2mNTbJdiw7dYecAxyvZj7+wt4/E3tDra0d+t
+         vy+yan8nKzXGlhEbhjFykGd09Dlz9FxjOotc41PaMvHZcJ54v0kw3waSxRM0g47/ReWm
+         rizm9MieHdFlHlqdIsQbDakIKyW9EHnWB2vKT4baQMm6Ig+JFgvfzzC2NNGVP0t8SNUF
+         4nmwwF1jmTqF/hL3kCzvHeAMVreeiqwi+FIi6+SKJYx28LeqU8yO01bQ7kGQ0tN9mMdn
+         x6Ww==
+X-Gm-Message-State: AGRZ1gK739+50x/vjW7FRGWjyl0tta/O1VjjjHRN7l1IdTXtV/49hnbV
+        1m6tKG7z0XCMebcxrsB0hdMPuk7sPdlQY93FoLY=
+X-Google-Smtp-Source: AJdET5fgTDYjHZqGwAaoP2fvtF87jF4J8R97RYNcAG2HUDNyJDBOCu2boM1Z7xJHEZbtwf18WePQrg/rn1ZzYGD3+74=
+X-Received: by 2002:a67:3edc:: with SMTP id a89mr6556490vsi.136.1541925789345;
+ Sun, 11 Nov 2018 00:43:09 -0800 (PST)
 MIME-Version: 1.0
 References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
- <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-10-newren@gmail.com>
- <20181111072007.GI30850@sigill.intra.peff.net>
-In-Reply-To: <20181111072007.GI30850@sigill.intra.peff.net>
+ <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-11-newren@gmail.com>
+ <20181111072356.GJ30850@sigill.intra.peff.net>
+In-Reply-To: <20181111072356.GJ30850@sigill.intra.peff.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sun, 11 Nov 2018 00:32:22 -0800
-Message-ID: <CABPp-BGNt0FcqiT=OqctjOEvY9ewNUJZ-Rs_aVEihjbQt3K8tQ@mail.gmail.com>
-Subject: Re: [PATCH 09/10] fast-export: add a --show-original-ids option to
- show original names
+Date:   Sun, 11 Nov 2018 00:42:58 -0800
+Message-ID: <CABPp-BGREOAvF-6DBymdwsUL2LpyPNqy8dCw0RuUKZf2Da6cJA@mail.gmail.com>
+Subject: Re: [PATCH 10/10] fast-export: add --always-show-modify-after-rename
 To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Lars Schneider <larsxschneider@gmail.com>,
@@ -67,77 +66,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 10, 2018 at 11:20 PM Jeff King <peff@peff.net> wrote:
+On Sat, Nov 10, 2018 at 11:23 PM Jeff King <peff@peff.net> wrote:
 >
-> On Sat, Nov 10, 2018 at 10:23:11PM -0800, Elijah Newren wrote:
+> On Sat, Nov 10, 2018 at 10:23:12PM -0800, Elijah Newren wrote:
 >
-> > Knowing the original names (hashes) of commits, blobs, and tags can
-> > sometimes enable post-filtering that would otherwise be difficult or
-> > impossible.  In particular, the desire to rewrite commit messages which
-> > refer to other prior commits (on top of whatever other filtering is
-> > being done) is very difficult without knowing the original names of each
-> > commit.
+> > fast-export output is traditionally used as an input to a fast-import
+> > program, but it is also useful to help gather statistics about the
+> > history of a repository (particularly when --no-data is also passed).
+> > For example, two of the types of information we may want to collect
+> > could include:
+> >   1) general information about renames that have occurred
+> >   2) what the biggest objects in a repository are and what names
+> >      they appear under.
 > >
-> > This commit teaches a new --show-original-ids option to fast-export
-> > which will make it add a 'originally <hash>' line to blob, commits, and
-> > tags.  It also teaches fast-import to parse (and ignore) such lines.
+> > The first bit of information can be gathered by just passing -M to
+> > fast-export.  The second piece of information can partially be gotten
+> > from running
+> >     git cat-file --batch-check --batch-all-objects
+> > However, that only shows what the biggest objects in the repository are
+> > and their sizes, not what names those objects appear as or what commits
+> > they were introduced in.  We can get that information from fast-export,
+> > but when we only see
+> >     R oldname newname
+> > instead of
+> >     R oldname newname
+> >     M 100644 $SHA1 newname
+> > then it makes the job more difficult.  Add an option which allows us to
+> > force the latter output even when commits have exact renames of files.
 >
-> Makes sense as a feature; I think filter-branch can make its mappings
-> available, too.
->
-> Do we need to worry about compatibility with other fast-import programs?
-> I think no, because this is not enabled by default (so if sending the
-> extra lines to another importer hurts, the answer is "don't do that").
->
-> I have a vague feeling that there might be some way to combine this with
-> --export-marks or --no-data, but I can't really think of a way. They
-> seem related, but not quite.
->
-> > ---
-> >  Documentation/git-fast-export.txt |  7 +++++++
-> >  builtin/fast-export.c             | 20 +++++++++++++++-----
-> >  fast-import.c                     | 17 +++++++++++++++++
-> >  t/t9350-fast-export.sh            | 17 +++++++++++++++++
-> >  4 files changed, 56 insertions(+), 5 deletions(-)
->
-> The fast-import format is documented in Documentation/git-fast-import.txt.
-> It might need an update to cover the new format.
+> fast-export seems like a funny tool to look up paths. What about "git
+> log --find-object=$SHA1" ?
 
-We document the format in both fast-import.c and
-Documentation/git-fast-import.txt?  Maybe we should delete the long
-comments in fast-import.c so this isn't duplicated?
+Eek, and give me O(N*M) behavior, where N is the number of commits in
+the repository and M is the number of renames that occur in its
+history?  Also, that's the inverse of the lookup I need anyway (I have
+the commit and filename, but am missing the SHA).
 
-> > --- a/Documentation/git-fast-export.txt
-> > +++ b/Documentation/git-fast-export.txt
-> > @@ -121,6 +121,13 @@ marks the same across runs.
-> >       used by a repository which already contains the necessary
-> >       parent commits.
-> >
-> > +--show-original-ids::
-> > +     Add an extra directive to the output for commits and blobs,
-> > +     `originally <SHA1SUM>`.  While such directives will likely be
-> > +     ignored by importers such as git-fast-import, it may be useful
-> > +     for intermediary filters (e.g. for rewriting commit messages
-> > +     which refer to older commits, or for stripping blobs by id).
->
-> I'm not quite sure how a blob ends up being rewritten by fast-export (I
-> get that commits may change due to dropping parents).
+One of the problems with filter-branch that people often run into is
+they know what they want at a high-level (e.g. extract the history of
+this directory for a new repository, or rewrite the history of this
+repo to appear at a subdirectory so it can be merged into a bigger
+repo and people passing filenames to log will still get the history of
+those files, or I want to remove some of the big stuff in my history),
+but often times that's not quite enough.  They need help finding big
+objects, or may be unaware that the subset of files they want used to
+be known by alternative names.
 
-It doesn't get rewritten by fast-export; it gets rewritten by other
-intermediary filters, e.g. in something like this:
-
-   git fast-export --show-original-ids --all | intermediary_filter |
-git fast-import
-
-The intermediary_filter program may want to strip out blobs by id, or
-remove filemodify and filedelete directives unless they touch certain
-paths, etc.
-
-> The name "originally" doesn't seem great to me. Probably because I would
-> continually wonder if it has one "l" or two. ;) Perhaps something like
-> "original-oid" might be better. That's well into bikeshed territory,
-> though.
-
-I wasn't a huge fan of "originally" either, but I just couldn't come
-up with anything else that wasn't really long.  I'd be happy to switch
-to original-oid.
+I want a simple --analyze mode that can report on all files that have
+been renamed (so users don't just say "all I care about is these N
+files, give me a rewritten history just including those" -- we can
+point out to them whether those N files used to be known by other
+names), as well as reporting on all big files and if they've been
+deleted, and aggregations of the "big files" information across
+directories and file extensions.
