@@ -2,75 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D27621F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 13:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04DF51F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 13:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728087AbeKKW6J (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 17:58:09 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53975 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727597AbeKKW6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 17:58:09 -0500
-X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Nov 2018 17:58:07 EST
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C2DBB397BC;
-        Sun, 11 Nov 2018 07:59:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=psE+KLXCr9r5
-        bx0qN+dYwOnxzLQ=; b=yJjKBP8cJ4ioZ9WO9hLmaVnQGZcWPigAvtIcE0BlEkIu
-        cfn7jWf0HoldVyzM2iLzvantDizD8BFFL8wd6lcXnfbv3mV8pr82RHMeg6GHVyUI
-        xc15sGWRLBPEMiswiBTGWGIaOSzZ2L6OpT3KGt3Y9Aow/eAhEI9d6X/iLN6pvS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xPhgy8
-        A3ZwmnM8gIRJyIzYnAf2DQO8Rxzfn83TLONE4jNtghMsQHugn4H1TbHbbfPK6yaY
-        cpSReU8nCe0VzHrTzce6CozYEWQ9vGPWqkBBJubUTXlRH8LzSZmvLNpLQ3vTyCKy
-        K3221rOUPyZunnBp/mIWkiQesQpM6+pskxSbM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BC1AA397BB;
-        Sun, 11 Nov 2018 07:59:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CF45A397BA;
-        Sun, 11 Nov 2018 07:59:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-References: <20181111095254.30473-1-pclouds@gmail.com>
-Date:   Sun, 11 Nov 2018 21:59:52 +0900
-In-Reply-To: <20181111095254.30473-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sun, 11 Nov 2018 10:52:54 +0100")
-Message-ID: <xmqqva534vnb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727648AbeKKXGg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Nov 2018 18:06:36 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:41350 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727594AbeKKXGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 18:06:36 -0500
+Received: by mail-vs1-f68.google.com with SMTP id t17so3616486vsc.8
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 05:18:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=6gUpwQgPo73C4z0d8zDQczCQbbR6aTClZ0T7I6rz1Jg=;
+        b=YiauiVyfBNSnAKXdDg2a4svbaC3+yTJD2LX3+CYTwrPsRSUV+LZmhq4Y4s3xST563D
+         80fdSb6ltQxtJyD2jb21yCCLiaN9uQzbYIrMmDrn2N6CfUFsJ/AuVeX2jGntmsCouWvb
+         azGYydsBGlYa9xI51TuNg3mEZQBDjr+pGEhs8PQ3nCciPlHwJWcZedIQ3PjgmkfZrBUu
+         dKHRuOmmTnY25r8OUjBC4qj+DZ7hC0FTdADpOVCMl403ecQYfLSX4lCeLMd7XFXC+imx
+         OE8cms5Fq9s93BBs3O10WS/lM8iYJf5QYQEKn5ARk1jiVkmI3CxHwOq8tzrTotLzkK9C
+         HcZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=6gUpwQgPo73C4z0d8zDQczCQbbR6aTClZ0T7I6rz1Jg=;
+        b=sFSv3KWJ0dDw5t9DW70zfkhwO3SE4gZ2Bw2CFtgnVa4cLje0VquEABsT6nqK/MnMBQ
+         Cmbf9Vu2zZe80e2KZUDa7tVI7/fukXPgLJ+x/ouqY5A9SAhLX9SFyG8+rM89HvQYi/A3
+         9E8iUNlM1o1OtmbyNg10RPWytwsxjzppJRd/I/onsWMwLpnKyOYlpayjBeWKLcol800P
+         Pdj6qEvDGKs5bHdxS682ZAC+LyyzOa9nBxfXcNwbevO6N39qPeVtRRHOQ+ymlChWLgSm
+         S95UAKlnTMsZD5QGBKFM0oN/bpXZTjwa0vv9u/ChPJbAa2d7wL9O9ISJj8akCxVBgaBu
+         H+6g==
+X-Gm-Message-State: AGRZ1gK+SdzJnmu4uPrJBLWaLhuEe3yo4u5ZV+OZ/LMriZmKCWoytSlw
+        0UrWAW0iKSFIT5EbjRophddxPRuZin9sDAak94imGMvX
+X-Google-Smtp-Source: AJdET5cBHk+V7nZzqhjIB+efm1sazAW28oKLrkWtV0BTfpGjh9+ElTRVEauzbxCwzZwaO5ND1p7QOnNaElnH8d2FbDY=
+X-Received: by 2002:a67:8d08:: with SMTP id p8mr3291217vsd.147.1541942281830;
+ Sun, 11 Nov 2018 05:18:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AF596556-E5B1-11E8-AA9D-F5C31241B9FE-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Sun, 11 Nov 2018 15:17:50 +0200
+Message-ID: <CAGHpTB+fQccqR8SF2_dS3itboKd79238KCFRe4-3PZz6bpr3iQ@mail.gmail.com>
+Subject: grep issues
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hi,
 
-> Also while "precious" is a fun name, but it does not sound serious.
-> Any suggestions? Perhaps "valuable"?
+I found 2 bugs in grep, using Git for Windows 2.19.1 (but noticed
+these several versions ago):
 
-FWIW, I am reasonably sure that I was the first in Git circle who
-used the term "precious" in discussions wrt .gitignore, i.e. "Git
-has ignored but not precious category".  Since it was not my
-invention but was a borrowed term from tla (aka GNU arch), I'd
-suggest to keep using that term, unless there is a strong reason not
-to follow longstanding precedent.
+1. git grep --recursive on a worktree (without rev) always matches
+against the submodule's HEAD, not its worktree, as it should.
+2. When core.autocrlf (or eol=crlf) is used, and a file in the
+worktree has CRLF, git grep fails to match $ against EOL.
+
+For example:
+git init
+echo 'file eol=crlf' > .gitattributes
+echo ABCD > file
+git add file
+git commit -m 'CRLF'
+rm file
+git checkout -f file
+git grep 'D$' file # Nothing
+git grep 'D$' HEAD -- file # Found!
+
+- Orgad
