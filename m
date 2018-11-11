@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F25B1F87F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65E941F87F
 	for <e@80x24.org>; Sun, 11 Nov 2018 06:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727531AbeKKQLI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 11:11:08 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:34917 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727307AbeKKQLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 11:11:08 -0500
-Received: by mail-oi1-f195.google.com with SMTP id v198-v6so4772140oif.2
-        for <git@vger.kernel.org>; Sat, 10 Nov 2018 22:23:29 -0800 (PST)
+        id S1727539AbeKKQLJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Nov 2018 11:11:09 -0500
+Received: from mail-oi1-f173.google.com ([209.85.167.173]:43377 "EHLO
+        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727524AbeKKQLJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 11:11:09 -0500
+Received: by mail-oi1-f173.google.com with SMTP id j202-v6so4745526oih.10
+        for <git@vger.kernel.org>; Sat, 10 Nov 2018 22:23:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wfH2+6YabaYG35LhvEhVXMJWWsSW3LIBAQR1xqoWPYA=;
-        b=LUn5AOq2ruHO8QhkH+rLh6qv2VDU5R0JA9HJLlqlG6N+l5v46HdIEPukV9TrG+E2sw
-         yX8oHar0pfUNPPDCVCPu9xKYWrWm+TYJu24Ybmp65zVBuKbqPzxLgaSrow6NPmCePyV3
-         5kLzNNcK5Suf10SdTEo30ZVjdRHlQrvK22EHk13vYFSsQPuuN9uFJ3goTxM3b4YGUJYt
-         pIehvSa4TiPOg1yr7sZ0R209yw/xktFZGAbi31eX+zeIJ+CmpHj+gupQD/SVCCqVI79z
-         pSlsI4s7bJbXqkl0CT+Eya7ERJc1db7BMgnvqjwvuSirV9zsa5Hmw4EPg5jCX3IbX7F9
-         +WJA==
+        bh=nFevrcZ/T8fCkpNvRUt5EvBMQkHssSjGQ3IfS7WtzY4=;
+        b=AM/y+awvC3p+T5AapK6N/7PilxV1HBNV5YRjvZHyatC+75ZnA4YGB2kcYzkXSgyQoK
+         kUXC8yNpMZkMP1N9TNYf8oaAasYp39NpvRn+TGO7sxHpGV9tlBk/n+P5eQBctdW72i5l
+         y0gFS3IDnS04AtZQXGI5DspY94Td2bzcGqW5PmyZ0wQPG0cl/vA8a6lWq63QYxtjwYuW
+         RNjeH6HJBy14p03WHpM9wPlLws7uFx3At7Qn1nFjr1IUEgEaIRS3KJJWWhuHohjRjmk3
+         V/7DOz2JoYUu2eeCB+p+JIdtn4zTHgLsmXPhERw1NYmH2CkprEkC37dyyggBayGmaZNC
+         VNww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wfH2+6YabaYG35LhvEhVXMJWWsSW3LIBAQR1xqoWPYA=;
-        b=ATctXdgTKQeBUXgQ7gi/GsGpyFOm7tJtcqXpXyDkgP1WW0SeHITEr9Nqm18gHhWQn2
-         088WtF1nVvaKJSIVGE0uU2j6KUvpznk2OPBQHnChw5+6roiLr8Kxtf/iKNUExxvBDNWe
-         x35Xx7KMWjFSCCVtxid1a65jSWf/5q60JqO4Qbadw9gsX+ZFe+Juecj28nAPfb/wCJ6X
-         s04GXM7vC/+HOe7apcHNALl2r9yjNTKVd6jiAIWJUtR7G/Si9BG64LuXnlN0N2nzhpHA
-         r3c10m/JFSB2XRko3I/u9o2L5zPXtylDrn3Ol4fWEMKO2OqEvyBzELj7WcsmJp4Vz5u4
-         A9Ug==
-X-Gm-Message-State: AGRZ1gJK9rPKmO48MajP8hho90UVfehD4DpSf2vISGpqnRzbcHpYNkeb
-        79e3XLtSeEDh+lDZPaGSW+mMz8y6
-X-Google-Smtp-Source: AJdET5eWhsFr40Kd25ZxXg6eajJDBmK5eZO0mYkN3ndEDZx+msGrB2toJuMHXB0Z6o90PmfFm5+byg==
-X-Received: by 2002:aca:5204:: with SMTP id g4-v6mr8961382oib.149.1541917409016;
-        Sat, 10 Nov 2018 22:23:29 -0800 (PST)
+        bh=nFevrcZ/T8fCkpNvRUt5EvBMQkHssSjGQ3IfS7WtzY4=;
+        b=OjvyrSrSdKZjeLl/OXGTdcTYRR7OD1NuzAf1bFvqqfFimNz5seKowL+oEXcdodTFHF
+         fGvdk9zTQI7+u5kKo6EclP3/y/xOXS/S+QVXjee6wop/rSOHI06vfCwCYx2m97Wp5cz1
+         iOARbFAjV5r88/wIuJGKcMNPW5GDRwtLwOqJxfOkAEkg4qCYg4OZHQkX7TSiKNIGbhXL
+         PDAZnKFmBdy9wlpG7yaaUlzmLjDXMucb10qoK8XcCRKiAsTngUPlEm4ZS69zyZTwZlf2
+         7bXmx8jQK1Y7YfzoePezttEsJQW8YyGVz9vK1+jk6Qs1pQ8Hi1URzA/vFVpZDEnOTzVS
+         ensQ==
+X-Gm-Message-State: AGRZ1gIGyP5r4OE/L8t2inHIrbt+Ysku5g9o4vjBy8M8JaQpiYHQJLt+
+        6Y53hdTwHl/zwestbeX8T56zFFfz
+X-Google-Smtp-Source: AJdET5f8j3lQdL/Jlqp9N++rxI5N9+/SI71kLayzHRTWhlETaQhwk0ZekCug+efIc/Oss+NkIW+4Mw==
+X-Received: by 2002:aca:eb4b:: with SMTP id j72-v6mr7975171oih.306.1541917410315;
+        Sat, 10 Nov 2018 22:23:30 -0800 (PST)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id f34sm1286855otb.25.2018.11.10.22.23.27
+        by smtp.gmail.com with ESMTPSA id f34sm1286855otb.25.2018.11.10.22.23.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 10 Nov 2018 22:23:28 -0800 (PST)
+        Sat, 10 Nov 2018 22:23:29 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     larsxschneider@gmail.com, sandals@crustytoothpaste.net,
         peff@peff.net, me@ttaylorr.com, jrnieder@gmail.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 08/10] fast-export: add --reference-excluded-parents option
-Date:   Sat, 10 Nov 2018 22:23:10 -0800
-Message-Id: <20181111062312.16342-9-newren@gmail.com>
+Subject: [PATCH 09/10] fast-export: add a --show-original-ids option to show original names
+Date:   Sat, 10 Nov 2018 22:23:11 -0800
+Message-Id: <20181111062312.16342-10-newren@gmail.com>
 X-Mailer: git-send-email 2.19.1.866.g82735bcbde
 In-Reply-To: <20181111062312.16342-1-newren@gmail.com>
 References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
@@ -68,178 +68,200 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git filter-branch has a nifty feature allowing you to rewrite, e.g. just
-the last 8 commits of a linear history
-  git filter-branch $OPTIONS HEAD~8..HEAD
+Knowing the original names (hashes) of commits, blobs, and tags can
+sometimes enable post-filtering that would otherwise be difficult or
+impossible.  In particular, the desire to rewrite commit messages which
+refer to other prior commits (on top of whatever other filtering is
+being done) is very difficult without knowing the original names of each
+commit.
 
-If you try the same with git fast-export, you instead get a history of
-only 8 commits, with HEAD~7 being rewritten into a root commit.  There
-are two alternatives:
-
-  1) Don't use the negative revision specification, and when you're
-     filtering the output to make modifications to the last 8 commits,
-     just be careful to not modify any earlier commits somehow.
-
-  2) First run 'git fast-export --export-marks=somefile HEAD~8', then
-     run 'git fast-export --import-marks=somefile HEAD~8..HEAD'.
-
-Both are more error prone than I'd like (the first for obvious reasons;
-with the second option I have sometimes accidentally included too many
-revisions in the first command and then found that the corresponding
-extra revisions were not exported by the second command and thus were
-not modified as I expected).  Also, both are poor from a performance
-perspective.
-
-Add a new --reference-excluded-parents option which will cause
-fast-export to refer to commits outside the specified rev-list-args
-range by their sha1sum.  Such a stream will only be useful in a
-repository which already contains the necessary commits (much like the
-restriction imposed when using --no-data).
+This commit teaches a new --show-original-ids option to fast-export
+which will make it add a 'originally <hash>' line to blob, commits, and
+tags.  It also teaches fast-import to parse (and ignore) such lines.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-fast-export.txt | 16 ++++++++++--
- builtin/fast-export.c             | 42 +++++++++++++++++++++++--------
- t/t9350-fast-export.sh            | 11 ++++++++
- 3 files changed, 57 insertions(+), 12 deletions(-)
+ Documentation/git-fast-export.txt |  7 +++++++
+ builtin/fast-export.c             | 20 +++++++++++++++-----
+ fast-import.c                     | 17 +++++++++++++++++
+ t/t9350-fast-export.sh            | 17 +++++++++++++++++
+ 4 files changed, 56 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 677510b7f7..2916096bdd 100644
+index 2916096bdd..4e40f0b99a 100644
 --- a/Documentation/git-fast-export.txt
 +++ b/Documentation/git-fast-export.txt
-@@ -110,6 +110,17 @@ marks the same across runs.
- 	the shape of the history and stored tree.  See the section on
- 	`ANONYMIZING` below.
+@@ -121,6 +121,13 @@ marks the same across runs.
+ 	used by a repository which already contains the necessary
+ 	parent commits.
  
-+--reference-excluded-parents::
-+	By default, running a command such as `git fast-export
-+	master~5..master` will not include the commit master\~5 and
-+	will make master\~4 no longer have master\~5 as a parent (though
-+	both the old master\~4 and new master~4 will have all the same
-+	files).  Use --reference-excluded-parents to instead have the
-+	the stream refer to commits in the excluded range of history
-+	by their sha1sum.  Note that the resulting stream can only be
-+	used by a repository which already contains the necessary
-+	parent commits.
++--show-original-ids::
++	Add an extra directive to the output for commits and blobs,
++	`originally <SHA1SUM>`.  While such directives will likely be
++	ignored by importers such as git-fast-import, it may be useful
++	for intermediary filters (e.g. for rewriting commit messages
++	which refer to older commits, or for stripping blobs by id).
 +
  --refspec::
  	Apply the specified refspec to each ref exported. Multiple of them can
  	be specified.
-@@ -119,8 +130,9 @@ marks the same across runs.
- 	'git rev-list', that specifies the specific objects and references
- 	to export.  For example, `master~10..master` causes the
- 	current master reference to be exported along with all objects
--	added since its 10th ancestor commit and all files common to
--	master\~9 and master~10.
-+	added since its 10th ancestor commit and (unless the
-+	--reference-excluded-parents option is specified) all files
-+	common to master\~9 and master~10.
- 
- EXAMPLES
- --------
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 0d0bbd9445..ea9c5b1c00 100644
+index ea9c5b1c00..cc01dcc90c 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -37,6 +37,7 @@ static int fake_missing_tagger;
- static int use_done_feature;
+@@ -38,6 +38,7 @@ static int use_done_feature;
  static int no_data;
  static int full_tree;
-+static int reference_excluded_commits;
+ static int reference_excluded_commits;
++static int show_original_ids;
  static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
  static struct string_list tag_refs = STRING_LIST_INIT_NODUP;
  static struct refspec refspecs = REFSPEC_INIT_FETCH;
-@@ -596,7 +597,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 		message += 2;
+@@ -271,7 +272,10 @@ static void export_blob(const struct object_id *oid)
  
- 	if (commit->parents &&
--	    get_object_mark(&commit->parents->item->object) != 0 &&
-+	    (get_object_mark(&commit->parents->item->object) != 0 ||
-+	     reference_excluded_commits) &&
- 	    !full_tree) {
- 		parse_commit_or_die(commit->parents->item);
- 		diff_tree_oid(get_commit_tree_oid(commit->parents->item),
-@@ -638,13 +640,21 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	unuse_commit_buffer(commit, commit_buffer);
+ 	mark_next_object(object);
  
- 	for (i = 0, p = commit->parents; p; p = p->next) {
--		int mark = get_object_mark(&p->item->object);
--		if (!mark)
-+		struct object *obj = &p->item->object;
-+		int mark = get_object_mark(obj);
-+
-+		if (!mark && !reference_excluded_commits)
- 			continue;
- 		if (i == 0)
--			printf("from :%d\n", mark);
-+			printf("from ");
-+		else
-+			printf("merge ");
-+		if (mark)
-+			printf(":%d\n", mark);
- 		else
--			printf("merge :%d\n", mark);
-+			printf("%s\n", sha1_to_hex(anonymize ?
-+						   anonymize_sha1(&obj->oid) :
-+						   obj->oid.hash));
- 		i++;
- 	}
+-	printf("blob\nmark :%"PRIu32"\ndata %lu\n", last_idnum, size);
++	printf("blob\nmark :%"PRIu32"\n", last_idnum);
++	if (show_original_ids)
++		printf("originally %s\n", oid_to_hex(oid));
++	printf("data %lu\n", size);
+ 	if (size && fwrite(buf, size, 1, stdout) != 1)
+ 		die_errno("could not write blob '%s'", oid_to_hex(oid));
+ 	printf("\n");
+@@ -628,8 +632,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 		reencoded = reencode_string(message, "UTF-8", encoding);
+ 	if (!commit->parents)
+ 		printf("reset %s\n", refname);
+-	printf("commit %s\nmark :%"PRIu32"\n%.*s\n%.*s\ndata %u\n%s",
+-	       refname, last_idnum,
++	printf("commit %s\nmark :%"PRIu32"\n", refname, last_idnum);
++	if (show_original_ids)
++		printf("originally %s\n", oid_to_hex(&commit->object.oid));
++	printf("%.*s\n%.*s\ndata %u\n%s",
+ 	       (int)(author_end - author), author,
+ 	       (int)(committer_end - committer), committer,
+ 	       (unsigned)(reencoded
+@@ -807,8 +813,10 @@ static void handle_tag(const char *name, struct tag *tag)
  
-@@ -925,13 +935,22 @@ static void handle_tags_and_duplicates(struct string_list *extras)
- 				/*
- 				 * Getting here means we have a commit which
- 				 * was excluded by a negative refspec (e.g.
--				 * fast-export ^master master).  If the user
-+				 * fast-export ^master master).  If we are
-+				 * referencing excluded commits, set the ref
-+				 * to the exact commit.  Otherwise, the user
- 				 * wants the branch exported but every commit
--				 * in its history to be deleted, that sounds
--				 * like a ref deletion to me.
-+				 * in its history to be deleted, which basically
-+				 * just means deletion of the ref.
- 				 */
--				printf("reset %s\nfrom %s\n\n",
--				       name, sha1_to_hex(null_sha1));
-+				if (!reference_excluded_commits) {
-+					/* delete the ref */
-+					printf("reset %s\nfrom %s\n\n",
-+					       name, sha1_to_hex(null_sha1));
-+					continue;
-+				}
-+				/* set ref to commit using oid, not mark */
-+				printf("reset %s\nfrom %s\n\n", name,
-+				       sha1_to_hex(commit->object.oid.hash));
- 				continue;
- 			}
- 
-@@ -1068,6 +1087,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		OPT_STRING_LIST(0, "refspec", &refspecs_list, N_("refspec"),
- 			     N_("Apply refspec to exported refs")),
+ 	if (starts_with(name, "refs/tags/"))
+ 		name += 10;
+-	printf("tag %s\nfrom :%d\n%.*s%sdata %d\n%.*s\n",
+-	       name, tagged_mark,
++	printf("tag %s\nfrom :%d\n", name, tagged_mark);
++	if (show_original_ids)
++		printf("originally %s\n", oid_to_hex(&tag->object.oid));
++	printf("%.*s%sdata %d\n%.*s\n",
+ 	       (int)(tagger_end - tagger), tagger,
+ 	       tagger == tagger_end ? "" : "\n",
+ 	       (int)message_size, (int)message_size, message ? message : "");
+@@ -1089,6 +1097,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
  		OPT_BOOL(0, "anonymize", &anonymize, N_("anonymize output")),
-+		OPT_BOOL(0, "reference-excluded-parents",
-+			 &reference_excluded_commits, N_("Reference parents which are not in fast-export stream by sha1sum")),
-+
+ 		OPT_BOOL(0, "reference-excluded-parents",
+ 			 &reference_excluded_commits, N_("Reference parents which are not in fast-export stream by sha1sum")),
++		OPT_BOOL(0, "show-original-ids", &show_original_ids,
++			    N_("Show original sha1sums of blobs/commits")),
+ 
  		OPT_END()
  	};
+diff --git a/fast-import.c b/fast-import.c
+index 95600c78e0..232b6a8b8d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -14,11 +14,13 @@ Format of STDIN stream:
  
+   new_blob ::= 'blob' lf
+     mark?
++    originally?
+     file_content;
+   file_content ::= data;
+ 
+   new_commit ::= 'commit' sp ref_str lf
+     mark?
++    originally?
+     ('author' (sp name)? sp '<' email '>' sp when lf)?
+     'committer' (sp name)? sp '<' email '>' sp when lf
+     commit_msg
+@@ -49,6 +51,7 @@ Format of STDIN stream:
+ 
+   new_tag ::= 'tag' sp tag_str lf
+     'from' sp commit-ish lf
++    originally?
+     ('tagger' (sp name)? sp '<' email '>' sp when lf)?
+     tag_msg;
+   tag_msg ::= data;
+@@ -73,6 +76,8 @@ Format of STDIN stream:
+   data ::= (delimited_data | exact_data)
+     lf?;
+ 
++  originally ::= 'originally' sp not_lf+ lf
++
+     # note: delim may be any string but must not contain lf.
+     # data_line may contain any data but must not be exactly
+     # delim.
+@@ -1968,6 +1973,13 @@ static void parse_mark(void)
+ 		next_mark = 0;
+ }
+ 
++static void parse_original_identifier(void)
++{
++	const char *v;
++	if (skip_prefix(command_buf.buf, "originally ", &v))
++		read_next_command();
++}
++
+ static int parse_data(struct strbuf *sb, uintmax_t limit, uintmax_t *len_res)
+ {
+ 	const char *data;
+@@ -2110,6 +2122,7 @@ static void parse_new_blob(void)
+ {
+ 	read_next_command();
+ 	parse_mark();
++	parse_original_identifier();
+ 	parse_and_store_blob(&last_blob, NULL, next_mark);
+ }
+ 
+@@ -2733,6 +2746,7 @@ static void parse_new_commit(const char *arg)
+ 
+ 	read_next_command();
+ 	parse_mark();
++	parse_original_identifier();
+ 	if (skip_prefix(command_buf.buf, "author ", &v)) {
+ 		author = parse_ident(v);
+ 		read_next_command();
+@@ -2865,6 +2879,9 @@ static void parse_new_tag(const char *arg)
+ 		die("Invalid ref name or SHA1 expression: %s", from);
+ 	read_next_command();
+ 
++	/* originally ... */
++	parse_original_identifier();
++
+ 	/* tagger ... */
+ 	if (skip_prefix(command_buf.buf, "tagger ", &v)) {
+ 		tagger = parse_ident(v);
 diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index a0c93f2212..c2f40d6a40 100755
+index c2f40d6a40..5ad6669910 100755
 --- a/t/t9350-fast-export.sh
 +++ b/t/t9350-fast-export.sh
-@@ -66,6 +66,17 @@ test_expect_success 'fast-export master~2..master' '
- 
+@@ -77,6 +77,23 @@ test_expect_success 'fast-export --reference-excluded-parents master~2..master'
+ 		 test $MASTER = $(git rev-parse --verify refs/heads/rewrite))
  '
  
-+test_expect_success 'fast-export --reference-excluded-parents master~2..master' '
++test_expect_success 'fast-export --show-original-ids' '
 +
-+	git fast-export --reference-excluded-parents master~2..master >actual &&
-+	grep commit.refs/heads/master actual >commit-count &&
-+	test_line_count = 2 commit-count &&
-+	sed "s/master/rewrite/" actual |
-+		(cd new &&
-+		 git fast-import &&
-+		 test $MASTER = $(git rev-parse --verify refs/heads/rewrite))
++	git fast-export --show-original-ids master >output &&
++	grep ^originally output| sed -e s/^originally.// | sort >actual &&
++	git rev-list --objects master muss >objects-and-names &&
++	awk "{print \$1}" objects-and-names | sort >commits-trees-blobs &&
++	comm -23 actual commits-trees-blobs >unfound &&
++	test_must_be_empty unfound
++'
++
++test_expect_success 'fast-export --show-original-ids | git fast-import' '
++
++	git fast-export --show-original-ids master muss | git fast-import --quiet &&
++	test $MASTER = $(git rev-parse --verify refs/heads/master) &&
++	test $MUSS = $(git rev-parse --verify refs/tags/muss)
 +'
 +
  test_expect_success 'iso-8859-1' '
