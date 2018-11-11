@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E00671F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 07:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 470271F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 08:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727510AbeKKR0q (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 12:26:46 -0500
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:45471 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727055AbeKKR0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 12:26:45 -0500
-Received: by mail-ua1-f66.google.com with SMTP id e16so832771uam.12
-        for <git@vger.kernel.org>; Sat, 10 Nov 2018 23:38:57 -0800 (PST)
+        id S1727389AbeKKRtq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Nov 2018 12:49:46 -0500
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:37362 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727055AbeKKRtq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 12:49:46 -0500
+Received: by mail-vk1-f193.google.com with SMTP id 197so1329764vkf.4
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 00:01:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=S/pjAcsDD0SRmqGQvMR1M5nX1n+0EJBfBK/f9wyTsl4=;
-        b=V7xHTAvT2Xt7z4gs7gemhN5Xi6uKqSzDg+5GX7Ns6tM1sN9c7AycoKtT0uCWbypn+y
-         +4Rx17Gzya66G+VjhkyB694zBms/OoVghK7nan44gCJUNAM8/ixTm889dv8hbxNroU92
-         Hv+WNqARE++x3B3XuRBQ/lGtLkLdRrhwewu3bm6CE5kIeujquU0yXqV5UvheiWcKqpM8
-         iqiFEQrs9xNKQi7tAgYyaivntyPTDmEQglTBpO41aPZ3QtsqOJJIfFOcS87QeY2tX/C1
-         H/klZ6n44DQFETevpg+e2EMPUAGgO9h7/f+fDFz415ulgFho5x3rZC38KouEB/8/wmnx
-         x1Hw==
+        bh=51I4E1qqqtiFSCz31AZxjZgcRL//goqjU+CPhBRu3Wg=;
+        b=VeJCk81PHKeh9LlEkQgi1p8d36S7ynR5os/8hIlPrOHhkNS7tQ+3E34zzk71w2s0kH
+         /gpvtGeN5eTyh77f3L2X8PP3Rh52GQv+tuYjmFAe0tWz9x2eB3G7vVNuBsegvizGdBgN
+         ixJZYeZd8qBVoszDr6vfu9pJd0DNS6PutVF2CL8hyXNaT/4kxKtStyZBgs7fB3sHtOC5
+         9cXVULbHFtSwTed69MNlvd4zQqYKL5jIU9KFsxGaWMdvmwWHz3YPrr3b9c+joZrSMLZG
+         Kcve1J71/u0a/tAjTLcc6C5PJ90guMMlxftiZLrz2nuIn5ofUdefnH0EhdVingNR8hBW
+         aXuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=S/pjAcsDD0SRmqGQvMR1M5nX1n+0EJBfBK/f9wyTsl4=;
-        b=cbNPoSDYtjwMKurItaSRhSADjdbc/Xcy3wRwTerzPKQe2i79+YMNRTVXgEcDMBjzQ6
-         ceaMucxiboJbA6xUddFCamJT/4w7oGS4NmjoP0YUwwRokics8v9IihXODMV0O0URB9iM
-         mN2hkGh9wphvmF+HmJoLOpfg/pqJfPO9B3ezO/5u6UaoCPP23dmaRtbMP9k2WJ3JsK0p
-         2E2qDnZfGOcRW5y+hArgHD2iQ4RYYuaAvgC7cWqPAwt8uvYxm23axTZr4e4ZGoSerAO3
-         UrnNoidAXt0b+a+3NZZJY5+sysD7moVn1Z3pgq6ava6Z14P8I2U94hWh7itK624+CNbv
-         A2UQ==
-X-Gm-Message-State: AGRZ1gK6VQfrLX5JQWLPTHJocSF0UefiMXOCB2t5ry2aiHId6LUBjbsM
-        Nfrabunixqn4H0F9AHLEOpUkmBpxf4M/kxdqUo4=
-X-Google-Smtp-Source: AJdET5dcxc3sT515R19cQkO470zDhDS/tEyt3sL94ymjLRjkcM9HAS5+oy88YznuQWfYwM9FBCIMFtvtQOp3Miix/3g=
-X-Received: by 2002:ab0:2314:: with SMTP id a20mr6658857uao.130.1541921936458;
- Sat, 10 Nov 2018 23:38:56 -0800 (PST)
+        bh=51I4E1qqqtiFSCz31AZxjZgcRL//goqjU+CPhBRu3Wg=;
+        b=Ghw55P1+LhknNQcVLbrD8catRvu9RMnRNafQh1UOKuMprSv8mSxqgZIt1hgI6i26dK
+         T7qN6xIB2SJHJ3omvyKT7W7p+EEHoj8eFH91w4Z1aD1vkz4lNDLKE7fPx6jgyUc3xaYN
+         PY9fJSF4gWVWFDYDgmJYpuWvORmYnQ/eEXpOlFf80D8lSt9P3CwT3r2KNyXZmSTBLdIJ
+         RbjjXspTTRFUkqEr3e5JWkFP90EtqAH9b/xsWqUfT6weMQ4E6MawuGvI9wtSnCRErlPc
+         fkBvOtBAJHTxFpRJnzuVvytrCkyjtUKo7SAe/KoD9WSbzluKo97KhLd9IESEcfLV8uey
+         fGSA==
+X-Gm-Message-State: AGRZ1gLDejACMvwpO+Bzzd4+TOMEo3ywupoH/rSenMLh5+o/A3bJkt9/
+        AGbax6yFyUr2VZu1vh3lOOlPreEWS+1+FhnfF1k=
+X-Google-Smtp-Source: AJdET5ckhwy1kJF9v0DYLIcT/SbSLOAyk2xRJ8PDh2tqFq4p/WdkgUSIPsl1gNC8y3H+lQ/oVUFfPRdux/UKStWdS1E=
+X-Received: by 2002:a1f:97d1:: with SMTP id z200mr6533886vkd.15.1541923314625;
+ Sun, 11 Nov 2018 00:01:54 -0800 (PST)
 MIME-Version: 1.0
 References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
- <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-5-newren@gmail.com>
- <20181111064442.GD30850@sigill.intra.peff.net>
-In-Reply-To: <20181111064442.GD30850@sigill.intra.peff.net>
+ <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-7-newren@gmail.com>
+ <20181111065338.GF30850@sigill.intra.peff.net>
+In-Reply-To: <20181111065338.GF30850@sigill.intra.peff.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 10 Nov 2018 23:38:45 -0800
-Message-ID: <CABPp-BFy1aS3mHGF99Lr=+APruzC3pF5PCEph8SU71uuyOnQ7Q@mail.gmail.com>
-Subject: Re: [PATCH 04/10] fast-export: avoid dying when filtering by paths
- and old tags exist
+Date:   Sun, 11 Nov 2018 00:01:43 -0800
+Message-ID: <CABPp-BGF8C5vhyVbAwpmXeii452fBgtvL4dPRLWdOPxLiCYR0A@mail.gmail.com>
+Subject: Re: [PATCH 06/10] fast-export: when using paths, avoid corrupt stream
+ with non-existent mark
 To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Lars Schneider <larsxschneider@gmail.com>,
@@ -67,103 +67,127 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 10, 2018 at 10:44 PM Jeff King <peff@peff.net> wrote:
+On Sat, Nov 10, 2018 at 10:53 PM Jeff King <peff@peff.net> wrote:
 >
-> On Sat, Nov 10, 2018 at 10:23:06PM -0800, Elijah Newren wrote:
+> On Sat, Nov 10, 2018 at 10:23:08PM -0800, Elijah Newren wrote:
 >
-> > If --tag-of-filtered-object=rewrite is specified along with a set of
-> > paths to limit what is exported, then any tags pointing to old commits
-> > that do not contain any of those specified paths cause problems.  Since
-> > the old tagged commit is not exported, fast-export attempts to rewrite
-> > such tags to an ancestor commit which was exported.  If no such commit
-> > exists, then fast-export currently die()s.  Five years after the tag
-> > rewriting logic was added to fast-export (see commit 2d8ad4691921,
-> > "fast-export: Add a --tag-of-filtered-object  option for newly dangling
-> > tags", 2009-06-25), fast-import gained the ability to delete refs (see
-> > commit 4ee1b225b99f, "fast-import: add support to delete refs",
-> > 2014-04-20), so now we do have a valid option to rewrite the tag to.
-> > Delete these tags instead of dying.
+> > If file paths are specified to fast-export and multiple refs point to a
+> > commit that does not touch any of the relevant file paths, then
+> > fast-export can hit problems.  fast-export has a list of additional refs
+> > that it needs to explicitly set after exporting all blobs and commits,
+> > and when it tries to get_object_mark() on the relevant commit, it can
+> > get a mark of 0, i.e. "not found", because the commit in question did
+> > not touch the relevant paths and thus was not exported.  Trying to
+> > import a stream with a mark corresponding to an unexported object will
+> > cause fast-import to crash.
+> >
+> > Avoid this problem by taking the commit the ref points to and finding an
+> > ancestor of it that was exported, and make the ref point to that commit
+> > instead.
 >
-> Hmm. That's the right thing to do if we're considering the export to be
-> an independent unit. But what if I'm just rewriting a portion of history
-> like:
+> As with the earlier tag commit, I wonder if this might depend on the
+> context in which you're using fast-export. I suppose that if you did not
+> feed the ref on the command line that we would not be dealing with it at
+> all (and maybe that is the answer to my question about the tag thing,
+> too).
+
+Right, if you didn't feed the ref on the command line, we're not
+dealing with the ref at all, so the code here doesn't affect any such
+ref.
+
+> It does seem funny that the behavior for the earlier case (bounded
+> commits) and this case (skipping some commits) are different. Would you
+> ever want to keep walking backwards to find an ancestor in the earlier
+> case? Or vice versa, would you ever want to simply delete a tag in a
+> case like this one?
 >
->   git fast-export HEAD~5..HEAD | some_filter | git fast-import
+> I'm not sure sure, but I suspect you may have thought about it a lot
+> harder than I have. :)
+
+I'm not sure why you thought the behavior for the two cases was
+different?  For both patches, my testcases used path limiting; it was
+you who suggested employing a negative revision to bound the commits.
+
+Anyway, for both patches assuming you haven't bounded the commits, you
+can attempt to keep walking backwards to find an earlier ancestor, but
+the fundamental fact is you aren't guaranteed that you can find one
+(i.e. some tag or branch points to a commit that didn't modify any of
+the specified paths, and nor did any of its ancestors back to any root
+commits).  I hit that case lots of times.  If the user explicitly
+requested a tag or branch for export (and requested tag rewriting),
+and limited to certain paths that had never existed in the repository
+as of the time of the tag or branch, then you hit the cases these
+patches worry about.  Patch 4 was about (annotated and signed) tags,
+this patch is about unannotated tags and branches and other refs.
+
+If you think about using negative revisions, for both cases, then
+again you can keep walking back history to try to find a commit that
+your tag or branch or ref can point to, but if you get back to the
+negative revisions, then you are in the range the user requested to be
+omitted from the resulting repository.  Sounds like tag/ref deletion
+to me.
+
 >
-> ? If I have a tag pointing to HEAD~10, will this delete that? Ideally I
-> think it would be left alone.
+> > diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> > index a3c044b0af..5648a8ce9c 100644
+> > --- a/builtin/fast-export.c
+> > +++ b/builtin/fast-export.c
+> > @@ -900,7 +900,18 @@ static void handle_tags_and_duplicates(void)
+> >                       if (anonymize)
+> >                               name = anonymize_refname(name);
+> >                       /* create refs pointing to already seen commits */
+> > -                     commit = (struct commit *)object;
+> > +                     commit = rewrite_commit((struct commit *)object);
+> > +                     if (!commit) {
+> > +                             /*
+> > +                              * Neither this object nor any of its
+> > +                              * ancestors touch any relevant paths, so
+> > +                              * it has been filtered to nothing.  Delete
+> > +                              * it.
+> > +                              */
+> > +                             printf("reset %s\nfrom %s\n\n",
+> > +                                    name, sha1_to_hex(null_sha1));
+> > +                             continue;
+> > +                     }
+>
+> This hunk makes sense.
 
-A couple things:
-  * This code path only triggers in a very specific case: If a tag is
-requested for export but points to a commit which is filtered out by
-something else (e.g. path limiters and the commit in question didn't
-modify any of the relevant paths), AND the user explicitly specified
---tag-of-filtered-object=rewrite (so that the tag in question can be
-rewritten to the nearest non-filtered ancestor).
-  * You didn't specify to export any tags, only HEAD, so this
-situation isn't relevant (the tag wouldn't be exported or deleted).
-  * You didn't specify --tag-of-filtered-object=rewrite, so this
-situation isn't relevant (even if you had specified a tag to filter,
-you'd get an abort instead)
+Cool, this was the entirety of the code...so does this mean that the
+code makes more sense than my commit message summary did?  ...and
+perhaps that my attempts to answer your questions in this email
+weren't necessary anymore?
 
-But let's say you do modify the example some:
-   git fast-export --tag-of-filtered-object=rewrite
---signed-tags=strip --tags master -- relatively_recent_subdirectory/ |
-some_filter | git fast-import
-
-The user asked that all tags and master be exported but only for the
-history that touched relatively_recent_subdirectory/, and if any tags
-point at commits that are pruned by only asking for commits touching
-relatively_recent_subdirectory/, then rewrite what those tags point to
-so that they instead point to the nearest non-filtered ancestor.  What
-about a commit like v0.1.0 that likely pre-dated the introduction of
-relatively_recent_subdirectory/?  It has no nearest ancestor to
-rewrite to.  The previous answer was to abort, which is really bad,
-especially since the user was clearly asking us to do whatever smart
-rewriting we can (--signed-tags=strip and
---tag-of-filtered-object=rewrite).
-
-Perhaps there's a different answer that's workable as well, but this
-one, in these circumstances, seemed the most reasonable to me.
-
-> > +test_expect_success 'rewrite tag predating pathspecs to nothing' '
-> > +     test_create_repo rewrite_tag_predating_pathspecs &&
+> > --- a/t/t9350-fast-export.sh
+> > +++ b/t/t9350-fast-export.sh
+> > @@ -386,6 +386,30 @@ test_expect_success 'path limiting with import-marks does not lose unmodified fi
+> >       grep file0 actual
+> >  '
+> >
+> > +test_expect_success 'avoid corrupt stream with non-existent mark' '
+> > +     test_create_repo avoid_non_existent_mark &&
 > > +     (
-> > +             cd rewrite_tag_predating_pathspecs &&
+> > +             cd avoid_non_existent_mark &&
+> > +
+> > +             touch important-path &&
+> > +             git add important-path &&
+> > +             test_commit initial &&
 > > +
 > > +             touch ignored &&
->
-> We usually prefer ">ignored" to create an empty file rather than
-> "touch".
-
-Will fix.
-
->
 > > +             git add ignored &&
-> > +             test_commit initial &&
+> > +             test_commit whatever &&
+> > +
+> > +             git branch A &&
+> > +             git branch B &&
+> > +
+> > +             echo foo >>important-path &&
+> > +             git add important-path &&
+> > +             test_commit more changes &&
+> > +
+> > +             git fast-export --all -- important-path | git fast-import --force
+> > +     )
+> > +'
 >
-> What do we need this "ignored" for? test_commit should create a file
-> "initial.t".
+> Similar comments apply about "touch" and "test_commit" to what I wrote
+> for the earlier patch.
 
-I think I original had plain "git commit", then switched to
-test_commit, then didn't recheck.  Thanks, will fix.
-
-> > +             echo foo >bar &&
-> > +             git add bar &&
-> > +             test_commit add-bar &&
->
-> Likewise, "test_commit bar" should work by itself (though note the
-> filename is "bar.t" in your fast-export command).
->
-> > +             git fast-export --tag-of-filtered-object=rewrite --all -- bar >output &&
-> > +             grep -A 1 refs/tags/v0.0.0.0.0.0.1 output | grep -E ^from.0{40}
->
-> I don't think "grep -A" is portable (and we don't seem to otherwise use
-> it). You can probably do something similar with sed.
->
-> Use $ZERO_OID instead of hard-coding 40, which future-proofs for the
-> hash transition (though I suppose the hash is not likely to get
-> _shorter_ ;) ).
-
-Will fix these up as well...after waiting for more feedback on
-possible alternate suggestions.
+Thanks; will fix.
