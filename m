@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 854F81F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 06:23:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 034C71F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 06:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727509AbeKKQLF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 11:11:05 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:37713 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727307AbeKKQLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 11:11:05 -0500
-Received: by mail-oi1-f193.google.com with SMTP id w66-v6so4762579oiw.4
-        for <git@vger.kernel.org>; Sat, 10 Nov 2018 22:23:27 -0800 (PST)
+        id S1727523AbeKKQLH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Nov 2018 11:11:07 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:41156 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727307AbeKKQLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 11:11:07 -0500
+Received: by mail-oi1-f194.google.com with SMTP id g188-v6so4748673oif.8
+        for <git@vger.kernel.org>; Sat, 10 Nov 2018 22:23:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Mms0aOjmTokxH/YVZ6NrGkicGMnzSg9TGErNjQ0QdY8=;
-        b=eT90vv5fK9c7PFFrpuCXx4K6B6GZWhqBZ4cfYGw8Bxa9zaQXQ8zqTp5zcbk5zo1xZ7
-         VCqyzkHMkSYO50+3QpzkAiSW8csLdskw6yXXKgX5WV9xLpcD7rA7aPRoAxebygaMSHd6
-         1X8yAXOND4XOxJd6I8s8ju16+2NmTtkNUY3jmKGRgZXmS01kKllcushc7ueSY9jiRaIc
-         DEZiarUEoxb/6xcSt0JZW9s1pHiAU9w03bvgi+xrqZLKJX3j5/mgSECyIZEBTvSoRkqg
-         kjDWE39rZIt9NxbUaQP3iwOcNCFwbq2P0L1AX5FoMQCsMxoHzigMNRsQpidDeyi+IiYa
-         e4bw==
+        bh=MBpZPg6l7CxjS3NxuCNj92+0MdQSMXusdWB2zYFHEOY=;
+        b=eoGL37fGPSa6cIKVP6vxANuOtVrwCzu54dLLlRZRwd9bRQVOJd2T6cibGQTyD1kqFf
+         LlyrGRhWzXEXBbZgfY8UpJpWZbCv5wBdb4Qo9/SSNMGo2kHUCMagi9LnxHgOi2iI4pbH
+         ITeY9EuSuhA2hdBe/Uou7lv0pFrPnSoQT30RlRXsVko1XayxYJAi19Q0dtGJxJjcXiNe
+         +39JknmQ1CVhn2wDPUQXFN4bhE0I3LwxdJt6a55tyPzTV+Db+pccXYVgan9Zp2grcmrS
+         lQkPiJX0UtjA21fOYO07kwvvlKcNUybMBR+UIK/koC4lpxR3+kVWdfeH4KPFbqda8V1K
+         WXdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Mms0aOjmTokxH/YVZ6NrGkicGMnzSg9TGErNjQ0QdY8=;
-        b=eYHjvPtFbfrZufQ3hPphiTZ/oUZX1fmf9xmc1eA+C650lDgYGCep/liCkvAfWsS7Fx
-         cqIfTEo434SWSTXKk5NNSO1JYYE8a0XKnpwmu4kiEaV3kcHVIX25Fwk1IigK+Y2sQW8u
-         zQVTiXiFpr5gz0hMj+J9+naMj8EPufTlTcvq7EwlyRB+8GdUJ96XACS98D0XqUYoO1Mm
-         LrdPmbytuc16sDTitRvhk13LHUH46TDaPlRtw37u7DtsGH7OjBI67ufF84BK0AD3hwVK
-         KX6Kv7Tt7H1Nw5+E7GihvfXgXQJSoTBtJFUqzchi2wTQvAbZDQHp0iLLCmzUH8Jnrrdu
-         wQGg==
-X-Gm-Message-State: AGRZ1gJjSX/WrlPVXN5P/ufT2KEwSDGHsU/wNRSeH8NaqSZEci0ZZTAL
-        k3W2W81IjqKp7xEl4ywYJYOzug44
-X-Google-Smtp-Source: AJdET5cZMDIGua/GX0DCMb7DF++wamOzLStBt0qBKZ2Sx/BpI97IGSGFsdlX7WKYw+VS59eKdhlPJg==
-X-Received: by 2002:aca:e607:: with SMTP id d7-v6mr8135977oih.68.1541917406487;
-        Sat, 10 Nov 2018 22:23:26 -0800 (PST)
+        bh=MBpZPg6l7CxjS3NxuCNj92+0MdQSMXusdWB2zYFHEOY=;
+        b=EWb8KMsuB2XOv8jlCj+FRTfP8XptDeSqhD7klWGWvZ493RHnFPbtV4wKbSN9LKNylA
+         2o+dnzyzc60ZR0cUX+u9/5hoD927xzZYRpQLkZqfTnjmp2WTvd/0P6nm2yvwj+v70Uwi
+         AQhnjzQRXUr4OGwhBAvg6S6ui0RsVSpw7cuNgexs/AHK0gTVlqZU8ImgWwnontk/ck5C
+         GNIz4TC1yxQabdPwpz8TWLyzu7ssof7OQvZzh3qi0is+Ewb3Ynw7FG2CZ7T4Lt+fSV6d
+         S9VMEpPzdVhLfa8jpx8VnoJNz/a78eYDdXf4cycykmJ5cNUZZhoYCikfQMb9zPDTx3y0
+         MJcQ==
+X-Gm-Message-State: AGRZ1gJXnUEHLiOvB/F9/UigtWDhsD28OClkGgGBa0vDb55ShbWZQqOk
+        xuaHv1URIAxEyZdaPCKnLBh/EKHG
+X-Google-Smtp-Source: AJdET5fLBIdx1+O8NdL/Ahh50H0gaJvy0OS1Kh6gG66FbLQfUpok0ICG+TIqsMMawbwROG6AxNTsDg==
+X-Received: by 2002:aca:ce47:: with SMTP id e68-v6mr8772718oig.83.1541917407754;
+        Sat, 10 Nov 2018 22:23:27 -0800 (PST)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id f34sm1286855otb.25.2018.11.10.22.23.25
+        by smtp.gmail.com with ESMTPSA id f34sm1286855otb.25.2018.11.10.22.23.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 10 Nov 2018 22:23:26 -0800 (PST)
+        Sat, 10 Nov 2018 22:23:27 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     larsxschneider@gmail.com, sandals@crustytoothpaste.net,
         peff@peff.net, me@ttaylorr.com, jrnieder@gmail.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 06/10] fast-export: when using paths, avoid corrupt stream with non-existent mark
-Date:   Sat, 10 Nov 2018 22:23:08 -0800
-Message-Id: <20181111062312.16342-7-newren@gmail.com>
+Subject: [PATCH 07/10] fast-export: ensure we export requested refs
+Date:   Sat, 10 Nov 2018 22:23:09 -0800
+Message-Id: <20181111062312.16342-8-newren@gmail.com>
 X-Mailer: git-send-email 2.19.1.866.g82735bcbde
 In-Reply-To: <20181111062312.16342-1-newren@gmail.com>
 References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
@@ -68,85 +68,168 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If file paths are specified to fast-export and multiple refs point to a
-commit that does not touch any of the relevant file paths, then
-fast-export can hit problems.  fast-export has a list of additional refs
-that it needs to explicitly set after exporting all blobs and commits,
-and when it tries to get_object_mark() on the relevant commit, it can
-get a mark of 0, i.e. "not found", because the commit in question did
-not touch the relevant paths and thus was not exported.  Trying to
-import a stream with a mark corresponding to an unexported object will
-cause fast-import to crash.
+If file paths are specified to fast-export and a ref points to a commit
+that does not touch any of the relevant paths, then that ref would
+sometimes fail to be exported.  (This depends on whether any ancestors
+of the commit which do touch the relevant paths would be exported with
+that same ref name or a different ref name.)  To avoid this problem,
+put *all* specified refs into extra_refs to start, and then as we export
+each commit, remove the refname used in the 'commit $REFNAME' directive
+from extra_refs.  Then, in handle_tags_and_duplicates() we know which
+refs actually do need a manual reset directive in order to be included.
 
-Avoid this problem by taking the commit the ref points to and finding an
-ancestor of it that was exported, and make the ref point to that commit
-instead.
+This means that we do need some special handling for excluded refs; e.g.
+if someone runs
+   git fast-export ^master master
+then they've asked for master to be exported, but they have also asked
+for the commit which master points to and all of its history to be
+excluded.  That logically means ref deletion.  Previously, such refs
+were just silently omitted from being exported despite having been
+explicitly requested for export.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/fast-export.c  | 13 ++++++++++++-
- t/t9350-fast-export.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 1 deletion(-)
+NOTE: I was hoping the strmap API proposal would materialize, but I either
+missed it or it hasn't shown up.  The usage of string_list in this patch
+would be better replaced by what Peff suggested.
+
+ builtin/fast-export.c  | 48 +++++++++++++++++++++++++++++++-----------
+ t/t9350-fast-export.sh | 16 +++++++++++---
+ 2 files changed, 49 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index a3c044b0af..5648a8ce9c 100644
+index 5648a8ce9c..0d0bbd9445 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -900,7 +900,18 @@ static void handle_tags_and_duplicates(void)
- 			if (anonymize)
- 				name = anonymize_refname(name);
- 			/* create refs pointing to already seen commits */
--			commit = (struct commit *)object;
-+			commit = rewrite_commit((struct commit *)object);
-+			if (!commit) {
+@@ -38,6 +38,7 @@ static int use_done_feature;
+ static int no_data;
+ static int full_tree;
+ static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
++static struct string_list tag_refs = STRING_LIST_INIT_NODUP;
+ static struct refspec refspecs = REFSPEC_INIT_FETCH;
+ static int anonymize;
+ static struct revision_sources revision_sources;
+@@ -611,6 +612,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 			export_blob(&diff_queued_diff.queue[i]->two->oid);
+ 
+ 	refname = *revision_sources_at(&revision_sources, commit);
++	string_list_remove(&extra_refs, refname, 0);
+ 	if (anonymize) {
+ 		refname = anonymize_refname(refname);
+ 		anonymize_ident_line(&committer, &committer_end);
+@@ -814,7 +816,7 @@ static struct commit *get_commit(struct rev_cmdline_entry *e, char *full_name)
+ 		/* handle nested tags */
+ 		while (tag && tag->object.type == OBJ_TAG) {
+ 			parse_object(the_repository, &tag->object.oid);
+-			string_list_append(&extra_refs, full_name)->util = tag;
++			string_list_append(&tag_refs, full_name)->util = tag;
+ 			tag = (struct tag *)tag->tagged;
+ 		}
+ 		if (!tag)
+@@ -873,25 +875,30 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
+ 		}
+ 
+ 		/*
+-		 * This ref will not be updated through a commit, lets make
+-		 * sure it gets properly updated eventually.
++		 * Make sure this ref gets properly updated eventually, whether
++		 * through a commit or manually at the end.
+ 		 */
+-		if (*revision_sources_at(&revision_sources, commit) ||
+-		    commit->object.flags & SHOWN)
++		if (e->item->type != OBJ_TAG)
+ 			string_list_append(&extra_refs, full_name)->util = commit;
++
+ 		if (!*revision_sources_at(&revision_sources, commit))
+ 			*revision_sources_at(&revision_sources, commit) = full_name;
+ 	}
++
++	string_list_sort(&extra_refs);
++	string_list_remove_duplicates(&extra_refs, 0);
+ }
+ 
+-static void handle_tags_and_duplicates(void)
++static void handle_tags_and_duplicates(struct string_list *extras)
+ {
+ 	struct commit *commit;
+ 	int i;
+ 
+-	for (i = extra_refs.nr - 1; i >= 0; i--) {
+-		const char *name = extra_refs.items[i].string;
+-		struct object *object = extra_refs.items[i].util;
++	for (i = extras->nr - 1; i >= 0; i--) {
++		const char *name = extras->items[i].string;
++		struct object *object = extras->items[i].util;
++		int mark;
++
+ 		switch (object->type) {
+ 		case OBJ_TAG:
+ 			handle_tag(name, (struct tag *)object);
+@@ -912,8 +919,24 @@ static void handle_tags_and_duplicates(void)
+ 				       name, sha1_to_hex(null_sha1));
+ 				continue;
+ 			}
+-			printf("reset %s\nfrom :%d\n\n", name,
+-			       get_object_mark(&commit->object));
++
++			mark = get_object_mark(&commit->object);
++			if (!mark) {
 +				/*
-+				 * Neither this object nor any of its
-+				 * ancestors touch any relevant paths, so
-+				 * it has been filtered to nothing.  Delete
-+				 * it.
++				 * Getting here means we have a commit which
++				 * was excluded by a negative refspec (e.g.
++				 * fast-export ^master master).  If the user
++				 * wants the branch exported but every commit
++				 * in its history to be deleted, that sounds
++				 * like a ref deletion to me.
 +				 */
 +				printf("reset %s\nfrom %s\n\n",
 +				       name, sha1_to_hex(null_sha1));
 +				continue;
 +			}
- 			printf("reset %s\nfrom :%d\n\n", name,
- 			       get_object_mark(&commit->object));
++
++			printf("reset %s\nfrom :%d\n\n", name, mark
++			       );
  			show_progress();
+ 			break;
+ 		}
+@@ -1101,7 +1124,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	handle_tags_and_duplicates();
++	handle_tags_and_duplicates(&extra_refs);
++	handle_tags_and_duplicates(&tag_refs);
+ 	handle_deletes();
+ 
+ 	if (export_filename && lastimportid != last_idnum)
 diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 5bf21b4908..dbb560c110 100755
+index dbb560c110..a0c93f2212 100755
 --- a/t/t9350-fast-export.sh
 +++ b/t/t9350-fast-export.sh
-@@ -386,6 +386,30 @@ test_expect_success 'path limiting with import-marks does not lose unmodified fi
- 	grep file0 actual
+@@ -552,10 +552,20 @@ test_expect_success 'use refspec' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'avoid corrupt stream with non-existent mark' '
-+	test_create_repo avoid_non_existent_mark &&
-+	(
-+		cd avoid_non_existent_mark &&
+-test_expect_success 'delete refspec' '
++test_expect_success 'delete ref because entire history excluded' '
+ 	git branch to-delete &&
+-	git fast-export --refspec :refs/heads/to-delete to-delete ^to-delete > actual &&
+-	cat > expected <<-EOF &&
++	git fast-export to-delete ^to-delete >actual &&
++	cat >expected <<-EOF &&
++	reset refs/heads/to-delete
++	from 0000000000000000000000000000000000000000
 +
-+		touch important-path &&
-+		git add important-path &&
-+		test_commit initial &&
-+
-+		touch ignored &&
-+		git add ignored &&
-+		test_commit whatever &&
-+
-+		git branch A &&
-+		git branch B &&
-+
-+		echo foo >>important-path &&
-+		git add important-path &&
-+		test_commit more changes &&
-+
-+		git fast-export --all -- important-path | git fast-import --force
-+	)
++	EOF
++	test_cmp expected actual
 +'
 +
- test_expect_success 'full-tree re-shows unmodified files'        '
- 	git checkout -f simple &&
- 	git fast-export --full-tree simple >actual &&
++test_expect_success 'delete refspec' '
++	git fast-export --refspec :refs/heads/to-delete >actual &&
++	cat >expected <<-EOF &&
+ 	reset refs/heads/to-delete
+ 	from 0000000000000000000000000000000000000000
+ 
 -- 
 2.19.1.866.g82735bcbde
 
