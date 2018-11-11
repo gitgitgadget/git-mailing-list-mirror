@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65E941F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 06:23:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66EE61F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 06:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727539AbeKKQLJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 11:11:09 -0500
-Received: from mail-oi1-f173.google.com ([209.85.167.173]:43377 "EHLO
-        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727524AbeKKQLJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 11:11:09 -0500
-Received: by mail-oi1-f173.google.com with SMTP id j202-v6so4745526oih.10
-        for <git@vger.kernel.org>; Sat, 10 Nov 2018 22:23:31 -0800 (PST)
+        id S1727550AbeKKQLL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Nov 2018 11:11:11 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:36337 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727524AbeKKQLK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 11:11:10 -0500
+Received: by mail-oi1-f193.google.com with SMTP id r127-v6so4765373oie.3
+        for <git@vger.kernel.org>; Sat, 10 Nov 2018 22:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nFevrcZ/T8fCkpNvRUt5EvBMQkHssSjGQ3IfS7WtzY4=;
-        b=AM/y+awvC3p+T5AapK6N/7PilxV1HBNV5YRjvZHyatC+75ZnA4YGB2kcYzkXSgyQoK
-         kUXC8yNpMZkMP1N9TNYf8oaAasYp39NpvRn+TGO7sxHpGV9tlBk/n+P5eQBctdW72i5l
-         y0gFS3IDnS04AtZQXGI5DspY94Td2bzcGqW5PmyZ0wQPG0cl/vA8a6lWq63QYxtjwYuW
-         RNjeH6HJBy14p03WHpM9wPlLws7uFx3At7Qn1nFjr1IUEgEaIRS3KJJWWhuHohjRjmk3
-         V/7DOz2JoYUu2eeCB+p+JIdtn4zTHgLsmXPhERw1NYmH2CkprEkC37dyyggBayGmaZNC
-         VNww==
+        bh=mtfZyQCvGTLrItylsV4YbZAfxEuQI5GK14yAcs/anmQ=;
+        b=NMw0IWbjMjR21qnKqJiO0VwYmHaQhAjsfzgANKDiFQ/XGihzwvp0KN5y10Hs13QcmC
+         DZyP8nD/6oQQzXwDvrt+rruJDPt6HFlqkGum+w0TbeY+NhQRNaq7xs3FvC7cr/CkX87E
+         OP0pj2lEd28hTzo9SksVOO8xxg1Ac7XKbYnf5ZoYHb/Fsj9KD6xVlu5uF32SorK42nCY
+         y7lqVyjTWMYp1ImbbPFB5ojAKK+70PYsWEEu8nJSH0l2PtWQrxaryOvPnhP+EwC4H7RX
+         XJ9VDRdvaWvuZ2JiIpEo8zgaCw8U9PFzvAz4m/BNPk3zIZpgd0k25Bhf7Aj4Wpkrph4r
+         82iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nFevrcZ/T8fCkpNvRUt5EvBMQkHssSjGQ3IfS7WtzY4=;
-        b=OjvyrSrSdKZjeLl/OXGTdcTYRR7OD1NuzAf1bFvqqfFimNz5seKowL+oEXcdodTFHF
-         fGvdk9zTQI7+u5kKo6EclP3/y/xOXS/S+QVXjee6wop/rSOHI06vfCwCYx2m97Wp5cz1
-         iOARbFAjV5r88/wIuJGKcMNPW5GDRwtLwOqJxfOkAEkg4qCYg4OZHQkX7TSiKNIGbhXL
-         PDAZnKFmBdy9wlpG7yaaUlzmLjDXMucb10qoK8XcCRKiAsTngUPlEm4ZS69zyZTwZlf2
-         7bXmx8jQK1Y7YfzoePezttEsJQW8YyGVz9vK1+jk6Qs1pQ8Hi1URzA/vFVpZDEnOTzVS
-         ensQ==
-X-Gm-Message-State: AGRZ1gIGyP5r4OE/L8t2inHIrbt+Ysku5g9o4vjBy8M8JaQpiYHQJLt+
-        6Y53hdTwHl/zwestbeX8T56zFFfz
-X-Google-Smtp-Source: AJdET5f8j3lQdL/Jlqp9N++rxI5N9+/SI71kLayzHRTWhlETaQhwk0ZekCug+efIc/Oss+NkIW+4Mw==
-X-Received: by 2002:aca:eb4b:: with SMTP id j72-v6mr7975171oih.306.1541917410315;
-        Sat, 10 Nov 2018 22:23:30 -0800 (PST)
+        bh=mtfZyQCvGTLrItylsV4YbZAfxEuQI5GK14yAcs/anmQ=;
+        b=k9nN8UOpaZGAFTq0Wr9Vg3PvWdskde0DgGMmVasJsZXTIovwrcSWqopyqmOwHL0kXQ
+         YRNJuBKXGv+gPdGv+bz4ku4E4UX02dPA4gBb8bvfdBQ4u5f8irS7lImr9JFojjXDrMC3
+         DZjQ4najfKYFK6A5KcC8XEgQ2I2xwRucKRVu2Nov/O8glLu8VaJxtYtnhEg7a2sM/Pz6
+         0PwNfEMjgzBvhgEQzB5prgQGFd+fHTRVZpbWmtGvOopB9EhQcsd5CZfc6T3lG4sIZ1Zz
+         6g+btoew97voqCKi/MMIKljGIkXshbKYcPUGLDK5vfPWQQ2xFfYfoIcwHTWfL1EkRIb6
+         mAow==
+X-Gm-Message-State: AGRZ1gLQR5iFAOIRlGBcXqz2NRL7kWN5ZYkdE58DYRXUmmEWNKZXfiIG
+        4l3I9MTeoGt56Bbf8RBcVm/n2stW
+X-Google-Smtp-Source: AJdET5d+8Lgtxg+vk3ZOw6EZlPE0gPTNH4/pgNlncX+Cs9ZLu6gUTWEz6PhdWKpidNoR4zDQOpDL4w==
+X-Received: by 2002:aca:3807:: with SMTP id f7-v6mr2068132oia.46.1541917411699;
+        Sat, 10 Nov 2018 22:23:31 -0800 (PST)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id f34sm1286855otb.25.2018.11.10.22.23.29
+        by smtp.gmail.com with ESMTPSA id f34sm1286855otb.25.2018.11.10.22.23.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 10 Nov 2018 22:23:29 -0800 (PST)
+        Sat, 10 Nov 2018 22:23:31 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     larsxschneider@gmail.com, sandals@crustytoothpaste.net,
         peff@peff.net, me@ttaylorr.com, jrnieder@gmail.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 09/10] fast-export: add a --show-original-ids option to show original names
-Date:   Sat, 10 Nov 2018 22:23:11 -0800
-Message-Id: <20181111062312.16342-10-newren@gmail.com>
+Subject: [PATCH 10/10] fast-export: add --always-show-modify-after-rename
+Date:   Sat, 10 Nov 2018 22:23:12 -0800
+Message-Id: <20181111062312.16342-11-newren@gmail.com>
 X-Mailer: git-send-email 2.19.1.866.g82735bcbde
 In-Reply-To: <20181111062312.16342-1-newren@gmail.com>
 References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
@@ -68,205 +68,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Knowing the original names (hashes) of commits, blobs, and tags can
-sometimes enable post-filtering that would otherwise be difficult or
-impossible.  In particular, the desire to rewrite commit messages which
-refer to other prior commits (on top of whatever other filtering is
-being done) is very difficult without knowing the original names of each
-commit.
+fast-export output is traditionally used as an input to a fast-import
+program, but it is also useful to help gather statistics about the
+history of a repository (particularly when --no-data is also passed).
+For example, two of the types of information we may want to collect
+could include:
+  1) general information about renames that have occurred
+  2) what the biggest objects in a repository are and what names
+     they appear under.
 
-This commit teaches a new --show-original-ids option to fast-export
-which will make it add a 'originally <hash>' line to blob, commits, and
-tags.  It also teaches fast-import to parse (and ignore) such lines.
+The first bit of information can be gathered by just passing -M to
+fast-export.  The second piece of information can partially be gotten
+from running
+    git cat-file --batch-check --batch-all-objects
+However, that only shows what the biggest objects in the repository are
+and their sizes, not what names those objects appear as or what commits
+they were introduced in.  We can get that information from fast-export,
+but when we only see
+    R oldname newname
+instead of
+    R oldname newname
+    M 100644 $SHA1 newname
+then it makes the job more difficult.  Add an option which allows us to
+force the latter output even when commits have exact renames of files.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-fast-export.txt |  7 +++++++
- builtin/fast-export.c             | 20 +++++++++++++++-----
- fast-import.c                     | 17 +++++++++++++++++
- t/t9350-fast-export.sh            | 17 +++++++++++++++++
- 4 files changed, 56 insertions(+), 5 deletions(-)
+ Documentation/git-fast-export.txt | 11 ++++++++++
+ builtin/fast-export.c             |  7 +++++-
+ t/t9350-fast-export.sh            | 36 +++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 2916096bdd..4e40f0b99a 100644
+index 4e40f0b99a..946a5aee1f 100644
 --- a/Documentation/git-fast-export.txt
 +++ b/Documentation/git-fast-export.txt
-@@ -121,6 +121,13 @@ marks the same across runs.
- 	used by a repository which already contains the necessary
- 	parent commits.
+@@ -128,6 +128,17 @@ marks the same across runs.
+ 	for intermediary filters (e.g. for rewriting commit messages
+ 	which refer to older commits, or for stripping blobs by id).
  
-+--show-original-ids::
-+	Add an extra directive to the output for commits and blobs,
-+	`originally <SHA1SUM>`.  While such directives will likely be
-+	ignored by importers such as git-fast-import, it may be useful
-+	for intermediary filters (e.g. for rewriting commit messages
-+	which refer to older commits, or for stripping blobs by id).
++--always-show-modify-after-rename::
++	When a rename is detected, fast-export normally issues both a
++	'R' (rename) and a 'M' (modify) directive.  However, if the
++	contents of the old and new filename match exactly, it will
++	only issue the rename directive.  Use this flag to have it
++	always issue the modify directive after the rename, which may
++	be useful for tools which are using the fast-export stream as
++	a mechanism for gathering statistics about a repository.  Note
++	that this option only has effect when rename detection is
++	active (see the -M option).
 +
  --refspec::
  	Apply the specified refspec to each ref exported. Multiple of them can
  	be specified.
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index ea9c5b1c00..cc01dcc90c 100644
+index cc01dcc90c..db606d1fd0 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
 @@ -38,6 +38,7 @@ static int use_done_feature;
  static int no_data;
  static int full_tree;
  static int reference_excluded_commits;
-+static int show_original_ids;
++static int always_show_modify_after_rename;
+ static int show_original_ids;
  static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
  static struct string_list tag_refs = STRING_LIST_INIT_NODUP;
- static struct refspec refspecs = REFSPEC_INIT_FETCH;
-@@ -271,7 +272,10 @@ static void export_blob(const struct object_id *oid)
+@@ -407,7 +408,8 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 				putchar('\n');
  
- 	mark_next_object(object);
- 
--	printf("blob\nmark :%"PRIu32"\ndata %lu\n", last_idnum, size);
-+	printf("blob\nmark :%"PRIu32"\n", last_idnum);
-+	if (show_original_ids)
-+		printf("originally %s\n", oid_to_hex(oid));
-+	printf("data %lu\n", size);
- 	if (size && fwrite(buf, size, 1, stdout) != 1)
- 		die_errno("could not write blob '%s'", oid_to_hex(oid));
- 	printf("\n");
-@@ -628,8 +632,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 		reencoded = reencode_string(message, "UTF-8", encoding);
- 	if (!commit->parents)
- 		printf("reset %s\n", refname);
--	printf("commit %s\nmark :%"PRIu32"\n%.*s\n%.*s\ndata %u\n%s",
--	       refname, last_idnum,
-+	printf("commit %s\nmark :%"PRIu32"\n", refname, last_idnum);
-+	if (show_original_ids)
-+		printf("originally %s\n", oid_to_hex(&commit->object.oid));
-+	printf("%.*s\n%.*s\ndata %u\n%s",
- 	       (int)(author_end - author), author,
- 	       (int)(committer_end - committer), committer,
- 	       (unsigned)(reencoded
-@@ -807,8 +813,10 @@ static void handle_tag(const char *name, struct tag *tag)
- 
- 	if (starts_with(name, "refs/tags/"))
- 		name += 10;
--	printf("tag %s\nfrom :%d\n%.*s%sdata %d\n%.*s\n",
--	       name, tagged_mark,
-+	printf("tag %s\nfrom :%d\n", name, tagged_mark);
-+	if (show_original_ids)
-+		printf("originally %s\n", oid_to_hex(&tag->object.oid));
-+	printf("%.*s%sdata %d\n%.*s\n",
- 	       (int)(tagger_end - tagger), tagger,
- 	       tagger == tagger_end ? "" : "\n",
- 	       (int)message_size, (int)message_size, message ? message : "");
-@@ -1089,6 +1097,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "anonymize", &anonymize, N_("anonymize output")),
- 		OPT_BOOL(0, "reference-excluded-parents",
+ 				if (oideq(&ospec->oid, &spec->oid) &&
+-				    ospec->mode == spec->mode)
++				    ospec->mode == spec->mode &&
++				    !always_show_modify_after_rename)
+ 					break;
+ 			}
+ 			/* fallthrough */
+@@ -1099,6 +1101,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
  			 &reference_excluded_commits, N_("Reference parents which are not in fast-export stream by sha1sum")),
-+		OPT_BOOL(0, "show-original-ids", &show_original_ids,
-+			    N_("Show original sha1sums of blobs/commits")),
+ 		OPT_BOOL(0, "show-original-ids", &show_original_ids,
+ 			    N_("Show original sha1sums of blobs/commits")),
++		OPT_BOOL(0, "always-show-modify-after-rename",
++			    &always_show_modify_after_rename,
++			 N_("Always provide 'M' directive after 'R'")),
  
  		OPT_END()
  	};
-diff --git a/fast-import.c b/fast-import.c
-index 95600c78e0..232b6a8b8d 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -14,11 +14,13 @@ Format of STDIN stream:
- 
-   new_blob ::= 'blob' lf
-     mark?
-+    originally?
-     file_content;
-   file_content ::= data;
- 
-   new_commit ::= 'commit' sp ref_str lf
-     mark?
-+    originally?
-     ('author' (sp name)? sp '<' email '>' sp when lf)?
-     'committer' (sp name)? sp '<' email '>' sp when lf
-     commit_msg
-@@ -49,6 +51,7 @@ Format of STDIN stream:
- 
-   new_tag ::= 'tag' sp tag_str lf
-     'from' sp commit-ish lf
-+    originally?
-     ('tagger' (sp name)? sp '<' email '>' sp when lf)?
-     tag_msg;
-   tag_msg ::= data;
-@@ -73,6 +76,8 @@ Format of STDIN stream:
-   data ::= (delimited_data | exact_data)
-     lf?;
- 
-+  originally ::= 'originally' sp not_lf+ lf
-+
-     # note: delim may be any string but must not contain lf.
-     # data_line may contain any data but must not be exactly
-     # delim.
-@@ -1968,6 +1973,13 @@ static void parse_mark(void)
- 		next_mark = 0;
- }
- 
-+static void parse_original_identifier(void)
-+{
-+	const char *v;
-+	if (skip_prefix(command_buf.buf, "originally ", &v))
-+		read_next_command();
-+}
-+
- static int parse_data(struct strbuf *sb, uintmax_t limit, uintmax_t *len_res)
- {
- 	const char *data;
-@@ -2110,6 +2122,7 @@ static void parse_new_blob(void)
- {
- 	read_next_command();
- 	parse_mark();
-+	parse_original_identifier();
- 	parse_and_store_blob(&last_blob, NULL, next_mark);
- }
- 
-@@ -2733,6 +2746,7 @@ static void parse_new_commit(const char *arg)
- 
- 	read_next_command();
- 	parse_mark();
-+	parse_original_identifier();
- 	if (skip_prefix(command_buf.buf, "author ", &v)) {
- 		author = parse_ident(v);
- 		read_next_command();
-@@ -2865,6 +2879,9 @@ static void parse_new_tag(const char *arg)
- 		die("Invalid ref name or SHA1 expression: %s", from);
- 	read_next_command();
- 
-+	/* originally ... */
-+	parse_original_identifier();
-+
- 	/* tagger ... */
- 	if (skip_prefix(command_buf.buf, "tagger ", &v)) {
- 		tagger = parse_ident(v);
 diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index c2f40d6a40..5ad6669910 100755
+index 5ad6669910..d0c30672ac 100755
 --- a/t/t9350-fast-export.sh
 +++ b/t/t9350-fast-export.sh
-@@ -77,6 +77,23 @@ test_expect_success 'fast-export --reference-excluded-parents master~2..master'
- 		 test $MASTER = $(git rev-parse --verify refs/heads/rewrite))
+@@ -638,4 +638,40 @@ test_expect_success 'merge commit gets exported with --import-marks' '
+ 	)
  '
  
-+test_expect_success 'fast-export --show-original-ids' '
++test_expect_success 'rename detection and --always-show-modify-after-rename' '
++	test_create_repo renames &&
++	(
++		cd renames &&
++		test_seq 0  9  >single_digit &&
++		test_seq 10 98 >double_digit &&
++		git add . &&
++		git commit -m initial &&
 +
-+	git fast-export --show-original-ids master >output &&
-+	grep ^originally output| sed -e s/^originally.// | sort >actual &&
-+	git rev-list --objects master muss >objects-and-names &&
-+	awk "{print \$1}" objects-and-names | sort >commits-trees-blobs &&
-+	comm -23 actual commits-trees-blobs >unfound &&
-+	test_must_be_empty unfound
++		echo 99 >>double_digit &&
++		git mv single_digit single-digit &&
++		git mv double_digit double-digit &&
++		git add double-digit &&
++		git commit -m renames &&
++
++		# First, check normal fast-export -M output
++		git fast-export -M --no-data master >out &&
++
++		grep double-digit out >out2 &&
++		test_line_count = 2 out2 &&
++
++		grep single-digit out >out2 &&
++		test_line_count = 1 out2 &&
++
++		# Now, test with --always-show-modify-after-rename; should
++		# have an extra "M" directive for "single-digit".
++		git fast-export -M --no-data --always-show-modify-after-rename master >out &&
++
++		grep double-digit out >out2 &&
++		test_line_count = 2 out2 &&
++
++		grep single-digit out >out2 &&
++		test_line_count = 2 out2
++	)
 +'
 +
-+test_expect_success 'fast-export --show-original-ids | git fast-import' '
-+
-+	git fast-export --show-original-ids master muss | git fast-import --quiet &&
-+	test $MASTER = $(git rev-parse --verify refs/heads/master) &&
-+	test $MUSS = $(git rev-parse --verify refs/tags/muss)
-+'
-+
- test_expect_success 'iso-8859-1' '
- 
- 	git config i18n.commitencoding ISO8859-1 &&
+ test_done
 -- 
 2.19.1.866.g82735bcbde
 
