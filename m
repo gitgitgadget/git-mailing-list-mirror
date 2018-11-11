@@ -2,108 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88B6E1F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 10:17:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 860B11F87F
+	for <e@80x24.org>; Sun, 11 Nov 2018 10:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727615AbeKKUFH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Nov 2018 15:05:07 -0500
-Received: from mout.web.de ([212.227.15.3]:42567 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727427AbeKKUFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Nov 2018 15:05:07 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2MZY-1fWIdj11S0-00s2kn; Sun, 11
- Nov 2018 11:16:51 +0100
-Date:   Sun, 11 Nov 2018 11:16:50 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] Upcast size_t variables to uintmax_t when printing
-Message-ID: <20181111101650.GA4471@tor.lan>
-References: <20181111070504.12858-1-tboegi@web.de>
- <20181111072835.GL30850@sigill.intra.peff.net>
+        id S1727427AbeKKUpx convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 11 Nov 2018 15:45:53 -0500
+Received: from locusts.copyleft.no ([188.94.218.116]:50248 "EHLO
+        mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727344AbeKKUpx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Nov 2018 15:45:53 -0500
+X-Greylist: delayed 974 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Nov 2018 15:45:52 EST
+Received: from mail-qk1-f177.google.com ([209.85.222.177])
+        by mail.mailgateway.no with esmtpsa (TLSv1:AES128-SHA:128)
+        (Exim 4.72 (FreeBSD))
+        (envelope-from <johan@herland.net>)
+        id 1gLnBF-0009To-FY
+        for git@vger.kernel.org; Sun, 11 Nov 2018 11:41:25 +0100
+Received: by mail-qk1-f177.google.com with SMTP id d135so8891587qkc.12
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 02:41:25 -0800 (PST)
+X-Gm-Message-State: AGRZ1gK86RqwKKtI9XbJONXpsTC5e6+3M2iWw8xKAeFxQb+UmjCvAaiQ
+        Bq7pQsn8hO4Vr2P47mPMrsWKLXXKr1NAwQoMpvI=
+X-Google-Smtp-Source: AJdET5fmaWBpWNeIx+5BYAMJljqbTRHg1/I86CJlbujesLIL5DXBTcLDOP1tufTOOnn1zxsetm8RRZnOfCHB4lVdosw=
+X-Received: by 2002:a37:8d06:: with SMTP id p6-v6mr14243157qkd.4.1541932879440;
+ Sun, 11 Nov 2018 02:41:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181111072835.GL30850@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:5gP2qyKjJPEA+NML7e4QXKtQcQA2nQuXT4OSPK6HB2rASUgrWwK
- 7pBlG7qNObLMj+hC4pfRdTjdezedIQsIXzce8YlEgr0GG3I+wB0Om51B88NFRUDNsWWaDMp
- EqXmDBihFUINIzNkT9t4yiUUA9eFFAWR7XG4hyq0R2uf2ADwiZCEKSE5XI+4pJF/eLo4Zof
- GwyAlnFicHbOSziGQgqyA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zwNj9ANCVKQ=:vdbzzhT1t9qJFWJccYwjV8
- D6Mntf58bPFXBeE69udBWezsazskGtMgL1Lh+/luNmebQZpdJ3fNGOXSud7aF7ZVUAlxhWrbQ
- QGYTkiapfh0AWZ7sRZtU/iBX9kWnwJ58J5K2dJ8LJxpYCYfwPCV7iqgoL5j/3835rZPFkzXCl
- A34LBSQEA3PPDnqdvDEdApK4GHCTZ5ZuN29oEzNYcRf3XladsSXE13FMTzKNRLtq8W+hTIeHT
- mJi4B3b8B6+byCqx4weT8zvihmCX4lx1LeUy/xyA8KokdkXds82FOGiGMg9cdpkFPrg7d3qn9
- UPckinU0iNkmYlJi2maSJa1goRf5oyQf8B68f1XxkO6cCY6/vvqKpJHn53klRRjaLNvmTS+rd
- 8ORHtSveLP9WZFe0vorwgXoFAEdAEyne2o88TiPML334ezwUTUpum9SvpCkgCfdSrVjb+uURz
- ftdCamSCZwkrawn6hM7zFa5T3fuRcK4pAelmI8EFjU/u72RDr9p6G1G/CpHnlgvrfZ7rRoHjC
- fNLkFjZbFHzKxmIazdm2uok5uda/STpaAJmc2EZue6wet5bhGgUkgqFUakczBS976tbZC1pHA
- Ymzlq8k41COJxEGwt+9LJw8Of32AvalMEgkCAEjUPF5PQgMz1iPgUPgfaN+m9UpzzSXGdIKql
- XO6iVBl3W2CI3E+rOXUt0IB93U239yyDH6msV9HPiDIMkrQ0F0WfoLuj2Dk7OxH9ZvH0tR/zb
- zgRD1CAD7lpWSoMH1reB7F4rCZMA2WW4W6um/Ak7wTmUP8aI6jNNp9s17xxyx9U+vDlt4m7MX
- npSrFYwKSRjNNCFEuMgbPr2KPVQomvVLziu7Gf9fbaGYeJrsC4qYc323SNU304MAA08SunOjl
- 1VqGCgPxBR0/TdZ7Lw+58lmbgM/5+/qKqdLTYF4PM=
+References: <20181111094933.27325-1-carenas@gmail.com>
+In-Reply-To: <20181111094933.27325-1-carenas@gmail.com>
+From:   Johan Herland <johan@herland.net>
+Date:   Sun, 11 Nov 2018 11:41:02 +0100
+X-Gmail-Original-Message-ID: <CALKQrgdCNxXSOG-KRUeNaw2q=hOGh9+-zM5ATHwmDEmOC7UAcw@mail.gmail.com>
+Message-ID: <CALKQrgdCNxXSOG-KRUeNaw2q=hOGh9+-zM5ATHwmDEmOC7UAcw@mail.gmail.com>
+Subject: Re: [PATCH] builtin/notes: remove unnecessary free
+To:     carenas@gmail.com
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 11, 2018 at 02:28:35AM -0500, Jeff King wrote:
-> On Sun, Nov 11, 2018 at 08:05:04AM +0100, tboegi@web.de wrote:
-> 
-> > From: Torsten B�gershausen <tboegi@web.de>
-> > 
-> > When printing variables which contain a size, today "unsigned long"
-> > is used at many places.
-> > In order to be able to change the type from "unsigned long" into size_t
-> > some day in the future, we need to have a way to print 64 bit variables
-> > on a system that has "unsigned long" defined to be 32 bit, like Win64.
-> > 
-> > Upcast all those variables into uintmax_t before they are printed.
-> > This is to prepare for a bigger change, when "unsigned long"
-> > will be converted into size_t for variables which may be > 4Gib.
-> 
-> I like the overall direction. I feel a little funny doing this step now,
-> and not as part of a series to convert individual variables. But I
-> cannot offhand think of any reason that it would behave badly even if
-> the other part does not materialize
-> 
+On Sun, Nov 11, 2018 at 10:49 AM Carlo Marcelo Arenas Belón
+<carenas@gmail.com> wrote:
+>
+> 511726e4b1 ("builtin/notes: fix premature failure when trying to add
+> the empty blob", 2014-11-09) removed the check for !len but left a
+> call to free the buffer that will be otherwise NULL
+>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 
-Hej all,
-There may be some background information missing:
-- I did a 2-patch series based on this commit in pu:
-    commit 37c59c3e8fac8bae7ccc5baa148b0e9bae0c8d65
-    Author: Junio C Hamano <gitster@pobox.com>
-    Date:   Sat Oct 27 16:42:25 2018 +0900
+Signed-off-by: Johan Herland <johan@herland.net>
 
-        treewide: apply cocci patch
+> ---
+>  builtin/notes.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index c05cd004ab..68062f7475 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -255,10 +255,8 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+>
+>         if (get_oid(arg, &object))
+>                 die(_("failed to resolve '%s' as a valid ref."), arg);
+> -       if (!(buf = read_object_file(&object, &type, &len))) {
+> -               free(buf);
+> +       if (!(buf = read_object_file(&object, &type, &len)))
+>                 die(_("failed to read object '%s'."), arg);
+> -       }
+>         if (type != OBJ_BLOB) {
+>                 free(buf);
+>                 die(_("cannot read note data from non-blob object '%s'."), arg);
+> --
+> 2.19.1.856.g8858448bb
+>
 
-(that patch was never send out, see below)
-....
-The week later, I tried to apply it on pu, but that was nearly hopeless,
-as too much things had changed on pu.
-I had the chance to compile & test it, but decided to take "part2" before
-"part1", so to say:
-Fix all the printing, and wait for the master branch to settle,
-and then do the "unsigned long" -> size_t conversion.
-That will probably happen after 2.20.
 
-At the moment, the big "unsigned long" -> size_t conversion is dependend on
- - mk/use-size-t-in-zlib
- - sb/more-repo-in-api,
- - jk/xdiff-interface'
- (and probably more stuff from Duy and others)
-
-How should we handle the big makeover ?
-
-> -Peff
-
-And thanks for reading my stuff
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
