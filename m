@@ -2,72 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3D581F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 09:26:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1322A1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 09:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729271AbeKLTS2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 14:18:28 -0500
-Received: from fallback21.m.smailru.net ([94.100.176.131]:57240 "EHLO
-        fallback21.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728396AbeKLTS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 14:18:28 -0500
-X-Greylist: delayed 2334 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Nov 2018 14:18:26 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=0U2vyNs1M7bgUk7/NGGcsZG6MymntEo4CciKuw/Mq7g=;
-        b=tTcwud369q97/VMsfkhQv1YiqYUrJouRYY0qNpPJG5Ub4ykusLbptlAXaaDGL/62Be2KlSPE4luX1GVTjWBs/W0VV+cYjjrJW0Q5E/JhT9LkwWbyNULF6yXoMV/U6Jfc4vyS+tssHUJBuQYWjDJKD2kTRUT9fj0ZZDAkXG/9nVk=;
-Received: from [10.161.25.36] (port=41470 helo=smtp59.i.mail.ru)
-        by fallback21.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1gM7sN-0001Zp-9Y
-        for git@vger.kernel.org; Mon, 12 Nov 2018 11:47:20 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=0U2vyNs1M7bgUk7/NGGcsZG6MymntEo4CciKuw/Mq7g=;
-        b=tTcwud369q97/VMsfkhQv1YiqYUrJouRYY0qNpPJG5Ub4ykusLbptlAXaaDGL/62Be2KlSPE4luX1GVTjWBs/W0VV+cYjjrJW0Q5E/JhT9LkwWbyNULF6yXoMV/U6Jfc4vyS+tssHUJBuQYWjDJKD2kTRUT9fj0ZZDAkXG/9nVk=;
-Received: by smtp59.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1gM7sL-0005H0-7h; Mon, 12 Nov 2018 11:47:17 +0300
-Date:   Mon, 12 Nov 2018 11:47:13 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Martin Delille <martin.delille@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Add issue management within git
-Message-ID: <20181112084713.g344kksb2bf33dzb@tigra>
-References: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
+        id S1728103AbeKLTmP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 14:42:15 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53136 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725873AbeKLTmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 14:42:15 -0500
+Received: by mail-wm1-f65.google.com with SMTP id r11-v6so7764186wmb.2
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 01:49:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=HNDRrvpc65yLo/25bi/d/VIznzozZpDATBMzqabzBDA=;
+        b=WmHBH4wDE5SnUVt5/EjnGCdqJ5oSdHdqBR1bQcX/e1m5ZX6kEWZK6p5wPutim1cZsj
+         5lvrfnKb5y3qdbIC1kwQhb0XCs4J/JpPph8o/3gOdieLMmMWdRKbpzXTuHc478slMO4d
+         Vxd+A1EtQt0864wcOTr1q1srXI9yBYfqbeAZ/Zm9x0z5tmxdbjnHmsld7DuDXMU12FmT
+         DrFiZoqd6J77N6HjBoZm4If0nfNjGV0JSilaOKSTvTHMX+UNrgJAeuwD9Y7OdH41VY9r
+         kCFnHZ7Qk8Xqeto3qqADTM6of2gB4+ri0rwyBINceOoQPOQVUldVpmQq8IC3s5w8NsnB
+         SgEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=HNDRrvpc65yLo/25bi/d/VIznzozZpDATBMzqabzBDA=;
+        b=eoytDwWuQ0qf0rLMCCBm4Gn6aLfp+YETnstsIBrfMDlj73gW7HoqEdus5WSSkWjuY5
+         jR6hVqpI1zmYB/qTbSkDsBa8qYu+V3gnTxWzDTsA/KUKFTj/aULpzBaHyK3xmaxXasgu
+         tkw1r5TlAns/uiQGBXadOvsLYbk0BfQVwPQJ2Hkdqb0UvQDjw21vnK9MoFdhy7zT5NX6
+         IAVcitH/Pg2frtnrQGW54cNoH0KgieE6/E7dLyx8u8dFs7Ri4C9SoXojKXRyZtLuaJmS
+         o99DRm6AmjfV022s0K709BEw1M0LurJvJ/JIK3UNKuuIXluyy8llHfU2jg7pmlEqBobz
+         oSWw==
+X-Gm-Message-State: AGRZ1gL1O8dY+eK/1RoakXRnV+jxQq6Z1spswX/fuY4LwGSVc87l+nZx
+        6bctJ69Jip9fTUnqCRooa1c=
+X-Google-Smtp-Source: AJdET5dfTTSRiWPK5X6d54fgB7ybb6UF8kzzt8k1NfAmQduqoSZ73M2jC982Icwee2hjtv6d9DEipg==
+X-Received: by 2002:a7b:c38f:: with SMTP id s15-v6mr7270300wmj.145.1542016187046;
+        Mon, 12 Nov 2018 01:49:47 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id r1-v6sm14914174wrt.59.2018.11.12.01.49.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Nov 2018 01:49:46 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Per Lundberg <per.lundberg@hibox.tv>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
+        Joshua Jensen <jjensen@workspacewhiz.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        "Holger Hellmuth \(IKS\)" <hellmuth@ira.uka.de>,
+        Kevin Ballard <kevin@sb.org>
+Subject: Re: [RFC PATCH] Introduce "precious" file concept
+References: <875zxa6xzp.fsf@evledraar.gmail.com>
+        <20181111095254.30473-1-pclouds@gmail.com>
+        <871s7r4wuv.fsf@evledraar.gmail.com>
+        <CACsJy8CYpuc7-CZhk7kQQVQFxOfLFZu4TVpG=b0a7j8P1J394Q@mail.gmail.com>
+        <591ab1f7-ef39-13e5-83b8-76fe372ecc2c@hibox.tv>
+        <1205132135.1189562.1542013731020.JavaMail.zimbra@matthieu-moy.fr>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <1205132135.1189562.1542013731020.JavaMail.zimbra@matthieu-moy.fr>
+Date:   Mon, 12 Nov 2018 10:49:44 +0100
+Message-ID: <87o9au39s7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
-X-77F55803: JXxPhqsJyJxaeFBL0qwpQZiHhPxsSuMf4pb4u6wtqbyL7fNqRXFqpqzYVQZlvxXSKAKAl54weYE=
-X-7FA49CB5: 0D63561A33F958A565D167DFC16C5981A1BEAA71F1ED4DD39D0985C91518193A8941B15DA834481FA18204E546F3947C2FFDA4F57982C5F4F6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8BF1175FABE1C0F9B6A471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C2249D827CA74CCEABFF33AA81AA40904B5D9CF19DD082D7633A0E7DDDDC251EA7DABD81D268191BDAD3D78DA827A17800CE767C209D01CC1E34BCD04E86FAF290E2D40A5AABA2AD3711975ECD9A6C639B01B78DA827A17800CE72AD3B10CAD5CF02BDFCF47C548E65BD175ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC85D9B7C4F32B44FF57285124B2A10EEC6C00306258E7E6ABB4E4A6367B16DE6309
-X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA43E79D5E45FCD6B6E8BEDF36A45716AA6C87DFF528253291DFD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
-X-77F55803: 6Ns2ePE+8+B/n1JIXLWE1ycf199igA/c0KIGMNloeeRlZc3rv2Jjiq4hRz6gAPyuhrVpcgAMT50=
-X-7FA49CB5: 0D63561A33F958A5D71E091E28E17E8396C3293C970424B14B409E133AB2B0928941B15DA834481FA18204E546F3947C062BEEFFB5F8EA3EF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B2EE5AD8F952D28FBA471835C12D1D977C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F05F538519369F3743B503F486389A921A5CC5B56E945C8DA
-X-Mailru-Sender: A5480F10D64C9005C18DAE012115204D56427842528889B16565CDEBBF62638A38FB88F2046B4192FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 11, 2018 at 11:50:00PM +0100, Martin Delille wrote:
 
-> This would be awesome to handle issue directly with git: Having an
-> offline version of the issues synced to the gitlab/github issues.  A
-> lot of work is done on the issues and it is lost when migrating from
-> one service to the other.  Beside we don’t always have a good internet
-> connection.  There is already a kind of integration between commit
-> message fixing issue automatically when merged in the master branch
-> (with “fix #143’).
+On Mon, Nov 12 2018, Matthieu Moy wrote:
 
-[1] is the last discussion (of many) happened on this list on this
-topic. Please start there. It also contains pointers to past discussions
-and past work done on that front.
+> "Per Lundberg" <per.lundberg@hibox.tv> wrote:
+>
+>> On 11/11/18 5:41 PM, Duy Nguyen wrote:
+>> > On Sun, Nov 11, 2018 at 1:33 PM Ævar Arnfjörð Bjarmason
+>> > <avarab@gmail.com> wrote:
+>>
+>> >> That will lose no data, and in the very rare cases where a checkout of
+>> >> tracked files would overwrite an ignored pattern, we can just error out
+>> >> (as we do with the "Ok to overwrite" branch removed) and tell the user
+>> >> to delete the files to proceed.
+>> > There's also the other side of the coin. If this refuse to overwrite
+>> > triggers too often, it can become an annoyance.
+>
+> I may have missed some cases, but to me the cases when checkout may try
+> to overwrite an ignored file are essentially:
+>
+> * Someone "git add"ed a file meant to be ignored by mistake (e.g.
+>   "git add -f *.o").
+>
+> * A file that was meant to be kept private (e.g. config.mak.dev) ends
+>   up being tracked. This may happen when we find a way to make per-developer
+>   settings the same for everyone.
 
-1. https://public-inbox.org/git/CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com/
+Yes, the cases under discussion here are all cases where a tracked file
+clobbers a file matching a pattern in in .gitignore.
 
+What I'd add to your list is:
+
+* Some projects (I've seen this in the wild) add e.g. *.mp3 or whatever
+  else usually doesn't belong in the repo as a "soft ignore". This is
+  something we've never recommended, but have implicitly supported since
+  the only caveats are a) you need a one-off "git add -f" and then
+  they're tracked b) them being missing from "status" before being
+  tracked c) the issue under discussion here.
+
+* Cases where e.g. filename changes to a directory or globs because of
+  that make this more complex.
+
+> I both cases I'd want at least to be notified that something is going on,
+> and in the second I'd probably want to keep my local file around.
+>> If we feel thrashable is stretching it too far (which I don't think it
+>> is), we could add a "core.ignore_files_are_trashable" setting that
+>> brings back the old semantics, for those who have a strong feeling about it.
+>
+> May I remind an idea I sugested in an old thread: add an intermediate level
+> where ignored files to be overwritten are renamed (eg. foo -> foo~ like Emacs'
+> backup files):
+>
+> https://public-inbox.org/git/vpqd3t9656k.fsf@bauges.imag.fr/
+>
+> One advantage of the "rename" behavior is that it's safer that the current,
+> but still not very disturbing for people who like the current behavior. This
+> makes it a good candidate for a default behavior.
+>
+> This could come in complement with this thread's "precious" concept:
+>
+> * If you know what you're doing and know that such or such file is precious,
+>   mark it as such and Git will never overwrite it.
+>
+> * If you don't know about precious files, just keep the default setting and
+>   the worse that can happen is to get your file overwritten with a bakup
+>   of the old version kept around.
+>
+> This would probably play better with a notion of "precious" files than with
+> a notion of "trashable" files.
+
+I used to think this foo -> foo~ approach made the most sense (and said
+as much in
+https://public-inbox.org/git/871s8qdzph.fsf@evledraar.gmail.com/) but I
+think it's probably best not to do it and just error out, because:
+
+ * We'd still need to handle the cases where "tests" the file collides
+   with "tests" the directory. Then where do we move the colliding file?
+   ~/.git/lost+found/* ? We could handle the subdir case with another
+   special-case though...
+
+ * I think such silent action will just leave users more confused, and
+   in many cases (e.g. a merge) whatever message we print out will be
+   missed in a deluge of other messaging, and they'll probably miss it.
+
+   I'd like to avoid a case where a bunch of *~ files get committed
+   because the user's workflow is (and some beginner git users do this):
+
+       git pull && git add . && git commit && git push
+
+   As the "pull" would now invoke a merge that would do this rename.
+
+ * If I have the "foo" file open in my editor (a plausible way to run
+   into this) I switch to another terminal, do the merge, miss the
+   message, then re-save "foo". Now I have both "foo" and "foo~"
+   on-disk. Another case where we should just refuse until the user
+   resolves the situation to avoid the confusion.
