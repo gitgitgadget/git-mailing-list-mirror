@@ -2,89 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC0CF1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 13:02:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EC7A1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 13:05:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729480AbeKLWzg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 17:55:36 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55453 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729173AbeKLWzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 17:55:36 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 47B651069BF;
-        Mon, 12 Nov 2018 08:02:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=a/UjhSjO8Vr+
-        OCiFsJuMQFFaD3c=; b=oifMkjLnDfhNAeaq7BlVDX1Bt7lVd/D0/mvH9BqUJFYP
-        ihcU0LD9CELJXcRnJyBqaylqlLhT03nQZZJn/ObGj2zUCYYSQlqQUDv9rIqSH6Eh
-        0CfN9HSdNhfe4c4LMF2ycE0nU6jFMsKiVcdvtXtYVj3bzVmXQnBKq+icFWeH/cQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dZGxR1
-        YLc/ADQJhZ3UqEwX9DZko2p4c5qZc59/aX/3Ya77jZ7vyklXcMLOYdtfCQpBznbD
-        cUjewiOcXUUQ2I7P2LCnA308RvwQJoGsZ605LpUOnh4NcfGI+nvEbh2fp9BLtVkF
-        Wqz0JbeKpQbHgaTbbk0iVa0i9HGWL+3o/7Z3c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DF861069BD;
-        Mon, 12 Nov 2018 08:02:23 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96A541069BC;
-        Mon, 12 Nov 2018 08:02:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Matthieu Moy <git@matthieu-moy.fr>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        "Holger Hellmuth \(IKS\)" <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-References: <875zxa6xzp.fsf@evledraar.gmail.com>
-        <20181111095254.30473-1-pclouds@gmail.com>
-        <871s7r4wuv.fsf@evledraar.gmail.com>
-        <CACsJy8CYpuc7-CZhk7kQQVQFxOfLFZu4TVpG=b0a7j8P1J394Q@mail.gmail.com>
-        <591ab1f7-ef39-13e5-83b8-76fe372ecc2c@hibox.tv>
-        <1205132135.1189562.1542013731020.JavaMail.zimbra@matthieu-moy.fr>
-        <87o9au39s7.fsf@evledraar.gmail.com>
-        <xmqqk1li1thy.fsf@gitster-ct.c.googlers.com>
-        <87in1231o2.fsf@evledraar.gmail.com>
-Date:   Mon, 12 Nov 2018 22:02:21 +0900
-In-Reply-To: <87in1231o2.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 12 Nov 2018 13:45:01 +0100")
-Message-ID: <xmqqbm6u1maq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729371AbeKLW6j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 17:58:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35470 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727989AbeKLW6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 17:58:39 -0500
+Received: (qmail 25385 invoked by uid 109); 12 Nov 2018 13:05:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 13:05:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10436 invoked by uid 111); 12 Nov 2018 13:04:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 08:04:47 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 08:05:25 -0500
+Date:   Mon, 12 Nov 2018 08:05:25 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
+Message-ID: <20181112130525.GK3956@sigill.intra.peff.net>
+References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
+ <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
+ <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 31D71F04-E67B-11E8-A636-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Nov 12, 2018 at 02:03:20PM +0900, Junio C Hamano wrote:
 
->> Or only selected "*.o" (vendor supplied binary blob) kept tracked
->> while everything else is built from the source.
->> ...
-> But it also does get used for "mostly we don't want this file, but
-> sometimes we do" use-case, so that's something we need to deal with in
-> practice.
+> > +		} else if (!strcmp(name, "objectsize")) {
+> >  			v->value = oi->size;
+> >  			v->s = xstrfmt("%lu", oi->size);
+> 
+> This is not a suggestion but is a genuine question, but I wonder if
+> two years down the road somebody who meets this API for the first
+> time find the asymmetry between "objectsize" and "objectsize:disk" a
+> tad strange and suggest the former to have "objectsize:real" or some
+> synonym.  Or we can consider "objectsize" the primary thing (hence
+> needing no colon-plus-modifier to clarify what kind of size we are
+> asking) and leave these two deliberatly asymmetric.  I am leaning
+> towards the latter myself.
 
-Exactly.  "Mostly we don't want *.o as we prefer to build from the
-source, but we have only object files for some selected ones" is an
-often cited use case where it is the BCP to have *.o in .gitignore
-and use "add -f" to add the "selected" ones initially.
+I think to some degree that ship has already sailed (and is my fault!).
 
+The ulterior motive here is to eventually unify the cat-file formatter
+with the ref-filter formatter.  So for that we'll have to support
+%(objectsize) anyway.
+
+That still leaves the option of having %(objectsize:real) later and
+marking a bare %(objectsize) as a deprecated synonym. But I don't think
+there's any advantage to trying to deal with it at this stage.
+
+-Peff
