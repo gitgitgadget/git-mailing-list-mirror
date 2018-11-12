@@ -2,120 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0213E1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 09:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3D581F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 09:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728505AbeKLTOl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 14:14:41 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:50944 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726161AbeKLTOl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 14:14:41 -0500
-Received: by mail-wm1-f51.google.com with SMTP id 124-v6so7742347wmw.0
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 01:22:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=R/NOsNhkUWGph1e2BhI9hcEYmbfw109KMRX3M8a49Fk=;
-        b=GV6ABq6oU2RMsuqkGzy3t9vhoK0mVpTeWZn7+FyBobAlBoGWPpyTfgx5re8vtuIXNj
-         6UVBdPcyNkZlGE6TN40kcrCeMgvAmIS6WdnkIFDGNLlDbouGrfy4vwYzFv+jLsTxN3QE
-         iG0VR86cCz8M20dlEXPxj9+s6S9Qch1aMr0LYhWbsZEMt17MR5w0TmORfuBBuRER8113
-         aTWnyvKwWwPyVkcex+Ag1q/phHeA4sA70lgabvcjaG58jQ6YtahpPglU/pX3TnCzQPkl
-         7M+doTxhhjz7PSiE1n7P8j58jxQoY+M1WNGIizODagKep9SvJHBKT/ch0sLrQ2N4ONcg
-         hk6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=R/NOsNhkUWGph1e2BhI9hcEYmbfw109KMRX3M8a49Fk=;
-        b=JSbklC1GHm+BN8c5c+y+FR8TwHJw12iZvn+5SuJa+5YCk0LOKzP5WvLBIGovDE3/B0
-         pwE7K5TzA843ya+ciigi6FLqR7rFF6z/KmMkDPXpzf5NIJF8+IEY9k9xxkv717havwLL
-         8dXKWjGC7JTltCpQsMA9pO8bLFPv+wgHvXwUrvgcxKYGt45CFvBMU4vDC1mFFQdW21Q0
-         uhBewfKcwKAyiMHGy6vPVMppsrzoHjTnsS49gyB9aIMPO0lRGfL7xeG7i4HqNcV8g1uc
-         fcaOU5pgUwwdYwhoaesQi6jdxrJMUsvs2dObqvwj1tfntnJt25FMM7pH4EcQLDJX7EW+
-         zjSg==
-X-Gm-Message-State: AGRZ1gIYar4JiVH1aXflP5woNOnT6FIXvrjlV5sseByQLcC9hhVpch9j
-        iHCcAJql07IPvQ3BgBS7BXX6c5rq
-X-Google-Smtp-Source: AJdET5dryXzEHEy0WJeAtG2LDGB+dCpn9WTcLsj15wjttw1yN40lEQG8FziPVP4l4+LloI+GVKDL0A==
-X-Received: by 2002:a1c:4b1a:: with SMTP id y26-v6mr7209231wma.82.1542014539527;
-        Mon, 12 Nov 2018 01:22:19 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id 64-v6sm7488742wml.22.2018.11.12.01.22.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Nov 2018 01:22:18 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Khomoutov <kostix@bswap.ru>
-Cc:     yan ke <yanke131415@gmail.com>, martin.delille@gmail.com,
-        git@vger.kernel.org
+        id S1729271AbeKLTS2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 14:18:28 -0500
+Received: from fallback21.m.smailru.net ([94.100.176.131]:57240 "EHLO
+        fallback21.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728396AbeKLTS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 14:18:28 -0500
+X-Greylist: delayed 2334 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Nov 2018 14:18:26 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=0U2vyNs1M7bgUk7/NGGcsZG6MymntEo4CciKuw/Mq7g=;
+        b=tTcwud369q97/VMsfkhQv1YiqYUrJouRYY0qNpPJG5Ub4ykusLbptlAXaaDGL/62Be2KlSPE4luX1GVTjWBs/W0VV+cYjjrJW0Q5E/JhT9LkwWbyNULF6yXoMV/U6Jfc4vyS+tssHUJBuQYWjDJKD2kTRUT9fj0ZZDAkXG/9nVk=;
+Received: from [10.161.25.36] (port=41470 helo=smtp59.i.mail.ru)
+        by fallback21.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1gM7sN-0001Zp-9Y
+        for git@vger.kernel.org; Mon, 12 Nov 2018 11:47:20 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=0U2vyNs1M7bgUk7/NGGcsZG6MymntEo4CciKuw/Mq7g=;
+        b=tTcwud369q97/VMsfkhQv1YiqYUrJouRYY0qNpPJG5Ub4ykusLbptlAXaaDGL/62Be2KlSPE4luX1GVTjWBs/W0VV+cYjjrJW0Q5E/JhT9LkwWbyNULF6yXoMV/U6Jfc4vyS+tssHUJBuQYWjDJKD2kTRUT9fj0ZZDAkXG/9nVk=;
+Received: by smtp59.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1gM7sL-0005H0-7h; Mon, 12 Nov 2018 11:47:17 +0300
+Date:   Mon, 12 Nov 2018 11:47:13 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     Martin Delille <martin.delille@gmail.com>
+Cc:     git@vger.kernel.org
 Subject: Re: Add issue management within git
-References: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com> <CAJosSJ4_PXrXUxn0WfFcR90SbDL0UWRRGPpxEjVwc=3NwWP+Jg@mail.gmail.com> <20181112085335.r5mk6b3l4faloayn@tigra>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181112085335.r5mk6b3l4faloayn@tigra>
-Date:   Mon, 12 Nov 2018 10:22:17 +0100
-Message-ID: <87pnva3b1y.fsf@evledraar.gmail.com>
+Message-ID: <20181112084713.g344kksb2bf33dzb@tigra>
+References: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-77F55803: JXxPhqsJyJxaeFBL0qwpQZiHhPxsSuMf4pb4u6wtqbyL7fNqRXFqpqzYVQZlvxXSKAKAl54weYE=
+X-7FA49CB5: 0D63561A33F958A565D167DFC16C5981A1BEAA71F1ED4DD39D0985C91518193A8941B15DA834481FA18204E546F3947C2FFDA4F57982C5F4F6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8BF1175FABE1C0F9B6A471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C2249D827CA74CCEABFF33AA81AA40904B5D9CF19DD082D7633A0E7DDDDC251EA7DABD81D268191BDAD3D78DA827A17800CE767C209D01CC1E34BCD04E86FAF290E2D40A5AABA2AD3711975ECD9A6C639B01B78DA827A17800CE72AD3B10CAD5CF02BDFCF47C548E65BD175ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC85D9B7C4F32B44FF57285124B2A10EEC6C00306258E7E6ABB4E4A6367B16DE6309
+X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA43E79D5E45FCD6B6E8BEDF36A45716AA6C87DFF528253291DFD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
+X-77F55803: 6Ns2ePE+8+B/n1JIXLWE1ycf199igA/c0KIGMNloeeRlZc3rv2Jjiq4hRz6gAPyuhrVpcgAMT50=
+X-7FA49CB5: 0D63561A33F958A5D71E091E28E17E8396C3293C970424B14B409E133AB2B0928941B15DA834481FA18204E546F3947C062BEEFFB5F8EA3EF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B2EE5AD8F952D28FBA471835C12D1D977C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F05F538519369F3743B503F486389A921A5CC5B56E945C8DA
+X-Mailru-Sender: A5480F10D64C9005C18DAE012115204D56427842528889B16565CDEBBF62638A38FB88F2046B4192FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Nov 11, 2018 at 11:50:00PM +0100, Martin Delille wrote:
 
-On Mon, Nov 12 2018, Konstantin Khomoutov wrote:
+> This would be awesome to handle issue directly with git: Having an
+> offline version of the issues synced to the gitlab/github issues.  A
+> lot of work is done on the issues and it is lost when migrating from
+> one service to the other.  Beside we don’t always have a good internet
+> connection.  There is already a kind of integration between commit
+> message fixing issue automatically when merged in the master branch
+> (with “fix #143’).
 
-> On Mon, Nov 12, 2018 at 09:35:31AM +0800, yan ke wrote:
->
->> > This would be awesome to handle issue directly with git:
->> > Having an offline version of the issues synced to the gitlab/github issues.
->> > A lot of work is done on the issues and it is lost when migrating
->> > from one service to the other.
->> > Beside we don’t always have a good internet connection.
->> > There is already a kind of integration between commit message fixing
->> > issue automatically when merged in the master branch (with “fix
->> > #143’).
->>    Very very agree, now it is very difficult to find a solution when
->> has some problem such build problem an so on! The mail-list is good to
->> send patch es, but is it not suitable for problem track or problem
->> solution search!
->>    Now the Github or Gitlab is good to track issues, suggest to open
->> the git issue track!
->
-> Please don't hijack the discussion: the original poster did not question
-> the workflow adopted by the Git project itself but rather asked about
-> what is colloquially called "distributed bug tracker", and wanted to
-> have one integrated with (or into) Git. That is completely orthogonal
-> story.
+[1] is the last discussion (of many) happened on this list on this
+topic. Please start there. It also contains pointers to past discussions
+and past work done on that front.
 
-Correct, but let's assume good faith here and presume yan ke just
-misread the original E-mail. Many of us (and perhaps yourself) are
-participating in our second, third, fourth etc. language on this list :)
+1. https://public-inbox.org/git/CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com/
 
-> As to searching for Git issues / problem solutions - I'd recommend using
-> the search on the main Git mailing list archive [1] and the issue
-> tracker of the Git for Windows project [2].
->
-> The communities around Git also include the "Git Users" low-volume
-> mailing list [3] (also perfectly searcheable), and the "git" tag at
-> StackOverflow [4].
->
-> 1. https://public-inbox.org/git/
-> 2. https://github.com/git-for-windows/git/issues
-> 3. https://groups.google.com/forum/#!forum/git-users
-> 4. https://stackoverflow.com/questions/tagged/git
-
-Yeah. I'll add to that that this specific thing has been discussed here
-really recently:
-
-https://public-inbox.org/git/CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com/
-https://github.com/MichaelMure/git-bug/
-
-So Martin, there's already a nascent tool that does this. It looks like
-the main thing it needs now is users & testers.
