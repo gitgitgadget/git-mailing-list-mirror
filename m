@@ -2,133 +2,320 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B44591F97E
-	for <e@80x24.org>; Mon, 12 Nov 2018 15:36:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35D771F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 15:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729810AbeKMBad (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 20:30:33 -0500
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:33913 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729488AbeKMBad (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 20:30:33 -0500
-Received: by mail-vk1-f193.google.com with SMTP id y14so2057828vkd.1
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 07:36:47 -0800 (PST)
+        id S1727976AbeKMBcP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 20:32:15 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:36574 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbeKMBcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 20:32:15 -0500
+Received: by mail-qk1-f195.google.com with SMTP id o125so13976750qkf.3
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 07:38:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lj9K0VkoPeFLjIe0xfKDL+198D4fsAJ15tZiYYeEv/0=;
-        b=GSq7XX/0KFVBnmywrbeyyXnLqFB6fdDyfBK6XbkxhsyIISqZ0AO0b9ab7vw95ACKc/
-         oNLoZ7KPhcbdSeOCZSKWkA6FpiVq3TIiiiiGP1RyzHL6NWygfM5z1IgcJb5QRRz88hwE
-         9hz/cj8tlDY0s8b+tVEvqVrzF0JmC0oD6hWpOHNbEageIXFexRT3xDdNnOBfAU0XuLS5
-         kQJk/5oDXLM3uRy3MLMwuMenwXuPgD/matUG1AkzyC28gCnlj1EVUIFa/LwlxCcw25wS
-         hFQb1+4E7OnIpIJNPbMLVtq1nUN/uB+CBD/gl3qlGwZd12kdPupRS4t3ix5KdCh1FYm5
-         tjNA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=IlBxpWDTc8/NjGvl3HUIbXVvrs77aHKakMBSYvATXXs=;
+        b=CtLvMXbNXErGGqxjQaSR2Po+q3XHmQgp4NlvtL2HCXMYnY4nSG13U4Zk8tb0ZjIdaT
+         TDIaHaodi9NYU3fnZgpeE2JIWNjUfmZt7pvavav9WqR/Mr2F97VjzOEtdLKSMte96Guo
+         UlgmqVsYaHC99bYhej7UFXUcMtgEH+1x/8vdpE7jMnc5py436LXUUf+ECjoJ33ZUsl03
+         Nwj+LqwQ1GItOk8mTnkPkI5IqoxbRd4kDlsUMYsS4m4lzLi4bmemaXh0OISuOoHRxM4/
+         bCjyekmwC76I/krreU5Az1tPliHjZyoiHx4ZAPESeSQ409eE8i7DCU5z/15SRfOP9sXm
+         OY8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lj9K0VkoPeFLjIe0xfKDL+198D4fsAJ15tZiYYeEv/0=;
-        b=bRXOA3+KKA2wo79uBeZ5QVL+QzSuJCynUPp4WlLU22Yp+I6SiIRQdUNZ6TmFsQh8KG
-         36VsOhcl1cQJELzTQRuoXog+Wmu4BkeXwTnidZ1DGV0d7+D5PC1RtbZtRQ1VZrcYFBEp
-         Ze39ziyWYsJLlg0fUhgErVV0o8qrn2diORVH+4sQYjufVFrrx66lkJPNTKY7yqjSO1nt
-         /Rp2++t4FZWEZaUnvOmfCXIBYnB+bIqd9IudQnWQ3Dgt3AOth8201GQDvEqlEh+iU+3R
-         Fz22Gf25qBVmUXYJh+baXnVKb2rL30mz08So33z87NzlKSR/Ob1VZInOF021RgJF9SiH
-         Qumw==
-X-Gm-Message-State: AGRZ1gLeeblVJpIkoMogUOvEGWsl+hoJMFvAo7EWzi3X48QnJM6OQRWz
-        UdTgNEW5ycYWFDfflo/km9hyMrghCsYVNUX4C6Y=
-X-Google-Smtp-Source: AJdET5e2uMKSmoTJ0DsOsKYMgsavcllOENW8GBHCK/VV6zxtr/n0OS0LkVEXXkZrX2HGP1m3TukVIKuC4BbwIpMPg8A=
-X-Received: by 2002:a1f:97d1:: with SMTP id z200mr593466vkd.15.1542037007188;
- Mon, 12 Nov 2018 07:36:47 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=IlBxpWDTc8/NjGvl3HUIbXVvrs77aHKakMBSYvATXXs=;
+        b=RJBst1omb+EM+YxB9ukVTCI0O6YHAaVTb7/oyu8qXbmzPlVGytFoYbjyJsI1/VfLdH
+         VGPWm3lm+bMvCefd1K0JueENnPY1Wm74EIgqJXlWN/7b6NCwwCwY1HGLebZSuAL9+iK8
+         28uLbQlvtUkjpaSRoTfz/mBeRK53t7JQ/0/HgXIIGjF9phGo0OEGtBQ/wMJ+X00/IXcE
+         EPAGjBAh9UribHJZdEfNmHIAJBI0AqnUiuevAbGSsdcgVFJ8+MaW5GBgNYYj0b/FYcvw
+         EW2IAEP3RwGVwF4RC8c5xy+hDBkrm9yo5Issr+JzJG9jteg82bV/LX5WswjGT2hsM4oY
+         UbYg==
+X-Gm-Message-State: AGRZ1gInJxPzRSNM4Hns7S+RUdo1J1V4srT2933vZzvymXU1AXQwSC4L
+        5kMLZbydFDAlWYn06Y3wOv8=
+X-Google-Smtp-Source: AJdET5cPuqRxh462YEVTkAGYuuLAHA0ctcvg8G6iV+UU2huotSi4hBXZ1N6JMZfnusvhN0foNhS/aQ==
+X-Received: by 2002:ac8:2729:: with SMTP id g38-v6mr1427105qtg.168.1542037108509;
+        Mon, 12 Nov 2018 07:38:28 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:705f:75d7:178c:fe1c? ([2001:4898:8010:0:5995:75d7:178c:fe1c])
+        by smtp.gmail.com with ESMTPSA id p3sm10832457qkp.48.2018.11.12.07.38.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Nov 2018 07:38:27 -0800 (PST)
+Subject: Re: [PATCH 5/9] handle alternates paths the same as the main object
+ dir
+To:     Jeff King <peff@peff.net>, Geert Jansen <gerardu@amazon.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Takuto Ikuta <tikuta@chromium.org>
+References: <20181112144627.GA2478@sigill.intra.peff.net>
+ <20181112144935.GE7400@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <56c50f51-5d9c-1166-75b9-418e384fc672@gmail.com>
+Date:   Mon, 12 Nov 2018 10:38:28 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
- <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-7-newren@gmail.com>
- <20181111065338.GF30850@sigill.intra.peff.net> <CABPp-BGF8C5vhyVbAwpmXeii452fBgtvL4dPRLWdOPxLiCYR0A@mail.gmail.com>
- <20181112124547.GG3956@sigill.intra.peff.net>
-In-Reply-To: <20181112124547.GG3956@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Nov 2018 07:36:36 -0800
-Message-ID: <CABPp-BHLEtXe-2OTHNxHe=vypvbd-kFQ3G1FaVGnQ-Gc4+z1uA@mail.gmail.com>
-Subject: Re: [PATCH 06/10] fast-export: when using paths, avoid corrupt stream
- with non-existent mark
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20181112144935.GE7400@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 4:45 AM Jeff King <peff@peff.net> wrote:
-> On Sun, Nov 11, 2018 at 12:01:43AM -0800, Elijah Newren wrote:
+On 11/12/2018 9:49 AM, Jeff King wrote:
+> When we generate loose file paths for the main object directory, the
+> caller provides a buffer to loose_object_path (formerly sha1_file_name).
+> The callers generally keep their own static buffer to avoid excessive
+> reallocations.
 >
-> > > It does seem funny that the behavior for the earlier case (bounded
-> > > commits) and this case (skipping some commits) are different. Would you
-> > > ever want to keep walking backwards to find an ancestor in the earlier
-> > > case? Or vice versa, would you ever want to simply delete a tag in a
-> > > case like this one?
-> > >
-> > > I'm not sure sure, but I suspect you may have thought about it a lot
-> > > harder than I have. :)
-> >
-> > I'm not sure why you thought the behavior for the two cases was
-> > different?  For both patches, my testcases used path limiting; it was
-> > you who suggested employing a negative revision to bound the commits.
+> But for alternate directories, each struct carries its own scratch
+> buffer. This is needlessly different; let's unify them.
 >
-> Sorry, I think I just got confused. I was thinking about the
-> documentation fixup you started with, which did regard bounded commits.
-> But that's not relevant here.
->
-> > Anyway, for both patches assuming you haven't bounded the commits, you
-> > can attempt to keep walking backwards to find an earlier ancestor, but
-> > the fundamental fact is you aren't guaranteed that you can find one
-> > (i.e. some tag or branch points to a commit that didn't modify any of
-> > the specified paths, and nor did any of its ancestors back to any root
-> > commits).  I hit that case lots of times.  If the user explicitly
-> > requested a tag or branch for export (and requested tag rewriting),
-> > and limited to certain paths that had never existed in the repository
-> > as of the time of the tag or branch, then you hit the cases these
-> > patches worry about.  Patch 4 was about (annotated and signed) tags,
-> > this patch is about unannotated tags and branches and other refs.
->
-> OK, that makes more sense.
->
-> So I guess my question is: in patch 4, why do we not walk back to find
-> an appropriate ancestor pointed to by the signed tag object, as we do
-> here for the unannotated case?
->
-> And I think the answer is: we already do that. It's just that the
-> unannotated case never learned the same trick. So basically it's:
->
->   1. rewriting annotated tags to ancestors is already known on "master"
->
->   2. patch 4 further teaches it to drop a tag when that fails
->
->   3. patch 6 teaches both (1) and (2) to the unannotated code path,
->      which knew neither
->
-> Is that right?
+> We could go either direction here, but this patch moves the alternates
+> struct over to the main directory style (rather than vice-versa).
+> Technically the alternates style is more efficient, as it avoids
+> rewriting the object directory name on each call. But this is unlikely
+> to matter in practice, as we avoid reallocations either way (and nobody
+> has ever noticed or complained that the main object directory is copying
+> a few extra bytes before making a much more expensive system call).
 
-Ah, now I see where the slight disconnect was.  And yes, you are correct.
+Hm. I've complained in the past [1] about a simple method like 
+strbuf_addf() over loose objects, but that was during abbreviation 
+checks so we were adding the string for every loose object but not 
+actually reading the objects.
 
-> > > This hunk makes sense.
-> >
-> > Cool, this was the entirety of the code...so does this mean that the
-> > code makes more sense than my commit message summary did?  ...and
-> > perhaps that my attempts to answer your questions in this email
-> > weren't necessary anymore?
+[1] 
+https://public-inbox.org/git/20171201174956.143245-1-dstolee@microsoft.com/
+
+The other concern I have is for alternates that may have long-ish paths 
+to their object directories.
+
+So, this is worth keeping an eye on, but is likely to be fine.
+
+> And this has the advantage that the reusable buffers are tied to
+> particular calls, which makes the invalidation rules simpler (for
+> example, the return value from stat_sha1_file() used to be invalidated
+> by basically any other object call, but now it is affected only by other
+> calls to stat_sha1_file()).
 >
-> No, it only made sense that the hunk implemented what you claimed in the
-> commit message. ;)
+> We do steal the trick from alt_sha1_path() of returning a pointer to the
+> filled buffer, which makes a few conversions more convenient.
 >
-> I think your responses did help me understand that what the commit
-> message is claiming is a good thing.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   object-store.h | 14 +-------------
+>   object.c       |  1 -
+>   sha1-file.c    | 44 ++++++++++++++++----------------------------
+>   sha1-name.c    |  8 ++++++--
+>   4 files changed, 23 insertions(+), 44 deletions(-)
+>
+> diff --git a/object-store.h b/object-store.h
+> index fefa17e380..b2fa0d0df0 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -10,10 +10,6 @@
+>   struct object_directory {
+>   	struct object_directory *next;
+>   
+> -	/* see alt_scratch_buf() */
+> -	struct strbuf scratch;
+> -	size_t base_len;
+> -
+>   	/*
+>   	 * Used to store the results of readdir(3) calls when searching
+>   	 * for unique abbreviated hashes.  This cache is never
+> @@ -54,14 +50,6 @@ void add_to_alternates_file(const char *dir);
+>    */
+>   void add_to_alternates_memory(const char *dir);
+>   
+> -/*
+> - * Returns a scratch strbuf pre-filled with the alternate object directory,
+> - * including a trailing slash, which can be used to access paths in the
+> - * alternate. Always use this over direct access to alt->scratch, as it
+> - * cleans up any previous use of the scratch buffer.
+> - */
+> -struct strbuf *alt_scratch_buf(struct object_directory *odb);
+> -
+>   struct packed_git {
+>   	struct packed_git *next;
+>   	struct list_head mru;
+> @@ -157,7 +145,7 @@ void raw_object_store_clear(struct raw_object_store *o);
+>    * Put in `buf` the name of the file in the local object database that
+>    * would be used to store a loose object with the specified sha1.
+>    */
+> -void loose_object_path(struct repository *r, struct strbuf *buf, const unsigned char *sha1);
+> +const char *loose_object_path(struct repository *r, struct strbuf *buf, const unsigned char *sha1);
+>   
+>   void *map_sha1_file(struct repository *r, const unsigned char *sha1, unsigned long *size);
+>   
+> diff --git a/object.c b/object.c
+> index 6af8e908bb..dd485ac629 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -484,7 +484,6 @@ struct raw_object_store *raw_object_store_new(void)
+>   
+>   static void free_alt_odb(struct object_directory *odb)
+>   {
+> -	strbuf_release(&odb->scratch);
+>   	oid_array_clear(&odb->loose_objects_cache);
+>   	free(odb);
+>   }
+> diff --git a/sha1-file.c b/sha1-file.c
+> index 478eac326b..15db6b61a9 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -346,27 +346,20 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
+>   	}
+>   }
+>   
+> -void loose_object_path(struct repository *r, struct strbuf *buf,
+> -		       const unsigned char *sha1)
+> +static const char *odb_loose_path(const char *path, struct strbuf *buf,
+> +				  const unsigned char *sha1)
+>   {
+>   	strbuf_reset(buf);
+> -	strbuf_addstr(buf, r->objects->objectdir);
+> +	strbuf_addstr(buf, path);
+>   	strbuf_addch(buf, '/');
+>   	fill_sha1_path(buf, sha1);
+> +	return buf->buf;
+>   }
+>   
+> -struct strbuf *alt_scratch_buf(struct object_directory *odb)
+> +const char *loose_object_path(struct repository *r, struct strbuf *buf,
+> +			      const unsigned char *sha1)
+>   {
+> -	strbuf_setlen(&odb->scratch, odb->base_len);
+> -	return &odb->scratch;
+> -}
+> -
+> -static const char *alt_sha1_path(struct object_directory *odb,
+> -				 const unsigned char *sha1)
+> -{
+> -	struct strbuf *buf = alt_scratch_buf(odb);
+> -	fill_sha1_path(buf, sha1);
+> -	return buf->buf;
+> +	return odb_loose_path(r->objects->objectdir, buf, sha1);
+>   }
+>   
+>   /*
+> @@ -547,9 +540,6 @@ struct object_directory *alloc_alt_odb(const char *dir)
+>   	struct object_directory *ent;
+>   
+>   	FLEX_ALLOC_STR(ent, path, dir);
+> -	strbuf_init(&ent->scratch, 0);
+> -	strbuf_addf(&ent->scratch, "%s/", dir);
+> -	ent->base_len = ent->scratch.len;
+>   
+>   	return ent;
+>   }
+> @@ -745,10 +735,12 @@ static int check_and_freshen_local(const struct object_id *oid, int freshen)
+>   static int check_and_freshen_nonlocal(const struct object_id *oid, int freshen)
+>   {
+>   	struct object_directory *odb;
+> +	static struct strbuf path = STRBUF_INIT;
+> +
+>   	prepare_alt_odb(the_repository);
+>   	for (odb = the_repository->objects->alt_odb_list; odb; odb = odb->next) {
+> -		const char *path = alt_sha1_path(odb, oid->hash);
+> -		if (check_and_freshen_file(path, freshen))
+> +		odb_loose_path(odb->path, &path, oid->hash);
+> +		if (check_and_freshen_file(path.buf, freshen))
+>   			return 1;
+>   	}
+>   	return 0;
+> @@ -889,7 +881,7 @@ int git_open_cloexec(const char *name, int flags)
+>    *
+>    * The "path" out-parameter will give the path of the object we found (if any).
+>    * Note that it may point to static storage and is only valid until another
+> - * call to loose_object_path(), etc.
+> + * call to stat_sha1_file().
+>    */
+>   static int stat_sha1_file(struct repository *r, const unsigned char *sha1,
+>   			  struct stat *st, const char **path)
+> @@ -897,16 +889,14 @@ static int stat_sha1_file(struct repository *r, const unsigned char *sha1,
+>   	struct object_directory *odb;
+>   	static struct strbuf buf = STRBUF_INIT;
+>   
+> -	loose_object_path(r, &buf, sha1);
+> -	*path = buf.buf;
+> -
+> +	*path = loose_object_path(r, &buf, sha1);
+>   	if (!lstat(*path, st))
+>   		return 0;
+>   
+>   	prepare_alt_odb(r);
+>   	errno = ENOENT;
+>   	for (odb = r->objects->alt_odb_list; odb; odb = odb->next) {
+> -		*path = alt_sha1_path(odb, sha1);
+> +		*path = odb_loose_path(odb->path, &buf, sha1);
+>   		if (!lstat(*path, st))
+>   			return 0;
+>   	}
+> @@ -926,9 +916,7 @@ static int open_sha1_file(struct repository *r,
+>   	int most_interesting_errno;
+>   	static struct strbuf buf = STRBUF_INIT;
+>   
+> -	loose_object_path(r, &buf, sha1);
+> -	*path = buf.buf;
+> -
+> +	*path = loose_object_path(r, &buf, sha1);
+>   	fd = git_open(*path);
+>   	if (fd >= 0)
+>   		return fd;
+> @@ -936,7 +924,7 @@ static int open_sha1_file(struct repository *r,
+>   
+>   	prepare_alt_odb(r);
+>   	for (odb = r->objects->alt_odb_list; odb; odb = odb->next) {
+> -		*path = alt_sha1_path(odb, sha1);
+> +		*path = odb_loose_path(odb->path, &buf, sha1);
+>   		fd = git_open(*path);
+>   		if (fd >= 0)
+>   			return fd;
+> diff --git a/sha1-name.c b/sha1-name.c
+> index 2594aa79f8..96a8e71482 100644
+> --- a/sha1-name.c
+> +++ b/sha1-name.c
+> @@ -97,6 +97,7 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+>   	int subdir_nr = ds->bin_pfx.hash[0];
+>   	struct object_directory *odb;
+>   	static struct object_directory *fakeent;
+> +	struct strbuf buf = STRBUF_INIT;
+>   
+>   	if (!fakeent) {
+>   		/*
+> @@ -114,8 +115,9 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+>   		int pos;
+>   
+>   		if (!odb->loose_objects_subdir_seen[subdir_nr]) {
+> -			struct strbuf *buf = alt_scratch_buf(odb);
+> -			for_each_file_in_obj_subdir(subdir_nr, buf,
+> +			strbuf_reset(&buf);
+> +			strbuf_addstr(&buf, odb->path);
+> +			for_each_file_in_obj_subdir(subdir_nr, &buf,
+>   						    append_loose_object,
+>   						    NULL, NULL,
+>   						    &odb->loose_objects_cache);
+> @@ -134,6 +136,8 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+>   			pos++;
+>   		}
+>   	}
+> +
+> +	strbuf_release(&buf);
+>   }
+>   
+>   static int match_sha(unsigned len, const unsigned char *a, const unsigned char *b)
+
