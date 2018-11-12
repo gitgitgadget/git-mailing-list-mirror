@@ -2,267 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E58B1F87F
-	for <e@80x24.org>; Sun, 11 Nov 2018 23:58:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B18C1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 01:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732613AbeKLJtJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 04:49:09 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34114 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732407AbeKLJtI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 04:49:08 -0500
-Received: by mail-pf1-f194.google.com with SMTP id y18-v6so3400125pfn.1
-        for <git@vger.kernel.org>; Sun, 11 Nov 2018 15:58:45 -0800 (PST)
+        id S1729802AbeKLL0a (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 06:26:30 -0500
+Received: from mail-oi1-f171.google.com ([209.85.167.171]:36235 "EHLO
+        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728452AbeKLL0a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 06:26:30 -0500
+Received: by mail-oi1-f171.google.com with SMTP id r127-v6so5920243oie.3
+        for <git@vger.kernel.org>; Sun, 11 Nov 2018 17:35:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bp+uiPF7u6e8zrE/l+0ycOjn0Uo7hoBpUBpNOrLQYdo=;
-        b=pyl+PqH3GTrOemwr54aUEZ0xTcjCggDoh7VfukBrXBGshHtWKWdMe+XAy+oCqf02Ji
-         cv74m8tqmwTy3sb1WEOI3858lBiyF/4X0H0AtBfF92nXwbLdUxbDikskCJ7i6djx+Kq9
-         +vbzbUNO7Ns2aYg0zBiDBLGwT2T6I4D8biZEIHvjy4GGa/Cw7VqLTpmUZyhxMFiTmRcd
-         WhtHStF49GWLNzPmHiBapwzb12jdB75mg+ojX4o6ctkpVCQpENPbIDh38LSrj0V5KP7K
-         o1eRXln5uaa9ij2V5jhVi5Tp67ZO2I4uCm/nS1XD4OwAowD40DX6nbKA3zhjXOYZovg0
-         pADA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5WM9iBTsNLrJoEcjk/PkdogvmRvBfopqgjHJH04aviA=;
+        b=dvqpKvr1ZfslwwFm9MZKUfaU2b+0o3enb8YIBvq0hQFgBAL4Pz33615MI7jFBlf1aM
+         yKm3qeFzcyG7uILahhd0CeMY3To08LSaXPGSggUP85Oul1UoYcbZ7qDB+lefQsCiXpVs
+         no1YKVQK/KHFToFANW4x4uUivcmxf5ITKzH2jXU0V+I2I/zSNXin8zZaT10iuNcSmX+w
+         4eXXRyvbkq7XBX2mY4PI/dhudTwEC+fKuVXXLS4+p/qjeE6sF9fuXtZm/OdpEbORkNKB
+         WYf9UfwBmSucq+Nc0hBQvd3AGa2k/g2UJOtUbBZLrBqg6J8c/j1BD+5visQgyW1xFXfa
+         QHkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bp+uiPF7u6e8zrE/l+0ycOjn0Uo7hoBpUBpNOrLQYdo=;
-        b=MQRvrp8LCz/0pvLXJiXgCJVcMETO+LMvgKKvBmWJUmgIXwTDCJ5da6XCnIqjv5pqSv
-         b7snNxcb+4+Q+ClZT6Pw6t3rhPPBtg2JrXMFsOvOeokdUynhbpbCh0M2EelbVBjkOgvK
-         CETMsQ7JUVT7iy4D5vEAyeCbFI6woy1L5jzYAvpKp8BQoHuWw5kjRVdxCD4hUtAaliHF
-         l9JgmsAaDrrSJFkwh1ffqRRDkZiCd3cWh2GNtMu4OI8jB0wqLzzKhE3vw0BSKe9F8jRF
-         RrZGBhOFNvXP7/vyjtQXzYmn4JDp25DHZHOIKeVbx4S94sz4KZItWgFQDjnmnsIHfQV/
-         yDRw==
-X-Gm-Message-State: AGRZ1gKO9WfS52GqCE0ZvY9YhnJTGv+L1a+3j4J2z705AJZS4YNrCoZT
-        sabb7SAnXqoZ1V+xIy3ytxs=
-X-Google-Smtp-Source: AJdET5cKiF9J0M22bDnqcLIDsM6tGu6JntMpLCp/DlXfiRmBNO04LWucKNOAsM/L3cRpmQr9vhz84w==
-X-Received: by 2002:a62:9a09:: with SMTP id o9-v6mr2054634pfe.229.1541980724459;
-        Sun, 11 Nov 2018 15:58:44 -0800 (PST)
-Received: from localhost.localdomain (143.sub-174-211-23.myvzw.com. [174.211.23.143])
-        by smtp.gmail.com with ESMTPSA id v5sm16954798pgn.5.2018.11.11.15.58.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 11 Nov 2018 15:58:44 -0800 (PST)
-From:   nbelakovski@gmail.com
-To:     rafa.almas@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, nbelakovski@gmail.com,
-        peff@peff.net
-Subject: [PATCH v2 2/2] branch: Mark and colorize a branch differently if it is checked out in a linked worktree
-Date:   Sun, 11 Nov 2018 15:58:31 -0800
-Message-Id: <20181111235831.44824-3-nbelakovski@gmail.com>
-X-Mailer: git-send-email 2.14.2
-In-Reply-To: <20181111235831.44824-1-nbelakovski@gmail.com>
-References: <20180927204049.GA2628@rigel>
- <20181111235831.44824-1-nbelakovski@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5WM9iBTsNLrJoEcjk/PkdogvmRvBfopqgjHJH04aviA=;
+        b=ZyY7kGCMkd6s6/KUuz6RtEgySPqC6BmTWEZXIkvekMvNpai/ptL3okW9tSrlS6CwEM
+         olJ6Iy23h4hMr44fKA/12IYPcoaKA26UkKk5yhfaxv8dGrNWzXsUBc3+BuJUltihnggg
+         G9IUlxuLwIs50rX6fP+xqgf8B3EebIwMGLljw7VVuAfNuFem7xqkW8k1R5mFomxDtu0f
+         /if/PU2Qb1csJLfVmoQMIfZC6b2KdpfJV7WuQP0Wwj726ebCh4BuYvnJifS1RoiKuUJd
+         ibhN91CkEb/EgD2THh/7bsSVSH7T/X+2D3lq3Y8kkMw/lFfeS7kGZKumU8dH7bLhmyxO
+         hayg==
+X-Gm-Message-State: AGRZ1gJBGuyghLbP1clzl/upGw/Ci2RR37DeMVLpplGG56ZTYEz1zJM9
+        EIaTdTeGlDov2lC5iPNuiAxtel8ozm7rPIQ+dcyGrzbe
+X-Google-Smtp-Source: AJdET5dkJNnHyA7LPcc8ChQY2DIVCQmWV+U7VhU3fNV5D+54tnhWRgg5twFRk9xeIVprSUeMxNf6wOD/XeBTzr5+tmM=
+X-Received: by 2002:aca:905:: with SMTP id 5-v6mr10247570oij.163.1541986543059;
+ Sun, 11 Nov 2018 17:35:43 -0800 (PST)
+MIME-Version: 1.0
+References: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
+In-Reply-To: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
+From:   yan ke <yanke131415@gmail.com>
+Date:   Mon, 12 Nov 2018 09:35:31 +0800
+Message-ID: <CAJosSJ4_PXrXUxn0WfFcR90SbDL0UWRRGPpxEjVwc=3NwWP+Jg@mail.gmail.com>
+Subject: Re: Add issue management within git
+To:     martin.delille@gmail.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nickolai Belakovski <nbelakovski@gmail.com>
-
-In order to more clearly display which branches are active, the output
-of git branch is modified to mark branches checkout out in a linked
-worktree with a "+" and color them in a faint light green (in contrast
-to the current branch, which will still be denoted with a "*" and
-colored in green)
-
-This is meant to simplify workflows related to worktree, particularly
-due to the limitations of not being able to check out the same branch in
-two worktrees and the inability to delete a branch checked out in a
-worktree. When performing branch operations like checkout and delete, it
-would be useful to know more readily if the branches in which the user
-is interested are already checked out in a worktree.
-
-The git worktree list command contains the relevant information, however
-this is a much less frquently used command than git branch.
-
-Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
----
- builtin/branch.c         | 22 +++++++++++++---------
- color.h                  | 18 ++++++++++++++++++
- t/t3200-branch.sh        |  8 ++++----
- t/t3203-branch-output.sh | 21 +++++++++++++++++++++
- t/test-lib-functions.sh  |  6 ++++++
- 5 files changed, 62 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0c55f7f065..34f44c82d7 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -42,11 +42,12 @@ static struct object_id head_oid;
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_RESET,
--	GIT_COLOR_NORMAL,       /* PLAIN */
--	GIT_COLOR_RED,          /* REMOTE */
--	GIT_COLOR_NORMAL,       /* LOCAL */
--	GIT_COLOR_GREEN,        /* CURRENT */
--	GIT_COLOR_BLUE,         /* UPSTREAM */
-+	GIT_COLOR_NORMAL,             /* PLAIN */
-+	GIT_COLOR_RED,                /* REMOTE */
-+	GIT_COLOR_NORMAL,             /* LOCAL */
-+	GIT_COLOR_GREEN,              /* CURRENT */
-+	GIT_COLOR_BLUE,               /* UPSTREAM */
-+	GIT_COLOR_FAINT_LIGHT_GREEN,  /* WORKTREE */
- };
- enum color_branch {
- 	BRANCH_COLOR_RESET = 0,
-@@ -54,7 +55,8 @@ enum color_branch {
- 	BRANCH_COLOR_REMOTE = 2,
- 	BRANCH_COLOR_LOCAL = 3,
- 	BRANCH_COLOR_CURRENT = 4,
--	BRANCH_COLOR_UPSTREAM = 5
-+	BRANCH_COLOR_UPSTREAM = 5,
-+	BRANCH_COLOR_WORKTREE = 6
- };
- 
- static const char *color_branch_slots[] = {
-@@ -64,6 +66,7 @@ static const char *color_branch_slots[] = {
- 	[BRANCH_COLOR_LOCAL]	= "local",
- 	[BRANCH_COLOR_CURRENT]	= "current",
- 	[BRANCH_COLOR_UPSTREAM] = "upstream",
-+	[BRANCH_COLOR_WORKTREE] = "worktree",
- };
- 
- static struct string_list output = STRING_LIST_INIT_DUP;
-@@ -342,9 +345,10 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 	struct strbuf local = STRBUF_INIT;
- 	struct strbuf remote = STRBUF_INIT;
- 
--	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
--		    branch_get_color(BRANCH_COLOR_CURRENT),
--		    branch_get_color(BRANCH_COLOR_LOCAL));
-+	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(worktree)%%(then)+ %s%%(else)  %s%%(end)%%(end)",
-+			branch_get_color(BRANCH_COLOR_CURRENT),
-+			branch_get_color(BRANCH_COLOR_WORKTREE),
-+			branch_get_color(BRANCH_COLOR_LOCAL));
- 	strbuf_addf(&remote, "  %s",
- 		    branch_get_color(BRANCH_COLOR_REMOTE));
- 
-diff --git a/color.h b/color.h
-index 98894d6a17..857653df73 100644
---- a/color.h
-+++ b/color.h
-@@ -42,6 +42,24 @@ struct strbuf;
- #define GIT_COLOR_FAINT_BLUE	"\033[2;34m"
- #define GIT_COLOR_FAINT_MAGENTA	"\033[2;35m"
- #define GIT_COLOR_FAINT_CYAN	"\033[2;36m"
-+#define GIT_COLOR_LIGHT_RED	"\033[91m"
-+#define GIT_COLOR_LIGHT_GREEN	"\033[92m"
-+#define GIT_COLOR_LIGHT_YELLOW	"\033[93m"
-+#define GIT_COLOR_LIGHT_BLUE	"\033[94m"
-+#define GIT_COLOR_LIGHT_MAGENTA	"\033[95m"
-+#define GIT_COLOR_LIGHT_CYAN	"\033[96m"
-+#define GIT_COLOR_BOLD_LIGHT_RED	"\033[1;91m"
-+#define GIT_COLOR_BOLD_LIGHT_GREEN	"\033[1;92m"
-+#define GIT_COLOR_BOLD_LIGHT_YELLOW	"\033[1;93m"
-+#define GIT_COLOR_BOLD_LIGHT_BLUE	"\033[1;94m"
-+#define GIT_COLOR_BOLD_LIGHT_MAGENTA	"\033[1;95m"
-+#define GIT_COLOR_BOLD_LIGHT_CYAN	"\033[1;96m"
-+#define GIT_COLOR_FAINT_LIGHT_RED	"\033[2;91m"
-+#define GIT_COLOR_FAINT_LIGHT_GREEN	"\033[2;92m"
-+#define GIT_COLOR_FAINT_LIGHT_YELLOW	"\033[2;93m"
-+#define GIT_COLOR_FAINT_LIGHT_BLUE	"\033[2;94m"
-+#define GIT_COLOR_FAINT_LIGHT_MAGENTA	"\033[2;95m"
-+#define GIT_COLOR_FAINT_LIGHT_CYAN	"\033[2;96m"
- #define GIT_COLOR_BG_RED	"\033[41m"
- #define GIT_COLOR_BG_GREEN	"\033[42m"
- #define GIT_COLOR_BG_YELLOW	"\033[43m"
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 478b82cf9b..e404f6e23c 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -292,7 +292,7 @@ test_expect_success 'git branch --list -v with --abbrev' '
- test_expect_success 'git branch --column' '
- 	COLUMNS=81 git branch --column=column >actual &&
- 	cat >expected <<\EOF &&
--  a/b/c     bam       foo       l       * master    n         o/p       r
-+  a/b/c   + bam       foo       l       * master    n         o/p       r
-   abc       bar       j/k       m/m       master2   o/o       q
- EOF
- 	test_cmp expected actual
-@@ -307,7 +307,7 @@ test_expect_success 'git branch --column with an extremely long branch name' '
- 	cat >expected <<EOF &&
-   a/b/c
-   abc
--  bam
-++ bam
-   bar
-   foo
-   j/k
-@@ -332,7 +332,7 @@ test_expect_success 'git branch with column.*' '
- 	git config --unset column.branch &&
- 	git config --unset column.ui &&
- 	cat >expected <<\EOF &&
--  a/b/c   bam   foo   l   * master    n     o/p   r
-+  a/b/c + bam   foo   l   * master    n     o/p   r
-   abc     bar   j/k   m/m   master2   o/o   q
- EOF
- 	test_cmp expected actual
-@@ -349,7 +349,7 @@ test_expect_success 'git branch -v with column.ui ignored' '
- 	cat >expected <<\EOF &&
-   a/b/c
-   abc
--  bam
-++ bam
-   bar
-   foo
-   j/k
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index ee6787614c..06771fac64 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -240,6 +240,27 @@ test_expect_success 'git branch --format option' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success '"add" a worktree' '
-+	mkdir worktree_dir &&
-+	git worktree add -b master_worktree worktree_dir master
-+'
-+
-+cat >expect <<'EOF'
-+* <GREEN>(HEAD detached from fromtag)<RESET>
-+  ambiguous<RESET>
-+  branch-one<RESET>
-+  branch-two<RESET>
-+  master<RESET>
-++ <FAINT;LGREEN>master_worktree<RESET>
-+  ref-to-branch<RESET> -> branch-one
-+  ref-to-remote<RESET> -> origin/branch-one
-+EOF
-+test_expect_success TTY 'worktree colors correct' '
-+	test_terminal git branch >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success "set up color tests" '
- 	echo "<RED>master<RESET>" >expect.color &&
- 	echo "master" >expect.bare &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 78d8c3783b..2831a42a88 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -61,6 +61,12 @@ test_decode_color () {
- 			if (n == 45) return "BMAGENTA";
- 			if (n == 46) return "BCYAN";
- 			if (n == 47) return "BWHITE";
-+			if (n == 91) return "LRED";
-+			if (n == 92) return "LGREEN";
-+			if (n == 93) return "LYELLOW";
-+			if (n == 94) return "LBLUE";
-+			if (n == 95) return "LMAGENTA";
-+			if (n == 96) return "LCYAN";
- 		}
- 		{
- 			while (match($0, /\033\[[0-9;]*m/) != 0) {
--- 
-2.14.2
-
+   Very very agree, now it is very difficult to find a solution when
+has some problem such build problem an so on! The mail-list is good to
+send patch es, but is it not suitable for problem track or problem
+solution search!
+   Now the Github or Gitlab is good to track issues, suggest to open
+the git issue track!
+Martin Delille <martin.delille@gmail.com> =E4=BA=8E2018=E5=B9=B411=E6=9C=88=
+12=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=886:52=E5=86=99=E9=81=93=EF=
+=BC=9A
+>
+> Hi,
+>
+> This would be awesome to handle issue directly with git:
+> Having an offline version of the issues synced to the gitlab/github issue=
+s.
+> A lot of work is done on the issues and it is lost when migrating from on=
+e service to the other.
+> Beside we don=E2=80=99t always have a good internet connection.
+> There is already a kind of integration between commit message fixing issu=
+e automatically when merged in the master branch (with =E2=80=9Cfix #143=E2=
+=80=99).
+>
+> Kind regards,
+>
+> Martin
+>
