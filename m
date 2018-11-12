@@ -2,113 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 151F81F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 12:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00FD91F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 12:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729318AbeKLWiN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 17:38:13 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40283 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727109AbeKLWiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 17:38:13 -0500
-Received: by mail-wr1-f65.google.com with SMTP id p4so14638wrt.7
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 04:45:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=OiDIajLiXe9tLZynkaRBCpTUaVPRccGomUoLv9eArP0=;
-        b=HOGVeOo0NDfhUPhtcVSqisXyp1v32PyP2WmfgoF6LXFQuBl83WGNxm9bSIUeRe88mX
-         anpofPrTdw2m2vKaNBuE8I2WlLJ2Wkf2WHOHFKtnTd0cQ1k03DBeLdhbWd4BYN4WAWbd
-         KR1rRh1BtmPf6XFPL0WiLqrazPUvG/coKIHJismqyWxCUE+bHVp/Tl47uJu3k9GCpUJX
-         5YkP5SFhuc/mhtVR7fgRymfxg7Xrz1Y8k7UJ2XaNPWrE/ZfJYivepBICJWvcPzbsCCk3
-         h1+YRP6Z9h4sunpkDJkCQyAuhl3c3OW7m9HJknv5V2wi6x7gSxai3NuyEVhn84Avi/6i
-         g2Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=OiDIajLiXe9tLZynkaRBCpTUaVPRccGomUoLv9eArP0=;
-        b=ZDuFIYToDP6wK+TymIyQ7sokqWuNWG/ZHB0Nqg22gQiW9GG1iotz+ncjYDMwaV2TtO
-         uDhj2tk8VSAKiBrLIDt5EvPRaN9hXrrN18bY+v1mG4dMv7+GN/CS5ivHM6Qu7sEtb+Rn
-         3EuGAOeJYMm8xLM+F806oIsfbR4lOoHpCR4s7yBvSx2u0tM4w0CUskP7/d/csR/2ZNLv
-         xOMithy0snQ0Gr3jejzzhbgHhvIzprVsWrMK8Ik6xew1FS/o0zry1YT/qPaTkf8gq/7Y
-         RwgGnKiX6dBtM4dxAeHYFIvILTcQbWlSyyPlTgRYgsNkYJ5DxTvgFSuelsOvHHYg8MHK
-         /BHw==
-X-Gm-Message-State: AGRZ1gIScJSNHCxsA/jKCqBSyuiMOLNOP44IMRAV6ls1DDy/zwBMnmJj
-        N+QpOZYN6Rn9FqAdEuY/Zq8=
-X-Google-Smtp-Source: AJdET5fr8f8xeD2W0NIetRT8Pg87Sr49JOupgJUguBOKYUXsfYcSf17K2GH9kiugnyI7spw7QK9UnQ==
-X-Received: by 2002:a5d:558a:: with SMTP id i10-v6mr844735wrv.38.1542026703819;
-        Mon, 12 Nov 2018 04:45:03 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id t187-v6sm7421134wmt.45.2018.11.12.04.45.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Nov 2018 04:45:02 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthieu Moy <git@matthieu-moy.fr>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        "Holger Hellmuth \(IKS\)" <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-References: <875zxa6xzp.fsf@evledraar.gmail.com>
-        <20181111095254.30473-1-pclouds@gmail.com>
-        <871s7r4wuv.fsf@evledraar.gmail.com>
-        <CACsJy8CYpuc7-CZhk7kQQVQFxOfLFZu4TVpG=b0a7j8P1J394Q@mail.gmail.com>
-        <591ab1f7-ef39-13e5-83b8-76fe372ecc2c@hibox.tv>
-        <1205132135.1189562.1542013731020.JavaMail.zimbra@matthieu-moy.fr>
-        <87o9au39s7.fsf@evledraar.gmail.com>
-        <xmqqk1li1thy.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqk1li1thy.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 12 Nov 2018 13:45:01 +0100
-Message-ID: <87in1231o2.fsf@evledraar.gmail.com>
+        id S1729428AbeKLWi5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 17:38:57 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35402 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727109AbeKLWi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 17:38:56 -0500
+Received: (qmail 24573 invoked by uid 109); 12 Nov 2018 12:45:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 12:45:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10313 invoked by uid 111); 12 Nov 2018 12:45:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 07:45:09 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 07:45:47 -0500
+Date:   Mon, 12 Nov 2018 07:45:47 -0500
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 06/10] fast-export: when using paths, avoid corrupt
+ stream with non-existent mark
+Message-ID: <20181112124547.GG3956@sigill.intra.peff.net>
+References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
+ <20181111062312.16342-1-newren@gmail.com>
+ <20181111062312.16342-7-newren@gmail.com>
+ <20181111065338.GF30850@sigill.intra.peff.net>
+ <CABPp-BGF8C5vhyVbAwpmXeii452fBgtvL4dPRLWdOPxLiCYR0A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGF8C5vhyVbAwpmXeii452fBgtvL4dPRLWdOPxLiCYR0A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Nov 11, 2018 at 12:01:43AM -0800, Elijah Newren wrote:
 
-On Mon, Nov 12 2018, Junio C Hamano wrote:
+> > It does seem funny that the behavior for the earlier case (bounded
+> > commits) and this case (skipping some commits) are different. Would you
+> > ever want to keep walking backwards to find an ancestor in the earlier
+> > case? Or vice versa, would you ever want to simply delete a tag in a
+> > case like this one?
+> >
+> > I'm not sure sure, but I suspect you may have thought about it a lot
+> > harder than I have. :)
+> 
+> I'm not sure why you thought the behavior for the two cases was
+> different?  For both patches, my testcases used path limiting; it was
+> you who suggested employing a negative revision to bound the commits.
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> What I'd add to your list is:
->>
->> * Some projects (I've seen this in the wild) add e.g. *.mp3 or whatever
->>   else usually doesn't belong in the repo as a "soft ignore". This is
->>   something we've never recommended, but have implicitly supported since
->>   the only caveats are a) you need a one-off "git add -f" and then
->>   they're tracked b) them being missing from "status" before being
->>   tracked c) the issue under discussion here.
->
-> Or only selected "*.o" (vendor supplied binary blob) kept tracked
-> while everything else is built from the source.
->
-> I do not know who you are referring to "we" in your sentence, but as
-> far as I am concerned, it has been and still is a BCP recommendation
-> on this list to deal with a case like that.
+Sorry, I think I just got confused. I was thinking about the
+documentation fixup you started with, which did regard bounded commits.
+But that's not relevant here.
 
-I mean that this use-case of having a "soft" ignore by carrying it
-across the "git add" barrier with a one-off "-f" isn't something
-explicitly documented, and apparently not something many
-expect. I.e. you / Matthieu have mentioned .gitignore in the past for
-only-generated *.o use-case.
+> Anyway, for both patches assuming you haven't bounded the commits, you
+> can attempt to keep walking backwards to find an earlier ancestor, but
+> the fundamental fact is you aren't guaranteed that you can find one
+> (i.e. some tag or branch points to a commit that didn't modify any of
+> the specified paths, and nor did any of its ancestors back to any root
+> commits).  I hit that case lots of times.  If the user explicitly
+> requested a tag or branch for export (and requested tag rewriting),
+> and limited to certain paths that had never existed in the repository
+> as of the time of the tag or branch, then you hit the cases these
+> patches worry about.  Patch 4 was about (annotated and signed) tags,
+> this patch is about unannotated tags and branches and other refs.
 
-But it also does get used for "mostly we don't want this file, but
-sometimes we do" use-case, so that's something we need to deal with in
-practice. Like many workflows in git it's not something that was forseen
-or intended, but does happen in the wild.
+OK, that makes more sense.
+
+So I guess my question is: in patch 4, why do we not walk back to find
+an appropriate ancestor pointed to by the signed tag object, as we do
+here for the unannotated case?
+
+And I think the answer is: we already do that. It's just that the
+unannotated case never learned the same trick. So basically it's:
+
+  1. rewriting annotated tags to ancestors is already known on "master"
+
+  2. patch 4 further teaches it to drop a tag when that fails
+
+  3. patch 6 teaches both (1) and (2) to the unannotated code path,
+     which knew neither
+
+Is that right?
+
+> > This hunk makes sense.
+> 
+> Cool, this was the entirety of the code...so does this mean that the
+> code makes more sense than my commit message summary did?  ...and
+> perhaps that my attempts to answer your questions in this email
+> weren't necessary anymore?
+
+No, it only made sense that the hunk implemented what you claimed in the
+commit message. ;)
+
+I think your responses did help me understand that what the commit
+message is claiming is a good thing.
+
+-Peff
