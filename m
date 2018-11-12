@@ -2,89 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B18C1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 01:35:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EE7E1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 03:03:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729802AbeKLL0a (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 06:26:30 -0500
-Received: from mail-oi1-f171.google.com ([209.85.167.171]:36235 "EHLO
-        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728452AbeKLL0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 06:26:30 -0500
-Received: by mail-oi1-f171.google.com with SMTP id r127-v6so5920243oie.3
-        for <git@vger.kernel.org>; Sun, 11 Nov 2018 17:35:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5WM9iBTsNLrJoEcjk/PkdogvmRvBfopqgjHJH04aviA=;
-        b=dvqpKvr1ZfslwwFm9MZKUfaU2b+0o3enb8YIBvq0hQFgBAL4Pz33615MI7jFBlf1aM
-         yKm3qeFzcyG7uILahhd0CeMY3To08LSaXPGSggUP85Oul1UoYcbZ7qDB+lefQsCiXpVs
-         no1YKVQK/KHFToFANW4x4uUivcmxf5ITKzH2jXU0V+I2I/zSNXin8zZaT10iuNcSmX+w
-         4eXXRyvbkq7XBX2mY4PI/dhudTwEC+fKuVXXLS4+p/qjeE6sF9fuXtZm/OdpEbORkNKB
-         WYf9UfwBmSucq+Nc0hBQvd3AGa2k/g2UJOtUbBZLrBqg6J8c/j1BD+5visQgyW1xFXfa
-         QHkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5WM9iBTsNLrJoEcjk/PkdogvmRvBfopqgjHJH04aviA=;
-        b=ZyY7kGCMkd6s6/KUuz6RtEgySPqC6BmTWEZXIkvekMvNpai/ptL3okW9tSrlS6CwEM
-         olJ6Iy23h4hMr44fKA/12IYPcoaKA26UkKk5yhfaxv8dGrNWzXsUBc3+BuJUltihnggg
-         G9IUlxuLwIs50rX6fP+xqgf8B3EebIwMGLljw7VVuAfNuFem7xqkW8k1R5mFomxDtu0f
-         /if/PU2Qb1csJLfVmoQMIfZC6b2KdpfJV7WuQP0Wwj726ebCh4BuYvnJifS1RoiKuUJd
-         ibhN91CkEb/EgD2THh/7bsSVSH7T/X+2D3lq3Y8kkMw/lFfeS7kGZKumU8dH7bLhmyxO
-         hayg==
-X-Gm-Message-State: AGRZ1gJBGuyghLbP1clzl/upGw/Ci2RR37DeMVLpplGG56ZTYEz1zJM9
-        EIaTdTeGlDov2lC5iPNuiAxtel8ozm7rPIQ+dcyGrzbe
-X-Google-Smtp-Source: AJdET5dkJNnHyA7LPcc8ChQY2DIVCQmWV+U7VhU3fNV5D+54tnhWRgg5twFRk9xeIVprSUeMxNf6wOD/XeBTzr5+tmM=
-X-Received: by 2002:aca:905:: with SMTP id 5-v6mr10247570oij.163.1541986543059;
- Sun, 11 Nov 2018 17:35:43 -0800 (PST)
+        id S1730314AbeKLMyz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 07:54:55 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62040 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbeKLMyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 07:54:54 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id ADD7F3E0B5;
+        Sun, 11 Nov 2018 22:03:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ech/o12Mtb6B6O2l1IsSwF4q2qk=; b=kHpPtr
+        S5QiT9Dlyj2pnYW2+2rSoBGX7Iebqdk5W3onydKXSiTNs7L2iTmq4+U5dTrrZa9M
+        RkXyy56jagzaWk8lEp3LbNLPf3ADmJZTUa/Ij9weKYsfIrV7AkQOcOobGhCvToZU
+        JlR4WZAT+CqB1+Wo1tHQqP8/mmSDCK4AwBX9M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vES2IZlC18+qQm1mUuKhajnKmP2xUEcQ
+        sxC0Q5FO6mrOlqBektD0MToGtkuKK4Bpw4fegevp1r5FJmDOEsiaPt40TTPmZByy
+        l9w3/y3QguFIH/Jpi4oGOt6TkL8ndpn9/j7rh7F6BtkuriHc4n6nIeq+qHyAHLUU
+        rRY6ZZ2SSms=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A7B373E0B4;
+        Sun, 11 Nov 2018 22:03:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 64D343E0B3;
+        Sun, 11 Nov 2018 22:03:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>, gitgitgadget@gmail.com,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] mingw: handle absolute paths in expand_user_path()
+References: <2287dd96cf0b9e9e250fdf92a32dcf666510e67d.1541515994.git.gitgitgadget@gmail.com>
+        <a374e4bb-1970-9ec7-fe94-a273f1206d6b@kdbg.org>
+        <nycvar.QRO.7.76.6.1811071222200.39@tvgsbejvaqbjf.bet>
+        <efd57458-07f6-2813-483b-dc7fba785dc0@kdbg.org>
+        <20181107204142.GA30078@sigill.intra.peff.net>
+        <e7ff6f22-fe5a-3cca-9305-2c8a6fb55d45@kdbg.org>
+        <20181107220320.GA8970@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1811081408310.39@tvgsbejvaqbjf.bet>
+        <CACsJy8AdRqKKFFO80p8jdMGaH6+Pj833nUEd7Xe6SWLQB=80UQ@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1811081639210.39@tvgsbejvaqbjf.bet>
+        <20181109101918.GC7410@sigill.intra.peff.net>
+        <CACsJy8BzbEnXMRw6kB1rg+WMfu2wwJZWkAtVate98CZRSY_dLA@mail.gmail.com>
+Date:   Mon, 12 Nov 2018 12:03:43 +0900
+In-Reply-To: <CACsJy8BzbEnXMRw6kB1rg+WMfu2wwJZWkAtVate98CZRSY_dLA@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 9 Nov 2018 17:16:41 +0100")
+Message-ID: <xmqqr2fr3skw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
-In-Reply-To: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com>
-From:   yan ke <yanke131415@gmail.com>
-Date:   Mon, 12 Nov 2018 09:35:31 +0800
-Message-ID: <CAJosSJ4_PXrXUxn0WfFcR90SbDL0UWRRGPpxEjVwc=3NwWP+Jg@mail.gmail.com>
-Subject: Re: Add issue management within git
-To:     martin.delille@gmail.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91842FA4-E627-11E8-B115-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-   Very very agree, now it is very difficult to find a solution when
-has some problem such build problem an so on! The mail-list is good to
-send patch es, but is it not suitable for problem track or problem
-solution search!
-   Now the Github or Gitlab is good to track issues, suggest to open
-the git issue track!
-Martin Delille <martin.delille@gmail.com> =E4=BA=8E2018=E5=B9=B411=E6=9C=88=
-12=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=886:52=E5=86=99=E9=81=93=EF=
-=BC=9A
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> FWIW I don't have any preference, as long as the variable can still
+> have a name (that is not a symbol).
+
+Same here.
+
+> A side question regardless of syntax. What do we do with
+> %(unrecognized name)/foo? I see three options
 >
-> Hi,
->
-> This would be awesome to handle issue directly with git:
-> Having an offline version of the issues synced to the gitlab/github issue=
-s.
-> A lot of work is done on the issues and it is lost when migrating from on=
-e service to the other.
-> Beside we don=E2=80=99t always have a good internet connection.
-> There is already a kind of integration between commit message fixing issu=
-e automatically when merged in the master branch (with =E2=80=9Cfix #143=E2=
-=80=99).
->
-> Kind regards,
->
-> Martin
->
+>  - expand to empty, so "/foo"
+>  - keep it and try the literal path "%(unrecognized name)/foo"
+
+Neither of these is good for future proofing purposes.
+
+>  - somehow tell the caller that the path is invalid and treat it like
+> non-existing path, even if there is some real thing at "%(unrecognized
+> name)/foo"
+
+Another thing to worry about is how to spell the real thing that has
+such a funny name, perhaps by escaping like "%%(unrecognized
+name)/foo".
+
+And from that point of view, "~runtime-prefix~/foo" (i.e. what J6t
+started) may make the most sense, as I do not think we need to
+support a username that ends with a tilde by introducing a quoting
+convention.
