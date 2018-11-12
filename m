@@ -2,78 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 415B61F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 18:23:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3201F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 18:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729281AbeKMERg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 23:17:36 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:38641 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727354AbeKMERg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 23:17:36 -0500
-Received: by mail-ed1-f67.google.com with SMTP id a2-v6so8186874edi.5
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 10:23:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gU94avoTKzV0+hkVMepm1vJS3UIdBlP3QUQXOiJmV0M=;
-        b=Ols/tYDZeFiUr5IcZRtsaVCjE9fzBgqoa0yHZTPLIPOuWR3/L+eDgB6miWxOjaUmMg
-         8RcBStCSdt4s8/XkjuokCOq79XUv9si1pRZzltnGZxnX9rVpbR0MYAV9ftBBC9HJ1hwQ
-         rkZtoOHbkYUY8/aHcoUIwBXvA/Pbvbn29Txd3Q30oruv00kkYpvVXyrdGCCpllsepfL7
-         aV8ml2QDf/7+WucPLSmOVumdkNIsYz5jI2ubfnkP5IpdnCneQcvgA/6/VDZAmyRLxD1v
-         7B4z+ebcOvbVDH6liKgc34+nurpWz6xVR2Mf4ohL1wLG809Sm04VOw+jjszGkK/cJylK
-         iznw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gU94avoTKzV0+hkVMepm1vJS3UIdBlP3QUQXOiJmV0M=;
-        b=KE6aic609MyAsjG/cmSYB27uP/Lo1jW8k7ytUeFS22yaFBndnwAmEUXctMcGmX18fl
-         JvVKBh2K2HdxlQNGsRTsZVKWInzvq0aHwiQo0tiL03IEwqp8zdUCswrxdkvPyOQyBgn5
-         fzsc9kf3AvaxfYVgtr0aPbxlB29ViDoZyPtOioTZWBWyMz0mJ98Lyh7cq6GMVJOmjB5F
-         FNgY45KeAViCn18ZY9JptksJSX38Rbyjolvb9Omf0SR4wfpydtHh/6eDTcfD1A0zCsFV
-         /EYqOy8bE7HVru7AvV9G6UxxqEOjL3TKowb37oiUHfW+gIOtp3F5+8sDbD6mz6vrE+Z+
-         V0Lg==
-X-Gm-Message-State: AGRZ1gIqfBAFSXxx7MbcC5suoJ1pYZdRO7UhHoN9GMesftU6G9QFeRCy
-        aB7j7uVFHU9aJz2BZF4H0FLoVkrwg0fr6WOAx2gaEA==
-X-Google-Smtp-Source: AJdET5d5OuiAAB+ExUYrwic7rAtLFUCMEQlbXg4aUIUE9vnHfUzgPILLkLSr8e2N+DqSFBItAC/WWEyMnB5oaAQ8ZTo=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr13603867edh.154.1542046991615;
- Mon, 12 Nov 2018 10:23:11 -0800 (PST)
+        id S1730079AbeKME2M (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 23:28:12 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:5481 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729553AbeKME2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 23:28:12 -0500
+Received: from [192.168.2.201] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id MH1sghplpwhzSMH1sg15TO; Mon, 12 Nov 2018 18:33:44 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1542047624;
+        bh=S8I1aT8U5GW3K/DpKrS1UBN0IDc1M+SdmLbJsraqaQQ=;
+        h=Reply-To:To:From:Subject:Date;
+        b=abOnpX0q1x9cSSt7f1zfLPdevg2Q0ZTBiRHJztS0MViB6Jg0ZN9qB9SLgGHFq1yCG
+         fji4bXYXJc4ohioj3Ki784cpSzkeNJ8PH7L9CA2/G7Tqeo0yCZ1fsJ8AVOVVa2XIBG
+         +TdsG2gGTLDc1MCxx8LyBq0TWmuGmQfC3kGfpw9c=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=BArZDd5mK4YBb39787wA:9
+ a=QEXdDO2ut3YA:10 a=pHzHmUro8NiASowvMSCR:22 a=6VlIyEUom7LUIeUMNQJH:22
+Reply-To: phillip.wood@dunelm.org.uk
+To:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Subject: Regression: rebase -C1 fails in master
+Message-ID: <7c0f0b57-d303-d1fe-e551-c8783b5dbc17@talktalk.net>
+Date:   Mon, 12 Nov 2018 18:33:44 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <20181112144627.GA2478@sigill.intra.peff.net> <20181112144703.GB7400@sigill.intra.peff.net>
-In-Reply-To: <20181112144703.GB7400@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 12 Nov 2018 10:23:00 -0800
-Message-ID: <CAGZ79kb7MtM8iQ1b-t-NGOa_s7v1ZoaM4xHcHQZ0dyMrNWdw0A@mail.gmail.com>
-Subject: Re: [PATCH 2/9] submodule--helper: prefer strip_suffix() to ends_with()
-To:     Jeff King <peff@peff.net>
-Cc:     gerardu@amazon.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, tikuta@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNdNJqlsG/S0tglr96pNDesPYZT2HDevgH9z2p3wZ7uqKhlWwg9fa4tdFKomqqmtHI7sgsWSboF0p8ddm0zbXTJZvbApSRt017IKS17UT9ppuPFJHv+s
+ V/mW3MlOGZuPooWN7mlQXm802I5PkeXlNLNApnTtwh9AKOg2jZq+EVy8WgC2GNfqUMRbmdFej24pJ3l1Y2OO4v8Sch2URtDhgJ6mjpr99XjkqoTCID3Svvcx
+ UjO5+qIQmLn0LKvy770PAw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 6:47 AM Jeff King <peff@peff.net> wrote:
->
-> Using strip_suffix() lets us avoid repeating ourselves. It also makes
-> the handling of "/" a bit less subtle (we strip one less character than
-> we matched in order to leave it in place, but we can just as easily
-> include the "/" when we add more path components).
->
-> Signed-off-by: Jeff King <peff@peff.net>
+I've just tried running
 
-This makes sense. Thanks!
+bin-wrappers/git rebase -C1 @^
 
-(This patch caught my attention as it's a submodule thing,
-but now looking at the rest of the series)
+and I get
+
+error: unknown switch `1'
+usage: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>]
+[<upstream>] [<branch>]
+   or: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>]
+--root [<branch>]
+   or: git rebase --continue | --abort | --skip | --edit-todo
+...
+
+bin-wrappers/git --version gives
+git version 2.19.1.856.g8858448bb4
+
+Unfortunately I've not got time it investigate properly at the moment.
+
+Best Wishes
+
+Phillip
