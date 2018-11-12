@@ -2,99 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 277A21F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 22:03:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD76A1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 22:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730407AbeKMH6E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 02:58:04 -0500
-Received: from mail-it1-f202.google.com ([209.85.166.202]:33025 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726006AbeKMH6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 02:58:04 -0500
-Received: by mail-it1-f202.google.com with SMTP id w68so1032824ith.0
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 14:02:58 -0800 (PST)
+        id S1730525AbeKMINw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 03:13:52 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:34186 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbeKMINw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 03:13:52 -0500
+Received: by mail-wm1-f41.google.com with SMTP id f1-v6so9808517wmg.1
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 14:18:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=J59Vw3uvDEtkwee5U2ftOaBfc+g4ZUV9h7d/WwVrssU=;
-        b=kuQ3DD7VyJ6Q0hqy2vS+zMJoHZN8llO9zWmvhM1WO5dZRbqaX1A43dKI5vbLzXfBK2
-         axxyaGf/eUGZNwTNUg+I0EBNkaJ7SyIpvlKJ7z4ka99RgOdrjXNr43d3wAaDHJQgGVsB
-         1aqGN8Jpe+O53CQgCG0YIzZm3B5z2bGKSkEAM1tuv54uIvyRrzt41ul7TlIybqY7aSHY
-         HvdmX9zVnHUZ3SrrYd4KRhMXX+pvGLtv1wKpyyH/Xuznj3Nb0p2+fJVPh8Q95/NgF6R4
-         Bos51a5b7TRIO0Y1FPBjkh4FjJOXtCtsjWF5KsUAWZgEeH6MICGZMbuasRMu62zRkgmG
-         ebuQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=rISCccNohwmm0MTgAahSksBi6yMWyy+mJuHTvNteWRA=;
+        b=ba4IZTdXMVT7bZRiCkb7TrM+C/D8bjUZKk7WbxqI0dY21Yi6T3pNfKYOt/ilM4q5uG
+         M6qQa/9WBbK6cfq+TWfdmMdegvrUQsRnis/4HG1QMKKJVNT5H7IdxGUWEWlXwezVL377
+         1uaQZKoyC6P/knqxOLUY1lbHXIyxfdwZgL2gH+hYEbIioF8owa3Y4+4Y49A7WSFs1Dxp
+         ThhYjdDuHhYzatDWqbOtsAWCocZSRF/H0bZThDq+XyaDNBnJ0IBlkUe1T+LUeeY8eTY1
+         qwAHrjMW++HMKBTvyXr5UDOB9WOXlNz03q0lR9xMb4kSnXlhrOfvyO5sDq/ID9iTL72p
+         vMGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=J59Vw3uvDEtkwee5U2ftOaBfc+g4ZUV9h7d/WwVrssU=;
-        b=erRXDeIQvqM4/OxgUOjuGXNWuU9xpS3jmXnSugVvKOMs4M+FEVEXUsX1bARHAsAS8Q
-         scJ9cNRDy0hOZW3UTBwJ0vI4CiRSI30iT5yWHfTv1iFZs3KDnIA/x1hCE5hMbKryZyQa
-         epYCLcMcZPDiNgwQ+2ERvB7YTE4CDt2EpUWm/qVEBomNUygbQ4QwrTGbIot/2zM6Xzzu
-         uoL19XJCcxCp1Vzuzi/GnG1vp3chRYNdM8/cuXE4++YT0t2bA8QE2xcAQIxf/pjiph4j
-         8SvIOL3GRBWdPiOUJvbmDGb/oHEYDdj+pBNL18Ej3ZlpQ1XjRLAF1paj1ELzRPnuqOGq
-         6Iuw==
-X-Gm-Message-State: AGRZ1gJ288cUcGj0mI+la3+XYMG4QHReY50X+718cqwmHy0JtC5Pqqct
-        eVdHS/OCvE+5bZVll1ZaijhxkABzGdK1MTnVLY7Vpofj9o72Ns5cLO2Uqnkv7giqjOPZivUCV02
-        blv1hBX+f+/iFvP3OUkMefuXiP5NhACaWPs7rixSNcJCKYyOZbctuTht5Quq7fic=
-X-Google-Smtp-Source: AJdET5cUcUCca5XtkAvNpbgY9scU+p89M8ifQpqP5cJ+s/+qB9EfnADTep4+0G38K0Sf79B4PONO/F6OFC9lcQ==
-X-Received: by 2002:a24:d255:: with SMTP id z82-v6mr1073398itf.31.1542060178337;
- Mon, 12 Nov 2018 14:02:58 -0800 (PST)
-Date:   Mon, 12 Nov 2018 14:02:56 -0800
-Message-Id: <1630a93f8270ca090459be8cc7213221cc6250cf.1542060094.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
-Subject: [PATCH] Makefile: use CXXFLAGS for linking fuzzers
-From:   steadmon@google.com
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=rISCccNohwmm0MTgAahSksBi6yMWyy+mJuHTvNteWRA=;
+        b=jGED2t4XiiymeCwNtQCkev56+O0lLpUcMKO80o0oGh0TRUig8vohjmi85eojaRdqM6
+         LKA0CXXzvo/x45N+USoell+AR1SDX/S5h5F9mqcyXC44XwcXHOqGzyrhr5dY7OhtH/hB
+         ipodwR1X2X9JyB5QQSSHyWpc91EjO/1QCuUTwfvoNygDhtG2exL2ytBtlzanBovY8cmJ
+         S0DdW3Wv4lhu4Gn2Cy4+0gX7TcunkdfaWRc5VgOkKqK+Ql5OW93U1+N8SGTID8TMi0Xk
+         GkjeUsNh/5hl2g5C1PgfQ5daqJq3ynon18Hzdn/JsfGbk3GhycL0X//H7vNs0k//vc+V
+         QTag==
+X-Gm-Message-State: AGRZ1gJ2RYgqsqWkmYW1ISsREH5wbTruhy8dah+UrAxUpBmonp32/rna
+        fJMyln3dI/6iIqPgXwr9/RQ=
+X-Google-Smtp-Source: AJdET5f8WzHNsCHGjv+UGvRKvshIXCWkqGN00a8Kil4jvK2HZ6NCHD1mUlhixHNeh5+4zB4RabHbWg==
+X-Received: by 2002:a7b:c052:: with SMTP id u18-v6mr1112476wmc.81.1542061122964;
+        Mon, 12 Nov 2018 14:18:42 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id v10-v6sm28110737wrq.4.2018.11.12.14.18.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Nov 2018 14:18:42 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Geert Jansen <gerardu@amazon.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Takuto Ikuta <tikuta@chromium.org>
+Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick existence check
+References: <20181112144627.GA2478@sigill.intra.peff.net> <20181112145442.GH7400@sigill.intra.peff.net> <87ftw62sld.fsf@evledraar.gmail.com> <20181112162150.GB7612@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181112162150.GB7612@sigill.intra.peff.net>
+Date:   Mon, 12 Nov 2018 23:18:40 +0100
+Message-ID: <87d0ra2b3z.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-OSS-Fuzz requires C++-specific flags to link fuzzers. Passing these in
-CFLAGS causes lots of build warnings. Using separate CXXFLAGS avoids
-this.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On Mon, Nov 12 2018, Jeff King wrote:
 
-diff --git a/Makefile b/Makefile
-index bbfbb4292d..5462bc4b6b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -497,6 +497,7 @@ GIT-VERSION-FILE: FORCE
- # CFLAGS and LDFLAGS are for the users to override from the command line.
- 
- CFLAGS = -g -O2 -Wall
-+CXXFLAGS ?= $(CFLAGS)
- LDFLAGS =
- ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
-@@ -3098,14 +3099,14 @@ cover_db_html: cover_db
- # An example command to build against libFuzzer from LLVM 4.0.0:
- #
- # make CC=clang CXX=clang++ \
--#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
-+#      CXXFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
- #      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
- #      fuzz-all
- #
- .PHONY: fuzz-all
- 
- $(FUZZ_PROGRAMS): all
--	$(QUIET_LINK)$(CXX) $(CFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
-+	$(QUIET_LINK)$(CXX) $(CXXFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
- 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
- 
- fuzz-all: $(FUZZ_PROGRAMS)
--- 
-2.19.1.930.g4563a0d9d0-goog
+> On Mon, Nov 12, 2018 at 05:01:02PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>
+>> > There's some obvious hand-waving in the paragraphs above. I would love
+>> > it if somebody with an NFS system could do some before/after timings
+>> > with various numbers of loose objects, to get a sense of where the
+>> > breakeven point is.
+>> >
+>> > My gut is that we do not need the complexity of a cache-size limit, nor
+>> > of a config option to disable this. But it would be nice to have a real
+>> > number where "reasonable" ends and "pathological" begins. :)
+>>
+>> I'm happy to test this on some of the NFS we have locally, and started
+>> out with a plan to write some for-loop using the low-level API (so it
+>> would look up all 256), fake populate .git/objects/?? with N number of
+>> objects etc, but ran out of time.
+>>
+>> Do you have something ready that you think would be representative and I
+>> could just run? If not I'll try to pick this up again...
+>
+> No, but they don't even really need to be actual objects. So I suspect
+> something like:
+>
+>   git init
+>   for i in $(seq 256); do
+>     i=$(printf %02x $i)
+>     mkdir -p .git/objects/$i
+>     for j in $(seq --format=%038g 1000); do
+>       echo foo >.git/objects/$i/$j
+>     done
+>   done
+>   git index-pack -v --stdin </path/to/git.git/objects/pack/XYZ.pack
+>
+> might work (for various values of 1000). The shell loop would probably
+> be faster as perl, too. :)
+>
+> Make sure you clear the object directory between runs, though (otherwise
+> the subsequent index-pack's really do find collisions and spend time
+> accessing the objects).
+>
+> If you want real objects, you could probably just dump a bunch of
+> sequential blobs to fast-import, and then pipe the result to
+> unpack-objects.
+>
+> -Peff
 
+I did a very ad-hoc test against a NetApp filer using the test script
+quoted at the end of this E-Mail. The test compared origin/master, this
+branch of yours, and my core.checkCollisions=false branch.
+
+When run with DBD-mysql.git (just some random ~1k commit repo I had):
+
+    $ GIT_PERF_REPEAT_COUNT=3 GIT_PERF_MAKE_OPTS='-j56 CFLAGS="-O3"' ./run origin/master peff/jk/loose-cache avar/check-collisions-config p0008-index-pack.sh
+
+I get:
+
+    Test                                             origin/master     peff/jk/loose-cache      avar/check-collisions-config
+    ------------------------------------------------------------------------------------------------------------------------
+    0008.2: index-pack with 256*1 loose objects      4.31(0.55+0.18)   0.41(0.40+0.02) -90.5%   0.23(0.36+0.01) -94.7%
+    0008.3: index-pack with 256*10 loose objects     4.37(0.45+0.21)   0.45(0.40+0.02) -89.7%   0.25(0.38+0.01) -94.3%
+    0008.4: index-pack with 256*100 loose objects    4.47(0.53+0.23)   0.67(0.63+0.02) -85.0%   0.24(0.38+0.01) -94.6%
+    0008.5: index-pack with 256*250 loose objects    5.01(0.67+0.30)   1.04(0.98+0.06) -79.2%   0.24(0.37+0.01) -95.2%
+    0008.6: index-pack with 256*500 loose objects    5.11(0.57+0.21)   1.81(1.70+0.09) -64.6%   0.25(0.38+0.01) -95.1%
+    0008.7: index-pack with 256*750 loose objects    5.12(0.60+0.22)   2.54(2.38+0.14) -50.4%   0.24(0.38+0.01) -95.3%
+    0008.8: index-pack with 256*1000 loose objects   4.52(0.52+0.21)   3.36(3.17+0.17) -25.7%   0.23(0.36+0.01) -94.9%
+
+I then hacked it to test against git.git, but skipped origin/master for
+that one because it takes *ages*. So just mine v.s. yours:
+
+    $ GIT_PERF_REPEAT_COUNT=3 GIT_PERF_MAKE_OPTS='-j56 CFLAGS="-O3"' ./run peff/jk/loose-cache avar/check-collisions-config p0008-index-pack.sh
+    [...]
+    Test                                             peff/jk/loose-cache   avar/check-collisions-config
+    ---------------------------------------------------------------------------------------------------
+    0008.2: index-pack with 256*1 loose objects      12.57(28.72+0.61)     12.68(29.36+0.62) +0.9%
+    0008.3: index-pack with 256*10 loose objects     12.77(28.75+0.61)     12.50(28.88+0.56) -2.1%
+    0008.4: index-pack with 256*100 loose objects    13.20(29.49+0.66)     12.38(28.58+0.60) -6.2%
+    0008.5: index-pack with 256*250 loose objects    14.10(30.59+0.64)     12.54(28.22+0.57) -11.1%
+    0008.6: index-pack with 256*500 loose objects    14.48(31.06+0.74)     12.43(28.59+0.60) -14.2%
+    0008.7: index-pack with 256*750 loose objects    15.31(31.91+0.74)     12.67(29.23+0.64) -17.2%
+    0008.8: index-pack with 256*1000 loose objects   16.34(32.84+0.76)     13.11(30.19+0.68) -19.8%
+
+So not much of a practical difference perhaps. But then again this isn't
+a very realistic test case of anything. Rarely are you going to push a
+history of something the size of git.git into a repo with this many
+loose objects.
+
+Using sha1collisiondetection.git is I think the most realistic scenario,
+i.e. you'll often end up fetching/pushing something roughly the size of
+its entire history on a big repo, and with it:
+
+    Test                                             peff/jk/loose-cache   avar/check-collisions-config
+    ---------------------------------------------------------------------------------------------------
+    0008.2: index-pack with 256*1 loose objects      0.16(0.04+0.01)       0.05(0.03+0.00) -68.8%
+    0008.3: index-pack with 256*10 loose objects     0.19(0.04+0.02)       0.05(0.02+0.00) -73.7%
+    0008.4: index-pack with 256*100 loose objects    0.32(0.17+0.02)       0.04(0.02+0.00) -87.5%
+    0008.5: index-pack with 256*250 loose objects    0.57(0.41+0.03)       0.04(0.02+0.00) -93.0%
+    0008.6: index-pack with 256*500 loose objects    1.02(0.83+0.06)       0.04(0.03+0.00) -96.1%
+    0008.7: index-pack with 256*750 loose objects    1.47(1.24+0.10)       0.04(0.02+0.00) -97.3%
+    0008.8: index-pack with 256*1000 loose objects   1.94(1.70+0.10)       0.04(0.02+0.00) -97.9%
+
+As noted in previous threads I have an in-house monorepo where (due to
+expiry policies) loose objects hover around the 256*250 mark.
+
+The script, which is hacky as hell and takes shortcuts not to re-create
+the huge fake loose object collection every time (takes ages). Perhaps
+you're interested in incorporating some version of this into a v2. To be
+useful it should take some target path as an env variable.
+
+$ cat t/perf/p0008-index-pack.sh
+#!/bin/sh
+
+test_description="Tests performance of index-pack with loose objects"
+
+. ./perf-lib.sh
+
+test_perf_fresh_repo
+
+test_expect_success 'setup tests' '
+	for count in 1 10 100 250 500 750 1000
+	do
+		if test -d /mnt/ontap_githackers/repo-$count.git
+		then
+			rm -rf /mnt/ontap_githackers/repo-$count.git/objects/pack
+		else
+			git init --bare /mnt/ontap_githackers/repo-$count.git &&
+			(
+				cd /mnt/ontap_githackers/repo-$count.git &&
+				for i in $(seq 0 255)
+				do
+					i=$(printf %02x $i) &&
+					mkdir objects/$i &&
+					for j in $(seq --format=%038g $count)
+					do
+						>objects/$i/$j
+					done
+				done
+			)
+		fi
+	done
+'
+
+for count in 1 10 100 250 500 750 1000
+do
+	echo 3 | sudo tee /proc/sys/vm/drop_caches
+	test_perf "index-pack with 256*$count loose objects" "
+		(
+			cd /mnt/ontap_githackers/repo-$count.git &&
+			rm -fv objects/pack/*;
+			git -c core.checkCollisions=false index-pack -v --stdin </home/aearnfjord/g/DBD-mysql/.git/objects/pack/pack-*.pack
+		)
+	"
+done
+
+test_done
