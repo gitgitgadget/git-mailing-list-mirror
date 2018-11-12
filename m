@@ -2,89 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA81C1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 05:20:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E721F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 05:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730559AbeKLPMR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 10:12:17 -0500
-Received: from mout.web.de ([212.227.15.14]:41153 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727243AbeKLPMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 10:12:17 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LvB2o-1fNGon3sH4-010PlO; Mon, 12
- Nov 2018 06:20:39 +0100
-Date:   Mon, 12 Nov 2018 06:20:39 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1728145AbeKLPQ1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 10:16:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50011 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726626AbeKLPQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 10:16:27 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30632100CAA;
+        Mon, 12 Nov 2018 00:24:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=P2NVAJycqqPHuUxZpsTRVRACrLo=; b=Ho5Ifq
+        e66oXt88LKKh7AQKXF1acvZtnHbD6TCKawrf1yZQXFW2xHYumPFvKJjpWbXV+Ljv
+        gYkzj1rMAeAHoDaLbvv0IdwOXegBhRhQhoFz9kPoS8sG1fdasD09XbiBdismjgfE
+        BibSf7SnfVbdfyl4jE9pKqLsGSzBrb8uvlnaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fhXsKy2xVFuHCaQ7QURaUXr+WczJuFeW
+        X9ba/p7vfbbBhLpf2XxmYInrU3rq20v+s/XSl3qYWrNQuHKcsHWa6fYV0iPZ7xQT
+        /oDx1RDRKy+G3rTPKZqe0WJxpqnbaKnKzpsHuIUdtU6BqNYjdYdHbPCi38rAVwHC
+        CKctRFeLRwE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28DB7100CA8;
+        Mon, 12 Nov 2018 00:24:53 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8D5F8100CA7;
+        Mon, 12 Nov 2018 00:24:52 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] remote-curl.c: xcurl_off_t is not portable (on 32
- bit platfoms)
-Message-ID: <20181112052039.GA12275@tor.lan>
-References: <20181025161310.29249-1-tboegi@web.de>
- <20181109174110.27630-1-tboegi@web.de>
- <xmqqbm6v3qex.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [RFC PATCH 5/5] ref-filter: add docs for new options
+References: <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
+        <01020166f76d851b-3a0f5414-48ce-4172-8200-0a59fd3f66d9-000000@eu-west-1.amazonses.com>
+Date:   Mon, 12 Nov 2018 14:24:51 +0900
+In-Reply-To: <01020166f76d851b-3a0f5414-48ce-4172-8200-0a59fd3f66d9-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Fri, 9 Nov 2018 07:44:01 +0000")
+Message-ID: <xmqqmuqe3m1o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbm6v3qex.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:LZMiY20YuWzyh4LddN8UPYd7ixFYITydlPgOtYMH6NuAPKrumRG
- KCEJsxPY8U8NOqCRaKNnw7fxMBuhXX8qlJCGpLfL5xRKkMLEMySaaxcXzKAjfdQt3MFlDfj
- Cn/U+hS8qmmiyorr4wYK7M4tUcZD79wu7MNrR8nhS571nA+7TzhiyX3QfQgipwfDAqyKRFo
- q/0NGJpQzuTNZ0dKJ5Q0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nLFT/yWCK9I=:zSp+t5wDmevFzrzN4CMB/9
- 90PnFmWCrIeBlT8xnLRLl3/yj7PmlVblWj6ufVZg170kPYcNDZxwuwDVcVZf6f6BE6xroRuUU
- u7SaNzQwKwiKynk/y+KkvxEAZUgoME7Jm8/5jvcgX3QueKudWg8ReLVMNflf55OhH8Pq3YBMi
- n1dNUJ7XFmjvsQFYNJ/x8Qss4+3fPQJEZ5z2hrD4RLQJpgmacoTmP0Caja2jljl4r/tEloPkN
- Yw9iqkvcl9VtaWhn+f+7avJRvIXZFyDBi6WR54OeVHlbKjzoG1k0tRzCTAJ5jrfsQJ/cNn6uu
- qntM9KYPwB/2NzNzvb4jQwYTdyjLXTAUs9gqUl5LRnQm58WxJHhA0VGFmN99kWwdE6Nym+26/
- sKFjrKT+PPLBz+zRDDOcMAIr74TUp4LEvpbnefZFST6P22+nr6vjZlMipSf3u30RH55XCSxRF
- rruC/TN8koAVLbyozABtfS+jZZcIwTxbHFssVgN9oMtzFYmXrQnLXewR3qw0C5UddUhImpJIe
- mw3p/omsCnULxgV7UnPgtOHjnozfe9hcbH3RZeJpVuPqOq+o3UctYdRqhDHaRMZdE4NHD4W29
- MABkLCDokmc7rJWXNBNugICFIYkcwNgGs3uchK6ONzeB26CwdeF2LTTz0k6QhzwZuBpiB7+40
- wS81QqV5uU4K1av2/bIrUIpJNqppiGHr6jYUMiiiTZF5HF212Uq9jKT404NqYto88zyuHaeOS
- 5SIS6G9wlnqeT08zx2F5Oq68egYE7PG3IU5SYjoocCsZx0e13sCYRs5x/OeXxV0Buc5qL2M+5
- jTLpcN1sEsdb9sx93FqHQHxU9TfHQY8UUrbJwzMLex2K28AFQdsWf9FrLclPmAepwE24BS+wf
- b7tR2tNclVeF3eOpUH5TYvync87Mz0IBPgG680MiM=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4856FAD2-E63B-11E8-B6FE-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 12:50:30PM +0900, Junio C Hamano wrote:
-> tboegi@web.de writes:
-> 
-> >
-> > This is a re-semd, the orignal patch was part of a 2
-> > patch-series.
-> > This patch needed some rework, and here should be
-> > the polished version.
-> 
-> Will queue.
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-Thanks, is there a chance to kill a typo here ?
-s/comopared/compared/
-- A temporally variable "size" is used, promoted int uintmax_t and the comopared
+>  objectname::
+>  	The object name (aka SHA-1).
+>  	For a non-ambiguous abbreviation of the object name append `:short`.
+>  	For an abbreviation of the object name with desired length append
+>  	`:short=<length>`, where the minimum length is MINIMUM_ABBREV. The
+>  	length may be exceeded to ensure unique object names.
+> +deltabase::
+> +	If the object is stored as a delta on-disk, this expands to the 40-hex
+> +	sha1 of the delta base object. Otherwise, expands to the null sha1
+> +	(40 zeroes). See `CAVEATS` section below.
+
+I know existing description for other things nearby still talk about
+SHA-1, but we can prepare ourselves better with something like:
+
+	This expands to the object name of the delta base for the
+	given object, if it is stored as a delta.  Otherwise it
+	expands to the null object name (all zeroes).
+
+> +Note that the sizes of objects on disk are reported accurately, but care
+> +should be taken in drawing conclusions about which refs or objects are
+> +responsible for disk usage. The size of a packed non-delta object may be
+> +much larger than the size of objects which delta against it, but the
+> +choice of which object is the base and which is the delta is arbitrary
+> +and is subject to change during a repack.
+> +
+> +Note also that multiple copies of an object may be present in the object
+> +database; in this case, it is undefined which copy's size or delta base
+> +will be reported.
+
+OK.
 
 
-> Next time, please refrain from saying "re-send", if you
-> changed anything in the patch (or the log message), as the phrase
-> implies you are sending the same thing as before (just in case the
-> earlier one was not seen, for example).  Marking it as vN+1 like you
-> did for this patch and having a reference to the original would make
-> it clear, though ;-)
-
-Sorry for the confusion.
-The next time I will not send unrelated patches as a series,
-so that we have a better "Message-ID:" and "In-Reply-To:"
-flow (which should make live 3% easier).
-
-https://public-inbox.org/git/20181029165914.2677-1-tboegi@web.de/
-https://public-inbox.org/git/20181109174110.27630-1-tboegi@web.de/
-
+>  SEE ALSO
+>  --------
+>  linkgit:git-show-ref[1]
+>
+> --
+> https://github.com/git/git/pull/552
